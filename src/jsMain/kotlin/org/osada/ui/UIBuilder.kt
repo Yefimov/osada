@@ -1,5 +1,6 @@
 package org.osada.ui
 
+import org.osada.ui.briefing.ScenarioBriefingController
 import org.osada.model.Equipment
 import org.osada.model.GameUnit
 
@@ -125,6 +126,15 @@ object UIBuilder {
     // --- Messages (MessageDialogs) ---
     fun message(title: String, body: String, narrative: Boolean = false, callback: (() -> Unit)? = null) =
         MessageDialogs.message(title, body, narrative, callback)
+    fun showScenarioBriefing(
+        title: String,
+        rawData: dynamic,
+        onFinished: () -> Unit
+    ) = ScenarioBriefingController.show(title, rawData, onFinished)
+    fun reopenScenarioBriefing(onClosed: () -> Unit): Boolean =
+        ScenarioBriefingController.reopenLast(onClosed)
+    fun isScenarioBriefingVisible(): Boolean = ScenarioBriefingController.isVisible()
+    fun clearScenarioBriefing() = ScenarioBriefingController.clearLast()
     fun messageDynamic(title: String, body: String) = MessageDialogs.messageDynamic(title, body)
     fun showPrototypeAwardMessage(eqid: Int) = MessageDialogs.showPrototypeAwardMessage(eqid)
     fun showAIStatus(active: Boolean) = MessageDialogs.showAIStatus(active)

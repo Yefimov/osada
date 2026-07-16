@@ -193,10 +193,16 @@ object UICombatLog {
         descButton.style.fontSize = "16px"
         descButton.textContent = "g"
         descButton.onclick = { _: MouseEvent ->
-            // Shows the description ON TOP of the report (z-index --z-msg beats combatLog's), no
-            // longer closes the report as a side effect — "view briefing" and "close" are two
-            // different actions and shouldn't be bound to the same button.
-            UIBuilder.message(game?.scenario?.name ?: "", game?.scenario?.getDescription() ?: "", narrative = true)
+            // Campaign battles reopen the full dialogue/orders screen. Standalone scenarios and
+            // older states without a cached briefing keep the existing narrative message fallback.
+            val reopened = game?.ui?.reopenScenarioBriefing() as? Boolean ?: false
+            if (!reopened) {
+                UIBuilder.message(
+                    game?.scenario?.name ?: "",
+                    game?.scenario?.getDescription() ?: "",
+                    narrative = true
+                )
+            }
         }
         if (game?.campaign != null) {
             val dossierButton = addTag(actions, "span")

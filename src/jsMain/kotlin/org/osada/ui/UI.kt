@@ -48,14 +48,8 @@ class UI(internal val game: Game) {
         UIBuilder.setEquipmentFlags(game.scenario?.eqp)
         menuController.updateStatusBar()
         menuController.checkUndeployedUnits()
-        // Only show the scenario-intro message when there IS a scenario. On a fresh start (no
-        // save to restore — e.g. incognito), UI is built with scenario==null and this used to
-        // show an EMPTY message box; the old UI hid it by accident (z-index 99 behind the
-        // z-300 start menu), but the Task-0 z-scale (--z-msg: 1000) put it above the menu.
-        if (game.scenario != null) {
-            UIBuilder.message(game.scenario?.name ?: "", game.scenario?.getDescription() ?: "", narrative = true)
-        }
-
+        // Scenario briefings are opened by setNewScenario() after map resources are ready. Keeping
+        // the constructor silent prevents duplicate briefings and replay after save restoration.
         render.cacheImages { }
         uiSettings.hasTouch = hasTouch()
         mapInputController.attachMapEventListeners()
@@ -64,7 +58,9 @@ class UI(internal val game: Game) {
         // once here since UI is constructed exactly once per page load (Game reuses this instance
         // across scenario/campaign transitions).
         document.addEventListener("keydown", { e ->
-            if ((e.asDynamic().key as? String) == "Escape") menuController.handleGlobalEscape()
+            if ((e.asDynamic().key as? String) == "Escape" && !UIBuilder.isScenarioBriefingVisible()) {
+                menuController.handleGlobalEscape()
+            }
         })
     }
 
@@ -223,6 +219,10 @@ class UI(internal val game: Game) {
 
     fun setNewScenario() {
         val map = game.scenario?.map ?: return
+        val rawBriefing = game.takeScenarioBriefing()
+        val showBriefing = game.takeScenarioBriefingEnabled()
+        // Prevent AI or scripted turns from running while the briefing is loading or visible.
+        game.uiMessageClicked = !showBriefing
         render.setNewMap(map)
         countriesOnSpotSide = map.getCountriesBySide(game.spotSide)
         UIBuilder.setEquipmentFlags(game.scenario?.eqp)
@@ -236,9 +236,9 @@ class UI(internal val game: Game) {
         // Operational sidebar is a flex column; makeVisible would set display:inline.
         byId("osada-sidebar")?.style?.display = "flex"
         menuController.updateStatusBar()
-        console.log("[OpenPanzer] UI.setNewScenario starting image cache")
+        console.log("[OSADA] UI.setNewScenario starting image cache")
         render.cacheImages {
-            console.log("[OpenPanzer] UI.setNewScenario cacheImages callback")
+            console.log("[OSADA] UI.setNewScenario cacheImages callback")
             render.render()
             render.setIconsetTint(game.scenario?.iconset ?: 0)
             // Build hex name/objective tooltips AFTER positionLayers has run inside cacheImages —
@@ -251,8 +251,40 @@ class UI(internal val game: Game) {
             menuController.checkUndeployedUnits()
             WeatherRenderer.start(game.scenario?.atmosferic ?: 0)
             WeatherModel.init(game.scenario)
-            UIBuilder.message(game.scenario?.name ?: "", game.scenario?.getDescription() ?: "", narrative = true)
+            if (!showBriefing) {
+                UIBuilder.clearScenarioBriefing()
+                game.uiMessageClicked = true
+            } else {
+                val title = game.scenario?.name ?: ""
+                val intro = game.scenario?.getDescription() ?: ""
+                val finishOpening = {
+                    game.uiMessageClicked = true
+                    game.processTurn()
+                }
+                val showLegacyScenarioMessage = {
+                    // Preserve the original scenario-opening popup after the campaign conversation
+                    // and operational summary. Standalone scenarios use this path directly.
+                    UIBuilder.message(title, intro, narrative = true, callback = finishOpening)
+                }
+                if (game.campaign != null && rawBriefing != null && rawBriefing != undefined) {
+                    UIBuilder.showScenarioBriefing(title, rawBriefing, showLegacyScenarioMessage)
+                } else {
+                    UIBuilder.clearScenarioBriefing()
+                    showLegacyScenarioMessage()
+                }
+            }
         }
+    }
+
+    /** Reopen the latest campaign briefing without changing scenario or campaign state. */
+    fun reopenScenarioBriefing(): Boolean {
+        game.uiMessageClicked = false
+        val opened = UIBuilder.reopenScenarioBriefing {
+            game.uiMessageClicked = true
+            game.processTurn()
+        }
+        if (!opened) game.uiMessageClicked = true
+        return opened
     }
 
     fun uiEndTurnInfo() {

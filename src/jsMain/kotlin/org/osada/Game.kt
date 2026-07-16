@@ -8,6 +8,7 @@ import org.osada.scenario.Campaign
 import org.osada.scenario.Scenario
 import org.osada.ui.UI
 import org.osada.ui.UIBuilder
+import org.osada.ui.briefing.CampaignBriefingCatalog
 import org.osada.ui.makeVisible
 import kotlin.js.JsExport
 import kotlin.js.JsName
@@ -44,6 +45,10 @@ class Game {
     private var awardPrototype: Boolean = false
     private var nextScenarioData: dynamic = null
 
+    /** Raw optional briefing data and visibility flag for the scenario currently being loaded. */
+    private var pendingScenarioBriefing: dynamic = null
+    private var pendingScenarioBriefingEnabled: Boolean = true
+
     companion object {
         const val defaultScenario: String = DEFAULT_SCENARIO
         val defaultScenarioAI: List<Int> = DEFAULT_SCENARIO_AI
@@ -54,22 +59,22 @@ class Game {
     }
 
     fun init() {
-        console.log("[OpenPanzer] Game.init start")
+        console.log("[OSADA] Game.init start")
         state = GameState(this)
-        console.log("[OpenPanzer] Game.init calling state.restore")
+        console.log("[OSADA] Game.init calling state.restore")
         state?.restore(
             onSuccess = {
-                console.log("[OpenPanzer] Game.init restore onSuccess")
+                console.log("[OSADA] Game.init restore onSuccess")
                 onScenarioLoadFinished(null, true)
             },
             onFail = {
-                console.log("[OpenPanzer] Game.init restore onFail -> creating UI and showing start menu")
+                console.log("[OSADA] Game.init restore onFail -> creating UI and showing start menu")
                 ui = UI(this)
                 makeVisible("startmenu")
                 makeVisible("smMain")
             }
         )
-        console.log("[OpenPanzer] Game.init state.restore dispatched")
+        console.log("[OSADA] Game.init state.restore dispatched")
     }
 
     fun processTurn() {
@@ -77,13 +82,14 @@ class Game {
         if (nextScenarioData != null && continueCampaignFlag && uiMessageClicked) {
             val intro = nextScenarioData.intro as? String
             val scenarioFile = nextScenarioData.scenario as String
+            pendingScenarioBriefing = resolveScenarioBriefing(nextScenarioData, scenarioFile)
             // Consume the pending campaign transition exactly once. Without clearing these,
             // the 1s processTurn interval reloads the same scenario every tick (an infinite
             // loop), which is especially visible when the briefing message is empty and never
             // resets uiMessageClicked back to false.
             continueCampaignFlag = false
             nextScenarioData = null
-            console.log("[OpenPanzer] processTurn continueCampaign -> newScenario", scenarioFile)
+            console.log("[OSADA] processTurn continueCampaign -> newScenario", scenarioFile)
             newScenario(scenarioFile, intro)
             return
         }
@@ -118,7 +124,7 @@ class Game {
                 val unit = param[0] as org.osada.model.GameUnit
                 val cell = param[1] as Cell
                 val nm = org.osada.model.Equipment.getEquipment(unit.eqid)?.name ?: ""
-                console.log("[OpenPanzer] AI move ${unit.id}($nm) -> ${cell.row},${cell.col}")
+                console.log("[OSADA] AI move ${unit.id}($nm) -> ${cell.row},${cell.col}")
                 scenario?.map?.setMoveRange(unit)
                 waitUIAnimation = true
                 ui?.uiUnitMove(unit, cell.row, cell.col)
@@ -187,7 +193,7 @@ class Game {
     }
 
     fun setupGameState() {
-        console.log("[OpenPanzer] setupGameState")
+        console.log("[OSADA] setupGameState")
         savedCampaignPlayer = null
         setupPlayers()
         humanSides = countHumanSides(scenario?.map?.getPlayers()?.toList() ?: emptyList())
@@ -197,6 +203,10 @@ class Game {
         gameEnded = false
         campaign?.let { state?.saveCampaign() }
         state?.save()
+        // setupGameState() is the disk/import restore path. A battle already in progress must
+        // resume immediately instead of replaying its campaign briefing.
+        pendingScenarioBriefing = null
+        pendingScenarioBriefingEnabled = false
         ui?.setNewScenario()
     }
 
@@ -260,9 +270,9 @@ class Game {
     }
 
     fun newScenario(file: String, intro: String?) {
-        console.log("[OpenPanzer] newScenario", file, "intro:", intro)
+        console.log("[OSADA] newScenario", file, "intro:", intro)
         if (file == "failRestore") {
-            console.log("[OpenPanzer] newScenario failRestore -> reset AI and default scenario")
+            console.log("[OSADA] newScenario failRestore -> reset AI and default scenario")
             for (i in uiSettings.isAI.indices) {
                 uiSettings.isAI[i] = defaultScenarioAI[i]
             }
@@ -271,13 +281,13 @@ class Game {
         cleanup()
         scenario = Scenario(file)
         scenario?.load {
-            console.log("[OpenPanzer] Scenario.load callback for", file)
+            console.log("[OSADA] Scenario.load callback for", file)
             onScenarioLoadFinished(intro, false)
         }
     }
 
     fun onScenarioLoadFinished(intro: String?, fromRestore: Boolean) {
-        console.log("[OpenPanzer] onScenarioLoadFinished fromRestore:", fromRestore, "isLoaded:", scenario?.isLoaded)
+        console.log("[OSADA] onScenarioLoadFinished fromRestore:", fromRestore, "isLoaded:", scenario?.isLoaded)
         if (scenario?.isLoaded != true) {
             UIBuilder.messageDynamic("Error", "Error Loading scenario ${scenario?.file}")
             gameEnded = true
@@ -295,9 +305,13 @@ class Game {
         waitUIAnimation = false
         gameStarted = true
         gameEnded = false
+        // A restored battle resumes immediately; a newly loaded battle is unblocked only after
+        // the player closes its briefing.
+        uiMessageClicked = fromRestore
+        pendingScenarioBriefingEnabled = !fromRestore
 
         if (campaign != null) {
-            console.log("[OpenPanzer] onScenarioLoadFinished campaign branch")
+            console.log("[OSADA] onScenarioLoadFinished campaign branch")
             if (buildCoreUnitsFlag) {
                 campaignPlayer?.prestige = campaign!!.startprestige
                 campaignPlayer?.initDossier()
@@ -323,7 +337,7 @@ class Game {
             }
             state?.saveCampaign()
         } else {
-            console.log("[OpenPanzer] onScenarioLoadFinished scenario branch")
+            console.log("[OSADA] onScenarioLoadFinished scenario branch")
             scenario!!.showStatistics()
             if (!fromRestore && scenario!!.file != "tutorial.xml") {
                 scenario!!.map.getPlayers().forEach { player ->
@@ -340,20 +354,22 @@ class Game {
             console.log("Game: created UI instance", uiInstance)
             js("window.game.ui = uiInstance")
             js("window.ui = uiInstance")
-            console.log("[OpenPanzer] onScenarioLoadFinished hiding start menu")
+            console.log("[OSADA] onScenarioLoadFinished hiding start menu")
             UIBuilder.hideStartMenu()
         }
-        console.log("[OpenPanzer] onScenarioLoadFinished calling setNewScenario")
+        console.log("[OSADA] onScenarioLoadFinished calling setNewScenario")
         ui?.setNewScenario()
     }
 
     fun newCampaign(id: Int, difficulty: Int) {
-        console.log("[OpenPanzer] newCampaign", id, difficulty)
+        console.log("[OSADA] newCampaign", id, difficulty)
+        pendingScenarioBriefing = null
+        pendingScenarioBriefingEnabled = true
         campaign = Campaign(id, difficulty) { onCampaignLoadFinished() }
     }
 
     private fun onCampaignLoadFinished() {
-        console.log("[OpenPanzer] onCampaignLoadFinished")
+        console.log("[OSADA] onCampaignLoadFinished")
         savedCampaignPlayer = null
         removeNonCampaignUnitsFlag = false
         buildCoreUnitsFlag = true
@@ -361,12 +377,53 @@ class Game {
         if (current != null) {
             val scenarioFile = current.scenario as String
             val intro = current.intro as? String
+            pendingScenarioBriefing = resolveScenarioBriefing(current, scenarioFile)
             newScenario(scenarioFile, intro)
         }
     }
 
+    /** Return and consume briefing data for the battle that has just finished loading. */
+    internal fun takeScenarioBriefing(): dynamic {
+        val result = pendingScenarioBriefing
+        pendingScenarioBriefing = null
+        return result
+    }
+
+    /** Whether the currently loaded battle should show its opening briefing. Consumed once. */
+    internal fun takeScenarioBriefingEnabled(): Boolean {
+        val result = pendingScenarioBriefingEnabled
+        pendingScenarioBriefingEnabled = true
+        return result
+    }
+
+    private fun extractScenarioBriefing(data: dynamic): dynamic {
+        if (data == null || data == undefined) return null
+        val briefing = data.briefing
+        if (briefing != null && briefing != undefined) return briefing
+        val dialogue = data.dialogue
+        if (dialogue != null && dialogue != undefined) return dialogue
+        val dialogues = data.dialogues
+        if (dialogues != null && dialogues != undefined) return dialogues
+        return null
+    }
+
+    private fun resolveScenarioBriefing(data: dynamic, scenarioFile: String): dynamic {
+        val embedded = extractScenarioBriefing(data)
+        val resolved = if (embedded != null && embedded != undefined) {
+            embedded
+        } else {
+            CampaignBriefingCatalog.forScenario(scenarioFile)
+        }
+        console.log(
+            "[OSADA] campaign briefing resolved",
+            scenarioFile,
+            resolved != null && resolved != undefined
+        )
+        return resolved
+    }
+
     fun continueCampaign(outcome: String, reason: EndGameType = EndGameType.MOVE_CAPTURE) {
-        console.log("[OpenPanzer] continueCampaign", outcome)
+        console.log("[OSADA] continueCampaign", outcome)
         val player = campaignPlayer ?: return
         player.prestige += campaign!!.getOutcomePrestige(outcome)
         player.addOutcomeToDossier(outcome, scenario!!.name)
@@ -396,7 +453,7 @@ class Game {
 
     fun setCurrentSide() {
         spotSide = if (humanSides == 2) scenario?.map?.currentPlayer?.side ?: 0 else humanSides
-        console.log("[OpenPanzer] setCurrentSide humanSides=$humanSides spotSide=$spotSide currentPlayer.side=${scenario?.map?.currentPlayer?.side}")
+        console.log("[OSADA] setCurrentSide humanSides=$humanSides spotSide=$spotSide currentPlayer.side=${scenario?.map?.currentPlayer?.side}")
     }
 
     /**
@@ -464,7 +521,7 @@ class Game {
     }
 
     fun cleanup() {
-        console.log("[OpenPanzer] cleanup")
+        console.log("[OSADA] cleanup")
         org.osada.ui.WeatherRenderer.stop()
         org.osada.ui.WeatherModel.stop()
         state?.clear()
