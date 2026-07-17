@@ -1,6 +1,8 @@
 package org.osada.ui
 
-import org.osada.*
+import org.osada.GameHolder
+import org.osada.ui.MapZoom.set
+import org.osada.uiSettings
 
 /**
  * Continuous map zoom: scales ONLY the map canvases (via the CSS `zoom` wrapper set up in
@@ -92,8 +94,11 @@ internal object MapZoom {
 
     private fun nextStep(current: Double, direction: Int): Double {
         val sorted = STEPS.sorted()
-        return if (direction > 0) sorted.firstOrNull { it > current + 0.001 } ?: MAX
-        else sorted.lastOrNull { it < current - 0.001 } ?: MIN
+        return if (direction > 0) {
+            sorted.firstOrNull { it > current + 0.001 } ?: MAX
+        } else {
+            sorted.lastOrNull { it < current - 0.001 } ?: MIN
+        }
     }
 
     fun refreshControls() {

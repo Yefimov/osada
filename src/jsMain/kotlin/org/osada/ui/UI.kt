@@ -3,12 +3,17 @@
 package org.osada.ui
 
 import kotlinx.browser.document
-import org.osada.*
-import org.osada.model.*
+import org.osada.CombatLog
+import org.osada.Game
+import org.osada.TerrainType
+import org.osada.TooltipColor
+import org.osada.TooltipStyle
+import org.osada.UnitClass
+import org.osada.model.Cell
+import org.osada.model.EquipmentData
+import org.osada.model.GameUnit
 import org.osada.rules.GameRules
-import kotlin.js.ExperimentalJsExport
-import kotlin.js.JsExport
-import kotlin.js.JsName
+import org.osada.uiSettings
 
 /**
  * Exported UI coordinator. Owns the [Render] instance and the per-side country list, and
@@ -98,8 +103,10 @@ class UI(internal val game: Game) {
         // clickable/visible, just not dead-center.
         val marginX = clientWidth * 0.15
         val marginY = clientHeight * 0.15
-        val inView = screenPos.x >= scrollLeft + marginX && screenPos.x <= scrollLeft + clientWidth - marginX &&
-            screenPos.y >= scrollTop + marginY && screenPos.y <= scrollTop + clientHeight - marginY
+        val inView = screenPos.x >= scrollLeft + marginX &&
+            screenPos.x <= scrollLeft + clientWidth - marginX &&
+            screenPos.y >= scrollTop + marginY &&
+            screenPos.y <= scrollTop + clientHeight - marginY
         return if (inView) true else uiSetUnitOnViewPort(unit)
     }
 
@@ -118,8 +125,7 @@ class UI(internal val game: Game) {
         return true
     }
 
-    fun uiUnitMove(unit: GameUnit, row: Int, col: Int): Boolean =
-        animationOrchestrator.uiUnitMove(unit, row, col)
+    fun uiUnitMove(unit: GameUnit, row: Int, col: Int): Boolean = animationOrchestrator.uiUnitMove(unit, row, col)
 
     fun uiUnitAttack(attacker: GameUnit, defender: GameUnit): Boolean =
         animationOrchestrator.uiUnitAttack(attacker, defender)
@@ -160,18 +166,26 @@ class UI(internal val game: Game) {
                 var color = TooltipColor.ENEMY
                 var style = TooltipStyle.TEXT
                 if (!all && hex.flag != -1 && hex.owner != -1) {
-                    text = if (hex.name.isNotEmpty()) hex.name else if (hex.victorySide != -1) "Objective" else null
+                    text = if (hex.name.isNotEmpty()) {
+                        hex.name
+                    } else if (hex.victorySide != -1) {
+                        "Objective"
+                    } else {
+                        null
+                    }
                     if (!uiSettings.showDetailInfoToolTips && hex.victorySide == -1) text = null
                     // hex.owner is a player id, not a side; comparing directly misreports
                     // ownership color whenever a side has more than one player (pre-existing bug,
                     // same root cause as the sidebar objectives "held" bug this session fixed).
                     if (map.getPlayer(hex.owner).side == side) color = TooltipColor.PLAYER
                     if (hex.terrain == TerrainType.AIRFIELD.value && currentPlayer.airTransports > 0) {
-                        text = "${currentPlayer.airTransports}&nbsp;<span style='font-family: openpanzer-menu;'>&#xe900;</span> "
+                        text =
+                            "${currentPlayer.airTransports}&nbsp;<span style='font-family: osada-menu;'>&#xe900;</span> "
                         style = TooltipStyle.PIN
                     }
                     if (hex.terrain == TerrainType.PORT.value && currentPlayer.navalTransports > 0) {
-                        text = "${currentPlayer.navalTransports}&nbsp;<span style='font-family: openpanzer-menu;'>&#xe901;</span>"
+                        text =
+                            "${currentPlayer.navalTransports}&nbsp;<span style='font-family: osada-menu;'>&#xe901;</span>"
                         style = TooltipStyle.PIN
                     }
                     text?.let {
@@ -184,11 +198,25 @@ class UI(internal val game: Game) {
                     val unitTipId = "gsttu${unit.id}"
                     if (GameRules.unitLowAmmo(unit, 1)) {
                         val pos = render.cellToScreen(r, c, true)
-                        UIBuilder.gameSmallToolTip("No Ammo", pos.x.toInt(), pos.y.toInt(), 0, unitTipId, TooltipStyle.TEXT)
+                        UIBuilder.gameSmallToolTip(
+                            "No Ammo",
+                            pos.x.toInt(),
+                            pos.y.toInt(),
+                            0,
+                            unitTipId,
+                            TooltipStyle.TEXT,
+                        )
                     }
                     if (GameRules.unitLowFuel(unit, 1)) {
                         val pos = render.cellToScreen(r, c, true)
-                        UIBuilder.gameSmallToolTip("No Fuel", pos.x.toInt(), pos.y.toInt(), 0, unitTipId, TooltipStyle.TEXT)
+                        UIBuilder.gameSmallToolTip(
+                            "No Fuel",
+                            pos.x.toInt(),
+                            pos.y.toInt(),
+                            0,
+                            unitTipId,
+                            TooltipStyle.TEXT,
+                        )
                     }
                     // Bad weather silently empties an air unit's attack range (CombatResolver.
                     // airGroundedByWeather) with zero explanation otherwise — reads exactly like a
@@ -202,7 +230,14 @@ class UI(internal val game: Game) {
                         // box sized for "No Ammo"/"No Fuel" — the longer text overflowed it, with
                         // "(Weather)" clipped outside the box. Matches the unit-card badge's own
                         // wording (osadaUcWeather), which carries the full explanation on hover.
-                        UIBuilder.gameSmallToolTip("Grounded", pos.x.toInt(), pos.y.toInt(), 0, "${unitTipId}w", TooltipStyle.TEXT)
+                        UIBuilder.gameSmallToolTip(
+                            "Grounded",
+                            pos.x.toInt(),
+                            pos.y.toInt(),
+                            0,
+                            "${unitTipId}w",
+                            TooltipStyle.TEXT,
+                        )
                     }
                 }
             }

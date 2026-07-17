@@ -1,6 +1,6 @@
 package org.osada.scenario
 
-import org.osada.*
+import org.osada.difficultyModifiers
 import org.w3c.xhr.XMLHttpRequest
 
 class Campaign(val id: Int, val difficulty: Int, val onLoad: () -> Unit) {
@@ -9,6 +9,7 @@ class Campaign(val id: Int, val difficulty: Int, val onLoad: () -> Unit) {
     var name: String = ""
     var country: Int = 0
     var file: String = ""
+
     // true only for imported campaigns whose first scenario gives the human an undeployed reserve
     // pool (forward, rcampdfr): those start with a buy/deploy phase. Others have units pre-placed.
     var deployPhase: Boolean = false
@@ -35,7 +36,9 @@ class Campaign(val id: Int, val difficulty: Int, val onLoad: () -> Unit) {
     private fun loadCampaignData(file: String) {
         val request = XMLHttpRequest()
         request.onload = {
-            if (request.readyState == 4.toShort() && (request.status == 200.toShort() || request.status == 0.toShort())) {
+            if (request.readyState == 4.toShort() &&
+                (request.status == 200.toShort() || request.status == 0.toShort())
+            ) {
                 scenarios = JSON.parse(request.responseText)
                 isLoaded = true
                 onLoad()
@@ -73,13 +76,10 @@ class Campaign(val id: Int, val difficulty: Int, val onLoad: () -> Unit) {
         return null
     }
 
-    fun getOutcomePrestige(outcome: String): Int {
-        return scenarios[currentScenarioIndex].outcome[outcome].prestige as Int
-    }
+    fun getOutcomePrestige(outcome: String): Int = scenarios[currentScenarioIndex].outcome[outcome].prestige as Int
 
-    fun getOutcomeText(outcome: String): String {
-        return scenarios[currentScenarioIndex].outcome[outcome].text as? String ?: "Continue to the next phase."
-    }
+    fun getOutcomeText(outcome: String): String =
+        scenarios[currentScenarioIndex].outcome[outcome].text as? String ?: "Continue to the next phase."
 
     fun getCampaignFlow(): String {
         val sb = StringBuilder()
@@ -90,20 +90,23 @@ class Campaign(val id: Int, val difficulty: Int, val onLoad: () -> Unit) {
             val victory = getScenarioNameFromId(scenarios[i].outcome.victory.goto as Int)
             val briliant = getScenarioNameFromId(scenarios[i].outcome.briliant.goto as Int)
             if (tactical == victory && victory == briliant) {
-                sb.append("- <b>$scenarioName</b><br/>&nbsp;&nbsp;&nbsp;&nbsp;Lose: $lose<br/>&nbsp;&nbsp;&nbsp;&nbsp;Victory: $victory<br/><br/>")
+                sb.append(
+                    "- <b>$scenarioName</b><br/>&nbsp;&nbsp;&nbsp;&nbsp;Lose: $lose<br/>&nbsp;&nbsp;&nbsp;&nbsp;Victory: $victory<br/><br/>",
+                )
             } else {
-                sb.append("- <b>$scenarioName</b><br/>&nbsp;&nbsp;&nbsp;&nbsp;Lose: $lose<br/>&nbsp;&nbsp;&nbsp;&nbsp;Tactical: $tactical<br/>&nbsp;&nbsp;&nbsp;&nbsp;Victory: $victory<br/>&nbsp;&nbsp;&nbsp;&nbsp;Brilliant: $briliant<br/><br/>")
+                sb.append(
+                    "- <b>$scenarioName</b><br/>&nbsp;&nbsp;&nbsp;&nbsp;Lose: $lose<br/>&nbsp;&nbsp;&nbsp;&nbsp;Tactical: $tactical<br/>&nbsp;&nbsp;&nbsp;&nbsp;Victory: $victory<br/>&nbsp;&nbsp;&nbsp;&nbsp;Brilliant: $briliant<br/><br/>",
+                )
             }
         }
         return sb.toString()
     }
 
-    fun getScenarioNameFromId(id: Int): String {
-        return when (id) {
-            255 -> "Defeat (End Campaign)"
-            254 -> "Victory (End Campaign)"
-            else -> ScenarioLoader.getScenarioDataByFileName(scenarios[id].scenario as String)?.get(1) as? String ?: "Unknown"
-        }
+    fun getScenarioNameFromId(id: Int): String = when (id) {
+        255 -> "Defeat (End Campaign)"
+        254 -> "Victory (End Campaign)"
+        else -> ScenarioLoader.getScenarioDataByFileName(scenarios[id].scenario as String)?.get(1) as? String
+            ?: "Unknown"
     }
 
     fun getCampaignData(): Array<dynamic> = scenarios

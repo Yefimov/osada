@@ -4,54 +4,49 @@ package org.osada.ui
  * Canvas rendering styles ported from the legacy `style.js`.
  */
 
-data class HexStyle(
-    val fillColor: String?,
-    val lineColor: String,
-    val lineWidth: Double,
-    val lineJoin: String
-)
+data class HexStyle(val fillColor: String?, val lineColor: String, val lineWidth: Double, val lineJoin: String)
 
 object HexStyles {
     val move = HexStyle(
         fillColor = "rgba(128,128,128,0.5)",
         lineColor = "rgba(0,0,0,0.4)",
         lineWidth = 1.0,
-        lineJoin = "miter"
+        lineJoin = "miter",
     )
 
     val attack = HexStyle(
         fillColor = null,
         lineColor = "rgba(239,0,0,0.8)",
         lineWidth = 3.0,
-        lineJoin = "miter"
+        lineJoin = "miter",
     )
 
     val current = HexStyle(
         fillColor = null,
         lineColor = "rgba(240,240,240,0.8)",
         lineWidth = 3.0,
-        lineJoin = "round"
+        lineJoin = "round",
     )
 
     val generic = HexStyle(
         fillColor = null,
         lineColor = "rgba(39,44,47,0.9)",
         lineWidth = 0.4,
-        lineJoin = "miter"
+        lineJoin = "miter",
     )
 
     val deploy = HexStyle(
         fillColor = "rgba(128,128,128,0.8)",
         lineColor = "rgba(0,0,0,0.4)",
         lineWidth = 1.0,
-        lineJoin = "miter"
+        lineJoin = "miter",
     )
 
     val ownunit = HexStyle(
         fillColor = "rgba(30,144,255,0.3)",
         lineColor = "rgba(0,0,0,0.4)",
         lineWidth = 0.0,
-        lineJoin = "miter"
+        lineJoin = "miter",
     )
 
     fun byName(name: String): HexStyle? = when (name) {
@@ -70,7 +65,7 @@ data class UnitStyle(
     val alliedBox: String,
     val playerText: String,
     val alliedPlayerText: String,
-    val movedUnitText: String
+    val movedUnitText: String,
 )
 
 val unitStyle = UnitStyle(
@@ -78,5 +73,5 @@ val unitStyle = UnitStyle(
     alliedBox = "#808000",
     playerText = "white",
     alliedPlayerText = "#696969",
-    movedUnitText = "#A9A9A9"
+    movedUnitText = "#A9A9A9",
 )

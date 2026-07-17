@@ -1,7 +1,8 @@
 package org.osada.ui
 
 import kotlinx.browser.localStorage
-import org.osada.*
+import org.osada.GameHolder
+import org.osada.uiSettings
 
 /**
  * Builds the right operational sidebar (Task 2): the Grid/Air view toggles, the minimap
@@ -35,8 +36,11 @@ internal object SidebarBuilder {
 
     private fun setCollapsed(collapse: Boolean) {
         val sidebar = byId("osada-sidebar") ?: return
-        if (collapse) sidebar.classList.add("osada-sidebar--collapsed")
-        else sidebar.classList.remove("osada-sidebar--collapsed")
+        if (collapse) {
+            sidebar.classList.add("osada-sidebar--collapsed")
+        } else {
+            sidebar.classList.remove("osada-sidebar--collapsed")
+        }
         localStorage.setItem(COLLAPSE_KEY, if (collapse) "1" else "0")
         if (collapse) HudLog.onSidebarCollapsed() else HudLog.onSidebarExpanded()
     }

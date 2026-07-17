@@ -1,6 +1,7 @@
 package org.osada.model
 
-import org.osada.*
+import org.osada.LeaderType
+import org.osada.PlayerType
 import org.osada.rules.GameRules
 
 /**
@@ -25,24 +26,27 @@ internal class MoveExecutor(private val gameMap: GameMap) {
         if (unit.player?.type == PlayerType.HUMAN_LOCAL) {
             gameMap.undoState.clear()
             gameMap.undoState.unit = unit
-            gameMap.undoState.savedUnit = GameUnit(unit.eqid).apply { copy(unit); setHex(unit.getHex()) }
+            gameMap.undoState.savedUnit = GameUnit(unit.eqid).apply {
+                copy(unit)
+                setHex(unit.getHex())
+            }
         }
 
         var totalCost = 0
         for (i in path.indices) {
             val cell = path[i]
             if (i > 0 && !GameRules.canPassInto(map, unit, cell)) {
-                if (!Leaders.unitHasLeader(unit, LeaderType.BATTLEFIELD_INTELLIGENCE)
-                    && !Leaders.unitHasLeader(unit, LeaderType.SKILLED_ASSAULT)
+                if (!Leaders.unitHasLeader(unit, LeaderType.BATTLEFIELD_INTELLIGENCE) &&
+                    !Leaders.unitHasLeader(unit, LeaderType.SKILLED_ASSAULT)
                 ) {
                     unit.isSurprised = true
                     result.surpriseCell.add(cell)
                 }
                 break
             }
-            if (unit.player?.type == PlayerType.HUMAN_LOCAL
-                || unit.player?.type == PlayerType.AI_SCRIPTED
-                || map[cell.row][cell.col].isSpotted(enemySide)
+            if (unit.player?.type == PlayerType.HUMAN_LOCAL ||
+                unit.player?.type == PlayerType.AI_SCRIPTED ||
+                map[cell.row][cell.col].isSpotted(enemySide)
             ) {
                 result.isVisible = true
                 if (cell is ExtendedCell) cell.isVisible = true
@@ -70,7 +74,8 @@ internal class MoveExecutor(private val gameMap: GameMap) {
         val newlySpotted = GameRules.setSpotRange(gameMap, unit, true)
         gameMap.setMoveRange(unit)
         gameMap.setAttackRange(unit)
-        gameMap.undoState.unit = if (newlySpotted == 0 && !unit.isSurprised && unit.player?.type == PlayerType.HUMAN_LOCAL) unit else null
+        gameMap.undoState.unit =
+            if (newlySpotted == 0 && !unit.isSurprised && unit.player?.type == PlayerType.HUMAN_LOCAL) unit else null
         return result
     }
 

@@ -1,7 +1,7 @@
 package org.osada.ai
 
-import org.osada.*
-import org.osada.model.*
+import org.osada.UnitClass
+import org.osada.model.Cell
 
 /** Tuning constants for reinforce/resupply/purchase decisions. */
 internal const val REINFORCE_STRENGTH_THRESHOLD = 4
@@ -28,8 +28,13 @@ internal val EXPENSIVE_CLASSES = listOf(UnitClass.FIGHTER, UnitClass.TACTICAL_BO
 
 /** Unit classes the AI cycles through for budget purchases. */
 internal val CHEAP_CLASSES = listOf(
-    UnitClass.INFANTRY, UnitClass.INFANTRY, UnitClass.ARTILLERY,
-    UnitClass.ANTI_TANK, UnitClass.TANK, UnitClass.INFANTRY, UnitClass.TANK
+    UnitClass.INFANTRY,
+    UnitClass.INFANTRY,
+    UnitClass.ARTILLERY,
+    UnitClass.ANTI_TANK,
+    UnitClass.TANK,
+    UnitClass.INFANTRY,
+    UnitClass.TANK,
 )
 
 /**
@@ -42,7 +47,8 @@ internal val lossTable = listOf(0, 5, 5, 10, 10, 5, 10, 40, 20, 10, 5, 30, 30, 4
  * Per-class kill reward used when evaluating combat profitability.
  * Index matches [UnitClass.value]; 0 = unknown/unused slot.
  */
-internal val killTable = listOf(0, 50, 25, 30, 10, 10, 5, 150, 150, 10, 50, 100, 100, 150, 50, 50, 50, 100, 150, 50, 50, 50)
+internal val killTable =
+    listOf(0, 50, 25, 30, 10, 10, 5, 150, 150, 10, 50, 100, 100, 150, 50, 50, 50, 100, 150, 50, 50, 50)
 
 /** Result of a single-cell attack evaluation. */
 internal data class AttackResult(val score: Int, val kills: Int)

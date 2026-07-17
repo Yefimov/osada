@@ -1,9 +1,19 @@
 package org.osada.ui
 
 import kotlinx.browser.document
-import org.osada.*
-import org.osada.model.*
+import org.osada.MovMethod
+import org.osada.UNIT_MAX_EXPERIENCE
+import org.osada.UNIT_NAME_MAX_LENGTH
+import org.osada.UnitClass
+import org.osada.model.Equipment
+import org.osada.model.EquipmentData
+import org.osada.model.GameUnit
+import org.osada.model.Leaders
+import org.osada.movMethodNames
 import org.osada.rules.GameRules
+import org.osada.uiSettings
+import org.osada.unitClassNames
+import org.osada.unitTypeNames
 import org.w3c.dom.HTMLInputElement
 
 /**
@@ -13,8 +23,13 @@ import org.w3c.dom.HTMLInputElement
 internal class UnitInfoPanel(private val ui: UI) {
 
     private val contextActionLabels = mapOf(
-        "mount" to "Mount", "embark" to "Embark", "resupply" to "Resupply",
-        "reinforce" to "Reinforce", "overstrength" to "Overstr.", "undo" to "Undo", "sleep" to "Sleep"
+        "mount" to "Mount",
+        "embark" to "Embark",
+        "resupply" to "Resupply",
+        "reinforce" to "Reinforce",
+        "overstrength" to "Overstr.",
+        "undo" to "Undo",
+        "sleep" to "Sleep",
     )
 
     fun buildUnitContext(unit: GameUnit?) {
@@ -32,7 +47,13 @@ internal class UnitInfoPanel(private val ui: UI) {
             return
         }
         var count = 0
-        fun addButton(action: String, glyph: String, title: String, labelOverride: String? = null, extraClass: String = "") {
+        fun addButton(
+            action: String,
+            glyph: String,
+            title: String,
+            labelOverride: String? = null,
+            extraClass: String = "",
+        ) {
             // Labeled action chip (glyph + text) instead of a bare floating glyph button:
             // the player must never guess what a context action does.
             val button = addTag("unit-context", "div")
@@ -50,13 +71,26 @@ internal class UnitInfoPanel(private val ui: UI) {
         if (GameRules.canMount(unit)) {
             // Mount/Dismount is ONE button; its label reflects the unit's current state (spec).
             val label = if (unit.isMounted) "Dismount" else "Mount"
-            addButton("mount", UIBuilder.unitContextButtons["mount"] ?: "[", "Mount/Umount this unit in/from a transport", label)
+            addButton(
+                "mount",
+                UIBuilder.unitContextButtons["mount"] ?: "[",
+                "Mount/Umount this unit in/from a transport",
+                label,
+            )
         }
         if (GameRules.canEmbark(map, unit) || GameRules.canDisembark(map, unit)) {
-            addButton("embark", UIBuilder.unitContextButtons["embark"] ?: "2", "Embark/DisEmbark this unit in/from a air/naval transport")
+            addButton(
+                "embark",
+                UIBuilder.unitContextButtons["embark"] ?: "2",
+                "Embark/DisEmbark this unit in/from a air/naval transport",
+            )
         }
         if (GameRules.canResupply(map, unit)) {
-            addButton("resupply", UIBuilder.unitContextButtons["resupply"] ?: "!", "Resupply Ammo and Fuel for this unit")
+            addButton(
+                "resupply",
+                UIBuilder.unitContextButtons["resupply"] ?: "!",
+                "Resupply Ammo and Fuel for this unit",
+            )
         }
         if (currentPlayer.prestige >= GameRules.calculateUnitCostPerStrength(unit)) {
             if (GameRules.canReinforce(map, unit, false)) {
@@ -68,7 +102,12 @@ internal class UnitInfoPanel(private val ui: UI) {
         }
         if (map.canUndoMove(unit)) {
             // The single rescue action — styled distinctly (brass border, spec).
-            addButton("undo", UIBuilder.unitContextButtons["undo"] ?: "_", "Undo last move", extraClass = "osada-action--undo")
+            addButton(
+                "undo",
+                UIBuilder.unitContextButtons["undo"] ?: "_",
+                "Undo last move",
+                extraClass = "osada-action--undo",
+            )
         }
         if (ui.hasAnyAction(unit)) {
             // Removes the unit from the ready-unit navigator/its count for the rest of this turn
@@ -77,10 +116,11 @@ internal class UnitInfoPanel(private val ui: UI) {
             // (a moved-but-not-fired unit can still be put to sleep).
             val asleep = ui.isUnitAsleep(unit)
             addButton(
-                "sleep", UIBuilder.unitContextButtons["sleep"] ?: "t",
+                "sleep",
+                UIBuilder.unitContextButtons["sleep"] ?: "t",
                 if (asleep) "Wake this unit" else "Put this unit to sleep for the rest of the turn",
                 labelOverride = if (asleep) "Wake" else "Sleep",
-                extraClass = if (asleep) "osada-action--active" else ""
+                extraClass = if (asleep) "osada-action--active" else "",
             )
         }
         if (count > 0) makeVisible("unit-context") else makeHidden("unit-context")
@@ -113,7 +153,9 @@ internal class UnitInfoPanel(private val ui: UI) {
                 if (fuel > 0) parts.add("+$fuel fuel")
                 val message = if (parts.isEmpty()) {
                     if (overStrength) "No overstrength" else "Can't reinforce"
-                } else parts.joinToString(" ")
+                } else {
+                    parts.joinToString(" ")
+                }
                 ui.showAlert(pos.row, pos.col, message, true)
             }
             "undo" -> map.undoLastMove()
@@ -189,7 +231,8 @@ internal class UnitInfoPanel(private val ui: UI) {
 
         byId("uImage")?.style?.backgroundImage = "url(${data.icon})"
         byId("uSmallFlag")?.style?.backgroundPosition = "${-21 * (unit.flag - 1)}px 0px"
-        byId("uFlag")?.style?.backgroundImage = "url('resources/ui/flags/${Equipment.unitedName}/flag_big_${unit.flag}.png')"
+        byId("uFlag")?.style?.backgroundImage =
+            "url('resources/ui/flags/${Equipment.unitedName}/flag_big_${unit.flag}.png')"
         byId("uFlag")?.textContent = Equipment.getCountryName(unit.flag - 1)
         val equipmentLabel = "$ordinal ${data.name} ${unitClassNames[data.uclass]}$coreText$leaderText"
         // A player-given name replaces the composite label on the card; the tooltip keeps the
@@ -214,7 +257,14 @@ internal class UnitInfoPanel(private val ui: UI) {
             }
         }
         byId("uTarget")?.textContent = unitTypeNames[data.target]
-        byId("uMoveType")?.textContent = if (data.uclass <= UnitClass.AIR_DEFENCE.value && data.movmethod == MovMethod.DEEP_NAVAL.value) "Rail Road" else movMethodNames[data.movmethod]
+        byId("uMoveType")?.textContent =
+            if (data.uclass <= UnitClass.AIR_DEFENCE.value &&
+                data.movmethod == MovMethod.DEEP_NAVAL.value
+            ) {
+                "Rail Road"
+            } else {
+                movMethodNames[data.movmethod]
+            }
         byId("uStr")?.textContent = "${unit.strength}/10"
         byId("uFuel")?.innerHTML = fuelStr
         byId("uAmmo")?.innerHTML = ammoDisplay
@@ -246,7 +296,8 @@ internal class UnitInfoPanel(private val ui: UI) {
             val transportBtn = byId("uTransport")
             transportBtn?.className = "osada-slot"
             transportBtn?.innerHTML = if (unit.isMounted) "9" else "8"
-            transportBtn?.title = if (unit.isMounted) "Mounted — click to preview dismounted stats" else "In transport — click to preview mounted stats"
+            transportBtn?.title =
+                if (unit.isMounted) "Mounted — click to preview dismounted stats" else "In transport — click to preview mounted stats"
             val switchMount = !unit.isMounted
             transportBtn?.onclick = { _: org.w3c.dom.events.MouseEvent ->
                 val wasMounted = unit.isMounted
@@ -262,9 +313,11 @@ internal class UnitInfoPanel(private val ui: UI) {
         if (unit.leader >= 0) {
             leaderBtn?.classList?.add("uc-leader-slot--filled")
             val descriptions = Leaders.getUnitLeaderDescriptions(unit)
-            leaderBtn?.title = if (descriptions.isNotEmpty())
+            leaderBtn?.title = if (descriptions.isNotEmpty()) {
                 descriptions.joinToString("\n") { "${it.first}: ${it.second}" }
-            else "Leader"
+            } else {
+                "Leader"
+            }
         } else {
             leaderBtn?.title = "Leader slot — empty"
         }
@@ -293,7 +346,8 @@ internal class UnitInfoPanel(private val ui: UI) {
         byId("osadaUcEnt")?.title = "Entrenchment: $entrenchment"
         val grounded = GameRules.isAir(unit) && GameRules.airGroundedByWeather(unit)
         byId("osadaUcWeather")?.textContent = if (grounded) "⚠" else ""
-        byId("osadaUcWeather")?.title = if (grounded) "Grounded — bad weather prevents air units from attacking this turn" else ""
+        byId("osadaUcWeather")?.title =
+            if (grounded) "Grounded — bad weather prevents air units from attacking this turn" else ""
 
         // Bottom-zone state: an own unit is now showing in the player-card slot.
         if (unit.player?.id == ui.game.scenario?.map?.currentPlayer?.id) {
@@ -327,7 +381,7 @@ internal class UnitInfoPanel(private val ui: UI) {
             done = true
             renameActive = false
             val value = input.value.trim().take(UNIT_NAME_MAX_LENGTH)
-            input.onblur = null   // removing a focused element fires blur; don't re-enter
+            input.onblur = null // removing a focused element fires blur; don't re-enter
             delTag(input)
             nameEl.style.display = ""
             if (commit) unit.customName = value.ifEmpty { null }
@@ -390,12 +444,20 @@ internal class UnitInfoPanel(private val ui: UI) {
 
         byId("uImage")?.style?.backgroundImage = "url(${data.icon})"
         byId("uSmallFlag")?.style?.backgroundPosition = "${-21 * (data.country - 1)}px 0px"
-        byId("uFlag")?.style?.backgroundImage = "url('resources/ui/flags/${Equipment.unitedName}/flag_big_${data.country}.png')"
+        byId("uFlag")?.style?.backgroundImage =
+            "url('resources/ui/flags/${Equipment.unitedName}/flag_big_${data.country}.png')"
         byId("uFlag")?.textContent = Equipment.getCountryName(data.country - 1)
         byId("uName")?.textContent = "${data.name} ${unitClassNames[data.uclass]}"
-        byId("ucRename")?.style?.display = "none"   // catalogue entries aren't renamable
+        byId("ucRename")?.style?.display = "none" // catalogue entries aren't renamable
         byId("uTarget")?.textContent = unitTypeNames[data.target]
-        byId("uMoveType")?.textContent = if (data.uclass <= UnitClass.AIR_DEFENCE.value && data.movmethod == MovMethod.DEEP_NAVAL.value) "Rail Road" else movMethodNames[data.movmethod]
+        byId("uMoveType")?.textContent =
+            if (data.uclass <= UnitClass.AIR_DEFENCE.value &&
+                data.movmethod == MovMethod.DEEP_NAVAL.value
+            ) {
+                "Rail Road"
+            } else {
+                movMethodNames[data.movmethod]
+            }
         byId("uStr")?.textContent = "10/10"
         byId("uFuel")?.innerHTML = fuelStr
         byId("uAmmo")?.innerHTML = ammo.toString()
@@ -456,7 +518,9 @@ internal class UnitInfoPanel(private val ui: UI) {
         val selected = map.currentUnit
         val target = if (selected != null && hex.isAttackSel && !selected.hasFired) {
             hex.getAttackableUnit(selected, uiSettings.airMode)
-        } else null
+        } else {
+            null
+        }
 
         if (selected != null && target != null) {
             val ownSide = map.currentPlayer?.side ?: return

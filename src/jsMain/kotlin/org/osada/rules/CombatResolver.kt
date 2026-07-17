@@ -1,7 +1,22 @@
 package org.osada.rules
 
-import org.osada.*
-import org.osada.model.*
+import org.osada.GameHolder
+import org.osada.LeaderType
+import org.osada.MovMethod
+import org.osada.RoadType
+import org.osada.TerrainType
+import org.osada.UNIT_MAX_EXPERIENCE
+import org.osada.UNIT_RETREAT_THRESHOLD
+import org.osada.UnitClass
+import org.osada.UnitType
+import org.osada.model.Cell
+import org.osada.model.CombatResults
+import org.osada.model.Equipment
+import org.osada.model.GameUnit
+import org.osada.model.Hex
+import org.osada.model.Leaders
+import org.osada.movTable
+import org.osada.unitEntrenchRate
 import kotlin.math.abs
 import kotlin.math.roundToInt
 import kotlin.random.Random
@@ -12,7 +27,7 @@ import kotlin.random.Random
  *
  * The heart of the rules engine, extracted from the former `GameRules` god-object.
  * Depends on [HexGeometry] (distance/rings), [UnitPredicates] (unit classification),
- * [Leaders] and [Equipment]. Faithful port of `openpanzer.js`
+ * [Leaders] and [Equipment]. Faithful port of `osada.js`
  * (`calculateAttackResults` ~line 2333 and the `f`/`attackValue` roll ~line 2029);
  * the cross-indexing and rounding subtleties are documented inline.
  */
@@ -25,17 +40,23 @@ object CombatResolver {
      * rolls are computed against a hit threshold. [attacker]'s strength and class
      * drive the roll; [defender] supplies the resilience leader check.
      */
-    internal fun attackValue(attackPower: Int, defense: Int, attacker: GameUnit, defender: GameUnit, useRandom: Boolean): Int {
+    internal fun attackValue(
+        attackPower: Int,
+        defense: Int,
+        attacker: GameUnit,
+        defender: GameUnit,
+        useRandom: Boolean,
+    ): Int {
         val attackerClass = attacker.unitData().uclass
         var p = (attackPower - defense).toDouble()
         var target = 15
         if (p > 4) p = 4 + (2 * p - 8) / 5
         if (Leaders.unitHasLeader(attacker, LeaderType.OVERWHELMING_ATTACK)) p += 2
         if (Leaders.unitHasLeader(defender, LeaderType.RESILIENCE)) p -= 2
-        if (attackerClass == UnitClass.ARTILLERY.value
-            || attackerClass == UnitClass.LEVEL_BOMBER.value
-            || attackerClass == UnitClass.FORTIFICATION.value
-            || (UnitPredicates.isSea(attacker) && !UnitPredicates.isSea(defender))
+        if (attackerClass == UnitClass.ARTILLERY.value ||
+            attackerClass == UnitClass.LEVEL_BOMBER.value ||
+            attackerClass == UnitClass.FORTIFICATION.value ||
+            (UnitPredicates.isSea(attacker) && !UnitPredicates.isSea(defender))
         ) {
             target = 19
         }
@@ -96,26 +117,47 @@ object CombatResolver {
         var defenderAttack = 0
         var defenderDefense = 0
         when (attackerTarget) {
-            UnitType.AIR.value -> { defenderAttack = defenderData.airatk; defenderDefense = defenderData.airdef }
-            UnitType.SOFT.value -> { defenderAttack = defenderData.softatk; defenderDefense = defenderData.grounddef }
-            UnitType.HARD.value -> { defenderAttack = defenderData.hardatk; defenderDefense = defenderData.grounddef }
+            UnitType.AIR.value -> {
+                defenderAttack = defenderData.airatk
+                defenderDefense = defenderData.airdef
+            }
+            UnitType.SOFT.value -> {
+                defenderAttack = defenderData.softatk
+                defenderDefense = defenderData.grounddef
+            }
+            UnitType.HARD.value -> {
+                defenderAttack = defenderData.hardatk
+                defenderDefense = defenderData.grounddef
+            }
             UnitType.SEA.value -> {
-                defenderAttack = defenderData.navalatk; defenderDefense = defenderData.grounddef
+                defenderAttack = defenderData.navalatk
+                defenderDefense = defenderData.grounddef
                 if (defenderData.uclass == UnitClass.SUBMARINE.value) attackerDefense = attackerData.closedef
             }
         }
         when (defenderTarget) {
-            UnitType.AIR.value -> { attackerAttack = attackerData.airatk; attackerDefense = attackerData.airdef }
-            UnitType.SOFT.value -> { attackerAttack = attackerData.softatk; attackerDefense = attackerData.grounddef }
-            UnitType.HARD.value -> { attackerAttack = attackerData.hardatk; attackerDefense = attackerData.grounddef }
+            UnitType.AIR.value -> {
+                attackerAttack = attackerData.airatk
+                attackerDefense = attackerData.airdef
+            }
+            UnitType.SOFT.value -> {
+                attackerAttack = attackerData.softatk
+                attackerDefense = attackerData.grounddef
+            }
+            UnitType.HARD.value -> {
+                attackerAttack = attackerData.hardatk
+                attackerDefense = attackerData.grounddef
+            }
             UnitType.SEA.value -> {
-                attackerAttack = attackerData.navalatk; attackerDefense = attackerData.grounddef
+                attackerAttack = attackerData.navalatk
+                attackerDefense = attackerData.grounddef
                 if (attackerData.uclass == UnitClass.SUBMARINE.value) defenderDefense = defenderData.closedef
             }
         }
 
-        val closeCombat = (UnitPredicates.isCloseCombatTerrain(dTerrain) || defenderData.uclass == UnitClass.FORTIFICATION.value)
-                && attackerData.uclass == UnitClass.INFANTRY.value
+        val closeCombat =
+            (UnitPredicates.isCloseCombatTerrain(dTerrain) || defenderData.uclass == UnitClass.FORTIFICATION.value) &&
+                attackerData.uclass == UnitClass.INFANTRY.value
         if (closeCombat) {
             defenderDefense = defenderData.closedef
             if (defenderData.uclass == UnitClass.INFANTRY.value) {
@@ -148,16 +190,23 @@ object CombatResolver {
             defenderAttack += 4
         }
 
-        if (UnitPredicates.isAir(attacker) && Leaders.unitHasLeader(attacker, LeaderType.SKILLED_GROUND_ATTACK) && UnitPredicates.isGround(defender)) {
+        if (UnitPredicates.isAir(attacker) &&
+            Leaders.unitHasLeader(attacker, LeaderType.SKILLED_GROUND_ATTACK) &&
+            UnitPredicates.isGround(defender)
+        ) {
             attackerAttack += 4
         }
         if (defenderData.uclass == UnitClass.ARTILLERY.value) defenderDefense += 3
         if (dTerrain == TerrainType.CITY.value) defenderDefense += 4
-        if ((dTerrain == TerrainType.RIVER.value || dTerrain == TerrainType.STREAM.value) && defenderHex.road == RoadType.NONE.value) {
+        if ((dTerrain == TerrainType.RIVER.value || dTerrain == TerrainType.STREAM.value) &&
+            defenderHex.road == RoadType.NONE.value
+        ) {
             attackerAttack += 4
             attackerDefense += 4
         }
-        if ((aTerrain == TerrainType.RIVER.value || aTerrain == TerrainType.STREAM.value) && attackerHex.road == RoadType.NONE.value) {
+        if ((aTerrain == TerrainType.RIVER.value || aTerrain == TerrainType.STREAM.value) &&
+            attackerHex.road == RoadType.NONE.value
+        ) {
             defenderAttack += 4
             defenderDefense += 4
         }
@@ -167,13 +216,13 @@ object CombatResolver {
         if (attackerEntrenchmentIntact && !closeCombat) attackerEntrenchment = attacker.entrenchment
         if (entrenchmentIntact) defenderEntrenchment = defender.entrenchment
 
-        if (Leaders.unitHasLeader(attacker, LeaderType.INFILTRATION_TACTICS)
-            && !Leaders.unitHasLeader(defender, LeaderType.FEROCIOUS_DEFENSE)
+        if (Leaders.unitHasLeader(attacker, LeaderType.INFILTRATION_TACTICS) &&
+            !Leaders.unitHasLeader(defender, LeaderType.FEROCIOUS_DEFENSE)
         ) {
             defenderEntrenchment = 0
         }
-        if (Leaders.unitHasLeader(defender, LeaderType.INFILTRATION_TACTICS)
-            && !Leaders.unitHasLeader(attacker, LeaderType.FEROCIOUS_DEFENSE)
+        if (Leaders.unitHasLeader(defender, LeaderType.INFILTRATION_TACTICS) &&
+            !Leaders.unitHasLeader(attacker, LeaderType.FEROCIOUS_DEFENSE)
         ) {
             attackerEntrenchment = 0
         }
@@ -181,11 +230,11 @@ object CombatResolver {
         attackerDefense += attackerEntrenchment
         defenderDefense += defenderEntrenchment
 
-        if (defenderData.uclass == UnitClass.INFANTRY.value
-            && UnitPredicates.isCloseCombatTerrain(dTerrain)
-            && !closeCombat
-            && attackerData.uclass > UnitClass.INFANTRY.value
-            && attackerData.uclass < UnitClass.GROUND_TRANSPORT.value
+        if (defenderData.uclass == UnitClass.INFANTRY.value &&
+            UnitPredicates.isCloseCombatTerrain(dTerrain) &&
+            !closeCombat &&
+            attackerData.uclass > UnitClass.INFANTRY.value &&
+            attackerData.uclass < UnitClass.GROUND_TRANSPORT.value
         ) {
             // infantry in close terrain attacked by a vehicle: its entrenchment counts twice
             defenderDefense += defenderEntrenchment
@@ -196,16 +245,17 @@ object CombatResolver {
         defenderAttack += defender.experience / 100
         defenderDefense += defender.experience / 100
 
-        if (attackerData.uclass != UnitClass.ARTILLERY.value
-            && attackerData.uclass != UnitClass.FORTIFICATION.value
-            && (attackerData.uclass < UnitClass.SUBMARINE.value || attackerData.uclass > UnitClass.LIGHT_CRUISER.value)
+        if (attackerData.uclass != UnitClass.ARTILLERY.value &&
+            attackerData.uclass != UnitClass.FORTIFICATION.value &&
+            (attackerData.uclass < UnitClass.SUBMARINE.value || attackerData.uclass > UnitClass.LIGHT_CRUISER.value)
         ) {
             val hitsPenalty = 2 * defender.hits
             defenderDefense = if (defenderDefense <= hitsPenalty) 0 else defenderDefense - hitsPenalty
         }
 
-        val antiTankMoved = attackerData.uclass == UnitClass.ANTI_TANK.value && attacker.hasMoved
-                && !Leaders.unitHasLeader(attacker, LeaderType.TANK_KILLER)
+        val antiTankMoved = attackerData.uclass == UnitClass.ANTI_TANK.value &&
+            attacker.hasMoved &&
+            !Leaders.unitHasLeader(attacker, LeaderType.TANK_KILLER)
         if (UnitPredicates.isGround(attacker) && UnitPredicates.isGround(defender) && !closeCombat) {
             if (distance <= 1 || getUnitAttackRange(defender) < distance) {
                 if (!antiTankMoved) attackerDefense += attackerData.rangedefmod / 2
@@ -236,7 +286,9 @@ object CombatResolver {
             attackerAttack /= 2
         }
 
-        if (distance > 1 && !(UnitPredicates.isSea(attacker) && UnitPredicates.isSea(defender) && defenderData.gunrange >= distance)) {
+        if (distance > 1 &&
+            !(UnitPredicates.isSea(attacker) && UnitPredicates.isSea(defender) && defenderData.gunrange >= distance)
+        ) {
             result.defcanfire = false
         }
         if (!canFire(defender, attacker)) {
@@ -248,11 +300,11 @@ object CombatResolver {
             result.losses = attackValue(defenderAttack, attackerDefense, defender, attacker, useRandom)
         }
 
-        if (attackerData.uclass == UnitClass.TANK.value
-            && result.losses <= 1
-            && result.kills >= defender.strength
-            && distance == 1
-            && !attacker.isSurprised
+        if (attackerData.uclass == UnitClass.TANK.value &&
+            result.losses <= 1 &&
+            result.kills >= defender.strength &&
+            distance == 1 &&
+            !attacker.isSurprised
         ) {
             result.isOverrun = true
         }
@@ -262,11 +314,13 @@ object CombatResolver {
         val defenderKillExp = (attackerAttack + 6 - defenderDefense).coerceAtLeast(1)
         val defenderSurviveExp = (attackerDefense + 6 - defenderAttack).coerceAtLeast(1)
 
-        result.atkExpGained = ((attackerKillExp * (defender.strength / 10.0) + attackerSurviveExp) * result.kills).toInt()
+        result.atkExpGained =
+            ((attackerKillExp * (defender.strength / 10.0) + attackerSurviveExp) * result.kills).toInt()
         result.defExpGained = 2 * result.kills
         if (result.defcanfire) {
             result.atkExpGained += 2 * result.losses
-            result.defExpGained += ((defenderKillExp * (attacker.strength / 10.0) + defenderSurviveExp) * result.losses).toInt()
+            result.defExpGained +=
+                ((defenderKillExp * (attacker.strength / 10.0) + defenderSurviveExp) * result.losses).toInt()
         }
 
         val maxAtkExp = UNIT_MAX_EXPERIENCE - attacker.experience
@@ -282,7 +336,13 @@ object CombatResolver {
      * [full] returns the true totals; otherwise only casualties from units visible to
      * the attacking side are reported (fog of war).
      */
-    fun calculateCombatResults(attacker: GameUnit, defender: GameUnit, units: List<GameUnit>, full: Boolean, useRandom: Boolean): CombatResults {
+    fun calculateCombatResults(
+        attacker: GameUnit,
+        defender: GameUnit,
+        units: List<GameUnit>,
+        full: Boolean,
+        useRandom: Boolean,
+    ): CombatResults {
         val result = CombatResults()
         if (attacker == null || defender == null) return result
         val attackerSide = attacker.player?.side ?: return result
@@ -335,12 +395,13 @@ object CombatResolver {
             val range = if (sData.gunrange == 0) 1 else sData.gunrange
             if (HexGeometry.distance(sPos.row, sPos.col, aPos.row, aPos.col) > range) return@filter false
             if (UnitPredicates.isAir(attacker)) {
-                sData.uclass == UnitClass.FLAK.value
-                        || sData.uclass == UnitClass.AIR_DEFENCE.value
-                        || sData.uclass == UnitClass.FIGHTER.value
+                sData.uclass == UnitClass.FLAK.value ||
+                    sData.uclass == UnitClass.AIR_DEFENCE.value ||
+                    sData.uclass == UnitClass.FIGHTER.value
             } else {
                 sData.uclass == UnitClass.ARTILLERY.value
-            } && canInitiateAttack(support, attacker)
+            } &&
+                canInitiateAttack(support, attacker)
         }
     }
 
@@ -387,7 +448,7 @@ object CombatResolver {
     }
 
     /** Air units cannot INITIATE attacks in bad weather (Overcast/Rain/Snow); they may still defend.
-     *  Per the openpanzer manual: Overcast/Raining/Snowing → "Air units can't attack". Internal
+     *  Per the osada manual: Overcast/Raining/Snowing → "Air units can't attack". Internal
      *  (not private): the UI layer needs this too, to explain a silently-empty attack range
      *  instead of leaving the player to guess why a plane "can't shoot" (surfaced via
      *  [GameRules.airGroundedByWeather]). */
@@ -417,18 +478,19 @@ object CombatResolver {
     }
 
     /** Whether a unit losing [current] of [original] strength is past its retreat threshold. */
-    fun isLossOverRetreatThreshold(current: Int, original: Int): Boolean {
-        return (original - current).toDouble() / original >= UNIT_RETREAT_THRESHOLD - (10 - original) / 2.0 / 10
-    }
+    fun isLossOverRetreatThreshold(current: Int, original: Int): Boolean =
+        (original - current).toDouble() / original >= UNIT_RETREAT_THRESHOLD - (10 - original) / 2.0 / 10
 
     /** Whether [defender] should retreat after taking losses (ground-vs-ground only). */
     fun shouldDefenderRetreat(attacker: GameUnit, defender: GameUnit, originalStrength: Int): Boolean {
         if (!UnitPredicates.isGround(attacker) || !UnitPredicates.isGround(defender)) return false
         val defenderClass = defender.unitData().uclass
-        if (defenderClass == UnitClass.ARTILLERY.value
-            || defenderClass == UnitClass.TACTICAL_BOMBER.value
-            || defenderClass == UnitClass.FORTIFICATION.value
-        ) return false
+        if (defenderClass == UnitClass.ARTILLERY.value ||
+            defenderClass == UnitClass.TACTICAL_BOMBER.value ||
+            defenderClass == UnitClass.FORTIFICATION.value
+        ) {
+            return false
+        }
         return isLossOverRetreatThreshold(defender.strength, originalStrength)
     }
 
@@ -436,7 +498,13 @@ object CombatResolver {
      *  [hasRailData] mirrors MovementRules.getMoveRange's guard: a train may only retreat onto
      *  rail once the map actually carries rail data (tools/og-import/add_rails.py) — on any
      *  scenario not yet re-patched it falls back to the pre-existing (unrestricted) check. */
-    fun getRetreatPosition(map: Array<Array<Hex>>?, unit: GameUnit, rows: Int, cols: Int, hasRailData: Boolean = false): Cell? {
+    fun getRetreatPosition(
+        map: Array<Array<Hex>>?,
+        unit: GameUnit,
+        rows: Int,
+        cols: Int,
+        hasRailData: Boolean = false,
+    ): Cell? {
         if (unit == null) return null
         val data = unit.unitData()
         if (data.movpoints == 0) return null
@@ -486,9 +554,15 @@ object CombatResolver {
     fun isEntrenchmentIntact(attacker: GameUnit, defender: GameUnit, terrain: Int): Boolean {
         if (Leaders.unitHasLeader(defender, LeaderType.FEROCIOUS_DEFENSE)) return true
         if (Equipment.ignoresEntrenchment(attacker.eqid)) return false
-        if ((Leaders.unitHasLeader(attacker, LeaderType.INFILTRATION_TACTICS)
-                    || Leaders.unitHasLeader(attacker, LeaderType.STREET_FIGHTER))
-            && (terrain == TerrainType.CITY.value || terrain == TerrainType.ROUGH.value || terrain == TerrainType.PORT.value)
+        if ((
+                Leaders.unitHasLeader(attacker, LeaderType.INFILTRATION_TACTICS) ||
+                    Leaders.unitHasLeader(attacker, LeaderType.STREET_FIGHTER)
+                ) &&
+            (
+                terrain == TerrainType.CITY.value ||
+                    terrain == TerrainType.ROUGH.value ||
+                    terrain == TerrainType.PORT.value
+                )
         ) {
             return false
         }

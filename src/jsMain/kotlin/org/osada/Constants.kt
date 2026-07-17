@@ -1,13 +1,14 @@
 package org.osada
 
-import kotlin.js.JsExport
-import kotlin.js.JsName
-
-// Enums and constants ported from the top of openpanzer.js
+// Enums and constants ported from the top of osada.js
 
 @JsExport
 enum class UnitType(val value: Int) {
-    NONE(-1), SOFT(0), HARD(1), AIR(2), SEA(3)
+    NONE(-1),
+    SOFT(0),
+    HARD(1),
+    AIR(2),
+    SEA(3),
 }
 
 val unitTypeNames = listOf("Soft", "Hard", "Air", "Sea")
@@ -34,14 +35,14 @@ enum class UnitClass(val value: Int) {
     NAVAL_TRANSPORT(18),
     BATTLE_CRUISER(19),
     CRUISER(20),
-    LIGHT_CRUISER(21)
+    LIGHT_CRUISER(21),
 }
 
 val unitClassNames = listOf(
     "No Class", "Infantry", "Tank", "Recon", "Anti Tank", "Flak", "Fortification",
     "Ground Transport", "Artillery", "Air Defence", "Fighter Aircraft", "Tactical Bomber",
     "Level Bomber", "Air Transport", "Submarine", "Destroyer", "Battleship", "Aircraft Carrier",
-    "Naval Transport", "Battle Cruiser", "Cruiser", "Light Cruiser"
+    "Naval Transport", "Battle Cruiser", "Cruiser", "Light Cruiser",
 )
 
 val unitEntrenchRate = listOf(0, 3, 1, 2, 2, 1, 1, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
@@ -59,57 +60,89 @@ enum class RoadType(val value: Int) {
     SOUTH(16),
     SOUTHWEST(32),
     WEST_UNUSED(64),
-    NORTHWEST(128)
+    NORTHWEST(128),
 }
 
 enum class Direction(val value: Int) {
-    S(0), SSE(1), SE(2), ESE(3), E(4), ENE(5), NE(6), NNE(7),
-    N(8), NNW(9), NW(10), WNW(11), W(12), WSW(13), SW(14), SSW(15)
+    S(0),
+    SSE(1),
+    SE(2),
+    ESE(3),
+    E(4),
+    ENE(5),
+    NE(6),
+    NNE(7),
+    N(8),
+    NNW(9),
+    NW(10),
+    WNW(11),
+    W(12),
+    WSW(13),
+    SW(14),
+    SSW(15),
 }
 
 enum class TerrainType(val value: Int) {
-    CLEAR(0), CITY(1), AIRFIELD(2), FOREST(3), BOCAGE(4), HILL(5), MOUNTAIN(6),
-    SAND(7), SWAMP(8), OCEAN(9), RIVER(10), FORTIFICATION(11), PORT(12), STREAM(13),
-    ESCARPMENT(14), IMPASSABLE_RIVER(15), ROUGH(16)
+    CLEAR(0),
+    CITY(1),
+    AIRFIELD(2),
+    FOREST(3),
+    BOCAGE(4),
+    HILL(5),
+    MOUNTAIN(6),
+    SAND(7),
+    SWAMP(8),
+    OCEAN(9),
+    RIVER(10),
+    FORTIFICATION(11),
+    PORT(12),
+    STREAM(13),
+    ESCARPMENT(14),
+    IMPASSABLE_RIVER(15),
+    ROUGH(16),
 }
 
 val terrainNames = listOf(
     "Clear", "City", "Airfield", "Forest", "Bocage", "Hill", "Mountain", "Sand", "Swamp",
-    "Ocean", "River", "Fortification", "Port", "Stream", "Escarpment", "Impassable river", "Rough"
+    "Ocean", "River", "Fortification", "Port", "Stream", "Escarpment", "Impassable river", "Rough",
 )
 
 val terrainEntrenchment = listOf(0, 3, 0, 2, 2, 1, 2, 0, 0, 0, 0, 4, 1, 0, 0, 0, 2)
 val terrainInitiative = listOf(99, 1, 99, 3, 3, 5, 1, 99, 2, 99, 99, 3, 5, 99, 99, 99, 3, 1)
 
 enum class GroundCondition(val value: Int) {
-    DRY(0), FROZEN(1), MUD(2)
+    DRY(0),
+    FROZEN(1),
+    MUD(2),
 }
 
 val groundConditionNames = listOf("Dry", "Frozen", "Mud")
 val groundFontEncoding = listOf("6", "8", "7")
 
 enum class WeatherCondition(val value: Int) {
-    FAIR(0), OVERCAST(1), RAIN(2), SNOW(3)
+    FAIR(0),
+    OVERCAST(1),
+    RAIN(2),
+    SNOW(3),
 }
 
 val weatherConditionNames = listOf("Fair", "Overcast", "Raining", "Snowing")
 val weatherFontEncoding = listOf("4", "5", "1", "2")
 
 /* Image icons (resources/ui/osada/, extracted from the 08_plain_icon_glyphs asset sheet) —
- * replace the openpanzer icon-font glyphs above in OSADA chrome; indexed like the name lists. */
+ * replace the osada icon-font glyphs above in OSADA chrome; indexed like the name lists. */
 val weatherIconFiles = listOf("clear", "overcast", "rain", "snow")
 val groundIconFiles = listOf("dry", "frozen", "mud")
-fun weatherIconImg(atmos: Int, cssClass: String): String =
-    weatherIconFiles.getOrNull(atmos)?.let {
-        "<img class=\"$cssClass\" src=\"resources/ui/osada/ico_weather_$it.png\" alt=\"\">"
-    } ?: ""
-fun groundIconImg(ground: Int, cssClass: String): String =
-    groundIconFiles.getOrNull(ground)?.let {
-        "<img class=\"$cssClass\" src=\"resources/ui/osada/ico_ground_$it.png\" alt=\"\">"
-    } ?: ""
+fun weatherIconImg(atmos: Int, cssClass: String): String = weatherIconFiles.getOrNull(atmos)?.let {
+    "<img class=\"$cssClass\" src=\"resources/ui/osada/ico_weather_$it.png\" alt=\"\">"
+} ?: ""
+fun groundIconImg(ground: Int, cssClass: String): String = groundIconFiles.getOrNull(ground)?.let {
+    "<img class=\"$cssClass\" src=\"resources/ui/osada/ico_ground_$it.png\" alt=\"\">"
+} ?: ""
 
 enum class PlayerSide(val value: Int) {
-    AXIS(0), ALLIES(1)
+    AXIS(0),
+    ALLIES(1),
 }
 
 val sideNames = listOf("Axis", "Allies")
@@ -137,16 +170,17 @@ enum class MovMethod(val value: Int) {
     AMPHIBIOUS(9),
     NAVAL(10),
     ALL_TERRAIN_LEG(11),
+
     // Armored trains (e.g. the Perekop Bronevagons) — confined to hex.rail by
     // MovementRules.getMoveRange's isTrain check, NOT by this row's own table values (see the
     // movTable*[12] comment below). OG's own movement method 12 ("Rail"); the import pipeline
     // used to fold it into WHEELED(2) for lack of a PM equivalent (tools/og-import/csv_to_eqp.py).
-    RAIL(12)
+    RAIL(12),
 }
 
 val movMethodNames = listOf(
     "Tracked", "Half Tracked", "Wheeled", "Leg", "Towed", "Air", "Deep Naval", "Costal",
-    "All Terrain", "Amphibious", "Naval", "Mountain Leg", "Rail"
+    "All Terrain", "Amphibious", "Naval", "Mountain Leg", "Rail",
 )
 
 @JsExport
@@ -155,7 +189,7 @@ enum class PlayerType(val value: Int) {
     HUMAN_NETWORK(1),
     AI_LOCAL(2),
     AI_SERVER(3),
-    AI_SCRIPTED(4)
+    AI_SCRIPTED(4),
 }
 
 enum class ActionType(val value: Int) {
@@ -171,15 +205,20 @@ enum class ActionType(val value: Int) {
     SELECT(9),
     END_TURN(10),
     MESSAGE(11),
-    VIEWPORT(12)
+    VIEWPORT(12),
 }
 
 enum class EmbarkType(val value: Int) {
-    NONE(0), NAVAL(1), AIR_MOBILE(2), AIRBORNE(3)
+    NONE(0),
+    NAVAL(1),
+    AIR_MOBILE(2),
+    AIRBORNE(3),
 }
 
 enum class DifficultyType(val value: Int) {
-    HISTORICAL(0), TACTICAL(1), OPERATIONAL(2)
+    HISTORICAL(0),
+    TACTICAL(1),
+    OPERATIONAL(2),
 }
 
 enum class LeaderType(val value: Int) {
@@ -215,28 +254,30 @@ enum class LeaderType(val value: Int) {
     SKILLED_GROUND_ATTACK(30),
     SKILLED_RECONNAISSANCE(31),
     STREET_FIGHTER(32),
-    SUPERIOR_MANEUVER(33)
+    SUPERIOR_MANEUVER(33),
 }
 
 enum class EndGameType {
-    MOVE_CAPTURE, NO_TURNS_LEFT, NO_ENEMY_LEFT
+    MOVE_CAPTURE,
+    NO_TURNS_LEFT,
+    NO_ENEMY_LEFT,
 }
 
 val endGameLossText = mapOf(
     EndGameType.MOVE_CAPTURE to "Enemy has captured all your objectives !<br>",
     EndGameType.NO_TURNS_LEFT to "You don't have any turns left !<br>",
-    EndGameType.NO_ENEMY_LEFT to "All your units had been destroyed !<br>"
+    EndGameType.NO_ENEMY_LEFT to "All your units had been destroyed !<br>",
 )
 
 val outcomeNames = mapOf(
     "lose" to "Defeat",
     "victory" to "Victory",
     "tactical" to "Tactical Victory",
-    "briliant" to "Brilliant Victory"
+    "briliant" to "Brilliant Victory",
 )
 
 // Movement tables (dry/frozen/mud). 12 legacy movement methods x 18 columns (terrain 0-16 +
-// road at [17]) reference openpanzer-legacy-2.3.14.js exactly (see ConstantsConsistencyTest).
+// road at [17]) reference osada-legacy-2.3.14.js exactly (see ConstantsConsistencyTest).
 // Row 12 (RAIL) is OSADA-added and has no legacy reference: it is intentionally all-255
 // (impassable via this table) because a train's real legality gate is the isTrain + hex.rail
 // check in MovementRules.getMoveRange (and the same-shaped checks in getDisembarkPositions,
@@ -255,7 +296,7 @@ val movTableDry: List<List<Int>> = listOf(
     listOf(1, 1, 1, 2, 4, 2, 254, 1, 3, 254, 3, 1, 1, 2, 255, 255, 2, 1),
     listOf(255, 255, 255, 255, 255, 255, 255, 255, 255, 1, 255, 255, 1, 255, 255, 255, 255, 255),
     listOf(1, 1, 1, 1, 2, 1, 1, 2, 2, 255, 254, 1, 1, 1, 255, 255, 1, 1),
-    listOf(255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255)
+    listOf(255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255),
 )
 
 val movTableFrozen: List<List<Int>> = listOf(
@@ -271,7 +312,7 @@ val movTableFrozen: List<List<Int>> = listOf(
     listOf(1, 1, 1, 2, 4, 3, 254, 1, 3, 254, 2, 2, 1, 2, 255, 255, 3, 1),
     listOf(255, 255, 255, 255, 255, 255, 255, 255, 255, 1, 255, 255, 1, 255, 255, 255, 255, 255),
     listOf(1, 1, 1, 1, 2, 1, 2, 2, 1, 255, 2, 1, 1, 1, 255, 255, 2, 1),
-    listOf(255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255)
+    listOf(255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255),
 )
 
 val movTableMud: List<List<Int>> = listOf(
@@ -287,7 +328,7 @@ val movTableMud: List<List<Int>> = listOf(
     listOf(1, 1, 1, 2, 4, 3, 254, 1, 3, 254, 3, 2, 1, 2, 255, 255, 3, 1),
     listOf(255, 255, 255, 255, 255, 255, 255, 255, 255, 1, 255, 255, 1, 255, 255, 255, 255, 255),
     listOf(2, 1, 1, 1, 3, 1, 3, 2, 1, 255, 254, 2, 1, 1, 255, 255, 3, 1),
-    listOf(255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255)
+    listOf(255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255),
 )
 
 var movTable: List<List<Int>> = movTableDry
@@ -308,10 +349,11 @@ val directionToRadians = listOf(
     3 * kotlin.math.PI / 2,
     4 * kotlin.math.PI / 3,
     5 * kotlin.math.PI / 4,
-    7 * kotlin.math.PI / 6
+    7 * kotlin.math.PI / 6,
 )
 
 const val UNIT_MAX_EXPERIENCE = 500
+
 /** Max length of a player-given unit name (rename feature). */
 const val UNIT_NAME_MAX_LENGTH = 24
 const val UNIT_RETREAT_THRESHOLD = 0.6
@@ -322,6 +364,7 @@ const val SCENARIO_START_PRESTIGE = 2000
 const val PROTOTYPE_MIN_COST = 200
 const val DEBUG_CAMPAIGN = false
 const val DEBUG_AI_MOVES = false
+
 // Bumped to 3.3.x for the eqp-united equipment merge: every eqid/country code was renumbered
 // (see tools/eqp-merge/), so autosaves under the old "3.2" localStorage key namespace must not
 // be picked up by GameStatePersistence.restore() -- they'd reference ids that no longer exist.
@@ -330,7 +373,7 @@ const val NATIVE_PLATFORM = "generic"
 
 val prestigeGains = mapOf(
     "flagCapture" to 50,
-    "objectiveCapture" to 150
+    "objectiveCapture" to 150,
 )
 
 val scoreGains = mapOf(
@@ -344,20 +387,20 @@ val scoreGains = mapOf(
     "casualty" to -5,
     "casualtyCore" to -10,
     "reinforce" to -5,
-    "resupply" to -10
+    "resupply" to -10,
 )
 
 val difficultyModifiers = mapOf(
     0 to DifficultyModifier(0.0, 0.0, 1.0, 1.0),
     1 to DifficultyModifier(0.2, 0.1, 1.2, 0.8),
-    2 to DifficultyModifier(0.5, 0.25, 1.5, 0.5)
+    2 to DifficultyModifier(0.5, 0.25, 1.5, 0.5),
 )
 
 data class DifficultyModifier(
     val startPrestige: Double,
     val turnPrestige: Double,
     val extraTurns: Double,
-    val scoreCoef: Double
+    val scoreCoef: Double,
 )
 
 // UI settings object skeleton
@@ -373,9 +416,11 @@ class UiSettings {
     var hexGrid: Boolean = false
     var showGridTerrain: Boolean = false
     var muteUnitSounds: Boolean = false
+
     // Default 0.5, not 1.0: unit/fire sound clips play at full native volume with no
     // attenuation anywhere (Sound.kt), which was reported as simply too loud.
     var soundVolume: Double = 0.5
+
     // Continuous background loops (weather ambience) get their own level, separate from the
     // discrete unit/fire cues — replaces the old hardcoded soundVolume*0.8 coupling.
     var ambientVolume: Double = 0.4
@@ -392,12 +437,14 @@ class UiSettings {
     var allowZoom: Boolean = false
     var isAI: MutableList<Int> = MutableList(4) { if (it == 0) 0 else 1 }
     var shownEndTurnTip: Boolean = false
+
     // OSADA UX: selecting a unit shows its info panel by default (modern HUD behavior);
     // the Inspect Unit toggle can still hide it.
     var unitInfoVisibility: Boolean = true
     var showInfoToolTips: Boolean = true
     var showDetailInfoToolTips: Boolean = false
     var showHiddenVictoryHexes: Boolean = false
+
     // OSADA: gate the top-bar inline End-Turn confirm (Task 1 state machine); default on.
     var confirmEndTurn: Boolean = true
 

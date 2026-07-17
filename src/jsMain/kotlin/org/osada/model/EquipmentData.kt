@@ -1,7 +1,5 @@
 package org.osada.model
 
-import kotlin.js.JsExport
-import kotlin.js.JsName
 import kotlin.js.Json
 
 @JsExport
@@ -34,6 +32,7 @@ class EquipmentData {
     var ammo: Int = 0
     var attr: Int = 0
     var embark: Int = 0
+
     // 1-based (1=January), matching the OG CSV's own MonthAvail/MonthExpired convention. Default
     // to full-year coverage: any equipment JSON whose parsehints don't include these two fields
     // (PM's own original adlerkorps/pacific sets, never touched by the OG import) behaves exactly

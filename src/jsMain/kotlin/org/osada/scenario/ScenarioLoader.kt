@@ -1,7 +1,11 @@
 package org.osada.scenario
 
-import org.osada.*
-import org.osada.model.*
+import org.osada.GameHolder
+import org.osada.difficultyModifiers
+import org.osada.model.Equipment
+import org.osada.model.GameUnit
+import org.osada.model.Leaders
+import org.osada.model.Player
 import org.osada.rules.GameRules
 import org.w3c.dom.Document
 import org.w3c.dom.Element
@@ -21,7 +25,9 @@ object ScenarioLoader {
         val path = scenarioPath + file + if (noCache) "?_=" + Date().getTime() else ""
         val request = XMLHttpRequest()
         request.onload = { _: org.w3c.dom.events.Event ->
-            if (request.readyState == 4.toShort() && (request.status == 200.toShort() || request.status == 0.toShort())) {
+            if (request.readyState == 4.toShort() &&
+                (request.status == 200.toShort() || request.status == 0.toShort())
+            ) {
                 val doc = DOMParser().parseFromString(request.responseText, "application/xml")
                 loadedScenarios[file] = doc
                 parseScenarioDocument(scenario, doc)
@@ -47,7 +53,9 @@ object ScenarioLoader {
         }
         val difficultyMultiplier = if (GameHolder.instance?.campaign != null) {
             difficultyModifiers[GameHolder.instance?.campaign?.difficulty ?: 0]?.extraTurns ?: 1.0
-        } else 1.0
+        } else {
+            1.0
+        }
 
         scenario.map.rows = mapElement.getAttribute("rows")?.toIntOrNull() ?: 0
         scenario.map.cols = mapElement.getAttribute("cols")?.toIntOrNull() ?: 0
@@ -97,7 +105,8 @@ object ScenarioLoader {
             val rows = kotlin.math.floor(heightRatio).toInt()
             val isLastRowPartial = (heightRatio - rows) in 0.39..0.8
             scenario.map.cols = cols - 1
-            scenario.map.rows = if (rows > 0 && (rows < scenario.map.rows || scenario.map.rows == 0)) rows else scenario.map.rows
+            scenario.map.rows =
+                if (rows > 0 && (rows < scenario.map.rows || scenario.map.rows == 0)) rows else scenario.map.rows
             scenario.map.isLastColPartial = isLastColPartial
             scenario.map.isLastRowPartial = isLastRowPartial
             scenario.map.allocMap()
@@ -110,8 +119,13 @@ object ScenarioLoader {
         val playerElements = doc.getElementsByTagName("player")
         val players = mutableListOf<Player>()
         val minTurnPrestige = if (GameHolder.instance?.campaign != null) {
-            kotlin.math.round(GameHolder.instance!!.campaign!!.startprestige * (difficultyModifiers[GameHolder.instance!!.campaign!!.difficulty]?.turnPrestige ?: 0.0)).toInt()
-        } else 0
+            kotlin.math.round(
+                GameHolder.instance!!.campaign!!.startprestige *
+                    (difficultyModifiers[GameHolder.instance!!.campaign!!.difficulty]?.turnPrestige ?: 0.0),
+            ).toInt()
+        } else {
+            0
+        }
 
         for (i in 0 until playerElements.length) {
             val el = playerElements.item(i) as? Element ?: continue
@@ -126,7 +140,11 @@ object ScenarioLoader {
                 if (v < minTurnPrestige) minTurnPrestige else v
             }?.toMutableList() ?: mutableListOf()
             player.prestige = player.prestigePerTurn.getOrElse(0) { 0 }
-            player.supportCountries = el.getAttribute("support")?.split(", ")?.map { it.toIntOrNull() ?: 0 }?.filter { it > 0 }?.toMutableList() ?: mutableListOf()
+            player.supportCountries =
+                el.getAttribute("support")?.split(", ")?.map {
+                    it.toIntOrNull() ?: 0
+                }?.filter { it > 0 }?.toMutableList()
+                    ?: mutableListOf()
             players.add(player)
         }
 
@@ -214,7 +232,8 @@ object ScenarioLoader {
         return unit
     }
 
-    fun getScenarioDataByFileName(file: String): Array<dynamic>? {
-        return js("scenariolist").unsafeCast<Array<Array<dynamic>>>().find { it[0] == file }
-    }
+    fun getScenarioDataByFileName(file: String): Array<dynamic>? =
+        js("scenariolist").unsafeCast<Array<Array<dynamic>>>().find {
+            it[0] == file
+        }
 }

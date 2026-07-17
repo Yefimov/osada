@@ -1,9 +1,18 @@
 package org.osada.ui
 
 import kotlinx.browser.window
-import org.osada.*
-import org.osada.model.*
+import org.osada.GameHolder
+import org.osada.MovMethod
+import org.osada.UnitClass
+import org.osada.UnitType
+import org.osada.model.Equipment
+import org.osada.model.GameUnit
+import org.osada.movMethodNames
 import org.osada.rules.GameRules
+import org.osada.ui.BottomZoneBuilder.renderEnemyCard
+import org.osada.ui.BottomZoneBuilder.renderForecast
+import org.osada.unitClassNames
+import org.osada.unitTypeNames
 import org.w3c.dom.HTMLElement
 
 /**
@@ -35,7 +44,9 @@ internal object BottomZoneBuilder {
 
     private fun restructurePlayerCard() {
         val root = byId("unit-info") ?: return
-        fun move(id: String, into: HTMLElement) { byId(id)?.let { into.appendChild(it) } }
+        fun move(id: String, into: HTMLElement) {
+            byId(id)?.let { into.appendChild(it) }
+        }
 
         // #unit-info's OWN display is still toggled by makeVisible/makeHidden (inline style),
         // which would fight a stylesheet `display:flex` on the same id (inline style always
@@ -60,7 +71,7 @@ internal object BottomZoneBuilder {
         val rename = addTag(nameLine, "span")
         rename.id = "ucRename"
         rename.className = "osada-rename-btn"
-        rename.innerHTML = "&#9998;"   // ✎
+        rename.innerHTML = "&#9998;" // ✎
         rename.title = "Rename"
         rename.style.display = "none"
         val stars = addTag(nameLine, "span")
@@ -238,13 +249,13 @@ internal object BottomZoneBuilder {
             Triple("ecAHard", "{", "Power vs Hard targets"),
             Triple("ecASoft", "\$", "Power vs Soft targets"),
             Triple("ecAAir", "&", "Power vs Air targets"),
-            Triple("ecANaval", "}", "Power vs Naval targets")
+            Triple("ecANaval", "}", "Power vs Naval targets"),
         ),
         "Defence" to listOf(
             Triple("ecDHard", "5", "Defence vs ground attacker"),
             Triple("ecDAir", "3", "Defence vs air attacker"),
             Triple("ecDClose", "6", "Defence in close combat"),
-            Triple("ecDRange", "7", "Defence in ranged combat")
+            Triple("ecDRange", "7", "Defence in ranged combat"),
         ),
         "Mobility & Recon" to listOf(
             Triple("ecTarget", "`", "Target type"),
@@ -252,8 +263,8 @@ internal object BottomZoneBuilder {
             Triple("ecMovement", "?", "Movement range"),
             Triple("ecGunRange", ">", "Firing range"),
             Triple("ecIni", "|", "Combat initiative"),
-            Triple("ecSpot", "'", "Spotting range")
-        )
+            Triple("ecSpot", "'", "Spotting range"),
+        ),
     )
 
     private fun buildEnemyCardSkeleton() {
@@ -330,8 +341,12 @@ internal object BottomZoneBuilder {
 
         val gunRange = if (data.gunrange == 0) 1 else data.gunrange
         byId("ecTarget")?.textContent = unitTypeNames.getOrNull(data.target) ?: ""
-        byId("ecMoveType")?.textContent = if (data.uclass <= UnitClass.AIR_DEFENCE.value && data.movmethod == MovMethod.DEEP_NAVAL.value)
-            "Rail Road" else movMethodNames.getOrNull(data.movmethod) ?: ""
+        byId("ecMoveType")?.textContent =
+            if (data.uclass <= UnitClass.AIR_DEFENCE.value && data.movmethod == MovMethod.DEEP_NAVAL.value) {
+                "Rail Road"
+            } else {
+                movMethodNames.getOrNull(data.movmethod) ?: ""
+            }
         byId("ecMovement")?.textContent = data.movpoints.toString()
         byId("ecGunRange")?.textContent = gunRange.toString()
         byId("ecIni")?.textContent = data.initiative.toString()

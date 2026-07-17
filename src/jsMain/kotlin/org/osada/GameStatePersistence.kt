@@ -14,15 +14,12 @@ import kotlinx.browser.localStorage
  * [GameStateSerializer] and rebuilds the game via the injected [GameStateRestore]. It
  * holds no serialization or graph-building logic of its own.
  */
-class GameStatePersistence(
-    private val game: Game,
-    private val restorer: GameStateRestore
-) {
+class GameStatePersistence(private val game: Game, private val restorer: GameStateRestore) {
     private val majorVersion: String = VERSION.split(".").take(2).joinToString(".")
-    private val scenarioKey = "openpanzer-scenario-$majorVersion"
-    private val playersKey = "openpanzer-players-$majorVersion"
-    private val settingsKey = "openpanzer-settings-$majorVersion"
-    private val campaignKey = "openpanzer-campaign-$majorVersion"
+    private val scenarioKey = "osada-scenario-$majorVersion"
+    private val playersKey = "osada-players-$majorVersion"
+    private val settingsKey = "osada-settings-$majorVersion"
+    private val campaignKey = "osada-campaign-$majorVersion"
 
     private val loadingState = mutableMapOf<String, dynamic>()
 
@@ -73,41 +70,70 @@ class GameStatePersistence(
     }
 
     fun restore(onSuccess: () -> Unit, onFail: () -> Unit) {
-        console.log("[OpenPanzer] GameState.restore start")
+        console.log("[osada] GameState.restore start")
         var pending = 4
         val check: () -> Unit = {
             pending--
-            console.log("[OpenPanzer] restore check pending:", pending)
+            console.log("[osada] restore check pending:", pending)
             if (pending <= 0) {
                 val scenarioData = loadingState[scenarioKey]
                 val playersData = loadingState[playersKey]
                 val campaignData = loadingState[campaignKey]
                 val settingsData = loadingState[settingsKey]
-                console.log("[OpenPanzer] restore all localStorage reads done; scenarioData!=null:", scenarioData != null, "playersData!=null:", playersData != null, "campaignData!=null:", campaignData != null, "settingsData!=null:", settingsData != null)
+                console.log(
+                    "[osada] restore all localStorage reads done; scenarioData!=null:",
+                    scenarioData != null,
+                    "playersData!=null:",
+                    playersData != null,
+                    "campaignData!=null:",
+                    campaignData != null,
+                    "settingsData!=null:",
+                    settingsData != null,
+                )
                 if (settingsData != null) restorer.applySettings(settingsData)
                 if (scenarioData != null && playersData != null && scenarioData.file != null) {
                     if (!hasAnyUnits(scenarioData, playersData)) {
                         // Stale/empty saved state (e.g. an old Operation Uranus left in localStorage):
                         // no units on the map, in reserve, or in any player's core. Auto-restoring it
                         // dumps the player onto a blank board. Drop it and show the menu instead.
-                        console.log("[OpenPanzer] restore: saved scenario has NO units (stale/empty) -> clearing and showing menu")
+                        console.log(
+                            "[osada] restore: saved scenario has NO units (stale/empty) -> clearing and showing menu",
+                        )
                         clear()
                         onFail()
                     } else {
-                        console.log("[OpenPanzer] restore calling restoreGame for", scenarioData.file)
+                        console.log("[osada] restore calling restoreGame for", scenarioData.file)
                         restorer.restoreGame(scenarioData, playersData, campaignData, onSuccess)
                     }
                 } else {
-                    console.log("[OpenPanzer] restore missing data, calling onFail")
+                    console.log("[osada] restore missing data, calling onFail")
                     onFail()
                 }
             }
         }
-        console.log("[OpenPanzer] restore requesting localStorage keys:", settingsKey, scenarioKey, playersKey, campaignKey)
-        localStorageGet(settingsKey) { loadingState[settingsKey] = it; check() }
-        localStorageGet(scenarioKey) { loadingState[scenarioKey] = it; check() }
-        localStorageGet(playersKey) { loadingState[playersKey] = it; check() }
-        localStorageGet(campaignKey) { loadingState[campaignKey] = it; check() }
+        console.log(
+            "[osada] restore requesting localStorage keys:",
+            settingsKey,
+            scenarioKey,
+            playersKey,
+            campaignKey,
+        )
+        localStorageGet(settingsKey) {
+            loadingState[settingsKey] = it
+            check()
+        }
+        localStorageGet(scenarioKey) {
+            loadingState[scenarioKey] = it
+            check()
+        }
+        localStorageGet(playersKey) {
+            loadingState[playersKey] = it
+            check()
+        }
+        localStorageGet(campaignKey) {
+            loadingState[campaignKey] = it
+            check()
+        }
     }
 
     fun restoreFromString(data: String, onReady: () -> Unit = {}): Boolean {
@@ -119,9 +145,11 @@ class GameStatePersistence(
                 // Pre-eqp-united save: its eqids/country codes are from the old per-efile
                 // numbering and no longer resolve against the merged equipment DB. Reject
                 // rather than load and silently show wrong/missing units.
-                console.error("[OpenPanzer] refusing to load save with fmt=$fmt " +
+                console.error(
+                    "[osada] refusing to load save with fmt=$fmt " +
                         "(need >= ${GameStateSerializer.SAVE_FORMAT_VERSION}): saved before the " +
-                        "equipment merge, its unit ids are no longer valid")
+                        "equipment merge, its unit ids are no longer valid",
+                )
                 return false
             }
             game.cleanup()
@@ -156,20 +184,27 @@ class GameStatePersistence(
     }
 
     private fun localStorageSet(key: String, value: dynamic) {
-        console.log("[OpenPanzer] localStorageSet", key)
+        console.log("[osada] localStorageSet", key)
         localStorage.setItem(key, JSON.stringify(value))
     }
 
     private fun localStorageGet(key: String, callback: (dynamic) -> Unit) {
-        console.log("[OpenPanzer] localStorageGet", key)
+        console.log("[osada] localStorageGet", key)
         val item = localStorage.getItem(key)
         val parsed = if (item != null) JSON.parse(item) else null
-        console.log("[OpenPanzer] localStorageGet", key, "item!=null:", item != null, "parsed type:", js("typeof parsed"))
+        console.log(
+            "[osada] localStorageGet",
+            key,
+            "item!=null:",
+            item != null,
+            "parsed type:",
+            js("typeof parsed"),
+        )
         callback(parsed)
     }
 
     private fun localStorageRemove(key: String) {
-        console.log("[OpenPanzer] localStorageRemove", key)
+        console.log("[osada] localStorageRemove", key)
         localStorage.removeItem(key)
     }
 }

@@ -1,6 +1,7 @@
 package org.osada.model
 
-import org.osada.*
+import org.osada.TerrainType
+import org.osada.UnitClass
 import org.osada.rules.GameRules
 import kotlin.js.json
 
@@ -47,8 +48,12 @@ internal class UnitOperations(private val gameMap: GameMap) {
             if (type > 0) {
                 if (!unit.embark(UnitClass.values().find { it.value == type } ?: return false)) return false
                 when (type) {
-                    UnitClass.AIR_TRANSPORT.value -> unit.player?.airTransports = unit.player?.airTransports?.minus(1) ?: 0
-                    UnitClass.NAVAL_TRANSPORT.value -> unit.player?.navalTransports = unit.player?.navalTransports?.minus(1) ?: 0
+                    UnitClass.AIR_TRANSPORT.value ->
+                        unit.player?.airTransports =
+                            unit.player?.airTransports?.minus(1) ?: 0
+                    UnitClass.NAVAL_TRANSPORT.value ->
+                        unit.player?.navalTransports =
+                            unit.player?.navalTransports?.minus(1) ?: 0
                 }
                 result = true
             }
@@ -196,7 +201,7 @@ internal class UnitOperations(private val gameMap: GameMap) {
             unit.isCore = true
             unit.isDeployed = false
             unit.hasOverstrength = savedUnit.hasOverstrength as? Boolean ?: false
-            unit.customName = savedUnit.customName as? String   // optional key (rename feature)
+            unit.customName = savedUnit.customName as? String // optional key (rename feature)
             unit.player = player
             savedUnit.transport?.let { t ->
                 val teqid = t.eqid as? Int ?: 0

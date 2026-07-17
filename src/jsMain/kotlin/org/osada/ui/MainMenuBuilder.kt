@@ -1,6 +1,6 @@
 package org.osada.ui
 
-import org.osada.*
+import org.osada.GameHolder
 
 /**
  * Builds the full-width in-game TOP BAR (OSADA Stage-3 HUD, Task 1) and wires the buttons that
@@ -34,7 +34,8 @@ internal object MainMenuBuilder {
         observer.id = "osadaObserverBadge"
         observer.className = "osada-tb-observer"
         observer.textContent = "OBSERVER"
-        observer.title = "Observer mode is active (fog of war disabled and/or hidden objectives shown) — affects game balance"
+        observer.title =
+            "Observer mode is active (fog of war disabled and/or hidden objectives shown) — affects game balance"
         observer.style.display = "none"
 
         // --- scenario / turn / date (center-left) ---
@@ -151,7 +152,8 @@ internal object MainMenuBuilder {
         }
 
         val statusBarButton = byId("statusBarButton")
-        statusBarButton?.onclick = { _: org.w3c.dom.events.MouseEvent -> GameHolder.instance?.ui?.toggleUnitsAndEquipmentWindow(false) }
+        statusBarButton?.onclick =
+            { _: org.w3c.dom.events.MouseEvent -> GameHolder.instance?.ui?.toggleUnitsAndEquipmentWindow(false) }
         val unitsBarButton = byId("unitsBarButton")
         unitsBarButton?.onclick = { _: org.w3c.dom.events.MouseEvent ->
             makeHidden("unitsBarButton")

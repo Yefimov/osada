@@ -1,8 +1,11 @@
 package org.osada.ui
 
-import org.osada.*
-import org.osada.model.*
+import org.osada.GameHolder
+import org.osada.TerrainType
+import org.osada.model.Cell
+import org.osada.model.GameUnit
 import org.osada.rules.GameRules
+import org.osada.uiSettings
 
 /**
  * Top-level map painter: clears and redraws hexes, grid, deploy/move/attack overlays,
@@ -15,7 +18,7 @@ internal class MapRenderer(
     private val rc: RenderContext,
     private val unitRenderer: UnitRenderer,
     private val overlayRenderer: OverlayRenderer,
-    private val cursorRenderer: CursorRenderer
+    private val cursorRenderer: CursorRenderer,
 ) {
 
     /** Полный redraw всей карты (используется при старте, ресайзе и т.д.) */
@@ -52,11 +55,12 @@ internal class MapRenderer(
         // When deploying an AIRCRAFT, airfields are valid deploy targets even outside the deploy
         // zone (OG rule, already honoured on click in MapInputController). Highlight them too — but
         // only for aircraft, so ground units don't see airfields lit up. Mirrors selectedDeployUnitIsAir().
-        val airDeploySelected = deployMode && run {
-            val index = byId("eqUserSel")?.asDynamic()?.deployunit as? Int ?: -1
-            val unit = if (index >= 0) q.currentPlayer?.getCoreUnitList()?.getOrNull(index) else null
-            unit != null && GameRules.isAir(unit)
-        }
+        val airDeploySelected = deployMode &&
+            run {
+                val index = byId("eqUserSel")?.asDynamic()?.deployunit as? Int ?: -1
+                val unit = if (index >= 0) q.currentPlayer?.getCoreUnitList()?.getOrNull(index) else null
+                unit != null && GameRules.isAir(unit)
+            }
 
         val c1 = rc.cellToScreen(clearBounds.srow, clearBounds.scol, false)
         val c2 = rc.cellToScreen(clearBounds.erow, clearBounds.ecol, false)
@@ -75,8 +79,11 @@ internal class MapRenderer(
             val spotSide = GameHolder.instance?.spotSide ?: 0
             ctx.save()
             ctx.fillStyle = "rgba(20,24,28,0.38)"
-            if (radius < 0) ctx.fillRect(0.0, 0.0, rc.mapWidth, rc.mapHeight + 65.0)
-            else ctx.fillRect(c1.x, c1.y, c2.x - c1.x, c2.y - c1.y)
+            if (radius < 0) {
+                ctx.fillRect(0.0, 0.0, rc.mapWidth, rc.mapHeight + 65.0)
+            } else {
+                ctx.fillRect(c1.x, c1.y, c2.x - c1.x, c2.y - c1.y)
+            }
             // Erase the veil over SEEN hexes. The erase must be FULLY opaque: destination-out removes
             // dst alpha in proportion to src alpha, so a translucent fill here would only half-erase
             // and leave seen terrain darkened. Use solid black (only alpha matters for destination-out).
@@ -138,12 +145,16 @@ internal class MapRenderer(
                 // -1 must be excluded explicitly) is a legal out-of-zone deploy target; previously
                 // this highlighted (and click-to-deploy accepted) any airfield on the map, enemy's
                 // included.
-                val friendlyAirfield = airDeploySelected && hex.terrain == TerrainType.AIRFIELD.value
-                    && hex.owner != -1 && q.getPlayer(hex.owner).side == q.currentPlayer?.side
-                if (deployMode && !deployOccupied && (
-                        (hex.isDeployment != -1 && q.getPlayer(hex.isDeployment).side == q.currentPlayer?.side)
-                        || friendlyAirfield
-                    )
+                val friendlyAirfield = airDeploySelected &&
+                    hex.terrain == TerrainType.AIRFIELD.value &&
+                    hex.owner != -1 &&
+                    q.getPlayer(hex.owner).side == q.currentPlayer?.side
+                if (deployMode &&
+                    !deployOccupied &&
+                    (
+                        (hex.isDeployment != -1 && q.getPlayer(hex.isDeployment).side == q.currentPlayer?.side) ||
+                            friendlyAirfield
+                        )
                 ) {
                     rc.drawHex(rc.hexesCtx, x, y, hexStyles["deploy"])
                 }
@@ -174,7 +185,7 @@ internal class MapRenderer(
                             rc.A * flag, 0.0, rc.A, rc.O,
                             fx, fy,
                             scale * rc.S,
-                            scale * rc.S / (rc.A / rc.O)
+                            scale * rc.S / (rc.A / rc.O),
                         )
                         rc.hexesCtx.globalAlpha = 1.0
                     }
@@ -188,10 +199,13 @@ internal class MapRenderer(
 
                     /* Primary unit (!airMode) – sprite only */
                     val primary = hex.getUnit(!airMode)
-                    if (primary != null && !primary.hasAnimation
-                        && (hex.isSpotted(GameHolder.instance?.spotSide ?: 0)
-                                || primary.tempSpotted
-                                || primary.player?.side == GameHolder.instance?.spotSide)
+                    if (primary != null &&
+                        !primary.hasAnimation &&
+                        (
+                            hex.isSpotted(GameHolder.instance?.spotSide ?: 0) ||
+                                primary.tempSpotted ||
+                                primary.player?.side == GameHolder.instance?.spotSide
+                            )
                     ) {
                         if (markOwnUnits && primary.player?.id == q.currentPlayer?.id) {
                             rc.drawHex(rc.hexesCtx, x, y, hexStyles["ownunit"])
@@ -201,10 +215,13 @@ internal class MapRenderer(
 
                     /* Secondary unit (airMode) – sprite + stats */
                     val secondary = hex.getUnit(airMode)
-                    if (secondary != null && !secondary.hasAnimation
-                        && (hex.isSpotted(GameHolder.instance?.spotSide ?: 0)
-                                || secondary.tempSpotted
-                                || secondary.player?.side == GameHolder.instance?.spotSide)
+                    if (secondary != null &&
+                        !secondary.hasAnimation &&
+                        (
+                            hex.isSpotted(GameHolder.instance?.spotSide ?: 0) ||
+                                secondary.tempSpotted ||
+                                secondary.player?.side == GameHolder.instance?.spotSide
+                            )
                     ) {
                         if (airMode && hex.airunit != null) {
                             rc.drawHex(rc.hexesCtx, x, y, hexStyles["airunit"])

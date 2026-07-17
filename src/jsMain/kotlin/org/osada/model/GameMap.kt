@@ -1,9 +1,12 @@
 package org.osada.model
 
-import org.osada.*
+import org.osada.CombatLog
+import org.osada.GameHolder
+import org.osada.PlayerType
+import org.osada.RoadType
+import org.osada.TerrainType
+import org.osada.UnitClass
 import org.osada.rules.GameRules
-import kotlin.js.JsExport
-import kotlin.js.JsName
 
 /**
  * Hex-grid model and unit/player registry. Owns the grid state, selection ranges, and turn
@@ -202,8 +205,11 @@ class GameMap {
         }.toMutableList()
         val index = sameSideUnits.indexOf(unit)
         if (index == -1) return unit
-        val newIndex = if (direction > 0) (index + 1) % sameSideUnits.size
-        else (index - 1 + sameSideUnits.size) % sameSideUnits.size
+        val newIndex = if (direction > 0) {
+            (index + 1) % sameSideUnits.size
+        } else {
+            (index - 1 + sameSideUnits.size) % sameSideUnits.size
+        }
         return sameSideUnits[newIndex]
     }
 
@@ -226,8 +232,7 @@ class GameMap {
 
     fun getPlayer(id: Int): Player = if (id in players.indices) players[id] else players[0]
 
-    fun getPlayersByCountry(country: Int): Array<Player> =
-        players.filter { it.country == country }.toTypedArray()
+    fun getPlayersByCountry(country: Int): Array<Player> = players.filter { it.country == country }.toTypedArray()
 
     fun getCountriesBySide(side: Int): Array<Int> {
         val result = mutableListOf<Int>()
@@ -240,7 +245,9 @@ class GameMap {
 
     // ---- Selection & range management ----
 
-    fun setCurrentUnit(unit: GameUnit?) { currentUnit = unit }
+    fun setCurrentUnit(unit: GameUnit?) {
+        currentUnit = unit
+    }
 
     fun delCurrentUnit() {
         currentUnit?.let { if (it.carrier < 0) it.toggleEmbark() }
@@ -369,8 +376,12 @@ class GameMap {
 
     // ---- Delegation: combat (CombatApplication) ----
 
-    fun attackUnit(attacker: GameUnit, defender: GameUnit, supportFire: Boolean, isOverrun: Boolean = false): CombatResults =
-        combatApplication.attackUnit(attacker, defender, supportFire, isOverrun)
+    fun attackUnit(
+        attacker: GameUnit,
+        defender: GameUnit,
+        supportFire: Boolean,
+        isOverrun: Boolean = false,
+    ): CombatResults = combatApplication.attackUnit(attacker, defender, supportFire, isOverrun)
 
     fun retreatUnit(unit: GameUnit, to: Cell): MovementResults = combatApplication.retreatUnit(unit, to)
 
@@ -418,15 +429,13 @@ class GameMap {
 
     fun resupplyUnit(unit: GameUnit): Supply = unitOperations.resupplyUnit(unit)
 
-    fun reinforceUnit(unit: GameUnit, overStrength: Boolean): dynamic =
-        unitOperations.reinforceUnit(unit, overStrength)
+    fun reinforceUnit(unit: GameUnit, overStrength: Boolean): dynamic = unitOperations.reinforceUnit(unit, overStrength)
 
     fun buildCoreUnitList(player: Player) = unitOperations.buildCoreUnitList(player)
 
     fun undeployCoreUnits(player: Player) = unitOperations.undeployCoreUnits(player)
 
-    fun restoreCoreUnitList(player: Player, saved: List<dynamic>) =
-        unitOperations.restoreCoreUnitList(player, saved)
+    fun restoreCoreUnitList(player: Player, saved: List<dynamic>) = unitOperations.restoreCoreUnitList(player, saved)
 
     fun removeNonCampaignUnits(player: Player) = unitOperations.removeNonCampaignUnits(player)
 }

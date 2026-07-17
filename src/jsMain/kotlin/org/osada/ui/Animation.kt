@@ -8,12 +8,7 @@ import kotlin.random.Random
  * An animation frame descriptor.  Mirrors the plain object created by the
  * legacy `animationSprite()` helper.
  */
-data class Sprite(
-    val image: dynamic,
-    val width: Int,
-    val frames: Int,
-    val sound: SoundSprite
-)
+data class Sprite(val image: dynamic, val width: Int, val frames: Int, val sound: SoundSprite)
 
 /**
  * Factory that returns a randomised sprite variant each time it is invoked,
@@ -22,7 +17,7 @@ data class Sprite(
  */
 class AnimationSprite(
     files: List<Triple<String, Int, Int>>, // path, frames, width
-    soundName: String? = null
+    soundName: String? = null,
 ) {
     private val sprites: MutableList<Sprite> = mutableListOf()
     private val sound: SoundSprite = resolveSound(soundName)
@@ -35,9 +30,7 @@ class AnimationSprite(
         }
     }
 
-    operator fun invoke(): Sprite {
-        return sprites[Random.nextInt(sprites.size)]
-    }
+    operator fun invoke(): Sprite = sprites[Random.nextInt(sprites.size)]
 }
 
 private fun resolveSound(name: String?): SoundSprite = when (name) {
@@ -60,19 +53,28 @@ private fun resolveSound(name: String?): SoundSprite = when (name) {
 }
 
 object Animations {
-    val explosion = AnimationSprite(listOf(
-        Triple("resources/animations/explosions.png", 12, 120),
-        Triple("resources/animations/explosions2.png", 12, 120),
-        Triple("resources/animations/explosions3.png", 12, 120)
-    ), "explosion")
+    val explosion = AnimationSprite(
+        listOf(
+            Triple("resources/animations/explosions.png", 12, 120),
+            Triple("resources/animations/explosions2.png", 12, 120),
+            Triple("resources/animations/explosions3.png", 12, 120),
+        ),
+        "explosion",
+    )
 
-    val gun = AnimationSprite(listOf(
-        Triple("resources/animations/fire-gun.png", 5, 150)
-    ), "gun")
+    val gun = AnimationSprite(
+        listOf(
+            Triple("resources/animations/fire-gun.png", 5, 150),
+        ),
+        "gun",
+    )
 
-    val smallgun = AnimationSprite(listOf(
-        Triple("resources/animations/fire-smallgun.png", 7, 80)
-    ), "smallgun")
+    val smallgun = AnimationSprite(
+        listOf(
+            Triple("resources/animations/fire-smallgun.png", 7, 80),
+        ),
+        "smallgun",
+    )
 }
 
 private val animationFilesByName: Map<String, AnimationSprite> = mapOf(
@@ -90,7 +92,10 @@ private val animationFilesByName: Map<String, AnimationSprite> = mapOf(
     "submarine" to AnimationSprite(listOf(Triple("resources/animations/fire-gun.png", 5, 150)), "submarine"),
     "smallShip" to AnimationSprite(listOf(Triple("resources/animations/fire-gun.png", 5, 150)), "smallShip"),
     "bigShip" to AnimationSprite(listOf(Triple("resources/animations/fire-gun.png", 5, 150)), "bigShip"),
-    "fortification" to AnimationSprite(listOf(Triple("resources/animations/fire-smallgun.png", 7, 80)), "fortification")
+    "fortification" to AnimationSprite(
+        listOf(Triple("resources/animations/fire-smallgun.png", 7, 80)),
+        "fortification",
+    ),
 )
 
 /**
@@ -119,7 +124,7 @@ val attackAnimationByClass = listOf(
     null,
     "bigShip",
     "bigShip",
-    "smallShip"
+    "smallShip",
 )
 
 fun getAnimationSprite(key: String): AnimationSprite? = animationFilesByName[key]
@@ -135,7 +140,7 @@ class Animation(
     private val y: Int,
     private val sprite: Sprite,
     private val rotate: Double = 0.0,
-    private val clearByComposite: Boolean = false
+    private val clearByComposite: Boolean = false,
 ) {
     private var intervalId: Int = -1
     private var frame: Int = 0
@@ -177,7 +182,7 @@ class Animation(
             sprite.width * f, 0,
             sprite.width, h,
             -sprite.width / 2.0, -h / 2.0,
-            sprite.width, h
+            sprite.width, h,
         )
         ctx.restore()
     }
@@ -205,7 +210,7 @@ class AnimationChain {
             animations[index].start()
             window.setTimeout(
                 { start(callback) },
-                animations[index].duration + 500
+                animations[index].duration + 500,
             )
             index++
         } else {

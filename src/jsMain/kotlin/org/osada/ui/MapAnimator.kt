@@ -1,9 +1,10 @@
 package org.osada.ui
 
 import kotlinx.browser.window
-import org.osada.*
-import org.osada.model.*
+import org.osada.model.GameUnit
+import org.osada.model.MovementResults
 import org.osada.rules.GameRules
+import org.osada.uiSettings
 import kotlin.math.abs
 
 /**
@@ -12,10 +13,7 @@ import kotlin.math.abs
  * `Render` god-class; owns the [AnimationChain] and renders moving sprites via
  * [UnitRenderer], using geometry/canvases from the shared [RenderContext].
  */
-internal class MapAnimator(
-    private val rc: RenderContext,
-    private val unitRenderer: UnitRenderer
-) {
+internal class MapAnimator(private val rc: RenderContext, private val unitRenderer: UnitRenderer) {
     private val animationChain = AnimationChain()
 
     fun runAnimation(callback: dynamic) {
@@ -30,9 +28,10 @@ internal class MapAnimator(
         val y = (pos.y - ((sprite.image.height as? Number)?.toDouble() ?: 0.0) / 2.0 + rc.v).toInt()
         val anim = Animation(
             rc.cursorCtx,
-            x, y,
+            x,
+            y,
             sprite,
-            directionToRadians[direction]
+            directionToRadians[direction],
         )
         animationChain.add(anim)
         return true

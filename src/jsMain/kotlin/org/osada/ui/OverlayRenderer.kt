@@ -1,6 +1,7 @@
 package org.osada.ui
 
-import org.osada.model.*
+import org.osada.model.GameMap
+import org.osada.model.Hex
 
 /**
  * Draws hex flags and victory-hex markers. Extracted from the former `Render`

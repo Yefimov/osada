@@ -1,9 +1,14 @@
 package org.osada.ui
 
 import kotlinx.browser.document
-import org.osada.*
-import org.osada.model.*
+import org.osada.GameHolder
+import org.osada.model.Cell
+import org.osada.model.GameMap
+import org.osada.model.GameUnit
+import org.osada.model.Hex
 import org.osada.rules.GameRules
+import org.osada.ui.AttackRingBuilder.MEASURED_HOVER_SAFE
+import org.osada.uiSettings
 
 /**
  * Task 6: red hex-contour rings on enemy units attackable by the currently selected own unit.
@@ -45,9 +50,11 @@ internal object AttackRingBuilder {
         container = div
     }
 
-    private fun anyModalOpen(): Boolean =
-        isVisible("equipment") || isVisible("smSettings") || isVisible("startmenu") ||
-            isVisible("combatLog") || isVisible("dossier")
+    private fun anyModalOpen(): Boolean = isVisible("equipment") ||
+        isVisible("smSettings") ||
+        isVisible("startmenu") ||
+        isVisible("combatLog") ||
+        isVisible("dossier")
 
     /** Clears all rings — called on deselection, end of turn, and modal open (spec). */
     fun clear() {
@@ -75,7 +82,10 @@ internal object AttackRingBuilder {
         // which never calls refresh() itself, so clearing unconditionally here costs nothing there.
         hoverCache.clear()
         cacheOwnerUnitId = unit.id
-        val pos = unit.getPos() ?: run { clear(); return }
+        val pos = unit.getPos() ?: run {
+            clear()
+            return
+        }
         val targets = attackableCellsFrom(map, unit, pos.row, pos.col)
         paint(targets)
     }

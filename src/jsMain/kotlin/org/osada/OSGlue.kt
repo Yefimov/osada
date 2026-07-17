@@ -1,10 +1,13 @@
 package org.osada
 
+import org.osada.OSGlue.diskloadHTML
+
+
 object OSGlue {
     var diskloadHTML: String = ""
 
     /** Just the hidden `<input type=file>` (desktop) or empty (mobile, where load goes through
-     *  the native `openpanzer://` scheme on click). Lets the Save/Load screen compose its own
+     *  the native `osada://` scheme on click). Lets the Save/Load screen compose its own
      *  button markup instead of embedding the input mid-text like [diskloadHTML] does — that
      *  inline input was what broke the button's text flow ("LOAD FROM" / "DISK" fragments). */
     var diskloadInputHTML: String = ""
@@ -14,7 +17,8 @@ object OSGlue {
         if (NATIVE_PLATFORM == "ios" || NATIVE_PLATFORM == "android") {
             diskloadHTML = "Load from Disk"
             diskloadInputHTML = ""
-            canvasErrorMsg = "<b>Couldn't create game surface.</b> <br/>This usually means that your device doesn't allow game surface to be created with dimensions over a certain limit."
+            canvasErrorMsg =
+                "<b>Couldn't create game surface.</b> <br/>This usually means that your device doesn't allow game surface to be created with dimensions over a certain limit."
         } else {
             diskloadHTML = "Load from Disk <input id='diskloadfile' type='file'/>"
             diskloadInputHTML = "<input id='diskloadfile' type='file'/>"
@@ -32,7 +36,7 @@ object OSGlue {
 
     fun diskload() {
         if (NATIVE_PLATFORM == "ios" || NATIVE_PLATFORM == "android") {
-            js("window.location = 'openpanzer://loadfromdisk'")
+            js("window.location = 'osada://loadfromdisk'")
         }
     }
 
@@ -50,7 +54,7 @@ object OSGlue {
 
     fun disksave(fileName: String) {
         if (NATIVE_PLATFORM == "ios" || NATIVE_PLATFORM == "android") {
-            js("window.location = 'openpanzer://savetodisk/' + fileName")
+            js("window.location = 'osada://savetodisk/' + fileName")
         } else {
             val data = GameHolder.instance?.state?.exportGameState() ?: ""
             val element = js("document.getElementById('savedata')")

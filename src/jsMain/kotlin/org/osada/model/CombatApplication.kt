@@ -1,7 +1,11 @@
 package org.osada.model
 
-import org.osada.*
+import org.osada.CombatLog
+import org.osada.LeaderType
+import org.osada.UnitClass
+import org.osada.prestigeGains
 import org.osada.rules.GameRules
+import org.osada.scoreGains
 import kotlin.js.json
 
 /**
@@ -12,7 +16,12 @@ import kotlin.js.json
  */
 internal class CombatApplication(private val gameMap: GameMap) {
 
-    fun attackUnit(attacker: GameUnit, defender: GameUnit, supportFire: Boolean, isOverrun: Boolean = false): CombatResults {
+    fun attackUnit(
+        attacker: GameUnit,
+        defender: GameUnit,
+        supportFire: Boolean,
+        isOverrun: Boolean = false,
+    ): CombatResults {
         val result = CombatResults()
         if (attacker == null || defender == null) return result
         gameMap.undoState.unit = null
@@ -28,8 +37,9 @@ internal class CombatApplication(private val gameMap: GameMap) {
             defender.facing = GameRules.getDirection(to.row, to.col, from.row, from.col) ?: defender.facing
         }
 
-        if (defender.isMounted && !defender.isSurprised
-            && defender.unitData(true).uclass == UnitClass.INFANTRY.value
+        if (defender.isMounted &&
+            !defender.isSurprised &&
+            defender.unitData(true).uclass == UnitClass.INFANTRY.value
         ) {
             gameMap.unmountUnitHandler(defender)
         }
@@ -53,9 +63,25 @@ internal class CombatApplication(private val gameMap: GameMap) {
         if (!supportFire) gameMap.delAttackSel()
 
         attacker.player?.updateScore(scoreGains["damage"] ?: 0, combatResult.kills)
-        attacker.player?.updateScore(if (attacker.isCore) scoreGains["casualtyCore"] ?: 0 else scoreGains["casualty"] ?: 0, combatResult.losses)
+        attacker.player?.updateScore(
+            if (attacker.isCore) {
+                scoreGains["casualtyCore"] ?: 0
+            } else {
+                scoreGains["casualty"]
+                    ?: 0
+            },
+            combatResult.losses,
+        )
         defender.player?.updateScore(scoreGains["damage"] ?: 0, combatResult.losses)
-        defender.player?.updateScore(if (defender.isCore) scoreGains["casualtyCore"] ?: 0 else scoreGains["casualty"] ?: 0, combatResult.kills)
+        defender.player?.updateScore(
+            if (defender.isCore) {
+                scoreGains["casualtyCore"] ?: 0
+            } else {
+                scoreGains["casualty"]
+                    ?: 0
+            },
+            combatResult.kills,
+        )
 
         val atkLeader = Leaders.generateLeaderWithChance(attacker, combatResult.atkExpGained)
         if (atkLeader != -1) {

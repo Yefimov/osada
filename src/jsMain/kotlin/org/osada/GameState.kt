@@ -2,9 +2,6 @@
 
 package org.osada
 
-import kotlin.js.JsExport
-import kotlin.js.JsName
-
 /**
  * Save/load entry point exposed to JavaScript (`window.game.state`).
  *

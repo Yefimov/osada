@@ -1,14 +1,27 @@
 package org.osada.ui
 
 import kotlinx.browser.document
-import org.osada.*
-import org.osada.model.*
+import org.osada.CombatLog
+import org.osada.LeaderType
+import org.osada.PlayerType
+import org.osada.UnitClass
+import org.osada.groundConditionNames
+import org.osada.groundIconImg
+import org.osada.model.Cell
+import org.osada.model.Equipment
+import org.osada.model.GameMap
+import org.osada.model.Hex
+import org.osada.model.Leaders
+import org.osada.outcomeNames
+import org.osada.prestigeGains
+import org.osada.terrainNames
+import org.osada.uiSettings
+import org.osada.weatherConditionNames
+import org.osada.weatherIconImg
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.Event
 import org.w3c.dom.events.MouseEvent
 import kotlin.math.roundToInt
-import org.osada.CombatLog
-import org.osada.uiSettings
 
 /**
  * The "Turn Report" window (`#combatLog`): a proper window frame (header + summary stat tiles +
@@ -91,8 +104,11 @@ object UICombatLog {
         // Teaser-mode marker: attachGroup's header click reads it (group headers expand the
         // teaser to the full report instead of collapsing — a collapse inside a 220px clipped
         // strip isn't a meaningful interaction anyway; user request).
-        if (fromStatusBar) logContainer.classList.remove("osada-tr--teaser")
-        else logContainer.classList.add("osada-tr--teaser")
+        if (fromStatusBar) {
+            logContainer.classList.remove("osada-tr--teaser")
+        } else {
+            logContainer.classList.add("osada-tr--teaser")
+        }
         val expandButton = if (!fromStatusBar) buildExtendButton(feed) else null
 
         val groups = listOf(
@@ -100,7 +116,7 @@ object UICombatLog {
             buildObjectiveGroup(map),
             buildResupplyGroup(),
             buildReinforceGroup(),
-            buildLeadersGroup()
+            buildLeadersGroup(),
         )
         if (groups.none { it.count > 0 }) {
             val empty = addTag(feed, "div")
@@ -169,9 +185,11 @@ object UICombatLog {
         titleRow.className = "osada-tr-title-row"
         val title = addTag(titleRow, "div")
         title.className = "osada-tr-title"
-        title.textContent = if (currentPlayer != null && map != null)
+        title.textContent = if (currentPlayer != null && map != null) {
             "${currentPlayer.getCountryName()} — Turn ${map.turn} of ${map.maxTurns}"
-        else "Turn Report"
+        } else {
+            "Turn Report"
+        }
 
         val sub = addTag(titleBlock, "div")
         sub.className = "osada-tr-sub"
@@ -200,7 +218,7 @@ object UICombatLog {
                 UIBuilder.message(
                     game?.scenario?.name ?: "",
                     game?.scenario?.getDescription() ?: "",
-                    narrative = true
+                    narrative = true,
                 )
             }
         }
@@ -257,7 +275,7 @@ object UICombatLog {
             ((map.victoryTurns.getOrNull(1) as? Int ?: 0) - currentTurn + 1).takeIf { it > 0 }
                 ?.let { it to (outcomeNames["victory"] ?: "Victory") },
             ((map.victoryTurns.getOrNull(2) as? Int ?: 0) - currentTurn + 1).takeIf { it > 0 }
-                ?.let { it to (outcomeNames["tactical"] ?: "Tactical") }
+                ?.let { it to (outcomeNames["tactical"] ?: "Tactical") },
         )
         tiers.minByOrNull { it.first }?.let { (turns, outcome) -> tile("Turns to $outcome", turns.toString()) }
 
@@ -266,7 +284,7 @@ object UICombatLog {
         tile(
             "Prestige",
             "${currentPlayer.prestige}&nbsp;${UIBuilder.currencyIcon}",
-            if (nextTurnPrestige != 0) "+$nextTurnPrestige next turn" else null
+            if (nextTurnPrestige != 0) "+$nextTurnPrestige next turn" else null,
         )
 
         // Casualties: summed from this turn's combat log for the viewing side — the same data
@@ -335,7 +353,7 @@ object UICombatLog {
         detail: String,
         isCore: Boolean,
         isDestroyed: Boolean,
-        pos: Cell?
+        pos: Cell?,
     ): HTMLElement {
         // Named rowEl, NOT row: `jsObject { row = pos.row; col = pos.col }` below builds a
         // dynamic {row, col} literal via an implicit assignment — a local `val row` in this same
@@ -366,7 +384,12 @@ object UICombatLog {
             rowEl.title = "Jump to (${pos.col},${pos.row})"
             rowEl.classList.add("osada-tr-row--clickable")
             rowEl.onclick = { _: MouseEvent ->
-                gameRef()?.ui?.uiSetCellOnViewPort(jsObject { row = pos.row; col = pos.col })
+                gameRef()?.ui?.uiSetCellOnViewPort(
+                    jsObject {
+                        row = pos.row
+                        col = pos.col
+                    },
+                )
             }
         }
         return rowEl
@@ -384,7 +407,13 @@ object UICombatLog {
             if (entry.side != game.spotSide) continue
             val eqData = Equipment.equipment[entry.eqid as Int]
             val uclass = eqData.uclass as? Int ?: 0
-            val icon = if (uclass > UnitClass.AIR_TRANSPORT.value) UIBuilder.navalReplacementIcon else eqData.icon as? String ?: ""
+            val icon = if (uclass >
+                UnitClass.AIR_TRANSPORT.value
+            ) {
+                UIBuilder.navalReplacementIcon
+            } else {
+                eqData.icon as? String ?: ""
+            }
             val isCore = entry.isCore as? Boolean == true
             val pos = entry.pos as? Cell ?: Cell(0, 0)
             val hexName = map[pos.row][pos.col].name
@@ -404,23 +433,44 @@ object UICombatLog {
             val maxAmmo = eqData.ammo as? Int ?: 0
 
             val actionVerb = when {
-                assaults >= defends || supports >= defends -> if (supports >= assaults) "provided fire support from" else "assaulted from"
+                assaults >= defends || supports >= defends -> if (supports >=
+                    assaults
+                ) {
+                    "provided fire support from"
+                } else {
+                    "assaulted from"
+                }
                 else -> "defended against an attack near"
             }
             val corePrefix = if (isCore) numSpan("Core ") else ""
-            val title = "$corePrefix${UIBuilder.unitIDToOrdinal(entry.id as Int)} <b>${eqData.name}</b> $actionVerb $location"
+            val title = "$corePrefix${UIBuilder.unitIDToOrdinal(
+                entry.id as Int,
+            )} <b>${eqData.name}</b> $actionVerb $location"
 
             val detailParts = mutableListOf<String>()
             if (kills > 0) detailParts.add("inflicted ${numSpan(kills)} casualties")
             if (losses != 0) {
-                detailParts.add(if (str > 0) "lost ${numSpan("-$losses")} (${numSpan(str)} remain)" else "lost ${numSpan("-$losses")} — destroyed")
+                detailParts.add(
+                    if (str >
+                        0
+                    ) {
+                        "lost ${numSpan("-$losses")} (${numSpan(str)} remain)"
+                    } else {
+                        "lost ${numSpan("-$losses")} — destroyed"
+                    },
+                )
             }
             if (assaults > 0) detailParts.add("$assaults assaults")
             if (defends > 0) detailParts.add("defended $defends attacks")
             if (xp != 0 && str > 0) detailParts.add("+${numSpan(xp)} XP")
             if (ammo < maxAmmo / 4) detailParts.add("low ammo ${numSpan("$ammo/$maxAmmo")}")
-            if (entrenchLost > 0) detailParts.add("${numSpan(entrenchLost)} entrenchments lost (${numSpan(entrench)} remain)")
-            else if (entrench > 0) detailParts.add("${numSpan(entrench)} entrenchments")
+            if (entrenchLost >
+                0
+            ) {
+                detailParts.add("${numSpan(entrenchLost)} entrenchments lost (${numSpan(entrench)} remain)")
+            } else if (entrench > 0) {
+                detailParts.add("${numSpan(entrench)} entrenchments")
+            }
 
             val row = addFeedRow(body, icon, title, detailParts.joinToString(" · "), isCore, str == 0, pos)
             built.add(Built(row, isCore))
@@ -442,7 +492,13 @@ object UICombatLog {
             if (entry.side != game.spotSide) continue
             val eqData = Equipment.equipment[entry.eqid as Int]
             val uclass = eqData.uclass as? Int ?: 0
-            val icon = if (uclass > UnitClass.AIR_TRANSPORT.value) UIBuilder.navalReplacementIcon else eqData.icon as? String ?: ""
+            val icon = if (uclass >
+                UnitClass.AIR_TRANSPORT.value
+            ) {
+                UIBuilder.navalReplacementIcon
+            } else {
+                eqData.icon as? String ?: ""
+            }
             val isCore = entry.isCore as? Boolean == true
             val corePrefix = if (isCore) numSpan("Core ") else ""
             val title = "$corePrefix${UIBuilder.unitIDToOrdinal(key.toInt())} <b>${eqData.name}</b>"
@@ -453,7 +509,15 @@ object UICombatLog {
             val detailParts = mutableListOf<String>()
             if (ammo > 0) detailParts.add("${numSpan("$ammo/$maxAmmo")} ammo")
             if (fuel > 0 && maxFuel > 0) detailParts.add("${numSpan("$fuel/$maxFuel")} fuel")
-            addFeedRow(body, icon, title, "Resupplied automatically: " + detailParts.joinToString(" · "), isCore, false, null)
+            addFeedRow(
+                body,
+                icon,
+                title,
+                "Resupplied automatically: " + detailParts.joinToString(" · "),
+                isCore,
+                false,
+                null,
+            )
             count++
         }
         return FeedGroup("supply", "Resupply", body, count)
@@ -470,7 +534,13 @@ object UICombatLog {
             if (entry.side != game.spotSide) continue
             val eqData = Equipment.equipment[entry.eqid as Int]
             val uclass = eqData.uclass as? Int ?: 0
-            val icon = if (uclass > UnitClass.AIR_TRANSPORT.value) UIBuilder.navalReplacementIcon else eqData.icon as? String ?: ""
+            val icon = if (uclass >
+                UnitClass.AIR_TRANSPORT.value
+            ) {
+                UIBuilder.navalReplacementIcon
+            } else {
+                eqData.icon as? String ?: ""
+            }
             val pos = entry.pos as? Cell ?: Cell(0, 0)
             val title = "<b>${eqData.name}</b> arrived as reinforcement"
             addFeedRow(body, icon, title, "", false, false, pos)
@@ -491,7 +561,9 @@ object UICombatLog {
             val eqData = Equipment.equipment[entry.eqid as Int]
             val isCore = entry.isCore as? Boolean == true
             val corePrefix = if (isCore) numSpan("Core ") else ""
-            val title = "$corePrefix${UIBuilder.unitIDToOrdinal(entry.id as Int)} <b>${eqData.name}</b> received a new leader"
+            val title = "$corePrefix${UIBuilder.unitIDToOrdinal(
+                entry.id as Int,
+            )} <b>${eqData.name}</b> received a new leader"
             val pos = entry.pos as? Cell ?: Cell(0, 0)
             val classLeader = LeaderType.values().find { it.value == entry.classLeader as? Int }
             val unitLeader = LeaderType.values().find { it.value == entry.leader as? Int }

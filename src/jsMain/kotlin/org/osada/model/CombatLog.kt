@@ -164,12 +164,23 @@ object CombatLog {
 
     private fun newCombatUnitInfo(): dynamic {
         val o = js("{}")
-        o.eqid = 0; o.id = 0
+        o.eqid = 0
+        o.id = 0
         o.side = -1
-        o.ammo = 0; o.entrench = 0; o.entrenchLost = 0; o.xp = 0; o.kills = 0; o.losses = 0; o.str = 0
+        o.ammo = 0
+        o.entrench = 0
+        o.entrenchLost = 0
+        o.xp = 0
+        o.kills = 0
+        o.losses = 0
+        o.str = 0
         o.pos = Cell(0, 0)
-        o.supports = 0; o.defends = 0; o.assaults = 0
-        o.isCore = false; o.isSurprised = false; o.isMounted = false
+        o.supports = 0
+        o.defends = 0
+        o.assaults = 0
+        o.isCore = false
+        o.isSurprised = false
+        o.isMounted = false
         o.unitCombatList = js("[]")
         return o
     }
@@ -177,7 +188,9 @@ object CombatLog {
     private fun newUnitEndTurnInfo(): dynamic {
         val o = js("{}")
         o.eqid = 0
-        o.fuel = -1; o.ammo = -1; o.side = -1
+        o.fuel = -1
+        o.ammo = -1
+        o.side = -1
         o.isCore = false
         return o
     }

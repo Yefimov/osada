@@ -1,6 +1,7 @@
 package org.osada
 
-import org.osada.model.*
+import org.osada.model.Equipment
+import org.osada.model.Hex
 import org.osada.scenario.Campaign
 import org.osada.scenario.Scenario
 import kotlin.js.Date
@@ -16,11 +17,11 @@ import kotlin.js.Date
 class GameStateRestore(private val game: Game) {
 
     fun restoreGame(scenarioData: dynamic, playersData: dynamic, campaignData: dynamic?, onReady: () -> Unit) {
-        console.log("[OpenPanzer] restoreGame start", scenarioData.file)
+        console.log("[osada] restoreGame start", scenarioData.file)
         game.cleanup()
         val newScenario = Scenario(scenarioData.file as String)
         Equipment.name = scenarioData.eqp as? String ?: Equipment.defaultName
-        console.log("[OpenPanzer] restoreGame equipment set to", Equipment.name)
+        console.log("[osada] restoreGame equipment set to", Equipment.name)
 
         newScenario.name = scenarioData.name as? String ?: newScenario.name
         newScenario.setDescription(scenarioData.description as? String ?: "")
@@ -36,29 +37,34 @@ class GameStateRestore(private val game: Game) {
         val rawPlayers = playersData.unsafeCast<Array<dynamic>>()
         val typedPlayers = rawPlayers.map { GameStateDeserializer.deserializePlayer(it) }.toTypedArray()
         Equipment.addPlayersEquipment(typedPlayers.toList()) {
-            console.log("[OpenPanzer] restoreGame adding players", typedPlayers.size)
+            console.log("[osada] restoreGame adding players", typedPlayers.size)
             typedPlayers.forEach {
-                console.log("[OpenPanzer] restoreGame addPlayer id", it.id, "side", it.side, "country", it.country)
+                console.log("[osada] restoreGame addPlayer id", it.id, "side", it.side, "country", it.country)
                 newScenario.map.addPlayer(it)
             }
-            console.log("[OpenPanzer] restoreGame players after add", newScenario.map.getPlayers().size)
+            console.log("[osada] restoreGame players after add", newScenario.map.getPlayers().size)
 
             newScenario.isLoaded = true
-            console.log("[OpenPanzer] restoreGame restoreMap start")
+            console.log("[osada] restoreGame restoreMap start")
             restoreMap(newScenario, scenarioData.map)
-            console.log("[OpenPanzer] restoreGame restoreReinforcements start")
+            console.log("[osada] restoreGame restoreReinforcements start")
             restoreReinforcements(newScenario, scenarioData.reinforcements)
 
             newScenario.map.turn = (scenarioData.turn as? Int)
                 ?: (scenarioData.map?.turn as? Int)
-                        ?: 1
+                ?: 1
             val currentPlayerId = (scenarioData.currentPlayerId as? Int)
                 ?: (scenarioData.currentPlayer?.id as? Int)
                 ?: 0
-            console.log("[OpenPanzer] restoreGame currentPlayerId", currentPlayerId, "players", newScenario.map.getPlayers().size)
+            console.log(
+                "[osada] restoreGame currentPlayerId",
+                currentPlayerId,
+                "players",
+                newScenario.map.getPlayers().size,
+            )
             newScenario.map.currentPlayer = newScenario.map.getPlayer(currentPlayerId)
 
-            console.log("[OpenPanzer] restoreGame setMoveTable")
+            console.log("[osada] restoreGame setMoveTable")
             newScenario.setMoveTable()
 
             val savedVictoryTurns = scenarioData.victoryTurns ?: scenarioData.map?.victoryTurns
@@ -83,22 +89,26 @@ class GameStateRestore(private val game: Game) {
                 }
             }
 
-            console.log("[OpenPanzer] restoreGame setting game.scenario")
+            console.log("[osada] restoreGame setting game.scenario")
             game.scenario = newScenario
             if (campaignData != null) {
                 val data = campaignData
                 val campaignId = data.id as Int
                 val file = data.file as String
                 val campaignIndex = Campaign.findCampaignByFile(file)
-                game.campaign = Campaign(if (campaignIndex >= 0) campaignIndex else campaignId, data.difficulty as Int) {
-                    game.campaign?.setScenarioById(data.scenario as Int)
-                    val campaignPlayer = game.getCampaignPlayer()
-                    val savedCoreUnits = data.coreUnits
-                    if (campaignPlayer != null && savedCoreUnits != null) {
-                        newScenario.map.restoreCoreUnitList(campaignPlayer, savedCoreUnits.unsafeCast<Array<dynamic>>().toList())
+                game.campaign =
+                    Campaign(if (campaignIndex >= 0) campaignIndex else campaignId, data.difficulty as Int) {
+                        game.campaign?.setScenarioById(data.scenario as Int)
+                        val campaignPlayer = game.getCampaignPlayer()
+                        val savedCoreUnits = data.coreUnits
+                        if (campaignPlayer != null && savedCoreUnits != null) {
+                            newScenario.map.restoreCoreUnitList(
+                                campaignPlayer,
+                                savedCoreUnits.unsafeCast<Array<dynamic>>().toList(),
+                            )
+                        }
+                        onReady()
                     }
-                    onReady()
-                }
             } else {
                 onReady()
             }
@@ -148,7 +158,7 @@ class GameStateRestore(private val game: Game) {
                     }
                     grid[r][c] = hex
                 } catch (e: Throwable) {
-                    console.error("[OpenPanzer] restoreMap error at cell", r, c, "message:", e.message, e)
+                    console.error("[osada] restoreMap error at cell", r, c, "message:", e.message, e)
                     throw e
                 }
             }
@@ -189,12 +199,12 @@ class GameStateRestore(private val game: Game) {
     }
 
     fun applySettings(data: dynamic) {
-        console.log("[OpenPanzer] applySettings start")
+        console.log("[osada] applySettings start")
         if (data == null) {
-            console.log("[OpenPanzer] applySettings: data is null, skipping")
+            console.log("[osada] applySettings: data is null, skipping")
             return
         }
-        console.log("[OpenPanzer] applySettings data keys:", js("Object.keys(data)"))
+        console.log("[osada] applySettings data keys:", js("Object.keys(data)"))
         uiSettings.airMode = data.airMode as? Boolean ?: false
         uiSettings.strategicZoom = data.strategicZoom as? Boolean ?: false
         uiSettings.strategicZoomLevel = (data.strategicZoomLevel as? Number)?.toDouble() ?: 1.0
@@ -233,13 +243,13 @@ class GameStateRestore(private val game: Game) {
         val isAI = data.isAI
         if (isAI != null) {
             val isAILength = isAI.length as? Int ?: 0
-            console.log("[OpenPanzer] applySettings isAI type:", js("typeof isAI"), "length:", isAILength)
+            console.log("[osada] applySettings isAI type:", js("typeof isAI"), "length:", isAILength)
             for (i in 0 until minOf(isAILength, uiSettings.isAI.size)) {
                 uiSettings.isAI[i] = isAI[i] as? Int ?: 0
             }
         } else {
-            console.log("[OpenPanzer] applySettings isAI is null")
+            console.log("[osada] applySettings isAI is null")
         }
-        console.log("[OpenPanzer] applySettings done")
+        console.log("[osada] applySettings done")
     }
 }

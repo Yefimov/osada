@@ -2,9 +2,18 @@ package org.osada.ui
 
 import kotlinx.browser.localStorage
 import kotlinx.browser.window
-import org.osada.*
+import org.osada.DEBUG_CAMPAIGN
+import org.osada.GameHolder
+import org.osada.VERSION
+import org.osada.difficultyModifiers
 import org.osada.model.Equipment
 import org.osada.scenario.Campaign
+import org.osada.ui.StartMenuBuilder.allCountriesOf
+import org.osada.ui.StartMenuBuilder.countryDisplayLabel
+import org.osada.ui.StartMenuBuilder.hiddenCampaignFiles
+import org.osada.ui.StartMenuBuilder.humanCountryOf
+import org.osada.ui.StartMenuBuilder.syncListHighlight
+import org.osada.uiSettings
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLOptionElement
 import org.w3c.dom.events.Event
@@ -71,7 +80,7 @@ internal object StartMenuBuilder {
         makeHidden("gameToolTip")
         makeHidden("smScen")
         makeHidden("startmenu")
-        markScenarioPlayed(file)   // cosmetic New/Played chip only; touches no game save
+        markScenarioPlayed(file) // cosmetic New/Played chip only; touches no game save
         val game = gameRef()
         if (game != null) {
             game.campaign = null
@@ -103,52 +112,80 @@ internal object StartMenuBuilder {
             Triple("newscenario", "Single Scenario", ""),
             Triple("saveload", "Load Game", ""),
             Triple("settings", "Settings", ""),
-            Triple("tutorial", "Tutorial", "muted")
+            Triple("tutorial", "Tutorial", "muted"),
         )
         val difficultyOptions = listOf(
             Triple(DIFFICULTY_HISTORICAL, "Historical", false),
             Triple(DIFFICULTY_TACTICAL, "Tactical", true),
-            Triple(DIFFICULTY_OPERATIONAL, "Operational", false)
+            Triple(DIFFICULTY_OPERATIONAL, "Operational", false),
         )
+
         // Task 5: regrouped from one flat list into named sections. Same keys/labels (plus the
         // new confirmEndTurn toggle) — CSS + markup only, no checkbox logic changed.
         data class SettingSection(val title: String, val caption: String?, val items: List<Pair<String, String>>)
         val settingSections = listOf(
-            SettingSection("Map View", null, listOf(
-                "showGridTerrain" to "Show terrain with Hex Grid",
-                "markOwnUnits" to "Mark own units on map",
-                "markEnemyUnits" to "Mark enemy strength in red",
-                "useRetina" to "Zoom to full device resolution"
-            )),
-            SettingSection("Gameplay", null, listOf(
-                "quickAnimation" to "Quick combat and move animations",
-                "showDetailInfoToolTips" to "Show optional objectives tooltips",
-                "confirmEndTurn" to "Confirm end of turn"
-            )),
-            SettingSection("Sound", null, listOf(
-                "muteUnitSounds" to "Mute unit combat sounds"
-            )),
-            SettingSection("Observer Mode", "Affects game balance", listOf(
-                "noFOW" to "Disable Fog of War",
-                "showHiddenVictoryHexes" to "Show hidden victory hexes"
-            ))
+            SettingSection(
+                "Map View",
+                null,
+                listOf(
+                    "showGridTerrain" to "Show terrain with Hex Grid",
+                    "markOwnUnits" to "Mark own units on map",
+                    "markEnemyUnits" to "Mark enemy strength in red",
+                    "useRetina" to "Zoom to full device resolution",
+                ),
+            ),
+            SettingSection(
+                "Gameplay",
+                null,
+                listOf(
+                    "quickAnimation" to "Quick combat and move animations",
+                    "showDetailInfoToolTips" to "Show optional objectives tooltips",
+                    "confirmEndTurn" to "Confirm end of turn",
+                ),
+            ),
+            SettingSection(
+                "Sound",
+                null,
+                listOf(
+                    "muteUnitSounds" to "Mute unit combat sounds",
+                ),
+            ),
+            SettingSection(
+                "Observer Mode",
+                "Affects game balance",
+                listOf(
+                    "noFOW" to "Disable Fog of War",
+                    "showHiddenVictoryHexes" to "Show hidden victory hexes",
+                ),
+            ),
         )
         // Settings that change what the CANVAS draws — re-rendered on click, not deferred to
         // "Done" (see the click handler below). useRetina is deliberately excluded: it needs a
         // page reload (see its own branch), not a render call.
         val liveRenderSettingIds = setOf(
-            "showGridTerrain", "markOwnUnits", "markEnemyUnits",
-            "noFOW", "showHiddenVictoryHexes", "showDetailInfoToolTips"
+            "showGridTerrain",
+            "markOwnUnits",
+            "markEnemyUnits",
+            "noFOW",
+            "showHiddenVictoryHexes",
+            "showDetailInfoToolTips",
         )
 
         val menuIcons = mapOf(
-            "continuegame" to "star", "newcampaign" to "map", "newscenario" to "attack",
-            "saveload" to "supply", "settings" to "settings", "tutorial" to "info"
+            "continuegame" to "star",
+            "newcampaign" to "map",
+            "newscenario" to "attack",
+            "saveload" to "supply",
+            "settings" to "settings",
+            "tutorial" to "info",
         )
         val menuSubs = mapOf(
-            "continuegame" to "Resume your campaign", "newcampaign" to "Lead a nation through the war",
-            "newscenario" to "Fight a standalone battle", "saveload" to "Restore a saved battle",
-            "settings" to "Options & display", "tutorial" to "Learn the basics"
+            "continuegame" to "Resume your campaign",
+            "newcampaign" to "Lead a nation through the war",
+            "newscenario" to "Fight a standalone battle",
+            "saveload" to "Restore a saved battle",
+            "settings" to "Options & display",
+            "tutorial" to "Learn the basics",
         )
         mainButtons.forEach { (id, title, variant) ->
             val button = addTag("smButtons", "div")
@@ -253,16 +290,19 @@ internal object StartMenuBuilder {
             byId("smCampDesc")?.innerHTML = campaign.desc as? String ?: ""
             byId("smCampCountry")?.innerHTML = "<b>Country</b><br/>" + country
             byId("smCampScenarios")?.innerHTML = "<b>Operations</b><br/>" +
-                    (campaign.scenarios as? Int ?: (campaign.scenarios as? String ?: ""))
+                (campaign.scenarios as? Int ?: (campaign.scenarios as? String ?: ""))
             byId("smCamp")?.asDynamic()?.selectedCampaign = value.toInt()
             updateCampaignPrestigeDisplay()
             // OSADA dossier head + register highlight (single source of truth = the hidden select).
             // Campaign title shows just the name (no date); date is in smCampDossierSub below
-            val campaignTitleClean = (campaign.title as? String ?: "").replace(Regex("\\s*\\([^)]*\\d{1,4}[^)]*\\)\\s*"), "").trim()
+            val campaignTitleClean = (campaign.title as? String ?: "").replace(
+                Regex("\\s*\\([^)]*\\d{1,4}[^)]*\\)\\s*"),
+                "",
+            ).trim()
             byId("smCampTitle")?.innerHTML = campaignTitleClean
             byId("smCampDossierSub")?.innerHTML = listOfNotNull(
                 country.ifBlank { null },
-                extractYears(campaign.title as? String ?: "").ifBlank { null }
+                extractYears(campaign.title as? String ?: "").ifBlank { null },
             ).joinToString(" &middot; ")
             setTheaterArt(campaign)
             byId("osadaCampList")?.let { syncListHighlight(campSelect, it) }
@@ -357,7 +397,15 @@ internal object StartMenuBuilder {
         // Slider rows need the same row scaffold as the checkbox rows below (and as PM): a
         // `settingContainer left` wrapper with a `settingText left` label and a right-floated div
         // holding the slider. Without it the three sliders had no label and no alignment ("съехали").
-        fun sliderSetting(id: String, label: String, value: Double, step: Double, min: Double, max: Double, onInput: () -> Unit): HTMLElement {
+        fun sliderSetting(
+            id: String,
+            label: String,
+            value: Double,
+            step: Double,
+            min: Double,
+            max: Double,
+            onInput: () -> Unit,
+        ): HTMLElement {
             val container = addTag("smSettingsContainer", "div")
             container.className = "settingContainer left"
             val textDiv = addTag(container, "div")
@@ -372,7 +420,14 @@ internal object StartMenuBuilder {
         // Interface width is obsolete: the HUD is viewport-based now. The row is hidden, not
         // removed — the Settings-OK handler (and UILayout) still read #uiresize, so the slider
         // element stays in the DOM with its stored value.
-        sliderSetting("uiresize", "Interface width (px)", uiSettings.uiSize.toDouble(), 10.0, uiSettings.uiSmallSize.toDouble(), 1920.0) {
+        sliderSetting(
+            "uiresize",
+            "Interface width (px)",
+            uiSettings.uiSize.toDouble(),
+            10.0,
+            uiSettings.uiSmallSize.toDouble(),
+            1920.0,
+        ) {
             UILayout.resizeUI((byId("uiresize")?.asDynamic()?.value as? String)?.toIntOrNull() ?: uiSettings.uiSize)
         }.style.display = "none"
         sliderSetting("uiscale", "Interface scale", uiSettings.uiScale, 0.1, 0.5, 3.0) {
@@ -405,8 +460,8 @@ internal object StartMenuBuilder {
                 textDiv.title = when (id) {
                     "showHiddenVictoryHexes" ->
                         "Reveals SECRET objectives (victory hexes with no flag on the map). " +
-                        "Regular objectives — bordered flags — are always visible; most scenarios " +
-                        "have no secret ones, so this often changes nothing. Affects game balance."
+                            "Regular objectives — bordered flags — are always visible; most scenarios " +
+                            "have no secret ones, so this often changes nothing. Affects game balance."
                     "noFOW" -> "Removes the fog veil and reveals all enemy units. Affects game balance."
                     "showDetailInfoToolTips" -> "Shows name labels over non-objective owned hexes (towns, airfields) on the map."
                     else -> label
@@ -416,7 +471,7 @@ internal object StartMenuBuilder {
                 val valueDiv = addTag(container, "div")
                 valueDiv.id = id
                 // Image-based checkbox (resources/ui/osada/ico_check_on/off.png, asset-sheet
-                // extracts) replaces the openpanzer-menu icon-font C/c glyph pair. Driven by a
+                // extracts) replaces the osada-menu icon-font C/c glyph pair. Driven by a
                 // "checked" class rather than the shared toggleCheckbox() case-flip helper (still
                 // used unchanged by the per-player AI toggle elsewhere in this file), since there's
                 // no text content left here to flip the case of.
@@ -463,11 +518,14 @@ internal object StartMenuBuilder {
             // Two levels (user request): discrete unit/fire cues vs the continuous weather loop.
             if (section.title == "Sound") {
                 sliderSetting("soundvolume", "Effects volume", uiSettings.soundVolume, 0.05, 0.0, 1.0) {
-                    uiSettings.soundVolume = (byId("soundvolume")?.asDynamic()?.value as? String)?.toDoubleOrNull() ?: uiSettings.soundVolume
+                    uiSettings.soundVolume =
+                        (byId("soundvolume")?.asDynamic()?.value as? String)?.toDoubleOrNull() ?: uiSettings.soundVolume
                 }
                 sliderSetting("ambientvolume", "Ambient volume", uiSettings.ambientVolume, 0.05, 0.0, 1.0) {
-                    uiSettings.ambientVolume = (byId("ambientvolume")?.asDynamic()?.value as? String)?.toDoubleOrNull() ?: uiSettings.ambientVolume
-                    Sound.refreshAmbientVolume()   // hear it while adjusting, not on next weather change
+                    uiSettings.ambientVolume =
+                        (byId("ambientvolume")?.asDynamic()?.value as? String)?.toDoubleOrNull()
+                            ?: uiSettings.ambientVolume
+                    Sound.refreshAmbientVolume() // hear it while adjusting, not on next weather change
                 }
             }
         }
@@ -537,31 +595,38 @@ internal object StartMenuBuilder {
         "Victory does not come by itself — it must be won." to "J. Stalin",
         "Tactics are a part of strategy, subordinate to it and serving it." to "J. Stalin",
         "Concentrate a great superiority of forces at the decisive point." to "V. I. Lenin",
-        "Victory is impossible unless they have learned both how to attack and how to retreat properly." to "V. I. Lenin",
-        "The philosophers have only interpreted the world, in various ways; the point, however, is to change it." to "K. Marx",
+        "Victory is impossible unless they have learned both how to attack and how to retreat properly." to
+            "V. I. Lenin",
+        "The philosophers have only interpreted the world, in various ways; the point, however, is to change it." to
+            "K. Marx",
         "Workers of the world, unite!" to "K. Marx & F. Engels",
         "Revolutions are the locomotives of history." to "K. Marx",
         "There are no fortresses that Bolsheviks cannot storm." to "J. Stalin",
         "Force is the midwife of every old society pregnant with a new one." to "K. Marx",
-        "The weapon of criticism cannot, of course, replace criticism of the weapon. Material force must be overthrown by material force." to "K. Marx",
-        "Mass insurrection, revolutionary war, guerrilla detachments everywhere — this is the only method by which a small nation can overcome a large one." to "F. Engels",
-        "The emancipation of the proletariat will have its own special expression in military affairs and will create its own, new military methods." to "F. Engels",
-        "Nothing is more dependent on economic conditions than precisely the army and the navy. Armament, composition, organization, tactics and strategy depend above all on the stage reached at the time in production." to "F. Engels",
+        "The weapon of criticism cannot, of course, replace criticism of the weapon. Material force must be overthrown by material force." to
+            "K. Marx",
+        "Mass insurrection, revolutionary war, guerrilla detachments everywhere — this is the only method by which a small nation can overcome a large one." to
+            "F. Engels",
+        "The emancipation of the proletariat will have its own special expression in military affairs and will create its own, new military methods." to
+            "F. Engels",
+        "Nothing is more dependent on economic conditions than precisely the army and the navy. Armament, composition, organization, tactics and strategy depend above all on the stage reached at the time in production." to
+            "F. Engels",
         "War is the continuation of politics by other means." to "V. I. Lenin",
         "Once you have taken up arms, do not lay them down until the enemy is completely crushed." to "V. I. Lenin",
         "A revolution is only worth something if it can defend itself." to "V. I. Lenin",
         "Peace is a breathing-space for war." to "V. I. Lenin",
         "Artillery is the god of war." to "J. Stalin",
-        "The art of war in modern conditions consists in mastering all forms of warfare and in using them intelligently." to "J. Stalin",
+        "The art of war in modern conditions consists in mastering all forms of warfare and in using them intelligently." to
+            "J. Stalin",
         "In modern war, the morale of the people is one of the decisive factors." to "V. I. Lenin",
-        "No mercy to the enemy!" to "J. Stalin"
+        "No mercy to the enemy!" to "J. Stalin",
     )
 
     private fun showRandomQuote() {
         val el = byId("smQuote") ?: return
         val (text, author) = menuQuotes.random()
         el.innerHTML = "<span class=\"osada-quote__text\">“$text”</span>" +
-                "<span class=\"osada-quote__author\">— $author</span>"
+            "<span class=\"osada-quote__author\">— $author</span>"
     }
 
     internal fun applyContinueButtonState() {
@@ -592,7 +657,7 @@ internal object StartMenuBuilder {
      *  otherwise a short "Name · Turn n/m" summary. Reads a single localStorage key. */
     private fun savedGameSummary(): String? {
         val majorVersion = VERSION.split(".").take(2).joinToString(".")
-        val raw = localStorage.getItem("openpanzer-scenario-$majorVersion") ?: return null
+        val raw = localStorage.getItem("osada-scenario-$majorVersion") ?: return null
         return try {
             val data = JSON.parse<dynamic>(raw)
             val name = data.name as? String
@@ -616,7 +681,7 @@ internal object StartMenuBuilder {
         val base = campaign.prestige as? Int ?: 0
         val difficulty = byId("smCamp")?.asDynamic()?.selectedDifficulty as? Int ?: DIFFICULTY_HISTORICAL
         byId("smCampPrestige")?.innerHTML = "<b>Start prestige</b><br/>" +
-                Campaign.computeStartPrestige(base, difficulty) + "&nbsp;" + UIBuilder.currencyIcon
+            Campaign.computeStartPrestige(base, difficulty) + "&nbsp;" + UIBuilder.currencyIcon
     }
 
     /** Extract a "1936-1945"-style year span from a campaign title's parentheses. */
@@ -635,7 +700,7 @@ internal object StartMenuBuilder {
     private fun buildSyncedList(
         select: HTMLElement,
         container: HTMLElement,
-        renderRow: (option: HTMLOptionElement, index: Int, row: HTMLElement, selectable: Boolean) -> Unit
+        renderRow: (option: HTMLOptionElement, index: Int, row: HTMLElement, selectable: Boolean) -> Unit,
     ) {
         clearTag(container)
         val options = select.asDynamic().options
@@ -664,8 +729,11 @@ internal object StartMenuBuilder {
         for (i in 0 until rows.length) {
             val row = rows.asDynamic()[i] as? HTMLElement ?: continue
             val idx = row.asDynamic().optionIndex as? Int ?: -1
-            if (idx == selected) row.classList.add("osadaListRow--selected")
-            else row.classList.remove("osadaListRow--selected")
+            if (idx == selected) {
+                row.classList.add("osadaListRow--selected")
+            } else {
+                row.classList.remove("osadaListRow--selected")
+            }
         }
     }
 
@@ -698,7 +766,7 @@ internal object StartMenuBuilder {
             "linear-gradient(180deg, rgba(10,11,13,0) 42%, rgba(8,9,11,.94) 100%)",
             "linear-gradient(rgba(0,0,0,.10), rgba(0,0,0,.14))",
             if (stem.isNotBlank()) "url('resources/ui/theater/$stem.jpg') 50% 0% / cover no-repeat" else null,
-            "url('resources/dossier_map_placeholder.png') 50% 0% / cover no-repeat"
+            "url('resources/dossier_map_placeholder.png') 50% 0% / cover no-repeat",
         )
         theater.style.background = layers.joinToString(", ")
     }
@@ -731,9 +799,14 @@ internal object StartMenuBuilder {
      *  regardless of filter/search/sort state (used to hide specific campaigns from this
      *  register — see [hiddenCampaignFiles]). */
     private fun tagRow(
-        row: HTMLElement, index: Int, name: String,
-        searchText: String = name, year: Int? = null, size: Int? = null, sides: List<String> = emptyList(),
-        forceHidden: Boolean = false
+        row: HTMLElement,
+        index: Int,
+        name: String,
+        searchText: String = name,
+        year: Int? = null,
+        size: Int? = null,
+        sides: List<String> = emptyList(),
+        forceHidden: Boolean = false,
     ) {
         val dyn = row.asDynamic()
         dyn.sortDefault = pad(index)
@@ -768,18 +841,18 @@ internal object StartMenuBuilder {
         // Germany: id 7 stays plain "Germany" (113 scenarios, every era); id 86 is the same
         // regime under a different eqp-lxf code (RD Road To/Siege Of Berlin, 1945) — merge it.
         86 to "Germany",
-        117 to "Germany — Empire",           // German Empire (Kaiserreich, WW1-era campaigns)
-        196 to "Germany — Revolutionaries",  // German Revolutionaries (1918-19 Räterepublik)
-        188 to "Germany — Communists",       // Red Germany
+        117 to "Germany — Empire", // German Empire (Kaiserreich, WW1-era campaigns)
+        196 to "Germany — Revolutionaries", // German Revolutionaries (1918-19 Räterepublik)
+        188 to "Germany — Communists", // Red Germany
         303 to "Germany — Waffen SS",
         // Russia: id 19/61/89 are three efiles' spelling of the same Soviet Union and stay
         // merged as before; the OTHER Russia-named factions are civil-war-era and distinct from
         // each other AND from the USSR, but read better clustered under "Russia — X".
         19 to "Soviet Union", 61 to "Soviet Union", 89 to "Soviet Union",
-        103 to "Russia — Communists",  // Red Russia
-        100 to "Russia — Whites",      // White Russia
-        189 to "Russia — Greens",      // Russian Green Armies
-        191 to "Russia — Cossacks",    // Cossack Hosts
+        103 to "Russia — Communists", // Red Russia
+        100 to "Russia — Whites", // White Russia
+        189 to "Russia — Greens", // Russian Green Armies
+        191 to "Russia — Cossacks", // Cossack Hosts
         // Hungary: id 4 stays plain; Red Hungary is the 1919 Soviet Republic.
         187 to "Hungary — Communists",
         // Spain: bn9s00 "Battle of Sesena" (eqp-lxf, id 28) confirmed vs a Soviet Union opponent —
@@ -789,8 +862,8 @@ internal object StartMenuBuilder {
         226 to "Spain — Republicans (Popular Army)",
         91 to "Spain — Republicans",
         // USA: id 9 stays plain; the Civil War factions don't share the "USA" word at all.
-        150 to "USA — Confederacy",   // Confederate States
-        162 to "USA — Union",         // Union States
+        150 to "USA — Confederacy", // Confederate States
+        162 to "USA — Union", // Union States
     )
 
     /** The side-filter label for country [id], or null (never matches a filter) for an invalid/
@@ -811,10 +884,10 @@ internal object StartMenuBuilder {
     // only (user request) until the path is actually reworked; the individual scenarios remain
     // playable, and honestly presented, from Scenario Selection (scenariolist.js is untouched).
     private val hiddenCampaignFiles = setOf(
-        "volarm.json",    // The Defeat of Denikin
-        "simpob.json",    // Sim Pobedishi! - The Red East
-        "acampdf2.json",  // Czech Legion - Siberian Anabasis
-        "polsov.json"     // The Polish-Soviet War: The Red Advance
+        "volarm.json", // The Defeat of Denikin
+        "simpob.json", // Sim Pobedishi! - The Red East
+        "acampdf2.json", // Czech Legion - Siberian Anabasis
+        "polsov.json", // The Polish-Soviet War: The Red Advance
     )
 
     // ---- Campaign progress ----------------------------------------------------------------
@@ -824,7 +897,7 @@ internal object StartMenuBuilder {
      *  there is no per-campaign progress storage, so at most one campaign can be annotated. */
     private fun activeCampaignProgress(): Pair<String, Int>? {
         val majorVersion = VERSION.split(".").take(2).joinToString(".")
-        val raw = localStorage.getItem("openpanzer-campaign-$majorVersion") ?: return null
+        val raw = localStorage.getItem("osada-campaign-$majorVersion") ?: return null
         return try {
             val data = JSON.parse<dynamic>(raw)
             val file = data.file as? String ?: return null
@@ -903,8 +976,9 @@ internal object StartMenuBuilder {
             val forceHidden = row.asDynamic().forceHidden as? Boolean ?: false
             val text = row.asDynamic().searchText as? String ?: ""
             val rowSides = (row.asDynamic().sideKeys as? Array<String>) ?: emptyArray()
-            val match = !forceHidden && (query.isEmpty() || text.contains(query)) &&
-                    (side == SIDE_ALL || side in rowSides)
+            val match = !forceHidden &&
+                (query.isEmpty() || text.contains(query)) &&
+                (side == SIDE_ALL || side in rowSides)
             row.style.display = if (match) "" else "none"
             if (match) {
                 groupHasMatch = true
@@ -923,8 +997,11 @@ internal object StartMenuBuilder {
     /** Filter box + sort segments + side chips + results counter, inserted above [list] inside
      *  its register column. */
     private fun buildListToolbar(
-        register: HTMLElement, list: HTMLElement, modes: List<String>,
-        placeholder: String, counterNoun: String
+        register: HTMLElement,
+        list: HTMLElement,
+        modes: List<String>,
+        placeholder: String,
+        counterNoun: String,
     ) {
         val tools = addTag(register, "div")
         tools.className = "osadaListTools"
@@ -1075,7 +1152,7 @@ internal object StartMenuBuilder {
             val ops = campaign?.scenarios as? Int
             rowSub.innerHTML = listOfNotNull(
                 extractYears(option.text).ifBlank { null },
-                ops?.let { "$it operations" }
+                ops?.let { "$it operations" },
             ).joinToString(" &middot; ")
             // In-progress annotation, right-aligned. Only ever ONE campaign can carry it: the
             // storage holds a single campaign slot (the one Continue resumes) — there is no
@@ -1085,18 +1162,34 @@ internal object StartMenuBuilder {
                 val note = addTag(row, "div")
                 note.className = "osadaListRowNote"
                 val operation = progress.second + 1
-                note.textContent = if (ops != null) "In progress · operation $operation/$ops"
-                    else "In progress · operation $operation"
+                note.textContent = if (ops != null) {
+                    "In progress · operation $operation/$ops"
+                } else {
+                    "In progress · operation $operation"
+                }
                 note.title = "This is the campaign Continue resumes"
             }
             // Country is searchable too, so "soviet"/"spain" finds a campaign whose title says neither.
             val country = Equipment.getCountryNameByEqp(flagId, eqp)
             val sideKey = countryDisplayLabel(flagId)
-            tagRow(row, index, option.text, "${option.text} $country", startYear(option.text), ops,
-                sides = listOfNotNull(sideKey), forceHidden = file != null && file in hiddenCampaignFiles)
+            tagRow(
+                row,
+                index,
+                option.text,
+                "${option.text} $country",
+                startYear(option.text),
+                ops,
+                sides = listOfNotNull(sideKey),
+                forceHidden = file != null && file in hiddenCampaignFiles,
+            )
         }
-        buildListToolbar(register, list, listOf(SORT_DEFAULT, SORT_NAME, SORT_YEAR, SORT_SIZE),
-            "Filter campaigns…", "campaigns")
+        buildListToolbar(
+            register,
+            list,
+            listOf(SORT_DEFAULT, SORT_NAME, SORT_YEAR, SORT_SIZE),
+            "Filter campaigns…",
+            "campaigns",
+        )
     }
 
     /** First 4-digit year in a campaign title ("Red Army Campaign (1936-1945)" -> 1936), used as
@@ -1202,8 +1295,11 @@ internal object StartMenuBuilder {
             // two sides, so "this scenario's side" can only mean the playable one.
             val eqpName = (if (scenario != null) scenario[5] else null) as? String ?: ""
             val humanCountry = humanCountryOf(scenario)
-            val countryName = if (humanCountry != null)
-                Equipment.getCountryNameByEqp(humanCountry, eqpName) else ""
+            val countryName = if (humanCountry != null) {
+                Equipment.getCountryNameByEqp(humanCountry, eqpName)
+            } else {
+                ""
+            }
             if (humanCountry != null && eqpName.isNotBlank()) {
                 val flag = addTag(row, "div")
                 flag.className = "osadaFlag"
@@ -1217,7 +1313,8 @@ internal object StartMenuBuilder {
             val note = addTag(row, "div")
             val file = (if (scenario != null) scenario[0] else null) as? String ?: ""
             val isPlayed = file.isNotBlank() && file in played
-            note.className = "osadaListRowNote" + if (isPlayed) " osadaListRowNote--played" else " osadaListRowNote--new"
+            note.className =
+                "osadaListRowNote" + if (isPlayed) " osadaListRowNote--played" else " osadaListRowNote--new"
             note.textContent = if (isPlayed) "Played" else "New"
 
             // Side FILTER covers every country playable in the scenario, not just the human's
@@ -1225,9 +1322,19 @@ internal object StartMenuBuilder {
             // findable under "Spain" too, since the scenario dossier's own AI/human toggles let
             // you take either side. All country names go into the search text for the same reason.
             val allCountries = allCountriesOf(scenario)
-            val allCountryNames = allCountries.mapNotNull { Equipment.getCountryName(it).takeIf { n -> n.isNotBlank() && n != "Unknown" } }
-            tagRow(row, index, title, "$title $group ${allCountryNames.joinToString(" ")}",
-                sides = allCountries.mapNotNull { countryDisplayLabel(it) })
+            val allCountryNames = allCountries.mapNotNull {
+                Equipment.getCountryName(it).takeIf { n ->
+                    n.isNotBlank() &&
+                        n != "Unknown"
+                }
+            }
+            tagRow(
+                row,
+                index,
+                title,
+                "$title $group ${allCountryNames.joinToString(" ")}",
+                sides = allCountries.mapNotNull { countryDisplayLabel(it) },
+            )
         }
         // No Year sort: scenariolist.js carries no date per scenario (it's in the scenario XML, which
         // isn't loaded until you start one). Campaign order already reads chronologically anyway.
@@ -1358,8 +1465,11 @@ internal object StartMenuBuilder {
         val players0 = scenario[3] as? Array<dynamic> ?: emptyArray()
         val players1 = scenario[4] as? Array<dynamic> ?: emptyArray()
         val available = booleanArrayOf(players0.isNotEmpty(), players1.isNotEmpty())
-        val effectiveSelected = if (available.getOrElse(selectedSide) { false }) selectedSide
-            else available.indexOfFirst { it }.coerceAtLeast(0)
+        val effectiveSelected = if (available.getOrElse(selectedSide) { false }) {
+            selectedSide
+        } else {
+            available.indexOfFirst { it }.coerceAtLeast(0)
+        }
         val focusSide = effectiveSelected
 
         val playersRoot = byId("smScenPlayers")
@@ -1373,8 +1483,11 @@ internal object StartMenuBuilder {
             // Real markup has #smSide0 already nested under #smScenPlayers -> insert before it so
             // it reads first; a flat/synthetic fixture (no such nesting) just appends instead,
             // since insertBefore requires the reference node to actually be a child of parentNode.
-            val heading = if (side0El != null && side0El.parentNode === playersRoot)
-                insertTag(playersRoot, "div", side0El) else addTag(playersRoot, "div")
+            val heading = if (side0El != null && side0El.parentNode === playersRoot) {
+                insertTag(playersRoot, "div", side0El)
+            } else {
+                addTag(playersRoot, "div")
+            }
             heading.id = "osadaSidePickerHeading"
             heading.className = "osada-side-picker__heading"
             heading.textContent = "Choose your side"
@@ -1395,8 +1508,13 @@ internal object StartMenuBuilder {
     }
 
     private fun buildSideCardContent(
-        container: HTMLElement, scenario: dynamic, side: Int,
-        selectedSide: Int, available: Boolean, focusSide: Int, eqpName: String
+        container: HTMLElement,
+        scenario: dynamic,
+        side: Int,
+        selectedSide: Int,
+        available: Boolean,
+        focusSide: Int,
+        eqpName: String,
     ) {
         val (name, extra) = sideLabel(scenario, side, eqpName)
         val primaryCountry = sideCountries(scenario, side).firstOrNull()
@@ -1449,7 +1567,10 @@ internal object StartMenuBuilder {
 
     private fun onSideCardKeydown(e: org.w3c.dom.events.KeyboardEvent, scenario: dynamic, side: Int) {
         when (e.asDynamic().key as? String) {
-            "Enter", " " -> { e.preventDefault(); selectScenarioSide(scenario, side) }
+            "Enter", " " -> {
+                e.preventDefault()
+                selectScenarioSide(scenario, side)
+            }
             "ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown" -> {
                 e.preventDefault()
                 val other = 1 - side

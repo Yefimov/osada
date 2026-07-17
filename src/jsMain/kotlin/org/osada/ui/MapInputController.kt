@@ -1,7 +1,12 @@
 package org.osada.ui
 
-import org.osada.*
+import org.osada.PlayerType
+import org.osada.RoadType
+import org.osada.TerrainType
+import org.osada.UnitClass
 import org.osada.rules.GameRules
+import org.osada.terrainNames
+import org.osada.uiSettings
 import org.w3c.dom.events.MouseEvent
 
 /**
@@ -12,6 +17,7 @@ import org.w3c.dom.events.MouseEvent
 internal class MapInputController(private val ui: UI) {
 
     private var curDown = false
+
     // Drag-to-scroll anchor: viewport (client) mouse position + #game's own scroll position at
     // drag start. clientX/Y deltas map 1:1 onto scrollLeft/scrollTop deltas regardless of zoom —
     // both are already expressed in #game's own rendered ("post-zoom") pixel space, so no zoom
@@ -45,7 +51,11 @@ internal class MapInputController(private val ui: UI) {
                     val deltaY = (event.deltaY as? Number)?.toDouble() ?: 0.0
                     val cx = (event.clientX as? Number)?.toDouble()
                     val cy = (event.clientY as? Number)?.toDouble()
-                    if (deltaY < 0) MapZoom.stepIn(cx, cy) else if (deltaY > 0) MapZoom.stepOut(cx, cy)
+                    if (deltaY < 0) {
+                        MapZoom.stepIn(cx, cy)
+                    } else if (deltaY > 0) {
+                        MapZoom.stepOut(cx, cy)
+                    }
                 }
             }
         }, js("({passive: false})"))
@@ -80,7 +90,11 @@ internal class MapInputController(private val ui: UI) {
 
         val currentPlayerSide = map.currentPlayer?.side ?: 0
         var unit = hex.getUnit(uiSettings.airMode)
-        if (unit != null && !hex.isSpotted(currentPlayerSide) && !unit.tempSpotted && unit.player?.side != currentPlayerSide) {
+        if (unit != null &&
+            !hex.isSpotted(currentPlayerSide) &&
+            !unit.tempSpotted &&
+            unit.player?.side != currentPlayerSide
+        ) {
             unit = null
         }
 
@@ -119,7 +133,9 @@ internal class MapInputController(private val ui: UI) {
             when {
                 currentUnit == null || uiSettings.deployMode -> handled = selectOtherUnit(cell.row, cell.col)
                 hex.isAttackSel && !currentUnit.hasFired -> {
-                    console.log("[OpenPanzer] click: attack at ${cell.row},${cell.col} attacker=${currentUnit.id} hasFired=${currentUnit.hasFired}")
+                    console.log(
+                        "[osada] click: attack at ${cell.row},${cell.col} attacker=${currentUnit.id} hasFired=${currentUnit.hasFired}",
+                    )
                     tryAttackAt(cell.row, cell.col)
                     handled = true
                 }
@@ -138,16 +154,21 @@ internal class MapInputController(private val ui: UI) {
             }
         } else {
             when {
-                uiSettings.deployMode && (
-                    (hex.isDeployment != -1 && map.getPlayer(hex.isDeployment).side == currentPlayerSide)
-                    // Aircraft can always be based on an airfield, even outside the deploy zone (OG)
-                    // — but only a FRIENDLY one. hex.owner is a player id, not a side (getPlayer(-1)
-                    // falls back to player 0, so an unowned/-1 airfield must be excluded explicitly
-                    // or it silently read as "belongs to player 0"), and this clause never checked it
-                    // at all: any airfield anywhere, including the enemy's, was a legal deploy target.
-                    || (hex.terrain == TerrainType.AIRFIELD.value && selectedDeployUnitIsAir()
-                        && hex.owner != -1 && map.getPlayer(hex.owner).side == currentPlayerSide)
-                ) -> {
+                uiSettings.deployMode &&
+                    (
+                        (hex.isDeployment != -1 && map.getPlayer(hex.isDeployment).side == currentPlayerSide) ||
+                            // Aircraft can always be based on an airfield, even outside the deploy zone (OG)
+                            // — but only a FRIENDLY one. hex.owner is a player id, not a side (getPlayer(-1)
+                            // falls back to player 0, so an unowned/-1 airfield must be excluded explicitly
+                            // or it silently read as "belongs to player 0"), and this clause never checked it
+                            // at all: any airfield anywhere, including the enemy's, was a legal deploy target.
+                            (
+                                hex.terrain == TerrainType.AIRFIELD.value &&
+                                    selectedDeployUnitIsAir() &&
+                                    hex.owner != -1 &&
+                                    map.getPlayer(hex.owner).side == currentPlayerSide
+                                )
+                        ) -> {
                     deployAt(cell.row, cell.col)
                     handled = true
                 }
@@ -182,7 +203,8 @@ internal class MapInputController(private val ui: UI) {
         } else {
             currentUnit?.let { ui.showUnitInfo(it) }
         }
-        currentUnit?.getPos()?.let { updateLocationMessage(it.row, it.col) } ?: updateLocationMessage(cell.row, cell.col)
+        currentUnit?.getPos()?.let { updateLocationMessage(it.row, it.col) }
+            ?: updateLocationMessage(cell.row, cell.col)
 
         event.preventDefault()
     }
@@ -261,7 +283,7 @@ internal class MapInputController(private val ui: UI) {
     }
 
     /** True if the unit currently picked in the deploy/equipment window is an air unit (so it may
-        be placed on an airfield outside the deploy zone). */
+     be placed on an airfield outside the deploy zone). */
     private fun selectedDeployUnitIsAir(): Boolean {
         val player = ui.game.scenario?.map?.currentPlayer ?: return false
         val index = byId("eqUserSel")?.asDynamic()?.deployunit as? Int ?: return false

@@ -8,9 +8,9 @@ import org.osada.rules.GameRules
 import org.w3c.dom.events.Event
 
 fun main() {
-    console.log("[OpenPanzer] bootstrap loaded")
+    console.log("[osada] bootstrap loaded")
     window.addEventListener("load", { _: Event ->
-        console.log("[OpenPanzer] window.load event")
+        console.log("[osada] window.load event")
         val game = Game()
         val gameRules = GameRules
         val equipment = Equipment
@@ -19,7 +19,7 @@ fun main() {
         val eventHandler = EventHandler
         val combatLog = CombatLog
         js("window.game = game")
-        console.log("[OpenPanzer] window.game set", game)
+        console.log("[osada] window.game set", game)
         js("window.GameRules = gameRules")
         js("window.Equipment = equipment")
         js("window.Leaders = leaders")
@@ -27,8 +27,8 @@ fun main() {
         js("window.EventHandler = eventHandler")
         js("window.CombatLog = combatLog")
         UnitDescriptions.load()
-        console.log("[OpenPanzer] calling game.init()")
+        console.log("[osada] calling game.init()")
         game.init()
-        console.log("[OpenPanzer] game.init() returned")
+        console.log("[osada] game.init() returned")
     })
 }

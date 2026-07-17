@@ -1,8 +1,9 @@
 package org.osada.ui
 
-import org.osada.*
-import org.osada.model.*
+import org.osada.GameHolder
+import org.osada.model.GameUnit
 import org.osada.rules.GameRules
+import org.osada.uiSettings
 
 /**
  * Draws unit sprites and their stat overlays (strength box, ammo/fire indicator,
@@ -29,23 +30,39 @@ internal class UnitRenderer(private val rc: RenderContext) {
         val boxH = rc.R + 4.0
         val textOff = if (unit.strength < 10) 2.0 else 1.0
 
-        ctx.fillStyle = if (side == 1) unitStyles["alliedBox"] as? String ?: "#808000" else unitStyles["axisBox"] as? String ?: "#383838"
+        ctx.fillStyle =
+            if (side ==
+                1
+            ) {
+                unitStyles["alliedBox"] as? String ?: "#808000"
+            } else {
+                unitStyles["axisBox"] as? String ?: "#383838"
+            }
         if (uiSettings.markEnemyUnits == true && side != GameHolder.instance?.spotSide) {
             ctx.fillStyle = unitStyles["enemyBoxMarked"] as? String ?: "#FF0000"
         }
 
         if (isCore) {
-            ctx.strokeStyle = if (side == 1) unitStyles["alliedBorder"] as? String ?: "rgba(127,255,0,1)" else unitStyles["axisBorder"] as? String ?: "rgba(211,211,211,1)"
+            ctx.strokeStyle =
+                if (side ==
+                    1
+                ) {
+                    unitStyles["alliedBorder"] as? String ?: "rgba(127,255,0,1)"
+                } else {
+                    unitStyles["axisBorder"] as? String
+                        ?: "rgba(211,211,211,1)"
+                }
             ctx.lineWidth = 2.0
             ctx.strokeRect(boxX, boxY - 1.0, boxW, boxH)
         }
         ctx.fillRect(boxX, boxY - 1.0, boxW, boxH)
 
-        ctx.fillStyle = if (unit.player?.id != rc.map?.currentPlayer?.id && unit.player?.side == rc.map?.currentPlayer?.side) {
-            unitStyles["alliedPlayerText"] as? String ?: "#696969"
-        } else {
-            unitStyles["playerText"] as? String ?: "white"
-        }
+        ctx.fillStyle =
+            if (unit.player?.id != rc.map?.currentPlayer?.id && unit.player?.side == rc.map?.currentPlayer?.side) {
+                unitStyles["alliedPlayerText"] as? String ?: "#696969"
+            } else {
+                unitStyles["playerText"] as? String ?: "white"
+            }
         if (hasMoved && isCurrentPlayer) {
             ctx.fillStyle = unitStyles["movedUnitText"] as? String ?: "#BDBDBD"
         }
@@ -66,13 +83,20 @@ internal class UnitRenderer(private val rc: RenderContext) {
     }
 
     private fun drawUnitSprite(ctx: dynamic, x: Double, y: Double, unit: GameUnit): Boolean {
-        val isBridge = !unit.hasAnimation
-                && GameRules.isGround(unit)
-                && GameRules.isBridgeForSide(unit.getHex(), unit.player?.side ?: -1)
+        val isBridge = !unit.hasAnimation &&
+            GameRules.isGround(unit) &&
+            GameRules.isBridgeForSide(unit.getHex(), unit.player?.side ?: -1)
         val icon = unit.getIcon()
         val img = if (isBridge) rc.bridgeImage else rc.unitImages[icon]
         if (img == null || img == undefined) {
-            console.log("[OpenPanzer] drawUnitSprite missing image for icon", icon, "unit eqid", unit.eqid, "isBridge", isBridge)
+            console.log(
+                "[osada] drawUnitSprite missing image for icon",
+                icon,
+                "unit eqid",
+                unit.eqid,
+                "isBridge",
+                isBridge,
+            )
             return false
         }
 

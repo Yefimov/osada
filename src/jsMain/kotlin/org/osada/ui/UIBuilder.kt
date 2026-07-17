@@ -1,8 +1,8 @@
 package org.osada.ui
 
-import org.osada.ui.briefing.ScenarioBriefingController
 import org.osada.model.Equipment
 import org.osada.model.GameUnit
+import org.osada.ui.briefing.ScenarioBriefingController
 
 /** Shared accessor for the JS `game` global, used by several UI builders. */
 internal fun gameRef(): dynamic = js("typeof game !== 'undefined' ? game : null")
@@ -37,7 +37,7 @@ object UIBuilder {
         "reinforce" to "#",
         "overstrength" to "J",
         "undo" to "_",
-        "sleep" to "t"
+        "sleep" to "t",
     )
 
     // Order matches JS for...in integer-key iteration (numeric ascending: 1,2,3,4,8,9,10,11).
@@ -49,7 +49,7 @@ object UIBuilder {
         "8" to Pair(")", "Artillery"),
         "9" to Pair("*", "Air defence"),
         "10" to Pair("%", "Air Fighter"),
-        "11" to Pair("4", "Air Bomber")
+        "11" to Pair("4", "Air Bomber"),
     )
 
     data class UnitStatEntry(
@@ -62,7 +62,7 @@ object UIBuilder {
         // Section heading for the "All stats" expander (#statsRow); blank for entries that don't
         // land there (uLeader/uTransport/uCarrier go to the name-line sockets, uFlag/uCost
         // elsewhere) — see UnitInfoBuilder.buildUnitInfoWindow, the only reader of this field.
-        val group: String = ""
+        val group: String = "",
     )
 
     val unitStats = listOf(
@@ -89,7 +89,7 @@ object UIBuilder {
         UnitStatEntry("uTransport", "See unit/transport", null, true),
         UnitStatEntry("uCarrier", "See naval/air carrier", null, true),
         UnitStatEntry("uFlag", "country flag", null, false),
-        UnitStatEntry("uCost", "Unit price", "B", true, "cost", false)
+        UnitStatEntry("uCost", "Unit price", "B", true, "cost", false),
     )
 
     // --- Start menu (StartMenuBuilder) ---
@@ -118,21 +118,24 @@ object UIBuilder {
 
     // --- Layout (UILayout) ---
     fun scaleUI(scale: Double) = UILayout.scaleUI(scale)
-    fun createSlider(container: dynamic, id: String, value: Double, step: Double, min: Double, max: Double, callback: (() -> Unit)?) =
-        UILayout.createSlider(container, id, value, step, min, max, callback)
+    fun createSlider(
+        container: dynamic,
+        id: String,
+        value: Double,
+        step: Double,
+        min: Double,
+        max: Double,
+        callback: (() -> Unit)?,
+    ) = UILayout.createSlider(container, id, value, step, min, max, callback)
     fun resizeUI(size: Int) = UILayout.resizeUI(size)
     fun setLayoutConstrains(small: Boolean) = UILayout.setLayoutConstrains(small)
 
     // --- Messages (MessageDialogs) ---
     fun message(title: String, body: String, narrative: Boolean = false, callback: (() -> Unit)? = null) =
         MessageDialogs.message(title, body, narrative, callback)
-    fun showScenarioBriefing(
-        title: String,
-        rawData: dynamic,
-        onFinished: () -> Unit
-    ) = ScenarioBriefingController.show(title, rawData, onFinished)
-    fun reopenScenarioBriefing(onClosed: () -> Unit): Boolean =
-        ScenarioBriefingController.reopenLast(onClosed)
+    fun showScenarioBriefing(title: String, rawData: dynamic, onFinished: () -> Unit) =
+        ScenarioBriefingController.show(title, rawData, onFinished)
+    fun reopenScenarioBriefing(onClosed: () -> Unit): Boolean = ScenarioBriefingController.reopenLast(onClosed)
     fun isScenarioBriefingVisible(): Boolean = ScenarioBriefingController.isVisible()
     fun clearScenarioBriefing() = ScenarioBriefingController.clearLast()
     fun messageDynamic(title: String, body: String) = MessageDialogs.messageDynamic(title, body)

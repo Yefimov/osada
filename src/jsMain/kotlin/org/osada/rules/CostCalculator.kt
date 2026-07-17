@@ -1,13 +1,15 @@
 package org.osada.rules
 
-import org.osada.*
-import org.osada.model.*
+import org.osada.CURRENCY_MULTIPLIER
+import org.osada.UPGRADE_PENALTY
+import org.osada.model.Equipment
+import org.osada.model.GameUnit
 
 /**
  * Prestige cost calculations for buying, upgrading and selling units (including their
  * transports). Extracted from the former `GameRules` god-object; depends only on the
  * [Equipment] database and the currency/penalty constants. Faithful port of the
- * `openpanzer.js` cost helpers.
+ * `osada.js` cost helpers.
  */
 object CostCalculator {
 
@@ -28,19 +30,34 @@ object CostCalculator {
     fun calculateUpgradeCosts(unit: GameUnit, newEqid: Int, transportEqid: Int): Int {
         if (unit == null) return 0
         val newUnitCost = if (newEqid > 0) {
-            if (unit.eqid == newEqid) calculateUnitCosts(unit.eqid, -1)
-            else (calculateUnitCosts(newEqid, -1) * UPGRADE_PENALTY).toInt()
-        } else calculateUnitCosts(unit.eqid, -1)
+            if (unit.eqid == newEqid) {
+                calculateUnitCosts(unit.eqid, -1)
+            } else {
+                (calculateUnitCosts(newEqid, -1) * UPGRADE_PENALTY).toInt()
+            }
+        } else {
+            calculateUnitCosts(unit.eqid, -1)
+        }
         val newTransportCost = if (transportEqid > 0) {
-            if (unit.transport?.eqid == transportEqid) calculateUnitCosts(-1, transportEqid)
-            else (calculateUnitCosts(-1, transportEqid) * UPGRADE_PENALTY).toInt()
-        } else 0
+            if (unit.transport?.eqid == transportEqid) {
+                calculateUnitCosts(-1, transportEqid)
+            } else {
+                (calculateUnitCosts(-1, transportEqid) * UPGRADE_PENALTY).toInt()
+            }
+        } else {
+            0
+        }
         val oldCost = if (unit.transport != null) {
             // When the upgrade drops the transport (transportEqid == -1), the old
             // cost is the unit alone — matches JS `-1 == m ? costs(eqid,-1) : ...`.
-            if (transportEqid == -1) calculateUnitCosts(unit.eqid, -1)
-            else calculateUnitCosts(unit.eqid, unit.transport!!.eqid)
-        } else calculateUnitCosts(unit.eqid, -1)
+            if (transportEqid == -1) {
+                calculateUnitCosts(unit.eqid, -1)
+            } else {
+                calculateUnitCosts(unit.eqid, unit.transport!!.eqid)
+            }
+        } else {
+            calculateUnitCosts(unit.eqid, -1)
+        }
         return (newUnitCost + newTransportCost - oldCost) shr 0
     }
 

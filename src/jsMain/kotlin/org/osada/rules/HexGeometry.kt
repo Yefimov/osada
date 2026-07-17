@@ -1,7 +1,9 @@
 package org.osada.rules
 
-import org.osada.*
-import org.osada.model.*
+import org.osada.Direction
+import org.osada.model.Cell
+import org.osada.model.ExtendedCell
+import org.osada.rules.HexGeometry.getAdjacent
 import kotlin.math.abs
 
 /**
@@ -10,7 +12,7 @@ import kotlin.math.abs
  * Stateless math with no dependency on game state, extracted from the former
  * `GameRules` god-object so the spatial primitives can be reasoned about and
  * tested in isolation. Faithful port of the corresponding helpers in
- * `openpanzer.js` (`distance`, `getAdjacent`, `isAdjacent`, the `s` ring helper).
+ * `osada.js` (`distance`, `getAdjacent`, `isAdjacent`, the `s` ring helper).
  */
 object HexGeometry {
 
@@ -24,26 +26,23 @@ object HexGeometry {
     }
 
     /** The six neighbours of a cell, in the original JS ordering (N, NW, SW, S, SE, NE). */
-    fun getAdjacent(row: Int, col: Int): List<Cell> {
-        return listOf(
-            Cell(row - 1, col),
-            Cell(row - 1 + col % 2, col - 1),
-            Cell(row + col % 2, col - 1),
-            Cell(row + 1, col),
-            Cell(row + col % 2, col + 1),
-            Cell(row - 1 + col % 2, col + 1)
-        )
-    }
+    fun getAdjacent(row: Int, col: Int): List<Cell> = listOf(
+        Cell(row - 1, col),
+        Cell(row - 1 + col % 2, col - 1),
+        Cell(row + col % 2, col - 1),
+        Cell(row + 1, col),
+        Cell(row + col % 2, col + 1),
+        Cell(row - 1 + col % 2, col + 1),
+    )
 
     /** True when (row2,col2) is one of the six neighbours of (row1,col1). */
-    fun isAdjacent(row1: Int, col1: Int, row2: Int, col2: Int): Boolean {
-        return (row1 - 1 + col1 % 2 == row2 && col1 - 1 == col2)
-                || (row1 + col1 % 2 == row2 && col1 - 1 == col2)
-                || (row1 - 1 == row2 && col1 == col2)
-                || (row1 + 1 == row2 && col1 == col2)
-                || (row1 - 1 + col1 % 2 == row2 && col1 + 1 == col2)
-                || (row1 + col1 % 2 == row2 && col1 + 1 == col2)
-    }
+    fun isAdjacent(row1: Int, col1: Int, row2: Int, col2: Int): Boolean =
+        (row1 - 1 + col1 % 2 == row2 && col1 - 1 == col2) ||
+            (row1 + col1 % 2 == row2 && col1 - 1 == col2) ||
+            (row1 - 1 == row2 && col1 == col2) ||
+            (row1 + 1 == row2 && col1 == col2) ||
+            (row1 - 1 + col1 % 2 == row2 && col1 + 1 == col2) ||
+            (row1 + col1 % 2 == row2 && col1 + 1 == col2)
 
     /** Compass-style direction (with diagonal offset) from one cell toward another, or null. */
     fun getDirection(fromRow: Int, fromCol: Int, toRow: Int, toCol: Int): Int? {
@@ -77,16 +76,14 @@ object HexGeometry {
     }
 
     /** Maps a unit facing to the index of the corresponding cell in [getAdjacent]. */
-    fun facingToAdjacentIndex(facing: Int): Int {
-        return when (facing) {
-            Direction.N.value -> 0
-            Direction.NW.value, Direction.NNW.value, Direction.WNW.value, Direction.W.value -> 1
-            Direction.SW.value, Direction.WSW.value, Direction.SSW.value -> 2
-            Direction.S.value -> 3
-            Direction.SE.value, Direction.SSE.value, Direction.ESE.value -> 4
-            Direction.NE.value, Direction.E.value, Direction.ENE.value, Direction.NNE.value -> 5
-            else -> 0
-        }
+    fun facingToAdjacentIndex(facing: Int): Int = when (facing) {
+        Direction.N.value -> 0
+        Direction.NW.value, Direction.NNW.value, Direction.WNW.value, Direction.W.value -> 1
+        Direction.SW.value, Direction.WSW.value, Direction.SSW.value -> 2
+        Direction.S.value -> 3
+        Direction.SE.value, Direction.SSE.value, Direction.ESE.value -> 4
+        Direction.NE.value, Direction.E.value, Direction.ENE.value, Direction.NNE.value -> 5
+        else -> 0
     }
 
     /**
@@ -121,11 +118,29 @@ object HexGeometry {
                 if (n in 0 until rows) {
                     val rightCol = col + e
                     if (rightCol < cols) {
-                        result.add(if (extended) ExtendedCell(n, rightCol).also { it.range = distance(row, col, n, rightCol) } else Cell(n, rightCol))
+                        result.add(
+                            if (extended) {
+                                ExtendedCell(n, rightCol).also {
+                                    it.range =
+                                        distance(row, col, n, rightCol)
+                                }
+                            } else {
+                                Cell(n, rightCol)
+                            },
+                        )
                     }
                     val leftCol = col - e
                     if (leftCol > 0) {
-                        result.add(if (extended) ExtendedCell(n, leftCol).also { it.range = distance(row, col, n, leftCol) } else Cell(n, leftCol))
+                        result.add(
+                            if (extended) {
+                                ExtendedCell(n, leftCol).also {
+                                    it.range =
+                                        distance(row, col, n, leftCol)
+                                }
+                            } else {
+                                Cell(n, leftCol)
+                            },
+                        )
                     }
                 }
                 n++
@@ -140,7 +155,5 @@ object HexGeometry {
  */
 object Dice {
     /** Uniform integer roll in [min, max], matching the original `rollDice` formula. */
-    fun roll(min: Int, max: Int): Int {
-        return (kotlin.random.Random.nextDouble() * (max - min + 1)).toInt() + min
-    }
+    fun roll(min: Int, max: Int): Int = (kotlin.random.Random.nextDouble() * (max - min + 1)).toInt() + min
 }

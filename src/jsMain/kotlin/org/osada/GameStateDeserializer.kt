@@ -1,6 +1,8 @@
 package org.osada
 
-import org.osada.model.*
+import org.osada.model.GameUnit
+import org.osada.model.Player
+import org.osada.model.Transport
 
 /**
  * Pure JSON → model deserialization of the individual entities in a save file
@@ -38,7 +40,7 @@ object GameStateDeserializer {
         unit.hits = data.hits as? Int ?: 0
         unit.leader = data.leader as? Int ?: -1
         unit.nodossier = data.nodossier as? Boolean ?: false
-        unit.customName = data.customName as? String   // optional key; absent in pre-rename saves
+        unit.customName = data.customName as? String // optional key; absent in pre-rename saves
         val transportData = data.transport
         if (transportData != null) {
             val transport = Transport((transportData.eqid as? Int ?: 0))

@@ -2,8 +2,6 @@ package org.osada
 
 import kotlinx.browser.document
 import org.w3c.dom.events.Event
-import kotlin.js.JsExport
-import kotlin.js.JsName
 
 /**
  * Global event manager ported from the legacy `eventhandler.js`.

@@ -1,13 +1,15 @@
 package org.osada.rules
 
-import org.osada.*
-import org.osada.model.*
+import org.osada.TerrainType
+import org.osada.model.GameMap
+import org.osada.model.GameUnit
+import org.osada.model.Supply
 import kotlin.math.roundToInt
 
 /**
  * Resupply (ammo/fuel) and reinforcement (strength) rules, including the terrain and
  * adjacent-enemy penalties that reduce how much can be restored. Extracted from the
- * former `GameRules` god-object. Faithful port of the `openpanzer.js` supply helpers.
+ * former `GameRules` god-object. Faithful port of the `osada.js` supply helpers.
  */
 object SupplyRules {
 
@@ -46,7 +48,7 @@ object SupplyRules {
             ammo.roundToInt(),
             fuel.roundToInt(),
             (transportAmmoNeeded * terrainMod).roundToInt(),
-            (transportFuelNeeded * terrainMod).roundToInt()
+            (transportFuelNeeded * terrainMod).roundToInt(),
         )
     }
 
@@ -84,9 +86,9 @@ object SupplyRules {
             transportNeedsFuel = tr.fuel < trData.fuel
         }
         if (!needsAmmo && !needsFuel && !transportNeedsAmmo && !transportNeedsFuel) return false
-        return UnitPredicates.isGround(unit)
-                || (UnitPredicates.isAir(unit) && MovementRules.hasAirfield(map, unit))
-                || (UnitPredicates.isSea(unit) && unit.getHex()?.terrain != TerrainType.PORT.value)
+        return UnitPredicates.isGround(unit) ||
+            (UnitPredicates.isAir(unit) && MovementRules.hasAirfield(map, unit)) ||
+            (UnitPredicates.isSea(unit) && unit.getHex()?.terrain != TerrainType.PORT.value)
     }
 
     /** True when [unit] is eligible to reinforce (optionally over its full strength). */
@@ -95,14 +97,17 @@ object SupplyRules {
         if (overStrength) {
             // Overstrength applies only to a unit already at full strength (>=10);
             // JS guards `10 > strength` (strength < 10), which was inverted here.
-            if (unit.strength < 10 || unit.experience < 100
-                || unit.strength >= 10 + (unit.experience / 100.0).roundToInt()
-            ) return false
+            if (unit.strength < 10 ||
+                unit.experience < 100 ||
+                unit.strength >= 10 + (unit.experience / 100.0).roundToInt()
+            ) {
+                return false
+            }
         } else {
             if (unit.hasResupplied || unit.strength >= 10) return false
         }
-        return UnitPredicates.isGround(unit)
-                || (UnitPredicates.isAir(unit) && MovementRules.hasAirfield(map, unit))
-                || (UnitPredicates.isSea(unit) && unit.getHex()?.terrain != TerrainType.PORT.value)
+        return UnitPredicates.isGround(unit) ||
+            (UnitPredicates.isAir(unit) && MovementRules.hasAirfield(map, unit)) ||
+            (UnitPredicates.isSea(unit) && unit.getHex()?.terrain != TerrainType.PORT.value)
     }
 }

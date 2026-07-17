@@ -1,14 +1,20 @@
 package org.osada.rules
 
-import org.osada.*
-import org.osada.model.*
+import org.osada.MovMethod
+import org.osada.TerrainType
+import org.osada.UnitClass
+import org.osada.model.Equipment
+import org.osada.model.EquipmentData
+import org.osada.model.GameUnit
+import org.osada.model.Transport
+import org.osada.unitEntrenchRate
 
 /**
  * Stateless predicates classifying a unit by movement domain (air/sea/ground/train),
  * resource usage (fuel/ammo) and simple per-unit capabilities (mount/unmount/capture/
  * entrench). Extracted from the former `GameRules` god-object: these answer "what kind
  * of unit is this?" without touching the map. Faithful port of the equivalent
- * `openpanzer.js` helpers.
+ * `osada.js` helpers.
  */
 object UnitPredicates {
 
@@ -37,12 +43,10 @@ object UnitPredicates {
         return isGround(unit) && (movmethod == MovMethod.RAIL.value || movmethod == MovMethod.DEEP_NAVAL.value)
     }
 
-    fun isCloseCombatTerrain(terrain: Int): Boolean {
-        return terrain == TerrainType.CITY.value
-                || terrain == TerrainType.FOREST.value
-                || terrain == TerrainType.MOUNTAIN.value
-                || terrain == TerrainType.FORTIFICATION.value
-    }
+    fun isCloseCombatTerrain(terrain: Int): Boolean = terrain == TerrainType.CITY.value ||
+        terrain == TerrainType.FOREST.value ||
+        terrain == TerrainType.MOUNTAIN.value ||
+        terrain == TerrainType.FORTIFICATION.value
 
     fun isEnemy(a: GameUnit?, b: GameUnit?): Boolean {
         if (a == null || b == null) return false
@@ -54,18 +58,16 @@ object UnitPredicates {
         return (Equipment.equipment[eqid]?.groundweight ?: 0) > 0
     }
 
-    fun unitUsesFuel(unit: GameUnit): Boolean {
-        return unitUsesFuelData(unit.unitData())
-    }
+    fun unitUsesFuel(unit: GameUnit): Boolean = unitUsesFuelData(unit.unitData())
 
-    fun unitUsesFuel(transport: Transport): Boolean {
-        return unitUsesFuelData(transport.unitData())
-    }
+    fun unitUsesFuel(transport: Transport): Boolean = unitUsesFuelData(transport.unitData())
 
     private fun unitUsesFuelData(data: EquipmentData): Boolean {
         if (data.fuel == 0) return false
         val method = data.movmethod
-        return method != MovMethod.LEG.value && method != MovMethod.TOWED.value && method != MovMethod.ALL_TERRAIN_LEG.value
+        return method != MovMethod.LEG.value &&
+            method != MovMethod.TOWED.value &&
+            method != MovMethod.ALL_TERRAIN_LEG.value
     }
 
     fun unitLowFuel(unit: GameUnit, threshold: Int): Boolean {
@@ -73,9 +75,7 @@ object UnitPredicates {
         return if (!unit.isMounted) unit.fuel < threshold else unit.transport?.fuel ?: 0 < threshold
     }
 
-    fun unitUsesAmmo(unit: GameUnit): Boolean {
-        return unit.unitData().ammo > 0
-    }
+    fun unitUsesAmmo(unit: GameUnit): Boolean = unit.unitData().ammo > 0
 
     fun unitLowAmmo(unit: GameUnit, threshold: Int): Boolean {
         if (!unitUsesAmmo(unit)) return false
@@ -85,10 +85,13 @@ object UnitPredicates {
     fun canCapture(unit: GameUnit): Boolean {
         if (isAir(unit)) return false
         val unitClass = unit.unitData().uclass
-        if (unit.isMounted && (unitClass == UnitClass.ANTI_TANK.value
-                    || unitClass == UnitClass.FLAK.value
-                    || unitClass == UnitClass.ARTILLERY.value
-                    || unitClass == UnitClass.AIR_DEFENCE.value)
+        if (unit.isMounted &&
+            (
+                unitClass == UnitClass.ANTI_TANK.value ||
+                    unitClass == UnitClass.FLAK.value ||
+                    unitClass == UnitClass.ARTILLERY.value ||
+                    unitClass == UnitClass.AIR_DEFENCE.value
+                )
         ) {
             return false
         }
@@ -100,11 +103,7 @@ object UnitPredicates {
         return unitEntrenchRate[unit.unitData().uclass] > 0
     }
 
-    fun canMount(unit: GameUnit): Boolean {
-        return !unit.hasMoved && isGround(unit) && unit.transport != null
-    }
+    fun canMount(unit: GameUnit): Boolean = !unit.hasMoved && isGround(unit) && unit.transport != null
 
-    fun canUnmount(unit: GameUnit): Boolean {
-        return !unit.hasMoved && unit.isMounted
-    }
+    fun canUnmount(unit: GameUnit): Boolean = !unit.hasMoved && unit.isMounted
 }

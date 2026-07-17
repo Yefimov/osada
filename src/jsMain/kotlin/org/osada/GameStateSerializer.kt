@@ -1,6 +1,10 @@
 package org.osada
 
-import org.osada.model.*
+import org.osada.model.GameMap
+import org.osada.model.GameUnit
+import org.osada.model.Hex
+import org.osada.model.Player
+import org.osada.model.Transport
 import org.osada.scenario.Scenario
 import kotlin.js.json
 
@@ -26,33 +30,31 @@ object GameStateSerializer {
             Pair("fmt", SAVE_FORMAT_VERSION),
             Pair("scenario", scenario?.let { serializeScenario(it) }),
             Pair("players", scenario?.map?.getPlayers()?.map { serializePlayer(it) }?.toTypedArray()),
-            Pair("campaign", buildCampaignData(game))
+            Pair("campaign", buildCampaignData(game)),
         )
         return JSON.stringify(base)
     }
 
-    fun serializeScenario(scenario: Scenario): dynamic {
-        return json(
-            Pair("file", scenario.file ?: ""),
-            Pair("name", scenario.name),
-            Pair("description", scenario.getDescription()),
-            Pair("maxTurns", scenario.maxTurns),
-            Pair("date", scenario.date.getTime()),
-            Pair("dayTurn", scenario.dayTurn),
-            Pair("turnsPerDay", scenario.turnsPerDay),
-            Pair("atmosferic", scenario.atmosferic),
-            Pair("latitude", scenario.latitude),
-            Pair("ground", scenario.ground),
-            Pair("eqp", scenario.eqp),
-            Pair("expPerSide", scenario.expPerSide.toTypedArray()),
-            Pair("unitsCostPerSide", scenario.unitsCostPerSide.toTypedArray()),
-            Pair("victoryTurns", scenario.map.victoryTurns.toTypedArray()),
-            Pair("currentPlayerId", scenario.map.currentPlayer?.id ?: 0),
-            Pair("turn", scenario.map.turn),
-            Pair("map", serializeMap(scenario.map)),
-            Pair("reinforcements", serializeReinforcements(scenario.reinforcements))
-        )
-    }
+    fun serializeScenario(scenario: Scenario): dynamic = json(
+        Pair("file", scenario.file ?: ""),
+        Pair("name", scenario.name),
+        Pair("description", scenario.getDescription()),
+        Pair("maxTurns", scenario.maxTurns),
+        Pair("date", scenario.date.getTime()),
+        Pair("dayTurn", scenario.dayTurn),
+        Pair("turnsPerDay", scenario.turnsPerDay),
+        Pair("atmosferic", scenario.atmosferic),
+        Pair("latitude", scenario.latitude),
+        Pair("ground", scenario.ground),
+        Pair("eqp", scenario.eqp),
+        Pair("expPerSide", scenario.expPerSide.toTypedArray()),
+        Pair("unitsCostPerSide", scenario.unitsCostPerSide.toTypedArray()),
+        Pair("victoryTurns", scenario.map.victoryTurns.toTypedArray()),
+        Pair("currentPlayerId", scenario.map.currentPlayer?.id ?: 0),
+        Pair("turn", scenario.map.turn),
+        Pair("map", serializeMap(scenario.map)),
+        Pair("reinforcements", serializeReinforcements(scenario.reinforcements)),
+    )
 
     fun serializeMap(map: GameMap): dynamic {
         val rows = js("[]")
@@ -71,24 +73,22 @@ object GameStateSerializer {
             Pair("name", map.name),
             Pair("turn", map.turn),
             Pair("maxTurns", map.maxTurns),
-            Pair("hexes", rows)
+            Pair("hexes", rows),
         )
     }
 
-    fun serializeHex(hex: Hex): dynamic {
-        return json(
-            Pair("terrain", hex.terrain),
-            Pair("road", hex.road),
-            Pair("rail", hex.rail),
-            Pair("owner", hex.owner),
-            Pair("flag", hex.flag),
-            Pair("isDeployment", hex.isDeployment),
-            Pair("victorySide", hex.victorySide),
-            Pair("name", hex.name),
-            Pair("unit", hex.unit?.let { serializeUnit(it) }),
-            Pair("airunit", hex.airunit?.let { serializeUnit(it) })
-        )
-    }
+    fun serializeHex(hex: Hex): dynamic = json(
+        Pair("terrain", hex.terrain),
+        Pair("road", hex.road),
+        Pair("rail", hex.rail),
+        Pair("owner", hex.owner),
+        Pair("flag", hex.flag),
+        Pair("isDeployment", hex.isDeployment),
+        Pair("victorySide", hex.victorySide),
+        Pair("name", hex.name),
+        Pair("unit", hex.unit?.let { serializeUnit(it) }),
+        Pair("airunit", hex.airunit?.let { serializeUnit(it) }),
+    )
 
     fun serializeUnit(unit: GameUnit): dynamic {
         val obj = json(
@@ -117,7 +117,7 @@ object GameStateSerializer {
             Pair("hits", unit.hits),
             Pair("leader", unit.leader),
             Pair("nodossier", unit.nodossier),
-            Pair("transport", unit.transport?.let { serializeTransport(it) })
+            Pair("transport", unit.transport?.let { serializeTransport(it) }),
         )
         // Optional key: emitted only when the player renamed the unit, so saves of unrenamed
         // units stay byte-identical to the pre-rename format (old saves simply lack the key).
@@ -125,13 +125,11 @@ object GameStateSerializer {
         return obj
     }
 
-    fun serializeTransport(transport: Transport): dynamic {
-        return json(
-            Pair("eqid", transport.eqid),
-            Pair("ammo", transport.ammo),
-            Pair("fuel", transport.fuel)
-        )
-    }
+    fun serializeTransport(transport: Transport): dynamic = json(
+        Pair("eqid", transport.eqid),
+        Pair("ammo", transport.ammo),
+        Pair("fuel", transport.fuel),
+    )
 
     fun serializeReinforcements(reinforcements: Map<Int, List<Scenario.Reinforcement>>): dynamic {
         val arr = js("[]")
@@ -143,33 +141,29 @@ object GameStateSerializer {
         return arr
     }
 
-    fun serializeReinforcement(r: Scenario.Reinforcement): dynamic {
-        return json(
-            Pair("turn", r.turn),
-            Pair("row", r.row),
-            Pair("col", r.col),
-            Pair("unit", serializeUnit(r.unit)),
-            Pair("id", r.id)
-        )
-    }
+    fun serializeReinforcement(r: Scenario.Reinforcement): dynamic = json(
+        Pair("turn", r.turn),
+        Pair("row", r.row),
+        Pair("col", r.col),
+        Pair("unit", serializeUnit(r.unit)),
+        Pair("id", r.id),
+    )
 
-    fun serializePlayer(player: Player): dynamic {
-        return json(
-            Pair("id", player.id),
-            Pair("side", player.side),
-            Pair("country", player.country),
-            Pair("prestige", player.prestige),
-            Pair("score", player.score),
-            Pair("playedTurn", player.playedTurn),
-            Pair("type", player.type.value),
-            Pair("airTransports", player.airTransports),
-            Pair("navalTransports", player.navalTransports),
-            Pair("supportCountries", player.supportCountries.toTypedArray()),
-            Pair("prestigePerTurn", player.prestigePerTurn.toTypedArray()),
-            Pair("coreUnits", player.getCoreUnitList().map { serializeUnit(it) }.toTypedArray()),
-            Pair("dossier", player.dossier)
-        )
-    }
+    fun serializePlayer(player: Player): dynamic = json(
+        Pair("id", player.id),
+        Pair("side", player.side),
+        Pair("country", player.country),
+        Pair("prestige", player.prestige),
+        Pair("score", player.score),
+        Pair("playedTurn", player.playedTurn),
+        Pair("type", player.type.value),
+        Pair("airTransports", player.airTransports),
+        Pair("navalTransports", player.navalTransports),
+        Pair("supportCountries", player.supportCountries.toTypedArray()),
+        Pair("prestigePerTurn", player.prestigePerTurn.toTypedArray()),
+        Pair("coreUnits", player.getCoreUnitList().map { serializeUnit(it) }.toTypedArray()),
+        Pair("dossier", player.dossier),
+    )
 
     /** Campaign-specific save block (core unit roster), or null when not in a campaign. */
     fun buildCampaignData(game: Game): dynamic? {
@@ -181,7 +175,7 @@ object GameStateSerializer {
             Pair("scenario", campaign.getCurrentScenario().id),
             Pair("country", campaign.country),
             Pair("difficulty", campaign.difficulty),
-            Pair("coreUnits", player.getCoreUnitList().map { serializeCoreUnit(it) }.toTypedArray())
+            Pair("coreUnits", player.getCoreUnitList().map { serializeCoreUnit(it) }.toTypedArray()),
         )
     }
 
@@ -200,7 +194,12 @@ object GameStateSerializer {
             Pair("isDeployed", unit.isDeployed),
             Pair("hasOverstrength", unit.hasOverstrength),
             Pair("transport", unit.transport?.let { serializeTransport(it) }),
-            Pair("player", unit.player?.let { json(Pair("id", it.id), Pair("side", it.side), Pair("country", it.country)) })
+            Pair(
+                "player",
+                unit.player?.let {
+                    json(Pair("id", it.id), Pair("side", it.side), Pair("country", it.country))
+                },
+            ),
         )
         // Same optional-key rule as serializeUnit.
         unit.customName?.let { obj.asDynamic().customName = it }

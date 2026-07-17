@@ -1,5 +1,6 @@
 package org.osada.model
 
+import org.osada.model.Equipment.getCountryEquipmentByClass
 import org.w3c.xhr.XMLHttpRequest
 import kotlin.js.Json
 
@@ -15,6 +16,7 @@ object Equipment {
     const val equipmentPath = "resources/equipment/"
     const val filePrefix = "equipment-country-"
     const val defaultName = "eqp-adlerkorps"
+
     // All equipment now lives in one merged DB (see tools/eqp-merge/); [name] is no longer a
     // folder selector, it's the pre-merge efile identifier used only as the availability-set
     // key (which merged eqids a given campaign/scenario may purchase -- see [availabilityMap]).
@@ -35,7 +37,9 @@ object Equipment {
     fun hasEquipment(eqid: Int): Boolean = _equipment.containsKey(eqid)
     fun getEquipment(eqid: Int): EquipmentData? = _equipment[eqid]
     fun firstEqid(): Int? = _equipment.keys.firstOrNull()
-    fun putEquipment(eqid: Int, data: EquipmentData) { _equipment[eqid] = data }
+    fun putEquipment(eqid: Int, data: EquipmentData) {
+        _equipment[eqid] = data
+    }
 
     val countryNames = listOf(
         "New Zealand", "Irregular Forces", "British India", "Australia", "Hungary", "Japan",
@@ -98,19 +102,15 @@ object Equipment {
         "Picts", "celtish Opponents", "germanic Opponents", "Western Roman Empire", "Byzantine Empire", "Sarmatians",
         "Scoti", "Thebes", "Panzerzug", "Nationalist Chinese", "Afrika Korps", "Communist Chinese",
         "Republican", "Allied Forces", "Axis Forces", "Poland (unmapped basekorp roster)", "Unassigned (basekorp)", "Russian Cossack Forces (Axis-aligned)",
-        "Russian Federation", "Unassigned Flag (lxf)"
+        "Russian Federation", "Unassigned Flag (lxf)",
     )
 
-    fun getCountryName(country: Int): String {
-        return if (country in countryNames.indices) countryNames[country] else "Unknown"
-    }
+    fun getCountryName(country: Int): String = if (country in countryNames.indices) countryNames[country] else "Unknown"
 
     // eqpName is unused since the merge (one shared countryNames list for every campaign) --
     // kept as a parameter so every existing call site (which passes the scenario's own eqp,
     // now just its availability-set key) doesn't need to change.
-    fun getCountryNameByEqp(country: Int, eqpName: String): String {
-        return getCountryName(country)
-    }
+    fun getCountryNameByEqp(country: Int, eqpName: String): String = getCountryName(country)
 
     fun resetEquipment() {
         _equipment.clear()
@@ -144,7 +144,9 @@ object Equipment {
         if (asyncLoad) {
             val request = XMLHttpRequest()
             request.onload = {
-                if (request.readyState == 4.toShort() && (request.status == 200.toShort() || request.status == 0.toShort())) {
+                if (request.readyState == 4.toShort() &&
+                    (request.status == 200.toShort() || request.status == 0.toShort())
+                ) {
                     parseCountryEquipment(country, JSON.parse(request.responseText))
                     onComplete?.invoke()
                 }
@@ -182,7 +184,9 @@ object Equipment {
                 loaded++
             }
         }
-        console.log("[OpenPanzer] parseCountryEquipment country=$country unitsLoaded=$loaded totalEquipment=${_equipment.size}")
+        console.log(
+            "[osada] parseCountryEquipment country=$country unitsLoaded=$loaded totalEquipment=${_equipment.size}",
+        )
     }
 
     private fun checkComplete() {
@@ -226,7 +230,7 @@ object Equipment {
         loadAvailabilityIfNeeded()
         val allowlist = availabilityMap?.get(name)
         if (allowlist == null) {
-            console.warn("[OpenPanzer] no availability entry for '$name' -- purchase list is unfiltered")
+            console.warn("[osada] no availability entry for '$name' -- purchase list is unfiltered")
         }
         return allowlist
     }
@@ -240,7 +244,7 @@ object Equipment {
         unitClass: org.osada.UnitClass,
         country: Int,
         sortProperty: String? = null,
-        descending: Boolean = false
+        descending: Boolean = false,
     ): List<Int> {
         val classValue = unitClass.value
         val index = equipmentIndexes[country] ?: return emptyList()
@@ -253,11 +257,7 @@ object Equipment {
     /** Union of every purchasable class for a country. Reachable by re-clicking
      *  the already-active class tab, a hidden toggle [EquipmentWindowBuilder] drives
      *  via UnitClass.NONE=0 as the sentinel class value. */
-    fun getCountryEquipmentAll(
-        country: Int,
-        sortProperty: String? = null,
-        descending: Boolean = false
-    ): List<Int> {
+    fun getCountryEquipmentAll(country: Int, sortProperty: String? = null, descending: Boolean = false): List<Int> {
         val index = equipmentIndexes[country] ?: return emptyList()
         val classIndex = index["unitclass"]
         if (classIndex == undefined || classIndex == null) return emptyList()
@@ -276,7 +276,7 @@ object Equipment {
         unitClass: org.osada.UnitClass,
         countries: List<Int>,
         sortProperty: String? = null,
-        descending: Boolean = false
+        descending: Boolean = false,
     ): List<Int> {
         val classValue = unitClass.value
         val all = mutableListOf<Int>()
@@ -294,7 +294,7 @@ object Equipment {
     fun getCountriesEquipmentAll(
         countries: List<Int>,
         sortProperty: String? = null,
-        descending: Boolean = false
+        descending: Boolean = false,
     ): List<Int> {
         val all = mutableListOf<Int>()
         countries.forEach { all.addAll(getCountryEquipmentAll(it)) }
@@ -312,7 +312,7 @@ object Equipment {
                 if (descending) value else -value
             }
                 .thenBy { _equipment[it]?.cost ?: 0 }
-                .thenBy { it }
+                .thenBy { it },
         )
     }
 
@@ -323,38 +323,30 @@ object Equipment {
         return applyAvailabilityFilter(ids)
     }
 
-    private fun getProperty(eq: EquipmentData, property: String): Int {
-        return when (property) {
-            "cost" -> eq.cost
-            "initiative" -> eq.initiative
-            "gunrange" -> eq.gunrange
-            "movpoints" -> eq.movpoints
-            "spotrange" -> eq.spotrange
-            "hardatk" -> eq.hardatk
-            "softatk" -> eq.softatk
-            "airatk" -> eq.airatk
-            "navalatk" -> eq.navalatk
-            "grounddef" -> eq.grounddef
-            "airdef" -> eq.airdef
-            "closedef" -> eq.closedef
-            "rangedefmod" -> eq.rangedefmod
-            "yearavailable" -> eq.yearavailable
-            "ammo" -> eq.ammo   // was missing: "Sort: Unit Ammo" silently returned 0 for all
-            else -> 0
-        }
+    private fun getProperty(eq: EquipmentData, property: String): Int = when (property) {
+        "cost" -> eq.cost
+        "initiative" -> eq.initiative
+        "gunrange" -> eq.gunrange
+        "movpoints" -> eq.movpoints
+        "spotrange" -> eq.spotrange
+        "hardatk" -> eq.hardatk
+        "softatk" -> eq.softatk
+        "airatk" -> eq.airatk
+        "navalatk" -> eq.navalatk
+        "grounddef" -> eq.grounddef
+        "airdef" -> eq.airdef
+        "closedef" -> eq.closedef
+        "rangedefmod" -> eq.rangedefmod
+        "yearavailable" -> eq.yearavailable
+        "ammo" -> eq.ammo // was missing: "Sort: Unit Ammo" silently returned 0 for all
+        else -> 0
     }
 
-    fun isBridge(eqid: Int): Boolean {
-        return (_equipment[eqid]?.attr?.and(8) ?: 0) != 0
-    }
+    fun isBridge(eqid: Int): Boolean = (_equipment[eqid]?.attr?.and(8) ?: 0) != 0
 
-    fun ignoresEntrenchment(eqid: Int): Boolean {
-        return (_equipment[eqid]?.attr?.and(4) ?: 0) != 0
-    }
+    fun ignoresEntrenchment(eqid: Int): Boolean = (_equipment[eqid]?.attr?.and(4) ?: 0) != 0
 
-    fun isPurchasable(eqid: Int): Boolean {
-        return (_equipment[eqid]?.attr?.and(262144) ?: 0) != 0
-    }
+    fun isPurchasable(eqid: Int): Boolean = (_equipment[eqid]?.attr?.and(262144) ?: 0) != 0
 
     fun canInitiateAttackOnUnitType(attackerEqid: Int, defenderEqid: Int): Boolean {
         val attacker = _equipment[attackerEqid] ?: return false
@@ -362,9 +354,9 @@ object Equipment {
         val attackerClass = attacker.uclass
         val target = defender.target
 
-        if (defender.uclass == org.osada.UnitClass.SUBMARINE.value
-            && attackerClass != org.osada.UnitClass.DESTROYER.value
-            && attackerClass != org.osada.UnitClass.TACTICAL_BOMBER.value
+        if (defender.uclass == org.osada.UnitClass.SUBMARINE.value &&
+            attackerClass != org.osada.UnitClass.DESTROYER.value &&
+            attackerClass != org.osada.UnitClass.TACTICAL_BOMBER.value
         ) {
             return false
         }
@@ -373,15 +365,15 @@ object Equipment {
         if (target == org.osada.UnitType.HARD.value && (attacker.attr.and(32) != 0)) return false
         if (target == org.osada.UnitType.AIR.value) {
             if (attacker.attr.and(64) != 0) return false
-            if (attackerClass != org.osada.UnitClass.AIR_DEFENCE.value
-                && attackerClass != org.osada.UnitClass.FIGHTER.value
-                && attackerClass != org.osada.UnitClass.LEVEL_BOMBER.value
-                && attackerClass != org.osada.UnitClass.TACTICAL_BOMBER.value
-                && attackerClass != org.osada.UnitClass.BATTLESHIP.value
-                && attackerClass != org.osada.UnitClass.BATTLE_CRUISER.value
-                && attackerClass != org.osada.UnitClass.LIGHT_CRUISER.value
-                && attackerClass != org.osada.UnitClass.AIR_TRANSPORT.value
-                && attacker.attr.and(32768) == 0
+            if (attackerClass != org.osada.UnitClass.AIR_DEFENCE.value &&
+                attackerClass != org.osada.UnitClass.FIGHTER.value &&
+                attackerClass != org.osada.UnitClass.LEVEL_BOMBER.value &&
+                attackerClass != org.osada.UnitClass.TACTICAL_BOMBER.value &&
+                attackerClass != org.osada.UnitClass.BATTLESHIP.value &&
+                attackerClass != org.osada.UnitClass.BATTLE_CRUISER.value &&
+                attackerClass != org.osada.UnitClass.LIGHT_CRUISER.value &&
+                attackerClass != org.osada.UnitClass.AIR_TRANSPORT.value &&
+                attacker.attr.and(32768) == 0
             ) {
                 return false
             }

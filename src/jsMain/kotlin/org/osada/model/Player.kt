@@ -1,9 +1,14 @@
 package org.osada.model
 
-import org.osada.*
+import org.osada.GameHolder
+import org.osada.OVERSTRENGTH_PENALTY
+import org.osada.PlayerType
+import org.osada.UnitClass
+import org.osada.difficultyModifiers
+import org.osada.outcomeNames
 import org.osada.rules.GameRules
-import kotlin.js.JsExport
-import kotlin.js.JsName
+import org.osada.scoreGains
+import org.osada.sideNames
 import kotlin.js.json
 
 @JsExport
@@ -58,7 +63,7 @@ class Player {
         val units = json(
             Pair("lostaux", lostaux),
             Pair("lostcore", lostcore),
-            Pair("killed", killed)
+            Pair("killed", killed),
         )
         val outcomes = json()
         outcomeNames.keys.forEach { outcomes[it] = js("[]") }
@@ -88,9 +93,7 @@ class Player {
     fun getCountryName(): String = Equipment.getCountryName(country)
     fun getSideName(): String = sideNames[side]
 
-    fun hasUndeployedUnits(): Boolean {
-        return coreUnits.any { !it.isDeployed }
-    }
+    fun hasUndeployedUnits(): Boolean = coreUnits.any { !it.isDeployed }
 
     fun buyUnit(eqid: Int, transportEqid: Int): Boolean {
         val cost = GameRules.calculateUnitCosts(eqid, transportEqid)

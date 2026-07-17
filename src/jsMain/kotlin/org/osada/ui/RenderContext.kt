@@ -2,10 +2,16 @@ package org.osada.ui
 
 import kotlinx.browser.document
 import kotlinx.browser.window
-import org.osada.*
-import org.osada.model.*
+import org.osada.TerrainType
+import org.osada.model.Cell
+import org.osada.model.Equipment
+import org.osada.model.GameMap
+import org.osada.model.ScreenPos
+import org.osada.uiSettings
 import kotlin.js.json
-import kotlin.math.*
+import kotlin.math.PI
+import kotlin.math.max
+import kotlin.math.min
 
 /* ------------------------------------------------------------------ */
 /*  Shared style objects (mirror the legacy JS objects)                */
@@ -19,25 +25,25 @@ internal val hexStyles = json(
         "fillColor" to "rgba(120,100,100,0.5)",
         "lineColor" to "rgba(0,0,0,0.4)",
         "lineWidth" to 1,
-        "lineJoin" to "miter"
+        "lineJoin" to "miter",
     ),
     "movespotted" to json(
         "fillColor" to "rgba(128,128,128,0.5)",
         "lineColor" to "rgba(0,0,0,0.4)",
         "lineWidth" to 1,
-        "lineJoin" to "miter"
+        "lineJoin" to "miter",
     ),
     "attack" to json(
         "fillColor" to null,
         "lineColor" to "rgba(239, 0, 0,0.8)",
         "lineWidth" to 3,
-        "lineJoin" to "miter"
+        "lineJoin" to "miter",
     ),
     "current" to json(
         "fillColor" to null,
         "lineColor" to "rgba(255, 240, 0, 0.8)",
         "lineWidth" to 3,
-        "lineJoin" to "round"
+        "lineJoin" to "round",
     ),
     "currentstroke" to json(
         "fillColor" to null,
@@ -46,44 +52,44 @@ internal val hexStyles = json(
         "shadowOffsetX" to 1,
         "shadowOffsetY" to 2,
         "shadowColor" to "black",
-        "lineJoin" to "round"
+        "lineJoin" to "round",
     ),
     "generic" to json(
         "fillColor" to null,
         "lineColor" to "rgba(39,44,47,0.9)",
         "lineWidth" to 0.4,
-        "lineJoin" to "miter"
+        "lineJoin" to "miter",
     ),
     "deploy" to json(
         "fillColor" to "rgba(128,128,128,0.8)",
         "lineColor" to "rgba(0,0,0,0.4)",
         "lineWidth" to 1,
-        "lineJoin" to "miter"
+        "lineJoin" to "miter",
     ),
     "ownunit" to json(
         "fillColor" to "rgba(30,144,255,0.3)",
         "lineColor" to "rgba(0,0,0,0.4)",
         "lineWidth" to 0,
-        "lineJoin" to "miter"
+        "lineJoin" to "miter",
     ),
     "airunit" to json(
         "fillColor" to "rgba(30,144,255,0.3)",
         "lineColor" to "rgba(50, 110, 240,0.6)",
         "lineWidth" to 2,
-        "lineJoin" to "miter"
+        "lineJoin" to "miter",
     ),
     "combat" to json(
         "fillColor" to "rgba(255, 255, 255,0.15)",
         "lineColor" to "rgba(239,0,0,0.7)",
         "lineWidth" to 2,
-        "lineJoin" to "miter"
+        "lineJoin" to "miter",
     ),
     "fog" to json(
         "fillColor" to "rgba(20,24,28,0.45)",
         "lineColor" to null,
         "lineWidth" to 0,
-        "lineJoin" to "miter"
-    )
+        "lineJoin" to "miter",
+    ),
 )
 
 internal val unitStyles = json(
@@ -96,18 +102,18 @@ internal val unitStyles = json(
     "alliedPlayerText" to "#696969",
     "movedUnitText" to "#BDBDBD",
     "terrainText" to "#333333",
-    "terrainTextStroke" to "#f8e064"
+    "terrainTextStroke" to "#f8e064",
 )
 
 internal val terrainEncoding = listOf(
     "A", "B", "C", "D", "D", "E", "F", "G", "H", "I",
-    "J", "K", "L", "M", "N", "O", "Q"
+    "J", "K", "L", "M", "N", "O", "Q",
 )
 
 internal val directionToRadians = arrayOf(
     PI, 5 * PI / 6, 3 * PI / 4, 2 * PI / 3, PI / 2, PI / 3,
     PI / 4, PI / 6, 0.0, 11 * PI / 6, 7 * PI / 4, 5 * PI / 3,
-    3 * PI / 2, 4 * PI / 3, 5 * PI / 4, 7 * PI / 6
+    3 * PI / 2, 4 * PI / 3, 5 * PI / 4, 7 * PI / 6,
 )
 
 /**
@@ -219,9 +225,9 @@ internal class RenderContext(var map: GameMap?) {
     fun setIconsetTint(iconset: Int) {
         val mc = mapCanvas ?: return
         mc.style.filter = when (iconset) {
-            1 -> "saturate(0.55) brightness(1.18)"                    // Snow — washed-out, brighter
-            2 -> "sepia(0.45) saturate(1.3) brightness(1.05)"         // Desert — sandy
-            3 -> "saturate(1.45) brightness(0.95) hue-rotate(-8deg)"  // Jungle — lush green
+            1 -> "saturate(0.55) brightness(1.18)" // Snow — washed-out, brighter
+            2 -> "sepia(0.45) saturate(1.3) brightness(1.05)" // Desert — sandy
+            3 -> "saturate(1.45) brightness(0.95) hue-rotate(-8deg)" // Jungle — lush green
             else -> "none"
         }
     }
@@ -262,12 +268,42 @@ internal class RenderContext(var map: GameMap?) {
             img.addEventListener("error", { checkDone() })
         }
 
-        if (attackCursorImage == null) load("resources/ui/cursors/attack.png") { attackCursorImage = it } else waitFor(attackCursorImage)
-        if (flagImage == null) load("resources/ui/flags/${Equipment.unitedName}/flags_med.png") { flagImage = it } else waitFor(flagImage)
+        if (attackCursorImage ==
+            null
+        ) {
+            load("resources/ui/cursors/attack.png") { attackCursorImage = it }
+        } else {
+            waitFor(attackCursorImage)
+        }
+        if (flagImage ==
+            null
+        ) {
+            load("resources/ui/flags/${Equipment.unitedName}/flags_med.png") { flagImage = it }
+        } else {
+            waitFor(flagImage)
+        }
         if (fireImage == null) load("resources/ui/indicators/unit-fire.png") { fireImage = it } else waitFor(fireImage)
-        if (noAmmoImage == null) load("resources/ui/indicators/unit-fire-no-ammo.png") { noAmmoImage = it } else waitFor(noAmmoImage)
-        if (leaderAxisImage == null) load("resources/ui/indicators/unit-leader-axis.png") { leaderAxisImage = it } else waitFor(leaderAxisImage)
-        if (leaderAlliedImage == null) load("resources/ui/indicators/unit-leader-allied.png") { leaderAlliedImage = it } else waitFor(leaderAlliedImage)
+        if (noAmmoImage ==
+            null
+        ) {
+            load("resources/ui/indicators/unit-fire-no-ammo.png") { noAmmoImage = it }
+        } else {
+            waitFor(noAmmoImage)
+        }
+        if (leaderAxisImage ==
+            null
+        ) {
+            load("resources/ui/indicators/unit-leader-axis.png") { leaderAxisImage = it }
+        } else {
+            waitFor(leaderAxisImage)
+        }
+        if (leaderAlliedImage ==
+            null
+        ) {
+            load("resources/ui/indicators/unit-leader-allied.png") { leaderAlliedImage = it }
+        } else {
+            waitFor(leaderAlliedImage)
+        }
         if (bridgeImage == null) load("resources/units/images/bridg.png") { bridgeImage = it } else waitFor(bridgeImage)
 
         // No map yet (first cacheImages call at startup) means there is no terrain to load —
@@ -316,7 +352,7 @@ internal class RenderContext(var map: GameMap?) {
         val list = map?.getUnitImagesList() ?: js("{}")
         val keys = js("Object.keys(list)")
         val keyCount = (keys.length as? Number)?.toInt() ?: 0
-        console.log("[OpenPanzer] Render.cacheImages map=${map?.name} unitImagesToLoad=$keyCount")
+        console.log("[osada] Render.cacheImages map=${map?.name} unitImagesToLoad=$keyCount")
         for (i in 0 until keyCount) {
             val key = keys[i] as? String ?: continue
             val src = list[key] as? String ?: continue
@@ -348,7 +384,9 @@ internal class RenderContext(var map: GameMap?) {
         val scaledH = zh * zoom
         var left = window.innerWidth / 2.0 - scaledW / 2.0
         if (left < 0) left = 0.0
-        console.log("[OpenPanzer] Render.positionLayers mapSize=${zw.toInt()}x${zh.toInt()} zoom=$zoom gameWidth=${game.style.width} gameHeight=${game.style.height} left=${left.toInt()}")
+        console.log(
+            "[osada] Render.positionLayers mapSize=${zw.toInt()}x${zh.toInt()} zoom=$zoom gameWidth=${game.style.width} gameHeight=${game.style.height} left=${left.toInt()}",
+        )
 
         mapCanvas.style.zIndex = 0
         mapCanvas.style.position = "absolute"
@@ -390,7 +428,8 @@ internal class RenderContext(var map: GameMap?) {
         val k = if (fitH) 0.0 else 30.0
 
         game.style.width = if (fitW) "${(scaledW + k).toInt()}px" else "${window.innerWidth}px"
-        game.style.height = if (fitH) "${(scaledH + 30.0 + g).toInt()}px" else "${(window.innerHeight - 30.0).toInt()}px"
+        game.style.height =
+            if (fitH) "${(scaledH + 30.0 + g).toInt()}px" else "${(window.innerHeight - 30.0).toInt()}px"
         game.style.position = "absolute"
         game.style.left = "${left.toInt()}px"
         game.style.top = "30px"
@@ -506,7 +545,7 @@ internal class RenderContext(var map: GameMap?) {
         if (showGridTerrain && terrain != null && terrain != TerrainType.CLEAR.value) {
             val tx = x + Y + Y / 2.0 - 2.0
             val ty = y + 2.0 * v - 12.0
-            ctx.font = "24px openpanzer, sans-serif"
+            ctx.font = "24px osada, sans-serif"
             ctx.strokeStyle = unitStyles["terrainTextStroke"] as? String ?: "#f8e064"
             ctx.lineWidth = 1.0
             ctx.strokeText(terrainEncoding.getOrElse(terrain) { "?" }, tx - 1.0, ty - 1.0)
@@ -517,7 +556,7 @@ internal class RenderContext(var map: GameMap?) {
         if (style === hexStyles["deploy"]) {
             val tx = x + 4.0
             val ty = y + 2.0 * v - 12.0
-            ctx.font = "24px openpanzer, sans-serif"
+            ctx.font = "24px osada, sans-serif"
             ctx.strokeStyle = unitStyles["terrainTextStroke"] as? String ?: "#f8e064"
             ctx.lineWidth = 1.0
             ctx.strokeText("Z", tx - 1.0, ty - 1.0)
@@ -527,7 +566,7 @@ internal class RenderContext(var map: GameMap?) {
 
         if (showGridTerrain && style === hexStyles["move"]) {
             val ty = y + 2.0 * v - 12.0
-            ctx.font = "26px openpanzer-menu, sans-serif"
+            ctx.font = "26px osada-menu, sans-serif"
             ctx.strokeStyle = unitStyles["terrainText"] as? String ?: "#333333"
             ctx.lineWidth = 1.0
             ctx.strokeText("'", x + 4.0 - 1.0, ty - 1.0)
@@ -550,7 +589,7 @@ internal class RenderContext(var map: GameMap?) {
             max(0, row - radius),
             max(0, col - radius),
             min(maxR, row + radius),
-            min(maxC, col + radius)
+            min(maxC, col + radius),
         )
     }
 }

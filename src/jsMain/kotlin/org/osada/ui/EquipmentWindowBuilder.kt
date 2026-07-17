@@ -1,15 +1,22 @@
 package org.osada.ui
 
 import kotlinx.browser.window
-import org.osada.*
-import org.osada.model.*
+import org.osada.CURRENCY_MULTIPLIER
+import org.osada.GameHolder
+import org.osada.UnitClass
+import org.osada.model.Equipment
+import org.osada.model.EquipmentData
+import org.osada.model.GameUnit
+import org.osada.model.UnitDescriptions
+import org.osada.monthNamesShort
+import org.osada.movMethodNames
+import org.osada.unitClassNames
 import org.w3c.dom.HTMLElement
 
 /** Unit narrative description when loaded and non-blank, else null — shared by the equipment
  *  window's own detail bay and the unit card's uName/uImage hover tooltip. Units without a
  *  reviewed description (most non-Soviet equipment, for now) simply show no description. */
-internal fun equipmentDescriptionOrNull(eq: EquipmentData): String? =
-    UnitDescriptions.get(eq.name)
+internal fun equipmentDescriptionOrNull(eq: EquipmentData): String? = UnitDescriptions.get(eq.name)
 
 /** "Available from Mon YYYY" — shared so the equipment window's detail bay and the unit-card
  *  tooltip always read the same month name for the same eq.monthavailable (1-based; monthNamesShort
@@ -77,7 +84,7 @@ internal object EquipmentWindowBuilder {
             div.title = data.second
             div.id = "eqclass-$eqClass"
             div.asDynamic().eqclass = eqClass
-            // Glyph + text label (a bare openpanzer glyph is unreadable as a class tab).
+            // Glyph + text label (a bare osada glyph is unreadable as a class tab).
             val glyphSpan = addTag(div, "span")
             glyphSpan.className = "osada-eqtab__glyph"
             glyphSpan.innerHTML = data.first
@@ -108,8 +115,11 @@ internal object EquipmentWindowBuilder {
                 // hidden toggle keeps the ability to browse everything at once without one).
                 // Except on the Upgrade tab, where "All" doesn't exist (upgrades are class-locked
                 // by the rules) — a re-click there is just a no-op re-show of the same class.
-                val targetClass = if (alreadyActive && eqmode != "upgrade") UnitClass.NONE.value
-                    else (eqClass.toIntOrNull() ?: UnitClass.TANK.value)
+                val targetClass = if (alreadyActive && eqmode != "upgrade") {
+                    UnitClass.NONE.value
+                } else {
+                    (eqClass.toIntOrNull() ?: UnitClass.TANK.value)
+                }
                 userSel?.lastClickedTab = if (targetClass == UnitClass.NONE.value) null else eqClass
                 GameHolder.instance?.ui?.updateEquipmentWindow(targetClass)
             }
@@ -151,8 +161,14 @@ internal object EquipmentWindowBuilder {
 
     /** OSADA class-tab text labels shown next to the legacy glyphs. */
     private val eqClassTabLabels = mapOf(
-        "1" to "Infantry", "2" to "Tanks", "3" to "Recon", "4" to "Anti-tank",
-        "8" to "Artillery", "9" to "Air def", "10" to "Fighters", "11" to "Bombers"
+        "1" to "Infantry",
+        "2" to "Tanks",
+        "3" to "Recon",
+        "4" to "Anti-tank",
+        "8" to "Artillery",
+        "9" to "Air def",
+        "10" to "Fighters",
+        "11" to "Bombers",
     )
 
     /**
@@ -166,7 +182,9 @@ internal object EquipmentWindowBuilder {
         val eq = byId("equipment") ?: return
         if (byId("eqGridHeader") != null) return
 
-        fun move(id: String, into: HTMLElement) { byId(id)?.let { into.appendChild(it) } }
+        fun move(id: String, into: HTMLElement) {
+            byId(id)?.let { into.appendChild(it) }
+        }
 
         // --- header: title · prestige (always visible) · fixed-size close ---
         val header = addTag(eq, "div")
@@ -229,15 +247,21 @@ internal object EquipmentWindowBuilder {
         actions.id = "eqDetailActions"
         val buyRow = addTag(actions, "div")
         buyRow.className = "osada-eqd-actionrow"
-        move("eqNewBut", buyRow); move("eqNewCost", buyRow); move("eqNewText", buyRow)
+        move("eqNewBut", buyRow)
+        move("eqNewCost", buyRow)
+        move("eqNewText", buyRow)
         val upgradeRow = addTag(actions, "div")
         upgradeRow.className = "osada-eqd-actionrow"
-        move("eqUpgradeBut", upgradeRow); move("eqUpgradeCost", upgradeRow); move("eqUpgradeText", upgradeRow)
+        move("eqUpgradeBut", upgradeRow)
+        move("eqUpgradeCost", upgradeRow)
+        move("eqUpgradeText", upgradeRow)
 
         // --- footer: secondary (sell/disband) ---
         val footer = addTag(eq, "div")
         footer.id = "eqFooter"
-        move("eqSellBut", footer); move("eqSellCost", footer); move("eqSellText", footer)
+        move("eqSellBut", footer)
+        move("eqSellCost", footer)
+        move("eqSellText", footer)
 
         renderEquipmentDetail(null)
         setEquipmentMode("purchase")
@@ -283,10 +307,11 @@ internal object EquipmentWindowBuilder {
         }
         // During the deploy phase the upgrade strip lists the same reserve pool (upgrading
         // BEFORE deployment is legal and cheaper) — the hint must say so.
-        byId("eqUpgradeHint")?.textContent = if (hasReserve)
+        byId("eqUpgradeHint")?.textContent = if (hasReserve) {
             "These are your reserve units — you can upgrade them before deploying (switch to the Reserve tab to place them)."
-        else
+        } else {
             "Select your unit here, then pick the new model below and press Upgrade."
+        }
     }
 
     /** Fills the right detail column for the selected equipment entry. */
@@ -337,13 +362,29 @@ internal object EquipmentWindowBuilder {
         stat("Soft attack", eq.softatk, "Attack power vs soft targets — infantry, artillery, unarmoured vehicles.")
         stat("Hard attack", eq.hardatk, "Attack power vs hard targets — tanks and other armoured vehicles.")
         stat("Air attack", eq.airatk, "Attack power vs aircraft.")
-        stat("Naval attack", eq.navalatk, "Attack power vs ships — used when firing on naval targets (e.g. coastal guns, or infantry engaging a landing craft).")
+        stat(
+            "Naval attack",
+            eq.navalatk,
+            "Attack power vs ships — used when firing on naval targets (e.g. coastal guns, or infantry engaging a landing craft).",
+        )
         stat("Ground def", eq.grounddef, "Defence when attacked by a ground unit.")
         stat("Air def", eq.airdef, "Defence when attacked from the air.")
-        stat("Close def", eq.closedef, "Defence in close combat — when an adjacent enemy attacks at melee range, as opposed to ranged fire.")
-        stat("Initiative", eq.initiative, "Higher initiative strikes first in combat, often before the enemy can return fire.")
+        stat(
+            "Close def",
+            eq.closedef,
+            "Defence in close combat — when an adjacent enemy attacks at melee range, as opposed to ranged fire.",
+        )
+        stat(
+            "Initiative",
+            eq.initiative,
+            "Higher initiative strikes first in combat, often before the enemy can return fire.",
+        )
         stat("Movement", eq.movpoints, "Movement points per turn.")
-        stat("Movement type", movMethodNames.getOrNull(eq.movmethod) ?: "Unknown", "How this unit moves — determines terrain cost, and whether it needs a road or (for Rail) is confined to the rail network.")
+        stat(
+            "Movement type",
+            movMethodNames.getOrNull(eq.movmethod) ?: "Unknown",
+            "How this unit moves — determines terrain cost, and whether it needs a road or (for Rail) is confined to the rail network.",
+        )
         stat("Spotting", eq.spotrange, "How many hexes away this unit reveals hidden enemies.")
         stat("Range", if (eq.gunrange == 0) 1 else eq.gunrange, "Firing range in hexes (1 = must be adjacent).")
         stat("Ammo", eq.ammo, "Rounds of ammunition before the unit must resupply.")
@@ -513,7 +554,7 @@ internal object EquipmentWindowBuilder {
 
         val vs = addTag(statusMsg, "div")
         vs.style.cssFloat = "left"
-        vs.style.fontFamily = "openpanzer"
+        vs.style.fontFamily = "osada"
         vs.style.fontSize = "18px"
         vs.innerHTML = "&nbsp!&nbsp;"
 

@@ -1,8 +1,5 @@
 package org.osada.model
 
-import kotlin.js.JsExport
-import kotlin.js.JsName
-
 @JsExport
 @JsName("Cell")
 open class Cell(open var row: Int = 0, open var col: Int = 0) {
@@ -55,12 +52,7 @@ class CombatResults {
 
 @JsExport
 @JsName("Supply")
-class Supply(
-    var ammo: Int = 0,
-    var fuel: Int = 0,
-    var transportAmmo: Int = 0,
-    var transportFuel: Int = 0
-)
+class Supply(var ammo: Int = 0, var fuel: Int = 0, var transportAmmo: Int = 0, var transportFuel: Int = 0)
 
 class MouseInfo(var x: Int = 0, var y: Int = 0, var rclick: Boolean = false)
 

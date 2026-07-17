@@ -1,8 +1,5 @@
 package org.osada.model
 
-import kotlin.js.JsExport
-import kotlin.js.JsName
-
 @JsExport
 @JsName("Transport")
 class Transport(eqid: Int) {

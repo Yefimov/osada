@@ -1,6 +1,13 @@
 package org.osada.rules
 
-import org.osada.model.*
+import org.osada.model.Cell
+import org.osada.model.CombatResults
+import org.osada.model.ExtendedCell
+import org.osada.model.GameMap
+import org.osada.model.GameUnit
+import org.osada.model.Hex
+import org.osada.model.Supply
+import org.osada.model.Transport
 
 /**
  * Backwards-compatibility facade over the focused rule objects.
@@ -18,14 +25,24 @@ object GameRules {
 
     // --- Combat (CombatResolver) ---
 
-    internal fun attackValue(attackPower: Int, defense: Int, attacker: GameUnit, defender: GameUnit, useRandom: Boolean): Int =
-        CombatResolver.attackValue(attackPower, defense, attacker, defender, useRandom)
+    internal fun attackValue(
+        attackPower: Int,
+        defense: Int,
+        attacker: GameUnit,
+        defender: GameUnit,
+        useRandom: Boolean,
+    ): Int = CombatResolver.attackValue(attackPower, defense, attacker, defender, useRandom)
 
     fun calculateAttackResults(attacker: GameUnit, defender: GameUnit, useRandom: Boolean): CombatResults =
         CombatResolver.calculateAttackResults(attacker, defender, useRandom)
 
-    fun calculateCombatResults(attacker: GameUnit, defender: GameUnit, units: List<GameUnit>, full: Boolean, useRandom: Boolean): CombatResults =
-        CombatResolver.calculateCombatResults(attacker, defender, units, full, useRandom)
+    fun calculateCombatResults(
+        attacker: GameUnit,
+        defender: GameUnit,
+        units: List<GameUnit>,
+        full: Boolean,
+        useRandom: Boolean,
+    ): CombatResults = CombatResolver.calculateCombatResults(attacker, defender, units, full, useRandom)
 
     fun getSupportFireUnits(units: List<GameUnit>, attacker: GameUnit, defender: GameUnit): List<GameUnit> =
         CombatResolver.getSupportFireUnits(units, attacker, defender)
@@ -41,8 +58,13 @@ object GameRules {
     fun shouldDefenderRetreat(attacker: GameUnit, defender: GameUnit, originalStrength: Int): Boolean =
         CombatResolver.shouldDefenderRetreat(attacker, defender, originalStrength)
 
-    fun getRetreatPosition(map: Array<Array<Hex>>?, unit: GameUnit, rows: Int, cols: Int, hasRailData: Boolean = false): Cell? =
-        CombatResolver.getRetreatPosition(map, unit, rows, cols, hasRailData)
+    fun getRetreatPosition(
+        map: Array<Array<Hex>>?,
+        unit: GameUnit,
+        rows: Int,
+        cols: Int,
+        hasRailData: Boolean = false,
+    ): Cell? = CombatResolver.getRetreatPosition(map, unit, rows, cols, hasRailData)
 
     fun isRuggedDefense(attacker: GameUnit, defender: GameUnit): Boolean =
         CombatResolver.isRuggedDefense(attacker, defender)
@@ -140,8 +162,7 @@ object GameRules {
 
     fun getAdjacent(row: Int, col: Int): List<Cell> = HexGeometry.getAdjacent(row, col)
 
-    fun isAdjacent(row1: Int, col1: Int, row2: Int, col2: Int): Boolean =
-        HexGeometry.isAdjacent(row1, col1, row2, col2)
+    fun isAdjacent(row1: Int, col1: Int, row2: Int, col2: Int): Boolean = HexGeometry.isAdjacent(row1, col1, row2, col2)
 
     fun facingToAdjacentIndex(facing: Int): Int = HexGeometry.facingToAdjacentIndex(facing)
 

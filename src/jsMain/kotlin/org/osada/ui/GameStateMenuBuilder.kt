@@ -1,6 +1,8 @@
 package org.osada.ui
 
-import org.osada.*
+import org.osada.GameHolder
+import org.osada.OSGlue
+import org.osada.ui.GameStateMenuBuilder.applySaveLoadContext
 import org.w3c.dom.HTMLElement
 import kotlin.js.Date
 
@@ -81,8 +83,11 @@ internal object GameStateMenuBuilder {
         val saveBut = byId("disksave") ?: return
         saveBut.classList.toggle("osada-sl-btn--disabled", !inGame)
         (saveBut.query(".osada-sl-btn__sub") as? HTMLElement)?.textContent =
-            if (inGame) "Download the current battle as a file"
-            else "Available during a battle — start or load a game first"
+            if (inGame) {
+                "Download the current battle as a file"
+            } else {
+                "Available during a battle — start or load a game first"
+            }
     }
 
     private fun onGameLoadSuccess() {

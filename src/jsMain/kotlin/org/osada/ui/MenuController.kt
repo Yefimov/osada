@@ -1,9 +1,23 @@
 package org.osada.ui
 
 import kotlinx.browser.window
-import org.osada.*
-import org.osada.model.*
+import org.osada.CombatLog
+import org.osada.Game
+import org.osada.GroundCondition
+import org.osada.PlayerType
+import org.osada.UnitClass
+import org.osada.WeatherCondition
+import org.osada.groundConditionNames
+import org.osada.groundIconImg
+import org.osada.model.Cell
+import org.osada.model.GameMap
+import org.osada.model.GameUnit
+import org.osada.model.Player
+import org.osada.monthNamesShort
 import org.osada.rules.GameRules
+import org.osada.uiSettings
+import org.osada.weatherConditionNames
+import org.osada.weatherIconImg
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLSelectElement
 import org.w3c.dom.events.MouseEvent
@@ -35,8 +49,13 @@ internal class MenuController(private val ui: UI) {
                 makeHidden("smMain")
                 makeVisible("smScen")
                 val scenSelect = byId("smScenSel")?.firstChild as? HTMLSelectElement
-                val allScenarios: Array<dynamic> = js("typeof scenariolist !== 'undefined' ? scenariolist : []").unsafeCast<Array<dynamic>>()
-                val defaultEntry = allScenarios.firstOrNull { (it.length as? Int ?: 0) > 1 && it[0] as? String == Game.defaultScenario }
+                val allScenarios: Array<dynamic> = js(
+                    "typeof scenariolist !== 'undefined' ? scenariolist : []",
+                ).unsafeCast<Array<dynamic>>()
+                val defaultEntry = allScenarios.firstOrNull {
+                    (it.length as? Int ?: 0) > 1 &&
+                        it[0] as? String == Game.defaultScenario
+                }
                 val scenarioName = ui.game.scenario?.name
                     ?: (if (defaultEntry != null) defaultEntry[1] as? String else null)
                 if (scenarioName != null) scenSelect?.let { setSelectOption(it, scenarioName) }
@@ -177,7 +196,7 @@ internal class MenuController(private val ui: UI) {
     }
 
     // Short weather/ground words for the top bar (spec: "Snow · Frozen").
-    private val weatherWords = listOf("Clear", "Overcast", "Rain", "Snow")   // by atmosferic 0..3
+    private val weatherWords = listOf("Clear", "Overcast", "Rain", "Snow") // by atmosferic 0..3
 
     /** Top-bar height the map area starts below — the same 30px RenderContext.positionLayers
      *  itself uses as #game's `top` (and #statusbar's own CSS height). */
@@ -189,9 +208,11 @@ internal class MenuController(private val ui: UI) {
         val currentPlayer = map.currentPlayer ?: return
 
         // --- scenario · turn · date (NOT the campaign name) ---
-        val phaseChip = if (currentPlayer.hasUndeployedUnits() && currentPlayer.type == PlayerType.HUMAN_LOCAL)
+        val phaseChip = if (currentPlayer.hasUndeployedUnits() && currentPlayer.type == PlayerType.HUMAN_LOCAL) {
             "<span class=\"osada-tb-field osada-tb-field--phase\" title=\"Place your units on the highlighted deployment hexes\"><b>Phase</b>DEPLOY</span>"
-        else ""
+        } else {
+            ""
+        }
         byId("statusmsg")?.innerHTML =
             "<span class=\"osada-tb-op\" title=\"${scenario.name}\">${scenario.name}</span>" +
             "<span class=\"osada-tb-field\"><b>Turn</b>${map.turn}/${map.maxTurns}</span>" +
@@ -205,7 +226,9 @@ internal class MenuController(private val ui: UI) {
             w.innerHTML =
                 weatherIconImg(atmos, "osada-tb-weather-img") +
                 groundIconImg(ground, "osada-tb-weather-img") +
-                "<span class=\"osada-tb-weather-txt\">${weatherWords.getOrNull(atmos) ?: ""} · ${groundConditionNames.getOrNull(ground) ?: ""}</span>"
+                "<span class=\"osada-tb-weather-txt\">${weatherWords.getOrNull(
+                    atmos,
+                ) ?: ""} · ${groundConditionNames.getOrNull(ground) ?: ""}</span>"
             // Rich hover panel replaces the bare native title: it spells out what the current
             // weather/ground actually DO to the rules — bonuses green, penalties red.
             w.asDynamic().title = ""
@@ -249,7 +272,7 @@ internal class MenuController(private val ui: UI) {
         tip.style.display = "block"
         val rect = anchor.asDynamic().getBoundingClientRect()
         val left = ((rect.left as? Number)?.toDouble() ?: 0.0)
-            .coerceAtMost(window.innerWidth - 360.0)   // keep the 340px panel on-screen
+            .coerceAtMost(window.innerWidth - 360.0) // keep the 340px panel on-screen
             .coerceAtLeast(6.0)
         tip.style.left = "${left.toInt()}px"
         tip.style.top = "${((rect.bottom as? Number)?.toDouble() ?: 40.0).toInt() + 6}px"
@@ -259,18 +282,22 @@ internal class MenuController(private val ui: UI) {
         val atmos = scenario.atmosferic
         val ground = scenario.ground
         val story = StringBuilder()
-        story.append(when (atmos) {
-            WeatherCondition.FAIR.value -> "Clear skies over the front."
-            WeatherCondition.OVERCAST.value -> "Low cloud hangs over the battlefield."
-            WeatherCondition.RAIN.value -> "Steady rain soaks the front."
-            else -> "Snow squalls sweep across the field."
-        })
+        story.append(
+            when (atmos) {
+                WeatherCondition.FAIR.value -> "Clear skies over the front."
+                WeatherCondition.OVERCAST.value -> "Low cloud hangs over the battlefield."
+                WeatherCondition.RAIN.value -> "Steady rain soaks the front."
+                else -> "Snow squalls sweep across the field."
+            },
+        )
         story.append(" ")
-        story.append(when (ground) {
-            GroundCondition.FROZEN.value -> "The earth is frozen hard."
-            GroundCondition.MUD.value -> "The ground has turned to mud."
-            else -> "The ground is firm."
-        })
+        story.append(
+            when (ground) {
+                GroundCondition.FROZEN.value -> "The earth is frozen hard."
+                GroundCondition.MUD.value -> "The ground has turned to mud."
+                else -> "The ground is firm."
+            },
+        )
 
         val lines = StringBuilder()
         fun line(kind: String, text: String) {
@@ -294,17 +321,20 @@ internal class MenuController(private val ui: UI) {
         }
         if (scenario.weatherCanChangeGround) {
             when (atmos) {
-                WeatherCondition.RAIN.value -> line("dim", "Continued rain keeps the ground muddy; a clear spell dries it out.")
+                WeatherCondition.RAIN.value -> line(
+                    "dim",
+                    "Continued rain keeps the ground muddy; a clear spell dries it out.",
+                )
                 WeatherCondition.SNOW.value -> line("dim", "Snowfall keeps the ground frozen; a clear spell thaws it.")
                 else -> {}
             }
         }
 
         val title = "${weatherConditionNames.getOrNull(atmos) ?: ""} · " +
-                "${groundConditionNames.getOrNull(ground) ?: ""} ground"
+            "${groundConditionNames.getOrNull(ground) ?: ""} ground"
         return "<div class=\"osada-wtip__title\">$title</div>" +
-               "<div class=\"osada-wtip__story\">$story</div>" +
-               lines.toString()
+            "<div class=\"osada-wtip__story\">$story</div>" +
+            lines.toString()
     }
 
     private fun updatePrestigeDisplay(player: Player, map: GameMap) {
@@ -340,7 +370,7 @@ internal class MenuController(private val ui: UI) {
      *  would both fire on the same keypress, e.g. closing a window AND opening the pause menu). */
     fun handleGlobalEscape() {
         when {
-            isVisible("ui-message") -> byId("uiokbut")?.click()   // topmost layer of all (--z-msg)
+            isVisible("ui-message") -> byId("uiokbut")?.click() // topmost layer of all (--z-msg)
             isVisible("equipment") -> byId("eqCloseBut")?.click()
             isVisible("combatLog") -> UICombatLog.toggleCombatLog(false, true)
             else -> ui.mainMenuButton("options")
@@ -383,10 +413,11 @@ internal class MenuController(private val ui: UI) {
         val player = map.currentPlayer ?: return emptyList()
         if (player.type != PlayerType.HUMAN_LOCAL) return emptyList()
         return map.getUnits().filter {
-            it.player?.id == player.id && !it.destroyed
-                && (!it.hasMoved || (!it.hasFired && it.getAmmo() > 0))
-                && hasAnyAction(it)
-                && !TurnSleep.isAsleep(map, it)
+            it.player?.id == player.id &&
+                !it.destroyed &&
+                (!it.hasMoved || (!it.hasFired && it.getAmmo() > 0)) &&
+                hasAnyAction(it) &&
+                !TurnSleep.isAsleep(map, it)
         }
     }
 
@@ -410,20 +441,31 @@ internal class MenuController(private val ui: UI) {
     fun updateTurnControls() {
         val navCount = actionableUnits().size
         byId("osadaNavCount")?.textContent = navCount.toString()
-        byId("osadaNav")?.let { if (navCount == 0) it.classList.add("osada-tb-nav--empty") else it.classList.remove("osada-tb-nav--empty") }
+        byId("osadaNav")?.let {
+            if (navCount ==
+                0
+            ) {
+                it.classList.add("osada-tb-nav--empty")
+            } else {
+                it.classList.remove("osada-tb-nav--empty")
+            }
+        }
         updateEndTurnButton(fullyReadyUnits().size)
     }
 
     private fun updateEndTurnButton(n: Int) {
         val btn = byId("osadaEndTurn") ?: return
-        if (btn.getAttribute("confirming") == "on") return  // don't clobber an active inline confirm
+        if (btn.getAttribute("confirming") == "on") return // don't clobber an active inline confirm
         btn.className = "osada-et " + if (n > 0) "osada-et--warn" else "osada-et--ready"
         clearTag(btn)
         val label = addTag(btn, "span")
         label.className = "osada-et__label"
         label.textContent = if (n > 0) "End turn · $n" else "End turn"
         btn.title = if (n > 0) "$n unit(s) haven't acted yet — click to end the turn" else "End turn"
-        btn.onclick = { e: MouseEvent -> e.stopPropagation(); onEndTurnClick() }
+        btn.onclick = { e: MouseEvent ->
+            e.stopPropagation()
+            onEndTurnClick()
+        }
     }
 
     /** Cycles map selection through the ready units. Reuses [UI.uiUnitSelect] (the existing
@@ -433,8 +475,11 @@ internal class MenuController(private val ui: UI) {
         if (list.isEmpty()) return
         val current = ui.game.scenario?.map?.currentUnit
         val idx = if (current != null) list.indexOfFirst { it.id == current.id } else -1
-        val nextIdx = if (idx == -1) (if (direction > 0) 0 else list.size - 1)
-        else (((idx + direction) % list.size) + list.size) % list.size
+        val nextIdx = if (idx == -1) {
+            (if (direction > 0) 0 else list.size - 1)
+        } else {
+            (((idx + direction) % list.size) + list.size) % list.size
+        }
         val unit = list[nextIdx]
         ui.uiUnitSelect(unit)
         unit.getPos()?.let { ui.uiSetCellOnViewPort(it) }
@@ -447,8 +492,11 @@ internal class MenuController(private val ui: UI) {
         if (map.currentPlayer?.type != PlayerType.HUMAN_LOCAL) return
         if (ui.game.waitUIAnimation || ui.game.gameEnded) return
         val n = fullyReadyUnits().size
-        if (n == 0 || !uiSettings.confirmEndTurn) performEndTurn()
-        else showEndTurnConfirm(n)
+        if (n == 0 || !uiSettings.confirmEndTurn) {
+            performEndTurn()
+        } else {
+            showEndTurnConfirm(n)
+        }
     }
 
     /** Inline (no-modal) confirm: the button morphs into "N can still act. End turn? ✓ ✗" for ~3s. */
@@ -458,13 +506,34 @@ internal class MenuController(private val ui: UI) {
         btn.className = "osada-et osada-et--confirm"
         btn.title = ""
         clearTag(btn)
-        val msg = addTag(btn, "span"); msg.className = "osada-et__msg"; msg.textContent = "$n unit(s) haven't acted. End turn?"
-        val yes = addTag(btn, "span"); yes.className = "osada-et__yes"; yes.innerHTML = "✓"; yes.title = "Confirm — end the turn"
-        val no = addTag(btn, "span"); no.className = "osada-et__no"; no.innerHTML = "✗"; no.title = "Cancel"
-        yes.onclick = { e: MouseEvent -> e.stopPropagation(); cancelEndTurnConfirm(); performEndTurn() }
-        no.onclick = { e: MouseEvent -> e.stopPropagation(); cancelEndTurnConfirm(); updateTurnControls() }
+        val msg = addTag(btn, "span")
+        msg.className = "osada-et__msg"
+        msg.textContent =
+            "$n unit(s) haven't acted. End turn?"
+        val yes = addTag(btn, "span")
+        yes.className = "osada-et__yes"
+        yes.innerHTML = "✓"
+        yes.title =
+            "Confirm — end the turn"
+        val no = addTag(btn, "span")
+        no.className = "osada-et__no"
+        no.innerHTML = "✗"
+        no.title = "Cancel"
+        yes.onclick = { e: MouseEvent ->
+            e.stopPropagation()
+            cancelEndTurnConfirm()
+            performEndTurn()
+        }
+        no.onclick = { e: MouseEvent ->
+            e.stopPropagation()
+            cancelEndTurnConfirm()
+            updateTurnControls()
+        }
         btn.onclick = { e: MouseEvent -> e.stopPropagation() }
-        endTurnConfirmTimer = window.setTimeout({ cancelEndTurnConfirm(); updateTurnControls() }, 3000)
+        endTurnConfirmTimer = window.setTimeout({
+            cancelEndTurnConfirm()
+            updateTurnControls()
+        }, 3000)
     }
 
     private fun cancelEndTurnConfirm() {
@@ -542,7 +611,7 @@ internal class MenuController(private val ui: UI) {
                 state.className = "osada-obj__state"
                 val mark = addTag(state, "span")
                 mark.className = "osada-obj__mark"
-                mark.textContent = if (isHeld) "✓" else "⚑"   // check / flag
+                mark.textContent = if (isHeld) "✓" else "⚑" // check / flag
                 val label = addTag(state, "span")
                 label.textContent = if (isHeld) "Held" else "Enemy"
                 row.onclick = { _: org.w3c.dom.events.MouseEvent -> ui.uiSetCellOnViewPort(Cell(r, c)) }
@@ -688,7 +757,10 @@ internal class MenuController(private val ui: UI) {
         for (u in units) {
             if (u.player?.id == player.id) {
                 val uclass = u.unitData(true).uclass as? Int ?: continue
-                if (uclass != UnitClass.FIGHTER.value && uclass != UnitClass.LEVEL_BOMBER.value && uclass != UnitClass.TACTICAL_BOMBER.value) {
+                if (uclass != UnitClass.FIGHTER.value &&
+                    uclass != UnitClass.LEVEL_BOMBER.value &&
+                    uclass != UnitClass.TACTICAL_BOMBER.value
+                ) {
                     ui.uiUnitSelect(u)
                     u.getPos()?.let { ui.uiSetCellOnViewPort(it) }
                     break

@@ -1,6 +1,8 @@
 package org.osada.model
 
-import org.osada.*
+import org.osada.LeaderType
+import org.osada.UNIT_MAX_EXPERIENCE
+import org.osada.UnitClass
 
 object Leaders {
     const val LEADER_CHANCE_THRESHOLD = 8
@@ -13,42 +15,68 @@ object Leaders {
         unitClassLeaders[UnitClass.INFANTRY.value] = listOf(
             LeaderType.TENACIOUS_DEFENSE, LeaderType.AGGRESSIVE_ATTACK, LeaderType.AGGRESSIVE_MANEUVER,
             LeaderType.BATTLEFIELD_INTELLIGENCE, LeaderType.DETERMINED_DEFENSE, LeaderType.FEROCIOUS_DEFENSE,
-            LeaderType.FIRST_STRIKE, LeaderType.INFILTRATION_TACTICS, LeaderType.LIBERATOR
+            LeaderType.FIRST_STRIKE, LeaderType.INFILTRATION_TACTICS, LeaderType.LIBERATOR,
         )
         unitClassLeaders[UnitClass.TANK.value] = listOf(
-            LeaderType.AGGRESSIVE_TANK_MANEUVER, LeaderType.AGGRESSIVE_ATTACK, LeaderType.AGGRESSIVE_MANEUVER,
-            LeaderType.BATTLEFIELD_INTELLIGENCE, LeaderType.DETERMINED_DEFENSE, LeaderType.FIRST_STRIKE,
-            LeaderType.INFILTRATION_TACTICS, LeaderType.LIBERATOR
+            LeaderType.AGGRESSIVE_TANK_MANEUVER,
+            LeaderType.AGGRESSIVE_ATTACK,
+            LeaderType.AGGRESSIVE_MANEUVER,
+            LeaderType.BATTLEFIELD_INTELLIGENCE,
+            LeaderType.DETERMINED_DEFENSE,
+            LeaderType.FIRST_STRIKE,
+            LeaderType.INFILTRATION_TACTICS,
+            LeaderType.LIBERATOR,
         )
         unitClassLeaders[UnitClass.RECON.value] = listOf(
-            LeaderType.ELITE_RECON_VETERAN, LeaderType.AGGRESSIVE_ATTACK, LeaderType.AGGRESSIVE_MANEUVER,
-            LeaderType.BATTLEFIELD_INTELLIGENCE, LeaderType.DETERMINED_DEFENSE, LeaderType.FIRST_STRIKE,
-            LeaderType.INFILTRATION_TACTICS, LeaderType.LIBERATOR
+            LeaderType.ELITE_RECON_VETERAN,
+            LeaderType.AGGRESSIVE_ATTACK,
+            LeaderType.AGGRESSIVE_MANEUVER,
+            LeaderType.BATTLEFIELD_INTELLIGENCE,
+            LeaderType.DETERMINED_DEFENSE,
+            LeaderType.FIRST_STRIKE,
+            LeaderType.INFILTRATION_TACTICS,
+            LeaderType.LIBERATOR,
         )
         unitClassLeaders[UnitClass.ANTI_TANK.value] = listOf(
             LeaderType.TANK_KILLER, LeaderType.AGGRESSIVE_ATTACK, LeaderType.AGGRESSIVE_MANEUVER,
             LeaderType.BATTLEFIELD_INTELLIGENCE, LeaderType.DETERMINED_DEFENSE, LeaderType.FEROCIOUS_DEFENSE,
-            LeaderType.FIRST_STRIKE, LeaderType.INFILTRATION_TACTICS, LeaderType.LIBERATOR
+            LeaderType.FIRST_STRIKE, LeaderType.INFILTRATION_TACTICS, LeaderType.LIBERATOR,
         )
         unitClassLeaders[UnitClass.FLAK.value] = emptyList()
         unitClassLeaders[UnitClass.FORTIFICATION.value] = emptyList()
         unitClassLeaders[UnitClass.GROUND_TRANSPORT.value] = emptyList()
         unitClassLeaders[UnitClass.ARTILLERY.value] = listOf(
-            LeaderType.MARKSMAN, LeaderType.AGGRESSIVE_ATTACK, LeaderType.AGGRESSIVE_MANEUVER,
-            LeaderType.BATTLEFIELD_INTELLIGENCE, LeaderType.DETERMINED_DEFENSE, LeaderType.FIRE_DISCIPLINE,
-            LeaderType.INFILTRATION_TACTICS
+            LeaderType.MARKSMAN,
+            LeaderType.AGGRESSIVE_ATTACK,
+            LeaderType.AGGRESSIVE_MANEUVER,
+            LeaderType.BATTLEFIELD_INTELLIGENCE,
+            LeaderType.DETERMINED_DEFENSE,
+            LeaderType.FIRE_DISCIPLINE,
+            LeaderType.INFILTRATION_TACTICS,
         )
         unitClassLeaders[UnitClass.AIR_DEFENCE.value] = listOf(
-            LeaderType.MECHANIZED_VETERAN, LeaderType.AGGRESSIVE_ATTACK, LeaderType.AGGRESSIVE_MANEUVER,
-            LeaderType.DETERMINED_DEFENSE, LeaderType.FIRE_DISCIPLINE, LeaderType.INFILTRATION_TACTICS
+            LeaderType.MECHANIZED_VETERAN,
+            LeaderType.AGGRESSIVE_ATTACK,
+            LeaderType.AGGRESSIVE_MANEUVER,
+            LeaderType.DETERMINED_DEFENSE,
+            LeaderType.FIRE_DISCIPLINE,
+            LeaderType.INFILTRATION_TACTICS,
         )
         unitClassLeaders[UnitClass.FIGHTER.value] = listOf(
-            LeaderType.SKILLED_INTERCEPTOR, LeaderType.AGGRESSIVE_ATTACK, LeaderType.AGGRESSIVE_MANEUVER,
-            LeaderType.BATTLEFIELD_INTELLIGENCE, LeaderType.DETERMINED_DEFENSE, LeaderType.FIRST_STRIKE
+            LeaderType.SKILLED_INTERCEPTOR,
+            LeaderType.AGGRESSIVE_ATTACK,
+            LeaderType.AGGRESSIVE_MANEUVER,
+            LeaderType.BATTLEFIELD_INTELLIGENCE,
+            LeaderType.DETERMINED_DEFENSE,
+            LeaderType.FIRST_STRIKE,
         )
         unitClassLeaders[UnitClass.TACTICAL_BOMBER.value] = listOf(
-            LeaderType.SKILLED_ASSAULT, LeaderType.AGGRESSIVE_ATTACK, LeaderType.AGGRESSIVE_MANEUVER,
-            LeaderType.DETERMINED_DEFENSE, LeaderType.FIRE_DISCIPLINE, LeaderType.FIRST_STRIKE
+            LeaderType.SKILLED_ASSAULT,
+            LeaderType.AGGRESSIVE_ATTACK,
+            LeaderType.AGGRESSIVE_MANEUVER,
+            LeaderType.DETERMINED_DEFENSE,
+            LeaderType.FIRE_DISCIPLINE,
+            LeaderType.FIRST_STRIKE,
         )
         unitClassLeaders[UnitClass.LEVEL_BOMBER.value] = emptyList()
         unitClassLeaders[UnitClass.AIR_TRANSPORT.value] = emptyList()
@@ -61,39 +89,67 @@ object Leaders {
         unitClassLeaders[UnitClass.CRUISER.value] = emptyList()
         unitClassLeaders[UnitClass.LIGHT_CRUISER.value] = emptyList()
 
-        description[LeaderType.MECHANIZED_VETERAN] = Pair("Mechanized Veteran", "Air Defence unit may move and fire in the same turn.")
-        description[LeaderType.TANK_KILLER] = Pair("Tank Killer", "Anti-Tank unit will not receive a penalty for movement into combat.")
+        description[LeaderType.MECHANIZED_VETERAN] =
+            Pair("Mechanized Veteran", "Air Defence unit may move and fire in the same turn.")
+        description[LeaderType.TANK_KILLER] =
+            Pair("Tank Killer", "Anti-Tank unit will not receive a penalty for movement into combat.")
         description[LeaderType.MARKSMAN] = Pair("Marksman", "The artillery unit attack range is increased by one hex.")
-        description[LeaderType.SKILLED_INTERCEPTOR] = Pair("Skilled Interceptor", "Fighter unit can intercept multiple enemy fighters in the defensive phase.")
-        description[LeaderType.TENACIOUS_DEFENSE] = Pair("Tenacious Defense", "The infantry unit ground defense factor is increased by 4.")
-        description[LeaderType.ELITE_RECON_VETERAN] = Pair("Elite Recon Veteran", "Recon unit spotting range is increased by two hexes.")
-        description[LeaderType.SKILLED_ASSAULT] = Pair("Skilled Assault", "The tactical bomber cannot be surprised while moving.")
-        description[LeaderType.AGGRESSIVE_TANK_MANEUVER] = Pair("Aggressive Tank Maneuver", "Tank movement factor is increased by 1.")
-        description[LeaderType.AGGRESSIVE_ATTACK] = Pair("Aggressive Attack", "Each of the unit attack values is increased by 2.")
-        description[LeaderType.AGGRESSIVE_MANEUVER] = Pair("Aggressive Maneuver", "The unit movement factor is increased by 1.")
-        description[LeaderType.ALL_WEATHER_COMBAT] = Pair("All Weather Combat", "The air unit is not affected by weather conditions.")
-        description[LeaderType.ALPINE_TRAINING] = Pair("Alpine Training", "When moving the unit treats forest and mountain hexes as clear terrain.")
-        description[LeaderType.BATTLEFIELD_INTELLIGENCE] = Pair("Battlefield Intelligence", "The unit cannot be surprised.")
-        description[LeaderType.BRIDGING] = Pair("Bridging", "When moving the unit treats passable river hexes as rough terrain.")
-        description[LeaderType.COMBAT_SUPPORT] = Pair("Combat Support", "Provides Resilience and Skilled Ground Attack to adjoining units.")
-        description[LeaderType.DETERMINED_DEFENSE] = Pair("Determined Defense", "Each of the unit defense factors is increased by 2.")
+        description[LeaderType.SKILLED_INTERCEPTOR] =
+            Pair("Skilled Interceptor", "Fighter unit can intercept multiple enemy fighters in the defensive phase.")
+        description[LeaderType.TENACIOUS_DEFENSE] =
+            Pair("Tenacious Defense", "The infantry unit ground defense factor is increased by 4.")
+        description[LeaderType.ELITE_RECON_VETERAN] =
+            Pair("Elite Recon Veteran", "Recon unit spotting range is increased by two hexes.")
+        description[LeaderType.SKILLED_ASSAULT] =
+            Pair("Skilled Assault", "The tactical bomber cannot be surprised while moving.")
+        description[LeaderType.AGGRESSIVE_TANK_MANEUVER] =
+            Pair("Aggressive Tank Maneuver", "Tank movement factor is increased by 1.")
+        description[LeaderType.AGGRESSIVE_ATTACK] =
+            Pair("Aggressive Attack", "Each of the unit attack values is increased by 2.")
+        description[LeaderType.AGGRESSIVE_MANEUVER] =
+            Pair("Aggressive Maneuver", "The unit movement factor is increased by 1.")
+        description[LeaderType.ALL_WEATHER_COMBAT] =
+            Pair("All Weather Combat", "The air unit is not affected by weather conditions.")
+        description[LeaderType.ALPINE_TRAINING] =
+            Pair("Alpine Training", "When moving the unit treats forest and mountain hexes as clear terrain.")
+        description[LeaderType.BATTLEFIELD_INTELLIGENCE] =
+            Pair("Battlefield Intelligence", "The unit cannot be surprised.")
+        description[LeaderType.BRIDGING] =
+            Pair("Bridging", "When moving the unit treats passable river hexes as rough terrain.")
+        description[LeaderType.COMBAT_SUPPORT] =
+            Pair("Combat Support", "Provides Resilience and Skilled Ground Attack to adjoining units.")
+        description[LeaderType.DETERMINED_DEFENSE] =
+            Pair("Determined Defense", "Each of the unit defense factors is increased by 2.")
         description[LeaderType.DEVASTATING_FIRE] = Pair("Devastating Fire", "The unit may fire twice in a turn.")
-        description[LeaderType.FEROCIOUS_DEFENSE] = Pair("Ferocious Defense", "The unit entrenchment cannot be ignored by enemy units.")
-        description[LeaderType.FIRE_DISCIPLINE] = Pair("Fire Discipline", "The unit will expend only one-half of an ammunition point each time it attacks.")
+        description[LeaderType.FEROCIOUS_DEFENSE] =
+            Pair("Ferocious Defense", "The unit entrenchment cannot be ignored by enemy units.")
+        description[LeaderType.FIRE_DISCIPLINE] =
+            Pair("Fire Discipline", "The unit will expend only one-half of an ammunition point each time it attacks.")
         description[LeaderType.FIRST_STRIKE] = Pair("First Strike", "The unit will fire first if it wins initiative.")
-        description[LeaderType.FOREST_CAMOUFLAGE] = Pair("Forest Camouflage", "In a forest hex the unit cannot be spotted unless enemy moves adjacent.")
-        description[LeaderType.INFILTRATION_TACTICS] = Pair("Infiltration Tactics", "The unit ignores enemy unit entrenchment when calculating combat results.")
-        description[LeaderType.INFLUENCE] = Pair("Influence", "Allows the unit to upgrade to better equipment at reduced prestige cost.")
-        description[LeaderType.LIBERATOR] = Pair("Liberator", "You receive double prestige for objectives captured by the unit.")
-        description[LeaderType.OVERWATCH] = Pair("Overwatch", "The unit will fire at any enemy unit that moves within range.")
-        description[LeaderType.OVERWHELMING_ATTACK] = Pair("Overwhelming Attack", "When attacking suppression points are converted to kills.")
+        description[LeaderType.FOREST_CAMOUFLAGE] =
+            Pair("Forest Camouflage", "In a forest hex the unit cannot be spotted unless enemy moves adjacent.")
+        description[LeaderType.INFILTRATION_TACTICS] =
+            Pair("Infiltration Tactics", "The unit ignores enemy unit entrenchment when calculating combat results.")
+        description[LeaderType.INFLUENCE] =
+            Pair("Influence", "Allows the unit to upgrade to better equipment at reduced prestige cost.")
+        description[LeaderType.LIBERATOR] =
+            Pair("Liberator", "You receive double prestige for objectives captured by the unit.")
+        description[LeaderType.OVERWATCH] =
+            Pair("Overwatch", "The unit will fire at any enemy unit that moves within range.")
+        description[LeaderType.OVERWHELMING_ATTACK] =
+            Pair("Overwhelming Attack", "When attacking suppression points are converted to kills.")
         description[LeaderType.RECON_MOVEMENT] = Pair("Recon Movement", "The unit is permitted phased movement.")
-        description[LeaderType.RESILIENCE] = Pair("Resilience", "The unit will suffer 1 to 3 fewer casualties when attacked.")
-        description[LeaderType.SHOCK_TACTICS] = Pair("Shock Tactics", "Suppression inflicted lasts the entire player turn.")
-        description[LeaderType.SKILLED_GROUND_ATTACK] = Pair("Skilled Ground Attack", "The unit inflicts 1 to 3 more casualties when attacking.")
-        description[LeaderType.SKILLED_RECONNAISSANCE] = Pair("Skilled Reconnaissance", "The unit spotting range is increased by one hex.")
+        description[LeaderType.RESILIENCE] =
+            Pair("Resilience", "The unit will suffer 1 to 3 fewer casualties when attacked.")
+        description[LeaderType.SHOCK_TACTICS] =
+            Pair("Shock Tactics", "Suppression inflicted lasts the entire player turn.")
+        description[LeaderType.SKILLED_GROUND_ATTACK] =
+            Pair("Skilled Ground Attack", "The unit inflicts 1 to 3 more casualties when attacking.")
+        description[LeaderType.SKILLED_RECONNAISSANCE] =
+            Pair("Skilled Reconnaissance", "The unit spotting range is increased by one hex.")
         description[LeaderType.STREET_FIGHTER] = Pair("Street Fighter", "The unit ignores enemy city entrenchment.")
-        description[LeaderType.SUPERIOR_MANEUVER] = Pair("Superior Maneuver", "The unit may bypass enemy zones of control.")
+        description[LeaderType.SUPERIOR_MANEUVER] =
+            Pair("Superior Maneuver", "The unit may bypass enemy zones of control.")
     }
 
     fun unitHasLeader(unit: GameUnit?, leader: LeaderType): Boolean {

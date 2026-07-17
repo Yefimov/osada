@@ -1,10 +1,19 @@
 package org.osada.scenario
 
-import org.osada.*
-import org.osada.model.*
+import org.osada.CURRENCY_MULTIPLIER
+import org.osada.GroundCondition
+import org.osada.PROTOTYPE_MIN_COST
+import org.osada.SCENARIO_START_PRESTIGE
+import org.osada.UnitClass
+import org.osada.model.Equipment
+import org.osada.model.GameMap
+import org.osada.model.GameUnit
+import org.osada.movTable
+import org.osada.movTableDry
+import org.osada.movTableFrozen
+import org.osada.movTableMud
+import org.osada.scoreGains
 import kotlin.js.Date
-import kotlin.js.JsExport
-import kotlin.js.JsName
 import kotlin.js.json
 import kotlin.random.Random
 
@@ -25,7 +34,7 @@ class Scenario(val file: String?) {
     var map: GameMap = GameMap()
     var expPerSide: MutableList<dynamic> = mutableListOf(
         json("exp" to 0, "count" to 0),
-        json("exp" to 0, "count" to 0)
+        json("exp" to 0, "count" to 0),
     )
     var unitsCostPerSide: MutableList<Int> = mutableListOf(0, 0)
     var isLoaded: Boolean = false
@@ -54,11 +63,14 @@ class Scenario(val file: String?) {
             val scoreMap = mutableMapOf<Int, Int>()
             val players = map.getPlayers()
             players.forEach { player ->
-                scoreMap[player.id] = map.sidesVictoryHexes[player.side].size * (scoreGains["objectivePerTurn"] ?: 0) / map.maxTurns
+                scoreMap[player.id] =
+                    map.sidesVictoryHexes[player.side].size * (scoreGains["objectivePerTurn"] ?: 0) / map.maxTurns
             }
             map.getUnits().forEach { unit ->
                 val playerId = unit.player?.id ?: -1
-                scoreMap[playerId] = (scoreMap[playerId] ?: 0) + if (unit.isCore) (scoreGains["coreUnit"] ?: 0) else (scoreGains["normalUnit"] ?: 0)
+                scoreMap[playerId] =
+                    (scoreMap[playerId] ?: 0) +
+                    if (unit.isCore) (scoreGains["coreUnit"] ?: 0) else (scoreGains["normalUnit"] ?: 0)
             }
             players.forEach { player ->
                 player.updateScore(scoreMap[player.id] ?: 0)
@@ -99,17 +111,17 @@ class Scenario(val file: String?) {
         return false
     }
 
-    fun checkVictory(): String {
-        return when {
-            map.turn <= map.victoryTurns[0] -> "briliant"
-            map.turn <= map.victoryTurns[1] -> "victory"
-            map.turn <= map.victoryTurns[2] -> "tactical"
-            else -> "lose"
-        }
+    fun checkVictory(): String = when {
+        map.turn <= map.victoryTurns[0] -> "briliant"
+        map.turn <= map.victoryTurns[1] -> "victory"
+        map.turn <= map.victoryTurns[2] -> "tactical"
+        else -> "lose"
     }
 
     fun getDescription(): String = description
-    fun setDescription(desc: String) { description = desc }
+    fun setDescription(desc: String) {
+        description = desc
+    }
 
     fun endTurn() {
         dayTurn++
@@ -137,9 +149,9 @@ class Scenario(val file: String?) {
             val eqid = iter.next()
             val eq = Equipment.equipment[eqid] ?: continue
             val uclass = eq.uclass
-            if ((uclass < UnitClass.TANK.value || uclass > UnitClass.ANTI_TANK.value)
-                && (uclass < UnitClass.ARTILLERY.value || uclass > UnitClass.TACTICAL_BOMBER.value)
-                || eq.cost * CURRENCY_MULTIPLIER < PROTOTYPE_MIN_COST
+            if ((uclass < UnitClass.TANK.value || uclass > UnitClass.ANTI_TANK.value) &&
+                (uclass < UnitClass.ARTILLERY.value || uclass > UnitClass.TACTICAL_BOMBER.value) ||
+                eq.cost * CURRENCY_MULTIPLIER < PROTOTYPE_MIN_COST
             ) {
                 iter.remove()
             }
@@ -192,11 +204,5 @@ class Scenario(val file: String?) {
         setMoveTable()
     }
 
-    data class Reinforcement(
-        val turn: Int,
-        val row: Int,
-        val col: Int,
-        val unit: GameUnit,
-        val id: Int
-    )
+    data class Reinforcement(val turn: Int, val row: Int, val col: Int, val unit: GameUnit, val id: Int)
 }

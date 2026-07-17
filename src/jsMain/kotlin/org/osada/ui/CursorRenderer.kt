@@ -1,9 +1,10 @@
 package org.osada.ui
 
 import kotlinx.browser.document
-import org.osada.*
-import org.osada.model.*
+import org.osada.model.Cell
+import org.osada.model.GameUnit
 import org.osada.rules.GameRules
+import org.osada.uiSettings
 
 /**
  * Builds and applies the attack cursor that previews a melee outcome (attacker/defender
@@ -23,9 +24,9 @@ internal class CursorRenderer(private val rc: RenderContext) {
         if (hex.isAttackSel && currentUnit != null && !currentUnit.hasFired) {
             val target = hex.getAttackableUnit(currentUnit, uiSettings.airMode as? Boolean ?: false)
             if (target != null) {
-                if (cursorUnit?.id != currentUnit.id
-                    || cursorCell?.row != cell.row
-                    || cursorCell?.col != cell.col
+                if (cursorUnit?.id != currentUnit.id ||
+                    cursorCell?.row != cell.row ||
+                    cursorCell?.col != cell.col
                 ) {
                     cursorUnit = currentUnit
                     cursorCell = cell
@@ -73,9 +74,11 @@ internal class CursorRenderer(private val rc: RenderContext) {
         bb.textBaseline = "top"
 
         val results = GameRules.calculateCombatResults(
-            attacker, defender,
+            attacker,
+            defender,
             rc.map?.getUnits()?.toList() ?: emptyList(),
-            false, true
+            false,
+            true,
         )
         val losses = results.losses
         val kills = results.kills

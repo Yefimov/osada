@@ -1,6 +1,7 @@
 package org.osada.ui
 
-import org.osada.*
+import org.osada.TooltipColor
+import org.osada.TooltipStyle
 import org.w3c.dom.Element
 
 /**

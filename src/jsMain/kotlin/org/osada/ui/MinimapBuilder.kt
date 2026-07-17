@@ -2,7 +2,9 @@ package org.osada.ui
 
 import kotlinx.browser.document
 import kotlinx.browser.window
-import org.osada.*
+import org.osada.GameHolder
+import org.osada.ui.MinimapBuilder.refresh
+import org.osada.uiSettings
 import org.w3c.dom.events.MouseEvent
 
 /**

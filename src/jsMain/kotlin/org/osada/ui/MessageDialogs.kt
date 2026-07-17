@@ -1,7 +1,7 @@
 package org.osada.ui
 
-import org.osada.*
 import org.osada.model.Equipment
+import org.osada.unitClassNames
 
 /**
  * Modal and transient message popups: the main OK dialog, dynamic message boxes, the
@@ -73,7 +73,8 @@ internal object MessageDialogs {
         var body = "<br>Due to your brilliant tactical performance on previous battle High Command awarded you a prototype core unit available for deployment."
         val eq = Equipment.getEquipment(eqid)
         if (eq != null) {
-            body += "<div class='uImageAnimation' style='margin-left: 120px;background-image: url(${eq.icon})'></div><b>${eq.name} ${unitClassNames[eq.uclass]}</b>"
+            body +=
+                "<div class='uImageAnimation' style='margin-left: 120px;background-image: url(${eq.icon})'></div><b>${eq.name} ${unitClassNames[eq.uclass]}</b>"
         }
         messageDynamic("You have been awarded a prototype unit", body)
     }
@@ -85,9 +86,15 @@ internal object MessageDialogs {
         if (active) {
             // Prominent banner so the player clearly sees the AI is thinking (was easy to miss).
             statusBarExtension.className = "statusbar-extension-animation"
-            s.width = "420px"; s.marginLeft = "-210px"; s.height = "40px"; s.lineHeight = "40px"
-            s.fontSize = "22px"; s.fontWeight = "bold"; s.color = "#fff"
-            s.background = "rgba(170,20,20,0.9)"; s.borderRadius = "0 0 8px 8px"
+            s.width = "420px"
+            s.marginLeft = "-210px"
+            s.height = "40px"
+            s.lineHeight = "40px"
+            s.fontSize = "22px"
+            s.fontWeight = "bold"
+            s.color = "#fff"
+            s.background = "rgba(170,20,20,0.9)"
+            s.borderRadius = "0 0 8px 8px"
             statusBarExtension.innerHTML = "&#9203; Computer turn in progress&hellip;"
         } else {
             statusBarExtension.className = "statusbar-extension-animation-reverse"

@@ -1,7 +1,9 @@
 package org.osada.ui
 
-import org.osada.*
-import org.osada.model.*
+import org.osada.PlayerType
+import org.osada.model.CombatResults
+import org.osada.model.GameUnit
+import org.osada.model.MovementResults
 import org.osada.rules.GameRules
 
 /** Max of move range, attack range and spot range — the render radius needed to redraw after any unit action. */
@@ -50,7 +52,13 @@ internal class AnimationOrchestrator(private val ui: UI) {
         val map = ui.game.scenario?.map ?: return false
         val attackerPos = attacker.getPos() ?: return false
         val defenderPos = defender.getPos() ?: return false
-        console.log("[OpenPanzer] uiUnitAttack attacker=${attacker.id}(${attacker.unitData(true).name}) at ${attackerPos.row},${attackerPos.col} defender=${defender.id}(${defender.unitData(true).name}) at ${defenderPos.row},${defenderPos.col}")
+        console.log(
+            "[osada] uiUnitAttack attacker=${attacker.id}(${attacker.unitData(
+                true,
+            ).name}) at ${attackerPos.row},${attackerPos.col} defender=${defender.id}(${defender.unitData(
+                true,
+            ).name}) at ${defenderPos.row},${defenderPos.col}",
+        )
         val radius = maxOf(getUnitRenderRadius(attacker), getUnitRenderRadius(defender))
 
         ui.game.waitUIAnimation = true
@@ -67,15 +75,17 @@ internal class AnimationOrchestrator(private val ui: UI) {
                 map.attackUnit(support, attacker, true)
                 val supportClass = support.unitData(true).uclass
                 val supportAnimType = attackAnimationByClass.getOrNull(supportClass)
-                val supportDir = GameRules.getDirection(supportPos.row, supportPos.col, attackerPos.row, attackerPos.col)
-                    ?: support.facing
+                val supportDir =
+                    GameRules.getDirection(supportPos.row, supportPos.col, attackerPos.row, attackerPos.col)
+                        ?: support.facing
                 supportAnimType?.let {
                     ui.render.addAnimation(supportPos.row, supportPos.col, it, supportDir)
                 }
             }
         }
 
-        val attackStopped = attacker.destroyed || GameRules.isLossOverRetreatThreshold(attacker.strength, attackerOldStrength)
+        val attackStopped =
+            attacker.destroyed || GameRules.isLossOverRetreatThreshold(attacker.strength, attackerOldStrength)
         val defenderOldStrength = defender.strength
 
         val result = if (!attackStopped) {
@@ -86,7 +96,10 @@ internal class AnimationOrchestrator(private val ui: UI) {
         }
 
         // Defender retreat for ground-vs-ground combat when losses exceed the threshold.
-        if (!attackStopped && !defender.destroyed && GameRules.shouldDefenderRetreat(attacker, defender, defenderOldStrength)) {
+        if (!attackStopped &&
+            !defender.destroyed &&
+            GameRules.shouldDefenderRetreat(attacker, defender, defenderOldStrength)
+        ) {
             val retreatPos = GameRules.getRetreatPosition(map.map, defender, map.rows, map.cols, map.hasRailData())
             if (retreatPos != null) {
                 map.retreatUnit(defender, retreatPos)
@@ -106,8 +119,9 @@ internal class AnimationOrchestrator(private val ui: UI) {
             }
 
             if (!defender.destroyed && result.defcanfire) {
-                val defendDir = GameRules.getDirection(defenderPos.row, defenderPos.col, attackerPos.row, attackerPos.col)
-                    ?: defender.facing
+                val defendDir =
+                    GameRules.getDirection(defenderPos.row, defenderPos.col, attackerPos.row, attackerPos.col)
+                        ?: defender.facing
                 defenderAnimType?.let {
                     ui.render.addAnimation(defenderPos.row, defenderPos.col, it, defendDir)
                 }
@@ -117,9 +131,11 @@ internal class AnimationOrchestrator(private val ui: UI) {
         if (attacker.destroyed) ui.render.addAnimation(attackerPos.row, attackerPos.col, "explosion", 0)
         if (defender.destroyed) ui.render.addAnimation(defenderPos.row, defenderPos.col, "explosion", 0)
 
-        ui.render.runAnimation(animationCallback {
-            finishAttackAnimation(attacker, defender, result, radius)
-        })
+        ui.render.runAnimation(
+            animationCallback {
+                finishAttackAnimation(attacker, defender, result, radius)
+            },
+        )
 
         return true
     }
@@ -173,7 +189,9 @@ internal class AnimationOrchestrator(private val ui: UI) {
     }
 
     private fun finishAttackAnimation(attacker: GameUnit, defender: GameUnit, result: CombatResults, radius: Int) {
-        console.log("[OpenPanzer] finishAttackAnimation losses=${result.losses} kills=${result.kills} destroyed=atk${attacker.destroyed}/def${defender.destroyed}")
+        console.log(
+            "[osada] finishAttackAnimation losses=${result.losses} kills=${result.kills} destroyed=atk${attacker.destroyed}/def${defender.destroyed}",
+        )
         val attackerPos = attacker.getPos()
         val defenderPos = defender.getPos()
 
@@ -218,13 +236,19 @@ internal class AnimationOrchestrator(private val ui: UI) {
             // clickable instead (jumps to the defender's hex) with the coordinates only in its
             // tooltip, same treatment as the Turn Report's rows.
             val segments = mutableListOf(
-                HudLog.Segment("$atkName attacked $defName:")
+                HudLog.Segment("$atkName attacked $defName:"),
             )
             val inflicted = StringBuilder("inflicted $defenderLosses")
             if (defender.destroyed) inflicted.append(" — $defName destroyed")
             segments.add(HudLog.Segment("$inflicted,", defenderIsOwn && defenderLosses > 0))
             val taken = StringBuilder("lost $attackerLosses")
-            if (attacker.destroyed) taken.append(" — unit destroyed") else taken.append(" (${attacker.strength} remain)")
+            if (attacker.destroyed) {
+                taken.append(
+                    " — unit destroyed",
+                )
+            } else {
+                taken.append(" (${attacker.strength} remain)")
+            }
             segments.add(HudLog.Segment(taken.toString(), attackerIsOwn && attackerLosses > 0))
             if (result.atkExpGained > 0 && !attacker.destroyed) {
                 segments.add(HudLog.Segment("· +${result.atkExpGained} XP"))

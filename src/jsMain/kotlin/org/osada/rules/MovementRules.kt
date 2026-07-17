@@ -1,7 +1,20 @@
 package org.osada.rules
 
-import org.osada.*
-import org.osada.model.*
+import org.osada.EmbarkType
+import org.osada.LeaderType
+import org.osada.MovMethod
+import org.osada.RoadType
+import org.osada.TerrainType
+import org.osada.UnitClass
+import org.osada.model.Cell
+import org.osada.model.Equipment
+import org.osada.model.ExtendedCell
+import org.osada.model.GameMap
+import org.osada.model.GameUnit
+import org.osada.model.Hex
+import org.osada.model.Leaders
+import org.osada.model.PathCell
+import org.osada.movTable
 
 /**
  * Movement, pathfinding, spotting, zone-of-control and embark/deploy rules.
@@ -9,7 +22,7 @@ import org.osada.model.*
  * Owns everything about where a unit may go and what it can see, extracted from the
  * former `GameRules` god-object. Depends on [HexGeometry] for spatial primitives and
  * [UnitPredicates] for unit classification. Faithful port of the corresponding
- * `openpanzer.js` rules.
+ * `osada.js` rules.
  */
 object MovementRules {
 
@@ -32,7 +45,13 @@ object MovementRules {
         // already completely immobile on land before this fix and is left exactly as it was
         // unless the map has rail data to actually move it on.
         val enforceRail = isTrain && map.hasRailData()
-        val method = if (unitData.movmethod == MovMethod.RAIL.value && !enforceRail) MovMethod.WHEELED.value else unitData.movmethod
+        val method = if (unitData.movmethod == MovMethod.RAIL.value &&
+            !enforceRail
+        ) {
+            MovMethod.WHEELED.value
+        } else {
+            unitData.movmethod
+        }
         val movementTable = movTable[method]
         var cells = HexGeometry.getRing(pos.row, pos.col, maxRange, map.rows, map.cols, true)
             .map { it as ExtendedCell }
@@ -40,9 +59,9 @@ object MovementRules {
 
         // Remove invalid edge cells
         cells = cells.filter { cell ->
-            !(cell.row == 0 && cell.col % 2 == 0)
-                    && !(map.isLastColPartial && cell.col == map.cols - 1)
-                    && !(map.isLastRowPartial && cell.row == map.rows - 1 && cell.col % 2 == 1)
+            !(cell.row == 0 && cell.col % 2 == 0) &&
+                !(map.isLastColPartial && cell.col == map.cols - 1) &&
+                !(map.isLastRowPartial && cell.row == map.rows - 1 && cell.col % 2 == 1)
         }.toMutableList()
 
         if (UnitPredicates.isAir(unit)) {
@@ -63,8 +82,8 @@ object MovementRules {
         while (k <= maxRange) {
             cells.filter { it.range == k }.forEach { current ->
                 cells.filter { neighbor ->
-                    HexGeometry.isAdjacent(current.row, current.col, neighbor.row, neighbor.col)
-                            && (neighbor.range >= k)
+                    HexGeometry.isAdjacent(current.row, current.col, neighbor.row, neighbor.col) &&
+                        (neighbor.range >= k)
                 }.forEach { neighbor ->
                     val hex = gameMap[neighbor.row][neighbor.col]
                     neighbor.cost = when {
@@ -72,7 +91,10 @@ object MovementRules {
                         hex.road > RoadType.NONE.value || isBridgeForSide(hex, unitSide) -> movementTable[17]
                         else -> movementTable[hex.terrain]
                     }
-                    if ((hex.isSpotted(unitSide) || hex.unit?.tempSpotted == true) && hex.isZOC(enemySide) && neighbor.cost < 254) {
+                    if ((hex.isSpotted(unitSide) || hex.unit?.tempSpotted == true) &&
+                        hex.isZOC(enemySide) &&
+                        neighbor.cost < 254
+                    ) {
                         neighbor.cost = 254
                     }
                     if (neighbor.cin == 0) neighbor.cin = current.cout
@@ -104,8 +126,10 @@ object MovementRules {
         if (UnitPredicates.unitUsesFuel(unit) && unit.getFuel() < range) range = unit.getFuel()
         if (Leaders.unitHasLeader(unit, LeaderType.AGGRESSIVE_TANK_MANEUVER)) range += 1
         if (Leaders.unitHasLeader(unit, LeaderType.AGGRESSIVE_MANEUVER)) range += 1
-        if (data.movmethod == MovMethod.TOWED.value && unit.transport == null && range == 0
-            && data.uclass != UnitClass.FORTIFICATION.value
+        if (data.movmethod == MovMethod.TOWED.value &&
+            unit.transport == null &&
+            range == 0 &&
+            data.uclass != UnitClass.FORTIFICATION.value
         ) {
             range = 1
         }
@@ -117,7 +141,10 @@ object MovementRules {
         val result = mutableListOf<Cell>()
         val openList = mutableListOf<PathCell>()
         val closedList = mutableListOf<PathCell>()
-        val startNode = PathCell(start.row, start.col).apply { dist = 0.0; prev = this }
+        val startNode = PathCell(start.row, start.col).apply {
+            dist = 0.0
+            prev = this
+        }
         openList.add(startNode)
 
         val nodeMap = mutableMapOf<Pair<Int, Int>, PathCell>()
@@ -162,7 +189,9 @@ object MovementRules {
         val hex = map?.getOrNull(cell.row)?.getOrNull(cell.col) ?: return false
         return when {
             UnitPredicates.isAir(unit) -> hex.airunit == null || hex.airunit!!.player?.side == unit.player?.side
-            UnitPredicates.isGround(unit) || UnitPredicates.isSea(unit) -> hex.unit == null || hex.unit!!.player?.side == unit.player?.side
+            UnitPredicates.isGround(unit) || UnitPredicates.isSea(unit) ->
+                hex.unit == null ||
+                    hex.unit!!.player?.side == unit.player?.side
             else -> false
         }
     }
@@ -227,13 +256,16 @@ object MovementRules {
         val pos = unit.getPos() ?: return UnitClass.NONE.value
         val hex = map.map?.getOrNull(pos.row)?.getOrNull(pos.col) ?: return UnitClass.NONE.value
         val data = unit.unitData()
-        if (hex.terrain == TerrainType.AIRFIELD.value && unit.player?.airTransports ?: 0 > 0
-            && data.embark > EmbarkType.NAVAL.value && hex.airunit == null
+        if (hex.terrain == TerrainType.AIRFIELD.value &&
+            unit.player?.airTransports ?: 0 > 0 &&
+            data.embark > EmbarkType.NAVAL.value &&
+            hex.airunit == null
         ) {
             return UnitClass.AIR_TRANSPORT.value
         }
-        if (hex.terrain == TerrainType.PORT.value && unit.player?.navalTransports ?: 0 > 0
-            && data.embark > EmbarkType.NONE.value
+        if (hex.terrain == TerrainType.PORT.value &&
+            unit.player?.navalTransports ?: 0 > 0 &&
+            data.embark > EmbarkType.NONE.value
         ) {
             return UnitClass.NAVAL_TRANSPORT.value
         }
@@ -245,7 +277,11 @@ object MovementRules {
         val result = mutableListOf<Cell>()
         if (unit.hasMoved) return result
         val data = unit.unitData()
-        if (data.uclass != UnitClass.AIR_TRANSPORT.value && data.uclass != UnitClass.NAVAL_TRANSPORT.value) return result
+        if (data.uclass != UnitClass.AIR_TRANSPORT.value &&
+            data.uclass != UnitClass.NAVAL_TRANSPORT.value
+        ) {
+            return result
+        }
         val movementMethod = Equipment.equipment[unit.eqid]?.movmethod ?: return result
         val movementTable = movTable[movementMethod]
         val pos = unit.getPos() ?: return result
@@ -274,8 +310,11 @@ object MovementRules {
         val candidates = mutableListOf<Cell>()
         candidates.add(Cell(row, col))
         candidates.addAll(HexGeometry.getAdjacent(row, col))
-        fun slotEmpty(hex: Hex) = if (UnitPredicates.isAir(unit)) hex.airunit == null
-                                  else (UnitPredicates.isGround(unit) || UnitPredicates.isSea(unit)) && hex.unit == null
+        fun slotEmpty(hex: Hex) = if (UnitPredicates.isAir(unit)) {
+            hex.airunit == null
+        } else {
+            (UnitPredicates.isGround(unit) || UnitPredicates.isSea(unit)) && hex.unit == null
+        }
         if (enforceRail) {
             // Prefer landing right on the rail network...
             candidates.forEach { cell ->
@@ -295,13 +334,10 @@ object MovementRules {
         return null
     }
 
-    fun canEmbark(map: GameMap, unit: GameUnit): Boolean {
-        return getEmbarkType(map, unit) > UnitClass.NONE.value || unit.carrier < 0
-    }
+    fun canEmbark(map: GameMap, unit: GameUnit): Boolean =
+        getEmbarkType(map, unit) > UnitClass.NONE.value || unit.carrier < 0
 
-    fun canDisembark(map: GameMap, unit: GameUnit): Boolean {
-        return getDisembarkPositions(map, unit).isNotEmpty()
-    }
+    fun canDisembark(map: GameMap, unit: GameUnit): Boolean = getDisembarkPositions(map, unit).isNotEmpty()
 
     /**
      * True when [unit] is on or beside a friendly airfield/carrier. Used by air resupply

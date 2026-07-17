@@ -147,8 +147,7 @@ fun getStyleSheet(selector: String): dynamic {
     return null
 }
 
-fun defined(value: dynamic): Boolean =
-    value != undefined && value != null
+fun defined(value: dynamic): Boolean = value != undefined && value != null
 
 fun makeVisible(id: String) {
     byId(id)?.style?.display = "inline"
@@ -228,13 +227,21 @@ fun hasTouch(): Boolean = js("('ontouchstart' in window)") as? Boolean ?: false
 
 fun hasBrokenScroll(): Boolean {
     val ua = window.navigator.userAgent
-    return (ua.contains(Regex("android 2", RegexOption.IGNORE_CASE)) && ua.contains(Regex("applewebkit", RegexOption.IGNORE_CASE)))
-            || (ua.contains(Regex("android 4", RegexOption.IGNORE_CASE)) && ua.contains(Regex("chrome", RegexOption.IGNORE_CASE)) && ua.contains(Regex("applewebkit", RegexOption.IGNORE_CASE)))
+    return (
+        ua.contains(Regex("android 2", RegexOption.IGNORE_CASE)) &&
+            ua.contains(Regex("applewebkit", RegexOption.IGNORE_CASE))
+        ) ||
+        (
+            ua.contains(Regex("android 4", RegexOption.IGNORE_CASE)) &&
+                ua.contains(Regex("chrome", RegexOption.IGNORE_CASE)) &&
+                ua.contains(Regex("applewebkit", RegexOption.IGNORE_CASE))
+            )
 }
 
 fun hasBrokenClearRect(): Boolean {
     val ua = window.navigator.userAgent
-    return ua.contains(Regex("android 4", RegexOption.IGNORE_CASE)) && !ua.contains(Regex("chrome", RegexOption.IGNORE_CASE))
+    return ua.contains(Regex("android 4", RegexOption.IGNORE_CASE)) &&
+        !ua.contains(Regex("chrome", RegexOption.IGNORE_CASE))
 }
 
 fun toggleRightClick(enabled: Boolean) {
@@ -270,13 +277,13 @@ fun touchScroll(elementId: String) {
         val pageX = touch.pageX as Double
         val newScrollTop = startY - pageY
         val newScrollLeft = startX - pageX
-        if ((element.scrollTop < element.scrollHeight - element.offsetHeight && newScrollTop < scrollTop - 5)
-            || (element.scrollTop > 0 && newScrollTop > scrollTop + 5)
+        if ((element.scrollTop < element.scrollHeight - element.offsetHeight && newScrollTop < scrollTop - 5) ||
+            (element.scrollTop > 0 && newScrollTop > scrollTop + 5)
         ) {
             event.preventDefault()
         }
-        if ((element.scrollLeft < element.scrollWidth - element.offsetWidth && newScrollLeft < scrollLeft - 5)
-            || (element.scrollLeft > 0 && newScrollLeft > scrollLeft + 5)
+        if ((element.scrollLeft < element.scrollWidth - element.offsetWidth && newScrollLeft < scrollLeft - 5) ||
+            (element.scrollLeft > 0 && newScrollLeft > scrollLeft + 5)
         ) {
             event.preventDefault()
         }
@@ -303,9 +310,7 @@ fun bounceText(x: Double, y: Double, text: String, green: Boolean = false) {
     inner.addEventListener("webkitAnimationEnd", { delTag(container) })
 }
 
-fun MouseEvent.rclick(): Boolean {
-    return if (this.asDynamic().which.toInt() == 3) true else this.button.toInt() == 2
-}
+fun MouseEvent.rclick(): Boolean = if (this.asDynamic().which.toInt() == 3) true else this.button.toInt() == 2
 
 fun jsObject(init: dynamic.() -> Unit): dynamic {
     val obj = js("({})")
@@ -313,9 +318,7 @@ fun jsObject(init: dynamic.() -> Unit): dynamic {
     return obj
 }
 
-fun isChromeApp(): Boolean {
-    return js("window.chrome && chrome.app && chrome.app.runtime") as? Boolean ?: false
-}
+fun isChromeApp(): Boolean = js("window.chrome && chrome.app && chrome.app.runtime") as? Boolean ?: false
 
 fun hoverin(element: HTMLImageElement?) {
     element ?: return
@@ -353,7 +356,13 @@ fun toggleCheckboxWithImage(element: dynamic): Boolean {
     val dir = src.substring(0, src.lastIndexOf("/") + 1)
     val name = src.substring(src.lastIndexOf("/") + 1)
     val checkedIndex = name.lastIndexOf("-checked")
-    val baseName = if (checkedIndex != -1) name.substring(0, checkedIndex) else name.substring(0, name.lastIndexOf(".")) + "-checked"
+    val baseName = if (checkedIndex !=
+        -1
+    ) {
+        name.substring(0, checkedIndex)
+    } else {
+        name.substring(0, name.lastIndexOf(".")) + "-checked"
+    }
     image.src = "$dir$baseName.png"
     return true
 }

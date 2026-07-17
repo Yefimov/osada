@@ -1,9 +1,9 @@
 package org.osada.model
 
-import org.osada.*
+import org.osada.UnitClass
 import org.osada.rules.GameRules
-import kotlin.js.JsExport
-import kotlin.js.JsName
+import org.osada.terrainEntrenchment
+import org.osada.unitEntrenchRate
 
 @JsExport
 @JsName("Unit")
@@ -53,34 +53,24 @@ class GameUnit(var eqid: Int) {
 
     fun getPos(): Cell? = hex?.getPos()
 
-    fun getEqid(useReal: Boolean = false): Int {
-        return when {
-            carrier > 0 && !useReal -> carrier
-            isMounted && transport != null && !useReal -> transport!!.eqid
-            else -> eqid
-        }
+    fun getEqid(useReal: Boolean = false): Int = when {
+        carrier > 0 && !useReal -> carrier
+        isMounted && transport != null && !useReal -> transport!!.eqid
+        else -> eqid
     }
 
-    fun unitData(useReal: Boolean = false): EquipmentData {
-        return Equipment.equipment[getEqid(useReal)] ?: EquipmentData()
+    fun unitData(useReal: Boolean = false): EquipmentData = Equipment.equipment[getEqid(useReal)] ?: EquipmentData()
+
+    fun getMovesLeft(): Int = when {
+        carrier > 0 -> Equipment.equipment[carrier]?.movpoints ?: 0
+        isMounted && transport != null -> Equipment.equipment[transport!!.eqid]?.movpoints ?: 0
+        hasMoved -> 0
+        else -> moveLeft
     }
 
-    fun getMovesLeft(): Int {
-        return when {
-            carrier > 0 -> Equipment.equipment[carrier]?.movpoints ?: 0
-            isMounted && transport != null -> Equipment.equipment[transport!!.eqid]?.movpoints ?: 0
-            hasMoved -> 0
-            else -> moveLeft
-        }
-    }
+    fun getAmmo(): Int = if (isMounted && transport != null) transport!!.ammo else ammo
 
-    fun getAmmo(): Int {
-        return if (isMounted && transport != null) transport!!.ammo else ammo
-    }
-
-    fun getFuel(): Int {
-        return if (isMounted && transport != null) transport!!.fuel else fuel
-    }
+    fun getFuel(): Int = if (isMounted && transport != null) transport!!.fuel else fuel
 
     fun hit(damage: Int) {
         strength -= damage

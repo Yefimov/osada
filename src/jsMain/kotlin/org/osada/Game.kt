@@ -2,7 +2,8 @@ package org.osada
 
 import org.osada.ai.AI
 import org.osada.ai.AIScripted
-import org.osada.model.*
+import org.osada.model.Cell
+import org.osada.model.Player
 import org.osada.rules.GameRules
 import org.osada.scenario.Campaign
 import org.osada.scenario.Scenario
@@ -10,8 +11,6 @@ import org.osada.ui.UI
 import org.osada.ui.UIBuilder
 import org.osada.ui.briefing.CampaignBriefingCatalog
 import org.osada.ui.makeVisible
-import kotlin.js.JsExport
-import kotlin.js.JsName
 
 private const val DEFAULT_SCENARIO = "tutorial.xml"
 private val DEFAULT_SCENARIO_AI = listOf(0, 1, 0, 0)
@@ -72,7 +71,7 @@ class Game {
                 ui = UI(this)
                 makeVisible("startmenu")
                 makeVisible("smMain")
-            }
+            },
         )
         console.log("[OSADA] Game.init state.restore dispatched")
     }
@@ -249,13 +248,9 @@ class Game {
         }
     }
 
-    private fun createAIHandler(player: Player): dynamic {
-        return AI(player, scenario!!.map)
-    }
+    private fun createAIHandler(player: Player): dynamic = AI(player, scenario!!.map)
 
-    private fun createScriptedAIHandler(player: Player): dynamic {
-        return AIScripted(player, scenario!!.map)
-    }
+    private fun createScriptedAIHandler(player: Player): dynamic = AIScripted(player, scenario!!.map)
 
     private fun countHumanSides(players: List<Player>): Int {
         val humanSides = players
@@ -417,7 +412,7 @@ class Game {
         console.log(
             "[OSADA] campaign briefing resolved",
             scenarioFile,
-            resolved != null && resolved != undefined
+            resolved != null && resolved != undefined,
         )
         return resolved
     }
@@ -453,7 +448,9 @@ class Game {
 
     fun setCurrentSide() {
         spotSide = if (humanSides == 2) scenario?.map?.currentPlayer?.side ?: 0 else humanSides
-        console.log("[OSADA] setCurrentSide humanSides=$humanSides spotSide=$spotSide currentPlayer.side=${scenario?.map?.currentPlayer?.side}")
+        console.log(
+            "[OSADA] setCurrentSide humanSides=$humanSides spotSide=$spotSide currentPlayer.side=${scenario?.map?.currentPlayer?.side}",
+        )
     }
 
     /**
@@ -529,5 +526,7 @@ class Game {
         scenario = null
     }
 
-    val loop = js("setInterval")(fun() { processTurn() }, 1000)
+    val loop = js("setInterval")(fun() {
+        processTurn()
+    }, 1000)
 }

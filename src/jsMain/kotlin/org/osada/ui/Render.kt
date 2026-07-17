@@ -1,6 +1,8 @@
 package org.osada.ui
 
-import org.osada.model.*
+import org.osada.model.Cell
+import org.osada.model.GameMap
+import org.osada.model.ScreenPos
 
 /**
  * Canvas rendering entry point used by the UI layer.
@@ -48,6 +50,7 @@ class Render(map: GameMap?) {
     fun getHexesCanvas(): dynamic = ctx.getHexesCanvas()
     fun getMapCanvas(): dynamic = ctx.getMapCanvas()
     fun getCursorCanvas(): dynamic = ctx.getCursorCanvas()
+
     /** The loaded terrain artwork (HTMLImageElement) — the minimap composites it as its base layer. */
     fun getTerrainImage(): dynamic = ctx.terrainImage
 }

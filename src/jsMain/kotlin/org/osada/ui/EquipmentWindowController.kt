@@ -1,9 +1,18 @@
 package org.osada.ui
 
 import kotlinx.browser.document
-import org.osada.*
-import org.osada.model.*
+import org.osada.CURRENCY_MULTIPLIER
+import org.osada.MovMethod
+import org.osada.UNIT_NAME_MAX_LENGTH
+import org.osada.UnitClass
+import org.osada.model.Equipment
+import org.osada.model.EquipmentData
+import org.osada.model.GameMap
+import org.osada.model.GameUnit
+import org.osada.model.isAvailableIn
 import org.osada.rules.GameRules
+import org.osada.uiSettings
+import org.osada.unitClassNames
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLInputElement
 
@@ -125,8 +134,11 @@ internal class EquipmentWindowController(private val ui: UI) {
         // 1-based OG codes (equipmentIndexes' own keying — see Equipment.kt / README's "player.country
         // = OGcode - 1" note) for every country to include: every support country on "All", else just
         // the selected one.
-        val countryIds = if (allCountries) ui.countriesOnSpotSide.map { it + 1 }
-            else listOfNotNull(ui.countriesOnSpotSide.getOrNull(countryIndex)?.plus(1))
+        val countryIds = if (allCountries) {
+            ui.countriesOnSpotSide.map { it + 1 }
+        } else {
+            listOfNotNull(ui.countriesOnSpotSide.getOrNull(countryIndex)?.plus(1))
+        }
         val countryId = countryIds.firstOrNull() ?: 1
         eqSelCountry.style.backgroundPosition = "${-21 * (countryId - 1)}px 0px"
         syncCountrySelect(countryIndex)
@@ -166,18 +178,30 @@ internal class EquipmentWindowController(private val ui: UI) {
         // unit to another of its class), so filter the strip to the selected class. This removes
         // the "Tanks tab shows tank offers while my infantry is selected" mismatch.
         val eqmode = eqUserSel?.eqmode as? String ?: "purchase"
-        val filterClass = if (eqmode == "upgrade") normalizeUnitClass(unitClass.toString().toIntOrNull() ?: UnitClass.TANK.value) else -1
+        val filterClass = if (eqmode ==
+            "upgrade"
+        ) {
+            normalizeUnitClass(unitClass.toString().toIntOrNull() ?: UnitClass.TANK.value)
+        } else {
+            -1
+        }
 
         unitList.forEachIndexed { _, unit ->
             if (uiSettings.deployMode && unit.isDeployed) return@forEachIndexed
             if (unit.player?.id != currentPlayer.id) return@forEachIndexed
-            if (filterClass != -1 && normalizeUnitClass(unit.unitData(true).uclass) != filterClass) return@forEachIndexed
+            if (filterClass != -1 &&
+                normalizeUnitClass(unit.unitData(true).uclass) != filterClass
+            ) {
+                return@forEachIndexed
+            }
             val item = buildUnitListItem(unit)
             if (!uiSettings.deployMode && selectedUnitId == -1) {
                 selectedUnitId = unit.id
             }
             val deployIndex = if (uiSettings.deployMode) coreList.indexOf(unit) else unit.id
-            if (uiSettings.deployMode && (selectedUnitId == -1 || coreList.getOrNull(selectedUnitId)?.isDeployed == true)) {
+            if (uiSettings.deployMode &&
+                (selectedUnitId == -1 || coreList.getOrNull(selectedUnitId)?.isDeployed == true)
+            ) {
                 eqUserSel?.deployunit = deployIndex
                 selectedUnitId = deployIndex
             }
@@ -198,7 +222,7 @@ internal class EquipmentWindowController(private val ui: UI) {
                     unit.getPos()?.let { ui.uiSetCellOnViewPort(it) }
                 }
                 // Only adopt this unit's existing transport when the user hasn't already picked
-                // one. PM (openpanzer.js:6414) guards the same assignment: set it to the unit's
+                // one. PM (osada.js:6414) guards the same assignment: set it to the unit's
                 // transport only if the unit HAS a transport, eqtransport is still -1, and the
                 // selected equipment is transportable (or unset). Without the guard this ran on
                 // every re-render and wiped the freshly-clicked transport back to -1, so no
@@ -206,8 +230,10 @@ internal class EquipmentWindowController(private val ui: UI) {
                 val currentTransport = eqUserSel?.eqtransport as? Int ?: -1
                 val currentEqunit = eqUserSel?.equnit as? Int ?: -1
                 val existingTransportEqid = unit.transport?.eqid
-                if (existingTransportEqid != null && currentTransport == -1 &&
-                    !(currentEqunit != -1 && !GameRules.isTransportable(currentEqunit))) {
+                if (existingTransportEqid != null &&
+                    currentTransport == -1 &&
+                    !(currentEqunit != -1 && !GameRules.isTransportable(currentEqunit))
+                ) {
                     eqUserSel?.eqtransport = existingTransportEqid
                 }
                 item.setAttribute("selectedUnit", unit.unitData(true).name)
@@ -268,7 +294,11 @@ internal class EquipmentWindowController(private val ui: UI) {
         // no "upgrade to any class"); defensively clamp instead of trusting only the tab's own
         // click-handler guard, since eqclass can also arrive here via setEquipmentMode's re-fetch.
         if (isAll && eqmode == "upgrade") selectedClass = UnitClass.TANK.value
-        if (!isAll && !UIBuilder.eqClassButtons.containsKey(selectedClass.toString())) selectedClass = UnitClass.TANK.value
+        if (!isAll &&
+            !UIBuilder.eqClassButtons.containsKey(selectedClass.toString())
+        ) {
+            selectedClass = UnitClass.TANK.value
+        }
         val previousKey = eqUserSel?.eqclass?.toString() ?: UnitClass.TANK.value.toString()
         if (UIBuilder.eqClassButtons.containsKey(previousKey)) {
             byId("eqclass-$previousKey")?.let { toggleButton(it, false) }
@@ -285,12 +315,18 @@ internal class EquipmentWindowController(private val ui: UI) {
         val sortProperty = eqUserSel?.sortproperty as? String ?: "cost"
         val descending = sortOrder == 1
         val equipmentList = if (isAll) {
-            if (allCountries) Equipment.getCountriesEquipmentAll(countryIds, sortProperty, descending)
-            else Equipment.getCountryEquipmentAll(countryId, sortProperty, descending)
+            if (allCountries) {
+                Equipment.getCountriesEquipmentAll(countryIds, sortProperty, descending)
+            } else {
+                Equipment.getCountryEquipmentAll(countryId, sortProperty, descending)
+            }
         } else {
             val eqClassEnum = UnitClass.values().find { it.value == selectedClass } ?: UnitClass.TANK
-            if (allCountries) Equipment.getCountriesEquipmentByClass(eqClassEnum, countryIds, sortProperty, descending)
-            else Equipment.getCountryEquipmentByClass(eqClassEnum, countryId, sortProperty, descending)
+            if (allCountries) {
+                Equipment.getCountriesEquipmentByClass(eqClassEnum, countryIds, sortProperty, descending)
+            } else {
+                Equipment.getCountryEquipmentByClass(eqClassEnum, countryId, sortProperty, descending)
+            }
         }
         val eqHscroll = byId("hscroll-eqUnitList")
         var eqScrollPos = 0
@@ -340,7 +376,12 @@ internal class EquipmentWindowController(private val ui: UI) {
             // any single nation) — a transport must match the specific unit it's hauling, not
             // whichever country the browse filter happens to be scoped to.
             val transportCountryId = selectedEq?.country ?: countryId
-            val transports = Equipment.getCountryEquipmentByClass(groundClass, transportCountryId, sortProperty, descending)
+            val transports = Equipment.getCountryEquipmentByClass(
+                groundClass,
+                transportCountryId,
+                sortProperty,
+                descending,
+            )
             transports.forEach { transportId ->
                 val transport = Equipment.getEquipment(transportId) ?: return@forEach
                 if (!transport.isAvailableIn(year, month)) return@forEach
@@ -364,10 +405,11 @@ internal class EquipmentWindowController(private val ui: UI) {
         // Detail column follows the last-clicked list: a picked transport shows ITS record
         // (PM behavior); deselecting the transport falls back to the main unit.
         val focusTransportId = eqUserSel?.eqtransport as? Int ?: -1
-        val detailEq = if ((eqUserSel?.detailfocus as? String) == "transport" && focusTransportId > 0)
+        val detailEq = if ((eqUserSel?.detailfocus as? String) == "transport" && focusTransportId > 0) {
             Equipment.getEquipment(focusTransportId)
-        else
+        } else {
             Equipment.getEquipment(selectedEqId)
+        }
         EquipmentWindowBuilder.renderEquipmentDetail(detailEq)
         EquipmentWindowBuilder.refreshReserveState()
         updateEquipmentCosts()
@@ -439,17 +481,32 @@ internal class EquipmentWindowController(private val ui: UI) {
         val year = scenario.date.getFullYear()
         val month = scenario.date.getMonth() + 1
 
-        val selectedUnit = if (deployUnitId == -1) map.getUnitById(userUnitId) else currentPlayer.getCoreUnitList().getOrNull(deployUnitId)
+        val selectedUnit = if (deployUnitId ==
+            -1
+        ) {
+            map.getUnitById(userUnitId)
+        } else {
+            currentPlayer.getCoreUnitList().getOrNull(deployUnitId)
+        }
         var upgradeCost = 0
         var sellCost = 0
         var buyCost = -1
 
         if (selectedUnit != null) {
-            val unitClass = selectedUnit.unitData(true).uclass.let { if (it == UnitClass.FLAK.value) UnitClass.AIR_DEFENCE.value else it }
+            val unitClass = selectedUnit.unitData(true).uclass.let {
+                if (it ==
+                    UnitClass.FLAK.value
+                ) {
+                    UnitClass.AIR_DEFENCE.value
+                } else {
+                    it
+                }
+            }
             val unitCountry = selectedUnit.unitData(true).country - 1
             if (eqUnitId > 0) {
                 val newEq = Equipment.getEquipment(eqUnitId)
-                val newClass = newEq?.uclass?.let { if (it == UnitClass.FLAK.value) UnitClass.AIR_DEFENCE.value else it } ?: -1
+                val newClass =
+                    newEq?.uclass?.let { if (it == UnitClass.FLAK.value) UnitClass.AIR_DEFENCE.value else it } ?: -1
                 val newCountry = (newEq?.country ?: 0) - 1
                 if (unitClass == newClass && unitCountry == newCountry) {
                     upgradeCost = GameRules.calculateUpgradeCosts(selectedUnit, eqUnitId, eqTransportId)
@@ -464,7 +521,8 @@ internal class EquipmentWindowController(private val ui: UI) {
             val newEq = Equipment.getEquipment(eqUnitId)
             val newCountry = (newEq?.country ?: 0) - 1
             buyCost = when {
-                selectedUnit != null && !UIBuilder.eqClassButtons.containsKey(selectedUnit.unitData(true).uclass.toString()) -> -1
+                selectedUnit != null &&
+                    !UIBuilder.eqClassButtons.containsKey(selectedUnit.unitData(true).uclass.toString()) -> -1
                 newEq != null && !newEq.isAvailableIn(year, month) -> -1
                 ui.game.campaign != null && ui.game.campaign!!.country != newCountry -> -1
                 else -> GameRules.calculateUnitCosts(eqUnitId, eqTransportId)
@@ -483,7 +541,7 @@ internal class EquipmentWindowController(private val ui: UI) {
         val icon = if (data.uclass > UnitClass.SUBMARINE.value) UIBuilder.navalReplacementIcon else data.icon
         img.style.backgroundImage = "url($icon)"
         nameDiv.textContent = unit.customName ?: data.name
-        if (unit.customName != null) nameDiv.title = data.name   // equipment identity on hover
+        if (unit.customName != null) nameDiv.title = data.name // equipment identity on hover
         iconsDiv.className = if (unit.isDeployed) "eqUnitBoxIconsMenu" else "eqUnitBoxIcons"
         var icons = ""
         if (unit.isDeployed) {
@@ -498,10 +556,10 @@ internal class EquipmentWindowController(private val ui: UI) {
         // units (updateEquipmentWindow filters on player id), so no ownership check is needed.
         val rename = addTag(container, "span")
         rename.className = "osada-rename-btn osada-rename-btn--card"
-        rename.innerHTML = "&#9998;"   // ✎
+        rename.innerHTML = "&#9998;" // ✎
         rename.title = "Rename"
         rename.onclick = { e: org.w3c.dom.events.MouseEvent ->
-            e.stopPropagation()   // must not select the card (that re-render would kill the input)
+            e.stopPropagation() // must not select the card (that re-render would kill the input)
             startCardRename(container, nameDiv, unit)
         }
         return container
@@ -522,7 +580,7 @@ internal class EquipmentWindowController(private val ui: UI) {
         fun finish(commit: Boolean) {
             if (done) return
             done = true
-            input.onblur = null   // removing a focused element fires blur; don't re-enter
+            input.onblur = null // removing a focused element fires blur; don't re-enter
             val value = input.value.trim().take(UNIT_NAME_MAX_LENGTH)
             delTag(input)
             nameDiv.style.visibility = ""
@@ -532,7 +590,7 @@ internal class EquipmentWindowController(private val ui: UI) {
             ui.game.scenario?.map?.currentUnit?.let { if (it.id == unit.id) ui.showUnitInfo(it) }
         }
         input.onkeydown = { e ->
-            e.stopPropagation()   // typing must not trigger document-level game hotkeys
+            e.stopPropagation() // typing must not trigger document-level game hotkeys
             when (e.asDynamic().key as? String) {
                 "Enter" -> finish(true)
                 "Escape" -> finish(false)

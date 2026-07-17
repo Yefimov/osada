@@ -2,6 +2,7 @@ package org.osada.ui
 
 import org.osada.GameHolder
 import org.osada.model.Cell
+import org.osada.ui.HudLog.add
 
 /**
  * Sidebar LOG panel (Task 2): a small ring buffer of plain-text lines appended from EXISTING

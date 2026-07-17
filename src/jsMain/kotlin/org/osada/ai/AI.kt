@@ -1,9 +1,22 @@
 package org.osada.ai
 
-import org.osada.*
-import org.osada.model.*
+import org.osada.ActionType
+import org.osada.GameHolder
+import org.osada.MovMethod
+import org.osada.RoadType
+import org.osada.TerrainType
+import org.osada.UnitClass
+import org.osada.model.Cell
+import org.osada.model.Equipment
+import org.osada.model.EquipmentData
+import org.osada.model.ExtendedCell
+import org.osada.model.GameMap
+import org.osada.model.GameUnit
+import org.osada.model.Hex
+import org.osada.model.Player
 import org.osada.rules.GameRules
-import kotlin.js.JsName
+import org.osada.terrainEntrenchment
+import org.osada.terrainInitiative
 import kotlin.js.json
 import kotlin.random.Random
 
@@ -42,10 +55,10 @@ class AI(private val player: Player, private val map: GameMap) {
         allUnits.filter { it.player?.id == player.id }.forEach { unit ->
             val aiUnit = AIUnit(unit)
             val uclass = unit.unitData().uclass
-            if (uclass == UnitClass.ARTILLERY.value
-                || uclass == UnitClass.FORTIFICATION.value
-                || (GameRules.isAir(unit) && uclass != UnitClass.AIR_TRANSPORT.value)
-                || (GameRules.isSea(unit) && uclass != UnitClass.NAVAL_TRANSPORT.value)
+            if (uclass == UnitClass.ARTILLERY.value ||
+                uclass == UnitClass.FORTIFICATION.value ||
+                (GameRules.isAir(unit) && uclass != UnitClass.AIR_TRANSPORT.value) ||
+                (GameRules.isSea(unit) && uclass != UnitClass.NAVAL_TRANSPORT.value)
             ) {
                 unitQueue.add(0, aiUnit)
             } else {
@@ -98,12 +111,12 @@ class AI(private val player: Player, private val map: GameMap) {
 
     private fun considerReinforce(aiUnit: AIUnit) {
         val unit = aiUnit.unit
-        if (!GameRules.canReinforce(map, unit)
-            || aiUnit.didResupplyReinforce
-            || aiUnit.didAttack
-            || aiUnit.didMove
-            || unit.unitData().uclass == UnitClass.FORTIFICATION.value
-            || availablePrestige <= 0
+        if (!GameRules.canReinforce(map, unit) ||
+            aiUnit.didResupplyReinforce ||
+            aiUnit.didAttack ||
+            aiUnit.didMove ||
+            unit.unitData().uclass == UnitClass.FORTIFICATION.value ||
+            availablePrestige <= 0
         ) {
             aiUnit.noReinforce = true
             return
@@ -129,17 +142,17 @@ class AI(private val player: Player, private val map: GameMap) {
 
     private fun considerResupply(aiUnit: AIUnit) {
         val unit = aiUnit.unit
-        if (!GameRules.canResupply(map, unit)
-            || aiUnit.didResupplyReinforce
-            || aiUnit.didAttack
-            || aiUnit.didMove
+        if (!GameRules.canResupply(map, unit) ||
+            aiUnit.didResupplyReinforce ||
+            aiUnit.didAttack ||
+            aiUnit.didMove
         ) {
             aiUnit.noResupply = true
             return
         }
-        if ((aiUnit.noAttack && aiUnit.noMove)
-            || unit.ammo < AMMO_THRESHOLD
-            || (GameRules.unitUsesFuel(unit) && unit.fuel < FUEL_THRESHOLD)
+        if ((aiUnit.noAttack && aiUnit.noMove) ||
+            unit.ammo < AMMO_THRESHOLD ||
+            (GameRules.unitUsesFuel(unit) && unit.fuel < FUEL_THRESHOLD)
         ) {
             addAction(ActionType.RESUPPLY, arrayOf(unit))
             aiUnit.didResupplyReinforce = true
@@ -253,10 +266,13 @@ class AI(private val player: Player, private val map: GameMap) {
         }
 
         val combat = GameRules.calculateCombatResults(attacker, defender, map.getUnits().toList(), true, true)
-        score += combat.kills * killTable[defender.unitData().uclass] - combat.losses * lossTable[attacker.unitData().uclass]
+        score +=
+            combat.kills * killTable[defender.unitData().uclass] - combat.losses * lossTable[attacker.unitData().uclass]
         kills = combat.kills
 
-        if (combat.losses >= attacker.strength || attacker.strength.toDouble() / combat.losses < ATTACK_LOSS_RATIO_LIMIT) {
+        if (combat.losses >= attacker.strength ||
+            attacker.strength.toDouble() / combat.losses < ATTACK_LOSS_RATIO_LIMIT
+        ) {
             return if (fullOnly) AttackResult(score, kills) else AttackResult(CANCELLED_ATTACK_SCORE, kills)
         }
 
@@ -301,9 +317,9 @@ class AI(private val player: Player, private val map: GameMap) {
         val deployment = hex.isDeployment
         if (hex.victorySide == -1 && deployment != -1 && deployment == player.id) score -= 100
 
-        if (unitClass == UnitClass.FIGHTER.value
-            || unitClass == UnitClass.TACTICAL_BOMBER.value
-            || unitClass == UnitClass.LEVEL_BOMBER.value
+        if (unitClass == UnitClass.FIGHTER.value ||
+            unitClass == UnitClass.TACTICAL_BOMBER.value ||
+            unitClass == UnitClass.LEVEL_BOMBER.value
         ) {
             return (score * randomFactor()).toInt()
         }
@@ -320,8 +336,8 @@ class AI(private val player: Player, private val map: GameMap) {
         var score = 0
         if (GameRules.canEntrench(unit) && unit.entrenchment < terrainEntrenchment[hex.terrain]) score += 50
         if (terrainInitiative[originalHex.terrain] < terrainInitiative[hex.terrain]) score += 20
-        if ((hex.terrain == TerrainType.RIVER.value || hex.terrain == TerrainType.STREAM.value)
-            && hex.road == RoadType.NONE.value
+        if ((hex.terrain == TerrainType.RIVER.value || hex.terrain == TerrainType.STREAM.value) &&
+            hex.road == RoadType.NONE.value
         ) {
             score -= 70
         }
@@ -361,7 +377,13 @@ class AI(private val player: Player, private val map: GameMap) {
         var score = 0
         val adjacent = GameRules.getAdjacent(cell.row, cell.col)
         for (neighbor in adjacent) {
-            if (neighbor.row < 0 || neighbor.col < 0 || neighbor.row >= map.rows - 1 || neighbor.col >= map.cols - 1) continue
+            if (neighbor.row < 0 ||
+                neighbor.col < 0 ||
+                neighbor.row >= map.rows - 1 ||
+                neighbor.col >= map.cols - 1
+            ) {
+                continue
+            }
             val neighborHex = map.map?.getOrNull(neighbor.row)?.getOrNull(neighbor.col) ?: continue
             val neighborUnit = neighborHex.getUnit()
             if (neighborUnit != null && neighborUnit.id != unit.id) {
@@ -433,15 +455,18 @@ class AI(private val player: Player, private val map: GameMap) {
                 // (Int < dynamic is an overload-ambiguity compile error, dynamic > Int isn't —
                 // the concrete type has to be on the same side consistently to avoid that trap).
                 val data = Equipment.equipment[eqid].unsafeCast<EquipmentData?>()
-                if (cost > remaining
-                    || cost > MAX_UNIT_COST
-                    || cost < MIN_UNIT_COST
-                    || data?.movmethod == MovMethod.DEEP_NAVAL.value
+                if (cost > remaining ||
+                    cost > MAX_UNIT_COST ||
+                    cost < MIN_UNIT_COST ||
+                    data?.movmethod == MovMethod.DEEP_NAVAL.value ||
                     // Lower bound only (matches the original year-only check's own scope — it
                     // never gated on yearexpired either, only adding month precision here, not a
                     // new upper-bound rule): not yet available this year, or available later this
                     // same year than the current month.
-                    || (data != null && (year < data.yearavailable || (year == data.yearavailable && month < data.monthavailable)))
+                    (
+                        data != null &&
+                            (year < data.yearavailable || (year == data.yearavailable && month < data.monthavailable))
+                        )
                 ) {
                     iterator.remove()
                 }

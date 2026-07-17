@@ -2,8 +2,6 @@ package org.osada.model
 
 import org.osada.*
 import org.osada.rules.GameRules
-import kotlin.js.JsExport
-import kotlin.js.JsName
 
 @JsExport
 @JsName("Hex")
@@ -12,6 +10,7 @@ class Hex(private val rowVal: Int, private val colVal: Int) {
     var airunit: GameUnit? = null
     var terrain: Int = TerrainType.CLEAR.value
     var road: Int = RoadType.NONE.value
+
     // 8-direction mask like [road], but for rail (train movement only) -- see
     // MovementRules.getMoveRange's isTrain gate. Parsed from the scenario XML's own `rail`
     // attribute (tools/og-import/xscn.py already split it out of the OG binary's road/rail
@@ -32,19 +31,25 @@ class Hex(private val rowVal: Int, private val colVal: Int) {
     fun getPos(): Cell = Cell(rowVal, colVal)
 
     fun isZOC(side: Int): Boolean = side < zoc.size && zoc[side] > 0
-    fun isSpotted(side: Int): Boolean {
-        return if (uiSettings.noFOW) true else side < spotted.size && spotted[side] > 0
-    }
+    fun isSpotted(side: Int): Boolean = if (uiSettings.noFOW) true else side < spotted.size && spotted[side] > 0
 
     fun setZOC(side: Int, add: Boolean) {
         if (side < zoc.size) {
-            if (add) zoc[side]++ else if (zoc[side] > 0) zoc[side]--
+            if (add) {
+                zoc[side]++
+            } else if (zoc[side] > 0) {
+                zoc[side]--
+            }
         }
     }
 
     fun setSpotted(side: Int, add: Boolean) {
         if (side < spotted.size) {
-            if (add) spotted[side]++ else if (spotted[side] > 0) spotted[side]--
+            if (add) {
+                spotted[side]++
+            } else if (spotted[side] > 0) {
+                spotted[side]--
+            }
         }
     }
 
@@ -62,12 +67,10 @@ class Hex(private val rowVal: Int, private val colVal: Int) {
         setUnit(other.airunit)
     }
 
-    fun getUnit(airMode: Boolean = false): GameUnit? {
-        return if (unit != null && airunit != null) {
-            if (airMode) airunit else unit
-        } else {
-            unit ?: airunit
-        }
+    fun getUnit(airMode: Boolean = false): GameUnit? = if (unit != null && airunit != null) {
+        if (airMode) airunit else unit
+    } else {
+        unit ?: airunit
     }
 
     fun setUnit(unit: GameUnit?) {
@@ -93,14 +96,17 @@ class Hex(private val rowVal: Int, private val colVal: Int) {
         val spotted = isSpotted(attackerSide)
         val primary = getUnit(airMode)
         val primaryId = primary?.id ?: -1
-        if (primary != null && (spotted || primary.tempSpotted)
-            && GameRules.canInitiateAttack(attacker, primary)
+        if (primary != null &&
+            (spotted || primary.tempSpotted) &&
+            GameRules.canInitiateAttack(attacker, primary)
         ) {
             return primary
         }
         val secondary = getUnit(!airMode)
-        if (secondary != null && secondary.id != primaryId && (spotted || secondary.tempSpotted)
-            && GameRules.canInitiateAttack(attacker, secondary)
+        if (secondary != null &&
+            secondary.id != primaryId &&
+            (spotted || secondary.tempSpotted) &&
+            GameRules.canInitiateAttack(attacker, secondary)
         ) {
             return secondary
         }

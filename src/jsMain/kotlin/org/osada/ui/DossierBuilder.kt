@@ -1,7 +1,8 @@
 package org.osada.ui
 
-import org.osada.*
+import org.osada.GameHolder
 import org.osada.model.GameUnit
+import org.osada.outcomeNames
 import org.w3c.dom.events.MouseEvent
 import kotlin.random.Random
 

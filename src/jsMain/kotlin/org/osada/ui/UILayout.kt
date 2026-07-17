@@ -1,7 +1,7 @@
 package org.osada.ui
 
 import kotlinx.browser.window
-import org.osada.*
+import org.osada.uiSettings
 
 /**
  * UI layout/scaling concerns: applies CSS zoom/transform scaling to the layout elements,
@@ -29,7 +29,7 @@ internal object UILayout {
         // silently overriding it (inline beats stylesheet), tucking the window back under the bar.
         "statusBarButton" to 15,
         "unitsBarButton" to 95,
-        "uiToolTip" to null
+        "uiToolTip" to null,
         // combatLogButton: removed — reparented into the topbar's flex icon cluster
         // (MainMenuBuilder), positioned by that flex layout, not this table.
         // dossier: removed — same incision as container-unitlist/unit-info above: the redesigned
@@ -80,7 +80,15 @@ internal object UILayout {
         uiSettings.uiScale = scale
     }
 
-    fun createSlider(container: dynamic, id: String, value: Double, step: Double, min: Double, max: Double, callback: (() -> Unit)?) {
+    fun createSlider(
+        container: dynamic,
+        id: String,
+        value: Double,
+        step: Double,
+        min: Double,
+        max: Double,
+        callback: (() -> Unit)?,
+    ) {
         // Round to 2 decimals — NOT toFixed(1): with the volume slider's 0.05 step, one-decimal
         // rounding pulled every second press back where it started (0.5−0.05=0.45→"0.5", and
         // 0.75→"0.8"), so the value could never leave 0.5 / 0.8. Two decimals cover every step
