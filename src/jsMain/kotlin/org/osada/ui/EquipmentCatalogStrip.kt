@@ -40,12 +40,11 @@ internal object EquipmentCatalogStrip {
             val eq = Equipment.getEquipment(eqid) ?: return@forEach
             if (!eq.isAvailableIn(year, month)) return@forEach
             if (EquipmentWindowState.isUndeployableOnThisMap(map, eq)) return@forEach
+            // Equipment the player can't currently afford isn't offered at all, rather than
+            // shown dimmed and unbuyable.
+            if (eq.cost * CURRENCY_MULTIPLIER > currentPlayer.prestige) return@forEach
             val item = buildEquipmentListItem("eqUnitList", eq)
             item.asDynamic().equnitid = eqid
-            // Unaffordable entries stay visible but read as out of reach.
-            if (eq.cost * CURRENCY_MULTIPLIER > currentPlayer.prestige) {
-                item.classList.add("osada-eq-unaffordable")
-            }
             if (eqid == selectedEqId) {
                 item.setAttribute("selectedUnit", eq.name)
                 eqScrollPos = (eqHscroll?.asDynamic()?.offsetWidth as? Int ?: 0) / 2 - (item.offsetWidth / 2)

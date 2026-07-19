@@ -48,22 +48,15 @@ internal object StartMenuSidePicker {
         return result
     }
 
-    /** (primary display name, count of additional distinct countries on that side) — naming
-     *  fallback chain: curated [StartMenuListToolbar.countryDisplayLabel] -> raw country name ->
-     *  "Side N". */
+    /** (primary display name, count of additional distinct countries on that side) — falls back
+     *  to "Side N" only when even the primary country fails to resolve. */
     private fun sideLabel(
         scenario: dynamic,
         side: Int,
         eqpName: String,
     ): Pair<String, Int> {
         val countries = sideCountries(scenario, side)
-        val primary = countries.firstOrNull()
-        val name =
-            primary?.let { c ->
-                StartMenuListToolbar.countryDisplayLabel(c) ?: Equipment
-                    .getCountryNameByEqp(c, eqpName)
-                    .let { n -> if (n.isBlank() || n == "Unknown") null else n }
-            } ?: "Side ${side + 1}"
+        val name = countries.firstOrNull()?.let { countryLabel(it, eqpName) } ?: "Side ${side + 1}"
         return Pair(name, maxOf(0, countries.size - 1))
     }
 
@@ -169,12 +162,14 @@ internal object StartMenuSidePicker {
         eqpName: String,
     ) {
         val (name, extra) = sideLabel(scenario, side, eqpName)
-        val primaryCountry = sideCountries(scenario, side).firstOrNull()
+        val countries = sideCountries(scenario, side)
+        val primaryCountry = countries.firstOrNull()
+        val extraNames = countries.drop(1).mapNotNull { countryLabel(it, eqpName) }
         val isSelected = available && side == selectedSide
 
         applySideCardAttrs(container, isSelected, available, side == focusSide)
         buildSideCardNameRow(container, name, primaryCountry)
-        buildSideCardBadgeRow(container, extra, available, isSelected)
+        buildSideCardBadgeRow(container, extra, extraNames, available, isSelected)
 
         if (available) {
             container.onclick = { _: MouseEvent -> selectScenarioSide(scenario, side) }
@@ -221,6 +216,7 @@ internal object StartMenuSidePicker {
     private fun buildSideCardBadgeRow(
         container: HTMLElement,
         extra: Int,
+        extraNames: List<String>,
         available: Boolean,
         isSelected: Boolean,
     ) {
@@ -230,7 +226,12 @@ internal object StartMenuSidePicker {
             val sub = addTag(badgeRow, "span")
             sub.className = "osada-side-card__sub"
             sub.textContent = "+$extra"
-            sub.title = "$extra additional " + (if (extra == 1) "nation" else "nations") + " fighting on this side"
+            sub.title =
+                if (extraNames.isNotEmpty()) {
+                    "Also fighting on this side: " + extraNames.joinToString(", ")
+                } else {
+                    "$extra additional " + (if (extra == 1) "nation" else "nations") + " fighting on this side"
+                }
         }
         val badge = addTag(badgeRow, "span")
         badge.className = "osada-side-card__badge"
@@ -260,3 +261,14 @@ internal object StartMenuSidePicker {
         }
     }
 }
+
+/** Naming fallback chain: curated [StartMenuListToolbar.countryDisplayLabel] -> raw country name
+ *  (via the scenario's equipment set) -> null if neither resolves to something real. Top-level
+ *  (not a [StartMenuSidePicker] member) purely to keep that object's function count in bounds. */
+private fun countryLabel(
+    country: Int,
+    eqpName: String,
+): String? =
+    StartMenuListToolbar.countryDisplayLabel(country) ?: Equipment
+        .getCountryNameByEqp(country, eqpName)
+        .let { n -> if (n.isBlank() || n == "Unknown") null else n }

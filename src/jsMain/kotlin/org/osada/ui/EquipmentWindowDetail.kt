@@ -90,6 +90,12 @@ private fun EquipmentWindowBuilder.buildEqDetailStats(
         "Defence in close combat — when an adjacent enemy attacks at melee range, as opposed to ranged fire.",
     )
     stat(
+        "Range def",
+        eq.rangedefmod,
+        "Defence bonus against ground fire from outside melee range — halved for an attacker within " +
+            "its own gun range, and waived against a moved Anti-Tank unit without a Tank Killer leader.",
+    )
+    stat(
         "Initiative",
         eq.initiative,
         "Higher initiative strikes first in combat, often before the enemy can return fire.",
