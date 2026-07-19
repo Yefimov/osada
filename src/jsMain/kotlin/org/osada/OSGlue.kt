@@ -2,7 +2,6 @@ package org.osada
 
 import org.osada.OSGlue.diskloadHTML
 
-
 object OSGlue {
     var diskloadHTML: String = ""
 
@@ -18,7 +17,8 @@ object OSGlue {
             diskloadHTML = "Load from Disk"
             diskloadInputHTML = ""
             canvasErrorMsg =
-                "<b>Couldn't create game surface.</b> <br/>This usually means that your device doesn't allow game surface to be created with dimensions over a certain limit."
+                "<b>Couldn't create game surface.</b> <br/>This usually means that your device doesn't " +
+                "allow game surface to be created with dimensions over a certain limit."
         } else {
             diskloadHTML = "Load from Disk <input id='diskloadfile' type='file'/>"
             diskloadInputHTML = "<input id='diskloadfile' type='file'/>"
@@ -26,7 +26,10 @@ object OSGlue {
         }
     }
 
-    fun diskloadEvent(element: dynamic, callback: () -> Unit) {
+    fun diskloadEvent(
+        element: dynamic,
+        callback: () -> Unit,
+    ) {
         if (NATIVE_PLATFORM == "ios" || NATIVE_PLATFORM == "android") {
             element.addEventListener("click", callback)
         } else {
@@ -40,7 +43,10 @@ object OSGlue {
         }
     }
 
-    fun diskload(onSuccess: () -> Unit, onError: () -> Unit) {
+    fun diskload(
+        onSuccess: () -> Unit,
+        onError: () -> Unit,
+    ) {
         if (NATIVE_PLATFORM == "ios" || NATIVE_PLATFORM == "android") {
             diskload()
         } else {
@@ -65,11 +71,19 @@ object OSGlue {
         }
     }
 
+    @Suppress("UnusedParameter", "EmptyFunctionBlock")
     fun reportScore(score: Int) {
-        // Platform-specific score reporting
+        // No-op stub on every NATIVE_PLATFORM in the legacy JS too (openpanzer.js's own
+        // `ios`/`generic` OSGlue variants both define this as empty `function(a){}`) -- kept
+        // with its parameter so the Game.kt call site (which mirrors the original hook) stays
+        // meaningful if a real platform integration is ever added.
     }
 
+    @Suppress("UnusedParameter", "EmptyFunctionBlock")
     fun reportAchievement(achievement: String) {
-        // Platform-specific achievement reporting
+        // No-op stub on every NATIVE_PLATFORM in the legacy JS too (openpanzer.js's own
+        // `ios`/`generic` OSGlue variants both define this as empty `function(a){}`) -- kept
+        // with its parameter so the Game.kt call site (which mirrors the original hook) stays
+        // meaningful if a real platform integration is ever added.
     }
 }

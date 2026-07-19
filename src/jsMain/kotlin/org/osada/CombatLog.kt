@@ -5,7 +5,6 @@ import org.osada.model.GameUnit
 import org.osada.model.Leaders
 
 object CombatLog {
-
     @JsName("log")
     var log: dynamic = makeEmptyLog()
         private set
@@ -29,7 +28,11 @@ object CombatLog {
         uniqueID = 0
     }
 
-    fun addCombatStart(attacker: GameUnit, defender: GameUnit, turn: Int): Int {
+    fun addCombatStart(
+        attacker: GameUnit,
+        defender: GameUnit,
+        turn: Int,
+    ): Int {
         uniqueID++
         val round = js("{}")
         val a = js("{}")
@@ -60,7 +63,12 @@ object CombatLog {
         return uniqueID
     }
 
-    fun addCombatEnd(attacker: GameUnit, defender: GameUnit, roundId: Int, isSupport: Boolean): Boolean {
+    fun addCombatEnd(
+        attacker: GameUnit,
+        defender: GameUnit,
+        roundId: Int,
+        isSupport: Boolean,
+    ): Boolean {
         val round = combatRound[roundId]
         if (round == null || round == undefined) return false
         round.isSupport = isSupport
@@ -140,28 +148,6 @@ object CombatLog {
         pushTo(log.leaders, entry)
     }
 
-    fun addResupply(unit: GameUnit) {
-        val player = unit.player ?: return
-        val id = unit.id
-        var entry = log.resupply[id]
-        if (entry == null || entry == undefined) {
-            entry = newUnitEndTurnInfo()
-            log.resupply[id] = entry
-        }
-        entry.eqid = unit.eqid
-        entry.ammo = unit.ammo
-        entry.fuel = unit.fuel
-        entry.isCore = unit.isCore
-        entry.side = player.side
-    }
-
-    fun addObjectiveCapture(cell: Cell, side: Int) {
-        val entry = js("{}")
-        entry.pos = Cell(cell.row, cell.col)
-        entry.side = side
-        pushTo(log.objectives, entry)
-    }
-
     private fun newCombatUnitInfo(): dynamic {
         val o = js("{}")
         o.eqid = 0
@@ -185,21 +171,19 @@ object CombatLog {
         return o
     }
 
-    private fun newUnitEndTurnInfo(): dynamic {
-        val o = js("{}")
-        o.eqid = 0
-        o.fuel = -1
-        o.ammo = -1
-        o.side = -1
-        o.isCore = false
-        return o
-    }
-
-    private fun pushTo(arr: dynamic, value: dynamic) {
+    // Internal (not private): CombatLogQueries.kt's addResupply/addObjectiveCapture extensions
+    // call this from another file.
+    internal fun pushTo(
+        arr: dynamic,
+        value: dynamic,
+    ) {
         arr.push(value)
     }
 
-    private fun deleteKey(obj: dynamic, key: Int) {
+    private fun deleteKey(
+        obj: dynamic,
+        key: Int,
+    ) {
         js("(function(o,k){ delete o[k]; })")(obj, key)
     }
 }

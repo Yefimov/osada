@@ -7,8 +7,12 @@ import org.osada.UnitClass
 import org.osada.UnitType
 import org.osada.model.Equipment
 import org.osada.model.GameUnit
+import org.osada.model.getCountryName
+import org.osada.model.getUnits
 import org.osada.movMethodNames
 import org.osada.rules.GameRules
+import org.osada.rules.calculateCombatResults
+import org.osada.rules.isAir
 import org.osada.ui.BottomZoneBuilder.renderEnemyCard
 import org.osada.ui.BottomZoneBuilder.renderForecast
 import org.osada.unitClassNames
@@ -26,8 +30,9 @@ import org.w3c.dom.HTMLElement
  * cursor forecast / click-to-inspect paths already reveal) — no new information is surfaced here.
  */
 internal object BottomZoneBuilder {
-
     private const val HOVER_PERSIST_MS = 2000
+    private const val FULL_STRENGTH = 10.0
+    private const val PERCENT_SCALE = 100.0
 
     private var hoverPersistTimer: Int = 0
 
@@ -44,7 +49,11 @@ internal object BottomZoneBuilder {
 
     private fun restructurePlayerCard() {
         val root = byId("unit-info") ?: return
-        fun move(id: String, into: HTMLElement) {
+
+        fun move(
+            id: String,
+            into: HTMLElement,
+        ) {
             byId(id)?.let { into.appendChild(it) }
         }
 
@@ -93,11 +102,18 @@ internal object BottomZoneBuilder {
 
         val bars = addTag(main, "div")
         bars.id = "uc-bars"
+
         // Numbers live ON the bar (a value span inside the track); the row's tooltip explains
         // only what the stat MEANS (durability, resupply, movement) — never repeats the number
         // that's already visible, and hovering the label or the track both trigger it since
         // `title` is set on the whole row.
-        fun bar(id: String, label: String, modifier: String, tooltip: String, iconFile: String? = null): HTMLElement {
+        fun bar(
+            id: String,
+            label: String,
+            modifier: String,
+            tooltip: String,
+            iconFile: String? = null,
+        ): HTMLElement {
             val row = addTag(bars, "div")
             row.id = "${id}Row"
             row.className = "osada-bar osada-bar--$modifier"
@@ -165,7 +181,11 @@ internal object BottomZoneBuilder {
     /** Reuses [GameRules.calculateCombatResults] — the SAME function and call shape the existing
      *  cursor-side attack forecast already uses ([CursorRenderer.generateAttackCursor]) — so the
      *  bottom-zone numbers always agree with the tooltip shown at the cursor. */
-    fun renderForecast(attacker: GameUnit, defender: GameUnit, ownSide: Int) {
+    fun renderForecast(
+        attacker: GameUnit,
+        defender: GameUnit,
+        ownSide: Int,
+    ) {
         cancelHoverPersistTimer()
         val map = GameHolder.instance?.scenario?.map
         val units = map?.getUnits()?.toList() ?: emptyList()
@@ -173,11 +193,12 @@ internal object BottomZoneBuilder {
 
         val attackerData = attacker.unitData(true)
         val defenderData = defender.unitData(true)
-        val attackValue = when {
-            GameRules.isAir(defender) -> attackerData.airatk
-            defenderData.target == UnitType.HARD.value -> attackerData.hardatk
-            else -> attackerData.softatk
-        }
+        val attackValue =
+            when {
+                GameRules.isAir(defender) -> attackerData.airatk
+                defenderData.target == UnitType.HARD.value -> attackerData.hardatk
+                else -> attackerData.softatk
+            }
         val defenseValue = if (GameRules.isAir(attacker)) defenderData.airdef else defenderData.grounddef
 
         byId("fcAtkDef")?.textContent = "ATK $attackValue · DEF $defenseValue"
@@ -199,7 +220,7 @@ internal object BottomZoneBuilder {
         }
         byId("fcStrengths")?.textContent = "${attacker.strength} vs ${defender.strength}"
 
-        renderEnemyCard(defender, ownSide)
+        renderEnemyCard(defender)
         setState("hover")
     }
 
@@ -213,16 +234,27 @@ internal object BottomZoneBuilder {
     }
 
     private fun armHoverPersistTimer() {
-        hoverPersistTimer = window.setTimeout({
-            // Don't clobber the enemy card out from under someone actively reading its "All
-            // stats" panel — re-check instead of reverting, so it only auto-hides once they
-            // close the panel (or move back onto a target, which cancels the timer entirely).
-            if (byId("osadaEnemyCard")?.classList?.contains("ec--expanded") == true) {
-                armHoverPersistTimer()
-            } else {
-                setState(if (GameHolder.instance?.scenario?.map?.currentUnit != null) "own" else "hidden")
-            }
-        }, HOVER_PERSIST_MS)
+        hoverPersistTimer =
+            window.setTimeout({
+                // Don't clobber the enemy card out from under someone actively reading its "All
+                // stats" panel — re-check instead of reverting, so it only auto-hides once they
+                // close the panel (or move back onto a target, which cancels the timer entirely).
+                if (byId("osadaEnemyCard")?.classList?.contains("ec--expanded") == true) {
+                    armHoverPersistTimer()
+                } else {
+                    setState(
+                        if (GameHolder.instance
+                                ?.scenario
+                                ?.map
+                                ?.currentUnit != null
+                        ) {
+                            "own"
+                        } else {
+                            "hidden"
+                        },
+                    )
+                }
+            }, HOVER_PERSIST_MS)
     }
 
     private fun cancelHoverPersistTimer() {
@@ -240,32 +272,37 @@ internal object BottomZoneBuilder {
      *  experience/entrenchment — those are per-unit LIVE state we have no visibility into for an
      *  enemy, unlike the player's own card (same discipline the class doc comment already states:
      *  nothing surfaced here beyond what spotting already reveals). Glyph chars/titles match
-     *  [UIBuilder.unitStats]'s entries for the same stat so the two cards read consistently. */
-    // Grouped (Attack/Defence/Mobility & Recon) for the "All stats" expander — same treatment as
-    // the player card's #statsRow (UIBuilder.unitStats' `group` field), just a separate, smaller,
-    // local list since this one has no live-state entries at all (see class doc above).
-    private val ecStatGroups: List<Pair<String, List<Triple<String, String, String>>>> = listOf(
-        "Attack" to listOf(
-            Triple("ecAHard", "{", "Power vs Hard targets"),
-            Triple("ecASoft", "\$", "Power vs Soft targets"),
-            Triple("ecAAir", "&", "Power vs Air targets"),
-            Triple("ecANaval", "}", "Power vs Naval targets"),
-        ),
-        "Defence" to listOf(
-            Triple("ecDHard", "5", "Defence vs ground attacker"),
-            Triple("ecDAir", "3", "Defence vs air attacker"),
-            Triple("ecDClose", "6", "Defence in close combat"),
-            Triple("ecDRange", "7", "Defence in ranged combat"),
-        ),
-        "Mobility & Recon" to listOf(
-            Triple("ecTarget", "`", "Target type"),
-            Triple("ecMoveType", "~", "Movement type"),
-            Triple("ecMovement", "?", "Movement range"),
-            Triple("ecGunRange", ">", "Firing range"),
-            Triple("ecIni", "|", "Combat initiative"),
-            Triple("ecSpot", "'", "Spotting range"),
-        ),
-    )
+     *  [UIBuilder.unitStats]'s entries for the same stat so the two cards read consistently.
+     *
+     *  Grouped (Attack/Defence/Mobility & Recon) for the "All stats" expander — same treatment as
+     *  the player card's #statsRow (UIBuilder.unitStats' `group` field), just a separate, smaller,
+     *  local list since this one has no live-state entries at all (see class doc above). */
+    private val ecStatGroups: List<Pair<String, List<Triple<String, String, String>>>> =
+        listOf(
+            "Attack" to
+                listOf(
+                    Triple("ecAHard", "{", "Power vs Hard targets"),
+                    Triple("ecASoft", "\$", "Power vs Soft targets"),
+                    Triple("ecAAir", "&", "Power vs Air targets"),
+                    Triple("ecANaval", "}", "Power vs Naval targets"),
+                ),
+            "Defence" to
+                listOf(
+                    Triple("ecDHard", "5", "Defence vs ground attacker"),
+                    Triple("ecDAir", "3", "Defence vs air attacker"),
+                    Triple("ecDClose", "6", "Defence in close combat"),
+                    Triple("ecDRange", "7", "Defence in ranged combat"),
+                ),
+            "Mobility & Recon" to
+                listOf(
+                    Triple("ecTarget", "`", "Target type"),
+                    Triple("ecMoveType", "~", "Movement type"),
+                    Triple("ecMovement", "?", "Movement range"),
+                    Triple("ecGunRange", ">", "Firing range"),
+                    Triple("ecIni", "|", "Combat initiative"),
+                    Triple("ecSpot", "'", "Spotting range"),
+                ),
+        )
 
     private fun buildEnemyCardSkeleton() {
         val root = byId("osadaEnemyCard") ?: return
@@ -328,7 +365,7 @@ internal object BottomZoneBuilder {
     /** Same one-line stat format the old sidebar hover inspector used ("STR x/10 · DEF g/a") —
      *  reused verbatim rather than inventing a new summary; the "All stats" expander below adds
      *  the rest of the (fog-of-war-safe) picture without replacing this quick read. */
-    fun renderEnemyCard(unit: GameUnit, ownSide: Int) {
+    fun renderEnemyCard(unit: GameUnit) {
         val data = unit.unitData(true)
         byId("ecPortrait")?.style?.backgroundImage = "url(${data.icon})"
         val className = unitClassNames.getOrNull(data.uclass) ?: ""
@@ -336,7 +373,8 @@ internal object BottomZoneBuilder {
         // unit.flag (like the player card's #uFlag), NOT data.country: the equipment record's
         // country is a catalogue index (0 = shared/generic) that maps to "Unknown" here.
         byId("ecSub")?.textContent = "Enemy · ${Equipment.getCountryName(unit.flag - 1)}"
-        byId("ecStrBarFill")?.style?.width = "${(unit.strength / 10.0 * 100).coerceIn(0.0, 100.0)}%"
+        byId("ecStrBarFill")?.style?.width =
+            "${(unit.strength / FULL_STRENGTH * PERCENT_SCALE).coerceIn(0.0, PERCENT_SCALE)}%"
         byId("ecStat")?.textContent = "STR ${unit.strength}/10 · DEF ${data.grounddef} ground / ${data.airdef} air"
 
         val gunRange = if (data.gunrange == 0) 1 else data.gunrange
@@ -362,9 +400,9 @@ internal object BottomZoneBuilder {
     }
 
     /** "Enemy clicked, nothing own selected" — the enemy card takes the player-card's slot. */
-    fun showEnemyAlone(unit: GameUnit, ownSide: Int) {
+    fun showEnemyAlone(unit: GameUnit) {
         cancelHoverPersistTimer()
-        renderEnemyCard(unit, ownSide)
+        renderEnemyCard(unit)
         setState("enemyAlone")
     }
 

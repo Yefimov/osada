@@ -9,8 +9,12 @@ import org.osada.unitClassNames
  * `UIBuilder` god-object.
  */
 internal object MessageDialogs {
-
-    fun message(title: String, body: String, narrative: Boolean = false, callback: (() -> Unit)? = null) {
+    fun message(
+        title: String,
+        body: String,
+        narrative: Boolean = false,
+        callback: (() -> Unit)? = null,
+    ) {
         // A message with nothing to say must never paint an empty popup over the UI. When a
         // callback is pending we still have to run the flow, just without the box.
         if (title.isBlank() && body.isBlank()) {
@@ -34,20 +38,24 @@ internal object MessageDialogs {
         makeVisible("ui-message")
         messageEl?.scrollTop = 0.0
         js("if (typeof game !== 'undefined') game.uiMessageClicked = false")
-        uiOkBut?.onclick = if (callback != null) {
-            { _: org.w3c.dom.events.MouseEvent ->
-                makeHidden("ui-message")
-                callback()
+        uiOkBut?.onclick =
+            if (callback != null) {
+                { _: org.w3c.dom.events.MouseEvent ->
+                    makeHidden("ui-message")
+                    callback()
+                }
+            } else {
+                { _: org.w3c.dom.events.MouseEvent ->
+                    makeHidden("ui-message")
+                    js("if (typeof game !== 'undefined') game.uiMessageClicked = true")
+                }
             }
-        } else {
-            { _: org.w3c.dom.events.MouseEvent ->
-                makeHidden("ui-message")
-                js("if (typeof game !== 'undefined') game.uiMessageClicked = true")
-            }
-        }
     }
 
-    fun messageDynamic(title: String, body: String) {
+    fun messageDynamic(
+        title: String,
+        body: String,
+    ) {
         val mainBody = byId("mainbody") ?: return
         val box = addTag(mainBody, "div")
         box.className = "uiMessageBox"
@@ -70,11 +78,14 @@ internal object MessageDialogs {
     }
 
     fun showPrototypeAwardMessage(eqid: Int) {
-        var body = "<br>Due to your brilliant tactical performance on previous battle High Command awarded you a prototype core unit available for deployment."
+        var body =
+            "<br>Due to your brilliant tactical performance on previous battle High Command awarded " +
+                "you a prototype core unit available for deployment."
         val eq = Equipment.getEquipment(eqid)
         if (eq != null) {
             body +=
-                "<div class='uImageAnimation' style='margin-left: 120px;background-image: url(${eq.icon})'></div><b>${eq.name} ${unitClassNames[eq.uclass]}</b>"
+                "<div class='uImageAnimation' style='margin-left: 120px;background-image: url(${eq.icon})'></div>" +
+                "<b>${eq.name} ${unitClassNames[eq.uclass]}</b>"
         }
         messageDynamic("You have been awarded a prototype unit", body)
     }

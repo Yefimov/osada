@@ -2,6 +2,7 @@ package org.osada.ui
 
 import kotlinx.browser.document
 import kotlinx.browser.window
+import org.osada.WeatherCondition
 
 /**
  * Runtime precipitation overlay. Draws OG's rain/snow scroll textures (keyed transparent in
@@ -11,6 +12,11 @@ import kotlinx.browser.window
  * tick so the rain keeps falling between game actions. Fair(0)/Overcast(1) show nothing.
  */
 internal object WeatherRenderer {
+    private const val TICK_INTERVAL_MS = 45
+    private const val PHASE_INCREMENT = 0.08
+    private const val RAIN_ALPHA = 0.5
+    private const val SNOW_ALPHA = 0.9
+
     private var canvas: dynamic = null
     private var ctx: dynamic = null
     private var img: dynamic = null
@@ -21,21 +27,22 @@ internal object WeatherRenderer {
 
     fun start(atmospheric: Int) {
         stop()
-        if (atmospheric != 2 && atmospheric != 3) return
+        if (atmospheric != WeatherCondition.RAIN.value && atmospheric != WeatherCondition.SNOW.value) return
         mode = atmospheric
         ensureCanvas()
-        val src = if (atmospheric == 2) {
-            "resources/ui/weather/rain.png"
-        } else {
-            "resources/ui/weather/snow.png"
-        }
+        val src =
+            if (atmospheric == WeatherCondition.RAIN.value) {
+                "resources/ui/weather/rain.png"
+            } else {
+                "resources/ui/weather/snow.png"
+            }
         val image = js("new Image()")
         image.onload = { onLoaded() }
         image.onerror = { console.error("WeatherRenderer: failed to load $src") }
         image.src = src
         img = image
         Sound.startAmbient(
-            if (atmospheric == 2) {
+            if (atmospheric == WeatherCondition.RAIN.value) {
                 "resources/sounds/weather/rain.mp3"
             } else {
                 "resources/sounds/weather/winter.mp3"
@@ -81,23 +88,24 @@ internal object WeatherRenderer {
         resize()
         canvas.style.display = "block"
         val ih = (img.height as? Number)?.toDouble() ?: 256.0
-        val fall = if (mode == 2) 26.0 else 4.0 // rain falls fast, snow drifts slowly
-        timer = window.setInterval({
-            resize()
-            offY = (offY + fall) % ih
-            phase += 0.08
-            draw(ih)
-        }, 45)
+        val fall = if (mode == WeatherCondition.RAIN.value) 26.0 else 4.0 // rain falls fast, snow drifts slowly
+        timer =
+            window.setInterval({
+                resize()
+                offY = (offY + fall) % ih
+                phase += PHASE_INCREMENT
+                draw(ih)
+            }, TICK_INTERVAL_MS)
     }
 
     private fun draw(ih: Double) {
         val vw = (canvas.width as? Number)?.toDouble() ?: 0.0
         val vh = (canvas.height as? Number)?.toDouble() ?: 0.0
         ctx.clearRect(0.0, 0.0, vw, vh)
-        ctx.globalAlpha = if (mode == 2) 0.5 else 0.9
+        ctx.globalAlpha = if (mode == WeatherCondition.RAIN.value) RAIN_ALPHA else SNOW_ALPHA
         // rain: steady wind to the left; snow: gentle horizontal sway. The texture (>6000px wide)
         // covers the viewport horizontally in one draw, so only a vertical tile loop is needed.
-        val xoff = if (mode == 2) -40.0 else (kotlin.math.sin(phase) * 28.0 - 28.0)
+        val xoff = if (mode == WeatherCondition.RAIN.value) -40.0 else (kotlin.math.sin(phase) * 28.0 - 28.0)
         var y = (offY % ih) - ih
         while (y < vh) {
             ctx.drawImage(img, xoff, y)

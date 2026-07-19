@@ -30,7 +30,11 @@ object EventHandler {
         listeners.remove(name)
     }
 
-    fun addListener(name: String, func: (dynamic) -> Unit, params: dynamic = null) {
+    fun addListener(
+        name: String,
+        func: (dynamic) -> Unit,
+        params: dynamic = null,
+    ) {
         if (!events.containsKey(name)) {
             console.log("Can't add listener no such event: $name")
             return

@@ -8,7 +8,12 @@ import kotlin.random.Random
  * An animation frame descriptor.  Mirrors the plain object created by the
  * legacy `animationSprite()` helper.
  */
-data class Sprite(val image: dynamic, val width: Int, val frames: Int, val sound: SoundSprite)
+data class Sprite(
+    val image: dynamic,
+    val width: Int,
+    val frames: Int,
+    val sound: SoundSprite,
+)
 
 /**
  * Factory that returns a randomised sprite variant each time it is invoked,
@@ -33,99 +38,107 @@ class AnimationSprite(
     operator fun invoke(): Sprite = sprites[Random.nextInt(sprites.size)]
 }
 
-private fun resolveSound(name: String?): SoundSprite = when (name) {
-    "explosion" -> Sound.explosion
-    "gun" -> Sound.gun
-    "artillery" -> Sound.artillery
-    "tank" -> Sound.tank
-    "recon" -> Sound.recon
-    "antiTank" -> Sound.antiTank
-    "airDefence" -> Sound.airDefence
-    "smallgun" -> Sound.smallgun
-    "infantry" -> Sound.infantry
-    "fighter" -> Sound.fighter
-    "bomber" -> Sound.bomber
-    "submarine" -> Sound.submarine
-    "smallShip" -> Sound.smallShip
-    "bigShip" -> Sound.bigShip
-    "fortification" -> Sound.fortification
-    else -> Sound.dummy
-}
+private val soundByName: Map<String, SoundSprite> =
+    mapOf(
+        "explosion" to Sound.explosion,
+        "gun" to Sound.gun,
+        "artillery" to Sound.artillery,
+        "tank" to Sound.tank,
+        "recon" to Sound.recon,
+        "antiTank" to Sound.antiTank,
+        "airDefence" to Sound.airDefence,
+        "smallgun" to Sound.smallgun,
+        "infantry" to Sound.infantry,
+        "fighter" to Sound.fighter,
+        "bomber" to Sound.bomber,
+        "submarine" to Sound.submarine,
+        "smallShip" to Sound.smallShip,
+        "bigShip" to Sound.bigShip,
+        "fortification" to Sound.fortification,
+    )
+
+private fun resolveSound(name: String?): SoundSprite = soundByName[name] ?: Sound.dummy
 
 object Animations {
-    val explosion = AnimationSprite(
-        listOf(
-            Triple("resources/animations/explosions.png", 12, 120),
-            Triple("resources/animations/explosions2.png", 12, 120),
-            Triple("resources/animations/explosions3.png", 12, 120),
-        ),
-        "explosion",
-    )
+    val explosion =
+        AnimationSprite(
+            listOf(
+                Triple("resources/animations/explosions.png", 12, 120),
+                Triple("resources/animations/explosions2.png", 12, 120),
+                Triple("resources/animations/explosions3.png", 12, 120),
+            ),
+            "explosion",
+        )
 
-    val gun = AnimationSprite(
-        listOf(
-            Triple("resources/animations/fire-gun.png", 5, 150),
-        ),
-        "gun",
-    )
+    val gun =
+        AnimationSprite(
+            listOf(
+                Triple("resources/animations/fire-gun.png", 5, 150),
+            ),
+            "gun",
+        )
 
-    val smallgun = AnimationSprite(
-        listOf(
-            Triple("resources/animations/fire-smallgun.png", 7, 80),
-        ),
-        "smallgun",
-    )
+    val smallgun =
+        AnimationSprite(
+            listOf(
+                Triple("resources/animations/fire-smallgun.png", 7, 80),
+            ),
+            "smallgun",
+        )
 }
 
-private val animationFilesByName: Map<String, AnimationSprite> = mapOf(
-    "explosion" to Animations.explosion,
-    "gun" to Animations.gun,
-    "artillery" to AnimationSprite(listOf(Triple("resources/animations/fire-gun.png", 5, 150)), "artillery"),
-    "tank" to AnimationSprite(listOf(Triple("resources/animations/fire-gun.png", 5, 150)), "tank"),
-    "recon" to AnimationSprite(listOf(Triple("resources/animations/fire-gun.png", 5, 150)), "recon"),
-    "antiTank" to AnimationSprite(listOf(Triple("resources/animations/fire-gun.png", 5, 150)), "antiTank"),
-    "airDefence" to AnimationSprite(listOf(Triple("resources/animations/fire-gun.png", 5, 150)), "airDefence"),
-    "smallgun" to Animations.smallgun,
-    "infantry" to AnimationSprite(listOf(Triple("resources/animations/fire-smallgun.png", 7, 80)), "infantry"),
-    "fighter" to AnimationSprite(listOf(Triple("resources/animations/fire-smallgun.png", 7, 80)), "fighter"),
-    "bomber" to AnimationSprite(listOf(Triple("resources/animations/fire-smallgun.png", 7, 80)), "bomber"),
-    "submarine" to AnimationSprite(listOf(Triple("resources/animations/fire-gun.png", 5, 150)), "submarine"),
-    "smallShip" to AnimationSprite(listOf(Triple("resources/animations/fire-gun.png", 5, 150)), "smallShip"),
-    "bigShip" to AnimationSprite(listOf(Triple("resources/animations/fire-gun.png", 5, 150)), "bigShip"),
-    "fortification" to AnimationSprite(
-        listOf(Triple("resources/animations/fire-smallgun.png", 7, 80)),
-        "fortification",
-    ),
-)
+private val animationFilesByName: Map<String, AnimationSprite> =
+    mapOf(
+        "explosion" to Animations.explosion,
+        "gun" to Animations.gun,
+        "artillery" to AnimationSprite(listOf(Triple("resources/animations/fire-gun.png", 5, 150)), "artillery"),
+        "tank" to AnimationSprite(listOf(Triple("resources/animations/fire-gun.png", 5, 150)), "tank"),
+        "recon" to AnimationSprite(listOf(Triple("resources/animations/fire-gun.png", 5, 150)), "recon"),
+        "antiTank" to AnimationSprite(listOf(Triple("resources/animations/fire-gun.png", 5, 150)), "antiTank"),
+        "airDefence" to AnimationSprite(listOf(Triple("resources/animations/fire-gun.png", 5, 150)), "airDefence"),
+        "smallgun" to Animations.smallgun,
+        "infantry" to AnimationSprite(listOf(Triple("resources/animations/fire-smallgun.png", 7, 80)), "infantry"),
+        "fighter" to AnimationSprite(listOf(Triple("resources/animations/fire-smallgun.png", 7, 80)), "fighter"),
+        "bomber" to AnimationSprite(listOf(Triple("resources/animations/fire-smallgun.png", 7, 80)), "bomber"),
+        "submarine" to AnimationSprite(listOf(Triple("resources/animations/fire-gun.png", 5, 150)), "submarine"),
+        "smallShip" to AnimationSprite(listOf(Triple("resources/animations/fire-gun.png", 5, 150)), "smallShip"),
+        "bigShip" to AnimationSprite(listOf(Triple("resources/animations/fire-gun.png", 5, 150)), "bigShip"),
+        "fortification" to
+            AnimationSprite(
+                listOf(Triple("resources/animations/fire-smallgun.png", 7, 80)),
+                "fortification",
+            ),
+    )
 
 /**
  * Maps unit class index (legacy `unitClass` enum order) to the animation key
  * used during an attack.
  */
-val attackAnimationByClass = listOf(
-    null,
-    "infantry",
-    "tank",
-    "recon",
-    "antiTank",
-    "airDefence",
-    "fortification",
-    "smallgun",
-    "artillery",
-    "airDefence",
-    "fighter",
-    "bomber",
-    "bomber",
-    null,
-    "submarine",
-    "smallShip",
-    "bigShip",
-    null,
-    null,
-    "bigShip",
-    "bigShip",
-    "smallShip",
-)
+val attackAnimationByClass =
+    listOf(
+        null,
+        "infantry",
+        "tank",
+        "recon",
+        "antiTank",
+        "airDefence",
+        "fortification",
+        "smallgun",
+        "artillery",
+        "airDefence",
+        "fighter",
+        "bomber",
+        "bomber",
+        null,
+        "submarine",
+        "smallShip",
+        "bigShip",
+        null,
+        null,
+        "bigShip",
+        "bigShip",
+        "smallShip",
+    )
 
 fun getAnimationSprite(key: String): AnimationSprite? = animationFilesByName[key]
 
@@ -170,7 +183,10 @@ class Animation(
         frame++
     }
 
-    private fun drawFrame(f: Int, composite: String) {
+    private fun drawFrame(
+        f: Int,
+        composite: String,
+    ) {
         if (f < 0) return
         val h = sprite.image.height as Double
         ctx.save()
@@ -179,10 +195,14 @@ class Animation(
         ctx.rotate(rotate)
         ctx.drawImage(
             sprite.image,
-            sprite.width * f, 0,
-            sprite.width, h,
-            -sprite.width / 2.0, -h / 2.0,
-            sprite.width, h,
+            sprite.width * f,
+            0,
+            sprite.width,
+            h,
+            -sprite.width / 2.0,
+            -h / 2.0,
+            sprite.width,
+            h,
         )
         ctx.restore()
     }
@@ -193,6 +213,11 @@ class Animation(
  * invokes a callback when the chain finishes.
  */
 class AnimationChain {
+    companion object {
+        private const val CHAIN_GAP_MS = 500
+        private const val CLEAR_DELAY_MS = 100
+    }
+
     private val animations: MutableList<Animation> = mutableListOf()
     private var index: Int = 0
 
@@ -210,12 +235,12 @@ class AnimationChain {
             animations[index].start()
             window.setTimeout(
                 { start(callback) },
-                animations[index].duration + 500,
+                animations[index].duration + CHAIN_GAP_MS,
             )
             index++
         } else {
             js("if (callback && callback.cbfunc) callback.cbfunc(callback)")
-            window.setTimeout({ clear() }, 100)
+            window.setTimeout({ clear() }, CLEAR_DELAY_MS)
         }
     }
 }

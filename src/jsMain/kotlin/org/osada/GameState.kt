@@ -17,7 +17,9 @@ package org.osada
  */
 @JsExport
 @JsName("GameState")
-class GameState(private val game: Game) {
+class GameState(
+    private val game: Game,
+) {
     private val restorer = GameStateRestore(game)
     private val persistence = GameStatePersistence(game, restorer)
 
@@ -27,13 +29,21 @@ class GameState(private val game: Game) {
 
     fun saveSettings() = persistence.saveSettings()
 
-    fun restore(onSuccess: () -> Unit, onFail: () -> Unit) = persistence.restore(onSuccess, onFail)
+    fun restore(
+        onSuccess: () -> Unit,
+        onFail: () -> Unit,
+    ) = persistence.restore(onSuccess, onFail)
 
-    fun restoreFromString(data: String, onReady: () -> Unit = {}): Boolean =
-        persistence.restoreFromString(data, onReady)
+    fun restoreFromString(
+        data: String,
+        onReady: () -> Unit = {},
+    ): Boolean = persistence.restoreFromString(data, onReady)
 
-    fun restoreFromFile(file: dynamic, onSuccess: () -> Unit, onError: () -> Unit) =
-        persistence.restoreFromFile(file, onSuccess, onError)
+    fun restoreFromFile(
+        file: dynamic,
+        onSuccess: () -> Unit,
+        onError: () -> Unit,
+    ) = persistence.restoreFromFile(file, onSuccess, onError)
 
     fun clear() = persistence.clear()
 

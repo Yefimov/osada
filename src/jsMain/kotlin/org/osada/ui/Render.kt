@@ -1,8 +1,6 @@
 package org.osada.ui
 
-import org.osada.model.Cell
 import org.osada.model.GameMap
-import org.osada.model.ScreenPos
 
 /**
  * Canvas rendering entry point used by the UI layer.
@@ -19,38 +17,29 @@ import org.osada.model.ScreenPos
  * This class is now a thin coordinator that wires those collaborators over one shared
  * [RenderContext] and preserves the exact public surface the UI/Game layer calls.
  */
-class Render(map: GameMap?) {
-
-    private val ctx = RenderContext(map)
+class Render(
+    map: GameMap?,
+) {
+    internal val ctx = RenderContext(map)
     private val unitRenderer = UnitRenderer(ctx)
     private val overlayRenderer = OverlayRenderer(ctx)
-    private val cursorRenderer = CursorRenderer(ctx)
-    private val mapRenderer = MapRenderer(ctx, unitRenderer, overlayRenderer, cursorRenderer)
-    private val animator = MapAnimator(ctx, unitRenderer)
+    internal val cursorRenderer = CursorRenderer(ctx)
+    internal val mapRenderer = MapRenderer(ctx, unitRenderer, overlayRenderer, cursorRenderer)
+    internal val animator = MapAnimator(ctx, unitRenderer)
 
     fun cacheImages(callback: () -> Unit) = ctx.cacheImages(callback)
+
     fun positionLayers() = ctx.positionLayers()
+
     fun setIconsetTint(iconset: Int) = ctx.setIconsetTint(iconset)
+
     fun setNewMap(newMap: GameMap) = ctx.setNewMap(newMap)
 
-    fun cellToScreen(row: Int, col: Int, absolute: Boolean): ScreenPos = ctx.cellToScreen(row, col, absolute)
-    fun screenToCell(x: Int, y: Int): Cell = ctx.screenToCell(x, y)
-
     fun render() = mapRenderer.render()
-    fun render(centerRow: Int, centerCol: Int, radius: Int) = mapRenderer.render(centerRow, centerCol, radius)
-    fun drawHexByCell(cell: Cell, style: dynamic) = mapRenderer.drawHexByCell(cell, style)
 
-    fun drawCursor(cell: Cell) = cursorRenderer.drawCursor(cell)
-
-    fun runAnimation(callback: dynamic) = animator.runAnimation(callback)
-    fun addAnimation(row: Int, col: Int, type: String, direction: Int): Boolean =
-        animator.addAnimation(row, col, type, direction)
-    fun moveAnimation(params: dynamic) = animator.moveAnimation(params)
-
-    fun getHexesCanvas(): dynamic = ctx.getHexesCanvas()
-    fun getMapCanvas(): dynamic = ctx.getMapCanvas()
-    fun getCursorCanvas(): dynamic = ctx.getCursorCanvas()
-
-    /** The loaded terrain artwork (HTMLImageElement) — the minimap composites it as its base layer. */
-    fun getTerrainImage(): dynamic = ctx.terrainImage
+    fun render(
+        centerRow: Int,
+        centerCol: Int,
+        radius: Int,
+    ) = mapRenderer.render(centerRow, centerCol, radius)
 }

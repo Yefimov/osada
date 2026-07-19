@@ -2,119 +2,215 @@ package org.osada.ui
 
 import kotlinx.browser.document
 import kotlinx.browser.window
-import org.osada.TerrainType
 import org.osada.model.Cell
 import org.osada.model.Equipment
 import org.osada.model.GameMap
 import org.osada.model.ScreenPos
-import org.osada.uiSettings
+import org.osada.model.getUnitImagesList
 import kotlin.js.json
 import kotlin.math.PI
 import kotlin.math.max
 import kotlin.math.min
 
-/* ------------------------------------------------------------------ */
-/*  Shared style objects (mirror the legacy JS objects)                */
-/*  `internal` so every renderer collaborator in this package shares   */
-/*  the same singletons — `drawHex` relies on identity comparison      */
-/*  (`style === hexStyles["deploy"]`).                                 */
-/* ------------------------------------------------------------------ */
+// ------------------------------------------------------------------
+// Shared style objects (mirror the legacy JS objects)
+// `internal` so every renderer collaborator in this package shares
+// the same singletons — `drawHex` relies on identity comparison
+// (`style === hexStyles["deploy"]`).
+// ------------------------------------------------------------------
 
-internal val hexStyles = json(
-    "move" to json(
-        "fillColor" to "rgba(120,100,100,0.5)",
-        "lineColor" to "rgba(0,0,0,0.4)",
-        "lineWidth" to 1,
-        "lineJoin" to "miter",
-    ),
-    "movespotted" to json(
-        "fillColor" to "rgba(128,128,128,0.5)",
-        "lineColor" to "rgba(0,0,0,0.4)",
-        "lineWidth" to 1,
-        "lineJoin" to "miter",
-    ),
-    "attack" to json(
-        "fillColor" to null,
-        "lineColor" to "rgba(239, 0, 0,0.8)",
-        "lineWidth" to 3,
-        "lineJoin" to "miter",
-    ),
-    "current" to json(
-        "fillColor" to null,
-        "lineColor" to "rgba(255, 240, 0, 0.8)",
-        "lineWidth" to 3,
-        "lineJoin" to "round",
-    ),
-    "currentstroke" to json(
-        "fillColor" to null,
-        "lineColor" to "rgba(0, 0, 0, 0.9)",
-        "lineWidth" to 2,
-        "shadowOffsetX" to 1,
-        "shadowOffsetY" to 2,
-        "shadowColor" to "black",
-        "lineJoin" to "round",
-    ),
-    "generic" to json(
-        "fillColor" to null,
-        "lineColor" to "rgba(39,44,47,0.9)",
-        "lineWidth" to 0.4,
-        "lineJoin" to "miter",
-    ),
-    "deploy" to json(
-        "fillColor" to "rgba(128,128,128,0.8)",
-        "lineColor" to "rgba(0,0,0,0.4)",
-        "lineWidth" to 1,
-        "lineJoin" to "miter",
-    ),
-    "ownunit" to json(
-        "fillColor" to "rgba(30,144,255,0.3)",
-        "lineColor" to "rgba(0,0,0,0.4)",
-        "lineWidth" to 0,
-        "lineJoin" to "miter",
-    ),
-    "airunit" to json(
-        "fillColor" to "rgba(30,144,255,0.3)",
-        "lineColor" to "rgba(50, 110, 240,0.6)",
-        "lineWidth" to 2,
-        "lineJoin" to "miter",
-    ),
-    "combat" to json(
-        "fillColor" to "rgba(255, 255, 255,0.15)",
-        "lineColor" to "rgba(239,0,0,0.7)",
-        "lineWidth" to 2,
-        "lineJoin" to "miter",
-    ),
-    "fog" to json(
-        "fillColor" to "rgba(20,24,28,0.45)",
-        "lineColor" to null,
-        "lineWidth" to 0,
-        "lineJoin" to "miter",
-    ),
-)
+internal val hexStyles =
+    json(
+        "move" to
+            json(
+                "fillColor" to "rgba(120,100,100,0.5)",
+                "lineColor" to "rgba(0,0,0,0.4)",
+                "lineWidth" to 1,
+                "lineJoin" to "miter",
+            ),
+        "movespotted" to
+            json(
+                "fillColor" to "rgba(128,128,128,0.5)",
+                "lineColor" to "rgba(0,0,0,0.4)",
+                "lineWidth" to 1,
+                "lineJoin" to "miter",
+            ),
+        "attack" to
+            json(
+                "fillColor" to null,
+                "lineColor" to "rgba(239, 0, 0,0.8)",
+                "lineWidth" to 3,
+                "lineJoin" to "miter",
+            ),
+        "current" to
+            json(
+                "fillColor" to null,
+                "lineColor" to "rgba(255, 240, 0, 0.8)",
+                "lineWidth" to 3,
+                "lineJoin" to "round",
+            ),
+        "currentstroke" to
+            json(
+                "fillColor" to null,
+                "lineColor" to "rgba(0, 0, 0, 0.9)",
+                "lineWidth" to 2,
+                "shadowOffsetX" to 1,
+                "shadowOffsetY" to 2,
+                "shadowColor" to "black",
+                "lineJoin" to "round",
+            ),
+        "generic" to
+            json(
+                "fillColor" to null,
+                "lineColor" to "rgba(39,44,47,0.9)",
+                "lineWidth" to 0.4,
+                "lineJoin" to "miter",
+            ),
+        "deploy" to
+            json(
+                "fillColor" to "rgba(128,128,128,0.8)",
+                "lineColor" to "rgba(0,0,0,0.4)",
+                "lineWidth" to 1,
+                "lineJoin" to "miter",
+            ),
+        "ownunit" to
+            json(
+                "fillColor" to "rgba(30,144,255,0.3)",
+                "lineColor" to "rgba(0,0,0,0.4)",
+                "lineWidth" to 0,
+                "lineJoin" to "miter",
+            ),
+        "airunit" to
+            json(
+                "fillColor" to "rgba(30,144,255,0.3)",
+                "lineColor" to "rgba(50, 110, 240,0.6)",
+                "lineWidth" to 2,
+                "lineJoin" to "miter",
+            ),
+        "combat" to
+            json(
+                "fillColor" to "rgba(255, 255, 255,0.15)",
+                "lineColor" to "rgba(239,0,0,0.7)",
+                "lineWidth" to 2,
+                "lineJoin" to "miter",
+            ),
+        "fog" to
+            json(
+                "fillColor" to "rgba(20,24,28,0.45)",
+                "lineColor" to null,
+                "lineWidth" to 0,
+                "lineJoin" to "miter",
+            ),
+    )
 
-internal val unitStyles = json(
-    "axisBox" to "#383838",
-    "alliedBox" to "#808000",
-    "axisBorder" to "rgba(211, 211, 211, 1)",
-    "alliedBorder" to "rgba(127, 255, 0, 1)",
-    "enemyBoxMarked" to "#FF0000",
-    "playerText" to "white",
-    "alliedPlayerText" to "#696969",
-    "movedUnitText" to "#BDBDBD",
-    "terrainText" to "#333333",
-    "terrainTextStroke" to "#f8e064",
-)
+internal val unitStyles =
+    json(
+        "axisBox" to "#383838",
+        "alliedBox" to "#808000",
+        "axisBorder" to "rgba(211, 211, 211, 1)",
+        "alliedBorder" to "rgba(127, 255, 0, 1)",
+        "enemyBoxMarked" to "#FF0000",
+        "playerText" to "white",
+        "alliedPlayerText" to "#696969",
+        "movedUnitText" to "#BDBDBD",
+        "terrainText" to "#333333",
+        "terrainTextStroke" to "#f8e064",
+    )
 
-internal val terrainEncoding = listOf(
-    "A", "B", "C", "D", "D", "E", "F", "G", "H", "I",
-    "J", "K", "L", "M", "N", "O", "Q",
-)
+internal val terrainEncoding =
+    listOf(
+        "A",
+        "B",
+        "C",
+        "D",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H",
+        "I",
+        "J",
+        "K",
+        "L",
+        "M",
+        "N",
+        "O",
+        "Q",
+    )
 
-internal val directionToRadians = arrayOf(
-    PI, 5 * PI / 6, 3 * PI / 4, 2 * PI / 3, PI / 2, PI / 3,
-    PI / 4, PI / 6, 0.0, 11 * PI / 6, 7 * PI / 4, 5 * PI / 3,
-    3 * PI / 2, 4 * PI / 3, 5 * PI / 4, 7 * PI / 6,
-)
+internal val directionToRadians =
+    arrayOf(
+        PI,
+        5 * PI / 6,
+        3 * PI / 4,
+        2 * PI / 3,
+        PI / 2,
+        PI / 3,
+        PI / 4,
+        PI / 6,
+        0.0,
+        11 * PI / 6,
+        7 * PI / 4,
+        5 * PI / 3,
+        3 * PI / 2,
+        4 * PI / 3,
+        5 * PI / 4,
+        7 * PI / 6,
+    )
+
+/**
+ * Mutable bookkeeping for one [RenderContext.cacheImages] call: how many image loads have been
+ * registered/completed so far, and the callback to fire once every registered load has settled.
+ */
+private class ImageLoadState(
+    private val callback: () -> Unit,
+) {
+    var loaded = 0
+    var total = 0
+    var registered = false
+
+    fun checkDone() {
+        loaded++
+        if (registered && loaded >= total) callback()
+    }
+}
+
+/** Starts loading [src] into an `Image`, wiring both load and error events to [ImageLoadState.checkDone]. */
+private fun ImageLoadState.load(
+    src: String,
+    into: (dynamic) -> Unit,
+) {
+    total++
+    val img = js("new Image()")
+    img.onload = { checkDone() }
+    img.onerror = { checkDone() }
+    img.src = src
+    into(img)
+}
+
+/**
+ * An image put in the cache by an EARLIER cacheImages call may still be in flight.
+ * On restore, UI.init warms the cache with an empty callback and setNewScenario's
+ * second call then saw "everything cached", fired its callback immediately and
+ * render()ed incomplete images — drawImage silently draws nothing, so a restored
+ * save came up with an empty unit layer until something forced a redraw. Wait on
+ * such images too; addEventListener so the first call's own onload still runs.
+ */
+private fun ImageLoadState.waitFor(img: dynamic) {
+    if (img == null || img == undefined) return
+    if (img.complete == true) return
+    total++
+    img.addEventListener("load", { checkDone() })
+    img.addEventListener("error", { checkDone() })
+}
+
+private fun ImageLoadState.loadOrWait(
+    current: dynamic,
+    src: String,
+    into: (dynamic) -> Unit,
+) {
+    if (current == null) load(src, into) else waitFor(current)
+}
 
 /**
  * The rendering substrate shared by all renderer collaborators.
@@ -128,31 +224,46 @@ internal val directionToRadians = arrayOf(
  * depend on this one state holder instead of being one monolith. Members are `internal`
  * because the collaborators live in the same package and share this single instance.
  */
-internal class RenderContext(var map: GameMap?) {
+internal class RenderContext(
+    var map: GameMap?,
+) {
+    companion object {
+        private const val CURSOR_BACKBUFFER_SIZE = 54
+        private const val UNIT_BACKBUFFER_SIZE = 120
+        private const val ICONSET_JUNGLE = 3
 
-    /* Hex geometry constants (match legacy JS exactly) */
-    val S: Double = 30.0
-    val Y: Double = 15.0
+        // The terrain image is 65px shorter than the canvases, which get +65 for the last hex row.
+        internal const val LAST_HEX_ROW_HEIGHT = 65.0
+        private const val Z_INDEX_UNIT_BACKBUFFER = 3
+
+        // Top-bar height the map area starts below (matches StrategicZoomController.topbarHeight / #game's
+        // own `top`/#statusbar's CSS height).
+        private const val TOPBAR_HEIGHT = 30.0
+    }
+
+    // Hex geometry constants (match legacy JS exactly)
+    val hexTopWidth: Double = 30.0
+    val hexSlantWidth: Double = 15.0
     val v: Double = 25.0
-    val A: Double = 21.0
-    val O: Double = 14.0
-    val R: Double = 8.0
+    val flagIconWidth: Double = 21.0
+    val flagIconHeight: Double = 14.0
+    val unitFontSize: Double = 8.0
 
-    /* Canvas elements */
+    // Canvas elements
     var mapCanvas: dynamic = null
     var hexesCanvas: dynamic = null
     var cursorCanvas: dynamic = null
     var unitBackBuffer: dynamic = null
     var backBuffer: dynamic = null
 
-    /* Contexts */
+    // Contexts
     var mapCtx: dynamic = null
     var hexesCtx: dynamic = null
     var cursorCtx: dynamic = null
     var unitBackCtx: dynamic = null
     var backBufferCtx: dynamic = null
 
-    /* Cached images */
+    // Cached images
     var attackCursorImage: dynamic = null
     var flagImage: dynamic = null
     var fireImage: dynamic = null
@@ -163,14 +274,16 @@ internal class RenderContext(var map: GameMap?) {
     var terrainImage: dynamic = null
     val unitImages: MutableMap<String, dynamic> = mutableMapOf()
 
-    /* State */
+    // State
     var hexGridEnabled: Boolean = false
     var mapWidth: Double = 0.0
     var mapHeight: Double = 0.0
-    var ba: Double = -(S + Y)
+    var ba: Double = -(hexTopWidth + hexSlantWidth)
     var ca: Double = -v
-    val K: Double = S + Y
-    val Z: Double = S / 100.0
+    val hexColumnStep: Double = hexTopWidth + hexSlantWidth
+    val hexColumnEpsilon: Double = hexTopWidth / 100.0
+
+    private val hexDrawer: HexDrawer by lazy { HexDrawer(this) }
 
     init {
         initCanvases()
@@ -191,7 +304,10 @@ internal class RenderContext(var map: GameMap?) {
             document.getElementById("game")?.asDynamic()?.appendChild(wrap)
         }
 
-        fun getOrCreate(id: String, parent: dynamic = wrap): dynamic {
+        fun getOrCreate(
+            id: String,
+            parent: dynamic = wrap,
+        ): dynamic {
             var el = document.getElementById(id)
             if (el == null) {
                 el = document.createElement("canvas")
@@ -214,157 +330,37 @@ internal class RenderContext(var map: GameMap?) {
         unitBackCtx = unitBackBuffer.getContext("2d")
         backBufferCtx = backBuffer.getContext("2d")
 
-        backBuffer.width = 54
-        backBuffer.height = 54
-        unitBackBuffer.width = 120
-        unitBackBuffer.height = 120
+        backBuffer.width = CURSOR_BACKBUFFER_SIZE
+        backBuffer.height = CURSOR_BACKBUFFER_SIZE
+        unitBackBuffer.width = UNIT_BACKBUFFER_SIZE
+        unitBackBuffer.height = UNIT_BACKBUFFER_SIZE
     }
 
     /** Thematic tint of the terrain background for the scenario's OG iconset (snow/desert/jungle).
      *  A cheap, reversible CSS filter — an approximation until real OG tilesets are rendered. */
     fun setIconsetTint(iconset: Int) {
         val mc = mapCanvas ?: return
-        mc.style.filter = when (iconset) {
-            1 -> "saturate(0.55) brightness(1.18)" // Snow — washed-out, brighter
-            2 -> "sepia(0.45) saturate(1.3) brightness(1.05)" // Desert — sandy
-            3 -> "saturate(1.45) brightness(0.95) hue-rotate(-8deg)" // Jungle — lush green
-            else -> "none"
-        }
+        mc.style.filter =
+            when (iconset) {
+                1 -> "saturate(0.55) brightness(1.18)" // Snow — washed-out, brighter
+                2 -> "sepia(0.45) saturate(1.3) brightness(1.05)" // Desert — sandy
+                ICONSET_JUNGLE -> "saturate(1.45) brightness(0.95) hue-rotate(-8deg)" // Jungle — lush green
+                else -> "none"
+            }
     }
 
     fun cacheImages(callback: () -> Unit) {
-        var loaded = 0
-        var total = 0
         // The callback must not fire until every load below has been REGISTERED: the old
         // "if (loaded >= total) callback()" mid-function checks fired with total==0 when the
         // terrain was already cached, before the unit-image loop had even run.
-        var registered = false
+        val state = ImageLoadState(callback)
 
-        fun checkDone() {
-            loaded++
-            if (registered && loaded >= total) callback()
-        }
+        loadFixedImages(state)
+        loadTerrainImage(state)
+        loadUnitImages(state)
 
-        fun load(src: String, into: (dynamic) -> Unit) {
-            total++
-            val img = js("new Image()")
-            img.onload = { checkDone() }
-            img.onerror = { checkDone() }
-            img.src = src
-            into(img)
-        }
-
-        // An image put in the cache by an EARLIER cacheImages call may still be in flight.
-        // On restore, UI.init warms the cache with an empty callback and setNewScenario's
-        // second call then saw "everything cached", fired its callback immediately and
-        // render()ed incomplete images — drawImage silently draws nothing, so a restored
-        // save came up with an empty unit layer until something forced a redraw. Wait on
-        // such images too; addEventListener so the first call's own onload still runs.
-        fun waitFor(img: dynamic) {
-            if (img == null || img == undefined) return
-            if (img.complete == true) return
-            total++
-            img.addEventListener("load", { checkDone() })
-            img.addEventListener("error", { checkDone() })
-        }
-
-        if (attackCursorImage ==
-            null
-        ) {
-            load("resources/ui/cursors/attack.png") { attackCursorImage = it }
-        } else {
-            waitFor(attackCursorImage)
-        }
-        if (flagImage ==
-            null
-        ) {
-            load("resources/ui/flags/${Equipment.unitedName}/flags_med.png") { flagImage = it }
-        } else {
-            waitFor(flagImage)
-        }
-        if (fireImage == null) load("resources/ui/indicators/unit-fire.png") { fireImage = it } else waitFor(fireImage)
-        if (noAmmoImage ==
-            null
-        ) {
-            load("resources/ui/indicators/unit-fire-no-ammo.png") { noAmmoImage = it }
-        } else {
-            waitFor(noAmmoImage)
-        }
-        if (leaderAxisImage ==
-            null
-        ) {
-            load("resources/ui/indicators/unit-leader-axis.png") { leaderAxisImage = it }
-        } else {
-            waitFor(leaderAxisImage)
-        }
-        if (leaderAlliedImage ==
-            null
-        ) {
-            load("resources/ui/indicators/unit-leader-allied.png") { leaderAlliedImage = it }
-        } else {
-            waitFor(leaderAlliedImage)
-        }
-        if (bridgeImage == null) load("resources/units/images/bridg.png") { bridgeImage = it } else waitFor(bridgeImage)
-
-        // No map yet (first cacheImages call at startup) means there is no terrain to load —
-        // skip instead of pointing an Image at src="" (which fired a spurious onerror and
-        // logged "failed to load terrain image" on every fresh launch).
-        val terrainSrc = (map?.terrainImage as? String) ?: ""
-        if (terrainImage == null && terrainSrc.isNotEmpty()) {
-            total++
-            val img = js("new Image()")
-            img.onload = {
-                mapWidth = (img.width as? Number)?.toDouble() ?: 0.0
-                mapHeight = (img.height as? Number)?.toDouble() ?: 0.0
-
-                mapCanvas.width = mapWidth.toInt()
-                mapCanvas.height = (mapHeight + 65.0).toInt()
-                hexesCanvas.width = mapWidth.toInt()
-                hexesCanvas.height = (mapHeight + 65.0).toInt()
-                cursorCanvas.width = mapWidth.toInt()
-                cursorCanvas.height = (mapHeight + 65.0).toInt()
-
-                mapCanvas.style.width = "${mapWidth.toInt()}px"
-                mapCanvas.style.height = "${(mapHeight + 65.0).toInt()}px"
-                hexesCanvas.style.width = "${mapWidth.toInt()}px"
-                hexesCanvas.style.height = "${(mapHeight + 65.0).toInt()}px"
-                cursorCanvas.style.width = "${mapWidth.toInt()}px"
-                cursorCanvas.style.height = "${(mapHeight + 65.0).toInt()}px"
-
-                mapCtx.imageSmoothingEnabled = false
-                hexesCtx.imageSmoothingEnabled = false
-                cursorCtx.imageSmoothingEnabled = false
-                unitBackCtx.imageSmoothingEnabled = false
-
-                positionLayers()
-                checkDone()
-            }
-            img.onerror = {
-                console.error("Render: failed to load terrain image")
-                checkDone()
-            }
-            img.src = terrainSrc
-            terrainImage = img
-        } else {
-            waitFor(terrainImage)
-        }
-
-        val list = map?.getUnitImagesList() ?: js("{}")
-        val keys = js("Object.keys(list)")
-        val keyCount = (keys.length as? Number)?.toInt() ?: 0
-        console.log("[osada] Render.cacheImages map=${map?.name} unitImagesToLoad=$keyCount")
-        for (i in 0 until keyCount) {
-            val key = keys[i] as? String ?: continue
-            val src = list[key] as? String ?: continue
-            if (!unitImages.containsKey(src)) {
-                load(src) { unitImages[src] = it }
-            } else {
-                waitFor(unitImages[src])
-            }
-        }
-
-        registered = true
-        if (loaded >= total) callback()
+        state.registered = true
+        if (state.loaded >= state.total) callback()
     }
 
     fun positionLayers() {
@@ -385,7 +381,8 @@ internal class RenderContext(var map: GameMap?) {
         var left = window.innerWidth / 2.0 - scaledW / 2.0
         if (left < 0) left = 0.0
         console.log(
-            "[osada] Render.positionLayers mapSize=${zw.toInt()}x${zh.toInt()} zoom=$zoom gameWidth=${game.style.width} gameHeight=${game.style.height} left=${left.toInt()}",
+            "[osada] Render.positionLayers mapSize=${zw.toInt()}x${zh.toInt()} zoom=$zoom " +
+                "gameWidth=${game.style.width} gameHeight=${game.style.height} left=${left.toInt()}",
         )
 
         mapCanvas.style.zIndex = 0
@@ -403,7 +400,7 @@ internal class RenderContext(var map: GameMap?) {
         cursorCanvas.style.left = "0px"
         cursorCanvas.style.top = "0px"
 
-        unitBackBuffer.style.zIndex = 3
+        unitBackBuffer.style.zIndex = Z_INDEX_UNIT_BACKBUFFER
         unitBackBuffer.style.position = "absolute"
         unitBackBuffer.style.left = "0px"
         unitBackBuffer.style.top = "0px"
@@ -419,7 +416,7 @@ internal class RenderContext(var map: GameMap?) {
         // width/height); `zoom` inflates/shrinks its RENDERED box from there, same technique
         // strategic zoom already uses on #game itself (proven in this codebase).
         wrap?.style?.width = "${zw.toInt()}px"
-        wrap?.style?.height = "${(zh + 65.0).toInt()}px"
+        wrap?.style?.height = "${(zh + LAST_HEX_ROW_HEIGHT).toInt()}px"
         wrap?.style?.zoom = zoom.toString()
 
         val fitW = window.innerWidth >= scaledW
@@ -429,7 +426,11 @@ internal class RenderContext(var map: GameMap?) {
 
         game.style.width = if (fitW) "${(scaledW + k).toInt()}px" else "${window.innerWidth}px"
         game.style.height =
-            if (fitH) "${(scaledH + 30.0 + g).toInt()}px" else "${(window.innerHeight - 30.0).toInt()}px"
+            if (fitH) {
+                "${(scaledH + TOPBAR_HEIGHT + g).toInt()}px"
+            } else {
+                "${(window.innerHeight - TOPBAR_HEIGHT).toInt()}px"
+            }
         game.style.position = "absolute"
         game.style.left = "${left.toInt()}px"
         game.style.top = "30px"
@@ -448,19 +449,24 @@ internal class RenderContext(var map: GameMap?) {
         val keys = js("Object.keys(list)")
         val keyCount = (keys.length as? Number)?.toInt() ?: 0
         for (i in 0 until keyCount) {
-            val src = list[keys[i] as? String ?: continue] as? String ?: continue
-            valid.add(src)
+            val key = keys[i] as? String
+            val src = if (key == null) null else list[key] as? String
+            if (src != null) valid.add(src)
         }
         unitImages.keys.filter { it !in valid }.forEach { unitImages.remove(it) }
     }
 
-    /* ------------------------------------------------------------------ */
-    /*  Coordinate conversion                                              */
-    /* ------------------------------------------------------------------ */
+    // ------------------------------------------------------------------
+    // Coordinate conversion
+    // ------------------------------------------------------------------
 
-    fun cellToScreen(row: Int, col: Int, absolute: Boolean): ScreenPos {
+    fun cellToScreen(
+        row: Int,
+        col: Int,
+        absolute: Boolean,
+    ): ScreenPos {
         var y = if (col % 2 == 1) 2.0 * row * v + v + ca else 2.0 * row * v + ca
-        var x = col * (S + Y) + Y + ba
+        var x = col * (hexTopWidth + hexSlantWidth) + hexSlantWidth + ba
 
         if (absolute) {
             val zoom = MapZoom.level
@@ -470,7 +476,9 @@ internal class RenderContext(var map: GameMap?) {
                 // scaledW there) — #game is centered based on its RENDERED (post-zoom) size.
                 val left = window.innerWidth / 2.0 - mapWidth * zoom / 2.0
                 x += left - (game.clientLeft as? Number)?.toDouble()!! - (game.offsetLeft as? Number)?.toDouble()!!
-                y += 30.0 - (game.clientTop as? Number)?.toDouble()!! - (game.offsetTop as? Number)?.toDouble()!!
+                y +=
+                    TOPBAR_HEIGHT - (game.clientTop as? Number)?.toDouble()!! -
+                    (game.offsetTop as? Number)?.toDouble()!!
             }
             x *= zoom
             y *= zoom
@@ -478,7 +486,10 @@ internal class RenderContext(var map: GameMap?) {
         return ScreenPos(x, y)
     }
 
-    fun screenToCell(x: Int, y: Int): Cell {
+    fun screenToCell(
+        x: Int,
+        y: Int,
+    ): Cell {
         // x/y arrive ALREADY compensated for zoom (both continuous map zoom and strategic zoom)
         // by the caller — MapInputController.getClickPos uses canvas.getBoundingClientRect(),
         // which reflects the FULL cumulative CSS zoom of every ancestor automatically, and
@@ -488,7 +499,7 @@ internal class RenderContext(var map: GameMap?) {
         val sx = x.toDouble()
         val sy = y.toDouble()
 
-        val colRaw = (sx - ba) / K + Z
+        val colRaw = (sx - ba) / hexColumnStep + hexColumnEpsilon
         var col = kotlin.math.round(colRaw).toInt() - 1
 
         val rowRaw = (sy - ca * (1.0 - (col and 1).toDouble())) / v
@@ -502,88 +513,36 @@ internal class RenderContext(var map: GameMap?) {
         return Cell(row, col)
     }
 
-    /* ------------------------------------------------------------------ */
-    /*  Shared hex-drawing primitive                                       */
-    /* ------------------------------------------------------------------ */
+    // ------------------------------------------------------------------
+    // Shared hex-drawing primitive
+    // ------------------------------------------------------------------
 
-    fun drawHex(ctx: dynamic, x: Double, y: Double, style: dynamic, terrain: Int? = null) {
-        val showGridTerrain = uiSettings.showGridTerrain as? Boolean ?: false
+    fun drawHex(
+        ctx: dynamic,
+        x: Double,
+        y: Double,
+        style: dynamic,
+        terrain: Int? = null,
+    ) = hexDrawer.draw(ctx, x, y, style, terrain)
 
-        ctx.beginPath()
-        ctx.moveTo(x, y)
-        ctx.lineTo(x + S, y)
-        ctx.lineTo(x + S + Y, y + v)
-        ctx.lineTo(x + S, y + 2 * v)
-        ctx.lineTo(x, y + 2 * v)
-        ctx.lineTo(x - Y, y + v)
+    // ------------------------------------------------------------------
+    // Canvas accessors / bounds
+    // ------------------------------------------------------------------
 
-        val fill = style.fillColor
-        if (fill != null) {
-            ctx.fillStyle = fill
-            ctx.fill()
-        }
-        ctx.closePath()
+    data class Bounds(
+        val srow: Int,
+        val scol: Int,
+        val erow: Int,
+        val ecol: Int,
+    )
 
-        val lw = (style.lineWidth as? Number)?.toDouble() ?: 0.0
-        if (lw > 0.0) {
-            ctx.lineWidth = lw
-            ctx.lineJoin = style.lineJoin as? String ?: "miter"
-            ctx.strokeStyle = style.lineColor as? String ?: "transparent"
-            val sc = style.shadowColor
-            if (sc != null) {
-                ctx.shadowOffsetX = (style.shadowOffsetX as? Number)?.toDouble() ?: 0.0
-                ctx.shadowOffsetY = (style.shadowOffsetY as? Number)?.toDouble() ?: 0.0
-                ctx.shadowColor = sc as String
-            } else {
-                ctx.shadowOffsetX = 0.0
-                ctx.shadowOffsetY = 0.0
-                ctx.shadowColor = "transparent"
-            }
-            ctx.stroke()
-        }
-
-        if (showGridTerrain && terrain != null && terrain != TerrainType.CLEAR.value) {
-            val tx = x + Y + Y / 2.0 - 2.0
-            val ty = y + 2.0 * v - 12.0
-            ctx.font = "24px osada, sans-serif"
-            ctx.strokeStyle = unitStyles["terrainTextStroke"] as? String ?: "#f8e064"
-            ctx.lineWidth = 1.0
-            ctx.strokeText(terrainEncoding.getOrElse(terrain) { "?" }, tx - 1.0, ty - 1.0)
-            ctx.fillStyle = unitStyles["terrainText"] as? String ?: "#333333"
-            ctx.fillText(terrainEncoding.getOrElse(terrain) { "?" }, tx, ty)
-        }
-
-        if (style === hexStyles["deploy"]) {
-            val tx = x + 4.0
-            val ty = y + 2.0 * v - 12.0
-            ctx.font = "24px osada, sans-serif"
-            ctx.strokeStyle = unitStyles["terrainTextStroke"] as? String ?: "#f8e064"
-            ctx.lineWidth = 1.0
-            ctx.strokeText("Z", tx - 1.0, ty - 1.0)
-            ctx.fillStyle = unitStyles["terrainText"] as? String ?: "#333333"
-            ctx.fillText("Z", tx, ty)
-        }
-
-        if (showGridTerrain && style === hexStyles["move"]) {
-            val ty = y + 2.0 * v - 12.0
-            ctx.font = "26px osada-menu, sans-serif"
-            ctx.strokeStyle = unitStyles["terrainText"] as? String ?: "#333333"
-            ctx.lineWidth = 1.0
-            ctx.strokeText("'", x + 4.0 - 1.0, ty - 1.0)
-        }
-    }
-
-    /* ------------------------------------------------------------------ */
-    /*  Canvas accessors / bounds                                          */
-    /* ------------------------------------------------------------------ */
-
-    fun getHexesCanvas(): dynamic = hexesCanvas
-    fun getMapCanvas(): dynamic = mapCanvas
-    fun getCursorCanvas(): dynamic = cursorCanvas
-
-    data class Bounds(val srow: Int, val scol: Int, val erow: Int, val ecol: Int)
-
-    fun getBounds(row: Int, col: Int, radius: Int, maxR: Int, maxC: Int): Bounds {
+    fun getBounds(
+        row: Int,
+        col: Int,
+        radius: Int,
+        maxR: Int,
+        maxC: Int,
+    ): Bounds {
         if (radius < 0) return Bounds(0, 0, maxR, maxC)
         return Bounds(
             max(0, row - radius),
@@ -591,5 +550,83 @@ internal class RenderContext(var map: GameMap?) {
             min(maxR, row + radius),
             min(maxC, col + radius),
         )
+    }
+}
+
+private fun RenderContext.applyTerrainImageSize(img: dynamic) {
+    val lastHexRowHeight = RenderContext.LAST_HEX_ROW_HEIGHT
+    mapWidth = (img.width as? Number)?.toDouble() ?: 0.0
+    mapHeight = (img.height as? Number)?.toDouble() ?: 0.0
+
+    mapCanvas.width = mapWidth.toInt()
+    mapCanvas.height = (mapHeight + lastHexRowHeight).toInt()
+    hexesCanvas.width = mapWidth.toInt()
+    hexesCanvas.height = (mapHeight + lastHexRowHeight).toInt()
+    cursorCanvas.width = mapWidth.toInt()
+    cursorCanvas.height = (mapHeight + lastHexRowHeight).toInt()
+
+    mapCanvas.style.width = "${mapWidth.toInt()}px"
+    mapCanvas.style.height = "${(mapHeight + lastHexRowHeight).toInt()}px"
+    hexesCanvas.style.width = "${mapWidth.toInt()}px"
+    hexesCanvas.style.height = "${(mapHeight + lastHexRowHeight).toInt()}px"
+    cursorCanvas.style.width = "${mapWidth.toInt()}px"
+    cursorCanvas.style.height = "${(mapHeight + lastHexRowHeight).toInt()}px"
+
+    mapCtx.imageSmoothingEnabled = false
+    hexesCtx.imageSmoothingEnabled = false
+    cursorCtx.imageSmoothingEnabled = false
+    unitBackCtx.imageSmoothingEnabled = false
+}
+
+/** [RenderContext.cacheImages] step: the small set of fixed UI images (cursor/flag/fire/leader/bridge). */
+private fun RenderContext.loadFixedImages(state: ImageLoadState) {
+    state.loadOrWait(attackCursorImage, "resources/ui/cursors/attack.png") { attackCursorImage = it }
+    state.loadOrWait(flagImage, "resources/ui/flags/${Equipment.UNITED_NAME}/flags_med.png") { flagImage = it }
+    state.loadOrWait(fireImage, "resources/ui/indicators/unit-fire.png") { fireImage = it }
+    state.loadOrWait(noAmmoImage, "resources/ui/indicators/unit-fire-no-ammo.png") { noAmmoImage = it }
+    state.loadOrWait(leaderAxisImage, "resources/ui/indicators/unit-leader-axis.png") { leaderAxisImage = it }
+    state.loadOrWait(
+        leaderAlliedImage,
+        "resources/ui/indicators/unit-leader-allied.png",
+    ) { leaderAlliedImage = it }
+    state.loadOrWait(bridgeImage, "resources/units/images/bridg.png") { bridgeImage = it }
+}
+
+/** [RenderContext.cacheImages] step: the current map's terrain background image. */
+private fun RenderContext.loadTerrainImage(state: ImageLoadState) {
+    // No map yet (first cacheImages call at startup) means there is no terrain to load —
+    // skip instead of pointing an Image at src="" (which fired a spurious onerror and
+    // logged "failed to load terrain image" on every fresh launch).
+    val terrainSrc = (map?.terrainImage as? String) ?: ""
+    if (terrainImage == null && terrainSrc.isNotEmpty()) {
+        state.total++
+        val img = js("new Image()")
+        img.onload = {
+            applyTerrainImageSize(img)
+            positionLayers()
+            state.checkDone()
+        }
+        img.onerror = {
+            console.error("Render: failed to load terrain image")
+            state.checkDone()
+        }
+        img.src = terrainSrc
+        terrainImage = img
+    } else {
+        state.waitFor(terrainImage)
+    }
+}
+
+/** [RenderContext.cacheImages] step: every distinct unit sprite image referenced by the current map. */
+private fun RenderContext.loadUnitImages(state: ImageLoadState) {
+    val list = map?.getUnitImagesList() ?: js("{}")
+    val keys = js("Object.keys(list)")
+    val keyCount = (keys.length as? Number)?.toInt() ?: 0
+    console.log("[osada] Render.cacheImages map=${map?.name} unitImagesToLoad=$keyCount")
+    for (i in 0 until keyCount) {
+        val key = keys[i] as? String
+        val src = if (key == null) null else list[key] as? String
+        if (src == null) continue
+        state.loadOrWait(unitImages[src], src) { unitImages[src] = it }
     }
 }

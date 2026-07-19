@@ -11,7 +11,7 @@ import org.osada.uiSettings
  * already persisted/restored, so saved games keep their zoom level; that slider now routes
  * through [set] too instead of just writing the number with no visual effect.
  *
- * Distinct from Strategic Map (`#zoom` button / [MenuController.toggleStrategicZoom]), which
+ * Distinct from Strategic Map (`#zoom` button / [StrategicZoomController.toggleStrategicZoom]), which
  * applies its own CSS `zoom` directly to `#game` for a fit-everything overview. The two are
  * mutually exclusive by convention: callers should not invoke [set] while strategic zoom is
  * active (checked at the call sites — the minimap controls and Ctrl+wheel handler).
@@ -19,6 +19,9 @@ import org.osada.uiSettings
 internal object MapZoom {
     const val MIN = 0.5
     const val MAX = 2.0
+
+    // Floating-point step-comparison tolerance.
+    private const val EPSILON = 0.001
 
     // ~1.25x multiplicative steps, including an exact 1.0 (100%) stop.
     val STEPS = listOf(0.5, 0.64, 0.8, 1.0, 1.25, 1.6, 2.0)
@@ -34,7 +37,11 @@ internal object MapZoom {
      * stays under it. Omitted (the +/-/reset controls, the Settings slider), the anchor is the
      * current viewport center, so zooming just "zooms in place" around what's already on screen.
      */
-    fun set(newLevel: Double, focusClientX: Double? = null, focusClientY: Double? = null) {
+    fun set(
+        newLevel: Double,
+        focusClientX: Double? = null,
+        focusClientY: Double? = null,
+    ) {
         val ui = GameHolder.instance?.ui
         val clamped = clamp(newLevel)
         val oldZoom = uiSettings.zoomLevel
@@ -78,26 +85,33 @@ internal object MapZoom {
         // NOT track later zoom changes on their own (they're plain divs, not redrawn on a
         // canvas), so without this they stay frozen at their pre-zoom position, drifting further
         // off their hex the more the zoom differs from whatever it was when they were placed.
-        // Same call pair MenuController's hex-grid toggle already uses for the same reason.
+        // Same call pair MainMenuButtonHandler's hex-grid toggle already uses for the same reason.
         ui.removeAllSmallToolTips()
         ui.addSmallToolTips()
         refreshControls()
     }
 
-    fun stepIn(focusClientX: Double? = null, focusClientY: Double? = null) =
-        set(nextStep(level, 1), focusClientX, focusClientY)
+    fun stepIn(
+        focusClientX: Double? = null,
+        focusClientY: Double? = null,
+    ) = set(nextStep(level, 1), focusClientX, focusClientY)
 
-    fun stepOut(focusClientX: Double? = null, focusClientY: Double? = null) =
-        set(nextStep(level, -1), focusClientX, focusClientY)
+    fun stepOut(
+        focusClientX: Double? = null,
+        focusClientY: Double? = null,
+    ) = set(nextStep(level, -1), focusClientX, focusClientY)
 
     fun reset() = set(1.0)
 
-    private fun nextStep(current: Double, direction: Int): Double {
+    private fun nextStep(
+        current: Double,
+        direction: Int,
+    ): Double {
         val sorted = STEPS.sorted()
         return if (direction > 0) {
-            sorted.firstOrNull { it > current + 0.001 } ?: MAX
+            sorted.firstOrNull { it > current + EPSILON } ?: MAX
         } else {
-            sorted.lastOrNull { it < current - 0.001 } ?: MIN
+            sorted.lastOrNull { it < current - EPSILON } ?: MIN
         }
     }
 
@@ -106,8 +120,8 @@ internal object MapZoom {
         byId("osadaZoomPct")?.textContent = "$pct%"
         // Plain divs (icon buttons, matching the rest of this HUD), not <button> — no native
         // `disabled`, so a CSS class marks the at-limit state instead.
-        byId("osadaZoomOut")?.classList?.toggle("osada-zoom-btn--disabled", level <= MIN + 0.001)
-        byId("osadaZoomIn")?.classList?.toggle("osada-zoom-btn--disabled", level >= MAX - 0.001)
+        byId("osadaZoomOut")?.classList?.toggle("osada-zoom-btn--disabled", level <= MIN + EPSILON)
+        byId("osadaZoomIn")?.classList?.toggle("osada-zoom-btn--disabled", level >= MAX - EPSILON)
     }
 
     private fun Double.roundToIntSafe(): Int = kotlin.math.round(this).toInt()

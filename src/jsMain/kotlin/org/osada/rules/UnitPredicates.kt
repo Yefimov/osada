@@ -4,9 +4,7 @@ import org.osada.MovMethod
 import org.osada.TerrainType
 import org.osada.UnitClass
 import org.osada.model.Equipment
-import org.osada.model.EquipmentData
 import org.osada.model.GameUnit
-import org.osada.model.Transport
 import org.osada.unitEntrenchRate
 
 /**
@@ -17,6 +15,13 @@ import org.osada.unitEntrenchRate
  * `osada.js` helpers.
  */
 object UnitPredicates {
+    private val HEAVY_WEAPON_CLASSES =
+        setOf(
+            UnitClass.ANTI_TANK.value,
+            UnitClass.FLAK.value,
+            UnitClass.ARTILLERY.value,
+            UnitClass.AIR_DEFENCE.value,
+        )
 
     fun isAir(unit: GameUnit?): Boolean {
         if (unit == null) return false
@@ -43,12 +48,16 @@ object UnitPredicates {
         return isGround(unit) && (movmethod == MovMethod.RAIL.value || movmethod == MovMethod.DEEP_NAVAL.value)
     }
 
-    fun isCloseCombatTerrain(terrain: Int): Boolean = terrain == TerrainType.CITY.value ||
-        terrain == TerrainType.FOREST.value ||
-        terrain == TerrainType.MOUNTAIN.value ||
-        terrain == TerrainType.FORTIFICATION.value
+    fun isCloseCombatTerrain(terrain: Int): Boolean =
+        terrain == TerrainType.CITY.value ||
+            terrain == TerrainType.FOREST.value ||
+            terrain == TerrainType.MOUNTAIN.value ||
+            terrain == TerrainType.FORTIFICATION.value
 
-    fun isEnemy(a: GameUnit?, b: GameUnit?): Boolean {
+    fun isEnemy(
+        a: GameUnit?,
+        b: GameUnit?,
+    ): Boolean {
         if (a == null || b == null) return false
         return a.player?.side != b.player?.side
     }
@@ -58,44 +67,11 @@ object UnitPredicates {
         return (Equipment.equipment[eqid]?.groundweight ?: 0) > 0
     }
 
-    fun unitUsesFuel(unit: GameUnit): Boolean = unitUsesFuelData(unit.unitData())
-
-    fun unitUsesFuel(transport: Transport): Boolean = unitUsesFuelData(transport.unitData())
-
-    private fun unitUsesFuelData(data: EquipmentData): Boolean {
-        if (data.fuel == 0) return false
-        val method = data.movmethod
-        return method != MovMethod.LEG.value &&
-            method != MovMethod.TOWED.value &&
-            method != MovMethod.ALL_TERRAIN_LEG.value
-    }
-
-    fun unitLowFuel(unit: GameUnit, threshold: Int): Boolean {
-        if (!unitUsesFuel(unit)) return false
-        return if (!unit.isMounted) unit.fuel < threshold else unit.transport?.fuel ?: 0 < threshold
-    }
-
-    fun unitUsesAmmo(unit: GameUnit): Boolean = unit.unitData().ammo > 0
-
-    fun unitLowAmmo(unit: GameUnit, threshold: Int): Boolean {
-        if (!unitUsesAmmo(unit)) return false
-        return if (!unit.isMounted) unit.ammo < threshold else unit.transport?.ammo ?: 0 < threshold
-    }
-
     fun canCapture(unit: GameUnit): Boolean {
         if (isAir(unit)) return false
         val unitClass = unit.unitData().uclass
-        if (unit.isMounted &&
-            (
-                unitClass == UnitClass.ANTI_TANK.value ||
-                    unitClass == UnitClass.FLAK.value ||
-                    unitClass == UnitClass.ARTILLERY.value ||
-                    unitClass == UnitClass.AIR_DEFENCE.value
-                )
-        ) {
-            return false
-        }
-        return true
+        val isHeavyWeaponClass = unitClass in HEAVY_WEAPON_CLASSES
+        return !(unit.isMounted && isHeavyWeaponClass)
     }
 
     fun canEntrench(unit: GameUnit): Boolean {

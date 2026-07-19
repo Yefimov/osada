@@ -1,13 +1,11 @@
 package org.osada.scenario
 
-import org.osada.CURRENCY_MULTIPLIER
 import org.osada.GroundCondition
-import org.osada.PROTOTYPE_MIN_COST
-import org.osada.SCENARIO_START_PRESTIGE
-import org.osada.UnitClass
 import org.osada.model.Equipment
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
+import org.osada.model.getPlayers
+import org.osada.model.getUnits
 import org.osada.movTable
 import org.osada.movTableDry
 import org.osada.movTableFrozen
@@ -15,11 +13,16 @@ import org.osada.movTableMud
 import org.osada.scoreGains
 import kotlin.js.Date
 import kotlin.js.json
-import kotlin.random.Random
 
 @JsExport
 @JsName("Scenario")
-class Scenario(val file: String?) {
+class Scenario(
+    val file: String?,
+) {
+    companion object {
+        private const val MILLIS_PER_DAY = 86400000
+    }
+
     var name: String = ""
     var maxTurns: Int = 0
     var date: Date = Date()
@@ -32,13 +35,14 @@ class Scenario(val file: String?) {
     var dayTurn: Int = 0
     var reinforcements: MutableMap<Int, MutableList<Reinforcement>> = mutableMapOf()
     var map: GameMap = GameMap()
-    var expPerSide: MutableList<dynamic> = mutableListOf(
-        json("exp" to 0, "count" to 0),
-        json("exp" to 0, "count" to 0),
-    )
+    var expPerSide: MutableList<dynamic> =
+        mutableListOf(
+            json("exp" to 0, "count" to 0),
+            json("exp" to 0, "count" to 0),
+        )
     var unitsCostPerSide: MutableList<Int> = mutableListOf(0, 0)
     var isLoaded: Boolean = false
-    var eqp: String = Equipment.defaultName
+    var eqp: String = Equipment.DEFAULT_NAME
     private var description: String = ""
     private var onLoadFinished: (() -> Unit)? = null
 
@@ -79,46 +83,26 @@ class Scenario(val file: String?) {
         onLoadFinished?.invoke()
     }
 
-    fun addReinforcement(turn: Int, row: Int, col: Int, unit: GameUnit) {
-        val list = reinforcements.getOrPut(turn) { mutableListOf() }
-        list.add(Reinforcement(turn, row, col, unit, list.size + 1))
-    }
-
-    fun getReinforcements(turn: Int, owner: Int): List<Reinforcement> {
-        val result = mutableListOf<Reinforcement>()
-        reinforcements.entries.filter { it.key <= turn }.forEach { (_, list) ->
-            result.addAll(list.filter { it.unit.owner == owner })
-        }
-        return result
-    }
-
-    fun removeReinforcement(turn: Int, id: Int): Boolean {
-        val list = reinforcements[turn] ?: return false
-        val iter = list.iterator()
-        while (iter.hasNext()) {
-            if (iter.next().id == id) {
-                iter.remove()
-                return true
-            }
-        }
-        return false
-    }
-
-    fun checkDefeat(side: Int, humanSides: Int): Boolean {
+    fun checkDefeat(
+        side: Int,
+        humanSides: Int,
+    ): Boolean {
         if (map.turn >= map.maxTurns && (side == humanSides || humanSides == 2)) {
             return map.getPlayers().none { it.side == side && it.playedTurn < map.maxTurns }
         }
         return false
     }
 
-    fun checkVictory(): String = when {
-        map.turn <= map.victoryTurns[0] -> "briliant"
-        map.turn <= map.victoryTurns[1] -> "victory"
-        map.turn <= map.victoryTurns[2] -> "tactical"
-        else -> "lose"
-    }
+    fun checkVictory(): String =
+        when {
+            map.turn <= map.victoryTurns[0] -> "briliant"
+            map.turn <= map.victoryTurns[1] -> "victory"
+            map.turn <= map.victoryTurns[2] -> "tactical"
+            else -> "lose"
+        }
 
     fun getDescription(): String = description
+
     fun setDescription(desc: String) {
         description = desc
     }
@@ -127,59 +111,24 @@ class Scenario(val file: String?) {
         dayTurn++
         if (dayTurn >= turnsPerDay) {
             dayTurn = 0
-            date = Date(date.getTime() + 86400000)
+            date = Date(date.getTime() + MILLIS_PER_DAY)
         }
         map.endTurn()
     }
 
     fun setMoveTable() {
-        movTable = when (ground) {
-            GroundCondition.DRY.value -> movTableDry
-            GroundCondition.FROZEN.value -> movTableFrozen
-            GroundCondition.MUD.value -> movTableMud
-            else -> movTableDry
-        }
-    }
-
-    fun getPrototypeUnitsAvailable(country: Int): List<Int> {
-        val year = date.getFullYear() + 1
-        val list = Equipment.getCountryEquipmentByYearRange(year, year, country).toMutableList()
-        val iter = list.iterator()
-        while (iter.hasNext()) {
-            val eqid = iter.next()
-            val eq = Equipment.equipment[eqid] ?: continue
-            val uclass = eq.uclass
-            if ((uclass < UnitClass.TANK.value || uclass > UnitClass.ANTI_TANK.value) &&
-                (uclass < UnitClass.ARTILLERY.value || uclass > UnitClass.TACTICAL_BOMBER.value) ||
-                eq.cost * CURRENCY_MULTIPLIER < PROTOTYPE_MIN_COST
-            ) {
-                iter.remove()
+        movTable =
+            when (ground) {
+                GroundCondition.DRY.value -> movTableDry
+                GroundCondition.FROZEN.value -> movTableFrozen
+                GroundCondition.MUD.value -> movTableMud
+                else -> movTableDry
             }
-        }
-        return list
-    }
-
-    fun getRandomPrototype(country: Int): Int {
-        val available = getPrototypeUnitsAvailable(country)
-        if (available.isEmpty()) return -1
-        return available[(Random.nextDouble() * available.size).toInt()]
-    }
-
-    fun getBalancedPrestige(side: Int): Int {
-        var prestige = SCENARIO_START_PRESTIGE + unitsCostPerSide[1 - side] - unitsCostPerSide[side]
-        if (prestige < SCENARIO_START_PRESTIGE) prestige = SCENARIO_START_PRESTIGE
-        return prestige
     }
 
     fun showStatistics() {
-        // TODO: implement statistics display
-    }
-
-    fun getSideUnitsAvgExp(side: Int): Int {
-        val data = expPerSide[side]
-        val count = data.count as Int
-        val exp = data.exp as Int
-        return if (count > 0) kotlin.math.round(exp.toDouble() / count).toInt() else 0
+        // Intentional no-op: the legacy JS's own `showStatistics` was already an empty stub
+        // (`this.showStatistics = function() {}`, never implemented upstream either).
     }
 
     fun copy(other: Scenario) {
@@ -204,5 +153,11 @@ class Scenario(val file: String?) {
         setMoveTable()
     }
 
-    data class Reinforcement(val turn: Int, val row: Int, val col: Int, val unit: GameUnit, val id: Int)
+    data class Reinforcement(
+        val turn: Int,
+        val row: Int,
+        val col: Int,
+        val unit: GameUnit,
+        val id: Int,
+    )
 }

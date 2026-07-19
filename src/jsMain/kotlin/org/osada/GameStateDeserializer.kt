@@ -13,27 +13,58 @@ import org.osada.model.Transport
  * because the input is untyped `dynamic` from `JSON.parse`.
  */
 object GameStateDeserializer {
+    private const val FULL_STRENGTH = 10
 
     fun deserializeUnit(data: dynamic): GameUnit {
         val unit = GameUnit(data.eqid as? Int ?: 0)
+        applyUnitIdentity(unit, data)
+        applyUnitFlags(unit, data)
+        applyUnitCombatStats(unit, data)
+        applyUnitProgress(unit, data)
+        applyUnitTransport(unit, data)
+        return unit
+    }
+
+    private fun applyUnitIdentity(
+        unit: GameUnit,
+        data: dynamic,
+    ) {
         unit.id = data.id as? Int ?: -1
         unit.owner = data.owner as? Int ?: -1
         unit.flag = data.flag as? Int ?: -1
         unit.isCore = data.isCore as? Boolean ?: false
         unit.isDeployed = data.isDeployed as? Boolean ?: false
+    }
+
+    private fun applyUnitFlags(
+        unit: GameUnit,
+        data: dynamic,
+    ) {
         unit.isSurprised = data.isSurprised as? Boolean ?: false
         unit.isMounted = data.isMounted as? Boolean ?: false
         unit.hasOverstrength = data.hasOverstrength as? Boolean ?: false
         unit.hasResupplied = data.hasResupplied as? Boolean ?: false
         unit.hasFired = data.hasFired as? Boolean ?: false
         unit.hasMoved = data.hasMoved as? Boolean ?: false
-        unit.strength = data.strength as? Int ?: 10
+    }
+
+    private fun applyUnitCombatStats(
+        unit: GameUnit,
+        data: dynamic,
+    ) {
+        unit.strength = data.strength as? Int ?: FULL_STRENGTH
         unit.facing = data.facing as? Int ?: 2
         unit.destroyed = data.destroyed as? Boolean ?: false
         unit.carrier = data.carrier as? Int ?: 0
         unit.moveLeft = data.moveLeft as? Int ?: 0
         unit.ammo = data.ammo as? Int ?: 0
         unit.fuel = data.fuel as? Int ?: 0
+    }
+
+    private fun applyUnitProgress(
+        unit: GameUnit,
+        data: dynamic,
+    ) {
         unit.entrenchment = data.entrenchment as? Int ?: 0
         unit.entrenchTicks = data.entrenchTicks as? Int ?: 0
         unit.experience = data.experience as? Int ?: 0
@@ -41,6 +72,12 @@ object GameStateDeserializer {
         unit.leader = data.leader as? Int ?: -1
         unit.nodossier = data.nodossier as? Boolean ?: false
         unit.customName = data.customName as? String // optional key; absent in pre-rename saves
+    }
+
+    private fun applyUnitTransport(
+        unit: GameUnit,
+        data: dynamic,
+    ) {
         val transportData = data.transport
         if (transportData != null) {
             val transport = Transport((transportData.eqid as? Int ?: 0))
@@ -48,7 +85,6 @@ object GameStateDeserializer {
             transport.fuel = transportData.fuel as? Int ?: transport.fuel
             unit.transport = transport
         }
-        return unit
     }
 
     fun deserializePlayer(data: dynamic): Player {

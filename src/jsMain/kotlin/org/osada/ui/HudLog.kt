@@ -16,10 +16,17 @@ import org.osada.ui.HudLog.add
  * hex names from data files can't inject markup.
  */
 internal object HudLog {
+    class Segment(
+        val text: String,
+        val ownLoss: Boolean = false,
+    )
 
-    class Segment(val text: String, val ownLoss: Boolean = false)
-
-    private class Entry(val segments: List<Segment>, val row: Int, val col: Int, val hasPosition: Boolean)
+    private class Entry(
+        val segments: List<Segment>,
+        val row: Int,
+        val col: Int,
+        val hasPosition: Boolean,
+    )
 
     private const val MAX_ENTRIES = 10
     private const val MAX_SHOWN = 6
@@ -35,11 +42,24 @@ internal object HudLog {
     /** Same as [add], but the row becomes clickable (spec: click a log line to jump there, like
      *  the Turn Report rows already do) — the raw "(col,row)" text itself is dropped from the
      *  visible line (it was clutter) and lives only in the row's tooltip. */
-    fun addAt(row: Int, col: Int, vararg segments: Segment) = addEntry(segments.toList(), row, col, hasPosition = true)
+    fun addAt(
+        row: Int,
+        col: Int,
+        vararg segments: Segment,
+    ) = addEntry(segments.toList(), row, col, hasPosition = true)
 
-    fun addAt(row: Int, col: Int, text: String) = addAt(row, col, Segment(text))
+    fun addAt(
+        row: Int,
+        col: Int,
+        text: String,
+    ) = addAt(row, col, Segment(text))
 
-    private fun addEntry(segments: List<Segment>, row: Int, col: Int, hasPosition: Boolean) {
+    private fun addEntry(
+        segments: List<Segment>,
+        row: Int,
+        col: Int,
+        hasPosition: Boolean,
+    ) {
         entries.add(0, Entry(segments, row, col, hasPosition))
         if (entries.size > MAX_ENTRIES) entries.removeAt(entries.size - 1)
         totalAdded++

@@ -7,11 +7,10 @@ import org.osada.uiSettings
 /**
  * Builds the right operational sidebar (Task 2): the Grid/Air view toggles, the minimap
  * placeholder (Task 4 fills in the canvas), and the whole-sidebar collapse rail. Objectives
- * and Log panel CONTENT are filled by [MenuController.updateStatusBar] / [HudLog] respectively —
+ * and Log panel CONTENT are filled by [StatusBarController.updateStatusBar] / [HudLog] respectively —
  * this object only wires the static chrome once at startup.
  */
 internal object SidebarBuilder {
-
     private const val COLLAPSE_KEY = "osada-sidebar-collapsed"
 
     fun buildSidebar() {
