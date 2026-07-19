@@ -597,7 +597,7 @@ private fun RenderContext.loadTerrainImage(state: ImageLoadState) {
     // No map yet (first cacheImages call at startup) means there is no terrain to load —
     // skip instead of pointing an Image at src="" (which fired a spurious onerror and
     // logged "failed to load terrain image" on every fresh launch).
-    val terrainSrc = (map?.terrainImage as? String) ?: ""
+    val terrainSrc = map?.terrainImage ?: ""
     if (terrainImage == null && terrainSrc.isNotEmpty()) {
         state.total++
         val img = js("new Image()")

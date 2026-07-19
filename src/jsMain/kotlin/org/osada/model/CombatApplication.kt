@@ -27,7 +27,6 @@ internal class CombatApplication(
         supportFire: Boolean,
         isOverrun: Boolean = false,
     ): CombatResults {
-        if (attacker == null || defender == null) return CombatResults()
         gameMap.undoState.unit = null
         val from = attacker.getPos()
         val to = defender.getPos()

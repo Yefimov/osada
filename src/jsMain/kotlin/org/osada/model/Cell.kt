@@ -68,12 +68,6 @@ class Supply(
     var transportFuel: Int = 0,
 )
 
-class MouseInfo(
-    var x: Int = 0,
-    var y: Int = 0,
-    var rclick: Boolean = false,
-)
-
 @JsExport
 @JsName("ScreenPos")
 class ScreenPos(

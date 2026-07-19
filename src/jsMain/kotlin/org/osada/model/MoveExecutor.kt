@@ -48,7 +48,7 @@ internal class MoveExecutor(
         val side = unit.player?.side
         if (map == null || from == null || side == null) return null
         val path = GameRules.getShortestPath(from, Cell(row, col), gameMap.currentMoveRange)
-        return if (path.isEmpty() || path[0] == null) {
+        return if (path.isEmpty()) {
             null
         } else {
             MoveSetup(map, from, map[from.row][from.col], side, path)

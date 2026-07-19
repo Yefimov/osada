@@ -13,7 +13,7 @@ import kotlin.random.Random
  * that callers can write `Sound.track.play()` just like the original JS.
  */
 class SoundSprite(
-    private val urls: List<String>,
+    urls: List<String>,
 ) {
     private val clips: MutableList<dynamic> = mutableListOf()
 
@@ -21,7 +21,8 @@ class SoundSprite(
         for (url in urls) {
             if (url.isBlank()) continue
             try {
-                val audio = js("new Audio(url)")
+                val audio = js("new Audio()")
+                audio.src = url
                 audio.load()
                 clips.add(audio)
             } catch (_: Throwable) {
@@ -225,14 +226,12 @@ object Sound {
      *  Respects the mute setting. Browsers may defer playback until the first user interaction. */
     private var ambient: dynamic = null
 
-    // `url` IS used -- inside the js() interop string below, where it refers to this Kotlin
-    // parameter by JS scoping. Static analysis can't see through the raw JS source string.
-    @Suppress("UnusedParameter")
     fun startAmbient(url: String) {
         stopAmbient()
         if (uiSettings.muteUnitSounds) return
         try {
-            val a = js("new Audio(url)")
+            val a = js("new Audio()")
+            a.src = url
             a.loop = true
             // Own slider (Settings > Sound > Ambient volume): a continuous background loop
             // shouldn't be chained to the discrete unit/fire cue level.
@@ -266,7 +265,7 @@ object Sound {
 }
 
 /**
- * Maps [movMethod] index (legacy enum order) to a [Sound] sprite.
+ * Maps a `movmethod` index (legacy enum order, see [playMoveSound]) to a [Sound] sprite.
  * Legacy: `moveSoundByMoveMethod = "track htrack htrack leg leg air naval naval leg track naval leg".split(" ")`
  */
 val moveSoundByMoveMethod =

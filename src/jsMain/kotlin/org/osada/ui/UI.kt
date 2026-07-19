@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalJsExport::class)
-
 package org.osada.ui
 
 import kotlinx.browser.document
@@ -163,7 +161,11 @@ class UI(
         }
     }
 
-    /** Reopen the latest campaign briefing without changing scenario or campaign state. */
+    /** Reopen the latest campaign briefing without changing scenario or campaign state.
+     *  Not dead code despite zero typed Kotlin callers: CombatLogHeader's briefing button
+     *  reaches it DYNAMICALLY (`gameRef()?.ui?.reopenScenarioBriefing()`), which is also
+     *  why it must stay a real public member of this @JsExport class. */
+    @Suppress("unused")
     fun reopenScenarioBriefing(): Boolean {
         game.uiMessageClicked = false
         val opened =

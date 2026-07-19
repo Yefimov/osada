@@ -7,9 +7,10 @@ import org.osada.WeatherCondition
 /**
  * Runtime precipitation overlay. Draws OG's rain/snow scroll textures (keyed transparent in
  * tools/og-import/make_weather_assets.py) over a fixed full-viewport canvas and animates them
- * falling, driven by the scenario's [atmospheric] condition (2=Rain, 3=Snow). Also loops the
- * matching ambient sound. Independent of the on-demand map render — it owns its own setInterval
- * tick so the rain keeps falling between game actions. Fair(0)/Overcast(1) show nothing.
+ * falling, driven by the scenario's `atmospheric` condition (see [start]; 2=Rain, 3=Snow). Also
+ * loops the matching ambient sound. Independent of the on-demand map render — it owns its own
+ * setInterval tick so the rain keeps falling between game actions. Fair(0)/Overcast(1) show
+ * nothing.
  */
 internal object WeatherRenderer {
     private const val TICK_INTERVAL_MS = 45

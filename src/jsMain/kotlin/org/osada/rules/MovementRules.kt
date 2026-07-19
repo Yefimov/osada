@@ -87,7 +87,7 @@ object MovementRules {
         unit: GameUnit,
         add: Boolean,
     ) {
-        val skip = unit == null || UnitPredicates.isAir(unit)
+        val skip = UnitPredicates.isAir(unit)
         val pos = if (skip) null else unit.getPos()
         val side = if (skip) null else unit.player?.side
         if (pos == null || side == null) return
@@ -107,8 +107,8 @@ object MovementRules {
         unit: GameUnit,
         add: Boolean,
     ): Int {
-        val pos = if (unit == null) null else unit.getPos()
-        val side = if (unit == null) null else unit.player?.side
+        val pos = unit.getPos()
+        val side = unit.player?.side
         if (pos == null || side == null) return 0
         val range = getUnitSpotRange(unit)
         val cells = HexGeometry.getRing(pos.row, pos.col, range, map.rows, map.cols, false)
@@ -132,7 +132,6 @@ object MovementRules {
 
     /** Spotting range for [unit] including recon leader bonuses. */
     fun getUnitSpotRange(unit: GameUnit): Int {
-        if (unit == null) return 0
         var range = unit.unitData().spotrange
         if (Leaders.unitHasLeader(unit, LeaderType.ELITE_RECON_VETERAN)) range += 2
         if (Leaders.unitHasLeader(unit, LeaderType.SKILLED_RECONNAISSANCE)) range += 1

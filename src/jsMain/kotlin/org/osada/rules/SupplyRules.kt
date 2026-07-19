@@ -71,8 +71,8 @@ object SupplyRules {
         full: Boolean,
     ): Supply {
         val data = unit.unitData(true)
-        var ammoNeeded = data.ammo - unit.ammo
-        var fuelNeeded = data.fuel - unit.fuel
+        val ammoNeeded = data.ammo - unit.ammo
+        val fuelNeeded = data.fuel - unit.fuel
         if (UnitPredicates.isAir(unit) || UnitPredicates.isSea(unit)) return Supply(ammoNeeded, fuelNeeded, 0, 0)
         var transportAmmoNeeded = 0
         var transportFuelNeeded = 0

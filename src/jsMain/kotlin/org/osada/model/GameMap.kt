@@ -67,17 +67,15 @@ class GameMap {
         if (currentPlayer?.id == 0) {
             turn++
             units.forEach { unit ->
-                if (unit != null) {
-                    if (unit.isMounted) unmountUnitHandler(unit)
-                    val supply = GameRules.getResupplyValue(this, unit, true)
-                    val needsAmmoOrFuel = supply.ammo > 0 || supply.fuel > 0
-                    val needsTransportSupply = supply.transportAmmo > 0 || supply.transportFuel > 0
-                    if (needsAmmoOrFuel || needsTransportSupply) {
-                        unit.resupply(supply)
-                        CombatLog.addResupply(unit)
-                    }
-                    unit.unitEndTurn(GameHolder.instance?.spotSide ?: 0)
+                if (unit.isMounted) unmountUnitHandler(unit)
+                val supply = GameRules.getResupplyValue(this, unit, true)
+                val needsAmmoOrFuel = supply.ammo > 0 || supply.fuel > 0
+                val needsTransportSupply = supply.transportAmmo > 0 || supply.transportFuel > 0
+                if (needsAmmoOrFuel || needsTransportSupply) {
+                    unit.resupply(supply)
+                    CombatLog.addResupply(unit)
                 }
+                unit.unitEndTurn(GameHolder.instance?.spotSide ?: 0)
             }
         }
         if (currentPlayer?.type == PlayerType.AI_LOCAL || currentPlayer?.type == PlayerType.AI_SCRIPTED) {
@@ -86,7 +84,6 @@ class GameMap {
     }
 
     fun copy(other: GameMap) {
-        if (other == null) return
         rows = other.rows
         cols = other.cols
         terrainImage = other.terrainImage

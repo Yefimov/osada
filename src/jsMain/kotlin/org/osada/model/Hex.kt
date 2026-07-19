@@ -67,7 +67,6 @@ class Hex(
     }
 
     fun copy(other: Hex) {
-        if (other == null) return
         terrain = other.terrain
         road = other.road
         rail = other.rail

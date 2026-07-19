@@ -30,7 +30,7 @@ internal class CursorRenderer(
         val hex = q.map?.getOrNull(cell.row)?.getOrNull(cell.col) ?: return
         val currentUnit = q.currentUnit
         if (hex.isAttackSel && currentUnit != null && !currentUnit.hasFired) {
-            val target = hex.getAttackableUnit(currentUnit, uiSettings.airMode as? Boolean ?: false)
+            val target = hex.getAttackableUnit(currentUnit, uiSettings.airMode)
             if (target != null) {
                 if (cursorUnit?.id != currentUnit.id ||
                     cursorCell?.row != cell.row ||

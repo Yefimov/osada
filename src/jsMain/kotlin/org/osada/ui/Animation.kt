@@ -239,7 +239,8 @@ class AnimationChain {
             )
             index++
         } else {
-            js("if (callback && callback.cbfunc) callback.cbfunc(callback)")
+            val cbfunc = callback?.cbfunc
+            if (callback != null && cbfunc != null && cbfunc != undefined) cbfunc(callback)
             window.setTimeout({ clear() }, CLEAR_DELAY_MS)
         }
     }

@@ -75,7 +75,7 @@ object UnitPredicates {
     }
 
     fun canEntrench(unit: GameUnit): Boolean {
-        if (unit == null || unit.carrier != 0) return false
+        if (unit.carrier != 0) return false
         return unitEntrenchRate[unit.unitData().uclass] > 0
     }
 

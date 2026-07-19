@@ -56,7 +56,7 @@ object ScenarioLoader {
         scenario: Scenario,
         doc: Document,
     ) {
-        val mapElement = doc.getElementsByTagName("map").item(0) as? Element
+        val mapElement = doc.getElementsByTagName("map").item(0)
         if (mapElement == null) {
             onLoadError(scenario)
             return

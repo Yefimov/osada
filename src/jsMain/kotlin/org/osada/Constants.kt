@@ -581,6 +581,10 @@ class UiSettings {
         }
     }
 
+    // Not dead code despite zero Kotlin callers: `toJSON` is the standard JS serialization
+    // hook — JSON.stringify(uiSettings) (GameStatePersistence's settings save) invokes it
+    // by name at runtime, which is also why the @JsName must stay exactly "toJSON".
+    @Suppress("unused")
     @JsName("toJSON")
     fun toJSON(): dynamic {
         val o = js("{}")

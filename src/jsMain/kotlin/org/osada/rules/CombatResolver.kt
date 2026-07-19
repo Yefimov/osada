@@ -125,13 +125,7 @@ object CombatResolver {
         useRandom: Boolean,
     ): CombatResults {
         val result = CombatResults()
-        val context =
-            if (attacker == null || defender == null) {
-                null
-            } else {
-                AttackCalculation.resolveCombatContext(attacker, defender)
-            }
-        if (context == null) return result
+        val context = AttackCalculation.resolveCombatContext(attacker, defender) ?: return result
 
         val stats = AttackCalculation.resolveCrossIndexedStats(context)
         val closeCombat = AttackCalculation.applyCloseCombat(stats, context)
@@ -165,8 +159,7 @@ object CombatResolver {
         useRandom: Boolean,
     ): CombatResults {
         val result = CombatResults()
-        val attackerSide = if (attacker == null || defender == null) null else attacker.player?.side
-        if (attackerSide == null) return result
+        val attackerSide = attacker.player?.side ?: return result
         val supportUnits = if (!attacker.isSurprised) getSupportFireUnits(units, attacker, defender) else emptyList()
         var totalKills = 0
         var totalLosses = 0
@@ -212,13 +205,15 @@ object CombatResolver {
         val aPos = attacker.getPos()
         val dPos = defender.getPos()
         val defenderSide = defender.player?.side
-        val eligible =
-            aPos != null &&
-                dPos != null &&
-                defenderSide != null &&
-                HexGeometry.distance(aPos.row, aPos.col, dPos.row, dPos.col) <= 1
-        if (!eligible || aPos == null || dPos == null) return emptyList()
-        return units.filter { support -> isSupportFireEligible(support, attacker, defender, defenderSide, aPos) }
+        return if (aPos != null && dPos != null && defenderSide != null) {
+            if (HexGeometry.distance(aPos.row, aPos.col, dPos.row, dPos.col) <= 1) {
+                units.filter { support -> isSupportFireEligible(support, attacker, defender, defenderSide, aPos) }
+            } else {
+                emptyList()
+            }
+        } else {
+            emptyList()
+        }
     }
 
     /** Whether [support] is a friendly, in-range, class-appropriate (Flak/AD/Fighter vs an air

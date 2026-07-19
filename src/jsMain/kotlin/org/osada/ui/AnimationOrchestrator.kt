@@ -222,7 +222,9 @@ internal class AnimationOrchestrator(
 
     private fun animationCallback(onComplete: () -> Unit): dynamic {
         val cb: (dynamic) -> Unit = { _: dynamic -> onComplete() }
-        return js("""var o = {}; o.cbfunc = cb; o;""")
+        val wrapper = js("{}")
+        wrapper.cbfunc = cb
+        return wrapper
     }
 
     private fun finishMoveAnimation(

@@ -95,7 +95,7 @@ object GameStateDeserializer {
         player.prestige = data.prestige as? Int ?: 0
         player.score = data.score as? Int ?: 0
         player.playedTurn = data.playedTurn as? Int ?: -1
-        player.type = PlayerType.values().getOrNull(data.type as? Int ?: 0) ?: PlayerType.HUMAN_LOCAL
+        player.type = PlayerType.entries.getOrNull(data.type as? Int ?: 0) ?: PlayerType.HUMAN_LOCAL
         player.airTransports = data.airTransports as? Int ?: 0
         player.navalTransports = data.navalTransports as? Int ?: 0
         player.supportCountries = parseIntArray(data.supportCountries)

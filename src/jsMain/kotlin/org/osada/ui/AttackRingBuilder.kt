@@ -27,7 +27,7 @@ import org.osada.uiSettings
  * Which enemies to mark reuses the exact same building blocks the existing click-to-attack path
  * and cursor forecast already use: [GameRules.getRing] for the range ring and
  * [Hex.getAttackableUnit] for the per-cell availability check — no range/LOS math is
- * reimplemented, only orchestrated (mirroring [GameRules.getUnitAttackCells]'s own approach,
+ * reimplemented, only orchestrated (mirroring `GameRules.getUnitAttackCells`'s own approach,
  * parameterized by an explicit row/col so it can ALSO answer "attackable from hex X" for the
  * (measured, see report) hover-preview extension without moving the real unit).
  */

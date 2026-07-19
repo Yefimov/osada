@@ -29,6 +29,12 @@ kotlin {
     }
 
     sourceSets {
+        // Opt in once for the whole project instead of a @file:OptIn header in every
+        // file that touches @JsExport (the exported game API surface).
+        all {
+            languageSettings.optIn("kotlin.js.ExperimentalJsExport")
+        }
+
         val jsMain by getting {
             dependencies {
                 // Kotlin/JS dependencies can be added here.

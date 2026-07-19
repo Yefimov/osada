@@ -1,0 +1,142 @@
+package org.osada.ui.briefing
+
+import kotlinx.browser.document
+import org.w3c.dom.HTMLElement
+
+/**
+ * Owns conversation branching, briefing navigation, focus management and replay.
+ *
+ * Dialogue navigation and keyboard/focus handling live as extension functions in the sibling
+ * `ScenarioBriefingNavigation.kt` and `ScenarioBriefingKeyboard.kt` files (same package) to
+ * stay within the project's function-count limits; this object keeps the lifecycle
+ * (show/reopen/close) and stage rendering, plus the shared mutable state.
+ */
+internal object ScenarioBriefingController {
+    private const val DEFAULT_BACKGROUND =
+        "resources/ui/dialogs/startmenu/images/startmenu-1.jpg"
+
+    internal data class DialogueStep(
+        val lineId: String,
+        var selectedChoice: BriefingChoice? = null,
+    )
+
+    internal var briefing: ScenarioBriefing? = null
+    private var lastBriefing: ScenarioBriefing? = null
+    internal var view: ScenarioBriefingView? = null
+    internal var stage: BriefingStage = BriefingStage.ORDERS
+    internal val path = mutableListOf<DialogueStep>()
+    private var finishCallback: (() -> Unit)? = null
+    private var previousFocus: HTMLElement? = null
+
+    fun show(
+        scenarioTitle: String,
+        rawData: dynamic,
+        onFinished: () -> Unit,
+    ) {
+        val parsed = BriefingParser.parse(scenarioTitle, rawData)
+        lastBriefing = parsed.takeIf { it.hasContent() }
+        showParsed(parsed, "CONTINUE", onFinished)
+    }
+
+    fun reopenLast(onClosed: () -> Unit): Boolean {
+        val parsed = lastBriefing ?: return false
+        showParsed(parsed, "RETURN TO BATTLE", onClosed)
+        return true
+    }
+
+    fun isVisible(): Boolean = view != null
+
+    fun clearLast() {
+        lastBriefing = null
+    }
+
+    private fun showParsed(
+        parsed: ScenarioBriefing,
+        beginLabel: String,
+        onFinished: () -> Unit,
+    ) {
+        close(runCallback = false)
+        if (!parsed.hasContent()) {
+            onFinished()
+            return
+        }
+
+        briefing = parsed
+        finishCallback = onFinished
+        previousFocus = document.activeElement as? HTMLElement
+        stage = if (parsed.dialogue.isNotEmpty()) BriefingStage.DIALOGUE else BriefingStage.ORDERS
+        path.clear()
+        parsed.dialogue.firstOrNull()?.let { path += DialogueStep(it.id) }
+
+        val created =
+            ScenarioBriefingBuilder.create(
+                onBack = { previousLine() },
+                onNext = { nextLine() },
+                onSkip = { showOrders() },
+                onReview = { reviewDialogue() },
+                onBegin = { close(runCallback = true) },
+            )
+        view = created
+        created.title.textContent = parsed.title
+        created.actLabel.textContent = parsed.actLabel
+        created.locationLabel.textContent = "LOCATION: ${parsed.locationLabel}"
+        ScenarioBriefingBuilder.setBeginLabel(created, beginLabel)
+        val background =
+            parsed.background
+                ?.takeIf { it.isNotBlank() }
+                ?: DEFAULT_BACKGROUND
+        created.backdrop.style.backgroundImage = "url(\"$background\")"
+        created.root.addEventListener("keydown", { e -> handleKeyDown(e) })
+
+        renderCurrentStage()
+        js("setTimeout")({ focusPrimaryControl() }, 0)
+    }
+
+    internal fun renderCurrentStage() {
+        val data = briefing ?: return
+        val currentView = view ?: return
+        ScenarioBriefingBuilder.showStage(currentView, stage, data.dialogue.isNotEmpty())
+        if (stage == BriefingStage.DIALOGUE) {
+            renderDialogueStage(currentView, data)
+        } else {
+            ScenarioBriefingBuilder.renderOrders(currentView, data.orders)
+        }
+    }
+
+    private fun renderDialogueStage(
+        currentView: ScenarioBriefingView,
+        data: ScenarioBriefing,
+    ) {
+        val current = currentLine()
+        if (current == null) {
+            showOrders()
+            return
+        }
+        val turns = buildTurns(data)
+        val hasNext = resolveNext(current, null) != null
+        ScenarioBriefingBuilder.renderDialogue(
+            view = currentView,
+            turns = turns,
+            player = data.player,
+            choices = if (path.lastOrNull()?.selectedChoice == null) current.choices else emptyList(),
+            canGoBack = path.size > 1,
+            hasNext = hasNext,
+            onChoice = { choose(it) },
+        )
+    }
+
+    private fun close(runCallback: Boolean) {
+        val current = view
+        view = null
+        current?.root?.parentElement?.removeChild(current.root)
+        briefing = null
+        path.clear()
+
+        val callback = finishCallback
+        finishCallback = null
+        previousFocus?.focus()
+        previousFocus = null
+
+        if (runCallback) callback?.invoke()
+    }
+}

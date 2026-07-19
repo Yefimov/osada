@@ -222,9 +222,9 @@ object Leaders {
     fun getUnitLeaderDescriptions(unit: GameUnit?): List<Pair<String, String>> {
         if (unit == null || unit.leader == -1) return emptyList()
         val result = mutableListOf<Pair<String, String>>()
-        val leaderType = LeaderType.values().find { it.value == unit.leader }
+        val leaderType = LeaderType.entries.find { it.value == unit.leader }
         leaderType?.let { description[it]?.let { desc -> result.add(desc) } }
-        val classLeaderType = LeaderType.values().find { it.value == getUnitClassLeader(unit) }
+        val classLeaderType = LeaderType.entries.find { it.value == getUnitClassLeader(unit) }
         classLeaderType?.let { description[it]?.let { desc -> result.add(desc) } }
         return result
     }

@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalJsExport::class)
-
 package org.osada
 
 /**

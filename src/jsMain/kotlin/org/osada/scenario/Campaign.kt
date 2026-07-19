@@ -3,6 +3,8 @@ package org.osada.scenario
 import org.osada.difficultyModifiers
 import org.w3c.xhr.XMLHttpRequest
 
+@JsExport
+@JsName("Campaign")
 class Campaign(
     val id: Int,
     val difficulty: Int,

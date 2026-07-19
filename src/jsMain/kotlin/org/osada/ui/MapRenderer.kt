@@ -78,7 +78,7 @@ internal class MapRenderer(
     ): RenderFrame {
         val rows = q.rows
         val cols = q.cols
-        val deployMode = uiSettings.deployMode as? Boolean ?: false
+        val deployMode = uiSettings.deployMode
 
         // When deploying an AIRCRAFT, airfields are valid deploy targets even outside the deploy
         // zone (OG rule, already honoured on click in MapInputController). Highlight them too — but
@@ -100,13 +100,13 @@ internal class MapRenderer(
             radius = radius,
             drawBounds = rc.getBounds(centerRow, centerCol, radius + 2, rows, cols),
             currentPos = q.currentUnit?.getPos(),
-            airMode = uiSettings.airMode as? Boolean ?: false,
-            hexGrid = uiSettings.hexGrid as? Boolean ?: false,
+            airMode = uiSettings.airMode,
+            hexGrid = uiSettings.hexGrid,
             deployMode = deployMode,
-            strategicZoom = uiSettings.strategicZoom as? Boolean ?: false,
-            showHiddenVictoryHexes = uiSettings.showHiddenVictoryHexes as? Boolean ?: false,
-            markOwnUnits = uiSettings.markOwnUnits as? Boolean ?: false,
-            hasTouch = uiSettings.hasTouch as? Boolean ?: false,
+            strategicZoom = uiSettings.strategicZoom,
+            showHiddenVictoryHexes = uiSettings.showHiddenVictoryHexes,
+            markOwnUnits = uiSettings.markOwnUnits,
+            hasTouch = uiSettings.hasTouch,
             airDeploySelected = airDeploySelected,
         )
     }
@@ -134,8 +134,12 @@ internal class MapRenderer(
     }
 }
 
+// Plain class (not data class): gameMap's Array property would give a structural equals()/
+// hashCode() built on reference identity for that field, which is misleading and unused —
+// every RenderFrame is a fresh per-frame parameter bundle, never compared or copied.
+
 /** Per-frame context shared by [MapRenderer], [FogOfWarRenderer] and [HexCellRenderer]. */
-internal data class RenderFrame(
+internal class RenderFrame(
     val q: GameMap,
     val gameMap: Array<Array<Hex>>,
     val rows: Int,

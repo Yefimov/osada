@@ -65,7 +65,7 @@ object OSGlue {
             val data = GameHolder.instance?.state?.exportGameState() ?: ""
             val element = js("document.getElementById('savedata')")
             element.download = fileName
-            element.href = "data:application/force-download," + js("encodeURIComponent(data)")
+            element.href = "data:application/force-download," + encodeURIComponent(data)
             element.click()
             js("document.getElementById('disksaveupdate').innerHTML = fileName")
         }
@@ -87,3 +87,7 @@ object OSGlue {
         // meaningful if a real platform integration is ever added.
     }
 }
+
+// A real function parameter (not a bare identifier inside a js("...") string) so this doesn't
+// depend on the Kotlin/JS compiler preserving a local variable's exact name in the emitted JS.
+private fun encodeURIComponent(value: String): String = js("encodeURIComponent")(value) as String

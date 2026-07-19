@@ -36,7 +36,6 @@ object CostCalculator {
         newEqid: Int,
         transportEqid: Int,
     ): Int {
-        if (unit == null) return 0
         val newUnitCost =
             if (newEqid > 0) {
                 if (unit.eqid == newEqid) {
@@ -73,14 +72,10 @@ object CostCalculator {
     }
 
     /** Prestige cost of a single strength point of [unit]'s equipment. */
-    fun calculateUnitCostPerStrength(unit: GameUnit): Int {
-        if (unit == null) return -1
-        return (unit.unitData().cost * CURRENCY_MULTIPLIER / FULL_STRENGTH)
-    }
+    fun calculateUnitCostPerStrength(unit: GameUnit): Int = unit.unitData().cost * CURRENCY_MULTIPLIER / FULL_STRENGTH
 
     /** Prestige refunded when disbanding/selling [unit] at its current strength. */
     fun calculateUnitSellCost(unit: GameUnit): Int {
-        if (unit == null) return -1
         val transportEqid = unit.transport?.eqid ?: -1
         return (calculateUnitCosts(unit.eqid, transportEqid) / UPGRADE_PENALTY / FULL_STRENGTH * unit.strength).toInt()
     }

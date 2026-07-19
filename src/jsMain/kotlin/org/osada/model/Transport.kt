@@ -11,7 +11,6 @@ class Transport(
     var icon: String = Equipment.equipment[this.eqid]?.icon ?: ""
 
     fun copy(other: Transport) {
-        if (other == null) return
         eqid = other.eqid
         ammo = other.ammo
         fuel = other.fuel

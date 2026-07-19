@@ -108,7 +108,6 @@ class GameUnit(
     fun getIcon(): String = unitData().icon
 
     fun copy(other: GameUnit) {
-        if (other == null) return
         eqid = if (Equipment.hasEquipment(other.eqid)) other.eqid else Equipment.firstEqid() ?: 0
         id = other.id
         owner = other.owner
