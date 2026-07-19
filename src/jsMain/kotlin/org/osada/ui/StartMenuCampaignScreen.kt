@@ -159,6 +159,9 @@ internal object StartMenuCampaignScreen {
                 country.ifBlank { null },
                 StartMenuListToolbar.extractYears(campaign.title as? String ?: "").ifBlank { null },
             ).joinToString(" &middot; ")
+        byId("smCampDossierHeadText")?.let {
+            StartMenuCampaignStory.applyDossierBadge(it, campaign.file as? String)
+        }
         StartMenuCampaignData.setTheaterArt(campaign)
         byId("osadaCampList")?.let { StartMenuListToolbar.syncListHighlight(campSelect, it) }
         byId("smCampPath")?.let { StartMenuCampaignData.collapsePath(it) }
@@ -197,7 +200,7 @@ internal object StartMenuCampaignScreen {
 
         val progress = StartMenuCampaignData.activeCampaignProgress()
         StartMenuListToolbar.buildSyncedList(campSelect, list) { option, index, row, _ ->
-            renderCampaignRow(option, index, row, progress)
+            renderCampaignRow(option, index, row, list, progress)
         }
         StartMenuListToolbar.buildListToolbar(
             register,
@@ -211,6 +214,9 @@ internal object StartMenuCampaignScreen {
             "Filter campaigns…",
             "campaigns",
         )
+        (register.querySelector(".osadaChipRow") as? HTMLElement)?.let { chipRow ->
+            StartMenuCampaignStory.buildStoryOnlyChip(chipRow, list)
+        }
     }
 
     private fun buildCampaignDossierHead(dossier: HTMLElement) {
@@ -219,6 +225,7 @@ internal object StartMenuCampaignScreen {
         head.className = "osadaDossierHead"
         StartMenuListToolbar.theaterPlaceholder(head)
         val headText = addTag(head, "div")
+        headText.id = "smCampDossierHeadText"
         headText.className = "osadaDossierHeadText"
         val title = addTag(headText, "div")
         title.id = "smCampTitle"
@@ -248,6 +255,7 @@ internal object StartMenuCampaignScreen {
         option: org.w3c.dom.HTMLOptionElement,
         index: Int,
         row: HTMLElement,
+        list: HTMLElement,
         progress: Pair<String, Int>?,
     ) {
         // option.value = the campaign's ORIGINAL campaignlist index; `index` is only the
@@ -305,6 +313,7 @@ internal object StartMenuCampaignScreen {
             sides = listOfNotNull(sideKey),
             forceHidden = file != null && file in StartMenuCampaignData.hiddenCampaignFiles,
         )
+        StartMenuCampaignStory.applyRowBadge(row, list, file)
     }
 
     /** First 4-digit year in a campaign title ("Red Army Campaign (1936-1945)" -> 1936), used as

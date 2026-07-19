@@ -187,12 +187,16 @@ internal object StartMenuListToolbar {
         return (0 until children.length).mapNotNull { children.asDynamic()[it] as? HTMLElement }
     }
 
-    /** Re-sorts and re-filters [list] from the mode/query/side-chip stashed on it by the toolbar,
-     *  and updates the results counter. */
-    private fun applyListView(list: HTMLElement) {
+    /** Re-sorts and re-filters [list] from the mode/query/side-chip/story-chip stashed on it by
+     *  the toolbar (and by [StartMenuCampaignStory] for the story marker), and updates the
+     *  results counter. Not private: callers whose story-detection result lands asynchronously,
+     *  after the initial render, re-invoke this to fold the new information into the current
+     *  view without the player touching a control. */
+    fun applyListView(list: HTMLElement) {
         val mode = list.asDynamic().sortMode as? String ?: SORT_DEFAULT
         val query = (list.asDynamic().filterQuery as? String ?: "").trim().lowercase()
         val side = list.asDynamic().sideFilter as? String ?: SIDE_ALL
+        val storyOnly = list.asDynamic().storyOnly as? Boolean ?: false
         val rows = rowsOf(list)
 
         // A campaign-group header only means something in the campaign-ordered view; any other
@@ -210,7 +214,7 @@ internal object StartMenuListToolbar {
             }
         sorted.forEach { list.appendChild(it) }
 
-        val matches = applyRowVisibility(sorted, grouped, query, side)
+        val matches = applyRowVisibility(sorted, grouped, query, side, storyOnly)
 
         (list.asDynamic().counterEl as? HTMLElement)?.let { counter ->
             val noun = list.asDynamic().counterNoun as? String ?: "entries"
@@ -226,6 +230,7 @@ internal object StartMenuListToolbar {
         grouped: Boolean,
         query: String,
         side: String,
+        storyOnly: Boolean,
     ): Int {
         var currentGroup: HTMLElement? = null
         var groupHasMatch = false
@@ -241,7 +246,7 @@ internal object StartMenuListToolbar {
                 groupHasMatch = false
                 continue
             }
-            if (applyRowMatch(row, query, side)) {
+            if (applyRowMatch(row, query, side, storyOnly)) {
                 groupHasMatch = true
                 matches++
             }
@@ -250,19 +255,22 @@ internal object StartMenuListToolbar {
         return matches
     }
 
-    /** Sets [row]'s visibility from [query]/[side], and reports whether it matched. */
+    /** Sets [row]'s visibility from [query]/[side]/[storyOnly], and reports whether it matched. */
     private fun applyRowMatch(
         row: HTMLElement,
         query: String,
         side: String,
+        storyOnly: Boolean,
     ): Boolean {
         val forceHidden = row.asDynamic().forceHidden as? Boolean ?: false
         val text = row.asDynamic().searchText as? String ?: ""
         val rowSides = (row.asDynamic().sideKeys as? Array<String>) ?: emptyArray()
+        val isStory = row.asDynamic().storyFlag as? Boolean ?: false
         val match =
             !forceHidden &&
                 (query.isEmpty() || text.contains(query)) &&
-                (side == SIDE_ALL || side in rowSides)
+                (side == SIDE_ALL || side in rowSides) &&
+                (!storyOnly || isStory)
         row.style.display = if (match) "" else "none"
         return match
     }

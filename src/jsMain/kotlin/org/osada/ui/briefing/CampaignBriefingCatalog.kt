@@ -9,12 +9,18 @@ import kotlin.js.json
  * by defining their own `briefing` object next to `scenario` and `intro`.
  */
 internal object CampaignBriefingCatalog {
-    fun forScenario(file: String): dynamic =
-        when (file.lowercase()) {
-            "bn9s00.xml" -> battleOfSesena()
-            "rd01.xml" -> bialystokInsurrection()
-            else -> null
-        }
+    private val entries: Map<String, () -> dynamic> =
+        mapOf(
+            "bn9s00.xml" to ::battleOfSesena,
+            "rd01.xml" to ::bialystokInsurrection,
+        )
+
+    fun forScenario(file: String): dynamic = entries[file.lowercase()]?.invoke()
+
+    /** Scenario XML files with authored dialogue/briefing content -- the single source of truth
+     *  a campaign is automatically marked "story" against (see [StoryCampaignDetector]). Adding
+     *  an entry to [entries] above lights the marker with zero further edits. */
+    internal val storyScenarioFiles: Set<String> get() = entries.keys
 
     private fun battleOfSesena(): dynamic =
         json(
@@ -126,8 +132,6 @@ internal object CampaignBriefingCatalog {
                 "The enemy is initially dispersed, but delay will allow reserves to form a stronger " +
                 "defensive line.",
             "availableSupport" to "Republican aircraft and local infantry formations support the operation.",
-            "notes" to
-                "After this summary, the original scenario introduction will still appear before play begins.",
         )
 
     private fun bialystokInsurrection(): dynamic =
