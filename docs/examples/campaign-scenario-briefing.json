@@ -1,0 +1,83 @@
+{
+  "scenario": "stalingrad.xml",
+  "intro": "This is the scenario's own concise objective text (the same field the standalone scenario-start message reads). In campaign context it is never shown as a separate popup: it renders as the final ORDERS section of the briefing below, after the conversation and operational summary.",
+  "briefing": {
+    "act": "ACT II — OPERATION URANUS",
+    "location": "Stalingrad Front",
+    "background": "resources/ui/briefings/stalingrad.jpg",
+    "player": {
+      "speaker": "Front Commander",
+      "role": "Soviet High Command",
+      "portrait": "resources/ui/briefings/player-commander.png",
+      "side": "left"
+    },
+    "dialogue": [
+      {
+        "id": "zhukov-opening",
+        "speaker": "Marshal Zhukov",
+        "role": "Deputy Supreme Commander",
+        "portrait": "resources/ui/briefings/zhukov.png",
+        "side": "left",
+        "text": "The enemy believes that Stalingrad has exhausted us.",
+        "next": "vasilevsky-plan"
+      },
+      {
+        "id": "vasilevsky-plan",
+        "speaker": "General Vasilevsky",
+        "role": "Chief of the General Staff",
+        "portrait": "resources/ui/briefings/vasilevsky.png",
+        "side": "right",
+        "text": "Southwestern Front will strike the Romanian formations from the north. How will you employ the mobile reserve?",
+        "choices": [
+          {
+            "id": "reserve-early",
+            "text": "Commit it early and force the breakthrough before German reserves can intervene.",
+            "next": "early-reply"
+          },
+          {
+            "id": "reserve-late",
+            "text": "Hold it back until the infantry has opened a secure corridor.",
+            "next": "late-reply"
+          }
+        ]
+      },
+      {
+        "id": "early-reply",
+        "speaker": "Marshal Zhukov",
+        "role": "Deputy Supreme Commander",
+        "side": "left",
+        "text": "Speed may decide the operation, but the spearhead must not outrun its fuel and artillery.",
+        "next": "final-order"
+      },
+      {
+        "id": "late-reply",
+        "speaker": "General Vasilevsky",
+        "role": "Chief of the General Staff",
+        "side": "right",
+        "text": "A secure corridor protects the tanks, but delay risks allowing the enemy to stabilise the flank.",
+        "next": "final-order"
+      },
+      {
+        "id": "final-order",
+        "speaker": "Marshal Zhukov",
+        "role": "Deputy Supreme Commander",
+        "side": "left",
+        "text": "Whichever method you choose, close the ring before the Germans understand the scale of the offensive."
+      }
+    ],
+    "orders": {
+      "situation": "Enemy flanks are held by weakened allied formations.",
+      "mission": "Break through both flanks and close the encirclement west of Stalingrad.",
+      "primaryObjectives": [
+        "Capture Kalach",
+        "Link the northern and southern spearheads"
+      ],
+      "secondaryObjectives": [
+        "Preserve at least two armoured core units"
+      ],
+      "enemyIntelligence": "Romanian infantry has limited anti-tank capability, but German reserves may intervene.",
+      "availableSupport": "Additional artillery becomes available on turn 4.",
+      "notes": "Speed is more important than destroying every enemy unit."
+    }
+  }
+}
