@@ -5,6 +5,19 @@ internal enum class BriefingStage {
     ORDERS,
 }
 
+/**
+ * Scenario-derived header/orders facts passed alongside the authored briefing data. The
+ * [ordersText] is read from the scenario's own description — the SAME field the standalone
+ * scenario-start message shows — so the concise objective text stays single-sourced in
+ * scenario data and is never copied into campaign/briefing content.
+ */
+internal data class ScenarioFacts(
+    val title: String,
+    val dateLabel: String,
+    val sidesLabel: String,
+    val ordersText: String,
+)
+
 internal data class BriefingChoice(
     val id: String,
     val text: String,

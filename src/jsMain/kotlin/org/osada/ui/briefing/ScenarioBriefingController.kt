@@ -21,7 +21,9 @@ internal object ScenarioBriefingController {
     )
 
     internal var briefing: ScenarioBriefing? = null
+    internal var facts: ScenarioFacts? = null
     private var lastBriefing: ScenarioBriefing? = null
+    private var lastFacts: ScenarioFacts? = null
     internal var view: ScenarioBriefingView? = null
     internal var stage: BriefingStage = BriefingStage.ORDERS
     internal val path = mutableListOf<DialogueStep>()
@@ -29,39 +31,54 @@ internal object ScenarioBriefingController {
     private var previousFocus: HTMLElement? = null
 
     fun show(
-        scenarioTitle: String,
+        scenarioFacts: ScenarioFacts,
         rawData: dynamic,
         onFinished: () -> Unit,
     ) {
-        val parsed = BriefingParser.parse(scenarioTitle, rawData)
-        lastBriefing = parsed.takeIf { it.hasContent() }
-        showParsed(parsed, "CONTINUE", onFinished)
+        val parsed = BriefingParser.parse(scenarioFacts.title, rawData)
+        lastBriefing = parsed
+        lastFacts = scenarioFacts
+        showParsed(parsed, scenarioFacts, "CONTINUE", onFinished)
+    }
+
+    /** Cache the briefing for the reopen button WITHOUT showing it — used by the retry
+     *  fast-path, which skips the ceremony but must keep the briefing reachable in battle. */
+    fun prime(
+        scenarioFacts: ScenarioFacts,
+        rawData: dynamic,
+    ) {
+        lastBriefing = BriefingParser.parse(scenarioFacts.title, rawData)
+        lastFacts = scenarioFacts
     }
 
     fun reopenLast(onClosed: () -> Unit): Boolean {
-        val parsed = lastBriefing ?: return false
-        showParsed(parsed, "RETURN TO BATTLE", onClosed)
+        val parsed = lastBriefing
+        val reopenFacts = lastFacts
+        if (parsed == null || reopenFacts == null) return false
+        showParsed(parsed, reopenFacts, "RETURN TO BATTLE", onClosed)
         return true
     }
 
     fun isVisible(): Boolean = view != null
 
+    /** Esc on the ORDERS stage acts like the primary button: begin the operation. */
+    internal fun finishBriefing() = close(runCallback = true)
+
     fun clearLast() {
         lastBriefing = null
+        lastFacts = null
     }
 
     private fun showParsed(
         parsed: ScenarioBriefing,
+        scenarioFacts: ScenarioFacts,
         beginLabel: String,
         onFinished: () -> Unit,
     ) {
         close(runCallback = false)
-        if (!parsed.hasContent()) {
-            onFinished()
-            return
-        }
 
         briefing = parsed
+        facts = scenarioFacts
         finishCallback = onFinished
         previousFocus = document.activeElement as? HTMLElement
         stage = if (parsed.dialogue.isNotEmpty()) BriefingStage.DIALOGUE else BriefingStage.ORDERS
@@ -99,7 +116,7 @@ internal object ScenarioBriefingController {
         if (stage == BriefingStage.DIALOGUE) {
             renderDialogueStage(currentView, data)
         } else {
-            ScenarioBriefingBuilder.renderOrders(currentView, data.orders)
+            ScenarioBriefingBuilder.renderOrders(currentView, data.orders, facts)
         }
     }
 
@@ -130,6 +147,7 @@ internal object ScenarioBriefingController {
         view = null
         current?.root?.parentElement?.removeChild(current.root)
         briefing = null
+        facts = null
         path.clear()
 
         val callback = finishCallback

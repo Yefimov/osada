@@ -6,7 +6,29 @@ package org.osada.ui.briefing
  * [BriefingParsingUtils].
  */
 internal object BriefingParser {
+    /** Never throws: malformed campaign data logs a warning and degrades to an empty briefing
+     *  (title/act/location only) rather than crashing the scenario launch. */
+    @Suppress("TooGenericExceptionCaught")
     fun parse(
+        scenarioTitle: String,
+        rawData: dynamic,
+    ): ScenarioBriefing =
+        try {
+            parseUnsafe(scenarioTitle, rawData)
+        } catch (e: Throwable) {
+            console.warn("[OSADA] briefing parse failed, falling back to minimal briefing", e)
+            ScenarioBriefing(
+                title = scenarioTitle,
+                actLabel = "CAMPAIGN OPERATION",
+                locationLabel = scenarioTitle,
+                background = null,
+                dialogue = emptyList(),
+                player = parsePlayer(null),
+                orders = BriefingOrders(),
+            )
+        }
+
+    private fun parseUnsafe(
         scenarioTitle: String,
         rawData: dynamic,
     ): ScenarioBriefing {

@@ -164,9 +164,15 @@ internal object ScenarioBriefingBuilder {
     fun renderOrders(
         view: ScenarioBriefingView,
         orders: BriefingOrders,
+        facts: ScenarioFacts?,
     ) {
         view.progress.textContent = "OPERATIONAL BRIEFING"
         clear(view.ordersContent)
+        if (facts != null) {
+            val meta = child(view.ordersContent, "div", "osada-briefing__meta")
+            child(meta, "span", "osada-briefing__meta-date").textContent = facts.dateLabel
+            child(meta, "span", "osada-briefing__meta-sides").textContent = facts.sidesLabel
+        }
         addTextSection(view.ordersContent, "SITUATION", orders.situation)
         addTextSection(view.ordersContent, "MISSION", orders.mission)
         addListSection(view.ordersContent, "PRIMARY OBJECTIVES", orders.primaryObjectives, primary = true)
@@ -175,10 +181,16 @@ internal object ScenarioBriefingBuilder {
         addTextSection(view.ordersContent, "AVAILABLE SUPPORT", orders.availableSupport)
         addTextSection(view.ordersContent, "ADDITIONAL NOTES", orders.notes)
 
-        if (view.ordersContent.childElementCount == 0) {
-            val empty = child(view.ordersContent, "p", "osada-briefing__empty")
-            empty.textContent = "No additional operational summary is available."
-        }
+        // ORDERS is ALWAYS last and always present: it is the legacy scenario-start message's
+        // text, single-sourced from scenario.getDescription() via ScenarioFacts — a visually
+        // distinct paper block, never a copy stored in briefing/campaign data.
+        val ordersText = facts?.ordersText.orEmpty().trim()
+        val ordersClass =
+            "osada-briefing__order-section osada-briefing__order-section--wide osada-briefing__orders-paper"
+        val section = child(view.ordersContent, "section", ordersClass)
+        child(section, "h2", "osada-briefing__order-heading").textContent = "ORDERS"
+        child(section, "p", "osada-briefing__order-text").textContent =
+            ordersText.ifBlank { "No further orders at this time." }
     }
 
     fun showStage(
@@ -244,6 +256,14 @@ internal object ScenarioBriefingBuilder {
         }
     }
 
+    // Generic head-and-shoulders silhouette, drawn with `currentColor` so its shade follows the
+    // `.osada-conversation__portrait-fallback` CSS rule (no downloaded asset, per spec).
+    private const val SILHOUETTE_SVG =
+        "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\">" +
+            "<circle cx=\"12\" cy=\"8\" r=\"4.5\" fill=\"currentColor\"/>" +
+            "<path d=\"M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7\" fill=\"currentColor\"/>" +
+            "</svg>"
+
     private fun addPortrait(
         parent: HTMLElement,
         participant: BriefingParticipant,
@@ -254,7 +274,8 @@ internal object ScenarioBriefingBuilder {
         image.alt = ""
         frame.appendChild(image)
         val fallback = child(frame, "div", "osada-conversation__portrait-fallback")
-        fallback.textContent = participant.initials
+        fallback.setAttribute("title", participant.speaker)
+        fallback.innerHTML = SILHOUETTE_SVG
 
         if (participant.portrait.isNullOrBlank()) {
             image.style.display = "none"

@@ -1,6 +1,7 @@
 package org.osada.ui
 
 import org.osada.ui.briefing.ScenarioBriefingController
+import org.osada.ui.briefing.ScenarioFacts
 
 // Message/briefing/game-tooltip forwarders for [UIBuilder], split out to keep its function
 // count in bounds.
@@ -13,11 +14,16 @@ fun UIBuilder.message(
     callback: (() -> Unit)? = null,
 ) = MessageDialogs.message(title, body, narrative, callback)
 
-fun UIBuilder.showScenarioBriefing(
-    title: String,
+internal fun UIBuilder.showScenarioBriefing(
+    facts: ScenarioFacts,
     rawData: dynamic,
     onFinished: () -> Unit,
-) = ScenarioBriefingController.show(title, rawData, onFinished)
+) = ScenarioBriefingController.show(facts, rawData, onFinished)
+
+internal fun UIBuilder.primeScenarioBriefing(
+    facts: ScenarioFacts,
+    rawData: dynamic,
+) = ScenarioBriefingController.prime(facts, rawData)
 
 fun UIBuilder.reopenScenarioBriefing(onClosed: () -> Unit): Boolean = ScenarioBriefingController.reopenLast(onClosed)
 

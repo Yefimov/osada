@@ -6,6 +6,7 @@ import org.osada.scenario.Campaign
 import org.osada.scenario.Scenario
 import org.osada.ui.UI
 import org.osada.ui.UIBuilder
+import org.osada.ui.briefing.BriefingIntroTracker
 import org.osada.ui.makeVisible
 import org.osada.ui.messageDynamic
 import org.osada.ui.showAIStatus
@@ -198,6 +199,7 @@ class Game {
         console.log("[OSADA] newCampaign", id, difficulty)
         pendingScenarioBriefing = null
         pendingScenarioBriefingEnabled = true
+        BriefingIntroTracker.reset()
         campaign = Campaign(id, difficulty) { onCampaignLoadFinished() }
     }
 

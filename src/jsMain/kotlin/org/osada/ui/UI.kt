@@ -8,6 +8,9 @@ import org.osada.model.Cell
 import org.osada.model.GameUnit
 import org.osada.model.getCountriesBySide
 import org.osada.model.selectUnit
+import org.osada.sideNames
+import org.osada.ui.briefing.BriefingIntroTracker
+import org.osada.ui.briefing.ScenarioFacts
 import org.osada.uiSettings
 
 /**
@@ -140,24 +143,49 @@ class UI(
                 UIBuilder.clearScenarioBriefing()
                 game.uiMessageClicked = true
             } else {
-                val title = game.scenario?.name ?: ""
-                val intro = game.scenario?.getDescription() ?: ""
-                val finishOpening = {
-                    game.uiMessageClicked = true
-                    game.processTurn()
-                }
-                val showLegacyScenarioMessage = {
-                    // Preserve the original scenario-opening popup after the campaign conversation
-                    // and operational summary. Standalone scenarios use this path directly.
-                    UIBuilder.message(title, intro, narrative = true, callback = finishOpening)
-                }
-                if (game.campaign != null && rawBriefing != null && rawBriefing != undefined) {
-                    UIBuilder.showScenarioBriefing(title, rawBriefing, showLegacyScenarioMessage)
-                } else {
-                    UIBuilder.clearScenarioBriefing()
-                    showLegacyScenarioMessage()
-                }
+                openScenarioCeremony(rawBriefing)
             }
+        }
+    }
+
+    /** Campaign scenarios always get the briefing ritual (dialogue if authored, briefing
+     *  always); the legacy small scenario-start popup is shown standalone only, byte-identical
+     *  to the pre-briefing behavior. */
+    private fun openScenarioCeremony(rawBriefing: dynamic) {
+        val title = game.scenario?.name ?: ""
+        val intro = game.scenario?.getDescription() ?: ""
+        val finishOpening = {
+            game.uiMessageClicked = true
+            game.processTurn()
+        }
+        val campaign = game.campaign
+        if (campaign == null) {
+            // Standalone scenarios are byte-identical to legacy behavior: no dialogue,
+            // no briefing, ever.
+            UIBuilder.clearScenarioBriefing()
+            UIBuilder.message(title, intro, narrative = true, callback = finishOpening)
+            return
+        }
+
+        val facts =
+            ScenarioFacts(
+                title = title,
+                dateLabel = game.scenario?.date?.toDateString() ?: "",
+                sidesLabel = sidesLabel(),
+                ordersText = intro,
+            )
+        val campaignFile = campaign.file
+        val scenarioFile = game.scenario?.file ?: ""
+        if (BriefingIntroTracker.isSeen(campaignFile, scenarioFile)) {
+            // Retry fast-path: keep the briefing reachable via the reopen button, but skip
+            // straight to gameplay — no dialogue, no briefing window.
+            UIBuilder.primeScenarioBriefing(facts, rawBriefing)
+            finishOpening()
+        } else {
+            BriefingIntroTracker.markSeen(campaignFile, scenarioFile)
+            // The campaign ritual replaces the small legacy scenario-start popup entirely; its
+            // text now lives as the briefing's final ORDERS section (facts.ordersText above).
+            UIBuilder.showScenarioBriefing(facts, rawBriefing, finishOpening)
         }
     }
 
@@ -186,6 +214,13 @@ class UI(
     // resolves to nothing at runtime (Kotlin/JS only exposes public members by real name to
     // dynamic/JS callers), the same pitfall this session already hit with showEnemyCard.
     fun updateStatusBar() = statusBarController.updateStatusBar()
+
+    private fun sidesLabel(): String {
+        val axis = sideNames.getOrNull(0) ?: "Axis"
+        val allies = sideNames.getOrNull(1) ?: "Allies"
+        val commanded = game.campaignPlayer?.getSideName()
+        return if (commanded != null) "$axis vs $allies — you command the $commanded" else "$axis vs $allies"
+    }
 
     private fun windowInnerWidth(): Int = js("window.innerWidth") as Int
 

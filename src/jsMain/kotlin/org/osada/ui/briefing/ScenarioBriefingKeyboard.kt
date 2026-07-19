@@ -10,9 +10,11 @@ internal fun ScenarioBriefingController.handleKeyDown(event: Event) {
     val key = e.key as? String
     if (key == null || handleTabKeyDown(key, e)) return
     val tagName = (e.target?.tagName as? String)?.uppercase()
-    if (isTypingField(tagName) || handleChoiceDigitKey(key, e) || tagName == "BUTTON") return
+    if (isNonNavigableTarget(tagName) || handleChoiceDigitKey(key, e) || handleChoiceArrowKey(key, e)) return
     handleNavigationKey(key, e)
 }
+
+private fun isNonNavigableTarget(tagName: String?): Boolean = isTypingField(tagName) || tagName == "BUTTON"
 
 private fun ScenarioBriefingController.handleTabKeyDown(
     key: String,
@@ -37,6 +39,8 @@ private fun ScenarioBriefingController.handleChoiceDigitKey(
     return choice != null
 }
 
+private val CHOICE_CYCLE_KEYS = setOf("ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight")
+
 private fun ScenarioBriefingController.handleNavigationKey(
     key: String,
     e: dynamic,
@@ -55,9 +59,43 @@ private fun ScenarioBriefingController.handleNavigationKey(
         "Escape" -> {
             e.preventDefault()
             e.stopPropagation()
-            if (stage == BriefingStage.DIALOGUE) showOrders()
+            if (stage == BriefingStage.DIALOGUE) showOrders() else finishBriefing()
         }
     }
+}
+
+/** Arrow keys cycle focus among the visible dialogue-choice buttons (wrapping); does nothing
+ *  and defers to normal navigation when focus isn't currently on a choice button. */
+private fun ScenarioBriefingController.handleChoiceArrowKey(
+    key: String,
+    e: dynamic,
+): Boolean {
+    val choices = if (key in CHOICE_CYCLE_KEYS) activeChoiceButtons() else null
+    val length = (choices?.length as? Int) ?: 0
+    val activeIndex = if (choices != null && length > 0) indexOfActiveChoice(choices) else -1
+    if (activeIndex < 0) return false
+
+    val forward = key == "ArrowDown" || key == "ArrowRight"
+    val nextIndex = if (forward) (activeIndex + 1) % length else (activeIndex - 1 + length) % length
+    e.preventDefault()
+    choices.item(nextIndex).asDynamic().focus()
+    return true
+}
+
+private fun ScenarioBriefingController.activeChoiceButtons(): dynamic =
+    if (stage == BriefingStage.DIALOGUE) {
+        view?.root?.querySelectorAll(".osada-conversation__choice")?.asDynamic()
+    } else {
+        null
+    }
+
+private fun indexOfActiveChoice(choices: dynamic): Int {
+    val active = document.activeElement
+    val length = (choices.length as? Int) ?: 0
+    for (i in 0 until length) {
+        if (choices.item(i) == active) return i
+    }
+    return -1
 }
 
 private fun ScenarioBriefingController.trapFocus(event: dynamic) {
