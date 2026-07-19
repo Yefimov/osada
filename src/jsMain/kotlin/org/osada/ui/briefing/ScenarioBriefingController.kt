@@ -25,6 +25,10 @@ internal object ScenarioBriefingController {
     private var lastBriefing: ScenarioBriefing? = null
     private var lastFacts: ScenarioFacts? = null
     internal var view: ScenarioBriefingView? = null
+
+    /** Text element of the turn currently typewriter-revealing, so an advance input can complete
+     *  it in place (each turn owns its own element now that the log keeps them all). */
+    internal var revealingLine: HTMLElement? = null
     internal var stage: BriefingStage = BriefingStage.ORDERS
     internal val path = mutableListOf<DialogueStep>()
     private var finishCallback: (() -> Unit)? = null
@@ -119,18 +123,36 @@ internal object ScenarioBriefingController {
         }
     }
 
+    /** Rebuilds the whole conversation log for the current branch, then typewriter-reveals only
+     *  its newest turn -- everything the player has already read stays on screen, in order, and
+     *  stays scrollable. */
     private fun renderDialogueStage(currentView: ScenarioBriefingView) {
+        val data = briefing
         val current = currentLine()
-        if (current == null) {
+        val turns = if (data != null && current != null) buildTurns(data) else emptyList()
+        val newest = turns.lastOrNull()
+        if (current == null || newest == null) {
             showOrders()
             return
         }
-        ScenarioBriefingBuilder.setSpeaker(currentView, current.participant())
+
+        ScenarioBriefingBuilder.clearTranscript(currentView)
+        turns.dropLast(1).forEach { turn ->
+            ScenarioBriefingBuilder.appendTurn(currentView, turn).textContent = turn.text
+        }
+        val newestEl = ScenarioBriefingBuilder.appendTurn(currentView, newest)
+        revealingLine = newestEl
+
         val pendingChoice = path.lastOrNull()?.selectedChoice
         val choices = if (pendingChoice == null) current.choices else emptyList()
         ScenarioBriefingBuilder.setChoices(currentView, choices) { choose(it) }
         ScenarioBriefingBuilder.setRevealed(currentView, revealed = false, hasChoices = choices.isNotEmpty())
-        BriefingTypewriter.start(currentView.lineText, current.text) {
+        BriefingTypewriter.start(
+            el = newestEl,
+            fullText = newest.text,
+            onProgress = { ScenarioBriefingBuilder.scrollTranscriptToEnd(currentView) },
+        ) {
+            ScenarioBriefingBuilder.scrollTranscriptToEnd(currentView)
             ScenarioBriefingBuilder.setRevealed(currentView, revealed = true, hasChoices = choices.isNotEmpty())
             if (choices.isNotEmpty()) {
                 currentView.choicesBox
@@ -143,6 +165,7 @@ internal object ScenarioBriefingController {
 
     private fun close(runCallback: Boolean) {
         BriefingTypewriter.cancel()
+        revealingLine = null
         val current = view
         view = null
         current?.root?.parentElement?.removeChild(current.root)

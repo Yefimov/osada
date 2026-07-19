@@ -16,14 +16,18 @@ internal object BriefingTypewriter {
     private var pendingText: String = ""
     private var pendingOnDone: (() -> Unit)? = null
 
+    /** [onProgress] fires after each revealed character (and on an instant fill), so the caller
+     *  can keep the growing text scrolled into view. */
     fun start(
         el: HTMLElement,
         fullText: String,
+        onProgress: () -> Unit = {},
         onDone: () -> Unit,
     ) {
         cancel()
         if (fullText.isEmpty() || reducedMotion()) {
             el.textContent = fullText
+            onProgress()
             onDone()
             return
         }
@@ -35,6 +39,7 @@ internal object BriefingTypewriter {
             window.setInterval({
                 shown++
                 el.textContent = fullText.substring(0, shown)
+                onProgress()
                 if (shown >= fullText.length) finishReveal()
             }, MS_PER_CHAR)
     }

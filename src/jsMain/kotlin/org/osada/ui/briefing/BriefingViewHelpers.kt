@@ -52,6 +52,45 @@ internal fun clear(element: HTMLElement) {
     while (element.firstChild != null) element.removeChild(element.firstChild!!)
 }
 
+// Generic head-and-shoulders silhouette, drawn with `currentColor` so its shade follows the
+// `.osada-dialogue__portrait-fallback` CSS rule (no downloaded asset, per spec).
+private const val SILHOUETTE_SVG =
+    "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\">" +
+        "<circle cx=\"12\" cy=\"8\" r=\"4.5\" fill=\"currentColor\"/>" +
+        "<path d=\"M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7\" fill=\"currentColor\"/>" +
+        "</svg>"
+
+/** Speaker portrait for one conversation turn: the authored image when present and loadable,
+ *  otherwise a neutral silhouette. Top-level (not a [ScenarioBriefingBuilder] member) purely to
+ *  keep that object's function count in bounds. */
+internal fun addPortrait(
+    row: HTMLElement,
+    participant: BriefingParticipant,
+) {
+    val portrait = child(row, "div", "osada-dialogue__portrait")
+    val image = document.createElement("img").asDynamic()
+    image.className = "osada-dialogue__portrait-image"
+    image.alt = ""
+    portrait.appendChild(image)
+    val fallback = child(portrait, "div", "osada-dialogue__portrait-fallback")
+    fallback.setAttribute("title", participant.speaker)
+    fallback.innerHTML = SILHOUETTE_SVG
+
+    if (participant.portrait.isNullOrBlank()) {
+        image.style.display = "none"
+        fallback.style.display = "grid"
+    } else {
+        image.style.display = "block"
+        fallback.style.display = "none"
+        image.onerror = { _: dynamic ->
+            image.style.display = "none"
+            fallback.style.display = "grid"
+            null
+        }
+        image.src = participant.portrait
+    }
+}
+
 internal fun addTextSection(
     parent: HTMLElement,
     heading: String,

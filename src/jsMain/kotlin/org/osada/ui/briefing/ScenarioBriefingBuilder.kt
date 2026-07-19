@@ -14,29 +14,20 @@ internal data class ScenarioBriefingView(
     val ordersContent: HTMLElement,
     val beginButton: HTMLElement,
     val dialogueStage: HTMLElement,
-    val portraitImage: HTMLElement,
-    val portraitFallback: HTMLElement,
-    val speakerName: HTMLElement,
-    val lineText: HTMLElement,
+    val transcript: HTMLElement,
     val choicesBox: HTMLElement,
     val hint: HTMLElement,
     val skipButton: HTMLElement,
 )
 
-/** DOM-only view builder for the lower-third campaign dialogue panel and the full-panel
- *  operational briefing (ORDERS). State transitions, branching and the typewriter reveal live
- *  in the controller; split across sibling files (same package) to stay within the project's
- *  function-count limits. */
+/** DOM-only view builder for the campaign conversation screen and the operational briefing
+ *  (ORDERS). The conversation is a SCROLLABLE LOG holding every line spoken so far (Warhammer
+ *  Armageddon-style), not a one-line visual-novel box: earlier turns stay on screen and can be
+ *  scrolled back through, while only the newest line typewriter-reveals. State transitions,
+ *  branching and the reveal itself live in the controller; split across sibling files (same
+ *  package) to stay within the project's function-count limits. */
 internal object ScenarioBriefingBuilder {
     internal const val STYLESHEET_ID = "osada-briefing-stylesheet"
-
-    // Generic head-and-shoulders silhouette, drawn with `currentColor` so its shade follows the
-    // `.osada-dialogue__portrait-fallback` CSS rule (no downloaded asset, per spec).
-    private const val SILHOUETTE_SVG =
-        "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\">" +
-            "<circle cx=\"12\" cy=\"8\" r=\"4.5\" fill=\"currentColor\"/>" +
-            "<path d=\"M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7\" fill=\"currentColor\"/>" +
-            "</svg>"
 
     fun create(
         onAdvance: () -> Unit,
@@ -73,10 +64,7 @@ internal object ScenarioBriefingBuilder {
             ordersContent = orders.content,
             beginButton = orders.beginButton,
             dialogueStage = dialogue.stage,
-            portraitImage = dialogue.portraitImage,
-            portraitFallback = dialogue.portraitFallback,
-            speakerName = dialogue.speakerName,
-            lineText = dialogue.lineText,
+            transcript = dialogue.transcript,
             choicesBox = dialogue.choicesBox,
             hint = dialogue.hint,
             skipButton = dialogue.skipButton,
@@ -122,18 +110,17 @@ internal object ScenarioBriefingBuilder {
 
     private data class DialogueRefs(
         val stage: HTMLElement,
-        val portraitImage: HTMLElement,
-        val portraitFallback: HTMLElement,
-        val speakerName: HTMLElement,
-        val lineText: HTMLElement,
+        val transcript: HTMLElement,
         val choicesBox: HTMLElement,
         val hint: HTMLElement,
         val skipButton: HTMLElement,
     )
 
-    /** Lower-third dialogue panel: portrait left, speaker/line/choices right, SKIP muted at the
-     *  panel's top-right corner. Clicking anywhere on the panel advances/completes the reveal;
-     *  choice buttons and SKIP stop propagation so they don't also trigger that advance. */
+    /** Conversation panel: a scrollable transcript filling the panel, with the choice buttons /
+     *  continue hint pinned below it and SKIP muted at the panel's top-right corner. Clicking
+     *  anywhere on the panel advances/completes the reveal; choice buttons and SKIP stop
+     *  propagation so they don't also trigger that advance, and so does the transcript's own
+     *  scrollbar area (dragging it must not skip lines). */
     private fun buildDialogueStage(
         shell: HTMLElement,
         onAdvance: () -> Unit,
@@ -153,47 +140,53 @@ internal object ScenarioBriefingBuilder {
         })
         panel.appendChild(skipButton)
 
-        val portrait = child(panel, "div", "osada-dialogue__portrait")
-        val portraitImage = document.createElement("img") as HTMLElement
-        portraitImage.className = "osada-dialogue__portrait-image"
-        portraitImage.asDynamic().alt = ""
-        portrait.appendChild(portraitImage)
-        val portraitFallback = child(portrait, "div", "osada-dialogue__portrait-fallback")
-        portraitFallback.innerHTML = SILHOUETTE_SVG
+        val transcript = child(panel, "div", "osada-dialogue__transcript")
+        transcript.setAttribute("aria-live", "polite")
+        transcript.tabIndex = 0
+        // Reading back through the log must not double as "advance": a click that ends a text
+        // selection or a scrollbar drag inside the transcript is a read gesture, not a next-line
+        // gesture. A plain click on it (no selection) still advances, so the panel stays a
+        // click-anywhere surface.
+        transcript.addEventListener("click", { e ->
+            val selection = js("window.getSelection()")
+            val selecting = (selection != null && (selection.toString() as String).isNotEmpty())
+            if (selecting) e.stopPropagation()
+        })
 
-        val content = child(panel, "div", "osada-dialogue__content")
-        val speakerName = child(content, "div", "osada-dialogue__speaker")
-        val lineText = child(content, "p", "osada-dialogue__line")
-        val choicesBox = child(content, "div", "osada-dialogue__choices")
-        val hint = child(content, "div", "osada-dialogue__hint")
+        val controls = child(panel, "div", "osada-dialogue__controls")
+        val choicesBox = child(controls, "div", "osada-dialogue__choices")
+        val hint = child(controls, "div", "osada-dialogue__hint")
         hint.textContent = "CONTINUE ▸"
 
-        return DialogueRefs(stage, portraitImage, portraitFallback, speakerName, lineText, choicesBox, hint, skipButton)
+        return DialogueRefs(stage, transcript, choicesBox, hint, skipButton)
     }
 
-    fun setSpeaker(
+    fun clearTranscript(view: ScenarioBriefingView) = clear(view.transcript)
+
+    /** Appends one spoken turn to the conversation log and returns the element holding its text,
+     *  so the controller can typewriter-reveal the newest one (earlier turns are already
+     *  complete and render instantly on re-render). */
+    fun appendTurn(
         view: ScenarioBriefingView,
-        participant: BriefingParticipant,
-    ) {
-        view.speakerName.textContent = participant.speaker
-        view.portraitFallback.setAttribute("title", participant.speaker)
-        if (participant.portrait.isNullOrBlank()) {
-            showPortraitFallback(view)
-        } else {
-            val image = view.portraitImage.asDynamic()
-            image.style.display = "block"
-            view.portraitFallback.style.display = "none"
-            image.onerror = { _: dynamic ->
-                showPortraitFallback(view)
-                null
-            }
-            image.src = participant.portrait
+        turn: DialogueTurn,
+    ): HTMLElement {
+        val participant = turn.participant
+        val row = child(view.transcript, "article", "osada-dialogue__turn")
+        if (turn.isPlayerResponse) row.classList.add("osada-dialogue__turn--player")
+
+        addPortrait(row, participant)
+        val body = child(row, "div", "osada-dialogue__body")
+        val speaker = child(body, "div", "osada-dialogue__speaker")
+        speaker.textContent = participant.speaker
+        if (participant.role.isNotBlank()) {
+            child(body, "div", "osada-dialogue__role").textContent = participant.role
         }
+        return child(body, "p", "osada-dialogue__text")
     }
 
-    private fun showPortraitFallback(view: ScenarioBriefingView) {
-        view.portraitImage.style.display = "none"
-        view.portraitFallback.style.display = "grid"
+    /** Keeps the newest line in view as it types / as turns are appended. */
+    fun scrollTranscriptToEnd(view: ScenarioBriefingView) {
+        view.transcript.scrollTop = view.transcript.scrollHeight.toDouble()
     }
 
     /** Renders (but does not reveal) the choice buttons for the current line; hidden via CSS
