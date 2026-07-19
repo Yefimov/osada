@@ -82,7 +82,17 @@ internal class EquipmentWindowController(
             "$year ${EquipmentWindowState.classLabel(isAll, selectedClass)} upgrades for " +
             EquipmentWindowState.countryLabel(countryCtx.allCountries, countryCtx.countryId)
 
-        populateCatalogAndTransport(eqUserSel, map, currentPlayer, countryCtx, isAll, selectedClass, year, month)
+        populateCatalogAndTransport(
+            eqUserSel,
+            map,
+            currentPlayer,
+            countryCtx,
+            isAll,
+            selectedClass,
+            year,
+            month,
+            purchaseMode = eqmode != "upgrade",
+        )
 
         finalizeEquipmentDetail(eqUserSel, eqUserSel?.equnit as? Int ?: -1)
     }
@@ -132,6 +142,7 @@ internal class EquipmentWindowController(
         selectedClass: Int,
         year: Int,
         month: Int,
+        purchaseMode: Boolean,
     ) {
         val selectedEqId = eqUserSel?.equnit as? Int ?: -1
         val sortProperty = eqUserSel?.sortproperty as? String ?: "cost"
@@ -157,6 +168,7 @@ internal class EquipmentWindowController(
                 month,
                 selectedEqId,
                 selectedClass,
+                purchaseMode,
             )
         if (selectedEqId > 0) {
             byId("hscroll-eqUnitList")?.asDynamic()?.scrollLeft = eqScrollPos

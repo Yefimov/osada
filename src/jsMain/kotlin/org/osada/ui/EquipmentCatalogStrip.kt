@@ -33,6 +33,7 @@ internal object EquipmentCatalogStrip {
         month: Int,
         selectedEqId: Int,
         selectedClass: Int,
+        purchaseMode: Boolean,
     ): Int {
         val eqHscroll = byId("hscroll-eqUnitList")
         var eqScrollPos = 0
@@ -40,9 +41,13 @@ internal object EquipmentCatalogStrip {
             val eq = Equipment.getEquipment(eqid) ?: return@forEach
             if (!eq.isAvailableIn(year, month)) return@forEach
             if (EquipmentWindowState.isUndeployableOnThisMap(map, eq)) return@forEach
-            // Equipment the player can't currently afford isn't offered at all, rather than
-            // shown dimmed and unbuyable.
-            if (eq.cost * CURRENCY_MULTIPLIER > currentPlayer.prestige) return@forEach
+            // Equipment the player cannot afford isn't offered at all, rather than listed with a
+            // hidden Buy button and a "need N more prestige" note (EquipmentWindowBuilder
+            // .showEquipmentCosts). PURCHASE MODE ONLY: an upgrade credits the old unit's cost
+            // back and so costs far less than buying outright (CostCalculator
+            // .calculateUpgradeCosts), and filtering the upgrade catalogue by full purchase price
+            // would hide upgrades the player can comfortably afford.
+            if (purchaseMode && eq.cost * CURRENCY_MULTIPLIER > currentPlayer.prestige) return@forEach
             val item = buildEquipmentListItem("eqUnitList", eq)
             item.asDynamic().equnitid = eqid
             if (eqid == selectedEqId) {

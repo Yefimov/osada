@@ -23,12 +23,16 @@
     background-size: cover;
 }
 
+/* Wash + vignette matching the main menu's treatment of the same staff-table photo
+ * (osada-theme.css #smMain), so a campaign opening reads as the same desk the player just
+ * left rather than a second, differently-lit room. */
 .osada-briefing__backdrop::before {
     content: "";
     position: absolute;
     inset: 0;
     background:
-        linear-gradient(180deg, rgba(10, 11, 13, .2), rgba(10, 11, 13, .58));
+        linear-gradient(180deg, rgba(10, 11, 13, .42), rgba(8, 9, 11, .62)),
+        radial-gradient(130% 100% at 28% 38%, rgba(0, 0, 0, 0) 24%, rgba(0, 0, 0, .62) 100%);
     backdrop-filter: saturate(.75) contrast(1.05);
 }
 

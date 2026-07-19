@@ -12,8 +12,10 @@ import org.w3c.dom.HTMLElement
  * (show/reopen/close) and stage rendering, plus the shared mutable state.
  */
 internal object ScenarioBriefingController {
-    private const val DEFAULT_BACKGROUND =
-        "resources/ui/dialogs/startmenu/images/startmenu-1.jpg"
+    // The staff-table photo the main menu uses, so an operation with no authored art of its own
+    // opens on the same desk the player just left. (The old default pointed into the legacy
+    // `animatedBackground` slideshow's stills, which that rotating-photo treatment retired.)
+    private const val DEFAULT_BACKGROUND = "resources/staff_table_background.png"
 
     internal data class DialogueStep(
         val lineId: String,
