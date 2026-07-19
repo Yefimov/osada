@@ -1,10 +1,12 @@
-/* OSADA campaign conversation and operational summary. Loaded on first use by Kotlin. */
+/* OSADA campaign dialogue (lower-third, Armageddon-style) and operational briefing (ORDERS).
+ * Loaded on first use by Kotlin. Built entirely on the --osada-* tokens defined in
+ * css/osada-theme.css — no parallel color/font system. */
 .osada-briefing {
     position: fixed;
     inset: 0;
     z-index: 1200;
-    color: #f1eee5;
-    font-family: Georgia, "Times New Roman", serif;
+    color: var(--osada-text);
+    font-family: var(--osada-font-ui);
     box-sizing: border-box;
 }
 
@@ -26,9 +28,8 @@
     position: absolute;
     inset: 0;
     background:
-        linear-gradient(180deg, rgba(5, 7, 6, .16), rgba(4, 6, 5, .46)),
-        radial-gradient(circle at 50% 42%, transparent 0 36%, rgba(3, 4, 3, .56) 100%);
-    backdrop-filter: saturate(.7) contrast(1.06);
+        linear-gradient(180deg, rgba(10, 11, 13, .2), rgba(10, 11, 13, .58));
+    backdrop-filter: saturate(.75) contrast(1.05);
 }
 
 .osada-briefing__shade {
@@ -44,240 +45,68 @@
     height: 100%;
     min-height: 0;
     display: grid;
-    grid-template-rows: auto minmax(0, 1fr) auto auto;
+    grid-template-rows: auto minmax(0, 1fr);
     overflow: hidden;
-    background: rgba(5, 7, 6, .12);
 }
 
+/* Header strip: operation title (+ act/location subtitle) and historical date --------- */
 .osada-briefing__header {
     position: relative;
     z-index: 2;
-    min-height: 54px;
+    min-height: 56px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 24px;
-    padding: 11px clamp(16px, 3vw, 42px);
-    background: linear-gradient(180deg, rgba(7, 9, 8, .78), rgba(7, 9, 8, .34));
-    border-bottom: 1px solid rgba(185, 177, 153, .34);
+    padding: 12px clamp(16px, 3vw, 42px);
+    background: linear-gradient(180deg, rgba(20, 22, 26, .86), rgba(20, 22, 26, .4));
+    border-bottom: var(--osada-frame-brass);
+}
+
+.osada-briefing__title-block {
+    min-width: 0;
 }
 
 .osada-briefing__title {
     margin: 0;
     overflow: hidden;
-    color: #f1eee4;
-    font-size: clamp(20px, 2.2vw, 32px);
-    font-weight: 500;
-    line-height: 1.1;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.osada-briefing__progress {
-    flex: 0 0 auto;
-    color: #d2c69d;
-    font-family: Arial, sans-serif;
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: .15em;
-    text-transform: uppercase;
-}
-
-/* Armageddon-like conversation scene ------------------------------------- */
-.osada-conversation {
-    min-height: 0;
-    overflow: hidden;
-}
-
-.osada-conversation__transcript {
-    width: 100%;
-    height: 100%;
-    min-height: 0;
-    overflow-x: hidden;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: clamp(12px, 2vh, 24px);
-    padding: clamp(18px, 3vh, 34px) clamp(16px, 6vw, 92px) 24px;
-    scroll-behavior: smooth;
-    scrollbar-color: rgba(184, 164, 112, .65) rgba(5, 6, 5, .42);
-}
-
-.osada-conversation__turn {
-    width: min(760px, 82vw);
-    display: grid;
-    grid-template-columns: 142px minmax(0, 1fr);
-    gap: 16px;
-    align-items: center;
-    align-self: flex-start;
-    animation: osada-conversation-enter-left .2s ease-out both;
-}
-
-.osada-conversation__turn--right {
-    grid-template-columns: minmax(0, 1fr) 142px;
-    align-self: flex-end;
-    animation-name: osada-conversation-enter-right;
-}
-
-.osada-conversation__turn--right .osada-conversation__portrait {
-    grid-column: 2;
-    grid-row: 1;
-}
-
-.osada-conversation__turn--right .osada-conversation__bubble {
-    grid-column: 1;
-    grid-row: 1;
-}
-
-.osada-conversation__turn--player .osada-conversation__text {
-    color: #d8a934;
-}
-
-.osada-conversation__portrait {
-    position: relative;
-    width: 142px;
-    height: 166px;
-    overflow: hidden;
-    background:
-        radial-gradient(circle at 50% 32%, rgba(135, 153, 147, .26), transparent 52%),
-        linear-gradient(145deg, #2c3937, #0c1110);
-    border: 2px solid #4f5551;
-    box-shadow:
-        inset 0 0 0 3px rgba(12, 14, 13, .9),
-        0 0 0 1px rgba(170, 173, 160, .34),
-        0 8px 24px rgba(0, 0, 0, .45);
-}
-
-.osada-conversation__portrait-image {
-    width: 100%;
-    height: calc(100% - 24px);
-    object-fit: cover;
-    object-position: center top;
-    filter: saturate(.74) contrast(1.08) sepia(.08);
-}
-
-.osada-conversation__portrait-fallback {
-    width: 100%;
-    height: calc(100% - 24px);
-    display: grid;
-    place-items: center;
-    color: rgba(218, 223, 210, .72);
-    font-family: Arial, sans-serif;
-    font-size: 48px;
-    font-weight: 900;
-    letter-spacing: .04em;
-    background:
-        radial-gradient(circle at 50% 34%, rgba(188, 198, 188, .16), transparent 22%),
-        radial-gradient(ellipse at 50% 72%, rgba(5, 7, 6, .92) 0 34%, transparent 35%),
-        radial-gradient(circle at 50% 37%, rgba(5, 7, 6, .92) 0 18%, transparent 19%);
-}
-
-.osada-conversation__portrait-fallback svg {
-    width: 52%;
-    height: 52%;
-    color: rgba(218, 223, 210, .55);
-}
-
-.osada-conversation__nameplate {
-    position: absolute;
-    right: 3px;
-    bottom: 3px;
-    left: 3px;
-    min-height: 18px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2px 5px;
-    color: #e6e1d5;
-    background: linear-gradient(#41443e, #242722);
-    border-top: 1px solid #777b70;
-    font-size: 10px;
+    color: var(--osada-text);
+    font-size: clamp(19px, 2.1vw, 30px);
+    font-weight: 700;
     line-height: 1.15;
-    text-align: center;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-.osada-conversation__bubble {
-    min-width: 0;
-    padding: 13px 17px 15px;
-    color: #f0eee7;
-    background: rgba(3, 4, 3, .91);
-    border: 1px solid rgba(150, 151, 139, .7);
-    box-shadow: 0 8px 22px rgba(0, 0, 0, .34);
-}
-
-.osada-conversation__role {
-    margin-bottom: 6px;
-    color: #a7a89f;
-    font-family: Arial, sans-serif;
-    font-size: 10px;
-    font-weight: 800;
+.osada-briefing__subtitle {
+    margin-top: 2px;
+    overflow: hidden;
+    color: var(--osada-steel);
+    font-size: 11px;
+    font-weight: 700;
     letter-spacing: .12em;
+    text-overflow: ellipsis;
     text-transform: uppercase;
+    white-space: nowrap;
 }
 
-.osada-conversation__text {
-    margin: 0;
-    color: #f1efe8;
-    font-size: clamp(16px, 1.55vw, 21px);
-    line-height: 1.3;
-    white-space: pre-line;
-    text-wrap: pretty;
+.osada-briefing__date {
+    flex: 0 0 auto;
+    color: var(--osada-brass);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    white-space: nowrap;
 }
 
-.osada-conversation__bubble--choices {
-    padding: 12px 15px 14px;
-}
-
-.osada-conversation__choices {
-    display: grid;
-    gap: 7px;
-}
-
-.osada-conversation__choice {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 24px minmax(0, 1fr);
-    gap: 7px;
-    align-items: start;
-    padding: 7px 8px;
-    color: #d8a934;
-    background: transparent;
-    border: 1px solid transparent;
-    font: inherit;
-    font-size: clamp(15px, 1.4vw, 19px);
-    line-height: 1.28;
-    text-align: left;
-    cursor: pointer;
-}
-
-.osada-conversation__choice:hover,
-.osada-conversation__choice:focus-visible {
-    color: #ffd568;
-    background: rgba(207, 162, 52, .09);
-    border-color: rgba(207, 162, 52, .48);
-    outline: none;
-}
-
-.osada-conversation__choice-number {
-    color: #8d762e;
-    font-family: Arial, sans-serif;
-    font-weight: 900;
-}
-
-.osada-conversation__choice-text {
-    min-width: 0;
-}
-
-/* Operational-summary screen -------------------------------------------- */
+/* Operational briefing (ORDERS) screen ------------------------------------------------- */
 .osada-briefing__orders {
+    display: grid;
     min-height: 0;
     overflow: auto;
     place-items: center;
     padding: clamp(18px, 3vw, 42px);
-    background: rgba(5, 7, 6, .54);
+    background: rgba(10, 11, 13, .46);
 }
 
 .osada-briefing__orders-panel {
@@ -285,23 +114,19 @@
     max-height: 100%;
     overflow: auto;
     padding: clamp(22px, 4vw, 42px);
-    background:
-        linear-gradient(rgba(31, 30, 25, .97), rgba(16, 17, 15, .98)),
-        repeating-linear-gradient(0deg, transparent 0 3px, rgba(255, 255, 255, .018) 3px 4px);
-    border: 1px solid #8a7954;
-    box-shadow:
-        0 0 0 4px rgba(12, 13, 11, .9),
-        0 0 0 5px rgba(166, 143, 92, .52),
-        0 24px 70px rgba(0, 0, 0, .62);
+    background: linear-gradient(var(--osada-metal-800), var(--osada-metal-900));
+    border: var(--osada-frame-brass);
+    border-radius: var(--osada-radius);
+    box-shadow: var(--osada-shadow), 0 24px 70px rgba(0, 0, 0, .5);
 }
 
 .osada-briefing__orders-eyebrow {
     margin-bottom: 18px;
-    color: #b9aa88;
-    font-family: Arial, sans-serif;
+    color: var(--osada-brass);
     font-size: 11px;
-    font-weight: 800;
-    letter-spacing: .18em;
+    font-weight: 700;
+    letter-spacing: .16em;
+    text-transform: uppercase;
 }
 
 .osada-briefing__orders-content {
@@ -311,10 +136,11 @@
 }
 
 .osada-briefing__order-section {
-    padding: 17px 19px;
-    background: rgba(213, 199, 161, .055);
-    border: 1px solid rgba(183, 158, 104, .34);
-    border-left: 4px solid #8e7748;
+    padding: 16px 18px;
+    background: rgba(217, 203, 168, .05);
+    border: var(--osada-border);
+    border-left: 4px solid var(--osada-brass);
+    border-radius: var(--osada-radius);
 }
 
 .osada-briefing__order-section--wide {
@@ -323,19 +149,18 @@
 
 .osada-briefing__order-heading {
     margin: 0 0 9px;
-    color: #d3bc82;
-    font-family: Arial, sans-serif;
+    color: var(--osada-brass);
     font-size: 12px;
-    font-weight: 900;
-    letter-spacing: .14em;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
 }
 
 .osada-briefing__order-text,
-.osada-briefing__objective-text,
-.osada-briefing__empty {
+.osada-briefing__objective-text {
     margin: 0;
-    color: #e4dfd1;
-    font-size: 17px;
+    color: var(--osada-text);
+    font-size: 16px;
     line-height: 1.5;
     white-space: pre-line;
 }
@@ -350,181 +175,256 @@
 
 .osada-briefing__objective {
     display: grid;
-    grid-template-columns: 28px 1fr;
+    grid-template-columns: 26px 1fr;
     gap: 10px;
     align-items: start;
 }
 
 .osada-briefing__objective-marker {
-    width: 26px;
-    height: 26px;
+    width: 24px;
+    height: 24px;
     display: grid;
     place-items: center;
-    color: #14150f;
-    background: #b59a5f;
-    font-family: Arial, sans-serif;
+    color: var(--osada-metal-900);
+    background: var(--osada-brass);
+    border-radius: var(--osada-radius);
     font-size: 12px;
-    font-weight: 900;
+    font-weight: 700;
 }
 
-/* Shared controls and bottom status strip -------------------------------- */
+/* ORDERS is always the final section: the legacy scenario-start message's own text, rendered
+ * as a visually distinct paper block so it reads as a direct field order, not campaign prose. */
+.osada-briefing__orders-paper {
+    background: var(--osada-paper);
+    border-color: var(--osada-red-dark);
+    border-left-color: var(--osada-red);
+}
+
+.osada-briefing__orders-paper .osada-briefing__order-heading {
+    color: var(--osada-red-dark);
+}
+
+.osada-briefing__orders-paper .osada-briefing__order-text {
+    color: var(--osada-paper-ink);
+}
+
 .osada-briefing__footer {
-    min-height: 62px;
-    padding: 9px clamp(14px, 3vw, 40px);
-    background: rgba(4, 5, 4, .86);
-    border-top: 1px solid rgba(176, 176, 165, .38);
-}
-
-.osada-briefing__controls {
-    min-height: 44px;
     display: flex;
-    align-items: center;
     justify-content: flex-end;
-    gap: 9px;
-}
-
-.osada-briefing__controls--dialogue .osada-briefing__button--quiet {
-    margin-right: auto;
-}
-
-.osada-briefing__controls--orders .osada-briefing__button--quiet {
-    margin-right: auto;
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: var(--osada-border);
 }
 
 .osada-briefing__button {
-    min-height: 42px;
-    padding: 0 18px;
+    min-height: 44px;
+    padding: 0 22px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: #eae2cf;
-    background: linear-gradient(#494b45, #242722);
-    border: 1px solid #7d7d72;
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .04);
-    font-family: Arial, sans-serif;
-    font-size: 11px;
-    font-weight: 900;
-    letter-spacing: .11em;
+    color: var(--osada-text);
+    background: var(--osada-metal-700);
+    border: var(--osada-border);
+    border-radius: var(--osada-radius);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
     cursor: pointer;
 }
 
-.osada-briefing__button:hover:not(:disabled),
+.osada-briefing__button:hover,
 .osada-briefing__button:focus-visible {
-    color: #fff7df;
-    background: linear-gradient(#626054, #34362f);
-    border-color: #b9a46d;
-    outline: 2px solid rgba(226, 192, 105, .42);
+    background: var(--osada-metal-600);
+    outline: 2px solid var(--osada-brass);
     outline-offset: 2px;
 }
 
-.osada-briefing__button:disabled {
-    opacity: .35;
-    cursor: default;
-}
-
 .osada-briefing__button--primary {
-    color: #18160f;
-    background: linear-gradient(#d1b565, #9e8240);
-    border-color: #e0ca8d;
+    color: #fff;
+    background: var(--osada-red);
+    border-color: var(--osada-red-bright);
 }
 
-.osada-briefing__button--primary:hover:not(:disabled),
+.osada-briefing__button--primary:hover,
 .osada-briefing__button--primary:focus-visible {
-    color: #120f09;
-    background: linear-gradient(#e4c978, #b09149);
+    background: var(--osada-red-bright);
 }
 
-.osada-briefing__button--quiet {
-    color: #bfc0b8;
-    background: rgba(26, 28, 25, .76);
-}
-
-.osada-conversation__status {
-    min-height: 30px;
+/* Lower-third dialogue (Armageddon-style) --------------------------------------------- */
+.osada-dialogue-stage {
+    position: relative;
+    min-height: 0;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    padding: 4px 9px;
-    color: #efeee7;
-    background: rgba(2, 3, 2, .94);
-    border-top: 1px solid rgba(195, 195, 184, .55);
-    font-family: "Courier New", monospace;
-    font-size: clamp(12px, 1.25vw, 17px);
+    align-items: flex-end;
+}
+
+.osada-dialogue {
+    position: relative;
+    width: 100%;
+    min-height: 30vh;
+    max-height: 44vh;
+    display: flex;
+    gap: clamp(16px, 3vw, 32px);
+    padding: clamp(18px, 2.6vw, 30px) clamp(20px, 5vw, 64px);
+    background: linear-gradient(180deg, var(--osada-metal-800), var(--osada-metal-900));
+    border-top: var(--osada-frame-brass);
+    box-shadow: 0 -12px 32px rgba(0, 0, 0, .5);
+    cursor: pointer;
+}
+
+.osada-dialogue__skip {
+    position: absolute;
+    top: 10px;
+    right: clamp(14px, 3vw, 28px);
+    padding: 6px 10px;
+    color: var(--osada-text-dim);
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: var(--osada-radius);
+    font-family: var(--osada-font-ui);
+    font-size: 10px;
     font-weight: 700;
-    text-shadow: 1px 1px 0 #000;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    cursor: pointer;
 }
 
-.osada-conversation__location {
-    text-align: right;
+.osada-dialogue__skip:hover,
+.osada-dialogue__skip:focus-visible {
+    color: var(--osada-text);
+    border-color: var(--osada-metal-600);
+    outline: none;
 }
 
-@keyframes osada-conversation-enter-left {
-    from { opacity: 0; transform: translateX(-12px); }
-    to { opacity: 1; transform: translateX(0); }
+.osada-dialogue__portrait {
+    position: relative;
+    flex: 0 0 auto;
+    width: clamp(112px, 13vw, 160px);
+    height: clamp(112px, 13vw, 160px);
+    align-self: center;
+    overflow: hidden;
+    background: var(--osada-metal-700);
+    border: var(--osada-frame-brass);
+    border-radius: var(--osada-radius);
+    box-shadow: var(--osada-shadow);
 }
 
-@keyframes osada-conversation-enter-right {
-    from { opacity: 0; transform: translateX(12px); }
-    to { opacity: 1; transform: translateX(0); }
+.osada-dialogue__portrait-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+}
+
+.osada-dialogue__portrait-fallback {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    color: var(--osada-steel);
+}
+
+.osada-dialogue__portrait-fallback svg {
+    width: 52%;
+    height: 52%;
+}
+
+.osada-dialogue__content {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+.osada-dialogue__speaker {
+    color: var(--osada-brass);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+}
+
+.osada-dialogue__line {
+    margin: 0;
+    color: var(--osada-paper);
+    font-size: clamp(14px, 1.5vw, 20px);
+    line-height: 1.4;
+    white-space: pre-line;
+    text-wrap: pretty;
+}
+
+.osada-dialogue__choices {
+    display: none;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.osada-dialogue__choice {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 22px minmax(0, 1fr);
+    gap: 8px;
+    align-items: start;
+    padding: 10px 12px;
+    color: var(--osada-text);
+    background: var(--osada-metal-700);
+    border: var(--osada-border);
+    border-radius: var(--osada-radius);
+    font: inherit;
+    font-size: clamp(13px, 1.2vw, 16px);
+    line-height: 1.3;
+    text-align: left;
+    cursor: pointer;
+}
+
+.osada-dialogue__choice:hover,
+.osada-dialogue__choice:focus-visible {
+    color: var(--osada-text);
+    background: var(--osada-metal-600);
+    border-color: var(--osada-brass);
+    outline: none;
+}
+
+.osada-dialogue__choice-number {
+    color: var(--osada-brass);
+    font-weight: 700;
+}
+
+.osada-dialogue__choice-text {
+    min-width: 0;
+}
+
+.osada-dialogue__hint {
+    display: none;
+    color: var(--osada-brass);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    animation: osada-hint-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes osada-hint-pulse {
+    0%, 100% { opacity: .55; }
+    50% { opacity: 1; }
 }
 
 @media (max-width: 760px) {
     .osada-briefing__header {
         min-height: 48px;
-        padding: 9px 12px;
+        padding: 9px 14px;
     }
 
     .osada-briefing__title {
-        font-size: 19px;
+        font-size: 18px;
     }
 
-    .osada-briefing__progress {
-        font-size: 9px;
-    }
-
-    .osada-conversation__transcript {
-        gap: 12px;
-        padding: 12px 10px 16px;
-    }
-
-    .osada-conversation__turn,
-    .osada-conversation__turn--right {
-        width: 100%;
-        grid-template-columns: 92px minmax(0, 1fr);
-        gap: 9px;
-    }
-
-    .osada-conversation__turn--right .osada-conversation__portrait,
-    .osada-conversation__turn--right .osada-conversation__bubble {
-        grid-column: auto;
-        grid-row: auto;
-    }
-
-    .osada-conversation__turn--right .osada-conversation__portrait {
-        order: 0;
-    }
-
-    .osada-conversation__portrait {
-        width: 92px;
-        height: 116px;
-    }
-
-    .osada-conversation__portrait-fallback {
-        font-size: 30px;
-    }
-
-    .osada-conversation__nameplate {
-        font-size: 8px;
-    }
-
-    .osada-conversation__bubble {
-        padding: 10px 11px;
-    }
-
-    .osada-conversation__text,
-    .osada-conversation__choice {
-        font-size: 15px;
+    .osada-briefing__date {
+        font-size: 11px;
     }
 
     .osada-briefing__orders {
@@ -532,7 +432,7 @@
     }
 
     .osada-briefing__orders-panel {
-        padding: 17px 14px;
+        padding: 16px 14px;
     }
 
     .osada-briefing__orders-content {
@@ -543,32 +443,30 @@
         grid-column: auto;
     }
 
-    .osada-briefing__footer {
-        padding: 7px 9px;
+    .osada-dialogue {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        max-height: 62vh;
+        padding: 16px 14px;
     }
 
-    .osada-briefing__controls {
-        flex-wrap: wrap;
-        justify-content: flex-end;
+    .osada-dialogue__portrait {
+        width: 84px;
+        height: 84px;
     }
 
-    .osada-briefing__button {
-        min-height: 40px;
-        padding: 0 12px;
-        font-size: 10px;
+    .osada-dialogue__content {
+        width: 100%;
     }
 
-    .osada-conversation__status {
-        font-size: 11px;
+    .osada-dialogue__choices {
+        grid-template-columns: 1fr;
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .osada-conversation__transcript {
-        scroll-behavior: auto;
-    }
-
-    .osada-conversation__turn {
+    .osada-dialogue__hint {
         animation: none;
     }
 }

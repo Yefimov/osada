@@ -38,7 +38,7 @@ internal object ScenarioBriefingController {
         val parsed = BriefingParser.parse(scenarioFacts.title, rawData)
         lastBriefing = parsed
         lastFacts = scenarioFacts
-        showParsed(parsed, scenarioFacts, "CONTINUE", onFinished)
+        showParsed(parsed, scenarioFacts, "BEGIN OPERATION", onFinished)
     }
 
     /** Cache the briefing for the reopen button WITHOUT showing it — used by the retry
@@ -87,17 +87,15 @@ internal object ScenarioBriefingController {
 
         val created =
             ScenarioBriefingBuilder.create(
-                onBack = { previousLine() },
-                onNext = { nextLine() },
+                onAdvance = { advanceOrComplete() },
                 onSkip = { showOrders() },
-                onReview = { reviewDialogue() },
                 onBegin = { close(runCallback = true) },
             )
         view = created
         created.title.textContent = parsed.title
-        created.actLabel.textContent = parsed.actLabel
-        created.locationLabel.textContent = "LOCATION: ${parsed.locationLabel}"
-        ScenarioBriefingBuilder.setBeginLabel(created, beginLabel)
+        created.subtitle.textContent = "${parsed.actLabel} · ${parsed.locationLabel}"
+        created.headerDate.textContent = scenarioFacts.dateLabel
+        created.beginButton.textContent = beginLabel
         val background =
             parsed.background
                 ?.takeIf { it.isNotBlank() }
@@ -112,37 +110,39 @@ internal object ScenarioBriefingController {
     internal fun renderCurrentStage() {
         val data = briefing ?: return
         val currentView = view ?: return
-        ScenarioBriefingBuilder.showStage(currentView, stage, data.dialogue.isNotEmpty())
+        ScenarioBriefingBuilder.showStage(currentView, stage)
         if (stage == BriefingStage.DIALOGUE) {
-            renderDialogueStage(currentView, data)
+            renderDialogueStage(currentView)
         } else {
+            BriefingTypewriter.cancel()
             ScenarioBriefingBuilder.renderOrders(currentView, data.orders, facts)
         }
     }
 
-    private fun renderDialogueStage(
-        currentView: ScenarioBriefingView,
-        data: ScenarioBriefing,
-    ) {
+    private fun renderDialogueStage(currentView: ScenarioBriefingView) {
         val current = currentLine()
         if (current == null) {
             showOrders()
             return
         }
-        val turns = buildTurns(data)
-        val hasNext = resolveNext(current, null) != null
-        ScenarioBriefingBuilder.renderDialogue(
-            view = currentView,
-            turns = turns,
-            player = data.player,
-            choices = if (path.lastOrNull()?.selectedChoice == null) current.choices else emptyList(),
-            canGoBack = path.size > 1,
-            hasNext = hasNext,
-            onChoice = { choose(it) },
-        )
+        ScenarioBriefingBuilder.setSpeaker(currentView, current.participant())
+        val pendingChoice = path.lastOrNull()?.selectedChoice
+        val choices = if (pendingChoice == null) current.choices else emptyList()
+        ScenarioBriefingBuilder.setChoices(currentView, choices) { choose(it) }
+        ScenarioBriefingBuilder.setRevealed(currentView, revealed = false, hasChoices = choices.isNotEmpty())
+        BriefingTypewriter.start(currentView.lineText, current.text) {
+            ScenarioBriefingBuilder.setRevealed(currentView, revealed = true, hasChoices = choices.isNotEmpty())
+            if (choices.isNotEmpty()) {
+                currentView.choicesBox
+                    .querySelector("button")
+                    ?.asDynamic()
+                    ?.focus()
+            }
+        }
     }
 
     private fun close(runCallback: Boolean) {
+        BriefingTypewriter.cancel()
         val current = view
         view = null
         current?.root?.parentElement?.removeChild(current.root)

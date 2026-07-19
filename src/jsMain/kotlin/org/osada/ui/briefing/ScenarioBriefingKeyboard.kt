@@ -25,12 +25,17 @@ private fun ScenarioBriefingController.handleTabKeyDown(
     return true
 }
 
-/** Digit 1-9 selects the matching dialogue choice, if one exists at that index. */
+/** Digit 1-9 selects the matching dialogue choice, if one exists at that index. Ignored while
+ *  the line is still typewriter-revealing -- the first input completes the reveal instead. */
 private fun ScenarioBriefingController.handleChoiceDigitKey(
     key: String,
     e: dynamic,
 ): Boolean {
-    val isDigitChoiceKey = stage == BriefingStage.DIALOGUE && key.length == 1 && key[0] in '1'..'9'
+    val isDigitChoiceKey =
+        stage == BriefingStage.DIALOGUE &&
+            !BriefingTypewriter.isRevealing() &&
+            key.length == 1 &&
+            key[0] in '1'..'9'
     val choice = if (isDigitChoiceKey) currentLine()?.choices?.getOrNull(key[0].digitToInt() - 1) else null
     if (choice != null) {
         e.preventDefault()
@@ -49,12 +54,7 @@ private fun ScenarioBriefingController.handleNavigationKey(
         "Enter", " ", "ArrowRight" ->
             if (stage == BriefingStage.DIALOGUE) {
                 e.preventDefault()
-                nextLine()
-            }
-        "ArrowLeft" ->
-            if (stage == BriefingStage.DIALOGUE) {
-                e.preventDefault()
-                previousLine()
+                advanceOrComplete()
             }
         "Escape" -> {
             e.preventDefault()
@@ -84,7 +84,7 @@ private fun ScenarioBriefingController.handleChoiceArrowKey(
 
 private fun ScenarioBriefingController.activeChoiceButtons(): dynamic =
     if (stage == BriefingStage.DIALOGUE) {
-        view?.root?.querySelectorAll(".osada-conversation__choice")?.asDynamic()
+        view?.root?.querySelectorAll(".osada-dialogue__choice")?.asDynamic()
     } else {
         null
     }
@@ -117,14 +117,17 @@ private fun ScenarioBriefingController.trapFocus(event: dynamic) {
     }
 }
 
+/** Ensures keyboard focus is somewhere inside the briefing so its keydown listener (bound to
+ *  the root, which only receives bubbled events from its own focused subtree) keeps working.
+ *  Once a line finishes revealing, the choices' onDone callback focuses the first choice
+ *  button directly, superseding this. */
 internal fun ScenarioBriefingController.focusPrimaryControl() {
     val currentView = view ?: return
     if (stage == BriefingStage.ORDERS) {
         currentView.beginButton.focus()
-        return
+    } else {
+        currentView.root.focus()
     }
-    val firstChoice = currentView.root.querySelector(".osada-conversation__choice")?.asDynamic()
-    if (firstChoice != null && firstChoice != undefined) firstChoice.focus() else currentView.nextButton.focus()
 }
 
 private fun isTypingField(tagName: String?): Boolean =

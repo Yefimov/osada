@@ -7,31 +7,40 @@ internal data class ScenarioBriefingView(
     val root: HTMLElement,
     val backdrop: HTMLElement,
     val title: HTMLElement,
-    val progress: HTMLElement,
-    val actLabel: HTMLElement,
-    val locationLabel: HTMLElement,
-    val dialogueStage: HTMLElement,
-    val transcript: HTMLElement,
+    val subtitle: HTMLElement,
+    val headerDate: HTMLElement,
     val ordersStage: HTMLElement,
+    val ordersEyebrow: HTMLElement,
     val ordersContent: HTMLElement,
-    val dialogueControls: HTMLElement,
-    val orderControls: HTMLElement,
-    val backButton: HTMLElement,
-    val nextButton: HTMLElement,
-    val skipButton: HTMLElement,
-    val reviewButton: HTMLElement,
     val beginButton: HTMLElement,
+    val dialogueStage: HTMLElement,
+    val portraitImage: HTMLElement,
+    val portraitFallback: HTMLElement,
+    val speakerName: HTMLElement,
+    val lineText: HTMLElement,
+    val choicesBox: HTMLElement,
+    val hint: HTMLElement,
+    val skipButton: HTMLElement,
 )
 
-/** DOM-only view builder. State transitions and branching live in the controller. */
+/** DOM-only view builder for the lower-third campaign dialogue panel and the full-panel
+ *  operational briefing (ORDERS). State transitions, branching and the typewriter reveal live
+ *  in the controller; split across sibling files (same package) to stay within the project's
+ *  function-count limits. */
 internal object ScenarioBriefingBuilder {
     internal const val STYLESHEET_ID = "osada-briefing-stylesheet"
 
+    // Generic head-and-shoulders silhouette, drawn with `currentColor` so its shade follows the
+    // `.osada-dialogue__portrait-fallback` CSS rule (no downloaded asset, per spec).
+    private const val SILHOUETTE_SVG =
+        "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\">" +
+            "<circle cx=\"12\" cy=\"8\" r=\"4.5\" fill=\"currentColor\"/>" +
+            "<path d=\"M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7\" fill=\"currentColor\"/>" +
+            "</svg>"
+
     fun create(
-        onBack: () -> Unit,
-        onNext: () -> Unit,
+        onAdvance: () -> Unit,
         onSkip: () -> Unit,
-        onReview: () -> Unit,
         onBegin: () -> Unit,
     ): ScenarioBriefingView {
         ensureStylesheet()
@@ -47,118 +56,179 @@ internal object ScenarioBriefingBuilder {
         val shade = child(root, "div", "osada-briefing__shade")
         val shell = child(shade, "section", "osada-briefing__shell")
 
-        val header = child(shell, "header", "osada-briefing__header")
-        val title = child(header, "h1", "osada-briefing__title")
-        title.id = "osada-briefing-title"
-        val progress = child(header, "div", "osada-briefing__progress")
-
-        val dialogueStage = child(shell, "section", "osada-conversation")
-        dialogueStage.setAttribute("aria-live", "polite")
-        val transcript = child(dialogueStage, "div", "osada-conversation__transcript")
-
-        val ordersStage = child(shell, "section", "osada-briefing__orders")
-        val ordersPanel = child(ordersStage, "div", "osada-briefing__orders-panel")
-        val ordersEyebrow = child(ordersPanel, "div", "osada-briefing__orders-eyebrow")
-        ordersEyebrow.textContent = "FIELD COMMAND • OPERATIONAL SUMMARY"
-        val ordersContent = child(ordersPanel, "div", "osada-briefing__orders-content")
-
-        val footer = buildFooter(shell, onBack, onNext, onSkip, onReview, onBegin)
-
-        val status = child(shell, "div", "osada-conversation__status")
-        val actLabel = child(status, "div", "osada-conversation__act")
-        val locationLabel = child(status, "div", "osada-conversation__location")
+        val header = buildHeader(shell)
+        val orders = buildOrdersStage(shell, onBegin)
+        val dialogue = buildDialogueStage(shell, onAdvance, onSkip)
 
         document.body?.appendChild(root)
 
         return ScenarioBriefingView(
             root = root,
             backdrop = backdrop,
-            title = title,
-            progress = progress,
-            actLabel = actLabel,
-            locationLabel = locationLabel,
-            dialogueStage = dialogueStage,
-            transcript = transcript,
-            ordersStage = ordersStage,
-            ordersContent = ordersContent,
-            dialogueControls = footer.dialogueControls,
-            orderControls = footer.orderControls,
-            backButton = footer.backButton,
-            nextButton = footer.nextButton,
-            skipButton = footer.skipButton,
-            reviewButton = footer.reviewButton,
-            beginButton = footer.beginButton,
+            title = header.title,
+            subtitle = header.subtitle,
+            headerDate = header.date,
+            ordersStage = orders.stage,
+            ordersEyebrow = orders.eyebrow,
+            ordersContent = orders.content,
+            beginButton = orders.beginButton,
+            dialogueStage = dialogue.stage,
+            portraitImage = dialogue.portraitImage,
+            portraitFallback = dialogue.portraitFallback,
+            speakerName = dialogue.speakerName,
+            lineText = dialogue.lineText,
+            choicesBox = dialogue.choicesBox,
+            hint = dialogue.hint,
+            skipButton = dialogue.skipButton,
         )
     }
 
-    private data class BriefingFooter(
-        val dialogueControls: HTMLElement,
-        val orderControls: HTMLElement,
-        val backButton: HTMLElement,
-        val nextButton: HTMLElement,
-        val skipButton: HTMLElement,
-        val reviewButton: HTMLElement,
+    private data class HeaderRefs(
+        val title: HTMLElement,
+        val subtitle: HTMLElement,
+        val date: HTMLElement,
+    )
+
+    private fun buildHeader(shell: HTMLElement): HeaderRefs {
+        val header = child(shell, "header", "osada-briefing__header")
+        val titleBlock = child(header, "div", "osada-briefing__title-block")
+        val title = child(titleBlock, "h1", "osada-briefing__title")
+        title.id = "osada-briefing-title"
+        val subtitle = child(titleBlock, "div", "osada-briefing__subtitle")
+        val date = child(header, "div", "osada-briefing__date")
+        return HeaderRefs(title, subtitle, date)
+    }
+
+    private data class OrdersRefs(
+        val stage: HTMLElement,
+        val eyebrow: HTMLElement,
+        val content: HTMLElement,
         val beginButton: HTMLElement,
     )
 
-    /** Footer controls (dialogue back/next/skip + orders review/continue) split out of [create]
-     *  purely to keep that function under the line-count limit — no behavior split intended. */
-    private fun buildFooter(
+    private fun buildOrdersStage(
         shell: HTMLElement,
-        onBack: () -> Unit,
-        onNext: () -> Unit,
-        onSkip: () -> Unit,
-        onReview: () -> Unit,
         onBegin: () -> Unit,
-    ): BriefingFooter {
-        val footer = child(shell, "footer", "osada-briefing__footer")
-        val dialogueControls = child(footer, "div", "osada-briefing__controls osada-briefing__controls--dialogue")
-        val skipButton =
-            button(dialogueControls, "SKIP TO BRIEFING", "osada-briefing__button osada-briefing__button--quiet", onSkip)
-        val backButton = button(dialogueControls, "BACK", "osada-briefing__button", onBack)
-        val nextButton =
-            button(dialogueControls, "NEXT", "osada-briefing__button osada-briefing__button--primary", onNext)
-
-        val orderControls = child(footer, "div", "osada-briefing__controls osada-briefing__controls--orders")
-        val reviewButton =
-            button(
-                orderControls,
-                "REVIEW CONVERSATION",
-                "osada-briefing__button osada-briefing__button--quiet",
-                onReview,
-            )
+    ): OrdersRefs {
+        val stage = child(shell, "section", "osada-briefing__orders")
+        val panel = child(stage, "div", "osada-briefing__orders-panel")
+        val eyebrow = child(panel, "div", "osada-briefing__orders-eyebrow")
+        val content = child(panel, "div", "osada-briefing__orders-content")
+        val footer = child(panel, "footer", "osada-briefing__footer")
         val beginButton =
-            button(orderControls, "CONTINUE", "osada-briefing__button osada-briefing__button--primary", onBegin)
-
-        return BriefingFooter(
-            dialogueControls = dialogueControls,
-            orderControls = orderControls,
-            backButton = backButton,
-            nextButton = nextButton,
-            skipButton = skipButton,
-            reviewButton = reviewButton,
-            beginButton = beginButton,
-        )
+            button(footer, "BEGIN OPERATION", "osada-briefing__button osada-briefing__button--primary", onBegin)
+        return OrdersRefs(stage, eyebrow, content, beginButton)
     }
 
-    fun renderDialogue(
+    private data class DialogueRefs(
+        val stage: HTMLElement,
+        val portraitImage: HTMLElement,
+        val portraitFallback: HTMLElement,
+        val speakerName: HTMLElement,
+        val lineText: HTMLElement,
+        val choicesBox: HTMLElement,
+        val hint: HTMLElement,
+        val skipButton: HTMLElement,
+    )
+
+    /** Lower-third dialogue panel: portrait left, speaker/line/choices right, SKIP muted at the
+     *  panel's top-right corner. Clicking anywhere on the panel advances/completes the reveal;
+     *  choice buttons and SKIP stop propagation so they don't also trigger that advance. */
+    private fun buildDialogueStage(
+        shell: HTMLElement,
+        onAdvance: () -> Unit,
+        onSkip: () -> Unit,
+    ): DialogueRefs {
+        val stage = child(shell, "section", "osada-dialogue-stage")
+        val panel = child(stage, "div", "osada-dialogue")
+        panel.addEventListener("click", { onAdvance() })
+
+        val skipButton = element("button", "osada-dialogue__skip")
+        skipButton.asDynamic().type = "button"
+        skipButton.textContent = "SKIP TO BRIEFING"
+        skipButton.title = "Skip the conversation and go straight to the operational briefing"
+        skipButton.addEventListener("click", { e ->
+            e.stopPropagation()
+            onSkip()
+        })
+        panel.appendChild(skipButton)
+
+        val portrait = child(panel, "div", "osada-dialogue__portrait")
+        val portraitImage = document.createElement("img") as HTMLElement
+        portraitImage.className = "osada-dialogue__portrait-image"
+        portraitImage.asDynamic().alt = ""
+        portrait.appendChild(portraitImage)
+        val portraitFallback = child(portrait, "div", "osada-dialogue__portrait-fallback")
+        portraitFallback.innerHTML = SILHOUETTE_SVG
+
+        val content = child(panel, "div", "osada-dialogue__content")
+        val speakerName = child(content, "div", "osada-dialogue__speaker")
+        val lineText = child(content, "p", "osada-dialogue__line")
+        val choicesBox = child(content, "div", "osada-dialogue__choices")
+        val hint = child(content, "div", "osada-dialogue__hint")
+        hint.textContent = "CONTINUE ▸"
+
+        return DialogueRefs(stage, portraitImage, portraitFallback, speakerName, lineText, choicesBox, hint, skipButton)
+    }
+
+    fun setSpeaker(
         view: ScenarioBriefingView,
-        turns: List<DialogueTurn>,
-        player: BriefingParticipant,
+        participant: BriefingParticipant,
+    ) {
+        view.speakerName.textContent = participant.speaker
+        view.portraitFallback.setAttribute("title", participant.speaker)
+        if (participant.portrait.isNullOrBlank()) {
+            showPortraitFallback(view)
+        } else {
+            val image = view.portraitImage.asDynamic()
+            image.style.display = "block"
+            view.portraitFallback.style.display = "none"
+            image.onerror = { _: dynamic ->
+                showPortraitFallback(view)
+                null
+            }
+            image.src = participant.portrait
+        }
+    }
+
+    private fun showPortraitFallback(view: ScenarioBriefingView) {
+        view.portraitImage.style.display = "none"
+        view.portraitFallback.style.display = "grid"
+    }
+
+    /** Renders (but does not reveal) the choice buttons for the current line; hidden via CSS
+     *  until the controller marks the reveal complete. Empty [choices] renders no buttons at
+     *  all -- a line with no real branch gets no buttons, never a fake continue pair. */
+    fun setChoices(
+        view: ScenarioBriefingView,
         choices: List<BriefingChoice>,
-        canGoBack: Boolean,
-        hasNext: Boolean,
         onChoice: (String) -> Unit,
     ) {
-        view.progress.textContent = if (choices.isEmpty()) "CONVERSATION" else "YOUR DECISION"
-        clear(view.transcript)
-        turns.forEach { turn -> addTurn(view.transcript, turn) }
-        if (choices.isNotEmpty()) addChoiceTurn(view.transcript, player, choices, onChoice)
+        clear(view.choicesBox)
+        choices.forEachIndexed { index, choice ->
+            val choiceButton = element("button", "osada-dialogue__choice")
+            choiceButton.asDynamic().type = "button"
+            choiceButton.setAttribute("aria-label", "Response ${index + 1}: ${choice.text}")
+            val number = child(choiceButton, "span", "osada-dialogue__choice-number")
+            number.textContent = "${index + 1}"
+            child(choiceButton, "span", "osada-dialogue__choice-text").textContent = choice.text
+            choiceButton.addEventListener("click", { e ->
+                e.stopPropagation()
+                onChoice(choice.id)
+            })
+            view.choicesBox.appendChild(choiceButton)
+        }
+    }
 
-        view.backButton.asDynamic().disabled = !canGoBack
-        view.nextButton.style.display = if (choices.isEmpty()) "inline-flex" else "none"
-        view.nextButton.textContent = if (hasNext) "NEXT" else "VIEW BRIEFING"
-        js("setTimeout")({ view.transcript.scrollTop = view.transcript.scrollHeight.toDouble() }, 0)
+    /** Choices and the "press to continue" hint only ever show once the current line has
+     *  finished revealing -- never both, never while text is still typing. */
+    fun setRevealed(
+        view: ScenarioBriefingView,
+        revealed: Boolean,
+        hasChoices: Boolean,
+    ) {
+        view.choicesBox.style.display = if (revealed && hasChoices) "grid" else "none"
+        view.hint.style.display = if (revealed && !hasChoices) "block" else "none"
     }
 
     fun renderOrders(
@@ -166,13 +236,9 @@ internal object ScenarioBriefingBuilder {
         orders: BriefingOrders,
         facts: ScenarioFacts?,
     ) {
-        view.progress.textContent = "OPERATIONAL BRIEFING"
+        view.ordersEyebrow.textContent = facts?.sidesLabel?.uppercase()?.takeIf { it.isNotBlank() }
+            ?: "OPERATIONAL SUMMARY"
         clear(view.ordersContent)
-        if (facts != null) {
-            val meta = child(view.ordersContent, "div", "osada-briefing__meta")
-            child(meta, "span", "osada-briefing__meta-date").textContent = facts.dateLabel
-            child(meta, "span", "osada-briefing__meta-sides").textContent = facts.sidesLabel
-        }
         addTextSection(view.ordersContent, "SITUATION", orders.situation)
         addTextSection(view.ordersContent, "MISSION", orders.mission)
         addListSection(view.ordersContent, "PRIMARY OBJECTIVES", orders.primaryObjectives, primary = true)
@@ -196,131 +262,9 @@ internal object ScenarioBriefingBuilder {
     fun showStage(
         view: ScenarioBriefingView,
         stage: BriefingStage,
-        hasDialogue: Boolean,
     ) {
         val dialogue = stage == BriefingStage.DIALOGUE
-        view.dialogueStage.style.display = if (dialogue) "block" else "none"
+        view.dialogueStage.style.display = if (dialogue) "flex" else "none"
         view.ordersStage.style.display = if (dialogue) "none" else "grid"
-        view.dialogueControls.style.display = if (dialogue) "flex" else "none"
-        view.orderControls.style.display = if (dialogue) "none" else "flex"
-        view.reviewButton.style.display = if (hasDialogue) "inline-flex" else "none"
-    }
-
-    fun setBeginLabel(
-        view: ScenarioBriefingView,
-        label: String,
-    ) {
-        view.beginButton.textContent = label
-    }
-
-    private fun addTurn(
-        parent: HTMLElement,
-        turn: DialogueTurn,
-    ) {
-        val row =
-            child(parent, "article", "osada-conversation__turn osada-conversation__turn--${turn.participant.side}")
-        if (turn.isPlayerResponse) row.classList.add("osada-conversation__turn--player")
-        addPortrait(row, turn.participant)
-        val bubble = child(row, "div", "osada-conversation__bubble")
-        if (turn.participant.role.isNotBlank()) {
-            child(bubble, "div", "osada-conversation__role").textContent = turn.participant.role
-        }
-        child(bubble, "p", "osada-conversation__text").textContent = turn.text
-    }
-
-    private fun addChoiceTurn(
-        parent: HTMLElement,
-        player: BriefingParticipant,
-        choices: List<BriefingChoice>,
-        onChoice: (String) -> Unit,
-    ) {
-        val row =
-            child(
-                parent,
-                "article",
-                "osada-conversation__turn osada-conversation__turn--${player.side} osada-conversation__turn--choice",
-            )
-        addPortrait(row, player)
-        val bubble = child(row, "div", "osada-conversation__bubble osada-conversation__bubble--choices")
-        child(bubble, "div", "osada-conversation__role").textContent = "SELECT RESPONSE"
-        val list = child(bubble, "div", "osada-conversation__choices")
-        choices.forEachIndexed { index, choice ->
-            val button = element("button", "osada-conversation__choice")
-            button.asDynamic().type = "button"
-            button.setAttribute("aria-label", "Response ${index + 1}: ${choice.text}")
-            val number = child(button, "span", "osada-conversation__choice-number")
-            number.textContent = "${index + 1}."
-            child(button, "span", "osada-conversation__choice-text").textContent = choice.text
-            button.addEventListener("click", { onChoice(choice.id) })
-            list.appendChild(button)
-        }
-    }
-
-    // Generic head-and-shoulders silhouette, drawn with `currentColor` so its shade follows the
-    // `.osada-conversation__portrait-fallback` CSS rule (no downloaded asset, per spec).
-    private const val SILHOUETTE_SVG =
-        "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\">" +
-            "<circle cx=\"12\" cy=\"8\" r=\"4.5\" fill=\"currentColor\"/>" +
-            "<path d=\"M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7\" fill=\"currentColor\"/>" +
-            "</svg>"
-
-    private fun addPortrait(
-        parent: HTMLElement,
-        participant: BriefingParticipant,
-    ) {
-        val frame = child(parent, "div", "osada-conversation__portrait")
-        val image = document.createElement("img").asDynamic()
-        image.className = "osada-conversation__portrait-image"
-        image.alt = ""
-        frame.appendChild(image)
-        val fallback = child(frame, "div", "osada-conversation__portrait-fallback")
-        fallback.setAttribute("title", participant.speaker)
-        fallback.innerHTML = SILHOUETTE_SVG
-
-        if (participant.portrait.isNullOrBlank()) {
-            image.style.display = "none"
-            fallback.style.display = "grid"
-        } else {
-            image.style.display = "block"
-            fallback.style.display = "none"
-            image.onerror = { _: dynamic ->
-                image.style.display = "none"
-                fallback.style.display = "grid"
-                null
-            }
-            image.src = participant.portrait
-        }
-
-        val nameplate = child(frame, "div", "osada-conversation__nameplate")
-        nameplate.textContent = participant.speaker
-    }
-
-    private fun addTextSection(
-        parent: HTMLElement,
-        heading: String,
-        text: String,
-    ) {
-        if (text.isBlank()) return
-        val section = child(parent, "section", "osada-briefing__order-section")
-        child(section, "h2", "osada-briefing__order-heading").textContent = heading
-        child(section, "p", "osada-briefing__order-text").textContent = text
-    }
-
-    private fun addListSection(
-        parent: HTMLElement,
-        heading: String,
-        items: List<String>,
-        primary: Boolean,
-    ) {
-        if (items.isEmpty()) return
-        val section = child(parent, "section", "osada-briefing__order-section osada-briefing__order-section--wide")
-        child(section, "h2", "osada-briefing__order-heading").textContent = heading
-        val list = child(section, "ol", "osada-briefing__objectives")
-        items.forEachIndexed { index, item ->
-            val row = child(list, "li", "osada-briefing__objective")
-            val marker = child(row, "span", "osada-briefing__objective-marker")
-            marker.textContent = if (primary) "${index + 1}" else "•"
-            child(row, "span", "osada-briefing__objective-text").textContent = item
-        }
     }
 }

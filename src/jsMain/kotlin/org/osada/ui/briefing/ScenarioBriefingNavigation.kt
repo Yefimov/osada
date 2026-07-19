@@ -2,26 +2,27 @@ package org.osada.ui.briefing
 
 /** Dialogue-navigation half of [ScenarioBriefingController], split out to keep its
  *  function count in bounds. */
-internal fun ScenarioBriefingController.buildTurns(data: ScenarioBriefing): List<DialogueTurn> {
-    val turns = mutableListOf<DialogueTurn>()
-    path.forEach { step ->
-        val line = data.lineById(step.lineId) ?: return@forEach
-        turns += DialogueTurn(line.participant(), line.text)
-        step.selectedChoice?.let { selected ->
-            turns += DialogueTurn(data.player, selected.text, isPlayerResponse = true)
-        }
-    }
-    return turns
-}
-
 internal fun ScenarioBriefingController.currentLine(): BriefingLine? = briefing?.lineById(path.lastOrNull()?.lineId)
+
+/** Entry point for every "advance" input (click/Enter/Space/ArrowRight): the FIRST such input
+ *  while a line is still typing completes it instantly; only once fully revealed does a
+ *  SECOND input move to the next line. Never advances past an unanswered choice. */
+internal fun ScenarioBriefingController.advanceOrComplete() {
+    if (stage != BriefingStage.DIALOGUE) return
+    val lineEl = view?.lineText
+    if (lineEl != null && BriefingTypewriter.isRevealing()) {
+        BriefingTypewriter.complete(lineEl)
+    } else {
+        nextLine()
+    }
+}
 
 internal fun ScenarioBriefingController.nextLine() {
     val current = currentLine() ?: return showOrders()
     if (current.choices.isNotEmpty() && path.lastOrNull()?.selectedChoice == null) {
         view
             ?.root
-            ?.querySelector(".osada-conversation__choice")
+            ?.querySelector(".osada-dialogue__choice")
             ?.asDynamic()
             ?.focus()
         return
@@ -63,27 +64,8 @@ internal fun ScenarioBriefingController.advanceTo(next: BriefingLine?) {
     focusPrimaryControl()
 }
 
-internal fun ScenarioBriefingController.previousLine() {
-    if (stage != BriefingStage.DIALOGUE || path.size <= 1) return
-    path.removeAt(path.lastIndex)
-    path.lastOrNull()?.let { previous ->
-        if (previous.selectedChoice != null) previous.selectedChoice = null
-    }
-    renderCurrentStage()
-    focusPrimaryControl()
-}
-
 internal fun ScenarioBriefingController.showOrders() {
     stage = BriefingStage.ORDERS
     renderCurrentStage()
     view?.beginButton?.focus()
-}
-
-internal fun ScenarioBriefingController.reviewDialogue() {
-    val first = briefing?.dialogue?.firstOrNull() ?: return
-    path.clear()
-    path += ScenarioBriefingController.DialogueStep(first.id)
-    stage = BriefingStage.DIALOGUE
-    renderCurrentStage()
-    focusPrimaryControl()
 }
