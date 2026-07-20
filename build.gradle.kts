@@ -142,6 +142,17 @@ tasks.register<Exec>("verifyStaticChecks") {
 }
 
 /*
+ * Валидация диалогов кампаний: граф диалога, условия, эффекты и цели сценария.
+ */
+tasks.register<Exec>("verifyCampaignDialogue") {
+    group = "verification"
+    description = "Validates campaign dialogue graphs, conditions, effects and scenario actions"
+
+    workingDir = rootDir
+    commandLine("python", "scripts/check_campaign_dialogue.py")
+}
+
+/*
  * Подготовка зависимостей production smoke test.
  */
 tasks.register<Exec>("verifyProductionSmokeTestNpmInstall") {
@@ -193,6 +204,7 @@ tasks.register<Exec>("verifyProductionSmokeTest") {
 tasks.named("check") {
     dependsOn(
         "verifyStaticChecks",
+        "verifyCampaignDialogue",
         "detekt",
         "ktlintCheck",
     )

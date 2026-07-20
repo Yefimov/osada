@@ -41,7 +41,7 @@ internal object ScenarioBriefingController {
         rawData: dynamic,
         onFinished: () -> Unit,
     ) {
-        val parsed = BriefingParser.parse(scenarioFacts.title, rawData)
+        val parsed = CampaignDialogueFilter.apply(BriefingParser.parse(scenarioFacts.title, rawData))
         lastBriefing = parsed
         lastFacts = scenarioFacts
         showParsed(parsed, scenarioFacts, "BEGIN OPERATION", onFinished)
@@ -53,7 +53,7 @@ internal object ScenarioBriefingController {
         scenarioFacts: ScenarioFacts,
         rawData: dynamic,
     ) {
-        lastBriefing = BriefingParser.parse(scenarioFacts.title, rawData)
+        lastBriefing = CampaignDialogueFilter.apply(BriefingParser.parse(scenarioFacts.title, rawData))
         lastFacts = scenarioFacts
     }
 

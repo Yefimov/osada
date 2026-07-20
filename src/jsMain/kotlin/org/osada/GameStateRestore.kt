@@ -1,5 +1,6 @@
 package org.osada
 
+import org.osada.campaign.CampaignNarrative
 import org.osada.model.Equipment
 import org.osada.model.GameMap
 import org.osada.model.Hex
@@ -147,6 +148,9 @@ class GameStateRestore(
         val data = campaignData
         val campaignId = data.id as Int
         val file = data.file as String
+        // Old saves have no `narrative` key: deserialize(null) yields empty state, so a
+        // pre-narrative save loads with no callbacks rather than failing.
+        CampaignNarrative.restore(data.narrative)
         val campaignIndex = Campaign.findCampaignByFile(file)
         game.campaign =
             Campaign(if (campaignIndex >= 0) campaignIndex else campaignId, data.difficulty as Int) {

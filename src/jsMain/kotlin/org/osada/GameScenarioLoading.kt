@@ -31,6 +31,9 @@ internal fun Game.handleCampaignScenarioLoaded() {
     if (removeNonCampaignUnitsFlag) {
         scenario!!.map.removeNonCampaignUnits(campaignPlayer!!)
     }
+    // Consume next-scenario effects queued by the previous transition, after the core roster
+    // exists and before the player receives control.
+    applyPendingCampaignEffects()
     if (awardPrototype) {
         val prototype = scenario!!.getRandomPrototype(campaignPlayer!!.country + 1)
         if (prototype > 0) {

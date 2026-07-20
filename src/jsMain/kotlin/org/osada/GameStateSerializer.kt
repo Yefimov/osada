@@ -1,5 +1,6 @@
 package org.osada
 
+import org.osada.campaign.CampaignNarrative
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
 import org.osada.model.Hex
@@ -183,14 +184,20 @@ object GameStateSerializer {
     fun buildCampaignData(game: Game): dynamic? {
         val campaign = game.campaign ?: return null
         return game.getCampaignPlayer()?.let { player ->
-            json(
-                Pair("id", campaign.id),
-                Pair("file", campaign.file),
-                Pair("scenario", campaign.getCurrentScenario().id),
-                Pair("country", campaign.country),
-                Pair("difficulty", campaign.difficulty),
-                Pair("coreUnits", player.getCoreUnitList().map { serializeCoreUnit(it) }.toTypedArray()),
-            )
+            val data =
+                json(
+                    Pair("id", campaign.id),
+                    Pair("file", campaign.file),
+                    Pair("scenario", campaign.getCurrentScenario().id),
+                    Pair("country", campaign.country),
+                    Pair("difficulty", campaign.difficulty),
+                    Pair("coreUnits", player.getCoreUnitList().map { serializeCoreUnit(it) }.toTypedArray()),
+                )
+            // Additive and optional: omitted entirely when the run has no narrative state yet, so
+            // saves keep their previous shape until the campaign actually records something.
+            val narrative: dynamic = CampaignNarrative.snapshot()
+            if (narrative != null) data["narrative"] = narrative
+            data
         }
     }
 

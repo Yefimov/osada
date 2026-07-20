@@ -22,7 +22,10 @@ class Campaign(
     var isLoaded: Boolean = false
 
     private var scenarios: Array<dynamic> = emptyArray()
-    private var currentScenarioIndex: Int = 0
+
+    /** Index of the scenario currently being played. Read by campaign-narrative extensions. */
+    var currentScenarioIndex: Int = 0
+        private set
 
     init {
         if (campaignData != null) {

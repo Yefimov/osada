@@ -49,6 +49,10 @@ fun Game.continueCampaign(
 ) {
     console.log("[OSADA] continueCampaign", outcome)
     val player = campaignPlayer ?: return
+    // The scenario is definitively over at this single funnel, so this is the one correct place
+    // to record the REAL outcome. recordScenarioCompletion is idempotent per scenario: the
+    // move-capture and end-turn completion paths can both reach here for the same battle.
+    recordCampaignOutcome(outcome)
     player.prestige += campaign!!.getOutcomePrestige(outcome)
     player.addOutcomeToDossier(outcome, scenario!!.name)
     OSGlue.reportScore(player.score)

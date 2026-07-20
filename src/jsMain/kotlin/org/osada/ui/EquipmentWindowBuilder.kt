@@ -53,7 +53,6 @@ internal object EquipmentWindowBuilder {
     internal const val FLAG_SPRITE_WIDTH = 21
     private const val NARROW_PRESTIGE_LABEL_WIDTH_THRESHOLD = 800
 
-
     fun setDefaultUserSelections() {
         val eqSelCountry = byId("eqSelCountry")
         eqSelCountry?.asDynamic()?.country = defaultCountryIndex()

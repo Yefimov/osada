@@ -139,5 +139,4 @@ fun GameMap.ownsSupplyHex(side: Int): Boolean {
  * buying), Forward0 (15 deploy → buying), N_Kiel (0 deploy, 3 ports owned by the enemy → no buying
  * until a port is captured). Scripted reinforcements are unaffected — they bypass this entirely.
  */
-fun GameMap.hasPurchaseAnchor(side: Int): Boolean =
-    getDeployHexes(side).isNotEmpty() || ownsSupplyHex(side)
+fun GameMap.hasPurchaseAnchor(side: Int): Boolean = getDeployHexes(side).isNotEmpty() || ownsSupplyHex(side)
