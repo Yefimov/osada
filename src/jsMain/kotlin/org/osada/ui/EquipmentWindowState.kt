@@ -8,9 +8,9 @@ import org.osada.model.GameMap
 import org.osada.model.GameUnit
 import org.osada.model.Player
 import org.osada.model.getCountriesEquipmentAll
-import org.osada.model.getCountriesEquipmentByClass
+import org.osada.model.getCountriesEquipmentByClasses
 import org.osada.model.getCountryEquipmentAll
-import org.osada.model.getCountryEquipmentByClass
+import org.osada.model.getCountryEquipmentByClasses
 import org.osada.model.getCountryName
 import org.osada.model.getUnits
 import org.osada.model.hasOpenWaterAccess
@@ -110,24 +110,27 @@ internal object EquipmentWindowState {
                 Equipment.getCountryEquipmentAll(countryId, sortProperty, descending)
             }
         } else {
-            val eqClassEnum = UnitClass.entries.find { it.value == selectedClass } ?: UnitClass.TANK
+            // A tab lists its own class plus any merged into it (UIBuilder.eqClassTabGroups) — so
+            // Infantry also shows Fortification, Air defence also shows Flak, etc. Without this,
+            // 13 of the 21 classes had no tab and were reachable only through the hidden "All".
+            val eqClasses = UIBuilder.classesForTab(selectedClass)
             if (allCountries) {
-                Equipment.getCountriesEquipmentByClass(eqClassEnum, countryIds, sortProperty, descending)
+                Equipment.getCountriesEquipmentByClasses(eqClasses, countryIds, sortProperty, descending)
             } else {
-                Equipment.getCountryEquipmentByClass(eqClassEnum, countryId, sortProperty, descending)
+                Equipment.getCountryEquipmentByClasses(eqClasses, countryId, sortProperty, descending)
             }
         }
 
-    /** FLAK and AIR_DEFENCE share one equipment tab; collapse them so strip filtering matches
-     *  the tab the player actually clicked. */
+    /** The tab that owns [uclass]: itself if it has its own tab, otherwise the tab it was merged
+     *  into (`UIBuilder.eqClassTabGroups` — Fortification -> Infantry, Flak -> Air defence, ...).
+     *  Collapsing here keeps strip filtering and tab highlighting matched to the tab the player
+     *  actually clicked. Was FLAK -> AIR_DEFENCE only, before the other 12 classes got a home. */
     fun normalizeUnitClass(uclass: Int): Int =
-        if (uclass ==
-            UnitClass.FLAK.value
-        ) {
-            UnitClass.AIR_DEFENCE.value
-        } else {
-            uclass
-        }
+        UIBuilder.eqClassTabGroups.entries
+            .firstOrNull { (_, merged) -> merged.any { it.value == uclass } }
+            ?.key
+            ?.toIntOrNull()
+            ?: uclass
 
     /** Whether [eq] could never actually be deployed anywhere on [map] — a train with nowhere to
      *  run rail on, or a pure-naval ship on a land-locked map — and should therefore be hidden

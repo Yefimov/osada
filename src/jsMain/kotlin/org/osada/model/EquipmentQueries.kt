@@ -75,6 +75,34 @@ fun Equipment.getCountriesEquipmentByClass(
     return sortEquipmentIds(applyAvailabilityFilter(all), sortProperty, descending)
 }
 
+/** Union of SEVERAL classes for one country — an equipment tab that covers more than its own class
+ *  (`UIBuilder.eqClassTabGroups`, e.g. Infantry also listing Fortification). */
+fun Equipment.getCountryEquipmentByClasses(
+    unitClasses: List<org.osada.UnitClass>,
+    country: Int,
+    sortProperty: String? = null,
+    descending: Boolean = false,
+): List<Int> {
+    val all = mutableListOf<Int>()
+    unitClasses.forEach { all.addAll(classIndexList(country, it.value.toString())) }
+    return sortEquipmentIds(applyAvailabilityFilter(all), sortProperty, descending)
+}
+
+/** Union of SEVERAL classes across MULTIPLE countries — [getCountryEquipmentByClasses] combined
+ *  with the "All countries" option. */
+fun Equipment.getCountriesEquipmentByClasses(
+    unitClasses: List<org.osada.UnitClass>,
+    countries: List<Int>,
+    sortProperty: String? = null,
+    descending: Boolean = false,
+): List<Int> {
+    val all = mutableListOf<Int>()
+    countries.forEach { country ->
+        unitClasses.forEach { all.addAll(classIndexList(country, it.value.toString())) }
+    }
+    return sortEquipmentIds(applyAvailabilityFilter(all), sortProperty, descending)
+}
+
 /** Union across MULTIPLE countries of every purchasable class — the "All countries" + "All
  *  classes" combination. */
 fun Equipment.getCountriesEquipmentAll(

@@ -10,6 +10,7 @@ import org.osada.rules.GameRules
 import org.osada.rules.calculateUnitCosts
 import org.osada.rules.calculateUnitSellCost
 import org.osada.rules.calculateUpgradeCosts
+import org.osada.rules.isPurchasableClass
 
 /**
  * [EquipmentWindowController]'s buy/upgrade/sell cost badge computation. Split out purely to
@@ -42,7 +43,7 @@ internal class EquipmentCostsCalculator(
             }
 
         val (upgradeCost, sellCost) = resolveUpgradeAndSellCost(selectedUnit, eqUnitId, eqTransportId)
-        val buyCost = resolveBuyCost(selectedUnit, eqUnitId, eqTransportId, year, month)
+        val buyCost = resolveBuyCost(eqUnitId, eqTransportId, year, month)
         UIBuilder.showEquipmentCosts(
             currentPlayer.prestige,
             buyCost,
@@ -115,7 +116,6 @@ internal class EquipmentCostsCalculator(
     }
 
     private fun resolveBuyCost(
-        selectedUnit: GameUnit?,
         eqUnitId: Int,
         eqTransportId: Int,
         year: Int,
@@ -125,8 +125,9 @@ internal class EquipmentCostsCalculator(
         val newEq = Equipment.getEquipment(eqUnitId)
         val newCountry = (newEq?.country ?: 0) - 1
         return when {
-            selectedUnit != null &&
-                !UIBuilder.eqClassButtons.containsKey(selectedUnit.unitData(true).uclass.toString()) -> -1
+            // Gate on the class being BOUGHT, not on whatever unit happens to be selected --
+            // see GameRules.isPurchasableClass for why PM's selection-based test was dropped.
+            newEq != null && !GameRules.isPurchasableClass(newEq.uclass) -> -1
             newEq != null && !newEq.isAvailableIn(year, month) -> -1
             ui.game.campaign != null && ui.game.campaign!!.country != newCountry -> -1
             // Nowhere to place a purchase -> OG offers none at all; resolveBuyBlockedReason says why.

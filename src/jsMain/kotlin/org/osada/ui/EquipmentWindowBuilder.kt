@@ -108,7 +108,15 @@ internal object EquipmentWindowBuilder {
         UIBuilder.eqClassButtons.forEach { (eqClass, data) ->
             val div = addTag("eqSelClass", "div")
             div.className = "smallButtonSubMenu"
-            div.title = data.second
+            // Name the classes merged into this tab (UIBuilder.eqClassTabGroups) so the player can
+            // see that e.g. fortifications live under Infantry, and advertise the otherwise
+            // invisible "All" re-click gesture. A visible "All" tab was tried and rejected for
+            // crowding the other 8 (see onClassTabClick), so both cues go in the tooltip.
+            val merged =
+                UIBuilder.eqClassTabGroups[eqClass]
+                    ?.joinToString(", ") { unitClassNames[it.value] }
+            val mergedNote = if (merged.isNullOrEmpty()) "" else " (incl. $merged)"
+            div.title = "${data.second}$mergedNote — click again to show all classes"
             div.id = "eqclass-$eqClass"
             div.asDynamic().eqclass = eqClass
             // Glyph + text label (a bare osada glyph is unreadable as a class tab).
