@@ -1,6 +1,7 @@
 package org.osada.ui
 
 import org.osada.GameHolder
+import org.osada.getCampaignPlayer
 import org.osada.model.GameUnit
 import org.osada.outcomeNames
 import org.osada.scenario.Campaign
@@ -76,16 +77,20 @@ internal object DossierBuilder {
         docked: Boolean,
         callback: (() -> Unit)? = null,
     ): Boolean {
-        val game = gameRef()
-        // Read campaign fields through the typed Game (not the dynamic `game`): Kotlin/JS mangles
-        // property backing fields (name -> name_1), so `game.campaign.name` via `dynamic` is undefined.
-        val campaign = GameHolder.instance?.campaign
+        // Everything here goes through the typed Game, never the dynamic `game`: Kotlin/JS mangles
+        // property backing fields (name -> name_1), so `game.campaign.name` via `dynamic` is
+        // undefined — AND `getCampaignPlayer` is an EXTENSION function (GameEndgame.kt), which
+        // compiles to a top-level function rather than a method on the Game object, so calling it
+        // dynamically threw "game.getCampaignPlayer is not a function" and crashed the campaign-end
+        // screen on every defeat.
+        val typedGame = GameHolder.instance
+        val campaign = typedGame?.campaign
         val dossier = byId("dossier")
-        if (game?.campaign == null || dossier == null) return false
+        if (campaign == null || dossier == null) return false
         clearTag(dossier)
         dossier.className = "dossier osada-dsr"
         dossier.style.display = "flex"
-        val player = game.getCampaignPlayer()
+        val player = typedGame.getCampaignPlayer()
         return if (player == null) {
             false
         } else {
