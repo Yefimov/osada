@@ -174,10 +174,10 @@ internal object CombatLogGroups {
         val detail: String
         if (isFriendly) {
             title = "Captured <b>${hex.name}</b>"
-            detail =
-                "Prestige +${CombatLogFeed.numSpan(
-                    prestigeGains["objectiveCapture"] ?: 0,
-                )}&nbsp;${UIBuilder.currencyIcon}"
+            // The amount actually awarded (recorded by addObjectiveCapture), falling back to the
+            // constant only for entries logged before it carried the real figure.
+            val awarded = entry.prestige as? Int ?: prestigeGains["objectiveCapture"] ?: 0
+            detail = "Prestige +${CombatLogFeed.numSpan(awarded)}&nbsp;${UIBuilder.currencyIcon}"
         } else {
             title = "Lost <b>${hex.name}</b>"
             detail = ""

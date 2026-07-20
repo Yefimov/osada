@@ -25,6 +25,9 @@ internal object ScenarioReinforcementParser {
         scenario: Scenario,
     ) {
         val turn = el.getAttribute("turn")?.toIntOrNull() ?: return
+        // Optional authored announcement for this wave, shown as a message box when it lands
+        // (OG pops a box; PM only had the fog-gated "Reinforced!" floater). Absent = no box.
+        el.getAttribute("message")?.takeIf { it.isNotBlank() }?.let { scenario.reinforcementMessages[turn] = it }
         for (j in 0 until el.childNodes.length) {
             val atNode = el.childNodes.item(j) as? Element
             if (atNode == null || atNode.nodeName != "at") continue

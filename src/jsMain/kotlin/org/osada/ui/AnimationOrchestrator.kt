@@ -290,7 +290,10 @@ internal class AnimationOrchestrator(
             // Coordinates only as a last-resort label when the hex has no name (nothing else
             // would identify it) — clickable either way, same as the combat log lines.
             val place = if (!hexName.isNullOrEmpty()) hexName else "(${pos.col},${pos.row})"
-            HudLog.addAt(pos.row, pos.col, "${unit.unitData(true).name} captured $place")
+            // OG reports the reward on capture ("You gain 40 prestige"); the amount was computed
+            // in applyHexCapture but never surfaced, so a capture read as worth nothing.
+            val reward = if (result.capturePrestige > 0) " (+${result.capturePrestige} prestige)" else ""
+            HudLog.addAt(pos.row, pos.col, "${unit.unitData(true).name} captured $place$reward")
         }
         if (result.isVictorySide >= 0) {
             ui.game.handleMoveVictory(result.isVictorySide)
