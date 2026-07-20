@@ -51,6 +51,12 @@ class UI(
     internal val strategicZoomController = StrategicZoomController(this)
     private val mapInputController = MapInputController(this)
 
+    // The campaign ceremony now opens BEFORE the map's images are cached, so the player can
+    // finish reading before the map is drawable. These two carry that race: BEGIN is honoured
+    // immediately once the map is ready, and parked until then if it is not.
+    private var mapReady = false
+    private var pendingBriefingFinish: (() -> Unit)? = null
+
     init {
         UIBuilder.buildStartMenu()
         UIBuilder.buildMainMenu()
@@ -124,6 +130,16 @@ class UI(
         // Operational sidebar is a flex column; makeVisible would set display:inline.
         byId("osada-sidebar")?.style?.display = "flex"
         statusBarController.updateStatusBar()
+        mapReady = false
+        pendingBriefingFinish = null
+        // The campaign conversation opens BEFORE cacheImages rather than in its callback. The
+        // briefing is a full-screen overlay with its own backdrop, so raising it first means the
+        // player goes start menu -> conversation without the bare, half-drawn map flashing
+        // between them, and the unit/terrain images finish loading underneath while they read.
+        // Standalone scenarios keep the legacy timing: their small popup still waits for the map,
+        // because it is a message ABOUT a map the player is looking at.
+        val campaignCeremony = showBriefing && game.campaign != null
+        if (campaignCeremony) openScenarioCeremony(rawBriefing)
         console.log("[OSADA] UI.setNewScenario starting image cache")
         render.cacheImages {
             console.log("[OSADA] UI.setNewScenario cacheImages callback")
@@ -139,13 +155,29 @@ class UI(
             mainMenuButtonHandler.checkUndeployedUnits()
             WeatherRenderer.start(game.scenario?.atmosferic ?: 0)
             WeatherModel.init(game.scenario)
+            mapReady = true
             if (!showBriefing) {
                 UIBuilder.clearScenarioBriefing()
                 game.uiMessageClicked = true
-            } else {
+            } else if (!campaignCeremony) {
                 openScenarioCeremony(rawBriefing)
             }
+            // A player who finished the ceremony faster than the images loaded is released here.
+            pendingBriefingFinish?.let {
+                pendingBriefingFinish = null
+                it()
+            }
         }
+    }
+
+    /** Hands control to the battle once BOTH the opening ceremony is done and the map is
+     *  drawable. Whichever finishes second calls the other's completion. */
+    private fun releaseToBattle() {
+        val start = {
+            game.uiMessageClicked = true
+            game.processTurn()
+        }
+        if (mapReady) start() else pendingBriefingFinish = start
     }
 
     /** Campaign scenarios always get the briefing ritual (dialogue if authored, briefing
@@ -154,10 +186,7 @@ class UI(
     private fun openScenarioCeremony(rawBriefing: dynamic) {
         val title = game.scenario?.name ?: ""
         val intro = game.scenario?.getDescription() ?: ""
-        val finishOpening = {
-            game.uiMessageClicked = true
-            game.processTurn()
-        }
+        val finishOpening = { releaseToBattle() }
         val campaign = game.campaign
         if (campaign == null) {
             // Standalone scenarios are byte-identical to legacy behavior: no dialogue,

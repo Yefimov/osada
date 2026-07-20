@@ -1,0 +1,1303 @@
+[
+  {
+    "id": 0,
+    "scenario": "n_kiel.xml",
+    "startprestige": 0,
+    "intro": "Free the detained sailors, secure Kiel's naval and transport installations, and prevent loyalist forces from crushing the uprising.",
+    "outcome": {
+      "briliant": {
+        "goto": 1,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 200,
+        "text": "The revolution has begun. A wildfire can develop. Help the comrades with it ..."
+      },
+      "victory": {
+        "goto": 1,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 150,
+        "text": "The revolution has begun. A wildfire can develop. Help the comrades with it ..."
+      },
+      "tactical": {
+        "goto": 1,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "The revolution has begun. A wildfire can develop. Help the comrades with it ..."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 150,
+        "text": "The revolution is over ... Many comrades have fallen. You are captured ... It is not difficult to guess that you expect death ..."
+      }
+    },
+    "briefing": {
+      "act": "ACT I — THE FLEET REFUSES",
+      "location": "Kiel, 1–4 November 1918",
+      "player": {
+        "speaker": "Sailors' Council Delegate",
+        "role": "Revolutionary Action Committee",
+        "side": "left"
+      },
+      "dialogue": [
+        {
+          "id": "artelt-cold-open",
+          "speaker": "Karl Artelt",
+          "role": "Sailor, First Torpedo Division",
+          "side": "left",
+          "text": "Look at the seal on this order. Berlin is already asking the Allies for an armistice, yet the admirals want the High Seas Fleet sent against the British one last time. They call it honour. The stokers below decks call it choosing the place of their own grave.",
+          "next": "artelt-opening",
+          "portrait": "resources/campaigns/portraits/karl-artelt.png"
+        },
+        {
+          "id": "artelt-opening",
+          "speaker": "Karl Artelt",
+          "role": "Sailor, First Torpedo Division",
+          "side": "left",
+          "text": "On Thüringen and Helgoland the crews refused to sail. On Markgraf the officers arrested forty-seven of our comrades and brought them to Kiel in irons. Last night two hundred and fifty sailors packed the union hall. We asked for the prisoners' release. The naval command would not even receive our delegation.",
+          "next": "popp-socialists",
+          "portrait": "resources/campaigns/portraits/karl-artelt.png"
+        },
+        {
+          "id": "popp-socialists",
+          "speaker": "Lothar Popp",
+          "role": "USPD Organiser and Shipyard Worker",
+          "side": "right",
+          "text": "Then stop speaking as isolated crews. The USPD, the unions and the shipyard men will open their halls, carry messages and bring workers into the streets. But they need the sailors to prove that the fleet can refuse its officers and remain united.",
+          "next": "popp-coordination",
+          "portrait": "resources/campaigns/portraits/lothar-popp.png"
+        },
+        {
+          "id": "popp-coordination",
+          "speaker": "Lothar Popp",
+          "role": "USPD Organiser and Shipyard Worker",
+          "side": "right",
+          "text": "The governor is closing meeting halls, patrols are loading live ammunition, and the officers intend to separate the ships from the yards before dawn. We have one night to turn refusal into an organised movement. Where does the first column go?",
+          "choices": [
+            {
+              "id": "free-prisoners-first",
+              "text": "March on the detention compound first. Freeing the prisoners will prove that the movement protects its own.",
+              "next": "garbe-prisoners",
+              "effects": [
+                {
+                  "id": "n_kiel.choice.prisoners.flag",
+                  "type": "setFlag",
+                  "flag": "sailors_liberated"
+                },
+                {
+                  "id": "n_kiel.choice.prisoners.clear",
+                  "type": "clearFlag",
+                  "flag": "communications_secured"
+                },
+                {
+                  "id": "n_kiel.choice.prisoners.unit",
+                  "type": "grantUnit",
+                  "eqid": 39130,
+                  "experience": 60,
+                  "strength": 10
+                },
+                {
+                  "id": "n_kiel.choice.prisoners.prestige",
+                  "type": "prestige",
+                  "amount": 50
+                }
+              ],
+              "hint": "Gain a veteran sailor detachment and public confidence, but leave the telegraph and arsenals unsecured for now."
+            },
+            {
+              "id": "secure-communications-first",
+              "text": "Secure the railway station, telegraph and armouries first. The revolt must not be isolated before it can spread.",
+              "next": "garbe-communications",
+              "effects": [
+                {
+                  "id": "n_kiel.choice.comms.flag",
+                  "type": "setFlag",
+                  "flag": "communications_secured"
+                },
+                {
+                  "id": "n_kiel.choice.comms.clear",
+                  "type": "clearFlag",
+                  "flag": "sailors_liberated"
+                },
+                {
+                  "id": "n_kiel.choice.comms.prestige",
+                  "type": "prestige",
+                  "amount": 200
+                },
+                {
+                  "id": "n_kiel.choice.comms.experience",
+                  "type": "experience",
+                  "amount": 25
+                }
+              ],
+              "hint": "Gain resources and better-coordinated forces, but the imprisoned sailors will not join you as a veteran detachment."
+            }
+          ],
+          "portrait": "resources/campaigns/portraits/lothar-popp.png"
+        },
+        {
+          "id": "garbe-prisoners",
+          "speaker": "Gustav Garbe",
+          "role": "Trade-Union Leader and Workers' Representative",
+          "side": "right",
+          "text": "The shipyard workers will cover the march. Once the prisoners are out, send trusted men to the station before reinforcements from outside Kiel arrive.",
+          "next": "souchon-warning",
+          "portrait": "resources/campaigns/portraits/gustav-garbe.png"
+        },
+        {
+          "id": "garbe-communications",
+          "speaker": "Gustav Garbe",
+          "role": "Trade-Union Leader and Workers' Representative",
+          "side": "right",
+          "text": "Good. Control of the station and telegraph will buy us time, but the imprisoned sailors cannot be left behind. Their release must follow immediately.",
+          "next": "souchon-warning",
+          "portrait": "resources/campaigns/portraits/gustav-garbe.png"
+        },
+        {
+          "id": "souchon-warning",
+          "speaker": "Governor Souchon's Headquarters",
+          "role": "Intercepted Loyalist Order",
+          "side": "right",
+          "text": "Order from the Governor's headquarters: all unauthorised assemblies are to disperse. Naval patrols will secure the detention compound, railway station, telegraph office and military depots. Ringleaders are to be arrested before the morning watch.",
+          "next": "artelt-final",
+          "portrait": "resources/campaigns/portraits/governor-souchon-s-headquarters.png"
+        },
+        {
+          "id": "artelt-final",
+          "speaker": "Karl Artelt",
+          "role": "Sailor, First Torpedo Division",
+          "side": "left",
+          "text": "Then the morning watch will find something the admirals never planned for: sailors, soldiers and workers acting together. Disarm those who resist, accept those who join us, and keep the ships in harbour. No one is sailing out to die for an empire that has already lost its war.",
+          "portrait": "resources/campaigns/portraits/karl-artelt.png"
+        }
+      ],
+      "orders": {
+        "situation": "Sailors who resisted the fleet's final battle order have been arrested. Workers are joining the protest, while the naval governor is attempting to seal meeting places and deploy loyalist patrols.",
+        "mission": "Turn the protest into an organised seizure of power in Kiel before outside troops can restore imperial control.",
+        "primaryObjectives": [
+          "Free the detained sailors",
+          "Secure the principal naval installations and armouries",
+          "Control Kiel's railway and communications centres",
+          "Defeat or disarm the loyalist suppression force"
+        ],
+        "secondaryObjectives": [
+          "Preserve the core sailor and worker formations",
+          "Bring isolated military detachments over to the revolution where possible"
+        ],
+        "enemyIntelligence": "The Steinhäuser patrol and other loyalist detachments are expected to move against the uprising. Some units may surrender or change sides once the revolutionary forces demonstrate control.",
+        "availableSupport": "Shipyard workers, USPD organisers and sympathetic sailors are mobilising across the city.",
+        "notes": "Speed and control of communications matter more than destroying every loyalist formation. Avoid unnecessary fighting in civilian districts."
+      }
+    },
+    "actions": [
+      {
+        "id": "naval_base_held",
+        "type": "hexesHeld",
+        "hexes": [
+          {
+            "row": 9,
+            "col": 35
+          },
+          {
+            "row": 11,
+            "col": 34
+          }
+        ]
+      },
+      {
+        "id": "town_hall_held",
+        "type": "hexesHeld",
+        "hexes": [
+          {
+            "row": 21,
+            "col": 28
+          }
+        ]
+      },
+      {
+        "id": "barracks_held",
+        "type": "hexesHeld",
+        "hexes": [
+          {
+            "row": 16,
+            "col": 31
+          },
+          {
+            "row": 17,
+            "col": 34
+          }
+        ]
+      },
+      {
+        "id": "core_intact",
+        "type": "coreLossesAtMost",
+        "maxLosses": 0
+      },
+      {
+        "id": "core_losses_light",
+        "type": "coreLossesAtMost",
+        "maxLosses": 2
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "scenario": "n_willhelmsh.xml",
+    "startprestige": 0,
+    "intro": "Secure Wilhelmshaven and extend the Council of 21's authority toward Aurich, Emden and Oldenburg; neutralise the remaining loyalist garrisons.",
+    "outcome": {
+      "briliant": {
+        "goto": 2,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 200,
+        "text": "Well done! The revolution continues. A wildfire is developed. Keep it up!"
+      },
+      "victory": {
+        "goto": 2,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 150,
+        "text": "Well done! The revolution continues. A wildfire is developed. Keep it up!"
+      },
+      "tactical": {
+        "goto": 2,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "Well done! The revolution continues. A wildfire is developed. Keep it up!"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": ""
+      }
+    },
+    "briefing": {
+      "act": "ACT II — THE COUNCILS TAKE POWER",
+      "location": "Wilhelmshaven and Oldenburg, 6–11 November 1918",
+      "player": {
+        "speaker": "Council of 21 Representative",
+        "role": "Revolutionary Field Command",
+        "side": "left"
+      },
+      "dialogue": [
+        {
+          "id": "reaction-briliant",
+          "speaker": "Bernhard Kuhnt",
+          "role": "Chairman of the Council of 21",
+          "side": "left",
+          "portrait": "resources/campaigns/portraits/bernhard-kuhnt.png",
+          "text": "Kiel went further than anyone dared hope. Word of the fleet's refusal reached the yards here before our own couriers did, and the garrison has been arguing with itself ever since.",
+          "conditions": {
+            "previousOutcome": [
+              "briliant"
+            ]
+          },
+          "next": "callback-naval-base"
+        },
+        {
+          "id": "reaction-tactical",
+          "speaker": "Bernhard Kuhnt",
+          "role": "Chairman of the Council of 21",
+          "side": "left",
+          "portrait": "resources/campaigns/portraits/bernhard-kuhnt.png",
+          "text": "Kiel was won slowly, and the yards are counting the cost. The officers here have had time to read the same telegrams we did, and to prepare for us.",
+          "conditions": {
+            "previousOutcome": [
+              "tactical"
+            ]
+          },
+          "next": "callback-naval-base"
+        },
+        {
+          "id": "reaction-victory",
+          "speaker": "Bernhard Kuhnt",
+          "role": "Chairman of the Council of 21",
+          "side": "left",
+          "portrait": "resources/campaigns/portraits/bernhard-kuhnt.png",
+          "text": "Kiel holds. That is enough to make Wilhelmshaven listen - though the officers here have not lost their nerve, and they still command the harbour batteries.",
+          "conditions": {
+            "previousOutcome": [
+              "victory"
+            ]
+          },
+          "next": "callback-naval-base"
+        },
+        {
+          "id": "callback-naval-base",
+          "speaker": "Bernhard Kuhnt",
+          "role": "Chairman of the Council of 21",
+          "side": "left",
+          "portrait": "resources/campaigns/portraits/bernhard-kuhnt.png",
+          "text": "The Kiel naval base stayed in our hands to the end, and the crews there have been sending us everything they can spare. Half the rifles in this room came north on their wagons.",
+          "conditions": {
+            "completedActions": [
+              "n_kiel.xml.naval_base_held"
+            ]
+          },
+          "next": "callback-naval-base-lost"
+        },
+        {
+          "id": "callback-naval-base-lost",
+          "speaker": "Bernhard Kuhnt",
+          "role": "Chairman of the Council of 21",
+          "side": "left",
+          "portrait": "resources/campaigns/portraits/bernhard-kuhnt.png",
+          "text": "Kiel's naval base slipped back to the officers before the fighting stopped. Whatever was in those magazines is being used against us now.",
+          "conditions": {
+            "failedActions": [
+              "n_kiel.xml.naval_base_held"
+            ]
+          },
+          "next": "callback-sailors"
+        },
+        {
+          "id": "callback-sailors",
+          "speaker": "Bernhard Kuhnt",
+          "role": "Chairman of the Council of 21",
+          "side": "left",
+          "portrait": "resources/campaigns/portraits/bernhard-kuhnt.png",
+          "text": "The men we took out of the detention compound have not gone home. They are here, they have brought others, and they are asking where the fighting is.",
+          "conditions": {
+            "allFlags": [
+              "sailors_liberated"
+            ]
+          },
+          "next": "callback-comms"
+        },
+        {
+          "id": "callback-comms",
+          "speaker": "Bernhard Kuhnt",
+          "role": "Chairman of the Council of 21",
+          "side": "left",
+          "portrait": "resources/campaigns/portraits/bernhard-kuhnt.png",
+          "text": "The telegraph line from Kiel is still ours. We knew Wilhelmshaven had risen before the Admiralty did.",
+          "conditions": {
+            "allFlags": [
+              "communications_secured"
+            ]
+          },
+          "next": "parkhaus-scene"
+        },
+        {
+          "id": "parkhaus-scene",
+          "speaker": "Marta Reimers",
+          "role": "Shipyard Workers' Courier — Fictional Composite",
+          "side": "right",
+          "text": "Every chair in the Parkhaus is taken. Sailors in oilskins sit beside stokers, clerks and yard delegates; rifles lean against the walls while three telephones ring without pause. The old command still sends orders. Now the operators bring each one to the council first.",
+          "next": "kuhnt-opening",
+          "portrait": "resources/campaigns/portraits/marta-reimers.png"
+        },
+        {
+          "id": "kuhnt-opening",
+          "speaker": "Bernhard Kuhnt",
+          "role": "Chairman of the Council of 21",
+          "side": "left",
+          "text": "More than two hundred delegates have elected the Council of 21. The admiral's offices still have their seals and letterhead, but they no longer control the gates, the crews or the telephone exchange. For a few hours, Wilhelmshaven belongs to whoever can turn that fact into authority.",
+          "next": "hug-question",
+          "portrait": "resources/campaigns/portraits/bernhard-kuhnt.png"
+        },
+        {
+          "id": "hug-question",
+          "speaker": "Paul Hug",
+          "role": "Rüstringen Deputy and Council Representative",
+          "side": "right",
+          "text": "Inside the harbour the officers hesitate. Beyond it, Aurich, Emden and Oldenburg are waiting to see whether this is a local mutiny or the beginning of a new power. Do we send delegates and armed columns now, or make the naval base impossible to retake first?",
+          "choices": [
+            {
+              "id": "regional-columns",
+              "text": "Send columns immediately toward Aurich, Emden and Oldenburg. Political momentum will collapse if the uprising remains trapped inside the naval base.",
+              "next": "kuhnt-regional",
+              "effects": [
+                {
+                  "id": "n_willhelmsh.choice.expand.flag",
+                  "type": "setFlag",
+                  "flag": "favours_rapid_offensive"
+                },
+                {
+                  "id": "n_willhelmsh.choice.expand.clear",
+                  "type": "clearFlag",
+                  "flag": "favours_methodical_consolidation"
+                },
+                {
+                  "id": "n_willhelmsh.choice.expand.unit",
+                  "type": "grantUnit",
+                  "eqid": 39128,
+                  "experience": 0,
+                  "strength": 10
+                },
+                {
+                  "id": "n_willhelmsh.choice.expand.prestige",
+                  "type": "prestige",
+                  "amount": 130
+                }
+              ],
+              "hint": "Gain another revolutionary unit and momentum across the region, but advance before the base and supply system are fully secured."
+            },
+            {
+              "id": "secure-base",
+              "text": "Secure the harbour, station, post and armouries first. A council without a defensible base will be dispersed by the first organised loyalist regiment.",
+              "next": "hug-consolidate",
+              "effects": [
+                {
+                  "id": "n_willhelmsh.choice.consolidate.flag",
+                  "type": "setFlag",
+                  "flag": "favours_methodical_consolidation"
+                },
+                {
+                  "id": "n_willhelmsh.choice.consolidate.clear",
+                  "type": "clearFlag",
+                  "flag": "favours_rapid_offensive"
+                },
+                {
+                  "id": "n_willhelmsh.choice.consolidate.supply",
+                  "type": "resupply",
+                  "strength": 10,
+                  "refuel": true,
+                  "rearm": true
+                },
+                {
+                  "id": "n_willhelmsh.choice.consolidate.unit",
+                  "type": "grantUnit",
+                  "eqid": 39135,
+                  "experience": 20,
+                  "strength": 10
+                }
+              ],
+              "hint": "Begin with a rested force and an entrenched detachment, but surrender time and political momentum beyond the harbour."
+            }
+          ],
+          "portrait": "resources/campaigns/portraits/paul-hug.png"
+        },
+        {
+          "id": "kuhnt-regional",
+          "speaker": "Bernhard Kuhnt",
+          "role": "Chairman of the Council of 21",
+          "side": "left",
+          "text": "Agreed. Each column must carry delegates as well as rifles. We are not occupying foreign towns; we are helping their soldiers and workers form councils of their own.",
+          "next": "oldenburg-report",
+          "portrait": "resources/campaigns/portraits/bernhard-kuhnt.png"
+        },
+        {
+          "id": "hug-consolidate",
+          "speaker": "Paul Hug",
+          "role": "Rüstringen Deputy and Council Representative",
+          "side": "right",
+          "text": "Then make the base secure quickly. The Oldenburg garrison is the greatest remaining obstacle, and delay gives its officers time to isolate the coast.",
+          "next": "oldenburg-report",
+          "portrait": "resources/campaigns/portraits/paul-hug.png"
+        },
+        {
+          "id": "oldenburg-report",
+          "speaker": "Marta Reimers",
+          "role": "Shipyard Workers' Courier — Fictional Composite",
+          "side": "right",
+          "text": "The couriers find red ribbons in every railway town, but no single command. Workers will stop trains for us; soldiers will listen; neither group will risk everything until they see which side controls the roads and armouries. The Oldenburg reserve garrison is making the same calculation.",
+          "next": "kuhnt-final",
+          "portrait": "resources/campaigns/portraits/marta-reimers.png"
+        },
+        {
+          "id": "kuhnt-final",
+          "speaker": "Bernhard Kuhnt",
+          "role": "Chairman of the Council of 21",
+          "side": "left",
+          "text": "Then we make the calculation for them. Carry council resolutions with the rifles, disarm officers who organise resistance, and leave elected delegates behind every column. We are not replacing one distant command with another—we are teaching each town to command itself.",
+          "portrait": "resources/campaigns/portraits/bernhard-kuhnt.png"
+        }
+      ],
+      "orders": {
+        "situation": "The Wilhelmshaven naval station has joined the revolution and elected the Council of 21. Its authority is secure inside the port but uncertain across Oldenburg and East Frisia.",
+        "mission": "Consolidate revolutionary control of Wilhelmshaven and carry the uprising into the surrounding towns before loyalist garrisons can organise a counterstroke.",
+        "primaryObjectives": [
+          "Secure Wilhelmshaven naval base and its communications",
+          "Establish control in Aurich and Emden",
+          "Neutralise the reserve garrison at Oldenburg",
+          "Keep the routes between the coastal councils open"
+        ],
+        "secondaryObjectives": [
+          "Preserve the Council of 21's headquarters",
+          "Capture armouries and transport hubs intact",
+          "Encourage local soldiers to surrender or join their councils"
+        ],
+        "enemyIntelligence": "Most naval personnel are unwilling to fight for the old command, but reserve officers and local garrisons may resist once revolutionary columns leave Wilhelmshaven.",
+        "availableSupport": "Sailors, shipyard workers and newly elected delegates can reinforce captured towns and maintain order.",
+        "notes": "The scenario dramatises the Council of 21's claimed authority over Oldenburg and East Frisia. Historically, its effective power remained concentrated mainly in Wilhelmshaven."
+      }
+    },
+    "actions": [
+      {
+        "id": "region_fully_secured",
+        "type": "hexesHeld",
+        "hexes": [
+          {
+            "row": 10,
+            "col": 6
+          },
+          {
+            "row": 15,
+            "col": 15
+          },
+          {
+            "row": 22,
+            "col": 8
+          },
+          {
+            "row": 30,
+            "col": 37
+          }
+        ]
+      },
+      {
+        "id": "region_partly_secured",
+        "type": "hexesHeld",
+        "atLeast": 2,
+        "hexes": [
+          {
+            "row": 10,
+            "col": 6
+          },
+          {
+            "row": 15,
+            "col": 15
+          },
+          {
+            "row": 22,
+            "col": 8
+          },
+          {
+            "row": 30,
+            "col": 37
+          }
+        ]
+      },
+      {
+        "id": "core_intact",
+        "type": "coreLossesAtMost",
+        "maxLosses": 0
+      },
+      {
+        "id": "core_losses_light",
+        "type": "coreLossesAtMost",
+        "maxLosses": 2
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "scenario": "n_frankfurt.xml",
+    "startprestige": 0,
+    "intro": "Seize Frankfurt's strategic transport and government centres, protect the workers' and soldiers' council, and prevent loyalist forces from isolating the uprising.",
+    "outcome": {
+      "briliant": {
+        "goto": 3,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 200,
+        "text": "Well done! The revolution continues. A wildfire is developed. Keep it up!"
+      },
+      "victory": {
+        "goto": 3,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 150,
+        "text": "Well done! The revolution continues. A wildfire is developed. Keep it up!"
+      },
+      "tactical": {
+        "goto": 3,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "Well done! The revolution continues. A wildfire is developed. Keep it up!"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "The revolution is over ... Many comrades have fallen. You are captured ... It is not difficult to guess that you expect death ..."
+      }
+    },
+    "briefing": {
+      "act": "ACT III — REVOLUTION INLAND",
+      "location": "Frankfurt am Main, 7–9 November 1918",
+      "player": {
+        "speaker": "Revolutionary District Delegate",
+        "role": "Frankfurt Workers' and Soldiers' Council",
+        "side": "left"
+      },
+      "dialogue": [
+        {
+          "id": "reaction-briliant",
+          "speaker": "Anna Keller",
+          "role": "Railway Workers' Delegate — Fictional Composite",
+          "side": "left",
+          "portrait": "resources/campaigns/portraits/anna-keller.png",
+          "text": "The coast is ours, and the news travelled faster than the trains carrying it. Frankfurt's garrison has spent two days deciding whether it still takes orders.",
+          "conditions": {
+            "previousOutcome": [
+              "briliant"
+            ]
+          },
+          "next": "callback-region-secured"
+        },
+        {
+          "id": "reaction-tactical",
+          "speaker": "Anna Keller",
+          "role": "Railway Workers' Delegate — Fictional Composite",
+          "side": "left",
+          "portrait": "resources/campaigns/portraits/anna-keller.png",
+          "text": "We hold the north, barely. The officials here have read the casualty lists and concluded that we can be resisted after all.",
+          "conditions": {
+            "previousOutcome": [
+              "tactical"
+            ]
+          },
+          "next": "callback-region-secured"
+        },
+        {
+          "id": "reaction-victory",
+          "speaker": "Anna Keller",
+          "role": "Railway Workers' Delegate — Fictional Composite",
+          "side": "left",
+          "portrait": "resources/campaigns/portraits/anna-keller.png",
+          "text": "The northern bases hold. But Frankfurt is not a naval town - here the authorities still have police, officials, and a printing press.",
+          "conditions": {
+            "previousOutcome": [
+              "victory"
+            ]
+          },
+          "next": "callback-region-secured"
+        },
+        {
+          "id": "callback-region-secured",
+          "speaker": "Anna Keller",
+          "role": "Railway Workers' Delegate — Fictional Composite",
+          "side": "left",
+          "portrait": "resources/campaigns/portraits/anna-keller.png",
+          "text": "The whole coastal region declared for the councils - Norden, Aurich, Emden, Oldenburg. The railwaymen carry our despatches free of charge and refuse the government's.",
+          "conditions": {
+            "completedActions": [
+              "n_willhelmsh.xml.region_fully_secured"
+            ]
+          },
+          "next": "callback-region-partial"
+        },
+        {
+          "id": "callback-region-partial",
+          "speaker": "Anna Keller",
+          "role": "Railway Workers' Delegate — Fictional Composite",
+          "side": "left",
+          "portrait": "resources/campaigns/portraits/anna-keller.png",
+          "text": "We hold part of the coast, not all of it. The towns we did not reach are being used to tell everyone else that the revolt has already been stopped.",
+          "conditions": {
+            "completedActions": [
+              "n_willhelmsh.xml.region_partly_secured"
+            ],
+            "failedActions": [
+              "n_willhelmsh.xml.region_fully_secured"
+            ]
+          },
+          "next": "callback-doctrine-rapid"
+        },
+        {
+          "id": "callback-doctrine-rapid",
+          "speaker": "Anna Keller",
+          "role": "Railway Workers' Delegate — Fictional Composite",
+          "side": "left",
+          "portrait": "resources/campaigns/portraits/anna-keller.png",
+          "text": "We have moved fast everywhere, and it has worked - but the formations arriving here are the same ones that have not rested since Kiel.",
+          "conditions": {
+            "allFlags": [
+              "favours_rapid_offensive"
+            ]
+          },
+          "next": "callback-doctrine-methodical"
+        },
+        {
+          "id": "callback-doctrine-methodical",
+          "speaker": "Anna Keller",
+          "role": "Railway Workers' Delegate — Fictional Composite",
+          "side": "left",
+          "portrait": "resources/campaigns/portraits/anna-keller.png",
+          "text": "We have taken our time and held what we took. The men are in condition. Whether the government has used that same time better than we did, we are about to discover.",
+          "conditions": {
+            "allFlags": [
+              "favours_methodical_consolidation"
+            ]
+          },
+          "next": "frankfurt-platform"
+        },
+        {
+          "id": "frankfurt-platform",
+          "speaker": "Anna Keller",
+          "role": "Railway Workers' Delegate — Fictional Composite",
+          "side": "left",
+          "text": "At the Hauptbahnhof the locomotive crews have banked their fires. Soldiers arriving from the west tear the imperial cockades from their caps before stepping onto the platform; police guard the telegraph room and pretend not to notice. Everyone is waiting for someone else to move first.",
+          "next": "keller-opening",
+          "portrait": "resources/campaigns/portraits/anna-keller.png"
+        },
+        {
+          "id": "keller-opening",
+          "speaker": "Anna Keller",
+          "role": "Railway Workers' Delegate — Fictional Composite",
+          "side": "left",
+          "text": "Kiel is no longer a rumour—it is being shouted from carriage roofs and printed on handbills in the depots. Railwaymen can stop troop trains and carry council delegates across the city, but only while the stations remain in our hands.",
+          "next": "weber-question",
+          "portrait": "resources/campaigns/portraits/anna-keller.png"
+        },
+        {
+          "id": "weber-question",
+          "speaker": "Otto Weber",
+          "role": "Soldiers' Council Sergeant — Fictional Composite",
+          "side": "right",
+          "text": "The barracks are split. One company has elected delegates, another has locked its armoury, and the officers are promising food and order to anyone who obeys. What do the people of Frankfurt see first: the council speaking in public, or the old state losing control of its machinery?",
+          "choices": [
+            {
+              "id": "take-infrastructure",
+              "text": "Occupy the Hauptbahnhof, bridges, post and telegraph. Once communications are ours, the authorities cannot coordinate a suppression force.",
+              "next": "adler-infrastructure",
+              "effects": [
+                {
+                  "id": "n_frankfurt.choice.infrastructure.flag",
+                  "type": "setFlag",
+                  "flag": "railways_controlled"
+                },
+                {
+                  "id": "n_frankfurt.choice.infrastructure.clear",
+                  "type": "clearFlag",
+                  "flag": "workers_armed"
+                },
+                {
+                  "id": "n_frankfurt.choice.infrastructure.prestige",
+                  "type": "prestige",
+                  "amount": 170
+                },
+                {
+                  "id": "n_frankfurt.choice.infrastructure.experience",
+                  "type": "experience",
+                  "amount": 20
+                }
+              ],
+              "hint": "Gain resources, coordination, and experienced troops, but forgo the mass mobilisation of armed workers."
+            },
+            {
+              "id": "declare-council",
+              "text": "Call a mass assembly and proclaim the council before moving on the barracks. Political legitimacy will bring hesitant soldiers over to us.",
+              "next": "keller-assembly",
+              "effects": [
+                {
+                  "id": "n_frankfurt.choice.council.flag",
+                  "type": "setFlag",
+                  "flag": "workers_armed"
+                },
+                {
+                  "id": "n_frankfurt.choice.council.clear",
+                  "type": "clearFlag",
+                  "flag": "railways_controlled"
+                },
+                {
+                  "id": "n_frankfurt.choice.council.unit1",
+                  "type": "grantUnit",
+                  "eqid": 39129,
+                  "experience": 0,
+                  "strength": 10
+                },
+                {
+                  "id": "n_frankfurt.choice.council.unit2",
+                  "type": "grantUnit",
+                  "eqid": 39129,
+                  "experience": 0,
+                  "strength": 10
+                },
+                {
+                  "id": "n_frankfurt.choice.council.production",
+                  "type": "prestige",
+                  "amount": -60
+                }
+              ],
+              "hint": "Raise two worker battalions and strengthen political legitimacy, but divert labour and resources from the war effort."
+            }
+          ],
+          "portrait": "resources/campaigns/portraits/otto-weber.png"
+        },
+        {
+          "id": "adler-infrastructure",
+          "speaker": "Dr. Jakob Adler",
+          "role": "Municipal Liaison — Fictional Composite",
+          "side": "right",
+          "text": "Then take the switchboards, bridges and post without turning the city into a conquered town. The waterworks clerks and food offices will stay at their desks if the council protects them. A revolution that cannot deliver bread will lose the streets it wins.",
+          "next": "loyalist-warning",
+          "portrait": "resources/campaigns/portraits/dr-jakob-adler.png"
+        },
+        {
+          "id": "keller-assembly",
+          "speaker": "Anna Keller",
+          "role": "Railway Workers' Delegate — Fictional Composite",
+          "side": "left",
+          "text": "The unions can fill the square before noon, and soldiers who will not follow a secret committee may follow a council elected in front of them. But while the speeches are being made, trusted crews must close the stations to hostile troop movements.",
+          "next": "loyalist-warning",
+          "portrait": "resources/campaigns/portraits/anna-keller.png"
+        },
+        {
+          "id": "loyalist-warning",
+          "speaker": "Loyalist District Command",
+          "role": "Intercepted Military Telegram",
+          "side": "right",
+          "text": "All railway, postal and municipal facilities are to remain under lawful authority. Armed councils will be dispersed and military property recovered.",
+          "next": "weber-final",
+          "portrait": "resources/campaigns/portraits/loyalist-district-command.png"
+        },
+        {
+          "id": "weber-final",
+          "speaker": "Otto Weber",
+          "role": "Soldiers' Council Sergeant — Fictional Composite",
+          "side": "left",
+          "text": "Then every company receives the same offer: elect delegates and keep its weapons under council authority, or be disarmed. Frankfurt must choose before Berlin chooses for it—and the railway must carry that choice east.",
+          "portrait": "resources/campaigns/portraits/otto-weber.png"
+        }
+      ],
+      "orders": {
+        "situation": "The revolution has spread inland. Frankfurt has formed a workers' and soldiers' council, but the municipal administration and military authorities still possess functioning institutions and armed detachments.",
+        "mission": "Secure the city's communications and strategic centres, expand support for the council and prevent the uprising from being divided and suppressed.",
+        "primaryObjectives": [
+          "Capture Frankfurt's principal railway and communications centres",
+          "Secure the bridges and designated government objectives",
+          "Disarm or defeat organised loyalist detachments",
+          "Maintain a continuous revolutionary zone through the city"
+        ],
+        "secondaryObjectives": [
+          "Keep essential municipal services functioning",
+          "Preserve worker and soldier formations for the march on Berlin",
+          "Avoid unnecessary damage to transport infrastructure"
+        ],
+        "enemyIntelligence": "The loyalists have fewer supporters than the council but retain officers, police, barracks and the ability to move troops by rail if the main stations remain open.",
+        "availableSupport": "Railway workers can obstruct hostile movement, while sympathetic soldiers may join after the council demonstrates control of the city.",
+        "notes": "The original scenario combines events in Frankfurt with the fall of the neighbouring Grand Duchy of Hesse. Frankfurt itself had been part of Prussia since 1866, and its historical workers' and soldiers' council exercised only limited influence over the city government."
+      }
+    },
+    "actions": [
+      {
+        "id": "frankfurt_city_held",
+        "type": "hexesHeld",
+        "hexes": [
+          {
+            "row": 31,
+            "col": 12
+          },
+          {
+            "row": 33,
+            "col": 8
+          },
+          {
+            "row": 35,
+            "col": 7
+          },
+          {
+            "row": 35,
+            "col": 14
+          }
+        ]
+      },
+      {
+        "id": "outer_towns_held",
+        "type": "hexesHeld",
+        "atLeast": 3,
+        "hexes": [
+          {
+            "row": 10,
+            "col": 23
+          },
+          {
+            "row": 15,
+            "col": 2
+          },
+          {
+            "row": 16,
+            "col": 36
+          },
+          {
+            "row": 22,
+            "col": 6
+          }
+        ]
+      },
+      {
+        "id": "core_intact",
+        "type": "coreLossesAtMost",
+        "maxLosses": 0
+      },
+      {
+        "id": "core_losses_light",
+        "type": "coreLossesAtMost",
+        "maxLosses": 2
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "scenario": "n_berlin.xml",
+    "startprestige": 0,
+    "intro": "Hold the working-class districts, seize Berlin's government and communications centres, and prevent police and Jäger units from crushing the revolution.",
+    "outcome": {
+      "briliant": {
+        "goto": 254,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Well done! The revolution is successful! Long live the Republic!"
+      },
+      "victory": {
+        "goto": 254,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Well done! The revolution is successful! Long live the Republic!"
+      },
+      "tactical": {
+        "goto": 254,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Well done! The revolution is successful! Long live the Republic!"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "The revolution is over ... Many comrades have fallen. You are captured ... It is not difficult to guess that you expect death ..."
+      }
+    },
+    "briefing": {
+      "act": "ACT IV — THE MONARCHY FALLS",
+      "location": "Berlin, 9 November 1918",
+      "player": {
+        "speaker": "Revolutionary Column Commander",
+        "role": "Berlin Workers' and Soldiers' Councils",
+        "side": "left"
+      },
+      "dialogue": [
+        {
+          "id": "reaction-briliant",
+          "speaker": "Emil Barth",
+          "role": "Revolutionary Shop Stewards and USPD",
+          "side": "left",
+          "portrait": "resources/campaigns/portraits/emil-barth.png",
+          "text": "Comrade, the revolution has outrun every prediction we made. Berlin is the last question, and for once we are asking it from strength.",
+          "conditions": {
+            "previousOutcome": [
+              "briliant"
+            ]
+          },
+          "next": "extra-workers-armed"
+        },
+        {
+          "id": "reaction-tactical",
+          "speaker": "Emil Barth",
+          "role": "Revolutionary Shop Stewards and USPD",
+          "side": "left",
+          "portrait": "resources/campaigns/portraits/emil-barth.png",
+          "text": "We reach Berlin having spent more than we gained. The Majority Socialists are already speaking of order and continuity, and they will be listened to.",
+          "conditions": {
+            "previousOutcome": [
+              "tactical"
+            ]
+          },
+          "next": "extra-workers-armed"
+        },
+        {
+          "id": "reaction-victory",
+          "speaker": "Emil Barth",
+          "role": "Revolutionary Shop Stewards and USPD",
+          "side": "left",
+          "portrait": "resources/campaigns/portraits/emil-barth.png",
+          "text": "The country is moving with us. Berlin decides whether that movement becomes power - or becomes a negotiation conducted over our heads.",
+          "conditions": {
+            "previousOutcome": [
+              "victory"
+            ]
+          },
+          "next": "extra-workers-armed"
+        },
+        {
+          "id": "extra-workers-armed",
+          "speaker": "Emil Barth",
+          "role": "Revolutionary Shop Stewards and USPD",
+          "side": "left",
+          "portrait": "resources/campaigns/portraits/emil-barth.png",
+          "text": "The armed workers' battalions are already in the streets; they did not wait to be asked. That is our strength today - and it is exactly what the Majority Socialists will point to when they call for order.",
+          "conditions": {
+            "allFlags": [
+              "workers_armed"
+            ]
+          },
+          "next": "extra-alternate-history"
+        },
+        {
+          "id": "extra-alternate-history",
+          "speaker": "Emil Barth",
+          "role": "Revolutionary Shop Stewards and USPD",
+          "side": "left",
+          "portrait": "resources/campaigns/portraits/emil-barth.png",
+          "text": "Comrade, by every calculation made in the ministries this movement should have been contained weeks ago. It has not been. We face choices that the men who planned our defeat never prepared for.",
+          "conditions": {
+            "minSuccesses": 3
+          },
+          "next": "callback-frankfurt-held"
+        },
+        {
+          "id": "callback-frankfurt-held",
+          "speaker": "Emil Barth",
+          "role": "Revolutionary Shop Stewards and USPD",
+          "side": "left",
+          "portrait": "resources/campaigns/portraits/emil-barth.png",
+          "text": "Frankfurt is ours entire - city, bridges and station. The Rhine-Main district is sending delegates to Berlin, not petitions.",
+          "conditions": {
+            "completedActions": [
+              "n_frankfurt.xml.frankfurt_city_held"
+            ]
+          },
+          "next": "callback-frankfurt-lost"
+        },
+        {
+          "id": "callback-frankfurt-lost",
+          "speaker": "Emil Barth",
+          "role": "Revolutionary Shop Stewards and USPD",
+          "side": "left",
+          "portrait": "resources/campaigns/portraits/emil-barth.png",
+          "text": "We never fully closed our hand on Frankfurt. The government still has a functioning administration in the west, and it is using it.",
+          "conditions": {
+            "failedActions": [
+              "n_frankfurt.xml.frankfurt_city_held"
+            ]
+          },
+          "next": "berlin-awakens"
+        },
+        {
+          "id": "berlin-awakens",
+          "speaker": "Emil Barth",
+          "role": "Revolutionary Shop Stewards and USPD",
+          "side": "left",
+          "text": "The factory whistles began before dawn and did not stop. Columns are leaving Moabit, Wedding and the eastern works; soldiers at the gates argue over whether the Kaiser has already abdicated. Inside the ministries, clerks keep stamping imperial forms as if paper could hold the city together.",
+          "next": "barth-opening",
+          "portrait": "resources/campaigns/portraits/emil-barth.png"
+        },
+        {
+          "id": "barth-opening",
+          "speaker": "Emil Barth",
+          "role": "Revolutionary Shop Stewards and USPD",
+          "side": "left",
+          "text": "The general strike is no longer a proposal. It is moving through Berlin street by street: workers leaving machines, soldiers electing councils, prison gates and barracks opening under pressure from the crowds. The old government still occupies the centre, but obedience is draining away from it by the hour.",
+          "next": "liebknecht-question",
+          "portrait": "resources/campaigns/portraits/emil-barth.png"
+        },
+        {
+          "id": "liebknecht-question",
+          "speaker": "Karl Liebknecht",
+          "role": "Spartacus League",
+          "side": "right",
+          "text": "A monarchy can collapse before a new power is ready to replace it. The Majority Socialists will offer a republic from the ministries; the councils can claim power from the streets. Where does your column strike before the old apparatus learns to wear a new name?",
+          "choices": [
+            {
+              "id": "government-quarter",
+              "text": "Drive directly toward the Reichstag and government quarter. The revolution must visibly replace imperial authority.",
+              "next": "haase-government",
+              "effects": [
+                {
+                  "id": "n_berlin.choice.government.flag",
+                  "type": "setFlag",
+                  "flag": "struck_for_government_quarter"
+                },
+                {
+                  "id": "n_berlin.choice.government.prestige",
+                  "type": "prestige",
+                  "amount": 150
+                },
+                {
+                  "id": "n_berlin.choice.government.experience",
+                  "type": "experience",
+                  "amount": 15
+                }
+              ],
+              "hint": "Gain political prestige and hardened troops through a direct symbolic strike, but receive no extra supply or sailor reinforcement."
+            },
+            {
+              "id": "barracks-stations",
+              "text": "Secure the barracks, stations and telegraph offices first. No proclamation will survive if loyalist troops control Berlin's communications.",
+              "next": "barth-infrastructure",
+              "effects": [
+                {
+                  "id": "n_berlin.choice.barracks.flag",
+                  "type": "setFlag",
+                  "flag": "secured_military_infrastructure"
+                },
+                {
+                  "id": "n_berlin.choice.barracks.supply",
+                  "type": "resupply",
+                  "strength": 10,
+                  "refuel": true,
+                  "rearm": true
+                },
+                {
+                  "id": "n_berlin.choice.barracks.unit",
+                  "type": "grantUnit",
+                  "eqid": 39130,
+                  "experience": 40,
+                  "strength": 10
+                }
+              ],
+              "hint": "Gain full supply and a veteran sailor detachment, but concede the political initiative in the government quarter."
+            }
+          ],
+          "portrait": "resources/campaigns/portraits/karl-liebknecht.png"
+        },
+        {
+          "id": "haase-government",
+          "speaker": "Hugo Haase",
+          "role": "USPD Chairman",
+          "side": "right",
+          "text": "A march on the centre may decide the symbol of the day, but symbols do not feed columns or keep soldiers together. Maintain contact between the workers' districts, the barracks and the council delegates as you advance.",
+          "next": "ebert-dispatch",
+          "portrait": "resources/campaigns/portraits/hugo-haase.png"
+        },
+        {
+          "id": "barth-infrastructure",
+          "speaker": "Emil Barth",
+          "role": "Revolutionary Shop Stewards and USPD",
+          "side": "left",
+          "text": "Then the stations and telegraph offices must fall in the first hours. Stop military trains, seize government messages, and make every captured barracks elect delegates. We need obedience to pass from the officers to the councils, not merely buildings to change hands.",
+          "next": "ebert-dispatch",
+          "portrait": "resources/campaigns/portraits/emil-barth.png"
+        },
+        {
+          "id": "ebert-dispatch",
+          "speaker": "SPD Headquarters",
+          "role": "Political Dispatch",
+          "side": "right",
+          "text": "Political dispatch from SPD headquarters: Friedrich Ebert calls for order, food distribution, an armistice government and elections. He warns that civil war will destroy the republic before it is born. The ministries are preparing to survive the fall of the Kaiser.",
+          "next": "liebknecht-final",
+          "portrait": "resources/campaigns/portraits/spd-headquarters.png"
+        },
+        {
+          "id": "liebknecht-final",
+          "speaker": "Karl Liebknecht",
+          "role": "Spartacus League",
+          "side": "left",
+          "text": "Then enter the centre as an organised force, not a crowd waiting for permission. Break the last armed resistance, open the prisons and government quarter, and make certain that when the monarchy falls, power does not simply pass from a uniform to a ministerial desk.",
+          "portrait": "resources/campaigns/portraits/karl-liebknecht.png"
+        }
+      ],
+      "orders": {
+        "situation": "A general strike and mass demonstrations are paralysing Berlin. Revolutionary columns control many working-class districts, while police, guards and Jäger detachments defend key institutions and transport routes.",
+        "mission": "Unite the revolutionary districts, seize the capital's centres of government and communication, and prevent loyalist forces from restoring imperial authority.",
+        "primaryObjectives": [
+          "Hold the principal working-class districts",
+          "Capture Berlin's government quarter and designated political objectives",
+          "Secure the main railway stations and telegraph facilities",
+          "Defeat or disarm the police and Jäger suppression forces"
+        ],
+        "secondaryObjectives": [
+          "Maintain contact between the advancing revolutionary columns",
+          "Preserve enough organised forces to hold the capital after victory",
+          "Prevent isolated loyalist units from reopening routes into the centre"
+        ],
+        "enemyIntelligence": "Loyalist units are politically uncertain but remain dangerous around government buildings, barracks and transport hubs. Some may refuse to fire if confronted by massed workers and soldiers.",
+        "availableSupport": "The general strike restricts government movement. Workers' delegates and sympathetic soldiers can consolidate captured districts and bring additional formations into the councils.",
+        "notes": "The scenario presents a more militarised struggle than most events in Berlin on 9 November, which were largely peaceful despite several fatal shootings. Max von Baden announced the Kaiser's abdication, Philipp Scheidemann proclaimed a republic, and Karl Liebknecht proclaimed a socialist republic later that day."
+      }
+    },
+    "actions": [
+      {
+        "id": "airfield_held_at_end",
+        "type": "hexesHeld",
+        "hexes": [
+          {
+            "row": 9,
+            "col": 16
+          }
+        ]
+      },
+      {
+        "id": "government_quarter_held",
+        "type": "hexesHeld",
+        "hexes": [
+          {
+            "row": 12,
+            "col": 18
+          },
+          {
+            "row": 13,
+            "col": 16
+          },
+          {
+            "row": 15,
+            "col": 13
+          }
+        ]
+      },
+      {
+        "id": "outskirts_held",
+        "type": "hexesHeld",
+        "atLeast": 1,
+        "hexes": [
+          {
+            "row": 11,
+            "col": 11
+          },
+          {
+            "row": 14,
+            "col": 5
+          }
+        ]
+      },
+      {
+        "id": "core_intact",
+        "type": "coreLossesAtMost",
+        "maxLosses": 0
+      },
+      {
+        "id": "core_losses_light",
+        "type": "coreLossesAtMost",
+        "maxLosses": 2
+      }
+    ]
+  }
+]

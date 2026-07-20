@@ -15,6 +15,7 @@ internal data class ScenarioBriefingView(
     val beginButton: HTMLElement,
     val dialogueStage: HTMLElement,
     val transcript: HTMLElement,
+    val controls: HTMLElement,
     val choicesBox: HTMLElement,
     val hint: HTMLElement,
     val skipButton: HTMLElement,
@@ -65,6 +66,7 @@ internal object ScenarioBriefingBuilder {
             beginButton = orders.beginButton,
             dialogueStage = dialogue.stage,
             transcript = dialogue.transcript,
+            controls = dialogue.controls,
             choicesBox = dialogue.choicesBox,
             hint = dialogue.hint,
             skipButton = dialogue.skipButton,
@@ -111,6 +113,7 @@ internal object ScenarioBriefingBuilder {
     private data class DialogueRefs(
         val stage: HTMLElement,
         val transcript: HTMLElement,
+        val controls: HTMLElement,
         val choicesBox: HTMLElement,
         val hint: HTMLElement,
         val skipButton: HTMLElement,
@@ -158,7 +161,7 @@ internal object ScenarioBriefingBuilder {
         val hint = child(controls, "div", "osada-dialogue__hint")
         hint.textContent = "CONTINUE ▸"
 
-        return DialogueRefs(stage, transcript, choicesBox, hint, skipButton)
+        return DialogueRefs(stage, transcript, controls, choicesBox, hint, skipButton)
     }
 
     fun clearTranscript(view: ScenarioBriefingView) = clear(view.transcript)
@@ -172,6 +175,10 @@ internal object ScenarioBriefingBuilder {
     ): HTMLElement {
         val participant = turn.participant
         val row = child(view.transcript, "article", "osada-dialogue__turn")
+        // `side` has been parsed and carried on every line since the schema was written but was
+        // never rendered. It now picks which edge the speaker's card sits against, so a two-hand
+        // argument reads as two hands without any campaign JSON changing.
+        if (participant.side == "right") row.classList.add("osada-dialogue__turn--right")
         if (turn.isPlayerResponse) row.classList.add("osada-dialogue__turn--player")
 
         addPortrait(row, participant)
@@ -227,8 +234,12 @@ internal object ScenarioBriefingBuilder {
         revealed: Boolean,
         hasChoices: Boolean,
     ) {
-        view.choicesBox.style.display = if (revealed && hasChoices) "grid" else "none"
+        val deciding = revealed && hasChoices
+        view.choicesBox.style.display = if (deciding) "grid" else "none"
         view.hint.style.display = if (revealed && !hasChoices) "block" else "none"
+        // The controls strip only draws its solid frame while it actually holds a decision; a
+        // bare "CONTINUE ▸" prompt should not put a slab over the backdrop art.
+        view.controls.classList.toggle("osada-dialogue__controls--deciding", deciding)
     }
 
     fun renderOrders(
@@ -266,5 +277,9 @@ internal object ScenarioBriefingBuilder {
         val dialogue = stage == BriefingStage.DIALOGUE
         view.dialogueStage.style.display = if (dialogue) "flex" else "none"
         view.ordersStage.style.display = if (dialogue) "none" else "grid"
+        // The conversation lifts the backdrop wash so the scenario art is actually visible behind
+        // the speaker cards. ORDERS keeps the heavier main-menu wash: there the art is only a
+        // background for an opaque document panel, and matching the menu is the point.
+        view.root.classList.toggle("osada-briefing--dialogue", dialogue)
     }
 }
