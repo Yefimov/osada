@@ -110,6 +110,7 @@ internal object DialogueParser {
                 null
             }
         val effects = if (isObject) CampaignEffectParser.parseList(item.effects) else emptyList()
-        return BriefingChoice(id = id, text = text, next = next, effects = effects)
+        val hint = (if (isObject) utils.readString(item.hint)?.trim() else null).orEmpty()
+        return BriefingChoice(id = id, text = text, next = next, effects = effects, hint = hint)
     }
 }

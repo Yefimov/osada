@@ -133,7 +133,7 @@ internal object ScenarioBriefingBuilder {
         val skipButton = element("button", "osada-dialogue__skip")
         skipButton.asDynamic().type = "button"
         skipButton.textContent = "SKIP TO BRIEFING"
-        skipButton.title = "Skip the conversation and go straight to the operational briefing"
+        skipButton.title = "Skip ahead — stops at your next decision, then goes to the briefing"
         skipButton.addEventListener("click", { e ->
             e.stopPropagation()
             onSkip()
@@ -205,6 +205,13 @@ internal object ScenarioBriefingBuilder {
             val number = child(choiceButton, "span", "osada-dialogue__choice-number")
             number.textContent = "${index + 1}"
             child(choiceButton, "span", "osada-dialogue__choice-text").textContent = choice.text
+            // What this branch means, so the player is not deciding blind. Authored `hint` when
+            // present, otherwise the immediate mechanics; narrative consequences are never shown.
+            val preview = BriefingChoicePreview.of(choice)
+            if (preview.isNotBlank()) {
+                child(choiceButton, "span", "osada-dialogue__choice-hint").textContent = preview
+                choiceButton.setAttribute("title", preview)
+            }
             choiceButton.addEventListener("click", { e ->
                 e.stopPropagation()
                 onChoice(choice.id)

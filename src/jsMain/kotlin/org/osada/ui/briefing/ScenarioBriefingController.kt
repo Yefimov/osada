@@ -67,8 +67,12 @@ internal object ScenarioBriefingController {
 
     fun isVisible(): Boolean = view != null
 
-    /** Esc on the ORDERS stage acts like the primary button: begin the operation. */
-    internal fun finishBriefing() = close(runCallback = true)
+    /** Esc on the ORDERS stage acts like the primary button: begin the operation — unless a
+     *  decision is still owed, which BEGIN itself is disabled for. Esc must not be a way around it. */
+    internal fun finishBriefing() {
+        if (pendingChoiceLine() != null) return
+        close(runCallback = true)
+    }
 
     fun clearLast() {
         lastBriefing = null
@@ -94,7 +98,7 @@ internal object ScenarioBriefingController {
         val created =
             ScenarioBriefingBuilder.create(
                 onAdvance = { advanceOrComplete() },
-                onSkip = { showOrders() },
+                onSkip = { skipToNextChoiceOrOrders() },
                 onBegin = { close(runCallback = true) },
             )
         view = created
@@ -122,6 +126,8 @@ internal object ScenarioBriefingController {
         } else {
             BriefingTypewriter.cancel()
             ScenarioBriefingBuilder.renderOrders(currentView, data.orders, facts)
+            // A decision the player skipped past follows them here and gates BEGIN.
+            renderPendingDecision(currentView, pendingChoiceLine()) { chooseFromOrders(it) }
         }
     }
 

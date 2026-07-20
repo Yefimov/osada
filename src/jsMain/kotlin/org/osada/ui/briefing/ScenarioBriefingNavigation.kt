@@ -94,6 +94,21 @@ internal fun ScenarioBriefingController.advanceTo(next: BriefingLine?) {
     focusPrimaryControl()
 }
 
+/**
+ * SKIP (and Esc out of the conversation): fast-forward the remaining chatter and go to the
+ * operational briefing — but carry any unanswered decision there rather than dropping it.
+ *
+ * Skip originally called [showOrders] directly, which silently forfeited every choice the player
+ * had not reached; dialogue choices commit real consequences, so it must not decide by omission.
+ * See `BriefingPendingChoice.kt` for the decision that travels with the player and gates BEGIN.
+ */
+internal fun ScenarioBriefingController.skipToNextChoiceOrOrders() {
+    if (stage != BriefingStage.DIALOGUE) return
+    BriefingTypewriter.cancel()
+    advanceToNextPendingChoice()
+    showOrders()
+}
+
 internal fun ScenarioBriefingController.showOrders() {
     stage = BriefingStage.ORDERS
     renderCurrentStage()

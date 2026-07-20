@@ -59,7 +59,9 @@ private fun ScenarioBriefingController.handleNavigationKey(
         "Escape" -> {
             e.preventDefault()
             e.stopPropagation()
-            if (stage == BriefingStage.DIALOGUE) showOrders() else finishBriefing()
+            // Esc out of the conversation behaves exactly like SKIP: it may shorten the ceremony
+            // but must carry any unanswered decision to the orders stage rather than dropping it.
+            if (stage == BriefingStage.DIALOGUE) skipToNextChoiceOrOrders() else finishBriefing()
         }
     }
 }
