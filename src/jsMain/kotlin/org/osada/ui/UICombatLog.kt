@@ -111,6 +111,7 @@ object UICombatLog {
         val groups =
             listOf(
                 CombatLogCombatGroup.buildCombatGroup(map),
+                CombatLogGroups.buildSurrenderGroup(),
                 CombatLogGroups.buildObjectiveGroup(map),
                 CombatLogGroups.buildResupplyGroup(),
                 CombatLogGroups.buildReinforceGroup(),

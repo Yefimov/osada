@@ -80,6 +80,35 @@ internal object CombatLogGroups {
         return CombatLogFeed.FeedGroup("upgrade", "Reinforcements", body, count)
     }
 
+    /** Units that surrendered to the viewing player — encirclement kills, kept apart from ordinary
+     *  combat losses so "Destroyed / Surrendered" is legible in the Turn Report as well as the AAR. */
+    fun buildSurrenderGroup(): CombatLogFeed.FeedGroup {
+        val game = gameRef()
+        val list = CombatLog.log.surrenders as? Array<dynamic>
+        if (game == null || list == null) return CombatLogFeed.emptyGroup("attack", "Surrenders")
+        val body = document.createElement("div") as HTMLElement
+        body.className = "osada-tr-group__rows"
+        var count = 0
+        for (i in 0 until list.size) {
+            val entry = list[i]
+            if (entry.side != game.spotSide) continue
+            val eqData = Equipment.equipment[entry.eqid as Int]
+            val icon = CombatLogFeed.resolveUnitIcon(eqData)
+            val pos = entry.pos as? Cell ?: Cell(0, 0)
+            val title = "<b>${eqData.name}</b> surrendered — encircled, no retreat"
+            val awarded = entry.prestige as? Int ?: 0
+            val detail =
+                if (awarded > 0) {
+                    "Prestige +${CombatLogFeed.numSpan(awarded)}&nbsp;${UIBuilder.currencyIcon}"
+                } else {
+                    ""
+                }
+            CombatLogFeed.addFeedRow(body, icon, title, detail, false, false, pos)
+            count++
+        }
+        return CombatLogFeed.FeedGroup("attack", "Surrenders", body, count)
+    }
+
     fun buildLeadersGroup(): CombatLogFeed.FeedGroup {
         val game = gameRef()
         val list = CombatLog.log.leaders as? Array<dynamic>

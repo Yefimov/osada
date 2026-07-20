@@ -18,14 +18,36 @@ fun CombatLog.addResupply(unit: GameUnit) {
     entry.side = player.side
 }
 
+/** [prestige] is the prestige ACTUALLY awarded for this capture, not the `objectiveCapture`
+ *  constant: a Liberator doubles it, and a hex that is both flagged and a victory hex contributes
+ *  twice. The Turn Report used to print the constant, so those cases reported the wrong number. */
 fun CombatLog.addObjectiveCapture(
     cell: Cell,
     side: Int,
+    prestige: Int = 0,
 ) {
     val entry = js("{}")
     entry.pos = Cell(cell.row, cell.col)
     entry.side = side
+    entry.prestige = prestige
     pushTo(log.objectives, entry)
+}
+
+/** A unit lost to SURRENDER (forced retreat with nowhere legal to go). [side] is the CAPTOR's side,
+ *  matching the objectives log, so the Turn Report shows it to the player who took the unit. */
+fun CombatLog.addSurrender(
+    unit: GameUnit,
+    cell: Cell,
+    side: Int,
+    prestige: Int,
+) {
+    val entry = js("{}")
+    entry.eqid = unit.eqid
+    entry.pos = Cell(cell.row, cell.col)
+    entry.side = side
+    entry.prestige = prestige
+    entry.strength = unit.hits
+    pushTo(log.surrenders, entry)
 }
 
 private fun newUnitEndTurnInfo(): dynamic {

@@ -24,6 +24,16 @@ class GameUnit(
     var strength: Int = 10
     var facing: Int = 2
     var destroyed: Boolean = false
+
+    /**
+     * Set alongside [destroyed] when the unit was lost by SURRENDER (a forced retreat with no legal
+     * destination) rather than by damage, so the two stay distinguishable in the log and dossier
+     * even though both remove the unit.
+     *
+     * Deliberately NOT serialised: a surrendered unit is swept by `updateUnitList()` in the same
+     * combat step it is set, so it never survives to a save.
+     */
+    var surrendered: Boolean = false
     var transport: Transport? = null
     var player: Player? = null
     var carrier: Int = 0

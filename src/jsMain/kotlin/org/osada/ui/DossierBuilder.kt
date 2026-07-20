@@ -159,9 +159,16 @@ internal object DossierBuilder {
             val uclass = entry.key
             val glyph = entry.value.first
             val classTitle = entry.value.second
-            val killed = dossierData.units.killed[uclass] as? Int ?: 0
-            val lostCore = dossierData.units.lostcore[uclass] as? Int ?: 0
-            val lostAux = dossierData.units.lostaux[uclass] as? Int ?: 0
+            // Sum the tab's own class AND the classes merged into it (UIBuilder.eqClassTabGroups):
+            // the grid has 8 cards for 21 classes, so without this, losses of merged classes
+            // (fortifications, transports, level bombers) were tallied but never displayed.
+            val tallied = UIBuilder.classesForTab(uclass.toIntOrNull() ?: 0).map { it.value.toString() }
+
+            fun sum(bucket: dynamic) = tallied.sumOf { bucket[it] as? Int ?: 0 }
+            val killed = sum(dossierData.units.killed)
+            val captured = sum(dossierData.units.captured)
+            val lostCore = sum(dossierData.units.lostcore)
+            val lostAux = sum(dossierData.units.lostaux)
             val card = addTag(grid, "div")
             card.className = "osada-dsr-cas-card"
             card.title = classTitle
@@ -179,7 +186,12 @@ internal object DossierBuilder {
                 row.className = "osada-dsr-cas-stat"
                 row.innerHTML = "<span>$label</span><b>$value</b>"
             }
-            stat("Inflicted", killed)
+            // `captured` is a subset of `killed`, so show the destroyed remainder separately —
+            // "Destroyed 12 / Surrendered 4" reads as the two distinct tactics that produced them.
+            // The Surrendered row is omitted entirely when none were taken, to avoid a grid full
+            // of zeroes in scenarios where encirclement never happened.
+            stat("Destroyed", killed - captured)
+            if (captured > 0) stat("Surrendered", captured)
             stat("Lost (Core)", lostCore)
             stat("Lost (Aux)", lostAux)
         }

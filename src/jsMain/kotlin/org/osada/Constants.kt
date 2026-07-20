@@ -448,6 +448,28 @@ const val UNIT_MAX_EXPERIENCE = 500
 /** Max length of a player-given unit name (rename feature). */
 const val UNIT_NAME_MAX_LENGTH = 24
 const val UNIT_RETREAT_THRESHOLD = 0.6
+
+/**
+ * Whether a defender that must retreat but has nowhere legal to go is destroyed as surrendered.
+ *
+ * DIVERGENCE FROM PM 3.2.14 (deliberate, user-approved 2026-07-20). PM silently does nothing in
+ * this case — the unit stays put, unharmed — which makes encirclement meaningless. Both source
+ * games destroy it: OG surrenders the unit unless it has Ferocious Defense / No Surrender, and
+ * Panzer Corps 2 surrenders a unit that cannot complete a legal retreat. Flag kept so the PM
+ * behaviour can be restored if an imported campaign turns out to depend on it.
+ */
+const val SURRENDER_ON_FAILED_RETREAT = true
+
+/**
+ * Share of the surrendered unit's surviving value paid to the captor as prestige.
+ *
+ * Panzer Corps 2 awards the full cost of the strength points still standing when a unit
+ * surrenders, which is what makes encirclement an economic choice rather than just a faster kill:
+ * shelling a unit to death destroys that value, forcing its surrender banks it. 1.0 reproduces PC2.
+ * Tunable because it is a real balance lever over imported OG campaigns, which were designed with
+ * no such income; drop it if surrender proves too lucrative.
+ */
+const val SURRENDER_PRESTIGE_FRACTION = 1.0
 const val CURRENCY_MULTIPLIER = 12
 const val UPGRADE_PENALTY = 1.2
 const val OVERSTRENGTH_PENALTY = 1.2

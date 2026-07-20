@@ -1,6 +1,7 @@
 package org.osada.rules
 
 import org.osada.LeaderType
+import org.osada.SURRENDER_ON_FAILED_RETREAT
 import org.osada.TerrainType
 import org.osada.UNIT_RETREAT_THRESHOLD
 import org.osada.UnitClass
@@ -265,6 +266,30 @@ object CombatResolver {
                 defenderClass == UnitClass.FORTIFICATION.value
         return !immuneToRetreat && isLossOverRetreatThreshold(defender.strength, originalStrength)
     }
+
+    /**
+     * Whether [defender] surrenders (is destroyed) because a retreat it is required to make has
+     * no legal destination — i.e. it is encircled or backed against impassable terrain.
+     *
+     * Callers must establish the precondition themselves: [shouldDefenderRetreat] is true AND
+     * `getRetreatPosition` returned null. See [SURRENDER_ON_FAILED_RETREAT] for why this diverges
+     * from PM, which leaves such a unit in place unharmed.
+     *
+     * Ferocious Defense exempts the unit, mirroring OG. Note this ADDS a meaning to the trait:
+     * in PM it only makes entrenchment un-ignorable ([isEntrenchmentIntact]), and that existing
+     * behaviour is untouched.
+     *
+     * [blockedByOwnUnitsOnly] also exempts it: being pinned against the map edge, water, mountains
+     * or enemies is encirclement and should kill the unit, but being crowded out by your own stack
+     * is a traffic-jam and must not. See [CombatPositioning.isRetreatBlockedByOwnUnitsOnly].
+     */
+    fun shouldDefenderSurrender(
+        defender: GameUnit,
+        blockedByOwnUnitsOnly: Boolean = false,
+    ): Boolean =
+        SURRENDER_ON_FAILED_RETREAT &&
+            !blockedByOwnUnitsOnly &&
+            !Leaders.unitHasLeader(defender, LeaderType.FEROCIOUS_DEFENSE)
 
     /** Whether the defender's entrenchment is strong enough to trigger a rugged defense. */
     fun isRuggedDefense(
