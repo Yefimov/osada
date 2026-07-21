@@ -1,6 +1,7 @@
 package org.osada
 
 import org.osada.campaign.CampaignNarrative
+import org.osada.hero.HeroCampaign
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
 import org.osada.model.Hex
@@ -134,6 +135,9 @@ object GameStateSerializer {
         // Optional key: emitted only when the player renamed the unit, so saves of unrenamed
         // units stay byte-identical to the pre-rename format (old saves simply lack the key).
         unit.customName?.let { obj.asDynamic().customName = it }
+        // Same rule for the core-formation id: scenario-only units have none, so their saved
+        // shape is unchanged by the hero system.
+        unit.formationId?.let { obj.asDynamic().formationId = it }
         return obj
     }
 
@@ -197,6 +201,10 @@ object GameStateSerializer {
             // saves keep their previous shape until the campaign actually records something.
             val narrative: dynamic = CampaignNarrative.snapshot()
             if (narrative != null) data["narrative"] = narrative
+            // Same additive-and-optional rule: a run that has produced no formations or heroes
+            // writes no `heroes` key, so its save keeps the previous shape exactly.
+            val heroes: dynamic = HeroCampaign.snapshot()
+            if (heroes != null) data["heroes"] = heroes
             data
         }
     }
@@ -226,6 +234,7 @@ object GameStateSerializer {
             )
         // Same optional-key rule as serializeUnit.
         unit.customName?.let { obj.asDynamic().customName = it }
+        unit.formationId?.let { obj.asDynamic().formationId = it }
         return obj
     }
 }

@@ -137,23 +137,16 @@ internal class CombatApplication(
         )
     }
 
+    /** Leader acquisition for both combatants — delegated to [CombatLeaderAcquisition]. */
     private fun generateCombatLeaders(
         attacker: GameUnit,
         defender: GameUnit,
         combatResult: CombatResults,
     ) {
-        val atkLeader = Leaders.generateLeaderWithChance(attacker, combatResult.atkExpGained)
-        if (atkLeader != -1) {
-            attacker.leader = atkLeader
-            combatResult.atkLeaderGain = true
-            CombatLog.addLeader(attacker)
-        }
-        val defLeader = Leaders.generateLeaderWithChance(defender, combatResult.defExpGained)
-        if (defLeader != -1) {
-            defender.leader = defLeader
-            combatResult.defLeaderGain = true
-            CombatLog.addLeader(defender)
-        }
+        combatResult.atkLeaderGain =
+            CombatLeaderAcquisition.acquire(attacker, defender, combatResult, isAttacker = true, turn = gameMap.turn)
+        combatResult.defLeaderGain =
+            CombatLeaderAcquisition.acquire(defender, attacker, combatResult, isAttacker = false, turn = gameMap.turn)
     }
 
     fun retreatUnit(

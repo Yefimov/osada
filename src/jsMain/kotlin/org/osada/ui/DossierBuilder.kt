@@ -2,6 +2,7 @@ package org.osada.ui
 
 import org.osada.GameHolder
 import org.osada.getCampaignPlayer
+import org.osada.hero.HeroCampaign
 import org.osada.model.GameUnit
 import org.osada.outcomeNames
 import org.osada.scenario.Campaign
@@ -50,6 +51,8 @@ internal object DossierBuilder {
         text: String,
         callback: (() -> Unit)?,
     ): Boolean {
+        // A completed campaign enshrines its notable commanders in the cross-campaign Hall of Fame (§14.6).
+        harvestHallOfFame()
         val dossier = if (showDossier(false, callback)) byId("dossier") else null
         dossier ?: return false
         val banner = addTag(dossier, "div")
@@ -242,5 +245,22 @@ internal object DossierBuilder {
 
     fun closeDossier() {
         byId("dossier")?.style?.display = "none"
+    }
+
+    /** Enshrines this campaign's renowned, authored, and fallen commanders in the Hall of Fame (§14.6). */
+    private fun harvestHallOfFame() {
+        val campaignName = GameHolder.instance?.campaign?.name ?: return
+        val entries =
+            HeroCampaign.commanders().filter { it.notable }.map {
+                HallOfFame.Entry(
+                    name = it.name,
+                    rank = it.rank,
+                    renown = it.renown,
+                    potential = it.potential,
+                    status = it.statusLabel,
+                    campaign = campaignName,
+                )
+            }
+        HallOfFame.harvest(entries)
     }
 }

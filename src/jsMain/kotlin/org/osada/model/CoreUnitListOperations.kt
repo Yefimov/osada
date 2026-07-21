@@ -74,6 +74,9 @@ internal class CoreUnitListOperations(
         unit.isDeployed = false
         unit.hasOverstrength = savedUnit.hasOverstrength as? Boolean ?: false
         unit.customName = savedUnit.customName as? String // optional key (rename feature)
+        // Carried, never re-minted: this is the scenario transition the formation id exists to
+        // survive. A pre-hero save has no key here and gets one on addCoreUnit below.
+        unit.formationId = savedUnit.formationId as? String
         unit.player = player
         applyRestoredTransport(savedUnit, unit)
         return unit

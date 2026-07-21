@@ -1,5 +1,6 @@
 package org.osada
 
+import org.osada.hero.HeroCampaign
 import org.osada.model.acquireUnit
 import org.osada.model.buildCoreUnitList
 import org.osada.model.getPlayers
@@ -31,6 +32,14 @@ internal fun Game.handleCampaignScenarioLoaded() {
     if (removeNonCampaignUnitsFlag) {
         scenario!!.map.removeNonCampaignUnits(campaignPlayer!!)
     }
+    // Tell the hero system which campaign/scenario/year it is now in, so an emergence check deep in
+    // combat can seed deterministically and date a new officer's biography. Runs on both a fresh
+    // start and a restore (both reach this handler), and after the scenario date is set.
+    HeroCampaign.setContext(
+        campaignId = campaign!!.file,
+        scenarioIndex = campaign!!.currentScenarioIndex,
+        serviceYear = scenario!!.date.getFullYear(),
+    )
     // Consume next-scenario effects queued by the previous transition, after the core roster
     // exists and before the player receives control.
     applyPendingCampaignEffects()

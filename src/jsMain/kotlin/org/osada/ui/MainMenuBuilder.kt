@@ -123,6 +123,15 @@ internal object MainMenuBuilder {
         }
         iconButton("zoom", "zoom", "recon", "Strategic map — zoom out to the whole theatre (M)")
         iconButton("options", "options", "settings", "Options & menu (Esc)")
+
+        // Headquarters → Commanders roster (§14.3). Opens the campaign leader roster, view-only
+        // during a scenario. Always present; the roster shows an empty state until officers emerge.
+        val hq = addTag(icons, "div")
+        hq.id = "osadaHqBtn"
+        hq.className = "osada-tb-icon osada-tb-hq"
+        hq.title = "Headquarters — Commanders roster"
+        hq.textContent = "★"
+        hq.onclick = { _: org.w3c.dom.events.MouseEvent -> CommanderRosterPresenter.open() }
     }
 
     private fun buildReadyUnitNav(statusbar: org.w3c.dom.HTMLElement) {
