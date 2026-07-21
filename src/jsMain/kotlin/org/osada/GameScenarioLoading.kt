@@ -3,6 +3,7 @@ package org.osada
 import org.osada.hero.HeroCampaign
 import org.osada.model.acquireUnit
 import org.osada.model.buildCoreUnitList
+import org.osada.model.ensureFormationIds
 import org.osada.model.getPlayers
 import org.osada.model.initDossier
 import org.osada.model.removeNonCampaignUnits
@@ -29,6 +30,10 @@ internal fun Game.handleCampaignScenarioLoaded() {
             campaignPlayer?.let { scenario!!.map.undeployCoreUnits(it) }
         }
     }
+    // The player's whole force is their army and thus hero-eligible (§9.1) — not just the units on
+    // deployment hexes. Mint a formation id for every remaining on-map unit so a pre-placed campaign
+    // enters the hero system instead of falling back to the dossier-less legacy leader.
+    campaignPlayer?.let { scenario!!.map.ensureFormationIds(it) }
     if (removeNonCampaignUnitsFlag) {
         scenario!!.map.removeNonCampaignUnits(campaignPlayer!!)
     }

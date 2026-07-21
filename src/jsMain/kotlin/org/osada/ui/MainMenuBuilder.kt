@@ -128,9 +128,10 @@ internal object MainMenuBuilder {
         // during a scenario. Always present; the roster shows an empty state until officers emerge.
         val hq = addTag(icons, "div")
         hq.id = "osadaHqBtn"
-        hq.className = "osada-tb-icon osada-tb-hq"
+        // Red star sprite (hud_icons_grid row 3, col 2 = .osada-ico--star), matching the other
+        // top-bar icons rather than a text glyph.
+        hq.className = "osada-tb-icon osada-ico osada-ico--star"
         hq.title = "Headquarters — Commanders roster"
-        hq.textContent = "★"
         hq.onclick = { _: org.w3c.dom.events.MouseEvent -> CommanderRosterPresenter.open() }
     }
 

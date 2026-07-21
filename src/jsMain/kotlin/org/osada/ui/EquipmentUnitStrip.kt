@@ -1,5 +1,6 @@
 package org.osada.ui
 
+import org.osada.model.delCurrentUnit
 import org.osada.model.getUnitById
 import org.osada.rules.GameRules
 import org.osada.rules.isTransportable
@@ -228,6 +229,10 @@ internal object EquipmentUnitStrip {
                 if (uiSettings.deployMode) {
                     eqUserSel?.deployunit = id
                     eqUserSel?.userunit = -1
+                    // Picking a reserve to place is a deploy intent: drop any selected map unit so
+                    // its move highlights can't make a later click on a deploy hex read as a move
+                    // instead of a deploy (see MapClickHandler.handleLeftClickEmpty).
+                    map.delCurrentUnit()
                 } else {
                     eqUserSel?.userunit = id
                     eqUserSel?.deployunit = -1

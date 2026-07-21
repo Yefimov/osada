@@ -10,6 +10,7 @@ import org.osada.model.delCurrentUnit
 import org.osada.model.deployPlayerUnit
 import org.osada.model.getAttackableUnit
 import org.osada.model.getPlayer
+import org.osada.rules.AttackEligibility
 import org.osada.rules.GameRules
 import org.osada.rules.isAir
 import org.osada.uiSettings
@@ -72,6 +73,7 @@ internal class MapClickHandler(
             ui.showUnitInfo(unit)
         }
         val currentUnit = map.currentUnit
+        logIfEnemyUnattackable(map, hex, currentUnit, unit)
         return when {
             currentUnit == null || uiSettings.deployMode -> selectOtherUnit(cell.row, cell.col)
             hex.isAttackSel && !currentUnit.hasFired -> {
@@ -106,12 +108,17 @@ internal class MapClickHandler(
     ): Boolean {
         val currentUnit = map.currentUnit
         return when {
-            uiSettings.deployMode && isValidDeployTarget(hex, map, currentPlayerSide) -> {
-                deployAt(cell.row, cell.col)
-                true
-            }
+            // A selected deployed unit ordered onto one of its reachable hexes MOVES, even when
+            // that hex is a deploy hex and the player still has reserves (deployMode stays on for
+            // the whole turn while any reserve is unplaced). Deploying is initiated from the
+            // reserve tray, which clears the map selection (EquipmentUnitStrip) — so a live move
+            // highlight here unambiguously means "move", and must win over the deploy branch.
             hex.isMoveSel && currentUnit != null && !currentUnit.hasMoved -> {
                 ui.uiUnitMove(currentUnit, cell.row, cell.col)
+                true
+            }
+            uiSettings.deployMode && isValidDeployTarget(hex, map, currentPlayerSide) -> {
+                deployAt(cell.row, cell.col)
                 true
             }
             else -> {
@@ -240,4 +247,27 @@ internal class MapClickHandler(
             EquipmentWindowBuilder.setEquipmentMode("reserve")
         }
     }
+}
+
+/** DIAGNOSTIC (DEFERRED: T-34/ZP-40 "can't attack an adjacent enemy"). When the player clicks an
+ *  enemy unit while one of their own is selected but no attack cursor is offered on that hex, print
+ *  the single gate that blocked it — an eligibility predicate (via
+ *  [AttackEligibility.attackBlockReason]) or, if the unit is actually eligible, the spotting state
+ *  that kept it out of the attack set. One line per click, so no per-frame spam. Top-level (not a
+ *  method) to keep [MapClickHandler] within the detekt function-per-class limit. */
+private fun logIfEnemyUnattackable(
+    map: GameMap,
+    hex: Hex,
+    currentUnit: GameUnit?,
+    clicked: GameUnit,
+) {
+    val side = map.currentPlayer?.side ?: return
+    if (currentUnit == null || clicked.player?.side == side || hex.isAttackSel) return
+    val reason =
+        AttackEligibility.attackBlockReason(currentUnit, clicked)
+            ?: "eligible but not in attack set — spotted=${hex.isSpotted(side)} tempSpotted=${clicked.tempSpotted}"
+    console.log(
+        "[osada] no attack cursor on ${clicked.unitData().name} (eqid=${clicked.getEqid()}) from " +
+            "${currentUnit.unitData().name}: $reason",
+    )
 }

@@ -5,8 +5,10 @@ import org.osada.CombatLog
 import org.osada.Game
 import org.osada.UnitClass
 import org.osada.model.Cell
+import org.osada.model.Equipment
 import org.osada.model.GameUnit
 import org.osada.model.getCountriesBySide
+import org.osada.model.getCountryName
 import org.osada.model.selectUnit
 import org.osada.sideNames
 import org.osada.ui.briefing.BriefingIntroTracker
@@ -244,7 +246,14 @@ class UI(
     // dynamic/JS callers), the same pitfall this session already hit with showEnemyCard.
     fun updateStatusBar() = statusBarController.updateStatusBar()
 
+    // Prefer real country names ("Romania vs Soviet Union") over the generic side labels; each side's
+    // first country is its primary belligerent. Falls back to Axis/Allies when the map has no players.
     private fun sidesLabel(): String {
+        val map = game.scenario?.map
+        val name0 = map?.getCountriesBySide(0)?.firstOrNull()?.let { Equipment.getCountryName(it) }
+        val name1 = map?.getCountriesBySide(1)?.firstOrNull()?.let { Equipment.getCountryName(it) }
+        val real = { name: String? -> !name.isNullOrBlank() && name != "Unknown" }
+        if (real(name0) && real(name1)) return "$name0 vs $name1"
         val axis = sideNames.getOrNull(0) ?: "Axis"
         val allies = sideNames.getOrNull(1) ?: "Allies"
         val commanded = game.campaignPlayer?.getSideName()
