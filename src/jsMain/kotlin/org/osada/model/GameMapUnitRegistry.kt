@@ -14,6 +14,10 @@ fun GameMap.addUnit(unit: GameUnit) {
     unit.transport?.let { unitImages.add(it.eqid) }
     if (unit.carrier > 0) unitImages.add(unit.carrier)
     unit.player = getPlayer(unit.owner)
+    GameHolder.instance
+        ?.getCampaignPlayer()
+        ?.takeIf { it.id == unit.owner }
+        ?.let { ensureFormationIds(it, listOf(unit)) }
     if (unit.flag == -1) unit.flag = getPlayer(unit.owner).country + 1
     GameRules.setZOCRange(this, unit, true)
     GameRules.setSpotRange(this, unit, true)
@@ -50,13 +54,20 @@ fun GameMap.updateUnitList() {
                 GameRules.setSpotRange(this, unit, false)
                 map?.getOrNull(pos.row)?.getOrNull(pos.col)?.delUnit(unit)
             }
-            if (GameHolder.instance?.campaign != null && unit.nodossier != false) {
+            // `nodossier` means exactly what its name says: explicitly omit this unit. The old
+            // inverted check recorded only omitted units, leaving normal campaign losses at zero.
+            if (recordsInCampaignDossier(GameHolder.instance?.campaign != null, unit.nodossier)) {
                 GameHolder.instance?.getCampaignPlayer()?.addDestroyedUnitToDossier(unit)
             }
             iter.remove()
         }
     }
 }
+
+internal fun recordsInCampaignDossier(
+    hasCampaign: Boolean,
+    noDossier: Boolean,
+): Boolean = hasCampaign && !noDossier
 
 fun GameMap.getUnitNeighbor(
     unit: GameUnit,

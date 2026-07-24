@@ -28,6 +28,7 @@ internal object TooltipBuilder {
         byId("gameToolTipMessage")?.innerHTML = text
         tooltip.setAttribute("orientation", "left")
         makeVisible("gameToolTip")
+        byId("gameToolTipOk")?.title = "Dismiss this battlefield notice."
         byId("gameToolTipOk")?.onclick = { _: org.w3c.dom.events.MouseEvent ->
             makeHidden("gameToolTip")
             js("if (typeof game !== 'undefined') game.waitUIAnimation = false")

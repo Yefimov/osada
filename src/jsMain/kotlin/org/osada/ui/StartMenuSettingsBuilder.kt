@@ -1,3 +1,5 @@
+@file:Suppress("MaxLineLength")
+
 package org.osada.ui
 
 import kotlinx.browser.window
@@ -77,6 +79,38 @@ internal object StartMenuSettingsBuilder {
             ),
         )
 
+    private val settingHelp =
+        mapOf(
+            "showGridTerrain" to
+                "Colours each hex by terrain type when the Grid overlay is enabled, making movement terrain easier to read.",
+            "markOwnUnits" to
+                "Adds a clear marker beneath your units so stacked sprites and aircraft are easier to distinguish.",
+            "markEnemyUnits" to
+                "Uses red strength markers for spotted enemy units. This does not reveal units hidden by fog of war.",
+            "useRetina" to
+                "Renders the map at the display's full device-pixel resolution. Sharper on high-DPI screens, but uses more graphics memory and requires a reload.",
+            "quickAnimation" to "Shortens movement and combat animations. Rules and results are unchanged.",
+            "showDetailInfoToolTips" to "Shows name labels over non-objective owned hexes such as towns and airfields.",
+            "confirmEndTurn" to
+                "Asks for confirmation before ending the turn and warns when units still have actions available.",
+            "muteUnitSounds" to
+                "Mutes discrete movement, weapon and combat sounds. Ambient weather audio has its own volume control.",
+            "noFOW" to "Removes fog of war and reveals all enemy units. This changes game balance.",
+            "showHiddenVictoryHexes" to
+                "Reveals secret objectives that have no flag on the map. Most scenarios have none; regular bordered objectives are always visible. This changes game balance.",
+        )
+
+    private val sliderHelp =
+        mapOf(
+            "uiresize" to
+                "Legacy interface-width value retained for compatibility; the current HUD automatically follows the viewport.",
+            "uiscale" to "Scales menus, panels and HUD controls without changing the tactical map zoom.",
+            "mapscale" to
+                "Scales the tactical map and unit sprites. This is the same zoom controlled beneath the minimap.",
+            "soundvolume" to "Volume for movement, weapon and combat sound effects.",
+            "ambientvolume" to "Volume for continuous ambient audio such as rain and wind.",
+        )
+
     fun buildSettingsScreen() {
         UILayout.resizeUI(uiSettings.uiSize)
         UILayout.scaleUI(uiSettings.uiScale)
@@ -103,8 +137,12 @@ internal object StartMenuSettingsBuilder {
         val textDiv = addTag(container, "div")
         textDiv.className = "settingText left"
         textDiv.textContent = label
+        val help = sliderHelp[id] ?: label
+        container.title = help
+        textDiv.title = help
         val sliderWrap = addTag(container, "div")
         sliderWrap.style.cssFloat = "right"
+        sliderWrap.title = help
         UILayout.createSlider(sliderWrap, id, value, step, min, max, onInput)
         return container
     }
@@ -168,17 +206,7 @@ internal object StartMenuSettingsBuilder {
         // most scenarios have no hidden objectives at all (all their victory hexes carry
         // visible flags), so the toggle legitimately changes nothing there — without this
         // explanation that reads as "the setting is broken" (user report).
-        textDiv.title =
-            when (id) {
-                "showHiddenVictoryHexes" ->
-                    "Reveals SECRET objectives (victory hexes with no flag on the map). " +
-                        "Regular objectives — bordered flags — are always visible; most scenarios " +
-                        "have no secret ones, so this often changes nothing. Affects game balance."
-                "noFOW" -> "Removes the fog veil and reveals all enemy units. Affects game balance."
-                "showDetailInfoToolTips" ->
-                    "Shows name labels over non-objective owned hexes (towns, airfields) on the map."
-                else -> label
-            }
+        textDiv.title = settingHelp[id] ?: label
         textDiv.className = "settingText left"
         textDiv.textContent = label
         val valueDiv = addTag(container, "div")
@@ -189,6 +217,7 @@ internal object StartMenuSettingsBuilder {
         // used unchanged by the per-player AI toggle elsewhere in this file), since there's
         // no text content left here to flip the case of.
         valueDiv.className = "settingValue right osada-checkbox"
+        valueDiv.title = textDiv.title
         val enabled = uiSettings.getFlag(id)
         valueDiv.classList.toggle("checked", enabled)
         valueDiv.onclick = { _: MouseEvent -> onSettingCheckboxClick(id, valueDiv) }
@@ -265,6 +294,8 @@ internal object StartMenuSettingsBuilder {
     }
 
     private fun wireSettingsOkHandler() {
+        byId("smSetOkBut")?.title =
+            "Apply these settings and return. Some display-resolution changes require a page reload."
         byId("smSetOkBut")?.onclick = { _: MouseEvent ->
             makeHidden("smSettings")
             // Settings is reached two ways: the PRE-GAME main menu's own "Settings" button (where

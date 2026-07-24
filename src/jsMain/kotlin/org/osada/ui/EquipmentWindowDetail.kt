@@ -21,6 +21,11 @@ internal fun EquipmentWindowBuilder.renderEquipmentDetail(eq: EquipmentData?) {
     buildEqDetailHeader(body, eq)
     buildEqDetailStats(body, eq)
     buildEqDetailDescription(body, eq)
+    equipmentMechanicsNote(eq)?.let { note ->
+        val mechanics = addTag(body, "div")
+        mechanics.className = "osada-eqd-desc osada-eqd-mechanics"
+        mechanics.textContent = note
+    }
 }
 
 private fun EquipmentWindowBuilder.buildEqDetailHeader(
@@ -31,7 +36,7 @@ private fun EquipmentWindowBuilder.buildEqDetailHeader(
     portrait.className = "osada-eqd-portrait"
     val img = addTag(portrait, "div")
     img.className = "osada-eqd-portrait__img"
-    img.style.backgroundImage = "url(${eq.icon})"
+    img.style.backgroundImage = "url(${UnitIconResolver.forCurrentScenario(eq.icon)})"
     val name = addTag(body, "div")
     name.className = "osada-eqd-name"
     // Country flag left of the name (user request): same flags_med.png sprite + 0-based
@@ -45,6 +50,9 @@ private fun EquipmentWindowBuilder.buildEqDetailHeader(
     }
     val nameText = addTag(name, "span")
     nameText.textContent = eq.name
+    val markings = addTag(name, "span")
+    markings.className = "osada-capability-marks"
+    EquipmentMarkings.render(markings, eq)
     val cls = addTag(body, "div")
     cls.className = "osada-eqd-class"
     cls.textContent = "${unitClassNames.getOrNull(eq.uclass) ?: ""} · ${Equipment.getCountryName(eq.country - 1)}"

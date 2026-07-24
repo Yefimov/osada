@@ -1,3 +1,5 @@
+@file:Suppress("MaxLineLength", "ktlint:standard:max-line-length")
+
 package org.osada.ui
 
 import org.osada.GameHolder
@@ -42,7 +44,7 @@ private fun EquipmentWindowBuilder.buildEqHeader(eq: HTMLElement) {
     moveInto("eqInfoText", header)
     val prestigeWrap = addTag(header, "div")
     prestigeWrap.id = "eqPrestigeWrap"
-    prestigeWrap.title = "Available prestige"
+    prestigeWrap.title = "Prestige available for purchases, upgrades and reinforcements."
     moveInto("currentPrestige", prestigeWrap)
     moveInto("currentPrestigeAmount", prestigeWrap)
     moveInto("eqCloseBut", header)
@@ -57,6 +59,12 @@ private fun EquipmentWindowBuilder.buildEqModeTabs(eq: HTMLElement) {
         tab.id = "eqModeTab-$mode"
         tab.className = "osada-eq-tab"
         tab.textContent = label
+        tab.title =
+            when (mode) {
+                "purchase" -> "Purchase — browse equipment and buy a new unit for prestige. New units enter the reserve tray."
+                "upgrade" -> "Upgrade — select one of your units, choose a compatible model, and pay the price difference."
+                else -> "Reserve — select purchased but undeployed units and place them on highlighted deployment hexes."
+            }
         tab.onclick = { _: org.w3c.dom.events.MouseEvent -> setEquipmentMode(mode) }
     }
 }
@@ -130,7 +138,8 @@ private fun EquipmentWindowBuilder.buildEqFooter(eq: HTMLElement) {
 private fun EquipmentWindowBuilder.buildCountrySelect(parent: HTMLElement) {
     val select = addTag(parent, "select")
     select.id = "osadaEqCountry"
-    select.title = "Equipment country"
+    select.title =
+        "Filter the catalogue by equipment country. Campaign purchases may be restricted to the campaign nation."
     select.style.display = "none"
     select.asDynamic().onchange = {
         // The option's own VALUE (-1 = "All Countries", 0..N-1 = country), not .selectedIndex
@@ -154,7 +163,7 @@ private fun EquipmentWindowBuilder.buildCountrySelect(parent: HTMLElement) {
 private fun EquipmentWindowBuilder.buildSortSelect(parent: HTMLElement) {
     val select = addTag(parent, "select")
     select.id = "osadaEqSort"
-    select.title = "Sort equipment by"
+    select.title = "Choose which equipment statistic orders the catalogue. Use the adjacent arrow to reverse the order."
     addSelectOption(select, "Sort: Cost", "cost", true)
     UIBuilder.unitStats.forEach { stat ->
         val property = stat.property ?: return@forEach

@@ -1,0 +1,838 @@
+[
+  {
+    "id": 0,
+    "scenario": "bn8s00.xml",
+    "startprestige": 0,
+    "intro": "There is no continuous front here—only terrain, secrecy, and the moment chosen for the first shot. UPRISING IN SERBIA - 25 Aug 1941 places your command at North of Bela Crkva, Macva Region, Serbia. You will lead the attack to liberate the provincial capital Krupanj! But first we need the arms depots of the Gendarmerie in the surrounding villages and as many men as possible before we can dare to attack. The wider stakes are clear: BACKGROUND The Uprising in Yugoslavia was initiated in July 1941 by the Communist Party of Yugoslavia against the German occupation forces and their Serbian quisling auxiliaries in the Territory of the Military Commander in Serbia. Use concealment, local mobility, and carefully chosen objectives to turn a raid into a strategic embarrassment.",
+    "outcome": {
+      "briliant": {
+        "goto": 1,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 300,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>BACKGROUND<br><br>The Uprising in Yugoslavia was initiated in July 1941 by the Communist Party of Yugoslavia against the German occupation forces and their Serbian quisling auxiliaries in the Territory of the Military Commander in Serbia. At first the Yugoslav Partisans had mounted diversions and conducted sabotage and had attacked representatives of Acimovic's quisling administration. In late August some Chetniks joined the uprising and liberated Loznica. The uprising soon reached mass proportions. Partisans and Chetniks captured towns that weak German garrisons had abandoned. The armed uprising soon engulfed great parts of the occupied territory. The largest liberated territory in occupied Europe was created by the Partisans in western Serbia, and was known as the Republic of Uzice. Rebels shared power on the liberated territory; the center of the Partisan liberated territory was in Uzice, and Chetniks had their headquarters on Ravna Gora.<br><br>As the uprising progressed, the ideological rift between the two factions became more and more obvious. On one side were the Chetnik detachments who considered themselves loyal to the royal government in exile and fought for the restoration of pre-war order. On the other side were members of the Peoples Liberation Army of Yugoslavia who favored the introduction of socialism and the post-war reorganization of Yugoslavia on federal basis. The Chetnik leader Dragoljub Mihailovic abandoned the uprising in late October and entered into negotiations with the quisling government and the Germans in order to destroy the rival Partisans.<br><br>The Germans soon gathered a large force and quelled the uprising using mass terror, but the remaining Partisan forces crossed into Bosnia, where they formed the 1st Proletarian Brigade. After the collapse of the uprising, Territory of the Military Commander was largely pacified until the return of the Partisans and the Belgrade Offensive in second half of 1944. Meanwhile, the Chetniks became even more reluctant to fight against Germans, and engaged in anti-Partisan operations and open collaboration. Nevertheless, Mihailovic was able to establish himself as the sole legitimate representative of the Yugoslav government in exile, who ordered that all resistance forces should fight under his command."
+      },
+      "victory": {
+        "goto": 1,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 275,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>BACKGROUND<br><br>The Uprising in Yugoslavia was initiated in July 1941 by the Communist Party of Yugoslavia against the German occupation forces and their Serbian quisling auxiliaries in the Territory of the Military Commander in Serbia. At first the Yugoslav Partisans had mounted diversions and conducted sabotage and had attacked representatives of Acimovic's quisling administration. In late August some Chetniks joined the uprising and liberated Loznica. The uprising soon reached mass proportions. Partisans and Chetniks captured towns that weak German garrisons had abandoned. The armed uprising soon engulfed great parts of the occupied territory. The largest liberated territory in occupied Europe was created by the Partisans in western Serbia, and was known as the Republic of Uzice. Rebels shared power on the liberated territory; the center of the Partisan liberated territory was in Uzice, and Chetniks had their headquarters on Ravna Gora.<br><br>As the uprising progressed, the ideological rift between the two factions became more and more obvious. On one side were the Chetnik detachments who considered themselves loyal to the royal government in exile and fought for the restoration of pre-war order. On the other side were members of the Peoples Liberation Army of Yugoslavia who favored the introduction of socialism and the post-war reorganization of Yugoslavia on federal basis. The Chetnik leader Dragoljub Mihailovic abandoned the uprising in late October and entered into negotiations with the quisling government and the Germans in order to destroy the rival Partisans.<br><br>The Germans soon gathered a large force and quelled the uprising using mass terror, but the remaining Partisan forces crossed into Bosnia, where they formed the 1st Proletarian Brigade. After the collapse of the uprising, Territory of the Military Commander was largely pacified until the return of the Partisans and the Belgrade Offensive in second half of 1944. Meanwhile, the Chetniks became even more reluctant to fight against Germans, and engaged in anti-Partisan operations and open collaboration. Nevertheless, Mihailovic was able to establish himself as the sole legitimate representative of the Yugoslav government in exile, who ordered that all resistance forces should fight under his command."
+      },
+      "tactical": {
+        "goto": 1,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 250,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>BACKGROUND<br><br>The Uprising in Yugoslavia was initiated in July 1941 by the Communist Party of Yugoslavia against the German occupation forces and their Serbian quisling auxiliaries in the Territory of the Military Commander in Serbia. At first the Yugoslav Partisans had mounted diversions and conducted sabotage and had attacked representatives of Acimovic's quisling administration. In late August some Chetniks joined the uprising and liberated Loznica. The uprising soon reached mass proportions. Partisans and Chetniks captured towns that weak German garrisons had abandoned. The armed uprising soon engulfed great parts of the occupied territory. The largest liberated territory in occupied Europe was created by the Partisans in western Serbia, and was known as the Republic of Uzice. Rebels shared power on the liberated territory; the center of the Partisan liberated territory was in Uzice, and Chetniks had their headquarters on Ravna Gora.<br><br>As the uprising progressed, the ideological rift between the two factions became more and more obvious. On one side were the Chetnik detachments who considered themselves loyal to the royal government in exile and fought for the restoration of pre-war order. On the other side were members of the Peoples Liberation Army of Yugoslavia who favored the introduction of socialism and the post-war reorganization of Yugoslavia on federal basis. The Chetnik leader Dragoljub Mihailovic abandoned the uprising in late October and entered into negotiations with the quisling government and the Germans in order to destroy the rival Partisans.<br><br>The Germans soon gathered a large force and quelled the uprising using mass terror, but the remaining Partisan forces crossed into Bosnia, where they formed the 1st Proletarian Brigade. After the collapse of the uprising, Territory of the Military Commander was largely pacified until the return of the Partisans and the Belgrade Offensive in second half of 1944. Meanwhile, the Chetniks became even more reluctant to fight against Germans, and engaged in anti-Partisan operations and open collaboration. Nevertheless, Mihailovic was able to establish himself as the sole legitimate representative of the Yugoslav government in exile, who ordered that all resistance forces should fight under his command."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "You could not achieve your goals, the mission was a failure! You had your chance, we need commander who successfully complete orders. This was your last combat mission!<br><br>THE END!<br><br>BACKGROUND<br><br>The Uprising in Yugoslavia was initiated in July 1941 by the Communist Party of Yugoslavia against the German occupation forces and their Serbian quisling auxiliaries in the Territory of the Military Commander in Serbia. At first the Yugoslav Partisans had mounted diversions and conducted sabotage and had attacked representatives of Acimovic's quisling administration. In late August some Chetniks joined the uprising and liberated Loznica. The uprising soon reached mass proportions. Partisans and Chetniks captured towns that weak German garrisons had abandoned. The armed uprising soon engulfed great parts of the occupied territory. The largest liberated territory in occupied Europe was created by the Partisans in western Serbia, and was known as the Republic of Uzice. Rebels shared power on the liberated territory; the center of the Partisan liberated territory was in Uzice, and Chetniks had their headquarters on Ravna Gora.<br><br>As the uprising progressed, the ideological rift between the two factions became more and more obvious. On one side were the Chetnik detachments who considered themselves loyal to the royal government in exile and fought for the restoration of pre-war order. On the other side were members of the Peoples Liberation Army of Yugoslavia who favored the introduction of socialism and the post-war reorganization of Yugoslavia on federal basis. The Chetnik leader Dragoljub Mihailovic abandoned the uprising in late October and entered into negotiations with the quisling government and the Germans in order to destroy the rival Partisans.<br><br>The Germans soon gathered a large force and quelled the uprising using mass terror, but the remaining Partisan forces crossed into Bosnia, where they formed the 1st Proletarian Brigade. After the collapse of the uprising, Territory of the Military Commander was largely pacified until the return of the Partisans and the Belgrade Offensive in second half of 1944. Meanwhile, the Chetniks became even more reluctant to fight against Germans, and engaged in anti-Partisan operations and open collaboration. Nevertheless, Mihailovic was able to establish itself as the sole legitimate representative of the Yugoslav government in exile, who ordered that all resistance forces should fight under his command."
+      }
+    }
+  },
+  {
+    "id": 1,
+    "scenario": "bn8s01.xml",
+    "startprestige": 0,
+    "intro": "There is no continuous front here—only terrain, secrecy, and the moment chosen for the first shot. BATTLE OF SABAC - 18 Sep 1941 places your command at North of Sabac, Macva Region, Serbia. North of Sabac, Macva Region, Serbia CO Commander Nebojsa Jerkovic We will take advantage of our success of the last weeks and extend the free territories fast. You will perform a attack against the strong German garrison of Sabac and free the city from fascism. The wider stakes are clear: In mid-September 1941, Josip Broz Tito and the Partisan General Staff moved from Belgrade to the Uzice Republic where the Partisans had by now formed 25 new military detachments. Your victory will be measured in disrupted movement, captured supplies, and fighters who live to strike again.",
+    "outcome": {
+      "briliant": {
+        "goto": 2,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 350,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>BACKGROUND<br><br>By September 1941, after seeing the considerable success of the uprising, and observing its wide, and growing, support among the populace, the Chetniks realized that if they did not join the fight, they would likely forfeit their standing as the leaders of Serbian resistance. On September 12, German intelligence reported that Chetnik units are taking up positions alongside the Partisans. Reporting on the events to the government-in-exile, Yugoslav politician Dr. Milos Sekulic stated that the Chetnik resistance has a \"defensive character\", while the Partisans managed to unite elements of the Yugoslav people inclined toward active resistance.<br><br>In mid-September 1941, Josip Broz Tito and the Partisan General Staff moved from Belgrade to the Uzice Republic where the Partisans had by now formed 25 new military detachments. A few days later on September 19, Tito met with Draza Mihailovic in order to negotiate an alliance between Partisans and Chetniks, but they failed to reach an agreement. Tito was in favor of a joint full-scale offensive, while Mihailovic considered a general uprising to be premature and dangerous, as he deemed it would trigger reprisals. Chetnik support for the rebellion was partial: of some 5,000-10,000 available men, the Chetniks fielded about 3,000 in the area, while an unknown proportion of these did not enter the fighting."
+      },
+      "victory": {
+        "goto": 2,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 325,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>BACKGROUND<br><br>By September 1941, after seeing the considerable success of the uprising, and observing its wide, and growing, support among the populace, the Chetniks realized that if they did not join the fight, they would likely forfeit their standing as the leaders of Serbian resistance. On September 12, German intelligence reported that Chetnik units are taking up positions alongside the Partisans. Reporting on the events to the government-in-exile, Yugoslav politician Dr. Milos Sekulic stated that the Chetnik resistance has a \"defensive character\", while the Partisans managed to unite elements of the Yugoslav people inclined toward active resistance.<br><br>In mid-September 1941, Josip Broz Tito and the Partisan General Staff moved from Belgrade to the Uzice Republic where the Partisans had by now formed 25 new military detachments. A few days later on September 19, Tito met with Draza Mihailovic in order to negotiate an alliance between Partisans and Chetniks, but they failed to reach an agreement. Tito was in favor of a joint full-scale offensive, while Mihailovic considered a general uprising to be premature and dangerous, as he deemed it would trigger reprisals. Chetnik support for the rebellion was partial: of some 5,000-10,000 available men, the Chetniks fielded about 3,000 in the area, while an unknown proportion of these did not enter the fighting."
+      },
+      "tactical": {
+        "goto": 2,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 300,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>BACKGROUND<br><br>By September 1941, after seeing the considerable success of the uprising, and observing its wide, and growing, support among the populace, the Chetniks realized that if they did not join the fight, they would likely forfeit their standing as the leaders of Serbian resistance. On September 12, German intelligence reported that Chetnik units are taking up positions alongside the Partisans. Reporting on the events to the government-in-exile, Yugoslav politician Dr. Milos Sekulic stated that the Chetnik resistance has a \"defensive character\", while the Partisans managed to unite elements of the Yugoslav people inclined toward active resistance.<br><br>In mid-September 1941, Josip Broz Tito and the Partisan General Staff moved from Belgrade to the Uzice Republic where the Partisans had by now formed 25 new military detachments. A few days later on September 19, Tito met with Draza Mihailovic in order to negotiate an alliance between Partisans and Chetniks, but they failed to reach an agreement. Tito was in favor of a joint full-scale offensive, while Mihailovic considered a general uprising to be premature and dangerous, as he deemed it would trigger reprisals. Chetnik support for the rebellion was partial: of some 5,000-10,000 available men, the Chetniks fielded about 3,000 in the area, while an unknown proportion of these did not enter the fighting."
+      },
+      "lose": {
+        "goto": 2,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 300,
+        "text": "You could not achieve your goals, the mission was a failure! Hopefully you have gained some experience to avoid such failures in future.<br><br>BACKGROUND<br><br>By September 1941, after seeing the considerable success of the uprising, and observing its wide, and growing, support among the populace, the Chetniks realized that if they did not join the fight, they would likely forfeit their standing as the leaders of Serbian resistance. On September 12, German intelligence reported that Chetnik units are taking up positions alongside the Partisans. Reporting on the events to the government-in-exile, Yugoslav politician Dr. Milos Sekulic stated that the Chetnik resistance has a \"defensive character\", while the Partisans managed to unite elements of the Yugoslav people inclined toward active resistance.<br><br>In mid-September 1941, Josip Broz Tito and the Partisan General Staff moved from Belgrade to the Uzice Republic where the Partisans had by now formed 25 new military detachments. A few days later on September 19, Tito met with Draza Mihailovic in order to negotiate an alliance between Partisans and Chetniks, but they failed to reach an agreement. Tito was in favor of a joint full-scale offensive, while Mihailovic considered a general uprising to be premature and dangerous, as he deemed it would trigger reprisals. Chetnik support for the rebellion was partial: of some 5,000-10,000 available men, the Chetniks fielded about 3,000 in the area, while an unknown proportion of these did not enter the fighting."
+      }
+    }
+  },
+  {
+    "id": 2,
+    "scenario": "bn8s02.xml",
+    "startprestige": 0,
+    "intro": "There is no continuous front here—only terrain, secrecy, and the moment chosen for the first shot. BETRAYAL - 1 Nov 1941 places your command at East of Uzice, Zlatibor Region, Serbia. East of Uzice, Zlatibor Region, Serbia CO Commander Koca Popovic We have information about an imminent attack of the treacherous Chetniks on our headquarters in Uzice. March with your comrades as soon as possible to Uzice and beat back the attackers! The wider stakes are clear: Tito and Mihailovic met again on October 26 or 27, 1941 in the town of Brajici near Ravna Gora in a final attempt to achieve an understanding, but found consensus only on secondary issues. Your victory will be measured in disrupted movement, captured supplies, and fighters who live to strike again.",
+    "outcome": {
+      "briliant": {
+        "goto": 3,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 350,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>BACKGROUND<br><br>By the beginning of October, several small towns in Serbia were in the hands of Partisan or Chetnik groups. While distrustful of each other, Partisans and Chetniks started taking joint actions and besieging larger towns. Their respective commands were set in Uzice and Pozega, 15 km apart. During October, all hopes of a continued cooperation were drained away in sporadic bickering and outright violations of agreements. During these weeks it also became obvious that, while the Partisan command had no doubts about continuing the struggle, the Chetniks were wavering and looking for a way of giving up the fight against the Germans and directing all their power against the Partisans. A process of polarization took place, taking several weeks and producing shifts in loyalties. The Chetnik detachments of Rev. Vlada Zecevic and Lieutenant Ratko Martinovic switched to the Partisans during this time.<br><br>Tito and Mihailovic met again on October 26 or 27, 1941 in the town of Brajici near Ravna Gora in a final attempt to achieve an understanding, but found consensus only on secondary issues. Mihailovic rejected principal points of Tito's proposal including the establishment of common headquarters, joint military actions against the Germans and quisling formations, establishment of a combined staff for the supply of troops, and the formation of national liberation committees. Mihailovic did not arrive at the meeting in good faith. The Chetnik command had already dispatched to Belgrade Colonel Branislav Pantic and Captain Nenad Mitrovic, two of Mihailovic's aides, where they contacted German intelligence officer Captain Josef Matl on October 28. They informed the Abwehr that they have been empowered by Colonel Mihailovic to establish contact with Prime Minister Milan Nedic and the appropriate Wehrmacht command posts to inform them that the Colonel was willing to \"place himself and his men at their disposal for fighting communism\". The two representatives further gave the Germans their commander's guarantee for the \"definitive clearing of communist bands in Serbian territory\" and requested aid from the occupation forces in the form of \"about 5,000 rifles, 350 machine guns, and 20 heavy machine guns\"."
+      },
+      "victory": {
+        "goto": 3,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 325,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>BACKGROUND<br><br>By the beginning of October, several small towns in Serbia were in the hands of Partisan or Chetnik groups. While distrustful of each other, Partisans and Chetniks started taking joint actions and besieging larger towns. Their respective commands were set in Uzice and Pozega, 15 km apart. During October, all hopes of a continued cooperation were drained away in sporadic bickering and outright violations of agreements. During these weeks it also became obvious that, while the Partisan command had no doubts about continuing the struggle, the Chetniks were wavering and looking for a way of giving up the fight against the Germans and directing all their power against the Partisans. A process of polarization took place, taking several weeks and producing shifts in loyalties. The Chetnik detachments of Rev. Vlada Zecevic and Lieutenant Ratko Martinovic switched to the Partisans during this time.<br><br>Tito and Mihailovic met again on October 26 or 27, 1941 in the town of Brajici near Ravna Gora in a final attempt to achieve an understanding, but found consensus only on secondary issues. Mihailovic rejected principal points of Tito's proposal including the establishment of common headquarters, joint military actions against the Germans and quisling formations, establishment of a combined staff for the supply of troops, and the formation of national liberation committees. Mihailovic did not arrive at the meeting in good faith. The Chetnik command had already dispatched to Belgrade Colonel Branislav Pantic and Captain Nenad Mitrovic, two of Mihailovic's aides, where they contacted German intelligence officer Captain Josef Matl on October 28. They informed the Abwehr that they have been empowered by Colonel Mihailovic to establish contact with Prime Minister Milan Nedic and the appropriate Wehrmacht command posts to inform them that the Colonel was willing to \"place himself and his men at their disposal for fighting communism\". The two representatives further gave the Germans their commander's guarantee for the \"definitive clearing of communist bands in Serbian territory\" and requested aid from the occupation forces in the form of \"about 5,000 rifles, 350 machine guns, and 20 heavy machine guns\"."
+      },
+      "tactical": {
+        "goto": 3,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 300,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>BACKGROUND<br><br>By the beginning of October, several small towns in Serbia were in the hands of Partisan or Chetnik groups. While distrustful of each other, Partisans and Chetniks started taking joint actions and besieging larger towns. Their respective commands were set in Uzice and Pozega, 15 km apart. During October, all hopes of a continued cooperation were drained away in sporadic bickering and outright violations of agreements. During these weeks it also became obvious that, while the Partisan command had no doubts about continuing the struggle, the Chetniks were wavering and looking for a way of giving up the fight against the Germans and directing all their power against the Partisans. A process of polarization took place, taking several weeks and producing shifts in loyalties. The Chetnik detachments of Rev. Vlada Zecevic and Lieutenant Ratko Martinovic switched to the Partisans during this time.<br><br>Tito and Mihailovic met again on October 26 or 27, 1941 in the town of Brajici near Ravna Gora in a final attempt to achieve an understanding, but found consensus only on secondary issues. Mihailovic rejected principal points of Tito's proposal including the establishment of common headquarters, joint military actions against the Germans and quisling formations, establishment of a combined staff for the supply of troops, and the formation of national liberation committees. Mihailovic did not arrive at the meeting in good faith. The Chetnik command had already dispatched to Belgrade Colonel Branislav Pantic and Captain Nenad Mitrovic, two of Mihailovic's aides, where they contacted German intelligence officer Captain Josef Matl on October 28. They informed the Abwehr that they have been empowered by Colonel Mihailovic to establish contact with Prime Minister Milan Nedic and the appropriate Wehrmacht command posts to inform them that the Colonel was willing to \"place himself and his men at their disposal for fighting communism\". The two representatives further gave the Germans their commander's guarantee for the \"definitive clearing of communist bands in Serbian territory\" and requested aid from the occupation forces in the form of \"about 5,000 rifles, 350 machine guns, and 20 heavy machine guns\"."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "You could not achieve your goals, the mission was a failure! You had your chance, we need commander who successfully complete orders. This was your last combat mission!<br><br>THE END!<br><br>BACKGROUND<br><br>By the beginning of October, several small towns in Serbia were in the hands of Partisan or Chetnik groups. While distrustful of each other, Partisans and Chetniks started taking joint actions and besieging larger towns. Their respective commands were set in Uzice and Pozega, 15 km apart. During October, all hopes of a continued cooperation were drained away in sporadic bickering and outright violations of agreements. During these weeks it also became obvious that, while the Partisan command had no doubts about continuing the struggle, the Chetniks were wavering and looking for a way of giving up the fight against the Germans and directing all their power against the Partisans. A process of polarization took place, taking several weeks and producing shifts in loyalties. The Chetnik detachments of Rev. Vlada Zecevic and Lieutenant Ratko Martinovic switched to the Partisans during this time.<br><br>Tito and Mihailovic met again on October 26 or 27, 1941 in the town of Brajici near Ravna Gora in a final attempt to achieve an understanding, but found consensus only on secondary issues. Mihailovic rejected principal points of Tito's proposal including the establishment of common headquarters, joint military actions against the Germans and quisling formations, establishment of a combined staff for the supply of troops, and the formation of national liberation committees. Mihailovic did not arrive at the meeting in good faith. The Chetnik command had already dispatched to Belgrade Colonel Branislav Pantic and Captain Nenad Mitrovic, two of Mihailovic's aides, where they contacted German intelligence officer Captain Josef Matl on October 28. They informed the Abwehr that they have been empowered by Colonel Mihailovic to establish contact with Prime Minister Milan Nedic and the appropriate Wehrmacht command posts to inform them that the Colonel was willing to \"place himself and his men at their disposal for fighting communism\". The two representatives further gave the Germans their commander's guarantee for the \"definitive clearing of communist bands in Serbian territory\" and requested aid from the occupation forces in the form of \"about 5,000 rifles, 350 machine guns, and 20 heavy machine guns\"."
+      }
+    }
+  },
+  {
+    "id": 3,
+    "scenario": "bn8s03.xml",
+    "startprestige": 0,
+    "intro": "This is not a rout unless you allow it to become one. RETREAT TO MONTENEGRO - 2 Dec 1941 places your command at Southwest of Nova Varos, Zlatibor Region, Serbia. Southwest of Nova Varos, Zlatibor Region, Serbia CO Commander Koca Popovic After a surprisingly strong German counterattack, our positions in Serbia have become untenable. Lead your comrades over the Lim River and cross the border at Dobrakovo. The wider stakes are clear: At the end of 1941, there were six Partisan detachments in eastern Bosnia, with about 7,300 fighters operating in the Majevica, Ozren, Birac, Romanija, Zvijezda and Kalinovik areas. Keep the route open, rescue what can still be saved, and deny the enemy the encirclement it expects.",
+    "outcome": {
+      "briliant": {
+        "goto": 4,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 450,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>BACKGROUND<br><br>Both Tito and Mihailovic had suffered a heavy setback. Tito had been surprised by the scale of the uprising, and had found himself managing inexperienced peasant fighters who were reluctant to move away from their towns, or to accept authority and indoctrination. Mihailovic had also been unable to impose discipline on his officers, and had not received sufficient help from the British.<br><br>In November and December 1941, almost all Partisan forces from the Territory of the Military Commander in Serbia had been forced to withdraw into eastern Bosnia where they combined with local Partisan forces. Most of the Chetnik forces in eastern Bosnia were local Serb peasants. The insurgency in eastern Bosnia meant that NDH authorities were unable to retain control of the region.<br><br>At the end of 1941, there were six Partisan detachments in eastern Bosnia, with about 7,300 fighters operating in the Majevica, Ozren, Birac, Romanija, Zvijezda and Kalinovik areas. According to Enver Redzic, in early January 1942, the Chetniks controlled a large portion of eastern Bosnia. Due to continuing cooperation between the two groups, the Chetniks also shared control of the towns of Rogatica, Olovo and Han Pijesak with the Partisans."
+      },
+      "victory": {
+        "goto": 4,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 425,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>BACKGROUND<br><br>Both Tito and Mihailovic had suffered a heavy setback. Tito had been surprised by the scale of the uprising, and had found himself managing inexperienced peasant fighters who were reluctant to move away from their towns, or to accept authority and indoctrination. Mihailovic had also been unable to impose discipline on his officers, and had not received sufficient help from the British.<br><br>In November and December 1941, almost all Partisan forces from the Territory of the Military Commander in Serbia had been forced to withdraw into eastern Bosnia where they combined with local Partisan forces. Most of the Chetnik forces in eastern Bosnia were local Serb peasants. The insurgency in eastern Bosnia meant that NDH authorities were unable to retain control of the region.<br><br>At the end of 1941, there were six Partisan detachments in eastern Bosnia, with about 7,300 fighters operating in the Majevica, Ozren, Birac, Romanija, Zvijezda and Kalinovik areas. According to Enver Redzic, in early January 1942, the Chetniks controlled a large portion of eastern Bosnia. Due to continuing cooperation between the two groups, the Chetniks also shared control of the towns of Rogatica, Olovo and Han Pijesak with the Partisans."
+      },
+      "tactical": {
+        "goto": 4,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 400,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>BACKGROUND<br><br>Both Tito and Mihailovic had suffered a heavy setback. Tito had been surprised by the scale of the uprising, and had found himself managing inexperienced peasant fighters who were reluctant to move away from their towns, or to accept authority and indoctrination. Mihailovic had also been unable to impose discipline on his officers, and had not received sufficient help from the British.<br><br>In November and December 1941, almost all Partisan forces from the Territory of the Military Commander in Serbia had been forced to withdraw into eastern Bosnia where they combined with local Partisan forces. Most of the Chetnik forces in eastern Bosnia were local Serb peasants. The insurgency in eastern Bosnia meant that NDH authorities were unable to retain control of the region.<br><br>At the end of 1941, there were six Partisan detachments in eastern Bosnia, with about 7,300 fighters operating in the Majevica, Ozren, Birac, Romanija, Zvijezda and Kalinovik areas. According to Enver Redzic, in early January 1942, the Chetniks controlled a large portion of eastern Bosnia. Due to continuing cooperation between the two groups, the Chetniks also shared control of the towns of Rogatica, Olovo and Han Pijesak with the Partisans."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "You could not achieve your goals, the mission was a failure! You had your chance, we need commander who successfully complete orders. This was your last combat mission!<br><br>THE END!<br><br>BACKGROUND<br><br>Both Tito and Mihailovic had suffered a heavy setback. Tito had been surprised by the scale of the uprising, and had found himself managing inexperienced peasant fighters who were reluctant to move away from their towns, or to accept authority and indoctrination. Mihailovic had also been unable to impose discipline on his officers, and had not received sufficient help from the British.<br><br>In November and December 1941, almost all Partisan forces from the Territory of the Military Commander in Serbia had been forced to withdraw into eastern Bosnia where they combined with local Partisan forces. Most of the Chetnik forces in eastern Bosnia were local Serb peasants. The insurgency in eastern Bosnia meant that NDH authorities were unable to retain control of the region.<br><br>At the end of 1941, there were six Partisan detachments in eastern Bosnia, with about 7,300 fighters operating in the Majevica, Ozren, Birac, Romanija, Zvijezda and Kalinovik areas. According to Enver Redzic, in early January 1942, the Chetniks controlled a large portion of eastern Bosnia. Due to continuing cooperation between the two groups, the Chetniks also shared control of the towns of Rogatica, Olovo and Han Pijesak with the Partisans."
+      }
+    }
+  },
+  {
+    "id": 4,
+    "scenario": "bn8s04.xml",
+    "startprestige": 0,
+    "intro": "Your force is exposed, the roads are closing, and every hour of delay narrows the route to safety. RAIL RAID - 8 Feb 1942 places your command at Railway between Mostar and Sarajevo, Bosnia. Railway between Mostar and Sarajevo, Bosnia CO Commander Koca Popovic Some German armored trains are on their way from Mostar to Belgrade. Then it should be possible to destroy these trains by a concentrated attack of your forces. The wider stakes are clear: You have achieved all objectives, the mission was a complete success. A strong result opens the road to OPERATION TRIO - 10 May 1942. Rear guards must buy time while the main body escapes; abandon cohesion and the campaign may end here.",
+    "outcome": {
+      "briliant": {
+        "goto": 5,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 450,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+      },
+      "victory": {
+        "goto": 5,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 425,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+      },
+      "tactical": {
+        "goto": 5,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 400,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "You could not achieve your goals, the mission was a failure! You had your chance, we need commander who successfully complete orders. This was your last combat mission!<br><br>THE END!"
+      }
+    }
+  },
+  {
+    "id": 5,
+    "scenario": "bn8s05.xml",
+    "startprestige": 0,
+    "intro": "The battle is already turning against you; survival now depends on discipline, not glory. OPERATION TRIO - 10 May 1942 places your command at Foca, Srpska Region, Bosnia. Foca, Srpska Region, Bosnia CO Commander Koca Popovic Italians, Croats and Chetniks have launched a large-scale operation against our liberated territory. Cover the retreat of the 1st Proletarian Brigade, especially the Brigade HQ! The wider stakes are clear: Within a few weeks of the end of Operation Trio only 600 Partisan fighters were left in eastern Bosnia, comprising the Group of Shock Battalions and the Birac Partisan Detachment. Every surviving veteran will matter in the battles ahead, so retreat with purpose and destroy what the enemy cannot be allowed to capture.",
+    "outcome": {
+      "briliant": {
+        "goto": 6,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 700,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>BACKGROUND<br><br>Operation Trio coincided with and contributed to the polarisation of the almost exclusively Serb rebels in eastern Bosnia into two groups: the Serb-chauvinist Chetniks and the multi-ethnic and communist-led Partisans. Encouraged by Chetnik propaganda against Croats and Bosnian Muslims and repelled by the sectarian left-wing policies and actions of the communists, many Serb peasant fighters were swayed to the Chetnik cause. Violent coups occurred against the communist leadership of all but one of the Partisan detachments in eastern Bosnia, and these detachments effectively defected to the Chetniks. Most of the surviving communist fighters from these detachments joined the Partisan forces, and many withdrew with Tito to western Bosnia during the Partisan Long March. Within a few weeks of the end of Operation Trio only 600 Partisan fighters were left in eastern Bosnia, comprising the Group of Shock Battalions and the Birac Partisan Detachment. All these forces sought refuge in the Birac region. The Chetnik movement in eastern Bosnia, at best a confederacy of local warlords, was strengthened by mass defections from the Partisans. For a time they ruled large parts of the region, after making accommodations with the Ustase regime in May and June 1942."
+      },
+      "victory": {
+        "goto": 6,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 650,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>BACKGROUND<br><br>Operation Trio coincided with and contributed to the polarisation of the almost exclusively Serb rebels in eastern Bosnia into two groups: the Serb-chauvinist Chetniks and the multi-ethnic and communist-led Partisans. Encouraged by Chetnik propaganda against Croats and Bosnian Muslims and repelled by the sectarian left-wing policies and actions of the communists, many Serb peasant fighters were swayed to the Chetnik cause. Violent coups occurred against the communist leadership of all but one of the Partisan detachments in eastern Bosnia, and these detachments effectively defected to the Chetniks. Most of the surviving communist fighters from these detachments joined the Partisan forces, and many withdrew with Tito to western Bosnia during the Partisan Long March. Within a few weeks of the end of Operation Trio only 600 Partisan fighters were left in eastern Bosnia, comprising the Group of Shock Battalions and the Birac Partisan Detachment. All these forces sought refuge in the Birac region. The Chetnik movement in eastern Bosnia, at best a confederacy of local warlords, was strengthened by mass defections from the Partisans. For a time they ruled large parts of the region, after making accommodations with the Ustase regime in May and June 1942."
+      },
+      "tactical": {
+        "goto": 6,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 600,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>BACKGROUND<br><br>Operation Trio coincided with and contributed to the polarisation of the almost exclusively Serb rebels in eastern Bosnia into two groups: the Serb-chauvinist Chetniks and the multi-ethnic and communist-led Partisans. Encouraged by Chetnik propaganda against Croats and Bosnian Muslims and repelled by the sectarian left-wing policies and actions of the communists, many Serb peasant fighters were swayed to the Chetnik cause. Violent coups occurred against the communist leadership of all but one of the Partisan detachments in eastern Bosnia, and these detachments effectively defected to the Chetniks. Most of the surviving communist fighters from these detachments joined the Partisan forces, and many withdrew with Tito to western Bosnia during the Partisan Long March. Within a few weeks of the end of Operation Trio only 600 Partisan fighters were left in eastern Bosnia, comprising the Group of Shock Battalions and the Birac Partisan Detachment. All these forces sought refuge in the Birac region. The Chetnik movement in eastern Bosnia, at best a confederacy of local warlords, was strengthened by mass defections from the Partisans. For a time they ruled large parts of the region, after making accommodations with the Ustase regime in May and June 1942."
+      },
+      "lose": {
+        "goto": 6,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 600,
+        "text": "You could not achieve your goals, the mission was a failure! Hopefully you have gained some experience to avoid such failures in future.<br><br>BACKGROUND<br><br>Operation Trio was the first large-scale joint German-Italian counter-insurgency operation of World War II conducted in the Independent State of Croatia (NDH), which included modern-day Bosnia and Herzegovina. It was carried out in two phases within eastern Bosnia from 20 April to 13 May 1942, with Ustase militia and Croatian Home Guard forces taking part on the Axis side. The aim of the operation was to target all insurgents between Sarajevo and the Drina river in eastern Bosnia. These included groups led by communists and Serb-chauvinist Chetniks. Differentiating between the rank and file of the two insurgent factions was difficult, as even the communist-led insurgent groups consisted mainly of Serb peasants who had little understanding of the political aims of their leaders.<br><br>Operation Trio consisted of two parts, Trio I and Trio II. Together they comprised the first phase of the Axis effort known as the Third Enemy Offensive. The joint Italian-Chetnik Herzegovina Offensive formed the second phase. The Third Enemy Offensive forms part of the Seven Enemy Offensives framework in Yugoslav historiography.<br><br>The operation was of limited effectiveness due to several factors, including pre-emptive action by the Ustase militia and Italian delays. The area of operations straddled the demarcation line between the German and Italian zones of occupation within the NDH, which led to mutual suspicion and lack of coordination. Both insurgent factions avoided fighting the Axis and NDH forces, instead focusing on fighting each other. After Operation Trio, the Partisan leader Josip Broz Tito, his Supreme Staff and the Partisan main force, consisting of the 1st and 2nd Proletarian Brigades, withdrew from their base of operations around Foca. After briefly reorganising around Zelengora mountain south-east of Foca, they moved their operations to western Bosnia for the remainder of 1942."
+      }
+    }
+  },
+  {
+    "id": 6,
+    "scenario": "bn8s06.xml",
+    "startprestige": 0,
+    "intro": "The battle is already turning against you; survival now depends on discipline, not glory. COUNTERATTACK ON KLIJUC - 7 Oct 1942 places your command at West of Kljuc, Una-Sana Region, Bosnia. West of Kljuc, Una-Sana Region, Bosnia CO Commander Koca Popovic Few days ago the fascists managed to capture the city Kljuc. Attack Kljuc, liberate the city and cut off the withdrawal Fascists and destroy them! The wider stakes are clear: You have achieved all objectives, the mission was a complete success. A strong result opens the road to CASE WHITE - 30 Feb 1943. Rear guards must buy time while the main body escapes; abandon cohesion and the campaign may end here.",
+    "outcome": {
+      "briliant": {
+        "goto": 7,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 800,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+      },
+      "victory": {
+        "goto": 7,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 750,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+      },
+      "tactical": {
+        "goto": 7,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 700,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "You could not achieve your goals, the mission was a failure! You had your chance, we need commander who successfully complete orders. This was your last combat mission!<br><br>THE END!"
+      }
+    }
+  },
+  {
+    "id": 7,
+    "scenario": "bn8s07.xml",
+    "startprestige": 0,
+    "intro": "Your force is exposed, the roads are closing, and every hour of delay narrows the route to safety. CASE WHITE - 30 Feb 1943 places your command at Vicinity of the Neretva River, Herzegovina. We must retreat as quickly as possible to Montenegro and our only remaining option is to reach and cross the Neretva River. When air reconnaissance brought this information to the German command, they concluded that the Partisans must be preparing a final dash north of their current position (along the western shore of the Neretva), and had blown up the bridge to prevent desertion as well as attack by Chetnik forces from the other side of the river.",
+    "outcome": {
+      "briliant": {
+        "goto": 8,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 700,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>BACKGROUND<br><br>Case White (German: Fall Weiss), also known as the Fourth Enemy Offensive was a combined Axis strategic offensive launched against the Yugoslav Partisans throughout occupied Yugoslavia during World War II. It is one of the most significant confrontations of the Yugoslav Front. The offensive took place in early 1943, between 20 January and mid-to-late March 1943.<br><br>The operation is most remembered in Yugoslavia for its final phase, the Battle of the Neretva in Jablanica, named after the Neretva river. The final phase is also known as the Battle for the Wounded.<br><br>In late 1942, with the Axis situation in North Africa deteriorating, the German high command became concerned about the possibility of an Allied landing in the Balkans. This was of particular concern due to the substantial resources they were extracting from Yugoslavia, including timber, copper and bauxite. In the event of an Allied landing, resistance forces in Yugoslavia would be likely to interfere with German defensive operations as well as continued resource extraction. As a result, on 16 December 1942, Adolf Hitler ordered the Armed Forces Commander in South-East Europe, Generaloberst Alexander Löhr to crush the resistance in Yugoslavia. In a meeting of 18-19 December, the General Staff of the Wehrmacht decided on the destruction of the Bihac Republic. On 8 January, Löhr and Mario Roatta, commander of the 2nd Italian army, met in Zagreb and devised a detailed plan."
+      },
+      "victory": {
+        "goto": 8,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 650,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>BACKGROUND<br><br>Case White (German: Fall Weiss), also known as the Fourth Enemy Offensive was a combined Axis strategic offensive launched against the Yugoslav Partisans throughout occupied Yugoslavia during World War II. It is one of the most significant confrontations of the Yugoslav Front. The offensive took place in early 1943, between 20 January and mid-to-late March 1943.<br><br>The operation is most remembered in Yugoslavia for its final phase, the Battle of the Neretva in Jablanica, named after the Neretva river. The final phase is also known as the Battle for the Wounded.<br><br>In late 1942, with the Axis situation in North Africa deteriorating, the German high command became concerned about the possibility of an Allied landing in the Balkans. This was of particular concern due to the substantial resources they were extracting from Yugoslavia, including timber, copper and bauxite. In the event of an Allied landing, resistance forces in Yugoslavia would be likely to interfere with German defensive operations as well as continued resource extraction. As a result, on 16 December 1942, Adolf Hitler ordered the Armed Forces Commander in South-East Europe, Generaloberst Alexander Löhr to crush the resistance in Yugoslavia. In a meeting of 18-19 December, the General Staff of the Wehrmacht decided on the destruction of the Bihac Republic. On 8 January, Löhr and Mario Roatta, commander of the 2nd Italian army, met in Zagreb and devised a detailed plan."
+      },
+      "tactical": {
+        "goto": 8,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 600,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>BACKGROUND<br><br>Case White (German: Fall Weiss), also known as the Fourth Enemy Offensive was a combined Axis strategic offensive launched against the Yugoslav Partisans throughout occupied Yugoslavia during World War II. It is one of the most significant confrontations of the Yugoslav Front. The offensive took place in early 1943, between 20 January and mid-to-late March 1943.<br><br>The operation is most remembered in Yugoslavia for its final phase, the Battle of the Neretva in Jablanica, named after the Neretva river. The final phase is also known as the Battle for the Wounded.<br><br>In late 1942, with the Axis situation in North Africa deteriorating, the German high command became concerned about the possibility of an Allied landing in the Balkans. This was of particular concern due to the substantial resources they were extracting from Yugoslavia, including timber, copper and bauxite. In the event of an Allied landing, resistance forces in Yugoslavia would be likely to interfere with German defensive operations as well as continued resource extraction. As a result, on 16 December 1942, Adolf Hitler ordered the Armed Forces Commander in South-East Europe, Generaloberst Alexander Löhr to crush the resistance in Yugoslavia. In a meeting of 18-19 December, the General Staff of the Wehrmacht decided on the destruction of the Bihac Republic. On 8 January, Löhr and Mario Roatta, commander of the 2nd Italian army, met in Zagreb and devised a detailed plan."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "You could not achieve your goals, the mission was a failure! You had your chance, we need commander who successfully complete orders. This was your last combat mission!<br><br>THE END!<br><br>BACKGROUND<br><br>Case White (German: Fall Weiss), also known as the Fourth Enemy Offensive was a combined Axis strategic offensive launched against the Yugoslav Partisans throughout occupied Yugoslavia during World War II. It is one of the most significant confrontations of the Yugoslav Front. The offensive took place in early 1943, between 20 January and mid-to-late March 1943.<br><br>The operation is most remembered in Yugoslavia for its final phase, the Battle of the Neretva in Jablanica, named after the Neretva river. The final phase is also known as the Battle for the Wounded.<br><br>In late 1942, with the Axis situation in North Africa deteriorating, the German high command became concerned about the possibility of an Allied landing in the Balkans. This was of particular concern due to the substantial resources they were extracting from Yugoslavia, including timber, copper and bauxite. In the event of an Allied landing, resistance forces in Yugoslavia would be likely to interfere with German defensive operations as well as continued resource extraction. As a result, on 16 December 1942, Adolf Hitler ordered the Armed Forces Commander in South-East Europe, Generaloberst Alexander Löhr to crush the resistance in Yugoslavia. In a meeting of 18-19 December, the General Staff of the Wehrmacht decided on the destruction of the Bihac Republic. On 8 January, Löhr and Mario Roatta, commander of the 2nd Italian army, met in Zagreb and devised a detailed plan."
+      }
+    }
+  },
+  {
+    "id": 8,
+    "scenario": "bn8s08.xml",
+    "startprestige": 0,
+    "intro": "The enemy owns the roads by day; your fighters must own the shadows around them. CASE BLACK - 4 Jun 1943 places your command at Vicinity of the Sutjeska River, Southeastern Bosnia. Strong enemy forces have encircled us and try to block our way into eastern Bosnia. The Axis troops used the advantage of better starting positions to encircle and isolate the partisans on the Durmitor mountain area, located between the Tara and Piva rivers in the mountainous areas of northern Montenegro and forced them to engage in a fierce month-long battle on waste territory. The wider stakes are clear: The operation immediately followed Case White which had failed in accomplishing the same objectives: to eliminate the central Partisan formations and capture their commander, Marshal Josip Broz Tito.",
+    "outcome": {
+      "briliant": {
+        "goto": 9,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1200,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>BACKGROUND<br><br>Case Black (German: Fall Schwarz), also known as the Fifth Enemy Offensive in Yugoslav historiography and often identified with its final phase, the Battle of the Sutjeska was a joint attack by the Axis taking place from 15 May to 16 June 1943, which aimed to destroy the main Yugoslav Partisan force, near the Sutjeska river in south-eastern Bosnia. The failure of the offensive marked a turning point for Yugoslavia during World War II.<br><br>The operation immediately followed Case White which had failed in accomplishing the same objectives: to eliminate the central Partisan formations and capture their commander, Marshal Josip Broz Tito.<br><br>There are several songs about the Battle of Sutjeska. One of the more popular is called Sivi Sokole which translates to Peregrine Falcon. It mentions the death of Commander Sava Kovacevic.<br><br>Peregrine Falcon, old friend of mine,<br>Give me wings, Falcon, that I may fly over the mountains.<br><br>The mountain is high, the sky above it,<br>And in the sky the peregrine falcon, looking down upon me.<br><br>The Sutjeska is deep, the canyon above it<br>Above the canyon stands Tito, watches over the wounded<br><br>Above the canyon stands Tito and commands,<br>The Sutjeska must be crossed to save the wounded,<br>Peregrine falcon...<br><br>The Sutjeska is breached, the wounded are saved<br>But our old hero Sava remains and lies dead<br>Peregrine falcon...<br><br>We have toiled, we toil, we will toil still<br>Comrade Tito, we pledge, we will triumph."
+      },
+      "victory": {
+        "goto": 9,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1100,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>BACKGROUND<br><br>Case Black (German: Fall Schwarz), also known as the Fifth Enemy Offensive in Yugoslav historiography and often identified with its final phase, the Battle of the Sutjeska was a joint attack by the Axis taking place from 15 May to 16 June 1943, which aimed to destroy the main Yugoslav Partisan force, near the Sutjeska river in south-eastern Bosnia. The failure of the offensive marked a turning point for Yugoslavia during World War II.<br><br>The operation immediately followed Case White which had failed in accomplishing the same objectives: to eliminate the central Partisan formations and capture their commander, Marshal Josip Broz Tito.<br><br>There are several songs about the Battle of Sutjeska. One of the more popular is called Sivi Sokole which translates to Peregrine Falcon. It mentions the death of Commander Sava Kovacevic.<br><br>Peregrine Falcon, old friend of mine,<br>Give me wings, Falcon, that I may fly over the mountains.<br><br>The mountain is high, the sky above it,<br>And in the sky the peregrine falcon, looking down upon me.<br><br>The Sutjeska is deep, the canyon above it<br>Above the canyon stands Tito, watches over the wounded<br><br>Above the canyon stands Tito and commands,<br>The Sutjeska must be crossed to save the wounded,<br>Peregrine falcon...<br><br>The Sutjeska is breached, the wounded are saved<br>But our old hero Sava remains and lies dead<br>Peregrine falcon...<br><br>We have toiled, we toil, we will toil still<br>Comrade Tito, we pledge, we will triumph."
+      },
+      "tactical": {
+        "goto": 9,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1000,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>BACKGROUND<br><br>Case Black (German: Fall Schwarz), also known as the Fifth Enemy Offensive in Yugoslav historiography and often identified with its final phase, the Battle of the Sutjeska was a joint attack by the Axis taking place from 15 May to 16 June 1943, which aimed to destroy the main Yugoslav Partisan force, near the Sutjeska river in south-eastern Bosnia. The failure of the offensive marked a turning point for Yugoslavia during World War II.<br><br>The operation immediately followed Case White which had failed in accomplishing the same objectives: to eliminate the central Partisan formations and capture their commander, Marshal Josip Broz Tito.<br><br>There are several songs about the Battle of Sutjeska. One of the more popular is called Sivi Sokole which translates to Peregrine Falcon. It mentions the death of Commander Sava Kovacevic.<br><br>Peregrine Falcon, old friend of mine,<br>Give me wings, Falcon, that I may fly over the mountains.<br><br>The mountain is high, the sky above it,<br>And in the sky the peregrine falcon, looking down upon me.<br><br>The Sutjeska is deep, the canyon above it<br>Above the canyon stands Tito, watches over the wounded<br><br>Above the canyon stands Tito and commands,<br>The Sutjeska must be crossed to save the wounded,<br>Peregrine falcon...<br><br>The Sutjeska is breached, the wounded are saved<br>But our old hero Sava remains and lies dead<br>Peregrine falcon...<br><br>We have toiled, we toil, we will toil still<br>Comrade Tito, we pledge, we will triumph."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "You could not achieve your goals, the mission was a failure! You had your chance, we need commander who successfully complete orders. This was your last combat mission!<br><br>THE END!<br><br>BACKGROUND<br><br>Case Black (German: Fall Schwarz), also known as the Fifth Enemy Offensive in Yugoslav historiography and often identified with its final phase, the Battle of the Sutjeska was a joint attack by the Axis taking place from 15 May to 16 June 1943, which aimed to destroy the main Yugoslav Partisan force, near the Sutjeska river in south-eastern Bosnia. The failure of the offensive marked a turning point for Yugoslavia during World War II.<br><br>The operation immediately followed Case White which had failed in accomplishing the same objectives: to eliminate the central Partisan formations and capture their commander, Marshal Josip Broz Tito.<br><br>There are several songs about the Battle of Sutjeska. One of the more popular is called Sivi Sokole which translates to Peregrine Falcon. It mentions the death of Commander Sava Kovacevic.<br><br>Peregrine Falcon, old friend of mine,<br>Give me wings, Falcon, that I may fly over the mountains.<br><br>The mountain is high, the sky above it,<br>And in the sky the peregrine falcon, looking down upon me.<br><br>The Sutjeska is deep, the canyon above it<br>Above the canyon stands Tito, watches over the wounded<br><br>Above the canyon stands Tito and commands,<br>The Sutjeska must be crossed to save the wounded,<br>Peregrine falcon...<br><br>The Sutjeska is breached, the wounded are saved<br>But our old hero Sava remains and lies dead<br>Peregrine falcon...<br><br>We have toiled, we toil, we will toil still<br>Comrade Tito, we pledge, we will triumph."
+      }
+    }
+  },
+  {
+    "id": 9,
+    "scenario": "bn8s09.xml",
+    "startprestige": 0,
+    "intro": "Strike hard, disappear quickly, and leave the occupier afraid of every path and village. OPERATION ISTRIA - 25 Sep 1943 places your command at Vicinity of Petrinja, Central Croatia. Unfortunately the fascists has occupied the most important cities such as Trieste, Rijeka and Zadar before we could intervene. Capture all VH and hold it for 15 turns! The wider stakes are clear: You have achieved all objectives, the mission was a complete success. A strong result opens the road to BANJA LUKA STRIKE - 18 Dec 1943. Use concealment, local mobility, and carefully chosen objectives to turn a raid into a strategic embarrassment.",
+    "outcome": {
+      "briliant": {
+        "goto": 10,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>BACKGROUND<br><br>Operation goal for the Germans was to occupy Slovenian littoral, Istrian peninsula, part of Kvarner littoral as well as Gorski Kotar to Ogulin in order to link up with Army Group F. Often confused with operation WOLKENBRUCH which followed immediately after probably beacuse they are locally known as Rommel's offensive or October offensive."
+      },
+      "victory": {
+        "goto": 10,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 450,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>BACKGROUND<br><br>Operation goal for the Germans was to occupy Slovenian littoral, Istrian peninsula, part of Kvarner littoral as well as Gorski Kotar to Ogulin in order to link up with Army Group F. Often confused with operation WOLKENBRUCH which followed immediately after probably beacuse they are locally known as Rommel's offensive or October offensive."
+      },
+      "tactical": {
+        "goto": 10,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 400,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>BACKGROUND<br><br>Operation goal for the Germans was to occupy Slovenian littoral, Istrian peninsula, part of Kvarner littoral as well as Gorski Kotar to Ogulin in order to link up with Army Group F. Often confused with operation WOLKENBRUCH which followed immediately after probably beacuse they are locally known as Rommel's offensive or October offensive."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "You could not achieve your goals, the mission was a failure! You had your chance, we need commander who successfully complete orders. This was your last combat mission!<br><br>THE END!<br><br>BACKGROUND<br><br>Operation goal for the Germans was to occupy Slovenian littoral, Istrian peninsula, part of Kvarner littoral as well as Gorski Kotar to Ogulin in order to link up with Army Group F. Often confused with operation WOLKENBRUCH which followed immediately after probably beacuse they are locally known as Rommel's offensive or October offensive."
+      }
+    }
+  },
+  {
+    "id": 10,
+    "scenario": "bn8s10.xml",
+    "startprestige": 0,
+    "intro": "Strike hard, disappear quickly, and leave the occupier afraid of every path and village. BANJA LUKA STRIKE - 18 Dec 1943 places your command at North of Banja Luka, Bosnia. North of Banja Luka, Bosnia CO Commander Slavko Rodic Your Corps will start a surprise attack on the largest town in the region of Srpska. Liberate the citizens of Banja Luka from the fascist bondage! The wider stakes are clear: You have achieved all objectives, the mission was a complete success. A strong result opens the road to KNIGHT'S MOVE - 25 May 1944. Avoid a fair fight, strike communications and isolated units, and withdraw before superior firepower can be brought to bear.",
+    "outcome": {
+      "briliant": {
+        "goto": 11,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 550,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+      },
+      "victory": {
+        "goto": 11,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+      },
+      "tactical": {
+        "goto": 11,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 450,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "You could not achieve your goals, the mission was a failure! You had your chance, we need commander who successfully complete orders. This was your last combat mission!<br><br>THE END!"
+      }
+    }
+  },
+  {
+    "id": 11,
+    "scenario": "bn8s11.xml",
+    "startprestige": 0,
+    "intro": "The enemy owns the roads by day; your fighters must own the shadows around them. KNIGHT'S MOVE - 25 May 1944 places your command at Drvar Region, Western Bosnia. Airborne assault and initial response 500th SS Parachute Battalion began to parachute and glide onto their objectives at 7am, with most parachutists and glider pilots able to land relatively close to their targets despite the smoke and dust from the bombing. They split into two groups, a smaller group which crossed the Unac and advanced west along the railway line on the ridge leading toward Tito's cave, and a larger group which collected arms and ammunition from several stray canisters of German equipment dropped by parachute.",
+    "outcome": {
+      "briliant": {
+        "goto": 12,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1500,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>BACKGROUND<br><br>Operation Rösselsprung (Knight's move) was a combined airborne and ground assault by the German XV Mountain Corps and their Allies on the Supreme Headquarters of the Yugoslav Partisans located at the town of Drvar in western Independent State of Croatia (of which modern-day Bosnia and Herzegovina was a part) during World War II. The operation was launched on 25 May 1944, and was aimed at capturing or killing Marshal Josip Broz Tito and destroying the headquarters, support facilities and co-located Allied military missions. It is associated with the Seventh Enemy Offensive in Yugoslav history. The airborne assault itself is also known as the Raid on Drvar.<br><br>Operation Rösselsprung was a coup de main operation involving direct action by a parachute and glider-borne assault force based on 500th SS Parachute Battalion and their link-up with ground forces of the XV Mountain Corps converging on Drvar. The airborne assault was preceded by heavy bombing of the town by the Luftwaffe. The ground forces included Home Guard forces of the Independent State of Croatia.<br><br>The operation was a failure, as Tito, his principal headquarters staff and the allied military personnel escaped, despite their presence in Drvar at the time of the airborne assault. The operation failed due to a number of factors, including Partisan resistance in the town itself and along the approaches to Drvar. The failure of the various German intelligence agencies to share the limited intelligence available on Tito's exact location also contributed to the unsuccessful outcome for the Germans, and this failure to share intelligence was compounded by a lack of contingency planning by the commander of the German airborne force."
+      },
+      "victory": {
+        "goto": 12,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1400,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>BACKGROUND<br><br>Operation Rösselsprung (Knight's move) was a combined airborne and ground assault by the German XV Mountain Corps and their Allies on the Supreme Headquarters of the Yugoslav Partisans located at the town of Drvar in western Independent State of Croatia (of which modern-day Bosnia and Herzegovina was a part) during World War II. The operation was launched on 25 May 1944, and was aimed at capturing or killing Marshal Josip Broz Tito and destroying the headquarters, support facilities and co-located Allied military missions. It is associated with the Seventh Enemy Offensive in Yugoslav history. The airborne assault itself is also known as the Raid on Drvar.<br><br>Operation Rösselsprung was a coup de main operation involving direct action by a parachute and glider-borne assault force based on 500th SS Parachute Battalion and their link-up with ground forces of the XV Mountain Corps converging on Drvar. The airborne assault was preceded by heavy bombing of the town by the Luftwaffe. The ground forces included Home Guard forces of the Independent State of Croatia.<br><br>The operation was a failure, as Tito, his principal headquarters staff and the allied military personnel escaped, despite their presence in Drvar at the time of the airborne assault. The operation failed due to a number of factors, including Partisan resistance in the town itself and along the approaches to Drvar. The failure of the various German intelligence agencies to share the limited intelligence available on Tito's exact location also contributed to the unsuccessful outcome for the Germans, and this failure to share intelligence was compounded by a lack of contingency planning by the commander of the German airborne force."
+      },
+      "tactical": {
+        "goto": 12,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1300,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>BACKGROUND<br><br>Operation Rösselsprung (Knight's move) was a combined airborne and ground assault by the German XV Mountain Corps and their Allies on the Supreme Headquarters of the Yugoslav Partisans located at the town of Drvar in western Independent State of Croatia (of which modern-day Bosnia and Herzegovina was a part) during World War II. The operation was launched on 25 May 1944, and was aimed at capturing or killing Marshal Josip Broz Tito and destroying the headquarters, support facilities and co-located Allied military missions. It is associated with the Seventh Enemy Offensive in Yugoslav history. The airborne assault itself is also known as the Raid on Drvar.<br><br>Operation Rösselsprung was a coup de main operation involving direct action by a parachute and glider-borne assault force based on 500th SS Parachute Battalion and their link-up with ground forces of the XV Mountain Corps converging on Drvar. The airborne assault was preceded by heavy bombing of the town by the Luftwaffe. The ground forces included Home Guard forces of the Independent State of Croatia.<br><br>The operation was a failure, as Tito, his principal headquarters staff and the allied military personnel escaped, despite their presence in Drvar at the time of the airborne assault. The operation failed due to a number of factors, including Partisan resistance in the town itself and along the approaches to Drvar. The failure of the various German intelligence agencies to share the limited intelligence available on Tito's exact location also contributed to the unsuccessful outcome for the Germans, and this failure to share intelligence was compounded by a lack of contingency planning by the commander of the German airborne force."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "You could not achieve your goals, the mission was a failure! You had your chance, we need commander who successfully complete orders. This was your last combat mission!<br><br>THE END!<br><br>BACKGROUND<br><br>Operation Rösselsprung (Knight's move) was a combined airborne and ground assault by the German XV Mountain Corps and their Allies on the Supreme Headquarters of the Yugoslav Partisans located at the town of Drvar in western Independent State of Croatia (of which modern-day Bosnia and Herzegovina was a part) during World War II. The operation was launched on 25 May 1944, and was aimed at capturing or killing Marshal Josip Broz Tito and destroying the headquarters, support facilities and co-located Allied military missions. It is associated with the Seventh Enemy Offensive in Yugoslav history. The airborne assault itself is also known as the Raid on Drvar.<br><br>Operation Rösselsprung was a coup de main operation involving direct action by a parachute and glider-borne assault force based on 500th SS Parachute Battalion and their link-up with ground forces of the XV Mountain Corps converging on Drvar. The airborne assault was preceded by heavy bombing of the town by the Luftwaffe. The ground forces included Home Guard forces of the Independent State of Croatia.<br><br>The operation was a failure, as Tito, his principal headquarters staff and the allied military personnel escaped, despite their presence in Drvar at the time of the airborne assault. The operation failed due to a number of factors, including Partisan resistance in the town itself and along the approaches to Drvar. The failure of the various German intelligence agencies to share the limited intelligence available on Tito's exact location also contributed to the unsuccessful outcome for the Germans, and this failure to share intelligence was compounded by a lack of contingency planning by the commander of the German airborne force."
+      }
+    }
+  },
+  {
+    "id": 12,
+    "scenario": "bn8s12.xml",
+    "startprestige": 0,
+    "intro": "There is no continuous front here—only terrain, secrecy, and the moment chosen for the first shot. OPERATION RATWEEK - 3 Sep 1944 places your command at West of Zagreb, Croatia. In recent days, the USAAF bombed all enemy airfields in Zagreb east of the Sava River. Your task is the capture and destruction of the remaining enemy airfields west of the Sava River! The wider stakes are clear: Allied air force destroyed 112 locomotives, 243 motorized transports and 413 railway carts, also attacks on the airfields destroyed 94 aircraft crippling Luftwaffe strength in Yugoslavia. A strong result opens the road to BELGRADE OFFENSIVE - 12 Oct 1944. Use concealment, local mobility, and carefully chosen objectives to turn a raid into a strategic embarrassment.",
+    "outcome": {
+      "briliant": {
+        "goto": 13,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 650,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>BACKGROUND<br><br>15th USAAF made 1373 sorties and drooped 3000 tons of bombs, while BAF made some 600 fighter sorties. Allied air force destroyed 112 locomotives, 243 motorized transports and 413 railway carts, also attacks on the airfields destroyed 94 aircraft crippling Luftwaffe strength in Yugoslavia. The Long Range Desert Group and the Special Boat Service destroyed bridge near Gruda and attacked coastal targets in Dubrovnik region, while Royal Navy harassed German sea traffic.<br><br>Yugoslav partisans among other things, captured eight communication centers, 49 railway stations or strongholds, destroyed 77 kilometers of railroad tracks, 97 road and railway bridges, also cut 77 kilometers of phone and telegraph lines.<br><br>Axis forces had suffered 4187 killed, around 2000 wounded and 5782 captured soldiers. Railway traffic was interrupted for two to three weeks during vital period of German retreat from Balkan (Greece, Bulgaria, Romania) in front of advancing Soviet army allowing for quick liberation of Belgrade.<br><br>In following weeks Army Group E narrowly avoid being cut off and destroyed because while RATWEEK prevented timely arrival of reinforcements to Belgrade, evacuation of German garrisons from the islands went mostly uninterrupted until last possible moment (thousands of troops still had to be abandoned on Crete which remained occupied until end of the war) despite little or no protection and when finally Germans began their retreat from Greece operation ended with most Allied air-power diverted to support operations on Gothic line in Italy, another week of bombing would probably delay Army Group E enough to make escape impossible."
+      },
+      "victory": {
+        "goto": 13,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 600,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>BACKGROUND<br><br>15th USAAF made 1373 sorties and drooped 3000 tons of bombs, while BAF made some 600 fighter sorties. Allied air force destroyed 112 locomotives, 243 motorized transports and 413 railway carts, also attacks on the airfields destroyed 94 aircraft crippling Luftwaffe strength in Yugoslavia. The Long Range Desert Group and the Special Boat Service destroyed bridge near Gruda and attacked coastal targets in Dubrovnik region, while Royal Navy harassed German sea traffic.<br><br>Yugoslav partisans among other things, captured eight communication centers, 49 railway stations or strongholds, destroyed 77 kilometers of railroad tracks, 97 road and railway bridges, also cut 77 kilometers of phone and telegraph lines.<br><br>Axis forces had suffered 4187 killed, around 2000 wounded and 5782 captured soldiers. Railway traffic was interrupted for two to three weeks during vital period of German retreat from Balkan (Greece, Bulgaria, Romania) in front of advancing Soviet army allowing for quick liberation of Belgrade.<br><br>In following weeks Army Group E narrowly avoid being cut off and destroyed because while RATWEEK prevented timely arrival of reinforcements to Belgrade, evacuation of German garrisons from the islands went mostly uninterrupted until last possible moment (thousands of troops still had to be abandoned on Crete which remained occupied until end of the war) despite little or no protection and when finally Germans began their retreat from Greece operation ended with most Allied air-power diverted to support operations on Gothic line in Italy, another week of bombing would probably delay Army Group E enough to make escape impossible."
+      },
+      "tactical": {
+        "goto": 13,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 550,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>BACKGROUND<br><br>15th USAAF made 1373 sorties and drooped 3000 tons of bombs, while BAF made some 600 fighter sorties. Allied air force destroyed 112 locomotives, 243 motorized transports and 413 railway carts, also attacks on the airfields destroyed 94 aircraft crippling Luftwaffe strength in Yugoslavia. The Long Range Desert Group and the Special Boat Service destroyed bridge near Gruda and attacked coastal targets in Dubrovnik region, while Royal Navy harassed German sea traffic.<br><br>Yugoslav partisans among other things, captured eight communication centers, 49 railway stations or strongholds, destroyed 77 kilometers of railroad tracks, 97 road and railway bridges, also cut 77 kilometers of phone and telegraph lines.<br><br>Axis forces had suffered 4187 killed, around 2000 wounded and 5782 captured soldiers. Railway traffic was interrupted for two to three weeks during vital period of German retreat from Balkan (Greece, Bulgaria, Romania) in front of advancing Soviet army allowing for quick liberation of Belgrade.<br><br>In following weeks Army Group E narrowly avoid being cut off and destroyed because while RATWEEK prevented timely arrival of reinforcements to Belgrade, evacuation of German garrisons from the islands went mostly uninterrupted until last possible moment (thousands of troops still had to be abandoned on Crete which remained occupied until end of the war) despite little or no protection and when finally Germans began their retreat from Greece operation ended with most Allied air-power diverted to support operations on Gothic line in Italy, another week of bombing would probably delay Army Group E enough to make escape impossible."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "You could not achieve your goals, the mission was a failure! You had your chance, we need commander who successfully complete orders. This was your last combat mission!<br><br>THE END!<br><br>BACKGROUND<br><br>15th USAAF made 1373 sorties and drooped 3000 tons of bombs, while BAF made some 600 fighter sorties. Allied air force destroyed 112 locomotives, 243 motorized transports and 413 railway carts, also attacks on the airfields destroyed 94 aircraft crippling Luftwaffe strength in Yugoslavia. The Long Range Desert Group and the Special Boat Service destroyed bridge near Gruda and attacked coastal targets in Dubrovnik region, while Royal Navy harassed German sea traffic.<br><br>Yugoslav partisans among other things, captured eight communication centers, 49 railway stations or strongholds, destroyed 77 kilometers of railroad tracks, 97 road and railway bridges, also cut 77 kilometers of phone and telegraph lines.<br><br>Axis forces had suffered 4187 killed, around 2000 wounded and 5782 captured soldiers. Railway traffic was interrupted for two to three weeks during vital period of German retreat from Balkan (Greece, Bulgaria, Romania) in front of advancing Soviet army allowing for quick liberation of Belgrade.<br><br>In following weeks Army Group E narrowly avoid being cut off and destroyed because while RATWEEK prevented timely arrival of reinforcements to Belgrade, evacuation of German garrisons from the islands went mostly uninterrupted until last possible moment (thousands of troops still had to be abandoned on Crete which remained occupied until end of the war) despite little or no protection and when finally Germans began their retreat from Greece operation ended with most Allied air-power diverted to support operations on Gothic line in Italy, another week of bombing would probably delay Army Group E enough to make escape impossible."
+      }
+    }
+  },
+  {
+    "id": 13,
+    "scenario": "bn8s13.xml",
+    "startprestige": 0,
+    "intro": "The enemy owns the roads by day; your fighters must own the shadows around them. BELGRADE OFFENSIVE - 12 Oct 1944 places your command at West of Belgrade, Serbia. West of Belgrade, Serbia CO General Peko Dapcevic The time has come to liberate the Serbian capital from the fascist bondage! The Yugoslavs advanced along the roads in the direction of Belgrade south of the Sava River, while the Red Army engaged in fighting on the northern bank outskirts. The wider stakes are clear: The objective was to destroy the forces of the German Army Group E in the Suva Planina region, and those of Army Group F east of Velika Morava river, and ultimately to free Belgrade from Nazi occupation.",
+    "outcome": {
+      "briliant": {
+        "goto": 14,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 800,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>BACKGROUND<br><br>The Belgrade Offensive or the Belgrade Strategic Offensive Operation (14 September-24 November 1944) was an offensive military operation in which Belgrade was liberated from the German Wehrmacht by the joint efforts of the Soviet Red Army, the Yugoslav Partisans, and the Bulgarian People's Army. These forces launched separate but loosely coordinated operations that successfully forced the Germans out of the Belgrade area.<br><br>The offensive involved the Soviet 3rd Ukrainian Front (including the Bulgarian 2nd Army), elements of the 2nd Ukrainian Front to the north, the 1st Army Group of the Yugoslav Partisans to the west, and First, Third and elements of the Fourth Bulgarian Armies to the south. They conductied an offensive against part of Germany's Army Group E (Korpsgruppe \"Schneckenburger\" and \"Stern\") which included the forces of the German-installed puppet government, quisling troops, and the military forces of the puppet government. The objective was to destroy the forces of the German Army Group E in the Suva Planina region, and those of Army Group F east of Velika Morava river, and ultimately to free Belgrade from Nazi occupation.<br><br>A secondary objective for the offensive was to sever the line of retreat for German Army Group E from Greece, Albania and the southern regions of Yugoslavia through Belgrade to Hungary, including the Salonica-Belgrade railroad."
+      },
+      "victory": {
+        "goto": 14,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 750,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>BACKGROUND<br><br>The Belgrade Offensive or the Belgrade Strategic Offensive Operation (14 September-24 November 1944) was an offensive military operation in which Belgrade was liberated from the German Wehrmacht by the joint efforts of the Soviet Red Army, the Yugoslav Partisans, and the Bulgarian People's Army. These forces launched separate but loosely coordinated operations that successfully forced the Germans out of the Belgrade area.<br><br>The offensive involved the Soviet 3rd Ukrainian Front (including the Bulgarian 2nd Army), elements of the 2nd Ukrainian Front to the north, the 1st Army Group of the Yugoslav Partisans to the west, and First, Third and elements of the Fourth Bulgarian Armies to the south. They conductied an offensive against part of Germany's Army Group E (Korpsgruppe \"Schneckenburger\" and \"Stern\") which included the forces of the German-installed puppet government, quisling troops, and the military forces of the puppet government. The objective was to destroy the forces of the German Army Group E in the Suva Planina region, and those of Army Group F east of Velika Morava river, and ultimately to free Belgrade from Nazi occupation.<br><br>A secondary objective for the offensive was to sever the line of retreat for German Army Group E from Greece, Albania and the southern regions of Yugoslavia through Belgrade to Hungary, including the Salonica-Belgrade railroad."
+      },
+      "tactical": {
+        "goto": 14,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 700,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>BACKGROUND<br><br>The Belgrade Offensive or the Belgrade Strategic Offensive Operation (14 September-24 November 1944) was an offensive military operation in which Belgrade was liberated from the German Wehrmacht by the joint efforts of the Soviet Red Army, the Yugoslav Partisans, and the Bulgarian People's Army. These forces launched separate but loosely coordinated operations that successfully forced the Germans out of the Belgrade area.<br><br>The offensive involved the Soviet 3rd Ukrainian Front (including the Bulgarian 2nd Army), elements of the 2nd Ukrainian Front to the north, the 1st Army Group of the Yugoslav Partisans to the west, and First, Third and elements of the Fourth Bulgarian Armies to the south. They conductied an offensive against part of Germany's Army Group E (Korpsgruppe \"Schneckenburger\" and \"Stern\") which included the forces of the German-installed puppet government, quisling troops, and the military forces of the puppet government. The objective was to destroy the forces of the German Army Group E in the Suva Planina region, and those of Army Group F east of Velika Morava river, and ultimately to free Belgrade from Nazi occupation.<br><br>A secondary objective for the offensive was to sever the line of retreat for German Army Group E from Greece, Albania and the southern regions of Yugoslavia through Belgrade to Hungary, including the Salonica-Belgrade railroad."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "You could not achieve your goals, the mission was a failure! You had your chance, we need commander who successfully complete orders. This was your last combat mission!<br><br>THE END!<br><br>BACKGROUND<br><br>The 4th Guards Mechanized Corps of the Red Army and the Yugoslav 12th Corps broke through the enemy resistance south of Belgrade on 14 October, approaching the city. The Yugoslavs advanced along the roads in the direction of Belgrade south of the Sava River, while the Red Army engaged in fighting on the northern bank outskirts. The assault on the city was delayed due to the diversion of forces for the elimination of thousands of enemy troops surrounded between Belgrade and Smederevo (to the south-east). On 20 October, Belgrade had been completely overrun by joint Soviet and Yugoslav forces.<br><br>The Yugoslav 13th Corps, in cooperation with the Bulgarian 2nd Army, advanced from the south-east. They were responsible for the area of Nis and Leskovac. The forces were also responsible for cutting off the main for the evacuation of Army Group E, along the rivers of South Morava and Morava. Army Group E had, therefore, been forced to retreat through the mountains of Montenegro and Bosnia and was unable to strengthen the German forces in Hungary.<br><br>The next day, elements of the 3rd Ukrainian Front stormed Kraljevo and finally cut Thessaloniki highway to Belgrade.<br><br>The Soviet 10th Guards Rifle Corps of the 46th Army (2nd Ukrainian Front), together with units of the Yugoslav Partisans moving via the Danube - provided more offensive strength from the north-east against the Wehrmacht's position in Belgrade. They cleared the left bank of the Tisa and Danube (in Yugoslavia) and took the town of Pancevo."
+      }
+    }
+  },
+  {
+    "id": 14,
+    "scenario": "bn8s14.xml",
+    "startprestige": 0,
+    "intro": "The battle is already turning against you; survival now depends on discipline, not glory. KNIN - 26 Nov 1944 places your command at South of Knin, Herzegovina. On 28 November Army Group E allowed 15th Mountain Corps to begun retreat from Knin to more defensible position north Knin which were to be held during the winter. On 1 December new assault breaks Germans lines, successful morthen outflanking maneuver by 8th Brigade of the 20th Division attacks German forces in Padene area while 26th Division ties down most of Germans to the southern sector. The wider stakes are clear: BACKGROUND Knin operation in 1944 was launched by Yugoslav Partisans 8th Corps from 7 November to 9 December 1944 with purpose of destroying German, Ustasha and Chetnik formations in the area of Knin.",
+    "outcome": {
+      "briliant": {
+        "goto": 15,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1600,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>BACKGROUND<br><br>Knin operation in 1944 was launched by Yugoslav Partisans 8th Corps from 7 November to 9 December 1944 with purpose of destroying German, Ustasha and Chetnik formations in the area of Knin. It is often refereed to as much larger Partisans offensive which liberated most of Dalmatia covering all operations from Zadar to Dubrovnik.<br><br>After difficult withdrawal from Dalmatian coastal areas during operation HERBSTGEWITTER (1944), headquarters of German 15th Mountain Corps (which was based in Knin until 19 November when it moved to Ostrozac near Bihac transferring defense of Knin to commander of the 264th Division) was ordered to hold Knin at all costs. German units were ordered to defend Knin to the last round and to the last men in order to stop advance of 8th Corps towards Lika and Bosnia. Knin was strategic point in defensive plans of German high command as part of the line going from Srymia over Sarajevo and Mostar holding the end of that line."
+      },
+      "victory": {
+        "goto": 15,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1500,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>BACKGROUND<br><br>Knin operation in 1944 was launched by Yugoslav Partisans 8th Corps from 7 November to 9 December 1944 with purpose of destroying German, Ustasha and Chetnik formations in the area of Knin. It is often refereed to as much larger Partisans offensive which liberated most of Dalmatia covering all operations from Zadar to Dubrovnik.<br><br>After difficult withdrawal from Dalmatian coastal areas during operation HERBSTGEWITTER (1944), headquarters of German 15th Mountain Corps (which was based in Knin until 19 November when it moved to Ostrozac near Bihac transferring defense of Knin to commander of the 264th Division) was ordered to hold Knin at all costs. German units were ordered to defend Knin to the last round and to the last men in order to stop advance of 8th Corps towards Lika and Bosnia. Knin was strategic point in defensive plans of German high command as part of the line going from Srymia over Sarajevo and Mostar holding the end of that line."
+      },
+      "tactical": {
+        "goto": 15,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1400,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>BACKGROUND<br><br>Knin operation in 1944 was launched by Yugoslav Partisans 8th Corps from 7 November to 9 December 1944 with purpose of destroying German, Ustasha and Chetnik formations in the area of Knin. It is often refereed to as much larger Partisans offensive which liberated most of Dalmatia covering all operations from Zadar to Dubrovnik.<br><br>After difficult withdrawal from Dalmatian coastal areas during operation HERBSTGEWITTER (1944), headquarters of German 15th Mountain Corps (which was based in Knin until 19 November when it moved to Ostrozac near Bihac transferring defense of Knin to commander of the 264th Division) was ordered to hold Knin at all costs. German units were ordered to defend Knin to the last round and to the last men in order to stop advance of 8th Corps towards Lika and Bosnia. Knin was strategic point in defensive plans of German high command as part of the line going from Srymia over Sarajevo and Mostar holding the end of that line."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "You could not achieve your goals, the mission was a failure! You had your chance, we need commander who successfully complete orders. This was your last combat mission!<br><br>THE END!<br><br>BACKGROUND<br><br>Knin operation in 1944 was launched by Yugoslav Partisans 8th Corps from 7 November to 9 December 1944 with purpose of destroying German, Ustasha and Chetnik formations in the area of Knin. It is often refereed to as much larger Partisans offensive which liberated most of Dalmatia covering all operations from Zadar to Dubrovnik.<br><br>After difficult withdrawal from Dalmatian coastal areas during operation HERBSTGEWITTER (1944), headquarters of German 15th Mountain Corps (which was based in Knin until 19 November when it moved to Ostrozac near Bihac transferring defense of Knin to commander of the 264th Division) was ordered to hold Knin at all costs. German units were ordered to defend Knin to the last round and to the last men in order to stop advance of 8th Corps towards Lika and Bosnia. Knin was strategic point in defensive plans of German high command as part of the line going from Srymia over Sarajevo and Mostar holding the end of that line."
+      }
+    }
+  },
+  {
+    "id": 15,
+    "scenario": "bn8s15.xml",
+    "startprestige": 0,
+    "intro": "The battle is already turning against you; survival now depends on discipline, not glory. LIBERATION OF MOSTAR - 6 Feb 1945 places your command at Sibenik, Croatia. However, the Germans have already started to retreat inland. Advance with a task force as soon as possible on Visoko and with a second along the coast on Dubrovnik. The wider stakes are clear: You have achieved all objectives, the mission was a complete success. A strong result opens the road to BATTLE OF SARAJEVO - 1 Apr 1945. Every surviving veteran will matter in the battles ahead, so retreat with purpose and destroy what the enemy cannot be allowed to capture.",
+    "outcome": {
+      "briliant": {
+        "goto": 16,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1600,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+      },
+      "victory": {
+        "goto": 16,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1500,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+      },
+      "tactical": {
+        "goto": 16,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1400,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+      },
+      "lose": {
+        "goto": 16,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1400,
+        "text": "You could not achieve your goals, the mission was a failure! Hopefully you have gained some experience to avoid such failures in future."
+      }
+    }
+  },
+  {
+    "id": 16,
+    "scenario": "bn8s16.xml",
+    "startprestige": 0,
+    "intro": "The battle is already turning against you; survival now depends on discipline, not glory. BATTLE OF SARAJEVO - 1 Apr 1945 places your command at Vicinity of Sarajevo, Bosnia. Vicinity of Sarajevo, Bosnia CO Commander Kosta Nad The encirclement and destruction of the German-Croat forces in the area of Sarajevo is our next planned step. Advance in the rear of the enemy quickly at Podlugovi and cut the Germans off! The wider stakes are clear: You have achieved all objectives, the mission was a complete success. A strong result opens the road to ADVANCE ON TRIESTE - 14 Apr 1945. Keep the route open, rescue what can still be saved, and deny the enemy the encirclement it expects.",
+    "outcome": {
+      "briliant": {
+        "goto": 17,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1100,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+      },
+      "victory": {
+        "goto": 17,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1000,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+      },
+      "tactical": {
+        "goto": 17,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 900,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+      },
+      "lose": {
+        "goto": 17,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 900,
+        "text": "You could not achieve your goals, the mission was a failure! Hopefully you have gained some experience to avoid such failures in future."
+      }
+    }
+  },
+  {
+    "id": 17,
+    "scenario": "bn8s17.xml",
+    "startprestige": 0,
+    "intro": "The enemy owns the roads by day; your fighters must own the shadows around them. ADVANCE ON TRIESTE - 14 Apr 1945 places your command at Vicinity of Drnis, Croatia. Vicinity of Drnis, Croatia CO Commander Pavle Ilic The last chapter of the liberation of our homeland is opened. Advance with your Corps to Trieste, liberate the city and link up with the from Italy coming Allied troops! The wider stakes are clear: You have achieved all objectives, the mission was a complete success. A strong result opens the road to BATTLE OF POLJANA - 14 May 1945. Your victory will be measured in disrupted movement, captured supplies, and fighters who live to strike again.",
+    "outcome": {
+      "briliant": {
+        "goto": 18,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1200,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+      },
+      "victory": {
+        "goto": 18,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1100,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+      },
+      "tactical": {
+        "goto": 18,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1000,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "You could not achieve your goals, the mission was a failure! You had your chance, we need commander who successfully complete orders. This was your last combat mission!<br><br>THE END!"
+      }
+    }
+  },
+  {
+    "id": 18,
+    "scenario": "bn8s18.xml",
+    "startprestige": 0,
+    "intro": "There is no continuous front here—only terrain, secrecy, and the moment chosen for the first shot. BATTLE OF POLJANA - 14 May 1945 places your command at Poljana Region, Slovenia. Poljana Region, Slovenia CO General Kosta Nad Marauding Axis troops, not willing to surrender to us and want to go to British occupied Austria, move toward your positions. Prevent that these units reach the Austrian border. The wider stakes are clear: BACKGROUND The Battle of Poljana (Monday May 14 - Tuesday May 15, 1945) was a battle of World War II in Europe. Your victory will be measured in disrupted movement, captured supplies, and fighters who live to strike again.",
+    "outcome": {
+      "briliant": {
+        "goto": 254,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>CAMPAIGN WON!!!<br><br>Congratulations, you have successfully completed the campaign!<br><br>BACKGROUND<br><br>The Battle of Poljana (Monday May 14 - Tuesday May 15, 1945) was a battle of World War II in Europe. It started at Poljana, near the village of Prevalje in Yugoslavia (now Slovenia), and was the culmination of a series of engagements between the Yugoslav Partisans and a large retreating Axis column, numbering in excess of 30,000 men. The column consisted of units of the German (Wehrmacht), the Armed Forces of the Independent State of Croatia, the Montenegrin People's Army (former Chetniks and the survivors of the Battle on Lijevce field), and Slovene Home Guard forces, as well as other fascist collaborationist factions and even civilians who were attempting to escape into British-controlled Austria. It took place a few days after 8 May, when the armed forces of Nazi Germany officially surrendered.<br><br>The Armed Forces of the Independent State of Croatia were reorganized in November 1944 to combine the units of the Ustase and Army of the Independent State of Croatia into eighteen divisions, comprising 13 infantry, two mountain, two assault and one replacement division, each with its own organic artillery and other support units. There were also several armoured units. From early 1945, the divisions were allocated to various German Corps and by March 1945 were holding the Southern Front.<br><br>In the spring of 1945, the German Army and their Allies were in full retreat from the Yugoslav Partisans. In early April, the Partisan 3rd Army, under the command of Kosta Nad, fanned out through the Drava Valley region (Podravina), reaching a point north of Zagreb, and crossed the old Austrian border with Yugoslavia in the Dravograd sector. The 3rd Army closed the ring around Axis forces when its advanced motorized detachments linked up with detachments of the 4th Army in Carinthia. As a result, the German Army Group E was prevented from escaping north-west across the Drava river. Completely surrounded, General Alexander Löhr, Commander-in-Chief of Army Group E was forced to sign the unconditional surrender of the forces under his command at Topolsica, near Velenje, Slovenia, on Wednesday May 9. Nevertheless, some of his troops, along with collaborationist units, namely the NDH forces, Slovene Home Guard, Montenegrin People's Army (former Chetniks), and elements of other factions, continued to resist and tried to fight their way west to what they hoped would be the protection of the British at Klagenfurt."
+      },
+      "victory": {
+        "goto": 254,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>CAMPAIGN WON!!!<br><br>Congratulations, you have successfully completed the campaign!<br><br>BACKGROUND<br><br>The Battle of Poljana (Monday May 14 - Tuesday May 15, 1945) was a battle of World War II in Europe. It started at Poljana, near the village of Prevalje in Yugoslavia (now Slovenia), and was the culmination of a series of engagements between the Yugoslav Partisans and a large retreating Axis column, numbering in excess of 30,000 men. The column consisted of units of the German (Wehrmacht), the Armed Forces of the Independent State of Croatia, the Montenegrin People's Army (former Chetniks and the survivors of the Battle on Lijevce field), and Slovene Home Guard forces, as well as other fascist collaborationist factions and even civilians who were attempting to escape into British-controlled Austria. It took place a few days after 8 May, when the armed forces of Nazi Germany officially surrendered.<br><br>The Armed Forces of the Independent State of Croatia were reorganized in November 1944 to combine the units of the Ustase and Army of the Independent State of Croatia into eighteen divisions, comprising 13 infantry, two mountain, two assault and one replacement division, each with its own organic artillery and other support units. There were also several armoured units. From early 1945, the divisions were allocated to various German Corps and by March 1945 were holding the Southern Front.<br><br>In the spring of 1945, the German Army and their Allies were in full retreat from the Yugoslav Partisans. In early April, the Partisan 3rd Army, under the command of Kosta Nad, fanned out through the Drava Valley region (Podravina), reaching a point north of Zagreb, and crossed the old Austrian border with Yugoslavia in the Dravograd sector. The 3rd Army closed the ring around Axis forces when its advanced motorized detachments linked up with detachments of the 4th Army in Carinthia. As a result, the German Army Group E was prevented from escaping north-west across the Drava river. Completely surrounded, General Alexander Löhr, Commander-in-Chief of Army Group E was forced to sign the unconditional surrender of the forces under his command at Topolsica, near Velenje, Slovenia, on Wednesday May 9. Nevertheless, some of his troops, along with collaborationist units, namely the NDH forces, Slovene Home Guard, Montenegrin People's Army (former Chetniks), and elements of other factions, continued to resist and tried to fight their way west to what they hoped would be the protection of the British at Klagenfurt."
+      },
+      "tactical": {
+        "goto": 254,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>CAMPAIGN WON!!!<br><br>Congratulations, you have successfully completed the campaign!<br><br>BACKGROUND<br><br>The Battle of Poljana (Monday May 14 - Tuesday May 15, 1945) was a battle of World War II in Europe. It started at Poljana, near the village of Prevalje in Yugoslavia (now Slovenia), and was the culmination of a series of engagements between the Yugoslav Partisans and a large retreating Axis column, numbering in excess of 30,000 men. The column consisted of units of the German (Wehrmacht), the Armed Forces of the Independent State of Croatia, the Montenegrin People's Army (former Chetniks and the survivors of the Battle on Lijevce field), and Slovene Home Guard forces, as well as other fascist collaborationist factions and even civilians who were attempting to escape into British-controlled Austria. It took place a few days after 8 May, when the armed forces of Nazi Germany officially surrendered.<br><br>The Armed Forces of the Independent State of Croatia were reorganized in November 1944 to combine the units of the Ustase and Army of the Independent State of Croatia into eighteen divisions, comprising 13 infantry, two mountain, two assault and one replacement division, each with its own organic artillery and other support units. There were also several armoured units. From early 1945, the divisions were allocated to various German Corps and by March 1945 were holding the Southern Front.<br><br>In the spring of 1945, the German Army and their Allies were in full retreat from the Yugoslav Partisans. In early April, the Partisan 3rd Army, under the command of Kosta Nad, fanned out through the Drava Valley region (Podravina), reaching a point north of Zagreb, and crossed the old Austrian border with Yugoslavia in the Dravograd sector. The 3rd Army closed the ring around Axis forces when its advanced motorized detachments linked up with detachments of the 4th Army in Carinthia. As a result, the German Army Group E was prevented from escaping north-west across the Drava river. Completely surrounded, General Alexander Löhr, Commander-in-Chief of Army Group E was forced to sign the unconditional surrender of the forces under his command at Topolsica, near Velenje, Slovenia, on Wednesday May 9. Nevertheless, some of his troops, along with collaborationist units, namely the NDH forces, Slovene Home Guard, Montenegrin People's Army (former Chetniks), and elements of other factions, continued to resist and tried to fight their way west to what they hoped would be the protection of the British at Klagenfurt."
+      },
+      "lose": {
+        "goto": 254,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "You could not achieve your goals, the mission was a failure!<br><br>THE END!!!<br><br>Congratulations, you have completed the campaign!<br><br>BACKGROUND<br><br>The Battle of Poljana (Monday May 14 - Tuesday May 15, 1945) was a battle of World War II in Europe. It started at Poljana, near the village of Prevalje in Yugoslavia (now Slovenia), and was the culmination of a series of engagements between the Yugoslav Partisans and a large retreating Axis column, numbering in excess of 30,000 men. The column consisted of units of the German (Wehrmacht), the Armed Forces of the Independent State of Croatia, the Montenegrin People's Army (former Chetniks and the survivors of the Battle on Lijevce field), and Slovene Home Guard forces, as well as other fascist collaborationist factions and even civilians who were attempting to escape into British-controlled Austria. It took place a few days after 8 May, when the armed forces of Nazi Germany officially surrendered.<br><br>The Armed Forces of the Independent State of Croatia were reorganized in November 1944 to combine the units of the Ustase and Army of the Independent State of Croatia into eighteen divisions, comprising 13 infantry, two mountain, two assault and one replacement division, each with its own organic artillery and other support units. There were also several armoured units. From early 1945, the divisions were allocated to various German Corps and by March 1945 were holding the Southern Front.<br><br>In the spring of 1945, the German Army and their Allies were in full retreat from the Yugoslav Partisans. In early April, the Partisan 3rd Army, under the command of Kosta Nad, fanned out through the Drava Valley region (Podravina), reaching a point north of Zagreb, and crossed the old Austrian border with Yugoslavia in the Dravograd sector. The 3rd Army closed the ring around Axis forces when its advanced motorized detachments linked up with detachments of the 4th Army in Carinthia. As a result, the German Army Group E was prevented from escaping north-west across the Drava river. Completely surrounded, General Alexander Löhr, Commander-in-Chief of Army Group E was forced to sign the unconditional surrender of the forces under his command at Topolsica, near Velenje, Slovenia, on Wednesday May 9. Nevertheless, some of his troops, along with collaborationist units, namely the NDH forces, Slovene Home Guard, Montenegrin People's Army (former Chetniks), and elements of other factions, continued to resist and tried to fight their way west to what they hoped would be the protection of the British at Klagenfurt."
+      }
+    }
+  }
+]

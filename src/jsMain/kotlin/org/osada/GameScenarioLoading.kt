@@ -5,6 +5,7 @@ import org.osada.model.acquireUnit
 import org.osada.model.buildCoreUnitList
 import org.osada.model.ensureFormationIds
 import org.osada.model.getPlayers
+import org.osada.model.getUnits
 import org.osada.model.initDossier
 import org.osada.model.removeNonCampaignUnits
 import org.osada.model.undeployCoreUnits
@@ -33,7 +34,14 @@ internal fun Game.handleCampaignScenarioLoaded() {
     // The player's whole force is their army and thus hero-eligible (§9.1) — not just the units on
     // deployment hexes. Mint a formation id for every remaining on-map unit so a pre-placed campaign
     // enters the hero system instead of falling back to the dossier-less legacy leader.
-    campaignPlayer?.let { scenario!!.map.ensureFormationIds(it) }
+    campaignPlayer?.let { player ->
+        val scriptedReinforcements =
+            scenario!!
+                .reinforcements.values
+                .flatten()
+                .map { it.unit }
+        scenario!!.map.ensureFormationIds(player, scriptedReinforcements)
+    }
     if (removeNonCampaignUnitsFlag) {
         scenario!!.map.removeNonCampaignUnits(campaignPlayer!!)
     }
@@ -44,6 +52,25 @@ internal fun Game.handleCampaignScenarioLoaded() {
         campaignId = campaign!!.file,
         scenarioIndex = campaign!!.currentScenarioIndex,
         serviceYear = scenario!!.date.getFullYear(),
+        country = campaignPlayer?.country,
+        availableUnitClasses =
+            buildSet {
+                campaignPlayer
+                    ?.getCoreUnitList()
+                    ?.filterNot { it.isTemporaryBorrowed }
+                    ?.mapTo(this) { it.unitData().uclass }
+                scenario!!
+                    .map
+                    .getUnits()
+                    .filter { it.owner == campaignPlayer?.id && !it.isTemporaryBorrowed }
+                    .mapTo(this) { it.unitData().uclass }
+                scenario!!
+                    .reinforcements.values
+                    .flatten()
+                    .map { it.unit }
+                    .filter { it.owner == campaignPlayer?.id && !it.isTemporaryBorrowed }
+                    .mapTo(this) { it.unitData().uclass }
+            },
     )
     // Consume next-scenario effects queued by the previous transition, after the core roster
     // exists and before the player receives control.

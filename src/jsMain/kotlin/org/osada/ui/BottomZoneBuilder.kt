@@ -1,3 +1,5 @@
+@file:Suppress("MaxLineLength")
+
 package org.osada.ui
 
 import kotlinx.browser.window
@@ -81,7 +83,7 @@ internal object BottomZoneBuilder {
         rename.id = "ucRename"
         rename.className = "osada-rename-btn"
         rename.innerHTML = "&#9998;" // ✎
-        rename.title = "Rename"
+        rename.title = "Rename this unit. The custom name is preserved with a surviving core unit."
         rename.style.display = "none"
         val stars = addTag(nameLine, "span")
         stars.id = "osadaUcStars"
@@ -89,6 +91,9 @@ internal object BottomZoneBuilder {
         val ent = addTag(nameLine, "span")
         ent.id = "osadaUcEnt"
         ent.className = "uc-ent"
+        val markings = addTag(nameLine, "span")
+        markings.id = "osadaUcMarkings"
+        markings.className = "osada-capability-marks"
         // Filled only for a selected air unit grounded by the scenario's current weather
         // (CombatResolver.airGroundedByWeather) — explains an otherwise-silent empty attack range.
         val weather = addTag(nameLine, "span")
@@ -149,7 +154,7 @@ internal object BottomZoneBuilder {
         val expandBtn = addTag(inner, "div")
         expandBtn.id = "uc-expand"
         expandBtn.textContent = "All stats ▸"
-        expandBtn.title = "Show every stat for this unit"
+        expandBtn.title = "Show the unit's complete combat, defence, mobility and reconnaissance statistics."
         expandBtn.onclick = { _: org.w3c.dom.events.MouseEvent ->
             root.classList.toggle("uc--expanded")
         }
@@ -332,7 +337,8 @@ internal object BottomZoneBuilder {
         val expandBtn = addTag(root, "div")
         expandBtn.id = "ec-expand"
         expandBtn.textContent = "All stats ▸"
-        expandBtn.title = "Show every known stat for this unit"
+        expandBtn.title =
+            "Show all equipment statistics known for this spotted enemy. Live ammo, fuel and experience remain hidden."
         expandBtn.onclick = { _: org.w3c.dom.events.MouseEvent ->
             root.classList.toggle("ec--expanded")
         }
@@ -348,6 +354,12 @@ internal object BottomZoneBuilder {
             val label = addTag(section, "div")
             label.className = "osada-stat-group__label"
             label.textContent = groupName
+            label.title =
+                when (groupName) {
+                    "Attack" -> "Attack values used against each target type; higher is better."
+                    "Defence" -> "Defensive values used for different attacks and ranges; higher is better."
+                    else -> "Movement, firing range, initiative and spotting capability."
+                }
             val grid = addTag(section, "div")
             grid.className = "osada-stat-group__grid"
             entries.forEach { (id, glyph, title) ->
@@ -362,6 +374,21 @@ internal object BottomZoneBuilder {
         }
     }
 
+    private fun enemyCardTooltip(
+        unit: GameUnit,
+        data: org.osada.model.EquipmentData,
+        fullName: String,
+    ): String {
+        val cls = unitClassNames.getOrNull(data.uclass) ?: ""
+        val country = Equipment.getCountryName(unit.flag - 1)
+        val header = "$fullName\n$cls · $country · ${equipmentAvailabilityText(data)}"
+        return listOfNotNull(
+            header,
+            equipmentDescriptionOrNull(data),
+            equipmentMechanicsNote(data),
+        ).joinToString("\n\n")
+    }
+
     /** Same one-line stat format the old sidebar hover inspector used ("STR x/10 · DEF g/a") —
      *  reused verbatim rather than inventing a new summary; the "All stats" expander below adds
      *  the rest of the (fog-of-war-safe) picture without replacing this quick read. */
@@ -369,7 +396,11 @@ internal object BottomZoneBuilder {
         val data = unit.unitData(true)
         byId("ecPortrait")?.style?.backgroundImage = "url(${data.icon})"
         val className = unitClassNames.getOrNull(data.uclass) ?: ""
-        byId("ecName")?.textContent = if (data.name == className) className else "${data.name} $className"
+        val displayName = if (data.name == className) className else "${data.name} $className"
+        byId("ecName")?.textContent = displayName
+        val tooltip = enemyCardTooltip(unit, data, displayName)
+        byId("ecPortrait")?.title = tooltip
+        byId("ecName")?.title = tooltip
         // unit.flag (like the player card's #uFlag), NOT data.country: the equipment record's
         // country is a catalogue index (0 = shared/generic) that maps to "Unknown" here.
         byId("ecSub")?.textContent = "Enemy · ${Equipment.getCountryName(unit.flag - 1)}"
@@ -397,6 +428,7 @@ internal object BottomZoneBuilder {
         byId("ecDAir")?.textContent = data.airdef.toString()
         byId("ecDClose")?.textContent = data.closedef.toString()
         byId("ecDRange")?.textContent = data.rangedefmod.toString()
+        CombatTransparencyPresenter.presentEnemy(unit)
     }
 
     /** "Enemy clicked, nothing own selected" — the enemy card takes the player-card's slot. */

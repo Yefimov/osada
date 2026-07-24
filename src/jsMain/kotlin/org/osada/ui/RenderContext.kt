@@ -451,7 +451,7 @@ internal class RenderContext(
         for (i in 0 until keyCount) {
             val key = keys[i] as? String
             val src = if (key == null) null else list[key] as? String
-            if (src != null) valid.add(src)
+            if (src != null) valid.add(UnitIconResolver.forCurrentScenario(src))
         }
         unitImages.keys.filter { it !in valid }.forEach { unitImages.remove(it) }
     }
@@ -625,8 +625,9 @@ private fun RenderContext.loadUnitImages(state: ImageLoadState) {
     console.log("[osada] Render.cacheImages map=${map?.name} unitImagesToLoad=$keyCount")
     for (i in 0 until keyCount) {
         val key = keys[i] as? String
-        val src = if (key == null) null else list[key] as? String
-        if (src == null) continue
+        val baseSrc = if (key == null) null else list[key] as? String
+        if (baseSrc == null) continue
+        val src = UnitIconResolver.forCurrentScenario(baseSrc)
         state.loadOrWait(unitImages[src], src) { unitImages[src] = it }
     }
 }

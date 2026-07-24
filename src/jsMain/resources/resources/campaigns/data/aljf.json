@@ -1,0 +1,1146 @@
+[
+  {
+    "id": 0,
+    "scenario": "aljf_0.xml",
+    "startprestige": 0,
+    "intro": "The campaign has reached a point where speed matters as much as firepower. 20. 4. 1848, Prologue: Knechtschaft oder Revolution! (Slavery or Revolution!) places your command at Lieber Freund,. Lieber Freund, not much time to write, hastily a short note for you: I joined Friedrich Hecker who is negotiating at the moment with prussian general Friedrich von Gagen. Von Gagen wants unconditional surrender which we never will accept. The wider stakes are clear: Prologue: Knechtschaft oder Revolution! * BV ( Prologue: Slavery or Revolution! * BV ) we have to move fast, General ! Concentrate your best units, protect the flanks of the advance, and seize the decisive objectives before the enemy can rebuild a line.",
+    "outcome": {
+      "briliant": {
+        "goto": 1,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 30,
+        "text": "Prologue: Knechtschaft oder Revolution! * BV<br>( Prologue: Slavery or Revolution! * BV )<br><br>we have to move fast, General !"
+      },
+      "victory": {
+        "goto": 1,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 30,
+        "text": "Prologue: Knechtschaft oder Revolution! * V<br>( Prologue: Slavery or Revolution! * TV )<br><br>we have to hurry up, General !"
+      },
+      "tactical": {
+        "goto": 1,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 30,
+        "text": "Prologue: Knechtschaft oder Revolution! * TV<br>( Prologue: Slavery or Revolution! * TV )<br><br>we have to hurry up, General !"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Prologue: Knechtschaft oder Revolution! * L<br><br>The Revolution and your Life is Lost."
+      }
+    }
+  },
+  {
+    "id": 1,
+    "scenario": "aljf_1.xml",
+    "startprestige": 0,
+    "intro": "A narrow window has opened in the enemy line; turn it into a strategic rupture. 20. 4. 1848, Der Heckerzug (Hecker's Uprising) places your command at Lieber Freund,. ORDERS: Herr General, free all the Main Cities around the Neckar and take you radvance to the important City of Freiburg. Reinforces from every liberated City will join our Revolution Army and the german democratic Legion aproaching in the South. The wider stakes are clear: Der Heckerzug (Hecker's Uprising) * BV Well done, Herr General !...but the enemy is too strong, we have to retreat to Switzerland, waiting for a opportunity to continue the fight..... Break the defence before reserves arrive, keep your spearheads supplied, and turn tactical success into an operational collapse.",
+    "outcome": {
+      "briliant": {
+        "goto": 2,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 40,
+        "text": "Der Heckerzug (Hecker's Uprising) * BV<br><br>Well done, Herr General !<br><br>...but the enemy is too strong, we have to retreat to Switzerland, waiting for a opportunity to continue the fight....."
+      },
+      "victory": {
+        "goto": 2,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 40,
+        "text": "Der Heckerzug (Hecker's Uprising) * V<br><br>Not bad, Herr General !<br><br>...but the enemy is too strong, we have to retreat toSwitzerland, waiting for a opportunity to continue the fight....."
+      },
+      "tactical": {
+        "goto": 2,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 40,
+        "text": "Der Heckerzug (Hecker's Uprising) * TV<br><br>A hard battle, Herr General !<br><br>...but the enemy is too strong, we have to retreat toSwitzerland, waiting for a opportunity to continue the fight....."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Der Heckerzug (Hecker's Uprising) * L<br><br>The Revolution and your Life is Lost."
+      }
+    }
+  },
+  {
+    "id": 2,
+    "scenario": "aljf_2.xml",
+    "startprestige": 0,
+    "intro": "The initiative is yours, but the enemy will not remain disorganized for long. 13. 6. 1849, The Palataine Uprising places your command at Lieber Freund,. Lieber Freund,...this is the opportunity, we have been waiting for: the Palatains continue the Fight for the Republic, and we have joined them. The Prussians have send some of their best troops, but in our hearts is still burning a hot flame of freedom.... The wider stakes are clear: The People of Baden and their whole army, except the High Command, has joined again our side! Break the defence before reserves arrive, keep your spearheads supplied, and turn tactical success into an operational collapse.",
+    "outcome": {
+      "briliant": {
+        "goto": 3,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 40,
+        "text": "The Palataine Uprising * BV<br><br>Well done, Herr General !<br><br>...but again, we have no chance to hold the conquered positions:  two complete prussian Armycorps are arriving from the north and the west...<br>But there's very good news, too ! The People of Baden and their whole army, except the High Command, has joined again our side!<br>Now, we must retreat to Baden, and unite our armies...."
+      },
+      "victory": {
+        "goto": 3,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 40,
+        "text": "The Palataine Uprising * V<br><br>Not bad, Herr General !<br><br>...but again, we have no chance to hold the conquered positions:  two complete prussian Armycorps are arriving from the north and the west...<br>But there's very good news, too ! The People of Baden and their whole army, except the High Command, has joined again our side!<br>Now, we must retreat to Baden, and unite our armies...."
+      },
+      "tactical": {
+        "goto": 3,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 40,
+        "text": "The Palataine Uprising * TV<br><br>Well done, Herr General !<br><br>...but again, we have no chance to hold the conquered positions:  two complete prussian Armycorps are arriving from the north and the west...<br>But there's very good news, too ! The People of Baden and their whole army, except the High Command, has joined again our side!<br>Now, we must retreat to Baden, and unite our armies...."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "The Palataine Uprising * L<br><br>....the Prussians will shoot you in the dawn...."
+      }
+    }
+  },
+  {
+    "id": 3,
+    "scenario": "aljf_3.xml",
+    "startprestige": 0,
+    "intro": "Enemy pressure is building faster than reinforcements can arrive. 21. 6. 1849, The decisive Battle at Waghäusel places your command at Lieber Freund,. Lieber Freund,...the superior prussian Army has pushed us back over the Rhine River, but the People in Baden, and their whole army have joined the Revolution again !...now, we are encircled by the enemy and we must fight for our lives and the Republic.... ORDERS: Herr General, many enemies in every direction..... The wider stakes are clear: The decisive Battle at Waghäusel * BV Lieber Freund, we've fought very brave, but the Prussians sent more and more troops against us... at last our front collapsed.... Use terrain, entrenchment, and supporting fire to survive the first blow—then punish every exposed formation.",
+    "outcome": {
+      "briliant": {
+        "goto": 4,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 60,
+        "text": "The decisive Battle at Waghäusel * BV<br><br>Lieber Freund,<br>we've fought very brave, but the Prussians sent more and more troops against us... at last our front collapsed.... <br>All our men, who have not been killed or captured, flew to Switzerland and most of us want to emigrate to the USA... there, we can live in liberty...."
+      },
+      "victory": {
+        "goto": 4,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 50,
+        "text": "The decisive Battle at Waghäusel * V<br><br>Lieber Freund,<br>we've fought very brave, but the Prussians sent more and more troops against us... at last our front collapsed.... <br>All our men, who have not been killed or captured, flew to Switzerland and most of us want to emigrate to the USA... there, we can live in liberty...."
+      },
+      "tactical": {
+        "goto": 4,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 40,
+        "text": "The decisive Battle at Waghäusel * TV<br><br>Lieber Freund,<br>we've fought very brave, but the Prussians sent more and more troops against us... at last our front collapsed.... <br>All our men, who have not been killed or captured, flew to Switzerland and most of us want to emigrate to the USA... there, we can live in liberty..."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "The decisive Battle at Waghäusel * L<br><br>Lieber Freund,<br>the Prussians sent more and more troops against us... at last our front collapsed.... <br>All our Men, who's not killed or captured, flown to the Swiss and the most of us want to emigrate to the USA... there, we can live in freedom..."
+      }
+    }
+  },
+  {
+    "id": 4,
+    "scenario": "aljf_4.xml",
+    "startprestige": 0,
+    "intro": "A narrow window has opened in the enemy line; turn it into a strategic rupture. May, 10., 1861 The St. Luis Arsenal places your command at Dear Friend,. Dear Friend, since I have been here I spent many years as Teacher and Editor of a german Journal.... Me and my former Comrades have foundeed many gymnastics Clubs, Pubs, Factories... and Families... The wider stakes are clear: The moment we have broken the last resistance of rebels in Boonville our connection lines are secured THE PRESIDENT OF THE UNITED STATES -----{end of secret telegraph depeche}----. Break the defence before reserves arrive, keep your spearheads supplied, and turn tactical success into an operational collapse.",
+    "outcome": {
+      "briliant": {
+        "goto": 5,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 80,
+        "text": "The St. Luis Arsenal * BV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>General,<br>We need commanders like you urgently...confirm your appointment as general of your troops for the time being<br>Having reestablished connection we are able to send you men and material<br>Move your troops westward along the Missouri now. The moment we have broken the last resistance of rebels in Boonville our connection lines are secured<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "victory": {
+        "goto": 5,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 60,
+        "text": "The St. Luis Arsenal * V<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>General,<br>We need commanders like you urgently...confirm your appointment as general of your troops for the time being<br>Having reestablished connection we are able to send you men and material<br>Move your troops westward along the Missouri now. The moment we have broken the last resistance of rebels in Boonville our connection lines are secured<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "tactical": {
+        "goto": 5,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 60,
+        "text": "The St. Luis Arsenal * TV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>General,<br>We need commanders like you urgently...confirm your appointment as general of your troops for the time being<br>Having reestablished connection we are able to send you men and material<br>Move your troops westward along the Missouri now. The moment we have broken the last resistance of rebels in Boonville our connection lines are secured<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "The St. Luis Arsenal * L<br><br>Everything is lost."
+      }
+    }
+  },
+  {
+    "id": 5,
+    "scenario": "aljf_5.xml",
+    "startprestige": 0,
+    "intro": "The initiative is yours, but the enemy will not remain disorganized for long. June, 17., 1861 The Boonville Races places your command at Dear Friend,. Dear Friend, wir haben uns mit modernem material ausgerüstet, und ziehen laut befehl nach westen- wenn wir die rebellen aus boonville vertreiben sind unsere versorgungswege bis auf weiteres sicher.... ORDERS: General, we send you a ship to support your troops. hurry up ! we need boonville fast ! The wider stakes are clear: But now we have to advance to Missouri as fast as possible! Concentrate your best units, protect the flanks of the advance, and seize the decisive objectives before the enemy can rebuild a line.",
+    "outcome": {
+      "briliant": {
+        "goto": 6,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 60,
+        "text": "The Boonville Races * BV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>very well done!<br>But now we have to advance to Missouri as fast as possible!<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "victory": {
+        "goto": 6,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 50,
+        "text": "The Boonville Races * V<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>very well done!<br>But now we have to advance to Missouri as fast as possible!<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "tactical": {
+        "goto": 6,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 40,
+        "text": "The Boonville Races * TV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>well done!<br>But now we have to advance to Missouri as fast as possible!<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "The Boonville Races * L<br><br>Everything is lost."
+      }
+    }
+  },
+  {
+    "id": 6,
+    "scenario": "aljf_6.xml",
+    "startprestige": 0,
+    "intro": "The initiative is yours, but the enemy will not remain disorganized for long. August, 10., 1861 Wilson's Creek places your command at Dear Friend,. Dear Friend, the northern border of Missouri should be safe.... but now we have to annihilate the last rebel units to secure our supplylines... General Sigel proposed to use one of our most successful strategies of the 48 revolution: General Lyon should occupy the enemy troops frontally and General Sigel and we will sneak into its back... The wider stakes are clear: Wilson's Creek * BV ----{secret telegraph depeche to general}----- THE WHITE HOUSE; WASHINGTON, Dear Sir, now you should advance to the interior of Missouri with caution. Momentum is your greatest asset: pause too long and a breakthrough becomes another costly frontal battle.",
+    "outcome": {
+      "briliant": {
+        "goto": 7,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "Wilson's Creek * BV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>now you should advance to the interior of Missouri with caution.<br>We pray for you.<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "victory": {
+        "goto": 7,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "Wilson's Creek * V<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>now you should advance to the interior of Missouri with caution.<br>We pray for you.<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "tactical": {
+        "goto": 7,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "Wilson's Creek * TV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>now you should advance to the interior of Missouri with caution.<br>We pray for you.<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Wilson's Creek * L<br><br>Everything is lost."
+      }
+    }
+  },
+  {
+    "id": 7,
+    "scenario": "aljf_7.xml",
+    "startprestige": 0,
+    "intro": "The initiative is yours, but the enemy will not remain disorganized for long. September, 20., 1861 Battle of the Hemp Bales places your command at Lexington, Missouri. Lexington, Missouri Dear Friend, the Missouri State Guard is attacking us for 8 days now. We are loading our rifles and guns with red hot iron bullets but they soaked the hemp bales in missouri waters and our salvos won't light them up at all! The wider stakes are clear: Battle of the Hemp Bales * BV ----{secret telegraph depeche to general}----- THE WHITE HOUSE; WASHINGTON, Dear Sir, excellent ! Break the defence before reserves arrive, keep your spearheads supplied, and turn tactical success into an operational collapse.",
+    "outcome": {
+      "briliant": {
+        "goto": 8,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 120,
+        "text": "Battle of the Hemp Bales * BV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>excellent ! You have managed to struggle free !<br>It´s a pity but we cannot grant a rest to you and your men...<br><br>We have been able to secure Missouri for the Union but danger is coming from Arkansas ... you have to move your men there immidiately<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "victory": {
+        "goto": 8,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 110,
+        "text": "Battle of the Hemp Bales * V<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>excellent ! You have managed to struggle free !<br>It´s a pity but we cannot grant a rest to you and your men...<br><br>We have been able to secure Missouri for the Union but danger is coming from Arkansas ... you have to move your men there immidiately<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "tactical": {
+        "goto": 8,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "Battle of the Hemp Bales * TV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>excellent ! You have managed to struggle free !<br>It´s a pity but we cannot grant a rest to you and your men...<br><br>We have been able to secure Missouri for the Union but danger is coming from Arkansas ... you have to move your men there immidiately<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Battle of the Hemp Bales * L<br><br>Everything is lost."
+      }
+    }
+  },
+  {
+    "id": 8,
+    "scenario": "aljf_8.xml",
+    "startprestige": 0,
+    "intro": "The initiative is yours, but the enemy will not remain disorganized for long. March, 3., 1862 Pea Ridge places your command at Dear Friend,. Dear Friend, our order is to secure Arkansas for the Union ! As we have won Missouri for us I think our meanwhile well established cavallery will free Arkansas quickly too... The wider stakes are clear: Another 300pp could be attained by capturing enemy blockade runners which will be put at your disposal too. Concentrate your best units, protect the flanks of the advance, and seize the decisive objectives before the enemy can rebuild a line.",
+    "outcome": {
+      "briliant": {
+        "goto": 9,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 600,
+        "text": "Pea Ridge * BV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>we are glad to inform you that the president of the United States is happy about your achievement namely securing Arkansas for the Union. He has ordered 300pp from the treasury to be payed to you for recruiting new troops.<br>Another 300pp could be attained by capturing enemy blockade runners which will be put at your disposal too.<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}-----"
+      },
+      "victory": {
+        "goto": 9,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 600,
+        "text": "Pea Ridge * V<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>we are glad to inform you that the president of the United States is happy about your achievement namely securing Arkansas for the Union. He has ordered 300pp from the treasury to be payed to you for recruiting new troops.<br>Another 300pp could be attained by capturing enemy blockade runners which will be put at your disposal too.<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}-----"
+      },
+      "tactical": {
+        "goto": 9,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 600,
+        "text": "Pea Ridge * TV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>we are glad to inform you that the president of the United States is happy about your achievement namely securing Arkansas for the Union. He has ordered 300pp from the treasury to be payed to you for recruiting new troops.<br>Another 300pp could be attained by capturing enemy blockade runners which will be put at your disposal too.<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}-----"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Pea Ridge * L<br><br>Everything is lost."
+      }
+    }
+  },
+  {
+    "id": 9,
+    "scenario": "aljf_9.xml",
+    "startprestige": 0,
+    "intro": "The initiative is yours, but the enemy will not remain disorganized for long. March, 23., 1862 Kernstown places your command at Dear Friend,. Dear Friend, now the time has come to draw our attack into enemy country... I got command for our attack on Virginia...! The wider stakes are clear: Kernstown * BV ----{secret telegraph depeche to general}----- THE WHITE HOUSE; WASHINGTON, Dear Sir, we were able to secure this area.... but we have to retreat....General Lee is moving with a large army towards Washington.... Momentum is your greatest asset: pause too long and a breakthrough becomes another costly frontal battle.",
+    "outcome": {
+      "briliant": {
+        "goto": 10,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 60,
+        "text": "Kernstown * BV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>we were able to secure this area.... but we have to retreat....General Lee is moving with a large army towards Washington....<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "victory": {
+        "goto": 10,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 50,
+        "text": "Kernstown * V<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>we were able to secure this area.... but we have to retreat....General Lee is moving with a large army towards Washington....<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "tactical": {
+        "goto": 10,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 40,
+        "text": "Kernstown * TV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>we were able to secure this area.... but we have to retreat....General Lee is moving with a large army towards Washington....<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Kernstown * L<br><br>Everything is lost."
+      }
+    }
+  },
+  {
+    "id": 10,
+    "scenario": "aljf_10.xml",
+    "startprestige": 0,
+    "intro": "The battle is already turning against you; survival now depends on discipline, not glory. August, 28., 1862 Retreat at Bull Run places your command at Dear Friend,. Dear Friend, General Lee fought his way trough all our armies and stands now close to Washington....but more bad news: the enemy uses our famous strategy and flanks us.... we must draw back to better positions.... An orderly retreat...: one of the most difficult manuveurs... The wider stakes are clear: 2nd Bull Run * BV ----{secret telegraph depeche to general}----- THE WHITE HOUSE; WASHINGTON, Dear Sir, great, we were able to stop General Lee's attack on Washington ! Every surviving veteran will matter in the battles ahead, so retreat with purpose and destroy what the enemy cannot be allowed to capture.",
+    "outcome": {
+      "briliant": {
+        "goto": 11,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "2nd Bull Run * BV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>great, we were able to stop General Lee´s attack on Washington !<br><br>Now we have to advance again....<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "victory": {
+        "goto": 11,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "2nd Bull Run * V<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>great, we were able to stop General Lee´s attack on Washington !<br><br>Now we have to advance again....<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "tactical": {
+        "goto": 11,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "2nd Bull Run * TV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>great, we were able to stop General Lee´s attack on Washington !<br><br>Now we have to advance again....<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "2nd Bull Run * L<br><br>Everything is lost."
+      }
+    }
+  },
+  {
+    "id": 11,
+    "scenario": "aljf_11.xml",
+    "startprestige": 0,
+    "intro": "The campaign has reached a point where speed matters as much as firepower. The defeated revolutionaries of 1848 have carried their cause across the Atlantic. Dear Friend, we have been ordered to Harpers Ferry. A little town and important railroad crossing, were the Shenandoah and Potamac Rivers meet, surrounded by mountains... The wider stakes are clear: Harpers Ferry * BV ----{secret telegraph depeche to general}----- THE WHITE HOUSE; WASHINGTON, Dear Sir, very well done ! now we must try to move further into Virginia...! Concentrate your best units, protect the flanks of the advance, and seize the decisive objectives before the enemy can rebuild a line.",
+    "outcome": {
+      "briliant": {
+        "goto": 12,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "Harpers Ferry * BV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>very well done ! now we must try to move further into Virginia...!<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "victory": {
+        "goto": 12,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "Harpers Ferry * V<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>very well done ! now we must try to move further into Virginia...!<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "tactical": {
+        "goto": 12,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "Harpers Ferry * TV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>well done ! now we must try to move further into Virginia...!<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Harpers Ferry * L<br><br>Everything is lost."
+      }
+    }
+  },
+  {
+    "id": 12,
+    "scenario": "aljf_12.xml",
+    "startprestige": 0,
+    "intro": "The initiative is yours, but the enemy will not remain disorganized for long. The defeated revolutionaries of 1848 have carried their cause across the Atlantic. The confederates had destroyed all bridges across Rappahannock River. We have been ordered to cross the river and attack the confederate positions on the heights west of Fredericksburg and the railway. The wider stakes are clear: THE PRESIDENT OF THE UNITED STATES -----{end of secret telegraph depeche}----. Momentum is your greatest asset: pause too long and a breakthrough becomes another costly frontal battle.",
+    "outcome": {
+      "briliant": {
+        "goto": 13,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "Fredericksburg * BV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>very well done but we cannot take profit out of our victory: our troops are tied everywhere...<br><br>so let us draw out of Virginia for the moment...<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "victory": {
+        "goto": 13,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "Fredericksburg * V<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>very well done but we cannot take profit out of our victory: our troops are tied everywhere...<br><br>so let us draw out of Virginia for the moment...<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "tactical": {
+        "goto": 13,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "Fredericksburg * TV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>well done but we cannot take profit out of our victory: our troops are tied everywhere...<br><br>so let us draw out of Virginia for the moment...<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "lose": {
+        "goto": 13,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Fredericksburg * L<br><br>Everything is lost."
+      }
+    }
+  },
+  {
+    "id": 13,
+    "scenario": "aljf_13.xml",
+    "startprestige": 0,
+    "intro": "The line is bending, and this position has become the hinge of the entire front. The defeated revolutionaries of 1848 have carried their cause across the Atlantic. Dear Friend, we are sitting in the middle of nowhere, waiting for the enemy. They are somewhere in the woods. The wider stakes are clear: As special recognition the newly launched USS Moose is detached to your army corps...! Trade space only when necessary, preserve your reserves, and counterattack the moment the enemy's assault loses momentum.",
+    "outcome": {
+      "briliant": {
+        "goto": 14,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 20,
+        "text": "Chancellorsville * BV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>the president names you as one of his best generals....! <br>As special recognition the newly launched USS Moose is detached to your army corps...!<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "victory": {
+        "goto": 14,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 20,
+        "text": "Chancellorsville * V<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>the president names you as one of his best generals....! <br>As special recognition the newly launched USS Moose is detached to your army corps...!<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "tactical": {
+        "goto": 14,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 20,
+        "text": "Chancellorsville * TV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>the president names you as one of his best generals....! <br>As special recognition the newly launched USS Moose is detached to your army corps...!<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Chancellorsville * L<br><br>Everything is lost."
+      }
+    }
+  },
+  {
+    "id": 14,
+    "scenario": "aljf_14.xml",
+    "startprestige": 0,
+    "intro": "A narrow window has opened in the enemy line; turn it into a strategic rupture. May, 19., 1863 Vicksburg places your command at Dear Friend,. Dear Friend, the president has attached the USS Moose to our army corps... So here I am again back to the Mississipi valley where everything started for me... The wider stakes are clear: We send your corps as reinforcement of our front. Concentrate your best units, protect the flanks of the advance, and seize the decisive objectives before the enemy can rebuild a line.",
+    "outcome": {
+      "briliant": {
+        "goto": 15,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 60,
+        "text": "Vicksburg * BV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>disregarding your success we are forced to pull back your troops. One of the best enemy generals, general Lee, is threatening our lins in the southeast.<br>Fortunately we early recognized the importance of railways and are therfore able to move troops for hundreds of miles very fast.<br><br>We send your corps as reinforcement of our front.<br><br>Stop General Lee at any cost !!!<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "victory": {
+        "goto": 15,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 50,
+        "text": "Vicksburg * V<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>disregarding your success we are forced to pull back your troops. One of the best enemy generals, general Lee, is threatening our lins in the southeast.<br>Fortunately we early recognized the importance of railways and are therfore able to move troops for hundreds of miles very fast.<br><br>We send your corps as reinforcement of our front.<br><br>Stop General Lee at any cost !!!<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "tactical": {
+        "goto": 15,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 50,
+        "text": "Vicksburg * TV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>disregarding your success we are forced to pull back your troops. One of the best enemy generals, general Lee, is threatening our lins in the southeast.<br>Fortunately we early recognized the importance of railways and are therfore able to move troops for hundreds of miles very fast.<br><br>We send your corps as reinforcement of our front.<br><br>Stop General Lee at any cost !!!<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Vicksburg * L<br><br>Everything is lost."
+      }
+    }
+  },
+  {
+    "id": 15,
+    "scenario": "aljf_15.xml",
+    "startprestige": 0,
+    "intro": "The campaign has reached a point where speed matters as much as firepower. July, 1., 1863 Gettysburg places your command at Dear Friend,. Our cavallery scouts have spotted a confederate reconnaissance unit near Gettysburg...expecting the mass of Lee's army to be close our troops errected provisional defense positions around Gettysburg in the last moment.. My army Corps originally was intended to support the South East but being near by chance we have to support our comrades in Gettysburg... The wider stakes are clear: Gettysburg * BV ----{secret telegraph depeche to general}----- THE WHITE HOUSE; WASHINGTON, Dear Sir, the United States congratulate you on this victory ! Momentum is your greatest asset: pause too long and a breakthrough becomes another costly frontal battle.",
+    "outcome": {
+      "briliant": {
+        "goto": 16,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "Gettysburg * BV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>the United States congratulate you on this victory ! <br>You have saved us from a big threat !<br>I am sorry, but we cannot grant a rest to you and your men... you are moved further by rail - our situation in the south is difficult...<br><br>May God be with you !<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "victory": {
+        "goto": 16,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 90,
+        "text": "Gettysburg * V<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>the United States congratulate you on this victory ! <br>You have saved us from a big threat !<br>I am sorry, but we cannot grant a rest to you and your men... you are moved further by rail - our situation in the south is difficult...<br><br>May God be with you !<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "tactical": {
+        "goto": 16,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 80,
+        "text": "Gettysburg * TV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>the United States congratulate you on this victory ! <br>You have saved us from a big threat !<br>I am sorry, but we cannot grant a rest to you and your men... you are moved further by rail - our situation in the south is difficult...<br><br>May God be with you !<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Gettysburg * L<br><br>Everything is lost."
+      }
+    }
+  },
+  {
+    "id": 16,
+    "scenario": "aljf_16.xml",
+    "startprestige": 0,
+    "intro": "The campaign has reached a point where speed matters as much as firepower. October, 14., 1863 Bristoe Station places your command at Dear Friend,. Dear Friend, I have only time for a short letter.... Now we are on our way to Manasas Junction and were marching all day long.... The wider stakes are clear: Bristoe Station * BV ----{secret telegraph depeche to general}----- THE WHITE HOUSE; WASHINGTON, Dear Sir, once again you have saved the Situaion and we are indebted to you... Break the defence before reserves arrive, keep your spearheads supplied, and turn tactical success into an operational collapse.",
+    "outcome": {
+      "briliant": {
+        "goto": 17,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "Bristoe Station * BV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>once again you have saved the Situaion and we are indebted to you...<br>We proclaim you to be the Commander in Chief of our Expeditionary forces ... <br>This time we will arrive from Sea, they will not calculate with this Move....<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "victory": {
+        "goto": 17,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "Bristoe Station * V<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>once again you have saved the Situaion and we are indebted to you...<br>We proclaim you to be the Commander in Chief of our Expeditionary forces ... <br>This time we will arrive from Sea, they will not calculate with this Move....<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "tactical": {
+        "goto": 17,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "Bristoe Station * TV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>once again you have saved the Situaion and we are indebted to you...<br>We proclaim you to be the Commander in Chief of our Expeditionary forces ... <br>This time we will arrive from Sea, they will not calculate with this Move....<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Bristoe Station * L<br><br>Everything is lost."
+      }
+    }
+  },
+  {
+    "id": 17,
+    "scenario": "aljf_17.xml",
+    "startprestige": 0,
+    "intro": "A narrow window has opened in the enemy line; turn it into a strategic rupture. February, 17., 1864 Charleston places your command at Dear Friend,. ORDERS: Charleston is a important confederate port and one of the largest cities in the CSA. Some of our troops have already taken position in the southern swamps. The wider stakes are clear: You have secured this part of the coast ! now we have planned your corps for reconniassance and sabotage missions in the enemy country.... Break the defence before reserves arrive, keep your spearheads supplied, and turn tactical success into an operational collapse.",
+    "outcome": {
+      "briliant": {
+        "goto": 18,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "Charleston * BV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>very well done. You have secured this part of the coast !<br><br>now we have planned your corps for reconniassance and sabotage missions in the enemy country....<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "victory": {
+        "goto": 18,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 90,
+        "text": "Charleston * V<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>very well done. You have secured this part of the coast !<br><br>now we have planned your corps for reconniassance and sabotage missions in the enemy country....<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "tactical": {
+        "goto": 18,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 80,
+        "text": "Charleston * TV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>well done. You have secured this part of the coast !<br><br>now we have planned your corps for reconniassance and sabotage missions in the enemy country....<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Charleston * L<br><br>Everything is lost."
+      }
+    }
+  },
+  {
+    "id": 18,
+    "scenario": "aljf_18.xml",
+    "startprestige": 0,
+    "intro": "The road ahead is defended, yet a decisive blow here can unhinge the entire front. May, 5., 1864 New Market places your command at Dear Friend,. Dear Friend, Once again our old friend Franz Sigel has taken command in our corps.... we have not met for a long time and the first night we talked an drank beer together...it has really been a long journey from the battlefields at the Rhine river up to here into Shenandoah valley.... Our original orders were to defend our own railway connections and to destroy the enemy ones... The wider stakes are clear: THE PRESIDENT OF THE UNITED STATES -----{end of secret telegraph depeche}----. Concentrate your best units, protect the flanks of the advance, and seize the decisive objectives before the enemy can rebuild a line.",
+    "outcome": {
+      "briliant": {
+        "goto": 19,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 80,
+        "text": "New Market * BV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>very well done, Sir, but now we haveto call you back.... at the moment we are not able to send you support... and even more important:<br>we have to reconquer the important railway junction Harpers Ferry at all cost....<br>this is one of the strategic most relevant traffic junctions... who controls the railway supply will win the war !<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "victory": {
+        "goto": 19,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 70,
+        "text": "New Market * V<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>very well done, Sir, but now we haveto call you back.... at the moment we are not able to send you support... and even more important:<br>we have to reconquer the important railway junction Harpers Ferry at all cost....<br>this is one of the strategic most relevant traffic junctions... who controls the railway supply will win the war !<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "tactical": {
+        "goto": 19,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 60,
+        "text": "New Market * TV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>well done, Sir, but now we haveto call you back.... at the moment we are not able to send you support... and even more important:<br>we have to reconquer the important railway junction Harpers Ferry at all cost....<br>this is one of the strategic most relevant traffic junctions... who controls the railway supply will win the war !<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "New Market * L<br><br>Everything is lost."
+      }
+    }
+  },
+  {
+    "id": 19,
+    "scenario": "aljf_19.xml",
+    "startprestige": 0,
+    "intro": "The enemy has filled the approaches with strongpoints, but the city beyond them is the campaign's prize. July, 4., 1864 Harper's Ferry places your command at Dear Friend,. When the confederate army under Jubel A. Early was approaching us, General Sigel gave orders to evacuate the city. We hear rumors that the High Command of the Army once again fell in disfavor with Sigel and that he will be replaced soon. The wider stakes are clear: THE PRESIDENT OF THE UNITED STATES -----{end of secret telegraph depeche}----. Secure the approaches, protect your supply route, and reduce the enemy's positions one district at a time.",
+    "outcome": {
+      "briliant": {
+        "goto": 20,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 80,
+        "text": "Harper's Ferry * BV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>excellent, General !<br>according to your high experience in warfare at sea and in amphibious maneuvers, you are sent to our south-eastern front... let us take all rebel harbors at first !<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "victory": {
+        "goto": 20,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 70,
+        "text": "Harper's Ferry * V<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>excellent, General !<br>according to your high experience in warfare at sea and in amphibious maneuvers, you are sent to our south-eastern front... let us take all rebel harbors at first !<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "tactical": {
+        "goto": 20,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 60,
+        "text": "Harper's Ferry * TV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>excellent, General !<br>according to your high experience in warfare at sea and in amphibious maneuvers, you are sent to our south-eastern front... let us take all rebel harbors at first !<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Harper's Ferry * L<br><br>Everything is lost."
+      }
+    }
+  },
+  {
+    "id": 20,
+    "scenario": "aljf_20.xml",
+    "startprestige": 0,
+    "intro": "The initiative is yours, but the enemy will not remain disorganized for long. August, 5., 1864 Mobile Bay places your command at Dear Friend,. Dear Friend, We spend weeks travelling down the Mississippi and once we arrived at New Orleans, we had to board ocean going transport ships. I was able to write and send this letter just before we left New Orleans for the Gulf of Mexico. The wider stakes are clear: Mobile Bay * BV ----{secret telegraph depeche to general}----- THE WHITE HOUSE; WASHINGTON, Dear Sir, the confederate fleet is nearly non existent any more... Momentum is your greatest asset: pause too long and a breakthrough becomes another costly frontal battle.",
+    "outcome": {
+      "briliant": {
+        "goto": 21,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "Mobile Bay * BV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>the confederate fleet is nearly non existent any more... <br>Now our main force may come from the north whereas your corps will land from the south-east..<br>good luck !<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "victory": {
+        "goto": 21,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 90,
+        "text": "Mobile Bay * V<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>the confederate fleet is nearly non existent any more... <br>Now our main force may come from the north whereas your corps will land from the south-east..<br>good luck !<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "tactical": {
+        "goto": 21,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 80,
+        "text": "Mobile Bay * TV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>the confederate fleet is nearly non existent any more... <br>Now our main force may come from the north whereas your corps will land from the south-east..<br>good luck !<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Mobile Bay * L<br><br>Everything is lost."
+      }
+    }
+  },
+  {
+    "id": 21,
+    "scenario": "aljf_21.xml",
+    "startprestige": 0,
+    "intro": "The initiative is yours, but the enemy will not remain disorganized for long. October, 25., 1864 Petersburg places your command at Dear Friend,. Dear Friend, our army corps has reached Petersburg...from here important roads and rails lead in all directions....but especially Petersburg controls the last working railway to Richmond... by now we only control the area east of Petersburg.... Trying to undermine the confederate fortifications south-east of Petersburg, sappers already created a huge crater in the rebel position. The wider stakes are clear: Some U.S.C.T and our Marine Corps will support you... Break the defence before reserves arrive, keep your spearheads supplied, and turn tactical success into an operational collapse.",
+    "outcome": {
+      "briliant": {
+        "goto": 22,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "Petersburg * BV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>rest of the confederate Navy gather near Fort Fisher...<br>As you and your men are most experienced in amphibious maneuvers, we once again have to ask you to carry out this important amphibious maneuver....<br>Some U.S.C.T and our Marine Corps will support you...<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "victory": {
+        "goto": 22,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 90,
+        "text": "Petersburg * V<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>rest of the confederate Navy gather near Fort Fisher...<br>As you and your men are most experienced in amphibious maneuvers, we once again have to ask you to carry out this important amphibious maneuver....<br>Some U.S.C.T and our Marine Corps will support you...<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "tactical": {
+        "goto": 22,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 80,
+        "text": "Petersburg * TV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>rest of the confederate Navy gather near Fort Fisher...<br>As you and your men are most experienced in amphibious maneuvers, we once again have to ask you to carry out this important amphibious maneuver....<br>Some U.S.C.T and our Marine Corps will support you...<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Petersburg * L<br><br>Everything is lost."
+      }
+    }
+  },
+  {
+    "id": 22,
+    "scenario": "aljf_22.xml",
+    "startprestige": 0,
+    "intro": "A narrow window has opened in the enemy line; turn it into a strategic rupture. January, 13., 1865 Fort Fisher places your command at Dear Friend,. Some of my best units are formed from black men...Finally we conduct this war for them and for the freedom of all men... as we did in 1848.. ORDERS: General, we have to take these important navy bases under all circumstances... best land your troops on the peninsula north of Fort Fisher but keep some landing units for landing in th outmost west, after the sea has been cleared from enemies. The wider stakes are clear: Now move back your corps to Petersburg immediately and close the trap...!",
+    "outcome": {
+      "briliant": {
+        "goto": 23,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "Fort Fisher * BV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>very well done General, <br>we have conquered the last important confederate Navybase !<br>Now move back your corps to Petersburg immediately and close the trap...!<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "victory": {
+        "goto": 23,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 90,
+        "text": "Fort Fisher * V<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>very well done General, <br>we have conquered the last important confederate Navybase !<br>Now move back your corps to Petersburg immediately and close the trap...!<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "tactical": {
+        "goto": 23,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 80,
+        "text": "Fort Fisher * TV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>well done General, <br>we have conquered the last important confederate Navybase !<br>Now move back your corps to Petersburg immediately and close the trap...!<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Fort Fisher * L<br><br>Everything is lost."
+      }
+    }
+  },
+  {
+    "id": 23,
+    "scenario": "aljf_23.xml",
+    "startprestige": 0,
+    "intro": "A cavalry force wins not by battering the strongest point, but by appearing where the enemy thought no army could be. April, 1., 1865 Close the Trap (Ft. Stedman + Five Forks) places your command at ----{secret telegraph depeche to general}-----. Furthermore half of the liberated slaves from Fort Fisher wished to fight on with you: we have formed three regiments and have put them under your direct command.... If we close the siege and take Petersburg we have depraved General Lee from any action possibility. The wider stakes are clear: You and your corps get the honor to start our attack... Scout first, avoid prepared strongpoints, and use speed to seize crossings, junctions, and retreat routes.",
+    "outcome": {
+      "briliant": {
+        "goto": 24,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 160,
+        "text": "Close the Trap * BV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>the rebels are not planning to surrender.... they collect their last reserves near Richmond...!<br>You and your corps get the honor to start our attack...<br>Secure the waterway to Richmond !<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "victory": {
+        "goto": 24,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 150,
+        "text": "Close the Trap * V<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>the rebels are not planning to surrender.... they collect their last reserves near Richmond...!<br>You and your corps get the honor to start our attack...<br>Secure the waterway to Richmond !<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "tactical": {
+        "goto": 24,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 140,
+        "text": "Close the Trap * TV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>the rebels are not planning to surrender.... they collect their last reserves near Richmond...!<br>You and your corps get the honor to start our attack...<br>Secure the waterway to Richmond !<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Close the Trap  * L<br><br>Everything is lost."
+      }
+    }
+  },
+  {
+    "id": 24,
+    "scenario": "aljf_24.xml",
+    "startprestige": 0,
+    "intro": "The railway is the front: whoever controls its stations controls movement, supply, and initiative. May, 9., 1865 The Key to Richmond places your command at Dear Friend,. Dear Friend, General Lee and President Davis flew to Richmond, capital of the CSA and their last stronghold. ORDERS: Sir, now that we took Petersburg, the confederates are retreating to Richmond, their last stronghold and capital of the Confederate States of America. The wider stakes are clear: THE PRESIDENT OF THE UNITED STATES -----{end of secret telegraph depeche}----. Secure the junctions, protect the track, and use mobile firepower before the enemy can isolate your train or sever the line behind it.",
+    "outcome": {
+      "briliant": {
+        "goto": 25,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 700,
+        "text": "The Key to Richmond * BV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>we have to srtike quickly into the heart of the beast !<br>being our best general, you have the honor to start the attack...<br>god bless america....<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "victory": {
+        "goto": 25,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 690,
+        "text": "The Key to Richmond * V<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>we have to srtike quickly into the heart of the beast !<br>being our best general, you have the honor to start the attack...<br>god bless america....<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "tactical": {
+        "goto": 25,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 660,
+        "text": "The Key to Richmond * TV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>we have to srtike quickly into the heart of the beast !<br>being our best general, you have the honor to start the attack...<br>god bless america....<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "The Key to Richmond * L<br><br>Everything is lost."
+      }
+    }
+  },
+  {
+    "id": 25,
+    "scenario": "aljf_25.xml",
+    "startprestige": 0,
+    "intro": "The campaign has reached a point where speed matters as much as firepower. June, 23., 1865 Final Assault at Richmond places your command at Dear Friend,. Dear Friend, it is now that we are in front of the lion's hole... the lion is hurted and has drawn back to the outmost corner of his cave... but he still is really dangerous..... may be even more dangerous then ever... before as he knows there is nothing to lose for him.... I do not know how this will end, but I feel this is the end of the war.. one way or the other..this is the final decision...",
+    "outcome": {
+      "briliant": {
+        "goto": 254,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 9999,
+        "text": "Final Assault at Richmond * BV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>Unbelievable, you made it !!!<br>You have taken Richmond and the enemy had to surrender !<br>The war is over ! We have won !<br>if you plan to run for presidency in the future, I could help you with advice...<br>God bless and long live liberty !<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----<br><br>dear friend,<br>we have won, I fullfilled my duty: I resign as general, return to my school and teach young people again.....<br>there is one thing that I will teach them for sure: Their are times where freedom must be defended.... <br>and here my friend, here ends my long journey to freedom."
+      },
+      "victory": {
+        "goto": 254,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 999,
+        "text": "Final Assault at Richmond * V<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>Unbelievable, you made it !!!<br>You have taken Richmond and the enemy had to surrender !<br>The war is over ! We have won !<br>if you plan to run for presidency in the future, I could help you with advice...<br>God bless and long live liberty !<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----<br><br>dear friend,<br>we have won, I fullfilled my duty: I resign as general, return to my school and teach young people again.....<br>there is one thing that I will teach them for sure: Their are times where freedom must be defended.... <br>and here my friend, here ends my long journey to freedom."
+      },
+      "tactical": {
+        "goto": 254,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 99,
+        "text": "Final Assault at Richmond * TV<br><br>----{secret telegraph depeche to general}-----<br>THE WHITE HOUSE; WASHINGTON,<br><br>Dear Sir,<br>Unbelievable, you made it !!!<br>You have taken Richmond and the enemy had to surrender !<br>The war is over ! We have won !<br>if you plan to run for presidency in the future, I could help you with advice...<br>God bless and long live liberty !<br><br>THE PRESIDENT OF THE UNITED STATES<br>-----{end of secret telegraph depeche}----<br><br>dear friend,<br>we have won, I fullfilled my duty: I resign as general, return to my school and teach young people again.....<br>there is one thing that I will teach them for sure: Their are times where freedom must be defended.... <br>and here my friend, here ends my long journey to freedom."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Final Assault at Richmond * L<br><br>Everything is lost."
+      }
+    }
+  }
+]

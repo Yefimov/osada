@@ -151,6 +151,26 @@ object CombatLog {
         pushTo(log.leaders, entry)
     }
 
+    fun addHero(
+        unit: GameUnit,
+        heroName: String,
+        rank: String,
+        formationName: String,
+    ) {
+        val player = unit.player ?: return
+        val entry = js("{}")
+        entry.id = unit.id
+        entry.eqid = unit.eqid
+        entry.isCore = unit.isCore
+        entry.pos = unit.getPos()
+        entry.side = player.side
+        entry.isHero = true
+        entry.heroName = heroName
+        entry.rank = rank
+        entry.formationName = formationName
+        pushTo(log.leaders, entry)
+    }
+
     private fun newCombatUnitInfo(): dynamic {
         val o = js("{}")
         o.eqid = 0

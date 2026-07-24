@@ -4,6 +4,7 @@ import org.osada.CombatLog
 import org.osada.PlayerType
 import org.osada.addSurrender
 import org.osada.handleMoveVictory
+import org.osada.hero.HeroCampaign
 import org.osada.model.Cell
 import org.osada.model.CombatResults
 import org.osada.model.GameMap
@@ -93,7 +94,7 @@ internal class AnimationOrchestrator(
 
         ui.game.waitUIAnimation = true
         UIBuilder.showAttackInfo(attacker, defender)
-        val preview = GameRules.calculateAttackResults(attacker, defender, true)
+        val preview = GameRules.calculateAttackResults(attacker, defender, true, map.getUnits().toList())
         val attackerOldStrength = attacker.strength
 
         resolveSupportFire(map, attacker, defender, attackerPos, preview)
@@ -207,6 +208,9 @@ internal class AnimationOrchestrator(
             val surrenderPos = defender.getPos()
             val name = defender.unitData(true).name
             val prestige = map.surrenderUnit(defender, attacker)
+            // Combat-side hero processing ran while the defender was still alive. Failed-retreat
+            // surrender destroys it afterwards, so resolve the commander's fate now.
+            HeroCampaign.recordCasualty(defender, map.turn)
             val captorSide = attacker.player?.side
             if (surrenderPos != null && captorSide != null) {
                 CombatLog.addSurrender(defender, surrenderPos, captorSide, prestige)

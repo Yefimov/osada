@@ -313,11 +313,13 @@ internal object AttackCalculation {
         attacker: GameUnit,
         defender: GameUnit,
         context: CombatContext,
+        attackerSupportBars: Int = 0,
+        defenderSupportBars: Int = 0,
     ) {
-        stats.attackerAttack += attacker.experience / EXPERIENCE_STAT_DIVISOR
-        stats.attackerDefense += attacker.experience / EXPERIENCE_STAT_DIVISOR
-        stats.defenderAttack += defender.experience / EXPERIENCE_STAT_DIVISOR
-        stats.defenderDefense += defender.experience / EXPERIENCE_STAT_DIVISOR
+        stats.attackerAttack += attacker.experience / EXPERIENCE_STAT_DIVISOR + attackerSupportBars
+        stats.attackerDefense += attacker.experience / EXPERIENCE_STAT_DIVISOR + attackerSupportBars
+        stats.defenderAttack += defender.experience / EXPERIENCE_STAT_DIVISOR + defenderSupportBars
+        stats.defenderDefense += defender.experience / EXPERIENCE_STAT_DIVISOR + defenderSupportBars
 
         val attackerData = context.attackerData
         val hitsPenaltyApplies =

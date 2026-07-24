@@ -49,6 +49,12 @@ class GameUnit(
     var tempSpotted: Boolean = false
     var nodossier: Boolean = false
 
+    /**
+     * Explicit hero-system opt-out for a unit loaned only for the current battle.
+     * Campaign-player control, not [isCore], is otherwise the participation rule.
+     */
+    var isTemporaryBorrowed: Boolean = false
+
     /** Player-given unit name (Stage 3.5, Task 2), or null to display the equipment name.
      *  Serialized into saves only when set — unrenamed units keep the exact pre-rename
      *  save layout (see GameStateSerializer's byte-stability doc). */
@@ -156,6 +162,7 @@ class GameUnit(
         entrenchment = other.entrenchment
         entrenchTicks = other.entrenchTicks
         leader = other.leader
+        isTemporaryBorrowed = other.isTemporaryBorrowed
         formationId = other.formationId
         player = Player().apply { copy(other.player ?: return@apply) }
         if (other.transport != null) {

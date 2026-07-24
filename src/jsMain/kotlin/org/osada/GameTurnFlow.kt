@@ -9,6 +9,7 @@ import org.osada.model.unmountUnit
 import org.osada.rules.GameRules
 import org.osada.rules.isInAttackRange
 import org.osada.ui.UIBuilder
+import org.osada.ui.message
 import org.osada.ui.showAIStatus
 import org.osada.ui.showGameToolTip
 import org.osada.ui.uiEndTurnInfo
@@ -54,7 +55,7 @@ fun Game.processAIActions() {
     executeAction(action)
 }
 
-@Suppress("UNCHECKED_CAST")
+@Suppress("UNCHECKED_CAST", "LongMethod")
 private fun Game.executeAction(action: dynamic) {
     val param = action.param as? Array<dynamic> ?: return
     when (action.type as Int) {
@@ -101,6 +102,15 @@ private fun Game.executeAction(action: dynamic) {
             waitUIAnimation = true
             ui?.showGameToolTip(message, cell.row, cell.col)
             ui?.uiSetCellOnViewPort(cell)
+        }
+        ActionType.MODAL_MESSAGE.value -> {
+            val title = param[0] as String
+            val body = param[1] as String
+            waitUIAnimation = true
+            UIBuilder.message(title, body) {
+                uiMessageClicked = true
+                uiAnimationFinished()
+            }
         }
         ActionType.VIEWPORT.value -> {
             ui?.uiSetCellOnViewPort(param[0] as Cell)

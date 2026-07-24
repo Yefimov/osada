@@ -1,0 +1,686 @@
+<?xml version="1.0" encoding="ASCII"?>
+<map file="acampzbo.xscn" name="Zborow" turns="8, 11, 15" date="July 2, 1917" dayturns="0" ground="0" atmosferic="0" latitude="6" iconset="0" weatherchg="1" rows="27" cols="40" eqp="eqp-kaiser" image="resources/maps/images/map_217.png" eqpv="united1">
+  <player id="0" country="144" side="1" airtrans="0" navaltrans="0" support="145, 154, 0, 0" turnprestige="0, 75, 0, 75, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <player id="1" country="143" side="0" airtrans="0" navaltrans="0" support="144, 0, 0, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <reinforce turn="2">
+    <at row="8" col="35">
+      <unit id="37823" owner="0" flag="154" face="0" exp="19" str="8"/>
+    </at>
+    <at row="8" col="34">
+      <unit id="37823" owner="0" flag="154" face="0" exp="134" str="5"/>
+    </at>
+  </reinforce>
+  <reinforce turn="3">
+    <at row="1" col="22">
+      <unit id="37823" owner="0" flag="154" face="0" exp="106" str="5"/>
+    </at>
+    <at row="12" col="14">
+      <unit id="36767" owner="1" flag="144" face="0" exp="146" str="5"/>
+    </at>
+    <at row="12" col="15">
+      <unit id="36767" owner="1" flag="144" face="0" exp="30" str="5"/>
+    </at>
+  </reinforce>
+  <reinforce turn="4">
+    <at row="5" col="10">
+      <unit id="36767" owner="1" flag="144" face="0" exp="46" str="5"/>
+    </at>
+  </reinforce>
+  <reinforce turn="5">
+    <at row="4" col="10">
+      <unit id="36768" owner="1" flag="144" face="0" exp="161" str="5" ldr="1"/>
+    </at>
+  </reinforce>
+  <reinforce turn="6">
+    <at row="1" col="20">
+      <unit id="37823" owner="0" flag="154" face="0" exp="57" str="7"/>
+    </at>
+    <at row="4" col="9">
+      <unit id="36797" owner="1" flag="144" face="0" exp="136" str="5"/>
+    </at>
+  </reinforce>
+  <hex row="0" col="5" terrain="10"/>
+  <hex row="0" col="7" terrain="3"/>
+  <hex row="0" col="8" terrain="3"/>
+  <hex row="0" col="9" terrain="3"/>
+  <hex row="0" col="13" terrain="8"/>
+  <hex row="0" col="14" terrain="8"/>
+  <hex row="0" col="15" terrain="3"/>
+  <hex row="0" col="16" terrain="3"/>
+  <hex row="0" col="17" terrain="10" name="Sltypa River"/>
+  <hex row="0" col="18" road="136"/>
+  <hex row="0" col="19" road="144"/>
+  <hex row="0" col="21" terrain="3"/>
+  <hex row="0" col="23" terrain="8"/>
+  <hex row="0" col="24" terrain="3"/>
+  <hex row="0" col="25" terrain="5"/>
+  <hex row="0" col="26" terrain="5"/>
+  <hex row="0" col="27" terrain="5"/>
+  <hex row="0" col="28" terrain="10"/>
+  <hex row="0" col="31" terrain="3"/>
+  <hex row="0" col="34" terrain="10"/>
+  <hex row="1" col="1" terrain="3"/>
+  <hex row="1" col="2" terrain="3"/>
+  <hex row="1" col="3" terrain="3"/>
+  <hex row="1" col="4" road="9"/>
+  <hex row="1" col="5" road="144"/>
+  <hex row="1" col="6" terrain="10"/>
+  <hex row="1" col="7" terrain="3"/>
+  <hex row="1" col="8" terrain="3"/>
+  <hex row="1" col="9" terrain="3"/>
+  <hex row="1" col="10" terrain="3"/>
+  <hex row="1" col="12" terrain="8"/>
+  <hex row="1" col="14" terrain="8"/>
+  <hex row="1" col="17" terrain="10" name="Sltypa River"/>
+  <hex row="1" col="19" road="9">
+    <unit id="37931" owner="0" flag="154" face="0" exp="31" str="7"/>
+  </hex>
+  <hex row="1" col="20" terrain="3"/>
+  <hex row="1" col="22" terrain="3"/>
+  <hex row="1" col="24" terrain="3"/>
+  <hex row="1" col="25" terrain="5"/>
+  <hex row="1" col="26" terrain="5"/>
+  <hex row="1" col="27" terrain="5"/>
+  <hex row="1" col="28" terrain="10"/>
+  <hex row="1" col="30" terrain="3"/>
+  <hex row="1" col="31" terrain="3"/>
+  <hex row="1" col="32" terrain="3"/>
+  <hex row="1" col="33" terrain="3"/>
+  <hex row="1" col="34" terrain="10"/>
+  <hex row="1" col="35" terrain="10"/>
+  <hex row="1" col="39" terrain="3"/>
+  <hex row="2" col="2" terrain="3"/>
+  <hex row="2" col="3" terrain="3"/>
+  <hex row="2" col="4" terrain="3"/>
+  <hex row="2" col="5" terrain="1" road="17" name="Zolocow"/>
+  <hex row="2" col="6" terrain="10"/>
+  <hex row="2" col="16">
+    <unit id="36767" owner="1" flag="144" face="0" transport="36815" exp="4" str="4"/>
+    <unit id="36815" owner="1" flag="144" face="0" exp="45" str="8"/>
+  </hex>
+  <hex row="2" col="18" terrain="10" name="Sltypa River"/>
+  <hex row="2" col="19" terrain="10" name="Sltypa River"/>
+  <hex row="2" col="20" road="144"/>
+  <hex row="2" col="23" terrain="5"/>
+  <hex row="2" col="24" terrain="5"/>
+  <hex row="2" col="25" terrain="5"/>
+  <hex row="2" col="26" terrain="5"/>
+  <hex row="2" col="28" terrain="10"/>
+  <hex row="2" col="30" terrain="3"/>
+  <hex row="2" col="32" terrain="3"/>
+  <hex row="2" col="35" terrain="10"/>
+  <hex row="2" col="37" terrain="3"/>
+  <hex row="2" col="38" terrain="3"/>
+  <hex row="2" col="39" terrain="3"/>
+  <hex row="3" col="1" road="40" name="Road to Lemberg"/>
+  <hex row="3" col="3" road="40" name="Road to Lemberg"/>
+  <hex row="3" col="4" terrain="1" name="Zolocow"/>
+  <hex row="3" col="5" terrain="1" road="41" name="Zolocow" owner="1" flag="143">
+    <unit id="36759" owner="1" flag="144" face="0" transport="36815" exp="10" str="5"/>
+  </hex>
+  <hex row="3" col="6" terrain="10"/>
+  <hex row="3" col="7" terrain="1" name="Zolocow"/>
+  <hex row="3" col="9" road="40"/>
+  <hex row="3" col="11" road="40"/>
+  <hex row="3" col="13" road="40"/>
+  <hex row="3" col="17">
+    <unit id="36815" owner="1" flag="144" face="0" exp="15" str="8"/>
+  </hex>
+  <hex row="3" col="19" terrain="10" name="Sltypa River"/>
+  <hex row="3" col="20" road="9"/>
+  <hex row="3" col="21" road="136" deploy="0">
+    <unit id="36957" owner="0" flag="145" face="0"/>
+  </hex>
+  <hex row="3" col="23" terrain="5"/>
+  <hex row="3" col="24" terrain="5"/>
+  <hex row="3" col="25" terrain="5"/>
+  <hex row="3" col="26" terrain="5"/>
+  <hex row="3" col="28" terrain="10"/>
+  <hex row="3" col="35" terrain="10"/>
+  <hex row="3" col="36" terrain="3"/>
+  <hex row="3" col="37" terrain="3"/>
+  <hex row="3" col="38" terrain="3"/>
+  <hex row="4" col="0" road="34"/>
+  <hex row="4" col="2" road="130" name="Road to Lemberg"/>
+  <hex row="4" col="3" terrain="3"/>
+  <hex row="4" col="4" terrain="3" road="130"/>
+  <hex row="4" col="5" road="18"/>
+  <hex row="4" col="6" terrain="10" road="168"/>
+  <hex row="4" col="7" road="130"/>
+  <hex row="4" col="8" road="42"/>
+  <hex row="4" col="9" road="136"/>
+  <hex row="4" col="10" road="130"/>
+  <hex row="4" col="12" road="130"/>
+  <hex row="4" col="13" terrain="3"/>
+  <hex row="4" col="14" road="136"/>
+  <hex row="4" col="15" road="130"/>
+  <hex row="4" col="16" road="40"/>
+  <hex row="4" col="17" road="136"/>
+  <hex row="4" col="19" road="40"/>
+  <hex row="4" col="20" terrain="10" name="Sltypa River"/>
+  <hex row="4" col="22" road="144"/>
+  <hex row="4" col="23" terrain="5"/>
+  <hex row="4" col="24" terrain="5"/>
+  <hex row="4" col="25" terrain="5"/>
+  <hex row="4" col="28" terrain="10"/>
+  <hex row="4" col="29" terrain="10"/>
+  <hex row="4" col="34" terrain="3"/>
+  <hex row="4" col="35" terrain="10"/>
+  <hex row="4" col="36" terrain="3"/>
+  <hex row="4" col="37" terrain="3"/>
+  <hex row="4" col="38" terrain="3"/>
+  <hex row="5" col="3" terrain="3"/>
+  <hex row="5" col="4" terrain="3"/>
+  <hex row="5" col="5" road="17"/>
+  <hex row="5" col="6" terrain="10"/>
+  <hex row="5" col="10" road="136"/>
+  <hex row="5" col="11" road="136"/>
+  <hex row="5" col="13" terrain="3"/>
+  <hex row="5" col="14" terrain="3"/>
+  <hex row="5" col="16">
+    <unit id="36868" owner="1" flag="144" face="0" transport="36831" exp="90" str="5"/>
+  </hex>
+  <hex row="5" col="18" road="130">
+    <unit id="36768" owner="1" flag="144" face="0" transport="36816" exp="94" str="5"/>
+    <unit id="36815" owner="1" flag="144" face="0" exp="92" str="7"/>
+  </hex>
+  <hex row="5" col="20" terrain="10" road="136" name="Sltypa River"/>
+  <hex row="5" col="21" road="130"/>
+  <hex row="5" col="22" road="41" deploy="0">
+    <unit id="36957" owner="0" flag="145" face="0"/>
+  </hex>
+  <hex row="5" col="23" road="136"/>
+  <hex row="5" col="24">
+    <unit id="36992" owner="0" flag="145" face="0" transport="36988" exp="35" str="7"/>
+  </hex>
+  <hex row="5" col="26" deploy="0">
+    <unit id="36957" owner="0" flag="145" face="0"/>
+  </hex>
+  <hex row="5" col="29" terrain="10"/>
+  <hex row="5" col="33" terrain="3"/>
+  <hex row="5" col="34" terrain="3"/>
+  <hex row="5" col="35" terrain="10"/>
+  <hex row="5" col="36" terrain="3"/>
+  <hex row="5" col="39" terrain="2"/>
+  <hex row="6" col="1" terrain="2"/>
+  <hex row="6" col="2" terrain="2" owner="1" flag="143"/>
+  <hex row="6" col="5" terrain="1" road="17" name="Voronjaky" owner="1" flag="143"/>
+  <hex row="6" col="6" terrain="10"/>
+  <hex row="6" col="7" terrain="10"/>
+  <hex row="6" col="9" terrain="3"/>
+  <hex row="6" col="10" terrain="3"/>
+  <hex row="6" col="12" road="136"/>
+  <hex row="6" col="13" road="130"/>
+  <hex row="6" col="14" road="40"/>
+  <hex row="6" col="15" road="136"/>
+  <hex row="6" col="19">
+    <unit id="36812" owner="1" flag="144" face="0" transport="36815" exp="22" str="5"/>
+    <unit id="441" owner="1" flag="144" face="0" exp="59" str="5"/>
+  </hex>
+  <hex row="6" col="20" terrain="10" name="Sltypa River"/>
+  <hex row="6" col="21" terrain="10" name="Sltypa River"/>
+  <hex row="6" col="24" road="136" deploy="0">
+    <unit id="36957" owner="0" flag="145" face="0"/>
+  </hex>
+  <hex row="6" col="25" road="136"/>
+  <hex row="6" col="27" terrain="3"/>
+  <hex row="6" col="29" terrain="3"/>
+  <hex row="6" col="30" terrain="10"/>
+  <hex row="6" col="31" terrain="3"/>
+  <hex row="6" col="32" terrain="3"/>
+  <hex row="6" col="33" terrain="3"/>
+  <hex row="6" col="34" terrain="3"/>
+  <hex row="6" col="36" terrain="10"/>
+  <hex row="6" col="37" terrain="10"/>
+  <hex row="6" col="38" terrain="2" owner="0" flag="144"/>
+  <hex row="7" col="2" terrain="2"/>
+  <hex row="7" col="5" road="25"/>
+  <hex row="7" col="6" terrain="10"/>
+  <hex row="7" col="7" terrain="10"/>
+  <hex row="7" col="11" terrain="3"/>
+  <hex row="7" col="12" terrain="3"/>
+  <hex row="7" col="14" terrain="1" name="Pluhiv"/>
+  <hex row="7" col="15" terrain="3"/>
+  <hex row="7" col="16" road="136"/>
+  <hex row="7" col="17" road="136"/>
+  <hex row="7" col="22" terrain="10" name="Sltypa River"/>
+  <hex row="7" col="23" terrain="10" name="Sltypa River"/>
+  <hex row="7" col="25" terrain="1" name="Zborow" owner="0" flag="144" victory="0" deploy="0">
+    <unit id="36957" owner="0" flag="145" face="0"/>
+  </hex>
+  <hex row="7" col="26" road="136"/>
+  <hex row="7" col="27" road="136"/>
+  <hex row="7" col="28" terrain="3"/>
+  <hex row="7" col="29" terrain="3"/>
+  <hex row="7" col="30" terrain="10"/>
+  <hex row="7" col="31" terrain="10"/>
+  <hex row="7" col="35" terrain="1" road="32" name="Village" owner="0" flag="144"/>
+  <hex row="7" col="37" terrain="10"/>
+  <hex row="8" col="0" terrain="3"/>
+  <hex row="8" col="1" terrain="3"/>
+  <hex row="8" col="2" terrain="3"/>
+  <hex row="8" col="5" road="33"/>
+  <hex row="8" col="6" road="136"/>
+  <hex row="8" col="7" road="144"/>
+  <hex row="8" col="8" terrain="10"/>
+  <hex row="8" col="9" terrain="3"/>
+  <hex row="8" col="11" terrain="5"/>
+  <hex row="8" col="12" terrain="5"/>
+  <hex row="8" col="13" terrain="5"/>
+  <hex row="8" col="14" terrain="1" name="Pluhiv" owner="1" flag="143" victory="1">
+    <unit id="36782" owner="1" flag="144" face="0" transport="36816" exp="30" str="5"/>
+    <unit id="36815" owner="1" flag="144" face="0" exp="34" str="7"/>
+  </hex>
+  <hex row="8" col="16" terrain="3"/>
+  <hex row="8" col="18" road="136"/>
+  <hex row="8" col="19" road="130"/>
+  <hex row="8" col="20" road="40"/>
+  <hex row="8" col="21" road="130"/>
+  <hex row="8" col="22" road="40">
+    <unit id="36768" owner="1" flag="144" face="0" transport="36816" exp="75" str="5"/>
+    <unit id="36815" owner="1" flag="144" face="0" exp="59" str="8"/>
+  </hex>
+  <hex row="8" col="23" road="136"/>
+  <hex row="8" col="24" terrain="10" name="Sltypa River"/>
+  <hex row="8" col="25" road="40"/>
+  <hex row="8" col="28" road="136"/>
+  <hex row="8" col="29" road="130"/>
+  <hex row="8" col="30" road="40"/>
+  <hex row="8" col="31" road="130"/>
+  <hex row="8" col="32" terrain="10" road="40"/>
+  <hex row="8" col="33" road="130"/>
+  <hex row="8" col="34" road="42"/>
+  <hex row="8" col="35" road="136"/>
+  <hex row="8" col="38" terrain="10"/>
+  <hex row="8" col="39" terrain="10"/>
+  <hex row="9" col="0" terrain="3"/>
+  <hex row="9" col="1" terrain="3"/>
+  <hex row="9" col="2" terrain="3"/>
+  <hex row="9" col="3" road="34"/>
+  <hex row="9" col="4" road="34"/>
+  <hex row="9" col="7" road="17"/>
+  <hex row="9" col="8" terrain="10"/>
+  <hex row="9" col="9" terrain="3"/>
+  <hex row="9" col="10" terrain="3"/>
+  <hex row="9" col="12" terrain="5"/>
+  <hex row="9" col="16" terrain="3"/>
+  <hex row="9" col="17" terrain="3"/>
+  <hex row="9" col="21">
+    <unit id="36862" owner="1" flag="144" face="0" transport="36816" exp="96" str="5"/>
+  </hex>
+  <hex row="9" col="23">
+    <unit id="36767" owner="1" flag="144" face="0" transport="36815" exp="49" str="6"/>
+    <unit id="36815" owner="1" flag="144" face="0" exp="34" str="8"/>
+  </hex>
+  <hex row="9" col="24" terrain="10" road="130" name="Sltypa River"/>
+  <hex row="9" col="25" terrain="10" name="Sltypa River"/>
+  <hex row="9" col="26" road="136"/>
+  <hex row="9" col="27" road="136" deploy="0">
+    <unit id="36957" owner="0" flag="145" face="0"/>
+  </hex>
+  <hex row="9" col="30" terrain="3"/>
+  <hex row="9" col="31" terrain="3"/>
+  <hex row="9" col="32" terrain="10"/>
+  <hex row="9" col="33" terrain="10"/>
+  <hex row="9" col="36" road="136" name="Road to Tarnopol"/>
+  <hex row="9" col="37" road="136" name="Road to Tarnopol"/>
+  <hex row="9" col="39" road="40" name="Road to Tarnopol" owner="0" flag="144"/>
+  <hex row="10" col="0" terrain="3" road="40"/>
+  <hex row="10" col="1" road="130"/>
+  <hex row="10" col="2" road="34"/>
+  <hex row="10" col="5" terrain="3"/>
+  <hex row="10" col="6" terrain="3"/>
+  <hex row="10" col="7" road="17"/>
+  <hex row="10" col="8" terrain="10"/>
+  <hex row="10" col="16" terrain="3"/>
+  <hex row="10" col="20" terrain="3"/>
+  <hex row="10" col="21" terrain="3"/>
+  <hex row="10" col="25" terrain="10" name="Sltypa River"/>
+  <hex row="10" col="28" road="136"/>
+  <hex row="10" col="29" road="130"/>
+  <hex row="10" col="30" road="40"/>
+  <hex row="10" col="31" road="136"/>
+  <hex row="10" col="33" terrain="10"/>
+  <hex row="10" col="38" road="130" name="Road to Tarnopol"/>
+  <hex row="11" col="6" terrain="1" name="Village"/>
+  <hex row="11" col="7" road="9"/>
+  <hex row="11" col="8" terrain="10"/>
+  <hex row="11" col="9" terrain="10"/>
+  <hex row="11" col="20" terrain="3"/>
+  <hex row="11" col="21" terrain="3"/>
+  <hex row="11" col="22" terrain="3"/>
+  <hex row="11" col="23" terrain="3"/>
+  <hex row="11" col="25">
+    <unit id="36767" owner="1" flag="144" face="0" transport="36815" exp="5" str="5"/>
+    <unit id="36815" owner="1" flag="144" face="0" exp="7" str="7"/>
+  </hex>
+  <hex row="11" col="26" terrain="10" name="Sltypa River"/>
+  <hex row="11" col="27" terrain="10" name="Sltypa River"/>
+  <hex row="11" col="31">
+    <unit id="37931" owner="0" flag="154" face="0" exp="36" str="7"/>
+  </hex>
+  <hex row="11" col="32" road="136"/>
+  <hex row="11" col="33" road="136"/>
+  <hex row="11" col="34" terrain="10"/>
+  <hex row="11" col="35" terrain="10"/>
+  <hex row="12" col="6" terrain="3"/>
+  <hex row="12" col="7" terrain="3"/>
+  <hex row="12" col="8" road="144"/>
+  <hex row="12" col="9" terrain="10"/>
+  <hex row="12" col="18" terrain="3"/>
+  <hex row="12" col="20" terrain="3"/>
+  <hex row="12" col="22" terrain="3"/>
+  <hex row="12" col="27" terrain="8"/>
+  <hex row="12" col="28" terrain="10" name="Sltypa River"/>
+  <hex row="12" col="29" terrain="10" name="Sltypa River"/>
+  <hex row="12" col="33" terrain="1" name="Village" owner="0" flag="144"/>
+  <hex row="12" col="34" road="136"/>
+  <hex row="12" col="35" road="136"/>
+  <hex row="12" col="36" terrain="10"/>
+  <hex row="12" col="37" terrain="10"/>
+  <hex row="13" col="5" terrain="3"/>
+  <hex row="13" col="8" road="17"/>
+  <hex row="13" col="9" terrain="10"/>
+  <hex row="13" col="24" terrain="8"/>
+  <hex row="13" col="25" terrain="8"/>
+  <hex row="13" col="26" terrain="8"/>
+  <hex row="13" col="27" terrain="8"/>
+  <hex row="13" col="28">
+    <unit id="36815" owner="1" flag="144" face="0" exp="58" str="8"/>
+  </hex>
+  <hex row="13" col="30" terrain="10" name="Sltypa River"/>
+  <hex row="13" col="31" terrain="10" name="Sltypa River"/>
+  <hex row="13" col="36" road="136"/>
+  <hex row="13" col="37" road="136"/>
+  <hex row="13" col="38" terrain="10"/>
+  <hex row="13" col="39" terrain="10"/>
+  <hex row="14" col="4" terrain="3"/>
+  <hex row="14" col="6" terrain="3"/>
+  <hex row="14" col="7" terrain="1" name="Remezivci" owner="1" flag="143"/>
+  <hex row="14" col="8" road="9"/>
+  <hex row="14" col="9" road="136"/>
+  <hex row="14" col="10" terrain="10"/>
+  <hex row="14" col="11" terrain="10"/>
+  <hex row="14" col="17" terrain="3"/>
+  <hex row="14" col="24" terrain="8"/>
+  <hex row="14" col="25" terrain="8"/>
+  <hex row="14" col="26" terrain="8"/>
+  <hex row="14" col="27" terrain="8"/>
+  <hex row="14" col="29" terrain="3"/>
+  <hex row="14" col="31" terrain="10" name="Sltypa River"/>
+  <hex row="14" col="32" terrain="10" name="Sltypa River"/>
+  <hex row="14" col="33" terrain="3">
+    <unit id="37931" owner="0" flag="154" face="0" exp="9" str="7"/>
+  </hex>
+  <hex row="14" col="38" road="136"/>
+  <hex row="14" col="39" road="130"/>
+  <hex row="15" col="10" road="144"/>
+  <hex row="15" col="11" terrain="10"/>
+  <hex row="15" col="12" terrain="3"/>
+  <hex row="15" col="13" terrain="10"/>
+  <hex row="15" col="18" terrain="3"/>
+  <hex row="15" col="24" terrain="3"/>
+  <hex row="15" col="25" terrain="8"/>
+  <hex row="15" col="26" terrain="8"/>
+  <hex row="15" col="27" terrain="8"/>
+  <hex row="15" col="28" terrain="3"/>
+  <hex row="15" col="30">
+    <unit id="36815" owner="1" flag="144" face="0" exp="57" str="8"/>
+  </hex>
+  <hex row="15" col="31" terrain="10" name="Sltypa River"/>
+  <hex row="16" col="1" terrain="3"/>
+  <hex row="16" col="9" terrain="1" road="32" name="Koropec" owner="1" flag="143"/>
+  <hex row="16" col="10" road="9"/>
+  <hex row="16" col="11" road="136"/>
+  <hex row="16" col="12" terrain="10"/>
+  <hex row="16" col="13" terrain="1" name="Pomorjany" owner="1" flag="143"/>
+  <hex row="16" col="14" terrain="10"/>
+  <hex row="16" col="15" terrain="10"/>
+  <hex row="16" col="17" terrain="10"/>
+  <hex row="16" col="26" terrain="8"/>
+  <hex row="16" col="32" terrain="10" name="Sltypa River"/>
+  <hex row="16" col="33" terrain="10" name="Sltypa River"/>
+  <hex row="16" col="38" terrain="3"/>
+  <hex row="16" col="39" terrain="3"/>
+  <hex row="17" col="0" terrain="3"/>
+  <hex row="17" col="1" terrain="8"/>
+  <hex row="17" col="3" terrain="8"/>
+  <hex row="17" col="5" terrain="3"/>
+  <hex row="17" col="7" terrain="3"/>
+  <hex row="17" col="8" road="18"/>
+  <hex row="17" col="12" road="136"/>
+  <hex row="17" col="13" road="130"/>
+  <hex row="17" col="14" terrain="1" road="40" name="Pomorjany"/>
+  <hex row="17" col="15" road="136"/>
+  <hex row="17" col="16" terrain="10"/>
+  <hex row="17" col="17" road="40"/>
+  <hex row="17" col="18" terrain="10"/>
+  <hex row="17" col="19" terrain="10"/>
+  <hex row="17" col="21" terrain="10"/>
+  <hex row="17" col="22" terrain="10"/>
+  <hex row="17" col="23" terrain="10"/>
+  <hex row="17" col="24" terrain="10"/>
+  <hex row="17" col="25" terrain="10"/>
+  <hex row="17" col="27" terrain="3"/>
+  <hex row="17" col="29" terrain="3"/>
+  <hex row="17" col="30" terrain="3"/>
+  <hex row="17" col="31" terrain="3"/>
+  <hex row="17" col="33" terrain="10" name="Sltypa River"/>
+  <hex row="17" col="34">
+    <unit id="37931" owner="0" flag="154" face="0" exp="56" str="8"/>
+  </hex>
+  <hex row="17" col="35" terrain="3"/>
+  <hex row="17" col="36" terrain="3"/>
+  <hex row="17" col="37" terrain="3"/>
+  <hex row="17" col="38" terrain="3"/>
+  <hex row="17" col="39" terrain="3"/>
+  <hex row="18" col="0" terrain="3"/>
+  <hex row="18" col="1" terrain="3"/>
+  <hex row="18" col="2" terrain="8"/>
+  <hex row="18" col="4" terrain="8"/>
+  <hex row="18" col="6" terrain="3"/>
+  <hex row="18" col="7" terrain="3"/>
+  <hex row="18" col="8" road="17"/>
+  <hex row="18" col="9" terrain="3"/>
+  <hex row="18" col="16" road="130"/>
+  <hex row="18" col="18" road="136"/>
+  <hex row="18" col="19" road="136"/>
+  <hex row="18" col="20" terrain="10"/>
+  <hex row="18" col="21" terrain="5" road="34"/>
+  <hex row="18" col="22" road="40"/>
+  <hex row="18" col="23" road="144"/>
+  <hex row="18" col="26" terrain="10"/>
+  <hex row="18" col="27" terrain="10"/>
+  <hex row="18" col="28" terrain="3"/>
+  <hex row="18" col="29" terrain="3"/>
+  <hex row="18" col="30" terrain="3"/>
+  <hex row="18" col="31" terrain="3"/>
+  <hex row="18" col="32" terrain="3"/>
+  <hex row="18" col="33" terrain="10" name="Sltypa River"/>
+  <hex row="18" col="35" terrain="3"/>
+  <hex row="18" col="36" terrain="3"/>
+  <hex row="18" col="37" terrain="3"/>
+  <hex row="18" col="38" terrain="3"/>
+  <hex row="18" col="39" terrain="3"/>
+  <hex row="19" col="0" terrain="3"/>
+  <hex row="19" col="1" terrain="3"/>
+  <hex row="19" col="2" terrain="3"/>
+  <hex row="19" col="3" terrain="3"/>
+  <hex row="19" col="4" terrain="8"/>
+  <hex row="19" col="5" terrain="8"/>
+  <hex row="19" col="7" terrain="8" road="18"/>
+  <hex row="19" col="8" terrain="3" road="33"/>
+  <hex row="19" col="9" terrain="3"/>
+  <hex row="19" col="10" terrain="3"/>
+  <hex row="19" col="12" terrain="3"/>
+  <hex row="19" col="15" terrain="1" name="Village"/>
+  <hex row="19" col="19" terrain="5"/>
+  <hex row="19" col="20" terrain="5" road="130"/>
+  <hex row="19" col="21" terrain="5"/>
+  <hex row="19" col="22" terrain="5"/>
+  <hex row="19" col="23" road="9"/>
+  <hex row="19" col="28" terrain="10"/>
+  <hex row="19" col="29" terrain="10"/>
+  <hex row="19" col="30" terrain="3"/>
+  <hex row="19" col="31">
+    <unit id="36815" owner="1" flag="144" face="0" exp="11" str="7"/>
+  </hex>
+  <hex row="19" col="33" terrain="10" name="Sltypa River"/>
+  <hex row="19" col="36" terrain="3"/>
+  <hex row="19" col="37" terrain="3"/>
+  <hex row="19" col="38" terrain="3"/>
+  <hex row="19" col="39" terrain="3"/>
+  <hex row="20" col="2" terrain="3"/>
+  <hex row="20" col="3" terrain="3"/>
+  <hex row="20" col="6" terrain="8"/>
+  <hex row="20" col="7" terrain="8"/>
+  <hex row="20" col="8" terrain="3"/>
+  <hex row="20" col="9" terrain="3"/>
+  <hex row="20" col="10" terrain="3"/>
+  <hex row="20" col="12" terrain="3"/>
+  <hex row="20" col="18" terrain="5"/>
+  <hex row="20" col="19" terrain="5"/>
+  <hex row="20" col="20" terrain="5"/>
+  <hex row="20" col="21" terrain="5"/>
+  <hex row="20" col="24" road="144"/>
+  <hex row="20" col="30" terrain="10"/>
+  <hex row="20" col="31" terrain="10"/>
+  <hex row="20" col="33" terrain="10" name="Sltypa River"/>
+  <hex row="20" col="36" terrain="3"/>
+  <hex row="20" col="39" terrain="3"/>
+  <hex row="21" col="2" terrain="3"/>
+  <hex row="21" col="3" terrain="3"/>
+  <hex row="21" col="4" terrain="3"/>
+  <hex row="21" col="5" terrain="3"/>
+  <hex row="21" col="6" terrain="8"/>
+  <hex row="21" col="7" terrain="8"/>
+  <hex row="21" col="8" terrain="3"/>
+  <hex row="21" col="12" terrain="3"/>
+  <hex row="21" col="13" terrain="3"/>
+  <hex row="21" col="14" terrain="3"/>
+  <hex row="21" col="18" terrain="5"/>
+  <hex row="21" col="19" terrain="5"/>
+  <hex row="21" col="20" terrain="5"/>
+  <hex row="21" col="24" road="9"/>
+  <hex row="21" col="25" road="136"/>
+  <hex row="21" col="32" terrain="10"/>
+  <hex row="21" col="33" terrain="10" name="Sltypa River"/>
+  <hex row="21" col="34">
+    <unit id="37931" owner="0" flag="154" face="0" exp="17" str="7"/>
+  </hex>
+  <hex row="21" col="36">
+    <unit id="37996" owner="0" flag="154" face="0" exp="159" str="7"/>
+  </hex>
+  <hex row="21" col="38" terrain="1" name="Village" owner="0" flag="144"/>
+  <hex row="21" col="39" terrain="3"/>
+  <hex row="22" col="1" terrain="3"/>
+  <hex row="22" col="2" terrain="3"/>
+  <hex row="22" col="3" terrain="3"/>
+  <hex row="22" col="4" terrain="3"/>
+  <hex row="22" col="5" terrain="3" road="34"/>
+  <hex row="22" col="6" terrain="3" road="34"/>
+  <hex row="22" col="8" terrain="8"/>
+  <hex row="22" col="9" terrain="3"/>
+  <hex row="22" col="10" terrain="3"/>
+  <hex row="22" col="15" terrain="3"/>
+  <hex row="22" col="17" terrain="8"/>
+  <hex row="22" col="26" road="136"/>
+  <hex row="22" col="27" road="136"/>
+  <hex row="22" col="34" terrain="10" name="Sltypa River"/>
+  <hex row="22" col="39" terrain="3"/>
+  <hex row="23" col="1" terrain="3"/>
+  <hex row="23" col="2" terrain="3"/>
+  <hex row="23" col="3" road="34"/>
+  <hex row="23" col="4" road="34"/>
+  <hex row="23" col="5" terrain="3"/>
+  <hex row="23" col="6" terrain="3"/>
+  <hex row="23" col="7" terrain="3"/>
+  <hex row="23" col="8" terrain="3"/>
+  <hex row="23" col="9" terrain="8"/>
+  <hex row="23" col="10" terrain="3"/>
+  <hex row="23" col="11" terrain="8"/>
+  <hex row="23" col="15" terrain="3"/>
+  <hex row="23" col="16" terrain="3"/>
+  <hex row="23" col="17" terrain="8"/>
+  <hex row="23" col="18" terrain="8"/>
+  <hex row="23" col="19" terrain="8"/>
+  <hex row="23" col="20" terrain="8"/>
+  <hex row="23" col="21" terrain="8"/>
+  <hex row="23" col="25" terrain="8"/>
+  <hex row="23" col="28" road="136"/>
+  <hex row="23" col="29" road="144"/>
+  <hex row="23" col="32">
+    <unit id="36815" owner="1" flag="144" face="0" exp="31" str="8"/>
+  </hex>
+  <hex row="23" col="34" terrain="10" name="Sltypa River"/>
+  <hex row="23" col="37">
+    <unit id="37931" owner="0" flag="154" face="0" exp="6" str="8"/>
+  </hex>
+  <hex row="23" col="38" terrain="3"/>
+  <hex row="24" col="1" terrain="3" road="18"/>
+  <hex row="24" col="2" terrain="3" road="34"/>
+  <hex row="24" col="3" terrain="3"/>
+  <hex row="24" col="4" terrain="3"/>
+  <hex row="24" col="5" terrain="3"/>
+  <hex row="24" col="6" terrain="3"/>
+  <hex row="24" col="7" terrain="3"/>
+  <hex row="24" col="8" terrain="3"/>
+  <hex row="24" col="9" terrain="8"/>
+  <hex row="24" col="10" terrain="3"/>
+  <hex row="24" col="11" terrain="8"/>
+  <hex row="24" col="12" terrain="8"/>
+  <hex row="24" col="15" terrain="3"/>
+  <hex row="24" col="20" terrain="8"/>
+  <hex row="24" col="25" terrain="8"/>
+  <hex row="24" col="29" road="9"/>
+  <hex row="24" col="34" terrain="10" name="Sltypa River"/>
+  <hex row="24" col="35" terrain="10" name="Sltypa River"/>
+  <hex row="24" col="39" terrain="3"/>
+  <hex row="25" col="0" terrain="3"/>
+  <hex row="25" col="1" terrain="3" road="33"/>
+  <hex row="25" col="2" terrain="3"/>
+  <hex row="25" col="3" terrain="3"/>
+  <hex row="25" col="4" terrain="3"/>
+  <hex row="25" col="5" terrain="3"/>
+  <hex row="25" col="6" terrain="3"/>
+  <hex row="25" col="7" terrain="3"/>
+  <hex row="25" col="9" terrain="3"/>
+  <hex row="25" col="10" terrain="8"/>
+  <hex row="25" col="11" terrain="3"/>
+  <hex row="25" col="12" terrain="3"/>
+  <hex row="25" col="14" terrain="3"/>
+  <hex row="25" col="15" terrain="3"/>
+  <hex row="25" col="20" terrain="8"/>
+  <hex row="25" col="30" road="136"/>
+  <hex row="25" col="31" road="136"/>
+  <hex row="25" col="34">
+    <unit id="36767" owner="1" flag="144" face="0" transport="36815" exp="66" str="5"/>
+    <unit id="36815" owner="1" flag="144" face="0" exp="9" str="7"/>
+  </hex>
+  <hex row="25" col="36" terrain="10" name="Sltypa River"/>
+  <hex row="25" col="37" terrain="10" name="Sltypa River"/>
+  <hex row="26" col="0" road="34"/>
+  <hex row="26" col="1" terrain="3"/>
+  <hex row="26" col="2" terrain="3"/>
+  <hex row="26" col="5" terrain="3"/>
+  <hex row="26" col="7" terrain="3"/>
+  <hex row="26" col="8" terrain="3"/>
+  <hex row="26" col="9" terrain="3"/>
+  <hex row="26" col="10" terrain="8"/>
+  <hex row="26" col="12" terrain="3"/>
+  <hex row="26" col="13" terrain="8"/>
+  <hex row="26" col="14" terrain="8"/>
+  <hex row="26" col="15" terrain="8"/>
+  <hex row="26" col="19" terrain="8"/>
+  <hex row="26" col="20" terrain="8"/>
+  <hex row="26" col="23" terrain="3"/>
+  <hex row="26" col="26" terrain="3"/>
+  <hex row="26" col="32" road="144"/>
+  <hex row="26" col="35" terrain="2"/>
+  <hex row="26" col="36" terrain="2"/>
+  <hex row="26" col="37">
+    <unit id="36815" owner="1" flag="144" face="0" exp="88" str="7"/>
+  </hex>
+  <hex row="26" col="38" terrain="10" name="Sltypa River"/>
+  <hex row="26" col="39" terrain="10" name="Sltypa River"/>
+</map>

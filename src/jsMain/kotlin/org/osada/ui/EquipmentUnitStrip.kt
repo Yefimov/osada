@@ -76,12 +76,17 @@ internal object EquipmentUnitStrip {
             selectedUnitId = unit.id
         }
         val deployIndex = if (uiSettings.deployMode) coreList.indexOf(unit) else unit.id
+
+        // Do not silently arm the first reserve card. With no explicit card selection, a click on a
+        // deployment hex opens the reserve deck and waits for the player's actual choice.
         if (uiSettings.deployMode &&
-            (selectedUnitId == -1 || coreList.getOrNull(selectedUnitId)?.isDeployed == true)
+            selectedUnitId >= 0 &&
+            coreList.getOrNull(selectedUnitId)?.isDeployed == true
         ) {
-            eqUserSel?.deployunit = deployIndex
-            selectedUnitId = deployIndex
+            DeploymentSelection.clearSelected()
+            selectedUnitId = -1
         }
+
         item.asDynamic().unitid = deployIndex
         item.asDynamic().uniteqid = unit.eqid
         item.asDynamic().eqclass = unit.unitData(true).uclass
@@ -95,7 +100,7 @@ internal object EquipmentUnitStrip {
             item.setAttribute("selectedUnit", unit.unitData(true).name)
             scrollPos = (hscroll?.asDynamic()?.offsetWidth as? Int ?: 0) / 2 - (item.offsetWidth / 2)
         }
-        wireUnitItemClick(ui, eqUserSel, map, currentPlayer, item, hscroll)
+        wireUnitItemClick(ui, eqUserSel, map, currentPlayer, unit, item, hscroll)
         return UnitItemResult(selectedUnitId, scrollPos)
     }
 
@@ -109,10 +114,20 @@ internal object EquipmentUnitStrip {
         val nameDiv = addTag(container, "div")
         val iconsDiv = addTag(container, "div")
         val data = unit.unitData(true)
-        val icon = if (data.uclass > org.osada.UnitClass.SUBMARINE.value) UIBuilder.navalReplacementIcon else data.icon
+        val icon =
+            if (data.uclass > org.osada.UnitClass.SUBMARINE.value) {
+                UIBuilder.navalReplacementIcon
+            } else {
+                UnitIconResolver.forCurrentScenario(data.icon)
+            }
         img.style.backgroundImage = "url($icon)"
         nameDiv.textContent = unit.customName ?: data.name
         if (unit.customName != null) nameDiv.title = data.name // equipment identity on hover
+        val location = if (unit.isDeployed) "deployed on the map" else "waiting in reserve"
+        val formation = if (unit.isCore) "core formation" else "scenario unit"
+        container.title =
+            "Select ${unit.customName ?: data.name}: $formation, $location. " +
+            "Card symbols show attack available, movement available, low supply, or reserve status."
         iconsDiv.className = if (unit.isDeployed) "eqUnitBoxIconsMenu" else "eqUnitBoxIcons"
         var icons = ""
         if (unit.isDeployed) {
@@ -220,52 +235,46 @@ internal object EquipmentUnitStrip {
         eqUserSel: dynamic,
         map: org.osada.model.GameMap,
         currentPlayer: org.osada.model.Player,
+        unit: org.osada.model.GameUnit,
         item: HTMLElement,
         hscroll: HTMLElement?,
     ) {
-        item.onclick = { _: MouseEvent ->
-            val clickedId = item.asDynamic().unitid as? Int
-            clickedId?.let { id ->
-                if (uiSettings.deployMode) {
-                    eqUserSel?.deployunit = id
-                    eqUserSel?.userunit = -1
-                    // Picking a reserve to place is a deploy intent: drop any selected map unit so
-                    // its move highlights can't make a later click on a deploy hex read as a move
-                    // instead of a deploy (see MapClickHandler.handleLeftClickEmpty).
-                    map.delCurrentUnit()
+        item.onclick = click@{ _: MouseEvent ->
+            val clickedId = item.asDynamic().unitid as? Int ?: return@click null
+            if (uiSettings.deployMode) {
+                if (!DeploymentSelection.selectUnit(currentPlayer, unit)) return@click null
+                map.delCurrentUnit()
+            } else {
+                DeploymentSelection.reset()
+                eqUserSel?.userunit = clickedId
+            }
+            eqUserSel?.eqtransport = -1
+            eqUserSel?.equnit = item.asDynamic().uniteqid as? Int ?: -1
+            eqUserSel?.unitscroll = hscroll?.asDynamic()?.scrollLeft as? Int ?: 0
+
+            val selected = if (uiSettings.deployMode) unit else map.getUnitById(clickedId)
+            selected?.let {
+                ui.showUnitInfo(it)
+                if (!uiSettings.deployMode) {
+                    ui.uiUnitSelect(it)
+                    it.getPos()?.let { pos -> ui.uiSetCellOnViewPort(pos) }
                 } else {
-                    eqUserSel?.userunit = id
-                    eqUserSel?.deployunit = -1
-                }
-                eqUserSel?.eqtransport = -1
-                eqUserSel?.equnit = item.asDynamic().uniteqid as? Int ?: -1
-                eqUserSel?.unitscroll = hscroll?.asDynamic()?.scrollLeft as? Int ?: 0
-                val selected =
-                    if (uiSettings.deployMode) {
-                        currentPlayer.getCoreUnitList().getOrNull(id)
-                    } else {
-                        map.getUnitById(id)
+                    // Refresh airfield highlights for the newly selected reserve unit.
+                    ui.render.render()
+                    // Hex-first deployment: the card click completes the pending placement now,
+                    // rather than becoming the choice for the NEXT hex.
+                    if (DeploymentSelection.pendingTarget() != null && DeploymentSelection.deployPending(ui)) {
+                        return@click null
                     }
-                selected?.let {
-                    ui.showUnitInfo(it)
-                    if (!uiSettings.deployMode) {
-                        ui.uiUnitSelect(it)
-                        it.getPos()?.let { pos -> ui.uiSetCellOnViewPort(pos) }
-                    } else {
-                        // Re-render so the airfield deploy highlight reflects whether the
-                        // newly selected reserve unit is an aircraft (see MapRenderer).
-                        ui.render.render()
-                    }
-                    ui.updateEquipmentWindow(item.asDynamic().eqclass as? Int ?: org.osada.UnitClass.TANK.value)
                 }
-                hscroll?.asDynamic()?.scrollLeft = eqUserSel?.unitscroll
-                // Close-on-pick is ONLY for the Reserve tab (the cursor then carries the unit
-                // to a deploy hex). On the Upgrade tab the same reserve unit is a chosen
-                // upgrade target, so the window must stay open to pick the new model.
-                val onReserveTab = byId("equipment")?.classList?.contains("osada-eq--reserve") == true
-                if (uiSettings.deployMode && onReserveTab) {
-                    byId("equipment")?.style?.display = "none"
-                }
+                ui.updateEquipmentWindow(item.asDynamic().eqclass as? Int ?: org.osada.UnitClass.TANK.value)
+            }
+            hscroll?.asDynamic()?.scrollLeft = eqUserSel?.unitscroll
+
+            // Unit-first deployment: close the catalogue and let the cursor carry this explicit unit.
+            val onReserveTab = byId("equipment")?.classList?.contains("osada-eq--reserve") == true
+            if (uiSettings.deployMode && onReserveTab) {
+                byId("equipment")?.style?.display = "none"
             }
         }
     }

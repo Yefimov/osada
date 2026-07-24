@@ -1,0 +1,618 @@
+[
+  {
+    "id": 0,
+    "scenario": "ncampseo.xml",
+    "startprestige": 0,
+    "intro": "A city is not captured in a single blow; it is taken district by district under smoke and fire. The Korean War is shifting between rapid manoeuvre and brutal attrition. The Imperialist Japanese have been driven off our peninsula only to make room for capitalistic Americans - but only in the south. The people of North Korea have the full support from our comrades in the Soviet Union. The wider stakes are clear: Seoul is liberated, and the Southern army is in disarray and close to fading into chaos. A strong result opens the road to SUWON (30 June 1950). The city rewards combined arms and patience; reckless attacks will leave your best formations buried in rubble.",
+    "outcome": {
+      "briliant": {
+        "goto": 1,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 150,
+        "text": "Comrade General, from the very beginning the invasion has been a stunning success.  Seoul is liberated, and the Southern army is in disarray and close to fading into chaos.  The bridges at Seoul have been blown up while there were still large Southern units north of the Han River.  Comrade, collect your forces and meet me at the next briefing, it will be held in the next few hours."
+      },
+      "victory": {
+        "goto": 1,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 150,
+        "text": "Comrade General, from the very beginning the invasion has been a stunning success.  Seoul is liberated, and the Southern army is in disarray and close to fading into chaos.  The bridges at Seoul have been blown up while there were still large Southern units north of the Han River.  Comrade, collect your forces and meet me at the next briefing, it will be held in the next few hours."
+      },
+      "tactical": {
+        "goto": 1,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 150,
+        "text": "Comrade General, from the very beginning the invasion has been a stunning success.  Seoul is liberated, and the Southern army is in disarray and close to fading into chaos.  The bridges at Seoul have been blown up while there were still large Southern units north of the Han River.  Comrade, collect your forces and meet me at the next briefing, it will be held in the next few hours."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Comrade General. You have failed and betrayed the communist cause!  You will be judged by a people's court!"
+      }
+    }
+  },
+  {
+    "id": 1,
+    "scenario": "ncamposa.xml",
+    "startprestige": 0,
+    "intro": "A narrow window has opened in the enemy line; turn it into a strategic rupture. The Korean War is shifting between rapid manoeuvre and brutal attrition. I see that you are eager to pursue the capitalist forces and destroy them, now we have the chance. They have concentrated just outside Seoul on the southern bank of the Han River and have blown the bridges. The wider stakes are clear: You are absolutely positive that your men have encountered American troops on the battlefield? A strong result opens the road to TAEJON (16 July 1950). Concentrate your best units, protect the flanks of the advance, and seize the decisive objectives before the enemy can rebuild a line.",
+    "outcome": {
+      "briliant": {
+        "goto": 2,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 200,
+        "text": "Another great victory for our cause!  Comrade General, I am happy to let you know tha... What!  Are you sure?  You are absolutely positive that your men have encountered American troops on the battlefield?  This is very alarming.  Yes, we have encountered aerial and naval strikes from American units but not yet on the ground.  I will contact my superiors and inform you at our next briefing.  For now, exploit your victory by advancing in the direction of Taejon.<br><br>."
+      },
+      "victory": {
+        "goto": 2,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 250,
+        "text": "Another great victory for our cause!  Comrade General, I am happy to let you know tha... What!  Are you sure?  You are absolutely positive that your men have encountered American troops on the battlefield?  This is very alarming.  Yes, we have encountered aerial and naval strikes from American units but not yet on the ground.  I will contact my superiors and inform you at our next briefing.  For now, exploit your victory by advancing in the direction of Taejon."
+      },
+      "tactical": {
+        "goto": 2,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 250,
+        "text": "Another great victory for our cause!  Comrade General, I am happy to let you know tha... What!  Are you sure?  You are absolutely positive that your men have encountered American troops on the battlefield?  This is very alarming.  Yes, we have encountered aerial and naval strikes from American units but not yet on the ground.  I will contact my superiors and inform you at our next briefing.  For now, exploit your victory by advancing in the direction of Taejon."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 250,
+        "text": "Comrade General. You have failed and betrayed the communist cause!  You will be judged by a people's court!"
+      }
+    }
+  },
+  {
+    "id": 2,
+    "scenario": "ncamptae.xml",
+    "startprestige": 0,
+    "intro": "A narrow window has opened in the enemy line; turn it into a strategic rupture. The Korean War is shifting between rapid manoeuvre and brutal attrition. They have blockaded our ports and we have suffered the first bombardments from American aircraft. Reconnaissance has shown that the capitalists have deployed units in the direct line of your advance on Taejon, which might be of divisional strength. The wider stakes are clear: Sources say the American 24th Infantry Division has suffered significant losses and has retreated southeast to the Naktong River. A strong result opens the road to PUSAN PERIMETER 1 (5 August 1950). Break the defence before reserves arrive, keep your spearheads supplied, and turn tactical success into an operational collapse.",
+    "outcome": {
+      "briliant": {
+        "goto": 3,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 200,
+        "text": "The People's cause has won an important battle against the capitalist Americans.  Taejon is liberated along with more than half of southern Korea.   Sources say the American 24th Infantry Division has suffered significant losses and has retreated southeast to the Naktong River.  You must follow it.  We will soon meet again!"
+      },
+      "victory": {
+        "goto": 3,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 250,
+        "text": "The People's cause has won an important battle against the capitalist Americans.  Taejon is liberated along with more than half of southern Korea.   Sources say the American 24th Infantry Division has suffered significant losses and has retreated southeast to the Naktong River.  You must follow it.  We will soon meet again!"
+      },
+      "tactical": {
+        "goto": 3,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 250,
+        "text": "The People's cause has won an important battle against the capitalist Americans.  Taejon is liberated along with more than half of southern Korea.   Sources say the American 24th Infantry Division has suffered significant losses and has retreated southeast to the Naktong River.  You must follow it.  We will soon meet again!"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 250,
+        "text": "Comrade General. You have failed and betrayed the communist cause!  You will be judged by a people's court!"
+      }
+    }
+  },
+  {
+    "id": 3,
+    "scenario": "ncamppu1.xml",
+    "startprestige": 0,
+    "intro": "Urban ground compresses the front and magnifies every mistake. The Korean War is shifting between rapid manoeuvre and brutal attrition. The end of our campaign for liberation is in sight. We have driven away the capitalist forces of the South and United Nations down into a corner on our Korean peninsula. The wider stakes are clear: While we are struggling to get supplies and men to the frontlines you have pushed back the Southern army and inflicted heavy casualties on the Americans but we still find ourselves in a stalemate. A strong result opens the road to PUSAN PERIMETER 2 (30 August 1950). Secure the approaches, protect your supply route, and reduce the enemy's positions one district at a time.",
+    "outcome": {
+      "briliant": {
+        "goto": 4,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 250,
+        "text": "Comrade General, have some water and rice.  You and our People's Army have performed admirably against an unequal foe.  While we are struggling to get supplies and men to the frontlines you have pushed back the Southern army and inflicted heavy casualties on the Americans but we still find ourselves in a stalemate.  Yes, eat as much rice as you wish, Comrade General.  We will build up our army and strike another day!"
+      },
+      "victory": {
+        "goto": 4,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 250,
+        "text": "Comrade General, have some water and rice.  You and our People's Army have performed admirably against an unequal foe.  While we are struggling to get supplies and men to the frontlines you have pushed back the Southern army and inflicted heavy casualties on the Americans but we still find ourselves in a stalemate.  Yes, eat as much rice as you wish, Comrade General.  We will build up our army and strike another day!"
+      },
+      "tactical": {
+        "goto": 4,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 250,
+        "text": "Comrade General, have some water and rice.  You and our People's Army have performed admirably against an unequal foe.  While we are struggling to get supplies and men to the frontlines you have pushed back the Southern army and inflicted heavy casualties on the Americans but we still find ourselves in a stalemate.  Yes, eat as much rice as you wish, Comrade General.  We will build up our army and strike another day!"
+      },
+      "lose": {
+        "goto": 4,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 250,
+        "text": "Comrade General. You have failed and betrayed the communist cause!  You will be judged by a people's court!"
+      }
+    }
+  },
+  {
+    "id": 4,
+    "scenario": "ncamppu2.xml",
+    "startprestige": 0,
+    "intro": "The road ahead is defended, yet a decisive blow here can unhinge the entire front. The Korean War is shifting between rapid manoeuvre and brutal attrition. We have increased your People's Army's strength as best we could. Almost 100,000 eager troops are under your command. The wider stakes are clear: By 23 September the North Korean army, what was left of it, was in full retreat back towards North Korea by every possible route it could find. A strong result opens the road to WONSAN (10 October 1950). Break the defence before reserves arrive, keep your spearheads supplied, and turn tactical success into an operational collapse.",
+    "outcome": {
+      "briliant": {
+        "goto": 5,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 250,
+        "text": "We have been betrayed!!! Almost a third of your forces were Southerners forcibly conscripted and untrained.  Capitalist spies must have passed knowledge of our plans to the Americans.  We have suffered enormous losses!  Comrade General, you will not be demoted for this failure.  What?  I see.  It is indeed wise that you have ordered your men to entrench themselves in their current position.  Follow me to my headquarters for further briefing on our situation.<br><br>AFTERMATH<br><br>Before the last North Korean attack had faded away on the Pusan Perimeter; the US 8th Army had started its counteroffensive.  They even broke through the North Korean line in some sectors.  To make matters worse on 15 September 1950 General MacArthur launched an amphibious invasion against Inch'on near Seoul.  In subsequent operations Seoul was captured by the US Army X Corps.  The few North Korean units present offered tough but brief resistance.  Ten days had past since the landing at Inch'on.  By 23 September the North Korean army, what was left of it, was in full retreat back towards North Korea by every possible route it could find."
+      },
+      "victory": {
+        "goto": 5,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 250,
+        "text": "We have been betrayed!!! Almost a third of your forces were Southerners forcibly conscripted and untrained.  Capitalist spies must have passed knowledge of our plans to the Americans.  We have suffered enormous losses!  Comrade General, you will not be demoted for this failure.  What?  I see.  It is indeed wise that you have ordered your men to entrench themselves in their current position.  Follow me to my headquarters for further briefing on our situation.<br><br>AFTERMATH<br><br>Before the last North Korean attack on the Pusan Perimeter had faded away the US 8th Army had started its counteroffensive.  They even broke through the North Korean line in some sectors.  To make matters worse on 15 September 1950 General MacArthur launched an amphibious invasion against Inch'on near Seoul.  In subsequent operations Seoul was captured by the US Army X Corps.  The few North Korean units present offered tough but brief resistance.  Ten days had past since the landing at Inch'on.  By 23 September the North Korean army, what was left of it, was in full retreat back towards North Korea by every possible route it could find."
+      },
+      "tactical": {
+        "goto": 5,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 250,
+        "text": "We have been betrayed!!! Almost a third of your forces were Southerners forcibly conscripted and untrained.  Capitalist spies must have passed knowledge of our plans to the Americans.  We have suffered enormous losses!  Comrade General, you will not be demoted for this failure.  What?  I see.  It is indeed wise that you have ordered your men to entrench themselves in their current position.  Follow me to my headquarters for further briefing on our situation.<br><br>AFTERMATH<br><br>Before the last North Korean attack on the Pusan Perimeter had faded away the US 8th Army had started its counteroffensive.  They even broke through the North Korean line in some sectors.  To make matters worse on 15 September 1950 General MacArthur launched an amphibious invasion against Inch'on near Seoul.  In subsequent operations Seoul was captured by the US Army X Corps.  The few North Korean units present offered tough but brief resistance.  Ten days had past since the landing at Inch'on.  By 23 September the North Korean army, what was left of it, was in full retreat back towards North Korea by every possible route it could find."
+      },
+      "lose": {
+        "goto": 5,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 250,
+        "text": "Comrade General. You have failed and betrayed the communist cause!  You will be judged by a people's court!"
+      }
+    }
+  },
+  {
+    "id": 5,
+    "scenario": "ncampwon.xml",
+    "startprestige": 0,
+    "intro": "The battle is already turning against you; survival now depends on discipline, not glory. The Korean War is shifting between rapid manoeuvre and brutal attrition. The enemy has crossed the border at the 38th Parallel and is now advancing into North Korea! While the fury of our people can be seen in every village, our People's Army is in bad shape after retreating for hundreds of miles. The wider stakes are clear: Get in this truck; it's me, Comrade General ! A strong result opens the road to CHONGJU (27 October 1950). Keep the route open, rescue what can still be saved, and deny the enemy the encirclement it expects.",
+    "outcome": {
+      "briliant": {
+        "goto": 6,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "Get in this truck; it's me, Comrade General !  We have no time to waste.  The capitalists are close to Hungnam as well.  Lead your men and follow us into the mountains.  HURRY UP!"
+      },
+      "victory": {
+        "goto": 6,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "Get in this truck; it's me, Comrade General !  We have no time to waste.  The capitalists are close to Hungnam as well.  Lead your men and follow us into the mountains.  HURRY UP!"
+      },
+      "tactical": {
+        "goto": 6,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "Get in this truck; it's me, Comrade General !  We have no time to waste.  The capitalists are close to Hungnam as well.  Lead your men and follow us into the mountains.  HURRY UP!"
+      },
+      "lose": {
+        "goto": 6,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 50,
+        "text": "Comrade General. You have failed and betrayed the communist cause!  You will be judged by a people's court!"
+      }
+    }
+  },
+  {
+    "id": 6,
+    "scenario": "ncampcho.xml",
+    "startprestige": 0,
+    "intro": "The battle has reached the streets, where every bridge, station, and block can become a fortress. The Korean War is shifting between rapid manoeuvre and brutal attrition. Now the people of China will support its Korean comrades in the struggle against capitalism. Our armies have been allowed to reorganize in Manchuria and for days the Chinese have massed forces just across the Yalu waiting for the right moment to launch a counteroffensive! The wider stakes are clear: You have stopped the capitalist advance short of the Yalu River. Your result determines whether the campaign continues toward MAJON-NI (11 November 1950) or CHONGJU (27 October 1950). Secure the approaches, protect your supply route, and reduce the enemy's positions one district at a time.",
+    "outcome": {
+      "briliant": {
+        "goto": 13,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Our glorious leader Kim Il-sung sends his highest congratulations, Comrade General!  You have stopped the capitalist advance short of the Yalu River.  The imperialist armies are short on supplies and soon a Chinese counteroffensive will destroy them while we rebuild our army to fight another day!<br><br>Follow me, Comrade General; I will inform you of your next mission.  Yes, that is right. Your men will get rest and new equipment, but we have a new assignment for you while your force is refitting!"
+      },
+      "victory": {
+        "goto": 13,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Our glorious leader Kim Il-sung sends his highest congratulations, Comrade General!  You have stopped the capitalist advance short of the Yalu River.  The imperialist armies are short on supplies and soon a Chinese counteroffensive will destroy them while we rebuild our army to fight another day!<br><br>Follow me, Comrade General; I will inform you of your next mission.  Yes, that is right. Your men will get rest and new equipment, but we have a new assignment for you while your force is refitting!"
+      },
+      "tactical": {
+        "goto": 13,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Our glorious leader Kim Il-sung sends his highest congratulations, Comrade General!  You have stopped the capitalist advance short of the Yalu River.  The imperialist armies are short on supplies and soon a Chinese counteroffensive will destroy them while we rebuild our army to fight another day!<br><br>Follow me, Comrade General; I will inform you of your next mission.  Yes, that is right. Your men will get rest and new equipment, but we have a new assignment for you while your force is refitting!"
+      },
+      "lose": {
+        "goto": 6,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Comrade General. You have failed and betrayed the communist cause!  You will be judged by a people's court!"
+      }
+    }
+  },
+  {
+    "id": 7,
+    "scenario": "ncamphon.xml",
+    "startprestige": 0,
+    "intro": "The initiative is yours, but the enemy will not remain disorganized for long. The Korean War is shifting between rapid manoeuvre and brutal attrition. The combined might of the expeditionary Chinese Liberation Army and the rebuilt North Korean People's Army will destroy the imperialistic ambitions on the Korean peninsula! Unfortunately our advance is losing steam; even spirited citizens cannot endure this much longer! The wider stakes are clear: Oh yes, we have the capitalists reeling and a number of South Korean units have already shown signs of panic. A strong result opens the road to WONJU DEEP RAID (7 January 1951). Break the defence before reserves arrive, keep your spearheads supplied, and turn tactical success into an operational collapse.",
+    "outcome": {
+      "briliant": {
+        "goto": 8,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Honch'on is ours, Comrade General.  Indeed your positions are not safe but let's not worry about that now.  Oh yes, we have the capitalists reeling and a number of South Korean units have already shown signs of panic.  Wait here, Comrade General, I have just received a letter from higher command.  Just a minute!"
+      },
+      "victory": {
+        "goto": 8,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Honch'on is ours, Comrade General.  Indeed your positions are not safe but let's not worry about that now.  Oh yes, we have the capitalists reeling and a number of South Korean units have already shown signs of panic.  Wait here, Comrade General, I have just received a letter from higher command.  Just a minute!"
+      },
+      "tactical": {
+        "goto": 8,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Honch'on is ours, Comrade General.  Indeed your positions are not safe but let's not worry about that now.  Oh yes, we have the capitalists reeling and a number of South Korean units have already shown signs of panic.  Wait here, Comrade General, I have just received a letter from higher command.  Just a minute!"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Comrade General. You have failed and betrayed the communist cause!  You will be judged by a people's court!"
+      }
+    }
+  },
+  {
+    "id": 8,
+    "scenario": "ncampwdr.xml",
+    "startprestige": 0,
+    "intro": "The initiative is yours, but the enemy will not remain disorganized for long. The Korean War is shifting between rapid manoeuvre and brutal attrition. Sorry for the interruption, Comrade General. We have reached the important communication center of Wonju. The wider stakes are clear: AFTERMATH The front stabilized at the end of January 1951 on a line 50 miles south of Seoul across the Korean peninsula. A strong result opens the road to HOENGSONG (11 February 1951). Concentrate your best units, protect the flanks of the advance, and seize the decisive objectives before the enemy can rebuild a line.",
+    "outcome": {
+      "briliant": {
+        "goto": 9,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "What, Comrade General?  I see.  Yes.  Really?   Well, you did the right thing, Comrade General.  Your advance was admirable.  Yes, if the enemy counterattacked your open flanks it is indeed wisest to retreat in order to prevent being destroyed.  Without knowing it you have benefited the communist cause by your actions!  While you occupied many United Nation forces trying to plug the holes in their open lines, the Chinese west of you have been able to advance and liberate Seoul.  The front is now stabilized across the peninsula some 50 miles south of Seoul.  Time to resupply and make ready for the final push.  Now let us eat some good rice, Comrade General!<br><br>AFTERMATH<br><br>The front stabilized at the end of January 1951 on a line 50 miles south of Seoul across the Korean peninsula.  The communist forces were exhausted and short of supplies after three months of offensive warfare in a hundred mile long advance.  Meanwhile the UN forces regained its morale and strength.  Starting in early January and ending in early February operations Thunderbolt and Roundup made the frontline roll north some 50 miles.  Communist forces retreated without heavy fighting to a main defensive line which was now reached by the United Nation forces."
+      },
+      "victory": {
+        "goto": 9,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "What, Comrade General?  I see.  Yes.  Really?   Well, you did the right thing, Comrade General.  Your advance was admirable.  Yes, if the enemy counterattacked your open flanks it is indeed wisest to retreat in order to prevent being destroyed.  Without knowing it you have benefited the communist cause by your actions!  While you occupied many United Nation forces trying to plug the holes in their open lines, the Chinese west of you have been able to advance and liberate Seoul.  The front is now stabilized across the peninsula some 50 miles south of Seoul.  Time to resupply and make ready for the final push.  Now let us eat some good rice, Comrade General!<br><br>AFTERMATH<br><br>The front stabilized at the end of January 1951 on a line 50 miles south of Seoul across the Korean peninsula.  The communist forces were exhausted and short of supplies after three months of offensive warfare in a hundred mile long advance.  Meanwhile the UN forces regained its morale and strength.  Starting in early January and ending in early February operations Thunderbolt and Roundup made the frontline roll north some 50 miles.  Communist forces retreated without heavy fighting to a main defensive line which was now reached by the United Nation forces."
+      },
+      "tactical": {
+        "goto": 9,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "What, Comrade General?  I see.  Yes.  Really?   Well, you did the right thing, Comrade General.  Your advance was admirable.  Yes, if the enemy counterattacked your open flanks it is indeed wisest to retreat in order to prevent being destroyed.  Without knowing it you have benefited the communist cause by your actions!  While you occupied many United Nation forces trying to plug the holes in their open lines, the Chinese west of you have been able to advance and liberate Seoul.  The front is now stabilized across the peninsula some 50 miles south of Seoul.  Time to resupply and make ready for the final push.  Now let us eat some good rice, Comrade General!<br><br>AFTERMATH<br><br>The front stabilized at the end of January 1951 on a line 50 miles south of Seoul across the Korean peninsula.  The communist forces were exhausted and short of supplies after three months of offensive warfare in a hundred mile long advance.  Meanwhile the UN forces regained its morale and strength.  Starting in early January and ending in early February operations Thunderbolt and Roundup made the frontline roll north some 50 miles.  Communist forces retreated without heavy fighting to a main defensive line which was now reached by the United Nation forces."
+      },
+      "lose": {
+        "goto": 9,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Comrade General. You have failed and betrayed the communist cause!  You will be judged by a people's court!"
+      }
+    }
+  },
+  {
+    "id": 9,
+    "scenario": "ncamphoe.xml",
+    "startprestige": 0,
+    "intro": "The campaign has reached a point where speed matters as much as firepower. The Korean War is shifting between rapid manoeuvre and brutal attrition. Since we are very vulnerable; we should avoid getting involved in their offensive and retreat some miles to a strong defensive position. This night, in cooperation with our Chinese Allies, we have resumed our offensive south. The wider stakes are clear: This UN counteroffensive in the central sector was continued in Operation Ripper which immediately followed with Operation Killer. A strong result opens the road to MUNSAN-NI (22 March 1951). Concentrate your best units, protect the flanks of the advance, and seize the decisive objectives before the enemy can rebuild a line.",
+    "outcome": {
+      "briliant": {
+        "goto": 10,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Is it not ironic that communist Allies can count on each other while capitalist Allies cannot?  A tactical victory has been gained at Hoengsong and to the west at Chip'yong-ni the Chinese were close to eliminating another pocket of encircled imperialist forces. Unfortunately the UN forces are too powerful at the moment and our communist offensive has ground to a halt.  You are right, Comrade General, we will pull back some miles to better positions and hold them as we ready ourselves for an even larger offensive this spring!<br><br>AFTERMATH<br><br>The limited communist offensive ended in several tactical victories without breaking the United Nations frontline.  The US 8th Army recaptured the lost terrain with Operation Killer in late February.  Bad weather made it easy for the communists to retreat in good order.  This UN counteroffensive in the central sector was continued in Operation Ripper which immediately followed with Operation Killer.  However the front near Seoul remained static until the end of March when there too, offensive operations were resumed."
+      },
+      "victory": {
+        "goto": 10,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Is it not ironic that communist Allies can count on each other while capitalist Allies cannot?  A tactical victory has been gained at Hoengsong and to the west at Chip'yong-ni the Chinese were close to eliminating another pocket of encircled imperialist forces. Unfortunately the UN forces are too powerful at the moment and our communist offensive has ground to a halt.  You are right, Comrade General, we will pull back some miles to better positions and hold them as we ready ourselves for an even larger offensive this spring!<br><br>AFTERMATH<br><br>The limited communist offensive ended in several tactical victories without breaking the United Nations frontline.  The US 8th Army recaptured the lost terrain with Operation Killer in late February.  Bad weather made it easy for the communists to retreat in good order.  This UN counteroffensive in the central sector was continued in Operation Ripper which immediately followed with Operation Killer.  However the front near Seoul remained static until the end of March when there too, offensive operations were resumed."
+      },
+      "tactical": {
+        "goto": 10,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Is it not ironic that communist Allies can count on each other while capitalist Allies cannot?  A tactical victory has been gained at Hoengsong and to the west at Chip'yong-ni the Chinese were close to eliminating another pocket of encircled imperialist forces. Unfortunately the UN forces are too powerful at the moment and our communist offensive has ground to a halt.  You are right, Comrade General, we will pull back some miles to better positions and hold them as we ready ourselves for an even larger offensive this spring!<br><br>AFTERMATH<br><br>The limited communist offensive ended in several tactical victories without breaking the United Nations frontline.  The US 8th Army recaptured the lost terrain with Operation Killer in late February.  Bad weather made it easy for the communists to retreat in good order.  This UN counteroffensive in the central sector was continued in Operation Ripper which immediately followed with Operation Killer.  However the front near Seoul remained static until the end of March when there too, offensive operations were resumed."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Comrade General. You have failed and betrayed the communist cause!  You will be judged by a people's court!"
+      }
+    }
+  },
+  {
+    "id": 10,
+    "scenario": "ncampmun.xml",
+    "startprestige": 0,
+    "intro": "Your force is exposed, the roads are closing, and every hour of delay narrows the route to safety. The Korean War is shifting between rapid manoeuvre and brutal attrition. You can see the advance that the imperialists have made. All has been quiet in the western sector and we have almost totally evacuated the region between the Imjin and Han Rivers. The wider stakes are clear: AFTERMATH Operation Courageous consisted of an advance from Seoul north and an airborne drop by the reinforced 187th Airborne RCT. A strong result opens the road to SPRING OFFENSIVE FIRST PHASE (22 April 1951). Keep the route open, rescue what can still be saved, and deny the enemy the encirclement it expects.",
+    "outcome": {
+      "briliant": {
+        "goto": 11,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 200,
+        "text": "For a moment those fools from the west must have really thought they could ambush us? Us?!  Communist warriors?  Never!  I will leave you alone for a few hours to get some sleep.  You look pale, Comrade General.<br><br>AFTERMATH<br><br>Operation Courageous consisted of an advance from Seoul north and an airborne drop by the reinforced 187th Airborne RCT.  However, communist officers had foreseen this action and when the UN forces attacked, the bulk of the communist forces were already north of the Imjin River.  Now the UN forces were full on the offensive again. Operations Rugged and Dauntless would push the frontline over the 38th Parallel running from the western coast along the Imjin River to Kumhwa and from there east across the peninsula.  Even now the communists were massing and preparing for their spring offensive."
+      },
+      "victory": {
+        "goto": 11,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 300,
+        "text": "For a moment those fools from the west must have really thought they could ambush us? Us?!  Communist warriors?  Never!  I will leave you alone for a few hours to get some sleep.  You look pale, Comrade General.<br><br>AFTERMATH<br><br>Operation Courageous consisted of an advance from Seoul north and an airborne drop by the reinforced 187th Airborne RCT.  However, communist officers had foreseen this action and when the UN forces attacked, the bulk of the communist forces were already north of the Imjin River.  Now the UN forces were full on the offensive again. Operations Rugged and Dauntless would push the frontline over the 38th Parallel running from the western coast along the Imjin River to Kumhwa and from there east across the peninsula.  Even now the communists were massing and preparing for their spring offensive."
+      },
+      "tactical": {
+        "goto": 11,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 400,
+        "text": "For a moment those fools from the west must have really thought they could ambush us? Us?!  Communist warriors?  Never!  I will leave you alone for a few hours to get some sleep.  You look pale, Comrade General.<br><br>AFTERMATH<br><br>Operation Courageous consisted of an advance from Seoul north and an airborne drop by the reinforced 187th Airborne RCT.  However, communist officers had foreseen this action and when the UN forces attacked, the bulk of the communist forces were already north of the Imjin River.  Now the UN forces were full on the offensive again. Operations Rugged and Dauntless would push the frontline over the 38th Parallel running from the western coast along the Imjin River to Kumhwa and from there east across the peninsula.  Even now the communists were massing and preparing for their spring offensive."
+      },
+      "lose": {
+        "goto": 11,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Comrade General. You have failed and betrayed the communist cause!  You will be judged by a people's court!"
+      }
+    }
+  },
+  {
+    "id": 11,
+    "scenario": "ncampspr.xml",
+    "startprestige": 0,
+    "intro": "The initiative is yours, but the enemy will not remain disorganized for long. The Korean War is shifting between rapid manoeuvre and brutal attrition. This is the moment we have been waiting for, Comrade General. The Chinese have prepared a huge force for an offensive aimed at destroying the capitalists! The wider stakes are clear: I am aftaid that you were not the only one, Comrade General. A strong result opens the road to SPRING OFFENSIVE SECOND PHASE (14 May 1951). Momentum is your greatest asset: pause too long and a breakthrough becomes another costly frontal battle.",
+    "outcome": {
+      "briliant": {
+        "goto": 12,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "There you are, Comrade General!  I have not heard from you for hours.  You were hit by an artillery shell?  Ah I see.  Nothing to worry about.  I am aftaid that you were not the only one, Comrade General.  Let me inform you about the general situation.  Over the entire front the communist armies have thrown the capitalists back but at a very high cost.  Attacking on this type of terrain made us vulnerable to massed firepower from the ground and air.  Hold your current positions.  Then meet me at my headquarters."
+      },
+      "victory": {
+        "goto": 12,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "There you are, Comrade General!  I have not heard from you for hours.  You were hit by an artillery shell?  Ah I see.  Nothing to worry about.  I am aftaid that you were not the only one, Comrade General.  Let me inform you about the general situation.  Over the entire front the communist armies have thrown the capitalists back but at a very high cost.  Attacking on this type of terrain made us vulnerable to massed firepower from the ground and air.  Hold your current positions.  Then meet me at my headquarters."
+      },
+      "tactical": {
+        "goto": 12,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "There you are, Comrade General!  I have not heard from you for hours.  You were hit by an artillery shell?  Ah I see.  Nothing to worry about.  I am aftaid that you were not the only one, Comrade General.  Let me inform you about the general situation.  Over the entire front the communist armies have thrown the capitalists back but at a very high cost.  Attacking on this type of terrain made us vulnerable to massed firepower from the ground and air.  Hold your current positions.  Then meet me at my headquarters."
+      },
+      "lose": {
+        "goto": 12,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Comrade General. You have failed and betrayed the communist cause!  You will be judged by a people's court!"
+      }
+    }
+  },
+  {
+    "id": 12,
+    "scenario": "ncampsp2.xml",
+    "startprestige": 0,
+    "intro": "A narrow window has opened in the enemy line; turn it into a strategic rupture. The Korean War is shifting between rapid manoeuvre and brutal attrition. You must have heard it already at the Chinese headquarters Comrade General but let us go through the situation once more. The offensive directed at Seoul has been halted in favor of a new offensive in the central and eastern sectors where the terrain is more to our advantage. The wider stakes are clear: Then finally the truce talks that started in July 1951 culminated in a cease fire signed on 27 July 1953. Concentrate your best units, protect the flanks of the advance, and seize the decisive objectives before the enemy can rebuild a line.",
+    "outcome": {
+      "briliant": {
+        "goto": 254,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Again the cowardly capitalists have retreated before we could destroy them.  We do not have the supply capability to keep up with the offensive.  You have orders to retreat a bit and reorganize for yet another assault.  Whatever may happen, we will never abandon our ambition to liberate and unite Korea!<br><br>AFTERMATH<br><br>The communist spring offensives were a huge strategic failure.  It did result in tactical victories but the United Nations retreated without heavy losses and by doing so were able to immediately produce a counteroffensive.  This UN spring offensive would be the last major action of the Korean War.  It pushed back the communist armies to the current armistice lines.  Both the United States and the People's Republic of China saw that neither could gain a complete victory and were willing to sign a cease fire.  Negotiations were long and tedious. They were often interrupted by many small skirmishes.  Meanwhile the frontlines were being heavily fortified and with each passing day any new offensive was made that much more difficult.  Then finally the truce talks that started in July 1951 culminated in a cease fire signed on 27 July 1953.  North and South Korea were more than willing to fight each other to the bitter end but on both sides the major powers decided for them.  Officially the Korean War still continues..."
+      },
+      "victory": {
+        "goto": 254,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Again the cowardly capitalists have retreated before we could destroy them.  We do not have the supply capability to keep up with the offensive.  You have orders to retreat a bit and reorganize for yet another assault.  Whatever may happen, we will never abandon our ambition to liberate and unite Korea!<br><br>AFTERMATH<br><br>The communist spring offensives were a huge strategic failure.  It did result in tactical victories but the United Nations retreated without heavy losses and by doing so were able to immediately produce a counteroffensive.  This UN spring offensive would be the last major action of the Korean War.  It pushed back the communist armies to the current armistice lines.  Both the United States and the People's Republic of China saw that neither could gain a complete victory and were willing to sign a cease fire.  Negotiations were long and tedious. They were often interrupted by many small skirmishes.  Meanwhile the frontlines were being heavily fortified and with each passing day any new offensive was made that much more difficult.  Then finally the truce talks that started in July 1951 culminated in a cease fire signed on 27 July 1953.  North and South Korea were more than willing to fight each other to the bitter end but on both sides the major powers decided for them.  Officially the Korean War still continues..."
+      },
+      "tactical": {
+        "goto": 254,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Again the cowardly capitalists have retreated before we could destroy them.  We do not have the supply capability to keep up with the offensive.  You have orders to retreat a bit and reorganize for yet another assault.  Whatever may happen, we will never abandon our ambition to liberate and unite Korea!<br><br>AFTERMATH<br><br>The communist spring offensives were a huge strategic failure.  It did result in tactical victories but the United Nations retreated without heavy losses and by doing so were able to immediately produce a counteroffensive.  This UN spring offensive would be the last major action of the Korean War.  It pushed back the communist armies to the current armistice lines.  Both the United States and the People's Republic of China saw that neither could gain a complete victory and were willing to sign a cease fire.  Negotiations were long and tedious. They were often interrupted by many small skirmishes.  Meanwhile the frontlines were being heavily fortified and with each passing day any new offensive was made that much more difficult.  Then finally the truce talks that started in July 1951 culminated in a cease fire signed on 27 July 1953.  North and South Korea were more than willing to fight each other to the bitter end but on both sides the major powers decided for them.  Officially the Korean War still continues..."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Comrade General. You have failed and betrayed the communist cause!  You will be judged by a people's court!"
+      }
+    }
+  },
+  {
+    "id": 13,
+    "scenario": "ncampgue.xml",
+    "startprestige": 0,
+    "intro": "The initiative is yours, but the enemy will not remain disorganized for long. The Korean War is shifting between rapid manoeuvre and brutal attrition. Since September we have left many troops behind during our retreat north. Partisan groups have been formed to harass enemy communications and other targets in its rear. The wider stakes are clear: Between 14 October and 1 November nearly 180,000 Chinese troops crossed the Chinese-Korean border and more were to follow. A strong result opens the road to HONGCH'ON (26 December 1950). Concentrate your best units, protect the flanks of the advance, and seize the decisive objectives before the enemy can rebuild a line.",
+    "outcome": {
+      "briliant": {
+        "goto": 7,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 200,
+        "text": "Ah there you are, Comrade General.  You need to eat something.  I have heard about your actions at Majon-ni.  The capitalists have suffered many losses and as you have experienced, the Chinese comrades are pushing south with great success!  Travel with me to P'yongyang where your force is waiting for you!<br><br>AFTERMATH<br><br>Ever since the North Korean retreat from the Pusan Perimeter, pockets of North Korean forces had continued to resist even when they found themselves deep inside enemy held territory.  The US IX Corps was deployed behind the frontline to maintain security in the interior.  Guerilla activity continued for months.<br><br>The United Nations offensive ground to a halt due to severe supply problems and over-extending its forces on too broad a front.  Between 14 October and 1 November nearly 180,000 Chinese troops crossed the Chinese-Korean border and more were to follow. They first engaged UN troops in skirmishes but in late November the full might of the expeditionary Chinese Liberation Army fell on the UN troops.  This was followed by the longest retreat in United States military history."
+      },
+      "victory": {
+        "goto": 7,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 200,
+        "text": "Ah there you are, Comrade General.  You need to eat something.  I have heard about your actions at Majon-ni.  The capitalists have suffered many losses and as you have experienced, the Chinese comrades are pushing south with great success!  Travel with me to P'yongyang where your force is waiting for you!<br><br>AFTERMATH<br><br>Ever since the North Korean retreat from the Pusan Perimeter, pockets of North Korean forces had continued to resist even when they found themselves deep inside enemy held territory.  The US IX Corps was deployed behind the frontline to maintain security in the interior.  Guerilla activity continued for months.<br><br>The United Nations offensive ground to a halt due to severe supply problems and over-extending its forces on too broad a front.  Between 14 October and 1 November nearly 180,000 Chinese troops crossed the Chinese-Korean border and more were to follow. They first engaged UN troops in skirmishes but in late November the full might of the expeditionary Chinese Liberation Army fell on the UN troops.  This was followed by the longest retreat in United States military history."
+      },
+      "tactical": {
+        "goto": 7,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 200,
+        "text": "Ah there you are, Comrade General.  You need to eat something.  I have heard about your actions at Majon-ni.  The capitalists have suffered many losses and as you have experienced, the Chinese comrades are pushing south with great success!  Travel with me to P'yongyang where your force is waiting for you!<br><br>AFTERMATH<br><br>Ever since the North Korean retreat from the Pusan Perimeter, pockets of North Korean forces had continued to resist even when they found themselves deep inside enemy held territory.  The US IX Corps was deployed behind the frontline to maintain security in the interior.  Guerilla activity continued for months.<br><br>The United Nations offensive ground to a halt due to severe supply problems and over-extending its forces on too broad a front.  Between 14 October and 1 November nearly 180,000 Chinese troops crossed the Chinese-Korean border and more were to follow. They first engaged UN troops in skirmishes but in late November the full might of the expeditionary Chinese Liberation Army fell on the UN troops.  This was followed by the longest retreat in United States military history."
+      },
+      "lose": {
+        "goto": 7,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 200,
+        "text": "Comrade General. You have failed and betrayed the communist cause!  You will be judged by a people's court!"
+      }
+    }
+  }
+]

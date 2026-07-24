@@ -39,7 +39,10 @@ fun GameMap.reinforceUnit(
 
 fun GameMap.buildCoreUnitList(player: Player) = coreUnitListOperations.buildCoreUnitList(player)
 
-fun GameMap.ensureFormationIds(player: Player) = coreUnitListOperations.ensureFormationIds(player)
+fun GameMap.ensureFormationIds(
+    player: Player,
+    additionalUnits: Iterable<GameUnit> = emptyList(),
+) = coreUnitListOperations.ensureFormationIds(player, additionalUnits)
 
 fun GameMap.undeployCoreUnits(player: Player) = coreUnitListOperations.undeployCoreUnits(player)
 

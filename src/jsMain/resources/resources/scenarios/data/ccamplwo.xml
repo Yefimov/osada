@@ -1,0 +1,710 @@
+<?xml version="1.0" encoding="ASCII"?>
+<map file="ccamplwo.xscn" name="Lwow" turns="9, 11, 13" date="August 20, 1920" dayturns="0" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="26" cols="40" eqp="eqp-kaiser" image="resources/maps/images/map_384.png" eqpv="united1">
+  <player id="0" country="103" side="0" airtrans="0" navaltrans="0" support="104, 0, 0, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <player id="1" country="20" side="1" airtrans="0" navaltrans="0" support="65, 21, 0, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <reinforce turn="3">
+    <at row="1" col="6">
+      <unit id="34920" owner="0" flag="104" face="0" exp="98" str="8"/>
+    </at>
+    <at row="1" col="7">
+      <unit id="34920" owner="0" flag="104" face="0" exp="1" str="8"/>
+    </at>
+    <at row="1" col="8">
+      <unit id="34920" owner="0" flag="104" face="0" exp="88" str="7"/>
+    </at>
+    <at row="13" col="12">
+      <unit id="17238" owner="1" flag="21" face="0" exp="98" str="5"/>
+    </at>
+    <at row="12" col="13">
+      <unit id="17238" owner="1" flag="21" face="0" exp="98" str="6"/>
+    </at>
+  </reinforce>
+  <reinforce turn="4">
+    <at row="14" col="20">
+      <unit id="17041" owner="1" flag="21" face="0" exp="55" str="13"/>
+    </at>
+    <at row="13" col="23">
+      <unit id="17059" owner="1" flag="21" face="0" exp="35" str="12"/>
+    </at>
+  </reinforce>
+  <hex row="0" col="2" road="32"/>
+  <hex row="0" col="7" road="17"/>
+  <hex row="0" col="17" road="50"/>
+  <hex row="0" col="18" rail="187"/>
+  <hex row="0" col="19" terrain="1" name="Skwarzawa"/>
+  <hex row="0" col="20" terrain="10" name="Poltva River"/>
+  <hex row="0" col="21" terrain="5" road="9"/>
+  <hex row="0" col="22" terrain="5"/>
+  <hex row="0" col="26" terrain="5"/>
+  <hex row="0" col="27" terrain="5"/>
+  <hex row="0" col="28" terrain="5"/>
+  <hex row="0" col="32" terrain="5"/>
+  <hex row="0" col="33" terrain="5" road="33">
+    <unit id="34997" owner="0" flag="104" face="0" transport="34986" exp="154" str="7"/>
+  </hex>
+  <hex row="0" col="34" terrain="5"/>
+  <hex row="0" col="35" terrain="5"/>
+  <hex row="0" col="36" terrain="5"/>
+  <hex row="0" col="38" terrain="5"/>
+  <hex row="1" col="1" rail="187"/>
+  <hex row="1" col="3" rail="187"/>
+  <hex row="1" col="5" rail="187"/>
+  <hex row="1" col="7" owner="0" flag="103" rail="187"/>
+  <hex row="1" col="9" rail="187"/>
+  <hex row="1" col="11" rail="187"/>
+  <hex row="1" col="16" road="18"/>
+  <hex row="1" col="17" road="17"/>
+  <hex row="1" col="18" owner="0" flag="103" victory="0" rail="187">
+    <unit id="34920" owner="0" flag="104" face="0" exp="98" str="7"/>
+  </hex>
+  <hex row="1" col="19" terrain="3"/>
+  <hex row="1" col="20" terrain="10" name="Poltva River"/>
+  <hex row="1" col="22" road="144"/>
+  <hex row="1" col="26" terrain="5"/>
+  <hex row="1" col="28" terrain="1" road="16" name="Village"/>
+  <hex row="1" col="31" terrain="1" road="58" name="Barszczowice"/>
+  <hex row="1" col="32" terrain="1" road="58" name="Barszczowice">
+    <unit id="34920" owner="0" flag="104" face="0" exp="254" str="8"/>
+  </hex>
+  <hex row="1" col="33" terrain="1" road="168" name="Barszczowice">
+    <unit id="34962" owner="0" flag="104" face="0" transport="34981" exp="254" str="7"/>
+  </hex>
+  <hex row="1" col="34" terrain="5"/>
+  <hex row="1" col="35" terrain="5"/>
+  <hex row="1" col="36" terrain="5"/>
+  <hex row="1" col="37" terrain="5"/>
+  <hex row="1" col="38" terrain="5"/>
+  <hex row="2" col="0" rail="187"/>
+  <hex row="2" col="2" rail="187"/>
+  <hex row="2" col="4" rail="187"/>
+  <hex row="2" col="6" rail="187"/>
+  <hex row="2" col="7" road="9"/>
+  <hex row="2" col="8" rail="187"/>
+  <hex row="2" col="10" rail="187"/>
+  <hex row="2" col="12" rail="187"/>
+  <hex row="2" col="13" rail="187"/>
+  <hex row="2" col="15" road="18"/>
+  <hex row="2" col="16" road="33"/>
+  <hex row="2" col="17" rail="187"/>
+  <hex row="2" col="18" rail="187">
+    <unit id="34920" owner="0" flag="104" face="0" exp="254" str="8"/>
+  </hex>
+  <hex row="2" col="19" terrain="15" name="Poltva River"/>
+  <hex row="2" col="20" terrain="10" name="Poltva River"/>
+  <hex row="2" col="22" road="17"/>
+  <hex row="2" col="23" terrain="5"/>
+  <hex row="2" col="24" terrain="5"/>
+  <hex row="2" col="25" terrain="5"/>
+  <hex row="2" col="27" road="18"/>
+  <hex row="2" col="28" road="33"/>
+  <hex row="2" col="29" terrain="5" road="18"/>
+  <hex row="2" col="30" road="50"/>
+  <hex row="2" col="31" terrain="5" road="17"/>
+  <hex row="2" col="32" terrain="1" road="131" name="Barszczowice" owner="0" flag="103" victory="0"/>
+  <hex row="2" col="33" terrain="5"/>
+  <hex row="2" col="34" terrain="5" road="136"/>
+  <hex row="2" col="35" terrain="5" road="136"/>
+  <hex row="2" col="36" terrain="5"/>
+  <hex row="2" col="37" terrain="5" road="40">
+    <unit id="34920" owner="0" flag="104" face="0" exp="98" str="8"/>
+  </hex>
+  <hex row="2" col="38" terrain="5"/>
+  <hex row="3" col="7" road="18"/>
+  <hex row="3" col="8" road="168"/>
+  <hex row="3" col="9" road="136"/>
+  <hex row="3" col="14" rail="187"/>
+  <hex row="3" col="15" rail="187"/>
+  <hex row="3" col="16" terrain="3"/>
+  <hex row="3" col="17" rail="187"/>
+  <hex row="3" col="18" terrain="15" name="Poltva River"/>
+  <hex row="3" col="21" terrain="3"/>
+  <hex row="3" col="22" road="9"/>
+  <hex row="3" col="23" road="130"/>
+  <hex row="3" col="24" terrain="5" road="40"/>
+  <hex row="3" col="25" terrain="1" road="130" name="Village"/>
+  <hex row="3" col="26" terrain="5" road="40"/>
+  <hex row="3" col="27" road="137"/>
+  <hex row="3" col="28" terrain="5"/>
+  <hex row="3" col="29" terrain="5" road="33"/>
+  <hex row="3" col="30" terrain="5" road="17"/>
+  <hex row="3" col="31" terrain="5" road="9"/>
+  <hex row="3" col="32" terrain="5"/>
+  <hex row="3" col="33" terrain="16"/>
+  <hex row="3" col="34" terrain="5"/>
+  <hex row="3" col="35" terrain="5"/>
+  <hex row="3" col="36" terrain="5" road="130"/>
+  <hex row="3" col="37" terrain="5"/>
+  <hex row="3" col="38" terrain="5" road="130">
+    <unit id="34959" owner="0" flag="104" face="0" transport="34981" exp="98" str="7"/>
+  </hex>
+  <hex row="4" col="7" road="17"/>
+  <hex row="4" col="10" road="136"/>
+  <hex row="4" col="11" road="136"/>
+  <hex row="4" col="13" road="34"/>
+  <hex row="4" col="14" terrain="1" road="34" name="Village"/>
+  <hex row="4" col="16" rail="187"/>
+  <hex row="4" col="17" terrain="1" road="17" name="Village"/>
+  <hex row="4" col="18" terrain="15" name="Poltva River"/>
+  <hex row="4" col="20" terrain="3"/>
+  <hex row="4" col="21" terrain="3"/>
+  <hex row="4" col="22" terrain="3"/>
+  <hex row="4" col="23" terrain="5"/>
+  <hex row="4" col="24" terrain="3"/>
+  <hex row="4" col="25" terrain="3"/>
+  <hex row="4" col="26" terrain="3"/>
+  <hex row="4" col="28" terrain="1" road="130" name="Village"/>
+  <hex row="4" col="30" terrain="5" road="17"/>
+  <hex row="4" col="31" terrain="5"/>
+  <hex row="4" col="32" terrain="5" road="144"/>
+  <hex row="4" col="33" terrain="5" road="40"/>
+  <hex row="4" col="35" terrain="5"/>
+  <hex row="4" col="36" terrain="5"/>
+  <hex row="4" col="37" terrain="5"/>
+  <hex row="4" col="38" terrain="5"/>
+  <hex row="4" col="39" terrain="5"/>
+  <hex row="5" col="7" road="17"/>
+  <hex row="5" col="8" terrain="3"/>
+  <hex row="5" col="9" terrain="3"/>
+  <hex row="5" col="12" road="146"/>
+  <hex row="5" col="16" rail="187"/>
+  <hex row="5" col="17" road="17"/>
+  <hex row="5" col="18" terrain="10" name="Poltva River"/>
+  <hex row="5" col="19" terrain="10" name="Poltva River"/>
+  <hex row="5" col="20" terrain="1" name="Village"/>
+  <hex row="5" col="21" terrain="5"/>
+  <hex row="5" col="22" terrain="3"/>
+  <hex row="5" col="23" terrain="3"/>
+  <hex row="5" col="24" terrain="5"/>
+  <hex row="5" col="25" terrain="3"/>
+  <hex row="5" col="28" terrain="3"/>
+  <hex row="5" col="30" terrain="5" road="9"/>
+  <hex row="5" col="31" terrain="5" road="160"/>
+  <hex row="5" col="32" terrain="5" road="3"/>
+  <hex row="5" col="33" terrain="5"/>
+  <hex row="5" col="34" terrain="5" road="136"/>
+  <hex row="5" col="35" terrain="5" road="144"/>
+  <hex row="5" col="36" terrain="5"/>
+  <hex row="6" col="7" road="17">
+    <unit id="610" owner="1" flag="21" face="0" exp="254" str="7"/>
+  </hex>
+  <hex row="6" col="8" terrain="3"/>
+  <hex row="6" col="9" terrain="3"/>
+  <hex row="6" col="10" terrain="3"/>
+  <hex row="6" col="11" terrain="3"/>
+  <hex row="6" col="12" road="17"/>
+  <hex row="6" col="13" terrain="3"/>
+  <hex row="6" col="14" terrain="3"/>
+  <hex row="6" col="15" terrain="3"/>
+  <hex row="6" col="16" rail="187"/>
+  <hex row="6" col="17" road="33"/>
+  <hex row="6" col="18" terrain="8"/>
+  <hex row="6" col="19" terrain="10" name="Poltva River"/>
+  <hex row="6" col="22" terrain="5"/>
+  <hex row="6" col="24" terrain="3"/>
+  <hex row="6" col="25" terrain="3"/>
+  <hex row="6" col="26" terrain="1" name="Village"/>
+  <hex row="6" col="29" terrain="3" road="34"/>
+  <hex row="6" col="30" terrain="5" road="42"/>
+  <hex row="6" col="31" terrain="1" road="128" name="Kukizov"/>
+  <hex row="6" col="32" terrain="5"/>
+  <hex row="6" col="33" terrain="5"/>
+  <hex row="6" col="34" terrain="5"/>
+  <hex row="6" col="35" terrain="5" road="9"/>
+  <hex row="6" col="36" terrain="5"/>
+  <hex row="6" col="37" terrain="5"/>
+  <hex row="6" col="38" terrain="1" name="Village"/>
+  <hex row="7" col="7" road="17"/>
+  <hex row="7" col="8" terrain="3"/>
+  <hex row="7" col="11" road="18"/>
+  <hex row="7" col="12" road="33"/>
+  <hex row="7" col="14" terrain="3"/>
+  <hex row="7" col="16" rail="187"/>
+  <hex row="7" col="20" terrain="10" name="Poltva River"/>
+  <hex row="7" col="23" terrain="5"/>
+  <hex row="7" col="25" terrain="5"/>
+  <hex row="7" col="26" terrain="5"/>
+  <hex row="7" col="27" terrain="5"/>
+  <hex row="7" col="28" terrain="3" road="18"/>
+  <hex row="7" col="29" terrain="5"/>
+  <hex row="7" col="30" terrain="5"/>
+  <hex row="7" col="31" terrain="5"/>
+  <hex row="7" col="32" terrain="5"/>
+  <hex row="7" col="33" terrain="5"/>
+  <hex row="7" col="34" terrain="5"/>
+  <hex row="7" col="35" terrain="5"/>
+  <hex row="7" col="36" terrain="5" road="144"/>
+  <hex row="8" col="1" terrain="2"/>
+  <hex row="8" col="7" terrain="1" road="25" name="Malczyce"/>
+  <hex row="8" col="11" road="35">
+    <unit id="667" owner="1" flag="21" face="0" exp="198" str="5"/>
+  </hex>
+  <hex row="8" col="12" road="40"/>
+  <hex row="8" col="13" road="130">
+    <unit id="367" owner="1" flag="21" face="0" exp="57" str="8"/>
+  </hex>
+  <hex row="8" col="14" road="40"/>
+  <hex row="8" col="15" rail="187"/>
+  <hex row="8" col="16" rail="187"/>
+  <hex row="8" col="18" terrain="3"/>
+  <hex row="8" col="20" terrain="10" name="Poltva River"/>
+  <hex row="8" col="21" terrain="1" name="Village"/>
+  <hex row="8" col="22" terrain="5"/>
+  <hex row="8" col="23" terrain="5"/>
+  <hex row="8" col="24" terrain="1" name="Odnow"/>
+  <hex row="8" col="25" terrain="3"/>
+  <hex row="8" col="26" terrain="5"/>
+  <hex row="8" col="28" terrain="1" road="25" name="Podliski" owner="1" flag="20" victory="1">
+    <unit id="17534" owner="1" flag="21" face="0" exp="89" str="7"/>
+  </hex>
+  <hex row="8" col="29" road="144"/>
+  <hex row="8" col="31">
+    <unit id="667" owner="1" flag="21" face="0" exp="201" str="7"/>
+  </hex>
+  <hex row="8" col="34" terrain="5"/>
+  <hex row="8" col="35" terrain="5"/>
+  <hex row="8" col="36" terrain="5" road="17"/>
+  <hex row="8" col="37" terrain="5"/>
+  <hex row="9" col="2" terrain="2" owner="1" flag="20"/>
+  <hex row="9" col="7" road="33"/>
+  <hex row="9" col="8" terrain="1" road="128" name="Malczyce"/>
+  <hex row="9" col="10" road="18"/>
+  <hex row="9" col="15" rail="187"/>
+  <hex row="9" col="16" road="153" owner="1" flag="20" victory="1" rail="187">
+    <unit id="667" owner="1" flag="21" face="0" exp="98" str="7"/>
+  </hex>
+  <hex row="9" col="17" road="136"/>
+  <hex row="9" col="18" terrain="1" road="16" name="Grzeda"/>
+  <hex row="9" col="19">
+    <unit id="513" owner="1" flag="21" face="0" exp="98" str="8"/>
+  </hex>
+  <hex row="9" col="20" terrain="10" name="Poltva River"/>
+  <hex row="9" col="21" terrain="10" name="Poltva River"/>
+  <hex row="9" col="22" terrain="5"/>
+  <hex row="9" col="23" terrain="5"/>
+  <hex row="9" col="24" terrain="5"/>
+  <hex row="9" col="25" terrain="5">
+    <unit id="513" owner="1" flag="21" face="0" exp="198" str="7"/>
+  </hex>
+  <hex row="9" col="26" terrain="5"/>
+  <hex row="9" col="27" terrain="1" road="18" name="Village"/>
+  <hex row="9" col="28" road="33"/>
+  <hex row="9" col="29" road="9"/>
+  <hex row="9" col="34" terrain="3"/>
+  <hex row="9" col="35" terrain="3"/>
+  <hex row="9" col="36" terrain="5" road="17"/>
+  <hex row="9" col="37" terrain="5"/>
+  <hex row="9" col="38" terrain="5"/>
+  <hex row="10" col="6" road="18"/>
+  <hex row="10" col="9" road="18"/>
+  <hex row="10" col="10" road="33"/>
+  <hex row="10" col="15" rail="187"/>
+  <hex row="10" col="18" terrain="1" road="153" name="Grzeda"/>
+  <hex row="10" col="19" road="144"/>
+  <hex row="10" col="20" terrain="1" name="Village"/>
+  <hex row="10" col="22" terrain="10" name="Poltva River"/>
+  <hex row="10" col="23" terrain="10" name="Poltva River"/>
+  <hex row="10" col="24" terrain="5"/>
+  <hex row="10" col="25" terrain="5"/>
+  <hex row="10" col="26" terrain="5"/>
+  <hex row="10" col="27" road="17"/>
+  <hex row="10" col="29" terrain="3">
+    <unit id="17041" owner="1" flag="21" face="0" exp="199" str="7"/>
+  </hex>
+  <hex row="10" col="30" road="136"/>
+  <hex row="10" col="31" road="168"/>
+  <hex row="10" col="32" terrain="1" name="Bilka Szlachecka"/>
+  <hex row="10" col="34" terrain="3"/>
+  <hex row="10" col="35" terrain="3"/>
+  <hex row="10" col="36" terrain="1" road="9" name="Village"/>
+  <hex row="10" col="37" road="144"/>
+  <hex row="10" col="38" terrain="2" owner="0" flag="103"/>
+  <hex row="11" col="1" road="136"/>
+  <hex row="11" col="6" road="17"/>
+  <hex row="11" col="9" road="33"/>
+  <hex row="11" col="15" road="17"/>
+  <hex row="11" col="16" rail="187"/>
+  <hex row="11" col="17" rail="187"/>
+  <hex row="11" col="18" terrain="1" road="1" name="Grzeda"/>
+  <hex row="11" col="19" terrain="11" road="9"/>
+  <hex row="11" col="21" terrain="11" owner="1" flag="20">
+    <unit id="588" owner="1" flag="21" face="0" exp="98" str="8"/>
+  </hex>
+  <hex row="11" col="23" terrain="10" name="Poltva River"/>
+  <hex row="11" col="24" terrain="1" name="Village"/>
+  <hex row="11" col="25" terrain="5"/>
+  <hex row="11" col="26" terrain="5"/>
+  <hex row="11" col="27" road="17"/>
+  <hex row="11" col="28" terrain="3"/>
+  <hex row="11" col="29" road="34"/>
+  <hex row="11" col="30" road="42"/>
+  <hex row="11" col="31" terrain="1" road="130" name="Village"/>
+  <hex row="11" col="32" terrain="3" road="169">
+    <unit id="667" owner="1" flag="21" face="0" exp="198" str="7"/>
+  </hex>
+  <hex row="11" col="33" road="130"/>
+  <hex row="11" col="34" road="40"/>
+  <hex row="11" col="35" terrain="3" road="136"/>
+  <hex row="11" col="37" road="9"/>
+  <hex row="11" col="38" terrain="2"/>
+  <hex row="12" col="2" road="136"/>
+  <hex row="12" col="3" road="136"/>
+  <hex row="12" col="5" road="18"/>
+  <hex row="12" col="6" road="33">
+    <unit id="513" owner="1" flag="21" face="0" exp="198" str="7"/>
+  </hex>
+  <hex row="12" col="7" road="34"/>
+  <hex row="12" col="8" road="34"/>
+  <hex row="12" col="15" road="17"/>
+  <hex row="12" col="18" rail="187"/>
+  <hex row="12" col="19" name="RAILROAD" rail="187"/>
+  <hex row="12" col="20" road="136"/>
+  <hex row="12" col="21" terrain="1" road="154" name="Lwow"/>
+  <hex row="12" col="22" terrain="1" road="56" name="Lwow"/>
+  <hex row="12" col="23" terrain="1" road="176" name="Lwow"/>
+  <hex row="12" col="24" terrain="10" name="Poltva River"/>
+  <hex row="12" col="25" terrain="10" name="Poltva River"/>
+  <hex row="12" col="26" terrain="11" owner="1" flag="20" victory="1">
+    <unit id="588" owner="1" flag="21" face="0" exp="98" str="8"/>
+  </hex>
+  <hex row="12" col="27" road="35"/>
+  <hex row="12" col="28" road="34"/>
+  <hex row="12" col="30">
+    <unit id="17041" owner="1" flag="21" face="0" exp="42" str="7" ldr="1"/>
+  </hex>
+  <hex row="12" col="33" terrain="3"/>
+  <hex row="12" col="34" terrain="3"/>
+  <hex row="12" col="36" road="136"/>
+  <hex row="12" col="37" road="130"/>
+  <hex row="12" col="38" road="168" owner="0" flag="103" victory="0"/>
+  <hex row="12" col="39" road="128"/>
+  <hex row="13" col="4" road="144"/>
+  <hex row="13" col="5" road="35"/>
+  <hex row="13" col="6" road="34"/>
+  <hex row="13" col="15" terrain="5" road="9"/>
+  <hex row="13" col="17" terrain="5"/>
+  <hex row="13" col="18" terrain="11" owner="1" flag="20" victory="1">
+    <unit id="588" owner="1" flag="21" face="0" exp="254" str="8"/>
+  </hex>
+  <hex row="13" col="20" name="RAILROAD" rail="187"/>
+  <hex row="13" col="21" terrain="1" name="Lwow: RAILROAD" rail="187">
+    <unit id="459" owner="1" flag="21" face="0" exp="157" str="5"/>
+  </hex>
+  <hex row="13" col="22" terrain="1" road="187" name="Lwow" owner="1" flag="20" rail="187">
+    <unit id="17534" owner="1" flag="21" face="0" exp="198" str="8"/>
+  </hex>
+  <hex row="13" col="23" terrain="1" road="169" name="Lwow"/>
+  <hex row="13" col="24" terrain="10" road="32" name="Poltva River"/>
+  <hex row="13" col="25" terrain="10" road="34" name="Poltva River"/>
+  <hex row="13" col="26" terrain="1" road="34" name="Village"/>
+  <hex row="13" col="28">
+    <unit id="17227" owner="1" flag="21" face="0" exp="98" str="4"/>
+  </hex>
+  <hex row="13" col="37" terrain="3"/>
+  <hex row="14" col="3" terrain="3"/>
+  <hex row="14" col="4" terrain="1" road="27" name="Grodek"/>
+  <hex row="14" col="5" terrain="1" road="160" name="Grodek"/>
+  <hex row="14" col="11" terrain="10" name="Poltva River"/>
+  <hex row="14" col="13" terrain="10" name="Poltva River"/>
+  <hex row="14" col="15" terrain="5"/>
+  <hex row="14" col="16" terrain="5" road="144"/>
+  <hex row="14" col="17" terrain="5"/>
+  <hex row="14" col="18" terrain="5"/>
+  <hex row="14" col="19" terrain="5"/>
+  <hex row="14" col="20" terrain="1" road="18" name="Lwow"/>
+  <hex row="14" col="21" terrain="15" name="Poltva River"/>
+  <hex row="14" col="22" terrain="1" name="Lwow: RAILROAD" rail="187"/>
+  <hex row="14" col="23" terrain="1" name="Lwow: RAILROAD" rail="187">
+    <unit id="17648" owner="1" flag="21" face="0" exp="35" str="5"/>
+  </hex>
+  <hex row="14" col="24" road="130">
+    <unit id="667" owner="1" flag="21" face="0" exp="199" str="7"/>
+  </hex>
+  <hex row="14" col="25" terrain="15" name="Poltva River"/>
+  <hex row="14" col="26" terrain="11">
+    <unit id="17534" owner="1" flag="21" face="0" exp="254" str="6"/>
+  </hex>
+  <hex row="14" col="32">
+    <unit id="513" owner="1" flag="21" face="0" exp="198" str="7"/>
+  </hex>
+  <hex row="14" col="36" terrain="3"/>
+  <hex row="14" col="37" terrain="3"/>
+  <hex row="14" col="38" terrain="3"/>
+  <hex row="14" col="39" terrain="3"/>
+  <hex row="15" col="1" terrain="3"/>
+  <hex row="15" col="3" terrain="3" road="34"/>
+  <hex row="15" col="4" terrain="1" road="35" name="Grodek" owner="1" flag="20" victory="1"/>
+  <hex row="15" col="5" terrain="3"/>
+  <hex row="15" col="9" terrain="10" name="Poltva River"/>
+  <hex row="15" col="10" terrain="10" name="Poltva River"/>
+  <hex row="15" col="11" terrain="5"/>
+  <hex row="15" col="12" terrain="10" name="Poltva River"/>
+  <hex row="15" col="14" terrain="10" name="Poltva River"/>
+  <hex row="15" col="15" terrain="10" name="Poltva River"/>
+  <hex row="15" col="16" terrain="1" road="1" name="Sokilnyky"/>
+  <hex row="15" col="17" terrain="10" name="Poltva River"/>
+  <hex row="15" col="18" terrain="5">
+    <unit id="367" owner="1" flag="21" face="0" exp="154" str="8"/>
+  </hex>
+  <hex row="15" col="19" terrain="10" name="Poltva River"/>
+  <hex row="15" col="20" terrain="10" road="9" name="Poltva River"/>
+  <hex row="15" col="21" road="136"/>
+  <hex row="15" col="22" terrain="15" name="Poltva River"/>
+  <hex row="15" col="23" terrain="1" road="49" name="Lwow"/>
+  <hex row="15" col="24" name="Poltva River: Rairoad Bridge" rail="187"/>
+  <hex row="15" col="25" terrain="15" name="Poltva River"/>
+  <hex row="15" col="33" rail="187"/>
+  <hex row="15" col="34" rail="187"/>
+  <hex row="15" col="35" rail="187"/>
+  <hex row="15" col="36" rail="187"/>
+  <hex row="15" col="37" terrain="3" rail="187"/>
+  <hex row="15" col="38" terrain="3" rail="187"/>
+  <hex row="15" col="39" terrain="3" rail="187"/>
+  <hex row="16" col="0" terrain="3"/>
+  <hex row="16" col="1" terrain="3"/>
+  <hex row="16" col="2" terrain="3" road="18"/>
+  <hex row="16" col="3" terrain="3"/>
+  <hex row="16" col="4" terrain="3"/>
+  <hex row="16" col="5" terrain="3"/>
+  <hex row="16" col="6" terrain="3"/>
+  <hex row="16" col="7" terrain="10" name="Poltva River"/>
+  <hex row="16" col="8" terrain="10" name="Poltva River"/>
+  <hex row="16" col="9" terrain="5"/>
+  <hex row="16" col="10" terrain="5"/>
+  <hex row="16" col="11" terrain="10" road="18" name="Poltva River"/>
+  <hex row="16" col="12" road="40">
+    <unit id="513" owner="1" flag="21" face="0" exp="111" str="8"/>
+  </hex>
+  <hex row="16" col="13" terrain="1" road="136" name="Village"/>
+  <hex row="16" col="16" terrain="10" name="Poltva River"/>
+  <hex row="16" col="18" terrain="10" name="Poltva River"/>
+  <hex row="16" col="20" terrain="11" owner="1" flag="20">
+    <unit id="588" owner="1" flag="21" face="0" exp="98" str="8"/>
+  </hex>
+  <hex row="16" col="22" road="130">
+    <unit id="667" owner="1" flag="21" face="0" exp="101" str="8"/>
+  </hex>
+  <hex row="16" col="23" road="33"/>
+  <hex row="16" col="24" name="RAILROAD" rail="187"/>
+  <hex row="16" col="25" terrain="11" owner="1" flag="20" rail="187">
+    <unit id="588" owner="1" flag="21" face="0" exp="98" str="8"/>
+  </hex>
+  <hex row="16" col="26" terrain="11"/>
+  <hex row="16" col="27" rail="187"/>
+  <hex row="16" col="28" rail="187"/>
+  <hex row="16" col="29" rail="187">
+    <unit id="30164" owner="1" flag="65" face="0" exp="81" str="7"/>
+  </hex>
+  <hex row="16" col="30" rail="187"/>
+  <hex row="16" col="31" rail="187"/>
+  <hex row="16" col="32" rail="187"/>
+  <hex row="16" col="33" terrain="5"/>
+  <hex row="16" col="34" terrain="5"/>
+  <hex row="16" col="35" terrain="5" road="40"/>
+  <hex row="16" col="36" terrain="5"/>
+  <hex row="16" col="37" terrain="5" road="40"/>
+  <hex row="16" col="38" terrain="5"/>
+  <hex row="17" col="0" terrain="3"/>
+  <hex row="17" col="1" road="18"/>
+  <hex row="17" col="2" road="33"/>
+  <hex row="17" col="3" terrain="3"/>
+  <hex row="17" col="4" terrain="3"/>
+  <hex row="17" col="5" terrain="3"/>
+  <hex row="17" col="6" terrain="3"/>
+  <hex row="17" col="7" terrain="3"/>
+  <hex row="17" col="8" terrain="10" name="Poltva River"/>
+  <hex row="17" col="9" terrain="10" name="Poltva River"/>
+  <hex row="17" col="10" terrain="10" name="Poltva River"/>
+  <hex row="17" col="11" road="17"/>
+  <hex row="17" col="12" terrain="10" name="Poltva River"/>
+  <hex row="17" col="14" road="144"/>
+  <hex row="17" col="22" terrain="11" road="2">
+    <unit id="513" owner="1" flag="21" face="0" exp="254" str="8"/>
+  </hex>
+  <hex row="17" col="23" terrain="3" rail="187"/>
+  <hex row="17" col="24" terrain="3" rail="187"/>
+  <hex row="17" col="25" terrain="5"/>
+  <hex row="17" col="26" rail="187"/>
+  <hex row="17" col="27" terrain="15"/>
+  <hex row="17" col="29" terrain="5" road="40"/>
+  <hex row="17" col="30" terrain="5">
+    <unit id="30164" owner="1" flag="65" face="0" exp="254" str="7"/>
+  </hex>
+  <hex row="17" col="31" terrain="5" road="40"/>
+  <hex row="17" col="33" road="34"/>
+  <hex row="17" col="34" road="34">
+    <unit id="610" owner="1" flag="21" face="0" exp="254" str="7"/>
+  </hex>
+  <hex row="17" col="35" terrain="5"/>
+  <hex row="17" col="36" terrain="5" road="130"/>
+  <hex row="17" col="37" terrain="5"/>
+  <hex row="17" col="38" terrain="5" road="130"/>
+  <hex row="18" col="0" terrain="3"/>
+  <hex row="18" col="1" road="17"/>
+  <hex row="18" col="2" terrain="3"/>
+  <hex row="18" col="3" terrain="3"/>
+  <hex row="18" col="4" terrain="3"/>
+  <hex row="18" col="5" terrain="3"/>
+  <hex row="18" col="6" terrain="3"/>
+  <hex row="18" col="11" road="33"/>
+  <hex row="18" col="12" terrain="10" name="Poltva River"/>
+  <hex row="18" col="14" road="9"/>
+  <hex row="18" col="15" road="144"/>
+  <hex row="18" col="20" terrain="3"/>
+  <hex row="18" col="22" rail="187"/>
+  <hex row="18" col="24" terrain="3"/>
+  <hex row="18" col="25" terrain="5"/>
+  <hex row="18" col="26" terrain="5" owner="1" flag="20" victory="1">
+    <unit id="17535" owner="1" flag="21" face="0" exp="198" str="7"/>
+  </hex>
+  <hex row="18" col="27" terrain="15"/>
+  <hex row="18" col="28" road="18"/>
+  <hex row="18" col="29" terrain="5"/>
+  <hex row="18" col="30" terrain="5" road="130">
+    <unit id="30164" owner="1" flag="65" face="0" exp="198" str="8"/>
+  </hex>
+  <hex row="18" col="31" terrain="5"/>
+  <hex row="18" col="32" terrain="5" road="130"/>
+  <hex row="18" col="33" terrain="5"/>
+  <hex row="18" col="34" terrain="5"/>
+  <hex row="18" col="35" terrain="5"/>
+  <hex row="18" col="36" terrain="5"/>
+  <hex row="19" col="1" road="145"/>
+  <hex row="19" col="4" terrain="3"/>
+  <hex row="19" col="10" road="18"/>
+  <hex row="19" col="11" terrain="5"/>
+  <hex row="19" col="12" terrain="10" name="Poltva River"/>
+  <hex row="19" col="13" terrain="10" name="Poltva River"/>
+  <hex row="19" col="15" road="9"/>
+  <hex row="19" col="22" rail="187"/>
+  <hex row="19" col="25" terrain="3"/>
+  <hex row="19" col="27" terrain="3"/>
+  <hex row="19" col="28" road="17"/>
+  <hex row="19" col="30" terrain="5"/>
+  <hex row="19" col="31" terrain="5"/>
+  <hex row="19" col="32" terrain="5"/>
+  <hex row="19" col="33" terrain="5"/>
+  <hex row="19" col="34" terrain="5"/>
+  <hex row="19" col="35" terrain="5"/>
+  <hex row="19" col="36" terrain="5"/>
+  <hex row="20" col="1" road="17"/>
+  <hex row="20" col="10" road="17"/>
+  <hex row="20" col="12" terrain="5"/>
+  <hex row="20" col="13" terrain="10" name="Poltva River"/>
+  <hex row="20" col="16" road="136"/>
+  <hex row="20" col="17" terrain="1" road="130" name="Zubra"/>
+  <hex row="20" col="18" road="48"/>
+  <hex row="20" col="21" road="34"/>
+  <hex row="20" col="22" rail="187"/>
+  <hex row="20" col="23" terrain="3"/>
+  <hex row="20" col="24" terrain="3"/>
+  <hex row="20" col="26" terrain="3"/>
+  <hex row="20" col="27" terrain="3"/>
+  <hex row="20" col="28" road="17"/>
+  <hex row="20" col="29" terrain="5"/>
+  <hex row="20" col="30" terrain="5"/>
+  <hex row="20" col="31" terrain="5"/>
+  <hex row="20" col="32" terrain="5"/>
+  <hex row="20" col="34" terrain="5"/>
+  <hex row="21" col="1" road="17"/>
+  <hex row="21" col="10" road="17"/>
+  <hex row="21" col="11" terrain="10" name="Poltva River"/>
+  <hex row="21" col="12" terrain="10" name="Poltva River"/>
+  <hex row="21" col="13" terrain="1" name="Village"/>
+  <hex row="21" col="18" road="9"/>
+  <hex row="21" col="19" road="130"/>
+  <hex row="21" col="20" road="50"/>
+  <hex row="21" col="22" rail="187"/>
+  <hex row="21" col="23" terrain="3"/>
+  <hex row="21" col="26" terrain="3"/>
+  <hex row="21" col="27" terrain="3" road="18"/>
+  <hex row="21" col="28" road="33"/>
+  <hex row="21" col="29" terrain="5"/>
+  <hex row="21" col="30" terrain="5"/>
+  <hex row="21" col="31" terrain="3"/>
+  <hex row="21" col="32" terrain="3"/>
+  <hex row="21" col="33" terrain="3"/>
+  <hex row="22" col="1" road="33"/>
+  <hex row="22" col="10" road="17"/>
+  <hex row="22" col="11" terrain="10" name="Poltva River"/>
+  <hex row="22" col="12" terrain="10" name="Poltva River"/>
+  <hex row="22" col="13" terrain="10" name="Poltva River"/>
+  <hex row="22" col="20" road="9"/>
+  <hex row="22" col="21" road="136"/>
+  <hex row="22" col="22" rail="187"/>
+  <hex row="22" col="24" terrain="3"/>
+  <hex row="22" col="26" terrain="3"/>
+  <hex row="22" col="27" road="17"/>
+  <hex row="22" col="28" terrain="5"/>
+  <hex row="22" col="29" terrain="3"/>
+  <hex row="22" col="30" terrain="3"/>
+  <hex row="22" col="32" terrain="3"/>
+  <hex row="22" col="33" terrain="3"/>
+  <hex row="22" col="35" road="40"/>
+  <hex row="22" col="37" road="40"/>
+  <hex row="23" col="0" road="2"/>
+  <hex row="23" col="1" terrain="3"/>
+  <hex row="23" col="10" road="17"/>
+  <hex row="23" col="11" terrain="1" road="24" name="Obroszyn"/>
+  <hex row="23" col="12" terrain="5"/>
+  <hex row="23" col="13" terrain="10" name="Poltva River"/>
+  <hex row="23" col="14" terrain="10" name="Poltva River"/>
+  <hex row="23" col="22" rail="187"/>
+  <hex row="23" col="23" road="136"/>
+  <hex row="23" col="25" road="40"/>
+  <hex row="23" col="27" road="33"/>
+  <hex row="23" col="28" terrain="3"/>
+  <hex row="23" col="29" terrain="3"/>
+  <hex row="23" col="31" terrain="3" road="40"/>
+  <hex row="23" col="32" terrain="3"/>
+  <hex row="23" col="33" terrain="1" road="50" name="Strzalki" owner="1" flag="20" victory="1">
+    <unit id="17534" owner="1" flag="21" face="0" exp="98" str="7"/>
+  </hex>
+  <hex row="23" col="34" road="34"/>
+  <hex row="23" col="35" terrain="10"/>
+  <hex row="23" col="36" road="130"/>
+  <hex row="23" col="37" terrain="10"/>
+  <hex row="23" col="38" road="130"/>
+  <hex row="23" col="39" terrain="10"/>
+  <hex row="24" col="10" road="9"/>
+  <hex row="24" col="11" terrain="1" road="129" name="Obroszyn" owner="1" flag="20">
+    <unit id="17534" owner="1" flag="21" face="0" exp="79" str="7"/>
+  </hex>
+  <hex row="24" col="12" terrain="10" road="136" name="Poltva River"/>
+  <hex row="24" col="13" road="128"/>
+  <hex row="24" col="21" rail="187"/>
+  <hex row="24" col="22" rail="187"/>
+  <hex row="24" col="23" terrain="3"/>
+  <hex row="24" col="24" terrain="3" road="130"/>
+  <hex row="24" col="25" terrain="3" road="18"/>
+  <hex row="24" col="26" road="170">
+    <unit id="367" owner="1" flag="21" face="0" exp="154" str="8"/>
+  </hex>
+  <hex row="24" col="27" road="136"/>
+  <hex row="24" col="28" terrain="3"/>
+  <hex row="24" col="29" terrain="3" road="34"/>
+  <hex row="24" col="30" road="34"/>
+  <hex row="24" col="32" road="130"/>
+  <hex row="24" col="33" terrain="10" road="17"/>
+  <hex row="24" col="34" terrain="10"/>
+  <hex row="24" col="36" terrain="10"/>
+  <hex row="24" col="37" terrain="3"/>
+  <hex row="24" col="38" terrain="10"/>
+  <hex row="25" col="7" terrain="3"/>
+  <hex row="25" col="11" terrain="10" name="Poltva River"/>
+  <hex row="25" col="12" terrain="10" name="Poltva River"/>
+  <hex row="25" col="19" rail="187"/>
+  <hex row="25" col="20" rail="187"/>
+  <hex row="25" col="23" terrain="3"/>
+  <hex row="25" col="24" terrain="3"/>
+  <hex row="25" col="25" terrain="3" road="1"/>
+  <hex row="25" col="26" terrain="3"/>
+  <hex row="25" col="27" terrain="3"/>
+  <hex row="25" col="28" terrain="3" road="130"/>
+  <hex row="25" col="29" terrain="3"/>
+  <hex row="25" col="31" terrain="10"/>
+  <hex row="25" col="32" terrain="10"/>
+  <hex row="25" col="33" road="1"/>
+  <hex row="25" col="35" terrain="3"/>
+  <hex row="25" col="36" terrain="3"/>
+  <hex row="25" col="37" terrain="3"/>
+</map>

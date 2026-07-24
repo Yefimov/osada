@@ -43,6 +43,8 @@ internal object MinimapBuilder {
         cv.id = "osada-minimap"
         cv.width = WIDTH
         cv.height = HEIGHT
+        cv.title =
+            "Minimap — friendly units are green, spotted enemies red, objectives brass, and the pale rectangle is your current view. Click or drag to centre the map."
         frame.appendChild(cv)
         canvas = cv
         ctx = cv.getContext("2d")
@@ -67,21 +69,21 @@ internal object MinimapBuilder {
         out.id = "osadaZoomOut"
         out.className = "osada-zoom-btn"
         out.textContent = "−"
-        out.title = "Zoom out"
+        out.title = "Zoom the tactical map out one step. Disabled while Strategic Map is active."
         out.onclick = { _: MouseEvent -> if (!uiSettings.strategicZoom) MapZoom.stepOut() }
 
         val pct = addTag(row, "div")
         pct.id = "osadaZoomPct"
         pct.className = "osada-zoom-pct"
         pct.textContent = "100%"
-        pct.title = "Reset to 100%"
+        pct.title = "Reset tactical-map zoom to 100%. Disabled while Strategic Map is active."
         pct.onclick = { _: MouseEvent -> if (!uiSettings.strategicZoom) MapZoom.reset() }
 
         val zoomIn = addTag(row, "div")
         zoomIn.id = "osadaZoomIn"
         zoomIn.className = "osada-zoom-btn"
         zoomIn.textContent = "+"
-        zoomIn.title = "Zoom in"
+        zoomIn.title = "Zoom the tactical map in one step. Disabled while Strategic Map is active."
         zoomIn.onclick = { _: MouseEvent -> if (!uiSettings.strategicZoom) MapZoom.stepIn() }
 
         MapZoom.refreshControls()

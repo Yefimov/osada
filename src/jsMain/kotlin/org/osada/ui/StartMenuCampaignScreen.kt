@@ -59,7 +59,7 @@ internal object StartMenuCampaignScreen {
             val seg = addTag("smCampDif", "div")
             seg.className = "osada-seg" + if (selected) " osada-seg--on" else ""
             seg.textContent = text
-            seg.title = text
+            seg.title = StartMenuCampaignData.difficultyHint(value)
             seg.asDynamic().diffValue = value
             if (selected) {
                 byId("smCamp")?.asDynamic()?.selectedDifficulty = value
@@ -90,14 +90,17 @@ internal object StartMenuCampaignScreen {
     }
 
     private fun wireCampaignHandlers(campSelect: HTMLElement) {
+        campSelect.title = "Choose the campaign whose briefing, nation, length and starting prestige are shown."
         campSelect.asDynamic().onchange = { onCampSelectChange(campSelect) }
         buildCampaignScreen(campSelect)
 
+        byId("smCBackBut")?.title = "Return to the main menu without starting a campaign."
         byId("smCBackBut")?.onclick = { _: org.w3c.dom.events.MouseEvent ->
             makeHidden("smCamp")
             makeVisible("smMain")
         }
 
+        byId("smCPlayBut")?.title = "Start the selected campaign at the chosen difficulty."
         byId("smCPlayBut")?.onclick = { _: org.w3c.dom.events.MouseEvent ->
             val selectedCampaign = byId("smCamp")?.asDynamic()?.selectedCampaign as? Int
             val difficulty =
@@ -105,6 +108,7 @@ internal object StartMenuCampaignScreen {
             selectedCampaign?.let { StartMenuBuilder.startNewCampaign(it, difficulty) }
         }
 
+        byId("smCFlowBut")?.title = "Show how scenario outcomes branch through this campaign."
         byId("smCFlowBut")?.onclick = { _: org.w3c.dom.events.MouseEvent ->
             val selectedCampaign = byId("smCamp")?.asDynamic()?.selectedCampaign as? Int
             if (selectedCampaign != null) {
@@ -125,13 +129,22 @@ internal object StartMenuCampaignScreen {
         }
     }
 
+    /** Campaign-list descriptions are JavaScript strings: HTML collapses their newlines unless converted. */
+    private fun formatCampaignDescription(raw: String): String =
+        raw
+            .replace("\r\n", "\n")
+            .replace('\r', '\n')
+            .trim()
+            .split(Regex("\\n{2,}"))
+            .joinToString("<br/><br/>") { paragraph -> paragraph.replace("\n", "<br/>") }
+
     private fun onCampSelectChange(campSelect: HTMLElement) {
         val selectedIndex = campSelect.asDynamic().selectedIndex as? Int ?: -1
         val value = if (selectedIndex < 0) null else campSelect.asDynamic().options[selectedIndex].value as? String
         val campaign = value?.let { StartMenuBuilder.campaignList().getOrNull(it.toInt()) }
         if (value == null || campaign == null) return
         val country = Equipment.getCountryNameByEqp(campaign.flag as? Int ?: 0, campaign.eqp as? String ?: "")
-        byId("smCampDesc")?.innerHTML = campaign.desc as? String ?: ""
+        byId("smCampDesc")?.innerHTML = formatCampaignDescription(campaign.desc as? String ?: "")
         byId("smCampCountry")?.innerHTML = "<b>Country</b><br/>" + country
         byId("smCampScenarios")?.innerHTML = "<b>Operations</b><br/>" +
             (campaign.scenarios as? Int ?: (campaign.scenarios as? String ?: ""))
@@ -148,11 +161,9 @@ internal object StartMenuCampaignScreen {
         country: String,
     ) {
         val campaignTitleClean =
-            (campaign.title as? String ?: "")
-                .replace(
-                    Regex("\\s*\\([^)]*\\d{1,4}[^)]*\\)\\s*"),
-                    "",
-                ).trim()
+            StartMenuListToolbar.campaignDisplayTitle(
+                campaign.title as? String ?: "",
+            )
         byId("smCampTitle")?.innerHTML = campaignTitleClean
         byId("smCampDossierSub")?.innerHTML =
             listOfNotNull(
@@ -245,6 +256,7 @@ internal object StartMenuCampaignScreen {
         val summary = addTag(path, "div")
         summary.className = "osadaCollapseSummary"
         summary.innerHTML = "Campaign path"
+        summary.title = "Expand or collapse the scenario route and its outcome-dependent branches."
         val pathBody = addTag(path, "div")
         pathBody.id = "smCampPathBody"
         pathBody.className = "osadaCollapseBody"
@@ -275,7 +287,7 @@ internal object StartMenuCampaignScreen {
         text.className = "osadaListRowText"
         val name = addTag(text, "div")
         name.className = "osadaListRowName"
-        name.textContent = option.text
+        name.textContent = StartMenuListToolbar.campaignDisplayTitle(option.text)
         val rowSub = addTag(text, "div")
         rowSub.className = "osadaListRowSub"
         val ops = campaign?.scenarios as? Int

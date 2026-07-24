@@ -1,3 +1,5 @@
+@file:Suppress("MaxLineLength")
+
 package org.osada.ui
 
 import kotlinx.browser.window
@@ -12,7 +14,17 @@ import org.osada.unitClassNames
 /** Unit narrative description when loaded and non-blank, else null — shared by the equipment
  *  window's own detail bay and the unit card's uName/uImage hover tooltip. Units without a
  *  reviewed description (most non-Soviet equipment, for now) simply show no description. */
-internal fun equipmentDescriptionOrNull(eq: EquipmentData): String? = UnitDescriptions.get(eq.name)
+internal fun equipmentDescriptionOrNull(eq: EquipmentData): String? = UnitDescriptions.get(eq)
+
+/** Explicitly says when an evocative equipment name has no extra rules beyond shown stats. */
+internal fun equipmentMechanicsNote(eq: EquipmentData): String? =
+    buildList {
+        val capabilities = org.osada.rules.UnitCapabilities
+        if (capabilities.isHeadquarters(eq)) add(capabilities.HEADQUARTERS_SUPPORT_DESCRIPTION)
+        if (capabilities.hasPhasedMovement(eq)) add(capabilities.RECON_MOVEMENT_DESCRIPTION)
+        if (capabilities.canOverrun(eq)) add(capabilities.TANK_OVERRUN_DESCRIPTION)
+        if (capabilities.isLogisticsUnitWithoutAura(eq)) add(capabilities.LOGISTICS_NO_AURA_DESCRIPTION)
+    }.takeIf { it.isNotEmpty() }?.joinToString(" ")
 
 /** "Available from Mon YYYY" — shared so the equipment window's detail bay and the unit-card
  *  tooltip always read the same month name for the same eq.monthavailable (1-based; monthNamesShort
@@ -60,6 +72,9 @@ internal object EquipmentWindowBuilder {
 
         val eqUserSel = byId("eqUserSel")
         eqUserSel?.asDynamic()?.deployunit = -1
+        eqUserSel?.asDynamic()?.deployformation = null
+        eqUserSel?.asDynamic()?.deployrow = -1
+        eqUserSel?.asDynamic()?.deploycol = -1
         eqUserSel?.asDynamic()?.userunit = -1
         eqUserSel?.asDynamic()?.equnit = -1
         eqUserSel?.asDynamic()?.eqtransport = -1
@@ -77,7 +92,7 @@ internal object EquipmentWindowBuilder {
 
     private fun wireSortButtons() {
         val eqSortOrderBut = byId("eqSortOrderBut")
-        eqSortOrderBut?.title = "Click to change sorting order ascending/descenting"
+        eqSortOrderBut?.title = "Reverse the catalogue sort order between lowest-to-highest and highest-to-lowest."
         eqSortOrderBut?.asDynamic()?.hasSelectedGlyph = true
         eqSortOrderBut?.onclick = { _: org.w3c.dom.events.MouseEvent ->
             val userSel = byId("eqUserSel")?.asDynamic()
@@ -89,7 +104,7 @@ internal object EquipmentWindowBuilder {
         }
 
         val eqSortOptionsBut = byId("eqSortOptionsBut")
-        eqSortOptionsBut?.title = "Click to change sort category"
+        eqSortOptionsBut?.title = "Choose the equipment statistic used to sort the catalogue."
         eqSortOptionsBut?.asDynamic()?.hasSelectedGlyph = true
         eqSortOptionsBut?.onclick = { _: org.w3c.dom.events.MouseEvent ->
             if (isVisible("eqSortOptions")) {
@@ -166,25 +181,27 @@ internal object EquipmentWindowBuilder {
 
     private fun wireEquipmentActionButtons() {
         val eqSelCountry2 = byId("eqSelCountry")
-        eqSelCountry2?.title = "Click to change country"
+        eqSelCountry2?.title = "Cycle through equipment countries available to this side."
         eqSelCountry2?.onclick = { _: org.w3c.dom.events.MouseEvent ->
             GameHolder.instance?.ui?.equipmentWindowButtons("changecountry")
         }
 
         val eqNewBut = byId("eqNewBut")
-        eqNewBut?.title = "Buy unit as a new unit"
+        eqNewBut?.title =
+            "Buy this equipment as a new unit. Prestige is spent now and the unit enters the reserve tray for deployment."
         eqNewBut?.onclick = { _: org.w3c.dom.events.MouseEvent ->
             GameHolder.instance?.ui?.equipmentWindowButtons("buy")
         }
 
         val eqUpgradeBut = byId("eqUpgradeBut")
-        eqUpgradeBut?.title = "Upgrade selected unit to this unit"
+        eqUpgradeBut?.title =
+            "Upgrade the selected formation to this compatible model. You pay the cost difference and keep its identity, experience and hero."
         eqUpgradeBut?.onclick = { _: org.w3c.dom.events.MouseEvent ->
             GameHolder.instance?.ui?.equipmentWindowButtons("upgrade")
         }
 
         val eqSellBut = byId("eqSellBut")
-        eqSellBut?.title = "Disband and sell this unit"
+        eqSellBut?.title = "Permanently disband the selected unit and recover part of its prestige value."
         eqSellBut?.onclick = { _: org.w3c.dom.events.MouseEvent ->
             GameHolder.instance?.ui?.equipmentWindowButtons("sell")
         }

@@ -29,6 +29,7 @@ internal object EquipmentStatCard {
         clearTag("uCarrier")
         delTag(byId("leaderInfo"))
         byId("uLeader")?.className = "uc-leader-slot"
+        byId("uLeader")?.textContent = ""
         byId("uLeader")?.title = "Leader slot — empty"
         byId("uTransport")?.className = ""
         byId("uCarrier")?.className = ""
@@ -47,6 +48,7 @@ internal object EquipmentStatCard {
             "url('resources/ui/flags/${Equipment.UNITED_NAME}/flag_big_${data.country}.png')"
         byId("uFlag")?.textContent = Equipment.getCountryName(data.country - 1)
         byId("uName")?.textContent = "${data.name} ${unitClassNames[data.uclass]}"
+        EquipmentMarkings.render(byId("osadaUcMarkings"), data)
         byId("ucRename")?.style?.display = "none" // catalogue entries aren't renamable
     }
 

@@ -1,0 +1,1286 @@
+<?xml version="1.0" encoding="ASCII"?>
+<map file="n_frankfurt.xscn" name="1918 Der Aufstand erfasst Frankfurt am Main" turns="16, 19, 23" date="November 7, 1918" dayturns="0" ground="0" atmosferic="1" latitude="2" iconset="0" weatherchg="0" rows="39" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_697.png" eqpv="united1">
+  <player id="0" country="188" side="1" airtrans="0" navaltrans="0" support="189, 0, 0, 0" turnprestige="10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10"/>
+  <player id="1" country="117" side="0" airtrans="0" navaltrans="0" support="118, 0, 0, 0" turnprestige="10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10"/>
+  <reinforce turn="2">
+    <at row="36" col="10">
+      <unit id="35562" owner="1" flag="118" face="0" transport="35654" exp="90" str="9" ldr="1"/>
+    </at>
+    <at row="35" col="9">
+      <unit id="35562" owner="1" flag="118" face="0" transport="35654" exp="150"/>
+    </at>
+    <at row="36" col="8">
+      <unit id="35562" owner="1" flag="118" face="0" transport="35654" exp="80" str="12"/>
+    </at>
+    <at row="36" col="9">
+      <unit id="35718" owner="1" flag="118" face="0" transport="35654" exp="90" str="8"/>
+    </at>
+  </reinforce>
+  <reinforce turn="4">
+    <at row="6" col="6">
+      <unit id="35550" owner="1" flag="118" face="0" transport="35654" exp="90"/>
+    </at>
+    <at row="5" col="5">
+      <unit id="35590" owner="1" flag="118" face="0" exp="80" str="7"/>
+    </at>
+    <at row="6" col="3">
+      <unit id="35550" owner="1" flag="118" face="0" transport="35654" exp="130" str="9"/>
+    </at>
+    <at row="6" col="4">
+      <unit id="35713" owner="1" flag="118" face="0" transport="35653" exp="90"/>
+    </at>
+    <at row="6" col="5">
+      <unit id="35639" owner="1" flag="118" face="0" transport="35652" exp="200" str="7"/>
+    </at>
+  </reinforce>
+  <reinforce turn="6">
+    <at row="31" col="41">
+      <unit id="39128" owner="0" flag="189" face="0" transport="39136" exp="90" str="8"/>
+    </at>
+    <at row="32" col="40">
+      <unit id="39128" owner="0" flag="189" face="0" transport="39136" exp="190" str="7"/>
+    </at>
+    <at row="32" col="39">
+      <unit id="39128" owner="0" flag="189" face="0" transport="39136" exp="110" str="9"/>
+    </at>
+    <at row="33" col="40">
+      <unit id="39132" owner="0" flag="189" face="0" exp="110" str="9"/>
+    </at>
+    <at row="32" col="41">
+      <unit id="39143" owner="0" flag="189" face="0" transport="39141" exp="110" str="9"/>
+    </at>
+    <at row="3" col="23">
+      <unit id="35596" owner="1" flag="118" face="0" exp="80" str="7"/>
+    </at>
+    <at row="4" col="22">
+      <unit id="35596" owner="1" flag="118" face="0" exp="80" str="8"/>
+    </at>
+    <at row="3" col="22">
+      <unit id="35714" owner="1" flag="118" face="0" exp="90" str="6"/>
+    </at>
+  </reinforce>
+  <reinforce turn="8">
+    <at row="3" col="31">
+      <unit id="35714" owner="1" flag="118" face="0" exp="90" str="5"/>
+    </at>
+    <at row="4" col="30">
+      <unit id="35596" owner="1" flag="118" face="0" exp="110" str="8"/>
+    </at>
+    <at row="4" col="31">
+      <unit id="35596" owner="1" flag="118" face="0" exp="110" str="7"/>
+    </at>
+  </reinforce>
+  <reinforce turn="10">
+    <at row="35" col="21">
+      <unit id="39131" owner="0" flag="189" face="0" exp="90"/>
+    </at>
+    <at row="36" col="19">
+      <unit id="39131" owner="0" flag="189" face="0" exp="190" str="9"/>
+    </at>
+    <at row="36" col="22">
+      <unit id="39131" owner="0" flag="189" face="0" exp="110" str="11"/>
+    </at>
+    <at row="36" col="20">
+      <unit id="39132" owner="0" flag="189" face="0" exp="10" str="12"/>
+    </at>
+    <at row="36" col="21">
+      <unit id="841" owner="0" flag="189" face="0" exp="90"/>
+    </at>
+  </reinforce>
+  <hex row="0" col="3" terrain="3"/>
+  <hex row="0" col="5" road="16"/>
+  <hex row="0" col="7" terrain="3"/>
+  <hex row="0" col="8" terrain="3"/>
+  <hex row="0" col="10" road="16"/>
+  <hex row="0" col="15" road="16"/>
+  <hex row="0" col="17" terrain="3"/>
+  <hex row="0" col="18" road="16"/>
+  <hex row="0" col="24" road="8"/>
+  <hex row="0" col="25" road="144"/>
+  <hex row="0" col="31" terrain="4"/>
+  <hex row="0" col="32" terrain="4"/>
+  <hex row="0" col="33" terrain="4"/>
+  <hex row="0" col="34" terrain="4"/>
+  <hex row="0" col="35" terrain="4" road="16"/>
+  <hex row="0" col="36" terrain="3"/>
+  <hex row="0" col="37" terrain="3"/>
+  <hex row="0" col="38" terrain="3"/>
+  <hex row="0" col="39" terrain="3"/>
+  <hex row="1" col="1" terrain="3"/>
+  <hex row="1" col="2" terrain="3"/>
+  <hex row="1" col="3" terrain="3"/>
+  <hex row="1" col="4" terrain="3"/>
+  <hex row="1" col="5" terrain="3" road="25"/>
+  <hex row="1" col="6" terrain="3"/>
+  <hex row="1" col="7" terrain="3"/>
+  <hex row="1" col="8" terrain="3"/>
+  <hex row="1" col="9" terrain="3" road="42"/>
+  <hex row="1" col="10" road="49"/>
+  <hex row="1" col="12" terrain="3"/>
+  <hex row="1" col="13" terrain="3"/>
+  <hex row="1" col="14" terrain="3"/>
+  <hex row="1" col="15" road="17"/>
+  <hex row="1" col="18" road="9"/>
+  <hex row="1" col="19" road="136"/>
+  <hex row="1" col="25" road="17"/>
+  <hex row="1" col="31" terrain="4"/>
+  <hex row="1" col="32" terrain="4"/>
+  <hex row="1" col="33" terrain="4"/>
+  <hex row="1" col="34" terrain="4"/>
+  <hex row="1" col="35" terrain="4" road="33"/>
+  <hex row="1" col="36" terrain="3"/>
+  <hex row="1" col="37" terrain="3"/>
+  <hex row="1" col="38" terrain="3"/>
+  <hex row="1" col="41" terrain="3"/>
+  <hex row="2" col="1" terrain="3"/>
+  <hex row="2" col="2" terrain="3"/>
+  <hex row="2" col="3" terrain="3"/>
+  <hex row="2" col="4" terrain="3"/>
+  <hex row="2" col="5" terrain="3" road="19"/>
+  <hex row="2" col="6" terrain="3" road="168"/>
+  <hex row="2" col="7" terrain="3" road="130"/>
+  <hex row="2" col="8" terrain="3" road="34"/>
+  <hex row="2" col="9" terrain="3"/>
+  <hex row="2" col="10" terrain="1" road="137" name="Butzbach" owner="1" flag="117"/>
+  <hex row="2" col="11" road="136"/>
+  <hex row="2" col="13" terrain="1" road="40" name="Rockemberg" owner="1" flag="117"/>
+  <hex row="2" col="15" road="49"/>
+  <hex row="2" col="16" terrain="3"/>
+  <hex row="2" col="17" terrain="4"/>
+  <hex row="2" col="20" road="136"/>
+  <hex row="2" col="21" road="144"/>
+  <hex row="2" col="25" road="17"/>
+  <hex row="2" col="28" terrain="4"/>
+  <hex row="2" col="29" terrain="4"/>
+  <hex row="2" col="30" terrain="4"/>
+  <hex row="2" col="31" terrain="4" road="34"/>
+  <hex row="2" col="32" terrain="4" road="40"/>
+  <hex row="2" col="33" terrain="4" road="130"/>
+  <hex row="2" col="34" terrain="4" road="34" owner="1" flag="117"/>
+  <hex row="2" col="35" terrain="4"/>
+  <hex row="2" col="39" terrain="16"/>
+  <hex row="2" col="40" terrain="3"/>
+  <hex row="2" col="41" terrain="3"/>
+  <hex row="2" col="42" terrain="3"/>
+  <hex row="2" col="43" terrain="3"/>
+  <hex row="3" col="2" terrain="3"/>
+  <hex row="3" col="3" terrain="3"/>
+  <hex row="3" col="4" terrain="3"/>
+  <hex row="3" col="5" terrain="3" road="17"/>
+  <hex row="3" col="6" terrain="3"/>
+  <hex row="3" col="7" terrain="3"/>
+  <hex row="3" col="8" terrain="3"/>
+  <hex row="3" col="9" terrain="3"/>
+  <hex row="3" col="10" terrain="16"/>
+  <hex row="3" col="11" terrain="3"/>
+  <hex row="3" col="12" terrain="1" road="146" name="Rockemberg"/>
+  <hex row="3" col="13" terrain="4"/>
+  <hex row="3" col="14" terrain="4" road="154"/>
+  <hex row="3" col="15" road="169"/>
+  <hex row="3" col="16" terrain="4"/>
+  <hex row="3" col="17" terrain="4"/>
+  <hex row="3" col="18" terrain="4"/>
+  <hex row="3" col="21" road="17"/>
+  <hex row="3" col="25" road="17"/>
+  <hex row="3" col="28" terrain="4"/>
+  <hex row="3" col="29" terrain="4" road="34"/>
+  <hex row="3" col="30" terrain="4" road="34"/>
+  <hex row="3" col="31" terrain="4"/>
+  <hex row="3" col="32" terrain="4"/>
+  <hex row="3" col="33" terrain="4"/>
+  <hex row="3" col="34" terrain="4"/>
+  <hex row="3" col="35" terrain="4"/>
+  <hex row="3" col="39" terrain="16"/>
+  <hex row="3" col="40" terrain="16"/>
+  <hex row="3" col="41" terrain="3"/>
+  <hex row="3" col="42" terrain="3"/>
+  <hex row="3" col="43" terrain="3"/>
+  <hex row="4" col="2" terrain="3"/>
+  <hex row="4" col="3" terrain="3"/>
+  <hex row="4" col="4" terrain="3"/>
+  <hex row="4" col="5" terrain="3" road="33"/>
+  <hex row="4" col="6" terrain="3"/>
+  <hex row="4" col="7" terrain="3"/>
+  <hex row="4" col="8" terrain="3"/>
+  <hex row="4" col="9" terrain="3"/>
+  <hex row="4" col="10" terrain="3"/>
+  <hex row="4" col="11" terrain="3"/>
+  <hex row="4" col="12" road="25"/>
+  <hex row="4" col="13" road="162"/>
+  <hex row="4" col="14" road="35"/>
+  <hex row="4" col="15" terrain="3"/>
+  <hex row="4" col="16" terrain="3" road="136"/>
+  <hex row="4" col="17" terrain="1" road="152" name="Wolfersheim"/>
+  <hex row="4" col="18" terrain="4"/>
+  <hex row="4" col="21" road="17"/>
+  <hex row="4" col="22" terrain="13"/>
+  <hex row="4" col="25" road="57"/>
+  <hex row="4" col="27" terrain="1" road="42" name="Nidda" owner="1" flag="117">
+    <unit id="35569" owner="1" flag="118" face="0" transport="35654" exp="80" str="12"/>
+  </hex>
+  <hex row="4" col="28" terrain="1" road="50" name="Nidda"/>
+  <hex row="4" col="32" terrain="4"/>
+  <hex row="4" col="33" terrain="4"/>
+  <hex row="4" col="34" terrain="4"/>
+  <hex row="4" col="37" terrain="16"/>
+  <hex row="4" col="38" terrain="16"/>
+  <hex row="4" col="39" terrain="16"/>
+  <hex row="4" col="40" terrain="16"/>
+  <hex row="4" col="41" terrain="3"/>
+  <hex row="4" col="42" terrain="3"/>
+  <hex row="4" col="43" terrain="3"/>
+  <hex row="5" col="1" road="40"/>
+  <hex row="5" col="3" terrain="3" road="42"/>
+  <hex row="5" col="4" terrain="3" road="50"/>
+  <hex row="5" col="5" terrain="4"/>
+  <hex row="5" col="6" terrain="3"/>
+  <hex row="5" col="7" terrain="4" road="40"/>
+  <hex row="5" col="8" terrain="3"/>
+  <hex row="5" col="9" terrain="4" road="50"/>
+  <hex row="5" col="10" terrain="3" road="40"/>
+  <hex row="5" col="11" road="138"/>
+  <hex row="5" col="12" road="51"/>
+  <hex row="5" col="13" terrain="4"/>
+  <hex row="5" col="14" terrain="4"/>
+  <hex row="5" col="15" terrain="4"/>
+  <hex row="5" col="16" terrain="4"/>
+  <hex row="5" col="17" terrain="1" road="11" name="Wolfersheim"/>
+  <hex row="5" col="18" terrain="1" road="184" name="Wolfersheim" owner="1" flag="117">
+    <unit id="35569" owner="1" flag="118" face="0" transport="35654" exp="90"/>
+  </hex>
+  <hex row="5" col="19" terrain="4" road="168"/>
+  <hex row="5" col="21" terrain="1" road="33" name="Echzell" owner="1" flag="117"/>
+  <hex row="5" col="22" terrain="13"/>
+  <hex row="5" col="23" terrain="3"/>
+  <hex row="5" col="24" road="26"/>
+  <hex row="5" col="25" road="163"/>
+  <hex row="5" col="26" terrain="3" road="162"/>
+  <hex row="5" col="27" terrain="3"/>
+  <hex row="5" col="28" terrain="1" road="129" name="Nidda"/>
+  <hex row="5" col="32" terrain="4"/>
+  <hex row="5" col="36" terrain="16"/>
+  <hex row="5" col="37" terrain="16"/>
+  <hex row="5" col="38" terrain="16"/>
+  <hex row="5" col="41" terrain="3" road="40"/>
+  <hex row="5" col="42" terrain="3"/>
+  <hex row="5" col="43" terrain="3"/>
+  <hex row="6" col="0" road="2"/>
+  <hex row="6" col="2" road="130" owner="1" flag="117"/>
+  <hex row="6" col="4" road="153"/>
+  <hex row="6" col="5" road="170"/>
+  <hex row="6" col="6" terrain="4" road="50"/>
+  <hex row="6" col="7" terrain="3"/>
+  <hex row="6" col="8" road="138"/>
+  <hex row="6" col="9" terrain="3" road="145"/>
+  <hex row="6" col="11" terrain="3"/>
+  <hex row="6" col="12" road="145"/>
+  <hex row="6" col="13" terrain="4"/>
+  <hex row="6" col="14" terrain="4"/>
+  <hex row="6" col="15" terrain="4"/>
+  <hex row="6" col="16" terrain="4"/>
+  <hex row="6" col="17" terrain="4"/>
+  <hex row="6" col="18" terrain="4" road="147"/>
+  <hex row="6" col="19" terrain="4"/>
+  <hex row="6" col="20" terrain="3" road="130"/>
+  <hex row="6" col="21" terrain="13"/>
+  <hex row="6" col="22" terrain="13"/>
+  <hex row="6" col="23" road="18"/>
+  <hex row="6" col="24" road="35"/>
+  <hex row="6" col="31" terrain="3"/>
+  <hex row="6" col="37" road="34"/>
+  <hex row="6" col="38" road="40"/>
+  <hex row="6" col="39" terrain="16" road="130"/>
+  <hex row="6" col="40" terrain="1" road="34" name="Wenings" owner="1" flag="117"/>
+  <hex row="6" col="41" terrain="16"/>
+  <hex row="6" col="42" terrain="16" road="136"/>
+  <hex row="6" col="43" road="128"/>
+  <hex row="7" col="3" terrain="1" road="10" name="Malbach" owner="1" flag="117"/>
+  <hex row="7" col="4" terrain="1" road="51" name="Malbach"/>
+  <hex row="7" col="5" terrain="3"/>
+  <hex row="7" col="6" road="137"/>
+  <hex row="7" col="7" road="136"/>
+  <hex row="7" col="8" terrain="3"/>
+  <hex row="7" col="9" road="57"/>
+  <hex row="7" col="10" terrain="3"/>
+  <hex row="7" col="12" terrain="3" road="17"/>
+  <hex row="7" col="13" terrain="4"/>
+  <hex row="7" col="14" terrain="4"/>
+  <hex row="7" col="15" terrain="4"/>
+  <hex row="7" col="16" terrain="4"/>
+  <hex row="7" col="17" terrain="4"/>
+  <hex row="7" col="18" terrain="4" road="9"/>
+  <hex row="7" col="19" terrain="4" road="152"/>
+  <hex row="7" col="21" terrain="10"/>
+  <hex row="7" col="23" road="57"/>
+  <hex row="7" col="29" terrain="3"/>
+  <hex row="7" col="30" terrain="3"/>
+  <hex row="7" col="31" terrain="3"/>
+  <hex row="7" col="32" terrain="3"/>
+  <hex row="7" col="33" terrain="1" road="50" name="Lissberg"/>
+  <hex row="7" col="34" terrain="1" road="40" name="Lissberg" owner="1" flag="117"/>
+  <hex row="7" col="35" road="146"/>
+  <hex row="7" col="36" road="34"/>
+  <hex row="7" col="40" terrain="16"/>
+  <hex row="8" col="1" terrain="3"/>
+  <hex row="8" col="3" terrain="16"/>
+  <hex row="8" col="4" road="137"/>
+  <hex row="8" col="5" road="136"/>
+  <hex row="8" col="7" terrain="3"/>
+  <hex row="8" col="8" road="138"/>
+  <hex row="8" col="9" road="155"/>
+  <hex row="8" col="10" terrain="1" road="176" name="Ober Moerlen" owner="1" flag="117"/>
+  <hex row="8" col="12" road="9"/>
+  <hex row="8" col="13" terrain="1" road="144" name="Bad Neuheim"/>
+  <hex row="8" col="14" terrain="4"/>
+  <hex row="8" col="15" terrain="4"/>
+  <hex row="8" col="16" terrain="4"/>
+  <hex row="8" col="17" terrain="4"/>
+  <hex row="8" col="18" terrain="4"/>
+  <hex row="8" col="19" terrain="1" road="11" name="Reichelsheim" owner="1" flag="117"/>
+  <hex row="8" col="20" terrain="1" road="176" name="Reichelsheim"/>
+  <hex row="8" col="21" terrain="10"/>
+  <hex row="8" col="22" road="26"/>
+  <hex row="8" col="23" road="163"/>
+  <hex row="8" col="24" road="168"/>
+  <hex row="8" col="25" road="130"/>
+  <hex row="8" col="26" road="40"/>
+  <hex row="8" col="27" road="130"/>
+  <hex row="8" col="28" road="40"/>
+  <hex row="8" col="29" road="130"/>
+  <hex row="8" col="30" road="40"/>
+  <hex row="8" col="31" terrain="1" road="130" name="Ortenberg" owner="1" flag="117"/>
+  <hex row="8" col="32" road="42"/>
+  <hex row="8" col="33" road="137"/>
+  <hex row="8" col="35" road="41"/>
+  <hex row="8" col="37" road="40"/>
+  <hex row="8" col="39" road="40"/>
+  <hex row="8" col="41" terrain="1" road="56" name="Kefenrod"/>
+  <hex row="9" col="1" terrain="3"/>
+  <hex row="9" col="2" terrain="3"/>
+  <hex row="9" col="3" terrain="3"/>
+  <hex row="9" col="4" terrain="3"/>
+  <hex row="9" col="5" terrain="3"/>
+  <hex row="9" col="6" terrain="3" road="144"/>
+  <hex row="9" col="7" terrain="3"/>
+  <hex row="9" col="8" terrain="3"/>
+  <hex row="9" col="9" road="19"/>
+  <hex row="9" col="10" terrain="1" road="169" name="Ober Moerlen"/>
+  <hex row="9" col="11" terrain="4" road="144"/>
+  <hex row="9" col="12" terrain="4"/>
+  <hex row="9" col="13" terrain="4" road="17"/>
+  <hex row="9" col="14" terrain="4"/>
+  <hex row="9" col="15" terrain="4"/>
+  <hex row="9" col="16" terrain="4"/>
+  <hex row="9" col="17" terrain="4"/>
+  <hex row="9" col="18" terrain="4"/>
+  <hex row="9" col="19" terrain="4"/>
+  <hex row="9" col="20" terrain="4" road="137"/>
+  <hex row="9" col="21" terrain="10" road="138"/>
+  <hex row="9" col="22" road="51"/>
+  <hex row="9" col="25" terrain="3"/>
+  <hex row="9" col="27" terrain="3"/>
+  <hex row="9" col="29" terrain="3"/>
+  <hex row="9" col="30" terrain="3"/>
+  <hex row="9" col="31" terrain="3"/>
+  <hex row="9" col="32" terrain="3"/>
+  <hex row="9" col="33" terrain="3"/>
+  <hex row="9" col="34" terrain="3" road="130"/>
+  <hex row="9" col="36" road="130"/>
+  <hex row="9" col="37" terrain="3"/>
+  <hex row="9" col="38" terrain="3" road="130"/>
+  <hex row="9" col="39" terrain="3"/>
+  <hex row="9" col="40" road="138"/>
+  <hex row="9" col="41" terrain="1" name="Kefenrod"/>
+  <hex row="9" col="42" terrain="1" road="168" name="Kefenrod" owner="1" flag="117"/>
+  <hex row="9" col="43" road="128"/>
+  <hex row="10" col="1" terrain="3"/>
+  <hex row="10" col="2" terrain="3"/>
+  <hex row="10" col="3" terrain="3"/>
+  <hex row="10" col="4" terrain="3"/>
+  <hex row="10" col="5" road="18"/>
+  <hex row="10" col="6" road="33"/>
+  <hex row="10" col="7" terrain="4"/>
+  <hex row="10" col="8" terrain="4"/>
+  <hex row="10" col="9" road="9"/>
+  <hex row="10" col="10" terrain="4"/>
+  <hex row="10" col="11" terrain="4" road="41"/>
+  <hex row="10" col="12" terrain="4"/>
+  <hex row="10" col="13" terrain="4" road="57"/>
+  <hex row="10" col="14" terrain="4"/>
+  <hex row="10" col="15" terrain="4"/>
+  <hex row="10" col="16" terrain="4"/>
+  <hex row="10" col="17" terrain="4"/>
+  <hex row="10" col="18" terrain="4"/>
+  <hex row="10" col="19" terrain="4"/>
+  <hex row="10" col="20" terrain="4"/>
+  <hex row="10" col="21" terrain="10"/>
+  <hex row="10" col="22" road="145">
+    <unit id="35758" owner="1" flag="118" face="0" exp="90"/>
+  </hex>
+  <hex row="10" col="23" terrain="2" name="Landwehr Alzenau" owner="1" flag="117" victory="1">
+    <unit id="35730" owner="1" flag="118" face="0" transport="35666" exp="90" str="8"/>
+  </hex>
+  <hex row="10" col="24" terrain="3"/>
+  <hex row="10" col="25" terrain="3"/>
+  <hex row="10" col="26" terrain="3"/>
+  <hex row="10" col="27" terrain="3"/>
+  <hex row="10" col="28" terrain="3"/>
+  <hex row="10" col="29" terrain="3"/>
+  <hex row="10" col="31" terrain="3"/>
+  <hex row="10" col="32" terrain="3"/>
+  <hex row="10" col="34" terrain="3"/>
+  <hex row="10" col="37" terrain="3"/>
+  <hex row="10" col="38" terrain="3"/>
+  <hex row="10" col="39" terrain="3"/>
+  <hex row="10" col="40" terrain="3"/>
+  <hex row="10" col="41" terrain="3"/>
+  <hex row="10" col="42" terrain="3"/>
+  <hex row="10" col="43" terrain="3"/>
+  <hex row="11" col="2" terrain="3"/>
+  <hex row="11" col="5" terrain="4" road="41"/>
+  <hex row="11" col="6" terrain="3"/>
+  <hex row="11" col="7" terrain="3"/>
+  <hex row="11" col="8" terrain="3"/>
+  <hex row="11" col="9" terrain="4"/>
+  <hex row="11" col="10" road="146"/>
+  <hex row="11" col="11" terrain="4"/>
+  <hex row="11" col="12" terrain="4" road="138"/>
+  <hex row="11" col="13" terrain="1" road="139" name="Friedberg" owner="1" flag="117"/>
+  <hex row="11" col="14" terrain="1" road="176" name="Friedberg"/>
+  <hex row="11" col="15" terrain="4"/>
+  <hex row="11" col="16" terrain="4"/>
+  <hex row="11" col="17" terrain="4"/>
+  <hex row="11" col="18" terrain="4"/>
+  <hex row="11" col="19" terrain="4"/>
+  <hex row="11" col="20" terrain="4"/>
+  <hex row="11" col="21" terrain="10"/>
+  <hex row="11" col="22" road="17"/>
+  <hex row="11" col="26" terrain="3"/>
+  <hex row="11" col="28" terrain="3"/>
+  <hex row="11" col="29" terrain="3"/>
+  <hex row="11" col="30" terrain="3"/>
+  <hex row="11" col="31" terrain="3"/>
+  <hex row="11" col="32" terrain="3"/>
+  <hex row="11" col="33" terrain="3"/>
+  <hex row="11" col="34" terrain="3"/>
+  <hex row="11" col="35" terrain="3"/>
+  <hex row="11" col="36" terrain="3"/>
+  <hex row="11" col="42" terrain="3"/>
+  <hex row="11" col="43" terrain="4"/>
+  <hex row="12" col="4" terrain="3" road="18"/>
+  <hex row="12" col="5" terrain="3"/>
+  <hex row="12" col="6" terrain="3" road="136"/>
+  <hex row="12" col="7" terrain="3" road="136"/>
+  <hex row="12" col="8" terrain="3"/>
+  <hex row="12" col="9" terrain="4"/>
+  <hex row="12" col="10" road="9"/>
+  <hex row="12" col="11" road="136"/>
+  <hex row="12" col="12" terrain="4"/>
+  <hex row="12" col="13" terrain="4"/>
+  <hex row="12" col="14" terrain="4" road="145"/>
+  <hex row="12" col="16" terrain="4"/>
+  <hex row="12" col="20" terrain="10"/>
+  <hex row="12" col="22" road="17"/>
+  <hex row="12" col="29" terrain="1" name="Glauburg" owner="1" flag="117"/>
+  <hex row="12" col="30" terrain="3"/>
+  <hex row="12" col="32" terrain="3"/>
+  <hex row="12" col="34" terrain="3"/>
+  <hex row="12" col="42" terrain="3"/>
+  <hex row="12" col="43" terrain="4"/>
+  <hex row="13" col="4" terrain="3" road="17"/>
+  <hex row="13" col="6" terrain="3"/>
+  <hex row="13" col="7" terrain="4"/>
+  <hex row="13" col="8" terrain="4" road="136"/>
+  <hex row="13" col="9" terrain="4" road="136"/>
+  <hex row="13" col="10" terrain="4"/>
+  <hex row="13" col="11" terrain="4"/>
+  <hex row="13" col="12" road="144"/>
+  <hex row="13" col="14" road="17"/>
+  <hex row="13" col="19" terrain="10"/>
+  <hex row="13" col="20" terrain="10"/>
+  <hex row="13" col="21" terrain="1" road="34" name="Flordstadt" owner="1" flag="117"/>
+  <hex row="13" col="22" road="33"/>
+  <hex row="13" col="28" terrain="1" name="Glauburg"/>
+  <hex row="13" col="42" terrain="3"/>
+  <hex row="13" col="43" terrain="4"/>
+  <hex row="14" col="1" terrain="3" road="40"/>
+  <hex row="14" col="2" terrain="3"/>
+  <hex row="14" col="3" terrain="1" road="58" name="Werheim"/>
+  <hex row="14" col="4" terrain="4" road="49"/>
+  <hex row="14" col="5" terrain="4"/>
+  <hex row="14" col="6" terrain="4"/>
+  <hex row="14" col="7" terrain="4"/>
+  <hex row="14" col="8" terrain="4"/>
+  <hex row="14" col="9" terrain="3"/>
+  <hex row="14" col="10" terrain="1" road="152" name="Rosbach"/>
+  <hex row="14" col="11" terrain="4" road="170"/>
+  <hex row="14" col="12" road="57"/>
+  <hex row="14" col="13" road="186"/>
+  <hex row="14" col="14" road="49"/>
+  <hex row="14" col="19" terrain="10"/>
+  <hex row="14" col="20" road="18"/>
+  <hex row="14" col="21" terrain="3"/>
+  <hex row="14" col="22" terrain="3"/>
+  <hex row="14" col="23" terrain="3"/>
+  <hex row="14" col="27" terrain="3"/>
+  <hex row="14" col="33" terrain="3"/>
+  <hex row="14" col="34" terrain="3"/>
+  <hex row="14" col="41" terrain="4"/>
+  <hex row="14" col="42" terrain="4"/>
+  <hex row="14" col="43" terrain="4"/>
+  <hex row="15" col="0" road="2"/>
+  <hex row="15" col="1" terrain="4"/>
+  <hex row="15" col="2" terrain="1" road="154" name="Werheim" owner="1" flag="117" victory="1">
+    <unit id="35569" owner="1" flag="118" face="0" transport="35652" exp="90"/>
+  </hex>
+  <hex row="15" col="3" terrain="1" road="163" name="Werheim"/>
+  <hex row="15" col="4" terrain="3" road="161"/>
+  <hex row="15" col="5" terrain="16"/>
+  <hex row="15" col="6" terrain="16"/>
+  <hex row="15" col="7" terrain="4"/>
+  <hex row="15" col="8" terrain="4"/>
+  <hex row="15" col="9" terrain="3"/>
+  <hex row="15" col="10" terrain="1" road="3" name="Rosbach" owner="1" flag="117"/>
+  <hex row="15" col="11" terrain="4"/>
+  <hex row="15" col="12" terrain="4" road="139"/>
+  <hex row="15" col="13" road="147"/>
+  <hex row="15" col="14" terrain="1" road="169" name="Wollstadt"/>
+  <hex row="15" col="15" terrain="1" road="144" name="Wollstadt"/>
+  <hex row="15" col="17" terrain="10"/>
+  <hex row="15" col="18" terrain="10"/>
+  <hex row="15" col="19" road="18"/>
+  <hex row="15" col="20" terrain="3" road="33"/>
+  <hex row="15" col="21" terrain="3"/>
+  <hex row="15" col="22" terrain="3"/>
+  <hex row="15" col="23" terrain="13"/>
+  <hex row="15" col="27" terrain="3"/>
+  <hex row="15" col="28" terrain="3"/>
+  <hex row="15" col="31" terrain="3"/>
+  <hex row="15" col="32" terrain="3"/>
+  <hex row="15" col="33" terrain="3"/>
+  <hex row="15" col="34" terrain="3"/>
+  <hex row="15" col="35" terrain="1" road="26" name="Buedingen"/>
+  <hex row="15" col="36" terrain="1" road="48" name="Buedingen"/>
+  <hex row="15" col="40" terrain="4"/>
+  <hex row="15" col="41" terrain="4"/>
+  <hex row="15" col="42" terrain="4"/>
+  <hex row="15" col="43" terrain="4"/>
+  <hex row="16" col="0" terrain="4"/>
+  <hex row="16" col="1" terrain="4"/>
+  <hex row="16" col="2" terrain="1" road="19" name="Werheim"/>
+  <hex row="16" col="3" terrain="4"/>
+  <hex row="16" col="4" terrain="16"/>
+  <hex row="16" col="5" terrain="4"/>
+  <hex row="16" col="6" terrain="4"/>
+  <hex row="16" col="7" terrain="4"/>
+  <hex row="16" col="8" terrain="4"/>
+  <hex row="16" col="9" terrain="4"/>
+  <hex row="16" col="10" terrain="3"/>
+  <hex row="16" col="11" terrain="3"/>
+  <hex row="16" col="12" terrain="4"/>
+  <hex row="16" col="13" road="25"/>
+  <hex row="16" col="15" road="33"/>
+  <hex row="16" col="16" terrain="10"/>
+  <hex row="16" col="17" terrain="3"/>
+  <hex row="16" col="19" terrain="1" road="41" name="Niddatal" owner="1" flag="117"/>
+  <hex row="16" col="22" terrain="10"/>
+  <hex row="16" col="24" terrain="13"/>
+  <hex row="16" col="28" terrain="3"/>
+  <hex row="16" col="30" terrain="3"/>
+  <hex row="16" col="31" terrain="3"/>
+  <hex row="16" col="32" terrain="3"/>
+  <hex row="16" col="33" terrain="3"/>
+  <hex row="16" col="34" terrain="3"/>
+  <hex row="16" col="35" terrain="1" road="35" name="Buedingen"/>
+  <hex row="16" col="36" terrain="1" road="169" name="Buedingen" owner="1" flag="117" victory="1">
+    <unit id="35569" owner="1" flag="118" face="0" transport="35652" exp="90"/>
+  </hex>
+  <hex row="16" col="37" terrain="1" road="136" name="Buedingen"/>
+  <hex row="16" col="41" terrain="3" road="40"/>
+  <hex row="16" col="42" terrain="3"/>
+  <hex row="16" col="43" terrain="3" road="32"/>
+  <hex row="17" col="0" terrain="4"/>
+  <hex row="17" col="1" terrain="4"/>
+  <hex row="17" col="2" terrain="4" road="17"/>
+  <hex row="17" col="3" terrain="3"/>
+  <hex row="17" col="4" terrain="3"/>
+  <hex row="17" col="5" terrain="3"/>
+  <hex row="17" col="6" terrain="4"/>
+  <hex row="17" col="7" terrain="4"/>
+  <hex row="17" col="8" terrain="4"/>
+  <hex row="17" col="9" terrain="4"/>
+  <hex row="17" col="10" terrain="3"/>
+  <hex row="17" col="11" terrain="4"/>
+  <hex row="17" col="12" terrain="4"/>
+  <hex row="17" col="13" road="27"/>
+  <hex row="17" col="14" terrain="4" road="178"/>
+  <hex row="17" col="15" terrain="10"/>
+  <hex row="17" col="16" terrain="10"/>
+  <hex row="17" col="17" road="26"/>
+  <hex row="17" col="18" road="50"/>
+  <hex row="17" col="19" terrain="3"/>
+  <hex row="17" col="20" road="136"/>
+  <hex row="17" col="21" road="136"/>
+  <hex row="17" col="22" terrain="10"/>
+  <hex row="17" col="23" road="34"/>
+  <hex row="17" col="24" terrain="1" road="40" name="Altenstadt" owner="1" flag="117"/>
+  <hex row="17" col="25" terrain="1" road="136" name="Altenstadt"/>
+  <hex row="17" col="26" terrain="3"/>
+  <hex row="17" col="33" road="34"/>
+  <hex row="17" col="34" terrain="3" road="34"/>
+  <hex row="17" col="38" road="152"/>
+  <hex row="17" col="39" road="162"/>
+  <hex row="17" col="40" road="34"/>
+  <hex row="17" col="41" terrain="3"/>
+  <hex row="17" col="42" terrain="3" road="130"/>
+  <hex row="17" col="43" terrain="3"/>
+  <hex row="18" col="2" terrain="3" road="17"/>
+  <hex row="18" col="3" terrain="3"/>
+  <hex row="18" col="4" terrain="3"/>
+  <hex row="18" col="5" terrain="3"/>
+  <hex row="18" col="6" terrain="3"/>
+  <hex row="18" col="7" terrain="3"/>
+  <hex row="18" col="8" terrain="3"/>
+  <hex row="18" col="9" terrain="3"/>
+  <hex row="18" col="10" terrain="3"/>
+  <hex row="18" col="11" terrain="3"/>
+  <hex row="18" col="12" terrain="3"/>
+  <hex row="18" col="13" road="27"/>
+  <hex row="18" col="14" terrain="3" road="185"/>
+  <hex row="18" col="15" terrain="10" road="168"/>
+  <hex row="18" col="16" terrain="3"/>
+  <hex row="18" col="17" terrain="3" road="43"/>
+  <hex row="18" col="18" terrain="3" road="177"/>
+  <hex row="18" col="20" terrain="3"/>
+  <hex row="18" col="21" terrain="10"/>
+  <hex row="18" col="22" terrain="10" road="130"/>
+  <hex row="18" col="24" terrain="3"/>
+  <hex row="18" col="25" terrain="4"/>
+  <hex row="18" col="26" terrain="3" road="136"/>
+  <hex row="18" col="27" terrain="16" road="136"/>
+  <hex row="18" col="28" terrain="16"/>
+  <hex row="18" col="31" road="34"/>
+  <hex row="18" col="32" road="34"/>
+  <hex row="18" col="38" road="19"/>
+  <hex row="18" col="41" terrain="3"/>
+  <hex row="18" col="42" terrain="3"/>
+  <hex row="18" col="43" terrain="3"/>
+  <hex row="19" col="1" road="10"/>
+  <hex row="19" col="2" road="49"/>
+  <hex row="19" col="6" terrain="3"/>
+  <hex row="19" col="7" terrain="3"/>
+  <hex row="19" col="8" terrain="3"/>
+  <hex row="19" col="9" terrain="4"/>
+  <hex row="19" col="10" terrain="4"/>
+  <hex row="19" col="11" terrain="16"/>
+  <hex row="19" col="12" terrain="16"/>
+  <hex row="19" col="13" road="19"/>
+  <hex row="19" col="14" terrain="1" road="163" name="Okarben" owner="1" flag="117"/>
+  <hex row="19" col="15" terrain="10"/>
+  <hex row="19" col="16" terrain="3" road="146"/>
+  <hex row="19" col="17" terrain="3"/>
+  <hex row="19" col="18" road="137"/>
+  <hex row="19" col="19" road="144"/>
+  <hex row="19" col="20" terrain="10"/>
+  <hex row="19" col="23" terrain="4"/>
+  <hex row="19" col="24" terrain="4"/>
+  <hex row="19" col="25" terrain="4"/>
+  <hex row="19" col="26" terrain="16"/>
+  <hex row="19" col="27" terrain="16"/>
+  <hex row="19" col="28" terrain="16" road="136"/>
+  <hex row="19" col="29" road="138"/>
+  <hex row="19" col="30" road="50"/>
+  <hex row="19" col="35" road="34"/>
+  <hex row="19" col="36" road="40"/>
+  <hex row="19" col="37" terrain="1" road="130" name="Hain Gruendau" owner="1" flag="117"/>
+  <hex row="19" col="38" road="33"/>
+  <hex row="19" col="40" terrain="3"/>
+  <hex row="19" col="41" terrain="4"/>
+  <hex row="19" col="42" terrain="4"/>
+  <hex row="19" col="43" terrain="4"/>
+  <hex row="20" col="2" road="137"/>
+  <hex row="20" col="3" road="136"/>
+  <hex row="20" col="8" terrain="3"/>
+  <hex row="20" col="9" terrain="16"/>
+  <hex row="20" col="10" terrain="16"/>
+  <hex row="20" col="11" terrain="16"/>
+  <hex row="20" col="12" terrain="16"/>
+  <hex row="20" col="13" road="49"/>
+  <hex row="20" col="14" terrain="10"/>
+  <hex row="20" col="16" road="17"/>
+  <hex row="20" col="18" terrain="3"/>
+  <hex row="20" col="19" terrain="10" road="57"/>
+  <hex row="20" col="20" terrain="10"/>
+  <hex row="20" col="23" terrain="4"/>
+  <hex row="20" col="24" terrain="4"/>
+  <hex row="20" col="25" terrain="3"/>
+  <hex row="20" col="26" terrain="3"/>
+  <hex row="20" col="27" terrain="3"/>
+  <hex row="20" col="30" road="137"/>
+  <hex row="20" col="31" road="136"/>
+  <hex row="20" col="33" road="58"/>
+  <hex row="20" col="34" road="50"/>
+  <hex row="20" col="39" terrain="4"/>
+  <hex row="20" col="40" terrain="4"/>
+  <hex row="20" col="41" terrain="4"/>
+  <hex row="20" col="42" terrain="4"/>
+  <hex row="20" col="43" terrain="4"/>
+  <hex row="21" col="4" road="136"/>
+  <hex row="21" col="5" terrain="1" road="152" name="Homburg"/>
+  <hex row="21" col="9" terrain="16"/>
+  <hex row="21" col="10" terrain="16"/>
+  <hex row="21" col="12" road="26"/>
+  <hex row="21" col="13" terrain="3" road="161"/>
+  <hex row="21" col="14" terrain="10"/>
+  <hex row="21" col="15" terrain="1" road="26" name="Karben" owner="1" flag="117"/>
+  <hex row="21" col="16" road="57"/>
+  <hex row="21" col="17" road="162"/>
+  <hex row="21" col="18" terrain="10" road="42"/>
+  <hex row="21" col="19" road="139"/>
+  <hex row="21" col="20" terrain="3" road="184"/>
+  <hex row="21" col="21" terrain="1" road="162" name="Schoeneck" owner="1" flag="117"/>
+  <hex row="21" col="22" terrain="3" road="40"/>
+  <hex row="21" col="23" road="130"/>
+  <hex row="21" col="24" terrain="3" road="40"/>
+  <hex row="21" col="25" terrain="3" road="136"/>
+  <hex row="21" col="26" terrain="3"/>
+  <hex row="21" col="27" terrain="3"/>
+  <hex row="21" col="28" terrain="3"/>
+  <hex row="21" col="32" road="138"/>
+  <hex row="21" col="33" road="139"/>
+  <hex row="21" col="34" terrain="1" road="177" name="Gruendau" owner="1" flag="117"/>
+  <hex row="21" col="35" terrain="3"/>
+  <hex row="21" col="36" terrain="4"/>
+  <hex row="21" col="37" terrain="4"/>
+  <hex row="21" col="38" terrain="4"/>
+  <hex row="21" col="39" terrain="4"/>
+  <hex row="21" col="40" terrain="4"/>
+  <hex row="21" col="41" terrain="4"/>
+  <hex row="21" col="42" terrain="4"/>
+  <hex row="21" col="43" terrain="4"/>
+  <hex row="22" col="0" terrain="3"/>
+  <hex row="22" col="1" terrain="3"/>
+  <hex row="22" col="2" terrain="3"/>
+  <hex row="22" col="5" terrain="1" road="27" name="Homburg"/>
+  <hex row="22" col="6" terrain="1" road="184" name="Homburg" owner="1" flag="117" victory="1">
+    <unit id="35569" owner="1" flag="118" face="0" transport="35652" exp="90"/>
+  </hex>
+  <hex row="22" col="7" road="176"/>
+  <hex row="22" col="11" terrain="3"/>
+  <hex row="22" col="12" road="19"/>
+  <hex row="22" col="13" terrain="16"/>
+  <hex row="22" col="14" terrain="10"/>
+  <hex row="22" col="15" terrain="1" road="35" name="Karben"/>
+  <hex row="22" col="16" road="163"/>
+  <hex row="22" col="17" terrain="10"/>
+  <hex row="22" col="18" terrain="10"/>
+  <hex row="22" col="19" terrain="3"/>
+  <hex row="22" col="20" road="147"/>
+  <hex row="22" col="21" terrain="3"/>
+  <hex row="22" col="22" terrain="3"/>
+  <hex row="22" col="23" terrain="3"/>
+  <hex row="22" col="24" terrain="3"/>
+  <hex row="22" col="26" road="136"/>
+  <hex row="22" col="27" road="144"/>
+  <hex row="22" col="33" terrain="4"/>
+  <hex row="22" col="34" terrain="4" road="137"/>
+  <hex row="22" col="35" terrain="4" road="136"/>
+  <hex row="22" col="36" terrain="3"/>
+  <hex row="22" col="37" terrain="4"/>
+  <hex row="22" col="38" terrain="4"/>
+  <hex row="22" col="39" terrain="4"/>
+  <hex row="22" col="40" terrain="4"/>
+  <hex row="22" col="41" terrain="4" road="34"/>
+  <hex row="22" col="42" terrain="4" road="40"/>
+  <hex row="22" col="43" terrain="4" road="128"/>
+  <hex row="23" col="0" terrain="3"/>
+  <hex row="23" col="1" terrain="3"/>
+  <hex row="23" col="2" terrain="3"/>
+  <hex row="23" col="3" terrain="3"/>
+  <hex row="23" col="5" terrain="4" road="19"/>
+  <hex row="23" col="6" terrain="1" road="171" name="Homburg"/>
+  <hex row="23" col="7" terrain="4" road="137"/>
+  <hex row="23" col="8" terrain="4"/>
+  <hex row="23" col="11" road="26"/>
+  <hex row="23" col="12" terrain="16" road="57"/>
+  <hex row="23" col="13" terrain="4" road="178"/>
+  <hex row="23" col="14" terrain="10" road="34"/>
+  <hex row="23" col="15" terrain="10"/>
+  <hex row="23" col="16" terrain="10"/>
+  <hex row="23" col="17" terrain="10"/>
+  <hex row="23" col="20" road="9"/>
+  <hex row="23" col="21" road="136"/>
+  <hex row="23" col="22" terrain="3"/>
+  <hex row="23" col="27" terrain="1" road="17" name="Neuberg"/>
+  <hex row="23" col="33" terrain="4"/>
+  <hex row="23" col="34" terrain="4"/>
+  <hex row="23" col="35" terrain="4"/>
+  <hex row="23" col="36" terrain="4" road="152"/>
+  <hex row="23" col="37" terrain="1" road="184" name="Roth" owner="1" flag="117"/>
+  <hex row="23" col="38" terrain="4"/>
+  <hex row="23" col="39" terrain="4" road="58"/>
+  <hex row="23" col="40" terrain="4" road="50"/>
+  <hex row="23" col="41" terrain="4"/>
+  <hex row="23" col="42" terrain="4"/>
+  <hex row="24" col="1" road="40"/>
+  <hex row="24" col="2" terrain="3"/>
+  <hex row="24" col="3" terrain="3" road="40"/>
+  <hex row="24" col="4" terrain="3"/>
+  <hex row="24" col="5" terrain="3" road="49"/>
+  <hex row="24" col="6" terrain="4"/>
+  <hex row="24" col="7" terrain="4"/>
+  <hex row="24" col="8" terrain="4" road="136"/>
+  <hex row="24" col="9" terrain="4" road="136"/>
+  <hex row="24" col="10" terrain="4"/>
+  <hex row="24" col="11" terrain="1" name="Bad Vilbel"/>
+  <hex row="24" col="12" road="187"/>
+  <hex row="24" col="13" terrain="4" road="169"/>
+  <hex row="24" col="15" terrain="10"/>
+  <hex row="24" col="16" terrain="10"/>
+  <hex row="24" col="22" road="144"/>
+  <hex row="24" col="27" road="9" owner="1" flag="117"/>
+  <hex row="24" col="34" terrain="4"/>
+  <hex row="24" col="35" terrain="4" road="34"/>
+  <hex row="24" col="36" terrain="4" road="43"/>
+  <hex row="24" col="37" terrain="4" road="131"/>
+  <hex row="24" col="38" terrain="4" road="170"/>
+  <hex row="24" col="39" road="131"/>
+  <hex row="24" col="40" terrain="1" road="161" name="Gelnhausen" owner="1" flag="117"/>
+  <hex row="25" col="0" road="2"/>
+  <hex row="25" col="2" road="130"/>
+  <hex row="25" col="3" terrain="3"/>
+  <hex row="25" col="4" terrain="3" road="138"/>
+  <hex row="25" col="5" terrain="3" road="145"/>
+  <hex row="25" col="6" terrain="3"/>
+  <hex row="25" col="7" terrain="4"/>
+  <hex row="25" col="8" terrain="4"/>
+  <hex row="25" col="9" terrain="4"/>
+  <hex row="25" col="10" terrain="4" road="138"/>
+  <hex row="25" col="11" terrain="1" road="155" name="Bad Vilbel" owner="1" flag="117">
+    <unit id="35569" owner="1" flag="118" face="0" transport="35652" exp="90"/>
+  </hex>
+  <hex row="25" col="12" road="179"/>
+  <hex row="25" col="13" terrain="4"/>
+  <hex row="25" col="14" terrain="3" road="144"/>
+  <hex row="25" col="15" terrain="10"/>
+  <hex row="25" col="17" terrain="3"/>
+  <hex row="25" col="22" road="25"/>
+  <hex row="25" col="23" terrain="1" road="168" name="Bruchkobel" owner="1" flag="117"/>
+  <hex row="25" col="28" road="144"/>
+  <hex row="25" col="33" road="34"/>
+  <hex row="25" col="34" road="34"/>
+  <hex row="25" col="38" terrain="4"/>
+  <hex row="26" col="4" terrain="3"/>
+  <hex row="26" col="5" road="33"/>
+  <hex row="26" col="6" terrain="3"/>
+  <hex row="26" col="7" terrain="4"/>
+  <hex row="26" col="8" terrain="4"/>
+  <hex row="26" col="9" terrain="4"/>
+  <hex row="26" col="10" terrain="4"/>
+  <hex row="26" col="11" road="35"/>
+  <hex row="26" col="12" road="161"/>
+  <hex row="26" col="13" terrain="3"/>
+  <hex row="26" col="14" terrain="3" road="17"/>
+  <hex row="26" col="15" terrain="10"/>
+  <hex row="26" col="17" terrain="3"/>
+  <hex row="26" col="18" terrain="3"/>
+  <hex row="26" col="19" terrain="3"/>
+  <hex row="26" col="21" terrain="3" road="34"/>
+  <hex row="26" col="22" road="35"/>
+  <hex row="26" col="23" terrain="3"/>
+  <hex row="26" col="24" road="136"/>
+  <hex row="26" col="25" road="136"/>
+  <hex row="26" col="26" terrain="3"/>
+  <hex row="26" col="28" road="25"/>
+  <hex row="26" col="29" road="178"/>
+  <hex row="26" col="30" terrain="1" road="40" name="Langensebold" owner="1" flag="117"/>
+  <hex row="26" col="31" road="146"/>
+  <hex row="26" col="32" road="34"/>
+  <hex row="27" col="1" terrain="3"/>
+  <hex row="27" col="3" terrain="3"/>
+  <hex row="27" col="4" road="18"/>
+  <hex row="27" col="5" terrain="3"/>
+  <hex row="27" col="6" terrain="3"/>
+  <hex row="27" col="7" terrain="3" road="18"/>
+  <hex row="27" col="8" terrain="4" road="40"/>
+  <hex row="27" col="9" road="130"/>
+  <hex row="27" col="10" road="34"/>
+  <hex row="27" col="11" terrain="3"/>
+  <hex row="27" col="12" terrain="3"/>
+  <hex row="27" col="13" road="34"/>
+  <hex row="27" col="14" terrain="3" road="33"/>
+  <hex row="27" col="15" terrain="10"/>
+  <hex row="27" col="17" deploy="0"/>
+  <hex row="27" col="18" terrain="3"/>
+  <hex row="27" col="19" terrain="3" road="18" deploy="0"/>
+  <hex row="27" col="20" terrain="3" road="34"/>
+  <hex row="27" col="21" terrain="3"/>
+  <hex row="27" col="22" terrain="3"/>
+  <hex row="27" col="23" terrain="3"/>
+  <hex row="27" col="24" terrain="3"/>
+  <hex row="27" col="26" road="136"/>
+  <hex row="27" col="27" terrain="1" road="138" name="Erlensee" owner="1" flag="117"/>
+  <hex row="27" col="28" road="59"/>
+  <hex row="27" col="29" road="169"/>
+  <hex row="27" col="31" road="49"/>
+  <hex row="27" col="42" terrain="3"/>
+  <hex row="28" col="0" terrain="3"/>
+  <hex row="28" col="1" terrain="3"/>
+  <hex row="28" col="2" terrain="3"/>
+  <hex row="28" col="3" terrain="3"/>
+  <hex row="28" col="4" terrain="3" road="17"/>
+  <hex row="28" col="5" terrain="3"/>
+  <hex row="28" col="6" terrain="3"/>
+  <hex row="28" col="7" road="33"/>
+  <hex row="28" col="9" terrain="4"/>
+  <hex row="28" col="10" terrain="3"/>
+  <hex row="28" col="11" terrain="4"/>
+  <hex row="28" col="12" road="18"/>
+  <hex row="28" col="14" terrain="10"/>
+  <hex row="28" col="16" deploy="0"/>
+  <hex row="28" col="17" deploy="0">
+    <unit id="39129" owner="0" flag="189" face="0" transport="39137" exp="110"/>
+  </hex>
+  <hex row="28" col="18" terrain="3" deploy="0">
+    <unit id="39132" owner="0" flag="189" face="0" exp="90"/>
+  </hex>
+  <hex row="28" col="19" terrain="3" road="49" deploy="0">
+    <unit id="39134" owner="0" flag="189" face="0" transport="39136" exp="120"/>
+  </hex>
+  <hex row="28" col="20" terrain="3" deploy="0"/>
+  <hex row="28" col="21" deploy="0"/>
+  <hex row="28" col="22" terrain="3"/>
+  <hex row="28" col="23" terrain="3"/>
+  <hex row="28" col="24" terrain="3"/>
+  <hex row="28" col="25" terrain="3"/>
+  <hex row="28" col="28" road="131"/>
+  <hex row="28" col="29" terrain="3"/>
+  <hex row="28" col="30" road="138"/>
+  <hex row="28" col="31" road="137"/>
+  <hex row="28" col="39" terrain="3"/>
+  <hex row="28" col="40" terrain="3"/>
+  <hex row="29" col="1" terrain="3"/>
+  <hex row="29" col="2" terrain="3"/>
+  <hex row="29" col="4" terrain="3" road="25"/>
+  <hex row="29" col="5" road="178"/>
+  <hex row="29" col="6" road="34"/>
+  <hex row="29" col="8" terrain="4"/>
+  <hex row="29" col="9" terrain="4"/>
+  <hex row="29" col="10" terrain="4"/>
+  <hex row="29" col="11" terrain="4"/>
+  <hex row="29" col="12" road="25"/>
+  <hex row="29" col="13" terrain="1" road="176" name="Frankfurt am Main"/>
+  <hex row="29" col="14" terrain="10"/>
+  <hex row="29" col="15" terrain="1" road="24" name="Frankfurt am Main"/>
+  <hex row="29" col="16" deploy="0">
+    <unit id="39128" owner="0" flag="189" face="0" transport="39136" exp="90"/>
+  </hex>
+  <hex row="29" col="17" terrain="1" road="50" name="Frankfurt am Main" deploy="0">
+    <unit id="39143" owner="0" flag="189" face="0" transport="39141" exp="90" str="8"/>
+  </hex>
+  <hex row="29" col="18" road="42" deploy="0">
+    <unit id="39127" owner="0" flag="189" face="0" transport="39138" exp="120" str="8" ldr="1"/>
+  </hex>
+  <hex row="29" col="19" road="137" deploy="0">
+    <unit id="39142" owner="0" flag="189" face="0" transport="39141" exp="150" str="9"/>
+  </hex>
+  <hex row="29" col="20" deploy="0">
+    <unit id="39130" owner="0" flag="189" face="0" transport="39136" exp="150" str="9"/>
+  </hex>
+  <hex row="29" col="21" deploy="0"/>
+  <hex row="29" col="24" terrain="3"/>
+  <hex row="29" col="26" terrain="3"/>
+  <hex row="29" col="32" road="136"/>
+  <hex row="29" col="33" road="130"/>
+  <hex row="29" col="34" road="40"/>
+  <hex row="29" col="35" terrain="1" road="152" name="Freigericht"/>
+  <hex row="29" col="40" terrain="3"/>
+  <hex row="30" col="0" terrain="3"/>
+  <hex row="30" col="1" terrain="3"/>
+  <hex row="30" col="2" terrain="3"/>
+  <hex row="30" col="4" road="27"/>
+  <hex row="30" col="5" road="185"/>
+  <hex row="30" col="6" terrain="3"/>
+  <hex row="30" col="7" terrain="1" road="58" name="Frankfurt am Main"/>
+  <hex row="30" col="8" terrain="1" road="56" name="Frankfurt am Main"/>
+  <hex row="30" col="9" terrain="1" road="184" name="Frankfurt am Main"/>
+  <hex row="30" col="10" terrain="4"/>
+  <hex row="30" col="11" terrain="1" road="58" name="Frankfurt am Main"/>
+  <hex row="30" col="12" terrain="1" road="59" name="Frankfurt am Main"/>
+  <hex row="30" col="13" terrain="1" road="185" name="Frankfurt am Main"/>
+  <hex row="30" col="14" terrain="10"/>
+  <hex row="30" col="15" terrain="10" road="43"/>
+  <hex row="30" col="16" terrain="1" road="186" name="Frankfurt am Main" owner="0" flag="188" victory="0" deploy="0">
+    <unit id="39135" owner="0" flag="189" face="0" transport="39128" exp="90"/>
+  </hex>
+  <hex row="30" col="17" terrain="1" road="161" name="Frankfurt am Main" deploy="0">
+    <unit id="39129" owner="0" flag="189" face="0" transport="39136" exp="90" str="8"/>
+  </hex>
+  <hex row="30" col="18" deploy="0">
+    <unit id="39128" owner="0" flag="189" face="0" transport="39136" exp="120" str="8"/>
+  </hex>
+  <hex row="30" col="19" deploy="0">
+    <unit id="39130" owner="0" flag="189" face="0" transport="39136" exp="150" str="9"/>
+  </hex>
+  <hex row="30" col="20" road="136" deploy="0">
+    <unit id="39127" owner="0" flag="189" face="0" transport="39138" exp="120" str="8" ldr="1"/>
+  </hex>
+  <hex row="30" col="21" road="136" deploy="0">
+    <unit id="39132" owner="0" flag="189" face="0" exp="90"/>
+  </hex>
+  <hex row="30" col="23" terrain="1" road="56" name="Hanau" owner="1" flag="117"/>
+  <hex row="30" col="35" terrain="1" road="35" name="Freigericht" owner="1" flag="117"/>
+  <hex row="30" col="36" terrain="1" road="168" name="Freigericht"/>
+  <hex row="30" col="37" road="136"/>
+  <hex row="31" col="0" terrain="3"/>
+  <hex row="31" col="1" terrain="3"/>
+  <hex row="31" col="2" terrain="3"/>
+  <hex row="31" col="4" road="27"/>
+  <hex row="31" col="5" terrain="1" road="187" name="Frankfurt am Main"/>
+  <hex row="31" col="6" terrain="1" road="186" name="Frankfurt am Main"/>
+  <hex row="31" col="7" terrain="1" road="187" name="Frankfurt am Main"/>
+  <hex row="31" col="8" terrain="1" road="187" name="Frankfurt am Main" owner="1" flag="117">
+    <unit id="513" owner="1" flag="118" face="0" exp="90" str="8"/>
+  </hex>
+  <hex row="31" col="9" terrain="1" road="187" name="Frankfurt am Main"/>
+  <hex row="31" col="10" terrain="1" road="186" name="Frankfurt am Main"/>
+  <hex row="31" col="11" terrain="1" road="187" name="Frankfurt am Main"/>
+  <hex row="31" col="12" terrain="1" road="187" name="Frankfurt am Main" owner="1" flag="117" victory="1">
+    <unit id="35647" owner="1" flag="118" face="0" exp="90" str="12"/>
+  </hex>
+  <hex row="31" col="13" terrain="1" road="171" name="Frankfurt am Main">
+    <unit id="513" owner="1" flag="118" face="0" exp="90" str="11"/>
+  </hex>
+  <hex row="31" col="14" road="178"/>
+  <hex row="31" col="15" terrain="10" name="Main River"/>
+  <hex row="31" col="16" terrain="1" road="131" name="Frankfurt am Main"/>
+  <hex row="31" col="17" terrain="10" name="Main River"/>
+  <hex row="31" col="18" deploy="0"/>
+  <hex row="31" col="20" deploy="0"/>
+  <hex row="31" col="21" deploy="0"/>
+  <hex row="31" col="22" road="138"/>
+  <hex row="31" col="23" road="131"/>
+  <hex row="31" col="24" road="168"/>
+  <hex row="31" col="25" terrain="4" road="136"/>
+  <hex row="31" col="26" terrain="4"/>
+  <hex row="31" col="27" terrain="4"/>
+  <hex row="31" col="28" terrain="4"/>
+  <hex row="31" col="33" road="34"/>
+  <hex row="31" col="34" road="34"/>
+  <hex row="31" col="38" road="136"/>
+  <hex row="31" col="39" road="136"/>
+  <hex row="32" col="3" terrain="1" road="58" name="Frankfurt am Main"/>
+  <hex row="32" col="4" terrain="1" road="59" name="Frankfurt am Main"/>
+  <hex row="32" col="5" terrain="1" road="187" name="Frankfurt am Main"/>
+  <hex row="32" col="6" terrain="1" road="187" name="Frankfurt am Main"/>
+  <hex row="32" col="7" terrain="1" name="Frankfurt am Main"/>
+  <hex row="32" col="8" terrain="1" road="187" name="Frankfurt am Main"/>
+  <hex row="32" col="9" terrain="1" road="187" name="Frankfurt am Main"/>
+  <hex row="32" col="10" terrain="1" road="187" name="Frankfurt am Main"/>
+  <hex row="32" col="11" terrain="1" road="163" name="Frankfurt am Main">
+    <unit id="318" owner="1" flag="118" face="0" exp="90" str="6"/>
+  </hex>
+  <hex row="32" col="12" terrain="1" road="163" name="Frankfurt am Main"/>
+  <hex row="32" col="13" terrain="10" name="Main River"/>
+  <hex row="32" col="14" terrain="10" road="145" name="Main River"/>
+  <hex row="32" col="16" terrain="10" name="Main River"/>
+  <hex row="32" col="18" terrain="10" name="Main River"/>
+  <hex row="32" col="19" terrain="10" name="Main River"/>
+  <hex row="32" col="20" terrain="10" name="Main River"/>
+  <hex row="32" col="21" terrain="10" name="Main River"/>
+  <hex row="32" col="26" terrain="4" road="144"/>
+  <hex row="32" col="27" terrain="4"/>
+  <hex row="32" col="28" terrain="4"/>
+  <hex row="32" col="32" road="18"/>
+  <hex row="32" col="40" road="136"/>
+  <hex row="32" col="41" road="136"/>
+  <hex row="32" col="43" road="32"/>
+  <hex row="33" col="1" road="10"/>
+  <hex row="33" col="2" terrain="1" road="58" name="Frankfurt am Main"/>
+  <hex row="33" col="3" terrain="1" road="187" name="Frankfurt am Main" owner="1" flag="117">
+    <unit id="513" owner="1" flag="118" face="0" exp="90"/>
+  </hex>
+  <hex row="33" col="4" terrain="1" road="187" name="Frankfurt am Main"/>
+  <hex row="33" col="5" terrain="1" road="171" name="Frankfurt am Main"/>
+  <hex row="33" col="6" terrain="1" road="187" name="Frankfurt am Main"/>
+  <hex row="33" col="7" terrain="1" road="179" name="Frankfurt am Main"/>
+  <hex row="33" col="8" terrain="1" road="171" name="Frankfurt am Main" owner="1" flag="117" victory="1">
+    <unit id="588" owner="1" flag="118" face="0" exp="90"/>
+  </hex>
+  <hex row="33" col="9" terrain="1" road="139" name="Frankfurt am Main"/>
+  <hex row="33" col="10" terrain="1" road="179" name="Frankfurt am Main"/>
+  <hex row="33" col="11" terrain="10" name="Main River"/>
+  <hex row="33" col="12" terrain="10" name="Main River"/>
+  <hex row="33" col="13" terrain="1" road="58" name="Frankfurt am Main"/>
+  <hex row="33" col="14" road="57"/>
+  <hex row="33" col="15" terrain="1" road="186" name="Frankfurt am Main"/>
+  <hex row="33" col="16" terrain="1" road="48" name="Frankfurt am Main"/>
+  <hex row="33" col="22" terrain="10" name="Main River"/>
+  <hex row="33" col="23" terrain="10" name="Main River"/>
+  <hex row="33" col="26" road="9"/>
+  <hex row="33" col="27" road="136"/>
+  <hex row="33" col="32" road="17"/>
+  <hex row="33" col="35" terrain="4"/>
+  <hex row="33" col="37" terrain="4"/>
+  <hex row="33" col="38" terrain="4"/>
+  <hex row="33" col="39" terrain="4"/>
+  <hex row="33" col="40" terrain="4"/>
+  <hex row="33" col="41" terrain="4"/>
+  <hex row="33" col="42" road="130"/>
+  <hex row="33" col="43" terrain="4"/>
+  <hex row="34" col="1" terrain="10" name="Main River"/>
+  <hex row="34" col="2" road="139"/>
+  <hex row="34" col="3" terrain="1" road="131" name="Frankfurt am Main"/>
+  <hex row="34" col="4" terrain="1" road="163" name="Frankfurt am Main"/>
+  <hex row="34" col="5" name="Frankfurt am Main"/>
+  <hex row="34" col="6" terrain="1" road="139" name="Frankfurt am Main"/>
+  <hex row="34" col="7" terrain="10" road="153" name="Main River"/>
+  <hex row="34" col="8" terrain="10" name="Main River"/>
+  <hex row="34" col="9" terrain="10" name="Main River"/>
+  <hex row="34" col="10" terrain="10" road="153" name="Main River"/>
+  <hex row="34" col="11" terrain="1" road="186" name="Frankfurt am Main"/>
+  <hex row="34" col="12" terrain="1" road="58" name="Frankfurt am Main"/>
+  <hex row="34" col="13" terrain="1" road="187" name="Frankfurt am Main"/>
+  <hex row="34" col="14" terrain="1" road="187" name="Frankfurt am Main"/>
+  <hex row="34" col="15" terrain="1" road="187" name="Frankfurt am Main"/>
+  <hex row="34" col="16" terrain="1" road="177" name="Frankfurt am Main"/>
+  <hex row="34" col="20" terrain="4"/>
+  <hex row="34" col="21" terrain="4"/>
+  <hex row="34" col="22" terrain="4"/>
+  <hex row="34" col="24" terrain="10" name="Main River"/>
+  <hex row="34" col="28" road="136"/>
+  <hex row="34" col="29" road="144"/>
+  <hex row="34" col="32" terrain="1" road="25" name="Alzenau"/>
+  <hex row="34" col="33" terrain="1" road="160" name="Alzenau" owner="1" flag="117">
+    <unit id="35569" owner="1" flag="118" face="0" transport="35652" exp="90"/>
+  </hex>
+  <hex row="34" col="34" terrain="4"/>
+  <hex row="34" col="35" terrain="4"/>
+  <hex row="34" col="36" terrain="4"/>
+  <hex row="34" col="37" terrain="4"/>
+  <hex row="34" col="38" terrain="4"/>
+  <hex row="34" col="39" terrain="4"/>
+  <hex row="34" col="40" terrain="4"/>
+  <hex row="34" col="41" terrain="4"/>
+  <hex row="34" col="42" terrain="4"/>
+  <hex row="34" col="43" terrain="4"/>
+  <hex row="35" col="2" terrain="10" name="Main River"/>
+  <hex row="35" col="3" terrain="10" name="Main River"/>
+  <hex row="35" col="4" terrain="10" name="Main River"/>
+  <hex row="35" col="5" terrain="10" name="Main River"/>
+  <hex row="35" col="6" terrain="10" name="Main River"/>
+  <hex row="35" col="7" terrain="1" road="59" name="Frankfurt am Main" owner="1" flag="117" victory="1">
+    <unit id="588" owner="1" flag="118" face="0" exp="90"/>
+  </hex>
+  <hex row="35" col="8" terrain="1" road="184" name="Frankfurt am Main"/>
+  <hex row="35" col="9" terrain="1" road="186" name="Frankfurt am Main"/>
+  <hex row="35" col="10" terrain="1" road="59" name="Frankfurt am Main" owner="1" flag="117">
+    <unit id="675" owner="1" flag="118" face="0" exp="90"/>
+  </hex>
+  <hex row="35" col="11" terrain="1" road="187" name="Frankfurt am Main"/>
+  <hex row="35" col="12" terrain="1" road="187" name="Frankfurt am Main"/>
+  <hex row="35" col="13" terrain="1" road="163" name="Frankfurt am Main"/>
+  <hex row="35" col="14" terrain="1" road="171" name="Frankfurt am Main" owner="1" flag="117" victory="1">
+    <unit id="35647" owner="1" flag="118" face="0" exp="90" str="9"/>
+  </hex>
+  <hex row="35" col="15" terrain="1" road="131" name="Frankfurt am Main"/>
+  <hex row="35" col="16" road="169"/>
+  <hex row="35" col="17" road="144"/>
+  <hex row="35" col="20" terrain="4"/>
+  <hex row="35" col="21" terrain="4"/>
+  <hex row="35" col="22" terrain="4"/>
+  <hex row="35" col="23" terrain="4"/>
+  <hex row="35" col="24" terrain="10" name="Main River"/>
+  <hex row="35" col="29" road="9"/>
+  <hex row="35" col="32" terrain="1" road="19" name="Alzenau"/>
+  <hex row="35" col="34" terrain="3"/>
+  <hex row="35" col="35" terrain="4"/>
+  <hex row="35" col="36" terrain="4"/>
+  <hex row="35" col="37" terrain="4"/>
+  <hex row="35" col="38" terrain="4"/>
+  <hex row="35" col="39" terrain="3"/>
+  <hex row="35" col="40" terrain="4"/>
+  <hex row="35" col="41" terrain="3"/>
+  <hex row="35" col="42" terrain="4"/>
+  <hex row="35" col="43" terrain="4"/>
+  <hex row="36" col="1" road="40"/>
+  <hex row="36" col="3" road="40"/>
+  <hex row="36" col="5" road="58"/>
+  <hex row="36" col="6" terrain="1" road="58" name="Frankfurt am Main"/>
+  <hex row="36" col="7" terrain="1" road="163" name="Frankfurt am Main"/>
+  <hex row="36" col="8" terrain="1" road="171" name="Frankfurt am Main"/>
+  <hex row="36" col="9" road="139"/>
+  <hex row="36" col="10" terrain="1" road="187" name="Frankfurt am Main"/>
+  <hex row="36" col="11" terrain="1" name="Frankfurt am Main"/>
+  <hex row="36" col="12" terrain="1" road="163" name="Frankfurt am Main"/>
+  <hex row="36" col="17" road="17"/>
+  <hex row="36" col="20" terrain="4"/>
+  <hex row="36" col="21" terrain="4"/>
+  <hex row="36" col="22" terrain="4"/>
+  <hex row="36" col="23" road="8"/>
+  <hex row="36" col="24" terrain="10" name="Main River"/>
+  <hex row="36" col="25" terrain="10" road="34" name="Main River"/>
+  <hex row="36" col="26" terrain="3" road="40"/>
+  <hex row="36" col="27" terrain="4" road="128"/>
+  <hex row="36" col="28" terrain="4"/>
+  <hex row="36" col="29" terrain="4"/>
+  <hex row="36" col="30" road="144"/>
+  <hex row="36" col="32" road="17"/>
+  <hex row="36" col="34" terrain="4"/>
+  <hex row="36" col="35" terrain="4"/>
+  <hex row="36" col="36" terrain="4"/>
+  <hex row="36" col="37" terrain="4"/>
+  <hex row="36" col="38" terrain="4"/>
+  <hex row="36" col="39" terrain="4"/>
+  <hex row="36" col="40" terrain="3"/>
+  <hex row="36" col="41" terrain="3"/>
+  <hex row="36" col="42" terrain="3"/>
+  <hex row="36" col="43" terrain="4"/>
+  <hex row="37" col="0" road="2"/>
+  <hex row="37" col="2" road="130"/>
+  <hex row="37" col="3" terrain="2" name="Hahn" owner="1" flag="117">
+    <unit id="35730" owner="1" flag="118" face="0" transport="35666" exp="90" str="8"/>
+  </hex>
+  <hex row="37" col="4" terrain="2" road="138"/>
+  <hex row="37" col="5" road="139"/>
+  <hex row="37" col="6" terrain="1" road="179" name="Frankfurt am Main"/>
+  <hex row="37" col="10" road="139"/>
+  <hex row="37" col="11" road="145"/>
+  <hex row="37" col="17" road="9"/>
+  <hex row="37" col="24" road="130"/>
+  <hex row="37" col="25" terrain="10" name="Main River"/>
+  <hex row="37" col="27" terrain="4"/>
+  <hex row="37" col="28" terrain="4"/>
+  <hex row="37" col="30" road="9"/>
+  <hex row="37" col="31" road="146"/>
+  <hex row="37" col="32" road="33"/>
+  <hex row="37" col="34" terrain="4"/>
+  <hex row="37" col="35" terrain="4"/>
+  <hex row="37" col="36" terrain="4"/>
+  <hex row="37" col="37" terrain="4"/>
+  <hex row="37" col="38" terrain="4"/>
+  <hex row="37" col="39" terrain="4"/>
+  <hex row="37" col="40" terrain="4"/>
+  <hex row="37" col="41" terrain="4"/>
+  <hex row="37" col="42" terrain="4"/>
+  <hex row="37" col="43" terrain="4"/>
+  <hex row="38" col="4" terrain="2"/>
+  <hex row="38" col="6" road="129"/>
+  <hex row="38" col="11" road="1"/>
+  <hex row="38" col="18" road="128"/>
+  <hex row="38" col="26" terrain="10"/>
+  <hex row="38" col="27" terrain="4"/>
+  <hex row="38" col="28" terrain="4"/>
+  <hex row="38" col="29" terrain="4"/>
+  <hex row="38" col="31" road="1"/>
+  <hex row="38" col="34" terrain="4"/>
+  <hex row="38" col="35" terrain="4"/>
+  <hex row="38" col="36" terrain="4"/>
+  <hex row="38" col="37" terrain="4"/>
+  <hex row="38" col="38" terrain="4"/>
+  <hex row="38" col="39" terrain="4"/>
+  <hex row="38" col="40" terrain="4"/>
+  <hex row="38" col="41" terrain="4"/>
+  <hex row="38" col="42" terrain="4"/>
+  <hex row="38" col="43" terrain="4"/>
+</map>

@@ -45,8 +45,37 @@ class GameStateRestore(
 
         val rawPlayers = playersData.unsafeCast<Array<dynamic>>()
         val typedPlayers = rawPlayers.map { GameStateDeserializer.deserializePlayer(it) }.toTypedArray()
+        addCampaignCoreEquipmentCountries(typedPlayers, campaignData)
         Equipment.addPlayersEquipment(typedPlayers.toList()) {
             restorePlayersAndFinish(newScenario, scenarioData, typedPlayers, campaignData, onReady)
+        }
+    }
+
+    /**
+     * Campaign core units are restored only after equipment loading, so their country files must be
+     * added to the player load set directly from save metadata first. `flag` is a migration fallback
+     * for fmt=2 saves written before `equipmentCountry` was introduced.
+     */
+    private fun addCampaignCoreEquipmentCountries(
+        players: Array<Player>,
+        campaignData: dynamic?,
+    ) {
+        val coreUnits = campaignData?.coreUnits ?: return
+        for (i in 0 until coreUnits.length) {
+            val unit = coreUnits[i]
+            val owner = unit.owner as? Int ?: continue
+            val player = players.firstOrNull { it.id == owner } ?: continue
+            val countries =
+                listOf(
+                    unit.equipmentCountry as? Int,
+                    unit.transportEquipmentCountry as? Int,
+                    unit.carrierEquipmentCountry as? Int,
+                    unit.flag as? Int,
+                ).filterNotNull()
+
+            countries.filter { it > 0 }.forEach { country ->
+                if (country !in player.supportCountries) player.supportCountries.add(country)
+            }
         }
     }
 
@@ -64,6 +93,11 @@ class GameStateRestore(
         newScenario.latitude = scenarioData.latitude as? Int ?: 0
         newScenario.ground = scenarioData.ground as? Int ?: 0
         newScenario.eqp = scenarioData.eqp as? String ?: Equipment.DEFAULT_NAME
+        val holdCounts = scenarioData.victoryHoldCounts
+        if (holdCounts != null) {
+            newScenario.victoryHoldCounts =
+                (0 until holdCounts.length).mapNotNull { i -> holdCounts[i] as? Int }
+        }
     }
 
     private fun restorePlayersAndFinish(

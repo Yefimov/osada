@@ -41,6 +41,13 @@ internal object UnitInfoBuilder {
             val label = addTag(section, "div")
             label.className = "osada-stat-group__label"
             label.textContent = groupName
+            label.title =
+                when (groupName) {
+                    "Status" -> "Current unit resources and battlefield condition."
+                    "Attack" -> "Attack values used against each enemy target type; higher is better."
+                    "Defence" -> "Defensive values used for different attacks and ranges; higher is better."
+                    else -> "Movement, firing range, initiative and battlefield detection."
+                }
             val grid = addTag(section, "div")
             grid.className = "osada-stat-group__grid"
             stats.forEach { stat -> buildStatDiv(grid, stat) }

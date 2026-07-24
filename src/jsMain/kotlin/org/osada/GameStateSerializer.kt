@@ -61,6 +61,7 @@ object GameStateSerializer {
             Pair("expPerSide", scenario.expPerSide.toTypedArray()),
             Pair("unitsCostPerSide", scenario.unitsCostPerSide.toTypedArray()),
             Pair("victoryTurns", scenario.map.victoryTurns.toTypedArray()),
+            Pair("victoryHoldCounts", scenario.victoryHoldCounts.toTypedArray()),
             Pair("currentPlayerId", scenario.map.currentPlayer?.id ?: 0),
             Pair("turn", scenario.map.turn),
             Pair("map", serializeMap(scenario.map)),
@@ -138,6 +139,7 @@ object GameStateSerializer {
         // Same rule for the core-formation id: scenario-only units have none, so their saved
         // shape is unchanged by the hero system.
         unit.formationId?.let { obj.asDynamic().formationId = it }
+        if (unit.isTemporaryBorrowed) obj.asDynamic().temporaryBorrowed = true
         return obj
     }
 
@@ -235,6 +237,7 @@ object GameStateSerializer {
         // Same optional-key rule as serializeUnit.
         unit.customName?.let { obj.asDynamic().customName = it }
         unit.formationId?.let { obj.asDynamic().formationId = it }
+        if (unit.isTemporaryBorrowed) obj.asDynamic().temporaryBorrowed = true
         return obj
     }
 }

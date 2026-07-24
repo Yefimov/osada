@@ -10,24 +10,14 @@ class AIScripted(
     internal val player: Player,
     internal val map: GameMap,
 ) {
-    // Internal (not private): AIScriptedHelpers.kt's per-turn extension functions (moved out of
-    // buildTutorialActions to keep it under detekt's LongMethod limit) add to this from another file.
     internal val actions: MutableList<dynamic> = mutableListOf()
-
-    companion object {
-        // buildTutorialActions() turn numbers -- narrated tutorial steps, not gameplay balance.
-        private const val TUTORIAL_TURN_REINFORCE_AND_ADVANCE = 3
-        private const val TUTORIAL_TURN_FINAL_ASSAULT = 4
-    }
 
     init {
         buildTutorialActions()
     }
 
     @JsName("buildActions")
-    fun buildActions() {
-        buildTutorialActions()
-    }
+    fun buildActions() = buildTutorialActions()
 
     @JsName("getAction")
     fun getAction(): dynamic? {
@@ -35,37 +25,30 @@ class AIScripted(
         return actions.removeAt(0)
     }
 
+    @Suppress("MagicNumber")
     private fun buildTutorialActions() {
         actions.clear()
-
-        val axisUnits = mutableMapOf<String, GameUnit?>()
-        val alliesUnits = mutableMapOf<String, GameUnit?>()
-        axisUnits["recon"] = unitAt(row = 8, col = 12)
-        axisUnits["legioninf"] = unitAt(row = 4, col = 2)
-        axisUnits["pz2a"] = unitAt(row = 9, col = 6)
-        axisUnits["ssinf1"] = unitAt(row = 8, col = 6)
-        axisUnits["ssinf2"] = unitAt(row = 9, col = 5)
-        axisUnits["ssinf3"] = unitAt(row = 9, col = 4)
-        axisUnits["arty"] = unitAt(row = 8, col = 4)
-        alliesUnits["inf1"] = unitAt(row = 8, col = 15)
-
         when (map.turn) {
-            1 -> buildTurn1Actions(axisUnits, alliesUnits)
-            2 -> buildTurn2Actions(axisUnits, alliesUnits)
-            TUTORIAL_TURN_REINFORCE_AND_ADVANCE -> buildTurn3Actions()
-            TUTORIAL_TURN_FINAL_ASSAULT -> buildTurn4Actions()
+            1 -> buildKhalkhinGolTurn1()
+            2 -> buildKhalkhinGolTurn2()
+            3 -> buildKhalkhinGolTurn3()
             else -> buildDefaultTurnActions()
         }
     }
 
-    // Internal (not private): AIScriptedHelpers.kt's per-turn extension functions (the
-    // buildTutorialActions LongMethod split) call these from another file.
     internal fun message(
         text: String,
         row: Int,
         col: Int,
     ) {
         addAction(ActionType.MESSAGE, arrayOf(text, Cell(row, col)))
+    }
+
+    internal fun modalMessage(
+        title: String,
+        body: String,
+    ) {
+        addAction(ActionType.MODAL_MESSAGE, arrayOf(title, body))
     }
 
     internal fun select(unit: GameUnit?) {

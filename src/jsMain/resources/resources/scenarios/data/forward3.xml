@@ -1,0 +1,1294 @@
+<?xml version="1.0" encoding="ASCII"?>
+<map file="forward3.xscn" name="Defense of Kishinev" turns="11, 11, 11" date="July 2, 1941" dayturns="0" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="0" rows="38" cols="44" eqp="eqp-atomic" image="resources/maps/images/map_20.png" eqpv="united1">
+  <player id="0" country="89" side="1" airtrans="0" navaltrans="0" support="0, 0, 0, 0" turnprestige="130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130"/>
+  <player id="1" country="7" side="0" airtrans="0" navaltrans="0" support="8, 14, 0, 0" turnprestige="50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50"/>
+  <reinforce turn="4">
+    <at row="13" col="2">
+      <unit id="8716" owner="1" flag="8" face="0" exp="146" str="12"/>
+    </at>
+    <at row="1" col="4">
+      <unit id="6994" owner="1" flag="8" face="0" exp="192" str="13"/>
+    </at>
+    <at row="26" col="7">
+      <unit id="14626" owner="1" flag="14" face="0" exp="85" str="7"/>
+    </at>
+    <at row="14" col="2">
+      <unit id="8579" owner="1" flag="8" face="0" exp="217"/>
+    </at>
+    <at row="13" col="3">
+      <unit id="14768" owner="1" flag="14" face="0" exp="19" str="8"/>
+    </at>
+    <at row="1" col="3">
+      <unit id="7957" owner="1" flag="8" face="0" exp="170"/>
+    </at>
+    <at row="0" col="5">
+      <unit id="7071" owner="1" flag="8" face="0" exp="161"/>
+    </at>
+  </reinforce>
+  <hex row="0" col="1" terrain="10" road="136" name="Prut River"/>
+  <hex row="0" col="2" terrain="15" name="Prut River"/>
+  <hex row="0" col="3" terrain="1" road="58" name="Ungheni"/>
+  <hex row="0" col="4" terrain="1" road="48" name="Ungheni"/>
+  <hex row="0" col="7" terrain="5"/>
+  <hex row="0" col="8" terrain="5"/>
+  <hex row="0" col="9" terrain="5"/>
+  <hex row="0" col="10" terrain="5"/>
+  <hex row="0" col="11" terrain="5"/>
+  <hex row="0" col="12" terrain="5"/>
+  <hex row="0" col="13" terrain="5"/>
+  <hex row="0" col="14" terrain="15"/>
+  <hex row="0" col="15" terrain="15"/>
+  <hex row="0" col="16" terrain="5"/>
+  <hex row="0" col="18" road="16"/>
+  <hex row="0" col="21" terrain="5"/>
+  <hex row="0" col="22" terrain="5"/>
+  <hex row="0" col="23" terrain="5"/>
+  <hex row="0" col="28" road="8"/>
+  <hex row="0" col="29" road="136"/>
+  <hex row="0" col="33" terrain="5"/>
+  <hex row="0" col="34" terrain="5"/>
+  <hex row="0" col="35" terrain="5"/>
+  <hex row="0" col="36" terrain="5"/>
+  <hex row="0" col="37" terrain="5"/>
+  <hex row="0" col="38" terrain="5"/>
+  <hex row="0" col="39" terrain="5"/>
+  <hex row="1" col="1" terrain="15" name="Prut River"/>
+  <hex row="1" col="2" terrain="1" road="130" name="Ungheni"/>
+  <hex row="1" col="3" terrain="1" road="27" name="Ungheni" owner="1" flag="7"/>
+  <hex row="1" col="4" terrain="1" road="177" name="Ungheni"/>
+  <hex row="1" col="6" terrain="5"/>
+  <hex row="1" col="7" terrain="2" road="48"/>
+  <hex row="1" col="8" terrain="5"/>
+  <hex row="1" col="9" terrain="5"/>
+  <hex row="1" col="10" terrain="5"/>
+  <hex row="1" col="11" terrain="5"/>
+  <hex row="1" col="12" terrain="5"/>
+  <hex row="1" col="13" terrain="5"/>
+  <hex row="1" col="14" terrain="5"/>
+  <hex row="1" col="15" terrain="15"/>
+  <hex row="1" col="16" terrain="5"/>
+  <hex row="1" col="17" terrain="5"/>
+  <hex row="1" col="18" road="17"/>
+  <hex row="1" col="20" terrain="5"/>
+  <hex row="1" col="21" terrain="5"/>
+  <hex row="1" col="22" terrain="5"/>
+  <hex row="1" col="23" terrain="5"/>
+  <hex row="1" col="30" terrain="1" road="136" name="Bravicea"/>
+  <hex row="1" col="31" terrain="1" road="136" name="Bravicea" owner="1" flag="7"/>
+  <hex row="1" col="34" terrain="5"/>
+  <hex row="1" col="35" terrain="5"/>
+  <hex row="1" col="36" terrain="5"/>
+  <hex row="1" col="37" terrain="5"/>
+  <hex row="1" col="38" terrain="5"/>
+  <hex row="1" col="39" terrain="5"/>
+  <hex row="2" col="1" terrain="15" name="Prut River"/>
+  <hex row="2" col="2" terrain="15" name="Prut River"/>
+  <hex row="2" col="3" road="17"/>
+  <hex row="2" col="4" terrain="1" road="129" name="Ungheni"/>
+  <hex row="2" col="5">
+    <unit id="8328" owner="1" flag="8" face="0" exp="152" str="11"/>
+  </hex>
+  <hex row="2" col="6" terrain="2" road="10" owner="1" flag="7">
+    <unit id="8765" owner="1" flag="8" face="0" exp="216"/>
+  </hex>
+  <hex row="2" col="7" terrain="2" road="129"/>
+  <hex row="2" col="8" terrain="5"/>
+  <hex row="2" col="9" terrain="5"/>
+  <hex row="2" col="10" terrain="5"/>
+  <hex row="2" col="11" terrain="5"/>
+  <hex row="2" col="12" terrain="5"/>
+  <hex row="2" col="13" terrain="5"/>
+  <hex row="2" col="14" terrain="5"/>
+  <hex row="2" col="15" terrain="5"/>
+  <hex row="2" col="16" terrain="15"/>
+  <hex row="2" col="17" terrain="15"/>
+  <hex row="2" col="18" road="17"/>
+  <hex row="2" col="20" terrain="5"/>
+  <hex row="2" col="21" terrain="5"/>
+  <hex row="2" col="22" terrain="5"/>
+  <hex row="2" col="23" terrain="5"/>
+  <hex row="2" col="24" terrain="5"/>
+  <hex row="2" col="25" terrain="5"/>
+  <hex row="2" col="32" road="144"/>
+  <hex row="2" col="35" terrain="5"/>
+  <hex row="2" col="36" terrain="5"/>
+  <hex row="2" col="37" terrain="5"/>
+  <hex row="2" col="38" terrain="5"/>
+  <hex row="2" col="39" terrain="5"/>
+  <hex row="2" col="40" terrain="5"/>
+  <hex row="2" col="41" terrain="5"/>
+  <hex row="3" col="1" terrain="15" name="Prut River"/>
+  <hex row="3" col="3" terrain="1" road="9" name="Valea Mare"/>
+  <hex row="3" col="6">
+    <unit id="8709" owner="1" flag="8" face="0" exp="172"/>
+  </hex>
+  <hex row="3" col="7" terrain="5"/>
+  <hex row="3" col="8" terrain="5"/>
+  <hex row="3" col="9" terrain="5"/>
+  <hex row="3" col="10" terrain="5"/>
+  <hex row="3" col="11" terrain="5"/>
+  <hex row="3" col="12" terrain="5"/>
+  <hex row="3" col="13" terrain="5"/>
+  <hex row="3" col="14" terrain="5"/>
+  <hex row="3" col="15" terrain="5"/>
+  <hex row="3" col="16" terrain="5"/>
+  <hex row="3" col="17" terrain="15"/>
+  <hex row="3" col="18" road="17"/>
+  <hex row="3" col="21" terrain="5"/>
+  <hex row="3" col="22" terrain="5"/>
+  <hex row="3" col="23" terrain="5"/>
+  <hex row="3" col="24" terrain="5"/>
+  <hex row="3" col="25" terrain="5"/>
+  <hex row="3" col="26" terrain="5"/>
+  <hex row="3" col="27" terrain="1" name="Raciula">
+    <unit id="8201" owner="1" flag="8" face="0" exp="144" ldr="1"/>
+  </hex>
+  <hex row="3" col="28">
+    <unit id="8114" owner="1" flag="8" face="0" exp="41"/>
+  </hex>
+  <hex row="3" col="32" road="9"/>
+  <hex row="3" col="33" road="144"/>
+  <hex row="3" col="36" terrain="5"/>
+  <hex row="3" col="37" terrain="5">
+    <unit id="8025" owner="1" flag="8" face="0" transport="7740" exp="155" str="11"/>
+  </hex>
+  <hex row="3" col="38" terrain="5">
+    <unit id="6568" owner="1" flag="8" face="0" exp="13" str="13"/>
+  </hex>
+  <hex row="3" col="39" terrain="5">
+    <unit id="7245" owner="1" flag="8" face="0" exp="13"/>
+  </hex>
+  <hex row="3" col="40" terrain="5"/>
+  <hex row="3" col="41" terrain="5"/>
+  <hex row="3" col="42" terrain="5"/>
+  <hex row="4" col="2" terrain="15" name="Prut River"/>
+  <hex row="4" col="3" terrain="15" name="Prut River"/>
+  <hex row="4" col="4" terrain="1" road="152" name="Valea Mare"/>
+  <hex row="4" col="5" terrain="1" road="128" name="Valea Mare"/>
+  <hex row="4" col="8" terrain="5"/>
+  <hex row="4" col="9" terrain="5"/>
+  <hex row="4" col="10" terrain="5"/>
+  <hex row="4" col="11" terrain="5"/>
+  <hex row="4" col="12" terrain="5">
+    <unit id="8031" owner="1" flag="8" face="0" exp="161"/>
+  </hex>
+  <hex row="4" col="13" terrain="5">
+    <unit id="6958" owner="1" flag="8" face="0" exp="150" ldr="1"/>
+  </hex>
+  <hex row="4" col="14" terrain="5">
+    <unit id="6966" owner="1" flag="8" face="0" exp="35"/>
+  </hex>
+  <hex row="4" col="15" terrain="1" name="Temeleuti">
+    <unit id="7071" owner="1" flag="8" face="0" exp="177"/>
+  </hex>
+  <hex row="4" col="16" terrain="5"/>
+  <hex row="4" col="17" terrain="15"/>
+  <hex row="4" col="18" road="9"/>
+  <hex row="4" col="19" road="144"/>
+  <hex row="4" col="22" terrain="5"/>
+  <hex row="4" col="23" terrain="5"/>
+  <hex row="4" col="24" terrain="5"/>
+  <hex row="4" col="25" terrain="5"/>
+  <hex row="4" col="26" terrain="5"/>
+  <hex row="4" col="27" terrain="5">
+    <unit id="6974" owner="1" flag="8" face="0" exp="172"/>
+  </hex>
+  <hex row="4" col="28">
+    <unit id="6466" owner="1" flag="8" face="0" transport="7838" exp="251"/>
+  </hex>
+  <hex row="4" col="30">
+    <unit id="7198" owner="1" flag="8" face="0" exp="193" str="11"/>
+  </hex>
+  <hex row="4" col="33" road="9"/>
+  <hex row="4" col="36" terrain="5"/>
+  <hex row="4" col="37" terrain="5"/>
+  <hex row="4" col="38" terrain="5">
+    <unit id="7529" owner="1" flag="8" face="0" exp="132" str="12"/>
+  </hex>
+  <hex row="4" col="39" terrain="5"/>
+  <hex row="4" col="40" terrain="5"/>
+  <hex row="4" col="41" terrain="5"/>
+  <hex row="4" col="42" terrain="5"/>
+  <hex row="4" col="43" terrain="5"/>
+  <hex row="5" col="3" terrain="15" name="Prut River"/>
+  <hex row="5" col="4" road="17"/>
+  <hex row="5" col="7">
+    <unit id="7889" owner="1" flag="8" face="0" transport="7766" exp="216" str="12"/>
+  </hex>
+  <hex row="5" col="8">
+    <unit id="7002" owner="1" flag="8" face="0" exp="153" str="11"/>
+  </hex>
+  <hex row="5" col="9" terrain="5">
+    <unit id="7658" owner="1" flag="8" face="0" exp="203"/>
+  </hex>
+  <hex row="5" col="10" terrain="5"/>
+  <hex row="5" col="11" terrain="5"/>
+  <hex row="5" col="12" terrain="5">
+    <unit id="6568" owner="1" flag="8" face="0" exp="31" str="13"/>
+  </hex>
+  <hex row="5" col="13" terrain="5"/>
+  <hex row="5" col="14" terrain="5">
+    <unit id="7637" owner="1" flag="8" face="0" exp="144" ldr="1"/>
+  </hex>
+  <hex row="5" col="15" terrain="1" name="Temeleuti" owner="1" flag="7"/>
+  <hex row="5" col="16" terrain="5"/>
+  <hex row="5" col="17" terrain="5"/>
+  <hex row="5" col="18" terrain="15"/>
+  <hex row="5" col="19" road="9"/>
+  <hex row="5" col="21" terrain="1" road="48" name="Sipoteni"/>
+  <hex row="5" col="22" terrain="5"/>
+  <hex row="5" col="23" terrain="5"/>
+  <hex row="5" col="24" terrain="5"/>
+  <hex row="5" col="25" terrain="5"/>
+  <hex row="5" col="26" terrain="5">
+    <unit id="6568" owner="1" flag="8" face="0" exp="146" str="13"/>
+  </hex>
+  <hex row="5" col="27" terrain="5"/>
+  <hex row="5" col="28" terrain="5"/>
+  <hex row="5" col="29" terrain="5"/>
+  <hex row="5" col="34" road="144"/>
+  <hex row="5" col="37" terrain="5"/>
+  <hex row="5" col="38" terrain="5"/>
+  <hex row="5" col="39" terrain="5"/>
+  <hex row="5" col="40" terrain="5"/>
+  <hex row="5" col="41" terrain="5"/>
+  <hex row="5" col="42" terrain="5"/>
+  <hex row="5" col="43" terrain="5"/>
+  <hex row="6" col="0" terrain="15" name="Jijia River"/>
+  <hex row="6" col="1" terrain="15" name="Jijia River"/>
+  <hex row="6" col="2" terrain="15" name="Prut River"/>
+  <hex row="6" col="4" road="17"/>
+  <hex row="6" col="6">
+    <unit id="8228" owner="1" flag="8" face="0" transport="7766" exp="49" str="12"/>
+  </hex>
+  <hex row="6" col="7">
+    <unit id="7079" owner="1" flag="8" face="0" exp="135"/>
+  </hex>
+  <hex row="6" col="8">
+    <unit id="6542" owner="1" flag="8" face="0" transport="7797" exp="233" str="13"/>
+  </hex>
+  <hex row="6" col="10" terrain="5"/>
+  <hex row="6" col="11" terrain="5"/>
+  <hex row="6" col="12" terrain="1" name="Milesti" owner="1" flag="7"/>
+  <hex row="6" col="13" terrain="5"/>
+  <hex row="6" col="14" terrain="5" deploy="0"/>
+  <hex row="6" col="15" terrain="15"/>
+  <hex row="6" col="16" terrain="5"/>
+  <hex row="6" col="17" terrain="5" deploy="0"/>
+  <hex row="6" col="18" terrain="15"/>
+  <hex row="6" col="19" terrain="15"/>
+  <hex row="6" col="20" terrain="1" road="138" name="Sipoteni"/>
+  <hex row="6" col="21" terrain="1" road="137" name="Sipoteni" owner="1" flag="7"/>
+  <hex row="6" col="22">
+    <unit id="7304" owner="1" flag="8" face="0" exp="63"/>
+  </hex>
+  <hex row="6" col="23" terrain="1" road="40" name="Calarasi"/>
+  <hex row="6" col="24" terrain="5"/>
+  <hex row="6" col="25" terrain="5"/>
+  <hex row="6" col="26" terrain="5"/>
+  <hex row="6" col="27" terrain="5"/>
+  <hex row="6" col="28" terrain="5"/>
+  <hex row="6" col="29" terrain="5"/>
+  <hex row="6" col="30" terrain="5"/>
+  <hex row="6" col="31" terrain="5"/>
+  <hex row="6" col="34" road="9"/>
+  <hex row="6" col="35" road="144"/>
+  <hex row="6" col="37" deploy="0"/>
+  <hex row="6" col="38" terrain="5"/>
+  <hex row="6" col="39" terrain="5" deploy="0"/>
+  <hex row="6" col="40" terrain="5"/>
+  <hex row="6" col="41" terrain="5"/>
+  <hex row="6" col="42" terrain="5"/>
+  <hex row="6" col="43" terrain="5"/>
+  <hex row="7" col="1" terrain="15" name="Jijia River"/>
+  <hex row="7" col="2" terrain="15" name="Prut River"/>
+  <hex row="7" col="3" terrain="15" name="Prut River"/>
+  <hex row="7" col="4" road="9"/>
+  <hex row="7" col="5" road="144"/>
+  <hex row="7" col="11" terrain="5"/>
+  <hex row="7" col="12" terrain="5"/>
+  <hex row="7" col="13" terrain="5"/>
+  <hex row="7" col="14" terrain="5"/>
+  <hex row="7" col="15" terrain="15"/>
+  <hex row="7" col="16" terrain="5" deploy="0"/>
+  <hex row="7" col="17" terrain="5"/>
+  <hex row="7" col="18" terrain="5"/>
+  <hex row="7" col="19" terrain="5"/>
+  <hex row="7" col="20" terrain="15"/>
+  <hex row="7" col="21" terrain="15"/>
+  <hex row="7" col="22" road="130"/>
+  <hex row="7" col="24" terrain="1" road="136" name="Calarasi" owner="0" flag="89"/>
+  <hex row="7" col="25" road="136"/>
+  <hex row="7" col="26" terrain="5"/>
+  <hex row="7" col="27" terrain="5" deploy="0"/>
+  <hex row="7" col="28" terrain="5"/>
+  <hex row="7" col="29" terrain="5" deploy="0"/>
+  <hex row="7" col="30" terrain="5" deploy="0"/>
+  <hex row="7" col="31" terrain="5"/>
+  <hex row="7" col="33" deploy="0"/>
+  <hex row="7" col="34" deploy="0"/>
+  <hex row="7" col="35" road="9"/>
+  <hex row="7" col="36" deploy="0"/>
+  <hex row="7" col="40" terrain="5" deploy="0"/>
+  <hex row="7" col="41" terrain="5"/>
+  <hex row="7" col="42" terrain="5"/>
+  <hex row="7" col="43" terrain="5"/>
+  <hex row="8" col="2" terrain="15" name="Jijia River"/>
+  <hex row="8" col="3" terrain="15" name="Prut River"/>
+  <hex row="8" col="5" road="17"/>
+  <hex row="8" col="12" terrain="5"/>
+  <hex row="8" col="13" terrain="5"/>
+  <hex row="8" col="14" terrain="5"/>
+  <hex row="8" col="15" terrain="5"/>
+  <hex row="8" col="16" terrain="15"/>
+  <hex row="8" col="17" terrain="5"/>
+  <hex row="8" col="18" terrain="5" deploy="0"/>
+  <hex row="8" col="19" terrain="5"/>
+  <hex row="8" col="20" terrain="5"/>
+  <hex row="8" col="21" terrain="5"/>
+  <hex row="8" col="22" terrain="15"/>
+  <hex row="8" col="23" terrain="15"/>
+  <hex row="8" col="26" road="144" deploy="0"/>
+  <hex row="8" col="27" terrain="5"/>
+  <hex row="8" col="28" terrain="5"/>
+  <hex row="8" col="29" terrain="5"/>
+  <hex row="8" col="30" terrain="5"/>
+  <hex row="8" col="31" terrain="5"/>
+  <hex row="8" col="32" terrain="5"/>
+  <hex row="8" col="36" road="136"/>
+  <hex row="8" col="37" road="144" deploy="0"/>
+  <hex row="8" col="40" terrain="5"/>
+  <hex row="8" col="41" terrain="5"/>
+  <hex row="8" col="42" terrain="5"/>
+  <hex row="8" col="43" terrain="5"/>
+  <hex row="9" col="2" terrain="15" name="Jijia River"/>
+  <hex row="9" col="4" terrain="15" name="Prut River"/>
+  <hex row="9" col="5" road="9"/>
+  <hex row="9" col="6" deploy="0"/>
+  <hex row="9" col="7" deploy="0"/>
+  <hex row="9" col="8" deploy="0"/>
+  <hex row="9" col="9" deploy="0"/>
+  <hex row="9" col="10" deploy="0"/>
+  <hex row="9" col="11" deploy="0"/>
+  <hex row="9" col="13" terrain="15"/>
+  <hex row="9" col="14" terrain="5" deploy="0"/>
+  <hex row="9" col="15" terrain="5"/>
+  <hex row="9" col="16" terrain="15"/>
+  <hex row="9" col="17" terrain="15"/>
+  <hex row="9" col="18" terrain="5"/>
+  <hex row="9" col="19" terrain="5"/>
+  <hex row="9" col="20" terrain="5"/>
+  <hex row="9" col="21" terrain="5"/>
+  <hex row="9" col="22" terrain="5"/>
+  <hex row="9" col="23" terrain="5"/>
+  <hex row="9" col="24" terrain="15"/>
+  <hex row="9" col="25" terrain="15"/>
+  <hex row="9" col="26" road="17"/>
+  <hex row="9" col="28" terrain="5" deploy="0"/>
+  <hex row="9" col="29" terrain="5"/>
+  <hex row="9" col="30" terrain="5"/>
+  <hex row="9" col="31" terrain="5"/>
+  <hex row="9" col="32" terrain="5" deploy="0"/>
+  <hex row="9" col="36" deploy="0"/>
+  <hex row="9" col="37" road="17"/>
+  <hex row="9" col="42" terrain="5"/>
+  <hex row="9" col="43" terrain="5"/>
+  <hex row="10" col="1" terrain="15" name="Jijia River"/>
+  <hex row="10" col="2" terrain="15" name="Jijia River"/>
+  <hex row="10" col="4" terrain="15" name="Prut River"/>
+  <hex row="10" col="5" terrain="15" name="Prut River"/>
+  <hex row="10" col="6" road="144"/>
+  <hex row="10" col="9" deploy="0"/>
+  <hex row="10" col="12" terrain="15"/>
+  <hex row="10" col="13" terrain="15"/>
+  <hex row="10" col="14" terrain="5"/>
+  <hex row="10" col="15" terrain="5" deploy="0"/>
+  <hex row="10" col="16" terrain="5"/>
+  <hex row="10" col="17" terrain="5"/>
+  <hex row="10" col="18" terrain="15"/>
+  <hex row="10" col="19" terrain="15"/>
+  <hex row="10" col="20" terrain="5"/>
+  <hex row="10" col="21" terrain="5"/>
+  <hex row="10" col="22" terrain="5"/>
+  <hex row="10" col="23" terrain="5"/>
+  <hex row="10" col="25" terrain="15"/>
+  <hex row="10" col="26" road="9"/>
+  <hex row="10" col="27" road="144"/>
+  <hex row="10" col="28" terrain="5"/>
+  <hex row="10" col="29" terrain="5"/>
+  <hex row="10" col="30" terrain="5"/>
+  <hex row="10" col="31" terrain="5"/>
+  <hex row="10" col="32" terrain="5"/>
+  <hex row="10" col="36" terrain="15" name="Ichel River"/>
+  <hex row="10" col="37" terrain="10" road="19" name="Ichel River"/>
+  <hex row="10" col="38" road="32"/>
+  <hex row="11" col="1" terrain="15" name="Jijia River"/>
+  <hex row="11" col="3" terrain="15" name="Prut River"/>
+  <hex row="11" col="4" terrain="15" name="Prut River"/>
+  <hex row="11" col="6" road="17"/>
+  <hex row="11" col="12" terrain="15"/>
+  <hex row="11" col="13" terrain="15"/>
+  <hex row="11" col="14" terrain="5"/>
+  <hex row="11" col="15" terrain="5" road="34"/>
+  <hex row="11" col="16" terrain="5" road="40"/>
+  <hex row="11" col="17" terrain="5" road="136"/>
+  <hex row="11" col="18" terrain="5"/>
+  <hex row="11" col="19" terrain="5"/>
+  <hex row="11" col="20" terrain="15"/>
+  <hex row="11" col="21" terrain="5"/>
+  <hex row="11" col="22" terrain="5"/>
+  <hex row="11" col="23" terrain="5"/>
+  <hex row="11" col="24" terrain="5"/>
+  <hex row="11" col="25" terrain="15"/>
+  <hex row="11" col="26" terrain="1" road="16" name="Bucovat"/>
+  <hex row="11" col="27" terrain="1" road="49" name="Bucovat" owner="0" flag="89"/>
+  <hex row="11" col="28" terrain="5"/>
+  <hex row="11" col="29" terrain="5"/>
+  <hex row="11" col="30" terrain="5"/>
+  <hex row="11" col="31" terrain="5"/>
+  <hex row="11" col="32" terrain="5"/>
+  <hex row="11" col="36" terrain="15" name="Ichel River"/>
+  <hex row="11" col="37" road="33"/>
+  <hex row="11" col="38" terrain="15" name="Ichel River"/>
+  <hex row="11" col="39" terrain="15" name="Ichel River"/>
+  <hex row="12" col="1" terrain="15" name="Jijia River"/>
+  <hex row="12" col="4" terrain="15" name="Prut River"/>
+  <hex row="12" col="5" terrain="15" name="Prut River"/>
+  <hex row="12" col="6" road="17"/>
+  <hex row="12" col="11" terrain="15"/>
+  <hex row="12" col="12" terrain="15"/>
+  <hex row="12" col="13" terrain="5" road="18"/>
+  <hex row="12" col="14" terrain="5" road="34"/>
+  <hex row="12" col="15" terrain="5"/>
+  <hex row="12" col="16" terrain="5"/>
+  <hex row="12" col="17" terrain="5"/>
+  <hex row="12" col="18" terrain="5" road="136"/>
+  <hex row="12" col="19" terrain="5" road="136"/>
+  <hex row="12" col="20" terrain="15"/>
+  <hex row="12" col="21" terrain="15"/>
+  <hex row="12" col="22" terrain="5"/>
+  <hex row="12" col="23" terrain="15"/>
+  <hex row="12" col="24" road="16"/>
+  <hex row="12" col="25" road="34"/>
+  <hex row="12" col="26" terrain="10" road="43"/>
+  <hex row="12" col="27" terrain="1" road="145" name="Bucovat"/>
+  <hex row="12" col="28" terrain="5"/>
+  <hex row="12" col="29" terrain="5"/>
+  <hex row="12" col="30" terrain="5"/>
+  <hex row="12" col="31" terrain="5"/>
+  <hex row="12" col="32" terrain="5"/>
+  <hex row="12" col="36" road="18"/>
+  <hex row="12" col="39" terrain="15" name="Ichel River"/>
+  <hex row="13" col="0" road="8"/>
+  <hex row="13" col="1" road="144"/>
+  <hex row="13" col="2" terrain="15" name="Jijia River"/>
+  <hex row="13" col="5" terrain="15" name="Prut River"/>
+  <hex row="13" col="6" road="17"/>
+  <hex row="13" col="8" deploy="0"/>
+  <hex row="13" col="11" terrain="15"/>
+  <hex row="13" col="12" terrain="5"/>
+  <hex row="13" col="13" terrain="5" road="33"/>
+  <hex row="13" col="14" terrain="5"/>
+  <hex row="13" col="15" terrain="5"/>
+  <hex row="13" col="16" terrain="5"/>
+  <hex row="13" col="17" terrain="5" deploy="0"/>
+  <hex row="13" col="18" terrain="5" deploy="0"/>
+  <hex row="13" col="19" terrain="5"/>
+  <hex row="13" col="20" road="136"/>
+  <hex row="13" col="21" road="152"/>
+  <hex row="13" col="22" terrain="15"/>
+  <hex row="13" col="23" terrain="1" road="34" name="Vorniceni" owner="0" flag="89"/>
+  <hex row="13" col="24" terrain="10" road="51"/>
+  <hex row="13" col="25" terrain="15"/>
+  <hex row="13" col="26" terrain="15"/>
+  <hex row="13" col="27" terrain="10" road="17"/>
+  <hex row="13" col="28" terrain="5"/>
+  <hex row="13" col="29" terrain="5"/>
+  <hex row="13" col="30" terrain="5"/>
+  <hex row="13" col="31" terrain="5"/>
+  <hex row="13" col="32" terrain="5"/>
+  <hex row="13" col="36" road="17"/>
+  <hex row="13" col="37" terrain="15" name="Ichel River"/>
+  <hex row="13" col="38" terrain="15" name="Ichel River"/>
+  <hex row="14" col="1" road="9"/>
+  <hex row="14" col="2" terrain="15" name="Jijia River"/>
+  <hex row="14" col="3" terrain="15" name="Jijia River"/>
+  <hex row="14" col="4" terrain="15" name="Prut River"/>
+  <hex row="14" col="6" road="17"/>
+  <hex row="14" col="9" road="34"/>
+  <hex row="14" col="10" road="40"/>
+  <hex row="14" col="11" terrain="10" road="154" name="Prut River"/>
+  <hex row="14" col="12" terrain="1" road="50" name="Nisiporeni" owner="0" flag="89"/>
+  <hex row="14" col="13" terrain="5"/>
+  <hex row="14" col="14" terrain="5"/>
+  <hex row="14" col="15" terrain="5"/>
+  <hex row="14" col="16" terrain="5"/>
+  <hex row="14" col="17" terrain="5"/>
+  <hex row="14" col="18" terrain="5" deploy="0"/>
+  <hex row="14" col="19" terrain="5"/>
+  <hex row="14" col="21" road="33"/>
+  <hex row="14" col="22" road="130"/>
+  <hex row="14" col="24" road="1"/>
+  <hex row="14" col="27" road="17"/>
+  <hex row="14" col="28" terrain="15"/>
+  <hex row="14" col="29" terrain="5"/>
+  <hex row="14" col="30" terrain="5"/>
+  <hex row="14" col="31" terrain="5"/>
+  <hex row="14" col="32" terrain="5"/>
+  <hex row="14" col="33" terrain="5"/>
+  <hex row="14" col="34" terrain="1" name="Recea" owner="0" flag="89"/>
+  <hex row="14" col="36" road="17"/>
+  <hex row="14" col="37" terrain="15" name="Ichel River"/>
+  <hex row="15" col="2" road="144"/>
+  <hex row="15" col="3" terrain="15" name="Jijia River"/>
+  <hex row="15" col="4" terrain="15" name="Prut River"/>
+  <hex row="15" col="5" terrain="15" name="Prut River"/>
+  <hex row="15" col="6" road="17"/>
+  <hex row="15" col="7" road="34"/>
+  <hex row="15" col="8" road="34"/>
+  <hex row="15" col="9" terrain="15"/>
+  <hex row="15" col="10" terrain="15" name="Prut River"/>
+  <hex row="15" col="11" terrain="5" road="1"/>
+  <hex row="15" col="12" terrain="5" road="129"/>
+  <hex row="15" col="13" terrain="15"/>
+  <hex row="15" col="14" terrain="15"/>
+  <hex row="15" col="15" terrain="5" road="34"/>
+  <hex row="15" col="16" terrain="5" road="40"/>
+  <hex row="15" col="17" terrain="5" road="136"/>
+  <hex row="15" col="18" terrain="5"/>
+  <hex row="15" col="19" terrain="5"/>
+  <hex row="15" col="20" terrain="5" road="18"/>
+  <hex row="15" col="21" terrain="5"/>
+  <hex row="15" col="23" terrain="5"/>
+  <hex row="15" col="27" road="9"/>
+  <hex row="15" col="28" terrain="15"/>
+  <hex row="15" col="29" terrain="15"/>
+  <hex row="15" col="30" terrain="5"/>
+  <hex row="15" col="31" terrain="5"/>
+  <hex row="15" col="32" terrain="5"/>
+  <hex row="15" col="33" terrain="5"/>
+  <hex row="15" col="34" terrain="1" name="Recea"/>
+  <hex row="15" col="35" road="18"/>
+  <hex row="15" col="36" road="41"/>
+  <hex row="15" col="37" terrain="1" road="128" name="Radeni" owner="0" flag="89"/>
+  <hex row="15" col="38" terrain="15" name="Ichel River"/>
+  <hex row="16" col="2" road="17"/>
+  <hex row="16" col="3" terrain="15" name="Jijia River"/>
+  <hex row="16" col="4" terrain="15" name="Jijia River"/>
+  <hex row="16" col="5" terrain="15" name="Prut River"/>
+  <hex row="16" col="6" terrain="1" road="19" name="Barboeni" owner="1" flag="7"/>
+  <hex row="16" col="9" terrain="15"/>
+  <hex row="16" col="10" terrain="5"/>
+  <hex row="16" col="11" terrain="5"/>
+  <hex row="16" col="12" terrain="5"/>
+  <hex row="16" col="13" terrain="15"/>
+  <hex row="16" col="14" terrain="1" road="18" name="Jurceni" owner="0" flag="89"/>
+  <hex row="16" col="15" terrain="5" road="32"/>
+  <hex row="16" col="16" terrain="5"/>
+  <hex row="16" col="17" terrain="5"/>
+  <hex row="16" col="18" terrain="5" road="136"/>
+  <hex row="16" col="19" terrain="5" road="130"/>
+  <hex row="16" col="20" terrain="5" road="41"/>
+  <hex row="16" col="21" terrain="5" road="136"/>
+  <hex row="16" col="22" terrain="5"/>
+  <hex row="16" col="23" terrain="2" road="42" owner="0" flag="89" victory="0" deploy="0"/>
+  <hex row="16" col="24" terrain="2" road="48" deploy="0"/>
+  <hex row="16" col="25" terrain="5"/>
+  <hex row="16" col="27" terrain="5"/>
+  <hex row="16" col="28" road="144"/>
+  <hex row="16" col="30" terrain="15"/>
+  <hex row="16" col="31" terrain="5"/>
+  <hex row="16" col="32" terrain="5"/>
+  <hex row="16" col="33" terrain="5"/>
+  <hex row="16" col="35" road="33"/>
+  <hex row="16" col="37" terrain="15" name="Ichel River"/>
+  <hex row="16" col="38" terrain="15" name="Ichel River"/>
+  <hex row="17" col="2" road="17"/>
+  <hex row="17" col="3" terrain="15" name="Jijia River"/>
+  <hex row="17" col="4" terrain="15" name="Prut River"/>
+  <hex row="17" col="5" terrain="15" name="Prut River"/>
+  <hex row="17" col="6" road="17"/>
+  <hex row="17" col="9" terrain="15"/>
+  <hex row="17" col="10" terrain="5"/>
+  <hex row="17" col="11" terrain="5"/>
+  <hex row="17" col="12" terrain="5"/>
+  <hex row="17" col="13" terrain="5" road="34"/>
+  <hex row="17" col="14" terrain="10" road="35"/>
+  <hex row="17" col="15" terrain="15"/>
+  <hex row="17" col="16" terrain="5"/>
+  <hex row="17" col="17" terrain="5"/>
+  <hex row="17" col="18" terrain="5"/>
+  <hex row="17" col="19" terrain="5"/>
+  <hex row="17" col="20" terrain="5"/>
+  <hex row="17" col="21" terrain="5"/>
+  <hex row="17" col="22" terrain="5" road="138"/>
+  <hex row="17" col="23" terrain="5" road="144" deploy="0"/>
+  <hex row="17" col="24" terrain="2" road="129" deploy="0"/>
+  <hex row="17" col="25" terrain="5"/>
+  <hex row="17" col="26" terrain="5"/>
+  <hex row="17" col="27" terrain="5"/>
+  <hex row="17" col="28" road="9"/>
+  <hex row="17" col="29" road="136"/>
+  <hex row="17" col="30" terrain="15"/>
+  <hex row="17" col="31" terrain="15"/>
+  <hex row="17" col="32" terrain="5"/>
+  <hex row="17" col="33" terrain="5"/>
+  <hex row="17" col="34" road="18"/>
+  <hex row="17" col="37" terrain="15" name="Ichel River"/>
+  <hex row="18" col="2" road="17"/>
+  <hex row="18" col="3" terrain="15" name="Jijia River"/>
+  <hex row="18" col="5" terrain="15" name="Prut River"/>
+  <hex row="18" col="6" road="17"/>
+  <hex row="18" col="7" terrain="15"/>
+  <hex row="18" col="8" terrain="15"/>
+  <hex row="18" col="9" terrain="5"/>
+  <hex row="18" col="10" terrain="5"/>
+  <hex row="18" col="11" terrain="5" road="18"/>
+  <hex row="18" col="12" terrain="5" road="34"/>
+  <hex row="18" col="13" terrain="5"/>
+  <hex row="18" col="14" terrain="15"/>
+  <hex row="18" col="15" terrain="5"/>
+  <hex row="18" col="16" terrain="5"/>
+  <hex row="18" col="17" terrain="5"/>
+  <hex row="18" col="18" terrain="5"/>
+  <hex row="18" col="19" terrain="5"/>
+  <hex row="18" col="20" terrain="5"/>
+  <hex row="18" col="21" terrain="5"/>
+  <hex row="18" col="22" terrain="5"/>
+  <hex row="18" col="23" terrain="5" road="9"/>
+  <hex row="18" col="24" terrain="5"/>
+  <hex row="18" col="25" terrain="5"/>
+  <hex row="18" col="26" terrain="5"/>
+  <hex row="18" col="27" terrain="5"/>
+  <hex row="18" col="28" terrain="5"/>
+  <hex row="18" col="30" terrain="1" road="136" name="Straseni" owner="0" flag="89"/>
+  <hex row="18" col="31" road="144"/>
+  <hex row="18" col="32" terrain="15"/>
+  <hex row="18" col="34" road="9"/>
+  <hex row="18" col="35" road="144"/>
+  <hex row="18" col="38" terrain="15" name="Ichel River"/>
+  <hex row="18" col="39" terrain="15" name="Ichel River"/>
+  <hex row="19" col="2" road="9"/>
+  <hex row="19" col="3" road="144"/>
+  <hex row="19" col="4" terrain="15" name="Jijia River"/>
+  <hex row="19" col="5" terrain="15" name="Prut River"/>
+  <hex row="19" col="6" road="17"/>
+  <hex row="19" col="7" terrain="15"/>
+  <hex row="19" col="9" terrain="5"/>
+  <hex row="19" col="10" terrain="5"/>
+  <hex row="19" col="11" terrain="5" road="33"/>
+  <hex row="19" col="12" terrain="5"/>
+  <hex row="19" col="13" terrain="5"/>
+  <hex row="19" col="14" terrain="15"/>
+  <hex row="19" col="15" terrain="15"/>
+  <hex row="19" col="16" terrain="5"/>
+  <hex row="19" col="17" terrain="5"/>
+  <hex row="19" col="18" terrain="5"/>
+  <hex row="19" col="19" terrain="5"/>
+  <hex row="19" col="20" terrain="5"/>
+  <hex row="19" col="21" terrain="5"/>
+  <hex row="19" col="22" terrain="5"/>
+  <hex row="19" col="23" terrain="5"/>
+  <hex row="19" col="24" terrain="5" road="144"/>
+  <hex row="19" col="25" terrain="5"/>
+  <hex row="19" col="26" terrain="5"/>
+  <hex row="19" col="27" terrain="5"/>
+  <hex row="19" col="28" terrain="5"/>
+  <hex row="19" col="29" terrain="5"/>
+  <hex row="19" col="31" road="17"/>
+  <hex row="19" col="32" terrain="15"/>
+  <hex row="19" col="33" terrain="15"/>
+  <hex row="19" col="35" road="9"/>
+  <hex row="19" col="40" terrain="15" name="Ichel River"/>
+  <hex row="19" col="41" terrain="15" name="Ichel River"/>
+  <hex row="20" col="3" terrain="1" road="17" name="Gorban" owner="1" flag="7"/>
+  <hex row="20" col="4" terrain="15" name="Prut River"/>
+  <hex row="20" col="5" terrain="15" name="Prut River"/>
+  <hex row="20" col="6" road="17"/>
+  <hex row="20" col="8" terrain="15"/>
+  <hex row="20" col="9" terrain="5"/>
+  <hex row="20" col="10" terrain="5" road="18"/>
+  <hex row="20" col="11" terrain="5"/>
+  <hex row="20" col="12" terrain="5"/>
+  <hex row="20" col="13" terrain="5"/>
+  <hex row="20" col="14" terrain="5"/>
+  <hex row="20" col="15" terrain="15"/>
+  <hex row="20" col="16" terrain="5"/>
+  <hex row="20" col="17" terrain="5"/>
+  <hex row="20" col="18" terrain="5"/>
+  <hex row="20" col="19" terrain="15" name="Cogilnic River"/>
+  <hex row="20" col="20" terrain="15" name="Cogilnic River"/>
+  <hex row="20" col="21" terrain="5"/>
+  <hex row="20" col="22" terrain="5"/>
+  <hex row="20" col="23" terrain="15"/>
+  <hex row="20" col="24" terrain="5" road="17"/>
+  <hex row="20" col="25" terrain="5"/>
+  <hex row="20" col="26" terrain="5"/>
+  <hex row="20" col="27" terrain="5"/>
+  <hex row="20" col="28" terrain="5"/>
+  <hex row="20" col="29" terrain="5"/>
+  <hex row="20" col="31" road="9"/>
+  <hex row="20" col="34" terrain="15"/>
+  <hex row="20" col="36" road="144"/>
+  <hex row="20" col="41" terrain="15" name="Ichel River"/>
+  <hex row="21" col="3" road="33"/>
+  <hex row="21" col="4" terrain="15" name="Prut River"/>
+  <hex row="21" col="5" terrain="1" road="18" name="Cotu Mori" owner="1" flag="7"/>
+  <hex row="21" col="6" terrain="1" road="33" name="Cotu Mori"/>
+  <hex row="21" col="7" terrain="15"/>
+  <hex row="21" col="8" terrain="15"/>
+  <hex row="21" col="9" terrain="5" road="18"/>
+  <hex row="21" col="10" terrain="5" road="33"/>
+  <hex row="21" col="11" terrain="5"/>
+  <hex row="21" col="12" terrain="5"/>
+  <hex row="21" col="13" terrain="5"/>
+  <hex row="21" col="14" terrain="15"/>
+  <hex row="21" col="15" terrain="5"/>
+  <hex row="21" col="16" terrain="5"/>
+  <hex row="21" col="17" terrain="5"/>
+  <hex row="21" col="18" terrain="5"/>
+  <hex row="21" col="19" terrain="15" name="Cogilnic River"/>
+  <hex row="21" col="20" terrain="15" name="Cogilnic River"/>
+  <hex row="21" col="21" terrain="5"/>
+  <hex row="21" col="22" terrain="5"/>
+  <hex row="21" col="23" terrain="15"/>
+  <hex row="21" col="24" terrain="5" road="9"/>
+  <hex row="21" col="25" terrain="5" road="144"/>
+  <hex row="21" col="26" terrain="5"/>
+  <hex row="21" col="27" terrain="5"/>
+  <hex row="21" col="28" terrain="5"/>
+  <hex row="21" col="29" terrain="5"/>
+  <hex row="21" col="32" road="144"/>
+  <hex row="21" col="33" terrain="15"/>
+  <hex row="21" col="34" terrain="15"/>
+  <hex row="21" col="36" road="17"/>
+  <hex row="21" col="39" terrain="15" name="Ichel River"/>
+  <hex row="21" col="40" terrain="15" name="Ichel River"/>
+  <hex row="22" col="2" road="18"/>
+  <hex row="22" col="3" terrain="15" name="Prut River"/>
+  <hex row="22" col="4" terrain="15" name="Prut River"/>
+  <hex row="22" col="5" road="17"/>
+  <hex row="22" col="6" terrain="15"/>
+  <hex row="22" col="7" terrain="15"/>
+  <hex row="22" col="8" terrain="5"/>
+  <hex row="22" col="9" terrain="5" road="33"/>
+  <hex row="22" col="10" terrain="5"/>
+  <hex row="22" col="11" terrain="5"/>
+  <hex row="22" col="12" terrain="5"/>
+  <hex row="22" col="13" terrain="5"/>
+  <hex row="22" col="14" terrain="15"/>
+  <hex row="22" col="15" terrain="15"/>
+  <hex row="22" col="16" terrain="5"/>
+  <hex row="22" col="17" terrain="5"/>
+  <hex row="22" col="18" terrain="5"/>
+  <hex row="22" col="19" terrain="15" name="Cogilnic River"/>
+  <hex row="22" col="20" terrain="1" name="Manoilesti" owner="0" flag="89"/>
+  <hex row="22" col="21" terrain="5"/>
+  <hex row="22" col="22" terrain="5"/>
+  <hex row="22" col="23" terrain="5"/>
+  <hex row="22" col="24" terrain="15"/>
+  <hex row="22" col="25" terrain="5" road="9"/>
+  <hex row="22" col="26" terrain="5"/>
+  <hex row="22" col="27" terrain="5"/>
+  <hex row="22" col="28" terrain="5"/>
+  <hex row="22" col="29" terrain="5"/>
+  <hex row="22" col="30" terrain="5"/>
+  <hex row="22" col="32" road="17"/>
+  <hex row="22" col="33" terrain="15"/>
+  <hex row="22" col="34" terrain="1" name="Ciopleni" owner="0" flag="89"/>
+  <hex row="22" col="36" road="17"/>
+  <hex row="22" col="39" terrain="15" name="Ichel River"/>
+  <hex row="23" col="2" road="17"/>
+  <hex row="23" col="4" terrain="15" name="Prut River"/>
+  <hex row="23" col="5" road="17"/>
+  <hex row="23" col="7" terrain="15"/>
+  <hex row="23" col="8" terrain="5" road="18"/>
+  <hex row="23" col="9" terrain="5"/>
+  <hex row="23" col="10" terrain="1" name="Onesti">
+    <unit id="14444" owner="1" flag="14" face="0" exp="17" str="9"/>
+  </hex>
+  <hex row="23" col="11" terrain="1" name="Onesti"/>
+  <hex row="23" col="12" terrain="5"/>
+  <hex row="23" col="13" terrain="5" deploy="0"/>
+  <hex row="23" col="14" terrain="5"/>
+  <hex row="23" col="15" terrain="15"/>
+  <hex row="23" col="16" terrain="5"/>
+  <hex row="23" col="17" terrain="5"/>
+  <hex row="23" col="18" terrain="5"/>
+  <hex row="23" col="19" terrain="5"/>
+  <hex row="23" col="20" terrain="15" name="Cogilnic River"/>
+  <hex row="23" col="21" terrain="15" name="Cogilnic River"/>
+  <hex row="23" col="22" terrain="5"/>
+  <hex row="23" col="23" terrain="5"/>
+  <hex row="23" col="24" terrain="15"/>
+  <hex row="23" col="25" terrain="15"/>
+  <hex row="23" col="26" terrain="5" road="136"/>
+  <hex row="23" col="27" terrain="5" road="144"/>
+  <hex row="23" col="28" terrain="5"/>
+  <hex row="23" col="29" terrain="5"/>
+  <hex row="23" col="30" terrain="5"/>
+  <hex row="23" col="31" terrain="5"/>
+  <hex row="23" col="32" road="9"/>
+  <hex row="23" col="33" terrain="1" road="144" name="Cojusna"/>
+  <hex row="23" col="34" terrain="15"/>
+  <hex row="23" col="36" road="9"/>
+  <hex row="23" col="37" road="144"/>
+  <hex row="23" col="39" terrain="15" name="Ichel River"/>
+  <hex row="23" col="40" terrain="15" name="Ichel River"/>
+  <hex row="24" col="1" road="18"/>
+  <hex row="24" col="2" road="33"/>
+  <hex row="24" col="3" terrain="15" name="Prut River"/>
+  <hex row="24" col="4" terrain="15" name="Prut River"/>
+  <hex row="24" col="5" road="25"/>
+  <hex row="24" col="6" terrain="15"/>
+  <hex row="24" col="7" road="34"/>
+  <hex row="24" col="8" terrain="5" road="33"/>
+  <hex row="24" col="9" terrain="5">
+    <unit id="14504" owner="1" flag="14" face="0" exp="23" ldr="1"/>
+  </hex>
+  <hex row="24" col="10" terrain="1" name="Onesti" owner="1" flag="7">
+    <unit id="14268" owner="1" flag="14" face="0" exp="72"/>
+  </hex>
+  <hex row="24" col="11" terrain="5"/>
+  <hex row="24" col="12" terrain="5"/>
+  <hex row="24" col="13" terrain="5" deploy="0"/>
+  <hex row="24" col="14" terrain="5"/>
+  <hex row="24" col="15" terrain="5"/>
+  <hex row="24" col="16" terrain="15"/>
+  <hex row="24" col="17" terrain="5"/>
+  <hex row="24" col="18" terrain="5"/>
+  <hex row="24" col="19" terrain="5"/>
+  <hex row="24" col="20" terrain="15" name="Cogilnic River"/>
+  <hex row="24" col="21" terrain="5"/>
+  <hex row="24" col="22" terrain="5"/>
+  <hex row="24" col="23" terrain="5"/>
+  <hex row="24" col="24" terrain="5"/>
+  <hex row="24" col="25" terrain="5"/>
+  <hex row="24" col="26" terrain="15"/>
+  <hex row="24" col="27" terrain="5" road="9"/>
+  <hex row="24" col="28" terrain="5"/>
+  <hex row="24" col="29" terrain="5"/>
+  <hex row="24" col="30" terrain="5"/>
+  <hex row="24" col="31" terrain="5"/>
+  <hex row="24" col="33" road="17"/>
+  <hex row="24" col="34" terrain="15"/>
+  <hex row="24" col="37" road="17"/>
+  <hex row="24" col="39" terrain="15" name="Ichel River"/>
+  <hex row="25" col="1" road="9"/>
+  <hex row="25" col="2" terrain="15" name="Prut River"/>
+  <hex row="25" col="3" terrain="15" name="Prut River"/>
+  <hex row="25" col="5" road="27"/>
+  <hex row="25" col="6" terrain="10" road="162"/>
+  <hex row="25" col="7" terrain="15"/>
+  <hex row="25" col="8" terrain="5"/>
+  <hex row="25" col="9" terrain="5"/>
+  <hex row="25" col="10" terrain="5">
+    <unit id="14268" owner="1" flag="14" face="0" exp="46"/>
+  </hex>
+  <hex row="25" col="11" terrain="5"/>
+  <hex row="25" col="12" terrain="5"/>
+  <hex row="25" col="13" terrain="5" deploy="0"/>
+  <hex row="25" col="14" terrain="5"/>
+  <hex row="25" col="15" terrain="15"/>
+  <hex row="25" col="16" terrain="15"/>
+  <hex row="25" col="17" terrain="5"/>
+  <hex row="25" col="18" terrain="5"/>
+  <hex row="25" col="19" terrain="5"/>
+  <hex row="25" col="20" terrain="15" name="Cogilnic River"/>
+  <hex row="25" col="21" terrain="15" name="Cogilnic River"/>
+  <hex row="25" col="22" terrain="5"/>
+  <hex row="25" col="23" terrain="5"/>
+  <hex row="25" col="24" terrain="5"/>
+  <hex row="25" col="25" terrain="5"/>
+  <hex row="25" col="26" terrain="15"/>
+  <hex row="25" col="27" terrain="5"/>
+  <hex row="25" col="28" terrain="5" road="136"/>
+  <hex row="25" col="29" terrain="5" road="136"/>
+  <hex row="25" col="30" terrain="5"/>
+  <hex row="25" col="31" terrain="5"/>
+  <hex row="25" col="32" terrain="5"/>
+  <hex row="25" col="33" road="9"/>
+  <hex row="25" col="34" terrain="15"/>
+  <hex row="25" col="35" terrain="15"/>
+  <hex row="25" col="37" road="17"/>
+  <hex row="25" col="38" terrain="15" name="Ichel River"/>
+  <hex row="26" col="2" road="144"/>
+  <hex row="26" col="3" terrain="15" name="Prut River"/>
+  <hex row="26" col="4" terrain="15" name="Prut River"/>
+  <hex row="26" col="5" road="51"/>
+  <hex row="26" col="6" terrain="10" road="168"/>
+  <hex row="26" col="7" terrain="1" road="136" name="Leuseni" owner="1" flag="7"/>
+  <hex row="26" col="8" terrain="5"/>
+  <hex row="26" col="9" terrain="5" road="34">
+    <unit id="14268" owner="1" flag="14" face="0" exp="89"/>
+  </hex>
+  <hex row="26" col="10" terrain="5" road="40">
+    <unit id="14466" owner="1" flag="14" face="0" exp="61" str="9"/>
+  </hex>
+  <hex row="26" col="11" terrain="5" road="136"/>
+  <hex row="26" col="12" terrain="5" deploy="0"/>
+  <hex row="26" col="13" terrain="5"/>
+  <hex row="26" col="14" terrain="5"/>
+  <hex row="26" col="15" terrain="15"/>
+  <hex row="26" col="16" terrain="5"/>
+  <hex row="26" col="17" terrain="5"/>
+  <hex row="26" col="18" terrain="5"/>
+  <hex row="26" col="19" terrain="5"/>
+  <hex row="26" col="20" terrain="5"/>
+  <hex row="26" col="21" terrain="15" name="Cogilnic River"/>
+  <hex row="26" col="22" terrain="15" name="Cogilnic River"/>
+  <hex row="26" col="23" terrain="5"/>
+  <hex row="26" col="24" terrain="5"/>
+  <hex row="26" col="25" terrain="5"/>
+  <hex row="26" col="26" terrain="15"/>
+  <hex row="26" col="27" terrain="15"/>
+  <hex row="26" col="28" terrain="5"/>
+  <hex row="26" col="29" terrain="5"/>
+  <hex row="26" col="30" terrain="5" road="136"/>
+  <hex row="26" col="31" terrain="5" road="136"/>
+  <hex row="26" col="32" terrain="5"/>
+  <hex row="26" col="34" road="144"/>
+  <hex row="26" col="35" terrain="1" road="48" name="Kishinev"/>
+  <hex row="26" col="36" terrain="15"/>
+  <hex row="26" col="37" road="17"/>
+  <hex row="26" col="38" terrain="15" name="Ichel River"/>
+  <hex row="26" col="39" terrain="15" name="Ichel River"/>
+  <hex row="27" col="2" road="9"/>
+  <hex row="27" col="3" road="162"/>
+  <hex row="27" col="4" terrain="10" road="34" name="Prut River"/>
+  <hex row="27" col="5" terrain="10" road="25"/>
+  <hex row="27" col="6" terrain="15"/>
+  <hex row="27" col="8" terrain="5" road="130">
+    <unit id="14672" owner="1" flag="14" face="0" exp="43" str="8"/>
+  </hex>
+  <hex row="27" col="9" terrain="5">
+    <unit id="14526" owner="1" flag="14" face="0" exp="57" str="9"/>
+  </hex>
+  <hex row="27" col="10" terrain="5">
+    <unit id="14466" owner="1" flag="14" face="0" exp="43" str="9"/>
+  </hex>
+  <hex row="27" col="11" terrain="5"/>
+  <hex row="27" col="12" terrain="5" road="136" deploy="0"/>
+  <hex row="27" col="13" terrain="5" road="136"/>
+  <hex row="27" col="14" terrain="15"/>
+  <hex row="27" col="15" terrain="15"/>
+  <hex row="27" col="16" terrain="5"/>
+  <hex row="27" col="17" terrain="5"/>
+  <hex row="27" col="18" terrain="5"/>
+  <hex row="27" col="19" terrain="5"/>
+  <hex row="27" col="20" terrain="15" name="Cogilnic River"/>
+  <hex row="27" col="21" terrain="15" name="Cogilnic River"/>
+  <hex row="27" col="22" terrain="5"/>
+  <hex row="27" col="23" terrain="5"/>
+  <hex row="27" col="24" terrain="5"/>
+  <hex row="27" col="25" terrain="5"/>
+  <hex row="27" col="26" terrain="15"/>
+  <hex row="27" col="27" terrain="15"/>
+  <hex row="27" col="28" terrain="5"/>
+  <hex row="27" col="30" terrain="5"/>
+  <hex row="27" col="32" terrain="5" road="136"/>
+  <hex row="27" col="33" road="136"/>
+  <hex row="27" col="34" road="11"/>
+  <hex row="27" col="35" terrain="1" road="153" name="Kishinev"/>
+  <hex row="27" col="36" terrain="15"/>
+  <hex row="27" col="37" road="41"/>
+  <hex row="27" col="40" terrain="15" name="Ichel River"/>
+  <hex row="27" col="41" terrain="15" name="Ichel River"/>
+  <hex row="28" col="1" road="18"/>
+  <hex row="28" col="2" road="34"/>
+  <hex row="28" col="3" terrain="15" name="Prut River">
+    <unit id="14744" owner="1" flag="14" face="0" exp="54" str="7"/>
+  </hex>
+  <hex row="28" col="4" terrain="15" name="Prut River"/>
+  <hex row="28" col="5" road="17"/>
+  <hex row="28" col="6" road="128"/>
+  <hex row="28" col="8">
+    <unit id="14268" owner="1" flag="14" face="0" exp="62"/>
+  </hex>
+  <hex row="28" col="9" terrain="5"/>
+  <hex row="28" col="10" terrain="5">
+    <unit id="14379" owner="1" flag="14" face="0" exp="57" str="9"/>
+  </hex>
+  <hex row="28" col="11" terrain="5"/>
+  <hex row="28" col="12" terrain="5" deploy="0"/>
+  <hex row="28" col="13" terrain="5"/>
+  <hex row="28" col="14" road="152" deploy="0"/>
+  <hex row="28" col="15" terrain="10" road="170" deploy="0"/>
+  <hex row="28" col="16" terrain="5" road="32"/>
+  <hex row="28" col="17" terrain="5"/>
+  <hex row="28" col="18" terrain="5"/>
+  <hex row="28" col="19" terrain="5"/>
+  <hex row="28" col="20" terrain="1" name="Loganesti" owner="0" flag="89"/>
+  <hex row="28" col="21" terrain="15" name="Cogilnic River"/>
+  <hex row="28" col="22" terrain="5"/>
+  <hex row="28" col="23" terrain="5"/>
+  <hex row="28" col="24" terrain="5"/>
+  <hex row="28" col="25" terrain="5"/>
+  <hex row="28" col="26" terrain="15"/>
+  <hex row="28" col="27" terrain="1" name="Nimoreni" owner="0" flag="89"/>
+  <hex row="28" col="29" terrain="15"/>
+  <hex row="28" col="33" road="34"/>
+  <hex row="28" col="34" road="168"/>
+  <hex row="28" col="35" terrain="1" road="131" name="Kishinev" owner="0" flag="89" victory="0" deploy="0"/>
+  <hex row="28" col="36" terrain="10" road="162"/>
+  <hex row="28" col="37" terrain="15"/>
+  <hex row="28" col="38" road="136"/>
+  <hex row="28" col="39" road="136"/>
+  <hex row="28" col="42" terrain="15" name="Ichel River"/>
+  <hex row="29" col="1" road="33"/>
+  <hex row="29" col="3" terrain="15" name="Prut River">
+    <unit id="14791" owner="1" flag="14" face="0" exp="70" str="7"/>
+  </hex>
+  <hex row="29" col="5" road="17"/>
+  <hex row="29" col="8">
+    <unit id="14392" owner="1" flag="14" face="0" exp="57" str="7"/>
+  </hex>
+  <hex row="29" col="9">
+    <unit id="14268" owner="1" flag="14" face="0" exp="9"/>
+  </hex>
+  <hex row="29" col="10" terrain="5"/>
+  <hex row="29" col="11" terrain="5"/>
+  <hex row="29" col="12" terrain="5" deploy="0"/>
+  <hex row="29" col="13" road="34"/>
+  <hex row="29" col="14" road="35"/>
+  <hex row="29" col="15" terrain="15"/>
+  <hex row="29" col="16" terrain="5" road="144" deploy="0"/>
+  <hex row="29" col="17" terrain="5"/>
+  <hex row="29" col="18" terrain="5"/>
+  <hex row="29" col="19" terrain="5"/>
+  <hex row="29" col="20" terrain="15" name="Cogilnic River"/>
+  <hex row="29" col="21" terrain="15" name="Cogilnic River"/>
+  <hex row="29" col="22" terrain="5"/>
+  <hex row="29" col="23" terrain="5"/>
+  <hex row="29" col="24" terrain="5"/>
+  <hex row="29" col="26" terrain="15"/>
+  <hex row="29" col="27" terrain="15"/>
+  <hex row="29" col="28" terrain="1" name="Nimoreni"/>
+  <hex row="29" col="29" terrain="15"/>
+  <hex row="29" col="31" road="34"/>
+  <hex row="29" col="32" road="34"/>
+  <hex row="29" col="35" terrain="15"/>
+  <hex row="29" col="36" terrain="15"/>
+  <hex row="29" col="40" road="136"/>
+  <hex row="29" col="41" road="136"/>
+  <hex row="29" col="42" terrain="15" name="Ichel River"/>
+  <hex row="29" col="43" terrain="15" name="Ichel River"/>
+  <hex row="30" col="0" road="2"/>
+  <hex row="30" col="1" terrain="15" name="Prut River"/>
+  <hex row="30" col="2" terrain="15" name="Prut River"/>
+  <hex row="30" col="3" terrain="3"/>
+  <hex row="30" col="5" terrain="1" road="49" name="Cioara" owner="1" flag="7"/>
+  <hex row="30" col="10" terrain="5"/>
+  <hex row="30" col="12" road="18" deploy="0"/>
+  <hex row="30" col="13" terrain="15"/>
+  <hex row="30" col="14" terrain="15"/>
+  <hex row="30" col="15" terrain="5"/>
+  <hex row="30" col="16" terrain="5" road="9"/>
+  <hex row="30" col="17" terrain="5" road="144"/>
+  <hex row="30" col="18" terrain="5"/>
+  <hex row="30" col="19" terrain="5"/>
+  <hex row="30" col="20" terrain="5"/>
+  <hex row="30" col="21" terrain="15" name="Cogilnic River"/>
+  <hex row="30" col="22" terrain="5"/>
+  <hex row="30" col="23" terrain="5"/>
+  <hex row="30" col="24" terrain="5"/>
+  <hex row="30" col="27" terrain="15"/>
+  <hex row="30" col="28" terrain="15"/>
+  <hex row="30" col="29" road="42"/>
+  <hex row="30" col="30" road="34"/>
+  <hex row="30" col="35" terrain="15"/>
+  <hex row="30" col="37" terrain="2" road="10"/>
+  <hex row="30" col="38" terrain="2" road="48" owner="0" flag="89" victory="0"/>
+  <hex row="30" col="42" road="136"/>
+  <hex row="30" col="43" road="128"/>
+  <hex row="31" col="1" terrain="15" name="Prut River"/>
+  <hex row="31" col="2" terrain="3"/>
+  <hex row="31" col="4" terrain="1" road="10" name="Cioara"/>
+  <hex row="31" col="5" road="145"/>
+  <hex row="31" col="11" road="34"/>
+  <hex row="31" col="12" road="33"/>
+  <hex row="31" col="13" terrain="15"/>
+  <hex row="31" col="14" terrain="5"/>
+  <hex row="31" col="15" terrain="5"/>
+  <hex row="31" col="16" terrain="5"/>
+  <hex row="31" col="17" terrain="5" road="9"/>
+  <hex row="31" col="18" terrain="5"/>
+  <hex row="31" col="19" terrain="5"/>
+  <hex row="31" col="20" terrain="5"/>
+  <hex row="31" col="21" terrain="15" name="Cogilnic River"/>
+  <hex row="31" col="22" terrain="15" name="Cogilnic River"/>
+  <hex row="31" col="23" terrain="5"/>
+  <hex row="31" col="24" terrain="5"/>
+  <hex row="31" col="25" road="8"/>
+  <hex row="31" col="26" terrain="15"/>
+  <hex row="31" col="27" road="34"/>
+  <hex row="31" col="28" terrain="10" road="50"/>
+  <hex row="31" col="29" terrain="15"/>
+  <hex row="31" col="30" road="144"/>
+  <hex row="31" col="31" terrain="1" road="24" name="Ioloveni"/>
+  <hex row="31" col="36" terrain="15"/>
+  <hex row="31" col="37" terrain="15"/>
+  <hex row="31" col="38" terrain="2" road="129"/>
+  <hex row="32" col="2" terrain="15" name="Prut River"/>
+  <hex row="32" col="3" terrain="15" name="Prut River"/>
+  <hex row="32" col="5" road="17"/>
+  <hex row="32" col="10" terrain="1" road="18" name="Carpineni"/>
+  <hex row="32" col="11" terrain="15"/>
+  <hex row="32" col="12" terrain="15"/>
+  <hex row="32" col="13" terrain="5"/>
+  <hex row="32" col="14" terrain="5"/>
+  <hex row="32" col="15" terrain="5"/>
+  <hex row="32" col="16" terrain="5"/>
+  <hex row="32" col="17" terrain="5"/>
+  <hex row="32" col="18" terrain="5" road="136" deploy="0"/>
+  <hex row="32" col="19" terrain="5" road="136" deploy="0"/>
+  <hex row="32" col="20" terrain="5"/>
+  <hex row="32" col="21" terrain="15" name="Cogilnic River"/>
+  <hex row="32" col="22" terrain="5"/>
+  <hex row="32" col="23" terrain="5"/>
+  <hex row="32" col="24" terrain="5"/>
+  <hex row="32" col="25" road="2"/>
+  <hex row="32" col="26" terrain="10" road="178"/>
+  <hex row="32" col="27" terrain="15"/>
+  <hex row="32" col="28" road="1"/>
+  <hex row="32" col="29" terrain="15"/>
+  <hex row="32" col="30" road="9"/>
+  <hex row="32" col="31" terrain="1" road="139" name="Ioloveni" owner="0" flag="89"/>
+  <hex row="32" col="32" terrain="1" road="160" name="Ioloveni"/>
+  <hex row="32" col="38" terrain="15"/>
+  <hex row="32" col="39" terrain="15"/>
+  <hex row="33" col="3" terrain="15" name="Prut River"/>
+  <hex row="33" col="5" road="17"/>
+  <hex row="33" col="9" road="34"/>
+  <hex row="33" col="10" road="33"/>
+  <hex row="33" col="11" terrain="15"/>
+  <hex row="33" col="12" terrain="5"/>
+  <hex row="33" col="13" terrain="5"/>
+  <hex row="33" col="14" terrain="5"/>
+  <hex row="33" col="15" terrain="5"/>
+  <hex row="33" col="16" terrain="5"/>
+  <hex row="33" col="17" terrain="5"/>
+  <hex row="33" col="18" terrain="5"/>
+  <hex row="33" col="19" terrain="5"/>
+  <hex row="33" col="20" terrain="1" road="136" name="Hincesti" owner="0" flag="89" deploy="0"/>
+  <hex row="33" col="21" terrain="1" road="136" name="Hincesti"/>
+  <hex row="33" col="22" terrain="15" name="Cogilnic River"/>
+  <hex row="33" col="23" terrain="15" name="Cogilnic River"/>
+  <hex row="33" col="24" terrain="5"/>
+  <hex row="33" col="25" road="34"/>
+  <hex row="33" col="26" road="33"/>
+  <hex row="33" col="28" terrain="15"/>
+  <hex row="33" col="29" terrain="15"/>
+  <hex row="33" col="30" terrain="15"/>
+  <hex row="33" col="31" terrain="15"/>
+  <hex row="33" col="32" road="136"/>
+  <hex row="33" col="33" road="144"/>
+  <hex row="33" col="40" terrain="15"/>
+  <hex row="34" col="2" terrain="15" name="Prut River"/>
+  <hex row="34" col="5" road="33"/>
+  <hex row="34" col="8" terrain="1" road="18" name="Mingir"/>
+  <hex row="34" col="9" terrain="15"/>
+  <hex row="34" col="10" terrain="15"/>
+  <hex row="34" col="11" terrain="5"/>
+  <hex row="34" col="12" terrain="5"/>
+  <hex row="34" col="13" terrain="5"/>
+  <hex row="34" col="14" terrain="5"/>
+  <hex row="34" col="15" terrain="5"/>
+  <hex row="34" col="16" terrain="5"/>
+  <hex row="34" col="17" terrain="5"/>
+  <hex row="34" col="18" terrain="1" name="Mereseni"/>
+  <hex row="34" col="19" terrain="1" name="Mereseni"/>
+  <hex row="34" col="20" terrain="5"/>
+  <hex row="34" col="21" terrain="5" road="2"/>
+  <hex row="34" col="22" terrain="10" road="168" name="Cogilnic River"/>
+  <hex row="34" col="23" road="162"/>
+  <hex row="34" col="24" terrain="5" road="34"/>
+  <hex row="34" col="25" terrain="5"/>
+  <hex row="34" col="28" terrain="1" name="Costesti"/>
+  <hex row="34" col="29" terrain="1" name="Costesti" owner="0" flag="89"/>
+  <hex row="34" col="30" terrain="15"/>
+  <hex row="34" col="32" terrain="15"/>
+  <hex row="34" col="33" road="9"/>
+  <hex row="34" col="35" terrain="3"/>
+  <hex row="34" col="39" terrain="15"/>
+  <hex row="34" col="40" terrain="15"/>
+  <hex row="35" col="1" terrain="15" name="Prut River"/>
+  <hex row="35" col="2" terrain="15" name="Prut River"/>
+  <hex row="35" col="4" road="18"/>
+  <hex row="35" col="7" road="18"/>
+  <hex row="35" col="8" terrain="1" road="33" name="Mingir"/>
+  <hex row="35" col="9" terrain="15"/>
+  <hex row="35" col="10" terrain="5"/>
+  <hex row="35" col="11" terrain="5"/>
+  <hex row="35" col="12" terrain="5"/>
+  <hex row="35" col="16" terrain="5"/>
+  <hex row="35" col="17" terrain="5"/>
+  <hex row="35" col="18" terrain="1" name="Mereseni" owner="0" flag="89"/>
+  <hex row="35" col="19" terrain="5"/>
+  <hex row="35" col="20" terrain="5"/>
+  <hex row="35" col="21" terrain="5" road="2"/>
+  <hex row="35" col="22" terrain="10" road="50" name="Cogilnic River"/>
+  <hex row="35" col="23" terrain="15" name="Cogilnic River"/>
+  <hex row="35" col="24" terrain="5"/>
+  <hex row="35" col="25" terrain="5"/>
+  <hex row="35" col="26" terrain="5"/>
+  <hex row="35" col="28" terrain="1" name="Costesti"/>
+  <hex row="35" col="29" terrain="15"/>
+  <hex row="35" col="30" terrain="15"/>
+  <hex row="35" col="32" terrain="15"/>
+  <hex row="35" col="33" terrain="15"/>
+  <hex row="35" col="34" terrain="1" road="136" name="Singera"/>
+  <hex row="35" col="35" terrain="1" road="136" name="Singera" owner="0" flag="89"/>
+  <hex row="35" col="36" terrain="1" road="16" name="Singera"/>
+  <hex row="35" col="37" road="32"/>
+  <hex row="35" col="38" terrain="15"/>
+  <hex row="36" col="1" terrain="15" name="Prut River"/>
+  <hex row="36" col="4" road="17"/>
+  <hex row="36" col="7" road="33"/>
+  <hex row="36" col="8" terrain="15"/>
+  <hex row="36" col="9" terrain="5"/>
+  <hex row="36" col="10" terrain="5"/>
+  <hex row="36" col="11" terrain="5"/>
+  <hex row="36" col="12" terrain="5"/>
+  <hex row="36" col="18" terrain="5"/>
+  <hex row="36" col="19" terrain="5"/>
+  <hex row="36" col="20" terrain="5"/>
+  <hex row="36" col="21" terrain="5" road="18"/>
+  <hex row="36" col="22" road="33"/>
+  <hex row="36" col="23" terrain="15" name="Cogilnic River"/>
+  <hex row="36" col="24" terrain="5"/>
+  <hex row="36" col="25" terrain="5"/>
+  <hex row="36" col="26" terrain="5"/>
+  <hex row="36" col="27" terrain="5"/>
+  <hex row="36" col="29" terrain="15"/>
+  <hex row="36" col="34" terrain="15"/>
+  <hex row="36" col="35" terrain="15"/>
+  <hex row="36" col="36" terrain="10" road="147"/>
+  <hex row="36" col="37" terrain="15"/>
+  <hex row="36" col="38" terrain="15"/>
+  <hex row="36" col="39" terrain="15"/>
+  <hex row="37" col="2" terrain="15" name="Prut River"/>
+  <hex row="37" col="3" terrain="15" name="Prut River"/>
+  <hex row="37" col="4" road="17"/>
+  <hex row="37" col="5" road="34"/>
+  <hex row="37" col="6" road="34"/>
+  <hex row="37" col="7" terrain="15"/>
+  <hex row="37" col="8" terrain="15"/>
+  <hex row="37" col="9" terrain="5"/>
+  <hex row="37" col="10" terrain="5"/>
+  <hex row="37" col="11" terrain="5"/>
+  <hex row="37" col="17" terrain="5"/>
+  <hex row="37" col="18" terrain="5"/>
+  <hex row="37" col="19" terrain="5"/>
+  <hex row="37" col="20" terrain="5"/>
+  <hex row="37" col="21" terrain="5" road="17"/>
+  <hex row="37" col="22" terrain="15" name="Cogilnic River"/>
+  <hex row="37" col="24" terrain="5"/>
+  <hex row="37" col="25" terrain="5"/>
+  <hex row="37" col="26" terrain="5"/>
+  <hex row="37" col="27" terrain="5"/>
+  <hex row="37" col="29" terrain="15"/>
+  <hex row="37" col="36" road="9"/>
+  <hex row="37" col="37" road="136"/>
+  <hex row="37" col="39" terrain="15"/>
+</map>

@@ -1,0 +1,486 @@
+[
+  {
+    "id": 0,
+    "scenario": "polsov_01.xml",
+    "startprestige": 0,
+    "intro": "The road ahead is defended, yet a decisive blow here can unhinge the entire front. Approach to Wilno places your command at April 15th, 1919. But rebuilding of the state was halted by the Soviet attack last winter. Instead of the roads and towns that needed to be built, the army had to be sent in to stop the Bolsheviks. The wider stakes are clear: There are rumours that the Polish Army from France is on the way to Poland. A strong result opens the road to Assault on Wilno. Concentrate your best units, protect the flanks of the advance, and seize the decisive objectives before the enemy can rebuild a line.",
+    "outcome": {
+      "briliant": {
+        "goto": 1,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 240,
+        "text": "Now we have an excellent position to assault Wilno. You will fight in the city so artillery and infantry will be handy. <br><br>There are rumours that the Polish Army from France is on the way to Poland. They will help us to defend the country.  <br><br>But now you have to liberate Wilno!"
+      },
+      "victory": {
+        "goto": 1,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 180,
+        "text": "Now we have an excellent position to assault Wilno. You will fight in the city so artillery and infantry will be handy. <br><br>There are rumours that the Polish Army from France is on the way to Poland. They will help us to defend the country.  <br><br>But now you have to liberate Wilno!"
+      },
+      "tactical": {
+        "goto": 1,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 145,
+        "text": "Now we have an excellent position to assault Wilno. You will fight in the city so artillery and infantry will be handy. <br><br>There are rumours that the Polish Army from France is on the way to Poland. They will help us to defend the country.  <br><br>But now you have to liberate Wilno!"
+      },
+      "lose": {
+        "goto": 1,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "You haven't been able to defeat the Red Army and now the Soviet counterattacks will force us to retreat. We'll have to agree to peace negotiations and we'll lose a great portion of the territory that was once part of Poland. You should accept your responsibility and resign inmediately."
+      }
+    }
+  },
+  {
+    "id": 1,
+    "scenario": "polsov_02.xml",
+    "startprestige": 0,
+    "intro": "The road ahead is defended, yet a decisive blow here can unhinge the entire front. Assault on Wilno places your command at April 18th, 1919. We have just secured the position for the assault. Easter arrives soon so try to liberate the city before the coming holidays. The wider stakes are clear: Your next objective will be the city of Minsk. A strong result opens the road to Liberating Bialorus. Momentum is your greatest asset: pause too long and a breakthrough becomes another costly frontal battle.",
+    "outcome": {
+      "briliant": {
+        "goto": 2,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 200,
+        "text": "Now that we have taken Wilno, our left flank will be secure. Of course, there will be Soviet counterattacks. But our new positions are strong and we'll be able to handle them.<br>We must keep on advancing before winter comes. Your next objective will be the city of Minsk."
+      },
+      "victory": {
+        "goto": 2,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 150,
+        "text": "Now that we have taken Wilno, our left flank will be secure. Of course, there will be Soviet counterattacks. But our new positions are strong and we'll be able to handle them.<br>We must keep on advancing before winter comes. Your next objective will be the city of Minsk."
+      },
+      "tactical": {
+        "goto": 2,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "Now that we have taken Wilno, our left flank will be secure. Of course, there will be Soviet counterattacks. But our new positions are strong and we'll be able to handle them.<br>We must keep on advancing before winter comes. Your next objective will be the city of Minsk."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "You haven't been able to defeat the Red Army and now the Soviet counterattacks will force us to retreat. We'll have to agree to peace negotiations and we'll lose a great portion of the territory that was once part of Poland. You should accept your responsibility and resign inmediately."
+      }
+    }
+  },
+  {
+    "id": 2,
+    "scenario": "polsov_03.xml",
+    "startprestige": 0,
+    "intro": "The initiative is yours, but the enemy will not remain disorganized for long. Liberating Bialorus places your command at August 4th, 1919. The next step is to liberate Bialorus and create there another independent state that would serve as an ally separating Poland from Russia. You will lead forces striking south and cutting off the Red Army units. The wider stakes are clear: With the Soviet Western Army in disarray, we'll advance further east to stronger positions. A strong result opens the road to Battle of Dyneburg. Break the defence before reserves arrive, keep your spearheads supplied, and turn tactical success into an operational collapse.",
+    "outcome": {
+      "briliant": {
+        "goto": 3,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 300,
+        "text": "A notable victory indeed! With the Soviet Western Army in disarray, we'll advance further east to stronger positions. This winter we'll be safe from enemy attacks. There are chances that an independent Bialorus will rise!"
+      },
+      "victory": {
+        "goto": 3,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 200,
+        "text": "A notable victory indeed! With the Soviet Western Army in disarray, we'll advance further east to stronger positions. This winter we'll be safe from enemy attacks. There are chances that an independent Bialorus will rise!"
+      },
+      "tactical": {
+        "goto": 3,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "A notable victory indeed! With the Soviet Western Army in disarray, we'll advance further east to stronger positions. This winter we'll be safe from enemy attacks. There are chances that an independent Bialorus will rise!"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "You have been too slow! Now when winter comes to our defensive positions, it will be very weak and we won't be able to resist the Soviet counterattack. We'll be forced to peace negotiations and surely we'll have to cede much of the territory we had taken from the Soviets.<br>I'll see to it that you assume full responsibility and be expelled from the Army."
+      }
+    }
+  },
+  {
+    "id": 3,
+    "scenario": "polsov_04.xml",
+    "startprestige": 0,
+    "intro": "The road ahead is defended, yet a decisive blow here can unhinge the entire front. Battle of Dyneburg places your command at January 3rd, 1920. But General Denikin not only refused to recognize the Polish state, but he also asked France (former Russian ally and current Polish ally) to stop supporting the Poles as well! Because of this, Polish authorities decided not to support Denikin's forces and stopped all aggressive operations against the Red Army. The wider stakes are clear: It has been a difficult battle but in the end the Soviet army has been destroyed and we have forged an alliance with Latvia that will be very important in the future. Break the defence before reserves arrive, keep your spearheads supplied, and turn tactical success into an operational collapse.",
+    "outcome": {
+      "briliant": {
+        "goto": 4,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "It has been a difficult battle but in the end the Soviet army has been destroyed and we have forged an alliance with Latvia that will be very important in the future.<br>During the rest of the winter we won't participate in any large scale military actions. But in spring we'll launch an offensive in Ukraine. If we help Symon Petliura's nationalists to create an anti-Bolshevist Ukrainian republic allied with Poland our eastern frontier will be much safer."
+      },
+      "victory": {
+        "goto": 4,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 50,
+        "text": "It has been a difficult battle but in the end the Soviet army has been destroyed and we have forged an alliance with Latvia that will be very important in the future.<br>During the rest of the winter we won't participate in any large scale military actions. But in spring we'll launch an offensive in Ukraine. If we help Symon Petliura's nationalists to create an anti-Bolshevist Ukrainian republic allied with Poland our eastern frontier will be much safer."
+      },
+      "tactical": {
+        "goto": 4,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "It has been a difficult battle but in the end the Soviet army has been destroyed and we have forged an alliance with Latvia that will be very important in the future.<br>During the rest of the winter we won't participate in any large scale military actions. But in spring we'll launch an offensive in Ukraine. If we help Symon Petliura's nationalists to create an anti-Bolshevist Ukrainian republic allied with Poland our eastern frontier will be much safer."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Our troops couldn't overcome the cold and the enemy. We still have a Soviet army menacing our left flank so we'll have to cancel our plans for a spring offensive.The Reds will have enough time to recover from their early defeats so maybe we'll have to agree to peace negotiations.<br>None of this would have happened if you had led your army better, General. It's time for you to ask for your retirement."
+      }
+    }
+  },
+  {
+    "id": 4,
+    "scenario": "polsov_05.xml",
+    "startprestige": 0,
+    "intro": "A narrow window has opened in the enemy line; turn it into a strategic rupture. Operation Kijów places your command at April 25th, 1920. Well, it's time to assault Kijów and hopefully inflict a decisive blow against the Red Russians. You must break the enemy line near Zytomierz and advance as fast as you can towards the east. The wider stakes are clear: Once again we have routed the Soviet Army and now the way to Kijów is clear! A strong result opens the road to Race to Kijów. Concentrate your best units, protect the flanks of the advance, and seize the decisive objectives before the enemy can rebuild a line.",
+    "outcome": {
+      "briliant": {
+        "goto": 5,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "Once again we have routed the Soviet Army and now the way to Kijów is clear! My congratulations, General!"
+      },
+      "victory": {
+        "goto": 5,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 400,
+        "text": "Once again we have routed the Soviet Army and now the way to Kijów is clear! My congratulations, General!"
+      },
+      "tactical": {
+        "goto": 5,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 300,
+        "text": "Once again we have routed the Soviet Army and now the way to Kijów is clear! My congratulations, General!"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "You have showed a worrying lack of skill in your advance on the Ukrainian plains. Although you did manage to destroy some Soviet divisions, it took you too long to do so and now the Reds have gathered an incredible amount of reinforcement troops. We'll have to retreat from Ukraine and build a safer defence line towards the west. Anyway, we'll choose another commander for that mission. Consider yourself relieved from duty, General."
+      }
+    }
+  },
+  {
+    "id": 5,
+    "scenario": "polsov_06.xml",
+    "startprestige": 0,
+    "intro": "The road ahead is defended, yet a decisive blow here can unhinge the entire front. Race to Kijów places your command at May 5th, 1920. It seems that they decided not to defend Kijów and instead retreated to the eastern bank of the Dniepr river. If we can occupy Kijów fast enough, we can prevent the Russians from stealing many Ukrainian goods, food and documents. The wider stakes are clear: Although Symon Petliura thought that there would be a Ukrainian patriotic uprising against the Russians, most of the population is indifferent at best. A strong result opens the road to Surviving the red tide. Momentum is your greatest asset: pause too long and a breakthrough becomes another costly frontal battle.",
+    "outcome": {
+      "briliant": {
+        "goto": 6,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 150,
+        "text": "We have entered Kijów without any serious trouble. Very well done!<br>But, confidentially, I must tell you that the situation is far worse than we expected. Although Symon Petliura thought that there would be a Ukrainian patriotic uprising against the Russians, most of the population is indifferent at best. We won't have any strong support from the locals.<br><br>And even worse than this, our intelligence reports warn us of a huge Red counteroffensive that will start in the next few weeks or possibly in a few days! We are very far from our bases and the Soviet reinforcements will be composed mainly of veteran troops so we could be in serious trouble."
+      },
+      "victory": {
+        "goto": 6,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 150,
+        "text": "We have entered Kijów without any serious trouble. Very well done!<br>But, confidentially, I must tell you that the situation is far worse than we expected. Although Symon Petliura thought that there would be a Ukrainian patriotic uprising against the Russians, most of the population is indifferent at best. We won't have any strong support from the locals.<br><br>And even worse than this, our intelligence reports warn us of a huge Red counteroffensive that will start in the next few weeks or possibly in a few days! We are very far from our bases and the Soviet reinforcements will be composed mainly of veteran troops so we could be in serious trouble."
+      },
+      "tactical": {
+        "goto": 6,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 150,
+        "text": "We have entered Kijów without any serious trouble. Very well done!<br>But, confidentially, I must tell you that the situation is far worse than we expected. Although Symon Petliura thought that there would be a Ukrainian patriotic uprising against the Russians, most of the population is indifferent at best. We won't have any strong support from the locals.<br><br>And even worse than this, our intelligence reports warn us of a huge Red counteroffensive that will start in the next few weeks or possibly in a few days! We are very far from our bases and the Soviet reinforcements will be composed mainly of veteran troops so we could be in serious trouble."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Your delay leaves us in a difficult diplomatic situation with Ukraine. The Ministry of Foreign Affairs wants you removed from your command and I'm afraid that the Army won't be able to coverup this scandal. For the sake of us all, you'd better resign."
+      }
+    }
+  },
+  {
+    "id": 6,
+    "scenario": "polsov_07.xml",
+    "startprestige": 0,
+    "intro": "Your force is exposed, the roads are closing, and every hour of delay narrows the route to safety. Surviving the red tide places your command at June 4th, 1920. They are trying to surround and crush our 3rd Army and we won't be able to resist their pressure until reinforcements arrive. We'll have to evacuate Kijów but we need some time to organize our troops and retreat in an orderly fashion towards our rear defence lines. The wider stakes are clear: The battle was tough but your masterful defence strategy was successful. A strong result opens the road to Battle of Warszawa: Poland's last chance. Rear guards must buy time while the main body escapes; abandon cohesion and the campaign may end here.",
+    "outcome": {
+      "briliant": {
+        "goto": 7,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 350,
+        "text": "The battle was tough but your masterful defence strategy was successful. You have inflicted heavy losses on the Reds and now, with a bit of luck, we'll be able to stop their counteroffensive at our winter headquarters near Zwiahel."
+      },
+      "victory": {
+        "goto": 7,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 350,
+        "text": "The battle was tough but your masterful defence strategy was successful. You have inflicted heavy losses on the Reds and now, with a bit of luck, we'll be able to stop their counteroffensive at our winter headquarters near Zwiahel."
+      },
+      "tactical": {
+        "goto": 7,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 350,
+        "text": "The battle was tough but your masterful defence strategy was successful. You have inflicted heavy losses on the Reds and now, with a bit of luck, we'll be able to stop their counteroffensive at our winter headquarters near Zwiahel."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Yes, that's right, Sir. The General is reported to be dead but in the midst of our retreat we couldn't recover his body. The Russian advance has been so quick that thousands of our soldiers are still missing and we fear the worst."
+      }
+    }
+  },
+  {
+    "id": 7,
+    "scenario": "polsov_08.xml",
+    "startprestige": 0,
+    "intro": "The campaign has reached a point where speed matters as much as firepower. Battle of Warszawa: Poland's last chance places your command at August 13th, 1920. Again and again we have been forced to retreat and now the Russian Red Army is ready for its final assault on Warszawa. As the Russian troops cross the Wkra River and advance towards Modlin Fortress, our defeat seems inminent. The wider stakes are clear: It is most important to advance quickly to the east and recover our lost territories before the Russians have time to recover or the League of Nations forces us to sign an armistice... Momentum is your greatest asset: pause too long and a breakthrough becomes another costly frontal battle.",
+    "outcome": {
+      "briliant": {
+        "goto": 8,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 150,
+        "text": "Amazing! This counterattack will be remembered as one of the finest military feats in Poland's history! The Red Army has been crushed and now its surviving units are fleeing to avoid being surrounded and destroyed by our troops!<br><br>We must take advantage of this situation, General! It is most important to advance quickly to the east and recover our lost territories before the Russians have time to recover or the League of Nations forces us to sign an armistice..."
+      },
+      "victory": {
+        "goto": 8,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 80,
+        "text": "Amazing! This counterattack will be remembered as one of the finest military feats in Poland's history! The Red Army has been crushed and now its surviving units are fleeing to avoid being surrounded and destroyed by our troops!<br><br>We must take advantage of this situation, General! It is most important to advance quickly to the east and recover our lost territories before the Russians have time to recover or the League of Nations forces us to sign an armistice..."
+      },
+      "tactical": {
+        "goto": 8,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Amazing! This counterattack will be remembered as one of the finest military feats in Poland's history! The Red Army has been crushed and now its surviving units are fleeing to avoid being surrounded and destroyed by our troops!<br><br>We must take advantage of this situation, General! It is most important to advance quickly to the east and recover our lost territories before the Russians have time to recover or the League of Nations forces us to sign an armistice..."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Everything is lost. Our army has been destroyed and the Russians have conquered our beloved capital. We can offer no further resistance and we have no other option but surrender. Poland will become a dominion of Soviet Russia. Or at best, if we are lucky and the League of Nations puts pressure on Russia, we'll be allowed to keep a tiny Polish state around Kraków.<br><br>In any case, going into exile would be the best thing for you to do General. After this defeat you will be better off in Paris or London than in Poland."
+      }
+    }
+  },
+  {
+    "id": 8,
+    "scenario": "polsov_09.xml",
+    "startprestige": 0,
+    "intro": "The enemy still has a line on the map; your task is to ride through it and strike the rear. Komarów, the last cavalry battle places your command at August 31st, 1920. Our pursuit of the retreating Bolshevik army has been quite successful so far. Now we have an opportunity to encircle and destroy the Russian's 1st cavalry Army, one of the best units in the Red Army. The wider stakes are clear: Although Budionny and part of his army were finally able to breakthrough our lines and retreat to the east, their losses were very high and I don't think they'll be a threat to us anymore. Scout first, avoid prepared strongpoints, and use speed to seize crossings, junctions, and retreat routes.",
+    "outcome": {
+      "briliant": {
+        "goto": 9,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 550,
+        "text": "This will be remembered as one of the largest cavalry battles in modern history and it has been a great victory for Poland! Although Budionny and part of his army were finally able to breakthrough our lines and retreat to the east, their losses were very high and I don't think they'll be a threat to us anymore.<br><br>But we can't stop now! We must continue our counteroffensive and recover all of the territories lost to the Russians in the last months. Your next destination will be the Niemen River."
+      },
+      "victory": {
+        "goto": 9,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 550,
+        "text": "This will be remembered as one of the largest cavalry battles in modern history and it has been a great victory for Poland! Although Budionny and part of his army were finally able to breakthrough our lines and retreat to the east, their losses were very high and I don't think they'll be a threat to us anymore.<br><br>But we can't stop now! We must continue our counteroffensive and recover all of the territories lost to the Russians in the last months. Your next destination will be the Niemen River."
+      },
+      "tactical": {
+        "goto": 9,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 550,
+        "text": "This will be remembered as one of the largest cavalry battles in modern history and it has been a great victory for Poland! Although Budionny and part of his army were finally able to breakthrough our lines and retreat to the east, their losses were very high and I don't think they'll be a threat to us anymore.<br><br>But we can't stop now! We must continue our counteroffensive and recover all of the territories lost to the Russians in the last months. Your next destination will be the Niemen River."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "You have missed our best chance to crush Budionny's troops. He has managed to retreat to the east with minor losses and his army will still be a challenge for us in the future. We'll still be able to continue with our counteroffensive but I think that you should resign your command. You performed well in the past, but now you seem exhausted and for the good of our nation you must take a rest."
+      }
+    }
+  },
+  {
+    "id": 9,
+    "scenario": "polsov_10.xml",
+    "startprestige": 0,
+    "intro": "Your force is exposed, the roads are closing, and every hour of delay narrows the route to safety. Riding across the Niemen River places your command at September 20th, 1920. After nearly a month of withdrawal, the Red Army is trying to build a solid defensive line by the river Niemen, near the town of Grodno. We must break that line quickly so that we can continue our offensive before the Russian defenses are completed. The wider stakes are clear: It has been a tremendous battle but finally the Soviets have been defeated and they have taken heavy losses. Rear guards must buy time while the main body escapes; abandon cohesion and the campaign may end here.",
+    "outcome": {
+      "briliant": {
+        "goto": 10,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 350,
+        "text": "It has been a tremendous battle but finally the Soviets have been defeated and they have taken heavy losses. The Bolshevik government has sent us a peace offer that we are considering right now. <br><br>The end of the war is near but until that moment comes our troops will have to go on advancing."
+      },
+      "victory": {
+        "goto": 10,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 350,
+        "text": "It has been a tremendous battle but finally the Soviets have been defeated and they have taken heavy losses. The Bolshevik government has sent us a peace offer that we are considering right now. <br><br>The end of the war is near but until that moment comes our troops will have to go on advancing."
+      },
+      "tactical": {
+        "goto": 10,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 350,
+        "text": "It has been a tremendous battle but finally the Soviets have been defeated and they have taken heavy losses. The Bolshevik government has sent us a peace offer that we are considering right now. <br><br>The end of the war is near but until that moment comes our troops will have to go on advancing."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "It has been a tremendous battle but our troops were exhausted and we couldn't take our objectives in time. The Red Army has taken heavy losses too so the Bolshevik government has sent us a peace offer that we are considering right now.<br>I'm afraid that we'll finally have to accept the Curzon Line as the boundary between Poland and Red Russia. But after your poor performance at the battle of the Niemen River it's the best we can get."
+      }
+    }
+  },
+  {
+    "id": 10,
+    "scenario": "polsov_11.xml",
+    "startprestige": 0,
+    "intro": "The initiative is yours, but the enemy will not remain disorganized for long. Back to Minsk places your command at October 9th, 1920. As a consequence of the peace talks that are taking place in Riga, it seems that a ceasefire is imminent. Continue your march to the east, towards the city of Minsk. The wider stakes are clear: I'll be glad to go with you to Wilno to offer our victory to Our Lady of Gate of Dawn. Momentum is your greatest asset: pause too long and a breakthrough becomes another costly frontal battle.",
+    "outcome": {
+      "briliant": {
+        "goto": 254,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Well done! After all of your stunning victories against the Soviets, it's time for our diplomats to exploit your successes. I just hope they are as competent as you!<br><br>You must feel proud of yourself, General! You will be remembered as one of our best military commanders. Poland will be forever in debt to you. <br><br>I'll be glad to go with you to Wilno to offer our victory to Our Lady of Gate of Dawn. May our Lord give you a long and prosperous life.<br><br>The campaign is over. I hope you have liked it and thanks for playing!<br><br>Urica 2011"
+      },
+      "victory": {
+        "goto": 254,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Well done! After all of your stunning victories against the Soviets, it's time for our diplomats to exploit your successes. I just hope they are as competent as you!<br><br>You must feel proud of yourself, General! You will be remembered as one of our best military commanders. Poland will be forever in debt to you. <br><br>I'll be glad to go with you to Wilno to offer our victory to Our Lady of Gate of Dawn. May our Lord give you a long and prosperous life.<br><br>The campaign is over. I hope you have liked it and thanks for playing!<br><br>Urica 2011"
+      },
+      "tactical": {
+        "goto": 254,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Well done! After all of your stunning victories against the Soviets, it's time for our diplomats to exploit your successes. I just hope they are as competent as you!<br><br>You must feel proud of yourself, General! You will be remembered as one of our best military commanders. Poland will be forever in debt to you. <br><br>I'll be glad to go with you to Wilno to offer our victory to Our Lady of Gate of Dawn. May our Lord give you a long and prosperous life.<br><br>The campaign is over. I hope you have liked it and thanks for playing!<br><br>Urica 2011"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "This has certainly been a bittersweet ending. Your failure at the gates of Minsk will make it much harder for our diplomats to get concessions from the Russians. It's a pity that you couldn't finish what you had started.<br><br>The campaign is over. I hope you have liked it and thanks for playing.<br><br>Urica 2011"
+      }
+    }
+  }
+]

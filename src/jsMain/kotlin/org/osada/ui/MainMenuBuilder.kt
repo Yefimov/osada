@@ -1,3 +1,5 @@
+@file:Suppress("MaxLineLength")
+
 package org.osada.ui
 
 import org.osada.GameHolder
@@ -20,7 +22,11 @@ internal object MainMenuBuilder {
 
         // Reparent the existing status elements (ids kept — StatusBarController fills them).
         // --- scenario / turn / date (center-left) ---
-        byId("statusmsg")?.let { statusbar.appendChild(it) }
+        byId("statusmsg")?.let {
+            statusbar.appendChild(it)
+            it.title =
+                "Current scenario, turn limit and in-game date. Victory tiers may require taking all objectives before an earlier turn threshold."
+        }
         // --- weather (text) ---
         byId("weathermsg")?.let { statusbar.appendChild(it) }
 
@@ -32,7 +38,10 @@ internal object MainMenuBuilder {
         buildEndTurnButton(statusbar)
 
         // --- hex coords / terrain (far right, muted) ---
-        byId("locmsg")?.let { statusbar.appendChild(it) }
+        byId("locmsg")?.let {
+            statusbar.appendChild(it)
+            it.title = "Hex under the pointer: terrain, road or place name, visible unit and map coordinates."
+        }
 
         // The bar no longer toggles the combat log on click (buttons live in it now).
         statusbar.onclick = null
@@ -74,7 +83,7 @@ internal object MainMenuBuilder {
         byId("combatLogButton")?.let { btn ->
             statusbar.appendChild(btn)
             btn.classList.add("osada-tb-icon", "osada-tb-combatlog")
-            btn.title = "Turn Report (L)"
+            btn.title = "Turn Report (L) — review objectives, score, prestige, combat results and recent events."
         }
         val spacer2 = addTag(statusbar, "div")
         spacer2.className = "osada-tb-spacer"
@@ -85,7 +94,8 @@ internal object MainMenuBuilder {
         val prestige = addTag(statusbar, "div")
         prestige.id = "osadaPrestige"
         prestige.className = "osada-tb-prestige"
-        prestige.title = "Prestige"
+        prestige.title =
+            "Prestige — campaign resources spent on buying, upgrading and reinforcing units. The green value is next turn's income."
     }
 
     private fun buildReservesButton(statusbar: org.w3c.dom.HTMLElement) {
@@ -93,7 +103,8 @@ internal object MainMenuBuilder {
         val reserves = addTag(statusbar, "div")
         reserves.id = "buy"
         reserves.className = "osada-tb-btn osada-tb-reserves"
-        reserves.title = "Reserves — buy, upgrade and deploy units (R)"
+        reserves.title =
+            "Reserves (R) — buy new units, upgrade existing formations, and deploy purchased units from the reserve tray."
         val reservesLabel = addTag(reserves, "span")
         reservesLabel.className = "osada-tb-reserves__label"
         reservesLabel.textContent = "Reserves"
@@ -121,8 +132,12 @@ internal object MainMenuBuilder {
             b.title = tip
             b.onclick = { _: org.w3c.dom.events.MouseEvent -> GameHolder.instance?.ui?.mainMenuButton(action) }
         }
-        iconButton("zoom", "zoom", "recon", "Strategic map — zoom out to the whole theatre (M)")
-        iconButton("options", "options", "settings", "Options & menu (Esc)")
+        iconButton(
+            "zoom",
+            "zoom",
+            "recon",
+            "Strategic map (M) — toggle a whole-theatre overview for navigation. Unit actions are unavailable in this view.",
+        )
 
         // Headquarters → Commanders roster (§14.3). Opens the campaign leader roster, view-only
         // during a scenario. Always present; the roster shows an empty state until officers emerge.
@@ -131,8 +146,16 @@ internal object MainMenuBuilder {
         // Red star sprite (hud_icons_grid row 3, col 2 = .osada-ico--star), matching the other
         // top-bar icons rather than a text glyph.
         hq.className = "osada-tb-icon osada-ico osada-ico--star"
-        hq.title = "Headquarters — Commanders roster"
+        hq.title =
+            "Headquarters — inspect all campaign commanders, their formations, status, recognition and career history."
         hq.onclick = { _: org.w3c.dom.events.MouseEvent -> CommanderRosterPresenter.open() }
+
+        iconButton(
+            "options",
+            "options",
+            "settings",
+            "Options & menu (Esc) — save or load the game, change settings, or return to the battle.",
+        )
     }
 
     private fun buildReadyUnitNav(statusbar: org.w3c.dom.HTMLElement) {
@@ -140,22 +163,24 @@ internal object MainMenuBuilder {
         val nav = addTag(statusbar, "div")
         nav.id = "osadaNav"
         nav.className = "osada-tb-nav"
-        nav.title = "Cycle through your units that can still act this turn"
+        nav.title =
+            "Ready units — the number of your units that can still move, attack or use another action this turn."
         val prev = addTag(nav, "span")
         prev.id = "osadaNavPrev"
         prev.className = "osada-tb-nav__arrow"
         prev.innerHTML = "<img class=\"osada-tb-nav__glyph\" src=\"resources/ui/osada/ico_nav_prev.png\" alt=\"◀\">"
-        prev.title = "Previous ready unit"
+        prev.title = "Select and centre the previous unit that can still act."
         prev.onclick = { _: org.w3c.dom.events.MouseEvent -> GameHolder.instance?.ui?.cycleReadyUnit(-1) }
         val count = addTag(nav, "span")
         count.id = "osadaNavCount"
         count.className = "osada-tb-nav__count"
         count.textContent = "0"
+        count.title = "Units still able to act this turn. Sleeping units are skipped by navigation."
         val next = addTag(nav, "span")
         next.id = "osadaNavNext"
         next.className = "osada-tb-nav__arrow"
         next.innerHTML = "<img class=\"osada-tb-nav__glyph\" src=\"resources/ui/osada/ico_nav_next.png\" alt=\"▶\">"
-        next.title = "Next ready unit"
+        next.title = "Select and centre the next unit that can still act."
         next.onclick = { _: org.w3c.dom.events.MouseEvent -> GameHolder.instance?.ui?.cycleReadyUnit(1) }
     }
 
@@ -164,7 +189,8 @@ internal object MainMenuBuilder {
         val endTurn = addTag(statusbar, "div")
         endTurn.id = "osadaEndTurn"
         endTurn.className = "osada-et osada-et--ready"
-        endTurn.title = "End turn"
+        endTurn.title =
+            "End the current side's turn. If confirmation is enabled, you will be warned about units that have not acted."
         val etLabel = addTag(endTurn, "span")
         etLabel.className = "osada-et__label"
         etLabel.textContent = "End turn"
@@ -190,9 +216,11 @@ internal object MainMenuBuilder {
         }
 
         val statusBarButton = byId("statusBarButton")
+        statusBarButton?.title = "Close the deployment unit strip and return to the map."
         statusBarButton?.onclick =
             { _: org.w3c.dom.events.MouseEvent -> GameHolder.instance?.ui?.toggleUnitsAndEquipmentWindow(false) }
         val unitsBarButton = byId("unitsBarButton")
+        unitsBarButton?.title = "Reopen the deployment unit strip to inspect or place reserve units."
         unitsBarButton?.onclick = { _: org.w3c.dom.events.MouseEvent ->
             makeHidden("unitsBarButton")
             byId("equipment")?.style?.display = "grid"

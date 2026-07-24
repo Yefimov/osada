@@ -1,0 +1,915 @@
+<?xml version="1.0" encoding="ASCII"?>
+<map file="aljf_6.xscn" name="Flank them at Wilson&#x27;s Creek" turns="6, 8, 16" date="August 10, 1861" dayturns="0" ground="0" atmosferic="0" latitude="15" iconset="0" weatherchg="0" rows="38" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_1409.png" eqpv="united1">
+  <player id="0" country="162" side="1" airtrans="0" navaltrans="0" support="163, 0, 0, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <player id="1" country="150" side="0" airtrans="0" navaltrans="0" support="151, 0, 0, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <hex row="0" col="8" terrain="3"/>
+  <hex row="0" col="9" terrain="3"/>
+  <hex row="0" col="10" terrain="3"/>
+  <hex row="0" col="11" terrain="3"/>
+  <hex row="0" col="13" terrain="3"/>
+  <hex row="0" col="14" terrain="3"/>
+  <hex row="0" col="15" terrain="3"/>
+  <hex row="0" col="27" road="17"/>
+  <hex row="0" col="32" terrain="5"/>
+  <hex row="0" col="33" terrain="5"/>
+  <hex row="0" col="39" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="0" col="40" terrain="3"/>
+  <hex row="0" col="41" terrain="3"/>
+  <hex row="0" col="42" terrain="3"/>
+  <hex row="0" col="43" terrain="3"/>
+  <hex row="1" col="1" terrain="3"/>
+  <hex row="1" col="3" terrain="3"/>
+  <hex row="1" col="6" terrain="3"/>
+  <hex row="1" col="7" terrain="3"/>
+  <hex row="1" col="8" terrain="3"/>
+  <hex row="1" col="9" terrain="3"/>
+  <hex row="1" col="10" terrain="3"/>
+  <hex row="1" col="11" terrain="3"/>
+  <hex row="1" col="13" terrain="3"/>
+  <hex row="1" col="14" terrain="3"/>
+  <hex row="1" col="25" terrain="1" road="10" name="Brookline"/>
+  <hex row="1" col="26" terrain="1" road="40" name="Brookline" owner="0" flag="162" deploy="0"/>
+  <hex row="1" col="27" terrain="1" road="161" name="Brookline"/>
+  <hex row="1" col="29" terrain="3"/>
+  <hex row="1" col="30" terrain="3"/>
+  <hex row="1" col="31" terrain="3"/>
+  <hex row="1" col="32" terrain="3"/>
+  <hex row="1" col="34" terrain="5"/>
+  <hex row="1" col="36" terrain="3"/>
+  <hex row="1" col="38" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="1" col="40" terrain="3"/>
+  <hex row="1" col="41" terrain="3"/>
+  <hex row="1" col="42" terrain="3"/>
+  <hex row="1" col="43" terrain="3"/>
+  <hex row="2" col="1" terrain="3"/>
+  <hex row="2" col="2" terrain="3"/>
+  <hex row="2" col="3" terrain="3"/>
+  <hex row="2" col="6" terrain="3"/>
+  <hex row="2" col="7" terrain="3"/>
+  <hex row="2" col="8" terrain="3"/>
+  <hex row="2" col="9" terrain="3"/>
+  <hex row="2" col="10" terrain="3"/>
+  <hex row="2" col="11" terrain="3"/>
+  <hex row="2" col="12" terrain="3"/>
+  <hex row="2" col="17" terrain="3"/>
+  <hex row="2" col="20" terrain="3"/>
+  <hex row="2" col="26" road="146"/>
+  <hex row="2" col="34" terrain="5"/>
+  <hex row="2" col="38" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="2" col="39" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="2" col="42" terrain="3"/>
+  <hex row="2" col="43" terrain="3"/>
+  <hex row="3" col="4" terrain="3"/>
+  <hex row="3" col="6" terrain="3"/>
+  <hex row="3" col="7" terrain="3"/>
+  <hex row="3" col="8" terrain="3"/>
+  <hex row="3" col="9" terrain="3"/>
+  <hex row="3" col="10" terrain="3"/>
+  <hex row="3" col="11" terrain="3"/>
+  <hex row="3" col="12" terrain="3"/>
+  <hex row="3" col="18" terrain="3"/>
+  <hex row="3" col="19" terrain="3"/>
+  <hex row="3" col="26" road="17"/>
+  <hex row="3" col="33" terrain="3"/>
+  <hex row="3" col="34" terrain="5"/>
+  <hex row="3" col="37" terrain="3"/>
+  <hex row="3" col="39" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="4" col="6" terrain="3"/>
+  <hex row="4" col="7" terrain="3"/>
+  <hex row="4" col="8" terrain="3"/>
+  <hex row="4" col="9" terrain="3"/>
+  <hex row="4" col="10" terrain="3"/>
+  <hex row="4" col="11" terrain="3"/>
+  <hex row="4" col="12" terrain="3"/>
+  <hex row="4" col="18" terrain="3"/>
+  <hex row="4" col="20" terrain="3"/>
+  <hex row="4" col="26" road="17"/>
+  <hex row="4" col="28" terrain="5"/>
+  <hex row="4" col="29" terrain="5"/>
+  <hex row="4" col="30" terrain="5"/>
+  <hex row="4" col="31" terrain="5"/>
+  <hex row="4" col="32" terrain="5"/>
+  <hex row="4" col="33" terrain="5"/>
+  <hex row="4" col="34" terrain="3"/>
+  <hex row="4" col="35" terrain="3"/>
+  <hex row="4" col="37" terrain="3"/>
+  <hex row="4" col="38" terrain="3"/>
+  <hex row="4" col="39" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="4" col="41" terrain="5"/>
+  <hex row="4" col="43" terrain="5"/>
+  <hex row="5" col="7" terrain="3"/>
+  <hex row="5" col="8" terrain="3"/>
+  <hex row="5" col="10" terrain="3"/>
+  <hex row="5" col="26" road="17"/>
+  <hex row="5" col="30" terrain="5"/>
+  <hex row="5" col="31" terrain="5"/>
+  <hex row="5" col="32" terrain="5"/>
+  <hex row="5" col="34" terrain="3"/>
+  <hex row="5" col="35" terrain="3"/>
+  <hex row="5" col="37" terrain="3"/>
+  <hex row="5" col="38" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="5" col="39" terrain="3"/>
+  <hex row="5" col="40" terrain="5"/>
+  <hex row="5" col="41" terrain="5"/>
+  <hex row="5" col="42" terrain="5"/>
+  <hex row="5" col="43" terrain="5"/>
+  <hex row="6" col="2" terrain="3"/>
+  <hex row="6" col="25" road="18"/>
+  <hex row="6" col="26" road="33"/>
+  <hex row="6" col="27" terrain="3"/>
+  <hex row="6" col="28" terrain="3"/>
+  <hex row="6" col="29" terrain="3"/>
+  <hex row="6" col="35" terrain="3"/>
+  <hex row="6" col="38" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="6" col="40" terrain="5"/>
+  <hex row="6" col="41" terrain="5"/>
+  <hex row="6" col="42" terrain="5"/>
+  <hex row="7" col="2" terrain="3"/>
+  <hex row="7" col="25" road="17"/>
+  <hex row="7" col="26" terrain="3"/>
+  <hex row="7" col="27" terrain="3"/>
+  <hex row="7" col="37" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="7" col="38" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="7" col="39" terrain="3"/>
+  <hex row="7" col="41" terrain="5"/>
+  <hex row="8" col="17" terrain="3"/>
+  <hex row="8" col="25" terrain="3" road="41"/>
+  <hex row="8" col="26" terrain="3"/>
+  <hex row="8" col="27" terrain="3"/>
+  <hex row="8" col="28" terrain="3"/>
+  <hex row="8" col="29" terrain="3"/>
+  <hex row="8" col="30" terrain="5"/>
+  <hex row="8" col="31" terrain="5"/>
+  <hex row="8" col="33" terrain="5"/>
+  <hex row="8" col="36" terrain="3"/>
+  <hex row="8" col="37" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="8" col="39" terrain="3"/>
+  <hex row="8" col="40" terrain="3"/>
+  <hex row="8" col="42" terrain="5"/>
+  <hex row="8" col="43" terrain="3"/>
+  <hex row="9" col="13" terrain="3"/>
+  <hex row="9" col="16" terrain="3"/>
+  <hex row="9" col="17" terrain="3"/>
+  <hex row="9" col="18" terrain="3"/>
+  <hex row="9" col="19" road="34"/>
+  <hex row="9" col="20" terrain="3" road="40"/>
+  <hex row="9" col="21" road="130"/>
+  <hex row="9" col="22" road="40"/>
+  <hex row="9" col="23" road="130"/>
+  <hex row="9" col="24" terrain="3" road="34"/>
+  <hex row="9" col="25" terrain="3"/>
+  <hex row="9" col="26" terrain="3" road="144"/>
+  <hex row="9" col="28" terrain="5"/>
+  <hex row="9" col="29" terrain="3"/>
+  <hex row="9" col="30" terrain="3"/>
+  <hex row="9" col="31" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="9" col="32" terrain="5"/>
+  <hex row="9" col="35" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="9" col="36" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="9" col="39" terrain="5"/>
+  <hex row="9" col="40" terrain="3"/>
+  <hex row="9" col="42" terrain="3"/>
+  <hex row="9" col="43" terrain="3"/>
+  <hex row="10" col="6" terrain="3"/>
+  <hex row="10" col="7" terrain="3"/>
+  <hex row="10" col="8" terrain="3"/>
+  <hex row="10" col="12" terrain="3"/>
+  <hex row="10" col="15" terrain="3"/>
+  <hex row="10" col="16" terrain="3"/>
+  <hex row="10" col="17" road="34"/>
+  <hex row="10" col="18" road="34"/>
+  <hex row="10" col="20" terrain="3"/>
+  <hex row="10" col="21" terrain="3"/>
+  <hex row="10" col="26" road="17"/>
+  <hex row="10" col="29" terrain="5"/>
+  <hex row="10" col="30" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="10" col="32" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="10" col="33" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="10" col="34" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="10" col="37" terrain="5"/>
+  <hex row="10" col="38" terrain="5"/>
+  <hex row="11" col="4" terrain="3"/>
+  <hex row="11" col="15" road="34"/>
+  <hex row="11" col="16" road="34"/>
+  <hex row="11" col="18" terrain="3"/>
+  <hex row="11" col="26" road="17"/>
+  <hex row="11" col="28" terrain="3"/>
+  <hex row="11" col="29" terrain="5"/>
+  <hex row="11" col="30" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="11" col="31" terrain="3"/>
+  <hex row="11" col="33" terrain="5"/>
+  <hex row="11" col="34" terrain="5"/>
+  <hex row="11" col="35" terrain="5"/>
+  <hex row="11" col="36" terrain="5"/>
+  <hex row="12" col="2" terrain="3"/>
+  <hex row="12" col="13" road="34"/>
+  <hex row="12" col="14" road="34"/>
+  <hex row="12" col="16" terrain="3"/>
+  <hex row="12" col="24" terrain="3"/>
+  <hex row="12" col="25" terrain="3"/>
+  <hex row="12" col="26" road="9"/>
+  <hex row="12" col="27" terrain="5" road="136">
+    <unit id="38438" owner="0" flag="163" face="0" exp="84"/>
+  </hex>
+  <hex row="12" col="28" terrain="5">
+    <unit id="38447" owner="0" flag="163" face="0" exp="95"/>
+  </hex>
+  <hex row="12" col="29" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="12" col="30" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="12" col="31" terrain="3"/>
+  <hex row="12" col="32" terrain="5"/>
+  <hex row="12" col="33" terrain="3"/>
+  <hex row="12" col="34" terrain="3"/>
+  <hex row="13" col="8" terrain="3"/>
+  <hex row="13" col="9" terrain="3"/>
+  <hex row="13" col="11" road="34"/>
+  <hex row="13" col="12" road="34"/>
+  <hex row="13" col="16" terrain="3"/>
+  <hex row="13" col="17" terrain="3"/>
+  <hex row="13" col="25" terrain="3"/>
+  <hex row="13" col="26" terrain="3"/>
+  <hex row="13" col="27" terrain="5"/>
+  <hex row="13" col="28" terrain="10" road="136" name="Wilson&#x27;s Creek"/>
+  <hex row="13" col="29" road="144"/>
+  <hex row="13" col="30" terrain="3"/>
+  <hex row="13" col="31" terrain="5"/>
+  <hex row="13" col="32" terrain="5"/>
+  <hex row="13" col="37" terrain="3"/>
+  <hex row="13" col="42" terrain="3"/>
+  <hex row="13" col="43" terrain="3"/>
+  <hex row="14" col="5" terrain="3"/>
+  <hex row="14" col="7" terrain="3"/>
+  <hex row="14" col="8" terrain="3"/>
+  <hex row="14" col="9" road="18"/>
+  <hex row="14" col="10" road="34"/>
+  <hex row="14" col="20" terrain="3"/>
+  <hex row="14" col="22" terrain="3"/>
+  <hex row="14" col="23" terrain="3"/>
+  <hex row="14" col="24" terrain="3"/>
+  <hex row="14" col="25" terrain="5"/>
+  <hex row="14" col="26" terrain="5"/>
+  <hex row="14" col="27" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="14" col="28" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="14" col="29" road="33"/>
+  <hex row="14" col="31" terrain="5"/>
+  <hex row="14" col="32" terrain="5"/>
+  <hex row="14" col="43" road="34"/>
+  <hex row="15" col="4" terrain="3"/>
+  <hex row="15" col="5" terrain="3"/>
+  <hex row="15" col="6" terrain="3"/>
+  <hex row="15" col="9" road="33"/>
+  <hex row="15" col="10" terrain="3"/>
+  <hex row="15" col="16" terrain="3"/>
+  <hex row="15" col="22" terrain="3"/>
+  <hex row="15" col="23" terrain="3"/>
+  <hex row="15" col="24" terrain="3"/>
+  <hex row="15" col="25" terrain="5"/>
+  <hex row="15" col="26" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="15" col="27" terrain="1" road="18" name="Gibson&#x27;s Farm and Mill" owner="1" flag="150">
+    <unit id="37308" owner="1" flag="151" face="0" exp="109"/>
+  </hex>
+  <hex row="15" col="28" road="34"/>
+  <hex row="15" col="31" terrain="5"/>
+  <hex row="15" col="37" terrain="3"/>
+  <hex row="15" col="41" road="34"/>
+  <hex row="15" col="42" road="34"/>
+  <hex row="16" col="7" road="34"/>
+  <hex row="16" col="8" road="34"/>
+  <hex row="16" col="15" terrain="3"/>
+  <hex row="16" col="22">
+    <unit id="38483" owner="0" flag="163" face="0" transport="38469" exp="95"/>
+  </hex>
+  <hex row="16" col="23" terrain="3">
+    <unit id="38447" owner="0" flag="163" face="0" exp="73"/>
+  </hex>
+  <hex row="16" col="24" terrain="3"/>
+  <hex row="16" col="25" terrain="5"/>
+  <hex row="16" col="26" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="16" col="27" terrain="1" road="9" name="Confederate Camp" owner="1" flag="150">
+    <unit id="37294" owner="1" flag="151" face="0" exp="116"/>
+  </hex>
+  <hex row="16" col="31" terrain="5"/>
+  <hex row="16" col="36" terrain="3"/>
+  <hex row="16" col="38" terrain="3"/>
+  <hex row="16" col="40" road="18"/>
+  <hex row="17" col="5" road="34"/>
+  <hex row="17" col="6" road="34"/>
+  <hex row="17" col="11" terrain="3"/>
+  <hex row="17" col="21">
+    <unit id="38485" owner="0" flag="163" face="0" transport="38469" exp="61"/>
+  </hex>
+  <hex row="17" col="22">
+    <unit id="38439" owner="0" flag="163" face="0" exp="61"/>
+  </hex>
+  <hex row="17" col="24" terrain="3"/>
+  <hex row="17" col="25" terrain="5"/>
+  <hex row="17" col="26" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="17" col="27" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="17" col="28" road="144"/>
+  <hex row="17" col="31" terrain="5"/>
+  <hex row="17" col="32" terrain="5"/>
+  <hex row="17" col="33" terrain="5"/>
+  <hex row="17" col="34" terrain="5"/>
+  <hex row="17" col="37" terrain="3"/>
+  <hex row="17" col="39" road="34"/>
+  <hex row="17" col="40" road="33"/>
+  <hex row="18" col="1" terrain="1" road="24" name="Republic"/>
+  <hex row="18" col="3" road="34"/>
+  <hex row="18" col="4" road="34"/>
+  <hex row="18" col="5" terrain="3"/>
+  <hex row="18" col="6" terrain="3"/>
+  <hex row="18" col="7" terrain="3"/>
+  <hex row="18" col="8" terrain="3"/>
+  <hex row="18" col="21">
+    <unit id="38439" owner="0" flag="163" face="0" exp="120"/>
+  </hex>
+  <hex row="18" col="22">
+    <unit id="38453" owner="0" flag="163" face="0" exp="85"/>
+  </hex>
+  <hex row="18" col="25" terrain="1" name="Confederate Camp" owner="1" flag="150" victory="1">
+    <unit id="37294" owner="1" flag="151" face="0" exp="113"/>
+  </hex>
+  <hex row="18" col="26" terrain="5">
+    <unit id="37293" owner="1" flag="151" face="0" exp="74"/>
+  </hex>
+  <hex row="18" col="27" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="18" col="28" road="17"/>
+  <hex row="18" col="30" terrain="3">
+    <unit id="37293" owner="1" flag="151" face="0" exp="83"/>
+  </hex>
+  <hex row="18" col="31" terrain="3"/>
+  <hex row="18" col="32" terrain="5"/>
+  <hex row="18" col="33" terrain="13"/>
+  <hex row="18" col="34" terrain="13"/>
+  <hex row="18" col="35" terrain="13"/>
+  <hex row="18" col="37" road="34"/>
+  <hex row="18" col="38" road="34"/>
+  <hex row="18" col="39" terrain="3"/>
+  <hex row="19" col="1" terrain="1" road="51" name="Republic" owner="1" flag="150" deploy="1"/>
+  <hex row="19" col="2" terrain="1" road="162" name="Republic"/>
+  <hex row="19" col="4" terrain="3"/>
+  <hex row="19" col="5" terrain="3"/>
+  <hex row="19" col="6" terrain="3"/>
+  <hex row="19" col="7" terrain="3"/>
+  <hex row="19" col="8" terrain="3"/>
+  <hex row="19" col="9" terrain="3"/>
+  <hex row="19" col="13" terrain="5"/>
+  <hex row="19" col="14" terrain="5"/>
+  <hex row="19" col="15" terrain="5"/>
+  <hex row="19" col="16" terrain="5"/>
+  <hex row="19" col="17" terrain="5"/>
+  <hex row="19" col="20" deploy="0"/>
+  <hex row="19" col="21" deploy="0"/>
+  <hex row="19" col="22">
+    <unit id="38449" owner="0" flag="163" face="0" exp="97"/>
+  </hex>
+  <hex row="19" col="25" terrain="5">
+    <unit id="37294" owner="1" flag="151" face="0" exp="75"/>
+  </hex>
+  <hex row="19" col="26" terrain="5">
+    <unit id="37293" owner="1" flag="151" face="0" exp="91"/>
+  </hex>
+  <hex row="19" col="27" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="19" col="28" road="9"/>
+  <hex row="19" col="29" terrain="1" road="136" name="Confederate Camp" owner="1" flag="150">
+    <unit id="37294" owner="1" flag="151" face="0" exp="62"/>
+  </hex>
+  <hex row="19" col="31" terrain="13"/>
+  <hex row="19" col="32" terrain="13"/>
+  <hex row="19" col="33" terrain="1" road="40" name="Ray&#x27;s Farm" owner="1" flag="150"/>
+  <hex row="19" col="34" terrain="3"/>
+  <hex row="19" col="35" road="34"/>
+  <hex row="19" col="36" road="34"/>
+  <hex row="19" col="38" terrain="3"/>
+  <hex row="19" col="39" terrain="3"/>
+  <hex row="19" col="40" terrain="3"/>
+  <hex row="19" col="42" terrain="3"/>
+  <hex row="20" col="0" terrain="1" road="34" name="Republic"/>
+  <hex row="20" col="1" road="9"/>
+  <hex row="20" col="5" terrain="5"/>
+  <hex row="20" col="6" terrain="5"/>
+  <hex row="20" col="7" terrain="5"/>
+  <hex row="20" col="8" terrain="3"/>
+  <hex row="20" col="9" terrain="5"/>
+  <hex row="20" col="10" terrain="5"/>
+  <hex row="20" col="11" terrain="5"/>
+  <hex row="20" col="12" terrain="3"/>
+  <hex row="20" col="13" terrain="5"/>
+  <hex row="20" col="14" terrain="5"/>
+  <hex row="20" col="15" terrain="5"/>
+  <hex row="20" col="16" terrain="5"/>
+  <hex row="20" col="17" terrain="5"/>
+  <hex row="20" col="18" terrain="3"/>
+  <hex row="20" col="19" terrain="3" deploy="0"/>
+  <hex row="20" col="20" terrain="3">
+    <unit id="38439" owner="0" flag="163" face="0" exp="90"/>
+  </hex>
+  <hex row="20" col="21">
+    <unit id="38434" owner="0" flag="163" face="0" transport="38463" exp="163"/>
+  </hex>
+  <hex row="20" col="23" terrain="3"/>
+  <hex row="20" col="25" terrain="5">
+    <unit id="37294" owner="1" flag="151" face="0" exp="118"/>
+  </hex>
+  <hex row="20" col="26" terrain="5">
+    <unit id="37333" owner="1" flag="151" face="0" transport="37321" exp="112"/>
+  </hex>
+  <hex row="20" col="27" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="20" col="29" terrain="13"/>
+  <hex row="20" col="30" terrain="13" road="136"/>
+  <hex row="20" col="31" road="162">
+    <unit id="37334" owner="1" flag="151" face="0" transport="37317" exp="86"/>
+  </hex>
+  <hex row="20" col="32" road="34"/>
+  <hex row="20" col="33" terrain="5"/>
+  <hex row="20" col="34" road="130"/>
+  <hex row="20" col="35" terrain="5"/>
+  <hex row="20" col="36" terrain="5"/>
+  <hex row="20" col="37" terrain="5"/>
+  <hex row="20" col="38" terrain="5"/>
+  <hex row="20" col="40" terrain="3"/>
+  <hex row="21" col="2" road="136"/>
+  <hex row="21" col="3" road="144"/>
+  <hex row="21" col="4" terrain="5"/>
+  <hex row="21" col="5" terrain="13" name="Skegg&#x27;s Branch"/>
+  <hex row="21" col="6" terrain="5"/>
+  <hex row="21" col="7" terrain="13" name="Skegg&#x27;s Branch"/>
+  <hex row="21" col="8" terrain="5"/>
+  <hex row="21" col="9" terrain="5"/>
+  <hex row="21" col="10" terrain="13"/>
+  <hex row="21" col="11" terrain="13" name="Skegg&#x27;s Branch"/>
+  <hex row="21" col="12" terrain="5"/>
+  <hex row="21" col="13" terrain="5"/>
+  <hex row="21" col="14" terrain="5"/>
+  <hex row="21" col="15" terrain="13" name="Skegg&#x27;s Branch"/>
+  <hex row="21" col="16" terrain="13" name="Skegg&#x27;s Branch"/>
+  <hex row="21" col="17" terrain="13" name="Skegg&#x27;s Branch"/>
+  <hex row="21" col="18" terrain="5"/>
+  <hex row="21" col="19" terrain="5" deploy="0"/>
+  <hex row="21" col="20" terrain="5" deploy="0"/>
+  <hex row="21" col="21" terrain="3"/>
+  <hex row="21" col="23">
+    <unit id="37294" owner="1" flag="151" face="0" exp="119"/>
+  </hex>
+  <hex row="21" col="24" terrain="3">
+    <unit id="37294" owner="1" flag="151" face="0" exp="88"/>
+  </hex>
+  <hex row="21" col="25">
+    <unit id="37291" owner="1" flag="151" face="0" transport="37315" exp="165"/>
+  </hex>
+  <hex row="21" col="26" terrain="5">
+    <unit id="37307" owner="1" flag="151" face="0" exp="89"/>
+  </hex>
+  <hex row="21" col="27" terrain="5"/>
+  <hex row="21" col="28" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="21" col="29" terrain="10" road="34" name="Wilson&#x27;s Creek"/>
+  <hex row="21" col="30" road="34"/>
+  <hex row="21" col="32" terrain="5"/>
+  <hex row="21" col="33" terrain="3"/>
+  <hex row="21" col="34" terrain="3"/>
+  <hex row="21" col="36" terrain="5"/>
+  <hex row="22" col="3" road="17"/>
+  <hex row="22" col="4" terrain="5"/>
+  <hex row="22" col="5" terrain="3"/>
+  <hex row="22" col="6" terrain="13" name="Skegg&#x27;s Branch"/>
+  <hex row="22" col="7" terrain="13" name="Skegg&#x27;s Branch"/>
+  <hex row="22" col="8" terrain="13" name="Skegg&#x27;s Branch"/>
+  <hex row="22" col="9" terrain="13" name="Skegg&#x27;s Branch"/>
+  <hex row="22" col="10" terrain="13" name="Skegg&#x27;s Branch"/>
+  <hex row="22" col="11" terrain="5"/>
+  <hex row="22" col="12" terrain="13" name="Skegg&#x27;s Branch"/>
+  <hex row="22" col="13" terrain="13" name="Skegg&#x27;s Branch"/>
+  <hex row="22" col="14" terrain="13" name="Skegg&#x27;s Branch"/>
+  <hex row="22" col="18" terrain="13" name="Skegg&#x27;s Branch"/>
+  <hex row="22" col="19" terrain="13" name="Skegg&#x27;s Branch"/>
+  <hex row="22" col="20" terrain="5"/>
+  <hex row="22" col="21" terrain="5"/>
+  <hex row="22" col="22" terrain="5"/>
+  <hex row="22" col="23" terrain="5">
+    <unit id="37294" owner="1" flag="151" face="0" exp="67"/>
+  </hex>
+  <hex row="22" col="24">
+    <unit id="37303" owner="1" flag="151" face="0" exp="98"/>
+  </hex>
+  <hex row="22" col="25" terrain="3"/>
+  <hex row="22" col="27" terrain="3"/>
+  <hex row="22" col="28" terrain="5" road="18"/>
+  <hex row="22" col="29" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="22" col="32" terrain="3"/>
+  <hex row="22" col="33" terrain="3"/>
+  <hex row="23" col="3" road="17"/>
+  <hex row="23" col="4" terrain="3"/>
+  <hex row="23" col="5" terrain="3"/>
+  <hex row="23" col="7" terrain="13" name="Skegg&#x27;s Branch"/>
+  <hex row="23" col="8" terrain="13" name="Skegg&#x27;s Branch"/>
+  <hex row="23" col="9" terrain="5"/>
+  <hex row="23" col="10" terrain="5"/>
+  <hex row="23" col="12" terrain="5"/>
+  <hex row="23" col="13" terrain="5"/>
+  <hex row="23" col="14" terrain="5"/>
+  <hex row="23" col="15" terrain="5"/>
+  <hex row="23" col="16" terrain="5"/>
+  <hex row="23" col="17" terrain="5"/>
+  <hex row="23" col="18" terrain="5"/>
+  <hex row="23" col="19" terrain="5"/>
+  <hex row="23" col="20" terrain="13" name="Skegg&#x27;s Branch"/>
+  <hex row="23" col="21" terrain="13" name="Skegg&#x27;s Branch"/>
+  <hex row="23" col="22" terrain="5">
+    <unit id="37294" owner="1" flag="151" face="0" exp="75"/>
+  </hex>
+  <hex row="23" col="23" terrain="5">
+    <unit id="37293" owner="1" flag="151" face="0" exp="83"/>
+  </hex>
+  <hex row="23" col="24" terrain="5"/>
+  <hex row="23" col="25" terrain="5"/>
+  <hex row="23" col="27" terrain="5"/>
+  <hex row="23" col="28" terrain="5" road="17"/>
+  <hex row="23" col="29" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="23" col="30" terrain="3"/>
+  <hex row="23" col="32" terrain="3"/>
+  <hex row="23" col="33" terrain="3"/>
+  <hex row="23" col="34" terrain="3"/>
+  <hex row="24" col="3" road="9"/>
+  <hex row="24" col="4" terrain="3"/>
+  <hex row="24" col="6" terrain="13" name="Skegg&#x27;s Branch"/>
+  <hex row="24" col="7" terrain="13" name="Skegg&#x27;s Branch"/>
+  <hex row="24" col="8" terrain="5"/>
+  <hex row="24" col="11" terrain="5"/>
+  <hex row="24" col="12" terrain="5"/>
+  <hex row="24" col="13" terrain="5"/>
+  <hex row="24" col="14" terrain="5"/>
+  <hex row="24" col="15" terrain="5"/>
+  <hex row="24" col="16" terrain="5"/>
+  <hex row="24" col="17" terrain="5"/>
+  <hex row="24" col="18" terrain="5"/>
+  <hex row="24" col="19" terrain="5"/>
+  <hex row="24" col="20" terrain="3"/>
+  <hex row="24" col="21" terrain="3"/>
+  <hex row="24" col="22" terrain="13" name="Skegg&#x27;s Branch"/>
+  <hex row="24" col="23" terrain="13" name="Skegg&#x27;s Branch"/>
+  <hex row="24" col="24" terrain="3"/>
+  <hex row="24" col="25" terrain="5"/>
+  <hex row="24" col="26" terrain="5"/>
+  <hex row="24" col="27" terrain="5" road="34"/>
+  <hex row="24" col="28" terrain="1" road="33" name="Confederate Camp" owner="1" flag="150"/>
+  <hex row="24" col="29" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="24" col="30" terrain="3"/>
+  <hex row="24" col="31" terrain="5"/>
+  <hex row="24" col="32" terrain="3"/>
+  <hex row="24" col="33" terrain="3"/>
+  <hex row="24" col="34" terrain="3"/>
+  <hex row="24" col="40" terrain="3"/>
+  <hex row="24" col="41" terrain="3"/>
+  <hex row="25" col="3" terrain="3"/>
+  <hex row="25" col="4" road="136"/>
+  <hex row="25" col="5" road="144"/>
+  <hex row="25" col="7" terrain="5"/>
+  <hex row="25" col="8" terrain="3"/>
+  <hex row="25" col="9" terrain="3"/>
+  <hex row="25" col="10" terrain="5"/>
+  <hex row="25" col="11" terrain="5"/>
+  <hex row="25" col="12" terrain="5"/>
+  <hex row="25" col="13" terrain="5"/>
+  <hex row="25" col="14" terrain="5"/>
+  <hex row="25" col="15" terrain="5"/>
+  <hex row="25" col="16" terrain="5"/>
+  <hex row="25" col="17" terrain="5"/>
+  <hex row="25" col="18" terrain="5"/>
+  <hex row="25" col="19" terrain="5"/>
+  <hex row="25" col="20" terrain="5"/>
+  <hex row="25" col="21" terrain="5"/>
+  <hex row="25" col="22" terrain="13" name="Skegg&#x27;s Branch"/>
+  <hex row="25" col="24" terrain="13" name="Skegg&#x27;s Branch"/>
+  <hex row="25" col="25" terrain="13" name="Skegg&#x27;s Branch"/>
+  <hex row="25" col="26" road="18"/>
+  <hex row="25" col="27" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="25" col="28" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="25" col="29" terrain="1" name="Confederate Camp" owner="1" flag="150"/>
+  <hex row="25" col="31" terrain="5"/>
+  <hex row="25" col="32" terrain="5"/>
+  <hex row="25" col="40" terrain="3"/>
+  <hex row="25" col="41" terrain="3"/>
+  <hex row="26" col="2" terrain="3"/>
+  <hex row="26" col="3" terrain="3"/>
+  <hex row="26" col="5" road="9"/>
+  <hex row="26" col="7" terrain="3"/>
+  <hex row="26" col="8" terrain="3"/>
+  <hex row="26" col="9" terrain="3"/>
+  <hex row="26" col="10" terrain="3"/>
+  <hex row="26" col="17" terrain="3"/>
+  <hex row="26" col="18" terrain="3"/>
+  <hex row="26" col="19" terrain="3"/>
+  <hex row="26" col="22" terrain="5"/>
+  <hex row="26" col="23" terrain="5"/>
+  <hex row="26" col="24" terrain="5"/>
+  <hex row="26" col="25" terrain="5"/>
+  <hex row="26" col="26" terrain="13" road="17" name="Skegg&#x27;s Branch"/>
+  <hex row="26" col="27" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="26" col="28" terrain="1" name="Confederate Camp" owner="1" flag="150">
+    <unit id="37334" owner="1" flag="151" face="0" transport="37317" exp="119"/>
+  </hex>
+  <hex row="26" col="29" terrain="5"/>
+  <hex row="26" col="30" terrain="5"/>
+  <hex row="26" col="31" terrain="3"/>
+  <hex row="26" col="32" terrain="3"/>
+  <hex row="26" col="41" terrain="3"/>
+  <hex row="26" col="42" terrain="3"/>
+  <hex row="26" col="43" terrain="3"/>
+  <hex row="27" col="1" terrain="3"/>
+  <hex row="27" col="2" terrain="3"/>
+  <hex row="27" col="3" terrain="3"/>
+  <hex row="27" col="6" road="136"/>
+  <hex row="27" col="7" road="136"/>
+  <hex row="27" col="10" terrain="3"/>
+  <hex row="27" col="18" terrain="3"/>
+  <hex row="27" col="19" terrain="3"/>
+  <hex row="27" col="25" terrain="3" road="34"/>
+  <hex row="27" col="26" terrain="1" road="41" name="Sharp&#x27;s Farm" owner="1" flag="150" victory="1">
+    <unit id="37294" owner="1" flag="151" face="0" exp="87"/>
+  </hex>
+  <hex row="27" col="27" road="144"/>
+  <hex row="27" col="28" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="27" col="29" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="27" col="30" terrain="5"/>
+  <hex row="27" col="31" terrain="3"/>
+  <hex row="27" col="32" terrain="3"/>
+  <hex row="27" col="33" terrain="3"/>
+  <hex row="27" col="42" terrain="3"/>
+  <hex row="28" col="1" terrain="3"/>
+  <hex row="28" col="2" terrain="3"/>
+  <hex row="28" col="3" terrain="3"/>
+  <hex row="28" col="5" terrain="3"/>
+  <hex row="28" col="8" road="136"/>
+  <hex row="28" col="9" road="130"/>
+  <hex row="28" col="10" road="40"/>
+  <hex row="28" col="11" road="136"/>
+  <hex row="28" col="13" road="40"/>
+  <hex row="28" col="15" road="40"/>
+  <hex row="28" col="17" terrain="3" road="40"/>
+  <hex row="28" col="19" road="40"/>
+  <hex row="28" col="21" terrain="3" road="40"/>
+  <hex row="28" col="22" terrain="3"/>
+  <hex row="28" col="23" terrain="3" road="34"/>
+  <hex row="28" col="24" road="34"/>
+  <hex row="28" col="26" terrain="5"/>
+  <hex row="28" col="27" terrain="5" road="9"/>
+  <hex row="28" col="29" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="28" col="30" terrain="5"/>
+  <hex row="28" col="31" terrain="3"/>
+  <hex row="28" col="32" terrain="3"/>
+  <hex row="28" col="41" terrain="3"/>
+  <hex row="29" col="2" terrain="3"/>
+  <hex row="29" col="4" terrain="3"/>
+  <hex row="29" col="5" terrain="3"/>
+  <hex row="29" col="12" road="130"/>
+  <hex row="29" col="14" road="130"/>
+  <hex row="29" col="16" terrain="3" road="130"/>
+  <hex row="29" col="18" road="130"/>
+  <hex row="29" col="20" road="130"/>
+  <hex row="29" col="22" road="146"/>
+  <hex row="29" col="27" terrain="5"/>
+  <hex row="29" col="28" road="144"/>
+  <hex row="29" col="29" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="29" col="31" terrain="5"/>
+  <hex row="29" col="32" terrain="5"/>
+  <hex row="29" col="39" terrain="3"/>
+  <hex row="30" col="1" terrain="3"/>
+  <hex row="30" col="5" terrain="5"/>
+  <hex row="30" col="6" terrain="3"/>
+  <hex row="30" col="7" terrain="5"/>
+  <hex row="30" col="15" terrain="3"/>
+  <hex row="30" col="17" terrain="3"/>
+  <hex row="30" col="18" terrain="3"/>
+  <hex row="30" col="19" terrain="5"/>
+  <hex row="30" col="21" road="34"/>
+  <hex row="30" col="22" road="33"/>
+  <hex row="30" col="25" terrain="3"/>
+  <hex row="30" col="26" terrain="3"/>
+  <hex row="30" col="27" terrain="5"/>
+  <hex row="30" col="28" road="17">
+    <unit id="37332" owner="1" flag="151" face="0" transport="37321" exp="109"/>
+  </hex>
+  <hex row="30" col="29" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="30" col="32" terrain="5"/>
+  <hex row="30" col="33" terrain="5"/>
+  <hex row="31" col="0" terrain="3"/>
+  <hex row="31" col="1" terrain="3"/>
+  <hex row="31" col="2" terrain="3"/>
+  <hex row="31" col="3" terrain="3"/>
+  <hex row="31" col="4" terrain="3"/>
+  <hex row="31" col="5" terrain="5"/>
+  <hex row="31" col="7" terrain="3"/>
+  <hex row="31" col="8" terrain="5"/>
+  <hex row="31" col="9" terrain="13" name="Terrell Creek"/>
+  <hex row="31" col="10" terrain="5"/>
+  <hex row="31" col="11" terrain="5"/>
+  <hex row="31" col="13" terrain="3"/>
+  <hex row="31" col="15" terrain="5"/>
+  <hex row="31" col="16" terrain="5"/>
+  <hex row="31" col="17" terrain="3"/>
+  <hex row="31" col="18" terrain="3"/>
+  <hex row="31" col="19" terrain="3"/>
+  <hex row="31" col="20" terrain="5" road="18"/>
+  <hex row="31" col="21" terrain="5"/>
+  <hex row="31" col="22" terrain="3"/>
+  <hex row="31" col="23" terrain="5"/>
+  <hex row="31" col="24" terrain="5"/>
+  <hex row="31" col="25" terrain="5"/>
+  <hex row="31" col="26" terrain="5"/>
+  <hex row="31" col="27" terrain="13" name="Terrell Creek"/>
+  <hex row="31" col="28" terrain="1" road="17" name="Confederate Camp" owner="1" flag="150" victory="1">
+    <unit id="37294" owner="1" flag="151" face="0" exp="92"/>
+  </hex>
+  <hex row="31" col="29" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="31" col="32" terrain="5"/>
+  <hex row="31" col="33" terrain="3"/>
+  <hex row="31" col="34" terrain="5"/>
+  <hex row="31" col="35" terrain="5"/>
+  <hex row="31" col="39" terrain="5"/>
+  <hex row="31" col="41" terrain="5"/>
+  <hex row="31" col="43" terrain="5"/>
+  <hex row="32" col="2" terrain="3"/>
+  <hex row="32" col="3" terrain="3"/>
+  <hex row="32" col="4" terrain="3"/>
+  <hex row="32" col="5" terrain="5"/>
+  <hex row="32" col="6" terrain="5"/>
+  <hex row="32" col="7" terrain="13" name="Terrell Creek"/>
+  <hex row="32" col="8" terrain="13" name="Terrell Creek"/>
+  <hex row="32" col="10" terrain="13" name="Terrell Creek"/>
+  <hex row="32" col="11" terrain="3"/>
+  <hex row="32" col="12" terrain="5"/>
+  <hex row="32" col="13" terrain="13" name="Terrell Creek"/>
+  <hex row="32" col="14" terrain="3"/>
+  <hex row="32" col="15" terrain="5"/>
+  <hex row="32" col="16" terrain="5"/>
+  <hex row="32" col="17" terrain="3"/>
+  <hex row="32" col="18" terrain="3"/>
+  <hex row="32" col="19" terrain="5" road="34"/>
+  <hex row="32" col="20" terrain="5" road="33"/>
+  <hex row="32" col="21" terrain="13" name="Terrell Creek"/>
+  <hex row="32" col="22" terrain="3"/>
+  <hex row="32" col="23" terrain="13" name="Terrell Creek"/>
+  <hex row="32" col="24" terrain="5"/>
+  <hex row="32" col="25" terrain="13" name="Terrell Creek"/>
+  <hex row="32" col="26" terrain="13" name="Terrell Creek"/>
+  <hex row="32" col="27" terrain="5"/>
+  <hex row="32" col="28" terrain="13" road="9" name="Terrell Creek"/>
+  <hex row="32" col="29" road="136"/>
+  <hex row="32" col="30" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="32" col="32" terrain="3"/>
+  <hex row="32" col="33" terrain="3"/>
+  <hex row="32" col="34" terrain="5"/>
+  <hex row="32" col="35" terrain="3"/>
+  <hex row="32" col="36" terrain="5"/>
+  <hex row="32" col="37" terrain="5">
+    <unit id="38434" owner="0" flag="163" face="0" transport="38463" exp="160" ldr="1"/>
+  </hex>
+  <hex row="32" col="38" terrain="5"/>
+  <hex row="32" col="39" terrain="5"/>
+  <hex row="32" col="40" terrain="5"/>
+  <hex row="32" col="41" terrain="5"/>
+  <hex row="32" col="42" terrain="5"/>
+  <hex row="32" col="43" terrain="5"/>
+  <hex row="33" col="5" terrain="5"/>
+  <hex row="33" col="6" terrain="13" name="Terrell Creek"/>
+  <hex row="33" col="7" terrain="13" name="Terrell Creek"/>
+  <hex row="33" col="8" terrain="3"/>
+  <hex row="33" col="10" terrain="13" name="Terrell Creek"/>
+  <hex row="33" col="11" terrain="13" name="Terrell Creek"/>
+  <hex row="33" col="12" terrain="13" name="Terrell Creek"/>
+  <hex row="33" col="13" terrain="5"/>
+  <hex row="33" col="14" terrain="13" name="Terrell Creek"/>
+  <hex row="33" col="15" terrain="13" name="Terrell Creek"/>
+  <hex row="33" col="16" terrain="13" name="Terrell Creek"/>
+  <hex row="33" col="17" terrain="13" name="Terrell Creek"/>
+  <hex row="33" col="18" terrain="13" road="18" name="Terrell Creek"/>
+  <hex row="33" col="19" terrain="13" name="Terrell Creek"/>
+  <hex row="33" col="20" terrain="13" name="Terrell Creek"/>
+  <hex row="33" col="21" terrain="5"/>
+  <hex row="33" col="22" terrain="13" name="Terrell Creek"/>
+  <hex row="33" col="24" terrain="13" name="Terrell Creek"/>
+  <hex row="33" col="25" terrain="5"/>
+  <hex row="33" col="26" terrain="5"/>
+  <hex row="33" col="27" terrain="3"/>
+  <hex row="33" col="28" terrain="5">
+    <unit id="37308" owner="1" flag="151" face="0" exp="90"/>
+  </hex>
+  <hex row="33" col="29" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="33" col="30" terrain="10" road="136" name="Wilson&#x27;s Creek"/>
+  <hex row="33" col="31" road="130"/>
+  <hex row="33" col="32" road="40"/>
+  <hex row="33" col="33" road="130"/>
+  <hex row="33" col="34" road="40"/>
+  <hex row="33" col="35" road="130"/>
+  <hex row="33" col="36" road="40" deploy="0"/>
+  <hex row="33" col="37" road="136" deploy="0"/>
+  <hex row="33" col="38" terrain="5"/>
+  <hex row="33" col="39" road="40" deploy="0"/>
+  <hex row="33" col="41" road="40"/>
+  <hex row="33" col="42" terrain="5"/>
+  <hex row="33" col="43" road="40"/>
+  <hex row="34" col="1" terrain="3"/>
+  <hex row="34" col="5" terrain="5"/>
+  <hex row="34" col="6" terrain="5"/>
+  <hex row="34" col="7" terrain="13" name="Terrell Creek"/>
+  <hex row="34" col="9" terrain="5"/>
+  <hex row="34" col="10" terrain="5"/>
+  <hex row="34" col="11" terrain="5"/>
+  <hex row="34" col="12" terrain="5"/>
+  <hex row="34" col="14" terrain="5"/>
+  <hex row="34" col="15" terrain="5"/>
+  <hex row="34" col="16" terrain="5"/>
+  <hex row="34" col="17" terrain="5" road="34"/>
+  <hex row="34" col="18" terrain="5" road="33"/>
+  <hex row="34" col="19" terrain="5"/>
+  <hex row="34" col="20" terrain="5"/>
+  <hex row="34" col="22" terrain="5"/>
+  <hex row="34" col="23" terrain="5"/>
+  <hex row="34" col="25" terrain="3"/>
+  <hex row="34" col="26" terrain="3"/>
+  <hex row="34" col="28" terrain="5"/>
+  <hex row="34" col="29" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="34" col="30" terrain="3"/>
+  <hex row="34" col="31" terrain="3"/>
+  <hex row="34" col="33" terrain="3"/>
+  <hex row="34" col="38" road="130" deploy="0"/>
+  <hex row="34" col="39" terrain="3"/>
+  <hex row="34" col="40" road="130"/>
+  <hex row="34" col="41" terrain="3"/>
+  <hex row="34" col="42" road="130"/>
+  <hex row="34" col="43" terrain="10" name="James River"/>
+  <hex row="35" col="1" terrain="5"/>
+  <hex row="35" col="3" terrain="5"/>
+  <hex row="35" col="4" terrain="3"/>
+  <hex row="35" col="5" terrain="5"/>
+  <hex row="35" col="6" terrain="3"/>
+  <hex row="35" col="7" terrain="13" name="Terrell Creek"/>
+  <hex row="35" col="9" terrain="5"/>
+  <hex row="35" col="10" terrain="3"/>
+  <hex row="35" col="15" road="34"/>
+  <hex row="35" col="16" road="34"/>
+  <hex row="35" col="17" terrain="3"/>
+  <hex row="35" col="18" terrain="3"/>
+  <hex row="35" col="24" terrain="5"/>
+  <hex row="35" col="26" terrain="3"/>
+  <hex row="35" col="27" terrain="3"/>
+  <hex row="35" col="28" terrain="3"/>
+  <hex row="35" col="29" terrain="5"/>
+  <hex row="35" col="30" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="35" col="31" terrain="10" name="Wilson&#x27;s Creek"/>
+  <hex row="35" col="33" terrain="10" name="James River"/>
+  <hex row="35" col="40" terrain="10" name="James River"/>
+  <hex row="35" col="41" terrain="10" name="James River"/>
+  <hex row="35" col="43" terrain="10" name="James River"/>
+  <hex row="36" col="1" terrain="3"/>
+  <hex row="36" col="2" terrain="5"/>
+  <hex row="36" col="3" terrain="5"/>
+  <hex row="36" col="4" terrain="5"/>
+  <hex row="36" col="5" terrain="13" name="Terrell Creek"/>
+  <hex row="36" col="6" terrain="13" name="Terrell Creek"/>
+  <hex row="36" col="8" terrain="5"/>
+  <hex row="36" col="9" terrain="3"/>
+  <hex row="36" col="10" terrain="3"/>
+  <hex row="36" col="13" road="34"/>
+  <hex row="36" col="14" road="34"/>
+  <hex row="36" col="19" terrain="3"/>
+  <hex row="36" col="20" terrain="3"/>
+  <hex row="36" col="21" terrain="3"/>
+  <hex row="36" col="22" terrain="3"/>
+  <hex row="36" col="23" terrain="3"/>
+  <hex row="36" col="27" terrain="5"/>
+  <hex row="36" col="28" terrain="5"/>
+  <hex row="36" col="31" terrain="10" name="James River"/>
+  <hex row="36" col="32" terrain="10" name="James River"/>
+  <hex row="36" col="33" terrain="3"/>
+  <hex row="36" col="34" terrain="10" name="James River"/>
+  <hex row="36" col="35" terrain="10" name="James River"/>
+  <hex row="36" col="36" terrain="10" name="James River"/>
+  <hex row="36" col="37" terrain="10" name="James River"/>
+  <hex row="36" col="38" terrain="10" name="James River"/>
+  <hex row="36" col="39" terrain="10" name="James River"/>
+  <hex row="36" col="40" terrain="10" name="James River"/>
+  <hex row="36" col="42" terrain="10" name="James River"/>
+  <hex row="37" col="1" terrain="3"/>
+  <hex row="37" col="3" terrain="13" name="Terrell Creek"/>
+  <hex row="37" col="4" terrain="13" name="Terrell Creek"/>
+  <hex row="37" col="8" terrain="5"/>
+  <hex row="37" col="9" terrain="3"/>
+  <hex row="37" col="10" terrain="3"/>
+  <hex row="37" col="11" road="18"/>
+  <hex row="37" col="12" road="34" owner="1" flag="150" deploy="1"/>
+  <hex row="37" col="18" terrain="3"/>
+  <hex row="37" col="19" terrain="3"/>
+  <hex row="37" col="20" terrain="3"/>
+  <hex row="37" col="21" terrain="3"/>
+  <hex row="37" col="22" terrain="3"/>
+  <hex row="37" col="23" terrain="3"/>
+  <hex row="37" col="24" terrain="3"/>
+  <hex row="37" col="26" terrain="5"/>
+  <hex row="37" col="27" terrain="3"/>
+  <hex row="37" col="29" terrain="10" name="James River"/>
+  <hex row="37" col="30" terrain="10" name="James River"/>
+  <hex row="37" col="31" terrain="3"/>
+  <hex row="37" col="38" terrain="3"/>
+  <hex row="37" col="43" terrain="3"/>
+</map>

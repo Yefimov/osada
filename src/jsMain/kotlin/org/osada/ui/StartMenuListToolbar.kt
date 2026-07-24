@@ -13,6 +13,7 @@ import org.w3c.dom.events.Event
  * project's function-count/class-size limits -- shared by [StartMenuCampaignScreen] and
  * [StartMenuScenarioScreen].
  */
+@Suppress("TooManyFunctions")
 internal object StartMenuListToolbar {
     // Flag sprite cell width in the flags_med.png strip (matches RenderContext.flagIconWidth).
     const val FLAG_SPRITE_WIDTH = 21
@@ -51,6 +52,7 @@ internal object StartMenuListToolbar {
             row.asDynamic().optionIndex = i
             renderRow(option, i, row, selectable)
             if (selectable) {
+                row.title = "Select ${option.textContent?.trim().orEmpty()} and show its full dossier."
                 row.onclick = { _: org.w3c.dom.events.MouseEvent ->
                     select.asDynamic().selectedIndex = i
                     select.dispatchEvent(Event("change"))
@@ -89,6 +91,15 @@ internal object StartMenuListToolbar {
         val m = Regex("\\(([^)]*\\d{1,4}[^)]*)\\)").find(title) ?: return ""
         return m.groupValues[1].trim()
     }
+
+    /**
+     * Removes a parenthesised year span from the visible campaign name while preserving the
+     * original title as the source for [extractYears], year sorting and campaign metadata.
+     */
+    fun campaignDisplayTitle(title: String): String =
+        title
+            .replace(Regex("\\s*\\([^)]*\\d{1,4}[^)]*\\)\\s*"), "")
+            .trim()
 
     /** Stamps the sort/search keys a row is ranked and filtered by. [year] and [size] are absent
      *  for scenario rows, which sort by campaign (document order) or by name only. [sides] is the

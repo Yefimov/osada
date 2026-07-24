@@ -57,15 +57,15 @@ internal class MapRenderer(
 
         val c1 = rc.cellToScreen(clearBounds.srow, clearBounds.scol, false)
         val c2 = rc.cellToScreen(clearBounds.erow, clearBounds.ecol, false)
-        rc.hexesCtx.clearRect(c1.x, c1.y, c2.x - c1.x, c2.y - c1.y)
+        if (radius < 0) {
+            // Clear exactly the full region FogOfWarRenderer fills. Otherwise the extra bottom
+            // strip receives another translucent veil on every Air/Grid/full redraw.
+            rc.hexesCtx.clearRect(0.0, 0.0, rc.mapWidth, rc.mapHeight + EXTRA_CANVAS_HEIGHT)
+        } else {
+            rc.hexesCtx.clearRect(c1.x, c1.y, c2.x - c1.x, c2.y - c1.y)
+        }
 
-        // Fog of war: fill the (re)drawn area with a translucent veil, then ERASE the hexes the
-        // current side can see so the terrain shows through. Filling-then-erasing (instead of
-        // shading each unseen hex) means the veil never double-darkens where partial redraws
-        // overlap (no seam frame around a moved unit) and it also covers the map margins where a
-        // library map image overruns the logical grid by a partial row/column.
         fogOfWarRenderer.apply(frame, c1, c2)
-
         drawCells(frame)
     }
 

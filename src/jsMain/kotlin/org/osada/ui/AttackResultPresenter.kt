@@ -6,7 +6,6 @@ import org.osada.model.Cell
 import org.osada.model.CombatResults
 import org.osada.model.GameUnit
 import org.osada.model.delCurrentUnit
-import org.osada.model.selectUnit
 import org.osada.model.updateUnitList
 import org.osada.uiAnimationFinished
 
@@ -155,9 +154,9 @@ internal class AttackResultPresenter(
                         ?.map
                         ?.delCurrentUnit()
                 } else {
-                    ui.game.scenario
-                        ?.map
-                        ?.selectUnit(currentUnit)
+                    // Rebuild the card as well as the model selection. Combat clears undoState;
+                    // merely reselecting left the old, inert Undo chip in the DOM.
+                    ui.uiUnitSelect(currentUnit)
                 }
             }
         } finally {

@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Osada — Portrait Layer Studio</title>
+  <style>
+    :root {
+      --skin: #e2b48c; --skin-shadow: #c98e64; --hair: #4a3526; --hair-gray: #c9c3b6;
+      --uniform: #7c7749; --uniform-shadow: #65613b; --collar: #8f2b2f;
+      --metal: #d9b25a; --outline: #2b211a;
+      --ink: #e8e4d8; --panel: #23262b; --line: #3a3f47;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font: 14px/1.5 system-ui, sans-serif; background: #16181c; color: var(--ink); }
+    header { padding: 14px 20px; border-bottom: 1px solid var(--line); }
+    header h1 { margin: 0; font-size: 18px; letter-spacing: .04em; }
+    header p { margin: 4px 0 0; opacity: .7; font-size: 12px; }
+    main { display: grid; grid-template-columns: 340px 1fr; gap: 22px; padding: 20px; align-items: start; }
+    @media (max-width: 720px) { main { grid-template-columns: 1fr; } }
+    .stage-wrap { display: flex; flex-direction: column; align-items: center; gap: 14px; position: sticky; top: 20px; }
+    .stage { width: 300px; height: 400px; position: relative; border: 1px solid var(--line);
+      border-radius: 10px; overflow: hidden; background: #0e0f12; }
+    .stage svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .ids { width: 300px; font: 11px/1.5 ui-monospace, monospace; opacity: .75; word-break: break-all; }
+    .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px; margin-bottom: 14px; }
+    .panel h2 { margin: 0 0 10px; font-size: 12px; text-transform: uppercase; letter-spacing: .08em; opacity: .7; }
+    .row { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 6px 0; }
+    .row label { opacity: .85; }
+    select, input[type=number], input[type=text] { background: #14161a; color: var(--ink);
+      border: 1px solid var(--line); border-radius: 6px; padding: 5px 7px; font: inherit; min-width: 150px; }
+    input[type=color] { width: 40px; height: 26px; border: 1px solid var(--line); border-radius: 6px; background: none; }
+    button { background: #2f3742; color: var(--ink); border: 1px solid var(--line); border-radius: 6px;
+      padding: 7px 12px; font: inherit; cursor: pointer; }
+    button:hover { background: #3a4450; }
+    .btns { display: flex; gap: 8px; flex-wrap: wrap; }
+    .cats { columns: 1; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Portrait Layer Studio — USSR · Operation Uranus, 1942</h1>
+    <p>Stacked flat-vector SVG layers on a fixed 300×400 canvas. Seed + layer ids reproduce any portrait.</p>
+  </header>
+  <main>
+    <section>
+      <div class="panel">
+        <h2>Generate from seed</h2>
+        <div class="row"><label for="seed">Seed</label><input type="number" id="seed" value="1942" /></div>
+        <div class="row"><label for="branch">Branch</label>
+          <select id="branch"><option>infantry</option><option>armor</option><option>artillery</option><option>aviation</option></select></div>
+        <div class="row"><label for="gender">Gender</label>
+          <select id="gender"><option>male</option><option>female</option></select></div>
+        <div class="row"><label for="rank">Rank</label>
+          <select id="rank"><option>lieutenant</option><option>captain</option><option>major</option><option>colonel</option></select></div>
+        <div class="row"><label for="age">Age band</label>
+          <select id="age"><option>young</option><option>middle</option><option>old</option></select></div>
+        <div class="row"><label for="scar">Scar</label><input type="checkbox" id="scar" /></div>
+        <div class="row"><label for="wound">Wound</label>
+          <select id="wound"><option value="">none</option><option value="head">head bandage</option><option value="arm">arm sling</option><option value="eye">eye patch</option></select></div>
+        <div class="btns" style="margin-top:10px">
+          <button id="gen">Generate</button>
+          <button id="rand">Random seed</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Palette variables</h2>
+        <div class="row"><label>Skin</label><input type="color" id="v-skin" value="#e2b48c" /></div>
+        <div class="row"><label>Hair</label><input type="color" id="v-hair" value="#4a3526" /></div>
+        <div class="row"><label>Uniform</label><input type="color" id="v-uniform" value="#7c7749" /></div>
+        <div class="row"><label>Collar</label><input type="color" id="v-collar" value="#8f2b2f" /></div>
+        <div class="row"><label>Metal</label><input type="color" id="v-metal" value="#d9b25a" /></div>
+      </div>
+
+      <div class="panel">
+        <h2>Manual layer override</h2>
+        <div class="cats" id="cats"></div>
+      </div>
+    </section>
+
+    <section class="stage-wrap">
+      <div class="stage" id="stage"></div>
+      <div class="ids" id="ids"></div>
+    </section>
+  </main>
+
+  <script type="module">
+    import { compose, layerPath } from './portrait-core.mjs';
+
+    const $ = (id) => document.getElementById(id);
+    const stage = $('stage');
+    const catsBox = $('cats');
+    const svgCache = new Map();
+    let manifest = null;
+    let selection = {}; // category -> id (or undefined to omit)
+
+    async function loadSvg(id) {
+      if (svgCache.has(id)) return svgCache.get(id);
+      const text = await fetch(layerPath(manifest, id)).then((r) => r.text());
+      svgCache.set(id, text);
+      return text;
+    }
+
+    function facts() {
+      return {
+        branch: $('branch').value, gender: $('gender').value, rank: $('rank').value,
+        ageBand: $('age').value, scar: $('scar').checked, wound: $('wound').value || null,
+      };
+    }
+
+    async function render() {
+      stage.innerHTML = '';
+      for (const category of manifest.order) {
+        const id = selection[category];
+        if (!id) continue;
+        stage.insertAdjacentHTML('beforeend', await loadSvg(id));
+      }
+      $('ids').textContent = manifest.order
+        .map((c) => selection[c]).filter(Boolean).join('  ›  ');
+    }
+
+    function generate() {
+      selection = compose(manifest, facts(), Number($('seed').value)).byCategory;
+      syncDropdowns();
+      render();
+    }
+
+    function buildDropdowns() {
+      catsBox.innerHTML = '';
+      for (const category of manifest.order) {
+        const row = document.createElement('div');
+        row.className = 'row';
+        const label = document.createElement('label');
+        label.textContent = category;
+        const sel = document.createElement('select');
+        sel.dataset.cat = category;
+        const none = document.createElement('option');
+        none.value = ''; none.textContent = '— none —';
+        sel.appendChild(none);
+        for (const l of manifest.layers[category]) {
+          const o = document.createElement('option');
+          o.value = l.id; o.textContent = l.id;
+          sel.appendChild(o);
+        }
+        sel.addEventListener('change', () => {
+          selection[category] = sel.value || undefined;
+          render();
+        });
+        row.append(label, sel);
+        catsBox.appendChild(row);
+      }
+    }
+
+    function syncDropdowns() {
+      catsBox.querySelectorAll('select').forEach((sel) => {
+        sel.value = selection[sel.dataset.cat] || '';
+      });
+    }
+
+    function wirePalette() {
+      const map = { 'v-skin': '--skin', 'v-hair': '--hair', 'v-uniform': '--uniform', 'v-collar': '--collar', 'v-metal': '--metal' };
+      for (const [el, cssVar] of Object.entries(map)) {
+        $(el).addEventListener('input', (e) => document.documentElement.style.setProperty(cssVar, e.target.value));
+      }
+    }
+
+    async function init() {
+      manifest = await fetch('./manifest.json').then((r) => r.json());
+      buildDropdowns();
+      wirePalette();
+      $('gen').addEventListener('click', generate);
+      $('rand').addEventListener('click', () => { $('seed').value = Math.floor(Math.random() * 1e9); generate(); });
+      ['branch', 'gender', 'rank', 'age', 'scar', 'wound'].forEach((id) => $(id).addEventListener('change', generate));
+      generate();
+    }
+
+    init();
+  </script>
+</body>
+</html>

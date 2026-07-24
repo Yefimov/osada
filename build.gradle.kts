@@ -152,6 +152,14 @@ tasks.register<Exec>("verifyCampaignDialogue") {
     commandLine("python", "scripts/check_campaign_dialogue.py")
 }
 
+tasks.register<Exec>("verifyUnitDescriptions") {
+    group = "verification"
+    description = "Validates row-specific equipment narrative descriptions"
+
+    workingDir = rootDir
+    commandLine("python", "scripts/check_unit_descriptions.py")
+}
+
 /*
  * Подготовка зависимостей production smoke test.
  */
@@ -205,6 +213,7 @@ tasks.named("check") {
     dependsOn(
         "verifyStaticChecks",
         "verifyCampaignDialogue",
+        "verifyUnitDescriptions",
         "detekt",
         "ktlintCheck",
     )

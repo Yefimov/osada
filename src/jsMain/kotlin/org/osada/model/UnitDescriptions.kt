@@ -5,7 +5,8 @@ import org.w3c.xhr.XMLHttpRequest
 object UnitDescriptions {
     private const val HTTP_OK = 200
 
-    private var map: Map<String, String>? = null
+    private var byName: Map<String, String>? = null
+    private var byId: Map<Int, String>? = null
     private var loadStarted = false
 
     fun load() {
@@ -37,30 +38,65 @@ object UnitDescriptions {
         try {
             val data: dynamic = js("JSON.parse")(responseText)
             if (data != null) {
-                val mutableMap = buildDescriptionMap(data)
-                map = mutableMap
-                console.log("[UnitDescriptions] loaded", mutableMap.size, "entries")
+                val maps = buildDescriptionMaps(data)
+                byName = maps.first
+                byId = maps.second
+                console.log(
+                    "[UnitDescriptions] loaded",
+                    maps.first.size,
+                    "name entries and",
+                    maps.second.size,
+                    "equipment entries",
+                )
             }
         } catch (e: Exception) {
             console.error("[UnitDescriptions] parse error:", e)
         }
     }
 
-    private fun buildDescriptionMap(data: dynamic): Map<String, String> {
+    private fun buildDescriptionMaps(data: dynamic): Pair<Map<String, String>, Map<Int, String>> {
+        val namesData: dynamic = if (data.byName != undefined) data.byName else data
+        val idsData: dynamic = if (data.byId != undefined) data.byId else null
         val mutableMap = mutableMapOf<String, String>()
-        js("Object.keys")(data).unsafeCast<Array<String>>().forEach { key ->
-            val value = data[key]
+        js("Object.keys")(namesData).unsafeCast<Array<String>>().forEach { key ->
+            val value = namesData[key]
             if (value != null) {
                 mutableMap[key] = value.toString()
             }
         }
-        return mutableMap
+        val idMap = mutableMapOf<Int, String>()
+        if (idsData != null) {
+            js("Object.keys")(idsData).unsafeCast<Array<String>>().forEach { key ->
+                val value = idsData[key]
+                val id = key.toIntOrNull()
+                if (id != null && value != null) idMap[id] = value.toString()
+            }
+        }
+        return mutableMap to idMap
     }
 
-    fun get(name: String): String? = map?.get(name.trim())?.takeIf { it.isNotBlank() }
+    fun get(name: String): String? = byName?.get(name.trim())?.takeIf { it.isNotBlank() }
 
-    internal fun setForTest(m: Map<String, String>?) {
-        map = m
+    /** Exact row-level prose wins. Name-only text remains as a compatibility fallback. */
+    fun get(equipment: EquipmentData): String? =
+        byId
+            ?.get(equipment.eqid)
+            ?.takeIf { it.isNotBlank() }
+            ?: get(equipment.name)
+
+    internal fun setForTest(
+        names: Map<String, String>?,
+        ids: Map<Int, String>? = null,
+    ) {
+        byName = names
+        byId = ids
+        loadStarted = true
+    }
+
+    internal fun parseForTest(responseText: String) {
+        byName = null
+        byId = null
+        parseResponse(responseText)
         loadStarted = true
     }
 }

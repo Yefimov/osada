@@ -124,6 +124,7 @@ internal object UILayout {
         minus.style.cssFloat = "left"
         minus.style.marginBottom = "5px"
         minus.innerHTML = "-"
+        minus.title = "Decrease this setting by $step."
         minus.onclick = { _: org.w3c.dom.events.MouseEvent -> adjust(-step) }
 
         // A real range slider (user request) with a live numeric readout; the +/- buttons stay
@@ -145,6 +146,7 @@ internal object UILayout {
         plus.className = "smallButton"
         plus.style.cssFloat = "left"
         plus.innerHTML = "+"
+        plus.title = "Increase this setting by $step."
         plus.onclick = { _: org.w3c.dom.events.MouseEvent -> adjust(step) }
     }
 

@@ -124,6 +124,7 @@ object CombatResolver {
         attacker: GameUnit,
         defender: GameUnit,
         useRandom: Boolean,
+        units: List<GameUnit> = emptyList(),
     ): CombatResults {
         val result = CombatResults()
         val context = AttackCalculation.resolveCombatContext(attacker, defender) ?: return result
@@ -133,7 +134,14 @@ object CombatResolver {
         AttackCalculation.applyLeaderBonuses(stats, attacker, defender, context)
         AttackCalculation.applyTerrainBonuses(stats, context)
         AttackCalculation.applyEntrenchment(stats, attacker, defender, context, closeCombat)
-        AttackCalculation.applyExperienceAndHitsPenalty(stats, attacker, defender, context)
+        AttackCalculation.applyExperienceAndHitsPenalty(
+            stats,
+            attacker,
+            defender,
+            context,
+            UnitCapabilities.combatSupportBars(units, attacker),
+            UnitCapabilities.combatSupportBars(units, defender),
+        )
         AttackCalculation.applyRangeDefenseModifier(stats, attacker, defender, context, closeCombat)
         AttackCalculation.applyInitiativeBonus(stats, attacker, defender, context)
         AttackCalculation.resolveRuggedSurpriseAndFireEligibility(stats, attacker, defender, context, result)
@@ -169,7 +177,7 @@ object CombatResolver {
 
         supportUnits.forEach { support ->
             val supportHex = support.getHex() ?: return@forEach
-            val supportResult = calculateAttackResults(support, attacker, useRandom)
+            val supportResult = calculateAttackResults(support, attacker, useRandom, units)
             if (supportHex.isSpotted(attackerSide) || support.tempSpotted) {
                 visibleKills += supportResult.kills
                 visibleLosses += supportResult.losses
@@ -178,7 +186,7 @@ object CombatResolver {
             totalLosses += supportResult.losses
         }
 
-        val mainResult = calculateAttackResults(attacker, defender, useRandom)
+        val mainResult = calculateAttackResults(attacker, defender, useRandom, units)
         totalKills += mainResult.losses
         totalLosses += mainResult.kills
         visibleKills += mainResult.losses

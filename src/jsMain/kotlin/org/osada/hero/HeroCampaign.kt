@@ -1,0 +1,552 @@
+package org.osada.hero
+
+import org.osada.GameHolder
+import org.osada.model.Equipment
+import org.osada.model.GameUnit
+
+/**
+ * Campaign-run entry point for the hero system — the direct counterpart of
+ * [org.osada.campaign.CampaignNarrative], and wired into the same three places:
+ * `Game.newCampaign` ([reset]), `GameStateSerializer.buildCampaignData` ([snapshot]) and
+ * `GameStateRestore.restoreCampaign` ([restore]).
+ *
+ * Global mutable state is the existing house pattern for per-run campaign data rather than a
+ * preference; the roster is scoped to one campaign run and cleared when a new one starts.
+ *
+ * ## Phase 2 additions
+ *
+ * This object also owns the acquisition loop: [setContext] records the campaign id / scenario /
+ * year that combat sits too deep to know, [recordCombat] turns a combat contribution into
+ * recognition and a possible officer, and [drainAnnouncements] hands finished new-leader events to
+ * the UI to present after the animation. The service and generator it drives are pure; all the
+ * mutation of roster, drought and formations lives here so there is one writer.
+ */
+@Suppress("TooManyFunctions")
+internal object HeroCampaign {
+    private var roster = HeroRoster()
+    private var context: EmergenceCampaignContext? = null
+    private val pendingAnnouncements = mutableListOf<HeroEmergenceAnnouncement>()
+    private val pendingPromotions = mutableListOf<HeroPromotionAnnouncement>()
+    private val pendingCasualties = mutableListOf<HeroCasualtyAnnouncement>()
+
+    /** The campaign facts an emergence needs that are not on the [GameUnit]. Set on scenario load. */
+    data class EmergenceCampaignContext(
+        val campaignId: String,
+        val scenarioIndex: Int,
+        val serviceYear: Int?,
+        val country: Int?,
+        val availableUnitClasses: Set<Int>,
+    )
+
+    /** A new run starts with no formations, no heroes, no drought and no pending events. */
+    fun reset() {
+        roster = HeroRoster()
+        context = null
+        pendingAnnouncements.clear()
+        pendingPromotions.clear()
+        pendingCasualties.clear()
+    }
+
+    /** Records the current campaign scenario so [recordCombat] can seed and date an emergence. */
+    fun setContext(
+        campaignId: String,
+        scenarioIndex: Int,
+        serviceYear: Int? = null,
+        country: Int? = null,
+        availableUnitClasses: Set<Int> = emptySet(),
+    ) {
+        context = EmergenceCampaignContext(campaignId, scenarioIndex, serviceYear, country, availableUnitClasses)
+        if (!roster.legendarySpawned) {
+            val current = roster.reservedLegendary
+            if (current == null ||
+                !LegendaryHeroPool.reservationCompatible(
+                    current,
+                    campaignId,
+                    country,
+                    serviceYear,
+                    availableUnitClasses,
+                )
+            ) {
+                roster.reservedLegendary =
+                    LegendaryHeroPool.reserve(campaignId, country, serviceYear, availableUnitClasses)
+            }
+        }
+    }
+
+    /** Save payload, or null when nothing has been recorded so the key can be omitted entirely. */
+    fun snapshot(): dynamic = if (roster.isEmpty) null else HeroSerializer.serialize(roster)
+
+    /** Restores from the save's `campaign.heroes` block; null (a pre-hero save) yields an empty roster. */
+    fun restore(heroes: dynamic) {
+        roster = HeroSerializer.deserialize(heroes)
+    }
+
+    /** The live roster, for the migration and resolver collaborators. */
+    fun roster(): HeroRoster = roster
+
+    /**
+     * The hero commanding [unit]'s formation, or null when the unit is not core, has no formation
+     * id, or its formation has no hero.
+     *
+     * This is the single lookup the combat-side adapter goes through, so "does this unit have a
+     * hero?" has exactly one answer everywhere.
+     */
+    fun heroFor(unit: GameUnit?): HeroState? {
+        val formationId = unit?.let { FormationIdentity.of(it) } ?: return null
+        return roster.assignedHero(formationId)
+    }
+
+    /** The coarse recognition status for [unit]'s formation, or null when it has none/has a hero (§7.1). */
+    fun recognitionStatus(unit: GameUnit?): String? {
+        val formation = unit?.let { FormationIdentity.of(it) }?.let { roster.formation(it) } ?: return null
+        return RecognitionService.coarseStatus(formation)
+    }
+
+    /** Visible recognition state for every leaderless formation, including one with no combat record yet. */
+    fun recognitionProgress(unit: GameUnit?): RecognitionService.Progress? {
+        val formationId = unit?.let(FormationIdentity::of)
+        val formation = formationId?.let(roster::formation)
+        return if (formationId != null && formation?.assignedHeroId == null) {
+            RecognitionService.progress(formation?.recognition ?: 0, roster.drought)
+        } else {
+            null
+        }
+    }
+
+    /** Persistent formation record for Unit Info's expanded recognition/history section. */
+    fun formationFor(unit: GameUnit?): CoreFormation? = unit?.let(FormationIdentity::of)?.let(roster::formation)
+
+    /**
+     * Ensures that every persistent player formation has a campaign record even before its first
+     * notable combat, and refreshes equipment/name metadata without touching recognition, history
+     * or commander assignment. A changed equipment id is recorded once in the service history.
+     */
+    fun synchronizeFormation(unit: GameUnit): CoreFormation? {
+        val formationId = FormationIdentity.of(unit) ?: return null
+        val current = roster.formation(formationId)
+        val equipmentChanged = current != null && current.currentEquipmentId != unit.eqid
+        val history =
+            if (equipmentChanged && current != null) {
+                val oldName =
+                    Equipment.getEquipment(current.currentEquipmentId)?.name ?: "#${current.currentEquipmentId}"
+                val newName = unit.unitData(true).name
+                current.history +
+                    FormationEvent(
+                        eventId = "equipment_changed",
+                        scenarioId = currentScenarioLabel(),
+                        turn = currentTurn(),
+                        date = currentDate(),
+                        location = "$oldName → $newName",
+                    )
+            } else {
+                current?.history.orEmpty()
+            }
+        val synchronized =
+            if (current == null) {
+                CoreFormation(
+                    id = formationId,
+                    ownerId = unit.owner,
+                    country = unit.player?.country ?: -1,
+                    displayName = unit.customName ?: unit.unitData(true).name,
+                    currentEquipmentId = unit.eqid,
+                    unitClass = unit.unitData(true).uclass,
+                    history = history,
+                )
+            } else {
+                current.copy(
+                    displayName = unit.customName ?: current.displayName,
+                    currentEquipmentId = unit.eqid,
+                    unitClass = unit.unitData(true).uclass,
+                    history = history,
+                )
+            }
+        roster.putFormation(synchronized)
+        return synchronized
+    }
+
+    /** Adds one idempotent chronological entry to a persistent formation's service record. */
+    fun recordFormationEvent(
+        unit: GameUnit,
+        eventId: String,
+        turn: Int = currentTurn(),
+        location: String? = null,
+    ): CoreFormation? {
+        val formationId = FormationIdentity.of(unit) ?: return null
+        val formation = ensureFormation(unit, formationId)
+        val event =
+            FormationEvent(
+                eventId,
+                currentScenarioLabel(),
+                turn,
+                currentDate(),
+                location ?: currentLocation(unit),
+            )
+        val previous = formation.history.lastOrNull()
+        if (previous?.eventId == event.eventId &&
+            previous.scenarioId == event.scenarioId &&
+            previous.turn == event.turn &&
+            previous.location == event.location
+        ) {
+            return formation
+        }
+        return formation.copy(history = formation.history + event).also(roster::putFormation)
+    }
+
+    /** Assignment lookup used by the roster/dossier Locate action. */
+    fun formationIdForHero(heroId: HeroId): FormationId? = roster.state(heroId)?.assignedFormationId
+
+    // ---------------------------------------------------------- Phase 4 read side
+
+    /** The dossier view for [unit]'s commander (§14.2/14.4), or null when the unit has no hero. */
+    fun dossier(unit: GameUnit?): LeaderDossierView? {
+        val experience = unit?.experience
+        val formation = unit?.let { FormationIdentity.of(it) }?.let { roster.formation(it) }
+        val heroId = formation?.assignedHeroId
+        val definition = heroId?.let { roster.definition(it) }
+        val state = heroId?.let { roster.state(it) }
+        return if (formation != null && definition != null && state != null) {
+            HeroDossierAssembler.dossier(definition, state, formation, experience)
+        } else {
+            null
+        }
+    }
+
+    /** The dossier for a hero by id (§14.4), opened from the roster where no deployed unit is known. */
+    fun dossier(heroId: HeroId): LeaderDossierView? {
+        val definition = roster.definition(heroId)
+        val state = roster.state(heroId)
+        val formation = state?.assignedFormationId?.let { roster.formation(it) }
+        return if (definition != null && state != null) {
+            HeroDossierAssembler.dossier(definition, state, formation, null)
+        } else {
+            null
+        }
+    }
+
+    /** Every commander in the campaign, for the Headquarters roster (§14.3). */
+    fun commanders(): List<CommanderRow> =
+        roster.allDefinitions().mapNotNull { definition ->
+            val state = roster.state(definition.id) ?: return@mapNotNull null
+            val formationName = state.assignedFormationId?.let { roster.formation(it)?.displayName }
+            HeroDossierAssembler.commanderRow(definition, state, formationName)
+        }
+
+    /** True when the campaign has produced at least one commander (to show/hide the HQ entry). */
+    fun hasCommanders(): Boolean = roster.allDefinitions().isNotEmpty()
+
+    /**
+     * Feeds one core unit's part in a resolved combat into the hero system and reports whether an
+     * officer emerged this call (so the caller can flag the leader-gain bounce).
+     *
+     * Routes to one of two mutually exclusive flows depending on whether the unit's formation
+     * already has a commander (§4.5, one leader per formation): a leaderless formation runs the
+     * Phase 2 emergence check; a led one runs Phase 3 progression instead. Returns false — no
+     * "leader gained" bounce — for a scenario-only unit with no formation, or for any action on a
+     * led formation (progression queues its own promotion announcement rather than this boolean).
+     */
+    fun recordCombat(
+        unit: GameUnit,
+        contribution: RecognitionService.Contribution,
+        turn: Int = 0,
+    ): Boolean {
+        val formationId = FormationIdentity.of(unit) ?: return false
+        val formation = ensureFormation(unit, formationId)
+        val heroId = formation.assignedHeroId
+        return when {
+            // A destroyed unit whose formation has a commander faces a casualty outcome (§11); a
+            // destroyed leaderless formation just loses its equipment and emerges nothing here.
+            unit.destroyed && heroId != null -> {
+                recordCasualty(unit, turn)
+                false
+            }
+            unit.destroyed -> false
+            heroId != null -> {
+                progressCommander(unit, formation, heroId, contribution, turn)
+                false
+            }
+            else -> attemptEmergence(unit, formation, contribution, turn)
+        }
+    }
+
+    /** Processes a destruction that happens after the normal combat result, notably failed-retreat surrender. */
+    fun recordCasualty(
+        unit: GameUnit,
+        turn: Int = 0,
+    ): Boolean {
+        val casualty =
+            unit
+                .takeIf { it.destroyed }
+                ?.let(FormationIdentity::of)
+                ?.let { ensureFormation(unit, it) }
+                ?.let { formation -> formation.assignedHeroId?.let { formation to it } }
+        return if (casualty != null) {
+            applyCasualty(unit, casualty.first, casualty.second, turn)
+            true
+        } else {
+            false
+        }
+    }
+
+    /**
+     * Resolves the fate of [formation]'s commander after its unit was destroyed (§11): sets the new
+     * status, records any wound, detaches the leader from the formation unless only lightly wounded,
+     * leaves a restrained memorial tradition on death (§11.2), and queues the event for the UI.
+     */
+    private fun applyCasualty(
+        unit: GameUnit,
+        formation: CoreFormation,
+        heroId: HeroId,
+        turn: Int,
+    ) {
+        val hero = roster.state(heroId) ?: return
+        val definition = roster.definition(heroId) ?: return
+        val scenarioId = currentScenarioLabel()
+        val casualtyContext =
+            HeroCasualtyService.Context(
+                surrendered = unit.surrendered,
+                safeSupply = !unit.surrendered,
+                seed = SeededRandom.seedFrom(heroId.value, scenarioId, turn.toString()),
+            )
+        val outcome = HeroCasualtyService.resolve(casualtyContext, scenarioId)
+        val event =
+            HeroEvent(
+                outcome.disposition.name.lowercase(),
+                scenarioId,
+                turn,
+                currentDate(),
+                currentLocation(unit),
+            )
+        roster.updateState(
+            hero.copy(
+                status = outcome.disposition.status,
+                injuries = hero.injuries + listOfNotNull(outcome.injury),
+                serviceEvents = hero.serviceEvents + event,
+                assignedFormationId = if (outcome.detach) null else hero.assignedFormationId,
+            ),
+        )
+        val killed = outcome.disposition == HeroCasualtyService.Disposition.KILLED
+        val memorial = if (killed) "Tradition of ${definition.displayName}" else null
+        val updatedFormation =
+            formation.copy(
+                assignedHeroId = if (outcome.detach) null else formation.assignedHeroId,
+                battleHonors = if (memorial != null) formation.battleHonors + memorial else formation.battleHonors,
+                history =
+                    formation.history +
+                        FormationEvent(
+                            "commander_${outcome.disposition.name.lowercase()}",
+                            scenarioId,
+                            turn,
+                            currentDate(),
+                            currentLocation(unit),
+                        ),
+            )
+        roster.putFormation(updatedFormation)
+        pendingCasualties += HeroCasualtyAnnouncement.from(outcome, updatedFormation, definition, hero.rankId, memorial)
+    }
+
+    /**
+     * Runs the emergence check for a leaderless [formation], or does nothing (beyond having
+     * created the formation record) when the action was not notable — recognition (§7.1) only
+     * accumulates from notable actions, and neither an ineligible nor an unremarkable combat should
+     * feed the drought counter.
+     */
+    private fun attemptEmergence(
+        unit: GameUnit,
+        formation: CoreFormation,
+        contribution: RecognitionService.Contribution,
+        turn: Int,
+    ): Boolean {
+        val assessment = RecognitionService.assess(contribution)
+        if (!assessment.isNotable) return false
+        val eventId = assessment.event?.eventId ?: EmergenceEvent.DISTINGUISHED_SERVICE.eventId
+        val recorded = recordFormationEvent(unit, eventId, turn) ?: formation
+        val checked =
+            recorded.copy(
+                recognition = recorded.recognition + assessment.points,
+                emergenceChecks = recorded.emergenceChecks + 1,
+            )
+        return runCheck(unit, checked, assessment, turn) is LeaderAcquisitionService.EmergenceResult.Emerged
+    }
+
+    /** Runs Phase 3 progression for a formation that already has a commander. */
+    private fun progressCommander(
+        unit: GameUnit,
+        formation: CoreFormation,
+        heroId: HeroId,
+        contribution: RecognitionService.Contribution,
+        turn: Int,
+    ) {
+        val hero = roster.state(heroId) ?: return
+        val definition = roster.definition(heroId) ?: return
+        val ctx = context
+        val result =
+            HeroProgressionProcessor.process(
+                contribution = contribution,
+                hero = hero,
+                definition = definition,
+                formation = formation,
+                campaignId = ctx?.campaignId ?: "",
+                scenarioId = currentScenarioLabel(),
+                turn = turn,
+                eventDate = currentDate(),
+                eventLocation = currentLocation(unit),
+            )
+        roster.updateState(result.hero)
+        roster.putFormation(result.formation)
+        result.promotion?.let {
+            pendingPromotions += HeroPromotionAnnouncement.from(it, result.formation, definition, result.hero)
+        }
+    }
+
+    /** New-leader events accumulated since the last drain, in order. Emptied by the caller. */
+    fun drainAnnouncements(): List<HeroEmergenceAnnouncement> {
+        if (pendingAnnouncements.isEmpty()) return emptyList()
+        val out = pendingAnnouncements.toList()
+        pendingAnnouncements.clear()
+        return out
+    }
+
+    /** Promotion events accumulated since the last drain (§8.5), in order. Emptied by the caller. */
+    fun drainPromotions(): List<HeroPromotionAnnouncement> {
+        if (pendingPromotions.isEmpty()) return emptyList()
+        val out = pendingPromotions.toList()
+        pendingPromotions.clear()
+        return out
+    }
+
+    /** Casualty events accumulated since the last drain (§11), in order. Emptied by the caller. */
+    fun drainCasualties(): List<HeroCasualtyAnnouncement> {
+        if (pendingCasualties.isEmpty()) return emptyList()
+        val out = pendingCasualties.toList()
+        pendingCasualties.clear()
+        return out
+    }
+
+    /** Applies the player's choice for a pending promotion (§8.5): learns the trait, gains one attribute point. */
+    fun applyPromotionChoice(
+        heroId: HeroId,
+        traitId: String,
+    ) {
+        val hero = roster.state(heroId) ?: return
+        val chosen = HeroTraitCatalog.byId(traitId) ?: return
+        roster.updateState(
+            hero.copy(
+                learnedTraitIds = hero.learnedTraitIds + LegacyTraitMapping.toTraitId(chosen.legacyTrait),
+                attributes = hero.attributes.increment(chosen.categoryId.attribute),
+            ),
+        )
+    }
+
+    /** Runs the emergence check on the (already recognition-updated) formation and applies the verdict. */
+    private fun runCheck(
+        unit: GameUnit,
+        checked: CoreFormation,
+        assessment: RecognitionService.Assessment,
+        turn: Int,
+    ): LeaderAcquisitionService.EmergenceResult {
+        val ctx = context
+        val reserved =
+            roster.reservedLegendary
+                ?.let { LegendaryHeroPool.byId(it) }
+                ?.takeIf {
+                    LegendaryHeroPool.compatible(
+                        it,
+                        ctx?.campaignId.orEmpty(),
+                        ctx?.country,
+                        checked.unitClass,
+                        ctx?.serviceYear,
+                    )
+                }
+        val proceduralFallback = roster.reservedLegendary == LegendaryHeroPool.PROCEDURAL_FALLBACK_ID
+        val earlyLegendaryQualifyingCombats =
+            roster
+                .allFormations()
+                .filterNot { it.id == checked.id }
+                .sumOf { it.emergenceChecks } + checked.emergenceChecks
+        val emergenceContext =
+            LeaderAcquisitionService.EmergenceContext(
+                campaignId = ctx?.campaignId ?: "",
+                scenarioIndex = ctx?.scenarioIndex ?: 0,
+                formation = checked,
+                event = assessment.event ?: EmergenceEvent.DISTINGUISHED_SERVICE,
+                campaignDrought = roster.drought,
+                country = unit.player?.country ?: checked.country,
+                unitExperience = unit.experience,
+                serviceYear = ctx?.serviceYear,
+                reservedLegendary = reserved,
+                proceduralLegendaryFallback = proceduralFallback,
+                earlyLegendaryQualifyingCombats = earlyLegendaryQualifyingCombats,
+            )
+        val result = LeaderAcquisitionService.tryGenerate(emergenceContext)
+        applyResult(unit, checked, result, assessment, turn)
+        return result
+    }
+
+    private fun applyResult(
+        unit: GameUnit,
+        checked: CoreFormation,
+        result: LeaderAcquisitionService.EmergenceResult,
+        assessment: RecognitionService.Assessment,
+        turn: Int,
+    ) {
+        when (result) {
+            is LeaderAcquisitionService.EmergenceResult.Emerged -> {
+                val scenarioId = currentScenarioLabel()
+                val date = currentDate()
+                val location = currentLocation(unit)
+                val eventId = assessment.event?.eventId ?: result.event.eventId
+                val state =
+                    result.state.copy(
+                        serviceEvents =
+                            result.state.serviceEvents + HeroEvent(eventId, scenarioId, turn, date, location),
+                    )
+                val formation = checked.copy(assignedHeroId = result.definition.id)
+                roster.putHero(result.definition, state)
+                roster.putFormation(formation)
+                roster.drought = 0
+                if (result.consumedReservation) {
+                    roster.reservedLegendary = null
+                    roster.legendarySpawned = true
+                }
+                pendingAnnouncements += HeroEmergenceAnnouncement.from(result, formation)
+            }
+            is LeaderAcquisitionService.EmergenceResult.NoLeader -> {
+                roster.putFormation(checked)
+                if (result.eligible) roster.drought += 1
+            }
+        }
+    }
+
+    private fun currentTurn(): Int = GameHolder.instance?.scenario?.map?.turn ?: 0
+
+    private fun currentScenarioLabel(): String =
+        GameHolder.instance
+            ?.scenario
+            ?.name
+            ?.takeIf { it.isNotBlank() }
+            ?: context?.scenarioIndex?.toString().orEmpty()
+
+    @Suppress("MagicNumber")
+    private fun currentDate(): String? {
+        val date = GameHolder.instance?.scenario?.date ?: return null
+        val month = (date.getMonth() + 1).toString().padStart(2, '0')
+        val day = date.getDate().toString().padStart(2, '0')
+        return "${date.getFullYear()}-$month-$day"
+    }
+
+    private fun currentLocation(unit: GameUnit): String? = unit.getHex()?.name?.takeIf { it.isNotBlank() }
+
+    /** The formation record for [unit], created from the unit on first contact (fresh campaigns have none). */
+    private fun ensureFormation(
+        unit: GameUnit,
+        formationId: FormationId,
+    ): CoreFormation =
+        roster.formation(formationId) ?: CoreFormation(
+            id = formationId,
+            ownerId = unit.owner,
+            country = unit.player?.country ?: -1,
+            displayName = unit.customName ?: unit.unitData().name,
+            currentEquipmentId = unit.eqid,
+            unitClass = unit.unitData().uclass,
+        ).also(roster::putFormation)
+}

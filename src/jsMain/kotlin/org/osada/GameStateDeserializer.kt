@@ -71,6 +71,7 @@ object GameStateDeserializer {
         unit.hits = data.hits as? Int ?: 0
         unit.leader = data.leader as? Int ?: -1
         unit.nodossier = data.nodossier as? Boolean ?: false
+        unit.isTemporaryBorrowed = data.temporaryBorrowed as? Boolean ?: false
         unit.customName = data.customName as? String // optional key; absent in pre-rename saves
         unit.formationId = data.formationId as? String // optional key; absent in pre-hero saves
     }

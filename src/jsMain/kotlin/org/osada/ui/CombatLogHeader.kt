@@ -104,9 +104,11 @@ internal object CombatLogHeader {
             label: String,
             value: String,
             sub: String? = null,
+            explanation: String,
         ) {
             val t = addTag(row, "div")
             t.className = "osada-tr-tile"
+            t.title = explanation
             val v = addTag(t, "div")
             v.className = "osada-tr-tile__value"
             v.innerHTML = value
@@ -121,25 +123,48 @@ internal object CombatLogHeader {
         }
 
         val objectivesLeft = map.sidesVictoryHexes.getOrElse(currentPlayer.side) { mutableListOf<Cell>() }.size
-        tile("Objectives Left", objectivesLeft.toString())
+        tile(
+            "Objectives Left",
+            objectivesLeft.toString(),
+            explanation = "Enemy victory objectives your side must still capture to complete the scenario.",
+        )
 
         // Only the NEAREST upcoming victory tier is shown (spec: compact, not the old three-tier
         // sentence) — the further-out tiers stop mattering once a closer one is reachable.
-        nearestVictoryTier(map)?.let { (turns, outcome) -> tile("Turns to $outcome", turns.toString()) }
+        nearestVictoryTier(map)?.let { (turns, outcome) ->
+            tile(
+                "Turns to $outcome",
+                turns.toString(),
+                explanation = "Turns remaining to earn the nearest timed victory tier by taking all objectives.",
+            )
+        }
 
-        tile("Score", currentPlayer.score.toString())
+        tile(
+            "Score",
+            currentPlayer.score.toString(),
+            explanation = "Scenario score earned from combat, objectives, supply and other actions.",
+        )
         val nextTurnPrestige = currentPlayer.prestigePerTurn.getOrNull(map.turn + 1) ?: 0
         tile(
             "Prestige",
             "${currentPlayer.prestige}&nbsp;${UIBuilder.currencyIcon}",
             if (nextTurnPrestige != 0) "+$nextTurnPrestige next turn" else null,
+            "Prestige available for purchases, upgrades and reinforcement; the subtitle shows scheduled income.",
         )
 
         // Casualties: summed from this turn's combat log for the viewing side — the same data
         // the Combat group below itemizes per-unit, just totaled for an at-a-glance read.
         val (inflicted, taken) = combatTotals(game)
-        tile("Inflicted", inflicted.toString())
-        tile("Losses", taken.toString())
+        tile(
+            "Inflicted",
+            inflicted.toString(),
+            explanation = "Total enemy strength points destroyed by your side during this turn.",
+        )
+        tile(
+            "Losses",
+            taken.toString(),
+            explanation = "Total friendly strength points lost by your side during this turn.",
+        )
 
         return row
     }

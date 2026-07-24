@@ -1,6 +1,7 @@
 package org.osada.ui
 
 import org.osada.MovMethod
+import org.osada.UnitClass
 import org.osada.model.GameUnit
 import org.osada.rules.GameRules
 import org.osada.rules.isTrain
@@ -40,18 +41,24 @@ class SoundSprite(
             // ignore
         }
         try {
-            // Read live, not cached at construction: the settings slider can change this
-            // mid-game, and clips are created once up front (init block) with no volume set
-            // at all — leaving them at the Audio element's own default of 1.0 (full volume),
-            // which is exactly the "too loud" complaint.
             clip.volume = uiSettings.soundVolume
         } catch (_: Throwable) {
             // ignore
         }
-        try {
-            clip.play()
-        } catch (_: Throwable) {
-            // ignore
+
+        val promise: dynamic =
+            try {
+                clip.play()
+            } catch (_: Throwable) {
+                clips.remove(clip)
+                null
+            }
+        // play() rejects asynchronously; try/catch cannot catch NotSupportedError from the Promise.
+        if (promise != null && promise != undefined) {
+            promise.catch { _: dynamic ->
+                clips.remove(clip)
+                null
+            }
         }
     }
 }
@@ -291,7 +298,17 @@ val moveSoundByMoveMethod =
  */
 fun playMoveSound(unit: GameUnit) {
     if (uiSettings.muteUnitSounds) return
-    var movmethod = unit.unitData().movmethod
+    val data = unit.unitData()
+    val unmountedEngineerInfantry =
+        !unit.isMounted &&
+            unit.carrier <= 0 &&
+            data.uclass == UnitClass.INFANTRY.value &&
+            data.name.contains("Engineer", ignoreCase = true)
+    if (unmountedEngineerInfantry) {
+        Sound.leg.play()
+        return
+    }
+    var movmethod = data.movmethod
     if (GameRules.isTrain(unit)) movmethod = MovMethod.TRACKED.value
     moveSoundByMoveMethod.getOrNull(movmethod)?.play()
 }

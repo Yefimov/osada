@@ -33,6 +33,7 @@ internal object MessageDialogs {
         val titleEl = byId("title")
         val messageEl = byId("message")
         val uiOkBut = byId("uiokbut")
+        uiOkBut?.title = "Close this message and continue."
         titleEl?.innerHTML = title
         messageEl?.innerHTML = body
         makeVisible("ui-message")
@@ -67,6 +68,7 @@ internal object MessageDialogs {
         bodyEl.className = "uiMessageBoxBody"
         val okButton = addTag(box, "div")
         okButton.className = "smallButton uiMessageBoxButton"
+        okButton.title = "Close this message and continue."
         titleEl.innerHTML = title
         bodyEl.innerHTML = body
         okButton.innerHTML = "1"
@@ -84,7 +86,8 @@ internal object MessageDialogs {
         val eq = Equipment.getEquipment(eqid)
         if (eq != null) {
             body +=
-                "<div class='uImageAnimation' style='margin-left: 120px;background-image: url(${eq.icon})'></div>" +
+                "<div class='uImageAnimation' style='margin-left: 120px;background-image: " +
+                "url(${UnitIconResolver.forCurrentScenario(eq.icon)})'></div>" +
                 "<b>${eq.name} ${unitClassNames[eq.uclass]}</b>"
         }
         messageDynamic("You have been awarded a prototype unit", body)

@@ -1,0 +1,169 @@
+{
+  "schema": 2,
+  "viewBox": "0 0 300 400",
+  "artStyle": "flat_dossier_v2",
+  "order": [
+    "background", "uniform_back", "hair_back", "face", "age_face", "scar",
+    "facial_hair", "hair_front", "under_headgear_hair", "uniform_front_collar",
+    "rank", "branch", "headgear", "wound"
+  ],
+  "categoryDir": {
+    "background": "background",
+    "uniform_back": "uniform_back",
+    "hair_back": "hair_back",
+    "face": "face",
+    "age_face": "age_face",
+    "scar": "scar",
+    "facial_hair": "facial_hair",
+    "hair_front": "hair_front",
+    "under_headgear_hair": "under_headgear_hair",
+    "uniform_front_collar": "uniform_front_collar",
+    "rank": "rank",
+    "branch": "branch",
+    "headgear": "headgear",
+    "wound": "wound"
+  },
+  "layers": {
+    "background": [
+      { "id": "bg_dossier_slate", "tags": { "nation": "*", "neutral": true } },
+      { "id": "bg_dossier_stone", "tags": { "nation": "*", "neutral": true } }
+    ],
+    "uniform_back": [
+      { "id": "back_infantry", "tags": { "branch": ["infantry"] } },
+      { "id": "back_armor", "tags": { "branch": ["armor"] } },
+      { "id": "back_artillery", "tags": { "branch": ["artillery"] } },
+      { "id": "back_aviation", "tags": { "branch": ["aviation"] } }
+    ],
+    "uniform_front_collar": [
+      { "id": "collar_infantry_summer", "tags": { "branch": ["infantry"], "season": "summer" } },
+      { "id": "collar_armor_summer", "tags": { "branch": ["armor"], "season": "summer" } },
+      { "id": "collar_artillery_summer", "tags": { "branch": ["artillery"], "season": "summer" } },
+      { "id": "collar_aviation", "tags": { "branch": ["aviation"], "season": "any" } },
+      { "id": "collar_infantry_winter", "tags": { "branch": ["infantry"], "season": "winter" } },
+      { "id": "collar_armor_winter", "tags": { "branch": ["armor"], "season": "winter" } },
+      { "id": "collar_artillery_winter", "tags": { "branch": ["artillery"], "season": "winter" } }
+    ],
+    "hair_back": [
+      { "id": "hair_back_short" },
+      { "id": "hair_back_full" },
+      { "id": "hair_back_female", "tags": { "gender": "female" } }
+    ],
+    "face": [
+      { "id": "face_narrow_stern", "tags": { "archetype": "narrow_stern" } },
+      { "id": "face_broad_calm", "tags": { "archetype": "broad_calm" } },
+      { "id": "face_round_young", "tags": { "archetype": "round_young" } },
+      { "id": "face_angular_tired", "tags": { "archetype": "angular_tired" } },
+      { "id": "face_long_mature", "tags": { "archetype": "long_mature" } },
+      { "id": "face_square_veteran", "tags": { "archetype": "square_veteran" } }
+    ],
+    "age_face": [
+      { "id": "age_face_light", "tags": { "age": "middle" } },
+      { "id": "age_face_heavy", "tags": { "age": "old" } }
+    ],
+    "scar": [
+      { "id": "scar_cheek" },
+      { "id": "scar_brow" },
+      { "id": "scar_lip" }
+    ],
+    "facial_hair": [
+      { "id": "facial_clean" },
+      { "id": "facial_stubble" },
+      { "id": "facial_mustache" },
+      { "id": "facial_beard" }
+    ],
+    "hair_front": [
+      { "id": "hair_front_crop" },
+      { "id": "hair_front_side" },
+      { "id": "hair_front_receding" },
+      { "id": "hair_front_swept" },
+      { "id": "hair_front_female_a", "tags": { "gender": "female" } },
+      { "id": "hair_front_female_b", "tags": { "gender": "female" } }
+    ],
+    "under_headgear_hair": [
+      { "id": "under_hair_temples" },
+      { "id": "under_hair_none" },
+      { "id": "under_hair_female", "tags": { "gender": "female" } }
+    ],
+    "rank": [
+      { "id": "rank_lieutenant", "tags": { "rank": "lieutenant" } },
+      { "id": "rank_captain", "tags": { "rank": "captain" } },
+      { "id": "rank_major", "tags": { "rank": "major" } },
+      { "id": "rank_colonel", "tags": { "rank": "colonel" } }
+    ],
+    "branch": [
+      { "id": "branch_infantry", "tags": { "branch": ["infantry"] } },
+      { "id": "branch_armor", "tags": { "branch": ["armor"] } },
+      { "id": "branch_artillery", "tags": { "branch": ["artillery"] } },
+      { "id": "branch_aviation", "tags": { "branch": ["aviation"] } }
+    ],
+    "headgear": [
+      { "id": "headgear_officer_cap", "tags": { "hairMode": "UNDER_CAP", "branch": ["infantry", "armor", "artillery", "aviation"] } },
+      { "id": "headgear_ushanka", "tags": { "hairMode": "UNDER_FUR_HAT", "branch": ["infantry", "armor", "artillery"], "season": "winter" } },
+      { "id": "headgear_pilotka", "tags": { "hairMode": "UNDER_CAP", "branch": ["infantry", "artillery"] } },
+      { "id": "headgear_flight_helmet", "tags": { "hairMode": "UNDER_FLIGHT_HELMET", "branch": ["aviation"] } }
+    ],
+    "wound": [
+      { "id": "wound_eye_patch", "tags": { "wound": "eye" } },
+      { "id": "wound_brow_bandage", "tags": { "wound": "brow" } },
+      { "id": "wound_cheek_dressing", "tags": { "wound": "cheek" } }
+    ]
+  },
+  "hairFront": {
+    "FULL_HAIR": ["hair_front_crop", "hair_front_side", "hair_front_receding", "hair_front_swept"],
+    "UNDER_CAP": ["under_hair_temples"],
+    "UNDER_FUR_HAT": [],
+    "UNDER_FLIGHT_HELMET": [],
+    "NONE": []
+  },
+  "weights": {
+    "seasonWinter": 0.6,
+    "scarChance": 0.18,
+    "woundChance": 0.06,
+    "grayHairFromAge": "old",
+    "rankAge": {
+      "lieutenant": { "young": 0.7, "middle": 0.3 },
+      "captain": { "young": 0.4, "middle": 0.5, "old": 0.1 },
+      "major": { "young": 0.1, "middle": 0.55, "old": 0.35 },
+      "colonel": { "young": 0.05, "middle": 0.35, "old": 0.6 }
+    },
+    "ageArchetype": {
+      "young": { "round_young": 0.4, "narrow_stern": 0.2, "broad_calm": 0.2, "long_mature": 0.1, "angular_tired": 0.05, "square_veteran": 0.05 },
+      "middle": { "broad_calm": 0.25, "narrow_stern": 0.2, "long_mature": 0.2, "square_veteran": 0.15, "angular_tired": 0.1, "round_young": 0.1 },
+      "old": { "square_veteran": 0.3, "long_mature": 0.25, "angular_tired": 0.25, "narrow_stern": 0.1, "broad_calm": 0.1 }
+    },
+    "facialByAge": {
+      "young": { "facial_clean": 0.55, "facial_stubble": 0.3, "facial_mustache": 0.12, "facial_beard": 0.03 },
+      "middle": { "facial_clean": 0.4, "facial_stubble": 0.3, "facial_mustache": 0.2, "facial_beard": 0.1 },
+      "old": { "facial_clean": 0.35, "facial_stubble": 0.25, "facial_mustache": 0.25, "facial_beard": 0.15 }
+    },
+    "headgear": {
+      "infantry": {
+        "summer": { "headgear_officer_cap": 0.4, "headgear_pilotka": 0.3, "none": 0.3 },
+        "winter": { "headgear_ushanka": 0.7, "headgear_officer_cap": 0.2, "none": 0.1 }
+      },
+      "artillery": {
+        "summer": { "headgear_officer_cap": 0.4, "headgear_pilotka": 0.3, "none": 0.3 },
+        "winter": { "headgear_ushanka": 0.7, "headgear_officer_cap": 0.2, "none": 0.1 }
+      },
+      "armor": {
+        "summer": { "headgear_officer_cap": 0.5, "none": 0.3, "headgear_pilotka": 0.2 },
+        "winter": { "headgear_ushanka": 0.6, "headgear_officer_cap": 0.3, "none": 0.1 }
+      },
+      "aviation": {
+        "summer": { "headgear_flight_helmet": 0.7, "none": 0.2, "headgear_officer_cap": 0.1 },
+        "winter": { "headgear_flight_helmet": 0.7, "none": 0.2, "headgear_officer_cap": 0.1 }
+      }
+    }
+  },
+  "pools": {
+    "ussr_1942": {
+      "label": "USSR — Operation Uranus, 1942",
+      "nation": "USSR",
+      "yearFrom": 1941,
+      "yearTo": 1943,
+      "theater": "eastern_front",
+      "defaultSeason": "winter",
+      "branches": ["infantry", "armor", "artillery", "aviation"]
+    }
+  }
+}

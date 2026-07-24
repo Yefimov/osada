@@ -1,0 +1,750 @@
+[
+  {
+    "id": 0,
+    "scenario": "ga4_0.xml",
+    "startprestige": 0,
+    "intro": "The road ahead is defended, yet a decisive blow here can unhinge the entire front. Zhukov's command career is becoming a sequence of increasingly vast operational battles. STAVKA has decided it is time for you to break the stalemate at Khalkin Gol. The Japanese have been pouring reinforcements into the area, but, as you know, so have we, and we continue to do so. The wider stakes are clear: Most of the Japanese forces have been wiped out, the remainder being either caught behind our lines of advance or pushed back into Manchukuo. Break the defence before reserves arrive, keep your spearheads supplied, and turn tactical success into an operational collapse.",
+    "outcome": {
+      "briliant": {
+        "goto": 1,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "Excellent work comrade Lieutenant-General!  Most of the Japanese forces have been wiped out, the remainder being either caught behind our lines of advance or pushed back into Manchukuo. Now the Japanese have asked for an armistice, and they agree to abide by the existing border! Congratulations, you have been awarded the title of \"Hero of the Soviet Union\", promoted to General of the Army, and have been given command of the Kiev Special Military District!"
+      },
+      "victory": {
+        "goto": 1,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "Good work comrade Lieutenant-General. Most of the Japanese forces have been wiped out, the remainder being either caught behind our lines of advance or pushed back into Manchukuo. Now the Japanese have asked for an armistice, and they agree to abide by the existing border! Congratulations, you have been awarded the title of \"Hero of the Soviet Union\", promoted to General of the Army, and have been given command of the Kiev Special Military District!"
+      },
+      "tactical": {
+        "goto": 1,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "Despite fierce resistance, you have managed to wipe out most of the Japanese forces, the remainder being either caught behind our lines of advance or pushed back into Manchukuo. Now the Japanese have asked for an armistice, and they agree to abide by the existing border! Congratulations, you have been awarded the title of \"Hero of the Soviet Union\", promoted to General of the Army, and have been given command of the Kiev Special Military District!"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Sorry comrade, obviously you were not the right man for the task. Now go, comrade Beria is waiting to talk to you..."
+      }
+    }
+  },
+  {
+    "id": 1,
+    "scenario": "ga4_1.xml",
+    "startprestige": 0,
+    "intro": "The initiative is yours, but the enemy will not remain disorganized for long. Zhukov's command career is becoming a sequence of increasingly vast operational battles. As you are now commander of the Kiev Special Military District, we have a special assignment for you to organize! As you know, the Romanians have consented to give us back the territory taken from us during the civil war, but, in disregard of the agreement, they are also attempting to take with them railroad rolling stock, factory equipment, and other supplies as they evacuate the area! The wider stakes are clear: Now the Romanians are protesting that we violated the agreement by using airborne troops and airborne tanks to disperse their army!",
+    "outcome": {
+      "briliant": {
+        "goto": 2,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 650,
+        "text": "Excellent work Comrade General! Now the Romanians are protesting that we violated the agreement by using airborne troops and airborne tanks to disperse their army! They were so panic stricken that they actually assumed that the tanks had been transported by air as well! Stalin sends his regards. Well done..."
+      },
+      "victory": {
+        "goto": 2,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 650,
+        "text": "Good work Comrade General! Now the Romanians are protesting that we violated the agreement by using airborne troops and airborne tanks to disperse their army! They were so panic stricken that they actually assumed that the tanks had been transported by air as well! Stalin sends his regards. Well done..."
+      },
+      "tactical": {
+        "goto": 2,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 650,
+        "text": "Despite some resistance, you have managed to put a stop to the mischief. Now the Romanians are protesting that we violated the agreement by using airborne troops and airborne tanks to disperse their army! They were so panic stricken that they actually assumed that the tanks had been transported by air as well! Stalin sends his regards..."
+      },
+      "lose": {
+        "goto": 2,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 650,
+        "text": "Comrade General, how could you have let the Romanians get away with it? Because you are still rather new to the post of the Kiev Special Military District, Stalin has reluctantly agreed to give you one more chance.....Do not fail us again!"
+      }
+    }
+  },
+  {
+    "id": 2,
+    "scenario": "ga4_2.xml",
+    "startprestige": 0,
+    "intro": "The initiative is yours, but the enemy will not remain disorganized for long. Zhukov's command career is becoming a sequence of increasingly vast operational battles. STAVKA applauds your decision in rejecting a defensive posture in favor of a more active stance. As a result, the German offensive has been brought to a halt here in the Yelnya sector. The wider stakes are clear: Your's and Rokossovsky's success at Yelnya has been the only bright spot against the German invasion of our country thus far. Break the defence before reserves arrive, keep your spearheads supplied, and turn tactical success into an operational collapse.",
+    "outcome": {
+      "briliant": {
+        "goto": 3,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 650,
+        "text": "Excellent work Comrade General! Your's and Rokossovsky's success at Yelnya has been the only bright spot against the German invasion of our country thus far. I know that you would probably like to continue your westward drive from Yelnya, but Stalin has ordered the Reserve front onto the defensive, and has summoned you to the Kremlin. I have a feeling that he would like you to take over the defence of Leningrad from Marshal Voroshilov, whose performance has been deemed as so incompetent, that now there is a real threat that our Northern capital will fall!"
+      },
+      "victory": {
+        "goto": 3,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 650,
+        "text": "Good work Comrade General. Your's and Rokossovsky's success at Yelnya has been the only bright spot against the German invasion of our country thus far. I know that you would probably like to continue your westward drive from Yelnya, but Stalin has ordered the Reserve front onto the defensive, and has summoned you to the Kremlin. I have a feeling that he would like you to take over the defence of Leningrad from Marshal Voroshilov, whose performance has been deemed as so incompetent, that now there is a real threat that our Northern capital will fall!"
+      },
+      "tactical": {
+        "goto": 3,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 650,
+        "text": "Despite fierce resistance, Yelnya is again ours. Your's and Rokossovsky's success at Yelnya has been the only bright spot against the German invasion of our country thus far. I know that you would probably like to continue your westward drive from Yelnya, but Stalin has ordered the Reserve front onto the defensive, and has summoned you to the Kremlin. I have a feeling that he would like you to take over the defence of Leningrad from Marshal Voroshilov, whose performance has been deemed as so incompetent, that now there is a real threat that our Northern capital will fall!"
+      },
+      "lose": {
+        "goto": 3,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 650,
+        "text": "Despite failing to re-capture Yelnya, You and Rokossovsky have shown the Germans that we will not give up. Stalin has now ordered the Reserve front onto the defensive, and has summoned you to the Kremlin. I have a feeling that he would like you to take over the defence of Leningrad from Marshal Voroshilov, whose performance has been deemed as so incompetent, that now there is a real threat that our Northern capital will fall!"
+      }
+    }
+  },
+  {
+    "id": 3,
+    "scenario": "ga4_3.xml",
+    "startprestige": 0,
+    "intro": "The campaign has reached a point where speed matters as much as firepower. Zhukov's command career is becoming a sequence of increasingly vast operational battles. The lead German forces now stand less than 30 kilometers away from the Kremlin! Stalin has finally approved the counter offensive proposed by You and General Vasilevsky. The wider stakes are clear: Despite fierce resistance, the Germans have been driven away from Moscow, but the front lines are still relatively close, and more importantly, the Rzhev salient of Army Group Center remains intact. Break the defence before reserves arrive, keep your spearheads supplied, and turn tactical success into an operational collapse.",
+    "outcome": {
+      "briliant": {
+        "goto": 4,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 700,
+        "text": "Excellent work comrade General! The Germans have been driven away from Moscow, but the front lines are still relatively close, and more importantly, the Rzhev salient of Army Group Center remains intact. Thus Stalin still considers Moscow as threatened..."
+      },
+      "victory": {
+        "goto": 4,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 700,
+        "text": "Good work comrade General. The Germans have been driven away from Moscow, but the front lines are still relatively close, and more importantly, the Rzhev salient of Army Group Center remains intact. Thus Stalin still considers Moscow as threatened..."
+      },
+      "tactical": {
+        "goto": 4,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 700,
+        "text": "Despite fierce resistance, the Germans have been driven away from Moscow, but the front lines are still relatively close, and more importantly, the Rzhev salient of Army Group Center remains intact. Thus Stalin still considers Moscow as threatened..."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Ex comrade general, Comrade Beria of the NKVD would like to have coffee with you, but not here, because now our Capital will very soon be overrrun by the Fascist invaders!"
+      }
+    }
+  },
+  {
+    "id": 4,
+    "scenario": "ga4_4.xml",
+    "startprestige": 0,
+    "intro": "The campaign has reached a point where speed matters as much as firepower. Zhukov's command career is becoming a sequence of increasingly vast operational battles. The desired effect of compelling the Germans to bring up four additional panzer divisions and one motorized division to deal with your attack, (thus effectively depriving their Stalingrad sector of the reinforcements they needed to deal with the Uranus operation), appears to have been accomplished. Therefore, Stalin has now authorized your order for the remnants of the 6th Tank Corps and three Cavalry divisions to break the encirclement... The wider stakes are clear: STAVKA has confirmed that the gains of Operation Uranus have now been consolidated, and there is no chance of a German counter-attack in the Stalingrad sector.",
+    "outcome": {
+      "briliant": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "I don't think so..."
+      },
+      "victory": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Nyet!"
+      },
+      "tactical": {
+        "goto": 5,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1200,
+        "text": "Comrade Zhukov, STAVKA has confirmed that the gains of Operation Uranus have now been consolidated, and there is no chance of a German counter-attack in the Stalingrad sector. Stalin sends his regards..."
+      },
+      "lose": {
+        "goto": 5,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1200,
+        "text": "Comrade General,  despite your being halted by the fascist counter attack, STAVKA has confirmed that the gains of Operation Uranus have now been consolidated, and there is no chance of a German counter-attack in the Stalingrad sector..."
+      }
+    }
+  },
+  {
+    "id": 5,
+    "scenario": "ga4_5.xml",
+    "startprestige": 0,
+    "intro": "A narrow window has opened in the enemy line; turn it into a strategic rupture. Zhukov's command career is becoming a sequence of increasingly vast operational battles. I am sure that Stalin has already briefed you on the importance of this operation to our starving people trapped in Leningrad. They are depending for their lives on your leadership of the Leningrad and Volkov fronts! The wider stakes are clear: Once this second Road of Life is finished being constructed within the liberated corridor, Leningrad should be able to be supplied with all necessities until the Siege can be completely lifted. Break the defence before reserves arrive, keep your spearheads supplied, and turn tactical success into an operational collapse.",
+    "outcome": {
+      "briliant": {
+        "goto": 6,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 700,
+        "text": "Excellent work comrade Zhukov!  Although the Germans still hold the Sinyavino heights, under your leadership and guidance, the fronts have met, and thus a land corridor has been opened into Leningrad! The city is still partially under siege, but emergency supply trucks are entering Leningrad as we speak, carrying much needed food and supplies. Once this second \" Road of Life\" is finished being constructed within the liberated corridor, Leningrad should be able to be supplied with all necessities until the Siege can be completely lifted. Congratulations, you have been promoted to Marshal of the Soviet Union!"
+      },
+      "victory": {
+        "goto": 6,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 700,
+        "text": "Good work comrade Zhukov! Although the Germans still hold the Sinyavino heights, under your leadership and guidance, the fronts have met, and thus a land corridor has been opened into Leningrad! The city is still partially under siege, but emergency supply trucks are entering Leningrad as we speak, carrying much needed food and supplies. Once this second \" Road of Life\" is finished being constructed within the liberated corridor, Leningrad should be able to be supplied with all necessities until the Siege can be completely lifted. Congratulations, you have been promoted to Marshal of the Soviet Union!"
+      },
+      "tactical": {
+        "goto": 6,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 700,
+        "text": "Well done comrade Zhukov.  Although the Germans still hold the Sinyavino heights, under your leadership and guidance, the fronts have met, and thus a land corridor has been opened into Leningrad! The city is still partially under siege, but emergency supply trucks are entering Leningrad as we speak, carrying much needed food and supplies. Once this second \" Road of Life\" is finished being constructed within the liberated corridor, Leningrad should be able to be supplied with all necessities until the Siege can be completely lifted. Congratulations, you have been promoted to Marshal of the Soviet Union!"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Comrade Generall, I have heard rumours that comrade Stalin is relieving you of your command. Don't worry, I think he appreciates all that you have done, but maybe he feels that you need a rest. Perhaps he has lined up a nice easy desk job for you at headquarters in Moscow?"
+      }
+    }
+  },
+  {
+    "id": 6,
+    "scenario": "ga4_6.xml",
+    "startprestige": 0,
+    "intro": "A narrow window has opened in the enemy line; turn it into a strategic rupture. Zhukov's command career is becoming a sequence of increasingly vast operational battles. Your prediction made back in April has come to pass! The Germans have launched a massive attack towards Kursk. The wider stakes are clear: Despite fierce resistance, Your's and Rokossovsky's joint handling of the situation has sent the Germans reeling back under the weight of the Central front's advance, forcing the German command to acknowledge the failure of Operation Citadel. Break the defence before reserves arrive, keep your spearheads supplied, and turn tactical success into an operational collapse.",
+    "outcome": {
+      "briliant": {
+        "goto": 7,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 800,
+        "text": "Excellent work comrade! Your's and Rokossovsky's joint handling of the situation has sent the Germans reeling back under the weight of the Central front's advance, forcing  the German command to acknowledge the failure of Operation Citadel. As a result, the Germans have decided to pull von Manstein's forces back to their starting line in order to save it's troops from complete defeat..."
+      },
+      "victory": {
+        "goto": 7,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 800,
+        "text": "Good work comrade. Your's and Rokossovsky's joint handling of the situation has sent the Germans reeling back under the weight of the Central front's advance, forcing  the German command to acknowledge the failure of Operation Citadel. As a result, the Germans have decided to pull von Manstein's forces back to their starting line in order to save it's troops from complete defeat..."
+      },
+      "tactical": {
+        "goto": 7,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 800,
+        "text": "Despite fierce resistance, Your's and Rokossovsky's joint handling of the situation has sent the Germans reeling back under the weight of the Central front's advance, forcing  the German command to acknowledge the failure of Operation Citadel. As a result, the Germans have decided to pull von Manstein's forces back to their starting line in order to save it's troops from complete defeat..."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Comrade Marshal, I have heard rumours that comrade Stalin is relieving you of your command. Don't worry, I think he appreciates all that you have done, but maybe he feels that you need a rest. Perhaps he has lined up a nice easy desk job for you at headquarters in Moscow?"
+      }
+    }
+  },
+  {
+    "id": 7,
+    "scenario": "ga4_7.xml",
+    "startprestige": 0,
+    "intro": "The road ahead is defended, yet a decisive blow here can unhinge the entire front. Zhukov's command career is becoming a sequence of increasingly vast operational battles. The joint attack by your 1st Ukrainian Front and Marshal Konev's 2nd Ukrainian Front has been approved by Stalin! The 2nd Ukrainian Front will move against Uman tommorrow, and then with any luck, we will end up encircling the 1st Panzer Armee in the Kamenets-Podolsk region... The wider stakes are clear: You have been re-assigned as STAVKA coordinator to both General Rokossovsky's 1st Belorussian Front, and General Zakharov's 2nd Belorussian Front... Break the defence before reserves arrive, keep your spearheads supplied, and turn tactical success into an operational collapse.",
+    "outcome": {
+      "briliant": {
+        "goto": 8,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 400,
+        "text": "Excellent work comrade Zhukov!, but unfortunately, even though we managed to encircle the 1st Panzer Armee and capture Kamenets-Podolsk, the Germans have counter-attacked, cutting off our forces, thus their breakout attempt continues. You have been re-assigned as STAVKA coordinator to both General Rokossovsky's 1st Belorussian Front, and General Zakharov's 2nd Belorussian Front..."
+      },
+      "victory": {
+        "goto": 8,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 400,
+        "text": "Good work comrade Zhukov. But unfortunately, even though we managed to encircle the 1st Panzer Armee and capture Kamenets-Podolsk, the Germans have counter-attacked, cutting off our forces, thus their breakout attempt continues. You have been re-assigned as STAVKA coordinator to both General Rokossovsky's 1st Belorussian Front, and General Zakharov's 2nd Belorussian Front..."
+      },
+      "tactical": {
+        "goto": 8,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 400,
+        "text": "Despite fierce resistance, we have managed to encircle the 1st Panzer Armee and capture Kamenets-Podolsk. But unfortunately, the Germans have counter-attacked, cutting off our forces, thus their breakout attempt continues. You have been re-assigned as STAVKA coordinator to both General Rokossovsky's 1st Belorussian Front, and General Zakharov's 2nd Belorussian Front..."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Comrade Marshal, I have heard rumours that comrade Stalin is relieving you of your command. Don't worry, I think he appreciates all that you have done, but maybe he feels that you need a rest. Perhaps he has lined up a nice easy desk job for you at headquarters in Moscow?"
+      }
+    }
+  },
+  {
+    "id": 8,
+    "scenario": "ga4_8.xml",
+    "startprestige": 0,
+    "intro": "A narrow window has opened in the enemy line; turn it into a strategic rupture. Zhukov's command career is becoming a sequence of increasingly vast operational battles. Since you are now Stavka coordinator for both the 1st and 2nd Belorussian fronts, and we know how you like to be close to the front lines with your troops, Stalin has given you the option to decide at which front you would like to be... To choose the 2nd Belorussian path, go to Staging Area 2... The wider stakes are clear: Your order's for the 2nd Belorussian front will now be forwarded to General Zakharov. Break the defence before reserves arrive, keep your spearheads supplied, and turn tactical success into an operational collapse.",
+    "outcome": {
+      "briliant": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "nyet"
+      },
+      "victory": {
+        "goto": 9,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Very well then, the 1st Belorussian front it is! Your order's for the 2nd Belorussian front will now be forwarded to General Zakharov. We will try to keep you informed of their progress..."
+      },
+      "tactical": {
+        "goto": 12,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Very well then, the 2nd Belorussian it is! Your orders for the 1st Belorussian front will now be forwarded to General  Rokossovsky. We will try to keep you informed of their progress..."
+      },
+      "lose": {
+        "goto": 8,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "really?"
+      }
+    }
+  },
+  {
+    "id": 9,
+    "scenario": "ga4_9.xml",
+    "startprestige": 0,
+    "intro": "The road ahead is defended, yet a decisive blow here can unhinge the entire front. Zhukov's command career is becoming a sequence of increasingly vast operational battles. Latest intelligence and recon reports show that the Germans have made extensive defensive preparations around Bobruisk, and have declared it a fortified area, nonetheless, we will proceed as planned. As you already know, the goal of this operation is twofold: breakthrough the defensive positions and take Bobruisk, and exploit any gaps that are opened, with the objective of forcing open a southern route towards Minsk... The wider stakes are clear: 5 divisions of 9th Armee's XXXV Korps have been trapped, along with elements of the XXXXI Panzer Korps that were not able to break out...",
+    "outcome": {
+      "briliant": {
+        "goto": 10,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 450,
+        "text": "Excellent work comrade Marshal! Bobruisk is ours again, and a southern route into Minsk has been opened. But not only that! 5 divisions of 9th Armee's XXXV Korps have been trapped, along with elements of the XXXXI Panzer Korps that were not able to break out..."
+      },
+      "victory": {
+        "goto": 10,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 450,
+        "text": "Good work comrade Marshal! Bobruisk is ours again, and a southern route into Minsk has been opened. But not only that! 5 divisions of 9th Armee's XXXV Korps have been trapped, along with elements of the XXXXI Panzer Korps that were not able to break out..."
+      },
+      "tactical": {
+        "goto": 10,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 450,
+        "text": "Despite fierce resistance, Bobruisk is ours again, and a southern route into Minsk has been opened. But not only that! 5 divisions of 9th Armee's XXXV Korps have been trapped, along with elements of the XXXXI Panzer Korps that were not able to break out..."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Comrade Marshal, I have heard rumours that comrade Stalin is relieving you of your command. Don't worry, I think he appreciates all that you have done, but maybe he feels that you need a rest. Perhaps he has lined up a nice easy desk job for you at headquarters in Moscow?"
+      }
+    }
+  },
+  {
+    "id": 10,
+    "scenario": "ga4_10.xml",
+    "startprestige": 0,
+    "intro": "The initiative is yours, but the enemy will not remain disorganized for long. Zhukov's command career is becoming a sequence of increasingly vast operational battles. Due to the staggering success of the Belorussian operations thus far, Stalin has decided to implement the plan for the expansion of the offensive to the Northern and Southern flanks. You will now suggest to Rokossovsky that he deploy the left wing of the 1st Belorussian front to the south of the Pripet Marshes. The wider stakes are clear: Stalin is also pleased that You and Rokossovsky were able to exploit the success, and as a result, continue the drive west towards the Vistula river... Concentrate your best units, protect the flanks of the advance, and seize the decisive objectives before the enemy can rebuild a line.",
+    "outcome": {
+      "briliant": {
+        "goto": 11,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 600,
+        "text": "Excellent work comrade Marshal! Brest-Litovsk is ours again. Stalin is also pleased that You and Rokossovsky were able to exploit the success, and as a result, continue the drive west towards the Vistula river..."
+      },
+      "victory": {
+        "goto": 11,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 600,
+        "text": "Good work comrade Marshal! Brest-Litovsk is ours again. Stalin is also pleased that You and Rokossovsky were able to exploit the success, and as a result, continue the drive west towards the Vistula river..."
+      },
+      "tactical": {
+        "goto": 11,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 600,
+        "text": "Despite fierce resistance, Brest-Litovsk is ours again. Stalin is also pleased that You and Rokossovsky were able to exploit the success, and as a result, continue the drive west towards the Vistula river..."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Comrade Marshal, I have heard rumours that comrade Stalin is relieving you of your command. Don't worry, I think he appreciates all that you have done, but maybe he feels that you need a rest. Perhaps he has lined up a nice easy desk job for you at headquarters in Moscow?"
+      }
+    }
+  },
+  {
+    "id": 11,
+    "scenario": "ga4_11.xml",
+    "startprestige": 0,
+    "intro": "What looks like a local defensive battle may decide the fate of the wider campaign. Zhukov's command career is becoming a sequence of increasingly vast operational battles. Two bridgeheads over the Vistula have already been secured in preparation for the drive into Warsaw, and now that You and Rokossovsky are finished preparing, Stalin has given the go ahead for the last remaining key German bridgehead on the east bank to be taken, thus eliminating a dangerous bulge in the Vistula Front, which Stalin would like to have straightened out before starting any large scale operations.",
+    "outcome": {
+      "briliant": {
+        "goto": 15,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 600,
+        "text": "Excellent work comrade Marshal! The Germans have been forced back over to the west bank of the Vistula, but unfortunately, they managed to destroy the bridgehead, thus making it much harder now to relieve the uprising...<br><br>November 16 1944<br><br>Comrade Marshal, STAVKA has directed that you now be informed of your assignment to direct command of the 1st Belorussian front, while Marshal Rossokovsky has been appointed commander of 2nd Belorussian front, effective immediately..."
+      },
+      "victory": {
+        "goto": 15,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 600,
+        "text": "Good work comrade Marshal! The Germans have been forced back over to the west bank of the Vistula, but unfortunately, they managed to destroy the bridgehead, thus making it much harder now to relieve the uprising...<br><br>November 16 1944<br><br>Comrade Marshal, STAVKA has directed that you now be informed of your assignment to direct command of the 1st Belorussian front, while Marshal Rossokovsky has been appointed commander of 2nd Belorussian front, effective immediately..."
+      },
+      "tactical": {
+        "goto": 15,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 600,
+        "text": "Despite fierce resistance, the Germans have been forced back over to the west bank of the Vistula, but unfortunately, they managed to destroy the bridgehead, thus making it much harder now to relieve the uprising...<br><br>November 16 1944<br><br>Comrade Marshal, STAVKA has directed that you now be informed of your assignment to direct command of the 1st Belorussian front, while Marshal Rossokovsky has been appointed commander of 2nd Belorussian front, effective immediately..."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Comrade Marshal, I have heard rumours that comrade Stalin is relieving you of your command. Don't worry, I think he appreciates all that you have done, but maybe he feels that you need a rest. Perhaps he has lined up a nice easy desk job for you at headquarters in Moscow?"
+      }
+    }
+  },
+  {
+    "id": 12,
+    "scenario": "ga4_12.xml",
+    "startprestige": 0,
+    "intro": "The initiative is yours, but the enemy will not remain disorganized for long. Zhukov's command career is becoming a sequence of increasingly vast operational battles. STAVKA agrees with you Comrade Marshal; the drive to capture Mogilev will be critical to the overall success of the Bagration operation. The German forces holding the Mogilev sector have a high proportion of very good units which cannot be allowed to reinforce either of the sectors to the north or south. Break the defence before reserves arrive, keep your spearheads supplied, and turn tactical success into an operational collapse.",
+    "outcome": {
+      "briliant": {
+        "goto": 13,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 450,
+        "text": "Excellent work comrade Marshal!, Mogilev is ours again and 4th Armee has been pushed back to Minsk preventing them from disengaging in time to reinforce Vitebsk and Bobruisk, resulting in roughly 30,000 German troops being surrounded at Vitebsk, and the encirclement of 5 divisions in the Bobruisk sector!"
+      },
+      "victory": {
+        "goto": 13,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 450,
+        "text": "Good work comrade Marshal, Mogilev is ours again and 4th Armee has been pushed back to Minsk preventing them from disengaging in time to reinforce Vitebsk and Bobruisk, resulting in roughly 30,000 German troops being surrounded at Vitebsk, and the encirclement of 5 divisions in the Bobruisk sector!"
+      },
+      "tactical": {
+        "goto": 13,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 450,
+        "text": "Despite fierce resistance, Mogilev is ours again and 4th Armee has been pushed back to Minsk preventing them from disengaging in time to reinforce Vitebsk and Bobruisk, resulting in roughly 30,000 German troops being surrounded at Vitebsk, and the encirclement of 5 divisions in the Bobruisk sector!"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Comrade Marshal, I have heard rumours that comrade Stalin is relieving you of your command. Don't worry, I think he appreciates all that you have done, but maybe he feels that you need a rest. Perhaps he has lined up a nice easy desk job for you at headquarters in Moscow?"
+      }
+    }
+  },
+  {
+    "id": 13,
+    "scenario": "ga4_13.xml",
+    "startprestige": 0,
+    "intro": "The initiative is yours, but the enemy will not remain disorganized for long. Zhukov's command career is becoming a sequence of increasingly vast operational battles. Now that the trapped German 4th Armee has, for the most part, been reduced in the pocket east of Minsk, STAVKA has issued new objectives for You and general Zakharov; secure the Novogrudok area, capture the key points of enemy resistance, especially Grodno and Volkovysk, and advance in the direction of Bialystok. The wider stakes are clear: Excellent work comrade Marshal!, You and Zakharov have acheived in 5 days what STAVKA had allotted 8-11 days to complete! Concentrate your best units, protect the flanks of the advance, and seize the decisive objectives before the enemy can rebuild a line.",
+    "outcome": {
+      "briliant": {
+        "goto": 14,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 600,
+        "text": "Excellent work comrade Marshal!, You and Zakharov have acheived in 5 days what STAVKA had allotted 8-11 days to complete! Stalin sends his regards!"
+      },
+      "victory": {
+        "goto": 14,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 600,
+        "text": "Good work comrade Marshal, You and Zakharov have acheived in 5 days what STAVKA had allotted 8-11 days to complete! Stalin sends his regards!"
+      },
+      "tactical": {
+        "goto": 14,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 600,
+        "text": "Despite fierce resistance, You and Zakharov have acheived in 5 days what STAVKA had allotted 8-11 days to complete! Well done!"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Comrade Marshal, I have heard rumours that comrade Stalin is relieving you of your command. Don't worry, I think he appreciates all that you have done, but maybe he feels that you need a rest. Perhaps he has lined up a nice easy desk job for you at headquarters in Moscow?"
+      }
+    }
+  },
+  {
+    "id": 14,
+    "scenario": "ga4_14.xml",
+    "startprestige": 0,
+    "intro": "The road ahead is defended, yet a decisive blow here can unhinge the entire front. Zhukov's command career is becoming a sequence of increasingly vast operational battles. Now that you have successfully taken Grodno and Bialystok, STAVKA has issued new objectives for the 2nd Belorussian front; capture the fortress of Osowiec whilst securing the area and moving in the direction of Lomza, enlarging the bridgeheads in preparation for a further advance into East Prussia... The wider stakes are clear: Although the German defence line on the Narew River remains intact in the Lomza area, Stalin has noted the capture of the fortress of Osowiec and sends congratulations to the units and commanders involved! Momentum is your greatest asset: pause too long and a breakthrough becomes another costly frontal battle.",
+    "outcome": {
+      "briliant": {
+        "goto": 15,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 600,
+        "text": "Excellent work comrade Marshal! Although the German defence line on the Narew River remains intact in the Lomza area, Stalin has noted the capture of the fortress of Osowiec and sends congratulations to the units and commanders involved!<br><br>November 16 1944<br><br>Comrade Marshal, STAVKA has directed that you be informed that you have now been assigned to direct command of the 1st Belorussian front, while Marshal Rossokovsky has been appointed commander of 2nd Belorussian front, effective immediately..."
+      },
+      "victory": {
+        "goto": 15,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 600,
+        "text": "Good work comrade Marshal. Although the German defence line on the Narew River remains intact in the Lomza area, Stalin has noted the capture of the fortress of Osowiec and sends congratulations to the units and commanders involved!<br><br>November 16 1944<br><br>Comrade Marshal, STAVKA has directed that you be informed that you have now been assigned to direct command of the 1st Belorussian front, while Marshal Rossokovsky has been appointed commander of 2nd Belorussian front, effective immediately..."
+      },
+      "tactical": {
+        "goto": 15,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 600,
+        "text": "Despite fierce resistance, and the remaining intact of the German line of defence on the Narew River in the Lomza area, Stalin has noted the capture of the fortress of Osowiec and sends congratulations to the units and commanders involved!<br><br>November 16 1944<br><br>Comrade Marshal, STAVKA has directed that you be informed that you have now been assigned to direct command of the 1st Belorussian front, while Marshal Rossokovsky has been appointed commander of 2nd Belorussian front, effective immediately..."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Comrade Marshal, I have heard rumours that comrade Stalin is relieving you of your command. Don't worry, I think he appreciates all that you have done, but maybe he feels that you need a rest. Perhaps he has lined up a nice easy desk job for you at headquarters in Moscow?"
+      }
+    }
+  },
+  {
+    "id": 15,
+    "scenario": "ga4_15.xml",
+    "startprestige": 0,
+    "intro": "A narrow window has opened in the enemy line; turn it into a strategic rupture. Zhukov's command career is becoming a sequence of increasingly vast operational battles. Seeing as the German counter attack has been blunted here in the Arnswalde sector with the result that the Germans are slowly falling back to their staging areas, Stalin suggests that you take the initiative and drive as far west as you can! This will assist Rossokovsky and the 2nd Belorussian front in clearing the enemy from all of Eastern Pomerania between Danzig and Stettin... The wider stakes are clear: Despite fierce resistance, you have managed to secure the Arsnwalde area and breakthrough past Stargard towards Altdamm and Stettin. Momentum is your greatest asset: pause too long and a breakthrough becomes another costly frontal battle.",
+    "outcome": {
+      "briliant": {
+        "goto": 16,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1200,
+        "text": "Excellent work comrade Marshal! You have managed to secure the Arsnwalde area and breakthrough past Stargard towards Altdamm and Stettin. Now the 2nd Belorussian front will take it from here while most of the elements of your 1st Belorussian front return to the bridgehead at Kustrin in preparation for the final push towards Berlin..."
+      },
+      "victory": {
+        "goto": 16,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1200,
+        "text": "Good work comrade Marshal! You have managed to secure the Arsnwalde area and breakthrough past Stargard towards Altdamm and Stettin. Now the 2nd Belorussian front will take it from here while most of the elements of your 1st Belorussian front return to the bridgehead at Kustrin in preparation for the final push towards Berlin..."
+      },
+      "tactical": {
+        "goto": 16,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1200,
+        "text": "Despite fierce resistance, you have managed to secure the Arsnwalde area and breakthrough past Stargard towards Altdamm and Stettin. Now the 2nd Belorussian front will take it from here while most of the elements of your 1st Belorussian front return to the bridgehead at Kustrin in preparation for the final push towards Berlin..."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Comrade Marshal, I have heard rumours that comrade Stalin is relieving you of your command. Don't worry, I think he appreciates all that you have done, but maybe he feels that you need a rest. Perhaps he has lined up a nice easy desk job for you at headquarters in Moscow?"
+      }
+    }
+  },
+  {
+    "id": 16,
+    "scenario": "ga4_16.xml",
+    "startprestige": 0,
+    "intro": "Urban ground compresses the front and magnifies every mistake. Zhukov's command career is becoming a sequence of increasingly vast operational battles. In view of the existing military and political situation, STAVKA has decided that the Berlin operation should be launched no later than April 16th, so here we are! Reviewing the plan once more: The main thrust toward Berlin and the capture of the city are entrusted to You and the 1st Belorussian front. The wider stakes are clear: On May 1st 1945 at 6:30pm, the final assault on the center of Berlin began. Secure the approaches, protect your supply route, and reduce the enemy's positions one district at a time.",
+    "outcome": {
+      "briliant": {
+        "goto": 254,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Historical Note:<br><br> As late as April 30th and May 1st, the Nazi leaders were still playing for time, opening talks for a cease-fire in Berlin and calling on Admiral Donitz's newly proclaimed government to negotiate Germany's surrender. The Soviets held fast to the demand that Germany unconditionally surrender to all the Allies before military activities would be halted. The last ditch German attempt to sow disunity between the Allies had failed. The Soviet forces were then given the order to finish off the enemy. On May 1st 1945 at 6:30pm, the final assault on the center of Berlin began. By 3:00pm May 2nd, it was all over, and from the Reichstag waved the Hammer & Sickle. The fall of Berlin and the link up between the Soviet armies and the Allied troops led to the final collapse of Nazi Germany. The disorganized German army was no longer capable of resistance. Everywhere in Italy and Western Europe, German troops began to capitulate. On May 8th representatives of the German command signed the Act of Unconditional Surrender, thus acknowledging their total defeat...<br><br>Hope you enjoyed ZHUKOV: RED GOD OF WAR. Any feedback can be directed to me, MG43, at Sdkfz_173@Yahoo.ca<br><br>MG43<br>08/10"
+      },
+      "victory": {
+        "goto": 254,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Historical Note:<br><br> As late as April 30th and May 1st, the Nazi leaders were still playing for time, opening talks for a cease-fire in Berlin and calling on Admiral Donitz's newly proclaimed government to negotiate Germany's surrender. The Soviets held fast to the demand that Germany unconditionally surrender to all the Allies before military activities would be halted. The last ditch German attempt to sow disunity between the Allies had failed. The Soviet forces were then given the order to finish off the enemy. On May 1st 1945 at 6:30pm, the final assault on the center of Berlin began. By 3:00pm May 2nd, it was all over, and from the Reichstag waved the Hammer & Sickle. The fall of Berlin and the link up between the Soviet armies and the Allied troops led to the final collapse of Nazi Germany. The disorganized German army was no longer capable of resistance. Everywhere in Italy and Western Europe, German troops began to capitulate. On May 8th representatives of the German command signed the Act of Unconditional Surrender, thus acknowledging their total defeat...<br><br>Hope you enjoyed ZHUKOV: RED GOD OF WAR. Any feedback can be directed to me, MG43, at Sdkfz_173@Yahoo.ca<br><br>MG43<br>08/10"
+      },
+      "tactical": {
+        "goto": 254,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Historical Note:<br><br> As late as April 30th and May 1st, the Nazi leaders were still playing for time, opening talks for a cease-fire in Berlin and calling on Admiral Donitz's newly proclaimed government to negotiate Germany's surrender. The Soviets held fast to the demand that Germany unconditionally surrender to all the Allies before military activities would be halted. The last ditch German attempt to sow disunity between the Allies had failed. The Soviet forces were then given the order to finish off the enemy. On May 1st 1945 at 6:30pm, the final assault on the center of Berlin began. By 3:00pm May 2nd, it was all over, and from the Reichstag waved the Hammer & Sickle. The fall of Berlin and the link up between the Soviet armies and the Allied troops led to the final collapse of Nazi Germany. The disorganized German army was no longer capable of resistance. Everywhere in Italy and Western Europe, German troops began to capitulate. On May 8th representatives of the German command signed the Act of Unconditional Surrender, thus acknowledging their total defeat...<br><br>Hope you enjoyed ZHUKOV: RED GOD OF WAR. Any feedback can be directed to me, MG43, at Sdkfz_173@Yahoo.ca<br><br>MG43<br>08/10"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Comrade Marshal, I have heard rumours that comrade Stalin is relieving you of your command. Don't worry, I think he appreciates all that you have done, but maybe he feels that you need a rest. Perhaps he has lined up a nice easy desk job for you at headquarters in Moscow?"
+      }
+    }
+  }
+]

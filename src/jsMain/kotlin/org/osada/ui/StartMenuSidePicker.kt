@@ -168,6 +168,12 @@ internal object StartMenuSidePicker {
         val isSelected = available && side == selectedSide
 
         applySideCardAttrs(container, isSelected, available, side == focusSide)
+        container.title =
+            if (available) {
+                "Play this scenario as $name. The opposing side will be controlled by the AI."
+            } else {
+                "$name is not available as a human-controlled side in this scenario."
+            }
         buildSideCardNameRow(container, name, primaryCountry)
         buildSideCardBadgeRow(container, extra, extraNames, available, isSelected)
 

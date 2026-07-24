@@ -45,9 +45,11 @@ internal object StartMenuScenarioScreen {
     }
 
     private fun wireScenarioHandlers(scenSelect: HTMLElement) {
+        scenSelect.title = "Choose a standalone battle; its briefing and playable sides appear below."
         scenSelect.asDynamic().onchange = { onScenSelectChange(scenSelect) }
         buildScenarioScreen(scenSelect)
 
+        byId("smSBackBut")?.title = "Return to the main menu without starting a scenario."
         byId("smSBackBut")?.onclick = { _: org.w3c.dom.events.MouseEvent ->
             makeHidden("smScen")
             makeVisible("smMain")
@@ -55,6 +57,7 @@ internal object StartMenuScenarioScreen {
             UIBuilder.setEquipmentFlags(game?.scenario?.eqp as? String)
         }
 
+        byId("smSPlayBut")?.title = "Start the selected standalone battle with the chosen human side."
         byId("smSPlayBut")?.onclick = { _: org.w3c.dom.events.MouseEvent ->
             val selectedScenario = byId("smScen")?.asDynamic()?.selectedScenario as? Int
             val scenario = selectedScenario?.let { StartMenuBuilder.scenarioList().getOrNull(it) }

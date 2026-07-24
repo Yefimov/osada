@@ -1,0 +1,949 @@
+<?xml version="1.0" encoding="ASCII"?>
+<map file="bn9s14.xscn" name="Zhitomir-Berdichev Offensive" turns="9, 12, 18" date="December 27, 1943" dayturns="0" ground="1" atmosferic="0" latitude="3" iconset="1" weatherchg="0" rows="32" cols="31" eqp="eqp-lxf" image="resources/maps/images/map_234.png" eqpv="united1">
+  <player id="0" country="19" side="1" airtrans="0" navaltrans="0" support="20, 48, 0, 0" turnprestige="0, 460, 460, 460, 460, 460, 460, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <player id="1" country="7" side="0" airtrans="0" navaltrans="0" support="8, 18, 360, 0" turnprestige="0, 230, 230, 230, 230, 230, 230, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <reinforce turn="2">
+    <at row="8" col="29">
+      <unit id="16590" owner="0" flag="20" face="0" exp="47"/>
+    </at>
+    <at row="6" col="27">
+      <unit id="16589" owner="0" flag="20" face="0" exp="35"/>
+    </at>
+    <at row="8" col="27">
+      <unit id="16589" owner="0" flag="20" face="0" exp="51"/>
+    </at>
+    <at row="9" col="28">
+      <unit id="16535" owner="0" flag="20" face="0" transport="16701" exp="44" str="12"/>
+    </at>
+    <at row="8" col="28">
+      <unit id="16656" owner="0" flag="20" face="0" exp="225" str="9"/>
+    </at>
+    <at row="7" col="27">
+      <unit id="16657" owner="0" flag="20" face="0" exp="184" str="9"/>
+    </at>
+    <at row="6" col="29">
+      <unit id="16616" owner="0" flag="20" face="0" transport="16688" exp="40" str="7"/>
+    </at>
+    <at row="7" col="28">
+      <unit id="16707" owner="0" flag="20" face="0" transport="16694" exp="41" str="11"/>
+    </at>
+    <at row="7" col="29">
+      <unit id="16671" owner="0" flag="20" face="0" exp="79"/>
+    </at>
+  </reinforce>
+  <reinforce turn="3">
+    <at row="6" col="1">
+      <unit id="15765" owner="1" flag="18" face="0" transport="15941" exp="13" str="8"/>
+    </at>
+    <at row="19" col="30">
+      <unit id="16571" owner="0" flag="20" face="0" exp="20"/>
+    </at>
+  </reinforce>
+  <reinforce turn="4">
+    <at row="28" col="30">
+      <unit id="16638" owner="0" flag="20" face="0" exp="205" str="7"/>
+    </at>
+    <at row="12" col="29">
+      <unit id="16765" owner="0" flag="20" face="0" exp="78"/>
+    </at>
+    <at row="11" col="29">
+      <unit id="16820" owner="0" flag="20" face="0" exp="42"/>
+    </at>
+    <at row="12" col="30">
+      <unit id="16803" owner="0" flag="20" face="0" exp="58"/>
+    </at>
+  </reinforce>
+  <hex row="0" col="1" terrain="3"/>
+  <hex row="0" col="4" road="16"/>
+  <hex row="0" col="8" terrain="3"/>
+  <hex row="0" col="9" terrain="3"/>
+  <hex row="0" col="10" terrain="3"/>
+  <hex row="0" col="11" terrain="3"/>
+  <hex row="0" col="12" terrain="3"/>
+  <hex row="0" col="13" terrain="3"/>
+  <hex row="0" col="14" terrain="3"/>
+  <hex row="0" col="17" road="17"/>
+  <hex row="0" col="20" terrain="10" name="Teterev river"/>
+  <hex row="0" col="25" terrain="3"/>
+  <hex row="0" col="26" terrain="3"/>
+  <hex row="0" col="27" terrain="3"/>
+  <hex row="0" col="28" terrain="3"/>
+  <hex row="1" col="1" terrain="3"/>
+  <hex row="1" col="2" terrain="3"/>
+  <hex row="1" col="4" road="9"/>
+  <hex row="1" col="5" road="144"/>
+  <hex row="1" col="8" terrain="3"/>
+  <hex row="1" col="9" terrain="3"/>
+  <hex row="1" col="10" terrain="3"/>
+  <hex row="1" col="11" terrain="3"/>
+  <hex row="1" col="12" terrain="3"/>
+  <hex row="1" col="13" terrain="3"/>
+  <hex row="1" col="14" terrain="3"/>
+  <hex row="1" col="17" road="17"/>
+  <hex row="1" col="19">
+    <unit id="6540" owner="1" flag="8" face="0" exp="193" str="9"/>
+  </hex>
+  <hex row="1" col="20" terrain="10" name="Teterev river"/>
+  <hex row="1" col="22">
+    <unit id="16519" owner="0" flag="20" face="0" exp="181" str="11"/>
+  </hex>
+  <hex row="1" col="25" deploy="0">
+    <unit id="16716" owner="0" flag="20" face="0" transport="16698" exp="189"/>
+    <unit id="16818" owner="0" flag="20" face="0" exp="66"/>
+  </hex>
+  <hex row="1" col="26" terrain="3"/>
+  <hex row="1" col="27" terrain="3"/>
+  <hex row="1" col="29" terrain="2" owner="0" flag="19">
+    <unit id="16661" owner="0" flag="20" face="0" transport="16701" exp="211"/>
+  </hex>
+  <hex row="1" col="30" terrain="2"/>
+  <hex row="2" col="2" terrain="3"/>
+  <hex row="2" col="3" terrain="3"/>
+  <hex row="2" col="4">
+    <unit id="7422" owner="1" flag="8" face="0" exp="82" str="6"/>
+  </hex>
+  <hex row="2" col="5" road="9">
+    <unit id="8090" owner="1" flag="8" face="0" exp="30" str="6"/>
+  </hex>
+  <hex row="2" col="8" terrain="3"/>
+  <hex row="2" col="9" terrain="3"/>
+  <hex row="2" col="10" terrain="3"/>
+  <hex row="2" col="11" terrain="3"/>
+  <hex row="2" col="12" terrain="3"/>
+  <hex row="2" col="13" terrain="3"/>
+  <hex row="2" col="14" terrain="3"/>
+  <hex row="2" col="17" road="17"/>
+  <hex row="2" col="19" terrain="10" name="Teterev river"/>
+  <hex row="2" col="20" terrain="10" name="Teterev river"/>
+  <hex row="2" col="22">
+    <unit id="16519" owner="0" flag="20" face="0" exp="228" str="12"/>
+  </hex>
+  <hex row="2" col="23">
+    <unit id="16728" owner="0" flag="20" face="0" transport="16684" exp="208" str="11"/>
+  </hex>
+  <hex row="2" col="25" deploy="0">
+    <unit id="16765" owner="0" flag="20" face="0" exp="50"/>
+    <unit id="16654" owner="0" flag="20" face="0" exp="214" str="9"/>
+  </hex>
+  <hex row="2" col="27" road="34"/>
+  <hex row="2" col="28" road="40"/>
+  <hex row="2" col="29" road="130"/>
+  <hex row="2" col="30" road="40"/>
+  <hex row="3" col="0" terrain="3"/>
+  <hex row="3" col="1" terrain="3"/>
+  <hex row="3" col="2" terrain="3"/>
+  <hex row="3" col="4">
+    <unit id="7237" owner="1" flag="8" face="0" exp="72" str="6"/>
+  </hex>
+  <hex row="3" col="5" owner="1" flag="7">
+    <unit id="6933" owner="1" flag="8" face="0" exp="7" str="8"/>
+  </hex>
+  <hex row="3" col="6" road="144">
+    <unit id="7229" owner="1" flag="8" face="0" exp="23" str="6" ldr="1"/>
+  </hex>
+  <hex row="3" col="10" terrain="3"/>
+  <hex row="3" col="12" terrain="3"/>
+  <hex row="3" col="17" road="17"/>
+  <hex row="3" col="18">
+    <unit id="6540" owner="1" flag="8" face="0" exp="197"/>
+  </hex>
+  <hex row="3" col="19" terrain="10" name="Teterev river"/>
+  <hex row="3" col="21" terrain="3">
+    <unit id="16519" owner="0" flag="20" face="0" exp="240" str="12"/>
+  </hex>
+  <hex row="3" col="22" terrain="3"/>
+  <hex row="3" col="23" road="34"/>
+  <hex row="3" col="24" road="40"/>
+  <hex row="3" col="25" road="130" deploy="0">
+    <unit id="16810" owner="0" flag="20" face="0" exp="30" str="5"/>
+    <unit id="16594" owner="0" flag="20" face="0" exp="92" str="9"/>
+  </hex>
+  <hex row="3" col="26" road="34">
+    <unit id="16653" owner="0" flag="20" face="0" exp="177"/>
+  </hex>
+  <hex row="3" col="27" terrain="3"/>
+  <hex row="4" col="0" terrain="3"/>
+  <hex row="4" col="3" terrain="3"/>
+  <hex row="4" col="6" road="9"/>
+  <hex row="4" col="7" road="144"/>
+  <hex row="4" col="12" terrain="3"/>
+  <hex row="4" col="16">
+    <unit id="7857" owner="1" flag="8" face="0" transport="7732" exp="192"/>
+  </hex>
+  <hex row="4" col="17" road="17"/>
+  <hex row="4" col="18" terrain="3"/>
+  <hex row="4" col="19" terrain="10" name="Teterev river"/>
+  <hex row="4" col="20" terrain="3"/>
+  <hex row="4" col="21" terrain="3" road="34">
+    <unit id="16535" owner="0" flag="20" face="0" exp="35" str="11"/>
+  </hex>
+  <hex row="4" col="22" road="34"/>
+  <hex row="4" col="24" terrain="3"/>
+  <hex row="4" col="25" terrain="3"/>
+  <hex row="4" col="26" terrain="3"/>
+  <hex row="4" col="27" terrain="3"/>
+  <hex row="4" col="28" terrain="3"/>
+  <hex row="5" col="1" terrain="5"/>
+  <hex row="5" col="3" terrain="2">
+    <unit id="6398" owner="1" flag="8" face="0" transport="7812" exp="66" str="8" ldr="1"/>
+    <unit id="8742" owner="1" flag="8" face="0" exp="91" str="8" ldr="1"/>
+  </hex>
+  <hex row="5" col="4" terrain="2" owner="1" flag="7">
+    <unit id="8597" owner="1" flag="8" face="0" exp="92" str="7" ldr="1"/>
+    <unit id="7584" owner="1" flag="8" face="0" transport="7775" exp="203" str="7"/>
+  </hex>
+  <hex row="5" col="6">
+    <unit id="7340" owner="1" flag="8" face="0" transport="7818" exp="5" str="6"/>
+  </hex>
+  <hex row="5" col="7" road="9"/>
+  <hex row="5" col="10">
+    <unit id="6397" owner="1" flag="8" face="0" transport="7815" exp="77" str="6"/>
+  </hex>
+  <hex row="5" col="12">
+    <unit id="6398" owner="1" flag="8" face="0" transport="7815" exp="14" str="7"/>
+  </hex>
+  <hex row="5" col="13" terrain="3"/>
+  <hex row="5" col="14" terrain="3"/>
+  <hex row="5" col="17" terrain="1" road="25" name="Korostyshev" owner="1" flag="7" victory="1">
+    <unit id="6485" owner="1" flag="8" face="0" exp="203" str="7"/>
+  </hex>
+  <hex row="5" col="19" terrain="10" road="42" name="Teterev river"/>
+  <hex row="5" col="20" road="34"/>
+  <hex row="5" col="21">
+    <unit id="16535" owner="0" flag="20" face="0" exp="70" str="11"/>
+  </hex>
+  <hex row="5" col="24" deploy="0">
+    <unit id="16708" owner="0" flag="20" face="0" transport="16685" exp="33"/>
+  </hex>
+  <hex row="5" col="25" terrain="3"/>
+  <hex row="5" col="26" terrain="3"/>
+  <hex row="5" col="27" terrain="3"/>
+  <hex row="5" col="30" terrain="3"/>
+  <hex row="6" col="0" road="2"/>
+  <hex row="6" col="1" road="136"/>
+  <hex row="6" col="2" terrain="5"/>
+  <hex row="6" col="3" terrain="5"/>
+  <hex row="6" col="4" terrain="2">
+    <unit id="7857" owner="1" flag="8" face="0" transport="7807" exp="83" str="8"/>
+    <unit id="8592" owner="1" flag="8" face="0" exp="26" str="4"/>
+  </hex>
+  <hex row="6" col="6" terrain="1" name="Kroshnya" owner="1" flag="7" victory="1">
+    <unit id="6398" owner="1" flag="8" face="0" transport="7815" exp="7" str="7"/>
+  </hex>
+  <hex row="6" col="8" road="144"/>
+  <hex row="6" col="10">
+    <unit id="7415" owner="1" flag="8" face="0" exp="32" str="6"/>
+  </hex>
+  <hex row="6" col="11">
+    <unit id="7229" owner="1" flag="8" face="0" exp="46" str="6"/>
+  </hex>
+  <hex row="6" col="12" terrain="3">
+    <unit id="6398" owner="1" flag="8" face="0" transport="7812" exp="2" str="7"/>
+  </hex>
+  <hex row="6" col="14" terrain="3"/>
+  <hex row="6" col="15">
+    <unit id="7857" owner="1" flag="8" face="0" transport="7807" exp="29" str="9" ldr="1"/>
+  </hex>
+  <hex row="6" col="16">
+    <unit id="7663" owner="1" flag="8" face="0" exp="253" str="7"/>
+  </hex>
+  <hex row="6" col="17" terrain="1" road="35" name="Korostyshev"/>
+  <hex row="6" col="18" road="162">
+    <unit id="7318" owner="1" flag="8" face="0" transport="7775" exp="243" str="6"/>
+  </hex>
+  <hex row="6" col="19" terrain="10" name="Teterev river"/>
+  <hex row="6" col="20" road="144"/>
+  <hex row="6" col="21">
+    <unit id="16535" owner="0" flag="20" face="0" exp="36" str="11"/>
+  </hex>
+  <hex row="6" col="22">
+    <unit id="16728" owner="0" flag="20" face="0" transport="16684" exp="62" str="12"/>
+  </hex>
+  <hex row="6" col="24" deploy="0">
+    <unit id="16718" owner="0" flag="20" face="0" transport="16698" exp="186" str="9"/>
+  </hex>
+  <hex row="6" col="25" deploy="0">
+    <unit id="16612" owner="0" flag="20" face="0" exp="235" str="9"/>
+  </hex>
+  <hex row="6" col="26" terrain="3" deploy="0">
+    <unit id="16616" owner="0" flag="20" face="0" transport="16688" exp="238" str="8"/>
+  </hex>
+  <hex row="6" col="27">
+    <unit id="16656" owner="0" flag="20" face="0" exp="218" str="9"/>
+  </hex>
+  <hex row="6" col="29" terrain="3"/>
+  <hex row="7" col="1" terrain="3"/>
+  <hex row="7" col="2" road="136"/>
+  <hex row="7" col="3" terrain="3" road="136"/>
+  <hex row="7" col="4" terrain="3"/>
+  <hex row="7" col="5" terrain="3">
+    <unit id="6397" owner="1" flag="8" face="0" transport="7812" exp="56" str="6"/>
+  </hex>
+  <hex row="7" col="8" road="17"/>
+  <hex row="7" col="10" terrain="3">
+    <unit id="7237" owner="1" flag="8" face="0" exp="38" str="6"/>
+  </hex>
+  <hex row="7" col="12">
+    <unit id="6928" owner="1" flag="8" face="0" exp="255" str="8"/>
+  </hex>
+  <hex row="7" col="13" road="40"/>
+  <hex row="7" col="15" road="34"/>
+  <hex row="7" col="16" road="34"/>
+  <hex row="7" col="17">
+    <unit id="6540" owner="1" flag="8" face="0" exp="211"/>
+  </hex>
+  <hex row="7" col="19" terrain="10" name="Teterev river"/>
+  <hex row="7" col="20" road="9"/>
+  <hex row="7" col="21" road="136"/>
+  <hex row="7" col="23" terrain="3" road="40"/>
+  <hex row="7" col="25" deploy="0">
+    <unit id="16527" owner="0" flag="20" face="0" transport="16687" exp="236" str="11"/>
+    <unit id="16753" owner="0" flag="20" face="0" exp="125"/>
+  </hex>
+  <hex row="7" col="26" deploy="0">
+    <unit id="16573" owner="0" flag="20" face="0" exp="238" str="9"/>
+  </hex>
+  <hex row="7" col="27">
+    <unit id="16707" owner="0" flag="20" face="0" transport="16694" exp="192" str="11"/>
+  </hex>
+  <hex row="7" col="28">
+    <unit id="16735" owner="0" flag="20" face="0" exp="39"/>
+  </hex>
+  <hex row="7" col="29" terrain="3"/>
+  <hex row="7" col="30" terrain="3"/>
+  <hex row="8" col="1" terrain="3"/>
+  <hex row="8" col="4" terrain="3" road="136">
+    <unit id="46776" owner="1" flag="360" face="0" exp="218" str="7"/>
+  </hex>
+  <hex row="8" col="5" terrain="3" road="130"/>
+  <hex row="8" col="6" road="40"/>
+  <hex row="8" col="7" road="136"/>
+  <hex row="8" col="8" road="9"/>
+  <hex row="8" col="9" terrain="1" road="184" name="Zhitomir"/>
+  <hex row="8" col="10" terrain="3"/>
+  <hex row="8" col="11" road="34"/>
+  <hex row="8" col="12" terrain="3" road="34"/>
+  <hex row="8" col="14" terrain="3" road="130"/>
+  <hex row="8" col="15" terrain="3"/>
+  <hex row="8" col="18" terrain="10" name="Teterev river"/>
+  <hex row="8" col="20">
+    <unit id="16519" owner="0" flag="20" face="0" exp="234" str="12"/>
+  </hex>
+  <hex row="8" col="21">
+    <unit id="16728" owner="0" flag="20" face="0" transport="16684" exp="239" str="11"/>
+  </hex>
+  <hex row="8" col="22" terrain="3" road="130"/>
+  <hex row="8" col="23" deploy="0">
+    <unit id="16716" owner="0" flag="20" face="0" transport="16698" exp="180" str="9"/>
+  </hex>
+  <hex row="8" col="24" terrain="3" road="136"/>
+  <hex row="8" col="25" road="136" deploy="0">
+    <unit id="16527" owner="0" flag="20" face="0" transport="16687" exp="234" str="11"/>
+    <unit id="16810" owner="0" flag="20" face="0" exp="62" str="5"/>
+  </hex>
+  <hex row="8" col="26" deploy="0">
+    <unit id="16657" owner="0" flag="20" face="0" exp="248"/>
+    <unit id="16803" owner="0" flag="20" face="0" exp="50" str="9"/>
+  </hex>
+  <hex row="8" col="27" terrain="3"/>
+  <hex row="8" col="29" terrain="3"/>
+  <hex row="8" col="30" terrain="3"/>
+  <hex row="9" col="4" terrain="5"/>
+  <hex row="9" col="5" terrain="10" name="Teterev river"/>
+  <hex row="9" col="6" terrain="10" name="Teterev river"/>
+  <hex row="9" col="7" terrain="10" name="Teterev river"/>
+  <hex row="9" col="8" terrain="1" road="154" name="Zhitomir"/>
+  <hex row="9" col="9" terrain="1" road="171" name="Zhitomir" owner="1" flag="7" victory="1">
+    <unit id="6485" owner="1" flag="8" face="0" exp="242" str="8"/>
+  </hex>
+  <hex row="9" col="10" road="162"/>
+  <hex row="9" col="11" terrain="3"/>
+  <hex row="9" col="12" terrain="3"/>
+  <hex row="9" col="14" terrain="3"/>
+  <hex row="9" col="15" terrain="3"/>
+  <hex row="9" col="16" terrain="3"/>
+  <hex row="9" col="17">
+    <unit id="6736" owner="1" flag="8" face="0" exp="178" str="8"/>
+  </hex>
+  <hex row="9" col="18" terrain="10" name="Teterev river"/>
+  <hex row="9" col="20">
+    <unit id="16519" owner="0" flag="20" face="0" exp="211" str="11"/>
+  </hex>
+  <hex row="9" col="22">
+    <unit id="16713" owner="0" flag="20" face="0" transport="16698" exp="189" str="9"/>
+  </hex>
+  <hex row="9" col="25" deploy="0">
+    <unit id="16669" owner="0" flag="20" face="0" exp="234"/>
+  </hex>
+  <hex row="9" col="26" road="152" deploy="0">
+    <unit id="16527" owner="0" flag="20" face="0" transport="16687" exp="205" str="12"/>
+  </hex>
+  <hex row="9" col="27" terrain="1" road="184" name="Brusilov" owner="0" flag="19" victory="0">
+    <unit id="27047" owner="0" flag="48" face="0" exp="202" str="12"/>
+  </hex>
+  <hex row="9" col="28">
+    <unit id="16661" owner="0" flag="20" face="0" transport="16701" exp="248"/>
+  </hex>
+  <hex row="9" col="29" road="34"/>
+  <hex row="9" col="30" road="34"/>
+  <hex row="10" col="1" terrain="10" name="Teterev river"/>
+  <hex row="10" col="2" terrain="10" name="Teterev river"/>
+  <hex row="10" col="3" terrain="10" name="Teterev river"/>
+  <hex row="10" col="4" terrain="10" name="Teterev river"/>
+  <hex row="10" col="7" road="34">
+    <unit id="8239" owner="1" flag="8" face="0" exp="224" str="7"/>
+  </hex>
+  <hex row="10" col="8" terrain="10" road="35" name="Teterev river"/>
+  <hex row="10" col="9" terrain="1" name="Zhitomir">
+    <unit id="6944" owner="1" flag="8" face="0" exp="125" str="6" ldr="1"/>
+  </hex>
+  <hex row="10" col="10" road="144">
+    <unit id="7243" owner="1" flag="8" face="0" exp="16" str="7"/>
+  </hex>
+  <hex row="10" col="14" terrain="3"/>
+  <hex row="10" col="15" terrain="3"/>
+  <hex row="10" col="16" terrain="3"/>
+  <hex row="10" col="17" terrain="10" name="Teterev river"/>
+  <hex row="10" col="18" terrain="10" name="Teterev river"/>
+  <hex row="10" col="22" terrain="3"/>
+  <hex row="10" col="26" road="27"/>
+  <hex row="10" col="27" terrain="1" road="139" name="Brusilov"/>
+  <hex row="10" col="28" terrain="1" road="178" name="Brusilov"/>
+  <hex row="10" col="30" terrain="3"/>
+  <hex row="11" col="1" terrain="3"/>
+  <hex row="11" col="3" terrain="3"/>
+  <hex row="11" col="6" road="18">
+    <unit id="7951" owner="1" flag="8" face="0" transport="7818" exp="204" str="9"/>
+  </hex>
+  <hex row="11" col="8" terrain="10" name="Teterev river"/>
+  <hex row="11" col="10" road="9">
+    <unit id="7538" owner="1" flag="8" face="0" exp="188" str="8" ldr="1"/>
+  </hex>
+  <hex row="11" col="11" road="144"/>
+  <hex row="11" col="14" terrain="3"/>
+  <hex row="11" col="15">
+    <unit id="6758" owner="1" flag="8" face="0" transport="7812" exp="31" str="7"/>
+  </hex>
+  <hex row="11" col="16" terrain="5"/>
+  <hex row="11" col="17">
+    <unit id="6759" owner="1" flag="8" face="0" transport="7812" exp="62" str="9"/>
+  </hex>
+  <hex row="11" col="18" terrain="10" name="Teterev river"/>
+  <hex row="11" col="20">
+    <unit id="16519" owner="0" flag="20" face="0" exp="192" str="12"/>
+  </hex>
+  <hex row="11" col="21">
+    <unit id="16519" owner="0" flag="20" face="0" exp="216" str="12"/>
+  </hex>
+  <hex row="11" col="25" terrain="3"/>
+  <hex row="11" col="26" road="17" deploy="0">
+    <unit id="16616" owner="0" flag="20" face="0" transport="16688" exp="63" str="7"/>
+  </hex>
+  <hex row="11" col="27" deploy="0">
+    <unit id="16657" owner="0" flag="20" face="0" exp="211"/>
+  </hex>
+  <hex row="11" col="28" road="145"/>
+  <hex row="11" col="29" terrain="3"/>
+  <hex row="12" col="0" terrain="3"/>
+  <hex row="12" col="2" terrain="3"/>
+  <hex row="12" col="5" terrain="3"/>
+  <hex row="12" col="6" road="17"/>
+  <hex row="12" col="7" terrain="10"/>
+  <hex row="12" col="8" terrain="10" name="Teterev river"/>
+  <hex row="12" col="9" terrain="10" name="Teterev river"/>
+  <hex row="12" col="10" terrain="10" name="Teterev river"/>
+  <hex row="12" col="11" terrain="10" road="17" name="Teterev river"/>
+  <hex row="12" col="12" terrain="10" name="Teterev river"/>
+  <hex row="12" col="13" terrain="10" name="Teterev river"/>
+  <hex row="12" col="14" name="Teterev river"/>
+  <hex row="12" col="15" terrain="10" name="Teterev river"/>
+  <hex row="12" col="16" terrain="10" name="Teterev river"/>
+  <hex row="12" col="17" terrain="10" name="Teterev river"/>
+  <hex row="12" col="18" terrain="10" name="Teterev river"/>
+  <hex row="12" col="21" terrain="3"/>
+  <hex row="12" col="23">
+    <unit id="16713" owner="0" flag="20" face="0" transport="16698" exp="190" str="9"/>
+  </hex>
+  <hex row="12" col="26" road="17" deploy="0">
+    <unit id="16589" owner="0" flag="20" face="0" exp="33"/>
+  </hex>
+  <hex row="12" col="27" deploy="0">
+    <unit id="16535" owner="0" flag="20" face="0" transport="16701" exp="75" str="11"/>
+    <unit id="16803" owner="0" flag="20" face="0" exp="65" str="9"/>
+  </hex>
+  <hex row="12" col="28" road="9">
+    <unit id="16707" owner="0" flag="20" face="0" transport="16694" exp="29" str="12"/>
+  </hex>
+  <hex row="12" col="29" road="136">
+    <unit id="16735" owner="0" flag="20" face="0" exp="61"/>
+  </hex>
+  <hex row="13" col="1" terrain="3"/>
+  <hex row="13" col="4" terrain="3"/>
+  <hex row="13" col="5" road="18"/>
+  <hex row="13" col="6" road="33"/>
+  <hex row="13" col="7" terrain="10"/>
+  <hex row="13" col="11" road="9"/>
+  <hex row="13" col="13" terrain="3"/>
+  <hex row="13" col="14" terrain="10"/>
+  <hex row="13" col="16">
+    <unit id="7857" owner="1" flag="8" face="0" transport="7807" exp="90" str="9"/>
+  </hex>
+  <hex row="13" col="17">
+    <unit id="7663" owner="1" flag="8" face="0" exp="94" str="7"/>
+  </hex>
+  <hex row="13" col="19">
+    <unit id="6759" owner="1" flag="8" face="0" transport="7812" exp="72"/>
+  </hex>
+  <hex row="13" col="20" terrain="3"/>
+  <hex row="13" col="21" terrain="3"/>
+  <hex row="13" col="22" terrain="3">
+    <unit id="16519" owner="0" flag="20" face="0" exp="227" str="11"/>
+  </hex>
+  <hex row="13" col="23">
+    <unit id="16728" owner="0" flag="20" face="0" transport="16684" exp="219" str="12"/>
+  </hex>
+  <hex row="13" col="24" terrain="3"/>
+  <hex row="13" col="26" road="17" deploy="0">
+    <unit id="16590" owner="0" flag="20" face="0" exp="31" str="9"/>
+    <unit id="16765" owner="0" flag="20" face="0" exp="90" str="9"/>
+  </hex>
+  <hex row="13" col="27" terrain="3" deploy="0">
+    <unit id="16590" owner="0" flag="20" face="0" exp="56" str="9"/>
+    <unit id="16765" owner="0" flag="20" face="0" exp="35" str="9"/>
+  </hex>
+  <hex row="13" col="28" deploy="0">
+    <unit id="16671" owner="0" flag="20" face="0" exp="93"/>
+  </hex>
+  <hex row="13" col="30" road="130"/>
+  <hex row="14" col="0" terrain="3"/>
+  <hex row="14" col="1" terrain="3"/>
+  <hex row="14" col="5" road="33"/>
+  <hex row="14" col="7" terrain="10"/>
+  <hex row="14" col="8" terrain="10"/>
+  <hex row="14" col="9" terrain="10"/>
+  <hex row="14" col="10" terrain="10"/>
+  <hex row="14" col="11" terrain="10"/>
+  <hex row="14" col="12" road="136"/>
+  <hex row="14" col="13" road="144"/>
+  <hex row="14" col="15" terrain="3">
+    <unit id="7541" owner="1" flag="8" face="0" exp="51" str="6"/>
+  </hex>
+  <hex row="14" col="16">
+    <unit id="7237" owner="1" flag="8" face="0" exp="64" str="6"/>
+  </hex>
+  <hex row="14" col="17" terrain="3">
+    <unit id="8090" owner="1" flag="8" face="0" exp="45" str="7"/>
+  </hex>
+  <hex row="14" col="18">
+    <unit id="7422" owner="1" flag="8" face="0" exp="72" str="7"/>
+  </hex>
+  <hex row="14" col="21" terrain="3"/>
+  <hex row="14" col="22">
+    <unit id="16519" owner="0" flag="20" face="0" exp="248" str="12"/>
+  </hex>
+  <hex row="14" col="26" terrain="3" road="17"/>
+  <hex row="14" col="28" deploy="0">
+    <unit id="16656" owner="0" flag="20" face="0" exp="244" str="9"/>
+  </hex>
+  <hex row="15" col="0" terrain="3"/>
+  <hex row="15" col="1" terrain="3"/>
+  <hex row="15" col="3" terrain="3" road="18"/>
+  <hex row="15" col="4" road="34"/>
+  <hex row="15" col="6" owner="1" flag="7">
+    <unit id="6684" owner="1" flag="8" face="0" transport="7842" exp="205" str="6"/>
+  </hex>
+  <hex row="15" col="8" terrain="3"/>
+  <hex row="15" col="10" terrain="3"/>
+  <hex row="15" col="11" terrain="10"/>
+  <hex row="15" col="13" road="9"/>
+  <hex row="15" col="14" terrain="3"/>
+  <hex row="15" col="15" terrain="3">
+    <unit id="6928" owner="1" flag="8" face="0" exp="10" str="8" ldr="1"/>
+  </hex>
+  <hex row="15" col="16">
+    <unit id="7132" owner="1" flag="8" face="0" exp="4" str="7" ldr="1"/>
+  </hex>
+  <hex row="15" col="19">
+    <unit id="7340" owner="1" flag="8" face="0" transport="7818" exp="84" str="6"/>
+  </hex>
+  <hex row="15" col="22">
+    <unit id="16635" owner="0" flag="20" face="0" transport="16685" exp="35" str="9"/>
+  </hex>
+  <hex row="15" col="23" terrain="3">
+    <unit id="16535" owner="0" flag="20" face="0" exp="24" str="11"/>
+  </hex>
+  <hex row="15" col="25" terrain="3"/>
+  <hex row="15" col="26" road="17" deploy="0">
+    <unit id="16708" owner="0" flag="20" face="0" transport="16685" exp="49"/>
+  </hex>
+  <hex row="15" col="27" road="40"/>
+  <hex row="15" col="29" terrain="2" road="48" owner="0" flag="19">
+    <unit id="16661" owner="0" flag="20" face="0" transport="16701" exp="206" str="9"/>
+  </hex>
+  <hex row="16" col="3" road="17"/>
+  <hex row="16" col="8" terrain="3"/>
+  <hex row="16" col="9" terrain="3"/>
+  <hex row="16" col="10" terrain="10"/>
+  <hex row="16" col="14" road="144"/>
+  <hex row="16" col="16" terrain="3"/>
+  <hex row="16" col="22" terrain="3"/>
+  <hex row="16" col="23">
+    <unit id="16535" owner="0" flag="20" face="0" exp="49" str="12"/>
+  </hex>
+  <hex row="16" col="24">
+    <unit id="16728" owner="0" flag="20" face="0" transport="16684" exp="82" str="11"/>
+  </hex>
+  <hex row="16" col="25">
+    <unit id="16635" owner="0" flag="20" face="0" transport="16685" exp="61"/>
+  </hex>
+  <hex row="16" col="26" road="19"/>
+  <hex row="16" col="27">
+    <unit id="16728" owner="0" flag="20" face="0" transport="16684" exp="195" str="11"/>
+  </hex>
+  <hex row="16" col="28" terrain="2" road="138"/>
+  <hex row="16" col="29" terrain="2" road="129"/>
+  <hex row="17" col="1" terrain="3">
+    <unit id="8340" owner="1" flag="8" face="0" exp="252" str="8"/>
+  </hex>
+  <hex row="17" col="2">
+    <unit id="8718" owner="1" flag="8" face="0" exp="83" str="8"/>
+  </hex>
+  <hex row="17" col="3" road="33"/>
+  <hex row="17" col="10" terrain="10"/>
+  <hex row="17" col="14" road="17"/>
+  <hex row="17" col="15" terrain="3"/>
+  <hex row="17" col="17">
+    <unit id="6928" owner="1" flag="8" face="0" exp="93" str="7"/>
+  </hex>
+  <hex row="17" col="19">
+    <unit id="6546" owner="1" flag="8" face="0" transport="7810" exp="78" str="6"/>
+  </hex>
+  <hex row="17" col="20">
+    <unit id="6398" owner="1" flag="8" face="0" transport="7775" exp="22" str="9" ldr="1"/>
+  </hex>
+  <hex row="17" col="23" terrain="3"/>
+  <hex row="17" col="24" terrain="3">
+    <unit id="16535" owner="0" flag="20" face="0" exp="25" str="11"/>
+  </hex>
+  <hex row="17" col="25" terrain="3"/>
+  <hex row="17" col="26" road="9">
+    <unit id="16519" owner="0" flag="20" face="0" exp="207" str="11"/>
+  </hex>
+  <hex row="17" col="27" road="144">
+    <unit id="16519" owner="0" flag="20" face="0" exp="193" str="11"/>
+  </hex>
+  <hex row="17" col="29" terrain="3">
+    <unit id="16519" owner="0" flag="20" face="0" exp="236" str="11"/>
+  </hex>
+  <hex row="18" col="2" road="18">
+    <unit id="8720" owner="1" flag="8" face="0" exp="6" str="5"/>
+  </hex>
+  <hex row="18" col="3" terrain="3"/>
+  <hex row="18" col="9" terrain="10"/>
+  <hex row="18" col="10" terrain="10"/>
+  <hex row="18" col="14" road="9"/>
+  <hex row="18" col="15" road="144"/>
+  <hex row="18" col="16" terrain="3"/>
+  <hex row="18" col="17" terrain="3">
+    <unit id="7234" owner="1" flag="8" face="0" exp="5" str="7"/>
+  </hex>
+  <hex row="18" col="18">
+    <unit id="7857" owner="1" flag="8" face="0" transport="7815" exp="90"/>
+  </hex>
+  <hex row="18" col="21">
+    <unit id="7318" owner="1" flag="8" face="0" transport="7816" exp="73" str="7"/>
+  </hex>
+  <hex row="18" col="22" terrain="3"/>
+  <hex row="18" col="27" road="25"/>
+  <hex row="18" col="28" terrain="3"/>
+  <hex row="18" col="29" road="40"/>
+  <hex row="19" col="1" terrain="3"/>
+  <hex row="19" col="2" road="17"/>
+  <hex row="19" col="5" terrain="3"/>
+  <hex row="19" col="8" terrain="3"/>
+  <hex row="19" col="9" terrain="10"/>
+  <hex row="19" col="15" road="9"/>
+  <hex row="19" col="18" terrain="3">
+    <unit id="6398" owner="1" flag="8" face="0" transport="7775" exp="53"/>
+  </hex>
+  <hex row="19" col="22" terrain="3"/>
+  <hex row="19" col="23" road="40"/>
+  <hex row="19" col="24" terrain="3"/>
+  <hex row="19" col="25" road="40">
+    <unit id="6398" owner="1" flag="8" face="0" transport="7815" exp="80" str="7"/>
+  </hex>
+  <hex row="19" col="27" road="35"/>
+  <hex row="19" col="28" road="162"/>
+  <hex row="19" col="29" terrain="3"/>
+  <hex row="19" col="30" road="130"/>
+  <hex row="20" col="2" road="17"/>
+  <hex row="20" col="4" terrain="3"/>
+  <hex row="20" col="5" terrain="3"/>
+  <hex row="20" col="8" terrain="10"/>
+  <hex row="20" col="9" terrain="10"/>
+  <hex row="20" col="16" road="152"/>
+  <hex row="20" col="17" road="168"/>
+  <hex row="20" col="19" road="40"/>
+  <hex row="20" col="21" road="34">
+    <unit id="7237" owner="1" flag="8" face="0" exp="73" str="7"/>
+  </hex>
+  <hex row="20" col="22" road="34">
+    <unit id="7422" owner="1" flag="8" face="0" exp="83" str="6"/>
+  </hex>
+  <hex row="20" col="24" road="130"/>
+  <hex row="20" col="25" terrain="3"/>
+  <hex row="20" col="26" road="130"/>
+  <hex row="20" col="27" terrain="1" name="Kornin"/>
+  <hex row="20" col="28" terrain="1" name="Kornin" owner="1" flag="7" victory="1">
+    <unit id="6398" owner="1" flag="8" face="0" transport="7812" exp="51" str="8"/>
+  </hex>
+  <hex row="20" col="30" terrain="3"/>
+  <hex row="21" col="1" terrain="10"/>
+  <hex row="21" col="2" road="17"/>
+  <hex row="21" col="10" terrain="10"/>
+  <hex row="21" col="11" terrain="10"/>
+  <hex row="21" col="12" terrain="3"/>
+  <hex row="21" col="13" terrain="3"/>
+  <hex row="21" col="14">
+    <unit id="6429" owner="1" flag="8" face="0" exp="177" str="6"/>
+  </hex>
+  <hex row="21" col="15">
+    <unit id="6546" owner="1" flag="8" face="0" transport="7842" exp="250" str="6"/>
+  </hex>
+  <hex row="21" col="16" road="19" owner="1" flag="7" victory="1">
+    <unit id="6485" owner="1" flag="8" face="0" exp="182" str="9"/>
+  </hex>
+  <hex row="21" col="18" road="130"/>
+  <hex row="21" col="19" terrain="3"/>
+  <hex row="21" col="20" road="130"/>
+  <hex row="21" col="21">
+    <unit id="7231" owner="1" flag="8" face="0" exp="49" str="6"/>
+  </hex>
+  <hex row="21" col="22">
+    <unit id="8164" owner="1" flag="8" face="0" exp="71" str="7"/>
+  </hex>
+  <hex row="21" col="25" terrain="10"/>
+  <hex row="21" col="26" terrain="3">
+    <unit id="7663" owner="1" flag="8" face="0" exp="3" str="6"/>
+  </hex>
+  <hex row="21" col="27">
+    <unit id="7857" owner="1" flag="8" face="0" transport="7807" exp="88" str="9"/>
+  </hex>
+  <hex row="21" col="28" terrain="1" name="Kornin"/>
+  <hex row="21" col="29" terrain="3">
+    <unit id="6397" owner="1" flag="8" face="0" transport="7812" exp="80" str="7"/>
+  </hex>
+  <hex row="21" col="30" terrain="3"/>
+  <hex row="22" col="1" terrain="10"/>
+  <hex row="22" col="2" road="17"/>
+  <hex row="22" col="3" terrain="3"/>
+  <hex row="22" col="5">
+    <unit id="7538" owner="1" flag="8" face="0" exp="30" str="4"/>
+  </hex>
+  <hex row="22" col="9" terrain="3"/>
+  <hex row="22" col="10" terrain="3"/>
+  <hex row="22" col="11" terrain="10"/>
+  <hex row="22" col="14">
+    <unit id="7856" owner="1" flag="8" face="0" transport="7732" exp="185" str="6"/>
+  </hex>
+  <hex row="22" col="15">
+    <unit id="7340" owner="1" flag="8" face="0" transport="7818" exp="238" str="7"/>
+  </hex>
+  <hex row="22" col="16" road="17"/>
+  <hex row="22" col="22">
+    <unit id="6933" owner="1" flag="8" face="0" exp="75" str="7" ldr="1"/>
+  </hex>
+  <hex row="22" col="24" terrain="10"/>
+  <hex row="22" col="26" terrain="10"/>
+  <hex row="22" col="27" terrain="10"/>
+  <hex row="22" col="29" terrain="3"/>
+  <hex row="22" col="30" terrain="10"/>
+  <hex row="23" col="1" terrain="10"/>
+  <hex row="23" col="2" road="25"/>
+  <hex row="23" col="3" terrain="3" road="168"/>
+  <hex row="23" col="4">
+    <unit id="7857" owner="1" flag="8" face="0" transport="7807" exp="47" str="4"/>
+  </hex>
+  <hex row="23" col="5">
+    <unit id="8130" owner="1" flag="8" face="0" exp="83" str="4"/>
+  </hex>
+  <hex row="23" col="6" owner="1" flag="7">
+    <unit id="6759" owner="1" flag="8" face="0" transport="7812" exp="70" str="9"/>
+  </hex>
+  <hex row="23" col="8" terrain="3"/>
+  <hex row="23" col="11" terrain="10"/>
+  <hex row="23" col="14" terrain="1" name="Andrushevka" owner="1" flag="7">
+    <unit id="6485" owner="1" flag="8" face="0" exp="223" str="9"/>
+  </hex>
+  <hex row="23" col="16" road="9"/>
+  <hex row="23" col="17" terrain="3" road="144"/>
+  <hex row="23" col="23" terrain="5"/>
+  <hex row="23" col="24" terrain="3"/>
+  <hex row="23" col="27" terrain="3"/>
+  <hex row="23" col="28" terrain="10"/>
+  <hex row="23" col="29" terrain="10"/>
+  <hex row="23" col="30" terrain="10"/>
+  <hex row="24" col="1" terrain="3"/>
+  <hex row="24" col="2" terrain="10" road="19"/>
+  <hex row="24" col="4" terrain="3" road="144"/>
+  <hex row="24" col="6">
+    <unit id="6928" owner="1" flag="8" face="0" exp="80" str="5"/>
+  </hex>
+  <hex row="24" col="8" terrain="3"/>
+  <hex row="24" col="10" terrain="10"/>
+  <hex row="24" col="11" terrain="3"/>
+  <hex row="24" col="13" terrain="3"/>
+  <hex row="24" col="16" terrain="3"/>
+  <hex row="24" col="17" terrain="3" road="9"/>
+  <hex row="24" col="24" terrain="3"/>
+  <hex row="24" col="25" terrain="5"/>
+  <hex row="24" col="26" terrain="3"/>
+  <hex row="24" col="27">
+    <unit id="7855" owner="1" flag="8" face="0" transport="7818" exp="186" ldr="1"/>
+  </hex>
+  <hex row="24" col="28" terrain="3"/>
+  <hex row="25" col="0" road="8"/>
+  <hex row="25" col="1" road="130"/>
+  <hex row="25" col="2" terrain="10" road="33"/>
+  <hex row="25" col="4" road="9"/>
+  <hex row="25" col="5" road="144"/>
+  <hex row="25" col="10" terrain="10"/>
+  <hex row="25" col="11" terrain="10"/>
+  <hex row="25" col="13" terrain="3"/>
+  <hex row="25" col="14" terrain="3"/>
+  <hex row="25" col="18" road="144"/>
+  <hex row="25" col="21" terrain="3"/>
+  <hex row="25" col="26" terrain="5"/>
+  <hex row="25" col="28" terrain="3"/>
+  <hex row="25" col="30" terrain="3"/>
+  <hex row="26" col="2" terrain="10"/>
+  <hex row="26" col="5" road="9"/>
+  <hex row="26" col="11" terrain="10"/>
+  <hex row="26" col="15" terrain="3"/>
+  <hex row="26" col="18" road="17"/>
+  <hex row="26" col="20" terrain="3"/>
+  <hex row="26" col="22" terrain="3"/>
+  <hex row="26" col="25">
+    <unit id="46776" owner="1" flag="360" face="0" exp="197" str="8"/>
+  </hex>
+  <hex row="26" col="26" owner="1" flag="7">
+    <unit id="7297" owner="1" flag="8" face="0" transport="7815" exp="51" str="6"/>
+  </hex>
+  <hex row="26" col="29" terrain="3"/>
+  <hex row="26" col="30" terrain="3"/>
+  <hex row="27" col="2" terrain="10"/>
+  <hex row="27" col="3" terrain="10"/>
+  <hex row="27" col="6" road="144"/>
+  <hex row="27" col="9" terrain="3"/>
+  <hex row="27" col="11" terrain="13"/>
+  <hex row="27" col="14" terrain="3"/>
+  <hex row="27" col="15" terrain="3"/>
+  <hex row="27" col="18" road="17"/>
+  <hex row="27" col="25" terrain="3"/>
+  <hex row="27" col="26">
+    <unit id="7538" owner="1" flag="8" face="0" exp="53" str="4"/>
+  </hex>
+  <hex row="27" col="30" terrain="3"/>
+  <hex row="28" col="1" terrain="3"/>
+  <hex row="28" col="2" terrain="10"/>
+  <hex row="28" col="6" road="17"/>
+  <hex row="28" col="9" terrain="3"/>
+  <hex row="28" col="13" terrain="1" name="Chervonoje" owner="1" flag="7">
+    <unit id="7104" owner="1" flag="8" face="0" transport="7703" exp="231" str="7"/>
+  </hex>
+  <hex row="28" col="16">
+    <unit id="7541" owner="1" flag="8" face="0" exp="1" str="7" ldr="1"/>
+  </hex>
+  <hex row="28" col="18" road="17"/>
+  <hex row="28" col="25" terrain="3"/>
+  <hex row="28" col="27" terrain="3"/>
+  <hex row="29" col="2" terrain="10"/>
+  <hex row="29" col="3" terrain="3"/>
+  <hex row="29" col="6" road="17"/>
+  <hex row="29" col="7" terrain="1" name="Berdichev" owner="1" flag="7" victory="1">
+    <unit id="6540" owner="1" flag="8" face="0" exp="231" str="9"/>
+  </hex>
+  <hex row="29" col="9">
+    <unit id="7324" owner="1" flag="8" face="0" transport="7789" exp="212" str="6"/>
+  </hex>
+  <hex row="29" col="11" terrain="2">
+    <unit id="8592" owner="1" flag="8" face="0" exp="84" str="5"/>
+  </hex>
+  <hex row="29" col="15">
+    <unit id="6398" owner="1" flag="8" face="0" transport="7815" exp="13" str="8"/>
+  </hex>
+  <hex row="29" col="16">
+    <unit id="7663" owner="1" flag="8" face="0" exp="51" str="7"/>
+  </hex>
+  <hex row="29" col="17">
+    <unit id="7237" owner="1" flag="8" face="0" exp="94" str="6"/>
+  </hex>
+  <hex row="29" col="18" road="17">
+    <unit id="6933" owner="1" flag="8" face="0" exp="81" str="8"/>
+  </hex>
+  <hex row="29" col="22" terrain="3"/>
+  <hex row="29" col="23" terrain="13"/>
+  <hex row="29" col="27" terrain="3"/>
+  <hex row="29" col="28" terrain="3"/>
+  <hex row="30" col="1" terrain="3"/>
+  <hex row="30" col="2" terrain="10"/>
+  <hex row="30" col="3" terrain="3"/>
+  <hex row="30" col="6" terrain="1" road="25" name="Berdichev">
+    <unit id="6540" owner="1" flag="8" face="0" exp="198"/>
+  </hex>
+  <hex row="30" col="7" terrain="1" road="168" name="Berdichev">
+    <unit id="7974" owner="1" flag="8" face="0" transport="7822" exp="196"/>
+  </hex>
+  <hex row="30" col="8">
+    <unit id="6546" owner="1" flag="8" face="0" transport="7810" exp="39" str="7"/>
+  </hex>
+  <hex row="30" col="9">
+    <unit id="6546" owner="1" flag="8" face="0" transport="7842" exp="4" str="7"/>
+  </hex>
+  <hex row="30" col="10" terrain="2" owner="1" flag="7">
+    <unit id="8706" owner="1" flag="8" face="0" exp="39" str="7"/>
+    <unit id="8226" owner="1" flag="8" face="0" transport="7728" exp="179" str="7"/>
+  </hex>
+  <hex row="30" col="11" terrain="2">
+    <unit id="8340" owner="1" flag="8" face="0" exp="245" str="8" ldr="1"/>
+  </hex>
+  <hex row="30" col="15" terrain="3"/>
+  <hex row="30" col="16">
+    <unit id="7104" owner="1" flag="8" face="0" transport="7767" exp="6" str="7"/>
+  </hex>
+  <hex row="30" col="17">
+    <unit id="7857" owner="1" flag="8" face="0" transport="7807" exp="17"/>
+  </hex>
+  <hex row="30" col="18" road="17">
+    <unit id="6397" owner="1" flag="8" face="0" transport="7812" exp="250" str="6"/>
+  </hex>
+  <hex row="30" col="19">
+    <unit id="6398" owner="1" flag="8" face="0" transport="7812" exp="78" str="8" ldr="1"/>
+  </hex>
+  <hex row="30" col="23" terrain="3"/>
+  <hex row="30" col="24" terrain="10"/>
+  <hex row="30" col="25" terrain="10"/>
+  <hex row="30" col="26" terrain="10"/>
+  <hex row="30" col="27" terrain="10"/>
+  <hex row="30" col="28" terrain="10"/>
+  <hex row="30" col="29" terrain="10"/>
+  <hex row="30" col="30" terrain="10"/>
+  <hex row="31" col="2" terrain="10"/>
+  <hex row="31" col="3" terrain="10"/>
+  <hex row="31" col="6" road="19"/>
+  <hex row="31" col="8" road="136">
+    <unit id="7857" owner="1" flag="8" face="0" transport="7732" exp="249"/>
+  </hex>
+  <hex row="31" col="9" road="128"/>
+  <hex row="31" col="10">
+    <unit id="6739" owner="1" flag="8" face="0" exp="81" str="7"/>
+  </hex>
+  <hex row="31" col="12" terrain="3"/>
+  <hex row="31" col="13" terrain="3"/>
+  <hex row="31" col="14" terrain="3"/>
+  <hex row="31" col="15" terrain="3"/>
+  <hex row="31" col="18" road="17"/>
+  <hex row="31" col="21" terrain="3"/>
+  <hex row="31" col="22" terrain="3"/>
+  <hex row="31" col="23" terrain="3"/>
+</map>

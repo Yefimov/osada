@@ -1,0 +1,574 @@
+[
+  {
+    "id": 0,
+    "scenario": "ccampore.xml",
+    "startprestige": 0,
+    "intro": "The steppe offers room for manoeuvre—and punishes every commander who hesitates. The First Cavalry Army is turning mobility into strategic shock. We have overthrown the Tsar but that has not stopped the capitalists, monarchists and other enemies of the people to unite, raise forces and march on our people's republic! Petrograd lies under attack and Siberia is under enemy control. The wider stakes are clear: The smell of capitalists fleeing from the people's army is in the air. A strong result opens the road to ROSTOV (6 January 1920). Your horses cannot replace armour in a frontal attack, but they can turn a retreat into annihilation.",
+    "outcome": {
+      "briliant": {
+        "goto": 1,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 900,
+        "text": "What a beautiful day, comrade!  The smell of capitalists fleeing from the people's army is in the air.  Voronezh is liberated but the enemy is not yet fully defeated.  Start the pursuit immediately!"
+      },
+      "victory": {
+        "goto": 1,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1000,
+        "text": "What a beautiful day, comrade!  The smell of capitalists fleeing from the people's army is in the air.  Voronezh is liberated but the enemy is not yet fully defeated.  Start the pursuit immediately!"
+      },
+      "tactical": {
+        "goto": 1,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1200,
+        "text": "What a beautiful day, comrade!  The smell of capitalists fleeing from the people's army is in the air.  Voronezh is liberated but the enemy is not yet fully defeated.  Start the pursuit immediately!"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "LOSS<br><br>You have disgraced the People's Republic!  You are not worthy of commanding our comrades!  You will face a tribunal!"
+      }
+    }
+  },
+  {
+    "id": 1,
+    "scenario": "ccampros.xml",
+    "startprestige": 0,
+    "intro": "The steppe offers room for manoeuvre—and punishes every commander who hesitates. The First Cavalry Army is turning mobility into strategic shock. Your army has not been defeated and is close to dealing another crucial blow to the capitalist's cause in southern Russia! The capitalist armies are ever retreating further south. The wider stakes are clear: AFTERMATH: By the end of 1919 the White armies in Siberia, western Russia and the Ukraine had been contained and defeated by the victorious Red Army. A strong result opens the road to BATTLE OF VOLODARKA (29 May 1920). Ride around resistance, strike artillery and supply columns, and close the trap before the enemy understands the danger.",
+    "outcome": {
+      "briliant": {
+        "goto": 2,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "Yes, comrade.  This is an impressive piece of mobile warfare!  You were even faster in Rostov than some of the capitalist's troops!  Roam the countryside and liberate the towns and villages of the provinces from the capitalists and monarchists.  They deserve to be free!  Hunt down every last traitor of the people!<br><br>AFTERMATH:<br>By the end of 1919 the White armies in Siberia, western Russia and the Ukraine had been contained and defeated by the victorious Red Army.  Although isolated troops and bands continued to roam around, the only organized resistance was put up by General Wrangel on the Crimea.  However, with peace so close by for the Bolshevik government, the tide seemed to turn again and not for the better..."
+      },
+      "victory": {
+        "goto": 2,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "Yes, comrade.  This is an impressive piece of mobile warfare!  You were even faster in Rostov than some of the capitalist's troops!  Roam the countryside and liberate the towns and villages of the provinces from the capitalists and monarchists.  They deserve to be free!  Hunt down every last traitor of the people!<br><br>AFTERMATH:<br>By the end of 1919 the White armies in Siberia, western Russia and the Ukraine had been contained and defeated by the victorious Red Army.  Although isolated troops and bands continued to roam around, the only organized resistance was put up by General Wrangel on the Crimea.  However, with peace so close by for the Bolshevik government, the tide seemed to turn again and not for the better..."
+      },
+      "tactical": {
+        "goto": 2,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 150,
+        "text": "Yes, comrade.  This is an impressive piece of mobile warfare!  You were even faster in Rostov than some of the capitalist's troops!  Roam the countryside and liberate the towns and villages of the provinces from the capitalists and monarchists.  They deserve to be free!  Hunt down every last traitor of the people!<br><br>AFTERMATH:<br>By the end of 1919 the White armies in Siberia, western Russia and the Ukraine had been contained and defeated by the victorious Red Army.  Although isolated troops and bands continued to roam around, the only organized resistance was put up by General Wrangel on the Crimea.  However, with peace so close by for the Bolshevik government, the tide seemed to turn again and not for the better..."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "LOSS<br><br>You have disgraced the People's Republic!  You are not worthy of commanding our comrades!  You will face a tribunal!"
+      }
+    }
+  },
+  {
+    "id": 2,
+    "scenario": "ccampvol.xml",
+    "startprestige": 0,
+    "intro": "A cavalry force wins not by battering the strongest point, but by appearing where the enemy thought no army could be. The First Cavalry Army is turning mobility into strategic shock. Finally all of your command has arrived at the new front in the west. The newly emerged Polish state has invaded our sacred territory both in the Belarus as here in the Ukraine. The wider stakes are clear: However the fighting with the Polish cavalry showed that the people's Cavalry Army is a superior army! A strong result opens the road to KIEV COUNTEROFFENSIVE (9 June 1920). Scout first, avoid prepared strongpoints, and use speed to seize crossings, junctions, and retreat routes.",
+    "outcome": {
+      "briliant": {
+        "goto": 3,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "Comrade, the operation near Volodarka has not been a success. The Polish troops had cowardly tactics and hid themselves in the villages where our horses have little effect! However the fighting with the Polish cavalry showed that the people's Cavalry Army is a superior army!<br><br>There is more bad news.  The reason why you lost contact with the Don Cossacks Brigade was not your fault, comrade.  It seems that they have switched sides and have joined the capitalist criminals that we are fighting!  I urge you to make clear to your men the fate of such traitors!"
+      },
+      "victory": {
+        "goto": 3,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "Comrade, the operation near Volodarka has not been a success. The Polish troops had cowardly tactics and hid themselves in the villages where our horses have little effect! However the fighting with the Polish cavalry showed that the people's Cavalry Army is a superior army!<br><br>There is more bad news.  The reason why you lost contact with the Don Cossacks Brigade was not your fault, comrade.  It seems that they have switched sides and have joined the capitalist criminals that we are fighting!  I urge you to make clear to your men the fate of such traitors!"
+      },
+      "tactical": {
+        "goto": 3,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 150,
+        "text": "Comrade, the operation near Volodarka has not been a success. The Polish troops had cowardly tactics and hid themselves in the villages where our horses have little effect! However the fighting with the Polish cavalry showed that the people's Cavalry Army is a superior army!<br><br>There is more bad news.  The reason why you lost contact with the Don Cossacks Brigade was not your fault, comrade.  It seems that they have switched sides and have joined the capitalist criminals that we are fighting!  I urge you to make clear to your men the fate of such traitors!"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "LOSS<br><br>You have disgraced the people's republic! You are not worthly of commanding our comrades! You will face a tribunal!"
+      }
+    }
+  },
+  {
+    "id": 3,
+    "scenario": "ccampkie.xml",
+    "startprestige": 0,
+    "intro": "Speed is your artillery: the enemy flank is open, but only for a few precious hours. The First Cavalry Army is turning mobility into strategic shock. A major offensive by our armies north and south of Kiev has pushed back the Polish bandits. Even blind people can see that Kiev is about to fall. The wider stakes are clear: The Ukrainian capital has been liberated! The people of the Ukraine are now free from the capitalists who have ruled them for the past few weeks. A strong result opens the road to DELAY AT ROVNO (1 July 1920). Ride around resistance, strike artillery and supply columns, and close the trap before the enemy understands the danger.",
+    "outcome": {
+      "briliant": {
+        "goto": 4,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 300,
+        "text": "Comrade! Kiev is liberated!  Imagine the headline of tomorrow's newspaper!  \"The Ukrainian capital has been liberated!\"   The people of the Ukraine are now free from the capitalists who have ruled them for the past few weeks.<br><br>Also, I assume you know what to do with the Ukrainian prisoners of war?  They are traitors of their own people.  They allied themselves with the very power that invaded their country and they deserve nothing but the final penalty."
+      },
+      "victory": {
+        "goto": 4,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 400,
+        "text": "Comrade! Kiev is liberated!  Imagine the headline of tomorrow's newspaper!  \"The Ukrainian capital has been liberated!\"   The people of the Ukraine are now free from the capitalists who have ruled them for the past few weeks.<br><br>Also, I assume you know what to do with the Ukrainian prisoners of war?  They are traitors of their own people.  They allied themselves with the very power that invaded their country and they deserve nothing but the final penalty."
+      },
+      "tactical": {
+        "goto": 4,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "Comrade! Kiev is liberated!  Imagine the headline of tomorrow's newspaper!  \"The Ukrainian capital has been liberated!\"   The people of the Ukraine are now free from the capitalists who have ruled them for the past few weeks.<br><br>Also, I assume you know what to do with the Ukrainian prisoners of war?  They are traitors of their own people.  They allied themselves with the very power that invaded their country and they deserve nothing but the final penalty."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "LOSS<br><br>You have disgraced the people's republic! You are not worthly of commanding our comrades! You will face a tribunal!"
+      }
+    }
+  },
+  {
+    "id": 4,
+    "scenario": "ccamprov.xml",
+    "startprestige": 0,
+    "intro": "Speed is your artillery: the enemy flank is open, but only for a few precious hours. The First Cavalry Army is turning mobility into strategic shock. Take anything from the country as you go. The people will help you and if they do not it is because they are still terrified of repressions by the capitalist pigs. The wider stakes are clear: Although you were held up near Rovno, the advance is still under way. A strong result opens the road to BATTLE OF BRODY (29 July 1920). Scout first, avoid prepared strongpoints, and use speed to seize crossings, junctions, and retreat routes.",
+    "outcome": {
+      "briliant": {
+        "goto": 5,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 200,
+        "text": "Do not apologize, comrade.  Although you were held up near Rovno, the advance is still under way.  Not even the people's army can win every skirmish.  But the war, comrade, the war is still going on, and it is going in our favor!<br><br>I have received more good news.  Comrade Tukhachevsky has started a grand offensive in Belarus and is also moving west!  Capitalist Poland will suffer dearly for their attack on the people of Russia!"
+      },
+      "victory": {
+        "goto": 5,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 400,
+        "text": "Do not apologize, comrade.  Although you were held up near Rovno, the advance is still under way.  Not even the people's army can win every skirmish.  But the war, comrade, the war is still going on, and it is going in our favor!<br><br>I have received more good news.  Comrade Tukhachevsky has started a grand offensive in Belarus and is also moving west!  Capitalist Poland will suffer dearly for their attack on the people of Russia!"
+      },
+      "tactical": {
+        "goto": 5,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "Do not apologize, comrade.  Although you were held up near Rovno, the advance is still under way.  Not even the people's army can win every skirmish.  But the war, comrade, the war is still going on, and it is going in our favor!<br><br>I have received more good news.  Comrade Tukhachevsky has started a grand offensive in Belarus and is also moving west!  Capitalist Poland will suffer dearly for their attack on the people of Russia!"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "LOSS<br><br>You have disgraced the people's republic! You are not worthly of commanding our comrades! You will face a tribunal!"
+      }
+    }
+  },
+  {
+    "id": 5,
+    "scenario": "ccampbro.xml",
+    "startprestige": 0,
+    "intro": "The steppe offers room for manoeuvre—and punishes every commander who hesitates. The First Cavalry Army is turning mobility into strategic shock. The Revolution will soon liberate the rest of Europe and join with other communists all over the continent! But first we must concentrate on capturing Warsaw in the north and Lwow here in the south! The wider stakes are clear: The Poles conducted a flanking attack on Brody while our eyes were pointed only on getting to Lwow. A strong result opens the road to BATTLE OF ZADWORZE (17 August 1920). Ride around resistance, strike artillery and supply columns, and close the trap before the enemy understands the danger.",
+    "outcome": {
+      "briliant": {
+        "goto": 6,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 250,
+        "text": "You have fended off disaster, comrade.  The Poles conducted a flanking attack on Brody while our eyes were pointed only on getting to Lwow.  You stabilized the situation!<br><br>On the other side, it was sarcastic that you had to encounter the treacherous Don Cossacks again that left our side at Volodarka.  If they had only known that the Revolution cannot be turned around.  We will make sure they know now.<br><br>Keep advancing towards Lwow.  It is not far now!"
+      },
+      "victory": {
+        "goto": 6,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 300,
+        "text": "You have fended off disaster, comrade.  The Poles conducted a flanking attack on Brody while our eyes were pointed only on getting to Lwow.  You stabilized the situation!<br><br>On the other side, it was sarcastic that you had to encounter the treacherous Don Cossacks again that left our side at Volodarka.  If they had only known that the Revolution cannot be turned around.  We will make sure they know now.<br><br>Keep advancing towards Lwow.  It is not far now!"
+      },
+      "tactical": {
+        "goto": 6,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "You have fended off disaster, comrade.  The Poles conducted a flanking attack on Brody while our eyes were pointed only on getting to Lwow.  You stabilized the situation!<br><br>On the other side, it was sarcastic that you had to encounter the treacherous Don Cossacks again that left our side at Volodarka.  If they had only known that the Revolution cannot be turned around.  We will make sure they know now.<br><br>Keep advancing towards Lwow.  It is not far now!"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "LOSS<br><br>You have disgraced the People's Republic!  You are not worthy of commanding our comrades!  You will face a tribunal!"
+      }
+    }
+  },
+  {
+    "id": 6,
+    "scenario": "ccampzad.xml",
+    "startprestige": 0,
+    "intro": "The steppe offers room for manoeuvre—and punishes every commander who hesitates. The First Cavalry Army is turning mobility into strategic shock. Let me quote something for the French socialist newspaper L'Humanite from early August. Long live the Workmen's International! As you can see our struggle against the capitalists is not going unnoticed. The wider stakes are clear: It only shows the superiority of the people's army! A strong result opens the road to LWOW (20 August 1920). Ride around resistance, strike artillery and supply columns, and close the trap before the enemy understands the danger.",
+    "outcome": {
+      "briliant": {
+        "goto": 7,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Well, if you like to see it that way.  The Poles were brave for defending that village to the bitter end but it turned into a Polish Thermopylae.  It only shows the superiority of the people's army!  The capitalists from London, Paris and Warsaw are sending their slaves to a certain death in order to stop us.  Yet they fail in stopping us!  They only slowed us down for a single day.  What is a single day in a war?  Go comrade, Lwow is ours!"
+      },
+      "victory": {
+        "goto": 7,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Well, if you like to see it that way.  The Poles were brave for defending that village to the bitter end but it turned into a Polish Thermopylae.  It only shows the superiority of the people's army!  The capitalists from London, Paris and Warsaw are sending their slaves to a certain death in order to stop us.  Yet they fail in stopping us!  They only slowed us down for a single day.  What is a single day in a war?  Go comrade, Lwow is ours!"
+      },
+      "tactical": {
+        "goto": 7,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Well, if you like to see it that way.  The Poles were brave for defending that village to the bitter end but it turned into a Polish Thermopylae.  It only shows the superiority of the people's army!  The capitalists from London, Paris and Warsaw are sending their slaves to a certain death in order to stop us.  Yet they fail in stopping us!  They only slowed us down for a single day.  What is a single day in a war?  Go comrade, Lwow is ours!"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "LOSS<br><br>You have disgraced the people's republic! You are not worthly of commanding our comrades! You will face a tribunal!"
+      }
+    }
+  },
+  {
+    "id": 7,
+    "scenario": "ccamplwo.xml",
+    "startprestige": 0,
+    "intro": "A cavalry force wins not by battering the strongest point, but by appearing where the enemy thought no army could be. The First Cavalry Army is turning mobility into strategic shock. Comrade there lays the old city of Lwow. It was the goal of the Tsar in 1914, Brusilov in 1916 and our goal in 1920. The wider stakes are clear: For three days blood was shed and both sides have suffered massive casualties. A strong result opens the road to BATTLE OF KOMAROW (29 August 1920). Your horses cannot replace armour in a frontal attack, but they can turn a retreat into annihilation.",
+    "outcome": {
+      "briliant": {
+        "goto": 8,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "For three days blood was shed and both sides have suffered massive casualties.  Lwow is still in reactionary hands.  You have done well despite the results, comrade.  But reports I am getting show a very, very grave situation is on our hands..."
+      },
+      "victory": {
+        "goto": 8,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "For three days blood was shed and both sides have suffered massive casualties.  Lwow is still in reactionary hands.  You have done well despite the results, comrade.  But reports I am getting show a very, very grave situation is on our hands..."
+      },
+      "tactical": {
+        "goto": 8,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "For three days blood was shed and both sides have suffered massive casualties.  Lwow is still in reactionary hands.  You have done well despite the results, comrade.  But reports I am getting show a very, very grave situation is on our hands..."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "LOSS<br><br>You have disgraced the people's republic! You are not worthly of commanding our comrades! You will face a tribunal!"
+      }
+    }
+  },
+  {
+    "id": 8,
+    "scenario": "ccampkom.xml",
+    "startprestige": 0,
+    "intro": "The steppe offers room for manoeuvre—and punishes every commander who hesitates. The First Cavalry Army is turning mobility into strategic shock. A few days ago while you were busy trying to capture Lwow; the Polish imperialists started a counteroffensive pushing through the center of the line between Lwow and Warsaw. After their breakthrough they turned north and now the entire northern command is retreating in order not to be encircled! The wider stakes are clear: NOTEWORTHY: Because of the numbers of forces involved, the Battle of Komarow is considered the greatest cavalry battle of the 20th century. Your horses cannot replace armour in a frontal attack, but they can turn a retreat into annihilation.",
+    "outcome": {
+      "briliant": {
+        "goto": 9,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Here, quickly, comrade!  A squadron of our loyal Cossacks have made a corridor through which we can escape!  Though not mauled, we have suffered a moral defeat from the Polish cavalry.  Worst of all, we have been denied access to the north and our entire front in Poland is rapidly collapsing...<br><br>NOTEWORTHY: Because of the numbers of forces involved, the Battle of Komarow is considered the greatest cavalry battle of the 20th century.  Also it was the last battle fought mostly by cavalry units, in which traditional cavalry tactics were used and sabers and lances played a vital role."
+      },
+      "victory": {
+        "goto": 9,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Here, quickly, comrade!  A squadron of our loyal Cossacks have made a corridor through which we can escape!  Though not mauled, we have suffered a moral defeat from the Polish cavalry.  Worst of all, we have been denied access to the north and our entire front in Poland is rapidly collapsing...<br><br>NOTEWORTHY: Because of the numbers of forces involved, the Battle of Komarow is considered the greatest cavalry battle of the 20th century.  Also it was the last battle fought mostly by cavalry units, in which traditional cavalry tactics were used and sabers and lances played a vital role."
+      },
+      "tactical": {
+        "goto": 9,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 350,
+        "text": "Here, quickly, comrade!  A squadron of our loyal Cossacks have made a corridor through which we can escape!  Though not mauled, we have suffered a moral defeat from the Polish cavalry.  Worst of all, we have been denied access to the north and our entire front in Poland is rapidly collapsing...<br><br>NOTEWORTHY: Because of the numbers of forces involved, the Battle of Komarow is considered the greatest cavalry battle of the 20th century.  Also it was the last battle fought mostly by cavalry units, in which traditional cavalry tactics were used and sabers and lances played a vital role."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "LOSS<br><br>You have disgraced the people's republic! You are not worthly of commanding our comrades! You will face a tribunal!"
+      }
+    }
+  },
+  {
+    "id": 9,
+    "scenario": "ccampro2.xml",
+    "startprestige": 0,
+    "intro": "Preserve the army today so that it can fight—and win—tomorrow. The First Cavalry Army is turning mobility into strategic shock. Comrade have I ever told you why I joined the Bolshevik party? The Northern armies will have to retreat on their own to defensive positions while we prepare to strike again and then finally make the wishes of millions of proletarians come true! The wider stakes are clear: The capitalists in Warsaw realize that further struggles with the People's Republic will inevitably will lead their defeat! A strong result opens the road to KAKHOVKA (20 October 1920). Rear guards must buy time while the main body escapes; abandon cohesion and the campaign may end here.",
+    "outcome": {
+      "briliant": {
+        "goto": 10,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 350,
+        "text": "Our armies are safe, comrade.  Thanks to your excellent rearguard duty slowing down the Polish army in the south long enough for us to retreat to better positions.  The front is stabilizing again locally.  Plus I have orders for our command to be pulled out of the frontline. That means rest and refitting for the first time in months!<br><br>---Some weeks later at the local HQ---<br><br>Good news, comrade!  The capitalists in Warsaw realize that further struggles with the People's Republic will inevitably will lead their defeat!  Though not all of our claims have been recognized in the cease fire, we now have peace at our western borders!  That means we finally have a border instead of a front!<br><br>Sadly that is not true for the southern border..."
+      },
+      "victory": {
+        "goto": 10,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "Our armies are safe, comrade.  Thanks to your excellent rearguard duty slowing down the Polish army in the south long enough for us to retreat to better positions.  The front is stabilizing again locally.  Plus I have orders for our command to be pulled out of the frontline. That means rest and refitting for the first time in months!<br><br>---Some weeks later at the local HQ---<br><br>Good news, comrade!  The capitalists in Warsaw realize that further struggles with the People's Republic will inevitably will lead their defeat!  Though not all of our claims have been recognized in the cease fire, we now have peace at our western borders!  That means we finally have a border instead of a front!<br><br>Sadly that is not true for the southern border..."
+      },
+      "tactical": {
+        "goto": 10,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 800,
+        "text": "Our armies are safe, comrade.  Thanks to your excellent rearguard duty slowing down the Polish army in the south long enough for us to retreat to better positions.  The front is stabilizing again locally.  Plus I have orders for our command to be pulled out of the frontline. That means rest and refitting for the first time in months!<br><br>---Some weeks later at the local HQ---<br><br>Good news, comrade!  The capitalists in Warsaw realize that further struggles with the People's Republic will inevitably will lead their defeat!  Though not all of our claims have been recognized in the cease fire, we now have peace at our western borders!  That means we finally have a border instead of a front!<br><br>Sadly that is not true for the southern border..."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "LOSS<br><br>You have disgraced the People's Republic! You are not worthly of commanding our comrades! You will face a tribunal!"
+      }
+    }
+  },
+  {
+    "id": 10,
+    "scenario": "ccampwr1.xml",
+    "startprestige": 0,
+    "intro": "Speed is your artillery: the enemy flank is open, but only for a few precious hours. The First Cavalry Army is turning mobility into strategic shock. He stabbed the people's army in the back while we were occupied with the war against Poland. Now that those reactionaries have seen that the Revolution in Russia cannot be stopped, we can muster all resources to bring peace to Russia! The wider stakes are clear: Our people's armies are closing in on them. A strong result opens the road to PEREKOP (28 October 1920). Ride around resistance, strike artillery and supply columns, and close the trap before the enemy understands the danger.",
+    "outcome": {
+      "briliant": {
+        "goto": 11,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Comrade, what can I say!  Moscow expected a long campaign against Wrangel. However your horses have proven them wrong!  The enemy is shattered.  Our people's armies are closing in on them.  Now quickly!  To the Perekop isthmus!!!"
+      },
+      "victory": {
+        "goto": 11,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Comrade, what can I say!  Moscow expected a long campaign against Wrangel. However your horses have proven them wrong!  The enemy is shattered.  Our people's armies are closing in on them.  Now quickly!  To the Perekop isthmus!!!"
+      },
+      "tactical": {
+        "goto": 11,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Comrade, what can I say!  Moscow expected a long campaign against Wrangel. However your horses have proven them wrong!  The enemy is shattered.  Our people's armies are closing in on them.  Now quickly!  To the Perekop isthmus!!!"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "LOSS<br><br>You have disgraced the People's Republic! You are not worthly of commanding our comrades! You will face a tribunal!"
+      }
+    }
+  },
+  {
+    "id": 11,
+    "scenario": "ccampwr2.xml",
+    "startprestige": 0,
+    "intro": "The steppe offers room for manoeuvre—and punishes every commander who hesitates. The First Cavalry Army is turning mobility into strategic shock. We have almost made it to the Perekop isthmus. If those Tsarists are willing to make a stand against the glorious people of Russia then they will do it there! The wider stakes are clear: Not only is Moscow happy with your results but also the glorious people's army. A strong result opens the road to SEVASTOPOL (11 November 1920). Ride around resistance, strike artillery and supply columns, and close the trap before the enemy understands the danger.",
+    "outcome": {
+      "briliant": {
+        "goto": 12,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "We must not stop now!  We have forced our way over the Perekop isthmus.  Not only is Moscow happy with your results but also the glorious people's army.  Now Wrangel is not in the position to cause more bloodshed.  Blood of the Russian proletariat!  Go forward and hunt down the enemy criminals!"
+      },
+      "victory": {
+        "goto": 12,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "We must not stop now!  We have forced our way over the Perekop isthmus.  Not only is Moscow happy with your results but also the glorious people's army.  Now Wrangel is not in the position to cause more bloodshed.  Blood of the Russian proletariat!  Go forward and hunt down the enemy criminals!"
+      },
+      "tactical": {
+        "goto": 12,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "We must not stop now!  We have forced our way over the Perekop isthmus.  Not only is Moscow happy with your results but also the glorious people's army.  Now Wrangel is not in the position to cause more bloodshed.  Blood of the Russian proletariat!  Go forward and hunt down the enemy criminals!"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "LOSS<br><br>You have disgraced the People's Republic! You are not worthly of commanding our comrades! You will face a tribunal!"
+      }
+    }
+  },
+  {
+    "id": 12,
+    "scenario": "ccampwr3.xml",
+    "startprestige": 0,
+    "intro": "This is not a rout unless you allow it to become one. The First Cavalry Army is turning mobility into strategic shock. Their dream of a Russia full of slaves they can control is gone! There are clear signs that the capitalists from London will send the Royal Navy to Russia and attempt to evacuate Wrangel and his forces. The wider stakes are clear: Something that Wrangel wanted to take with him in his escape. Keep the route open, rescue what can still be saved, and deny the enemy the encirclement it expects.",
+    "outcome": {
+      "briliant": {
+        "goto": 254,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Comrade, this is one of the finest bottles of vodka!  Something that Wrangel wanted to take with him in his escape.  Though Wrangel has escaped, something historical has happened, comrade.  The Revolution of the proletariat in Russia has succeeded!  For the first time in history, the socialists of the people will rule themselves!  No more tyranny, no more social classes!  We will all be equal!  A dream has come alive, comrade!"
+      },
+      "victory": {
+        "goto": 254,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Comrade, this is one of the finest bottles of vodka!  Something that Wrangel wanted to take with him in his escape.  Though Wrangel has escaped, something historical has happened, comrade.  The Revolution of the proletariat in Russia has succeeded!  For the first time in history, the socialists of the people will rule themselves!  No more tyranny, no more social classes!  We will all be equal!  A dream has come alive, comrade!"
+      },
+      "tactical": {
+        "goto": 254,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Comrade, this is one of the finest bottles of vodka!  Something that Wrangel wanted to take with him in his escape.  Though Wrangel has escaped, something historical has happened, comrade.  The Revolution of the proletariat in Russia has succeeded!  For the first time in history, the socialists of the people will rule themselves!  No more tyranny, no more social classes!  We will all be equal!  A dream has come alive, comrade!"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "LOSS<br><br>You have disgraced the People's Republic! You are not worthly of commanding our comrades! You will face a tribunal!"
+      }
+    }
+  }
+]

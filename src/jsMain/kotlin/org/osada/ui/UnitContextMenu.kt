@@ -10,6 +10,7 @@ import org.osada.model.reinforceUnit
 import org.osada.model.resupplyUnit
 import org.osada.model.undoLastMove
 import org.osada.model.unmountUnit
+import org.osada.rules.SupplyRules
 
 /**
  * [UnitInfoPanel]'s per-unit action context menu action execution (Mount/Embark/Resupply/
@@ -102,7 +103,13 @@ internal class UnitContextMenu(
         val parts = mutableListOf<String>()
         if (supply.ammo > 0) parts.add("+${supply.ammo} ammo")
         if (supply.fuel > 0) parts.add("+${supply.fuel} fuel")
-        val message = if (parts.isEmpty()) "Can't resupply" else parts.joinToString(" ")
+        val context = SupplyRules.getSupplyContext(map, unit)
+        val message =
+            if (parts.isEmpty()) {
+                "Can't resupply"
+            } else {
+                "${parts.joinToString(" ")} · ${context.label} (${context.efficiencyPercent}%)"
+            }
         ui.showAlert(pos.row, pos.col, message, true)
     }
 
@@ -124,7 +131,8 @@ internal class UnitContextMenu(
             if (parts.isEmpty()) {
                 if (overStrength) "No overstrength" else "Can't reinforce"
             } else {
-                parts.joinToString(" ")
+                val context = SupplyRules.getSupplyContext(map, unit)
+                "${parts.joinToString(" ")} · ${context.label} (${context.efficiencyPercent}%)"
             }
         ui.showAlert(pos.row, pos.col, message, true)
     }

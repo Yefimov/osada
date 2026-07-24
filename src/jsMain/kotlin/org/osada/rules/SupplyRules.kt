@@ -20,6 +20,12 @@ object SupplyRules {
     private const val HEAVY_ENEMY_SUPPLY_PENALTY = 3.0
     private const val EXPERIENCE_STRENGTH_DIVISOR = 100.0
     private const val OVERSTRENGTH_MIN_EXPERIENCE = 100
+    private const val PERCENT = 100
+
+    data class SupplyContext(
+        val efficiencyPercent: Int,
+        val label: String,
+    )
 
     /** Count of adjacent enemy units around [pos], used by both supply-penalty calculations. */
     private fun countAdjacentEnemies(
@@ -43,6 +49,35 @@ object SupplyRules {
         if (adjacentEnemies > 2) modifier /= HEAVY_ENEMY_SUPPLY_PENALTY
         return modifier
     }
+
+    /** Player-facing explanation of the exact local modifier used by manual supply/reinforcement. */
+    fun getSupplyContext(
+        map: GameMap,
+        unit: GameUnit,
+    ): SupplyContext =
+        when {
+            UnitPredicates.isAir(unit) -> SupplyContext(PERCENT, "airfield/carrier supply")
+            UnitPredicates.isSea(unit) -> SupplyContext(PERCENT, "naval supply")
+            else -> {
+                val pos = unit.getPos()
+                if (pos == null) {
+                    SupplyContext(0, "no supply position")
+                } else {
+                    val adjacentEnemies = countAdjacentEnemies(map, unit, pos)
+                    val inCity = unit.getHex()?.terrain == TerrainType.CITY.value
+                    val efficiency =
+                        (supplyPenaltyModifier(unit.getHex(), adjacentEnemies) * PERCENT).roundToInt()
+                    val location = if (inCity) "city supply" else "field supply"
+                    val pressure =
+                        when {
+                            adjacentEnemies == 0 -> ""
+                            adjacentEnemies == 1 -> ", 1 adjacent enemy"
+                            else -> ", $adjacentEnemies adjacent enemies"
+                        }
+                    SupplyContext(efficiency, "$location$pressure")
+                }
+            }
+        }
 
     /** True when [unit]'s type/terrain make it eligible for a supply action at all. */
     private fun isSupplyEligibleType(

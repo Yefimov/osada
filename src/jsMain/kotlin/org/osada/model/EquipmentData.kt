@@ -5,6 +5,8 @@ import kotlin.js.Json
 @JsExport
 @JsName("EquipmentData")
 class EquipmentData {
+    /** Stable merged-equipment id. The loader assigns it from the JSON object's row key. */
+    var eqid: Int = 0
     var gunrange: Int = 0
     var icon: String = ""
     var yearexpired: Int = 0

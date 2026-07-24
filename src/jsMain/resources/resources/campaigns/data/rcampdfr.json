@@ -1,0 +1,1190 @@
+[
+  {
+    "id": 0,
+    "scenario": "rcampfa1.xml",
+    "startprestige": 1000,
+    "intro": "The coast has become a battlefield, and every harbor, convoy, and battery now matters. The Black Sea war ties the front to ports, convoys, and coastal strongholds. Today fascist forces from Germany have attacked our borders, from the Baltic to the Ukraine. Our Red Army is the biggest army in the world and we have more tanks and aircraft than any other country. The wider stakes are clear: You have shown that it is a mistake to think the Red Army is an easy prey! Coordinate ships, aircraft, coastal guns, and landing forces carefully; one exposed transport can undo the entire plan.",
+    "outcome": {
+      "briliant": {
+        "goto": 1,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 350,
+        "text": "BRILLIANT VICTORY<br><br>Brilliant, Comrade. You have shown that it is a mistake to think the Red Army is an easy prey! You are ordered to dig in, because the situation on other sections of the front causes us to send all reinforcements elsewhere."
+      },
+      "victory": {
+        "goto": 1,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 350,
+        "text": "VICTORY<br><br>Excellent, Comrade. You have shown that it is a mistake to think the Red Army is an easy prey! You are ordered to dig in, because the situation on other sections of the front causes us to send all reinforcements elsewhere."
+      },
+      "tactical": {
+        "goto": 1,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 350,
+        "text": "TACTICAL VICTORY<br><br>Well done, Comrade. You have shown that it is a mistake to think the Red Army is an easy prey! You are ordered to dig in, because the situation on other sections of the front causes us to send all reinforcements elsewhere."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "LOSS<br><br>The Rumanians proved to be too strong for you. Because you are incompetent to lead Red Army troops you will be stripped of your insignia and serve as a regular soldier from now on!"
+      }
+    }
+  },
+  {
+    "id": 1,
+    "scenario": "rcampfa2.xml",
+    "startprestige": 0,
+    "intro": "Control of the water will decide whether the army ashore is supplied, reinforced, or abandoned. The Black Sea war ties the front to ports, convoys, and coastal strongholds. North of the Pripjat Marshes the front has collapsed. However south of it, we have our front intact but are slowly being pushed back. The wider stakes are clear: Furious fights have shown the tenacity of the Red Army in war! Coordinate ships, aircraft, coastal guns, and landing forces carefully; one exposed transport can undo the entire plan.",
+    "outcome": {
+      "briliant": {
+        "goto": 2,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 80,
+        "text": "BRILLIANT VICTORY<br><br>Excellent, comrade. You have stopped the Rumanian fascists! Furious fights have shown the tenacity of the Red Army in war! However the bridgehead cannot be held. As you have noticed the enemy is close to cutting us off from the rear. You have orders to pull back to our side of the Prut River and await new orders."
+      },
+      "victory": {
+        "goto": 2,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 80,
+        "text": ""
+      },
+      "tactical": {
+        "goto": 2,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "TACTICAL VICTORY<br><br>Well done, comrade. You have stopped the Rumanian fascists! Furious fights have shown the tenacity of the Red Army in war! However the bridgehead cannot be held. As you have noticed the enemy is close to cutting us off from the rear. You have orders to pull back to our side of the Prut River and await new orders."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "LOSS<br><br>You failed to hold the perimeter of the Falciu bridgehead. Report in Moskva!"
+      }
+    }
+  },
+  {
+    "id": 2,
+    "scenario": "rcampki1.xml",
+    "startprestige": 0,
+    "intro": "The coast has become a battlefield, and every harbor, convoy, and battery now matters. The Black Sea war ties the front to ports, convoys, and coastal strongholds. The Germans have broken through our lines and are advancing with high speed. However, to their south, the Romanians have still not managed a breakthrough thanks to your men. Protect the sea lanes, suppress shore defences, and deliver troops where the enemy least expects them. The Black Sea war ties the front to ports, convoys, and coastal strongholds, and the outcome here will shape the tempo and resources available in the next operation.",
+    "outcome": {
+      "briliant": {
+        "goto": 3,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "BRILLIANT VICTORY<br><br>You made it! Very well done, comrade. The front has completely fallen apart. We are falling back on Odessa."
+      },
+      "victory": {
+        "goto": 3,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 550,
+        "text": "VICTORY<br><br>You made it! Very well done, comrade. The front has completely fallen apart. We are falling back on Odessa."
+      },
+      "tactical": {
+        "goto": 3,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 550,
+        "text": "TACTICAL VICTORY<br><br>You made it! Well done, comrade. The front has completely fallen apart. We are falling back on Odessa."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "LOSS<br><br>'The commander? He has been trapped with his forces in the Kishenev pocket. No sign of him anymore. Another division lost...'"
+      }
+    }
+  },
+  {
+    "id": 3,
+    "scenario": "rcampode.xml",
+    "startprestige": 0,
+    "intro": "At sea there are no safe flanks—only range, weather, and the next enemy aircraft overhead. The Black Sea war ties the front to ports, convoys, and coastal strongholds. The Fascists are near Leningrad and Smolensk in the north and Kiev in the south. Here, near the Black Sea coast, the Romanian fascists with help of their German allies have advanced to the port of Odessa which is an important base for our Black Sea Fleet. Protect the sea lanes, suppress shore defences, and deliver troops where the enemy least expects them.",
+    "outcome": {
+      "briliant": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "BRILLIANT VICTORY<br><br>Not possible..."
+      },
+      "victory": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "VICTORY<br><br>Not possible..."
+      },
+      "tactical": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "TACTICAL VICTORY<br><br>Not possible..."
+      },
+      "lose": {
+        "goto": 4,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 600,
+        "text": "LOSS<br><br>You have done more than well, comrade. You have stopped the Rumanian advance towards Odessa. They have suffered tremendous losses already however they will be attacking soon again. Conditions on the fronts elsewhere, force us to pull your experienced division back from Odessa and to the Crimea. The garrison of Odessa will continue to resist!"
+      }
+    }
+  },
+  {
+    "id": 4,
+    "scenario": "rcampper.xml",
+    "startprestige": 0,
+    "intro": "Control of the water will decide whether the army ashore is supplied, reinforced, or abandoned. The Black Sea war ties the front to ports, convoys, and coastal strongholds. Although Odessa is still in our hands, the enemy rushes further east. At Kiev we have suffered enormous defeats with the losses of hundreds of thousands of soldiers. The wider stakes are clear: We have most of the Perekop peninsula back under control. Weather and range are as dangerous as the enemy—commit your vessels with precision, not bravado.",
+    "outcome": {
+      "briliant": {
+        "goto": 5,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 250,
+        "text": "BRILLIANT VICTORY<br><br>Brilliant, comrade. We have most of the Perekop peninsula back under control. However it seems the fascists are assembling new forces to storm our lines again.<br><br>You will be drawn back from the front for rest and possible refitting."
+      },
+      "victory": {
+        "goto": 5,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 350,
+        "text": "VICTORY<br><br>Excellent, comrade. We have most of the Perekop peninsula back under control. However it seems the fascists are assembling new forces to storm our lines again.<br><br>You will be drawn back from the front for rest and possible refitting."
+      },
+      "tactical": {
+        "goto": 5,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 450,
+        "text": "TACTICAL VICTORY<br><br>Excellent, comrade. We have most of the Perekop peninsula back under control. However it seems the fascists are assembling new forces to storm our lines again.<br><br>You will be drawn back from the front for rest and possible refitting."
+      },
+      "lose": {
+        "goto": 4,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "LOSS<br><br>You have ashamed the Red Army, comrade. The fascists are pouring into the Crimea as we speak. Report in Moskva!"
+      }
+    }
+  },
+  {
+    "id": 5,
+    "scenario": "rcampro1.xml",
+    "startprestige": 0,
+    "intro": "The coast has become a battlefield, and every harbor, convoy, and battery now matters. The Black Sea war ties the front to ports, convoys, and coastal strongholds. In the south the fascists have captured Odessa, broken through into the Crimea, and days ago Rostov. We cannot allow the enemy to hold this position. The wider stakes are clear: However many of the almost entrapped Germans managed to retreat and built up a defensive winter line at the Mius River, still tens of kilometers west of Rostov! Weather and range are as dangerous as the enemy—commit your vessels with precision, not bravado.",
+    "outcome": {
+      "briliant": {
+        "goto": 8,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "BRILLIANT VICTORY<br><br>Excellent comrade!!! This is one of first big victories of this war. You have driven some elite forces of the fascists armies out of Rostov and saved the Caucasus from an attack! However many of the almost entrapped Germans managed to retreat and built up a defensive winter line at the Mius River, still tens of kilometers west of Rostov!"
+      },
+      "victory": {
+        "goto": 8,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "VICTORY<br><br>Excellent comrade!!! This is one of first big victories of this war. You have driven some elite forces of the fascists armies out of Rostov and saved the Caucasus from an attack! However many of the almost entrapped Germans managed to retreat and built up a defensive winter line at the Mius River, still tens of kilometers west of Rostov!"
+      },
+      "tactical": {
+        "goto": 8,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "TACTICAL VICTORY<br><br>Excellent comrade!!! This is one of first big victories of this war. You have driven some elite forces of the fascists armies out of Rostov and saved the Caucasus from an attack! However many of the almost entrapped Germans managed to retreat and built up a defensive winter line at the Mius River, still tens of kilometers west of Rostov!"
+      },
+      "lose": {
+        "goto": 5,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "LOSS<br><br>You have failed to drive the fascist enemy out of the Rostov region. Despite all our advantages you have failed..."
+      }
+    }
+  },
+  {
+    "id": 6,
+    "scenario": "rcampker.xml",
+    "startprestige": 0,
+    "intro": "Sevastopol remains under siege, and the Axis occupation of Crimea threatens to isolate the fortress completely. A double amphibious operation at Kerch and Feodosiya will force the enemy to divert troops from the western peninsula. Your force lands around Kerch from the Taman coast, where scattered German defenders will attempt to contain the beaches until reserves arrive. Put troops ashore quickly, secure the port and road network, and defeat the counterattack before the landing becomes a trapped bridgehead. Success will open the Kerch Peninsula and relieve pressure on Sevastopol.",
+    "outcome": {
+      "briliant": {
+        "goto": 9,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "BRILLIANT VICTORY<br><br>Brilliant, comrade. You have taken Kerch and repulsed all fascist counterattacks! The landing near Feodosiya has been an equal success. The enemy was quick enough to retreat and build a new defensive line, but we are in possession of the Kerch peninsula from Kerch to Feodisya and have drained away enemy forces that could otherwise attack Sevastopol."
+      },
+      "victory": {
+        "goto": 9,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "VICTORY<br><br>Brilliant, comrade. You have taken Kerch and repulsed all fascist counterattacks! The landing near Feodosiya has been an equal success. The enemy was quick enough to retreat and build a new defensive line, but we are in possession of the Kerch peninsula from Kerch to Feodisya and have drained away enemy forces that could otherwise attack Sevastopol."
+      },
+      "tactical": {
+        "goto": 9,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "TACTICAL VICTORY<br><br>Brilliant, comrade. You have taken Kerch and repulsed all fascist counterattacks! The landing near Feodosiya has been an equal success. The enemy was quick enough to retreat and build a new defensive line, but we are in possession of the Kerch peninsula from Kerch to Feodisya and have drained away enemy forces that could otherwise attack Sevastopol."
+      },
+      "lose": {
+        "goto": 6,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "LOSS<br><br>The Kerch operation has failed. As we speak our brave forces are driven back into the sea. Because of the failure of the Kerch operation, the succesful Feodosiya operation has become irrelevant..."
+      }
+    }
+  },
+  {
+    "id": 7,
+    "scenario": "rcampfeo.xml",
+    "startprestige": 0,
+    "intro": "The second half of the Crimean landing strikes at Feodosiya, the key junction between the Kerch Peninsula and the wider Crimea. From the Taman coast, naval transports must deliver infantry and support weapons onto beaches that are thinly defended but certain to attract a rapid German response. Seize the town, port, and inland routes before the enemy can build a blocking line across the peninsula. A fast advance will link the Feodosiya and Kerch lodgements, threaten Axis communications, and draw forces away from besieged Sevastopol. Delay will leave both landings isolated.",
+    "outcome": {
+      "briliant": {
+        "goto": 9,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "BRILLIANT VICTORY<br><br>Brilliant, comrade. You have taken Feodosiya and repulsed all fascist counterattacks! The landing near Kerch has been an equal success. The enemy was quick enough to retreat and build a new defensive line, but we are in possession of the Kerch peninsula from Kerch to Feodisya and have drained away enemy forces that could otherwise attack Sevastopol."
+      },
+      "victory": {
+        "goto": 9,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "VICTORY<br><br>Brilliant, comrade. You have taken Feodosiya and repulsed all fascist counterattacks! The landing near Kerch has been an equal success. The enemy was quick enough to retreat and build a new defensive line, but we are in possession of the Kerch peninsula from Kerch to Feodisya and have drained away enemy forces that could otherwise attack Sevastopol."
+      },
+      "tactical": {
+        "goto": 9,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "TACTICAL VICTORY<br><br>Brilliant, comrade. You have taken Feodosiya and repulsed all fascist counterattacks! The landing near Kerch has been an equal success. The enemy was quick enough to retreat and build a new defensive line, but we are in possession of the Kerch peninsula from Kerch to Feodisya and have drained away enemy forces that could otherwise attack Sevastopol."
+      },
+      "lose": {
+        "goto": 7,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "LOSS<br><br>The Feodosiya operation has failed. As we speak our brave forces are driven back into the sea. Because of the failure of the Feodosiya operation, the succesful Kerch operation has become irrelevant..."
+      }
+    }
+  },
+  {
+    "id": 8,
+    "scenario": "rcampcho.xml",
+    "startprestige": 0,
+    "intro": "The operation depends on ships, shore guns, and troops fighting as one force. The Black Sea war ties the front to ports, convoys, and coastal strongholds. This is not a regular scenario but a so called 'player choice scenario'. You can choose which one it will be: Kerch of Feodosiya. The wider stakes are clear: TACTICAL VICTORY You have chosen to play Feodosiya. Coordinate ships, aircraft, coastal guns, and landing forces carefully; one exposed transport can undo the entire plan.",
+    "outcome": {
+      "briliant": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "BRILLIANT VICTORY<br><br>Not possible..."
+      },
+      "victory": {
+        "goto": 6,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 600,
+        "text": "VICTORY<br><br>You have chosen to play Kerch. So be it!"
+      },
+      "tactical": {
+        "goto": 7,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 600,
+        "text": "TACTICAL VICTORY<br><br>You have chosen to play Feodosiya. So be it!"
+      },
+      "lose": {
+        "goto": 8,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "LOSS<br><br>Come on, make a decision! Try again!"
+      }
+    }
+  },
+  {
+    "id": 9,
+    "scenario": "rcampsev.xml",
+    "startprestige": 0,
+    "intro": "The operation depends on ships, shore guns, and troops fighting as one force. The Black Sea war ties the front to ports, convoys, and coastal strongholds. Despite our initial successes in our Winter offensive, it has failed to defeat the fascist invaders. With the start of spring they have regained their initiative and at the moment are preparing a final assault on the fortress city of Sevastopol which is being cut off from our lines since last year. Protect the sea lanes, suppress shore defences, and deliver troops where the enemy least expects them.",
+    "outcome": {
+      "briliant": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "BRILLIANT VICTORY<br><br>Not possible..."
+      },
+      "victory": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "VICTORY<br><br>Not possible..."
+      },
+      "tactical": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "TACTICAL VICTORY<br><br>Not possible..."
+      },
+      "lose": {
+        "goto": 10,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1000,
+        "text": "LOSS<br><br>Our forces in Sevastopol could not stop the fascist attack, despite you reinforcing them. The enemy has lead enormous numbers of men in their however. At the moment they are clearing the last streets of the city of Sevastopol. Luckily your core could make it on time out of the besieged city, to the ports where the Black Sea Fleet will transport you back to a Caucasus port."
+      }
+    }
+  },
+  {
+    "id": 10,
+    "scenario": "rcampno1.xml",
+    "startprestige": 0,
+    "intro": "The operation depends on ships, shore guns, and troops fighting as one force. The Black Sea war ties the front to ports, convoys, and coastal strongholds. We expected the fascists to strike against Moskva, our capital, but they have attacked in the south. Within weeks they had reached the Don River and Stalingrad on the Volga River. The wider stakes are clear: You have stopped the fascist advance on the coastal road. Protect the sea lanes, suppress shore defences, and deliver troops where the enemy least expects them.",
+    "outcome": {
+      "briliant": {
+        "goto": 11,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "BRILLIANT VICTORY<br><br>Very well done, comrade. You have stopped the fascist advance on the coastal road. The front near Novorossiysk is changing into a stalemate so it seems, which is good from our perspective."
+      },
+      "victory": {
+        "goto": 11,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 50,
+        "text": "VICTORY<br><br>Very well done, comrade. You have stopped the fascist advance on the coastal road. The front near Novorossiysk is changing into a stalemate so it seems, which is good from our perspective."
+      },
+      "tactical": {
+        "goto": 11,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "TACTICAL VICTORY<br><br>Well done, comrade. You have stopped the fascist advance on the coastal road. The front near Novorossiysk is changing into a stalemate so it seems, which is good from our perspective."
+      },
+      "lose": {
+        "goto": 10,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "LOSS<br><br>Comrade, comrade... You failed to stop the enemy advance on the coastal road. If you are lucky you are getting another chance, as regular soldier in the 62nd Army in the hell of Stalingrad."
+      }
+    }
+  },
+  {
+    "id": 11,
+    "scenario": "rcampsuc.xml",
+    "startprestige": 0,
+    "intro": "The operation depends on ships, shore guns, and troops fighting as one force. The Black Sea war ties the front to ports, convoys, and coastal strongholds. THe enemy's advance on the coastal road has been halted and that saves many Black Sea ports still in our hands free from an attack on one side. However the German advance has penetrated deep into the southern steppes and has reached the foot of the Caucasus mountain range. The wider stakes are clear: The fascist advance on Suchumi has been stopped. Weather and range are as dangerous as the enemy—commit your vessels with precision, not bravado.",
+    "outcome": {
+      "briliant": {
+        "goto": 12,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 700,
+        "text": "BRILLIANT VICTORY<br><br>Excellent, comrade. The fascist advance on Suchumi has been stopped. It seems the front, from the Don and Stalingrad in the north, to the Caucasus mountains is turning into a stalemate all along the front."
+      },
+      "victory": {
+        "goto": 12,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 700,
+        "text": "VICTORY<br><br>Excellent, comrade. The fascist advance on Suchumi has been stopped. It seems the front, from the Don and Stalingrad in the north, to the Caucasus mountains is turning into a stalemate all along the front."
+      },
+      "tactical": {
+        "goto": 12,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 800,
+        "text": "TACTICAL VICTORY<br><br>Excellent, comrade. The fascist advance on Suchumi has been stopped. It seems the front, from the Don and Stalingrad in the north, to the Caucasus mountains is turning into a stalemate all along the front."
+      },
+      "lose": {
+        "goto": 10,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "LOSS<br><br>The enemy is taking control of Suchumi and a section of the coastal road. This means we are no longer able to fully supply our units near Novorossiysk, only by the means of our Black Sea Fleet. The front is collapsing and soon our glorious Black Sea Fleet will run out of ports! Report to Moskva or take life into your own hands..."
+      }
+    }
+  },
+  {
+    "id": 12,
+    "scenario": "rcampor1.xml",
+    "startprestige": 0,
+    "intro": "Control of the water will decide whether the army ashore is supplied, reinforced, or abandoned. The Black Sea war ties the front to ports, convoys, and coastal strongholds. The situation at the fronts is critical. And in the Caucasus Army the German First Panzer Army has refueled its offensive over the Terek River towards Grozny, and Baku where the oilfields are. The wider stakes are clear: You have effectively halted the fascist advance on Ordzhonikidze by not only stopping them in the city suburbs but even more by encircling them from behind! Protect the sea lanes, suppress shore defences, and deliver troops where the enemy least expects them.",
+    "outcome": {
+      "briliant": {
+        "goto": 13,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 150,
+        "text": "BRILLIANT VICTORY<br><br>Comrade, it is a glorious day! You have effectively halted the fascist advance on Ordzhonikidze by not only stopping them in the city suburbs but even more by encircling them from behind! Do not waste time, go and destroy them, comrade!"
+      },
+      "victory": {
+        "goto": 13,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 250,
+        "text": "VICTORY<br><br>Comrade, it is a glorious day! You have effectively halted the fascist advance on Ordzhonikidze by not only stopping them in the city suburbs but even more by encircling them from behind! Do not waste time, go and destroy them, comrade!"
+      },
+      "tactical": {
+        "goto": 13,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 350,
+        "text": "TACTICAL VICTORY<br><br>Comrade, it is a glorious day! You have effectively halted the fascist advance on Ordzhonikidze by not only stopping them in the city suburbs but even more by encircling them from behind! Do not waste time, go and destroy them, comrade!"
+      },
+      "lose": {
+        "goto": 12,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "LOSS<br><br>The fascist have have only been halted by days. Ordzhonikidze has been taken and  we are in serious trouble at Grozny. Report in Moskva!"
+      }
+    }
+  },
+  {
+    "id": 13,
+    "scenario": "rcampor2.xml",
+    "startprestige": 0,
+    "intro": "At sea there are no safe flanks—only range, weather, and the next enemy aircraft overhead. The Black Sea war ties the front to ports, convoys, and coastal strongholds. Of all sectors of the front, from Leningrad to Moscow and to Stalingrad, just here at Ordzhonikidze, we have the initiative, comrade. You have saved Ordzhonikidze from an immediately enemy invasion and cut off the supply lines for the fascist forces at Ordzhonikidze. The wider stakes are clear: Although a considerable number of Germans managed to get to their own lines, we are preparing to liberate the region in our upcoming winter offensive! Coordinate ships, aircraft, coastal guns, and landing forces carefully; one exposed transport can undo the entire plan.",
+    "outcome": {
+      "briliant": {
+        "goto": 14,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "BRILLIANT VICTORY<br><br>Amazing work, comrade! You not only destroyed many fascist forces but also got the front moving again, back to the north-west. Although a considerable number of Germans managed to get to their own lines, we are preparing to liberate the region in our upcoming winter offensive!"
+      },
+      "victory": {
+        "goto": 14,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 150,
+        "text": "VICTORY<br><br>Amazing work, comrade! You not only destroyed many fascist forces but also got the front moving again, back to the north-west. Although a considerable number of Germans managed to get to their own lines, we are preparing to liberate the region in our upcoming winter offensive!"
+      },
+      "tactical": {
+        "goto": 14,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 300,
+        "text": "TACTICAL VICTORY<br><br>Amazing work, comrade! You not only destroyed many fascist forces but also got the front moving again, back to the north-west. Although a considerable number of Germans managed to get to their own lines, we are preparing to liberate the region in our upcoming winter offensive!"
+      },
+      "lose": {
+        "goto": 13,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "LOSS<br><br>Ordzhonikidze is under severe pressure once again. The fascist relief force has joined up with the trapped forces and are likely to capture Ordzhonikidze after all. We were so close to victory here..."
+      }
+    }
+  },
+  {
+    "id": 14,
+    "scenario": "rcampmai.xml",
+    "startprestige": 0,
+    "intro": "The battle is already turning against you; survival now depends on discipline, not glory. The Black Sea war ties the front to ports, convoys, and coastal strongholds. And in the Caucasus the Germans are slowly retreating. We started our winter offensive to liberate the Caucasus region all the way up to Novorossiysk and Rostov, some weeks ago. The wider stakes are clear: We have destroyed many Romanian, Hungarian and Italian units in battles near the Don River. Every surviving veteran will matter in the battles ahead, so retreat with purpose and destroy what the enemy cannot be allowed to capture.",
+    "outcome": {
+      "briliant": {
+        "goto": 15,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1400,
+        "text": "BRILLIANT VICTORY<br><br>Brilliant, comrade. Simply brilliant! You have chased those fascists dogs in front of you. Large parts of the Caucasus region have been liberated. And the fascists in Stalingrad should be close to surrender. We have destroyed many Rumanian, Hungarian and Italian units in battles near the Don River. Our winter offensive is already a triumph. Simply keep advancing until you receive new orders, comrade!"
+      },
+      "victory": {
+        "goto": 15,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1550,
+        "text": "VICTORY<br><br>Brilliant, comrade. Simply brilliant! You have chased those fascists dogs in front of you. Large parts of the Caucasus region have been liberated. And the fascists in Stalingrad should be close to surrender. We have destroyed many Rumanian, Hungarian and Italian units in battles near the Don River. Our winter offensive is already a triumph. Simply keep advancing until you receive new orders, comrade!"
+      },
+      "tactical": {
+        "goto": 15,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1700,
+        "text": "TACTICAL VICTORY<br><br>Brilliant, comrade. Simply brilliant! You have chased those fascists dogs in front of you. Large parts of the Caucasus region have been liberated. And the fascists in Stalingrad should be close to surrender. We have destroyed many Rumanian, Hungarian and Italian units in battles near the Don River. Our winter offensive is already a triumph. Simply keep advancing until you receive new orders, comrade!"
+      },
+      "lose": {
+        "goto": 14,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "LOSS<br><br>The Red Army is ashamed of you. Report to HQ. It seems the fascists at Stalingrad are harder to defeat than imagined and we could use every extra man..."
+      }
+    }
+  },
+  {
+    "id": 15,
+    "scenario": "rcampro2.xml",
+    "startprestige": 0,
+    "intro": "The operation depends on ships, shore guns, and troops fighting as one force. The Black Sea war ties the front to ports, convoys, and coastal strongholds. We have advanced hundreds of kilometers and we once again stand at the gates of Rostov. It is vital that we capture this gate to the Caucasus as soon as possible, because still not all German units have retreated over the Don, back into the Ukraine. The wider stakes are clear: We have liberated Rostov again and the Caucasus has been liberated entirely but for the Kuban region. Protect the sea lanes, suppress shore defences, and deliver troops where the enemy least expects them.",
+    "outcome": {
+      "briliant": {
+        "goto": 16,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 250,
+        "text": "BRILLIANT VICTORY<br><br>Excellent news from the fronts are arriving to our glorious leader. The fascist forces at Stalingrad have finally been forced to surrender. We have liberated Rostov again and the Caucasus has been liberated entirely but for the Kuban region. The danger for the oilfields is gone and our winter offensive has been a great success!"
+      },
+      "victory": {
+        "goto": 16,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 350,
+        "text": "VICTORY<br><br>Excellent news from the fronts are arriving to our glorious leader. The fascist forces at Stalingrad have finally been forced to surrender. We have liberated Rostov again and the Caucasus has been liberated entirely but for the Kuban region. The danger for the oilfields is gone and our winter offensive has been a great success!"
+      },
+      "tactical": {
+        "goto": 16,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "TACTICAL VICTORY<br><br>Excellent news from the fronts are arriving to our glorious leader. The fascist forces at Stalingrad have finally been forced to surrender. We have liberated Rostov again and the Caucasus has been liberated entirely but for the Kuban region. The danger for the oilfields is gone and our winter offensive has been a great success!"
+      },
+      "lose": {
+        "goto": 15,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "LOSS<br><br>You have orders to immediately travel to Moskva and report to the great leader himself. No further details have been given."
+      }
+    }
+  },
+  {
+    "id": 16,
+    "scenario": "rcampno2.xml",
+    "startprestige": 0,
+    "intro": "This is not a rout unless you allow it to become one. The Black Sea war ties the front to ports, convoys, and coastal strongholds. We are happy to hold down the Germans. More south, the enemy is still holding the Kuban region, of which the Taman peninsula is only a few miles away from the Kerch peninsula of the Crimea. The wider stakes are clear: Attacks on all of the fascist Kuban positions are continuing as we speak! Keep the route open, rescue what can still be saved, and deny the enemy the encirclement it expects.",
+    "outcome": {
+      "briliant": {
+        "goto": 17,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 25,
+        "text": "BRILLIANT VICTORY<br><br>Absolutely brilliant, comrade. The enemy was much stronger and more tenacious than expected. We were unable to take Novorossiysk itself but we have closed in, on two sides. Attacks on all of the fascist Kuban positions are continuing as we speak!"
+      },
+      "victory": {
+        "goto": 17,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 50,
+        "text": "VICTORY<br><br>Absolutely brilliant, comrade. The enemy was much stronger and more tenacious than expected. We were unable to take Novorossiysk itself but we have closed in, on two sides. Attacks on all of the fascist Kuban positions are continuing as we speak!"
+      },
+      "tactical": {
+        "goto": 17,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "TACTICAL VICTORY<br><br>Well done, comrade. The enemy was much stronger and more tenacious than expected. We were unable to take Novorossiysk itself but we have closed in, on two sides. Attacks on all of the fascist Kuban positions are continuing as we speak!"
+      },
+      "lose": {
+        "goto": 16,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "LOSS<br><br>You have failed. Thousands of Marines are perishing because of your blunders..."
+      }
+    }
+  },
+  {
+    "id": 17,
+    "scenario": "rcampkry.xml",
+    "startprestige": 0,
+    "intro": "The coast has become a battlefield, and every harbor, convoy, and battery now matters. The Black Sea war ties the front to ports, convoys, and coastal strongholds. After a month of ferious attacks we have not breached the fascist front. We have only advanced several miles, and the cities of Novorossiysk and Krasnodar are still in enemy hands. The wider stakes are clear: On the other hand, the enemy was not able to destroy the Novorossiysk bridgehead either. Coordinate ships, aircraft, coastal guns, and landing forces carefully; one exposed transport can undo the entire plan.",
+    "outcome": {
+      "briliant": {
+        "goto": 18,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1500,
+        "text": "BRILLIANT VICTORY<br><br>You have done a very good job, comrade. The fascists had more reserves than expected, including an entire tank division. Although you have shifted the frontline to the west, no breakthrough has taken place. On the other hand, the enemy was not able to destroy the Novorossiysk bridgehead either. We are locked in a stalemate. We will stop offensive actions and assemble forces for a new offensive that should commence after some months."
+      },
+      "victory": {
+        "goto": 18,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1700,
+        "text": "VICTORY<br><br>You have done a very good job, comrade. The fascists had more reserves than expected, including an entire tank division. Although you have shifted the frontline to the west, no breakthrough has taken place. On the other hand, the enemy was not able to destroy the Novorossiysk bridgehead either. We are locked in a stalemate. We will stop offensive actions and assemble forces for a new offensive that should commence after some months."
+      },
+      "tactical": {
+        "goto": 18,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 2000,
+        "text": "TACTICAL VICTORY<br><br>You have done a good job, comrade. The fascists had more reserves than expected, including an entire tank division. Although you have shifted the frontline to the west, no breakthrough has taken place. On the other hand, the enemy was not able to destroy the Novorossiysk bridgehead either. We are locked in a stalemate. We will stop offensive actions and assemble forces for a new offensive that should commence after some months."
+      },
+      "lose": {
+        "goto": 17,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "LOSS<br><br>The enemy was much stronger than anticipated. This is however not an acceptable excuse for your performance. Report to HQ!"
+      }
+    }
+  },
+  {
+    "id": 18,
+    "scenario": "rcampno3.xml",
+    "startprestige": 0,
+    "intro": "The operation depends on ships, shore guns, and troops fighting as one force. The Black Sea war ties the front to ports, convoys, and coastal strongholds. And finally, after months of preparations, we are in position for a full-scale attack on the fascist perimeter. We must follow and make the enemy see that the Red Army has arisen from its ashes! The wider stakes are clear: Finally we have broken through and have liberated Novorossiysk! Protect the sea lanes, suppress shore defences, and deliver troops where the enemy least expects them.",
+    "outcome": {
+      "briliant": {
+        "goto": 19,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "BRILLIANT VICTORY<br><br>Excellent, comrade, excellent! You cannot imagine how happy our glorious leader is with this victory. Finally we have broken through and have liberated Novorossiysk! The enemy is retreating towards the Taman peninsula, and will either make a stand there or get ready to be evactuated to the Crimea. Follow the fascists, let nothing stop you!"
+      },
+      "victory": {
+        "goto": 19,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 50,
+        "text": "VICTORY<br><br>Excellent, comrade, excellent! You cannot imagine how happy our glorious leader is with this victory. Finally we have broken through and have liberated Novorossiysk! The enemy is retreating towards the Taman peninsula, and will either make a stand there or get ready to be evactuated to the Crimea. Follow the fascists, let nothing stop you!"
+      },
+      "tactical": {
+        "goto": 19,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 75,
+        "text": "TACTICAL VICTORY<br><br>Excellent, comrade, excellent! You cannot imagine how happy our glorious leader is with this victory. Finally we have broken through and have liberated Novorossiysk! The enemy is retreating towards the Taman peninsula, and will either make a stand there or get ready to be evactuated to the Crimea. Follow the fascists, let nothing stop you!"
+      },
+      "lose": {
+        "goto": 18,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "LOSS<br><br>Although we made progress, still, after all those months, there is no break through. Our troops were ready. You failed. Our glorious leader has requested your presence..."
+      }
+    }
+  },
+  {
+    "id": 19,
+    "scenario": "rcamptam.xml",
+    "startprestige": 0,
+    "intro": "The battle is already turning against you; survival now depends on discipline, not glory. The Black Sea war ties the front to ports, convoys, and coastal strongholds. Those were quite some days, comrade. Krasnodar and Novorossiysk have been liberated and the fascists cowards are fleeing towards the Taman peninsula where they should be evacuated to the Crimea. The wider stakes are clear: In the Ukraine our offensive is steaming towards the Dnjepr River. Keep the route open, rescue what can still be saved, and deny the enemy the encirclement it expects.",
+    "outcome": {
+      "briliant": {
+        "goto": 20,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1250,
+        "text": "BRILLIANT VICTORY<br><br>The Kuban steppes and the Taman peninsula are liberated. Not one fascist still stands in its soil. Well done, comrade. Elsewhere our forces are having victories as well. In the Ukraine our offensive is steaming towards the Dnjepr River. And the winter has still to begin! However your forces will be drawn back, and receive some badly needed rest and refitting. But the enemy is far from defeated so you will face them again."
+      },
+      "victory": {
+        "goto": 20,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1500,
+        "text": "VICTORY<br><br>The Kuban steppes and the Taman peninsula are liberated. Not one fascist still stands in its soil. Well done, comrade. Elsewhere our forces are having victories as well. In the Ukraine our offensive is steaming towards the Dnjepr River. And the winter has still to begin! However your forces will be drawn back, and receive some badly needed rest and refitting. But the enemy is far from defeated so you will face them again."
+      },
+      "tactical": {
+        "goto": 20,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 2000,
+        "text": "TACTICAL VICTORY<br><br>The Kuban steppes and the Taman peninsula are liberated. Not one fascist still stands in its soil. Well done, comrade. Elsewhere our forces are having victories as well. In the Ukraine our offensive is steaming towards the Dnjepr River. And the winter has still to begin! However your forces will be drawn back, and receive some badly needed rest and refitting. But the enemy is far from defeated so you will face them again."
+      },
+      "lose": {
+        "goto": 19,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "LOSS<br><br>Stavka is not pleased. Not pleased at all. I suggest you hold the honour to yourself..."
+      }
+    }
+  },
+  {
+    "id": 20,
+    "scenario": "rcampod2.xml",
+    "startprestige": 0,
+    "intro": "The operation depends on ships, shore guns, and troops fighting as one force. The Black Sea war ties the front to ports, convoys, and coastal strongholds. Our winter offensive has brought us on the other side of the Dnjepr River and Kiev has been liberated. We will attack near Perekop and force ourselves into the Crimea. The wider stakes are clear: After months of advancing, our troops in the Ukraine will stop large offensive actions as almost the entire Ukraine has been liberated now. Protect the sea lanes, suppress shore defences, and deliver troops where the enemy least expects them.",
+    "outcome": {
+      "briliant": {
+        "goto": 21,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 750,
+        "text": "BRILLIANT VICTORY<br><br>You rushed west and took Odessa without too much trouble, an admirable achievement. After months of advancing, our troops in the Ukraine will stop large offensive actions as almost the entire Ukraine has been liberated now. But our great nation is larger than just the Ukraine and those areas are waiting for our troops to liberate them from the fascist oppression. Your forces will be send to the Crimea. Other forces will start attacks in Byelorussia and the Baltics."
+      },
+      "victory": {
+        "goto": 21,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 900,
+        "text": "VICTORY<br><br>You rushed west and took Odessa without too much trouble, an admirable achievement. After months of advancing, our troops in the Ukraine will stop large offensive actions as almost the entire Ukraine has been liberated now. But our great nation is larger than just the Ukraine and those areas are waiting for our troops to liberate them from the fascist oppression. Your forces will be send to the Crimea. Other forces will start attacks in Byelorussia and the Baltics."
+      },
+      "tactical": {
+        "goto": 21,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1100,
+        "text": "TACTICAL VICTORY<br><br>You rushed west and took Odessa without too much trouble, an admirable achievement. After months of advancing, our troops in the Ukraine will stop large offensive actions as almost the entire Ukraine has been liberated now. But our great nation is larger than just the Ukraine and those areas are waiting for our troops to liberate them from the fascist oppression. Your forces will be send to the Crimea. Other forces will start attacks in Byelorussia and the Baltics."
+      },
+      "lose": {
+        "goto": 20,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "LOSS<br><br>You have failed..."
+      }
+    }
+  },
+  {
+    "id": 21,
+    "scenario": "rcampse2.xml",
+    "startprestige": 0,
+    "intro": "Control of the water will decide whether the army ashore is supplied, reinforced, or abandoned. The Black Sea war ties the front to ports, convoys, and coastal strongholds. A month ago we broke through fascist lines at the Perekop peninsula, the sole connection of the Crimean peninsula with the Ukrainian mainland. The enemy has retreated from all over the Crimea to Sevastopol which has been turned into a fortress once again. The wider stakes are clear: We do not even start counting the dead bodies in and around Sevastopol. Coordinate ships, aircraft, coastal guns, and landing forces carefully; one exposed transport can undo the entire plan.",
+    "outcome": {
+      "briliant": {
+        "goto": 22,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1000,
+        "text": "BRILLIANT VICTORY<br><br>Sevastopol is once again in proletarian hands. We have taken over 30,000 fascists prisoner. We do not even start counting the dead bodies in and around Sevastopol. The enemy tried to evacuate his troops but failed to do so in large numbers. You have gained a huge victory, comrade."
+      },
+      "victory": {
+        "goto": 22,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1200,
+        "text": "VICTORY<br><br>Sevastopol is once again in proletarian hands. We have taken over 30,000 fascists prisoner. We do not even start counting the dead bodies in and around Sevastopol. The enemy tried to evacuate his troops but failed to do so in large numbers. You have gained a huge victory, comrade."
+      },
+      "tactical": {
+        "goto": 22,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1500,
+        "text": "TACTICAL VICTORY<br><br>Sevastopol is once again in proletarian hands. We have taken over 30,000 fascists prisoner. We do not even start counting the dead bodies in and around Sevastopol. The enemy tried to evacuate his troops but failed to do so in large numbers. You have gained a huge victory, comrade."
+      },
+      "lose": {
+        "goto": 21,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "LOSS<br><br>Sevastopol is still not in our hands. You have proven to be incapable of leading this operation. Report to Moskva!"
+      }
+    }
+  },
+  {
+    "id": 22,
+    "scenario": "rcampjas.xml",
+    "startprestige": 0,
+    "intro": "Your force is exposed, the roads are closing, and every hour of delay narrows the route to safety. The Black Sea war ties the front to ports, convoys, and coastal strongholds. Since our spring offensives we have a bridgehead into Rumania over the Prut River, near Jassy. The fascists have taken blow after blow but somehow have regained their spirit. The wider stakes are clear: We still have our bridgehead over the Prut River near Jassy. Rear guards must buy time while the main body escapes; abandon cohesion and the campaign may end here.",
+    "outcome": {
+      "briliant": {
+        "goto": 23,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 300,
+        "text": "BRILLIANT VICTORY<br><br>Several days of heavy fighting have taken place with both sides having lost thousands of men and hundreds of vehicles. But in the end the fascists couldn't drive us into the Prut River. We still have our bridgehead over the Prut River near Jassy. Preparations for the invasion of Rumania are taking place."
+      },
+      "victory": {
+        "goto": 23,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "VICTORY<br><br>Several days of heavy fighting have taken place with both sides having lost thousands of men and hundreds of vehicles. But in the end the fascists couldn't drive us into the Prut River. We still have our bridgehead over the Prut River near Jassy. Preparations for the invasion of Rumania are taking place."
+      },
+      "tactical": {
+        "goto": 23,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "TACTICAL VICTORY<br><br>Several days of heavy fighting have taken place with both sides having lost thousands of men and hundreds of vehicles. But in the end the fascists couldn't drive us into the Prut River. We still have our bridgehead over the Prut River near Jassy. Preparations for the invasion of Rumania are taking place."
+      },
+      "lose": {
+        "goto": 22,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "LOSS<br><br>The bridgehead is lost as we speak. This makes our planned invasion of Rumania a lot more difficult. And we still need soldiers for the glorious Red Army. I suggest you join them if you want to get our of this situation alive."
+      }
+    }
+  },
+  {
+    "id": 23,
+    "scenario": "rcampfa3.xml",
+    "startprestige": 0,
+    "intro": "Control of the water will decide whether the army ashore is supplied, reinforced, or abandoned. The Black Sea war ties the front to ports, convoys, and coastal strongholds. The biggest ally of the German cowards that invaded our country. Like our offensives in the Baltic and Byelorussia, we have made promising advances. The wider stakes are clear: The Red Army has encircled many fascist formations. Coordinate ships, aircraft, coastal guns, and landing forces carefully; one exposed transport can undo the entire plan.",
+    "outcome": {
+      "briliant": {
+        "goto": 24,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 50,
+        "text": "BRILLIANT VICTORY<br><br>Brilliant, comrade. The Red Army has encircled many fascist formations. We expect to have encircled over 20 German divisions at least. And our advance into Rumania is going quick, victory should be near. In the Baltic and Byelorussia we have advanced over hundreds of kilometers. Our nation is close to being completely liberated from the fascist supression!"
+      },
+      "victory": {
+        "goto": 24,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "VICTORY<br><br>Brilliant, comrade. The Red Army has encircled many fascist formations. We expect to have encircled over 20 German divisions at least. And our advance into Rumania is going quick, victory should be near. In the Baltic and Byelorussia we have advanced over hundreds of kilometers. Our nation is close to being completely liberated from the fascist supression!"
+      },
+      "tactical": {
+        "goto": 24,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 150,
+        "text": "TACTICAL VICTORY<br><br>Brilliant, comrade. The Red Army has encircled many fascist formations. We expect to have encircled over 20 German divisions at least. And our advance into Rumania is going quick, victory should be near. In the Baltic and Byelorussia we have advanced over hundreds of kilometers. Our nation is close to being completely liberated from the fascist supression!"
+      },
+      "lose": {
+        "goto": 23,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "LOSS<br><br>Many, too many, fascist formations could escape... Our glorious leader is ferious..."
+      }
+    }
+  },
+  {
+    "id": 24,
+    "scenario": "rcampbuc.xml",
+    "startprestige": 0,
+    "intro": "The operation depends on ships, shore guns, and troops fighting as one force. The Black Sea war ties the front to ports, convoys, and coastal strongholds. Great news from some days ago: the Romanians have surrendered to the mighty Soviet Union and are now fighting against the Germans. However there are still Romanian fascists in the Romanian Army that refuse to surrender and remain loyal to their fascists leaders and the Germans. The wider stakes are clear: The fascists are almost as good as driven out of Rumania and now the Romanian Army is fighting alongside us against the Germans and Hungarians. Protect the sea lanes, suppress shore defences, and deliver troops where the enemy least expects them.",
+    "outcome": {
+      "briliant": {
+        "goto": 25,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 50,
+        "text": "BRILLIANT VICTORY<br><br>Excellent, comrade. There were serious fights happening in the streets of Bucharest until you arrived and restored law and order. Proletarian law and order! The fascists are almost as good as driven out of Rumania and now the Rumanian Army is fighting alongside us against the Germans and Hungarians."
+      },
+      "victory": {
+        "goto": 25,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "VICTORY<br><br>Excellent, comrade. There were serious fights happening in the streets of Bucharest until you arrived and restored law and order. Proletarian law and order! The fascists are almost as good as driven out of Rumania and now the Rumanian Army is fighting alongside us against the Germans and Hungarians."
+      },
+      "tactical": {
+        "goto": 25,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 150,
+        "text": "TACTICAL VICTORY<br><br>Excellent, comrade. There were serious fights happening in the streets of Bucharest until you arrived and restored law and order. Proletarian law and order! The fascists are almost as good as driven out of Rumania and now the Rumanian Army is fighting alongside us against the Germans and Hungarians."
+      },
+      "lose": {
+        "goto": 24,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "LOSS<br><br>The German fascists are still in the vicinity of Bucharest. You have failed..."
+      }
+    }
+  },
+  {
+    "id": 25,
+    "scenario": "rcamprus.xml",
+    "startprestige": 0,
+    "intro": "The coast has become a battlefield, and every harbor, convoy, and battery now matters. The Black Sea war ties the front to ports, convoys, and coastal strongholds. While the front against the fascists moves west, into Yugoslavia, Hungary, Czechoslovakia and Poland, your force will used in a special mission. Bulgaria and our Soviet Union have never been in war. The wider stakes are clear: However they are no match for our experienced veterans. Coordinate ships, aircraft, coastal guns, and landing forces carefully; one exposed transport can undo the entire plan.",
+    "outcome": {
+      "briliant": {
+        "goto": 26,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 50,
+        "text": "BRILLIANT VICTORY<br><br>You have done a good job, comrade. The Bulgarians resisted more than we expected. However they are no match for our experienced veterans. You have been given orders to keep advancing towards their capitol of Sofia!"
+      },
+      "victory": {
+        "goto": 26,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "VICTORY<br><br>You have done a good job, comrade. The Bulgarians resisted more than we expected. However they are no match for our experienced veterans. You have been given orders to keep advancing towards their capitol of Sofia!"
+      },
+      "tactical": {
+        "goto": 26,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 150,
+        "text": "TACTICAL VICTORY<br><br>You have done a good job, comrade. The Bulgarians resisted more than we expected. However they are no match for our experienced veterans. You have been given orders to keep advancing towards their capitol of Sofia!"
+      },
+      "lose": {
+        "goto": 25,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "LOSS<br><br>Comrade, comrade. What were you thinking? Never underestimate the will to resist of fascists..."
+      }
+    }
+  },
+  {
+    "id": 26,
+    "scenario": "rcampsof.xml",
+    "startprestige": 0,
+    "intro": "Control of the water will decide whether the army ashore is supplied, reinforced, or abandoned. The Black Sea war ties the front to ports, convoys, and coastal strongholds. The last days, we have not encountered heavy resistance. Most of the Bulgarian Army is deployed in occupied territories in Greece and Yugoslavia. The wider stakes are clear: VICTORY Bulgaria has switched sides and the Bulgarian Army, as the Romanian Army, is fighting alongside us against the German fascists. Protect the sea lanes, suppress shore defences, and deliver troops where the enemy least expects them.",
+    "outcome": {
+      "briliant": {
+        "goto": 254,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "BRILLIANT VICTORY<br><br>Bulgaria has switched sides and the Bulgarian Army, as the Rumanian Army, is fighting alongside us against the German fascists. You have done a worthy job.<br><br>AFTERMATH<br><br>Our glorious leader has not listened to your request for deployment in Yugoslavia to fight the fascists. You and your comrades have been fighting on the coasts of the Black Sea for over four years. They deserve rest and will not be called upon during this war again. And you, comrade, you will get a nice villa in the Crimea with view on your beloved Black Sea."
+      },
+      "victory": {
+        "goto": 254,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "VICTORY<br><br>Bulgaria has switched sides and the Bulgarian Army, as the Rumanian Army, is fighting alongside us against the German fascists. You have done a worthy job.<br><br>AFTERMATH<br><br>Our glorious leader has not listened to your request for deployment in Yugoslavia to fight the fascists. You and your comrades have been fighting on the coasts of the Black Sea for over four years. They deserve rest and will not be called upon during this war again. And you, comrade, you will get a nice villa in the Crimea with view on your beloved Black Sea."
+      },
+      "tactical": {
+        "goto": 254,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "TACTICAL VICTORY<br><br>Bulgaria has switched sides and the Bulgarian Army, as the Rumanian Army, is fighting alongside us against the German fascists. You have done a worthy job.<br><br>AFTERMATH<br><br>Our glorious leader has not listened to your request for deployment in Yugoslavia to fight the fascists. You and your comrades have been fighting on the coasts of the Black Sea for over four years. They deserve rest and will not be called upon during this war again. And you, comrade, you will get a nice villa in the Crimea with view on your beloved Black Sea."
+      },
+      "lose": {
+        "goto": 26,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "LOSS<br><br>Comrade, you have failed. The fascists are still in the Sofia vicinity..."
+      }
+    }
+  }
+]

@@ -1,0 +1,530 @@
+[
+  {
+    "id": 0,
+    "scenario": "nvc00.xml",
+    "startprestige": 0,
+    "intro": "The enemy owns the roads by day; your fighters must own the shadows around them. Raid at Binh Gia places your command at December, 1964. Ah brave fighters of the Viet-Cong! Today will be our first action against our brothers, but do not see them as equals for they are traitors. The wider stakes are clear: Then we will decide on a course of action. A strong result opens the road to Escape from Vung Tau. Your victory will be measured in disrupted movement, captured supplies, and fighters who live to strike again.",
+    "outcome": {
+      "briliant": {
+        "goto": 1,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Chien thang! For now your men have reached all the objectives.  At dawn you should expect new orders from the central office.  Then we will decide on a course of action."
+      },
+      "victory": {
+        "goto": 1,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Chien thang! For now your men have reached all the objectives.  At dawn you should expect new orders from the central office.  Then we will decide on a course of action."
+      },
+      "tactical": {
+        "goto": 1,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Chien thang! For now your men have reached all the objectives.  At dawn you should expect new orders from the central office.  Then we will decide on a course of action."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "[CIA agent, somewhere at Saigon] Ah, OK, this is the Viet Cong officer. Well sir, we are going to initiate our interrogation. You can get well, or not, it depends on you. All I want to know is..."
+      }
+    }
+  },
+  {
+    "id": 1,
+    "scenario": "nvc01.xml",
+    "startprestige": 0,
+    "intro": "This is not a rout unless you allow it to become one. Escape from Vung Tau places your command at December, 1964. Nevertheless, at the first light of day our agents in Saigon have reported that the puny so-called ARVN will sent a large number of troops to clear the Vung-Tau area of our men. The central office of the Viet-Cong thinks you must undertake an organized withdrawal to safer positions at the jungle. The wider stakes are clear: My orders are to tell you that Hanoi has decided that you and your command will be included into the North Vietnam Army. Every surviving veteran will matter in the battles ahead, so retreat with purpose and destroy what the enemy cannot be allowed to capture.",
+    "outcome": {
+      "briliant": {
+        "goto": 2,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 350,
+        "text": "Comrade commander!  I'm a representative of Hanoi, where your exploits have caused a lot of excitement and national pride.  My orders are to tell you that Hanoi has decided that you and your command will be included into the North Vietnam Army.  Congratulations, you have been appointed the commander of this army."
+      },
+      "victory": {
+        "goto": 2,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 240,
+        "text": "Comrade commander!  I'm a representative of Hanoi, where your exploits have caused a lot of excitement and national pride.  My orders are to tell you that Hanoi has decided that you and your command will be included into the North Vietnam Army.  Congratulations, you have been appointed the commander of this army."
+      },
+      "tactical": {
+        "goto": 2,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 150,
+        "text": "Comrade commander!  I'm a representative of Hanoi, where your exploits have caused a lot of excitement and national pride.  My orders are to tell you that Hanoi has decided that you and your command will be included into the North Vietnam Army.  Congratulations, you have been appointed the commander of this army."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 75,
+        "text": "I'm a representative of Hanoi, where your exploits have caused a lot of excitement and national pride.  We know that your lastest operation was not really good... but my orders are to tell you that Hanoi has decided that you and your command will be included into the North Vietnam Army.  You have been appointed the commander of this army."
+      }
+    }
+  },
+  {
+    "id": 2,
+    "scenario": "nvc02.xml",
+    "startprestige": 0,
+    "intro": "The enemy owns the roads by day; your fighters must own the shadows around them. Attack on the Plei Me Camp places your command at October, 1965. As you know, in the central highlands near to the town of Pleiku, a couple of years ago the Americans constructed a so-called advanced combat base. Your task is to attack and take the camp. The wider stakes are clear: The government and the high command at Hanoi want to congratulate you on this great victory. A strong result opens the road to Ia Drang Valley. Avoid a fair fight, strike communications and isolated units, and withdraw before superior firepower can be brought to bear.",
+    "outcome": {
+      "briliant": {
+        "goto": 3,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 150,
+        "text": "The government and the high command at Hanoi want to congratulate you on this great victory. The irregular southern militias have been severly defeated.  Most importantly you have unexpectedly beaten the imperialist invaders too.  This is even sweeter given they were equipped with the very latest technology such us their helicopters. Now you should disappear quickly into the jungle before the Americans arrive again to claim revenge!.<br><br>loi chuc mung!"
+      },
+      "victory": {
+        "goto": 3,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "The government and the high command at Hanoi want to congratulate you on this great victory. The irregular southern militias have been severly defeated.  Most importantly you have unexpectedly beaten the imperialist invaders too.  This is even sweeter given they were equipped with the very latest technology such us their helicopters. Now you should disappear quickly into the jungle before the Americans arrive again to claim revenge!.<br><br>loi chuc mung!"
+      },
+      "tactical": {
+        "goto": 3,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 70,
+        "text": "The government and the high command at Hanoi want to congratulate you on this great victory. The irregular southern militias have been severly defeated.  Most importantly you have unexpectedly beaten the imperialist invaders too.  This is even sweeter given they were equipped with the very latest technology such us their helicopters. Now you should disappear quickly into the jungle before the Americans arrive again to claim revenge!.<br><br>loi chuc mung!"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 150,
+        "text": "[CIA agent, somewhere at Saigon] Ah, OK, this is the Viet Cong officer. Well sir, we are going to initiate your interrogation. You can get well, or not, it depends on you. All I want to know is..."
+      }
+    }
+  },
+  {
+    "id": 3,
+    "scenario": "nvc03.xml",
+    "startprestige": 0,
+    "intro": "A smaller force can still dictate the battle when it chooses where the battle begins. Ia Drang Valley places your command at November, 1965. Following your recent successes, Headquarters in Hanoi wants to continue the struggle. You will attack the advanced outposts of the Americans close to the limits of Cambodia. The wider stakes are clear: Although the enemy was better equiped, once again your skills were too much for them. A strong result opens the road to Military Region IV Crisis. Use concealment, local mobility, and carefully chosen objectives to turn a raid into a strategic embarrassment.",
+    "outcome": {
+      "briliant": {
+        "goto": 4,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 120,
+        "text": "Although the enemy was better equiped, once again your skills were too much for them.  For now our supply lines through the jungle will remain."
+      },
+      "victory": {
+        "goto": 4,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 90,
+        "text": "Although the enemy was better equiped, once again your skills were too much for them.  For now our supply lines through the jungle will remain."
+      },
+      "tactical": {
+        "goto": 4,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 75,
+        "text": "Although the enemy was better equiped, once again your skills were too much for them.  For now our supply lines through the jungle will remain."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 150,
+        "text": "[CIA agent, somewhere at Saigon] Ah, OK, this is the Viet Cong officer. Well sir, we are going to initiate your interrogation. You can get well, or not, it depends on you. All I want to know is..."
+      }
+    }
+  },
+  {
+    "id": 4,
+    "scenario": "nvc04.xml",
+    "startprestige": 0,
+    "intro": "Preserve the army today so that it can fight—and win—tomorrow. Military Region IV Crisis places your command at January, 1966. Our spies in Saigon have sent us information about an imminent enemy offensive of considerable size. Deploy your units quickly and take defensive positions to allow a retreat towards safer positions to the west in War Zone C. It won't be easy, since we need to save the local VC units. The wider stakes are clear: The enemy thinks he has occupied the so-called Iron Triangle, but many of our southern comrades are now hidden in this areas secret underground tunnels. Keep the route open, rescue what can still be saved, and deny the enemy the encirclement it expects.",
+    "outcome": {
+      "briliant": {
+        "goto": 5,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 200,
+        "text": "Good work. The local VC units are safe, and we took only minimal losses. The enemy thinks he has occupied the so-called ''Iron Triangle'', but many of our southern comrades are now hidden in this areas secret underground tunnels.  They are preparing their former positions for the return of our troops there. <br><br>Hanoi wants to celebrate your victory by moving your troops to a quiet place to give you and your men a rest."
+      },
+      "victory": {
+        "goto": 5,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 150,
+        "text": "Good work. The local VC units are safe, and we took only minimal losses. The enemy thinks he has occupied the so-called ''Iron Triangle'', but many of our southern comrades are now hidden in this areas secret underground tunnels.  They are preparing their former positions for the return of our troops there. <br><br>Hanoi wants to celebrate your victory by moving your troops to a quiet place to give you and your men a rest."
+      },
+      "tactical": {
+        "goto": 5,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "Good work. The local VC units are safe, and we took only minimal losses. The enemy thinks he has occupied the so-called ''Iron Triangle'', but many of our southern comrades are now hidden in this areas secret underground tunnels.  They are preparing their former positions for the return of our troops there. <br><br>Hanoi wants to celebrate your victory by moving your troops to a quiet place to give you and your men a rest."
+      },
+      "lose": {
+        "goto": 5,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 150,
+        "text": "[CIA agent, somewhere at Saigon] Ah, OK, this is the Viet Cong officer. Well sir, we are going to initiate your interrogation. You can get well, or not, it depends on you. All I want to know is..."
+      }
+    }
+  },
+  {
+    "id": 5,
+    "scenario": "nvc05.xml",
+    "startprestige": 0,
+    "intro": "Strike hard, disappear quickly, and leave the occupier afraid of every path and village. Asian Clash places your command at July, 1967. As you know, commander, our positions near Tuy Hoa are right next to the South Korean troops who are supporting the western invaders. Some of our men, are shortage that exists an operation denominated by the Koreans like Hong Kil Dong, that consists of eliminating our defences in the zone. The wider stakes are clear: For now our supply routes through Laos and Cambodia are safe. A strong result opens the road to Strike on Kontum. Use concealment, local mobility, and carefully chosen objectives to turn a raid into a strategic embarrassment.",
+    "outcome": {
+      "briliant": {
+        "goto": 6,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 200,
+        "text": "Tot cong viec general!, with meager resources you have achieved all the objectives.  For now our supply routes through Laos and Cambodia are safe."
+      },
+      "victory": {
+        "goto": 6,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 150,
+        "text": "Good work comrade. The south Koreans have been defeated and they are not going to be a problem. Anyway it seem they have assumed a defensive role at this time and Tuy Hoa is still well protected."
+      },
+      "tactical": {
+        "goto": 6,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "The south Koreans were barely stopped, but at least you have saved some of our strongholds near Tuy Hoa."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 150,
+        "text": "[CIA agent, somewhere at Saigon] Ah, OK, this is the Viet Cong officer. Well sir, we are going to initiate your interrogation. You can get well, or not, it depends on you. All I want to know is..."
+      }
+    }
+  },
+  {
+    "id": 6,
+    "scenario": "nvc05b.xml",
+    "startprestige": 0,
+    "intro": "A smaller force can still dictate the battle when it chooses where the battle begins. Strike on Kontum places your command at November, 1967. As you know, our mid year operations in the province of Kontum have gone well, nevertheless there are still several enemy forward bases that we must destroy. Those bases are too close to our supply routes for Ho the Chi Minh trail and our area 609. The wider stakes are clear: For now our supply routes through Laos and Cambodia are safe. A strong result opens the road to Attack on Khe Sanh. Avoid a fair fight, strike communications and isolated units, and withdraw before superior firepower can be brought to bear.",
+    "outcome": {
+      "briliant": {
+        "goto": 7,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 550,
+        "text": "Tot cong viec general!, with meager resources you have achieved all the objectives.  For now our supply routes through Laos and Cambodia are safe."
+      },
+      "victory": {
+        "goto": 7,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 509,
+        "text": "Tot cong viec general!, with meager resources you have achieved all the objectives.  For now our supply routes through Laos and Cambodia are safe."
+      },
+      "tactical": {
+        "goto": 7,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 460,
+        "text": "Tot cong viec general!, with meager resources you have achieved all the objectives.  For now our supply routes through Laos and Cambodia are safe."
+      },
+      "lose": {
+        "goto": 7,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "[CIA agent, somewhere at Saigon] Ah, OK, this is the Viet Cong officer. Well sir, we are going to initiate your interrogation. You can get well, or not, it depends on you. All I want to know is..."
+      }
+    }
+  },
+  {
+    "id": 7,
+    "scenario": "nvc06.xml",
+    "startprestige": 0,
+    "intro": "The enemy owns the roads by day; your fighters must own the shadows around them. Attack on Khe Sanh places your command at January, 1968. As you know, our campaign of attacking enemy forward bases continues. Khe Sanh is the provincial capital and the key towards controlling our national Route 9. The wider stakes are clear: There is no time to rest since we must continue the offensive. A strong result opens the road to Tet Offensive - Hue and Da Nang. Your victory will be measured in disrupted movement, captured supplies, and fighters who live to strike again.",
+    "outcome": {
+      "briliant": {
+        "goto": 8,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 300,
+        "text": "Congratulations comrade!  You have completely smashed the enemy troops, but there is no time to rest since we must continue the offensive.  Your command must drive to the south.  Continued good luck!"
+      },
+      "victory": {
+        "goto": 8,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 250,
+        "text": "You have completely smashed the enemy troops, but there is no time to rest since we must continue the offensive.  Your command must drive to the south.  Continued good luck!"
+      },
+      "tactical": {
+        "goto": 8,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 200,
+        "text": "There is no time to rest since we must continue the offensive.  Your command must drive to the south."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 150,
+        "text": "[CIA agent, somewhere at Saigon] Ah, OK, this is the Viet Cong officer. Well sir, we are going to initiate your interrogation. You can get well, or not, it depends on you. All I want to know is..."
+      }
+    }
+  },
+  {
+    "id": 8,
+    "scenario": "nvc07.xml",
+    "startprestige": 0,
+    "intro": "Strike hard, disappear quickly, and leave the occupier afraid of every path and village. Tet Offensive - Hue and Da Nang places your command at February, 1968. Hanoi thinks we can take advantage of the two-day ceasefire announced for the Tet by striking now while the enemy is celebrating the holiday. One will take Hue, where the enemy 2nd ARVN Division's HQ and the MACV compound are located. The wider stakes are clear: It's time to get back to the jungle. A strong result opens the road to Laos Counteroffensive. Your victory will be measured in disrupted movement, captured supplies, and fighters who live to strike again.",
+    "outcome": {
+      "briliant": {
+        "goto": 9,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1000,
+        "text": "It's time to get back to the jungle. In most places our offensive has been stopped and the enemy has recovered sooner than we thought possible."
+      },
+      "victory": {
+        "goto": 9,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 975,
+        "text": "It's time to get back to the jungle. In most places our offensive has been stopped and the enemy has recovered sooner than we thought possible."
+      },
+      "tactical": {
+        "goto": 9,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 625,
+        "text": "It's time to get back to the jungle. In most places our offensive has been stopped and the enemy has recovered sooner than we thought possible."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 150,
+        "text": "[CIA agent, somewhere at Saigon] Ah, OK, this is the Viet Cong officer. Well sir, we are going to initiate your interrogation. You can get well, or not, it depends on you. All I want to know is..."
+      }
+    }
+  },
+  {
+    "id": 9,
+    "scenario": "nvc08.xml",
+    "startprestige": 0,
+    "intro": "The enemy owns the roads by day; your fighters must own the shadows around them. Laos Counteroffensive places your command at February, 1971. Once again we need you to re-start the offensive against the enemy. They are trying to cut our supply lines in that country's jungle. The wider stakes are clear: The ARVN has been kicked out of Laos. A strong result opens the road to Battle of Kontum. Your victory will be measured in disrupted movement, captured supplies, and fighters who live to strike again.",
+    "outcome": {
+      "briliant": {
+        "goto": 10,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 200,
+        "text": "The ARVN has been kicked out of Laos. Thanks to the modern equipment from our foreign comrade allies we can begin to think in more conventional offensives."
+      },
+      "victory": {
+        "goto": 10,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 150,
+        "text": "The ARVN has been kicked out of Laos. Thanks to the modern equipment from our foreign comrade allies we can begin to think in more conventional offensives."
+      },
+      "tactical": {
+        "goto": 10,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "The ARVN has been kicked out of Laos. Thanks to the modern equipment from our foreign comrade allies we can begin to think in more conventional offensives."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 150,
+        "text": "[CIA agent, somewhere at Saigon] Ah, OK, this is the Viet Cong officer. Well sir, we are going to initiate your interrogation. You can get well, or not, it depends on you. All I want to know is..."
+      }
+    }
+  },
+  {
+    "id": 10,
+    "scenario": "nvc09.xml",
+    "startprestige": 0,
+    "intro": "A smaller force can still dictate the battle when it chooses where the battle begins. Battle of Kontum places your command at May, 1972. Continuing with our campaign of harassment on our southern capitalist enemies, the next step now is to strike the South Vietnam on their home soil! This operation is to attack and capture the provincial capital city of Kontum. The wider stakes are clear: Once again you have cleared our enemies from Kontum. A strong result opens the road to Liberation of Saigon. Use concealment, local mobility, and carefully chosen objectives to turn a raid into a strategic embarrassment.",
+    "outcome": {
+      "briliant": {
+        "goto": 11,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 2800,
+        "text": "Xin chuc mung! Once again you have cleared our enemies from Kontum. The ARVN and their allies are no longer able to use this province as an advanced base and strike our supply routes."
+      },
+      "victory": {
+        "goto": 11,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 2550,
+        "text": "Xin chuc mung! Once again you have cleared our enemies from Kontum. The ARVN and their allies are no longer able to use this province as an advanced base and strike our supply routes."
+      },
+      "tactical": {
+        "goto": 11,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1500,
+        "text": "Xin chuc mung! Once again you have cleared our enemies from Kontum. The ARVN and their allies are no longer able to use this province as an advanced base and strike our supply routes."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 150,
+        "text": "[CIA agent, somewhere at Saigon] Ah, OK, this is the Viet Cong officer. Well sir, we are going to initiate your interrogation. You can get well, or not, it depends on you. All I want to know is..."
+      }
+    }
+  },
+  {
+    "id": 11,
+    "scenario": "nvc10.xml",
+    "startprestige": 0,
+    "intro": "A smaller force can still dictate the battle when it chooses where the battle begins. Liberation of Saigon places your command at April, 1975. The northern part of South Vietnam has been cleared of enemies by the People's Army of Vietnam. Hue and Da Nang along other key cities have been also liberated and now it's time for the heart of South Vietnam: Saigon! The wider stakes are clear: The Viet Cong flag has been raised over Independence Palace. Avoid a fair fight, strike communications and isolated units, and withdraw before superior firepower can be brought to bear.",
+    "outcome": {
+      "briliant": {
+        "goto": 254,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "BRILLIANT VICTORY<br><br>Congratulations general, Saigon has been liberated! The Viet Cong flag has been raised over Independence Palace.  The South Vietnam general Doung Van Minh has surrendered to us. The city will soon be renamed after our great leader Ho Chi Minh... It's time to inspect the US Embassy..."
+      },
+      "victory": {
+        "goto": 254,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "Congratulations general, Saigon has been liberated! The Viet Cong flag has been raised over Independence Palace.  The South Vietnam general Doung Van Minh has surrendered to us. The city will soon be renamed after our great leader Ho Chi Minh... It's time to inspect the US Embassy..."
+      },
+      "tactical": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "The ARVN has hit us hard in resisting your assault. We must sent more resources and men to the front.   In the mean time the US air force continues striking Hanoi. You have let your communist brothers down.  Your re-training program includes being sent to the front with these privates."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "The ARVN has hit us hard in resisting your assault. We must sent more resources and men to the front.   In the mean time the US air force continues striking Hanoi. You have let your communist brothers down.  Your re-training program includes being sent to the front with these privates."
+      }
+    }
+  }
+]

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" role="img" aria-label="Dossier red backdrop">
+  <defs>
+    <radialGradient id="bgdr" cx="50%" cy="36%" r="72%">
+      <stop offset="0%" stop-color="#8a2b30"/>
+      <stop offset="100%" stop-color="#4d1518"/>
+    </radialGradient>
+  </defs>
+  <rect x="0" y="0" width="300" height="400" fill="url(#bgdr)"/>
+  <ellipse cx="150" cy="145" rx="115" ry="135" fill="#a24248" opacity="0.30"/>
+  <rect x="0" y="0" width="300" height="400" fill="none" stroke="#2c0d0f" stroke-width="10"/>
+</svg>

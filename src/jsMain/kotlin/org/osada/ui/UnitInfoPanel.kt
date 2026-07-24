@@ -11,7 +11,7 @@ import org.osada.uiSettings
  * cards in [UnitStatCard] / [EquipmentStatCard]; the hover forecast in [UnitHoverForecast].
  */
 internal class UnitInfoPanel(
-    ui: UI,
+    private val ui: UI,
 ) {
     private val contextMenu = UnitContextMenu(ui)
     private val hoverForecast = UnitHoverForecast(ui)
@@ -32,7 +32,10 @@ internal class UnitInfoPanel(
         }
     }
 
-    fun showUnitInfo(unit: GameUnit?) = statCard.showUnitInfo(unit)
+    fun showUnitInfo(unit: GameUnit?) {
+        statCard.showUnitInfo(unit)
+        UnitIdentityPresenter.present(ui, unit)
+    }
 
     fun showEquipmentInfo(eq: EquipmentData?) = EquipmentStatCard.showEquipmentInfo(eq)
 

@@ -1,3 +1,5 @@
+@file:Suppress("MaxLineLength")
+
 package org.osada.ui
 
 import org.osada.model.GameMap
@@ -5,12 +7,15 @@ import org.osada.model.GameUnit
 import org.osada.model.Player
 import org.osada.model.canUndoMove
 import org.osada.rules.GameRules
+import org.osada.rules.SupplyRules
 import org.osada.rules.calculateUnitCostPerStrength
 import org.osada.rules.canDisembark
 import org.osada.rules.canEmbark
 import org.osada.rules.canMount
 import org.osada.rules.canReinforce
 import org.osada.rules.canResupply
+import org.osada.rules.getReinforceValue
+import org.osada.rules.getResupplyValue
 import org.w3c.dom.events.MouseEvent
 
 /**
@@ -56,7 +61,11 @@ internal class UnitContextButtons(
             unit,
             "mount",
             UIBuilder.unitContextButtons["mount"] ?: "[",
-            "Mount/Umount this unit in/from a transport",
+            if (unit.isMounted) {
+                "Dismount from organic ground transport and use the unit's own combat and movement statistics."
+            } else {
+                "Mount in organic ground transport. The transport's movement and vulnerability apply until dismounted."
+            },
             label,
         )
         return true
@@ -71,7 +80,11 @@ internal class UnitContextButtons(
             unit,
             "embark",
             UIBuilder.unitContextButtons["embark"] ?: "2",
-            "Embark/DisEmbark this unit in/from a air/naval transport",
+            if (unit.carrier > 0) {
+                "Disembark from air or naval transport onto this valid hex."
+            } else {
+                "Embark into available air or naval transport. The unit cannot fight normally while transported."
+            },
         )
         return true
     }
@@ -81,11 +94,15 @@ internal class UnitContextButtons(
         unit: GameUnit,
     ): Boolean {
         if (!GameRules.canResupply(map, unit)) return false
+        val supply = GameRules.getResupplyValue(map, unit)
+        val context = SupplyRules.getSupplyContext(map, unit)
         addButton(
             unit,
             "resupply",
             UIBuilder.unitContextButtons["resupply"] ?: "!",
-            "Resupply Ammo and Fuel for this unit",
+            "Restore up to +${supply.ammo} ammo and +${supply.fuel} fuel now " +
+                "(${context.label}, ${context.efficiencyPercent}% efficiency). City: 100%; outside city: 77%; " +
+                "1-2 adjacent enemies: x0.67; 3 or more: x0.33.",
         )
         return true
     }
@@ -97,12 +114,25 @@ internal class UnitContextButtons(
     ): Int {
         if (currentPlayer.prestige < GameRules.calculateUnitCostPerStrength(unit)) return 0
         var count = 0
-        if (GameRules.canReinforce(map, unit, false)) {
-            addButton(unit, "reinforce", UIBuilder.unitContextButtons["reinforce"] ?: "#", "Reinforce unit strength")
+        if (GameRules.canReinforce(map, unit, false) && GameRules.getReinforceValue(map, unit, false) > 0) {
+            val strength = GameRules.getReinforceValue(map, unit, false)
+            val context = SupplyRules.getSupplyContext(map, unit)
+            addButton(
+                unit,
+                "reinforce",
+                UIBuilder.unitContextButtons["reinforce"] ?: "#",
+                "Restore up to +$strength strength at ${context.efficiencyPercent}% efficiency (${context.label}) " +
+                    "and resupply ammo/fuel. Costs prestige and uses the unit's action.",
+            )
             count++
         }
-        if (GameRules.canReinforce(map, unit, true)) {
-            addButton(unit, "overstrength", UIBuilder.unitContextButtons["overstrength"] ?: "J", "Overstrength unit")
+        if (GameRules.canReinforce(map, unit, true) && GameRules.getReinforceValue(map, unit, true) > 0) {
+            addButton(
+                unit,
+                "overstrength",
+                UIBuilder.unitContextButtons["overstrength"] ?: "J",
+                "Raise this experienced unit above normal strength. Costs prestige, uses its action and is limited by experience.",
+            )
             count++
         }
         return count
@@ -118,7 +148,7 @@ internal class UnitContextButtons(
             unit,
             "undo",
             UIBuilder.unitContextButtons["undo"] ?: "_",
-            "Undo last move",
+            "Undo this unit's most recent move and restore its previous position, fuel and movement state. Unavailable after combat or another irreversible action.",
             extraClass = "osada-action--undo",
         )
         return true
@@ -135,7 +165,11 @@ internal class UnitContextButtons(
             unit,
             "sleep",
             UIBuilder.unitContextButtons["sleep"] ?: "t",
-            if (asleep) "Wake this unit" else "Put this unit to sleep for the rest of the turn",
+            if (asleep) {
+                "Wake this unit so it returns to ready-unit navigation if it can still act."
+            } else {
+                "Skip this unit in ready-unit navigation for the rest of the turn. It is still counted by the end-turn warning."
+            },
             labelOverride = if (asleep) "Wake" else "Sleep",
             extraClass = if (asleep) "osada-action--active" else "",
         )
@@ -153,14 +187,25 @@ internal class UnitContextButtons(
         extraClass: String = "",
     ) {
         val button = addTag("unit-context", "div")
+        val labelText = labelOverride ?: contextActionLabels[action] ?: action
         button.className = "osada-action" + if (extraClass.isNotEmpty()) " $extraClass" else ""
         button.title = title
+        button.setAttribute("role", "button")
+        button.setAttribute("tabindex", "0")
+        button.setAttribute("aria-label", labelText)
         val g = addTag(button, "span")
         g.className = "osada-action__glyph"
         g.innerHTML = glyph
         val label = addTag(button, "span")
         label.className = "osada-action__label"
-        label.textContent = labelOverride ?: contextActionLabels[action] ?: action
+        label.textContent = labelText
         button.onclick = { _: MouseEvent -> onAction(action, unit) }
+        button.onkeydown = { event ->
+            val key = event.asDynamic().key as? String
+            if (key == "Enter" || key == " ") {
+                event.preventDefault()
+                onAction(action, unit)
+            }
+        }
     }
 }

@@ -83,7 +83,9 @@ fun Equipment.parseCountryEquipment(
         val eqid = key.toIntOrNull()
         val unitJson = unitsDynamic[key]
         if (eqid != null && unitJson != undefined) {
-            equipmentMap[eqid] = unitJson.unsafeCast<kotlin.js.Json>().toEquipmentData(parseHints.toList())
+            val equipment = unitJson.unsafeCast<kotlin.js.Json>().toEquipmentData(parseHints.toList())
+            equipment.eqid = eqid
+            equipmentMap[eqid] = equipment
             loaded++
         }
     }

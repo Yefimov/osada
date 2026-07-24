@@ -1,0 +1,486 @@
+[
+  {
+    "id": 0,
+    "scenario": "acampzbo.xml",
+    "startprestige": 0,
+    "intro": "A narrow window has opened in the enemy line; turn it into a strategic rupture. The Legion's road home runs east across a continent in civil war. Now, during the World War, the time has come to liberate ourselves and rule our own country ourselves! The Habsburg K.u.K Army has suffered tremendous losses ever since 1914 and of the hundreds of thousands prisoners, a considerable number of Czech were part of that. The wider stakes are clear: In the battle of Zborow the Czech Legion captured 62 officers, 3150 soldiers, 15 canons and lots of machine guns. Concentrate your best units, protect the flanks of the advance, and seize the decisive objectives before the enemy can rebuild a line.",
+    "outcome": {
+      "briliant": {
+        "goto": 1,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 350,
+        "text": "OUTCOME<br><br>The Czech action at Zborow was a huge success for the Czech Legion. The Russian Army was weary of three years of defeat after defeat and were deeply demoralized. So were the Austro-Hungarian forces at the other side. Two of the Austrian regiments had more than 50% of Czechs filling the ranks. <br><br>In the battle of Zborow the Czech Legion captured 62 officers, 3150 soldiers, 15 canons and lots of machine guns. The losses were only 185 killed and 800 wounded. Though in general, the Kerensky offensive was a failure, the Czechs proved their worth and spirit in battle.<br><br>The Czech victory was kept silent in the Habsburg Empire but was made public in almost all other countries, including Germany. Kerensky allowed the Legion to expand and conduct an independant offensive which had minimum success. The front kept quiet the coming months when another revolution, the Bolshevik revolution, took place in Russia broke out..."
+      },
+      "victory": {
+        "goto": 1,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 350,
+        "text": "OUTCOME<br><br>The Czech action at Zborow was a huge success for the Czech Legion. The Russian Army was weary of three years of defeat after defeat and were deeply demoralized. So were the Austro-Hungarian forces at the other side. Two of the Austrian regiments had more than 50% of Czechs filling the ranks. <br><br>In the battle of Zborow the Czech Legion captured 62 officers, 3150 soldiers, 15 canons and lots of machine guns. The losses were only 185 killed and 800 wounded. Though in general, the Kerensky offensive was a failure, the Czechs proved their worth and spirit in battle.<br><br>The Czech victory was kept silent in the Habsburg Empire but was made public in almost all other countries, including Germany. Kerensky allowed the Legion to expand and conduct an independant offensive which had minimum success. The front kept quiet the coming months when another revolution, the Bolshevik revolution, took place in Russia broke out..."
+      },
+      "tactical": {
+        "goto": 1,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 350,
+        "text": "OUTCOME<br><br>The Czech action at Zborow was a huge success for the Czech Legion. The Russian Army was weary of three years of defeat after defeat and were deeply demoralized. So were the Austro-Hungarian forces at the other side. Two of the Austrian regiments had more than 50% of Czechs filling the ranks. <br><br>In the battle of Zborow the Czech Legion captured 62 officers, 3150 soldiers, 15 canons and lots of machine guns. The losses were only 185 killed and 800 wounded. Though in general, the Kerensky offensive was a failure, the Czechs proved their worth and spirit in battle.<br><br>The Czech victory was kept silent in the Habsburg Empire but was made public in almost all other countries, including Germany. Kerensky allowed the Legion to expand and conduct an independant offensive which had minimum success. The front kept quiet the coming months when another revolution, the Bolshevik revolution, took place in Russia broke out..."
+      },
+      "lose": {
+        "goto": 0,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "OUTCOME<br><br>The Czech action at Zborow was a huge success for the Czech Legion. The Russian Army was weary of three years of defeat after defeat and were deeply demoralized. So were the Austro-Hungarian forces at the other side. Two of the Austrian regiments had more than 50% of Czechs filling the ranks. <br><br>In the battle of Zborow the Czech Legion captured 62 officers, 3150 soldiers, 15 canons and lots of machine guns. The losses were only 185 killed and 800 wounded. Though in general, the Kerensky offensive was a failure, the Czechs proved their worth and spirit in battle.<br><br>The Czech victory was kept silent in the Habsburg Empire but was made public in almost all other countries, including Germany. Kerensky allowed the Legion to expand and conduct an independant offensive which had minimum success. The front kept quiet the coming months when another revolution, the Bolshevik revolution, took place in Russia broke out..."
+      }
+    }
+  },
+  {
+    "id": 1,
+    "scenario": "acampkie.xml",
+    "startprestige": 0,
+    "intro": "The initiative is yours, but the enemy will not remain disorganized for long. The Legion's road home runs east across a continent in civil war. The Bolshevik rule in Russia had resulted in a armistice with the Central Powers signed on 17 December 1917. To force the Bolsheviks to sign, the Central Powers have resumed their offensive actions and because of the complete dissarray of the Russian Army, they are pushing deep into the Ukraine. The wider stakes are clear: The Legion's 2nd Regiment took up positions at the bridges over the Dnjepr River at Kiev and held these for five days, until 3 March 1918, so that the bulk of the Czech Legion could retreat east.",
+    "outcome": {
+      "briliant": {
+        "goto": 2,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 300,
+        "text": "OUTCOME<br><br>The German juggernaut into the Ukraine was in general unstoppable because the Imperial Russian Army was no more. Only scattered troops were fleeing to safety. Chaos was complete. Kiev was evacuated by the Bolsheviks as soon as the Germans came near.<br><br>The Czech Legion was also retreating east to stay out of German hands. The Legion's 2nd Regiment took up positions at the bridges over the Dnjepr River at Kiev and held these for five days, until 3 March 1918, so that the bulk of the Czech Legion could retreat east. The 2nd regiment then broke off contact and joined the Legion again. Kiev was now in German hands but the Czech Legion had escaped!"
+      },
+      "victory": {
+        "goto": 2,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 300,
+        "text": "OUTCOME<br><br>The German juggernaut into the Ukraine was in general unstoppable because the Imperial Russian Army was no more. Only scattered troops were fleeing to safety. Chaos was complete. Kiev was evacuated by the Bolsheviks as soon as the Germans came near.<br><br>The Czech Legion was also retreating east to stay out of German hands. The Legion's 2nd Regiment took up positions at the bridges over the Dnjepr River at Kiev and held these for five days, until 3 March 1918, so that the bulk of the Czech Legion could retreat east. The 2nd regiment then broke off contact and joined the Legion again. Kiev was now in German hands but the Czech Legion had escaped!"
+      },
+      "tactical": {
+        "goto": 2,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 300,
+        "text": "OUTCOME<br><br>The German juggernaut into the Ukraine was in general unstoppable because the Imperial Russian Army was no more. Only scattered troops were fleeing to safety. Chaos was complete. Kiev was evacuated by the Bolsheviks as soon as the Germans came near.<br><br>The Czech Legion was also retreating east to stay out of German hands. The Legion's 2nd Regiment took up positions at the bridges over the Dnjepr River at Kiev and held these for five days, until 3 March 1918, so that the bulk of the Czech Legion could retreat east. The 2nd regiment then broke off contact and joined the Legion again. Kiev was now in German hands but the Czech Legion had escaped!"
+      },
+      "lose": {
+        "goto": 1,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 200,
+        "text": "OUTCOME<br><br>The German juggernaut into the Ukraine was in general unstoppable because the Imperial Russian Army was no more. Only scattered troops were fleeing to safety. Chaos was complete. Kiev was evacuated by the Bolsheviks as soon as the Germans came near.<br><br>The Czech Legion was also retreating east to stay out of German hands. The Legion's 2nd Regiment took up positions at the bridges over the Dnjepr River at Kiev and held these for five days, until 3 March 1918, so that the bulk of the Czech Legion could retreat east. The 2nd regiment then broke off contact and joined the Legion again. Kiev was now in German hands but the Czech Legion had escaped!"
+      }
+    }
+  },
+  {
+    "id": 2,
+    "scenario": "acampbac.xml",
+    "startprestige": 0,
+    "intro": "The road ahead is defended, yet a decisive blow here can unhinge the entire front. The Legion's road home runs east across a continent in civil war. On 3 March 1918 the Bolsheviks signed the peace treaty of Brest-Litovsk which made an end to official hostilities between Russia and the Central Powers. The Germans were close to reaching their new borders on the border of Russia and the Ukraine. The wider stakes are clear: OUTCOME At Bachmatsj the Czech Legion, in cooperation with Soviet Red Army units, stopped the advance of the German Army and could march its way east, out of the German occupied regions of Russia. Break the defence before reserves arrive, keep your spearheads supplied, and turn tactical success into an operational collapse.",
+    "outcome": {
+      "briliant": {
+        "goto": 3,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "OUTCOME<br><br>At Bachmatsj the Czech Legion, in cooperation with Soviet Red Army units, stopped the advance of the German Army and could march its way east, out of the German occupied regions of Russia.<br><br>Seeing no future staying in Russia, the Czech Legion decided to get out of Russia somehow. Ultimately the plan would be to travel across Siberia, using the Trans-Siberian railway, to reach Wladiwostok and embark to France. In the weeks after the action at Bachmatsj, the Legion was dispersed at the railways between Penza and the Ural mountains."
+      },
+      "victory": {
+        "goto": 3,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "OUTCOME<br><br>At Bachmatsj the Czech Legion, in cooperation with Soviet Red Army units, stopped the advance of the German Army and could march its way east, out of the German occupied regions of Russia.<br><br>Seeing no future staying in Russia, the Czech Legion decided to get out of Russia somehow. Ultimately the plan would be to travel across Siberia, using the Trans-Siberian railway, to reach Wladiwostok and embark to France. In the weeks after the action at Bachmatsj, the Legion was dispersed at the railways between Penza and the Ural mountains."
+      },
+      "tactical": {
+        "goto": 3,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "OUTCOME<br><br>At Bachmatsj the Czech Legion, in cooperation with Soviet Red Army units, stopped the advance of the German Army and could march its way east, out of the German occupied regions of Russia.<br><br>Seeing no future staying in Russia, the Czech Legion decided to get out of Russia somehow. Ultimately the plan would be to travel across Siberia, using the Trans-Siberian railway, to reach Wladiwostok and embark to France. In the weeks after the action at Bachmatsj, the Legion was dispersed at the railways between Penza and the Ural mountains."
+      },
+      "lose": {
+        "goto": 2,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 200,
+        "text": "OUTCOME<br><br>At Bachmatsj the Czech Legion, in cooperation with Soviet Red Army units, stopped the advance of the German Army and could march its way east, out of the German occupied regions of Russia.<br><br>Seeing no future staying in Russia, the Czech Legion decided to get out of Russia somehow. Ultimately the plan would be to travel across Siberia, using the Trans-Siberian railway, to reach Wladiwostok and embark to France. In the weeks after the action at Bachmatsj, the Legion was dispersed at the railways between Penza and the Ural mountains."
+      }
+    }
+  },
+  {
+    "id": 3,
+    "scenario": "acamptsj.xml",
+    "startprestige": 0,
+    "intro": "Across this vast theatre, steel rails matter more than roads and armored trains matter more than fortresses. The Legion's road home runs east across a continent in civil war. The Legion is allowed to get out of Russia using the Trans-Siberian railway. So the Legion was scattered over the railway between Penza and the Urals in May 1918. The wider stakes are clear: Still the Legion was scattered from Penza, west of the Volga River, to Tsjeljabinsk, east of the Urals... Control the stations, repair the line, and make the railway carry your offensive farther than marching columns could ever reach.",
+    "outcome": {
+      "briliant": {
+        "goto": 4,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "OUTCOME<br><br>With the Czech action at Tsjeljabinsk the imprisoned Legionairs were freed. Even more, the Soviet rule in the city was destroyed. The Legion would take care of their own way how to reach Wladiswostok and get out of Russia. No longer it would cooperate with the Soviet authorities. Still the Legion was scattered from Penza, west of the Volga River, to Tsjeljabinsk, east of the Urals..."
+      },
+      "victory": {
+        "goto": 4,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "OUTCOME<br><br>With the Czech action at Tsjeljabinsk the imprisoned Legionairs were freed. Even more, the Soviet rule in the city was destroyed. The Legion would take care of their own way how to reach Wladiswostok and get out of Russia. No longer it would cooperate with the Soviet authorities. Still the Legion was scattered from Penza, west of the Volga River, to Tsjeljabinsk, east of the Urals..."
+      },
+      "tactical": {
+        "goto": 4,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "OUTCOME<br><br>With the Czech action at Tsjeljabinsk the imprisoned Legionairs were freed. Even more, the Soviet rule in the city was destroyed. The Legion would take care of their own way how to reach Wladiswostok and get out of Russia. No longer it would cooperate with the Soviet authorities. Still the Legion was scattered from Penza, west of the Volga River, to Tsjeljabinsk, east of the Urals..."
+      },
+      "lose": {
+        "goto": 3,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 200,
+        "text": "OUTCOME<br><br>With the Czech action at Tsjeljabinsk the imprisoned Legionairs were freed. Even more, the Soviet rule in the city was destroyed. The Legion would take care of their own way how to reach Wladiswostok and get out of Russia. No longer it would cooperate with the Soviet authorities. Still the Legion was scattered from Penza, west of the Volga River, to Tsjeljabinsk, east of the Urals..."
+      }
+    }
+  },
+  {
+    "id": 4,
+    "scenario": "acampsam.xml",
+    "startprestige": 0,
+    "intro": "The road ahead is defended, yet a decisive blow here can unhinge the entire front. The Legion's road home runs east across a continent in civil war. After breaking with the Soviet authorities, the Czech Legion started to take over city after city along the railroads towards Wladiwostok. As it was still dispersed from east of the Urals in the east to almost the Volga River in the west. The wider stakes are clear: OUTCOME The Legion successfuly occupied Samara and was threatening more Russian cities along the Volga. Break the defence before reserves arrive, keep your spearheads supplied, and turn tactical success into an operational collapse.",
+    "outcome": {
+      "briliant": {
+        "goto": 5,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "OUTCOME<br><br>The Legion succesfully occupied Samara and was threatening more Russian cities along the Volga. Through foreign and through White Russian eyes, the Legion was an ideal force for the counter-revolution and overthrow the Soviets. However the Czech Legion was fighting its own struggle and it only occasionally co-operated with White Russian authorities."
+      },
+      "victory": {
+        "goto": 5,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "OUTCOME<br><br>The Legion succesfully occupied Samara and was threatening more Russian cities along the Volga. Through foreign and through White Russian eyes, the Legion was an ideal force for the counter-revolution and overthrow the Soviets. However the Czech Legion was fighting its own struggle and it only occasionally co-operated with White Russian authorities."
+      },
+      "tactical": {
+        "goto": 5,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "OUTCOME<br><br>The Legion succesfully occupied Samara and was threatening more Russian cities along the Volga. Through foreign and through White Russian eyes, the Legion was an ideal force for the counter-revolution and overthrow the Soviets. However the Czech Legion was fighting its own struggle and it only occasionally co-operated with White Russian authorities."
+      },
+      "lose": {
+        "goto": 4,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 200,
+        "text": "OUTCOME<br><br>The Legion succesfully occupied Samara and was threatening more Russian cities along the Volga. Through foreign and through White Russian eyes, the Legion was an ideal force for the counter-revolution and overthrow the Soviets. However the Czech Legion was fighting its own struggle and it only occasionally co-operated with White Russian authorities."
+      }
+    }
+  },
+  {
+    "id": 5,
+    "scenario": "acampkaz.xml",
+    "startprestige": 0,
+    "intro": "The road ahead is defended, yet a decisive blow here can unhinge the entire front. The Legion's road home runs east across a continent in civil war. In the process of securing its own fate, the Czech Legion was capturing various cities. Within weeks the Volga River was reached and the city of Samara was taken. The wider stakes are clear: Furthermore, the loss of Kazan shocked Soviet authorities in Moscow and the Czech Legion was seen as one of the many enemies of the Communist rule in Russia. Break the defence before reserves arrive, keep your spearheads supplied, and turn tactical success into an operational collapse.",
+    "outcome": {
+      "briliant": {
+        "goto": 9,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 300,
+        "text": "OUTCOME<br><br>Bolshevik power in Kazan was overthrown and the Czech Legion captured eight train cars of gold.<br><br>Furthermore, the loss of Kazan shocked Soviet authorities in Moscow and the Czech Legion was seen as one of the many enemies of the Communist rule in Russia."
+      },
+      "victory": {
+        "goto": 9,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 300,
+        "text": "OUTCOME<br><br>Bolshevik power in Kazan was overthrown and the Czech Legion captured eight train cars of gold.<br><br>Furthermore, the loss of Kazan shocked Soviet authorities in Moscow and the Czech Legion was seen as one of the many enemies of the Communist rule in Russia."
+      },
+      "tactical": {
+        "goto": 9,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 300,
+        "text": "OUTCOME<br><br>Bolshevik power in Kazan was overthrown and the Czech Legion captured eight train cars of gold.<br><br>Furthermore, the loss of Kazan shocked Soviet authorities in Moscow and the Czech Legion was seen as one of the many enemies of the Communist rule in Russia."
+      },
+      "lose": {
+        "goto": 5,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 200,
+        "text": "OUTCOME<br><br>Bolshevik power in Kazan was overthrown and the Czech Legion captured eight train cars of gold.<br><br>Furthermore, the loss of Kazan shocked Soviet authorities in Moscow and the Czech Legion was seen as one of the many enemies of the Communist rule in Russia."
+      }
+    }
+  },
+  {
+    "id": 6,
+    "scenario": "acampoms.xml",
+    "startprestige": 0,
+    "intro": "A narrow window has opened in the enemy line; turn it into a strategic rupture. The Legion's road home runs east across a continent in civil war. The autumn of 1918 brought good news to the Czech Legion. To reach its homeland, the Legion had still to cross Siberia, which was in control of White Russian power under Admiral Koltsjak. The wider stakes are clear: Some of the opponents eventually joined the Soviets. Break the defence before reserves arrive, keep your spearheads supplied, and turn tactical success into an operational collapse.",
+    "outcome": {
+      "briliant": {
+        "goto": 10,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "OUTCOME<br><br>The revolt was crushed. Almost 500 rebels were executed. Some of the opponents eventually joined the Soviets. Koltsjak's regime, however, was secured."
+      },
+      "victory": {
+        "goto": 10,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "OUTCOME<br><br>The revolt was crushed. Almost 500 rebels were executed. Some of the opponents eventually joined the Soviets. Koltsjak's regime, however, was secured."
+      },
+      "tactical": {
+        "goto": 10,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "OUTCOME<br><br>The revolt was crushed. Almost 500 rebels were executed. Some of the opponents eventually joined the Soviets. Koltsjak's regime, however, was secured."
+      },
+      "lose": {
+        "goto": 6,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "OUTCOME<br><br>The revolt was crushed. Almost 500 rebels were executed. Some of the opponents eventually joined the Soviets. Koltsjak's regime, however, was secured."
+      }
+    }
+  },
+  {
+    "id": 7,
+    "scenario": "acampsem.xml",
+    "startprestige": 0,
+    "intro": "The road ahead is defended, yet a decisive blow here can unhinge the entire front. The Legion's road home runs east across a continent in civil war. Early 1920, the Legion was close to reaching Wladiwostok. At Irkutsk the Czech Legion traded the Imperial Gold Reserve and Koltsjak to the Soviets for a free passage further east. The wider stakes are clear: OUTCOME After several clashes with Ataman Semenov, Semenov left the Czechs for what they were and concentrated on the Soviet forces which were approaching. Concentrate your best units, protect the flanks of the advance, and seize the decisive objectives before the enemy can rebuild a line.",
+    "outcome": {
+      "briliant": {
+        "goto": 8,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "OUTCOME<br><br>After several clashes with Ataman Semenov, Semenov left the Czechs for what they were and concentrated on the Soviet forces which were approaching. The Czech Legion was steaming full speed on Wladiwostok!"
+      },
+      "victory": {
+        "goto": 8,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "OUTCOME<br><br>After several clashes with Ataman Semenov, Semenov left the Czechs for what they were and concentrated on the Soviet forces which were approaching. The Czech Legion was steaming full speed on Wladiwostok!"
+      },
+      "tactical": {
+        "goto": 8,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "OUTCOME<br><br>After several clashes with Ataman Semenov, Semenov left the Czechs for what they were and concentrated on the Soviet forces which were approaching. The Czech Legion was steaming full speed on Wladiwostok!"
+      },
+      "lose": {
+        "goto": 7,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 200,
+        "text": "OUTCOME<br><br>After several clashes with Ataman Semenov, Semenov left the Czechs for what they were and concentrated on the Soviet forces which were approaching. The Czech Legion was steaming full speed on Wladiwostok!"
+      }
+    }
+  },
+  {
+    "id": 8,
+    "scenario": "acampwla.xml",
+    "startprestige": 0,
+    "intro": "The initiative is yours, but the enemy will not remain disorganized for long. The Legion's road home runs east across a continent in civil war. After two years of struggle getting through Russia, the Czech Legion had finally reached Wladiwostok and all what was left was waiting on ships to take them home, as initially there were not sufficient ships to take all back home at once. You have get to Wladiswostok by passing American and Japanese zones of occupation. The wider stakes are clear: OUTCOME After Wladiwostok was reached, it took months to get home. Momentum is your greatest asset: pause too long and a breakthrough becomes another costly frontal battle.",
+    "outcome": {
+      "briliant": {
+        "goto": 254,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "OUTCOME<br><br>After Wladiwostok was reached, it took months to get home. Partly because there still had be ships to arrive to take them on board, partly because of a huge journey from the Pacific Ocean to European ports, and from there over land to the new republic of Czechoslovakia: HOME!"
+      },
+      "victory": {
+        "goto": 254,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "OUTCOME<br><br>After Wladiwostok was reached, it took months to get home. Partly because there still had be ships to arrive to take them on board, partly because of a huge journey from the Pacific Ocean to European ports, and from there over land to the new republic of Czechoslovakia: HOME!"
+      },
+      "tactical": {
+        "goto": 254,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": ""
+      },
+      "lose": {
+        "goto": 8,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 100,
+        "text": "OUTCOME<br><br>After Wladiwostok was reached, it took months to get home. Partly because there still had be ships to arrive to take them on board, partly because of a huge journey from the Pacific Ocean to European ports, and from there over land to the new republic of Czechoslovakia: HOME!"
+      }
+    }
+  },
+  {
+    "id": 9,
+    "scenario": "acampka2.xml",
+    "startprestige": 0,
+    "intro": "The line is bending, and this position has become the hinge of the entire front. The Legion's road home runs east across a continent in civil war. The loss of Kazan had generated into enormous bolshevik activity to stop the Czech Legion from capturing more cities and advance across the Volga River towards Moscow. The Soviet assembled their Fifth Army under General Tukhachevsky, which later lead the invasion of Poland and become victim of Stalin's purges. The wider stakes are clear: OUTCOME The Soviets eventually captured Kazan and the Czech Legion would retreat. The objective is not merely to endure, but to hold enough strength for the counterstroke that follows.",
+    "outcome": {
+      "briliant": {
+        "goto": 6,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "OUTCOME<br><br>The Soviets eventually captured Kazan and the Czech Legion would retreat. News from Europe would weaken the wrath against the bolsheviks..."
+      },
+      "victory": {
+        "goto": 6,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "OUTCOME<br><br>The Soviets eventually captured Kazan and the Czech Legion would retreat. News from Europe would weaken the wrath against the bolsheviks..."
+      },
+      "tactical": {
+        "goto": 6,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "OUTCOME<br><br>The Soviets eventually captured Kazan and the Czech Legion would retreat. News from Europe would weaken the wrath against the bolsheviks..."
+      },
+      "lose": {
+        "goto": 9,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 200,
+        "text": "OUTCOME<br><br>The Soviets eventually captured Kazan and the Czech Legion would retreat. News from Europe would weaken the wrath against the bolsheviks..."
+      }
+    }
+  },
+  {
+    "id": 10,
+    "scenario": "acampufa.xml",
+    "startprestige": 0,
+    "intro": "This is not a rout unless you allow it to become one. The Legion's road home runs east across a continent in civil war. However, still elements of the Legion were scattered as far west as Ufa, near the Ural mountains, when the White Russian forces of Koltsjak were on the retreat under pressure of a huge Soviet offensive aimed at destroying the White Russians in Siberia. The White Russian Siberian Army has suffered defeat after defeat and is retreating towards to Ural mountains where it hopes to stop the Soviet advance. The wider stakes are clear: The White Russians lead defeat after defeat and near the end of 1919 the Red Army had captured Siberia all the way to Omsk.",
+    "outcome": {
+      "briliant": {
+        "goto": 7,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "OUTCOME<br><br>The Czech Legion was only sparsely involved in the battles between the Red Army and the White Russian Siberian Army. The White Russians lead defeat after defeat and near the end of 1919 the Red Army had captured Siberia all the way to Omsk. By then, the Czech Legion was already in eastern Siberia..."
+      },
+      "victory": {
+        "goto": 7,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "OUTCOME<br><br>The Czech Legion was only sparsely involved in the battles between the Red Army and the White Russian Siberian Army. The White Russians lead defeat after defeat and near the end of 1919 the Red Army had captured Siberia all the way to Omsk. By then, the Czech Legion was already in eastern Siberia..."
+      },
+      "tactical": {
+        "goto": 7,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0,
+        "text": "OUTCOME<br><br>The Czech Legion was only sparsely involved in the battles between the Red Army and the White Russian Siberian Army. The White Russians lead defeat after defeat and near the end of 1919 the Red Army had captured Siberia all the way to Omsk. By then, the Czech Legion was already in eastern Siberia..."
+      },
+      "lose": {
+        "goto": 10,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 200,
+        "text": "OUTCOME<br><br>The Czech Legion was only sparsely involved in the battles between the Red Army and the White Russian Siberian Army. The White Russians lead defeat after defeat and near the end of 1919 the Red Army had captured Siberia all the way to Omsk. By then, the Czech Legion was already in eastern Siberia..."
+      }
+    }
+  }
+]

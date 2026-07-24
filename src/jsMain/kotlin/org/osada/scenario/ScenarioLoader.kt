@@ -24,6 +24,7 @@ object ScenarioLoader {
 
     private const val HEX_COLUMN_WIDTH = 30
     private const val HEX_COLUMN_WIDTH_PAIR = 60
+    private const val HOLD_THRESHOLD_COUNT = 3
 
     private val loadedScenarios: MutableMap<String, Document> = mutableMapOf()
 
@@ -87,6 +88,14 @@ object ScenarioLoader {
         scenario.map.victoryTurns[2] = kotlin.math.round(turns[2] * difficultyMultiplier).toInt()
         scenario.map.maxTurns = scenario.map.victoryTurns[2]
         scenario.maxTurns = scenario.map.maxTurns
+        scenario.victoryHoldCounts =
+            mapElement
+                .getAttribute("holdvictory")
+                ?.takeIf { it.isNotBlank() }
+                ?.split(',')
+                ?.mapNotNull { it.trim().toIntOrNull() }
+                ?.takeIf { it.size == HOLD_THRESHOLD_COUNT }
+                ?: emptyList()
         scenario.date = Date(Date.parse(mapElement.getAttribute("date") ?: ""))
     }
 

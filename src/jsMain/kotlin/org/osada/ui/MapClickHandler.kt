@@ -1,7 +1,6 @@
 package org.osada.ui
 
 import org.osada.TerrainType
-import org.osada.UnitClass
 import org.osada.model.Cell
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
@@ -62,9 +61,6 @@ internal class MapClickHandler(
         hex: Hex,
         unit: GameUnit,
     ): Boolean {
-        // #unit-info (the player card) is reserved for the player's OWN units going forward;
-        // a foreign unit under the cursor is previewed via the enemy card only once the
-        // click is resolved below (it may turn out to be an attack instead of an inspect).
         if (unit.player?.id == map.currentPlayer?.id) {
             if (uiSettings.unitInfoVisibility) {
                 makeVisible("unit-info")
@@ -72,31 +68,40 @@ internal class MapClickHandler(
             }
             ui.showUnitInfo(unit)
         }
+
         val currentUnit = map.currentUnit
+        val selectedReserve = DeploymentSelection.selectedUnit(ui)
+        val selectedDeployLayerFree =
+            selectedReserve != null &&
+                if (GameRules.isAir(selectedReserve)) {
+                    hex.airunit == null
+                } else {
+                    hex.unit == null
+                }
+        val canDeploySelected =
+            currentUnit == null &&
+                uiSettings.deployMode &&
+                selectedReserve != null &&
+                selectedDeployLayerFree &&
+                isValidDeployTarget(hex, map, map.currentPlayer?.side ?: 0)
+
         logIfEnemyUnattackable(map, hex, currentUnit, unit)
         return when {
-            currentUnit == null || uiSettings.deployMode -> selectOtherUnit(cell.row, cell.col)
-            hex.isAttackSel && !currentUnit.hasFired -> {
-                console.log(
-                    "[osada] click: attack at ${cell.row},${cell.col} attacker=${currentUnit.id} " +
-                        "hasFired=${currentUnit.hasFired}",
-                )
+            currentUnit != null && hex.isAttackSel && !currentUnit.hasFired ->
                 tryAttackAt(cell.row, cell.col)
-                true
-            }
-            hex.isMoveSel -> {
+            currentUnit != null && hex.isMoveSel && !currentUnit.hasMoved -> {
                 ui.uiUnitMove(currentUnit, cell.row, cell.col)
                 true
             }
-            currentUnit.id == unit.id -> {
-                // Deselect only. Do NOT clear uiSettings.unitInfoVisibility here: that flag
-                // is the explicit Inspect pin, and clearing it as a deselect side effect
-                // meant showUnitInfo() early-returned forever after — selecting any unit
-                // (e.g. right after an attack) left the bottom zone permanently hidden.
+            canDeploySelected ->
+                DeploymentSelection.deploySelected(ui, cell.row, cell.col)
+            currentUnit != null && currentUnit.id == unit.id -> {
                 deselectCurrentUnit()
                 false
             }
-            else -> selectOtherUnit(cell.row, cell.col)
+            unit.player?.id == map.currentPlayer?.id ->
+                selectOtherUnit(cell.row, cell.col)
+            else -> false
         }
     }
 
@@ -108,18 +113,19 @@ internal class MapClickHandler(
     ): Boolean {
         val currentUnit = map.currentUnit
         return when {
-            // A selected deployed unit ordered onto one of its reachable hexes MOVES, even when
-            // that hex is a deploy hex and the player still has reserves (deployMode stays on for
-            // the whole turn while any reserve is unplaced). Deploying is initiated from the
-            // reserve tray, which clears the map selection (EquipmentUnitStrip) — so a live move
-            // highlight here unambiguously means "move", and must win over the deploy branch.
+            // Movement must win over deployment. In particular, aircraft may occupy the air layer
+            // above a hex containing an enemy ground unit.
             hex.isMoveSel && currentUnit != null && !currentUnit.hasMoved -> {
                 ui.uiUnitMove(currentUnit, cell.row, cell.col)
                 true
             }
             uiSettings.deployMode && isValidDeployTarget(hex, map, currentPlayerSide) -> {
-                deployAt(cell.row, cell.col)
-                true
+                if (DeploymentSelection.selectedUnit(ui) != null) {
+                    DeploymentSelection.deploySelected(ui, cell.row, cell.col)
+                } else {
+                    DeploymentSelection.openForTarget(ui, cell.row, cell.col)
+                    true
+                }
             }
             else -> {
                 // Same as the re-click-deselect above: never clear the Inspect pin here.
@@ -164,6 +170,7 @@ internal class MapClickHandler(
                 else -> null
             }
         if (map == null || ownUnit == null) return false
+        DeploymentSelection.reset()
         ui.removeUnitToolTip(ownUnit.id)
         val eqUserSel = byId("eqUserSel")?.asDynamic()
         eqUserSel?.userunit = ownUnit.id
@@ -209,45 +216,10 @@ internal class MapClickHandler(
 
     /** True if the unit currently picked in the deploy/equipment window is an air unit (so it may
      *  be placed on an airfield outside the deploy zone). */
-    private fun selectedDeployUnitIsAir(): Boolean {
-        val player =
-            ui.game.scenario
-                ?.map
-                ?.currentPlayer
-        val index = byId("eqUserSel")?.asDynamic()?.deployunit as? Int
-        val unit =
-            if (player != null && index != null && index >= 0) player.getCoreUnitList().getOrNull(index) else null
-        return unit != null && GameRules.isAir(unit)
-    }
+    private fun selectedDeployUnitIsAir(): Boolean = DeploymentSelection.selectedUnit(ui)?.let(GameRules::isAir) == true
 
-    private fun deployAt(
-        row: Int,
-        col: Int,
-    ) {
-        val map = ui.game.scenario?.map
-        val player = map?.currentPlayer
-        if (map == null || player == null) return
-        val eqUserSel = byId("eqUserSel")?.asDynamic()
-        val index = eqUserSel?.deployunit as? Int ?: -1
-        val unit = if (index >= 0) player.getCoreUnitList().getOrNull(index) else null
-        if (unit == null || !map.deployPlayerUnit(player, unit, row, col)) return
-        ui.render.cacheImages { ui.render.render(row, col, 1) }
-        deselectCurrentUnit()
-        val eqclass = eqUserSel?.eqclass as? Int ?: UnitClass.TANK.value
-        ui.updateEquipmentWindow(eqclass)
-        ui.updateStatusBar() // reserve pool shrank (unit now deployed) — refresh the Reserves badge
-        if (!player.hasUndeployedUnits()) {
-            makeHidden("container-unitlist")
-            makeHidden("equipment")
-            byId("buy")?.let { toggleButton(it, false) }
-        } else {
-            // More reserves to place: reopen the window on the Reserve tab so the deploy
-            // loop (pick → place → pick) continues without hunting for the button.
-            byId("equipment")?.style?.display = "grid"
-            EquipmentWindowBuilder.setEquipmentMode("reserve")
-        }
-    }
 }
+
 
 /** DIAGNOSTIC (DEFERRED: T-34/ZP-40 "can't attack an adjacent enemy"). When the player clicks an
  *  enemy unit while one of their own is selected but no attack cursor is offered on that hex, print
@@ -262,7 +234,9 @@ private fun logIfEnemyUnattackable(
     clicked: GameUnit,
 ) {
     val side = map.currentPlayer?.side ?: return
-    if (currentUnit == null || clicked.player?.side == side || hex.isAttackSel) return
+    // A move-highlighted hex is a movement destination, not a failed attack. This is essential for
+    // aircraft moving over a ground unit on the other occupancy layer.
+    if (currentUnit == null || clicked.player?.side == side || hex.isAttackSel || hex.isMoveSel) return
     val reason =
         AttackEligibility.attackBlockReason(currentUnit, clicked)
             ?: "eligible but not in attack set — spotted=${hex.isSpotted(side)} tempSpotted=${clicked.tempSpotted}"

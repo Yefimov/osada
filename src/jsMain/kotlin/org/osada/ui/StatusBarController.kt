@@ -226,8 +226,10 @@ internal class StatusBarController(
     private fun updateObjectivesPanel() {
         val container = byId("osadaObjectives")
         val map = ui.game.scenario?.map
-        val side = map?.currentPlayer?.side
-        if (container == null || map == null || side == null) return
+        // The sidebar belongs to the observing campaign player. During/after an AI turn
+        // currentPlayer is the opponent, which inverted every Held/Enemy label in the end screen.
+        val side = ui.game.spotSide
+        if (container == null || map == null) return
         clearTag(container)
         var total = 0
         var held = 0
@@ -262,6 +264,9 @@ internal class StatusBarController(
     ) {
         val row = addTag(container, "div")
         row.className = "osada-obj" + if (isHeld) " osada-obj--held" else ""
+        row.title =
+            (if (isHeld) "Held by your side" else "Held by the enemy") +
+            " — click to centre this objective at ($c,$r)."
         val name = addTag(row, "span")
         name.className = "osada-obj__name"
         name.textContent = if (hex.name.isNotEmpty()) hex.name else "($c,$r)"

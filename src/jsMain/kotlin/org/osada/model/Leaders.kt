@@ -1,3 +1,5 @@
+@file:Suppress("MaxLineLength")
+
 package org.osada.model
 
 import org.osada.LeaderType
@@ -138,7 +140,10 @@ object Leaders {
         description[LeaderType.BRIDGING] =
             Pair("Bridging", "When moving the unit treats passable river hexes as rough terrain.")
         description[LeaderType.COMBAT_SUPPORT] =
-            Pair("Combat Support", "Provides Resilience and Skilled Ground Attack to adjoining units.")
+            Pair(
+                "Combat Support",
+                "Lends this unit's experience bars to adjacent friendly units on the same air/ground layer; multiple sources stack.",
+            )
         description[LeaderType.DETERMINED_DEFENSE] =
             Pair("Determined Defense", "Each of the unit defense factors is increased by 2.")
         description[LeaderType.DEVASTATING_FIRE] = Pair("Devastating Fire", "The unit may fire twice in a turn.")

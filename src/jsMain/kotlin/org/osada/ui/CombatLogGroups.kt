@@ -49,6 +49,8 @@ internal object CombatLogGroups {
         val detailParts = mutableListOf<String>()
         if (ammo > 0) detailParts.add("${CombatLogFeed.numSpan("$ammo/$maxAmmo")} ammo")
         if (fuel > 0 && maxFuel > 0) detailParts.add("${CombatLogFeed.numSpan("$fuel/$maxFuel")} fuel")
+        val source = entry.source as? String
+        if (!source.isNullOrBlank()) detailParts.add(source)
         CombatLogFeed.addFeedRow(
             body,
             icon,
@@ -132,11 +134,19 @@ internal object CombatLogGroups {
         val eqData = Equipment.equipment[entry.eqid as Int]
         val isCore = entry.isCore as? Boolean == true
         val corePrefix = if (isCore) CombatLogFeed.numSpan("Core ") else ""
+        val pos = entry.pos as? Cell ?: Cell(0, 0)
+        if (entry.isHero as? Boolean == true) {
+            val title =
+                "${CombatLogFeed.numSpan(entry.rank as? String ?: "Commander")} " +
+                    "<b>${entry.heroName as? String ?: ""}</b> emerged"
+            val detail = "Took command of ${entry.formationName as? String ?: eqData.name as? String ?: "formation"}"
+            CombatLogFeed.addFeedRow(body, eqData.icon as? String ?: "", title, detail, isCore, false, pos)
+            return
+        }
         val title =
             "$corePrefix${UIBuilder.unitIDToOrdinal(
                 entry.id as Int,
             )} <b>${eqData.name}</b> received a new leader"
-        val pos = entry.pos as? Cell ?: Cell(0, 0)
         val classLeader = LeaderType.entries.find { it.value == entry.classLeader as? Int }
         val unitLeader = LeaderType.entries.find { it.value == entry.leader as? Int }
         val classDesc = classLeader?.let { Leaders.description[it]?.first } ?: ""

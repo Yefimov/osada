@@ -41,7 +41,7 @@ internal object StartMenuMainButtons {
         mainButtons.forEach { (id, title, variant) ->
             val button = addTag("smButtons", "div")
             button.id = id
-            button.title = title
+            button.title = menuSubs[id] ?: title
             button.className = "smMainButton osada-menu-btn" +
                 when (variant) {
                     "primary" -> " osada-menu-btn--primary"
@@ -78,6 +78,7 @@ internal object StartMenuMainButtons {
         val hof = addTag("smButtons", "div")
         hof.id = "hallOfFame"
         hof.className = "smMainButton osada-menu-btn osada-menu-btn--muted"
+        hof.title = "Review notable commanders preserved across completed campaigns."
         val ico = addTag(hof, "span")
         ico.className = "osada-menu-btn__ico osada-ico osada-ico--star"
         val text = addTag(hof, "span")

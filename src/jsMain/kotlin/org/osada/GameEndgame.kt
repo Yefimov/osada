@@ -1,8 +1,11 @@
 package org.osada
 
+import org.osada.hero.HeroCampaign
 import org.osada.model.Player
 import org.osada.model.addOutcomeToDossier
+import org.osada.model.collectPersistentCampaignUnits
 import org.osada.model.deployReinforcement
+import org.osada.model.ensureFormationIds
 import org.osada.model.getPlayer
 import org.osada.scenario.getReinforcements
 import org.osada.scenario.removeReinforcement
@@ -34,11 +37,12 @@ fun Game.handleMoveVictory(winningSide: Int) {
         val title = if (currentType == PlayerType.HUMAN_LOCAL) outcomeNames[outcome] ?: outcome else "DEFEAT"
         val message =
             if (currentType == PlayerType.HUMAN_LOCAL) {
-                "You have won this scenario!"
+                "Excellent work, Commander!<br/><br/>You have won this scenario.<br/><br/>" +
+                    "Good luck in your next operation!"
             } else {
                 "You have lost! Your enemy wins by capturing all victory hexes."
             }
-        UIBuilder.message(title, "<br/><br/><br/><br/>$message") {
+        UIBuilder.message(title, message) {
             ui?.mainMenuButton("options")
         }
     }
@@ -57,6 +61,21 @@ fun Game.continueCampaign(
     player.prestige += campaign!!.getOutcomePrestige(outcome)
     player.addOutcomeToDossier(outcome, scenario!!.name)
     OSGlue.reportScore(player.score)
+    val carryOver = scenario!!.map.collectPersistentCampaignUnits(player)
+    val outcomeLabel = outcomeNames[outcome] ?: outcome
+    player.getCoreUnitList().forEach { unit ->
+        HeroCampaign.recordFormationEvent(
+            unit = unit,
+            eventId = "scenario_completed",
+            turn = scenario!!.map.turn,
+            location = "Outcome: $outcomeLabel",
+        )
+    }
+    console.log(
+        "[OSADA] campaign carry-over: ${carryOver.survivors}/${carryOver.candidates} formations; " +
+            "destroyed=${carryOver.destroyed}, temporary=${carryOver.temporary}, " +
+            "nodossier=${carryOver.noDossier}, duplicateIds=${carryOver.duplicateFormationIds}",
+    )
     player.setPlayerToHQ()
     savedCampaignPlayer = Player().apply { copy(player) }
     removeNonCampaignUnitsFlag = true
@@ -96,6 +115,9 @@ fun Game.deployReinforcements(
     val reinforcements = scenario?.getReinforcements(turn, playerId) ?: return
     val side = scenario!!.map.getPlayer(playerId).side
     reinforcements.forEach { reinf ->
+        campaignPlayer
+            ?.takeIf { it.id == playerId }
+            ?.let { scenario!!.map.ensureFormationIds(it, listOf(reinf.unit)) }
         val pos = scenario!!.map.deployReinforcement(reinf.unit, reinf.row, reinf.col)
         if (pos != null) {
             deployed = true

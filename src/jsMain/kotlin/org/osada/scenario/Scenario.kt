@@ -4,6 +4,7 @@ import org.osada.GroundCondition
 import org.osada.model.Equipment
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
+import org.osada.model.getPlayer
 import org.osada.model.getPlayers
 import org.osada.model.getUnits
 import org.osada.movTable
@@ -21,6 +22,10 @@ class Scenario(
 ) {
     companion object {
         private const val MILLIS_PER_DAY = 86400000
+        private const val HOLD_OUTCOME_TIERS = 3
+        private const val BRILLIANT_TIER = 0
+        private const val VICTORY_TIER = 1
+        private const val TACTICAL_TIER = 2
     }
 
     var name: String = ""
@@ -38,6 +43,10 @@ class Scenario(
     /** Optional authored message box per reinforcement turn (`<reinforce turn="2" message="...">`),
      *  shown when that wave actually deploys. Empty for scenarios that do not author one. */
     var reinforcementMessages: MutableMap<Int, String> = mutableMapOf()
+
+    /** Optional OG-style objective-hold thresholds for the turn-limit outcome, ordered
+     * brilliant / victory / tactical. Empty keeps the legacy all-objectives-or-defeat rule. */
+    var victoryHoldCounts: List<Int> = emptyList()
     var map: GameMap = GameMap()
     var expPerSide: MutableList<dynamic> =
         mutableListOf(
@@ -105,6 +114,33 @@ class Scenario(
             else -> "lose"
         }
 
+    /** Returns the authored result when the final human turn has actually completed. */
+    fun checkTimedOutcome(
+        side: Int,
+        humanSides: Int,
+    ): String? {
+        if (!checkDefeat(side, humanSides)) return null
+        val result =
+            if (victoryHoldCounts.size < HOLD_OUTCOME_TIERS) {
+                "lose"
+            } else {
+                var held = 0
+                for (row in 0 until map.rows) {
+                    for (col in 0 until map.cols) {
+                        val hex = map.map?.getOrNull(row)?.getOrNull(col) ?: continue
+                        if (hex.victorySide != -1 && hex.owner != -1 && map.getPlayer(hex.owner).side == side) held++
+                    }
+                }
+                when {
+                    held >= victoryHoldCounts[BRILLIANT_TIER] -> "briliant"
+                    held >= victoryHoldCounts[VICTORY_TIER] -> "victory"
+                    held >= victoryHoldCounts[TACTICAL_TIER] -> "tactical"
+                    else -> "lose"
+                }
+            }
+        return result
+    }
+
     fun getDescription(): String = description
 
     fun setDescription(desc: String) {
@@ -147,6 +183,7 @@ class Scenario(
         eqp = other.eqp
         reinforcementMessages.clear()
         reinforcementMessages.putAll(other.reinforcementMessages)
+        victoryHoldCounts = other.victoryHoldCounts.toList()
         reinforcements.clear()
         other.reinforcements.forEach { (turn, list) ->
             list.forEach { r ->

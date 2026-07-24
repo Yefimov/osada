@@ -6,6 +6,7 @@ import org.osada.UNIT_MAX_EXPERIENCE
 import org.osada.UNIT_NAME_MAX_LENGTH
 import org.osada.UnitClass
 import org.osada.hero.HeroCampaign
+import org.osada.hero.HeroEventDisplay
 import org.osada.model.Equipment
 import org.osada.model.EquipmentData
 import org.osada.model.GameUnit
@@ -48,6 +49,7 @@ internal class UnitStatCard(
         clearTag("uCarrier")
         delTag(byId("leaderInfo"))
         byId("uLeader")?.className = "uc-leader-slot"
+        byId("uLeader")?.textContent = ""
         byId("uTransport")?.className = ""
         byId("uCarrier")?.className = ""
         byId("statsRow")?.let { makeVisible(it.id) }
@@ -63,6 +65,7 @@ internal class UnitStatCard(
         fillUnitCarrierSlot(unit)
         fillUnitTransportSlot(unit)
         fillUnitLeaderSlot(unit)
+        fillFormationDetail(unit)
         fillUnitStatBars(unit, data)
         fillUnitBadges(unit)
 
@@ -85,7 +88,7 @@ internal class UnitStatCard(
         val coreText = if (unit.isCore) " (Core Unit)" else ""
         val leaderText = if (unit.leader != -1) " (Leader)" else ""
 
-        byId("uImage")?.style?.backgroundImage = "url(${data.icon})"
+        byId("uImage")?.style?.backgroundImage = "url(${UnitIconResolver.forCurrentScenario(data.icon)})"
         byId("uSmallFlag")?.style?.backgroundPosition = "${-FLAG_SPRITE_WIDTH * (unit.flag - 1)}px 0px"
         byId("uFlag")?.style?.backgroundImage =
             "url('resources/ui/flags/${Equipment.UNITED_NAME}/flag_big_${unit.flag}.png')"
@@ -101,6 +104,7 @@ internal class UnitStatCard(
         val cardTooltip = equipmentCardTooltip(unit, data, tooltipName)
         byId("uImage")?.title = cardTooltip
         byId("uName")?.title = cardTooltip
+        EquipmentMarkings.render(byId("osadaUcMarkings"), data, unit)
 
         // Rename affordance (Stage 3.5, Task 2): own units only — never enemies, never
         // browsed equipment entries (showEquipmentInfo hides it).
@@ -199,6 +203,7 @@ internal class UnitStatCard(
         val leaderBtn = byId("uLeader")
         val dossier = HeroCampaign.dossier(unit)
         if (dossier != null) {
+            leaderBtn?.textContent = ""
             leaderBtn?.classList?.add("uc-leader-slot--filled", "uc-leader-slot--hero")
             val traits = dossier.traits.joinToString(", ") { it.title }
             leaderBtn?.title =
@@ -215,6 +220,7 @@ internal class UnitStatCard(
         }
         leaderBtn?.onclick = null
         if (unit.leader >= 0) {
+            leaderBtn?.textContent = ""
             leaderBtn?.classList?.add("uc-leader-slot--filled")
             val descriptions = Leaders.getUnitLeaderDescriptions(unit)
             leaderBtn?.title =
@@ -224,8 +230,26 @@ internal class UnitStatCard(
                     "Leader"
                 }
         } else {
-            val recognition = HeroCampaign.recognitionStatus(unit)
-            leaderBtn?.title = recognition?.let { "No commander — $it" } ?: "Leader slot — empty"
+            val progress = HeroCampaign.recognitionProgress(unit)
+            if (progress != null) {
+                leaderBtn?.classList?.add("uc-leader-slot--recognition")
+                leaderBtn?.textContent =
+                    "●".repeat(progress.filledStages) + "○".repeat(RECOGNITION_STAGES - progress.filledStages)
+                val chanceLine =
+                    when {
+                        progress.recognition < progress.target ->
+                            "Officer checks unlock at ${progress.target} recognition"
+                        progress.drought >= progress.guaranteedAfterFailures ->
+                            "Next notable action: officer guaranteed"
+                        else -> "Next notable action: ${progress.chancePercent}% officer chance"
+                    }
+                leaderBtn?.title =
+                    "No commander — ${progress.status}\nRecognition: ${progress.recognition}\n$chanceLine\n" +
+                    "Drought protection: ${progress.drought}/${progress.guaranteedAfterFailures}"
+            } else {
+                leaderBtn?.textContent = ""
+                leaderBtn?.title = "Leader slot — empty"
+            }
         }
     }
 
@@ -333,7 +357,8 @@ internal class UnitStatCard(
         val country = Equipment.getCountryName(unit.flag - 1)
         val header = "$fullName\n$cls · $country · ${equipmentAvailabilityText(data)}"
         val description = equipmentDescriptionOrNull(data)
-        return if (description != null) "$header\n\n$description" else header
+        val mechanics = equipmentMechanicsNote(data)
+        return listOfNotNull(header, description, mechanics).joinToString("\n\n")
     }
 
     private fun htmlRed(value: Any): String = "<span style='color: #FF6347'>$value</span>"
@@ -344,5 +369,40 @@ internal class UnitStatCard(
         private const val FULL_STRENGTH = 10.0
         private const val PERCENT_SCALE = 100.0
         private const val MAX_EXPERIENCE_STARS = 5
+        private const val RECOGNITION_STAGES = 3
     }
 }
+
+/** Exact recognition and recent formation history live visibly in All Stats. */
+private fun fillFormationDetail(unit: GameUnit) {
+    delTag(byId("osadaFormationDetail"))
+    val container = byId("statsRowContainer")
+    val formation = HeroCampaign.formationFor(unit)
+    val progress = HeroCampaign.recognitionProgress(unit)
+    if (container == null || (formation == null && progress == null)) return
+    val detail = addTag(container, "div")
+    detail.id = "osadaFormationDetail"
+    detail.className = "osada-formation-detail"
+    val headline = addTag(detail, "div")
+    headline.className = "osada-formation-detail__headline"
+    headline.textContent =
+        if (progress != null) {
+            if (progress.recognition < progress.target) {
+                "Recognition ${progress.recognition} — officer checks unlock at ${progress.target}"
+            } else {
+                "Recognition ${progress.recognition} — next chance ${progress.chancePercent}% · " +
+                    "protection ${progress.drought}/${progress.guaranteedAfterFailures}"
+            }
+        } else {
+            "Formation record — commander assigned"
+        }
+    formation?.history?.takeLast(RECENT_FORMATION_EVENTS)?.forEach { event ->
+        val row = addTag(detail, "div")
+        row.className = "osada-formation-detail__event"
+        row.textContent =
+            HeroEventDisplay.title(event.eventId) +
+            HeroEventDisplay.context(event.scenarioId, event.turn, event.date, event.location)
+    }
+}
+
+private const val RECENT_FORMATION_EVENTS = 3

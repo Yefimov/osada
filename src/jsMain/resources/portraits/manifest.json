@@ -1,0 +1,124 @@
+{
+  "schema": 1,
+  "viewBox": "0 0 300 400",
+  "artStyle": "flat_dossier",
+  "order": [
+    "background", "uniform", "head", "eyes", "nose", "mouth", "scar",
+    "facialHair", "hair", "headgear", "rankInsignia", "branchBadge",
+    "ageOverlay", "woundOverlay"
+  ],
+  "categoryDir": {
+    "background": "background",
+    "uniform": "uniform",
+    "head": "head",
+    "eyes": "eyes",
+    "nose": "nose",
+    "mouth": "mouth",
+    "scar": "scar",
+    "facialHair": "facial_hair",
+    "hair": "hair",
+    "headgear": "headgear",
+    "rankInsignia": "rank",
+    "branchBadge": "branch",
+    "ageOverlay": "age",
+    "woundOverlay": "wound"
+  },
+  "select": {
+    "background": { "by": "seed", "required": true },
+    "uniform": { "by": "branch", "required": true },
+    "head": { "by": "gender+seed", "required": true },
+    "eyes": { "by": "seed", "required": true },
+    "nose": { "by": "seed", "required": true },
+    "mouth": { "by": "seed", "required": true },
+    "scar": { "by": "fact:scar+seed", "required": false },
+    "facialHair": { "by": "gender+seed", "required": true, "femaleForcesId": "facial_clean" },
+    "hair": { "by": "seed", "required": true },
+    "headgear": { "by": "branch+seed", "required": true },
+    "rankInsignia": { "by": "fact:rank", "required": true },
+    "branchBadge": { "by": "branch", "required": true },
+    "ageOverlay": { "by": "fact:age", "required": true },
+    "woundOverlay": { "by": "fact:wound", "required": false }
+  },
+  "layers": {
+    "background": [
+      { "id": "bg_field_gray", "tags": { "nation": "*" } },
+      { "id": "bg_dossier_red", "tags": { "nation": "*" } },
+      { "id": "bg_winter", "tags": { "nation": "*", "season": "winter" } }
+    ],
+    "uniform": [
+      { "id": "uniform_infantry_ussr_1942", "tags": { "nation": "USSR", "yearFrom": 1936, "yearTo": 1943, "branch": ["infantry"] } },
+      { "id": "uniform_tank_ussr_1942", "tags": { "nation": "USSR", "yearFrom": 1936, "yearTo": 1943, "branch": ["armor"] } },
+      { "id": "uniform_artillery_ussr_1942", "tags": { "nation": "USSR", "yearFrom": 1936, "yearTo": 1943, "branch": ["artillery"] } },
+      { "id": "uniform_pilot_ussr_1942", "tags": { "nation": "USSR", "yearFrom": 1936, "yearTo": 1943, "branch": ["aviation"] } }
+    ],
+    "head": [
+      { "id": "head_male_1", "tags": { "gender": "male" } },
+      { "id": "head_male_2", "tags": { "gender": "male" } },
+      { "id": "head_male_3", "tags": { "gender": "male" } },
+      { "id": "head_male_4", "tags": { "gender": "male" } },
+      { "id": "head_male_5", "tags": { "gender": "male" } },
+      { "id": "head_male_6", "tags": { "gender": "male" } },
+      { "id": "head_female_1", "tags": { "gender": "female" } },
+      { "id": "head_female_2", "tags": { "gender": "female" } }
+    ],
+    "eyes": [
+      { "id": "eyes_1" }, { "id": "eyes_2" }, { "id": "eyes_3" }, { "id": "eyes_4" }
+    ],
+    "nose": [
+      { "id": "nose_1" }, { "id": "nose_2" }, { "id": "nose_3" }, { "id": "nose_4" }
+    ],
+    "mouth": [
+      { "id": "mouth_1" }, { "id": "mouth_2" }, { "id": "mouth_3" }, { "id": "mouth_4" }
+    ],
+    "scar": [
+      { "id": "scar_1" }, { "id": "scar_2" }, { "id": "scar_3" }
+    ],
+    "facialHair": [
+      { "id": "facial_clean" }, { "id": "facial_mustache" },
+      { "id": "facial_beard" }, { "id": "facial_stubble" }
+    ],
+    "hair": [
+      { "id": "hair_1" }, { "id": "hair_2" }, { "id": "hair_3" },
+      { "id": "hair_4" }, { "id": "hair_5" }, { "id": "hair_6" }
+    ],
+    "headgear": [
+      { "id": "headgear_ushanka", "tags": { "nation": "USSR", "branch": ["infantry", "armor", "artillery"], "season": "winter" } },
+      { "id": "headgear_pilotka", "tags": { "nation": "USSR", "branch": ["infantry", "artillery"] } },
+      { "id": "headgear_officer_cap", "tags": { "nation": "USSR", "branch": ["infantry", "armor", "artillery"], "rankGroup": "officer" } },
+      { "id": "headgear_flight_helmet", "tags": { "nation": "USSR", "branch": ["aviation"] } }
+    ],
+    "rankInsignia": [
+      { "id": "rank_lieutenant", "tags": { "rank": "lieutenant", "rankGroup": "officer" } },
+      { "id": "rank_captain", "tags": { "rank": "captain", "rankGroup": "officer" } },
+      { "id": "rank_major", "tags": { "rank": "major", "rankGroup": "officer" } },
+      { "id": "rank_colonel", "tags": { "rank": "colonel", "rankGroup": "officer" } }
+    ],
+    "branchBadge": [
+      { "id": "branch_infantry", "tags": { "branch": ["infantry"] } },
+      { "id": "branch_armor", "tags": { "branch": ["armor"] } },
+      { "id": "branch_artillery", "tags": { "branch": ["artillery"] } },
+      { "id": "branch_aviation", "tags": { "branch": ["aviation"] } }
+    ],
+    "ageOverlay": [
+      { "id": "age_young", "tags": { "age": "young" } },
+      { "id": "age_middle", "tags": { "age": "middle" } },
+      { "id": "age_old", "tags": { "age": "old" } }
+    ],
+    "woundOverlay": [
+      { "id": "wound_bandage_head", "tags": { "wound": "head" } },
+      { "id": "wound_arm_sling", "tags": { "wound": "arm" } },
+      { "id": "wound_eye_patch", "tags": { "wound": "eye" } }
+    ]
+  },
+  "pools": {
+    "ussr_1942": {
+      "label": "USSR — Operation Uranus, 1942",
+      "nation": "USSR",
+      "yearFrom": 1941,
+      "yearTo": 1943,
+      "theater": "eastern_front",
+      "branches": ["infantry", "armor", "artillery", "aviation"],
+      "notes": "Vertical slice pool. See docs/portraits/adding-pools.md to add more."
+    }
+  }
+}

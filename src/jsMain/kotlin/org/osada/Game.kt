@@ -95,9 +95,10 @@ class Game {
         val side = scenario?.map?.currentPlayer?.side ?: return
         waitUIAnimation = false
         scenario?.endTurn()
-        if (scenario?.checkDefeat(side, humanSides) == true) {
+        val timedOutcome = scenario?.checkTimedOutcome(side, humanSides)
+        if (timedOutcome != null) {
             if (campaign != null) {
-                continueCampaign("lose", EndGameType.NO_TURNS_LEFT)
+                continueCampaign(timedOutcome, EndGameType.NO_TURNS_LEFT)
             } else {
                 gameEnded = true
             }

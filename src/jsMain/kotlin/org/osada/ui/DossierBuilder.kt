@@ -155,7 +155,7 @@ internal object DossierBuilder {
         casSection.className = "osada-dsr-section"
         val casTitle = addTag(casSection, "div")
         casTitle.className = "osada-dsr-section-title"
-        casTitle.textContent = "Casualties"
+        casTitle.textContent = "Combat Record — complete units, not strength points"
         val grid = addTag(casSection, "div")
         grid.className = "osada-dsr-cas-grid"
         UIBuilder.eqClassButtons.forEach { entry ->
@@ -193,14 +193,14 @@ internal object DossierBuilder {
             // "Destroyed 12 / Surrendered 4" reads as the two distinct tactics that produced them.
             // The Surrendered row is omitted entirely when none were taken, to avoid a grid full
             // of zeroes in scenarios where encirclement never happened.
-            stat("Destroyed", killed - captured)
-            if (captured > 0) stat("Surrendered", captured)
-            stat("Lost (Core)", lostCore)
-            stat("Lost (Aux)", lostAux)
+            stat("Enemy destroyed", killed - captured)
+            if (captured > 0) stat("Enemy surrendered", captured)
+            stat("Own core lost", lostCore)
+            stat("Own auxiliary lost", lostAux)
         }
     }
 
-    // ---- Military Awards: CSS-drawn medal badges (gold/silver/bronze by outcome tier)
+    // ---- Campaign Record: CSS-drawn outcome badges (gold/silver/bronze by outcome tier)
     // replace the old per-country PNGs (resources/ui/dossier/{country}_{outcome}.png), which
     // only exist for the original 8 PM countries — every OG-imported campaign showed a
     // broken image here otherwise. ----
@@ -212,14 +212,17 @@ internal object DossierBuilder {
         medSection.className = "osada-dsr-section"
         val medTitle = addTag(medSection, "div")
         medTitle.className = "osada-dsr-section-title"
-        medTitle.textContent = "Military Awards"
-        var hasMedals = false
+        medTitle.textContent = "Campaign Record"
+        medTitle.title =
+            "Your Campaign Dossier's completed battles, grouped by the result earned. Hero medals are recorded " +
+            "separately in each commander's dossier."
+        var hasResults = false
         val outcomeOrder = listOf("briliant", "victory", "tactical", "lose")
         val medalMod = mapOf("briliant" to "gold", "victory" to "silver", "tactical" to "bronze", "lose" to "none")
         for (outcome in outcomeOrder) {
             val list = dossierData.outcomes[outcome] as? Array<dynamic>
             if (list == null || list.isEmpty()) continue
-            if (outcome != "lose") hasMedals = true
+            hasResults = true
             val row = addTag(medSection, "div")
             row.className = "osada-dsr-medal-row"
             val badge = addTag(row, "div")
@@ -236,10 +239,12 @@ internal object DossierBuilder {
             scenarios.className = "osada-dsr-medal-scenarios"
             scenarios.textContent = (0 until list.size).joinToString(" · ") { i -> list[i] as? String ?: "" }
         }
-        if (!hasMedals) {
+        if (!hasResults) {
             val empty = addTag(medSection, "div")
             empty.className = "osada-dsr-empty"
-            empty.textContent = "No medals awarded yet."
+            empty.textContent =
+                "No scenario results recorded yet. " +
+                "Hero decorations are shown in each commander's dossier."
         }
     }
 

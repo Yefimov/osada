@@ -131,11 +131,15 @@ internal object EquipmentCatalogStrip {
     ): HTMLElement {
         val container = addTag(containerId, "div")
         container.className = "eqUnitBox"
+        container.title = "Select ${eq.name} to inspect its statistics, availability, price and special capabilities."
         val img = EquipmentWindowState.buildCardSprite(container)
         val nameDiv = addTag(container, "div")
         val costDiv = addTag(container, "div")
-        img.style.backgroundImage = "url(${eq.icon})"
+        img.style.backgroundImage = "url(${UnitIconResolver.forCurrentScenario(eq.icon)})"
         nameDiv.textContent = eq.name
+        val markings = addTag(container, "span")
+        markings.className = "osada-capability-marks"
+        EquipmentMarkings.render(markings, eq)
         costDiv.innerHTML = "<b>${eq.cost * CURRENCY_MULTIPLIER}${UIBuilder.currencyIcon}</b>"
         return container
     }

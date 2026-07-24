@@ -19,7 +19,8 @@ fun GameRules.calculateAttackResults(
     attacker: GameUnit,
     defender: GameUnit,
     useRandom: Boolean,
-): CombatResults = CombatResolver.calculateAttackResults(attacker, defender, useRandom)
+    units: List<GameUnit> = emptyList(),
+): CombatResults = CombatResolver.calculateAttackResults(attacker, defender, useRandom, units)
 
 fun GameRules.calculateCombatResults(
     attacker: GameUnit,

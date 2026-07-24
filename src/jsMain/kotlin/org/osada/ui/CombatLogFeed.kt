@@ -36,6 +36,9 @@ internal object CombatLogFeed {
         groupEl.className = "osada-tr-group"
         val header = addTag(groupEl, "div")
         header.className = "osada-tr-group__header"
+        header.title =
+            "${group.label}: ${group.count} event(s). Click to expand or collapse this section; " +
+            "in the compact turn notice, click to open the full report."
         val icon = addTag(header, "span")
         icon.className = "osada-ico osada-ico--${group.icoMod} osada-tr-group__ico"
         val label = addTag(header, "span")

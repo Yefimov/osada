@@ -3,7 +3,10 @@ package org.osada
 import org.osada.model.Cell
 import org.osada.model.GameUnit
 
-fun CombatLog.addResupply(unit: GameUnit) {
+fun CombatLog.addResupply(
+    unit: GameUnit,
+    source: String? = null,
+) {
     val player = unit.player ?: return
     val id = unit.id
     var entry = log.resupply[id]
@@ -16,6 +19,7 @@ fun CombatLog.addResupply(unit: GameUnit) {
     entry.fuel = unit.fuel
     entry.isCore = unit.isCore
     entry.side = player.side
+    entry.source = source
 }
 
 /** [prestige] is the prestige ACTUALLY awarded for this capture, not the `objectiveCapture`
@@ -57,5 +61,6 @@ private fun newUnitEndTurnInfo(): dynamic {
     o.ammo = -1
     o.side = -1
     o.isCore = false
+    o.source = null
     return o
 }

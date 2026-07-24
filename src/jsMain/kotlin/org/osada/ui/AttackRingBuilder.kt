@@ -10,6 +10,7 @@ import org.osada.model.getAttackableUnit
 import org.osada.rules.GameRules
 import org.osada.rules.getRing
 import org.osada.rules.getUnitAttackRange
+import org.osada.rules.isAir
 import org.osada.ui.AttackRingBuilder.MEASURED_HOVER_SAFE
 import org.osada.uiSettings
 
@@ -98,6 +99,7 @@ internal object AttackRingBuilder {
      *  same building blocks as GameRules.getUnitAttackCells, reused rather than reimplemented,
      *  just parameterized by row/col instead of reading unit.getPos() internally. Cached per
      *  (row,col) within the current selection for the hover-preview extension. */
+    @Suppress("LoopWithTooManyJumpStatements")
     private fun attackableCellsFrom(
         map: GameMap,
         unit: GameUnit,
@@ -113,7 +115,16 @@ internal object AttackRingBuilder {
             ring.add(Cell(row, col))
             for (cell in ring) {
                 val hex = map.map?.getOrNull(cell.row)?.getOrNull(cell.col) ?: continue
-                if (hex.getAttackableUnit(unit, uiSettings.airMode) != null) result.add(cell)
+                val target = hex.getAttackableUnit(unit, uiSettings.airMode) ?: continue
+                val attackerIsAir = GameRules.isAir(unit)
+                val targetIsAir = GameRules.isAir(target)
+                if (!attackPreviewAllowsTarget(attackerIsAir, targetIsAir, row, col, cell)) continue
+
+                // The map's native attack-selection edge already marks a ground target directly
+                // under an aircraft. Do not add the DOM ring on top of it and create double edges.
+                val sameHexGroundTarget =
+                    attackerIsAir && !targetIsAir && cell.row == row && cell.col == col
+                if (!sameHexGroundTarget) result.add(cell)
             }
         }
         hoverCache[key] = result
@@ -163,3 +174,22 @@ internal object AttackRingBuilder {
      *  enemies — comfortably under the ~5ms budget, so the hover-preview extension is enabled. */
     private const val MEASURED_HOVER_SAFE = true
 }
+
+/** Aircraft may engage air targets in range, but a ground target only in the aircraft's own hex. */
+internal fun attackPreviewAllowsTarget(
+    attackerIsAir: Boolean,
+    targetIsAir: Boolean,
+    originRow: Int,
+    originCol: Int,
+    cell: Cell,
+): Boolean = !attackerIsAir || targetIsAir || (cell.row == originRow && cell.col == originCol)
+
+/** Legacy pure helper retained for existing tests and callers. */
+internal fun attackPreviewAllowsCell(
+    attackerIsAir: Boolean,
+    range: Int,
+    airMode: Boolean,
+    originRow: Int,
+    originCol: Int,
+    cell: Cell,
+): Boolean = !attackerIsAir || range > 1 || airMode || (cell.row == originRow && cell.col == originCol)

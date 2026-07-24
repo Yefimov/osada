@@ -1,0 +1,975 @@
+<?xml version="1.0" encoding="ASCII"?>
+<map file="acampoms.xscn" name="Omsk" turns="7, 9, 12" date="December 22, 1918" dayturns="0" ground="1" atmosferic="0" latitude="3" iconset="1" weatherchg="1" rows="38" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_acampoms.png" eqpv="united1">
+  <player id="0" country="144" side="1" airtrans="0" navaltrans="0" support="101, 0, 0, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <player id="1" country="148" side="0" airtrans="0" navaltrans="0" support="149, 0, 0, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <reinforce turn="2">
+    <at row="20" col="17">
+      <unit id="37233" owner="1" flag="149" face="0" exp="183" str="8"/>
+    </at>
+    <at row="13" col="15">
+      <unit id="37233" owner="1" flag="149" face="0" exp="60" str="8"/>
+    </at>
+    <at row="15" col="14">
+      <unit id="37233" owner="1" flag="149" face="0" exp="201" str="7"/>
+    </at>
+    <at row="13" col="17">
+      <unit id="37233" owner="1" flag="149" face="0" exp="201" str="8"/>
+    </at>
+    <at row="25" col="18">
+      <unit id="37234" owner="1" flag="149" face="0" exp="234" str="5" ldr="1"/>
+    </at>
+    <at row="11" col="9">
+      <unit id="37234" owner="1" flag="149" face="0" exp="113" str="5"/>
+    </at>
+  </reinforce>
+  <reinforce turn="3">
+    <at row="17" col="24">
+      <unit id="37233" owner="1" flag="149" face="0" exp="201" str="7"/>
+    </at>
+  </reinforce>
+  <hex row="0" col="2" terrain="3"/>
+  <hex row="0" col="3" road="17"/>
+  <hex row="0" col="5" terrain="15" name="Irtysh River"/>
+  <hex row="0" col="8" terrain="3"/>
+  <hex row="0" col="9" terrain="3"/>
+  <hex row="0" col="15" road="50"/>
+  <hex row="0" col="16" road="34"/>
+  <hex row="0" col="20" terrain="10"/>
+  <hex row="0" col="21" terrain="10"/>
+  <hex row="0" col="23" terrain="1" road="18" name="Devyatirekovka"/>
+  <hex row="0" col="24" terrain="3" road="34"/>
+  <hex row="0" col="25" terrain="5"/>
+  <hex row="0" col="26" terrain="6"/>
+  <hex row="0" col="27" terrain="6"/>
+  <hex row="0" col="28" terrain="6"/>
+  <hex row="0" col="29" terrain="6"/>
+  <hex row="0" col="30" terrain="6"/>
+  <hex row="0" col="31" terrain="3"/>
+  <hex row="0" col="32" terrain="3"/>
+  <hex row="0" col="33" terrain="5"/>
+  <hex row="0" col="34" terrain="5"/>
+  <hex row="0" col="35" terrain="5" road="49"/>
+  <hex row="0" col="36" terrain="5"/>
+  <hex row="0" col="37" terrain="5"/>
+  <hex row="0" col="38" terrain="6"/>
+  <hex row="0" col="39" terrain="6"/>
+  <hex row="0" col="40" terrain="5"/>
+  <hex row="0" col="41" terrain="5"/>
+  <hex row="0" col="42" terrain="5"/>
+  <hex row="0" col="43" terrain="6"/>
+  <hex row="1" col="0" terrain="15" name="Irtysh River"/>
+  <hex row="1" col="1" terrain="15" name="Irtysh River"/>
+  <hex row="1" col="2" terrain="15" name="Irtysh River"/>
+  <hex row="1" col="3" terrain="10" road="33" name="Irtysh River"/>
+  <hex row="1" col="4" terrain="15" name="Irtysh River"/>
+  <hex row="1" col="5" terrain="3"/>
+  <hex row="1" col="6" terrain="15" name="Irtysh River"/>
+  <hex row="1" col="7" terrain="15" name="Irtysh River"/>
+  <hex row="1" col="8" terrain="3"/>
+  <hex row="1" col="13" road="42"/>
+  <hex row="1" col="14" terrain="1" road="34" name="Beregovoy"/>
+  <hex row="1" col="15" terrain="1" road="33" name="Beregovoy"/>
+  <hex row="1" col="22" terrain="13"/>
+  <hex row="1" col="23" road="17"/>
+  <hex row="1" col="24" terrain="5"/>
+  <hex row="1" col="25" terrain="5"/>
+  <hex row="1" col="26" terrain="3"/>
+  <hex row="1" col="27" terrain="3"/>
+  <hex row="1" col="28" terrain="3"/>
+  <hex row="1" col="29" terrain="1" name="Fabrichnoye"/>
+  <hex row="1" col="30" terrain="5"/>
+  <hex row="1" col="32" terrain="3"/>
+  <hex row="1" col="33" terrain="5" road="10"/>
+  <hex row="1" col="34" terrain="5" road="34"/>
+  <hex row="1" col="35" terrain="1" road="1" name="Vinogradovka"/>
+  <hex row="1" col="36" terrain="5"/>
+  <hex row="1" col="37" terrain="5"/>
+  <hex row="1" col="38" terrain="5"/>
+  <hex row="1" col="39" terrain="5"/>
+  <hex row="1" col="40" terrain="5"/>
+  <hex row="1" col="41" terrain="6"/>
+  <hex row="1" col="42" terrain="6"/>
+  <hex row="1" col="43" terrain="5"/>
+  <hex row="2" col="1" road="18"/>
+  <hex row="2" col="2" road="34"/>
+  <hex row="2" col="3" terrain="3"/>
+  <hex row="2" col="4" terrain="3"/>
+  <hex row="2" col="7" terrain="15" name="Irtysh River"/>
+  <hex row="2" col="12" road="18"/>
+  <hex row="2" col="14" road="130"/>
+  <hex row="2" col="22" terrain="13"/>
+  <hex row="2" col="23" road="17"/>
+  <hex row="2" col="26" terrain="5"/>
+  <hex row="2" col="28" terrain="5"/>
+  <hex row="2" col="29" terrain="5"/>
+  <hex row="2" col="30" terrain="5"/>
+  <hex row="2" col="31" terrain="6"/>
+  <hex row="2" col="32" terrain="6"/>
+  <hex row="2" col="33" terrain="6"/>
+  <hex row="2" col="34" terrain="5" road="136"/>
+  <hex row="2" col="35" terrain="5" road="144"/>
+  <hex row="2" col="36" terrain="5"/>
+  <hex row="2" col="37" terrain="6"/>
+  <hex row="2" col="38" terrain="5"/>
+  <hex row="2" col="39" terrain="5"/>
+  <hex row="2" col="40" terrain="5"/>
+  <hex row="2" col="41" terrain="5"/>
+  <hex row="2" col="42" terrain="6"/>
+  <hex row="2" col="43" terrain="5"/>
+  <hex row="3" col="1" road="17"/>
+  <hex row="3" col="4" terrain="3"/>
+  <hex row="3" col="7" terrain="1" name="Kulach&#x27;ye"/>
+  <hex row="3" col="8" terrain="15" name="Irtysh River"/>
+  <hex row="3" col="12" road="17"/>
+  <hex row="3" col="22" terrain="13"/>
+  <hex row="3" col="23" road="17"/>
+  <hex row="3" col="31" terrain="6"/>
+  <hex row="3" col="32" terrain="6"/>
+  <hex row="3" col="33" terrain="5" road="18"/>
+  <hex row="3" col="34" terrain="5" road="40"/>
+  <hex row="3" col="35" terrain="5" road="137"/>
+  <hex row="3" col="36" terrain="6"/>
+  <hex row="3" col="37" terrain="6"/>
+  <hex row="3" col="38" terrain="5"/>
+  <hex row="3" col="39" terrain="5"/>
+  <hex row="3" col="40" terrain="5"/>
+  <hex row="3" col="41" terrain="3"/>
+  <hex row="3" col="42" terrain="3"/>
+  <hex row="3" col="43" terrain="3"/>
+  <hex row="4" col="1" road="17"/>
+  <hex row="4" col="2" terrain="2"/>
+  <hex row="4" col="3" terrain="2"/>
+  <hex row="4" col="7" terrain="3"/>
+  <hex row="4" col="8" terrain="15" name="Irtysh River"/>
+  <hex row="4" col="12" road="25"/>
+  <hex row="4" col="13" road="130"/>
+  <hex row="4" col="14" road="40"/>
+  <hex row="4" col="15" road="144"/>
+  <hex row="4" col="23" road="17"/>
+  <hex row="4" col="31" road="18"/>
+  <hex row="4" col="32" terrain="5" road="40"/>
+  <hex row="4" col="33" road="129"/>
+  <hex row="4" col="34" terrain="5"/>
+  <hex row="4" col="35" terrain="5"/>
+  <hex row="4" col="36" terrain="1" road="128" name="Alekseyevka"/>
+  <hex row="4" col="37" terrain="4"/>
+  <hex row="4" col="38" terrain="5"/>
+  <hex row="4" col="39" terrain="5"/>
+  <hex row="4" col="40" terrain="5"/>
+  <hex row="4" col="41" terrain="3"/>
+  <hex row="4" col="42" terrain="3"/>
+  <hex row="4" col="43" terrain="3"/>
+  <hex row="5" col="1" road="35"/>
+  <hex row="5" col="2" road="40"/>
+  <hex row="5" col="3" road="136"/>
+  <hex row="5" col="5" terrain="3"/>
+  <hex row="5" col="6" terrain="3"/>
+  <hex row="5" col="7" terrain="15" name="Irtysh River"/>
+  <hex row="5" col="8" terrain="15" name="Irtysh River"/>
+  <hex row="5" col="12" road="17"/>
+  <hex row="5" col="15" road="9"/>
+  <hex row="5" col="23" road="17"/>
+  <hex row="5" col="31" road="9"/>
+  <hex row="5" col="34" terrain="5"/>
+  <hex row="5" col="35" terrain="5"/>
+  <hex row="5" col="36" terrain="5"/>
+  <hex row="5" col="37" terrain="16"/>
+  <hex row="5" col="38" terrain="5"/>
+  <hex row="5" col="39" terrain="5"/>
+  <hex row="5" col="40" terrain="5"/>
+  <hex row="5" col="41" terrain="3"/>
+  <hex row="5" col="42" terrain="3"/>
+  <hex row="5" col="43" terrain="3"/>
+  <hex row="6" col="0" road="34"/>
+  <hex row="6" col="4" road="136"/>
+  <hex row="6" col="5" road="136"/>
+  <hex row="6" col="6" terrain="3"/>
+  <hex row="6" col="7" terrain="15" name="Irtysh River"/>
+  <hex row="6" col="12" road="17"/>
+  <hex row="6" col="16" road="136"/>
+  <hex row="6" col="17" road="136"/>
+  <hex row="6" col="21" terrain="3"/>
+  <hex row="6" col="22" terrain="3"/>
+  <hex row="6" col="23" terrain="3" road="17"/>
+  <hex row="6" col="32" road="136"/>
+  <hex row="6" col="33" terrain="1" road="160" name="Nemetskiy"/>
+  <hex row="6" col="34" terrain="5"/>
+  <hex row="6" col="35" terrain="5"/>
+  <hex row="6" col="36" terrain="5"/>
+  <hex row="6" col="37" terrain="8"/>
+  <hex row="6" col="38" terrain="8"/>
+  <hex row="6" col="39" terrain="3"/>
+  <hex row="6" col="40" terrain="5"/>
+  <hex row="6" col="41" terrain="3"/>
+  <hex row="6" col="42" terrain="3"/>
+  <hex row="6" col="43" terrain="3"/>
+  <hex row="7" col="3">
+    <unit id="39180" owner="0" flag="101" face="0" exp="119" str="5"/>
+  </hex>
+  <hex row="7" col="6" road="136"/>
+  <hex row="7" col="7" terrain="10" road="136" name="Irtysh River"/>
+  <hex row="7" col="8" terrain="15" name="Irtysh River"/>
+  <hex row="7" col="12" road="17"/>
+  <hex row="7" col="13" terrain="3"/>
+  <hex row="7" col="14" terrain="3"/>
+  <hex row="7" col="15" terrain="3" road="24"/>
+  <hex row="7" col="16" terrain="3"/>
+  <hex row="7" col="18" road="136"/>
+  <hex row="7" col="19" terrain="1" road="168" name="Trusovka"/>
+  <hex row="7" col="20" terrain="1" name="Trusovka"/>
+  <hex row="7" col="21" terrain="3" road="40"/>
+  <hex row="7" col="22" terrain="3"/>
+  <hex row="7" col="23" road="49"/>
+  <hex row="7" col="26" road="24"/>
+  <hex row="7" col="27" road="130"/>
+  <hex row="7" col="28" road="40"/>
+  <hex row="7" col="29" road="130"/>
+  <hex row="7" col="30" road="40"/>
+  <hex row="7" col="31" road="130"/>
+  <hex row="7" col="32" road="42"/>
+  <hex row="7" col="33" terrain="5" road="136"/>
+  <hex row="7" col="34" terrain="5"/>
+  <hex row="7" col="35" terrain="3"/>
+  <hex row="7" col="36" terrain="5"/>
+  <hex row="7" col="38" terrain="3"/>
+  <hex row="7" col="39" terrain="1" road="16" name="Mikheyevka"/>
+  <hex row="7" col="40" terrain="5"/>
+  <hex row="7" col="42" terrain="3"/>
+  <hex row="7" col="43" terrain="3"/>
+  <hex row="8" col="6" terrain="15" name="Irtysh River"/>
+  <hex row="8" col="8" terrain="10" road="136" name="Irtysh River"/>
+  <hex row="8" col="9" road="136"/>
+  <hex row="8" col="11" road="18"/>
+  <hex row="8" col="12" terrain="3" road="33"/>
+  <hex row="8" col="14" terrain="3"/>
+  <hex row="8" col="15" terrain="3" road="33"/>
+  <hex row="8" col="16" road="136"/>
+  <hex row="8" col="17" road="146"/>
+  <hex row="8" col="18" road="34"/>
+  <hex row="8" col="19" terrain="1" name="Trusovka"/>
+  <hex row="8" col="20" terrain="1" road="130" name="Trusovka"/>
+  <hex row="8" col="22" road="130"/>
+  <hex row="8" col="23" road="19"/>
+  <hex row="8" col="24" road="40"/>
+  <hex row="8" col="25" road="130"/>
+  <hex row="8" col="26" road="33"/>
+  <hex row="8" col="31" terrain="3"/>
+  <hex row="8" col="32" terrain="3"/>
+  <hex row="8" col="33" terrain="3"/>
+  <hex row="8" col="34" terrain="3" road="136"/>
+  <hex row="8" col="35" terrain="3" road="136"/>
+  <hex row="8" col="36" terrain="3"/>
+  <hex row="8" col="39" road="33"/>
+  <hex row="8" col="40" terrain="2"/>
+  <hex row="8" col="41" terrain="2"/>
+  <hex row="9" col="0" road="136"/>
+  <hex row="9" col="1" road="136"/>
+  <hex row="9" col="6" terrain="15" name="Irtysh River"/>
+  <hex row="9" col="10" road="136"/>
+  <hex row="9" col="11" road="145"/>
+  <hex row="9" col="13" road="34"/>
+  <hex row="9" col="14" road="34"/>
+  <hex row="9" col="15" terrain="3"/>
+  <hex row="9" col="17" road="17"/>
+  <hex row="9" col="23" road="17"/>
+  <hex row="9" col="32" terrain="3"/>
+  <hex row="9" col="33" terrain="3"/>
+  <hex row="9" col="34" terrain="3"/>
+  <hex row="9" col="35" terrain="3"/>
+  <hex row="9" col="36" terrain="3" road="136"/>
+  <hex row="9" col="37" terrain="3" road="130"/>
+  <hex row="9" col="38" terrain="3" road="42"/>
+  <hex row="9" col="39" road="136"/>
+  <hex row="9" col="41" road="40"/>
+  <hex row="9" col="43" terrain="3"/>
+  <hex row="10" col="0" terrain="3"/>
+  <hex row="10" col="2" road="136"/>
+  <hex row="10" col="3" road="144"/>
+  <hex row="10" col="6" terrain="15" name="Irtysh River"/>
+  <hex row="10" col="7" terrain="15" name="Irtysh River"/>
+  <hex row="10" col="11" road="25"/>
+  <hex row="10" col="12" terrain="1" road="18" name="Alexandrovka"/>
+  <hex row="10" col="15" terrain="3"/>
+  <hex row="10" col="16" terrain="3"/>
+  <hex row="10" col="17" road="17"/>
+  <hex row="10" col="23" road="17"/>
+  <hex row="10" col="27">
+    <unit id="39180" owner="0" flag="101" face="0" exp="43" str="7"/>
+  </hex>
+  <hex row="10" col="31" terrain="3"/>
+  <hex row="10" col="32" terrain="3"/>
+  <hex row="10" col="33" terrain="3"/>
+  <hex row="10" col="34" terrain="3"/>
+  <hex row="10" col="35" terrain="3"/>
+  <hex row="10" col="36" terrain="3"/>
+  <hex row="10" col="37" terrain="3"/>
+  <hex row="10" col="38" terrain="3"/>
+  <hex row="10" col="39" terrain="3"/>
+  <hex row="10" col="40" terrain="3" road="130"/>
+  <hex row="10" col="41" terrain="3"/>
+  <hex row="10" col="42" road="136"/>
+  <hex row="10" col="43" road="136"/>
+  <hex row="11" col="3" road="9"/>
+  <hex row="11" col="6" terrain="8"/>
+  <hex row="11" col="7" terrain="15" name="Irtysh River"/>
+  <hex row="11" col="9" terrain="3"/>
+  <hex row="11" col="10" terrain="3"/>
+  <hex row="11" col="11" terrain="1" name="Omsk"/>
+  <hex row="11" col="12" road="153"/>
+  <hex row="11" col="13" road="136"/>
+  <hex row="11" col="16" terrain="3"/>
+  <hex row="11" col="17" road="17"/>
+  <hex row="11" col="23" terrain="8" road="17"/>
+  <hex row="11" col="30" terrain="3"/>
+  <hex row="11" col="31" terrain="3"/>
+  <hex row="11" col="32" terrain="3"/>
+  <hex row="11" col="33" terrain="3"/>
+  <hex row="11" col="34" terrain="3"/>
+  <hex row="11" col="35" terrain="3"/>
+  <hex row="11" col="36" terrain="3"/>
+  <hex row="11" col="37" terrain="3"/>
+  <hex row="11" col="38" terrain="3"/>
+  <hex row="11" col="39" terrain="3"/>
+  <hex row="11" col="40" terrain="3"/>
+  <hex row="11" col="41" terrain="3"/>
+  <hex row="11" col="42" terrain="3"/>
+  <hex row="11" col="43" terrain="3"/>
+  <hex row="12" col="0" terrain="3"/>
+  <hex row="12" col="1" terrain="3"/>
+  <hex row="12" col="2" terrain="3"/>
+  <hex row="12" col="3" terrain="3"/>
+  <hex row="12" col="4" road="144"/>
+  <hex row="12" col="7" terrain="15" name="Irtysh River"/>
+  <hex row="12" col="8" terrain="1" name="Omsk"/>
+  <hex row="12" col="9" terrain="1" name="Omsk"/>
+  <hex row="12" col="10" terrain="1" name="Omsk"/>
+  <hex row="12" col="11" terrain="1" name="Omsk"/>
+  <hex row="12" col="12" terrain="1" road="17" name="Omsk"/>
+  <hex row="12" col="14" road="136"/>
+  <hex row="12" col="15" road="136"/>
+  <hex row="12" col="17" road="49"/>
+  <hex row="12" col="23" road="9"/>
+  <hex row="12" col="34" terrain="3"/>
+  <hex row="12" col="36" terrain="3"/>
+  <hex row="12" col="37" terrain="3"/>
+  <hex row="12" col="38" terrain="3"/>
+  <hex row="12" col="39" terrain="3"/>
+  <hex row="12" col="40" terrain="3"/>
+  <hex row="12" col="41" terrain="3"/>
+  <hex row="12" col="42" terrain="3"/>
+  <hex row="12" col="43" terrain="3"/>
+  <hex row="13" col="0" terrain="3"/>
+  <hex row="13" col="1" terrain="3"/>
+  <hex row="13" col="2" terrain="3"/>
+  <hex row="13" col="3" terrain="3"/>
+  <hex row="13" col="4" road="17"/>
+  <hex row="13" col="6" terrain="15" name="Irtysh River"/>
+  <hex row="13" col="7" terrain="15" name="Irtysh River"/>
+  <hex row="13" col="8" terrain="1" name="Omsk"/>
+  <hex row="13" col="9" terrain="1" name="Omsk" owner="0" flag="144" victory="0">
+    <unit id="607" owner="0" flag="101" face="0" exp="24" str="5"/>
+  </hex>
+  <hex row="13" col="10" terrain="1" name="Omsk"/>
+  <hex row="13" col="11" terrain="1" name="Omsk"/>
+  <hex row="13" col="12" terrain="1" road="17" name="Omsk"/>
+  <hex row="13" col="16" road="130"/>
+  <hex row="13" col="17" road="9"/>
+  <hex row="13" col="24" road="136"/>
+  <hex row="13" col="25" road="168"/>
+  <hex row="13" col="35" terrain="3"/>
+  <hex row="13" col="37" terrain="3"/>
+  <hex row="13" col="38" terrain="3"/>
+  <hex row="13" col="39" terrain="3"/>
+  <hex row="13" col="40" terrain="3"/>
+  <hex row="13" col="41" terrain="3"/>
+  <hex row="13" col="42" terrain="3"/>
+  <hex row="13" col="43" terrain="3"/>
+  <hex row="14" col="0" name="RAILROAD"/>
+  <hex row="14" col="1" name="RAILROAD"/>
+  <hex row="14" col="2" terrain="3"/>
+  <hex row="14" col="4" terrain="3" road="9"/>
+  <hex row="14" col="5" road="136"/>
+  <hex row="14" col="6" terrain="1" name="Federovka"/>
+  <hex row="14" col="7" terrain="15" name="Irtysh River"/>
+  <hex row="14" col="8" terrain="1" name="Omsk"/>
+  <hex row="14" col="9" terrain="1" name="Omsk"/>
+  <hex row="14" col="10" terrain="1" name="Omsk"/>
+  <hex row="14" col="11" terrain="1" name="Omsk">
+    <unit id="34699" owner="0" flag="101" face="0" exp="20" str="5"/>
+  </hex>
+  <hex row="14" col="12" terrain="1" road="17" name="Omsk"/>
+  <hex row="14" col="13" terrain="1">
+    <unit id="194" owner="1" flag="149" face="0" exp="64" str="9"/>
+  </hex>
+  <hex row="14" col="14">
+    <unit id="37233" owner="1" flag="149" face="0" exp="199" str="7"/>
+  </hex>
+  <hex row="14" col="15" terrain="1" name="Omsk" owner="1" flag="148" victory="1">
+    <unit id="37233" owner="1" flag="149" face="0" exp="201" str="7"/>
+  </hex>
+  <hex row="14" col="16" terrain="1" name="Omsk"/>
+  <hex row="14" col="18" road="144"/>
+  <hex row="14" col="23" road="34"/>
+  <hex row="14" col="24" road="34"/>
+  <hex row="14" col="25" terrain="15"/>
+  <hex row="14" col="26" road="136"/>
+  <hex row="14" col="27" terrain="10" road="136"/>
+  <hex row="14" col="29" terrain="15"/>
+  <hex row="14" col="37" terrain="1" name="Eorki"/>
+  <hex row="14" col="38" terrain="3"/>
+  <hex row="14" col="39" terrain="3"/>
+  <hex row="14" col="40" terrain="3"/>
+  <hex row="14" col="41" terrain="15"/>
+  <hex row="14" col="42" terrain="15"/>
+  <hex row="14" col="43" terrain="15"/>
+  <hex row="15" col="0" terrain="3"/>
+  <hex row="15" col="1" terrain="3"/>
+  <hex row="15" col="2" name="RAILROAD"/>
+  <hex row="15" col="3" name="RAILROAD"/>
+  <hex row="15" col="6" road="144"/>
+  <hex row="15" col="8" terrain="15" name="Irtysh River"/>
+  <hex row="15" col="9" terrain="15" name="Irtysh River"/>
+  <hex row="15" col="10" terrain="1" name="Omsk"/>
+  <hex row="15" col="11" terrain="1" name="Omsk"/>
+  <hex row="15" col="12" terrain="1" road="17" name="Omsk"/>
+  <hex row="15" col="13" terrain="1" name="Omsk"/>
+  <hex row="15" col="14" terrain="1" name="Omsk"/>
+  <hex row="15" col="15" terrain="1" road="40" name="Omsk"/>
+  <hex row="15" col="16" terrain="1" name="Omsk"/>
+  <hex row="15" col="17" terrain="1" road="34" name="Omsk"/>
+  <hex row="15" col="18" terrain="1" road="41" name="Omsk"/>
+  <hex row="15" col="19" terrain="1" road="136" name="Omsk"/>
+  <hex row="15" col="21" road="34"/>
+  <hex row="15" col="22" road="34"/>
+  <hex row="15" col="24" terrain="15"/>
+  <hex row="15" col="25" terrain="3"/>
+  <hex row="15" col="26" terrain="15"/>
+  <hex row="15" col="27" terrain="3"/>
+  <hex row="15" col="28" terrain="10" road="144"/>
+  <hex row="15" col="29" terrain="3"/>
+  <hex row="15" col="30" terrain="15"/>
+  <hex row="15" col="31" terrain="15"/>
+  <hex row="15" col="32" terrain="15"/>
+  <hex row="15" col="33" terrain="15"/>
+  <hex row="15" col="34" terrain="15"/>
+  <hex row="15" col="35" terrain="15"/>
+  <hex row="15" col="36" terrain="15"/>
+  <hex row="15" col="37" terrain="10"/>
+  <hex row="15" col="38" terrain="1" name="Eorki"/>
+  <hex row="15" col="39" terrain="15"/>
+  <hex row="15" col="40" terrain="3"/>
+  <hex row="15" col="41" terrain="15"/>
+  <hex row="16" col="0" terrain="3"/>
+  <hex row="16" col="1" terrain="3"/>
+  <hex row="16" col="4" name="RAILROAD"/>
+  <hex row="16" col="5" name="RAILROAD"/>
+  <hex row="16" col="6" road="9"/>
+  <hex row="16" col="7" terrain="1" road="146" name="Mel&#x27;nichnoya"/>
+  <hex row="16" col="8" road="40"/>
+  <hex row="16" col="9" road="136"/>
+  <hex row="16" col="10" terrain="15" name="Irtysh River"/>
+  <hex row="16" col="11" terrain="15" name="Irtysh River"/>
+  <hex row="16" col="12" terrain="1" road="17" name="Omsk"/>
+  <hex row="16" col="13" terrain="10" road="34" name="Irtysh River"/>
+  <hex row="16" col="14" terrain="1" road="34" name="Irtysh River"/>
+  <hex row="16" col="15" terrain="1" name="Omsk"/>
+  <hex row="16" col="16" terrain="1" road="138" name="Omsk"/>
+  <hex row="16" col="17" terrain="1" road="144" name="Omsk"/>
+  <hex row="16" col="18" terrain="1" name="Omsk">
+    <unit id="194" owner="1" flag="149" face="0" exp="5" str="8"/>
+  </hex>
+  <hex row="16" col="19" terrain="15"/>
+  <hex row="16" col="20" terrain="1" road="138" name="Omsk"/>
+  <hex row="16" col="21" terrain="10" road="136"/>
+  <hex row="16" col="22" terrain="15"/>
+  <hex row="16" col="23" terrain="15"/>
+  <hex row="16" col="24" terrain="15"/>
+  <hex row="16" col="25" terrain="3"/>
+  <hex row="16" col="26" terrain="3"/>
+  <hex row="16" col="27" terrain="3" road="34"/>
+  <hex row="16" col="28" terrain="3" road="33"/>
+  <hex row="16" col="32" terrain="3"/>
+  <hex row="16" col="33" terrain="3"/>
+  <hex row="16" col="34" terrain="3"/>
+  <hex row="16" col="35" terrain="3"/>
+  <hex row="16" col="36" terrain="3"/>
+  <hex row="16" col="38" terrain="15"/>
+  <hex row="16" col="39" terrain="8"/>
+  <hex row="16" col="40" terrain="15"/>
+  <hex row="16" col="41" terrain="16"/>
+  <hex row="16" col="42" terrain="8"/>
+  <hex row="16" col="43" terrain="8"/>
+  <hex row="17" col="0" terrain="3"/>
+  <hex row="17" col="1" terrain="3"/>
+  <hex row="17" col="2" terrain="3"/>
+  <hex row="17" col="3" terrain="3"/>
+  <hex row="17" col="6" name="RAILROAD"/>
+  <hex row="17" col="7" road="17" name="RAILROAD"/>
+  <hex row="17" col="10" road="136"/>
+  <hex row="17" col="11" road="130"/>
+  <hex row="17" col="12" terrain="10" road="43" name="Irtysh River"/>
+  <hex row="17" col="13" road="144"/>
+  <hex row="17" col="14" terrain="15" name="Irtysh River"/>
+  <hex row="17" col="16" terrain="1" name="Omsk" owner="0" flag="144" victory="0">
+    <unit id="607" owner="0" flag="101" face="0" exp="30" str="8"/>
+  </hex>
+  <hex row="17" col="17" terrain="1" road="17" name="Omsk"/>
+  <hex row="17" col="18" terrain="1" name="Omsk"/>
+  <hex row="17" col="19" terrain="15"/>
+  <hex row="17" col="20" terrain="15"/>
+  <hex row="17" col="21" terrain="1"/>
+  <hex row="17" col="22" road="144"/>
+  <hex row="17" col="25" terrain="1" road="42" name="Novo Moskovka"/>
+  <hex row="17" col="26" road="34"/>
+  <hex row="17" col="32" terrain="3"/>
+  <hex row="17" col="33" terrain="3"/>
+  <hex row="17" col="34" terrain="3"/>
+  <hex row="17" col="35" terrain="3"/>
+  <hex row="17" col="36" terrain="1" name="Kormilovka"/>
+  <hex row="17" col="37" terrain="1" name="Kormilovka"/>
+  <hex row="17" col="38" terrain="13"/>
+  <hex row="17" col="39" terrain="13"/>
+  <hex row="17" col="40" terrain="16"/>
+  <hex row="17" col="41" terrain="16"/>
+  <hex row="17" col="42" terrain="16"/>
+  <hex row="17" col="43" terrain="8"/>
+  <hex row="18" col="0" terrain="3"/>
+  <hex row="18" col="1" terrain="3"/>
+  <hex row="18" col="2" terrain="3"/>
+  <hex row="18" col="3" road="18"/>
+  <hex row="18" col="4" road="40"/>
+  <hex row="18" col="5" road="136"/>
+  <hex row="18" col="7" road="33"/>
+  <hex row="18" col="8" name="RAILROAD"/>
+  <hex row="18" col="9" name="RAILROAD"/>
+  <hex row="18" col="12" terrain="1" name="Druzhino"/>
+  <hex row="18" col="13" terrain="1" road="1" name="Druzhino"/>
+  <hex row="18" col="14" terrain="15" name="Irtysh River"/>
+  <hex row="18" col="15" terrain="15" name="Irtysh River"/>
+  <hex row="18" col="17" terrain="10" road="17"/>
+  <hex row="18" col="18" terrain="15"/>
+  <hex row="18" col="19" terrain="1" name="Omsk"/>
+  <hex row="18" col="20" terrain="1" name="Omsk" owner="0" flag="144" victory="0">
+    <unit id="34699" owner="0" flag="101" face="0" exp="20" str="4"/>
+  </hex>
+  <hex row="18" col="21" terrain="1" road="18" name="Omsk"/>
+  <hex row="18" col="22" road="33"/>
+  <hex row="18" col="23" road="34"/>
+  <hex row="18" col="24" road="34"/>
+  <hex row="18" col="26" road="136"/>
+  <hex row="18" col="27" road="136"/>
+  <hex row="18" col="32" terrain="3"/>
+  <hex row="18" col="33" terrain="3"/>
+  <hex row="18" col="34" terrain="3"/>
+  <hex row="18" col="35" terrain="3"/>
+  <hex row="18" col="38" terrain="3"/>
+  <hex row="18" col="39" terrain="3"/>
+  <hex row="18" col="40" terrain="13"/>
+  <hex row="18" col="41" terrain="13"/>
+  <hex row="18" col="42" terrain="8"/>
+  <hex row="18" col="43" terrain="8"/>
+  <hex row="19" col="3" terrain="1" road="49" name="Luzino"/>
+  <hex row="19" col="4" terrain="3"/>
+  <hex row="19" col="5" terrain="3"/>
+  <hex row="19" col="6" road="146"/>
+  <hex row="19" col="10" name="RAILROAD"/>
+  <hex row="19" col="11" name="RAILROAD"/>
+  <hex row="19" col="13" terrain="2"/>
+  <hex row="19" col="14" terrain="2"/>
+  <hex row="19" col="15" terrain="16"/>
+  <hex row="19" col="16" terrain="15" name="Irtysh River"/>
+  <hex row="19" col="17" terrain="1" road="17" name="Omsk" owner="1" flag="148" victory="1">
+    <unit id="37233" owner="1" flag="149" face="0" exp="241" str="6"/>
+  </hex>
+  <hex row="19" col="18" terrain="1" name="Omsk"/>
+  <hex row="19" col="19" terrain="1" name="Omsk"/>
+  <hex row="19" col="20" terrain="1" name="Omsk">
+    <unit id="194" owner="1" flag="149" face="0" exp="48" str="9"/>
+  </hex>
+  <hex row="19" col="21" road="35"/>
+  <hex row="19" col="22" road="34"/>
+  <hex row="19" col="28" road="136"/>
+  <hex row="19" col="29" road="136"/>
+  <hex row="19" col="33" name="RAILROAD"/>
+  <hex row="19" col="34" name="RAILROAD"/>
+  <hex row="19" col="35" name="RAILROAD"/>
+  <hex row="19" col="36" name="RAILROAD"/>
+  <hex row="19" col="37" name="RAILROAD"/>
+  <hex row="19" col="38" name="RAILROAD"/>
+  <hex row="19" col="39" name="RAILROAD"/>
+  <hex row="19" col="40" name="RAILROAD"/>
+  <hex row="19" col="41" name="RAILROAD"/>
+  <hex row="19" col="42" name="RAILROAD"/>
+  <hex row="19" col="43" name="RAILROAD"/>
+  <hex row="20" col="1" road="34"/>
+  <hex row="20" col="2" terrain="1" road="34" name="Luzino"/>
+  <hex row="20" col="3" terrain="1" road="9" name="Luzino"/>
+  <hex row="20" col="4" terrain="1" name="Luzino"/>
+  <hex row="20" col="5" road="34"/>
+  <hex row="20" col="6" road="49"/>
+  <hex row="20" col="12" name="RAILROAD"/>
+  <hex row="20" col="13" name="RAILROAD"/>
+  <hex row="20" col="14" terrain="2"/>
+  <hex row="20" col="15" terrain="5"/>
+  <hex row="20" col="16" terrain="15" name="Irtysh River"/>
+  <hex row="20" col="17" terrain="1" road="9" name="Omsk">
+    <unit id="37233" owner="1" flag="149" face="0" exp="201" str="7"/>
+  </hex>
+  <hex row="20" col="18" terrain="1" name="Omsk"/>
+  <hex row="20" col="19" road="34"/>
+  <hex row="20" col="20" road="34"/>
+  <hex row="20" col="23" terrain="3"/>
+  <hex row="20" col="25" terrain="15"/>
+  <hex row="20" col="30" road="136"/>
+  <hex row="20" col="31" road="144" name="RAILROAD"/>
+  <hex row="20" col="32" name="RAILROAD"/>
+  <hex row="20" col="41">
+    <unit id="39180" owner="0" flag="101" face="0" exp="26" str="7" ldr="1"/>
+  </hex>
+  <hex row="21" col="0" road="34" name="RAILROAD"/>
+  <hex row="21" col="1" name="RAILROAD" owner="0" flag="144"/>
+  <hex row="21" col="2" name="RAILROAD"/>
+  <hex row="21" col="3" name="RAILROAD"/>
+  <hex row="21" col="4" road="130" name="RAILROAD"/>
+  <hex row="21" col="5" name="RAILROAD"/>
+  <hex row="21" col="6" road="17" name="RAILROAD"/>
+  <hex row="21" col="7" name="RAILROAD"/>
+  <hex row="21" col="8" name="RAILROAD"/>
+  <hex row="21" col="9" name="RAILROAD"/>
+  <hex row="21" col="10" name="RAILROAD"/>
+  <hex row="21" col="11" name="RAILROAD"/>
+  <hex row="21" col="12" name="RAILROAD"/>
+  <hex row="21" col="13" name="Bolshaye Rebrovka: RAILROAD">
+    <unit id="37233" owner="1" flag="149" face="0" exp="111" str="7"/>
+  </hex>
+  <hex row="21" col="14" name="Bolshaye Rebrovka: RAILROAD" owner="0" flag="144"/>
+  <hex row="21" col="15" terrain="15" name="Irtysh River"/>
+  <hex row="21" col="16" terrain="15" name="Irtysh River"/>
+  <hex row="21" col="17" terrain="1" name="Omsk"/>
+  <hex row="21" col="18" terrain="1" road="146" name="Omsk">
+    <unit id="37233" owner="1" flag="149" face="0" exp="143" str="9"/>
+  </hex>
+  <hex row="21" col="19" terrain="1" name="Omsk"/>
+  <hex row="21" col="21" terrain="2"/>
+  <hex row="21" col="22" terrain="2"/>
+  <hex row="21" col="23" terrain="3"/>
+  <hex row="21" col="24" terrain="3"/>
+  <hex row="21" col="29" name="RAILROAD"/>
+  <hex row="21" col="30" name="RAILROAD"/>
+  <hex row="21" col="31" road="17"/>
+  <hex row="22" col="5" road="34"/>
+  <hex row="22" col="6" road="33"/>
+  <hex row="22" col="8" name="RAILROAD"/>
+  <hex row="22" col="9" name="RAILROAD"/>
+  <hex row="22" col="13" name="RAILROAD"/>
+  <hex row="22" col="14" terrain="1" name="Bolshaye Rebrovka"/>
+  <hex row="22" col="15" terrain="15" name="Irtysh River"/>
+  <hex row="22" col="16" name="Irtysh River"/>
+  <hex row="22" col="17" name="Omsk: RAILROAD"/>
+  <hex row="22" col="18" terrain="1" road="17" name="Omsk"/>
+  <hex row="22" col="19" name="RAILROAD"/>
+  <hex row="22" col="20" name="Omsk: RAILROAD" owner="0" flag="144"/>
+  <hex row="22" col="21" name="RAILROAD"/>
+  <hex row="22" col="22" name="RAILROAD"/>
+  <hex row="22" col="23" name="RAILROAD"/>
+  <hex row="22" col="24" name="RAILROAD"/>
+  <hex row="22" col="25" name="RAILROAD"/>
+  <hex row="22" col="26" name="RAILROAD"/>
+  <hex row="22" col="27" name="RAILROAD"/>
+  <hex row="22" col="28" name="RAILROAD"/>
+  <hex row="22" col="31" road="17"/>
+  <hex row="22" col="41" terrain="1" name="Nemirovka"/>
+  <hex row="23" col="4" terrain="1" road="18" name="Kok-Biye"/>
+  <hex row="23" col="10" name="RAILROAD"/>
+  <hex row="23" col="11" name="RAILROAD"/>
+  <hex row="23" col="12" terrain="3"/>
+  <hex row="23" col="13" name="RAILROAD"/>
+  <hex row="23" col="14" terrain="15" name="Irtysh River"/>
+  <hex row="23" col="16" terrain="1" name="Omsk" owner="0" flag="144" victory="0">
+    <unit id="607" owner="0" flag="101" face="0" exp="68" str="5"/>
+  </hex>
+  <hex row="23" col="17" terrain="1" name="Omsk"/>
+  <hex row="23" col="18" road="17" name="Omsk: RAILROAD"/>
+  <hex row="23" col="19" terrain="1" name="Omsk"/>
+  <hex row="23" col="31" road="17"/>
+  <hex row="23" col="35" road="40"/>
+  <hex row="24" col="4" terrain="1" road="17" name="Kok-Biye"/>
+  <hex row="24" col="10" terrain="3"/>
+  <hex row="24" col="12" name="RAILROAD"/>
+  <hex row="24" col="14" terrain="15" name="Irtysh River"/>
+  <hex row="24" col="16" terrain="1" name="Omsk"/>
+  <hex row="24" col="17" terrain="1" road="50" name="Omsk"/>
+  <hex row="24" col="18" terrain="1" road="33"/>
+  <hex row="24" col="31" road="17"/>
+  <hex row="24" col="33" road="34"/>
+  <hex row="24" col="34" terrain="1" road="34" name="Ul&#x27;yanovka"/>
+  <hex row="24" col="36" road="136"/>
+  <hex row="24" col="37" terrain="1" road="136" name="Yasnaya Polyana"/>
+  <hex row="25" col="3" road="18"/>
+  <hex row="25" col="4" road="33"/>
+  <hex row="25" col="7">
+    <unit id="39180" owner="0" flag="101" face="0" exp="211" str="6"/>
+  </hex>
+  <hex row="25" col="12" name="RAILROAD"/>
+  <hex row="25" col="14" terrain="15" name="Irtysh River"/>
+  <hex row="25" col="15" road="34"/>
+  <hex row="25" col="16" terrain="3" road="34"/>
+  <hex row="25" col="17" road="17" name="Omsk"/>
+  <hex row="25" col="18" terrain="1" name="Omsk"/>
+  <hex row="25" col="19" terrain="3"/>
+  <hex row="25" col="23" terrain="3"/>
+  <hex row="25" col="24" terrain="3"/>
+  <hex row="25" col="25" terrain="3"/>
+  <hex row="25" col="31" road="35"/>
+  <hex row="25" col="32" road="34"/>
+  <hex row="25" col="38" road="136"/>
+  <hex row="25" col="39" terrain="1" road="136" name="Rakitinka"/>
+  <hex row="25" col="40" terrain="4"/>
+  <hex row="25" col="41" road="40"/>
+  <hex row="26" col="3" road="9"/>
+  <hex row="26" col="12" name="RAILROAD"/>
+  <hex row="26" col="13" road="34"/>
+  <hex row="26" col="14" terrain="10" road="34" name="Irtysh River"/>
+  <hex row="26" col="16" terrain="3"/>
+  <hex row="26" col="17" road="17"/>
+  <hex row="26" col="18" terrain="1" name="Omsk"/>
+  <hex row="26" col="19" terrain="3"/>
+  <hex row="26" col="23" terrain="3"/>
+  <hex row="26" col="24" terrain="3"/>
+  <hex row="26" col="25" terrain="3"/>
+  <hex row="26" col="26" terrain="3"/>
+  <hex row="26" col="27" terrain="3"/>
+  <hex row="26" col="29" road="42"/>
+  <hex row="26" col="30" road="34"/>
+  <hex row="26" col="31" terrain="1" name="Novaya Stanitsa"/>
+  <hex row="26" col="39" road="18"/>
+  <hex row="26" col="40" road="162"/>
+  <hex row="26" col="42" terrain="1" road="136" name="Ankudinovo"/>
+  <hex row="26" col="43" terrain="5" road="136"/>
+  <hex row="27" col="4" road="136"/>
+  <hex row="27" col="5" road="136"/>
+  <hex row="27" col="11" road="34"/>
+  <hex row="27" col="12" road="34" name="RAILROAD"/>
+  <hex row="27" col="14" terrain="15" name="Irtysh River"/>
+  <hex row="27" col="17" road="17"/>
+  <hex row="27" col="23" terrain="3"/>
+  <hex row="27" col="24" terrain="3"/>
+  <hex row="27" col="25" terrain="3"/>
+  <hex row="27" col="26" terrain="3"/>
+  <hex row="27" col="27" road="34"/>
+  <hex row="27" col="28" road="34"/>
+  <hex row="27" col="30" road="136"/>
+  <hex row="27" col="31" terrain="1" road="136" name="Novaya Stanitsa"/>
+  <hex row="27" col="32" terrain="1" name="Novaya Stanitsa"/>
+  <hex row="27" col="39" road="33"/>
+  <hex row="27" col="41" terrain="5"/>
+  <hex row="27" col="42" terrain="5"/>
+  <hex row="27" col="43" terrain="5"/>
+  <hex row="28" col="6" road="144"/>
+  <hex row="28" col="9" road="34"/>
+  <hex row="28" col="10" road="34"/>
+  <hex row="28" col="12" name="RAILROAD"/>
+  <hex row="28" col="13" name="RAILROAD"/>
+  <hex row="28" col="14" terrain="15" name="Irtysh River"/>
+  <hex row="28" col="15" terrain="15" name="Irtysh River"/>
+  <hex row="28" col="16" terrain="3"/>
+  <hex row="28" col="17" terrain="10" road="9" name="Irtysh River"/>
+  <hex row="28" col="19" terrain="15" name="Irtysh River"/>
+  <hex row="28" col="20" terrain="15" name="Irtysh River"/>
+  <hex row="28" col="21" terrain="15" name="Irtysh River"/>
+  <hex row="28" col="22" terrain="3"/>
+  <hex row="28" col="23" terrain="3"/>
+  <hex row="28" col="24" terrain="3"/>
+  <hex row="28" col="26" terrain="3" road="18"/>
+  <hex row="28" col="27" terrain="3"/>
+  <hex row="28" col="29" terrain="3"/>
+  <hex row="28" col="32" road="136"/>
+  <hex row="28" col="33" road="144"/>
+  <hex row="28" col="34" terrain="3"/>
+  <hex row="28" col="38" road="18"/>
+  <hex row="28" col="41" terrain="5"/>
+  <hex row="28" col="42" terrain="5"/>
+  <hex row="28" col="43" terrain="5"/>
+  <hex row="29" col="6" road="17"/>
+  <hex row="29" col="7" terrain="1" road="34" name="Omskiy"/>
+  <hex row="29" col="8" road="34"/>
+  <hex row="29" col="13" name="RAILROAD"/>
+  <hex row="29" col="14" terrain="3"/>
+  <hex row="29" col="15" terrain="3"/>
+  <hex row="29" col="16" terrain="15" name="Irtysh River"/>
+  <hex row="29" col="17" road="18"/>
+  <hex row="29" col="18" terrain="10" road="160" name="Irtysh River"/>
+  <hex row="29" col="22" terrain="15" name="Irtysh River"/>
+  <hex row="29" col="23" terrain="15" name="Irtysh River"/>
+  <hex row="29" col="24" terrain="3"/>
+  <hex row="29" col="25" terrain="1" road="10" name="Serebryakovka"/>
+  <hex row="29" col="26" terrain="1" road="33" name="Serebryakovka"/>
+  <hex row="29" col="27" terrain="3"/>
+  <hex row="29" col="28" terrain="3"/>
+  <hex row="29" col="29" terrain="3"/>
+  <hex row="29" col="30" terrain="3"/>
+  <hex row="29" col="31" terrain="3"/>
+  <hex row="29" col="32" terrain="3"/>
+  <hex row="29" col="33" road="17"/>
+  <hex row="29" col="37" road="34"/>
+  <hex row="29" col="38" road="33"/>
+  <hex row="29" col="41" terrain="5"/>
+  <hex row="29" col="42" terrain="5"/>
+  <hex row="30" col="5" road="34"/>
+  <hex row="30" col="6" terrain="1" road="43" name="Omskiy"/>
+  <hex row="30" col="7" road="136"/>
+  <hex row="30" col="14" name="RAILROAD"/>
+  <hex row="30" col="15" name="RAILROAD"/>
+  <hex row="30" col="17" road="9"/>
+  <hex row="30" col="24" terrain="10" name="Irtysh River"/>
+  <hex row="30" col="25" terrain="15" name="Irtysh River"/>
+  <hex row="30" col="26" terrain="1" road="136" name="Serebryakovka"/>
+  <hex row="30" col="27" road="136"/>
+  <hex row="30" col="28" terrain="3"/>
+  <hex row="30" col="30" terrain="3"/>
+  <hex row="30" col="31" terrain="3"/>
+  <hex row="30" col="32" terrain="3"/>
+  <hex row="30" col="33" road="9"/>
+  <hex row="30" col="35" road="18"/>
+  <hex row="30" col="36" road="34"/>
+  <hex row="30" col="41" terrain="2"/>
+  <hex row="31" col="3" terrain="1" name="Aytansyk"/>
+  <hex row="31" col="4" terrain="1" road="18" name="Aytansyk"/>
+  <hex row="31" col="8" road="136"/>
+  <hex row="31" col="9" road="136"/>
+  <hex row="31" col="12" terrain="3"/>
+  <hex row="31" col="13" terrain="3"/>
+  <hex row="31" col="15" name="RAILROAD"/>
+  <hex row="31" col="18" road="144"/>
+  <hex row="31" col="25" terrain="15" name="Irtysh River"/>
+  <hex row="31" col="26" terrain="5"/>
+  <hex row="31" col="28" road="144"/>
+  <hex row="31" col="30" terrain="3"/>
+  <hex row="31" col="31" terrain="3"/>
+  <hex row="31" col="32" terrain="3"/>
+  <hex row="31" col="34" road="136"/>
+  <hex row="31" col="35" road="145"/>
+  <hex row="31" col="40" terrain="2"/>
+  <hex row="31" col="41" terrain="2"/>
+  <hex row="31" col="43" road="34"/>
+  <hex row="32" col="4" terrain="1" road="17" name="Aytansyk"/>
+  <hex row="32" col="10" road="136"/>
+  <hex row="32" col="11" road="136"/>
+  <hex row="32" col="13" terrain="3"/>
+  <hex row="32" col="14" terrain="3"/>
+  <hex row="32" col="15" terrain="3"/>
+  <hex row="32" col="16" name="RAILROAD"/>
+  <hex row="32" col="18" road="17"/>
+  <hex row="32" col="23" terrain="5"/>
+  <hex row="32" col="25" terrain="15" name="Irtysh River"/>
+  <hex row="32" col="26" terrain="16"/>
+  <hex row="32" col="27" terrain="16"/>
+  <hex row="32" col="28" road="9"/>
+  <hex row="32" col="29" road="144"/>
+  <hex row="32" col="35" road="9"/>
+  <hex row="32" col="41" road="18"/>
+  <hex row="32" col="42" road="34"/>
+  <hex row="33" col="0" terrain="15"/>
+  <hex row="33" col="1" terrain="15"/>
+  <hex row="33" col="4" road="17"/>
+  <hex row="33" col="12" road="136"/>
+  <hex row="33" col="13" road="136"/>
+  <hex row="33" col="14" terrain="1" name="Gauf"/>
+  <hex row="33" col="15" terrain="3"/>
+  <hex row="33" col="16" name="RAILROAD"/>
+  <hex row="33" col="17" name="RAILROAD"/>
+  <hex row="33" col="18" road="17"/>
+  <hex row="33" col="21" terrain="5"/>
+  <hex row="33" col="22" terrain="5"/>
+  <hex row="33" col="23" terrain="5"/>
+  <hex row="33" col="24" terrain="5"/>
+  <hex row="33" col="26" terrain="15" name="Irtysh River"/>
+  <hex row="33" col="27" terrain="15" name="Irtysh River"/>
+  <hex row="33" col="28" terrain="3"/>
+  <hex row="33" col="29" terrain="3" road="3"/>
+  <hex row="33" col="30" road="40"/>
+  <hex row="33" col="31" road="136"/>
+  <hex row="33" col="33" road="40"/>
+  <hex row="33" col="36" road="136"/>
+  <hex row="33" col="37" road="144"/>
+  <hex row="33" col="41" road="33"/>
+  <hex row="34" col="0" road="136"/>
+  <hex row="34" col="1" road="136"/>
+  <hex row="34" col="2" terrain="15"/>
+  <hex row="34" col="3" terrain="15"/>
+  <hex row="34" col="4" road="17"/>
+  <hex row="34" col="12" terrain="3"/>
+  <hex row="34" col="13" terrain="3"/>
+  <hex row="34" col="14" road="136"/>
+  <hex row="34" col="15" road="144"/>
+  <hex row="34" col="16" terrain="3"/>
+  <hex row="34" col="17" terrain="3" road="18"/>
+  <hex row="34" col="18" road="33" name="RAILROAD"/>
+  <hex row="34" col="20" terrain="5"/>
+  <hex row="34" col="21" terrain="5"/>
+  <hex row="34" col="22" terrain="5"/>
+  <hex row="34" col="27" terrain="15" name="Irtysh River"/>
+  <hex row="34" col="28" terrain="1" name="Ust-Zaostrovka"/>
+  <hex row="34" col="32" road="130"/>
+  <hex row="34" col="34" road="136"/>
+  <hex row="34" col="35" road="130"/>
+  <hex row="34" col="36" road="40"/>
+  <hex row="34" col="37" road="137"/>
+  <hex row="34" col="40" road="18"/>
+  <hex row="35" col="1" terrain="3"/>
+  <hex row="35" col="2" terrain="10" road="136"/>
+  <hex row="35" col="3" road="136"/>
+  <hex row="35" col="4" road="17"/>
+  <hex row="35" col="12" terrain="3"/>
+  <hex row="35" col="15" road="17"/>
+  <hex row="35" col="16" terrain="3"/>
+  <hex row="35" col="17" terrain="3" road="17"/>
+  <hex row="35" col="18" name="RAILROAD"/>
+  <hex row="35" col="19" name="RAILROAD"/>
+  <hex row="35" col="20" terrain="5"/>
+  <hex row="35" col="21" terrain="3"/>
+  <hex row="35" col="28" terrain="15" name="Irtysh River"/>
+  <hex row="35" col="29" terrain="15" name="Irtysh River"/>
+  <hex row="35" col="30" terrain="3"/>
+  <hex row="35" col="38" road="136"/>
+  <hex row="35" col="39" terrain="1" road="170" name="Novo Rossiyka"/>
+  <hex row="35" col="40" road="33"/>
+  <hex row="35" col="43" terrain="3"/>
+  <hex row="36" col="1" terrain="1" name="Azovo"/>
+  <hex row="36" col="2" terrain="15"/>
+  <hex row="36" col="4" road="137"/>
+  <hex row="36" col="5" road="136"/>
+  <hex row="36" col="15" road="9"/>
+  <hex row="36" col="17" road="17"/>
+  <hex row="36" col="20" name="RAILROAD"/>
+  <hex row="36" col="21" terrain="3"/>
+  <hex row="36" col="27" terrain="3"/>
+  <hex row="36" col="30" terrain="15" name="Irtysh River"/>
+  <hex row="36" col="38" road="18"/>
+  <hex row="36" col="39" terrain="16"/>
+  <hex row="36" col="40" road="136"/>
+  <hex row="36" col="41" terrain="16" road="144"/>
+  <hex row="36" col="42" terrain="3"/>
+  <hex row="37" col="0" terrain="1"/>
+  <hex row="37" col="1" terrain="1" name="Azovo"/>
+  <hex row="37" col="2" terrain="15"/>
+  <hex row="37" col="3" terrain="15"/>
+  <hex row="37" col="6" road="136"/>
+  <hex row="37" col="7" road="136"/>
+  <hex row="37" col="16" road="136"/>
+  <hex row="37" col="17" road="145"/>
+  <hex row="37" col="20" name="RAILROAD"/>
+  <hex row="37" col="21" name="RAILROAD"/>
+  <hex row="37" col="24" terrain="1" name="Kamyshino"/>
+  <hex row="37" col="26" terrain="3"/>
+  <hex row="37" col="27" terrain="3"/>
+  <hex row="37" col="28" terrain="3"/>
+  <hex row="37" col="29" terrain="15" name="Irtysh River"/>
+  <hex row="37" col="30" terrain="15" name="Irtysh River"/>
+  <hex row="37" col="37" road="34"/>
+  <hex row="37" col="38" road="41"/>
+  <hex row="37" col="39" terrain="16" road="136"/>
+  <hex row="37" col="40" terrain="16"/>
+  <hex row="37" col="41" road="41"/>
+  <hex row="37" col="43" road="40"/>
+</map>

@@ -1,0 +1,1268 @@
+<?xml version="1.0" encoding="ASCII"?>
+<map file="mao7.xscn" name="Linjiang Campaign" turns="15, 19, 22" date="March 8, 1947" dayturns="0" ground="0" atmosferic="0" latitude="2" iconset="0" weatherchg="0" rows="38" cols="43" eqp="eqp-olgww2" image="resources/maps/images/map_571.png" eqpv="united1">
+  <player id="0" country="21" side="1" airtrans="0" navaltrans="0" support="22, 0, 0, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 20, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <player id="1" country="15" side="0" airtrans="0" navaltrans="0" support="16, 0, 0, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <reinforce turn="8">
+    <at row="11" col="6">
+      <unit id="15274" owner="1" flag="16" face="0" str="5"/>
+    </at>
+  </reinforce>
+  <reinforce turn="9">
+    <at row="2" col="15">
+      <unit id="15234" owner="1" flag="16" face="0" exp="200"/>
+    </at>
+    <at row="3" col="16">
+      <unit id="15234" owner="1" flag="16" face="0"/>
+    </at>
+    <at row="2" col="14">
+      <unit id="15234" owner="1" flag="16" face="0"/>
+    </at>
+    <at row="2" col="16">
+      <unit id="15366" owner="1" flag="16" face="0" transport="15365"/>
+    </at>
+    <at row="3" col="6">
+      <unit id="15234" owner="1" flag="16" face="0"/>
+    </at>
+    <at row="2" col="7">
+      <unit id="15234" owner="1" flag="16" face="0"/>
+    </at>
+    <at row="3" col="7">
+      <unit id="15234" owner="1" flag="16" face="0"/>
+    </at>
+    <at row="2" col="6">
+      <unit id="15366" owner="1" flag="16" face="0" transport="15365"/>
+    </at>
+    <at row="11" col="5">
+      <unit id="15234" owner="1" flag="16" face="0"/>
+    </at>
+    <at row="10" col="5">
+      <unit id="15234" owner="1" flag="16" face="0"/>
+    </at>
+    <at row="10" col="4">
+      <unit id="15234" owner="1" flag="16" face="0"/>
+    </at>
+    <at row="11" col="2">
+      <unit id="15370" owner="1" flag="16" face="0" transport="15345"/>
+    </at>
+    <at row="11" col="4">
+      <unit id="15295" owner="1" flag="16" face="0" str="5"/>
+    </at>
+  </reinforce>
+  <hex row="0" col="15" terrain="3"/>
+  <hex row="0" col="17" road="34"/>
+  <hex row="0" col="18" road="32"/>
+  <hex row="0" col="33" terrain="3"/>
+  <hex row="1" col="4" road="136"/>
+  <hex row="1" col="5" terrain="3" road="136"/>
+  <hex row="1" col="6" terrain="3"/>
+  <hex row="1" col="11" terrain="8"/>
+  <hex row="1" col="12" terrain="8"/>
+  <hex row="1" col="14" terrain="3"/>
+  <hex row="1" col="16" road="18"/>
+  <hex row="1" col="30" terrain="3"/>
+  <hex row="2" col="3" terrain="3"/>
+  <hex row="2" col="4" terrain="3"/>
+  <hex row="2" col="5" terrain="3"/>
+  <hex row="2" col="6" terrain="3" road="144"/>
+  <hex row="2" col="7" terrain="3"/>
+  <hex row="2" col="8" terrain="3"/>
+  <hex row="2" col="15" road="34"/>
+  <hex row="2" col="16" road="33"/>
+  <hex row="2" col="26" terrain="3"/>
+  <hex row="2" col="27" terrain="3"/>
+  <hex row="2" col="28" terrain="3"/>
+  <hex row="2" col="33" terrain="3"/>
+  <hex row="2" col="37" terrain="6"/>
+  <hex row="2" col="38" terrain="6"/>
+  <hex row="2" col="39" terrain="6"/>
+  <hex row="2" col="40" terrain="6"/>
+  <hex row="2" col="41" terrain="6"/>
+  <hex row="2" col="42" terrain="6"/>
+  <hex row="3" col="3" terrain="3"/>
+  <hex row="3" col="4" terrain="3"/>
+  <hex row="3" col="5" terrain="3"/>
+  <hex row="3" col="6" terrain="3" road="9"/>
+  <hex row="3" col="7" terrain="3" road="136"/>
+  <hex row="3" col="8" terrain="3"/>
+  <hex row="3" col="13" terrain="1" road="34" name="Dehui" owner="1" flag="15" victory="1">
+    <unit id="616" owner="1" flag="16" face="0"/>
+  </hex>
+  <hex row="3" col="14" terrain="1" road="34" name="Dehui"/>
+  <hex row="3" col="18" terrain="3"/>
+  <hex row="3" col="21" terrain="8"/>
+  <hex row="3" col="22" terrain="8"/>
+  <hex row="3" col="26" terrain="3"/>
+  <hex row="3" col="27" terrain="3"/>
+  <hex row="3" col="28" terrain="3"/>
+  <hex row="3" col="29" terrain="3"/>
+  <hex row="3" col="30" terrain="3"/>
+  <hex row="3" col="31" terrain="3"/>
+  <hex row="3" col="32" terrain="3"/>
+  <hex row="3" col="33" terrain="3"/>
+  <hex row="3" col="35" terrain="6"/>
+  <hex row="3" col="36" terrain="6"/>
+  <hex row="3" col="37" terrain="6"/>
+  <hex row="3" col="38" terrain="6"/>
+  <hex row="3" col="39" terrain="6"/>
+  <hex row="3" col="40" terrain="6"/>
+  <hex row="3" col="41" terrain="6"/>
+  <hex row="3" col="42" terrain="6"/>
+  <hex row="4" col="4" terrain="3"/>
+  <hex row="4" col="5" terrain="3"/>
+  <hex row="4" col="6" terrain="3"/>
+  <hex row="4" col="7" terrain="3"/>
+  <hex row="4" col="8" terrain="1" road="136" name="Nong an"/>
+  <hex row="4" col="9" terrain="1" road="138" name="Nong an" owner="1" flag="15" victory="1">
+    <unit id="616" owner="1" flag="16" face="0"/>
+  </hex>
+  <hex row="4" col="10" road="56"/>
+  <hex row="4" col="11" road="178"/>
+  <hex row="4" col="12" road="34"/>
+  <hex row="4" col="28" terrain="3"/>
+  <hex row="4" col="30" terrain="3"/>
+  <hex row="4" col="33" terrain="6"/>
+  <hex row="4" col="34" terrain="6"/>
+  <hex row="4" col="35" terrain="6"/>
+  <hex row="4" col="36" terrain="6"/>
+  <hex row="4" col="37" terrain="6"/>
+  <hex row="4" col="38" terrain="6"/>
+  <hex row="4" col="39" terrain="6"/>
+  <hex row="4" col="40" terrain="6"/>
+  <hex row="4" col="41" terrain="6"/>
+  <hex row="4" col="42" terrain="6"/>
+  <hex row="5" col="1" terrain="3"/>
+  <hex row="5" col="2" terrain="3"/>
+  <hex row="5" col="3" terrain="3"/>
+  <hex row="5" col="4" terrain="3"/>
+  <hex row="5" col="6" terrain="3"/>
+  <hex row="5" col="10" road="139"/>
+  <hex row="5" col="11" terrain="3" road="137"/>
+  <hex row="5" col="12" terrain="3"/>
+  <hex row="5" col="18" terrain="3"/>
+  <hex row="5" col="21" terrain="4"/>
+  <hex row="5" col="22" terrain="4"/>
+  <hex row="5" col="23" terrain="4"/>
+  <hex row="5" col="24" terrain="4"/>
+  <hex row="5" col="25" terrain="4"/>
+  <hex row="5" col="26" terrain="4"/>
+  <hex row="5" col="31" terrain="6"/>
+  <hex row="5" col="32" terrain="6"/>
+  <hex row="5" col="33" terrain="6"/>
+  <hex row="5" col="34" terrain="6"/>
+  <hex row="5" col="35" terrain="6"/>
+  <hex row="5" col="36" terrain="6"/>
+  <hex row="5" col="37" terrain="6"/>
+  <hex row="5" col="38" terrain="6"/>
+  <hex row="5" col="39" terrain="6"/>
+  <hex row="5" col="40" terrain="6"/>
+  <hex row="5" col="41" terrain="6"/>
+  <hex row="5" col="42" terrain="6"/>
+  <hex row="6" col="1" terrain="3"/>
+  <hex row="6" col="2" terrain="3"/>
+  <hex row="6" col="3" terrain="3"/>
+  <hex row="6" col="12" terrain="3" road="136"/>
+  <hex row="6" col="13" road="138"/>
+  <hex row="6" col="14" terrain="1" road="56" name="Jishu"/>
+  <hex row="6" col="15" terrain="1" road="168" name="Jishu" owner="1" flag="15" victory="1">
+    <unit id="616" owner="1" flag="16" face="0"/>
+  </hex>
+  <hex row="6" col="20" terrain="4"/>
+  <hex row="6" col="21" terrain="4"/>
+  <hex row="6" col="22" terrain="4"/>
+  <hex row="6" col="23" terrain="4"/>
+  <hex row="6" col="24" terrain="4"/>
+  <hex row="6" col="25" terrain="4"/>
+  <hex row="6" col="26" terrain="4"/>
+  <hex row="6" col="27" terrain="4"/>
+  <hex row="6" col="29" terrain="6"/>
+  <hex row="6" col="30" terrain="6"/>
+  <hex row="6" col="31" terrain="6"/>
+  <hex row="6" col="32" terrain="6"/>
+  <hex row="6" col="33" terrain="6"/>
+  <hex row="6" col="34" terrain="6"/>
+  <hex row="6" col="35" terrain="6"/>
+  <hex row="6" col="36" terrain="6"/>
+  <hex row="6" col="37" terrain="6"/>
+  <hex row="6" col="38" terrain="6"/>
+  <hex row="6" col="39" terrain="6"/>
+  <hex row="6" col="40" terrain="6"/>
+  <hex row="6" col="41" terrain="6"/>
+  <hex row="6" col="42" terrain="6"/>
+  <hex row="7" col="2" terrain="3"/>
+  <hex row="7" col="3" terrain="3"/>
+  <hex row="7" col="4" terrain="3"/>
+  <hex row="7" col="5" terrain="3"/>
+  <hex row="7" col="8" terrain="8"/>
+  <hex row="7" col="9" terrain="8"/>
+  <hex row="7" col="10" terrain="8"/>
+  <hex row="7" col="13" terrain="8"/>
+  <hex row="7" col="14" road="147"/>
+  <hex row="7" col="16" road="136"/>
+  <hex row="7" col="17" terrain="6" road="130"/>
+  <hex row="7" col="18" terrain="6" road="40"/>
+  <hex row="7" col="19" terrain="6" road="136" owner="1" flag="15" victory="1">
+    <unit id="616" owner="1" flag="16" face="0"/>
+  </hex>
+  <hex row="7" col="20" terrain="6"/>
+  <hex row="7" col="21" terrain="6" road="40"/>
+  <hex row="7" col="22" terrain="4"/>
+  <hex row="7" col="23" terrain="4"/>
+  <hex row="7" col="24" terrain="4"/>
+  <hex row="7" col="25" terrain="4"/>
+  <hex row="7" col="26" terrain="4"/>
+  <hex row="7" col="27" terrain="4"/>
+  <hex row="7" col="28" terrain="4"/>
+  <hex row="7" col="29" terrain="4"/>
+  <hex row="7" col="30" terrain="6"/>
+  <hex row="7" col="31" terrain="6"/>
+  <hex row="7" col="32" terrain="6"/>
+  <hex row="7" col="33" terrain="6"/>
+  <hex row="7" col="34" terrain="6"/>
+  <hex row="7" col="35" terrain="6"/>
+  <hex row="7" col="36" terrain="6"/>
+  <hex row="7" col="37" terrain="6"/>
+  <hex row="7" col="38" terrain="6"/>
+  <hex row="7" col="40" terrain="6"/>
+  <hex row="7" col="41" terrain="6"/>
+  <hex row="7" col="42" terrain="6"/>
+  <hex row="8" col="2" terrain="3"/>
+  <hex row="8" col="3" terrain="3"/>
+  <hex row="8" col="4" terrain="3"/>
+  <hex row="8" col="6" terrain="3"/>
+  <hex row="8" col="7" terrain="2" owner="1" flag="15">
+    <unit id="15428" owner="1" flag="16" face="0" str="5"/>
+  </hex>
+  <hex row="8" col="8" terrain="2"/>
+  <hex row="8" col="13" road="34"/>
+  <hex row="8" col="14" terrain="8" road="33"/>
+  <hex row="8" col="17" terrain="6"/>
+  <hex row="8" col="18" terrain="6"/>
+  <hex row="8" col="19" terrain="6"/>
+  <hex row="8" col="20" terrain="6" road="130"/>
+  <hex row="8" col="21" terrain="6"/>
+  <hex row="8" col="22" terrain="4" road="136"/>
+  <hex row="8" col="23" terrain="4" road="136"/>
+  <hex row="8" col="24" terrain="4"/>
+  <hex row="8" col="25" terrain="4"/>
+  <hex row="8" col="26" terrain="4"/>
+  <hex row="8" col="27" terrain="4"/>
+  <hex row="8" col="28" terrain="4"/>
+  <hex row="8" col="29" terrain="4"/>
+  <hex row="8" col="30" terrain="6"/>
+  <hex row="8" col="31" terrain="6"/>
+  <hex row="8" col="32" terrain="6"/>
+  <hex row="8" col="33" terrain="6"/>
+  <hex row="8" col="34" terrain="6"/>
+  <hex row="8" col="35" terrain="6"/>
+  <hex row="8" col="36" terrain="6"/>
+  <hex row="8" col="37" terrain="6"/>
+  <hex row="8" col="42" terrain="6"/>
+  <hex row="9" col="5" terrain="8"/>
+  <hex row="9" col="6" terrain="8"/>
+  <hex row="9" col="11" road="50"/>
+  <hex row="9" col="12" road="34"/>
+  <hex row="9" col="18" terrain="6"/>
+  <hex row="9" col="19" terrain="3"/>
+  <hex row="9" col="21" terrain="2"/>
+  <hex row="9" col="22" terrain="2"/>
+  <hex row="9" col="23" terrain="2"/>
+  <hex row="9" col="24" road="152"/>
+  <hex row="9" col="25" road="184"/>
+  <hex row="9" col="26" terrain="4"/>
+  <hex row="9" col="27" terrain="4"/>
+  <hex row="9" col="28" terrain="4"/>
+  <hex row="9" col="29" terrain="4"/>
+  <hex row="9" col="30" terrain="6"/>
+  <hex row="9" col="31" terrain="6"/>
+  <hex row="9" col="32" terrain="6"/>
+  <hex row="9" col="33" terrain="6"/>
+  <hex row="9" col="34" terrain="6"/>
+  <hex row="9" col="35" terrain="6"/>
+  <hex row="9" col="36" terrain="6"/>
+  <hex row="9" col="37" terrain="6"/>
+  <hex row="10" col="2" terrain="8"/>
+  <hex row="10" col="4" terrain="8"/>
+  <hex row="10" col="7" terrain="1" road="10" name="Changchun"/>
+  <hex row="10" col="8" terrain="1" road="56" name="Changchun">
+    <unit id="15370" owner="1" flag="16" face="0" str="8"/>
+  </hex>
+  <hex row="10" col="9" terrain="1" road="186" name="Changchun" owner="1" flag="15">
+    <unit id="15234" owner="1" flag="16" face="0"/>
+  </hex>
+  <hex row="10" col="10" terrain="1" road="58" name="Changchun"/>
+  <hex row="10" col="11" terrain="1" road="169" name="Changchun" owner="1" flag="15">
+    <unit id="15234" owner="1" flag="16" face="0"/>
+  </hex>
+  <hex row="10" col="19" terrain="3"/>
+  <hex row="10" col="20" terrain="3"/>
+  <hex row="10" col="21" terrain="3"/>
+  <hex row="10" col="22" terrain="2" owner="1" flag="15"/>
+  <hex row="10" col="23" terrain="4"/>
+  <hex row="10" col="24" terrain="1" name="Jilin">
+    <unit id="15370" owner="1" flag="16" face="0" str="6"/>
+  </hex>
+  <hex row="10" col="25" terrain="1" name="Jilin">
+    <unit id="15333" owner="1" flag="16" face="0" str="5"/>
+  </hex>
+  <hex row="10" col="26" terrain="1" road="176" name="Jilin"/>
+  <hex row="10" col="27" terrain="4"/>
+  <hex row="10" col="28" terrain="4"/>
+  <hex row="10" col="29" terrain="4"/>
+  <hex row="10" col="30" terrain="4"/>
+  <hex row="10" col="31" terrain="6">
+    <unit id="18074" owner="0" flag="22" face="0"/>
+  </hex>
+  <hex row="10" col="32" terrain="6"/>
+  <hex row="10" col="33" terrain="6"/>
+  <hex row="10" col="34" terrain="6"/>
+  <hex row="10" col="39" terrain="8"/>
+  <hex row="10" col="41" terrain="10" name="Song Hua River"/>
+  <hex row="10" col="42" terrain="10" name="Song Hua River"/>
+  <hex row="11" col="8" terrain="1" road="139" name="Changchun">
+    <unit id="15256" owner="1" flag="16" face="0" str="5" ldr="1"/>
+  </hex>
+  <hex row="11" col="9" terrain="1" road="147" name="Changchun"/>
+  <hex row="11" col="10" terrain="1" road="163" name="Changchun">
+    <unit id="15317" owner="1" flag="16" face="0" str="7"/>
+  </hex>
+  <hex row="11" col="11" terrain="4"/>
+  <hex row="11" col="12" road="136"/>
+  <hex row="11" col="13" terrain="1" road="138" name="Xinan" owner="1" flag="15" victory="1">
+    <unit id="15234" owner="1" flag="16" face="0"/>
+  </hex>
+  <hex row="11" col="14" terrain="1" name="Xinan"/>
+  <hex row="11" col="15" terrain="4" road="168"/>
+  <hex row="11" col="17" terrain="4"/>
+  <hex row="11" col="18" terrain="4"/>
+  <hex row="11" col="19" terrain="3"/>
+  <hex row="11" col="20" terrain="3"/>
+  <hex row="11" col="21" terrain="4"/>
+  <hex row="11" col="22" terrain="4"/>
+  <hex row="11" col="23" terrain="4"/>
+  <hex row="11" col="24" terrain="4"/>
+  <hex row="11" col="25" terrain="4"/>
+  <hex row="11" col="26" terrain="1" road="137" name="Jilin" owner="1" flag="15">
+    <unit id="15333" owner="1" flag="16" face="0" str="5"/>
+  </hex>
+  <hex row="11" col="27" terrain="1" road="144" name="Jilin">
+    <unit id="379" owner="1" flag="16" face="0" str="7"/>
+  </hex>
+  <hex row="11" col="28" terrain="4"/>
+  <hex row="11" col="29" terrain="6"/>
+  <hex row="11" col="30" terrain="6"/>
+  <hex row="11" col="31" terrain="6"/>
+  <hex row="11" col="32" terrain="6"/>
+  <hex row="11" col="33" terrain="6"/>
+  <hex row="11" col="34" terrain="6"/>
+  <hex row="11" col="38" terrain="8"/>
+  <hex row="11" col="40" terrain="10" name="Song Hua River"/>
+  <hex row="12" col="8">
+    <unit id="15366" owner="1" flag="16" face="0"/>
+  </hex>
+  <hex row="12" col="9" terrain="4" road="33"/>
+  <hex row="12" col="10" terrain="4"/>
+  <hex row="12" col="11" terrain="4">
+    <unit id="15234" owner="1" flag="16" face="0"/>
+  </hex>
+  <hex row="12" col="12" terrain="4"/>
+  <hex row="12" col="13" terrain="4"/>
+  <hex row="12" col="14" terrain="1" road="131" name="Xinan"/>
+  <hex row="12" col="15" terrain="4"/>
+  <hex row="12" col="16" terrain="4" road="144"/>
+  <hex row="12" col="17" terrain="4"/>
+  <hex row="12" col="18" terrain="4"/>
+  <hex row="12" col="19" terrain="4"/>
+  <hex row="12" col="20" terrain="4"/>
+  <hex row="12" col="21" terrain="4"/>
+  <hex row="12" col="22" terrain="4"/>
+  <hex row="12" col="23" terrain="4"/>
+  <hex row="12" col="24" terrain="4"/>
+  <hex row="12" col="25" terrain="4"/>
+  <hex row="12" col="26" terrain="4"/>
+  <hex row="12" col="27" terrain="6" road="17"/>
+  <hex row="12" col="28" terrain="6"/>
+  <hex row="12" col="29" terrain="6"/>
+  <hex row="12" col="30" terrain="6">
+    <unit id="18074" owner="0" flag="22" face="0"/>
+  </hex>
+  <hex row="12" col="31" terrain="6"/>
+  <hex row="12" col="32" terrain="6"/>
+  <hex row="12" col="33" terrain="6"/>
+  <hex row="12" col="34" terrain="6"/>
+  <hex row="12" col="37" terrain="8"/>
+  <hex row="12" col="38" terrain="8"/>
+  <hex row="12" col="39" terrain="10" name="Song Hua River"/>
+  <hex row="12" col="40" terrain="10" name="Song Hua River"/>
+  <hex row="13" col="5" road="34"/>
+  <hex row="13" col="6" road="40"/>
+  <hex row="13" col="7" road="130"/>
+  <hex row="13" col="8" terrain="1" road="34" name="Fanjiatun" owner="1" flag="15" victory="1">
+    <unit id="15234" owner="1" flag="16" face="0"/>
+  </hex>
+  <hex row="13" col="9" terrain="4"/>
+  <hex row="13" col="10" terrain="4"/>
+  <hex row="13" col="12" terrain="4"/>
+  <hex row="13" col="13" terrain="4"/>
+  <hex row="13" col="14" terrain="4"/>
+  <hex row="13" col="15" terrain="6"/>
+  <hex row="13" col="16" road="9"/>
+  <hex row="13" col="17" road="136"/>
+  <hex row="13" col="18" terrain="4"/>
+  <hex row="13" col="19" terrain="4"/>
+  <hex row="13" col="20" terrain="4"/>
+  <hex row="13" col="21" terrain="4"/>
+  <hex row="13" col="22" terrain="4"/>
+  <hex row="13" col="23" terrain="4"/>
+  <hex row="13" col="24" terrain="4"/>
+  <hex row="13" col="25" terrain="6"/>
+  <hex row="13" col="26" terrain="6"/>
+  <hex row="13" col="27" terrain="6" road="9"/>
+  <hex row="13" col="28" terrain="6"/>
+  <hex row="13" col="29" terrain="6" road="56"/>
+  <hex row="13" col="30" terrain="6"/>
+  <hex row="13" col="31" terrain="6" road="34"/>
+  <hex row="13" col="32" terrain="6" road="40">
+    <unit id="40325" owner="0" flag="22" face="0" transport="40301" str="8"/>
+  </hex>
+  <hex row="13" col="33" terrain="5" road="136"/>
+  <hex row="13" col="34" terrain="6"/>
+  <hex row="13" col="38" terrain="8"/>
+  <hex row="13" col="39" terrain="10" name="Song Hua River"/>
+  <hex row="14" col="3" road="42"/>
+  <hex row="14" col="4" road="50"/>
+  <hex row="14" col="10" terrain="8"/>
+  <hex row="14" col="13" terrain="6"/>
+  <hex row="14" col="14" terrain="6"/>
+  <hex row="14" col="15" terrain="6"/>
+  <hex row="14" col="16" terrain="6">
+    <unit id="616" owner="1" flag="16" face="0"/>
+  </hex>
+  <hex row="14" col="17" terrain="6"/>
+  <hex row="14" col="18" road="136"/>
+  <hex row="14" col="19" road="144"/>
+  <hex row="14" col="20" terrain="4"/>
+  <hex row="14" col="21" terrain="4"/>
+  <hex row="14" col="22" terrain="4"/>
+  <hex row="14" col="23" terrain="6"/>
+  <hex row="14" col="24" terrain="6"/>
+  <hex row="14" col="25" terrain="6"/>
+  <hex row="14" col="26" terrain="6"/>
+  <hex row="14" col="27" terrain="6"/>
+  <hex row="14" col="28" terrain="6" road="138"/>
+  <hex row="14" col="29" terrain="6" road="139"/>
+  <hex row="14" col="30" terrain="6" road="178">
+    <unit id="18072" owner="0" flag="22" face="0"/>
+  </hex>
+  <hex row="14" col="31" terrain="6"/>
+  <hex row="14" col="32" terrain="6"/>
+  <hex row="14" col="33" terrain="6"/>
+  <hex row="14" col="34" terrain="5" road="136"/>
+  <hex row="14" col="35" terrain="6" road="136"/>
+  <hex row="14" col="40" terrain="10" name="Song Hua River"/>
+  <hex row="15" col="0" road="8"/>
+  <hex row="15" col="1" road="130"/>
+  <hex row="15" col="2" road="34"/>
+  <hex row="15" col="4" road="145"/>
+  <hex row="15" col="10" terrain="8"/>
+  <hex row="15" col="11" terrain="6"/>
+  <hex row="15" col="12" terrain="6"/>
+  <hex row="15" col="13" terrain="6"/>
+  <hex row="15" col="14" terrain="6"/>
+  <hex row="15" col="15" terrain="6" deploy="0"/>
+  <hex row="15" col="16" terrain="6"/>
+  <hex row="15" col="17" terrain="6"/>
+  <hex row="15" col="18" terrain="6"/>
+  <hex row="15" col="19" terrain="6" road="9" deploy="0">
+    <unit id="40259" owner="0" flag="22" face="0" str="8"/>
+  </hex>
+  <hex row="15" col="20" terrain="6"/>
+  <hex row="15" col="21" terrain="6"/>
+  <hex row="15" col="22" terrain="6"/>
+  <hex row="15" col="23" terrain="6"/>
+  <hex row="15" col="24" terrain="6"/>
+  <hex row="15" col="25" terrain="6"/>
+  <hex row="15" col="26" terrain="6"/>
+  <hex row="15" col="27" terrain="6"/>
+  <hex row="15" col="28" terrain="5"/>
+  <hex row="15" col="29" terrain="6"/>
+  <hex row="15" col="30" terrain="6" road="145"/>
+  <hex row="15" col="31" terrain="6"/>
+  <hex row="15" col="32" terrain="6"/>
+  <hex row="15" col="33" terrain="6"/>
+  <hex row="15" col="34" terrain="6"/>
+  <hex row="15" col="35" terrain="6"/>
+  <hex row="15" col="36" terrain="6" road="136" deploy="0">
+    <unit id="18072" owner="0" flag="22" face="0"/>
+  </hex>
+  <hex row="15" col="37" terrain="6" road="144"/>
+  <hex row="15" col="38" terrain="6"/>
+  <hex row="15" col="40" terrain="10" name="Song Hua River"/>
+  <hex row="16" col="4" road="17"/>
+  <hex row="16" col="11" terrain="6"/>
+  <hex row="16" col="12" terrain="6"/>
+  <hex row="16" col="13" terrain="6">
+    <unit id="18074" owner="0" flag="22" face="0"/>
+  </hex>
+  <hex row="16" col="14" terrain="6"/>
+  <hex row="16" col="15" terrain="6"/>
+  <hex row="16" col="16" terrain="6">
+    <unit id="18074" owner="0" flag="22" face="0"/>
+  </hex>
+  <hex row="16" col="17" terrain="6"/>
+  <hex row="16" col="18" terrain="6" deploy="0">
+    <unit id="18074" owner="0" flag="22" face="0"/>
+  </hex>
+  <hex row="16" col="19" terrain="6"/>
+  <hex row="16" col="20" terrain="6" road="144" deploy="0">
+    <unit id="18072" owner="0" flag="22" face="0"/>
+  </hex>
+  <hex row="16" col="21" terrain="6"/>
+  <hex row="16" col="22" terrain="6"/>
+  <hex row="16" col="23" terrain="6"/>
+  <hex row="16" col="24" terrain="6" deploy="0">
+    <unit id="18074" owner="0" flag="22" face="0"/>
+  </hex>
+  <hex row="16" col="25" terrain="6"/>
+  <hex row="16" col="26" terrain="6"/>
+  <hex row="16" col="27" terrain="5"/>
+  <hex row="16" col="28" terrain="5"/>
+  <hex row="16" col="29" terrain="5"/>
+  <hex row="16" col="30" terrain="6" road="17"/>
+  <hex row="16" col="31" terrain="6"/>
+  <hex row="16" col="32" terrain="6"/>
+  <hex row="16" col="33" terrain="6"/>
+  <hex row="16" col="34" terrain="6"/>
+  <hex row="16" col="35" terrain="6"/>
+  <hex row="16" col="36" terrain="6" deploy="0">
+    <unit id="18074" owner="0" flag="22" face="0"/>
+  </hex>
+  <hex row="16" col="37" terrain="6" road="25" deploy="0">
+    <unit id="40243" owner="0" flag="22" face="0" str="5"/>
+  </hex>
+  <hex row="16" col="38" terrain="6"/>
+  <hex row="16" col="39" terrain="10" name="Song Hua River"/>
+  <hex row="16" col="40" terrain="10" name="Song Hua River"/>
+  <hex row="16" col="41" road="34"/>
+  <hex row="16" col="42" road="34"/>
+  <hex row="17" col="3" terrain="1" name="Siping"/>
+  <hex row="17" col="4" road="49"/>
+  <hex row="17" col="9" terrain="6"/>
+  <hex row="17" col="10" terrain="6"/>
+  <hex row="17" col="11" terrain="6"/>
+  <hex row="17" col="12" terrain="6" deploy="0"/>
+  <hex row="17" col="13" terrain="6"/>
+  <hex row="17" col="14" terrain="6">
+    <unit id="40330" owner="0" flag="22" face="0" transport="40296" str="8"/>
+  </hex>
+  <hex row="17" col="15" terrain="6" deploy="0"/>
+  <hex row="17" col="16" terrain="6"/>
+  <hex row="17" col="17" terrain="6"/>
+  <hex row="17" col="18" terrain="6"/>
+  <hex row="17" col="19" terrain="6"/>
+  <hex row="17" col="20" terrain="6" road="9" deploy="0">
+    <unit id="18072" owner="0" flag="22" face="0"/>
+  </hex>
+  <hex row="17" col="21" terrain="6" road="136">
+    <unit id="40325" owner="0" flag="22" face="0" transport="40296" str="7"/>
+  </hex>
+  <hex row="17" col="22" terrain="6" deploy="0">
+    <unit id="18074" owner="0" flag="22" face="0"/>
+  </hex>
+  <hex row="17" col="23" terrain="6"/>
+  <hex row="17" col="24" terrain="6"/>
+  <hex row="17" col="25" terrain="5"/>
+  <hex row="17" col="26" terrain="5"/>
+  <hex row="17" col="27" terrain="5"/>
+  <hex row="17" col="28" terrain="5"/>
+  <hex row="17" col="29" terrain="5"/>
+  <hex row="17" col="30" terrain="5" road="17"/>
+  <hex row="17" col="31" terrain="5"/>
+  <hex row="17" col="32" terrain="6"/>
+  <hex row="17" col="33" terrain="6"/>
+  <hex row="17" col="34" terrain="6"/>
+  <hex row="17" col="35" terrain="5"/>
+  <hex row="17" col="36" terrain="6" deploy="0">
+    <unit id="18072" owner="0" flag="22" face="0"/>
+  </hex>
+  <hex row="17" col="37" terrain="1" road="3" name="Dunhua" owner="0" flag="21" deploy="0">
+    <unit id="40325" owner="0" flag="22" face="0" transport="40301" str="8"/>
+  </hex>
+  <hex row="17" col="38" terrain="10" road="168" name="Song Hua River"/>
+  <hex row="17" col="39" road="130"/>
+  <hex row="17" col="40" road="34"/>
+  <hex row="18" col="2" terrain="1" name="Siping"/>
+  <hex row="18" col="3" terrain="1" road="171" name="Siping" owner="1" flag="15">
+    <unit id="15333" owner="1" flag="16" face="0" str="14"/>
+  </hex>
+  <hex row="18" col="4" terrain="1" road="185" name="Siping"/>
+  <hex row="18" col="5" road="168"/>
+  <hex row="18" col="7" terrain="6"/>
+  <hex row="18" col="8" terrain="6"/>
+  <hex row="18" col="9" terrain="6"/>
+  <hex row="18" col="10" terrain="6">
+    <unit id="616" owner="1" flag="16" face="0"/>
+  </hex>
+  <hex row="18" col="11" terrain="6"/>
+  <hex row="18" col="12" terrain="6"/>
+  <hex row="18" col="13" terrain="6">
+    <unit id="18074" owner="0" flag="22" face="0"/>
+  </hex>
+  <hex row="18" col="14" terrain="6"/>
+  <hex row="18" col="15" terrain="6"/>
+  <hex row="18" col="16" terrain="6" deploy="0"/>
+  <hex row="18" col="17" terrain="6"/>
+  <hex row="18" col="18" terrain="6"/>
+  <hex row="18" col="20" terrain="6"/>
+  <hex row="18" col="21" terrain="6"/>
+  <hex row="18" col="22" terrain="6" road="136">
+    <unit id="40253" owner="0" flag="22" face="0" str="7"/>
+  </hex>
+  <hex row="18" col="23" terrain="8" road="130">
+    <unit id="18049" owner="0" flag="22" face="0"/>
+  </hex>
+  <hex row="18" col="24" road="40"/>
+  <hex row="18" col="25" terrain="5" road="144"/>
+  <hex row="18" col="26" terrain="5"/>
+  <hex row="18" col="27" terrain="5"/>
+  <hex row="18" col="28" terrain="5"/>
+  <hex row="18" col="29" terrain="5"/>
+  <hex row="18" col="30" terrain="5" road="9"/>
+  <hex row="18" col="31" terrain="5" road="144"/>
+  <hex row="18" col="32" terrain="5"/>
+  <hex row="18" col="33" terrain="5"/>
+  <hex row="18" col="34" terrain="5"/>
+  <hex row="18" col="35" terrain="10" name="Song Hua River"/>
+  <hex row="18" col="36" terrain="10" name="Song Hua River"/>
+  <hex row="18" col="37" terrain="10" name="Song Hua River"/>
+  <hex row="18" col="38" terrain="10" name="Song Hua River"/>
+  <hex row="18" col="39" terrain="6"/>
+  <hex row="18" col="42" terrain="3"/>
+  <hex row="19" col="1" road="34"/>
+  <hex row="19" col="2" road="35"/>
+  <hex row="19" col="4" road="131"/>
+  <hex row="19" col="5" terrain="6"/>
+  <hex row="19" col="6" terrain="6" road="136"/>
+  <hex row="19" col="7" terrain="6" road="136"/>
+  <hex row="19" col="8" terrain="6"/>
+  <hex row="19" col="9" terrain="6"/>
+  <hex row="19" col="10" terrain="6"/>
+  <hex row="19" col="11" terrain="6"/>
+  <hex row="19" col="12" terrain="6"/>
+  <hex row="19" col="13" terrain="6"/>
+  <hex row="19" col="14" terrain="6"/>
+  <hex row="19" col="15" terrain="6"/>
+  <hex row="19" col="16" terrain="6"/>
+  <hex row="19" col="17" terrain="6"/>
+  <hex row="19" col="18" terrain="6"/>
+  <hex row="19" col="24" terrain="8"/>
+  <hex row="19" col="25" terrain="5" road="9"/>
+  <hex row="19" col="26" terrain="5"/>
+  <hex row="19" col="27" terrain="5"/>
+  <hex row="19" col="28" terrain="5"/>
+  <hex row="19" col="29" terrain="5"/>
+  <hex row="19" col="30" terrain="5"/>
+  <hex row="19" col="31" terrain="5" road="33"/>
+  <hex row="19" col="32" terrain="5"/>
+  <hex row="19" col="33" terrain="5"/>
+  <hex row="19" col="34" terrain="5"/>
+  <hex row="19" col="35" terrain="10" name="Song Hua River"/>
+  <hex row="19" col="39" terrain="6"/>
+  <hex row="19" col="40" terrain="6"/>
+  <hex row="19" col="41" terrain="6"/>
+  <hex row="19" col="42" terrain="6"/>
+  <hex row="20" col="0" road="2"/>
+  <hex row="20" col="3" terrain="6"/>
+  <hex row="20" col="4" terrain="6"/>
+  <hex row="20" col="5" terrain="6"/>
+  <hex row="20" col="6" terrain="6"/>
+  <hex row="20" col="7" terrain="6"/>
+  <hex row="20" col="8" terrain="6" road="136"/>
+  <hex row="20" col="9" terrain="6" road="136"/>
+  <hex row="20" col="10" terrain="6"/>
+  <hex row="20" col="11" terrain="6"/>
+  <hex row="20" col="12" terrain="6"/>
+  <hex row="20" col="13" terrain="6"/>
+  <hex row="20" col="14" terrain="6"/>
+  <hex row="20" col="15" terrain="6"/>
+  <hex row="20" col="16" terrain="6"/>
+  <hex row="20" col="17" terrain="6"/>
+  <hex row="20" col="18" terrain="6"/>
+  <hex row="20" col="24" terrain="8"/>
+  <hex row="20" col="25" terrain="8"/>
+  <hex row="20" col="26" terrain="5" road="144"/>
+  <hex row="20" col="27" terrain="5"/>
+  <hex row="20" col="28" terrain="5"/>
+  <hex row="20" col="30" terrain="5" road="18"/>
+  <hex row="20" col="32" terrain="5"/>
+  <hex row="20" col="33" terrain="5"/>
+  <hex row="20" col="34" terrain="10" name="Song Hua River"/>
+  <hex row="20" col="38" terrain="6"/>
+  <hex row="20" col="39" terrain="6"/>
+  <hex row="20" col="40" terrain="6"/>
+  <hex row="20" col="41" terrain="6"/>
+  <hex row="20" col="42" terrain="6"/>
+  <hex row="21" col="1" terrain="6"/>
+  <hex row="21" col="3" terrain="6"/>
+  <hex row="21" col="4" terrain="6"/>
+  <hex row="21" col="5" terrain="6"/>
+  <hex row="21" col="6" terrain="6"/>
+  <hex row="21" col="7" terrain="6"/>
+  <hex row="21" col="8" terrain="6"/>
+  <hex row="21" col="9" terrain="6"/>
+  <hex row="21" col="10" terrain="6" road="136">
+    <unit id="616" owner="1" flag="16" face="0"/>
+  </hex>
+  <hex row="21" col="11" terrain="6" road="136"/>
+  <hex row="21" col="12" terrain="6"/>
+  <hex row="21" col="13" terrain="6"/>
+  <hex row="21" col="14" terrain="6"/>
+  <hex row="21" col="15" terrain="6"/>
+  <hex row="21" col="16" terrain="6"/>
+  <hex row="21" col="17" terrain="6"/>
+  <hex row="21" col="24" terrain="8"/>
+  <hex row="21" col="25" terrain="8">
+    <unit id="40325" owner="0" flag="22" face="0" ldr="1"/>
+  </hex>
+  <hex row="21" col="26" terrain="5" road="17"/>
+  <hex row="21" col="27" terrain="5"/>
+  <hex row="21" col="28" terrain="5"/>
+  <hex row="21" col="30" road="17"/>
+  <hex row="21" col="32" terrain="5"/>
+  <hex row="21" col="33" terrain="5"/>
+  <hex row="21" col="34" terrain="10" name="Song Hua River"/>
+  <hex row="21" col="37" terrain="6"/>
+  <hex row="21" col="38" terrain="6"/>
+  <hex row="21" col="39" terrain="6"/>
+  <hex row="21" col="40" terrain="6"/>
+  <hex row="21" col="41" terrain="6"/>
+  <hex row="21" col="42" terrain="6"/>
+  <hex row="22" col="0" terrain="6"/>
+  <hex row="22" col="1" terrain="6"/>
+  <hex row="22" col="2" terrain="6"/>
+  <hex row="22" col="3" terrain="6"/>
+  <hex row="22" col="4" terrain="6"/>
+  <hex row="22" col="5" terrain="6"/>
+  <hex row="22" col="6" terrain="6"/>
+  <hex row="22" col="7" terrain="6"/>
+  <hex row="22" col="8" terrain="6"/>
+  <hex row="22" col="9" terrain="6"/>
+  <hex row="22" col="10" terrain="6"/>
+  <hex row="22" col="11" terrain="6"/>
+  <hex row="22" col="12" terrain="6" road="136"/>
+  <hex row="22" col="13" terrain="6" road="130"/>
+  <hex row="22" col="14" terrain="6" road="40"/>
+  <hex row="22" col="15" terrain="6" road="136"/>
+  <hex row="22" col="16" terrain="6"/>
+  <hex row="22" col="19">
+    <unit id="40276" owner="0" flag="22" face="0" str="11"/>
+  </hex>
+  <hex row="22" col="26" terrain="5" road="9"/>
+  <hex row="22" col="27" terrain="5" road="130"/>
+  <hex row="22" col="28" terrain="5" road="40"/>
+  <hex row="22" col="29" road="138"/>
+  <hex row="22" col="30" road="49"/>
+  <hex row="22" col="31" terrain="5"/>
+  <hex row="22" col="32" terrain="5"/>
+  <hex row="22" col="33" terrain="10" name="Song Hua River"/>
+  <hex row="22" col="34" terrain="10" name="Song Hua River"/>
+  <hex row="22" col="37" terrain="6"/>
+  <hex row="22" col="38" terrain="6"/>
+  <hex row="22" col="39" terrain="6"/>
+  <hex row="22" col="40" terrain="6"/>
+  <hex row="22" col="41" terrain="6"/>
+  <hex row="22" col="42" terrain="6"/>
+  <hex row="23" col="0" terrain="6"/>
+  <hex row="23" col="1" terrain="6"/>
+  <hex row="23" col="2" terrain="6"/>
+  <hex row="23" col="3" terrain="6"/>
+  <hex row="23" col="4" terrain="6"/>
+  <hex row="23" col="5" terrain="6"/>
+  <hex row="23" col="6" terrain="6"/>
+  <hex row="23" col="7" terrain="6"/>
+  <hex row="23" col="8" terrain="6"/>
+  <hex row="23" col="9" terrain="6"/>
+  <hex row="23" col="10" terrain="6"/>
+  <hex row="23" col="11" terrain="6"/>
+  <hex row="23" col="12" terrain="6"/>
+  <hex row="23" col="13" terrain="6"/>
+  <hex row="23" col="14" terrain="6"/>
+  <hex row="23" col="15" terrain="6"/>
+  <hex row="23" col="16" road="136"/>
+  <hex row="23" col="17" road="130">
+    <unit id="15333" owner="1" flag="16" face="0" str="9"/>
+  </hex>
+  <hex row="23" col="18" road="40"/>
+  <hex row="23" col="19" road="136"/>
+  <hex row="23" col="23" terrain="3">
+    <unit id="40276" owner="0" flag="22" face="0" str="8"/>
+  </hex>
+  <hex row="23" col="24" terrain="3"/>
+  <hex row="23" col="25" terrain="3"/>
+  <hex row="23" col="29" terrain="8"/>
+  <hex row="23" col="30" road="145"/>
+  <hex row="23" col="31" terrain="5"/>
+  <hex row="23" col="32" terrain="5"/>
+  <hex row="23" col="33" terrain="10" name="Song Hua River"/>
+  <hex row="23" col="36" terrain="6"/>
+  <hex row="23" col="37" terrain="6"/>
+  <hex row="23" col="38" terrain="6"/>
+  <hex row="23" col="39" terrain="6"/>
+  <hex row="23" col="40" terrain="6"/>
+  <hex row="23" col="41" terrain="6"/>
+  <hex row="23" col="42" terrain="6"/>
+  <hex row="24" col="0" terrain="6"/>
+  <hex row="24" col="1" terrain="6"/>
+  <hex row="24" col="2" terrain="6"/>
+  <hex row="24" col="3" terrain="6"/>
+  <hex row="24" col="4" terrain="6"/>
+  <hex row="24" col="5" terrain="6"/>
+  <hex row="24" col="6" terrain="6"/>
+  <hex row="24" col="7" terrain="6"/>
+  <hex row="24" col="8" terrain="6"/>
+  <hex row="24" col="9" terrain="6"/>
+  <hex row="24" col="10" terrain="6"/>
+  <hex row="24" col="11" terrain="6"/>
+  <hex row="24" col="12" terrain="6"/>
+  <hex row="24" col="13" terrain="6"/>
+  <hex row="24" col="14" terrain="6"/>
+  <hex row="24" col="15" terrain="6"/>
+  <hex row="24" col="20" road="136"/>
+  <hex row="24" col="21" road="136"/>
+  <hex row="24" col="23" terrain="3"/>
+  <hex row="24" col="24" terrain="3"/>
+  <hex row="24" col="25" terrain="3"/>
+  <hex row="24" col="26" terrain="3"/>
+  <hex row="24" col="29" terrain="8"/>
+  <hex row="24" col="30" terrain="8" road="9"/>
+  <hex row="24" col="31" road="144"/>
+  <hex row="24" col="34" terrain="10" name="Song Hua River"/>
+  <hex row="24" col="37" terrain="6"/>
+  <hex row="24" col="38" terrain="6"/>
+  <hex row="24" col="39" terrain="6"/>
+  <hex row="24" col="41" terrain="6"/>
+  <hex row="24" col="42" terrain="6"/>
+  <hex row="25" col="0" terrain="6"/>
+  <hex row="25" col="1" terrain="6"/>
+  <hex row="25" col="2" terrain="6"/>
+  <hex row="25" col="3" terrain="6"/>
+  <hex row="25" col="4" terrain="6"/>
+  <hex row="25" col="5" terrain="6"/>
+  <hex row="25" col="6" terrain="6"/>
+  <hex row="25" col="7" terrain="6"/>
+  <hex row="25" col="8" terrain="6"/>
+  <hex row="25" col="9" terrain="6"/>
+  <hex row="25" col="10" terrain="6"/>
+  <hex row="25" col="11" terrain="6"/>
+  <hex row="25" col="12" terrain="6"/>
+  <hex row="25" col="13" terrain="6"/>
+  <hex row="25" col="14" terrain="6"/>
+  <hex row="25" col="15" terrain="6"/>
+  <hex row="25" col="19" terrain="3"/>
+  <hex row="25" col="22" terrain="1" road="136" name="Yangtonshan" owner="1" flag="15">
+    <unit id="15333" owner="1" flag="16" face="0"/>
+  </hex>
+  <hex row="25" col="23" road="136"/>
+  <hex row="25" col="24" terrain="3"/>
+  <hex row="25" col="26">
+    <unit id="40276" owner="0" flag="22" face="0" str="7"/>
+  </hex>
+  <hex row="25" col="29" terrain="8"/>
+  <hex row="25" col="30" terrain="8"/>
+  <hex row="25" col="31" road="17"/>
+  <hex row="25" col="34" terrain="10" name="Song Hua River"/>
+  <hex row="25" col="35" terrain="10" name="Song Hua River"/>
+  <hex row="25" col="36" terrain="6"/>
+  <hex row="25" col="37" terrain="6"/>
+  <hex row="25" col="38" terrain="6"/>
+  <hex row="25" col="39" terrain="6"/>
+  <hex row="25" col="40" terrain="6"/>
+  <hex row="26" col="0" terrain="6"/>
+  <hex row="26" col="1" terrain="6"/>
+  <hex row="26" col="2" terrain="6"/>
+  <hex row="26" col="3" terrain="6"/>
+  <hex row="26" col="4" terrain="6"/>
+  <hex row="26" col="5" terrain="6"/>
+  <hex row="26" col="6" terrain="6"/>
+  <hex row="26" col="7" terrain="6"/>
+  <hex row="26" col="8" terrain="6"/>
+  <hex row="26" col="9" terrain="6"/>
+  <hex row="26" col="10" terrain="6"/>
+  <hex row="26" col="11" terrain="6"/>
+  <hex row="26" col="12" terrain="6"/>
+  <hex row="26" col="13" terrain="6"/>
+  <hex row="26" col="14" terrain="6"/>
+  <hex row="26" col="15" terrain="6"/>
+  <hex row="26" col="17" terrain="3"/>
+  <hex row="26" col="18" terrain="3"/>
+  <hex row="26" col="19" terrain="3"/>
+  <hex row="26" col="20" terrain="3"/>
+  <hex row="26" col="23" terrain="8"/>
+  <hex row="26" col="24" road="136"/>
+  <hex row="26" col="25" road="144"/>
+  <hex row="26" col="29">
+    <unit id="40276" owner="0" flag="22" face="0" str="9"/>
+  </hex>
+  <hex row="26" col="31" road="17"/>
+  <hex row="26" col="35" terrain="10" name="Song Hua River"/>
+  <hex row="26" col="36" terrain="3"/>
+  <hex row="26" col="37" terrain="3"/>
+  <hex row="27" col="0" terrain="6"/>
+  <hex row="27" col="1" terrain="6"/>
+  <hex row="27" col="2" terrain="6"/>
+  <hex row="27" col="3" terrain="6"/>
+  <hex row="27" col="4" terrain="6"/>
+  <hex row="27" col="5" terrain="6"/>
+  <hex row="27" col="6" terrain="6"/>
+  <hex row="27" col="7" terrain="6"/>
+  <hex row="27" col="8" terrain="6"/>
+  <hex row="27" col="9" terrain="6"/>
+  <hex row="27" col="10" terrain="6"/>
+  <hex row="27" col="11" terrain="6"/>
+  <hex row="27" col="12" terrain="6"/>
+  <hex row="27" col="13" terrain="6"/>
+  <hex row="27" col="14" terrain="6"/>
+  <hex row="27" col="15" terrain="6"/>
+  <hex row="27" col="16" terrain="3"/>
+  <hex row="27" col="17" terrain="3"/>
+  <hex row="27" col="18" terrain="3"/>
+  <hex row="27" col="19" terrain="3"/>
+  <hex row="27" col="20" terrain="3"/>
+  <hex row="27" col="22" terrain="8"/>
+  <hex row="27" col="23" terrain="8"/>
+  <hex row="27" col="24" terrain="8"/>
+  <hex row="27" col="25" road="9">
+    <unit id="15378" owner="1" flag="16" face="0" transport="15365" exp="123" str="8"/>
+  </hex>
+  <hex row="27" col="26">
+    <unit id="15234" owner="1" flag="16" face="0" exp="180"/>
+  </hex>
+  <hex row="27" col="27">
+    <unit id="15234" owner="1" flag="16" face="0" exp="150"/>
+  </hex>
+  <hex row="27" col="28" terrain="3"/>
+  <hex row="27" col="29" terrain="3"/>
+  <hex row="27" col="31" road="17">
+    <unit id="18074" owner="0" flag="22" face="0" str="7"/>
+  </hex>
+  <hex row="27" col="33" terrain="1" name="Qingyu" owner="0" flag="21" victory="0">
+    <unit id="18074" owner="0" flag="22" face="0" str="2"/>
+  </hex>
+  <hex row="27" col="34" terrain="1" name="Qingyu"/>
+  <hex row="27" col="35" terrain="10" name="Song Hua River"/>
+  <hex row="27" col="36" terrain="3"/>
+  <hex row="27" col="37" terrain="3"/>
+  <hex row="27" col="38" terrain="3"/>
+  <hex row="28" col="0" terrain="6"/>
+  <hex row="28" col="1" terrain="6"/>
+  <hex row="28" col="2" terrain="6"/>
+  <hex row="28" col="3" terrain="6"/>
+  <hex row="28" col="4" terrain="6"/>
+  <hex row="28" col="5" terrain="6"/>
+  <hex row="28" col="6" terrain="6"/>
+  <hex row="28" col="7" terrain="5"/>
+  <hex row="28" col="10" terrain="6"/>
+  <hex row="28" col="15" terrain="3"/>
+  <hex row="28" col="16" terrain="3"/>
+  <hex row="28" col="17" terrain="3"/>
+  <hex row="28" col="18" terrain="3"/>
+  <hex row="28" col="19" terrain="3"/>
+  <hex row="28" col="20" terrain="3"/>
+  <hex row="28" col="21" terrain="3"/>
+  <hex row="28" col="22" terrain="8"/>
+  <hex row="28" col="23" terrain="8"/>
+  <hex row="28" col="24" terrain="8"/>
+  <hex row="28" col="25" terrain="8"/>
+  <hex row="28" col="26" road="136">
+    <unit id="15366" owner="1" flag="16" face="0" exp="178" str="7"/>
+  </hex>
+  <hex row="28" col="27" terrain="1" road="136" name="Huadian" owner="1" flag="15" victory="1">
+    <unit id="15333" owner="1" flag="16" face="0" str="8"/>
+  </hex>
+  <hex row="28" col="28" terrain="3">
+    <unit id="15260" owner="1" flag="16" face="0" exp="200"/>
+  </hex>
+  <hex row="28" col="29" terrain="3"/>
+  <hex row="28" col="30" terrain="3"/>
+  <hex row="28" col="31" terrain="3" road="17">
+    <unit id="40259" owner="0" flag="22" face="0"/>
+  </hex>
+  <hex row="28" col="33">
+    <unit id="40325" owner="0" flag="22" face="0" transport="40301" str="8"/>
+  </hex>
+  <hex row="28" col="34" terrain="10" name="Song Hua River"/>
+  <hex row="28" col="36" terrain="3"/>
+  <hex row="29" col="0" terrain="6"/>
+  <hex row="29" col="1" terrain="6"/>
+  <hex row="29" col="2" terrain="6"/>
+  <hex row="29" col="3" terrain="5"/>
+  <hex row="29" col="4" terrain="5"/>
+  <hex row="29" col="5" terrain="5"/>
+  <hex row="29" col="6" terrain="6"/>
+  <hex row="29" col="7" terrain="5"/>
+  <hex row="29" col="8" terrain="5"/>
+  <hex row="29" col="9" terrain="5"/>
+  <hex row="29" col="16" terrain="3"/>
+  <hex row="29" col="17" terrain="3"/>
+  <hex row="29" col="18" terrain="3"/>
+  <hex row="29" col="19" terrain="3"/>
+  <hex row="29" col="20" terrain="3"/>
+  <hex row="29" col="22" terrain="8"/>
+  <hex row="29" col="23" terrain="8"/>
+  <hex row="29" col="24" terrain="8"/>
+  <hex row="29" col="25" terrain="8"/>
+  <hex row="29" col="28" road="136"/>
+  <hex row="29" col="29" road="136"/>
+  <hex row="29" col="30" terrain="3"/>
+  <hex row="29" col="31" road="33">
+    <unit id="18072" owner="0" flag="22" face="0"/>
+  </hex>
+  <hex row="29" col="33" terrain="10" name="Song Hua River"/>
+  <hex row="29" col="34" terrain="10" name="Song Hua River"/>
+  <hex row="30" col="1" terrain="5"/>
+  <hex row="30" col="2" terrain="5"/>
+  <hex row="30" col="3" terrain="5"/>
+  <hex row="30" col="4" terrain="5"/>
+  <hex row="30" col="5" terrain="5"/>
+  <hex row="30" col="6" terrain="5"/>
+  <hex row="30" col="7" terrain="5"/>
+  <hex row="30" col="8" terrain="5"/>
+  <hex row="30" col="9" terrain="5"/>
+  <hex row="30" col="16" terrain="3"/>
+  <hex row="30" col="18" terrain="3"/>
+  <hex row="30" col="20" terrain="3"/>
+  <hex row="30" col="21" terrain="3"/>
+  <hex row="30" col="30" road="146"/>
+  <hex row="30" col="33" terrain="10" name="Song Hua River"/>
+  <hex row="31" col="0" terrain="5" road="8"/>
+  <hex row="31" col="1" terrain="5" road="136"/>
+  <hex row="31" col="2" terrain="5"/>
+  <hex row="31" col="3" terrain="5"/>
+  <hex row="31" col="4" terrain="5"/>
+  <hex row="31" col="5" terrain="5"/>
+  <hex row="31" col="6" terrain="5"/>
+  <hex row="31" col="7" terrain="5"/>
+  <hex row="31" col="8" terrain="5"/>
+  <hex row="31" col="9" terrain="5"/>
+  <hex row="31" col="10" terrain="5"/>
+  <hex row="31" col="11" terrain="5"/>
+  <hex row="31" col="20" terrain="3"/>
+  <hex row="31" col="23" terrain="3"/>
+  <hex row="31" col="24" terrain="3"/>
+  <hex row="31" col="25" terrain="3"/>
+  <hex row="31" col="27">
+    <unit id="15333" owner="1" flag="16" face="0" str="8"/>
+  </hex>
+  <hex row="31" col="29" road="18"/>
+  <hex row="31" col="30" road="33"/>
+  <hex row="31" col="33" terrain="10" name="Song Hua River"/>
+  <hex row="31" col="39" terrain="6"/>
+  <hex row="32" col="0" terrain="5"/>
+  <hex row="32" col="1" terrain="5"/>
+  <hex row="32" col="2" terrain="5" road="136"/>
+  <hex row="32" col="3" terrain="5" road="152"/>
+  <hex row="32" col="4" terrain="5"/>
+  <hex row="32" col="5" terrain="5"/>
+  <hex row="32" col="6" terrain="5"/>
+  <hex row="32" col="7" terrain="5"/>
+  <hex row="32" col="8" terrain="5"/>
+  <hex row="32" col="9" terrain="5"/>
+  <hex row="32" col="10" terrain="5"/>
+  <hex row="32" col="11" terrain="5"/>
+  <hex row="32" col="12" terrain="5"/>
+  <hex row="32" col="13" terrain="5"/>
+  <hex row="32" col="15" terrain="5"/>
+  <hex row="32" col="23" terrain="3"/>
+  <hex row="32" col="24" terrain="3"/>
+  <hex row="32" col="25" terrain="3"/>
+  <hex row="32" col="29" road="17"/>
+  <hex row="32" col="31" deploy="0">
+    <unit id="18074" owner="0" flag="22" face="0"/>
+  </hex>
+  <hex row="32" col="33" terrain="10" name="Song Hua River"/>
+  <hex row="32" col="35" terrain="1" name="Songjianhe" owner="0" flag="21"/>
+  <hex row="32" col="37" terrain="6"/>
+  <hex row="32" col="38" terrain="6"/>
+  <hex row="32" col="39" terrain="6"/>
+  <hex row="32" col="40" terrain="6"/>
+  <hex row="32" col="41" terrain="6"/>
+  <hex row="33" col="0" terrain="5"/>
+  <hex row="33" col="1" terrain="5"/>
+  <hex row="33" col="2" terrain="5"/>
+  <hex row="33" col="3" terrain="5" road="3"/>
+  <hex row="33" col="4" terrain="5" road="168"/>
+  <hex row="33" col="5" terrain="5" road="130"/>
+  <hex row="33" col="6" terrain="5" road="40"/>
+  <hex row="33" col="7" terrain="5" road="130"/>
+  <hex row="33" col="8" terrain="5" road="40"/>
+  <hex row="33" col="9" terrain="5" road="130"/>
+  <hex row="33" col="10" terrain="5" road="40"/>
+  <hex row="33" col="11" terrain="5" road="136"/>
+  <hex row="33" col="12" terrain="5"/>
+  <hex row="33" col="13" terrain="5"/>
+  <hex row="33" col="14" terrain="5"/>
+  <hex row="33" col="15" terrain="3"/>
+  <hex row="33" col="16" terrain="3"/>
+  <hex row="33" col="17" terrain="3"/>
+  <hex row="33" col="25" terrain="8"/>
+  <hex row="33" col="26" terrain="3">
+    <unit id="15366" owner="1" flag="16" face="0" exp="200" str="7" ldr="1"/>
+  </hex>
+  <hex row="33" col="27" terrain="3">
+    <unit id="15333" owner="1" flag="16" face="0"/>
+  </hex>
+  <hex row="33" col="28" terrain="3"/>
+  <hex row="33" col="29" road="49" deploy="0">
+    <unit id="18074" owner="0" flag="22" face="0"/>
+  </hex>
+  <hex row="33" col="33" terrain="10" name="Song Hua River"/>
+  <hex row="33" col="36" terrain="6"/>
+  <hex row="33" col="37" terrain="6"/>
+  <hex row="33" col="38" terrain="10" name="VOLCANO LAKE"/>
+  <hex row="33" col="39" terrain="6"/>
+  <hex row="33" col="40" terrain="6"/>
+  <hex row="34" col="0" terrain="5"/>
+  <hex row="34" col="1" terrain="5"/>
+  <hex row="34" col="2" terrain="5"/>
+  <hex row="34" col="3" terrain="5"/>
+  <hex row="34" col="4" terrain="5"/>
+  <hex row="34" col="5" terrain="5"/>
+  <hex row="34" col="6" terrain="5"/>
+  <hex row="34" col="7" terrain="5"/>
+  <hex row="34" col="8" terrain="5"/>
+  <hex row="34" col="9" terrain="5"/>
+  <hex row="34" col="10" terrain="5"/>
+  <hex row="34" col="11" terrain="5"/>
+  <hex row="34" col="12" terrain="5" road="136"/>
+  <hex row="34" col="13" terrain="5" road="136"/>
+  <hex row="34" col="14" terrain="3"/>
+  <hex row="34" col="15" terrain="3"/>
+  <hex row="34" col="16" terrain="3"/>
+  <hex row="34" col="17" terrain="3"/>
+  <hex row="34" col="18" terrain="3"/>
+  <hex row="34" col="23" terrain="8"/>
+  <hex row="34" col="24" terrain="8"/>
+  <hex row="34" col="28" road="26"/>
+  <hex row="34" col="29" road="169" deploy="0">
+    <unit id="40259" owner="0" flag="22" face="0"/>
+  </hex>
+  <hex row="34" col="31" terrain="1" name="Hunjiang"/>
+  <hex row="34" col="32" terrain="10" name="Song Hua River"/>
+  <hex row="34" col="36" terrain="6"/>
+  <hex row="34" col="37" terrain="6"/>
+  <hex row="34" col="38" terrain="6"/>
+  <hex row="35" col="0" terrain="5"/>
+  <hex row="35" col="1" terrain="5"/>
+  <hex row="35" col="2" terrain="5"/>
+  <hex row="35" col="3" terrain="5"/>
+  <hex row="35" col="4" terrain="5"/>
+  <hex row="35" col="5" terrain="5"/>
+  <hex row="35" col="6" terrain="5"/>
+  <hex row="35" col="7" terrain="5"/>
+  <hex row="35" col="8" terrain="5"/>
+  <hex row="35" col="9" terrain="5"/>
+  <hex row="35" col="10" terrain="5"/>
+  <hex row="35" col="11" terrain="5"/>
+  <hex row="35" col="12" terrain="5"/>
+  <hex row="35" col="13" terrain="5"/>
+  <hex row="35" col="14" terrain="5" road="136"/>
+  <hex row="35" col="15" terrain="5" road="136"/>
+  <hex row="35" col="16" terrain="3"/>
+  <hex row="35" col="17" terrain="3" road="40"/>
+  <hex row="35" col="18" terrain="3"/>
+  <hex row="35" col="23" terrain="8"/>
+  <hex row="35" col="24" terrain="8"/>
+  <hex row="35" col="28" road="19" deploy="0">
+    <unit id="18074" owner="0" flag="22" face="0"/>
+  </hex>
+  <hex row="35" col="30" road="138"/>
+  <hex row="35" col="31" terrain="1" road="145" name="Hunjiang" owner="0" flag="21" victory="0">
+    <unit id="40211" owner="0" flag="22" face="0"/>
+  </hex>
+  <hex row="35" col="32" terrain="10" name="Song Hua River"/>
+  <hex row="35" col="33" terrain="6"/>
+  <hex row="35" col="34" terrain="6"/>
+  <hex row="35" col="35" terrain="6"/>
+  <hex row="35" col="36" terrain="6"/>
+  <hex row="35" col="37" terrain="6"/>
+  <hex row="35" col="39" terrain="6"/>
+  <hex row="36" col="0" terrain="5"/>
+  <hex row="36" col="1" terrain="5"/>
+  <hex row="36" col="2" terrain="5"/>
+  <hex row="36" col="3" terrain="5"/>
+  <hex row="36" col="4" terrain="5"/>
+  <hex row="36" col="5" terrain="5"/>
+  <hex row="36" col="6" terrain="5"/>
+  <hex row="36" col="7" terrain="5"/>
+  <hex row="36" col="8" terrain="5"/>
+  <hex row="36" col="9" terrain="5"/>
+  <hex row="36" col="10" terrain="5"/>
+  <hex row="36" col="11" terrain="5"/>
+  <hex row="36" col="12" terrain="5"/>
+  <hex row="36" col="13" terrain="5"/>
+  <hex row="36" col="14" terrain="5"/>
+  <hex row="36" col="15" terrain="5"/>
+  <hex row="36" col="16" terrain="5" road="130"/>
+  <hex row="36" col="18" road="136"/>
+  <hex row="36" col="19" road="130"/>
+  <hex row="36" col="20" road="40"/>
+  <hex row="36" col="21" road="130"/>
+  <hex row="36" col="22" road="40">
+    <unit id="15366" owner="1" flag="16" face="0" transport="15365" exp="100"/>
+  </hex>
+  <hex row="36" col="23" terrain="8" road="130">
+    <unit id="15234" owner="1" flag="16" face="0" exp="100"/>
+  </hex>
+  <hex row="36" col="24" terrain="8" road="40">
+    <unit id="15234" owner="1" flag="16" face="0" exp="100" ldr="1"/>
+  </hex>
+  <hex row="36" col="25" road="136"/>
+  <hex row="36" col="27" terrain="1" road="34" name="Tonghua"/>
+  <hex row="36" col="28" road="33"/>
+  <hex row="36" col="30" terrain="3" deploy="0">
+    <unit id="40325" owner="0" flag="22" face="0" transport="40301"/>
+  </hex>
+  <hex row="36" col="31" terrain="3" road="9"/>
+  <hex row="36" col="32" terrain="10" name="Song Hua River"/>
+  <hex row="36" col="33" terrain="1" name="Linjiang"/>
+  <hex row="36" col="34" terrain="6"/>
+  <hex row="36" col="36" terrain="6"/>
+  <hex row="36" col="37" terrain="6"/>
+  <hex row="36" col="38" terrain="6"/>
+  <hex row="36" col="39" terrain="6"/>
+  <hex row="36" col="40" terrain="6"/>
+  <hex row="37" col="0" terrain="5"/>
+  <hex row="37" col="1" terrain="5"/>
+  <hex row="37" col="2" terrain="5"/>
+  <hex row="37" col="3" terrain="5"/>
+  <hex row="37" col="4" terrain="5"/>
+  <hex row="37" col="5" terrain="5"/>
+  <hex row="37" col="6" terrain="5"/>
+  <hex row="37" col="7" terrain="5"/>
+  <hex row="37" col="8" terrain="5"/>
+  <hex row="37" col="9" terrain="5"/>
+  <hex row="37" col="10" terrain="5"/>
+  <hex row="37" col="11" terrain="5"/>
+  <hex row="37" col="12" terrain="5"/>
+  <hex row="37" col="13" terrain="5"/>
+  <hex row="37" col="14" terrain="5"/>
+  <hex row="37" col="15" terrain="5"/>
+  <hex row="37" col="23" terrain="3"/>
+  <hex row="37" col="26" terrain="1" road="146" name="Tonghua" owner="0" flag="21" deploy="0">
+    <unit id="18072" owner="0" flag="22" face="0"/>
+  </hex>
+  <hex row="37" col="30" terrain="3"/>
+  <hex row="37" col="31" terrain="10" name="Song Hua River"/>
+  <hex row="37" col="32" terrain="10" road="138" name="Song Hua River"/>
+  <hex row="37" col="33" terrain="1" road="139" name="Linjiang" owner="0" flag="21" victory="0">
+    <unit id="379" owner="0" flag="22" face="0"/>
+  </hex>
+  <hex row="37" col="34" terrain="1" name="Linjiang">
+    <unit id="40242" owner="0" flag="22" face="0" str="5"/>
+  </hex>
+  <hex row="37" col="35" terrain="6"/>
+  <hex row="37" col="36" terrain="6"/>
+  <hex row="37" col="37" terrain="6"/>
+  <hex row="37" col="38" terrain="6"/>
+  <hex row="37" col="39" terrain="6"/>
+  <hex row="37" col="40" terrain="6"/>
+</map>

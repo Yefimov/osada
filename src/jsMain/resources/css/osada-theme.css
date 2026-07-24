@@ -1,0 +1,2679 @@
+/* ============================================================================
+ * OSADA theme layer — design tokens + reusable component classes.
+ *
+ * Loaded AFTER css/base.css (ex-ui.css) so it can override, but at this stage it defines
+ * ONLY CSS variables and NEW reusable classes (.osada-*). It does not yet
+ * restyle any existing #id / legacy class, so including it changes nothing
+ * visually and cannot break gameplay logic. Stage-1 reskin work will start
+ * mapping the legacy selectors onto these tokens.
+ *
+ * Visual direction: historical military staff — dark metal, staff folders,
+ * paper, red accents, brass/steel frames. NOT flat SaaS / Bootstrap.
+ * ============================================================================ */
+
+:root {
+    /* --- Surfaces --- */
+    --osada-metal-900: #14161a;   /* deepest panel metal            */
+    --osada-metal-800: #1d2127;   /* panel background               */
+    --osada-metal-700: #2a2f38;   /* raised element / button base   */
+    --osada-metal-600: #3a414c;   /* border / bevel highlight       */
+    --osada-paper:     #d9cba8;   /* staff-folder paper             */
+    --osada-paper-ink: #2b2317;   /* text on paper                  */
+
+    /* --- Accents --- */
+    --osada-red:        #a51e22;  /* primary action / danger        */
+    --osada-red-bright: #d0342c;  /* hover                          */
+    --osada-red-dark:   #7d1418;  /* pressed / paper headings       */
+    --osada-brass:      #b48a3c;  /* frames / dividers              */
+    --osada-steel:      #8a929c;  /* secondary text / steel trim    */
+    --osada-gold:       #f8e064;  /* legacy PM gold (kept for parity)*/
+    --osada-cyan:       #3cf;     /* legacy PM info blue            */
+
+    /* --- Text --- */
+    --osada-text:       #e7e2d4;  /* primary readable text          */
+    --osada-text-dim:   #a9a494;
+
+    /* --- Structure --- */
+    --osada-radius:      3px;
+    --osada-border:      1px solid var(--osada-metal-600);
+    --osada-frame-brass: 2px solid var(--osada-brass);
+    --osada-shadow:      0 2px 6px rgba(0,0,0,.6);
+    --osada-font-ui:     Arial, "Segoe UI", sans-serif;
+
+    /* --- HUD geometry (to replace hard-coded 840px/-420px math in JS) --- */
+    --osada-topbar-h:    40px;
+    --osada-sidebar-w:   280px;
+    --osada-bottombar-h: 120px;
+}
+
+/* --- Reusable component classes (not yet wired to legacy DOM) --- */
+.osada-panel            { background: var(--osada-metal-800); border: var(--osada-border); border-radius: var(--osada-radius); box-shadow: var(--osada-shadow); color: var(--osada-text); }
+.osada-panel--paper     { background: var(--osada-paper); color: var(--osada-paper-ink); border-color: var(--osada-brass); }
+.osada-panel--metal     { background: linear-gradient(180deg, var(--osada-metal-700), var(--osada-metal-900)); border: var(--osada-frame-brass); }
+
+.osada-button           { display:inline-flex; align-items:center; justify-content:center; min-height:36px; padding:0 14px; border:var(--osada-border); border-radius:var(--osada-radius); background:var(--osada-metal-700); color:var(--osada-text); font-family:var(--osada-font-ui); font-weight:bold; cursor:pointer; }
+.osada-button:hover     { background:var(--osada-metal-600); }
+.osada-button--primary  { background:var(--osada-red); border-color:var(--osada-red-bright); color:#fff; }
+.osada-button--primary:hover { background:var(--osada-red-bright); }
+.osada-button--danger   { background:transparent; border-color:var(--osada-red); color:var(--osada-red-bright); }
+
+.osada-topbar           { display:flex; align-items:center; gap:18px; height:var(--osada-topbar-h); padding:0 12px; }
+.osada-sidebar          { width:var(--osada-sidebar-w); display:flex; flex-direction:column; gap:10px; }
+.osada-bottom-bar       { min-height:var(--osada-bottombar-h); display:flex; align-items:stretch; gap:12px; }
+.osada-unit-card        { display:flex; flex-direction:column; }
+.osada-objectives       { }
+.osada-minimap          { border:var(--osada-frame-brass); }
+.osada-log              { overflow-y:auto; }
+
+/* ============================================================================
+ * STAGE 1 + partial STAGE 2 — LEGACY REMAP
+ *
+ * Everything below maps the existing Panzer Marshal / OpenPanzer selectors onto
+ * the OSADA tokens above. It is CSS-only: no DOM id is renamed, no Kotlin logic
+ * touched, nothing about canvas / map / units / rules changes. Loaded after
+ * base.css (ex-ui.css), so equal-specificity rules here win.
+ *
+ * Palette remap intent:
+ *   PM gold   #f8e064  -> ivory text / brass accents
+ *   PM orange #f90 #ffb506 -> brass frames / red primary
+ *   PM cyan   #3cf     -> steel / brass
+ *   PM bg     rgba(0,0,0,.7) -> dark metal gradients
+ * ============================================================================ */
+
+/* ---- shared helper: reusable metal / paper surfaces via mixins-as-rules ---- */
+
+/* =====================  A. START MENU SHELL  ============================== */
+
+#startmenu {
+    color: var(--osada-text);
+    font-family: var(--osada-font-ui);
+}
+/* Darken & age the rotating WW2 photo background so it reads as a staff/command
+   backdrop instead of bright stock photos. (Background only — not the map.)
+   Done purely with a filter on the photo layer so no stacking-context / z-index
+   changes are needed — the menu panels keep their existing paint order. */
+.animatedBackground span {
+    filter: brightness(.38) contrast(1.08) sepia(.3) saturate(.75);
+}
+
+/* Main framed dialog surface (campaign / scenario / state screens). */
+.mainPanel {
+    background:
+        linear-gradient(180deg, rgba(42,47,56,.96), rgba(20,22,26,.985)),
+        var(--osada-metal-800);
+    border: var(--osada-frame-brass);
+    border-radius: var(--osada-radius);
+    box-shadow: 0 12px 44px rgba(0,0,0,.8), inset 0 0 0 1px rgba(0,0,0,.55);
+    color: var(--osada-text);
+}
+.mainPanelInner { color: var(--osada-text); }
+
+/* Logo block (keeps logo.png). */
+#smLogo { filter: drop-shadow(0 3px 6px rgba(0,0,0,.7)); }
+#smLogoText, #smCredits { color: var(--osada-text-dim); }
+
+hr {
+    height: 2px;
+    background-image: linear-gradient(left, rgba(0,0,0,0), var(--osada-brass), rgba(0,0,0,0));
+    background-image: linear-gradient(to right, rgba(0,0,0,0), var(--osada-brass), rgba(0,0,0,0));
+}
+
+/* =====================  B. BUTTONS (image skins)  ======================= */
+/* State plates were split from the provided *_states.png strips into tightly-
+ * cropped per-state files (see IMAGE ASSETS v2 note at the end). Each state uses
+ * the full `background` shorthand incl. size, so no gradient/border from base.css (ex-ui.css)
+ * or earlier rules leaks between states. `background-size:100% 100%` stretches
+ * the plate to the button; the plates are simple bevelled frames so this reads
+ * clean at button scale. */
+
+/* Wide main-menu buttons (New Game / Settings / Save-Load / Continue) -> metal. */
+.smMainButton {
+    border: 0; box-shadow: none; text-shadow: none;
+    background: url('../resources/btn_menu_metal_normal.png') center / 100% 100% no-repeat;
+    color: var(--osada-text); text-transform: uppercase; letter-spacing: .04em;
+}
+.smMainButton:hover  { background: url('../resources/btn_menu_metal_hover.png')   center / 100% 100% no-repeat; color: #fff; }
+.smMainButton:active { background: url('../resources/btn_menu_metal_pressed.png') center / 100% 100% no-repeat; }
+
+/* Submenu (Campaigns / Scenarios / Tutorial) -> dark steel plate. */
+.smMainButtonLight {
+    border: 0; box-shadow: none; text-shadow: none;
+    background: url('../resources/btn_secondary_dark_normal.png') center / 100% 100% no-repeat;
+    color: var(--osada-text); text-transform: uppercase; letter-spacing: .04em;
+}
+.smMainButtonLight:hover { background: url('../resources/btn_secondary_dark_hover.png') center / 100% 100% no-repeat; color: #fff; }
+
+/* Small glyph buttons everywhere -> rounded-square brass plate (dark/gold/red). */
+.smallButton, .smallButtonSubMenu, .smallButtonMenu {
+    border: 0; box-shadow: none; border-radius: 0; text-shadow: none;
+    background: url('../resources/btn_round_brass_normal.png') center / 100% 100% no-repeat;
+    color: var(--osada-text);
+}
+.smallButton:hover, .smallButtonSubMenu:hover, .smallButtonMenu:hover {
+    background: url('../resources/btn_round_brass_hover.png') center / 100% 100% no-repeat; color: #fff;
+}
+.smallButton:active,
+.smallButton[selected], .smallButtonSubMenu[selected], .smallButtonMenu[selected] {
+    background: url('../resources/btn_round_brass_selected.png') center / 100% 100% no-repeat; color: #fff;
+}
+.smallButtonAlert { color: var(--osada-brass); }
+
+/* Primary confirm/OK glyph buttons -> red plate (kept round).
+ * NOT #dossierCloseBut: it was in this list back when the dossier's close control was an
+ * osada-menu glyph button, but DossierBuilder now builds it as an `.osada-ico--close` sprite
+ * span (like the Turn Report's). An ID selector (1-0-0) outranks `.osada-ico` (0-1-0), so this
+ * rule's `background` shorthand silently replaced the sprite sheet with a blank brass plate —
+ * the close button rendered as a featureless disc with no ✕ on it. */
+#uiokbut, #smStOkBut, #smSetOkBut {
+    background: url('../resources/btn_round_brass_selected.png') center / 100% 100% no-repeat; color: #fff;
+}
+
+/* Large primary "Play / Start" -> wide red plate; "Back" -> wide dark plate.
+ * These are widened from the default 26px glyph circles and re-offset so the
+ * campaign/scenario button rows (play / back / flow) don't collide. Offsets are
+ * relative to the panel padding box (inside the 42px frame border added below). */
+#smCPlayBut, #smSPlayBut {
+    width: 158px; min-width: 158px; height: 44px; min-height: 44px; line-height: 44px;
+    border: 0; box-shadow: none; border-radius: 0; text-shadow: none; font-size: 20px;
+    background: url('../resources/btn_primary_red_normal.png') center / 100% 100% no-repeat;
+    color: var(--osada-text); right: 14px; bottom: 8px;
+}
+#smCPlayBut:hover, #smSPlayBut:hover   { background: url('../resources/btn_primary_red_hover.png')   center / 100% 100% no-repeat; }
+#smCPlayBut:active, #smSPlayBut:active  { background: url('../resources/btn_primary_red_pressed.png') center / 100% 100% no-repeat; }
+#smCBackBut, #smSBackBut {
+    width: 132px; min-width: 132px; height: 40px; min-height: 40px; line-height: 40px;
+    border: 0; box-shadow: none; border-radius: 0; text-shadow: none; font-size: 18px;
+    background: url('../resources/btn_secondary_dark_normal.png') center / 100% 100% no-repeat;
+    color: var(--osada-text); right: 186px; bottom: 10px;
+}
+#smCBackBut:hover, #smSBackBut:hover { background: url('../resources/btn_secondary_dark_hover.png') center / 100% 100% no-repeat; }
+/* Campaign "flow" glyph button sits left of the widened Back button. */
+#smCFlowBut { right: 330px; }
+
+/* Search / text inputs. */
+input[type=text], input[type=search] {
+    background-color: var(--osada-metal-900);
+    border: 1px solid var(--osada-brass);
+    color: var(--osada-text);
+}
+
+/* =====================  C. SELECTS (register panels)  ==================== */
+
+.smSelect {
+    border: 1px solid var(--osada-brass);
+    border-left: 3px solid var(--osada-red);
+    border-radius: var(--osada-radius);
+    background-color: var(--osada-metal-900);
+    background-blend-mode: normal;
+    color: var(--osada-text);
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.5);
+}
+.smSelect select { color: var(--osada-text); font-weight: bold; }
+.smSelect option { background-color: var(--osada-metal-800); color: var(--osada-text); }
+.smSelect option:checked { background: var(--osada-red); color: #fff; }
+/* Category / group rows (disabled options) -> brass italic register headers. */
+.smSelect option:disabled { background-color: var(--osada-metal-900); color: var(--osada-brass); font-style: italic; }
+
+/* =====================  D + E. STAGE 2 REGISTER / DOSSIER SCREENS  ========
+ * Campaign (#smCamp) and Scenario (#smScen) share one template: a header strip,
+ * a two-column body (left register list synced to the hidden <select>, right
+ * dossier), and a footer strip. Built by StartMenuBuilder.buildCampaignScreen /
+ * buildScenarioScreen; the native <select> stays in the DOM as source of truth
+ * but is hidden. The panels keep their 42px frame border from the .mainPanel
+ * rules above, so this only sets the inner flex layout (not the frame). */
+
+.osadaHiddenSelect { display: none !important; }
+
+/* IMPORTANT: do NOT set `display` on #smCamp / #smScen here. They are toggled by
+ * makeVisible/makeHidden (inline display), and default to `display:none` in base.css (ex-ui.css).
+ * Overriding display in the stylesheet would keep both screens permanently visible
+ * and overlapping. Instead the panel is just a positioning context (it is already
+ * position:absolute via .mainPanel) and the header / body / footer are absolutely
+ * positioned inside it — layout is independent of the outer display value. */
+
+/* --- header strip (pinned top, inside the 42px frame) --- */
+.osadaScreenHeader {
+    position: absolute; top: 0; left: 2px; right: 2px;
+    color: var(--osada-brass);
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 2px 2px 8px;
+    border-bottom: 1px solid var(--osada-metal-600);
+}
+
+/* --- two-column body (fills between header and footer) --- */
+.osadaScreenBody { position: absolute; top: 40px; bottom: 66px; left: 2px; right: 2px; display: flex; gap: 14px; align-items: stretch; }
+
+/* --- left: register list --- */
+.osadaRegister { flex: 0 0 40%; min-width: 0; display: flex; flex-direction: column; }
+.osadaList { flex: 1 1 auto; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; padding-right: 4px; }
+
+/* Sort + filter bar above the register (StartMenuBuilder.buildListToolbar). flex:0 0 auto so it
+ * never steals height from the scrolling list below it. */
+.osadaListTools { flex: 0 0 auto; display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.osadaListFilter {
+    flex: 1 1 auto; min-width: 0; box-sizing: border-box; height: 28px; padding: 0 8px;
+    border: 1px solid var(--osada-metal-600); border-radius: var(--osada-radius);
+    background: #14171b; color: var(--osada-text);
+    font-family: var(--osada-font-ui); font-size: 12px;
+}
+.osadaListFilter:focus { outline: none; border-color: var(--osada-brass); }
+.osadaListFilter::placeholder { color: var(--osada-text-dim); }
+.osadaListSorts { flex: 0 0 auto; display: flex; gap: 4px; }
+/* flex:0 0 auto, overriding .osada-seg's `flex:1 1 0` (it's a fill-the-row difficulty segment
+ * there): here the segments must size to their labels so the filter box takes the slack. */
+.osadaListSorts .osada-seg { flex: 0 0 auto; padding: 0 8px; height: 28px; line-height: 26px; }
+.osadaListRow {
+    display: flex; align-items: center; gap: 10px;
+    min-height: 44px; padding: 6px 10px; cursor: pointer; box-sizing: border-box;
+    background: #1c1f25;
+    border: 1px solid var(--osada-metal-600);
+    border-left: 3px solid transparent;
+    border-radius: var(--osada-radius);
+    color: var(--osada-text);
+}
+.osadaListRow:hover { border-color: var(--osada-brass); }
+.osadaListRow--selected, .osadaListRow--selected:hover {
+    /* 9-slice red command plate: dark chevron end-caps stay crisp, red middle stretches. */
+    border: 4px solid transparent;
+    border-left-width: 18px; border-right-width: 18px;
+    border-image: url('../resources/list_row_selected.png') 44 200 44 200 fill stretch;
+    padding: 4px 6px;
+    color: #f4e7d6; text-shadow: 0 1px 2px rgba(0,0,0,.6);
+}
+.osadaListRow--group {
+    cursor: default; background: transparent; border: none;
+    color: var(--osada-brass); font-style: italic; text-transform: uppercase;
+    letter-spacing: .06em; font-size: 12px; min-height: 26px; padding: 12px 4px 2px;
+}
+.osadaListRow--group:hover { border: none; }
+.osadaFlag { flex: 0 0 auto; width: 22px; height: 14px; background-repeat: no-repeat; box-shadow: 0 0 0 1px rgba(0,0,0,.5); }
+.osadaListRowText { display: flex; flex-direction: column; min-width: 0; }
+.osadaListRowName { font-size: 13px; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.osadaListRowSub { font-size: 11px; color: var(--osada-text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.osadaListRow--selected .osadaListRowSub { color: rgba(244,231,214,.82); }
+
+/* --- right: dossier --- */
+.osadaDossier { flex: 1 1 60%; min-width: 0; display: flex; flex-direction: column; gap: 10px; overflow: hidden; }
+/* The theater art is the emotional anchor of this screen (spec) — a full-width banner with the
+ * title/subtitle overlaid at the bottom, not a small thumbnail beside the text. NOTE: this is
+ * still ONE placeholder image (dossier_map_placeholder.png) for every campaign — there is no
+ * per-campaign key art asset or scenario-snapshot pipeline yet, so the banner is a real layout
+ * upgrade but not yet a real content upgrade; swap the background-image source per campaign
+ * once that art exists. */
+.osadaDossierHead {
+    flex: 0 0 auto; position: relative; height: 190px;
+    border: 1px solid var(--osada-brass); border-radius: var(--osada-radius);
+    overflow: hidden; box-shadow: 0 6px 24px rgba(0,0,0,.5);
+}
+.osadaTheater {
+    position: absolute; inset: 0;
+    /* 50% 0%: show the TOP of the key art (user request) — the bottom is covered by the
+     * title/subtitle scrim gradient anyway. Must match setTheaterArt() in StartMenuBuilder,
+     * which rebuilds this background per campaign. */
+    background:
+        linear-gradient(180deg, rgba(10,11,13,0) 42%, rgba(8,9,11,.94) 100%),
+        linear-gradient(rgba(0,0,0,.10), rgba(0,0,0,.14)),
+        url('../resources/dossier_map_placeholder.png') 50% 0% / cover no-repeat;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.35), inset 0 0 30px rgba(0,0,0,.5);
+}
+.osadaDossierHeadText {
+    position: absolute; left: 16px; right: 16px; bottom: 12px; z-index: 1;
+    display: flex; flex-direction: column; min-width: 0;
+}
+.osadaDossierTitle { color: var(--osada-brass); font-size: 22px; font-weight: bold; letter-spacing: .02em; line-height: 1.15; text-shadow: 0 2px 6px rgba(0,0,0,.9), 0 0 22px rgba(0,0,0,.6); }
+.osadaDossierSub { color: var(--osada-text-dim); font-size: 13px; text-transform: uppercase; letter-spacing: .06em; margin-top: 3px; text-shadow: 0 1px 4px rgba(0,0,0,.9); }
+
+/* --- dossier badge chips (reuses the existing #smCampInfo data elements) --- */
+#smCampInfo { flex: 0 0 auto; width: auto; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.smCampDetails {
+    float: none; width: auto; min-width: 0; height: auto; min-height: 0;
+    text-align: left; padding: 6px 12px; line-height: 1.35; box-sizing: border-box;
+    color: var(--osada-text);
+    background: var(--osada-metal-800);
+    border: 1px solid var(--osada-metal-600);
+    border-left: 2px solid var(--osada-brass);
+    border-radius: var(--osada-radius);
+    font-size: 13px; font-weight: normal;
+}
+.smCampDetails b { color: var(--osada-brass); text-transform: uppercase; font-size: 10px; letter-spacing: .06em; display: block; margin-bottom: 2px; }
+#smCampDif { border: none; background: transparent; box-shadow: none; padding: 0; width: auto; }
+
+/* --- paper description (staff folder), scrolls inside its own block --- */
+.smDesc {
+    flex: 1 1 auto; min-height: 90px; height: auto; overflow-y: auto;
+    color: var(--osada-paper-ink);
+    background:
+        linear-gradient(180deg, rgba(0,0,0,.04), rgba(0,0,0,.10)),
+        var(--osada-paper);
+    border: 1px solid var(--osada-brass);
+    border-top: 3px solid var(--osada-red);
+    border-radius: var(--osada-radius);
+    box-shadow: inset 0 0 24px rgba(90,70,40,.18), var(--osada-shadow);
+    padding: 14px 16px;
+    line-height: 1.55;
+    font-family: var(--osada-font-ui);
+}
+.smDesc b, .smDesc h1, .smDesc h2, .smDesc h3 { color: var(--osada-red-dark, #7d1418); }
+#smCampDesc, #smScenDesc { width: auto; margin: 0; }
+
+/* --- collapsible campaign path (victory/defeat tree) --- */
+.osadaCollapse { flex: 0 0 auto; border-top: 1px solid var(--osada-metal-600); padding-top: 4px; }
+.osadaCollapseSummary {
+    cursor: pointer; user-select: none;
+    color: var(--osada-text-dim); font-size: 12px;
+    text-transform: uppercase; letter-spacing: .08em; padding: 6px 2px;
+}
+.osadaCollapseSummary:hover { color: var(--osada-brass); }
+.osadaCollapseSummary:before { content: "\25B8\00a0\00a0"; }
+.osadaCollapse--open .osadaCollapseSummary:before { content: "\25BE\00a0\00a0"; }
+.osadaCollapseBody { display: none; max-height: 170px; overflow-y: auto; color: var(--osada-text); font-size: 13px; padding: 4px 2px 2px; }
+.osadaCollapse--open .osadaCollapseBody { display: block; }
+
+/* --- scenario side picker: compact two-card "choose your side" selector ---
+ * #smScenPlayers/#smSide0/#smVS/#smSide1 are the load-bearing ids (StartMenuBuilder never
+ * recreates them, only their children/attrs); layout is CSS Grid so a heading can sit above
+ * the [card / divider / card] row without a wrapper element that would require reparenting. */
+#smScenPlayers {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 10px; row-gap: 4px;
+    align-items: stretch;
+    flex: 0 0 auto; width: auto; margin: 0; padding: 0;
+}
+.osada-side-picker__heading {
+    grid-column: 1 / -1; grid-row: 1;
+    text-align: center; color: var(--osada-brass);
+    text-transform: uppercase; letter-spacing: .12em; font-size: 11px; font-weight: bold;
+}
+#smSide0 { grid-column: 1; grid-row: 2; }
+#smVS    { grid-column: 2; grid-row: 2; }
+#smSide1 { grid-column: 3; grid-row: 2; }
+
+#smSide0, #smSide1 {
+    display: flex; flex-direction: column; justify-content: center; gap: 4px;
+    float: none; width: auto; margin: 0;
+    background: var(--osada-metal-800);
+    border: 1px solid var(--osada-metal-600);
+    border-radius: var(--osada-radius);
+    padding: 6px 10px; box-sizing: border-box;
+    cursor: pointer;
+    transition: background .12s ease, border-color .12s ease, box-shadow .12s ease;
+}
+#smSide0:hover, #smSide1:hover { border-color: var(--osada-brass); }
+#smSide0:focus-visible, #smSide1:focus-visible {
+    outline: none; border-color: var(--osada-brass);
+    box-shadow: 0 0 0 2px rgba(180, 138, 60, .55);
+}
+#smSide0.is-selected, #smSide1.is-selected {
+    background: linear-gradient(180deg, rgba(165, 30, 34, .35), rgba(125, 20, 24, .35)), var(--osada-metal-800);
+    border: 1px solid var(--osada-brass);
+    box-shadow: inset 0 0 0 1px rgba(180, 138, 60, .25), inset 0 1px 6px rgba(0, 0, 0, .35);
+}
+#smSide0.is-disabled, #smSide1.is-disabled { cursor: default; opacity: .5; }
+
+.osada-side-card__row { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.osada-side-card__flag {
+    /* Sprite is clipped by background-position at native 22x14px cell size (see .playerCountry
+     * in base.css) — scaling the box directly would reveal the neighbouring flag in the sheet,
+     * so the box stays native size and only its rendered pixels are scaled via transform. The
+     * extra margin reserves the ~11px/7px the scale grows beyond the unscaled layout box. */
+    flex: 0 0 auto; margin: 4px 14px 4px 2px;
+    transform: scale(1.5); transform-origin: left center;
+}
+.osada-side-card__name {
+    flex: 1 1 auto; min-width: 0;
+    color: var(--osada-text); font-weight: bold; text-transform: uppercase;
+    letter-spacing: .02em; font-size: 12px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.is-disabled .osada-side-card__name { color: var(--osada-text-dim); }
+.osada-side-card__badgerow { display: flex; align-items: center; justify-content: center; gap: 6px; }
+.osada-side-card__sub {
+    color: var(--osada-text-dim); font-size: 10px; text-transform: uppercase; letter-spacing: .04em;
+}
+.osada-side-card__badge {
+    font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: .06em;
+    padding: 2px 8px; border-radius: 10px;
+    border: 1px solid var(--osada-metal-600); color: var(--osada-text-dim);
+}
+.is-selected .osada-side-card__badge { color: #fff; border-color: var(--osada-brass); background: var(--osada-red); }
+.is-disabled .osada-side-card__badge { color: var(--osada-text-dim); border-color: var(--osada-metal-600); }
+
+#smVS { flex: 0 0 auto; float: none; width: auto; align-self: center; justify-self: center; text-align: center; margin: 0; }
+.osada-side-divider__medallion {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 26px; height: 26px; border-radius: 50%;
+    border: 1px solid var(--osada-brass); color: var(--osada-brass);
+    font-weight: bold; font-size: 10px; letter-spacing: .04em;
+}
+
+@media (max-width: 640px) {
+    #smScenPlayers { grid-template-columns: 1fr; grid-template-rows: auto auto auto auto; }
+    .osada-side-picker__heading { grid-column: 1; grid-row: 1; }
+    #smSide0 { grid-column: 1; grid-row: 2; }
+    #smVS    { grid-column: 1; grid-row: 3; }
+    #smSide1 { grid-column: 1; grid-row: 4; }
+}
+
+/* --- footer strip: BACK (dark, left) + START (red, right), text labels ---
+ * A `position:absolute` child's containing block is the ancestor's PADDING edge, which sits
+ * INSIDE the border but ignores the ancestor's own padding — so left/right/bottom:0 here would
+ * render flush with the panel border, inside its visual padding gutter, not respecting it. This
+ * value is overridden again, later in this file, by the "frame secondary to layout" rule for the
+ * enlarged campaign/scenario panel — see the other #smCampButtons/#smScenButtons rule below,
+ * which must carry the SAME inset since it's the one that actually wins the cascade. */
+#smCampButtons, #smScenButtons {
+    position: absolute; left: 22px; right: 22px; bottom: 16px;
+    display: flex; align-items: center; gap: 12px;
+    margin: 0; padding-top: 10px; border-top: 1px solid var(--osada-metal-600);
+}
+#smCPlayBut, #smSPlayBut, #smCBackBut, #smSBackBut {
+    position: static; top: auto; right: auto; bottom: auto; left: auto; margin: 0;
+}
+#smCBackBut, #smSBackBut { order: 1; width: 120px; min-width: 120px; }
+#smCPlayBut, #smSPlayBut { order: 3; margin-left: auto; width: 210px; min-width: 210px; }
+#smCFlowBut { display: none; }
+/* Replace the osada-menu glyph (1 / 0) with real text labels on the plates. */
+#smCPlayBut, #smSPlayBut, #smCBackBut, #smSBackBut { font-size: 0 !important; }
+#smCPlayBut::after, #smSPlayBut::after, #smCBackBut::after, #smSBackBut::after {
+    font-family: var(--osada-font-ui); font-size: 14px; font-weight: bold;
+    letter-spacing: .08em; text-transform: uppercase; color: inherit;
+}
+#smCPlayBut::after { content: "Start Campaign"; }
+#smSPlayBut::after { content: "Start Scenario"; }
+/* The side picker overwrites this with the resolved side name ("Start as Soviet Union") via
+ * data-label — attr() keeps the button's own click handler/launch path completely untouched. */
+#smSPlayBut[data-label]::after { content: attr(data-label); }
+#smCBackBut::after, #smSBackBut::after { content: "Back"; }
+
+/* =====================  F. IN-GAME HUD (light reskin)  ================== */
+
+#statusbar {
+    background: linear-gradient(180deg, rgba(42,47,56,.92), rgba(16,18,21,.94));
+    border-bottom: 2px solid var(--osada-brass);
+    box-shadow: 0 2px 8px rgba(0,0,0,.6);
+}
+.message { color: var(--osada-text); }
+#weathermsg { color: var(--osada-brass); }
+#locmsg { color: var(--osada-text-dim); }
+
+#unit-context {
+    background: linear-gradient(180deg, rgba(42,47,56,.94), rgba(16,18,21,.96));
+    border-top: 2px solid var(--osada-brass);
+    box-shadow: 0 -2px 10px rgba(0,0,0,.6);
+}
+
+#unit-info { color: var(--osada-text); }
+.statsRow {
+    background: linear-gradient(180deg, rgba(30,34,40,.92), rgba(14,16,19,.94));
+    border-top: 2px solid var(--osada-brass);
+    border-radius: var(--osada-radius);
+}
+.statsGlyph { color: var(--osada-brass); }
+.statsText  { color: var(--osada-text); }
+#uName      { color: var(--osada-text); }
+
+/* =====================  G. EQUIPMENT / DEPLOY (light reskin)  =========== */
+
+#equipment {
+    background: linear-gradient(180deg, rgba(29,33,39,.96), rgba(16,18,21,.97));
+    border: 1px solid var(--osada-brass);
+    border-radius: var(--osada-radius);
+    box-shadow: var(--osada-shadow);
+    color: var(--osada-text);
+}
+#eqInfoText { color: var(--osada-brass); }
+#eqHeaderSpacer  { border-bottom: 1px solid var(--osada-brass); }
+#eqButtonsContainer, #eqSortOptions { border-top: 1px solid var(--osada-brass); }
+.eqCostText { color: var(--osada-brass); }
+#currentPrestigeAmount, #currentPrestige { color: var(--osada-text); }
+.eqUnitBoxIconsMenu, .eqUnitBoxIcons { color: var(--osada-steel); }
+/* Unit cards: CSS panels replace the legacy unit-box*.png sprite frames, including the
+ * yellow-glow hover/selected states (Stage 3.5, Task 1d). The sprite-strip icon crop
+ * (.eqUnitBox > img clip hack in base.css) is untouched — only the frame/highlight moves
+ * to CSS. Attribute names are case-insensitive in HTML CSS, so [selectedunit] matches the
+ * "selectedUnit" attribute the Kotlin code sets. */
+.eqUnitBox, .eqUnitBox:hover, .eqUnitBox[selectedunit], .eqUnitBox[coreunit] {
+    background-image: none;
+}
+.eqUnitBox {
+    background-color: rgba(16,18,21,.85);
+    border: 1px solid var(--osada-metal-600);
+    border-radius: 4px; box-sizing: border-box;
+    color: var(--osada-text);
+}
+.eqUnitBox:hover { border-color: var(--osada-brass); }
+/* One facing frame of the 9-frame icon strip (see EquipmentWindowController.buildCardSprite).
+ * 900% = 9 frames scaled so ONE frame fills this 80px box regardless of the strip's native
+ * frame width; x 37.5% = frame 3 of 0..8 (k/8), the same facing the legacy clip hack showed.
+ * Must escape base.css's `.eqUnitBox div` rule (position:relative; top:50px — meant for the
+ * name/cost labels below the icon area). */
+.eqUnitBox .eqUnitBoxSprite {
+    position: absolute; top: 0; left: 7px; width: 80px; height: 50px;
+    background-repeat: no-repeat;
+    background-size: 900% auto;
+    background-position: 37.5% 50%;
+}
+.eqUnitBox[selectedunit] {
+    background-color: rgba(165,30,34,.28);
+    border-color: var(--osada-red);
+    box-shadow: inset 0 0 0 1px var(--osada-red);
+}
+/* Core units: brass edge + brass name (replaces unit-box-core.png's gold frame). */
+.eqUnitBox[coreunit] { border-color: rgba(217,178,90,.55); color: var(--osada-brass); }
+.eqUnitBox[coreunit][selectedunit] { border-color: var(--osada-red); }
+
+/* =====================  H. MESSAGES / TOOLTIPS / DOSSIER  =============== */
+
+.uiMessageBox {
+    /* shorthand replaces the legacy ui-message.png with a metal panel */
+    background: linear-gradient(180deg, rgba(42,47,56,.98), rgba(18,20,24,.99));
+    border: var(--osada-frame-brass);
+    border-radius: var(--osada-radius);
+    box-shadow: 0 12px 40px rgba(0,0,0,.8);
+    color: var(--osada-text);
+}
+.uiMessageBoxTitle { color: var(--osada-red-bright); text-transform: uppercase; letter-spacing: .05em; font-size: 14px; }
+.uiMessageBoxBody  { color: var(--osada-text); }
+
+.toolTip { color: var(--osada-text); }
+.toolTip[type="game"] {
+    border: 2px solid var(--osada-brass);
+    background: linear-gradient(180deg, rgba(30,34,40,.95), rgba(16,18,21,.96));
+}
+.toolTip[type="ui"] {
+    background: var(--osada-metal-800);
+    border: 1px solid var(--osada-brass);
+    color: var(--osada-steel);
+}
+.toolTip:before { border-color: transparent var(--osada-brass); }
+
+.smallToolTip, .smallToolTip[shape="pin"] { color: var(--osada-steel); background: rgba(16,18,21,.85); }
+
+/* Flat brass edge, NOT the frame_turn_report.png 9-slice (tried and reverted at the user's
+ * request): a 16px ornamental border on a window whose body scrolls reads as clutter around
+ * moving content, and it ate 32px of the panel's width and height. The bigger .mainPanel frame
+ * used by the settings/message boxes is fine there because that content is static and inset. */
+#dossier, #combatLog {
+    background: linear-gradient(180deg, rgba(29,33,39,.97), rgba(14,16,19,.98));
+    border: 1px solid var(--osada-brass);
+    color: var(--osada-text);
+    box-shadow: 0 10px 40px rgba(0,0,0,.8);
+}
+.combatLogHeader { color: var(--osada-brass); text-transform: uppercase; letter-spacing: .04em; }
+.combatLogNum, .combatLogInfoBoxRed { color: var(--osada-red-bright); }
+/* Close control sits in .osada-tr-actions (a normal flex row) now, not absolutely positioned —
+ * see the Turn Report block below. Sizing/hover stay shared with any other future usage. */
+.combatLogCloseBut {
+    width: 26px; height: 26px; cursor: pointer; opacity: .85; transition: opacity .12s, transform .06s;
+    /* Extra breathing room from the info buttons beside it (Dossier/Briefing) — those are a
+     * different kind of action (view info vs. close the window) and sat close enough to invite
+     * a mis-click when they were only the row's normal 6px gap apart. */
+    margin-left: 10px;
+}
+.combatLogCloseBut:hover { opacity: 1; filter: drop-shadow(0 0 5px rgba(208,52,44,.6)); }
+.combatLogCloseBut:active { transform: scale(.92); }
+
+/* ============================================================================
+ * TURN REPORT (#combatLog) — a real window: sticky header + summary stat tiles,
+ * a scrollable grouped event feed below. Replaces the old single flowing block
+ * of prose. Shares #dossier's background/frame treatment (rules above/below);
+ * this block is layout only.
+ * ============================================================================ */
+#combatLog.osada-tr {
+    display: flex; flex-direction: column; overflow: hidden;
+    padding: 0; text-align: left; font-family: var(--osada-font-ui);
+    /* Own centered box (base.css geometry, restated so nothing inline needs to agree with it —
+     * UILayout's scaleUI/resizeUI used to write inline top/width/marginLeft over this block). */
+    width: 800px; max-width: 94vw; left: 50%; margin-left: 0; transform: translateX(-50%);
+    /* base.css's legacy `top: 25px` predates the current top bar (30px + 2px brass border =
+     * 32px) and sat UNDER it by ~7px — the window's rounded top edge visibly overlapped the
+     * bar. The Task-1 full-width bar is 40px
+     * tall now, so clear that plus a small gap. */
+    top: 48px;
+}
+.osada-tr-header {
+    flex: 0 0 auto; display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 12px; padding: 14px 16px 10px; border-bottom: 1px solid var(--osada-metal-600);
+}
+.osada-tr-titleblock { min-width: 0; }
+.osada-tr-title-row { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.osada-tr-title {
+    flex: 1 1 auto; min-width: 0;
+    font-size: 15px; font-weight: bold; color: var(--osada-brass); text-transform: uppercase;
+    letter-spacing: .04em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+/* Scenario Briefing: moved beside the title, away from the actions cluster on the right (Close
+ * sat only 6px from it there — close enough to invite a mis-click. */
+.osada-tr-briefing-btn { flex: 0 0 auto; }
+/* Briefing AND Dossier both still carry the legacy .combatLogInfoButton class (round brass
+ * .smallButtonMenu glyph button — kept for that look), but base.css (ex-ui.css)'s OWN rule for it is
+ * `position:absolute;top:25px;min-width/height:30px;font-size:30px`, unscoped — it pulled both
+ * buttons out of this flex row entirely regardless of where they sit in the DOM: Briefing landed
+ * on top of .osada-tr-sub below it, and Dossier (no flex space reserved for an absolutely
+ * positioned element) let Close visually collide with/render mostly under it. Un-positioning here
+ * only within the Turn Report header, not globally — .combatLogInfoButton isn't used elsewhere,
+ * but scoping keeps this a one-window fix regardless. */
+.osada-tr-header .combatLogInfoButton {
+    position: static; min-width: 26px; min-height: 26px; font-size: 16px;
+}
+.osada-tr-sub { margin-top: 3px; font-size: 12px; color: var(--osada-text-dim); }
+.osada-tr-sub i { color: var(--osada-text); font-style: normal; }
+.osada-tr-weather-img { width: 15px; height: 15px; object-fit: contain; vertical-align: -3px; margin: 0 3px 0 6px; }
+.osada-tr-actions { flex: 0 0 auto; display: flex; align-items: center; gap: 6px; }
+
+.osada-tr-summary {
+    flex: 0 0 auto; display: flex; flex-wrap: wrap; gap: 1px;
+    background: var(--osada-metal-600); border-bottom: 1px solid var(--osada-metal-600);
+}
+.osada-tr-tile { flex: 1 1 90px; min-width: 90px; padding: 8px 10px; background: rgba(14,16,19,.9); text-align: center; }
+.osada-tr-tile__value { font-size: 17px; font-weight: bold; color: #f4e3c6; line-height: 1.1; }
+.osada-tr-tile__label { margin-top: 2px; font-size: 9px; font-weight: bold; text-transform: uppercase; letter-spacing: .05em; color: var(--osada-text-dim); }
+.osada-tr-tile__sub { margin-top: 2px; font-size: 10px; color: #7fa86a; }
+
+.osada-tr-feed { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 6px 10px 10px; }
+.osada-tr-empty { padding: 30px 10px; text-align: center; color: var(--osada-text-dim); font-size: 13px; }
+
+.osada-tr-expand {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    margin-bottom: 8px; padding: 8px; border-radius: 4px; cursor: pointer;
+    background: rgba(217,178,90,.08); border: 1px solid var(--osada-metal-600);
+    color: var(--osada-brass); font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: .04em;
+}
+.osada-tr-expand:hover { border-color: var(--osada-brass); background: rgba(217,178,90,.14); }
+.osada-tr-expand__ico { width: 16px; height: 16px; }
+
+.osada-tr-group + .osada-tr-group { margin-top: 10px; }
+.osada-tr-group__header {
+    display: flex; align-items: center; gap: 8px; padding: 4px 2px; cursor: pointer;
+    border-bottom: 1px solid var(--osada-metal-600);
+}
+.osada-tr-group__ico { width: 20px; height: 20px; flex: 0 0 auto; }
+.osada-tr-group__label { flex: 1 1 auto; font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: .05em; color: var(--osada-brass); }
+.osada-tr-group__badge { flex: 0 0 auto; min-width: 18px; padding: 1px 6px; border-radius: 8px; text-align: center; background: var(--osada-metal-700); color: var(--osada-text); font-size: 11px; font-weight: bold; }
+.osada-tr-group__rows { padding-top: 4px; }
+.osada-tr-group--collapsed .osada-tr-group__rows { display: none; }
+.osada-tr-group--collapsed .osada-tr-group__header { border-bottom-color: transparent; }
+
+.osada-tr-row { display: flex; align-items: center; gap: 10px; padding: 5px 4px; border-radius: 3px; }
+.osada-tr-row--clickable { cursor: pointer; }
+.osada-tr-row--clickable:hover { background: rgba(217,178,90,.08); }
+.osada-tr-row--core { border-left: 2px solid var(--osada-brass); padding-left: 6px; }
+.osada-tr-row--destroyed .osada-tr-row__title { color: var(--osada-red-bright); }
+/* Same natural-size crop technique as #uImage/#ecPortrait: a background-image, not <img src>,
+ * since these unit icons are multi-frame sprite strips (contain/cover would squeeze the whole
+ * strip into the box). */
+/* 80x50, NOT a compact 34x26: sprite FRAMES are themselves ~80x50 (matches #ecPortrait and the
+ * equipment-window portrait) with the unit art often not starting right at the top-left corner
+ * — a smaller natural-size crop just showed an empty corner of the frame (black box) instead of
+ * the vehicle. */
+.osada-tr-row__icon {
+    flex: 0 0 auto; width: 80px; height: 50px; overflow: hidden; border-radius: 2px;
+    background-color: rgba(0,0,0,.35); background-repeat: no-repeat; background-position: 0 0;
+    border: 1px solid var(--osada-metal-600);
+}
+.osada-tr-row__body { min-width: 0; flex: 1 1 auto; }
+.osada-tr-row__title { font-size: 12px; color: var(--osada-text); line-height: 1.3; }
+.osada-tr-row__detail { margin-top: 1px; font-size: 11px; color: var(--osada-text-dim); line-height: 1.3; }
+
+/* ============================================================================
+ * DOSSIER (#dossier) — a floating window matching the Turn Report's own treatment
+ * (header + scrollable body), replacing the legacy <table>-based layout and the
+ * per-country medal PNGs (see DossierBuilder.kt's class doc for why those were dropped).
+ * #dossier/#combatLog already share frame background/border (rules earlier in this file).
+ * ============================================================================ */
+#dossier.osada-dsr {
+    position: fixed; width: 800px; max-width: 92vw; height: 560px; max-height: 82vh;
+    left: 50%; top: 50%; margin: -280px 0 0 -400px;
+    border-radius: 5px; z-index: 290;
+    display: flex; flex-direction: column; overflow: hidden;
+    padding: 0; text-align: left; font-family: var(--osada-font-ui);
+}
+.osada-dsr-header {
+    flex: 0 0 auto; display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 12px; padding: 14px 16px 10px; border-bottom: 1px solid var(--osada-metal-600);
+}
+.osada-dsr-titleblock { min-width: 0; }
+.osada-dsr-title {
+    font-size: 15px; font-weight: bold; color: var(--osada-brass); text-transform: uppercase;
+    letter-spacing: .04em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.osada-dsr-sub { margin-top: 3px; font-size: 12px; color: var(--osada-text-dim); }
+.osada-dsr-close { flex: 0 0 auto; width: 26px; height: 26px; cursor: pointer; opacity: .85; transition: opacity .12s, transform .06s; }
+.osada-dsr-close:hover { opacity: 1; filter: drop-shadow(0 0 5px rgba(208,52,44,.6)); }
+.osada-dsr-close:active { transform: scale(.92); }
+
+.osada-dsr-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 14px 16px; }
+.osada-dsr-section + .osada-dsr-section { margin-top: 18px; }
+.osada-dsr-section-title {
+    font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: .05em;
+    color: var(--osada-brass); padding-bottom: 6px; margin-bottom: 10px; border-bottom: 1px solid var(--osada-metal-600);
+}
+.osada-dsr-empty { padding: 12px 4px; color: var(--osada-text-dim); font-size: 13px; }
+
+/* Casualties: one card per unit class (replaces the old fixed-column table, which — like the
+ * medal art — only ever fit the original 8-class efiles). */
+.osada-dsr-cas-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+.osada-dsr-cas-card {
+    flex: 1 1 130px; min-width: 130px; display: flex; align-items: center; gap: 8px;
+    padding: 8px 10px; border-radius: 4px; background: rgba(0,0,0,.28); border: 1px solid rgba(217,178,90,.28);
+}
+.osada-dsr-cas-icon { flex: 0 0 auto; font-family: osada-menu; font-size: 22px; color: var(--osada-brass); }
+.osada-dsr-cas-stats { flex: 1 1 auto; min-width: 0; }
+.osada-dsr-cas-stat { display: flex; justify-content: space-between; gap: 8px; font-size: 11px; color: var(--osada-text-dim); line-height: 1.5; }
+.osada-dsr-cas-stat b { color: var(--osada-text); font-weight: bold; }
+
+/* Awards: a CSS-drawn medal badge (no per-country art needed) — a star disc colored by outcome
+ * tier, with a small overlapping counter badge (same corner-badge idea as .counterBox, restyled). */
+.osada-dsr-medal-row { display: flex; align-items: center; gap: 14px; padding: 8px 0; }
+.osada-dsr-medal-row + .osada-dsr-medal-row { border-top: 1px solid rgba(217,178,90,.14); }
+.osada-dsr-medal { position: relative; flex: 0 0 auto; width: 46px; height: 46px; }
+/* Medal art on ::before so the tier tint filter doesn't also tint the count badge child. */
+.osada-dsr-medal::before {
+    content: ""; position: absolute; inset: 0;
+    background: url('../resources/ui/osada/medal_laurel.png') center / contain no-repeat;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,.55));
+}
+/* gold = the art's native brass */
+.osada-dsr-medal--silver::before { filter: grayscale(1) brightness(1.12) drop-shadow(0 2px 4px rgba(0,0,0,.55)); }
+.osada-dsr-medal--bronze::before { filter: sepia(.5) saturate(1.6) hue-rotate(-28deg) brightness(.82) drop-shadow(0 2px 4px rgba(0,0,0,.55)); }
+.osada-dsr-medal--none::before   { filter: grayscale(1) brightness(.55) drop-shadow(0 2px 4px rgba(0,0,0,.55)); }
+.osada-dsr-medal__count {
+    position: absolute; right: -4px; bottom: -4px; min-width: 16px; padding: 1px 4px; border-radius: 8px;
+    background: var(--osada-metal-800); border: 1px solid var(--osada-brass); color: var(--osada-text);
+    font-size: 10px; font-weight: bold; text-shadow: none;
+}
+.osada-dsr-medal-info { min-width: 0; flex: 1 1 auto; }
+.osada-dsr-medal-label { font-size: 13px; font-weight: bold; color: var(--osada-text); }
+.osada-dsr-medal-scenarios { margin-top: 2px; font-size: 11px; color: var(--osada-text-dim); }
+
+/* Campaign-end banner (DossierBuilder.showCampaignEnd) — replaces the full-panel
+ * campaign_victory.png/campaign_defeat.png background images with a CSS gradient panel. */
+.osada-dsr-endbanner {
+    padding: 22px 16px; margin: 0 0 14px; border-radius: 4px; text-align: center;
+    border: 1px solid var(--osada-metal-600);
+}
+.osada-dsr-endbanner--victory { background: linear-gradient(180deg, rgba(90,74,26,.5), rgba(20,22,26,.2)); }
+.osada-dsr-endbanner--defeat  { background: linear-gradient(180deg, rgba(90,26,26,.5), rgba(20,22,26,.2)); }
+.osada-dsr-endbanner__title { font-size: 34px; font-weight: bold; text-transform: uppercase; letter-spacing: .05em; color: var(--osada-text); }
+.osada-dsr-endbanner--victory .osada-dsr-endbanner__title { color: #f4e3c6; }
+.osada-dsr-endbanner--defeat .osada-dsr-endbanner__title { color: var(--osada-red-bright); }
+.osada-dsr-endbanner__subtitle { margin-top: 2px; font-size: 11px; letter-spacing: .3em; color: var(--osada-text-dim); }
+.osada-dsr-endbanner__message { margin-top: 12px; font-size: 13px; color: var(--osada-text); }
+
+/* =====================  SETTINGS SCREEN  ================================ */
+
+.settingText  { color: var(--osada-text); }
+.settingValue { color: var(--osada-brass); }
+.settingContainer:hover { background-color: rgba(180,138,60,.10); }
+/* Image checkbox (resources/ui/osada/ico_check_on/off.png, asset-sheet extracts) replaces the
+ * osada-menu icon-font C/c glyph pair — driven by the "checked" class, not text content. */
+.osada-checkbox {
+    width: 26px; height: 26px; flex: 0 0 26px; min-width: 26px;
+    background: url('../resources/ui/osada/ico_check_off.png') center / contain no-repeat;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,.6));
+}
+.osada-checkbox.checked { background-image: url('../resources/ui/osada/ico_check_on.png'); }
+.textGoldNormal { color: var(--osada-brass); }
+.textWhiteNormal { color: var(--osada-text); }
+
+/* ============================================================================
+ * IMAGE ASSETS (wired) — provided PNGs in resources/. Paths are relative to
+ * this file (css/), so ../resources/ resolves to the served resources/ root,
+ * matching the existing base.css (ex-ui.css) url() convention. These rules come last, so
+ * they override the gradient-only surfaces defined above; borders / shadows
+ * from those earlier rules are preserved (only `background` is replaced).
+ *
+ * Not yet wired (Stage 3): icons.png, minimap_frame.png, unit_card_frame.png.
+ * ============================================================================ */
+
+/* OSADA metal logo (transparent PNG, ~3.59:1). Replaces logo.png. */
+#smLogo {
+    width: 560px;
+    height: 160px;
+    background-image: url('../resources/logo_osada.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+/* Dark metal panel texture on the main framed surfaces. */
+.mainPanel {
+    background:
+        linear-gradient(180deg, rgba(22,24,28,.74), rgba(12,13,16,.86)),
+        url('../resources/panel_metal_dark.png') center / cover no-repeat;
+}
+
+/* Staff-desk / operational-map backdrop specific to campaign & scenario. */
+#smCamp, #smScen {
+    background:
+        linear-gradient(180deg, rgba(10,11,13,.55), rgba(10,11,13,.78)),
+        url('../resources/campaign_screen_background.png') center / cover no-repeat;
+}
+
+/* Aged staff paper behind the description dossier. */
+.smDesc {
+    background:
+        linear-gradient(180deg, rgba(255,250,235,.12), rgba(120,95,55,.10)),
+        url('../resources/panel_paper.png') center / cover no-repeat;
+    color: var(--osada-paper-ink);
+}
+
+/* Weather hover panel (MenuController.showWeatherTooltip): narrative line + rule effects,
+ * bonuses green / penalties red / forecasts dim. position set inline (anchored to #weathermsg). */
+.osada-wtip {
+    display: none; position: fixed; z-index: var(--z-msg, 1000);
+    width: 340px; max-width: 92vw; box-sizing: border-box; padding: 10px 12px;
+    background: linear-gradient(180deg, rgba(29,33,39,.98), rgba(14,16,19,.99));
+    border: 1px solid var(--osada-brass); border-radius: 5px;
+    box-shadow: 0 8px 30px rgba(0,0,0,.75);
+    font-family: var(--osada-font-ui); font-size: 12px; line-height: 1.45;
+    color: var(--osada-text); text-align: left; pointer-events: none;
+}
+.osada-wtip__title {
+    font-weight: bold; font-size: 13px; color: var(--osada-brass);
+    text-transform: uppercase; letter-spacing: .05em; margin-bottom: 4px;
+}
+.osada-wtip__story { font-style: italic; color: var(--osada-text-dim); margin-bottom: 8px; }
+.osada-wtip__line { padding-left: 14px; position: relative; margin-top: 3px; }
+.osada-wtip__line::before { position: absolute; left: 0; font-weight: bold; }
+.osada-wtip__line--good { color: #8fce7a; }
+.osada-wtip__line--good::before { content: "+"; }
+.osada-wtip__line--bad { color: #e07a72; }
+.osada-wtip__line--bad::before { content: "\2212"; } /* minus sign */
+.osada-wtip__line--dim { color: var(--osada-text-dim); }
+.osada-wtip__line--dim::before { content: "\203A"; } /* › */
+
+/* Settings sliders (UILayout.createSlider): range input + numeric readout between the +/- steppers. */
+.osada-slider { display: inline-flex; align-items: center; gap: 8px; margin-top: 5px; padding: 0 6px; }
+.osada-slider input[type="range"] { width: 130px; accent-color: var(--osada-brass); cursor: pointer; }
+.osada-slider__value {
+    min-width: 34px; text-align: right;
+    color: var(--osada-brass); font-weight: bold; font-size: 12px; font-family: var(--osada-font-ui);
+}
+
+/* Metal texture on the remaining framed panels / HUD bars. */
+#equipment, .uiMessageBox, #dossier, #combatLog {
+    background:
+        linear-gradient(180deg, rgba(18,20,24,.82), rgba(10,11,13,.9)),
+        url('../resources/panel_metal_dark.png') center / cover no-repeat;
+}
+#statusbar, #unit-context, .statsRow {
+    background:
+        linear-gradient(180deg, rgba(20,22,26,.8), rgba(12,13,16,.88)),
+        url('../resources/panel_metal_dark.png') center / cover no-repeat;
+}
+
+/* ============================================================================
+ * IMAGE ASSETS v2 — 9-slice frames, nameplate, ornamental divider.
+ *
+ * Derived files created by trimming/splitting the provided sheets with PIL
+ * (no new art generated — only crops of the supplied PNGs):
+ *   frame_panel_9slice.png  -> frame_panel_9slice_trim.png  (1222x1210,
+ *                              transparent margin removed; opening measured at
+ *                              top135 right119 bottom140 left119 -> slice)
+ *   nameplate_red_9slice.png-> nameplate_red_trim.png       (2226x355)
+ *   divider_brass.png       -> divider_brass_trim.png       (2252x126)
+ *   btn_*_states.png        -> btn_*_{normal,hover,pressed|selected}.png
+ * ============================================================================ */
+
+/* --- Panel frame (9-slice border-image) --------------------------------- */
+/* Applied as a real border on the main framed panels; content sits inside the
+ * 42px border. Slice = measured opening; `stretch` keeps the straight bars crisp
+ * and lets the centred red name-bays scale with panel width. */
+.mainPanel {
+    border: 42px solid transparent;
+    border-image: url('../resources/frame_panel_9slice_trim.png') 135 119 140 119 stretch;
+}
+/* The message box has children at hard-coded absolute coordinates, so the frame
+ * is drawn on a ::before overlay at z-index:-1 — it paints above the panel
+ * background but below the content, without shifting any layout. (Not applied to
+ * #dossier / #combatLog: their scrolling content would overlap the frame bars;
+ * those keep the flat brass border for now.) */
+.uiMessageBox::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none; z-index: -1;
+    border: 24px solid transparent;
+    border-image: url('../resources/frame_panel_9slice_trim.png') 135 119 140 119 stretch;
+}
+/* Message title now reads on the frame's built-in red name-bay. */
+.uiMessageBoxTitle { color: var(--osada-text); }
+
+/* --- Red nameplate (9-slice, fill) for section headers ------------------ */
+/* Used for standalone headers (combat-log / dossier section titles) and any
+ * element given .osada-nameplate. NOT the message/dossier main titles, which
+ * already sit on the frame's red bay. */
+.osada-nameplate, .combatLogHeader {
+    box-sizing: border-box;
+    border: 9px solid transparent;
+    border-left-width: 20px; border-right-width: 20px;
+    border-image: url('../resources/nameplate_red_trim.png') 34 70 34 70 fill stretch;
+    min-height: 32px;
+    color: var(--osada-text); text-transform: uppercase; letter-spacing: .05em;
+    text-shadow: 0 1px 2px rgba(0,0,0,.75);
+}
+
+/* --- Ornamental brass divider replaces the flat <hr> -------------------- */
+/* Trimmed divider aspect (~18:1) closely matches a slim rule, so a plain 100%
+ * stretch keeps the centre star medallion undistorted. */
+hr {
+    height: 22px; border: 0;
+    background: url('../resources/divider_brass_trim.png') center / 100% 100% no-repeat;
+}
+
+/* ============================================================================
+ * STAGE 2 — MAIN MENU (#smMain) : asymmetric war-room layout.
+ * Working column (logo + vertical buttons) pinned top-left; the darkened rotating
+ * photo is the atmosphere on the right. CSS-only — StartMenuBuilder only changed
+ * the button set/labels and the logo/version text. Corner items use fixed
+ * positioning; they hide with the menu because #smMain is display:none when hidden.
+ * ============================================================================ */
+
+/* Static staff-table photo is the main-menu backdrop (replaces the rotating stock
+ * photos). Darkened with a wash so the logo/buttons read; ::before adds a vignette. */
+#smMain {
+    position: absolute; inset: 0; overflow: hidden;
+    background:
+        linear-gradient(180deg, rgba(10,11,13,.42), rgba(8,9,11,.62)),
+        url('../resources/staff_table_background.png') center / cover no-repeat;
+}
+.animatedBackground { display: none; }
+/* Full-screen operational-map backdrop sits behind the framed campaign/scenario
+ * panels (which additionally carry the same map as their inner panel texture). */
+#startmenu {
+    background:
+        linear-gradient(180deg, rgba(8,9,11,.6), rgba(8,9,11,.72)),
+        url('../resources/campaign_screen_background.png') center / cover no-repeat,
+        #0a0b0d;
+}
+#smMain::before {
+    content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background: radial-gradient(130% 100% at 28% 38%, rgba(0,0,0,0) 24%, rgba(0,0,0,.62) 100%);
+}
+
+/* Logo block, top-left (not centred). */
+#smLogo {
+    position: absolute; top: 54px; left: 64px; margin: 0; z-index: 2;
+    width: 420px; height: 118px;
+    background-image: url('../resources/logo_osada.png');
+    background-repeat: no-repeat; background-position: left center; background-size: contain;
+    /* No filter here: a filter creates a containing block that would trap the
+     * position:fixed corner icons (#smMiscButs) inside the logo box. */
+    filter: none;
+}
+/* "1941 – 1945" subtitle sits just under the wordmark, left aligned brass caps. */
+#smLogoText {
+    position: absolute; top: 100%; left: 6px; right: auto; bottom: auto; margin-top: 6px;
+    max-width: 420px;
+    color: var(--osada-brass); font-weight: normal; font-size: 13px;
+    /* .12em, not the old .34em: the subtitle is a full tagline now ("Turn-based strategy of
+     * great battles"), not a four-digit year span. */
+    letter-spacing: .12em; text-transform: uppercase; text-shadow: 0 1px 2px rgba(0,0,0,.8);
+}
+
+/* ---- Reusable icon sprite from hud_icons_grid.png (4 cols x 3 rows) ---- */
+.osada-ico {
+    background-image: url('../resources/hud_icons_grid.png');
+    background-repeat: no-repeat; background-size: 400% 300%;
+}
+/* hud_icons_grid.png is machine-recut from hud_icons_grid_raw.png by scripts/recut_hud_icons.py:
+ * the raw art's 12 badges sit on a ~322x311 pitch anchored top-left, so sampling it on the uniform
+ * 362px grid below cropped every icon toward the top-left (reported 2026-07-21). The script locates
+ * each badge by alpha projection and pastes its RAW pixels centered in a clean 362px cell (1448x1086
+ * = 4x3) — no keying, so no glyph is damaged (an earlier flood-keyed recut chipped some frames).
+ * Point .osada-ico at the recut, not the raw sheet; re-run the script if the raw art changes. */
+.osada-ico--upgrade  { background-position: 0%     0%; }
+.osada-ico--attack   { background-position: 33.33% 0%; }
+.osada-ico--artillery{ background-position: 66.66% 0%; }
+.osada-ico--recon    { background-position: 100%   0%; }
+.osada-ico--supply   { background-position: 0%     50%; }
+.osada-ico--entrench { background-position: 33.33% 50%; }
+.osada-ico--endturn  { background-position: 66.66% 50%; }
+.osada-ico--settings { background-position: 100%   50%; }
+.osada-ico--map      { background-position: 0%     100%; }
+.osada-ico--star     { background-position: 33.33% 100%; }
+.osada-ico--info     { background-position: 66.66% 100%; }
+.osada-ico--close    { background-position: 100%   100%; }
+
+/* Vertical command-plate column, left, under the logo. */
+.smBottomCenter { position: absolute; left: 64px; top: 226px; right: auto; bottom: auto; min-height: 0; margin: 0; z-index: 2; }
+.smCenter { display: flex; flex-direction: column; gap: 10px; margin: 0; }
+
+/* Each main-menu entry is an icon + label + subtitle command plate. */
+.smMainButton.osada-menu-btn {
+    float: none; display: flex; align-items: center; gap: 14px;
+    /* line-height reset: base.css's legacy .smMainButton sets line-height:40px, which the
+     * subtitle span inherits — the text column grew ~40px tall and pinned the label to the
+     * button's top edge. */
+    line-height: 1.2;
+    width: 340px; min-height: 58px; height: auto; margin: 0; padding: 0 18px 0 10px; box-sizing: border-box;
+    border: 1px solid var(--osada-metal-600); border-radius: var(--osada-radius);
+    background: linear-gradient(180deg, rgba(42,47,56,.95), rgba(22,25,30,.96));
+    color: var(--osada-text); font-family: var(--osada-font-ui); text-align: left; cursor: pointer;
+    text-shadow: 0 1px 2px rgba(0,0,0,.6);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 2px 6px rgba(0,0,0,.45);
+    transition: background .12s, border-color .12s, box-shadow .12s, transform .05s;
+}
+.smMainButton.osada-menu-btn:hover {
+    border-color: var(--osada-brass);
+    background: linear-gradient(180deg, rgba(54,60,70,.96), rgba(30,34,40,.97));
+    box-shadow: inset 0 0 0 1px rgba(217,178,90,.25), 0 0 14px rgba(217,178,90,.16), 0 2px 8px rgba(0,0,0,.5);
+}
+.smMainButton.osada-menu-btn:active { transform: translateY(1px); box-shadow: inset 0 2px 5px rgba(0,0,0,.6); }
+.osada-menu-btn__ico {
+    flex: 0 0 auto; width: 42px; height: 42px;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,.6));
+    transition: filter .12s;
+}
+.osada-menu-btn:hover .osada-menu-btn__ico { filter: drop-shadow(0 0 5px rgba(217,178,90,.45)) brightness(1.1); }
+.osada-menu-btn__text { display: flex; flex-direction: column; min-width: 0; }
+.osada-menu-btn__label {
+    font-size: 15px; font-weight: bold; letter-spacing: .09em; text-transform: uppercase;
+    color: var(--osada-text); line-height: 1.15;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.osada-menu-btn:hover .osada-menu-btn__label { color: var(--osada-brass); }
+.osada-menu-btn__sub {
+    font-size: 11px; font-weight: normal; letter-spacing: .02em; text-transform: none;
+    color: var(--osada-text-dim); margin-top: 2px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.smMainButton.osada-menu-btn--primary {
+    border-color: #a83a3a;
+    background: linear-gradient(180deg, #a5322f, #7a1c1a);
+}
+.smMainButton.osada-menu-btn--primary:hover {
+    border-color: var(--osada-brass);
+    background: linear-gradient(180deg, #b93b37, #8a211f);
+    box-shadow: inset 0 0 0 1px rgba(217,178,90,.3), 0 0 16px rgba(165,50,47,.45), 0 2px 8px rgba(0,0,0,.5);
+}
+.osada-menu-btn--primary .osada-menu-btn__label { color: #f4e3c6; }
+.osada-menu-btn--primary .osada-menu-btn__sub { color: rgba(244,227,198,.75); }
+.osada-menu-btn--muted .osada-menu-btn__label { color: var(--osada-text-dim); }
+.osada-menu-btn--muted:hover .osada-menu-btn__label { color: var(--osada-brass); }
+
+/* Version bottom-left, social/help icons bottom-right. */
+#smCredits {
+    position: fixed; left: 16px; bottom: 12px; right: auto; top: auto; z-index: 3;
+    color: var(--osada-text-dim); font-weight: normal; font-size: 12px; letter-spacing: .04em;
+}
+#smMiscButs { position: fixed; right: 16px; bottom: 10px; top: auto; left: auto; z-index: 3; display: flex; gap: 8px; }
+/* External-link chips (GitHub / Marxists.org) — plain UI-font text, NOT .smallButton: that class
+ * renders its text through the osada-menu icon font, which would turn the labels into
+ * unrelated glyphs. */
+.osada-linkbtn {
+    display: inline-flex; align-items: center; height: 24px; padding: 0 10px;
+    border: 1px solid var(--osada-metal-600); border-radius: var(--osada-radius);
+    background: rgba(20,22,26,.85); color: var(--osada-text-dim); text-decoration: none;
+    font-family: var(--osada-font-ui); font-size: 11px; font-weight: bold;
+    letter-spacing: .06em; text-transform: uppercase;
+}
+.osada-linkbtn:hover { color: var(--osada-brass); border-color: var(--osada-brass); }
+
+/* ============================================================================
+ * STAGE 2 — SETTINGS (#smSettings) : tighten to content, group into sections,
+ * align the checkbox/value column. CSS-only; the builder is untouched.
+ * TASK 5: the old position-based (:nth-child) divider hack is replaced by explicit section
+ * headers built by StartMenuBuilder (Map View / Gameplay / Sound / Observer Mode).
+ * ============================================================================ */
+#smSettings.mainPanel {
+    height: auto; max-height: 84%; top: 50%; bottom: auto;
+    transform: translateY(-50%);
+    width: 70%; max-width: 620px;
+}
+
+/* Save/Load (#smState): tighten to content like #smSettings above — the shared .mainPanel
+ * height was sized for the register+dossier screens (#smCamp/#smScen); disk save/load alone
+ * (cloud save/load removed — see GameStatePersistence.kt) is much shorter. */
+#smState.mainPanel {
+    height: auto; top: 50%; bottom: auto;
+    transform: translateY(-50%);
+    width: 60%; max-width: 520px;
+}
+#smState .smCenter { padding: 20px 26px 30px; }
+#smSettingsContainer { height: auto !important; max-height: 68vh; overflow-y: auto; padding-bottom: 44px; }
+#smSettingsContainer .settingContainer {
+    display: flex; align-items: center; gap: 12px;
+    float: none; clear: both; width: 100%; min-height: 34px; padding: 5px 12px; box-sizing: border-box;
+}
+#smSettingsContainer .settingText { float: none; flex: 1 1 auto; height: auto; line-height: 1.25; }
+#smSettingsContainer .settingValue { float: none; flex: 0 0 auto; margin-right: 0; min-width: 40px; }
+/* Same specificity as the rule above (id + class) but declared after it, so this wins and
+ * un-stretches the 26px image checkbox back down from that rule's generic 40px min-width. */
+#smSettingsContainer .osada-checkbox { min-width: 26px; width: 26px; }
+
+.osada-settings-header {
+    display: flex; align-items: baseline; gap: 10px;
+    margin: 14px 12px 2px; padding-top: 12px; border-top: 1px solid var(--osada-metal-600);
+}
+#smSettingsContainer .osada-settings-header:first-child { margin-top: 4px; padding-top: 0; border-top: none; }
+.osada-settings-header__title {
+    color: var(--osada-brass); font-size: 12px; font-weight: bold;
+    text-transform: uppercase; letter-spacing: .1em;
+}
+.osada-settings-header__caption { color: var(--osada-text-dim); font-size: 11px; font-style: italic; }
+/* Observer Mode: visually separated (spec) — a stronger red-tinted divider, not just brass. */
+.osada-settings-header--observer {
+    border-top: 1px solid rgba(201,70,61,.5);
+    background: linear-gradient(180deg, rgba(165,30,34,.10), transparent);
+}
+.osada-settings-header--observer .osada-settings-header__title { color: #d9463d; }
+
+/* ============================================================================
+ * STAGE 3 — IN-GAME HUD (topbar / sidebar / unit card).
+ * CSS-only. Elements keep their ids, widths (uiSize) and centering/scaling from
+ * UILayout; this only restyles surfaces and repositions inner text. Uses the
+ * provided frame PNGs (topbar_metal_9slice, unit_card_frame) as backgrounds and
+ * the brass round-button plates (already wired) for the sidebar.
+ * ============================================================================ */
+
+/* ---- Topbar: slim metal command bar with red star end-caps ----
+ * NOTE: topbar_metal_9slice.png is authored ~3:1 (tall) and cannot be stretched
+ * onto the thin ~30px status strip without destroying its compass/star bays, and
+ * a taller bar would overlap the unit-list strip at top:30. So the bar reuses the
+ * frame's *material* (dark metal + brass trim) plus CSS red star caps. */
+#statusbar {
+    height: 30px !important; max-height: 30px !important;
+    background:
+        linear-gradient(180deg, rgba(36,40,48,.95), rgba(14,16,20,.97)),
+        url('../resources/panel_metal_dark.png') center / cover no-repeat !important;
+    border: 0 !important;
+    border-top: 1px solid rgba(217,178,90,.45) !important;
+    border-bottom: 2px solid var(--osada-brass) !important;
+    border-radius: 0 !important;
+    box-shadow: 0 3px 10px rgba(0,0,0,.5) !important;
+    overflow: hidden;
+}
+#statusbar::before, #statusbar::after {
+    content: "\2605"; position: absolute; top: 0; z-index: 1;
+    width: 28px; height: 30px; line-height: 30px; text-align: center;
+    color: var(--osada-gold); font-size: 15px; text-shadow: 0 1px 2px rgba(0,0,0,.7);
+    background: linear-gradient(180deg, #8f2020, #5c1414);
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.45);
+}
+#statusbar::before { left: 0; border-right: 1px solid var(--osada-brass); }
+#statusbar::after  { right: 0; border-left: 1px solid var(--osada-brass); }
+#weathermsg { height: 30px; line-height: 30px; padding: 0 4px 0 36px; font-size: 18px; color: var(--osada-brass); }
+#statusmsg  { height: 30px; line-height: 30px; padding: 0 0 0 4px; }
+#locmsg     { height: 30px; line-height: 30px; padding: 0 36px 0 0; color: var(--osada-text-dim); }
+#statusbar .message { font-size: 13px; letter-spacing: .02em; text-shadow: 0 1px 2px rgba(0,0,0,.8); }
+
+/* ---- Sidebar: subtle metal rail behind the brass action buttons ---- */
+#menu {
+    padding: 8px 3px; border-radius: 8px;
+    background: linear-gradient(180deg, rgba(24,27,32,.72), rgba(12,13,16,.8));
+    border: 1px solid var(--osada-metal-600);
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.5), -3px 2px 10px rgba(0,0,0,.5);
+}
+.smallButtonMenu { margin-left: auto; margin-right: auto; float: none; }
+
+/* ============================================================================
+ * TASK 3 — BOTTOM ZONE: player unit card / forecast strip / enemy unit card.
+ * From the left edge to the sidebar (never under it), ~90px tall, z 10.
+ * State machine (classes on #osada-bottomzone; see BottomZoneBuilder.setState):
+ *   (no class)        -> hidden (nothing selected)
+ *   bz--visible        -> player card only (own unit selected)
+ *   bz--visible+hover  -> card + forecast + enemy card (hovering a valid target)
+ *   bz--visible+enemy-only -> enemy card alone, in the card's slot (enemy clicked,
+ *                              nothing own selected)
+ * ============================================================================ */
+#osada-bottomzone {
+    display: none;
+    position: fixed; left: 0; right: 270px; bottom: 0; z-index: var(--z-hud);
+    height: 92px;
+    /* Compact card, NOT 1fr: with 1fr the card stretched across the whole free width
+     * (~1200px on FHD) and the STR/AMMO bars inside it became absurdly long. */
+    grid-template-columns: minmax(360px, 520px) 150px 340px;
+    grid-template-areas: "card forecast enemy";
+    gap: 8px; padding: 0 10px 8px;
+    font-family: var(--osada-font-ui);
+}
+#osada-bottomzone.bz--visible { display: grid; }
+
+/* ---- Player card (#unit-info) ----
+ * #unit-info's own `display` is still toggled by makeVisible/makeHidden as inline style (many
+ * existing call sites rely on isVisible("unit-info") reading that inline value, so it is left
+ * alone) — an inline style always wins over a plain stylesheet rule, so this element is just a
+ * plain box (position/padding/background only). The actual flex row lives on #uc-inner, an id
+ * no code ever calls makeVisible/makeHidden on, sidestepping the conflict entirely. */
+#unit-info {
+    /* Neutralize base.css (ex-ui.css)'s legacy centered-840px-box hack (width:840px; left:50%; top:100%;
+     * margin:-70px auto 0 -420px) — without resetting all four, the leftover negative margin/
+     * fixed width would fight this element's new life as a CSS grid item. */
+    grid-area: card; position: relative; top: auto; left: auto;
+    width: auto; min-width: 0; margin: 0; box-sizing: border-box;
+    padding: 8px 10px;
+    background: rgba(21,23,28,.92); border: 1px solid var(--osada-metal-600);
+    border-radius: 5px; box-shadow: 0 -2px 10px rgba(0,0,0,.45);
+    color: var(--osada-text); font-family: var(--osada-font-ui);
+}
+/* !important: this must win even over a stale inline display:inline from a previous makeVisible
+ * call, since the enemy-alone state can be entered without an intervening makeHidden. */
+#osada-bottomzone.bz--enemy-only #unit-info { display: none !important; }
+#unit-info .nameRow, #statsRowTop, #unit-info .uSpacer, #uSmallFlag, .statsRow { display: none; }
+
+#uc-inner { display: flex; align-items: stretch; gap: 10px; height: 100%; }
+
+#uc-portrait {
+    flex: 0 0 auto; width: 64px; height: 64px; align-self: center;
+    background: #101215; border: 1px solid #3a3d45; border-radius: 4px; overflow: hidden;
+}
+#uImageBg { width: 100%; height: 100%; background: none; border: 0; overflow: hidden; }
+#uImage { width: 100%; height: 100%; margin: 0; border: 0; background-repeat: no-repeat; }
+#uFlag { display: none; } /* country already implied by portrait; kept in DOM, not shown here */
+
+#uc-main { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; justify-content: center; gap: 5px; }
+#uc-nameline { display: flex; align-items: center; gap: 8px; min-width: 0; }
+#uName {
+    flex: 0 1 auto; min-width: 0; position: static; width: auto; height: auto;
+    display: block; color: #f4e3c6; text-transform: uppercase; letter-spacing: .03em;
+    font-weight: bold; font-size: 13px; line-height: 1.2; text-shadow: 0 1px 2px rgba(0,0,0,.7);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.uc-stars { flex: 0 0 auto; color: var(--osada-brass); font-size: 12px; letter-spacing: 1px; }
+.uc-ent { flex: 0 0 auto; color: var(--osada-text-dim); font-size: 11px; font-weight: bold; }
+/* Empty (textContent="") when not applicable — only a grounded-by-weather air unit shows this. */
+.uc-weather { flex: 0 0 auto; color: var(--osada-red-bright); font-size: 13px; }
+
+/* Leader slot: empty outline vs filled (spec); non-clickable, tooltip only. */
+.uc-leader-slot {
+    flex: 0 0 auto; width: 18px; height: 18px; cursor: default;
+    border: 1.5px solid var(--osada-text-dim); border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center; font-size: 0;
+    background: transparent; box-shadow: none;
+}
+/* Faint star when empty so the circle reads as an intentional (unfilled) slot, not an artifact. */
+.uc-leader-slot::before { content: "★"; font-size: 10px; color: rgba(169,164,148,.38); }
+.uc-leader-slot--filled {
+    border-color: var(--osada-brass);
+    background: radial-gradient(circle, rgba(217,178,90,.35), transparent 70%);
+}
+.uc-leader-slot--filled::before { color: var(--osada-brass); }
+.uc-leader-slot--recognition {
+    width: 24px; border-radius: 9px; border-color: rgba(217,178,90,.58);
+    color: var(--osada-brass); font-size: 8px; letter-spacing: -1px; line-height: 1;
+    background: rgba(217,178,90,.08);
+}
+.uc-leader-slot--recognition::before { content: none; }
+/* #uLeader/#uCarrier/#uTransport carry a LEGACY base.css (ex-ui.css) rule keyed by the same IDs:
+ *   #uLeader{position:absolute;left:-20px} #uCarrier,#uTransport{position:absolute;top:35px;left:-20px}
+ * An ID selector beats any class we give them (.uc-leader-slot / .osada-slot below), regardless
+ * of stylesheet order, so without resetting position/top/left BY ID here too, all three render
+ * ~20px to the left of #unit-info's own left edge — i.e. almost off the screen — no matter what
+ * class-based styling they get. This reset must stay an ID selector to actually win. */
+#uLeader, #uCarrier, #uTransport {
+    position: static; top: auto; left: auto; right: auto; float: none;
+}
+/* uTransport/uCarrier: small utility icons alongside the leader slot. Own class, NOT the legacy
+ * `.smallButtonSubMenu` (bright orange 26px circle) — that clashed with the dark/brass card and
+ * was part of why these read as "barely visible" alongside the mispositioning above. */
+.osada-slot {
+    flex: 0 0 auto; width: 22px; height: 22px; min-width: 22px; min-height: 22px;
+    line-height: 22px; margin: 0; font-size: 13px; border-radius: 4px; text-align: center;
+    font-family: osada-menu; font-weight: normal; text-shadow: none; cursor: pointer;
+    background: rgba(0,0,0,.35); border: 1px solid var(--osada-metal-600); color: var(--osada-brass);
+}
+.osada-slot:hover { border-color: var(--osada-brass); background: rgba(217,178,90,.14); }
+
+#uc-bars { display: flex; flex-direction: column; gap: 3px; }
+.osada-bar { display: flex; align-items: center; gap: 6px; }
+/* Ammo/fuel icons (resources/ui/osada/, asset-sheet extracts) sit before the STR/AMMO/FUEL
+ * label; STR has no matching art in the extracted set so it stays label-only. */
+.osada-bar__ico { width: 14px; height: 14px; flex: 0 0 auto; object-fit: contain; filter: drop-shadow(0 1px 1px rgba(0,0,0,.6)); }
+.osada-bar__label { flex: 0 0 30px; font-size: 9px; font-weight: bold; letter-spacing: .04em; color: var(--osada-text-dim); }
+.osada-bar__track {
+    position: relative; flex: 1 1 auto; height: 6px; background: rgba(0,0,0,.4);
+    border-radius: 3px; overflow: hidden; min-width: 60px; max-width: 170px;
+}
+.osada-bar__fill { height: 100%; width: 0; border-radius: 3px; transition: width .15s; }
+.osada-bar--str .osada-bar__fill { background: #7fa86a; }
+.osada-bar--ammo .osada-bar__fill, .osada-bar--fuel .osada-bar__fill { background: var(--osada-brass); }
+/* Current/max lives ON the bar; the row's `title` (set in Kotlin) explains only the MEANING,
+ * never repeats this number. */
+.osada-bar__value {
+    position: absolute; right: 4px; top: 50%; transform: translateY(-50%);
+    font-size: 9px; font-weight: bold; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,.9);
+    pointer-events: none; letter-spacing: .02em; line-height: 1;
+}
+#uFuelBarFillRow { display: none; } /* shown only when the unit uses fuel (Kotlin toggles this) */
+
+/* "All stats ▸" expander: compact grid ABOVE the card (spec), reusing the existing granular
+ * stat chips (#statsRowContainer/#statsRow) untouched in content — only repositioned. */
+#uc-expand {
+    flex: 0 0 auto; align-self: flex-start; margin-top: 2px;
+    font-size: 10px; font-weight: bold; letter-spacing: .04em; text-transform: uppercase;
+    color: var(--osada-text-dim); cursor: pointer; padding: 3px 6px; border-radius: 3px;
+}
+#uc-expand:hover { color: var(--osada-brass); background: rgba(217,178,90,.08); }
+#statsRowContainer {
+    display: none; position: absolute; left: 0; bottom: calc(100% + 6px); width: min(560px, 90vw);
+    max-height: 260px; overflow-y: auto; z-index: 1;
+    background: rgba(15,17,20,.98); border: 1px solid var(--osada-brass); border-radius: 5px;
+    box-shadow: 0 -8px 30px rgba(0,0,0,.6); padding: 8px;
+}
+#unit-info.uc--expanded #statsRowContainer { display: block; }
+.osada-formation-detail {
+    clear: both; margin: 7px 2px 2px; padding: 6px 8px; line-height: 1.35;
+    border: 1px solid rgba(221,174,68,.28); background: rgba(0,0,0,.22); color: var(--osada-text-dim);
+}
+.osada-formation-detail__headline { color: var(--osada-brass); font-size: 11px; font-weight: bold; }
+.osada-formation-detail__event { margin-top: 3px; font-size: 10px; }
+#statsRow { float: none !important; margin: 0 !important; padding: 0; white-space: normal; width: 100%; }
+.statsGlyph {
+    display: inline-block; float: none; vertical-align: top; box-sizing: border-box;
+    width: 56px; min-width: 56px; height: 44px; margin: 2px; padding-top: 3px;
+    text-align: center; overflow: hidden;
+    background: rgba(0,0,0,.28); border: 1px solid rgba(217,178,90,.28); border-radius: 3px;
+    font-size: 19px; line-height: 19px; color: var(--osada-brass);
+    text-shadow: 0 1px 2px rgba(0,0,0,.8);
+}
+.statsText { display: block; margin-top: 3px; min-width: 0; font-size: 12px; line-height: 13px; font-weight: bold; color: var(--osada-text); text-shadow: 0 1px 1px rgba(0,0,0,.7); }
+
+/* "All stats" expander groups (Status/Attack/Defence/Mobility & Recon — UIBuilder.unitStats'
+ * `group` field): a heading above each row of .statsGlyph chips, which keep their own wrapping
+ * inline-block layout unchanged inside .osada-stat-group__grid. */
+.osada-stat-group { margin-bottom: 6px; }
+.osada-stat-group:last-child { margin-bottom: 0; }
+.osada-stat-group__label {
+    font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: .06em;
+    color: var(--osada-text-dim); margin: 0 0 2px 2px;
+}
+#leaderInfo { color: var(--osada-text); font-size: 12px; line-height: 1.4; }
+#leaderInfo b { color: var(--osada-brass); }
+
+/* ---- Action row (#unit-context reparented into #uc-actions) ----
+ * NOTE: #unit-context's visibility is toggled via inline style (makeVisible/makeHidden set
+ * display:inline/none directly), which always wins over a stylesheet `display`. So this does
+ * NOT set display:flex here (it would be silently defeated whenever the row is shown) — instead
+ * each .osada-action chip is display:inline-flex (below) with its own margin for spacing, so
+ * they lay out in a row purely from normal inline flow regardless of the parent's display. */
+#uc-actions { flex: 0 0 auto; display: flex; align-items: center; align-self: center; }
+#unit-context {
+    position: static; z-index: auto; margin: 0; padding: 0; float: none; left: auto; top: auto;
+    width: 165px; white-space: normal; line-height: 0; background: none; border: 0; box-shadow: none;
+}
+.osada-action { width: 52px; min-height: 40px; margin: 0 3px 0 0; }
+.osada-action__label { font-size: 8px; }
+/* Undo: the single rescue action, styled distinctly (spec). */
+.osada-action--undo { border-color: var(--osada-brass); }
+.osada-action--undo .osada-action__glyph { color: #f4e3c6; }
+/* Sleep: pressed/active look while the unit is asleep (chip reads "Wake"). */
+.osada-action--active { background: var(--osada-metal-600); border-color: var(--osada-brass); }
+.osada-action--active .osada-action__glyph { color: #f4e3c6; }
+
+/* ---- Forecast strip (~90px "wide" column; taller than wide by design) ---- */
+#osadaForecast {
+    grid-area: forecast; display: none; flex-direction: column; align-items: center;
+    justify-content: center; gap: 4px; padding: 8px 6px;
+    background: rgba(21,23,28,.92); border: 1px solid var(--osada-metal-600);
+    border-radius: 5px; box-shadow: 0 -2px 10px rgba(0,0,0,.45);
+}
+#osada-bottomzone.bz--hover #osadaForecast { display: flex; }
+.osada-fc-atkdef { color: var(--osada-brass); font-size: 12px; font-weight: bold; letter-spacing: .03em; text-align: center; }
+.osada-fc-losses { display: flex; align-items: baseline; gap: 5px; font-size: 15px; font-weight: bold; }
+.osada-fc-vs { font-size: 10px; font-weight: normal; color: var(--osada-text-dim); text-transform: uppercase; }
+.osada-fc-loss--own { color: #7fa86a; }
+.osada-fc-loss--enemy { color: var(--osada-red-bright); }
+.osada-fc-strengths { color: var(--osada-text-dim); font-size: 11px; }
+
+/* ---- Enemy unit card ---- */
+#osadaEnemyCard {
+    grid-area: enemy; position: relative; display: none; align-items: center; gap: 10px; padding: 8px 10px;
+    background: rgba(28,20,20,.94); border: 1px solid #6b3434; border-radius: 5px;
+    box-shadow: 0 -2px 10px rgba(0,0,0,.45); color: #e8c9c9;
+}
+/* "All stats ▸" expander, same technique as #uc-expand/#statsRowContainer on the player card
+ * (pop-up grid ABOVE the card) but its own element/state — see BottomZoneBuilder.ecStatEntries. */
+#ec-expand {
+    flex: 0 0 auto; align-self: flex-start; margin-top: 2px;
+    font-size: 10px; font-weight: bold; letter-spacing: .04em; text-transform: uppercase;
+    color: #a56b6b; cursor: pointer; padding: 3px 6px; border-radius: 3px;
+}
+#ec-expand:hover { color: var(--osada-red-bright); background: rgba(217,178,90,.08); }
+#ecStatsContainer {
+    display: none; position: absolute; right: 0; bottom: calc(100% + 6px); width: min(420px, 90vw);
+    max-height: 260px; overflow-y: auto; z-index: 1;
+    background: rgba(15,17,20,.98); border: 1px solid #6b3434; border-radius: 5px;
+    box-shadow: 0 -8px 30px rgba(0,0,0,.6); padding: 8px;
+}
+#osadaEnemyCard.ec--expanded #ecStatsContainer { display: block; }
+#osada-bottomzone.bz--hover #osadaEnemyCard,
+#osada-bottomzone.bz--enemy-only #osadaEnemyCard { display: flex; }
+#osada-bottomzone.bz--enemy-only #osadaEnemyCard { grid-area: card; }
+/* 80x50, matching the box size the sprite strip's frame spacing is authored for (same box the
+ * equipment-window portrait uses) — a narrower box would misalign the animation's frame steps.
+ * Reuses the same idle cycle (unitanim, defined above) as the equipment portrait instead of a
+ * static crop, so the enemy card doesn't read as a dead bitmap. */
+#ecPortrait {
+    flex: 0 0 auto; width: 80px; height: 50px; background-color: #150f0f;
+    border: 1px solid #6b3434; border-radius: 4px; background-repeat: no-repeat;
+    overflow: hidden; animation: unitanim 2s steps(9,end) infinite alternate;
+}
+#ecMain { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.osada-ec-name { font-weight: bold; font-size: 13px; color: #e8c9c9; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.osada-ec-sub { font-size: 11px; color: #a56b6b; text-transform: uppercase; letter-spacing: .04em; }
+.osada-bar--enemy .osada-bar__track { max-width: 160px; }
+.osada-bar--enemy .osada-bar__fill { background: var(--osada-red-bright); }
+.osada-ec-stat { font-size: 11px; color: #c99; }
+
+/* ============================================================================
+ * STAGE 3 REBUILD — widen the campaign/scenario browsers to real screen size,
+ * bump readability, and replace the native difficulty <select> with a custom
+ * segmented control.
+ * ============================================================================ */
+#smCamp, #smScen { width: 82%; max-width: 1480px; height: 88%; max-height: 940px; }
+
+.osadaScreenHeader { font-size: 17px; }
+.osadaListRow { min-height: 50px; }
+.osadaListRowName { font-size: 14px; }
+.osadaListRowSub { font-size: 12px; }
+.osadaDossierTitle { font-size: 23px; }
+.osadaDossierSub { font-size: 14px; }
+.smDesc { font-size: 14px; line-height: 1.6; }
+.smCampDetails { font-size: 14px; }
+.osadaCollapseSummary { font-size: 13px; }
+.osadaCollapseBody { font-size: 13px; }
+/* Bigger banner for the enlarged (82%-width) panel — was a dead width/height override left
+ * over from the thumbnail-sized .osadaTheater; the banner now fills .osadaDossierHead via
+ * position:absolute so its OWN height is what needs to grow here, not the old element's. */
+.osadaDossierHead { height: 220px; }
+
+/* Custom segmented difficulty selector (replaces #smCampDifSel <select>). */
+#smCampInfo > .smCampDetails:nth-child(2) { width: 100%; }
+#smCampDif {
+    border: none !important; background: transparent !important; box-shadow: none !important;
+    display: flex; gap: 5px; padding: 3px 0 0 0; width: auto;
+}
+.osada-seg {
+    flex: 1 1 0; text-align: center; padding: 7px 4px; cursor: pointer; box-sizing: border-box;
+    font-size: 11px; font-weight: bold; letter-spacing: .03em; text-transform: uppercase;
+    color: var(--osada-text-dim); background: var(--osada-metal-800);
+    border: 1px solid var(--osada-metal-600); border-radius: 2px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color .12s, background .12s, border-color .12s;
+}
+.osada-seg:hover { color: var(--osada-brass); border-color: var(--osada-brass); }
+.osada-seg--on { color: #f4e3c6; background: var(--osada-red); border-color: var(--osada-red); box-shadow: inset 0 0 0 1px rgba(217,178,90,.3); }
+/* Difficulty hint line: replaces the old "?" button that swapped away the campaign description
+ * to show static help text. Updates on hover (preview) / falls back to the selected value. */
+.osada-dif-hint { margin-top: 6px; font-size: 11px; font-weight: normal; color: var(--osada-text-dim); line-height: 1.4; }
+
+/* ============================================================================
+ * STAGE 4 — GAMEPLAY HUD: command rail (framed PNG icons) + segmented topbar.
+ * ============================================================================ */
+
+/* ---- Command rail: square framed icon buttons from hud_icons_grid ----
+ * font-size:0 hides the legacy osada-menu glyph (kept for the toggle logic
+ * that reads/writes innerHTML), and a ::before paints the PNG icon. Removing the
+ * round brass plate avoids a double frame (each grid icon carries its own). */
+#menu { width: 58px; padding: 8px 4px; }
+#menu .smallButtonMenu {
+    background: none !important; border: 0 !important; box-shadow: none !important;
+    width: 48px; height: 48px; min-width: 48px; min-height: 48px; line-height: 48px;
+    margin: 3px auto; padding: 0; border-radius: 0; font-size: 0; position: relative; cursor: pointer;
+}
+#menu .smallButtonMenu::before {
+    content: ""; position: absolute; inset: 0;
+    background-image: url('../resources/hud_icons_grid.png');
+    background-repeat: no-repeat; background-size: 400% 300%;
+    transition: filter .12s, transform .06s;
+}
+#menu .smallButtonMenu:hover::before { filter: drop-shadow(0 0 6px rgba(217,178,90,.55)) brightness(1.12); }
+#menu .smallButtonMenu:active::before { transform: scale(.94); }
+#menu .smallButtonMenu[selected]::before { filter: drop-shadow(0 0 7px rgba(208,52,44,.75)) brightness(1.18) saturate(1.15); }
+#endturn.smallButtonMenu { width: 52px; height: 52px; }
+/* Per-action icon cells (unique icon each; tooltips carry the exact meaning). */
+#inspectunit::before { background-position: 66.66% 100%; } /* info    */
+#endturn::before     { background-position: 66.66% 50%;  } /* endturn */
+#mainmenu::before    { background-position: 33.33% 100%; } /* star    */
+#buy::before         { background-position: 0%     0%;   } /* upgrade */
+#hex::before         { background-position: 0%     100%; } /* map     */
+#air::before         { background-position: 33.33% 0%;   } /* attack  */
+#zoom::before        { background-position: 100%   0%;   } /* recon   */
+#options::before     { background-position: 100%   50%;  } /* settings*/
+
+/* ---- Topbar: segmented status bar (operation | side | turn | prestige) ---- */
+#statusbar { display: flex; align-items: center; padding: 0 34px; }
+#weathermsg { flex: 0 0 auto; }
+#statusmsg {
+    flex: 1 1 auto; display: flex; align-items: center; gap: 16px;
+    width: auto; height: 30px; padding: 0 6px; overflow: hidden;
+}
+#locmsg { flex: 0 0 auto; width: auto; max-width: 26%; }
+.osada-tb-op {
+    flex: 0 1 auto; min-width: 0; max-width: 46%;
+    font-weight: bold; color: var(--osada-brass); text-transform: uppercase; letter-spacing: .04em;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.osada-tb-field { flex: 0 0 auto; display: inline-flex; align-items: baseline; gap: 5px; white-space: nowrap; color: var(--osada-text); }
+.osada-tb-field b { color: var(--osada-text-dim); font-weight: normal; font-size: 10px; text-transform: uppercase; letter-spacing: .07em; }
+.osada-tb-field--prestige { color: var(--osada-gold); font-weight: bold; }
+
+/* ============================================================================
+ * TASK 0 — Z-INDEX SCALE (design contract for the whole HUD):
+ *   map 0 → HUD 10 → modal dim overlay 90 → windows 100 → messages/tooltips 1000
+ * ============================================================================ */
+:root {
+    --z-map: 0;
+    --z-hud: 10;
+    --z-dim: 90;
+    --z-window: 100;
+    --z-msg: 1000;
+}
+#ui-message, #uiMessageBoxDynamic { z-index: var(--z-msg) !important; }
+#uiToolTip { z-index: var(--z-msg) !important; }
+/* Obsolete deploy-strip toggles: the reserve list lives inside the equipment window now. */
+#statusBarButton, #unitsBarButton { display: none !important; }
+
+/* ============================================================================
+ * TASK 0 — EQUIPMENT WINDOW: one CSS grid, named areas
+ *   header / mode-tabs / class-tabs / list / detail / footer
+ * DOM areas are built by EquipmentWindowBuilder.restructureEquipmentWindow();
+ * legacy float containers (#eqSortButtonsContainer, #eqHeaderSpacer,
+ * #eqActionsContainer, #eqSortOptions) are emptied and killed here.
+ * Kotlin open-sites set inline display:grid (never set display in CSS — the
+ * makeVisible/makeHidden inline-display trap).
+ * ============================================================================ */
+#equipment {
+    position: fixed !important;
+    left: 50% !important; top: 50% !important; right: auto !important; bottom: auto !important;
+    transform: translate(-50%, -50%);
+    width: min(1160px, 94vw) !important;
+    height: min(780px, 90vh);
+    margin: 0 !important;
+    z-index: var(--z-window) !important;
+    grid-template-rows: 50px 42px 52px minmax(0, 1fr) 52px;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    grid-template-areas:
+        "header    header"
+        "modetabs  modetabs"
+        "classtabs classtabs"
+        "list      detail"
+        "footer    footer";
+    border: 2px solid var(--osada-brass) !important;
+    border-radius: 6px;
+    /* The huge spread shadow doubles as the modal dim layer (map dimmed behind). */
+    box-shadow: 0 0 0 200vmax rgba(0, 0, 0, .55), 0 18px 70px rgba(0, 0, 0, .85);
+    overflow: hidden;
+    font-family: var(--osada-font-ui);
+}
+/* Legacy containers that no longer host anything. */
+#eqSortButtonsContainer, #eqHeaderSpacer, #eqActionsContainer, #eqSortOptions,
+#eqSortOptionsBut { display: none !important; }
+
+/* --- header --- */
+#eqGridHeader {
+    grid-area: header; display: flex; align-items: center; gap: 14px;
+    padding: 0 14px; border-bottom: 1px solid var(--osada-metal-600);
+    background: rgba(0, 0, 0, .25);
+}
+#eqInfoText {
+    flex: 1 1 auto; width: auto !important; height: auto !important; float: none;
+    margin: 0 !important; font-size: 15px !important; color: var(--osada-brass);
+    text-transform: uppercase; letter-spacing: .06em;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+#eqPrestigeWrap { flex: 0 0 auto; display: flex; align-items: center; gap: 4px; }
+#currentPrestige, #currentPrestigeAmount {
+    float: none !important; margin: 0 !important; font-size: 15px !important;
+    font-weight: bold; color: var(--osada-gold) !important; white-space: nowrap;
+}
+#eqCloseBut {
+    flex: 0 0 auto; float: none !important; margin: 0 !important;
+    width: 34px; min-width: 34px !important; height: 34px; min-height: 34px !important;
+    line-height: 34px !important; box-sizing: border-box;
+}
+
+/* --- mode tabs --- */
+#eqModeTabs {
+    grid-area: modetabs; display: flex; gap: 3px; align-items: flex-end;
+    padding: 0 14px; border-bottom: 1px solid var(--osada-brass);
+    background: rgba(0, 0, 0, .18);
+}
+.osada-eq-tab {
+    min-width: 140px; padding: 10px 20px; text-align: center; cursor: pointer;
+    box-sizing: border-box;
+    font-size: 13px; font-weight: bold; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--osada-text-dim); background: #1a1d22;
+    border: 1px solid var(--osada-metal-600); border-bottom: none;
+    border-radius: 5px 5px 0 0;
+}
+.osada-eq-tab:hover { color: var(--osada-brass); }
+.osada-eq-tab[selected] { color: #d9b25a; background: #22262c; border-color: #d9b25a; }
+
+/* --- class tabs + tools --- */
+#eqClassTabs {
+    grid-area: classtabs; display: flex; align-items: center; gap: 10px;
+    padding: 6px 14px; border-bottom: 1px solid var(--osada-metal-600);
+}
+.osada-eq--reserve #eqClassTabs { visibility: hidden; }
+#eqSelClass {
+    display: flex; gap: 6px; flex-wrap: nowrap; overflow: hidden;
+    width: auto !important; float: none !important; margin: 0 !important;
+}
+#eqSelClass .smallButtonSubMenu {
+    float: none; display: inline-flex; align-items: center; gap: 7px;
+    width: auto !important; min-width: 0 !important; height: 40px !important; min-height: 40px !important;
+    line-height: normal !important; padding: 0 12px; margin: 0 !important; box-sizing: border-box;
+    border-radius: 4px; box-shadow: none;
+    background: #22262c !important; border: 1px solid #3a3d45 !important;
+    color: var(--osada-text); cursor: pointer;
+}
+#eqSelClass .smallButtonSubMenu:hover { border-color: var(--osada-brass) !important; color: var(--osada-brass); }
+#eqSelClass .smallButtonSubMenu[selected] {
+    border-color: #d9b25a !important; color: #d9b25a; background: #2a2620 !important; box-shadow: none;
+}
+.osada-eqtab__glyph { font-family: osada-menu, sans-serif; font-size: 19px; line-height: 1; }
+.osada-eqtab__label { font-family: var(--osada-font-ui); font-size: 12px; font-weight: bold; letter-spacing: .04em; text-transform: uppercase; }
+/* Narrow screens: keep all 8 class tabs clickable by dropping to glyph-only
+ * (the title attribute still names the class on hover). */
+@media (max-width: 1240px) {
+    .osada-eqtab__label { display: none; }
+}
+#eqClassTools { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+#osadaEqSort, #osadaEqCountry {
+    height: 34px; padding: 0 8px; font-size: 12px; max-width: 190px;
+    background: #15171c; color: var(--osada-text);
+    border: 1px solid #3a3d45; border-radius: 4px;
+}
+#eqSortOrderBut {
+    float: none !important; margin: 0 !important; box-sizing: border-box;
+    width: 34px; min-width: 34px !important; height: 34px; min-height: 34px !important;
+    line-height: 34px !important;
+}
+/* Legacy flag-cycling button replaced by the #osadaEqCountry dropdown. */
+#eqSelCountryButton { display: none !important; }
+
+/* Multi-country side (country dropdown visible — .osada-eq--countries is toggled by
+ * EquipmentWindowController.syncCountrySelect): the tools cluster grows ~190px, which the
+ * default 1160px window can't give the 8 labeled class tabs (#eqSelClass overflow:hidden just
+ * clipped their text). Widen the window and compact the selects/tabs; below 1470px viewport
+ * there is no room to widen into, so drop to glyph-only tabs (same treatment as the 1240px
+ * narrow-screen rule — class names stay on the tooltips). */
+#equipment.osada-eq--countries { width: min(1380px, 94vw) !important; }
+.osada-eq--countries #osadaEqSort, .osada-eq--countries #osadaEqCountry { max-width: 150px; }
+.osada-eq--countries #eqSelClass .smallButtonSubMenu { padding: 0 9px; gap: 5px; }
+@media (max-width: 1470px) {
+    .osada-eq--countries .osada-eqtab__label { display: none; }
+}
+
+/* --- list pane --- */
+#eqListPane { grid-area: list; overflow-y: auto; padding: 12px 14px; min-height: 0; min-width: 0; }
+#hscroll-eqUnitList, #hscroll-eqTransportList {
+    width: 100% !important; margin: 0; overflow: visible !important;
+}
+#hscroll-eqTransportList { margin-top: 10px; }
+#eqUnitList, #eqTransportList {
+    float: none !important; margin: 0 !important; padding: 0 !important;
+    display: flex; flex-wrap: wrap; gap: 10px; align-content: flex-start;
+}
+#eqTransportList:not(:empty)::before {
+    content: "Transport (optional — click again to unselect)";
+    display: block; width: 100%; font-size: 11px; font-weight: bold;
+    letter-spacing: .08em; text-transform: uppercase; color: var(--osada-text-dim);
+    margin-bottom: 2px;
+}
+.eqUnitBox { margin: 0 !important; }
+.osada-eq-unaffordable { filter: grayscale(.9) brightness(.55); }
+
+/* Unit strip pane (upgrade target list / reserve list) — mode-dependent. */
+#eqReservePane { display: none; }
+.osada-eq--upgrade #eqReservePane {
+    display: block; margin-bottom: 12px; padding-bottom: 8px;
+    border-bottom: 1px solid var(--osada-metal-600);
+}
+.osada-eq--reserve #eqReservePane { display: block; }
+.osada-eq--reserve #hscroll-eqUnitList, .osada-eq--reserve #hscroll-eqTransportList { display: none !important; }
+.osada-eq--reserve #eqDetailPane { display: none; }
+.osada-eq--reserve #eqListPane { grid-column: 1 / -1; }
+#eqReserveHint, #eqUpgradeHint, #eqReserveEmpty {
+    display: none; color: var(--osada-text-dim); font-size: 13px; margin: 0 0 10px;
+}
+.osada-eq--reserve #eqReserveHint { display: block; color: var(--osada-brass); }
+.osada-eq--upgrade #eqUpgradeHint { display: block; }
+/* #eqReserveEmpty visibility is driven inline by refreshReserveState(). */
+#container-unitlist {
+    position: static !important; width: auto !important; margin: 0 !important;
+    left: auto !important; top: auto !important; background: transparent !important;
+    border-radius: 0;
+}
+#hscroll-unitlist { width: 100% !important; overflow: visible !important; margin: 0; }
+#unitlist {
+    float: none !important; margin: 0 !important; padding: 0 !important;
+    display: flex; flex-wrap: wrap; gap: 10px;
+}
+
+/* --- detail column --- */
+#eqDetailPane {
+    grid-area: detail; min-height: 0; display: flex; flex-direction: column;
+    border-left: 1px solid var(--osada-metal-600); background: rgba(0, 0, 0, .22);
+}
+#eqDetailBody { flex: 1 1 auto; overflow-y: auto; padding: 14px; }
+.osada-eqd-empty { color: var(--osada-text-dim); font-size: 13px; text-align: center; margin-top: 30px; }
+.osada-eqd-portrait {
+    width: 80px; height: 50px; overflow: hidden; margin: 0 auto 10px;
+    background: #101215; border: 1px solid #3a3d45; border-radius: 4px;
+}
+/* base.css (ex-ui.css) only defines this keyframe with -webkit-/-moz- prefixes, which modern browsers ignore
+ * for an unprefixed `animation:` — so this "idle" sprite-strip cycle never actually ran. Defining
+ * the unprefixed name here fixes it everywhere it's used (this portrait AND #ecPortrait below). */
+@keyframes unitanim { from { background-position: 0 50%; } to { background-position: 112% 50%; } }
+
+/* Same technique as #uImage on the unit card: a background-image (not <img src>, since
+ * background-position is what the sprite-strip animation drives) stepping through the icon's
+ * frame strip — the subtle "idle" cycling the legacy unit card already has. */
+.osada-eqd-portrait__img {
+    width: 100%; height: 100%; background-repeat: no-repeat;
+    animation: unitanim 2s steps(9,end) infinite alternate;
+}
+.osada-eqd-name {
+    font-size: 15px; font-weight: bold; color: #d9b25a; text-align: center;
+    text-transform: uppercase; letter-spacing: .04em;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+/* Reuses .osadaFlag's sprite sizing; min-width so long names can't squash the flag away. */
+.osada-eqd-flag { min-width: 22px; }
+.osada-eqd-class { font-size: 12px; color: var(--osada-text-dim); text-align: center; margin-top: 2px; }
+.osada-eqd-avail { font-size: 11px; color: var(--osada-text-dim); text-align: center; margin-top: 1px; opacity: .75; }
+.osada-eqd-cost { text-align: center; color: var(--osada-gold); font-weight: bold; font-size: 14px; margin: 6px 0 12px; }
+.osada-eqd-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 8px; }
+.osada-eqd-stat {
+    display: flex; justify-content: space-between; gap: 6px; font-size: 12px;
+    padding: 4px 7px; background: rgba(255, 255, 255, .04); border-radius: 3px;
+    cursor: help;
+}
+.osada-eqd-stat:hover { background: rgba(217, 178, 90, .12); }
+.osada-eqd-stat b { color: var(--osada-text-dim); font-weight: normal; white-space: nowrap; }
+.osada-eqd-stat span { color: var(--osada-text); font-weight: bold; }
+/* Narrative bay under the stats (renders eq.description when the data grows one). */
+.osada-eqd-desc {
+    margin-top: 12px; padding: 10px 12px; font-size: 12px; line-height: 1.55;
+    color: var(--osada-text-dim); font-style: italic;
+    background: rgba(0, 0, 0, .18); border-left: 2px solid var(--osada-brass);
+    border-radius: 3px;
+}
+#eqDetailActions { flex: 0 0 auto; padding: 10px 14px 12px; border-top: 1px solid var(--osada-metal-600); }
+.osada-eqd-actionrow { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.osada-eqd-actionrow:first-child { margin-top: 0; }
+/* Mode gating: exactly one primary action per tab (inline display from
+ * showEquipmentCosts is beaten by !important here). */
+.osada-eq--purchase #eqUpgradeBut, .osada-eq--purchase #eqUpgradeCost, .osada-eq--purchase #eqUpgradeText { display: none !important; }
+.osada-eq--upgrade #eqNewBut, .osada-eq--upgrade #eqNewCost, .osada-eq--upgrade #eqNewText { display: none !important; }
+#eqNewBut, #eqUpgradeBut {
+    flex: 1 1 100%; float: none !important; margin: 0 !important; box-sizing: border-box;
+    height: 44px; min-height: 44px !important; min-width: 0 !important; width: 100%;
+    line-height: 44px !important; border-radius: 4px; cursor: pointer; text-align: center;
+    background: linear-gradient(180deg, #a5322f, #6f1a18) !important;
+    border: 1px solid var(--osada-brass) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .5);
+    font-size: 0 !important;
+}
+#eqNewBut:hover, #eqUpgradeBut:hover { background: linear-gradient(180deg, #bb3c38, #83201d) !important; }
+#eqNewBut::after, #eqUpgradeBut::after {
+    font-family: var(--osada-font-ui); font-size: 14px; font-weight: bold;
+    letter-spacing: .09em; text-transform: uppercase; color: #f4e3c6;
+}
+#eqNewBut::after { content: "Buy unit"; }
+#eqUpgradeBut::after { content: "Upgrade"; }
+.eqCostText {
+    float: none !important; margin: 0 !important; overflow: visible; white-space: normal;
+    font-size: 13px !important; color: var(--osada-brass) !important;
+}
+.eqCostText[style*="color: white"], .eqCostText[style*="color:white"] { color: var(--osada-text) !important; }
+
+/* --- footer --- */
+#eqFooter {
+    grid-area: footer; display: flex; align-items: center; gap: 10px;
+    padding: 0 14px; border-top: 1px solid var(--osada-metal-600);
+    background: rgba(0, 0, 0, .25);
+}
+#eqSellBut {
+    float: none !important; margin: 0 !important; box-sizing: border-box;
+    height: 34px; min-height: 34px !important; min-width: 0 !important; width: auto;
+    line-height: 34px !important; padding: 0 14px; border-radius: 4px; cursor: pointer;
+    background: #22262c !important; border: 1px solid #8f2020 !important;
+    box-shadow: none; font-size: 0 !important;
+}
+#eqSellBut::after {
+    content: "Disband / Sell"; font-family: var(--osada-font-ui); font-size: 12px;
+    font-weight: bold; letter-spacing: .07em; text-transform: uppercase; color: #c9463d;
+}
+#eqSellBut:hover { border-color: #c9463d !important; }
+
+/* ============================================================================
+ * RADICAL HUD REBUILD — operational sidebar, topbar End Turn, labeled action
+ * bar, readable reports, clean campaign frame. CSS-first (PNG chrome optional).
+ * ============================================================================ */
+
+/* ============================================================================
+ * TASK 2 — RIGHT SIDEBAR: view toggles, minimap placeholder, objectives, log,
+ * and the whole-sidebar collapse rail. Fixed column, flush to the right edge,
+ * below the (now 40px) top bar to the bottom of the viewport.
+ * ============================================================================ */
+#osada-sidebar {
+    display: none; /* shown via Kotlin (setNewScenario) as flex */
+    position: fixed; z-index: var(--z-hud);
+    top: 40px; right: 0; bottom: 0; width: 270px; box-sizing: border-box;
+    flex-direction: column;
+    background: linear-gradient(180deg, rgba(21,23,28,.94), rgba(13,15,18,.97));
+    border-left: 1px solid var(--osada-brass);
+    box-shadow: -4px 0 18px rgba(0,0,0,.5);
+    color: var(--osada-text); font-family: var(--osada-font-ui);
+    transition: width .12s;
+}
+
+/* --- view-toggles row --- */
+.osada-sb-toggles {
+    flex: 0 0 auto; display: flex; align-items: center; gap: 6px;
+    padding: 8px 10px; border-bottom: 1px solid var(--osada-metal-600);
+}
+.osada-sb-toggle {
+    padding: 5px 12px; cursor: pointer; box-sizing: border-box;
+    font-size: 11px; font-weight: bold; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--osada-text-dim); background: #1c1f25;
+    border: 1px solid var(--osada-metal-600); border-radius: 3px;
+}
+.osada-sb-toggle:hover { color: var(--osada-brass); border-color: var(--osada-brass); }
+/* Active = brass border + brass text (spec). Air mode's ON state must be obvious, so it also
+ * gets a filled brass background rather than only a border, since it changes click behavior
+ * on the map (a purely-outlined state is too easy to miss mid-game). */
+.osada-sb-toggle[selected] { color: var(--osada-brass); border-color: var(--osada-brass); }
+#air.osada-sb-toggle[selected] { background: rgba(217,178,90,.22); color: #f4e3c6; }
+.osada-sb-toggles-spacer { flex: 1 1 auto; }
+.osada-sb-collapse {
+    width: 26px; height: 26px; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; border: 1px solid var(--osada-metal-600); border-radius: 3px;
+    color: var(--osada-text-dim); font-size: 16px; user-select: none;
+}
+.osada-sb-collapse:hover { color: var(--osada-brass); border-color: var(--osada-brass); }
+
+/* --- body: stacked panels, log fills remaining height --- */
+#osadaSideBody { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; padding: 10px 10px 8px; gap: 10px; }
+.osada-sidebar--collapsed .osada-sb-toggles, .osada-sidebar--collapsed #osadaSideBody { display: none; }
+
+.osada-sb-panel { flex: 0 0 auto; display: flex; flex-direction: column; min-height: 0; }
+.osada-sb-panel__title {
+    flex: 0 0 auto; margin-bottom: 5px; color: var(--osada-brass); font-size: 11px; font-weight: bold;
+    text-transform: uppercase; letter-spacing: .1em;
+    border-bottom: 1px solid rgba(58,65,76,.6); padding-bottom: 3px;
+}
+.osada-side-section { font-size: 13px; }
+.osada-side-empty { color: var(--osada-text-dim); font-size: 12px; padding: 4px 2px; }
+
+/* Minimap placeholder (Task 4 fills #osadaMinimapFrame with a real canvas). */
+.osada-sb-panel--minimap { flex: 0 0 auto; }
+.osada-minimap-frame {
+    height: 160px; display: flex; align-items: center; justify-content: center;
+    background: var(--osada-metal-900); border: 1px solid var(--osada-brass); border-radius: 3px;
+    box-shadow: inset 0 0 14px rgba(0,0,0,.5); overflow: hidden;
+}
+#osada-minimap { display: block; width: 240px; height: 160px; cursor: crosshair; }
+
+/* Map-zoom −/100%/+ cluster, docked directly under the minimap frame (zoom controls belong near
+ * the navigation aid, not buried in Settings). */
+.osada-zoom-controls {
+    display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 6px;
+}
+.osada-zoom-btn {
+    flex: 0 0 auto; width: 24px; height: 24px; line-height: 22px; text-align: center;
+    font-size: 15px; font-weight: bold; color: var(--osada-brass); cursor: pointer;
+    background: rgba(0,0,0,.35); border: 1px solid var(--osada-metal-600); border-radius: 3px;
+    user-select: none;
+}
+.osada-zoom-btn:hover { border-color: var(--osada-brass); background: rgba(217,178,90,.12); }
+.osada-zoom-btn--disabled { opacity: .35; pointer-events: none; }
+.osada-zoom-pct {
+    flex: 0 0 auto; min-width: 44px; height: 24px; line-height: 24px; text-align: center;
+    font-size: 11px; font-weight: bold; color: var(--osada-text-dim); cursor: pointer;
+    border-radius: 3px; user-select: none;
+}
+.osada-zoom-pct:hover { color: var(--osada-brass); background: rgba(217,178,90,.08); }
+
+/* Objectives: flat list, no grouping. */
+.osada-sb-panel--objectives { flex: 0 1 auto; max-height: 34%; }
+.osada-sb-panel--objectives .osada-side-section { overflow-y: auto; min-height: 0; }
+.osada-obj {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    padding: 5px 6px; margin: 2px 0; border-radius: 3px; cursor: pointer;
+    border: 1px solid transparent;
+}
+.osada-obj:hover { border-color: var(--osada-brass); background: rgba(217,178,90,.07); }
+.osada-obj__name { flex: 1 1 auto; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 13px; }
+.osada-obj__state {
+    flex: 0 0 auto; display: inline-flex; align-items: center; gap: 4px;
+    font-size: 11px; font-weight: bold; letter-spacing: .05em; color: var(--osada-text-dim);
+}
+.osada-obj__mark { font-size: 12px; color: var(--osada-brass); }
+.osada-obj--held .osada-obj__state { color: #7fa86a; }
+.osada-obj--held .osada-obj__mark { color: #7fa86a; }
+
+/* Log: fills whatever height remains in the sidebar body. */
+.osada-sb-panel--log { flex: 1 1 auto; min-height: 0; }
+.osada-sb-panel--log .osada-side-section { flex: 1 1 auto; min-height: 0; overflow-y: auto; }
+.osada-log-row { padding: 4px 6px; margin: 1px 0; font-size: 12px; line-height: 1.45; color: var(--osada-text-dim); border-radius: 3px; }
+.osada-log-row--clickable { cursor: pointer; }
+.osada-log-row--clickable:hover { background: rgba(217,178,90,.10); color: var(--osada-text); }
+.osada-log-seg--loss { color: var(--osada-red-bright); font-weight: bold; }
+
+/* --- collapsed rail: thin ~40px column, nothing else --- */
+#osada-sidebar.osada-sidebar--collapsed { width: 40px; border-left-color: var(--osada-metal-600); }
+.osada-sb-rail { display: none; }
+.osada-sidebar--collapsed .osada-sb-rail {
+    display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 10px 4px;
+}
+.osada-sb-rail__expand {
+    width: 26px; height: 26px; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; border: 1px solid var(--osada-metal-600); border-radius: 3px;
+    color: var(--osada-text-dim); font-size: 16px;
+}
+.osada-sb-rail__expand:hover { color: var(--osada-brass); border-color: var(--osada-brass); }
+.osada-sb-rail__counter { font-size: 11px; font-weight: bold; color: var(--osada-brass); white-space: nowrap; }
+.osada-sb-rail__dot {
+    display: none; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--osada-red-bright); box-shadow: 0 0 5px rgba(201,70,61,.85);
+}
+
+/* ---- Labeled unit-context action bar ----
+ * Task 3 reparented #unit-context INSIDE the compact bottom-zone player card (#uc-actions),
+ * so it is no longer a floating fixed/centered element — the earlier Task-3 block already sets
+ * position:static for its new home; this section only sizes the compact action chips. */
+.osada-action {
+    display: inline-flex; flex-direction: column; align-items: center; justify-content: center;
+    width: 52px; min-height: 40px; margin: 0; padding: 3px 2px; cursor: pointer; vertical-align: top;
+    background: var(--osada-metal-700); border: 1px solid var(--osada-metal-600); border-radius: 3px;
+    transition: border-color .12s, background .12s;
+}
+.osada-action:hover { border-color: var(--osada-brass); background: var(--osada-metal-600); }
+.osada-action:active { transform: translateY(1px); }
+.osada-action__glyph { font-family: osada-menu, sans-serif; font-size: 16px; line-height: 18px; color: var(--osada-brass); text-shadow: 0 1px 2px rgba(0,0,0,.7); }
+.osada-action__label { font-size: 8px; font-weight: bold; letter-spacing: .04em; text-transform: uppercase; color: var(--osada-text); margin-top: 1px; }
+
+/* ---- Report / message dialog rebuild (#ui-message) ---- */
+.uiMessageBox {
+    width: min(620px, 88vw); height: auto; min-height: 0; max-height: 74vh;
+    margin-left: 0; margin-top: 0; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    background:
+        linear-gradient(180deg, rgba(30,34,41,.97), rgba(15,17,21,.98)),
+        url('../resources/panel_metal_dark.png') center / cover no-repeat;
+    border: 2px solid var(--osada-brass); border-radius: 4px;
+    box-shadow: 0 16px 60px rgba(0,0,0,.85);
+}
+.uiMessageBox::before { display: none; } /* drop the 9-slice overlay frame */
+/* makeVisible sets display:inline (blockified to block); children are laid out
+ * statically in document order, so no flex is required for correctness. */
+.uiMessageBoxTitle {
+    position: static; width: auto; padding: 12px 18px 10px;
+    background: linear-gradient(180deg, rgba(165,30,34,.55), rgba(92,20,20,.35));
+    border-bottom: 1px solid var(--osada-brass);
+    color: #f4e3c6; font-size: 16px; font-weight: bold;
+    text-transform: uppercase; letter-spacing: .08em; text-align: left;
+    overflow: hidden; text-overflow: ellipsis;
+}
+.uiMessageBoxBody {
+    position: static; width: auto; height: auto; max-height: calc(74vh - 128px);
+    padding: 14px 18px; overflow-y: auto; text-align: left;
+    color: var(--osada-text); font-size: 14px; font-weight: normal; line-height: 1.55;
+}
+.uiMessageBoxButton {
+    position: static; margin: 6px 16px 14px auto; display: block; float: right;
+}
+#uiokbut {
+    min-width: 150px; height: 40px; line-height: 40px; border-radius: 3px;
+    background: linear-gradient(180deg, #a5322f, #6f1a18);
+    border: 1px solid var(--osada-brass); box-shadow: 0 2px 8px rgba(0,0,0,.5);
+    font-size: 0; text-align: center; cursor: pointer;
+}
+#uiokbut::after {
+    content: "Continue"; font-family: var(--osada-font-ui); font-size: 14px; font-weight: bold;
+    color: #f4e3c6; text-transform: uppercase; letter-spacing: .09em;
+}
+#uiokbut:hover { background: linear-gradient(180deg, #bb3c38, #83201d); }
+
+/* ---- Campaign / scenario browsers: frame secondary to layout ---- */
+/* Drop the stretched 42px 9-slice frame; a clean brass-edged panel carries the
+ * layout. Footer buttons become CSS plates (no star overlap, always fit). */
+#smCamp, #smScen {
+    border: 2px solid var(--osada-brass) !important;
+    border-image: none !important;
+    border-radius: 5px;
+    padding: 18px 22px 16px;
+    width: 88%; max-width: 1560px; height: 88%; max-height: 920px;
+    box-shadow: 0 18px 70px rgba(0,0,0,.85), inset 0 0 0 1px rgba(0,0,0,.6);
+}
+#smCamp .osadaScreenHeader, #smScen .osadaScreenHeader { left: 0; right: 0; top: 4px; }
+#smCamp .osadaScreenBody, #smScen .osadaScreenBody { top: 46px; bottom: 72px; left: 0; right: 0; }
+/* Description/detail text never got its own OSADA pass — it was still inheriting #startmenu's
+ * heavy title-sized text-shadow (0.1em 0.1em 0.2em blur), which at body-text font sizes reads as
+ * smudged/near-illegible rather than the crisp emboss it gives large bold headers.
+ * Two surfaces, two treatments: the campaign/scenario DESCRIPTION is the .smDesc PAPER panel
+ * (light background) — its ink color comes from .smDesc and an ID rule here must not override it
+ * back to light (that made it white-on-paper); it just needs the inherited shadow killed. The
+ * detail chips (country/operations/prestige) sit on the DARK panel and keep light text. */
+#smCampDesc, #smScenDesc {
+    color: var(--osada-paper-ink);
+    text-shadow: none;
+}
+#smCampCountry, #smCampScenarios, #smCampPrestige, .smCampDetails {
+    color: var(--osada-text);
+    text-shadow: 0 1px 2px rgba(0,0,0,.8);
+}
+/* Must match the earlier #smCampButtons/#smScenButtons rule's inset exactly — this is the one
+ * that actually wins (same specificity, later in cascade). left/right/bottom:0 previously put
+ * Back/Start flush with the panel's border, ignoring its 18px/22px/16px padding entirely — Back
+ * and Start sat almost outside the frame. */
+#smCampButtons, #smScenButtons { left: 22px; right: 22px; bottom: 16px; }
+#smCPlayBut, #smSPlayBut {
+    width: 250px; min-width: 250px; height: 48px; min-height: 48px; line-height: 48px;
+    background: linear-gradient(180deg, #a5322f, #6f1a18) !important;
+    border: 1px solid var(--osada-brass) !important; border-radius: 3px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.5);
+}
+#smCPlayBut:hover, #smSPlayBut:hover { background: linear-gradient(180deg, #bb3c38, #83201d) !important; }
+#smCBackBut, #smSBackBut {
+    width: 140px; min-width: 140px; height: 44px; min-height: 44px; line-height: 44px;
+    background: linear-gradient(180deg, #2f353f, #191c21) !important;
+    border: 1px solid var(--osada-metal-600) !important; border-radius: 3px;
+}
+#smCBackBut:hover, #smSBackBut:hover { border-color: var(--osada-brass) !important; }
+
+/* ============================================================================
+ * TASK 1 — FULL-WIDTH TOP BAR (overrides the earlier centered-bar rules).
+ * The floating #menu rail is dissolved; End Turn, Reserves, Strategic map,
+ * Options and the ready-unit navigator live here. Positioned purely by CSS
+ * (removed from UILayout), so the UI-scale slider no longer touches it.
+ * ============================================================================ */
+#statusbar {
+    position: fixed !important;
+    left: 0 !important; right: 0 !important; top: 0 !important;
+    width: 100% !important; margin: 0 !important;
+    height: 40px !important; max-height: 40px !important;
+    display: flex; align-items: center; gap: 14px;
+    padding: 0 12px !important;
+    box-sizing: border-box;
+    z-index: var(--z-hud) !important;
+    background:
+        linear-gradient(180deg, rgba(28,31,37,.97), rgba(15,17,20,.98)),
+        #15171c !important;
+    border: 0 !important;
+    border-bottom: 2px solid var(--osada-brass) !important;
+    border-radius: 0 !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,.55) !important;
+    overflow: visible;
+    font-family: var(--osada-font-ui);
+}
+/* Kill the old red star end-caps (they belonged to the centered 840px bar). */
+#statusbar::before, #statusbar::after { content: none !important; display: none !important; }
+
+/* --- brand: the riveted-metal logo art (logo_osada.png, 1867x456 ≈ 4.1:1) --- */
+.osada-tb-brand { flex: 0 0 auto; cursor: default; display: flex; align-items: center; }
+.osada-tb-brand-logo {
+    display: block; height: 26px; width: auto;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,.7));
+}
+
+/* --- observer badge --- */
+.osada-tb-observer {
+    flex: 0 0 auto; font-size: 11px; font-weight: bold; letter-spacing: .1em;
+    padding: 3px 8px; border-radius: 3px; color: #f4e3c6;
+    background: linear-gradient(180deg, #6b5326, #3d2f14);
+    border: 1px solid var(--osada-brass); text-transform: uppercase;
+}
+
+/* --- scenario / turn / date --- */
+#statusmsg {
+    flex: 0 1 auto; min-width: 0; width: auto !important; height: 40px; max-height: 40px !important;
+    display: flex; align-items: center; gap: 14px; padding: 0 !important; overflow: hidden;
+}
+.osada-tb-op {
+    flex: 0 1 auto; min-width: 0; max-width: 340px;
+    font-weight: bold; color: var(--osada-brass); text-transform: uppercase; letter-spacing: .04em;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 14px;
+}
+.osada-tb-field { flex: 0 0 auto; display: inline-flex; align-items: baseline; gap: 5px; white-space: nowrap; color: var(--osada-text); font-size: 13px; }
+.osada-tb-field b { color: var(--osada-text-dim); font-weight: normal; font-size: 10px; text-transform: uppercase; letter-spacing: .07em; }
+.osada-tb-date { color: var(--osada-text-dim); }
+.osada-tb-field--phase { color: #f4e3c6; background: rgba(165,30,34,.4); border: 1px solid rgba(201,70,61,.5); border-radius: 3px; padding: 2px 7px; }
+.osada-tb-field--phase b { color: rgba(244,227,198,.8); }
+
+/* --- combat flash (EquipmentWindowBuilder.showAttackInfo overwrites #statusmsg mid-combat) ---
+ * Legacy base.css (ex-ui.css)'s .combatInfoStatusBar{max-height:16px;max-width:40%;overflow:hidden} clipped both
+ * unit names in half: #statusmsg is a 40px flex row here (float:left is a no-op on a flex item, so
+ * that part of the legacy rule was already inert — only the max-height/max-width/overflow bite).
+ * Scoped to #statusmsg so it can't affect any other future .combatInfoStatusBar usage. */
+#statusmsg .combatInfoStatusBar {
+    float: none; max-height: none; max-width: 160px; overflow: hidden;
+    white-space: nowrap; text-overflow: ellipsis; font-size: 13px; color: var(--osada-text);
+}
+#statusmsg .combatInfoStatusBar b { color: var(--osada-brass); font-weight: bold; }
+
+/* --- weather (words + small glyph icon) --- */
+#weathermsg {
+    flex: 0 0 auto; width: auto !important; height: 40px; display: flex; align-items: center; gap: 10px;
+    padding: 0 !important; color: var(--osada-text); font-size: 13px; cursor: help;
+}
+/* Weather + ground condition as image icons (resources/ui/osada/, asset-sheet extracts) —
+ * replaced the osada icon-font glyphs, whose inconsistent advance widths needed a
+ * fixed-box workaround. The flex row's own gap spaces the two icons and the text. */
+.osada-tb-weather-img {
+    width: 22px; height: 22px; flex: 0 0 auto; object-fit: contain;
+    filter: drop-shadow(0 1px 1px rgba(0,0,0,.6));
+}
+/* MUST reset the font: legacy base.css (ex-ui.css) puts font-family:osada (the ICON font) on all of
+ * #weathermsg, so without this the words' first letters ("S" of Snow, "F" of Frozen) render
+ * as icon glyphs overlapping the text. */
+.osada-tb-weather-txt { white-space: nowrap; font-family: var(--osada-font-ui); font-size: 13px; }
+
+/* --- spacer --- */
+.osada-tb-spacer { flex: 1 1 auto; min-width: 8px; }
+
+/* --- prestige + per-turn delta --- */
+.osada-tb-prestige { flex: 0 0 auto; display: inline-flex; align-items: baseline; gap: 5px; white-space: nowrap; cursor: default; }
+.osada-tb-prestige-val { color: var(--osada-brass); font-weight: bold; font-size: 15px; }
+.osada-tb-delta { color: #7fa86a; font-weight: bold; font-size: 12px; }
+
+/* --- generic top-bar button + icon --- */
+.osada-tb-btn {
+    flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center;
+    height: 30px; min-width: 40px; padding: 0 12px; box-sizing: border-box; cursor: pointer;
+    background: #22262c; border: 1px solid #3a3d45; border-radius: 4px;
+    color: var(--osada-text); font-weight: bold; font-size: 12px;
+    text-transform: uppercase; letter-spacing: .05em; white-space: nowrap;
+}
+.osada-tb-btn:hover { border-color: var(--osada-brass); color: var(--osada-brass); }
+.osada-tb-btn[selected] { border-color: var(--osada-brass); color: #d9b25a; background: #2a2620; }
+
+/* Reserves button with undeployed-count badge */
+.osada-tb-reserves { position: relative; }
+.osada-tb-reserves__badge {
+    display: none; align-items: center; justify-content: center;
+    margin-left: 7px; min-width: 18px; height: 18px; padding: 0 5px; box-sizing: border-box;
+    border-radius: 9px; background: var(--osada-brass); color: #1a140a;
+    font-size: 11px; font-weight: bold;
+}
+
+/* Icon cluster (strategic map, options). Each hud_icons_grid cell is already a framed metal
+ * button (frame + red-star tab baked in), so no extra border/plate here — the .osada-ico class
+ * and its modifier supply the sprite image, size (400% 300%) and cell position. */
+.osada-tb-icons { flex: 0 0 auto; display: flex; align-items: center; gap: 6px; }
+.osada-tb-icon {
+    width: 34px; height: 34px; min-width: 34px; box-sizing: border-box; cursor: pointer;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,.6));
+}
+.osada-tb-icon:hover { filter: drop-shadow(0 0 5px rgba(217,178,90,.55)) brightness(1.1); }
+.osada-tb-icon[selected] { filter: drop-shadow(0 0 6px rgba(208,52,44,.7)) brightness(1.15); }
+
+/* combatLogButton (Turn Report toggle): reparented from a legacy position:fixed floating glyph
+ * — that independent fixed positioning used to sit directly over the Turn Report's own title once
+ * open — into this flex row (MainMenuBuilder). Resets base.css's fixed/top/left/margin/size/
+ * background so it lays out as a normal .osada-tb-icon sibling; keeps its own osada-menu
+ * glyph font ("l") rather than switching to the .osada-ico sprite sheet (no matching glyph there). */
+.osada-tb-combatlog {
+    /* Absolutely centered in the bar (not flex-centered between spacers): the left and right
+     * bar clusters have different widths, so flex centering drifted the button off the true
+     * viewport centerline while the Turn Report window below opens exactly ON it (user report:
+     * "combatLog is righter than combatLogButton"). Pinning to left:50% puts button and window
+     * on the same axis regardless of what the flanking clusters contain. */
+    position: absolute !important; top: 50% !important; left: 50% !important;
+    margin-left: 0 !important; transform: translate(-50%, -50%);
+    background: none !important; border-radius: 0 !important; z-index: auto !important;
+    display: flex !important; align-items: center; justify-content: center;
+    font-size: 20px !important; line-height: 1 !important; color: var(--osada-brass) !important;
+}
+.osada-tb-combatlog:hover { filter: drop-shadow(0 0 5px rgba(217,178,90,.55)) brightness(1.1); }
+.osada-tb-combatlog[selected] { filter: drop-shadow(0 0 6px rgba(208,52,44,.7)) brightness(1.15); }
+
+/* Ready-unit navigator [<  N  >] */
+.osada-tb-nav {
+    flex: 0 0 auto; display: inline-flex; align-items: center; gap: 2px;
+    background: #22262c; border: 1px solid #3a3d45; border-radius: 4px; overflow: hidden;
+}
+.osada-tb-nav__arrow {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 26px; height: 30px; cursor: pointer; color: var(--osada-text);
+    font-size: 12px; user-select: none;
+}
+.osada-tb-nav__glyph { width: 13px; height: 13px; object-fit: contain; display: block; }
+.osada-tb-nav__arrow:hover { background: var(--osada-brass); color: #1a140a; }
+/* brass glyph on brass hover background would vanish — darken it to read as pressed-in */
+.osada-tb-nav__arrow:hover .osada-tb-nav__glyph { filter: brightness(0.2); }
+.osada-tb-nav__count {
+    min-width: 26px; height: 30px; display: inline-flex; align-items: center; justify-content: center;
+    font-weight: bold; font-size: 13px; color: var(--osada-brass);
+    border-left: 1px solid #3a3d45; border-right: 1px solid #3a3d45;
+}
+.osada-tb-nav--empty { opacity: .4; pointer-events: none; }
+.osada-tb-nav--empty .osada-tb-nav__count { color: var(--osada-text-dim); }
+
+/* --- END TURN state machine --- */
+#osadaEndTurn {
+    position: static !important; margin: 0 !important; top: auto !important; right: auto !important;
+    flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    height: 32px; min-width: 108px; padding: 0 16px; box-sizing: border-box; cursor: pointer;
+    border-radius: 4px; border: 1px solid transparent;
+    font-weight: bold; font-size: 13px; text-transform: uppercase; letter-spacing: .06em;
+    color: #f4e3c6; text-shadow: 0 1px 2px rgba(0,0,0,.7);
+    animation: none;
+}
+/* N = 0 : bright red, immediate */
+#osadaEndTurn.osada-et--ready { background: linear-gradient(180deg, #c9302c, #8f1f1c); border-color: #d9463d; }
+#osadaEndTurn.osada-et--ready:hover { background: linear-gradient(180deg, #db3a35, #a2241f); }
+/* N > 0 : muted red, click asks to confirm */
+#osadaEndTurn.osada-et--warn { background: linear-gradient(180deg, #6f2422, #4a1615); border-color: #8f2020; color: #e8c9c9; }
+#osadaEndTurn.osada-et--warn:hover { background: linear-gradient(180deg, #7d2a27, #571a18); border-color: #c9463d; }
+/* inline confirm */
+#osadaEndTurn.osada-et--confirm { background: linear-gradient(180deg, #22262c, #15171c); border-color: var(--osada-brass); min-width: 0; }
+.osada-et__label { white-space: nowrap; }
+.osada-et__msg { font-size: 12px; font-weight: normal; text-transform: none; letter-spacing: 0; color: var(--osada-text); white-space: nowrap; }
+.osada-et__yes, .osada-et__no {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 26px; height: 24px; border-radius: 3px; font-size: 14px; cursor: pointer;
+}
+.osada-et__yes { background: #8f2020; color: #fff; }
+.osada-et__yes:hover { background: #c9302c; }
+.osada-et__no { background: #2a2f38; color: var(--osada-text); }
+.osada-et__no:hover { background: #3a414c; }
+
+/* --- hex coords / terrain (far right, muted) ---
+ * FIXED width slot: the text changes on every hover, and an auto width would
+ * re-flow the flex row, making the buttons to its left jump. Long text clips
+ * with an ellipsis inside the reserved slot instead. */
+#locmsg {
+    flex: 0 0 240px; width: 240px !important; height: 40px; max-height: 40px !important;
+    display: block; line-height: 40px;
+    padding: 0 !important; margin: 0 !important;
+    color: var(--osada-text-dim); font-size: 12px; text-align: right;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* Command rail fully gone. */
+#menu { display: none !important; }
+
+/* Narrow viewport (1366×768 and down): tighten so nothing wraps or overlaps. */
+@media (max-width: 1450px) {
+    #statusbar { gap: 9px; padding: 0 8px !important; }
+    .osada-tb-op { max-width: 210px; font-size: 13px; }
+    .osada-tb-weather-txt { max-width: 130px; overflow: hidden; text-overflow: ellipsis; }
+    #locmsg { flex-basis: 170px; width: 170px !important; }
+}
+@media (max-width: 1180px) {
+    .osada-tb-reserves__label { display: none; }
+    .osada-tb-brand-logo { height: 22px; }
+    #locmsg { display: none; }
+}
+
+/* ============================================================================
+ * TASK 6 — ATTACK-RANGE ENEMY RINGS (DOM overlay, zero canvas changes).
+ * #osada-attack-rings sits inside #game at the same (0,0) offset as the map canvases, so it
+ * scrolls with the map for free. Each ring is a single outline-only hexagon built with ONE
+ * `clip-path: path(evenodd, "...")` — an SVG compound path with an OUTER hexagon and a slightly
+ * SMALLER INNER hexagon; the `evenodd` fill rule clips out everything except the ~2-3px band
+ * between them, leaving a true ring with no fill in the middle. (An earlier attempt used
+ * `mix-blend-mode: destination-out` to punch the hole — that is a CANVAS `globalCompositeOperation`
+ * keyword, not a valid CSS mix-blend-mode value, so the browser silently ignored it and rendered
+ * a solid filled hex. `clip-path: path()` with two sub-paths is the correct CSS-only fix and
+ * needs only one element.)
+ * ============================================================================ */
+#osada-attack-rings {
+    position: absolute; left: 0; top: 0; z-index: 2; pointer-events: none;
+}
+.osada-atk-ring {
+    position: absolute; width: 60px; height: 50px; pointer-events: none;
+    background: #c9463d;
+    clip-path: path(evenodd, "M15 0L45 0L60 25L45 50L15 50L0 25Z M16.8 3L43.2 3L56.4 25L43.2 47L16.8 47L3.6 25Z");
+}
+
+/* ============================================================================
+ * STAGE 3.5 — legacy-window migration (Save/Load, Settings shell, narrative
+ * paper messages, Turn Report chip). Placed last so it wins the cascade over
+ * the earlier .mainPanel / #smState / #smSettings / .osada-tb-combatlog rules.
+ * ============================================================================ */
+
+/* ---- Save/Load + Settings: same clean brass-edged panel as #smCamp/#smScen/#ui-message
+ * (the stretched 42px 9-slice frame was already dropped from those; these two were the
+ * last panels still wearing it). ---- */
+#smState.mainPanel, #smSettings.mainPanel {
+    border: 2px solid var(--osada-brass) !important;
+    border-image: none !important;
+    border-radius: 5px;
+    box-shadow: 0 18px 70px rgba(0,0,0,.85), inset 0 0 0 1px rgba(0,0,0,.6);
+}
+#smState.mainPanel { padding: 0; width: min(480px, 92vw); }
+#smSettings.mainPanel { padding: 14px 18px 12px; }
+
+/* ---- Save/Load window: header strip / body / footer ---- */
+/* .osadaScreenHeader is absolutely positioned for the register screens; here it is a
+ * normal flow row at the top of the panel. */
+.osada-sl-header {
+    position: static; left: auto; right: auto; top: auto;
+    padding: 12px 18px 10px;
+    border-bottom: 1px solid var(--osada-metal-600);
+}
+.osada-sl-body { padding: 16px 18px 12px; display: flex; flex-direction: column; gap: 10px; }
+.osada-sl-btn {
+    position: relative; display: flex; flex-direction: column; gap: 3px;
+    padding: 12px 14px; cursor: pointer; text-align: left; overflow: hidden;
+    background: linear-gradient(180deg, rgba(42,47,56,.95), rgba(22,25,30,.96));
+    border: 1px solid var(--osada-metal-600); border-radius: 3px;
+    transition: border-color .12s, background .12s;
+}
+.osada-sl-btn:hover { border-color: var(--osada-brass); }
+.osada-sl-btn__label {
+    font-size: 14px; font-weight: bold; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--osada-text); text-shadow: 0 1px 2px rgba(0,0,0,.6);
+}
+.osada-sl-btn:hover .osada-sl-btn__label { color: var(--osada-brass); }
+.osada-sl-btn__sub { font-size: 11px; font-weight: normal; color: var(--osada-text-dim); }
+/* The file input covers the whole Load row invisibly — one click target, and the label
+ * text is no longer interrupted by an inline input box (the old broken flow). */
+.osada-sl-btn input[type=file] {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    margin: 0; padding: 0; opacity: 0; cursor: pointer;
+}
+.osada-sl-btn--disabled { opacity: .45; cursor: default; }
+.osada-sl-btn--disabled:hover { border-color: var(--osada-metal-600); }
+.osada-sl-btn--disabled:hover .osada-sl-btn__label { color: var(--osada-text); }
+.osada-sl-info { font-size: 12px; font-weight: normal; color: var(--osada-text-dim); }
+.osada-sl-info span { color: var(--osada-text); }
+.osada-sl-error { font-size: 12px; font-weight: normal; color: var(--osada-red-bright); }
+.osada-sl-footer {
+    display: flex; justify-content: flex-end;
+    padding: 10px 18px 14px; border-top: 1px solid var(--osada-metal-600);
+}
+
+/* ---- Labeled footer buttons: Save/Load "Close", Settings "Done" (replace the round
+ * glyph discs; same technique as #uiokbut's "Continue"). The base.css rule that
+ * absolutely positioned them is reset here. ---- */
+#smStOkBut, #smSetOkBut {
+    position: static; top: auto; right: auto; bottom: auto; left: auto;
+    width: 132px; min-width: 132px; height: 38px; min-height: 38px; line-height: 38px;
+    margin: 0; border: 1px solid var(--osada-metal-600); border-radius: 3px;
+    box-shadow: none; text-shadow: none; text-align: center; cursor: pointer;
+    background: linear-gradient(180deg, #2f343d, #1b1e24);
+    font-size: 0 !important;
+}
+#smStOkBut:hover, #smSetOkBut:hover { border-color: var(--osada-brass); background: linear-gradient(180deg, #363c46, #20242b); }
+#smStOkBut::after, #smSetOkBut::after {
+    font-family: var(--osada-font-ui); font-size: 13px; font-weight: bold;
+    letter-spacing: .08em; text-transform: uppercase; color: var(--osada-text);
+}
+#smStOkBut::after { content: "Close"; }
+#smSetOkBut::after { content: "Done"; }
+/* Settings: the button flows after the scrolling section list, right-aligned. */
+#smSetOkBut { display: block; margin: 10px 0 2px auto; }
+
+/* ---- Narrative messages (briefings, campaign outcome texts) read on staff paper;
+ * system messages keep the metal body. Class toggled by MessageDialogs.message(). ---- */
+.uiMessageBox--narrative .uiMessageBoxBody {
+    margin: 12px 14px; padding: 14px 16px;
+    background:
+        linear-gradient(180deg, rgba(255,250,235,.12), rgba(120,95,55,.10)),
+        url('../resources/panel_paper.png') center / cover no-repeat;
+    color: var(--osada-paper-ink);
+    border: 1px solid var(--osada-brass); border-top: 3px solid var(--osada-red);
+    border-radius: var(--osada-radius);
+    font-weight: normal; text-shadow: none; line-height: 1.6;
+}
+.uiMessageBox--narrative .uiMessageBoxBody b,
+.uiMessageBox--narrative .uiMessageBoxBody h1,
+.uiMessageBox--narrative .uiMessageBoxBody h2,
+.uiMessageBox--narrative .uiMessageBoxBody h3,
+.uiMessageBox--narrative .uiMessageBoxBody a { color: var(--osada-red-dark); }
+
+/* ============================================================================
+ * STRATEGIC VIEW (Stage 3.5, Task 4) — backdrop behind the scaled-down map.
+ * The class lives on #mainbody and is added/removed by MenuController.toggleStrategicZoom,
+ * which also centers #game; everything here reverts with the class.
+ * ============================================================================ */
+/* ::before, not a background on #mainbody: body's own background paints behind the whole
+ * document, so it could never sit *between* the page and #game. This pseudo-element is a
+ * positioned box earlier in paint order than #game (also positioned, z-index auto), so the
+ * map lands on top of it. */
+#mainbody.osada-strategic::before {
+    content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    /* staff table at ~40% brightness (spec) — the map must be the bright thing on screen. */
+    background:
+        linear-gradient(rgba(6,7,9,.6), rgba(6,7,9,.6)),
+        url('../resources/staff_table_background.png') center / cover no-repeat;
+    box-shadow: inset 0 0 180px rgba(0,0,0,.75);
+}
+/* The map box is sized to the map exactly in this mode; a scrollbar would only appear from
+ * the wrapper's own bottom padding and would knock the centering off. */
+#mainbody.osada-strategic #game {
+    overflow: hidden;
+    box-shadow: 0 10px 50px rgba(0,0,0,.8), 0 0 0 1px var(--osada-brass);
+}
+
+/* ---- Register side filter + results counter + row annotations (Stage 3.5, Task 3) ----
+ * The side filter is a plain <select>, same look as the equipment window's #osadaEqCountry —
+ * a row of always-visible chips read as too much competing chrome above a register list
+ * (user feedback); a dropdown is one control that's out of the way until opened. */
+.osadaChipRow {
+    flex: 0 0 auto; display: flex; align-items: center; gap: 8px; margin-bottom: 8px;
+}
+.osadaSideSelect {
+    flex: 0 1 auto; min-width: 0; height: 28px; padding: 0 8px; font-size: 12px;
+    background: #15171c; color: var(--osada-text);
+    border: 1px solid var(--osada-metal-600); border-radius: var(--osada-radius);
+}
+.osadaSideSelect:focus { outline: none; border-color: var(--osada-brass); }
+.osadaListCount { flex: 1 1 auto; text-align: right; font-size: 11px; color: var(--osada-text-dim); white-space: nowrap; }
+
+/* Right-aligned row annotation (campaign progress; scenario New/Played). margin-left:auto
+ * pushes it to the row's right edge past the flex text column. */
+.osadaListRowNote {
+    flex: 0 0 auto; margin-left: auto; padding-left: 8px; white-space: nowrap;
+    font-size: 11px; font-weight: bold; color: var(--osada-brass);
+}
+.osadaListRow--selected .osadaListRowNote { color: #f4e7d6; }
+.osadaListRowNote--played { color: #7fa86a; font-weight: normal; }
+.osadaListRowNote--played::before { content: "\2713\00a0"; }  /* ✓ */
+.osadaListRowNote--new { color: var(--osada-text-dim); font-weight: normal; }
+
+/* Story-campaign marker (row + dossier header) — brass open-book icon, see
+ * StartMenuCampaignStory.kt. Row variant sits at the far right like .osadaListRowNote (multiple
+ * margin-left:auto siblings still cluster together at the row's end). */
+.osadaStoryBadge {
+    display: inline-flex; flex: 0 0 auto; margin-left: auto;
+    width: 16px; height: 16px; color: var(--osada-brass);
+}
+.osadaStoryBadge svg { display: block; width: 100%; height: 100%; }
+.osadaStoryBadge--dossier {
+    position: absolute; top: 0; right: 0; width: 20px; height: 20px; margin-left: 0;
+    filter: drop-shadow(0 1px 3px rgba(0,0,0,.9));
+}
+
+/* ---- Rename affordance (Stage 3.5, Task 2): pencil buttons + inline input ---- */
+.osada-rename-btn {
+    flex: 0 0 auto; width: 18px; height: 18px;
+    display: inline-flex; align-items: center; justify-content: center;
+    cursor: pointer; border-radius: 3px; font-size: 12px; line-height: 1;
+    color: var(--osada-text-dim);
+}
+.osada-rename-btn:hover { color: var(--osada-brass); background: rgba(217,178,90,.12); }
+/* Card variant lives in the strip card's top-right corner, revealed on hover so the
+ * tiny 94px cards don't carry permanent chrome. */
+.osada-rename-btn--card {
+    position: absolute; top: 2px; right: 2px; width: 16px; height: 16px;
+    font-size: 11px; background: rgba(0,0,0,.45); z-index: 1; display: none;
+}
+.eqUnitBox:hover .osada-rename-btn--card { display: inline-flex; }
+/* No [type=text] on these inputs on purpose: base.css's `input[type="text"]` rule carries a
+ * fixed 280px width that would blow out both hosts. */
+.osada-rename-input {
+    flex: 1 1 auto; min-width: 60px; max-width: 260px; box-sizing: border-box;
+    height: 22px; padding: 0 6px;
+    background: #14171b; border: 1px solid var(--osada-brass); border-radius: 3px;
+    color: var(--osada-text); font-family: var(--osada-font-ui); font-size: 12px; font-weight: bold;
+}
+.osada-rename-input:focus { outline: none; box-shadow: 0 0 6px rgba(217,178,90,.35); }
+.osada-rename-input--card {
+    position: absolute; left: 2px; right: 2px; bottom: 2px; width: calc(100% - 4px);
+    height: 20px; font-size: 11px; font-weight: normal; z-index: 2;
+}
+
+/* ---- Main-menu quote (bottom-center, above the credits/link rows) ---- */
+.osada-quote {
+    position: absolute; left: 50%; bottom: 44px; transform: translateX(-50%);
+    z-index: 2; max-width: min(680px, 74vw);
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    text-align: center; pointer-events: none;
+}
+.osada-quote__text {
+    font-family: Georgia, "Times New Roman", serif; font-style: italic;
+    font-size: 15px; line-height: 1.5; color: rgba(231,226,212,.82);
+    text-shadow: 0 1px 3px rgba(0,0,0,.9);
+}
+.osada-quote__author {
+    font-family: var(--osada-font-ui); font-size: 11px; font-weight: bold;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--osada-brass);
+    text-shadow: 0 1px 2px rgba(0,0,0,.9);
+}
+
+/* ============================================================================
+ * Phase 4 — hero leader dossier & commander roster (design brief §14.3–14.5).
+ * Built dynamically into #mainbody by LeaderDossierPresenter / CommanderRosterPresenter.
+ * ========================================================================== */
+.osada-hero-dossier, .osada-hero-roster {
+    position: fixed; width: 720px; max-width: 92vw; height: 540px; max-height: 84vh;
+    left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 300;
+    display: flex; flex-direction: column; overflow: hidden;
+    border-radius: 6px; text-align: left; font-family: var(--osada-font-ui);
+    background: var(--osada-panel, #1b1d21); border: 1px solid var(--osada-metal-600);
+    box-shadow: 0 12px 44px rgba(0,0,0,.55);
+}
+.osada-hero-header {
+    flex: 0 0 auto; display: flex; align-items: center; gap: 12px;
+    padding: 14px 16px 12px; border-bottom: 1px solid var(--osada-metal-600);
+}
+.osada-hero-portrait {
+    flex: 0 0 auto; width: 54px; height: 54px; border-radius: 5px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; font-weight: bold; color: #fff; letter-spacing: .04em;
+    background: linear-gradient(160deg, #4a5566, #2b3038); border: 1px solid var(--osada-metal-600);
+}
+.osada-hero-id { flex: 1 1 auto; min-width: 0; }
+.osada-hero-name { font-size: 16px; font-weight: bold; color: var(--osada-brass); }
+.osada-hero-sub { margin-top: 2px; font-size: 12px; color: var(--osada-text-dim); }
+.osada-hero-locate {
+    margin-left: auto; padding: 4px 8px; color: var(--osada-brass); background: var(--osada-metal-700);
+    border: 1px solid rgba(221,174,68,.45); border-radius: 3px; cursor: pointer;
+}
+.osada-hero-locate:hover { background: var(--osada-metal-600); border-color: var(--osada-brass); }
+.osada-hero-locate--header { align-self: center; white-space: nowrap; }
+.osada-hero-status { margin-top: 2px; font-size: 11px; color: var(--osada-text-dim); }
+.osada-hero-close { flex: 0 0 auto; width: 26px; height: 26px; cursor: pointer; opacity: .85; }
+.osada-hero-close:hover { opacity: 1; filter: drop-shadow(0 0 5px rgba(208,52,44,.6)); }
+.osada-hero-tabs {
+    flex: 0 0 auto; display: flex; flex-wrap: wrap; gap: 6px;
+    padding: 10px 16px; border-bottom: 1px solid var(--osada-metal-600);
+}
+.osada-hero-tab {
+    padding: 5px 12px; cursor: pointer; font-size: 12px; border-radius: 4px;
+    color: var(--osada-text-dim); border: 1px solid var(--osada-metal-600); background: rgba(0,0,0,.22);
+}
+.osada-hero-tab:hover { color: #fff; }
+.osada-hero-tab[selected] { color: #fff; background: var(--osada-brass); border-color: var(--osada-brass); }
+.osada-hero-tabbody { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 14px 16px; }
+.osada-hero-section + .osada-hero-section { margin-top: 16px; }
+.osada-hero-section-title {
+    font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: .05em;
+    color: var(--osada-brass); padding-bottom: 6px; margin-bottom: 10px;
+    border-bottom: 1px solid var(--osada-metal-600);
+}
+.osada-hero-kv { display: flex; justify-content: space-between; gap: 12px; padding: 3px 0; font-size: 13px; }
+.osada-hero-kv-key { color: var(--osada-text-dim); }
+.osada-hero-kv-val { color: var(--osada-text); font-weight: bold; text-align: right; }
+.osada-hero-trait { padding: 8px 0; border-bottom: 1px solid rgba(217,178,90,.14); }
+.osada-hero-trait-title { font-size: 13px; font-weight: bold; color: var(--osada-text); }
+.osada-hero-trait-effect { font-size: 12px; color: var(--osada-text-dim); margin-top: 2px; }
+.osada-hero-trait-cond { font-size: 11px; color: var(--osada-brass); margin-top: 2px; }
+.osada-hero-line { font-size: 12px; color: var(--osada-text-dim); padding: 3px 0; }
+.osada-hero-empty { padding: 10px 2px; color: var(--osada-text-dim); font-size: 13px; }
+.osada-hero-rosterrow {
+    display: block; width: 100%; text-align: left; cursor: pointer; margin-bottom: 8px;
+    padding: 10px 12px; border-radius: 5px; background: rgba(0,0,0,.24); border: 1px solid var(--osada-metal-600);
+}
+.osada-hero-rosterrow:hover { background: rgba(217,178,90,.14); }
+.osada-hero-rosterrow-name { font-size: 14px; font-weight: bold; color: var(--osada-text); }
+.osada-hero-rosterrow-sub { font-size: 11px; color: var(--osada-text-dim); margin-top: 2px; }
+.uc-leader-slot--hero { cursor: pointer; }
+
+/* Phase 5 — fallen commander (In Memoriam) styling in the dossier (§11.2, §14.6). */
+.osada-hero-memoriam { border-color: #7a6a4a; }
+.osada-hero-memoriam .osada-hero-name { color: #cbb98a; }
+.osada-hero-memoriam-tag { margin-top: 3px; font-size: 12px; font-weight: bold; color: #cbb98a; letter-spacing: .04em; }
+
+/* Phase 5 — layered portrait rendering (§15): stacked inline SVG layers sharing one space. */
+.osada-portrait-stack { position: relative; overflow: hidden; }
+.osada-portrait-layer { position: absolute; inset: 0; }
+.osada-portrait-layer svg { width: 100%; height: 100%; display: block; }
+.heroEmergencePortrait {
+    width: 132px; height: 176px; margin: 0 auto 12px; position: relative; overflow: hidden;
+    border-radius: 6px; border: 1px solid var(--osada-metal-600); background: #0e0f12;
+}
+.osada-capability-marks {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    margin-left: 4px;
+}
+
+.osada-capability-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 16px;
+    padding: 0 4px;
+    border: 1px solid rgba(205, 160, 63, 0.8);
+    border-radius: 3px;
+    color: #e0b754;
+    background: rgba(28, 23, 15, 0.92);
+    font: 700 9px/1 Arial, sans-serif;
+    letter-spacing: 0.5px;
+    box-sizing: border-box;
+}
+
+.eqUnitBox > .osada-capability-marks {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    z-index: 2;
+    margin-left: 0;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.osada-capability-mark--logistics { color: var(--osada-text-dim); border-color: var(--osada-metal-500); }
+
+/* OSADA HOTFIX 2026-07-23 — flexible Unit Info name/actions layout */
+#uc-nameline { width: 100%; }
+#uName { flex: 1 1 auto; }
+#uc-actions {
+    min-width: 0;
+    margin-left: auto;
+    justify-content: flex-end;
+}
+#unit-context {
+    display: flex !important;
+    width: auto;
+    max-width: 165px;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+.osada-action { margin-left: 3px; margin-right: 0; }
+
+/* OSADA commander roster portraits. */
+.osada-hero-rosterrow {
+    display: flex; align-items: center; gap: 10px;
+}
+.osada-hero-rosterrow-portrait {
+    flex: 0 0 auto; width: 46px; height: 58px; position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--osada-metal-600); border-radius: 4px;
+    background: linear-gradient(160deg, #4a5566, #2b3038);
+    color: #fff; font-size: 15px; font-weight: bold;
+}
+.osada-hero-rosterrow-copy { flex: 1 1 auto; min-width: 0; }

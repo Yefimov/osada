@@ -179,6 +179,7 @@ object UICombatLog {
     private fun buildExtendButton(container: HTMLElement): HTMLElement {
         val button = addTag(container, "div")
         button.className = "osada-tr-expand"
+        button.title = "Open the complete Turn Report with every event group and scrollable details."
         button.innerHTML = "Show Full Turn Report<span class=\"osada-ico osada-ico--map osada-tr-expand__ico\"></span>"
         button.onclick = { _: MouseEvent -> showCombatLog(true) }
         return button

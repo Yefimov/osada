@@ -4,6 +4,7 @@ import org.osada.GameHolder
 import org.osada.PlayerType
 import org.osada.difficultyModifiers
 import org.osada.hero.FormationIdentity
+import org.osada.hero.HeroCampaign
 import org.osada.scoreGains
 import org.osada.sideNames
 
@@ -35,16 +36,17 @@ class Player {
     /**
      * Adds [unit] to the campaign core roster, minting its persistent formation id if it has none.
      *
-     * This is the single place a formation comes into existence, which is why minting lives here
-     * rather than at the several call sites that create core units (first-scenario deploy sweep,
-     * save restore, mid-campaign purchase). [org.osada.hero.FormationIdentity.ensure] is
-     * idempotent, so a unit restored from a save keeps the id it already had and only genuinely
-     * new formations get a fresh one.
+     * Core-roster insertion is one enrollment path (tray, purchase, carry-over and restore). The
+     * campaign-wide ownership sweep also covers non-core pre-placement and scripted reinforcement;
+     * [org.osada.hero.FormationIdentity.ensure] is idempotent across both paths.
      */
     fun addCoreUnit(unit: GameUnit?): Boolean {
-        if (unit == null) return false
+        if (unit == null || coreUnits.any { it === unit }) return false
         unit.isCore = true
-        FormationIdentity.ensure(unit, coreUnits.mapNotNull { it.formationId })
+        if (!unit.isTemporaryBorrowed) {
+            FormationIdentity.ensure(unit, coreUnits.mapNotNull { it.formationId })
+            HeroCampaign.synchronizeFormation(unit)
+        }
         coreUnits.add(unit)
         return true
     }
@@ -93,16 +95,18 @@ class Player {
             if (unit.destroyed) {
                 iter.remove()
             } else {
-                unit.unmount()
-                unit.carrier = 0
+                // Preserve the campaign's existing free replacement/refit rule while carrying
+                // every persistent formation instead of only the legacy core subset.
                 unit.hasMoved = false
                 unit.hasFired = false
                 unit.hasResupplied = false
+                unit.isSurprised = false
                 unit.isDeployed = false
                 if (unit.strength < FULL_STRENGTH) unit.strength = FULL_STRENGTH
                 unit.refillAmmoFuel()
                 unit.moveLeft = unit.unitData().movpoints
                 unit.entrenchment = 0
+                unit.entrenchTicks = 0
                 unit.hits = 0
                 unit.setHex(null)
             }

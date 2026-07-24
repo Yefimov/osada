@@ -4,6 +4,7 @@ import org.osada.CombatLog
 import org.osada.LeaderType
 import org.osada.UnitClass
 import org.osada.addObjectiveCapture
+import org.osada.hero.HeroCampaign
 import org.osada.prestigeGains
 import org.osada.rules.GameRules
 import org.osada.rules.calculateAttackResults
@@ -45,7 +46,7 @@ internal class CombatApplication(
         supportFire: Boolean,
         isOverrun: Boolean,
     ): CombatResults {
-        val combatResult = GameRules.calculateAttackResults(attacker, defender, true)
+        val combatResult = GameRules.calculateAttackResults(attacker, defender, true, gameMap.getUnits().toList())
         val logId = CombatLog.addCombatStart(attacker, defender, gameMap.turn)
         applyCombatFacing(attacker, defender, from, to)
         unmountDefenderIfNeeded(defender)
@@ -224,5 +225,13 @@ internal class CombatApplication(
         // awarded (Liberator doubles it; a flagged victory hex contributes twice) rather than the
         // bare objectiveCapture constant it used to print.
         if (loggedObjective) CombatLog.addObjectiveCapture(hex.getPos(), side, prestigeGain)
+        if (result["isCapture"] as? Boolean == true) {
+            HeroCampaign.recordFormationEvent(
+                unit = unit,
+                eventId = if (loggedObjective) "objective_captured" else "flag_captured",
+                turn = gameMap.turn,
+                location = hex.name.takeIf { it.isNotBlank() },
+            )
+        }
     }
 }

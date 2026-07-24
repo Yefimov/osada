@@ -148,7 +148,7 @@ internal class UnitRenderer(
             !unit.hasAnimation &&
                 GameRules.isGround(unit) &&
                 GameRules.isBridgeForSide(unit.getHex(), unit.player?.side ?: -1)
-        val icon = unit.getIcon()
+        val icon = UnitIconResolver.forCurrentScenario(unit.getIcon())
         val img = if (isBridge) rc.bridgeImage else rc.unitImages[icon]
         if (img == null || img == undefined) {
             if (loggedMissingIcons.add(icon)) {

@@ -27,12 +27,45 @@ internal object ScenarioPlayerParser {
             players.add(parsePlayerElement(el, minTurnPrestige))
         }
 
+        addCarryOverEquipmentCountries(players)
         Equipment.addPlayersEquipment(players) {
             players.forEach { scenario.map.addPlayer(it) }
             ScenarioReinforcementParser.parse(scenario, doc)
             ScenarioHexParser.parse(scenario, doc)
             scenario.isLoaded = true
             scenario.onLoadFinished()
+        }
+    }
+
+    /**
+     * Equipment is stored in country-split JSON files. A campaign may move a persistent formation
+     * between theatres whose scenario player lists no longer mention that formation's equipment
+     * country (for example Republican Spanish infantry carried into a Soviet scenario).
+     *
+     * This runs before [Equipment.addPlayersEquipment] clears the previous scenario's equipment
+     * map, so the stable carried eqids can still tell us which country files the next scenario must
+     * keep loaded. The unit flag is also retained as a tolerant fallback for older saves.
+     */
+    private fun addCarryOverEquipmentCountries(players: List<Player>) {
+        val carriedPlayer = GameHolder.instance?.savedCampaignPlayer ?: return
+        val nextPlayer = players.firstOrNull { it.id == carriedPlayer.id } ?: return
+
+        carriedPlayer.getCoreUnitList().forEach { unit ->
+            val equipmentIds =
+                listOfNotNull(
+                    unit.eqid,
+                    unit.transport?.eqid,
+                    unit.carrier.takeIf { it > 0 },
+                )
+            val countries =
+                equipmentIds
+                    .mapNotNull(Equipment::getEquipment)
+                    .map { it.country } +
+                    listOf(unit.flag)
+
+            countries.filter { it > 0 }.forEach { country ->
+                if (country !in nextPlayer.supportCountries) nextPlayer.supportCountries.add(country)
+            }
         }
     }
 

@@ -1,0 +1,840 @@
+<?xml version="1.0" encoding="ASCII"?>
+<map file="simpob_06.xscn" name="Song of the cossacks: Orenburg" turns="16, 20, 24" date="April 17, 1919" dayturns="0" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="38" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_simpob_06.png" eqpv="united1">
+<player id="0" country="103" side="0" airtrans="0" navaltrans="0" support="104, 0, 0, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+<player id="1" country="100" side="1" airtrans="0" navaltrans="0" support="192, 0, 0, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <hex row="0" col="3" terrain="10" name="Yangiz"/>
+  <hex row="0" col="14" road="18"/>
+  <hex row="0" col="16" terrain="10" name="Salmysh"/>
+  <hex row="0" col="23" road="33"/>
+  <hex row="1" col="4" terrain="10" name="Yangiz"/>
+  <hex row="1" col="5" terrain="10" name="Yangiz"/>
+  <hex row="1" col="14" road="17"/>
+  <hex row="1" col="16" terrain="10" name="Salmysh"/>
+  <hex row="1" col="21" road="42"/>
+  <hex row="1" col="22" road="34"/>
+  <hex row="2" col="6" terrain="10" name="Yangiz"/>
+  <hex row="2" col="14" road="17"/>
+  <hex row="2" col="16" terrain="10" name="Salmysh"/>
+  <hex row="2" col="20" road="18"/>
+  <hex row="2" col="22" road="144"/>
+  <hex row="3" col="6" terrain="10" name="Yangiz"/>
+  <hex row="3" col="14" road="17"/>
+  <hex row="3" col="16" terrain="10" name="Salmysh"/>
+  <hex row="3" col="19" road="18"/>
+  <hex row="3" col="20" road="33"/>
+  <hex row="3" col="22" road="17"/>
+  <hex row="4" col="6" terrain="10" name="Yangiz"/>
+  <hex row="4" col="7" terrain="10" name="Yangiz"/>
+  <hex row="4" col="14" road="17"/>
+  <hex row="4" col="15" terrain="10" name="Salmysh"/>
+  <hex row="4" col="16" terrain="10" name="Salmysh"/>
+  <hex row="4" col="19" road="33"/>
+  <hex row="4" col="22" road="17"/>
+  <hex row="4" col="24" owner="1" flag="100" victory="1"/>
+  <hex row="5" col="7" terrain="10" name="Yangiz"/>
+  <hex row="5" col="14" road="17"/>
+  <hex row="5" col="15" terrain="10" name="Salmysh"/>
+  <hex row="5" col="17" terrain="1" road="187" name="Imangulovo" owner="1" flag="100"/>
+  <hex row="5" col="18" road="34"/>
+  <hex row="5" col="19" terrain="2"/>
+  <hex row="5" col="22" road="9"/>
+  <hex row="5" col="23" road="144"/>
+  <hex row="6" col="8" terrain="10" name="Yangiz"/>
+  <hex row="6" col="14" road="17"/>
+  <hex row="6" col="15" road="24"/>
+  <hex row="6" col="16" terrain="10" road="18" name="Salmysh"/>
+  <hex row="6" col="19" terrain="2"/>
+  <hex row="6" col="20" terrain="2" owner="1" flag="100"/>
+  <hex row="6" col="23" road="9"/>
+  <hex row="7" col="0" terrain="10" name="Kargalka"/>
+  <hex row="7" col="1" terrain="10" name="Kargalka"/>
+  <hex row="7" col="8" terrain="10" name="Yangiz"/>
+  <hex row="7" col="9" terrain="10" name="Yangiz"/>
+  <hex row="7" col="10" terrain="10" name="Yangiz"/>
+  <hex row="7" col="11" terrain="10" name="Yangiz"/>
+  <hex row="7" col="14" road="17"/>
+  <hex row="7" col="15" road="33">
+    <unit id="610" owner="0" flag="104" face="0" exp="160"/>
+  </hex>
+  <hex row="7" col="16" terrain="10" road="129" name="Salmysh"/>
+  <hex row="7" col="17" terrain="10" name="Salmysh"/>
+  <hex row="7" col="24" road="144"/>
+  <hex row="8" col="2" terrain="10" name="Kargalka"/>
+  <hex row="8" col="3" terrain="10" name="Kargalka"/>
+  <hex row="8" col="12" terrain="10" name="Yangiz"/>
+  <hex row="8" col="14" road="11"/>
+  <hex row="8" col="15" road="144"/>
+  <hex row="8" col="18" terrain="10" name="Salmysh"/>
+  <hex row="8" col="19" terrain="10" name="Salmysh"/>
+  <hex row="8" col="24" road="9"/>
+  <hex row="8" col="25" road="136"/>
+  <hex row="9" col="4" terrain="10" name="Kargalka"/>
+  <hex row="9" col="12" terrain="10" name="Yangiz"/>
+  <hex row="9" col="15" road="9"/>
+  <hex row="9" col="19" terrain="10" name="Salmysh"/>
+  <hex row="9" col="26" road="144"/>
+  <hex row="10" col="4" terrain="10" name="Kargalka"/>
+  <hex row="10" col="5" terrain="10" name="Kargalka"/>
+  <hex row="10" col="12" terrain="10" name="Yangiz"/>
+  <hex row="10" col="13" terrain="10" name="Yangiz"/>
+  <hex row="10" col="16" road="144"/>
+  <hex row="10" col="20" terrain="10" name="Salmysh"/>
+  <hex row="10" col="22" deploy="1"/>
+  <hex row="10" col="23" deploy="1"/>
+  <hex row="10" col="26" road="9"/>
+  <hex row="10" col="27" road="152"/>
+  <hex row="11" col="6" terrain="10" name="Kargalka"/>
+  <hex row="11" col="14" terrain="10" name="Yangiz"/>
+  <hex row="11" col="15" terrain="10" name="Yangiz"/>
+  <hex row="11" col="16" road="17">
+    <unit id="610" owner="0" flag="104" face="0" exp="160"/>
+  </hex>
+  <hex row="11" col="20" terrain="10" name="Salmysh"/>
+  <hex row="11" col="22" deploy="1"/>
+  <hex row="11" col="23" deploy="1"/>
+  <hex row="11" col="25" deploy="1"/>
+  <hex row="11" col="27" terrain="1" road="187" name="Grigoryevka" owner="1" flag="100"/>
+  <hex row="11" col="28" terrain="1" road="187" name="Grigoryevka"/>
+  <hex row="12" col="6" terrain="10" name="Kargalka"/>
+  <hex row="12" col="7" terrain="10" name="Kargalka"/>
+  <hex row="12" col="14" terrain="10" name="Yangiz"/>
+  <hex row="12" col="15" terrain="10" road="18" name="Yangiz"/>
+  <hex row="12" col="16" terrain="1" road="187" name="Maryevskyi" owner="0" flag="103"/>
+  <hex row="12" col="20" terrain="10" name="Salmysh"/>
+  <hex row="12" col="22" deploy="1"/>
+  <hex row="12" col="23" deploy="1"/>
+  <hex row="12" col="24" deploy="1"/>
+  <hex row="12" col="25" deploy="1"/>
+  <hex row="12" col="27" deploy="1"/>
+  <hex row="12" col="28" road="144"/>
+  <hex row="13" col="8" terrain="10" name="Kargalka"/>
+  <hex row="13" col="9" terrain="10" name="Kargalka"/>
+  <hex row="13" col="15" terrain="10" road="33" name="Yangiz"/>
+  <hex row="13" col="20" terrain="10" name="Salmysh"/>
+  <hex row="13" col="24" deploy="1"/>
+  <hex row="13" col="25" deploy="1"/>
+  <hex row="13" col="26" deploy="1"/>
+  <hex row="13" col="27" deploy="1"/>
+  <hex row="13" col="28" road="17"/>
+  <hex row="14" col="0" terrain="10" name="Srednyaya Kargalka"/>
+  <hex row="14" col="1" terrain="10" name="Srednyaya Kargalka"/>
+  <hex row="14" col="10" terrain="10" name="Kargalka"/>
+  <hex row="14" col="11" terrain="10" name="Kargalka"/>
+  <hex row="14" col="14" road="18">
+    <unit id="610" owner="0" flag="104" face="0" exp="160"/>
+  </hex>
+  <hex row="14" col="16" terrain="10" name="Yangiz"/>
+  <hex row="14" col="17" terrain="10" name="Yangiz"/>
+  <hex row="14" col="20" terrain="10" name="Salmysh"/>
+  <hex row="14" col="21" terrain="8"/>
+  <hex row="14" col="26" deploy="1"/>
+  <hex row="14" col="27" terrain="1" road="187" name="Petropavloskoye" owner="1" flag="100" deploy="1"/>
+  <hex row="14" col="28" road="33" deploy="1"/>
+  <hex row="15" col="2" terrain="10" name="Srednyaya Kargalka"/>
+  <hex row="15" col="3" terrain="10" name="Srednyaya Kargalka"/>
+  <hex row="15" col="11" terrain="10" name="Kargalka"/>
+  <hex row="15" col="13" terrain="1" road="187" name="Mayorskoye" owner="0" flag="103"/>
+  <hex row="15" col="14" road="49"/>
+  <hex row="15" col="16" terrain="8"/>
+  <hex row="15" col="17" terrain="8"/>
+  <hex row="15" col="18" terrain="10" name="Yangiz"/>
+  <hex row="15" col="19" terrain="10" name="Yangiz"/>
+  <hex row="15" col="20" terrain="10" name="Salmysh"/>
+  <hex row="15" col="21" terrain="8"/>
+  <hex row="15" col="25" terrain="8"/>
+  <hex row="15" col="27" terrain="8"/>
+  <hex row="15" col="29" terrain="8"/>
+  <hex row="16" col="4" terrain="10" name="Srednyaya Kargalka"/>
+  <hex row="16" col="5" terrain="10" name="Srednyaya Kargalka"/>
+  <hex row="16" col="11" road="34">
+    <unit id="610" owner="0" flag="104" face="0" exp="160"/>
+  </hex>
+  <hex row="16" col="12" terrain="10" road="34" name="Kargalka"/>
+  <hex row="16" col="13" terrain="10" name="Kargalka"/>
+  <hex row="16" col="14" road="9"/>
+  <hex row="16" col="15" road="144">
+    <unit id="610" owner="0" flag="104" face="0" exp="160"/>
+  </hex>
+  <hex row="16" col="17" terrain="8"/>
+  <hex row="16" col="18" terrain="8"/>
+  <hex row="16" col="19" terrain="10" name="Yangiz"/>
+  <hex row="16" col="20" terrain="10" name="Salmysh"/>
+  <hex row="16" col="23" terrain="8"/>
+  <hex row="16" col="24" terrain="8"/>
+  <hex row="16" col="25" terrain="10" name="Sakmara"/>
+  <hex row="16" col="26" terrain="10" name="Sakmara"/>
+  <hex row="16" col="27" terrain="10" name="Sakmara"/>
+  <hex row="16" col="28" terrain="8"/>
+  <hex row="16" col="29" terrain="10" name="Sakmara"/>
+  <hex row="16" col="30" terrain="8"/>
+  <hex row="16" col="31" terrain="8"/>
+  <hex row="16" col="32" terrain="8"/>
+  <hex row="16" col="33" terrain="8"/>
+  <hex row="17" col="5" terrain="10" name="Srednyaya Kargalka"/>
+  <hex row="17" col="10" road="18"/>
+  <hex row="17" col="13" terrain="10" name="Kargalka"/>
+  <hex row="17" col="14">
+    <unit id="385" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="17" col="15" road="9">
+    <unit id="34907" owner="0" flag="104" face="0" transport="34981" exp="4"/>
+  </hex>
+  <hex row="17" col="16" terrain="8"/>
+  <hex row="17" col="17" terrain="8"/>
+  <hex row="17" col="18" terrain="8"/>
+  <hex row="17" col="19" terrain="10" name="Salmysh"/>
+  <hex row="17" col="20" terrain="10" name="Salmysh"/>
+  <hex row="17" col="21" terrain="10" name="Sakmara"/>
+  <hex row="17" col="22" terrain="10" name="Sakmara"/>
+  <hex row="17" col="23" terrain="10" name="Sakmara"/>
+  <hex row="17" col="24" terrain="10" name="Sakmara"/>
+  <hex row="17" col="25" terrain="1" road="187" name="Nizhnie Chebenki ">
+    <unit id="367" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="17" col="26" terrain="8"/>
+  <hex row="17" col="27" road="40"/>
+  <hex row="17" col="28" terrain="10" name="Sakmara"/>
+  <hex row="17" col="29" terrain="10" name="Sakmara"/>
+  <hex row="17" col="30" terrain="8"/>
+  <hex row="17" col="31" terrain="10" name="Sakmara"/>
+  <hex row="17" col="32" terrain="8"/>
+  <hex row="17" col="33" terrain="8"/>
+  <hex row="18" col="5" terrain="10" name="Srednyaya Kargalka"/>
+  <hex row="18" col="7" terrain="10" name="Srednyaya Kargalka"/>
+  <hex row="18" col="10" road="17"/>
+  <hex row="18" col="11" terrain="8"/>
+  <hex row="18" col="12" terrain="8"/>
+  <hex row="18" col="13" terrain="8"/>
+  <hex row="18" col="14" terrain="10" name="Kargalka">
+    <unit id="34907" owner="0" flag="104" face="0" transport="34981" exp="104" ldr="1"/>
+  </hex>
+  <hex row="18" col="15">
+    <unit id="34963" owner="0" flag="104" face="0" transport="34981" exp="104"/>
+  </hex>
+  <hex row="18" col="16" terrain="1" road="187" name="Sakmara">
+    <unit id="34907" owner="0" flag="104" face="0" transport="34981" exp="4" ldr="1"/>
+  </hex>
+  <hex row="18" col="17" terrain="1" road="187" name="Sakmara">
+    <unit id="34892" owner="0" flag="104" face="0" transport="34979" exp="200" ldr="1"/>
+  </hex>
+  <hex row="18" col="19" terrain="10" name="Sakmara"/>
+  <hex row="18" col="20" terrain="10" name="Sakmara"/>
+  <hex row="18" col="24" terrain="1" road="187" name="Nizhnie Chebenki " owner="0" flag="103" victory="0">
+    <unit id="34907" owner="0" flag="104" face="0" transport="34981" exp="200"/>
+  </hex>
+  <hex row="18" col="25">
+    <unit id="367" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="18" col="26" road="130"/>
+  <hex row="18" col="28" terrain="1" road="187"/>
+  <hex row="18" col="29" terrain="1" road="187" name="Verkhnie Chebenki" owner="0" flag="103" victory="0">
+    <unit id="34907" owner="0" flag="104" face="0" transport="34981" exp="44" ldr="1"/>
+  </hex>
+  <hex row="18" col="30" terrain="10" name="Sakmara"/>
+  <hex row="18" col="31" terrain="8"/>
+  <hex row="18" col="32" terrain="10" name="Sakmara"/>
+  <hex row="18" col="33" terrain="8"/>
+  <hex row="18" col="34" terrain="8"/>
+  <hex row="19" col="6" terrain="10" name="Srednyaya Kargalka"/>
+  <hex row="19" col="8" terrain="10" name="Srednyaya Kargalka"/>
+  <hex row="19" col="9" terrain="10" name="Srednyaya Kargalka"/>
+  <hex row="19" col="10" road="17">
+    <unit id="385" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="19" col="11">
+    <unit id="34907" owner="0" flag="104" face="0" transport="34981" exp="104"/>
+  </hex>
+  <hex row="19" col="13" terrain="10" name="Sakmara"/>
+  <hex row="19" col="14" terrain="10" name="Kargalka"/>
+  <hex row="19" col="15" terrain="10" name="Sakmara"/>
+  <hex row="19" col="16" terrain="1" road="187" name="Sakmara" owner="0" flag="103" victory="0">
+    <unit id="35038" owner="0" flag="104" face="0" transport="34986" exp="160"/>
+  </hex>
+  <hex row="19" col="17" terrain="10" name="Sakmara"/>
+  <hex row="19" col="18" terrain="10" name="Sakmara"/>
+  <hex row="19" col="19" terrain="8"/>
+  <hex row="19" col="20" terrain="8"/>
+  <hex row="19" col="21">
+    <unit id="34907" owner="0" flag="104" face="0" transport="34981" exp="210"/>
+  </hex>
+  <hex row="19" col="22">
+    <unit id="610" owner="0" flag="104" face="0" exp="160"/>
+  </hex>
+  <hex row="19" col="28" terrain="1" name="Verkhnie Chebenki">
+    <unit id="367" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="19" col="29">
+    <unit id="367" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="19" col="30" road="144"/>
+  <hex row="19" col="31" terrain="8"/>
+  <hex row="19" col="32" terrain="10" name="Sakmara"/>
+  <hex row="19" col="33" terrain="10" name="Sakmara"/>
+  <hex row="19" col="34" terrain="8"/>
+  <hex row="19" col="37" terrain="8"/>
+  <hex row="20" col="7" road="34"/>
+  <hex row="20" col="8" road="40"/>
+  <hex row="20" col="9" terrain="10" road="130" name="Srednyaya Kargalka"/>
+  <hex row="20" col="10" terrain="1" road="187" name="Seitovsky Posad ">
+    <unit id="34907" owner="0" flag="104" face="0" transport="34981" exp="104"/>
+  </hex>
+  <hex row="20" col="11" terrain="10" name="Sakmara"/>
+  <hex row="20" col="12" terrain="10" name="Sakmara"/>
+  <hex row="20" col="13" terrain="8"/>
+  <hex row="20" col="14" terrain="10" name="Sakmara"/>
+  <hex row="20" col="15" terrain="8"/>
+  <hex row="20" col="16" terrain="10" name="Sakmara"/>
+  <hex row="20" col="17" terrain="8"/>
+  <hex row="20" col="18" terrain="8"/>
+  <hex row="20" col="21">
+    <unit id="34961" owner="0" flag="104" face="0" transport="34981" exp="200" ldr="1"/>
+  </hex>
+  <hex row="20" col="22">
+    <unit id="34907" owner="0" flag="104" face="0" exp="200"/>
+  </hex>
+  <hex row="20" col="23" terrain="1" road="187" name="Belovka" owner="0" flag="103">
+    <unit id="34907" owner="0" flag="104" face="0" transport="34981" exp="4"/>
+  </hex>
+  <hex row="20" col="24" terrain="1" road="187" name="Belovka"/>
+  <hex row="20" col="25" road="136"/>
+  <hex row="20" col="26">
+    <unit id="367" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="20" col="27" road="40">
+    <unit id="367" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="20" col="30" road="17"/>
+  <hex row="20" col="31" terrain="8"/>
+  <hex row="20" col="32" terrain="8"/>
+  <hex row="20" col="33" terrain="10" name="Sakmara"/>
+  <hex row="20" col="34" terrain="8"/>
+  <hex row="20" col="35" terrain="8"/>
+  <hex row="20" col="36" terrain="8"/>
+  <hex row="20" col="37" terrain="8"/>
+  <hex row="20" col="38" terrain="8"/>
+  <hex row="20" col="39" terrain="8"/>
+  <hex row="20" col="40" terrain="8"/>
+  <hex row="20" col="41" terrain="8"/>
+  <hex row="21" col="5" road="18"/>
+  <hex row="21" col="6" road="34"/>
+  <hex row="21" col="8" terrain="10" name="Sakmara"/>
+  <hex row="21" col="9" terrain="10" road="18" name="Sakmara"/>
+  <hex row="21" col="10" terrain="1" road="33" name="Seitovsky Posad " owner="0" flag="103" victory="0">
+    <unit id="35034" owner="0" flag="104" face="0" transport="34986" exp="100"/>
+  </hex>
+  <hex row="21" col="11" terrain="10" name="Sakmara"/>
+  <hex row="21" col="12" terrain="8"/>
+  <hex row="21" col="13" terrain="8"/>
+  <hex row="21" col="14" terrain="8"/>
+  <hex row="21" col="16" terrain="8"/>
+  <hex row="21" col="19">
+    <unit id="610" owner="0" flag="104" face="0" exp="160"/>
+  </hex>
+  <hex row="21" col="26" road="130">
+    <unit id="513" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="21" col="27">
+    <unit id="367" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="21" col="28" road="136"/>
+  <hex row="21" col="29" road="130"/>
+  <hex row="21" col="30" road="41">
+    <unit id="610" owner="0" flag="104" face="0" exp="160"/>
+  </hex>
+  <hex row="21" col="31" road="144"/>
+  <hex row="21" col="32" terrain="8"/>
+  <hex row="21" col="33" terrain="8"/>
+  <hex row="21" col="34" terrain="10" name="Sakmara"/>
+  <hex row="21" col="35" terrain="10" name="Sakmara"/>
+  <hex row="21" col="36" terrain="10" name="Sakmara"/>
+  <hex row="21" col="37" terrain="10" name="Sakmara"/>
+  <hex row="21" col="38" terrain="8"/>
+  <hex row="21" col="39" terrain="8"/>
+  <hex row="21" col="40" terrain="8"/>
+  <hex row="21" col="41" terrain="8"/>
+  <hex row="22" col="5" road="33"/>
+  <hex row="22" col="7" terrain="10" name="Sakmara"/>
+  <hex row="22" col="8" terrain="10" name="Sakmara"/>
+  <hex row="22" col="9" road="17"/>
+  <hex row="22" col="10" terrain="10" name="Sakmara"/>
+  <hex row="22" col="16">
+    <unit id="34907" owner="0" flag="104" face="0" transport="34981" exp="180"/>
+  </hex>
+  <hex row="22" col="17">
+    <unit id="34907" owner="0" flag="104" face="0" transport="34981" exp="100"/>
+  </hex>
+  <hex row="22" col="27">
+    <unit id="367" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="22" col="31" road="9"/>
+  <hex row="22" col="32" terrain="8"/>
+  <hex row="22" col="33" terrain="8"/>
+  <hex row="22" col="34" terrain="8"/>
+  <hex row="22" col="35" terrain="8"/>
+  <hex row="22" col="36" terrain="8"/>
+  <hex row="22" col="37" terrain="8"/>
+  <hex row="22" col="38" terrain="10" name="Sakmara"/>
+  <hex row="22" col="39" terrain="10" name="Sakmara"/>
+  <hex row="22" col="40" terrain="8"/>
+  <hex row="22" col="41" terrain="8"/>
+  <hex row="22" col="42" terrain="8"/>
+  <hex row="22" col="43" terrain="8"/>
+  <hex row="23" col="3" road="26"/>
+  <hex row="23" col="4" road="34"/>
+  <hex row="23" col="5" road="40"/>
+  <hex row="23" col="7" terrain="10" name="Sakmara"/>
+  <hex row="23" col="9" road="17">
+    <unit id="34907" owner="0" flag="104" face="0" transport="34981" exp="4"/>
+  </hex>
+  <hex row="23" col="16">
+    <unit id="35005" owner="0" flag="104" face="0" transport="34993" exp="160"/>
+  </hex>
+  <hex row="23" col="17">
+    <unit id="35038" owner="0" flag="104" face="0" transport="34986" exp="100"/>
+  </hex>
+  <hex row="23" col="18">
+    <unit id="34907" owner="0" flag="104" face="0" transport="34981" exp="230"/>
+  </hex>
+  <hex row="23" col="19">
+    <unit id="34907" owner="0" flag="104" face="0" transport="34981" exp="200"/>
+  </hex>
+  <hex row="23" col="26">
+    <unit id="385" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="23" col="27">
+    <unit id="367" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="23" col="32" terrain="1" road="187" name="Chebenki" owner="0" flag="103">
+    <unit id="34907" owner="0" flag="104" face="0" transport="34981" exp="100"/>
+  </hex>
+  <hex row="23" col="33">
+    <unit id="367" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="23" col="34" terrain="8"/>
+  <hex row="23" col="36" terrain="8"/>
+  <hex row="23" col="37" terrain="8"/>
+  <hex row="23" col="38" terrain="8"/>
+  <hex row="23" col="39" terrain="8"/>
+  <hex row="23" col="40" terrain="10" name="Sakmara"/>
+  <hex row="23" col="41" terrain="10" name="Sakmara"/>
+  <hex row="23" col="42" terrain="8"/>
+  <hex row="23" col="43" terrain="8"/>
+  <hex row="24" col="1" road="40"/>
+  <hex row="24" col="2" road="24"/>
+  <hex row="24" col="3" road="129">
+    <unit id="610" owner="0" flag="104" face="0" exp="160"/>
+  </hex>
+  <hex row="24" col="4" road="130"/>
+  <hex row="24" col="5" terrain="10" name="Sakmara"/>
+  <hex row="24" col="6" terrain="10" road="136" name="Sakmara"/>
+  <hex row="24" col="7" road="136">
+    <unit id="367" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="24" col="9" road="33"/>
+  <hex row="24" col="10">
+    <unit id="34907" owner="0" flag="104" face="0" transport="34981" exp="4"/>
+  </hex>
+  <hex row="24" col="11">
+    <unit id="34907" owner="0" flag="104" face="0" transport="34981" exp="4"/>
+  </hex>
+  <hex row="24" col="13">
+    <unit id="610" owner="0" flag="104" face="0" exp="160"/>
+  </hex>
+  <hex row="24" col="23">
+    <unit id="513" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="24" col="24">
+    <unit id="367" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="24" col="32" road="9">
+    <unit id="367" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="24" col="33" road="136"/>
+  <hex row="24" col="38" terrain="8"/>
+  <hex row="24" col="40" terrain="8"/>
+  <hex row="24" col="41" terrain="8"/>
+  <hex row="24" col="42" terrain="10" name="Sakmara"/>
+  <hex row="24" col="43" terrain="10" name="Sakmara"/>
+  <hex row="25" col="0" road="130"/>
+  <hex row="25" col="2" road="129"/>
+  <hex row="25" col="3" terrain="10" name="Sakmara"/>
+  <hex row="25" col="4" terrain="10" name="Sakmara"/>
+  <hex row="25" col="8" road="154">
+    <unit id="367" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="25" col="9" road="160">
+    <unit id="367" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="25" col="24">
+    <unit id="367" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="25" col="34" road="136"/>
+  <hex row="25" col="35" road="136">
+    <unit id="610" owner="0" flag="104" face="0" exp="160"/>
+  </hex>
+  <hex row="25" col="42" terrain="8"/>
+  <hex row="25" col="43" terrain="8"/>
+  <hex row="26" col="1" terrain="8"/>
+  <hex row="26" col="3" terrain="10" name="Sakmara"/>
+  <hex row="26" col="4" terrain="8"/>
+  <hex row="26" col="8" road="19">
+    <unit id="513" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="26" col="10">
+    <unit id="367" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="26" col="11">
+    <unit id="367" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="26" col="21">
+    <unit id="34907" owner="0" flag="104" face="0" transport="34981" exp="200" ldr="1"/>
+  </hex>
+  <hex row="26" col="25">
+    <unit id="385" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="26" col="26">
+    <unit id="367" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="26" col="36" road="136"/>
+  <hex row="26" col="37" road="187"/>
+  <hex row="27" col="0" terrain="8"/>
+  <hex row="27" col="1" terrain="8"/>
+  <hex row="27" col="2" terrain="10" name="Sakmara"/>
+  <hex row="27" col="3" terrain="8"/>
+  <hex row="27" col="4" terrain="8"/>
+  <hex row="27" col="5" terrain="8"/>
+  <hex row="27" col="6" terrain="1" road="187" name="Orenburg"/>
+  <hex row="27" col="7" terrain="1" road="187" name="Orenburg"/>
+  <hex row="27" col="8" terrain="1" road="187" name="Orenburg">
+    <unit id="34904" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="27" col="9" terrain="1" road="187" name="Orenburg"/>
+  <hex row="27" col="10">
+    <unit id="513" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="27" col="12">
+    <unit id="367" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="27" col="13">
+    <unit id="367" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="27" col="21">
+    <unit id="34907" owner="0" flag="104" face="0" transport="34981" exp="210"/>
+  </hex>
+  <hex row="27" col="26">
+    <unit id="367" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="27" col="37" terrain="1" road="17" name="Studentsy" owner="0" flag="103"/>
+  <hex row="28" col="0" terrain="8"/>
+  <hex row="28" col="1" terrain="8"/>
+  <hex row="28" col="2" terrain="10" name="Sakmara"/>
+  <hex row="28" col="3" terrain="10" name="Sakmara"/>
+  <hex row="28" col="4" terrain="8"/>
+  <hex row="28" col="5" terrain="8"/>
+  <hex row="28" col="6" terrain="1" road="187" name="Orenburg"/>
+  <hex row="28" col="7" terrain="1" road="187" name="Orenburg" owner="0" flag="103">
+    <unit id="34904" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="28" col="8" terrain="1" road="187" name="Orenburg">
+    <unit id="367" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="28" col="9" terrain="1" road="187" name="Orenburg"/>
+  <hex row="28" col="10">
+    <unit id="34904" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="28" col="12">
+    <unit id="513" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="28" col="13">
+    <unit id="367" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="28" col="20">
+    <unit id="34968" owner="0" flag="104" face="0" exp="200"/>
+  </hex>
+  <hex row="28" col="21">
+    <unit id="34907" owner="0" flag="104" face="0" transport="34981" exp="200"/>
+  </hex>
+  <hex row="28" col="23">
+    <unit id="513" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="28" col="24">
+    <unit id="367" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="28" col="37" road="9"/>
+  <hex row="29" col="0" terrain="8"/>
+  <hex row="29" col="1" terrain="10" name="Sakmara"/>
+  <hex row="29" col="2" terrain="10" name="Sakmara"/>
+  <hex row="29" col="3" terrain="8"/>
+  <hex row="29" col="4" terrain="8"/>
+  <hex row="29" col="5" terrain="1" road="187" name="Orenburg"/>
+  <hex row="29" col="6" terrain="1" road="187" name="Orenburg"/>
+  <hex row="29" col="7" terrain="1" road="187" name="Orenburg">
+    <unit id="513" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="29" col="8" terrain="1" road="187" name="Orenburg">
+    <unit id="367" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="29" col="9" terrain="1" road="187" name="Orenburg">
+    <unit id="367" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="29" col="10" terrain="1" road="187" name="Orenburg"/>
+  <hex row="29" col="11">
+    <unit id="34904" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="29" col="13">
+    <unit id="367" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="29" col="21" terrain="2"/>
+  <hex row="29" col="24">
+    <unit id="367" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="29" col="37" road="10"/>
+  <hex row="29" col="38" road="160"/>
+  <hex row="29" col="40">
+    <unit id="39180" owner="1" flag="192" face="0" exp="200"/>
+  </hex>
+  <hex row="30" col="0" terrain="15" name="Ural"/>
+  <hex row="30" col="1" terrain="15" name="Ural"/>
+  <hex row="30" col="2" terrain="8"/>
+  <hex row="30" col="3" terrain="8"/>
+  <hex row="30" col="5" terrain="1" road="187" name="Orenburg"/>
+  <hex row="30" col="6" terrain="1" road="187" name="Orenburg"/>
+  <hex row="30" col="7" terrain="1" road="187" name="Orenburg"/>
+  <hex row="30" col="8" terrain="1" road="187" name="Orenburg" owner="0" flag="103" victory="0">
+    <unit id="34904" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="30" col="9" terrain="1" road="187" name="Orenburg">
+    <unit id="34970" owner="0" flag="104" face="0" exp="100"/>
+  </hex>
+  <hex row="30" col="10" terrain="1" road="187" name="Orenburg"/>
+  <hex row="30" col="11" road="40"/>
+  <hex row="30" col="12">
+    <unit id="513" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="30" col="13" road="48">
+    <unit id="367" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="30" col="20" terrain="2"/>
+  <hex row="30" col="21" terrain="2" owner="0" flag="103">
+    <unit id="34904" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="30" col="22">
+    <unit id="367" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="30" col="23">
+    <unit id="367" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="30" col="37" road="10"/>
+  <hex row="30" col="38" road="160"/>
+  <hex row="31" col="0" terrain="8"/>
+  <hex row="31" col="1" terrain="8"/>
+  <hex row="31" col="2" terrain="15" name="Ural"/>
+  <hex row="31" col="3" terrain="8"/>
+  <hex row="31" col="6" terrain="1" road="187" name="Orenburg" owner="0" flag="103">
+    <unit id="34904" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="31" col="7" terrain="1" road="187" name="Orenburg"/>
+  <hex row="31" col="8" terrain="1" road="187" name="Orenburg"/>
+  <hex row="31" col="9" terrain="1" road="187" name="Orenburg"/>
+  <hex row="31" col="10" road="130"/>
+  <hex row="31" col="12" road="130"/>
+  <hex row="31" col="13" road="3">
+    <unit id="367" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="31" col="14" road="40"/>
+  <hex row="31" col="15" road="130"/>
+  <hex row="31" col="16" road="40"/>
+  <hex row="31" col="17" terrain="1" road="171" name="Nezhinka" owner="0" flag="103">
+    <unit id="34904" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="31" col="18" road="40"/>
+  <hex row="31" col="19" road="130"/>
+  <hex row="31" col="20" road="40"/>
+  <hex row="31" col="21" road="130"/>
+  <hex row="31" col="22" road="40">
+    <unit id="513" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="31" col="23" road="136">
+    <unit id="367" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="31" col="35">
+    <unit id="39180" owner="1" flag="192" face="0" exp="200"/>
+  </hex>
+  <hex row="31" col="37" road="18">
+    <unit id="39180" owner="1" flag="192" face="0" exp="200"/>
+  </hex>
+  <hex row="31" col="38" road="160"/>
+  <hex row="32" col="0" terrain="8"/>
+  <hex row="32" col="1" terrain="8"/>
+  <hex row="32" col="2" terrain="15" name="Ural"/>
+  <hex row="32" col="3" terrain="15" name="Ural"/>
+  <hex row="32" col="5" terrain="15" name="Ural"/>
+  <hex row="32" col="6" terrain="15" name="Ural"/>
+  <hex row="32" col="7" terrain="10" road="17" name="Ural"/>
+  <hex row="32" col="8" terrain="1" road="187" name="Orenburg" owner="0" flag="103">
+    <unit id="34904" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="32" col="9" terrain="15" name="Ural"/>
+  <hex row="32" col="10" terrain="15" name="Ural"/>
+  <hex row="32" col="11" terrain="15" name="Ural"/>
+  <hex row="32" col="12" terrain="15" name="Ural"/>
+  <hex row="32" col="13" terrain="15" name="Ural"/>
+  <hex row="32" col="15" terrain="15" name="Ural"/>
+  <hex row="32" col="16" terrain="15" name="Ural"/>
+  <hex row="32" col="17" terrain="15" name="Ural"/>
+  <hex row="32" col="18" terrain="15" name="Ural"/>
+  <hex row="32" col="19" terrain="15" name="Ural"/>
+  <hex row="32" col="20" terrain="15" name="Ural"/>
+  <hex row="32" col="21" terrain="15" name="Ural"/>
+  <hex row="32" col="23">
+    <unit id="367" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="32" col="24" road="136">
+    <unit id="610" owner="0" flag="104" face="0" exp="160"/>
+  </hex>
+  <hex row="32" col="25" road="136"/>
+  <hex row="32" col="33">
+    <unit id="39180" owner="1" flag="192" face="0" exp="200"/>
+  </hex>
+  <hex row="32" col="37" road="17"/>
+  <hex row="32" col="40">
+    <unit id="39180" owner="1" flag="192" face="0" exp="200"/>
+  </hex>
+  <hex row="33" col="2" terrain="8"/>
+  <hex row="33" col="3" terrain="8"/>
+  <hex row="33" col="4" terrain="15" name="Ural"/>
+  <hex row="33" col="7" road="33"/>
+  <hex row="33" col="8" terrain="10" name="Ural"/>
+  <hex row="33" col="9" terrain="8"/>
+  <hex row="33" col="10" terrain="8"/>
+  <hex row="33" col="11" terrain="8"/>
+  <hex row="33" col="12" terrain="15" name="Ural"/>
+  <hex row="33" col="13" terrain="15" name="Ural"/>
+  <hex row="33" col="14" terrain="15" name="Ural"/>
+  <hex row="33" col="15" terrain="1" road="187" name="Blagoslovenka" owner="0" flag="103">
+    <unit id="513" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="33" col="16" terrain="15" name="Ural"/>
+  <hex row="33" col="17" terrain="8"/>
+  <hex row="33" col="18" terrain="8"/>
+  <hex row="33" col="19" terrain="8"/>
+  <hex row="33" col="20" terrain="15" name="Ural"/>
+  <hex row="33" col="21" terrain="8"/>
+  <hex row="33" col="22" terrain="15" name="Ural"/>
+  <hex row="33" col="23" terrain="15" name="Ural"/>
+  <hex row="33" col="26" road="152"/>
+  <hex row="33" col="27" terrain="1" road="187" name="Kamenno-Ozornoye"/>
+  <hex row="33" col="36" road="24"/>
+  <hex row="33" col="37" road="129"/>
+  <hex row="34" col="2" terrain="8"/>
+  <hex row="34" col="3" terrain="8"/>
+  <hex row="34" col="4" terrain="8"/>
+  <hex row="34" col="6" road="18">
+    <unit id="513" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="34" col="8">
+    <unit id="513" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="34" col="10" terrain="8"/>
+  <hex row="34" col="11" terrain="8"/>
+  <hex row="34" col="12" terrain="8"/>
+  <hex row="34" col="13" road="34"/>
+  <hex row="34" col="14" road="34"/>
+  <hex row="34" col="15">
+    <unit id="367" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="34" col="16" terrain="8"/>
+  <hex row="34" col="17" terrain="8"/>
+  <hex row="34" col="18" terrain="8"/>
+  <hex row="34" col="19" terrain="8"/>
+  <hex row="34" col="20" terrain="8"/>
+  <hex row="34" col="21" terrain="8"/>
+  <hex row="34" col="22" terrain="8"/>
+  <hex row="34" col="23" terrain="8"/>
+  <hex row="34" col="24" terrain="15" name="Ural"/>
+  <hex row="34" col="25" terrain="15" name="Ural"/>
+  <hex row="34" col="26" terrain="1" road="187" name="Kamenno-Ozornoye" owner="1" flag="100">
+    <unit id="39180" owner="1" flag="192" face="0" exp="200"/>
+  </hex>
+  <hex row="34" col="28" road="136"/>
+  <hex row="34" col="29" road="136"/>
+  <hex row="34" col="30">
+    <unit id="39180" owner="1" flag="192" face="0" exp="200"/>
+  </hex>
+  <hex row="34" col="35" road="34"/>
+  <hex row="34" col="36" road="33"/>
+  <hex row="35" col="0" terrain="8"/>
+  <hex row="35" col="1" terrain="8"/>
+  <hex row="35" col="2" terrain="8"/>
+  <hex row="35" col="3" terrain="8"/>
+  <hex row="35" col="4" terrain="8"/>
+  <hex row="35" col="5" road="18"/>
+  <hex row="35" col="6" road="41">
+    <unit id="367" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="35" col="7" road="130"/>
+  <hex row="35" col="8" road="40">
+    <unit id="367" owner="0" flag="104" face="0" exp="4"/>
+  </hex>
+  <hex row="35" col="9" road="130"/>
+  <hex row="35" col="10" road="40"/>
+  <hex row="35" col="11" road="130"/>
+  <hex row="35" col="12" road="34"/>
+  <hex row="35" col="16" terrain="8"/>
+  <hex row="35" col="17" terrain="8"/>
+  <hex row="35" col="18" terrain="8"/>
+  <hex row="35" col="19" terrain="8"/>
+  <hex row="35" col="20" terrain="8"/>
+  <hex row="35" col="21" terrain="8"/>
+  <hex row="35" col="22" terrain="8"/>
+  <hex row="35" col="23" terrain="8"/>
+  <hex row="35" col="24" terrain="8"/>
+  <hex row="35" col="25" terrain="8"/>
+  <hex row="35" col="26" terrain="15" name="Ural"/>
+  <hex row="35" col="29" terrain="8"/>
+  <hex row="35" col="30" road="136"/>
+  <hex row="35" col="31" road="136"/>
+  <hex row="35" col="33" road="50"/>
+  <hex row="35" col="34" road="34"/>
+  <hex row="36" col="5" road="17">
+    <unit id="39187" owner="1" flag="192" face="0" exp="99"/>
+  </hex>
+  <hex row="36" col="9">
+    <unit id="39187" owner="1" flag="192" face="0" exp="99"/>
+  </hex>
+  <hex row="36" col="15">
+    <unit id="39187" owner="1" flag="192" face="0" exp="99"/>
+  </hex>
+  <hex row="36" col="20" terrain="8"/>
+  <hex row="36" col="23" terrain="8"/>
+  <hex row="36" col="24" terrain="8"/>
+  <hex row="36" col="25" terrain="8"/>
+  <hex row="36" col="26" terrain="15" name="Ural"/>
+  <hex row="36" col="27" terrain="15" name="Ural"/>
+  <hex row="36" col="28" terrain="15" name="Ural"/>
+  <hex row="36" col="29" terrain="15" name="Ural"/>
+  <hex row="36" col="30" terrain="8"/>
+  <hex row="36" col="31" terrain="8"/>
+  <hex row="36" col="32" terrain="1" road="187" name="Vyazovka"/>
+  <hex row="36" col="33" terrain="1" road="187" name="Vyazovka" owner="1" flag="100"/>
+  <hex row="36" col="34" road="40"/>
+  <hex row="36" col="35" road="136"/>
+  <hex row="37" col="5" road="33"/>
+  <hex row="37" col="12">
+    <unit id="39187" owner="1" flag="192" face="0" exp="99"/>
+  </hex>
+  <hex row="37" col="24" terrain="8"/>
+  <hex row="37" col="25" terrain="8"/>
+  <hex row="37" col="26" terrain="15" name="Ural"/>
+  <hex row="37" col="27" terrain="8"/>
+  <hex row="37" col="28" terrain="8"/>
+  <hex row="37" col="29" terrain="8"/>
+  <hex row="37" col="30" terrain="15" name="Ural"/>
+  <hex row="37" col="31" terrain="15" name="Ural"/>
+  <hex row="37" col="32" terrain="15" name="Ural"/>
+  <hex row="37" col="33" terrain="15" name="Ural"/>
+  <hex row="37" col="34" terrain="8"/>
+  <hex row="37" col="35" terrain="8"/>
+  <hex row="37" col="36" road="136"/>
+  <hex row="37" col="37" road="136"/>
+</map>

@@ -1,0 +1,1186 @@
+[
+  {
+    "id": 0,
+    "intro": "Stalingrad is burning, but the German Sixth Army has finally pushed itself into a trap. As Zhukov, coordinate the blow that will close Operation Uranus: smash the Axis flanks, cut the roads across the Don and Chir, and prevent relief forces from reopening the corridor to Paulus. The Romanian armies are brittle, yet German armour and air power can still punish a careless advance. Break through quickly, preserve your mobile formations for exploitation, and turn the defence of Stalingrad into the encirclement that changes the course of the war.",
+    "outcome": {
+      "briliant": {
+        "goto": 1,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1500,
+        "text": "Excellent Job Comrade General.  Stalin will reward you with an experimental prototype to use in your battles.  Congratulations on the shattering of the German 6th Army!  But we cannot be idle!  A Winter Storm is moving in, and the 3rd and 4th Romanian Armies are squatting along the Chir and Don Rivers.  Also, recon reports that the Italian 8th Army is in the area, and that the 48th Panzer Division is moving East quickly.  Smash these invaders now!"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          255
+        ],
+        "prestige": 0,
+        "text": "Sorry Comrade General Zhukov, you have been demoted.  There is work for you in Siberia.  Good Luck with your new endeavors."
+      },
+      "tactical": {
+        "goto": 1,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "Well, you broke even Comrade General.  Though we paid a price!<br>  Congratulations on the shattering of the German 6th Army!  But we cannot be idle!  A Winter Storm is moving in, and the 3rd and 4th Romanian Armies are squatting along the Chir and Don Rivers.  Also, recon reports that the Italian 8th Army is in the area, and that the 48th Panzer Division is moving East quickly.  Smash these invaders now!"
+      },
+      "victory": {
+        "goto": 1,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1000,
+        "text": "Good Job Comrade General.<br>  Congratulations on the shattering of the German 6th Army!  But we cannot be idle!  A Winter Storm is moving in, and the 3rd and 4th Romanian Armies are squatting along the Chir and Don Rivers.  Also, recon reports that the Italian 8th Army is in the area, and that the 48th Panzer Division is moving East quickly.  Smash these invaders now!"
+      }
+    },
+    "scenario": "rcampx01.xml",
+    "startprestige": 0
+  },
+  {
+    "id": 1,
+    "intro": "The Stalingrad pocket is sealed, but the wider Axis front on the Don has not yet collapsed. Italian formations, fortified western approaches, and a strongly defended central airfield block the next stage of the counteroffensive. Strike before the enemy can recover from Operation Uranus, destroy the Italian Eighth Army’s cohesion, and open the road toward Millerovo and Rostov. A rapid victory will expand the encirclement and deny Manstein the forces he needs for a relief attempt. Use armour for depth, not merely for the first line, and keep the winter advance moving.",
+    "outcome": {
+      "briliant": {
+        "goto": 2,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1500,
+        "text": "Absolutely Brilliant, Zhukov, you will be rewarded greatly.  Plus I have a case of Stolie's and a box of cigars for you when you return.<br>Congratulations, but we must push on to Rostov.  Despite the Winter Storm that has moved in.  There are ragtag units who ran away during Operation Saturn, but they are being reinforced by part of the 48th Panzer Division.  Recon tells us they heard of our counterattack, and moved a sizable amount of Heavy Artillery across the river.  So send recon and aircraft out first, Comrade.  You have the select group of forces from the best armies and divisions, and commendable leaders!  Push East Comrade!  ON TO ROSTOV!"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          255
+        ],
+        "prestige": 0,
+        "text": "Sorry Zhukov, but I have heard that the cannery in Siberia has openings.  Gen. Yeremenko will be taking over your duties.  Good Luck!"
+      },
+      "tactical": {
+        "goto": 2,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "Well, Zhukov.  A manageable, tactical win.  But many losses!  Our line is wearing thin.  If this continues, we will suffer a defeat in the long run.  We must send out more recon, before blindly attacking.<br>Congratulations, but we must push on to Rostov.  Despite the Winter Storm that has moved in.  There are ragtag units who ran away during Operation Saturn, but they are being reinforced by part of the 48th Panzer Division.  Recon tells us they heard of our counterattack, and moved a sizable amount of Heavy Artillery across the river.  So send recon and aircraft out first, Comrade.  You have the select group of forces from the best armies and divisions, and commendable leaders!  Push East Comrade!  ON TO ROSTOV!"
+      },
+      "victory": {
+        "goto": 2,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1000,
+        "text": "Good, Good Job, Comrade Zhukov.  Still some unexpected losses.<br>Congratulations, but we must push on to Rostov.  Despite the Winter Storm that has moved in.  There are ragtag units who ran away during Operation Saturn, but they are being reinforced by part of the 48th Panzer Division.  Recon tells us they heard of our counterattack, and moved a sizable amount of Heavy Artillery across the river.  So send recon and aircraft out first, Comrade.  You have the select group of forces from the best armies and divisions, and commendable leaders!  Push East Comrade!  ON TO ROSTOV!"
+      }
+    },
+    "scenario": "rcampx02.xml",
+    "startprestige": 0
+  },
+  {
+    "id": 2,
+    "intro": "The Chir and Don crossings are heavily guarded, and German aircraft are already moving east to reinforce the threatened sector. Your task is to rupture the river line, seize the bridges, and create the deployment space required for the advance on Rostov. The enemy expects the rivers to slow you long enough for reserves to arrive; prove that expectation fatal. Concentrate artillery on a narrow front, force the crossings under cover, and exploit immediately with mobile units before the defensive network can be rebuilt.",
+    "outcome": {
+      "briliant": {
+        "goto": 3,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1500,
+        "text": "Excellent Job Comrade Zhukov, You were brilliant, and will be amply rewarded!  We have a chance to quickly secure four tactical deployment sites and for our seige of Rostov.  We have to do this very quickly.  And with limited supply and troops.  Bomb the occupied territories, we have the l6th Air Army on the way.  Sieze  the  occupied territories.  Quickly, the full Army is on it's way!"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          225
+        ],
+        "prestige": 0,
+        "text": "Sorry Zhukov, General Rokossovsky is taking over your command.  You are relieved of your duties, and will be an office manager in Moscow."
+      },
+      "tactical": {
+        "goto": 3,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "Well, a win is a win.  But I am getting worried about the loss of too many units for our marrch to Rostov.  We have a chance to quickly secure four tactical deployment sites.  Bomb the occupied territories and seize them with limited recon and units.  Hurry, the rest of the army is on its way"
+      },
+      "victory": {
+        "goto": 3,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1000,
+        "text": "Good Job Zhukov, but careful with our units, We will need them, later.  We have a chance to quickly secure four tactical deployment sites and for our seige of Rostov.  We have to do this very quickly.  And with limited supply and troops.  Bomb the occupied territories, we have the l6th Air Army on the way.  Sieze  the  occupied territories.  Quickly, the full Army is on it's way!"
+      }
+    },
+    "scenario": "rcampx03.xml",
+    "startprestige": 0
+  },
+  {
+    "id": 3,
+    "intro": "Rostov is the gateway to the Caucasus, but the assault cannot begin until several tactical deployment sites are secured around the city. Reconnaissance reports limited defenders and little air cover—an opportunity that will vanish as soon as the enemy understands your intention. Advance with speed, seize the staging areas intact, and protect the corridors through which the main army must follow. This is a preparation battle in which every turn saved matters: the better your opening position, the less costly the coming struggle for Rostov will be.",
+    "outcome": {
+      "briliant": {
+        "goto": 4,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1500,
+        "text": "Great Job, Zhukov.  We must now take Rostov, but our reports tell us that Wiking's Panzer Division has reinforced the occupied city hearing of our movements.  Wiking has a sizable amount of Tigers lying in wait, so be sure to employ the recon aircraft that I have sequestred. Our tactical fighters and bombers are being used in Kursk at this time, and will not be available. In addition, Stalin is sending us additional bombers from the 8th Army to aid us in our efforts.  Careful General, a defeat here may mean a loss in the war.  Good Luck & GodSpeed, Comrade!"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          255
+        ],
+        "prestige": 0,
+        "text": "Get Lost Zhukov you can't manage a fishery"
+      },
+      "tactical": {
+        "goto": 4,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "Great Job, Zhukov.  We must now take Rostov, but our reports tell us that Wiking's Panzer Division has reinforced the occupied city hearing of our movements.  Wiking has a sizable amount of Tigers lying in wait, so be sure to employ the recon aircraft that I have sequestred. Our tactical fighters and bombers are being used in Kursk at this time, and will not be available. In addition, Stalin is sending us additional bombers from the 8th Army to aid us in our efforts.  Careful General, a defeat here may mean a loss in the war.  Good Luck & GodSpeed, Comrade!"
+      },
+      "victory": {
+        "goto": 4,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1000,
+        "text": "Great Job, Zhukov.  We must now take Rostov, but our reports tell us that Wiking's Panzer Division has reinforced the occupied city hearing of our movements.  Wiking has a sizable amount of Tigers lying in wait, so be sure to employ the recon aircraft that I have sequestred. Our tactical fighters and bombers are being used in Kursk at this time, and will not be available. In addition, Stalin is sending us additional bombers from the 8th Army to aid us in our efforts.  Careful General, a defeat here may mean a loss in the war.  Good Luck & GodSpeed, Comrade!"
+      }
+    },
+    "scenario": "rcampx04.xml",
+    "startprestige": 0
+  },
+  {
+    "id": 4,
+    "intro": "Rostov has been reinforced by the Wiking Panzer Division, including heavy Tigers, anti-tank batteries, cavalry, and local air support. The enemy intends to turn the city into a shield for the Caucasus withdrawal and a fortress on the Don. Use reconnaissance to identify the heavy armour, isolate the strongest positions, and attack the city from more than one direction. A frontal rush will burn away your tank strength; combined arms and careful encirclement can instead trap the defenders and open the southern road toward the Crimea.",
+    "outcome": {
+      "briliant": {
+        "goto": 5,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1500,
+        "text": "Our Marines, Naval Forces, and Air Armies have captured deployment areas near Sevastopol.  Now is the time for us to capture Sevastopol before we head North.  There are some concerns.  Recon tells us that their are some Italian navy units operating in the Black Sea, but most of them are small.  Capture Sevastopol and let us continue this campaign for the liberation of Russia and its homeland.  Good Luck, Zhukov, I am sending you some paratroopers to deploy over key focal points in our attack"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          255
+        ],
+        "prestige": 0,
+        "text": "Sorry Zhukov, Malinowsky will be deployed to the Southwest Line to assume your duties"
+      },
+      "tactical": {
+        "goto": 5,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "Our Marines, Naval Forces, and Air Armies have captured deployment areas near Sevastopol.  Now is the time for us to capture Sevastopol before we head North.  There are some concerns.  Recon tells us that their are some Italian navy units operating in the Black Sea, but most of them are small.  Capture Sevastopol and let us continue this campaign for the liberation of Russia and its homeland.  Good Luck, Zhukov, I am sending you some paratroopers to deploy over key focal points in our attack"
+      },
+      "victory": {
+        "goto": 5,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1000,
+        "text": "Our Marines, Naval Forces, and Air Armies have captured deployment areas near Sevastopol.  Now is the time for us to capture Sevastopol before we head North.  There are some concerns.  Recon tells us that their are some Italian navy units operating in the Black Sea, but most of them are small.  Capture Sevastopol and let us continue this campaign for the liberation of Russia and its homeland.  Good Luck, Zhukov, I am sending you some paratroopers to deploy over key focal points in our attack"
+      }
+    },
+    "scenario": "rcampx05.xml",
+    "startprestige": 0
+  },
+  {
+    "id": 5,
+    "intro": "Sevastopol stands behind coastal guns, prepared urban defences, and incoming airborne reinforcements. Soviet marines, naval forces, aircraft, and paratroopers have already secured footholds around the fortress, but the final assault must be coordinated before Axis help arrives across the Black Sea. Suppress the batteries, protect the landing zones, and break into the city without allowing the defenders to concentrate against a single approach. The capture of Sevastopol will restore a vital base and place the entire Crimean coast within reach.",
+    "outcome": {
+      "briliant": {
+        "goto": 6,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1500,
+        "text": "Excellent Job Comrade Zhukov!  I'm sure Stalin will reward you greatly!<br>We are headed North to Odessa.  There seems to be some small units on the way.  Nothing that you can't take care of.  Will report back after we dispose of these runaways!  Good Luck Zhukov!"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          255
+        ],
+        "prestige": 0,
+        "text": "Well Zhukov, see you after the war, when you are waiting tables for my dinner party."
+      },
+      "tactical": {
+        "goto": 6,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "Well, Zhukov you made it a tactical victory, but I am concerned.<br>We are headed North to Odessa.  There seems to be some small units on the way.  Nothing that you can't take care of.  Will report back after we dispose of these runaways!  Good Luck Zhukov!"
+      },
+      "victory": {
+        "goto": 6,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1000,
+        "text": "Good Job Zhukov.  A Bit of a Log Jam there, but still a victory.<br>We are headed North to Odessa.  There seems to be some small units on the way.  Nothing that you can't take care of.  Will report back after we dispose of these runaways!  Good Luck Zhukov!"
+      }
+    },
+    "scenario": "rcampx06.xml",
+    "startprestige": 0
+  },
+  {
+    "id": 6,
+    "intro": "The road north from Sevastopol appears lightly held, but scattered Axis units and reconnaissance aircraft can still delay the movement toward Odessa. Treat these skirmishes as an operational race: clear the route, preserve fuel and ammunition, and prevent isolated enemy groups from cutting your columns or reporting their strength. Your army must arrive at the next battlefield organised rather than exhausted. A clean pursuit will keep the Black Sea initiative in Soviet hands and ensure that the heavy guns waiting farther west face a concentrated army, not a string of vulnerable detachments.",
+    "outcome": {
+      "briliant": {
+        "goto": 7,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1500,
+        "text": "Excellent Job Comrade Zhukov!  I'm sure Stalin will reward you greatly!<br>West to the Sea Comrade!  This is going to be a big one!  We have Naval Support in the Black Sea for the Naval guns.  Plus in a day or two will be sending in some bombing support.  Careful, recon tells us mostly anti-tank battalions, small, though they are supported by some heavier ATs.  Air intelligence has spotted the Italian Navy to the South, but also two HA railroad guns that could cause some problems, brother.  Good Luck Comrade Zhukov, after this we head North to Kiev to reunite with the other generals in their battle."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          255
+        ],
+        "prestige": 0,
+        "text": "Get Lost Zhukov!"
+      },
+      "tactical": {
+        "goto": 7,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "Excellent Job Comrade Zhukov!  I'm sure Stalin will reward you greatly!<br>West to the Sea Comrade!  This is going to be a big one!  We have Naval Support in the Black Sea for the Naval guns.  Plus in a day or two will be sending in some bombing support.  Careful, recon tells us mostly anti-tank battalions, small, though they are supported by some heavier ATs.  Air intelligence has spotted the Italian Navy to the South, but also two HA railroad guns that could cause some problems, brother.  Good Luck Comrade Zhukov, after this we head North to Kiev to reunite with the other generals in their battle."
+      },
+      "victory": {
+        "goto": 7,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1000,
+        "text": "Excellent Job Comrade Zhukov!  I'm sure Stalin will reward you greatly!<br>West to the Sea Comrade!  This is going to be a big one!  We have Naval Support in the Black Sea for the Naval guns.  Plus in a day or two will be sending in some bombing support.  Careful, recon tells us mostly anti-tank battalions, small, though they are supported by some heavier ATs.  Air intelligence has spotted the Italian Navy to the South, but also two HA railroad guns that could cause some problems, brother.  Good Luck Comrade Zhukov, after this we head North to Kiev to reunite with the other generals in their battle."
+      }
+    },
+    "scenario": "rcampx07.xml",
+    "startprestige": 0
+  },
+  {
+    "id": 7,
+    "intro": "Odessa is protected by dense anti-tank positions, heavy artillery, Italian naval elements, and two formidable railway guns. The enemy has prepared the coastal approaches to punish armour and delay any direct assault, but Soviet naval gunfire and bomber support are becoming available. Neutralise the long-range batteries, secure the shoreline, and open safe lanes for infantry and tanks to enter the city. This is a combined-arms siege: victory depends on using sea, air, artillery, and ground forces as a single system rather than feeding units into the fortifications piecemeal.",
+    "outcome": {
+      "briliant": {
+        "goto": 8,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1500,
+        "text": "Comrade General Zhukov.  Stalin informs me that the fighting in Kursk was fierce, but the city was finally liberated.  The German battalions have regrouped at Kharkov under the leadership of Generals Von Kleist and Mannheim - remember them?  At least we are pushing them back.  General's Vatutin, Koniev, & Malinowsky are already there to expel the Northern German units on our push to Kiev.  Secure the southern area Comrade until the Generals can eradicate the Northern and Central areas.  It may be wise to wait for them to reinforce you, Kharkov across the river is well-fortified, with Kleist's Panzer Division.  Good Luck General!  I will send some crack parachuters into the Western region as soon as possible to aid your efforts."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          255
+        ],
+        "prestige": 0,
+        "text": "Have a nice life Zhukov!"
+      },
+      "tactical": {
+        "goto": 8,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "Comrade General Zhukov.  Stalin informs me that the fighting in Kursk was fierce, but the city was finally liberated.  The German battalions have regrouped at Kharkov under the leadership of Generals Von Kleist and Mannheim - remember them?  At least we are pushing them back.  General's Vatutin, Koniev, & Malinowsky are already there to expel the Northern German units on our push to Kiev.  Secure the southern area Comrade until the Generals can eradicate the Northern and Central areas.  It may be wise to wait for them to reinforce you, Kharkov across the river is well-fortified, with Kleist's Panzer Division.  Good Luck General!  I will send some crack parachuters into the Western region as soon as possible to aid your efforts."
+      },
+      "victory": {
+        "goto": 8,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1000,
+        "text": "Comrade General Zhukov.  Stalin informs me that the fighting in Kursk was fierce, but the city was finally liberated.  The German battalions have regrouped at Kharkov under the leadership of Generals Von Kleist and Mannheim - remember them?  At least we are pushing them back.  General's Vatutin, Koniev, & Malinowsky are already there to expel the Northern German units on our push to Kiev.  Secure the southern area Comrade until the Generals can eradicate the Northern and Central areas.  It may be wise to wait for them to reinforce you, Kharkov across the river is well-fortified, with Kleist's Panzer Division.  Good Luck General!  I will send some crack parachuters into the Western region as soon as possible to aid your efforts."
+      }
+    },
+    "scenario": "rcampx08.xml",
+    "startprestige": 0
+  },
+  {
+    "id": 8,
+    "intro": "Kursk has been liberated, but German forces are regrouping around Kharkov under experienced commanders and have shot down the aircraft sent to examine their positions. You must advance with incomplete intelligence against a city that has changed hands before and will be defended by armour, artillery, and mobile reserves. Probe carefully, secure the approaches, and avoid exposing your spearheads to a prepared counterstroke. Take Kharkov, break the enemy’s ability to stabilise the front, and clear the way toward the Dnieper operations that will follow.",
+    "outcome": {
+      "briliant": {
+        "goto": 9,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1500,
+        "text": "Comrade General Zhukov, Excellent Job as usual.  Recon has informed us that there are lingering German units in Kanev, holding line for the bigger battle of Kiev.  I am letting the other generals go to try and encircle Kiev, while you are disposing of the German, and possibly Romanian units holding out there...Good Luck General, on our push to Kiev.  They got a bunch of units out there, especially Heavy Artillery, be careful, and tactful.  Across the river is a Rat's Nest!"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          255
+        ],
+        "prestige": 0,
+        "text": "For me to say anything Zhukov, would be beyond contempt, and lacking in dignity."
+      },
+      "tactical": {
+        "goto": 9,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "Comrade General Zhukov, Excellent Job as usual.  Recon has informed us that there are lingering German units in Kanev, holding line for the bigger battle of Kiev.  I am letting the other generals go to try and encircle Kiev, while you are disposing of the German, and possibly Romanian units holding out there...Good Luck General, on our push to Kiev.  They got a bunch of units out there, especially Heavy Artillery, be careful, and tactful.  Across the river is a Rat's Nest!"
+      },
+      "victory": {
+        "goto": 9,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1000,
+        "text": "Comrade General Zhukov, Excellent Job as usual.  Recon has informed us that there are lingering German units in Kanev, holding line for the bigger battle of Kiev.  I am letting the other generals go to try and encircle Kiev, while you are disposing of the German, and possibly Romanian units holding out there...Good Luck General, on our push to Kiev.  They got a bunch of units out there, especially Heavy Artillery, be careful, and tactful.  Across the river is a Rat's Nest!"
+      }
+    },
+    "scenario": "rcampx09.xml",
+    "startprestige": 0
+  },
+  {
+    "id": 9,
+    "intro": "German and Romanian remnants are holding Kanev to protect the approaches to Kiev and the Dnieper crossings. The visible garrison appears small, but Luftwaffe activity has blinded reconnaissance along the river and hidden whatever reserves wait beyond the city limits. Seize the crossings, eliminate the holdouts, and establish a secure bridgehead before the main battle for Kiev begins. Speed is important, but a careless river assault could leave your formations divided on opposite banks. Take Kanev cleanly and give the armies converging on Kiev a firm southern anchor.",
+    "outcome": {
+      "briliant": {
+        "goto": 10,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1500,
+        "text": "Comrade General Zhukov, Excellent Job!  Onward to Kiev.  This is the Big One!  You will be reuniting with Generals Koniev, Malinowsky, and Vatutin there, as you approach from the South.  They will be working on the Northern and Central Sectors of Kiev.  Do your best to reinforce their efforts.  The Battle has already begun, and we have established bases east of the river.  Good Luck Comrade General.  If we do well here, it may signal the beginning of the end to this war."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          255
+        ],
+        "prestige": 0,
+        "text": "Comrade General Zhukov, you are no longer a comrade.  Become an expatriat, and leave our beloved mission now."
+      },
+      "tactical": {
+        "goto": 10,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "Comrade General Zhukov, Excellent Job!  Onward to Kiev.  This is the Big One!  You will be reuniting with Generals Koniev, Malinowsky, and Vatutin there, as you approach from the South.  They will be working on the Northern and Central Sectors of Kiev.  Do your best to reinforce their efforts.  The Battle has already begun, and we have established bases east of the river.  Good Luck Comrade General.  If we do well here, it may signal the beginning of the end to this war."
+      },
+      "victory": {
+        "goto": 10,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1000,
+        "text": "Comrade General Zhukov, Excellent Job!  Onward to Kiev.  This is the Big One!  You will be reuniting with Generals Koniev, Malinowsky, and Vatutin there, as you approach from the South.  They will be working on the Northern and Central Sectors of Kiev.  Do your best to reinforce their efforts.  The Battle has already begun, and we have established bases east of the river.  Good Luck Comrade General.  If we do well here, it may signal the beginning of the end to this war."
+      }
+    },
+    "scenario": "rcampx10.xml",
+    "startprestige": 0
+  },
+  {
+    "id": 10,
+    "intro": "The battle for Kiev is already under way. Konev, Malinovsky, and Vatutin are attacking from the north and centre while your force approaches from the south through uncertain terrain and hostile air cover. Your role is to reinforce the encirclement, seize the southern crossings, and prevent the garrison from escaping or receiving relief. Kiev is too large for a single thrust: isolate districts, coordinate armour with infantry, and keep supply routes across the river open. Liberate the city without allowing the battle to consume the army needed for the advance beyond Ukraine.",
+    "outcome": {
+      "briliant": {
+        "goto": 11,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1500,
+        "text": "Comrade General Zhukov!  Excellent!  Excellent!  Despite the heavy casualties.  The other generals will be pushing the front through Poland, and I need you to counter some Romanian resistance in Belgrade. If we can be victorious here, there will be absolutely no chance of getting attacked from behind.  Good Luck, with this win you will be joining the other generals, in the push of the East Front!"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          255
+        ],
+        "prestige": 0,
+        "text": "Comrade General Zhukov! I am sending you to work with the women in the factories."
+      },
+      "tactical": {
+        "goto": 11,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "Comrade General Zhukov!  Excellent!  Excellent!  Despite the heavy casualties.  The other generals will be pushing the front through Poland, and I need you to counter some Romanian resistance in Belgrade. If we can be victorious here, there will be absolutely no chance of getting attacked from behind.  Good Luck, with this win you will be joining the other generals, in the push of the East Front!"
+      },
+      "victory": {
+        "goto": 11,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1000,
+        "text": "Comrade General Zhukov!  Excellent!  Excellent!  Despite the heavy casualties.  The other generals will be pushing the front through Poland, and I need you to counter some Romanian resistance in Belgrade. If we can be victorious here, there will be absolutely no chance of getting attacked from behind.  Good Luck, with this win you will be joining the other generals, in the push of the East Front!"
+      }
+    },
+    "scenario": "rcampx11.xml",
+    "startprestige": 0
+  },
+  {
+    "id": 11,
+    "intro": "With Kiev secured, Romanian resistance around Belgrade threatens the flank and communications of the wider Soviet advance. Enemy tanks, anti-tank guns, and mixed Axis units defend the approaches, while damaged airfields must be captured before your own aviation can operate effectively. Clear the region, seize the bases, and eliminate the possibility of a counterattack from the south. This operation is less spectacular than Berlin, but strategically essential: leave an enemy force behind you and every supply column moving toward Poland will remain in danger.",
+    "outcome": {
+      "briliant": {
+        "goto": 12,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1500,
+        "text": "Comrade General Zhukov! Excellent Job!  We need to move you and your arms NW to the SE front of Poland.  The Other Generals are there awaiting you, and your fine army battalions.  Good Luck!"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          255
+        ],
+        "prestige": 0,
+        "text": "Comrade General Zhukov! See you back at the office."
+      },
+      "tactical": {
+        "goto": 12,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "Comrade General Zhukov! Excellent Job!  We need to move you and your arms NW to the SE front of Poland.  The Other Generals are there awaiting you, and your fine army battalions.  Good Luck!"
+      },
+      "victory": {
+        "goto": 12,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1000,
+        "text": "Comrade General Zhukov! Excellent Job!  We need to move you and your arms NW to the SE front of Poland.  The Other Generals are there awaiting you, and your fine army battalions.  Good Luck!"
+      }
+    },
+    "scenario": "rcampx12.xml",
+    "startprestige": 0
+  },
+  {
+    "id": 12,
+    "intro": "The armies driving through Poland are waiting for your formation on the south-eastern sector of the front. Luftwaffe patrols have destroyed reconnaissance aircraft, but airborne reinforcements are prepared to seize advanced positions and accelerate the junction. Break through the remaining German screen, protect the drop zones, and connect your force with the neighbouring Soviet armies before the enemy can defeat either element separately. Success will complete the concentration for the final advance to the Oder; delay will give Berlin precious time to fortify its approaches.",
+    "outcome": {
+      "briliant": {
+        "goto": 13,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1500,
+        "text": "Excellent Zhukov, my commendations!  We are approaching Berlin.  The Other armies are poised at the Oder.  We are ready to strike.  We need you to approach from the Southwest as usual.  This war is almost over!"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          255
+        ],
+        "prestige": 0,
+        "text": "Get Lost Zhukov!!!!!!!!!!"
+      },
+      "tactical": {
+        "goto": 13,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "Excellent Zhukov, my commendations!  We are approaching Berlin.  The Other armies are poised at the Oder.  We are ready to strike.  We need you to approach from the Southwest as usual.  This war is almost over!"
+      },
+      "victory": {
+        "goto": 13,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1000,
+        "text": "Excellent Zhukov, my commendations!  We are approaching Berlin.  The Other armies are poised at the Oder.  We are ready to strike.  We need you to approach from the Southwest as usual.  This war is almost over!"
+      }
+    },
+    "scenario": "rcampx13.xml",
+    "startprestige": 0
+  },
+  {
+    "id": 13,
+    "intro": "The Oder line is the last great operational barrier before Berlin. Enemy troops are scattered around the approaches, city limits are heavily armed, and surprise detachments wait beyond the areas visible to reconnaissance. Secure the crossings, destroy isolated strongpoints, and bring your army into position before the Western Allies can reach the German capital first. The defenders are depleted but still dangerous, especially where anti-tank guns and urban terrain can halt Soviet armour. Open the road to Berlin and preserve enough strength for the battles inside the city.",
+    "outcome": {
+      "briliant": {
+        "goto": 14,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1500,
+        "text": "Excellent Drive Zhukov.  We are now poised to take Berlin!  We hear that the French, American, & British forces are approaching.  But we will strike first!  Good Luck Zhukov!  Their sources are almost depleted, but more support may be on its way, from the other fronts."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          255
+        ],
+        "prestige": 0,
+        "text": "Get Lost Zhukov"
+      },
+      "tactical": {
+        "goto": 14,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "Excellent Drive Zhukov.  We are now poised to take Berlin!  We hear that the French, American, & British forces are approaching.  But we will strike first!  Good Luck Zhukov!  Their sources are almost depleted, but more support may be on its way, from the other fronts."
+      },
+      "victory": {
+        "goto": 14,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1000,
+        "text": "Excellent Drive Zhukov.  We are now poised to take Berlin!  We hear that the French, American, & British forces are approaching.  But we will strike first!  Good Luck Zhukov!  Their sources are almost depleted, but more support may be on its way, from the other fronts."
+      }
+    },
+    "scenario": "rcampx14.xml",
+    "startprestige": 0
+  },
+  {
+    "id": 14,
+    "intro": "Berlin is surrounded, but the Luftwaffe and dense anti-aircraft defences have forced Soviet reconnaissance out of the city. The enemy has converted streets, rail yards, government buildings, and hidden arsenals into a layered defensive system whose true strength remains uncertain. Drive into the capital, divide the garrison, and seize the crossings before the defenders can shift reserves between sectors. Expect ambushes, heavy anti-tank fire, and close urban combat. This is not yet the Reichstag assault—it is the battle to make that final objective reachable.",
+    "outcome": {
+      "briliant": {
+        "goto": 15,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1500,
+        "text": "Zhukov now that we have surrounded the city of Berlin.  We have heard of Hitler's death, or suicide, we are not quite sure at this time.  But it appears, the Reichstag had a secret armory, a warehouse, of anti-tank weapons, and heavy artillery.  Overnight, in secret they have barricaded the Reichstag off from the impending forces.  And set up their last hold on the city.  It appears they have stockpiled more than we assumed.  Recon tells us that some fighters and bombers of the Luftwaffe running out of fuel may be approaching the area.  Keep an eye to the sky, and take the Reichstag stronghold.  You will have the support of your other fine generals, as well as the American, British, and French battalions which pushed their way to Berlin.  Good Luck, Zhukov.  This war is almost over."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          255
+        ],
+        "prestige": 0,
+        "text": "Go make Vodka from potatos Zhukov, at least you can get drunk, you disgrace!"
+      },
+      "tactical": {
+        "goto": 15,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "Zhukov now that we have surrounded the city of Berlin.  We have heard of Hitler's death, or suicide, we are not quite sure at this time.  But it appears, the Reichstag had a secret armory, a warehouse, of anti-tank weapons, and heavy artillery.  Overnight, in secret they have barricaded the Reichstag off from the impending forces.  And set up their last hold on the city.  It appears they have stockpiled more than we assumed.  Recon tells us that some fighters and bombers of the Luftwaffe running out of fuel may be approaching the area.  Keep an eye to the sky, and take the Reichstag stronghold.  You will have the support of your other fine generals, as well as the American, British, and French battalions which pushed their way to Berlin.  Good Luck, Zhukov.  This war is almost over."
+      },
+      "victory": {
+        "goto": 15,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1000,
+        "text": "Zhukov now that we have surrounded the city of Berlin.  We have heard of Hitler's death, or suicide, we are not quite sure at this time.  But it appears, the Reichstag had a secret armory, a warehouse, of anti-tank weapons, and heavy artillery.  Overnight, in secret they have barricaded the Reichstag off from the impending forces.  And set up their last hold on the city.  It appears they have stockpiled more than we assumed.  Recon tells us that some fighters and bombers of the Luftwaffe running out of fuel may be approaching the area.  Keep an eye to the sky, and take the Reichstag stronghold.  You will have the support of your other fine generals, as well as the American, British, and French battalions which pushed their way to Berlin.  Good Luck, Zhukov.  This war is almost over."
+      }
+    },
+    "scenario": "rcampx15.xml",
+    "startprestige": 0
+  },
+  {
+    "id": 15,
+    "intro": "The Reichstag has become the last symbol and one of the strongest fortresses in Berlin. Its defenders possess more ammunition, anti-tank weapons, and heavy artillery than intelligence predicted, while barricades and firing positions have appeared overnight. Reduce the surrounding blocks, isolate the building, and bring infantry and engineers forward under concentrated fire support. Do not squander tanks against hidden guns in the streets. Take the Reichstag, raise the red banner over the centre of German power, and end the European war with a victory worthy of the losses that brought you here.",
+    "outcome": {
+      "briliant": {
+        "goto": 16,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1500,
+        "text": "Comrade Zhukov.  Our engineers have barricaded the East side of the city, for what we feel is rightfully ours, after our losses and determination in pushing the German forces back.  Negotiations of the leaders appear to be a bit strained.  And this division of the city of Berlin has us looking over the fortifications at the American, British, and French units.  We are supposed to be allies, so if things get tense on the line of demarcation.  Try to quiet down the troops, and just hold our ground.  Do not fire unless fired upon!  That is an order Zhukov!  Excellent Job in your push to Berlin.  We shall be decorated for our heroism"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          255
+        ],
+        "prestige": 0,
+        "text": "Comrade Zhukov.  Our engineers have barricaded the East side of the city, for what we feel is rightfully ours, after our losses and determination in pushing the German forces back.  Negotiations of the leaders appear to be a bit strained.  And this division of the city of Berlin has us looking over the fortifications at the American, British, and French units.  We are supposed to be allies, so if things get tense on the line of demarcation.  Try to quiet down the troops, and just hold our ground.  Do not fire unless fired upon!  That is an order Zhukov!  Excellent Job in your push to Berlin.  We shall be decorated for our heroism"
+      },
+      "tactical": {
+        "goto": 16,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "Comrade Zhukov.  Our engineers have barricaded the East side of the city, for what we feel is rightfully ours, after our losses and determination in pushing the German forces back.  Negotiations of the leaders appear to be a bit strained.  And this division of the city of Berlin has us looking over the fortifications at the American, British, and French units.  We are supposed to be allies, so if things get tense on the line of demarcation.  Try to quiet down the troops, and just hold our ground.  Do not fire unless fired upon!  That is an order Zhukov!  Excellent Job in your push to Berlin.  We shall be decorated for our heroism"
+      },
+      "victory": {
+        "goto": 16,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1000,
+        "text": "Comrade Zhukov.  Our engineers have barricaded the East side of the city, for what we feel is rightfully ours, after our losses and determination in pushing the German forces back.  Negotiations of the leaders appear to be a bit strained.  And this division of the city of Berlin has us looking over the fortifications at the American, British, and French units.  We are supposed to be allies, so if things get tense on the line of demarcation.  Try to quiet down the troops, and just hold our ground.  Do not fire unless fired upon!  That is an order Zhukov!  Excellent Job in your push to Berlin.  We shall be decorated for our heroism"
+      }
+    },
+    "scenario": "rcampx16.xml",
+    "startprestige": 0
+  },
+  {
+    "id": 16,
+    "intro": "The guns have barely fallen silent when the alliance begins to fracture. Soviet engineers fortify the eastern sector of Berlin while American, British, and French troops face them across a tense line of demarcation. Orders are to hold ground and avoid opening fire—but an unexpected Allied attack turns occupation into a new battlefield. Stabilise the sector, protect the approaches to East Berlin, and decide whether this clash remains local or becomes the opening shot of another war. Every unit lost now will matter if negotiations fail completely.",
+    "outcome": {
+      "briliant": {
+        "goto": 17,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1500,
+        "text": "Comrade General Zhukov.  We were attacked ruthlessly without warning by our own allies.  While the great leaders were negotiating, Russian blood was spilled.  I am stepping down from any advice.  It is up to you and General Rokossovsky to consider pushing our so-called allies back to the sea.  If you wish to continue our war, press on General, if not, then stay secure, and wait for the negotiations to end.  The choice is yours General, in my eyes you are the true leader of Russia now.  Whatever your choice Good Luck, and God be with you General.  Further reports will be assigned by another intelligence officer.  Goodbye Zhukov."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          255
+        ],
+        "prestige": 0,
+        "text": "Comrade General Zhukov.  We were attacked ruthlessly without warning by our own allies.  While the great leaders were negotiating, Russian blood was spilled.  I am stepping down from any advice.  It is up to you and General Rokossovsky to consider pushing our so-called allies back to the sea.  If you wish to continue our war, press on General, if not, then stay secure, and wait for the negotiations to end.  The choice is yours General, in my eyes you are the true leader of Russia now.  Whatever your choice Good Luck, and God be with you General.  Further reports will be assigned by another intelligence officer.  Goodbye Zhukov."
+      },
+      "tactical": {
+        "goto": 17,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "Comrade General Zhukov.  We were attacked ruthlessly without warning by our own allies.  While the great leaders were negotiating, Russian blood was spilled.  I am stepping down from any advice.  It is up to you and General Rokossovsky to consider pushing our so-called allies back to the sea.  If you wish to continue our war, press on General, if not, then stay secure, and wait for the negotiations to end.  The choice is yours General, in my eyes you are the true leader of Russia now.  Whatever your choice Good Luck, and God be with you General.  Further reports will be assigned by another intelligence officer.  Goodbye Zhukov."
+      },
+      "victory": {
+        "goto": 17,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1000,
+        "text": "Comrade General Zhukov.  We were attacked ruthlessly without warning by our own allies.  While the great leaders were negotiating, Russian blood was spilled.  I am stepping down from any advice.  It is up to you and General Rokossovsky to consider pushing our so-called allies back to the sea.  If you wish to continue our war, press on General, if not, then stay secure, and wait for the negotiations to end.  The choice is yours General, in my eyes you are the true leader of Russia now.  Whatever your choice Good Luck, and God be with you General.  Further reports will be assigned by another intelligence officer.  Goodbye Zhukov."
+      }
+    },
+    "scenario": "rcampx17.xml",
+    "startprestige": 0
+  },
+  {
+    "id": 17,
+    "intro": "Victory over Germany has produced an impossible choice. In this alternate path, Soviet leaders form a new Pact of Steel with former German enemies and Italian forces in order to drive the Western Allies from Europe. British, American, and French armies are retreating toward Dunkirk while German formations secure the northern flank. Commit to the offensive, reorganise a coalition built from yesterday’s enemies, and strike before the evacuation ports can be fortified. The decision taken here abandons historical restraint and opens a campaign of continental conquest.",
+    "outcome": {
+      "briliant": {
+        "goto": 18,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1500,
+        "text": "INTELLIGENCE REPORT:<br><br>We have formed a new Pact of Steel with Germany despite both our losses and resentments.  It is in Russia's best interests.  The Italian armies have also joined on our quest in the expansion westward.  The British, American, and French armies have been pushed back to Dunkirk, while our German allies are successfully occupying the Northern Sectors.  In addition, the Italian factions are working through Spain.  Take Dunkirk, now while it is vulnerable.  Then our new Pact of Steel, can push on to Great Britain."
+      },
+      "lose": {
+        "goto": 254,
+        "gotoplayed": [
+          0,
+          254
+        ],
+        "prestige": 0,
+        "text": "INTELLIGENCE REPORT:<br><br>We have formed a new Pact of Steel with Germany despite both our losses and resentments.  It is in Russia's best interests.  The Italian armies have also joined on our quest in the expansion westward.  The British, American, and French armies have been pushed back to Dunkirk, while our German allies are successfully occupying the Northern Sectors.  In addition, the Italian factions are working through Spain.  Take Dunkirk, now while it is vulnerable.  Then our new Pact of Steel, can push on to Great Britain."
+      },
+      "tactical": {
+        "goto": 18,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "INTELLIGENCE REPORT:<br><br>We have formed a new Pact of Steel with Germany despite both our losses and resentments.  It is in Russia's best interests.  The Italian armies have also joined on our quest in the expansion westward.  The British, American, and French armies have been pushed back to Dunkirk, while our German allies are successfully occupying the Northern Sectors.  In addition, the Italian factions are working through Spain.  Take Dunkirk, now while it is vulnerable.  Then our new Pact of Steel, can push on to Great Britain."
+      },
+      "victory": {
+        "goto": 18,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1000,
+        "text": "INTELLIGENCE REPORT:<br><br>We have formed a new Pact of Steel with Germany despite both our losses and resentments.  It is in Russia's best interests.  The Italian armies have also joined on our quest in the expansion westward.  The British, American, and French armies have been pushed back to Dunkirk, while our German allies are successfully occupying the Northern Sectors.  In addition, the Italian factions are working through Spain.  Take Dunkirk, now while it is vulnerable.  Then our new Pact of Steel, can push on to Great Britain."
+      }
+    },
+    "scenario": "rcampx18.xml",
+    "startprestige": 0
+  },
+  {
+    "id": 18,
+    "intro": "The Western Allies are compressed around Dunkirk, but the port remains their gateway to the English Channel. Soviet, German, and Italian forces must break the siege perimeter, seize an airfield and deployment zone, and prevent another evacuation across the water. Naval and air support are available, yet transport capacity is limited and heavy artillery cannot all be moved forward at once. Secure the coast, destroy the remaining bridgehead, and establish the bases required for an invasion of Britain. Failure here will give the Allies time to rebuild behind the Channel.",
+    "outcome": {
+      "briliant": {
+        "goto": 19,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1500,
+        "text": "INTELLIGENCE REPORT:<br><br>We are currently crossing the English Channel encountering some resistence from the British, <br>American, and French factions.  Our new allies have naval and air support, and are currently <br>transporting units for landing.  There are also some paratrooper support in the NW quadrant.  <br>For our full air attack to be employed, it is a priority to annex an airbase, otherwise we will be <br>sunk in the English channel.  There is also a necessary deployment zone to annex.  Our units <br>are getting backed-up, and we don't have the transport capabilities for the bigger heavy <br>artillery.  At this point, it may be wise, to cash in a few units for parachutists or Spenaz.  Out.<br><br>"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          255
+        ],
+        "prestige": 0,
+        "text": "INTELLIGENCE REPORT:<br><br>We are currently crossing the English Channel encountering some resistence from the British, <br>American, and French factions.  Our new allies have naval and air support, and are currently <br>transporting units for landing.  There are also some paratrooper support in the NW quadrant.  <br>For our full air attack to be employed, it is a priority to annex an airbase, otherwise we will be <br>sunk in the English channel.  There is also a necessary deployment zone to annex.  Our units <br>are getting backed-up, and we don't have the transport capabilities for the bigger heavy <br>artillery.  At this point, it may be wise, to cash in a few units for parachutists or Spenaz.  Out.<br><br>"
+      },
+      "tactical": {
+        "goto": 19,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "INTELLIGENCE REPORT:<br><br>We are currently crossing the English Channel encountering some resistence from the British, <br>American, and French factions.  Our new allies have naval and air support, and are currently <br>transporting units for landing.  There are also some paratrooper support in the NW quadrant.  <br>For our full air attack to be employed, it is a priority to annex an airbase, otherwise we will be <br>sunk in the English channel.  There is also a necessary deployment zone to annex.  Our units <br>are getting backed-up, and we don't have the transport capabilities for the bigger heavy <br>artillery.  At this point, it may be wise, to cash in a few units for parachutists or Spenaz.  Out.<br><br>"
+      },
+      "victory": {
+        "goto": 19,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1000,
+        "text": "INTELLIGENCE REPORT:<br><br>We are currently crossing the English Channel encountering some resistence from the British, <br>American, and French factions.  Our new allies have naval and air support, and are currently <br>transporting units for landing.  There are also some paratrooper support in the NW quadrant.  <br>For our full air attack to be employed, it is a priority to annex an airbase, otherwise we will be <br>sunk in the English channel.  There is also a necessary deployment zone to annex.  Our units <br>are getting backed-up, and we don't have the transport capabilities for the bigger heavy <br>artillery.  At this point, it may be wise, to cash in a few units for parachutists or Spenaz.  Out.<br><br>"
+      }
+    },
+    "scenario": "rcampx19.xml",
+    "startprestige": 0
+  },
+  {
+    "id": 19,
+    "intro": "Operation Nexus carries the new coalition across the English Channel. British, American, and French forces contest the crossing while Soviet and allied transports struggle to deliver armour, artillery, and paratroopers to the southern coast. Capture an airfield immediately or enemy aircraft will turn the beaches and sea lanes into a graveyard. Then seize the deployment zone, widen the lodgement, and prevent the defenders from containing the invasion. The operation is a race between reinforcement and destruction: establish a functioning bridgehead before the Channel closes behind you.",
+    "outcome": {
+      "briliant": {
+        "goto": 20,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1500,
+        "text": "INTELLIGENCE REPORT:<br><br>While our other armies are working in the Northern vectors of England, we need you to annex the Southernmost part, before you are directed towards Windsor, and ultimately the encirclement of England.  We have established an airbase for you, and provided air, sea, and ground support. Out."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          255
+        ],
+        "prestige": 0,
+        "text": "INTELLIGENCE REPORT:<br><br>While our other armies are working in the Northern vectors of England, we need you to annex the Southernmost part, before you are directed towards Windsor, and ultimately the encirclement of England.  We have established an airbase for you, and provided air, sea, and ground support. Out."
+      },
+      "tactical": {
+        "goto": 20,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "INTELLIGENCE REPORT:<br><br>While our other armies are working in the Northern vectors of England, we need you to annex the Southernmost part, before you are directed towards Windsor, and ultimately the encirclement of England.  We have established an airbase for you, and provided air, sea, and ground support. Out."
+      },
+      "victory": {
+        "goto": 20,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1000,
+        "text": "INTELLIGENCE REPORT:<br><br>While our other armies are working in the Northern vectors of England, we need you to annex the Southernmost part, before you are directed towards Windsor, and ultimately the encirclement of England.  We have established an airbase for you, and provided air, sea, and ground support. Out."
+      }
+    },
+    "scenario": "rcampx20.xml",
+    "startprestige": 0
+  },
+  {
+    "id": 20,
+    "intro": "The invasion has gained a foothold in southern England, and allied armies are pushing toward London from the north. Your force must annex the southern approaches, secure roads and airbases, and prepare the advance on Windsor. The countryside may appear open, but British reserves can use towns, rivers, and narrow routes to delay heavier formations. Keep the landing areas supplied, prevent local counterattacks from reaching the coast, and build a continuous front. A swift southern advance will close the first half of the ring around the British capital.",
+    "outcome": {
+      "briliant": {
+        "goto": 21,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1500,
+        "text": "INTELLIGENCE REPORT:<br><br>The other armies are pushing towards London from the North, you are now in a position to take Windsor.  Airbases have been established, and there are some ground units in the area.  Windsor appears to be heavily fortified with all types of weapons.  Out."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          255
+        ],
+        "prestige": 0,
+        "text": "INTELLIGENCE REPORT:<br><br>The other armies are pushing towards London from the North, you are now in a position to take Windsor.  Airbases have been established, and there are some ground units in the area.  Windsor appears to be heavily fortified with all types of weapons.  Out."
+      },
+      "tactical": {
+        "goto": 21,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "INTELLIGENCE REPORT:<br><br>The other armies are pushing towards London from the North, you are now in a position to take Windsor.  Airbases have been established, and there are some ground units in the area.  Windsor appears to be heavily fortified with all types of weapons.  Out."
+      },
+      "victory": {
+        "goto": 21,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1000,
+        "text": "INTELLIGENCE REPORT:<br><br>The other armies are pushing towards London from the North, you are now in a position to take Windsor.  Airbases have been established, and there are some ground units in the area.  Windsor appears to be heavily fortified with all types of weapons.  Out."
+      }
+    },
+    "scenario": "rcampx21.xml",
+    "startprestige": 0
+  },
+  {
+    "id": 21,
+    "intro": "Windsor is heavily fortified and stands between your southern army and the encirclement of London. German units have reached the north-eastern outskirts while paratroopers and advance detachments hold scattered tactical positions inside the metropolitan area. Exploit identified gaps, secure the airborne landing zones, and break the Windsor defences before British reserves can seal the corridor. The city’s air and ground support remains strong, so every isolated spearhead risks destruction. Take Windsor, connect the encircling forces, and prepare for the final struggle for London.",
+    "outcome": {
+      "briliant": {
+        "goto": 22,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1500,
+        "text": "INTELLIGENCE REPORT:<br><br>The German units are now at the Northeast parameters of London.  While our paratroopers and other ground units have annexed some key tactical positions for the encirclement and defeat of London.  Air recon has identified some vacant areas in the middle of the city, where you will be reinforced by air drops.  Also reinforcements may be issued from the East which seems a tactical weak point for the British.  London is heavily armed with air and ground support.  Out."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          255
+        ],
+        "prestige": 0,
+        "text": "INTELLIGENCE REPORT:<br><br>The German units are now at the Northeast parameters of London.  While our paratroopers and other ground units have annexed some key tactical positions for the encirclement and defeat of London.  Air recon has identified some vacant areas in the middle of the city, where you will be reinforced by air drops.  Also reinforcements may be issued from the East which seems a tactical weak point for the British.  London is heavily armed with air and ground support.  Out."
+      },
+      "tactical": {
+        "goto": 22,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "INTELLIGENCE REPORT:<br><br>The German units are now at the Northeast parameters of London.  While our paratroopers and other ground units have annexed some key tactical positions for the encirclement and defeat of London.  Air recon has identified some vacant areas in the middle of the city, where you will be reinforced by air drops.  Also reinforcements may be issued from the East which seems a tactical weak point for the British.  London is heavily armed with air and ground support.  Out."
+      },
+      "victory": {
+        "goto": 22,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1000,
+        "text": "INTELLIGENCE REPORT:<br><br>The German units are now at the Northeast parameters of London.  While our paratroopers and other ground units have annexed some key tactical positions for the encirclement and defeat of London.  Air recon has identified some vacant areas in the middle of the city, where you will be reinforced by air drops.  Also reinforcements may be issued from the East which seems a tactical weak point for the British.  London is heavily armed with air and ground support.  Out."
+      }
+    },
+    "scenario": "rcampx22.xml",
+    "startprestige": 0
+  },
+  {
+    "id": 22,
+    "intro": "Britain and France have capitulated, and the war crosses the Atlantic. A Soviet-German naval force, supported by submarines, destroyers, aircraft, and landing troops, approaches the Florida coast before American radar detects the deployment. Enemy destroyers and air units guard the objective, but no reinforcements are expected during the opening assault. Win control of the sea, suppress the coastal defence, and seize the first strategic point intact. This is the campaign’s most audacious leap: if the lodgement fails, the ocean will separate the invaders from every source of heavy reinforcement.",
+    "outcome": {
+      "briliant": {
+        "goto": 23,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1500,
+        "text": "INTELLIGENCE REPORT:<br><br>You are to accompany an air and naval attack off the Florida Coast.  It is protected by a small group of destroyers, and air support.  The German Wolfpack, along with some of our bigger destroyers will assist in the attack.  Once annexed we can attack the USA.  Great Britain, and France have capitulated.  There will be no reinforcements in this siege.  Thier radar units have not picked up our deployments at this time.  Out."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          255
+        ],
+        "prestige": 0,
+        "text": "INTELLIGENCE REPORT:<br><br>You are to accompany an air and naval attack off the Florida Coast.  It is protected by a small group of destroyers, and air support.  The German Wolfpack, along with some of our bigger destroyers will assist in the attack.  Once annexed we can attack the USA.  Great Britain, and France have capitulated.  There will be no reinforcements in this siege.  Thier radar units have not picked up our deployments at this time.  Out."
+      },
+      "tactical": {
+        "goto": 23,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "INTELLIGENCE REPORT:<br><br>You are to accompany an air and naval attack off the Florida Coast.  It is protected by a small group of destroyers, and air support.  The German Wolfpack, along with some of our bigger destroyers will assist in the attack.  Once annexed we can attack the USA.  Great Britain, and France have capitulated.  There will be no reinforcements in this siege.  Thier radar units have not picked up our deployments at this time.  Out."
+      },
+      "victory": {
+        "goto": 23,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1000,
+        "text": "INTELLIGENCE REPORT:<br><br>You are to accompany an air and naval attack off the Florida Coast.  It is protected by a small group of destroyers, and air support.  The German Wolfpack, along with some of our bigger destroyers will assist in the attack.  Once annexed we can attack the USA.  Great Britain, and France have capitulated.  There will be no reinforcements in this siege.  Thier radar units have not picked up our deployments at this time.  Out."
+      }
+    },
+    "scenario": "rcampx23.xml",
+    "startprestige": 0
+  },
+  {
+    "id": 23,
+    "intro": "The first American coastal position lies east of Florida, while other coalition armies strike farther north. Your air support will remain limited until an airbase is captured, leaving ships and landing forces exposed during the opening turns. Secure the tactical point, take the airfield, and expand the beachhead before American forces can coordinate a counterattack. Naval gunfire can open the way, but only ground units can hold what has been won. Establish the bridgehead that will carry the war from the Atlantic shore into the American interior.",
+    "outcome": {
+      "briliant": {
+        "goto": 24,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1500,
+        "text": "INTELLIGENCE REPORT:<br><br>You are to annex a tactical point off the east coast of Florida, while our other armies are attacking northern points.  You will not have full air support until you annex an airbase.  Out."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          255
+        ],
+        "prestige": 0,
+        "text": "INTELLIGENCE REPORT:<br><br>You are to annex a tactical point off the east coast of Florida, while our other armies are attacking northern points.  You will not have full air support until you annex an airbase.  Out."
+      },
+      "tactical": {
+        "goto": 24,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "INTELLIGENCE REPORT:<br><br>You are to annex a tactical point off the east coast of Florida, while our other armies are attacking northern points.  You will not have full air support until you annex an airbase.  Out."
+      },
+      "victory": {
+        "goto": 24,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1000,
+        "text": "INTELLIGENCE REPORT:<br><br>You are to annex a tactical point off the east coast of Florida, while our other armies are attacking northern points.  You will not have full air support until you annex an airbase.  Out."
+      }
+    },
+    "scenario": "rcampx24.xml",
+    "startprestige": 0
+  },
+  {
+    "id": 24,
+    "intro": "The Florida landing has succeeded, and the invasion front is moving north. Savannah is strongly fortified, but a captured airbase gives your army access to air and naval support while reinforcements approach from the coast. The city anchors the American southern defence and blocks the route toward Washington. Isolate its fortifications, protect the supply corridor to the beaches, and coordinate bombardment with a deliberate ground assault. Take Savannah before the defenders can turn it into a prolonged siege and allow the northern coalition armies to join the advance inland.",
+    "outcome": {
+      "briliant": {
+        "goto": 25,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1500,
+        "text": "INTELLIGENCE REPORT:<br><br>Savannah is well-fortified, but an airbase was taken.  You are provided with naval and air support.  Reinforcements are forthcoming.  The Northern armies are pushing Southward and Westward from the Ocean towards Washington.  Out"
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          255
+        ],
+        "prestige": 0,
+        "text": "INTELLIGENCE REPORT:<br><br>Savannah is well-fortified, but an airbase was taken.  You are provided with naval and air support.  Reinforcements are forthcoming.  The Northern armies are pushing Southward and Westward from the Ocean towards Washington.  Out"
+      },
+      "tactical": {
+        "goto": 25,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "INTELLIGENCE REPORT:<br><br>Savannah is well-fortified, but an airbase was taken.  You are provided with naval and air support.  Reinforcements are forthcoming.  The Northern armies are pushing Southward and Westward from the Ocean towards Washington.  Out"
+      },
+      "victory": {
+        "goto": 25,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1000,
+        "text": "INTELLIGENCE REPORT:<br><br>Savannah is well-fortified, but an airbase was taken.  You are provided with naval and air support.  Reinforcements are forthcoming.  The Northern armies are pushing Southward and Westward from the Ocean towards Washington.  Out"
+      }
+    },
+    "scenario": "rcampx25.xml",
+    "startprestige": 0
+  },
+  {
+    "id": 25,
+    "intro": "Savannah has fallen and the road toward the American capital is opening. Coalition armies are driving south and west from the Atlantic while your force prepares the next stage of the offensive. American resistance is reorganising around key transport routes, industrial centres, and the approaches to Washington. Keep the columns moving, capture airfields and supply hubs, and prevent the defenders from forming a continuous line. This is the final operational advance of the campaign: every intact unit and every turn saved will strengthen the assault on the capital.",
+    "outcome": {
+      "briliant": {
+        "goto": 26,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1500,
+        "text": "INTELLIGENCE REPORT:<br><br>Washington and the USA are ready to be conquered.  Out."
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          255
+        ],
+        "prestige": 0,
+        "text": "INTELLIGENCE REPORT:<br><br>Washington and the USA are ready to be conquered.  Out."
+      },
+      "tactical": {
+        "goto": 26,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500,
+        "text": "INTELLIGENCE REPORT:<br><br>Washington and the USA are ready to be conquered.  Out."
+      },
+      "victory": {
+        "goto": 26,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1000,
+        "text": "INTELLIGENCE REPORT:<br><br>Washington and the USA are ready to be conquered.  Out."
+      }
+    },
+    "scenario": "rcampx26.xml",
+    "startprestige": 0
+  },
+  {
+    "id": 26,
+    "intro": "Washington is the final objective of the impossible war that began at Stalingrad and crossed two oceans. The American capital is defended by surviving regular forces, emergency formations, artillery, and whatever air support can still be assembled. Break the outer defensive ring, secure the Potomac crossings, and fight through the government district without allowing your supply line to collapse behind you. The battle is both military and symbolic: victory ends organised resistance and completes the alternate-history conquest. Commit every veteran formation carefully—there will be no campaign beyond Washington in which to replace them.",
+    "outcome": {
+      "briliant": {
+        "goto": 254,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1500
+      },
+      "lose": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 0
+      },
+      "tactical": {
+        "goto": 255,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 500
+      },
+      "victory": {
+        "goto": 254,
+        "gotoplayed": [
+          0,
+          0
+        ],
+        "prestige": 1000
+      }
+    },
+    "scenario": "rcampx27.xml",
+    "startprestige": 0
+  }
+]

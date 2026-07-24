@@ -41,6 +41,7 @@ internal class HexCellRenderer(
             rc.drawHex(rc.hexesCtx, x, y, hexStyles["current"])
         }
         drawDeployHighlight(frame, hex, x, y)
+        overlayRenderer.drawTerrainFacility(rc.hexesCtx, hex, x, y)
         if (frame.strategicZoom) {
             drawStrategicZoomFlags(frame, hex, x, y)
         } else {

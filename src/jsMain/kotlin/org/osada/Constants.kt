@@ -285,6 +285,7 @@ enum class ActionType(
     END_TURN(10),
     MESSAGE(11),
     VIEWPORT(12),
+    MODAL_MESSAGE(13),
 }
 
 enum class EmbarkType(

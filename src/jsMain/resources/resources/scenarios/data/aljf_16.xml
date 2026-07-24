@@ -1,0 +1,814 @@
+<?xml version="1.0" encoding="ASCII"?>
+<map file="aljf_16.xscn" name="Meeting at Bristoe Station" turns="16, 20, 25" date="October 14, 1863" dayturns="0" ground="0" atmosferic="0" latitude="15" iconset="0" weatherchg="0" rows="32" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_1425.png" eqpv="united1">
+  <player id="0" country="162" side="1" airtrans="0" navaltrans="0" support="163, 0, 0, 0" turnprestige="20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <player id="1" country="150" side="0" airtrans="0" navaltrans="0" support="151, 0, 0, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <reinforce turn="6">
+    <at row="25" col="4">
+      <unit id="710" owner="0" flag="163" face="0" exp="89"/>
+    </at>
+    <at row="26" col="2">
+      <unit id="710" owner="0" flag="163" face="0" exp="180"/>
+    </at>
+    <at row="25" col="3">
+      <unit id="734" owner="0" flag="163" face="0" exp="100"/>
+    </at>
+    <at row="26" col="1">
+      <unit id="710" owner="0" flag="163" face="0" exp="13"/>
+    </at>
+  </reinforce>
+  <hex row="0" col="7" terrain="3"/>
+  <hex row="0" col="8" terrain="3"/>
+  <hex row="0" col="11" terrain="3"/>
+  <hex row="0" col="14" terrain="3"/>
+  <hex row="0" col="15" terrain="3"/>
+  <hex row="0" col="21" terrain="3">
+    <unit id="37326" owner="1" flag="151" face="0"/>
+  </hex>
+  <hex row="0" col="22" terrain="4" road="17"/>
+  <hex row="0" col="23" terrain="4">
+    <unit id="37334" owner="1" flag="151" face="0"/>
+  </hex>
+  <hex row="0" col="24" terrain="4"/>
+  <hex row="0" col="25" terrain="3"/>
+  <hex row="0" col="26" terrain="4"/>
+  <hex row="0" col="28" terrain="4"/>
+  <hex row="0" col="29" terrain="3"/>
+  <hex row="0" col="31">
+    <unit id="37296" owner="1" flag="151" face="0" transport="37318" exp="56"/>
+  </hex>
+  <hex row="0" col="32" terrain="10" name="Broad Run"/>
+  <hex row="0" col="33" terrain="10" name="Broad Run"/>
+  <hex row="0" col="34" terrain="3"/>
+  <hex row="1" col="1" terrain="3"/>
+  <hex row="1" col="2" terrain="3"/>
+  <hex row="1" col="3" terrain="3"/>
+  <hex row="1" col="7" terrain="3"/>
+  <hex row="1" col="8" terrain="3"/>
+  <hex row="1" col="10" terrain="3"/>
+  <hex row="1" col="14" terrain="3"/>
+  <hex row="1" col="17" terrain="1" name="B. Robinson"/>
+  <hex row="1" col="21">
+    <unit id="37304" owner="1" flag="151" face="0" exp="246"/>
+  </hex>
+  <hex row="1" col="22" terrain="1" road="17" name="M. Robinson" owner="1" flag="150">
+    <unit id="37312" owner="1" flag="151" face="0"/>
+  </hex>
+  <hex row="1" col="25" terrain="3"/>
+  <hex row="1" col="26" terrain="4"/>
+  <hex row="1" col="27" terrain="4"/>
+  <hex row="1" col="28" terrain="4"/>
+  <hex row="1" col="30">
+    <unit id="37290" owner="1" flag="151" face="0" transport="37321" exp="78"/>
+  </hex>
+  <hex row="1" col="32" terrain="3">
+    <unit id="37287" owner="1" flag="151" face="0" transport="37321" exp="229"/>
+  </hex>
+  <hex row="1" col="34" terrain="10" name="Broad Run"/>
+  <hex row="1" col="36" terrain="3"/>
+  <hex row="1" col="39" terrain="3"/>
+  <hex row="1" col="41" terrain="3"/>
+  <hex row="2" col="2" terrain="3"/>
+  <hex row="2" col="6" terrain="3"/>
+  <hex row="2" col="7" terrain="3"/>
+  <hex row="2" col="8" terrain="3"/>
+  <hex row="2" col="9" terrain="3"/>
+  <hex row="2" col="11" terrain="3"/>
+  <hex row="2" col="13" terrain="3"/>
+  <hex row="2" col="22" road="17">
+    <unit id="37303" owner="1" flag="151" face="0" exp="172"/>
+  </hex>
+  <hex row="2" col="23" terrain="3"/>
+  <hex row="2" col="24" terrain="3"/>
+  <hex row="2" col="25" terrain="3"/>
+  <hex row="2" col="27" terrain="3"/>
+  <hex row="2" col="34" terrain="10" name="Broad Run"/>
+  <hex row="2" col="35" terrain="10" name="Broad Run"/>
+  <hex row="2" col="37" terrain="3"/>
+  <hex row="2" col="39" terrain="3"/>
+  <hex row="2" col="40" terrain="3"/>
+  <hex row="2" col="41" terrain="3"/>
+  <hex row="3" col="3">
+    <unit id="37305" owner="1" flag="151" face="0"/>
+  </hex>
+  <hex row="3" col="5" terrain="3"/>
+  <hex row="3" col="6" terrain="3"/>
+  <hex row="3" col="7" terrain="3"/>
+  <hex row="3" col="8" terrain="3"/>
+  <hex row="3" col="9" terrain="3"/>
+  <hex row="3" col="10" terrain="3"/>
+  <hex row="3" col="11" terrain="3"/>
+  <hex row="3" col="12" terrain="3"/>
+  <hex row="3" col="13" terrain="3"/>
+  <hex row="3" col="14" terrain="3"/>
+  <hex row="3" col="19" terrain="3"/>
+  <hex row="3" col="20" terrain="3"/>
+  <hex row="3" col="21" terrain="3"/>
+  <hex row="3" col="22" terrain="3" road="17"/>
+  <hex row="3" col="36" terrain="10" name="Broad Run"/>
+  <hex row="3" col="40" terrain="3"/>
+  <hex row="4" col="3">
+    <unit id="37296" owner="1" flag="151" face="0" transport="37318"/>
+  </hex>
+  <hex row="4" col="4">
+    <unit id="37296" owner="1" flag="151" face="0" transport="37318"/>
+  </hex>
+  <hex row="4" col="5" terrain="3"/>
+  <hex row="4" col="8" terrain="3"/>
+  <hex row="4" col="9" terrain="3"/>
+  <hex row="4" col="10" terrain="3"/>
+  <hex row="4" col="11" terrain="3"/>
+  <hex row="4" col="12" terrain="3"/>
+  <hex row="4" col="13" terrain="3"/>
+  <hex row="4" col="14" terrain="3"/>
+  <hex row="4" col="17" terrain="3"/>
+  <hex row="4" col="18" terrain="3"/>
+  <hex row="4" col="20" terrain="3"/>
+  <hex row="4" col="22" road="17"/>
+  <hex row="4" col="35" terrain="10" name="Broad Run"/>
+  <hex row="4" col="36" terrain="10" name="Broad Run"/>
+  <hex row="5" col="2">
+    <unit id="37307" owner="1" flag="151" face="0"/>
+  </hex>
+  <hex row="5" col="4" terrain="3"/>
+  <hex row="5" col="7" terrain="3"/>
+  <hex row="5" col="8" terrain="3"/>
+  <hex row="5" col="9" terrain="3"/>
+  <hex row="5" col="10" terrain="3"/>
+  <hex row="5" col="11" terrain="3"/>
+  <hex row="5" col="12" terrain="3"/>
+  <hex row="5" col="13" terrain="3"/>
+  <hex row="5" col="14" terrain="3"/>
+  <hex row="5" col="15" terrain="3"/>
+  <hex row="5" col="22" road="17"/>
+  <hex row="5" col="35" terrain="10" name="Broad Run"/>
+  <hex row="5" col="37" terrain="3"/>
+  <hex row="5" col="38" terrain="3"/>
+  <hex row="5" col="43" road="32"/>
+  <hex row="6" col="0" road="136"/>
+  <hex row="6" col="1" terrain="3" road="136">
+    <unit id="37334" owner="1" flag="151" face="0"/>
+  </hex>
+  <hex row="6" col="2">
+    <unit id="37304" owner="1" flag="151" face="0" exp="187"/>
+  </hex>
+  <hex row="6" col="3">
+    <unit id="37303" owner="1" flag="151" face="0" exp="85"/>
+  </hex>
+  <hex row="6" col="6" terrain="3"/>
+  <hex row="6" col="7" terrain="3"/>
+  <hex row="6" col="8" terrain="3"/>
+  <hex row="6" col="9" terrain="3"/>
+  <hex row="6" col="10" terrain="3"/>
+  <hex row="6" col="11" terrain="3"/>
+  <hex row="6" col="12" terrain="3"/>
+  <hex row="6" col="13" terrain="3"/>
+  <hex row="6" col="14" terrain="3"/>
+  <hex row="6" col="15" terrain="3"/>
+  <hex row="6" col="16" terrain="3"/>
+  <hex row="6" col="17" terrain="3"/>
+  <hex row="6" col="18" terrain="3"/>
+  <hex row="6" col="19" terrain="3"/>
+  <hex row="6" col="22" road="17">
+    <unit id="37308" owner="1" flag="151" face="0" exp="90"/>
+  </hex>
+  <hex row="6" col="27">
+    <unit id="37294" owner="1" flag="151" face="0" exp="181"/>
+  </hex>
+  <hex row="6" col="35" terrain="10" name="Broad Run"/>
+  <hex row="6" col="38" terrain="3"/>
+  <hex row="6" col="41" road="34" owner="0" flag="162"/>
+  <hex row="6" col="42" road="34"/>
+  <hex row="6" col="43" terrain="3"/>
+  <hex row="7" col="0" terrain="3"/>
+  <hex row="7" col="1" terrain="3"/>
+  <hex row="7" col="2" terrain="3" road="136" owner="1" flag="150">
+    <unit id="37312" owner="1" flag="151" face="0"/>
+  </hex>
+  <hex row="7" col="3" terrain="3" road="136"/>
+  <hex row="7" col="5" terrain="3"/>
+  <hex row="7" col="6" terrain="3"/>
+  <hex row="7" col="7" terrain="3"/>
+  <hex row="7" col="8" terrain="3"/>
+  <hex row="7" col="9" terrain="3"/>
+  <hex row="7" col="10" terrain="3"/>
+  <hex row="7" col="11" terrain="3"/>
+  <hex row="7" col="12" terrain="3"/>
+  <hex row="7" col="13" terrain="3"/>
+  <hex row="7" col="14" terrain="3"/>
+  <hex row="7" col="15" terrain="3"/>
+  <hex row="7" col="16" terrain="3"/>
+  <hex row="7" col="17" terrain="3"/>
+  <hex row="7" col="18" terrain="3"/>
+  <hex row="7" col="19" terrain="3"/>
+  <hex row="7" col="20" terrain="3"/>
+  <hex row="7" col="21" road="18">
+    <unit id="37302" owner="1" flag="151" face="0" exp="195"/>
+  </hex>
+  <hex row="7" col="22" road="33">
+    <unit id="37298" owner="1" flag="151" face="0" exp="185"/>
+  </hex>
+  <hex row="7" col="29">
+    <unit id="37334" owner="1" flag="151" face="0" transport="37317" exp="218"/>
+  </hex>
+  <hex row="7" col="33" terrain="3">
+    <unit id="37337" owner="1" flag="151" face="0" transport="37321" exp="171" ldr="1"/>
+  </hex>
+  <hex row="7" col="34">
+    <unit id="37305" owner="1" flag="151" face="0" exp="92" ldr="1"/>
+  </hex>
+  <hex row="7" col="35" terrain="10" name="Broad Run"/>
+  <hex row="7" col="39" road="34"/>
+  <hex row="7" col="40" terrain="3" road="34"/>
+  <hex row="7" col="41" terrain="3"/>
+  <hex row="7" col="42" terrain="3"/>
+  <hex row="7" col="43" terrain="3"/>
+  <hex row="8" col="0" terrain="3"/>
+  <hex row="8" col="1" terrain="3"/>
+  <hex row="8" col="2" terrain="3"/>
+  <hex row="8" col="3" terrain="3"/>
+  <hex row="8" col="4" terrain="3" road="136"/>
+  <hex row="8" col="5" terrain="3" road="136"/>
+  <hex row="8" col="6" terrain="3"/>
+  <hex row="8" col="10" terrain="3"/>
+  <hex row="8" col="12" terrain="3"/>
+  <hex row="8" col="13" terrain="3"/>
+  <hex row="8" col="14" terrain="3"/>
+  <hex row="8" col="15" terrain="3"/>
+  <hex row="8" col="17">
+    <unit id="37294" owner="1" flag="151" face="0" exp="248"/>
+  </hex>
+  <hex row="8" col="18" terrain="3"/>
+  <hex row="8" col="20" terrain="3"/>
+  <hex row="8" col="21" road="17">
+    <unit id="37288" owner="1" flag="151" face="0" exp="192"/>
+  </hex>
+  <hex row="8" col="23" terrain="3"/>
+  <hex row="8" col="29" terrain="3">
+    <unit id="37294" owner="1" flag="151" face="0" exp="84"/>
+  </hex>
+  <hex row="8" col="30">
+    <unit id="37299" owner="1" flag="151" face="0" exp="90"/>
+  </hex>
+  <hex row="8" col="32">
+    <unit id="37298" owner="1" flag="151" face="0" exp="108"/>
+  </hex>
+  <hex row="8" col="33" terrain="10" name="Broad Run"/>
+  <hex row="8" col="34" terrain="10" name="Broad Run"/>
+  <hex row="8" col="37" road="18"/>
+  <hex row="8" col="38" road="34"/>
+  <hex row="8" col="41" terrain="3"/>
+  <hex row="8" col="42" terrain="3"/>
+  <hex row="8" col="43" terrain="3"/>
+  <hex row="9" col="0" terrain="3"/>
+  <hex row="9" col="1" terrain="3"/>
+  <hex row="9" col="2" terrain="3"/>
+  <hex row="9" col="3" terrain="3"/>
+  <hex row="9" col="4" terrain="3"/>
+  <hex row="9" col="5" terrain="3"/>
+  <hex row="9" col="6" terrain="3" road="136"/>
+  <hex row="9" col="7" road="136">
+    <unit id="37296" owner="1" flag="151" face="0" transport="37318" exp="245"/>
+  </hex>
+  <hex row="9" col="10" terrain="3"/>
+  <hex row="9" col="13" terrain="3"/>
+  <hex row="9" col="14" terrain="3"/>
+  <hex row="9" col="15" terrain="3"/>
+  <hex row="9" col="16" terrain="3"/>
+  <hex row="9" col="17" road="40"/>
+  <hex row="9" col="19" terrain="3" road="40"/>
+  <hex row="9" col="21" terrain="3" road="41"/>
+  <hex row="9" col="22" terrain="3"/>
+  <hex row="9" col="23" terrain="3"/>
+  <hex row="9" col="27">
+    <unit id="37288" owner="1" flag="151" face="0" exp="39" ldr="1"/>
+  </hex>
+  <hex row="9" col="28" terrain="3"/>
+  <hex row="9" col="33" terrain="10" name="Broad Run"/>
+  <hex row="9" col="34" terrain="3"/>
+  <hex row="9" col="37" road="33"/>
+  <hex row="9" col="42" terrain="3"/>
+  <hex row="9" col="43" terrain="3"/>
+  <hex row="10" col="0" terrain="3"/>
+  <hex row="10" col="1" terrain="3"/>
+  <hex row="10" col="2" terrain="3"/>
+  <hex row="10" col="3" terrain="3"/>
+  <hex row="10" col="4" terrain="3"/>
+  <hex row="10" col="5" terrain="3"/>
+  <hex row="10" col="6" terrain="3"/>
+  <hex row="10" col="7" terrain="3"/>
+  <hex row="10" col="8" road="136"/>
+  <hex row="10" col="9" road="130"/>
+  <hex row="10" col="10" road="40">
+    <unit id="37299" owner="1" flag="151" face="0" exp="177"/>
+  </hex>
+  <hex row="10" col="11" road="130"/>
+  <hex row="10" col="12" terrain="3" road="40"/>
+  <hex row="10" col="13" terrain="3" road="130"/>
+  <hex row="10" col="14" terrain="3" road="40"/>
+  <hex row="10" col="15" terrain="3" road="130"/>
+  <hex row="10" col="16" road="34"/>
+  <hex row="10" col="18" road="130"/>
+  <hex row="10" col="19" terrain="3"/>
+  <hex row="10" col="20" terrain="3" road="130"/>
+  <hex row="10" col="22" road="144"/>
+  <hex row="10" col="23" terrain="3">
+    <unit id="37291" owner="1" flag="151" face="0" transport="37315" exp="51" ldr="1"/>
+  </hex>
+  <hex row="10" col="25" terrain="3">
+    <unit id="37299" owner="1" flag="151" face="0" exp="235"/>
+  </hex>
+  <hex row="10" col="33" terrain="10" name="Broad Run"/>
+  <hex row="10" col="35" terrain="3" road="34"/>
+  <hex row="10" col="36" terrain="1" road="34" name="Windmill"/>
+  <hex row="10" col="37" terrain="3"/>
+  <hex row="11" col="0" terrain="3"/>
+  <hex row="11" col="1" terrain="3"/>
+  <hex row="11" col="2" terrain="3"/>
+  <hex row="11" col="3" terrain="3"/>
+  <hex row="11" col="4" terrain="3"/>
+  <hex row="11" col="5" terrain="3"/>
+  <hex row="11" col="6" terrain="3"/>
+  <hex row="11" col="7">
+    <unit id="37298" owner="1" flag="151" face="0" exp="70"/>
+  </hex>
+  <hex row="11" col="8">
+    <unit id="37326" owner="1" flag="151" face="0" exp="166"/>
+  </hex>
+  <hex row="11" col="11">
+    <unit id="37337" owner="1" flag="151" face="0" transport="37321" exp="81"/>
+  </hex>
+  <hex row="11" col="14" terrain="3"/>
+  <hex row="11" col="15" terrain="3"/>
+  <hex row="11" col="16" terrain="3"/>
+  <hex row="11" col="21" terrain="3"/>
+  <hex row="11" col="22" terrain="3" road="9"/>
+  <hex row="11" col="23" terrain="4" road="136">
+    <unit id="37307" owner="1" flag="151" face="0" exp="190"/>
+  </hex>
+  <hex row="11" col="24">
+    <unit id="37328" owner="1" flag="151" face="0" transport="37321" exp="70"/>
+  </hex>
+  <hex row="11" col="25">
+    <unit id="37294" owner="1" flag="151" face="0" exp="171"/>
+  </hex>
+  <hex row="11" col="28" terrain="1" name="Dodd"/>
+  <hex row="11" col="31" terrain="3"/>
+  <hex row="11" col="33" terrain="10" road="34" name="Broad Run"/>
+  <hex row="11" col="34" road="34"/>
+  <hex row="11" col="36" terrain="3"/>
+  <hex row="12" col="0" terrain="3"/>
+  <hex row="12" col="1" terrain="3"/>
+  <hex row="12" col="2" terrain="3"/>
+  <hex row="12" col="3" terrain="3"/>
+  <hex row="12" col="4" terrain="3"/>
+  <hex row="12" col="5" terrain="3"/>
+  <hex row="12" col="6" terrain="3"/>
+  <hex row="12" col="8">
+    <unit id="37302" owner="1" flag="151" face="0" exp="54"/>
+  </hex>
+  <hex row="12" col="10">
+    <unit id="37298" owner="1" flag="151" face="0" exp="31"/>
+  </hex>
+  <hex row="12" col="11" terrain="3">
+    <unit id="37294" owner="1" flag="151" face="0" exp="245"/>
+  </hex>
+  <hex row="12" col="13">
+    <unit id="37305" owner="1" flag="151" face="0" exp="16" ldr="1"/>
+  </hex>
+  <hex row="12" col="14">
+    <unit id="37334" owner="1" flag="151" face="0" transport="37317" exp="61"/>
+  </hex>
+  <hex row="12" col="15">
+    <unit id="37294" owner="1" flag="151" face="0" exp="70"/>
+  </hex>
+  <hex row="12" col="17">
+    <unit id="37298" owner="1" flag="151" face="0" exp="1"/>
+  </hex>
+  <hex row="12" col="18">
+    <unit id="37328" owner="1" flag="151" face="0" transport="37321" exp="170" ldr="1"/>
+  </hex>
+  <hex row="12" col="19">
+    <unit id="37294" owner="1" flag="151" face="0" exp="100"/>
+  </hex>
+  <hex row="12" col="21">
+    <unit id="37288" owner="1" flag="151" face="0" exp="2" ldr="1"/>
+  </hex>
+  <hex row="12" col="23" terrain="3"/>
+  <hex row="12" col="24" terrain="4" road="136">
+    <unit id="37288" owner="1" flag="151" face="0" exp="171"/>
+  </hex>
+  <hex row="12" col="25" terrain="4" road="136"/>
+  <hex row="12" col="27">
+    <unit id="38439" owner="0" flag="163" face="0" exp="245"/>
+  </hex>
+  <hex row="12" col="29" road="34"/>
+  <hex row="12" col="30" terrain="3" road="40">
+    <unit id="38447" owner="0" flag="163" face="0" exp="145"/>
+  </hex>
+  <hex row="12" col="31" terrain="3" road="130"/>
+  <hex row="12" col="32" road="34"/>
+  <hex row="12" col="34" terrain="10" name="Broad Run"/>
+  <hex row="13" col="0" terrain="3"/>
+  <hex row="13" col="1" terrain="3"/>
+  <hex row="13" col="2" terrain="3"/>
+  <hex row="13" col="3" terrain="3"/>
+  <hex row="13" col="4" terrain="3"/>
+  <hex row="13" col="5" terrain="3"/>
+  <hex row="13" col="6" terrain="3"/>
+  <hex row="13" col="8" terrain="3"/>
+  <hex row="13" col="9" terrain="3"/>
+  <hex row="13" col="10" terrain="3"/>
+  <hex row="13" col="14">
+    <unit id="37288" owner="1" flag="151" face="0" exp="91"/>
+  </hex>
+  <hex row="13" col="16" terrain="3"/>
+  <hex row="13" col="17" terrain="3"/>
+  <hex row="13" col="19" terrain="3"/>
+  <hex row="13" col="20" terrain="3"/>
+  <hex row="13" col="21" terrain="3"/>
+  <hex row="13" col="26" terrain="4" road="136">
+    <unit id="38439" owner="0" flag="163" face="0" exp="56"/>
+  </hex>
+  <hex row="13" col="27" terrain="1" road="170" name="Bristoe Station (Bristow)" owner="0" flag="162">
+    <unit id="38483" owner="0" flag="163" face="0" transport="38469" exp="154"/>
+  </hex>
+  <hex row="13" col="28" road="50">
+    <unit id="38445" owner="0" flag="163" face="0" exp="185"/>
+  </hex>
+  <hex row="13" col="29" terrain="3"/>
+  <hex row="13" col="30" terrain="3"/>
+  <hex row="13" col="31" terrain="3"/>
+  <hex row="13" col="32" terrain="3"/>
+  <hex row="13" col="34" terrain="10" name="Broad Run"/>
+  <hex row="14" col="2" terrain="3"/>
+  <hex row="14" col="3" terrain="3"/>
+  <hex row="14" col="4" terrain="3"/>
+  <hex row="14" col="5" terrain="3"/>
+  <hex row="14" col="6" terrain="3"/>
+  <hex row="14" col="17" terrain="3"/>
+  <hex row="14" col="18" terrain="3"/>
+  <hex row="14" col="19" terrain="3"/>
+  <hex row="14" col="20" terrain="3"/>
+  <hex row="14" col="21" terrain="3"/>
+  <hex row="14" col="25" road="34">
+    <unit id="38446" owner="0" flag="163" face="0" exp="246"/>
+  </hex>
+  <hex row="14" col="26" terrain="1" road="34" name="Bristoe Station (Bristow)"/>
+  <hex row="14" col="27" terrain="3">
+    <unit id="38451" owner="0" flag="163" face="0" exp="236"/>
+  </hex>
+  <hex row="14" col="28" road="145">
+    <unit id="38428" owner="0" flag="163" face="0" transport="38466" exp="122"/>
+  </hex>
+  <hex row="14" col="30" terrain="3"/>
+  <hex row="14" col="31" terrain="3"/>
+  <hex row="14" col="34" terrain="10" name="Broad Run"/>
+  <hex row="14" col="35" terrain="10" name="Broad Run"/>
+  <hex row="14" col="36" terrain="10" name="Broad Run"/>
+  <hex row="14" col="37" terrain="10" name="Broad Run"/>
+  <hex row="14" col="38" terrain="10" name="Broad Run"/>
+  <hex row="14" col="39" terrain="10" name="Broad Run"/>
+  <hex row="14" col="41" terrain="10" name="Broad Run"/>
+  <hex row="15" col="6" terrain="3"/>
+  <hex row="15" col="9" terrain="3"/>
+  <hex row="15" col="10" terrain="3"/>
+  <hex row="15" col="17" terrain="3"/>
+  <hex row="15" col="18" terrain="3"/>
+  <hex row="15" col="19" terrain="3"/>
+  <hex row="15" col="20" terrain="3"/>
+  <hex row="15" col="21" terrain="3">
+    <unit id="38439" owner="0" flag="163" face="0"/>
+  </hex>
+  <hex row="15" col="22" terrain="1" name="Davis"/>
+  <hex row="15" col="23" road="34">
+    <unit id="38439" owner="0" flag="163" face="0" exp="60"/>
+  </hex>
+  <hex row="15" col="24" road="34">
+    <unit id="38447" owner="0" flag="163" face="0" exp="149"/>
+  </hex>
+  <hex row="15" col="28" road="9"/>
+  <hex row="15" col="29" terrain="3" road="144"/>
+  <hex row="15" col="36" terrain="3"/>
+  <hex row="15" col="37" terrain="3"/>
+  <hex row="15" col="40" terrain="10" name="Broad Run"/>
+  <hex row="15" col="41" terrain="3"/>
+  <hex row="15" col="42" terrain="10" name="Broad Run"/>
+  <hex row="15" col="43" terrain="3"/>
+  <hex row="16" col="9" terrain="3"/>
+  <hex row="16" col="10" terrain="3"/>
+  <hex row="16" col="17" terrain="3"/>
+  <hex row="16" col="18" terrain="3"/>
+  <hex row="16" col="20" terrain="3">
+    <unit id="38439" owner="0" flag="163" face="0" exp="165"/>
+  </hex>
+  <hex row="16" col="21" road="34"/>
+  <hex row="16" col="22" road="34"/>
+  <hex row="16" col="29" road="17"/>
+  <hex row="16" col="37" terrain="3"/>
+  <hex row="16" col="38" terrain="3"/>
+  <hex row="16" col="40" terrain="3"/>
+  <hex row="16" col="42" terrain="10" name="Broad Run"/>
+  <hex row="17" col="3" terrain="3"/>
+  <hex row="17" col="8" terrain="3"/>
+  <hex row="17" col="9" terrain="3"/>
+  <hex row="17" col="10" terrain="3"/>
+  <hex row="17" col="15" terrain="3"/>
+  <hex row="17" col="19" road="34"/>
+  <hex row="17" col="20" road="34">
+    <unit id="38447" owner="0" flag="163" face="0" exp="168"/>
+  </hex>
+  <hex row="17" col="22" terrain="3"/>
+  <hex row="17" col="24" terrain="3"/>
+  <hex row="17" col="26" terrain="3"/>
+  <hex row="17" col="29" road="9"/>
+  <hex row="17" col="30" terrain="3"/>
+  <hex row="17" col="36" terrain="3"/>
+  <hex row="17" col="37" terrain="3"/>
+  <hex row="17" col="38" terrain="3"/>
+  <hex row="17" col="42" terrain="10" name="Broad Run"/>
+  <hex row="18" col="2" terrain="3"/>
+  <hex row="18" col="3" terrain="3"/>
+  <hex row="18" col="4" terrain="3"/>
+  <hex row="18" col="9" terrain="3"/>
+  <hex row="18" col="10" terrain="3"/>
+  <hex row="18" col="13" terrain="3"/>
+  <hex row="18" col="14" terrain="3"/>
+  <hex row="18" col="17" road="34">
+    <unit id="38447" owner="0" flag="163" face="0" exp="70"/>
+  </hex>
+  <hex row="18" col="18" road="34">
+    <unit id="38446" owner="0" flag="163" face="0" exp="234"/>
+  </hex>
+  <hex row="18" col="19" terrain="3"/>
+  <hex row="18" col="21" terrain="4"/>
+  <hex row="18" col="22" terrain="4"/>
+  <hex row="18" col="23" terrain="4"/>
+  <hex row="18" col="25" terrain="3"/>
+  <hex row="18" col="30" road="136"/>
+  <hex row="18" col="31" road="136"/>
+  <hex row="18" col="33" terrain="3"/>
+  <hex row="18" col="34" terrain="3"/>
+  <hex row="18" col="35" terrain="3"/>
+  <hex row="18" col="36" terrain="3"/>
+  <hex row="18" col="37" terrain="3"/>
+  <hex row="18" col="38" terrain="3"/>
+  <hex row="18" col="39" terrain="3"/>
+  <hex row="18" col="41" terrain="10" name="Broad Run"/>
+  <hex row="18" col="42" terrain="10" name="Broad Run"/>
+  <hex row="19" col="4" terrain="3"/>
+  <hex row="19" col="9" terrain="3"/>
+  <hex row="19" col="12" terrain="3"/>
+  <hex row="19" col="13" terrain="3"/>
+  <hex row="19" col="15" road="34"/>
+  <hex row="19" col="16" road="34">
+    <unit id="38435" owner="0" flag="163" face="0" exp="186"/>
+  </hex>
+  <hex row="19" col="18" terrain="3"/>
+  <hex row="19" col="19">
+    <unit id="38434" owner="0" flag="163" face="0" transport="38463" exp="200"/>
+  </hex>
+  <hex row="19" col="20">
+    <unit id="38481" owner="0" flag="163" face="0" transport="38469" exp="234"/>
+  </hex>
+  <hex row="19" col="22" terrain="4"/>
+  <hex row="19" col="23" terrain="4"/>
+  <hex row="19" col="24" terrain="4"/>
+  <hex row="19" col="32" road="136"/>
+  <hex row="19" col="33" road="136"/>
+  <hex row="19" col="35" terrain="3"/>
+  <hex row="19" col="36" terrain="3"/>
+  <hex row="19" col="37" terrain="3"/>
+  <hex row="19" col="38" terrain="3"/>
+  <hex row="19" col="39" terrain="3"/>
+  <hex row="19" col="40" terrain="3"/>
+  <hex row="19" col="41" terrain="10" name="Broad Run"/>
+  <hex row="20" col="2" terrain="3"/>
+  <hex row="20" col="3" terrain="3"/>
+  <hex row="20" col="9" terrain="3"/>
+  <hex row="20" col="12" terrain="3"/>
+  <hex row="20" col="13" road="34">
+    <unit id="38447" owner="0" flag="163" face="0" exp="85"/>
+  </hex>
+  <hex row="20" col="14" road="34">
+    <unit id="38445" owner="0" flag="163" face="0" exp="89"/>
+  </hex>
+  <hex row="20" col="15" terrain="3"/>
+  <hex row="20" col="19">
+    <unit id="38451" owner="0" flag="163" face="0" exp="33"/>
+  </hex>
+  <hex row="20" col="22" terrain="4"/>
+  <hex row="20" col="33" terrain="3"/>
+  <hex row="20" col="34" road="152"/>
+  <hex row="20" col="35" terrain="3" road="136"/>
+  <hex row="20" col="36" terrain="3"/>
+  <hex row="20" col="37" terrain="3"/>
+  <hex row="20" col="38" terrain="3"/>
+  <hex row="20" col="42" terrain="10" name="Broad Run"/>
+  <hex row="21" col="1" terrain="3"/>
+  <hex row="21" col="3" terrain="3"/>
+  <hex row="21" col="10" terrain="3"/>
+  <hex row="21" col="11" road="34"/>
+  <hex row="21" col="12" road="34">
+    <unit id="38432" owner="0" flag="163" face="0" transport="38469" exp="45"/>
+  </hex>
+  <hex row="21" col="13" terrain="3"/>
+  <hex row="21" col="15" terrain="3"/>
+  <hex row="21" col="30" terrain="3"/>
+  <hex row="21" col="34" road="17"/>
+  <hex row="21" col="35" terrain="3"/>
+  <hex row="21" col="36" road="136"/>
+  <hex row="21" col="37" road="136"/>
+  <hex row="21" col="42" terrain="10" name="Broad Run"/>
+  <hex row="22" col="0" terrain="3"/>
+  <hex row="22" col="1" terrain="3"/>
+  <hex row="22" col="2" terrain="3"/>
+  <hex row="22" col="3" terrain="3"/>
+  <hex row="22" col="9" terrain="3" road="34" deploy="0"/>
+  <hex row="22" col="10" road="34" deploy="0"/>
+  <hex row="22" col="11" terrain="3"/>
+  <hex row="22" col="13" terrain="3"/>
+  <hex row="22" col="14" terrain="3"/>
+  <hex row="22" col="15" terrain="3"/>
+  <hex row="22" col="33" terrain="3"/>
+  <hex row="22" col="34" terrain="3" road="17"/>
+  <hex row="22" col="35" terrain="3"/>
+  <hex row="22" col="36" terrain="3"/>
+  <hex row="22" col="37" terrain="3"/>
+  <hex row="22" col="38" road="136"/>
+  <hex row="22" col="39" terrain="3" road="136"/>
+  <hex row="22" col="40" terrain="3"/>
+  <hex row="22" col="42" terrain="10" name="Broad Run"/>
+  <hex row="22" col="43" terrain="10" name="Broad Run"/>
+  <hex row="23" col="0" terrain="10" name="Kettle Run"/>
+  <hex row="23" col="1" terrain="10" name="Kettle Run"/>
+  <hex row="23" col="2" terrain="3"/>
+  <hex row="23" col="3" terrain="3"/>
+  <hex row="23" col="4" terrain="3"/>
+  <hex row="23" col="7" road="34"/>
+  <hex row="23" col="8" road="34" deploy="0"/>
+  <hex row="23" col="9" terrain="3"/>
+  <hex row="23" col="10" terrain="3"/>
+  <hex row="23" col="11" terrain="3"/>
+  <hex row="23" col="14" terrain="3"/>
+  <hex row="23" col="25" terrain="3"/>
+  <hex row="23" col="27" terrain="3"/>
+  <hex row="23" col="28" terrain="3"/>
+  <hex row="23" col="29" terrain="3"/>
+  <hex row="23" col="34" terrain="3" road="17"/>
+  <hex row="23" col="35" terrain="3"/>
+  <hex row="23" col="36" terrain="3"/>
+  <hex row="23" col="37" terrain="3"/>
+  <hex row="23" col="38" terrain="3"/>
+  <hex row="23" col="39" terrain="3"/>
+  <hex row="23" col="40" road="144"/>
+  <hex row="23" col="41" terrain="3"/>
+  <hex row="23" col="42" terrain="3"/>
+  <hex row="23" col="43" terrain="3"/>
+  <hex row="24" col="2" terrain="10" name="Kettle Run"/>
+  <hex row="24" col="3" terrain="10" name="Kettle Run"/>
+  <hex row="24" col="4" terrain="3"/>
+  <hex row="24" col="5" road="18" deploy="0"/>
+  <hex row="24" col="6" road="34" deploy="0"/>
+  <hex row="24" col="7" terrain="3"/>
+  <hex row="24" col="8" terrain="3"/>
+  <hex row="24" col="10" terrain="3"/>
+  <hex row="24" col="11" terrain="3"/>
+  <hex row="24" col="12" terrain="3"/>
+  <hex row="24" col="15" terrain="3"/>
+  <hex row="24" col="21" terrain="3"/>
+  <hex row="24" col="28" terrain="3"/>
+  <hex row="24" col="34" road="17"/>
+  <hex row="24" col="38" terrain="3"/>
+  <hex row="24" col="40" road="9"/>
+  <hex row="24" col="41" road="130"/>
+  <hex row="24" col="42" road="40"/>
+  <hex row="24" col="43" road="128"/>
+  <hex row="25" col="1" terrain="3"/>
+  <hex row="25" col="4" terrain="10" name="Kettle Run"/>
+  <hex row="25" col="5" road="49" deploy="0"/>
+  <hex row="25" col="20" terrain="3"/>
+  <hex row="25" col="22" terrain="3"/>
+  <hex row="25" col="27" terrain="3"/>
+  <hex row="25" col="29" terrain="3"/>
+  <hex row="25" col="30" terrain="3"/>
+  <hex row="25" col="31" terrain="3"/>
+  <hex row="25" col="34" road="17"/>
+  <hex row="26" col="1" road="40"/>
+  <hex row="26" col="3" road="34"/>
+  <hex row="26" col="4" terrain="10" road="34" name="Kettle Run"/>
+  <hex row="26" col="5" road="17"/>
+  <hex row="26" col="7" terrain="3"/>
+  <hex row="26" col="9" terrain="3"/>
+  <hex row="26" col="17" terrain="3"/>
+  <hex row="26" col="19" terrain="3"/>
+  <hex row="26" col="27" terrain="3"/>
+  <hex row="26" col="28" terrain="3"/>
+  <hex row="26" col="30" terrain="3"/>
+  <hex row="26" col="33" terrain="3"/>
+  <hex row="26" col="34" road="17"/>
+  <hex row="26" col="37" terrain="3"/>
+  <hex row="26" col="38" terrain="3"/>
+  <hex row="27" col="0" road="34"/>
+  <hex row="27" col="2" road="130" owner="0" flag="162"/>
+  <hex row="27" col="4" terrain="10" name="Kettle Run"/>
+  <hex row="27" col="5" road="17"/>
+  <hex row="27" col="7" terrain="3"/>
+  <hex row="27" col="8" terrain="3"/>
+  <hex row="27" col="9" terrain="3"/>
+  <hex row="27" col="10" terrain="3"/>
+  <hex row="27" col="11" terrain="3"/>
+  <hex row="27" col="12" terrain="3"/>
+  <hex row="27" col="13" terrain="3"/>
+  <hex row="27" col="15" terrain="3"/>
+  <hex row="27" col="20" terrain="3"/>
+  <hex row="27" col="21" terrain="3"/>
+  <hex row="27" col="26" terrain="3"/>
+  <hex row="27" col="27" terrain="3"/>
+  <hex row="27" col="33" terrain="3" road="18"/>
+  <hex row="27" col="34" terrain="3" road="33"/>
+  <hex row="27" col="35" terrain="3"/>
+  <hex row="27" col="41" terrain="3"/>
+  <hex row="27" col="43" terrain="3"/>
+  <hex row="28" col="3" terrain="3"/>
+  <hex row="28" col="4" terrain="10" name="Kettle Run"/>
+  <hex row="28" col="5" road="9"/>
+  <hex row="28" col="8" terrain="3"/>
+  <hex row="28" col="9" terrain="3"/>
+  <hex row="28" col="10" terrain="3"/>
+  <hex row="28" col="11" terrain="3"/>
+  <hex row="28" col="12" terrain="3"/>
+  <hex row="28" col="13" terrain="3"/>
+  <hex row="28" col="14" terrain="3"/>
+  <hex row="28" col="15" terrain="3"/>
+  <hex row="28" col="25" terrain="3"/>
+  <hex row="28" col="26" terrain="3"/>
+  <hex row="28" col="27" terrain="3"/>
+  <hex row="28" col="28" terrain="3"/>
+  <hex row="28" col="33" road="17"/>
+  <hex row="28" col="34" terrain="3"/>
+  <hex row="28" col="35" terrain="3"/>
+  <hex row="28" col="38" terrain="3"/>
+  <hex row="28" col="40" terrain="3"/>
+  <hex row="28" col="41" terrain="3"/>
+  <hex row="28" col="42" terrain="3"/>
+  <hex row="28" col="43" terrain="3"/>
+  <hex row="29" col="1" terrain="3"/>
+  <hex row="29" col="2" terrain="3"/>
+  <hex row="29" col="3" terrain="3"/>
+  <hex row="29" col="4" terrain="10" name="Kettle Run"/>
+  <hex row="29" col="5" terrain="10" name="Kettle Run"/>
+  <hex row="29" col="6" road="144"/>
+  <hex row="29" col="8" terrain="3"/>
+  <hex row="29" col="9" terrain="3"/>
+  <hex row="29" col="10" terrain="3"/>
+  <hex row="29" col="11" terrain="3"/>
+  <hex row="29" col="12" terrain="3"/>
+  <hex row="29" col="13" terrain="3"/>
+  <hex row="29" col="14" terrain="3"/>
+  <hex row="29" col="15" terrain="3"/>
+  <hex row="29" col="25" terrain="3"/>
+  <hex row="29" col="26" terrain="3"/>
+  <hex row="29" col="33" road="17"/>
+  <hex row="29" col="40" terrain="3"/>
+  <hex row="29" col="41" terrain="3"/>
+  <hex row="29" col="42" terrain="3"/>
+  <hex row="29" col="43" terrain="3"/>
+  <hex row="30" col="0" terrain="3"/>
+  <hex row="30" col="1" terrain="3"/>
+  <hex row="30" col="2" terrain="3"/>
+  <hex row="30" col="5" terrain="10" name="Kettle Run"/>
+  <hex row="30" col="6" road="17"/>
+  <hex row="30" col="8" terrain="3"/>
+  <hex row="30" col="9" terrain="3"/>
+  <hex row="30" col="10" terrain="3"/>
+  <hex row="30" col="11" terrain="3"/>
+  <hex row="30" col="12" terrain="3"/>
+  <hex row="30" col="13" terrain="3"/>
+  <hex row="30" col="14" terrain="3"/>
+  <hex row="30" col="15" terrain="3"/>
+  <hex row="30" col="16" terrain="3"/>
+  <hex row="30" col="18" terrain="3"/>
+  <hex row="30" col="27" terrain="3"/>
+  <hex row="30" col="33" road="17"/>
+  <hex row="31" col="4" terrain="3"/>
+  <hex row="31" col="5" terrain="10" name="Kettle Run"/>
+  <hex row="31" col="6" road="17"/>
+  <hex row="31" col="7" terrain="3"/>
+  <hex row="31" col="8" terrain="3"/>
+  <hex row="31" col="9" terrain="3"/>
+  <hex row="31" col="10" terrain="3"/>
+  <hex row="31" col="11" terrain="3"/>
+  <hex row="31" col="12" terrain="3"/>
+  <hex row="31" col="13" terrain="3"/>
+  <hex row="31" col="14" terrain="3"/>
+  <hex row="31" col="15" terrain="3"/>
+  <hex row="31" col="16" terrain="3"/>
+  <hex row="31" col="17" terrain="3"/>
+  <hex row="31" col="19" terrain="3"/>
+  <hex row="31" col="22" terrain="3"/>
+  <hex row="31" col="26" terrain="3"/>
+  <hex row="31" col="31" terrain="3"/>
+  <hex row="31" col="33" terrain="3" road="17"/>
+  <hex row="31" col="35" terrain="3"/>
+  <hex row="31" col="37" terrain="3"/>
+</map>

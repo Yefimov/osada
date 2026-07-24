@@ -1,5 +1,7 @@
 package org.osada.ui
 
+import org.osada.TerrainType
+import org.osada.uiSettings
 import org.osada.model.GameMap
 import org.osada.model.Hex
 import org.osada.model.getPlayer
@@ -24,6 +26,42 @@ internal class OverlayRenderer(
         // A hidden objective (flag-less owned victory hex, revealed via the owner's flag rather
         // than its own) gets a thicker border than a normally-flagged victory hex.
         private const val HIDDEN_OBJECTIVE_BORDER_WIDTH = 6.0
+    }
+
+    /** A map-independent facility sign for painted maps whose artwork omits the runway. */
+    @Suppress("MagicNumber")
+    fun drawTerrainFacility(
+        ctx: dynamic,
+        hex: Hex,
+        x: Double,
+        y: Double,
+    ) {
+        if (!uiSettings.airMode || hex.terrain != TerrainType.AIRFIELD.value) return
+        val cx = x + 3.0
+        val cy = y + 13.0
+        ctx.save()
+        ctx.beginPath()
+        ctx.arc(cx, cy, 9.0, 0.0, 2.0 * kotlin.math.PI)
+        ctx.fillStyle = "rgba(15,18,20,.78)"
+        ctx.fill()
+        ctx.strokeStyle = "rgba(221,174,68,.95)"
+        ctx.lineWidth = 2.0
+        ctx.stroke()
+        ctx.translate(cx, cy)
+        ctx.rotate(-0.55)
+        ctx.beginPath()
+        ctx.moveTo(-5.0, -2.0)
+        ctx.lineTo(5.0, -2.0)
+        ctx.moveTo(-5.0, 2.0)
+        ctx.lineTo(5.0, 2.0)
+        ctx.moveTo(-5.0, -4.0)
+        ctx.lineTo(-5.0, 4.0)
+        ctx.moveTo(5.0, -4.0)
+        ctx.lineTo(5.0, 4.0)
+        ctx.strokeStyle = "#f2d184"
+        ctx.lineWidth = 1.5
+        ctx.stroke()
+        ctx.restore()
     }
 
     /** Draws the red/green/black concentric victory-hex border around the flag at ([fx], [fy]). */

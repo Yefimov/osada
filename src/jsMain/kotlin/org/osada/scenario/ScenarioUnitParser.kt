@@ -41,6 +41,7 @@ internal object ScenarioUnitParser {
         el.getAttribute("exp")?.toIntOrNull()?.let { unit.experience = it }
         el.getAttribute("ent")?.toIntOrNull()?.let { unit.entrenchment = it }
         el.getAttribute("str")?.toIntOrNull()?.let { unit.strength = it }
+        unit.isTemporaryBorrowed = el.getAttribute("temporaryBorrowed")?.toBooleanStrictOrNull() ?: false
         if (el.hasAttribute("ldr")) {
             unit.leader = Leaders.generateLeader(unit)
         }

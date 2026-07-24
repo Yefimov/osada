@@ -35,6 +35,7 @@ internal object GameStateMenuBuilder {
         val saveBut = addTag(body, "div")
         saveBut.id = "disksave"
         saveBut.className = "osada-sl-btn"
+        saveBut.title = "Download the current campaign or scenario state as a JSON save file."
         saveBut.innerHTML =
             "<span class='osada-sl-btn__label'>Save to Disk</span>" +
             "<span class='osada-sl-btn__sub'>Download the current battle as a file</span>" +
@@ -48,6 +49,7 @@ internal object GameStateMenuBuilder {
         val loadBut = addTag(body, "div")
         loadBut.id = "diskload"
         loadBut.className = "osada-sl-btn"
+        loadBut.title = "Choose a compatible OSADA JSON save file and replace the current game state with it."
         loadBut.innerHTML =
             "<span class='osada-sl-btn__label'>Load from Disk</span>" +
             "<span class='osada-sl-btn__sub'>Restore a battle from a save file</span>" +
@@ -66,6 +68,7 @@ internal object GameStateMenuBuilder {
         footer.className = "osada-sl-footer"
         byId("smStOkBut")?.let { footer.appendChild(it) }
 
+        byId("smStOkBut")?.title = "Return to the main menu without saving or loading."
         byId("smStOkBut")?.onclick = { _: org.w3c.dom.events.MouseEvent ->
             makeHidden("smState")
             makeVisible("smMain")

@@ -1,6 +1,7 @@
 package org.osada.model
 
 import org.osada.hero.FormationIdentity
+import org.osada.hero.HeroCampaign
 import org.osada.rules.GameRules
 import org.osada.rules.setSpotRange
 import org.osada.rules.setZOCRange
@@ -24,18 +25,26 @@ internal class CoreUnitListOperations(
     }
 
     /**
-     * Gives every one of [player]'s on-map units a formation id, so the WHOLE campaign force is
-     * hero-eligible (§9.1) — not only the units deployed onto deployment hexes. Without this a
-     * pre-placed campaign (units not sitting on deploy hexes at scenario start) never enters the
-     * hero system: those units fall back to the legacy integer leader, which has no dossier.
+     * Gives every unit directly controlled by [player] a formation id, across the map, deployment
+     * tray and any additional scripted-unit collection. [GameUnit.isCore] is deliberately not an
+     * eligibility condition; only [GameUnit.isTemporaryBorrowed] opts a controlled unit out.
      *
      * Idempotent: a unit restored from a save keeps the id it already had; only missing ids are
      * minted, seeded past every id already present so two units never collide.
      */
-    fun ensureFormationIds(player: Player) {
-        val existing = gameMap.units.mapNotNull { it.formationId?.takeIf { id -> id.isNotEmpty() } }.toMutableSet()
-        gameMap.units
-            .filter { it.player?.id == player.id }
+    fun ensureFormationIds(
+        player: Player,
+        additionalUnits: Iterable<GameUnit> = emptyList(),
+    ) {
+        val candidates = gameMap.units + player.getCoreUnitList() + additionalUnits
+        val existing =
+            buildSet {
+                candidates.mapNotNullTo(this) { it.formationId?.takeIf(String::isNotEmpty) }
+                HeroCampaign.roster().allFormations().mapTo(this) { it.id.value }
+            }.toMutableSet()
+        candidates
+            .filter { it.owner == player.id && !it.isTemporaryBorrowed }
+            .distinct()
             .forEach { unit -> existing.add(FormationIdentity.ensure(unit, existing).value) }
     }
 
@@ -91,6 +100,7 @@ internal class CoreUnitListOperations(
         unit.isDeployed = false
         unit.hasOverstrength = savedUnit.hasOverstrength as? Boolean ?: false
         unit.customName = savedUnit.customName as? String // optional key (rename feature)
+        unit.isTemporaryBorrowed = savedUnit.temporaryBorrowed as? Boolean ?: false
         // Carried, never re-minted: this is the scenario transition the formation id exists to
         // survive. A pre-hero save has no key here and gets one on addCoreUnit below.
         unit.formationId = savedUnit.formationId as? String
