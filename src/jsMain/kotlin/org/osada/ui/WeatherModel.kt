@@ -22,6 +22,12 @@ object WeatherModel {
     private const val RAIN = 2
     private const val SNOW = 3
 
+    private const val MONTHS_IN_YEAR = 12
+    private const val WEATHER_ROLL_SCALE = 100
+
+    // weatherZones row layout: [avgClear, avgOvercast, probSnow%, probPrecip%].
+    private const val PRECIP_PROB_INDEX = 3
+
     private var zone = 0
     private var month = 1 // 1-12
     private var clearPhase = true // in a clear spell (vs an overcast spell)
@@ -37,7 +43,7 @@ object WeatherModel {
             return
         }
         zone = s.latitude.coerceIn(0, weatherZones.size - 1)
-        month = (s.date.getMonth() + 1).coerceIn(1, 12) // JS Date.getMonth() is 0-based
+        month = (s.date.getMonth() + 1).coerceIn(1, MONTHS_IN_YEAR) // JS Date.getMonth() is 0-based
         clearPhase = s.atmosferic == FAIR
         counter = phaseLen(if (clearPhase) 0 else 1)
         lastTurn = s.map.turn
@@ -51,8 +57,7 @@ object WeatherModel {
     }
 
     fun advance(s: Scenario?) {
-        if (!active || s == null) return
-        if (s.map.turn == lastTurn) return // fire once per game turn
+        if (!active || s == null || s.map.turn == lastTurn) return // fire once per game turn
         lastTurn = s.map.turn
         if (counter > 0) {
             counter--
@@ -64,11 +69,12 @@ object WeatherModel {
         if (clearPhase) {
             clearPhase = false
             counter = phaseLen(1)
-            s.atmosferic = if (Random.nextInt(100) < row[3]) {
-                if (Random.nextInt(100) < row[2]) SNOW else RAIN
-            } else {
-                OVERCAST
-            }
+            s.atmosferic =
+                if (Random.nextInt(WEATHER_ROLL_SCALE) < row[PRECIP_PROB_INDEX]) {
+                    if (Random.nextInt(WEATHER_ROLL_SCALE) < row[2]) SNOW else RAIN
+                } else {
+                    OVERCAST
+                }
         } else {
             clearPhase = true
             counter = phaseLen(0)
@@ -86,23 +92,25 @@ object WeatherModel {
     private fun onChange(s: Scenario) {
         WeatherRenderer.start(s.atmosferic)
         if (s.weatherCanChangeGround) {
-            val newGround = when (s.atmosferic) {
-                RAIN -> {
-                    groundByWeather = true
-                    2
-                } // Mud
-                SNOW -> {
-                    groundByWeather = true
-                    1
-                } // Frozen
-                FAIR -> if (groundByWeather) {
-                    groundByWeather = false
-                    initialGround
-                } else {
-                    s.ground // clear spell dries back to designed ground
+            val newGround =
+                when (s.atmosferic) {
+                    RAIN -> {
+                        groundByWeather = true
+                        2
+                    } // Mud
+                    SNOW -> {
+                        groundByWeather = true
+                        1
+                    } // Frozen
+                    FAIR ->
+                        if (groundByWeather) {
+                            groundByWeather = false
+                            initialGround
+                        } else {
+                            s.ground // clear spell dries back to designed ground
+                        }
+                    else -> s.ground // Overcast: leave ground as-is
                 }
-                else -> s.ground // Overcast: leave ground as-is
-            }
             if (newGround != s.ground) {
                 s.ground = newGround
                 s.setMoveTable() // activate the movement table (mud/frozen = reduced move; frozen crosses rivers)

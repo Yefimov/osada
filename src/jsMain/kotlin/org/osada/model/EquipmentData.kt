@@ -44,7 +44,10 @@ class EquipmentData {
 /** Whether this equipment can be bought/found in [year]/[month] (1-based month, matching
  *  monthavailable/monthexpired). Shared by the equipment window, the unit-card tooltip, and the
  *  AI's own purchase filter so all three agree on the same availability window. */
-fun EquipmentData.isAvailableIn(year: Int, month: Int): Boolean {
+fun EquipmentData.isAvailableIn(
+    year: Int,
+    month: Int,
+): Boolean {
     val afterStart = year > yearavailable || (year == yearavailable && month >= monthavailable)
     val beforeEnd = year < yearexpired || (year == yearexpired && month <= monthexpired)
     return afterStart && beforeEnd
@@ -53,39 +56,67 @@ fun EquipmentData.isAvailableIn(year: Int, month: Int): Boolean {
 fun Json.toEquipmentData(parseHints: List<String>): EquipmentData {
     val data = EquipmentData()
     val values = this.unsafeCast<Array<dynamic>>()
+    // The field set is split across three helpers purely to keep each `when` under detekt's
+    // cyclomatic-complexity limit. Every hint matches at most one arm across all three, so
+    // calling all three per field is behaviour-identical to the original single `when`.
     parseHints.forEachIndexed { index, hint ->
         val value = values[index]
-        when (hint) {
-            "gunrange" -> data.gunrange = value as Int
-            "icon" -> data.icon = value as String
-            "yearexpired" -> data.yearexpired = value as Int
-            "cost" -> data.cost = value as Int
-            "initiative" -> data.initiative = value as Int
-            "spotrange" -> data.spotrange = value as Int
-            "hardatk" -> data.hardatk = value as Int
-            "softatk" -> data.softatk = value as Int
-            "uclass" -> data.uclass = value as Int
-            "airdef" -> data.airdef = value as Int
-            "fuel" -> data.fuel = value as Int
-            "airseaweight" -> data.airseaweight = value as Int
-            "rangedefmod" -> data.rangedefmod = value as Int
-            "airatk" -> data.airatk = value as Int
-            "groundweight" -> data.groundweight = value as Int
-            "movmethod" -> data.movmethod = value as Int
-            "navalatk" -> data.navalatk = value as Int
-            "movpoints" -> data.movpoints = value as Int
-            "grounddef" -> data.grounddef = value as Int
-            "target" -> data.target = value as Int
-            "yearavailable" -> data.yearavailable = value as Int
-            "name" -> data.name = value as String
-            "country" -> data.country = value as Int
-            "closedef" -> data.closedef = value as Int
-            "ammo" -> data.ammo = value as Int
-            "attr" -> data.attr = value as Int
-            "embark" -> data.embark = value as Int
-            "monthavailable" -> data.monthavailable = value as Int
-            "monthexpired" -> data.monthexpired = value as Int
-        }
+        data.applyEquipmentFieldsA(hint, value)
+        data.applyEquipmentFieldsB(hint, value)
+        data.applyEquipmentFieldsC(hint, value)
     }
     return data
+}
+
+private fun EquipmentData.applyEquipmentFieldsA(
+    hint: String,
+    value: dynamic,
+) {
+    when (hint) {
+        "gunrange" -> gunrange = value as Int
+        "icon" -> icon = value as String
+        "yearexpired" -> yearexpired = value as Int
+        "cost" -> cost = value as Int
+        "initiative" -> initiative = value as Int
+        "spotrange" -> spotrange = value as Int
+        "hardatk" -> hardatk = value as Int
+        "softatk" -> softatk = value as Int
+        "uclass" -> uclass = value as Int
+        "airdef" -> airdef = value as Int
+    }
+}
+
+private fun EquipmentData.applyEquipmentFieldsB(
+    hint: String,
+    value: dynamic,
+) {
+    when (hint) {
+        "fuel" -> fuel = value as Int
+        "airseaweight" -> airseaweight = value as Int
+        "rangedefmod" -> rangedefmod = value as Int
+        "airatk" -> airatk = value as Int
+        "groundweight" -> groundweight = value as Int
+        "movmethod" -> movmethod = value as Int
+        "navalatk" -> navalatk = value as Int
+        "movpoints" -> movpoints = value as Int
+        "grounddef" -> grounddef = value as Int
+        "target" -> target = value as Int
+    }
+}
+
+private fun EquipmentData.applyEquipmentFieldsC(
+    hint: String,
+    value: dynamic,
+) {
+    when (hint) {
+        "yearavailable" -> yearavailable = value as Int
+        "name" -> name = value as String
+        "country" -> country = value as Int
+        "closedef" -> closedef = value as Int
+        "ammo" -> ammo = value as Int
+        "attr" -> attr = value as Int
+        "embark" -> embark = value as Int
+        "monthavailable" -> monthavailable = value as Int
+        "monthexpired" -> monthexpired = value as Int
+    }
 }

@@ -6,7 +6,6 @@ package org.osada.ui
  * [UIBuilder.unitStats] metadata. Extracted from the former `UIBuilder` god-object.
  */
 internal object UnitInfoBuilder {
-
     fun buildUnitInfoWindow() {
         // Portrait + big flag live directly under #unit-info (not inside #statsRow) so the
         // OSADA card can absolutely position them into the frame's portrait window / flag
@@ -17,7 +16,10 @@ internal object UnitInfoBuilder {
         val image = addTag("uImageBg", "div")
         image.id = "uImage"
 
-        fun buildStatDiv(parent: dynamic, stat: UIBuilder.UnitStatEntry) {
+        fun buildStatDiv(
+            parent: dynamic,
+            stat: UIBuilder.UnitStatEntry,
+        ) {
             var div = addTag(parent, "div")
             stat.glyph?.let { glyph ->
                 div.title = stat.title

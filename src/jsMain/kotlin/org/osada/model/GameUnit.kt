@@ -2,12 +2,13 @@ package org.osada.model
 
 import org.osada.UnitClass
 import org.osada.rules.GameRules
-import org.osada.terrainEntrenchment
-import org.osada.unitEntrenchRate
+import org.osada.rules.isTransportable
 
 @JsExport
 @JsName("Unit")
-class GameUnit(var eqid: Int) {
+class GameUnit(
+    var eqid: Int,
+) {
     var id: Int = -1
     var owner: Int = -1
     var flag: Int = owner
@@ -43,9 +44,10 @@ class GameUnit(var eqid: Int) {
      *  save layout (see GameStateSerializer's byte-stability doc). */
     var customName: String? = null
 
-    private var hex: Hex? = null
+    internal var hex: Hex? = null
 
     fun getHex(): Hex? = hex
+
     fun setHex(hex: Hex?) {
         this.hex = hex
         if (hex != null) isDeployed = true
@@ -53,66 +55,31 @@ class GameUnit(var eqid: Int) {
 
     fun getPos(): Cell? = hex?.getPos()
 
-    fun getEqid(useReal: Boolean = false): Int = when {
-        carrier > 0 && !useReal -> carrier
-        isMounted && transport != null && !useReal -> transport!!.eqid
-        else -> eqid
-    }
+    fun getEqid(useReal: Boolean = false): Int =
+        when {
+            carrier > 0 && !useReal -> carrier
+            isMounted && transport != null && !useReal -> transport!!.eqid
+            else -> eqid
+        }
 
     fun unitData(useReal: Boolean = false): EquipmentData = Equipment.equipment[getEqid(useReal)] ?: EquipmentData()
 
-    fun getMovesLeft(): Int = when {
-        carrier > 0 -> Equipment.equipment[carrier]?.movpoints ?: 0
-        isMounted && transport != null -> Equipment.equipment[transport!!.eqid]?.movpoints ?: 0
-        hasMoved -> 0
-        else -> moveLeft
-    }
+    fun getMovesLeft(): Int =
+        when {
+            carrier > 0 -> Equipment.equipment[carrier]?.movpoints ?: 0
+            isMounted && transport != null -> Equipment.equipment[transport!!.eqid]?.movpoints ?: 0
+            hasMoved -> 0
+            else -> moveLeft
+        }
 
     fun getAmmo(): Int = if (isMounted && transport != null) transport!!.ammo else ammo
 
     fun getFuel(): Int = if (isMounted && transport != null) transport!!.fuel else fuel
 
-    fun hit(damage: Int) {
-        strength -= damage
-        hits++
-        if (entrenchment > 0) entrenchment--
-        if (strength <= 0) destroyed = true
-    }
-
-    fun fire(usedOverstrength: Boolean) {
-        tempSpotted = true
-        ammo--
-        if (usedOverstrength) {
-            hasFired = true
-            hasOverstrength = true
-        }
-    }
-
-    fun move(cost: Int) {
-        entrenchment = 0
-        // JS: `254 <= a ? a/254 + a%254 >> 0 : a`. The `>> 0` is an integer
-        // truncation (no-op), NOT a shift-by-one — `shr 1` here halved the cost.
-        val realCost = if (cost >= 254) (cost / 254 + cost % 254) else cost
-        if (isMounted && transport != null) {
-            hasFired = true
-            if (GameRules.unitUsesFuel(transport!!)) {
-                transport!!.fuel -= realCost
-            }
-            moveLeft = 0
-        } else {
-            if (GameRules.unitUsesFuel(this) && carrier == 0) {
-                fuel -= realCost
-            }
-            moveLeft -= realCost
-        }
-        if (unitData().uclass != UnitClass.RECON.value || moveLeft <= 0) {
-            hasMoved = true
-            hasOverstrength = true
-        }
-        if (carrier < 0) carrier = 0
-    }
-
-    fun upgrade(newEqid: Int, transportEqid: Int): Boolean {
+    fun upgrade(
+        newEqid: Int,
+        transportEqid: Int,
+    ): Boolean {
         var targetEqid = newEqid
         if (targetEqid <= 0) targetEqid = eqid
         val oldClass = Equipment.equipment[eqid]?.uclass ?: 0
@@ -138,109 +105,9 @@ class GameUnit(var eqid: Int) {
         return true
     }
 
-    fun resupply(supply: Supply) {
-        ammo += supply.ammo
-        fuel += supply.fuel
-        transport?.let {
-            it.ammo += supply.transportAmmo
-            it.fuel += supply.transportFuel
-        }
-        hasMoved = true
-        hasFired = true
-        hasResupplied = true
-    }
-
-    fun reinforce(amount: Int, overStrength: Boolean) {
-        strength += amount
-        hasMoved = true
-        hasFired = true
-        hasResupplied = true
-        if (overStrength) hasOverstrength = true
-    }
-
-    fun setTransport(eqid: Int) {
-        transport = Transport(eqid)
-    }
-
-    fun mount() {
-        isMounted = true
-    }
-
-    fun unmount() {
-        isMounted = false
-    }
-
-    fun embark(carrierClass: UnitClass): Boolean {
-        val eqid = Equipment.getCountryEquipmentByClass(carrierClass, (player?.country ?: 0) + 1).firstOrNull()
-            ?: return false
-        carrier = eqid
-        return true
-    }
-
-    fun entrench(): Boolean {
-        if (!GameRules.canEntrench(this)) return false
-        val hex = this.hex ?: return false
-        val terrainEnt = terrainEntrenchment[hex.terrain]
-        val unitClass = unitData().uclass
-        if (entrenchment >= terrainEnt) {
-            var extra = entrenchment - terrainEnt
-            var limit = 9 * extra + 4
-            entrenchTicks += (experience / 100 + (terrainEnt + 1) * unitEntrenchRate[unitClass]).toInt()
-            while (entrenchTicks >= limit && entrenchment < terrainEnt + 5) {
-                entrenchTicks -= limit
-                entrenchment++
-                extra++
-                limit = 9 * extra + 4
-            }
-        } else {
-            entrenchment = terrainEnt
-            entrenchTicks = 0
-        }
-        return true
-    }
-
-    fun toggleEmbark() {
-        carrier = -carrier
-    }
-
     fun getIcon(): String = unitData().icon
 
-    fun refillAmmoFuel() {
-        Equipment.getEquipment(eqid)?.let {
-            ammo = it.ammo
-            fuel = it.fuel
-        }
-        transport?.let { tr ->
-            Equipment.getEquipment(tr.eqid)?.let {
-                tr.ammo = it.ammo
-                tr.fuel = it.fuel
-            }
-        }
-    }
-
-    fun unitEndTurn(spotSide: Int) {
-        entrench()
-        moveLeft = Equipment.equipment[eqid]?.movpoints ?: 0
-        hasMoved = false
-        hasFired = false
-        hasOverstrength = false
-        hasResupplied = false
-        isSurprised = false
-        hits = 0
-        if (unitData().uclass != UnitClass.FORTIFICATION.value) {
-            val hex = this.hex
-            if (hex == null || !hex.isSpotted(spotSide)) {
-                tempSpotted = false
-            }
-        }
-    }
-
-    fun cleanup() {
-        // nothing to cleanup explicitly in Kotlin
-    }
-
     fun copy(other: GameUnit) {
-        if (other == null) return
         eqid = if (Equipment.hasEquipment(other.eqid)) other.eqid else Equipment.firstEqid() ?: 0
         id = other.id
         owner = other.owner

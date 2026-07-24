@@ -12,72 +12,92 @@ object Leaders {
 
     init {
         unitClassLeaders[UnitClass.NONE.value] = emptyList()
-        unitClassLeaders[UnitClass.INFANTRY.value] = listOf(
-            LeaderType.TENACIOUS_DEFENSE, LeaderType.AGGRESSIVE_ATTACK, LeaderType.AGGRESSIVE_MANEUVER,
-            LeaderType.BATTLEFIELD_INTELLIGENCE, LeaderType.DETERMINED_DEFENSE, LeaderType.FEROCIOUS_DEFENSE,
-            LeaderType.FIRST_STRIKE, LeaderType.INFILTRATION_TACTICS, LeaderType.LIBERATOR,
-        )
-        unitClassLeaders[UnitClass.TANK.value] = listOf(
-            LeaderType.AGGRESSIVE_TANK_MANEUVER,
-            LeaderType.AGGRESSIVE_ATTACK,
-            LeaderType.AGGRESSIVE_MANEUVER,
-            LeaderType.BATTLEFIELD_INTELLIGENCE,
-            LeaderType.DETERMINED_DEFENSE,
-            LeaderType.FIRST_STRIKE,
-            LeaderType.INFILTRATION_TACTICS,
-            LeaderType.LIBERATOR,
-        )
-        unitClassLeaders[UnitClass.RECON.value] = listOf(
-            LeaderType.ELITE_RECON_VETERAN,
-            LeaderType.AGGRESSIVE_ATTACK,
-            LeaderType.AGGRESSIVE_MANEUVER,
-            LeaderType.BATTLEFIELD_INTELLIGENCE,
-            LeaderType.DETERMINED_DEFENSE,
-            LeaderType.FIRST_STRIKE,
-            LeaderType.INFILTRATION_TACTICS,
-            LeaderType.LIBERATOR,
-        )
-        unitClassLeaders[UnitClass.ANTI_TANK.value] = listOf(
-            LeaderType.TANK_KILLER, LeaderType.AGGRESSIVE_ATTACK, LeaderType.AGGRESSIVE_MANEUVER,
-            LeaderType.BATTLEFIELD_INTELLIGENCE, LeaderType.DETERMINED_DEFENSE, LeaderType.FEROCIOUS_DEFENSE,
-            LeaderType.FIRST_STRIKE, LeaderType.INFILTRATION_TACTICS, LeaderType.LIBERATOR,
-        )
+        unitClassLeaders[UnitClass.INFANTRY.value] =
+            listOf(
+                LeaderType.TENACIOUS_DEFENSE,
+                LeaderType.AGGRESSIVE_ATTACK,
+                LeaderType.AGGRESSIVE_MANEUVER,
+                LeaderType.BATTLEFIELD_INTELLIGENCE,
+                LeaderType.DETERMINED_DEFENSE,
+                LeaderType.FEROCIOUS_DEFENSE,
+                LeaderType.FIRST_STRIKE,
+                LeaderType.INFILTRATION_TACTICS,
+                LeaderType.LIBERATOR,
+            )
+        unitClassLeaders[UnitClass.TANK.value] =
+            listOf(
+                LeaderType.AGGRESSIVE_TANK_MANEUVER,
+                LeaderType.AGGRESSIVE_ATTACK,
+                LeaderType.AGGRESSIVE_MANEUVER,
+                LeaderType.BATTLEFIELD_INTELLIGENCE,
+                LeaderType.DETERMINED_DEFENSE,
+                LeaderType.FIRST_STRIKE,
+                LeaderType.INFILTRATION_TACTICS,
+                LeaderType.LIBERATOR,
+            )
+        unitClassLeaders[UnitClass.RECON.value] =
+            listOf(
+                LeaderType.ELITE_RECON_VETERAN,
+                LeaderType.AGGRESSIVE_ATTACK,
+                LeaderType.AGGRESSIVE_MANEUVER,
+                LeaderType.BATTLEFIELD_INTELLIGENCE,
+                LeaderType.DETERMINED_DEFENSE,
+                LeaderType.FIRST_STRIKE,
+                LeaderType.INFILTRATION_TACTICS,
+                LeaderType.LIBERATOR,
+            )
+        unitClassLeaders[UnitClass.ANTI_TANK.value] =
+            listOf(
+                LeaderType.TANK_KILLER,
+                LeaderType.AGGRESSIVE_ATTACK,
+                LeaderType.AGGRESSIVE_MANEUVER,
+                LeaderType.BATTLEFIELD_INTELLIGENCE,
+                LeaderType.DETERMINED_DEFENSE,
+                LeaderType.FEROCIOUS_DEFENSE,
+                LeaderType.FIRST_STRIKE,
+                LeaderType.INFILTRATION_TACTICS,
+                LeaderType.LIBERATOR,
+            )
         unitClassLeaders[UnitClass.FLAK.value] = emptyList()
         unitClassLeaders[UnitClass.FORTIFICATION.value] = emptyList()
         unitClassLeaders[UnitClass.GROUND_TRANSPORT.value] = emptyList()
-        unitClassLeaders[UnitClass.ARTILLERY.value] = listOf(
-            LeaderType.MARKSMAN,
-            LeaderType.AGGRESSIVE_ATTACK,
-            LeaderType.AGGRESSIVE_MANEUVER,
-            LeaderType.BATTLEFIELD_INTELLIGENCE,
-            LeaderType.DETERMINED_DEFENSE,
-            LeaderType.FIRE_DISCIPLINE,
-            LeaderType.INFILTRATION_TACTICS,
-        )
-        unitClassLeaders[UnitClass.AIR_DEFENCE.value] = listOf(
-            LeaderType.MECHANIZED_VETERAN,
-            LeaderType.AGGRESSIVE_ATTACK,
-            LeaderType.AGGRESSIVE_MANEUVER,
-            LeaderType.DETERMINED_DEFENSE,
-            LeaderType.FIRE_DISCIPLINE,
-            LeaderType.INFILTRATION_TACTICS,
-        )
-        unitClassLeaders[UnitClass.FIGHTER.value] = listOf(
-            LeaderType.SKILLED_INTERCEPTOR,
-            LeaderType.AGGRESSIVE_ATTACK,
-            LeaderType.AGGRESSIVE_MANEUVER,
-            LeaderType.BATTLEFIELD_INTELLIGENCE,
-            LeaderType.DETERMINED_DEFENSE,
-            LeaderType.FIRST_STRIKE,
-        )
-        unitClassLeaders[UnitClass.TACTICAL_BOMBER.value] = listOf(
-            LeaderType.SKILLED_ASSAULT,
-            LeaderType.AGGRESSIVE_ATTACK,
-            LeaderType.AGGRESSIVE_MANEUVER,
-            LeaderType.DETERMINED_DEFENSE,
-            LeaderType.FIRE_DISCIPLINE,
-            LeaderType.FIRST_STRIKE,
-        )
+        unitClassLeaders[UnitClass.ARTILLERY.value] =
+            listOf(
+                LeaderType.MARKSMAN,
+                LeaderType.AGGRESSIVE_ATTACK,
+                LeaderType.AGGRESSIVE_MANEUVER,
+                LeaderType.BATTLEFIELD_INTELLIGENCE,
+                LeaderType.DETERMINED_DEFENSE,
+                LeaderType.FIRE_DISCIPLINE,
+                LeaderType.INFILTRATION_TACTICS,
+            )
+        unitClassLeaders[UnitClass.AIR_DEFENCE.value] =
+            listOf(
+                LeaderType.MECHANIZED_VETERAN,
+                LeaderType.AGGRESSIVE_ATTACK,
+                LeaderType.AGGRESSIVE_MANEUVER,
+                LeaderType.DETERMINED_DEFENSE,
+                LeaderType.FIRE_DISCIPLINE,
+                LeaderType.INFILTRATION_TACTICS,
+            )
+        unitClassLeaders[UnitClass.FIGHTER.value] =
+            listOf(
+                LeaderType.SKILLED_INTERCEPTOR,
+                LeaderType.AGGRESSIVE_ATTACK,
+                LeaderType.AGGRESSIVE_MANEUVER,
+                LeaderType.BATTLEFIELD_INTELLIGENCE,
+                LeaderType.DETERMINED_DEFENSE,
+                LeaderType.FIRST_STRIKE,
+            )
+        unitClassLeaders[UnitClass.TACTICAL_BOMBER.value] =
+            listOf(
+                LeaderType.SKILLED_ASSAULT,
+                LeaderType.AGGRESSIVE_ATTACK,
+                LeaderType.AGGRESSIVE_MANEUVER,
+                LeaderType.DETERMINED_DEFENSE,
+                LeaderType.FIRE_DISCIPLINE,
+                LeaderType.FIRST_STRIKE,
+            )
         unitClassLeaders[UnitClass.LEVEL_BOMBER.value] = emptyList()
         unitClassLeaders[UnitClass.AIR_TRANSPORT.value] = emptyList()
         unitClassLeaders[UnitClass.SUBMARINE.value] = emptyList()
@@ -152,24 +172,40 @@ object Leaders {
             Pair("Superior Maneuver", "The unit may bypass enemy zones of control.")
     }
 
-    fun unitHasLeader(unit: GameUnit?, leader: LeaderType): Boolean {
+    fun unitHasLeader(
+        unit: GameUnit?,
+        leader: LeaderType,
+    ): Boolean {
         if (unit == null || unit.leader == -1) return false
-        if (unit.leader == leader.value) return true
         val classLeader = getUnitClassLeader(unit)
-        return leader.value == classLeader
+        return unit.leader == leader.value || leader.value == classLeader
     }
 
     fun generateLeader(unit: GameUnit?): Int {
         if (unit == null) return -1
-        val unitClass = unit.unitData().uclass
-        val leaders = unitClassLeaders[unitClass] ?: return -1
-        if (leaders.size < 2) return -1
-        return leaders[(kotlin.random.Random.nextDouble() * (leaders.size - 2)).toInt() + 1].value
+        val leaders = unitClassLeaders[unit.unitData().uclass]
+        return if (leaders == null || leaders.size < 2) {
+            -1
+        } else {
+            leaders[(kotlin.random.Random.nextDouble() * (leaders.size - 2)).toInt() + 1].value
+        }
     }
 
-    fun generateLeaderWithChance(unit: GameUnit?, expGained: Int): Int {
+    fun generateLeaderWithChance(
+        unit: GameUnit?,
+        expGained: Int,
+    ): Int {
         if (unit == null || unit.leader != -1) return -1
-        if (unit.experience >= UNIT_MAX_EXPERIENCE) return generateLeader(unit)
+        return when {
+            unit.experience >= UNIT_MAX_EXPERIENCE -> generateLeader(unit)
+            else -> rollLeaderChance(unit, expGained)
+        }
+    }
+
+    private fun rollLeaderChance(
+        unit: GameUnit,
+        expGained: Int,
+    ): Int {
         val level = unit.experience / 100
         val levelAfter = (unit.experience - expGained) / 100
         if (levelAfter <= 0) return -1
@@ -179,16 +215,16 @@ object Leaders {
 
     fun getUnitClassLeader(unit: GameUnit?): Int {
         if (unit == null || unit.leader == -1) return -1
-        val leaders = unitClassLeaders[unit.unitData().uclass] ?: return -1
-        return leaders.firstOrNull()?.value ?: -1
+        val leaders = unitClassLeaders[unit.unitData().uclass]
+        return leaders?.firstOrNull()?.value ?: -1
     }
 
     fun getUnitLeaderDescriptions(unit: GameUnit?): List<Pair<String, String>> {
         if (unit == null || unit.leader == -1) return emptyList()
         val result = mutableListOf<Pair<String, String>>()
-        val leaderType = LeaderType.values().find { it.value == unit.leader }
+        val leaderType = LeaderType.entries.find { it.value == unit.leader }
         leaderType?.let { description[it]?.let { desc -> result.add(desc) } }
-        val classLeaderType = LeaderType.values().find { it.value == getUnitClassLeader(unit) }
+        val classLeaderType = LeaderType.entries.find { it.value == getUnitClassLeader(unit) }
         classLeaderType?.let { description[it]?.let { desc -> result.add(desc) } }
         return result
     }

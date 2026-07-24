@@ -3,7 +3,9 @@ package org.osada
 // Enums and constants ported from the top of osada.js
 
 @JsExport
-enum class UnitType(val value: Int) {
+enum class UnitType(
+    val value: Int,
+) {
     NONE(-1),
     SOFT(0),
     HARD(1),
@@ -13,7 +15,9 @@ enum class UnitType(val value: Int) {
 
 val unitTypeNames = listOf("Soft", "Hard", "Air", "Sea")
 
-enum class UnitClass(val value: Int) {
+enum class UnitClass(
+    val value: Int,
+) {
     NONE(0),
     INFANTRY(1),
     TANK(2),
@@ -38,12 +42,31 @@ enum class UnitClass(val value: Int) {
     LIGHT_CRUISER(21),
 }
 
-val unitClassNames = listOf(
-    "No Class", "Infantry", "Tank", "Recon", "Anti Tank", "Flak", "Fortification",
-    "Ground Transport", "Artillery", "Air Defence", "Fighter Aircraft", "Tactical Bomber",
-    "Level Bomber", "Air Transport", "Submarine", "Destroyer", "Battleship", "Aircraft Carrier",
-    "Naval Transport", "Battle Cruiser", "Cruiser", "Light Cruiser",
-)
+val unitClassNames =
+    listOf(
+        "No Class",
+        "Infantry",
+        "Tank",
+        "Recon",
+        "Anti Tank",
+        "Flak",
+        "Fortification",
+        "Ground Transport",
+        "Artillery",
+        "Air Defence",
+        "Fighter Aircraft",
+        "Tactical Bomber",
+        "Level Bomber",
+        "Air Transport",
+        "Submarine",
+        "Destroyer",
+        "Battleship",
+        "Aircraft Carrier",
+        "Naval Transport",
+        "Battle Cruiser",
+        "Cruiser",
+        "Light Cruiser",
+    )
 
 val unitEntrenchRate = listOf(0, 3, 1, 2, 2, 1, 1, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 
@@ -51,7 +74,9 @@ val unitEntrenchRate = listOf(0, 3, 1, 2, 2, 1, 1, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0,
  *  `monthexpired` are the OG CSV's own 1-based convention instead — subtract 1 when indexing here. */
 val monthNamesShort = listOf("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
 
-enum class RoadType(val value: Int) {
+enum class RoadType(
+    val value: Int,
+) {
     NONE(0),
     NORTH(1),
     NORTHEAST(2),
@@ -63,7 +88,9 @@ enum class RoadType(val value: Int) {
     NORTHWEST(128),
 }
 
-enum class Direction(val value: Int) {
+enum class Direction(
+    val value: Int,
+) {
     S(0),
     SSE(1),
     SE(2),
@@ -82,7 +109,9 @@ enum class Direction(val value: Int) {
     SSW(15),
 }
 
-enum class TerrainType(val value: Int) {
+enum class TerrainType(
+    val value: Int,
+) {
     CLEAR(0),
     CITY(1),
     AIRFIELD(2),
@@ -102,15 +131,33 @@ enum class TerrainType(val value: Int) {
     ROUGH(16),
 }
 
-val terrainNames = listOf(
-    "Clear", "City", "Airfield", "Forest", "Bocage", "Hill", "Mountain", "Sand", "Swamp",
-    "Ocean", "River", "Fortification", "Port", "Stream", "Escarpment", "Impassable river", "Rough",
-)
+val terrainNames =
+    listOf(
+        "Clear",
+        "City",
+        "Airfield",
+        "Forest",
+        "Bocage",
+        "Hill",
+        "Mountain",
+        "Sand",
+        "Swamp",
+        "Ocean",
+        "River",
+        "Fortification",
+        "Port",
+        "Stream",
+        "Escarpment",
+        "Impassable river",
+        "Rough",
+    )
 
 val terrainEntrenchment = listOf(0, 3, 0, 2, 2, 1, 2, 0, 0, 0, 0, 4, 1, 0, 0, 0, 2)
 val terrainInitiative = listOf(99, 1, 99, 3, 3, 5, 1, 99, 2, 99, 99, 3, 5, 99, 99, 99, 3, 1)
 
-enum class GroundCondition(val value: Int) {
+enum class GroundCondition(
+    val value: Int,
+) {
     DRY(0),
     FROZEN(1),
     MUD(2),
@@ -119,7 +166,9 @@ enum class GroundCondition(val value: Int) {
 val groundConditionNames = listOf("Dry", "Frozen", "Mud")
 val groundFontEncoding = listOf("6", "8", "7")
 
-enum class WeatherCondition(val value: Int) {
+enum class WeatherCondition(
+    val value: Int,
+) {
     FAIR(0),
     OVERCAST(1),
     RAIN(2),
@@ -133,14 +182,26 @@ val weatherFontEncoding = listOf("4", "5", "1", "2")
  * replace the osada icon-font glyphs above in OSADA chrome; indexed like the name lists. */
 val weatherIconFiles = listOf("clear", "overcast", "rain", "snow")
 val groundIconFiles = listOf("dry", "frozen", "mud")
-fun weatherIconImg(atmos: Int, cssClass: String): String = weatherIconFiles.getOrNull(atmos)?.let {
-    "<img class=\"$cssClass\" src=\"resources/ui/osada/ico_weather_$it.png\" alt=\"\">"
-} ?: ""
-fun groundIconImg(ground: Int, cssClass: String): String = groundIconFiles.getOrNull(ground)?.let {
-    "<img class=\"$cssClass\" src=\"resources/ui/osada/ico_ground_$it.png\" alt=\"\">"
-} ?: ""
 
-enum class PlayerSide(val value: Int) {
+fun weatherIconImg(
+    atmos: Int,
+    cssClass: String,
+): String =
+    weatherIconFiles.getOrNull(atmos)?.let {
+        "<img class=\"$cssClass\" src=\"resources/ui/osada/ico_weather_$it.png\" alt=\"\">"
+    } ?: ""
+
+fun groundIconImg(
+    ground: Int,
+    cssClass: String,
+): String =
+    groundIconFiles.getOrNull(ground)?.let {
+        "<img class=\"$cssClass\" src=\"resources/ui/osada/ico_ground_$it.png\" alt=\"\">"
+    } ?: ""
+
+enum class PlayerSide(
+    val value: Int,
+) {
     AXIS(0),
     ALLIES(1),
 }
@@ -157,7 +218,9 @@ object TooltipStyle {
     const val PIN = 1
 }
 
-enum class MovMethod(val value: Int) {
+enum class MovMethod(
+    val value: Int,
+) {
     TRACKED(0),
     HALF_TRACKED(1),
     WHEELED(2),
@@ -178,13 +241,27 @@ enum class MovMethod(val value: Int) {
     RAIL(12),
 }
 
-val movMethodNames = listOf(
-    "Tracked", "Half Tracked", "Wheeled", "Leg", "Towed", "Air", "Deep Naval", "Costal",
-    "All Terrain", "Amphibious", "Naval", "Mountain Leg", "Rail",
-)
+val movMethodNames =
+    listOf(
+        "Tracked",
+        "Half Tracked",
+        "Wheeled",
+        "Leg",
+        "Towed",
+        "Air",
+        "Deep Naval",
+        "Costal",
+        "All Terrain",
+        "Amphibious",
+        "Naval",
+        "Mountain Leg",
+        "Rail",
+    )
 
 @JsExport
-enum class PlayerType(val value: Int) {
+enum class PlayerType(
+    val value: Int,
+) {
     HUMAN_LOCAL(0),
     HUMAN_NETWORK(1),
     AI_LOCAL(2),
@@ -192,7 +269,9 @@ enum class PlayerType(val value: Int) {
     AI_SCRIPTED(4),
 }
 
-enum class ActionType(val value: Int) {
+enum class ActionType(
+    val value: Int,
+) {
     MOVE(0),
     ATTACK(1),
     RESUPPLY(2),
@@ -208,20 +287,26 @@ enum class ActionType(val value: Int) {
     VIEWPORT(12),
 }
 
-enum class EmbarkType(val value: Int) {
+enum class EmbarkType(
+    val value: Int,
+) {
     NONE(0),
     NAVAL(1),
     AIR_MOBILE(2),
     AIRBORNE(3),
 }
 
-enum class DifficultyType(val value: Int) {
+enum class DifficultyType(
+    val value: Int,
+) {
     HISTORICAL(0),
     TACTICAL(1),
     OPERATIONAL(2),
 }
 
-enum class LeaderType(val value: Int) {
+enum class LeaderType(
+    val value: Int,
+) {
     MECHANIZED_VETERAN(1),
     TANK_KILLER(2),
     MARKSMAN(3),
@@ -263,18 +348,20 @@ enum class EndGameType {
     NO_ENEMY_LEFT,
 }
 
-val endGameLossText = mapOf(
-    EndGameType.MOVE_CAPTURE to "Enemy has captured all your objectives !<br>",
-    EndGameType.NO_TURNS_LEFT to "You don't have any turns left !<br>",
-    EndGameType.NO_ENEMY_LEFT to "All your units had been destroyed !<br>",
-)
+val endGameLossText =
+    mapOf(
+        EndGameType.MOVE_CAPTURE to "Enemy has captured all your objectives !<br>",
+        EndGameType.NO_TURNS_LEFT to "You don't have any turns left !<br>",
+        EndGameType.NO_ENEMY_LEFT to "All your units had been destroyed !<br>",
+    )
 
-val outcomeNames = mapOf(
-    "lose" to "Defeat",
-    "victory" to "Victory",
-    "tactical" to "Tactical Victory",
-    "briliant" to "Brilliant Victory",
-)
+val outcomeNames =
+    mapOf(
+        "lose" to "Defeat",
+        "victory" to "Victory",
+        "tactical" to "Tactical Victory",
+        "briliant" to "Brilliant Victory",
+    )
 
 // Movement tables (dry/frozen/mud). 12 legacy movement methods x 18 columns (terrain 0-16 +
 // road at [17]) reference osada-legacy-2.3.14.js exactly (see ConstantsConsistencyTest).
@@ -283,74 +370,78 @@ val outcomeNames = mapOf(
 // check in MovementRules.getMoveRange (and the same-shaped checks in getDisembarkPositions,
 // getReinforcementDeployPositions, CombatResolver.getRetreatPosition) — this row only exists so
 // movTable[RAIL.value] stays in-bounds for any caller that indexes it without that guard.
-val movTableDry: List<List<Int>> = listOf(
-    listOf(1, 1, 1, 2, 4, 2, 254, 1, 4, 255, 254, 1, 1, 2, 255, 255, 2, 1),
-    listOf(1, 1, 1, 2, 254, 2, 254, 1, 4, 255, 254, 1, 1, 2, 255, 255, 2, 1),
-    listOf(2, 1, 1, 4, 254, 3, 254, 3, 254, 255, 254, 2, 1, 4, 255, 255, 2, 1),
-    listOf(1, 1, 1, 2, 2, 2, 254, 2, 2, 255, 254, 1, 1, 1, 255, 255, 2, 1),
-    listOf(1, 1, 1, 1, 1, 1, 254, 1, 255, 255, 254, 1, 1, 254, 255, 255, 1, 1),
-    listOf(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-    listOf(255, 255, 255, 255, 255, 255, 255, 255, 255, 1, 255, 255, 1, 255, 255, 255, 255, 255),
-    listOf(255, 255, 255, 255, 255, 255, 255, 255, 255, 2, 1, 255, 1, 255, 255, 255, 255, 255),
-    listOf(1, 1, 1, 2, 3, 3, 254, 2, 254, 255, 254, 1, 1, 1, 255, 255, 3, 1),
-    listOf(1, 1, 1, 2, 4, 2, 254, 1, 3, 254, 3, 1, 1, 2, 255, 255, 2, 1),
-    listOf(255, 255, 255, 255, 255, 255, 255, 255, 255, 1, 255, 255, 1, 255, 255, 255, 255, 255),
-    listOf(1, 1, 1, 1, 2, 1, 1, 2, 2, 255, 254, 1, 1, 1, 255, 255, 1, 1),
-    listOf(255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255),
-)
+val movTableDry: List<List<Int>> =
+    listOf(
+        listOf(1, 1, 1, 2, 4, 2, 254, 1, 4, 255, 254, 1, 1, 2, 255, 255, 2, 1),
+        listOf(1, 1, 1, 2, 254, 2, 254, 1, 4, 255, 254, 1, 1, 2, 255, 255, 2, 1),
+        listOf(2, 1, 1, 4, 254, 3, 254, 3, 254, 255, 254, 2, 1, 4, 255, 255, 2, 1),
+        listOf(1, 1, 1, 2, 2, 2, 254, 2, 2, 255, 254, 1, 1, 1, 255, 255, 2, 1),
+        listOf(1, 1, 1, 1, 1, 1, 254, 1, 255, 255, 254, 1, 1, 254, 255, 255, 1, 1),
+        listOf(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+        listOf(255, 255, 255, 255, 255, 255, 255, 255, 255, 1, 255, 255, 1, 255, 255, 255, 255, 255),
+        listOf(255, 255, 255, 255, 255, 255, 255, 255, 255, 2, 1, 255, 1, 255, 255, 255, 255, 255),
+        listOf(1, 1, 1, 2, 3, 3, 254, 2, 254, 255, 254, 1, 1, 1, 255, 255, 3, 1),
+        listOf(1, 1, 1, 2, 4, 2, 254, 1, 3, 254, 3, 1, 1, 2, 255, 255, 2, 1),
+        listOf(255, 255, 255, 255, 255, 255, 255, 255, 255, 1, 255, 255, 1, 255, 255, 255, 255, 255),
+        listOf(1, 1, 1, 1, 2, 1, 1, 2, 2, 255, 254, 1, 1, 1, 255, 255, 1, 1),
+        listOf(255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255),
+    )
 
-val movTableFrozen: List<List<Int>> = listOf(
-    listOf(1, 1, 1, 2, 4, 2, 254, 1, 2, 255, 2, 1, 1, 2, 255, 255, 2, 1),
-    listOf(1, 1, 1, 2, 254, 3, 254, 1, 2, 255, 2, 1, 1, 2, 255, 255, 3, 1),
-    listOf(2, 2, 2, 254, 254, 254, 254, 3, 3, 255, 3, 3, 2, 4, 255, 255, 4, 2),
-    listOf(1, 1, 1, 2, 2, 2, 254, 2, 1, 255, 2, 1, 1, 1, 255, 255, 2, 1),
-    listOf(1, 1, 1, 1, 1, 1, 254, 1, 1, 255, 254, 1, 1, 254, 255, 255, 1, 1),
-    listOf(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-    listOf(255, 255, 255, 255, 255, 255, 255, 255, 255, 1, 255, 255, 1, 255, 255, 255, 255, 255),
-    listOf(255, 255, 255, 255, 255, 255, 255, 255, 255, 2, 255, 255, 1, 255, 255, 255, 255, 255),
-    listOf(1, 1, 1, 2, 3, 3, 254, 2, 3, 255, 2, 1, 1, 1, 255, 255, 3, 1),
-    listOf(1, 1, 1, 2, 4, 3, 254, 1, 3, 254, 2, 2, 1, 2, 255, 255, 3, 1),
-    listOf(255, 255, 255, 255, 255, 255, 255, 255, 255, 1, 255, 255, 1, 255, 255, 255, 255, 255),
-    listOf(1, 1, 1, 1, 2, 1, 2, 2, 1, 255, 2, 1, 1, 1, 255, 255, 2, 1),
-    listOf(255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255),
-)
+val movTableFrozen: List<List<Int>> =
+    listOf(
+        listOf(1, 1, 1, 2, 4, 2, 254, 1, 2, 255, 2, 1, 1, 2, 255, 255, 2, 1),
+        listOf(1, 1, 1, 2, 254, 3, 254, 1, 2, 255, 2, 1, 1, 2, 255, 255, 3, 1),
+        listOf(2, 2, 2, 254, 254, 254, 254, 3, 3, 255, 3, 3, 2, 4, 255, 255, 4, 2),
+        listOf(1, 1, 1, 2, 2, 2, 254, 2, 1, 255, 2, 1, 1, 1, 255, 255, 2, 1),
+        listOf(1, 1, 1, 1, 1, 1, 254, 1, 1, 255, 254, 1, 1, 254, 255, 255, 1, 1),
+        listOf(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+        listOf(255, 255, 255, 255, 255, 255, 255, 255, 255, 1, 255, 255, 1, 255, 255, 255, 255, 255),
+        listOf(255, 255, 255, 255, 255, 255, 255, 255, 255, 2, 255, 255, 1, 255, 255, 255, 255, 255),
+        listOf(1, 1, 1, 2, 3, 3, 254, 2, 3, 255, 2, 1, 1, 1, 255, 255, 3, 1),
+        listOf(1, 1, 1, 2, 4, 3, 254, 1, 3, 254, 2, 2, 1, 2, 255, 255, 3, 1),
+        listOf(255, 255, 255, 255, 255, 255, 255, 255, 255, 1, 255, 255, 1, 255, 255, 255, 255, 255),
+        listOf(1, 1, 1, 1, 2, 1, 2, 2, 1, 255, 2, 1, 1, 1, 255, 255, 2, 1),
+        listOf(255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255),
+    )
 
-val movTableMud: List<List<Int>> = listOf(
-    listOf(2, 1, 1, 2, 4, 3, 254, 1, 254, 255, 254, 2, 1, 2, 255, 255, 3, 2),
-    listOf(3, 1, 1, 2, 254, 3, 254, 1, 254, 255, 254, 2, 1, 2, 255, 255, 3, 2),
-    listOf(4, 2, 2, 254, 254, 254, 254, 3, 254, 255, 254, 4, 2, 4, 255, 255, 254, 2),
-    listOf(2, 1, 1, 2, 2, 2, 254, 2, 1, 255, 254, 2, 1, 1, 255, 255, 3, 1),
-    listOf(2, 1, 1, 1, 1, 2, 254, 1, 255, 255, 254, 21, 1, 254, 255, 255, 2, 2),
-    listOf(2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-    listOf(255, 255, 255, 255, 255, 255, 255, 255, 255, 1, 255, 255, 1, 255, 255, 255, 255, 255),
-    listOf(255, 255, 255, 255, 255, 255, 255, 255, 255, 2, 255, 255, 1, 255, 255, 255, 255, 255),
-    listOf(2, 1, 1, 2, 3, 3, 254, 2, 3, 255, 255, 2, 1, 1, 255, 255, 4, 2),
-    listOf(1, 1, 1, 2, 4, 3, 254, 1, 3, 254, 3, 2, 1, 2, 255, 255, 3, 1),
-    listOf(255, 255, 255, 255, 255, 255, 255, 255, 255, 1, 255, 255, 1, 255, 255, 255, 255, 255),
-    listOf(2, 1, 1, 1, 3, 1, 3, 2, 1, 255, 254, 2, 1, 1, 255, 255, 3, 1),
-    listOf(255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255),
-)
+val movTableMud: List<List<Int>> =
+    listOf(
+        listOf(2, 1, 1, 2, 4, 3, 254, 1, 254, 255, 254, 2, 1, 2, 255, 255, 3, 2),
+        listOf(3, 1, 1, 2, 254, 3, 254, 1, 254, 255, 254, 2, 1, 2, 255, 255, 3, 2),
+        listOf(4, 2, 2, 254, 254, 254, 254, 3, 254, 255, 254, 4, 2, 4, 255, 255, 254, 2),
+        listOf(2, 1, 1, 2, 2, 2, 254, 2, 1, 255, 254, 2, 1, 1, 255, 255, 3, 1),
+        listOf(2, 1, 1, 1, 1, 2, 254, 1, 255, 255, 254, 21, 1, 254, 255, 255, 2, 2),
+        listOf(2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+        listOf(255, 255, 255, 255, 255, 255, 255, 255, 255, 1, 255, 255, 1, 255, 255, 255, 255, 255),
+        listOf(255, 255, 255, 255, 255, 255, 255, 255, 255, 2, 255, 255, 1, 255, 255, 255, 255, 255),
+        listOf(2, 1, 1, 2, 3, 3, 254, 2, 3, 255, 255, 2, 1, 1, 255, 255, 4, 2),
+        listOf(1, 1, 1, 2, 4, 3, 254, 1, 3, 254, 3, 2, 1, 2, 255, 255, 3, 1),
+        listOf(255, 255, 255, 255, 255, 255, 255, 255, 255, 1, 255, 255, 1, 255, 255, 255, 255, 255),
+        listOf(2, 1, 1, 1, 3, 1, 3, 2, 1, 255, 254, 2, 1, 1, 255, 255, 3, 1),
+        listOf(255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255),
+    )
 
 var movTable: List<List<Int>> = movTableDry
 
-val directionToRadians = listOf(
-    kotlin.math.PI,
-    5 * kotlin.math.PI / 6,
-    3 * kotlin.math.PI / 4,
-    2 * kotlin.math.PI / 3,
-    kotlin.math.PI / 2,
-    kotlin.math.PI / 3,
-    kotlin.math.PI / 4,
-    kotlin.math.PI / 6,
-    0.0,
-    11 * kotlin.math.PI / 6,
-    7 * kotlin.math.PI / 4,
-    5 * kotlin.math.PI / 3,
-    3 * kotlin.math.PI / 2,
-    4 * kotlin.math.PI / 3,
-    5 * kotlin.math.PI / 4,
-    7 * kotlin.math.PI / 6,
-)
+val directionToRadians =
+    listOf(
+        kotlin.math.PI,
+        5 * kotlin.math.PI / 6,
+        3 * kotlin.math.PI / 4,
+        2 * kotlin.math.PI / 3,
+        kotlin.math.PI / 2,
+        kotlin.math.PI / 3,
+        kotlin.math.PI / 4,
+        kotlin.math.PI / 6,
+        0.0,
+        11 * kotlin.math.PI / 6,
+        7 * kotlin.math.PI / 4,
+        5 * kotlin.math.PI / 3,
+        3 * kotlin.math.PI / 2,
+        4 * kotlin.math.PI / 3,
+        5 * kotlin.math.PI / 4,
+        7 * kotlin.math.PI / 6,
+    )
 
 const val UNIT_MAX_EXPERIENCE = 500
 
@@ -371,30 +462,33 @@ const val DEBUG_AI_MOVES = false
 const val VERSION = "3.3.0"
 const val NATIVE_PLATFORM = "generic"
 
-val prestigeGains = mapOf(
-    "flagCapture" to 50,
-    "objectiveCapture" to 150,
-)
+val prestigeGains =
+    mapOf(
+        "flagCapture" to 50,
+        "objectiveCapture" to 150,
+    )
 
-val scoreGains = mapOf(
-    "coreUnit" to -15,
-    "normalUnit" to -5,
-    "objectivePerTurn" to 1000,
-    "flagCapture" to 50,
-    "objectiveCapture" to 100,
-    "endTurn" to -10,
-    "damage" to 10,
-    "casualty" to -5,
-    "casualtyCore" to -10,
-    "reinforce" to -5,
-    "resupply" to -10,
-)
+val scoreGains =
+    mapOf(
+        "coreUnit" to -15,
+        "normalUnit" to -5,
+        "objectivePerTurn" to 1000,
+        "flagCapture" to 50,
+        "objectiveCapture" to 100,
+        "endTurn" to -10,
+        "damage" to 10,
+        "casualty" to -5,
+        "casualtyCore" to -10,
+        "reinforce" to -5,
+        "resupply" to -10,
+    )
 
-val difficultyModifiers = mapOf(
-    0 to DifficultyModifier(0.0, 0.0, 1.0, 1.0),
-    1 to DifficultyModifier(0.2, 0.1, 1.2, 0.8),
-    2 to DifficultyModifier(0.5, 0.25, 1.5, 0.5),
-)
+val difficultyModifiers =
+    mapOf(
+        0 to DifficultyModifier(0.0, 0.0, 1.0, 1.0),
+        1 to DifficultyModifier(0.2, 0.1, 1.2, 0.8),
+        2 to DifficultyModifier(0.5, 0.25, 1.5, 0.5),
+    )
 
 data class DifficultyModifier(
     val startPrestige: Double,
@@ -452,22 +546,26 @@ class UiSettings {
      *  this is a typed Kotlin object — its properties compile to mangled getters/setters, NOT plain
      *  JS keys, so `asDynamic()[key]` does NOT reach them (reads undefined, writes a dead property).
      *  These map the checkbox keys to the real typed properties so the menu actually toggles them. */
-    fun getFlag(key: String): Boolean = when (key) {
-        "hexGrid" -> hexGrid
-        "showGridTerrain" -> showGridTerrain
-        "muteUnitSounds" -> muteUnitSounds
-        "noFOW" -> noFOW
-        "useRetina" -> useRetina
-        "markOwnUnits" -> markOwnUnits
-        "markEnemyUnits" -> markEnemyUnits
-        "quickAnimation" -> quickAnimation
-        "showDetailInfoToolTips" -> showDetailInfoToolTips
-        "showHiddenVictoryHexes" -> showHiddenVictoryHexes
-        "confirmEndTurn" -> confirmEndTurn
-        else -> false
-    }
+    fun getFlag(key: String): Boolean =
+        when (key) {
+            "hexGrid" -> hexGrid
+            "showGridTerrain" -> showGridTerrain
+            "muteUnitSounds" -> muteUnitSounds
+            "noFOW" -> noFOW
+            "useRetina" -> useRetina
+            "markOwnUnits" -> markOwnUnits
+            "markEnemyUnits" -> markEnemyUnits
+            "quickAnimation" -> quickAnimation
+            "showDetailInfoToolTips" -> showDetailInfoToolTips
+            "showHiddenVictoryHexes" -> showHiddenVictoryHexes
+            "confirmEndTurn" -> confirmEndTurn
+            else -> false
+        }
 
-    fun setFlag(key: String, value: Boolean) {
+    fun setFlag(
+        key: String,
+        value: Boolean,
+    ) {
         when (key) {
             "hexGrid" -> hexGrid = value
             "showGridTerrain" -> showGridTerrain = value
@@ -483,6 +581,10 @@ class UiSettings {
         }
     }
 
+    // Not dead code despite zero Kotlin callers: `toJSON` is the standard JS serialization
+    // hook — JSON.stringify(uiSettings) (GameStatePersistence's settings save) invokes it
+    // by name at runtime, which is also why the @JsName must stay exactly "toJSON".
+    @Suppress("unused")
     @JsName("toJSON")
     fun toJSON(): dynamic {
         val o = js("{}")

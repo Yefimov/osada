@@ -3,7 +3,13 @@ package org.osada.scenario
 import org.osada.difficultyModifiers
 import org.w3c.xhr.XMLHttpRequest
 
-class Campaign(val id: Int, val difficulty: Int, val onLoad: () -> Unit) {
+@JsExport
+@JsName("Campaign")
+class Campaign(
+    val id: Int,
+    val difficulty: Int,
+    val onLoad: () -> Unit,
+) {
     private val campaignData: dynamic = findCampaignById(id)
     var startprestige: Int = 0
     var name: String = ""
@@ -91,27 +97,37 @@ class Campaign(val id: Int, val difficulty: Int, val onLoad: () -> Unit) {
             val briliant = getScenarioNameFromId(scenarios[i].outcome.briliant.goto as Int)
             if (tactical == victory && victory == briliant) {
                 sb.append(
-                    "- <b>$scenarioName</b><br/>&nbsp;&nbsp;&nbsp;&nbsp;Lose: $lose<br/>&nbsp;&nbsp;&nbsp;&nbsp;Victory: $victory<br/><br/>",
+                    "- <b>$scenarioName</b><br/>&nbsp;&nbsp;&nbsp;&nbsp;Lose: $lose<br/>" +
+                        "&nbsp;&nbsp;&nbsp;&nbsp;Victory: $victory<br/><br/>",
                 )
             } else {
                 sb.append(
-                    "- <b>$scenarioName</b><br/>&nbsp;&nbsp;&nbsp;&nbsp;Lose: $lose<br/>&nbsp;&nbsp;&nbsp;&nbsp;Tactical: $tactical<br/>&nbsp;&nbsp;&nbsp;&nbsp;Victory: $victory<br/>&nbsp;&nbsp;&nbsp;&nbsp;Brilliant: $briliant<br/><br/>",
+                    "- <b>$scenarioName</b><br/>&nbsp;&nbsp;&nbsp;&nbsp;Lose: $lose<br/>" +
+                        "&nbsp;&nbsp;&nbsp;&nbsp;Tactical: $tactical<br/>" +
+                        "&nbsp;&nbsp;&nbsp;&nbsp;Victory: $victory<br/>" +
+                        "&nbsp;&nbsp;&nbsp;&nbsp;Brilliant: $briliant<br/><br/>",
                 )
             }
         }
         return sb.toString()
     }
 
-    fun getScenarioNameFromId(id: Int): String = when (id) {
-        255 -> "Defeat (End Campaign)"
-        254 -> "Victory (End Campaign)"
-        else -> ScenarioLoader.getScenarioDataByFileName(scenarios[id].scenario as String)?.get(1) as? String
-            ?: "Unknown"
-    }
+    fun getScenarioNameFromId(id: Int): String =
+        when (id) {
+            CAMPAIGN_DEFEAT_SCENARIO_ID -> "Defeat (End Campaign)"
+            CAMPAIGN_VICTORY_SCENARIO_ID -> "Victory (End Campaign)"
+            else ->
+                ScenarioLoader.getScenarioDataByFileName(scenarios[id].scenario as String)?.get(1) as? String
+                    ?: "Unknown"
+        }
 
     fun getCampaignData(): Array<dynamic> = scenarios
 
     companion object {
+        // Sentinel scenario ids marking a campaign-ending branch rather than a real scenario.
+        private const val CAMPAIGN_VICTORY_SCENARIO_ID = 254
+        private const val CAMPAIGN_DEFEAT_SCENARIO_ID = 255
+
         fun findCampaignByFile(file: String): Int {
             val list = js("campaignlist").unsafeCast<Array<dynamic>>()
             for (i in list.indices) {
@@ -127,7 +143,9 @@ class Campaign(val id: Int, val difficulty: Int, val onLoad: () -> Unit) {
 
         /** Difficulty-adjusted starting prestige. Single source of truth: used when a campaign
          *  actually starts AND by the campaign-select screen display (0b). */
-        fun computeStartPrestige(basePrestige: Int, difficulty: Int): Int =
-            basePrestige + (basePrestige * (difficultyModifiers[difficulty]?.startPrestige ?: 0.0)).toInt()
+        fun computeStartPrestige(
+            basePrestige: Int,
+            difficulty: Int,
+        ): Int = basePrestige + (basePrestige * (difficultyModifiers[difficulty]?.startPrestige ?: 0.0)).toInt()
     }
 }

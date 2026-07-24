@@ -9,36 +9,42 @@ import org.osada.uiSettings
  * Extracted from the former `UIBuilder` god-object; owns the layout-element table.
  */
 internal object UILayout {
+    private const val SLIDER_QUANTIZE_SCALE = 100
+    private const val SMALL_LAYOUT_WIDTH_THRESHOLD = 800
+    private const val EQUIPMENT_PANEL_SMALL_TOP_PX = 112
+    private const val DEFAULT_UI_SIZE_PX = 840
+    private const val SMALL_LAYOUT_UI_SCALE = 0.9
 
-    private val uiLayoutElements = mutableListOf(
-        "gameToolTip" to null,
-        "ui-message" to null,
-        "startmenu" to null,
-        // Task 1: #statusbar is now a full-viewport-width fixed top bar positioned purely by CSS,
-        // and the floating #menu rail is dissolved — both are removed from UILayout's scale/offset
-        // math (the intended incision) so the UI-scale slider no longer shrinks/centres them.
-        "statusbar-extension" to 25,
-        // Task 3: #unit-info/#unit-context now live inside the CSS-grid bottom zone (fixed ~92px
-        // row, grid-area:card) — same incision as Task 1: removed here so the UI-scale slider's
-        // transform:scale()/marginTop math doesn't fight the grid's own sizing.
-        "container-unitlist" to 30,
-        "equipment" to 125,
-        // combatLog: removed — same incision as dossier below: the redesigned #combatLog.osada-tr
-        // positions itself below the 40px topbar via its own CSS top, and the inline
-        // element.style.top = "25px" written here on every settings-OK/UI-scale change was
-        // silently overriding it (inline beats stylesheet), tucking the window back under the bar.
-        "statusBarButton" to 15,
-        "unitsBarButton" to 95,
-        "uiToolTip" to null,
-        // combatLogButton: removed — reparented into the topbar's flex icon cluster
-        // (MainMenuBuilder), positioned by that flex layout, not this table.
-        // dossier: removed — same incision as container-unitlist/unit-info above: the redesigned
-        // #dossier.osada-dsr is centered via its own CSS (top:50%), which this table's
-        // element.style.top = "25px" was silently overwriting on every settings-OK/UI-scale
-        // change (an inline style always beats a stylesheet rule, regardless of specificity) —
-        // the dossier rendered pinned to the very top of the screen, its header clipped under
-        // the topbar, no matter what the CSS said.
-    )
+    private val uiLayoutElements =
+        mutableListOf(
+            "gameToolTip" to null,
+            "ui-message" to null,
+            "startmenu" to null,
+            // Task 1: #statusbar is now a full-viewport-width fixed top bar positioned purely by CSS,
+            // and the floating #menu rail is dissolved — both are removed from UILayout's scale/offset
+            // math (the intended incision) so the UI-scale slider no longer shrinks/centres them.
+            "statusbar-extension" to 25,
+            // Task 3: #unit-info/#unit-context now live inside the CSS-grid bottom zone (fixed ~92px
+            // row, grid-area:card) — same incision as Task 1: removed here so the UI-scale slider's
+            // transform:scale()/marginTop math doesn't fight the grid's own sizing.
+            "container-unitlist" to 30,
+            "equipment" to 125,
+            // combatLog: removed — same incision as dossier below: the redesigned #combatLog.osada-tr
+            // positions itself below the 40px topbar via its own CSS top, and the inline
+            // element.style.top = "25px" written here on every settings-OK/UI-scale change was
+            // silently overriding it (inline beats stylesheet), tucking the window back under the bar.
+            "statusBarButton" to 15,
+            "unitsBarButton" to 95,
+            "uiToolTip" to null,
+            // combatLogButton: removed — reparented into the topbar's flex icon cluster
+            // (MainMenuBuilder), positioned by that flex layout, not this table.
+            // dossier: removed — same incision as container-unitlist/unit-info above: the redesigned
+            // #dossier.osada-dsr is centered via its own CSS (top:50%), which this table's
+            // element.style.top = "25px" was silently overwriting on every settings-OK/UI-scale
+            // change (an inline style always beats a stylesheet rule, regardless of specificity) —
+            // the dossier rendered pinned to the very top of the screen, its header clipped under
+            // the topbar, no matter what the CSS said.
+        )
 
     fun scaleUI(scale: Double) {
         if (js("\"zoom\" in document.body.style") as? Boolean ?: false) {
@@ -93,7 +99,7 @@ internal object UILayout {
         // rounding pulled every second press back where it started (0.5−0.05=0.45→"0.5", and
         // 0.75→"0.8"), so the value could never leave 0.5 / 0.8. Two decimals cover every step
         // this app uses (0.05, 0.1, 10).
-        fun quantize(v: Double): Double = kotlin.math.round(v * 100) / 100
+        fun quantize(v: Double): Double = kotlin.math.round(v * SLIDER_QUANTIZE_SCALE) / SLIDER_QUANTIZE_SCALE
 
         fun showValue(v: Double) {
             val q = quantize(v)
@@ -164,7 +170,7 @@ internal object UILayout {
     }
 
     fun setLayoutConstrains(small: Boolean) {
-        if (window.innerWidth >= 800 && !small) return
+        if (window.innerWidth >= SMALL_LAYOUT_WIDTH_THRESHOLD && !small) return
         byId("eqInfoText")?.style?.width = "0px"
         byId("eqSortInfo")?.style?.width = "0px"
         byId("eqSortInfo")?.style?.height = "0px"
@@ -172,15 +178,15 @@ internal object UILayout {
         byId("menu")?.style?.right = "1px"
         val equipmentIndex = uiLayoutElements.indexOfFirst { it.first == "equipment" }
         if (equipmentIndex >= 0) {
-            uiLayoutElements[equipmentIndex] = "equipment" to 112
+            uiLayoutElements[equipmentIndex] = "equipment" to EQUIPMENT_PANEL_SMALL_TOP_PX
         }
-        byId("equipment")?.style?.top = "112px"
+        byId("equipment")?.style?.top = "${EQUIPMENT_PANEL_SMALL_TOP_PX}px"
         byId("eqUpgradeText")?.style?.display = "none"
         byId("eqNewText")?.style?.display = "none"
         byId("eqSellText")?.style?.display = "none"
-        if (small && uiSettings.uiSize == 840 && uiSettings.uiScale == 1.0) {
+        if (small && uiSettings.uiSize == DEFAULT_UI_SIZE_PX && uiSettings.uiScale == 1.0) {
             uiSettings.uiSize = uiSettings.uiSmallSize
-            uiSettings.uiScale = 0.9
+            uiSettings.uiScale = SMALL_LAYOUT_UI_SCALE
         }
     }
 }

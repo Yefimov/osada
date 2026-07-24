@@ -12,9 +12,13 @@ import org.osada.model.GameUnit
  * `osada.js` cost helpers.
  */
 object CostCalculator {
+    private const val FULL_STRENGTH = 10
 
     /** Combined buy cost of a unit and (optionally) its transport. Pass -1 to skip either. */
-    fun calculateUnitCosts(eqid: Int, transportEqid: Int): Int {
+    fun calculateUnitCosts(
+        eqid: Int,
+        transportEqid: Int,
+    ): Int {
         var cost = 0
         if (eqid > 0) cost += (Equipment.getEquipment(eqid)?.cost ?: 0) * CURRENCY_MULTIPLIER
         if (transportEqid > 0) cost += (Equipment.getEquipment(transportEqid)?.cost ?: 0) * CURRENCY_MULTIPLIER
@@ -27,50 +31,52 @@ object CostCalculator {
      * value. The old unit's cost is credited back ([transportEqid] == -1 drops the
      * transport, so only the unit cost is credited).
      */
-    fun calculateUpgradeCosts(unit: GameUnit, newEqid: Int, transportEqid: Int): Int {
-        if (unit == null) return 0
-        val newUnitCost = if (newEqid > 0) {
-            if (unit.eqid == newEqid) {
+    fun calculateUpgradeCosts(
+        unit: GameUnit,
+        newEqid: Int,
+        transportEqid: Int,
+    ): Int {
+        val newUnitCost =
+            if (newEqid > 0) {
+                if (unit.eqid == newEqid) {
+                    calculateUnitCosts(unit.eqid, -1)
+                } else {
+                    (calculateUnitCosts(newEqid, -1) * UPGRADE_PENALTY).toInt()
+                }
+            } else {
                 calculateUnitCosts(unit.eqid, -1)
-            } else {
-                (calculateUnitCosts(newEqid, -1) * UPGRADE_PENALTY).toInt()
             }
-        } else {
-            calculateUnitCosts(unit.eqid, -1)
-        }
-        val newTransportCost = if (transportEqid > 0) {
-            if (unit.transport?.eqid == transportEqid) {
-                calculateUnitCosts(-1, transportEqid)
+        val newTransportCost =
+            if (transportEqid > 0) {
+                if (unit.transport?.eqid == transportEqid) {
+                    calculateUnitCosts(-1, transportEqid)
+                } else {
+                    (calculateUnitCosts(-1, transportEqid) * UPGRADE_PENALTY).toInt()
+                }
             } else {
-                (calculateUnitCosts(-1, transportEqid) * UPGRADE_PENALTY).toInt()
+                0
             }
-        } else {
-            0
-        }
-        val oldCost = if (unit.transport != null) {
-            // When the upgrade drops the transport (transportEqid == -1), the old
-            // cost is the unit alone — matches JS `-1 == m ? costs(eqid,-1) : ...`.
-            if (transportEqid == -1) {
+        val oldCost =
+            if (unit.transport != null) {
+                // When the upgrade drops the transport (transportEqid == -1), the old
+                // cost is the unit alone — matches JS `-1 == m ? costs(eqid,-1) : ...`.
+                if (transportEqid == -1) {
+                    calculateUnitCosts(unit.eqid, -1)
+                } else {
+                    calculateUnitCosts(unit.eqid, unit.transport!!.eqid)
+                }
+            } else {
                 calculateUnitCosts(unit.eqid, -1)
-            } else {
-                calculateUnitCosts(unit.eqid, unit.transport!!.eqid)
             }
-        } else {
-            calculateUnitCosts(unit.eqid, -1)
-        }
         return (newUnitCost + newTransportCost - oldCost) shr 0
     }
 
     /** Prestige cost of a single strength point of [unit]'s equipment. */
-    fun calculateUnitCostPerStrength(unit: GameUnit): Int {
-        if (unit == null) return -1
-        return (unit.unitData().cost * CURRENCY_MULTIPLIER / 10)
-    }
+    fun calculateUnitCostPerStrength(unit: GameUnit): Int = unit.unitData().cost * CURRENCY_MULTIPLIER / FULL_STRENGTH
 
     /** Prestige refunded when disbanding/selling [unit] at its current strength. */
     fun calculateUnitSellCost(unit: GameUnit): Int {
-        if (unit == null) return -1
         val transportEqid = unit.transport?.eqid ?: -1
-        return (calculateUnitCosts(unit.eqid, transportEqid) / UPGRADE_PENALTY / 10 * unit.strength).toInt()
+        return (calculateUnitCosts(unit.eqid, transportEqid) / UPGRADE_PENALTY / FULL_STRENGTH * unit.strength).toInt()
     }
 }

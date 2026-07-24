@@ -21,12 +21,18 @@ internal object TurnSleep {
         }
     }
 
-    fun isAsleep(map: GameMap, unit: GameUnit): Boolean {
+    fun isAsleep(
+        map: GameMap,
+        unit: GameUnit,
+    ): Boolean {
         sync(map)
         return unit.id in ids
     }
 
-    fun toggle(map: GameMap, unit: GameUnit) {
+    fun toggle(
+        map: GameMap,
+        unit: GameUnit,
+    ) {
         sync(map)
         if (!ids.add(unit.id)) ids.remove(unit.id)
     }

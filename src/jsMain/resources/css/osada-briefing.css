@@ -1,0 +1,540 @@
+/* OSADA campaign dialogue (lower-third, Armageddon-style) and operational briefing (ORDERS).
+ * Loaded on first use by Kotlin. Built entirely on the --osada-* tokens defined in
+ * css/osada-theme.css — no parallel color/font system. */
+.osada-briefing {
+    position: fixed;
+    inset: 0;
+    z-index: 1200;
+    color: var(--osada-text);
+    font-family: var(--osada-font-ui);
+    box-sizing: border-box;
+}
+
+.osada-briefing *,
+.osada-briefing *::before,
+.osada-briefing *::after {
+    box-sizing: border-box;
+}
+
+.osada-briefing__backdrop {
+    position: absolute;
+    inset: 0;
+    background-position: center;
+    background-size: cover;
+}
+
+/* Wash + vignette matching the main menu's treatment of the same staff-table photo
+ * (osada-theme.css #smMain), so a campaign opening reads as the same desk the player just
+ * left rather than a second, differently-lit room. */
+.osada-briefing__backdrop::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(180deg, rgba(10, 11, 13, .42), rgba(8, 9, 11, .62)),
+        radial-gradient(130% 100% at 28% 38%, rgba(0, 0, 0, 0) 24%, rgba(0, 0, 0, .62) 100%);
+    backdrop-filter: saturate(.75) contrast(1.05);
+}
+
+.osada-briefing__shade {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+}
+
+.osada-briefing__shell {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    overflow: hidden;
+}
+
+/* Header strip: operation title (+ act/location subtitle) and historical date --------- */
+.osada-briefing__header {
+    position: relative;
+    z-index: 2;
+    min-height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 12px clamp(16px, 3vw, 42px);
+    background: linear-gradient(180deg, rgba(20, 22, 26, .86), rgba(20, 22, 26, .4));
+    border-bottom: var(--osada-frame-brass);
+}
+
+.osada-briefing__title-block {
+    min-width: 0;
+}
+
+.osada-briefing__title {
+    margin: 0;
+    overflow: hidden;
+    color: var(--osada-text);
+    font-size: clamp(19px, 2.1vw, 30px);
+    font-weight: 700;
+    line-height: 1.15;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.osada-briefing__subtitle {
+    margin-top: 2px;
+    overflow: hidden;
+    color: var(--osada-steel);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.osada-briefing__date {
+    flex: 0 0 auto;
+    color: var(--osada-brass);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    white-space: nowrap;
+}
+
+/* Operational briefing (ORDERS) screen ------------------------------------------------- */
+.osada-briefing__orders {
+    display: grid;
+    min-height: 0;
+    overflow: auto;
+    place-items: center;
+    padding: clamp(18px, 3vw, 42px);
+    background: rgba(10, 11, 13, .46);
+}
+
+.osada-briefing__orders-panel {
+    width: min(1060px, 100%);
+    max-height: 100%;
+    overflow: auto;
+    padding: clamp(22px, 4vw, 42px);
+    background: linear-gradient(var(--osada-metal-800), var(--osada-metal-900));
+    border: var(--osada-frame-brass);
+    border-radius: var(--osada-radius);
+    box-shadow: var(--osada-shadow), 0 24px 70px rgba(0, 0, 0, .5);
+}
+
+.osada-briefing__orders-eyebrow {
+    margin-bottom: 18px;
+    color: var(--osada-brass);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+}
+
+.osada-briefing__orders-content {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.osada-briefing__order-section {
+    padding: 16px 18px;
+    background: rgba(217, 203, 168, .05);
+    border: var(--osada-border);
+    border-left: 4px solid var(--osada-brass);
+    border-radius: var(--osada-radius);
+}
+
+.osada-briefing__order-section--wide {
+    grid-column: 1 / -1;
+}
+
+.osada-briefing__order-heading {
+    margin: 0 0 9px;
+    color: var(--osada-brass);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+.osada-briefing__order-text,
+.osada-briefing__objective-text {
+    margin: 0;
+    color: var(--osada-text);
+    font-size: 16px;
+    line-height: 1.5;
+    white-space: pre-line;
+}
+
+.osada-briefing__objectives {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 9px;
+}
+
+.osada-briefing__objective {
+    display: grid;
+    grid-template-columns: 26px 1fr;
+    gap: 10px;
+    align-items: start;
+}
+
+.osada-briefing__objective-marker {
+    width: 24px;
+    height: 24px;
+    display: grid;
+    place-items: center;
+    color: var(--osada-metal-900);
+    background: var(--osada-brass);
+    border-radius: var(--osada-radius);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* ORDERS is always the final section: the legacy scenario-start message's own text, rendered
+ * as a visually distinct paper block so it reads as a direct field order, not campaign prose. */
+.osada-briefing__orders-paper {
+    background: var(--osada-paper);
+    border-color: var(--osada-red-dark);
+    border-left-color: var(--osada-red);
+}
+
+.osada-briefing__orders-paper .osada-briefing__order-heading {
+    color: var(--osada-red-dark);
+}
+
+.osada-briefing__orders-paper .osada-briefing__order-text {
+    color: var(--osada-paper-ink);
+}
+
+.osada-briefing__footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: var(--osada-border);
+}
+
+.osada-briefing__button {
+    min-height: 44px;
+    padding: 0 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--osada-text);
+    background: var(--osada-metal-700);
+    border: var(--osada-border);
+    border-radius: var(--osada-radius);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.osada-briefing__button:hover,
+.osada-briefing__button:focus-visible {
+    background: var(--osada-metal-600);
+    outline: 2px solid var(--osada-brass);
+    outline-offset: 2px;
+}
+
+.osada-briefing__button--primary {
+    color: #fff;
+    background: var(--osada-red);
+    border-color: var(--osada-red-bright);
+}
+
+.osada-briefing__button--primary:hover,
+.osada-briefing__button--primary:focus-visible {
+    background: var(--osada-red-bright);
+}
+
+/* Conversation screen (Armageddon-style scrollable log) -------------------------------- */
+.osada-dialogue-stage {
+    position: relative;
+    min-height: 0;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    padding: clamp(12px, 2vw, 28px);
+}
+
+.osada-dialogue {
+    position: relative;
+    width: min(1060px, 100%);
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    padding: clamp(38px, 4vw, 46px) clamp(16px, 2.4vw, 28px) clamp(14px, 2vw, 20px);
+    background: linear-gradient(180deg, var(--osada-metal-800), var(--osada-metal-900));
+    border: var(--osada-frame-brass);
+    border-radius: var(--osada-radius);
+    box-shadow: var(--osada-shadow), 0 20px 60px rgba(0, 0, 0, .5);
+    cursor: pointer;
+}
+
+/* The log itself: every line spoken so far stays here and stays scrollable. */
+.osada-dialogue__transcript {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(12px, 1.6vh, 20px);
+    padding-right: 6px;
+    scrollbar-color: var(--osada-brass) rgba(0, 0, 0, .35);
+}
+
+.osada-dialogue__transcript:focus-visible {
+    outline: 1px solid var(--osada-brass);
+    outline-offset: 2px;
+}
+
+.osada-dialogue__turn {
+    display: flex;
+    gap: clamp(10px, 1.4vw, 16px);
+    align-items: flex-start;
+    animation: osada-turn-enter .18s ease-out both;
+}
+
+/* The player's own replies read back as answers: indented, brass, no portrait repeat. */
+.osada-dialogue__turn--player {
+    padding-left: clamp(20px, 4vw, 56px);
+}
+
+.osada-dialogue__turn--player .osada-dialogue__portrait {
+    display: none;
+}
+
+.osada-dialogue__turn--player .osada-dialogue__text {
+    color: var(--osada-brass);
+    font-style: italic;
+}
+
+.osada-dialogue__turn--player .osada-dialogue__text::before {
+    content: "▸ ";
+}
+
+.osada-dialogue__body {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+@keyframes osada-turn-enter {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.osada-dialogue__skip {
+    position: absolute;
+    top: 10px;
+    right: clamp(14px, 3vw, 28px);
+    padding: 6px 10px;
+    color: var(--osada-text-dim);
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: var(--osada-radius);
+    font-family: var(--osada-font-ui);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.osada-dialogue__skip:hover,
+.osada-dialogue__skip:focus-visible {
+    color: var(--osada-text);
+    border-color: var(--osada-metal-600);
+    outline: none;
+}
+
+.osada-dialogue__portrait {
+    position: relative;
+    flex: 0 0 auto;
+    width: clamp(52px, 6vw, 76px);
+    height: clamp(52px, 6vw, 76px);
+    overflow: hidden;
+    background: var(--osada-metal-700);
+    border: var(--osada-frame-brass);
+    border-radius: var(--osada-radius);
+    box-shadow: var(--osada-shadow);
+}
+
+.osada-dialogue__portrait-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+}
+
+.osada-dialogue__portrait-fallback {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    color: var(--osada-steel);
+}
+
+.osada-dialogue__portrait-fallback svg {
+    width: 52%;
+    height: 52%;
+}
+
+.osada-dialogue__speaker {
+    color: var(--osada-brass);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+}
+
+.osada-dialogue__role {
+    margin-top: 1px;
+    color: var(--osada-text-dim);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.osada-dialogue__text {
+    margin: 4px 0 0;
+    color: var(--osada-paper);
+    font-size: clamp(14px, 1.4vw, 18px);
+    line-height: 1.45;
+    white-space: pre-line;
+    text-wrap: pretty;
+}
+
+/* Choice buttons / continue hint sit below the log, never inside the scroll area. */
+.osada-dialogue__controls {
+    flex: 0 0 auto;
+    margin-top: clamp(10px, 1.6vh, 16px);
+    padding-top: clamp(10px, 1.6vh, 14px);
+    border-top: var(--osada-border);
+}
+
+.osada-dialogue__choices {
+    display: none;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 8px;
+}
+
+.osada-dialogue__choice {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 22px minmax(0, 1fr);
+    gap: 8px;
+    align-items: start;
+    padding: 10px 12px;
+    color: var(--osada-text);
+    background: var(--osada-metal-700);
+    border: var(--osada-border);
+    border-radius: var(--osada-radius);
+    font: inherit;
+    font-size: clamp(13px, 1.2vw, 16px);
+    line-height: 1.3;
+    text-align: left;
+    cursor: pointer;
+}
+
+.osada-dialogue__choice:hover,
+.osada-dialogue__choice:focus-visible {
+    color: var(--osada-text);
+    background: var(--osada-metal-600);
+    border-color: var(--osada-brass);
+    outline: none;
+}
+
+.osada-dialogue__choice-number {
+    color: var(--osada-brass);
+    font-weight: 700;
+}
+
+.osada-dialogue__choice-text {
+    min-width: 0;
+}
+
+.osada-dialogue__hint {
+    display: none;
+    color: var(--osada-brass);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    animation: osada-hint-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes osada-hint-pulse {
+    0%, 100% { opacity: .55; }
+    50% { opacity: 1; }
+}
+
+@media (max-width: 760px) {
+    .osada-briefing__header {
+        min-height: 48px;
+        padding: 9px 14px;
+    }
+
+    .osada-briefing__title {
+        font-size: 18px;
+    }
+
+    .osada-briefing__date {
+        font-size: 11px;
+    }
+
+    .osada-briefing__orders {
+        padding: 12px;
+    }
+
+    .osada-briefing__orders-panel {
+        padding: 16px 14px;
+    }
+
+    .osada-briefing__orders-content {
+        grid-template-columns: 1fr;
+    }
+
+    .osada-briefing__order-section--wide {
+        grid-column: auto;
+    }
+
+    .osada-dialogue-stage {
+        padding: 8px;
+    }
+
+    .osada-dialogue {
+        padding: 34px 12px 12px;
+    }
+
+    .osada-dialogue__portrait {
+        width: 44px;
+        height: 44px;
+    }
+
+    .osada-dialogue__turn--player {
+        padding-left: 16px;
+    }
+
+    .osada-dialogue__choices {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .osada-dialogue__hint {
+        animation: none;
+    }
+
+    .osada-dialogue__turn {
+        animation: none;
+    }
+}

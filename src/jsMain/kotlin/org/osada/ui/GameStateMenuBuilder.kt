@@ -21,7 +21,6 @@ import kotlin.js.Date
  * access token) was removed — see GameStatePersistence.kt's class doc for why. Disk-only now.
  */
 internal object GameStateMenuBuilder {
-
     fun buildGameStateMenu() {
         val root = byId("smState") ?: return
 
@@ -74,7 +73,7 @@ internal object GameStateMenuBuilder {
         }
     }
 
-    /** Called every time the screen is opened (MenuController "saveload"): pre-game there is
+    /** Called every time the screen is opened (StartMenuButtonHandler "saveload"): pre-game there is
      *  nothing to save, so the window presents itself as "Load Game" with the Save row muted;
      *  mid-game (pause menu) it is the full "Save / Load". */
     fun applySaveLoadContext() {
@@ -109,7 +108,9 @@ internal object GameStateMenuBuilder {
                 if (GameHolder.instance?.gameStarted != true) return
                 val now = Date()
                 val prefix = if (game?.campaign != null) "(Campaign) " else "(Scenario) "
-                val fileName = "$prefix${game?.scenario?.name} Turn ${game?.scenario?.map?.turn} ${now.toDateString()} ${now.toLocaleTimeString()}.json"
+                val fileName =
+                    "$prefix${game?.scenario?.name} Turn ${game?.scenario?.map?.turn} " +
+                        "${now.toDateString()} ${now.toLocaleTimeString()}.json"
                 OSGlue.disksave(fileName)
             }
             "diskload" -> OSGlue.diskload(::onGameLoadSuccess, ::onGameLoadError)

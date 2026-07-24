@@ -6,7 +6,10 @@ import org.osada.model.Cell
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
 import org.osada.model.Hex
+import org.osada.model.getAttackableUnit
 import org.osada.rules.GameRules
+import org.osada.rules.getRing
+import org.osada.rules.getUnitAttackRange
 import org.osada.ui.AttackRingBuilder.MEASURED_HOVER_SAFE
 import org.osada.uiSettings
 
@@ -24,12 +27,11 @@ import org.osada.uiSettings
  * Which enemies to mark reuses the exact same building blocks the existing click-to-attack path
  * and cursor forecast already use: [GameRules.getRing] for the range ring and
  * [Hex.getAttackableUnit] for the per-cell availability check — no range/LOS math is
- * reimplemented, only orchestrated (mirroring [GameRules.getUnitAttackCells]'s own approach,
+ * reimplemented, only orchestrated (mirroring `GameRules.getUnitAttackCells`'s own approach,
  * parameterized by an explicit row/col so it can ALSO answer "attackable from hex X" for the
  * (measured, see report) hover-preview extension without moving the real unit).
  */
 internal object AttackRingBuilder {
-
     // Mirrors RenderContext's hex geometry (S=30, Y=15, v=25) — see class doc. Only Y is needed
     // directly here (to offset the ring's left edge from cellToScreen's anchor point); the ring's
     // CSS width/height (60/50 = S+2Y / 2v) and clip-path hexagon are literal in osada-theme.css.
@@ -50,11 +52,12 @@ internal object AttackRingBuilder {
         container = div
     }
 
-    private fun anyModalOpen(): Boolean = isVisible("equipment") ||
-        isVisible("smSettings") ||
-        isVisible("startmenu") ||
-        isVisible("combatLog") ||
-        isVisible("dossier")
+    private fun anyModalOpen(): Boolean =
+        isVisible("equipment") ||
+            isVisible("smSettings") ||
+            isVisible("startmenu") ||
+            isVisible("combatLog") ||
+            isVisible("dossier")
 
     /** Clears all rings — called on deselection, end of turn, and modal open (spec). */
     fun clear() {
@@ -82,10 +85,11 @@ internal object AttackRingBuilder {
         // which never calls refresh() itself, so clearing unconditionally here costs nothing there.
         hoverCache.clear()
         cacheOwnerUnitId = unit.id
-        val pos = unit.getPos() ?: run {
-            clear()
-            return
-        }
+        val pos =
+            unit.getPos() ?: run {
+                clear()
+                return
+            }
         val targets = attackableCellsFrom(map, unit, pos.row, pos.col)
         paint(targets)
     }
@@ -94,7 +98,12 @@ internal object AttackRingBuilder {
      *  same building blocks as GameRules.getUnitAttackCells, reused rather than reimplemented,
      *  just parameterized by row/col instead of reading unit.getPos() internally. Cached per
      *  (row,col) within the current selection for the hover-preview extension. */
-    private fun attackableCellsFrom(map: GameMap, unit: GameUnit, row: Int, col: Int): List<Cell> {
+    private fun attackableCellsFrom(
+        map: GameMap,
+        unit: GameUnit,
+        row: Int,
+        col: Int,
+    ): List<Cell> {
         val key = row.toLong() * 10000L + col.toLong()
         hoverCache[key]?.let { return it }
         val result = mutableListOf<Cell>()
@@ -114,14 +123,18 @@ internal object AttackRingBuilder {
     /** Hover-preview extension: "what if I moved here" — only wired if [MEASURED_HOVER_SAFE] is
      *  true (see report for the measured timing this decision is based on). Marks enemies
      *  attackable from a REACHABLE MOVE hex while hovering it, with an own unit selected. */
-    fun previewFromHover(row: Int, col: Int) {
-        if (!MEASURED_HOVER_SAFE) return
+    fun previewFromHover(
+        row: Int,
+        col: Int,
+    ) {
+        if (!MEASURED_HOVER_SAFE || anyModalOpen()) return
         val map = GameHolder.instance?.scenario?.map ?: return
-        val unit = map.currentUnit ?: return
-        if (anyModalOpen()) return
-        val hex = map.map?.getOrNull(row)?.getOrNull(col) ?: return
-        if (!hex.isMoveSel) return // only preview genuinely reachable hexes
-        paint(attackableCellsFrom(map, unit, row, col))
+        val unit = map.currentUnit
+        val hex = map.map?.getOrNull(row)?.getOrNull(col)
+        // only preview genuinely reachable hexes
+        if (unit != null && hex != null && hex.isMoveSel) {
+            paint(attackableCellsFrom(map, unit, row, col))
+        }
     }
 
     /** Reverts to the real (non-hypothetical) position's rings — called when hover leaves a

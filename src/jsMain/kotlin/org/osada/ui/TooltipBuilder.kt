@@ -10,12 +10,21 @@ import org.w3c.dom.Element
  * Extracted from the former `UIBuilder` god-object.
  */
 internal object TooltipBuilder {
+    private const val GAME_TOOLTIP_OFFSET = 55
+    private const val TOOLTIP_Y_OFFSET = 15
+    private const val PIN_TOOLTIP_X_OFFSET = 8
+    private const val TEXT_TOOLTIP_X_OFFSET = 38
+    private const val TOOLTIP_ELEMENT_GAP = 5
 
-    fun gameToolTip(text: String, x: Int, y: Int) {
+    fun gameToolTip(
+        text: String,
+        x: Int,
+        y: Int,
+    ) {
         val tooltip = byId("gameToolTip") ?: return
         tooltip.setAttribute("type", "game")
-        tooltip.style.top = "${y - 55}px"
-        tooltip.style.left = "${x + 55}px"
+        tooltip.style.top = "${y - GAME_TOOLTIP_OFFSET}px"
+        tooltip.style.left = "${x + GAME_TOOLTIP_OFFSET}px"
         byId("gameToolTipMessage")?.innerHTML = text
         tooltip.setAttribute("orientation", "left")
         makeVisible("gameToolTip")
@@ -25,7 +34,14 @@ internal object TooltipBuilder {
         }
     }
 
-    fun gameSmallToolTip(text: String, x: Int, y: Int, color: Int, id: String?, style: Int) {
+    fun gameSmallToolTip(
+        text: String,
+        x: Int,
+        y: Int,
+        color: Int,
+        id: String?,
+        style: Int,
+    ) {
         val game = byId("game") ?: return
         val tooltipId = id ?: ("gstt" + UIBuilder.smallToolTipList.size)
         // Idempotent on id: an existing element with the same id must be removed first, not just
@@ -48,11 +64,11 @@ internal object TooltipBuilder {
         if (color == TooltipColor.ENEMY) div.style.color = "#F8F864"
         if (style == TooltipStyle.PIN) {
             div.setAttribute("shape", "pin")
-            div.style.top = "${y - 15}px"
-            div.style.left = "${x - 8}px"
+            div.style.top = "${y - TOOLTIP_Y_OFFSET}px"
+            div.style.left = "${x - PIN_TOOLTIP_X_OFFSET}px"
         } else {
-            div.style.top = "${y - 15}px"
-            div.style.left = "${x - 38}px"
+            div.style.top = "${y - TOOLTIP_Y_OFFSET}px"
+            div.style.left = "${x - TEXT_TOOLTIP_X_OFFSET}px"
         }
         div.style.display = "inline"
         div.innerHTML = text
@@ -64,7 +80,12 @@ internal object TooltipBuilder {
         }
     }
 
-    fun uiToolTip(text: String, x: Int, y: Int, right: Boolean) {
+    fun uiToolTip(
+        text: String,
+        x: Int,
+        y: Int,
+        right: Boolean,
+    ) {
         val tooltip = byId("uiToolTip") ?: return
         tooltip.setAttribute("type", "ui")
         tooltip.style.top = "${y}px"
@@ -81,11 +102,15 @@ internal object TooltipBuilder {
         tooltip.onclick = { _: org.w3c.dom.events.MouseEvent -> makeHidden("uiToolTip") }
     }
 
-    fun uiToolTipAtElement(element: dynamic, text: String, right: Boolean) {
+    fun uiToolTipAtElement(
+        element: dynamic,
+        text: String,
+        right: Boolean,
+    ) {
         val tooltip = byId("uiToolTip") ?: return
         val htmlElement = element as? Element ?: return
         uiToolTip(text, 0, 0, right)
         val coords = getCoordinates(htmlElement)
-        uiToolTip(text, coords.x - tooltip.clientWidth - 5, coords.y, right)
+        uiToolTip(text, coords.x - tooltip.clientWidth - TOOLTIP_ELEMENT_GAP, coords.y, right)
     }
 }

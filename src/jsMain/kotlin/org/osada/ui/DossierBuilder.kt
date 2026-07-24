@@ -3,6 +3,8 @@ package org.osada.ui
 import org.osada.GameHolder
 import org.osada.model.GameUnit
 import org.osada.outcomeNames
+import org.osada.scenario.Campaign
+import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.MouseEvent
 import kotlin.random.Random
 
@@ -19,30 +21,36 @@ import kotlin.random.Random
  * so every campaign — imported or original — renders identically.
  */
 internal object DossierBuilder {
+    private const val SIMULATED_LOSS_PROBABILITY = 0.5
 
     fun simulateDossier(): dynamic {
         val game = gameRef()
         val player = game?.scenario?.map?.currentPlayer ?: return null
         val units = game.scenario?.map?.getUnits() ?: emptyArray<GameUnit>()
         for (unit in units) {
-            if (Random.nextDouble() > 0.5) player.addDestroyedUnitToDossier(unit)
+            if (Random.nextDouble() > SIMULATED_LOSS_PROBABILITY) player.addDestroyedUnitToDossier(unit)
         }
         val campaignData = game.campaign?.getCampaignData()?.unsafeCast<Array<dynamic>>()
         campaignData?.forEachIndexed { index, _ ->
-            val outcome = when (Random.nextInt(3)) {
-                0 -> "victory"
-                1 -> "tactical"
-                else -> "briliant"
-            }
+            val outcome =
+                when (Random.nextInt(3)) {
+                    0 -> "victory"
+                    1 -> "tactical"
+                    else -> "briliant"
+                }
             val name = game.campaign?.getScenarioNameFromId(index) ?: ""
             player.addOutcomeToDossier(outcome, name)
         }
         return player.dossier
     }
 
-    fun showCampaignEnd(outcome: String, text: String, callback: (() -> Unit)?): Boolean {
-        if (!showDossier(false, callback)) return false
-        val dossier = byId("dossier") ?: return false
+    fun showCampaignEnd(
+        outcome: String,
+        text: String,
+        callback: (() -> Unit)?,
+    ): Boolean {
+        val dossier = if (showDossier(false, callback)) byId("dossier") else null
+        dossier ?: return false
         val banner = addTag(dossier, "div")
         banner.className = "osada-dsr-endbanner osada-dsr-endbanner--${if (outcome == "lose") "defeat" else "victory"}"
         val title = addTag(banner, "div")
@@ -63,20 +71,52 @@ internal object DossierBuilder {
      *  see class doc) but is kept so callers don't need updating; a close button always renders,
      *  where before "docked" mode (opened from the Turn Report's Dossier button) had none at all
      *  and could only be dismissed by reopening the Turn Report or loading a new scenario. */
-    fun showDossier(docked: Boolean, callback: (() -> Unit)? = null): Boolean {
+    @Suppress("UnusedParameter")
+    fun showDossier(
+        docked: Boolean,
+        callback: (() -> Unit)? = null,
+    ): Boolean {
         val game = gameRef()
-        if (game?.campaign == null) return false
         // Read campaign fields through the typed Game (not the dynamic `game`): Kotlin/JS mangles
         // property backing fields (name -> name_1), so `game.campaign.name` via `dynamic` is undefined.
         val campaign = GameHolder.instance?.campaign
-        val dossier = byId("dossier") ?: return false
+        val dossier = byId("dossier")
+        if (game?.campaign == null || dossier == null) return false
         clearTag(dossier)
         dossier.className = "dossier osada-dsr"
         dossier.style.display = "flex"
-        val player = game.getCampaignPlayer() ?: return false
+        val player = game.getCampaignPlayer()
+        return if (player == null) {
+            false
+        } else {
+            buildDossierContent(dossier, campaign, player, callback)
+            true
+        }
+    }
+
+    private fun buildDossierContent(
+        dossier: HTMLElement,
+        campaign: Campaign?,
+        player: dynamic,
+        callback: (() -> Unit)?,
+    ) {
         val dossierData = player.dossier
         if (dossierData == null || dossierData.units == js("undefined")) player.initDossier()
 
+        buildDossierHeader(dossier, campaign, player, callback)
+
+        val body = addTag(dossier, "div")
+        body.className = "osada-dsr-body"
+        buildCasualtiesSection(body, dossierData)
+        buildAwardsSection(body, dossierData)
+    }
+
+    private fun buildDossierHeader(
+        dossier: HTMLElement,
+        campaign: Campaign?,
+        player: dynamic,
+        callback: (() -> Unit)?,
+    ) {
         val header = addTag(dossier, "div")
         header.className = "osada-dsr-header"
         val titleBlock = addTag(header, "div")
@@ -95,12 +135,14 @@ internal object DossierBuilder {
             closeDossier()
             callback?.invoke()
         }
+    }
 
-        val body = addTag(dossier, "div")
-        body.className = "osada-dsr-body"
-
-        // ---- Casualties: one card per unit class, replacing the old fixed-column <table> (which
-        // didn't scale past the original 8-class efiles either) with a wrapping grid. ----
+    // ---- Casualties: one card per unit class, replacing the old fixed-column <table> (which
+    // didn't scale past the original 8-class efiles either) with a wrapping grid. ----
+    private fun buildCasualtiesSection(
+        body: HTMLElement,
+        dossierData: dynamic,
+    ) {
         val casSection = addTag(body, "div")
         casSection.className = "osada-dsr-section"
         val casTitle = addTag(casSection, "div")
@@ -123,7 +165,11 @@ internal object DossierBuilder {
             icon.textContent = glyph
             val stats = addTag(card, "div")
             stats.className = "osada-dsr-cas-stats"
-            fun stat(label: String, value: Int) {
+
+            fun stat(
+                label: String,
+                value: Int,
+            ) {
                 val row = addTag(stats, "div")
                 row.className = "osada-dsr-cas-stat"
                 row.innerHTML = "<span>$label</span><b>$value</b>"
@@ -132,11 +178,16 @@ internal object DossierBuilder {
             stat("Lost (Core)", lostCore)
             stat("Lost (Aux)", lostAux)
         }
+    }
 
-        // ---- Military Awards: CSS-drawn medal badges (gold/silver/bronze by outcome tier)
-        // replace the old per-country PNGs (resources/ui/dossier/{country}_{outcome}.png), which
-        // only exist for the original 8 PM countries — every OG-imported campaign showed a
-        // broken image here otherwise. ----
+    // ---- Military Awards: CSS-drawn medal badges (gold/silver/bronze by outcome tier)
+    // replace the old per-country PNGs (resources/ui/dossier/{country}_{outcome}.png), which
+    // only exist for the original 8 PM countries — every OG-imported campaign showed a
+    // broken image here otherwise. ----
+    private fun buildAwardsSection(
+        body: HTMLElement,
+        dossierData: dynamic,
+    ) {
         val medSection = addTag(body, "div")
         medSection.className = "osada-dsr-section"
         val medTitle = addTag(medSection, "div")
@@ -146,8 +197,8 @@ internal object DossierBuilder {
         val outcomeOrder = listOf("briliant", "victory", "tactical", "lose")
         val medalMod = mapOf("briliant" to "gold", "victory" to "silver", "tactical" to "bronze", "lose" to "none")
         for (outcome in outcomeOrder) {
-            val list = dossierData.outcomes[outcome] as? Array<dynamic> ?: continue
-            if (list.isEmpty()) continue
+            val list = dossierData.outcomes[outcome] as? Array<dynamic>
+            if (list == null || list.isEmpty()) continue
             if (outcome != "lose") hasMedals = true
             val row = addTag(medSection, "div")
             row.className = "osada-dsr-medal-row"
@@ -170,8 +221,6 @@ internal object DossierBuilder {
             empty.className = "osada-dsr-empty"
             empty.textContent = "No medals awarded yet."
         }
-
-        return true
     }
 
     fun closeDossier() {
