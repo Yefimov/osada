@@ -5,6 +5,8 @@ package org.osada.ui
 import kotlinx.browser.window
 import org.osada.GameHolder
 import org.osada.UnitClass
+import org.osada.i18n.GameText
+import org.osada.i18n.I18n
 import org.osada.model.EquipmentData
 import org.osada.model.GameUnit
 import org.osada.model.UnitDescriptions
@@ -325,13 +327,16 @@ internal object EquipmentWindowBuilder {
         val eqNewCost = byId("eqNewCost")
         val eqNewBut = byId("eqNewBut")
         if (buy > 0 && buy <= prestige) {
-            eqNewText?.innerHTML = "Buy "
+            eqNewText?.textContent = I18n.t("equipment.action.buy.label")
             eqNewCost?.innerHTML = "$buy${UIBuilder.currencyIcon}"
             eqNewBut?.style?.display = "inline-block"
         } else {
             if (buy > prestige) {
                 val diff = buy - prestige
-                eqNewText?.innerHTML = "<span style='color:#BB7575'>Need $diff more prestige to buy.</span>"
+                eqNewText?.innerHTML =
+                    "<span style='color:#BB7575'>" +
+                        I18n.t("equipment.cost.need_buy", mapOf("amount" to diff)) +
+                        "</span>"
             } else if (buyBlockedReason != null) {
                 // A rule (not the wallet) refuses this purchase — say which one, rather than
                 // leaving an empty space where the Buy button was.
@@ -347,13 +352,16 @@ internal object EquipmentWindowBuilder {
         val eqUpgradeCost = byId("eqUpgradeCost")
         val eqUpgradeBut = byId("eqUpgradeBut")
         if (upgrade > 0 && upgrade <= prestige) {
-            eqUpgradeText?.innerHTML = " Upgrade "
+            eqUpgradeText?.textContent = I18n.t("equipment.action.upgrade.label")
             eqUpgradeCost?.innerHTML = "$upgrade${UIBuilder.currencyIcon}"
             eqUpgradeBut?.style?.display = "inline-block"
         } else {
             if (upgrade > prestige) {
                 val diff = upgrade - prestige
-                eqUpgradeText?.innerHTML = "<span style='color:#BB7575'>Need $diff more prestige to upgrade.</span>"
+                eqUpgradeText?.innerHTML =
+                    "<span style='color:#BB7575'>" +
+                        I18n.t("equipment.cost.need_upgrade", mapOf("amount" to diff)) +
+                        "</span>"
             } else {
                 eqUpgradeText?.textContent = ""
             }
@@ -365,7 +373,7 @@ internal object EquipmentWindowBuilder {
         val eqSellCost = byId("eqSellCost")
         val eqSellBut = byId("eqSellBut")
         if (sell > 0) {
-            eqSellText?.innerHTML = " Sell "
+            eqSellText?.textContent = I18n.t("equipment.action.sell.label")
             eqSellCost?.innerHTML = "$sell${UIBuilder.currencyIcon}"
             eqSellBut?.style?.display = "inline-block"
         } else {
@@ -376,7 +384,13 @@ internal object EquipmentWindowBuilder {
 
         val currentPrestige = byId("currentPrestige")
         currentPrestige?.textContent =
-            if (window.innerWidth >= NARROW_PRESTIGE_LABEL_WIDTH_THRESHOLD) "Available Prestige: " else "Now: "
+            I18n.t(
+                if (window.innerWidth >= NARROW_PRESTIGE_LABEL_WIDTH_THRESHOLD) {
+                    "equipment.cost.available"
+                } else {
+                    "equipment.cost.available_short"
+                },
+            ) + " "
         val currentPrestigeAmount = byId("currentPrestigeAmount")
         currentPrestigeAmount?.innerHTML = "$prestige${UIBuilder.currencyIcon}"
     }
@@ -397,7 +411,7 @@ internal object EquipmentWindowBuilder {
 
         val attackerInfo = addTag(statusMsg, "div")
         attackerInfo.className = "combatInfoStatusBar"
-        attackerInfo.innerHTML = "<b>${attackerData.name}</b> ${unitClassNames[attackerData.uclass]}"
+        attackerInfo.innerHTML = "<b>${attackerData.name}</b> ${GameText.unitClass(attackerData.uclass)}"
 
         val vs = addTag(statusMsg, "div")
         vs.style.cssFloat = "left"
@@ -412,6 +426,6 @@ internal object EquipmentWindowBuilder {
 
         val defenderInfo = addTag(statusMsg, "div")
         defenderInfo.className = "combatInfoStatusBar"
-        defenderInfo.innerHTML = "<b>${defenderData.name}</b> ${unitClassNames[defenderData.uclass]}"
+        defenderInfo.innerHTML = "<b>${defenderData.name}</b> ${GameText.unitClass(defenderData.uclass)}"
     }
 }

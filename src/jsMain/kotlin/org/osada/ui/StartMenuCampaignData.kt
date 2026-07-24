@@ -3,6 +3,7 @@ package org.osada.ui
 import kotlinx.browser.localStorage
 import org.osada.VERSION
 import org.osada.difficultyModifiers
+import org.osada.i18n.I18n
 import org.osada.scenario.Campaign
 import kotlin.math.roundToInt
 
@@ -44,7 +45,7 @@ internal object StartMenuCampaignData {
                 mod.scoreCoef == 1.0
         return when {
             mod == null -> ""
-            isFullDifficulty -> "Full difficulty — no starting bonuses, standard turn limit and score."
+            isFullDifficulty -> I18n.t("campaign.difficulty.full.description")
             else -> {
                 // roundToInt(), not toInt(): floating-point subtraction (e.g. 1.2 - 1.0) lands on
                 // 0.19999999999999996, and plain truncation turned +20% into a wrong "+19%".
@@ -52,8 +53,15 @@ internal object StartMenuCampaignData {
                 val turnPct = (mod.turnPrestige * 100).roundToInt()
                 val turnsPct = ((mod.extraTurns - 1.0) * 100).roundToInt()
                 val scorePct = ((1.0 - mod.scoreCoef) * 100).roundToInt()
-                "+$startPct% starting prestige, +$turnPct% prestige per turn, +$turnsPct% extra turns, " +
-                    "-$scorePct% score"
+                I18n.t(
+                    "campaign.difficulty.modifiers.summary",
+                    mapOf(
+                        "startPct" to startPct,
+                        "turnPct" to turnPct,
+                        "turnsPct" to turnsPct,
+                        "scorePct" to scorePct,
+                    ),
+                )
             }
         }
     }
@@ -95,8 +103,8 @@ internal object StartMenuCampaignData {
         val campaign = StartMenuBuilder.campaignList().getOrNull(selected) ?: return
         val base = campaign.prestige as? Int ?: 0
         val difficulty = byId("smCamp")?.asDynamic()?.selectedDifficulty as? Int ?: DIFFICULTY_HISTORICAL
-        byId("smCampPrestige")?.innerHTML = "<b>Start prestige</b><br/>" +
-            Campaign.computeStartPrestige(base, difficulty) + "&nbsp;" + UIBuilder.currencyIcon
+        byId("smCampPrestige")?.innerHTML = "<b>${I18n.t("campaign.start_prestige.label")}</b><br/>" +
+            I18n.formatNumber(Campaign.computeStartPrestige(base, difficulty)) + "&nbsp;" + UIBuilder.currencyIcon
     }
 
     /** The in-progress campaign from localStorage: (campaign file, 0-based scenario index).

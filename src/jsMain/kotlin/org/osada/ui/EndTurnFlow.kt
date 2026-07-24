@@ -4,6 +4,7 @@ import kotlinx.browser.window
 import org.osada.CombatLog
 import org.osada.PlayerType
 import org.osada.UnitClass
+import org.osada.i18n.I18n
 import org.osada.model.getCountriesBySide
 import org.osada.model.getUnits
 import org.osada.uiSettings
@@ -42,17 +43,15 @@ internal class EndTurnFlow(
         clearTag(btn)
         val msg = addTag(btn, "span")
         msg.className = "osada-et__msg"
-        msg.textContent =
-            "$n unit(s) haven't acted. End turn?"
+        msg.textContent = I18n.plural("hud.end_turn.confirm", n)
         val yes = addTag(btn, "span")
         yes.className = "osada-et__yes"
         yes.innerHTML = "✓"
-        yes.title =
-            "Confirm — end the turn"
+        yes.title = I18n.t("hud.end_turn.confirm_yes.help")
         val no = addTag(btn, "span")
         no.className = "osada-et__no"
         no.innerHTML = "✗"
-        no.title = "Cancel"
+        no.title = I18n.t("common.cancel.label")
         yes.onclick = { e: MouseEvent ->
             e.stopPropagation()
             cancelEndTurnConfirm()
@@ -97,7 +96,10 @@ internal class EndTurnFlow(
         if (map.currentPlayer?.type == PlayerType.HUMAN_LOCAL) {
             ui.game.endTurn()
             if (ui.game.gameEnded && ui.game.gameStarted) {
-                UIBuilder.message("DEFEAT", "<br><br>You didn't capture the objectives in time")
+                UIBuilder.message(
+                    I18n.t("hud.defeat.title"),
+                    I18n.t("hud.defeat.objectives_in_time"),
+                )
             } else {
                 ui.countriesOnSpotSide = map.getCountriesBySide(ui.game.spotSide)
                 UIBuilder.setDefaultUserSelections()
@@ -108,7 +110,16 @@ internal class EndTurnFlow(
                 // map.currentPlayer is already the NEXT player at this point (GameMap.endTurn
                 // advances it); log whose turn is starting.
                 map.currentPlayer?.let { next ->
-                    HudLog.add("Turn ${map.turn}/${map.maxTurns} — ${next.getCountryName()} begins")
+                    HudLog.add(
+                        I18n.t(
+                            "hud.turn_started",
+                            mapOf(
+                                "turn" to map.turn,
+                                "maxTurns" to map.maxTurns,
+                                "country" to next.getCountryName(),
+                            ),
+                        ),
+                    )
                 }
             }
         }

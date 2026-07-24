@@ -35,6 +35,7 @@ internal class UnitInfoPanel(
     fun showUnitInfo(unit: GameUnit?) {
         statCard.showUnitInfo(unit)
         UnitIdentityPresenter.present(ui, unit)
+        GameplayLocalization.refreshUnitInfo(unit)
     }
 
     fun showEquipmentInfo(eq: EquipmentData?) = EquipmentStatCard.showEquipmentInfo(eq)

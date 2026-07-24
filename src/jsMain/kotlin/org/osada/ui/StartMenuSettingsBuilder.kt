@@ -4,6 +4,7 @@ package org.osada.ui
 
 import kotlinx.browser.window
 import org.osada.GameHolder
+import org.osada.i18n.I18n
 import org.osada.uiSettings
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.MouseEvent
@@ -23,8 +24,8 @@ internal object StartMenuSettingsBuilder {
     // Task 5: regrouped from one flat list into named sections. Same keys/labels (plus the
     // new confirmEndTurn toggle) — CSS + markup only, no checkbox logic changed.
     private data class SettingSection(
-        val title: String,
-        val caption: String?,
+        val titleKey: String,
+        val captionKey: String?,
         val items: List<Pair<String, String>>,
     )
 
@@ -44,77 +45,69 @@ internal object StartMenuSettingsBuilder {
     private val settingSections =
         listOf(
             SettingSection(
-                "Map View",
+                "settings.section.map_view.title",
                 null,
                 listOf(
-                    "showGridTerrain" to "Show terrain with Hex Grid",
-                    "markOwnUnits" to "Mark own units on map",
-                    "markEnemyUnits" to "Mark enemy strength in red",
-                    "useRetina" to "Zoom to full device resolution",
+                    "showGridTerrain" to "settings.map.show_grid_terrain.label",
+                    "markOwnUnits" to "settings.map.mark_own_units.label",
+                    "markEnemyUnits" to "settings.map.mark_enemy_units.label",
+                    "useRetina" to "settings.map.use_retina.label",
                 ),
             ),
             SettingSection(
-                "Gameplay",
+                "settings.section.gameplay.title",
                 null,
                 listOf(
-                    "quickAnimation" to "Quick combat and move animations",
-                    "showDetailInfoToolTips" to "Show optional objectives tooltips",
-                    "confirmEndTurn" to "Confirm end of turn",
+                    "quickAnimation" to "settings.gameplay.quick_animation.label",
+                    "showDetailInfoToolTips" to "settings.gameplay.optional_objectives.label",
+                    "confirmEndTurn" to "settings.gameplay.confirm_end_turn.label",
                 ),
             ),
             SettingSection(
-                "Sound",
+                "settings.section.sound.title",
                 null,
                 listOf(
-                    "muteUnitSounds" to "Mute unit combat sounds",
+                    "muteUnitSounds" to "settings.sound.mute_unit_sounds.label",
                 ),
             ),
             SettingSection(
-                "Observer Mode",
-                "Affects game balance",
+                "settings.section.observer.title",
+                "settings.section.observer.caption",
                 listOf(
-                    "noFOW" to "Disable Fog of War",
-                    "showHiddenVictoryHexes" to "Show hidden victory hexes",
+                    "noFOW" to "settings.observer.no_fow.label",
+                    "showHiddenVictoryHexes" to "settings.observer.hidden_victory_hexes.label",
                 ),
             ),
         )
 
-    private val settingHelp =
+    private val settingHelpKeys =
         mapOf(
-            "showGridTerrain" to
-                "Colours each hex by terrain type when the Grid overlay is enabled, making movement terrain easier to read.",
-            "markOwnUnits" to
-                "Adds a clear marker beneath your units so stacked sprites and aircraft are easier to distinguish.",
-            "markEnemyUnits" to
-                "Uses red strength markers for spotted enemy units. This does not reveal units hidden by fog of war.",
-            "useRetina" to
-                "Renders the map at the display's full device-pixel resolution. Sharper on high-DPI screens, but uses more graphics memory and requires a reload.",
-            "quickAnimation" to "Shortens movement and combat animations. Rules and results are unchanged.",
-            "showDetailInfoToolTips" to "Shows name labels over non-objective owned hexes such as towns and airfields.",
-            "confirmEndTurn" to
-                "Asks for confirmation before ending the turn and warns when units still have actions available.",
-            "muteUnitSounds" to
-                "Mutes discrete movement, weapon and combat sounds. Ambient weather audio has its own volume control.",
-            "noFOW" to "Removes fog of war and reveals all enemy units. This changes game balance.",
-            "showHiddenVictoryHexes" to
-                "Reveals secret objectives that have no flag on the map. Most scenarios have none; regular bordered objectives are always visible. This changes game balance.",
+            "showGridTerrain" to "settings.map.show_grid_terrain.help",
+            "markOwnUnits" to "settings.map.mark_own_units.help",
+            "markEnemyUnits" to "settings.map.mark_enemy_units.help",
+            "useRetina" to "settings.map.use_retina.help",
+            "quickAnimation" to "settings.gameplay.quick_animation.help",
+            "showDetailInfoToolTips" to "settings.gameplay.optional_objectives.help",
+            "confirmEndTurn" to "settings.gameplay.confirm_end_turn.help",
+            "muteUnitSounds" to "settings.sound.mute_unit_sounds.help",
+            "noFOW" to "settings.observer.no_fow.help",
+            "showHiddenVictoryHexes" to "settings.observer.hidden_victory_hexes.help",
         )
 
-    private val sliderHelp =
+    private val sliderHelpKeys =
         mapOf(
-            "uiresize" to
-                "Legacy interface-width value retained for compatibility; the current HUD automatically follows the viewport.",
-            "uiscale" to "Scales menus, panels and HUD controls without changing the tactical map zoom.",
-            "mapscale" to
-                "Scales the tactical map and unit sprites. This is the same zoom controlled beneath the minimap.",
-            "soundvolume" to "Volume for movement, weapon and combat sound effects.",
-            "ambientvolume" to "Volume for continuous ambient audio such as rain and wind.",
+            "uiresize" to "settings.slider.interface_width.help",
+            "uiscale" to "settings.slider.interface_scale.help",
+            "mapscale" to "settings.slider.map_scale.help",
+            "soundvolume" to "settings.slider.effects_volume.help",
+            "ambientvolume" to "settings.slider.ambient_volume.help",
         )
 
     fun buildSettingsScreen() {
         UILayout.resizeUI(uiSettings.uiSize)
         UILayout.scaleUI(uiSettings.uiScale)
         UILayout.setLayoutConstrains(false)
+        LanguageSelector.buildSettingsControl()
         buildTopSliders()
         settingSections.forEach { buildSettingSection(it) }
         wireSettingsOkHandler()
@@ -125,7 +118,7 @@ internal object StartMenuSettingsBuilder {
     // holding the slider. Without it the three sliders had no label and no alignment ("съехали").
     private fun sliderSetting(
         id: String,
-        label: String,
+        labelKey: String,
         value: Double,
         step: Double,
         min: Double,
@@ -136,8 +129,9 @@ internal object StartMenuSettingsBuilder {
         container.className = "settingContainer left"
         val textDiv = addTag(container, "div")
         textDiv.className = "settingText left"
+        val label = I18n.t(labelKey)
         textDiv.textContent = label
-        val help = sliderHelp[id] ?: label
+        val help = sliderHelpKeys[id]?.let { I18n.t(it) } ?: label
         container.title = help
         textDiv.title = help
         val sliderWrap = addTag(container, "div")
@@ -153,7 +147,7 @@ internal object StartMenuSettingsBuilder {
         // element stays in the DOM with its stored value.
         sliderSetting(
             "uiresize",
-            "Interface width (px)",
+            "settings.slider.interface_width.label",
             uiSettings.uiSize.toDouble(),
             step = 10.0,
             min = uiSettings.uiSmallSize.toDouble(),
@@ -161,12 +155,19 @@ internal object StartMenuSettingsBuilder {
         ) {
             UILayout.resizeUI((byId("uiresize")?.asDynamic()?.value as? String)?.toIntOrNull() ?: uiSettings.uiSize)
         }.style.display = "none"
-        sliderSetting("uiscale", "Interface scale", uiSettings.uiScale, step = 0.1, min = 0.5, max = 3.0) {
+        sliderSetting(
+            "uiscale",
+            "settings.slider.interface_scale.label",
+            uiSettings.uiScale,
+            step = 0.1,
+            min = 0.5,
+            max = 3.0,
+        ) {
             UILayout.scaleUI((byId("uiscale")?.asDynamic()?.value as? String)?.toDoubleOrNull() ?: uiSettings.uiScale)
         }
         sliderSetting(
             "mapscale",
-            "Game Map scale",
+            "settings.slider.map_scale.label",
             uiSettings.zoomLevel,
             step = 0.1,
             min = MapZoom.MIN,
@@ -181,23 +182,23 @@ internal object StartMenuSettingsBuilder {
         header.className = "osada-settings-header"
         val title = addTag(header, "span")
         title.className = "osada-settings-header__title"
-        title.textContent = section.title
-        section.caption?.let { cap ->
+        title.textContent = I18n.t(section.titleKey)
+        section.captionKey?.let { captionKey ->
             header.classList.add("osada-settings-header--observer")
             val caption = addTag(header, "span")
             caption.className = "osada-settings-header__caption"
-            caption.textContent = cap
+            caption.textContent = I18n.t(captionKey)
         }
-        section.items.forEach { (id, label) -> buildSettingCheckbox(id, label) }
+        section.items.forEach { (id, labelKey) -> buildSettingCheckbox(id, labelKey) }
         // Volume sliders live inside the Sound section, right after its checkbox — a
         // continuation of the section's own items, not separate top-level controls.
         // Two levels (user request): discrete unit/fire cues vs the continuous weather loop.
-        if (section.title == "Sound") buildSoundSliders()
+        if (section.titleKey == "settings.section.sound.title") buildSoundSliders()
     }
 
     private fun buildSettingCheckbox(
         id: String,
-        label: String,
+        labelKey: String,
     ) {
         val container = addTag("smSettingsContainer", "div")
         container.className = "settingContainer left"
@@ -206,7 +207,8 @@ internal object StartMenuSettingsBuilder {
         // most scenarios have no hidden objectives at all (all their victory hexes carry
         // visible flags), so the toggle legitimately changes nothing there — without this
         // explanation that reads as "the setting is broken" (user report).
-        textDiv.title = settingHelp[id] ?: label
+        val label = I18n.t(labelKey)
+        textDiv.title = settingHelpKeys[id]?.let { I18n.t(it) } ?: label
         textDiv.className = "settingText left"
         textDiv.textContent = label
         val valueDiv = addTag(container, "div")
@@ -269,7 +271,7 @@ internal object StartMenuSettingsBuilder {
     private fun buildSoundSliders() {
         sliderSetting(
             "soundvolume",
-            "Effects volume",
+            "settings.slider.effects_volume.label",
             uiSettings.soundVolume,
             step = 0.05,
             min = 0.0,
@@ -280,7 +282,7 @@ internal object StartMenuSettingsBuilder {
         }
         sliderSetting(
             "ambientvolume",
-            "Ambient volume",
+            "settings.slider.ambient_volume.label",
             uiSettings.ambientVolume,
             step = 0.05,
             min = 0.0,
@@ -294,8 +296,7 @@ internal object StartMenuSettingsBuilder {
     }
 
     private fun wireSettingsOkHandler() {
-        byId("smSetOkBut")?.title =
-            "Apply these settings and return. Some display-resolution changes require a page reload."
+        byId("smSetOkBut")?.title = I18n.t("settings.done.help")
         byId("smSetOkBut")?.onclick = { _: MouseEvent ->
             makeHidden("smSettings")
             // Settings is reached two ways: the PRE-GAME main menu's own "Settings" button (where

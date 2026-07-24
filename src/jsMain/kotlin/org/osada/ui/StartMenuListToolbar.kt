@@ -1,5 +1,6 @@
 package org.osada.ui
 
+import org.osada.i18n.I18n
 import org.osada.model.Equipment
 import org.osada.model.getCountryName
 import org.w3c.dom.HTMLElement
@@ -52,7 +53,10 @@ internal object StartMenuListToolbar {
             row.asDynamic().optionIndex = i
             renderRow(option, i, row, selectable)
             if (selectable) {
-                row.title = "Select ${option.textContent?.trim().orEmpty()} and show its full dossier."
+                row.title = I18n.t(
+                    "list.select_dossier.help",
+                    mapOf("name" to option.textContent?.trim().orEmpty()),
+                )
                 row.onclick = { _: org.w3c.dom.events.MouseEvent ->
                     select.asDynamic().selectedIndex = i
                     select.dispatchEvent(Event("change"))
@@ -228,9 +232,8 @@ internal object StartMenuListToolbar {
         val matches = applyRowVisibility(sorted, grouped, query, side, storyOnly)
 
         (list.asDynamic().counterEl as? HTMLElement)?.let { counter ->
-            val noun = list.asDynamic().counterNoun as? String ?: "entries"
-            val singular = noun.removeSuffix("s")
-            counter.textContent = "$matches ${if (matches == 1) singular else noun}"
+            val counterKey = list.asDynamic().counterKey as? String ?: return@let
+            counter.textContent = I18n.plural(counterKey, matches)
         }
     }
 
@@ -292,8 +295,8 @@ internal object StartMenuListToolbar {
         register: HTMLElement,
         list: HTMLElement,
         modes: List<String>,
-        placeholder: String,
-        counterNoun: String,
+        placeholderKey: String,
+        counterKey: String,
     ) {
         val tools = addTag(register, "div")
         tools.className = "osadaListTools"
@@ -303,7 +306,7 @@ internal object StartMenuListToolbar {
         val filter = addTag(tools, "input")
         filter.className = "osadaListFilter"
         filter.setAttribute("type", "search")
-        filter.setAttribute("placeholder", placeholder)
+        filter.setAttribute("placeholder", I18n.t(placeholderKey))
         filter.asDynamic().oninput = {
             list.asDynamic().filterQuery = filter.asDynamic().value as? String ?: ""
             applyListView(list)
@@ -316,11 +319,11 @@ internal object StartMenuListToolbar {
         register.insertBefore(chipRow, list)
         val sideSelect = addTag(chipRow, "select")
         sideSelect.className = "osadaSideSelect"
-        sideSelect.title = "Filter by country (any side — including AI-only factions)"
+        sideSelect.title = I18n.t("list.filter.country.help")
         // Options = every faction actually playable in this register (rows are already built and
         // tagged by the time the toolbar is inserted, one row can carry several sideKeys),
         // alphabetical after "All countries".
-        addSelectOption(sideSelect, "All countries", SIDE_ALL, true)
+        addSelectOption(sideSelect, I18n.t("list.all_countries.label"), SIDE_ALL, true)
         rowsOf(list)
             .flatMap { (it.asDynamic().sideKeys as? Array<String>)?.toList() ?: emptyList() }
             .distinct()
@@ -334,7 +337,7 @@ internal object StartMenuListToolbar {
         val counter = addTag(chipRow, "div")
         counter.className = "osadaListCount"
         list.asDynamic().counterEl = counter
-        list.asDynamic().counterNoun = counterNoun
+        list.asDynamic().counterKey = counterKey
         list.asDynamic().sideFilter = SIDE_ALL
 
         val segs = addTag(tools, "div")
@@ -342,15 +345,16 @@ internal object StartMenuListToolbar {
         modes.forEach { mode ->
             val seg = addTag(segs, "div")
             seg.className = "osada-seg" + if (mode == SORT_DEFAULT) " osada-seg--on" else ""
-            seg.textContent = mode
-            seg.title =
+            val keyPrefix =
                 when (mode) {
-                    SORT_DEFAULT -> "Campaign order"
-                    SORT_NAME -> "Alphabetical"
-                    SORT_YEAR -> "Earliest year first"
-                    SORT_SIZE -> "Fewest operations first"
-                    else -> mode
+                    SORT_DEFAULT -> "list.sort.default"
+                    SORT_NAME -> "list.sort.name"
+                    SORT_YEAR -> "list.sort.year"
+                    SORT_SIZE -> "list.sort.size"
+                    else -> null
                 }
+            seg.textContent = keyPrefix?.let { I18n.t("$it.label") } ?: mode
+            seg.title = keyPrefix?.let { I18n.t("$it.help") } ?: mode
             seg.onclick = { _: org.w3c.dom.events.MouseEvent ->
                 rowsOf(segs).forEach { it.classList.remove("osada-seg--on") }
                 seg.classList.add("osada-seg--on")

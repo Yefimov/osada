@@ -160,6 +160,14 @@ tasks.register<Exec>("verifyUnitDescriptions") {
     commandLine("python", "scripts/check_unit_descriptions.py")
 }
 
+tasks.register<Exec>("verifyTranslations") {
+    group = "verification"
+    description = "Validates localization bundles, placeholders, plurals and stable key usage"
+
+    workingDir = rootDir
+    commandLine("python", "scripts/check_translations.py")
+}
+
 /*
  * Подготовка зависимостей production smoke test.
  */
@@ -214,6 +222,7 @@ tasks.named("check") {
         "verifyStaticChecks",
         "verifyCampaignDialogue",
         "verifyUnitDescriptions",
+        "verifyTranslations",
         "detekt",
         "ktlintCheck",
     )

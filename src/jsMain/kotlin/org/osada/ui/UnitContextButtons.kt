@@ -189,6 +189,8 @@ internal class UnitContextButtons(
         val button = addTag("unit-context", "div")
         val labelText = labelOverride ?: contextActionLabels[action] ?: action
         button.className = "osada-action" + if (extraClass.isNotEmpty()) " $extraClass" else ""
+        button.setAttribute("data-action", action)
+        button.setAttribute("data-action-variant", labelText.lowercase())
         button.title = title
         button.setAttribute("role", "button")
         button.setAttribute("tabindex", "0")

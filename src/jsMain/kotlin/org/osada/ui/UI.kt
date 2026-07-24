@@ -4,6 +4,7 @@ import kotlinx.browser.document
 import org.osada.CombatLog
 import org.osada.Game
 import org.osada.UnitClass
+import org.osada.i18n.I18n
 import org.osada.model.Cell
 import org.osada.model.Equipment
 import org.osada.model.GameUnit
@@ -186,8 +187,11 @@ class UI(
      *  always); the legacy small scenario-start popup is shown standalone only, byte-identical
      *  to the pre-briefing behavior. */
     private fun openScenarioCeremony(rawBriefing: dynamic) {
-        val title = game.scenario?.name ?: ""
-        val intro = game.scenario?.getDescription() ?: ""
+        val tutorial = game.scenario?.file == Game.defaultScenario
+        val title =
+            if (tutorial) I18n.t("tutorial.welcome.title") else game.scenario?.name ?: ""
+        val intro =
+            if (tutorial) I18n.t("tutorial.welcome.body") else game.scenario?.getDescription() ?: ""
         val finishOpening = { releaseToBattle() }
         val campaign = game.campaign
         if (campaign == null) {
@@ -253,11 +257,20 @@ class UI(
         val name0 = map?.getCountriesBySide(0)?.firstOrNull()?.let { Equipment.getCountryName(it) }
         val name1 = map?.getCountriesBySide(1)?.firstOrNull()?.let { Equipment.getCountryName(it) }
         val real = { name: String? -> !name.isNullOrBlank() && name != "Unknown" }
-        if (real(name0) && real(name1)) return "$name0 vs $name1"
-        val axis = sideNames.getOrNull(0) ?: "Axis"
-        val allies = sideNames.getOrNull(1) ?: "Allies"
+        if (real(name0) && real(name1)) {
+            return I18n.t("briefing.sides", mapOf("left" to name0, "right" to name1))
+        }
+        val axis = sideNames.getOrNull(0) ?: I18n.t("game.side.0")
+        val allies = sideNames.getOrNull(1) ?: I18n.t("game.side.1")
         val commanded = game.campaignPlayer?.getSideName()
-        return if (commanded != null) "$axis vs $allies — you command the $commanded" else "$axis vs $allies"
+        return if (commanded != null) {
+            I18n.t(
+                "briefing.sides.commanded",
+                mapOf("left" to axis, "right" to allies, "commanded" to commanded),
+            )
+        } else {
+            I18n.t("briefing.sides", mapOf("left" to axis, "right" to allies))
+        }
     }
 
     private fun windowInnerWidth(): Int = js("window.innerWidth") as Int

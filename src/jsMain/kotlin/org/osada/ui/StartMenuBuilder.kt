@@ -3,6 +3,7 @@ package org.osada.ui
 import kotlinx.browser.localStorage
 import org.osada.GameHolder
 import org.osada.VERSION
+import org.osada.i18n.I18n
 import org.w3c.dom.HTMLElement
 
 /**
@@ -96,52 +97,48 @@ internal object StartMenuBuilder {
     }
 
     // Shown one at a time, bottom-center of the main menu (user request).
+    private data class MenuQuote(
+        val textKey: String,
+        val authorKey: String,
+    )
+
     private val menuQuotes =
         listOf(
-            "Tactics are the questions of the day, strategy the questions of the epoch." to "J. Stalin",
-            "Who will prevail over whom — that is the fundamental question of every revolution." to "V. I. Lenin",
-            "Victory does not come by itself — it must be won." to "J. Stalin",
-            "Tactics are a part of strategy, subordinate to it and serving it." to "J. Stalin",
-            "Concentrate a great superiority of forces at the decisive point." to "V. I. Lenin",
-            "Victory is impossible unless they have learned both how to attack and how to retreat properly." to
-                "V. I. Lenin",
-            "The philosophers have only interpreted the world, in various ways; the point, however, is to change it." to
-                "K. Marx",
-            "Workers of the world, unite!" to "K. Marx & F. Engels",
-            "Revolutions are the locomotives of history." to "K. Marx",
-            "There are no fortresses that Bolsheviks cannot storm." to "J. Stalin",
-            "Force is the midwife of every old society pregnant with a new one." to "K. Marx",
-            "The weapon of criticism cannot, of course, replace criticism of the weapon. " +
-                "Material force must be overthrown by material force." to
-                "K. Marx",
-            "Mass insurrection, revolutionary war, guerrilla detachments everywhere — this is the only " +
-                "method by which a small nation can overcome a large one." to
-                "F. Engels",
-            "The emancipation of the proletariat will have its own special expression in military " +
-                "affairs and will create its own, new military methods." to
-                "F. Engels",
-            "Nothing is more dependent on economic conditions than precisely the army and the navy. " +
-                "Armament, composition, organization, tactics and strategy depend above all on the " +
-                "stage reached at the time in production." to
-                "F. Engels",
-            "War is the continuation of politics by other means." to "V. I. Lenin",
-            "Once you have taken up arms, do not lay them down until the enemy is completely crushed." to "V. I. Lenin",
-            "A revolution is only worth something if it can defend itself." to "V. I. Lenin",
-            "Peace is a breathing-space for war." to "V. I. Lenin",
-            "Artillery is the god of war." to "J. Stalin",
-            "The art of war in modern conditions consists in mastering all forms of warfare and in " +
-                "using them intelligently." to
-                "J. Stalin",
-            "In modern war, the morale of the people is one of the decisive factors." to "V. I. Lenin",
-            "No mercy to the enemy!" to "J. Stalin",
+            MenuQuote("menu.quotes.stalin.tactics_day.text", "menu.quotes.stalin.tactics_day.author"),
+            MenuQuote("menu.quotes.lenin.who_will_prevail.text", "menu.quotes.lenin.who_will_prevail.author"),
+            MenuQuote("menu.quotes.stalin.victory_must_be_won.text", "menu.quotes.stalin.victory_must_be_won.author"),
+            MenuQuote("menu.quotes.stalin.tactics_part_of_strategy.text", "menu.quotes.stalin.tactics_part_of_strategy.author"),
+            MenuQuote("menu.quotes.lenin.decisive_point.text", "menu.quotes.lenin.decisive_point.author"),
+            MenuQuote("menu.quotes.lenin.attack_and_retreat.text", "menu.quotes.lenin.attack_and_retreat.author"),
+            MenuQuote("menu.quotes.marx.change_the_world.text", "menu.quotes.marx.change_the_world.author"),
+            MenuQuote("menu.quotes.marx_engels.workers_unite.text", "menu.quotes.marx_engels.workers_unite.author"),
+            MenuQuote("menu.quotes.marx.locomotives_of_history.text", "menu.quotes.marx.locomotives_of_history.author"),
+            MenuQuote("menu.quotes.stalin.no_fortresses.text", "menu.quotes.stalin.no_fortresses.author"),
+            MenuQuote("menu.quotes.marx.force_midwife.text", "menu.quotes.marx.force_midwife.author"),
+            MenuQuote("menu.quotes.marx.weapon_of_criticism.text", "menu.quotes.marx.weapon_of_criticism.author"),
+            MenuQuote("menu.quotes.engels.mass_insurrection.text", "menu.quotes.engels.mass_insurrection.author"),
+            MenuQuote("menu.quotes.engels.new_military_methods.text", "menu.quotes.engels.new_military_methods.author"),
+            MenuQuote("menu.quotes.engels.army_economic_conditions.text", "menu.quotes.engels.army_economic_conditions.author"),
+            MenuQuote("menu.quotes.lenin.war_politics.text", "menu.quotes.lenin.war_politics.author"),
+            MenuQuote("menu.quotes.lenin.do_not_lay_down_arms.text", "menu.quotes.lenin.do_not_lay_down_arms.author"),
+            MenuQuote("menu.quotes.lenin.revolution_defend_itself.text", "menu.quotes.lenin.revolution_defend_itself.author"),
+            MenuQuote("menu.quotes.lenin.peace_breathing_space.text", "menu.quotes.lenin.peace_breathing_space.author"),
+            MenuQuote("menu.quotes.stalin.artillery_god_of_war.text", "menu.quotes.stalin.artillery_god_of_war.author"),
+            MenuQuote("menu.quotes.stalin.master_all_forms.text", "menu.quotes.stalin.master_all_forms.author"),
+            MenuQuote("menu.quotes.lenin.morale_decisive.text", "menu.quotes.lenin.morale_decisive.author"),
+            MenuQuote("menu.quotes.stalin.no_mercy.text", "menu.quotes.stalin.no_mercy.author"),
         )
 
     private fun showRandomQuote() {
         val el = byId("smQuote") ?: return
-        val (text, author) = menuQuotes.random()
+        val quote = menuQuotes.random()
+        val text = I18n.t(quote.textKey)
+        val author = I18n.t(quote.authorKey)
         el.innerHTML = "<span class=\"osada-quote__text\">“$text”</span>" +
             "<span class=\"osada-quote__author\">— $author</span>"
     }
+
+    internal fun refreshRandomQuote() = showRandomQuote()
 
     /** Show/hide the Continue button based on a saved game in localStorage, and annotate it
      *  with cheap save metadata (scenario name + turn) when that is readable. Re-invoked every
@@ -153,10 +150,12 @@ internal object StartMenuBuilder {
         // only loading is possible; from the in-game pause menu it is the full pair.
         byId("saveload")?.let { btn ->
             val inGame = GameHolder.instance?.gameStarted == true
+            val keyPrefix = if (inGame) "menu.main.save_load" else "menu.main.load_game"
             (btn.query(".osada-menu-btn__label") as? HTMLElement)?.textContent =
-                if (inGame) "Save / Load" else "Load Game"
+                I18n.t("$keyPrefix.label")
             (btn.query(".osada-menu-btn__sub") as? HTMLElement)?.textContent =
-                if (inGame) "Save or restore a battle" else "Restore a saved battle"
+                I18n.t("$keyPrefix.subtitle")
+            btn.title = I18n.t("$keyPrefix.subtitle")
         }
         val button = byId("continuegame") ?: return
         val summary = savedGameSummary()
@@ -182,8 +181,16 @@ internal object StartMenuBuilder {
             val turn = data.turn as? Int
             val maxTurns = data.maxTurns as? Int
             when {
-                name != null && turn != null && maxTurns != null -> "$name · Turn $turn/$maxTurns"
-                name != null && turn != null -> "$name · Turn $turn"
+                name != null && turn != null && maxTurns != null ->
+                    I18n.t(
+                        "menu.save.summary_full",
+                        mapOf("name" to name, "turn" to turn, "maxTurns" to maxTurns),
+                    )
+                name != null && turn != null ->
+                    I18n.t(
+                        "menu.save.summary_short",
+                        mapOf("name" to name, "turn" to turn),
+                    )
                 else -> ""
             }
         } catch (_: Throwable) {

@@ -2677,3 +2677,59 @@ hr {
     color: #fff; font-size: 15px; font-weight: bold;
 }
 .osada-hero-rosterrow-copy { flex: 1 1 auto; min-width: 0; }
+
+/* Stable-ID localization: scalable native language dropdown. */
+.osada-language-switch {
+    position: absolute;
+    top: 18px;
+    right: 22px;
+    z-index: 5;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 7px;
+    border: 1px solid var(--osada-metal-600);
+    border-radius: var(--osada-radius);
+    background: rgba(14,16,19,.78);
+    box-shadow: var(--osada-shadow);
+    font-family: var(--osada-font-ui);
+}
+.osada-language-switch__globe {
+    color: var(--osada-brass);
+    font-size: 14px;
+    line-height: 1;
+}
+.osada-language-switch__label {
+    color: var(--osada-text-dim);
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+.osada-language-switch__select,
+.osada-language-setting__select {
+    min-height: 28px;
+    padding: 0 28px 0 9px;
+    border: 1px solid var(--osada-metal-600);
+    border-radius: 3px;
+    background: var(--osada-metal-800);
+    color: #fff;
+    cursor: pointer;
+    font: bold 11px/26px var(--osada-font-ui);
+}
+.osada-language-switch__select:hover,
+.osada-language-switch__select:focus,
+.osada-language-setting__select:hover,
+.osada-language-setting__select:focus {
+    border-color: var(--osada-brass);
+    outline: none;
+}
+.osada-language-setting__value { display: flex; justify-content: flex-end; }
+
+/* Late overrides replace fixed English pseudo-element labels with localized data attributes. */
+#smCPlayBut::after, #smSPlayBut::after, #smCBackBut::after, #smSBackBut::after { content: attr(data-label); }
+
+@media (max-width: 640px) {
+    .osada-language-switch { top: 8px; right: 8px; }
+    .osada-language-switch__label { display: none; }
+}

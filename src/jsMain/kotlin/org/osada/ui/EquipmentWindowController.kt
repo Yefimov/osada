@@ -247,6 +247,7 @@ internal class EquipmentWindowController(
         EquipmentWindowBuilder.renderEquipmentDetail(detailEq)
         EquipmentWindowBuilder.refreshReserveState()
         updateEquipmentCosts()
+        GameplayLocalization.refreshEquipment()
     }
 
     /** Fills the country dropdown from the side's country list, with a leading "All Countries"

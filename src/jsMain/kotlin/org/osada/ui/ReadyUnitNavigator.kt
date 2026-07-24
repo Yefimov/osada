@@ -1,6 +1,7 @@
 package org.osada.ui
 
 import org.osada.PlayerType
+import org.osada.i18n.I18n
 import org.osada.model.GameUnit
 import org.osada.model.getUnits
 import org.osada.rules.GameRules
@@ -103,8 +104,18 @@ internal class ReadyUnitNavigator(
         clearTag(btn)
         val label = addTag(btn, "span")
         label.className = "osada-et__label"
-        label.textContent = if (n > 0) "End turn · $n" else "End turn"
-        btn.title = if (n > 0) "$n unit(s) haven't acted yet — click to end the turn" else "End turn"
+        label.textContent =
+            if (n > 0) {
+                I18n.t("hud.end_turn.with_ready", mapOf("count" to n))
+            } else {
+                I18n.t("hud.end_turn.label")
+            }
+        btn.title =
+            if (n > 0) {
+                I18n.plural("hud.end_turn.with_ready.help", n)
+            } else {
+                I18n.t("hud.end_turn.help")
+            }
         btn.onclick = { e: MouseEvent ->
             e.stopPropagation()
             ui.onEndTurnClick()

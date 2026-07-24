@@ -80,6 +80,7 @@ internal class StatusBarController(
         // updateStatusBar for the human player) unit-move/combat-end refresh triggers too.
         MinimapBuilder.refresh()
         AttackRingBuilder.refresh()
+        GameplayLocalization.refreshStatusBar()
     }
 
     // ---- Weather hover panel -----------------------------------------------------------------

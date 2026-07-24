@@ -1,6 +1,7 @@
 package org.osada.ui
 
 import org.osada.DEBUG_CAMPAIGN
+import org.osada.i18n.I18n
 import org.osada.model.Equipment
 import org.osada.model.getCountryNameByEqp
 import org.osada.scenario.Campaign
@@ -38,9 +39,9 @@ internal object StartMenuCampaignScreen {
     private fun buildDifficultySelector() {
         val difficultyOptions =
             listOf(
-                Triple(StartMenuCampaignData.DIFFICULTY_HISTORICAL, "Historical", false),
-                Triple(StartMenuCampaignData.DIFFICULTY_TACTICAL, "Tactical", true),
-                Triple(StartMenuCampaignData.DIFFICULTY_OPERATIONAL, "Operational", false),
+                Triple(StartMenuCampaignData.DIFFICULTY_HISTORICAL, "campaign.difficulty.historical.label", false),
+                Triple(StartMenuCampaignData.DIFFICULTY_TACTICAL, "campaign.difficulty.tactical.label", true),
+                Triple(StartMenuCampaignData.DIFFICULTY_OPERATIONAL, "campaign.difficulty.operational.label", false),
             )
         // The "?" help button used to REPLACE the campaign description with a wall of static
         // text (a hidden mode the player had to discover, and it clobbered the actual campaign
@@ -55,10 +56,10 @@ internal object StartMenuCampaignScreen {
 
         // Custom segmented difficulty control (replaces the native <select>). The chosen
         // value is stashed on #smCamp and read by the Start handler.
-        difficultyOptions.forEach { (value, text, selected) ->
+        difficultyOptions.forEach { (value, labelKey, selected) ->
             val seg = addTag("smCampDif", "div")
             seg.className = "osada-seg" + if (selected) " osada-seg--on" else ""
-            seg.textContent = text
+            seg.textContent = I18n.t(labelKey)
             seg.title = StartMenuCampaignData.difficultyHint(value)
             seg.asDynamic().diffValue = value
             if (selected) {
@@ -90,17 +91,19 @@ internal object StartMenuCampaignScreen {
     }
 
     private fun wireCampaignHandlers(campSelect: HTMLElement) {
-        campSelect.title = "Choose the campaign whose briefing, nation, length and starting prestige are shown."
+        campSelect.title = I18n.t("campaign.select.help")
         campSelect.asDynamic().onchange = { onCampSelectChange(campSelect) }
         buildCampaignScreen(campSelect)
 
-        byId("smCBackBut")?.title = "Return to the main menu without starting a campaign."
+        byId("smCBackBut")?.title = I18n.t("campaign.back.help")
+        byId("smCBackBut")?.setAttribute("data-label", I18n.t("common.back.label"))
         byId("smCBackBut")?.onclick = { _: org.w3c.dom.events.MouseEvent ->
             makeHidden("smCamp")
             makeVisible("smMain")
         }
 
-        byId("smCPlayBut")?.title = "Start the selected campaign at the chosen difficulty."
+        byId("smCPlayBut")?.title = I18n.t("campaign.start.help")
+        byId("smCPlayBut")?.setAttribute("data-label", I18n.t("campaign.start.label"))
         byId("smCPlayBut")?.onclick = { _: org.w3c.dom.events.MouseEvent ->
             val selectedCampaign = byId("smCamp")?.asDynamic()?.selectedCampaign as? Int
             val difficulty =
@@ -108,7 +111,7 @@ internal object StartMenuCampaignScreen {
             selectedCampaign?.let { StartMenuBuilder.startNewCampaign(it, difficulty) }
         }
 
-        byId("smCFlowBut")?.title = "Show how scenario outcomes branch through this campaign."
+        byId("smCFlowBut")?.title = I18n.t("campaign.flow.help")
         byId("smCFlowBut")?.onclick = { _: org.w3c.dom.events.MouseEvent ->
             val selectedCampaign = byId("smCamp")?.asDynamic()?.selectedCampaign as? Int
             if (selectedCampaign != null) {
@@ -145,9 +148,10 @@ internal object StartMenuCampaignScreen {
         if (value == null || campaign == null) return
         val country = Equipment.getCountryNameByEqp(campaign.flag as? Int ?: 0, campaign.eqp as? String ?: "")
         byId("smCampDesc")?.innerHTML = formatCampaignDescription(campaign.desc as? String ?: "")
-        byId("smCampCountry")?.innerHTML = "<b>Country</b><br/>" + country
-        byId("smCampScenarios")?.innerHTML = "<b>Operations</b><br/>" +
-            (campaign.scenarios as? Int ?: (campaign.scenarios as? String ?: ""))
+        byId("smCampCountry")?.innerHTML = "<b>${I18n.t("campaign.country.label")}</b><br/>" + country
+        val operations = campaign.scenarios as? Int
+        byId("smCampScenarios")?.innerHTML = "<b>${I18n.t("campaign.operations.label")}</b><br/>" +
+            (operations?.let(I18n::formatNumber) ?: (campaign.scenarios as? String ?: ""))
         byId("smCamp")?.asDynamic()?.selectedCampaign = value.toInt()
         StartMenuCampaignData.updateCampaignPrestigeDisplay()
         updateCampaignDossierHead(campSelect, campaign, country)
@@ -186,7 +190,7 @@ internal object StartMenuCampaignScreen {
         val header = addTag(root, "div")
         header.id = "smCampHeader"
         header.className = "osadaScreenHeader"
-        header.textContent = "Campaign Selection"
+        header.textContent = I18n.t("campaign.selection.title")
 
         val body = addTag(root, "div")
         body.id = "smCampBody"
@@ -222,8 +226,8 @@ internal object StartMenuCampaignScreen {
                 StartMenuListToolbar.SORT_YEAR,
                 StartMenuListToolbar.SORT_SIZE,
             ),
-            "Filter campaigns…",
-            "campaigns",
+            "campaign.filter.placeholder",
+            "campaign.counter",
         )
         (register.querySelector(".osadaChipRow") as? HTMLElement)?.let { chipRow ->
             StartMenuCampaignStory.buildStoryOnlyChip(chipRow, list)
@@ -255,8 +259,8 @@ internal object StartMenuCampaignScreen {
         path.className = "osadaCollapse"
         val summary = addTag(path, "div")
         summary.className = "osadaCollapseSummary"
-        summary.innerHTML = "Campaign path"
-        summary.title = "Expand or collapse the scenario route and its outcome-dependent branches."
+        summary.textContent = I18n.t("campaign.path.label")
+        summary.title = I18n.t("campaign.path.help")
         val pathBody = addTag(path, "div")
         pathBody.id = "smCampPathBody"
         pathBody.className = "osadaCollapseBody"
@@ -294,7 +298,7 @@ internal object StartMenuCampaignScreen {
         rowSub.innerHTML =
             listOfNotNull(
                 StartMenuListToolbar.extractYears(option.text).ifBlank { null },
-                ops?.let { "$it operations" },
+                ops?.let { I18n.plural("campaign.row.operations", it) },
             ).joinToString(" &middot; ")
         // In-progress annotation, right-aligned. Only ever ONE campaign can carry it: the
         // storage holds a single campaign slot (the one Continue resumes) — there is no
@@ -306,11 +310,17 @@ internal object StartMenuCampaignScreen {
             val operation = progress.second + 1
             note.textContent =
                 if (ops != null) {
-                    "In progress · operation $operation/$ops"
+                    I18n.t(
+                        "campaign.progress.full",
+                        mapOf("current" to operation, "total" to ops),
+                    )
                 } else {
-                    "In progress · operation $operation"
+                    I18n.t(
+                        "campaign.progress.short",
+                        mapOf("current" to operation),
+                    )
                 }
-            note.title = "This is the campaign Continue resumes"
+            note.title = I18n.t("campaign.progress.help")
         }
         // Country is searchable too, so "soviet"/"spain" finds a campaign whose title says neither.
         val country = Equipment.getCountryNameByEqp(flagId, eqp)

@@ -1,5 +1,6 @@
 package org.osada.ui
 
+import org.osada.i18n.I18n
 import org.osada.model.Equipment
 import org.osada.model.getCountryNameByEqp
 import org.osada.uiSettings
@@ -56,7 +57,9 @@ internal object StartMenuSidePicker {
         eqpName: String,
     ): Pair<String, Int> {
         val countries = sideCountries(scenario, side)
-        val name = countries.firstOrNull()?.let { countryLabel(it, eqpName) } ?: "Side ${side + 1}"
+        val name =
+            countries.firstOrNull()?.let { countryLabel(it, eqpName) }
+                ?: I18n.t("scenario.side.number", mapOf("number" to side + 1))
         return Pair(name, maxOf(0, countries.size - 1))
     }
 
@@ -94,7 +97,10 @@ internal object StartMenuSidePicker {
     ) {
         val eqpName = scenario[5] as? String ?: ""
         val (name, _) = sideLabel(scenario, side, eqpName)
-        byId("smSPlayBut")?.setAttribute("data-label", "Start as $name")
+        byId("smSPlayBut")?.setAttribute(
+            "data-label",
+            I18n.t("scenario.side.start_as", mapOf("country" to name)),
+        )
     }
 
     /** Rebuilds the two side cards + divider in place. Never recreates #smScenPlayers/#smSide0/
@@ -120,7 +126,7 @@ internal object StartMenuSidePicker {
         playersRoot?.apply {
             className = "osada-side-picker"
             setAttribute("role", "radiogroup")
-            setAttribute("aria-label", "Choose your side")
+            setAttribute("aria-label", I18n.t("scenario.side.choose"))
         }
         val side0El = byId("smSide0")
         if (playersRoot != null && byId("osadaSidePickerHeading") == null) {
@@ -135,13 +141,13 @@ internal object StartMenuSidePicker {
                 }
             heading.id = "osadaSidePickerHeading"
             heading.className = "osada-side-picker__heading"
-            heading.textContent = "Choose your side"
+            heading.textContent = I18n.t("scenario.side.choose")
         }
 
         byId("smVS")?.apply {
             className = "osada-side-divider"
             setAttribute("aria-hidden", "true")
-            innerHTML = "<span class=\"osada-side-divider__medallion\">VS</span>"
+            innerHTML = "<span class=\"osada-side-divider__medallion\">${I18n.t("scenario.side.vs")}</span>"
         }
 
         for (side in 0..1) {
@@ -170,9 +176,15 @@ internal object StartMenuSidePicker {
         applySideCardAttrs(container, isSelected, available, side == focusSide)
         container.title =
             if (available) {
-                "Play this scenario as $name. The opposing side will be controlled by the AI."
+                I18n.t(
+                    "scenario.side.play_as.help",
+                    mapOf("country" to name),
+                )
             } else {
-                "$name is not available as a human-controlled side in this scenario."
+                I18n.t(
+                    "scenario.side.unavailable.help",
+                    mapOf("country" to name),
+                )
             }
         buildSideCardNameRow(container, name, primaryCountry)
         buildSideCardBadgeRow(container, extra, extraNames, available, isSelected)
@@ -234,18 +246,18 @@ internal object StartMenuSidePicker {
             sub.textContent = "+$extra"
             sub.title =
                 if (extraNames.isNotEmpty()) {
-                    "Also fighting on this side: " + extraNames.joinToString(", ")
+                    I18n.t("scenario.side.also_fighting", mapOf("countries" to extraNames.joinToString(", ")))
                 } else {
-                    "$extra additional " + (if (extra == 1) "nation" else "nations") + " fighting on this side"
+                    I18n.plural("scenario.side.additional_nations", extra)
                 }
         }
         val badge = addTag(badgeRow, "span")
         badge.className = "osada-side-card__badge"
         badge.textContent =
             when {
-                !available -> "AI CONTROLLED"
-                isSelected -> "✓ PLAYER"
-                else -> "SELECT SIDE"
+                !available -> I18n.t("scenario.side.ai_controlled")
+                isSelected -> I18n.t("scenario.side.player")
+                else -> I18n.t("scenario.side.select")
             }
     }
 

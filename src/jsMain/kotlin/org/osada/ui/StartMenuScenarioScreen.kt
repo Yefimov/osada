@@ -1,6 +1,7 @@
 package org.osada.ui
 
 import kotlinx.browser.localStorage
+import org.osada.i18n.I18n
 import org.osada.model.Equipment
 import org.osada.model.getCountryName
 import org.osada.model.getCountryNameByEqp
@@ -45,11 +46,12 @@ internal object StartMenuScenarioScreen {
     }
 
     private fun wireScenarioHandlers(scenSelect: HTMLElement) {
-        scenSelect.title = "Choose a standalone battle; its briefing and playable sides appear below."
+        scenSelect.title = I18n.t("scenario.select.help")
         scenSelect.asDynamic().onchange = { onScenSelectChange(scenSelect) }
         buildScenarioScreen(scenSelect)
 
-        byId("smSBackBut")?.title = "Return to the main menu without starting a scenario."
+        byId("smSBackBut")?.title = I18n.t("scenario.back.help")
+        byId("smSBackBut")?.setAttribute("data-label", I18n.t("common.back.label"))
         byId("smSBackBut")?.onclick = { _: org.w3c.dom.events.MouseEvent ->
             makeHidden("smScen")
             makeVisible("smMain")
@@ -57,7 +59,8 @@ internal object StartMenuScenarioScreen {
             UIBuilder.setEquipmentFlags(game?.scenario?.eqp as? String)
         }
 
-        byId("smSPlayBut")?.title = "Start the selected standalone battle with the chosen human side."
+        byId("smSPlayBut")?.title = I18n.t("scenario.start.help")
+        byId("smSPlayBut")?.setAttribute("data-label", I18n.t("scenario.start.label"))
         byId("smSPlayBut")?.onclick = { _: org.w3c.dom.events.MouseEvent ->
             val selectedScenario = byId("smScen")?.asDynamic()?.selectedScenario as? Int
             val scenario = selectedScenario?.let { StartMenuBuilder.scenarioList().getOrNull(it) }
@@ -101,7 +104,7 @@ internal object StartMenuScenarioScreen {
         val header = addTag(root, "div")
         header.id = "smScenHeader"
         header.className = "osadaScreenHeader"
-        header.textContent = "Scenario Selection"
+        header.textContent = I18n.t("scenario.selection.title")
 
         val body = addTag(root, "div")
         body.id = "smScenBody"
@@ -156,8 +159,8 @@ internal object StartMenuScenarioScreen {
             register,
             list,
             listOf(StartMenuListToolbar.SORT_DEFAULT, StartMenuListToolbar.SORT_NAME),
-            "Filter scenarios…",
-            "scenarios",
+            "scenario.filter.placeholder",
+            "scenario.counter",
         )
     }
 
@@ -207,7 +210,7 @@ internal object StartMenuScenarioScreen {
         val isPlayed = file.isNotBlank() && file in played
         note.className =
             "osadaListRowNote" + if (isPlayed) " osadaListRowNote--played" else " osadaListRowNote--new"
-        note.textContent = if (isPlayed) "Played" else "New"
+        note.textContent = I18n.t(if (isPlayed) "scenario.status.played" else "scenario.status.new")
 
         // Side FILTER covers every country playable in the scenario, not just the human's
         // default (id 0) — a scenario like Battle of Sesena (Soviet Union vs Spain) must be

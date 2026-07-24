@@ -1,5 +1,6 @@
 package org.osada.ui
 
+import org.osada.i18n.I18n
 import org.osada.model.Equipment
 import org.osada.model.GameUnit
 import org.osada.model.getCountryName
@@ -60,10 +61,7 @@ internal class EquipmentCostsCalculator(
     private fun resolveBuyBlockedReason(eqUnitId: Int): String? =
         when {
             eqUnitId <= 0 -> null
-            !hasPurchaseAnchor() ->
-                "No supply hex or deployment zone in this scenario — nothing can be bought here " +
-                    "(the enemy cannot buy either). Reinforcements arrive on schedule instead; " +
-                    "capturing a port would open deployment."
+            !hasPurchaseAnchor() -> I18n.t("equipment.buy_blocked.no_anchor")
             else -> campaignCountryRefusal(eqUnitId)
         }
 
@@ -74,9 +72,13 @@ internal class EquipmentCostsCalculator(
         return if (campaign.country == eqCountry) {
             null
         } else {
-            "${Equipment.getCountryName(eqCountry)} equipment — this campaign may only " +
-                "purchase ${Equipment.getCountryName(campaign.country)} equipment. It can " +
-                "still be upgraded from the Upgrade tab."
+            I18n.t(
+                "equipment.buy_blocked.campaign_country",
+                mapOf(
+                    "selectedCountry" to Equipment.getCountryName(eqCountry),
+                    "campaignCountry" to Equipment.getCountryName(campaign.country),
+                ),
+            )
         }
     }
 
