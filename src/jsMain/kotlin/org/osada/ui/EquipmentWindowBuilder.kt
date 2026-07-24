@@ -20,6 +20,30 @@ internal fun equipmentDescriptionOrNull(eq: EquipmentData): String? = UnitDescri
 internal fun equipmentAvailabilityText(eq: EquipmentData): String =
     "Available from ${monthNamesShort.getOrNull(eq.monthavailable - 1) ?: ""} ${eq.yearavailable}"
 
+/** "All Countries" — the country dropdown's leading entry; see syncCountrySelect. */
+private const val ALL_COUNTRIES = -1
+
+/**
+ * Which country the equipment window opens on, as an index into [UI.countriesOnSpotSide].
+ *
+ * A campaign may only BUY its own nation's equipment ([EquipmentCostsCalculator] resolveBuyCost),
+ * so opening on "All Countries" leads the catalogue with support-country units the player cannot
+ * purchase — e.g. the Soviet Red Army campaign opening on Spanish Republic militia at Seseña.
+ * Preselect the campaign's own nation instead. Standalone scenarios have no campaign nation and
+ * keep "All Countries", which is correct there: the whole side IS buyable.
+ *
+ * Falls back to "All Countries" when the campaign nation is absent from this side's list, or when
+ * the game/UI isn't up yet — this also runs at window-build time, before a scenario is loaded.
+ */
+private fun defaultCountryIndex(): Int {
+    val game = GameHolder.instance
+    val campaignCountry = game?.campaign?.country
+    val countries = game?.ui?.countriesOnSpotSide
+    val index =
+        if (campaignCountry != null && countries != null) countries.indexOf(campaignCountry) else -1
+    return if (index >= 0) index else ALL_COUNTRIES
+}
+
 /**
  * Builds the equipment window (class selector, buy/upgrade/sell buttons, sort options) and
  * renders the cost row and the attack-info status bar. Extracted from the former `UIBuilder`
@@ -31,10 +55,7 @@ internal object EquipmentWindowBuilder {
 
     fun setDefaultUserSelections() {
         val eqSelCountry = byId("eqSelCountry")
-        // -1 = "All Countries" (see syncCountrySelect): the default whenever the side has support
-        // countries, so opening Reserves as e.g. Axis shows every buyable unit up front instead of
-        // just the first country in the list.
-        eqSelCountry?.asDynamic()?.country = -1
+        eqSelCountry?.asDynamic()?.country = defaultCountryIndex()
         eqSelCountry?.asDynamic()?.owner = 0
 
         val eqUserSel = byId("eqUserSel")
@@ -87,7 +108,15 @@ internal object EquipmentWindowBuilder {
         UIBuilder.eqClassButtons.forEach { (eqClass, data) ->
             val div = addTag("eqSelClass", "div")
             div.className = "smallButtonSubMenu"
-            div.title = data.second
+            // Name the classes merged into this tab (UIBuilder.eqClassTabGroups) so the player can
+            // see that e.g. fortifications live under Infantry, and advertise the otherwise
+            // invisible "All" re-click gesture. A visible "All" tab was tried and rejected for
+            // crowding the other 8 (see onClassTabClick), so both cues go in the tooltip.
+            val merged =
+                UIBuilder.eqClassTabGroups[eqClass]
+                    ?.joinToString(", ") { unitClassNames[it.value] }
+            val mergedNote = if (merged.isNullOrEmpty()) "" else " (incl. $merged)"
+            div.title = "${data.second}$mergedNote — click again to show all classes"
             div.id = "eqclass-$eqClass"
             div.asDynamic().eqclass = eqClass
             // Glyph + text label (a bare osada glyph is unreadable as a class tab).
@@ -273,6 +302,7 @@ internal object EquipmentWindowBuilder {
         buy: Int,
         upgrade: Int,
         sell: Int,
+        buyBlockedReason: String? = null,
     ) {
         val eqNewText = byId("eqNewText")
         val eqNewCost = byId("eqNewCost")
@@ -285,6 +315,10 @@ internal object EquipmentWindowBuilder {
             if (buy > prestige) {
                 val diff = buy - prestige
                 eqNewText?.innerHTML = "<span style='color:#BB7575'>Need $diff more prestige to buy.</span>"
+            } else if (buyBlockedReason != null) {
+                // A rule (not the wallet) refuses this purchase — say which one, rather than
+                // leaving an empty space where the Buy button was.
+                eqNewText?.innerHTML = "<span style='color:#BB7575'>$buyBlockedReason</span>"
             } else {
                 eqNewText?.textContent = ""
             }

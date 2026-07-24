@@ -1,5 +1,6 @@
 package org.osada.ui
 
+import org.osada.UnitClass
 import org.osada.model.Equipment
 
 /** Shared accessor for the JS `game` global, used by several UI builders. */
@@ -51,6 +52,40 @@ object UIBuilder {
             "10" to Pair("%", "Air Fighter"),
             "11" to Pair("4", "Air Bomber"),
         )
+
+    /**
+     * Extra [UnitClass] values each tab shows beyond its own, so all 21 classes are reachable from
+     * the 8 tabs instead of only through the hidden "All" re-click.
+     *
+     * PM had 8 tabs for 21 classes and no mapping, which left 13 classes — Flak, Fortification,
+     * both transports, level bombers and every naval class — with no tab at all. A ninth "All" tab
+     * was tried and rejected for crowding the row, so classes are MERGED into related tabs instead,
+     * the way Panzer Corps 2 does it (its Anti-Aircraft tab covers what OG splits into Flak and
+     * Air Defense). Only entries that genuinely belong together are merged:
+     *  - Fortification onto Infantry — static emplacements, the OG "Eingegrabene Infanterie" case;
+     *  - Flak onto Air defence — already collapsed for strip filtering, see normalizeUnitClass;
+     *  - Ground Transport onto Tank, Air Transport onto Air Fighter, Level Bomber onto Air Bomber.
+     *
+     * Naval classes are deliberately NOT merged into a ground tab: they would be nonsense there,
+     * and `EquipmentWindowState.isUndeployableOnThisMap` already hides ships on maps with no water.
+     * They remain reachable through "All"; a dedicated naval tab is the open question if a
+     * water-heavy campaign ever needs one.
+     */
+    val eqClassTabGroups: Map<String, List<UnitClass>> =
+        mapOf(
+            UnitClass.INFANTRY.value.toString() to listOf(UnitClass.FORTIFICATION),
+            UnitClass.TANK.value.toString() to listOf(UnitClass.GROUND_TRANSPORT),
+            UnitClass.AIR_DEFENCE.value.toString() to listOf(UnitClass.FLAK),
+            UnitClass.FIGHTER.value.toString() to listOf(UnitClass.AIR_TRANSPORT),
+            UnitClass.TACTICAL_BOMBER.value.toString() to listOf(UnitClass.LEVEL_BOMBER),
+        )
+
+    /** Every [UnitClass] the tab for [classValue] should list: the tab's own class first, then any
+     *  merged in by [eqClassTabGroups]. */
+    fun classesForTab(classValue: Int): List<UnitClass> {
+        val own = UnitClass.entries.find { it.value == classValue } ?: UnitClass.TANK
+        return listOf(own) + (eqClassTabGroups[classValue.toString()] ?: emptyList())
+    }
 
     data class UnitStatEntry(
         val id: String,

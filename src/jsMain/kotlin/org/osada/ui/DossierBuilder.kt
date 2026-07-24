@@ -1,6 +1,8 @@
 package org.osada.ui
 
 import org.osada.GameHolder
+import org.osada.getCampaignPlayer
+import org.osada.hero.HeroCampaign
 import org.osada.model.GameUnit
 import org.osada.outcomeNames
 import org.osada.scenario.Campaign
@@ -49,6 +51,8 @@ internal object DossierBuilder {
         text: String,
         callback: (() -> Unit)?,
     ): Boolean {
+        // A completed campaign enshrines its notable commanders in the cross-campaign Hall of Fame (§14.6).
+        harvestHallOfFame()
         val dossier = if (showDossier(false, callback)) byId("dossier") else null
         dossier ?: return false
         val banner = addTag(dossier, "div")
@@ -76,16 +80,20 @@ internal object DossierBuilder {
         docked: Boolean,
         callback: (() -> Unit)? = null,
     ): Boolean {
-        val game = gameRef()
-        // Read campaign fields through the typed Game (not the dynamic `game`): Kotlin/JS mangles
-        // property backing fields (name -> name_1), so `game.campaign.name` via `dynamic` is undefined.
-        val campaign = GameHolder.instance?.campaign
+        // Everything here goes through the typed Game, never the dynamic `game`: Kotlin/JS mangles
+        // property backing fields (name -> name_1), so `game.campaign.name` via `dynamic` is
+        // undefined — AND `getCampaignPlayer` is an EXTENSION function (GameEndgame.kt), which
+        // compiles to a top-level function rather than a method on the Game object, so calling it
+        // dynamically threw "game.getCampaignPlayer is not a function" and crashed the campaign-end
+        // screen on every defeat.
+        val typedGame = GameHolder.instance
+        val campaign = typedGame?.campaign
         val dossier = byId("dossier")
-        if (game?.campaign == null || dossier == null) return false
+        if (campaign == null || dossier == null) return false
         clearTag(dossier)
         dossier.className = "dossier osada-dsr"
         dossier.style.display = "flex"
-        val player = game.getCampaignPlayer()
+        val player = typedGame.getCampaignPlayer()
         return if (player == null) {
             false
         } else {
@@ -154,9 +162,16 @@ internal object DossierBuilder {
             val uclass = entry.key
             val glyph = entry.value.first
             val classTitle = entry.value.second
-            val killed = dossierData.units.killed[uclass] as? Int ?: 0
-            val lostCore = dossierData.units.lostcore[uclass] as? Int ?: 0
-            val lostAux = dossierData.units.lostaux[uclass] as? Int ?: 0
+            // Sum the tab's own class AND the classes merged into it (UIBuilder.eqClassTabGroups):
+            // the grid has 8 cards for 21 classes, so without this, losses of merged classes
+            // (fortifications, transports, level bombers) were tallied but never displayed.
+            val tallied = UIBuilder.classesForTab(uclass.toIntOrNull() ?: 0).map { it.value.toString() }
+
+            fun sum(bucket: dynamic) = tallied.sumOf { bucket[it] as? Int ?: 0 }
+            val killed = sum(dossierData.units.killed)
+            val captured = sum(dossierData.units.captured)
+            val lostCore = sum(dossierData.units.lostcore)
+            val lostAux = sum(dossierData.units.lostaux)
             val card = addTag(grid, "div")
             card.className = "osada-dsr-cas-card"
             card.title = classTitle
@@ -174,7 +189,12 @@ internal object DossierBuilder {
                 row.className = "osada-dsr-cas-stat"
                 row.innerHTML = "<span>$label</span><b>$value</b>"
             }
-            stat("Inflicted", killed)
+            // `captured` is a subset of `killed`, so show the destroyed remainder separately —
+            // "Destroyed 12 / Surrendered 4" reads as the two distinct tactics that produced them.
+            // The Surrendered row is omitted entirely when none were taken, to avoid a grid full
+            // of zeroes in scenarios where encirclement never happened.
+            stat("Destroyed", killed - captured)
+            if (captured > 0) stat("Surrendered", captured)
             stat("Lost (Core)", lostCore)
             stat("Lost (Aux)", lostAux)
         }
@@ -225,5 +245,22 @@ internal object DossierBuilder {
 
     fun closeDossier() {
         byId("dossier")?.style?.display = "none"
+    }
+
+    /** Enshrines this campaign's renowned, authored, and fallen commanders in the Hall of Fame (§14.6). */
+    private fun harvestHallOfFame() {
+        val campaignName = GameHolder.instance?.campaign?.name ?: return
+        val entries =
+            HeroCampaign.commanders().filter { it.notable }.map {
+                HallOfFame.Entry(
+                    name = it.name,
+                    rank = it.rank,
+                    renown = it.renown,
+                    potential = it.potential,
+                    status = it.statusLabel,
+                    campaign = campaignName,
+                )
+            }
+        HallOfFame.harvest(entries)
     }
 }

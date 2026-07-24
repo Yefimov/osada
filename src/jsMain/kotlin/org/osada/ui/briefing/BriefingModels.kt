@@ -1,5 +1,8 @@
 package org.osada.ui.briefing
 
+import org.osada.campaign.CampaignCondition
+import org.osada.campaign.CampaignEffect
+
 internal enum class BriefingStage {
     DIALOGUE,
     ORDERS,
@@ -22,6 +25,18 @@ internal data class BriefingChoice(
     val id: String,
     val text: String,
     val next: String?,
+    /** Consequences committed once, when the player actually selects this branch. */
+    val effects: List<CampaignEffect> = emptyList(),
+    /**
+     * Optional authored one-line preview of what taking this branch means, e.g.
+     * "Command will note your caution". Qualitative on purpose: it may gesture at long-term
+     * standing without naming the flag or route it sets.
+     *
+     * When blank, `BriefingChoicePreview` falls back to a generated summary of the IMMEDIATE
+     * game-mechanic effects only. Narrative consequences (`setFlag`/`clearFlag`/`route`) are
+     * never disclosed either way — that is the whole point of authoring a hint instead.
+     */
+    val hint: String = "",
 )
 
 internal data class BriefingParticipant(
@@ -42,6 +57,11 @@ internal data class BriefingLine(
     val initials: String,
     val next: String?,
     val choices: List<BriefingChoice>,
+    /**
+     * Facts this line requires. [CampaignCondition.EMPTY] — what every condition-free line parses
+     * to — always matches, which is why pre-existing dialogue keeps displaying unchanged.
+     */
+    val condition: CampaignCondition = CampaignCondition.EMPTY,
 ) {
     fun participant(): BriefingParticipant =
         BriefingParticipant(

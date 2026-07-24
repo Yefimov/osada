@@ -6,6 +6,7 @@ import org.osada.model.deployReinforcement
 import org.osada.model.getPlayer
 import org.osada.scenario.getReinforcements
 import org.osada.scenario.removeReinforcement
+import org.osada.ui.HudLog
 import org.osada.ui.UIBuilder
 import org.osada.ui.handleReinforcementDeployment
 import org.osada.ui.mainMenuButton
@@ -49,6 +50,10 @@ fun Game.continueCampaign(
 ) {
     console.log("[OSADA] continueCampaign", outcome)
     val player = campaignPlayer ?: return
+    // The scenario is definitively over at this single funnel, so this is the one correct place
+    // to record the REAL outcome. recordScenarioCompletion is idempotent per scenario: the
+    // move-capture and end-turn completion paths can both reach here for the same battle.
+    recordCampaignOutcome(outcome)
     player.prestige += campaign!!.getOutcomePrestige(outcome)
     player.addOutcomeToDossier(outcome, scenario!!.name)
     OSGlue.reportScore(player.score)
@@ -101,7 +106,19 @@ fun Game.deployReinforcements(
                 val isFriendly = spotSide == side
                 ui?.showAlert(pos.row, pos.col, "Reinforced!", isFriendly)
             }
+            // The floating "Reinforced!" alert is fog-gated, so a scripted reinforcement that
+            // lands off-screen or in unspotted territory arrived with no notice at all. OG always
+            // announces your OWN arrivals ("reinforcements have arrived"), so log those
+            // unconditionally; the row is clickable and jumps to the unit.
+            if (spotSide == side) {
+                HudLog.addAt(pos.row, pos.col, "Reinforcement arrived: ${reinf.unit.unitData(true).name}")
+            }
         }
+    }
+    // Authored announcement for this wave (`<reinforce message="...">`), OG-style. Only for the
+    // side the player is watching — the enemy's reinforcements are not theirs to be told about.
+    if (deployed && spotSide == side) {
+        scenario?.reinforcementMessages?.get(turn)?.let { UIBuilder.message("Reinforcements", it) }
     }
     if (deployed) {
         // Reinforcements can introduce unit/transport eqids whose sprites were not part of the

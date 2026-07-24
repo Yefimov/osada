@@ -50,6 +50,30 @@ internal object AttackEligibility {
         return UnitPredicates.isEnemy(attacker, defender) && canTargetAir
     }
 
+    /** Diagnostic: names the first eligibility gate that blocks [attacker] from striking
+     *  [defender], or null when the attack is actually allowed. Not used by combat resolution —
+     *  it exists so the click path can explain a "why can't I attack this?" case in one console
+     *  line (see MapClickHandler), instead of leaving it to guesswork (DEFERRED: T-34/ZP-40). */
+    fun attackBlockReason(
+        attacker: GameUnit,
+        defender: GameUnit,
+    ): String? =
+        when {
+            attacker.destroyed || defender.destroyed -> "a unit is destroyed"
+            !UnitPredicates.isEnemy(attacker, defender) ->
+                "not an enemy (same side ${attacker.player?.side})"
+            airGroundedByWeather(attacker) -> "attacker is an air unit grounded by weather"
+            attacker.getAmmo() <= 0 -> "attacker is out of ammo"
+            UnitPredicates.isAir(defender) && attacker.unitData().airatk <= 0 ->
+                "attacker cannot target air (airatk=${attacker.unitData().airatk})"
+            !Equipment.canInitiateAttackOnUnitType(attacker.getEqid(), defender.getEqid()) ->
+                "target-type matrix (attacker attr=${attacker.unitData().attr}, target=${defender.unitData().target})"
+            attacker.hasFired -> "attacker has already fired"
+            !isInAttackRange(attacker, defender) ->
+                "out of range (range=${getUnitAttackRange(attacker)})"
+            else -> null
+        }
+
     fun isInAttackRange(
         attacker: GameUnit,
         defender: GameUnit,

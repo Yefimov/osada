@@ -1,5 +1,8 @@
 package org.osada
 
+import org.osada.campaign.CampaignNarrative
+import org.osada.hero.HeroCampaign
+import org.osada.hero.LeaderMigration
 import org.osada.model.Equipment
 import org.osada.model.GameMap
 import org.osada.model.Hex
@@ -147,6 +150,12 @@ class GameStateRestore(
         val data = campaignData
         val campaignId = data.id as Int
         val file = data.file as String
+        // Old saves have no `narrative` key: deserialize(null) yields empty state, so a
+        // pre-narrative save loads with no callbacks rather than failing.
+        CampaignNarrative.restore(data.narrative)
+        // Same absence rule: a save written before the hero system has no `heroes` key and
+        // restores to an empty roster, which the migration below then populates.
+        HeroCampaign.restore(data.heroes)
         val campaignIndex = Campaign.findCampaignByFile(file)
         game.campaign =
             Campaign(if (campaignIndex >= 0) campaignIndex else campaignId, data.difficulty as Int) {
@@ -159,6 +168,9 @@ class GameStateRestore(
                         savedCoreUnits.unsafeCast<Array<dynamic>>().toList(),
                     )
                 }
+                // After the core roster exists, so every core unit has a formation id to key on.
+                // Idempotent, so running it on an already-migrated save changes nothing.
+                campaignPlayer?.let { LeaderMigration.migrate(it, file) }
                 onReady()
             }
     }

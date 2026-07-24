@@ -17,6 +17,10 @@ internal class UnitRenderer(
     private val rc: RenderContext,
 ) {
     companion object {
+        // Icons already reported missing, so a missing OG-import sprite is logged once rather than
+        // every frame it is drawn — the per-frame spam was pinning the console and the render loop.
+        private val loggedMissingIcons = mutableSetOf<String>()
+
         private const val STRENGTH_TEXT_Y_OFFSET = 9.0
         private const val AMMO_ICON_X_OFFSET = 4.0
         private const val AMMO_ICON_Y_OFFSET = 12.0
@@ -147,14 +151,9 @@ internal class UnitRenderer(
         val icon = unit.getIcon()
         val img = if (isBridge) rc.bridgeImage else rc.unitImages[icon]
         if (img == null || img == undefined) {
-            console.log(
-                "[osada] drawUnitSprite missing image for icon",
-                icon,
-                "unit eqid",
-                unit.eqid,
-                "isBridge",
-                isBridge,
-            )
+            if (loggedMissingIcons.add(icon)) {
+                console.log("[osada] drawUnitSprite missing image (logged once) for icon", icon, "eqid", unit.eqid)
+            }
             return false
         }
 

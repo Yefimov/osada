@@ -34,6 +34,16 @@
         linear-gradient(180deg, rgba(10, 11, 13, .42), rgba(8, 9, 11, .62)),
         radial-gradient(130% 100% at 28% 38%, rgba(0, 0, 0, 0) 24%, rgba(0, 0, 0, .62) 100%);
     backdrop-filter: saturate(.75) contrast(1.05);
+    transition: background .4s ease;
+}
+
+/* Conversation stage: the speaker cards carry their own legibility (local blur), so the wash
+ * over the art can come up. This is the whole reason the cards are translucent — a dark slab
+ * plus a dark wash would show nothing either way. */
+.osada-briefing--dialogue .osada-briefing__backdrop::before {
+    background:
+        linear-gradient(180deg, rgba(10, 11, 13, .2), rgba(8, 9, 11, .42)),
+        radial-gradient(130% 100% at 28% 38%, rgba(0, 0, 0, 0) 34%, rgba(0, 0, 0, .55) 100%);
 }
 
 .osada-briefing__shade {
@@ -265,17 +275,17 @@
     padding: clamp(12px, 2vw, 28px);
 }
 
+/* The panel itself is now pure layout: no fill, no frame. Every speaker gets their OWN
+ * translucent card instead (see __body), so the scenario's backdrop art stays visible between
+ * and behind them. Legibility comes from each card's local blur, never from a slab over the
+ * whole screen. */
 .osada-dialogue {
     position: relative;
     width: min(1060px, 100%);
     min-height: 0;
     display: flex;
     flex-direction: column;
-    padding: clamp(38px, 4vw, 46px) clamp(16px, 2.4vw, 28px) clamp(14px, 2vw, 20px);
-    background: linear-gradient(180deg, var(--osada-metal-800), var(--osada-metal-900));
-    border: var(--osada-frame-brass);
-    border-radius: var(--osada-radius);
-    box-shadow: var(--osada-shadow), 0 20px 60px rgba(0, 0, 0, .5);
+    padding: clamp(38px, 4vw, 46px) clamp(4px, 1vw, 10px) clamp(4px, 1vw, 8px);
     cursor: pointer;
 }
 
@@ -300,12 +310,33 @@
     display: flex;
     gap: clamp(10px, 1.4vw, 16px);
     align-items: flex-start;
-    animation: osada-turn-enter .18s ease-out both;
+    /* `backwards`, NOT `both`: a filled-forwards animation would pin opacity:1 and beat the
+     * age-fade rules below in the cascade. Backwards gives the pre-start state only. */
+    animation: osada-turn-enter .22s ease-out backwards;
+    transition: opacity .3s ease;
 }
 
-/* The player's own replies read back as answers: indented, brass, no portrait repeat. */
+/* Translucent boxes stack badly: eight of them over one photo is noise, and the eye loses which
+ * line is current. So the log recedes with age — newest at full strength, the one before it
+ * dimmed, everything older further back. Hovering or focusing the transcript restores all of it,
+ * because reading back through the conversation is a supported gesture. */
+.osada-dialogue__turn:nth-last-child(n + 2) { opacity: .6; }
+.osada-dialogue__turn:nth-last-child(n + 4) { opacity: .34; }
+
+.osada-dialogue__transcript:hover .osada-dialogue__turn,
+.osada-dialogue__transcript:focus-within .osada-dialogue__turn {
+    opacity: 1;
+}
+
+/* `side: right` puts the speaker against the opposite edge — the schema has carried this field
+ * from the start; it only now has a visual meaning. */
+.osada-dialogue__turn--right {
+    flex-direction: row-reverse;
+}
+
+/* The player's own replies read back as answers: brass, right-hand side, no portrait repeat. */
 .osada-dialogue__turn--player {
-    padding-left: clamp(20px, 4vw, 56px);
+    flex-direction: row-reverse;
 }
 
 .osada-dialogue__turn--player .osada-dialogue__portrait {
@@ -321,13 +352,50 @@
     content: "▸ ";
 }
 
+/* ---- The speaker card ------------------------------------------------------------------
+   This is the box. `backdrop-filter` is what makes translucency survive prose: the art stays
+   readable AS art behind the card, while the text sits on a locally calmed surface. Plain alpha
+   over a photograph would not hold at this line length. */
 .osada-dialogue__body {
-    flex: 1 1 auto;
+    flex: 0 1 auto;
     min-width: 0;
+    max-width: min(700px, 84%);
+    padding: 11px clamp(13px, 1.4vw, 18px) 13px;
+    background: linear-gradient(180deg, rgba(29, 33, 39, .58), rgba(20, 22, 26, .72));
+    backdrop-filter: blur(16px) saturate(.8);
+    -webkit-backdrop-filter: blur(16px) saturate(.8);
+    border: 1px solid rgba(180, 138, 60, .18);
+    border-left: 3px solid var(--osada-brass);
+    border-radius: var(--osada-radius);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .42);
+}
+
+/* Mirrored cards take the accent on the mirrored edge, so the brass rule always points back at
+ * the portrait rather than away from it. */
+.osada-dialogue__turn--right .osada-dialogue__body,
+.osada-dialogue__turn--player .osada-dialogue__body {
+    border-left: 1px solid rgba(180, 138, 60, .18);
+    border-right: 3px solid var(--osada-brass);
+}
+
+.osada-dialogue__turn--player .osada-dialogue__body {
+    background: linear-gradient(180deg, rgba(96, 74, 33, .42), rgba(58, 45, 20, .56));
+}
+
+/* Without backdrop-filter the cards would be flat alpha over a photo — unreadable at this text
+ * length. Fall back to near-opaque fills rather than shipping grey text on a battlefield. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .osada-dialogue__body {
+        background: linear-gradient(180deg, rgba(29, 33, 39, .93), rgba(20, 22, 26, .96));
+    }
+
+    .osada-dialogue__turn--player .osada-dialogue__body {
+        background: linear-gradient(180deg, rgba(70, 55, 25, .94), rgba(48, 37, 17, .96));
+    }
 }
 
 @keyframes osada-turn-enter {
-    from { opacity: 0; transform: translateY(6px); }
+    from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
@@ -337,8 +405,12 @@
     right: clamp(14px, 3vw, 28px);
     padding: 6px 10px;
     color: var(--osada-text-dim);
-    background: transparent;
-    border: 1px solid transparent;
+    /* No longer sitting on a panel, so it carries its own small surface — otherwise 10px dim
+     * uppercase over a photograph is unreadable. */
+    background: rgba(16, 18, 21, .62);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(180, 138, 60, .22);
     border-radius: var(--osada-radius);
     font-family: var(--osada-font-ui);
     font-size: 10px;
@@ -351,7 +423,8 @@
 .osada-dialogue__skip:hover,
 .osada-dialogue__skip:focus-visible {
     color: var(--osada-text);
-    border-color: var(--osada-metal-600);
+    background: rgba(16, 18, 21, .86);
+    border-color: var(--osada-brass);
     outline: none;
 }
 
@@ -364,7 +437,8 @@
     background: var(--osada-metal-700);
     border: var(--osada-frame-brass);
     border-radius: var(--osada-radius);
-    box-shadow: var(--osada-shadow);
+    /* Sits outside the card, directly over the backdrop art, so it needs to separate itself. */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, .6);
 }
 
 .osada-dialogue__portrait-image {
@@ -413,12 +487,28 @@
     text-wrap: pretty;
 }
 
-/* Choice buttons / continue hint sit below the log, never inside the scroll area. */
+/* Choice buttons / continue hint sit below the log, never inside the scroll area.
+ * Deliberately NOT translucent like the speaker cards. These commit prestige, units and campaign
+ * routing — an element that decides the run gets full contrast, not mood lighting. */
 .osada-dialogue__controls {
     flex: 0 0 auto;
     margin-top: clamp(10px, 1.6vh, 16px);
-    padding-top: clamp(10px, 1.6vh, 14px);
+    padding: clamp(10px, 1.6vh, 14px) clamp(12px, 1.6vw, 18px);
+    background: linear-gradient(180deg, rgba(29, 33, 39, .93), rgba(16, 18, 21, .97));
+    border: var(--osada-border);
+    border-top: 2px solid var(--osada-brass);
+    border-radius: var(--osada-radius);
+    box-shadow: 0 -6px 26px rgba(0, 0, 0, .45);
+}
+
+/* A "press to continue" prompt needs no chrome around it — the strip only earns its frame when
+ * it is actually holding a decision (class set by ScenarioBriefingBuilder.setRevealed). */
+.osada-dialogue__controls:not(.osada-dialogue__controls--deciding) {
+    background: none;
+    border: none;
     border-top: var(--osada-border);
+    border-radius: 0;
+    box-shadow: none;
 }
 
 .osada-dialogue__choices {
@@ -469,6 +559,8 @@
     font-weight: 700;
     letter-spacing: .1em;
     text-transform: uppercase;
+    /* Unframed now that the strip is bare between decisions — reads against any backdrop. */
+    text-shadow: 0 1px 4px rgba(0, 0, 0, .9);
     animation: osada-hint-pulse 1.6s ease-in-out infinite;
 }
 
@@ -512,7 +604,7 @@
     }
 
     .osada-dialogue {
-        padding: 34px 12px 12px;
+        padding: 34px 4px 4px;
     }
 
     .osada-dialogue__portrait {
@@ -520,8 +612,9 @@
         height: 44px;
     }
 
-    .osada-dialogue__turn--player {
-        padding-left: 16px;
+    /* Narrow screens have no room to spend on an empty gutter opposite each card. */
+    .osada-dialogue__body {
+        max-width: 100%;
     }
 
     .osada-dialogue__choices {
@@ -537,4 +630,81 @@
     .osada-dialogue__turn {
         animation: none;
     }
+}
+
+/* ---- Choice consequence preview -------------------------------------------------
+   One muted line under a dialogue choice: the authored `hint`, or a generated summary
+   of the choice's immediate mechanics. Narrative consequences (flags/routing) are never
+   shown -- see BriefingChoicePreview. Column 2 so it aligns under the choice text, not
+   under the number gutter. */
+.osada-dialogue__choice-hint {
+    grid-column: 2;
+    margin-top: 4px;
+    color: var(--osada-text-dim);
+    font-size: 12px;
+    line-height: 1.35;
+}
+
+/* ---- Pending decision on the ORDERS stage ---------------------------------------
+   Shown when SKIP (or Esc) jumped a conversation that still owed a decision. Sits above
+   the orders text and gates the BEGIN button. */
+.osada-briefing__decision {
+    border-left: 3px solid var(--osada-brass);
+    padding-left: 12px;
+}
+
+.osada-briefing__decision-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.osada-briefing__decision-option {
+    display: grid;
+    grid-template-columns: 22px minmax(0, 1fr);
+    gap: 8px;
+    align-items: start;
+    padding: 10px 12px;
+    color: var(--osada-text);
+    background: var(--osada-metal-700);
+    border: var(--osada-border);
+    border-radius: var(--osada-radius);
+    font: inherit;
+    font-size: clamp(13px, 1.2vw, 16px);
+    line-height: 1.3;
+    text-align: left;
+    cursor: pointer;
+}
+
+.osada-briefing__decision-option:hover,
+.osada-briefing__decision-option:focus-visible {
+    background: var(--osada-metal-600);
+    border-color: var(--osada-brass);
+    outline: none;
+}
+
+.osada-briefing__decision-label {
+    color: var(--osada-brass);
+    font-weight: 700;
+}
+
+.osada-briefing__decision-text {
+    min-width: 0;
+}
+
+.osada-briefing__decision-hint {
+    grid-column: 2;
+    margin-top: 4px;
+    color: var(--osada-text-dim);
+    font-size: 12px;
+    line-height: 1.35;
+}
+
+/* BEGIN stays visibly unavailable until the decision is made. */
+.osada-briefing__button--disabled,
+.osada-briefing__button:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+    filter: grayscale(60%);
 }

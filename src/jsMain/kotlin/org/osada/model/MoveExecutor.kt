@@ -128,6 +128,7 @@ internal class MoveExecutor(
         if (last.row == row && last.col == col && GameRules.canCapture(unit)) {
             val capture = gameMap.captureHex(toHex, unit)
             result.isCapture = capture.isCapture
+            result.capturePrestige = capture.prestigeGain as? Int ?: 0
             if (capture.isWin) result.isVictorySide = setup.side
         }
 

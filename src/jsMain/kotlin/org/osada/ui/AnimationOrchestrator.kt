@@ -1,6 +1,8 @@
 package org.osada.ui
 
+import org.osada.CombatLog
 import org.osada.PlayerType
+import org.osada.addSurrender
 import org.osada.handleMoveVictory
 import org.osada.model.Cell
 import org.osada.model.CombatResults
@@ -12,6 +14,7 @@ import org.osada.model.getUnits
 import org.osada.model.hasRailData
 import org.osada.model.moveUnit
 import org.osada.model.retreatUnit
+import org.osada.model.surrenderUnit
 import org.osada.rules.GameRules
 import org.osada.rules.calculateAttackResults
 import org.osada.rules.getDirection
@@ -20,7 +23,9 @@ import org.osada.rules.getSupportFireUnits
 import org.osada.rules.getUnitAttackRange
 import org.osada.rules.getUnitMoveRange
 import org.osada.rules.isLossOverRetreatThreshold
+import org.osada.rules.isRetreatBlockedByOwnUnitsOnly
 import org.osada.rules.shouldDefenderRetreat
+import org.osada.rules.shouldDefenderSurrender
 import org.osada.uiAnimationFinished
 
 /** Max of move range, attack range and spot range — the render radius needed to redraw after any unit action. */
@@ -175,6 +180,15 @@ internal class AnimationOrchestrator(
         }
 
     // Defender retreat for ground-vs-ground combat when losses exceed the threshold.
+    //
+    // ORDERING IS THE RULE, not an implementation detail: the guard below means surrender is
+    // reachable ONLY after a retreat has genuinely been triggered by the normal combat rules
+    // (shouldDefenderRetreat: ground-vs-ground, not artillery/bomber/fortification, losses past
+    // UNIT_RETREAT_THRESHOLD). A unit that merely happens to have no legal adjacent hex — sitting
+    // in a corner, ringed by water, boxed in by friendlies — never surrenders while it is not
+    // being forced to retreat. Only once the retreat is owed and cannot be paid does the unit
+    // surrender. This is COMBAT encirclement, not operational encirclement: see
+    // SURRENDER_ON_FAILED_RETREAT.
     private fun applyDefenderRetreat(
         map: GameMap,
         attacker: GameUnit,
@@ -185,6 +199,26 @@ internal class AnimationOrchestrator(
         val retreatPos = GameRules.getRetreatPosition(map.map, defender, map.rows, map.hasRailData())
         if (retreatPos != null) {
             map.retreatUnit(defender, retreatPos)
+        } else if (GameRules.shouldDefenderSurrender(
+                defender,
+                GameRules.isRetreatBlockedByOwnUnitsOnly(map.map, defender, map.rows),
+            )
+        ) {
+            val surrenderPos = defender.getPos()
+            val name = defender.unitData(true).name
+            val prestige = map.surrenderUnit(defender, attacker)
+            val captorSide = attacker.player?.side
+            if (surrenderPos != null && captorSide != null) {
+                CombatLog.addSurrender(defender, surrenderPos, captorSide, prestige)
+            }
+            surrenderPos?.let {
+                ui.render.addAnimation(it.row, it.col, "explosion", 0)
+                ui.showAlert(it.row, it.col, "Surrendered", false)
+                // Named distinctly from an ordinary kill: the player needs to see that cutting off
+                // the retreat is what did it, not damage — and what it earned.
+                val reward = if (prestige > 0) " (+$prestige prestige)" else ""
+                HudLog.addAt(it.row, it.col, "$name surrendered — encircled, no retreat$reward")
+            }
         }
     }
 
@@ -256,7 +290,10 @@ internal class AnimationOrchestrator(
             // Coordinates only as a last-resort label when the hex has no name (nothing else
             // would identify it) — clickable either way, same as the combat log lines.
             val place = if (!hexName.isNullOrEmpty()) hexName else "(${pos.col},${pos.row})"
-            HudLog.addAt(pos.row, pos.col, "${unit.unitData(true).name} captured $place")
+            // OG reports the reward on capture ("You gain 40 prestige"); the amount was computed
+            // in applyHexCapture but never surfaced, so a capture read as worth nothing.
+            val reward = if (result.capturePrestige > 0) " (+${result.capturePrestige} prestige)" else ""
+            HudLog.addAt(pos.row, pos.col, "${unit.unitData(true).name} captured $place$reward")
         }
         if (result.isVictorySide >= 0) {
             ui.game.handleMoveVictory(result.isVictorySide)

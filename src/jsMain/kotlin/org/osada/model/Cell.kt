@@ -41,6 +41,10 @@ class MovementResults {
     var isVictorySide: Int = -1
     var passedCells: MutableList<Cell> = mutableListOf()
     var isCapture: Boolean = false
+
+    /** Prestige awarded by the capture this move triggered, so the HUD can report the amount
+     *  the way OG does ("You gain 40 prestige"). 0 when the move captured nothing. */
+    var capturePrestige: Int = 0
 }
 
 @JsExport

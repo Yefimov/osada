@@ -3,6 +3,7 @@ package org.osada.model
 import org.osada.GameHolder
 import org.osada.PlayerType
 import org.osada.difficultyModifiers
+import org.osada.hero.FormationIdentity
 import org.osada.scoreGains
 import org.osada.sideNames
 
@@ -31,9 +32,19 @@ class Player {
 
     fun getCoreUnitList(): List<GameUnit> = coreUnits.toList()
 
+    /**
+     * Adds [unit] to the campaign core roster, minting its persistent formation id if it has none.
+     *
+     * This is the single place a formation comes into existence, which is why minting lives here
+     * rather than at the several call sites that create core units (first-scenario deploy sweep,
+     * save restore, mid-campaign purchase). [org.osada.hero.FormationIdentity.ensure] is
+     * idempotent, so a unit restored from a save keeps the id it already had and only genuinely
+     * new formations get a fresh one.
+     */
     fun addCoreUnit(unit: GameUnit?): Boolean {
         if (unit == null) return false
         unit.isCore = true
+        FormationIdentity.ensure(unit, coreUnits.mapNotNull { it.formationId })
         coreUnits.add(unit)
         return true
     }

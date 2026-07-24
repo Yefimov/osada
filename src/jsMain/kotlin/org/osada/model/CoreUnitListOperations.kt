@@ -1,5 +1,6 @@
 package org.osada.model
 
+import org.osada.hero.FormationIdentity
 import org.osada.rules.GameRules
 import org.osada.rules.setSpotRange
 import org.osada.rules.setZOCRange
@@ -20,6 +21,22 @@ internal class CoreUnitListOperations(
             .filter {
                 it.player?.id == player.id && it.getHex()?.isDeployment == player.id
             }.forEach { player.addCoreUnit(it) }
+    }
+
+    /**
+     * Gives every one of [player]'s on-map units a formation id, so the WHOLE campaign force is
+     * hero-eligible (§9.1) — not only the units deployed onto deployment hexes. Without this a
+     * pre-placed campaign (units not sitting on deploy hexes at scenario start) never enters the
+     * hero system: those units fall back to the legacy integer leader, which has no dossier.
+     *
+     * Idempotent: a unit restored from a save keeps the id it already had; only missing ids are
+     * minted, seeded past every id already present so two units never collide.
+     */
+    fun ensureFormationIds(player: Player) {
+        val existing = gameMap.units.mapNotNull { it.formationId?.takeIf { id -> id.isNotEmpty() } }.toMutableSet()
+        gameMap.units
+            .filter { it.player?.id == player.id }
+            .forEach { unit -> existing.add(FormationIdentity.ensure(unit, existing).value) }
     }
 
     /**
@@ -74,6 +91,9 @@ internal class CoreUnitListOperations(
         unit.isDeployed = false
         unit.hasOverstrength = savedUnit.hasOverstrength as? Boolean ?: false
         unit.customName = savedUnit.customName as? String // optional key (rename feature)
+        // Carried, never re-minted: this is the scenario transition the formation id exists to
+        // survive. A pre-hero save has no key here and gets one on addCoreUnit below.
+        unit.formationId = savedUnit.formationId as? String
         unit.player = player
         applyRestoredTransport(savedUnit, unit)
         return unit

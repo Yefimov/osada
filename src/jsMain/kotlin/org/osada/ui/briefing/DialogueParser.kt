@@ -1,5 +1,8 @@
 package org.osada.ui.briefing
 
+import org.osada.campaign.CampaignConditionParser
+import org.osada.campaign.CampaignEffectParser
+
 /**
  * Parses the briefing dialogue tree (lines + branching choices). Split from [BriefingParser]
  * purely to keep that object within the project's function-count/complexity limits.
@@ -45,6 +48,7 @@ internal object DialogueParser {
             initials = utils.initialsFor(speaker),
             next = utils.readString(item.next ?: item.nextId)?.trim()?.takeIf { it.isNotBlank() },
             choices = parseChoices(item.choices ?: item.responses ?: item.options, id),
+            condition = CampaignConditionParser.parse(item.conditions ?: item.condition),
         )
     }
 
@@ -105,6 +109,8 @@ internal object DialogueParser {
             } else {
                 null
             }
-        return BriefingChoice(id = id, text = text, next = next)
+        val effects = if (isObject) CampaignEffectParser.parseList(item.effects) else emptyList()
+        val hint = (if (isObject) utils.readString(item.hint)?.trim() else null).orEmpty()
+        return BriefingChoice(id = id, text = text, next = next, effects = effects, hint = hint)
     }
 }

@@ -104,3 +104,39 @@ fun GameMap.getDeployHexes(side: Int): Array<Cell> {
     }
     return result.toTypedArray()
 }
+
+/**
+ * Whether [side] currently owns a PORT — OG's persistent supply hex, which lets a player take
+ * delivery of purchases and place reserves on it and adjacent legal land.
+ *
+ * Measured on the real OG install: in N_Kiel both Kieler Hafen ports open deployment on their
+ * adjacent land hexes once genuinely owned ((27,12) → (27,13)/(28,13)/(29,12); (29,11) → (30,11)).
+ * The apparent counter-example — capturing (27,12) and getting nothing — was a naval "capture":
+ * OG only lets GROUND units take a hex, so the port had never actually changed hands.
+ *
+ * Deliberately live map state, not scenario-start data: capturing an enemy port must open
+ * purchasing mid-scenario, exactly as observed.
+ */
+fun GameMap.ownsSupplyHex(side: Int): Boolean {
+    map?.forEach { row ->
+        row.forEach { hex ->
+            val owner = hex.owner
+            if (hex.terrain == TerrainType.PORT.value && owner != -1 && getPlayer(owner).side == side) {
+                return true
+            }
+        }
+    }
+    return false
+}
+
+/**
+ * Whether [side] has anywhere to put a newly bought unit. OG offers no purchases at all when a
+ * player has neither a designated deployment zone nor an owned supply hex — Seseña (`bn9s00`) is
+ * exactly that case (Supply=0, Ports=0, Deploy=0 in its OpenSuite report), which is why OG lets
+ * NEITHER side buy there and the designer scripts a turn-2 reinforcement instead.
+ *
+ * Verified against four OG scenarios: bn9s00 (0 deploy / 0 ports → no buying), bn9s02 (7 deploy →
+ * buying), Forward0 (15 deploy → buying), N_Kiel (0 deploy, 3 ports owned by the enemy → no buying
+ * until a port is captured). Scripted reinforcements are unaffected — they bypass this entirely.
+ */
+fun GameMap.hasPurchaseAnchor(side: Int): Boolean = getDeployHexes(side).isNotEmpty() || ownsSupplyHex(side)

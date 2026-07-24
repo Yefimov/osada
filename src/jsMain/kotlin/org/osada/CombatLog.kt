@@ -19,6 +19,9 @@ object CombatLog {
         l.leaders = js("[]")
         l.resupply = js("{}")
         l.objectives = js("[]")
+        // Enemy units taken by surrender rather than damage — reported as their own Turn Report
+        // group so encirclement reads as a distinct result, not just another kill.
+        l.surrenders = js("[]")
         return l
     }
 

@@ -3,6 +3,7 @@ package org.osada.model
 import org.osada.LeaderType
 import org.osada.UNIT_MAX_EXPERIENCE
 import org.osada.UnitClass
+import org.osada.hero.HeroTraitResolver
 
 object Leaders {
     const val LEADER_CHANCE_THRESHOLD = 8
@@ -172,14 +173,20 @@ object Leaders {
             Pair("Superior Maneuver", "The unit may bypass enemy zones of control.")
     }
 
+    /**
+     * Whether [unit] has [leader]'s trait, from any source.
+     *
+     * The combat rules' single entry point for trait checks. It now delegates to
+     * [HeroTraitResolver], which answers from campaign hero state when the unit belongs to a
+     * formation with a commander and falls back to the legacy integer otherwise — see that class
+     * for why the switch lives there rather than at the ~10 call sites.
+     *
+     * The signature is unchanged on purpose: no combat code was touched to introduce heroes.
+     */
     fun unitHasLeader(
         unit: GameUnit?,
         leader: LeaderType,
-    ): Boolean {
-        if (unit == null || unit.leader == -1) return false
-        val classLeader = getUnitClassLeader(unit)
-        return unit.leader == leader.value || leader.value == classLeader
-    }
+    ): Boolean = HeroTraitResolver.hasTrait(unit, leader)
 
     fun generateLeader(unit: GameUnit?): Int {
         if (unit == null) return -1

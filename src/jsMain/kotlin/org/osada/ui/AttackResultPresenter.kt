@@ -1,6 +1,7 @@
 package org.osada.ui
 
 import org.osada.PlayerType
+import org.osada.hero.HeroCampaign
 import org.osada.model.Cell
 import org.osada.model.CombatResults
 import org.osada.model.GameUnit
@@ -41,6 +42,13 @@ internal class AttackResultPresenter(
 
         attackerPos?.let { ui.render.render(it.row, it.col, radius) }
         showLeaderGainBounceTexts(result, attackerPos, defenderPos)
+        // Present any new-leader events the hero system queued during this combat — after the
+        // animation, per §14.1, never mid-attack.
+        HeroEmergencePresenter.announce(HeroCampaign.drainAnnouncements())
+        // Same timing rule for a promotion choice (§8.5) on a formation that already has a commander.
+        HeroPromotionPresenter.present(HeroCampaign.drainPromotions())
+        // And for a commander casualty when a led formation's unit was destroyed (§11).
+        HeroCasualtyPresenter.present(HeroCampaign.drainCasualties())
 
         refreshCurrentUnitSelection(attacker)
     }

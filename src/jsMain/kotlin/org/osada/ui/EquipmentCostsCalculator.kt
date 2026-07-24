@@ -2,12 +2,15 @@ package org.osada.ui
 
 import org.osada.model.Equipment
 import org.osada.model.GameUnit
+import org.osada.model.getCountryName
 import org.osada.model.getUnitById
+import org.osada.model.hasPurchaseAnchor
 import org.osada.model.isAvailableIn
 import org.osada.rules.GameRules
 import org.osada.rules.calculateUnitCosts
 import org.osada.rules.calculateUnitSellCost
 import org.osada.rules.calculateUpgradeCosts
+import org.osada.rules.isPurchasableClass
 
 /**
  * [EquipmentWindowController]'s buy/upgrade/sell cost badge computation. Split out purely to
@@ -40,8 +43,50 @@ internal class EquipmentCostsCalculator(
             }
 
         val (upgradeCost, sellCost) = resolveUpgradeAndSellCost(selectedUnit, eqUnitId, eqTransportId)
-        val buyCost = resolveBuyCost(selectedUnit, eqUnitId, eqTransportId, year, month)
-        UIBuilder.showEquipmentCosts(currentPlayer.prestige, buyCost, upgradeCost, sellCost)
+        val buyCost = resolveBuyCost(eqUnitId, eqTransportId, year, month)
+        UIBuilder.showEquipmentCosts(
+            currentPlayer.prestige,
+            buyCost,
+            upgradeCost,
+            sellCost,
+            resolveBuyBlockedReason(eqUnitId),
+        )
+    }
+
+    /** Why the Buy button is absent for [eqUnitId], or null when the refusal is not one we can
+     *  usefully explain. The catalogue lists the whole side (see [EquipmentCatalogStrip]), so a
+     *  campaign player routinely selects equipment they may not purchase — the Buy button then just
+     *  vanished, which read as a bug. Name the rule instead. */
+    private fun resolveBuyBlockedReason(eqUnitId: Int): String? =
+        when {
+            eqUnitId <= 0 -> null
+            !hasPurchaseAnchor() ->
+                "No supply hex or deployment zone in this scenario — nothing can be bought here " +
+                    "(the enemy cannot buy either). Reinforcements arrive on schedule instead; " +
+                    "capturing a port would open deployment."
+            else -> campaignCountryRefusal(eqUnitId)
+        }
+
+    /** Mirrors [resolveBuyCost]'s campaign-country test so catalogue and button always agree. */
+    private fun campaignCountryRefusal(eqUnitId: Int): String? {
+        val campaign = ui.game.campaign ?: return null
+        val eqCountry = (Equipment.getEquipment(eqUnitId)?.country ?: 0) - 1
+        return if (campaign.country == eqCountry) {
+            null
+        } else {
+            "${Equipment.getCountryName(eqCountry)} equipment — this campaign may only " +
+                "purchase ${Equipment.getCountryName(campaign.country)} equipment. It can " +
+                "still be upgraded from the Upgrade tab."
+        }
+    }
+
+    /** OG offers no purchases at all to a player with nowhere to place them; see
+     *  [org.osada.model.hasPurchaseAnchor]. Evaluated live so capturing a port opens buying. */
+    private fun hasPurchaseAnchor(): Boolean {
+        val map = ui.game.scenario?.map
+        val side = map?.currentPlayer?.side
+        // No map/player yet -> permit; the gate is a rule, not a load-order guard.
+        return if (map == null || side == null) true else map.hasPurchaseAnchor(side)
     }
 
     private fun resolveUpgradeAndSellCost(
@@ -71,7 +116,6 @@ internal class EquipmentCostsCalculator(
     }
 
     private fun resolveBuyCost(
-        selectedUnit: GameUnit?,
         eqUnitId: Int,
         eqTransportId: Int,
         year: Int,
@@ -81,10 +125,13 @@ internal class EquipmentCostsCalculator(
         val newEq = Equipment.getEquipment(eqUnitId)
         val newCountry = (newEq?.country ?: 0) - 1
         return when {
-            selectedUnit != null &&
-                !UIBuilder.eqClassButtons.containsKey(selectedUnit.unitData(true).uclass.toString()) -> -1
+            // Gate on the class being BOUGHT, not on whatever unit happens to be selected --
+            // see GameRules.isPurchasableClass for why PM's selection-based test was dropped.
+            newEq != null && !GameRules.isPurchasableClass(newEq.uclass) -> -1
             newEq != null && !newEq.isAvailableIn(year, month) -> -1
             ui.game.campaign != null && ui.game.campaign!!.country != newCountry -> -1
+            // Nowhere to place a purchase -> OG offers none at all; resolveBuyBlockedReason says why.
+            !hasPurchaseAnchor() -> -1
             else -> GameRules.calculateUnitCosts(eqUnitId, eqTransportId)
         }
     }

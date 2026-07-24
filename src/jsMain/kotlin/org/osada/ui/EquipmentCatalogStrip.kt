@@ -33,7 +33,6 @@ internal object EquipmentCatalogStrip {
         month: Int,
         selectedEqId: Int,
         selectedClass: Int,
-        purchaseMode: Boolean,
     ): Int {
         val eqHscroll = byId("hscroll-eqUnitList")
         var eqScrollPos = 0
@@ -41,15 +40,22 @@ internal object EquipmentCatalogStrip {
             val eq = Equipment.getEquipment(eqid) ?: return@forEach
             if (!eq.isAvailableIn(year, month)) return@forEach
             if (EquipmentWindowState.isUndeployableOnThisMap(map, eq)) return@forEach
-            // Equipment the player cannot afford isn't offered at all, rather than listed with a
-            // hidden Buy button and a "need N more prestige" note (EquipmentWindowBuilder
-            // .showEquipmentCosts). PURCHASE MODE ONLY: an upgrade credits the old unit's cost
-            // back and so costs far less than buying outright (CostCalculator
-            // .calculateUpgradeCosts), and filtering the upgrade catalogue by full purchase price
-            // would hide upgrades the player can comfortably afford.
-            if (purchaseMode && eq.cost * CURRENCY_MULTIPLIER > currentPlayer.prestige) return@forEach
+            // The whole side's catalogue is listed here (own nation + support countries from
+            // getCountriesBySide), matching original PM, whose list loop filters on availability
+            // dates ONLY. Foreign-country entries are deliberately kept even though a campaign
+            // may not BUY them (EquipmentCostsCalculator.resolveBuyCost rejects any country but
+            // the campaign's own): scenarios routinely field support-country units — Seseña's
+            // Soviet campaign fights with a mostly Spanish Republic order of battle — and those
+            // units still need their nation's models listed to be UPGRADEABLE, since upgrades
+            // key off the unit's own country, not the campaign's. Instead of hiding the cards,
+            // the detail pane spells out why Buy is unavailable; see showEquipmentCosts.
             val item = buildEquipmentListItem("eqUnitList", eq)
             item.asDynamic().equnitid = eqid
+            // Unaffordable entries stay visible but read as out of reach — the player can see
+            // what they are saving toward, matching the Buy button's own "need N more prestige".
+            if (eq.cost * CURRENCY_MULTIPLIER > currentPlayer.prestige) {
+                item.classList.add("osada-eq-unaffordable")
+            }
             if (eqid == selectedEqId) {
                 item.setAttribute("selectedUnit", eq.name)
                 eqScrollPos = (eqHscroll?.asDynamic()?.offsetWidth as? Int ?: 0) / 2 - (item.offsetWidth / 2)

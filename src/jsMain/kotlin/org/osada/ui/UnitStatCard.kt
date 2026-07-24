@@ -5,6 +5,7 @@ import org.osada.MovMethod
 import org.osada.UNIT_MAX_EXPERIENCE
 import org.osada.UNIT_NAME_MAX_LENGTH
 import org.osada.UnitClass
+import org.osada.hero.HeroCampaign
 import org.osada.model.Equipment
 import org.osada.model.EquipmentData
 import org.osada.model.GameUnit
@@ -190,11 +191,29 @@ internal class UnitStatCard(
         }
     }
 
-    // Leader slot (spec): empty outline = no leader, filled = has leader; non-clickable for
-    // now (future hook) — a tooltip with name/bonus is the only interaction, using data
-    // Leaders.getUnitLeaderDescriptions already computes cheaply (no new lookups).
+    // Leader slot (§14.2): a campaign core unit whose formation has a commander shows the hero — name,
+    // rank, traits — and CLICKS INTO THE DOSSIER (§14.4, §29.8). A leaderless core formation shows its
+    // recognition status (§7.1). Scenario-only units keep the legacy integer-leader tooltip. Unit
+    // veteran experience stays in its own stat/stars, distinct from leader effects (§4.6).
     private fun fillUnitLeaderSlot(unit: GameUnit) {
         val leaderBtn = byId("uLeader")
+        val dossier = HeroCampaign.dossier(unit)
+        if (dossier != null) {
+            leaderBtn?.classList?.add("uc-leader-slot--filled", "uc-leader-slot--hero")
+            val traits = dossier.traits.joinToString(", ") { it.title }
+            leaderBtn?.title =
+                buildString {
+                    append("${dossier.rank} ${dossier.name}\n${dossier.potential}")
+                    if (traits.isNotEmpty()) append("\n$traits")
+                    append("\nClick to open the dossier")
+                }
+            leaderBtn?.onclick = { e: MouseEvent ->
+                e.stopPropagation()
+                LeaderDossierPresenter.openForUnit(unit)
+            }
+            return
+        }
+        leaderBtn?.onclick = null
         if (unit.leader >= 0) {
             leaderBtn?.classList?.add("uc-leader-slot--filled")
             val descriptions = Leaders.getUnitLeaderDescriptions(unit)
@@ -205,7 +224,8 @@ internal class UnitStatCard(
                     "Leader"
                 }
         } else {
-            leaderBtn?.title = "Leader slot — empty"
+            val recognition = HeroCampaign.recognitionStatus(unit)
+            leaderBtn?.title = recognition?.let { "No commander — $it" } ?: "Leader slot — empty"
         }
     }
 

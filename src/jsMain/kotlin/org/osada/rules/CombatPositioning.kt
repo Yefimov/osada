@@ -103,6 +103,51 @@ internal object CombatPositioning {
         return railRetreat ?: firstPassableRetreatCell(map, ordered, rows, movementTable, requireRail = false)
     }
 
+    /**
+     * True when [unit] has no retreat hex ONLY because friendly units are standing in the ones it
+     * could otherwise have used — i.e. some adjacent cell is on-map and terrain-passable, and the
+     * unit occupying it is on the same side.
+     *
+     * Surrender is meant to punish being *cut off*: pinned against the map edge, water, mountains
+     * or enemies. Being crowded out by your own stack is a traffic-jam, not an encirclement, and
+     * must not kill the unit — so the caller skips surrender when this is true.
+     */
+    fun isRetreatBlockedByOwnUnitsOnly(
+        map: Array<Array<Hex>>?,
+        unit: GameUnit,
+        rows: Int,
+    ): Boolean {
+        val data = unit.unitData()
+        val pos = if (data.movpoints == 0) null else unit.getPos()
+        return if (pos == null) {
+            false
+        } else {
+            val movementTable = movTable[if (UnitPredicates.isTrain(unit)) MovMethod.WHEELED.value else data.movmethod]
+            val side = unit.player?.side
+            HexGeometry.getAdjacent(pos.row, pos.col).any { cell ->
+                isFriendlyOccupiedPassableCell(map, cell, rows, movementTable, side)
+            }
+        }
+    }
+
+    /** On-map, terrain-passable, and occupied by a unit on [side] — the "my own stack is in the
+     *  way" case that must NOT count as encirclement. */
+    private fun isFriendlyOccupiedPassableCell(
+        map: Array<Array<Hex>>?,
+        cell: Cell,
+        rows: Int,
+        movementTable: List<Int>,
+        side: Int?,
+    ): Boolean {
+        val offMap = (cell.row == 0 && cell.col % 2 == 0) || (cell.row == rows - 1 && cell.col % 2 == 1)
+        val hex = if (offMap) null else map?.getOrNull(cell.row)?.getOrNull(cell.col)
+        val occupant = hex?.unit
+        return hex != null &&
+            movementTable[hex.terrain] < IMPASSABLE_TERRAIN_COST &&
+            occupant != null &&
+            occupant.player?.side == side
+    }
+
     /** [unit]'s adjacent cells ordered rear-facing-first (the preferred retreat direction). */
     private fun retreatCellsByFacing(
         unit: GameUnit,

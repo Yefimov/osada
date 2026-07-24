@@ -63,9 +63,31 @@ internal object StartMenuMainButtons {
             }
         }
 
+        buildHallOfFameButton()
+
         byId("smLogoText")?.innerHTML = "Turn-based strategy of great battles"
         // Display version only — decoupled from the engine VERSION constant, which is baked
         // into the localStorage save keys and must not change (it would orphan existing saves).
         byId("smCredits")?.innerHTML = "v0.5"
+    }
+
+    // Hall of Fame (§14.6): a cross-campaign collection, shown only once legends exist. Wired
+    // directly (not through the startMenuButton action router) since it opens its own overlay.
+    private fun buildHallOfFameButton() {
+        if (!HallOfFame.isNotEmpty()) return
+        val hof = addTag("smButtons", "div")
+        hof.id = "hallOfFame"
+        hof.className = "smMainButton osada-menu-btn osada-menu-btn--muted"
+        val ico = addTag(hof, "span")
+        ico.className = "osada-menu-btn__ico osada-ico osada-ico--star"
+        val text = addTag(hof, "span")
+        text.className = "osada-menu-btn__text"
+        val label = addTag(text, "span")
+        label.className = "osada-menu-btn__label"
+        label.textContent = "Hall of Fame"
+        val sub = addTag(text, "span")
+        sub.className = "osada-menu-btn__sub"
+        sub.textContent = "Legends across your campaigns"
+        hof.onclick = { _: org.w3c.dom.events.MouseEvent -> HallOfFamePresenter.open() }
     }
 }

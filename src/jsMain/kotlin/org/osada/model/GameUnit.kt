@@ -24,6 +24,16 @@ class GameUnit(
     var strength: Int = 10
     var facing: Int = 2
     var destroyed: Boolean = false
+
+    /**
+     * Set alongside [destroyed] when the unit was lost by SURRENDER (a forced retreat with no legal
+     * destination) rather than by damage, so the two stay distinguishable in the log and dossier
+     * even though both remove the unit.
+     *
+     * Deliberately NOT serialised: a surrendered unit is swept by `updateUnitList()` in the same
+     * combat step it is set, so it never survives to a save.
+     */
+    var surrendered: Boolean = false
     var transport: Transport? = null
     var player: Player? = null
     var carrier: Int = 0
@@ -43,6 +53,20 @@ class GameUnit(
      *  Serialized into saves only when set — unrenamed units keep the exact pre-rename
      *  save layout (see GameStateSerializer's byte-stability doc). */
     var customName: String? = null
+
+    /**
+     * Stable identity of the persistent CORE FORMATION this unit is the current instance of, or
+     * null for scenario-only units (see `org.osada.hero.FormationId`).
+     *
+     * Set once by `Player.addCoreUnit` and then never reassigned — it must survive [upgrade]
+     * (which mutates [eqid] in place, so the id rides along for free) and the scenario transition
+     * (where it is carried by `serializeCoreUnit` / `CoreUnitListOperations`). This is what lets
+     * a hero, a service record and a formation history outlive the equipment they were earned on.
+     *
+     * Same optional-key serialization rule as [customName]: emitted only when set, so saves of
+     * non-core units keep their exact previous layout.
+     */
+    var formationId: String? = null
 
     internal var hex: Hex? = null
 
@@ -132,6 +156,7 @@ class GameUnit(
         entrenchment = other.entrenchment
         entrenchTicks = other.entrenchTicks
         leader = other.leader
+        formationId = other.formationId
         player = Player().apply { copy(other.player ?: return@apply) }
         if (other.transport != null) {
             transport = Transport(other.transport!!.eqid).apply { copy(other.transport!!) }

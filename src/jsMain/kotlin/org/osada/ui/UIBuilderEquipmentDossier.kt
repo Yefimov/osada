@@ -17,7 +17,8 @@ fun UIBuilder.showEquipmentCosts(
     buy: Int,
     upgrade: Int,
     sell: Int,
-) = EquipmentWindowBuilder.showEquipmentCosts(prestige, buy, upgrade, sell)
+    buyBlockedReason: String? = null,
+) = EquipmentWindowBuilder.showEquipmentCosts(prestige, buy, upgrade, sell, buyBlockedReason)
 
 fun UIBuilder.showAttackInfo(
     attacker: GameUnit,

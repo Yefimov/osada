@@ -34,6 +34,10 @@ class Scenario(
     var turnsPerDay: Int = 1
     var dayTurn: Int = 0
     var reinforcements: MutableMap<Int, MutableList<Reinforcement>> = mutableMapOf()
+
+    /** Optional authored message box per reinforcement turn (`<reinforce turn="2" message="...">`),
+     *  shown when that wave actually deploys. Empty for scenarios that do not author one. */
+    var reinforcementMessages: MutableMap<Int, String> = mutableMapOf()
     var map: GameMap = GameMap()
     var expPerSide: MutableList<dynamic> =
         mutableListOf(
@@ -141,6 +145,8 @@ class Scenario(
         ground = other.ground
         turnsPerDay = other.turnsPerDay
         eqp = other.eqp
+        reinforcementMessages.clear()
+        reinforcementMessages.putAll(other.reinforcementMessages)
         reinforcements.clear()
         other.reinforcements.forEach { (turn, list) ->
             list.forEach { r ->

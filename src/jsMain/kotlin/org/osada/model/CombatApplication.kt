@@ -137,23 +137,16 @@ internal class CombatApplication(
         )
     }
 
+    /** Leader acquisition for both combatants — delegated to [CombatLeaderAcquisition]. */
     private fun generateCombatLeaders(
         attacker: GameUnit,
         defender: GameUnit,
         combatResult: CombatResults,
     ) {
-        val atkLeader = Leaders.generateLeaderWithChance(attacker, combatResult.atkExpGained)
-        if (atkLeader != -1) {
-            attacker.leader = atkLeader
-            combatResult.atkLeaderGain = true
-            CombatLog.addLeader(attacker)
-        }
-        val defLeader = Leaders.generateLeaderWithChance(defender, combatResult.defExpGained)
-        if (defLeader != -1) {
-            defender.leader = defLeader
-            combatResult.defLeaderGain = true
-            CombatLog.addLeader(defender)
-        }
+        combatResult.atkLeaderGain =
+            CombatLeaderAcquisition.acquire(attacker, defender, combatResult, isAttacker = true, turn = gameMap.turn)
+        combatResult.defLeaderGain =
+            CombatLeaderAcquisition.acquire(defender, attacker, combatResult, isAttacker = false, turn = gameMap.turn)
     }
 
     fun retreatUnit(
@@ -177,7 +170,7 @@ internal class CombatApplication(
         hex: Hex,
         unit: GameUnit,
     ): dynamic {
-        val result = json(Pair("isWin", false), Pair("isCapture", false))
+        val result = json(Pair("isWin", false), Pair("isCapture", false), Pair("prestigeGain", 0))
         val player = unit.player ?: return result
         applyHexCapture(hex, unit, player, result)
         return result
@@ -199,6 +192,7 @@ internal class CombatApplication(
         val multiplier = if (Leaders.unitHasLeader(unit, LeaderType.LIBERATOR)) 2 else 1
         var prestigeGain = 0
         var scoreGain = 0
+        var loggedObjective = false
 
         if (hex.flag != -1) {
             gameMap.undoState.oldFlag = hex.flag
@@ -218,12 +212,17 @@ internal class CombatApplication(
             prestigeGain += (prestigeGains["objectiveCapture"] ?: 0) * multiplier
             scoreGain += (scoreGains["objectiveCapture"] ?: 0) * multiplier
             result["isCapture"] = true
-            CombatLog.addObjectiveCapture(hex.getPos(), side)
+            loggedObjective = true
         }
 
         gameMap.undoState.prestigeGain = prestigeGain
         gameMap.undoState.scoreGain = scoreGain
         player.prestige += prestigeGain
         player.updateScore(scoreGain)
+        result["prestigeGain"] = prestigeGain
+        // Logged only once the total is final, so the Turn Report reports the prestige actually
+        // awarded (Liberator doubles it; a flagged victory hex contributes twice) rather than the
+        // bare objectiveCapture constant it used to print.
+        if (loggedObjective) CombatLog.addObjectiveCapture(hex.getPos(), side, prestigeGain)
     }
 }

@@ -1,5 +1,7 @@
 package org.osada
 
+import org.osada.campaign.CampaignNarrative
+import org.osada.hero.HeroCampaign
 import org.osada.model.Player
 import org.osada.model.getPlayers
 import org.osada.scenario.Campaign
@@ -200,6 +202,10 @@ class Game {
         pendingScenarioBriefing = null
         pendingScenarioBriefingEnabled = true
         BriefingIntroTracker.reset()
+        // A new run starts with no remembered outcomes, choices, flags or queued effects.
+        CampaignNarrative.reset()
+        // ...and with no formations or heroes carried over from a previous run.
+        HeroCampaign.reset()
         campaign = Campaign(id, difficulty) { onCampaignLoadFinished() }
     }
 
