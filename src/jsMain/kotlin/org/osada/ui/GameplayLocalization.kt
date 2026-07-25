@@ -24,8 +24,10 @@ import org.osada.i18n.I18n
 import org.osada.model.Equipment
 import org.osada.model.GameUnit
 import org.osada.model.getCountryName
+import org.osada.model.getUnits
 import org.osada.rules.GameRules
 import org.osada.rules.SupplyRules
+import org.osada.rules.UnitCapabilities
 import org.osada.rules.airGroundedByWeather
 import org.osada.rules.getReinforceValue
 import org.osada.rules.getResupplyValue
@@ -75,6 +77,7 @@ internal object GameplayLocalization {
             refreshUnitStatMetadata()
             if (selected != null) {
                 refreshUnitIdentity(selected)
+                refreshUnitSupport(selected)
                 refreshUnitLeader(selected)
                 refreshUnitActions(selected)
                 refreshUnitSlots(selected)
@@ -89,7 +92,11 @@ internal object GameplayLocalization {
     ) {
         try {
             block()
-        } catch (error: Throwable) {
+            // `block` is an arbitrary DOM refresh; one surface failing to localize must not break
+            // the others or the caller.
+        } catch (
+            @Suppress("TooGenericExceptionCaught") error: Throwable,
+        ) {
             console.error("[i18n] $surface localization refresh failed", error)
         }
     }
@@ -145,10 +152,10 @@ internal object GameplayLocalization {
             )
         byId("statusmsg")?.innerHTML =
             "<span class=\"osada-tb-op\" title=\"${scenario.name}\">${scenario.name}</span>" +
-                "<span class=\"osada-tb-field\"><b>${I18n.t("hud.turn.label")}</b>" +
-                "${I18n.formatNumber(map.turn)}/${I18n.formatNumber(map.maxTurns)}</span>" +
-                "<span class=\"osada-tb-field osada-tb-date\">$dateText</span>" +
-                phaseChip
+            "<span class=\"osada-tb-field\"><b>${I18n.t("hud.turn.label")}</b>" +
+            "${I18n.formatNumber(map.turn)}/${I18n.formatNumber(map.maxTurns)}</span>" +
+            "<span class=\"osada-tb-field osada-tb-date\">$dateText</span>" +
+            phaseChip
     }
 
     private fun refreshWeather() {
@@ -302,7 +309,12 @@ internal object GameplayLocalization {
         }
         byId("eqReserveHint")?.textContent = I18n.t("equipment.reserve.hint")
         byId("eqUpgradeHint")?.let { hint ->
-            val hasReserve = GameHolder.instance?.scenario?.map?.currentPlayer?.hasUndeployedUnits() == true
+            val hasReserve =
+                GameHolder.instance
+                    ?.scenario
+                    ?.map
+                    ?.currentPlayer
+                    ?.hasUndeployedUnits() == true
             hint.textContent =
                 I18n.t(
                     if (hasReserve) "equipment.upgrade.reserve_hint" else "equipment.upgrade.hint",
@@ -355,6 +367,9 @@ internal object GameplayLocalization {
         }
     }
 
+    // Flat property-name -> i18n-key lookup table; each `when` branch is a trivial mapping, not
+    // real branching logic, so the complexity count overstates how hard this is to read.
+    @Suppress("CyclomaticComplexMethod")
     private fun equipmentSortLabel(property: String): String =
         I18n.t(
             when (property) {
@@ -420,7 +435,8 @@ internal object GameplayLocalization {
             return
         }
         val classLine = byId("eqDetailBody")?.querySelector(".osada-eqd-class") as? HTMLElement
-        classLine?.textContent = "${GameText.unitClass(detail.uclass)} · ${Equipment.getCountryName(detail.country - 1)}"
+        classLine?.textContent =
+            "${GameText.unitClass(detail.uclass)} · ${Equipment.getCountryName(detail.country - 1)}"
         (byId("eqDetailBody")?.querySelector(".osada-eqd-avail") as? HTMLElement)?.textContent =
             I18n.t(
                 "equipment.availability",
@@ -474,6 +490,9 @@ internal object GameplayLocalization {
         }
     }
 
+    // TODO(detekt): CyclomaticComplexMethod (18) — deliberately deferred rather than rushed, see
+    // refreshUnitActions above for the same call.
+    @Suppress("CyclomaticComplexMethod")
     private fun refreshUnitIdentity(unit: GameUnit) {
         val data = unit.unitData(true)
         byId("osadaUcClass")?.apply {
@@ -517,6 +536,36 @@ internal object GameplayLocalization {
         byId("osadaUcWeather")?.title = if (grounded) I18n.t("unit_info.grounded.help") else ""
     }
 
+    /**
+     * The Combat Support chip and the support clause on the experience stars.
+     *
+     * Runs after [refreshUnitIdentity], which writes the plain experience tooltip — that overwrite is
+     * exactly what used to swallow the "Combat Support adds N bar(s)" sentence when
+     * `UnitIdentityPresenter` wrote it and this file rewrote the same node a moment later. One writer
+     * per node: `UnitIdentityPresenter` decides whether the chip is visible, this decides what it says.
+     */
+    private fun refreshUnitSupport(unit: GameUnit) {
+        val units =
+            GameHolder.instance
+                ?.scenario
+                ?.map
+                ?.getUnits()
+                ?.toList()
+                .orEmpty()
+        val bars = UnitCapabilities.combatSupportBars(units, unit)
+        byId("osadaUcSupport")?.apply {
+            textContent = if (bars > 0) I18n.t("unit_info.support.label", mapOf("bars" to bars)) else ""
+            title = if (bars > 0) I18n.t("unit_info.support.help", mapOf("bars" to bars)) else ""
+        }
+        if (bars > 0) {
+            byId("osadaUcStars")?.title =
+                I18n.t(
+                    "unit_info.experience.value_with_support",
+                    mapOf("experience" to unit.experience, "max" to UNIT_MAX_EXPERIENCE, "bars" to bars),
+                )
+        }
+    }
+
     private fun refreshUnitLeader(unit: GameUnit) {
         val leader = byId("uLeader") ?: return
         val dossier = HeroCampaign.dossier(unit)
@@ -532,7 +581,9 @@ internal object GameplayLocalization {
                 leader.setAttribute("aria-label", I18n.t("unit_info.leader.open_dossier.aria", mapOf("label" to label)))
             }
             unit.leader >= 0 -> {
-                val descriptions = org.osada.model.Leaders.getUnitLeaderDescriptions(unit)
+                val descriptions =
+                    org.osada.model.Leaders
+                        .getUnitLeaderDescriptions(unit)
                 val trait = descriptions.firstOrNull()?.first ?: I18n.t("unit_info.leader.authored_commander")
                 val label = I18n.t("unit_info.leader.legacy", mapOf("trait" to trait))
                 leader.textContent = label
@@ -587,6 +638,12 @@ internal object GameplayLocalization {
         }
     }
 
+    // TODO(detekt): CyclomaticComplexMethod (27) — this function walks every unit-context action
+    // button and branches per action id; splitting it (one resolver per action-button concern)
+    // is real refactoring work, deliberately deferred rather than rushed. `continue` per
+    // missing/unmatched button attribute (LoopWithTooManyJumpStatements) is the same benign
+    // DOM-skip idiom used throughout this file/LiveLocalization.kt.
+    @Suppress("CyclomaticComplexMethod", "LoopWithTooManyJumpStatements")
     private fun refreshUnitActions(unit: GameUnit) {
         val map = GameHolder.instance?.scenario?.map ?: return
         val currentPlayer = map.currentPlayer ?: return
@@ -605,7 +662,16 @@ internal object GameplayLocalization {
             val help =
                 when (action) {
                     "mount" -> I18n.t(if (mounted) "unit_info.action.dismount.help" else "unit_info.action.mount.help")
-                    "embark" -> I18n.t(if (unit.carrier > 0) "unit_info.action.disembark.help" else "unit_info.action.embark.help")
+                    "embark" ->
+                        I18n.t(
+                            if (unit.carrier >
+                                0
+                            ) {
+                                "unit_info.action.disembark.help"
+                            } else {
+                                "unit_info.action.embark.help"
+                            },
+                        )
                     "resupply" -> {
                         val value = GameRules.getResupplyValue(map, unit)
                         val context = SupplyRules.getSupplyContext(map, unit)
@@ -657,9 +723,22 @@ internal object GameplayLocalization {
         val formation = HeroCampaign.formationFor(unit) ?: return
         val detail = byId("osadaFormationDetail") ?: return
         val rows = detail.querySelectorAll(".osada-formation-detail__summary")
-        val scenarios = formation.history.map { it.scenarioId }.filter(String::isNotBlank).distinct().size
-        val victories = formation.history.count { it.eventId.contains("destroy", true) || it.eventId.contains("kill", true) }
-        val objectives = formation.history.count { it.eventId.contains("capture", true) || it.eventId.contains("objective", true) }
+        val scenarios =
+            formation.history
+                .map { it.scenarioId }
+                .filter(String::isNotBlank)
+                .distinct()
+                .size
+        val victories =
+            formation.history.count {
+                it.eventId.contains("destroy", true) ||
+                    it.eventId.contains("kill", true)
+            }
+        val objectives =
+            formation.history.count {
+                it.eventId.contains("capture", true) ||
+                    it.eventId.contains("objective", true)
+            }
         val commander = HeroCampaign.dossier(unit)?.let { "${it.rank} ${it.name}" } ?: I18n.t("common.none")
         val honours = formation.battleHonors.takeIf { it.isNotEmpty() }?.joinToString() ?: I18n.t("common.none")
         val values = listOf(formation.recognition, scenarios, victories, objectives, commander, honours)

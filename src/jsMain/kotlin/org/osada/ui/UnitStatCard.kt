@@ -86,7 +86,7 @@ internal class UnitStatCard(
     ) {
         val ordinal = if (data.uclass != UnitClass.FORTIFICATION.value) UIBuilder.unitIDToOrdinal(unit.id) else ""
         val coreText = if (unit.isCore) " (Core Unit)" else ""
-        val leaderText = if (unit.leader != -1) " (Leader)" else ""
+        val leaderText = if (HeroCampaign.hasAnyCommander(unit)) " (Leader)" else ""
 
         byId("uImage")?.style?.backgroundImage = "url(${UnitIconResolver.forCurrentScenario(data.icon)})"
         byId("uSmallFlag")?.style?.backgroundPosition = "${-FLAG_SPRITE_WIDTH * (unit.flag - 1)}px 0px"

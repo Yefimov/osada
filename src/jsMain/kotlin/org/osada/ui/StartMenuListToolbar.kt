@@ -53,10 +53,11 @@ internal object StartMenuListToolbar {
             row.asDynamic().optionIndex = i
             renderRow(option, i, row, selectable)
             if (selectable) {
-                row.title = I18n.t(
-                    "list.select_dossier.help",
-                    mapOf("name" to option.textContent?.trim().orEmpty()),
-                )
+                row.title =
+                    I18n.t(
+                        "list.select_dossier.help",
+                        mapOf("name" to option.textContent?.trim().orEmpty()),
+                    )
                 row.onclick = { _: org.w3c.dom.events.MouseEvent ->
                     select.asDynamic().selectedIndex = i
                     select.dispatchEvent(Event("change"))
@@ -290,7 +291,9 @@ internal object StartMenuListToolbar {
     }
 
     /** Filter box + sort segments + side chips + results counter, inserted above [list] inside
-     *  its register column. */
+     *  its register column. TODO(detekt): CyclomaticComplexMethod (17) — deliberately deferred
+     *  rather than rushed. */
+    @Suppress("CyclomaticComplexMethod")
     fun buildListToolbar(
         register: HTMLElement,
         list: HTMLElement,

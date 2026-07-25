@@ -177,6 +177,10 @@ internal class CombatApplication(
         return result
     }
 
+    // TODO(detekt): CyclomaticComplexMethod (16) — victory-side/owner/flag/prestige/liberator
+    // branches for a hex capture; deliberately deferred rather than rushed (combat code, locked by
+    // CombatTest — a hasty split risks a subtle behavior change here of all places).
+    @Suppress("CyclomaticComplexMethod")
     private fun applyHexCapture(
         hex: Hex,
         unit: GameUnit,

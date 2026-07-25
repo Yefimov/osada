@@ -121,16 +121,6 @@ ktlint {
 }
 
 /*
- * Не копируем исходные архивы Panzer Marshal
- * в итоговый браузерный дистрибутив.
- */
-tasks.named<Copy>("jsProcessResources") {
-    exclude("Panzer+Marshal_3.2.10_Android/**")
-    exclude("Panzer_Marshal_3.2.14_Browser/**")
-    exclude("opengeneral-code-r1715/**")
-}
-
-/*
  * Собственная Python-проверка проекта.
  */
 tasks.register<Exec>("verifyStaticChecks") {

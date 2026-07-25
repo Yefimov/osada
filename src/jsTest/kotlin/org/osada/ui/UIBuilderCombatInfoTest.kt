@@ -2,6 +2,7 @@ package org.osada.ui
 
 import kotlinx.browser.document
 import org.osada.UnitClass
+import org.osada.i18n.installEnglishUiBundleForTests
 import org.osada.model.Equipment
 import org.osada.model.EquipmentData
 import org.osada.model.GameUnit
@@ -19,6 +20,7 @@ import kotlin.test.assertTrue
 class UIBuilderCombatInfoTest {
     @BeforeTest
     fun setup() {
+        installEnglishUiBundleForTests()
         Equipment.resetEquipment()
         Equipment.putEquipment(
             1,
@@ -60,7 +62,7 @@ class UIBuilderCombatInfoTest {
     @Test
     fun showEquipmentCostsDisplaysBuyButtonWhenAffordable() {
         UIBuilder.showEquipmentCosts(prestige = 100, buy = 50, upgrade = 0, sell = 0)
-        assertEquals("Buy ", byId("eqNewText")?.innerHTML)
+        assertEquals("Buy", byId("eqNewText")?.innerHTML)
         val costHtml = byId("eqNewCost")?.innerHTML ?: ""
         assertTrue(costHtml.contains("50"))
         assertTrue(costHtml.contains("currency.png"))
@@ -75,6 +77,25 @@ class UIBuilderCombatInfoTest {
         assertEquals("", byId("eqNewCost")?.textContent)
     }
 
+    /**
+     * A rule refusing the purchase outranks the wallet: saving up cannot lift the rule, so the
+     * shortfall line would point the player at a unit they can never buy and hide the reason why.
+     */
+    @Test
+    fun showEquipmentCostsPrefersTheBlockingRuleOverTheShortfall() {
+        UIBuilder.showEquipmentCosts(
+            prestige = 30,
+            buy = 50,
+            upgrade = 0,
+            sell = 0,
+            buyBlockedReason = "No supply hex or deployment zone in this scenario",
+        )
+        val html = byId("eqNewText")?.innerHTML ?: ""
+        assertTrue(html.contains("No supply hex or deployment zone in this scenario"), html)
+        assertTrue(!html.contains("Need 20 more prestige"), html)
+        assertEquals("none", byId("eqNewBut")?.style?.display)
+    }
+
     @Test
     fun showEquipmentCostsHidesBuyButtonWhenCostIsZero() {
         UIBuilder.showEquipmentCosts(prestige = 100, buy = 0, upgrade = 0, sell = 0)
@@ -85,7 +106,7 @@ class UIBuilderCombatInfoTest {
     @Test
     fun showEquipmentCostsDisplaysUpgradeButtonWhenAffordable() {
         UIBuilder.showEquipmentCosts(prestige = 100, buy = 0, upgrade = 40, sell = 0)
-        assertEquals(" Upgrade ", byId("eqUpgradeText")?.innerHTML)
+        assertEquals("Upgrade", byId("eqUpgradeText")?.innerHTML)
         val costHtml = byId("eqUpgradeCost")?.innerHTML ?: ""
         assertTrue(costHtml.contains("40"))
         assertTrue(costHtml.contains("currency.png"))
@@ -103,7 +124,7 @@ class UIBuilderCombatInfoTest {
     @Test
     fun showEquipmentCostsDisplaysSellButtonWhenSellValuePositive() {
         UIBuilder.showEquipmentCosts(prestige = 100, buy = 0, upgrade = 0, sell = 15)
-        assertEquals(" Sell ", byId("eqSellText")?.innerHTML)
+        assertEquals("Sell", byId("eqSellText")?.innerHTML)
         val costHtml = byId("eqSellCost")?.innerHTML ?: ""
         assertTrue(costHtml.contains("15"))
         assertTrue(costHtml.contains("currency.png"))

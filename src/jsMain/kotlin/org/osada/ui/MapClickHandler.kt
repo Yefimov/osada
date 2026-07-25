@@ -6,7 +6,6 @@ import org.osada.model.GameMap
 import org.osada.model.GameUnit
 import org.osada.model.Hex
 import org.osada.model.delCurrentUnit
-import org.osada.model.deployPlayerUnit
 import org.osada.model.getAttackableUnit
 import org.osada.model.getPlayer
 import org.osada.rules.AttackEligibility
@@ -55,6 +54,10 @@ internal class MapClickHandler(
         }
     }
 
+    // TODO(detekt): CyclomaticComplexMethod (22) — the worst offender in this file; dispatches
+    // every left-click-with-a-selected-unit outcome (move/attack/capture/deploy/mount/etc).
+    // Deliberately deferred rather than rushed — this is a map-input hot path.
+    @Suppress("CyclomaticComplexMethod")
     fun handleLeftClickWithUnit(
         map: GameMap,
         cell: Cell,
@@ -217,9 +220,7 @@ internal class MapClickHandler(
     /** True if the unit currently picked in the deploy/equipment window is an air unit (so it may
      *  be placed on an airfield outside the deploy zone). */
     private fun selectedDeployUnitIsAir(): Boolean = DeploymentSelection.selectedUnit(ui)?.let(GameRules::isAir) == true
-
 }
-
 
 /** DIAGNOSTIC (DEFERRED: T-34/ZP-40 "can't attack an adjacent enemy"). When the player clicks an
  *  enemy unit while one of their own is selected but no attack cursor is offered on that hex, print
@@ -234,12 +235,26 @@ private fun logIfEnemyUnattackable(
     clicked: GameUnit,
 ) {
     val side = map.currentPlayer?.side ?: return
-    // A move-highlighted hex is a movement destination, not a failed attack. This is essential for
-    // aircraft moving over a ground unit on the other occupancy layer.
-    if (currentUnit == null || clicked.player?.side == side || hex.isAttackSel || hex.isMoveSel) return
+    if (currentUnit == null || isNotAFailedAttack(hex, clicked, side)) return
     val reason =
         AttackEligibility.attackBlockReason(currentUnit, clicked)
             ?: "eligible but not in attack set — spotted=${hex.isSpotted(side)} tempSpotted=${clicked.tempSpotted}"
+    logAttackBlockReason(clicked, currentUnit, reason)
+}
+
+// A move-highlighted hex is a movement destination, not a failed attack. This is essential for
+// aircraft moving over a ground unit on the other occupancy layer.
+private fun isNotAFailedAttack(
+    hex: Hex,
+    clicked: GameUnit,
+    side: Int,
+): Boolean = clicked.player?.side == side || hex.isAttackSel || hex.isMoveSel
+
+private fun logAttackBlockReason(
+    clicked: GameUnit,
+    currentUnit: GameUnit,
+    reason: String,
+) {
     console.log(
         "[osada] no attack cursor on ${clicked.unitData().name} (eqid=${clicked.getEqid()}) from " +
             "${currentUnit.unitData().name}: $reason",

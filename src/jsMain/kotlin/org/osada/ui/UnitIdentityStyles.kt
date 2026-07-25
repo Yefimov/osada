@@ -9,11 +9,16 @@ import kotlinx.browser.document
 internal object UnitIdentityStyles {
     private const val STYLE_ID = "osada-unit-identity-styles"
 
+    // LongMethod false-positive: the function body is 4 statements: check style tag doesn't exist,
+    // set its content to a CSS literal (most of the "length"), append. Splitting the CSS text into
+    // several string constants would not change what the function does, only how detekt counts it.
+    @Suppress("LongMethod")
     fun ensureInstalled() {
         if (document.getElementById(STYLE_ID) != null) return
         val style = document.createElement("style")
         style.id = STYLE_ID
-        style.textContent = """
+        style.textContent =
+            """
 /* ============================================================================
  * UNIT IDENTITY / COMBAT TRANSPARENCY / SERVICE RECORD (2026-07-23)
  * ============================================================================ */
@@ -116,7 +121,7 @@ internal object UnitIdentityStyles {
     .osada-service-record__summary { grid-template-columns: repeat(2, minmax(0,1fr)); }
 }
 
-        """.trimIndent()
+            """.trimIndent()
         document.head?.appendChild(style)
     }
 }

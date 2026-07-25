@@ -172,6 +172,9 @@ class HeroSystemFixesTest {
                     unitExperience = 100,
                     serviceYear = 1936,
                     proceduralLegendaryFallback = true,
+                    // resolveEarlyLegendary bails out before checking proceduralLegendaryFallback
+                    // when this is <= 0 (LeaderAcquisitionService.kt's reservedPending guard).
+                    earlyLegendaryQualifyingCombats = 1,
                 ),
             ) as LeaderAcquisitionService.EmergenceResult.Emerged
 

@@ -61,6 +61,9 @@ internal object LeaderAcquisitionService {
         ) : EmergenceResult
     }
 
+    // Sequential eligibility pipeline with early exits; collapsing it into one expression (nested
+    // when/elvis) would be harder to follow than the guard clauses it replaces.
+    @Suppress("ReturnCount")
     fun tryGenerate(
         context: EmergenceContext,
         balance: HeroBalance = HeroBalance.DEFAULT,
@@ -77,6 +80,7 @@ internal object LeaderAcquisitionService {
     }
 
     /** The campaign's reserved opening character has its own onboarding roll: 45%, 70%, then 100%. */
+    @Suppress("ReturnCount")
     private fun resolveEarlyLegendary(
         context: EmergenceContext,
         balance: HeroBalance,

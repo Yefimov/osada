@@ -16,6 +16,9 @@ import org.w3c.dom.HTMLElement
 
 /** Adds identified live state and the largest active combat modifiers to the enemy card. */
 internal object CombatTransparencyPresenter {
+    // TODO(detekt): CyclomaticComplexMethod (20) — assembles every identified-state chip and
+    // active-modifier line for the enemy card; deliberately deferred rather than rushed.
+    @Suppress("CyclomaticComplexMethod")
     fun presentEnemy(unit: GameUnit) {
         UnitIdentityStyles.ensureInstalled()
         val main = byId("ecMain") ?: return
@@ -51,7 +54,7 @@ internal object CombatTransparencyPresenter {
         byId("ecSub")?.textContent = "$className · $country · $terrain"
         byId("ecStat")?.textContent =
             "STR ${unit.strength}/10 · EXP ${unit.experience} · ENT ${unit.entrenchment} · " +
-                "DEF ${data.grounddef} ground / ${data.airdef} air"
+            "DEF ${data.grounddef} ground / ${data.airdef} air"
 
         val factors =
             buildList {

@@ -16,18 +16,21 @@ class CampaignFormationCarryOverTest {
     @Test
     fun explicitTemporaryAndDestroyedUnitsDoNotPersist() {
         val player = Player().apply { id = 0 }
-        val temporary = GameUnit(0).apply {
-            owner = 0
-            isTemporaryBorrowed = true
-        }
-        val destroyed = GameUnit(0).apply {
-            owner = 0
-            this.destroyed = true
-        }
-        val noDossier = GameUnit(0).apply {
-            owner = 0
-            nodossier = true
-        }
+        val temporary =
+            GameUnit(0).apply {
+                owner = 0
+                isTemporaryBorrowed = true
+            }
+        val destroyed =
+            GameUnit(0).apply {
+                owner = 0
+                this.destroyed = true
+            }
+        val noDossier =
+            GameUnit(0).apply {
+                owner = 0
+                nodossier = true
+            }
 
         assertFalse(temporary.isCampaignPersistentFor(player))
         assertFalse(destroyed.isCampaignPersistentFor(player))

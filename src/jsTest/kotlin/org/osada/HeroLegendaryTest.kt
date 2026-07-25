@@ -46,6 +46,9 @@ class HeroLegendaryTest {
         unitExperience = 120,
         serviceYear = 1942,
         reservedLegendary = legendaryId?.let(LegendaryHeroPool::byId),
+        // This combat is itself the qualifying one for the early-legendary onboarding roll
+        // (LeaderAcquisitionService.resolveEarlyLegendary bails out at 0 — see its `<= 0` guard).
+        earlyLegendaryQualifyingCombats = 1,
     )
 
     @Test

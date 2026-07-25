@@ -176,6 +176,10 @@ internal object UnitIdentityPresenter {
         element.setAttribute("aria-label", element.title)
     }
 
+    // TODO(detekt): CyclomaticComplexMethod (22) — tied with handleLeftClickWithUnit as the worst
+    // offender in the codebase; assembles every unit-status chip. Deliberately deferred rather
+    // than rushed.
+    @Suppress("CyclomaticComplexMethod")
     private fun presentStatus(
         ui: UI,
         unit: GameUnit,
@@ -193,19 +197,18 @@ internal object UnitIdentityPresenter {
             title = "Unit class and campaign-persistence status"
         }
 
-        val units = ui.game.scenario?.map?.getUnits()?.toList().orEmpty()
+        val units =
+            ui.game.scenario
+                ?.map
+                ?.getUnits()
+                ?.toList()
+                .orEmpty()
+        // Text and tooltip are written by GameplayLocalization.refreshUnitSupport, which runs
+        // immediately after this presenter (UnitInfoPanel.showUnitInfo) — only the visibility
+        // decision belongs here. Writing the strings in both places is how the Combat Support note
+        // on #osadaUcStars used to be silently overwritten and lost.
         val supportBars = UnitCapabilities.combatSupportBars(units, unit)
-        byId("osadaUcSupport")?.apply {
-            style.display = if (supportBars > 0) "inline-flex" else "none"
-            textContent = if (supportBars > 0) "HQ SUPPORT +$supportBars" else ""
-            title =
-                if (supportBars > 0) {
-                    "Receiving Combat Support from adjacent valid headquarters.\n" +
-                        "Effective combat experience: permanent experience plus $supportBars supported bar(s)."
-                } else {
-                    ""
-                }
-        }
+        byId("osadaUcSupport")?.style?.display = if (supportBars > 0) "inline-flex" else "none"
 
         val states =
             buildList {
@@ -227,17 +230,14 @@ internal object UnitIdentityPresenter {
                                 "ignore this defence penalty.",
                         )
                     }
-                    if (unit.isSurprised) add("SURPRISED: the unit was caught unprepared and may suffer combat penalties.")
+                    if (unit.isSurprised) {
+                        add(
+                            "SURPRISED: the unit was caught unprepared and may suffer combat penalties.",
+                        )
+                    }
                     if (unit.isMounted) add("MOUNTED: the formation is currently using its organic transport.")
                     if (!unit.isDeployed) add("RESERVE: the formation is waiting to be deployed.")
                 }.joinToString("\n")
-        }
-
-        val stars = byId("osadaUcStars")
-        if (supportBars > 0) {
-            stars?.title =
-                "Permanent experience: ${unit.experience}. " +
-                    "Combat Support adds $supportBars effective bar(s)."
         }
     }
 
@@ -255,7 +255,12 @@ internal object UnitIdentityPresenter {
         headline.className = "osada-formation-detail__headline"
         headline.textContent = "${formation.displayName} · ${formation.id.value}"
 
-        val scenarios = formation.history.map { it.scenarioId }.filter(String::isNotBlank).distinct().size
+        val scenarios =
+            formation.history
+                .map { it.scenarioId }
+                .filter(String::isNotBlank)
+                .distinct()
+                .size
         val victories =
             formation.history.count {
                 it.eventId.contains("destroy", true) || it.eventId.contains("kill", true)
@@ -294,7 +299,7 @@ internal object UnitIdentityPresenter {
             row.className = "osada-formation-detail__event"
             row.textContent =
                 FormationServiceRecordPresenter.eventTitle(event.eventId) +
-                    HeroEventDisplay.context(event.scenarioId, event.turn, event.date, event.location)
+                HeroEventDisplay.context(event.scenarioId, event.turn, event.date, event.location)
         }
     }
 }

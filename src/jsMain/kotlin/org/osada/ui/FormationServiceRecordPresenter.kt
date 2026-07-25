@@ -69,7 +69,6 @@ internal object FormationServiceRecordPresenter {
         document.body?.appendChild(overlay)
     }
 
-
     fun eventTitle(eventId: String): String =
         when (eventId) {
             "equipment_changed" -> "Formation re-equipped"

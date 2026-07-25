@@ -2,11 +2,9 @@
 
 package org.osada.ui
 
-import kotlinx.browser.window
 import org.osada.GameHolder
 import org.osada.UnitClass
 import org.osada.i18n.GameText
-import org.osada.i18n.I18n
 import org.osada.model.EquipmentData
 import org.osada.model.GameUnit
 import org.osada.model.UnitDescriptions
@@ -65,7 +63,7 @@ private fun defaultCountryIndex(): Int {
  */
 internal object EquipmentWindowBuilder {
     internal const val FLAG_SPRITE_WIDTH = 21
-    private const val NARROW_PRESTIGE_LABEL_WIDTH_THRESHOLD = 800
+    internal const val NARROW_PRESTIGE_LABEL_WIDTH_THRESHOLD = 800
 
     fun setDefaultUserSelections() {
         val eqSelCountry = byId("eqSelCountry")
@@ -323,76 +321,10 @@ internal object EquipmentWindowBuilder {
         sell: Int,
         buyBlockedReason: String? = null,
     ) {
-        val eqNewText = byId("eqNewText")
-        val eqNewCost = byId("eqNewCost")
-        val eqNewBut = byId("eqNewBut")
-        if (buy > 0 && buy <= prestige) {
-            eqNewText?.textContent = I18n.t("equipment.action.buy.label")
-            eqNewCost?.innerHTML = "$buy${UIBuilder.currencyIcon}"
-            eqNewBut?.style?.display = "inline-block"
-        } else {
-            if (buy > prestige) {
-                val diff = buy - prestige
-                eqNewText?.innerHTML =
-                    "<span style='color:#BB7575'>" +
-                        I18n.t("equipment.cost.need_buy", mapOf("amount" to diff)) +
-                        "</span>"
-            } else if (buyBlockedReason != null) {
-                // A rule (not the wallet) refuses this purchase — say which one, rather than
-                // leaving an empty space where the Buy button was.
-                eqNewText?.innerHTML = "<span style='color:#BB7575'>$buyBlockedReason</span>"
-            } else {
-                eqNewText?.textContent = ""
-            }
-            eqNewBut?.style?.display = "none"
-            eqNewCost?.textContent = ""
-        }
-
-        val eqUpgradeText = byId("eqUpgradeText")
-        val eqUpgradeCost = byId("eqUpgradeCost")
-        val eqUpgradeBut = byId("eqUpgradeBut")
-        if (upgrade > 0 && upgrade <= prestige) {
-            eqUpgradeText?.textContent = I18n.t("equipment.action.upgrade.label")
-            eqUpgradeCost?.innerHTML = "$upgrade${UIBuilder.currencyIcon}"
-            eqUpgradeBut?.style?.display = "inline-block"
-        } else {
-            if (upgrade > prestige) {
-                val diff = upgrade - prestige
-                eqUpgradeText?.innerHTML =
-                    "<span style='color:#BB7575'>" +
-                        I18n.t("equipment.cost.need_upgrade", mapOf("amount" to diff)) +
-                        "</span>"
-            } else {
-                eqUpgradeText?.textContent = ""
-            }
-            eqUpgradeBut?.style?.display = "none"
-            eqUpgradeCost?.textContent = ""
-        }
-
-        val eqSellText = byId("eqSellText")
-        val eqSellCost = byId("eqSellCost")
-        val eqSellBut = byId("eqSellBut")
-        if (sell > 0) {
-            eqSellText?.textContent = I18n.t("equipment.action.sell.label")
-            eqSellCost?.innerHTML = "$sell${UIBuilder.currencyIcon}"
-            eqSellBut?.style?.display = "inline-block"
-        } else {
-            eqSellBut?.style?.display = "none"
-            eqSellCost?.textContent = ""
-            eqSellText?.textContent = ""
-        }
-
-        val currentPrestige = byId("currentPrestige")
-        currentPrestige?.textContent =
-            I18n.t(
-                if (window.innerWidth >= NARROW_PRESTIGE_LABEL_WIDTH_THRESHOLD) {
-                    "equipment.cost.available"
-                } else {
-                    "equipment.cost.available_short"
-                },
-            ) + " "
-        val currentPrestigeAmount = byId("currentPrestigeAmount")
-        currentPrestigeAmount?.innerHTML = "$prestige${UIBuilder.currencyIcon}"
+        showBuyCost(prestige, buy, buyBlockedReason)
+        showUpgradeCost(prestige, upgrade)
+        showSellCost(sell)
+        showCurrentPrestige(prestige)
     }
 
     fun showAttackInfo(

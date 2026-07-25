@@ -98,8 +98,9 @@ internal object AttackRingBuilder {
     /** Attackable-enemy cells from an ARBITRARY position (not necessarily the unit's real one) —
      *  same building blocks as GameRules.getUnitAttackCells, reused rather than reimplemented,
      *  just parameterized by row/col instead of reading unit.getPos() internally. Cached per
-     *  (row,col) within the current selection for the hover-preview extension. */
-    @Suppress("LoopWithTooManyJumpStatements")
+     *  (row,col) within the current selection for the hover-preview extension.
+     *  TODO(detekt): CyclomaticComplexMethod (15) — deliberately deferred rather than rushed. */
+    @Suppress("LoopWithTooManyJumpStatements", "CyclomaticComplexMethod")
     private fun attackableCellsFrom(
         map: GameMap,
         unit: GameUnit,

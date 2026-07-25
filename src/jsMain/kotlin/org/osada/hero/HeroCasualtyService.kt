@@ -31,11 +31,17 @@ object HeroCasualtyService {
         val seed: Int,
     )
 
+    /**
+     * Whether the commander *leaves* the formation is deliberately NOT decided here. This service is
+     * only reached when the formation's unit has been destroyed, and a destroyed unit never carries
+     * into the next scenario ([org.osada.model.isCampaignPersistentFor]) — so the formation is gone
+     * whatever the commander's fate, and only [org.osada.hero.HeroCampaign.applyCasualty] knows that.
+     * An earlier version returned `detach = false` for [Disposition.LIGHTLY_WOUNDED] ("he stays with
+     * his unit"), which left the hero permanently bound to a formation no unit would ever carry again.
+     */
     data class Outcome(
         val disposition: Disposition,
         val injury: HeroInjury?,
-        /** True when the commander leaves the formation (killed, taken, or evacuated to reserve). */
-        val detach: Boolean,
     )
 
     private val BASE =
@@ -88,7 +94,7 @@ object HeroCasualtyService {
                 Disposition.SERIOUSLY_WOUNDED -> HeroInjury(SERIOUS_WOUND_ID, scenarioId, permanent = true)
                 else -> null
             }
-        return Outcome(disposition, injury, detach = disposition != Disposition.LIGHTLY_WOUNDED)
+        return Outcome(disposition, injury)
     }
 
     private fun weightedPick(

@@ -1,10 +1,10 @@
 package org.osada.ui
 
 import org.osada.TerrainType
-import org.osada.uiSettings
 import org.osada.model.GameMap
 import org.osada.model.Hex
 import org.osada.model.getPlayer
+import org.osada.uiSettings
 
 /**
  * Draws hex flags and victory-hex markers. Extracted from the former `Render`

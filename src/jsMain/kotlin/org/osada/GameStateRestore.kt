@@ -54,8 +54,10 @@ class GameStateRestore(
     /**
      * Campaign core units are restored only after equipment loading, so their country files must be
      * added to the player load set directly from save metadata first. `flag` is a migration fallback
-     * for fmt=2 saves written before `equipmentCountry` was introduced.
+     * for fmt=2 saves written before `equipmentCountry` was introduced. `continue` per
+     * missing/unmatched field reads more plainly than nesting these as an `if`.
      */
+    @Suppress("LoopWithTooManyJumpStatements")
     private fun addCampaignCoreEquipmentCountries(
         players: Array<Player>,
         campaignData: dynamic?,

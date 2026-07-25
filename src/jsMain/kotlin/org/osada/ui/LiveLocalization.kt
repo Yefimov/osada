@@ -8,6 +8,7 @@ import org.osada.VERSION
 import org.osada.i18n.I18n
 import org.osada.model.Equipment
 import org.osada.model.getCountryNameByEqp
+
 /** Refreshes already-built start-menu DOM after an in-session locale change. */
 internal object LiveLocalization {
     private var installed = false
@@ -168,6 +169,7 @@ internal object LiveLocalization {
                 StartMenuCampaignData.DIFFICULTY_OPERATIONAL to "campaign.difficulty.operational.label",
             )
         val segments = byId("smCampDif")?.children ?: return
+        @Suppress("LoopWithTooManyJumpStatements")
         for (index in 0 until segments.length) {
             val segment = segments.item(index) as? org.w3c.dom.HTMLElement ?: continue
             val difficulty = segment.asDynamic().diffValue as? Int ?: continue
@@ -195,6 +197,11 @@ internal object LiveLocalization {
         byId("smCampScenarios")?.innerHTML = "<b>${I18n.t("campaign.operations.label")}</b><br/>$operationValue"
     }
 
+    // TODO(detekt): CyclomaticComplexMethod (21) — walks every campaign-list row and derives its
+    // subtitle/badges; deliberately deferred rather than rushed (see refreshUnitActions in
+    // GameplayLocalization.kt for the same call). `continue` per unmatched row (
+    // LoopWithTooManyJumpStatements) is the same benign DOM-skip idiom used throughout this file.
+    @Suppress("CyclomaticComplexMethod", "LoopWithTooManyJumpStatements")
     private fun refreshCampaignRows() {
         val list = byId("osadaCampList") ?: return
         val select = byId("smCampSel")?.querySelector("select") ?: return
@@ -253,6 +260,9 @@ internal object LiveLocalization {
         refreshScenarioSidePicker()
     }
 
+    // TODO(detekt): CyclomaticComplexMethod (15) — same deferred-refactor note as
+    // refreshCampaignRows above; `continue`s are the same benign DOM-skip idiom.
+    @Suppress("CyclomaticComplexMethod", "LoopWithTooManyJumpStatements")
     private fun refreshScenarioRows() {
         val list = byId("osadaScenList") ?: return
         val select = byId("smScenSel")?.querySelector("select") ?: return
@@ -303,6 +313,7 @@ internal object LiveLocalization {
         }
 
         val segments = register.querySelector(".osadaListSorts")?.children ?: return
+        @Suppress("LoopWithTooManyJumpStatements")
         for (index in 0 until segments.length) {
             val segment = segments.item(index) as? org.w3c.dom.HTMLElement ?: continue
             val mode = modes.getOrNull(index) ?: continue

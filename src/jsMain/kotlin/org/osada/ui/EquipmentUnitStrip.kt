@@ -230,6 +230,8 @@ internal object EquipmentUnitStrip {
         }
     }
 
+    // TODO(detekt): CyclomaticComplexMethod (15) — deliberately deferred rather than rushed.
+    @Suppress("CyclomaticComplexMethod")
     private fun wireUnitItemClick(
         ui: UI,
         eqUserSel: dynamic,

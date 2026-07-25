@@ -16,8 +16,14 @@ import org.osada.model.deployPlayerUnit
 internal object DeploymentSelection {
     private const val NO_SELECTION = -1
 
+    // Guard-clause early returns read more clearly here than nesting or chaining ?.let; detekt's
+    // default ReturnCount budget (2) is not a good fit for this style.
+    @Suppress("ReturnCount")
     fun selectedUnit(ui: UI): GameUnit? {
-        val player = ui.game.scenario?.map?.currentPlayer ?: return null
+        val player =
+            ui.game.scenario
+                ?.map
+                ?.currentPlayer ?: return null
         val eqUserSel = byId("eqUserSel")?.asDynamic() ?: return null
         val formationId = eqUserSel.deployformation as? String
         val byFormation =
@@ -33,6 +39,7 @@ internal object DeploymentSelection {
         return player.getCoreUnitList().getOrNull(index)?.takeUnless { it.isDeployed }
     }
 
+    @Suppress("ReturnCount")
     fun selectUnit(
         player: Player,
         unit: GameUnit,
@@ -62,7 +69,9 @@ internal object DeploymentSelection {
         clearSelected(eqUserSel)
         eqUserSel.deployrow = row
         eqUserSel.deploycol = col
-        ui.game.scenario?.map?.delCurrentUnit()
+        ui.game.scenario
+            ?.map
+            ?.delCurrentUnit()
         ui.buildUnitContext(null)
         makeVisible("container-unitlist")
         byId("equipment")?.style?.display = "grid"
@@ -74,6 +83,7 @@ internal object DeploymentSelection {
         return deploySelected(ui, target.row, target.col)
     }
 
+    @Suppress("ReturnCount")
     fun deploySelected(
         ui: UI,
         row: Int,

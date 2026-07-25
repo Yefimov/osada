@@ -1,6 +1,7 @@
 package org.osada.ui
 
 import kotlinx.browser.document
+import org.osada.i18n.installEnglishUiBundleForTests
 import org.osada.uiSettings
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.KeyboardEvent
@@ -17,6 +18,7 @@ import kotlin.test.assertTrue
 class UIBuilderStartMenuTest {
     @BeforeTest
     fun setup() {
+        installEnglishUiBundleForTests()
         UIBuilder.resetStartMenuBuilt()
         installFixtureData()
         ensureFixtureDom()

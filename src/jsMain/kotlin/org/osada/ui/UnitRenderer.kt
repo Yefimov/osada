@@ -1,6 +1,7 @@
 package org.osada.ui
 
 import org.osada.GameHolder
+import org.osada.hero.HeroCampaign
 import org.osada.model.GameUnit
 import org.osada.rules.GameRules
 import org.osada.rules.isBridgeForSide
@@ -133,7 +134,7 @@ internal class UnitRenderer(
         boxX: Double,
         boxW: Double,
     ) {
-        if (unit.leader == -1) return
+        if (!HeroCampaign.hasAnyCommander(unit)) return
         val img = if (side == 1) rc.leaderAlliedImage else rc.leaderAxisImage
         ctx.drawImage(img, boxX + boxW + 1.0, y + 2.0 * rc.v - LEADER_ICON_Y_OFFSET)
     }

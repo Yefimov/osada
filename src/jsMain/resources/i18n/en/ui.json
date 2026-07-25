@@ -447,6 +447,7 @@
   "unit_info.carrier.help": "Carrier — click to view.",
   "unit_info.entrenchment.value": "Entrenchment: {value}",
   "unit_info.experience.value": "Experience: {experience}/{max}",
+  "unit_info.experience.value_with_support": "Experience: {experience}/{max}. Combat Support adds {bars} effective bar(s).",
   "unit_info.formation.commander.label": "Current commander",
   "unit_info.formation.destroyed.label": "Enemy formations destroyed",
   "unit_info.formation.honours.label": "Battle honours",
@@ -523,6 +524,8 @@
     "one": "{base}, {count} adjacent enemy",
     "other": "{base}, {count} adjacent enemies"
   },
+  "unit_info.support.help": "Receiving Combat Support from adjacent valid headquarters.\nEffective combat experience: permanent experience plus {bars} supported bar(s).",
+  "unit_info.support.label": "HQ SUPPORT +{bars}",
   "unit_info.transport.dismounted.help": "In transport — click to preview mounted stats.",
   "unit_info.transport.mounted.help": "Mounted — click to preview dismounted stats."
 }

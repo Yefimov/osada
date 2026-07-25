@@ -30,7 +30,9 @@ import org.w3c.dom.HTMLElement
  * Fog-of-war discipline: [renderEnemyCard] and [renderForecast] only ever receive a [GameUnit]
  * that the caller has ALREADY cleared through the existing spotting checks (same units the
  * cursor forecast / click-to-inspect paths already reveal) — no new information is surfaced here.
+ * Still 12 vs. the 11-function budget after being split from UIBuilder.
  */
+@Suppress("TooManyFunctions")
 internal object BottomZoneBuilder {
     private const val HOVER_PERSIST_MS = 2000
     private const val FULL_STRENGTH = 10.0

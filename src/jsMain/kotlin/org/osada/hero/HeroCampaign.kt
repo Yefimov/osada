@@ -96,6 +96,17 @@ internal object HeroCampaign {
         return roster.assignedHero(formationId)
     }
 
+    /**
+     * True when [unit] is commanded at all, by either mechanic.
+     *
+     * Core formations that emerge an officer through the hero system deliberately leave
+     * `unit.leader` at -1 (`CombatLeaderAcquisition`), so a plain `unit.leader != -1` test now means
+     * "has a LEGACY leader", not "has a commander". Anything that just wants to know whether the
+     * formation is led — a map badge, a name suffix — must ask this instead, or it will decorate
+     * throwaway scenario units while ignoring the campaign's actual commanders.
+     */
+    fun hasAnyCommander(unit: GameUnit?): Boolean = heroFor(unit) != null || (unit?.leader ?: -1) != -1
+
     /** The coarse recognition status for [unit]'s formation, or null when it has none/has a hero (§7.1). */
     fun recognitionStatus(unit: GameUnit?): String? {
         val formation = unit?.let { FormationIdentity.of(it) }?.let { roster.formation(it) } ?: return null
@@ -182,15 +193,18 @@ internal object HeroCampaign {
                 location ?: currentLocation(unit),
             )
         val previous = formation.history.lastOrNull()
-        if (previous?.eventId == event.eventId &&
-            previous.scenarioId == event.scenarioId &&
-            previous.turn == event.turn &&
-            previous.location == event.location
-        ) {
-            return formation
+        return if (previous.isSameEvent(event)) {
+            formation
+        } else {
+            formation.copy(history = formation.history + event).also(roster::putFormation)
         }
-        return formation.copy(history = formation.history + event).also(roster::putFormation)
     }
+
+    private fun FormationEvent?.isSameEvent(other: FormationEvent): Boolean =
+        this?.eventId == other.eventId &&
+            this.scenarioId == other.scenarioId &&
+            this.turn == other.turn &&
+            this.location == other.location
 
     /** Assignment lookup used by the roster/dossier Locate action. */
     fun formationIdForHero(heroId: HeroId): FormationId? = roster.state(heroId)?.assignedFormationId
@@ -289,8 +303,14 @@ internal object HeroCampaign {
 
     /**
      * Resolves the fate of [formation]'s commander after its unit was destroyed (§11): sets the new
-     * status, records any wound, detaches the leader from the formation unless only lightly wounded,
-     * leaves a restrained memorial tradition on death (§11.2), and queues the event for the UI.
+     * status, records any wound, detaches the leader, leaves a restrained memorial tradition on death
+     * (§11.2), and queues the event for the UI.
+     *
+     * The detach is unconditional because this only runs on a destroyed unit, and a destroyed unit is
+     * not campaign-persistent — the formation itself does not reach the next scenario. Keeping a
+     * lightly wounded commander "with his formation" therefore stranded him: still `ACTIVE`, still
+     * pointing at a formation no unit would ever carry again, and unreachable by any reassignment
+     * (transfers are still deferred, see `docs/hero-leader-implementation-phases.md` Phase 4).
      */
     private fun applyCasualty(
         unit: GameUnit,
@@ -321,14 +341,14 @@ internal object HeroCampaign {
                 status = outcome.disposition.status,
                 injuries = hero.injuries + listOfNotNull(outcome.injury),
                 serviceEvents = hero.serviceEvents + event,
-                assignedFormationId = if (outcome.detach) null else hero.assignedFormationId,
+                assignedFormationId = null,
             ),
         )
         val killed = outcome.disposition == HeroCasualtyService.Disposition.KILLED
         val memorial = if (killed) "Tradition of ${definition.displayName}" else null
         val updatedFormation =
             formation.copy(
-                assignedHeroId = if (outcome.detach) null else formation.assignedHeroId,
+                assignedHeroId = null,
                 battleHonors = if (memorial != null) formation.battleHonors + memorial else formation.battleHonors,
                 history =
                     formation.history +
@@ -517,7 +537,11 @@ internal object HeroCampaign {
         }
     }
 
-    private fun currentTurn(): Int = GameHolder.instance?.scenario?.map?.turn ?: 0
+    private fun currentTurn(): Int =
+        GameHolder.instance
+            ?.scenario
+            ?.map
+            ?.turn ?: 0
 
     private fun currentScenarioLabel(): String =
         GameHolder.instance

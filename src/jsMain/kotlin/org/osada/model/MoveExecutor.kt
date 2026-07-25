@@ -156,6 +156,10 @@ internal class MoveExecutor(
         val unit = ctx.unit
         val fromHex = ctx.fromHex
         unit.copy(ctx.saved)
+        // copy() detaches unit.player onto a throwaway Player; re-point it at the shared
+        // instance so refunds below land on the real player, not a copy of a copy.
+        val player = gameMap.getPlayer(unit.player?.id ?: 0)
+        unit.player = player
         GameRules.setZOCRange(gameMap, unit, false)
         GameRules.setSpotRange(gameMap, unit, false)
         fromHex.delUnit(unit)
@@ -166,12 +170,11 @@ internal class MoveExecutor(
         gameMap.undoState.oldOwner?.let { fromHex.owner = it }
         gameMap.undoState.oldFlag?.let { fromHex.flag = it }
         gameMap.undoState.oldVictorySide?.let { vs ->
-            val player = gameMap.getPlayer(unit.player?.id ?: 0)
             gameMap.updateVictorySides(1 - player.side, fromHex.getPos())
             fromHex.victorySide = vs
         }
-        gameMap.undoState.prestigeGain?.let { unit.player?.prestige = unit.player?.prestige?.minus(it) ?: 0 }
-        gameMap.undoState.scoreGain?.let { unit.player?.updateScore(-it) }
+        gameMap.undoState.prestigeGain?.let { player.prestige -= it }
+        gameMap.undoState.scoreGain?.let { player.updateScore(-it) }
         gameMap.undoState.clear()
     }
 
