@@ -52,11 +52,11 @@ internal object CampaignEffectApplier {
                 is CampaignEffect.GrantUnit -> applyGrantUnit(effect, player)
                 is CampaignEffect.GrantExperience -> applyExperience(effect, player)
                 is CampaignEffect.Resupply -> applyResupply(effect, player)
+                is CampaignEffect.Route -> state.route.set(effect.scenarioIndex)
                 // Setup effects consumed by the scenario loader rather than the player object.
                 is CampaignEffect.ShiftReinforcements,
                 is CampaignEffect.UnlockEquipment,
                 is CampaignEffect.DeploymentSlots,
-                is CampaignEffect.Route,
                 -> Unit
             }
         } catch (e: Throwable) {

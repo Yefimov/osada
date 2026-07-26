@@ -8,6 +8,7 @@ import org.osada.hero.HeroBalance
 import org.osada.hero.HeroCampaign
 import org.osada.hero.LeaderAcquisitionService
 import org.osada.hero.RecognitionService
+import org.osada.i18n.installEnglishUiBundleForTests
 import org.osada.model.Equipment
 import org.osada.model.EquipmentData
 import org.osada.model.GameUnit
@@ -41,6 +42,7 @@ class HeroAcquisitionTest {
     @BeforeTest
     fun setup() {
         js("if (typeof window.scenariolist === 'undefined') { window.scenariolist = []; }")
+        installEnglishUiBundleForTests()
         Equipment.resetEquipment()
         Equipment.putEquipment(
             TANK_EQID,

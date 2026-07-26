@@ -328,6 +328,38 @@ class CampaignNarrativeTest {
         assertTrue(state.effects.pending.isEmpty())
     }
 
+    // --------------------------------------------------------------- route override
+
+    @Test
+    fun routeEffectCommitsAnOverrideConsumedExactlyOnce() {
+        val state = CampaignNarrativeState()
+        val player = Player()
+        CampaignEffectApplier.apply(listOf(CampaignEffect.Route("choice.route", scenarioIndex = 4)), player, state)
+        assertEquals(4, state.route.peek(), "committing a route effect must record its target")
+        assertEquals(4, state.route.take())
+        assertNull(state.route.take(), "a committed route must not leak into resolving a later transition")
+    }
+
+    @Test
+    fun committedRouteSurvivesASaveBeforeItIsConsumed() {
+        val state = CampaignNarrativeState()
+        state.route.set(7)
+        val restored = CampaignNarrativeSerializer.deserialize(CampaignNarrativeSerializer.serialize(state))
+        assertEquals(
+            7,
+            restored.route.peek(),
+            "a route committed but not yet consumed must round-trip through a save",
+        )
+    }
+
+    @Test
+    fun campaignNarrativeExposesTheCommittedRouteExactlyOnce() {
+        CampaignNarrative.reset()
+        CampaignNarrative.state.route.set(2)
+        assertEquals(2, CampaignNarrative.takeCommittedRoute())
+        assertNull(CampaignNarrative.takeCommittedRoute(), "the facade must consume the same way the state does")
+    }
+
     // -------------------------------------------------------------- persistence
 
     @Test

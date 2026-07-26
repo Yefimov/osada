@@ -23,6 +23,39 @@ internal data class PendingEffect(
 )
 
 /**
+ * The player-chosen route override committed via a [CampaignEffect.Route] dialogue effect, if
+ * any. Split out purely to keep [CampaignNarrativeState] within the project's function budget,
+ * following the same decomposition as [CampaignEffectLedger] and [ScenarioActionLog].
+ */
+internal class RouteOverride {
+    private var scenarioIndex: Int? = null
+
+    val isEmpty: Boolean get() = scenarioIndex == null
+
+    /** Overwriting an existing value is not a concern in practice: effect ids are idempotent, so
+     *  an already-applied route effect cannot re-fire and re-commit here. */
+    fun set(index: Int) {
+        scenarioIndex = index
+    }
+
+    /** Reads the override without consuming it. Used by the save serializer, which must not
+     *  mutate state as a side effect of writing it out. */
+    fun peek(): Int? = scenarioIndex
+
+    /** Consumes and clears the override, if any, so it cannot leak into resolving some later,
+     *  unrelated transition. */
+    fun take(): Int? {
+        val value = scenarioIndex
+        scenarioIndex = null
+        return value
+    }
+
+    fun restore(value: Int?) {
+        scenarioIndex = value
+    }
+}
+
+/**
  * Persistent narrative and consequence state for ONE campaign run.
  *
  * Lifecycle: created empty by `newCampaign`, mutated only through the `record*` functions here
@@ -31,8 +64,9 @@ internal data class PendingEffect(
  *
  * Collections are exposed read-only; mutation goes through recording functions so that
  * "record exactly once" is enforced in one place rather than at every call site. The effect
- * ledger and scenario-action log are separate collaborators ([CampaignEffectLedger],
- * [ScenarioActionLog]) to keep each class within the project's function budget.
+ * ledger, scenario-action log and route override are separate collaborators
+ * ([CampaignEffectLedger], [ScenarioActionLog], [RouteOverride]) to keep each class within the
+ * project's function budget.
  */
 internal class CampaignNarrativeState {
     private val outcomes = mutableListOf<ScenarioOutcomeRecord>()
@@ -45,6 +79,9 @@ internal class CampaignNarrativeState {
     /** Applied-effect ids and queued next-scenario effects. */
     val effects = CampaignEffectLedger()
 
+    /** A player-committed `CampaignEffect.Route`, if any, awaiting `continueCampaign`. */
+    val route = RouteOverride()
+
     /** Completed scenarios in play order. */
     val scenarioOutcomes: List<ScenarioOutcomeRecord> get() = outcomes.toList()
 
@@ -54,7 +91,13 @@ internal class CampaignNarrativeState {
     val flags: Set<String> get() = flagSet.toSet()
 
     val isEmpty: Boolean
-        get() = outcomes.isEmpty() && choices.isEmpty() && flagSet.isEmpty() && actions.isEmpty && effects.isEmpty
+        get() =
+            outcomes.isEmpty() &&
+                choices.isEmpty() &&
+                flagSet.isEmpty() &&
+                actions.isEmpty &&
+                effects.isEmpty &&
+                route.isEmpty
 
     // ---------------------------------------------------------------- outcomes
 
@@ -119,6 +162,7 @@ internal class CampaignNarrativeState {
         actionMap: Map<String, Set<String>>,
         applied: Set<String>,
         queued: List<PendingEffect>,
+        route: Int?,
     ) {
         outcomes.clear()
         outcomes += outcomeRecords
@@ -128,5 +172,6 @@ internal class CampaignNarrativeState {
         flagSet += flagValues
         actions.restore(actionMap)
         effects.restore(applied, queued)
+        this.route.restore(route)
     }
 }

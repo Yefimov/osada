@@ -76,8 +76,16 @@ class Campaign(
 
     fun getCurrentScenario(): dynamic = scenarios.getOrNull(currentScenarioIndex)
 
-    fun loadNextScenario(outcome: String): dynamic? {
-        val next = scenarios[currentScenarioIndex].outcome[outcome].goto as Int
+    /**
+     * [routeOverride], when present, replaces the outcome-branch `goto` entirely — it is how an
+     * authored player CHOICE (as opposed to a victory grade) redirects the campaign. See
+     * `CampaignEffect.Route` and `CampaignNarrative.takeCommittedRoute`.
+     */
+    fun loadNextScenario(
+        outcome: String,
+        routeOverride: Int? = null,
+    ): dynamic? {
+        val next = routeOverride ?: (scenarios[currentScenarioIndex].outcome[outcome].goto as Int)
         if (next < scenarios.size) {
             currentScenarioIndex = next
             return scenarios[next]

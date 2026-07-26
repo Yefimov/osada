@@ -3,7 +3,6 @@ package org.osada.model
 import org.osada.UnitClass
 import org.osada.rules.GameRules
 import org.osada.rules.canEntrench
-import org.osada.terrainEntrenchment
 import org.osada.unitEntrenchRate
 
 private const val EXPERIENCE_ENTRENCH_DIVISOR = 100
@@ -15,7 +14,7 @@ private const val MAX_ENTRENCHMENT_ABOVE_TERRAIN = 5
 fun GameUnit.entrench(): Boolean {
     val hex = this.hex
     if (!GameRules.canEntrench(this) || hex == null) return false
-    val terrainEnt = terrainEntrenchment[hex.terrain]
+    val terrainEnt = TerrainEx.baseEntrenchment(hex.terrain)
     val unitClass = unitData().uclass
     if (entrenchment >= terrainEnt) {
         var extra = entrenchment - terrainEnt

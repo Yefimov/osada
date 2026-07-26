@@ -46,7 +46,12 @@ internal object FormationServiceRecordPresenter {
         summary(summaryGrid, "Experience", unit.experience.toString())
         summary(summaryGrid, "Strength", unit.strength.toString())
         summary(summaryGrid, "Commander", dossier?.let { "${it.rank} ${it.name}" } ?: "None")
-        summary(summaryGrid, "Attachments", formation.attachmentIds.size.toString())
+        // Nothing writes attachmentIds yet (DEFERRED.md §1.4), so "Attachments: 0" would render
+        // forever and read as broken rather than "the feature doesn't exist here yet". Hide the
+        // row until there is something to report.
+        if (formation.attachmentIds.isNotEmpty()) {
+            summary(summaryGrid, "Attachments", formation.attachmentIds.size.toString())
+        }
         summary(summaryGrid, "Battle honours", formation.battleHonors.size.toString())
 
         val history = child(panel, "div", "osada-service-record__history")

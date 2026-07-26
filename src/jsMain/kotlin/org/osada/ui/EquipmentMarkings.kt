@@ -39,7 +39,9 @@ internal object EquipmentMarkings {
             } else {
                 "Combat Support: currently lends $experienceBars experience bar(s) to adjacent friendly units on " +
                     "the same air/ground layer. " +
-                    "Multiple Combat Support units stack."
+                    "Multiple Combat Support units stack. " +
+                    "(Detected from the unit's name — a genuine Combat Support special or leader may be missed, " +
+                    "or a unit merely named \"HQ\" may be flagged in error.)"
             }
         addMark(parent, "HQ", description, "hq", mark)
     }

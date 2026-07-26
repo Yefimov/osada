@@ -18,21 +18,25 @@ import kotlin.js.json
  * player with a damaged save loses narrative callbacks, not their campaign.
  */
 internal object CampaignNarrativeSerializer {
-    fun serialize(state: CampaignNarrativeState): dynamic =
-        json(
-            Pair("version", NARRATIVE_VERSION),
-            Pair("outcomes", state.scenarioOutcomes.map(::serializeOutcome).toTypedArray()),
-            Pair("choices", serializeStringMap(state.selectedChoices)),
-            Pair("flags", state.flags.toTypedArray()),
-            Pair("actions", serializeActions(state)),
-            Pair("applied", state.effects.applied.toTypedArray()),
-            Pair(
-                "pending",
-                state.effects.pending
-                    .map(::serializePending)
-                    .toTypedArray(),
-            ),
-        )
+    fun serialize(state: CampaignNarrativeState): dynamic {
+        val obj: dynamic =
+            json(
+                Pair("version", NARRATIVE_VERSION),
+                Pair("outcomes", state.scenarioOutcomes.map(::serializeOutcome).toTypedArray()),
+                Pair("choices", serializeStringMap(state.selectedChoices)),
+                Pair("flags", state.flags.toTypedArray()),
+                Pair("actions", serializeActions(state)),
+                Pair("applied", state.effects.applied.toTypedArray()),
+                Pair(
+                    "pending",
+                    state.effects.pending
+                        .map(::serializePending)
+                        .toTypedArray(),
+                ),
+            )
+        state.route.peek()?.let { obj.route = it }
+        return obj
+    }
 
     @Suppress("TooGenericExceptionCaught")
     fun deserialize(value: dynamic): CampaignNarrativeState =
@@ -48,6 +52,7 @@ internal object CampaignNarrativeSerializer {
                         actionMap = readActions(value.actions),
                         applied = BriefingDynamic.strList(value.applied).toSet(),
                         queued = readPending(value.pending),
+                        route = BriefingDynamic.int(value.route),
                     )
                 }
             } catch (e: Throwable) {

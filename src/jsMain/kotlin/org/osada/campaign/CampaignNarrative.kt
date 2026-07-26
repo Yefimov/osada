@@ -116,6 +116,16 @@ internal object CampaignNarrative {
         return applied
     }
 
+    /**
+     * Consumes a player-committed [CampaignEffect.Route] override, if any, clearing it so it
+     * cannot leak into resolving a later, unrelated transition.
+     *
+     * Called once by `Game.continueCampaign`, before both [queueForNextScenario]'s target lookup
+     * and `Campaign.loadNextScenario` — a committed route replaces the outcome-branch `goto`
+     * entirely, it does not just relabel it.
+     */
+    fun takeCommittedRoute(): Int? = current.route.take()
+
     /** Builds the evaluation context for dialogue conditions. */
     fun context(
         campaignFile: String,

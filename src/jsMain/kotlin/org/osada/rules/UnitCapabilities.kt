@@ -12,7 +12,9 @@ object UnitCapabilities {
 
     const val HEADQUARTERS_SUPPORT_DESCRIPTION =
         "Combat Support: lends this unit's experience bars to adjacent friendly units on the same air/ground layer. " +
-            "Multiple Combat Support units stack."
+            "Multiple Combat Support units stack. " +
+            "(Detected from the unit's name — a genuine Combat Support special or leader may be missed, " +
+            "or a unit merely named \"HQ\" may be flagged in error.)"
 
     const val RECON_MOVEMENT_DESCRIPTION =
         "Phased Movement: reconnaissance units may move again while movement points remain. " +

@@ -15,16 +15,24 @@ package org.osada.scenario
 /**
  * The scenario file [outcome] would route to, without advancing the campaign.
  *
+ * [routeOverride], when present, is what a committed `CampaignEffect.Route` replaces the
+ * outcome's `goto` with — see `Campaign.loadNextScenario`. Passing it here too keeps this peek
+ * agreeing with the transition `loadNextScenario` is about to make, so outcome effects queue for
+ * the scenario the campaign is ACTUALLY going to, not the one the victory grade alone would pick.
+ *
  * Returns null for the campaign-ending sentinels (254 victory / 255 defeat) — which is exactly
  * how "the campaign ends here" is recorded. Both shipping story campaigns route every `lose` to
  * 255, so a loss there yields null.
  */
-fun Campaign.peekNextScenarioFile(outcome: String): String? {
+fun Campaign.peekNextScenarioFile(
+    outcome: String,
+    routeOverride: Int? = null,
+): String? {
     val scenarios = getCampaignData()
     // Bracket access, not `?.get(outcome)`: the outcome map is a plain JS object parsed from the
     // campaign JSON, so a `.get(...)` method call throws "get is not a function" at runtime.
     val outcomes: dynamic = scenarios.getOrNull(currentScenarioIndex)?.outcome
-    val goto = if (outcomes == null) null else outcomes[outcome]?.goto as? Int
+    val goto = routeOverride ?: (if (outcomes == null) null else outcomes[outcome]?.goto as? Int)
     return goto?.let { scenarios.getOrNull(it)?.scenario as? String }
 }
 

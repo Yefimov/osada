@@ -30,8 +30,9 @@ internal object BriefingChoicePreview {
             is CampaignEffect.GrantExperience -> describeExperience(effect)
             is CampaignEffect.Resupply -> describeResupply(effect)
             is CampaignEffect.GrantUnit -> "Reinforcement: ${equipmentName(effect.eqid)}"
-            // Narrative state — never previewed. See the class doc.
-            is CampaignEffect.SetFlag, is CampaignEffect.ClearFlag -> null
+            // Narrative state — never previewed, regardless of whether it is applied. See the
+            // class doc: naming the campaign branch a choice routes to would spoil the story.
+            is CampaignEffect.SetFlag, is CampaignEffect.ClearFlag, is CampaignEffect.Route -> null
             // Parsed, clamped and persisted, but `CampaignEffectApplier` still no-ops them (see
             // the effect catalogue in docs/campaign-dialogue-and-consequences.md §7). Previewing
             // them would promise the player something that does not happen — worse than silence.
@@ -39,7 +40,6 @@ internal object BriefingChoicePreview {
             is CampaignEffect.UnlockEquipment,
             is CampaignEffect.DeploymentSlots,
             is CampaignEffect.ShiftReinforcements,
-            is CampaignEffect.Route,
             -> null
         }
 

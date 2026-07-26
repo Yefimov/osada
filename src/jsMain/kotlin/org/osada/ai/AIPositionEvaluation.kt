@@ -8,6 +8,7 @@ import org.osada.model.ExtendedCell
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
 import org.osada.model.Hex
+import org.osada.model.TerrainEx
 import org.osada.model.getPlayer
 import org.osada.rules.GameRules
 import org.osada.rules.canEntrench
@@ -16,7 +17,6 @@ import org.osada.rules.getAdjacent
 import org.osada.rules.isCloseCombatTerrain
 import org.osada.rules.isEnemy
 import org.osada.rules.isGround
-import org.osada.terrainEntrenchment
 import org.osada.terrainInitiative
 
 /**
@@ -91,7 +91,7 @@ internal object AIPositionEvaluation {
         originalHex: Hex,
     ): Int {
         var score = 0
-        if (GameRules.canEntrench(unit) && unit.entrenchment < terrainEntrenchment[hex.terrain]) {
+        if (GameRules.canEntrench(unit) && unit.entrenchment < TerrainEx.baseEntrenchment(hex.terrain)) {
             score += TERRAIN_ENTRENCH_BONUS
         }
         if (terrainInitiative[originalHex.terrain] < terrainInitiative[hex.terrain]) score += TERRAIN_INITIATIVE_BONUS

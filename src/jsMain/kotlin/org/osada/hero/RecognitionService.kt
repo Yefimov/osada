@@ -1,5 +1,6 @@
 package org.osada.hero
 
+import org.osada.i18n.I18n
 import kotlin.math.roundToInt
 
 /**
@@ -109,8 +110,8 @@ internal object RecognitionService {
      * exact number, so the mechanic reads as "an officer is emerging" rather than a progress bar.
      * A formation that already has a commander returns null (there is nothing to recognise toward).
      *
-     * Display source text; §29.20 keys it here for a future i18n pass. An advanced tooltip may still
-     * show [CoreFormation.recognition] verbatim for players who want the raw figure.
+     * An advanced tooltip may still show [CoreFormation.recognition] verbatim for players who want
+     * the raw figure.
      */
     fun coarseStatus(
         formation: CoreFormation,
@@ -118,12 +119,14 @@ internal object RecognitionService {
     ): String? {
         if (formation.assignedHeroId != null) return null
         val floor = balance.recognitionEmergenceFloor
-        return when {
-            formation.recognition <= 0 -> "No candidate identified"
-            formation.recognition < floor / 2 -> "Promising officers"
-            formation.recognition < floor -> "Officer recommendation pending"
-            else -> "Leader emergence likely"
-        }
+        val key =
+            when {
+                formation.recognition <= 0 -> "hero.recognition.status.none"
+                formation.recognition < floor / 2 -> "hero.recognition.status.promising"
+                formation.recognition < floor -> "hero.recognition.status.pending"
+                else -> "hero.recognition.status.likely"
+            }
+        return I18n.t(key)
     }
 
     /** Three visible stages plus the exact raw progress used by the Unit Info tooltip. */

@@ -1,6 +1,7 @@
 package org.osada.hero
 
 import org.osada.LeaderType
+import org.osada.i18n.I18n
 import org.osada.model.Leaders
 
 /*
@@ -233,7 +234,8 @@ object HeroDossierAssembler {
     ): FormationView =
         FormationView(
             name = formation.displayName,
-            recognitionStatus = RecognitionService.coarseStatus(formation) ?: "Commander assigned",
+            recognitionStatus =
+                RecognitionService.coarseStatus(formation) ?: I18n.t("hero.recognition.status.commander_assigned"),
             unitExperience = unitExperience,
             battleHonors = formation.battleHonors,
             medals = formation.medals.map { it.medalId },

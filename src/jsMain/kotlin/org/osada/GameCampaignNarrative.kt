@@ -20,11 +20,18 @@ import org.osada.scenario.peekNextScenarioFile
  * Called from `Game.continueCampaign`, the single point at which the engine has definitively
  * completed a scenario. Must run BEFORE `Campaign.loadNextScenario` advances the index, so the
  * "current" scenario is still the one that was played.
+ *
+ * [routeOverride] is the committed `CampaignEffect.Route`, if any, that will replace the
+ * outcome's `goto` — passed through so the recorded route and the queued outcome effects agree
+ * with where the campaign is actually headed.
  */
-internal fun Game.recordCampaignOutcome(outcome: String) {
+internal fun Game.recordCampaignOutcome(
+    outcome: String,
+    routeOverride: Int?,
+) {
     val activeCampaign = campaign ?: return
     val scenarioFile = activeCampaign.getCurrentScenario()?.scenario as? String ?: return
-    val nextScenario = activeCampaign.peekNextScenarioFile(outcome)
+    val nextScenario = activeCampaign.peekNextScenarioFile(outcome, routeOverride)
     val recorded =
         CampaignNarrative.recordScenarioCompletion(
             scenarioFile = scenarioFile,

@@ -1,5 +1,6 @@
 package org.osada
 
+import org.osada.campaign.CampaignNarrative
 import org.osada.hero.HeroCampaign
 import org.osada.model.Player
 import org.osada.model.addOutcomeToDossier
@@ -54,10 +55,14 @@ fun Game.continueCampaign(
 ) {
     console.log("[OSADA] continueCampaign", outcome)
     val player = campaignPlayer ?: return
+    // A player CHOICE (BGCchoice-style), committed earlier in this scenario's own briefing
+    // dialogue, overrides the outcome-branch goto entirely. Taken once, here, so it cannot leak
+    // into resolving some later, unrelated transition.
+    val routeOverride = CampaignNarrative.takeCommittedRoute()
     // The scenario is definitively over at this single funnel, so this is the one correct place
     // to record the REAL outcome. recordScenarioCompletion is idempotent per scenario: the
     // move-capture and end-turn completion paths can both reach here for the same battle.
-    recordCampaignOutcome(outcome)
+    recordCampaignOutcome(outcome, routeOverride)
     player.prestige += campaign!!.getOutcomePrestige(outcome)
     player.addOutcomeToDossier(outcome, scenario!!.name)
     OSGlue.reportScore(player.score)
@@ -81,7 +86,7 @@ fun Game.continueCampaign(
     removeNonCampaignUnitsFlag = true
     buildCoreUnitsFlag = false
     val text = campaign!!.getOutcomeText(outcome)
-    nextScenarioData = campaign!!.loadNextScenario(outcome)
+    nextScenarioData = campaign!!.loadNextScenario(outcome, routeOverride)
     continueCampaignFlag = true
     if (nextScenarioData == null) {
         val finalText = if (outcome == "lose") endGameLossText[reason] + text else text
