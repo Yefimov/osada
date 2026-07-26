@@ -73,15 +73,15 @@ class CombatSupportTest {
     }
 
     @Test
-    fun intrinsicClassCapabilitiesAreExposedWithoutInventingLogisticsAura() {
+    fun intrinsicClassCapabilitiesComeFromTheClassNotTheName() {
         val recon = EquipmentData().apply { uclass = UnitClass.RECON.value }
         val tank = EquipmentData().apply { uclass = UnitClass.TANK.value }
         val depot = EquipmentData().apply { name = "Supply Depot" }
 
         assertTrue(UnitCapabilities.hasPhasedMovement(recon))
         assertTrue(UnitCapabilities.canOverrun(tank))
-        assertTrue(UnitCapabilities.isLogisticsUnitWithoutAura(depot))
         assertFalse(UnitCapabilities.hasPhasedMovement(depot))
+        assertFalse(UnitCapabilities.canOverrun(depot))
     }
 
     private fun mapAndPlayer(): Pair<GameMap, Player> {

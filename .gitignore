@@ -43,3 +43,8 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+### Ad-hoc backup files/dirs (DEFERRED.md §4.5 -- these used to pollute greps and weren't ignored) ###
+*.bak
+.osada-hotfix-backups/
+.osada-localization-backup/

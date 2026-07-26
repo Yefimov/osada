@@ -23,7 +23,6 @@ internal fun equipmentMechanicsNote(eq: EquipmentData): String? =
         if (capabilities.isHeadquarters(eq)) add(capabilities.HEADQUARTERS_SUPPORT_DESCRIPTION)
         if (capabilities.hasPhasedMovement(eq)) add(capabilities.RECON_MOVEMENT_DESCRIPTION)
         if (capabilities.canOverrun(eq)) add(capabilities.TANK_OVERRUN_DESCRIPTION)
-        if (capabilities.isLogisticsUnitWithoutAura(eq)) add(capabilities.LOGISTICS_NO_AURA_DESCRIPTION)
     }.takeIf { it.isNotEmpty() }?.joinToString(" ")
 
 /** "Available from Mon YYYY" — shared so the equipment window's detail bay and the unit-card

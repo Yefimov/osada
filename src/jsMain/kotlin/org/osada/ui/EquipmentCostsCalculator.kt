@@ -7,6 +7,7 @@ import org.osada.model.getCountryName
 import org.osada.model.getUnitById
 import org.osada.model.hasPurchaseAnchor
 import org.osada.model.isAvailableIn
+import org.osada.model.isPurchasableGroundTransport
 import org.osada.rules.GameRules
 import org.osada.rules.calculateUnitCosts
 import org.osada.rules.calculateUnitSellCost
@@ -62,6 +63,7 @@ internal class EquipmentCostsCalculator(
         when {
             eqUnitId <= 0 -> null
             !hasPurchaseAnchor() -> I18n.t("equipment.buy_blocked.no_anchor")
+            !Equipment.isPurchasableGroundTransport(eqUnitId) -> I18n.t("equipment.buy_blocked.not_purchasable")
             else -> campaignCountryRefusal(eqUnitId)
         }
 
@@ -131,6 +133,7 @@ internal class EquipmentCostsCalculator(
             // see GameRules.isPurchasableClass for why PM's selection-based test was dropped.
             newEq != null && !GameRules.isPurchasableClass(newEq.uclass) -> -1
             newEq != null && !newEq.isAvailableIn(year, month) -> -1
+            !Equipment.isPurchasableGroundTransport(eqUnitId) -> -1
             ui.game.campaign != null && ui.game.campaign!!.country != newCountry -> -1
             // Nowhere to place a purchase -> OG offers none at all; resolveBuyBlockedReason says why.
             !hasPurchaseAnchor() -> -1

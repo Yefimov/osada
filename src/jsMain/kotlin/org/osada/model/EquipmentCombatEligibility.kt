@@ -18,6 +18,23 @@ fun Equipment.ignoresEntrenchment(eqid: Int): Boolean =
 
 fun Equipment.isPurchasable(eqid: Int): Boolean = (equipmentMap[eqid]?.attr?.and(ATTR_MASK_PURCHASABLE) ?: 0) != 0
 
+/** Ground Transport is the one class where OG's own data meaningfully uses the purchasable bit --
+ *  most of the class exists only to be *given* to a unit as an organic transport, not bought as a
+ *  combat unit (see DEFERRED.md §1.7: 5,041 Ground Transport records, ~1% flagged purchasable).
+ *  A country whose data never sets the bit on any of its own Ground Transport records is treated as
+ *  not using the flag at all, so the gate falls back to permitting everything for that country --
+ *  otherwise a country with no populated bit would lose the whole class to buy. */
+fun Equipment.isPurchasableGroundTransport(eqid: Int): Boolean {
+    val eq = equipmentMap[eqid]
+    if (eq == null || eq.uclass != org.osada.UnitClass.GROUND_TRANSPORT.value) return true
+    val countryTransports =
+        equipmentMap.values.filter {
+            it.uclass == org.osada.UnitClass.GROUND_TRANSPORT.value && it.country == eq.country
+        }
+    val bitUsedByCountry = countryTransports.any { it.attr.and(ATTR_MASK_PURCHASABLE) != 0 }
+    return !bitUsedByCountry || eq.attr.and(ATTR_MASK_PURCHASABLE) != 0
+}
+
 fun Equipment.canInitiateAttackOnUnitType(
     attackerEqid: Int,
     defenderEqid: Int,

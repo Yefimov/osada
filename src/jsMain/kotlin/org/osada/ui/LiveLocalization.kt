@@ -197,11 +197,7 @@ internal object LiveLocalization {
         byId("smCampScenarios")?.innerHTML = "<b>${I18n.t("campaign.operations.label")}</b><br/>$operationValue"
     }
 
-    // TODO(detekt): CyclomaticComplexMethod (21) — walks every campaign-list row and derives its
-    // subtitle/badges; deliberately deferred rather than rushed (see refreshUnitActions in
-    // GameplayLocalization.kt for the same call). `continue` per unmatched row (
-    // LoopWithTooManyJumpStatements) is the same benign DOM-skip idiom used throughout this file.
-    @Suppress("CyclomaticComplexMethod", "LoopWithTooManyJumpStatements")
+    @Suppress("LoopWithTooManyJumpStatements")
     private fun refreshCampaignRows() {
         val list = byId("osadaCampList") ?: return
         val select = byId("smCampSel")?.querySelector("select") ?: return
@@ -214,32 +210,47 @@ internal object LiveLocalization {
             val option = options[optionIndex] ?: continue
             val campaignIndex = (option.value as? String)?.toIntOrNull() ?: continue
             val campaign = StartMenuBuilder.campaignList().getOrNull(campaignIndex) ?: continue
-            val operations = campaign.scenarios as? Int
-            val years = StartMenuListToolbar.extractYears(option.text as? String ?: "")
-            row.querySelector(".osadaListRowSub")?.innerHTML =
-                listOfNotNull(
-                    years.ifBlank { null },
-                    operations?.let { I18n.plural("campaign.row.operations", it) },
-                ).joinToString(" &middot; ")
-            row.title =
-                I18n.t(
-                    "list.select_dossier.help",
-                    mapOf("name" to (option.text as? String ?: "").trim()),
-                )
-            val file = campaign.file as? String
-            (row.querySelector(".osadaListRowNote") as? org.w3c.dom.HTMLElement)?.let { note ->
-                if (progress != null && file == progress.first) {
-                    val current = progress.second + 1
-                    note.textContent =
-                        if (operations != null) {
-                            I18n.t("campaign.progress.full", mapOf("current" to current, "total" to operations))
-                        } else {
-                            I18n.t("campaign.progress.short", mapOf("current" to current))
-                        }
-                    note.title = I18n.t("campaign.progress.help")
-                }
-            }
+            applyCampaignRow(row, option, campaign, progress)
         }
+    }
+
+    private fun applyCampaignRow(
+        row: org.w3c.dom.HTMLElement,
+        option: dynamic,
+        campaign: dynamic,
+        progress: Pair<String, Int>?,
+    ) {
+        val operations = campaign.scenarios as? Int
+        val years = StartMenuListToolbar.extractYears(option.text as? String ?: "")
+        row.querySelector(".osadaListRowSub")?.innerHTML =
+            listOfNotNull(
+                years.ifBlank { null },
+                operations?.let { I18n.plural("campaign.row.operations", it) },
+            ).joinToString(" &middot; ")
+        row.title =
+            I18n.t(
+                "list.select_dossier.help",
+                mapOf("name" to (option.text as? String ?: "").trim()),
+            )
+        applyCampaignProgressNote(row, campaign.file as? String, operations, progress)
+    }
+
+    private fun applyCampaignProgressNote(
+        row: org.w3c.dom.HTMLElement,
+        file: String?,
+        operations: Int?,
+        progress: Pair<String, Int>?,
+    ) {
+        if (progress == null || file != progress.first) return
+        val note = row.querySelector(".osadaListRowNote") as? org.w3c.dom.HTMLElement ?: return
+        val current = progress.second + 1
+        note.textContent =
+            if (operations != null) {
+                I18n.t("campaign.progress.full", mapOf("current" to current, "total" to operations))
+            } else {
+                I18n.t("campaign.progress.short", mapOf("current" to current))
+            }
+        note.title = I18n.t("campaign.progress.help")
     }
 
     private fun refreshScenarioScreen() {
@@ -260,9 +271,7 @@ internal object LiveLocalization {
         refreshScenarioSidePicker()
     }
 
-    // TODO(detekt): CyclomaticComplexMethod (15) — same deferred-refactor note as
-    // refreshCampaignRows above; `continue`s are the same benign DOM-skip idiom.
-    @Suppress("CyclomaticComplexMethod", "LoopWithTooManyJumpStatements")
+    @Suppress("LoopWithTooManyJumpStatements")
     private fun refreshScenarioRows() {
         val list = byId("osadaScenList") ?: return
         val select = byId("smScenSel")?.querySelector("select") ?: return
@@ -273,22 +282,28 @@ internal object LiveLocalization {
             if (row.classList.contains("osadaListRow--group")) continue
             val optionIndex = row.asDynamic().optionIndex as? Int ?: continue
             val option = options[optionIndex] ?: continue
-            row.title =
-                I18n.t(
-                    "list.select_dossier.help",
-                    mapOf("name" to (option.text as? String ?: "").trim()),
-                )
-            (row.querySelector(".osadaListRowNote") as? org.w3c.dom.HTMLElement)?.let { note ->
-                note.textContent =
-                    I18n.t(
-                        if (note.classList.contains("osadaListRowNote--played")) {
-                            "scenario.status.played"
-                        } else {
-                            "scenario.status.new"
-                        },
-                    )
-            }
+            applyScenarioRow(row, option)
         }
+    }
+
+    private fun applyScenarioRow(
+        row: org.w3c.dom.HTMLElement,
+        option: dynamic,
+    ) {
+        row.title =
+            I18n.t(
+                "list.select_dossier.help",
+                mapOf("name" to (option.text as? String ?: "").trim()),
+            )
+        val note = row.querySelector(".osadaListRowNote") as? org.w3c.dom.HTMLElement ?: return
+        note.textContent =
+            I18n.t(
+                if (note.classList.contains("osadaListRowNote--played")) {
+                    "scenario.status.played"
+                } else {
+                    "scenario.status.new"
+                },
+            )
     }
 
     private fun refreshScenarioSidePicker() {

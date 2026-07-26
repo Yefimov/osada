@@ -26,9 +26,6 @@ internal object EquipmentMarkings {
             addMark(parent, "RCN", UnitCapabilities.RECON_MOVEMENT_DESCRIPTION)
         }
         if (UnitCapabilities.canOverrun(data)) addMark(parent, "OVR", UnitCapabilities.TANK_OVERRUN_DESCRIPTION)
-        if (UnitCapabilities.isLogisticsUnitWithoutAura(data)) {
-            addMark(parent, "LOG", UnitCapabilities.LOGISTICS_NO_AURA_DESCRIPTION, "logistics")
-        }
     }
 
     fun addHeadquartersMark(

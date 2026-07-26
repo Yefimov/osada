@@ -22,6 +22,7 @@ import org.osada.hero.HeroCampaign
 import org.osada.i18n.GameText
 import org.osada.i18n.I18n
 import org.osada.model.Equipment
+import org.osada.model.GameMap
 import org.osada.model.GameUnit
 import org.osada.model.getCountryName
 import org.osada.model.getUnits
@@ -490,8 +491,8 @@ internal object GameplayLocalization {
         }
     }
 
-    // TODO(detekt): CyclomaticComplexMethod (18) — deliberately deferred rather than rushed, see
-    // refreshUnitActions above for the same call.
+    // TODO(detekt): CyclomaticComplexMethod (18) — deliberately deferred rather than rushed
+    // (DEFERRED.md §4.1). refreshUnitActions above was split out separately; this one wasn't.
     @Suppress("CyclomaticComplexMethod")
     private fun refreshUnitIdentity(unit: GameUnit) {
         val data = unit.unitData(true)
@@ -638,75 +639,93 @@ internal object GameplayLocalization {
         }
     }
 
-    // TODO(detekt): CyclomaticComplexMethod (27) — this function walks every unit-context action
-    // button and branches per action id; splitting it (one resolver per action-button concern)
-    // is real refactoring work, deliberately deferred rather than rushed. `continue` per
-    // missing/unmatched button attribute (LoopWithTooManyJumpStatements) is the same benign
-    // DOM-skip idiom used throughout this file/LiveLocalization.kt.
-    @Suppress("CyclomaticComplexMethod", "LoopWithTooManyJumpStatements")
+    @Suppress("LoopWithTooManyJumpStatements")
     private fun refreshUnitActions(unit: GameUnit) {
         val map = GameHolder.instance?.scenario?.map ?: return
-        val currentPlayer = map.currentPlayer ?: return
+        map.currentPlayer ?: return
         val buttons = byId("unit-context")?.querySelectorAll("[data-action]") ?: return
         for (index in 0 until buttons.length) {
             val button = buttons.item(index) as? HTMLElement ?: continue
             val action = button.getAttribute("data-action") ?: continue
-            val asleep = action == "sleep" && button.getAttribute("data-action-variant") == "wake"
-            val mounted = action == "mount" && unit.isMounted
-            val labelKey =
-                when {
-                    action == "mount" && mounted -> "unit_info.action.dismount.label"
-                    action == "sleep" && asleep -> "unit_info.action.wake.label"
-                    else -> "unit_info.action.$action.label"
-                }
-            val help =
-                when (action) {
-                    "mount" -> I18n.t(if (mounted) "unit_info.action.dismount.help" else "unit_info.action.mount.help")
-                    "embark" ->
-                        I18n.t(
-                            if (unit.carrier >
-                                0
-                            ) {
-                                "unit_info.action.disembark.help"
-                            } else {
-                                "unit_info.action.embark.help"
-                            },
-                        )
-                    "resupply" -> {
-                        val value = GameRules.getResupplyValue(map, unit)
-                        val context = SupplyRules.getSupplyContext(map, unit)
-                        I18n.t(
-                            "unit_info.action.resupply.help",
-                            mapOf(
-                                "ammo" to value.ammo,
-                                "fuel" to value.fuel,
-                                "context" to GameText.supplyContext(context.label),
-                                "efficiency" to context.efficiencyPercent,
-                            ),
-                        )
-                    }
-                    "reinforce" -> {
-                        val strength = GameRules.getReinforceValue(map, unit, false)
-                        val context = SupplyRules.getSupplyContext(map, unit)
-                        I18n.t(
-                            "unit_info.action.reinforce.help",
-                            mapOf(
-                                "strength" to strength,
-                                "context" to GameText.supplyContext(context.label),
-                                "efficiency" to context.efficiencyPercent,
-                            ),
-                        )
-                    }
-                    "overstrength" -> I18n.t("unit_info.action.overstrength.help")
-                    "undo" -> I18n.t("unit_info.action.undo.help")
-                    "sleep" -> I18n.t(if (asleep) "unit_info.action.wake.help" else "unit_info.action.sleep.help")
-                    else -> button.title
-                }
-            val label = I18n.t(labelKey)
-            button.querySelector(".osada-action__label")?.textContent = label
-            button.title = help
-            button.setAttribute("aria-label", label)
+            applyUnitActionButton(button, action, unit, map)
         }
+    }
+
+    private fun applyUnitActionButton(
+        button: HTMLElement,
+        action: String,
+        unit: GameUnit,
+        map: GameMap,
+    ) {
+        val asleep = action == "sleep" && button.getAttribute("data-action-variant") == "wake"
+        val mounted = action == "mount" && unit.isMounted
+        val label = I18n.t(unitActionLabelKey(action, asleep, mounted))
+        button.querySelector(".osada-action__label")?.textContent = label
+        button.title = unitActionHelp(action, unit, map, asleep, mounted, button.title)
+        button.setAttribute("aria-label", label)
+    }
+
+    private fun unitActionLabelKey(
+        action: String,
+        asleep: Boolean,
+        mounted: Boolean,
+    ): String =
+        when {
+            action == "mount" && mounted -> "unit_info.action.dismount.label"
+            action == "sleep" && asleep -> "unit_info.action.wake.label"
+            else -> "unit_info.action.$action.label"
+        }
+
+    private fun unitActionHelp(
+        action: String,
+        unit: GameUnit,
+        map: GameMap,
+        asleep: Boolean,
+        mounted: Boolean,
+        fallbackTitle: String,
+    ): String =
+        when (action) {
+            "mount" -> I18n.t(if (mounted) "unit_info.action.dismount.help" else "unit_info.action.mount.help")
+            "embark" -> I18n.t(if (unit.carrier > 0) "unit_info.action.disembark.help" else "unit_info.action.embark.help")
+            "resupply" -> unitActionResupplyHelp(map, unit)
+            "reinforce" -> unitActionReinforceHelp(map, unit)
+            "overstrength" -> I18n.t("unit_info.action.overstrength.help")
+            "undo" -> I18n.t("unit_info.action.undo.help")
+            "sleep" -> I18n.t(if (asleep) "unit_info.action.wake.help" else "unit_info.action.sleep.help")
+            else -> fallbackTitle
+        }
+
+    private fun unitActionResupplyHelp(
+        map: GameMap,
+        unit: GameUnit,
+    ): String {
+        val value = GameRules.getResupplyValue(map, unit)
+        val context = SupplyRules.getSupplyContext(map, unit)
+        return I18n.t(
+            "unit_info.action.resupply.help",
+            mapOf(
+                "ammo" to value.ammo,
+                "fuel" to value.fuel,
+                "context" to GameText.supplyContext(context.label),
+                "efficiency" to context.efficiencyPercent,
+            ),
+        )
+    }
+
+    private fun unitActionReinforceHelp(
+        map: GameMap,
+        unit: GameUnit,
+    ): String {
+        val strength = GameRules.getReinforceValue(map, unit, false)
+        val context = SupplyRules.getSupplyContext(map, unit)
+        return I18n.t(
+            "unit_info.action.reinforce.help",
+            mapOf(
+                "strength" to strength,
+                "context" to GameText.supplyContext(context.label),
+                "efficiency" to context.efficiencyPercent,
+            ),
+        )
     }
 
     private fun refreshUnitSlots(unit: GameUnit) {

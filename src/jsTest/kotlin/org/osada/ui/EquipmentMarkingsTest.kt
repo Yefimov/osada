@@ -21,12 +21,17 @@ class EquipmentMarkingsTest {
         assertTrue(parent.firstElementChild?.getAttribute("title")?.contains("restores 1 movement point") == true)
     }
 
+    /**
+     * A logistics-sounding name is not a capability. The old LOG mark inferred one from the name
+     * and then spent its tooltip explaining the port's own import status to the player; both the
+     * inference and the explanation are gone. What is actually known about OG Depots lives in
+     * DEFERRED.md §2.10, not in the UI.
+     */
     @Test
-    fun supplyDepotMarkExplicitlySaysThereIsNoAura() {
+    fun aLogisticsSoundingNameEarnsNoMark() {
         val parent = document.createElement("div") as HTMLElement
         EquipmentMarkings.render(parent, EquipmentData().apply { name = "Supply Depot" })
 
-        assertEquals("LOG", parent.firstElementChild?.textContent)
-        assertTrue(parent.firstElementChild?.getAttribute("title")?.contains("no adjacent resupply aura") == true)
+        assertEquals(null, parent.firstElementChild)
     }
 }
