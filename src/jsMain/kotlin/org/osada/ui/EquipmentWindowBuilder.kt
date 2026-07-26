@@ -123,20 +123,22 @@ internal object EquipmentWindowBuilder {
             val div = addTag("eqSelClass", "div")
             div.className = "smallButtonSubMenu"
             // Name the classes merged into this tab (UIBuilder.eqClassTabGroups) so the player can
-            // see that e.g. fortifications live under Infantry, and advertise the otherwise
-            // invisible "All" re-click gesture. A visible "All" tab was tried and rejected for
-            // crowding the other 8 (see onClassTabClick), so both cues go in the tooltip.
+            // see that e.g. Flak lives under Air defence without having to click through.
             val merged =
                 UIBuilder.eqClassTabGroups[eqClass]
                     ?.joinToString(", ") { unitClassNames[it.value] }
             val mergedNote = if (merged.isNullOrEmpty()) "" else " (incl. $merged)"
-            div.title = "${data.second}$mergedNote — click again to show all classes"
+            div.title = "${data.second}$mergedNote"
             div.id = "eqclass-$eqClass"
             div.asDynamic().eqclass = eqClass
-            // Glyph + text label (a bare osada glyph is unreadable as a class tab).
-            val glyphSpan = addTag(div, "span")
-            glyphSpan.className = "osada-eqtab__glyph"
-            glyphSpan.innerHTML = data.first
+            // Glyph + text label (a bare osada glyph is unreadable as a class tab). Tabs with no
+            // known glyph get no span at all rather than an empty one, so the flex gap doesn't
+            // leave them visibly indented against their neighbours.
+            if (data.first.isNotEmpty()) {
+                val glyphSpan = addTag(div, "span")
+                glyphSpan.className = "osada-eqtab__glyph"
+                glyphSpan.innerHTML = data.first
+            }
             val labelSpan = addTag(div, "span")
             labelSpan.className = "osada-eqtab__label"
             labelSpan.textContent = eqClassTabLabels[eqClass] ?: data.second
@@ -144,17 +146,18 @@ internal object EquipmentWindowBuilder {
         }
     }
 
+    /**
+     * A class tab simply selects its class.
+     *
+     * Until 2026-07-26 "All" had no tab of its own and was reached by re-clicking the already
+     * active tab — an undiscoverable gesture that also needed a defensive `lastClickedTab` field,
+     * because `eqUserSel.eqclass` is written by several unrelated paths and so could already equal
+     * the clicked tab before the player had ever clicked it. "All" is a real leftmost tab now, so
+     * both the gesture and the field are gone.
+     */
     private fun onClassTabClick(eqClass: String) {
         val userSel = byId("eqUserSel")?.asDynamic()
         val eqmode = userSel?.eqmode as? String ?: "purchase"
-        // Deliberately NOT compared against eqUserSel.eqclass: that field gets set by
-        // MANY unrelated code paths (selecting a unit in the reserve strip, switching
-        // mode tabs, country change...), so it can already equal this tab's class before
-        // the player ever clicked it — which made the FIRST click on, say, Tanks (the
-        // default-selected class at window build) misfire as a "re-click" and jump
-        // straight to All. lastClickedTab is written ONLY by this handler, so it truly
-        // means "the player's last class-tab click was this one."
-        val alreadyActive = (userSel?.lastClickedTab as? String) == eqClass
         // Reset the current selection so switching class jumps to (auto-selects) the
         // player's first own unit of that class in the Upgrade tab — the class tabs
         // then act as "switch between my units", not "show a mismatched catalogue".
@@ -163,18 +166,11 @@ internal object EquipmentWindowBuilder {
         userSel?.equnit = -1
         userSel?.eqtransport = -1
         userSel?.detailfocus = "unit"
-        // Re-clicking the already-active tab shows every class ("All" — no visible tab
-        // for it anymore, user feedback said it crooked/condensed the other 8; this
-        // hidden toggle keeps the ability to browse everything at once without one).
-        // Except on the Upgrade tab, where "All" doesn't exist (upgrades are class-locked
-        // by the rules) — a re-click there is just a no-op re-show of the same class.
+        val clicked = eqClass.toIntOrNull() ?: UnitClass.TANK.value
+        // "All" doesn't exist on the Upgrade tab — upgrades are class-locked by the rules, so
+        // there is no "upgrade to any class". Fall back to the tab's own class there.
         val targetClass =
-            if (alreadyActive && eqmode != "upgrade") {
-                UnitClass.NONE.value
-            } else {
-                (eqClass.toIntOrNull() ?: UnitClass.TANK.value)
-            }
-        userSel?.lastClickedTab = if (targetClass == UnitClass.NONE.value) null else eqClass
+            if (clicked == UnitClass.NONE.value && eqmode == "upgrade") UnitClass.TANK.value else clicked
         GameHolder.instance?.ui?.updateEquipmentWindow(targetClass)
     }
 
@@ -216,14 +212,17 @@ internal object EquipmentWindowBuilder {
     /** OSADA class-tab text labels shown next to the legacy glyphs. */
     private val eqClassTabLabels =
         mapOf(
+            "0" to "All",
             "1" to "Infantry",
             "2" to "Tanks",
             "3" to "Recon",
             "4" to "Anti-tank",
+            "6" to "Forts",
             "8" to "Artillery",
             "9" to "Air def",
             "10" to "Fighters",
             "11" to "Bombers",
+            "15" to "Naval",
         )
 
     /** Switches the window between purchase / upgrade / reserve. State lives as a CSS class on

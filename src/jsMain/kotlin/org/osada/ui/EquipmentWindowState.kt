@@ -111,8 +111,8 @@ internal object EquipmentWindowState {
             }
         } else {
             // A tab lists its own class plus any merged into it (UIBuilder.eqClassTabGroups) — so
-            // Infantry also shows Fortification, Air defence also shows Flak, etc. Without this,
-            // 13 of the 21 classes had no tab and were reachable only through the hidden "All".
+            // Air defence also shows Flak, Naval shows all eight ship classes, etc. Without this,
+            // 13 of the 21 classes had no tab at all.
             val eqClasses = UIBuilder.classesForTab(selectedClass)
             if (allCountries) {
                 Equipment.getCountriesEquipmentByClasses(eqClasses, countryIds, sortProperty, descending)

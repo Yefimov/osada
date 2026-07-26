@@ -7,6 +7,7 @@ import org.osada.addObjectiveCapture
 import org.osada.hero.HeroCampaign
 import org.osada.prestigeGains
 import org.osada.rules.GameRules
+import org.osada.rules.UnitCapabilities
 import org.osada.rules.calculateAttackResults
 import org.osada.rules.getDirection
 import org.osada.rules.isBridgeForSide
@@ -187,6 +188,10 @@ internal class CombatApplication(
         player: Player,
         result: dynamic,
     ) {
+        // OG restricts hex capture to ground combat units; PM has no class check at all. Reversed
+        // in OG's favour 2026-07-26 (DEFERRED.md §5.4). `unitData(true)` reads the REAL unit, not
+        // its transport, so infantry riding a truck still takes the hex it drives into.
+        if (!UnitCapabilities.canCaptureHex(unit.unitData(true))) return
         val side = player.side
         val notCapturable = hex.owner == -1 && hex.flag == -1
         val oldOwnerSide = if (hex.owner != -1) gameMap.getPlayer(hex.owner).side else -1

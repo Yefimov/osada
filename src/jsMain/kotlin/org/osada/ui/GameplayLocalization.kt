@@ -293,14 +293,17 @@ internal object GameplayLocalization {
         }
         val classKeys =
             mapOf(
+                "0" to "all",
                 "1" to "infantry",
                 "2" to "tanks",
                 "3" to "recon",
                 "4" to "anti_tank",
+                "6" to "fortification",
                 "8" to "artillery",
                 "9" to "air_defence",
                 "10" to "fighters",
                 "11" to "bombers",
+                "15" to "naval",
             )
         classKeys.forEach { (id, key) ->
             byId("eqclass-$id")?.apply {
@@ -686,7 +689,10 @@ internal object GameplayLocalization {
     ): String =
         when (action) {
             "mount" -> I18n.t(if (mounted) "unit_info.action.dismount.help" else "unit_info.action.mount.help")
-            "embark" -> I18n.t(if (unit.carrier > 0) "unit_info.action.disembark.help" else "unit_info.action.embark.help")
+            "embark" ->
+                I18n.t(
+                    if (unit.carrier > 0) "unit_info.action.disembark.help" else "unit_info.action.embark.help",
+                )
             "resupply" -> unitActionResupplyHelp(map, unit)
             "reinforce" -> unitActionReinforceHelp(map, unit)
             "overstrength" -> I18n.t("unit_info.action.overstrength.help")

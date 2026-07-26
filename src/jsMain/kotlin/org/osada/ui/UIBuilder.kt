@@ -42,9 +42,23 @@ object UIBuilder {
             "sleep" to "t",
         )
 
-    // Order matches JS for...in integer-key iteration (numeric ascending: 1,2,3,4,8,9,10,11).
+    /**
+     * The class-tab row, in display order: `class value -> (osada-menu glyph, English name)`.
+     *
+     * "All" ([UnitClass.NONE]) is the leftmost tab and Naval and Fortification close the row, so
+     * every one of the 21 classes is now reachable by clicking a VISIBLE tab — see
+     * [eqClassTabGroups] for the history. `#eqSelClass` scrolls horizontally, which is what makes
+     * an 11-tab row affordable; before that, room in the header was the binding constraint.
+     *
+     * A blank glyph renders label-only. Only `` (the naval-transport pin, also used by
+     * `UIToolTips` for ports) is a verified meaning in `osada-menu.ttf` — the font's remaining
+     * codepoints are named after their own hex value, so there is no way to look up an "All" or
+     * "Fortification" icon without eyeballing the font. Left blank rather than guessed; fill them
+     * in if the glyph map is ever recovered.
+     */
     val eqClassButtons =
         linkedMapOf(
+            UnitClass.NONE.value.toString() to Pair("", "All"),
             "1" to Pair("(", "Infantry"),
             "2" to Pair("]", "Tank"),
             "3" to Pair("=", "Recon"),
@@ -53,34 +67,57 @@ object UIBuilder {
             "9" to Pair("*", "Air defence"),
             "10" to Pair("%", "Air Fighter"),
             "11" to Pair("4", "Air Bomber"),
+            UnitClass.DESTROYER.value.toString() to Pair("", "Naval"),
+            UnitClass.FORTIFICATION.value.toString() to Pair("", "Fortification"),
         )
 
+    /** The Naval tab's own class. The other seven naval classes merge into it via
+     *  [eqClassTabGroups]; `EquipmentWindowController` hides the whole tab on a map with no water. */
+    val navalTabClass: Int = UnitClass.DESTROYER.value
+
     /**
-     * Extra [UnitClass] values each tab shows beyond its own, so all 21 classes are reachable from
-     * the 8 tabs instead of only through the hidden "All" re-click.
+     * Extra [UnitClass] values each tab shows beyond its own, so all 21 classes are reachable.
      *
      * PM had 8 tabs for 21 classes and no mapping, which left 13 classes — Flak, Fortification,
-     * both transports, level bombers and every naval class — with no tab at all. A ninth "All" tab
-     * was tried and rejected for crowding the row, so classes are MERGED into related tabs instead,
-     * the way Panzer Corps 2 does it (its Anti-Aircraft tab covers what OG splits into Flak and
-     * Air Defense). Only entries that genuinely belong together are merged:
-     *  - Fortification onto Infantry — static emplacements, the OG "Eingegrabene Infanterie" case;
+     * both transports, level bombers and every naval class — with no tab at all. The first fix
+     * MERGED them into related tabs, the way Panzer Corps 2 does (its Anti-Aircraft tab covers what
+     * OG splits into Flak and Air Defense), because a visible "All" tab had been tried and rejected
+     * for crowding the row. Making the row scrollable removed that constraint, so the two classes
+     * whose merge was purely a space compromise — Fortification and the naval group — got their own
+     * tabs back on 2026-07-26. What is still merged is merged because it genuinely belongs together:
      *  - Flak onto Air defence — already collapsed for strip filtering, see normalizeUnitClass;
      *  - Ground Transport onto Tank, Air Transport onto Air Fighter, Level Bomber onto Air Bomber.
      *
-     * Naval classes are deliberately NOT merged into a ground tab: they would be nonsense there,
-     * and `EquipmentWindowState.isUndeployableOnThisMap` already hides ships on maps with no water.
-     * They remain reachable through "All"; a dedicated naval tab is the open question if a
-     * water-heavy campaign ever needs one.
+     * The naval group hangs off Destroyer, the most representative surface class, so the existing
+     * tab machinery ([classesForTab], `normalizeUnitClass`) handles all eight with no special case.
      */
     val eqClassTabGroups: Map<String, List<UnitClass>> =
         mapOf(
-            UnitClass.INFANTRY.value.toString() to listOf(UnitClass.FORTIFICATION),
             UnitClass.TANK.value.toString() to listOf(UnitClass.GROUND_TRANSPORT),
             UnitClass.AIR_DEFENCE.value.toString() to listOf(UnitClass.FLAK),
             UnitClass.FIGHTER.value.toString() to listOf(UnitClass.AIR_TRANSPORT),
             UnitClass.TACTICAL_BOMBER.value.toString() to listOf(UnitClass.LEVEL_BOMBER),
+            UnitClass.DESTROYER.value.toString() to
+                listOf(
+                    UnitClass.SUBMARINE,
+                    UnitClass.BATTLESHIP,
+                    UnitClass.BATTLE_CRUISER,
+                    UnitClass.CRUISER,
+                    UnitClass.LIGHT_CRUISER,
+                    UnitClass.CARRIER,
+                    UnitClass.NAVAL_TRANSPORT,
+                ),
         )
+
+    /**
+     * Hides the whole Naval tab on a map with no water, rather than offering a tab whose list is
+     * always empty. Same judgement `EquipmentWindowState.isUndeployableOnThisMap` already makes per
+     * ship; this just spares the player the click. [hasWater] should be the BROAD water check —
+     * a river-only map still floats gunboats, even though it floats no battleship.
+     */
+    fun syncNavalTabVisibility(hasWater: Boolean) {
+        byId("eqclass-$navalTabClass")?.style?.display = if (hasWater) "" else "none"
+    }
 
     /** Every [UnitClass] the tab for [classValue] should list: the tab's own class first, then any
      *  merged in by [eqClassTabGroups]. */

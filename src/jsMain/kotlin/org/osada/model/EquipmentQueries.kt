@@ -41,9 +41,8 @@ private fun Equipment.classIndexList(
     return classIndex[classKey].unsafeCast<Array<Int>?>()?.toList() ?: emptyList()
 }
 
-/** Union of every purchasable class for a country. Reachable by re-clicking
- *  the already-active class tab, a hidden toggle [EquipmentWindowBuilder] drives
- *  via UnitClass.NONE=0 as the sentinel class value. */
+/** Union of every purchasable class for a country — what the leftmost "All" class tab shows.
+ *  UnitClass.NONE=0 is the sentinel class value that selects it. */
 fun Equipment.getCountryEquipmentAll(
     country: Int,
     sortProperty: String? = null,

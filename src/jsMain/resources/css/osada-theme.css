@@ -1649,9 +1649,31 @@ hr {
     padding: 6px 14px; border-bottom: 1px solid var(--osada-metal-600);
 }
 .osada-eq--reserve #eqClassTabs { visibility: hidden; }
+/* The class-tab row scrolls horizontally instead of clipping (it was `overflow: hidden`, which
+ * silently cut off whichever tabs didn't fit). That is what makes 11 tabs affordable — All,
+ * Fortification and Naval got real tabs on 2026-07-26 because room was the only thing that had
+ * ever been against them. `min-width: 0` is required: without it a flex item refuses to shrink
+ * below its content width and the row would push #eqClassTools off the header instead of
+ * scrolling. Scroll-snap makes a swipe land on a tab boundary rather than mid-label. */
 #eqSelClass {
-    display: flex; gap: 6px; flex-wrap: nowrap; overflow: hidden;
+    display: flex; gap: 6px; flex-wrap: nowrap;
+    overflow-x: auto; overflow-y: hidden;
+    flex: 1 1 auto; min-width: 0;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none; -ms-overflow-style: none;
+    overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch;
     width: auto !important; float: none !important; margin: 0 !important;
+}
+/* The row is short and sits directly under the mode tabs; a visible scrollbar there reads as a
+ * rendering artifact. The edge fades below are what signal "there is more". */
+#eqSelClass::-webkit-scrollbar { display: none; }
+#eqSelClass .smallButtonSubMenu { scroll-snap-align: start; }
+/* Fade the row's own edges so a cut-off tab reads as "scroll for more" rather than as clipping.
+ * The mask is painted in the scroll container's own box, so it stays put while content scrolls
+ * under it; scoping it to #eqSelClass keeps #eqClassTools (country/sort) out of the fade. */
+#eqSelClass {
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 12px, #000 calc(100% - 12px), transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0, #000 12px, #000 calc(100% - 12px), transparent 100%);
 }
 #eqSelClass .smallButtonSubMenu {
     float: none; display: inline-flex; align-items: center; gap: 7px;
@@ -1666,12 +1688,10 @@ hr {
     border-color: #d9b25a !important; color: #d9b25a; background: #2a2620 !important; box-shadow: none;
 }
 .osada-eqtab__glyph { font-family: osada-menu, sans-serif; font-size: 19px; line-height: 1; }
-.osada-eqtab__label { font-family: var(--osada-font-ui); font-size: 12px; font-weight: bold; letter-spacing: .04em; text-transform: uppercase; }
-/* Narrow screens: keep all 8 class tabs clickable by dropping to glyph-only
- * (the title attribute still names the class on hover). */
-@media (max-width: 1240px) {
-    .osada-eqtab__label { display: none; }
-}
+.osada-eqtab__label { font-family: var(--osada-font-ui); font-size: 12px; font-weight: bold; letter-spacing: .04em; text-transform: uppercase; white-space: nowrap; }
+/* Labels used to be hidden below 1240px so all 8 tabs still fit. The row scrolls now, so there is
+ * nothing to fit — and dropping to glyph-only would render the All and Fortification tabs as
+ * BLANK boxes, since neither has a known osada-menu glyph (see UIBuilder.eqClassButtons). */
 #eqClassTools { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
 #osadaEqSort, #osadaEqCountry {
     height: 34px; padding: 0 8px; font-size: 12px; max-width: 190px;
@@ -1687,17 +1707,12 @@ hr {
 #eqSelCountryButton { display: none !important; }
 
 /* Multi-country side (country dropdown visible — .osada-eq--countries is toggled by
- * EquipmentWindowController.syncCountrySelect): the tools cluster grows ~190px, which the
- * default 1160px window can't give the 8 labeled class tabs (#eqSelClass overflow:hidden just
- * clipped their text). Widen the window and compact the selects/tabs; below 1470px viewport
- * there is no room to widen into, so drop to glyph-only tabs (same treatment as the 1240px
- * narrow-screen rule — class names stay on the tooltips). */
+ * EquipmentWindowController.syncCountrySelect): the tools cluster grows ~190px. Widen the window
+ * and compact the tabs so fewer of them need scrolling to reach; the row no longer has to FIT,
+ * so the old below-1470px glyph-only fallback is gone with the 1240px one above. */
 #equipment.osada-eq--countries { width: min(1380px, 94vw) !important; }
 .osada-eq--countries #osadaEqSort, .osada-eq--countries #osadaEqCountry { max-width: 150px; }
 .osada-eq--countries #eqSelClass .smallButtonSubMenu { padding: 0 9px; gap: 5px; }
-@media (max-width: 1470px) {
-    .osada-eq--countries .osada-eqtab__label { display: none; }
-}
 
 /* --- list pane --- */
 #eqListPane { grid-area: list; overflow-y: auto; padding: 12px 14px; min-height: 0; min-width: 0; }

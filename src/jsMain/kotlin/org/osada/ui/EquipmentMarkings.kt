@@ -26,6 +26,14 @@ internal object EquipmentMarkings {
             addMark(parent, "RCN", UnitCapabilities.RECON_MOVEMENT_DESCRIPTION)
         }
         if (UnitCapabilities.canOverrun(data)) addMark(parent, "OVR", UnitCapabilities.TANK_OVERRUN_DESCRIPTION)
+        // Both read the same predicates CombatResolver.isSupportFireEligible uses, so a badge can
+        // never claim a defensive-fire role the combat code would not actually grant.
+        if (UnitCapabilities.hasSupportFire(data)) {
+            addMark(parent, "SUP", UnitCapabilities.SUPPORT_FIRE_DESCRIPTION)
+        }
+        if (UnitCapabilities.hasAirDefenceFire(data)) {
+            addMark(parent, "AA", UnitCapabilities.AIR_DEFENCE_FIRE_DESCRIPTION)
+        }
     }
 
     fun addHeadquartersMark(

@@ -240,13 +240,13 @@ object CombatResolver {
         val sData = support.unitData()
         val range = if (sData.gunrange == 0) 1 else sData.gunrange
         val inRange = HexGeometry.distance(sPos.row, sPos.col, aPos.row, aPos.col) <= range
+        // Class eligibility lives in UnitCapabilities so the rule and the unit card's SUP/AA
+        // badges read the same predicate and cannot drift apart (the §4.6 mistake).
         val classEligible =
             if (UnitPredicates.isAir(attacker)) {
-                sData.uclass == UnitClass.FLAK.value ||
-                    sData.uclass == UnitClass.AIR_DEFENCE.value ||
-                    sData.uclass == UnitClass.FIGHTER.value
+                UnitCapabilities.hasAirDefenceFire(sData)
             } else {
-                sData.uclass == UnitClass.ARTILLERY.value
+                UnitCapabilities.hasSupportFire(sData)
             }
         return inRange && classEligible && AttackEligibility.canInitiateAttack(support, attacker)
     }

@@ -3,6 +3,7 @@ package org.osada.ui
 import org.osada.UnitClass
 import org.osada.model.Equipment
 import org.osada.model.getCountryName
+import org.osada.model.hasWaterAccess
 import org.osada.uiSettings
 
 /**
@@ -77,6 +78,7 @@ internal class EquipmentWindowController(
         val eqmode = eqUserSel?.eqmode as? String ?: "purchase"
         populateUnitStrip(unitClass, eqmode, eqUserSel, map, currentPlayer, unitList, coreList)
 
+        UIBuilder.syncNavalTabVisibility(map.hasWaterAccess())
         val (selectedClass, isAll) = resolveSelectedClassAndTabs(unitClass, eqmode, eqUserSel)
         byId("eqInfoText")?.innerHTML =
             "$year ${EquipmentWindowState.classLabel(isAll, selectedClass)} upgrades for " +
@@ -225,7 +227,8 @@ internal class EquipmentWindowController(
         if (UIBuilder.eqClassButtons.containsKey(previousKey)) {
             byId("eqclass-$previousKey")?.let { toggleButton(it, false) }
         }
-        // No tab lights up for "All" (there's no visible tab for it — see getCountryEquipmentAll).
+        // "All" has had its own leftmost tab (class 0) since 2026-07-26, so it highlights like any
+        // other; on the Upgrade tab the clamp above has already moved the highlight to Tank.
         byId("eqclass-$selectedClass")?.let { toggleButton(it, true) }
         eqUserSel?.eqclass = selectedClass
         return selectedClass to isAll
