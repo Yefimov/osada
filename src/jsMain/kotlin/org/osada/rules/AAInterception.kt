@@ -47,6 +47,11 @@ internal object AAInterception {
      *  worth drawing. Hidden AA must never leak through this (that is the whole point of the
      *  ambush); deriving it from unfiltered unit positions would destroy the mechanic.
      *
+     *  Spotted AA only ever fires when `g2a_intercept_mode` bit 2 is set (see [fires]), and even
+     *  then only against a plane finishing its move in range -- never one merely passing through.
+     *  Without bit 2 (every efile except LXF), spotted AA can never intercept, so there is no
+     *  threat to draw at all.
+     *
      *  Returns `(row, col)` pairs rather than [Cell] -- [Cell] has no value `equals`/`hashCode`, so
      *  a caller comparing against its own freshly-built `Cell`s (e.g. a move-range list) would
      *  never find a match by reference. */
@@ -55,6 +60,8 @@ internal object AAInterception {
         side: Int,
         forPlane: GameUnit,
     ): Set<Pair<Int, Int>> {
+        val mode = EfileConfig.intKey("g2a_intercept_mode", 0)
+        if ((mode and MODE_SPOTTED_INTERCEPTS_AT_DESTINATION) == 0) return emptySet()
         val range = EfileConfig.intKey("flak_range", DEFAULT_FLAK_RANGE)
         val threatened = mutableSetOf<Pair<Int, Int>>()
         val rows = map.rows

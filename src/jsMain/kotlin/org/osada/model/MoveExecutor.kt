@@ -126,8 +126,10 @@ internal class MoveExecutor(
             }
         if (interceptors.isEmpty()) return false
 
+        GameRules.setSpotRange(gameMap, unit, false)
         unit.getHex()?.delUnit(unit)
         setup.map[cell.row][cell.col].setUnit(unit)
+        GameRules.setSpotRange(gameMap, unit, true)
         AAInterception.applyInterception(gameMap, unit, interceptors)
         result.wasIntercepted = true
         return true

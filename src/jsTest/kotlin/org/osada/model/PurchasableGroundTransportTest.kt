@@ -11,12 +11,13 @@ import kotlin.test.assertTrue
  * attack and cannot capture; it exists to be attached to a unit at purchase time, which this gate
  * does not touch.
  *
- * **This replaced an `attr` bit 262144 gate, and the replacement is not a simplification — the old
- * rule never refused anything.** It permitted any transport whose country never set the bit, and
- * measurement says that is every country in our content: only 1,060 of 46,978 `eqp-united` records
- * carry the bit (2.3%), **including zero Tank and zero Anti-tank records**. A bit that no tank in
- * the game sets is not "purchasable". Do not reinstate an attr-based gate here until DEFERRED.md
- * §1.5/§1.7 have re-identified it.
+ * **This replaced an `attr` bit 262144 gate, and the bit is not a reliable "purchasable" signal.**
+ * It permitted any transport whose country never set the bit, and that fallback is not universal:
+ * 29 of 289 `eqp-united` countries do set the bit on a transport (country 20/USSR flags 4 of its
+ * 28, refusing the other 24). But the bit still doesn't track purchasability — only 1,060 of 46,978
+ * `eqp-united` records carry it (2.3%), **including zero Tank and zero Anti-tank records** (class 2
+ * = 0/3,024, class 4 = 0/3,186). A bit that no tank in the game sets is not "purchasable". Do not
+ * reinstate an attr-based gate here until DEFERRED.md §1.5/§1.7 have re-identified it.
  */
 class PurchasableGroundTransportTest {
     @BeforeTest

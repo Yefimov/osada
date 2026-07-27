@@ -39,11 +39,14 @@ object MovementRules {
         if (UnitPredicates.unitUsesFuel(unit) && unit.getFuel() < range) range = unit.getFuel()
         if (Leaders.unitHasLeader(unit, LeaderType.AGGRESSIVE_TANK_MANEUVER)) range += 1
         if (Leaders.unitHasLeader(unit, LeaderType.AGGRESSIVE_MANEUVER)) range += 1
+        val preAttachmentRange = range
         range += Attachments.bonus(unit, Attachments.SLOT_FAST_SPEED) + Attachments.movementPenalty(unit)
         // attach_minmove (LXF 1, BASEKORP 2): undocumented in any efile comment found locally --
-        // INFERENCE that it is a floor a movement penalty may not push the unit below.
+        // INFERENCE that it is a floor a movement penalty may not push the unit below. Capped at
+        // preAttachmentRange so the floor can't override the fuel clamp above (a unit out of fuel
+        // stays out of fuel even with a movement-malus attachment).
         EfileConfig.attachments()?.minMove?.takeIf { it > 0 && Attachments.movementPenalty(unit) < 0 }?.let {
-            range = maxOf(range, it)
+            range = minOf(maxOf(range, it), preAttachmentRange)
         }
         val isStrandedTowedGun =
             data.movmethod == MovMethod.TOWED.value &&

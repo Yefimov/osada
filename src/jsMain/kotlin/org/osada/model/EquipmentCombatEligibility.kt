@@ -26,12 +26,13 @@ fun Equipment.isPurchasable(eqid: Int): Boolean = (equipmentMap[eqid]?.attr?.and
  *
  * **This replaced an attr-bit gate on 2026-07-26 (user request), and the bit it used is suspect.**
  * The previous rule permitted a transport whose `attr` had bit 262144 -- recorded in DEFERRED.md
- * §1.5/§1.7 as "purchasable" -- with a per-country fallback that permitted EVERYTHING when a
- * country never set the bit. That fallback fired for every country in play, so the gate never
- * refused anything. Worse, the bit's identification does not survive measurement: only 1,060 of
- * 46,978 `eqp-united` records carry it (2.3%), **including zero Tank and zero Anti-tank records**,
- * and no equipment table ships with no buyable tank. Do not restore an attr-based gate here until
- * that bit has been re-identified.
+ * §1.5/§1.7 as "purchasable" -- with a per-country fallback for countries that never set the bit.
+ * That fallback does NOT fire for every country: 29 of 289 `eqp-united` countries do set the bit
+ * on a transport, and country 20 (USSR) flags only 4 of its 28, refusing the other 24. The bit's
+ * identification is still wrong, though: only 1,060 of 46,978 `eqp-united` records carry it (2.3%),
+ * **including zero Tank and zero Anti-tank records** (class 2 = 0/3,024, class 4 = 0/3,186), and no
+ * equipment table ships with no buyable tank. Do not restore an attr-based gate here until that
+ * bit has been re-identified.
  */
 fun Equipment.isPurchasableGroundTransport(eqid: Int): Boolean =
     equipmentMap[eqid]?.uclass != org.osada.UnitClass.GROUND_TRANSPORT.value
