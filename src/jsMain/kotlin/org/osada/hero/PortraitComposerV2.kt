@@ -307,6 +307,13 @@ object PortraitComposerV2 {
             else -> null
         }
 
+    /**
+     * The hero's rolled gender, a pure function of [seed] alone (§4.11) — so any caller that needs
+     * to agree with the portrait (biography narrator, name pools) can ask without pulling in the
+     * unit-class/rank/birth-year context [deriveFacts] otherwise requires.
+     */
+    fun genderFor(seed: Int): String = if (chance(seed, "gender", FEMALE_CHANCE)) "female" else "male"
+
     private fun deriveFacts(
         seed: Int,
         unitClass: Int,
@@ -317,7 +324,7 @@ object PortraitComposerV2 {
         permanentInjury: Boolean,
     ): Facts {
         val rank = if (rankId in RANK_AGE) rankId else "lieutenant"
-        val gender = if (chance(seed, "gender", FEMALE_CHANCE)) "female" else "male"
+        val gender = genderFor(seed)
         val age = ageBand(seed, rank, birthYear, serviceYear)
         val season = if (chance(seed, "season", SEASON_WINTER_CHANCE)) "winter" else "summer"
         val wounded = status == HeroStatus.WOUNDED || status == HeroStatus.SERIOUSLY_WOUNDED

@@ -108,6 +108,10 @@ internal object UnitIdentityStyles {
 .osada-service-record__event-context, .osada-service-record__empty { margin-top: 3px; color: var(--osada-text-dim); font-size: 11px; }
 .osada-ec-chips { display: flex; flex-wrap: wrap; gap: 3px; margin: 1px 0; }
 .osada-ec-chip { color: #d8b4b4; border-color: rgba(139,75,75,.7); background: rgba(91,31,31,.18); }
+/* DEFERRED.md §1.20: the ENT chip keeps showing the real entrenchment value (it IS still that
+ * entrenched) but struck through, because the selected attacker will ignore it. The paired
+ * ENT BYPASSED chip says why; this one says which number stops counting. */
+.osada-ec-chip--struck { text-decoration: line-through; opacity: .6; }
 #ecMain { gap: 2px; }
 .osada-ec-name { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
 .osada-ec-stat { cursor: help; }

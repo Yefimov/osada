@@ -2,6 +2,7 @@ package org.osada.ui
 
 import kotlinx.browser.window
 import org.osada.uiSettings
+import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.Event
 import org.w3c.dom.events.MouseEvent
 
@@ -11,6 +12,34 @@ import org.w3c.dom.events.MouseEvent
  */
 
 fun hasTouch(): Boolean = js("('ontouchstart' in window)") as? Boolean ?: false
+
+/**
+ * Makes a non-`<button>` element behave like one: `role`/`tabindex` for assistive technology AND
+ * the Enter/Space handler that role promises (DEFERRED.md §4.14).
+ *
+ * **Use this instead of setting the two attributes by hand.** Setting them without a key handler is
+ * worse than setting neither — the element takes focus and announces itself as a button, then does
+ * nothing when activated. That is exactly what happened in all three `--z-msg` dialogs, because the
+ * ARIA attributes and the handler were separable; here they are not.
+ *
+ * [ariaLabel] is only needed when the element's own text is not the label (a glyph-only control).
+ */
+fun HTMLElement.asButton(
+    ariaLabel: String? = null,
+    onActivate: () -> Unit,
+) {
+    setAttribute("role", "button")
+    setAttribute("tabindex", "0")
+    ariaLabel?.let { setAttribute("aria-label", it) }
+    onclick = { _: MouseEvent -> onActivate() }
+    onkeydown = { event ->
+        val key = event.asDynamic().key as? String
+        if (key == "Enter" || key == " ") {
+            event.preventDefault()
+            onActivate()
+        }
+    }
+}
 
 fun hasBrokenScroll(): Boolean {
     val ua = window.navigator.userAgent

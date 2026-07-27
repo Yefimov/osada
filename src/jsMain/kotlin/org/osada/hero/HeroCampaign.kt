@@ -36,6 +36,11 @@ internal object HeroCampaign {
     private val transferEligibleStatuses =
         setOf(HeroStatus.RESERVE, HeroStatus.WOUNDED, HeroStatus.SERIOUSLY_WOUNDED)
 
+    /** Whether [status] is a benched state [transferCommander] can recall from -- the single
+     *  source of truth [CommanderRosterPresenter] queries instead of keeping its own copy of this
+     *  set (DEFERRED.md §4.10: the two used to state the rule twice and could drift). */
+    fun isTransferEligible(status: HeroStatus): Boolean = status in transferEligibleStatuses
+
     /** The campaign facts an emergence needs that are not on the [GameUnit]. Set on scenario load. */
     data class EmergenceCampaignContext(
         val campaignId: String,

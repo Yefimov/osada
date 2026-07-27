@@ -34,7 +34,7 @@ internal class EquipmentWindowController(
             AttackRingBuilder.clear() // rings clear while any modal window is open (spec)
         } else {
             makeHidden("container-unitlist")
-            makeHidden("equipment")
+            hideEquipmentWindow()
             uiSettings.deployMode = false
             ui.hideUnitInfoIfNotPinned()
             // Restore the normal turn status line (updateEquipmentWindow overwrote it with the

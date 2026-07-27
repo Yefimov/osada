@@ -3,6 +3,7 @@ package org.osada
 import org.osada.hero.HeroBiographyFacts
 import org.osada.hero.HeroBiographyNarrator
 import org.osada.hero.HeroBiographyPools
+import org.osada.hero.PortraitComposerV2
 import org.osada.i18n.installEnglishUiBundleForTests
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -21,12 +22,18 @@ class HeroBiographyNarratorTest {
         installEnglishUiBundleForTests()
     }
 
+    // Found by scan rather than hardcoded, so the tests stay correct if PortraitComposerV2's
+    // gender roll ever changes shape (§4.11) -- what matters is "a seed that rolls male/female",
+    // not any particular integer.
+    private val maleSeed = (0..2000).first { PortraitComposerV2.genderFor(it) == "male" }
+    private val femaleSeed = (0..2000).first { PortraitComposerV2.genderFor(it) == "female" }
+
     @Test
     fun biographyOmitsMissingFactsRatherThanSayingUnknown() {
         // The migrated-hero case (LeaderMigration.kt): only emergenceEventId is ever set.
         val migrated = HeroBiographyFacts(emergenceEventId = "migrated_from_legacy_leader")
 
-        val lines = HeroBiographyNarrator.narrate(migrated, "major")
+        val lines = HeroBiographyNarrator.narrate(migrated, "major", maleSeed)
 
         assertEquals(listOf("Commissioned as Major."), lines, "no birth year means no origin sentence at all")
         assertFalse(lines.any { it.contains("null", ignoreCase = true) })
@@ -44,7 +51,7 @@ class HeroBiographyNarratorTest {
                 emergenceEventId = "distinguished_service",
             )
 
-        val lines = HeroBiographyNarrator.narrate(legendary, "colonel")
+        val lines = HeroBiographyNarrator.narrate(legendary, "colonel", maleSeed)
 
         assertEquals("Born 1905.", lines[0], "no birthplace/social fact means the plain year-only sentence")
         assertEquals("Commissioned as Colonel.", lines[1])
@@ -62,8 +69,8 @@ class HeroBiographyNarratorTest {
                 emergenceEventId = "destroyed_stronger_enemy",
             )
 
-        val first = HeroBiographyNarrator.narrate(facts, "colonel")
-        val second = HeroBiographyNarrator.narrate(facts, "colonel")
+        val first = HeroBiographyNarrator.narrate(facts, "colonel", maleSeed)
+        val second = HeroBiographyNarrator.narrate(facts, "colonel", maleSeed)
 
         assertEquals(first, second)
         assertEquals("Born 1911 near a provincial town, to a working-class family.", first[0])
@@ -71,6 +78,28 @@ class HeroBiographyNarratorTest {
             "A graduate of the military academy, he served in the border skirmishes before rising to Colonel.",
             first[1],
         )
+    }
+
+    @Test
+    fun biographyAgreesWithThePortraitsRolledGender() {
+        // §4.11: a hero the portrait draws as a woman must be narrated as one too -- same seed,
+        // same gender, in both places.
+        assertEquals("female", PortraitComposerV2.genderFor(femaleSeed))
+        val facts =
+            HeroBiographyFacts(
+                birthYear = 1911,
+                militaryEducationId = "military_academy",
+                priorServiceId = "border_skirmishes",
+                emergenceEventId = "destroyed_stronger_enemy",
+            )
+
+        val lines = HeroBiographyNarrator.narrate(facts, "colonel", femaleSeed)
+
+        assertEquals(
+            "A graduate of the military academy, she served in the border skirmishes before rising to Colonel.",
+            lines[1],
+        )
+        assertFalse(lines.any { it.contains(" he ", ignoreCase = false) })
     }
 
     @Test

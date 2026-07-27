@@ -158,6 +158,17 @@ tasks.register<Exec>("verifyTranslations") {
     commandLine("python", "scripts/check_translations.py")
 }
 
+tasks.register<Exec>("verifyTrackedSources") {
+    group = "verification"
+    description = "Fails when a Kotlin source under src/ is untracked by git (DEFERRED.md §4.7)"
+
+    // Never up-to-date: the answer depends on the git index, not on any file this task reads.
+    outputs.upToDateWhen { false }
+
+    workingDir = rootDir
+    commandLine("python", "scripts/check_tracked_sources.py")
+}
+
 /*
  * Подготовка зависимостей production smoke test.
  */
@@ -213,6 +224,7 @@ tasks.named("check") {
         "verifyCampaignDialogue",
         "verifyUnitDescriptions",
         "verifyTranslations",
+        "verifyTrackedSources",
         "detekt",
         "ktlintCheck",
     )

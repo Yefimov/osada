@@ -42,15 +42,20 @@ internal val hexStyles =
                 "lineWidth" to 3,
                 "lineJoin" to "miter",
             ),
-        // AA threat overlay (DEFERRED.md §1.1): outline-only so it composites over the move/attack
-        // fill already drawn on the same hex -- warns that spotted enemy AA covers this cell without
-        // implying anything about hidden AA, which must never be drawn (the whole point of the ambush).
+        // AA threat overlay (DEFERRED.md §1.1, dashed style per §1.15): outline-only so it
+        // composites over the move/attack fill already drawn on the same hex -- warns that spotted
+        // enemy AA covers this cell without implying anything about hidden AA, which must never be
+        // drawn (the whole point of the ambush). Dashed rather than solid because the warning is
+        // conditional: mode-2 spotted AA only fires if the plane's move actually ENDS here, never on
+        // a hex it merely flies over on the way to a farther, unmarked destination (§1.15) -- a
+        // solid ring (like "attack"'s) would read as unconditional danger, which this isn't.
         "aathreat" to
             json(
                 "fillColor" to null,
                 "lineColor" to "rgba(255, 165, 0, 0.85)",
                 "lineWidth" to 2,
                 "lineJoin" to "miter",
+                "lineDash" to arrayOf(4, 3),
             ),
         "current" to
             json(

@@ -206,7 +206,7 @@ internal object EquipmentWindowBuilder {
         eqCloseBut?.title = "Close (Esc)"
         eqCloseBut?.onclick = { _: org.w3c.dom.events.MouseEvent ->
             // Hide only; deployMode is left as-is so a picked reserve unit can still be placed.
-            makeHidden("equipment")
+            hideEquipmentWindow()
         }
     }
 

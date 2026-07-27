@@ -60,7 +60,11 @@ internal class AnimationOrchestrator(
 
         ui.game.waitUIAnimation = true
         val result = map.moveUnit(unit, row, col)
-        val animated = result.passedCells.size > 1 && result.isVisible
+        // §1.12: off-screen was not modelled at all -- a spotted unit moving outside the current
+        // viewport used to animate in full with nothing scrolling to it. Nothing here forces a
+        // scroll (that would yank the camera off whatever the player is doing); it just stops
+        // tweening a move nobody could see.
+        val animated = result.passedCells.size > 1 && result.isVisible && !isPathEntirelyOffScreen(result)
 
         if (animated) {
             playMoveSound(unit)
@@ -79,6 +83,23 @@ internal class AnimationOrchestrator(
             finishMoveAnimation(unit, result, radius)
         }
         return animated
+    }
+
+    /** True when none of [result]'s path cells are inside `#game`'s current scroll viewport --
+     *  §1.12's second gap, distinct from [MovementResults.isVisible]'s fog check. No margin here
+     *  (unlike [uiScrollUnitIntoView]'s "comfortably visible" one): the only question is whether
+     *  the player could see any part of the move happen, not whether it is comfortably placed. */
+    private fun isPathEntirelyOffScreen(result: MovementResults): Boolean {
+        val gameDiv = byId("game")?.asDynamic()
+        val clientWidth = (gameDiv?.clientWidth as? Number)?.toDouble()
+        val clientHeight = (gameDiv?.clientHeight as? Number)?.toDouble()
+        if (gameDiv == null || clientWidth == null || clientHeight == null) return false
+        val scrollLeft = (gameDiv.scrollLeft as? Number)?.toDouble() ?: 0.0
+        val scrollTop = (gameDiv.scrollTop as? Number)?.toDouble() ?: 0.0
+        return result.passedCells.none { cell ->
+            val pos = ui.render.cellToScreen(cell.row, cell.col, true)
+            pos.x in scrollLeft..(scrollLeft + clientWidth) && pos.y in scrollTop..(scrollTop + clientHeight)
+        }
     }
 
     fun uiUnitAttack(

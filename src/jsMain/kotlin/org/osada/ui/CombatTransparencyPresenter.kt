@@ -4,17 +4,27 @@ package org.osada.ui
 
 import org.osada.GameHolder
 import org.osada.hero.HeroCampaign
+import org.osada.i18n.I18n
 import org.osada.model.Equipment
 import org.osada.model.GameUnit
 import org.osada.model.Leaders
+import org.osada.model.TerrainEx
 import org.osada.model.getCountryName
 import org.osada.model.getUnits
+import org.osada.rules.CombatResolver
 import org.osada.rules.UnitCapabilities
 import org.osada.terrainNames
 import org.osada.unitClassNames
 import org.w3c.dom.HTMLElement
 
-/** Adds identified live state and the largest active combat modifiers to the enemy card. */
+/**
+ * Adds identified live state and the largest active combat modifiers to the enemy card.
+ *
+ * **Localized (DEFERRED.md §4.15).** Every chip label, tooltip and factor line used to be an
+ * English string literal — this whole surface was invisible to §4.10's sweep because it predates it.
+ * `terrainNames` / `unitClassNames` stay as they are: those are game-data name tables shared with
+ * the rest of the engine, and localizing them is a separate job with a different blast radius.
+ */
 internal object CombatTransparencyPresenter {
     // TODO(detekt): CyclomaticComplexMethod (20) — assembles every identified-state chip and
     // active-modifier line for the enemy card; deliberately deferred rather than rushed.
@@ -24,7 +34,8 @@ internal object CombatTransparencyPresenter {
         val main = byId("ecMain") ?: return
         val chips = ensureChips(main)
         val data = unit.unitData(true)
-        val terrain = unit.getHex()?.terrain?.let { terrainNames.getOrNull(it) } ?: "Unknown terrain"
+        val terrain =
+            unit.getHex()?.terrain?.let { terrainNames.getOrNull(it) } ?: I18n.t("combat.enemy.terrain.unknown")
         val game = GameHolder.instance
         val spotSide = game?.spotSide ?: -1
         val visibleUnits =
@@ -38,42 +49,135 @@ internal object CombatTransparencyPresenter {
         val supportBars = UnitCapabilities.combatSupportBars(visibleUnits, unit)
         val dossier = HeroCampaign.dossier(unit)
         val legacyLeader =
-            if (unit.leader >= 0) Leaders.getUnitLeaderDescriptions(unit).firstOrNull()?.first ?: "Commander" else null
+            if (unit.leader >= 0) {
+                Leaders.getUnitLeaderDescriptions(unit).firstOrNull()?.first
+                    ?: I18n.t("combat.enemy.commander.fallback")
+            } else {
+                null
+            }
         val commander = dossier?.let { "${it.rank} ${it.name}" } ?: legacyLeader
+        // §1.3: TerrainEx.initiativeCap already throttles this unit's effective initiative in
+        // combat (AttackCalculation.applyInitiativeBonus, capped by the DEFENDER's hex -- this card
+        // is shown for the enemy the player may attack, i.e. the defender) but nothing told the
+        // player why a unit with high listed initiative still lost the initiative roll. No existing
+        // surface explains a single combat modifier this way, so it gets its own chip + tooltip line
+        // rather than a silent number.
+        val initiativeCap = unit.getHex()?.terrain?.let { TerrainEx.initiativeCap(it) }
+        val initiativeCapped = initiativeCap != null && data.initiative > initiativeCap
+        val entrenchmentBypassed = unit.entrenchment > 0 && isEntrenchmentBypassed(unit)
+        val iniCapArgs = mapOf("cap" to initiativeCap, "base" to data.initiative)
+        val entrenchmentHelp =
+            if (entrenchmentBypassed) {
+                "combat.enemy.chip.entrenchment.bypassed.help"
+            } else {
+                "combat.enemy.chip.entrenchment.help"
+            }
 
-        setChip(chips, "ecExperience", "EXP ${unit.experience}", true, "Enemy formation experience")
-        setChip(chips, "ecEntrenchment", "ENT ${unit.entrenchment}", unit.entrenchment > 0, "Entrenchment")
-        setChip(chips, "ecSuppression", "SUPP ${unit.hits}", unit.hits > 0, "Temporary suppression")
-        setChip(chips, "ecSupport", "SUPPORTED +$supportBars", supportBars > 0, "Combat Support is active")
-        setChip(chips, "ecMounted", "MOUNTED", unit.isMounted, "Mounted in organic transport")
-        setChip(chips, "ecSurprised", "SURPRISED", unit.isSurprised, "Surprise penalties are active")
+        setChip(chips, "ecExperience", "EXP ${unit.experience}", true, I18n.t("combat.enemy.chip.experience.help"))
+        setChip(chips, "ecEntrenchment", "ENT ${unit.entrenchment}", unit.entrenchment > 0, I18n.t(entrenchmentHelp))
+        byId("ecEntrenchment")?.classList?.toggle("osada-ec-chip--struck", entrenchmentBypassed)
+        setChip(
+            chips,
+            "ecSuppression",
+            "SUPP ${unit.hits}",
+            unit.hits > 0,
+            I18n.t("combat.enemy.chip.suppression.help"),
+        )
+        setChip(
+            chips,
+            "ecSupport",
+            "SUPPORTED +$supportBars",
+            supportBars > 0,
+            I18n.t("combat.enemy.chip.support.help"),
+        )
+        setChip(chips, "ecMounted", "MOUNTED", unit.isMounted, I18n.t("combat.enemy.chip.mounted.help"))
+        setChip(chips, "ecSurprised", "SURPRISED", unit.isSurprised, I18n.t("combat.enemy.chip.surprised.help"))
         setChip(chips, "ecCommander", "LEADER", commander != null, commander ?: "")
+        setChip(
+            chips,
+            "ecIniCap",
+            I18n.t("combat.enemy.chip.initiative_cap", iniCapArgs),
+            initiativeCapped,
+            I18n.t("combat.enemy.chip.initiative_cap.help", iniCapArgs),
+        )
+        setChip(
+            chips,
+            "ecEntBypass",
+            I18n.t("combat.enemy.chip.entrenchment_bypassed"),
+            entrenchmentBypassed,
+            I18n.t("combat.enemy.chip.entrenchment_bypassed.help"),
+        )
 
         val country = Equipment.getCountryName(unit.flag - 1)
-        val className = unitClassNames.getOrNull(data.uclass) ?: "Unit"
-        byId("ecSub")?.textContent = "$className · $country · $terrain"
+        val className = unitClassNames.getOrNull(data.uclass) ?: I18n.t("combat.enemy.class.unknown")
+        byId("ecSub")?.textContent =
+            I18n.t(
+                "combat.enemy.sub",
+                mapOf("class" to className, "country" to country, "terrain" to terrain),
+            )
         byId("ecStat")?.textContent =
-            "STR ${unit.strength}/10 · EXP ${unit.experience} · ENT ${unit.entrenchment} · " +
-            "DEF ${data.grounddef} ground / ${data.airdef} air"
+            I18n.t(
+                "combat.enemy.stat",
+                mapOf(
+                    "strength" to unit.strength,
+                    "experience" to unit.experience,
+                    "entrenchment" to unit.entrenchment,
+                    "ground" to data.grounddef,
+                    "air" to data.airdef,
+                ),
+            )
 
+        // Keys are spelled out in full, never assembled from a prefix + variable: check_translations.py
+        // finds used keys by matching the literal argument, and an interpolated key is invisible to it.
+        val ent = unit.entrenchment
+        val exp = unit.experience
         val factors =
             buildList {
-                add("Combat factors")
-                add("Terrain: $terrain")
-                if (unit.entrenchment > 0) add("Entrenchment: ${unit.entrenchment}")
-                if (unit.experience > 0) add("Experience: ${unit.experience}")
-                if (unit.hits > 0) add("Suppression: ${unit.hits}")
-                if (supportBars > 0) add("Combat Support: +$supportBars effective experience bar(s)")
-                if (commander != null) add("Leader: $commander")
-                if (unit.isMounted) add("Mounted state is active")
-                if (unit.isSurprised) add("Surprise state is active")
-                add("Exact ammo and fuel remain hidden by current spotting rules.")
+                add(I18n.t("combat.enemy.factors.title"))
+                add(I18n.t("combat.enemy.factors.terrain", mapOf("terrain" to terrain)))
+                if (ent > 0) add(I18n.t("combat.enemy.factors.entrenchment", mapOf("value" to ent)))
+                if (entrenchmentBypassed) add(I18n.t("combat.enemy.factors.entrenchment_bypassed"))
+                if (exp > 0) add(I18n.t("combat.enemy.factors.experience", mapOf("value" to exp)))
+                if (unit.hits > 0) add(I18n.t("combat.enemy.factors.suppression", mapOf("value" to unit.hits)))
+                if (supportBars > 0) add(I18n.t("combat.enemy.factors.support", mapOf("value" to supportBars)))
+                if (initiativeCapped) add(I18n.t("combat.enemy.factors.initiative_cap", iniCapArgs))
+                if (commander != null) add(I18n.t("combat.enemy.factors.leader", mapOf("name" to commander)))
+                if (unit.isMounted) add(I18n.t("combat.enemy.factors.mounted"))
+                if (unit.isSurprised) add(I18n.t("combat.enemy.factors.surprised"))
+                add(I18n.t("combat.enemy.factors.hidden_supply"))
             }.joinToString("\n• ", postfix = "", prefix = "• ")
         byId("ecStat")?.title = factors
         byId("ecName")?.title =
             listOfNotNull(byId("ecName")?.title, factors)
                 .filter(String::isNotBlank)
                 .joinToString("\n\n")
+    }
+
+    /**
+     * Whether the player's currently selected unit would ignore [defender]'s entrenchment
+     * (DEFERRED.md §1.20).
+     *
+     * **Asks the rule, it does not restate it.** `CombatResolver.isEntrenchmentIntact` is the single
+     * predicate combat itself uses, so the chip and the resolution cannot drift — that matters here
+     * because there are three independent bypass sources (the "Ignore trench" `attr` bit, the
+     * Infiltration/Street-Fighter leaders on vulnerable terrain, and the Bunker Buster attachment),
+     * and the defender's own Ferocious Defense leader overrides all of them.
+     *
+     * Null-safe by design: this card is also shown on plain hover with nothing of the player's
+     * selected, and with no attacker there is no bypass to report.
+     */
+    private fun isEntrenchmentBypassed(defender: GameUnit): Boolean {
+        val attacker =
+            GameHolder.instance
+                ?.scenario
+                ?.map
+                ?.currentUnit
+        val terrain = defender.getHex()?.terrain
+        val hostile = attacker != null && attacker.player?.side != defender.player?.side
+        return attacker != null &&
+            terrain != null &&
+            hostile &&
+            !CombatResolver.isEntrenchmentIntact(attacker, defender, terrain)
     }
 
     private fun ensureChips(main: HTMLElement): HTMLElement =

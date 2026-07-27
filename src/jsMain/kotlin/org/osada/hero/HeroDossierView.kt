@@ -283,7 +283,7 @@ object HeroDossierAssembler {
         definition: HeroDefinition,
     ): List<String> =
         buildList {
-            addAll(HeroBiographyNarrator.narrate(definition.biographyFacts, state.rankId))
+            addAll(HeroBiographyNarrator.narrate(definition.biographyFacts, state.rankId, definition.portrait.seed))
             state.serviceEvents.forEach {
                 add(
                     HeroEventDisplay.title(it.eventId) +

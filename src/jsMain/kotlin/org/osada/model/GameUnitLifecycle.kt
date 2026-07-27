@@ -1,6 +1,7 @@
 package org.osada.model
 
 import org.osada.UnitClass
+import org.osada.rules.Attachments
 import org.osada.rules.GameRules
 import org.osada.rules.canEntrench
 import org.osada.unitEntrenchRate
@@ -14,7 +15,11 @@ private const val MAX_ENTRENCHMENT_ABOVE_TERRAIN = 5
 fun GameUnit.entrench(): Boolean {
     val hex = this.hex
     if (!GameRules.canEntrench(this) || hex == null) return false
-    val terrainEnt = TerrainEx.baseEntrenchment(hex.terrain)
+    // Fast Entrench (Attachments.SLOT_FAST_ENTRENCH, DEFERRED.md §1.4 Tier 2) raises the terrain's
+    // own entrenchment ceiling for this unit -- both the immediate snap-to-baseline below and the
+    // slow tick-up toward baseline+5 pair naturally with the existing per-efile terrain value
+    // rather than needing a new mechanic.
+    val terrainEnt = TerrainEx.baseEntrenchment(hex.terrain) + Attachments.bonus(this, Attachments.SLOT_FAST_ENTRENCH)
     val unitClass = unitData().uclass
     if (entrenchment >= terrainEnt) {
         var extra = entrenchment - terrainEnt

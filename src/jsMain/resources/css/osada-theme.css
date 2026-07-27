@@ -2896,6 +2896,36 @@ hr {
     .osada-atp__slots { grid-template-columns: 1fr; }
 }
 
+/* ============================================================================
+ * HERO PROMOTION DIALOG (ui/HeroPromotionPresenter, DEFERRED.md §4.12)
+ *
+ * The dialog `.osada-atp`'s own comment above warns about: it used to render its choices as
+ * `.smallButton heroPromotionChoice`, an ICON font with no rule overriding it, so every promotion
+ * choice drew as unrelated glyphs. Same fix shape as the attachment picker -- an explicit
+ * `.osada-hpp-*` family, `--z-msg` instead of a hardcoded z-index, no `makeVisible()`.
+ * ========================================================================= */
+.osada-hpp {
+    position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    z-index: var(--z-msg, 1000); width: min(480px, 92vw); max-height: 88vh; overflow-y: auto;
+    box-sizing: border-box; padding: 14px 16px 12px;
+    background: #1b1e24; border: 1px solid var(--osada-brass);
+    border-radius: var(--osada-radius); box-shadow: 0 10px 34px rgba(0,0,0,.66);
+    font-family: var(--osada-font-ui); color: var(--osada-text);
+}
+.osada-hpp__title { font-size: 15px; font-weight: bold; letter-spacing: .02em; margin-bottom: 8px; }
+.osada-hpp__body { font-size: 12px; color: var(--osada-text-dim); margin-bottom: 12px; }
+.osada-hpp__choice {
+    box-sizing: border-box; padding: 8px 10px 9px; margin-bottom: 8px; cursor: pointer;
+    background: #22262c; border: 1px solid var(--osada-metal-600); border-radius: var(--osada-radius);
+    transition: border-color .12s, background .12s;
+}
+.osada-hpp__choice:last-child { margin-bottom: 0; }
+.osada-hpp__choice:hover { border-color: var(--osada-brass); background: #2a2f37; }
+.osada-hpp__choice:active { transform: translateY(1px); }
+.osada-hpp__choice-title { font-size: 13px; font-weight: bold; color: var(--osada-brass); }
+.osada-hpp__choice-effect { margin-top: 3px; font-size: 12px; color: var(--osada-text); }
+.osada-hpp__choice-justification { margin-top: 3px; font-size: 11px; color: var(--osada-text-dim); font-style: italic; }
+
 /* Stat chips an attachment is currently moving (ui/UnitStatAttachmentMarks). The panel used to
  * show base equipment stats while the rules layer used the modified ones — a player could not
  * tell a kitted-out unit from a bare one anywhere outside the picker. Same green/red pairing the

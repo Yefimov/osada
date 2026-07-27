@@ -80,7 +80,11 @@ object MovementRules {
         }
     }
 
-    /** A friendly non-mounted bridge unit on a river/stream hex acts as a road for [side]. */
+    /** A friendly non-mounted bridge unit on a river/stream hex acts as a road for [side]. The
+     *  Bridging attachment (`Attachments.SLOT_BRIDGING`, DEFERRED.md §1.4 Tier 2) is a second,
+     *  OR'd source of the same boolean capability -- `Attachments.availableSlots` already refuses
+     *  to sell it to a unit that has [Equipment.isBridge] itself, so the two can never both be true
+     *  for the same unit and there is nothing to double-count. */
     fun isBridgeForSide(
         hex: Hex?,
         side: Int,
@@ -89,7 +93,7 @@ object MovementRules {
         val onRiverOrStream = hex?.terrain == TerrainType.RIVER.value || hex?.terrain == TerrainType.STREAM.value
         val isFriendlyDismounted = bridgeUnit != null && !bridgeUnit.isMounted && bridgeUnit.player?.side == side
         if (bridgeUnit == null || !onRiverOrStream || !isFriendlyDismounted) return false
-        return Equipment.isBridge(bridgeUnit.eqid)
+        return Equipment.isBridge(bridgeUnit.eqid) || Attachments.has(bridgeUnit, Attachments.SLOT_BRIDGING)
     }
 
     /** Adds or removes [unit]'s zone of control on its neighbouring hexes. */

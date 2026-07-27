@@ -364,8 +364,13 @@ object CombatResolver {
             terrain == TerrainType.CITY.value ||
                 terrain == TerrainType.ROUGH.value ||
                 terrain == TerrainType.PORT.value
+        // Bunker Buster (Attachments.SLOT_BUNKER_BUSTER, DEFERRED.md §1.4 Tier 2) is modelled on
+        // the same "Ignore trench" attr bit Equipment.ignoresEntrenchment reads -- an unconditional
+        // bypass, not restricted to fortification-class defenders, exactly like that bit's own
+        // grant (`OG_ABILITY_AUDIT.md` §4).
         val bypassed =
             Equipment.ignoresEntrenchment(attacker.eqid) ||
+                Attachments.has(attacker, Attachments.SLOT_BUNKER_BUSTER) ||
                 (hasEntrenchmentBypassLeader && isEntrenchmentVulnerableTerrain)
         return !bypassed
     }

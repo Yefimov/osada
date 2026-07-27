@@ -2,6 +2,7 @@ package org.osada.ui
 
 import org.osada.PlayerType
 import org.osada.RoadType
+import org.osada.i18n.I18n
 import org.osada.model.Cell
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
@@ -236,6 +237,9 @@ internal class MapInputController(
             .append(",")
             .append(row)
             .append(")")
+        // §1.15: the dashed ring alone doesn't say the danger is conditional on landing here (as
+        // opposed to merely flying over it on the way to a farther, unmarked hex) -- spell it out.
+        if (hex.isAaThreat) sb.append(" — ").append(I18n.t("hud.status.location.aa_threat"))
         byId("locmsg")?.innerHTML = sb.toString()
     }
 }

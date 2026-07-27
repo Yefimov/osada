@@ -12,6 +12,23 @@ import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.MouseEvent
 
 /**
+ * Hides `#equipment`, taking anything layered over it down with it (DEFERRED.md §4.13).
+ *
+ * **Every path that closes the equipment window must go through here**, not
+ * `makeHidden("equipment")`. [AttachmentPickerPresenter] is opened from this file's unit strip but
+ * attached to `mainbody` at `--z-msg`, so hiding the window on its own left a live,
+ * prestige-spending modal floating over the bare map with no owner. That is a property of *closing
+ * the window*, not of Escape — the ✕, the end-turn teardown and the deploy flow all had it too.
+ *
+ * It lives here, next to the only code that opens that picker, so the open and the teardown that
+ * has to match it are visible in one file.
+ */
+internal fun hideEquipmentWindow() {
+    AttachmentPickerPresenter.close()
+    makeHidden("equipment")
+}
+
+/**
  * [EquipmentWindowController.updateEquipmentWindow]'s "your units" reserve/upgrade strip: the
  * unit-list loop, its per-item building/wiring, and the inline rename card. Split out purely to
  * keep [EquipmentWindowController] within the project's function-count/class-size limits -- not
@@ -321,7 +338,7 @@ internal object EquipmentUnitStrip {
             // Unit-first deployment: close the catalogue and let the cursor carry this explicit unit.
             val onReserveTab = byId("equipment")?.classList?.contains("osada-eq--reserve") == true
             if (uiSettings.deployMode && onReserveTab) {
-                byId("equipment")?.style?.display = "none"
+                hideEquipmentWindow()
             }
         }
     }

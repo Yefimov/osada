@@ -84,7 +84,7 @@ internal class EndTurnFlow(
         val map = ui.game.scenario?.map ?: return
         cancelEndTurnConfirm()
         if (isVisible("equipment")) {
-            makeHidden("equipment")
+            hideEquipmentWindow()
             makeHidden("container-unitlist")
             uiSettings.deployMode = false
             byId("buy")?.let { toggleButton(it, false) }

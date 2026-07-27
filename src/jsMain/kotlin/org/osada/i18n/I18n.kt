@@ -115,6 +115,20 @@ internal object I18n {
         return interpolate(template, args)
     }
 
+    /**
+     * Like [t], but returns null on a miss instead of the raw key — for callers that have their own
+     * fallback key to try next (e.g. a gendered `_f` variant falling back to the ungendered base)
+     * and must not trigger [reportMissing] for a variant that is allowed to not exist.
+     */
+    fun tOrNull(
+        key: String,
+        args: Map<String, Any?> = emptyMap(),
+        domain: String = DEFAULT_DOMAIN,
+    ): String? {
+        val template = stringValue(language, domain, key) ?: stringValue(Language.ENGLISH, domain, key)
+        return template?.let { interpolate(it, args) }
+    }
+
     fun plural(
         key: String,
         count: Number,

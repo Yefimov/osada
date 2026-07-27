@@ -18,14 +18,19 @@ internal object HeroNaming {
 
     private const val EXPERIENCE_PER_LEVEL = 100
 
-    /** A stable full-name designation for [seed], using [country]'s pool (§16). */
+    /**
+     * A stable full-name designation for [seed], using [country]'s pool (§16). Gender is derived
+     * from the same [seed] via [PortraitComposerV2.genderFor] (§4.11), so the name always agrees
+     * with the portrait the same seed composes.
+     */
     fun nameFor(
         seed: Int,
         country: Int,
-    ): String = HeroNamePools.nameFor(seed, country)
+    ): String = HeroNamePools.nameFor(seed, country, female = PortraitComposerV2.genderFor(seed) == "female")
 
     /** Country-less overload for the migration, which has no nation for a reconstructed officer. */
-    fun nameFor(seed: Int): String = HeroNamePools.nameFor(seed, country = -1)
+    fun nameFor(seed: Int): String =
+        HeroNamePools.nameFor(seed, country = -1, female = PortraitComposerV2.genderFor(seed) == "female")
 
     /**
      * Rank implied by the formation's veteran experience.

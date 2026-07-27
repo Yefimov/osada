@@ -70,7 +70,7 @@ internal class MainMenuButtonHandler(
     private fun onBuyButton(map: GameMap) {
         val equipment = byId("equipment")
         if (equipment != null && isVisible("equipment")) {
-            makeHidden("equipment")
+            hideEquipmentWindow()
             makeHidden("container-unitlist")
             uiSettings.deployMode = false
             byId("buy")?.let { toggleButton(it, false) }
@@ -127,13 +127,30 @@ internal class MainMenuButtonHandler(
         }
     }
 
-    /** Single global Escape handler: closes the topmost modal, or — if nothing is open — toggles
-     *  the pause/options menu. Registered ONCE from UI.init(); anything that wants Escape to close
-     *  it belongs as a branch here, not a second document-level listener (two independent listeners
-     *  would both fire on the same keypress, e.g. closing a window AND opening the pause menu). */
+    /**
+     * Single global Escape handler: closes the topmost modal, or — if nothing is open — toggles
+     * the pause/options menu. Registered ONCE from UI.init(); anything that wants Escape to close
+     * it belongs as a branch here, not a second document-level listener (two independent listeners
+     * would both fire on the same keypress, e.g. closing a window AND opening the pause menu).
+     *
+     * **The branch order IS the z-order, and it has to be maintained by hand (DEFERRED.md §4.13).**
+     * `ui-message` used to be commented "topmost layer of all (--z-msg)"; that stopped being true
+     * when §7.28/§7.37 rebuilt three dialogs onto the same `--z-msg` tier and none of them was
+     * registered here. The visible consequence was that Escape over the attachment picker matched
+     * the `equipment` branch and closed the window *underneath* the modal, leaving a
+     * prestige-spending dialog floating over the bare map.
+     *
+     * The promotion dialog is deliberately a **swallow**, not a close: it is the one modal that owes
+     * the player a decision and has no cancel path, so Escape must neither dismiss it nor fall
+     * through and open the pause menu behind it.
+     */
     fun handleGlobalEscape() {
         when {
-            isVisible("ui-message") -> byId("uiokbut")?.click() // topmost layer of all (--z-msg)
+            isVisible("ui-message") -> byId("uiokbut")?.click()
+            HeroPromotionPresenter.isOpen() -> Unit // modal by design — see the doc comment
+            CommanderRosterPresenter.isTransferPickerOpen() -> CommanderRosterPresenter.closeTransferPicker()
+            AttachmentPickerPresenter.isOpen() -> AttachmentPickerPresenter.close()
+            CommanderRosterPresenter.isOpen() -> CommanderRosterPresenter.close()
             isVisible("equipment") -> byId("eqCloseBut")?.click()
             isVisible("combatLog") -> UICombatLog.toggleCombatLog(false, true)
             else -> ui.mainMenuButton("options")

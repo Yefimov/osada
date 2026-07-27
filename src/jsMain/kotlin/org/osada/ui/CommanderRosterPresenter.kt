@@ -4,7 +4,7 @@ import org.osada.hero.CommanderRow
 import org.osada.hero.HeroCampaign
 import org.osada.hero.HeroDisplay
 import org.osada.hero.HeroId
-import org.osada.hero.HeroStatus
+import org.osada.i18n.I18n
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.MouseEvent
 
@@ -13,14 +13,30 @@ import org.w3c.dom.events.MouseEvent
  * Active / Reserve / Wounded / Missing / Fallen tabs. A row opens the leader dossier; an eligible
  * benched officer (Reserve/Wounded, currently unassigned — [HeroCampaign.transferableFormations])
  * also gets a Transfer action (DEFERRED.md §1.10), the "way back" a wounded or evacuated commander
- * previously had no route to. Built from the pure [CommanderRow] list, all label text from
- * [HeroDisplay], dynamic values via `textContent`.
+ * previously had no route to. Built from the pure [CommanderRow] list, dynamic values via
+ * `textContent`.
+ *
+ * **Localized in full (DEFERRED.md §4.15).** §7.37 localized only the transfer picker inside this
+ * file and left the roster around it in English, which was the worst of both. Note what the tab
+ * labels do now: [HeroDisplay.ROSTER_TABS]' strings are treated as **ids** for grouping and looked
+ * up as `hero.roster.tab.<id>` for display. The previous tooltip interpolated the visible label
+ * into an English sentence (`"…status is ${label.substringBefore(" (").lowercase()}"`), which would
+ * have produced half-Russian text the moment those labels were localized at the source.
  */
 internal object CommanderRosterPresenter {
     private const val BOX_ID = "uiCommanderRoster"
-    private val transferEligibleStatuses = setOf(HeroStatus.RESERVE, HeroStatus.WOUNDED, HeroStatus.SERIOUSLY_WOUNDED)
+    private const val TRANSFER_BOX_ID = "uiHeroTransferBox"
 
     fun close() = delTag(byId(BOX_ID))
+
+    /** Whether the roster is on screen — see [MainMenuButtonHandler.handleGlobalEscape] (§4.13). */
+    fun isOpen(): Boolean = byId(BOX_ID) != null
+
+    /** Whether the transfer picker is on screen. It layers ABOVE the roster, so Escape has to
+     *  offer it first — see [MainMenuButtonHandler.handleGlobalEscape] (§4.13). */
+    fun isTransferPickerOpen(): Boolean = byId(TRANSFER_BOX_ID) != null
+
+    fun closeTransferPicker() = delTag(byId(TRANSFER_BOX_ID))
 
     fun open() {
         close()
@@ -35,13 +51,16 @@ internal object CommanderRosterPresenter {
         header.className = "osada-hero-header"
         val title = addTag(header, "div")
         title.className = "osada-hero-id"
-        addText(title, "osada-hero-name", "Headquarters — Commanders")
-        addText(title, "osada-hero-sub", "${HeroCampaign.commanders().size} officers").title =
-            "Campaign commander roster. Select an officer to open the full dossier."
+        addText(title, "osada-hero-name", I18n.t("hero.roster.title"))
+        addText(
+            title,
+            "osada-hero-sub",
+            I18n.t("hero.roster.count", mapOf("count" to HeroCampaign.commanders().size)),
+        ).title = I18n.t("hero.roster.help")
         val close = addTag(header, "span")
         close.className = "osada-ico osada-ico--close osada-hero-close"
-        close.title = "Close"
-        close.onclick = { _: MouseEvent -> close() }
+        close.title = I18n.t("common.close.label")
+        close.asButton(ariaLabel = I18n.t("common.close.label")) { close() }
 
         val tabBar = addTag(box, "div")
         tabBar.className = "osada-hero-tabs"
@@ -51,7 +70,7 @@ internal object CommanderRosterPresenter {
         val buttons =
             HeroDisplay.ROSTER_TABS.map { tab ->
                 val count = byTab[tab]?.size ?: 0
-                tabButton(tabBar, "$tab ($count)")
+                tabButton(tabBar, tab, count)
             }
 
         fun select(index: Int) {
@@ -68,7 +87,7 @@ internal object CommanderRosterPresenter {
         rows: List<CommanderRow>,
     ) {
         if (rows.isEmpty()) {
-            addText(body, "osada-hero-empty", "No officers in this category.")
+            addText(body, "osada-hero-empty", I18n.t("hero.roster.empty"))
             return
         }
         rows.sortedBy { it.name }.forEach { row -> renderRow(body, row) }
@@ -106,17 +125,17 @@ internal object CommanderRosterPresenter {
 
         val locate = addTag(card, "button")
         locate.className = "osada-hero-locate"
-        locate.textContent = "Locate"
-        locate.title = "Select this commander's deployed formation on the map"
+        locate.textContent = I18n.t("hero.roster.locate.label")
+        locate.title = I18n.t("hero.roster.locate.help")
         locate.onclick = { e: MouseEvent ->
             e.stopPropagation()
             locateHero(HeroId(row.heroId))
         }
-        if (row.formationName == null && row.status in transferEligibleStatuses) {
+        if (row.formationName == null && HeroCampaign.isTransferEligible(row.status)) {
             val transfer = addTag(card, "button")
             transfer.className = "osada-hero-locate"
-            transfer.textContent = "Transfer"
-            transfer.title = "Assign this commander to a formation with no current officer"
+            transfer.textContent = I18n.t("hero.roster.transfer.label")
+            transfer.title = I18n.t("hero.roster.transfer.help")
             transfer.onclick = { e: MouseEvent ->
                 e.stopPropagation()
                 openTransferPicker(HeroId(row.heroId), row.name)
@@ -125,54 +144,60 @@ internal object CommanderRosterPresenter {
         card.onclick = { _: MouseEvent -> LeaderDossierPresenter.openForHero(HeroId(row.heroId)) }
     }
 
+    // Reuses HeroPromotionPresenter's `.osada-hpp` dialog shape (DEFERRED.md §4.10/§4.12) rather
+    // than the legacy `.smallButton heroPromotionChoice` this used to copy: same ICON-font trap
+    // (real words rendering as glyphs) and same hardcoded z-index that opens behind #equipment.
     private fun openTransferPicker(
         heroId: HeroId,
         heroName: String,
     ) {
         val mainBody = byId("mainbody") ?: return
-        delTag(byId("uiHeroTransferBox"))
+        closeTransferPicker()
         val choices = HeroCampaign.transferableFormations(heroId)
 
         val box = addTag(mainBody, "div")
-        box.id = "uiHeroTransferBox"
-        box.className = "uiMessageBox heroPromotionBox"
-        box.style.zIndex = "98"
+        box.id = TRANSFER_BOX_ID
+        box.className = "osada-hpp"
 
         val titleEl = addTag(box, "div")
-        titleEl.className = "uiMessageBoxTitle"
-        titleEl.textContent = "$heroName — Transfer to a formation"
+        titleEl.className = "osada-hpp__title"
+        titleEl.textContent = I18n.t("hero.roster.transfer.title", mapOf("name" to heroName))
 
-        val bodyEl = addTag(box, "div")
-        bodyEl.className = "uiMessageBoxBody"
         if (choices.isEmpty()) {
-            addText(bodyEl, "osada-hero-empty", "No unled formation is currently available to take this commander.")
+            val bodyEl = addTag(box, "div")
+            bodyEl.className = "osada-hpp__body"
+            bodyEl.textContent = I18n.t("hero.roster.transfer.empty")
         } else {
             choices.forEach { formation ->
-                val option = addTag(bodyEl, "div")
-                option.className = "smallButton heroPromotionChoice"
+                val option = addTag(box, "div")
+                option.className = "osada-hpp__choice"
                 option.textContent = formation.displayName
-                option.onclick = { _: MouseEvent ->
+                option.asButton {
                     HeroCampaign.transferCommander(heroId, formation.id)
                     delTag(box)
                     open()
                 }
             }
         }
-        val cancel = addTag(bodyEl, "div")
-        cancel.className = "smallButton heroPromotionChoice"
-        cancel.textContent = "Cancel"
-        cancel.onclick = { _: MouseEvent -> delTag(box) }
-        makeVisible("uiHeroTransferBox")
+        val cancel = addTag(box, "div")
+        cancel.className = "osada-hpp__choice"
+        cancel.textContent = I18n.t("common.cancel.label")
+        cancel.asButton { delTag(box) }
     }
 
+    /** [tabId] is the untranslated [HeroDisplay.ROSTER_TABS] entry — the grouping key, not display
+     *  text. Both the label and its tooltip are looked up from it, so neither can end up half
+     *  translated (§4.15). */
     private fun tabButton(
         bar: HTMLElement,
-        label: String,
+        tabId: String,
+        count: Int,
     ): HTMLElement {
         val b = addTag(bar, "div")
+        val status = I18n.t("hero.roster.tab.${tabId.lowercase()}")
         b.className = "osada-hero-tab"
-        b.textContent = label
-        b.title = "Show commanders whose current status is ${label.substringBefore(" (").lowercase()}"
+        b.textContent = I18n.t("hero.roster.tab.label", mapOf("status" to status, "count" to count))
+        b.title = I18n.t("hero.roster.tab.help", mapOf("status" to status.lowercase()))
         return b
     }
 

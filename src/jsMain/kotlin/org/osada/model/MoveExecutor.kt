@@ -148,6 +148,15 @@ internal class MoveExecutor(
         }
     }
 
+    /** DEFERRED.md §1.12: whether `AI_SCRIPTED` bypassing fog here (animating in full through
+     *  hexes the human side has not spotted) is deliberate was previously undecided. **Decided:
+     *  deliberate.** `AI_SCRIPTED` exists only for the Khalkhin Gol tutorial's scripted
+     *  demonstration turns (`docs/tutorial.md`), and every other place that branches on player
+     *  type treats it the same as `HUMAN_LOCAL` for exactly this reason -- `UICombatLog` logs its
+     *  combats, `StatusBarController` narrates its turn -- because a guided demonstration that
+     *  vanishes into "fogged, snap to destination" defeats the point of demonstrating it. Do not
+     *  gate this on spotting; the off-screen gap this same entry also named is fixed instead, in
+     *  `AnimationOrchestrator.isPathEntirelyOffScreen`. */
     private fun isCellVisible(
         unit: GameUnit,
         map: Array<Array<Hex>>,

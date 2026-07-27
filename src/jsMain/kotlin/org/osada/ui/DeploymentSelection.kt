@@ -115,7 +115,7 @@ internal object DeploymentSelection {
 
         // After a successful placement return focus to the map. The next unit may be selected
         // first, or the next deployment hex may be clicked first.
-        makeHidden("equipment")
+        hideEquipmentWindow()
         makeHidden("container-unitlist")
         if (!player.hasUndeployedUnits()) {
             byId("buy")?.let { toggleButton(it, false) }

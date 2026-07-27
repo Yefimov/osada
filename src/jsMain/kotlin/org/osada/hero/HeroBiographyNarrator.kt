@@ -21,14 +21,30 @@ import org.osada.i18n.I18n
  * migrated hero with only `emergenceEventId` set still gets a dignified, if short, commission
  * sentence; a hero missing `birthYear` entirely (no campaign year known at emergence) gets no
  * origin sentence at all rather than a broken one.
+ *
+ * **Gendered (§4.11).** [seed] is the hero's portrait seed — the same one
+ * [PortraitComposerV2.genderFor] rolls a gender from — so the biography's pronouns/inflections
+ * always agree with the face the player sees. Every `hero.bio.origin`/`hero.bio.commission`
+ * selector has a `_f` sibling branch (identical text where the language has no gendered wording,
+ * as in English origin sentences; a rewritten sentence where it does, as in Russian). Fact clauses
+ * looked up directly (`hero.bio.education.*`) fall back from a `_f` key to the base key via
+ * [I18n.tOrNull] rather than requiring every education/service string to carry a redundant
+ * feminine copy in languages where the noun doesn't inflect.
  */
 internal object HeroBiographyNarrator {
     fun narrate(
         facts: HeroBiographyFacts,
         rankId: String,
-    ): List<String> = listOfNotNull(originSentence(facts), commissionSentence(facts, rankId))
+        seed: Int,
+    ): List<String> {
+        val female = PortraitComposerV2.genderFor(seed) == "female"
+        return listOfNotNull(originSentence(facts, female), commissionSentence(facts, rankId, female))
+    }
 
-    private fun originSentence(facts: HeroBiographyFacts): String? {
+    private fun originSentence(
+        facts: HeroBiographyFacts,
+        female: Boolean,
+    ): String? {
         val year = facts.birthYear ?: return null
         val place = facts.birthplaceId?.let { I18n.t("hero.bio.birthplace.$it") }
         val social = facts.socialBackgroundId?.let { I18n.t("hero.bio.social.$it") }
@@ -41,7 +57,7 @@ internal object HeroBiographyNarrator {
             }
         return I18n.select(
             "hero.bio.origin",
-            selector,
+            genderedSelector(selector, female),
             mapOf("year" to year.toString(), "place" to place, "social" to social),
         )
     }
@@ -49,10 +65,11 @@ internal object HeroBiographyNarrator {
     private fun commissionSentence(
         facts: HeroBiographyFacts,
         rankId: String,
+        female: Boolean,
     ): String {
         val rank = HeroDisplay.rank(rankId)
-        val education = facts.militaryEducationId?.let { I18n.t("hero.bio.education.$it") }
-        val service = facts.priorServiceId?.let { I18n.t("hero.bio.service.$it") }
+        val education = facts.militaryEducationId?.let { genderedFact("hero.bio.education.$it", female) }
+        val service = facts.priorServiceId?.let { genderedFact("hero.bio.service.$it", female) }
         val selector =
             when {
                 education != null && service != null -> "education_service"
@@ -62,8 +79,20 @@ internal object HeroBiographyNarrator {
             }
         return I18n.select(
             "hero.bio.commission",
-            selector,
+            genderedSelector(selector, female),
             mapOf("rank" to rank, "education" to education, "service" to service),
         )
     }
+
+    /** A `_f` branch is required for every selector this file uses — see the class doc. */
+    private fun genderedSelector(
+        selector: String,
+        female: Boolean,
+    ): String = if (female) "${selector}_f" else selector
+
+    /** A `_f` key is optional here: languages where the noun doesn't inflect just reuse the base. */
+    private fun genderedFact(
+        baseKey: String,
+        female: Boolean,
+    ): String = (if (female) I18n.tOrNull("${baseKey}_f") else null) ?: I18n.t(baseKey)
 }

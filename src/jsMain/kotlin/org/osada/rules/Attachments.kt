@@ -1,8 +1,12 @@
 package org.osada.rules
 
+import org.osada.LeaderType
 import org.osada.hero.HeroCampaign
 import org.osada.model.EfileConfig
+import org.osada.model.Equipment
 import org.osada.model.GameUnit
+import org.osada.model.Leaders
+import org.osada.model.isBridge
 
 /**
  * Attachments (DEFERRED.md §1.4, `docs/design/attachments.md`): per-efile purchasable per-unit
@@ -23,21 +27,33 @@ internal object Attachments {
 
     // Fixed slot mechanics (`OG_ABILITY_AUDIT.md` §4) -- the SLOT NUMBER decides which stat the
     // bonus applies to; only the magnitude, name, cost and penalty are per-efile data. Tier 1
-    // (`docs/design/attachments.md` §4) is Recon/Air Defense/AntiTank/Support/Fuel Pods/Fast Speed.
-    // Bridging is named only because LXF disables it explicitly; it is Tier 2 and is NOT in
-    // [IMPLEMENTED_SLOTS].
+    // (`docs/design/attachments.md` §4) is Recon/Air Defense/AntiTank/Support/Fuel Pods/Fast Speed;
+    // Tier 2 is Bridging/Fast Entrench/Bunker Buster, each modelled on an existing rule rather than
+    // a new one (§6.6 item 7, DEFERRED.md §1.4).
     const val SLOT_RECON = 1
     const val SLOT_AIR_DEFENSE = 2
     const val SLOT_BRIDGING = 3
     const val SLOT_ANTI_TANK = 4
     const val SLOT_SUPPORT_AMMO = 5
+    const val SLOT_FAST_ENTRENCH = 8
+    const val SLOT_BUNKER_BUSTER = 9
     const val SLOT_FUEL_PODS = 11
     const val SLOT_FAST_SPEED = 12
 
-    /** The slots this engine actually applies -- Tier 1, the six pure stat deltas. Nothing else may
-     *  be sold; see [availableSlots]. */
+    /** The slots this engine actually applies -- the six Tier 1 pure stat deltas plus the three
+     *  Tier 2 slots. Nothing else may be sold; see [availableSlots]. */
     val IMPLEMENTED_SLOTS =
-        setOf(SLOT_RECON, SLOT_AIR_DEFENSE, SLOT_ANTI_TANK, SLOT_SUPPORT_AMMO, SLOT_FUEL_PODS, SLOT_FAST_SPEED)
+        setOf(
+            SLOT_RECON,
+            SLOT_AIR_DEFENSE,
+            SLOT_BRIDGING,
+            SLOT_ANTI_TANK,
+            SLOT_SUPPORT_AMMO,
+            SLOT_FAST_ENTRENCH,
+            SLOT_BUNKER_BUSTER,
+            SLOT_FUEL_PODS,
+            SLOT_FAST_SPEED,
+        )
 
     private const val DEFAULT_MIN_COST = 30
     private const val DEFAULT_FACTOR_PCT = 25
@@ -151,10 +167,11 @@ internal object Attachments {
      * **Known simplification**: `equip.xeqa`'s per-equipment allow-list is not modelled -- its
      * bitmask is indexed by the ORIGINAL per-efile equipment row order, and the runtime equipment
      * database is the id-renumbered `eqp-united` merge, so a naive index lookup would silently
-     * attribute the wrong equipment's eligibility. OG's own pre-v6 fallback CLASS rules (quoted in
-     * `docs/design/attachments.md` §3) are not applied either -- every one of them constrains a
-     * Tier 2/3 slot, so none can fire while [IMPLEMENTED_SLOTS] holds only Tier 1. Implement them
-     * together with the slot they gate, not before (see DEFERRED.md §1.4).
+     * attribute the wrong equipment's eligibility. OG's own pre-v6 fallback CLASS rule (C) --
+     * Fast Builder needs a Sapper/Build-Repair capability this engine does not model -- is not
+     * applied either, and cannot fire yet: [IMPLEMENTED_SLOTS] does not include slot 10. Rules (A)
+     * and (B) below are now applied, together with the Bridging slot they gate
+     * (`docs/design/attachments.md` §2.3, §4 Tier 2).
      */
     fun availableSlots(unit: GameUnit): List<Pair<Int, EfileConfig.AttachmentSlot>> {
         val config = EfileConfig.attachments()
@@ -166,11 +183,28 @@ internal object Attachments {
                 .filter { (number, slot) ->
                     number in IMPLEMENTED_SLOTS &&
                         !slot.disabled &&
-                        number.toString() !in formation.attachmentIds
+                        number.toString() !in formation.attachmentIds &&
+                        (number != SLOT_BRIDGING || isBridgingEligible(unit))
                 }.map { (number, slot) -> number to slot }
                 .sortedBy { it.first }
         }
     }
+
+    /**
+     * OG's pre-v6 fallback class rules (A) and (B), quoted verbatim from `EFILE_NOKORP/equip.cfg`
+     * (`docs/design/attachments.md` §2.3): Bridging is disabled for air and naval units, and for a
+     * unit that already carries the Bridge equipment special -- buying the attachment on a unit
+     * that is already a bridge would not stack a second one, it would just waste prestige. The
+     * Bridging LEADER is checked too, for the same reason -- `grep -rn LeaderType.BRIDGING
+     * src/jsMain/kotlin` finds only its display description, no rule site, so this check is
+     * currently a no-op in practice; it costs nothing to keep and stops this slot being the first
+     * caller to get it wrong if that leader is ever wired up.
+     */
+    private fun isBridgingEligible(unit: GameUnit): Boolean =
+        !UnitPredicates.isAir(unit) &&
+            !UnitPredicates.isSea(unit) &&
+            !Equipment.isBridge(unit.eqid) &&
+            !Leaders.unitHasLeader(unit, LeaderType.BRIDGING)
 
     /**
      * `cost = minCost + (unitCostPerStrengthPoint x unitBaseStrength x factorPct) / 100`

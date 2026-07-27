@@ -1,5 +1,7 @@
 package org.osada.rules
 
+import org.osada.MovMethod
+import org.osada.TerrainType
 import org.osada.UnitClass
 import org.osada.hero.CoreFormation
 import org.osada.hero.FormationId
@@ -8,7 +10,9 @@ import org.osada.model.EfileConfig
 import org.osada.model.Equipment
 import org.osada.model.EquipmentData
 import org.osada.model.GameUnit
+import org.osada.model.Hex
 import org.osada.model.Player
+import org.osada.model.entrench
 import org.osada.model.resetEquipment
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
@@ -494,5 +498,139 @@ class AttachmentsTest {
 
         assertEquals(emptyList(), Attachments.availableSlots(unit))
         assertFalse(HeroCampaign.purchaseAttachment(unit, Attachments.SLOT_RECON))
+    }
+
+    // ---------------------------------------------------------------- Tier 2 (DEFERRED.md §1.4)
+
+    private fun withTier2Slots(base: EfileConfig.AttachmentConfig) =
+        base.copy(
+            slots =
+                base.slots +
+                    mapOf(
+                        Attachments.SLOT_BRIDGING to
+                            EfileConfig.AttachmentSlot(
+                                "Bridging",
+                                disabled = false,
+                                bonus = 0,
+                                penalty = -1,
+                                minCost = 30,
+                                factCost = 50,
+                                penaltyType = 1,
+                            ),
+                        Attachments.SLOT_FAST_ENTRENCH to
+                            EfileConfig.AttachmentSlot(
+                                "Fast Entrench",
+                                disabled = false,
+                                bonus = 3,
+                                penalty = -1,
+                                minCost = 30,
+                                factCost = 25,
+                                penaltyType = 2,
+                            ),
+                        Attachments.SLOT_BUNKER_BUSTER to
+                            EfileConfig.AttachmentSlot(
+                                "Bunker Buster",
+                                disabled = false,
+                                bonus = 3,
+                                penalty = -1,
+                                minCost = 30,
+                                factCost = 25,
+                                penaltyType = 3,
+                            ),
+                    ),
+        )
+
+    @Test
+    fun bridgingLetsAUnitActAsABridge() {
+        EfileConfig.setForTest(attachmentConfigValue = withTier2Slots(lxfShapedConfig()))
+        HeroCampaign.roster().putFormation(formation("F-A"))
+        val unit =
+            coreUnit("F-A").apply {
+                player =
+                    Player().apply {
+                        id = 0
+                        side = 0
+                    }
+            }
+        val riverHex =
+            Hex(0, 0).apply {
+                terrain = TerrainType.RIVER.value
+                this.unit = unit
+            }
+
+        assertFalse(MovementRules.isBridgeForSide(riverHex, 0), "not a bridge before purchase")
+        assertTrue(HeroCampaign.purchaseAttachment(unit, Attachments.SLOT_BRIDGING))
+        assertTrue(MovementRules.isBridgeForSide(riverHex, 0), "Bridging attachment grants the same capability")
+    }
+
+    @Test
+    fun bridgingIsNotOfferedToAUnitThatAlreadyHasTheBridgeSpecial() {
+        Equipment.equipmentMap[eqid]?.attr = 8 // ATTR_MASK_BRIDGE
+        EfileConfig.setForTest(attachmentConfigValue = withTier2Slots(lxfShapedConfig()))
+        HeroCampaign.roster().putFormation(formation("F-A"))
+        val unit = coreUnit("F-A")
+
+        val offered = Attachments.availableSlots(unit).map { it.first }
+
+        assertFalse(Attachments.SLOT_BRIDGING in offered, "already a bridge -- buying a second would waste prestige")
+    }
+
+    @Test
+    fun bridgingIsNotOfferedToAirOrNavalUnits() {
+        Equipment.putEquipment(
+            eqid,
+            EquipmentData().apply {
+                uclass = UnitClass.FIGHTER.value
+                movmethod = MovMethod.AIR.value
+            },
+        )
+        EfileConfig.setForTest(attachmentConfigValue = withTier2Slots(lxfShapedConfig()))
+        HeroCampaign.roster().putFormation(formation("F-A"))
+        val unit = coreUnit("F-A")
+
+        val offered = Attachments.availableSlots(unit).map { it.first }
+
+        assertFalse(Attachments.SLOT_BRIDGING in offered, "OG's pre-v6 fallback rule (A) excludes air units")
+    }
+
+    @Test
+    fun fastEntrenchRaisesTheTerrainEntrenchmentCeiling() {
+        EfileConfig.setForTest(attachmentConfigValue = withTier2Slots(lxfShapedConfig()))
+        HeroCampaign.roster().putFormation(formation("F-A"))
+        HeroCampaign.roster().putFormation(formation("F-B"))
+        // CITY (terrainEntrenchment index 1) has a nonzero base -- starting entrenchment 0 is below
+        // it, so entrench() snaps straight to the ceiling in one call rather than needing several
+        // ticks, which CLEAR's base-0 ceiling would.
+        val bare = coreUnit("F-A").apply { hex = Hex(0, 0).apply { terrain = TerrainType.CITY.value } }
+        val fitted = coreUnit("F-B").apply { hex = Hex(0, 1).apply { terrain = TerrainType.CITY.value } }
+        assertTrue(HeroCampaign.purchaseAttachment(fitted, Attachments.SLOT_FAST_ENTRENCH))
+
+        bare.entrench()
+        fitted.entrench()
+
+        val plainCeiling = bare.entrenchment
+        assertEquals(
+            plainCeiling + 3,
+            fitted.entrenchment,
+            "Fast Entrench's +3 raises the terrain's own ceiling this unit snaps to",
+        )
+    }
+
+    @Test
+    fun bunkerBusterBypassesTheDefendersEntrenchment() {
+        EfileConfig.setForTest(attachmentConfigValue = withTier2Slots(lxfShapedConfig()))
+        HeroCampaign.roster().putFormation(formation("F-A"))
+        val attacker = coreUnit("F-A")
+        val defender = GameUnit(eqid).apply { player = Player().apply { id = 1 } }
+
+        assertTrue(
+            CombatResolver.isEntrenchmentIntact(attacker, defender, TerrainType.CLEAR.value),
+            "entrenchment applies normally before the attacker buys Bunker Buster",
+        )
+        assertTrue(HeroCampaign.purchaseAttachment(attacker, Attachments.SLOT_BUNKER_BUSTER))
+        assertFalse(
+            CombatResolver.isEntrenchmentIntact(attacker, defender, TerrainType.CLEAR.value),
+            "Bunker Buster bypasses entrenchment exactly like the Ignore-trench attr bit",
+        )
     }
 }
