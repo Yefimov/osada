@@ -67,7 +67,7 @@ internal object LeaderDossierPresenter {
         val header = addTag(box, "div")
         header.className = "osada-hero-header"
         val portrait = addTag(header, "div")
-        portrait.className = "osada-hero-portrait"
+        portrait.className = "osada-hero-portrait ${view.renownClass}".trim()
         portrait.textContent =
             view.name
                 .split(' ')

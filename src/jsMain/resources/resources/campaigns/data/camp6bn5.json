@@ -1,442 +1,442 @@
 [
-  {
-    "id": 0,
-    "scenario": "bn5s01.xml",
-    "startprestige": 0,
-    "intro": "A smaller force can still dictate the battle when it chooses where the battle begins. GUERRILLA HUNTER - 2 JUL 1941 places your command at HQ 8th NKVD Rife Brigade, Estonia. HQ 8th NKVD Rife Brigade, Estonia CO General Kuznetsov It does not look good for us, Comrade! The Germans stand at the Estonian border and all over crawled Bandits out of their holes. The wider stakes are clear: A serious defeat for the Estonian bandits and their Finnish friends. A strong result opens the road to BLITZ - 10 JUL 1941. Your victory will be measured in disrupted movement, captured supplies, and fighters who live to strike again.",
-    "outcome": {
-      "briliant": {
-        "goto": 1,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "General Kuznetsov<br><br>Excellent, a serious defeat for the Estonian bandits and their Finnish friends."
-      },
-      "victory": {
-        "goto": 1,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "General Kuznetsov<br><br>Excellent, a serious defeat for the Estonian bandits and their Finnish friends."
-      },
-      "tactical": {
-        "goto": 1,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "General Kuznetsov<br><br>Excellent, a serious defeat for the Estonian bandits and their Finnish friends."
-      },
-      "lose": {
-        "goto": 1,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "General Kuznetsov<br><br>You can not win all battles, it is important to win the last battle, Comrade!"
-      }
-    }
-  },
-  {
-    "id": 1,
-    "scenario": "bn5s02.xml",
-    "startprestige": 0,
-    "intro": "There is no continuous front here—only terrain, secrecy, and the moment chosen for the first shot. BLITZ - 10 JUL 1941 places your command at HQ 8th NKVD Rife Brigade, Estonia. HQ 8th NKVD Rife Brigade, Estonia CO General Kuznetsov The Nazi war machine stand at our gates, Comrade! And your fate is the defense of Dorpat. The wider stakes are clear: Go with your remains into the forests and form a partisan group to fight against the Fascists from behind! A strong result opens the road to SINK THE TIRPITZ - 5 OCT 1941. Your victory will be measured in disrupted movement, captured supplies, and fighters who live to strike again.",
-    "outcome": {
-      "briliant": {
-        "goto": 2,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 500,
-        "text": "General Kuznetsov<br><br>Your resoluteness is impressing, Comrade! Go with your remains into the forests and form a partisan group to fight against the Fascists from behind!"
-      },
-      "victory": {
-        "goto": 2,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 500,
-        "text": "General Kuznetsov<br><br>Your resoluteness is impressing, Comrade! Go with your remains into the forests and form a partisan group to fight against the Fascists from behind!"
-      },
-      "tactical": {
-        "goto": 2,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 500,
-        "text": "General Kuznetsov<br><br>Your resoluteness is impressing, Comrade! Go with your remains into the forests and form a partisan group to fight against the Fascists from behind!"
-      },
-      "lose": {
-        "goto": 2,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 500,
-        "text": "General Kuznetsov<br><br>You can not win all battles, it is important to win the last battle, Comrade! Go with the remains into the forests and form a partisan group to fight against the Fascists from behind!"
-      }
-    }
-  },
-  {
-    "id": 2,
-    "scenario": "bn5s09.xml",
-    "startprestige": 0,
-    "intro": "Strike hard, disappear quickly, and leave the occupier afraid of every path and village. SINK THE TIRPITZ - 5 OCT 1941 places your command at HQ Soviet Partisans, Estonia. HQ Soviet Partisans, Estonia CO General Karotamm The largest German battleship, the Tirpitz, flagship of a fleet, which has supported the German landings on the Baltic islands, anchored off the coast and poses a serious threat for our Baltic fleet. Maritime forces are not available that could match with this ship. The wider stakes are clear: General Karotamm A great success that make headlines. A strong result opens the road to HIT & RUN - 28 APR 1942. Use concealment, local mobility, and carefully chosen objectives to turn a raid into a strategic embarrassment.",
-    "outcome": {
-      "briliant": {
-        "goto": 3,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 750,
-        "text": "General Karotamm<br><br>A great success that make headlines. Your name is on everyone's lips in Moscow. Excellent work, Comrade!"
-      },
-      "victory": {
-        "goto": 3,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 750,
-        "text": "General Karotamm<br><br>A great success that make headlines. Your name is on everyone's lips in Moscow. Excellent work, Comrade!"
-      },
-      "tactical": {
-        "goto": 3,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 750,
-        "text": "General Karotamm<br><br>A great success that make headlines. Your name is on everyone's lips in Moscow. Excellent work, Comrade!"
-      },
-      "lose": {
-        "goto": 3,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 750,
-        "text": "General Karotamm<br><br>You can not win all battles, it is important to win the last battle, Comrade!"
-      }
-    }
-  },
-  {
-    "id": 3,
-    "scenario": "bn5s03.xml",
-    "startprestige": 0,
-    "intro": "The enemy owns the roads by day; your fighters must own the shadows around them. HIT & RUN - 28 APR 1942 places your command at HQ Soviet Partisans, Lithuania. HQ Soviet Partisans, Lithuania CO General Karotamm Comrade, its time to strike the invaders where it hurts. You'll attack a weak defended German supply depot and raise the Red Banner on its ruins! The wider stakes are clear: General Karotamm Your attack was a success, the depot was badly damaged! A strong result opens the road to REVENGE - 8 OCT 1942. Use concealment, local mobility, and carefully chosen objectives to turn a raid into a strategic embarrassment.",
-    "outcome": {
-      "briliant": {
-        "goto": 4,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 1000,
-        "text": "General Karotamm<br><br>Your attack was a success, the depot was badly damaged! That's the way we will wear down the enemy, Comrade!"
-      },
-      "victory": {
-        "goto": 4,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 1000,
-        "text": "General Karotamm<br><br>Your attack was a success, the depot was badly damaged! That's the way we will wear down the enemy, Comrade!"
-      },
-      "tactical": {
-        "goto": 4,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 1000,
-        "text": "General Karotamm<br><br>Your attack was a success, the depot was badly damaged! That's the way we will wear down the enemy, Comrade!"
-      },
-      "lose": {
-        "goto": 4,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 1000,
-        "text": "General Karotamm<br><br>You can not win all battles, it is important to win the last battle, Comrade!"
-      }
-    }
-  },
-  {
-    "id": 4,
-    "scenario": "bn5s08.xml",
-    "startprestige": 0,
-    "intro": "Strike hard, disappear quickly, and leave the occupier afraid of every path and village. REVENGE - 8 OCT 1942 places your command at HQ Soviet Partisans, Latvia. HQ Soviet Partisans, Latvia CO General Karotamm Parts of an SS-Division were moved in our area for rest and refreshing. It is a unit well-known as Anti-Partisan combat formation and has spread terror among the Soviet population. The wider stakes are clear: General Karotamm The leadership of the SS division is destroyed. A strong result opens the road to OPERATION GYBSY BARON - 15 JUN 1943. Avoid a fair fight, strike communications and isolated units, and withdraw before superior firepower can be brought to bear.",
-    "outcome": {
-      "briliant": {
-        "goto": 5,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 1000,
-        "text": "General Karotamm<br><br>The leadership of the SS division is destroyed. They get what they deserve. You have once again met all expectations."
-      },
-      "victory": {
-        "goto": 5,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 1000,
-        "text": "General Karotamm<br><br>The leadership of the SS division is destroyed. They get what they deserve. You have once again met all expectations."
-      },
-      "tactical": {
-        "goto": 5,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 1000,
-        "text": "General Karotamm<br><br>The leadership of the SS division is destroyed. They get what they deserve. You have once again met all expectations."
-      },
-      "lose": {
-        "goto": 5,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 1000,
-        "text": "General Karotamm<br><br>You can not win all battles, it is important to win the last battle, Comrade!"
-      }
-    }
-  },
-  {
-    "id": 5,
-    "scenario": "bn5s06.xml",
-    "startprestige": 0,
-    "intro": "The enemy owns the roads by day; your fighters must own the shadows around them. OPERATION GYBSY BARON - 15 JUN 1943 places your command at HQ Soviet Partisans, Belarus. HQ Soviet Partisans, Belarus CO General Karotamm That we have interrupted the supply routes for their offensive at Kursk, has not pleased the Germans. They'll try to force us out of this area. The wider stakes are clear: General Karotamm The Germans sent criminal traitors in the battle. A strong result opens the road to RESCUE MISSION - 12 SEP 1943. Use concealment, local mobility, and carefully chosen objectives to turn a raid into a strategic embarrassment.",
-    "outcome": {
-      "briliant": {
-        "goto": 6,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 1000,
-        "text": "General Karotamm<br><br>The Germans sent criminal traitors in the battle. But they are all dead now."
-      },
-      "victory": {
-        "goto": 6,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 1000,
-        "text": "General Karotamm<br><br>The Germans sent criminal traitors in the battle. But they are all dead now."
-      },
-      "tactical": {
-        "goto": 6,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 1000,
-        "text": "General Karotamm<br><br>The Germans sent criminal traitors in the battle. But they are all dead now."
-      },
-      "lose": {
-        "goto": 6,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 1000,
-        "text": "General Karotamm<br><br>You can not win all battles, it is important to win the last battle, Comrade!"
-      }
-    }
-  },
-  {
-    "id": 6,
-    "scenario": "bn5s04.xml",
-    "startprestige": 0,
-    "intro": "The enemy owns the roads by day; your fighters must own the shadows around them. RESCUE MISSION - 12 SEP 1943 places your command at HQ Soviet Partisans, Estonia. HQ Soviet Partisans, Estonia CO General Karotamm A plane loaded with a important U.S. politician, on his way to Moscow, was forced to make an emergency landing in our area. A British submarine, ready to take our guest is waiting off the coast. The wider stakes are clear: Moscow is very pleased with the outcome of this mission! A strong result opens the road to KILL BRUNO - 28 JAN 1944. Avoid a fair fight, strike communications and isolated units, and withdraw before superior firepower can be brought to bear.",
-    "outcome": {
-      "briliant": {
-        "goto": 7,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 1000,
-        "text": "General Karotamm<br><br>Excellent, Moscow is very pleased with the outcome of this mission!"
-      },
-      "victory": {
-        "goto": 7,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 1000,
-        "text": "General Karotamm<br><br>Excellent, Moscow is very pleased with the outcome of this mission!"
-      },
-      "tactical": {
-        "goto": 7,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 1000,
-        "text": "General Karotamm<br><br>Excellent, Moscow is very pleased with the outcome of this mission!"
-      },
-      "lose": {
-        "goto": 7,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 1000,
-        "text": "General Karotamm<br><br>You can not win all battles, it is important to win the last battle, Comrade!"
-      }
-    }
-  },
-  {
-    "id": 7,
-    "scenario": "bn5s07.xml",
-    "startprestige": 0,
-    "intro": "The enemy owns the roads by day; your fighters must own the shadows around them. KILL BRUNO - 28 JAN 1944 places your command at HQ Soviet Partisans, Estonia. The Germans consider their rail gun safe, because any direct attack is smashed by the Luftwaffe. The eastern airfield is to seize with your troops. The wider stakes are clear: General Karotamm The Rail gun is destroyed, excellent work. A strong result opens the road to NARVA - 24 JUL 1944. Your victory will be measured in disrupted movement, captured supplies, and fighters who live to strike again.",
-    "outcome": {
-      "briliant": {
-        "goto": 8,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 5000,
-        "text": "General Karotamm<br><br>The Rail gun is destroyed, excellent work. Another major blow to the fascists!"
-      },
-      "victory": {
-        "goto": 8,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 5000,
-        "text": "General Karotamm<br><br>The Rail gun is destroyed, excellent work. Another major blow to the fascists!"
-      },
-      "tactical": {
-        "goto": 8,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 5000,
-        "text": "General Karotamm<br><br>The Rail gun is destroyed, excellent work. Another major blow to the fascists!"
-      },
-      "lose": {
-        "goto": 8,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 5000,
-        "text": "General Karotamm<br><br>You can not win all battles, it is important to win the last battle, Comrade!"
-      }
-    }
-  },
-  {
-    "id": 8,
-    "scenario": "bn5s05.xml",
-    "startprestige": 0,
-    "intro": "Strike hard, disappear quickly, and leave the occupier afraid of every path and village. NARVA - 24 JUL 1944 places your command at HQ 2nd Shock Army. HQ 2nd Shock Army CO General Fedyuninsky Comrade, we want to break the German defense at Narva in an all out attack. Our objective is to seize Narva, break through the Tannenberg Line, and occupy all enemy ports, airfields, and key cities. The wider stakes are clear: General Fedyuninsky The Germans are defeated, the way to Tallinn is open! A strong result opens the road to AUGUST STORM - 12 AUG 1945. Avoid a fair fight, strike communications and isolated units, and withdraw before superior firepower can be brought to bear.",
-    "outcome": {
-      "briliant": {
-        "goto": 9,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 3000,
-        "text": "General Fedyuninsky<br><br>The Germans are defeated, the way to Tallinn is open! Soon our country will be cleared of the last German soldier."
-      },
-      "victory": {
-        "goto": 9,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 3000,
-        "text": "General Fedyuninsky<br><br>The Germans are defeated, the way to Tallinn is open! Soon our country will be cleared of the last German soldier."
-      },
-      "tactical": {
-        "goto": 9,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 3000,
-        "text": "General Fedyuninsky<br><br>The Germans are defeated, the way to Tallinn is open! Soon our country will be cleared of the last German soldier."
-      },
-      "lose": {
-        "goto": 9,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 3000,
-        "text": "General Fedyuninsky<br><br>You can not win all battles, it is important to win the last battle, Comrade!"
-      }
-    }
-  },
-  {
-    "id": 9,
-    "scenario": "bn5s10.xml",
-    "startprestige": 0,
-    "intro": "There is no continuous front here—only terrain, secrecy, and the moment chosen for the first shot. AUGUST STORM - 12 AUG 1945 places your command at HQ Transbaikal Front, Manchuria. HQ Transbaikal Front, Manchuria CO General Malinovsky Comrade, the liberation of Manchuria from Japanese occupation making good progress on all fronts. Outstanding work, but now the heavily defended area around Solon is our next target. The wider stakes are clear: General Malinovsky The Japanese will surrender soon and we dictate the terms! Your victory will be measured in disrupted movement, captured supplies, and fighters who live to strike again.",
-    "outcome": {
-      "briliant": {
-        "goto": 254,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "General Malinovsky<br><br>The Japanese will surrender soon and we dictate the terms! A great victory for our glorious country.<br><br>I hope you enjoyed this short campaign with an small lock-out on the possibilities of Open General. Thousand thanks to Luis for all his efforts!"
-      },
-      "victory": {
-        "goto": 254,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "General Malinovsky<br><br>The Japanese will surrender soon and we dictate the terms! A great victory for our glorious country.<br><br>I hope you enjoyed this short campaign with an small lock-out on the possibilities of Open General. Thousand thanks to Luis for all his efforts!"
-      },
-      "tactical": {
-        "goto": 254,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "General Malinovsky<br><br>The Japanese will surrender soon and we dictate the terms! A great victory for our glorious country.<br><br>I hope you enjoyed this short campaign with an small lock-out on the possibilities of Open General. Thousand thanks to Luis for all his efforts!"
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "General Malinovsky<br><br>Hey, that is probably not your day, Comrade!<br><br>I hope you enjoyed this short campaign with an small lock-out on the possibilities of Open General. Thousand thanks to Luis for all his efforts!"
-      }
-    }
+ {
+  "id": 0,
+  "scenario": "bn5s01.xml",
+  "startprestige": 0,
+  "intro": "GUERRILLA HUNTER - 2 JUL 1941<br><br>HQ 8th NKVD Rife Brigade, Estonia<br>CO General Kuznetsov<br><br>It does not look good for us, Comrade! The Germans stand at the Estonian border and all over crawled Bandits out of their holes. Minutes ago, I was informed about a upcoming guerrilla attack. It seems the Estonian Forest Brothers try to free some of their guerrilla fighters from her imprisonment. A Estonian commando, flown in from Finland lead the operation.<br><br>Order: Protect our prison building, search & destroy the ERNA commando and all Bandits!",
+  "outcome": {
+   "briliant": {
+    "goto": 1,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "General Kuznetsov<br><br>Excellent, a serious defeat for the Estonian bandits and their Finnish friends."
+   },
+   "victory": {
+    "goto": 1,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "General Kuznetsov<br><br>Excellent, a serious defeat for the Estonian bandits and their Finnish friends."
+   },
+   "tactical": {
+    "goto": 1,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "General Kuznetsov<br><br>Excellent, a serious defeat for the Estonian bandits and their Finnish friends."
+   },
+   "lose": {
+    "goto": 1,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "General Kuznetsov<br><br>You can not win all battles, it is important to win the last battle, Comrade!"
+   }
   }
+ },
+ {
+  "id": 1,
+  "scenario": "bn5s02.xml",
+  "startprestige": 0,
+  "intro": "BLITZ - 10 JUL 1941<br><br>HQ 8th NKVD Rife Brigade, Estonia<br>CO General Kuznetsov<br><br>The Nazi war machine stand at our gates, Comrade! And your fate is the defense of Dorpat. Hold the city as long as you can, a train with important war goods must pass your position before the city falls.<br><br>Note: Buy cheap Militia to block the German advance. <br><br>Order: Protect the train, resist the German attack for 10 rounds and hold as much VH as possible!",
+  "outcome": {
+   "briliant": {
+    "goto": 2,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 500,
+    "text": "General Kuznetsov<br><br>Your resoluteness is impressing, Comrade! Go with your remains into the forests and form a partisan group to fight against the Fascists from behind!"
+   },
+   "victory": {
+    "goto": 2,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 500,
+    "text": "General Kuznetsov<br><br>Your resoluteness is impressing, Comrade! Go with your remains into the forests and form a partisan group to fight against the Fascists from behind!"
+   },
+   "tactical": {
+    "goto": 2,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 500,
+    "text": "General Kuznetsov<br><br>Your resoluteness is impressing, Comrade! Go with your remains into the forests and form a partisan group to fight against the Fascists from behind!"
+   },
+   "lose": {
+    "goto": 2,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 500,
+    "text": "General Kuznetsov<br><br>You can not win all battles, it is important to win the last battle, Comrade! Go with the remains into the forests and form a partisan group to fight against the Fascists from behind!"
+   }
+  }
+ },
+ {
+  "id": 2,
+  "scenario": "bn5s09.xml",
+  "startprestige": 0,
+  "intro": "SINK THE TIRPITZ - 5 OCT 1941<br><br>HQ Soviet Partisans, Estonia<br>CO General Karotamm<br><br>The largest German battleship, the Tirpitz, flagship of a fleet, which has supported the German landings on the Baltic islands, anchored off the coast and poses a serious threat for our Baltic fleet.<br>Maritime forces are not available that could match with this ship. The Harbor defense prevent submarine attacks and air attacks are useless against the strong armour. Therefore, the Germans believe their battleship is safe.<br>But an daring Guerrilla - Commando attack could succeed. The high command subordinate 3 Naval-Commandos to your forces. Find a way to sink the Tirpitz!<br><br>Order: Sink the Battleship! Use the air-, sea- and land-transport capability of the Commandos. Use your Partisan and Saboteur units to slow down the German advance by blow up ports, roads and bridges or lay mines.",
+  "outcome": {
+   "briliant": {
+    "goto": 3,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 750,
+    "text": "General Karotamm<br><br>A great success that make headlines. Your name is on everyone's lips in Moscow. Excellent work, Comrade!"
+   },
+   "victory": {
+    "goto": 3,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 750,
+    "text": "General Karotamm<br><br>A great success that make headlines. Your name is on everyone's lips in Moscow. Excellent work, Comrade!"
+   },
+   "tactical": {
+    "goto": 3,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 750,
+    "text": "General Karotamm<br><br>A great success that make headlines. Your name is on everyone's lips in Moscow. Excellent work, Comrade!"
+   },
+   "lose": {
+    "goto": 3,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 750,
+    "text": "General Karotamm<br><br>You can not win all battles, it is important to win the last battle, Comrade!"
+   }
+  }
+ },
+ {
+  "id": 3,
+  "scenario": "bn5s03.xml",
+  "startprestige": 0,
+  "intro": "HIT & RUN - 28 APR 1942<br><br>HQ Soviet Partisans, Lithuania<br>CO General Karotamm<br><br>Comrade, its time to strike the invaders where it hurts. You'll attack a weak defended German supply depot and raise the Red Banner on its ruins! The Germans did not expect large partisan forces in this area and need some time to react. Take advantage of surprise, but be fast! It's a dangerous mission, speed is everything here!<br><br>Order: Reach the EH (red-border hex) and retreat 3 units.",
+  "outcome": {
+   "briliant": {
+    "goto": 4,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 1000,
+    "text": "General Karotamm<br><br>Your attack was a success, the depot was badly damaged! That's the way we will wear down the enemy, Comrade!"
+   },
+   "victory": {
+    "goto": 4,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 1000,
+    "text": "General Karotamm<br><br>Your attack was a success, the depot was badly damaged! That's the way we will wear down the enemy, Comrade!"
+   },
+   "tactical": {
+    "goto": 4,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 1000,
+    "text": "General Karotamm<br><br>Your attack was a success, the depot was badly damaged! That's the way we will wear down the enemy, Comrade!"
+   },
+   "lose": {
+    "goto": 4,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 1000,
+    "text": "General Karotamm<br><br>You can not win all battles, it is important to win the last battle, Comrade!"
+   }
+  }
+ },
+ {
+  "id": 4,
+  "scenario": "bn5s08.xml",
+  "startprestige": 0,
+  "intro": "REVENGE - 8 OCT 1942<br><br>HQ Soviet Partisans, Latvia<br>CO General Karotamm<br><br>Parts of an SS-Division were moved in our area for rest and refreshing. It is a unit well-known as Anti-Partisan combat formation and has spread terror among the Soviet population.<br>This is our chance for revenge! Your force should be strong enough to enclose and wipe out this devils. Especially the leaders of this bunch should receive no mercy.<br><br>Order: Search & destroy three enemy unit. The units can be identified by an extra frame around their unit strength.",
+  "outcome": {
+   "briliant": {
+    "goto": 5,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 1000,
+    "text": "General Karotamm<br><br>The leadership of the SS division is destroyed. They get what they deserve. You have once again met all expectations."
+   },
+   "victory": {
+    "goto": 5,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 1000,
+    "text": "General Karotamm<br><br>The leadership of the SS division is destroyed. They get what they deserve. You have once again met all expectations."
+   },
+   "tactical": {
+    "goto": 5,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 1000,
+    "text": "General Karotamm<br><br>The leadership of the SS division is destroyed. They get what they deserve. You have once again met all expectations."
+   },
+   "lose": {
+    "goto": 5,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 1000,
+    "text": "General Karotamm<br><br>You can not win all battles, it is important to win the last battle, Comrade!"
+   }
+  }
+ },
+ {
+  "id": 5,
+  "scenario": "bn5s06.xml",
+  "startprestige": 0,
+  "intro": "OPERATION GYBSY BARON - 15 JUN 1943<br><br>HQ Soviet Partisans, Belarus<br>CO General Karotamm<br><br>That we have interrupted the supply routes for their offensive at Kursk, has not pleased the Germans. They'll try to force us out of this area. Resist their attack, and hold the railways unusable.<br><br>Order: Resist the German attack for 16 turns and hold as much VH as possible!",
+  "outcome": {
+   "briliant": {
+    "goto": 6,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 1000,
+    "text": "General Karotamm<br><br>The Germans sent criminal traitors in the battle. But they are all dead now."
+   },
+   "victory": {
+    "goto": 6,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 1000,
+    "text": "General Karotamm<br><br>The Germans sent criminal traitors in the battle. But they are all dead now."
+   },
+   "tactical": {
+    "goto": 6,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 1000,
+    "text": "General Karotamm<br><br>The Germans sent criminal traitors in the battle. But they are all dead now."
+   },
+   "lose": {
+    "goto": 6,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 1000,
+    "text": "General Karotamm<br><br>You can not win all battles, it is important to win the last battle, Comrade!"
+   }
+  }
+ },
+ {
+  "id": 6,
+  "scenario": "bn5s04.xml",
+  "startprestige": 0,
+  "intro": "RESCUE MISSION - 12 SEP 1943<br><br>HQ Soviet Partisans, Estonia<br>CO General Karotamm<br><br>A plane loaded with a important U.S. politician, on his way to Moscow, was forced to make an emergency landing in our area. This gentleman must be saved, and Moscow has developed an daring plan, just right for you!<br>A British submarine, ready to take our guest is waiting off the coast. You must carry the VIP by air or by sea to the rendezvous-point, a little island lying off the coast.<br>But first you have to conquer the port or airfield of Kuressaare in a coup. Split you force in two groups. With the southern group perform a mock attack against the German positions, while the second group together with the VIP, past the busy Germans in the north and perform an fast attack against Kuressaare. Capture a plane or a vessel and carry this sporty Cowboy to the rendezvous-point. Good luck, Comrade!<br><br>Order: Reach the EH (red-border hex) and retreat the VIP MSU unit.",
+  "outcome": {
+   "briliant": {
+    "goto": 7,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 1000,
+    "text": "General Karotamm<br><br>Excellent, Moscow is very pleased with the outcome of this mission!"
+   },
+   "victory": {
+    "goto": 7,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 1000,
+    "text": "General Karotamm<br><br>Excellent, Moscow is very pleased with the outcome of this mission!"
+   },
+   "tactical": {
+    "goto": 7,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 1000,
+    "text": "General Karotamm<br><br>Excellent, Moscow is very pleased with the outcome of this mission!"
+   },
+   "lose": {
+    "goto": 7,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 1000,
+    "text": "General Karotamm<br><br>You can not win all battles, it is important to win the last battle, Comrade!"
+   }
+  }
+ },
+ {
+  "id": 7,
+  "scenario": "bn5s07.xml",
+  "startprestige": 0,
+  "intro": "KILL BRUNO - 28 JAN 1944<br><br>HQ Soviet Partisans, Estonia<br>CO General Karotamm<br><br>The Germans hide a rail gun in a our operation area. This gun must be destroyed. The German Luftwaffe is very active in this area and makes an air strike impossible. So, here is our plan.<br><br>The Germans consider their rail gun safe, because any direct attack is smashed by the Luftwaffe. So we first switch off the German airfields.<br>There are two airfields that must be made unusable. The eastern airfield is to seize with your troops. A reinforcing Smersh team, which is subordinate to you for this operation, attack the western airfield.<br>Start similar the central attack on the rail gun! If the rail gun destroyed, block the railway line as long as possible before you retreat your troops. The Germans will soon bring in reinforcements. Good luck, and leave a pile of rubble behind you!<br><br>Note: You can use a Smersh commando or a Partisan unit to make a airfield unusable. Move the unit on the airfield hex and press key 1 for \"blow\". Remember that an airfield sometimes consist of several airfield hexes. Then you have to \"blow\" each airfield hex.<br><br>Order: Resist the German attack for 16 turns and hold as much VH as possible!",
+  "outcome": {
+   "briliant": {
+    "goto": 8,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 5000,
+    "text": "General Karotamm<br><br>The Rail gun is destroyed, excellent work. Another major blow to the fascists!"
+   },
+   "victory": {
+    "goto": 8,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 5000,
+    "text": "General Karotamm<br><br>The Rail gun is destroyed, excellent work. Another major blow to the fascists!"
+   },
+   "tactical": {
+    "goto": 8,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 5000,
+    "text": "General Karotamm<br><br>The Rail gun is destroyed, excellent work. Another major blow to the fascists!"
+   },
+   "lose": {
+    "goto": 8,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 5000,
+    "text": "General Karotamm<br><br>You can not win all battles, it is important to win the last battle, Comrade!"
+   }
+  }
+ },
+ {
+  "id": 8,
+  "scenario": "bn5s05.xml",
+  "startprestige": 0,
+  "intro": "NARVA - 24 JUL 1944<br><br>HQ 2nd Shock Army<br>CO General Fedyuninsky<br><br>Comrade, we want to break the German defense at Narva in an all out attack. Our objective is to seize Narva, break through the Tannenberg Line, and occupy all enemy ports, airfields, and key cities. Give her best, Stalin look at us!<br><br>Order: Capture all VH or destroy all enemy units!<br><br>Original Title & Design: Retreat to the Tannenberg Line by Stephen deJong",
+  "outcome": {
+   "briliant": {
+    "goto": 9,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 3000,
+    "text": "General Fedyuninsky<br><br>The Germans are defeated, the way to Tallinn is open! Soon our country will be cleared of the last German soldier."
+   },
+   "victory": {
+    "goto": 9,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 3000,
+    "text": "General Fedyuninsky<br><br>The Germans are defeated, the way to Tallinn is open! Soon our country will be cleared of the last German soldier."
+   },
+   "tactical": {
+    "goto": 9,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 3000,
+    "text": "General Fedyuninsky<br><br>The Germans are defeated, the way to Tallinn is open! Soon our country will be cleared of the last German soldier."
+   },
+   "lose": {
+    "goto": 9,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 3000,
+    "text": "General Fedyuninsky<br><br>You can not win all battles, it is important to win the last battle, Comrade!"
+   }
+  }
+ },
+ {
+  "id": 9,
+  "scenario": "bn5s10.xml",
+  "startprestige": 0,
+  "intro": "AUGUST STORM - 12 AUG 1945<br><br>HQ Transbaikal Front, Manchuria<br>CO General Malinovsky<br><br>Comrade, the liberation of Manchuria from Japanese occupation making good progress on all fronts. Outstanding work, but now the heavily defended area around Solon is our next target. A breakthrough in this area is necessary for our further advance! The high command is expecting a quick victory!<br><br>Order: Capture all VH or destroy all enemy units!",
+  "outcome": {
+   "briliant": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "General Malinovsky<br><br>The Japanese will surrender soon and we dictate the terms! A great victory for our glorious country.<br><br>I hope you enjoyed this short campaign with an small lock-out on the possibilities of Open General. Thousand thanks to Luis for all his efforts!"
+   },
+   "victory": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "General Malinovsky<br><br>The Japanese will surrender soon and we dictate the terms! A great victory for our glorious country.<br><br>I hope you enjoyed this short campaign with an small lock-out on the possibilities of Open General. Thousand thanks to Luis for all his efforts!"
+   },
+   "tactical": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "General Malinovsky<br><br>The Japanese will surrender soon and we dictate the terms! A great victory for our glorious country.<br><br>I hope you enjoyed this short campaign with an small lock-out on the possibilities of Open General. Thousand thanks to Luis for all his efforts!"
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "General Malinovsky<br><br>Hey, that is probably not your day, Comrade!<br><br>I hope you enjoyed this short campaign with an small lock-out on the possibilities of Open General. Thousand thanks to Luis for all his efforts!"
+   }
+  }
+ }
 ]

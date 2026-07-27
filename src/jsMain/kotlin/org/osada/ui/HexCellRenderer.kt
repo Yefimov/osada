@@ -192,6 +192,11 @@ internal class HexCellRenderer(
         if (hex.isAttackSel) {
             rc.drawHex(rc.hexesCtx, x, y, hexStyles["attack"])
         }
+        // Outline-only so it composites over the move fill just drawn -- covers only spotted AA,
+        // by construction of AAInterception.visibleThreatHexes (DEFERRED.md §1.1).
+        if (hex.isAaThreat) {
+            rc.drawHex(rc.hexesCtx, x, y, hexStyles["aathreat"])
+        }
     }
 
     private fun drawTouchAttackPreview(

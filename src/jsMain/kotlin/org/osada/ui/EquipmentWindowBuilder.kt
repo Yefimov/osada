@@ -5,6 +5,7 @@ package org.osada.ui
 import org.osada.GameHolder
 import org.osada.UnitClass
 import org.osada.i18n.GameText
+import org.osada.i18n.I18n
 import org.osada.model.EquipmentData
 import org.osada.model.GameUnit
 import org.osada.model.UnitDescriptions
@@ -20,9 +21,9 @@ internal fun equipmentDescriptionOrNull(eq: EquipmentData): String? = UnitDescri
 internal fun equipmentMechanicsNote(eq: EquipmentData): String? =
     buildList {
         val capabilities = org.osada.rules.UnitCapabilities
-        if (capabilities.isHeadquarters(eq)) add(capabilities.HEADQUARTERS_SUPPORT_DESCRIPTION)
-        if (capabilities.hasPhasedMovement(eq)) add(capabilities.RECON_MOVEMENT_DESCRIPTION)
-        if (capabilities.canOverrun(eq)) add(capabilities.TANK_OVERRUN_DESCRIPTION)
+        if (capabilities.isHeadquarters(eq)) add(I18n.t("equipment.mechanics.headquarters"))
+        if (capabilities.hasPhasedMovement(eq)) add(I18n.t("equipment.mechanics.recon_movement"))
+        if (capabilities.canOverrun(eq)) add(I18n.t("equipment.mechanics.tank_overrun"))
     }.takeIf { it.isNotEmpty() }?.joinToString(" ")
 
 /** "Available from Mon YYYY" — shared so the equipment window's detail bay and the unit-card

@@ -45,6 +45,12 @@ class MovementResults {
     /** Prestige awarded by the capture this move triggered, so the HUD can report the amount
      *  the way OG does ("You gain 40 prestige"). 0 when the move captured nothing. */
     var capturePrestige: Int = 0
+
+    /** Set when AA fired on this move (`AAInterception`), whether or not the unit survived. An
+     *  intercepted move must never be undoable -- see `MoveExecutor.isUndoable` -- allowing undo
+     *  would let a player probe for hidden AA for free and take the probe back, destroying the
+     *  entire point of hidden AA (docs/design/aa-interception.md §3.4). */
+    var wasIntercepted: Boolean = false
 }
 
 @JsExport

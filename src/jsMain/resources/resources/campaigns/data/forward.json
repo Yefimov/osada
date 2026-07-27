@@ -1,1938 +1,1938 @@
 [
-  {
-    "id": 0,
-    "scenario": "forward0.xml",
-    "startprestige": 0,
-    "intro": "The line is bending, and this position has become the hinge of the entire front. The Eastern Front is a war of survival and transformation. Your mission is to put the enemy over the river. Your troops: We have chosen some troops for you. The wider stakes are clear: After your superior win, Japan have sued for peace. A strong result opens the road to Battle of Suomussalmi. The objective is not merely to endure, but to hold enough strength for the counterstroke that follows.",
-    "outcome": {
-      "briliant": {
-        "goto": 1,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 400,
-        "text": "Well done. After your superior win, Japan have sued for peace."
-      },
-      "victory": {
-        "goto": 1,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 300,
-        "text": "Well done. After your superior win, Japan have sued for peace."
-      },
-      "tactical": {
-        "goto": 1,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 200,
-        "text": "Well done. After your superior win, Japan have sued for peace."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "Are you fuckinmg serious? You failed at this easy task? You will be dishonorable discharged."
-      }
-    }
-  },
-  {
-    "id": 1,
-    "scenario": "forward1.xml",
-    "startprestige": 0,
-    "intro": "The campaign has reached a point where speed matters as much as firepower. The Eastern Front is a war of survival and transformation. You surely know, that we are at war with Finland at the moment. Your mission is to break through the finish lines at Suomussalmi. The wider stakes are clear: After your victory, it seems that the finish government has to accept a peace dictate. A strong result opens the road to Pocket of Minsk:. Concentrate your best units, protect the flanks of the advance, and seize the decisive objectives before the enemy can rebuild a line.",
-    "outcome": {
-      "briliant": {
-        "goto": 2,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 3600,
-        "text": "Very good. After your victory, it seems that the finish government has to accept a peace dictate."
-      },
-      "victory": {
-        "goto": 2,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 1800,
-        "text": "Very good. After your victory, it seems that the finish government has to accept a peace dictate."
-      },
-      "tactical": {
-        "goto": 2,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 1000,
-        "text": "Very good. After your victory, it seems that the finish government has to accept a peace dictate."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "Well, our attack was maybe to optimistic. Otherwise, the finish troops were not superior. Therefore we have decided, that you are not needed anymore."
-      }
-    }
-  },
-  {
-    "id": 2,
-    "scenario": "forward2.xml",
-    "startprestige": 0,
-    "intro": "The road ahead is defended, yet a decisive blow here can unhinge the entire front. The Eastern Front is a war of survival and transformation. You surely know that the Germans have assaulted our country. You have the permission to evacuate the pocket in need. The wider stakes are clear: Well done, we hold Minsk long enough to take new positions. A strong result opens the road to Defense of Kishinev. Momentum is your greatest asset: pause too long and a breakthrough becomes another costly frontal battle.",
-    "outcome": {
-      "briliant": {
-        "goto": 3,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 1300,
-        "text": "Well done, we hold Minsk long enough to take new positions."
-      },
-      "victory": {
-        "goto": 3,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 1000,
-        "text": "Good job. You hold nearly everything."
-      },
-      "tactical": {
-        "goto": 3,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 500,
-        "text": "That was nearly an desaster. But you hold Minsk and Borissow long time."
-      },
-      "lose": {
-        "goto": 3,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "That was an awful performance. But unfortunally we do not have the replacement for you. So, you will have another chance to show your skill."
-      }
-    }
-  },
-  {
-    "id": 3,
-    "scenario": "forward3.xml",
-    "startprestige": 0,
-    "intro": "A narrow window has opened in the enemy line; turn it into a strategic rupture. The Eastern Front is a war of survival and transformation. The Germans and their allies, the Romanians, attacking Bessarabia. Stop the advance of the axis troops. The wider stakes are clear: Now we have enough time to prepare Kiew for the defense. A strong result opens the road to Battle of Odessa:. Momentum is your greatest asset: pause too long and a breakthrough becomes another costly frontal battle.",
-    "outcome": {
-      "briliant": {
-        "goto": 4,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 500,
-        "text": "Good job. The attack of the axis crashed on your lines. Now we have enough time to prepare Kiew for the defense."
-      },
-      "victory": {
-        "goto": 4,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 250,
-        "text": "Good job. You could nearly hold your line."
-      },
-      "tactical": {
-        "goto": 4,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 100,
-        "text": "This was not good. You could only hold one target. Next time you should deal your job better."
-      },
-      "lose": {
-        "goto": 4,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "Unfortunally you could not deliver. Therefore, comrade Stalin have decided that your troops will not reciieve any reinforcements at the moment."
-      }
-    }
-  },
-  {
-    "id": 4,
-    "scenario": "forward4.xml",
-    "startprestige": 0,
-    "intro": "A narrow window has opened in the enemy line; turn it into a strategic rupture. The Eastern Front is a war of survival and transformation. Army has launched its attack on Odessa in the last days. They succeeded in pushing our troops back. A strong result opens the road to Pocket of Kiev. Concentrate your best units, protect the flanks of the advance, and seize the decisive objectives before the enemy can rebuild a line.",
-    "outcome": {
-      "briliant": {
-        "goto": 5,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 500,
-        "text": "Nice job! The Rumanians have gotten a bloody nose. Unfortunally your troops are trapped. We will evacuate your troops with ships."
-      },
-      "victory": {
-        "goto": 5,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 300,
-        "text": "Nice job! The Rumanians have gotten a bloody nose. Unfortunally your troops are trapped. We will evacuate your troops with ships."
-      },
-      "tactical": {
-        "goto": 5,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 100,
-        "text": "Nice job! The Rumanians have gotten a bloody nose. Unfortunally your troops are trapped. We will evacuate your troops with ships."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 150,
-        "text": "Odessa ist lost. The only good thing is, that a traitor like you is fallen into the faschist clutches. I am sure they will arrive you every moment and thank you for your good work."
-      }
-    }
-  },
-  {
-    "id": 5,
-    "scenario": "forward5.xml",
-    "startprestige": 0,
-    "intro": "A narrow window has opened in the enemy line; turn it into a strategic rupture. The Eastern Front is a war of survival and transformation. Your troops are threatened by encirclement. From the north the Panzergruppe 2 will show up every moment in the back of your positions and they will join with the advance guard of the 17. The wider stakes are clear: That was what we have expected from you. A strong result opens the road to Pocket of Brjansk. Concentrate your best units, protect the flanks of the advance, and seize the decisive objectives before the enemy can rebuild a line.",
-    "outcome": {
-      "briliant": {
-        "goto": 6,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 2500,
-        "text": "That was what we have expected from you. You could hold Kiev and the surrounding region."
-      },
-      "victory": {
-        "goto": 6,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 1300,
-        "text": "Good job. You could held most of the region of Kiev."
-      },
-      "tactical": {
-        "goto": 6,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 1000,
-        "text": "Your performance was only a partitial success. Next time you should accomplish your mission in a better way."
-      },
-      "lose": {
-        "goto": 6,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "This was a nefirious performance. Your punishment will be no reinforcemnts in the near future."
-      }
-    }
-  },
-  {
-    "id": 6,
-    "scenario": "forward6.xml",
-    "startprestige": 0,
-    "intro": "The road ahead is defended, yet a decisive blow here can unhinge the entire front. The Eastern Front is a war of survival and transformation. It may be expected that they will turn northwards and try to encircle your troops. Try to evacuate your troops slowly but do not miss to defend Brjansk and your other targets. The wider stakes are clear: Unfortunally most of the Brjansk region was occupied by the Germans. A strong result opens the road to Tula Counterattack. Concentrate your best units, protect the flanks of the advance, and seize the decisive objectives before the enemy can rebuild a line.",
-    "outcome": {
-      "briliant": {
-        "goto": 7,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 1000,
-        "text": "This was a premium performance. The advance of the German troops is stopped."
-      },
-      "victory": {
-        "goto": 7,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 500,
-        "text": "Well done. You could hold most of your targets."
-      },
-      "tactical": {
-        "goto": 7,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 300,
-        "text": "Unfortunally most of the Brjansk region was occupied by the Germans. This was not a good performance."
-      },
-      "lose": {
-        "goto": 7,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "The Brjansker region is lost too early. You will get another chance but you have to deliever in the future."
-      }
-    }
-  },
-  {
-    "id": 7,
-    "scenario": "forward7.xml",
-    "startprestige": 0,
-    "intro": "A narrow window has opened in the enemy line; turn it into a strategic rupture. The Eastern Front is a war of survival and transformation. Now it is time to take the initiative. Panzerarmee, which will attack every moment your lines south of Tula. The wider stakes are clear: You have won the battle, but the Germans are able to win the war. Your result determines whether the campaign continues toward Closing the pocket or Destroying the Demyansk Pocket. Concentrate your best units, protect the flanks of the advance, and seize the decisive objectives before the enemy can rebuild a line.",
-    "outcome": {
-      "briliant": {
-        "goto": 8,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 2000,
-        "text": "This brilliant victory will ever be in the haerts of our soviet population. Due to your brave soldiers we could push forward in the south of Moskau and recapture a lot of land. If we could succeed a breakthrough in the north there will be a chance to encircle the whole Heeresgruppe Mitte in a big pocket."
-      },
-      "victory": {
-        "goto": 10,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 200,
-        "text": "Gut gemacht. Wir konnten auf breiter Front vorstossen. Allerdings haben sich die Deutschen inzwischen verstärkt. An ein weiteres Vordringen ist erstmal nicht mehr zu denken.<br>Good job. We could attack along a wide front. However, the Germans brought up reinforcements. So, a further attack is impossible in the moment."
-      },
-      "tactical": {
-        "goto": 9,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 300,
-        "text": "You have won the battle, but the Germans are able to win the war. While you were fighting, German troops have passed Tula and are heading towards Moskau now. We will need your help for the defense of Moskau."
-      },
-      "lose": {
-        "goto": 9,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "You have lost the battle, but the Germans are able to win the war. While you were fighting, German troops have passed Tula and are heading towards Moskau now. We will need your help for the defense of Moskau."
-      }
-    }
-  },
-  {
-    "id": 8,
-    "scenario": "forward8.xml",
-    "startprestige": 0,
-    "intro": "Your force is exposed, the roads are closing, and every hour of delay narrows the route to safety. The Eastern Front is a war of survival and transformation. After your success at Tula we could also break through the German lines north of Moscow. Your troops should now deploy northeast and southeast of the city and attacking the last German troops which hold the last position, in which German troops could escape. The wider stakes are clear: The German divisions in the pocket have surrendered after fighting a few days. A strong result opens the road to Destroying the Demyansk Pocket. Every surviving veteran will matter in the battles ahead, so retreat with purpose and destroy what the enemy cannot be allowed to capture.",
-    "outcome": {
-      "briliant": {
-        "goto": 254,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "It was definirly right to honor you with the soviet medal. The German divisions in the pocket have surrendered after fighting a few days. The war is over! Hitler has withdrawed the last German armys."
-      },
-      "victory": {
-        "goto": 254,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": ""
-      },
-      "tactical": {
-        "goto": 254,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": ""
-      },
-      "lose": {
-        "goto": 10,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "Our plan was too optimistic. Fortunally your troops could escape the pocket. Muster up your troops, because comrade Stalin has refused steadfastly to give you further reinforcements."
-      }
-    }
-  },
-  {
-    "id": 9,
-    "scenario": "forward9.xml",
-    "startprestige": 0,
-    "intro": "The campaign has reached a point where speed matters as much as firepower. The Eastern Front is a war of survival and transformation. The Germans have advanced to the western periphery of Moscow. The wider stakes are clear: The German invaders were crushed by your troops. A strong result opens the road to Destroying the Demyansk Pocket. Momentum is your greatest asset: pause too long and a breakthrough becomes another costly frontal battle. The Eastern Front is a war of survival and transformation, and the outcome here will shape the tempo and resources available in the next operation.",
-    "outcome": {
-      "briliant": {
-        "goto": 10,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 200,
-        "text": "The German invaders were crushed by your troops. Due to your success, we could push back the Germans by performing many counterattacks. Keep ready for further instructions."
-      },
-      "victory": {
-        "goto": 10,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 150,
-        "text": ""
-      },
-      "tactical": {
-        "goto": 10,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 100,
-        "text": ""
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": ""
-      }
-    }
-  },
-  {
-    "id": 10,
-    "scenario": "forward10.xml",
-    "startprestige": 0,
-    "intro": "The campaign has reached a point where speed matters as much as firepower. The Eastern Front is a war of survival and transformation. Since our offensive in the winter we could encircle the X. Army Corps near of Demyansk. Now we know that the Kampfgruppe Seydlitz is on her way to save the troops in the pocket. The wider stakes are clear: Very good, the troops in the pocket was exterminated before the Kampfgruppe Seydlitz could save them. A strong result opens the road to Defense of Voronezh. Momentum is your greatest asset: pause too long and a breakthrough becomes another costly frontal battle.",
-    "outcome": {
-      "briliant": {
-        "goto": 11,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 2000,
-        "text": "Very good, the troops in the pocket was exterminated before the Kampfgruppe Seydlitz could save them."
-      },
-      "victory": {
-        "goto": 11,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 1000,
-        "text": "Very good, the troops in the pocket was exterminated before the Kampfgruppe Seydlitz could save them."
-      },
-      "tactical": {
-        "goto": 11,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 500,
-        "text": "Very good, the troops in the pocket was exterminated before the Kampfgruppe Seydlitz could save them."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 150,
-        "text": "Herr General, this was a dilettante performance. Dismiss!"
-      }
-    }
-  },
-  {
-    "id": 11,
-    "scenario": "forward11.xml",
-    "startprestige": 0,
-    "intro": "The initiative is yours, but the enemy will not remain disorganized for long. The Eastern Front is a war of survival and transformation. After our successes in the winter the Germans seems to have their troops reinforced. Slow down the advance of the Germans, so we have enough time to prepare new positions. The wider stakes are clear: We had good chances to stop the Germans some miles before Woronesch but you have not used them. A strong result opens the road to Rzhew Meat Grinder. Momentum is your greatest asset: pause too long and a breakthrough becomes another costly frontal battle.",
-    "outcome": {
-      "briliant": {
-        "goto": 12,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 200,
-        "text": "Very good. The great German offensive was stopped before it really could begin."
-      },
-      "victory": {
-        "goto": 12,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 100,
-        "text": "Your performance was ok. You cold hold most of your targets."
-      },
-      "tactical": {
-        "goto": 12,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 50,
-        "text": "This was a bumbling performance. We had good chances to stop the Germans some miles before Woronesch but you have not used them."
-      },
-      "lose": {
-        "goto": 12,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "This was awful. We have decided that you will get no reinforcements for the moment."
-      }
-    }
-  },
-  {
-    "id": 12,
-    "scenario": "forward12.xml",
-    "startprestige": 0,
-    "intro": "The campaign has reached a point where speed matters as much as firepower. The Eastern Front is a war of survival and transformation. We have decided to start a great attack on the salient with the target of destroying the defendsing German troops. Your troops should attack in the north at Rzhew, in the south at Sychewka and in the middle of the salient, break through the lines and destroy or capture the most forces. The wider stakes are clear: Very good, the Germans have suffered heavy losses. A strong result opens the road to Operation Uranus. Concentrate your best units, protect the flanks of the advance, and seize the decisive objectives before the enemy can rebuild a line.",
-    "outcome": {
-      "briliant": {
-        "goto": 13,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 200,
-        "text": "Very good, the Germans have suffered heavy losses. Now there is no danger for Moscow anyway. Also we have bind troops that the Germans could have needed for their offensive in the south."
-      },
-      "victory": {
-        "goto": 13,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 100,
-        "text": ""
-      },
-      "tactical": {
-        "goto": 13,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 50,
-        "text": ""
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "The German salient still exists and you have failed although best efforts of us. The Germans have progressed in the south, too. To stop the Faschists in the south we will need a more talented general then you."
-      }
-    }
-  },
-  {
-    "id": 13,
-    "scenario": "forward13.xml",
-    "startprestige": 0,
-    "intro": "The campaign has reached a point where speed matters as much as firepower. The Eastern Front is a war of survival and transformation. Your troops will attack from the south and the northwest the German and their allied troops. This troops will attack the Romanian front in the northeast and will support your attack against the Italian und Hungarian troops in the southeast. The wider stakes are clear: The axis in Stalingrad are now encircled and the Germans and their allied troops suffered heavy losses. A strong result opens the road to Battle at the Myschkowa. Momentum is your greatest asset: pause too long and a breakthrough becomes another costly frontal battle.",
-    "outcome": {
-      "briliant": {
-        "goto": 14,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 400,
-        "text": "Very good. The axis in Stalingrad are now encircled and the Germans and their allied troops suffered heavy losses. Now a relief attack to break up the Stalingrad pocket is almost impossible."
-      },
-      "victory": {
-        "goto": 14,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 200,
-        "text": ""
-      },
-      "tactical": {
-        "goto": 14,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 100,
-        "text": ""
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "What the fuck? This comprehensive and long time planed offensive was no success? Stalin is in rage. Maybe Stalingrad is lost too in a few days. You will be deported to Siberia. There you will learn what hard work means."
-      }
-    }
-  },
-  {
-    "id": 14,
-    "scenario": "forward14.xml",
-    "startprestige": 0,
-    "intro": "The initiative is yours, but the enemy will not remain disorganized for long. The Eastern Front is a war of survival and transformation. The fascists and their allied try to break up the pocket of Stalingrad. We could stop them at the Myschkowa. The wider stakes are clear: Now the distance between Stalingrad and the German front line is very high. A strong result opens the road to Blowed by backhand. Concentrate your best units, protect the flanks of the advance, and seize the decisive objectives before the enemy can rebuild a line.",
-    "outcome": {
-      "briliant": {
-        "goto": 15,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 200,
-        "text": "Very good. Now the distance between Stalingrad and the German front line is very high. The 6. Army in Stalingrad is doomed to extinction."
-      },
-      "victory": {
-        "goto": 15,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 100,
-        "text": "Very good. Now the distance between Stalingrad and the German front line is very high. The 6. Army in Stalingrad is doomed to extinction.."
-      },
-      "tactical": {
-        "goto": 15,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 50,
-        "text": "Very good. Now the distance between Stalingrad and the German front line is very high. The 6. Army in Stalingrad is doomed to extinction."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 150,
-        "text": "Your performance was a shame for the sovietunion. The Germans could break up the pocket and save the 6. Army. The death squad is already on the way to you."
-      }
-    }
-  },
-  {
-    "id": 15,
-    "scenario": "forward15.xml",
-    "startprestige": 0,
-    "intro": "Preserve the army today so that it can fight—and win—tomorrow. The Eastern Front is a war of survival and transformation. Herr General, the victory is within one`s reach, or maybe not. The Germans have evacuated the area of Charkow and withdraw their troops. The wider stakes are clear: Fortunaly your troops could withstand the German pricer grip. Your result determines whether the campaign continues toward Free Leningrad or Prokhorowka Tank Battle. Every surviving veteran will matter in the battles ahead, so retreat with purpose and destroy what the enemy cannot be allowed to capture.",
-    "outcome": {
-      "briliant": {
-        "goto": 18,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 5100,
-        "text": "Fortunaly your troops could withstand the German pricer grip. Now we have finally taken over the initiative. I will plead for better reconnaissance for further operations. You can make holidays at the black sea. We will report when our next big offensives are pending."
-      },
-      "victory": {
-        "goto": 18,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 5100,
-        "text": "Fortunaly your troops could withstand the German pricer grip. Now we have finally taken over the initiative. I will plead for better reconnaissance for further operations. You can make holidays at the black sea. We will report when our next big offensives are pending."
-      },
-      "tactical": {
-        "goto": 18,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 5100,
-        "text": "Fortunaly your troops could withstand the German pricer grip. Now we have finally taken over the initiative. I will plead for better reconnaissance for further operations. You can make holidays at the black sea. We will report when our next big offensives are pending."
-      },
-      "lose": {
-        "goto": 16,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 2100,
-        "text": "This lose is not your fault. Our reconnaissance has dismally failed. Fortunally your troops could escape and prevent an encirclement. The germans have caputed Charkow again."
-      }
-    }
-  },
-  {
-    "id": 16,
-    "scenario": "forward16.xml",
-    "startprestige": 0,
-    "intro": "The initiative is yours, but the enemy will not remain disorganized for long. The Eastern Front is a war of survival and transformation. The Germans are attacking our lines at Prokhorowka. Resist all Germans attacks and lead a conterattack against Belgorod. The wider stakes are clear: After your success our troops in the north of the Kursker salient could break to the German lines. A strong result opens the road to Free Leningrad. Momentum is your greatest asset: pause too long and a breakthrough becomes another costly frontal battle.",
-    "outcome": {
-      "briliant": {
-        "goto": 18,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 2500,
-        "text": "Great job. The Germans got a bloody nose. They have wasted all of their reserves and it seems that they have no capabilities to lead a further big attack. After your success our troops in the north of the Kursker salient could break to the German lines. Because of this they stopped all attacks on the Kursker salient. It gives me pleasure to told you that the USA and Great Britain has landed on Sicily."
-      },
-      "victory": {
-        "goto": 18,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 1300,
-        "text": ""
-      },
-      "tactical": {
-        "goto": 18,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 700,
-        "text": ""
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "The attack of the Germans was a great success. They could capture several armies in the Kursker pocket. Now it seems that we have los the war. The Germans are standing  at the gates of Moscow. We do not need cowards like you anymore."
-      }
-    }
-  },
-  {
-    "id": 17,
-    "scenario": "forward17.xml",
-    "startprestige": 0,
-    "intro": "A narrow window has opened in the enemy line; turn it into a strategic rupture. The Eastern Front is a war of survival and transformation. We want avoid large troop movements for our big offensives, so we have decided that an army stays in the region, whrere it is deployed. You have three options: You can fight against the Heeresgruppe North: This is the easiest and shortest path. A strong result opens the road to Battle of Romania. Break the defence before reserves arrive, keep your spearheads supplied, and turn tactical success into an operational collapse.",
-    "outcome": {
-      "briliant": {
-        "goto": 41,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": ""
-      },
-      "victory": {
-        "goto": 41,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": ""
-      },
-      "tactical": {
-        "goto": 41,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": ""
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": ""
-      }
-    }
-  },
-  {
-    "id": 18,
-    "scenario": "forward18.xml",
-    "startprestige": 0,
-    "intro": "Preserve the army today so that it can fight—and win—tomorrow. The Eastern Front is a war of survival and transformation. More then two years ago the Germans began with their blockade of Leningrad. The pitful population of the town had to feel the pinch of hunger. The wider stakes are clear: The Germans were driven back several hundereds miles. A strong result opens the road to Battle of Viipuri. Keep the route open, rescue what can still be saved, and deny the enemy the encirclement it expects.",
-    "outcome": {
-      "briliant": {
-        "goto": 19,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 2500,
-        "text": "Good job. The Germans were driven back several hundereds miles. The Leningrader population is no longer a hostage for the faschists."
-      },
-      "victory": {
-        "goto": 19,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 1300,
-        "text": ""
-      },
-      "tactical": {
-        "goto": 19,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 700,
-        "text": ""
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "This was a desaster. Leningrad is still in German hands. Dismiss!"
-      }
-    }
-  },
-  {
-    "id": 19,
-    "scenario": "forward19.xml",
-    "startprestige": 0,
-    "intro": "The road ahead is defended, yet a decisive blow here can unhinge the entire front. The Eastern Front is a war of survival and transformation. Due to the invasion of Western Allied troops in France the Germans have withdrawn many troops. Your next operation will be the attack in Karelia. The wider stakes are clear: I am gladly to tell you that Finland have sued for peace and now will support our troops. A strong result opens the road to Attack on Riga. Concentrate your best units, protect the flanks of the advance, and seize the decisive objectives before the enemy can rebuild a line.",
-    "outcome": {
-      "briliant": {
-        "goto": 20,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 200,
-        "text": "You have satisfied our expectations. I am gladly to tell you that Finland have sued for peace and now will support our troops."
-      },
-      "victory": {
-        "goto": 20,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 100,
-        "text": "You have satisfied our expectations. I am gladly to tell you that Finland have sued for peace and now will support our troops."
-      },
-      "tactical": {
-        "goto": 20,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 50,
-        "text": "You have satisfied our expectations. I am gladly to tell you that Finland have sued for peace and now will support our troops."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "If you do not have the ability to defeat the Finnish hillbillys you are useless for the great spviet army. Dismiss!"
-      }
-    }
-  },
-  {
-    "id": 20,
-    "scenario": "forward20.xml",
-    "startprestige": 0,
-    "intro": "The campaign has reached a point where speed matters as much as firepower. The Eastern Front is a war of survival and transformation. After our success in Karelia we now want to free the Baltic states. Your tank army have the mission to attack the Germans in Riga and throw them out of the city. The wider stakes are clear: The Germans have withdrawn to Courland and are trapped there. A strong result opens the road to Courland Pocket. Momentum is your greatest asset: pause too long and a breakthrough becomes another costly frontal battle.",
-    "outcome": {
-      "briliant": {
-        "goto": 21,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 1000,
-        "text": "Very good. We freed Riga. The Germans have withdrawn to Courland and are trapped there."
-      },
-      "victory": {
-        "goto": 21,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 750,
-        "text": "Very good. We freed Riga. The Germans have withdrawn to Courland and are trapped there."
-      },
-      "tactical": {
-        "goto": 21,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 500,
-        "text": "Very good. We freed Riga. The Germans have withdrawn to Courland and are trapped there."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "This was a poor performance. There is no chance to get something out of your attack. However, it could be a good paragon, how a general not sould lead an attack."
-      }
-    }
-  },
-  {
-    "id": 21,
-    "scenario": "forward21.xml",
-    "startprestige": 0,
-    "intro": "The initiative is yours, but the enemy will not remain disorganized for long. The Eastern Front is a war of survival and transformation. We have started several trials to elimenate the trapped Germans in Courland, but all attempts were not successful. Attack on the front between Liepaja and Saldus, break through the German lines and take Pavilosta. The wider stakes are clear: You we can free troops for the Battle of Berlin. A strong result opens the road to Manchurian Operation. Break the defence before reserves arrive, keep your spearheads supplied, and turn tactical success into an operational collapse.",
-    "outcome": {
-      "briliant": {
-        "goto": 22,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 810,
-        "text": "Very good. The courland pocket is eliminated. You we can free troops for the Battle of Berlin. The end of the war is near. We will not sacrifice further men of you against the fanatic Nazis. But we have recognized with the west allied that we will attack Japan in the summer. Prepare your troops for this mission."
-      },
-      "victory": {
-        "goto": 22,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 400,
-        "text": ""
-      },
-      "tactical": {
-        "goto": 22,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 200,
-        "text": ""
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "You failed too in breaking up the pocket? Are you serious? You decieve all our hopes."
-      }
-    }
-  },
-  {
-    "id": 22,
-    "scenario": "forward22.xml",
-    "startprestige": 0,
-    "intro": "The initiative is yours, but the enemy will not remain disorganized for long. The Eastern Front is a war of survival and transformation. Now we had to keep our promise and built a second front against Japan in Asia. Your troops should break through the lines of Japanese and Manchukuo troops in the east of the town and capture Changchun. The wider stakes are clear: After the Faschists your great attacks have left the Japanese out of the war, too. Momentum is your greatest asset: pause too long and a breakthrough becomes another costly frontal battle.",
-    "outcome": {
-      "briliant": {
-        "goto": 254,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "After the Faschists your great attacks have left the Japanese out of the war, too. The war is finally over. You and your men will achieve the justified honor. Come back to Moscow and join the celebration of the soviet population."
-      },
-      "victory": {
-        "goto": 254,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": ""
-      },
-      "tactical": {
-        "goto": 254,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": ""
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "Your attack was botched. Fortunately, your fail has no role. The war is over despite your performance. I think you are war-weary. For operations in the future we will give unspent generals a chance."
-      }
-    }
-  },
-  {
-    "id": 23,
-    "scenario": "forward23.xml",
-    "startprestige": 0,
-    "intro": "The campaign has reached a point where speed matters as much as firepower. The Eastern Front is a war of survival and transformation. You will attack the German Heeresgruppe Mitte at Yelnya. The Germans are well prepared for our attack, but I am sure you will be able to break through their lines. The wider stakes are clear: We have gained a lot of territory and destroyed several German troops. A strong result opens the road to Operation Bagration. Break the defence before reserves arrive, keep your spearheads supplied, and turn tactical success into an operational collapse.",
-    "outcome": {
-      "briliant": {
-        "goto": 24,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 2700,
-        "text": "Very good. We have gained a lot of territory and destroyed several German troops. In the next month we planned offensives in the north and in the south. We will inform you, when your troops have to be ready."
-      },
-      "victory": {
-        "goto": 24,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 1300,
-        "text": ""
-      },
-      "tactical": {
-        "goto": 24,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 700,
-        "text": ""
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "Our first big offensive was a fail. Maybe because you are a fail. In the future we will work together with more talented generals."
-      }
-    }
-  },
-  {
-    "id": 24,
-    "scenario": "forward24.xml",
-    "startprestige": 0,
-    "intro": "The road ahead is defended, yet a decisive blow here can unhinge the entire front. The Eastern Front is a war of survival and transformation. Several armies will join the attack in Belorussia. Take the town and push forward to the west. The wider stakes are clear: We could not only free Belorussia, but push forward to the Vistula. A strong result opens the road to Battle of Silesia. Concentrate your best units, protect the flanks of the advance, and seize the decisive objectives before the enemy can rebuild a line.",
-    "outcome": {
-      "briliant": {
-        "goto": 25,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 200,
-        "text": "Our offensive was a great success. We could not only free Belorussia, but push forward to the Vistula. Stalin has confer a decoration on you."
-      },
-      "victory": {
-        "goto": 25,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 100,
-        "text": "Our offensive was a great success. We could not only free Belorussia, but push forward to the Vistula. Stalin has confer a decoration on you."
-      },
-      "tactical": {
-        "goto": 25,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 50,
-        "text": "Our offensive was a great success. We could not only free Belorussia, but push forward to the Vistula. Stalin has confer a decoration on you."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "Our great success hung op at the  first line of the faschists. Many soldiers find a pointless death. For further operations amateurs like you are useless."
-      }
-    }
-  },
-  {
-    "id": 25,
-    "scenario": "forward25.xml",
-    "startprestige": 0,
-    "intro": "The initiative is yours, but the enemy will not remain disorganized for long. The Eastern Front is a war of survival and transformation. Herr General, meanwhile our armies have arrived Poland. You should take Krakow, west of you which is hold by the 4th Tank Army. The wider stakes are clear: You defeated the Nazis before they can withdraw their troops. A strong result opens the road to Fortress Küstrin. Concentrate your best units, protect the flanks of the advance, and seize the decisive objectives before the enemy can rebuild a line.",
-    "outcome": {
-      "briliant": {
-        "goto": 26,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 460,
-        "text": "Very good. You defeated the Nazis before they can withdraw their troops."
-      },
-      "victory": {
-        "goto": 26,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 200,
-        "text": "Very good. You defeated the Nazis before they can withdraw their troops."
-      },
-      "tactical": {
-        "goto": 26,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 100,
-        "text": "Very good. You defeated the Nazis before they can withdraw their troops."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "This was a poor performance. Dismiss!"
-      }
-    }
-  },
-  {
-    "id": 26,
-    "scenario": "forward26.xml",
-    "startprestige": 0,
-    "intro": "The initiative is yours, but the enemy will not remain disorganized for long. The Eastern Front is a war of survival and transformation. Take Küstrin, take positions along the river and build a bridgehead over the river at Küstrin. Enemy troops: Küstrin is hold by a garrison. The wider stakes are clear: Fortunately the German troops in the east are captured. Your result determines whether the campaign continues toward Battle of Berlin or Breakthrough at Dessau. Concentrate your best units, protect the flanks of the advance, and seize the decisive objectives before the enemy can rebuild a line.",
-    "outcome": {
-      "briliant": {
-        "goto": 27,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 360,
-        "text": "Now the way to Berlin is free. When we have finished our operations in the north your troops will attack."
-      },
-      "victory": {
-        "goto": 33,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 5300,
-        "text": "The west allied have broken the agreements and have captured Berlin. This behaviour we have to punish. We have declared war to the west allied. Fortunately the German troops in the east are captured. We have negotiasted with their commanders that they will will help us if we will relinquinsh war imprisonment. You can order German troops if you need some."
-      },
-      "tactical": {
-        "goto": 28,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 5300,
-        "text": "The west allied have broken the agreements and have captured Berlin. This behaviour we have to punish. We have declared war to the west allied. Unfortunately, the German troops in the east could flee to the west allied troops and will fight together against us."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "Your operation was a failure. You are needed no longer."
-      }
-    }
-  },
-  {
-    "id": 27,
-    "scenario": "forward27.xml",
-    "startprestige": 0,
-    "intro": "The initiative is yours, but the enemy will not remain disorganized for long. The Eastern Front is a war of survival and transformation. Your troops have taken positions along the Oder. In the north the 2nd Belorussian Front should take Schwedt and fight against the 4th Tank Army. The wider stakes are clear: Hitler is dead and the surrender of the Nazis is near. Momentum is your greatest asset: pause too long and a breakthrough becomes another costly frontal battle.",
-    "outcome": {
-      "briliant": {
-        "goto": 254,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "Very good. This is the end of the war! Hitler is dead and the surrender of the Nazis is near. Come back home and celebrate with us."
-      },
-      "victory": {
-        "goto": 254,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": ""
-      },
-      "tactical": {
-        "goto": 254,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": ""
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "This is very, very sad. You were pipped at the post. Thanks to your failure, all German troops could escape in the west. Other generals have to complete what you have started."
-      }
-    }
-  },
-  {
-    "id": 28,
-    "scenario": "forward28.xml",
-    "startprestige": 0,
-    "intro": "The road ahead is defended, yet a decisive blow here can unhinge the entire front. The Eastern Front is a war of survival and transformation. After some planning the general stuff has decided that we will attack the allied lines at Dessau. The allies have numerous troops at this front line, so, if we can break through their lines, the allies must withdraw their other troops. The wider stakes are clear: Your troops could break through the allied lines and they must retreat because of their losses. A strong result opens the road to Battle of East Friesland. Break the defence before reserves arrive, keep your spearheads supplied, and turn tactical success into an operational collapse.",
-    "outcome": {
-      "briliant": {
-        "goto": 29,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 1300,
-        "text": "Very good. Your troops could break through the allied lines and they must retreat because of their losses."
-      },
-      "victory": {
-        "goto": 29,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 800,
-        "text": "Very good. Your troops could break through the allied lines and they must retreat because of their losses."
-      },
-      "tactical": {
-        "goto": 29,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 500,
-        "text": "Very good. Your troops could break through the allied lines and they must retreat because of their losses."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 150,
-        "text": "Our offensive was blighted. The war is over. We have to bear with the betrayal of the west allied."
-      }
-    }
-  },
-  {
-    "id": 29,
-    "scenario": "forward29.xml",
-    "startprestige": 0,
-    "intro": "Several Allied formations are trapped in East Friesland and preparing to escape through Emden and Wilhelmshaven. Your tank army must reach both ports before evacuation ships arrive, while a smaller supporting force helps reduce the urban objectives. The defenders still possess dangerous armoured divisions, plentiful infantry, and air power; worse, you begin without a nearby airfield. Bring engineers capable of establishing aviation support, seal the coastal exits, and destroy the pocket before it can become the nucleus of a counterattack. Speed will decide whether this is an encirclement or merely an expensive pursuit.",
-    "outcome": {
-      "briliant": {
-        "goto": 30,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 500,
-        "text": "Very good. The allied troops are destroyed and with Emden and Wilhelmshaven the allieds have lost two harbours in which they can land new troops."
-      },
-      "victory": {
-        "goto": 30,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 300,
-        "text": "Very good. The allied troops are destroyed and with Emden and Wilhelmshaven the allieds have lost two harbours in which they can land new troops."
-      },
-      "tactical": {
-        "goto": 30,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 100,
-        "text": "Very good! After your success we could capture whole Germany in a few months."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 150,
-        "text": "Unfortunately the allied troops could escape. The war will last longer as believed. But, for you, the war is over. Dismiss!"
-      }
-    }
-  },
-  {
-    "id": 30,
-    "scenario": "forward30.xml",
-    "startprestige": 0,
-    "intro": "The campaign has reached a point where speed matters as much as firepower. The Eastern Front is a war of survival and transformation. The majority of the war production for the Western Allied comes from the Ruhr area. If we will be able to capture the Ruhr area it will be more difficult for the allied to get supplies. The wider stakes are clear: After your success we could capture whole Germany in a few months. A strong result opens the road to Battle in the Ardennes. Break the defence before reserves arrive, keep your spearheads supplied, and turn tactical success into an operational collapse.",
-    "outcome": {
-      "briliant": {
-        "goto": 31,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 1400,
-        "text": "Very good! After your success we could capture whole Germany in a few months."
-      },
-      "victory": {
-        "goto": 31,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 100,
-        "text": "Very good! After your success we could capture whole Germany in a few months."
-      },
-      "tactical": {
-        "goto": 31,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 500,
-        "text": "Very good! After your success we could capture whole Germany in a few months. For the German troops the war is over. They have surrendered to our troops."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 150,
-        "text": "You were not fast enough. You failed!"
-      }
-    }
-  },
-  {
-    "id": 31,
-    "scenario": "forward31.xml",
-    "startprestige": 0,
-    "intro": "The initiative is yours, but the enemy will not remain disorganized for long. The Eastern Front is a war of survival and transformation. In what the Germans failed once we now want to success. In the Ardennes the allied have build the last defensive line. A strong result opens the road to Charge on Antwerpen. Momentum is your greatest asset: pause too long and a breakthrough becomes another costly frontal battle. The Eastern Front is a war of survival and transformation, and the outcome here will shape the tempo and resources available in the next operation.",
-    "outcome": {
-      "briliant": {
-        "goto": 32,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 500,
-        "text": "The last serious troops are defeated. Now the way to Antwerpen is free. A great performance from you."
-      },
-      "victory": {
-        "goto": 32,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 300,
-        "text": "The last serious troops are defeated. Now the way to Antwerpen is free. A great performance from you."
-      },
-      "tactical": {
-        "goto": 32,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 100,
-        "text": "The last serious troops are defeated. Now the way to Antwerpen is free. A great performance from you."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 150,
-        "text": "Our offensive brokes down in the same way like the German offensive once. Before the allied troops can force back our troops to the border of the German Reich we believe we have to appoint a new general."
-      }
-    }
-  },
-  {
-    "id": 32,
-    "scenario": "forward32.xml",
-    "startprestige": 0,
-    "intro": "What looks like a local defensive battle may decide the fate of the wider campaign. The Eastern Front is a war of survival and transformation. Your mission is to eliminate the last allied troops and occupy the harbor of Antwerpen to prevent further allied reinforcements. Your troops: The harbor of Antwerpen is secured by several ships. The wider stakes are clear: The whole German Reich is now under our control. The objective is not merely to endure, but to hold enough strength for the counterstroke that follows.",
-    "outcome": {
-      "briliant": {
-        "goto": 254,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 100,
-        "text": "You are a great guy. You have managed capturing Antwerpen in only a half year. The next opportunity to land new units is far away. The allied have noticed their malposition and have quit the war. The whole German Reich is now under our control. You are invited to the Kremlin. Stalin personally wants to thank you."
-      },
-      "victory": {
-        "goto": 254,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 50,
-        "text": "You are a great guy. You have managed capturing Antwerpen in only a half year. The next opportunity to land new units is far away. The allied have noticed their malposition and have quit the war. The whole German Reich is now under our control. You are invited to the Kremlin. Stalin personally wants to thank you."
-      },
-      "tactical": {
-        "goto": 254,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 10,
-        "text": "You are a great guy. You have managed capturing Antwerpen in only a half year. The next opportunity to land new units is far away. The allied have noticed their malposition and have quit the war. The whole German Reich is now under our control. You are invited to the Kremlin. Stalin personally wants to thank you."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 150,
-        "text": "Our charge on Antwerpen was a totally disaster. The allied have reinforced their troops severely around the harbor. A new offensive is not possible at the moment. Your troops will be refreshed and will get a new commander."
-      }
-    }
-  },
-  {
-    "id": 33,
-    "scenario": "forward33.xml",
-    "startprestige": 0,
-    "intro": "The campaign has reached a point where speed matters as much as firepower. The Eastern Front is a war of survival and transformation. After some planning the general stuff has decided that we will attack the allied lines at Dessau. The allies have numerous troops at this front line, so, if we can break through their lines, the allies must withdraw their other troops. The wider stakes are clear: Your troops could break through the allied lines and they must retreat because of their losses. A strong result opens the road to Battle of East Friesland. Break the defence before reserves arrive, keep your spearheads supplied, and turn tactical success into an operational collapse.",
-    "outcome": {
-      "briliant": {
-        "goto": 34,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 200,
-        "text": "Very good. Your troops could break through the allied lines and they must retreat because of their losses."
-      },
-      "victory": {
-        "goto": 34,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 100,
-        "text": "Very good. Your troops could break through the allied lines and they must retreat because of their losses."
-      },
-      "tactical": {
-        "goto": 34,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 50,
-        "text": "Very good. Your troops could break through the allied lines and they must retreat because of their losses."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "Our offensive was blighted. The war is over. We have to bear with the betrayal of the west allied."
-      }
-    }
-  },
-  {
-    "id": 34,
-    "scenario": "forward34.xml",
-    "startprestige": 0,
-    "intro": "The campaign returns to East Friesland, where Allied remnants again crowd the ports of Emden and Wilhelmshaven under the protection of armour, infantry, and air power. This time the enemy understands the danger and is preparing a more disciplined evacuation. Drive rapidly to the coast, establish an airfield for your own aircraft, and prevent the trapped formations from slipping away by sea. The operation rewards a commander who can split the force without losing concentration: seize both harbours, close the pocket, and deny the Allies bases from which to reopen the German coast.",
-    "outcome": {
-      "briliant": {
-        "goto": 35,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 200,
-        "text": "Very good. The allied troops are destroyed and with Emden and Wilhelmshaven the allieds have lost two harbours in which they can land new troops."
-      },
-      "victory": {
-        "goto": 35,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 100,
-        "text": "Very good. The allied troops are destroyed and with Emden and Wilhelmshaven the allieds have lost two harbours in which they can land new troops."
-      },
-      "tactical": {
-        "goto": 35,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 50,
-        "text": "Very good. The allied troops are destroyed and with Emden and Wilhelmshaven the allieds have lost two harbours in which they can land new troops."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 150,
-        "text": "Unfortunately the allied troops could escape. The war will last longer as believed. But, for you, the war is over. Dismiss!"
-      }
-    }
-  },
-  {
-    "id": 35,
-    "scenario": "forward35.xml",
-    "startprestige": 0,
-    "intro": "A narrow window has opened in the enemy line; turn it into a strategic rupture. The Eastern Front is a war of survival and transformation. The majority of the war production for the Western Allied comes from the Ruhr area. If we will be able to capture the Ruhr area it will be more difficult for the allied to get supplies. A strong result opens the road to Battle in the Ardennes. Momentum is your greatest asset: pause too long and a breakthrough becomes another costly frontal battle.",
-    "outcome": {
-      "briliant": {
-        "goto": 36,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 900,
-        "text": ""
-      },
-      "victory": {
-        "goto": 36,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 500,
-        "text": ""
-      },
-      "tactical": {
-        "goto": 36,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 300,
-        "text": ""
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": ""
-      }
-    }
-  },
-  {
-    "id": 36,
-    "scenario": "forward36.xml",
-    "startprestige": 0,
-    "intro": "The initiative is yours, but the enemy will not remain disorganized for long. The Eastern Front is a war of survival and transformation. In what the Germans failed once we now want to success. In the Ardennes the allied have build the last defensive line. A strong result opens the road to Charge on Antwerpen. Concentrate your best units, protect the flanks of the advance, and seize the decisive objectives before the enemy can rebuild a line.",
-    "outcome": {
-      "briliant": {
-        "goto": 37,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 290,
-        "text": ""
-      },
-      "victory": {
-        "goto": 37,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 150,
-        "text": ""
-      },
-      "tactical": {
-        "goto": 37,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 50,
-        "text": ""
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": ""
-      }
-    }
-  },
-  {
-    "id": 37,
-    "scenario": "forward37.xml",
-    "startprestige": 0,
-    "intro": "There is nowhere left to yield: hold this ground and make the enemy pay for every hex. The Eastern Front is a war of survival and transformation. Your mission is to eliminate the last allied troops and occupy the harbor of Antwerpen to prevent further allied reinforcements. Your troops: The harbor of Antwerpen is secured by several ships. Use terrain, entrenchment, and supporting fire to survive the first blow—then punish every exposed formation. The Eastern Front is a war of survival and transformation, and the outcome here will shape the tempo and resources available in the next operation.",
-    "outcome": {
-      "briliant": {
-        "goto": 254,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": ""
-      },
-      "victory": {
-        "goto": 254,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": ""
-      },
-      "tactical": {
-        "goto": 254,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": ""
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": ""
-      }
-    }
-  },
-  {
-    "id": 38,
-    "scenario": "forward38.xml",
-    "startprestige": 0,
-    "intro": "Your force is exposed, the roads are closing, and every hour of delay narrows the route to safety. The Eastern Front is a war of survival and transformation. Since many months the Germans has the bridgehead at the black sea. We could push them back, but all tries to destroy the Germans and their allied failed. The wider stakes are clear: While your offensive we could push forward in the Ukraine. A strong result opens the road to Zhitomir Counterattack. Rear guards must buy time while the main body escapes; abandon cohesion and the campaign may end here.",
-    "outcome": {
-      "briliant": {
-        "goto": 39,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 2500,
-        "text": "Very good. The axis have suffered heavy losses and no troops could be evacuated. While your offensive we could push forward in the Ukraine. Your men need a break. I am sure they will be needed in the near future."
-      },
-      "victory": {
-        "goto": 39,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 1300,
-        "text": ""
-      },
-      "tactical": {
-        "goto": 39,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 700,
-        "text": ""
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "Many troops of the axis could escape because of your failure. We have no further use for you."
-      }
-    }
-  },
-  {
-    "id": 39,
-    "scenario": "forward39.xml",
-    "startprestige": 0,
-    "intro": "Enemy pressure is building faster than reinforcements can arrive. The Eastern Front is a war of survival and transformation. While we have refitted your troops the situation near Zhitomir have changed in a serious way. The Germans have started a counterattack with five tank divisions after we have recaptured Kiev. The wider stakes are clear: The German attack was choked off by your troops. A strong result opens the road to Brody Cauldron. Use terrain, entrenchment, and supporting fire to survive the first blow—then punish every exposed formation.",
-    "outcome": {
-      "briliant": {
-        "goto": 40,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 200,
-        "text": "Well done. The German attack was choked off by your troops. Also, the faschists have lost many troops. It would seem that they have lost the possibility to further counterattacks."
-      },
-      "victory": {
-        "goto": 40,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 100,
-        "text": ""
-      },
-      "tactical": {
-        "goto": 40,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 50,
-        "text": ""
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "Because of your incompetence the Germans could destroy several soviet divisions. They are standing at the gates of Kiev in the moment. We onlyy can hope that further reinforcements will arrive soon. Otherwise the city will be again in German hands in only a few days."
-      }
-    }
-  },
-  {
-    "id": 40,
-    "scenario": "forward40.xml",
-    "startprestige": 0,
-    "intro": "This is not a rout unless you allow it to become one. The Eastern Front is a war of survival and transformation. With your advance the encirclement of six German and Hungarian divisions is complete. We know that the Germans will try to break out of the pocket. The wider stakes are clear: The Axis have suffered heavy losses and your victory opened a way to Lwow. A strong result opens the road to Battle of Romania. Keep the route open, rescue what can still be saved, and deny the enemy the encirclement it expects.",
-    "outcome": {
-      "briliant": {
-        "goto": 41,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 200,
-        "text": "Very good. The Axis have suffered heavy losses and your victory opened a way to Lwow. The next way will be an attack on Romania."
-      },
-      "victory": {
-        "goto": 41,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 100,
-        "text": ""
-      },
-      "tactical": {
-        "goto": 41,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 50,
-        "text": ""
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "This was not a good performance. Too many German and Hungarian soldiers could flee because you failed in destroying enough axis divisions."
-      }
-    }
-  },
-  {
-    "id": 41,
-    "scenario": "forward41.xml",
-    "startprestige": 0,
-    "intro": "The campaign has reached a point where speed matters as much as firepower. The Eastern Front is a war of survival and transformation. After we made peace with Finland, we want to urge Romania out of the war, because with the loss of the Romanian oilfield the Germans will not be able to perform big resistance. You have to break through the Axis lines at Jassy. The wider stakes are clear: Soon the Germans will be as immobile as a 90 year old rollator-grandma. A strong result opens the road to Take Szekesfehervar!. Momentum is your greatest asset: pause too long and a breakthrough becomes another costly frontal battle.",
-    "outcome": {
-      "briliant": {
-        "goto": 42,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 200,
-        "text": "After the surrender of Finland Romania now have sued for peace too. Thereby the Germans have lost their important oilfields in Romania. Soon the Germans will be as immobile as a 90 year old rollator-grandma. So, the victory over the Faschist will be a waltz."
-      },
-      "victory": {
-        "goto": 42,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 150,
-        "text": "After the surrender of Finland Romania now have sued for peace too. Thereby the Germans have lost their important oilfields in Romania. Soon the Germans will be as immobile as a 90 year old rollator-grandma. So, the victory over the Faschist will be a waltz."
-      },
-      "tactical": {
-        "goto": 42,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 100,
-        "text": "After the surrender of Finland Romania now have sued for peace too. Thereby the Germans have lost their important oilfields in Romania. Soon the Germans will be as immobile as a 90 year old rollator-grandma. So, the victory over the Faschist will be a waltz."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "Your offensive do not deserve the word offensive. Romania still supports the Germans. We are at the end of patience with you and will not support you any longer."
-      }
-    }
-  },
-  {
-    "id": 42,
-    "scenario": "forward42.xml",
-    "startprestige": 0,
-    "intro": "The initiative is yours, but the enemy will not remain disorganized for long. The Eastern Front is a war of survival and transformation. While the Germans try to break through our lines at the Lake Balaton in the west, your mission is to break through the German and Hungarian line at Szekesfehervar. With the capture of the town the way to Vienna will be open. The wider stakes are clear: Moreover the germans had to stop their offensive at the Lake Balaton. A strong result opens the road to Battle of Prague. Momentum is your greatest asset: pause too long and a breakthrough becomes another costly frontal battle.",
-    "outcome": {
-      "briliant": {
-        "goto": 43,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 3000,
-        "text": "Very good. Now the way to Vienna is open. Moreover the germans had to stop their offensive at the Lake Balaton."
-      },
-      "victory": {
-        "goto": 43,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 2000,
-        "text": "Very good. Now the way to Vienna is open. Moreover the germans had to stop their offensive at the Lake Balaton."
-      },
-      "tactical": {
-        "goto": 43,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 1000,
-        "text": "Very good. Now the way to Vienna is open. Moreover the germans had to stop their offensive at the Lake Balaton."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "No breakthrough means no further combat missions for you. This is an easy calculation."
-      }
-    }
-  },
-  {
-    "id": 43,
-    "scenario": "forward43.xml",
-    "startprestige": 0,
-    "intro": "The campaign has reached a point where speed matters as much as firepower. The Eastern Front is a war of survival and transformation. Berlin is captured by our troops. Now we want to destroy the remaining German armies in Czechia and in Slovakia and free Prague. The wider stakes are clear: You could break through the German lines and destroy the 8th Army. A strong result opens the road to Manchurian Operation. Break the defence before reserves arrive, keep your spearheads supplied, and turn tactical success into an operational collapse.",
-    "outcome": {
-      "briliant": {
-        "goto": 22,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 1100,
-        "text": "Very good. You could break through the German lines and destroy the 8th Army. Now the way to Prague is open."
-      },
-      "victory": {
-        "goto": 22,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 500,
-        "text": ""
-      },
-      "tactical": {
-        "goto": 22,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 250,
-        "text": ""
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "You failed in your mission. Dismiss!"
-      }
-    }
+ {
+  "id": 0,
+  "scenario": "forward0.xml",
+  "startprestige": 0,
+  "intro": "Battle at the Chalchin Gol<br>Welcome, Herr General. You are facing the 6. Japanese army. The Japanese have passed the Chalchin Gol. Your mission is to put the enemy over the river.<br>Your troops:<br>We have chosen some troops for you. You will have six different troops, each of them is of another class. And you are able to order more units in a recent scale.  Keep in mind that your decision can be important in coming battles.<br>Enemy troops: <br>The 6. Japanese army have only a few tanks and very few air support. The Japanese are worn out. They have no rail connection, so they are certainly not able to relieve their troops.<br>Sgn Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 1,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 400,
+    "text": "Well done. After your superior win, Japan have sued for peace."
+   },
+   "victory": {
+    "goto": 1,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 300,
+    "text": "Well done. After your superior win, Japan have sued for peace."
+   },
+   "tactical": {
+    "goto": 1,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 200,
+    "text": "Well done. After your superior win, Japan have sued for peace."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Are you fuckinmg serious? You failed at this easy task? You will be dishonorable discharged."
+   }
   }
+ },
+ {
+  "id": 1,
+  "scenario": "forward1.xml",
+  "startprestige": 0,
+  "intro": "Battle of Suomussalmi<br>You surely know, that we are at war with Finland at the moment. Your mission is to break through the finish lines at Suomussalmi. <br>Your troops:<br>You have to solve this mission only with little help from auxiliary troops. <br>Enemy troops: <br>The Finish have only a few troops. Mainly infantry troops are awaiting you on your way to Suomussalmi.<br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 2,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 3600,
+    "text": "Very good. After your victory, it seems that the finish government has to accept a peace dictate."
+   },
+   "victory": {
+    "goto": 2,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 1800,
+    "text": "Very good. After your victory, it seems that the finish government has to accept a peace dictate."
+   },
+   "tactical": {
+    "goto": 2,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 1000,
+    "text": "Very good. After your victory, it seems that the finish government has to accept a peace dictate."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Well, our attack was maybe to optimistic. Otherwise, the finish troops were not superior. Therefore we have decided, that you are not needed anymore."
+   }
+  }
+ },
+ {
+  "id": 2,
+  "scenario": "forward2.xml",
+  "startprestige": 0,
+  "intro": "Pocket of Minsk:<br>Comrade General, you surely know that the Germans have assaulted our country. Now, the situation is really delicate. While we are speaking, every moment German troops can fulfill the closing of the Minsker pocket. The Panzergruppe 2 and 3 have bypassed Minsk in the northern and southern and every moment they can team up near of Borissow to close the pocket. You have the permission to evacuate the pocket in need. But you should try to hold Minsk, the Minsker Airfield and Borissow as long as possible. <br>Your troops:<br>You will get help from the soviet Westfront. These troops have only few tank divisions but many artilleries and especially infantry divisions.<br> Enemy troops:<br>You are facing a large part of the Heeresgruppe Mitte. The Germans have contracted a lot of tanks, infantry, artillery, 8.8 PAK and bombers west of Minsk. Hoths Panzergruppe 3 is attacking from the north, Panzergruppe 2 under Guderian is attacking from the south. You will have contact with these troops soon, too. <br>Attention! Trying to hold Minsk can be really hard. The Germans are much more experienced then you. If you are a bad player you can evacuate Minsk and trying to hold Borissow and expect the enemy in the outback<br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 3,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 1300,
+    "text": "Well done, we hold Minsk long enough to take new positions."
+   },
+   "victory": {
+    "goto": 3,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 1000,
+    "text": "Good job. You hold nearly everything."
+   },
+   "tactical": {
+    "goto": 3,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 500,
+    "text": "That was nearly an desaster. But you hold Minsk and Borissow long time."
+   },
+   "lose": {
+    "goto": 3,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "That was an awful performance. But unfortunally we do not have the replacement for you. So, you will have another chance to show your skill."
+   }
+  }
+ },
+ {
+  "id": 3,
+  "scenario": "forward3.xml",
+  "startprestige": 0,
+  "intro": "Defense of Kishinev<br>The Germans and their allies, the Rumanians, attacking Bessarabia. Stop the advance of the axis troops.<br>Your troops:<br>You have only your core troops. We cannot provide more troops, because they are all needed on other frontlines.<br>Enemy troops:<br>You are facing the 11. German army in the north. Some parts of the Rumanian third and fourth army are attacking from southwest. The Rumanians are inexperienced. It could be a good idea, that you use your inexperienced troops against them.<br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 4,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 500,
+    "text": "Good job. The attack of the axis crashed on your lines. Now we have enough time to prepare Kiew for the defense."
+   },
+   "victory": {
+    "goto": 4,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 250,
+    "text": "Good job. You could nearly hold your line."
+   },
+   "tactical": {
+    "goto": 4,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 100,
+    "text": "This was not good. You could only hold one target. Next time you should deal your job better."
+   },
+   "lose": {
+    "goto": 4,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Unfortunally you could not deliver. Therefore, comrade Stalin have decided that your troops will not reciieve any reinforcements at the moment."
+   }
+  }
+ },
+ {
+  "id": 4,
+  "scenario": "forward4.xml",
+  "startprestige": 0,
+  "intro": "Battle of Odessa:<br>The Rumanian 4. Army has launched its attack on Odessa in the last days. They succeeded in pushing our troops back. Your mission is to launch a counterattack and put the Rumanians back to their starting position.<br>Your troops:<br>Again, you will nearly have your own troops to deal with your mission.<br>Enemy troops:<br>The Rumanian 4. Army is inexperienced. They have only a few tanks, but a lot of cavalry and infantry. We expect that some German troops will arrive in a few days to support the Rumanian attack.<br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 5,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 500,
+    "text": "Nice job! The Rumanians have gotten a bloody nose. Unfortunally your troops are trapped. We will evacuate your troops with ships."
+   },
+   "victory": {
+    "goto": 5,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 300,
+    "text": "Nice job! The Rumanians have gotten a bloody nose. Unfortunally your troops are trapped. We will evacuate your troops with ships."
+   },
+   "tactical": {
+    "goto": 5,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 100,
+    "text": "Nice job! The Rumanians have gotten a bloody nose. Unfortunally your troops are trapped. We will evacuate your troops with ships."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 150,
+    "text": "Odessa ist lost. The only good thing is, that a traitor like you is fallen into the faschist clutches. I am sure they will arrive you every moment and thank you for your good work."
+   }
+  }
+ },
+ {
+  "id": 5,
+  "scenario": "forward5.xml",
+  "startprestige": 0,
+  "intro": "Pocket of Kiev<br>Herr General, the situation is very awkward. Your troops are threatened by encirclement. Western of Kiev, the 6. Army is attacking your positions. From the north the Panzergruppe 2 will show up every moment in the back of your positions and they will join with the advance guard of the 17. Army. Hold Kiev and the surrounding regions as long as possible, so that we have the possibility to bind German troops.<br>Your troops:<br>Parts of the 37. Army are subordinate to your authority. These troops are wet behind the ears and do not have much tanks, but some artillery with big caliber.<br>Enemy troops:<br>The Germans proceed in the west with many tanks and infantry. The Panzergruppe 2 and the advance guard of the 17. Army are completely motorized and have mainly Panzer II and Panzer III tanks.<br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 6,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 2500,
+    "text": "That was what we have expected from you. You could hold Kiev and the surrounding region."
+   },
+   "victory": {
+    "goto": 6,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 1300,
+    "text": "Good job. You could held most of the region of Kiev."
+   },
+   "tactical": {
+    "goto": 6,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 1000,
+    "text": "Your performance was only a partitial success. Next time you should accomplish your mission in a better way."
+   },
+   "lose": {
+    "goto": 6,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "This was a nefirious performance. Your punishment will be no reinforcemnts in the near future."
+   }
+  }
+ },
+ {
+  "id": 6,
+  "scenario": "forward6.xml",
+  "startprestige": 0,
+  "intro": "Pocket of Brjansk<br>The situation at the Brjansker front is very grave. The XXIV. Motorized Army Corps could brake through your lines south of Brjansk. It may be expected that they will turn northwards and try to encircle your troops. Try to evacuate your troops slowly but do not miss to defend Brjansk and your other targets.<br>Your troops:<br>The 50. Army is reported to you. Altogether 50 troops will help you. They are still inexperienced, but they should be strong enough to slow the German advance a little bit. <br>Enemy troops:<br>The Germans have many tank divisions, infantry divisions and bomber squadrons. You should calculate with heavy attacks from the west and the south. The strongest German troops are deployed in the southwest. <br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 7,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 1000,
+    "text": "This was a premium performance. The advance of the German troops is stopped."
+   },
+   "victory": {
+    "goto": 7,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 500,
+    "text": "Well done. You could hold most of your targets."
+   },
+   "tactical": {
+    "goto": 7,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 300,
+    "text": "Unfortunally most of the Brjansk region was occupied by the Germans. This was not a good performance."
+   },
+   "lose": {
+    "goto": 7,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "The Brjansker region is lost too early. You will get another chance but you have to deliever in the future."
+   }
+  }
+ },
+ {
+  "id": 7,
+  "scenario": "forward7.xml",
+  "startprestige": 0,
+  "intro": "Tula Counterattack<br>Now it is time to take the initiative. You are facing the 2. Panzerarmee, which will attack every moment your lines south of Tula. Hold Tula and try to realize a counterattack if possible.<br>Your troops:<br>You have the command about the 49. and 50. Army. The troops are still inexperienced, but they were reinforced only just. <br>We are pleased to tell you, that we have decided to add a new recon unit to your troops.<br>Enemy troops:<br>Parts of the 2. Panzerarmee are under the required strength. There are not so much tanks and anti-tanks on the first front line, however the 2. Panzerarmee still have some tank divisions in reserve. Probably the Germans will march them off.<br>Please notice:<br>A brilliant victory, a normal victory and a tactical victory will lead to different scenarios. There will be no choice scenario. You should make a save game, if you want to play all scenarios.<br>A brilliant victory will give you the opportunity to end the war in the early 1942 by encircling the Heeresgruppe Mitte at Krasny Bor.<br>A normal victory will lead you to the normal progression of the campaign. <br>If you achieve only a tactical victory or a loss you have to defend Moskau first, before you can continue with the normal campaign path (Demyansk).<br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 8,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 2000,
+    "text": "This brilliant victory will ever be in the haerts of our soviet population. Due to your brave soldiers we could push forward in the south of Moskau and recapture a lot of land. If we could succeed a breakthrough in the north there will be a chance to encircle the whole Heeresgruppe Mitte in a big pocket."
+   },
+   "victory": {
+    "goto": 10,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 200,
+    "text": "Gut gemacht. Wir konnten auf breiter Front vorstossen. Allerdings haben sich die Deutschen inzwischen verstärkt. An ein weiteres Vordringen ist erstmal nicht mehr zu denken.<br>Good job. We could attack along a wide front. However, the Germans brought up reinforcements. So, a further attack is impossible in the moment."
+   },
+   "tactical": {
+    "goto": 9,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 300,
+    "text": "You have won the battle, but the Germans are able to win the war. While you were fighting, German troops have passed Tula and are heading towards Moskau now. We will need your help for the defense of Moskau."
+   },
+   "lose": {
+    "goto": 9,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "You have lost the battle, but the Germans are able to win the war. While you were fighting, German troops have passed Tula and are heading towards Moskau now. We will need your help for the defense of Moskau."
+   }
+  }
+ },
+ {
+  "id": 8,
+  "scenario": "forward8.xml",
+  "startprestige": 0,
+  "intro": "Closing the pocket<br>After your success at Tula we could also break through the German lines north of Moscow. You are now in the near of Smolensk. The Germans had not tried to escape. I believe they have the order to stay in the pocket. Your troops should now deploy northeast and southeast of the city and attacking the last German troops which hold the last position, in which German troops could escape. Close the pocket! Hold in any case the connection to the troops east of you (both victory hexes), so the Germans could not escape. Otherwise there is a risk that your troops will be encircled. <br>Your troops:<br>We can provide only a few troops for your mission, because most of the soviet armies are needed to hold the pocket closed.<br>Enemy troops:<br>The Germans have left the city and have taken positions east of the town. The Germans in this area are really weak. However, the area of the bottleneck is surrounded with mine field and other blockings. We have reliable information that the Germans do big troop movements. They have removed troops from the Heeresgruppe Süd and Heeresgruppe Nord to relieve the pocket. Moreover, troops in the pocket try to meet these troops halfway. Be fast, because the enemy is outnumbered.<br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "It was definirly right to honor you with the soviet medal. The German divisions in the pocket have surrendered after fighting a few days. The war is over! Hitler has withdrawed the last German armys."
+   },
+   "victory": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": ""
+   },
+   "tactical": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": ""
+   },
+   "lose": {
+    "goto": 10,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Our plan was too optimistic. Fortunally your troops could escape the pocket. Muster up your troops, because comrade Stalin has refused steadfastly to give you further reinforcements."
+   }
+  }
+ },
+ {
+  "id": 9,
+  "scenario": "forward9.xml",
+  "startprestige": 0,
+  "intro": "Urban Warfare in Moscow<br>This is our last opportunity. The Germans have advanced to the western periphery of Moscow. Hold Moscow at any costs!<br>Your troops:<br>You have we command over a tank division, the Moscow garrison and several bunkers and pillboxes. We have tried to mine the way for the German divisions but we could not finish this.<br>Enemy troops:<br>You are facing several tanks and infantry divisions. Moreover, you should calculate with heavy attacks from the German Luftwaffe.<br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 10,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 200,
+    "text": "The German invaders were crushed by your troops. Due to your success, we could push back the Germans by performing many counterattacks. Keep ready for further instructions."
+   },
+   "victory": {
+    "goto": 10,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 150,
+    "text": ""
+   },
+   "tactical": {
+    "goto": 10,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 100,
+    "text": ""
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": ""
+   }
+  }
+ },
+ {
+  "id": 10,
+  "scenario": "forward10.xml",
+  "startprestige": 0,
+  "intro": "Destroying the Demyansk Pocket<br>Comrade General, I have an easy mission for you. Since our offensive in the winter we could encircle the X. Army Corps near of Demyansk. Now we know that the Kampfgruppe Seydlitz is on her way to save the troops in the pocket. Stop the attack of Kampfgruppe Seydlitz and hold the pocket closen.<br>Your troops:<br>For this easy mission you will nearly only have your tank army. The deploy-hexes around the pocket are limited.<br>Enemy troops:<br>The X. Army corps has lost strength in the battles and have only a few divisions now. Kampfgruppe Seydlitz has an equal strength, but this troops are more dangerous. Do not miss to cut the Kampfgruppe Seydlitz off from the battlefield. They should arrive on our western flank in two days. Be aware of the German Luftwaffe. We have information that several bomber squadrons are in the combat area.<br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 11,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 2000,
+    "text": "Very good, the troops in the pocket was exterminated before the Kampfgruppe Seydlitz could save them."
+   },
+   "victory": {
+    "goto": 11,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 1000,
+    "text": "Very good, the troops in the pocket was exterminated before the Kampfgruppe Seydlitz could save them."
+   },
+   "tactical": {
+    "goto": 11,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 500,
+    "text": "Very good, the troops in the pocket was exterminated before the Kampfgruppe Seydlitz could save them."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 150,
+    "text": "Herr General, this was a dilettante performance. Dismiss!"
+   }
+  }
+ },
+ {
+  "id": 11,
+  "scenario": "forward11.xml",
+  "startprestige": 0,
+  "intro": "Defense of Voronezh<br>After our successes in the winter the Germans seems to have their troops reinforced. With their Hungarian allies they are starting a big offensive with the target Voronezh. Slow down the advance of the Germans, so we have enough time to prepare new positions. <br>Your troops:<br>You have command over the 40. and 13. Army. These troops are equipped with very new prototypes of SU tank destroyers. They could be useful for you.<br>Enemy troops:<br>You are facing the 4. Panzerarmee and the 2. Army. Moreover, in the south the 2. Hungarian Army supports them. The Hungarians are not so experienced like the Germans. The Germans have also new assault guns with higher range than our tanks. Be aware of them! Oh, wait, we have just this moment obtained the information that the Germans have marched off more troops with good tanks and tank destroyers. They will arrive in the south of the battlefield in several days.<br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 12,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 200,
+    "text": "Very good. The great German offensive was stopped before it really could begin."
+   },
+   "victory": {
+    "goto": 12,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 100,
+    "text": "Your performance was ok. You cold hold most of your targets."
+   },
+   "tactical": {
+    "goto": 12,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 50,
+    "text": "This was a bumbling performance. We had good chances to stop the Germans some miles before Woronesch but you have not used them."
+   },
+   "lose": {
+    "goto": 12,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "This was awful. We have decided that you will get no reinforcements for the moment."
+   }
+  }
+ },
+ {
+  "id": 12,
+  "scenario": "forward12.xml",
+  "startprestige": 0,
+  "intro": "Rzhew Meat Grinder<br>After our offensive in the winter there is still the German salient at Rzhew. We have decided to start a great attack on the salient with the target of destroying the defendsing German troops. Your troops should attack in the north at Rzhew, in the south at Sychewka and in the middle of the salient, break through the lines and destroy or capture the most forces.<br>Your troops:<br>You will have the command over the 30. Army. The Germans hold the only airfield in this area, but the 30. Army has a very experienced engineer troop, which has many experience in buliding airfields.<br>Enemy troops:<br>You are facing the 9. German Army. The troops in the salient are still very strong. They have built a coherent front line and break through it could be very difficult but they have no reserves after the first front line. The area is also full of landmines and fortifications. Rzhew`s defenders are very powerfull, you may need a lot of higher range artillery to break through the lines at Rzhew. Be aware, that the reserve troops are deployed in Sychewka. There you have to calculate with heavy resistance, too.<br>Please notice:<br>You will gain 100 pp per turn.This money is for refits and you will be over the cap if you do not use it, so feel free to use it.<br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 13,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 200,
+    "text": "Very good, the Germans have suffered heavy losses. Now there is no danger for Moscow anyway. Also we have bind troops that the Germans could have needed for their offensive in the south."
+   },
+   "victory": {
+    "goto": 13,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 100,
+    "text": ""
+   },
+   "tactical": {
+    "goto": 13,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 50,
+    "text": ""
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "The German salient still exists and you have failed although best efforts of us. The Germans have progressed in the south, too. To stop the Faschists in the south we will need a more talented general then you."
+   }
+  }
+ },
+ {
+  "id": 13,
+  "scenario": "forward13.xml",
+  "startprestige": 0,
+  "intro": "Operation Uranus<br>Be ready for Operation Uranus. Today our great offensive starts with the aim to encircling the 6. Army in Stalingrad. Your troops will attack from the south and the northwest the German and their allied troops. <br>Your troops:<br>You will have command over the 65. Army. This troops will attack the Romanian front in the northeast and will support your attack against the Italian und Hungarian troops in the southeast.<br>Enemy troops:<br>In the southwest the 4. Panzerarmee under command of Hermann Hoth is your opponent. In the north the 3. Romanian Army defends the front line. In the southeast Italian and Hungary troops hold the lines. The Romanian, Italian und Hungarian troops have under strength and are bad equipped. They have only a lit bit of ammunition. Although these troops are numerous, they should be no real opponent for your troops. The situation in the southwest looks different. The 4. Panzerarmee still has some tank divisions. There is also a tank troop equipped with the new very dangerous Tiger tank.<br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 14,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 400,
+    "text": "Very good. The axis in Stalingrad are now encircled and the Germans and their allied troops suffered heavy losses. Now a relief attack to break up the Stalingrad pocket is almost impossible."
+   },
+   "victory": {
+    "goto": 14,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 200,
+    "text": ""
+   },
+   "tactical": {
+    "goto": 14,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 100,
+    "text": ""
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "What the fuck? This comprehensive and long time planed offensive was no success? Stalin is in rage. Maybe Stalingrad is lost too in a few days. You will be deported to Siberia. There you will learn what hard work means."
+   }
+  }
+ },
+ {
+  "id": 14,
+  "scenario": "forward14.xml",
+  "startprestige": 0,
+  "intro": "Battle at the Myschkowa<br>The fascists and their allied try to break up the pocket of Stalingrad. We could stop them at the Myschkowa. You should overrun the enemy troops and throw them back to their starting position. <br>Your troops:<br>You will only have your tank army for this job.<br>Enemy troops:<br>The Army Group Hoth is on the other side of the Myschkowa river. We calculate with further reinforcements in the next days. Although this troops will mostly be Italians, Romanians and Hungarians.<br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 15,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 200,
+    "text": "Very good. Now the distance between Stalingrad and the German front line is very high. The 6. Army in Stalingrad is doomed to extinction."
+   },
+   "victory": {
+    "goto": 15,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 100,
+    "text": "Very good. Now the distance between Stalingrad and the German front line is very high. The 6. Army in Stalingrad is doomed to extinction.."
+   },
+   "tactical": {
+    "goto": 15,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 50,
+    "text": "Very good. Now the distance between Stalingrad and the German front line is very high. The 6. Army in Stalingrad is doomed to extinction."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 150,
+    "text": "Your performance was a shame for the sovietunion. The Germans could break up the pocket and save the 6. Army. The death squad is already on the way to you."
+   }
+  }
+ },
+ {
+  "id": 15,
+  "scenario": "forward15.xml",
+  "startprestige": 0,
+  "intro": "Blowed by backhand<br>Herr General, the victory is within one`s reach, or maybe not. The Germans have evacuated the area of Charkow and withdraw their troops. Your army should push forward into the empty area and follow the escaping Germans. Many of our generals believe that the Germans are already beaten and the war will soon be over. But I am not so optimistic. So, be careful. <br>Your troops:<br>You will only have your tank army for this task.<br>Enemy troops:<br>Our recons reported nearly no enemies in the area.<br>Please notice:<br>If you can hold all VHs you will come to a choice scenario, in which you must decide which Army Group you want to face for the rest of the war. If you cannot hold all VHs you will first have to fend the German attack at Prokhorowka.<br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 18,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 5100,
+    "text": "Fortunaly your troops could withstand the German pricer grip. Now we have finally taken over the initiative. I will plead for better reconnaissance for further operations. You can make holidays at the black sea. We will report when our next big offensives are pending."
+   },
+   "victory": {
+    "goto": 18,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 5100,
+    "text": "Fortunaly your troops could withstand the German pricer grip. Now we have finally taken over the initiative. I will plead for better reconnaissance for further operations. You can make holidays at the black sea. We will report when our next big offensives are pending."
+   },
+   "tactical": {
+    "goto": 18,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 5100,
+    "text": "Fortunaly your troops could withstand the German pricer grip. Now we have finally taken over the initiative. I will plead for better reconnaissance for further operations. You can make holidays at the black sea. We will report when our next big offensives are pending."
+   },
+   "lose": {
+    "goto": 16,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 2100,
+    "text": "This lose is not your fault. Our reconnaissance has dismally failed. Fortunally your troops could escape and prevent an encirclement. The germans have caputed Charkow again."
+   }
+  }
+ },
+ {
+  "id": 16,
+  "scenario": "forward16.xml",
+  "startprestige": 0,
+  "intro": "Prokhorowka Tank Battle<br>The Germans are attacking our lines at Prokhorowka. Resist all Germans attacks and lead a conterattack against Belgorod. <br>Your troops: <br>We knowed that the Germans we lead this offensive and we could prepare strong positions. You will have command over the 51th Tank Army. This troops are not so experienced but all refreshed to over strenght. The positions before your deployment positions are secured with landmines.<br>Enemy troops:<br>You are facing the II. SS-Panzer Corps. You have to calculate with heavy tank attacks. The German Luftwaffe will support the attack of the tanks. So you need a strong air defense and fighters. <br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 18,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 2500,
+    "text": "Great job. The Germans got a bloody nose. They have wasted all of their reserves and it seems that they have no capabilities to lead a further big attack. After your success our troops in the north of the Kursker salient could break to the German lines. Because of this they stopped all attacks on the Kursker salient. It gives me pleasure to told you that the USA and Great Britain has landed on Sicily."
+   },
+   "victory": {
+    "goto": 18,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 1300,
+    "text": ""
+   },
+   "tactical": {
+    "goto": 18,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 700,
+    "text": ""
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "The attack of the Germans was a great success. They could capture several armies in the Kursker pocket. Now it seems that we have los the war. The Germans are standing  at the gates of Moscow. We do not need cowards like you anymore."
+   }
+  }
+ },
+ {
+  "id": 17,
+  "scenario": "forward17.xml",
+  "startprestige": 0,
+  "intro": "Choice Scenario<br>We want avoid large troop movements for our big offensives, so we have decided that an army stays in the region, whrere it is deployed. You have to come to a decision, where you want to fight. You have three options:<br>You can fight against the Heeresgruppe North:<br>This is the easiest and shortest path. You will attack the Germans at Leningrad and will follow them to Courland.<br>You can fight against the Heeresgruppe Mitte:<br>This can be tough, because you will have the option to fight against west allied troops. Otherwise this path will lead you to Berlin.<br>You can fight against the Heeresgruppe South:<br>This path contains several scenarios. You will first attack the Kuban-Bridgehead and push the Germans through Romania and Hungary to Prague, where this path will end.<br>Please notice: After the battles in Europe two of the three paths will have an additional scenario in asia.<br>What is your choice?<br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 41,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": ""
+   },
+   "victory": {
+    "goto": 41,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": ""
+   },
+   "tactical": {
+    "goto": 41,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": ""
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": ""
+   }
+  }
+ },
+ {
+  "id": 18,
+  "scenario": "forward18.xml",
+  "startprestige": 0,
+  "intro": "Free Leningrad<br>More then two years ago the Germans began with their blockade of Leningrad. The pitful population of the town had to feel the pinch of hunger. We want to stop the blockade and push the Germans back. In the south and in the central sovietunion the Germans are withdrawed. I am sure they will withdraw their troops, if we will be able to lauch a great attack on the 16th Army.<br>Your troops:<br>You will only have your tank army for this mission, but we have allocated two divisions with bridging engineers to your troops, because the Germans have destroyed the bridges. <br>Enemy troops:<br>The 16th Army still have some strong troops, but the best of the Germans are fighting in the south and in the central. So the 16th Army has only a few tank divisions. Mostfull infantry divisions will be your opponent.<br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 19,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 2500,
+    "text": "Good job. The Germans were driven back several hundereds miles. The Leningrader population is no longer a hostage for the faschists."
+   },
+   "victory": {
+    "goto": 19,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 1300,
+    "text": ""
+   },
+   "tactical": {
+    "goto": 19,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 700,
+    "text": ""
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "This was a desaster. Leningrad is still in German hands. Dismiss!"
+   }
+  }
+ },
+ {
+  "id": 19,
+  "scenario": "forward19.xml",
+  "startprestige": 0,
+  "intro": "Battle of Viipuri<br>Due to the invasion of west allied troops in France the Germans have withdrawn many troops. Your next operation will be the attack in Karelia. Move forward and capture Viipuri. <br>Your troops:<br>You will only have your tank army for this mission. <br>Enemy troops:<br>You are facing several finish troops. However, you should expect that the Germans will help Finland with some German reinforcements. Nonetheless, the enemy troops should be no problem for you.<br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 20,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 200,
+    "text": "You have satisfied our expectations. I am gladly to tell you that Finland have sued for peace and now will support our troops."
+   },
+   "victory": {
+    "goto": 20,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 100,
+    "text": "You have satisfied our expectations. I am gladly to tell you that Finland have sued for peace and now will support our troops."
+   },
+   "tactical": {
+    "goto": 20,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 50,
+    "text": "You have satisfied our expectations. I am gladly to tell you that Finland have sued for peace and now will support our troops."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "If you do not have the ability to defeat the Finnish hillbillys you are useless for the great spviet army. Dismiss!"
+   }
+  }
+ },
+ {
+  "id": 20,
+  "scenario": "forward20.xml",
+  "startprestige": 0,
+  "intro": "Attack on Riga<br>After our success in Karelia we now want to free the Baltic states. Your tank army have the mission to attack the Germans in Riga and throw them out of the city.<br>Your troops:<br>You will only have your tank army for this mission. <br>Enemy troops:<br>The 16th army and the 18th Army defends the city. There are some serious tank divisions outside of the city. In Riga fanatic infantry divisions are deployed. They have support fire from several artillery divisions.<br>Please notice:<br>The next two scenarios will be with no-auto-refit. You will gain a lot of pp for refits. <br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 21,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 1000,
+    "text": "Very good. We freed Riga. The Germans have withdrawn to Courland and are trapped there."
+   },
+   "victory": {
+    "goto": 21,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 750,
+    "text": "Very good. We freed Riga. The Germans have withdrawn to Courland and are trapped there."
+   },
+   "tactical": {
+    "goto": 21,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 500,
+    "text": "Very good. We freed Riga. The Germans have withdrawn to Courland and are trapped there."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "This was a poor performance. There is no chance to get something out of your attack. However, it could be a good paragon, how a general not sould lead an attack."
+   }
+  }
+ },
+ {
+  "id": 21,
+  "scenario": "forward21.xml",
+  "startprestige": 0,
+  "intro": "Courland Pocket<br>We have started several trials to elimenate the trapped Germans in Courland, but all attempts were not successful. I think your men are more suitable for this mission. Attack on the front between Liepaja and Saldus, break through the German lines and take Pavilosta.<br>Your troops:<br>You will only have your tank army for this mission.<br>Enemy troops:<br>You are facing the 16th and 18th Army. These troops are worn out, but high experienced. They have only two serious tank troops. The way to the battlefield is blocked with Blockings, Bunkers and Mindfields.<br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 22,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 810,
+    "text": "Very good. The courland pocket is eliminated. You we can free troops for the Battle of Berlin. The end of the war is near. We will not sacrifice further men of you against the fanatic Nazis. But we have recognized with the west allied that we will attack Japan in the summer. Prepare your troops for this mission."
+   },
+   "victory": {
+    "goto": 22,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 400,
+    "text": ""
+   },
+   "tactical": {
+    "goto": 22,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 200,
+    "text": ""
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "You failed too in breaking up the pocket? Are you serious? You decieve all our hopes."
+   }
+  }
+ },
+ {
+  "id": 22,
+  "scenario": "forward22.xml",
+  "startprestige": 0,
+  "intro": "Manchurian Operation<br>The war in Europe is over. Now we had to keep our promise and built a second front against Japan in Asia. We could push forward and are now east of Changchun. Your troops should break through the lines of Japanese and Manchukuo troops in the east of the town and capture Changchun.<br>Your troops:<br>For this attack you will only have your tank army. We own no airfield in this area. So, you should have a can build unit for this mission in your troops.<br>Enemy troops: <br>You are facing two armies and some Manchukuo troops. These armies are bad equipped but they have entrenched themselves in the mountains east of Changchun. To break through the lines will take time.<br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "After the Faschists your great attacks have left the Japanese out of the war, too. The war is finally over. You and your men will achieve the justified honor. Come back to Moscow and join the celebration of the soviet population."
+   },
+   "victory": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": ""
+   },
+   "tactical": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": ""
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Your attack was botched. Fortunately, your fail has no role. The war is over despite your performance. I think you are war-weary. For operations in the future we will give unspent generals a chance."
+   }
+  }
+ },
+ {
+  "id": 23,
+  "scenario": "forward23.xml",
+  "startprestige": 0,
+  "intro": "Smolensker Offensive<br>Now it is time for our big offensive. You will attack the German Heeresgruppe Mitte at Yelnya. The Germans are well prepared for our attack, but I am sure you will be able to break through their lines.<br>Your troops:<br>You will only have your tank army for this mission.<br>Enemy troops:<br>The Heeresgruppe Mitte still have strong troops, but they have only few tanks. On the other side you have to calculate with strong fire of high-range artillery and the German Luftwaffe has strong bomber forces in this area. The areas behind the bridges are well prepared for your attack, but if you are breaken through the resistance will be smaller.",
+  "outcome": {
+   "briliant": {
+    "goto": 24,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 2700,
+    "text": "Very good. We have gained a lot of territory and destroyed several German troops. In the next month we planned offensives in the north and in the south. We will inform you, when your troops have to be ready."
+   },
+   "victory": {
+    "goto": 24,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 1300,
+    "text": ""
+   },
+   "tactical": {
+    "goto": 24,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 700,
+    "text": ""
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Our first big offensive was a fail. Maybe because you are a fail. In the future we will work together with more talented generals."
+   }
+  }
+ },
+ {
+  "id": 24,
+  "scenario": "forward24.xml",
+  "startprestige": 0,
+  "intro": "Operation Bagration<br>Now the time four our great offensives is come. Several armies will join the attack in Belorussia. Your troops should take Vitebsk.  Take the town and push forward to the west.<br>Your troops:<br>You will only have your tank army for this mission.<br>Enemy troops:<br>Vitebsk is secured by strong fortifications and the IX. Army Corps. Further south the VI. Army Corps hold the positions. The Germans have some good tanks and tank killers like Tiger II tanks and a division of Elefants. It could be a good idea to deploy your best troops in the south and push there forward and the rest can concentrate on Vitebsk.<br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 25,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 200,
+    "text": "Our offensive was a great success. We could not only free Belorussia, but push forward to the Vistula. Stalin has confer a decoration on you."
+   },
+   "victory": {
+    "goto": 25,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 100,
+    "text": "Our offensive was a great success. We could not only free Belorussia, but push forward to the Vistula. Stalin has confer a decoration on you."
+   },
+   "tactical": {
+    "goto": 25,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 50,
+    "text": "Our offensive was a great success. We could not only free Belorussia, but push forward to the Vistula. Stalin has confer a decoration on you."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Our great success hung op at the  first line of the faschists. Many soldiers find a pointless death. For further operations amateurs like you are useless."
+   }
+  }
+ },
+ {
+  "id": 25,
+  "scenario": "forward25.xml",
+  "startprestige": 0,
+  "intro": "Battle of Silesia<br>Herr General, meanwhile our armies have arrived Poland. You should take Krakow, west of you which is hold by the 4th Tank Army.<br>Your troops:<br>You will only have your tank army for this mission.<br>Enemy troops:<br>The 4th tank army has far under strength, but they have some serious Panther and Tiger II tanks. The strongest resistance should be in the Krakow city areal.<br>Please remember:<br>The next scenario (and Berlin too) will be no-auto-refit scenarios.<br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 26,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 460,
+    "text": "Very good. You defeated the Nazis before they can withdraw their troops."
+   },
+   "victory": {
+    "goto": 26,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 200,
+    "text": "Very good. You defeated the Nazis before they can withdraw their troops."
+   },
+   "tactical": {
+    "goto": 26,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 100,
+    "text": "Very good. You defeated the Nazis before they can withdraw their troops."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "This was a poor performance. Dismiss!"
+   }
+  }
+ },
+ {
+  "id": 26,
+  "scenario": "forward26.xml",
+  "startprestige": 0,
+  "intro": "Fortress Küstrin<br>Your troops have arrived the Oder at Küstrin. Take Küstrin, take positions along the river and build a bridgehead over the river at Küstrin. <br>Your troops:<br>You will only have your tank army for this mission.<br>Enemy troops:<br>Küstrin is hold by a garrison. Behind the Oder some strong German troops will try to prevent that you can build a bridgehead. But altogether the enemy should be no problem for your troops.<br>Attention please:<br>A brilliant victory, a normal victory and a tactical victory will lead you into different paths. <br>If you win brilliant, you have to end the war with the battle in Berlin. This scenario will be no-auto-refit, too.<br>If you win normal the west allied have captured Berlin and you have to fight against them. In this path you have the help of German troops, which you can buy for extra pp.<br>If you win tactical the west allied have captured Berlin and you have to fight against them. The German armies in the east could flee into the west and will support the west allies.<br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 27,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 360,
+    "text": "Now the way to Berlin is free. When we have finished our operations in the north your troops will attack."
+   },
+   "victory": {
+    "goto": 33,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 5300,
+    "text": "The west allied have broken the agreements and have captured Berlin. This behaviour we have to punish. We have declared war to the west allied. Fortunately the German troops in the east are captured. We have negotiasted with their commanders that they will will help us if we will relinquinsh war imprisonment. You can order German troops if you need some."
+   },
+   "tactical": {
+    "goto": 28,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 5300,
+    "text": "The west allied have broken the agreements and have captured Berlin. This behaviour we have to punish. We have declared war to the west allied. Unfortunately, the German troops in the east could flee to the west allied troops and will fight together against us."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Your operation was a failure. You are needed no longer."
+   }
+  }
+ },
+ {
+  "id": 27,
+  "scenario": "forward27.xml",
+  "startprestige": 0,
+  "intro": "Battle of Berlin<br>Herr General, it is time for the last battle. Your troops have taken positions along the Oder. In this scenario you have several missions.<br>-\tTake Cottbus, Schwedt and Oranienburg<br>-\tCross the Oder at the Seelower Heights and defeat the 9th Army<br>-\tEncircle the rest of the 9th Army in the Pocket of Halbe <br>-\tDo not let the troops in the pocket flee<br>-\tTake Berlin<br>-\tStop the advance of the 12th Army and take Eberswalde at the Elbe<br>Your troops:<br>The 2nd Belorussian Front will assist your attack in the south and in the north. In the north the 2nd Belorussian Front should take Schwedt and fight against the 4th Tank Army. Remember, this is the last battle. You can use the massive pp for refitting if you need it.<br>Enemy troops:<br>The 9th Army, the 12th Army and the 4th Tank Army are high-experienced but worn out troops. They have some serious tank divisions with Tiger II and Panther tanks. In the areal of Berlin unexperienced Volkssturm and Landwehr troops are also common opponents. In Berlin rests of the 9th Army, police troops and Volkssturm troops defeats the city. They are supported by Waffen SS Battle Group Mohnke.<br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Very good. This is the end of the war! Hitler is dead and the surrender of the Nazis is near. Come back home and celebrate with us."
+   },
+   "victory": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": ""
+   },
+   "tactical": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": ""
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "This is very, very sad. You were pipped at the post. Thanks to your failure, all German troops could escape in the west. Other generals have to complete what you have started."
+   }
+  }
+ },
+ {
+  "id": 28,
+  "scenario": "forward28.xml",
+  "startprestige": 0,
+  "intro": "Breakthrough at Dessau<br>After some planning the general stuff has decided that we will attack the allied lines at Dessau. The allies have numerous troops at this front line, so, if we can break through their lines, the allies must withdraw their other troops.<br>Your troops:<br>Besides your tank army one army will support your attack. They are deployed west of your troops.<br>Enemy troops:<br>The enemy have several tank divisions. In the air you have to calculate with high resistance, too. The USAF and RAF have several air fleets in the area of Dessau. Several level-bomber squadrons will support the ground troops.<br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 29,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 1300,
+    "text": "Very good. Your troops could break through the allied lines and they must retreat because of their losses."
+   },
+   "victory": {
+    "goto": 29,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 800,
+    "text": "Very good. Your troops could break through the allied lines and they must retreat because of their losses."
+   },
+   "tactical": {
+    "goto": 29,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 500,
+    "text": "Very good. Your troops could break through the allied lines and they must retreat because of their losses."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 150,
+    "text": "Our offensive was blighted. The war is over. We have to bear with the betrayal of the west allied."
+   }
+  }
+ },
+ {
+  "id": 29,
+  "scenario": "forward29.xml",
+  "startprestige": 0,
+  "intro": "Battle of East Friesland<br>We could trap several armies in East Friesland. We have reliable information that the west allied plans to evacuate the troops through the harbors of Emden and Wilhelmshaven. Take Emden and Wilhelmshaven before the ships arrive and destroy most of the enemy's troops to prevent the possibilities of a counterattack.<br>Your troops: <br>Besides your tank army a little army will support you. This troops could be useful for the conquer of Emden.<br>Enemy troops:<br>The trapped opponents still have several dangerous tank divisions and plenty infantry. The air force will made problems to you, especially because you will have no airfield at the beginning of the battle. The next airfield is too far away. Be sure that you have troops that can build an airport.   <br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 30,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 500,
+    "text": "Very good. The allied troops are destroyed and with Emden and Wilhelmshaven the allieds have lost two harbours in which they can land new troops."
+   },
+   "victory": {
+    "goto": 30,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 300,
+    "text": "Very good. The allied troops are destroyed and with Emden and Wilhelmshaven the allieds have lost two harbours in which they can land new troops."
+   },
+   "tactical": {
+    "goto": 30,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 100,
+    "text": "Very good! After your success we could capture whole Germany in a few months."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 150,
+    "text": "Unfortunately the allied troops could escape. The war will last longer as believed. But, for you, the war is over. Dismiss!"
+   }
+  }
+ },
+ {
+  "id": 30,
+  "scenario": "forward30.xml",
+  "startprestige": 0,
+  "intro": "Battle at the Ruhr<br>The majority of the war production for the west allied comes from the Ruhr area. If we will be able to capture the Ruhr area it will be more difficult for the allied to get supplies. Take the Ruhr area, Düsseldorf and build a bridgehead over the Rhine.<br>Your troops:<br>Besides your tank army several divisions will support your troops. Relating to your request we have given you more Flak units for this battle.<br>Enemy troops:<br>The enemies are not numerous. In the east of the Ruhr area the west allied have built a front which is saved by blockings, landmines and barbwire. More in the south the resistance seems to be not so hard.<br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 31,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 1400,
+    "text": "Very good! After your success we could capture whole Germany in a few months."
+   },
+   "victory": {
+    "goto": 31,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 100,
+    "text": "Very good! After your success we could capture whole Germany in a few months."
+   },
+   "tactical": {
+    "goto": 31,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 500,
+    "text": "Very good! After your success we could capture whole Germany in a few months. For the German troops the war is over. They have surrendered to our troops."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 150,
+    "text": "You were not fast enough. You failed!"
+   }
+  }
+ },
+ {
+  "id": 31,
+  "scenario": "forward31.xml",
+  "startprestige": 0,
+  "intro": "Battle in the Ardennes<br>In what the Germans failed once we now want to success. In the Ardennes the allied have build the last defensive line. If we can manage a breakthrough the way to Antwerpen will be free and the allied troops can no longer use the harbor of Antwerpen for reinforcements. <br>Your troops:<br>An army will support your attack. A unit of Josef Stalin tanks will assist you, too.<br>Enemy troops:<br>The allied troops are still numerous. Beware of assaults in the woody terrain. I remind you, that Josef Stalin tanks only have a few ammunitions and they are vulnerable in this terrain.<br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 32,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 500,
+    "text": "The last serious troops are defeated. Now the way to Antwerpen is free. A great performance from you."
+   },
+   "victory": {
+    "goto": 32,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 300,
+    "text": "The last serious troops are defeated. Now the way to Antwerpen is free. A great performance from you."
+   },
+   "tactical": {
+    "goto": 32,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 100,
+    "text": "The last serious troops are defeated. Now the way to Antwerpen is free. A great performance from you."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 150,
+    "text": "Our offensive brokes down in the same way like the German offensive once. Before the allied troops can force back our troops to the border of the German Reich we believe we have to appoint a new general."
+   }
+  }
+ },
+ {
+  "id": 32,
+  "scenario": "forward32.xml",
+  "startprestige": 0,
+  "intro": "Charge on Antwerpen<br>The victory is near. Your troops are standing in the near of Antwerpen. Your mission is to eliminate the last allied troops and occupy the harbor of Antwerpen to prevent further allied reinforcements.<br>Your troops:<br>The harbor of Antwerpen is secured by several ships. You will have command over a part of our fleet. Some bombers will assist you in this fight, too. The allied hold the only airfield in this area. It could be a good idea to build a new airfield at the start of the battle.<br>Enemy troops:<br>The defenders have abandoned the area south of Antwerpen and secured it with landmines and blockings. After this line the enemy front line is not so big. In the outback the allied still have some big tanks, like the Sherman Easy Eight type. In the harbor the allied unload unexperienced tank divisions at the moment.<br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 100,
+    "text": "You are a great guy. You have managed capturing Antwerpen in only a half year. The next opportunity to land new units is far away. The allied have noticed their malposition and have quit the war. The whole German Reich is now under our control. You are invited to the Kremlin. Stalin personally wants to thank you."
+   },
+   "victory": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 50,
+    "text": "You are a great guy. You have managed capturing Antwerpen in only a half year. The next opportunity to land new units is far away. The allied have noticed their malposition and have quit the war. The whole German Reich is now under our control. You are invited to the Kremlin. Stalin personally wants to thank you."
+   },
+   "tactical": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 10,
+    "text": "You are a great guy. You have managed capturing Antwerpen in only a half year. The next opportunity to land new units is far away. The allied have noticed their malposition and have quit the war. The whole German Reich is now under our control. You are invited to the Kremlin. Stalin personally wants to thank you."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 150,
+    "text": "Our charge on Antwerpen was a totally disaster. The allied have reinforced their troops severely around the harbor. A new offensive is not possible at the moment. Your troops will be refreshed and will get a new commander."
+   }
+  }
+ },
+ {
+  "id": 33,
+  "scenario": "forward33.xml",
+  "startprestige": 0,
+  "intro": "Breakthrough at Dessau<br>After some planning the general stuff has decided that we will attack the allied lines at Dessau. The allies have numerous troops at this front line, so, if we can break through their lines, the allies must withdraw their other troops.<br>Your troops:<br>Besides your tank army one army will support your attack. They are deployed west of your troops.<br>Enemy troops:<br>The enemy have several tank divisions. In the air you have to calculate with high resistance, too. The USAF and RAF have several air fleets in the area of Dessau. Several level-bomber squadrons will support the ground troops.<br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 34,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 200,
+    "text": "Very good. Your troops could break through the allied lines and they must retreat because of their losses."
+   },
+   "victory": {
+    "goto": 34,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 100,
+    "text": "Very good. Your troops could break through the allied lines and they must retreat because of their losses."
+   },
+   "tactical": {
+    "goto": 34,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 50,
+    "text": "Very good. Your troops could break through the allied lines and they must retreat because of their losses."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Our offensive was blighted. The war is over. We have to bear with the betrayal of the west allied."
+   }
+  }
+ },
+ {
+  "id": 34,
+  "scenario": "forward34.xml",
+  "startprestige": 0,
+  "intro": "Battle of East Friesland<br>We could trap several armies in East Friesland. We have reliable information that the west allied plans to evacuate the troops through the harbors of Emden and Wilhelmshaven. Take Emden and Wilhelmshaven before the ships arrive and destroy most of the enemy's troops to prevent the possibilities of a counterattack.<br>Your troops: <br>Besides your tank army a little army will support you. This troops could be useful for the conquer of Emden.<br>Enemy troops:<br>The trapped opponents still have several dangerous tank divisions and plenty infantry. The air force will made problems to you, especially because you will have no airfield at the beginning of the battle. The next airfield is too far away. Be sure that you have troops that can build an airport.   <br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 35,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 200,
+    "text": "Very good. The allied troops are destroyed and with Emden and Wilhelmshaven the allieds have lost two harbours in which they can land new troops."
+   },
+   "victory": {
+    "goto": 35,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 100,
+    "text": "Very good. The allied troops are destroyed and with Emden and Wilhelmshaven the allieds have lost two harbours in which they can land new troops."
+   },
+   "tactical": {
+    "goto": 35,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 50,
+    "text": "Very good. The allied troops are destroyed and with Emden and Wilhelmshaven the allieds have lost two harbours in which they can land new troops."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 150,
+    "text": "Unfortunately the allied troops could escape. The war will last longer as believed. But, for you, the war is over. Dismiss!"
+   }
+  }
+ },
+ {
+  "id": 35,
+  "scenario": "forward35.xml",
+  "startprestige": 0,
+  "intro": "Battle at the Ruhr<br>The majority of the war production for the west allied comes from the Ruhr area. If we will be able to capture the Ruhr area it will be more difficult for the allied to get supplies. Take the Ruhr area, Düsseldorf and build a bridgehead over the Rhine.<br>Your troops:<br>Besides your tank army several divisions will support your troops. Relating to your request we have given you more Flak units for this battle.<br>Enemy troops:<br>The enemies are not numerous. In the east of the Ruhr area the west allied have built a front which is saved by blockings, landmines and barbwire. More in the south the resistance seems to be not so hard.<br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 36,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 900,
+    "text": ""
+   },
+   "victory": {
+    "goto": 36,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 500,
+    "text": ""
+   },
+   "tactical": {
+    "goto": 36,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 300,
+    "text": ""
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": ""
+   }
+  }
+ },
+ {
+  "id": 36,
+  "scenario": "forward36.xml",
+  "startprestige": 0,
+  "intro": "Battle in the Ardennes<br>In what the Germans failed once we now want to success. In the Ardennes the allied have build the last defensive line. If we can manage a breakthrough the way to Antwerpen will be free and the allied troops can no longer use the harbor of Antwerpen for reinforcements. <br>Your troops:<br>An army will support your attack. A unit of Josef Stalin tanks will assist you, too.<br>Enemy troops:<br>The allied troops are still numerous. Beware of assaults in the woody terrain. I remind you, that Josef Stalin tanks only have a few ammunitions and they are vulnerable in this terrain.<br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 37,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 290,
+    "text": ""
+   },
+   "victory": {
+    "goto": 37,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 150,
+    "text": ""
+   },
+   "tactical": {
+    "goto": 37,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 50,
+    "text": ""
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": ""
+   }
+  }
+ },
+ {
+  "id": 37,
+  "scenario": "forward37.xml",
+  "startprestige": 0,
+  "intro": "Charge on Antwerpen<br>The victory is near. Your troops are standing in the near of Antwerpen. Your mission is to eliminate the last allied troops and occupy the harbor of Antwerpen to prevent further allied reinforcements.<br>Your troops:<br>The harbor of Antwerpen is secured by several ships. You will have command over a part of our fleet. Some bombers will assist you in this fight, too. The allied hold the only airfield in this area. It could be a good idea to build a new airfield at the start of the battle.<br>Enemy troops:<br>The defenders have abandoned the area south of Antwerpen and secured it with landmines and blockings. After this line the enemy front line is not so big. In the outback the allied still have some big tanks, like the Sherman Easy Eight type. In the harbor the allied unload unexperienced tank divisions at the moment.<br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": ""
+   },
+   "victory": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": ""
+   },
+   "tactical": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": ""
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": ""
+   }
+  }
+ },
+ {
+  "id": 38,
+  "scenario": "forward38.xml",
+  "startprestige": 0,
+  "intro": "Kuban-Bridgehead<br>Since many months the Germans has the bridgehead at the black sea. We could push them back, but all tries to destroy the Germans and their allied failed. We have reliable information that the Germans plans to evacuate the bridgehead preventing a cut off. We want attack before they can escape. Force an attack and destroy the German forces.<br>Your troops:<br>You will only have your tank army for this mission. The Germans control all two airfields in this area. We have provided an engineer troop to your army. It should be able to build a little airfield in a few days.<br>Enemy troops:<br>You are facing the 17th German Army. Also, there are several Romanian and Slovak troops. The Romanians and the Slovaks have only a low strength. The German troops has only a few tanks and only one fighter squadron. Maybe there will be no great fightback, but you have to be fast, too.<br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 39,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 2500,
+    "text": "Very good. The axis have suffered heavy losses and no troops could be evacuated. While your offensive we could push forward in the Ukraine. Your men need a break. I am sure they will be needed in the near future."
+   },
+   "victory": {
+    "goto": 39,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 1300,
+    "text": ""
+   },
+   "tactical": {
+    "goto": 39,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 700,
+    "text": ""
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Many troops of the axis could escape because of your failure. We have no further use for you."
+   }
+  }
+ },
+ {
+  "id": 39,
+  "scenario": "forward39.xml",
+  "startprestige": 0,
+  "intro": "Zhitomir Counterattack<br>Unfortunately, I have to interrupt your vacation. While we have refitted your troops the situation near Zhitomir have changed in a serious way. The Germans have started a counterattack with five tank divisions after we have recaptured Kiev. Hold Zhitomir and stop every advance to Kiev.<br>Your troops:<br>Because of the refits not every of your unit had marched of simultaneously. In the Zhitomir area you will have only a few troops in the beginning. You can calculate with an arrive of your other troops in some days. The 94. Rifle Division defends Zhitomir. These troops will also be under your command.<br>Enemy troops:<br>The Germans are not numerous, but they have some serious tanks. Because of the near of the Germans to Zhitomir they may be able to lead a devastating attack onto your troops. So, be careful.<br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 40,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 200,
+    "text": "Well done. The German attack was choked off by your troops. Also, the faschists have lost many troops. It would seem that they have lost the possibility to further counterattacks."
+   },
+   "victory": {
+    "goto": 40,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 100,
+    "text": ""
+   },
+   "tactical": {
+    "goto": 40,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 50,
+    "text": ""
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Because of your incompetence the Germans could destroy several soviet divisions. They are standing at the gates of Kiev in the moment. We onlyy can hope that further reinforcements will arrive soon. Otherwise the city will be again in German hands in only a few days."
+   }
+  }
+ },
+ {
+  "id": 40,
+  "scenario": "forward40.xml",
+  "startprestige": 0,
+  "intro": "Brody Cauldron<br>With your advance the encirclement of six German and Hungarian divisions is complete. We know that the Germans will try to break out of the pocket. You have to prevent that troops of the axis can escape over the river into the west and you have to destroy most of the enemies troops.<br>Your troops: <br>Some troops of the 1st Ukrainian Front will assist you by your mission.<br>Enemy troops:<br>You are facing the XIII Army Corps. The enemy is under strenght and has only some seroius tanks. With a good front is should be easy to repel the breakout.<br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 41,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 200,
+    "text": "Very good. The Axis have suffered heavy losses and your victory opened a way to Lwow. The next way will be an attack on Romania."
+   },
+   "victory": {
+    "goto": 41,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 100,
+    "text": ""
+   },
+   "tactical": {
+    "goto": 41,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 50,
+    "text": ""
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "This was not a good performance. Too many German and Hungarian soldiers could flee because you failed in destroying enough axis divisions."
+   }
+  }
+ },
+ {
+  "id": 41,
+  "scenario": "forward41.xml",
+  "startprestige": 0,
+  "intro": "Battle of Romania<br>After we made peace with Finland, we want to urge Romania out of the war, because with the loss of the Romanian oilfield the Germans will not be able to perform big resistance. You have to break through the Axis lines at Jassy.<br>Your troops:<br>You only have the command about your tank army.<br>Enemy troops:<br>The Germans and Romanians have several divisions in this area. More precisely you are fighting against the Heeresgruppe Südukraine which consists of the Army Group Wohler, the Army Group Dumitrescu and the 4th Romanian Army. The Germans have some heavy tanks and will be able to perform a hard counterattack if you are not able to perform a good first strike. The Romanians have suffered heavy losses in the war and their troops are quite under normal strength.<br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 42,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 200,
+    "text": "After the surrender of Finland Romania now have sued for peace too. Thereby the Germans have lost their important oilfields in Romania. Soon the Germans will be as immobile as a 90 year old rollator-grandma. So, the victory over the Faschist will be a waltz."
+   },
+   "victory": {
+    "goto": 42,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 150,
+    "text": "After the surrender of Finland Romania now have sued for peace too. Thereby the Germans have lost their important oilfields in Romania. Soon the Germans will be as immobile as a 90 year old rollator-grandma. So, the victory over the Faschist will be a waltz."
+   },
+   "tactical": {
+    "goto": 42,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 100,
+    "text": "After the surrender of Finland Romania now have sued for peace too. Thereby the Germans have lost their important oilfields in Romania. Soon the Germans will be as immobile as a 90 year old rollator-grandma. So, the victory over the Faschist will be a waltz."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Your offensive do not deserve the word offensive. Romania still supports the Germans. We are at the end of patience with you and will not support you any longer."
+   }
+  }
+ },
+ {
+  "id": 42,
+  "scenario": "forward42.xml",
+  "startprestige": 0,
+  "intro": "Take Szekesfehervar!<br>While the Germans try to break through our lines at the Lake Balaton in the west, your mission is to break through the German and Hungarian line at Szekesfehervar. With the capture of the town the way to Vienna will be open.<br>Your troops:<br>You will only have your tank army for this mission.<br>Enemy troops:<br>Your opponent is the Army Group Balck. The troops are battle-wearied, but they have some serious tanks and fighters. <br>!!!Please notice!!!: <br>The next two scenarios will be no-auto-refit. So, you should ensure that your troops are in acceptably conditions at the end of the battle.<br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 43,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 3000,
+    "text": "Very good. Now the way to Vienna is open. Moreover the germans had to stop their offensive at the Lake Balaton."
+   },
+   "victory": {
+    "goto": 43,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 2000,
+    "text": "Very good. Now the way to Vienna is open. Moreover the germans had to stop their offensive at the Lake Balaton."
+   },
+   "tactical": {
+    "goto": 43,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 1000,
+    "text": "Very good. Now the way to Vienna is open. Moreover the germans had to stop their offensive at the Lake Balaton."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "No breakthrough means no further combat missions for you. This is an easy calculation."
+   }
+  }
+ },
+ {
+  "id": 43,
+  "scenario": "forward43.xml",
+  "startprestige": 0,
+  "intro": "Battle of Prague<br>Berlin is captured by our troops. Now we want to destroy the remaining German armies in Czechia and in Slovakia and free Prague. You have to broke through the German lines at Nagysallo and move north.<br>Your troops: <br>The 2nd Ukrainian Front will assist your attack on the German lines. Also, some Romanian, Czech and Polish troops will be under your command. Unfortunately, there is no airfield in this area. So, you have to build one, before your planes can start.<br>Enemy troops:<br>You are facing the 8th Army. These troops have lost much of their strength but they were supplied with some serious prototypes in the last days. The Germans have some new fighters in the area, but there is no airfield in the near, so, the fighters can support the German troops only a few days.  <br>Sgn. Major Heinz",
+  "outcome": {
+   "briliant": {
+    "goto": 22,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 1100,
+    "text": "Very good. You could break through the German lines and destroy the 8th Army. Now the way to Prague is open."
+   },
+   "victory": {
+    "goto": 22,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 500,
+    "text": ""
+   },
+   "tactical": {
+    "goto": 22,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 250,
+    "text": ""
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "You failed in your mission. Dismiss!"
+   }
+  }
+ }
 ]

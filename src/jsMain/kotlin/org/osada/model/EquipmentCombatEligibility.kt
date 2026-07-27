@@ -18,22 +18,23 @@ fun Equipment.ignoresEntrenchment(eqid: Int): Boolean =
 
 fun Equipment.isPurchasable(eqid: Int): Boolean = (equipmentMap[eqid]?.attr?.and(ATTR_MASK_PURCHASABLE) ?: 0) != 0
 
-/** Ground Transport is the one class where OG's own data meaningfully uses the purchasable bit --
- *  most of the class exists only to be *given* to a unit as an organic transport, not bought as a
- *  combat unit (see DEFERRED.md §1.7: 5,041 Ground Transport records, ~1% flagged purchasable).
- *  A country whose data never sets the bit on any of its own Ground Transport records is treated as
- *  not using the flag at all, so the gate falls back to permitting everything for that country --
- *  otherwise a country with no populated bit would lose the whole class to buy. */
-fun Equipment.isPurchasableGroundTransport(eqid: Int): Boolean {
-    val eq = equipmentMap[eqid]
-    if (eq == null || eq.uclass != org.osada.UnitClass.GROUND_TRANSPORT.value) return true
-    val countryTransports =
-        equipmentMap.values.filter {
-            it.uclass == org.osada.UnitClass.GROUND_TRANSPORT.value && it.country == eq.country
-        }
-    val bitUsedByCountry = countryTransports.any { it.attr.and(ATTR_MASK_PURCHASABLE) != 0 }
-    return !bitUsedByCountry || eq.attr.and(ATTR_MASK_PURCHASABLE) != 0
-}
+/**
+ * A bare Ground Transport is never bought as a unit of its own. A transport is acquired by
+ * ATTACHING it to a unit at purchase time (`eqUserSel.eqtransport`), which this does not affect --
+ * only the "buy a Horse as your combat unit" case, which has no defensible reading: it cannot
+ * attack, cannot capture, and exists solely to carry something.
+ *
+ * **This replaced an attr-bit gate on 2026-07-26 (user request), and the bit it used is suspect.**
+ * The previous rule permitted a transport whose `attr` had bit 262144 -- recorded in DEFERRED.md
+ * §1.5/§1.7 as "purchasable" -- with a per-country fallback that permitted EVERYTHING when a
+ * country never set the bit. That fallback fired for every country in play, so the gate never
+ * refused anything. Worse, the bit's identification does not survive measurement: only 1,060 of
+ * 46,978 `eqp-united` records carry it (2.3%), **including zero Tank and zero Anti-tank records**,
+ * and no equipment table ships with no buyable tank. Do not restore an attr-based gate here until
+ * that bit has been re-identified.
+ */
+fun Equipment.isPurchasableGroundTransport(eqid: Int): Boolean =
+    equipmentMap[eqid]?.uclass != org.osada.UnitClass.GROUND_TRANSPORT.value
 
 fun Equipment.canInitiateAttackOnUnitType(
     attackerEqid: Int,

@@ -4,17 +4,21 @@ import org.osada.hero.CommanderRow
 import org.osada.hero.HeroCampaign
 import org.osada.hero.HeroDisplay
 import org.osada.hero.HeroId
+import org.osada.hero.HeroStatus
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.MouseEvent
 
 /**
  * The campaign commander roster (design brief §14.3) — Headquarters → Commanders, with
- * Active / Reserve / Wounded / Missing / Fallen tabs. View-only: a row opens the leader dossier;
- * transfers happen between scenarios, not here. Built from the pure [CommanderRow] list, all label
- * text from [HeroDisplay], dynamic values via `textContent`.
+ * Active / Reserve / Wounded / Missing / Fallen tabs. A row opens the leader dossier; an eligible
+ * benched officer (Reserve/Wounded, currently unassigned — [HeroCampaign.transferableFormations])
+ * also gets a Transfer action (DEFERRED.md §1.10), the "way back" a wounded or evacuated commander
+ * previously had no route to. Built from the pure [CommanderRow] list, all label text from
+ * [HeroDisplay], dynamic values via `textContent`.
  */
 internal object CommanderRosterPresenter {
     private const val BOX_ID = "uiCommanderRoster"
+    private val transferEligibleStatuses = setOf(HeroStatus.RESERVE, HeroStatus.WOUNDED, HeroStatus.SERIOUSLY_WOUNDED)
 
     fun close() = delTag(byId(BOX_ID))
 
@@ -78,7 +82,7 @@ internal object CommanderRosterPresenter {
         card.className = "osada-hero-rosterrow"
 
         val portrait = addTag(card, "div")
-        portrait.className = "osada-hero-rosterrow-portrait"
+        portrait.className = "osada-hero-rosterrow-portrait ${row.renownClass}".trim()
         portrait.textContent =
             row.name
                 .split(Regex("\\s+"))
@@ -108,7 +112,57 @@ internal object CommanderRosterPresenter {
             e.stopPropagation()
             locateHero(HeroId(row.heroId))
         }
+        if (row.formationName == null && row.status in transferEligibleStatuses) {
+            val transfer = addTag(card, "button")
+            transfer.className = "osada-hero-locate"
+            transfer.textContent = "Transfer"
+            transfer.title = "Assign this commander to a formation with no current officer"
+            transfer.onclick = { e: MouseEvent ->
+                e.stopPropagation()
+                openTransferPicker(HeroId(row.heroId), row.name)
+            }
+        }
         card.onclick = { _: MouseEvent -> LeaderDossierPresenter.openForHero(HeroId(row.heroId)) }
+    }
+
+    private fun openTransferPicker(
+        heroId: HeroId,
+        heroName: String,
+    ) {
+        val mainBody = byId("mainbody") ?: return
+        delTag(byId("uiHeroTransferBox"))
+        val choices = HeroCampaign.transferableFormations(heroId)
+
+        val box = addTag(mainBody, "div")
+        box.id = "uiHeroTransferBox"
+        box.className = "uiMessageBox heroPromotionBox"
+        box.style.zIndex = "98"
+
+        val titleEl = addTag(box, "div")
+        titleEl.className = "uiMessageBoxTitle"
+        titleEl.textContent = "$heroName — Transfer to a formation"
+
+        val bodyEl = addTag(box, "div")
+        bodyEl.className = "uiMessageBoxBody"
+        if (choices.isEmpty()) {
+            addText(bodyEl, "osada-hero-empty", "No unled formation is currently available to take this commander.")
+        } else {
+            choices.forEach { formation ->
+                val option = addTag(bodyEl, "div")
+                option.className = "smallButton heroPromotionChoice"
+                option.textContent = formation.displayName
+                option.onclick = { _: MouseEvent ->
+                    HeroCampaign.transferCommander(heroId, formation.id)
+                    delTag(box)
+                    open()
+                }
+            }
+        }
+        val cancel = addTag(bodyEl, "div")
+        cancel.className = "smallButton heroPromotionChoice"
+        cancel.textContent = "Cancel"
+        cancel.onclick = { _: MouseEvent -> delTag(box) }
+        makeVisible("uiHeroTransferBox")
     }
 
     private fun tabButton(

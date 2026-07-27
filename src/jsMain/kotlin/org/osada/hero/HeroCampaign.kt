@@ -1,8 +1,10 @@
 package org.osada.hero
 
 import org.osada.GameHolder
+import org.osada.model.EfileConfig
 import org.osada.model.Equipment
 import org.osada.model.GameUnit
+import org.osada.rules.Attachments
 
 /**
  * Campaign-run entry point for the hero system — the direct counterpart of
@@ -28,6 +30,11 @@ internal object HeroCampaign {
     private val pendingAnnouncements = mutableListOf<HeroEmergenceAnnouncement>()
     private val pendingPromotions = mutableListOf<HeroPromotionAnnouncement>()
     private val pendingCasualties = mutableListOf<HeroCasualtyAnnouncement>()
+
+    // §1.10: benched statuses a transfer can recall from. MISSING/CAPTURED have no confirmed fate,
+    // RETIRED has left service and KILLED is final -- none of those are "just benched".
+    private val transferEligibleStatuses =
+        setOf(HeroStatus.RESERVE, HeroStatus.WOUNDED, HeroStatus.SERIOUSLY_WOUNDED)
 
     /** The campaign facts an emergence needs that are not on the [GameUnit]. Set on scenario load. */
     data class EmergenceCampaignContext(
@@ -208,6 +215,96 @@ internal object HeroCampaign {
 
     /** Assignment lookup used by the roster/dossier Locate action. */
     fun formationIdForHero(heroId: HeroId): FormationId? = roster.state(heroId)?.assignedFormationId
+
+    /**
+     * Adds [slotNumber] to [unit]'s formation's attachments (DEFERRED.md §1.4). Refuses when: the
+     * formation doesn't exist (a formationless scenario/auxiliary unit never gets attachments —
+     * §3.2); the active efile has attachments off or no definition for this slot number, or
+     * disables it (LXF disables Bridging); the formation is already at `Attachments.MAX_PER_UNIT`;
+     * or it already has this slot. This is the actual gate, not the UI —
+     * `Attachments.availableSlots` is expected to only ever offer legal choices, but re-checked
+     * here independently, the same discipline `transferCommander` already applies. Prestige is the
+     * caller's concern (`Player.purchaseAttachment` mirrors `Player.upgradeUnit`'s own pattern of
+     * checking cost, calling the mutation, then deducting).
+     */
+    fun purchaseAttachment(
+        unit: GameUnit,
+        slotNumber: Int,
+    ): Boolean {
+        val formation = FormationIdentity.of(unit)?.let(roster::formation)
+        val slot = EfileConfig.attachments()?.slots?.get(slotNumber)
+        val slotId = slotNumber.toString()
+        val legal =
+            formation != null &&
+                slot != null &&
+                !slot.disabled &&
+                formation.attachmentIds.size < Attachments.MAX_PER_UNIT &&
+                slotId !in formation.attachmentIds
+        if (formation == null || !legal) return false
+        roster.putFormation(formation.copy(attachmentIds = formation.attachmentIds + slotId))
+        return true
+    }
+
+    /** Whether [hero] is eligible to be transferred to a new formation (§1.10): unassigned, and
+     *  not in a status where the officer's fate/service is unresolved rather than merely benched.
+     *  RESERVE (evacuated) and WOUNDED/SERIOUSLY_WOUNDED can return; MISSING and CAPTURED have no
+     *  confirmed fate to transfer *from*, RETIRED has left service, and KILLED needs no explanation. */
+    private fun isTransferEligible(hero: HeroState): Boolean =
+        hero.assignedFormationId == null &&
+            hero.status in transferEligibleStatuses
+
+    /** Unled formations that could receive [heroId] in a transfer (§1.10), or empty when the hero
+     *  itself is not currently eligible. Between-scenario by nature: a formation not present in the
+     *  scenario on the map right now is still a valid target, since the roster (not the live map)
+     *  is what the next scenario load reads `heroFor` against. */
+    fun transferableFormations(heroId: HeroId): List<CoreFormation> {
+        val hero = roster.state(heroId)
+        return if (hero != null && isTransferEligible(hero)) {
+            roster.allFormations().filter { it.assignedHeroId == null }
+        } else {
+            emptyList()
+        }
+    }
+
+    /**
+     * Assigns [heroId] to command [formationId] (§1.10) — the roster's own "way back" for a
+     * benched commander, closing the state `applyCasualty` leaves a lightly wounded officer in
+     * (detached, unassigned, and previously with no way to be reassigned). Returns false if either
+     * side of the transfer is not currently legal; the caller (`CommanderRosterPresenter`) is
+     * expected to only ever offer legal choices, but this is the actual gate, not the UI.
+     */
+    fun transferCommander(
+        heroId: HeroId,
+        formationId: FormationId,
+    ): Boolean {
+        val hero = roster.state(heroId)
+        val formation = roster.formation(formationId)
+        val legal = hero != null && formation != null && isTransferEligible(hero) && formation.assignedHeroId == null
+        if (hero == null || formation == null || !legal) return false
+        val event = HeroEvent("transferred", currentScenarioLabel(), currentTurn(), currentDate(), null)
+        roster.updateState(
+            hero.copy(
+                status = HeroStatus.ACTIVE,
+                assignedFormationId = formationId,
+                serviceEvents = hero.serviceEvents + event,
+            ),
+        )
+        roster.putFormation(
+            formation.copy(
+                assignedHeroId = heroId,
+                history =
+                    formation.history +
+                        FormationEvent(
+                            "commander_transferred",
+                            currentScenarioLabel(),
+                            currentTurn(),
+                            currentDate(),
+                            null,
+                        ),
+            ),
+        )
+        return true
+    }
 
     // ---------------------------------------------------------- Phase 4 read side
 

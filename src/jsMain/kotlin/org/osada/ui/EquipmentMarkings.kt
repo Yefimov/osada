@@ -2,6 +2,7 @@
 
 package org.osada.ui
 
+import org.osada.i18n.I18n
 import org.osada.model.EquipmentData
 import org.osada.model.GameUnit
 import org.osada.rules.UnitCapabilities
@@ -23,16 +24,16 @@ internal object EquipmentMarkings {
                 data,
             )
         ) {
-            addMark(parent, "RCN", UnitCapabilities.RECON_MOVEMENT_DESCRIPTION)
+            addMark(parent, "RCN", I18n.t("equipment.mechanics.recon_movement"))
         }
-        if (UnitCapabilities.canOverrun(data)) addMark(parent, "OVR", UnitCapabilities.TANK_OVERRUN_DESCRIPTION)
+        if (UnitCapabilities.canOverrun(data)) addMark(parent, "OVR", I18n.t("equipment.mechanics.tank_overrun"))
         // Both read the same predicates CombatResolver.isSupportFireEligible uses, so a badge can
         // never claim a defensive-fire role the combat code would not actually grant.
         if (UnitCapabilities.hasSupportFire(data)) {
-            addMark(parent, "SUP", UnitCapabilities.SUPPORT_FIRE_DESCRIPTION)
+            addMark(parent, "SUP", I18n.t("equipment.mechanics.support_fire"))
         }
         if (UnitCapabilities.hasAirDefenceFire(data)) {
-            addMark(parent, "AA", UnitCapabilities.AIR_DEFENCE_FIRE_DESCRIPTION)
+            addMark(parent, "AA", I18n.t("equipment.mechanics.anti_air"))
         }
     }
 
@@ -43,13 +44,9 @@ internal object EquipmentMarkings {
         val mark = addTag(parent, "span")
         val description =
             if (experienceBars == null) {
-                UnitCapabilities.HEADQUARTERS_SUPPORT_DESCRIPTION
+                I18n.t("equipment.mechanics.headquarters")
             } else {
-                "Combat Support: currently lends $experienceBars experience bar(s) to adjacent friendly units on " +
-                    "the same air/ground layer. " +
-                    "Multiple Combat Support units stack. " +
-                    "(Detected from the unit's name — a genuine Combat Support special or leader may be missed, " +
-                    "or a unit merely named \"HQ\" may be flagged in error.)"
+                I18n.plural("equipment.mechanics.headquarters_bars", experienceBars)
             }
         addMark(parent, "HQ", description, "hq", mark)
     }

@@ -10,30 +10,6 @@ import org.osada.model.Leaders
 object UnitCapabilities {
     const val EXPERIENCE_PER_BAR = 100
 
-    const val HEADQUARTERS_SUPPORT_DESCRIPTION =
-        "Combat Support: lends this unit's experience bars to adjacent friendly units on the same air/ground layer. " +
-            "Multiple Combat Support units stack. " +
-            "(Detected from the unit's name — a genuine Combat Support special or leader may be missed, " +
-            "or a unit merely named \"HQ\" may be flagged in error.)"
-
-    const val RECON_MOVEMENT_DESCRIPTION =
-        "Phased Movement: reconnaissance units may move again while movement points remain. " +
-            "Each movement segment spends points normally."
-
-    const val TANK_OVERRUN_DESCRIPTION =
-        "Overrun: an adjacent attack that destroys the defender, costs at most 1 strength and does not catch this " +
-            "tank surprised lets it continue moving and restores 1 movement point."
-
-    const val SUPPORT_FIRE_DESCRIPTION =
-        "Support Fire: when a friendly unit is attacked in close combat by a ground unit, this artillery fires on " +
-            "the attacker from up to its gun range away. It fires in addition to the defender, and does not have to " +
-            "be adjacent to either side."
-
-    const val AIR_DEFENCE_FIRE_DESCRIPTION =
-        "Anti-Air: when a friendly unit is attacked by aircraft, this unit fires on the attacking aircraft from up " +
-            "to its gun range away. It does NOT yet intercept aircraft that merely fly through or land inside its " +
-            "range — only attacks on a friendly unit trigger it."
-
     /**
      * Unit classes that flip a hex's owner and flag by occupying it.
      *
@@ -61,7 +37,13 @@ object UnitCapabilities {
      */
     private val SUPPORT_FIRE_CLASSES = setOf(UnitClass.ARTILLERY.value)
 
-    /** Classes that fire back at an AIR attacker on behalf of an adjacent friendly defender. */
+    /**
+     * Classes that fire back at an AIR attacker on behalf of an adjacent friendly defender.
+     *
+     * Fighter is in the set deliberately and faithfully: `openpanzer.js:2642` tests
+     * `flak || airDefence || fighter`, so a friendly fighter parked beside a bombed unit really
+     * does fire back. That is why a Yak-1 carries the AA badge.
+     */
     private val AIR_DEFENCE_FIRE_CLASSES =
         setOf(
             UnitClass.FLAK.value,
@@ -84,7 +66,16 @@ object UnitCapabilities {
 
     fun hasSupportFire(data: EquipmentData): Boolean = data.uclass in SUPPORT_FIRE_CLASSES
 
-    fun hasAirDefenceFire(data: EquipmentData): Boolean = data.uclass in AIR_DEFENCE_FIRE_CLASSES
+    /**
+     * The class check alone over-promises: it granted the AA badge to units that cannot fire on
+     * aircraft at all. Measured in `eqp-lxf`: 4 Flak and 9 Air Defence records have `airatk = 0` —
+     * every one of them a RADAR set (`Mobile Radar`, `SCR-584`, `SCR-268`, `RDT-4 Folaga`). The
+     * real rule then rejects them anyway, because `CombatResolver.isSupportFireEligible` also runs
+     * `AttackEligibility.canInitiateAttack`, which fails on a zero air attack. So the badge claimed
+     * a role combat would never grant — the §4.6 failure mode, in the very predicate §7.14 shared
+     * to prevent it. Sharing the class list was not enough; the capability has to be checked too.
+     */
+    fun hasAirDefenceFire(data: EquipmentData): Boolean = data.uclass in AIR_DEFENCE_FIRE_CLASSES && data.airatk > 0
 
     fun hasCombatSupport(unit: GameUnit): Boolean =
         isHeadquarters(unit.unitData(true)) || Leaders.unitHasLeader(unit, LeaderType.COMBAT_SUPPORT)

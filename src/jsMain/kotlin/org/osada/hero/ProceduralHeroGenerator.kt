@@ -73,7 +73,11 @@ internal object ProceduralHeroGenerator {
             biographyFacts =
                 HeroBiographyFacts(
                     birthYear = birthYear(request),
+                    birthplaceId = HeroBiographyPools.birthplaceId(request.seed),
+                    socialBackgroundId = HeroBiographyPools.socialBackgroundId(request.seed),
                     prewarProfessionId = background?.id,
+                    militaryEducationId = HeroBiographyPools.militaryEducationId(request.seed, rankId),
+                    priorServiceId = HeroBiographyPools.priorServiceId(request.seed, rankId),
                     emergenceEventId = request.event.eventId,
                 ),
             // §15.3: store the composed layer ids and seed, not a bitmap — the portrait re-renders

@@ -12,6 +12,7 @@ import org.osada.model.EquipmentData
 import org.osada.model.GameUnit
 import org.osada.model.Hex
 import org.osada.model.Leaders
+import org.osada.model.TerrainEx
 import kotlin.math.abs
 
 /**
@@ -359,14 +360,31 @@ internal object AttackCalculation {
     }
 
     /** Initiative-difference bonus: the faster side gets +defense and a capped +attack,
-     *  reversed by either side's First Strike leader. */
+     *  reversed by either side's First Strike leader.
+     *
+     *  Both combatants' initiative is first clamped to the defender's terrain
+     *  ([TerrainEx.initiativeCap]) -- OG's terrain data throttles initiative in close terrain
+     *  (town, mountain, ...), and PM's own AI already scores moves by the identical
+     *  [org.osada.terrainInitiative] table (`AIPositionEvaluation`) without the combat resolver
+     *  ever having applied it. Capping by the DEFENDER's hex, not each side's own, is deliberate:
+     *  the alternative would make assaulting a city better for a fast attacker, which inverts the
+     *  point of the cap (see `docs/design/terrain-supply-and-initiative.md` §4.2). Applied before
+     *  the First Strike reversal below, which takes `abs()` of the difference. */
     fun applyInitiativeBonus(
         stats: CombatStats,
         attacker: GameUnit,
         defender: GameUnit,
         context: CombatContext,
     ) {
-        var initiativeDiff = context.attackerData.initiative - context.defenderData.initiative
+        val cap = TerrainEx.initiativeCap(context.dTerrain)
+        // Attachments.initiativePenalty is already <= 0 (a summed malus-type-2 penalty), so adding
+        // it reduces initiative; applied before the terrain cap, matching how the cap is meant to
+        // clamp the unit's EFFECTIVE initiative, not just its base equipment stat.
+        val attackerInitiative =
+            minOf(context.attackerData.initiative + Attachments.initiativePenalty(attacker), cap)
+        val defenderInitiative =
+            minOf(context.defenderData.initiative + Attachments.initiativePenalty(defender), cap)
+        var initiativeDiff = attackerInitiative - defenderInitiative
         if (Leaders.unitHasLeader(attacker, LeaderType.FIRST_STRIKE)) initiativeDiff = abs(initiativeDiff)
         if (Leaders.unitHasLeader(defender, LeaderType.FIRST_STRIKE)) initiativeDiff = -abs(initiativeDiff)
         if (initiativeDiff >= 0) {

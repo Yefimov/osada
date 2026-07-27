@@ -1,0 +1,163 @@
+{
+  "efile": "LXF",
+  "keys": {
+    "exp_bar_factor": 5,
+    "critical_hit": 2,
+    "am_atpcheckweather": 1,
+    "reinf_move": 100,
+    "zoc_evade": 5,
+    "naval_noblock_bridge": 1,
+    "sabotage_min": 40,
+    "sabotage_max": 85,
+    "kamikaze": 1,
+    "ground_carrier": 11,
+    "allow_pontoon_ex": 1,
+    "force_weather": 1,
+    "zero_msu": 1,
+    "flak_range": 4,
+    "ignore_custom_ename": 1,
+    "g2a_intercept_mode": 2,
+    "upgrade_ldr": 0,
+    "rem_leader": 1
+  },
+  "raw": {
+    "exp_bar_factor": "5",
+    "critical_hit": "2",
+    "am_atpcheckweather": "1",
+    "reinf_move": "100",
+    "zoc_evade": "5",
+    "class_evade": "!30",
+    "build_cost": "12,48,60,36,24",
+    "naval_noblock_bridge": "1",
+    "sabotage_min": "40",
+    "sabotage_max": "85",
+    "kamikaze": "1",
+    "ground_carrier": "11",
+    "allow_pontoon_ex": "1",
+    "force_weather": "1",
+    "zero_msu": "1",
+    "flak_range": "4",
+    "ignore_custom_ename": "1",
+    "g2a_intercept_mode": "2",
+    "upgrade_ldr": "0",
+    "rem_leader": "1",
+    "build_turn": "2,3,3,3,2",
+    "repair_turn": "1,2,2,2,1,1"
+  },
+  "attachments": {
+    "slots": {
+      "1": {
+        "name": "Recon",
+        "disabled": false,
+        "bonus": 2,
+        "penalty": -1,
+        "minCost": 30,
+        "factCost": 5,
+        "penaltyType": 1
+      },
+      "2": {
+        "name": "Air Defense",
+        "disabled": false,
+        "bonus": 2,
+        "penalty": -1,
+        "minCost": 30,
+        "factCost": 20,
+        "penaltyType": 2
+      },
+      "3": {
+        "name": "Bridging",
+        "disabled": true,
+        "bonus": 0,
+        "penalty": 0,
+        "minCost": 0,
+        "factCost": 0,
+        "penaltyType": 0
+      },
+      "4": {
+        "name": "AntiTank",
+        "disabled": false,
+        "bonus": 2,
+        "penalty": -1,
+        "minCost": 30,
+        "factCost": 15,
+        "penaltyType": 1
+      },
+      "5": {
+        "name": "Support",
+        "disabled": false,
+        "bonus": 2,
+        "penalty": -1,
+        "minCost": 30,
+        "factCost": 10,
+        "penaltyType": 1
+      },
+      "6": {
+        "name": "Forward Observer",
+        "disabled": false,
+        "bonus": 2,
+        "penalty": -1,
+        "minCost": 30,
+        "factCost": 15,
+        "penaltyType": 2
+      },
+      "7": {
+        "name": "Special Munition",
+        "disabled": false,
+        "bonus": 2,
+        "penalty": -1,
+        "minCost": 30,
+        "factCost": 15,
+        "penaltyType": 3
+      },
+      "8": {
+        "name": "FastEntrench",
+        "disabled": false,
+        "bonus": 2,
+        "penalty": -1,
+        "minCost": 30,
+        "factCost": 5,
+        "penaltyType": 2
+      },
+      "9": {
+        "name": "Bunker Buster",
+        "disabled": false,
+        "bonus": 2,
+        "penalty": -1,
+        "minCost": 30,
+        "factCost": 5,
+        "penaltyType": 3
+      },
+      "10": {
+        "name": "Fast Builder",
+        "disabled": false,
+        "bonus": 1,
+        "penalty": -1,
+        "minCost": 30,
+        "factCost": 5,
+        "penaltyType": 2
+      },
+      "11": {
+        "name": "Fuel Pods",
+        "disabled": false,
+        "bonus": 25,
+        "penalty": -1,
+        "minCost": 30,
+        "factCost": 10,
+        "penaltyType": 1
+      },
+      "12": {
+        "name": "Fast Speed",
+        "disabled": false,
+        "bonus": 20,
+        "penalty": -1,
+        "minCost": 30,
+        "factCost": 15,
+        "penaltyType": 2
+      }
+    },
+    "on": true,
+    "armyCost": true,
+    "minFuel": 8,
+    "minMove": 1
+  }
+}

@@ -150,11 +150,21 @@ internal object MoveRangeCalculation {
         context: MoveContext,
         enemySide: Int,
     ) {
+        // The road column is a BONUS, so it may only ever be taken when this movement method can
+        // actually use a road. PM applies it unconditionally (`openpanzer.js:2157`), and because
+        // the road entry is 255 for all three naval rows, a river hex carrying a road -- i.e. a
+        // BRIDGE -- became impassable to ships: in `Falciu 1` the Shtorm TB could run the river
+        // freely but could not pass (19,23), `river/road9`. OG has no such rule and cannot have
+        // one: its `TerrainEx.txt` `[terrain-cost]` table is 19 terrain columns with NO road
+        // column at all, and BASEKORP's Coastal row gives river cost 1 outright. Falling back to
+        // the terrain column changes nothing for land units (their road entry is 1, passable) and
+        // does not float a deep-naval ship up a river (its river entry is 255 either way).
+        val roadCost = context.movementTable[ROAD_MOVE_TABLE_INDEX]
+        val onRoad = hex.road > RoadType.NONE.value || MovementRules.isBridgeForSide(hex, context.unitSide)
         neighbor.cost =
             when {
                 context.enforceRail -> if (hex.rail > RoadType.NONE.value) 1 else IMPASSABLE_TERRAIN_COST
-                hex.road > RoadType.NONE.value || MovementRules.isBridgeForSide(hex, context.unitSide) ->
-                    context.movementTable[ROAD_MOVE_TABLE_INDEX]
+                onRoad && roadCost != IMPASSABLE_TERRAIN_COST -> roadCost
                 else -> context.movementTable[hex.terrain]
             }
         val inEnemyZoc = (hex.isSpotted(context.unitSide) || hex.unit?.tempSpotted == true) && hex.isZOC(enemySide)

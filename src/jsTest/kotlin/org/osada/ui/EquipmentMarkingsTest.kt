@@ -2,13 +2,20 @@ package org.osada.ui
 
 import kotlinx.browser.document
 import org.osada.UnitClass
+import org.osada.i18n.installEnglishUiBundleForTests
 import org.osada.model.EquipmentData
 import org.w3c.dom.HTMLElement
+import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class EquipmentMarkingsTest {
+    @BeforeTest
+    fun setup() {
+        installEnglishUiBundleForTests()
+    }
+
     @Test
     fun reconAndTankMarksExplainTheirRealRules() {
         val parent = document.createElement("div") as HTMLElement
@@ -28,20 +35,55 @@ class EquipmentMarkingsTest {
         assertEquals("SUP", parent.firstElementChild?.textContent)
 
         listOf(UnitClass.FLAK, UnitClass.AIR_DEFENCE, UnitClass.FIGHTER).forEach { cls ->
-            EquipmentMarkings.render(parent, EquipmentData().apply { uclass = cls.value })
+            EquipmentMarkings.render(
+                parent,
+                EquipmentData().apply {
+                    uclass = cls.value
+                    airatk = 8
+                },
+            )
             assertEquals("AA", parent.lastElementChild?.textContent, "$cls returns fire against aircraft")
         }
     }
 
-    /** DEFERRED.md §1.1: the engine has no interception at all. The badge must not imply one, or
-     *  it promises a rule the combat code will never run. */
+    /**
+     * The class alone is not the capability. `eqp-lxf` has 13 Flak/Air-Defence records with
+     * `airatk = 0` — all of them radar sets (`Mobile Radar`, `SCR-584`, `SCR-268`) — and the real
+     * rule rejects them, because `CombatResolver.isSupportFireEligible` also runs
+     * `AttackEligibility.canInitiateAttack`. A badge on those claimed a role combat would never
+     * grant: DEFERRED.md §4.6's failure mode, inside the predicate §7.14 shared to prevent it.
+     */
     @Test
-    fun theAntiAirMarkDoesNotPromiseInterception() {
+    fun anAirDefenceUnitThatCannotAttackAircraftGetsNoAntiAirMark() {
         val parent = document.createElement("div") as HTMLElement
-        EquipmentMarkings.render(parent, EquipmentData().apply { uclass = UnitClass.AIR_DEFENCE.value })
+        EquipmentMarkings.render(
+            parent,
+            EquipmentData().apply {
+                uclass = UnitClass.AIR_DEFENCE.value
+                airatk = 0
+                name = "SCR-584"
+            },
+        )
+
+        assertEquals(null, parent.firstElementChild, "a radar set advertises no defensive fire")
+    }
+
+    /** DEFERRED.md §1.1/§7.19: the engine now intercepts moving aircraft, so the badge must state
+     *  the rule it actually runs rather than the old disclaimer that it never would. */
+    @Test
+    fun theAntiAirMarkNowPromisesInterception() {
+        val parent = document.createElement("div") as HTMLElement
+        EquipmentMarkings.render(
+            parent,
+            EquipmentData().apply {
+                uclass = UnitClass.AIR_DEFENCE.value
+                airatk = 8
+            },
+        )
 
         val title = parent.lastElementChild?.getAttribute("title").orEmpty()
-        assertTrue(title.contains("does NOT yet intercept"), "the AA tooltip must disclaim interception")
+        assertTrue(title.contains("intercepts"), "the AA tooltip must state the interception rule")
+        assertTrue(!title.contains("does NOT yet intercept"), "the old disclaimer must be gone")
     }
 
     /** A class with no defensive-fire role must not pick up either badge. */

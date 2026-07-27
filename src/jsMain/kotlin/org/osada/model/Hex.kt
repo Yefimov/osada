@@ -31,6 +31,11 @@ class Hex(
     var isMoveSel: Boolean = false
     var isAttackSel: Boolean = false
 
+    /** Set alongside [isMoveSel] when a SPOTTED enemy AA unit covers this hex and the currently
+     *  selected unit is an aircraft (DEFERRED.md §1.1). Never derived from hidden AA -- see
+     *  `AAInterception.visibleThreatHexes`. Cleared in `delMoveSel`. */
+    var isAaThreat: Boolean = false
+
     private val zoc: IntArray = IntArray(2)
     private val spotted: IntArray = IntArray(2)
 

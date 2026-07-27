@@ -2,6 +2,8 @@ package org.osada.model
 
 import org.osada.GameHolder
 import org.osada.OVERSTRENGTH_PENALTY
+import org.osada.hero.HeroCampaign
+import org.osada.rules.Attachments
 import org.osada.rules.GameRules
 import org.osada.rules.calculateUnitCostPerStrength
 import org.osada.rules.calculateUnitCosts
@@ -49,6 +51,19 @@ fun Player.upgradeUnit(
     if (cost > prestige || !unit.upgrade(newEqid, transportEqid)) return false
     prestige -= cost
     return true
+}
+
+/** Buys attachment [slotNumber] for [unit]'s formation (DEFERRED.md §1.4), same check-then-mutate-
+ *  then-deduct shape as [upgradeUnit]. Fails without spending prestige when the slot is unaffordable
+ *  or [HeroCampaign.purchaseAttachment] itself refuses (no formation, already full, already owned). */
+fun Player.purchaseAttachment(
+    unit: GameUnit,
+    slotNumber: Int,
+): Boolean {
+    val cost = Attachments.cost(unit, slotNumber) ?: -1
+    val purchased = cost in 0..prestige && HeroCampaign.purchaseAttachment(unit, slotNumber)
+    if (purchased) prestige -= cost
+    return purchased
 }
 
 fun Player.sellUnit(unit: GameUnit): Boolean {

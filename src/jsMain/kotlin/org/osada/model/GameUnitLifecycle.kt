@@ -54,6 +54,7 @@ fun GameUnit.unitEndTurn(spotSide: Int) {
     hasOverstrength = false
     hasResupplied = false
     isSurprised = false
+    hasInterceptedThisTurn = false
     hits = 0
     if (unitData().uclass != UnitClass.FORTIFICATION.value) {
         val hex = this.hex

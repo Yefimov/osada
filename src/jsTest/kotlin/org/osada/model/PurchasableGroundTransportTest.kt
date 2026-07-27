@@ -7,19 +7,22 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
- * Locks in DEFERRED.md §1.7: OG's `attr` bit 262144 marks Ground Transport equipment purchasable
- * as a combat unit rather than existing only to be assigned as a unit's organic transport. Most of
- * the class never sets the bit (~1% of 5,041 records in the shipped `eqp-united`), so the gate
- * must fall back to permitting everything for a country whose data never uses the flag at all --
- * otherwise a naive gate makes the whole class unbuyable for most nations.
+ * A bare Ground Transport is never bought as a unit of its own (user, 2026-07-26). It cannot
+ * attack and cannot capture; it exists to be attached to a unit at purchase time, which this gate
+ * does not touch.
+ *
+ * **This replaced an `attr` bit 262144 gate, and the replacement is not a simplification — the old
+ * rule never refused anything.** It permitted any transport whose country never set the bit, and
+ * measurement says that is every country in our content: only 1,060 of 46,978 `eqp-united` records
+ * carry the bit (2.3%), **including zero Tank and zero Anti-tank records**. A bit that no tank in
+ * the game sets is not "purchasable". Do not reinstate an attr-based gate here until DEFERRED.md
+ * §1.5/§1.7 have re-identified it.
  */
 class PurchasableGroundTransportTest {
     @BeforeTest
     fun setup() {
         Equipment.resetEquipment()
     }
-
-    private val purchasableFlag = 262144
 
     @Test
     fun classesOtherThanGroundTransportAreNeverGated() {
@@ -28,7 +31,6 @@ class PurchasableGroundTransportTest {
             EquipmentData().apply {
                 uclass = UnitClass.INFANTRY.value
                 country = 1
-                attr = 0
             },
         )
 
@@ -36,76 +38,37 @@ class PurchasableGroundTransportTest {
     }
 
     @Test
-    fun countryThatNeverSetsTheBitPermitsEveryTransport() {
+    fun aBareGroundTransportIsNeverBuyableOnItsOwn() {
         Equipment.putEquipment(
             1,
             EquipmentData().apply {
                 uclass = UnitClass.GROUND_TRANSPORT.value
                 country = 1
-                attr = 0
-            },
-        )
-        Equipment.putEquipment(
-            2,
-            EquipmentData().apply {
-                uclass = UnitClass.GROUND_TRANSPORT.value
-                country = 1
-                attr = 0
+                name = "Mules"
             },
         )
 
-        assertTrue(Equipment.isPurchasableGroundTransport(1), "bare Horse/Mule case: bit unused, fall back to permit")
-        assertTrue(Equipment.isPurchasableGroundTransport(2))
+        assertFalse(Equipment.isPurchasableGroundTransport(1), "buying a bare Mules has no defensible reading")
+    }
+
+    /** The old gate's escape hatch: setting the bit used to make a transport buyable. It must not
+     *  any more, or the countries whose data happens to set it get the dumb case back. */
+    @Test
+    fun theOldPurchasableBitNoLongerReopensTheCase() {
+        Equipment.putEquipment(
+            1,
+            EquipmentData().apply {
+                uclass = UnitClass.GROUND_TRANSPORT.value
+                country = 1
+                attr = 262144
+            },
+        )
+
+        assertFalse(Equipment.isPurchasableGroundTransport(1), "the attr bit no longer permits a standalone buy")
     }
 
     @Test
-    fun countryThatUsesTheBitGatesOnItStrictly() {
-        Equipment.putEquipment(
-            1,
-            EquipmentData().apply {
-                uclass = UnitClass.GROUND_TRANSPORT.value
-                country = 1
-                attr = purchasableFlag
-            },
-        )
-        Equipment.putEquipment(
-            2,
-            EquipmentData().apply {
-                uclass = UnitClass.GROUND_TRANSPORT.value
-                country = 1
-                attr = 0
-            },
-        )
-
-        assertTrue(Equipment.isPurchasableGroundTransport(1), "flagged record stays buyable")
-        assertFalse(
-            Equipment.isPurchasableGroundTransport(2),
-            "unflagged record is gated once the country uses the bit",
-        )
-    }
-
-    @Test
-    fun gateIsPerCountryNotGlobal() {
-        Equipment.putEquipment(
-            1,
-            EquipmentData().apply {
-                uclass = UnitClass.GROUND_TRANSPORT.value
-                country = 1
-                attr = purchasableFlag
-            },
-        )
-        Equipment.putEquipment(
-            2,
-            EquipmentData().apply {
-                uclass = UnitClass.GROUND_TRANSPORT.value
-                country = 2
-                attr = 0
-            },
-        )
-
-        assertTrue(
-            Equipment.isPurchasableGroundTransport(2),
-            "country 2 never uses the bit, so its own record is unaffected by country 1 using it",
-        )
+    fun anUnknownEquipmentIdIsNotTreatedAsATransport() {
+        assertTrue(Equipment.isPurchasableGroundTransport(9999), "a missing record must not be gated as a transport")
     }
 }

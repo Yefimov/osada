@@ -147,11 +147,13 @@ class CombatTest {
 
     /**
      * Builds two adjacent units on clear terrain and returns the combat result.
-     * [attackerEqid]/[defenderEqid] index the mock equipment from [setup].
+     * [attackerEqid]/[defenderEqid] index the mock equipment from [setup]. [defenderTerrain]
+     * defaults to clear; pass a different [TerrainType] to exercise terrain-dependent rules.
      */
     private fun attack(
         attackerEqid: Int,
         defenderEqid: Int,
+        defenderTerrain: Int = TerrainType.CLEAR.value,
     ): CombatResults {
         val map =
             GameMap().apply {
@@ -204,7 +206,7 @@ class CombatTest {
             setUnit(attacker)
         }
         map.map?.get(1)?.get(2)?.apply {
-            terrain = TerrainType.CLEAR.value
+            terrain = defenderTerrain
             road = RoadType.NONE.value
             setUnit(defender)
         }
@@ -247,6 +249,30 @@ class CombatTest {
         assertEquals(true, r.defcanfire, "infantry fires back at range 1")
         assertEquals(22, r.atkExpGained, "attacker experience gained")
         assertEquals(25, r.defExpGained, "defender experience gained")
+    }
+
+    /**
+     * Same infantry(ini 5)-attacks-tank(ini 6) engagement as [infantryAttacksTankExactValues], but
+     * the defender's hex is MOUNTAIN (`Constants.terrainInitiative[6] == 1`) instead of clear.
+     * Mountain carries no other combat-relevant terrain bonus (unlike CITY's own +4 defense, or
+     * RIVER/STREAM's assault bonus -- see [org.osada.rules.AttackCalculation.applyTerrainBonuses]),
+     * so it isolates the initiative cap alone: both units clamp to initiative 1, erasing the tank's
+     * clear-terrain speed edge (DEFERRED.md §1.3/§7.16; `docs/design/terrain-supply-and-initiative.md`
+     * §4.2 recommends capping by the DEFENDER's hex). On clear terrain the tank's higher initiative
+     * wins it +4 defense and the infantry's counter-attack is dampened (kills=1, losses=2); once both
+     * are capped to 1 the swing goes to the attacker instead (kills=4, losses=1) -- exact values
+     * confirmed against this engagement's actual run rather than hand-derived, matching this file's
+     * own "exact-value" convention above.
+     */
+    @Test
+    fun initiativeCapOnDefendersMountainTerrainFlipsTheInitiativeSwing() {
+        val clear = attack(attackerEqid = 1, defenderEqid = 2)
+        val mountain = attack(attackerEqid = 1, defenderEqid = 2, defenderTerrain = TerrainType.MOUNTAIN.value)
+
+        assertEquals(1, clear.kills, "clear-terrain baseline: infantry->tank kills")
+        assertEquals(2, clear.losses, "clear-terrain baseline: infantry->tank losses")
+        assertEquals(4, mountain.kills, "capped initiative gives the attacker the swing instead")
+        assertEquals(1, mountain.losses, "capped initiative removes the tank's uncapped counter-bonus")
     }
 
     private fun makeMap(): Triple<GameMap, Player, Player> {

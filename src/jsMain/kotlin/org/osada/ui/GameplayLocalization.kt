@@ -148,7 +148,8 @@ internal object GameplayLocalization {
                 mapOf(
                     "day" to scenario.date.getDate(),
                     "month" to GameText.monthShort(scenario.date.getMonth()),
-                    "year" to scenario.date.getFullYear(),
+                    // A calendar year must never pick up a locale thousands-separator.
+                    "year" to scenario.date.getFullYear().toString(),
                 ),
             )
         byId("statusmsg")?.innerHTML =
@@ -413,7 +414,7 @@ internal object GameplayLocalization {
             I18n.t(
                 "equipment.heading",
                 mapOf(
-                    "year" to scenario.date.getFullYear(),
+                    "year" to scenario.date.getFullYear().toString(),
                     "class" to if (all) I18n.t("equipment.all_classes") else GameText.unitClass(selectedClass),
                     "country" to country,
                 ),
@@ -446,7 +447,7 @@ internal object GameplayLocalization {
                 "equipment.availability",
                 mapOf(
                     "month" to GameText.monthShort(detail.monthavailable - 1),
-                    "year" to detail.yearavailable,
+                    "year" to detail.yearavailable.toString(),
                 ),
             )
         val rows = byId("eqDetailBody")?.querySelectorAll(".osada-eqd-stat") ?: return
@@ -645,7 +646,7 @@ internal object GameplayLocalization {
     @Suppress("LoopWithTooManyJumpStatements")
     private fun refreshUnitActions(unit: GameUnit) {
         val map = GameHolder.instance?.scenario?.map ?: return
-        map.currentPlayer ?: return
+        if (map.currentPlayer == null) return
         val buttons = byId("unit-context")?.querySelectorAll("[data-action]") ?: return
         for (index in 0 until buttons.length) {
             val button = buttons.item(index) as? HTMLElement ?: continue

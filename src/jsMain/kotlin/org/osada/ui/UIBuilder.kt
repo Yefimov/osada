@@ -86,16 +86,25 @@ object UIBuilder {
      * whose merge was purely a space compromise — Fortification and the naval group — got their own
      * tabs back on 2026-07-26. What is still merged is merged because it genuinely belongs together:
      *  - Flak onto Air defence — already collapsed for strip filtering, see normalizeUnitClass;
-     *  - Ground Transport onto Tank, Air Transport onto Air Fighter, Level Bomber onto Air Bomber.
+     *  - Level Bomber onto Air Bomber.
      *
      * The naval group hangs off Destroyer, the most representative surface class, so the existing
      * tab machinery ([classesForTab], `normalizeUnitClass`) handles all eight with no special case.
+     *
+     * **The two TRANSPORT merges were removed on 2026-07-26 (user request).** Ground Transport used
+     * to appear under Tank and Air Transport under Air Fighter, which put Horse, Mules, Wagon,
+     * Limber and GAZ-1 in the middle of the tank list. Those merges existed only because 13 classes
+     * had no tab at all; once "All" became a real tab that reason expired, and a carrier class
+     * sitting inside a combat-class tab is a category error rather than a space compromise. Both are
+     * still reachable from All, and a transport is chosen where it is actually used — the transport
+     * strip under the unit you are buying.
+     *
+     * What remains merged is merged because it is the SAME kind of unit under two OG class ids
+     * (Flak/Air defence, tactical/level bombers) or is an explicitly named category tab (Naval).
      */
     val eqClassTabGroups: Map<String, List<UnitClass>> =
         mapOf(
-            UnitClass.TANK.value.toString() to listOf(UnitClass.GROUND_TRANSPORT),
             UnitClass.AIR_DEFENCE.value.toString() to listOf(UnitClass.FLAK),
-            UnitClass.FIGHTER.value.toString() to listOf(UnitClass.AIR_TRANSPORT),
             UnitClass.TACTICAL_BOMBER.value.toString() to listOf(UnitClass.LEVEL_BOMBER),
             UnitClass.DESTROYER.value.toString() to
                 listOf(

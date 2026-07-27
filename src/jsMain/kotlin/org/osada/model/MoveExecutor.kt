@@ -2,7 +2,9 @@ package org.osada.model
 
 import org.osada.LeaderType
 import org.osada.PlayerType
+import org.osada.rules.AAInterception
 import org.osada.rules.GameRules
+import org.osada.rules.UnitPredicates
 import org.osada.rules.canCapture
 import org.osada.rules.canPassInto
 import org.osada.rules.getDirection
@@ -31,9 +33,18 @@ internal class MoveExecutor(
         val setup = setupMove(unit, row, col) ?: return result
         saveUndoState(unit)
         val totalCost = traversePath(unit, setup, result)
-        val last = result.passedCells.lastOrNull()
-        if (last != null) {
-            applyMove(unit, setup, row, col, last, totalCost, result)
+        // AA interception can destroy the plane mid-path (§3.4, docs/design/aa-interception.md):
+        // it is already correctly positioned at the intercepting cell (applyAAInterception moved
+        // it there before applying damage), so the normal destroyed-unit sweep finds and removes
+        // it from exactly where it fell -- applyMove must NOT also run, or a dead unit would be
+        // "placed" a second time.
+        if (unit.destroyed) {
+            gameMap.undoState.clear()
+            gameMap.updateUnitList()
+        } else {
+            result.passedCells.lastOrNull()?.let { last ->
+                applyMove(unit, setup, row, col, last, totalCost, result)
+            }
         }
         return result
     }
@@ -66,6 +77,9 @@ internal class MoveExecutor(
             }
     }
 
+    // Two distinct early-exit conditions (blocked terrain, AA interception) genuinely both belong
+    // in this per-cell walk -- splitting them apart would relocate the `when`, not simplify it.
+    @Suppress("LoopWithTooManyJumpStatements")
     private fun traversePath(
         unit: GameUnit,
         setup: MoveSetup,
@@ -85,8 +99,38 @@ internal class MoveExecutor(
             }
             result.passedCells.add(cell)
             totalCost += if (cell is ExtendedCell) cell.cost else 1
+            if (i > 0 && applyAAInterception(unit, setup, cell, i == setup.path.lastIndex, result)) {
+                break
+            }
         }
         return totalCost
+    }
+
+    /** AA interception of a moving aircraft (DEFERRED.md §1.1). Checks the cell [unit] just
+     *  entered; if any enemy AA fires, relocates [unit] there (so the combat resolves against
+     *  where it actually is, not its stale start-of-move position) and applies one-sided damage.
+     *  Returns true when interception fired -- the walk must stop at this cell regardless of
+     *  whether the plane survived (docs/design/aa-interception.md §3.4). */
+    private fun applyAAInterception(
+        unit: GameUnit,
+        setup: MoveSetup,
+        cell: Cell,
+        isDestination: Boolean,
+        result: MovementResults,
+    ): Boolean {
+        val interceptors =
+            if (UnitPredicates.isAir(unit)) {
+                AAInterception.interceptorsFor(gameMap, unit, cell, isDestination)
+            } else {
+                emptyList()
+            }
+        if (interceptors.isEmpty()) return false
+
+        unit.getHex()?.delUnit(unit)
+        setup.map[cell.row][cell.col].setUnit(unit)
+        AAInterception.applyInterception(gameMap, unit, interceptors)
+        result.wasIntercepted = true
+        return true
     }
 
     private fun markSurprise(
@@ -143,13 +187,18 @@ internal class MoveExecutor(
         val newlySpotted = GameRules.setSpotRange(gameMap, unit, true)
         gameMap.setMoveRange(unit)
         gameMap.setAttackRange(unit)
-        gameMap.undoState.unit = if (isUndoable(newlySpotted, unit)) unit else null
+        gameMap.undoState.unit = if (isUndoable(newlySpotted, unit, result.wasIntercepted)) unit else null
     }
 
     private fun isUndoable(
         newlySpotted: Int,
         unit: GameUnit,
-    ): Boolean = newlySpotted == 0 && !unit.isSurprised && unit.player?.type == PlayerType.HUMAN_LOCAL
+        wasIntercepted: Boolean,
+    ): Boolean =
+        newlySpotted == 0 &&
+            !unit.isSurprised &&
+            !wasIntercepted &&
+            unit.player?.type == PlayerType.HUMAN_LOCAL
 
     fun undoLastMove() {
         val ctx = resolveUndoContext() ?: return

@@ -69,11 +69,52 @@ private fun EquipmentWindowBuilder.buildEqModeTabs(eq: HTMLElement) {
     }
 }
 
+/**
+ * Lets the wheel scroll a row that only scrolls horizontally.
+ *
+ * A browser sends a plain wheel gesture as `deltaY`, and an element whose overflow is `auto` on X
+ * but `hidden` on Y consumes none of it — so the class-tab row was unscrollable by wheel even once
+ * it genuinely overflowed. Chrome only maps wheel→horizontal on its own when Shift is held. Trackpad
+ * and touch swipes already produce `deltaX` and are left alone; the fallback to `deltaY` is what
+ * makes a mouse work.
+ */
+private fun attachHorizontalWheelScrolling(row: HTMLElement) {
+    // Marks which ends are fully scrolled so the CSS edge fade can be dropped there. At either
+    // extreme the fade has nothing left to hint at, and it dimmed the outer border of the first
+    // ("All") and last ("Fortification") tabs, which reads as clipping rather than as scrollable.
+    // The 1px tolerance absorbs the fractional scrollLeft a zoomed or fractional-DPI layout
+    // produces -- without it the end flag never sets and the right-hand fade never clears.
+    val syncEdgeFlags = {
+        val maxScroll = row.scrollWidth - row.clientWidth
+        // The row is built while #equipment is still display:none, where both widths read 0. Treat
+        // that as "there is more to the right" rather than as fully-scrolled, or the very first
+        // open shows no right-edge hint at all -- the mirror of the bug this whole flag fixes.
+        val laidOut = row.clientWidth > 0
+        row.setAttribute("data-scroll-start", (row.scrollLeft <= 1.0).toString())
+        row.setAttribute(
+            "data-scroll-end",
+            (laidOut && (maxScroll <= 0 || row.scrollLeft >= maxScroll - 1.0)).toString(),
+        )
+    }
+    row.addEventListener("wheel", { event ->
+        val wheel = event.asDynamic()
+        val delta = (wheel.deltaX as? Double)?.takeIf { it != 0.0 } ?: (wheel.deltaY as? Double ?: 0.0)
+        if (delta != 0.0 && row.scrollWidth > row.clientWidth) {
+            row.scrollLeft += delta
+            event.preventDefault()
+        }
+        syncEdgeFlags()
+    })
+    row.addEventListener("scroll", { syncEdgeFlags() })
+    syncEdgeFlags()
+}
+
 private fun EquipmentWindowBuilder.buildEqClassTabsRow(eq: HTMLElement) {
     // --- class tabs + tools (country, sort order, sort property) ---
     val classRow = addTag(eq, "div")
     classRow.id = "eqClassTabs"
     moveInto("eqSelClass", classRow)
+    byId("eqSelClass")?.let(::attachHorizontalWheelScrolling)
     val tools = addTag(classRow, "div")
     tools.id = "eqClassTools"
     moveInto("eqSelCountryButton", tools) // kept in DOM, hidden by CSS (replaced by the dropdown)

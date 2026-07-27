@@ -121,4 +121,26 @@ class HeroDossierTest {
         assertEquals("Reserve", HeroDisplay.rosterTab(HeroStatus.RETIRED))
         assertEquals("Missing", HeroDisplay.rosterTab(HeroStatus.CAPTURED))
     }
+
+    /** DEFERRED.md §6.6 item 6a / `docs/design/hero-presentation.md` §1: every renown tier maps to
+     *  exactly one CSS class, UNKNOWN gets none, and no two tiers can ever collide. */
+    @Test
+    fun renownTierMapsToExactlyOneCssClass() {
+        assertEquals("", HeroDisplay.renownClass(HeroRenown.UNKNOWN), "UNKNOWN must render no frame at all")
+        val classes = HeroRenown.entries.map { HeroDisplay.renownClass(it) }
+        assertEquals(classes.size, classes.toSet().size, "no two renown tiers may share a CSS class")
+        HeroRenown.entries.filter { it != HeroRenown.UNKNOWN }.forEach { tier ->
+            assertTrue(HeroDisplay.renownClass(tier).isNotBlank(), "$tier must have a non-empty frame class")
+        }
+    }
+
+    @Test
+    fun dossierAndRosterRowCarryTheMatchingRenownClass() {
+        val distinguished = state().copy(renown = HeroRenown.DISTINGUISHED)
+        val dossierView = HeroDossierAssembler.dossier(definition(), distinguished, formation(), null)
+        val row = HeroDossierAssembler.commanderRow(definition(), distinguished, "24th Tank Brigade")
+
+        assertEquals(HeroDisplay.renownClass(HeroRenown.DISTINGUISHED), dossierView.renownClass)
+        assertEquals(dossierView.renownClass, row.renownClass, "the dossier and the roster row must agree")
+    }
 }

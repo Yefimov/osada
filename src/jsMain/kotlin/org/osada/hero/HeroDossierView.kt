@@ -38,6 +38,7 @@ data class LeaderDossierView(
     val rank: String,
     val potential: String,
     val renown: String,
+    val renownClass: String,
     val status: String,
     val nickname: String?,
     val background: Pair<String, String>?,
@@ -61,6 +62,7 @@ data class CommanderRow(
     val name: String,
     val rank: String,
     val renown: String,
+    val renownClass: String,
     val potential: String,
     val status: HeroStatus,
     val statusLabel: String,
@@ -89,6 +91,19 @@ object HeroDisplay {
             HeroRenown.DISTINGUISHED -> "Distinguished"
             HeroRenown.HERO -> "Hero"
             HeroRenown.LEGEND -> "Legend"
+        }
+
+    /** CSS class for the renown portrait frame (`docs/design/hero-presentation.md` §1), applied
+     *  identically wherever a hero's portrait appears (dossier, roster row, unit-card leader slot,
+     *  Hall of Fame) so one tier means one appearance everywhere. [HeroRenown.UNKNOWN] gets no
+     *  frame at all -- a tier system where every tier is decorated communicates nothing. */
+    fun renownClass(r: HeroRenown): String =
+        when (r) {
+            HeroRenown.UNKNOWN -> ""
+            HeroRenown.EXPERIENCED -> "osada-renown--experienced"
+            HeroRenown.DISTINGUISHED -> "osada-renown--distinguished"
+            HeroRenown.HERO -> "osada-renown--hero"
+            HeroRenown.LEGEND -> "osada-renown--legend"
         }
 
     fun status(s: HeroStatus): String =
@@ -190,6 +205,7 @@ object HeroDossierAssembler {
             rank = HeroDisplay.rank(state.rankId),
             potential = HeroDisplay.potential(state.potential),
             renown = HeroDisplay.renown(state.renown),
+            renownClass = HeroDisplay.renownClass(state.renown),
             status = HeroDisplay.status(state.status),
             nickname = state.nicknameId?.let(HeroNicknames::displayText),
             background = background?.let { it.title to it.description },
@@ -217,6 +233,7 @@ object HeroDossierAssembler {
             name = definition.displayName,
             rank = HeroDisplay.rank(state.rankId),
             renown = HeroDisplay.renown(state.renown),
+            renownClass = HeroDisplay.renownClass(state.renown),
             potential = HeroDisplay.potential(state.potential),
             status = state.status,
             statusLabel = HeroDisplay.status(state.status),
@@ -266,8 +283,7 @@ object HeroDossierAssembler {
         definition: HeroDefinition,
     ): List<String> =
         buildList {
-            definition.biographyFacts.birthYear?.let { add("Born $it.") }
-            add("Commissioned as ${HeroDisplay.rank(state.rankId)}.")
+            addAll(HeroBiographyNarrator.narrate(definition.biographyFacts, state.rankId))
             state.serviceEvents.forEach {
                 add(
                     HeroEventDisplay.title(it.eventId) +

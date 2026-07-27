@@ -1,838 +1,838 @@
 [
-  {
-    "id": 0,
-    "scenario": "mao1.xml",
-    "startprestige": 0,
-    "intro": "A narrow window has opened in the enemy line; turn it into a strategic rupture. The Chinese revolution is surviving encirclement, invasion, and civil war. Today we will join the revolution against the ancient oppressors of the Chinese people and against the likes of Chiang-Kai-Shek. Some of our comrades in other army units will also join us in our glorious uprising against the enemies of the people. The wider stakes are clear: This has become the first major stronghold of Marxism in China. A strong result opens the road to Autumn Harvest Uprising. Momentum is your greatest asset: pause too long and a breakthrough becomes another costly frontal battle.",
-    "outcome": {
-      "briliant": {
-        "goto": 1,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 100,
-        "text": "BRILLIANT VICTORY<br><br>The uprising was successful and Nanchang is ours!  This has become the first major stronghold of Marxism in China.  Now it is time to create a Revolutionary Committee in this city to manage our goals.  We must get Soviet aid by sea with another uprising in Guangzhou.  Our comrades there will receive our support from Nanchang."
-      },
-      "victory": {
-        "goto": 1,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 90,
-        "text": "VICTORY<br><br>The uprising was successful and Nanchang is ours!  This has become the first major stronghold of Marxism in China.  Now it is time to create a Revolutionary Committee in this city to manage our goals.  We must get Soviet aid by sea with another uprising in Guangzhou.  Our comrades there will receive our support from Nanchang."
-      },
-      "tactical": {
-        "goto": 1,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 80,
-        "text": "TACTICAL VICTORY<br><br>The uprising was successful and Nanchang is ours!  This has become the first major stronghold of Marxism in China.  Now it is time to create a Revolutionary Committee in this city to manage our goals.  We must get Soviet aid by sea with another uprising in Guangzhou.  Our comrades there will receive our support from Nanchang."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 150,
-        "text": "DEFEAT!<br><br>Our battle against the ancient landlords of oppression has been suddenly stopped... now we must again dress ourselves as peasants to avoid being captured by the enemy."
-      }
-    }
-  },
-  {
-    "id": 1,
-    "scenario": "mao2.xml",
-    "startprestige": 0,
-    "intro": "The campaign has reached a point where speed matters as much as firepower. The Chinese revolution is surviving encirclement, invasion, and civil war. The uprising at Guangzhou against the local warlords was successful and access by sea for Soviet aid was secured. Now, comrade Mao from Hunan is planning an assault on the city fortress of Changsha against the local warlords and KMT troops placed at that city. The wider stakes are clear: The uprising was very successfull here in Changsha... A strong result opens the road to KMT Annihilation Campaign. Break the defence before reserves arrive, keep your spearheads supplied, and turn tactical success into an operational collapse.",
-    "outcome": {
-      "briliant": {
-        "goto": 2,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 200,
-        "text": "BRILLIANT VICTORY<br><br>Xion wei!   The uprising was very successfull here in Changsha... Mao isn't as popular as he wanted... but his prestige continues to grow anyway.   We are going to join his troops for now."
-      },
-      "victory": {
-        "goto": 2,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 150,
-        "text": "VICTORY<br><br>Xion wei!   The uprising was very successfull here in Changsha... Mao isn't as popular as he wanted... but his prestige continues to grow anyway.   We are going to join his troops for now."
-      },
-      "tactical": {
-        "goto": 2,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 100,
-        "text": "TACTICAL VICTORY<br><br>Xion wei!   The uprising was successfull here in Changsha... Mao isn't as popular as he wanted... but his prestige continues to grow anyway.   We are going to join his troops for now."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 150,
-        "text": "DEFEAT!<br><br>Our battle against the ancient landlords of oppression has been suddenly stopped... now we must again dress ourselves as peasants to avoid being captured by the enemy."
-      }
-    }
-  },
-  {
-    "id": 2,
-    "scenario": "mao3.xml",
-    "startprestige": 0,
-    "intro": "The initiative is yours, but the enemy will not remain disorganized for long. The Chinese revolution is surviving encirclement, invasion, and civil war. It is well protected and hidden from our enemies by a heavy wilderness and bamboo trees. All the access points to our base are under continuous servalance and our Soviet GRU spies report that the Kuomingtan enemies and the Warlords are planning to eradicate us at once. The wider stakes are clear: Myself, together with Mao and our Komintern advisor Li-De (Otto Braun) are planning the evacuation of Jinggangshan. A strong result opens the road to Long March - Luding Bridge. Concentrate your best units, protect the flanks of the advance, and seize the decisive objectives before the enemy can rebuild a line.",
-    "outcome": {
-      "briliant": {
-        "goto": 3,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 50,
-        "text": "BRILLIANT VICTORY<br><br>Congratulations on your victory.   Myself, together with Mao and our Komintern advisor Li-De (Otto Braun) are planning the evacuation of Jinggangshan.  We will do it quickly while the KMT troops are busy dealing with the Japanese in Manchuria."
-      },
-      "victory": {
-        "goto": 3,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 25,
-        "text": "VICTORY<br><br>Congratulations on your victory.   Myself, together with Mao and our Komintern advisor Li-De (Otto Braun) are planning the evacuation of Jinggangshan.  We will do it quickly while the KMT troops are busy dealing with the Japanese in Manchuria."
-      },
-      "tactical": {
-        "goto": 3,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 25,
-        "text": "VICTORY<br><br>Congratulations on your victory.   Myself, together with Mao and our Komintern advisor Li-De (Otto Braun) are planning the evacuation of Jinggangshan.  We will do it quickly while the KMT troops are busy dealing with the Japanese in Manchuria."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "DEFEAT!<br><br>Our battle against the ancient landlords of oppression has been suddenly stopped... now we must again dress ourselves as peasants to avoid being captured by the enemy."
-      }
-    }
-  },
-  {
-    "id": 3,
-    "scenario": "mao4.xml",
-    "startprestige": 0,
-    "intro": "The initiative is yours, but the enemy will not remain disorganized for long. The Chinese revolution is surviving encirclement, invasion, and civil war. We have escaped from Jingghanshan in our long march to the North. Today the Dadu River lies in front of us, and your task is to cross that river. The wider stakes are clear: We have crossed that damned bridge and many comrades have died, but their lives were not lost, they have contributed to the success of our retreat to save the Revolution. A strong result opens the road to Pingxingguan Pass. Break the defence before reserves arrive, keep your spearheads supplied, and turn tactical success into an operational collapse.",
-    "outcome": {
-      "briliant": {
-        "goto": 4,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 300,
-        "text": "BRILLIANT VICTORY<br><br>Victory!   We have crossed that damned bridge and many comrades have died, but their lives were not lost, they have contributed to the success of our retreat to save the Revolution.  Congratulations for your actions."
-      },
-      "victory": {
-        "goto": 4,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 240,
-        "text": "VICTORY<br><br>Victory!   We have crossed that damned bridge and many comrades have died, but their lives were not lost, they have contributed to the success of our retreat to save the Revolution.  Congratulations for your actions."
-      },
-      "tactical": {
-        "goto": 4,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 190,
-        "text": "TACTICAL VICTORY<br><br>Victory!   We have crossed that damned bridge and many comrades have died, but their lives were not lost, they have contributed to the success of our retreat to save the Revolution.  Congratulations for your actions."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "DEFEAT!<br><br>Our battle against the ancient landlords of oppression has been suddenly stopped... now we must again dress ourselves as peasants to avoid being captured by the enemy."
-      }
-    }
-  },
-  {
-    "id": 4,
-    "scenario": "mao5.xml",
-    "startprestige": 0,
-    "intro": "A narrow window has opened in the enemy line; turn it into a strategic rupture. The Chinese revolution is surviving encirclement, invasion, and civil war. 25-9-1937, Pingxingguan Pass, near Datong, Northern China. Now, the enemy is the foreign imperialist invader, it's time to forget our quarrel with the KMT for a while. The wider stakes are clear: The enemy division is completely scattered and our troops can continue to harass them. A strong result opens the road to 100 Regiments Offensive. Break the defence before reserves arrive, keep your spearheads supplied, and turn tactical success into an operational collapse.",
-    "outcome": {
-      "briliant": {
-        "goto": 5,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 200,
-        "text": "BRILLIANT VICTORY<br><br>Tong gan ku!  The dirty Japanese invaders got a lesson in good old ancient Chinese tactics.  The enemy division is completely scattered and our troops can continue to harass them."
-      },
-      "victory": {
-        "goto": 5,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 150,
-        "text": "VICTORY<br><br>Tong gan ku!  The dirty Japanese invaders got a lesson in good old ancient Chinese tactics.  The enemy division is completely scattered and our troops can continue to harass them."
-      },
-      "tactical": {
-        "goto": 5,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 100,
-        "text": "TACTICAL VICTORY<br><br>Tong gan ku!  The dirty Japanese invaders got a lesson in good old ancient Chinese tactics.  The enemy division is completely scattered and our troops can continue to harass them."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "DEFEAT!<br><br>I can't understand your failure commander.  It seems our estimation of your skills were wrong... the central ChCP commission has demoted you to a private for the remainder of the fighting.  This should erase any capitalist bad manners that you may have acquired."
-      }
-    }
-  },
-  {
-    "id": 5,
-    "scenario": "mao5_2.xml",
-    "startprestige": 0,
-    "intro": "The road ahead is defended, yet a decisive blow here can unhinge the entire front. 100 Regiments Offensive places your command at 1-11-1940, Shanzi, North-Central China. Again, the central committee of the ChCP has agreed to launch another guerrilla assault on the Japanese rearguard in co-operation with our Kuomingtan allies. But China is calling for Chinese action against the invaders, and that's what we are going to carry out. The wider stakes are clear: All the mission objectives were achieved before the Japanese could send reinforcements to this area. A strong result opens the road to Central Plains Breakout. Break the defence before reserves arrive, keep your spearheads supplied, and turn tactical success into an operational collapse.",
-    "outcome": {
-      "briliant": {
-        "goto": 6,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 300,
-        "text": "BRILLIANT VICTORY<br><br>Wan shan!  All the mission objectives were achieved before the Japanese could send reinforcements to this area.  Now your task is to hide your guerrillas and wait for new orders."
-      },
-      "victory": {
-        "goto": 6,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 200,
-        "text": "VICTORY<br><br>Wan shan!  All the mission objectives were achieved before the Japanese could send reinforcements to this area.  Now your task is to hide your guerrillas and wait for new orders."
-      },
-      "tactical": {
-        "goto": 6,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 100,
-        "text": "TACTICAL VICTORY<br><br>Wan shan!  All the mission objectives were achieved before the Japanese could send reinforcements to this area.  Now your task is to hide your guerrillas and wait for new orders."
-      },
-      "lose": {
-        "goto": 6,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 255,
-        "text": "DEFEAT!<br><br>I can't understand your failure commander.  It seems our estimation of your skills were wrong... the central ChCP commission has demoted you to a private for the remainder of the fighting.  This should erase any capitalist bad manners that you may have acquired."
-      }
-    }
-  },
-  {
-    "id": 6,
-    "scenario": "mao6.xml",
-    "startprestige": 0,
-    "intro": "The initiative is yours, but the enemy will not remain disorganized for long. The Chinese revolution is surviving encirclement, invasion, and civil war. I hope the lessons you have reciently taken in the USSR about the modern warfare will be useful for us now. As you know, the Soviet victory agaisnt the Japanese in Manchuria the past year has opened the gate of the regular support of hardware and weapons to us. The wider stakes are clear: We must hope to counterstrike the dirty nationalists as soon as we receive some Soviet aid through Manchuria. Concentrate your best units, protect the flanks of the advance, and seize the decisive objectives before the enemy can rebuild a line.",
-    "outcome": {
-      "briliant": {
-        "goto": 7,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 200,
-        "text": "BRILLIANT VICTORY<br><br>Wan Shan!  We have saved a lot of our men from the Kuomingtan onslaught.  We must hope to counterstrike the dirty nationalists as soon as we receive some Soviet aid through Manchuria."
-      },
-      "victory": {
-        "goto": 7,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 150,
-        "text": "VICTORY<br><br>Wan Shan!  We have saved a lot of our men from the Kuomingtan onslaught.  We must hope to counterstrike the dirty nationalists as soon as we receive some Soviet aid through Manchuria."
-      },
-      "tactical": {
-        "goto": 7,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 100,
-        "text": "TACTICAL VICTORY<br><br>Wan Shan!  We have saved a lot of our men from the Kuomingtan onslaught.  We must hope to counterstrike the dirty nationalists as soon as we receive some Soviet aid through Manchuria."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 150,
-        "text": "DEFEAT!<br><br>I can't understand your failure commander.  It seems our estimation of your skills were wrong... the central ChCP commission has demoted you to a private for the remainder of the fighting.  This should erase any capitalist bad manners that you may have acquired."
-      }
-    }
-  },
-  {
-    "id": 7,
-    "scenario": "mao7.xml",
-    "startprestige": 0,
-    "intro": "The campaign has reached a point where speed matters as much as firepower. The Chinese revolution is surviving encirclement, invasion, and civil war. Your actions were enough to support your upgrade decided in the ChCP council... Your first assignment as PLA's commander will be in the Jilin province, our base there is placed at Linjiang. The wider stakes are clear: In addition, we are now in a good position to attack Changchun, Jilin and Siping during the next summer offensive. A strong result opens the road to Summer Offensive 1947. Break the defence before reserves arrive, keep your spearheads supplied, and turn tactical success into an operational collapse.",
-    "outcome": {
-      "briliant": {
-        "goto": 8,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 200,
-        "text": "BRILLIANT VICTORY<br><br>Thanks to your good work, our base at Linjiang is now safe.  In addition, we are now in a good position to attack Changchun, Jilin and Siping during the next summer offensive.  We will wait for good weather to arrive in Manchuria."
-      },
-      "victory": {
-        "goto": 8,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 150,
-        "text": "VICTORY<br><br>Thanks to your good work, our base at Linjiang is now safe.  In addition, we are now in a good position to attack Changchun, Jilin and Siping during the next summer offensive.  We will wait for good weather to arrive in Manchuria."
-      },
-      "tactical": {
-        "goto": 8,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 100,
-        "text": "TACTICAL VICTORY<br><br>Thanks to your good work, our base at Linjiang is now safe.  In addition, we are now in a good position to attack Changchun, Jilin and Siping during the next summer offensive.  We will wait for good weather to arrive in Manchuria."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 150,
-        "text": "DEFEAT!<br><br>I can't understand your failure commander.  It seems our estimation of your skills were wrong... the central ChCP commission has demoted you to a private for the remainder of the fighting.  This should erase any capitalist bad manners that you may have acquired."
-      }
-    }
-  },
-  {
-    "id": 8,
-    "scenario": "mao8.xml",
-    "startprestige": 0,
-    "intro": "The campaign has reached a point where speed matters as much as firepower. The Chinese revolution is surviving encirclement, invasion, and civil war. Orders from the central ChCP comitte: it's time to capture Changchun, Siping, and Jilin to complete the conquest of Manchuria. The success on this offensive is extremely important, because it would allow us to undertake further penetrations on to Beijing and Nanjing in the next months. The wider stakes are clear: This will be a big problem for the Nationalists, since their communications by train or by road from Manchuria to Beijing are now stopped. Concentrate your best units, protect the flanks of the advance, and seize the decisive objectives before the enemy can rebuild a line.",
-    "outcome": {
-      "briliant": {
-        "goto": 9,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 500,
-        "text": "BRILLIANT VICTORY<br><br>Congratulations!, Changchun, Jilin and Siping have been captured. This will be a big problem for the Nationalists, since their communications by train or by road from Manchuria to Beijing are now stopped."
-      },
-      "victory": {
-        "goto": 9,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 450,
-        "text": "VICTORY<br><br>Congratulations!, Changchun, Jilin and Siping have been captured. This will be a big problem for the Nationalists, since their communications by train or by road from Manchuria to Beijing are now stopped."
-      },
-      "tactical": {
-        "goto": 9,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 375,
-        "text": "TACTICAL VICTORY<br><br>Congratulations!, Changchun, Jilin and Siping have been captured. This will be a big problem for the Nationalists, since their communications by train or by road from Manchuria to Beijing are now stopped."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 150,
-        "text": "DEFEAT!<br><br>I can't understand your failure commander.  It seems our estimation of your skills were wrong... the central ChCP commission has demoted you to a private for the remainder of the fighting.  This should erase any capitalist bad manners that you may have acquired."
-      }
-    }
-  },
-  {
-    "id": 9,
-    "scenario": "mao9.xml",
-    "startprestige": 0,
-    "intro": "The road ahead is defended, yet a decisive blow here can unhinge the entire front. The Chinese revolution is surviving encirclement, invasion, and civil war. Our victories at Changchun and Siping have decimated their men, commander, and you must put an end to the nationalist resistance in Manchuria. Your mission is to secure the communications between our base at Siping and our groups in the South, near to Shenyang. The wider stakes are clear: I'm sure we will be celebrating our victory over Chiang Kai Shek's troops during the coming year of 1948. A strong result opens the road to Pyongyang Liberation [Korean War]. Break the defence before reserves arrive, keep your spearheads supplied, and turn tactical success into an operational collapse.",
-    "outcome": {
-      "briliant": {
-        "goto": 10,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 4500,
-        "text": "BRILLIAN VICTORY<br><br>Wan shan!  The KMT have suffered a great defeat.  I'm sure we will be celebrating our victory over Chiang Kai Shek's troops during the coming year of 1948."
-      },
-      "victory": {
-        "goto": 10,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 3200,
-        "text": "VICTORY<br><br>Wan shan!  The KMT have suffered a great defeat.  I'm sure we will be celebrating our victory over Chiang Kai Shek's troops during the coming year of 1948."
-      },
-      "tactical": {
-        "goto": 10,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 2700,
-        "text": "TACTICAL VICTORY<br><br>Wan shan!  The KMT have suffered a great defeat.  I'm sure we will be celebrating our victory over Chiang Kai Shek's troops during the coming year of 1948."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 150,
-        "text": "DEFEAT!<br><br>I can't understand your failure commander.  It seems our estimation of your skills were wrong... the central ChCP commission has demoted you to a private for the remainder of the fighting.  This should erase any capitalist bad manners that you have acquired."
-      }
-    }
-  },
-  {
-    "id": 10,
-    "scenario": "mao11.xml",
-    "startprestige": 0,
-    "intro": "A narrow window has opened in the enemy line; turn it into a strategic rupture. The Chinese revolution is surviving encirclement, invasion, and civil war. 25-11-1950 Chongchon River, near the Chinese border. Your next mission is highly secret and will take you to the Sino-Korean border. The wider stakes are clear: Pyongyang is again a communist stronghold, and we must continue to pursue and annihilate the UN forces. A strong result opens the road to Chosin Reservoir [Korean War]. Break the defence before reserves arrive, keep your spearheads supplied, and turn tactical success into an operational collapse.",
-    "outcome": {
-      "briliant": {
-        "goto": 11,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "BRILLIANT VICTORY<br><br>Wan Shan!  Did you see how the capitalists are escaping from us??   Pyongyang is again a communist stronghold, and we must continue to pursue and annihilate the UN forces."
-      },
-      "victory": {
-        "goto": 11,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "VICTORY<br><br>Wan Shan!  Did you see how the capitalists are escaping from us??   Pyongyang is again a communist stronghold, and we must continue to pursue and annihilate the UN forces."
-      },
-      "tactical": {
-        "goto": 11,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "TACTICAL VICTORY<br><br>Wan Shan!  Did you see how the capitalists are escaping from us??   Pyongyang is again a communist stronghold, and we must continue to pursue and annihilate the UN forces."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "DEFEAT!<br><br>I can't understand your failure commander.  It seems our estimation of your skills were wrong... the central ChCP commission has demoted you to a private for the remainder of the fighting.  This should erase any capitalist bad manners that you may have acquired."
-      }
-    }
-  },
-  {
-    "id": 11,
-    "scenario": "mao12.xml",
-    "startprestige": 0,
-    "intro": "A narrow window has opened in the enemy line; turn it into a strategic rupture. The Chinese revolution is surviving encirclement, invasion, and civil war. 27-11-1950 Chosin Reservoir, N of North Korea. Your quick advance has created a salient in the enemy lines, like the one at the Chosin Reservoir. The wider stakes are clear: The North Americans have received a stinging lesson on the power of the People's War. A strong result opens the road to Hungnam Pocket [Korean War]. Break the defence before reserves arrive, keep your spearheads supplied, and turn tactical success into an operational collapse.",
-    "outcome": {
-      "briliant": {
-        "goto": 12,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 100,
-        "text": "BRILLIANT VICTORY<br><br>Congratulations, the way to the South is open.  The North Americans have received a stinging lesson on the power of the People's War."
-      },
-      "victory": {
-        "goto": 12,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 90,
-        "text": "VICTORY<br><br>Congratulations, the way to the South is open.  The North Americans have received a stinging lesson on the power of the People's War."
-      },
-      "tactical": {
-        "goto": 12,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 80,
-        "text": "TACTICAL VICTORY<br><br>Congratulations, the way to the South is open.  The North Americans have received a stinging lesson on the power of the People's War."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 150,
-        "text": "DEFEAT!<br><br>I can't understand your failure commander.  It seems our estimation of your skills were wrong... the central ChCP commission has demoted you to a private for the remainder of the fighting.  This should erase any capitalist bad manners that you may have acquired."
-      }
-    }
-  },
-  {
-    "id": 12,
-    "scenario": "mao13.xml",
-    "startprestige": 0,
-    "intro": "This is not a rout unless you allow it to become one. The Chinese revolution is surviving encirclement, invasion, and civil war. Again, your smashing attack has left the enemy forces on the ground isolated. This is the situation at Hungnam. The wider stakes are clear: VICTORY Some UN forces have escaped from Hungnam, but at least we can now continue with our advance towards Seoul. A strong result opens the road to Seoul: UN Counterattack. Every surviving veteran will matter in the battles ahead, so retreat with purpose and destroy what the enemy cannot be allowed to capture.",
-    "outcome": {
-      "briliant": {
-        "goto": 13,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 200,
-        "text": "BRILLIANT VICTORY<br><br>You have crushed the UN forces with a smashing victory!  Now, we can continue with our advance towards Seoul."
-      },
-      "victory": {
-        "goto": 13,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 175,
-        "text": "VICTORY<br><br>Some UN forces have escaped from Hungnam, but at least we can now continue with our advance towards Seoul."
-      },
-      "tactical": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "TACTICAL VICTORY<br><br>Most of the UN forces have escaped and you have suffered heavy causalities.  You, commander, will meet a People's Court to determine if you are a capitalist sympathizer."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 150,
-        "text": "DEFEAT!<br><br>I can't understand your failure commander.  It seems our estimation of your skills were wrong... the central ChCP commission has demoted you to a private for the remainder of the fighting.  This should erase any capitalist bad manners that you may have acquired."
-      }
-    }
-  },
-  {
-    "id": 13,
-    "scenario": "mao13_2.xml",
-    "startprestige": 0,
-    "intro": "A city is not captured in a single blow; it is taken district by district under smoke and fire. The Chinese revolution is surviving encirclement, invasion, and civil war. 25-1-1951 The lightning advances of December and early January provide us with the opportunity to easily retake Seoul for the North Koreans. Our supply lines to China are long and are constantly being bombed and strafed by the UN air force. The wider stakes are clear: You have permission to retreat your armies behind the Han river to avoid future losses. Your result determines whether the campaign continues toward Pusan Revisited or Spring Offensive [Korean War]. Secure the approaches, protect your supply route, and reduce the enemy's positions one district at a time.",
-    "outcome": {
-      "briliant": {
-        "goto": 15,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 800,
-        "text": "BRILLIANT VICTORY<br><br>The enemy offensive has been completely defeated.  Seoul is now securely in our hands, Kim-Il-Sung is really happy with your actions.  Now, let's complete the communist victory in Korea."
-      },
-      "victory": {
-        "goto": 15,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 670,
-        "text": "VICTORY<br><br>The enemy offensive has been completely defeated.  Seoul is now securely in our hands, Kim-Il-Sung is really happy with your actions.  Now, let's complete the communist victory in Korea."
-      },
-      "tactical": {
-        "goto": 14,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 500,
-        "text": "TACTICAL VICTORY<br><br>We have stopped the offensive, but our casualities have been too high.  You have permission to retreat your armies behind the Han river to avoid future losses."
-      },
-      "lose": {
-        "goto": 14,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "DEFEAT!<br><br>I can't understand your failure commander.  It seems our estimation of your skills were wrong... the central ChCP commission has demoted you to a private for the remainder of the fighting.  This should erase any capitalist bad manners that you may have acquired."
-      }
-    }
-  },
-  {
-    "id": 14,
-    "scenario": "mao14.xml",
-    "startprestige": 0,
-    "intro": "Urban ground compresses the front and magnifies every mistake. The Chinese revolution is surviving encirclement, invasion, and civil war. It's time to go back to Seoul. We have deployed a large number of PLA and KPA units Northwards toward Seoul and with your armies nothing will stop us in our drive. The wider stakes are clear: The North Korean flag again flies over the city of Seoul. Your result determines whether the campaign continues toward Pusan Revisited or Taiwan Strait - Nuclear Crisis. Use artillery and infantry together, isolate strongpoints, and avoid wasting elite units in unsupported assaults.",
-    "outcome": {
-      "briliant": {
-        "goto": 15,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 200,
-        "text": "BRILLIANT VICTORY<br><br>Perfect!  The North Korean flag again flies over the city of Seoul.  Kim-Il-Sung is really pleased with you.   You have become a hero for the Korean people."
-      },
-      "victory": {
-        "goto": 16,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 150,
-        "text": "VICTORY<br><br>Perfect!  The North Korean flag again flies over the city of Seoul.  Kim-Il-Sung is really pleased with you.   You have become a hero for the Korean people.   Anyway we are shortly going to open the negotiations with the UN forces to terminate this conflict."
-      },
-      "tactical": {
-        "goto": 16,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 100,
-        "text": "TACTICAL VICTORY<br><br>Perfect!  The North Korean flag again flies over the city of Seoul.  Kim-Il-Sung is really pleased with you.   You have become a hero for the Korean people.   Anyway we are shortly going to open the negotiations with the UN forces to terminate this conflict."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 150,
-        "text": "DEFEAT!<br><br>I can't understand your failure commander.  It seems our estimation of your skills were wrong... the central ChCP commission has demoted you to a private for the remainder of the fighting.  This should erase any capitalist bad manners that you may have acquired."
-      }
-    }
-  },
-  {
-    "id": 15,
-    "scenario": "mao14_2.xml",
-    "startprestige": 0,
-    "intro": "A narrow window has opened in the enemy line; turn it into a strategic rupture. Pusan Revisited places your command at 27-6-1951 Pusan, South Korea. Just like last year, the UN forces are again encircled on the Pusan Perimeter. Now, with the bulk of the North Korean forces are guarding the rear, we can assault the enemy positions without the fear of an assault on our back like last years landings at Inch'on. The wider stakes are clear: Korea is now entirely unified under the communist flag, and Kim-Il-Sung has been proclaimed chairman of the People's Republic of Korea at Seoul. Momentum is your greatest asset: pause too long and a breakthrough becomes another costly frontal battle.",
-    "outcome": {
-      "briliant": {
-        "goto": 16,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "BRILLIANT VICTORY<br><br>Congratulations comrade!  Korea is now entirely unified under the communist flag, and Kim-Il-Sung has been proclaimed chairman of the People's Republic of Korea at Seoul. This is an enormous victory for the communist world, there have also been celebrations at other communist capitals like Moscow, East-Berlin, and of course Beijing.<br><br>Now you are a hero for the People's Republic of China and for all the workers around the world."
-      },
-      "victory": {
-        "goto": 16,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "VICTORY<br><br>Congratulations comrade!  Korea is now entirely unified under the communist flag, and Kim-Il-Sung has been proclaimed chairman of the People's Republic of Korea at Seoul. This is an enormous victory for the communist world, there have also been celebrations at other communist capitals like Moscow, East-Berlin, and of course Beijing.<br><br>Now you are a hero for the People's Republic of China and for all the workers around the world."
-      },
-      "tactical": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "DEFEAT<br><br>This was a disaster!  The arguments formerly proposed by General McArthur have finally been accepted by Washington.  A nuclear attack was carried out over the city of Nanjing, killing millions of Chinese people.  The soviets have declined to give us any nuclear help and now we must accept the peace imposed by the West."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "DEFEAT<br><br>This was a disaster!  The arguments formerly proposed by General McArthur have finally been accepted by Washington.  A nuclear attack was carried out over the city of Nanjing, killing millions of Chinese people.  The soviets have declined to give us any nuclear help and now we must accept the peace imposed by the West."
-      }
-    }
-  },
-  {
-    "id": 16,
-    "scenario": "mao15.xml",
-    "startprestige": 0,
-    "intro": "A narrow window has opened in the enemy line; turn it into a strategic rupture. The Chinese revolution is surviving encirclement, invasion, and civil war. As one of the heroes of the PRC the High Command of the PLA has a new mission for you. The new North American government has retired the fleet that was guarding the Taiwan Strait. The wider stakes are clear: VICTORY Chiang Kai Shek has escaped from Taipei thanks to his American friends, but the whole Taiwanese island plus other minor islands are now part of the PRC. A strong result opens the road to Sino - Soviet Incident. Concentrate your best units, protect the flanks of the advance, and seize the decisive objectives before the enemy can rebuild a line.",
-    "outcome": {
-      "briliant": {
-        "goto": 17,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 200,
-        "text": "BRILLIANT VICTORY<br><br>Chiang Kai Shek has escaped from Taipei thanks to his American friends, but the whole Taiwanese island plus other minor islands are now part of the PRC.  The Civil War is over and all the Chinese territories are now unified under the red stars flag!  Comrade Mao is pleased with you, the hero of the PRC."
-      },
-      "victory": {
-        "goto": 17,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 150,
-        "text": "VICTORY<br><br>Chiang Kai Shek has escaped from Taipei thanks to his American friends, but the whole Taiwanese island plus other minor islands are now part of the PRC.  The Civil War is over and all the Chinese territories are now unified under the red stars flag!  Comrade Mao is pleased with you, the hero of the PRC."
-      },
-      "tactical": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "DEFEAT<br><br>This was a disaster!  The arguments formerly proposed by General McArthur have finally been accepted by Washington.  A nuclear attack was carried out over the city of Nanjing, killing millions of Chinese people.  The soviets have declined to give us any nuclear help and now we must accept the peace imposed by the West."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "DEFEAT<br><br>This was a disaster... the arguments formerly proposed by General McArthur have finally been accepted by Washington.  A nuclear attack has been carried out over the city of Nanjing, killing millions of Chinese people... The soviets have declined to give us any nuclear help and now we must accept the imposed Western peace."
-      }
-    }
-  },
-  {
-    "id": 17,
-    "scenario": "mao16.xml",
-    "startprestige": 0,
-    "intro": "The campaign has reached a point where speed matters as much as firepower. The Chinese revolution is surviving encirclement, invasion, and civil war. 1-10-1955, Amur river, Sino-Soviet border, near Khabarovsk, Far Eastern Siberia. A chain of unfortunate incidents with the Soviets along the Chinese - Soviet border has opened the way for the outbreak of full scale military operations. The wider stakes are clear: I know you are the greatest hero of the PRC and the KRC and I have a mission for you from the Kremlin. A strong result opens the road to Great Leap Forward. Concentrate your best units, protect the flanks of the advance, and seize the decisive objectives before the enemy can rebuild a line.",
-    "outcome": {
-      "briliant": {
-        "goto": 18,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 200,
-        "text": "BRILLIANT VICTORY<br><br>Ahh, comrade Commander!  Do you like Khabarovsk?  It's a pretty city, isn't it?   I know you are the greatest hero of the PRC and the KRC and I have a mission for you from the Kremlin.  I have to give you a letter from Moscow but... well anyway this is a good situation to do it.  Err... yes, but first, let's negotiate the surrender of my forces in this sector."
-      },
-      "victory": {
-        "goto": 18,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 150,
-        "text": "VICTORY<br><br>Ahh, comrade Commander!  Do you like Khabarovsk?  It's a pretty city, isn't it?   I know you are the greatest hero of the PRC and the KRC and I have a mission for you from the Kremlin.  I have to give you a letter from Moscow but... well anyway this is a good situation to do it.  Err... yes, but first, let's negotiate the surrender of my forces in this sector."
-      },
-      "tactical": {
-        "goto": 18,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 100,
-        "text": "TACTICAL VICTORY<br><br>Ahh, comrade Commander!  Do you like Khabarovsk?  It's a pretty city, isn't it?   I know you are the greatest hero of the PRC and the KRC and I have a mission for you from the Kremlin.  I have to give you a letter from Moscow but... well anyway this is a good situation to do it.  Err... yes, but first, let's negotiate the surrender of my forces in this sector."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "DEFEAT!<br><br>I can't understand your failure commander.  It seems our estimation of your skills were wrong... the central ChCP commission has demoted you to a private for the remainder of the fighting.  This should erase any capitalist bad manners that you may have acquired."
-      }
-    }
-  },
-  {
-    "id": 18,
-    "scenario": "mao17.xml",
-    "startprestige": 0,
-    "intro": "A narrow window has opened in the enemy line; turn it into a strategic rupture. The Chinese revolution is surviving encirclement, invasion, and civil war. As our men from the KGB have told you, we are ready to support you, if you finally decide to undertake a coup against Mao Zedong and his reformed communism. We need to take China back to the right and true communist way. The wider stakes are clear: You are the new Premier of the People's Republic of China. Concentrate your best units, protect the flanks of the advance, and seize the decisive objectives before the enemy can rebuild a line.",
-    "outcome": {
-      "briliant": {
-        "goto": 254,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "BRILLIANT VICTORY<br><br>Congratulations comrade!  You are the new Premier of the People's Republic of China. Mao has disappeared and we know he won't be back, hahaha!  I hope your understanding of the communist doctrine will be the correct one.  That would be the best for the communist world."
-      },
-      "victory": {
-        "goto": 254,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "VICTORY<br><br>Congratulations comrade!  You are the new Premier of the People's Republic of China. Mao has disappeared and we know he won't be back, hahaha!  I hope your understanding of the communist doctrine will be the correct one.  That would be the best for the communist world."
-      },
-      "tactical": {
-        "goto": 254,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "TACTICAL VICTORY<br><br>Congratulations comrade!  You are the new Premier of the People's Republic of China. Mao has disappeared and we know he won't be back, hahaha!  I hope your understanding of the communist doctrine will be the correct one.  That would be the best for the communist world."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "DEFEAT!<br><br>AH!  You dirty rebel and traitor!.  You, the former hero of the People's Republic of China are now a coward capitalist traitor.  Your execution will be soon be celebrated in Tiananmen Square.<br><br>I was completely wrong about you and maybe also with your friend Zhou, hmmm or maybe not.  I think China deserves a return to the true Revolution to avoid the capitalist deformation that you have suffered."
-      }
-    }
+ {
+  "id": 0,
+  "scenario": "mao1.xml",
+  "startprestige": 0,
+  "intro": "Nanchang Uprising<br><br>1-8-1927, Nanchang, Jiangxi, SE China.<br><br>[Your speech to your men before the action]<br><br>Brave soldiers under my command!  The so-called ''united front'' with the Kuomingtan is over.  Today we will join the revolution against the ancient oppressors of the Chinese people and against the likes of Chiang-Kai-Shek.  Some of our comrades in other army units will also join us in our glorious uprising against the enemies of the people.  They are just now coming here to help us in the assault on the old city of Nanchang!  The end of the oppression, the capitalism, and the humiliations begins here on the West bank of the Gan River!  We are surrounded by the local warlords KMT troops, but our comrades will attack them from different directions, and the victory will be ours!<br><br>Men long live the revolution!<br><br>[Applause from the crowd..]",
+  "outcome": {
+   "briliant": {
+    "goto": 1,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 100,
+    "text": "BRILLIANT VICTORY<br><br>The uprising was successful and Nanchang is ours!  This has become the first major stronghold of Marxism in China.  Now it is time to create a Revolutionary Committee in this city to manage our goals.  We must get Soviet aid by sea with another uprising in Guangzhou.  Our comrades there will receive our support from Nanchang."
+   },
+   "victory": {
+    "goto": 1,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 90,
+    "text": "VICTORY<br><br>The uprising was successful and Nanchang is ours!  This has become the first major stronghold of Marxism in China.  Now it is time to create a Revolutionary Committee in this city to manage our goals.  We must get Soviet aid by sea with another uprising in Guangzhou.  Our comrades there will receive our support from Nanchang."
+   },
+   "tactical": {
+    "goto": 1,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 80,
+    "text": "TACTICAL VICTORY<br><br>The uprising was successful and Nanchang is ours!  This has become the first major stronghold of Marxism in China.  Now it is time to create a Revolutionary Committee in this city to manage our goals.  We must get Soviet aid by sea with another uprising in Guangzhou.  Our comrades there will receive our support from Nanchang."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 150,
+    "text": "DEFEAT!<br><br>Our battle against the ancient landlords of oppression has been suddenly stopped... now we must again dress ourselves as peasants to avoid being captured by the enemy."
+   }
   }
+ },
+ {
+  "id": 1,
+  "scenario": "mao2.xml",
+  "startprestige": 0,
+  "intro": "Autumn Harvest Uprising<br><br>7-9-1927, Changsha, Hunan, South-Central China.<br><br>The uprising at Guangzhou against the local warlords was successful and access by sea for Soviet aid was secured.  Now, comrade Mao from Hunan is planning an assault on the city fortress of Changsha against the local warlords and KMT troops placed at that city. The central Chinese Communist Party director dislikes this operation, but we are going to dispatch your troops there to help our comrades in the offensive.  Personally, I don't want the prestige of Mao Zedong to overly influence the ChCP.  He seems to gain more power each day.<br><br>Yun qi!",
+  "outcome": {
+   "briliant": {
+    "goto": 2,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 200,
+    "text": "BRILLIANT VICTORY<br><br>Xion wei!   The uprising was very successfull here in Changsha... Mao isn't as popular as he wanted... but his prestige continues to grow anyway.   We are going to join his troops for now."
+   },
+   "victory": {
+    "goto": 2,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 150,
+    "text": "VICTORY<br><br>Xion wei!   The uprising was very successfull here in Changsha... Mao isn't as popular as he wanted... but his prestige continues to grow anyway.   We are going to join his troops for now."
+   },
+   "tactical": {
+    "goto": 2,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 100,
+    "text": "TACTICAL VICTORY<br><br>Xion wei!   The uprising was successfull here in Changsha... Mao isn't as popular as he wanted... but his prestige continues to grow anyway.   We are going to join his troops for now."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 150,
+    "text": "DEFEAT!<br><br>Our battle against the ancient landlords of oppression has been suddenly stopped... now we must again dress ourselves as peasants to avoid being captured by the enemy."
+   }
+  }
+ },
+ {
+  "id": 2,
+  "scenario": "mao3.xml",
+  "startprestige": 0,
+  "intro": "KMT Anihilation Campaign<br><br>10-11-1930, Jinggangshan mountains, Jiangxi, SE China.<br><br>Comrade Mao has established a \"Soviet Commune'' here in the Jinggangshan Mountains.  It is well protected and hidden from our enemies by a heavy wilderness and bamboo trees.  All the access points to our base are under continuous servalance and our Soviet GRU spies report that the Kuomingtan enemies and the Warlords are planning to eradicate us at once.  They are supported by German advisors who think the best way to eliminate us from here is the so-called strategy ''ferocious walls''.  They are blocking our exits by constructing blockhouses.  We will resist their attacks as long as possible.  Mao thinks we will leave here soon and go North which is much closer to the Soviet border.<br><br>Our Soviet advisors suggest that we let the enemy troops pass through the mountains and then annihilate them on a familiar battlefield.<br><br>Yu qi.",
+  "outcome": {
+   "briliant": {
+    "goto": 3,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 50,
+    "text": "BRILLIANT VICTORY<br><br>Congratulations on your victory.   Myself, together with Mao and our Komintern advisor Li-De (Otto Braun) are planning the evacuation of Jinggangshan.  We will do it quickly while the KMT troops are busy dealing with the Japanese in Manchuria."
+   },
+   "victory": {
+    "goto": 3,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 25,
+    "text": "VICTORY<br><br>Congratulations on your victory.   Myself, together with Mao and our Komintern advisor Li-De (Otto Braun) are planning the evacuation of Jinggangshan.  We will do it quickly while the KMT troops are busy dealing with the Japanese in Manchuria."
+   },
+   "tactical": {
+    "goto": 3,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 25,
+    "text": "VICTORY<br><br>Congratulations on your victory.   Myself, together with Mao and our Komintern advisor Li-De (Otto Braun) are planning the evacuation of Jinggangshan.  We will do it quickly while the KMT troops are busy dealing with the Japanese in Manchuria."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "DEFEAT!<br><br>Our battle against the ancient landlords of oppression has been suddenly stopped... now we must again dress ourselves as peasants to avoid being captured by the enemy."
+   }
+  }
+ },
+ {
+  "id": 3,
+  "scenario": "mao4.xml",
+  "startprestige": 0,
+  "intro": "Long March - Luding Bridge<br><br>29-5-1935, Luding, Sichuan, Central China.<br><br>Welcome again commander.  We have escaped from Jingghanshan in our long march to the North.  Today the Dadu River lies in front of us, and your task is to cross that river.  The problem is, we have in front the city of Luding, which is in the hands of the local pro-KMT Warlord Liu Wenhui.  I see the chains bridge over the Dadu River is on fire, but our long march can't be stopped!  Go ahead soldier!<br><br>[Historically the crossing of the Dadu River by the chains bridge on fire is just a legend.  During the 80's, some PRC sources admitted the ChCP troops crossed the bridge without too many problems because the local warlord willingness of fight was not very high... like most other warlords.]",
+  "outcome": {
+   "briliant": {
+    "goto": 4,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 300,
+    "text": "BRILLIANT VICTORY<br><br>Victory!   We have crossed that damned bridge and many comrades have died, but their lives were not lost, they have contributed to the success of our retreat to save the Revolution.  Congratulations for your actions."
+   },
+   "victory": {
+    "goto": 4,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 240,
+    "text": "VICTORY<br><br>Victory!   We have crossed that damned bridge and many comrades have died, but their lives were not lost, they have contributed to the success of our retreat to save the Revolution.  Congratulations for your actions."
+   },
+   "tactical": {
+    "goto": 4,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 190,
+    "text": "TACTICAL VICTORY<br><br>Victory!   We have crossed that damned bridge and many comrades have died, but their lives were not lost, they have contributed to the success of our retreat to save the Revolution.  Congratulations for your actions."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "DEFEAT!<br><br>Our battle against the ancient landlords of oppression has been suddenly stopped... now we must again dress ourselves as peasants to avoid being captured by the enemy."
+   }
+  }
+ },
+ {
+  "id": 4,
+  "scenario": "mao5.xml",
+  "startprestige": 0,
+  "intro": "Pingxingguan Pass<br><br>25-9-1937, Pingxingguan Pass, near Datong, Northern China.<br><br>As you know, we have signed an alliance with our former enemies, the nationalists.  Now, the enemy is the foreign imperialist invader, it's time to forget our quarrel with the KMT for a while.  We are united with them against a common enemy: the Japanese Empire.  While the KMT troops are dealing with the Japanese armies in other parts of China, our guerrillas have been surrounded by the enemy advance in Manchuria and other many places in Northern China, and you (yes, you), a veteran ChCP commander will show the dirty invaders a bit of the people's revolution power.  We must harass the Japanese rearguard as much as possible without taking too many losses.  I'm sure the current KMT-ChCP alliance will not long too much longer.<br><br>This is your duty commander; the 5th Japanese division is driving south towards the Pingxingguan Pass. You must block their path, and then, annihilate all the Japanese, using your famous guerrilla tactics.",
+  "outcome": {
+   "briliant": {
+    "goto": 5,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 200,
+    "text": "BRILLIANT VICTORY<br><br>Tong gan ku!  The dirty Japanese invaders got a lesson in good old ancient Chinese tactics.  The enemy division is completely scattered and our troops can continue to harass them."
+   },
+   "victory": {
+    "goto": 5,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 150,
+    "text": "VICTORY<br><br>Tong gan ku!  The dirty Japanese invaders got a lesson in good old ancient Chinese tactics.  The enemy division is completely scattered and our troops can continue to harass them."
+   },
+   "tactical": {
+    "goto": 5,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 100,
+    "text": "TACTICAL VICTORY<br><br>Tong gan ku!  The dirty Japanese invaders got a lesson in good old ancient Chinese tactics.  The enemy division is completely scattered and our troops can continue to harass them."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "DEFEAT!<br><br>I can't understand your failure commander.  It seems our estimation of your skills were wrong... the central ChCP commission has demoted you to a private for the remainder of the fighting.  This should erase any capitalist bad manners that you may have acquired."
+   }
+  }
+ },
+ {
+  "id": 5,
+  "scenario": "mao5_2.xml",
+  "startprestige": 0,
+  "intro": "100 Regiments Offensive<br><br>1-11-1940, Shanzi, North-Central China<br><br>Again, the central committee of the ChCP has agreed to launch another guerrilla assault on the Japanese rearguard in co-operation with our Kuomingtan ''allies''.  Comrade Mao dislikes this attack, but China is calling for Chinese action against the invaders, and that's what we are going to carry out.  The main objectives must be the capture of enemy resources present in your area: the coal mines and factories.  Your battle plan includes some cities and don't forget to cut all enemy lines of communication.<br><br>Act as quick as possible, the Japanese are going to use all available means to defeat any try to stop their penetration into China.<br><br>Fu qi!",
+  "outcome": {
+   "briliant": {
+    "goto": 6,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 300,
+    "text": "BRILLIANT VICTORY<br><br>Wan shan!  All the mission objectives were achieved before the Japanese could send reinforcements to this area.  Now your task is to hide your guerrillas and wait for new orders."
+   },
+   "victory": {
+    "goto": 6,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 200,
+    "text": "VICTORY<br><br>Wan shan!  All the mission objectives were achieved before the Japanese could send reinforcements to this area.  Now your task is to hide your guerrillas and wait for new orders."
+   },
+   "tactical": {
+    "goto": 6,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 100,
+    "text": "TACTICAL VICTORY<br><br>Wan shan!  All the mission objectives were achieved before the Japanese could send reinforcements to this area.  Now your task is to hide your guerrillas and wait for new orders."
+   },
+   "lose": {
+    "goto": 6,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 255,
+    "text": "DEFEAT!<br><br>I can't understand your failure commander.  It seems our estimation of your skills were wrong... the central ChCP commission has demoted you to a private for the remainder of the fighting.  This should erase any capitalist bad manners that you may have acquired."
+   }
+  }
+ },
+ {
+  "id": 6,
+  "scenario": "mao6.xml",
+  "startprestige": 0,
+  "intro": "Central Plains Breakout<br><br>22-6-1946, Wuhan, Hubei province.<br><br>Nice to see you again... I hope the lessons you have reciently taken in the USSR about the modern warfare will be useful for us now. Well, please sit down, I have some information to bring you about the current situation.<br><br>As you know, the Soviet victory agaisnt the Japanese in Manchuria the past year has opened the gate of the regular support of hardware and weapons to us. Now, the ChCP troops are better equipped and trained. The Soviets have given us some Japanese captured equipment from Manchuria, like tanks and artillery and the Japanese prisoners are training our brave men. They had no choice: work in Siberia or work with us!.<br><br>However, it's still soon to enjoy our new training and equipment... the bad news?, well the mission of the US general George Marshall to pacificate China and reach an agreement between us and the KMT is a clear failure. The Kuomingtan have taken advantage of the time just to rearm their units, and now they are clearly taking positions around our areas, probably to anihilate us like in the 30's. In case of the outbreak of the war... your mission is to drive your units in Wuhan to the West, to join the central ChCP units in Central China.",
+  "outcome": {
+   "briliant": {
+    "goto": 7,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 200,
+    "text": "BRILLIANT VICTORY<br><br>Wan Shan!  We have saved a lot of our men from the Kuomingtan onslaught.  We must hope to counterstrike the dirty nationalists as soon as we receive some Soviet aid through Manchuria."
+   },
+   "victory": {
+    "goto": 7,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 150,
+    "text": "VICTORY<br><br>Wan Shan!  We have saved a lot of our men from the Kuomingtan onslaught.  We must hope to counterstrike the dirty nationalists as soon as we receive some Soviet aid through Manchuria."
+   },
+   "tactical": {
+    "goto": 7,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 100,
+    "text": "TACTICAL VICTORY<br><br>Wan Shan!  We have saved a lot of our men from the Kuomingtan onslaught.  We must hope to counterstrike the dirty nationalists as soon as we receive some Soviet aid through Manchuria."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 150,
+    "text": "DEFEAT!<br><br>I can't understand your failure commander.  It seems our estimation of your skills were wrong... the central ChCP commission has demoted you to a private for the remainder of the fighting.  This should erase any capitalist bad manners that you may have acquired."
+   }
+  }
+ },
+ {
+  "id": 7,
+  "scenario": "mao7.xml",
+  "startprestige": 0,
+  "intro": "Linjiang Campaign<br><br>8-3-1947, Jilin Province, NE China.<br><br>Congratulations on your promotion to commander of our reciently created People's Liberation Army!. Your actions were enough to support your upgrade decided in the ChCP council... Mao Zedong it's also pleased with you as PLA's general.<br><br>Your first assignment as PLA's commander will be in the Jilin province, our base there is placed at Linjiang. The situation in Manchuria is complex. We need Manchuria for some reasons, first, it's border is close with the USSR and the support we are receiving from the Soviets, and second, Manchuria is the most industrialised area in the whole China, we need the resources from here, and we need to avoid the profits the Kuomingtang can get from here.<br><br>General, deploy your forces along the front lines we have reached in the past months. Be careful, the lines are not safe; althought we are near to Jilin, Changchun and Siping, the KMT forces still keep a strong attack axis near to our base at Linjiang. The mission will be a complete success if you can besiege Changchun and Jilin, and stop the KMT's assault on Linjiang, GRU spies reports our enemies will also try to recapture the section of the Beijing-Changchun railroad, which is also now our main supply line, protect it at any costs!<br><br>Fu qi!.",
+  "outcome": {
+   "briliant": {
+    "goto": 8,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 200,
+    "text": "BRILLIANT VICTORY<br><br>Thanks to your good work, our base at Linjiang is now safe.  In addition, we are now in a good position to attack Changchun, Jilin and Siping during the next summer offensive.  We will wait for good weather to arrive in Manchuria."
+   },
+   "victory": {
+    "goto": 8,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 150,
+    "text": "VICTORY<br><br>Thanks to your good work, our base at Linjiang is now safe.  In addition, we are now in a good position to attack Changchun, Jilin and Siping during the next summer offensive.  We will wait for good weather to arrive in Manchuria."
+   },
+   "tactical": {
+    "goto": 8,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 100,
+    "text": "TACTICAL VICTORY<br><br>Thanks to your good work, our base at Linjiang is now safe.  In addition, we are now in a good position to attack Changchun, Jilin and Siping during the next summer offensive.  We will wait for good weather to arrive in Manchuria."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 150,
+    "text": "DEFEAT!<br><br>I can't understand your failure commander.  It seems our estimation of your skills were wrong... the central ChCP commission has demoted you to a private for the remainder of the fighting.  This should erase any capitalist bad manners that you may have acquired."
+   }
+  }
+ },
+ {
+  "id": 8,
+  "scenario": "mao8.xml",
+  "startprestige": 0,
+  "intro": "Summer Offensive 1947<br><br>16-5-47, Jilin Province, NE China.<br><br>Orders from the central ChCP comitte: it's time to capture Changchun, Siping, and Jilin to complete the conquest of Manchuria. The success on this offensive is extremely important, because it would allow us to undertake further penetrations on to Beijing and Nanjing in the next months.<br><br>It won't be easy, the nationalists still have good units with good equipment, but we count on your elite units to deal with the Kuomingtan troops. The planned Summer Offensive must be victorious.",
+  "outcome": {
+   "briliant": {
+    "goto": 9,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 500,
+    "text": "BRILLIANT VICTORY<br><br>Congratulations!, Changchun, Jilin and Siping have been captured. This will be a big problem for the Nationalists, since their communications by train or by road from Manchuria to Beijing are now stopped."
+   },
+   "victory": {
+    "goto": 9,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 450,
+    "text": "VICTORY<br><br>Congratulations!, Changchun, Jilin and Siping have been captured. This will be a big problem for the Nationalists, since their communications by train or by road from Manchuria to Beijing are now stopped."
+   },
+   "tactical": {
+    "goto": 9,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 375,
+    "text": "TACTICAL VICTORY<br><br>Congratulations!, Changchun, Jilin and Siping have been captured. This will be a big problem for the Nationalists, since their communications by train or by road from Manchuria to Beijing are now stopped."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 150,
+    "text": "DEFEAT!<br><br>I can't understand your failure commander.  It seems our estimation of your skills were wrong... the central ChCP commission has demoted you to a private for the remainder of the fighting.  This should erase any capitalist bad manners that you may have acquired."
+   }
+  }
+ },
+ {
+  "id": 9,
+  "scenario": "mao9.xml",
+  "startprestige": 0,
+  "intro": "Winter Offensive<br><br>1-12-1947 Liaoning Province, NE China.<br><br>The KMT troops are badly wounded.  Our victories at Changchun and Siping have decimated their men, commander, and you must put an end to the nationalist resistance in Manchuria.  Your mission is to secure the communications between our base at Siping and our groups in the South, near to Shenyang.  Then you must take Shenyang.  It is the historical Manchurian capital and is both an important industrial and political center.  The capture of Shenyang will open the way to Beijing and Nanjing.<br><br>I don't think the snow and the bad weather conditions of the Manchurian Winter will be a major problem for you.",
+  "outcome": {
+   "briliant": {
+    "goto": 10,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 4500,
+    "text": "BRILLIAN VICTORY<br><br>Wan shan!  The KMT have suffered a great defeat.  I'm sure we will be celebrating our victory over Chiang Kai Shek's troops during the coming year of 1948."
+   },
+   "victory": {
+    "goto": 10,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 3200,
+    "text": "VICTORY<br><br>Wan shan!  The KMT have suffered a great defeat.  I'm sure we will be celebrating our victory over Chiang Kai Shek's troops during the coming year of 1948."
+   },
+   "tactical": {
+    "goto": 10,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 2700,
+    "text": "TACTICAL VICTORY<br><br>Wan shan!  The KMT have suffered a great defeat.  I'm sure we will be celebrating our victory over Chiang Kai Shek's troops during the coming year of 1948."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 150,
+    "text": "DEFEAT!<br><br>I can't understand your failure commander.  It seems our estimation of your skills were wrong... the central ChCP commission has demoted you to a private for the remainder of the fighting.  This should erase any capitalist bad manners that you have acquired."
+   }
+  }
+ },
+ {
+  "id": 10,
+  "scenario": "mao11.xml",
+  "startprestige": 0,
+  "intro": "Pyongyang Liberation [Korean War]<br><br>25-11-1950 Chongchon River, near the Chinese border.<br><br>Nice to see you again commander. Your next mission is highly secret and will take you to the Sino-Korean border.  The dirty North American invaders and their South Korean allies have smashed the North Koreans.  Kim-Il-Sung was close to a total victory during the past summer, but he didn't protect his rearguard and as you know, the capitalist operation at Inch'on and Seoul has completely defeated the North Korean advance on Pusan.<br><br>We can't allow this situation; the capitalist unification of Korea must not be completed.  A capitalist state in Korea would be like a gun aimed at the People's Republic of China, and we know that the puny North American general McArthur has maintained some conversations with Chaing-Kai-Shek about a possible continuation of the war against us.<br><br>Build your army, and cross the Yalu River to help the North Koreans and strike the UN forces.  Liberate Pyongyang to allow further advances to the 38 parallel and beyond.  We will have help from the air from our recently created People's Liberation Army Air Force. Remember all the principles of the People's War doctrine on your way.<br><br>Fu qi, commander.",
+  "outcome": {
+   "briliant": {
+    "goto": 11,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "BRILLIANT VICTORY<br><br>Wan Shan!  Did you see how the capitalists are escaping from us??   Pyongyang is again a communist stronghold, and we must continue to pursue and annihilate the UN forces."
+   },
+   "victory": {
+    "goto": 11,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "VICTORY<br><br>Wan Shan!  Did you see how the capitalists are escaping from us??   Pyongyang is again a communist stronghold, and we must continue to pursue and annihilate the UN forces."
+   },
+   "tactical": {
+    "goto": 11,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "TACTICAL VICTORY<br><br>Wan Shan!  Did you see how the capitalists are escaping from us??   Pyongyang is again a communist stronghold, and we must continue to pursue and annihilate the UN forces."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "DEFEAT!<br><br>I can't understand your failure commander.  It seems our estimation of your skills were wrong... the central ChCP commission has demoted you to a private for the remainder of the fighting.  This should erase any capitalist bad manners that you may have acquired."
+   }
+  }
+ },
+ {
+  "id": 11,
+  "scenario": "mao12.xml",
+  "startprestige": 0,
+  "intro": "Chosin Reservoir [Korean War]<br><br>27-11-1950 Chosin Reservoir, N of North Korea.<br><br>Your quick advance has created a salient in the enemy lines, like the one at the Chosin Reservoir.  This sector is protected by a North American division.  Your task is to make a surprise attack from two different directions and destroy the entire enemy division.  Be careful, our spies report that it's a crack division and they have air support from an improvised airstrip near the reservoir.  Air reinforcements are on the way.",
+  "outcome": {
+   "briliant": {
+    "goto": 12,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 100,
+    "text": "BRILLIANT VICTORY<br><br>Congratulations, the way to the South is open.  The North Americans have received a stinging lesson on the power of the People's War."
+   },
+   "victory": {
+    "goto": 12,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 90,
+    "text": "VICTORY<br><br>Congratulations, the way to the South is open.  The North Americans have received a stinging lesson on the power of the People's War."
+   },
+   "tactical": {
+    "goto": 12,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 80,
+    "text": "TACTICAL VICTORY<br><br>Congratulations, the way to the South is open.  The North Americans have received a stinging lesson on the power of the People's War."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 150,
+    "text": "DEFEAT!<br><br>I can't understand your failure commander.  It seems our estimation of your skills were wrong... the central ChCP commission has demoted you to a private for the remainder of the fighting.  This should erase any capitalist bad manners that you may have acquired."
+   }
+  }
+ },
+ {
+  "id": 12,
+  "scenario": "mao13.xml",
+  "startprestige": 0,
+  "intro": "Hungnam Pocket [Korean War]<br><br>11-12-1950, Hungnam, North Korea.<br><br>Again, your smashing attack has left the enemy forces on the ground isolated.  This is the situation at Hungnam.  The UN forces are surrounded from the North and South by us while the North Korean units will attack from the East.  However, the Hungnam port continues to be their main lifeline, supported by their overwhelming naval power.<br><br>Your mission is to reach the port of Hungnam while destroying all enemy forces along your way.  You must stop any UN evacuation as soon as possible.  A successful evacuation will be a victory for them.  The 2nd, 6th and 10th North Korean divisions (the 2nd Korean People's Army) will be under your direct command and the 20th PLA will arrive from the South as reinforcements.",
+  "outcome": {
+   "briliant": {
+    "goto": 13,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 200,
+    "text": "BRILLIANT VICTORY<br><br>You have crushed the UN forces with a smashing victory!  Now, we can continue with our advance towards Seoul."
+   },
+   "victory": {
+    "goto": 13,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 175,
+    "text": "VICTORY<br><br>Some UN forces have escaped from Hungnam, but at least we can now continue with our advance towards Seoul."
+   },
+   "tactical": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "TACTICAL VICTORY<br><br>Most of the UN forces have escaped and you have suffered heavy causalities.  You, commander, will meet a People's Court to determine if you are a capitalist sympathizer."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 150,
+    "text": "DEFEAT!<br><br>I can't understand your failure commander.  It seems our estimation of your skills were wrong... the central ChCP commission has demoted you to a private for the remainder of the fighting.  This should erase any capitalist bad manners that you may have acquired."
+   }
+  }
+ },
+ {
+  "id": 13,
+  "scenario": "mao13_2.xml",
+  "startprestige": 0,
+  "intro": "Seoul: UN Counterattack<br><br>Seoul, beyond the 38th Paralell, near to the former DMZ.<br><br>25-1-1951<br><br>The lightning advances of December and early January provide us with the opportunity to easily retake Seoul for the North Koreans.  However, the situation is becoming dangerous.  Our supply lines to China are long and are constantly being bombed and strafed by the UN air force.  Because of this they are preparing a counterattack to again liberate Seoul.  Our Korean spies have told us that a great number of troops are concentrating South of Suwon, including modern tanks and heavy artillery.<br><br>Be careful, our troops are nearly exhausted due to the quick advances in the past months. Your mission is to protect Seoul at all costs and if possible defeat the capitalist advance.",
+  "outcome": {
+   "briliant": {
+    "goto": 15,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 800,
+    "text": "BRILLIANT VICTORY<br><br>The enemy offensive has been completely defeated.  Seoul is now securely in our hands, Kim-Il-Sung is really happy with your actions.  Now, let's complete the communist victory in Korea."
+   },
+   "victory": {
+    "goto": 15,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 670,
+    "text": "VICTORY<br><br>The enemy offensive has been completely defeated.  Seoul is now securely in our hands, Kim-Il-Sung is really happy with your actions.  Now, let's complete the communist victory in Korea."
+   },
+   "tactical": {
+    "goto": 14,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 500,
+    "text": "TACTICAL VICTORY<br><br>We have stopped the offensive, but our casualities have been too high.  You have permission to retreat your armies behind the Han river to avoid future losses."
+   },
+   "lose": {
+    "goto": 14,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "DEFEAT!<br><br>I can't understand your failure commander.  It seems our estimation of your skills were wrong... the central ChCP commission has demoted you to a private for the remainder of the fighting.  This should erase any capitalist bad manners that you may have acquired."
+   }
+  }
+ },
+ {
+  "id": 14,
+  "scenario": "mao14.xml",
+  "startprestige": 0,
+  "intro": "Spring Offensive [Korean War]<br><br>22-4-1951 Seoul, near the 38th Paralell.<br><br>It's time to go back to Seoul.  We have deployed a large number of PLA and KPA units Northwards toward Seoul and with your armies nothing will stop us in our drive.  The South Korean capital must be in our hands again.<br><br>The UN forces have massed their units to protect their silly so-called ''No-Named line''.  Anyway, this situation fits perfectly with our People's War doctrine.  Launch your armies and over run the dirty capitalist's invaders on your way to recapture Seoul.",
+  "outcome": {
+   "briliant": {
+    "goto": 15,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 200,
+    "text": "BRILLIANT VICTORY<br><br>Perfect!  The North Korean flag again flies over the city of Seoul.  Kim-Il-Sung is really pleased with you.   You have become a hero for the Korean people."
+   },
+   "victory": {
+    "goto": 16,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 150,
+    "text": "VICTORY<br><br>Perfect!  The North Korean flag again flies over the city of Seoul.  Kim-Il-Sung is really pleased with you.   You have become a hero for the Korean people.   Anyway we are shortly going to open the negotiations with the UN forces to terminate this conflict."
+   },
+   "tactical": {
+    "goto": 16,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 100,
+    "text": "TACTICAL VICTORY<br><br>Perfect!  The North Korean flag again flies over the city of Seoul.  Kim-Il-Sung is really pleased with you.   You have become a hero for the Korean people.   Anyway we are shortly going to open the negotiations with the UN forces to terminate this conflict."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 150,
+    "text": "DEFEAT!<br><br>I can't understand your failure commander.  It seems our estimation of your skills were wrong... the central ChCP commission has demoted you to a private for the remainder of the fighting.  This should erase any capitalist bad manners that you may have acquired."
+   }
+  }
+ },
+ {
+  "id": 15,
+  "scenario": "mao14_2.xml",
+  "startprestige": 0,
+  "intro": "Pusan Revisited<br><br>27-6-1951 Pusan, South Korea<br><br>Just like last year, the UN forces are again encircled on the ''Pusan Perimeter''.  Now, with the bulk of the North Korean forces are guarding the rear, we can assault the enemy positions without the fear of an assault on our back like last years landings at Inch'on.<br><br>You have one mission; destroy the remnants of the capitalist forces.  Otherwise, they will receive more reinforcements and support from their stronghold at Pusan.  Quick drive them into the sea and Korea will become the unified Korean People's Republic.",
+  "outcome": {
+   "briliant": {
+    "goto": 16,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "BRILLIANT VICTORY<br><br>Congratulations comrade!  Korea is now entirely unified under the communist flag, and Kim-Il-Sung has been proclaimed chairman of the People's Republic of Korea at Seoul. This is an enormous victory for the communist world, there have also been celebrations at other communist capitals like Moscow, East-Berlin, and of course Beijing.<br><br>Now you are a hero for the People's Republic of China and for all the workers around the world."
+   },
+   "victory": {
+    "goto": 16,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "VICTORY<br><br>Congratulations comrade!  Korea is now entirely unified under the communist flag, and Kim-Il-Sung has been proclaimed chairman of the People's Republic of Korea at Seoul. This is an enormous victory for the communist world, there have also been celebrations at other communist capitals like Moscow, East-Berlin, and of course Beijing.<br><br>Now you are a hero for the People's Republic of China and for all the workers around the world."
+   },
+   "tactical": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "DEFEAT<br><br>This was a disaster!  The arguments formerly proposed by General McArthur have finally been accepted by Washington.  A nuclear attack was carried out over the city of Nanjing, killing millions of Chinese people.  The soviets have declined to give us any nuclear help and now we must accept the peace imposed by the West."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "DEFEAT<br><br>This was a disaster!  The arguments formerly proposed by General McArthur have finally been accepted by Washington.  A nuclear attack was carried out over the city of Nanjing, killing millions of Chinese people.  The soviets have declined to give us any nuclear help and now we must accept the peace imposed by the West."
+   }
+  }
+ },
+ {
+  "id": 16,
+  "scenario": "mao15.xml",
+  "startprestige": 0,
+  "intro": "Taiwan Strait - Nuclear Crisis<br><br>1-9-1953, Sea of China.<br><br>I hope you had enough rest from your participation on the Korean War.  As one of the heroes of the PRC the High Command of the PLA has a new mission for you.  The new North American government has retired the fleet that was guarding the Taiwan Strait.  This is the opportunity we have been waiting for; the assault on the rebel province of Taiwan.  You must end the existence of the KMT and its leader, Chiang-Kai-Shek.<br><br>Embark your units in Tianjing and reach the Taiwanese coast as soon as possible.  Beijing is sure the UN will take part in operations like in Korea, this time supporting the KMT in Taiwan.  Your highest priority is the conquest of Taipei.  With this city we will complete the unification of all the Chinese territories.",
+  "outcome": {
+   "briliant": {
+    "goto": 17,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 200,
+    "text": "BRILLIANT VICTORY<br><br>Chiang Kai Shek has escaped from Taipei thanks to his American friends, but the whole Taiwanese island plus other minor islands are now part of the PRC.  The Civil War is over and all the Chinese territories are now unified under the red stars flag!  Comrade Mao is pleased with you, the hero of the PRC."
+   },
+   "victory": {
+    "goto": 17,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 150,
+    "text": "VICTORY<br><br>Chiang Kai Shek has escaped from Taipei thanks to his American friends, but the whole Taiwanese island plus other minor islands are now part of the PRC.  The Civil War is over and all the Chinese territories are now unified under the red stars flag!  Comrade Mao is pleased with you, the hero of the PRC."
+   },
+   "tactical": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "DEFEAT<br><br>This was a disaster!  The arguments formerly proposed by General McArthur have finally been accepted by Washington.  A nuclear attack was carried out over the city of Nanjing, killing millions of Chinese people.  The soviets have declined to give us any nuclear help and now we must accept the peace imposed by the West."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "DEFEAT<br><br>This was a disaster... the arguments formerly proposed by General McArthur have finally been accepted by Washington.  A nuclear attack has been carried out over the city of Nanjing, killing millions of Chinese people... The soviets have declined to give us any nuclear help and now we must accept the imposed Western peace."
+   }
+  }
+ },
+ {
+  "id": 17,
+  "scenario": "mao16.xml",
+  "startprestige": 0,
+  "intro": "Sino - Soviet Incident<br><br>1-10-1955, Amur river, Sino-Soviet border, near Khabarovsk, Far Eastern Siberia.<br><br>A chain of unfortunate incidents with the Soviets along the Chinese - Soviet border has opened the way for the outbreak of full scale military operations.  As you know, the relationship with our former Soviet allies has badly deteriorated.  Moscow doesn't like our own interpretation of Marxism and wants to take us back to the ''correct'' communist system.  To punish us, they have launched an invasion across the Amur River, the natural border between the PRC and the USSR.  They have captured a many square kilometers of Chinese territory, including some villages.<br><br>You are the commander of the best units in the whole PLA, and your mission is to counter-strike the Soviet invaders.  If we want to continue with our own interpretation of the Marxism, we must defeat the Soviets.  Also Mao would be most pleased, if your men capture the important city of Khabarovsk.  He says that these territories are historically Chinese and no soviets must remain on Chinese lands! <br><br>Fu qi!",
+  "outcome": {
+   "briliant": {
+    "goto": 18,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 200,
+    "text": "BRILLIANT VICTORY<br><br>Ahh, comrade Commander!  Do you like Khabarovsk?  It's a pretty city, isn't it?   I know you are the greatest hero of the PRC and the KRC and I have a mission for you from the Kremlin.  I have to give you a letter from Moscow but... well anyway this is a good situation to do it.  Err... yes, but first, let's negotiate the surrender of my forces in this sector."
+   },
+   "victory": {
+    "goto": 18,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 150,
+    "text": "VICTORY<br><br>Ahh, comrade Commander!  Do you like Khabarovsk?  It's a pretty city, isn't it?   I know you are the greatest hero of the PRC and the KRC and I have a mission for you from the Kremlin.  I have to give you a letter from Moscow but... well anyway this is a good situation to do it.  Err... yes, but first, let's negotiate the surrender of my forces in this sector."
+   },
+   "tactical": {
+    "goto": 18,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 100,
+    "text": "TACTICAL VICTORY<br><br>Ahh, comrade Commander!  Do you like Khabarovsk?  It's a pretty city, isn't it?   I know you are the greatest hero of the PRC and the KRC and I have a mission for you from the Kremlin.  I have to give you a letter from Moscow but... well anyway this is a good situation to do it.  Err... yes, but first, let's negotiate the surrender of my forces in this sector."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "DEFEAT!<br><br>I can't understand your failure commander.  It seems our estimation of your skills were wrong... the central ChCP commission has demoted you to a private for the remainder of the fighting.  This should erase any capitalist bad manners that you may have acquired."
+   }
+  }
+ },
+ {
+  "id": 18,
+  "scenario": "mao17.xml",
+  "startprestige": 0,
+  "intro": "Great Leap Forward<br><br>1-12-1955, Beijing.<br><br>Private Tovarich!  Nice to see you again.  It has been a while since our last meeting at Khabarovsk.  It was a shame to lose the battle against you, but now we can re-negotiate the conditions of the peace treaty.  This is Top Secret and I hope you have told no one of our plans.  As our men from the KGB have told you, we are ready to support you, if you finally decide to undertake a coup against Mao Zedong and his reformed communism.  It is literally destroying China.  We need to take China back to the right and true communist way.  We think you and your so-called ''Gang of Four'' are the perfect team to take down the Maoist system and that destructive plan named ''Great Leap Forward''.  That woman of your gang, ''Madame Mao'' can be very useful in the near future, when you will need to destroy the political image of Mao.<br><br>This is the plan we suggest; in the past month the units under your direct management have been deployed on the coast of the Sea of China in preparation for the Coup.   We are ready to support you by sea.  The Chinese navy will remain loyal to Mao, but it is not powerful enough to deal with a minor Soviet submarine unit.  After we secure the entire coast by taking Tanggu, you must launch the counterattack against the government loyalist units which surely will be sent to defeat our plans.  Take the Tanggu airfield as soon as possible as this will allow us to send you reinforcements by air.  Our planes will be painted with the PRC symbols.  You must avoid the Americans as we don't need any problems with them now.  The incident should be only between Chinese forces.<br><br>The last stand will be Beijing, this won't be easy, as you know, the best PLA units are deployed there.  The price maybe high, but it deserves a try.  You can become the new premier of the People's Republic of China!<br><br>Udachi tovarich!",
+  "outcome": {
+   "briliant": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "BRILLIANT VICTORY<br><br>Congratulations comrade!  You are the new Premier of the People's Republic of China. Mao has disappeared and we know he won't be back, hahaha!  I hope your understanding of the communist doctrine will be the correct one.  That would be the best for the communist world."
+   },
+   "victory": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "VICTORY<br><br>Congratulations comrade!  You are the new Premier of the People's Republic of China. Mao has disappeared and we know he won't be back, hahaha!  I hope your understanding of the communist doctrine will be the correct one.  That would be the best for the communist world."
+   },
+   "tactical": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "TACTICAL VICTORY<br><br>Congratulations comrade!  You are the new Premier of the People's Republic of China. Mao has disappeared and we know he won't be back, hahaha!  I hope your understanding of the communist doctrine will be the correct one.  That would be the best for the communist world."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "DEFEAT!<br><br>AH!  You dirty rebel and traitor!.  You, the former hero of the People's Republic of China are now a coward capitalist traitor.  Your execution will be soon be celebrated in Tiananmen Square.<br><br>I was completely wrong about you and maybe also with your friend Zhou, hmmm or maybe not.  I think China deserves a return to the true Revolution to avoid the capitalist deformation that you have suffered."
+   }
+  }
+ }
 ]

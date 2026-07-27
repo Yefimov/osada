@@ -1670,13 +1670,31 @@ hr {
 #eqSelClass .smallButtonSubMenu { scroll-snap-align: start; }
 /* Fade the row's own edges so a cut-off tab reads as "scroll for more" rather than as clipping.
  * The mask is painted in the scroll container's own box, so it stays put while content scrolls
- * under it; scoping it to #eqSelClass keeps #eqClassTools (country/sort) out of the fade. */
+ * under it; scoping it to #eqSelClass keeps #eqClassTools (country/sort) out of the fade.
+ *
+ * The fade is DROPPED on whichever end is fully scrolled, via data-scroll-start / data-scroll-end
+ * (set by EquipmentWindowRestructure). A static fade dimmed the left border of "All" and the right
+ * border of "Fortification" even at the extremes, where there is nothing more to scroll to and the
+ * hint is therefore a lie — the first and last tabs just looked clipped. */
 #eqSelClass {
-    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 12px, #000 calc(100% - 12px), transparent 100%);
-    mask-image: linear-gradient(to right, transparent 0, #000 12px, #000 calc(100% - 12px), transparent 100%);
+    --eq-fade-left: 12px;
+    --eq-fade-right: 12px;
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 var(--eq-fade-left),
+        #000 calc(100% - var(--eq-fade-right)), transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0, #000 var(--eq-fade-left),
+        #000 calc(100% - var(--eq-fade-right)), transparent 100%);
 }
+#eqSelClass[data-scroll-start="true"] { --eq-fade-left: 0px; }
+#eqSelClass[data-scroll-end="true"] { --eq-fade-right: 0px; }
+/* `flex: 0 0 auto` is what actually makes the row scroll, and it was missing: as flex items the
+ * tabs defaulted to `flex-shrink: 1`, so instead of overflowing #eqSelClass they COMPRESSED to fit
+ * it. Measured before the fix (1160px window, 11 tabs): scrollWidth == clientWidth == 926px, i.e.
+ * nothing to scroll, and the Infantry tab rendered 89px wide against a natural 116px — which is
+ * why the labels (white-space: nowrap) spilled over their own button borders. The overflow-x/
+ * min-width rules above were correct but could never fire while the children were shrinkable.
+ * Longer locales compress further, so ru/tly were strictly worse. */
 #eqSelClass .smallButtonSubMenu {
-    float: none; display: inline-flex; align-items: center; gap: 7px;
+    float: none; display: inline-flex; align-items: center; gap: 7px; flex: 0 0 auto;
     width: auto !important; min-width: 0 !important; height: 40px !important; min-height: 40px !important;
     line-height: normal !important; padding: 0 12px; margin: 0 !important; box-sizing: border-box;
     border-radius: 4px; box-shadow: none;
@@ -2690,6 +2708,25 @@ hr {
     color: #fff; font-size: 15px; font-weight: bold;
 }
 .osada-hero-rosterrow-copy { flex: 1 1 auto; min-width: 0; }
+
+/* Renown portrait frames (docs/design/hero-presentation.md §1) -- one escalating tier treatment,
+   applied identically wherever a hero's portrait renders (dossier header, roster row) so a tier
+   never means something different in two panels. HeroRenown.UNKNOWN gets no class and so no frame
+   -- a tier system where every tier is decorated communicates nothing. Text (the "Renown: X" row/
+   subtitle) is unchanged: the frame is redundancy for the tier, not a replacement. */
+.osada-renown--experienced { border-color: var(--osada-brass); border-width: 2px; }
+.osada-renown--distinguished {
+    border-color: #c9d2da; border-width: 2px;
+    box-shadow: 0 0 0 1px rgba(201, 210, 218, .35);
+}
+.osada-renown--hero {
+    border-color: var(--osada-brass); border-width: 2px;
+    box-shadow: 0 0 8px rgba(180, 138, 60, .55);
+}
+.osada-renown--legend {
+    border-color: #e8c766; border-width: 3px;
+    box-shadow: 0 0 12px rgba(232, 199, 102, .7), 0 0 2px rgba(232, 199, 102, .9) inset;
+}
 
 /* Stable-ID localization: scalable native language dropdown. */
 .osada-language-switch {

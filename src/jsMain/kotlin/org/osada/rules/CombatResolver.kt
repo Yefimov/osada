@@ -7,6 +7,7 @@ import org.osada.UNIT_RETREAT_THRESHOLD
 import org.osada.UnitClass
 import org.osada.model.Cell
 import org.osada.model.CombatResults
+import org.osada.model.EfileConfig
 import org.osada.model.Equipment
 import org.osada.model.GameUnit
 import org.osada.model.Leaders
@@ -63,6 +64,10 @@ object CombatResolver {
     private const val RUGGED_DEFENSE_THRESHOLD = 50
     private const val RUGGED_DEFENSE_SCALE = 50.0
     private const val RUGGED_DEFENSE_MULTIPLIER = 5.0
+
+    // equip.cfg's own comment: "Default all flak-type actions are limited to range 1." Absent for
+    // 5 of our 10 shipped efiles (including KAISER, 8 campaigns) -- see docs/design/aa-interception.md §1.1.
+    private const val DEFAULT_FLAK_RANGE = 1
 
     /**
      * Core damage roll. Mirrors the legacy `f(p, r, b, m, k)` combat function:
@@ -130,6 +135,7 @@ object CombatResolver {
         val context = AttackCalculation.resolveCombatContext(attacker, defender) ?: return result
 
         val stats = AttackCalculation.resolveCrossIndexedStats(context)
+        AttackCalculation.applyAttachmentBonuses(stats, attacker, defender, context)
         val closeCombat = AttackCalculation.applyCloseCombat(stats, context)
         AttackCalculation.applyLeaderBonuses(stats, attacker, defender, context)
         AttackCalculation.applyTerrainBonuses(stats, context)
@@ -238,7 +244,18 @@ object CombatResolver {
         val sPos = support.getPos()
         if (!isFriendlyNotDefender || sPos == null) return false
         val sData = support.unitData()
-        val range = if (sData.gunrange == 0) 1 else sData.gunrange
+        // OG's `flak_range` governs ALL flak-type actions -- interception AND this air-defense
+        // support fire -- and applies flat, regardless of the unit's own gunrange (DEFERRED.md
+        // §1.1, docs/design/aa-interception.md §1.1/§2). Ground support fire (artillery) is
+        // unaffected and keeps using its own gunrange.
+        val range =
+            if (UnitPredicates.isAir(attacker)) {
+                EfileConfig.intKey("flak_range", DEFAULT_FLAK_RANGE)
+            } else if (sData.gunrange == 0) {
+                1
+            } else {
+                sData.gunrange
+            }
         val inRange = HexGeometry.distance(sPos.row, sPos.col, aPos.row, aPos.col) <= range
         // Class eligibility lives in UnitCapabilities so the rule and the unit card's SUP/AA
         // badges read the same predicate and cannot drift apart (the §4.6 mistake).
@@ -248,7 +265,13 @@ object CombatResolver {
             } else {
                 UnitCapabilities.hasSupportFire(sData)
             }
-        return inRange && classEligible && AttackEligibility.canInitiateAttack(support, attacker)
+        // g2a_intercept_mode bit 1: an AA unit that has already intercepted a moving aircraft
+        // this turn cannot also air-defend one (AAInterception.applyInterception sets the flag).
+        val notSpentOnInterception = !UnitPredicates.isAir(attacker) || !support.hasInterceptedThisTurn
+        return inRange &&
+            classEligible &&
+            notSpentOnInterception &&
+            AttackEligibility.canInitiateAttack(support, attacker)
     }
 
     /** Whether a unit losing [current] of [original] strength is past its retreat threshold. */

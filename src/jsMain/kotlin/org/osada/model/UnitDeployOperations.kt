@@ -2,6 +2,7 @@ package org.osada.model
 
 import org.osada.TerrainType
 import org.osada.UnitClass
+import org.osada.movTable
 import org.osada.rules.GameRules
 import org.osada.rules.getReinforceValue
 import org.osada.rules.getReinforcementDeployPositions
@@ -16,6 +17,11 @@ import kotlin.js.json
 internal class UnitDeployOperations(
     private val gameMap: GameMap,
 ) {
+    private companion object {
+        /** `movTable` sentinel for "this movement method may never enter"; 254 is merely costly. */
+        const val IMPASSABLE_TERRAIN_COST = 255
+    }
+
     fun upgradeUnit(
         unitId: Int,
         newEqid: Int,
@@ -64,17 +70,40 @@ internal class UnitDeployOperations(
         col: Int,
     ): Boolean {
         val hex = gameMap.map?.getOrNull(row)?.getOrNull(col)
-        if (unit.isDeployed || hex == null) return false
         val isAir = GameRules.isAir(unit)
-        val occupied = (isAir && hex.airunit != null) || (!isAir && hex.unit != null)
-        if (!occupied) {
+        val free = hex != null && if (isAir) hex.airunit == null else hex.unit == null
+        val allowed = !unit.isDeployed && hex != null && free && canDeployOnTerrain(unit, hex, isAir)
+        if (allowed && hex != null) {
             if (!isAir && hex.terrain == TerrainType.OCEAN.value) {
                 unit.embark(UnitClass.NAVAL_TRANSPORT)
             }
             hex.setUnit(unit)
             gameMap.addUnit(unit)
         }
-        return !occupied
+        return allowed
+    }
+
+    /**
+     * Whether [unit]'s movement method can exist on this hex's terrain at all.
+     *
+     * Deployment used to check ONLY occupancy, so any deploy hex accepted any unit: in `Falciu 1`
+     * the author marks 3 town, 1 mountain, 1 clear and 2 river deploy hexes, and a river gunboat
+     * could be placed on the town at (17,22) — `terrain 1`, Cantemir. Reinforcements have always
+     * been gated this way (`ReinforcementDeployment.findTerrainDeployCell`); player deployment
+     * simply never was.
+     *
+     * `254` means "costs the whole move allowance", not "forbidden" — only `255` is impassable, so
+     * a leg unit deploying onto the mountain hex stays legal. Ocean keeps its amphibious exception
+     * below: a ground unit placed on ocean embarks rather than being refused.
+     */
+    private fun canDeployOnTerrain(
+        unit: GameUnit,
+        hex: Hex,
+        isAir: Boolean,
+    ): Boolean {
+        val exempt = isAir || hex.terrain == TerrainType.OCEAN.value
+        val cost = movTable.getOrNull(unit.unitData().movmethod)?.getOrNull(hex.terrain)
+        return exempt || cost == null || cost != IMPASSABLE_TERRAIN_COST
     }
 
     fun deployNewUnitByEqId(

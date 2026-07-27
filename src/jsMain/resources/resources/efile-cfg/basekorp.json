@@ -1,0 +1,176 @@
+{
+  "efile": "BASEKORP",
+  "keys": {
+    "reinf_move": 60,
+    "sh_pg1": 1,
+    "naval_noblock_bridge": 1,
+    "sabotage_min": 40,
+    "sabotage_max": 85,
+    "ground_carrier": 1,
+    "zero_msu": 1,
+    "flak_range": 1,
+    "ignore_custom_ename": 1,
+    "ai_refit_free": 1,
+    "noldr_auxunits": 1,
+    "build_start_ex": 1,
+    "build_terr_ex": 1,
+    "air_landmines": 1,
+    "blow_any_terrain": 1,
+    "avoid_cbf": 1,
+    "limit_move2set_bridge": 1,
+    "sub_buytra": 1,
+    "air_carrier": 1,
+    "known_ex": 1,
+    "air2container_deploy": 1,
+    "kamikaze": 1,
+    "trigger_ex": 1,
+    "flak_ex2": 1
+  },
+  "raw": {
+    "reinf_move": "60",
+    "sh_pg1": "1",
+    "class_evade": "!30",
+    "build_cost": "10,20,20,6,16",
+    "naval_noblock_bridge": "1",
+    "sabotage_min": "40",
+    "sabotage_max": "85",
+    "ground_carrier": "1",
+    "zero_msu": "1",
+    "flak_range": "1",
+    "ignore_custom_ename": "1",
+    "ai_refit_free": "1",
+    "noldr_auxunits": "1",
+    "build_start_ex": "1",
+    "build_terr_ex": "1",
+    "air_landmines": "1",
+    "blow_any_terrain": "1",
+    "avoid_cbf": "1",
+    "limit_move2set_bridge": "1",
+    "sub_buytra": "1",
+    "build_turn": "2,2,2,2,2",
+    "repair_turn": "1,1,1,1,1",
+    "air_carrier": "1",
+    "known_ex": "1",
+    "air2container_deploy": "1",
+    "kamikaze": "1",
+    "trigger_ex": "1",
+    "flak_ex2": "1"
+  },
+  "attachments": {
+    "slots": {
+      "1": {
+        "name": "Recon",
+        "disabled": false,
+        "bonus": 1,
+        "penalty": 0,
+        "minCost": 0,
+        "factCost": 0,
+        "penaltyType": 0
+      },
+      "2": {
+        "name": "Air Defense",
+        "disabled": false,
+        "bonus": 3,
+        "penalty": 0,
+        "minCost": 0,
+        "factCost": 0,
+        "penaltyType": 0
+      },
+      "3": {
+        "name": "Bridging",
+        "disabled": false,
+        "bonus": 0,
+        "penalty": 0,
+        "minCost": 0,
+        "factCost": 0,
+        "penaltyType": 0
+      },
+      "4": {
+        "name": "AntiTank",
+        "disabled": false,
+        "bonus": 3,
+        "penalty": 0,
+        "minCost": 0,
+        "factCost": 0,
+        "penaltyType": 0
+      },
+      "5": {
+        "name": "Support",
+        "disabled": false,
+        "bonus": 2,
+        "penalty": 0,
+        "minCost": 0,
+        "factCost": 0,
+        "penaltyType": 0
+      },
+      "6": {
+        "name": "Forward Observer",
+        "disabled": false,
+        "bonus": 3,
+        "penalty": 0,
+        "minCost": 0,
+        "factCost": 0,
+        "penaltyType": 0
+      },
+      "7": {
+        "name": "Special Munition",
+        "disabled": false,
+        "bonus": 3,
+        "penalty": 0,
+        "minCost": 0,
+        "factCost": 0,
+        "penaltyType": 0
+      },
+      "8": {
+        "name": "FastEntrench",
+        "disabled": false,
+        "bonus": 3,
+        "penalty": 0,
+        "minCost": 0,
+        "factCost": 0,
+        "penaltyType": 0
+      },
+      "9": {
+        "name": "Bunker Buster",
+        "disabled": false,
+        "bonus": 5,
+        "penalty": 0,
+        "minCost": 0,
+        "factCost": 20,
+        "penaltyType": 3
+      },
+      "10": {
+        "name": "Fast Builder",
+        "disabled": false,
+        "bonus": 2,
+        "penalty": 0,
+        "minCost": 0,
+        "factCost": 20,
+        "penaltyType": 2
+      },
+      "11": {
+        "name": "Fuel Pods",
+        "disabled": false,
+        "bonus": 50,
+        "penalty": 0,
+        "minCost": 0,
+        "factCost": 20,
+        "penaltyType": 1
+      },
+      "12": {
+        "name": "Fast Speed",
+        "disabled": false,
+        "bonus": 30,
+        "penalty": 0,
+        "minCost": 0,
+        "factCost": 20,
+        "penaltyType": 2
+      }
+    },
+    "on": true,
+    "armyCost": true,
+    "minFuel": 20,
+    "minMove": 2,
+    "factorDefaultPct": 20
+  }
+}

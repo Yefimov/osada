@@ -1,6 +1,8 @@
 package org.osada.model
 
+import org.osada.rules.AAInterception
 import org.osada.rules.GameRules
+import org.osada.rules.UnitPredicates
 import org.osada.rules.getMoveRange
 import org.osada.rules.getUnitAttackCells
 
@@ -19,7 +21,10 @@ fun GameMap.delCurrentUnit() {
 
 fun GameMap.delMoveSel() {
     currentMoveRange.forEach { cell ->
-        map?.getOrNull(cell.row)?.getOrNull(cell.col)?.isMoveSel = false
+        map?.getOrNull(cell.row)?.getOrNull(cell.col)?.apply {
+            isMoveSel = false
+            isAaThreat = false
+        }
     }
     currentMoveRange.clear()
 }
@@ -34,10 +39,24 @@ fun GameMap.delAttackSel() {
 fun GameMap.setMoveRange(unit: GameUnit) {
     delMoveSel()
     val range = GameRules.getMoveRange(this, unit)
+    // AA threat overlay (DEFERRED.md §1.1): only meaningful for the aircraft that would actually
+    // be intercepted, and only ever built from SPOTTED AA -- hidden AA must never be drawn, or the
+    // ambush the mechanic depends on is gone.
+    val threatSide = currentPlayer?.side
+    val threatened =
+        if (UnitPredicates.isAir(unit) && threatSide != null) {
+            AAInterception.visibleThreatHexes(this, threatSide, unit)
+        } else {
+            emptySet()
+        }
     range.forEach { cell ->
         currentMoveRange.add(cell)
+        val hex = map?.getOrNull(cell.row)?.getOrNull(cell.col)
         if (cell.canMove) {
-            map?.getOrNull(cell.row)?.getOrNull(cell.col)?.isMoveSel = true
+            hex?.isMoveSel = true
+        }
+        if ((cell.row to cell.col) in threatened) {
+            hex?.isAaThreat = true
         }
     }
 }

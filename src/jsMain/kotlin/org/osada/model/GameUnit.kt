@@ -49,6 +49,13 @@ class GameUnit(
     var tempSpotted: Boolean = false
     var nodossier: Boolean = false
 
+    /** Set when this AA unit has already intercepted a moving aircraft this turn under
+     *  `g2a_intercept_mode` bit 1 ("disables air-defense after interception") -- checked by
+     *  [org.osada.rules.CombatResolver]'s support-fire eligibility so the same unit cannot both
+     *  intercept and then air-defend a friendly unit in the same turn. Reset every turn in
+     *  [unitEndTurn]. Deliberately not serialised -- it never survives past the turn it is set. */
+    var hasInterceptedThisTurn: Boolean = false
+
     /**
      * Explicit hero-system opt-out for a unit loaned only for the current battle.
      * Campaign-player control, not [isCore], is otherwise the participation rule.

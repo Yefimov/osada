@@ -62,9 +62,27 @@ object UnitPredicates {
         return a.player?.side != b.player?.side
     }
 
+    /**
+     * Whether [eqid] may be given a ground transport.
+     *
+     * PM tests `groundweight != 0` and nothing else (`openpanzer.js:2707`), and that is why
+     * **Landmines were offered a truck**. `groundweight` doubles as a transport-compatibility
+     * bitmask, and 96 FORTIFICATION records in `eqp-atomic` — Landmines, bunkers, emplacements —
+     * carry bit `0x8000`. Seven `eqp-lxf`/`eqp-united` ground transports carry the same bit
+     * (`Civilians`, `Refugees`, `A4 Transport`, `SdKfz 3`, `Opel Blitz`), so the mask test passed
+     * and the equipment window listed them.
+     *
+     * FORTIFICATION is excluded and no other class is. In particular **do not exclude on
+     * `movpoints == 0`**, which looks like the more general rule and is wrong: towed artillery is
+     * exactly a zero-movement unit that must be transportable (`26cm MinenWrf M17`, gw 32, mov 0).
+     * Emplacements are the case that has no defensible reading — an entrenchment is built, not
+     * loaded onto a lorry.
+     */
     fun isTransportable(eqid: Int): Boolean {
-        if (eqid < 1) return false
-        return (Equipment.equipment[eqid]?.groundweight ?: 0) > 0
+        val data = if (eqid < 1) null else Equipment.equipment[eqid]
+        return data != null &&
+            data.uclass != UnitClass.FORTIFICATION.value &&
+            data.groundweight > 0
     }
 
     fun canCapture(unit: GameUnit): Boolean {

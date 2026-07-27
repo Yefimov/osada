@@ -1,530 +1,530 @@
 [
-  {
-    "id": 0,
-    "scenario": "gce1.xml",
-    "startprestige": 0,
-    "intro": "Madrid is the Republic’s political heart, and the Army of Africa has reached its outskirts after months of rebel advance. Militia columns, newly organised units of the Ejército Popular, and the first foreign volunteers must hold the capital street by street while the government struggles to create a real army from the chaos of July. The bridges, western approaches, and urban strongpoints cannot all be defended equally, so reserves must be committed with care. Stop the assault, preserve the capital, and prove that Franco’s drive can be broken before fascist victory begins to look inevitable.",
-    "outcome": {
-      "briliant": {
-        "goto": 1,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 180,
-        "text": "El ejercito de Africa ha sido frenado en seco!, es el primer exito importante de nuestras valerosas tropas. Gran trabajo, general. Madrid ha sido defendido con exito y ahora se convertira en el ejemplo a seguir por todos los pueblos de este pais, que estan tratando de resistir a la amenaza fascista.<br><br>The African Army has been stopped! This is the first important successful action of our soldiers. Great work, Madrid has been successfully defended, and now it will be a resistance symbol for the people of this country fighting against the Fascist menace!"
-      },
-      "victory": {
-        "goto": 1,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 120,
-        "text": "El ejercito de Africa ha sido frenado en seco!, es el primer exito importante de nuestras valerosas tropas. Gran trabajo, general. Madrid ha sido defendido con exito y ahora se convertira en el ejemplo a seguir por todos los pueblos de este pais, que estan tratando de resistir a la amenaza fascista.<br><br>The African Army has been stopped! This is the first important successful action of our soldiers. Great work, Madrid has been successfully defended, and now it will be a resistance symbol for the people of this country fighting against the Fascist menace!"
-      },
-      "tactical": {
-        "goto": 1,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 80,
-        "text": "El ejercito de Africa ha sido frenado en seco!, es el primer exito importante de nuestras valerosas tropas. Gran trabajo, general. Madrid ha sido defendido con exito y ahora se convertira en el ejemplo a seguir por todos los pueblos de este pais, que estan tratando de resistir a la amenaza fascista.<br><br>The African Army has been stopped! This is the first important successful action of our soldiers. Great work, Madrid has been successfully defended, and now it will be a resistance symbol for the people of this country fighting against the Fascist menace!"
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 120,
-        "text": "Asomese a la ventana, lo ve?, las columnas enemigas estan apareciendo por el paseo de la Castellana triunfalmente. No nos queda escapatoria alguna, gracias a su ineptitud la guerra ha terminado para nosotros y seguro que pronto nos fusilaran.<br><br>Please, look out the window!  Did you see it? The rebel columns are advancing down Paseo de la Castellana street just now. We have no chance to save ourselves thanks to your stupid actions! Surely, the rebels will execute us soon!"
-      }
-    }
-  },
-  {
-    "id": 1,
-    "scenario": "gce2.xml",
-    "startprestige": 0,
-    "intro": "The direct assault on Madrid has failed, so the rebel command now tries to encircle the capital from the south-east through the Jarama valley. If the crossings and high ground fall, the road linking Madrid with Valencia may be cut and the city slowly strangled. Republican formations and International Brigade battalions must absorb a powerful attack, counter local breakthroughs, and prevent the enemy from joining hands across the river. Hold the valley, protect the communications of the capital, and turn Jarama into proof that the People’s Army can survive a battle of attrition.",
-    "outcome": {
-      "briliant": {
-        "goto": 2,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 180,
-        "text": "Felicidades!, ha demostrado usted ser un buen mando para el Ejercito Popular. La ofensiva rebelde en el valle del Jarama se ha detenido por el momento y hemos conseguido demostrarles a los rebeldes que nuestras fuerzas deben ser tenidas en cuenta.<br><br>Congratulations! You have showed the proper skills to be a good commander for the People's Army. The Rebel offensive has been stopped for the moment, and the fascists have already seen the valor of our troops."
-      },
-      "victory": {
-        "goto": 2,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 120,
-        "text": "Felicidades!, ha demostrado usted ser un buen mando para el Ejercito Popular. La ofensiva rebelde en el valle del Jarama se ha detenido por el momento y hemos conseguido demostrarles a los rebeldes que nuestras fuerzas deben ser tenidas en cuenta.<br><br>Congratulations! You have showed the proper skills to be a good commander for the People's Army. The Rebel offensive has been stopped for the moment, and the fascists have already seen the valor of our troops."
-      },
-      "tactical": {
-        "goto": 2,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 80,
-        "text": "Felicidades!, ha demostrado usted ser un buen mando para el Ejercito Popular. La ofensiva rebelde en el valle del Jarama se ha detenido por el momento y hemos conseguido demostrarles a los rebeldes que nuestras fuerzas deben ser tenidas en cuenta.<br><br>Congratulations! You have showed the proper skills to be a good commander for the People's Army. The Rebel offensive has been stopped for the moment, and the fascists have already seen the valor of our troops."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 120,
-        "text": "Asomese a la ventana, lo ve?, las columnas enemigas estan apareciendo por el paseo de la Castellana triunfalmente. No nos queda escapatoria alguna, gracias a su ineptitud la guerra ha terminado para nosotros y seguro que pronto nos fusilaran.<br><br>Please, look out the window!  Did you see it? The rebel columns are advancing down Paseo de la Castellana street just now. We have no chance to save ourselves thanks to your stupid actions! Surely, the rebels will execute us soon!"
-      }
-    }
-  },
-  {
-    "id": 2,
-    "scenario": "gce3.xml",
-    "startprestige": 0,
-    "intro": "Italian troops of the Corpo Truppe Volontarie are massing along the Brihuega–Torija line, confident that motorised columns and air power will finish what the rebels failed to achieve at Madrid. Soviet advisers and Republican reconnaissance have identified the concentration, giving you a rare chance to meet the offensive before it gathers full momentum. Use the weather, terrain, armour, and mobile reserves to isolate the Italian spearheads and strike their exposed flanks. A decisive victory at Guadalajara can end the immediate threat to Madrid and transform a defensive war into the Republic’s first great triumph.",
-    "outcome": {
-      "briliant": {
-        "goto": 3,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 300,
-        "text": "Magnifico!, los italianos huyen despaboridos mientras los rebeldes tratan de mantener las lineas de frente. Esta derrota despeja por completo el peligro sobre Madrid, al menos por el momento, y nos posibilitara empezar a pensar en acciones ofensivas en semanas posteriores.<br><br>Great! The Italians are running to the hills instead of trying to hold their front lines. This victory will stop the rebel menace at Madrid, at least for the moment, and allow us to think about further operations in the coming weeks.<br><br>Viva la republica!"
-      },
-      "victory": {
-        "goto": 3,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 270,
-        "text": "Magnifico!, los italianos huyen despaboridos mientras los rebeldes tratan de mantener las lineas de frente. Esta derrota despeja por completo el peligro sobre Madrid, al menos por el momento, y nos posibilitara empezar a pensar en acciones ofensivas en semanas posteriores.<br><br>Great! The Italians are running to the hills instead of trying to hold their front lines. This victory will stop the rebel menace at Madrid, at least for the moment, and allow us to think about further operations in the coming weeks.<br><br>Viva la republica!"
-      },
-      "tactical": {
-        "goto": 3,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 200,
-        "text": "Magnifico!, los italianos huyen despaboridos mientras los rebeldes tratan de mantener las lineas de frente. Esta derrota despeja por completo el peligro sobre Madrid, al menos por el momento, y nos posibilitara empezar a pensar en acciones ofensivas en semanas posteriores.<br><br>Great! The Italians are running to the hills instead of trying to hold their front lines. This victory will stop the rebel menace at Madrid, at least for the moment, and allow us to think about further operations in the coming weeks.<br><br>Viva la republica!"
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 120,
-        "text": "Inepto!, los rebeldes han conseguido cercar la capital y ahora la guerra esta sentenciada, no nos queda escapatoria alguna,  la guerra ha terminado para nosotros y seguro que pronto nos fusilaran.<br><br>Please, look out the window! Did you see it?  The rebel columns are entering Paseo de la Castellana street just now. We have no chance to save ourselves thanks to your stupid actions! Surely, the rebels will execute us soon!."
-      }
-    }
-  },
-  {
-    "id": 3,
-    "scenario": "gce4.xml",
-    "startprestige": 0,
-    "intro": "With Madrid secure and new Soviet equipment reaching the front, the Republic is ready to attempt its first major offensive. The plan at Brunete is ambitious: break through from the north and east, threaten the rebel forces west of Madrid, and force Franco to divert strength from the Northern Front. Success depends on speed before enemy air superiority and experienced reserves can stabilise the line. Punch through the initial positions, exploit with armour, and seize the key towns while your supply routes remain open. Even a costly advance may relieve pressure elsewhere—but only a clean breakthrough can change the strategic balance.",
-    "outcome": {
-      "briliant": {
-        "goto": 4,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "Se han alcanzado todos los objetivos de la operacion, sin embargo debido a la superioridad aerea enemiga y a la calidad de sus tropas, debemos retirar nuestras unidades de Brunete a posiciones ligeramente mas al Norte.<br>Buen trabajo. <br><br>All the goals have been achieved. However, due to the enemy air superiority and the quality of their troops, we must retreat our troops from Brunete to Northern positions.<br><br>Good Work. I wish El Ejercito Popular had more commanders of your quality and initiative."
-      },
-      "victory": {
-        "goto": 4,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "Se han alcanzado todos los objetivos de la operacion, sin embargo debido a la superioridad aerea enemiga y a la calidad de sus tropas, debemos retirar nuestras unidades de Brunete a posiciones ligeramente mas al Norte.<br>Buen trabajo. <br><br>All the goals have been achieved. However, due to the enemy air superiority and the quality of their troops, we must retreat our troops from Brunete to Northern positions.<br><br>Good Work. I wish El Ejercito Popular had more commanders of your quality and initiative."
-      },
-      "tactical": {
-        "goto": 4,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "Se han alcanzado todos los objetivos de la operacion, sin embargo debido a la superioridad aerea enemiga y a la calidad de sus tropas, debemos retirar nuestras unidades de Brunete a posiciones ligeramente mas al Norte.<br>Buen trabajo. <br><br>All the goals have been achieved. However, due to the enemy air superiority and the quality of their troops, we must retreat our troops from Brunete to Northern positions.<br><br>Good Work. I wish El Ejercito Popular had more commanders of your quality and initiative."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "Inepto!, los rebeldes han conseguido detener la ofensiva por completo y ahora se preparan a lanzar un contraataque que seguro rompera el frente, lo que les permitira cercar la capital. Ahora la guerra esta sentenciada, no nos queda escapatoria alguna,  la guerra ha terminado para nosotros y seguro que pronto nos fusilaran.<br><br>Please, look out the window!  Did you see it? The rebel columns are advancing down Paseo de la Castellana street just now. We have no chance to save ourselves thanks to your stupid actions! Surely, the rebels will execute us soon!"
-      }
-    }
-  },
-  {
-    "id": 4,
-    "scenario": "gce5.xml",
-    "startprestige": 0,
-    "intro": "The fall of the Northern Front draws closer, and the Republic must force the enemy to look away from Asturias and Cantabria. A new offensive in Aragón aims toward Zaragoza, but the open ground, dispersed Republican formations, and rapid rebel counterattacks make the operation dangerously fragile. Advance through weak sectors, secure Belchite and the surrounding communications, and prevent local successes from being isolated. The campaign will reward commanders who keep their forces concentrated and recognise when the main objective is slipping away. A secondary victory may still buy time, morale, and political value for the Republic.",
-    "outcome": {
-      "briliant": {
-        "goto": 5,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "El plan principal ha fracasado... el contraataque enemigo frustro nuestro ataque sobre Zaragoza, sin embargo los servicios de propaganda explotaran esta victoria secundaria en Belchite de la mejor manera posible.<br><br>The main plan hasn't been accomplished, the rebel counterattack defeated our attack on Zaragoza. However, our propaganda services will try to exploit this minor victory at Belchite...<br><br>However, commandante, you must understand that tactical victories do not balance strategic failures."
-      },
-      "victory": {
-        "goto": 5,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "El plan principal ha fracasado... el contraataque enemigo frustro nuestro ataque sobre Zaragoza, sin embargo los servicios de propaganda explotaran esta victoria secundaria en Belchite de la mejor manera posible.<br><br>The main plan hasn't been accomplished, the rebel counterattack defeated our attack on Zaragoza. However, our propaganda services will try to exploit this minor victory at Belchite...<br><br>However, commandante, you must understand that tactical victories do not balance strategic failures."
-      },
-      "tactical": {
-        "goto": 5,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "El plan principal ha fracasado... el contraataque enemigo frustro nuestro ataque sobre Zaragoza, sin embargo los servicios de propaganda explotaran esta victoria secundaria en Belchite de la mejor manera posible.<br><br>The main plan hasn't been accomplished, the rebel counterattack defeated our attack on Zaragoza. However, our propaganda services will try to exploit this minor victory at Belchite...<br><br>However, commandante, you must understand that tactical victories do not balance strategic failures."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "Esta derrota deja comprometido todo el frente de Aragon... ahora el enemigo tendra facilmente la posibilidad de alcanzar el Mediterraneo sin muchos problemas.<br><br>This defeat means the end of the Aragon front. Now the enemy can easily reach the Mediterranean sea without problems.<br><br>Commandante, how is your French? No? How about your Portuguese?"
-      }
-    }
-  },
-  {
-    "id": 5,
-    "scenario": "gce6.xml",
-    "startprestige": 0,
-    "intro": "The Northern Front has collapsed and the rebel armies are preparing to drive toward the Mediterranean, threatening Valencia and the territory that still links the Republic together. To seize the initiative in winter, the People’s Army will attack the exposed city of Teruel before the enemy can complete its plans. The battle will be fought through freezing weather, mountain roads, and fortified urban ground, followed inevitably by a powerful counterstroke. Capture the city, hold it against relief forces, and avoid exhausting your best formations before the enemy offensive has truly begun.",
-    "outcome": {
-      "briliant": {
-        "goto": 6,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 200,
-        "text": "La amenaza sobre Levante se ha disipado tras la captura de Teruel y la derrota del potente contraataque que lanzo el enemigo!. La batalla ha sido terrible, pero la victoria nos ha favorecido.<br><br>The rebel offensive in and around Levante has been stopped after our victory in Teruel!. Excellent work!"
-      },
-      "victory": {
-        "goto": 6,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 150,
-        "text": "La amenaza sobre Levante se ha disipado tras la captura de Teruel y la derrota del potente contraataque que lanzo el enemigo!. La batalla ha sido terrible, pero la victoria nos ha favorecido.<br><br>The rebel offensive in and around Levante has been stopped after our victory in Teruel!. Excellent work!"
-      },
-      "tactical": {
-        "goto": 6,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "La amenaza sobre Levante se ha disipado tras la captura de Teruel y la derrota del potente contraataque que lanzo el enemigo!. La batalla ha sido terrible, pero la victoria nos ha favorecido.<br><br>The rebel offensive in and around Levante has been stopped after our victory in Teruel!. Excellent work!"
-      },
-      "lose": {
-        "goto": 6,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "La batalla ha sido terrible... y mas aun lo esta siendo la retirada. Tras capturar Teruel los rebeldes nos han hecho trizas... Este golpe tal vez sea definitivo, a pesar de ello el alto mando seguira necesitando de sus servicios.<br><br>The battle has been horrible... and more horrible has been the retreat. After the fall of Teruel, the rebels have overrun our troops. Maybe this strike against El Ejercito Popular has sealed our fate. In spite of your failure here, the high command, and the Republic, still need your services. For all our sakes, you must succeed next time."
-      }
-    }
-  },
-  {
-    "id": 6,
-    "scenario": "gce7.xml",
-    "startprestige": 0,
-    "intro": "The rebels have reached the Mediterranean and split Republican territory in two. The Ebro offensive is the Republic’s boldest—and perhaps last—attempt to reverse the war. Under cover of darkness, the People’s Army must cross the river near Amposta and elsewhere, rupture a sector the enemy considers secure, and drive toward Gandesa before reserves and air power arrive. Engineers, bridges, artillery, and disciplined exploitation will decide whether the surprise crossing becomes a strategic breakthrough or a trapped bridgehead. Cross fast, widen the corridor, and force Franco to abandon the Levant.",
-    "outcome": {
-      "briliant": {
-        "goto": 9,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 180,
-        "text": "Fantastico!, los rebeldes se baten en retirada, nuestro ataque por sorpresa cruzando el Ebro ha sido todo un exito gracias a su pericia. Ahora todo el sector de Levante que los fascistas habian alcanzado esta comprometido y deberan retirarse de ahi si no quieren verse rodeados. Esta victoria elevara la moral de toda la zona leal al gobierno.<br><br>Wonderful! The rebels are in disarray and retreating all their units in the sector. Our surprise attack across the Ebro has been totally accomplished thanks to your skills, and brave soldiers. Now, all of the Levante sector under rebel control is in chaos and will soon be recaptured by El Ejercito Popular. This victory will increase the morale of all the citizens of free Spain!<br><br>Congratulations, General."
-      },
-      "victory": {
-        "goto": 7,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "Hemos conseguido alcanzar una victoria estrategica, pero el enemigo ha sabido encajar el golpe y la ofensiva no va a tener los efectos planeados... ahora se espera un fuerte contraataque enemigo. Prepare las trincheras.<br><br>We have achieved a minor victory, however the enemy has stopped our advance and in several other sectors.  The planned offensive won't reach all the main goals, and many enemy formations are still operational.  Intelligence has warned of a counterattack in your sector soon.  I advise you to order your troops to dig in.<br><br>Commandante, you must hold your lines if the Republic is to survive."
-      },
-      "tactical": {
-        "goto": 7,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "Hemos conseguido alcanzar una victoria estrategica, pero el enemigo ha sabido encajar el golpe y la ofensiva no va a tener los efectos planeados... ahora se espera un fuerte contraataque enemigo. Prepare las trincheras.<br><br>We have achieved a minor victory, however the enemy has stopped our advance and in several other sectors.  The planned offensive won't reach all the main goals, and many enemy formations are still operational.  Intelligence has warned of a counterattack in your sector soon.  I advise you to order your troops to dig in.<br><br>Commandante, you must hold your lines if the Republic is to survive."
-      },
-      "lose": {
-        "goto": 7,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "Hemos conseguido alcanzar una victoria estrategica, pero el enemigo ha sabido encajar el golpe y la ofensiva no va a tener los efectos planeados... ahora se espera un fuerte contraataque enemigo. Prepare las trincheras.<br><br>We have achieved a minor victory, however the enemy has stopped our advance here and in several other sectors. The planned offensive won't accomplish all of its main goals, and many enemy formations are still operational. Intelligence has warned of a counterattack in your sector soon. I advise you to order your troops to dig in.<br><br>Commandante, you must hold your lines if the Republic is to survive."
-      }
-    }
-  },
-  {
-    "id": 7,
-    "scenario": "gce8.xml",
-    "startprestige": 0,
-    "intro": "The advance beyond the Ebro has stalled before Gandesa, while German and Italian aircraft pound the bridgeheads and rebel reinforcements close from every direction. The great offensive has failed to achieve its strategic aim; the immediate task is now to save the army that carried it out. Conduct an organised withdrawal across the river, protect the remaining bridges, evacuate artillery and experienced units, and use rearguards to prevent pursuit from becoming a massacre. This is a battle of discipline under pressure: every formation brought back intact may be essential to the Republic’s final defence.",
-    "outcome": {
-      "briliant": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "Que...?? a donde va con esas tropas?, que clase de retirada ha planeado?, su cobardia muestra que no es apto para el Ejercito Popular.<br><br>What!??  Where are you going with those troops!!??  What kind of retreat are you making???  Your cowardice shows you are not the general which the People's Army needs! You are dismissed, as an officer, but not from the army, private!<br><br>Remember, \"Victoria o muerte,\" but with this performance, death seems more likely."
-      },
-      "victory": {
-        "goto": 8,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 120,
-        "text": "Hemos conseguido hacer una retirada medianamente ordenada, sin embargo algunas unidades han quedado atras y han sido capturadas por el enemigo.<br><br>The retreat was successful, Senor General, although a few more of our units have been captured by the enemy."
-      },
-      "tactical": {
-        "goto": 8,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 80,
-        "text": "Afortunadamente hemos conseguido hacer una retirada ordenada y la mayor parte del Ejercito Popular ha cruzado en direccion contraria el rio Ebro.<br><br>Fortunately, you have managed to make a careful retreat to the other bank of the river, and most of the People's Army is now safe for the moment.  Unfortunately, careful retreats and saving what is left of our army will not defeat the Falangists."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 120,
-        "text": "Ah!, un general republicano!, el alto mando del generalisimo estara encantado de saber que ademas de haber destruido todo su sucio ''ejercito del Ebro'' hemos capturado a un general rojo. Trataremos de sacar partido con su captura y si no nos sirve le fusilaremos por traicion a la patria!.<br><br>Nationalist officer - \"Aha!, a Republican General! The high command of the Generalisimo will be pleased to know that your nasty ''Army of the Ebro'' has been destroyed, and also that we have captured a red general! [evil laughter]. You will be executed soon for your betrayal of Spain!<br><br>\"Despite you, Spain shall be 'un grande libre.'\""
-      }
-    }
-  },
-  {
-    "id": 8,
-    "scenario": "gce9.xml",
-    "startprestige": 0,
-    "intro": "After the disaster on the Ebro, Franco’s armies are pressing into Catalonia and the Republic’s position is collapsing. The command hopes to slow the offensive around Lérida by correcting the front and recovering two important power stations beyond the Segre. Your force must cross or fight along the river, seize the industrial objectives, and then survive the enemy’s inevitable response. The victory will not reverse the war, but it can buy time for civilians, units, and political cadres to escape the encirclement. Fight for every day the Republic still possesses.",
-    "outcome": {
-      "briliant": {
-        "goto": 254,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 180,
-        "text": "Esta victoria nos permitira respirar un poco mas, pero le informo de que algunos mandos se han pasado al enemigo y otros han huido a traves de la frontera francesa. Personalmente le sugiero que hagamos lo mismo y nos salvemos antes de que sea tarde, la ofensiva rebelde sobre Catalunya continua imparable...<br><br>Nota historica--- Historicamente la guerra termino en Abril de 1939, despues de la caida de Catalunya y la redicion de Madrid a las tropas rebeldes.<br><br>This victory will allow us to take a breath, but I must warn you that many army officers have joined the enemy! Others have abandoned the fight and crossed the Spanish - French border to escape.  Personally, I advise you to cross the border, too, and save yourself.   I think the rebel offensive is unbeatable now.<br><br>Historical note--- The war finally ended in April, 1939 with the rebel victory after the fall of Catalunya and the surrender of Madrid to rebels.  The prelude to WWII was over, and September 1, 1939 was quickly approaching."
-      },
-      "victory": {
-        "goto": 254,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 120,
-        "text": "Esta victoria nos permitira respirar un poco mas, pero le informo de que algunos mandos se han pasado al enemigo y otros han huido a traves de la frontera francesa. Personalmente le sugiero que hagamos lo mismo y nos salvemos antes de que sea tarde, la ofensiva rebelde sobre Catalunya continua imparable...<br><br>Nota historica--- Historicamente la guerra termino en Abril de 1939, despues de la caida de Catalunya y la redicion de Madrid a las tropas rebeldes.<br><br>This victory will allow us to take a breath, but I must warn you that many army officers have joined the enemy! Others have abandoned the fight and crossed the Spanish - French border to escape.  Personally, I advise you to cross the border, too, and save yourself.   I think the rebel offensive is unbeatable now.<br><br>Historical note--- The war finally ended in April, 1939 with the rebel victory after the fall of Catalunya and the surrender of Madrid to rebels.  The prelude to WWII was over, and September 1, 1939 was quickly approaching."
-      },
-      "tactical": {
-        "goto": 254,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 80,
-        "text": "Esta victoria nos permitira respirar un poco mas, pero le informo de que algunos mandos se han pasado al enemigo y otros han huido a traves de la frontera francesa. Personalmente le sugiero que hagamos lo mismo y nos salvemos antes de que sea tarde, la ofensiva rebelde sobre Catalunya continua imparable...<br><br>Nota historica--- Historicamente la guerra termino en Abril de 1939, despues de la caida de Catalunya y la redicion de Madrid a las tropas rebeldes.<br><br>This victory will allow us to take a breath, but I must warn you that many army officers have joined the enemy! Others have abandoned the fight and crossed the Spanish - French border to escape.  Personally, I advise you to cross the border, too, and save yourself.   I think the rebel offensive is unbeatable now.<br><br>Historical note--- The war finally ended in April, 1939 with the rebel victory after the fall of Catalunya and the surrender of Madrid to rebels.  The prelude to WWII was over, and September 1, 1939 was quickly approaching."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 120,
-        "text": "Ah!, buenos dias ''general''!, el GCG estara contento de saber que hemos dado otro paso adelante en la liberacion de este pais capturando a uno de sus comandantes mas famosos. En adelante se pudrira usted en una de nuestras carceles!.<br><br>Nota historica--- Historicamente la guerra termino en Abril de 1939, despues de la caida de Catalunya y la redicion de Madrid a las tropas rebeldes.<br><br>Nationalist officer - \"AH!, buenos dias ''general''!  The High Headquarters of Generalisimo Franco will be happy knowing that we have made another step to free this country by capturing one of the most popular Republican generals!  Do you wish to join the victorious side?  No? Then you will surely rot and die in jail. [Evil laughter]\"<br><br>Historical note--- The war finally end in April of 1939 with the rebel victory after the fall of Catalunya and the surrender of Madrid to rebels."
-      }
-    }
-  },
-  {
-    "id": 9,
-    "scenario": "vgce0.xml",
-    "startprestige": 0,
-    "intro": "The war has taken an unexpected turn: Republican successes have destabilised the rebel rear, encouraged uprisings, and opened a new opportunity in Catalonia. South of Lérida, enemy forces are attempting to restore the front before the momentum becomes irreversible. Meet them at the Segre, defeat their counterattack, and turn a local operation into the collapse of the entire Catalan position. A clear victory will reopen the road into Aragón and place Zaragoza within reach. Maintain pressure, prevent the enemy from rebuilding, and make this river battle the bridge from survival to final offensive.",
-    "outcome": {
-      "briliant": {
-        "goto": 10,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "Victoria!, el dispositivo ha funcionado y el frente de Catalunya ha caido!, ahora podremos volver a atacar Aragon y su capital Zaragoza con garantias de exito. Se ha abierto el camino a la victoria.<br><br>Victory!, the plan has worked, and the rebel positions around Catalunya have fallen!. Now we can attack Aragon and its capital, Zaragoza, again! The path to the victory is opened finally, thanks to the brave soldiers of the Republic and you!"
-      },
-      "victory": {
-        "goto": 10,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "Victoria!, el dispositivo ha funcionado y el frente de Catalunya ha caido!, ahora podremos volver a atacar Aragon y su capital Zaragoza con garantias de exito. Se ha abierto el camino a la victoria.<br><br>Victory!, the plan has worked, and the rebel positions around Catalunya have fallen!. Now we can attack Aragon and its capital, Zaragoza, again! The path to the victory is opened finally, thanks to the brave soldiers of the Republic and you!"
-      },
-      "tactical": {
-        "goto": 10,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "Victoria!, el dispositivo ha funcionado y el frente de Catalunya ha caido!, ahora podremos volver a atacar Aragon y su capital Zaragoza con garantias de exito. Se ha abierto el camino a la victoria.<br><br>Victory!, the plan has worked, and the rebel positions around Catalunya have fallen!. Now we can attack Aragon and its capital, Zaragoza, again! The path to the victory is opened finally, thanks to the brave soldiers of the Republic and you!"
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "Ah!, buenos dias ''general''!, el GCG estara contento de saber que hemos dado otro paso adelante en la liberacion de este pais capturando a uno de sus comandantes mas famosos. En adelante se pudrira usted en una de nuestras carceles!.<br><br>Nationalist officer - \"AH!, buenos dias ''general''!  The High Headquarters of Generalisimo Franco will be happy knowing that we have made another step to free this country by capturing one of the most popular Republican generals!  Do you wish to join the victorious side?  No? Then you will surely rot and die in jail. [Evil laughter]\""
-      }
-    }
-  },
-  {
-    "id": 10,
-    "scenario": "vgce1.xml",
-    "startprestige": 0,
-    "intro": "The successful counteroffensive has forced the rebels back from the Mediterranean, while the reopening of the French frontier allows long-awaited Soviet weapons to reach the Republic. Zaragoza now stands as the next great prize and the gateway toward Burgos. The city is protected by experienced troops, foreign support, and prepared approaches, but the strategic balance has shifted in your favour. Coordinate armour, infantry, artillery, and air support, isolate the garrison, and break the defensive ring without allowing the offensive to lose momentum. Take Zaragoza and carry the People’s Army into the enemy heartland.",
-    "outcome": {
-      "briliant": {
-        "goto": 11,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 180,
-        "text": "Victoria!, Zaragoza esta ahora en nuestras manos y el camino hacia Burgos esta reabierto.<br><br>Viva la Republica y viva Espana!.<br><br>Victory! Zaragoza is our hands, and the path to Burgos is open! Good work.<br><br>Viva los trabajadores y campesinos!"
-      },
-      "victory": {
-        "goto": 11,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 120,
-        "text": "Victoria!, Zaragoza esta ahora en nuestras manos y el camino hacia Burgos esta reabierto.<br><br>Viva la Republica y viva Espana!.<br><br>Victory! Zaragoza is our hands, and the path to Burgos is open! Good work.<br><br>Viva los trabajadores y campesinos!"
-      },
-      "tactical": {
-        "goto": 11,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 80,
-        "text": "Victoria!, Zaragoza esta ahora en nuestras manos y el camino hacia Burgos esta reabierto.<br><br>Viva la Republica y viva Espana!.<br><br>Victory! Zaragoza is our hands, and the path to Burgos is open! Good work.<br><br>Viva los trabajadores y campesinos!"
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 120,
-        "text": "Oficial Nacionalista- AH!, que tenemos aqui?, un general republicano!. El alto mando del Generalisimo estara encantado de saber que hemos capturado a un general rojo, esto es un paso mas para librar a este pais de canallas como usted!. Jajaja!, quiere usted unirse al bando que va a vencer?, no?, entonces se pudrira usted en la carcel!.<br><br>Nationalist officer - \"AH!, buenos dias ''general''!  The High Headquarters of Generalisimo Franco will be happy knowing that we have made another step to free this country by capturing one of the most popular Republican generals!  Do you wish to join the victorious side?  No? Then you will surely rot and die in jail. [Evil laughter]\""
-      }
-    }
-  },
-  {
-    "id": 11,
-    "scenario": "vgce4.xml",
-    "startprestige": 0,
-    "intro": "The rebellion has collapsed across the Peninsula. Burgos has fallen, northern uprisings have shattered the enemy rear, and many rebel units have abandoned Franco’s cause. The surviving insurgent forces have withdrawn across the Strait to the Spanish protectorate in Morocco, where the war began. The final campaign leads to Ceuta: secure the coast, defeat the remaining formations, and prevent their escape or foreign reinforcement. This is the last operation of the civil war and the first test of the peace that follows. Finish the struggle, reunite Spain under the Republic, and close the road that carried the Army of Africa to the mainland.",
-    "outcome": {
-      "briliant": {
-        "goto": 254,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "LA GUERRA HA TERMINADO!, en multitud de puntos del pais se celebra la victoria por todo lo alto!. De ahora en adelante se abre una nueva etapa en la que nuestra patria debe modernizarse y afrontar nuevos desafios. Usted formara parte en adelante de la historia de Espana para siempre.<br><br>The WAR IS OVER! All the people are in the streets celebrating the victory of the Republic's victory over the fascist rebels! From now, and in the future, a new political system will try to modernize Spain without any kind of capitalist or traditionalist intervention. Excellent work general, obviously you are one of the new heroes of the Spanish Republic, and your name will be written for ever in the ancient Spanish history."
-      },
-      "victory": {
-        "goto": 254,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "LA GUERRA HA TERMINADO!, en multitud de puntos del pais se celebra la victoria por todo lo alto!. De ahora en adelante se abre una nueva etapa en la que nuestra patria debe modernizarse y afrontar nuevos desafios. Usted formara parte en adelante de la historia de Espana para siempre.<br><br>The WAR IS OVER! All the people are in the streets celebrating the victory of the Republic's victory over the fascist rebels! From now, and in the future, a new political system will try to modernize Spain without any kind of capitalist or traditionalist intervention. Excellent work general, obviously you are one of the new heroes of the Spanish Republic, and your name will be written for ever in the ancient Spanish history."
-      },
-      "tactical": {
-        "goto": 254,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "LA GUERRA HA TERMINADO!, en multitud de puntos del pais se celebra la victoria por todo lo alto!. De ahora en adelante se abre una nueva etapa en la que nuestra patria debe modernizarse y afrontar nuevos desafios. Usted formara parte en adelante de la historia de Espana para siempre.<br><br>The WAR IS OVER! All the people are in the streets celebrating the victory of the Republic's victory over the fascist rebels! From now, and in the future, a new political system will try to modernize Spain without any kind of capitalist or traditionalist intervention. Excellent work general, obviously you are one of the new heroes of the Spanish Republic, and your name will be written for ever in the ancient Spanish history."
-      },
-      "lose": {
-        "goto": 255,
-        "gotoplayed": [
-          0,
-          0
-        ],
-        "prestige": 0,
-        "text": "Oficial Nacionalista- AH!, que tenemos aqui?, un general republicano!. El alto mando del Generalisimo estara encantado de saber que hemos capturado a un general rojo, esto es un paso mas para librar a este pais de canallas como usted!. Jajaja!, quiere usted unirse al bando que va a vencer?, no?, entonces se pudrira usted en la carcel!.<br><br>Nationalist officer - \"AH!, buenos dias ''general''!  The High Headquarters of Generalisimo Franco will be happy knowing that we have made another step to free this country by capturing one of the most popular Republican generals!  Do you wish to join the victorious side?  No? Then you will surely rot and die in jail. [Evil laughter]\""
-      }
-    }
+ {
+  "id": 0,
+  "scenario": "gce1.xml",
+  "startprestige": 0,
+  "intro": "Batalla por Madrid<br><br>13 de Noviembre de 1936<br><br>Bien comandante, le pondre al corriente de la situacion presente; 4 meses despues del golpe de Julio la situacion es caotica, algunos sectores de la Peninsula y la totalidad del protectorado de Marruecos se han unido a la sublevacion. Columnas rebeldes provenientes del Norte y el Sur han alcanzado Madrid. Mientras que las columnas del general Mola se han visto detenidas en las sierras del Norte de la capital, el ejercito de Africa al mando del general Franco ha alcanzado los barrios del Sur y del Oeste de la ciudad y constituye una gravisima amenaza, no deben cruzar el rio Manzanares!. Ademas se teme que elementos quintacolumnistas aparezcan dentro de la ciudad segun se vayan acercando las columnas rebeldes.<br><br>El gobierno de la Republica ha dado la orden de la formacion de un ejercito popular del que comienzan a formarse las primeras brigadas mixtas. Ademas, contamos con la valerosa aportacion de los voluntarios extranjeros, que hemos agrupado en algunas ''Brigadas Internacionales''. Su mision consistira en dirigir esas unidades de nueva creacion y algunas milicias para defender Madrid. Si Madrid cae, de por sentado que habremos perdido la guerra.<br>Recuerde el lema de Madrid; No pasaran!.<br><br>Batalla por Madrid<br><br>November 13th, 1936<br><br>Well commander, please listen to me, I will explain you the present situation. 4 months after the coup de'etat of July the situation is chaotic, some peninsular areas and the whole of Spanish Morocco are supporting the uprising. Rebel columns coming from the North, and from the South have reached Madrid. While the columns from the North under the command of the General Mola have been stopped in the mountains north of Madrid, the African Army under the command of the General Franco is now approaching the South and West neighborhoods of Madrid. They are a dangerous menace, and they must not cross the Manzanares river! Also, probably ''5th column'' elements will appear with the rebel approach to Madrid.<br><br>The Republican government has finally given the order to form a People's Army, some Mixed Brigades (Brigadas Mixtas, ''BM'') are now ready, and also other International Brigades (consisting mainly of foreign anti-fascist volunteers) should be ready for the battle!<br><br>Your mission is to defend Madrid at any cost, if Madrid falls, the whole Spain will fall! Remember the Madrid people's slogan; No pasaran! (\"They shall not pass!\").",
+  "outcome": {
+   "briliant": {
+    "goto": 1,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 180,
+    "text": "El ejercito de Africa ha sido frenado en seco!, es el primer exito importante de nuestras valerosas tropas. Gran trabajo, general. Madrid ha sido defendido con exito y ahora se convertira en el ejemplo a seguir por todos los pueblos de este pais, que estan tratando de resistir a la amenaza fascista.<br><br>The African Army has been stopped! This is the first important successful action of our soldiers. Great work, Madrid has been successfully defended, and now it will be a resistance symbol for the people of this country fighting against the Fascist menace!"
+   },
+   "victory": {
+    "goto": 1,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 120,
+    "text": "El ejercito de Africa ha sido frenado en seco!, es el primer exito importante de nuestras valerosas tropas. Gran trabajo, general. Madrid ha sido defendido con exito y ahora se convertira en el ejemplo a seguir por todos los pueblos de este pais, que estan tratando de resistir a la amenaza fascista.<br><br>The African Army has been stopped! This is the first important successful action of our soldiers. Great work, Madrid has been successfully defended, and now it will be a resistance symbol for the people of this country fighting against the Fascist menace!"
+   },
+   "tactical": {
+    "goto": 1,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 80,
+    "text": "El ejercito de Africa ha sido frenado en seco!, es el primer exito importante de nuestras valerosas tropas. Gran trabajo, general. Madrid ha sido defendido con exito y ahora se convertira en el ejemplo a seguir por todos los pueblos de este pais, que estan tratando de resistir a la amenaza fascista.<br><br>The African Army has been stopped! This is the first important successful action of our soldiers. Great work, Madrid has been successfully defended, and now it will be a resistance symbol for the people of this country fighting against the Fascist menace!"
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 120,
+    "text": "Asomese a la ventana, lo ve?, las columnas enemigas estan apareciendo por el paseo de la Castellana triunfalmente. No nos queda escapatoria alguna, gracias a su ineptitud la guerra ha terminado para nosotros y seguro que pronto nos fusilaran.<br><br>Please, look out the window!  Did you see it? The rebel columns are advancing down Paseo de la Castellana street just now. We have no chance to save ourselves thanks to your stupid actions! Surely, the rebels will execute us soon!"
+   }
   }
+ },
+ {
+  "id": 1,
+  "scenario": "gce2.xml",
+  "startprestige": 0,
+  "intro": "Jarama Valley<br><br>16 de Febrero de 1937<br><br>La marcha rebelde sobre Madrid esta completamente detenida por el momento. En las ultimas semanas los movimientos fascistas delatan que los planes del enemigo han cambiado y ahora en lugar del asalto directo a la capital se han decantado por rodearla, primero atacando nuestro sector Sur-Este en el rio Jarama para despues enlazar con las columnas que estan mas al norte.<br>Por tanto, evite que el enemigo cruce el rio Jarama a cualquier precio!!!. Tampoco se olvide que el importante punto estrategico del Cerro de los Angeles no debe caer en manos rebeldes<br><br>Se han tomado un par decisiones para tratar de poner orden en el caos reinante organizando unas cuantas divisiones provisionales para el Ejercito Popular, ademas esperamos que las recientes llegadas de armamento sovietico nos sean de ayuda para acometer esta tarea.<br><br>Buena suerte.<br><br>Valle del Jarama<br><br>February 16th, 1937<br><br>The rebel march on Madrid is completely stopped for the moment. In the past weeks, the movements of the fascist have shown us that the enemy's plans have changed. Now they will try to encircle the capital, cutting our communications with Valencia (new seat of the Republican goverment). The High Command thinks that stopping the rebel plans is possible, and the best sector to do it is the Jarama river area (SE of Madrid). Provisional divisions have been formed for this duty.<br><br>Your mission is to stop the rebels here, by counterattacking, and keeping open communications with Madrid.<br><br>Buena suerte.",
+  "outcome": {
+   "briliant": {
+    "goto": 2,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 180,
+    "text": "Felicidades!, ha demostrado usted ser un buen mando para el Ejercito Popular. La ofensiva rebelde en el valle del Jarama se ha detenido por el momento y hemos conseguido demostrarles a los rebeldes que nuestras fuerzas deben ser tenidas en cuenta.<br><br>Congratulations! You have showed the proper skills to be a good commander for the People's Army. The Rebel offensive has been stopped for the moment, and the fascists have already seen the valor of our troops."
+   },
+   "victory": {
+    "goto": 2,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 120,
+    "text": "Felicidades!, ha demostrado usted ser un buen mando para el Ejercito Popular. La ofensiva rebelde en el valle del Jarama se ha detenido por el momento y hemos conseguido demostrarles a los rebeldes que nuestras fuerzas deben ser tenidas en cuenta.<br><br>Congratulations! You have showed the proper skills to be a good commander for the People's Army. The Rebel offensive has been stopped for the moment, and the fascists have already seen the valor of our troops."
+   },
+   "tactical": {
+    "goto": 2,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 80,
+    "text": "Felicidades!, ha demostrado usted ser un buen mando para el Ejercito Popular. La ofensiva rebelde en el valle del Jarama se ha detenido por el momento y hemos conseguido demostrarles a los rebeldes que nuestras fuerzas deben ser tenidas en cuenta.<br><br>Congratulations! You have showed the proper skills to be a good commander for the People's Army. The Rebel offensive has been stopped for the moment, and the fascists have already seen the valor of our troops."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 120,
+    "text": "Asomese a la ventana, lo ve?, las columnas enemigas estan apareciendo por el paseo de la Castellana triunfalmente. No nos queda escapatoria alguna, gracias a su ineptitud la guerra ha terminado para nosotros y seguro que pronto nos fusilaran.<br><br>Please, look out the window!  Did you see it? The rebel columns are advancing down Paseo de la Castellana street just now. We have no chance to save ourselves thanks to your stupid actions! Surely, the rebels will execute us soon!"
+   }
+  }
+ },
+ {
+  "id": 2,
+  "scenario": "gce3.xml",
+  "startprestige": 0,
+  "intro": "Guadalajara<br><br>8 de Marzo de 1937<br><br>A primeras horas nuestros asesores sovieticos (Rodimtsev y Goriev) nos han informado de una gran concentracion de tropas en la linea Brihuega-Torija, y que se oyen a lo lejos raras canciones italianas, lo que hace indicar que el nucleo de esas tropas es el CTV italiano que capturo Malaga en fechas pasadas.<br><br>Tras el exito en el valle del Jarama nuestro objetivo ahora es asestar un duro golpe al enemigo, que tiene una confianza excesiva en sus propios medios, y hacer dudar a los rebeldes de la valia de la cooperacion que reciben de los italianos. <br><br>Una gran victoria aqui podra poner punto y final a las aspiraciones rebeldes sobre Madrid, al menos por el momento.<br><br>Guadalajara<br><br>March 8th, 1937<br><br>Early this morning, our Soviet advisors (Rodimtsev and Goriev) informed us of a large concentration of troops spotted along the Brihuega-Torija line. Our advanced recon units have heard strange Italian songs. There is no doubt the Italian CTV which captured Malaga the past days is on the way to strike again, here in Guadalajara.<br><br>After your success in the Jarama Valley, our aim now, is to accomplish a grand victory over the overconfident Italian troops.<br><br>A decisive victory here will be the end of the rebel's menacing threat to Madrid, at least for the moment.",
+  "outcome": {
+   "briliant": {
+    "goto": 3,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 300,
+    "text": "Magnifico!, los italianos huyen despaboridos mientras los rebeldes tratan de mantener las lineas de frente. Esta derrota despeja por completo el peligro sobre Madrid, al menos por el momento, y nos posibilitara empezar a pensar en acciones ofensivas en semanas posteriores.<br><br>Great! The Italians are running to the hills instead of trying to hold their front lines. This victory will stop the rebel menace at Madrid, at least for the moment, and allow us to think about further operations in the coming weeks.<br><br>Viva la republica!"
+   },
+   "victory": {
+    "goto": 3,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 270,
+    "text": "Magnifico!, los italianos huyen despaboridos mientras los rebeldes tratan de mantener las lineas de frente. Esta derrota despeja por completo el peligro sobre Madrid, al menos por el momento, y nos posibilitara empezar a pensar en acciones ofensivas en semanas posteriores.<br><br>Great! The Italians are running to the hills instead of trying to hold their front lines. This victory will stop the rebel menace at Madrid, at least for the moment, and allow us to think about further operations in the coming weeks.<br><br>Viva la republica!"
+   },
+   "tactical": {
+    "goto": 3,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 200,
+    "text": "Magnifico!, los italianos huyen despaboridos mientras los rebeldes tratan de mantener las lineas de frente. Esta derrota despeja por completo el peligro sobre Madrid, al menos por el momento, y nos posibilitara empezar a pensar en acciones ofensivas en semanas posteriores.<br><br>Great! The Italians are running to the hills instead of trying to hold their front lines. This victory will stop the rebel menace at Madrid, at least for the moment, and allow us to think about further operations in the coming weeks.<br><br>Viva la republica!"
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 120,
+    "text": "Inepto!, los rebeldes han conseguido cercar la capital y ahora la guerra esta sentenciada, no nos queda escapatoria alguna,  la guerra ha terminado para nosotros y seguro que pronto nos fusilaran.<br><br>Please, look out the window! Did you see it?  The rebel columns are entering Paseo de la Castellana street just now. We have no chance to save ourselves thanks to your stupid actions! Surely, the rebels will execute us soon!."
+   }
+  }
+ },
+ {
+  "id": 3,
+  "scenario": "gce4.xml",
+  "startprestige": 0,
+  "intro": "Ofensiva de Brunete<br><br>6 de Julio de 1937<br><br>Tras las primeras pruebas de fuego mas o menos victoriosas para el Ejercito Popular, sumado eso a los ultimos envios de armas que han llegado desde la URSS, se puede decir que estamos en posicion de lanzar nuestra primera gran ofensiva de la guerra.<br>El plan consiste en un ataque desde el Norte y el Este en el sector de Brunete para embolsar a las fuerzas rebeldes aqui presentes. La mayor parte del V y el XVIII cuerpos atacaran desde el Norte en direccion a Brunete y Villafranca del Castillo, mientras que desde Madrid llegara el II cuerpo por el Este en direccion a Villaviciosa de Odon. Tambien llegara la 14 Division posteriormente como refuerzo, ademas de una buena cantidad de aparatos de las FARE.<br><br>Los motivos de esta ofensiva son varios, por un lado el objetivo principal es embolsar al enemigo, pero tambien alejar a los fascistas definitivamente de Madrid y conseguir que estos retiren parte de sus tropas del frente Norte, para asi aliviar la presion ejercida sobre el mismo. Desde algunas instancias tambien se espera que esta ofensiva de lugar al final de la guerra, pero entre nosotros, creo que eso es algo complicado.<br><br>Espero que a pesar del aplastante calor reinante, sus acciones alcancen los resultados previstos. <br><br>Ofensiva de Brunete<br><br>July 6th, 1937<br><br>After your first successful actions with the People's Army, and with our new Soviet equipment, received in the past few days, we are in a good position to launch our first big offensive of the war.<br><br>The plan consists of an attack from the North and the East on the Brunete sector, to surround the rebel forces there. The main part of the V and the XVIII Army Corps will attack from the North southwards to Brunete and Villafranca del Castillo, while the II Army Corp arrives from Madrid, taking the Villaviciosa de Odon. Also, the 14th Division will arrive as reinforcements, as well as a good number of FARE aircraft.<br><br>The High Command wants to encircle the rebel troops, create a pocket, and then destroy it. This will allow us to push the rebel lines far away from Madrid. A success here would make the rebels withdraw troops from the Austrian Front in the North, which is under horrible pressure.<br><br>Some people also believe that a major success for us here would finish the war... but personally I don't think so.<br><br>I hope that in spite of the African heat we are suffering this Summer, the People's Army will be able to achieve all the scheduled goals.<br><br>Buena Suerte.",
+  "outcome": {
+   "briliant": {
+    "goto": 4,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Se han alcanzado todos los objetivos de la operacion, sin embargo debido a la superioridad aerea enemiga y a la calidad de sus tropas, debemos retirar nuestras unidades de Brunete a posiciones ligeramente mas al Norte.<br>Buen trabajo. <br><br>All the goals have been achieved. However, due to the enemy air superiority and the quality of their troops, we must retreat our troops from Brunete to Northern positions.<br><br>Good Work. I wish El Ejercito Popular had more commanders of your quality and initiative."
+   },
+   "victory": {
+    "goto": 4,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Se han alcanzado todos los objetivos de la operacion, sin embargo debido a la superioridad aerea enemiga y a la calidad de sus tropas, debemos retirar nuestras unidades de Brunete a posiciones ligeramente mas al Norte.<br>Buen trabajo. <br><br>All the goals have been achieved. However, due to the enemy air superiority and the quality of their troops, we must retreat our troops from Brunete to Northern positions.<br><br>Good Work. I wish El Ejercito Popular had more commanders of your quality and initiative."
+   },
+   "tactical": {
+    "goto": 4,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Se han alcanzado todos los objetivos de la operacion, sin embargo debido a la superioridad aerea enemiga y a la calidad de sus tropas, debemos retirar nuestras unidades de Brunete a posiciones ligeramente mas al Norte.<br>Buen trabajo. <br><br>All the goals have been achieved. However, due to the enemy air superiority and the quality of their troops, we must retreat our troops from Brunete to Northern positions.<br><br>Good Work. I wish El Ejercito Popular had more commanders of your quality and initiative."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Inepto!, los rebeldes han conseguido detener la ofensiva por completo y ahora se preparan a lanzar un contraataque que seguro rompera el frente, lo que les permitira cercar la capital. Ahora la guerra esta sentenciada, no nos queda escapatoria alguna,  la guerra ha terminado para nosotros y seguro que pronto nos fusilaran.<br><br>Please, look out the window!  Did you see it? The rebel columns are advancing down Paseo de la Castellana street just now. We have no chance to save ourselves thanks to your stupid actions! Surely, the rebels will execute us soon!"
+   }
+  }
+ },
+ {
+  "id": 4,
+  "scenario": "gce5.xml",
+  "startprestige": 0,
+  "intro": "Ofensiva de Aragon<br><br>24 de Agosto de 1937<br><br>Bienvenido al frente de Aragon, general. Los objetivos alcanzados en el sector de Brunete no correspondieron finalmente con nuestras aspiraciones, pero la ofensiva franquista sobre el Frente Norte se ha visto afectada.<br>Para tratar de nuevo de frenar completamente la tremenda presion que los rebeldes ejercen sobre Asturias y Cantabria, el alto mando ha creado esta nueva operacion sobre Aragon, consistente en un ataque concentrico que caera finalmente sobre Zaragoza. En su camino hacia la capital aragonesa encontrara multitud de guarniciones falangistas bien atrincheradas que trataran de resistir hasta la llegada de refuerzos, asi que actue con rapidez. Contara tambien con la ayuda de un grupo de guerrilleros cuya mision es capturar los puentes de Zaragoza...<br>Tenemos mas equipo que en Brunete, asi que se esperan amplios resultados de esta operacion.<br><br>---Historicamente la operacion fue un fracaso, ya que las divisiones republicanas se vieron detenidas por las guarniciones fuertemente atrincheradas, y posteriormente la ofensiva acabaria conociendose como batalla de Belchite.<br><br>Ofensiva de Aragon<br><br>August 24th, 1937<br><br>Welcome to the Aragon front, general. The operation of Brunete did not achieve everything that we wanted. However, the enemy has withdrawn some troops from the Northern Front. In order to try again to stop the rebel offensive in Asturias and Cantabria, the High Command has planned a new operation, here in Aragon. Its purposes are twofold. First, capture the objectives. Second, draw more troops away from our weakened northern front.<br><br>This is again a coordinated attack. The goal is Aragon's capital, Zaragoza. On your way to Zaragoza, you will encounter a lot of strongly-entreched falangist garrisons. These garrisons will try to resist, and delay you, until the arrival of rebel reinforcements, so a fast advance is needed. A guerrilla group has been deployed also to capture the Zaragoza bridges, but will not be able to hold them indefinitely.<br><br>--- Historically, this operation was a minor victory for the Republicans, achieved in the battle for the small village Belchite, where the rebel reinforcements attacked the Republican left flank. This battle is known as ''Battle for Belchite'' or Batalla de Belchite in Spanish.",
+  "outcome": {
+   "briliant": {
+    "goto": 5,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "El plan principal ha fracasado... el contraataque enemigo frustro nuestro ataque sobre Zaragoza, sin embargo los servicios de propaganda explotaran esta victoria secundaria en Belchite de la mejor manera posible.<br><br>The main plan hasn't been accomplished, the rebel counterattack defeated our attack on Zaragoza. However, our propaganda services will try to exploit this minor victory at Belchite...<br><br>However, commandante, you must understand that tactical victories do not balance strategic failures."
+   },
+   "victory": {
+    "goto": 5,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "El plan principal ha fracasado... el contraataque enemigo frustro nuestro ataque sobre Zaragoza, sin embargo los servicios de propaganda explotaran esta victoria secundaria en Belchite de la mejor manera posible.<br><br>The main plan hasn't been accomplished, the rebel counterattack defeated our attack on Zaragoza. However, our propaganda services will try to exploit this minor victory at Belchite...<br><br>However, commandante, you must understand that tactical victories do not balance strategic failures."
+   },
+   "tactical": {
+    "goto": 5,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "El plan principal ha fracasado... el contraataque enemigo frustro nuestro ataque sobre Zaragoza, sin embargo los servicios de propaganda explotaran esta victoria secundaria en Belchite de la mejor manera posible.<br><br>The main plan hasn't been accomplished, the rebel counterattack defeated our attack on Zaragoza. However, our propaganda services will try to exploit this minor victory at Belchite...<br><br>However, commandante, you must understand that tactical victories do not balance strategic failures."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Esta derrota deja comprometido todo el frente de Aragon... ahora el enemigo tendra facilmente la posibilidad de alcanzar el Mediterraneo sin muchos problemas.<br><br>This defeat means the end of the Aragon front. Now the enemy can easily reach the Mediterranean sea without problems.<br><br>Commandante, how is your French? No? How about your Portuguese?"
+   }
+  }
+ },
+ {
+  "id": 5,
+  "scenario": "gce6.xml",
+  "startprestige": 0,
+  "intro": "Batalla de Teruel<br><br>15 de Diciembre de 1937<br><br>A pesar de los esfuerzos realizados, las operaciones de los meses pasados no alcanzaron sus objetivos primarios, el frente Norte ha caido, y la ofensiva rebelde sobre el Levante se acerca cada vez mas a Valencia (capital de la Republica provisionalmente). Para ayudarse en su avance hacia el Mediterraneo, el enemigo cuenta con la estrategica posicion de Teruel, que capturo tiempo atras. Esta posicion constituye un enorme peligro para Levante, por lo que no podemos permitir que continue en manos rebeldes.<br>La ofensiva que lanzaremos consiste en otro ataque envolvente que acabara rapidamente con la guarnicion enemiga, pero de por sentado que recibiremos un duro contraataque seguidamente. Las condiciones climatologicas este invierno estan siendo especialmente duras... los -28 grados que hace ahi fuera seran un problema mas.<br><br>Buena suerte.<br><br>Batalla de Teruel<br><br>December 15th, 1937<br><br>Althought we have made valiant efforts to change the tactical and strategic situation, recent operations have not achieved the High Command's goals. The Northern front has fallen, and the rebel offensive over the Levante is approaching the Republic's provisional capital in Valencia. Now, the enemy has an important base to aid his advance on the Mediterranean Sea, Teruel. The enemy base at Teruel is a great danger for the whole Levante area. We cannot allow the enemy to continue holding Teruel, if we are to save the Republic!<br><br>The planned offensive consist of a concentrated attack on Teruel, in order to quickly finish the rebel garrison defending Teruel. The rebels are commanded by Colonel Rey D'Harcourt, a clever opponent. The High Command thinks the fascists will send a huge number of reinforcements as soon as our troops appear at Teruel, so drive your troops quickly to the objectives and be careful to secure your flanks... Reinforcements of the V Army Corps will arrive to help you.<br><br>Ah, one more thing... as you surely already know it's minus 28 degrees (-18 Fahrenheit) and the snow will be another enemy to face for El Ejercito Popular...<br><br>Buena suerte.",
+  "outcome": {
+   "briliant": {
+    "goto": 6,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 200,
+    "text": "La amenaza sobre Levante se ha disipado tras la captura de Teruel y la derrota del potente contraataque que lanzo el enemigo!. La batalla ha sido terrible, pero la victoria nos ha favorecido.<br><br>The rebel offensive in and around Levante has been stopped after our victory in Teruel!. Excellent work!"
+   },
+   "victory": {
+    "goto": 6,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 150,
+    "text": "La amenaza sobre Levante se ha disipado tras la captura de Teruel y la derrota del potente contraataque que lanzo el enemigo!. La batalla ha sido terrible, pero la victoria nos ha favorecido.<br><br>The rebel offensive in and around Levante has been stopped after our victory in Teruel!. Excellent work!"
+   },
+   "tactical": {
+    "goto": 6,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "La amenaza sobre Levante se ha disipado tras la captura de Teruel y la derrota del potente contraataque que lanzo el enemigo!. La batalla ha sido terrible, pero la victoria nos ha favorecido.<br><br>The rebel offensive in and around Levante has been stopped after our victory in Teruel!. Excellent work!"
+   },
+   "lose": {
+    "goto": 6,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "La batalla ha sido terrible... y mas aun lo esta siendo la retirada. Tras capturar Teruel los rebeldes nos han hecho trizas... Este golpe tal vez sea definitivo, a pesar de ello el alto mando seguira necesitando de sus servicios.<br><br>The battle has been horrible... and more horrible has been the retreat. After the fall of Teruel, the rebels have overrun our troops. Maybe this strike against El Ejercito Popular has sealed our fate. In spite of your failure here, the high command, and the Republic, still need your services. For all our sakes, you must succeed next time."
+   }
+  }
+ },
+ {
+  "id": 6,
+  "scenario": "gce7.xml",
+  "startprestige": 0,
+  "intro": "Ofensiva del Ebro<br><br>25 de Julio de 1938<br><br>El enemigo ha alcanzado el mar Mediterraneo y las cosas no pueden ir peor, tal vez esta sea nuestra ultima oportunidad de encauzar la situacion, general. Se ha concebido un nuevo plan de batalla, esta ocasion es el mas ambicioso de todo cuanto hemos hecho hasta ahora. Nuestro Ejercito Popular ha tomado sigilosamente posiciones en torno al rio Ebro, cerca de Amposta, en Tarragona, con la mision de cruzarlo y romper asi el frente por una zona por la que el enemigo no se lo espera.<br>El objetivo primario es cruzar el rio y establecer una fuerte cabeza de puente alcanzando la capital de la comarca; Gandesa. Una posible victoria en esta operacion nos permitiria futuros avances que tal vez pudiesen re-equilibrar la situacion.<br><br>Buena suerte.<br><br>Ofensiva del Ebro<br><br>July 25th, 1938<br><br>[Handwritten message received by courier]<br><br>The enemy has finally reached the Mediterranean sea, and things can't be worse. Maybe this will be our last chance to reverse the fortunes of war, commandante. A new plan has been designed. This offensive is our biggest gamble in the war up to now. People's Army units have silently taken positions along the river Ebro, nearly to the town of Amposta, in the province of Tarragona. The main mission is to cross the great Ebro river and break through the enemy lines here, in a place where an attack is not expected. Your mission is to cross the river, make a bridgehead to allow more troops to cross, and finally reach and conquer the town of Gandesa.<br><br>A victory here would allow us further advances. If we are defeated here ... No, failure is too terrible to contemplate.<br><br>Buena suerte.",
+  "outcome": {
+   "briliant": {
+    "goto": 9,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 180,
+    "text": "Fantastico!, los rebeldes se baten en retirada, nuestro ataque por sorpresa cruzando el Ebro ha sido todo un exito gracias a su pericia. Ahora todo el sector de Levante que los fascistas habian alcanzado esta comprometido y deberan retirarse de ahi si no quieren verse rodeados. Esta victoria elevara la moral de toda la zona leal al gobierno.<br><br>Wonderful! The rebels are in disarray and retreating all their units in the sector. Our surprise attack across the Ebro has been totally accomplished thanks to your skills, and brave soldiers. Now, all of the Levante sector under rebel control is in chaos and will soon be recaptured by El Ejercito Popular. This victory will increase the morale of all the citizens of free Spain!<br><br>Congratulations, General."
+   },
+   "victory": {
+    "goto": 7,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Hemos conseguido alcanzar una victoria estrategica, pero el enemigo ha sabido encajar el golpe y la ofensiva no va a tener los efectos planeados... ahora se espera un fuerte contraataque enemigo. Prepare las trincheras.<br><br>We have achieved a minor victory, however the enemy has stopped our advance and in several other sectors.  The planned offensive won't reach all the main goals, and many enemy formations are still operational.  Intelligence has warned of a counterattack in your sector soon.  I advise you to order your troops to dig in.<br><br>Commandante, you must hold your lines if the Republic is to survive."
+   },
+   "tactical": {
+    "goto": 7,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Hemos conseguido alcanzar una victoria estrategica, pero el enemigo ha sabido encajar el golpe y la ofensiva no va a tener los efectos planeados... ahora se espera un fuerte contraataque enemigo. Prepare las trincheras.<br><br>We have achieved a minor victory, however the enemy has stopped our advance and in several other sectors.  The planned offensive won't reach all the main goals, and many enemy formations are still operational.  Intelligence has warned of a counterattack in your sector soon.  I advise you to order your troops to dig in.<br><br>Commandante, you must hold your lines if the Republic is to survive."
+   },
+   "lose": {
+    "goto": 7,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Hemos conseguido alcanzar una victoria estrategica, pero el enemigo ha sabido encajar el golpe y la ofensiva no va a tener los efectos planeados... ahora se espera un fuerte contraataque enemigo. Prepare las trincheras.<br><br>We have achieved a minor victory, however the enemy has stopped our advance here and in several other sectors. The planned offensive won't accomplish all of its main goals, and many enemy formations are still operational. Intelligence has warned of a counterattack in your sector soon. I advise you to order your troops to dig in.<br><br>Commandante, you must hold your lines if the Republic is to survive."
+   }
+  }
+ },
+ {
+  "id": 7,
+  "scenario": "gce8.xml",
+  "startprestige": 0,
+  "intro": "Contraofensiva del Ebro<br><br>3 de Septiembre de 1938<br><br>Los fascistas han detenido en seco nuestra ofensiva, nos hemos quedado a las puertas de Gandesa y la aviacion Italoalemana nos hostiga continuamente. La ofensiva ha fracasado rotundamente, nuestra unica opcion ahora es retirar nuestras tropas para evitar mayores bajas.<br>Su mision es hacer una retirada ordenada hacia la otra orilla del rio Ebro, tratando de tener el menor numero posible de bajas.<br><br>Instrucciones: Para ganar el escenario debe retirar sus tropas hacia la orilla derecha del Ebro y despues tomar las dos banderas nacionalistas nombradas en el mapa como ''EXIT''. Atencion, obteniendo una BV PIERDE EL ESCENARIO, obtener una V se considera como una TV y una TV se considera como BV y da prestigio.<br><br>Contraofensiva del Ebro<br><br>September 3rd, 1938<br><br>\"The fascists have stopped our offensive, we are at the gates of Gandesa, and the enemy Italian - German airforce is smashing us. Our offensive is a complete dissaster, and our last chance now is to retreat our troops to the right bank of the Ebro river to avoid even greater losses.<br><br>Your mission is to make an organized retreat to the east bank of the Ebro river, trying to take as few losses as possible. Plus ultra, Senor General\"<br><br>---Instructions: To win this scenario, your should retreat your troops to the East bank of the river, and then take the two Nationalist flags named as ''EXIT''. GETTING A BV YOU WILL LOSE THE SCENARIO! In order to win you should get at least a V, which is considered as a classical TV, and a TV is considered a BV and brings you extra-prestige.",
+  "outcome": {
+   "briliant": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Que...?? a donde va con esas tropas?, que clase de retirada ha planeado?, su cobardia muestra que no es apto para el Ejercito Popular.<br><br>What!??  Where are you going with those troops!!??  What kind of retreat are you making???  Your cowardice shows you are not the general which the People's Army needs! You are dismissed, as an officer, but not from the army, private!<br><br>Remember, \"Victoria o muerte,\" but with this performance, death seems more likely."
+   },
+   "victory": {
+    "goto": 8,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 120,
+    "text": "Hemos conseguido hacer una retirada medianamente ordenada, sin embargo algunas unidades han quedado atras y han sido capturadas por el enemigo.<br><br>The retreat was successful, Senor General, although a few more of our units have been captured by the enemy."
+   },
+   "tactical": {
+    "goto": 8,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 80,
+    "text": "Afortunadamente hemos conseguido hacer una retirada ordenada y la mayor parte del Ejercito Popular ha cruzado en direccion contraria el rio Ebro.<br><br>Fortunately, you have managed to make a careful retreat to the other bank of the river, and most of the People's Army is now safe for the moment.  Unfortunately, careful retreats and saving what is left of our army will not defeat the Falangists."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 120,
+    "text": "Ah!, un general republicano!, el alto mando del generalisimo estara encantado de saber que ademas de haber destruido todo su sucio ''ejercito del Ebro'' hemos capturado a un general rojo. Trataremos de sacar partido con su captura y si no nos sirve le fusilaremos por traicion a la patria!.<br><br>Nationalist officer - \"Aha!, a Republican General! The high command of the Generalisimo will be pleased to know that your nasty ''Army of the Ebro'' has been destroyed, and also that we have captured a red general! [evil laughter]. You will be executed soon for your betrayal of Spain!<br><br>\"Despite you, Spain shall be 'un grande libre.'\""
+   }
+  }
+ },
+ {
+  "id": 8,
+  "scenario": "gce9.xml",
+  "startprestige": 0,
+  "intro": "Batalla del rio Segre<br><br>6 de Noviembre de 1938<br><br>El rotundo fracaso en el Ebro ha propiciado a los rebeldes lanzar una gran ofensiva sobre Catalunya. El alto mando tiene intencion de al menos detener esa ofensiva y se ha planeado una operacion en el sector de Lerida, destinada a corregir el frente y recuperar dos importantes centrales electricas al otro lado del rio.<br><br>Su mision se localizara al Norte del dispositivo, justo al Sur de Lerida, cruce el rio y alcance la localidad de Fraga, donde segun informes de agentes infiltrados se encuentra la comandancia de las tropas enemigas en este sector.<br><br>Mucho nos tememos que a pesar de todo la guerra estara perdida pase lo que pase...<br><br>Batalla del rio Segre<br><br>November 6th 1938<br><br>The disaster in the Ebro operation has allow the rebels to launch a big offensive over Catalunya. The high command wants to (at least) stop that offensive, or delay it basically. The current operation consist of an attack in the Segre river sector, Southwards to Lerida, aimed to stabilize our front and to recapture two important electric plants in the other side of the river.<br><br>Your mission is to cross the river, and take the town of Fraga, where intelligence reports the enemy command center is deployed.<br><br>However, personally I think the fate of the Republica is sealed, my friend.  If you fail, there is no one to help you.<br><br>Buena suerte.",
+  "outcome": {
+   "briliant": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 180,
+    "text": "Esta victoria nos permitira respirar un poco mas, pero le informo de que algunos mandos se han pasado al enemigo y otros han huido a traves de la frontera francesa. Personalmente le sugiero que hagamos lo mismo y nos salvemos antes de que sea tarde, la ofensiva rebelde sobre Catalunya continua imparable...<br><br>Nota historica--- Historicamente la guerra termino en Abril de 1939, despues de la caida de Catalunya y la redicion de Madrid a las tropas rebeldes.<br><br>This victory will allow us to take a breath, but I must warn you that many army officers have joined the enemy! Others have abandoned the fight and crossed the Spanish - French border to escape.  Personally, I advise you to cross the border, too, and save yourself.   I think the rebel offensive is unbeatable now.<br><br>Historical note--- The war finally ended in April, 1939 with the rebel victory after the fall of Catalunya and the surrender of Madrid to rebels.  The prelude to WWII was over, and September 1, 1939 was quickly approaching."
+   },
+   "victory": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 120,
+    "text": "Esta victoria nos permitira respirar un poco mas, pero le informo de que algunos mandos se han pasado al enemigo y otros han huido a traves de la frontera francesa. Personalmente le sugiero que hagamos lo mismo y nos salvemos antes de que sea tarde, la ofensiva rebelde sobre Catalunya continua imparable...<br><br>Nota historica--- Historicamente la guerra termino en Abril de 1939, despues de la caida de Catalunya y la redicion de Madrid a las tropas rebeldes.<br><br>This victory will allow us to take a breath, but I must warn you that many army officers have joined the enemy! Others have abandoned the fight and crossed the Spanish - French border to escape.  Personally, I advise you to cross the border, too, and save yourself.   I think the rebel offensive is unbeatable now.<br><br>Historical note--- The war finally ended in April, 1939 with the rebel victory after the fall of Catalunya and the surrender of Madrid to rebels.  The prelude to WWII was over, and September 1, 1939 was quickly approaching."
+   },
+   "tactical": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 80,
+    "text": "Esta victoria nos permitira respirar un poco mas, pero le informo de que algunos mandos se han pasado al enemigo y otros han huido a traves de la frontera francesa. Personalmente le sugiero que hagamos lo mismo y nos salvemos antes de que sea tarde, la ofensiva rebelde sobre Catalunya continua imparable...<br><br>Nota historica--- Historicamente la guerra termino en Abril de 1939, despues de la caida de Catalunya y la redicion de Madrid a las tropas rebeldes.<br><br>This victory will allow us to take a breath, but I must warn you that many army officers have joined the enemy! Others have abandoned the fight and crossed the Spanish - French border to escape.  Personally, I advise you to cross the border, too, and save yourself.   I think the rebel offensive is unbeatable now.<br><br>Historical note--- The war finally ended in April, 1939 with the rebel victory after the fall of Catalunya and the surrender of Madrid to rebels.  The prelude to WWII was over, and September 1, 1939 was quickly approaching."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 120,
+    "text": "Ah!, buenos dias ''general''!, el GCG estara contento de saber que hemos dado otro paso adelante en la liberacion de este pais capturando a uno de sus comandantes mas famosos. En adelante se pudrira usted en una de nuestras carceles!.<br><br>Nota historica--- Historicamente la guerra termino en Abril de 1939, despues de la caida de Catalunya y la redicion de Madrid a las tropas rebeldes.<br><br>Nationalist officer - \"AH!, buenos dias ''general''!  The High Headquarters of Generalisimo Franco will be happy knowing that we have made another step to free this country by capturing one of the most popular Republican generals!  Do you wish to join the victorious side?  No? Then you will surely rot and die in jail. [Evil laughter]\"<br><br>Historical note--- The war finally end in April of 1939 with the rebel victory after the fall of Catalunya and the surrender of Madrid to rebels."
+   }
+  }
+ },
+ {
+  "id": 9,
+  "scenario": "vgce0.xml",
+  "startprestige": 0,
+  "intro": "Batalla del rio Segre<br><br>6 de Noviembre de 1938<br><br>Todas las cancillerias europeas estan absolutamente sorprendidas por el fulgurante cambio de rumbo que la guerra parece estar dando. Para completar la victoria se ha creado una operacion en el sector catalan al sur de Lerida, donde los rebeldes han tratado de avanzar para tratar de equilibrar la situacion. Su mision es salir al encuentro del avance fascista en el sector del rio Segre, encontrar la formacion de tropas atacantes y neutralizarla.<br><br>Agentes infiltrados informan de que el puesto de mando enemigo se encuentra en la localidad de Fraga, que constituye uno de los objetivos de la mision.<br><br>Buena suerte!, si logramos la victoria total en esta operacion la puerta hacia la capital de Aragon quedara abierta.<br><br>Batalla del rio Segre<br><br>November 6th, 1938<br><br>All the foreign goverments are absolutely amazed by the striking change of the war! To complete the victory over the rebel troops we have planned an attack along the Segre river, southwards from Lerida, where the rebels are trying to advance to halt our attacks. Your mission is to face the rebel attack on the Segre river.<br><br>Intelligence reports that the enemy command point is located in the village of Fraga, and obviously that is one of the main goals of your mission.<br><br>Buena suerte!  If we can achieve a complete victory, this operation will open the way to Zaragoza again!",
+  "outcome": {
+   "briliant": {
+    "goto": 10,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Victoria!, el dispositivo ha funcionado y el frente de Catalunya ha caido!, ahora podremos volver a atacar Aragon y su capital Zaragoza con garantias de exito. Se ha abierto el camino a la victoria.<br><br>Victory!, the plan has worked, and the rebel positions around Catalunya have fallen!. Now we can attack Aragon and its capital, Zaragoza, again! The path to the victory is opened finally, thanks to the brave soldiers of the Republic and you!"
+   },
+   "victory": {
+    "goto": 10,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Victoria!, el dispositivo ha funcionado y el frente de Catalunya ha caido!, ahora podremos volver a atacar Aragon y su capital Zaragoza con garantias de exito. Se ha abierto el camino a la victoria.<br><br>Victory!, the plan has worked, and the rebel positions around Catalunya have fallen!. Now we can attack Aragon and its capital, Zaragoza, again! The path to the victory is opened finally, thanks to the brave soldiers of the Republic and you!"
+   },
+   "tactical": {
+    "goto": 10,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Victoria!, el dispositivo ha funcionado y el frente de Catalunya ha caido!, ahora podremos volver a atacar Aragon y su capital Zaragoza con garantias de exito. Se ha abierto el camino a la victoria.<br><br>Victory!, the plan has worked, and the rebel positions around Catalunya have fallen!. Now we can attack Aragon and its capital, Zaragoza, again! The path to the victory is opened finally, thanks to the brave soldiers of the Republic and you!"
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Ah!, buenos dias ''general''!, el GCG estara contento de saber que hemos dado otro paso adelante en la liberacion de este pais capturando a uno de sus comandantes mas famosos. En adelante se pudrira usted en una de nuestras carceles!.<br><br>Nationalist officer - \"AH!, buenos dias ''general''!  The High Headquarters of Generalisimo Franco will be happy knowing that we have made another step to free this country by capturing one of the most popular Republican generals!  Do you wish to join the victorious side?  No? Then you will surely rot and die in jail. [Evil laughter]\""
+   }
+  }
+ },
+ {
+  "id": 10,
+  "scenario": "vgce1.xml",
+  "startprestige": 0,
+  "intro": "Ataque a Zaragoza<br><br>12 de Febrero de 1939<br><br>Felicidades por su ascenso general!, tras el rotundo exito en la ofensiva del Ebro el enemigo se ha visto obligado a retirarse de las zonas contiguas al Mediterraneo que habia ocupado, sumado a nuestra victoria, los franceses han levantado el cierre de la frontera y las armas sovieticas que esperabamos han logrado pasar la frontera. Gracias a todo esto, es la hora de explotar nuestro exito!, ademas los aliados de los rebeldes estan perdiendo la paciencia con ellos.<br>Nuevamente el plan es atacar Zaragoza, aprendiendo de los errores del pasado. Zaragoza es la puerta hacia Burgos, la capital fascista. Una gran victoria aqui podria cambiar el curso de la guerra y desestabilizar toda la retaguardia enemiga, incluso incitando al levantamiento en las zonas del Norte contra los ocupantes rebeldes.<br><br>Hemos infiltrado algunos grupos de guerrilleros tras las lineas enemigas, que seguro le seran de utilidad. De paso, estos guerrilleros nos informan que los rebeldes han desplegado aqui el CTV al completo, y es probable que la 13 Division vuelva a presentar batalla... <br><br>Esta es la batalla decisiva!!!.<br><br>Ataque a Zaragoza<br><br>February 12th, 1939<br><br>Congratulations on your promotion general! After the big success in the Ebro Offensive the enemy has retreated many troops from the Mediterranean areas. The French government has opened the border and we have received more Soviet weapons. This is the hour to start the exploiting of the present situation! Again, the plan is to attack Zaragoza, taking into account the past experiences in the Aragon front. Capturing Zaragoza will clear the path to Burgos; the Fascist capital!. A major victory here surely will change all our fortunes, and the Northern areas would rise up against the Fascists also.<br><br>Some guerrilla groups are beyond the enemy lines, and you can probably use them to our advantage. This guerrilla units have informed us that the enemy troops here are mainly composed of the complete Italian CTV and the famous rebel 13th Division.  Do not underestimate the enemy, General.<br><br>Buena suerte.",
+  "outcome": {
+   "briliant": {
+    "goto": 11,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 180,
+    "text": "Victoria!, Zaragoza esta ahora en nuestras manos y el camino hacia Burgos esta reabierto.<br><br>Viva la Republica y viva Espana!.<br><br>Victory! Zaragoza is our hands, and the path to Burgos is open! Good work.<br><br>Viva los trabajadores y campesinos!"
+   },
+   "victory": {
+    "goto": 11,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 120,
+    "text": "Victoria!, Zaragoza esta ahora en nuestras manos y el camino hacia Burgos esta reabierto.<br><br>Viva la Republica y viva Espana!.<br><br>Victory! Zaragoza is our hands, and the path to Burgos is open! Good work.<br><br>Viva los trabajadores y campesinos!"
+   },
+   "tactical": {
+    "goto": 11,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 80,
+    "text": "Victoria!, Zaragoza esta ahora en nuestras manos y el camino hacia Burgos esta reabierto.<br><br>Viva la Republica y viva Espana!.<br><br>Victory! Zaragoza is our hands, and the path to Burgos is open! Good work.<br><br>Viva los trabajadores y campesinos!"
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 120,
+    "text": "Oficial Nacionalista- AH!, que tenemos aqui?, un general republicano!. El alto mando del Generalisimo estara encantado de saber que hemos capturado a un general rojo, esto es un paso mas para librar a este pais de canallas como usted!. Jajaja!, quiere usted unirse al bando que va a vencer?, no?, entonces se pudrira usted en la carcel!.<br><br>Nationalist officer - \"AH!, buenos dias ''general''!  The High Headquarters of Generalisimo Franco will be happy knowing that we have made another step to free this country by capturing one of the most popular Republican generals!  Do you wish to join the victorious side?  No? Then you will surely rot and die in jail. [Evil laughter]\""
+   }
+  }
+ },
+ {
+  "id": 11,
+  "scenario": "vgce4.xml",
+  "startprestige": 0,
+  "intro": "Ceuta<br><br>5 de Agosto de 1939<br><br>La rebelion ha terminado en toda la Peninsula, la debilidad de retaguardia del enemigo ha sido clave para que el Norte se levantara contra los rebeldes, e incluso muchas unidades rebeldes se hayan cambiado de bando. Burgos, la capital enemiga ha caido, y las fuerzas insurgentes en el Sur han embarcado hacia el protectorado de Marruecos.<br><br>Para terminar la guerra debemos asaltar el protectorado. El plan consiste en atacar el puerto de Ceuta, y despues avanzar hacia Tetuan, donde se ha establecido el centro de mando de los rebeldes. Unidades navales han salido de la base de Cartagena, ademas el V cuerpo ha llegado a costas proximas a Ceuta desde Cadiz.<br><br>Algunos de nuestros valerosos guerrilleros operan ya sobre el terreno, nos han remitido informes que muestran que el enemigo cuenta con fuerzas de las que se retiraron de la Peninsula, y que ha organizado en dos divisiones, compuestas por banderas de la Legion; la division ''Ceuta'' y la division ''Tetuan'', asi como otros elementos de la ya famosa 13 Division. Los rebeldes siguen recibiendo cierta ayuda italiana, lo que complicara las cosas.<br><br>Buena suerte.<br><br>Ceuta<br><br>August 5th, 1939<br><br>The uprising against the Republic is completely smashed by our People's Army, the weakness of the rear rebel territories has been a key for our final victory, Northern places like Asturias, Santander or Euzkadi started a revolt against the rebel opressors, also, some rebel units joined the People's Army, and Burgos, the enemy capital has fallen. Many rebel troops have embarked to the Spanish Morocco, where they will try to resist with some Italian help.<br><br>To finish the war, we must clear Morocco. The high command has designed a plan, disembarking our troops in the Ceuta area and establishing two beach heads to cut the communications between Ceuta and Tetuan.<br><br>Intelligence reports the rebel forces are mainly composed by the elements from the 13th Division, and some Legion Banderas, which have been included into two newly formed divisions; the division Tetuan and the division Ceuta, which will surely be extremely hard. Also, Italian units will make harder the things.<br><br>Naval forces from the Cartagena base are also here to destroy the rebel naval power, but be careful, Italian submarines have been spotted.<br><br>Buena suerte.  Victoria or muerte!",
+  "outcome": {
+   "briliant": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "LA GUERRA HA TERMINADO!, en multitud de puntos del pais se celebra la victoria por todo lo alto!. De ahora en adelante se abre una nueva etapa en la que nuestra patria debe modernizarse y afrontar nuevos desafios. Usted formara parte en adelante de la historia de Espana para siempre.<br><br>The WAR IS OVER! All the people are in the streets celebrating the victory of the Republic's victory over the fascist rebels! From now, and in the future, a new political system will try to modernize Spain without any kind of capitalist or traditionalist intervention. Excellent work general, obviously you are one of the new heroes of the Spanish Republic, and your name will be written for ever in the ancient Spanish history."
+   },
+   "victory": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "LA GUERRA HA TERMINADO!, en multitud de puntos del pais se celebra la victoria por todo lo alto!. De ahora en adelante se abre una nueva etapa en la que nuestra patria debe modernizarse y afrontar nuevos desafios. Usted formara parte en adelante de la historia de Espana para siempre.<br><br>The WAR IS OVER! All the people are in the streets celebrating the victory of the Republic's victory over the fascist rebels! From now, and in the future, a new political system will try to modernize Spain without any kind of capitalist or traditionalist intervention. Excellent work general, obviously you are one of the new heroes of the Spanish Republic, and your name will be written for ever in the ancient Spanish history."
+   },
+   "tactical": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "LA GUERRA HA TERMINADO!, en multitud de puntos del pais se celebra la victoria por todo lo alto!. De ahora en adelante se abre una nueva etapa en la que nuestra patria debe modernizarse y afrontar nuevos desafios. Usted formara parte en adelante de la historia de Espana para siempre.<br><br>The WAR IS OVER! All the people are in the streets celebrating the victory of the Republic's victory over the fascist rebels! From now, and in the future, a new political system will try to modernize Spain without any kind of capitalist or traditionalist intervention. Excellent work general, obviously you are one of the new heroes of the Spanish Republic, and your name will be written for ever in the ancient Spanish history."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Oficial Nacionalista- AH!, que tenemos aqui?, un general republicano!. El alto mando del Generalisimo estara encantado de saber que hemos capturado a un general rojo, esto es un paso mas para librar a este pais de canallas como usted!. Jajaja!, quiere usted unirse al bando que va a vencer?, no?, entonces se pudrira usted en la carcel!.<br><br>Nationalist officer - \"AH!, buenos dias ''general''!  The High Headquarters of Generalisimo Franco will be happy knowing that we have made another step to free this country by capturing one of the most popular Republican generals!  Do you wish to join the victorious side?  No? Then you will surely rot and die in jail. [Evil laughter]\""
+   }
+  }
+ }
 ]

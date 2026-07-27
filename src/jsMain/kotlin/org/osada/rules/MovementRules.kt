@@ -5,6 +5,7 @@ import org.osada.MovMethod
 import org.osada.TerrainType
 import org.osada.UnitClass
 import org.osada.model.Cell
+import org.osada.model.EfileConfig
 import org.osada.model.Equipment
 import org.osada.model.ExtendedCell
 import org.osada.model.GameMap
@@ -28,13 +29,22 @@ object MovementRules {
         unit: GameUnit,
     ): Array<ExtendedCell> = MoveRangeCalculation.getMoveRange(map, unit)
 
-    /** Effective movement points for [unit] this turn (capped by fuel, boosted by leaders). */
+    /** Effective movement points for [unit] this turn (capped by fuel, boosted by leaders and
+     *  attachments). Fast Speed's bonus and any other attachment's movement penalty (`malus-type`
+     *  1) both land here, after the fuel clamp -- same ordering the existing leader bonuses use,
+     *  so an attachment bonus isn't itself further capped by fuel. */
     fun getUnitMoveRange(unit: GameUnit): Int {
         var range = unit.getMovesLeft()
         val data = unit.unitData()
         if (UnitPredicates.unitUsesFuel(unit) && unit.getFuel() < range) range = unit.getFuel()
         if (Leaders.unitHasLeader(unit, LeaderType.AGGRESSIVE_TANK_MANEUVER)) range += 1
         if (Leaders.unitHasLeader(unit, LeaderType.AGGRESSIVE_MANEUVER)) range += 1
+        range += Attachments.bonus(unit, Attachments.SLOT_FAST_SPEED) + Attachments.movementPenalty(unit)
+        // attach_minmove (LXF 1, BASEKORP 2): undocumented in any efile comment found locally --
+        // INFERENCE that it is a floor a movement penalty may not push the unit below.
+        EfileConfig.attachments()?.minMove?.takeIf { it > 0 && Attachments.movementPenalty(unit) < 0 }?.let {
+            range = maxOf(range, it)
+        }
         val isStrandedTowedGun =
             data.movmethod == MovMethod.TOWED.value &&
                 unit.transport == null &&
@@ -135,6 +145,7 @@ object MovementRules {
         var range = unit.unitData().spotrange
         if (Leaders.unitHasLeader(unit, LeaderType.ELITE_RECON_VETERAN)) range += 2
         if (Leaders.unitHasLeader(unit, LeaderType.SKILLED_RECONNAISSANCE)) range += 1
+        range += Attachments.bonus(unit, Attachments.SLOT_RECON)
         return range
     }
 

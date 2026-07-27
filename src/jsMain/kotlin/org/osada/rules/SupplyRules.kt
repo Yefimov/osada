@@ -1,11 +1,15 @@
 package org.osada.rules
 
+import org.osada.GameHolder
+import org.osada.GroundCondition
+import org.osada.RoadType
 import org.osada.TerrainType
 import org.osada.model.Cell
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
 import org.osada.model.Hex
 import org.osada.model.Supply
+import org.osada.model.TerrainEx
 import kotlin.math.roundToInt
 
 /**
@@ -15,7 +19,6 @@ import kotlin.math.roundToInt
  */
 object SupplyRules {
     private const val FULL_STRENGTH = 10
-    private const val OFF_CITY_SUPPLY_PENALTY = 1.3
     private const val LIGHT_ENEMY_SUPPLY_PENALTY = 1.5
     private const val HEAVY_ENEMY_SUPPLY_PENALTY = 3.0
     private const val EXPERIENCE_STRENGTH_DIVISOR = 100.0
@@ -38,13 +41,27 @@ object SupplyRules {
             hex?.unit?.player?.side != unit.player?.side && hex?.unit != null
         }
 
-    /** Terrain/adjacent-enemy penalty multiplier shared by resupply and reinforce math. */
+    /** Terrain/adjacent-enemy penalty multiplier shared by resupply and reinforce math.
+     *
+     *  The terrain term is OG's own per-efile factor ([TerrainEx.supplyFactor]) rather than PM's
+     *  flat off-city penalty -- for the four efiles with no `TerrainEx.txt`, and for any terrain id
+     *  a shipped efile omits, [TerrainEx.supplyFactor] falls back to that exact flat number, so this
+     *  is a strict extension, not a behaviour change, where OG data is absent
+     *  (`docs/design/terrain-supply-and-initiative.md` §3.2). The enemy-pressure divisors are PM's
+     *  own rule, with no OG equivalent, and are unaffected. */
     private fun supplyPenaltyModifier(
         hex: Hex?,
         adjacentEnemies: Int,
     ): Double {
-        var modifier = 1.0
-        if (hex?.terrain != TerrainType.CITY.value) modifier /= OFF_CITY_SUPPLY_PENALTY
+        val ground = GameHolder.instance?.scenario?.ground ?: GroundCondition.DRY.value
+        val terrainFactor =
+            TerrainEx.supplyFactor(
+                hex?.terrain ?: TerrainType.CLEAR.value,
+                hex?.road ?: RoadType.NONE.value,
+                hex?.rail ?: RoadType.NONE.value,
+                ground,
+            )
+        var modifier = terrainFactor / PERCENT.toDouble()
         if (adjacentEnemies in 1..2) modifier /= LIGHT_ENEMY_SUPPLY_PENALTY
         if (adjacentEnemies > 2) modifier /= HEAVY_ENEMY_SUPPLY_PENALTY
         return modifier
@@ -105,9 +122,8 @@ object SupplyRules {
         unit: GameUnit,
         full: Boolean,
     ): Supply {
-        val data = unit.unitData(true)
-        val ammoNeeded = data.ammo - unit.ammo
-        val fuelNeeded = data.fuel - unit.fuel
+        val ammoNeeded = maxAmmo(unit) - unit.ammo
+        val fuelNeeded = maxFuel(unit) - unit.fuel
         if (UnitPredicates.isAir(unit) || UnitPredicates.isSea(unit)) return Supply(ammoNeeded, fuelNeeded, 0, 0)
         var transportAmmoNeeded = 0
         var transportFuelNeeded = 0
@@ -166,15 +182,24 @@ object SupplyRules {
         }
     }
 
+    /** Maximum ammunition [unit] can carry, including the Support/Ammunition attachment's bonus
+     *  and any attachment's ammo-malus penalty (`docs/design/attachments.md` Tier 1). */
+    private fun maxAmmo(unit: GameUnit): Int =
+        unit.unitData(true).ammo + Attachments.bonus(unit, Attachments.SLOT_SUPPORT_AMMO) +
+            Attachments.ammoPenalty(unit)
+
+    /** Maximum fuel [unit] can carry, including the Fuel Pods attachment's bonus. */
+    private fun maxFuel(unit: GameUnit): Int =
+        unit.unitData(true).fuel + Attachments.bonus(unit, Attachments.SLOT_FUEL_PODS)
+
     /** True when [unit] is eligible to resupply (hasn't acted, needs supply, valid terrain). */
     fun canResupply(
         map: GameMap,
         unit: GameUnit,
     ): Boolean {
         if (unit.hasMoved || unit.hasFired || unit.hasResupplied) return false
-        val data = unit.unitData(true)
-        val needsAmmo = unit.ammo < data.ammo
-        val needsFuel = unit.fuel < data.fuel
+        val needsAmmo = unit.ammo < maxAmmo(unit)
+        val needsFuel = unit.fuel < maxFuel(unit)
         var transportNeedsAmmo = false
         var transportNeedsFuel = false
         unit.transport?.let { tr ->

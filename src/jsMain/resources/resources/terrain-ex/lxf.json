@@ -1,0 +1,163 @@
+{
+  "efile": "LXF",
+  "terrain": {
+    "0": {
+      "name": "clear",
+      "base_entrench": 0,
+      "initiative_cap": 99,
+      "supply_factor_pct": 100,
+      "allow_bridge": false,
+      "avoid_mech_landing": false
+    },
+    "1": {
+      "name": "town",
+      "base_entrench": 3,
+      "initiative_cap": 1,
+      "supply_factor_pct": 100,
+      "allow_bridge": false,
+      "avoid_mech_landing": false
+    },
+    "2": {
+      "name": "airfield",
+      "base_entrench": 0,
+      "initiative_cap": 99,
+      "supply_factor_pct": 100,
+      "allow_bridge": false,
+      "avoid_mech_landing": false
+    },
+    "3": {
+      "name": "forest",
+      "base_entrench": 2,
+      "initiative_cap": 3,
+      "supply_factor_pct": 100,
+      "allow_bridge": false,
+      "avoid_mech_landing": false
+    },
+    "4": {
+      "name": "boccage",
+      "base_entrench": 2,
+      "initiative_cap": 3,
+      "supply_factor_pct": 100,
+      "allow_bridge": false,
+      "avoid_mech_landing": false
+    },
+    "5": {
+      "name": "hill",
+      "base_entrench": 1,
+      "initiative_cap": 5,
+      "supply_factor_pct": 100,
+      "allow_bridge": false,
+      "avoid_mech_landing": false
+    },
+    "6": {
+      "name": "mountain",
+      "base_entrench": 2,
+      "initiative_cap": 1,
+      "supply_factor_pct": 100,
+      "allow_bridge": false,
+      "avoid_mech_landing": false
+    },
+    "7": {
+      "name": "sand",
+      "base_entrench": 0,
+      "initiative_cap": 99,
+      "supply_factor_pct": 100,
+      "allow_bridge": false,
+      "avoid_mech_landing": false
+    },
+    "8": {
+      "name": "swamp",
+      "base_entrench": 0,
+      "initiative_cap": 2,
+      "supply_factor_pct": 100,
+      "allow_bridge": true,
+      "avoid_mech_landing": false
+    },
+    "9": {
+      "name": "ocean",
+      "base_entrench": 0,
+      "initiative_cap": 99,
+      "supply_factor_pct": 100,
+      "allow_bridge": false,
+      "avoid_mech_landing": false
+    },
+    "10": {
+      "name": "river",
+      "base_entrench": 0,
+      "initiative_cap": 99,
+      "supply_factor_pct": 100,
+      "allow_bridge": true,
+      "avoid_mech_landing": false
+    },
+    "11": {
+      "name": "fortification",
+      "base_entrench": 4,
+      "initiative_cap": 3,
+      "supply_factor_pct": 100,
+      "allow_bridge": false,
+      "avoid_mech_landing": false
+    },
+    "12": {
+      "name": "port",
+      "base_entrench": 1,
+      "initiative_cap": 5,
+      "supply_factor_pct": 100,
+      "allow_bridge": false,
+      "avoid_mech_landing": false
+    },
+    "13": {
+      "name": "stream",
+      "base_entrench": 0,
+      "initiative_cap": 99,
+      "supply_factor_pct": 100,
+      "allow_bridge": true,
+      "avoid_mech_landing": false
+    },
+    "14": {
+      "name": "escarpment",
+      "base_entrench": 0,
+      "initiative_cap": 99,
+      "supply_factor_pct": 100,
+      "allow_bridge": false,
+      "avoid_mech_landing": false
+    },
+    "15": {
+      "name": "major",
+      "base_entrench": 0,
+      "initiative_cap": 99,
+      "supply_factor_pct": 100,
+      "allow_bridge": true,
+      "avoid_mech_landing": false
+    },
+    "16": {
+      "name": "rough",
+      "base_entrench": 2,
+      "initiative_cap": 3,
+      "supply_factor_pct": 100,
+      "allow_bridge": false,
+      "avoid_mech_landing": false
+    },
+    "17": {
+      "name": "custom",
+      "base_entrench": 1,
+      "initiative_cap": 1,
+      "supply_factor_pct": 100,
+      "allow_bridge": false,
+      "avoid_mech_landing": false
+    },
+    "18": {
+      "name": "shallow",
+      "base_entrench": 0,
+      "initiative_cap": 99,
+      "supply_factor_pct": 100,
+      "allow_bridge": false,
+      "avoid_mech_landing": false
+    }
+  },
+  "supply_modifiers": {
+    "road": 0,
+    "rail": 0,
+    "frozen": 0,
+    "mud": 0
+  }
+}
