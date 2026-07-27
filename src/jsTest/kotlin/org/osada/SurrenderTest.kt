@@ -142,6 +142,60 @@ class SurrenderTest {
         )
     }
 
+    /**
+     * OG's OTHER exemption, named in [SURRENDER_ON_FAILED_RETREAT]'s own comment from the start but
+     * unimplemented until the `attr` bit was identified (bit 23, 2026-07-27 — see
+     * `EquipmentCombatEligibility.ATTR_MASK_NO_SURRENDER`).
+     *
+     * This is the case that actually mattered: 56% of the Fortification class carries the flag, and
+     * a bunker has `movpoints == 0`, so it can never complete a legal retreat — every forced retreat
+     * was an automatic destruction.
+     */
+    @Test
+    fun noSurrenderAttributeExemptsFromSurrender() {
+        val bunkerEqid = 2
+        Equipment.putEquipment(
+            bunkerEqid,
+            EquipmentData().apply {
+                uclass = UnitClass.FORTIFICATION.value
+                movmethod = MovMethod.LEG.value
+                movpoints = 0
+                target = UnitType.SOFT.value
+                ammo = 10
+                attr = NO_SURRENDER_ATTR
+            },
+        )
+        val (_, _, defender) = buildMap(TerrainType.OCEAN.value)
+        defender.eqid = bunkerEqid
+
+        assertFalse(
+            CombatResolver.shouldDefenderSurrender(defender),
+            "an OG unit flagged No Surrender is never destroyed-as-surrendered",
+        )
+    }
+
+    /** Control: the same immobile fortification WITHOUT the bit still surrenders, so the exemption
+     *  is the attribute and not the class or the zero move allowance. */
+    @Test
+    fun anImmobileFortificationWithoutTheAttributeStillSurrenders() {
+        val plainFortEqid = 3
+        Equipment.putEquipment(
+            plainFortEqid,
+            EquipmentData().apply {
+                uclass = UnitClass.FORTIFICATION.value
+                movmethod = MovMethod.LEG.value
+                movpoints = 0
+                target = UnitType.SOFT.value
+                ammo = 10
+                attr = 0
+            },
+        )
+        val (_, _, defender) = buildMap(TerrainType.OCEAN.value)
+        defender.eqid = plainFortEqid
+
+        assertTrue(CombatResolver.shouldDefenderSurrender(defender))
+    }
+
     /** The precondition: a leg unit ringed by ocean has no legal retreat hex. */
     @Test
     fun encircledByImpassableTerrainHasNoRetreatPosition() {
@@ -317,5 +371,11 @@ class SurrenderTest {
 
         assertEquals(1, captor.dossier.units.killed[key] as? Int ?: 0, "surrender still counts as a kill")
         assertEquals(1, captor.dossier.units.captured[key] as? Int ?: 0, "and is also counted as captured")
+    }
+
+    private companion object {
+        /** `Equipment.attr` bit 23 — OG's `No Surrender`. Mirrors the private mask in
+         *  `EquipmentCombatEligibility`; identified from BASEKORP's `Fort` (`E 335`). */
+        const val NO_SURRENDER_ATTR = 8388608
     }
 }

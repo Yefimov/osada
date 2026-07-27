@@ -4,6 +4,7 @@ import org.osada.GameHolder
 import org.osada.TerrainType
 import org.osada.model.GameUnit
 import org.osada.model.Hex
+import org.osada.model.canDeployOnTerrain
 import org.osada.model.getAttackableUnit
 import org.osada.model.getPlayer
 
@@ -57,6 +58,13 @@ internal class HexCellRenderer(
      * it, a hex stayed highlighted forever after another unit moved onto it (reserve
      * placed there, or an already-deployed unit relocating into the zone), even
      * though it's no longer a legal deploy target.
+     *
+     * The terrain gate ([canDeployOnTerrain], the same call `deployPlayerUnit` makes) is applied
+     * only once a reserve unit is actually picked: with nothing selected the whole zone is drawn,
+     * because some unit in the reserve can go there. In `Falciu 1` the author marks 3 town, 1
+     * mountain, 1 clear and 2 river deploy hexes; with the Shtorm TB picked, OG lights only the
+     * two river hexes (24,17)/(24,18), while OSADA lit all seven and then refused five of them
+     * silently on click.
      */
     private fun drawDeployHighlight(
         frame: RenderFrame,
@@ -77,7 +85,10 @@ internal class HexCellRenderer(
                 frame.q.getPlayer(hex.owner).side == frame.q.currentPlayer?.side
         val isOwnDeployZone =
             hex.isDeployment != -1 && frame.q.getPlayer(hex.isDeployment).side == frame.q.currentPlayer?.side
-        val showDeployHighlight = frame.deployMode && !deployOccupied && (isOwnDeployZone || friendlyAirfield)
+        val terrainAllowsUnit =
+            frame.deployUnit?.let { canDeployOnTerrain(it, hex, frame.airDeploySelected) } ?: true
+        val showDeployHighlight =
+            frame.deployMode && !deployOccupied && terrainAllowsUnit && (isOwnDeployZone || friendlyAirfield)
         if (showDeployHighlight) {
             rc.drawHex(rc.hexesCtx, x, y, hexStyles["deploy"])
         }

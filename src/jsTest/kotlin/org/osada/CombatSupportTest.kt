@@ -28,13 +28,17 @@ class CombatSupportTest {
                 movmethod = MovMethod.LEG.value
             },
         )
+        // Carries OG's `Combat Support` ATTRIBUTE (attr bit 16), which is what grants the role.
+        // Its name is deliberately NOT HQ-like: sourcing the capability from the name missed 85% of
+        // the records that actually have the bit (see UnitCapabilities.hasCombatSupport).
         Equipment.putEquipment(
             2,
             EquipmentData().apply {
-                name = "Headquarters"
+                name = "04 General Staff"
                 uclass = UnitClass.INFANTRY.value
                 target = UnitType.SOFT.value
                 movmethod = MovMethod.LEG.value
+                attr = COMBAT_SUPPORT_ATTR
             },
         )
     }
@@ -82,6 +86,115 @@ class CombatSupportTest {
         assertTrue(UnitCapabilities.canOverrun(tank))
         assertFalse(UnitCapabilities.hasPhasedMovement(depot))
         assertFalse(UnitCapabilities.canOverrun(depot))
+    }
+
+    /**
+     * OG's `Support Fire` (`attr` bit 12) is a **TOGGLE that reverses the class default**, not a
+     * grant — `OG_ABILITY_AUDIT.md` §2, confirmed by the data: all three toggles that survive the
+     * importer are rare on the class they default to (`Recon Skill` is on 10 of 2,880 Recon records).
+     *
+     * So the rule is `classDefault xor bit`. These four cases are the whole truth table.
+     */
+    @Test
+    fun supportFireIsTheClassDefaultToggledByTheAttribute() {
+        fun eq(
+            cls: UnitClass,
+            flagged: Boolean,
+        ) = EquipmentData().apply {
+            uclass = cls.value
+            attr = if (flagged) SUPPORT_FIRE_ATTR else 0
+        }
+
+        assertTrue(
+            UnitCapabilities.hasSupportFire(eq(UnitClass.ARTILLERY, flagged = false)),
+            "artillery defaults to fire support — 87% of OG artillery, unflagged",
+        )
+        assertFalse(
+            UnitCapabilities.hasSupportFire(eq(UnitClass.ARTILLERY, flagged = true)),
+            "the flag REVERSES it: the 700 artillery records OG switches off",
+        )
+        assertFalse(
+            UnitCapabilities.hasSupportFire(eq(UnitClass.ANTI_TANK, flagged = false)),
+            "anti-tank has no default fire support",
+        )
+        assertTrue(
+            UnitCapabilities.hasSupportFire(eq(UnitClass.ANTI_TANK, flagged = true)),
+            "and the flag switches it on — 74% of OG anti-tank",
+        )
+    }
+
+    /** BASEKORP's `Fort` (`E 335`), the record that decoded both bits: it reports exactly
+     *  `Support Fire` + `NoSurrender`, and a fortification does not default to fire support, so the
+     *  toggle grants it. */
+    @Test
+    fun fortE335GetsSupportFireFromItsToggle() {
+        val fort =
+            EquipmentData().apply {
+                uclass = UnitClass.FORTIFICATION.value
+                attr = SUPPORT_FIRE_ATTR or NO_SURRENDER_ATTR
+            }
+
+        assertTrue(UnitCapabilities.hasSupportFire(fort))
+    }
+
+    /** The two bits must not bleed into each other — 12 is Support Fire, 23 is NoSurrender, and a
+     *  record carrying only one must not answer for the other. */
+    @Test
+    fun noSurrenderAloneDoesNotToggleSupportFire() {
+        val coastalBattery =
+            EquipmentData().apply {
+                uclass = UnitClass.FORTIFICATION.value
+                attr = NO_SURRENDER_ATTR
+            }
+
+        assertFalse(
+            UnitCapabilities.hasSupportFire(coastalBattery),
+            "`8\" Coastal Battery` carries NoSurrender without Support Fire, and forts do not default to it",
+        )
+    }
+
+    /**
+     * `Combat Support` is the ATTRIBUTE (bit 16), never the name. Confirmed by BASEKORP `43 HQ`
+     * (`E 3814`), whose sole enabled ability is `Combat Support` and whose `attr` is exactly 65536.
+     *
+     * The old name test (`isHeadquarters`) matched 227 records and agreed on 211, missing **1,157**
+     * that carry the bit — `04 General Staff`, `21 Alpini`, `24 KOP`, commissars, squadron leaders —
+     * and inventing 16 that do not. §1 of `OG_ABILITY_AUDIT.md`: *never infer a layer from a name.*
+     */
+    @Test
+    fun combatSupportComesFromTheAttributeNotTheName() {
+        val (map, player) = mapAndPlayer()
+        Equipment.putEquipment(
+            3,
+            EquipmentData().apply {
+                name = "Divisional HQ"
+                uclass = UnitClass.INFANTRY.value
+                target = UnitType.SOFT.value
+                movmethod = MovMethod.LEG.value
+            },
+        )
+        val recipient = unit(1, player, experience = 50)
+        val hqNamedButUnflagged = unit(3, player, experience = 250)
+        place(map, recipient, 1, 1)
+        place(map, hqNamedButUnflagged, 1, 2)
+
+        assertEquals(
+            0,
+            UnitCapabilities.combatSupportBars(listOf(recipient, hqNamedButUnflagged), recipient),
+            "an HQ-sounding name without the attribute lends nothing",
+        )
+        assertTrue(UnitCapabilities.isHeadquarters(Equipment.getEquipment(3)!!), "but it is still LABELLED an HQ")
+    }
+
+    private companion object {
+        /** `Equipment.attr` bit 12 — OG's `Support Fire`. */
+        const val SUPPORT_FIRE_ATTR = 4096
+
+        /** `Equipment.attr` bit 16 — OG's `Combat Support`. */
+        const val COMBAT_SUPPORT_ATTR = 65536
+
+        /** `Equipment.attr` bit 23 — OG's `NoSurrender`. */
+        const val NO_SURRENDER_ATTR = 8388608
     }
 
     private fun mapAndPlayer(): Pair<GameMap, Player> {

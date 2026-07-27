@@ -16,14 +16,23 @@ import org.osada.model.deployPlayerUnit
 internal object DeploymentSelection {
     private const val NO_SELECTION = -1
 
-    // Guard-clause early returns read more clearly here than nesting or chaining ?.let; detekt's
-    // default ReturnCount budget (2) is not a good fit for this style.
-    @Suppress("ReturnCount")
-    fun selectedUnit(ui: UI): GameUnit? {
-        val player =
+    fun selectedUnit(ui: UI): GameUnit? =
+        selectedUnit(
             ui.game.scenario
                 ?.map
-                ?.currentPlayer ?: return null
+                ?.currentPlayer,
+        )
+
+    // Guard-clause early returns read more clearly here than nesting or chaining ?.let; detekt's
+    // default ReturnCount budget (2) is not a good fit for this style.
+    //
+    // Takes the player rather than the UI so MapRenderer can ask the same question while building
+    // a frame (it has the GameMap, not the UI) — the deploy highlight must agree with what a click
+    // would actually do, and it previously read `eqUserSel.deployunit` directly, missing the
+    // formation-id path below entirely.
+    @Suppress("ReturnCount")
+    fun selectedUnit(player: Player?): GameUnit? {
+        if (player == null) return null
         val eqUserSel = byId("eqUserSel")?.asDynamic() ?: return null
         val formationId = eqUserSel.deployformation as? String
         val byFormation =

@@ -107,6 +107,40 @@ class GameRulesLogicTest {
         }
     }
 
+    /**
+     * The same disk equality, but anchored at the WEST EDGE — where [getRingMatchesDistanceDisk]'s
+     * interior centres (10,10)/(10,11) could never look.
+     *
+     * `addSideColumnCells` bounded the left column with `leftCol > 0`, a faithful port of PM's
+     * `0 < b - E` (`openpanzer.js`, the `s` helper) against its own correct `b + E < f` on the
+     * right. That dropped **column 0 from every ring on every map**: nothing could move onto or
+     * attack into it. `Falciu 1` parks a Rumanian unit at (2,0), permanently unattackable.
+     */
+    @Test
+    fun getRingIncludesColumnZeroAtTheWestEdge() {
+        val rows = 21
+        val cols = 21
+        for (radius in 1..3) {
+            for ((cr, cc) in listOf(10 to 0, 10 to 1, 10 to 2, 0 to 1)) {
+                val ring =
+                    HexGeometry
+                        .getRing(cr, cc, radius, rows, cols, false)
+                        .map { it.row to it.col }
+                        .toSet()
+                assertEquals(
+                    distanceDisk(cr, cc, radius, rows, cols),
+                    ring,
+                    "ring radius $radius at ($cr,$cc) must equal the distance disk, column 0 included",
+                )
+            }
+        }
+        val adjacentToColumnOne =
+            HexGeometry
+                .getRing(10, 1, 1, rows, cols, false)
+                .map { it.row to it.col }
+        assertTrue(adjacentToColumnOne.any { it.second == 0 }, "column 0 is reachable from column 1")
+    }
+
     /** Brute-force set of all cells whose hex distance from (cr,cc) is in 1..radius. */
     private fun distanceDisk(
         cr: Int,

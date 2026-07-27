@@ -3,6 +3,7 @@ package org.osada.model
 import org.osada.GroundCondition
 import org.osada.RoadType
 import org.osada.TerrainType
+import org.osada.movTableDry
 import org.osada.terrainEntrenchment
 import org.osada.terrainInitiative
 import org.w3c.xhr.XMLHttpRequest
@@ -10,15 +11,17 @@ import kotlin.js.Json
 import kotlin.math.roundToInt
 
 /**
- * Per-efile terrain entrenchment and initiative cap, imported from OG's `TerrainEx.txt`
- * (`tools/og-import/terrain_ex_to_json.py` -> `resources/terrain-ex/<tag>.json`).
+ * Per-efile terrain entrenchment, initiative cap, supply factor and MOVEMENT COST, imported from
+ * OG's `TerrainEx.txt` (`tools/og-import/terrain_ex_to_json.py` ->
+ * `resources/terrain-ex/<tag>.json`).
  *
- * Falls back to PM's own baseline ([terrainEntrenchment] / [terrainInitiative], one shared list
- * for every efile) for any efile that ships no TerrainEx data -- GCE, OLGCW and OLGWW2 never had
- * the file at all, and not every efile that does has been run through the importer -- and for any
- * terrain id the data omits. [terrainInitiative] is element-for-element identical to the
- * initiative-cap column of every TerrainEx.txt we import, so the fallback is exact, not approximate
- * (see `docs/design/terrain-supply-and-initiative.md` §1).
+ * Falls back to PM's own baseline ([terrainEntrenchment] / [terrainInitiative] / [movTableDry] and
+ * friends, one shared set of tables for every efile) for any efile that ships no TerrainEx data --
+ * GCE, OLGCW and OLGWW2 never had the file at all, and not every efile that does has been run
+ * through the importer -- and for any terrain id the data omits. [terrainInitiative] is
+ * element-for-element identical to the initiative-cap column of every TerrainEx.txt we import, so
+ * that fallback is exact, not approximate (see `docs/design/terrain-supply-and-initiative.md` §1).
+ * The movement-cost fallback is NOT exact: see [movementCostTable].
  */
 object TerrainEx {
     private const val PATH = "resources/terrain-ex/"
@@ -81,6 +84,16 @@ object TerrainEx {
     private fun fallbackSupplyFactor(terrain: Int): Int =
         if (terrain == TerrainType.CITY.value) PERCENT_MAX else (PERCENT_MAX / OFF_CITY_SUPPLY_PENALTY).roundToInt()
 
+    /**
+     * PM's movement table for [ground], with the active efile's own OG `[terrain-cost]` laid over
+     * it. See [TerrainMovementCost] for what the overlay does, which two of OG's rows it declines
+     * to take and why. Falls back to PM's table unchanged for any efile with no TerrainEx data.
+     */
+    fun movementCostTable(ground: Int): List<List<Int>> {
+        loadIfNeeded()
+        return TerrainMovementCost.table(ground)
+    }
+
     // Synchronous, like `EquipmentAvailability`'s allowlist fetch: a small per-efile file, read
     // lazily on first use after the efile changes rather than threaded through scenario loading.
     private fun loadIfNeeded() {
@@ -92,6 +105,7 @@ object TerrainEx {
         initiativeCapByTerrain = text?.let { parseField(it, "initiative_cap") } ?: emptyMap()
         supplyFactorByTerrain = text?.let { parseField(it, "supply_factor_pct") } ?: emptyMap()
         supplyModifiers = text?.let(::parseSupplyModifiers) ?: emptyMap()
+        TerrainMovementCost.load(text)
     }
 
     private fun fetch(efile: String): String? {
@@ -154,6 +168,7 @@ object TerrainEx {
         initiativeCapByTerrain = emptyMap()
         supplyFactorByTerrain = emptyMap()
         supplyModifiers = emptyMap()
+        TerrainMovementCost.load(null)
         loadedForEfile = null
     }
 

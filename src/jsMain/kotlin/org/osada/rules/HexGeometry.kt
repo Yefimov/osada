@@ -223,7 +223,14 @@ private fun addSideColumnCells(
             val rightCol = col + e
             addRingCell(result, row, col, n, rightCol, rightCol < cols, extended)
             val leftCol = col - e
-            addRingCell(result, row, col, n, leftCol, leftCol > 0, extended)
+            // `leftCol >= 0`, NOT PM's `0 < b - E` (`openpanzer.js`, the `s` ring helper). PM bounds
+            // the right column with `b + E < f` (correct, exclusive upper) but the left one with
+            // `0 < b - E`, which drops column 0 from EVERY ring -- so on every map no unit could
+            // move onto, or attack into, column 0. `Falciu 1` has a Rumanian unit parked at (2,0):
+            // permanently unattackable. Faithfully ported here, and a real defect either way, so it
+            // is fixed rather than preserved (DEFERRED.md's 2026-07-26 framing: OG fidelity beats
+            // PM fidelity). Widens move/attack ranges by at most one column, only at the west edge.
+            addRingCell(result, row, col, n, leftCol, leftCol >= 0, extended)
         }
         n++
     }

@@ -1,16 +1,14 @@
 package org.osada.scenario
 
-import org.osada.GroundCondition
 import org.osada.model.Equipment
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
+import org.osada.model.TerrainEx
 import org.osada.model.getPlayer
 import org.osada.model.getPlayers
 import org.osada.model.getUnits
+import org.osada.model.invalidateWaterAccessCache
 import org.osada.movTable
-import org.osada.movTableDry
-import org.osada.movTableFrozen
-import org.osada.movTableMud
 import org.osada.scoreGains
 import kotlin.js.Date
 import kotlin.js.json
@@ -156,14 +154,21 @@ class Scenario(
         map.endTurn()
     }
 
+    /**
+     * Publishes the active movement-cost table for this scenario's ground condition.
+     *
+     * [TerrainEx.movementCostTable] returns PM's own `movTableDry`/`movTableFrozen`/`movTableMud`
+     * with the active efile's OG `[terrain-cost]` laid over it, and falls back to the PM table
+     * unchanged for any efile that ships no TerrainEx data. Called on scenario load, on save
+     * restore, and on every weather change that flips the ground condition, so an efile switch
+     * always lands before the next read of `movTable`.
+     *
+     * `hasWaterAccess`/`hasOpenWaterAccess` cache answers derived from this table, so they are
+     * dropped here rather than left to go stale across a ground-condition change.
+     */
     fun setMoveTable() {
-        movTable =
-            when (ground) {
-                GroundCondition.DRY.value -> movTableDry
-                GroundCondition.FROZEN.value -> movTableFrozen
-                GroundCondition.MUD.value -> movTableMud
-                else -> movTableDry
-            }
+        movTable = TerrainEx.movementCostTable(ground)
+        map.invalidateWaterAccessCache()
     }
 
     fun showStatistics() {

@@ -1,19 +1,25 @@
 package org.osada.model
 
 import org.osada.GroundCondition
+import org.osada.MovMethod
 import org.osada.RoadType
 import org.osada.TerrainType
+import org.osada.movTableDry
+import org.osada.movTableFrozen
+import org.osada.movTableMud
 import org.osada.terrainEntrenchment
 import org.osada.terrainInitiative
 import kotlin.test.AfterTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 /**
- * Per-efile terrain entrenchment and initiative cap (DEFERRED.md §1.3). [TerrainEx.baseEntrenchment]
- * and [TerrainEx.initiativeCap] must each prefer the imported per-efile value and fall back to PM's
- * shared [terrainEntrenchment] / [terrainInitiative] baseline whenever the active efile has no
- * TerrainEx data for that terrain id.
+ * Per-efile terrain entrenchment, initiative cap and movement cost (DEFERRED.md §1.3).
+ * [TerrainEx.baseEntrenchment], [TerrainEx.initiativeCap] and [TerrainEx.movementCostTable] must
+ * each prefer the imported per-efile value and fall back to PM's shared [terrainEntrenchment] /
+ * [terrainInitiative] / [movTableDry] baseline whenever the active efile has no TerrainEx data for
+ * that terrain id or movement method.
  */
 class TerrainExTest {
     @AfterTest
@@ -260,5 +266,197 @@ class TerrainExTest {
             ),
             "0 - 30 clamps to 0, never negative",
         )
+    }
+
+    // ---------------------------------------------------------------------------------------
+    // Per-efile movement costs ([TerrainEx.movementCostTable])
+    // ---------------------------------------------------------------------------------------
+
+    /** BASEKORP's real Coastal row, dry: ocean/river/port/impassable-river/shallow passable, the
+     *  rest 255. 19 columns, exactly as `[terrain-cost]` writes them. */
+    private val basekorpCoastalDry =
+        listOf(255, 255, 255, 255, 255, 255, 255, 255, 255, 1, 1, 255, 1, 255, 255, 1, 255, 255, 1)
+
+    /** Pins the efile's move costs without touching the network: [TerrainEx.setForTest] stops
+     *  `loadIfNeeded` from fetching, then [TerrainMovementCost] gets the rows directly. */
+    private fun loadEfileCosts(
+        costs: Map<Int, Map<String, List<Int>>>,
+        roads: Map<String, List<Int>> = emptyMap(),
+    ) {
+        TerrainEx.setForTest(emptyMap())
+        TerrainMovementCost.setForTest(terrainCostMap = costs, roadsCostMap = roads)
+    }
+
+    @Test
+    fun parsesTerrainCostByMovementMethodAndGround() {
+        val json =
+            """
+            {"efile":"BASEKORP","terrain":{},"terrain_cost":{
+              "7":{"dry":[255,255,255,255,255,255,255,255,255,1,1,255,1,255,255,1,255,255,1],
+                   "frozen":[255,255,255,255,255,255,255,255,255,1,2,255,1,255,255,2,255,255,1]},
+              "10":{"dry":[255,255,255,255,255,255,255,255,255,1,255,255,1,255,255,1,255,255,1]}
+            }}
+            """.trimIndent()
+
+        val parsed = TerrainMovementCost.parseTerrainCost(json)
+
+        assertEquals(basekorpCoastalDry, parsed[MovMethod.COASTAL.value]?.get("dry"))
+        assertEquals(2, parsed[MovMethod.COASTAL.value]?.get("frozen")?.get(TerrainType.IMPASSABLE_RIVER.value))
+        assertEquals(1, parsed[MovMethod.NAVAL.value]?.get("dry")?.get(TerrainType.IMPASSABLE_RIVER.value))
+        assertEquals(null, parsed[MovMethod.NAVAL.value]?.get("frozen"), "not in the fixture")
+    }
+
+    @Test
+    fun parsesRoadsCostByGround() {
+        val json =
+            """
+            {"efile":"BASEKORP","terrain":{},
+             "roads_cost":{"dry":[1,1,1,1,1,1,255,255,1,1,255,1,255,1,1]}}
+            """.trimIndent()
+
+        val parsed = TerrainMovementCost.parseGroundRows(json, "roads_cost")
+
+        assertEquals(1, parsed["dry"]?.get(MovMethod.TRACKED.value))
+        assertEquals(255, parsed["dry"]?.get(MovMethod.COASTAL.value))
+        assertEquals(null, parsed["frozen"])
+    }
+
+    /**
+     * The reported bug. PM's shared table marks IMPASSABLE_RIVER 255 for every movement method, so
+     * `Falciu 1`'s Shtorm TB could not cross the terrain-15 stretches of the very river it sailed;
+     * BASEKORP's own Coastal row puts that cell at 1.
+     */
+    @Test
+    fun theEfileMakesAnImpassableRiverNavigableForACoastalShip() {
+        assertEquals(
+            255,
+            movTableDry[MovMethod.COASTAL.value][TerrainType.IMPASSABLE_RIVER.value],
+            "test assumption: PM's own table forbids it",
+        )
+        loadEfileCosts(mapOf(MovMethod.COASTAL.value to mapOf("dry" to basekorpCoastalDry)))
+
+        val table = TerrainEx.movementCostTable(GroundCondition.DRY.value)
+
+        assertEquals(1, table[MovMethod.COASTAL.value][TerrainType.IMPASSABLE_RIVER.value])
+    }
+
+    /** A movement method the efile says nothing about keeps PM's row untouched. */
+    @Test
+    fun movementMethodsAbsentFromTheEfileKeepThePmRow() {
+        loadEfileCosts(mapOf(MovMethod.COASTAL.value to mapOf("dry" to basekorpCoastalDry)))
+
+        val table = TerrainEx.movementCostTable(GroundCondition.DRY.value)
+
+        assertEquals(movTableDry[MovMethod.TRACKED.value], table[MovMethod.TRACKED.value])
+        assertEquals(movTableDry[MovMethod.LEG.value], table[MovMethod.LEG.value])
+    }
+
+    /**
+     * AIR is deliberately excluded from the overlay: OSADA resolves air movement outside this table
+     * entirely, and AG's row 5 is `ocean 255, river 254, impassable 255` on an efile whose FIGHTER
+     * records all declare movmethod 5 -- taking it would ground AG's air force in every path that
+     * DOES read the table (reinforcement placement) while move range flew on regardless.
+     */
+    @Test
+    fun theAirRowIsNeverOverlaid() {
+        val agAirDry = listOf(1, 1, 1, 2, 2, 1, 1, 2, 2, 255, 254, 1, 1, 1, 255, 255, 1, 1, 1)
+        loadEfileCosts(mapOf(MovMethod.AIR.value to mapOf("dry" to agAirDry)))
+
+        val table = TerrainEx.movementCostTable(GroundCondition.DRY.value)
+
+        assertEquals(movTableDry[MovMethod.AIR.value], table[MovMethod.AIR.value])
+        assertEquals(1, table[MovMethod.AIR.value][TerrainType.OCEAN.value], "aircraft still cross water")
+    }
+
+    /** RAIL's row is OSADA's own all-255 sentinel; the real gate is isTrain + `hex.rail`. OG's Train
+     *  row would put a train in a port hex (254) through the table instead. */
+    @Test
+    fun theRailRowIsNeverOverlaid() {
+        val ogTrainDry = List(19) { if (it == TerrainType.PORT.value) 254 else 255 }
+        loadEfileCosts(mapOf(MovMethod.RAIL.value to mapOf("dry" to ogTrainDry)))
+
+        val table = TerrainEx.movementCostTable(GroundCondition.DRY.value)
+
+        assertEquals(movTableDry[MovMethod.RAIL.value], table[MovMethod.RAIL.value])
+        assertTrue(table[MovMethod.RAIL.value].all { it == 255 }, "the sentinel row stays all-255")
+    }
+
+    /** OG keeps the road cost in its own `[roads-cost]` section; PM keeps it at index 17 of each
+     *  movement row. The overlay must move it into that slot and not read terrain column 17. */
+    @Test
+    fun theRoadColumnComesFromRoadsCostNotTerrainColumn17() {
+        val ogCustomColumn = 17
+        assertEquals(255, basekorpCoastalDry[ogCustomColumn], "OG column 17 is `custom` terrain, not road")
+        loadEfileCosts(
+            mapOf(MovMethod.TRACKED.value to mapOf("dry" to basekorpCoastalDry)),
+            roads = mapOf("dry" to List(15) { 3 }),
+        )
+
+        val table = TerrainEx.movementCostTable(GroundCondition.DRY.value)
+
+        assertEquals(3, table[MovMethod.TRACKED.value][ROAD_COLUMN], "taken from roads_cost")
+    }
+
+    /** No `roads_cost` for this ground condition -> PM's own road entry survives. */
+    @Test
+    fun aMissingRoadsCostRowKeepsThePmRoadEntry() {
+        loadEfileCosts(mapOf(MovMethod.COASTAL.value to mapOf("dry" to basekorpCoastalDry)))
+
+        val table = TerrainEx.movementCostTable(GroundCondition.DRY.value)
+
+        assertEquals(movTableDry[MovMethod.COASTAL.value][ROAD_COLUMN], table[MovMethod.COASTAL.value][ROAD_COLUMN])
+    }
+
+    @Test
+    fun frozenAndMudSelectTheirOwnBaselineAndTheirOwnEfileRow() {
+        loadEfileCosts(
+            mapOf(
+                MovMethod.COASTAL.value to
+                    mapOf(
+                        "dry" to basekorpCoastalDry,
+                        "mud" to basekorpCoastalDry.toMutableList().also { it[TerrainType.OCEAN.value] = 2 },
+                    ),
+            ),
+        )
+
+        val frozen = TerrainEx.movementCostTable(GroundCondition.FROZEN.value)
+        val mud = TerrainEx.movementCostTable(GroundCondition.MUD.value)
+
+        assertEquals(
+            movTableFrozen[MovMethod.COASTAL.value],
+            frozen[MovMethod.COASTAL.value],
+            "the efile has no frozen row here, so PM's frozen table stands",
+        )
+        assertEquals(2, mud[MovMethod.COASTAL.value][TerrainType.OCEAN.value], "mud row taken from the efile")
+        assertEquals(movTableMud[MovMethod.TRACKED.value], mud[MovMethod.TRACKED.value], "mud baseline for the rest")
+    }
+
+    /** GCE/OLGCW/OLGWW2 ship no TerrainEx at all — they must see PM's tables byte for byte. */
+    @Test
+    fun anEfileWithoutTerrainCostDataGetsThePmTablesUnchanged() {
+        TerrainEx.setForTest(emptyMap())
+
+        assertEquals(movTableDry, TerrainEx.movementCostTable(GroundCondition.DRY.value))
+        assertEquals(movTableFrozen, TerrainEx.movementCostTable(GroundCondition.FROZEN.value))
+        assertEquals(movTableMud, TerrainEx.movementCostTable(GroundCondition.MUD.value))
+    }
+
+    /** The overlay must not change the table's shape — every consumer indexes it positionally. */
+    @Test
+    fun theOverlaidTableKeepsPmsDimensions() {
+        loadEfileCosts(
+            mapOf(MovMethod.COASTAL.value to mapOf("dry" to basekorpCoastalDry)),
+            roads = mapOf("dry" to List(15) { 1 }),
+        )
+
+        val table = TerrainEx.movementCostTable(GroundCondition.DRY.value)
+
+        assertEquals(movTableDry.size, table.size)
+        table.forEach { row -> assertEquals(movTableDry[0].size, row.size) }
+    }
+
+    private companion object {
+        /** Index 17 of a movement row: PM's road column. Mirrors `TerrainEx`'s own private const. */
+        const val ROAD_COLUMN = 17
     }
 }

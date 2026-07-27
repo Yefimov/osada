@@ -1,11 +1,13 @@
 package org.osada.rules
 
+import org.osada.LeaderType
 import org.osada.MovMethod
 import org.osada.RoadType
 import org.osada.model.ExtendedCell
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
 import org.osada.model.Hex
+import org.osada.model.Leaders
 import org.osada.model.hasRailData
 import org.osada.movTable
 
@@ -30,6 +32,7 @@ internal object MoveRangeCalculation {
         val cells: MutableList<ExtendedCell>,
         val enforceRail: Boolean,
         val movementTable: List<Int>,
+        val ignoresZoc: Boolean,
     )
 
     fun getMoveRange(
@@ -77,7 +80,14 @@ internal object MoveRangeCalculation {
                 .map { it as ExtendedCell }
         val cells = ring.filter { cell -> isValidEdgeCell(cell, map) }.toMutableList()
 
-        return MoveContext(gameMap, pos, maxRange, unitSide, cells, enforceRail, movementTable)
+        // OG's Superior Maneuver: "The unit may bypass enemy zones of control." The leader has
+        // existed (and been offered to the player, with that exact description) since the port
+        // began, with NO rule behind it -- `grep LeaderType.SUPERIOR_MANEUVER src/jsMain/.../rules`
+        // found nothing. It bypasses the ZOC rule outright, not a cost discount: OG's manual states
+        // the unit ignores enemy ZOC, and here ZOC is the only thing the flag may touch.
+        val ignoresZoc = Leaders.unitHasLeader(unit, LeaderType.SUPERIOR_MANEUVER)
+
+        return MoveContext(gameMap, pos, maxRange, unitSide, cells, enforceRail, movementTable, ignoresZoc)
     }
 
     private fun isValidEdgeCell(
@@ -154,11 +164,13 @@ internal object MoveRangeCalculation {
         // actually use a road. PM applies it unconditionally (`openpanzer.js:2157`), and because
         // the road entry is 255 for all three naval rows, a river hex carrying a road -- i.e. a
         // BRIDGE -- became impassable to ships: in `Falciu 1` the Shtorm TB could run the river
-        // freely but could not pass (19,23), `river/road9`. OG has no such rule and cannot have
-        // one: its `TerrainEx.txt` `[terrain-cost]` table is 19 terrain columns with NO road
-        // column at all, and BASEKORP's Coastal row gives river cost 1 outright. Falling back to
-        // the terrain column changes nothing for land units (their road entry is 1, passable) and
-        // does not float a deep-naval ship up a river (its river entry is 255 either way).
+        // freely but could not pass (19,23), `river/road9`. OG has no such rule. It does have a
+        // per-method road cost, but in its own `[roads-cost]` section rather than as a column of
+        // `[terrain-cost]`, and BASEKORP sets it to 255 for all three naval methods while giving
+        // the same methods river cost 1 outright -- so 255 there reads "cannot use roads", i.e.
+        // withholds the bonus, not "cannot enter a bridged hex". Falling back to the terrain
+        // column changes nothing for land units (their road entry is 1, passable) and does not
+        // float a deep-naval ship up a river (its river entry is 255 either way).
         val roadCost = context.movementTable[ROAD_MOVE_TABLE_INDEX]
         val onRoad = hex.road > RoadType.NONE.value || MovementRules.isBridgeForSide(hex, context.unitSide)
         neighbor.cost =
@@ -167,7 +179,10 @@ internal object MoveRangeCalculation {
                 onRoad && roadCost != IMPASSABLE_TERRAIN_COST -> roadCost
                 else -> context.movementTable[hex.terrain]
             }
-        val inEnemyZoc = (hex.isSpotted(context.unitSide) || hex.unit?.tempSpotted == true) && hex.isZOC(enemySide)
+        val inEnemyZoc =
+            !context.ignoresZoc &&
+                (hex.isSpotted(context.unitSide) || hex.unit?.tempSpotted == true) &&
+                hex.isZOC(enemySide)
         if (inEnemyZoc && neighbor.cost < ZOC_MOVE_COST) {
             neighbor.cost = ZOC_MOVE_COST
         }

@@ -1,7 +1,9 @@
 package org.osada.model
 
+import org.osada.MovMethod
 import org.osada.RoadType
 import org.osada.TerrainType
+import org.osada.movTable
 
 /** Grid allocation & hex access for [GameMap], split out to keep its function count in bounds. */
 fun GameMap.allocMap() {
@@ -23,30 +25,57 @@ fun GameMap.hasRailData(): Boolean {
     return found
 }
 
-/** Whether this map has any Ocean/River/Port hex — the terrain COASTAL movement needs to ever
- *  move at all (per movTableDry row 7: OCEAN/RIVER/PORT are all passable). NOT sufficient for
- *  DEEP_NAVAL/NAVAL — see [hasOpenWaterAccess]. Same cached-once shape as [hasRailData]; used
- *  by EquipmentWindowController to hide ships that could never be deployed anywhere on a
- *  land-locked map's Purchase list. */
+/** Whether this map holds a hex COASTAL movement can actually enter — under PM's own table that
+ *  is Ocean/River/Port; under a per-efile table it is whatever that efile allows (BASEKORP and
+ *  LXF add IMPASSABLE_RIVER). NOT sufficient for DEEP_NAVAL/NAVAL — see [hasOpenWaterAccess].
+ *  Same cached-once shape as [hasRailData]; used by EquipmentWindowController to hide ships that
+ *  could never be deployed anywhere on a land-locked map's Purchase list. */
 fun GameMap.hasWaterAccess(): Boolean {
     hasWaterAccessCache?.let { return it }
-    val naval = setOf(TerrainType.OCEAN.value, TerrainType.RIVER.value, TerrainType.PORT.value)
-    val found = map?.any { row -> row.any { it.terrain in naval } } ?: false
+    val found = hasHexEnterableBy(MovMethod.COASTAL.value)
     hasWaterAccessCache = found
     return found
 }
 
-/** Whether this map has any Ocean/Port hex. Per movTableDry rows 6 (DEEP_NAVAL) and 10
- *  (NAVAL), RIVER is 255 (impassable) for both — only COASTAL can actually cross a river (row
- *  7). A river-only map (e.g. Operation Uranus, all Don-river hexes, zero Ocean/Port) must NOT
- *  count as "water access" for submarines/destroyers/battleships, or the Purchase list offers
- *  ships that could never move a single hex (2026-07-15 bug report). */
+/** Whether this map holds a hex a blue-water ship can enter. Ordinary RIVER is 255 for both
+ *  DEEP_NAVAL and NAVAL in every efile measured, so a river-only map (e.g. Operation Uranus, all
+ *  Don-river hexes, zero Ocean/Port) must NOT count as water access for submarines/destroyers/
+ *  battleships, or the Purchase list offers ships that could never move a single hex (2026-07-15
+ *  bug report). IMPASSABLE_RIVER is a different matter and is why this reads the live table rather
+ *  than a hardcoded Ocean/Port set: BASEKORP, LXF and ATOMIC all let NAVAL cross it, so on
+ *  `Falciu 1` — whose Prut is drawn entirely in RIVER and IMPASSABLE_RIVER, with no Ocean or Port
+ *  hex anywhere — a Soviet destroyer is a legitimate purchase after all. */
 fun GameMap.hasOpenWaterAccess(): Boolean {
     hasOpenWaterAccessCache?.let { return it }
-    val openWater = setOf(TerrainType.OCEAN.value, TerrainType.PORT.value)
-    val found = map?.any { row -> row.any { it.terrain in openWater } } ?: false
+    val found = hasHexEnterableBy(MovMethod.DEEP_NAVAL.value, MovMethod.NAVAL.value)
     hasOpenWaterAccessCache = found
     return found
+}
+
+/**
+ * Whether any hex on the grid is enterable by at least one of [methods] under the movement table
+ * currently in force ([movTable], republished per ground condition by `Scenario.setMoveTable`).
+ *
+ * 255 is the only impassable sentinel; 254 merely costs the whole allowance. Both caches above are
+ * cleared by [allocMap] and by `Scenario.setMoveTable`, so a weather change that swaps the table
+ * cannot leave a stale answer behind.
+ */
+private fun GameMap.hasHexEnterableBy(vararg methods: Int): Boolean {
+    val costRows = methods.toList().mapNotNull { movTable.getOrNull(it) }
+
+    fun enterable(terrain: Int) =
+        costRows.any { costs -> (costs.getOrNull(terrain) ?: IMPASSABLE_TERRAIN_COST) < IMPASSABLE_TERRAIN_COST }
+    return map?.any { row -> row.any { hex -> enterable(hex.terrain) } } ?: false
+}
+
+/** `movTable` sentinel for "this movement method may never enter"; 254 is merely costly. */
+private const val IMPASSABLE_TERRAIN_COST = 255
+
+/** Drops the [hasWaterAccess] / [hasOpenWaterAccess] answers. Called by `Scenario.setMoveTable`:
+ *  both are derived from [movTable], which a weather change or an efile switch replaces. */
+fun GameMap.invalidateWaterAccessCache() {
+    hasWaterAccessCache = null
+    hasOpenWaterAccessCache = null
 }
 
 fun GameMap.setHex(

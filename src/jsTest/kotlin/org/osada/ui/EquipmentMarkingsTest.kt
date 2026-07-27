@@ -28,12 +28,43 @@ class EquipmentMarkingsTest {
         assertTrue(parent.firstElementChild?.getAttribute("title")?.contains("restores 1 movement point") == true)
     }
 
+    /**
+     * The SUP badge follows OG's effective rule — the class default **toggled** by `attr` bit 12 —
+     * because rule and badge share one predicate ([UnitCapabilities.hasSupportFire], §7.14).
+     *
+     * `Support Fire` is a toggle, not a grant (`OG_ABILITY_AUDIT.md` §2). So an unflagged artillery
+     * piece keeps the badge and a flagged one loses it, while a flagged anti-tank gun gains it. The
+     * AA badge is a separate predicate and is unchanged.
+     */
     @Test
-    fun artilleryAndAirDefenceAdvertiseTheirDefensiveFireRoles() {
+    fun theSupportFireMarkFollowsTheToggledClassDefault() {
         val parent = document.createElement("div") as HTMLElement
-        EquipmentMarkings.render(parent, EquipmentData().apply { uclass = UnitClass.ARTILLERY.value })
-        assertEquals("SUP", parent.firstElementChild?.textContent)
 
+        EquipmentMarkings.render(parent, EquipmentData().apply { uclass = UnitClass.ARTILLERY.value })
+        assertEquals("SUP", parent.firstElementChild?.textContent, "artillery defaults to fire support")
+
+        EquipmentMarkings.render(
+            parent,
+            EquipmentData().apply {
+                uclass = UnitClass.ARTILLERY.value
+                attr = SUPPORT_FIRE_ATTR
+            },
+        )
+        assertEquals(null, parent.firstElementChild, "the flag REVERSES the default, so no badge")
+
+        EquipmentMarkings.render(
+            parent,
+            EquipmentData().apply {
+                uclass = UnitClass.ANTI_TANK.value
+                attr = SUPPORT_FIRE_ATTR
+            },
+        )
+        assertEquals("SUP", parent.firstElementChild?.textContent, "74% of OG anti-tank is toggled ON")
+    }
+
+    @Test
+    fun airDefenceClassesAdvertiseAntiAirFire() {
+        val parent = document.createElement("div") as HTMLElement
         listOf(UnitClass.FLAK, UnitClass.AIR_DEFENCE, UnitClass.FIGHTER).forEach { cls ->
             EquipmentMarkings.render(
                 parent,
@@ -107,5 +138,10 @@ class EquipmentMarkingsTest {
         EquipmentMarkings.render(parent, EquipmentData().apply { name = "Supply Depot" })
 
         assertEquals(null, parent.firstElementChild)
+    }
+
+    private companion object {
+        /** `Equipment.attr` bit 12 — OG's `Support Fire`. */
+        const val SUPPORT_FIRE_ATTR = 4096
     }
 }

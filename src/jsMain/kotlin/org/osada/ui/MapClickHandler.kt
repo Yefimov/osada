@@ -5,6 +5,7 @@ import org.osada.model.Cell
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
 import org.osada.model.Hex
+import org.osada.model.canDeployOnTerrain
 import org.osada.model.delCurrentUnit
 import org.osada.model.getAttackableUnit
 import org.osada.model.getPlayer
@@ -86,6 +87,7 @@ internal class MapClickHandler(
                 uiSettings.deployMode &&
                 selectedReserve != null &&
                 selectedDeployLayerFree &&
+                terrainAcceptsReserve(selectedReserve, hex) &&
                 isValidDeployTarget(hex, map, map.currentPlayer?.side ?: 0)
 
         logIfEnemyUnattackable(map, hex, currentUnit, unit)
@@ -123,7 +125,12 @@ internal class MapClickHandler(
                 true
             }
             uiSettings.deployMode && isValidDeployTarget(hex, map, currentPlayerSide) -> {
-                if (DeploymentSelection.selectedUnit(ui) != null) {
+                // A hex this unit's movement method cannot occupy falls through to the picker
+                // rather than to deploySelected, which would return false with no message at all
+                // (a river gunboat clicking Cantemir in `Falciu 1`). Re-opening the picker for the
+                // hex is the useful reading: the hex is a legal deploy hex, just not for THIS unit.
+                val selected = DeploymentSelection.selectedUnit(ui)
+                if (selected != null && terrainAcceptsReserve(selected, hex)) {
                     DeploymentSelection.deploySelected(ui, cell.row, cell.col)
                 } else {
                     DeploymentSelection.openForTarget(ui, cell.row, cell.col)
@@ -137,6 +144,13 @@ internal class MapClickHandler(
             }
         }
     }
+
+    /** The same terrain rule `deployPlayerUnit` enforces and the deploy highlight now draws, so
+     *  all three agree on which hexes in the zone this particular reserve unit may take. */
+    private fun terrainAcceptsReserve(
+        unit: GameUnit,
+        hex: Hex,
+    ): Boolean = canDeployOnTerrain(unit, hex, GameRules.isAir(unit))
 
     private fun isValidDeployTarget(
         hex: Hex,

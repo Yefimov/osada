@@ -2,6 +2,7 @@ package org.osada.ui
 
 import org.osada.model.Cell
 import org.osada.model.GameMap
+import org.osada.model.GameUnit
 import org.osada.model.Hex
 import org.osada.rules.GameRules
 import org.osada.rules.isAir
@@ -80,17 +81,17 @@ internal class MapRenderer(
         val cols = q.cols
         val deployMode = uiSettings.deployMode
 
+        // The reserve unit awaiting placement, resolved exactly as the click path resolves it
+        // (DeploymentSelection.selectedUnit) so the highlight cannot promise a hex the click would
+        // refuse. Null when nothing is picked yet — the zone is then drawn in full, which is right:
+        // some unit in the reserve can go there, we just don't know which one yet.
+        val deployUnit = if (deployMode) DeploymentSelection.selectedUnit(q.currentPlayer) else null
+
         // When deploying an AIRCRAFT, airfields are valid deploy targets even outside the deploy
         // zone (OG rule, already honoured on click in MapInputController). Highlight them too — but
         // only for aircraft, so ground units don't see airfields lit up. Mirrors
         // selectedDeployUnitIsAir().
-        val airDeploySelected =
-            deployMode &&
-                run {
-                    val index = byId("eqUserSel")?.asDynamic()?.deployunit as? Int ?: -1
-                    val unit = if (index >= 0) q.currentPlayer?.getCoreUnitList()?.getOrNull(index) else null
-                    unit != null && GameRules.isAir(unit)
-                }
+        val airDeploySelected = deployUnit != null && GameRules.isAir(deployUnit)
 
         return RenderFrame(
             q = q,
@@ -108,6 +109,7 @@ internal class MapRenderer(
             markOwnUnits = uiSettings.markOwnUnits,
             hasTouch = uiSettings.hasTouch,
             airDeploySelected = airDeploySelected,
+            deployUnit = deployUnit,
         )
     }
 
@@ -155,4 +157,6 @@ internal class RenderFrame(
     val markOwnUnits: Boolean,
     val hasTouch: Boolean,
     val airDeploySelected: Boolean,
+    /** Reserve unit awaiting placement, or null when none is picked yet. */
+    val deployUnit: GameUnit? = null,
 )

@@ -24,8 +24,13 @@ import kotlin.test.assertTrue
  * the river in two. Reported on `Falciu 1`: the Shtorm TB ran the river freely but could not pass
  * (19,23), `river/road9`.
  *
- * **OG cannot express this rule at all.** Its `TerrainEx.txt` `[terrain-cost]` table is 19 terrain
- * columns with no road column, and `EFILE_BASEKORP`'s Coastal row gives river cost 1 outright.
+ * **OG does have a per-method road cost, and it does not mean what PM's column means.** It lives in
+ * its own `[roads-cost]` section (one row per ground condition, indexed by movement method), not as
+ * a 20th column of `[terrain-cost]` -- which is why reading the cost table alone suggests OG has no
+ * road cost at all. `EFILE_BASEKORP` sets it to 255 for Deep Naval/Coastal/Naval, i.e. "this method
+ * cannot use roads", while the same efile's Coastal row gives river cost 1 outright. So 255 there
+ * withholds a bonus; it does not dam the river. Taking the road column only when it is not 255 is
+ * the reading that reproduces OG.
  */
 class NavalBridgeMovementTest {
     private val coastalEqid = 200

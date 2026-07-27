@@ -11,6 +11,7 @@ import org.osada.model.EfileConfig
 import org.osada.model.Equipment
 import org.osada.model.GameUnit
 import org.osada.model.Leaders
+import org.osada.model.hasNoSurrender
 import org.osada.model.ignoresEntrenchment
 import org.osada.unitEntrenchRate
 import kotlin.math.roundToInt
@@ -310,6 +311,14 @@ object CombatResolver {
      * in PM it only makes entrenchment un-ignorable ([isEntrenchmentIntact]), and that existing
      * behaviour is untouched.
      *
+     * **OG's other exemption, `No Surrender`, is now honoured too** ([SURRENDER_ON_FAILED_RETREAT]'s
+     * own comment named it from the start; it was unimplemented only because the `attr` bit had not
+     * been identified — see [Equipment.hasNoSurrender], bit 23, pinned down 2026-07-27). This
+     * mattered most for exactly the units that carry the flag: a bunker or fort has `movpoints == 0`
+     * and so can NEVER complete a legal retreat, which made every forced retreat an automatic
+     * destruction. 1,252 records (2.7% of `eqp-united`) gain the exemption, 56% of the whole
+     * Fortification class among them.
+     *
      * [blockedByOwnUnitsOnly] also exempts it: being pinned against the map edge, water, mountains
      * or enemies is encirclement and should kill the unit, but being crowded out by your own stack
      * is a traffic-jam and must not. See [CombatPositioning.isRetreatBlockedByOwnUnitsOnly].
@@ -320,6 +329,7 @@ object CombatResolver {
     ): Boolean =
         SURRENDER_ON_FAILED_RETREAT &&
             !blockedByOwnUnitsOnly &&
+            !Equipment.hasNoSurrender(defender.getEqid(true)) &&
             !Leaders.unitHasLeader(defender, LeaderType.FEROCIOUS_DEFENSE)
 
     /** Whether the defender's entrenchment is strong enough to trigger a rugged defense. */
