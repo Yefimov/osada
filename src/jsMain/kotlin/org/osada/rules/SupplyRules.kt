@@ -188,9 +188,12 @@ object SupplyRules {
         unit.unitData(true).ammo + Attachments.bonus(unit, Attachments.SLOT_SUPPORT_AMMO) +
             Attachments.ammoPenalty(unit)
 
-    /** Maximum fuel [unit] can carry, including the Fuel Pods attachment's bonus. */
+    /** Maximum fuel [unit] can carry, including the Fuel Pods attachment's bonus. That bonus is
+     *  flat or a percentage of base fuel depending on the efile's `attach_minfuel` -- resolved
+     *  inside [Attachments.bonus]. */
     private fun maxFuel(unit: GameUnit): Int =
-        unit.unitData(true).fuel + Attachments.bonus(unit, Attachments.SLOT_FUEL_PODS)
+        unit.unitData(true).fuel + Attachments.bonus(unit, Attachments.SLOT_FUEL_PODS) +
+            Attachments.fuelPenalty(unit)
 
     /** True when [unit] is eligible to resupply (hasn't acted, needs supply, valid terrain). */
     fun canResupply(

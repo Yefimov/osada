@@ -5,7 +5,6 @@ import org.osada.MovMethod
 import org.osada.TerrainType
 import org.osada.UnitClass
 import org.osada.model.Cell
-import org.osada.model.EfileConfig
 import org.osada.model.Equipment
 import org.osada.model.ExtendedCell
 import org.osada.model.GameMap
@@ -32,22 +31,21 @@ object MovementRules {
     /** Effective movement points for [unit] this turn (capped by fuel, boosted by leaders and
      *  attachments). Fast Speed's bonus and any other attachment's movement penalty (`malus-type`
      *  1) both land here, after the fuel clamp -- same ordering the existing leader bonuses use,
-     *  so an attachment bonus isn't itself further capped by fuel. */
+     *  so an attachment bonus isn't itself further capped by fuel.
+     *
+     *  `attach_minmove` is deliberately NOT read here. It was previously applied as a floor this
+     *  range could not fall below, which was an INFERENCE and is now known to be wrong: the key
+     *  selects Fast Speed's flat-vs-percentage spelling and floors THE BONUS, not the unit's
+     *  resulting movement (the scaling lives in [Attachments.bonus]). Applying it here was DEFERRED.md
+     *  §1.14, and the cap added to contain it was §1.16 -- both dissolve with the correct reading. */
     fun getUnitMoveRange(unit: GameUnit): Int {
         var range = unit.getMovesLeft()
         val data = unit.unitData()
         if (UnitPredicates.unitUsesFuel(unit) && unit.getFuel() < range) range = unit.getFuel()
         if (Leaders.unitHasLeader(unit, LeaderType.AGGRESSIVE_TANK_MANEUVER)) range += 1
         if (Leaders.unitHasLeader(unit, LeaderType.AGGRESSIVE_MANEUVER)) range += 1
-        val preAttachmentRange = range
         range += Attachments.bonus(unit, Attachments.SLOT_FAST_SPEED) + Attachments.movementPenalty(unit)
-        // attach_minmove (LXF 1, BASEKORP 2): undocumented in any efile comment found locally --
-        // INFERENCE that it is a floor a movement penalty may not push the unit below. Capped at
-        // preAttachmentRange so the floor can't override the fuel clamp above (a unit out of fuel
-        // stays out of fuel even with a movement-malus attachment).
-        EfileConfig.attachments()?.minMove?.takeIf { it > 0 && Attachments.movementPenalty(unit) < 0 }?.let {
-            range = minOf(maxOf(range, it), preAttachmentRange)
-        }
+        if (range < 0) range = 0
         val isStrandedTowedGun =
             data.movmethod == MovMethod.TOWED.value &&
                 unit.transport == null &&

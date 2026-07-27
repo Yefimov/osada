@@ -6,7 +6,6 @@ import org.osada.model.GameMap
 import org.osada.model.GameUnit
 import org.osada.model.Player
 import org.osada.model.canUndoMove
-import org.osada.rules.Attachments
 import org.osada.rules.GameRules
 import org.osada.rules.SupplyRules
 import org.osada.rules.calculateUnitCostPerStrength
@@ -20,7 +19,7 @@ import org.osada.rules.getResupplyValue
 import org.w3c.dom.events.MouseEvent
 
 /**
- * [UnitContextMenu]'s action-chip strip (Mount/Embark/Resupply/Reinforce/Attach/Undo/Sleep). Split
+ * [UnitContextMenu]'s action-chip strip (Mount/Embark/Resupply/Reinforce/Undo/Sleep). Split
  * out purely to keep [UnitContextMenu] within the project's function-count/class-size limits --
  * not expected to be called from elsewhere.
  */
@@ -35,7 +34,6 @@ internal class UnitContextButtons(
             "resupply" to "Resupply",
             "reinforce" to "Reinforce",
             "overstrength" to "Overstr.",
-            "attach" to "Attach",
             "undo" to "Undo",
             "sleep" to "Sleep",
         )
@@ -50,24 +48,9 @@ internal class UnitContextButtons(
         if (addEmbarkButton(map, unit)) count++
         if (addResupplyButton(map, unit)) count++
         count += addReinforceButtons(map, unit, currentPlayer)
-        if (addAttachButton(unit)) count++
         if (addUndoButton(map, unit)) count++
         if (addSleepButton(unit)) count++
         return count
-    }
-
-    /** Attachments (DEFERRED.md §1.4): offered only when the efile has them on, the unit has a
-     *  formation, it isn't already at the two-per-unit cap, and at least one enabled slot remains
-     *  unbought -- exactly [Attachments.availableSlots]'s own gate. */
-    private fun addAttachButton(unit: GameUnit): Boolean {
-        if (Attachments.availableSlots(unit).isEmpty()) return false
-        addButton(
-            unit,
-            "attach",
-            UIBuilder.unitContextButtons["attach"] ?: "+",
-            "Purchase an attachment for this formation (up to two). Each carries a bonus and a stated penalty.",
-        )
-        return true
     }
 
     private fun addMountButton(unit: GameUnit): Boolean {

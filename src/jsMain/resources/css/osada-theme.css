@@ -2783,3 +2783,122 @@ hr {
     .osada-language-switch { top: 8px; right: 8px; }
     .osada-language-switch__label { display: none; }
 }
+
+/* ============================================================================
+ * ATTACHMENT PICKER  (ui/AttachmentPickerPresenter)
+ *
+ * Two slot cards over a grid of choices. The MAX_PER_UNIT cap is the structure of
+ * the dialog, not a sentence in it.
+ *
+ * NOTHING here uses .smallButton. That class sets `font-family: osada-menu` — an
+ * ICON font — so any real word inside it renders as unrelated glyphs. The previous
+ * picker inherited `.smallButton heroPromotionChoice` from HeroPromotionPresenter's
+ * DOM shape and drew every label as gibberish; `.heroPromotionChoice` has no rule
+ * anywhere in the stylesheet, so it overrode none of it. Same trap .osada-linkbtn
+ * documents further up. Every font-family below is the UI font, explicitly.
+ * ========================================================================= */
+.osada-atp {
+    position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    /* --z-msg, not a magic number: #equipment sits at --z-window (100), so anything below that
+     * opens BEHIND the equipment window and only becomes visible when that window changes state.
+     * This dialog is modal over it, which is exactly what the --z-msg tier is for. */
+    z-index: var(--z-msg, 1000); width: min(560px, 92vw); max-height: 88vh; overflow-y: auto;
+    box-sizing: border-box; padding: 14px 16px 12px;
+    background: #1b1e24; border: 1px solid var(--osada-brass);
+    border-radius: var(--osada-radius); box-shadow: 0 10px 34px rgba(0,0,0,.66);
+    font-family: var(--osada-font-ui); color: var(--osada-text);
+}
+.osada-atp__header { display: flex; align-items: baseline; gap: 10px; margin-bottom: 12px; }
+.osada-atp__title {
+    flex: 1 1 auto; font-size: 15px; font-weight: bold; letter-spacing: .02em;
+    color: var(--osada-text); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.osada-atp__count { flex: 0 0 auto; font-size: 11px; color: var(--osada-brass); letter-spacing: .06em; text-transform: uppercase; }
+.osada-atp__close {
+    flex: 0 0 auto; cursor: pointer; font-size: 15px; line-height: 1; padding: 2px 4px;
+    color: var(--osada-text-dim); font-family: var(--osada-font-ui);
+}
+.osada-atp__close:hover { color: var(--osada-red-bright); }
+
+/* --- the two slots --- */
+.osada-atp__slots { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.osada-atp__slot {
+    box-sizing: border-box; padding: 9px 10px 10px; min-height: 92px;
+    background: #22262c; border: 1px solid var(--osada-metal-600); border-radius: var(--osada-radius);
+}
+.osada-atp__slot--empty {
+    background: repeating-linear-gradient(135deg, #1e2127 0 6px, #22262c 6px 12px);
+    border-style: dashed; border-color: #4a515d;
+}
+.osada-atp__slotlabel { font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: var(--osada-text-dim); }
+.osada-atp__slotname { margin-top: 4px; font-size: 13px; font-weight: bold; color: var(--osada-brass); }
+.osada-atp__slothint { margin-top: 14px; text-align: center; font-size: 11px; color: #6d7480; font-style: italic; }
+
+/* --- the choices --- */
+.osada-atp__heading {
+    margin: 14px 0 7px; padding-top: 10px; border-top: 1px solid var(--osada-metal-600);
+    font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: var(--osada-text-dim);
+}
+.osada-atp__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); gap: 8px; }
+.osada-atp__tile {
+    box-sizing: border-box; padding: 8px 9px 9px; cursor: pointer;
+    background: #22262c; border: 1px solid var(--osada-metal-600); border-radius: var(--osada-radius);
+    transition: border-color .12s, background .12s;
+}
+.osada-atp__tile:hover { border-color: var(--osada-brass); background: #2a2f37; }
+.osada-atp__tile:active { transform: translateY(1px); }
+.osada-atp__tilename { font-size: 12px; font-weight: bold; color: var(--osada-text); }
+/* Unaffordable is dimmed and not clickable, but still states its full cost and effects --
+ * a price you cannot pay yet is information, not noise. */
+.osada-atp__tile--locked { opacity: .45; cursor: not-allowed; }
+.osada-atp__tile--locked:hover { border-color: var(--osada-metal-600); background: #22262c; }
+
+/* Bonus and penalty carry EQUAL visual weight: same size, same position, differing only in
+ * hue. `docs/design/attachments.md` §5 -- a tile that shows +2 Spot and whispers -1 Movement
+ * is the hidden-modifier failure. */
+.osada-atp__bonus   { margin-top: 3px; font-size: 11px; color: #8fbf6a; }
+.osada-atp__penalty { font-size: 11px; color: #c87b6a; }
+.osada-atp__cost { margin-top: 5px; font-size: 11px; font-weight: bold; color: var(--osada-brass); }
+.osada-atp__none { padding: 10px 2px; font-size: 12px; color: var(--osada-text-dim); font-style: italic; }
+.osada-atp__footer {
+    margin-top: 12px; padding-top: 9px; border-top: 1px solid var(--osada-metal-600);
+    display: flex; align-items: center; gap: 10px; font-size: 11px; color: var(--osada-text-dim);
+}
+.osada-atp__prestige { flex: 1 1 auto; }
+/* The dialog no longer closes itself on a purchase -- a unit has two slots, and closing after the
+ * first made filling the second a second trip. This is the explicit way out. */
+.osada-atp__done {
+    flex: 0 0 auto; padding: 5px 16px; cursor: pointer;
+    background: var(--osada-red); border: 1px solid var(--osada-red-bright); border-radius: var(--osada-radius);
+    color: #fff; font-family: var(--osada-font-ui); font-size: 11px; font-weight: bold;
+    letter-spacing: .06em; text-transform: uppercase;
+}
+.osada-atp__done:hover { background: var(--osada-red-bright); }
+.osada-atp__done:active { transform: translateY(1px); }
+
+/* The strip card's opener: mirrors .osada-rename-btn--card's placement on the opposite
+ * corner. Always visible (not hover-only like rename) because it carries a value -- the
+ * number of attachments currently fitted. */
+.osada-atp-btn {
+    position: absolute; top: 2px; left: 2px; height: 16px; padding: 0 3px; z-index: 1;
+    display: inline-flex; align-items: center; justify-content: center; gap: 1px;
+    background: rgba(0,0,0,.55); border: 1px solid #4a515d; border-radius: 3px;
+    color: #6d7480; font-family: var(--osada-font-ui); font-size: 9px;
+    line-height: 1; letter-spacing: -.5px; cursor: pointer;
+    transition: color .12s, border-color .12s, background .12s;
+}
+/* Carrying at least one attachment lights the whole control brass, so a kitted-out unit is
+ * distinguishable from an empty one across the whole strip without reading anything. */
+.osada-atp-btn--fitted { color: var(--osada-brass); border-color: var(--osada-brass); background: rgba(0,0,0,.7); }
+.osada-atp-btn:hover { background: var(--osada-brass); color: #14171b; border-color: var(--osada-brass); }
+
+@media (max-width: 560px) {
+    .osada-atp__slots { grid-template-columns: 1fr; }
+}
+
+/* Stat chips an attachment is currently moving (ui/UnitStatAttachmentMarks). The panel used to
+ * show base equipment stats while the rules layer used the modified ones — a player could not
+ * tell a kitted-out unit from a bare one anywhere outside the picker. Same green/red pairing the
+ * picker's bonus/penalty lines use, so the two surfaces read as one system. */
+.osada-stat--boosted { color: #8fbf6a !important; font-weight: bold; cursor: help; }
+.osada-stat--reduced { color: #c87b6a !important; font-weight: bold; cursor: help; }

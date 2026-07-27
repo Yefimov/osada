@@ -1,7 +1,9 @@
 package org.osada.ui
 
+import org.osada.i18n.I18n
 import org.osada.model.delCurrentUnit
 import org.osada.model.getUnitById
+import org.osada.rules.Attachments
 import org.osada.rules.GameRules
 import org.osada.rules.isTransportable
 import org.osada.rules.unitUsesFuel
@@ -148,7 +150,50 @@ internal object EquipmentUnitStrip {
             e.stopPropagation() // must not select the card (that re-render would kill the input)
             startCardRename(ui, container, nameDiv, unit)
         }
+        addAttachmentButton(ui, container, unit)
         return container
+    }
+
+    /** Attachments (DEFERRED.md §1.4, §1.18). This strip is the attachment surface: OG allows
+     *  attachment changes at initial HQ only, never mid-scenario, and the equipment window is
+     *  where buying and upgrading already happen. It is also the one place carrying a real owned
+     *  [org.osada.model.GameUnit] rather than an equipment TYPE, which is what made the picker
+     *  possible without the `EquipmentWindowDetail` restructure §7.22 deferred.
+     *
+     *  Shown only when the unit could actually fit something — an efile with attachments off (14 of
+     *  22 campaigns) never renders the control at all, the same hide-don't-disable rule §7.13 took
+     *  for the display row and §7.14 for the Naval tab. */
+    private fun addAttachmentButton(
+        ui: UI,
+        container: HTMLElement,
+        unit: org.osada.model.GameUnit,
+    ) {
+        if (Attachments.availableSlots(unit).isEmpty() && Attachments.purchasedSlots(unit).isEmpty()) return
+        val player = unit.player ?: return
+        val fitted = Attachments.purchasedSlots(unit)
+        val button = addTag(container, "span")
+        button.className = "osada-atp-btn" + if (fitted.isEmpty()) "" else " osada-atp-btn--fitted"
+        // One star per slot, filled for each attachment fitted -- a bare count read as a
+        // meaningless "0". This shows BOTH whether the unit carries anything and how much room is
+        // left, in the width a digit occupied. Stars are UI-font characters, never osada-menu
+        // glyphs (DEFERRED.md §4.12).
+        button.textContent =
+            "★".repeat(fitted.size) + "☆".repeat(Attachments.MAX_PER_UNIT - fitted.size)
+        val summary =
+            if (fitted.isEmpty()) {
+                I18n.t("attachments.open.help")
+            } else {
+                fitted.joinToString(", ") { (_, slot) -> slot.name }
+            }
+        button.title = summary
+        button.setAttribute("role", "button")
+        button.setAttribute("aria-label", I18n.t("attachments.open.help"))
+        button.onclick = { e: MouseEvent ->
+            e.stopPropagation() // must not re-select the card out from under the dialog
+            AttachmentPickerPresenter.open(unit, player) {
+                ui.updateEquipmentWindow(unit.unitData(true).uclass)
+            }
+        }
     }
 
     /** Inline rename inside a reserve/upgrade strip card — same Enter/blur/Esc contract as the
