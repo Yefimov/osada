@@ -52,6 +52,21 @@ internal fun clear(element: HTMLElement) {
     while (element.firstChild != null) element.removeChild(element.firstChild!!)
 }
 
+/** Imported OG prose is HTML: 6,945 `<br>` across the shipped campaign data, because the legacy
+ *  `#ui-message` popup sets it with `innerHTML`. The briefing sets prose with `textContent` — the
+ *  right call, it must not run authored markup — so those tags used to render as visible "<br><br>"
+ *  and the whole text collapsed into one paragraph. Turn the breaks into real newlines instead;
+ *  `.osada-briefing__order-text` is already `white-space: pre-line`, so they paragraph correctly.
+ *  Any other tag is stripped rather than shown: none exist in the data today, and a literal
+ *  "<i>" on staff paper is a worse failure than a lost emphasis. */
+internal fun plainText(raw: String): String =
+    raw
+        .replace(Regex("<br\\s*/?>", RegexOption.IGNORE_CASE), "\n")
+        .replace(Regex("<[^>]*>"), "")
+        .replace(Regex("[ \\t]+\n"), "\n")
+        .replace(Regex("\n{3,}"), "\n\n")
+        .trim()
+
 // Generic head-and-shoulders silhouette, drawn with `currentColor` so its shade follows the
 // `.osada-dialogue__portrait-fallback` CSS rule (no downloaded asset, per spec).
 private const val SILHOUETTE_SVG =
@@ -96,10 +111,11 @@ internal fun addTextSection(
     heading: String,
     text: String,
 ) {
-    if (text.isBlank()) return
+    val body = plainText(text)
+    if (body.isBlank()) return
     val section = child(parent, "section", "osada-briefing__order-section")
     child(section, "h2", "osada-briefing__order-heading").textContent = heading
-    child(section, "p", "osada-briefing__order-text").textContent = text
+    child(section, "p", "osada-briefing__order-text").textContent = body
 }
 
 internal fun addListSection(
@@ -116,6 +132,6 @@ internal fun addListSection(
         val row = child(list, "li", "osada-briefing__objective")
         val marker = child(row, "span", "osada-briefing__objective-marker")
         marker.textContent = if (primary) "${index + 1}" else "•"
-        child(row, "span", "osada-briefing__objective-text").textContent = item
+        child(row, "span", "osada-briefing__objective-text").textContent = plainText(item)
     }
 }

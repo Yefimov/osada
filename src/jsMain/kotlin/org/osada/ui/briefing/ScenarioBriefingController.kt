@@ -146,7 +146,7 @@ internal object ScenarioBriefingController {
 
         ScenarioBriefingBuilder.clearTranscript(currentView)
         turns.dropLast(1).forEach { turn ->
-            ScenarioBriefingBuilder.appendTurn(currentView, turn).textContent = turn.text
+            ScenarioBriefingBuilder.appendTurn(currentView, turn).textContent = plainText(turn.text)
         }
         val newestEl = ScenarioBriefingBuilder.appendTurn(currentView, newest)
         revealingLine = newestEl
@@ -157,7 +157,7 @@ internal object ScenarioBriefingController {
         ScenarioBriefingBuilder.setRevealed(currentView, revealed = false, hasChoices = choices.isNotEmpty())
         BriefingTypewriter.start(
             el = newestEl,
-            fullText = newest.text,
+            fullText = plainText(newest.text),
             onProgress = { ScenarioBriefingBuilder.scrollTranscriptToEnd(currentView) },
         ) {
             ScenarioBriefingBuilder.scrollTranscriptToEnd(currentView)

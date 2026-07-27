@@ -261,7 +261,7 @@ internal object ScenarioBriefingBuilder {
         // ORDERS is ALWAYS last and always present: it is the legacy scenario-start message's
         // text, single-sourced from scenario.getDescription() via ScenarioFacts — a visually
         // distinct paper block, never a copy stored in briefing/campaign data.
-        val ordersText = facts?.ordersText.orEmpty().trim()
+        val ordersText = plainText(facts?.ordersText.orEmpty())
         val ordersClass =
             "osada-briefing__order-section osada-briefing__order-section--wide osada-briefing__orders-paper"
         val section = child(view.ordersContent, "section", ordersClass)

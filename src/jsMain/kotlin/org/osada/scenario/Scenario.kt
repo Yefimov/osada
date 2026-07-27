@@ -1,5 +1,6 @@
 package org.osada.scenario
 
+import org.osada.GroundCondition
 import org.osada.model.Equipment
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
@@ -24,6 +25,10 @@ class Scenario(
         private const val BRILLIANT_TIER = 0
         private const val VICTORY_TIER = 1
         private const val TACTICAL_TIER = 2
+
+        /** OG `iconset`: 0=Default 1=Snow 2=Desert 3=Jungle. */
+        private const val ICONSET_DEFAULT = 0
+        private const val ICONSET_SNOW = 1
     }
 
     var name: String = ""
@@ -33,6 +38,29 @@ class Scenario(
     var latitude: Int = 0
     var ground: Int = 0
     var iconset: Int = 0
+
+    /**
+     * The iconset actually rendered: [iconset] as authored, except that a **Frozen**-ground
+     * scenario which authored no iconset at all is drawn as snow.
+     *
+     * OG scenario authors set `iconset` by hand and forgot it often. Measured across the shipped
+     * scenarios, 47 of the 53 with Frozen ground do set snow, so the pairing is the intent and the
+     * omissions are oversights — the visible symptom was Operation Uranus (November 1942, frozen,
+     * snowing, snow-covered map art) fielding summer-camo paratroopers. Frozen ground is the only
+     * trigger: falling snow over unfrozen ground would whiten units standing on green terrain, and
+     * Dry/Mud are left strictly alone.
+     *
+     * Read this, never [iconset], on any rendering path. [iconset] stays the raw imported value so
+     * saves and the importer keep round-tripping OG's own data unchanged.
+     */
+    val effectiveIconset: Int
+        get() =
+            if (iconset == ICONSET_DEFAULT && ground == GroundCondition.FROZEN.value) {
+                ICONSET_SNOW
+            } else {
+                iconset
+            }
+
     var weatherCanChangeGround: Boolean = false
     var turnsPerDay: Int = 1
     var dayTurn: Int = 0

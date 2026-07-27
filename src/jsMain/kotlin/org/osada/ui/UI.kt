@@ -147,7 +147,7 @@ class UI(
         render.cacheImages {
             console.log("[OSADA] UI.setNewScenario cacheImages callback")
             render.render()
-            render.setIconsetTint(game.scenario?.iconset ?: 0)
+            render.setIconsetTint(game.scenario?.effectiveIconset ?: 0)
             // Build hex name/objective tooltips AFTER positionLayers has run inside cacheImages —
             // doing it before (stale/zero game geometry) placed labels off the map (e.g. "Sirki",
             // "Objective" floating beyond the edge until a scenario restart).

@@ -31,7 +31,7 @@ internal fun renderPendingDecision(
         "osada-briefing__order-section osada-briefing__order-section--wide osada-briefing__decision"
     val section = element("section", sectionClass)
     child(section, "h2", "osada-briefing__order-heading").textContent = "YOUR DECISION"
-    child(section, "p", "osada-briefing__order-text").textContent = line.text
+    child(section, "p", "osada-briefing__order-text").textContent = plainText(line.text)
     val options = child(section, "div", "osada-briefing__decision-options")
     line.choices.forEachIndexed { index, choice ->
         options.appendChild(decisionOption(index, choice, onChoice))

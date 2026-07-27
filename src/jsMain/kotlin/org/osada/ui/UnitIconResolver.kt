@@ -10,7 +10,8 @@ import kotlin.js.jsTypeOf
  * variant sets.
  */
 internal object UnitIconResolver {
-    fun forCurrentScenario(baseIcon: String): String = resolve(baseIcon, GameHolder.instance?.scenario?.iconset ?: 0)
+    fun forCurrentScenario(baseIcon: String): String =
+        resolve(baseIcon, GameHolder.instance?.scenario?.effectiveIconset ?: 0)
 
     fun resolve(
         baseIcon: String,
