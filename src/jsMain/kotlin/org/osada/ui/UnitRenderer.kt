@@ -149,11 +149,12 @@ internal class UnitRenderer(
             !unit.hasAnimation &&
                 GameRules.isGround(unit) &&
                 GameRules.isBridgeForSide(unit.getHex(), unit.player?.side ?: -1)
-        val icon = UnitIconResolver.forCurrentScenario(unit.getIcon())
+        val displayedEqid = unit.getEqid()
+        val icon = UnitIconResolver.forCurrentScenario(displayedEqid, unit.getIcon())
         val img = if (isBridge) rc.bridgeImage else rc.unitImages[icon]
         if (img == null || img == undefined) {
             if (loggedMissingIcons.add(icon)) {
-                console.log("[osada] drawUnitSprite missing image (logged once) for icon", icon, "eqid", unit.eqid)
+                console.log("[osada] drawUnitSprite missing image (logged once) for icon", icon, "eqid", displayedEqid)
             }
             return false
         }

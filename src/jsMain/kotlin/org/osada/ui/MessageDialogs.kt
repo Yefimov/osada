@@ -87,7 +87,7 @@ internal object MessageDialogs {
         if (eq != null) {
             body +=
                 "<div class='uImageAnimation' style='margin-left: 120px;background-image: " +
-                "url(${UnitIconResolver.forCurrentScenario(eq.icon)})'></div>" +
+                "url(${UnitIconResolver.forCurrentScenario(eqid, eq.icon)})'></div>" +
                 "<b>${eq.name} ${unitClassNames[eq.uclass]}</b>"
         }
         messageDynamic("You have been awarded a prototype unit", body)

@@ -36,7 +36,7 @@ private fun EquipmentWindowBuilder.buildEqDetailHeader(
     portrait.className = "osada-eqd-portrait"
     val img = addTag(portrait, "div")
     img.className = "osada-eqd-portrait__img"
-    img.style.backgroundImage = "url(${UnitIconResolver.forCurrentScenario(eq.icon)})"
+    img.style.backgroundImage = "url(${UnitIconResolver.forCurrentScenario(eq.eqid, eq.icon)})"
     val name = addTag(body, "div")
     name.className = "osada-eqd-name"
     // Country flag left of the name (user request): same flags_med.png sprite + 0-based

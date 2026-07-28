@@ -31,8 +31,6 @@ class Render(
 
     fun positionLayers() = ctx.positionLayers()
 
-    fun setIconsetTint(iconset: Int) = ctx.setIconsetTint(iconset)
-
     fun setNewMap(newMap: GameMap) = ctx.setNewMap(newMap)
 
     fun render() = mapRenderer.render()

@@ -4,16 +4,18 @@ import org.osada.GameHolder
 import kotlin.js.jsTypeOf
 
 /**
- * Resolves an equipment's stable/default icon to the scenario-climate variant generated from OG's
- * SnowIcon/DesertIcon/JungleIcon columns. The manifest is loaded before `osada.js`; absent entries
- * deliberately fall back to the original icon, preserving stock PM equipment and incomplete OG
- * variant sets.
+ * Resolves an equipment ID and its default icon to the scenario-season variant generated from
+ * OG's SnowIcon/DesertIcon/JungleIcon columns. Equipment ID is essential because unrelated OG
+ * units can share one default icon while authoring different seasonal variants.
  */
 internal object UnitIconResolver {
-    fun forCurrentScenario(baseIcon: String): String =
-        resolve(baseIcon, GameHolder.instance?.scenario?.effectiveIconset ?: 0)
+    fun forCurrentScenario(
+        eqid: Int,
+        baseIcon: String,
+    ): String = resolve(eqid, baseIcon, GameHolder.instance?.scenario?.effectiveIconset ?: 0)
 
     fun resolve(
+        eqid: Int,
         baseIcon: String,
         iconset: Int,
     ): String {
@@ -21,7 +23,7 @@ internal object UnitIconResolver {
         if (iconset in SNOW_ICONSET..JUNGLE_ICONSET) {
             val registry: dynamic = js("typeof window !== 'undefined' ? window.seasonalUnitIcons : undefined")
             if (registry != null && jsTypeOf(registry) != "undefined") {
-                val variants: dynamic = registry[baseIcon]
+                val variants: dynamic = registry[eqid.toString()]
                 if (variants != null && jsTypeOf(variants) != "undefined") {
                     selected = variants[iconset.toString()] as? String
                 }

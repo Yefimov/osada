@@ -116,10 +116,11 @@ internal object CombatLogFeed {
      *  the shared replacement icon rather than each unit's own (often missing) art. */
     fun resolveUnitIcon(eqData: dynamic): String {
         val uclass = eqData.uclass as? Int ?: 0
+        val baseIcon = eqData.icon as? String ?: ""
         return if (uclass > UnitClass.AIR_TRANSPORT.value) {
             UIBuilder.navalReplacementIcon
         } else {
-            eqData.icon as? String ?: ""
+            UnitIconResolver.forCurrentScenario(eqData.eqid as? Int ?: 0, baseIcon)
         }
     }
 

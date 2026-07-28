@@ -108,6 +108,7 @@ object ScenarioLoader {
         scenario.ground = mapElement.getAttribute("ground")?.toIntOrNull() ?: 0
         scenario.weatherCanChangeGround = (mapElement.getAttribute("weatherchg")?.toIntOrNull() ?: 0) != 0
         scenario.iconset = mapElement.getAttribute("iconset")?.toIntOrNull() ?: 0
+        scenario.lockedEffectiveIconset = scenario.effectiveIconset
         scenario.turnsPerDay = (mapElement.getAttribute("dayturns")?.toIntOrNull() ?: 1) * 2
         scenario.map.terrainImage = mapElement.getAttribute("image") ?: ""
     }

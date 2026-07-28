@@ -88,7 +88,8 @@ internal class UnitStatCard(
         val coreText = if (unit.isCore) " (Core Unit)" else ""
         val leaderText = if (HeroCampaign.hasAnyCommander(unit)) " (Leader)" else ""
 
-        byId("uImage")?.style?.backgroundImage = "url(${UnitIconResolver.forCurrentScenario(data.icon)})"
+        byId("uImage")?.style?.backgroundImage =
+            "url(${UnitIconResolver.forCurrentScenario(data.eqid, data.icon)})"
         byId("uSmallFlag")?.style?.backgroundPosition = "${-FLAG_SPRITE_WIDTH * (unit.flag - 1)}px 0px"
         byId("uFlag")?.style?.backgroundImage =
             "url('resources/ui/flags/${Equipment.UNITED_NAME}/flag_big_${unit.flag}.png')"

@@ -10,7 +10,7 @@ class UnitIconResolverTest {
     private fun scenarioWith(
         ground: Int,
         iconset: Int,
-    ) = Scenario("test.xml").also {
+    ) = Scenario(null).also {
         it.ground = ground
         it.iconset = iconset
     }
@@ -20,13 +20,17 @@ class UnitIconResolverTest {
     @Test
     fun frozenGroundWithoutAuthoredIconsetRendersAsSnow() {
         val scenario = scenarioWith(ground = 1, iconset = 0)
+        scenario.lockedEffectiveIconset = scenario.effectiveIconset
         assertEquals(1, scenario.effectiveIconset)
         assertEquals(0, scenario.iconset, "the raw imported value must stay untouched")
+        scenario.ground = 0
+        assertEquals(1, scenario.effectiveIconset, "weather must not change uniforms during the battle")
     }
 
     @Test
     fun leavesAuthoredAndNonFrozenIconsetsAlone() {
         val authoredJungleOnIce = scenarioWith(ground = 1, iconset = 3)
+        authoredJungleOnIce.lockedEffectiveIconset = authoredJungleOnIce.effectiveIconset
         assertEquals(3, authoredJungleOnIce.effectiveIconset, "an authored iconset always wins")
         assertEquals(0, scenarioWith(ground = 0, iconset = 0).effectiveIconset)
         assertEquals(0, scenarioWith(ground = 2, iconset = 0).effectiveIconset, "mud is not winter")
@@ -51,16 +55,37 @@ class UnitIconResolverTest {
     }
 
     @Test
-    fun resolvesManifestByScenarioIconsetAndFallsBackForUnmappedClimate() {
+    fun resolvesManifestByEquipmentIdAndFallsBackForUnmappedClimate() {
+        val eqid = 16508
         val base = "resources/units/images/lxf/example.png"
         val snow = "resources/units/images/seasonal/example-snow.png"
         val global = window.asDynamic()
         val previous: dynamic = global.seasonalUnitIcons
-        global.seasonalUnitIcons = json(base to json("1" to snow))
+        global.seasonalUnitIcons = json(eqid.toString() to json("1" to snow))
         try {
-            assertEquals(snow, UnitIconResolver.resolve(base, 1))
-            assertEquals(base, UnitIconResolver.resolve(base, 2))
-            assertEquals(base, UnitIconResolver.resolve(base, 0))
+            assertEquals(snow, UnitIconResolver.resolve(eqid, base, 1))
+            assertEquals(base, UnitIconResolver.resolve(eqid, base, 2))
+            assertEquals(base, UnitIconResolver.resolve(eqid, base, 0))
+        } finally {
+            global.seasonalUnitIcons = previous
+        }
+    }
+
+    @Test
+    fun unitsSharingDefaultArtCanUseDifferentSnowVariants() {
+        val base = "resources/units/images/lxf/jcp77.png"
+        val entrenchedSnow = "resources/units/images/seasonal/jcq30.png"
+        val otherSnow = "resources/units/images/seasonal/zyi38.png"
+        val global = window.asDynamic()
+        val previous: dynamic = global.seasonalUnitIcons
+        global.seasonalUnitIcons =
+            json(
+                "16508" to json("1" to entrenchedSnow),
+                "16509" to json("1" to otherSnow),
+            )
+        try {
+            assertEquals(entrenchedSnow, UnitIconResolver.resolve(16508, base, 1))
+            assertEquals(otherSnow, UnitIconResolver.resolve(16509, base, 1))
         } finally {
             global.seasonalUnitIcons = previous
         }

@@ -137,7 +137,7 @@ internal object EquipmentUnitStrip {
             if (data.uclass > org.osada.UnitClass.SUBMARINE.value) {
                 UIBuilder.navalReplacementIcon
             } else {
-                UnitIconResolver.forCurrentScenario(data.icon)
+                UnitIconResolver.forCurrentScenario(unit.eqid, data.icon)
             }
         img.style.backgroundImage = "url($icon)"
         nameDiv.textContent = unit.customName ?: data.name

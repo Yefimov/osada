@@ -38,28 +38,31 @@ class Scenario(
     var latitude: Int = 0
     var ground: Int = 0
     var iconset: Int = 0
+    internal var lockedEffectiveIconset: Int? = null
 
     /**
-     * The iconset actually rendered: [iconset] as authored, except that a **Frozen**-ground
-     * scenario which authored no iconset at all is drawn as snow.
+     * The unit iconset selected at scenario load: [iconset] as authored, except that a
+     * **Frozen**-ground scenario which authored no iconset at all starts with snow unit art.
      *
      * OG scenario authors set `iconset` by hand and forgot it often. Measured across the shipped
      * scenarios, 47 of the 53 with Frozen ground do set snow, so the pairing is the intent and the
      * omissions are oversights — the visible symptom was Operation Uranus (November 1942, frozen,
      * snowing, snow-covered map art) fielding summer-camo paratroopers. Frozen ground is the only
-     * trigger: falling snow over unfrozen ground would whiten units standing on green terrain, and
-     * Dry/Mud are left strictly alone.
+     * initial trigger: falling snow over unfrozen ground must not change uniforms, and Dry/Mud are
+     * left strictly alone. The locked value also survives later weather/ground transitions.
      *
-     * Read this, never [iconset], on any rendering path. [iconset] stays the raw imported value so
-     * saves and the importer keep round-tripping OG's own data unchanged.
+     * Read this, never [iconset], on unit rendering paths. [iconset] stays the raw imported value;
+     * saves persist both it and this fixed battle-season snapshot. Map art is always shown as
+     * authored and never filtered from either value.
      */
     val effectiveIconset: Int
         get() =
-            if (iconset == ICONSET_DEFAULT && ground == GroundCondition.FROZEN.value) {
-                ICONSET_SNOW
-            } else {
-                iconset
-            }
+            lockedEffectiveIconset
+                ?: if (iconset == ICONSET_DEFAULT && ground == GroundCondition.FROZEN.value) {
+                    ICONSET_SNOW
+                } else {
+                    iconset
+                }
 
     var weatherCanChangeGround: Boolean = false
     var turnsPerDay: Int = 1
@@ -212,6 +215,7 @@ class Scenario(
         weatherCanChangeGround = other.weatherCanChangeGround
         iconset = other.iconset
         ground = other.ground
+        lockedEffectiveIconset = other.effectiveIconset
         turnsPerDay = other.turnsPerDay
         eqp = other.eqp
         reinforcementMessages.clear()

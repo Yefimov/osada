@@ -42,7 +42,8 @@ internal object EquipmentStatCard {
     }
 
     private fun fillEquipmentHeader(data: EquipmentData) {
-        byId("uImage")?.style?.backgroundImage = "url(${data.icon})"
+        byId("uImage")?.style?.backgroundImage =
+            "url(${UnitIconResolver.forCurrentScenario(data.eqid, data.icon)})"
         byId("uSmallFlag")?.style?.backgroundPosition = "${-FLAG_SPRITE_WIDTH * (data.country - 1)}px 0px"
         byId("uFlag")?.style?.backgroundImage =
             "url('resources/ui/flags/${Equipment.UNITED_NAME}/flag_big_${data.country}.png')"

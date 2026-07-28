@@ -396,7 +396,8 @@ internal object BottomZoneBuilder {
      *  the rest of the (fog-of-war-safe) picture without replacing this quick read. */
     fun renderEnemyCard(unit: GameUnit) {
         val data = unit.unitData(true)
-        byId("ecPortrait")?.style?.backgroundImage = "url(${data.icon})"
+        byId("ecPortrait")?.style?.backgroundImage =
+            "url(${UnitIconResolver.forCurrentScenario(unit.eqid, data.icon)})"
         val className = unitClassNames.getOrNull(data.uclass) ?: ""
         val displayName = if (data.name == className) className else "${data.name} $className"
         byId("ecName")?.textContent = displayName

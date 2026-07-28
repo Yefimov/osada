@@ -94,6 +94,9 @@ class GameStateRestore(
         newScenario.atmosferic = scenarioData.atmosferic as? Int ?: 0
         newScenario.latitude = scenarioData.latitude as? Int ?: 0
         newScenario.ground = scenarioData.ground as? Int ?: 0
+        newScenario.iconset = scenarioData.iconset as? Int ?: 0
+        newScenario.lockedEffectiveIconset =
+            scenarioData.effectiveIconset as? Int ?: newScenario.effectiveIconset
         newScenario.eqp = scenarioData.eqp as? String ?: Equipment.DEFAULT_NAME
         val holdCounts = scenarioData.victoryHoldCounts
         if (holdCounts != null) {

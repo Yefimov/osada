@@ -135,7 +135,7 @@ internal object EquipmentCatalogStrip {
         val img = EquipmentWindowState.buildCardSprite(container)
         val nameDiv = addTag(container, "div")
         val costDiv = addTag(container, "div")
-        img.style.backgroundImage = "url(${UnitIconResolver.forCurrentScenario(eq.icon)})"
+        img.style.backgroundImage = "url(${UnitIconResolver.forCurrentScenario(eq.eqid, eq.icon)})"
         nameDiv.textContent = eq.name
         val markings = addTag(container, "span")
         markings.className = "osada-capability-marks"

@@ -351,19 +351,6 @@ internal class RenderContext(
         unitBackBuffer.height = UNIT_BACKBUFFER_SIZE
     }
 
-    /** Thematic tint of the terrain background for the scenario's OG iconset (snow/desert/jungle).
-     *  A cheap, reversible CSS filter — an approximation until real OG tilesets are rendered. */
-    fun setIconsetTint(iconset: Int) {
-        val mc = mapCanvas ?: return
-        mc.style.filter =
-            when (iconset) {
-                1 -> "saturate(0.55) brightness(1.18)" // Snow — washed-out, brighter
-                2 -> "sepia(0.45) saturate(1.3) brightness(1.05)" // Desert — sandy
-                ICONSET_JUNGLE -> "saturate(1.45) brightness(0.95) hue-rotate(-8deg)" // Jungle — lush green
-                else -> "none"
-            }
-    }
-
     fun cacheImages(callback: () -> Unit) {
         // The callback must not fire until every load below has been REGISTERED: the old
         // "if (loaded >= total) callback()" mid-function checks fired with total==0 when the
@@ -466,7 +453,8 @@ internal class RenderContext(
         for (i in 0 until keyCount) {
             val key = keys[i] as? String
             val src = if (key == null) null else list[key] as? String
-            if (src != null) valid.add(UnitIconResolver.forCurrentScenario(src))
+            val eqid = key?.toIntOrNull()
+            if (eqid != null && src != null) valid.add(UnitIconResolver.forCurrentScenario(eqid, src))
         }
         unitImages.keys.filter { it !in valid }.forEach { unitImages.remove(it) }
     }
@@ -641,8 +629,9 @@ private fun RenderContext.loadUnitImages(state: ImageLoadState) {
     for (i in 0 until keyCount) {
         val key = keys[i] as? String
         val baseSrc = if (key == null) null else list[key] as? String
-        if (baseSrc == null) continue
-        val src = UnitIconResolver.forCurrentScenario(baseSrc)
+        val eqid = key?.toIntOrNull()
+        if (eqid == null || baseSrc == null) continue
+        val src = UnitIconResolver.forCurrentScenario(eqid, baseSrc)
         state.loadOrWait(unitImages[src], src) { unitImages[src] = it }
     }
 }

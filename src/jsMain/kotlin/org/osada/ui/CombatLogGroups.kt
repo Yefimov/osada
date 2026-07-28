@@ -140,7 +140,15 @@ internal object CombatLogGroups {
                 "${CombatLogFeed.numSpan(entry.rank as? String ?: "Commander")} " +
                     "<b>${entry.heroName as? String ?: ""}</b> emerged"
             val detail = "Took command of ${entry.formationName as? String ?: eqData.name as? String ?: "formation"}"
-            CombatLogFeed.addFeedRow(body, eqData.icon as? String ?: "", title, detail, isCore, false, pos)
+            CombatLogFeed.addFeedRow(
+                body,
+                CombatLogFeed.resolveUnitIcon(eqData),
+                title,
+                detail,
+                isCore,
+                false,
+                pos,
+            )
             return
         }
         val title =
@@ -152,7 +160,15 @@ internal object CombatLogGroups {
         val classDesc = classLeader?.let { Leaders.description[it]?.first } ?: ""
         val leaderDesc = unitLeader?.let { Leaders.description[it]?.first } ?: ""
         val detail = "${CombatLogFeed.numSpan(classDesc)} and ${CombatLogFeed.numSpan(leaderDesc)} abilities"
-        CombatLogFeed.addFeedRow(body, eqData.icon as? String ?: "", title, detail, isCore, false, pos)
+        CombatLogFeed.addFeedRow(
+            body,
+            CombatLogFeed.resolveUnitIcon(eqData),
+            title,
+            detail,
+            isCore,
+            false,
+            pos,
+        )
     }
 
     fun buildObjectiveGroup(map: Array<Array<Hex>>): CombatLogFeed.FeedGroup {

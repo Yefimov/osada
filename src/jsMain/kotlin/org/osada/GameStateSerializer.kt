@@ -57,6 +57,8 @@ object GameStateSerializer {
             Pair("atmosferic", scenario.atmosferic),
             Pair("latitude", scenario.latitude),
             Pair("ground", scenario.ground),
+            Pair("iconset", scenario.iconset),
+            Pair("effectiveIconset", scenario.effectiveIconset),
             Pair("eqp", scenario.eqp),
             Pair("expPerSide", scenario.expPerSide.toTypedArray()),
             Pair("unitsCostPerSide", scenario.unitsCostPerSide.toTypedArray()),
