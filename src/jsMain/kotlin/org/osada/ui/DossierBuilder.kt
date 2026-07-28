@@ -3,6 +3,7 @@ package org.osada.ui
 import org.osada.GameHolder
 import org.osada.getCampaignPlayer
 import org.osada.hero.HeroCampaign
+import org.osada.i18n.I18n
 import org.osada.model.GameUnit
 import org.osada.outcomeNames
 import org.osada.scenario.Campaign
@@ -59,10 +60,11 @@ internal object DossierBuilder {
         banner.className = "osada-dsr-endbanner osada-dsr-endbanner--${if (outcome == "lose") "defeat" else "victory"}"
         val title = addTag(banner, "div")
         title.className = "osada-dsr-endbanner__title"
-        title.textContent = if (outcome == "lose") "Defeat" else "Victory"
+        title.textContent =
+            I18n.t(if (outcome == "lose") "dossier.defeat.title" else "dossier.victory.title")
         val subtitle = addTag(banner, "div")
         subtitle.className = "osada-dsr-endbanner__subtitle"
-        subtitle.textContent = "CAMPAIGN FINISHED"
+        subtitle.textContent = I18n.t("dossier.finished")
         val message = addTag(banner, "div")
         message.className = "osada-dsr-endbanner__message"
         message.innerHTML = text
@@ -134,11 +136,11 @@ internal object DossierBuilder {
         title.textContent = "${campaign?.name} — ${player.getCountryName()}"
         val sub = addTag(titleBlock, "div")
         sub.className = "osada-dsr-sub"
-        sub.textContent = "Campaign Dossier"
+        sub.textContent = I18n.t("dossier.subtitle")
         val closeButton = addTag(header, "span")
         closeButton.id = "dossierCloseBut"
         closeButton.className = "osada-ico osada-ico--close osada-dsr-close"
-        closeButton.title = "Close"
+        closeButton.title = I18n.t("common.close.label")
         closeButton.onclick = { _: MouseEvent ->
             closeDossier()
             callback?.invoke()
@@ -155,7 +157,7 @@ internal object DossierBuilder {
         casSection.className = "osada-dsr-section"
         val casTitle = addTag(casSection, "div")
         casTitle.className = "osada-dsr-section-title"
-        casTitle.textContent = "Combat Record — complete units, not strength points"
+        casTitle.textContent = I18n.t("dossier.casualties.title")
         val grid = addTag(casSection, "div")
         grid.className = "osada-dsr-cas-grid"
         UIBuilder.eqClassButtons.forEach { entry ->
@@ -193,10 +195,10 @@ internal object DossierBuilder {
             // "Destroyed 12 / Surrendered 4" reads as the two distinct tactics that produced them.
             // The Surrendered row is omitted entirely when none were taken, to avoid a grid full
             // of zeroes in scenarios where encirclement never happened.
-            stat("Enemy destroyed", killed - captured)
-            if (captured > 0) stat("Enemy surrendered", captured)
-            stat("Own core lost", lostCore)
-            stat("Own auxiliary lost", lostAux)
+            stat(I18n.t("dossier.cas.enemy_destroyed"), killed - captured)
+            if (captured > 0) stat(I18n.t("dossier.cas.enemy_surrendered"), captured)
+            stat(I18n.t("dossier.cas.core_lost"), lostCore)
+            stat(I18n.t("dossier.cas.aux_lost"), lostAux)
         }
     }
 
@@ -212,10 +214,8 @@ internal object DossierBuilder {
         medSection.className = "osada-dsr-section"
         val medTitle = addTag(medSection, "div")
         medTitle.className = "osada-dsr-section-title"
-        medTitle.textContent = "Campaign Record"
-        medTitle.title =
-            "Your Campaign Dossier's completed battles, grouped by the result earned. Hero medals are recorded " +
-            "separately in each commander's dossier."
+        medTitle.textContent = I18n.t("dossier.awards.title")
+        medTitle.title = I18n.t("dossier.awards.help")
         var hasResults = false
         val outcomeOrder = listOf("briliant", "victory", "tactical", "lose")
         val medalMod = mapOf("briliant" to "gold", "victory" to "silver", "tactical" to "bronze", "lose" to "none")

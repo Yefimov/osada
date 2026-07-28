@@ -54,6 +54,8 @@ data class LeaderDossierView(
     /** Ordered v2 portrait layer paths to stack (§15), and the seed for its palette. */
     val portrait: List<String>,
     val portraitSeed: Int,
+    /** Painted portrait asset for an authored hero (§6.6/6a); null means render [portrait] instead. */
+    val portraitArt: String? = null,
 )
 
 /** A single row in the campaign commander roster (§14.3). */
@@ -223,6 +225,7 @@ object HeroDossierAssembler {
             formation = formation?.let { formationView(it, unitExperience) },
             portrait = PortraitComposerV2.forHero(definition, state, formation?.unitClass ?: 0),
             portraitSeed = definition.portrait.seed,
+            portraitArt = HeroPortraitArt.pathFor(definition.portrait.artId),
         )
     }
 
@@ -286,7 +289,14 @@ object HeroDossierAssembler {
         definition: HeroDefinition,
     ): List<String> =
         buildList {
-            addAll(HeroBiographyNarrator.narrate(definition.biographyFacts, state.rankId, definition.portrait.seed))
+            addAll(
+                HeroBiographyNarrator.narrate(
+                    definition.biographyFacts,
+                    state.rankId,
+                    definition.portrait.seed,
+                    definition.portrait.female,
+                ),
+            )
             state.serviceEvents.forEach {
                 add(
                     HeroEventDisplay.title(it.eventId) +

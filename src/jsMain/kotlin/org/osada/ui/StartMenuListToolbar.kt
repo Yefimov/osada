@@ -19,6 +19,10 @@ internal object StartMenuListToolbar {
     // Flag sprite cell width in the flags_med.png strip (matches RenderContext.flagIconWidth).
     const val FLAG_SPRITE_WIDTH = 21
 
+    // Background-position values for the dossier theater banner -- see [applyTheaterArt].
+    const val THEATER_TOP = "50% 0%"
+    const val THEATER_CENTERED = "50% 50%"
+
     const val SORT_DEFAULT = "Default"
     const val SORT_NAME = "A–Z"
     const val SORT_YEAR = "Year"
@@ -88,6 +92,49 @@ internal object StartMenuListToolbar {
     fun theaterPlaceholder(parent: HTMLElement) {
         val theater = addTag(parent, "div")
         theater.className = "osadaTheater"
+    }
+
+    /**
+     * Repaint a dossier's [theaterPlaceholder] banner with [artUrl] over the shared placeholder.
+     *
+     * The fallback needs no existence check: CSS paints background layers front-to-back, and a
+     * layer whose URL 404s simply paints nothing -- so listing the art ABOVE the placeholder
+     * yields the art when it exists and the placeholder when it doesn't. (The two gradients must
+     * stay on top: they're the scrim the overlaid title/subtitle text reads against.)
+     *
+     * [position] frames the art inside the wide banner box. The campaign key art and the
+     * placeholder are authored 1920x640 and are top-anchored (user request), which is the
+     * default; the scenario wallpapers are full 16:9 scenes, where anchoring to the top of a
+     * 4:1 box crops away everything but sky -- those pass [THEATER_CENTERED] instead.
+     */
+    fun applyTheaterArt(
+        head: HTMLElement?,
+        artUrl: String?,
+        position: String = THEATER_TOP,
+    ) {
+        val theater = head?.query(".osadaTheater") as? HTMLElement ?: return
+        val layers =
+            listOfNotNull(
+                "linear-gradient(180deg, rgba(10,11,13,0) 42%, rgba(8,9,11,.94) 100%)",
+                "linear-gradient(rgba(0,0,0,.10), rgba(0,0,0,.14))",
+                artUrl?.takeIf { it.isNotBlank() }?.let { "url('$it') $position / cover no-repeat" },
+                "url('resources/dossier_map_placeholder.png') $THEATER_TOP / cover no-repeat",
+            )
+        theater.style.background = layers.joinToString(", ")
+    }
+
+    /**
+     * The chapter wallpaper a scenario's briefing opens on, reused as its Scenario Selection
+     * banner so the register preview and the operation itself show the same key art.
+     *
+     * Backed by the generated `scenarioWallpapers` global (resources/campaigns/wallpapers.js,
+     * loaded by index.html alongside scenariolist.js), keyed by scenario XML file name. Campaigns
+     * whose art has not been produced yet are simply absent -- they fall back to the placeholder.
+     */
+    fun scenarioWallpaper(scenarioFile: String?): String? {
+        if (scenarioFile.isNullOrBlank()) return null
+        val table = js("typeof scenarioWallpapers !== 'undefined' ? scenarioWallpapers : null")
+        return if (table == null) null else table[scenarioFile] as? String
     }
 
     /** Extract a "1936-1945"-style year span from a campaign/scenario title's parentheses. */

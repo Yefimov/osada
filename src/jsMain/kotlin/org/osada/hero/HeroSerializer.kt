@@ -108,6 +108,8 @@ internal object HeroSerializer {
             Pair("signature", definition.signatureTraitId ?: ""),
             Pair("portraitSeed", definition.portrait.seed),
             Pair("portraitLayers", definition.portrait.layerIds.toTypedArray()),
+            Pair("portraitArt", definition.portrait.artId.orEmpty()),
+            Pair("portraitFemale", authoredGender(definition.portrait.female)),
             Pair("bio", HeroValueCodec.serializeBiography(definition.biographyFacts)),
             Pair("rank", state?.rankId.orEmpty()),
             Pair("status", (state?.status ?: HeroStatus.ACTIVE).name),
@@ -131,6 +133,17 @@ internal object HeroSerializer {
             ),
         )
 
+    /**
+     * An authored hero's stated gender, or `""` for "not stated" — a procedural hero must keep
+     * rolling it from the portrait seed on reload rather than having one roll frozen into the save.
+     */
+    private fun authoredGender(female: Boolean?): String =
+        when (female) {
+            true -> "true"
+            false -> "false"
+            null -> ""
+        }
+
     private fun readHero(item: dynamic): Pair<HeroDefinition, HeroState>? {
         val id = BriefingDynamic.str(item?.id)?.takeIf { it.isNotBlank() } ?: return null
         val heroId = HeroId(id)
@@ -150,6 +163,8 @@ internal object HeroSerializer {
                     PortraitComposition(
                         seed = BriefingDynamic.int(item?.portraitSeed) ?: 0,
                         layerIds = BriefingDynamic.strList(item?.portraitLayers),
+                        artId = BriefingDynamic.str(item?.portraitArt)?.takeIf { it.isNotBlank() },
+                        female = BriefingDynamic.str(item?.portraitFemale)?.takeIf { it.isNotBlank() }?.toBoolean(),
                     ),
                 signatureTraitId = BriefingDynamic.str(item?.signature)?.takeIf { it.isNotBlank() },
             )

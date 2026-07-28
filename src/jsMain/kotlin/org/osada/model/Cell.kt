@@ -51,6 +51,14 @@ class MovementResults {
      *  would let a player probe for hidden AA for free and take the probe back, destroying the
      *  entire point of hidden AA (docs/design/aa-interception.md §3.4). */
     var wasIntercepted: Boolean = false
+
+    /** Set when the walk terminated because the unit became adjacent to an enemy its own side had
+     *  not spotted (`MoveExecutor.stoppedByUnseenZoc`, DEFERRED.md §7.32 item 4). The move range is
+     *  deliberately optimistic about unseen ZOC so the overlay cannot betray a hidden unit's
+     *  position, which means this is the only signal that the unit stopped short of where the player
+     *  clicked. Like [wasIntercepted] it must block undo: undoing it would let a player sweep for
+     *  hidden enemies and take the probe back. */
+    var stoppedByUnseenEnemy: Boolean = false
 }
 
 @JsExport

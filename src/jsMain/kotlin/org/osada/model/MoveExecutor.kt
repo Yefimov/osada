@@ -103,6 +103,10 @@ internal class MoveExecutor(
             if (i > 0 && applyAAInterception(unit, setup, cell, i == setup.path.lastIndex, result)) {
                 break
             }
+            if (i > 0 && stoppedByUnseenZoc(unit, setup.map, setup.side, cell, enemySide)) {
+                result.stoppedByUnseenEnemy = true
+                break
+            }
         }
         return totalCost
     }
@@ -203,17 +207,24 @@ internal class MoveExecutor(
         HeroCampaign.recordReconnaissance(unit, newlySpotted)
         gameMap.setMoveRange(unit)
         gameMap.setAttackRange(unit)
-        gameMap.undoState.unit = if (isUndoable(newlySpotted, unit, result.wasIntercepted)) unit else null
+        gameMap.undoState.unit =
+            if (isUndoable(newlySpotted, unit, result.wasIntercepted, result.stoppedByUnseenEnemy)) unit else null
     }
 
     private fun isUndoable(
         newlySpotted: Int,
         unit: GameUnit,
         wasIntercepted: Boolean,
+        stoppedByUnseenEnemy: Boolean,
     ): Boolean =
         newlySpotted == 0 &&
             !unit.isSurprised &&
             !wasIntercepted &&
+            // Same reasoning as an intercepted move: rewinding a move that a hidden enemy stopped
+            // would make probing for hidden units free (DEFERRED.md §7.32 item 4). In practice a
+            // stop usually reveals the enemy anyway, which `newlySpotted` already catches -- this
+            // covers the case where it stopped without spotting it.
+            !stoppedByUnseenEnemy &&
             unit.player?.type == PlayerType.HUMAN_LOCAL
 
     fun undoLastMove() {

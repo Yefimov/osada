@@ -1,5 +1,8 @@
 package org.osada.model
 
+import org.osada.LeaderType
+import org.osada.rules.UnitPredicates
+
 internal fun MoveExecutor.resolveUndoContext(): MoveExecutor.UndoContext? {
     val unit = gameMap.undoState.unit
     val saved = gameMap.undoState.savedUnit
@@ -28,4 +31,42 @@ internal fun MoveExecutor.resolveUndoHexes(
     } else {
         null
     }
+}
+
+/**
+ * DEFERRED.md §7.32 item 4: a hidden enemy's zone of control stops a move.
+ *
+ * `MoveRangeCalculation.resolveNeighborCost` applies the ZOC cost floor only to a hex the mover's
+ * own side can see, so a move plotted past an unspotted enemy is costed as if that enemy were not
+ * there. OG's Basic Manual §5.2 ends a move on becoming adjacent to an enemy and does not make
+ * that conditional on having spotted it -- and `Camouflage Expert`, which fires at the first
+ * enemy to enter its ZOC, cannot work at all if hidden units project nothing.
+ *
+ * **Fixed here rather than in the overlay, deliberately, because the overlay is what the player
+ * sees.** Applying unseen ZOC to the move range would draw a short reach around an enemy the
+ * player has not found, which reads the hidden unit's position straight off the UI -- the
+ * fog-of-war leak the entry warned about. So the overlay stays optimistic and the *walk*
+ * terminates on contact: the player commits a move, bumps into something, and stops there.
+ * `passedCells.last()` is the arrival hex, so breaking the loop is all that is needed.
+ *
+ * Deliberately NOT done: no surprise/ambush penalty is applied. OG documents that hidden units
+ * "can stop or ambush" a move; the stop is the documented, testable half, and inventing ambush
+ * damage would be adding a rule rather than honouring one. [markSurprise] stays reserved for
+ * walking into a blocked hex.
+ */
+internal fun MoveExecutor.stoppedByUnseenZoc(
+    unit: GameUnit,
+    map: Array<Array<Hex>>,
+    moverSide: Int,
+    cell: Cell,
+    enemySide: Int,
+): Boolean {
+    val hex = map[cell.row][cell.col]
+    // Exactly the predicate the overlay uses to decide it may skip the ZOC floor, negated.
+    val overlayChargedForIt = hex.isSpotted(moverSide) || hex.unit?.tempSpotted == true
+    // Air units neither project nor feel ZOC (MovementRules.setZOCRange skips them), and Superior
+    // Maneuver bypasses it outright -- the same two exemptions MoveRangeCalculation applies.
+    val subjectToZoc =
+        !UnitPredicates.isAir(unit) && !Leaders.unitHasLeader(unit, LeaderType.SUPERIOR_MANEUVER)
+    return subjectToZoc && !overlayChargedForIt && hex.isZOC(enemySide)
 }

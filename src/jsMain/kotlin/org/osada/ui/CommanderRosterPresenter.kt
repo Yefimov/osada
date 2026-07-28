@@ -114,6 +114,7 @@ internal object CommanderRosterPresenter {
                 dossier.portrait,
                 dossier.portraitSeed,
                 gray = dossier.inMemoriam,
+                artPath = dossier.portraitArt,
             )
         }
 

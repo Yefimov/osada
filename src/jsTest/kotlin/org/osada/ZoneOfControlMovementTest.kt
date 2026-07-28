@@ -8,13 +8,16 @@ import org.osada.model.Player
 import org.osada.model.addPlayer
 import org.osada.model.allocMap
 import org.osada.model.getPlayer
+import org.osada.model.moveUnit
 import org.osada.model.resetEquipment
+import org.osada.model.setMoveRange
 import org.osada.rules.GameRules
 import org.osada.rules.MovementRules
 import org.osada.rules.setZOCRange
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -36,6 +39,7 @@ import kotlin.test.assertTrue
  */
 class ZoneOfControlMovementTest {
     private val legEqid = 400
+    private val fighterEqid = 401
     private val rows = 3
     private val cols = 9
 
@@ -196,5 +200,101 @@ class ZoneOfControlMovementTest {
         val got = reach(map, unit)
 
         assertFalse((1 to 5) in got, "Determined Defense has nothing to do with movement")
+    }
+
+    // ---- DEFERRED.md §7.32 item 4: a HIDDEN enemy's ZOC ----
+    //
+    // The move RANGE is deliberately blind to unseen ZOC: charging for it would draw a short reach
+    // around an enemy the player has not found, reading its position straight off the overlay. The
+    // stop therefore lives in the executor, so the overlay stays honest and the unit stops on
+    // contact. These three tests pin both halves plus the fog guarantee between them.
+
+    /** The overlay must keep offering the whole corridor even though an unspotted enemy flanks it —
+     *  if this ever fails, the move range has begun leaking hidden unit positions. */
+    @Test
+    fun theMoveRangeStaysOptimisticAboutAnUnseenEnemysZoc() {
+        val map = corridor()
+        withEnemyProjectingZocInto(map, 0, 4)
+        unspot(map, 1, 4)
+        val unit = place(map, 1, 2, 0)
+
+        val got = reach(map, unit)
+
+        assertTrue((1 to 5) in got, "an unspotted enemy must not shorten the drawn range")
+        assertTrue((1 to 8) in got, "nor cost the allowance — that would betray its position")
+    }
+
+    /** ...but walking it actually stops the unit on the hex where it became adjacent. */
+    @Test
+    fun aMoveThroughAnUnseenEnemysZocStopsOnContact() {
+        val map = corridor()
+        withEnemyProjectingZocInto(map, 0, 4)
+        unspot(map, 1, 4)
+        val unit = place(map, 1, 2, 0)
+
+        map.setMoveRange(unit)
+        val result = map.moveUnit(unit, 1, 8)
+
+        assertTrue(result.stoppedByUnseenEnemy, "the walk must report why it stopped short")
+        assertEquals(1 to 4, unit.getPos()!!.let { it.row to it.col }, "stops on the first ZOC hex entered")
+    }
+
+    /** Control: with the same enemy spotted, the range itself already ends the move, so the
+     *  executor's stop must NOT be what is doing the work — otherwise the two rules would
+     *  double-charge and the spotted case would silently change behaviour. */
+    @Test
+    fun aSpottedEnemyIsHandledByTheRangeNotTheWalkStop() {
+        val map = corridor()
+        withEnemyProjectingZocInto(map, 0, 4)
+        val unit = place(map, 1, 2, 0)
+
+        map.setMoveRange(unit)
+        val result = map.moveUnit(unit, 1, 4)
+
+        assertFalse(result.stoppedByUnseenEnemy, "a visible enemy's ZOC is priced into the range")
+        assertEquals(1 to 4, unit.getPos()!!.let { it.row to it.col })
+    }
+
+    /** Air units neither project nor feel ZOC (`MovementRules.setZOCRange` skips them), so a hidden
+     *  ground enemy must not halt an aircraft either. */
+    @Test
+    fun anAircraftIsNotStoppedByAnUnseenGroundZoc() {
+        val map = corridor()
+        withEnemyProjectingZocInto(map, 0, 4)
+        unspot(map, 1, 4)
+        Equipment.putEquipment(
+            fighterEqid,
+            EquipmentData().apply {
+                uclass = UnitClass.FIGHTER.value
+                movmethod = MovMethod.AIR.value
+                movpoints = 6
+                fuel = 40
+                ammo = 6
+            },
+        )
+        val plane =
+            GameUnit(fighterEqid).apply {
+                owner = 0
+                player = map.getPlayer(0)
+                strength = 10
+                fuel = 40
+            }
+        map.map!![1][2].setUnit(plane)
+
+        map.setMoveRange(plane)
+        val result = map.moveUnit(plane, 1, 6)
+
+        assertFalse(result.stoppedByUnseenEnemy, "ground ZOC is nothing to an aircraft")
+    }
+
+    /** Hides the ZOC-covered corridor hex from side 0. The engine's gate is `isSpotted` on the hex
+     *  BEING ENTERED (`MoveRangeCalculation.resolveNeighborCost`), so "an unseen enemy's ZOC" means
+     *  precisely a ZOC hex the mover cannot see into — not an unseen enemy somewhere off to the side. */
+    private fun unspot(
+        map: GameMap,
+        row: Int,
+        col: Int,
+    ) {
+        map.map!![row][col].setSpotted(0, false)
     }
 }

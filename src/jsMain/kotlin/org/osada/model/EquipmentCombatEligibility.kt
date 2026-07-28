@@ -118,15 +118,26 @@ fun Equipment.hasNoSurrender(eqid: Int): Boolean = (equipmentMap[eqid]?.attr?.an
  * only the "buy a Horse as your combat unit" case, which has no defensible reading: it cannot
  * attack, cannot capture, and exists solely to carry something.
  *
- * **This replaced an attr-bit gate on 2026-07-26 (user request), and the bit it used is suspect.**
- * The previous rule permitted a transport whose `attr` had bit 262144 -- recorded in DEFERRED.md
- * §1.5/§1.7 as "purchasable" -- with a per-country fallback for countries that never set the bit.
- * That fallback does NOT fire for every country: 29 of 289 `eqp-united` countries do set the bit
- * on a transport, and country 20 (USSR) flags only 4 of its 28, refusing the other 24. The bit's
- * identification is still wrong, though: only 1,060 of 46,978 `eqp-united` records carry it (2.3%),
- * **including zero Tank and zero Anti-tank records** (class 2 = 0/3,024, class 4 = 0/3,186), and no
- * equipment table ships with no buyable tank. Do not restore an attr-based gate here until that
- * bit has been re-identified.
+ * **This replaced an attr-bit gate on 2026-07-26 (user request).** The previous rule permitted a
+ * transport whose `attr` had bit 262144 -- which DEFERRED.md §1.5/§1.7 then recorded as
+ * "purchasable" -- with a per-country fallback for countries that never set the bit. That fallback
+ * did NOT fire for every country: 29 of 289 `eqp-united` countries do set the bit on a transport,
+ * and country 20 (USSR) flags only 4 of its 28, refusing the other 24.
+ *
+ * **262144 has since been identified, and it was never a purchasability bit: it is `Can't Naval
+ * Atk`** -- see this file's own `attr` table above, and DEFERRED.md §7.32/§7.44. That explains every
+ * number the old note called "suspect": only 1,060 of 46,978 records carry it (2.3%) with **zero
+ * Tank and zero Anti-tank** (class 2 = 0/3,024, class 4 = 0/3,186), which is nonsense for
+ * purchasability and exactly right for a naval-attack prohibition.
+ *
+ * Purchasability is bit 7, `Can't Buy`, inverted -- `Equipment.isPurchasable` reads it and currently
+ * has no caller (DEFERRED.md §7.32 item 2c). **So the standing advice is unchanged but for a new
+ * reason:** do not restore an attr-based gate *here*, because no attr bit describes what this
+ * function decides. The flat class rule below is the rule.
+ *
+ * (This comment and the file header used to contradict each other -- the header naming the bit while
+ * this block called it unidentified. DEFERRED.md §7.44 asked for them to be collapsed; done
+ * 2026-07-28.)
  */
 fun Equipment.isPurchasableGroundTransport(eqid: Int): Boolean =
     equipmentMap[eqid]?.uclass != org.osada.UnitClass.GROUND_TRANSPORT.value

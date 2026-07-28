@@ -24,7 +24,9 @@ import org.osada.i18n.I18n
  *
  * **Gendered (§4.11).** [seed] is the hero's portrait seed — the same one
  * [PortraitComposerV2.genderFor] rolls a gender from — so the biography's pronouns/inflections
- * always agree with the face the player sees. Every `hero.bio.origin`/`hero.bio.commission`
+ * always agree with the face the player sees. An **authored** hero passes `femaleOverride` instead
+ * (from [PortraitComposition.female]): their face is a painting, not a roll, so the painting is
+ * what the prose has to agree with. Every `hero.bio.origin`/`hero.bio.commission`
  * selector has a `_f` sibling branch (identical text where the language has no gendered wording,
  * as in English origin sentences; a rewritten sentence where it does, as in Russian). Fact clauses
  * looked up directly (`hero.bio.education.*`) fall back from a `_f` key to the base key via
@@ -36,8 +38,9 @@ internal object HeroBiographyNarrator {
         facts: HeroBiographyFacts,
         rankId: String,
         seed: Int,
+        femaleOverride: Boolean? = null,
     ): List<String> {
-        val female = PortraitComposerV2.genderFor(seed) == "female"
+        val female = femaleOverride ?: (PortraitComposerV2.genderFor(seed) == "female")
         return listOfNotNull(originSentence(facts, female), commissionSentence(facts, rankId, female))
     }
 

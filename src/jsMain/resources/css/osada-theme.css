@@ -2646,6 +2646,17 @@ hr {
     width: 132px; height: 176px; margin: 0 auto 12px; position: relative; overflow: hidden;
     border-radius: 6px; border: 1px solid var(--osada-metal-600); background: #0e0f12;
 }
+/* Painted portrait for an authored hero (docs/design/hero-presentation.md §3, DEFERRED §6.6 item 6a).
+   `cover` with the focus high in the frame: the assets are 3:4 head-and-shoulders busts and every
+   container they render into (54x54 dossier header, 46x58 roster row, 132x176 emergence) is a
+   different aspect, so anchoring to the top keeps the face, not the tunic, in the crop. */
+.osada-portrait-photo {
+    background-repeat: no-repeat;
+    background-position: center 12%;
+    background-size: cover;
+    color: transparent; /* the monogram placeholder underneath must not show through */
+}
+.osada-portrait-photo--memoriam { filter: grayscale(1) brightness(0.82); }
 .osada-capability-marks {
     display: inline-flex;
     align-items: center;

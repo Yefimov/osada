@@ -126,11 +126,20 @@ object CombatResolver {
             attackerClass == UnitClass.FORTIFICATION.value ||
             (UnitPredicates.isSea(attacker) && !UnitPredicates.isSea(defender))
 
+    /**
+     * [attackerIsFiringSupport] marks the exchange as a Fire Support shot, i.e. this call resolves an
+     * adjacent unit firing in support of someone else's defence rather than its own attack. OG does
+     * not let a unit collect Combat Support for the exchange in which it is itself providing Fire
+     * Support, so the attacker's support bars are suppressed (`DEFERRED.md` §4.6, second divergence).
+     * The *defender* of a support shot -- the original attacker -- keeps its own bars: it is being
+     * shot at, which is exactly the case Combat Support exists to cushion.
+     */
     fun calculateAttackResults(
         attacker: GameUnit,
         defender: GameUnit,
         useRandom: Boolean,
         units: List<GameUnit> = emptyList(),
+        attackerIsFiringSupport: Boolean = false,
     ): CombatResults {
         val result = CombatResults()
         val context = AttackCalculation.resolveCombatContext(attacker, defender) ?: return result
@@ -146,7 +155,7 @@ object CombatResolver {
             attacker,
             defender,
             context,
-            UnitCapabilities.combatSupportBars(units, attacker),
+            if (attackerIsFiringSupport) 0 else UnitCapabilities.combatSupportBars(units, attacker),
             UnitCapabilities.combatSupportBars(units, defender),
         )
         AttackCalculation.applyRangeDefenseModifier(stats, attacker, defender, context, closeCombat)
@@ -184,7 +193,8 @@ object CombatResolver {
 
         supportUnits.forEach { support ->
             val supportHex = support.getHex() ?: return@forEach
-            val supportResult = calculateAttackResults(support, attacker, useRandom, units)
+            val supportResult =
+                calculateAttackResults(support, attacker, useRandom, units, attackerIsFiringSupport = true)
             if (supportHex.isSpotted(attackerSide) || support.tempSpotted) {
                 visibleKills += supportResult.kills
                 visibleLosses += supportResult.losses

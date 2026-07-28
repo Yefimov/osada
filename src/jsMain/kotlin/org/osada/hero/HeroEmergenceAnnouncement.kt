@@ -24,6 +24,8 @@ data class HeroEmergenceAnnouncement(
     val guaranteed: Boolean,
     val portrait: List<String>,
     val portraitSeed: Int,
+    /** Painted portrait asset for an authored hero; null means render [portrait] instead. */
+    val portraitArt: String? = null,
 ) {
     companion object {
         /** Assembles the announcement from the emergence result and the formation it attached to. */
@@ -50,6 +52,7 @@ data class HeroEmergenceAnnouncement(
                 guaranteed = emerged.guaranteed,
                 portrait = PortraitComposerV2.forHero(emerged.definition, emerged.state, formation.unitClass),
                 portraitSeed = emerged.definition.portrait.seed,
+                portraitArt = HeroPortraitArt.pathFor(emerged.definition.portrait.artId),
             )
         }
     }

@@ -77,23 +77,15 @@ internal object StartMenuCampaignData {
      * indistinguishable on screen (the box renders at 948x222, so even a retina pass has pixels to
      * spare). Source PNGs live outside the served tree, in art-src/theater-spare/.
      *
-     * The fallback needs no existence check: CSS paints background layers front-to-back, and a
-     * layer whose URL 404s simply paints nothing — so listing the per-campaign image ABOVE the
-     * placeholder yields the art when it exists and the placeholder when it doesn't. (The two
-     * gradients must stay on top: they're the scrim the overlaid title/subtitle text reads against.)
+     * Layering and placeholder fallback live in [StartMenuListToolbar.applyTheaterArt], shared
+     * with the scenario screen's own banner.
      */
     fun setTheaterArt(campaign: dynamic) {
-        val theater = byId("smCampDossierHead")?.query(".osadaTheater") as? org.w3c.dom.HTMLElement ?: return
         val stem = (campaign?.file as? String)?.removeSuffix(".json") ?: ""
-        // 50% 0%: show the TOP of the art (user request) — matches .osadaTheater's own CSS rule.
-        val layers =
-            listOfNotNull(
-                "linear-gradient(180deg, rgba(10,11,13,0) 42%, rgba(8,9,11,.94) 100%)",
-                "linear-gradient(rgba(0,0,0,.10), rgba(0,0,0,.14))",
-                if (stem.isNotBlank()) "url('resources/ui/theater/$stem.jpg') 50% 0% / cover no-repeat" else null,
-                "url('resources/dossier_map_placeholder.png') 50% 0% / cover no-repeat",
-            )
-        theater.style.background = layers.joinToString(", ")
+        StartMenuListToolbar.applyTheaterArt(
+            byId("smCampDossierHead"),
+            if (stem.isBlank()) null else "resources/ui/theater/$stem.jpg",
+        )
     }
 
     /** 0b: campaign-select prestige display. Uses the exact computation campaign start applies

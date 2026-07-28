@@ -93,6 +93,14 @@ internal object StartMenuScenarioScreen {
                 )
             }
         byId("smScenDossierSub")?.innerHTML = scenDate
+        // The dossier banner shows the same chapter wallpaper the operation's own briefing opens
+        // on, so the register preview and the battle agree. Scenarios with no wallpaper (whole
+        // campaigns still awaiting art, plus every standalone scenario) keep the placeholder map.
+        StartMenuListToolbar.applyTheaterArt(
+            byId("smScenDossierHead"),
+            StartMenuListToolbar.scenarioWallpaper(scenario[0] as? String),
+            StartMenuListToolbar.THEATER_CENTERED,
+        )
         byId("osadaScenList")?.let { StartMenuListToolbar.syncListHighlight(scenSelect, it) }
     }
 

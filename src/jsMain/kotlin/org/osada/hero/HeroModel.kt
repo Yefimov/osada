@@ -67,10 +67,21 @@ data class HeroBiographyFacts(
  * Phase 1 stores an empty [layerIds] with a live [seed]: the layered portrait art described in
  * §15.2 does not exist in the repository yet, so rendering falls back to a branch/rank placeholder.
  * When the art lands, the same seed reproduces a stable portrait for heroes already in saves.
+ *
+ * [artId] is the escape hatch for an **authored** hero whose face is a painted asset rather than a
+ * layer recipe (see [HeroPortraitArt]): the composer still fills [layerIds], so a missing or renamed
+ * asset degrades to the procedural face instead of to an empty frame. It is an id, not a path — the
+ * directory layout stays a rendering detail and old saves keep resolving after a move.
+ *
+ * [female] is likewise an authored override. Procedural heroes leave it null and the gender is
+ * rolled from [seed] ([PortraitComposerV2.genderFor]); an authored hero states it, because the
+ * painting already decided and the biography's inflections must agree with the face (§4.11).
  */
 data class PortraitComposition(
     val seed: Int,
     val layerIds: List<String> = emptyList(),
+    val artId: String? = null,
+    val female: Boolean? = null,
 )
 
 /**

@@ -25,8 +25,21 @@ internal object PortraitRenderer {
         paths: List<String>,
         seed: Int,
         gray: Boolean = false,
+        artPath: String? = null,
     ) {
-        if (container == null || paths.isEmpty()) return
+        if (container == null) return
+        when {
+            artPath != null -> renderPainted(container, artPath, gray)
+            paths.isNotEmpty() -> renderStack(container, paths, seed, gray)
+        }
+    }
+
+    private fun renderStack(
+        container: HTMLElement,
+        paths: List<String>,
+        seed: Int,
+        gray: Boolean,
+    ) {
         val skin = SKINS[posMod(seed, SKINS.size)]
         container.classList.add("osada-portrait-stack")
         container.style.setProperty("--skin", skin)
@@ -43,6 +56,22 @@ internal object PortraitRenderer {
                 container.innerHTML =
                     texts.joinToString("") { "<span class=\"osada-portrait-layer\">$it</span>" }
             }.catch { /* keep the caller's placeholder on any fetch failure */ }
+    }
+
+    /**
+     * An authored hero's painted portrait (§6.6/6a). Set as a background rather than fetched and
+     * inlined: it is one raster asset, so there is nothing to recolor, no layer order to honour and
+     * no partial-stack failure mode — if the file 404s the caller's monogram is simply never covered.
+     */
+    private fun renderPainted(
+        container: HTMLElement,
+        artPath: String,
+        gray: Boolean,
+    ) {
+        container.textContent = ""
+        container.classList.add("osada-portrait-photo")
+        container.classList.toggle("osada-portrait-photo--memoriam", gray)
+        container.style.backgroundImage = "url('$artPath')"
     }
 
     private fun fetchSvg(url: String): Promise<String> {

@@ -24,7 +24,12 @@ internal object HeroEmergencePresenter {
         pending.forEach {
             UIBuilder.messageDynamic("A New Commander Emerges", body(it))
             // The layered portrait (§14.1, §15) loads into the placeholder after the dialog is built.
-            PortraitRenderer.render(byId("heroEmergencePortrait"), it.portrait, it.portraitSeed)
+            PortraitRenderer.render(
+                byId("heroEmergencePortrait"),
+                it.portrait,
+                it.portraitSeed,
+                artPath = it.portraitArt,
+            )
             val unit =
                 GameHolder.instance
                     ?.scenario

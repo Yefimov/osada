@@ -74,8 +74,15 @@ internal object LeaderDossierPresenter {
                 .mapNotNull { it.firstOrNull()?.uppercaseChar() }
                 .joinToString("")
                 .take(2)
-        // The monogram above is the placeholder; the layered SVG portrait (§15) loads over it.
-        PortraitRenderer.render(portrait, view.portrait, view.portraitSeed, gray = view.inMemoriam)
+        // The monogram above is the placeholder; the portrait (§15) — painted for an authored hero,
+        // otherwise the layered SVG stack — loads over it.
+        PortraitRenderer.render(
+            portrait,
+            view.portrait,
+            view.portraitSeed,
+            gray = view.inMemoriam,
+            artPath = view.portraitArt,
+        )
         val id = addTag(header, "div")
         id.className = "osada-hero-id"
         addText(id, "osada-hero-name", "${view.rank} ${view.name}")
