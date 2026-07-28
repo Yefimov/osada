@@ -2,6 +2,7 @@ package org.osada.model
 
 import org.osada.LeaderType
 import org.osada.PlayerType
+import org.osada.hero.HeroCampaign
 import org.osada.rules.AAInterception
 import org.osada.rules.GameRules
 import org.osada.rules.UnitPredicates
@@ -196,6 +197,10 @@ internal class MoveExecutor(
         unit.facing = GameRules.getDirection(from.row, from.col, last.row, last.col) ?: unit.facing
         GameRules.setZOCRange(gameMap, unit, true)
         val newlySpotted = GameRules.setSpotRange(gameMap, unit, true)
+        // §7.43 reconnaissance evidence. Safe against undo without any bookkeeping: `isUndoable`
+        // below already refuses to offer an undo for a move that revealed something, so a credited
+        // contact can never be rewound out from under the evidence it granted.
+        HeroCampaign.recordReconnaissance(unit, newlySpotted)
         gameMap.setMoveRange(unit)
         gameMap.setAttackRange(unit)
         gameMap.undoState.unit = if (isUndoable(newlySpotted, unit, result.wasIntercepted)) unit else null

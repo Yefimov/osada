@@ -17,10 +17,16 @@ enum class CommandAttribute {
  * Thematic evidence categories (§8.4) a hero accumulates proof in. Names match the brief's list
  * verbatim so a future phase can add rules under an existing category rather than inventing one.
  *
- * Only a subset has an [EvidenceRule] producing it in Phase 3 — see that file for which. The rest
- * are declared now so the save shape (a plain `Map<String, Int>` keyed by [name]) never needs to
- * change when a later phase wires a new source; this mirrors Phase 1's "reserved field" approach
- * applied to enum entries instead of data-class fields.
+ * Only a subset has an [EvidenceRule] producing it — see that file for which. The rest are declared
+ * now so the save shape (a plain `Map<String, Int>` keyed by [name]) never needs to change when a
+ * later phase wires a new source; this mirrors Phase 1's "reserved field" approach applied to enum
+ * entries instead of data-class fields.
+ *
+ * **An unfed entry is only harmless while nothing is gated on it** (`tools/og-import/DEFERRED.md`
+ * §7.43). A [HeroTraitDefinition] whose `requiredEvidence` names a category no rule produces is
+ * unobtainable; leaving that requirement off instead makes it a permanent §8.5.4 fallback and
+ * displaces the ones meant to fill that role. Both happened here. Adding a catalogue entry means
+ * adding its category's source in the same change.
  */
 enum class EvidenceCategory(
     val title: String,

@@ -11,6 +11,15 @@ package org.osada.hero
  * Terrain-derived types only fire alongside an already-notable action (a kill or a stand), never
  * for routine movement onto the terrain — keeping faith with §7.1's "notable actions, not every
  * routine attack" for progression the same way [RecognitionService] already does for emergence.
+ *
+ * ## The three non-terrain qualifiers (`tools/og-import/DEFERRED.md` §7.43)
+ *
+ * [GROUND_ATTACK_KILL] and [MANEUVER_KILL] follow the same discipline: both ride along an existing
+ * kill rather than firing on their own, so neither can be farmed by flying sorties or driving around.
+ * [RECON_CONTACT] is the one exception and the only type that does **not** come from a resolved
+ * combat — reconnaissance evidence has no combat signal at all, so it is raised from the one place
+ * that already knows a formation revealed something ([org.osada.model.MoveExecutor]). It is capped
+ * per formation per turn by [HeroCampaign] for exactly the reason the others need no cap.
  */
 enum class AchievementType {
     DESTROYED_ENEMY,
@@ -22,4 +31,7 @@ enum class AchievementType {
     URBAN_ASSAULT,
     FOREST_ASSAULT,
     MOUNTAIN_ASSAULT,
+    GROUND_ATTACK_KILL,
+    MANEUVER_KILL,
+    RECON_CONTACT,
 }

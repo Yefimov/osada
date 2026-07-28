@@ -1,5 +1,6 @@
 package org.osada.model
 
+import org.osada.LeaderType
 import org.osada.UnitClass
 import org.osada.rules.GameRules
 import org.osada.rules.unitUsesFuel
@@ -38,7 +39,11 @@ fun GameUnit.move(cost: Int) {
         }
         moveLeft -= realCost
     }
-    if (unitData().uclass != UnitClass.RECON.value || moveLeft <= 0) {
+    // Recon class gets phased movement innately; a Reconnaissance Movement leader (§1.6) extends
+    // the same allowance to any other formation, without touching the class's own free grant.
+    val phasedMovement =
+        unitData().uclass == UnitClass.RECON.value || Leaders.unitHasLeader(this, LeaderType.RECON_MOVEMENT)
+    if (!phasedMovement || moveLeft <= 0) {
         hasMoved = true
         hasOverstrength = true
     }

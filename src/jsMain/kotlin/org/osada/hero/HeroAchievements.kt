@@ -22,6 +22,14 @@ internal object HeroAchievements {
                     AchievementType.DESTROYED_ENEMY
                 }
             if (contribution.enemyUnitClass == UnitClass.TANK.value) types += AchievementType.ARMORED_KILL
+            if (contribution.attackedGroundFromAir) types += AchievementType.GROUND_ATTACK_KILL
+            // A kill the formation had to drive to, not one it shelled from where it already stood.
+            // Attacker-only by nature: a defender never closed anything.
+            if (contribution.role == RecognitionService.Contribution.Role.ATTACKER &&
+                contribution.closedDistanceBeforeAttack
+            ) {
+                types += AchievementType.MANEUVER_KILL
+            }
         }
         if (contribution.survivedCriticalDamage) {
             types +=

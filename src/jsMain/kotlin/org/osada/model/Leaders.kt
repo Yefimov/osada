@@ -193,13 +193,24 @@ object Leaders {
         leader: LeaderType,
     ): Boolean = HeroTraitResolver.hasTrait(unit, leader)
 
+    /**
+     * A random non-signature leader for [unit]'s class, or -1 when the class has none.
+     *
+     * Index 0 is skipped deliberately: it is the class signature trait, which
+     * [getUnitClassLeader] grants separately and unconditionally, so rolling it here would be a
+     * wasted roll. **The last entry used to be skipped too** — `(random * (size - 2)) + 1` spans
+     * `1..size-2` — which was not deliberate, and cost `LeaderType.LIBERATOR` its entire existence:
+     * Liberator is the last entry in all four lists that contain it, is honoured in combat code
+     * (`CombatApplication` doubles capture prestige for it), and could therefore never be obtained
+     * by any means. See `tools/og-import/DEFERRED.md` §7.43.
+     */
     fun generateLeader(unit: GameUnit?): Int {
         if (unit == null) return -1
         val leaders = unitClassLeaders[unit.unitData().uclass]
         return if (leaders == null || leaders.size < 2) {
             -1
         } else {
-            leaders[(kotlin.random.Random.nextDouble() * (leaders.size - 2)).toInt() + 1].value
+            leaders[(kotlin.random.Random.nextDouble() * (leaders.size - 1)).toInt() + 1].value
         }
     }
 

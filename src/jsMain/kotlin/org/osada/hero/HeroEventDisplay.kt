@@ -5,22 +5,33 @@ internal object HeroEventDisplay {
     private const val ISO_PARTS = 3
     private val months = listOf("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
 
+    /**
+     * Fixed event ids, as a table rather than a `when` chain: every [AchievementType] lands here via
+     * its lowercased name, so the chain grew one branch per achievement and eventually tripped
+     * detekt's complexity limit. A map keeps adding an achievement a one-line change.
+     */
+    private val titles =
+        mapOf(
+            "destroyed_enemy" to "Destroyed an enemy formation",
+            "destroyed_stronger_enemy" to "Destroyed a stronger enemy formation",
+            "armored_kill" to "Destroyed enemy armour",
+            "held_under_attack" to "Held the position under heavy attack",
+            "survived_critical_damage" to "Kept the formation fighting after severe losses",
+            "river_assault" to "Distinguished in river combat",
+            "urban_assault" to "Distinguished in urban combat",
+            "forest_assault" to "Distinguished in forest combat",
+            "mountain_assault" to "Distinguished in mountain combat",
+            "ground_attack_kill" to "Destroyed a ground target from the air",
+            "maneuver_kill" to "Closed the distance and destroyed the enemy",
+            "distinguished_service" to "Recognised for distinguished service",
+        )
+
     fun title(eventId: String): String =
-        when {
-            eventId == "destroyed_enemy" -> "Destroyed an enemy formation"
-            eventId == "destroyed_stronger_enemy" -> "Destroyed a stronger enemy formation"
-            eventId == "armored_kill" -> "Destroyed enemy armour"
-            eventId == "held_under_attack" -> "Held the position under heavy attack"
-            eventId == "survived_critical_damage" -> "Kept the formation fighting after severe losses"
-            eventId == "river_assault" -> "Distinguished in river combat"
-            eventId == "urban_assault" -> "Distinguished in urban combat"
-            eventId == "forest_assault" -> "Distinguished in forest combat"
-            eventId == "mountain_assault" -> "Distinguished in mountain combat"
-            eventId == "distinguished_service" -> "Recognised for distinguished service"
-            eventId.startsWith("promoted_to_") ->
-                "Promoted to ${HeroDisplay.rank(eventId.removePrefix("promoted_to_"))}"
+        titles[eventId] ?: when {
             eventId.startsWith("commander_promoted_to_") ->
                 "Commander promoted to ${HeroDisplay.rank(eventId.removePrefix("commander_promoted_to_"))}"
+            eventId.startsWith("promoted_to_") ->
+                "Promoted to ${HeroDisplay.rank(eventId.removePrefix("promoted_to_"))}"
             else -> eventId.replace('_', ' ').replaceFirstChar(Char::uppercaseChar)
         }
 

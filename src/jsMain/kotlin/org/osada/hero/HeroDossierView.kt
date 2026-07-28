@@ -168,12 +168,15 @@ object HeroDisplay {
             LeaderType.TANK_KILLER -> "When engaging armored targets."
             LeaderType.STREET_FIGHTER -> "While fighting in urban terrain."
             LeaderType.INFILTRATION_TACTICS -> "In forest and concealment."
-            LeaderType.AGGRESSIVE_MANEUVER, LeaderType.AGGRESSIVE_TANK_MANEUVER, LeaderType.SUPERIOR_MANEUVER,
+            LeaderType.AGGRESSIVE_MANEUVER, LeaderType.AGGRESSIVE_TANK_MANEUVER,
             -> "Affects movement each turn."
+            LeaderType.SUPERIOR_MANEUVER -> "While moving past enemy units."
+            LeaderType.RECON_MOVEMENT -> "Permits phased movement: may act and continue moving in the same turn."
             LeaderType.ELITE_RECON_VETERAN, LeaderType.BATTLEFIELD_INTELLIGENCE, LeaderType.SKILLED_RECONNAISSANCE,
             -> "Improves spotting each turn."
             LeaderType.MARKSMAN -> "When firing at range."
             LeaderType.SKILLED_INTERCEPTOR -> "When intercepting aircraft."
+            LeaderType.SKILLED_GROUND_ATTACK -> "When attacking a ground target from the air."
             else -> "Passive."
         }
 }

@@ -41,6 +41,13 @@ internal object RecognitionService {
      * [terrain] and [enemyUnitClass] are Phase 3 additions consumed by [HeroAchievements] — both
      * default to null so every existing caller (and `HeroAcquisitionTest`, which builds these with
      * named arguments) is unaffected.
+     *
+     * [attackedGroundFromAir] and [closedDistanceBeforeAttack] are §7.43's two additions, and are
+     * plain booleans rather than the unit classes they derive from on purpose: the air/ground test
+     * that matters is `UnitPredicates.isAir`/`isGround` (movement method, not class number), which is
+     * exactly what `AttackCalculation` gates the Skilled Ground Attack bonus on. Resolving them at
+     * the combat site keeps this package free of a dependency on `rules` and keeps the achievement
+     * and the bonus it justifies from drifting apart.
      */
     data class Contribution(
         val role: Role,
@@ -51,6 +58,8 @@ internal object RecognitionService {
         val survivedCriticalDamage: Boolean,
         val terrain: Int? = null,
         val enemyUnitClass: Int? = null,
+        val attackedGroundFromAir: Boolean = false,
+        val closedDistanceBeforeAttack: Boolean = false,
     ) {
         enum class Role { ATTACKER, DEFENDER }
     }

@@ -31,14 +31,32 @@ data class HeroTraitDefinition(
  * class-signature/personal-trait paths ([HeroBackgrounds], [ProceduralHeroGenerator]) — offered
  * again here at a higher evidence bar for a formation that did not start with it — or one of the
  * traits `docs/leaders.md` §8 flags as "defined but unobtainable... nonetheless honoured in combat
- * code" (Resilience, Overwhelming Attack, Skilled Ground Attack, Street Fighter, Skilled
- * Reconnaissance). Phase 3 is what makes those five reachable at last, exactly the way the design
- * brief's §8.6 prefers: a real, already-implemented rule effect rather than a new numeric bonus
- * invented for the occasion.
+ * code" (Resilience, Overwhelming Attack, Skilled Ground Attack, Skilled Reconnaissance, Street
+ * Fighter, Recon Movement). This is exactly the way the design brief's §8.6 prefers: a real,
+ * already-implemented rule effect rather than a new numeric bonus invented for the occasion.
  *
- * Two entries — [determinedCommand] is intentionally not one of them — carry no evidence
- * requirement, so [HeroTraitCatalog.choose] always has a fallback pair even for a hero whose
- * evidence is still thin at their first promotion.
+ * **Correction, `tools/og-import/DEFERRED.md` §1.6:** Skilled Ground Attack, Skilled
+ * Reconnaissance and Recon Movement were still missing from this list despite this file's own
+ * comment claiming otherwise — `AttackCalculation`/`MovementRules` already honoured the first two,
+ * but no catalogue entry, class-signature list or background ever granted any of the three, so a
+ * hero could never actually learn them. Recon Movement additionally had no combat-code consumer at
+ * all until `GameUnit.move` was taught to check it. All three are wired now.
+ *
+ * **Follow-up, §7.43:** those three were added as zero-evidence entries because no [EvidenceRule]
+ * fed their categories, and that quietly broke the fallback contract below — five zero-evidence
+ * entries meant [choose] handed out whichever two sorted first by `id`, so `fluid_maneuver` (phased
+ * movement, the strongest effect in the catalogue) became the default offer at almost every
+ * promotion while `steady_hand` and `veteran_instincts` stopped being offered at all. §7.43 fed
+ * MOBILE_WARFARE, RECONNAISSANCE and GROUND_ATTACK from real achievements and gated all three
+ * properly. The same pass added `dug_in` and `open_ground_initiative`, the last two traits with a
+ * live rule effect and no way to acquire them.
+ *
+ * **Exactly two entries carry no evidence requirement** — `steady_hand` and `veteran_instincts` —
+ * so [choose] always has a §8.5.4 class-general fallback pair for a hero whose evidence is still
+ * thin at their first promotion, and that pair is *deterministic* rather than an accident of
+ * alphabetical order. Adding a third zero-evidence entry is a behaviour change to every early
+ * promotion in the game, not an addition; `promotionFallbackPairIsTheTwoClassGeneralOptions` fails
+ * if one appears. Anything genuinely powerful belongs behind evidence.
  */
 internal object HeroTraitCatalog {
     val ALL: List<HeroTraitDefinition> =
@@ -111,6 +129,43 @@ internal object HeroTraitCatalog {
                 title = "Veteran Instincts",
                 categoryId = EvidenceCategory.RECONNAISSANCE,
                 legacyTrait = LeaderType.BATTLEFIELD_INTELLIGENCE,
+            ),
+            HeroTraitDefinition(
+                id = "sharp_eyes",
+                title = "Sharp Eyes",
+                categoryId = EvidenceCategory.RECONNAISSANCE,
+                legacyTrait = LeaderType.SKILLED_RECONNAISSANCE,
+                requiredEvidence = mapOf(EvidenceCategory.RECONNAISSANCE to 30),
+            ),
+            HeroTraitDefinition(
+                id = "ground_attack_specialist",
+                title = "Ground Attack Specialist",
+                categoryId = EvidenceCategory.GROUND_ATTACK,
+                legacyTrait = LeaderType.SKILLED_GROUND_ATTACK,
+                compatibleUnitClasses =
+                    setOf(UnitClass.FIGHTER.value, UnitClass.TACTICAL_BOMBER.value, UnitClass.LEVEL_BOMBER.value),
+                requiredEvidence = mapOf(EvidenceCategory.GROUND_ATTACK to 30),
+            ),
+            HeroTraitDefinition(
+                id = "fluid_maneuver",
+                title = "Fluid Maneuver",
+                categoryId = EvidenceCategory.MOBILE_WARFARE,
+                legacyTrait = LeaderType.RECON_MOVEMENT,
+                requiredEvidence = mapOf(EvidenceCategory.MOBILE_WARFARE to 60),
+            ),
+            HeroTraitDefinition(
+                id = "dug_in",
+                title = "Dug In",
+                categoryId = EvidenceCategory.DEFENSIVE_OPERATIONS,
+                legacyTrait = LeaderType.FEROCIOUS_DEFENSE,
+                requiredEvidence = mapOf(EvidenceCategory.DEFENSIVE_OPERATIONS to 90),
+            ),
+            HeroTraitDefinition(
+                id = "open_ground_initiative",
+                title = "Open-Ground Initiative",
+                categoryId = EvidenceCategory.MOBILE_WARFARE,
+                legacyTrait = LeaderType.SUPERIOR_MANEUVER,
+                requiredEvidence = mapOf(EvidenceCategory.MOBILE_WARFARE to 90),
             ),
         )
 

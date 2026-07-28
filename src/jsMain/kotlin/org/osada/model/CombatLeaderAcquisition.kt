@@ -4,6 +4,7 @@ import org.osada.CombatLog
 import org.osada.hero.FormationIdentity
 import org.osada.hero.HeroCampaign
 import org.osada.hero.RecognitionService
+import org.osada.rules.UnitPredicates
 
 /**
  * Turns a resolved combat into leader acquisition for one combatant — extracted from
@@ -64,8 +65,30 @@ internal object CombatLeaderAcquisition {
             // both combatants are judged against, regardless of which one "unit" is here.
             terrain = (if (isAttacker) enemy else unit).getHex()?.terrain,
             enemyUnitClass = enemy.unitData().uclass,
+            // §7.43 evidence for the two categories the promotion catalogue gates on. The air/ground
+            // test mirrors `AttackCalculation`'s Skilled Ground Attack gate exactly, so the trait can
+            // only ever be earned by the kind of sortie it then improves.
+            attackedGroundFromAir =
+                isAttacker && UnitPredicates.isAir(unit) && UnitPredicates.isGround(enemy),
+            closedDistanceBeforeAttack = isAttacker && spentMovementThisTurn(unit),
         )
     }
+
+    /**
+     * Whether [unit] paid movement before this attack — the "closed the distance" half of a
+     * [org.osada.hero.AchievementType.MANEUVER_KILL].
+     *
+     * Compares against the equipment's own movement allowance rather than tracking a per-turn
+     * odometer, because that allowance is what `unitEndTurn` restores `moveLeft` to. Artillery firing
+     * from where it started the turn therefore scores nothing, which is the point: this is evidence
+     * for mobile warfare, not for having a gun.
+     *
+     * `unitData(true)` — the *unit's* equipment, not its transport's — for exactly that reason:
+     * `unitEndTurn` refills `moveLeft` from `Equipment.equipment[eqid]`, so a mounted formation
+     * compared against `unitData()` (which resolves to the transport, or the carrier for an aircraft)
+     * would read as having spent movement while sitting still.
+     */
+    internal fun spentMovementThisTurn(unit: GameUnit): Boolean = unit.moveLeft < unit.unitData(true).movpoints
 
     /** True when this combat's XP push carried the unit across a veteran level boundary. */
     private fun crossedExperienceLevel(

@@ -31,6 +31,13 @@ internal object HeroCampaign {
     private val pendingPromotions = mutableListOf<HeroPromotionAnnouncement>()
     private val pendingCasualties = mutableListOf<HeroCasualtyAnnouncement>()
 
+    // §7.43: (scenario, formation, turn) keys already credited with a reconnaissance contact. A
+    // formation that walks out of spotting range and back in banks the evidence once per turn, not
+    // once per trip. RECON_CONTACT is the only achievement type not anchored to a resolved combat,
+    // so it is the only one that needs its own anti-farming guard -- movement is repeatable at will
+    // in a way that being shot at is not. Cleared by [reset] with the rest of the run's state.
+    private val reconContactsCredited = mutableSetOf<String>()
+
     // §1.10: benched statuses a transfer can recall from. MISSING/CAPTURED have no confirmed fate,
     // RETIRED has left service and KILLED is final -- none of those are "just benched".
     private val transferEligibleStatuses =
@@ -57,6 +64,7 @@ internal object HeroCampaign {
         pendingAnnouncements.clear()
         pendingPromotions.clear()
         pendingCasualties.clear()
+        reconContactsCredited.clear()
     }
 
     /** Records the current campaign scenario so [recordCombat] can seed and date an emergence. */
@@ -382,6 +390,47 @@ internal object HeroCampaign {
             }
             else -> attemptEmergence(unit, formation, contribution, turn)
         }
+    }
+
+    /**
+     * Credits [unit]'s commander with reconnaissance evidence for revealing [newlySpotted]
+     * previously unseen enemies (§8.4, `tools/og-import/DEFERRED.md` §7.43), and reports whether
+     * anything was credited.
+     *
+     * **Evidence only** — no leader XP, no recognition, no promotion check, no service-history
+     * entry. Spotting is not one of §7.1's notable actions, so it must neither move a leaderless
+     * formation toward emergence nor pad a dossier with a line per hex revealed. It exists so
+     * RECONNAISSANCE is a *fed* category and `sharp_eyes` can be earned on merit rather than handed
+     * out as a §8.5.4 fallback, which is what §7.42 was reduced to doing.
+     *
+     * Counted once per formation per turn regardless of [newlySpotted]; see
+     * [reconContactsCredited]. A leaderless formation is skipped outright — there is no one to
+     * credit, and recognition deliberately does not accrue from this.
+     */
+    fun recordReconnaissance(
+        unit: GameUnit,
+        newlySpotted: Int,
+        turn: Int = currentTurn(),
+    ): Boolean {
+        val formationId = unit.takeIf { newlySpotted > 0 }?.let(FormationIdentity::of)
+        val hero =
+            formationId
+                ?.let(roster::formation)
+                ?.assignedHeroId
+                ?.let(roster::state)
+                // Claimed last, so a leaderless or unknown formation never burns the turn's key.
+                ?.takeIf { reconContactsCredited.add("${currentScenarioLabel()}|${formationId.value}|$turn") }
+                ?: return false
+        roster.updateState(
+            hero.copy(
+                specializationEvidence =
+                    EvidenceRules.accrue(
+                        hero.specializationEvidence,
+                        listOf(AchievementType.RECON_CONTACT),
+                    ),
+            ),
+        )
+        return true
     }
 
     /** Processes a destruction that happens after the normal combat result, notably failed-retreat surrender. */

@@ -61,23 +61,10 @@ internal object HeroProgressionProcessor {
         val updated =
             hero.copy(
                 experience = hero.experience + balance.leaderXpPerCombat,
-                specializationEvidence = applyEvidence(hero.specializationEvidence, achievements),
+                specializationEvidence = EvidenceRules.accrue(hero.specializationEvidence, achievements),
                 serviceEvents = hero.serviceEvents + events.map(::serviceEventFor),
             )
         return updated.copy(renown = HeroRenownService.forExperience(updated.experience, balance))
-    }
-
-    private fun applyEvidence(
-        current: Map<String, Int>,
-        achievements: List<AchievementType>,
-    ): Map<String, Int> {
-        val next = current.toMutableMap()
-        achievements.forEach { type ->
-            EvidenceRules.forType(type).forEach { rule ->
-                next[rule.categoryId.name] = (next[rule.categoryId.name] ?: 0) + rule.baseAmount
-            }
-        }
-        return next
     }
 
     private fun appendFormationHistory(

@@ -25,10 +25,13 @@ import org.osada.hero.HeroTraitCatalog
 import org.osada.hero.LegacyTraitMapping
 import org.osada.hero.PortraitComposition
 import org.osada.hero.RecognitionService
+import org.osada.model.CombatLeaderAcquisition
 import org.osada.model.Equipment
 import org.osada.model.EquipmentData
 import org.osada.model.GameUnit
 import org.osada.model.Player
+import org.osada.model.Transport
+import org.osada.model.move
 import org.osada.model.resetEquipment
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
@@ -46,6 +49,7 @@ import kotlin.test.assertTrue
 class HeroProgressionTest {
     private companion object {
         const val TANK_EQID = 910
+        const val TRUCK_EQID = 911
         const val CAMPAIGN = "progression-campaign.json"
     }
 
@@ -290,6 +294,204 @@ class HeroProgressionTest {
         val second = HeroTraitCatalog.choose(hero, backgroundTrait = null, unitClass = UnitClass.TANK.value)
 
         assertEquals(first.map { it.id }, second.map { it.id }, "the same state must always offer the same pair")
+    }
+
+    // ------------------------------------------------- newly-wired traits, DEFERRED.md §1.6/§7.43
+
+    @Test
+    fun groundAttackSpecialistIsOnlyOfferedToAirClasses() {
+        val hero = HeroState(heroId = HeroId("H-air"), rankId = "lieutenant")
+
+        val tankChoices = HeroTraitCatalog.eligibleFor(hero, backgroundTrait = null, unitClass = UnitClass.TANK.value)
+        val fighterChoices =
+            HeroTraitCatalog.eligibleFor(hero, backgroundTrait = null, unitClass = UnitClass.FIGHTER.value)
+
+        assertTrue(
+            tankChoices.none { it.id == "ground_attack_specialist" },
+            "attacking a ground target from the air makes no sense for a tank's own leader",
+        )
+        assertTrue(fighterChoices.any { it.id == "ground_attack_specialist" })
+    }
+
+    @Test
+    fun reconMovementTraitGrantsPhasedMovementToANonReconFormation() {
+        val unit = coreUnit()
+        ledFormation(unit)
+        unit.moveLeft = 5
+
+        unit.move(1)
+        assertTrue(unit.hasMoved, "an ordinary tank has no phased movement without the trait")
+
+        unit.hasMoved = false
+        unit.moveLeft = 5
+        HeroCampaign.applyPromotionChoice(HeroId("H-test"), "fluid_maneuver")
+
+        unit.move(1)
+        assertFalse(
+            unit.hasMoved,
+            "Fluid Maneuver (RECON_MOVEMENT) grants phased movement off the Recon class too",
+        )
+    }
+
+    /**
+     * The guard that was missing when §7.42 added three zero-evidence entries and silently took
+     * both fallback slots. `choose` breaks ties by `id`, so the fallback pair is only stable while
+     * exactly two entries are unGated — this pins the pair itself, not merely its shape.
+     */
+    @Test
+    fun promotionFallbackPairIsTheTwoClassGeneralOptions() {
+        val hero = HeroState(heroId = HeroId("H-thin2"), rankId = "lieutenant")
+
+        val infantry = HeroTraitCatalog.choose(hero, backgroundTrait = null, unitClass = UnitClass.INFANTRY.value)
+        val fighter = HeroTraitCatalog.choose(hero, backgroundTrait = null, unitClass = UnitClass.FIGHTER.value)
+
+        assertEquals(listOf("steady_hand", "veteran_instincts"), infantry.map { it.id }.sorted())
+        assertEquals(
+            listOf("steady_hand", "veteran_instincts"),
+            fighter.map { it.id }.sorted(),
+            "an air formation with no evidence gets the same class-general pair, not a free specialisation",
+        )
+        assertEquals(
+            2,
+            HeroTraitCatalog.ALL.count { it.requiredEvidence.isEmpty() },
+            "a third zero-evidence entry would change every early promotion in the game",
+        )
+    }
+
+    @Test
+    fun theOnceUngatedTraitsAreOfferedOnMeritWhenTheirEvidenceExists() {
+        val hero =
+            HeroState(
+                heroId = HeroId("H-mobile"),
+                rankId = "lieutenant",
+                specializationEvidence = mapOf(EvidenceCategory.MOBILE_WARFARE.name to 60),
+            )
+
+        val choices = HeroTraitCatalog.choose(hero, backgroundTrait = null, unitClass = UnitClass.TANK.value)
+
+        assertEquals("fluid_maneuver", choices.first().id, "the best-justified eligible trait comes first")
+    }
+
+    @Test
+    fun everyTraitWithALiveRuleEffectIsNowReachable() {
+        val catalogued = HeroTraitCatalog.ALL.map { it.legacyTrait }.toSet()
+
+        assertTrue(LeaderType.SUPERIOR_MANEUVER in catalogued, "ZOC bypass had a rule but no way to earn it")
+        assertTrue(LeaderType.FEROCIOUS_DEFENSE in catalogued, "hero path had no entry for it")
+    }
+
+    // ------------------------------------------- the three newly fed evidence categories §7.43
+
+    @Test
+    fun airKillOnAGroundTargetFeedsGroundAttackEvidence() {
+        val unit = coreUnit()
+        ledFormation(unit)
+
+        HeroCampaign.recordCombat(unit, strongerKill().copy(attackedGroundFromAir = true))
+
+        val hero = assertNotNull(HeroCampaign.heroFor(unit))
+        assertEquals(20, hero.specializationEvidence[EvidenceCategory.GROUND_ATTACK.name])
+    }
+
+    @Test
+    fun onlyAKillTheFormationDroveToFeedsMobileWarfareEvidence() {
+        val stationary = coreUnit()
+        ledFormation(stationary, HeroId("H-static"))
+        HeroCampaign.recordCombat(stationary, strongerKill().copy(closedDistanceBeforeAttack = false))
+        assertEquals(
+            null,
+            assertNotNull(HeroCampaign.heroFor(stationary)).specializationEvidence[
+                EvidenceCategory.MOBILE_WARFARE.name,
+            ],
+            "shelling from where it already stood is not mobile warfare",
+        )
+
+        val mobile = coreUnit()
+        ledFormation(mobile, HeroId("H-mobile2"))
+        HeroCampaign.recordCombat(mobile, strongerKill().copy(closedDistanceBeforeAttack = true))
+        assertEquals(
+            15,
+            assertNotNull(HeroCampaign.heroFor(mobile)).specializationEvidence[EvidenceCategory.MOBILE_WARFARE.name],
+        )
+    }
+
+    @Test
+    fun aManeuverKillNeedsTheAttackerRole() {
+        val unit = coreUnit()
+        ledFormation(unit)
+
+        HeroCampaign.recordCombat(
+            unit,
+            riverStand().copy(destroyedEnemy = true, closedDistanceBeforeAttack = true),
+        )
+
+        assertEquals(
+            null,
+            assertNotNull(HeroCampaign.heroFor(unit)).specializationEvidence[EvidenceCategory.MOBILE_WARFARE.name],
+            "a defender never closed any distance, whatever the flag says",
+        )
+    }
+
+    /**
+     * `unitEndTurn` refills `moveLeft` from the unit's OWN equipment, but `unitData()` resolves to
+     * the transport when mounted — so comparing the two would have credited a mobile-warfare kill to
+     * every mounted formation that never moved.
+     */
+    @Test
+    fun aMountedFormationThatNeverMovedScoresNoManeuverEvidence() {
+        val unit = coreUnit()
+        ledFormation(unit)
+        Equipment.putEquipment(
+            TRUCK_EQID,
+            EquipmentData().apply {
+                uclass = UnitClass.GROUND_TRANSPORT.value
+                name = "Test Truck"
+                movpoints = 8
+            },
+        )
+        unit.transport = Transport(TRUCK_EQID)
+        unit.isMounted = true
+        unit.moveLeft = unit.unitData(true).movpoints
+
+        assertTrue(
+            unit.unitData().movpoints > unit.unitData(true).movpoints,
+            "precondition: the transport out-runs the formation, which is what made this wrong",
+        )
+        assertFalse(
+            CombatLeaderAcquisition.spentMovementThisTurn(unit),
+            "a full tank of movement is a full tank of movement, mounted or not",
+        )
+
+        unit.moveLeft -= 1
+        assertTrue(CombatLeaderAcquisition.spentMovementThisTurn(unit), "and spending any of it still counts")
+    }
+
+    @Test
+    fun reconContactFeedsReconnaissanceEvidenceOncePerTurn() {
+        val unit = coreUnit()
+        ledFormation(unit)
+
+        assertTrue(HeroCampaign.recordReconnaissance(unit, newlySpotted = 3, turn = 4))
+        assertFalse(
+            HeroCampaign.recordReconnaissance(unit, newlySpotted = 3, turn = 4),
+            "shuttling in and out of spotting range must not bank the evidence twice in a turn",
+        )
+        assertTrue(HeroCampaign.recordReconnaissance(unit, newlySpotted = 1, turn = 5))
+
+        val hero = assertNotNull(HeroCampaign.heroFor(unit))
+        assertEquals(16, hero.specializationEvidence[EvidenceCategory.RECONNAISSANCE.name], "two turns, 8 each")
+        assertEquals(0, hero.experience, "spotting is not a notable action: evidence only, no leader XP")
+        assertTrue(hero.serviceEvents.isEmpty(), "and no dossier line per hex revealed")
+    }
+
+    @Test
+    fun reconContactIsIgnoredForAFormationWithNoCommander() {
+        val unit = coreUnit()
+
+        assertFalse(
+            HeroCampaign.recordReconnaissance(unit, newlySpotted = 2, turn = 1),
+            "there is nobody to credit, and recognition deliberately does not accrue from spotting",
+        )
     }
 
     // -------------------------------------------------------------------- persistence §29.12
