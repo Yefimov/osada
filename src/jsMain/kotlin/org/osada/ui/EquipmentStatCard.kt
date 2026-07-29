@@ -3,13 +3,12 @@ package org.osada.ui
 import org.osada.MovMethod
 import org.osada.UNIT_MAX_EXPERIENCE
 import org.osada.UnitClass
+import org.osada.i18n.GameText
+import org.osada.i18n.I18n
 import org.osada.model.Equipment
 import org.osada.model.EquipmentData
 import org.osada.model.getCountryName
-import org.osada.movMethodNames
 import org.osada.uiSettings
-import org.osada.unitClassNames
-import org.osada.unitTypeNames
 
 /**
  * [UnitInfoPanel]'s equipment-catalogue (browse-only, no live unit) stat card. Split out purely
@@ -30,7 +29,7 @@ internal object EquipmentStatCard {
         delTag(byId("leaderInfo"))
         byId("uLeader")?.className = "uc-leader-slot"
         byId("uLeader")?.textContent = ""
-        byId("uLeader")?.title = "Leader slot — empty"
+        byId("uLeader")?.title = I18n.t("unit_info.leader.not_applicable.help")
         byId("uTransport")?.className = ""
         byId("uCarrier")?.className = ""
         byId("statsRow")?.let { makeVisible(it.id) }
@@ -48,7 +47,7 @@ internal object EquipmentStatCard {
         byId("uFlag")?.style?.backgroundImage =
             "url('resources/ui/flags/${Equipment.UNITED_NAME}/flag_big_${data.country}.png')"
         byId("uFlag")?.textContent = Equipment.getCountryName(data.country - 1)
-        byId("uName")?.textContent = "${data.name} ${unitClassNames[data.uclass]}"
+        byId("uName")?.textContent = "${data.name} ${GameText.unitClass(data.uclass)}"
         EquipmentMarkings.render(byId("osadaUcMarkings"), data)
         byId("ucRename")?.style?.display = "none" // catalogue entries aren't renamable
     }
@@ -57,14 +56,14 @@ internal object EquipmentStatCard {
         var fuelStr = "-"
         if (data.fuel > 0) fuelStr = data.fuel.toString()
 
-        byId("uTarget")?.textContent = unitTypeNames[data.target]
+        byId("uTarget")?.textContent = GameText.unitType(data.target)
         byId("uMoveType")?.textContent =
             if (data.uclass <= UnitClass.AIR_DEFENCE.value &&
                 data.movmethod == MovMethod.DEEP_NAVAL.value
             ) {
-                "Rail Road"
+                I18n.t("game.movement_type.rail_road")
             } else {
-                movMethodNames[data.movmethod]
+                GameText.movementType(data.movmethod)
             }
         byId("uStr")?.textContent = "10/10"
         byId("uFuel")?.innerHTML = fuelStr
@@ -98,7 +97,8 @@ internal object EquipmentStatCard {
             byId("uFuelBarFillValue")?.textContent = "${data.fuel}/${data.fuel}"
         }
         byId("osadaUcStars")?.textContent = "☆☆☆☆☆"
-        byId("osadaUcStars")?.title = "Experience: 0/$UNIT_MAX_EXPERIENCE"
+        byId("osadaUcStars")?.title =
+            I18n.t("unit_info.experience.value", mapOf("experience" to 0, "max" to UNIT_MAX_EXPERIENCE))
         byId("osadaUcEnt")?.textContent = ""
     }
 }

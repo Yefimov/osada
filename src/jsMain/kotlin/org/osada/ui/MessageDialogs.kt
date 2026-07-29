@@ -1,5 +1,6 @@
 package org.osada.ui
 
+import org.osada.i18n.I18n
 import org.osada.model.Equipment
 import org.osada.unitClassNames
 
@@ -33,7 +34,10 @@ internal object MessageDialogs {
         val titleEl = byId("title")
         val messageEl = byId("message")
         val uiOkBut = byId("uiokbut")
-        uiOkBut?.title = "Close this message and continue."
+        uiOkBut?.apply {
+            this.title = I18n.t("message.continue.help")
+            setAttribute("data-label", I18n.t("common.continue.label"))
+        }
         titleEl?.innerHTML = title
         messageEl?.innerHTML = body
         makeVisible("ui-message")
@@ -68,7 +72,8 @@ internal object MessageDialogs {
         bodyEl.className = "uiMessageBoxBody"
         val okButton = addTag(box, "div")
         okButton.className = "smallButton uiMessageBoxButton"
-        okButton.title = "Close this message and continue."
+        okButton.title = I18n.t("message.continue.help")
+        okButton.setAttribute("data-label", I18n.t("common.continue.label"))
         titleEl.innerHTML = title
         bodyEl.innerHTML = body
         okButton.innerHTML = "1"
@@ -80,9 +85,7 @@ internal object MessageDialogs {
     }
 
     fun showPrototypeAwardMessage(eqid: Int) {
-        var body =
-            "<br>Due to your brilliant tactical performance on previous battle High Command awarded " +
-                "you a prototype core unit available for deployment."
+        var body = "<br>${I18n.t("message.prototype.body")}"
         val eq = Equipment.getEquipment(eqid)
         if (eq != null) {
             body +=
@@ -90,7 +93,7 @@ internal object MessageDialogs {
                 "url(${UnitIconResolver.forCurrentScenario(eqid, eq.icon)})'></div>" +
                 "<b>${eq.name} ${unitClassNames[eq.uclass]}</b>"
         }
-        messageDynamic("You have been awarded a prototype unit", body)
+        messageDynamic(I18n.t("message.prototype.title"), body)
     }
 
     fun showAIStatus(active: Boolean) {
@@ -109,11 +112,12 @@ internal object MessageDialogs {
             s.color = "#fff"
             s.background = "rgba(170,20,20,0.9)"
             s.borderRadius = "0 0 8px 8px"
-            statusBarExtension.innerHTML = "&#9203; Computer turn in progress&hellip;"
+            statusBarExtension.innerHTML = "&#9203; ${I18n.t("hud.ai_turn.in_progress")}"
         } else {
             statusBarExtension.className = "statusbar-extension-animation-reverse"
             s.top = "-20px"
-            statusBarExtension.innerHTML = "<span style='color: #33ccff'> Finished computer turn ! </span>"
+            statusBarExtension.innerHTML =
+                "<span style='color: #33ccff'>${I18n.t("hud.ai_turn.finished")}</span>"
         }
     }
 }

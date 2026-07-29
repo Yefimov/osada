@@ -3,6 +3,7 @@ package org.osada.ui
 import kotlinx.browser.document
 import kotlinx.browser.window
 import org.osada.GameHolder
+import org.osada.i18n.I18n
 import org.osada.model.Cell
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
@@ -43,8 +44,7 @@ internal object MinimapBuilder {
         cv.id = "osada-minimap"
         cv.width = WIDTH
         cv.height = HEIGHT
-        cv.title =
-            "Minimap — friendly units are green, spotted enemies red, objectives brass, and the pale rectangle is your current view. Click or drag to centre the map."
+        cv.title = I18n.t("hud.sidebar.minimap.canvas.help")
         frame.appendChild(cv)
         canvas = cv
         ctx = cv.getContext("2d")
@@ -69,21 +69,21 @@ internal object MinimapBuilder {
         out.id = "osadaZoomOut"
         out.className = "osada-zoom-btn"
         out.textContent = "−"
-        out.title = "Zoom the tactical map out one step. Disabled while Strategic Map is active."
+        out.title = I18n.t("hud.zoom.out.help")
         out.onclick = { _: MouseEvent -> if (!uiSettings.strategicZoom) MapZoom.stepOut() }
 
         val pct = addTag(row, "div")
         pct.id = "osadaZoomPct"
         pct.className = "osada-zoom-pct"
         pct.textContent = "100%"
-        pct.title = "Reset tactical-map zoom to 100%. Disabled while Strategic Map is active."
+        pct.title = I18n.t("hud.zoom.reset.help")
         pct.onclick = { _: MouseEvent -> if (!uiSettings.strategicZoom) MapZoom.reset() }
 
         val zoomIn = addTag(row, "div")
         zoomIn.id = "osadaZoomIn"
         zoomIn.className = "osada-zoom-btn"
         zoomIn.textContent = "+"
-        zoomIn.title = "Zoom the tactical map in one step. Disabled while Strategic Map is active."
+        zoomIn.title = I18n.t("hud.zoom.in.help")
         zoomIn.onclick = { _: MouseEvent -> if (!uiSettings.strategicZoom) MapZoom.stepIn() }
 
         MapZoom.refreshControls()

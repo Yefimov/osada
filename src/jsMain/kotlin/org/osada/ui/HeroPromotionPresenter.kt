@@ -1,8 +1,10 @@
 package org.osada.ui
 
 import org.osada.hero.HeroCampaign
+import org.osada.hero.HeroDisplay
 import org.osada.hero.HeroId
 import org.osada.hero.HeroPromotionAnnouncement
+import org.osada.i18n.I18n
 import org.w3c.dom.HTMLElement
 
 /**
@@ -55,11 +57,19 @@ internal object HeroPromotionPresenter {
 
         val titleEl = addTag(box, "div")
         titleEl.className = "osada-hpp__title"
-        titleEl.textContent = "${announcement.heroName} — Promotion to ${rankLabel(announcement.newRankId)}"
+        titleEl.textContent =
+            I18n.t(
+                "hero.promotion.title",
+                mapOf("name" to announcement.heroName, "rank" to HeroDisplay.rank(announcement.newRankId)),
+            )
 
         val bodyEl = addTag(box, "div")
         bodyEl.className = "osada-hpp__body"
-        bodyEl.textContent = "${announcement.formationName}'s commander has earned a promotion. Choose one:"
+        bodyEl.textContent =
+            I18n.t(
+                "hero.promotion.body",
+                mapOf("formation" to announcement.formationName),
+            )
 
         announcement.choices.forEach { choice -> addChoice(box, announcement.heroId.value, choice) }
     }
@@ -90,6 +100,4 @@ internal object HeroPromotionPresenter {
             showNext()
         }
     }
-
-    private fun rankLabel(rankId: String): String = rankId.replaceFirstChar { it.uppercaseChar() }
 }

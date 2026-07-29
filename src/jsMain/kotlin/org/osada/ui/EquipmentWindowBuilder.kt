@@ -92,7 +92,7 @@ internal object EquipmentWindowBuilder {
 
     private fun wireSortButtons() {
         val eqSortOrderBut = byId("eqSortOrderBut")
-        eqSortOrderBut?.title = "Reverse the catalogue sort order between lowest-to-highest and highest-to-lowest."
+        eqSortOrderBut?.title = I18n.t("equipment.sort.reverse.help")
         eqSortOrderBut?.asDynamic()?.hasSelectedGlyph = true
         eqSortOrderBut?.onclick = { _: org.w3c.dom.events.MouseEvent ->
             val userSel = byId("eqUserSel")?.asDynamic()
@@ -104,7 +104,7 @@ internal object EquipmentWindowBuilder {
         }
 
         val eqSortOptionsBut = byId("eqSortOptionsBut")
-        eqSortOptionsBut?.title = "Choose the equipment statistic used to sort the catalogue."
+        eqSortOptionsBut?.title = I18n.t("equipment.sort.choose.help")
         eqSortOptionsBut?.asDynamic()?.hasSelectedGlyph = true
         eqSortOptionsBut?.onclick = { _: org.w3c.dom.events.MouseEvent ->
             if (isVisible("eqSortOptions")) {
@@ -177,7 +177,7 @@ internal object EquipmentWindowBuilder {
 
     private fun wireEquipmentActionButtons() {
         val eqSelCountry2 = byId("eqSelCountry")
-        eqSelCountry2?.title = "Cycle through equipment countries available to this side."
+        eqSelCountry2?.title = I18n.t("equipment.country_cycle.help")
         eqSelCountry2?.onclick = { _: org.w3c.dom.events.MouseEvent ->
             GameHolder.instance?.ui?.equipmentWindowButtons("changecountry")
         }
@@ -197,13 +197,13 @@ internal object EquipmentWindowBuilder {
         }
 
         val eqSellBut = byId("eqSellBut")
-        eqSellBut?.title = "Permanently disband the selected unit and recover part of its prestige value."
+        eqSellBut?.title = I18n.t("equipment.action.sell.help")
         eqSellBut?.onclick = { _: org.w3c.dom.events.MouseEvent ->
             GameHolder.instance?.ui?.equipmentWindowButtons("sell")
         }
 
         val eqCloseBut = byId("eqCloseBut")
-        eqCloseBut?.title = "Close (Esc)"
+        eqCloseBut?.title = I18n.t("common.close_esc.help")
         eqCloseBut?.onclick = { _: org.w3c.dom.events.MouseEvent ->
             // Hide only; deployMode is left as-is so a picked reserve unit can still be placed.
             hideEquipmentWindow()
@@ -278,7 +278,7 @@ internal object EquipmentWindowBuilder {
 
     fun buildEquipmentSortOptions() {
         val eqSortInfo = byId("eqSortInfo")
-        eqSortInfo?.innerHTML = "Sort equipment by: "
+        eqSortInfo?.textContent = I18n.t("equipment.sort.prompt")
 
         UIBuilder.unitStats.forEach { stat ->
             val property = stat.property ?: return@forEach
@@ -300,13 +300,14 @@ internal object EquipmentWindowBuilder {
                 userSel?.sortproperty = property
                 toggleButton(div, true)
                 GameHolder.instance?.ui?.updateEquipmentWindow(userSel?.eqclass as? Int ?: UnitClass.TANK.value)
-                eqSortInfo?.innerHTML = "Sorted by: ${stat.title}"
+                eqSortInfo?.textContent =
+                    I18n.t("equipment.sort.sorted_by", mapOf("stat" to stat.title))
                 makeVisible("eqSortOptions")
             }
         }
 
         val eqSortCloseBut = byId("eqSortCloseBut")
-        eqSortCloseBut?.title = "Close sorting options"
+        eqSortCloseBut?.title = I18n.t("equipment.sort.close.help")
         eqSortCloseBut?.onclick = { _: org.w3c.dom.events.MouseEvent ->
             makeHidden("eqSortOptions")
             makeVisible("eqButtonsContainer")

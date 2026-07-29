@@ -3,10 +3,11 @@ package org.osada.hero
 import org.osada.UnitClass
 
 /**
- * Kotlin port of the v2 (head-centric Soviet dossier) portrait generator — the twin of
+ * Kotlin port of the v2 head-centric dossier portrait generator — the twin of
  * `resources/portraits/portrait-core-v2.mjs`. It selects the ordered v2 layer ids for a hero so the
- * game renders the approved redesign (not the v1 slice), and derives scar/wound overlays from the
- * hero's own condition so a wounded or scarred commander looks the part (§11.1).
+ * game renders the approved redesign (not the v1 slice), selects the historical national/era
+ * uniform pool, and derives scar/wound overlays from the hero's own condition so a wounded or
+ * scarred commander looks the part (§11.1).
  *
  * Determinism is the contract (§7.4 / §29.17): every choice is a seeded, weighted function of the
  * portrait seed plus stable facts, so the same hero reproduces the same portrait on reload. The
@@ -15,6 +16,17 @@ import org.osada.UnitClass
  */
 @Suppress("TooManyFunctions")
 object PortraitComposerV2 {
+    enum class Pool(
+        val id: String,
+    ) {
+        USSR_1942("ussr_1942"),
+        REVOLUTION_1919("revolution_1919"),
+        SPANISH_REPUBLIC_1936("spanish_republic_1936"),
+        YUGOSLAV_PARTISAN_1941("yugoslav_partisan_1941"),
+        EAST_ASIAN_REVOLUTIONARY("east_asian_revolutionary"),
+        NONE("none"),
+    }
+
     val ORDER =
         listOf(
             "background",
@@ -136,12 +148,40 @@ object PortraitComposerV2 {
                     "winter" to mapOf("headgear_flight_helmet" to 0.7, "none" to 0.2, "headgear_officer_cap" to 0.1),
                 ),
         )
+    private val REVOLUTION_HEADGEAR =
+        fieldHeadgear(
+            groundPrimary = "headgear_rev1919_field_cap",
+            groundSecondary = "headgear_rev1919_service_cap",
+        )
+    private val SPANISH_HEADGEAR =
+        fieldHeadgear(
+            groundPrimary = "headgear_spanish_side_cap",
+            groundSecondary = "headgear_spanish_beret",
+        )
+    private val YUGOSLAV_HEADGEAR =
+        fieldHeadgear(
+            groundPrimary = "headgear_yugoslav_titovka",
+            groundSecondary = "headgear_yugoslav_partisan_cap",
+        )
+    private val EAST_ASIAN_HEADGEAR =
+        fieldHeadgear(
+            groundPrimary = "headgear_east_asian_field_cap",
+            groundSecondary = "headgear_east_asian_boonie",
+        )
     private val HAIR_MODE =
         mapOf(
             "headgear_officer_cap" to "UNDER_CAP",
             "headgear_pilotka" to "UNDER_CAP",
             "headgear_ushanka" to "UNDER_FUR_HAT",
             "headgear_flight_helmet" to "UNDER_FLIGHT_HELMET",
+            "headgear_rev1919_field_cap" to "UNDER_CAP",
+            "headgear_rev1919_service_cap" to "UNDER_CAP",
+            "headgear_spanish_side_cap" to "UNDER_CAP",
+            "headgear_spanish_beret" to "UNDER_CAP",
+            "headgear_yugoslav_titovka" to "UNDER_CAP",
+            "headgear_yugoslav_partisan_cap" to "UNDER_CAP",
+            "headgear_east_asian_field_cap" to "UNDER_CAP",
+            "headgear_east_asian_boonie" to "UNDER_CAP",
         )
 
     data class Facts(
@@ -152,6 +192,7 @@ object PortraitComposerV2 {
         val season: String,
         val scar: Boolean,
         val wound: String?,
+        val pool: Pool = Pool.USSR_1942,
     )
 
     /** A finished v2 [PortraitComposition] for a hero, reflecting current rank and condition. */
@@ -163,15 +204,29 @@ object PortraitComposerV2 {
         serviceYear: Int?,
         status: HeroStatus = HeroStatus.ACTIVE,
         permanentInjury: Boolean = false,
+        country: Int? = null,
+        poolOverride: Pool? = null,
     ): PortraitComposition {
-        val facts = deriveFacts(seed, unitClass, rankId, birthYear, serviceYear, status, permanentInjury)
-        return PortraitComposition(seed = seed, layerIds = compose(facts, seed))
+        val facts =
+            deriveFacts(
+                seed,
+                unitClass,
+                rankId,
+                birthYear,
+                serviceYear,
+                status,
+                permanentInjury,
+                country,
+                poolOverride,
+            )
+        return PortraitComposition(seed = seed, layerIds = compose(facts, seed), poolId = facts.pool.id)
     }
 
     fun compose(
         facts: Facts,
         seed: Int,
     ): List<String> {
+        if (facts.pool == Pool.NONE) return emptyList()
         val chosen = LinkedHashMap<String, String>()
         val headgear = pickHeadgear(facts, seed)
         val hairMode = if (headgear == null) "FULL_HAIR" else HAIR_MODE.getValue(headgear)
@@ -182,9 +237,8 @@ object PortraitComposerV2 {
         ageLayer(facts.age)?.let { chosen["age_face"] = it }
         if (facts.scar) chosen["scar"] = pick(SCARS, seed, "scar")
         chosen["facial_hair"] = facialHair(facts, seed)
-        chosen["uniform_front_collar"] =
-            if (facts.branch == "aviation") "collar_aviation" else "collar_${facts.branch}_${facts.season}"
-        chosen["rank"] = "rank_${facts.rank}"
+        chosen["uniform_front_collar"] = collarFor(facts)
+        chosen["rank"] = rankFor(facts)
         chosen["branch"] = "branch_${facts.branch}"
         headgear?.let { chosen["headgear"] = it }
         facts.wound?.let { chosen["wound"] = it }
@@ -204,6 +258,7 @@ object PortraitComposerV2 {
         definition: HeroDefinition,
         state: HeroState,
         unitClass: Int,
+        country: Int? = null,
     ): List<String> {
         val stored = definition.portrait.layerIds
         val base =
@@ -216,6 +271,8 @@ object PortraitComposerV2 {
                     state.rankId,
                     definition.biographyFacts.birthYear,
                     null,
+                    country = country,
+                    poolOverride = poolById(definition.portrait.poolId),
                 ).layerIds
             }
         val withCondition = applyCondition(base, state, definition.portrait.seed)
@@ -295,10 +352,40 @@ object PortraitComposerV2 {
         facts: Facts,
         seed: Int,
     ): String? {
+        val catalog =
+            when (facts.pool) {
+                Pool.USSR_1942 -> HEADGEAR_BY_BRANCH_SEASON
+                Pool.REVOLUTION_1919 -> REVOLUTION_HEADGEAR
+                Pool.SPANISH_REPUBLIC_1936 -> SPANISH_HEADGEAR
+                Pool.YUGOSLAV_PARTISAN_1941 -> YUGOSLAV_HEADGEAR
+                Pool.EAST_ASIAN_REVOLUTIONARY -> EAST_ASIAN_HEADGEAR
+                Pool.NONE -> return null
+            }
         val key =
-            weightedPick(HEADGEAR_BY_BRANCH_SEASON.getValue(facts.branch).getValue(facts.season), seed, "headgear")
+            weightedPick(catalog.getValue(facts.branch).getValue(facts.season), seed, "headgear")
         return if (key == "none") null else key
     }
+
+    private fun collarFor(facts: Facts): String =
+        when (facts.pool) {
+            Pool.USSR_1942 ->
+                if (facts.branch == "aviation") "collar_aviation" else "collar_${facts.branch}_${facts.season}"
+            Pool.REVOLUTION_1919 -> "collar_rev1919_field"
+            Pool.SPANISH_REPUBLIC_1936 -> "collar_spanish_republic"
+            Pool.YUGOSLAV_PARTISAN_1941 -> "collar_yugoslav_partisan"
+            Pool.EAST_ASIAN_REVOLUTIONARY -> "collar_east_asian_field"
+            Pool.NONE -> error("A no-portrait pool has no collar")
+        }
+
+    private fun rankFor(facts: Facts): String =
+        when (facts.pool) {
+            Pool.USSR_1942 -> "rank_${facts.rank}"
+            Pool.REVOLUTION_1919 -> "rank_rev1919_${facts.rank}"
+            Pool.SPANISH_REPUBLIC_1936 -> "rank_spanish_${facts.rank}"
+            Pool.YUGOSLAV_PARTISAN_1941 -> "rank_yugoslav_${facts.rank}"
+            Pool.EAST_ASIAN_REVOLUTIONARY -> "rank_east_asian_${facts.rank}"
+            Pool.NONE -> error("A no-portrait pool has no rank layer")
+        }
 
     private fun ageLayer(age: String): String? =
         when (age) {
@@ -322,6 +409,8 @@ object PortraitComposerV2 {
         serviceYear: Int?,
         status: HeroStatus,
         permanentInjury: Boolean,
+        country: Int?,
+        poolOverride: Pool?,
     ): Facts {
         val rank = if (rankId in RANK_AGE) rankId else "lieutenant"
         val gender = genderFor(seed)
@@ -336,8 +425,28 @@ object PortraitComposerV2 {
             season = season,
             scar = permanentInjury,
             wound = if (wounded) pick(WOUNDS, seed, "wound") else null,
+            pool = poolOverride ?: poolFor(country),
         )
     }
+
+    /**
+     * Country ids are the merged equipment-country ids used by the actual scenario player. Unknown
+     * countries deliberately receive the monogram fallback instead of silently wearing Soviet
+     * insignia; `null` keeps the historical default for old/internal callers that predate country
+     * threading.
+     */
+    @Suppress("MagicNumber") // Stable equipment-country ids, not arithmetic constants.
+    fun poolFor(country: Int?): Pool =
+        when (country) {
+            null, 19, 61, 89 -> Pool.USSR_1942
+            103, 144, 187, 188, 196 -> Pool.REVOLUTION_1919
+            226 -> Pool.SPANISH_REPUBLIC_1936
+            43 -> Pool.YUGOSLAV_PARTISAN_1941
+            21, 25, 276 -> Pool.EAST_ASIAN_REVOLUTIONARY
+            else -> Pool.NONE
+        }
+
+    private fun poolById(id: String?): Pool? = Pool.entries.firstOrNull { it.id == id }
 
     private fun ageBand(
         seed: Int,
@@ -405,6 +514,28 @@ object PortraitComposerV2 {
             if (r < 0) return key
         }
         return entries.last().key
+    }
+
+    private fun fieldHeadgear(
+        groundPrimary: String,
+        groundSecondary: String,
+    ): Map<String, Map<String, Map<String, Double>>> {
+        val ground =
+            mapOf(
+                "summer" to mapOf(groundPrimary to 0.55, groundSecondary to 0.25, "none" to 0.2),
+                "winter" to mapOf(groundPrimary to 0.55, groundSecondary to 0.25, "none" to 0.2),
+            )
+        val aviation =
+            mapOf(
+                "summer" to mapOf("headgear_flight_helmet" to 0.55, groundPrimary to 0.25, "none" to 0.2),
+                "winter" to mapOf("headgear_flight_helmet" to 0.55, groundPrimary to 0.25, "none" to 0.2),
+            )
+        return mapOf(
+            "infantry" to ground,
+            "armor" to ground,
+            "artillery" to ground,
+            "aviation" to aviation,
+        )
     }
 
     private val PREFIX_CATEGORY =

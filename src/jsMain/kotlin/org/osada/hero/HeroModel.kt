@@ -76,12 +76,18 @@ data class HeroBiographyFacts(
  * [female] is likewise an authored override. Procedural heroes leave it null and the gender is
  * rolled from [seed] ([PortraitComposerV2.genderFor]); an authored hero states it, because the
  * painting already decided and the biography's inflections must agree with the face (§4.11).
+ *
+ * [poolId] remembers the national/era recipe even when [layerIds] is intentionally empty. That is
+ * important for unsupported settings such as Spartacus: after the hero leaves a formation there
+ * is no country to derive from, but the saved `none` verdict must still select the monogram fallback
+ * instead of silently turning the hero into a Soviet officer.
  */
 data class PortraitComposition(
     val seed: Int,
     val layerIds: List<String> = emptyList(),
     val artId: String? = null,
     val female: Boolean? = null,
+    val poolId: String? = null,
 )
 
 /**

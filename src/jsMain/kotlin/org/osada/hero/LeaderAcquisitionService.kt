@@ -1,13 +1,14 @@
 package org.osada.hero
 
 /**
- * Decides whether a leaderless formation produces an officer — design brief §7.2, §22.
+ * Decides whether a formation's ordinary command produces a distinguished heroic commander —
+ * design brief §7.2, §22.
  *
  * This is the deliberate replacement for `Leaders.generateLeaderWithChance`, whose three
  * divergences from Panzer Marshal (and its latent crash above level 5) are catalogued in
  * `docs/leaders.md` §5 and were left unrepaired precisely because this supersedes them. The old
  * per-combat lottery is gone; acquisition is now a function of accumulated recognition plus
- * campaign-wide drought protection, so veterans reliably grow commanders (§29.3, §29.4).
+ * campaign-wide drought protection, so veterans reliably produce heroes (§29.3, §29.4).
  *
  * ## Purity and determinism
  *
@@ -15,11 +16,10 @@ package org.osada.hero
  * verdict; [HeroCampaign] owns applying it. The one piece of state it depends on for its seed is
  * [CoreFormation.emergenceChecks], a per-formation counter persisted in the save. Seeding from a
  * saved counter is what satisfies §29.17: reloading an autosave taken before the combat replays the
- * counter at its old value, so the same check produces the same verdict and the same officer — a
+ * counter at its old value, so the same check produces the same verdict and the same hero — a
  * reload cannot reroll a better hero.
  *
- * Legendary reservation (§6, §23) is Phase 5; the [EmergenceResult] shape leaves room for it but
- * every officer this phase produces is procedural.
+ * Legendary reservation (§6, §23) is evaluated before the regular procedural path.
  */
 internal object LeaderAcquisitionService {
     /** Everything a check needs, assembled by the caller from combat + campaign state. */
@@ -36,14 +36,15 @@ internal object LeaderAcquisitionService {
         val reservedLegendary: LegendaryHeroPool.LegendaryHero? = null,
         /** True when no authored hero matched the campaign/nation/date/class reservation request. */
         val proceduralLegendaryFallback: Boolean = false,
-        /** Notable leaderless-formation combats accumulated across the opening campaign. */
+        /** Notable combats by formations without heroes, accumulated across the opening campaign. */
         val earlyLegendaryQualifyingCombats: Int = 0,
     )
 
     sealed interface EmergenceResult {
         /**
-         * No officer this time. [eligible] distinguishes a failed roll (which counts toward drought)
-         * from a formation that was not a candidate at all (already led, or below the floor).
+         * No hero emerged this time. [eligible] distinguishes a failed roll (which counts toward
+         * drought) from a formation that was not eligible at all (already has a hero, or below
+         * the recognition floor).
          */
         data class NoLeader(
             val eligible: Boolean,
@@ -54,7 +55,7 @@ internal object LeaderAcquisitionService {
             val state: HeroState,
             val event: EmergenceEvent,
             val guaranteed: Boolean,
-            /** True when the officer is the campaign's reserved authored legendary (§6). */
+            /** True when the hero is the campaign's reserved authored legendary (§6). */
             val legendary: Boolean = false,
             /** Authored or procedural, this emergence fulfilled the reserved early-hero hook. */
             val consumedReservation: Boolean = false,
@@ -73,7 +74,7 @@ internal object LeaderAcquisitionService {
 
         resolveEarlyLegendary(context, balance)?.let { return it }
 
-        // Recognition 30 is the start of the ordinary officer lottery, not a completed progress bar.
+        // Recognition 30 starts the ordinary hero-emergence lottery; it is not a completed progress bar.
         val eligible = formation.recognition >= balance.recognitionEmergenceFloor
         if (!eligible) return EmergenceResult.NoLeader(eligible = false)
         return resolveRegularEligible(context, balance)
@@ -98,7 +99,7 @@ internal object LeaderAcquisitionService {
         return if (legendary != null) emergeLegendary(context, legendary) else emergeProceduralFallback(context)
     }
 
-    /** Ordinary procedural-officer roll after the recognition floor has been reached. */
+    /** Ordinary procedural-hero roll after the recognition floor has been reached. */
     private fun resolveRegularEligible(
         context: EmergenceContext,
         balance: HeroBalance,
@@ -180,7 +181,7 @@ internal object LeaderAcquisitionService {
             serviceYear = context.serviceYear,
         )
 
-    // Distinct salts so the roll and the officer's identity draw from unrelated streams, both keyed
+    // Distinct salts so the roll and the hero's identity draw from unrelated streams, both keyed
     // on the persisted per-formation counter for reload-stable results.
     private fun rollSeed(context: EmergenceContext): Int = seed(context, "roll")
 

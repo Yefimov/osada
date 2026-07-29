@@ -4,25 +4,25 @@ import org.osada.LeaderType
 import org.osada.model.Leaders
 
 /**
- * Builds a procedural officer — design brief §8.2, §8.3, §16.
+ * Builds a procedural heroic commander — design brief §8.2, §8.3, §16.
  *
  * This is the Phase 2 realisation of §29.7: "a procedural leader receives a deterministic name,
  * portrait, biography, background, and personal trait". Everything it produces is a pure function
  * of the [Request] (the request carries the seed), so the same emergence reconstructs the same
- * officer across save and reload — the §7.4 / §29.17 determinism contract.
+ * hero across save and reload — the §7.4 / §29.17 determinism contract.
  *
- * ## The two traits an officer starts with
+ * ## The two traits a hero starts with
  *
- * A new officer mirrors what the old system granted, but now both halves are justified:
+ * A new hero mirrors what the old system granted, but now both halves are justified:
  *
- * - a **professional background** ([HeroBackgrounds]) — the officer's training, granting the class's
+ * - a **professional background** ([HeroBackgrounds]) — the hero's training, granting the class's
  *   signature effect with a stated reason;
  * - a **personal trait** — a class-compatible [LeaderType] chosen from the [EmergenceEvent] that
  *   produced them (§8.3), so the trait argues from what just happened rather than a blind roll.
  *
  * Both are stored as [LegacyTraitMapping] ids and reach combat through [HeroTraitResolver] exactly
  * as a migrated hero's do — no new combat wiring, and the two are guaranteed distinct so the
- * officer really has two effects rather than one counted twice.
+ * hero really has two effects rather than one counted twice.
  */
 internal object ProceduralHeroGenerator {
     /** Everything the generator needs, resolved by [LeaderAcquisitionService] at emergence time. */
@@ -38,7 +38,7 @@ internal object ProceduralHeroGenerator {
         val serviceYear: Int?,
     )
 
-    /** Experience at which a newly emerged officer starts as [HeroPotential.PROMISING] rather than line. */
+    /** Experience at which a newly emerged hero starts as [HeroPotential.PROMISING] rather than line. */
     private const val PROMISING_EXPERIENCE = 300
 
     /** Universal traits with an effect on any unit, used to break a personal/background collision. */
@@ -81,7 +81,7 @@ internal object ProceduralHeroGenerator {
                     emergenceEventId = request.event.eventId,
                 ),
             // §15.3: store the composed layer ids and seed, not a bitmap — the portrait re-renders
-            // deterministically wherever it is shown. Uses the v2 (head-centric Soviet) composer so
+            // deterministically wherever it is shown. Uses the v2 head-centric composer so
             // the stored layers match the approved redesign the game renders.
             portrait =
                 PortraitComposerV2.composeFor(
@@ -90,6 +90,7 @@ internal object ProceduralHeroGenerator {
                     rankId = rankId,
                     birthYear = birthYear(request),
                     serviceYear = request.serviceYear,
+                    country = request.country,
                 ),
         )
 
@@ -112,7 +113,7 @@ internal object ProceduralHeroGenerator {
 
     /**
      * A class-appropriate personal trait for the emergence event, never equal to the background's
-     * granted trait (which would leave the officer only one effective trait).
+     * granted trait (which would leave the hero only one effective trait).
      *
      * Resolution order: the event's [EmergenceEvent.preferredTrait] if the class's own leader list
      * allows it; otherwise a seeded pick from that list (excluding index 0, the signature the

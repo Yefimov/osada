@@ -20,7 +20,7 @@ internal object HeroPromotionService {
         formation: CoreFormation,
         balance: HeroBalance = HeroBalance.DEFAULT,
     ): Promotion? {
-        val thresholds = balance.promotionThresholds
+        val thresholds = balance.promotionThresholdsFor(hero.potential)
         val milestoneReached =
             hero.promotionsAwarded < thresholds.size && hero.experience >= thresholds[hero.promotionsAwarded]
         if (!milestoneReached) return null

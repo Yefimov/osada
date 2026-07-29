@@ -483,12 +483,11 @@ input[type=text], input[type=search] {
     font-family: var(--osada-font-ui); font-size: 14px; font-weight: bold;
     letter-spacing: .08em; text-transform: uppercase; color: inherit;
 }
-#smCPlayBut::after { content: "Start Campaign"; }
-#smSPlayBut::after { content: "Start Scenario"; }
+#smCPlayBut::after, #smSPlayBut::after { content: attr(data-label); }
 /* The side picker overwrites this with the resolved side name ("Start as Soviet Union") via
  * data-label — attr() keeps the button's own click handler/launch path completely untouched. */
 #smSPlayBut[data-label]::after { content: attr(data-label); }
-#smCBackBut::after, #smSBackBut::after { content: "Back"; }
+#smCBackBut::after, #smSBackBut::after { content: attr(data-label); }
 
 /* =====================  F. IN-GAME HUD (light reskin)  ================== */
 
@@ -1278,7 +1277,7 @@ hr {
 /* Empty (textContent="") when not applicable — only a grounded-by-weather air unit shows this. */
 .uc-weather { flex: 0 0 auto; color: var(--osada-red-bright); font-size: 13px; }
 
-/* Leader slot: empty outline vs filled (spec); non-clickable, tooltip only. */
+/* Hero slot: no emerged hero vs heroic commander present (spec); non-clickable, tooltip only. */
 .uc-leader-slot {
     flex: 0 0 auto; width: 18px; height: 18px; cursor: default;
     border: 1.5px solid var(--osada-text-dim); border-radius: 50%;
@@ -1743,7 +1742,7 @@ hr {
     display: flex; flex-wrap: wrap; gap: 10px; align-content: flex-start;
 }
 #eqTransportList:not(:empty)::before {
-    content: "Transport (optional — click again to unselect)";
+    content: attr(data-label);
     display: block; width: 100%; font-size: 11px; font-weight: bold;
     letter-spacing: .08em; text-transform: uppercase; color: var(--osada-text-dim);
     margin-bottom: 2px;
@@ -1848,8 +1847,7 @@ hr {
     font-family: var(--osada-font-ui); font-size: 14px; font-weight: bold;
     letter-spacing: .09em; text-transform: uppercase; color: #f4e3c6;
 }
-#eqNewBut::after { content: "Buy unit"; }
-#eqUpgradeBut::after { content: "Upgrade"; }
+#eqNewBut::after, #eqUpgradeBut::after { content: attr(data-label); }
 .eqCostText {
     float: none !important; margin: 0 !important; overflow: visible; white-space: normal;
     font-size: 13px !important; color: var(--osada-brass) !important;
@@ -1870,7 +1868,7 @@ hr {
     box-shadow: none; font-size: 0 !important;
 }
 #eqSellBut::after {
-    content: "Disband / Sell"; font-family: var(--osada-font-ui); font-size: 12px;
+    content: attr(data-label); font-family: var(--osada-font-ui); font-size: 12px;
     font-weight: bold; letter-spacing: .07em; text-transform: uppercase; color: #c9463d;
 }
 #eqSellBut:hover { border-color: #c9463d !important; }
@@ -2059,7 +2057,7 @@ hr {
     font-size: 0; text-align: center; cursor: pointer;
 }
 #uiokbut::after {
-    content: "Continue"; font-family: var(--osada-font-ui); font-size: 14px; font-weight: bold;
+    content: attr(data-label); font-family: var(--osada-font-ui); font-size: 14px; font-weight: bold;
     color: #f4e3c6; text-transform: uppercase; letter-spacing: .09em;
 }
 #uiokbut:hover { background: linear-gradient(180deg, #bb3c38, #83201d); }
@@ -2431,8 +2429,7 @@ hr {
     font-family: var(--osada-font-ui); font-size: 13px; font-weight: bold;
     letter-spacing: .08em; text-transform: uppercase; color: var(--osada-text);
 }
-#smStOkBut::after { content: "Close"; }
-#smSetOkBut::after { content: "Done"; }
+#smStOkBut::after, #smSetOkBut::after { content: attr(data-label); }
 /* Settings: the button flows after the scrolling section list, right-aligned. */
 #smSetOkBut { display: block; margin: 10px 0 2px auto; }
 
@@ -2943,3 +2940,463 @@ hr {
  * picker's bonus/penalty lines use, so the two surfaces read as one system. */
 .osada-stat--boosted { color: #8fbf6a !important; font-weight: bold; cursor: help; }
 .osada-stat--reduced { color: #c87b6a !important; font-weight: bold; cursor: help; }
+
+/* ============================================================================
+ * LOCAL TWO-TAB MULTIPLAYER
+ *
+ * This screen is built dynamically by LocalTwoTabMultiplayer. It deliberately
+ * uses its own component family instead of inheriting the prototype's inline
+ * flex column, so the hub and lobby read like the other OSADA staff screens.
+ * ========================================================================= */
+#smMultiplayerLocal.osada-mp-screen {
+    position: absolute;
+    inset: 0;
+    z-index: 100;
+    width: min(1080px, 92vw);
+    height: min(720px, 90vh);
+    margin: auto;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    isolation: isolate;
+    border: 2px solid var(--osada-brass);
+    border-radius: 6px;
+    background:
+        linear-gradient(120deg, rgba(11, 13, 16, .94), rgba(24, 27, 32, .91)),
+        url('../resources/staff_table_background.png') center / cover no-repeat;
+    box-shadow:
+        0 0 0 1px rgba(0, 0, 0, .85),
+        0 22px 70px rgba(0, 0, 0, .82),
+        inset 0 0 60px rgba(0, 0, 0, .55);
+    color: var(--osada-text);
+    font-family: var(--osada-font-ui);
+}
+#smMultiplayerLocal.osada-mp-screen::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        linear-gradient(90deg, transparent 0 49.85%, rgba(180, 138, 60, .06) 50%, transparent 50.15%),
+        repeating-linear-gradient(0deg, transparent 0 39px, rgba(255, 255, 255, .018) 40px);
+}
+
+.osada-mp-header {
+    flex: 0 0 auto;
+    min-height: 118px;
+    padding: 24px 30px 20px 34px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    border-bottom: 1px solid var(--osada-brass);
+    background:
+        linear-gradient(90deg, rgba(165, 30, 34, .2), transparent 42%),
+        rgba(6, 7, 9, .55);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, .35);
+}
+.osada-mp-header-copy { flex: 1 1 auto; min-width: 0; }
+.osada-mp-eyebrow {
+    margin-bottom: 5px;
+    color: var(--osada-brass);
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: .24em;
+}
+.osada-mp-title {
+    margin: 0;
+    color: #f1ecdf;
+    font-size: clamp(25px, 3vw, 36px);
+    line-height: 1.06;
+    font-weight: normal;
+    letter-spacing: .025em;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, .75);
+}
+.osada-mp-subtitle {
+    max-width: 720px;
+    margin-top: 8px;
+    color: var(--osada-text-dim);
+    font-size: 13px;
+    line-height: 1.45;
+}
+.osada-mp-signal {
+    flex: 0 0 74px;
+    width: 74px;
+    height: 74px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    border: 1px solid #5d5036;
+    border-radius: 50%;
+    background: radial-gradient(circle, #2e333a 0 42%, #181b20 43% 59%, #0f1114 60%);
+    box-shadow: inset 0 0 0 3px rgba(180, 138, 60, .1), 0 4px 12px rgba(0, 0, 0, .55);
+}
+.osada-mp-signal-ring {
+    width: 17px;
+    height: 17px;
+    border: 2px solid #91bd79;
+    border-radius: 50%;
+    box-shadow: 0 0 9px rgba(145, 189, 121, .55), inset 0 0 5px rgba(145, 189, 121, .4);
+}
+.osada-mp-signal-label {
+    color: #a7cb92;
+    font-size: 8px;
+    font-weight: bold;
+    letter-spacing: .17em;
+}
+
+.osada-mp-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    padding: 24px 30px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+.osada-mp-card {
+    position: relative;
+    box-sizing: border-box;
+    border: 1px solid var(--osada-metal-600);
+    border-radius: 4px;
+    background:
+        linear-gradient(155deg, rgba(48, 53, 62, .9), rgba(24, 27, 32, .96)),
+        url('../resources/panel_metal_dark.png') center / cover no-repeat;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .045), 0 6px 18px rgba(0, 0, 0, .32);
+}
+.osada-mp-identity {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(260px, 390px);
+    align-items: center;
+    gap: 28px;
+    padding: 17px 20px;
+    border-left: 3px solid var(--osada-brass);
+}
+.osada-mp-card-title {
+    color: #eee8d9;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: .025em;
+}
+.osada-mp-card-copy {
+    margin-top: 5px;
+    color: var(--osada-text-dim);
+    font-size: 12px;
+    line-height: 1.45;
+}
+.osada-mp-field { width: 100%; }
+.osada-mp-field-label {
+    margin: 0 0 6px 2px;
+    color: var(--osada-brass);
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: .11em;
+    text-transform: uppercase;
+}
+#smMultiplayerLocal .osada-mp-input {
+    display: block;
+    width: 100%;
+    height: 43px;
+    margin: 0;
+    padding: 0 13px;
+    box-sizing: border-box;
+    outline: none;
+    border: 1px solid #505762;
+    border-radius: 3px;
+    background: rgba(8, 9, 11, .78);
+    color: #f1ecdf;
+    font: 14px var(--osada-font-ui);
+    box-shadow: inset 0 2px 7px rgba(0, 0, 0, .55);
+    transition: border-color .13s, box-shadow .13s;
+}
+#smMultiplayerLocal .osada-mp-input:hover { border-color: #716343; }
+#smMultiplayerLocal .osada-mp-input:focus {
+    border-color: var(--osada-brass);
+    box-shadow: inset 0 2px 7px rgba(0, 0, 0, .55), 0 0 0 2px rgba(180, 138, 60, .14);
+}
+#smMultiplayerLocal .osada-mp-input--code {
+    text-transform: uppercase;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 19px;
+    font-weight: bold;
+    letter-spacing: .2em;
+}
+
+.osada-mp-choices {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 18px;
+}
+.osada-mp-action-card {
+    min-height: 230px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow: hidden;
+}
+.osada-mp-action-card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 90px;
+    height: 90px;
+    opacity: .12;
+    background: linear-gradient(135deg, transparent 49%, var(--osada-brass) 50% 51%, transparent 52%);
+}
+.osada-mp-action-card--host { border-top: 2px solid var(--osada-red-bright); }
+.osada-mp-action-card--join { border-top: 2px solid var(--osada-brass); }
+.osada-mp-action-card .osada-mp-card-heading { min-height: 49px; }
+.osada-mp-action-card .osada-mp-field { margin-top: auto; }
+.osada-mp-step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--osada-text-dim);
+}
+.osada-mp-step-number {
+    min-width: 28px;
+    padding-right: 8px;
+    border-right: 1px solid var(--osada-brass);
+    color: var(--osada-brass);
+    font: bold 13px Consolas, "Courier New", monospace;
+}
+.osada-mp-step-label {
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+}
+
+#smMultiplayerLocal .osada-mp-button {
+    min-width: 150px;
+    min-height: 43px;
+    margin: 0;
+    padding: 0 19px;
+    box-sizing: border-box;
+    border: 1px solid #555d68;
+    border-radius: 3px;
+    background: linear-gradient(180deg, #353b45, #22262c);
+    color: #ede8dc;
+    font: bold 12px var(--osada-font-ui);
+    letter-spacing: .075em;
+    text-transform: uppercase;
+    text-shadow: 0 1px 2px #000;
+    cursor: pointer;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .075), 0 3px 8px rgba(0, 0, 0, .35);
+    transition: border-color .12s, background .12s, color .12s, transform .05s;
+}
+#smMultiplayerLocal .osada-mp-button:hover:not(:disabled) {
+    border-color: var(--osada-brass);
+    background: linear-gradient(180deg, #414854, #292e35);
+    color: #fff;
+}
+#smMultiplayerLocal .osada-mp-button:active:not(:disabled) { transform: translateY(1px); }
+#smMultiplayerLocal .osada-mp-button--primary {
+    border-color: #d1534f;
+    background: linear-gradient(180deg, #b82a2e, #81171b);
+}
+#smMultiplayerLocal .osada-mp-button--primary:hover:not(:disabled) {
+    border-color: #ef716b;
+    background: linear-gradient(180deg, #ce383b, #951e22);
+}
+#smMultiplayerLocal .osada-mp-button--quiet {
+    min-width: 0;
+    border-color: transparent;
+    background: transparent;
+    box-shadow: none;
+    color: var(--osada-text-dim);
+}
+#smMultiplayerLocal .osada-mp-button--quiet:hover:not(:disabled) {
+    border-color: #555d68;
+    background: rgba(255, 255, 255, .035);
+    color: var(--osada-text);
+}
+#smMultiplayerLocal .osada-mp-button:disabled {
+    opacity: .38;
+    filter: grayscale(.45);
+    cursor: default;
+}
+.osada-mp-action-card > .osada-mp-button { align-self: flex-start; margin-top: auto; }
+
+.osada-mp-footer {
+    flex: 0 0 auto;
+    min-height: 66px;
+    padding: 11px 22px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    border-top: 1px solid #454b55;
+    background: rgba(7, 8, 10, .7);
+}
+.osada-mp-footnote {
+    flex: 1 1 auto;
+    padding-left: 25px;
+    color: var(--osada-text-dim);
+    font-size: 11px;
+    line-height: 1.4;
+    position: relative;
+}
+.osada-mp-footnote::before {
+    content: "i";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 16px;
+    height: 16px;
+    transform: translateY(-50%);
+    border: 1px solid var(--osada-brass);
+    border-radius: 50%;
+    color: var(--osada-brass);
+    font: bold 11px/16px Georgia, serif;
+    text-align: center;
+}
+
+.osada-mp-body--lobby {
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+}
+.osada-mp-room-strip {
+    min-height: 78px;
+    padding: 12px 18px;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: auto minmax(170px, auto) minmax(0, 1fr);
+    align-items: center;
+    gap: 20px;
+    border: 1px solid #66573a;
+    border-left: 4px solid var(--osada-brass);
+    background:
+        linear-gradient(90deg, rgba(180, 138, 60, .12), transparent 54%),
+        rgba(11, 13, 16, .75);
+}
+.osada-mp-room-label {
+    color: var(--osada-text-dim);
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: .14em;
+}
+.osada-mp-room-code {
+    color: #f2d58d;
+    font: bold 28px Consolas, "Courier New", monospace;
+    letter-spacing: .24em;
+    text-shadow: 0 0 12px rgba(180, 138, 60, .25);
+}
+.osada-mp-room-help {
+    padding-left: 20px;
+    border-left: 1px solid #4b4435;
+    color: var(--osada-text-dim);
+    font-size: 12px;
+    line-height: 1.45;
+}
+.osada-mp-alert {
+    padding: 10px 13px;
+    border: 1px solid #59616d;
+    border-left-width: 3px;
+    background: rgba(24, 28, 34, .88);
+    color: var(--osada-text);
+    font-size: 12px;
+}
+.osada-mp-alert--info { border-left-color: #7898b8; color: #b9cde0; }
+.osada-mp-alert--error { border-left-color: var(--osada-red-bright); color: #f0a7a3; }
+.osada-mp-roster-card { padding: 17px 18px 18px; }
+.osada-mp-roster {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 11px;
+    margin-top: 15px;
+}
+.osada-mp-player {
+    min-height: 72px;
+    padding: 10px 12px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid #454c56;
+    background: rgba(7, 8, 10, .42);
+}
+.osada-mp-player-index {
+    flex: 0 0 34px;
+    width: 34px;
+    height: 34px;
+    border: 1px solid #61583f;
+    border-radius: 50%;
+    color: var(--osada-brass);
+    font: bold 13px/34px Consolas, "Courier New", monospace;
+    text-align: center;
+}
+.osada-mp-player-identity { flex: 1 1 auto; min-width: 0; }
+.osada-mp-player-name {
+    color: #eee8d9;
+    font-size: 14px;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.osada-mp-player-role {
+    margin-top: 4px;
+    color: var(--osada-text-dim);
+    font-size: 10px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+.osada-mp-ready-state {
+    flex: 0 0 auto;
+    padding: 5px 7px;
+    border: 1px solid #555d68;
+    color: #8d9299;
+    font-size: 9px;
+    font-weight: bold;
+    letter-spacing: .08em;
+}
+.osada-mp-ready-state--ready {
+    border-color: #668b59;
+    background: rgba(78, 119, 62, .14);
+    color: #a6cd91;
+}
+.osada-mp-player--empty { border-style: dashed; opacity: .55; }
+.osada-mp-player--empty .osada-mp-player-name {
+    color: var(--osada-text-dim);
+    font-size: 12px;
+    font-weight: normal;
+    font-style: italic;
+}
+
+@media (max-width: 760px) {
+    #smMultiplayerLocal.osada-mp-screen { width: 96vw; height: 94vh; }
+    .osada-mp-header { min-height: 100px; padding: 18px 20px; }
+    .osada-mp-signal { display: none; }
+    .osada-mp-body { padding: 17px; }
+    .osada-mp-identity { grid-template-columns: 1fr; gap: 13px; }
+    .osada-mp-choices, .osada-mp-roster { grid-template-columns: 1fr; }
+    .osada-mp-action-card { min-height: 210px; }
+    .osada-mp-room-strip {
+        grid-template-columns: auto 1fr;
+        gap: 8px 14px;
+    }
+    .osada-mp-room-help {
+        grid-column: 1 / -1;
+        padding: 8px 0 0;
+        border-left: 0;
+        border-top: 1px solid #4b4435;
+    }
+    .osada-mp-footer { flex-wrap: wrap; }
+    .osada-mp-footnote { flex-basis: 100%; }
+}
+
+@media (max-height: 650px) and (min-width: 761px) {
+    #smMultiplayerLocal.osada-mp-screen { height: 94vh; }
+    .osada-mp-header { min-height: 94px; padding-top: 16px; padding-bottom: 14px; }
+    .osada-mp-body { padding-top: 16px; padding-bottom: 16px; }
+    .osada-mp-action-card { min-height: 205px; }
+}

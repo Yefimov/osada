@@ -2,6 +2,7 @@ package org.osada
 
 import org.osada.campaign.CampaignNarrative
 import org.osada.hero.HeroCampaign
+import org.osada.i18n.I18n
 import org.osada.model.Player
 import org.osada.model.getPlayers
 import org.osada.scenario.Campaign
@@ -162,7 +163,10 @@ class Game {
     ) {
         console.log("[OSADA] onScenarioLoadFinished fromRestore:", fromRestore, "isLoaded:", scenario?.isLoaded)
         if (scenario?.isLoaded != true) {
-            UIBuilder.messageDynamic("Error", "Error Loading scenario ${scenario?.file}")
+            UIBuilder.messageDynamic(
+                I18n.t("game.error.title"),
+                I18n.t("game.error.loading_scenario", mapOf("file" to (scenario?.file ?: "—"))),
+            )
             gameEnded = true
             return
         }

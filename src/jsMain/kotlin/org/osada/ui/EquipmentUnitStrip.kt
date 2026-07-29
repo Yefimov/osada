@@ -162,7 +162,7 @@ internal object EquipmentUnitStrip {
         val rename = addTag(container, "span")
         rename.className = "osada-rename-btn osada-rename-btn--card"
         rename.innerHTML = "&#9998;" // ✎
-        rename.title = "Rename"
+        rename.title = I18n.t("unit_info.rename.label")
         rename.onclick = { e: MouseEvent ->
             e.stopPropagation() // must not select the card (that re-render would kill the input)
             startCardRename(ui, container, nameDiv, unit)

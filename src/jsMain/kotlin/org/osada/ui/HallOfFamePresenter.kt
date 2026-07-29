@@ -1,6 +1,7 @@
 package org.osada.ui
 
 import kotlinx.browser.document
+import org.osada.i18n.I18n
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.MouseEvent
 
@@ -27,17 +28,21 @@ internal object HallOfFamePresenter {
         header.className = "osada-hero-header"
         val title = addTag(header, "div")
         title.className = "osada-hero-id"
-        addText(title, "osada-hero-name", "Hall of Fame")
-        addText(title, "osada-hero-sub", "Legends across your campaigns · ${entries.size}")
+        addText(title, "osada-hero-name", I18n.t("hero.hall_of_fame.title"))
+        addText(
+            title,
+            "osada-hero-sub",
+            I18n.t("hero.hall_of_fame.count", mapOf("count" to entries.size)),
+        )
         val close = addTag(header, "span")
         close.className = "osada-ico osada-ico--close osada-hero-close"
-        close.title = "Close"
+        close.title = I18n.t("common.close.label")
         close.onclick = { _: MouseEvent -> close() }
 
         val body = addTag(box, "div")
         body.className = "osada-hero-tabbody"
         if (entries.isEmpty()) {
-            addText(body, "osada-hero-empty", "No legends yet — complete a campaign to enshrine its commanders here.")
+            addText(body, "osada-hero-empty", I18n.t("hero.hall_of_fame.empty"))
             return
         }
         entries.sortedByDescending { it.campaign }.forEach { entry -> renderEntry(body, entry) }

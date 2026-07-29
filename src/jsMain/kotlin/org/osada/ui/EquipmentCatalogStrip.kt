@@ -2,6 +2,7 @@ package org.osada.ui
 
 import org.osada.CURRENCY_MULTIPLIER
 import org.osada.UnitClass
+import org.osada.i18n.I18n
 import org.osada.model.Equipment
 import org.osada.model.EquipmentData
 import org.osada.model.GameMap
@@ -131,7 +132,7 @@ internal object EquipmentCatalogStrip {
     ): HTMLElement {
         val container = addTag(containerId, "div")
         container.className = "eqUnitBox"
-        container.title = "Select ${eq.name} to inspect its statistics, availability, price and special capabilities."
+        container.title = I18n.t("equipment.card.inspect.help", mapOf("name" to eq.name))
         val img = EquipmentWindowState.buildCardSprite(container)
         val nameDiv = addTag(container, "div")
         val costDiv = addTag(container, "div")

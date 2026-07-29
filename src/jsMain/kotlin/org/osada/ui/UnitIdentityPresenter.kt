@@ -4,11 +4,12 @@ package org.osada.ui
 
 import org.osada.hero.HeroCampaign
 import org.osada.hero.HeroEventDisplay
+import org.osada.i18n.GameText
+import org.osada.i18n.I18n
 import org.osada.model.GameUnit
 import org.osada.model.Leaders
 import org.osada.model.getUnits
 import org.osada.rules.UnitCapabilities
-import org.osada.unitClassNames
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.MouseEvent
 
@@ -91,11 +92,18 @@ internal object UnitIdentityPresenter {
         val dossier = HeroCampaign.dossier(unit)
         when {
             dossier != null -> {
-                val label = "Led by ${dossier.rank} ${dossier.name}"
+                val label =
+                    I18n.t(
+                        "unit_info.leader.led_by",
+                        mapOf("rank" to dossier.rank, "name" to dossier.name),
+                    )
                 leader.textContent = label
                 leader.classList.add("uc-commander-line--hero")
-                leader.title = "$label\nClick to open the commander dossier."
-                leader.setAttribute("aria-label", "$label. Open commander dossier")
+                leader.title = "$label\n${I18n.t("unit_info.leader.open_dossier.help")}"
+                leader.setAttribute(
+                    "aria-label",
+                    I18n.t("unit_info.leader.open_dossier.aria", mapOf("label" to label)),
+                )
                 leader.onclick = { event: MouseEvent ->
                     event.stopPropagation()
                     LeaderDossierPresenter.openForUnit(unit)
@@ -104,8 +112,8 @@ internal object UnitIdentityPresenter {
             }
             unit.leader >= 0 -> {
                 val descriptions = Leaders.getUnitLeaderDescriptions(unit)
-                val trait = descriptions.firstOrNull()?.first ?: "authored commander"
-                val label = "Legacy commander: $trait"
+                val trait = descriptions.firstOrNull()?.first ?: I18n.t("unit_info.leader.authored_commander")
+                val label = I18n.t("unit_info.leader.legacy", mapOf("trait" to trait))
                 leader.textContent = label
                 leader.title = descriptions.joinToString("\n") { "${it.first}: ${it.second}" }.ifBlank { label }
                 leader.setAttribute("aria-label", label)
@@ -116,36 +124,47 @@ internal object UnitIdentityPresenter {
                 enableKeyboardActivation(leader)
             }
             unit.isTemporaryBorrowed || unit.nodossier -> {
-                leader.textContent = "Temporary auxiliary formation"
+                leader.textContent = I18n.t("unit_info.leader.temporary.label")
                 leader.classList.add("uc-commander-line--disabled")
-                leader.title = "This formation is explicitly temporary and does not develop a persistent commander."
+                leader.title = I18n.t("unit_info.leader.temporary.help")
                 disableInteraction(leader)
             }
             unit.formationId == null -> {
-                leader.textContent = "No persistent commander"
+                leader.textContent = I18n.t("unit_info.leader.scenario_only.label")
                 leader.classList.add("uc-commander-line--disabled")
-                leader.title = "Scenario-only formation: commander development is unavailable."
+                leader.title = I18n.t("unit_info.leader.scenario_only.help")
                 disableInteraction(leader)
             }
             else -> {
                 val progress = HeroCampaign.recognitionProgress(unit)
-                val label = "Officer candidate developing"
+                val label = I18n.t("unit_info.leader.candidate.label")
                 leader.textContent = label
                 leader.classList.add("uc-commander-line--candidate")
                 leader.title =
                     if (progress == null) {
-                        "No commander assigned. This formation has no recognition record yet."
+                        I18n.t("unit_info.leader.candidate.no_record")
                     } else {
                         val chanceLine =
                             when {
                                 progress.recognition < progress.target ->
-                                    "Officer checks unlock at ${progress.target} recognition"
+                                    I18n.t("unit_info.leader.checks_unlock", mapOf("target" to progress.target))
                                 progress.drought >= progress.guaranteedAfterFailures ->
-                                    "Next notable action: officer guaranteed"
-                                else -> "Next notable action: ${progress.chancePercent}% officer chance"
+                                    I18n.t("unit_info.leader.guaranteed")
+                                else ->
+                                    I18n.t(
+                                        "unit_info.leader.chance",
+                                        mapOf("chance" to progress.chancePercent),
+                                    )
                             }
-                        "No commander assigned\nRecognition: ${progress.recognition}\n$chanceLine\n" +
-                            "Drought protection: ${progress.drought}/${progress.guaranteedAfterFailures}"
+                        I18n.t(
+                            "unit_info.leader.candidate.help",
+                            mapOf(
+                                "recognition" to progress.recognition,
+                                "chanceLine" to chanceLine,
+                                "drought" to progress.drought,
+                                "guaranteedAfter" to progress.guaranteedAfterFailures,
+                            ),
+                        )
                     }
                 leader.setAttribute("aria-label", "$label. ${leader.title}")
                 leader.onclick = { event: MouseEvent ->
@@ -186,15 +205,22 @@ internal object UnitIdentityPresenter {
     ) {
         val data = unit.unitData(true)
         byId("osadaUcClass")?.apply {
-            val className = unitClassNames.getOrNull(data.uclass) ?: "Unit"
-            val service =
+            val className = GameText.unitClass(data.uclass)
+            val serviceKey =
                 when {
-                    unit.isTemporaryBorrowed || unit.nodossier -> "AUXILIARY"
-                    unit.formationId != null -> "CORE"
-                    else -> "SCENARIO"
+                    unit.isTemporaryBorrowed || unit.nodossier -> "auxiliary"
+                    unit.formationId != null -> "core"
+                    else -> "scenario"
                 }
-            textContent = "$className · $service"
-            title = "Unit class and campaign-persistence status"
+            textContent =
+                I18n.t(
+                    "unit_info.identity.class_service",
+                    mapOf(
+                        "class" to className,
+                        "service" to I18n.t("unit_info.identity.service.$serviceKey"),
+                    ),
+                )
+            title = I18n.t("unit_info.identity.class_service.help")
         }
 
         val units =
@@ -212,31 +238,27 @@ internal object UnitIdentityPresenter {
 
         val states =
             buildList {
-                if (unit.hits > 0) add("SUPPRESSED ${unit.hits}")
-                if (unit.isSurprised) add("SURPRISED")
-                if (unit.isMounted) add("MOUNTED")
-                if (!unit.isDeployed) add("RESERVE")
+                if (unit.hits > 0) add(I18n.t("unit_info.state.suppressed.label", mapOf("hits" to unit.hits)))
+                if (unit.isSurprised) add(I18n.t("unit_info.state.surprised.label"))
+                if (unit.isMounted) add(I18n.t("unit_info.state.mounted.label"))
+                if (!unit.isDeployed) add(I18n.t("unit_info.state.reserve.label"))
             }
         byId("osadaUcTempState")?.apply {
             style.display = if (states.isEmpty()) "none" else "inline-flex"
             textContent = states.joinToString(" · ")
             title =
                 buildList {
-                    add("Current temporary battlefield state.")
+                    add(I18n.t("unit_info.state.help"))
                     if (unit.hits > 0) {
                         add(
-                            "SUPPRESSED ${unit.hits}: each suppression point currently reduces defence by 2 " +
-                                "in combat for affected units. Artillery, fortifications and most naval classes " +
-                                "ignore this defence penalty.",
+                            I18n.t("unit_info.state.suppressed.help", mapOf("hits" to unit.hits)),
                         )
                     }
                     if (unit.isSurprised) {
-                        add(
-                            "SURPRISED: the unit was caught unprepared and may suffer combat penalties.",
-                        )
+                        add(I18n.t("unit_info.state.surprised.help"))
                     }
-                    if (unit.isMounted) add("MOUNTED: the formation is currently using its organic transport.")
-                    if (!unit.isDeployed) add("RESERVE: the formation is waiting to be deployed.")
+                    if (unit.isMounted) add(I18n.t("unit_info.state.mounted.help"))
+                    if (!unit.isDeployed) add(I18n.t("unit_info.state.reserve.help"))
                 }.joinToString("\n")
         }
     }
@@ -269,26 +291,29 @@ internal object UnitIdentityPresenter {
             formation.history.count {
                 it.eventId.contains("capture", true) || it.eventId.contains("objective", true)
             }
-        val commander = HeroCampaign.dossier(unit)?.let { "${it.rank} ${it.name}" } ?: "None"
-        val honors = formation.battleHonors.takeIf { it.isNotEmpty() }?.joinToString() ?: "None"
+        val commander = HeroCampaign.dossier(unit)?.let { "${it.rank} ${it.name}" } ?: I18n.t("common.none")
+        val honors = formation.battleHonors.takeIf { it.isNotEmpty() }?.joinToString() ?: I18n.t("common.none")
         listOf(
-            "Recognition" to formation.recognition.toString(),
-            "Scenarios recorded" to scenarios.toString(),
-            "Enemy formations destroyed" to victories.toString(),
-            "Objectives captured" to objectives.toString(),
-            "Current commander" to commander,
-            "Battle honours" to honors,
+            I18n.t("unit_info.formation.recognition.label") to formation.recognition.toString(),
+            I18n.t("unit_info.formation.scenarios.label") to scenarios.toString(),
+            I18n.t("unit_info.formation.destroyed.label") to victories.toString(),
+            I18n.t("unit_info.formation.objectives.label") to objectives.toString(),
+            I18n.t("unit_info.formation.commander.label") to commander,
+            I18n.t("unit_info.formation.honours.label") to honors,
         ).forEach { (key, value) ->
             val row = addTag(detail, "div")
             row.className = "osada-formation-detail__summary"
-            row.textContent = "$key: $value"
+            row.textContent = I18n.t("unit_info.formation.summary", mapOf("label" to key, "value" to value))
         }
 
         val button = addTag(detail, "button")
         button.className = "osada-service-record-button"
-        button.textContent = "SERVICE RECORD"
-        button.title = "Open the complete chronological formation history."
-        button.setAttribute("aria-label", "Open service record for ${formation.displayName}")
+        button.textContent = I18n.t("unit_info.formation.service_record.label")
+        button.title = I18n.t("unit_info.formation.service_record.help")
+        button.setAttribute(
+            "aria-label",
+            I18n.t("unit_info.formation.service_record.aria", mapOf("formation" to formation.displayName)),
+        )
         button.onclick = { event: MouseEvent ->
             event.stopPropagation()
             FormationServiceRecordPresenter.open(unit)

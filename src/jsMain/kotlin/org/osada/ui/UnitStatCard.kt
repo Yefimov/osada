@@ -7,19 +7,18 @@ import org.osada.UNIT_NAME_MAX_LENGTH
 import org.osada.UnitClass
 import org.osada.hero.HeroCampaign
 import org.osada.hero.HeroEventDisplay
+import org.osada.i18n.GameText
+import org.osada.i18n.I18n
 import org.osada.model.Equipment
 import org.osada.model.EquipmentData
 import org.osada.model.GameUnit
 import org.osada.model.Leaders
 import org.osada.model.getCountryName
-import org.osada.movMethodNames
 import org.osada.rules.GameRules
 import org.osada.rules.airGroundedByWeather
 import org.osada.rules.isAir
 import org.osada.rules.unitUsesFuel
 import org.osada.uiSettings
-import org.osada.unitClassNames
-import org.osada.unitTypeNames
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.MouseEvent
 
@@ -94,7 +93,7 @@ internal class UnitStatCard(
         byId("uFlag")?.style?.backgroundImage =
             "url('resources/ui/flags/${Equipment.UNITED_NAME}/flag_big_${unit.flag}.png')"
         byId("uFlag")?.textContent = Equipment.getCountryName(unit.flag - 1)
-        val equipmentLabel = "$ordinal ${data.name} ${unitClassNames[data.uclass]}$coreText$leaderText"
+        val equipmentLabel = "$ordinal ${data.name} ${GameText.unitClass(data.uclass)}$coreText$leaderText"
         // A player-given name replaces the composite label on the card; the tooltip keeps the
         // equipment identity in parentheses so a renamed unit is never a mystery model.
         val fullNameLabel = unit.customName ?: equipmentLabel
@@ -137,14 +136,14 @@ internal class UnitStatCard(
             fuelStr = htmlRed(fuelStr)
         }
 
-        byId("uTarget")?.textContent = unitTypeNames[data.target]
+        byId("uTarget")?.textContent = GameText.unitType(data.target)
         byId("uMoveType")?.textContent =
             if (data.uclass <= UnitClass.AIR_DEFENCE.value &&
                 data.movmethod == MovMethod.DEEP_NAVAL.value
             ) {
-                "Rail Road"
+                I18n.t("game.movement_type.rail_road")
             } else {
-                movMethodNames[data.movmethod]
+                GameText.movementType(data.movmethod)
             }
         byId("uStr")?.textContent = "${unit.strength}/10"
         byId("uFuel")?.innerHTML = fuelStr
@@ -172,7 +171,7 @@ internal class UnitStatCard(
         val carrierBtn = byId("uCarrier")
         carrierBtn?.className = "osada-slot"
         carrierBtn?.innerHTML = "2"
-        carrierBtn?.title = "Carrier — click to view"
+        carrierBtn?.title = I18n.t("unit_info.carrier.help")
         carrierBtn?.onclick = { _: MouseEvent ->
             Equipment.getEquipment(unit.carrier)?.let { ui.showEquipmentInfo(it) }
         }
@@ -185,9 +184,9 @@ internal class UnitStatCard(
         transportBtn?.innerHTML = if (unit.isMounted) "9" else "8"
         transportBtn?.title =
             if (unit.isMounted) {
-                "Mounted — click to preview dismounted stats"
+                I18n.t("unit_info.transport.mounted.help")
             } else {
-                "In transport — click to preview mounted stats"
+                I18n.t("unit_info.transport.dismounted.help")
             }
         val switchMount = !unit.isMounted
         transportBtn?.onclick = { _: MouseEvent ->
@@ -198,10 +197,11 @@ internal class UnitStatCard(
         }
     }
 
-    // Leader slot (§14.2): a campaign core unit whose formation has a commander shows the hero — name,
-    // rank, traits — and CLICKS INTO THE DOSSIER (§14.4, §29.8). A leaderless core formation shows its
-    // recognition status (§7.1). Scenario-only units keep the legacy integer-leader tooltip. Unit
-    // veteran experience stays in its own stat/stars, distinct from leader effects (§4.6).
+    // Hero slot (§14.2): a campaign core unit whose formation has an emerged hero shows their name,
+    // rank and traits — and CLICKS INTO THE DOSSIER (§14.4, §29.8). A core formation without a hero
+    // shows its recognition status (§7.1). Scenario-only units keep the legacy integer-leader
+    // tooltip. Unit veteran experience stays in its own stat/stars, distinct from hero effects (§4.6).
+    @Suppress("LongMethod")
     private fun fillUnitLeaderSlot(unit: GameUnit) {
         val leaderBtn = byId("uLeader")
         val dossier = HeroCampaign.dossier(unit)
@@ -213,7 +213,7 @@ internal class UnitStatCard(
                 buildString {
                     append("${dossier.rank} ${dossier.name}\n${dossier.potential}")
                     if (traits.isNotEmpty()) append("\n$traits")
-                    append("\nClick to open the dossier")
+                    append("\n${I18n.t("unit_info.leader.open_dossier.help")}")
                 }
             leaderBtn?.onclick = { e: MouseEvent ->
                 e.stopPropagation()
@@ -230,7 +230,7 @@ internal class UnitStatCard(
                 if (descriptions.isNotEmpty()) {
                     descriptions.joinToString("\n") { "${it.first}: ${it.second}" }
                 } else {
-                    "Leader"
+                    I18n.t("combat.enemy.commander.fallback")
                 }
         } else {
             val progress = HeroCampaign.recognitionProgress(unit)
@@ -241,17 +241,28 @@ internal class UnitStatCard(
                 val chanceLine =
                     when {
                         progress.recognition < progress.target ->
-                            "Officer checks unlock at ${progress.target} recognition"
+                            I18n.t("unit_info.leader.checks_unlock", mapOf("target" to progress.target))
                         progress.drought >= progress.guaranteedAfterFailures ->
-                            "Next notable action: officer guaranteed"
-                        else -> "Next notable action: ${progress.chancePercent}% officer chance"
+                            I18n.t("unit_info.leader.guaranteed")
+                        else ->
+                            I18n.t(
+                                "unit_info.leader.chance",
+                                mapOf("chance" to progress.chancePercent),
+                            )
                     }
                 leaderBtn?.title =
-                    "No commander — ${progress.status}\nRecognition: ${progress.recognition}\n$chanceLine\n" +
-                    "Drought protection: ${progress.drought}/${progress.guaranteedAfterFailures}"
+                    I18n.t(
+                        "unit_info.leader.candidate.help",
+                        mapOf(
+                            "recognition" to progress.recognition,
+                            "chanceLine" to chanceLine,
+                            "drought" to progress.drought,
+                            "guaranteedAfter" to progress.guaranteedAfterFailures,
+                        ),
+                    )
             } else {
                 leaderBtn?.textContent = ""
-                leaderBtn?.title = "Leader slot — empty"
+                leaderBtn?.title = I18n.t("unit_info.leader.empty.help")
             }
         }
     }
@@ -287,13 +298,18 @@ internal class UnitStatCard(
         val entrenchment = unit.entrenchment
         val starCount = ((experience.toDouble() / UNIT_MAX_EXPERIENCE) * 5).toInt().coerceIn(0, 5)
         byId("osadaUcStars")?.textContent = "★".repeat(starCount) + "☆".repeat(MAX_EXPERIENCE_STARS - starCount)
-        byId("osadaUcStars")?.title = "Experience: $experience/$UNIT_MAX_EXPERIENCE"
+        byId("osadaUcStars")?.title =
+            I18n.t(
+                "unit_info.experience.value",
+                mapOf("experience" to experience, "max" to UNIT_MAX_EXPERIENCE),
+            )
         byId("osadaUcEnt")?.textContent = if (entrenchment > 0) "⛨$entrenchment" else ""
-        byId("osadaUcEnt")?.title = "Entrenchment: $entrenchment"
+        byId("osadaUcEnt")?.title =
+            I18n.t("unit_info.entrenchment.value", mapOf("value" to entrenchment))
         val grounded = GameRules.isAir(unit) && GameRules.airGroundedByWeather(unit)
         byId("osadaUcWeather")?.textContent = if (grounded) "⚠" else ""
         byId("osadaUcWeather")?.title =
-            if (grounded) "Grounded — bad weather prevents air units from attacking this turn" else ""
+            if (grounded) I18n.t("unit_info.grounded.help") else ""
     }
 
     /** Swaps #uName for a text input in place (no modal). Enter/blur commit, Esc cancels;
@@ -356,7 +372,7 @@ internal class UnitStatCard(
         data: EquipmentData,
         fullName: String,
     ): String {
-        val cls = unitClassNames.getOrNull(data.uclass) ?: ""
+        val cls = GameText.unitClass(data.uclass)
         val country = Equipment.getCountryName(unit.flag - 1)
         val header = "$fullName\n$cls · $country · ${equipmentAvailabilityText(data)}"
         val description = equipmentDescriptionOrNull(data)
@@ -391,13 +407,13 @@ private fun fillFormationDetail(unit: GameUnit) {
     headline.textContent =
         if (progress != null) {
             if (progress.recognition < progress.target) {
-                "Recognition ${progress.recognition} — officer checks unlock at ${progress.target}"
+                "Recognition ${progress.recognition} — hero emergence checks unlock at ${progress.target}"
             } else {
                 "Recognition ${progress.recognition} — next chance ${progress.chancePercent}% · " +
                     "protection ${progress.drought}/${progress.guaranteedAfterFailures}"
             }
         } else {
-            "Formation record — commander assigned"
+            "Formation record — heroic commander present"
         }
     formation?.history?.takeLast(RECENT_FORMATION_EVENTS)?.forEach { event ->
         val row = addTag(detail, "div")

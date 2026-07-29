@@ -2,6 +2,7 @@ package org.osada
 
 import org.osada.campaign.CampaignNarrative
 import org.osada.hero.HeroCampaign
+import org.osada.i18n.I18n
 import org.osada.model.Player
 import org.osada.model.addOutcomeToDossier
 import org.osada.model.collectPersistentCampaignUnits
@@ -35,13 +36,17 @@ fun Game.handleMoveVictory(winningSide: Int) {
     } else {
         gameEnded = true
         val currentType = scenario?.map?.currentPlayer?.type
-        val title = if (currentType == PlayerType.HUMAN_LOCAL) outcomeNames[outcome] ?: outcome else "DEFEAT"
+        val title =
+            if (currentType == PlayerType.HUMAN_LOCAL) {
+                localizedOutcomeName(outcome)
+            } else {
+                I18n.t("game.outcome.lose")
+            }
         val message =
             if (currentType == PlayerType.HUMAN_LOCAL) {
-                "Excellent work, Commander!<br/><br/>You have won this scenario.<br/><br/>" +
-                    "Good luck in your next operation!"
+                I18n.t("game.scenario.victory.body")
             } else {
-                "You have lost! Your enemy wins by capturing all victory hexes."
+                I18n.t("game.scenario.defeat.objectives.body")
             }
         UIBuilder.message(title, message) {
             ui?.mainMenuButton("options")
@@ -67,13 +72,13 @@ fun Game.continueCampaign(
     player.addOutcomeToDossier(outcome, scenario!!.name)
     OSGlue.reportScore(player.score)
     val carryOver = scenario!!.map.collectPersistentCampaignUnits(player)
-    val outcomeLabel = outcomeNames[outcome] ?: outcome
+    val outcomeLabel = localizedOutcomeName(outcome)
     player.getCoreUnitList().forEach { unit ->
         HeroCampaign.recordFormationEvent(
             unit = unit,
             eventId = "scenario_completed",
             turn = scenario!!.map.turn,
-            location = "Outcome: $outcomeLabel",
+            location = I18n.t("game.history.outcome", mapOf("outcome" to outcomeLabel)),
         )
     }
     console.log(
@@ -89,7 +94,7 @@ fun Game.continueCampaign(
     nextScenarioData = campaign!!.loadNextScenario(outcome, routeOverride)
     continueCampaignFlag = true
     if (nextScenarioData == null) {
-        val finalText = if (outcome == "lose") endGameLossText[reason] + text else text
+        val finalText = if (outcome == "lose") localizedLossReason(reason) + text else text
         UIBuilder.showCampaignEnd(outcome, finalText) { ui?.mainMenuButton("options") }
         gameEnded = true
         gameStarted = false
@@ -97,7 +102,7 @@ fun Game.continueCampaign(
             OSGlue.reportAchievement(campaign!!.file)
         }
     } else {
-        UIBuilder.message(outcomeNames[outcome] ?: outcome, text, narrative = true)
+        UIBuilder.message(localizedOutcomeName(outcome), text, narrative = true)
         if (outcome == "briliant") awardPrototype = true
     }
 }
@@ -131,21 +136,30 @@ fun Game.deployReinforcements(
             val hex = scenario!!.map.map!![pos.row][pos.col]
             if (hex.isSpotted(spotSide)) {
                 val isFriendly = spotSide == side
-                ui?.showAlert(pos.row, pos.col, "Reinforced!", isFriendly)
+                ui?.showAlert(pos.row, pos.col, I18n.t("game.reinforcement.alert"), isFriendly)
             }
             // The floating "Reinforced!" alert is fog-gated, so a scripted reinforcement that
             // lands off-screen or in unspotted territory arrived with no notice at all. OG always
             // announces your OWN arrivals ("reinforcements have arrived"), so log those
             // unconditionally; the row is clickable and jumps to the unit.
             if (spotSide == side) {
-                HudLog.addAt(pos.row, pos.col, "Reinforcement arrived: ${reinf.unit.unitData(true).name}")
+                HudLog.addAt(
+                    pos.row,
+                    pos.col,
+                    I18n.t(
+                        "game.reinforcement.arrived",
+                        mapOf("unit" to reinf.unit.unitData(true).name),
+                    ),
+                )
             }
         }
     }
     // Authored announcement for this wave (`<reinforce message="...">`), OG-style. Only for the
     // side the player is watching — the enemy's reinforcements are not theirs to be told about.
     if (deployed && spotSide == side) {
-        scenario?.reinforcementMessages?.get(turn)?.let { UIBuilder.message("Reinforcements", it) }
+        scenario?.reinforcementMessages?.get(turn)?.let {
+            UIBuilder.message(I18n.t("game.reinforcement.title"), it)
+        }
     }
     if (deployed) {
         // Reinforcements can introduce unit/transport eqids whose sprites were not part of the
@@ -166,3 +180,19 @@ fun Game.cleanup() {
     scenario?.map?.cleanup()
     scenario = null
 }
+
+private fun localizedOutcomeName(outcome: String): String =
+    when (outcome) {
+        "lose" -> I18n.t("game.outcome.lose")
+        "victory" -> I18n.t("game.outcome.victory")
+        "tactical" -> I18n.t("game.outcome.tactical")
+        "briliant" -> I18n.t("game.outcome.brilliant")
+        else -> outcome
+    }
+
+private fun localizedLossReason(reason: EndGameType): String =
+    when (reason) {
+        EndGameType.MOVE_CAPTURE -> I18n.t("game.loss_reason.objectives")
+        EndGameType.NO_TURNS_LEFT -> I18n.t("game.loss_reason.turns")
+        EndGameType.NO_ENEMY_LEFT -> I18n.t("game.loss_reason.units")
+    }

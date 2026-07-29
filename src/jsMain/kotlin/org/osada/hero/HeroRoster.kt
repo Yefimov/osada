@@ -20,10 +20,10 @@ internal class HeroRoster {
     private val states = mutableMapOf<String, HeroState>()
 
     /**
-     * Campaign-wide drought counter (§7.2): eligible emergence failures since the last officer.
+     * Campaign-wide drought counter (§7.2): eligible emergence failures since the last hero.
      * Rises on a failed eligible check, resets to 0 when one emerges. Campaign-scoped rather than
-     * per-formation on purpose — the guarantee protects the *campaign* against long officerless
-     * stretches, so any qualifying formation can be the one it fires on.
+     * per-formation on purpose — the guarantee protects the *campaign* against long stretches
+     * without a hero, so any qualifying formation can be the one it fires on.
      */
     var drought: Int = 0
 

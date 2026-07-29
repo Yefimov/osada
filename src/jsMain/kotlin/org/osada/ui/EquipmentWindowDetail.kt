@@ -1,6 +1,7 @@
 package org.osada.ui
 
 import org.osada.CURRENCY_MULTIPLIER
+import org.osada.i18n.I18n
 import org.osada.model.Equipment
 import org.osada.model.EquipmentData
 import org.osada.model.getCountryName
@@ -15,7 +16,7 @@ internal fun EquipmentWindowBuilder.renderEquipmentDetail(eq: EquipmentData?) {
     if (eq == null) {
         val empty = addTag(body, "div")
         empty.className = "osada-eqd-empty"
-        empty.textContent = "Select a unit from the list to see its record."
+        empty.textContent = I18n.t("equipment.detail.select_prompt")
         return
     }
     buildEqDetailHeader(body, eq)

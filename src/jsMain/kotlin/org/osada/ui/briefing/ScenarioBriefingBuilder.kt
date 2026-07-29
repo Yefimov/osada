@@ -1,6 +1,7 @@
 package org.osada.ui.briefing
 
 import kotlinx.browser.document
+import org.osada.i18n.I18n
 import org.w3c.dom.HTMLElement
 
 internal data class ScenarioBriefingView(
@@ -106,7 +107,12 @@ internal object ScenarioBriefingBuilder {
         val content = child(panel, "div", "osada-briefing__orders-content")
         val footer = child(panel, "footer", "osada-briefing__footer")
         val beginButton =
-            button(footer, "BEGIN OPERATION", "osada-briefing__button osada-briefing__button--primary", onBegin)
+            button(
+                footer,
+                I18n.t("briefing.begin.label"),
+                "osada-briefing__button osada-briefing__button--primary",
+                onBegin,
+            )
         return OrdersRefs(stage, eyebrow, content, beginButton)
     }
 
@@ -135,8 +141,8 @@ internal object ScenarioBriefingBuilder {
 
         val skipButton = element("button", "osada-dialogue__skip")
         skipButton.asDynamic().type = "button"
-        skipButton.textContent = "SKIP TO BRIEFING"
-        skipButton.title = "Skip ahead — stops at your next decision, then goes to the briefing"
+        skipButton.textContent = I18n.t("briefing.skip.label")
+        skipButton.title = I18n.t("briefing.skip.help")
         skipButton.addEventListener("click", { e ->
             e.stopPropagation()
             onSkip()
@@ -159,7 +165,7 @@ internal object ScenarioBriefingBuilder {
         val controls = child(panel, "div", "osada-dialogue__controls")
         val choicesBox = child(controls, "div", "osada-dialogue__choices")
         val hint = child(controls, "div", "osada-dialogue__hint")
-        hint.textContent = "CONTINUE ▸"
+        hint.textContent = I18n.t("briefing.continue.label")
 
         return DialogueRefs(stage, transcript, controls, choicesBox, hint, skipButton)
     }
@@ -265,7 +271,7 @@ internal object ScenarioBriefingBuilder {
         val ordersClass =
             "osada-briefing__order-section osada-briefing__order-section--wide osada-briefing__orders-paper"
         val section = child(view.ordersContent, "section", ordersClass)
-        child(section, "h2", "osada-briefing__order-heading").textContent = "ORDERS"
+        child(section, "h2", "osada-briefing__order-heading").textContent = I18n.t("briefing.orders.title")
         child(section, "p", "osada-briefing__order-text").textContent =
             ordersText.ifBlank { "No further orders at this time." }
     }

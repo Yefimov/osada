@@ -192,6 +192,7 @@ internal object StartMenuCampaignScreen {
         header.id = "smCampHeader"
         header.className = "osadaScreenHeader"
         header.textContent = I18n.t("campaign.selection.title")
+        byId("smCampDifficultyLabel")?.textContent = I18n.t("campaign.difficulty.label")
 
         val body = addTag(root, "div")
         body.id = "smCampBody"

@@ -5,11 +5,15 @@ import org.osada.hero.HeroDefinition
 import org.osada.hero.HeroId
 import org.osada.hero.HeroInjury
 import org.osada.hero.HeroOrigin
+import org.osada.hero.HeroRoster
+import org.osada.hero.HeroSerializer
 import org.osada.hero.HeroState
 import org.osada.hero.HeroStatus
 import org.osada.hero.PortraitComposerV2
+import org.osada.hero.PortraitComposition
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
@@ -43,6 +47,132 @@ class HeroPortraitV2Test {
     fun compositionIsDeterministic() {
         val f = facts(branch = "armor", rank = "major", age = "old", season = "summer")
         assertEquals(PortraitComposerV2.compose(f, 77), PortraitComposerV2.compose(f, 77))
+    }
+
+    @Test
+    fun campaignCountriesResolveToTheirHistoricalPortraitPool() {
+        val expected =
+            mapOf(
+                19 to PortraitComposerV2.Pool.USSR_1942,
+                61 to PortraitComposerV2.Pool.USSR_1942,
+                89 to PortraitComposerV2.Pool.USSR_1942,
+                103 to PortraitComposerV2.Pool.REVOLUTION_1919,
+                144 to PortraitComposerV2.Pool.REVOLUTION_1919,
+                187 to PortraitComposerV2.Pool.REVOLUTION_1919,
+                188 to PortraitComposerV2.Pool.REVOLUTION_1919,
+                196 to PortraitComposerV2.Pool.REVOLUTION_1919,
+                226 to PortraitComposerV2.Pool.SPANISH_REPUBLIC_1936,
+                43 to PortraitComposerV2.Pool.YUGOSLAV_PARTISAN_1941,
+                21 to PortraitComposerV2.Pool.EAST_ASIAN_REVOLUTIONARY,
+                25 to PortraitComposerV2.Pool.EAST_ASIAN_REVOLUTIONARY,
+                276 to PortraitComposerV2.Pool.EAST_ASIAN_REVOLUTIONARY,
+                310 to PortraitComposerV2.Pool.NONE,
+            )
+
+        expected.forEach { (country, pool) ->
+            assertEquals(pool, PortraitComposerV2.poolFor(country), "country $country")
+        }
+    }
+
+    @Test
+    fun nonSovietPoolsUseTheirOwnCollarAndRankLayers() {
+        val expected =
+            mapOf(
+                103 to listOf("collar_rev1919_field", "rank_rev1919_major"),
+                226 to listOf("collar_spanish_republic", "rank_spanish_major"),
+                43 to listOf("collar_yugoslav_partisan", "rank_yugoslav_major"),
+                21 to listOf("collar_east_asian_field", "rank_east_asian_major"),
+            )
+
+        expected.forEach { (country, nationalLayers) ->
+            val ids =
+                PortraitComposerV2
+                    .composeFor(77, UnitClass.TANK.value, "major", 1900, 1942, country = country)
+                    .layerIds
+            nationalLayers.forEach { assertTrue(it in ids, "country $country should use $it") }
+            assertFalse("rank_major" in ids, "country $country must not use Soviet rank plates")
+            assertFalse(ids.any { it.startsWith("collar_armor_") }, "country $country must not use Soviet collar tabs")
+        }
+    }
+
+    @Test
+    fun countryWithoutArtUsesMonogramFallback() {
+        val portrait =
+            PortraitComposerV2.composeFor(
+                seed = 73,
+                unitClass = UnitClass.INFANTRY.value,
+                rankId = "captain",
+                birthYear = null,
+                serviceYear = -72,
+                country = 310,
+            )
+
+        assertTrue(portrait.layerIds.isEmpty(), "Spartacus must not wear a twentieth-century uniform")
+        assertEquals(PortraitComposerV2.Pool.NONE.id, portrait.poolId)
+    }
+
+    @Test
+    fun savedNoPortraitVerdictSurvivesWithoutFormationCountry() {
+        val heroId = HeroId("H-spartacus")
+        val definition =
+            HeroDefinition(
+                id = heroId,
+                origin = HeroOrigin.PROCEDURAL,
+                displayName = "Spartacus",
+                backgroundId = "partisan_organizer",
+                biographyFacts = HeroBiographyFacts(emergenceEventId = "x"),
+                portrait =
+                    PortraitComposerV2.composeFor(
+                        seed = 73,
+                        unitClass = UnitClass.INFANTRY.value,
+                        rankId = "captain",
+                        birthYear = null,
+                        serviceYear = -72,
+                        country = 310,
+                    ),
+            )
+
+        val roster = HeroRoster()
+        roster.putHero(definition, HeroState(heroId = heroId, rankId = "captain"))
+        val restored = HeroSerializer.deserialize(JSON.parse(JSON.stringify(HeroSerializer.serialize(roster))))
+        val restoredDefinition = checkNotNull(restored.definition(heroId))
+        assertEquals(PortraitComposerV2.Pool.NONE.id, restoredDefinition.portrait.poolId)
+
+        val rendered =
+            PortraitComposerV2.forHero(
+                restoredDefinition,
+                HeroState(heroId = heroId, rankId = "captain"),
+                UnitClass.INFANTRY.value,
+                country = null,
+            )
+
+        assertTrue(rendered.isEmpty(), "the detached hero must keep the saved monogram fallback")
+    }
+
+    @Test
+    fun storedPortraitIdentityWinsAfterPoolsAreAdded() {
+        val heroId = HeroId("H-existing")
+        val stored = PortraitComposerV2.compose(facts(branch = "armor", rank = "major"), 11)
+        val definition =
+            HeroDefinition(
+                id = heroId,
+                origin = HeroOrigin.PROCEDURAL,
+                displayName = "Existing officer",
+                backgroundId = "armored_academy_graduate",
+                biographyFacts = HeroBiographyFacts(emergenceEventId = "x"),
+                portrait = PortraitComposition(seed = 11, layerIds = stored),
+            )
+
+        val rendered =
+            PortraitComposerV2.forHero(
+                definition,
+                HeroState(heroId = heroId, rankId = "major"),
+                UnitClass.TANK.value,
+                country = 226,
+            )
+
+        assertEquals(PortraitComposerV2.pathsFor(stored), rendered)
+        assertTrue(rendered.any { it.endsWith("/rank/rank_major.svg") })
     }
 
     @Test

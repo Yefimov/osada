@@ -3,6 +3,7 @@ package org.osada
 import org.osada.hero.CoreFormation
 import org.osada.hero.EmergenceEvent
 import org.osada.hero.FormationId
+import org.osada.hero.HeroBackgrounds
 import org.osada.hero.HeroBalance
 import org.osada.hero.HeroPotential
 import org.osada.hero.HeroRoster
@@ -89,6 +90,15 @@ class HeroLegendaryTest {
         val signature = LegacyTraitMapping.toTraitId(LeaderType.OVERWHELMING_ATTACK)
         assertEquals(signature, emerged.definition.signatureTraitId)
         assertTrue(signature in emerged.state.learnedTraitIds)
+    }
+
+    @Test
+    fun civilWarLineOfficerSignatureDoesNotDuplicateTheProfessionalBackground() {
+        val hero = assertNotNull(LegendaryHeroPool.byId("rcw_line_officer"))
+        val background = assertNotNull(HeroBackgrounds.byId(hero.backgroundId))
+
+        assertEquals(LeaderType.FEROCIOUS_DEFENSE, hero.signatureTrait)
+        assertTrue(hero.signatureTrait != background.grantedTrait)
     }
 
     @Test

@@ -7,18 +7,17 @@ import org.osada.GameHolder
 import org.osada.MovMethod
 import org.osada.UnitClass
 import org.osada.UnitType
+import org.osada.i18n.GameText
+import org.osada.i18n.I18n
 import org.osada.model.Equipment
 import org.osada.model.GameUnit
 import org.osada.model.getCountryName
 import org.osada.model.getUnits
-import org.osada.movMethodNames
 import org.osada.rules.GameRules
 import org.osada.rules.calculateCombatResults
 import org.osada.rules.isAir
 import org.osada.ui.BottomZoneBuilder.renderEnemyCard
 import org.osada.ui.BottomZoneBuilder.renderForecast
-import org.osada.unitClassNames
-import org.osada.unitTypeNames
 import org.w3c.dom.HTMLElement
 
 /**
@@ -51,6 +50,7 @@ internal object BottomZoneBuilder {
 
     // ---- Player card: compact ~90px layout (was a 150px wide ornate frame) ----
 
+    @Suppress("LongMethod")
     private fun restructurePlayerCard() {
         val root = byId("unit-info") ?: return
 
@@ -85,7 +85,7 @@ internal object BottomZoneBuilder {
         rename.id = "ucRename"
         rename.className = "osada-rename-btn"
         rename.innerHTML = "&#9998;" // ✎
-        rename.title = "Rename this unit. The custom name is preserved with a surviving core unit."
+        rename.title = I18n.t("unit_info.rename.help")
         rename.style.display = "none"
         val stars = addTag(nameLine, "span")
         stars.id = "osadaUcStars"
@@ -101,7 +101,7 @@ internal object BottomZoneBuilder {
         val weather = addTag(nameLine, "span")
         weather.id = "osadaUcWeather"
         weather.className = "uc-weather"
-        // Leader slot: non-clickable per spec ("future hook") — tooltip only, no onclick here;
+        // Hero slot: non-clickable per spec ("future hook") — tooltip only, no onclick here;
         // UnitInfoPanel.showUnitInfo sets the title/filled-state, never an onclick, going forward.
         move("uLeader", nameLine)
         move("uTransport", nameLine)
@@ -146,17 +146,35 @@ internal object BottomZoneBuilder {
         }
         // Helmet, not the chevron-stack alternative: `hud_icons_grid`'s "upgrade" icon is already an
         // arrow over chevrons, so a chevron STR icon would repeat that motif at a glance.
-        bar("uStrBarFill", "STR", "str", "Unit durability and firepower", "ico_stat_str.png")
-        bar("uAmmoBarFill", "AMMO", "ammo", "Remaining ammunition — resupply when low", "ico_stat_ammo.png")
-        bar("uFuelBarFill", "FUEL", "fuel", "Remaining fuel — the unit can't move without it", "ico_stat_fuel.png")
+        bar(
+            "uStrBarFill",
+            I18n.t("unit_info.bar.strength.label"),
+            "str",
+            I18n.t("unit_info.bar.strength.help"),
+            "ico_stat_str.png",
+        )
+        bar(
+            "uAmmoBarFill",
+            I18n.t("unit_info.bar.ammo.label"),
+            "ammo",
+            I18n.t("unit_info.bar.ammo.help"),
+            "ico_stat_ammo.png",
+        )
+        bar(
+            "uFuelBarFill",
+            I18n.t("unit_info.bar.fuel.label"),
+            "fuel",
+            I18n.t("unit_info.bar.fuel.help"),
+            "ico_stat_fuel.png",
+        )
 
         val actions = addTag(inner, "div")
         actions.id = "uc-actions"
 
         val expandBtn = addTag(inner, "div")
         expandBtn.id = "uc-expand"
-        expandBtn.textContent = "All stats ▸"
-        expandBtn.title = "Show the unit's complete combat, defence, mobility and reconnaissance statistics."
+        expandBtn.textContent = I18n.t("unit_info.all_stats.label")
+        expandBtn.title = I18n.t("unit_info.all_stats.help")
         expandBtn.onclick = { _: org.w3c.dom.events.MouseEvent ->
             root.classList.toggle("uc--expanded")
         }
@@ -208,7 +226,8 @@ internal object BottomZoneBuilder {
             }
         val defenseValue = if (GameRules.isAir(attacker)) defenderData.airdef else defenderData.grounddef
 
-        byId("fcAtkDef")?.textContent = "ATK $attackValue · DEF $defenseValue"
+        byId("fcAtkDef")?.textContent =
+            I18n.t("combat.forecast.attack_defence", mapOf("attack" to attackValue, "defence" to defenseValue))
 
         val attackerOwn = attacker.player?.side == ownSide
         val defenderOwn = defender.player?.side == ownSide
@@ -220,12 +239,16 @@ internal object BottomZoneBuilder {
             a.textContent = "−${result.losses}"
             val sep = addTag(it, "span")
             sep.className = "osada-fc-vs"
-            sep.textContent = "vs"
+            sep.textContent = I18n.t("common.vs")
             val d = addTag(it, "span")
             d.className = "osada-fc-loss" + if (defenderOwn) " osada-fc-loss--own" else " osada-fc-loss--enemy"
             d.textContent = "−${result.kills}"
         }
-        byId("fcStrengths")?.textContent = "${attacker.strength} vs ${defender.strength}"
+        byId("fcStrengths")?.textContent =
+            I18n.t(
+                "combat.forecast.strengths",
+                mapOf("attacker" to attacker.strength, "defender" to defender.strength),
+            )
 
         renderEnemyCard(defender)
         setState("hover")
@@ -286,28 +309,28 @@ internal object BottomZoneBuilder {
      *  local list since this one has no live-state entries at all (see class doc above). */
     private val ecStatGroups: List<Pair<String, List<Triple<String, String, String>>>> =
         listOf(
-            "Attack" to
+            "attack" to
                 listOf(
-                    Triple("ecAHard", "{", "Power vs Hard targets"),
-                    Triple("ecASoft", "\$", "Power vs Soft targets"),
-                    Triple("ecAAir", "&", "Power vs Air targets"),
-                    Triple("ecANaval", "}", "Power vs Naval targets"),
+                    Triple("ecAHard", "{", "uAHard"),
+                    Triple("ecASoft", "\$", "uASoft"),
+                    Triple("ecAAir", "&", "uAAir"),
+                    Triple("ecANaval", "}", "uANaval"),
                 ),
-            "Defence" to
+            "defence" to
                 listOf(
-                    Triple("ecDHard", "5", "Defence vs ground attacker"),
-                    Triple("ecDAir", "3", "Defence vs air attacker"),
-                    Triple("ecDClose", "6", "Defence in close combat"),
-                    Triple("ecDRange", "7", "Defence in ranged combat"),
+                    Triple("ecDHard", "5", "uDHard"),
+                    Triple("ecDAir", "3", "uDAir"),
+                    Triple("ecDClose", "6", "uDClose"),
+                    Triple("ecDRange", "7", "uDRange"),
                 ),
-            "Mobility & Recon" to
+            "mobility_recon" to
                 listOf(
-                    Triple("ecTarget", "`", "Target type"),
-                    Triple("ecMoveType", "~", "Movement type"),
-                    Triple("ecMovement", "?", "Movement range"),
-                    Triple("ecGunRange", ">", "Firing range"),
-                    Triple("ecIni", "|", "Combat initiative"),
-                    Triple("ecSpot", "'", "Spotting range"),
+                    Triple("ecTarget", "`", "uTarget"),
+                    Triple("ecMoveType", "~", "uMoveType"),
+                    Triple("ecMovement", "?", "uMovement"),
+                    Triple("ecGunRange", ">", "uGunRange"),
+                    Triple("ecIni", "|", "uIni"),
+                    Triple("ecSpot", "'", "uSpot"),
                 ),
         )
 
@@ -338,9 +361,8 @@ internal object BottomZoneBuilder {
 
         val expandBtn = addTag(root, "div")
         expandBtn.id = "ec-expand"
-        expandBtn.textContent = "All stats ▸"
-        expandBtn.title =
-            "Show all equipment statistics known for this spotted enemy. Live ammo, fuel and experience remain hidden."
+        expandBtn.textContent = I18n.t("combat.enemy.all_stats.label")
+        expandBtn.title = I18n.t("combat.enemy.all_stats.help")
         expandBtn.onclick = { _: org.w3c.dom.events.MouseEvent ->
             root.classList.toggle("ec--expanded")
         }
@@ -350,24 +372,19 @@ internal object BottomZoneBuilder {
         // same time, so they can never share one. Same .statsGlyph/.statsText chip look though.
         val statsContainer = addTag(root, "div")
         statsContainer.id = "ecStatsContainer"
-        ecStatGroups.forEach { (groupName, entries) ->
+        ecStatGroups.forEach { (groupKey, entries) ->
             val section = addTag(statsContainer, "div")
             section.className = "osada-stat-group"
             val label = addTag(section, "div")
             label.className = "osada-stat-group__label"
-            label.textContent = groupName
-            label.title =
-                when (groupName) {
-                    "Attack" -> "Attack values used against each target type; higher is better."
-                    "Defence" -> "Defensive values used for different attacks and ranges; higher is better."
-                    else -> "Movement, firing range, initiative and spotting capability."
-                }
+            label.textContent = I18n.t("unit_info.group.$groupKey.label")
+            label.title = I18n.t("unit_info.group.$groupKey.help")
             val grid = addTag(section, "div")
             grid.className = "osada-stat-group__grid"
-            entries.forEach { (id, glyph, title) ->
+            entries.forEach { (id, glyph, helpId) ->
                 val chip = addTag(grid, "div")
                 chip.className = "statsGlyph"
-                chip.title = title
+                chip.title = GameText.unitStatHelp(helpId)
                 chip.textContent = glyph
                 val valueDiv = addTag(chip, "div")
                 valueDiv.id = id
@@ -381,7 +398,7 @@ internal object BottomZoneBuilder {
         data: org.osada.model.EquipmentData,
         fullName: String,
     ): String {
-        val cls = unitClassNames.getOrNull(data.uclass) ?: ""
+        val cls = GameText.unitClass(data.uclass)
         val country = Equipment.getCountryName(unit.flag - 1)
         val header = "$fullName\n$cls · $country · ${equipmentAvailabilityText(data)}"
         return listOfNotNull(
@@ -398,7 +415,7 @@ internal object BottomZoneBuilder {
         val data = unit.unitData(true)
         byId("ecPortrait")?.style?.backgroundImage =
             "url(${UnitIconResolver.forCurrentScenario(unit.eqid, data.icon)})"
-        val className = unitClassNames.getOrNull(data.uclass) ?: ""
+        val className = GameText.unitClass(data.uclass)
         val displayName = if (data.name == className) className else "${data.name} $className"
         byId("ecName")?.textContent = displayName
         val tooltip = enemyCardTooltip(unit, data, displayName)
@@ -406,18 +423,23 @@ internal object BottomZoneBuilder {
         byId("ecName")?.title = tooltip
         // unit.flag (like the player card's #uFlag), NOT data.country: the equipment record's
         // country is a catalogue index (0 = shared/generic) that maps to "Unknown" here.
-        byId("ecSub")?.textContent = "Enemy · ${Equipment.getCountryName(unit.flag - 1)}"
+        byId("ecSub")?.textContent =
+            I18n.t("combat.enemy.side_country", mapOf("country" to Equipment.getCountryName(unit.flag - 1)))
         byId("ecStrBarFill")?.style?.width =
             "${(unit.strength / FULL_STRENGTH * PERCENT_SCALE).coerceIn(0.0, PERCENT_SCALE)}%"
-        byId("ecStat")?.textContent = "STR ${unit.strength}/10 · DEF ${data.grounddef} ground / ${data.airdef} air"
+        byId("ecStat")?.textContent =
+            I18n.t(
+                "combat.enemy.summary",
+                mapOf("strength" to unit.strength, "ground" to data.grounddef, "air" to data.airdef),
+            )
 
         val gunRange = if (data.gunrange == 0) 1 else data.gunrange
-        byId("ecTarget")?.textContent = unitTypeNames.getOrNull(data.target) ?: ""
+        byId("ecTarget")?.textContent = GameText.unitType(data.target)
         byId("ecMoveType")?.textContent =
             if (data.uclass <= UnitClass.AIR_DEFENCE.value && data.movmethod == MovMethod.DEEP_NAVAL.value) {
-                "Rail Road"
+                I18n.t("game.movement_type.rail_road")
             } else {
-                movMethodNames.getOrNull(data.movmethod) ?: ""
+                GameText.movementType(data.movmethod)
             }
         byId("ecMovement")?.textContent = data.movpoints.toString()
         byId("ecGunRange")?.textContent = gunRange.toString()

@@ -1,6 +1,7 @@
 package org.osada.ui
 
 import org.osada.GameHolder
+import org.osada.i18n.I18n
 import org.osada.model.Cell
 import org.osada.ui.HudLog.add
 
@@ -91,13 +92,14 @@ internal object HudLog {
         if (entries.isEmpty()) {
             val empty = addTag(container, "div")
             empty.className = "osada-side-empty"
-            empty.textContent = "No events yet"
+            empty.textContent = I18n.t("hud.log.empty")
         } else {
             entries.take(MAX_SHOWN).forEach { entry ->
                 val row = addTag(container, "div")
                 row.className = if (entry.hasPosition) "osada-log-row osada-log-row--clickable" else "osada-log-row"
                 if (entry.hasPosition) {
-                    row.title = "Jump to (${entry.col},${entry.row})"
+                    row.title =
+                        I18n.t("hud.log.jump.help", mapOf("col" to entry.col, "row" to entry.row))
                     row.onclick = { _: org.w3c.dom.events.MouseEvent ->
                         GameHolder.instance?.ui?.uiSetCellOnViewPort(Cell(entry.row, entry.col))
                     }

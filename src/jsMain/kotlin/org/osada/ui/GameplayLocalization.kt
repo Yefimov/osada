@@ -51,6 +51,7 @@ internal object GameplayLocalization {
     fun refreshAll() {
         refreshStatusBar()
         refreshEquipment()
+        refreshBottomZoneChrome()
         refreshUnitInfo(currentUnit)
     }
 
@@ -87,6 +88,28 @@ internal object GameplayLocalization {
         }
     }
 
+    private fun refreshBottomZoneChrome() {
+        byId("ucRename")?.title = I18n.t("unit_info.rename.help")
+        byId("uc-expand")?.apply {
+            textContent = I18n.t("unit_info.all_stats.label")
+            title = I18n.t("unit_info.all_stats.help")
+        }
+        byId("ec-expand")?.apply {
+            textContent = I18n.t("combat.enemy.all_stats.label")
+            title = I18n.t("combat.enemy.all_stats.help")
+        }
+        listOf(
+            "uStrBarFillRow" to "unit_info.bar.strength",
+            "uAmmoBarFillRow" to "unit_info.bar.ammo",
+            "uFuelBarFillRow" to "unit_info.bar.fuel",
+        ).forEach { (rowId, prefix) ->
+            byId(rowId)?.apply {
+                title = I18n.t("$prefix.help")
+                querySelector(".osada-bar__label")?.textContent = I18n.t("$prefix.label")
+            }
+        }
+    }
+
     private fun safely(
         surface: String,
         block: () -> Unit,
@@ -103,6 +126,7 @@ internal object GameplayLocalization {
     }
 
     private fun refreshStatusBarChrome() {
+        SidebarBuilder.refreshLocalization()
         byId("statusmsg")?.title = I18n.t("hud.status.scenario.help")
         byId("locmsg")?.title = I18n.t("hud.status.location.help")
         byId("osadaObserverBadge")?.apply {
@@ -332,17 +356,21 @@ internal object GameplayLocalization {
         byId("eqSortOptionsBut")?.title = I18n.t("equipment.sort.choose.help")
         byId("eqSelCountry")?.title = I18n.t("equipment.country_cycle.help")
         byId("eqNewBut")?.apply {
+            setAttribute("data-label", I18n.t("equipment.action.buy.label"))
             title = I18n.t("equipment.action.buy.help")
             setAttribute("aria-label", I18n.t("equipment.action.buy.label"))
         }
         byId("eqUpgradeBut")?.apply {
+            setAttribute("data-label", I18n.t("equipment.action.upgrade.label"))
             title = I18n.t("equipment.action.upgrade.help")
             setAttribute("aria-label", I18n.t("equipment.action.upgrade.label"))
         }
         byId("eqSellBut")?.apply {
+            setAttribute("data-label", I18n.t("equipment.action.sell.label"))
             title = I18n.t("equipment.action.sell.help")
             setAttribute("aria-label", I18n.t("equipment.action.sell.label"))
         }
+        byId("eqTransportList")?.setAttribute("data-label", I18n.t("equipment.transport.optional"))
         byId("eqCloseBut")?.apply {
             title = I18n.t("common.close_esc.help")
             setAttribute("aria-label", I18n.t("common.close.label"))

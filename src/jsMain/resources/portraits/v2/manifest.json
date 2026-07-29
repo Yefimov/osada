@@ -35,13 +35,17 @@
       { "id": "back_aviation", "tags": { "branch": ["aviation"] } }
     ],
     "uniform_front_collar": [
-      { "id": "collar_infantry_summer", "tags": { "branch": ["infantry"], "season": "summer" } },
-      { "id": "collar_armor_summer", "tags": { "branch": ["armor"], "season": "summer" } },
-      { "id": "collar_artillery_summer", "tags": { "branch": ["artillery"], "season": "summer" } },
-      { "id": "collar_aviation", "tags": { "branch": ["aviation"], "season": "any" } },
-      { "id": "collar_infantry_winter", "tags": { "branch": ["infantry"], "season": "winter" } },
-      { "id": "collar_armor_winter", "tags": { "branch": ["armor"], "season": "winter" } },
-      { "id": "collar_artillery_winter", "tags": { "branch": ["artillery"], "season": "winter" } }
+      { "id": "collar_infantry_summer", "tags": { "nation": "USSR", "branch": ["infantry"], "season": "summer" } },
+      { "id": "collar_armor_summer", "tags": { "nation": "USSR", "branch": ["armor"], "season": "summer" } },
+      { "id": "collar_artillery_summer", "tags": { "nation": "USSR", "branch": ["artillery"], "season": "summer" } },
+      { "id": "collar_aviation", "tags": { "nation": "USSR", "branch": ["aviation"], "season": "any" } },
+      { "id": "collar_infantry_winter", "tags": { "nation": "USSR", "branch": ["infantry"], "season": "winter" } },
+      { "id": "collar_armor_winter", "tags": { "nation": "USSR", "branch": ["armor"], "season": "winter" } },
+      { "id": "collar_artillery_winter", "tags": { "nation": "USSR", "branch": ["artillery"], "season": "winter" } },
+      { "id": "collar_rev1919_field", "tags": { "nation": "REVOLUTIONARY_1919", "season": "any" } },
+      { "id": "collar_spanish_republic", "tags": { "nation": "SPANISH_REPUBLIC", "season": "any" } },
+      { "id": "collar_yugoslav_partisan", "tags": { "nation": "YUGOSLAV_PARTISAN", "season": "any" } },
+      { "id": "collar_east_asian_field", "tags": { "nation": "EAST_ASIAN_REVOLUTIONARY", "season": "any" } }
     ],
     "hair_back": [
       { "id": "hair_back_short" },
@@ -85,10 +89,26 @@
       { "id": "under_hair_female", "tags": { "gender": "female" } }
     ],
     "rank": [
-      { "id": "rank_lieutenant", "tags": { "rank": "lieutenant" } },
-      { "id": "rank_captain", "tags": { "rank": "captain" } },
-      { "id": "rank_major", "tags": { "rank": "major" } },
-      { "id": "rank_colonel", "tags": { "rank": "colonel" } }
+      { "id": "rank_lieutenant", "tags": { "nation": "USSR", "rank": "lieutenant" } },
+      { "id": "rank_captain", "tags": { "nation": "USSR", "rank": "captain" } },
+      { "id": "rank_major", "tags": { "nation": "USSR", "rank": "major" } },
+      { "id": "rank_colonel", "tags": { "nation": "USSR", "rank": "colonel" } },
+      { "id": "rank_rev1919_lieutenant", "tags": { "nation": "REVOLUTIONARY_1919", "rank": "lieutenant" } },
+      { "id": "rank_rev1919_captain", "tags": { "nation": "REVOLUTIONARY_1919", "rank": "captain" } },
+      { "id": "rank_rev1919_major", "tags": { "nation": "REVOLUTIONARY_1919", "rank": "major" } },
+      { "id": "rank_rev1919_colonel", "tags": { "nation": "REVOLUTIONARY_1919", "rank": "colonel" } },
+      { "id": "rank_spanish_lieutenant", "tags": { "nation": "SPANISH_REPUBLIC", "rank": "lieutenant" } },
+      { "id": "rank_spanish_captain", "tags": { "nation": "SPANISH_REPUBLIC", "rank": "captain" } },
+      { "id": "rank_spanish_major", "tags": { "nation": "SPANISH_REPUBLIC", "rank": "major" } },
+      { "id": "rank_spanish_colonel", "tags": { "nation": "SPANISH_REPUBLIC", "rank": "colonel" } },
+      { "id": "rank_yugoslav_lieutenant", "tags": { "nation": "YUGOSLAV_PARTISAN", "rank": "lieutenant" } },
+      { "id": "rank_yugoslav_captain", "tags": { "nation": "YUGOSLAV_PARTISAN", "rank": "captain" } },
+      { "id": "rank_yugoslav_major", "tags": { "nation": "YUGOSLAV_PARTISAN", "rank": "major" } },
+      { "id": "rank_yugoslav_colonel", "tags": { "nation": "YUGOSLAV_PARTISAN", "rank": "colonel" } },
+      { "id": "rank_east_asian_lieutenant", "tags": { "nation": "EAST_ASIAN_REVOLUTIONARY", "rank": "lieutenant" } },
+      { "id": "rank_east_asian_captain", "tags": { "nation": "EAST_ASIAN_REVOLUTIONARY", "rank": "captain" } },
+      { "id": "rank_east_asian_major", "tags": { "nation": "EAST_ASIAN_REVOLUTIONARY", "rank": "major" } },
+      { "id": "rank_east_asian_colonel", "tags": { "nation": "EAST_ASIAN_REVOLUTIONARY", "rank": "colonel" } }
     ],
     "branch": [
       { "id": "branch_infantry", "tags": { "branch": ["infantry"] } },
@@ -97,10 +117,18 @@
       { "id": "branch_aviation", "tags": { "branch": ["aviation"] } }
     ],
     "headgear": [
-      { "id": "headgear_officer_cap", "tags": { "hairMode": "UNDER_CAP", "branch": ["infantry", "armor", "artillery", "aviation"] } },
-      { "id": "headgear_ushanka", "tags": { "hairMode": "UNDER_FUR_HAT", "branch": ["infantry", "armor", "artillery"], "season": "winter" } },
-      { "id": "headgear_pilotka", "tags": { "hairMode": "UNDER_CAP", "branch": ["infantry", "artillery"] } },
-      { "id": "headgear_flight_helmet", "tags": { "hairMode": "UNDER_FLIGHT_HELMET", "branch": ["aviation"] } }
+      { "id": "headgear_officer_cap", "tags": { "nation": "USSR", "hairMode": "UNDER_CAP", "branch": ["infantry", "armor", "artillery", "aviation"] } },
+      { "id": "headgear_ushanka", "tags": { "nation": "USSR", "hairMode": "UNDER_FUR_HAT", "branch": ["infantry", "armor", "artillery"], "season": "winter" } },
+      { "id": "headgear_pilotka", "tags": { "nation": "USSR", "hairMode": "UNDER_CAP", "branch": ["infantry", "artillery"] } },
+      { "id": "headgear_flight_helmet", "tags": { "nation": "*", "hairMode": "UNDER_FLIGHT_HELMET", "branch": ["aviation"] } },
+      { "id": "headgear_rev1919_field_cap", "tags": { "nation": "REVOLUTIONARY_1919", "hairMode": "UNDER_CAP" } },
+      { "id": "headgear_rev1919_service_cap", "tags": { "nation": "REVOLUTIONARY_1919", "hairMode": "UNDER_CAP" } },
+      { "id": "headgear_spanish_side_cap", "tags": { "nation": "SPANISH_REPUBLIC", "hairMode": "UNDER_CAP" } },
+      { "id": "headgear_spanish_beret", "tags": { "nation": "SPANISH_REPUBLIC", "hairMode": "UNDER_CAP" } },
+      { "id": "headgear_yugoslav_titovka", "tags": { "nation": "YUGOSLAV_PARTISAN", "hairMode": "UNDER_CAP" } },
+      { "id": "headgear_yugoslav_partisan_cap", "tags": { "nation": "YUGOSLAV_PARTISAN", "hairMode": "UNDER_CAP" } },
+      { "id": "headgear_east_asian_field_cap", "tags": { "nation": "EAST_ASIAN_REVOLUTIONARY", "hairMode": "UNDER_CAP" } },
+      { "id": "headgear_east_asian_boonie", "tags": { "nation": "EAST_ASIAN_REVOLUTIONARY", "hairMode": "UNDER_CAP" } }
     ],
     "wound": [
       { "id": "wound_eye_patch", "tags": { "wound": "eye" } },
@@ -159,11 +187,80 @@
     "ussr_1942": {
       "label": "USSR — Operation Uranus, 1942",
       "nation": "USSR",
+      "countries": [19, 61, 89],
       "yearFrom": 1941,
       "yearTo": 1943,
       "theater": "eastern_front",
       "defaultSeason": "winter",
       "branches": ["infantry", "armor", "artillery", "aviation"]
+    },
+    "revolution_1919": {
+      "label": "European revolutionary forces, 1917-1920",
+      "nation": "REVOLUTIONARY_1919",
+      "countries": [103, 144, 187, 188, 196],
+      "yearFrom": 1917,
+      "yearTo": 1920,
+      "defaultSeason": "summer",
+      "branches": ["infantry", "armor", "artillery", "aviation"],
+      "collar": "collar_rev1919_field",
+      "rankPrefix": "rank_rev1919_",
+      "headgear": {
+        "infantry": { "summer": { "headgear_rev1919_field_cap": 0.55, "headgear_rev1919_service_cap": 0.25, "none": 0.2 }, "winter": { "headgear_rev1919_field_cap": 0.55, "headgear_rev1919_service_cap": 0.25, "none": 0.2 } },
+        "armor": { "summer": { "headgear_rev1919_field_cap": 0.55, "headgear_rev1919_service_cap": 0.25, "none": 0.2 }, "winter": { "headgear_rev1919_field_cap": 0.55, "headgear_rev1919_service_cap": 0.25, "none": 0.2 } },
+        "artillery": { "summer": { "headgear_rev1919_field_cap": 0.55, "headgear_rev1919_service_cap": 0.25, "none": 0.2 }, "winter": { "headgear_rev1919_field_cap": 0.55, "headgear_rev1919_service_cap": 0.25, "none": 0.2 } },
+        "aviation": { "summer": { "headgear_flight_helmet": 0.55, "headgear_rev1919_field_cap": 0.25, "none": 0.2 }, "winter": { "headgear_flight_helmet": 0.55, "headgear_rev1919_field_cap": 0.25, "none": 0.2 } }
+      }
+    },
+    "spanish_republic_1936": {
+      "label": "Spanish Republic, 1936-1939",
+      "nation": "SPANISH_REPUBLIC",
+      "countries": [226],
+      "yearFrom": 1936,
+      "yearTo": 1939,
+      "defaultSeason": "summer",
+      "branches": ["infantry", "armor", "artillery", "aviation"],
+      "collar": "collar_spanish_republic",
+      "rankPrefix": "rank_spanish_",
+      "headgear": {
+        "infantry": { "summer": { "headgear_spanish_side_cap": 0.55, "headgear_spanish_beret": 0.25, "none": 0.2 }, "winter": { "headgear_spanish_side_cap": 0.55, "headgear_spanish_beret": 0.25, "none": 0.2 } },
+        "armor": { "summer": { "headgear_spanish_side_cap": 0.55, "headgear_spanish_beret": 0.25, "none": 0.2 }, "winter": { "headgear_spanish_side_cap": 0.55, "headgear_spanish_beret": 0.25, "none": 0.2 } },
+        "artillery": { "summer": { "headgear_spanish_side_cap": 0.55, "headgear_spanish_beret": 0.25, "none": 0.2 }, "winter": { "headgear_spanish_side_cap": 0.55, "headgear_spanish_beret": 0.25, "none": 0.2 } },
+        "aviation": { "summer": { "headgear_flight_helmet": 0.55, "headgear_spanish_side_cap": 0.25, "none": 0.2 }, "winter": { "headgear_flight_helmet": 0.55, "headgear_spanish_side_cap": 0.25, "none": 0.2 } }
+      }
+    },
+    "yugoslav_partisan_1941": {
+      "label": "Yugoslav Partisans, 1941-1945",
+      "nation": "YUGOSLAV_PARTISAN",
+      "countries": [43],
+      "yearFrom": 1941,
+      "yearTo": 1945,
+      "defaultSeason": "summer",
+      "branches": ["infantry", "armor", "artillery", "aviation"],
+      "collar": "collar_yugoslav_partisan",
+      "rankPrefix": "rank_yugoslav_",
+      "headgear": {
+        "infantry": { "summer": { "headgear_yugoslav_titovka": 0.55, "headgear_yugoslav_partisan_cap": 0.25, "none": 0.2 }, "winter": { "headgear_yugoslav_titovka": 0.55, "headgear_yugoslav_partisan_cap": 0.25, "none": 0.2 } },
+        "armor": { "summer": { "headgear_yugoslav_titovka": 0.55, "headgear_yugoslav_partisan_cap": 0.25, "none": 0.2 }, "winter": { "headgear_yugoslav_titovka": 0.55, "headgear_yugoslav_partisan_cap": 0.25, "none": 0.2 } },
+        "artillery": { "summer": { "headgear_yugoslav_titovka": 0.55, "headgear_yugoslav_partisan_cap": 0.25, "none": 0.2 }, "winter": { "headgear_yugoslav_titovka": 0.55, "headgear_yugoslav_partisan_cap": 0.25, "none": 0.2 } },
+        "aviation": { "summer": { "headgear_flight_helmet": 0.55, "headgear_yugoslav_titovka": 0.25, "none": 0.2 }, "winter": { "headgear_flight_helmet": 0.55, "headgear_yugoslav_titovka": 0.25, "none": 0.2 } }
+      }
+    },
+    "east_asian_revolutionary": {
+      "label": "East Asian revolutionary forces, 1927-1975",
+      "nation": "EAST_ASIAN_REVOLUTIONARY",
+      "countries": [21, 25, 276],
+      "yearFrom": 1927,
+      "yearTo": 1975,
+      "defaultSeason": "summer",
+      "branches": ["infantry", "armor", "artillery", "aviation"],
+      "collar": "collar_east_asian_field",
+      "rankPrefix": "rank_east_asian_",
+      "headgear": {
+        "infantry": { "summer": { "headgear_east_asian_field_cap": 0.55, "headgear_east_asian_boonie": 0.25, "none": 0.2 }, "winter": { "headgear_east_asian_field_cap": 0.55, "headgear_east_asian_boonie": 0.25, "none": 0.2 } },
+        "armor": { "summer": { "headgear_east_asian_field_cap": 0.55, "headgear_east_asian_boonie": 0.25, "none": 0.2 }, "winter": { "headgear_east_asian_field_cap": 0.55, "headgear_east_asian_boonie": 0.25, "none": 0.2 } },
+        "artillery": { "summer": { "headgear_east_asian_field_cap": 0.55, "headgear_east_asian_boonie": 0.25, "none": 0.2 }, "winter": { "headgear_east_asian_field_cap": 0.55, "headgear_east_asian_boonie": 0.25, "none": 0.2 } },
+        "aviation": { "summer": { "headgear_flight_helmet": 0.55, "headgear_east_asian_field_cap": 0.25, "none": 0.2 }, "winter": { "headgear_flight_helmet": 0.55, "headgear_east_asian_field_cap": 0.25, "none": 0.2 } }
+      }
     }
   }
 }

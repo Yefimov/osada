@@ -2,6 +2,7 @@ package org.osada.ui
 
 import kotlinx.browser.document
 import org.osada.PlayerType
+import org.osada.i18n.I18n
 import org.osada.model.GameMap
 import org.osada.uiSettings
 import org.w3c.dom.HTMLElement
@@ -120,7 +121,7 @@ object UICombatLog {
         if (groups.none { it.count > 0 }) {
             val empty = addTag(feed, "div")
             empty.className = "osada-tr-empty"
-            empty.textContent = "All quiet this turn — no combat, objectives, or reinforcements to report."
+            empty.textContent = I18n.t("turn_report.empty")
         } else {
             groups.forEach { if (it.count > 0) CombatLogFeed.attachGroup(feed, it) }
         }
@@ -179,8 +180,10 @@ object UICombatLog {
     private fun buildExtendButton(container: HTMLElement): HTMLElement {
         val button = addTag(container, "div")
         button.className = "osada-tr-expand"
-        button.title = "Open the complete Turn Report with every event group and scrollable details."
-        button.innerHTML = "Show Full Turn Report<span class=\"osada-ico osada-ico--map osada-tr-expand__ico\"></span>"
+        button.title = I18n.t("turn_report.expand.help")
+        button.innerHTML =
+            I18n.t("turn_report.expand.label") +
+            "<span class=\"osada-ico osada-ico--map osada-tr-expand__ico\"></span>"
         button.onclick = { _: MouseEvent -> showCombatLog(true) }
         return button
     }

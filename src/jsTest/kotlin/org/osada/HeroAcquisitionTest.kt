@@ -136,7 +136,7 @@ class HeroAcquisitionTest {
         assertFalse(HeroCampaign.recordCombat(unit, routine), "a routine attack must not emerge a leader")
         val formation = assertNotNull(HeroCampaign.roster().formation(assertNotNull(FormationIdentity.of(unit))))
         assertEquals(0, formation.recognition, "recognition comes from notable actions, not every attack")
-        assertEquals("No candidate identified", HeroCampaign.recognitionStatus(unit))
+        assertEquals("No hero has emerged", HeroCampaign.recognitionStatus(unit))
     }
 
     @Test
@@ -189,7 +189,7 @@ class HeroAcquisitionTest {
         val unit = coreUnit(experience = 350)
         primeAtGuarantee(unit)
 
-        assertTrue(HeroCampaign.recordCombat(unit, kill(stronger = true)), "the drought guarantee produces an officer")
+        assertTrue(HeroCampaign.recordCombat(unit, kill(stronger = true)), "the drought guarantee produces a hero")
 
         val hero = assertNotNull(HeroCampaign.heroFor(unit), "the formation now has a commander")
         assertEquals(0, HeroCampaign.roster().drought, "emergence resets the campaign drought")
@@ -253,8 +253,8 @@ class HeroAcquisitionTest {
 
         val hero = assertNotNull(HeroCampaign.heroFor(unit))
         val definition = assertNotNull(HeroCampaign.roster().definition(hero.heroId))
-        assertEquals("armored_academy_graduate", definition.backgroundId, "tank officer gets the armored background")
-        assertTrue(definition.displayName.isNotBlank(), "a procedural officer has a name (§29.7)")
+        assertEquals("armored_academy_graduate", definition.backgroundId, "tank hero gets the armored background")
+        assertTrue(definition.displayName.isNotBlank(), "a procedural hero has a name (§29.7)")
         assertEquals(1, hero.learnedTraitIds.size, "one personal trait, distinct from the background")
         // Background (Aggressive Tank Maneuver) reaches combat, and so does the personal trait.
         assertTrue(Leaders.unitHasLeader(unit, LeaderType.AGGRESSIVE_TANK_MANEUVER), "background trait is honoured")
@@ -266,7 +266,7 @@ class HeroAcquisitionTest {
         val destroyer = coreUnit(eqid = DESTROYER_EQID, country = 7)
         primeAtGuarantee(destroyer)
 
-        assertTrue(HeroCampaign.recordCombat(destroyer, kill(stronger = true)), "a naval formation gets an officer")
+        assertTrue(HeroCampaign.recordCombat(destroyer, kill(stronger = true)), "a naval formation gets a hero")
         val hero = assertNotNull(HeroCampaign.heroFor(destroyer))
         val definition = assertNotNull(HeroCampaign.roster().definition(hero.heroId))
         assertEquals("destroyer_captain", definition.backgroundId)

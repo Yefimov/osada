@@ -6,7 +6,8 @@ import kotlin.math.roundToInt
 /**
  * Turns one unit's part in a resolved combat into recognition — design brief §7.1.
  *
- * Recognition is what a leaderless formation accumulates until it produces an officer (§5, §9.3).
+ * Recognition is what a formation without an emerged hero accumulates until a heroic commander
+ * distinguishes themselves (§5, §9.3).
  * The design is emphatic that it comes from **notable actions, not every routine attack**: a unit
  * that trades fire without result gains nothing, so a formation earns its commander by doing
  * something, not by being in enough combats.
@@ -18,10 +19,10 @@ import kotlin.math.roundToInt
  * ([org.osada.model.CombatApplication] runs before retreat/surrender are decided) and belong with
  * Phase 3's structured [CombatAchievementEvent] pipeline (§19). Phase 2 scores the subset that IS
  * available at the point of combat resolution — kills, stronger-enemy kills, critical survival, and
- * veteran level-ups — which is enough for a formation to reliably grow a leader (§29.3).
+ * veteran level-ups — which is enough for a formation to reliably produce a hero (§29.3).
  *
  * The same assessment also names the [EmergenceEvent] that best characterises the action, so if the
- * emergence roll succeeds the officer's first trait and biography are justified by what just
+ * emergence roll succeeds, the hero's first trait and biography are justified by what just
  * happened rather than rolled blind (§4.1, §8.3).
  */
 internal object RecognitionService {
@@ -115,9 +116,9 @@ internal object RecognitionService {
     ): Boolean = tookLosses && strengthAfter in 1..CRITICAL_STRENGTH
 
     /**
-     * The coarse recognition status a leaderless formation shows (§7.1) — a broad phrase, not the
-     * exact number, so the mechanic reads as "an officer is emerging" rather than a progress bar.
-     * A formation that already has a commander returns null (there is nothing to recognise toward).
+     * The coarse recognition status a formation without an emerged hero shows (§7.1) — a broad
+     * phrase, not the exact number, so the mechanic reads as "a hero is emerging" rather than a
+     * progress bar. A formation that already has a hero returns null.
      *
      * An advanced tooltip may still show [CoreFormation.recognition] verbatim for players who want
      * the raw figure.

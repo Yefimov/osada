@@ -75,25 +75,19 @@ data class CommanderRow(
 
 /** Localization-ready label resolution — the one place enum/id → display text lives. */
 object HeroDisplay {
-    fun rank(rankId: String): String =
-        rankId.split('_', ' ').joinToString(" ") { it.replaceFirstChar(Char::uppercaseChar) }
+    fun rank(rankId: String): String = I18n.t("hero.rank.${rankId.lowercase()}")
 
     fun potential(p: HeroPotential): String =
-        when (p) {
-            HeroPotential.LINE_OFFICER -> "Line Officer"
-            HeroPotential.PROMISING -> "Promising Officer"
-            HeroPotential.DISTINGUISHED -> "Distinguished Officer"
-            HeroPotential.AUTHORED_LEGENDARY -> "Legendary"
-        }
+        I18n.t(
+            when (p) {
+                HeroPotential.LINE_OFFICER -> "hero.potential.line"
+                HeroPotential.PROMISING -> "hero.potential.promising"
+                HeroPotential.DISTINGUISHED -> "hero.potential.distinguished"
+                HeroPotential.AUTHORED_LEGENDARY -> "hero.potential.legendary"
+            },
+        )
 
-    fun renown(r: HeroRenown): String =
-        when (r) {
-            HeroRenown.UNKNOWN -> "Unknown"
-            HeroRenown.EXPERIENCED -> "Experienced"
-            HeroRenown.DISTINGUISHED -> "Distinguished"
-            HeroRenown.HERO -> "Hero"
-            HeroRenown.LEGEND -> "Legend"
-        }
+    fun renown(r: HeroRenown): String = I18n.t("hero.renown.${r.name.lowercase()}")
 
     /** CSS class for the renown portrait frame (`docs/design/hero-presentation.md` §1), applied
      *  identically wherever a hero's portrait appears (dossier, roster row, unit-card leader slot,
@@ -108,53 +102,50 @@ object HeroDisplay {
             HeroRenown.LEGEND -> "osada-renown--legend"
         }
 
-    fun status(s: HeroStatus): String =
-        when (s) {
-            HeroStatus.ACTIVE -> "Active"
-            HeroStatus.RESERVE -> "Reserve"
-            HeroStatus.WOUNDED -> "Wounded"
-            HeroStatus.SERIOUSLY_WOUNDED -> "Seriously Wounded"
-            HeroStatus.MISSING -> "Missing in Action"
-            HeroStatus.CAPTURED -> "Captured"
-            HeroStatus.RETIRED -> "Retired"
-            HeroStatus.KILLED -> "Killed in Action"
-        }
+    fun status(s: HeroStatus): String = I18n.t("hero.status.${s.name.lowercase()}")
 
     /** The roster tab a status belongs under (§14.3). */
     fun rosterTab(s: HeroStatus): String =
-        when (s) {
-            HeroStatus.ACTIVE -> "Active"
-            HeroStatus.RESERVE, HeroStatus.RETIRED -> "Reserve"
-            HeroStatus.WOUNDED, HeroStatus.SERIOUSLY_WOUNDED -> "Wounded"
-            HeroStatus.MISSING, HeroStatus.CAPTURED -> "Missing"
-            HeroStatus.KILLED -> "Fallen"
-        }
+        I18n.t(
+            when (s) {
+                HeroStatus.ACTIVE -> "hero.roster.tab.active"
+                HeroStatus.RESERVE, HeroStatus.RETIRED -> "hero.roster.tab.reserve"
+                HeroStatus.WOUNDED, HeroStatus.SERIOUSLY_WOUNDED -> "hero.roster.tab.wounded"
+                HeroStatus.MISSING, HeroStatus.CAPTURED -> "hero.roster.tab.missing"
+                HeroStatus.KILLED -> "hero.roster.tab.fallen"
+            },
+        )
 
     /** The tab order the roster renders (§14.3). */
-    val ROSTER_TABS = listOf("Active", "Reserve", "Wounded", "Missing", "Fallen")
+    val ROSTER_TABS: List<String>
+        get() =
+            listOf(
+                I18n.t("hero.roster.tab.active"),
+                I18n.t("hero.roster.tab.reserve"),
+                I18n.t("hero.roster.tab.wounded"),
+                I18n.t("hero.roster.tab.missing"),
+                I18n.t("hero.roster.tab.fallen"),
+            )
 
-    fun disposition(d: HeroCasualtyService.Disposition): String =
-        when (d) {
-            HeroCasualtyService.Disposition.EVACUATED -> "Evacuated to reserve"
-            HeroCasualtyService.Disposition.LIGHTLY_WOUNDED -> "Lightly wounded"
-            HeroCasualtyService.Disposition.SERIOUSLY_WOUNDED -> "Seriously wounded"
-            HeroCasualtyService.Disposition.MISSING -> "Missing in action"
-            HeroCasualtyService.Disposition.CAPTURED -> "Captured"
-            HeroCasualtyService.Disposition.KILLED -> "Killed in action"
-        }
+    fun disposition(d: HeroCasualtyService.Disposition): String = I18n.t("hero.disposition.${d.name.lowercase()}")
 
     fun injury(injuryId: String): String =
-        when (injuryId) {
-            HeroCasualtyService.LIGHT_WOUND_ID -> "Light wound"
-            HeroCasualtyService.SERIOUS_WOUND_ID -> "Serious wound (permanent)"
-            else -> injuryId
-        }
+        I18n.t(
+            when (injuryId) {
+                HeroCasualtyService.LIGHT_WOUND_ID -> "hero.injury.light"
+                HeroCasualtyService.SERIOUS_WOUND_ID -> "hero.injury.serious"
+                else -> return injuryId
+            },
+        )
 
     fun trait(
         leader: LeaderType,
         source: String,
     ): HeroTraitLine {
-        val (title, effect) = Leaders.description[leader] ?: (leader.name to "")
+        val key = leader.name.lowercase()
+        val fallback = Leaders.description[leader] ?: (leader.name to "")
+        val title = I18n.tOrNull("hero.trait.$key.title") ?: fallback.first
+        val effect = I18n.tOrNull("hero.trait.$key.effect") ?: fallback.second
         return HeroTraitLine(title = title, effect = effect, activation = activation(leader), source = source)
     }
 
@@ -164,27 +155,28 @@ object HeroDisplay {
         when (leader) {
             LeaderType.TENACIOUS_DEFENSE, LeaderType.DETERMINED_DEFENSE, LeaderType.FEROCIOUS_DEFENSE,
             LeaderType.RESILIENCE,
-            -> "While defending."
+            -> I18n.t("hero.trait.activation.defending")
             LeaderType.AGGRESSIVE_ATTACK, LeaderType.OVERWHELMING_ATTACK, LeaderType.FIRST_STRIKE,
-            -> "While attacking."
-            LeaderType.TANK_KILLER -> "When engaging armored targets."
-            LeaderType.STREET_FIGHTER -> "While fighting in urban terrain."
-            LeaderType.INFILTRATION_TACTICS -> "In forest and concealment."
+            -> I18n.t("hero.trait.activation.attacking")
+            LeaderType.TANK_KILLER -> I18n.t("hero.trait.activation.armored_targets")
+            LeaderType.STREET_FIGHTER -> I18n.t("hero.trait.activation.urban")
+            LeaderType.INFILTRATION_TACTICS -> I18n.t("hero.trait.activation.forest")
             LeaderType.AGGRESSIVE_MANEUVER, LeaderType.AGGRESSIVE_TANK_MANEUVER,
-            -> "Affects movement each turn."
-            LeaderType.SUPERIOR_MANEUVER -> "While moving past enemy units."
-            LeaderType.RECON_MOVEMENT -> "Permits phased movement: may act and continue moving in the same turn."
+            -> I18n.t("hero.trait.activation.movement")
+            LeaderType.SUPERIOR_MANEUVER -> I18n.t("hero.trait.activation.zoc")
+            LeaderType.RECON_MOVEMENT -> I18n.t("hero.trait.activation.phased_movement")
             LeaderType.ELITE_RECON_VETERAN, LeaderType.BATTLEFIELD_INTELLIGENCE, LeaderType.SKILLED_RECONNAISSANCE,
-            -> "Improves spotting each turn."
-            LeaderType.MARKSMAN -> "When firing at range."
-            LeaderType.SKILLED_INTERCEPTOR -> "When intercepting aircraft."
-            LeaderType.SKILLED_GROUND_ATTACK -> "When attacking a ground target from the air."
-            else -> "Passive."
+            -> I18n.t("hero.trait.activation.spotting")
+            LeaderType.MARKSMAN -> I18n.t("hero.trait.activation.ranged_fire")
+            LeaderType.SKILLED_INTERCEPTOR -> I18n.t("hero.trait.activation.interception")
+            LeaderType.SKILLED_GROUND_ATTACK -> I18n.t("hero.trait.activation.ground_attack")
+            else -> I18n.t("hero.trait.activation.passive")
         }
 }
 
 /** Assembles the read-side views (pure). One place turns roster records into UI-ready data. */
 object HeroDossierAssembler {
+    @Suppress("LongMethod")
     fun dossier(
         definition: HeroDefinition,
         state: HeroState,
@@ -195,13 +187,20 @@ object HeroDossierAssembler {
         val backgroundTrait = background?.grantedTrait
         val traits =
             buildList {
-                backgroundTrait?.let { add(HeroDisplay.trait(it, "Background")) }
+                backgroundTrait?.let { add(HeroDisplay.trait(it, I18n.t("hero.trait.source.background"))) }
                 state.learnedTraitIds
                     .mapNotNull(LegacyTraitMapping::fromTraitId)
                     .filter { it != backgroundTrait }
                     .forEach { trait ->
                         val isSignature = LegacyTraitMapping.toTraitId(trait) == definition.signatureTraitId
-                        add(HeroDisplay.trait(trait, if (isSignature) "Signature" else "Earned"))
+                        add(
+                            HeroDisplay.trait(
+                                trait,
+                                I18n.t(
+                                    if (isSignature) "hero.trait.source.signature" else "hero.trait.source.earned",
+                                ),
+                            ),
+                        )
                     }
             }
         return LeaderDossierView(
@@ -213,17 +212,33 @@ object HeroDossierAssembler {
             renownClass = HeroDisplay.renownClass(state.renown),
             status = HeroDisplay.status(state.status),
             nickname = state.nicknameId?.let(HeroNicknames::displayText),
-            background = background?.let { it.title to it.description },
+            background =
+                background?.let {
+                    I18n.t("hero.background.${it.id}.title") to
+                        I18n.t("hero.background.${it.id}.description")
+                },
             traits = traits,
             attributes = attributeLines(state.attributes),
             leaderExperience = state.experience,
             evidence = evidenceLines(state.specializationEvidence),
             medals = state.medals.map { (HeroMedals.title(it.medalId) ?: it.medalId) to it.scenarioId },
-            injuries = state.injuries.map { "${HeroDisplay.injury(it.injuryId)} — scenario ${it.scenarioId}" },
+            injuries =
+                state.injuries.map {
+                    I18n.t(
+                        "hero.injury.record",
+                        mapOf("injury" to HeroDisplay.injury(it.injuryId), "scenario" to it.scenarioId),
+                    )
+                },
             inMemoriam = state.status == HeroStatus.KILLED,
             serviceRecord = serviceLines(state, definition),
             formation = formation?.let { formationView(it, unitExperience) },
-            portrait = PortraitComposerV2.forHero(definition, state, formation?.unitClass ?: 0),
+            portrait =
+                PortraitComposerV2.forHero(
+                    definition,
+                    state,
+                    formation?.unitClass ?: 0,
+                    formation?.country,
+                ),
             portraitSeed = definition.portrait.seed,
             portraitArt = HeroPortraitArt.pathFor(definition.portrait.artId),
         )
@@ -272,17 +287,20 @@ object HeroDossierAssembler {
 
     private fun attributeLines(a: CommandAttributes): List<Pair<String, Int>> =
         listOf(
-            "Offense" to a.offense,
-            "Defense" to a.defense,
-            "Maneuver" to a.maneuver,
-            "Coordination" to a.coordination,
+            I18n.t("hero.attribute.offense") to a.offense,
+            I18n.t("hero.attribute.defense") to a.defense,
+            I18n.t("hero.attribute.maneuver") to a.maneuver,
+            I18n.t("hero.attribute.coordination") to a.coordination,
         )
 
     private fun evidenceLines(evidence: Map<String, Int>): List<Pair<String, Int>> =
         evidence.entries
             .filter { it.value > 0 }
-            .mapNotNull { e -> EvidenceCategory.byName(e.key)?.let { it.title to e.value } }
-            .sortedByDescending { it.second }
+            .mapNotNull { e ->
+                EvidenceCategory.byName(e.key)?.let {
+                    I18n.t("hero.evidence.${it.name.lowercase()}") to e.value
+                }
+            }.sortedByDescending { it.second }
 
     private fun serviceLines(
         state: HeroState,
@@ -303,6 +321,13 @@ object HeroDossierAssembler {
                         HeroEventDisplay.context(it.scenarioId, it.turn, it.date, it.location) + ".",
                 )
             }
-            if (state.promotionsAwarded > 0) add("Promotions awarded: ${state.promotionsAwarded}.")
+            if (state.promotionsAwarded > 0) {
+                add(
+                    I18n.t(
+                        "hero.service.promotions",
+                        mapOf("count" to state.promotionsAwarded),
+                    ),
+                )
+            }
         }
 }

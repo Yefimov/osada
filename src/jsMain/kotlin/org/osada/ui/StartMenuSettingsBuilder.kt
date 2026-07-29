@@ -296,7 +296,10 @@ internal object StartMenuSettingsBuilder {
     }
 
     private fun wireSettingsOkHandler() {
-        byId("smSetOkBut")?.title = I18n.t("settings.done.help")
+        byId("smSetOkBut")?.apply {
+            title = I18n.t("settings.done.help")
+            setAttribute("data-label", I18n.t("common.done.label"))
+        }
         byId("smSetOkBut")?.onclick = { _: MouseEvent ->
             makeHidden("smSettings")
             // Settings is reached two ways: the PRE-GAME main menu's own "Settings" button (where

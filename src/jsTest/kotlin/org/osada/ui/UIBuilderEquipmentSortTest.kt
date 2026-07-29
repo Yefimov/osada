@@ -44,7 +44,7 @@ class UIBuilderEquipmentSortTest {
     @Test
     fun buildEquipmentSortOptionsSetsInitialInfoText() {
         UIBuilder.buildEquipmentSortOptions()
-        assertEquals("Sort equipment by: ", byId("eqSortInfo")?.innerHTML)
+        assertEquals("Sort equipment", byId("eqSortInfo")?.textContent)
     }
 
     @Test

@@ -4,6 +4,7 @@ package org.osada.ui
 
 import org.osada.GameHolder
 import org.osada.UnitClass
+import org.osada.i18n.I18n
 import org.w3c.dom.HTMLElement
 
 /**
@@ -44,7 +45,7 @@ private fun EquipmentWindowBuilder.buildEqHeader(eq: HTMLElement) {
     moveInto("eqInfoText", header)
     val prestigeWrap = addTag(header, "div")
     prestigeWrap.id = "eqPrestigeWrap"
-    prestigeWrap.title = "Prestige available for purchases, upgrades and reinforcements."
+    prestigeWrap.title = I18n.t("equipment.prestige.help")
     moveInto("currentPrestige", prestigeWrap)
     moveInto("currentPrestigeAmount", prestigeWrap)
     moveInto("eqCloseBut", header)
@@ -136,10 +137,10 @@ private fun EquipmentWindowBuilder.buildEqListPane(eq: HTMLElement) {
         "The window reopens until every reserve is placed."
     val upgradeHint = addTag(reservePane, "div")
     upgradeHint.id = "eqUpgradeHint"
-    upgradeHint.textContent = "Select your unit here, then pick the new model below and press Upgrade."
+    upgradeHint.textContent = I18n.t("equipment.upgrade.hint")
     val reserveEmpty = addTag(reservePane, "div")
     reserveEmpty.id = "eqReserveEmpty"
-    reserveEmpty.textContent = "No purchased units awaiting deployment."
+    reserveEmpty.textContent = I18n.t("equipment.reserve.empty")
     moveInto("container-unitlist", reservePane)
     moveInto("hscroll-eqUnitList", listPane)
     moveInto("hscroll-eqTransportList", listPane)
@@ -204,7 +205,7 @@ private fun EquipmentWindowBuilder.buildCountrySelect(parent: HTMLElement) {
 private fun EquipmentWindowBuilder.buildSortSelect(parent: HTMLElement) {
     val select = addTag(parent, "select")
     select.id = "osadaEqSort"
-    select.title = "Choose which equipment statistic orders the catalogue. Use the adjacent arrow to reverse the order."
+    select.title = I18n.t("equipment.sort.help")
     addSelectOption(select, "Sort: Cost", "cost", true)
     UIBuilder.unitStats.forEach { stat ->
         val property = stat.property ?: return@forEach

@@ -3,6 +3,7 @@
 package org.osada.multiplayer.ui
 
 import kotlinx.browser.document
+import org.osada.i18n.I18n
 import org.osada.multiplayer.model.MultiplayerRuntimeState
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.Event
@@ -14,7 +15,11 @@ class MultiplayerPanelController {
         this.root = root
         root.style.display = "block"
         if (root.childElementCount == 0) {
-            root.appendChild((document.createElement("h2") as HTMLElement).apply { textContent = "Multiplayer" })
+            root.appendChild(
+                (document.createElement("h2") as HTMLElement).apply {
+                    textContent = I18n.t("multiplayer.title")
+                },
+            )
             root.appendChild((document.createElement("div") as HTMLElement).apply { className = "mp-panel-state" })
         }
     }
@@ -26,7 +31,14 @@ class MultiplayerPanelController {
     fun render(state: MultiplayerRuntimeState) {
         val summary = root?.querySelector(".mp-panel-state") as? HTMLElement ?: return
         summary.textContent =
-            "${state.status.name} · revision ${state.revision} · authority ${state.authorityParticipantId}"
+            I18n.t(
+                "multiplayer.panel.state",
+                mapOf(
+                    "status" to I18n.t("multiplayer.match_status.${state.status.name.lowercase()}"),
+                    "revision" to state.revision,
+                    "authority" to state.authorityParticipantId,
+                ),
+            )
         root?.setAttribute("data-status", state.status.name.lowercase())
     }
 

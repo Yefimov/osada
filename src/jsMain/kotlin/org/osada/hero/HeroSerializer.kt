@@ -110,6 +110,7 @@ internal object HeroSerializer {
             Pair("portraitLayers", definition.portrait.layerIds.toTypedArray()),
             Pair("portraitArt", definition.portrait.artId.orEmpty()),
             Pair("portraitFemale", authoredGender(definition.portrait.female)),
+            Pair("portraitPool", definition.portrait.poolId.orEmpty()),
             Pair("bio", HeroValueCodec.serializeBiography(definition.biographyFacts)),
             Pair("rank", state?.rankId.orEmpty()),
             Pair("status", (state?.status ?: HeroStatus.ACTIVE).name),
@@ -165,6 +166,7 @@ internal object HeroSerializer {
                         layerIds = BriefingDynamic.strList(item?.portraitLayers),
                         artId = BriefingDynamic.str(item?.portraitArt)?.takeIf { it.isNotBlank() },
                         female = BriefingDynamic.str(item?.portraitFemale)?.takeIf { it.isNotBlank() }?.toBoolean(),
+                        poolId = BriefingDynamic.str(item?.portraitPool)?.takeIf { it.isNotBlank() },
                     ),
                 signatureTraitId = BriefingDynamic.str(item?.signature)?.takeIf { it.isNotBlank() },
             )

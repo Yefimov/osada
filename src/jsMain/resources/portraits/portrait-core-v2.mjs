@@ -5,7 +5,14 @@
 // branch↔headgear, season↔uniform, uncommon injuries). Reuses SeededRandom's FNV-1a via
 // portrait-core.mjs so seeding stays consistent across the system.
 
-import { seedFrom } from './portrait-core.mjs';
+// FNV-1a twin of SeededRandom.seedFrom. Kept here because the deleted v1 generator used to export
+// this helper; v2 must remain a self-contained module now that v1 no longer ships.
+function seedFrom(...parts) {
+  let hash = 0x811c9dc5 | 0;
+  const text = parts.join('\0');
+  for (let i = 0; i < text.length; i++) hash = Math.imul(hash ^ text.charCodeAt(i), 16777619);
+  return hash;
+}
 
 // One mulberry32 draw from a fully-formed 32-bit seed — same stream as SeededRandom.
 function draw(seed) {
@@ -75,6 +82,9 @@ export function layerPath(manifest, id) {
  */
 export function compose(manifest, input, seed) {
   const W = manifest.weights;
+  const poolId = input.poolId || 'ussr_1942';
+  const pool = manifest.pools[poolId];
+  if (!pool) return { layerIds: [], byCategory: {}, meta: { poolId: null } };
   const branch = input.branch;
   const rank = input.rank;
   const gender = (input.gender || 'male').toLowerCase() === 'female' ? 'female' : 'male';
@@ -85,7 +95,8 @@ export function compose(manifest, input, seed) {
 
   // Headgear (branch × season), then hair by the headgear's occlusion mode. An explicit override
   // (id or 'none') lets a review page pin a specific cap; otherwise it is weighted by branch+season.
-  const headgearKey = input.headgear !== undefined ? input.headgear : weightedPick(seed, 'headgear', W.headgear[branch][season]);
+  const headgearWeights = pool.headgear || W.headgear;
+  const headgearKey = input.headgear !== undefined ? input.headgear : weightedPick(seed, 'headgear', headgearWeights[branch][season]);
   const headgear = headgearKey === 'none' ? null : headgearKey;
   const hairMode = headgear ? hairModeOf(manifest, headgear) : 'FULL_HAIR';
 
@@ -121,8 +132,8 @@ export function compose(manifest, input, seed) {
   // roll is confined to the male branch, so no seed, override or fallback can put a beard on a woman.
   put('facial_hair', gender === 'female' ? 'facial_clean' : weightedPick(seed, 'facial', W.facialByAge[age]));
 
-  put('uniform_front_collar', branch === 'aviation' ? 'collar_aviation' : `collar_${branch}_${season}`);
-  put('rank', `rank_${rank}`);
+  put('uniform_front_collar', pool.collar || (branch === 'aviation' ? 'collar_aviation' : `collar_${branch}_${season}`));
+  put('rank', `${pool.rankPrefix || 'rank_'}${rank}`);
   put('branch', `branch_${branch}`);
   if (headgear) put('headgear', headgear);
 
@@ -133,5 +144,5 @@ export function compose(manifest, input, seed) {
 
   const layerIds = manifest.order.map((c) => chosen[c]).filter(Boolean);
   const hairGray = age === W.grayHairFromAge;
-  return { layerIds, byCategory: chosen, meta: { age, archetype, season, hairMode, gender, hairGray } };
+  return { layerIds, byCategory: chosen, meta: { age, archetype, season, hairMode, gender, hairGray, poolId } };
 }

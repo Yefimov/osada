@@ -6,6 +6,7 @@ import org.osada.PlayerType
 import org.osada.WeatherCondition
 import org.osada.groundConditionNames
 import org.osada.groundIconImg
+import org.osada.i18n.I18n
 import org.osada.model.Cell
 import org.osada.model.GameMap
 import org.osada.model.Hex
@@ -195,7 +196,15 @@ internal class StatusBarController(
         val delta = player.prestigePerTurn.getOrNull(map.turn) ?: 0
         val deltaHtml = if (delta > 0) "<span class=\"osada-tb-delta\">+$delta</span>" else ""
         el.innerHTML = "<span class=\"osada-tb-prestige-val\">${player.prestige}</span>$deltaHtml"
-        el.title = "Prestige: ${player.prestige}" + if (delta > 0) " (+$delta next turn)" else ""
+        el.title =
+            if (delta > 0) {
+                I18n.t(
+                    "hud.prestige.value_with_income",
+                    mapOf("prestige" to player.prestige, "delta" to delta),
+                )
+            } else {
+                I18n.t("hud.prestige.value", mapOf("prestige" to player.prestige))
+            }
     }
 
     /** Task 5: persistent "OBSERVER" badge in the top bar while either fog-of-war or hidden-
@@ -251,7 +260,7 @@ internal class StatusBarController(
         if (total == 0) {
             val empty = addTag(container, "div")
             empty.className = "osada-side-empty"
-            empty.textContent = "No visible objectives"
+            empty.textContent = I18n.t("hud.objective.none_visible")
         }
         byId("osadaRailObjCounter")?.textContent = "$held/$total"
     }
@@ -266,8 +275,10 @@ internal class StatusBarController(
         val row = addTag(container, "div")
         row.className = "osada-obj" + if (isHeld) " osada-obj--held" else ""
         row.title =
-            (if (isHeld) "Held by your side" else "Held by the enemy") +
-            " — click to centre this objective at ($c,$r)."
+            I18n.t(
+                if (isHeld) "hud.objective.held.help" else "hud.objective.enemy.help",
+                mapOf("name" to (if (hex.name.isNotEmpty()) hex.name else "($c,$r)")),
+            )
         val name = addTag(row, "span")
         name.className = "osada-obj__name"
         name.textContent = if (hex.name.isNotEmpty()) hex.name else "($c,$r)"
@@ -278,7 +289,7 @@ internal class StatusBarController(
         mark.className = "osada-obj__mark"
         mark.textContent = if (isHeld) "✓" else "⚑" // check / flag
         val label = addTag(state, "span")
-        label.textContent = if (isHeld) "Held" else "Enemy"
+        label.textContent = I18n.t(if (isHeld) "hud.objective.held.label" else "hud.objective.enemy.label")
         row.onclick = { _: MouseEvent -> ui.uiSetCellOnViewPort(Cell(r, c)) }
     }
 

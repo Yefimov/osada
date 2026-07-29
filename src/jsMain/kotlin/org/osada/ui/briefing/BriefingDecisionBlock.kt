@@ -1,5 +1,7 @@
 package org.osada.ui.briefing
 
+import org.osada.i18n.I18n
+
 // The "YOUR DECISION" block on the operational briefing: a choice the player skipped past in the
 // conversation, rendered as A/B options that gate the BEGIN button. Split out of
 // ScenarioBriefingBuilder to keep that object within the project's function-count limit, following
@@ -23,14 +25,14 @@ internal fun renderPendingDecision(
     view.beginButton.classList.toggle("osada-briefing__button--disabled", blocked)
     view.beginButton.setAttribute(
         "title",
-        if (blocked) "Make your decision before beginning the operation" else "",
+        if (blocked) I18n.t("briefing.decision.required.help") else "",
     )
     if (line == null) return
 
     val sectionClass =
         "osada-briefing__order-section osada-briefing__order-section--wide osada-briefing__decision"
     val section = element("section", sectionClass)
-    child(section, "h2", "osada-briefing__order-heading").textContent = "YOUR DECISION"
+    child(section, "h2", "osada-briefing__order-heading").textContent = I18n.t("briefing.decision.title")
     child(section, "p", "osada-briefing__order-text").textContent = plainText(line.text)
     val options = child(section, "div", "osada-briefing__decision-options")
     line.choices.forEachIndexed { index, choice ->
@@ -46,7 +48,10 @@ private fun decisionOption(
     onChoice: (String) -> Unit,
 ) = element("button", "osada-briefing__decision-option").apply {
     asDynamic().type = "button"
-    setAttribute("aria-label", "Option ${index + 1}: ${choice.text}")
+    setAttribute(
+        "aria-label",
+        I18n.t("briefing.decision.option.aria", mapOf("number" to index + 1, "text" to choice.text)),
+    )
     child(this, "span", "osada-briefing__decision-label").textContent = "${'A' + index}"
     child(this, "span", "osada-briefing__decision-text").textContent = choice.text
     val preview = BriefingChoicePreview.of(choice)

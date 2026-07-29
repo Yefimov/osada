@@ -3,7 +3,7 @@ package org.osada.hero
 import org.osada.model.Leaders
 
 /**
- * The player-facing payload of a new-leader event — design brief §14.1.
+ * The player-facing payload of a hero-emergence event — design brief §14.1.
  *
  * A plain view-model built in the hero layer and drained by the UI, so the "presented after combat
  * resolution, never during attack animation" requirement is met by *when the UI reads it*, not by
@@ -50,7 +50,13 @@ data class HeroEmergenceAnnouncement(
                 effects = effects,
                 potential = emerged.state.potential,
                 guaranteed = emerged.guaranteed,
-                portrait = PortraitComposerV2.forHero(emerged.definition, emerged.state, formation.unitClass),
+                portrait =
+                    PortraitComposerV2.forHero(
+                        emerged.definition,
+                        emerged.state,
+                        formation.unitClass,
+                        formation.country,
+                    ),
                 portraitSeed = emerged.definition.portrait.seed,
                 portraitArt = HeroPortraitArt.pathFor(emerged.definition.portrait.artId),
             )

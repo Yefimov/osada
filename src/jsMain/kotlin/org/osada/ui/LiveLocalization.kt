@@ -23,6 +23,7 @@ internal object LiveLocalization {
         LanguageSelector.refreshAll()
         refreshMainMenu()
         refreshSettings()
+        GameStateMenuBuilder.refreshLocalization()
         refreshCampaignScreen()
         refreshScenarioScreen()
         GameplayLocalization.refreshAll()
@@ -115,7 +116,11 @@ internal object LiveLocalization {
 
         settingKeys.forEach { (id, keys) -> refreshSettingRow(id, keys.first, keys.second) }
         sliderKeys.forEach { (id, keys) -> refreshSettingRow(id, keys.first, keys.second) }
-        byId("smSetOkBut")?.title = I18n.t("settings.done.help")
+        byId("smSetOkBut")?.apply {
+            title = I18n.t("settings.done.help")
+            setAttribute("data-label", I18n.t("common.done.label"))
+        }
+        byId("uiokbut")?.setAttribute("data-label", I18n.t("common.continue.label"))
     }
 
     private fun refreshSettingRow(
@@ -137,6 +142,8 @@ internal object LiveLocalization {
 
     private fun refreshCampaignScreen() {
         byId("smCampHeader")?.textContent = I18n.t("campaign.selection.title")
+        byId("smCampDifficultyLabel")?.textContent = I18n.t("campaign.difficulty.label")
+        StartMenuCampaignStory.refreshLocalization()
         byId("smCBackBut")?.apply {
             title = I18n.t("campaign.back.help")
             setAttribute("data-label", I18n.t("common.back.label"))

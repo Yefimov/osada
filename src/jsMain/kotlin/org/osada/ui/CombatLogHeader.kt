@@ -1,12 +1,11 @@
 package org.osada.ui
 
 import org.osada.CombatLog
-import org.osada.groundConditionNames
 import org.osada.groundIconImg
+import org.osada.i18n.GameText
+import org.osada.i18n.I18n
 import org.osada.model.Cell
 import org.osada.model.GameMap
-import org.osada.outcomeNames
-import org.osada.weatherConditionNames
 import org.osada.weatherIconImg
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.MouseEvent
@@ -32,16 +31,19 @@ internal object CombatLogHeader {
         title.className = "osada-tr-title"
         title.textContent =
             currentPlayer?.let { player ->
-                "${player.getCountryName()} — Turn ${map.turn} of ${map.maxTurns}"
-            } ?: "Turn Report"
+                I18n.t(
+                    "turn_report.title_with_turn",
+                    mapOf("country" to player.getCountryName(), "turn" to map.turn, "maxTurns" to map.maxTurns),
+                )
+            } ?: I18n.t("turn_report.title")
 
         val sub = addTag(titleBlock, "div")
         sub.className = "osada-tr-sub"
         val atmos = game?.scenario?.atmosferic as? Int ?: 0
         val ground = game?.scenario?.ground as? Int ?: 0
         sub.innerHTML = "<i>${game?.scenario?.name}</i>, ${game?.scenario?.date?.toDateString()} · " +
-            "${weatherIconImg(atmos, "osada-tr-weather-img")}${weatherConditionNames.getOrNull(atmos) ?: ""} · " +
-            "${groundIconImg(ground, "osada-tr-weather-img")}${groundConditionNames.getOrNull(ground) ?: ""}"
+            "${weatherIconImg(atmos, "osada-tr-weather-img")}${GameText.weather(atmos)} · " +
+            "${groundIconImg(ground, "osada-tr-weather-img")}${GameText.ground(ground)}"
 
         buildHeaderActions(header, game)
         return header
@@ -59,7 +61,7 @@ internal object CombatLogHeader {
         actions.className = "osada-tr-actions"
         val descButton = addTag(actions, "span")
         descButton.className = "smallButtonMenu combatLogInfoButton osada-tr-briefing-btn"
-        descButton.title = "Scenario Briefing"
+        descButton.title = I18n.t("turn_report.briefing.help")
         descButton.style.fontSize = "16px"
         descButton.textContent = "g"
         descButton.onclick = { _: MouseEvent ->
@@ -77,7 +79,7 @@ internal object CombatLogHeader {
         if (game?.campaign != null) {
             val dossierButton = addTag(actions, "span")
             dossierButton.className = "smallButtonMenu combatLogInfoButton"
-            dossierButton.title = "Campaign Dossier"
+            dossierButton.title = I18n.t("turn_report.dossier.help")
             dossierButton.textContent = "@"
             dossierButton.onclick = { _: MouseEvent ->
                 UICombatLog.forceClose()
@@ -86,7 +88,7 @@ internal object CombatLogHeader {
         }
         val closeButton = addTag(actions, "span")
         closeButton.className = "osada-ico osada-ico--close combatLogCloseBut"
-        closeButton.title = "Close (Esc)"
+        closeButton.title = I18n.t("common.close_esc.help")
         closeButton.onclick = { _: MouseEvent -> UICombatLog.toggleCombatLog() }
     }
 
@@ -124,46 +126,50 @@ internal object CombatLogHeader {
 
         val objectivesLeft = map.sidesVictoryHexes.getOrElse(currentPlayer.side) { mutableListOf<Cell>() }.size
         tile(
-            "Objectives Left",
+            I18n.t("turn_report.objectives_left.label"),
             objectivesLeft.toString(),
-            explanation = "Enemy victory objectives your side must still capture to complete the scenario.",
+            explanation = I18n.t("turn_report.objectives_left.help"),
         )
 
         // Only the NEAREST upcoming victory tier is shown (spec: compact, not the old three-tier
         // sentence) — the further-out tiers stop mattering once a closer one is reachable.
         nearestVictoryTier(map)?.let { (turns, outcome) ->
             tile(
-                "Turns to $outcome",
+                I18n.t("turn_report.turns_to.label", mapOf("outcome" to outcome)),
                 turns.toString(),
-                explanation = "Turns remaining to earn the nearest timed victory tier by taking all objectives.",
+                explanation = I18n.t("turn_report.turns_to.help"),
             )
         }
 
         tile(
-            "Score",
+            I18n.t("turn_report.score.label"),
             currentPlayer.score.toString(),
-            explanation = "Scenario score earned from combat, objectives, supply and other actions.",
+            explanation = I18n.t("turn_report.score.help"),
         )
         val nextTurnPrestige = currentPlayer.prestigePerTurn.getOrNull(map.turn + 1) ?: 0
         tile(
-            "Prestige",
+            I18n.t("turn_report.prestige.label"),
             "${currentPlayer.prestige}&nbsp;${UIBuilder.currencyIcon}",
-            if (nextTurnPrestige != 0) "+$nextTurnPrestige next turn" else null,
-            "Prestige available for purchases, upgrades and reinforcement; the subtitle shows scheduled income.",
+            if (nextTurnPrestige != 0) {
+                I18n.t("turn_report.prestige.next_turn", mapOf("amount" to nextTurnPrestige))
+            } else {
+                null
+            },
+            I18n.t("turn_report.prestige.help"),
         )
 
         // Casualties: summed from this turn's combat log for the viewing side — the same data
         // the Combat group below itemizes per-unit, just totaled for an at-a-glance read.
         val (inflicted, taken) = combatTotals(game)
         tile(
-            "Inflicted",
+            I18n.t("turn_report.inflicted.label"),
             inflicted.toString(),
-            explanation = "Total enemy strength points destroyed by your side during this turn.",
+            explanation = I18n.t("turn_report.inflicted.help"),
         )
         tile(
-            "Losses",
+            I18n.t("turn_report.losses.label"),
             taken.toString(),
-            explanation = "Total friendly strength points lost by your side during this turn.",
+            explanation = I18n.t("turn_report.losses.help"),
         )
 
         return row
@@ -177,13 +183,13 @@ internal object CombatLogHeader {
             listOfNotNull(
                 ((map.victoryTurns.getOrNull(0) ?: 0) - currentTurn + 1)
                     .takeIf { it > 0 }
-                    ?.let { it to (outcomeNames["briliant"] ?: "Brilliant") },
+                    ?.let { it to I18n.t("turn_report.outcome.brilliant") },
                 ((map.victoryTurns.getOrNull(1) ?: 0) - currentTurn + 1)
                     .takeIf { it > 0 }
-                    ?.let { it to (outcomeNames["victory"] ?: "Victory") },
+                    ?.let { it to I18n.t("turn_report.outcome.victory") },
                 ((map.victoryTurns.getOrNull(2) ?: 0) - currentTurn + 1)
                     .takeIf { it > 0 }
-                    ?.let { it to (outcomeNames["tactical"] ?: "Tactical") },
+                    ?.let { it to I18n.t("turn_report.outcome.tactical") },
             )
         return tiers.minByOrNull { it.first }
     }

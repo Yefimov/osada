@@ -4,6 +4,7 @@ package org.osada.ui
 
 import kotlinx.browser.localStorage
 import org.osada.GameHolder
+import org.osada.i18n.I18n
 import org.osada.uiSettings
 
 /**
@@ -18,32 +19,13 @@ internal object SidebarBuilder {
     fun buildSidebar() {
         val hex = byId("hex")
         hex?.let { toggleButton(it, uiSettings.hexGrid) }
-        hex?.title = "Grid (H) — show or hide hex boundaries and terrain-type overlays."
         hex?.onclick = { _: org.w3c.dom.events.MouseEvent -> GameHolder.instance?.ui?.mainMenuButton("hex") }
 
         val air = byId("air")
         air?.let { toggleButton(it, uiSettings.airMode) }
-        air?.title =
-            "Air mode (P) — select, move and attack with aircraft. Ground units remain visible but clicks target the air layer."
         air?.onclick = { _: org.w3c.dom.events.MouseEvent -> GameHolder.instance?.ui?.mainMenuButton("air") }
 
-        byId("osadaSideToggle")?.title = "Collapse the operational sidebar to make more room for the map."
-        byId("osadaRailExpand")?.title = "Expand the operational sidebar."
-        byId("osadaRailObjCounter")?.title =
-            "Visible objectives currently held by your side / total visible objectives."
-        byId("osadaRailLogDot")?.title = "New battle-log events arrived while the sidebar was collapsed."
-        documentTitle(
-            "#osadaMinimapPanel .osada-sb-panel__title",
-            "Minimap — friendly units are green, spotted enemies red, and objectives brass. Click or drag to centre the main map.",
-        )
-        documentTitle(
-            ".osada-sb-panel--objectives .osada-sb-panel__title",
-            "Visible victory objectives. Click an entry to centre it on the main map.",
-        )
-        documentTitle(
-            ".osada-sb-panel--log .osada-sb-panel__title",
-            "Recent turn, combat, capture and hero events. Click a located event to jump to its hex.",
-        )
+        refreshLocalization()
 
         val sidebar = byId("osada-sidebar")
         val collapsed = localStorage.getItem(COLLAPSE_KEY) == "1"
@@ -54,6 +36,38 @@ internal object SidebarBuilder {
 
         byId("osadaSideToggle")?.onclick = { _: org.w3c.dom.events.MouseEvent -> setCollapsed(true) }
         byId("osadaRailExpand")?.onclick = { _: org.w3c.dom.events.MouseEvent -> setCollapsed(false) }
+    }
+
+    fun refreshLocalization() {
+        byId("hex")?.apply {
+            textContent = I18n.t("hud.sidebar.grid.label")
+            title = I18n.t("hud.sidebar.grid.help")
+        }
+        byId("air")?.apply {
+            textContent = I18n.t("hud.sidebar.air.label")
+            title = I18n.t("hud.sidebar.air.help")
+        }
+        byId("osadaSideToggle")?.title = I18n.t("hud.sidebar.collapse.help")
+        byId("osadaRailExpand")?.title = I18n.t("hud.sidebar.expand.help")
+        byId("osadaRailObjCounter")?.title = I18n.t("hud.sidebar.objective_counter.help")
+        byId("osadaRailLogDot")?.title = I18n.t("hud.sidebar.new_events.help")
+        documentTitle(
+            "#osadaMinimapPanel .osada-sb-panel__title",
+            I18n.t("hud.sidebar.minimap.help"),
+        )
+        documentTitle(
+            ".osada-sb-panel--objectives .osada-sb-panel__title",
+            I18n.t("hud.sidebar.objectives.help"),
+        )
+        documentTitle(
+            ".osada-sb-panel--log .osada-sb-panel__title",
+            I18n.t("hud.sidebar.log.help"),
+        )
+        byId("osadaMinimapTitle")?.textContent = I18n.t("hud.sidebar.minimap.label")
+        byId("osadaObjectivesTitle")?.textContent = I18n.t("hud.sidebar.objectives.label")
+        byId("osadaLogTitle")?.textContent = I18n.t("hud.sidebar.log.label")
+        byId("osadaMinimapFrame")?.querySelector(".osada-side-empty")?.textContent =
+            I18n.t("hud.sidebar.minimap.loading")
     }
 
     private fun documentTitle(

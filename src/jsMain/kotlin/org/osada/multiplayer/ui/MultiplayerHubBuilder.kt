@@ -3,6 +3,7 @@
 package org.osada.multiplayer.ui
 
 import kotlinx.browser.document
+import org.osada.i18n.I18n
 import org.osada.multiplayer.model.MultiplayerEndpointConfig
 import org.w3c.dom.HTMLElement
 
@@ -16,13 +17,25 @@ class MultiplayerHubBuilder {
         this.root = root
         root.clearHubChildren()
         root.className = "osada-multiplayer-hub"
-        root.appendChild(heading("Multiplayer"))
-        root.appendChild(paragraph("Real-time multiplayer. Both players must use the same game version."))
-        root.appendChild(card("Create Room", "Host a new match.", "create"))
-        root.appendChild(card("Join Room", "Enter a room code or use an invite link.", "join"))
-        root.appendChild(card("Reconnect", "Resume the latest online match.", "reconnect"))
-        root.appendChild(paragraph("Backend: ${endpoint.environment}"))
-        val diagnostics = button("Connection diagnostics")
+        root.appendChild(heading(I18n.t("multiplayer.title")))
+        root.appendChild(paragraph(I18n.t("multiplayer.online.description")))
+        root.appendChild(
+            card(I18n.t("multiplayer.create.label"), I18n.t("multiplayer.online.create.help"), "create"),
+        )
+        root.appendChild(
+            card(I18n.t("multiplayer.join.label"), I18n.t("multiplayer.online.join.help"), "join"),
+        )
+        root.appendChild(
+            card(
+                I18n.t("multiplayer.reconnect.label"),
+                I18n.t("multiplayer.reconnect.help"),
+                "reconnect",
+            ),
+        )
+        root.appendChild(
+            paragraph(I18n.t("multiplayer.backend", mapOf("environment" to endpoint.environment))),
+        )
+        val diagnostics = button(I18n.t("multiplayer.diagnostics.label"))
         diagnostics.onclick = { showDiagnostics() }
         root.appendChild(diagnostics)
         showCreateRoom()

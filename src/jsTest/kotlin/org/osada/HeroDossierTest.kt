@@ -16,6 +16,8 @@ import org.osada.hero.HeroState
 import org.osada.hero.HeroStatus
 import org.osada.hero.LegacyTraitMapping
 import org.osada.hero.PortraitComposition
+import org.osada.i18n.installEnglishUiBundleForTests
+import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -29,6 +31,11 @@ import kotlin.test.assertTrue
 class HeroDossierTest {
     private val heroId = HeroId("H-1")
     private val formationId = FormationId("F-1")
+
+    @BeforeTest
+    fun setUpI18n() {
+        installEnglishUiBundleForTests()
+    }
 
     private fun definition() =
         HeroDefinition(
@@ -74,7 +81,7 @@ class HeroDossierTest {
         val view = HeroDossierAssembler.dossier(definition(), state(), formation(), unitExperience = 250)
         assertEquals("Ivan Petrov", view.name)
         assertEquals("Major", view.rank)
-        assertEquals("Distinguished Officer", view.potential)
+        assertEquals("Distinguished Hero", view.potential)
         assertEquals("Hero", view.renown)
         assertEquals("Active", view.status)
     }

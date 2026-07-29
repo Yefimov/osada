@@ -2,6 +2,7 @@ package org.osada.ui
 
 import kotlinx.browser.document
 import org.osada.UnitClass
+import org.osada.i18n.I18n
 import org.osada.model.Cell
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.MouseEvent
@@ -37,8 +38,10 @@ internal object CombatLogFeed {
         val header = addTag(groupEl, "div")
         header.className = "osada-tr-group__header"
         header.title =
-            "${group.label}: ${group.count} event(s). Click to expand or collapse this section; " +
-            "in the compact turn notice, click to open the full report."
+            I18n.t(
+                "turn_report.group.help",
+                mapOf("group" to group.label, "count" to group.count),
+            )
         val icon = addTag(header, "span")
         icon.className = "osada-ico osada-ico--${group.icoMod} osada-tr-group__ico"
         val label = addTag(header, "span")
@@ -98,7 +101,8 @@ internal object CombatLogFeed {
             detailDiv.innerHTML = detail
         }
         if (pos != null) {
-            rowEl.title = "Jump to (${pos.col},${pos.row})"
+            rowEl.title =
+                I18n.t("hud.log.jump.help", mapOf("col" to pos.col, "row" to pos.row))
             rowEl.classList.add("osada-tr-row--clickable")
             rowEl.onclick = { _: MouseEvent ->
                 gameRef()?.ui?.uiSetCellOnViewPort(

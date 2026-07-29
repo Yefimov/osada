@@ -17,6 +17,7 @@ import org.osada.hero.HeroId
 import org.osada.hero.HeroMedal
 import org.osada.hero.HeroMedals
 import org.osada.hero.HeroOrigin
+import org.osada.hero.HeroPotential
 import org.osada.hero.HeroRenown
 import org.osada.hero.HeroRoster
 import org.osada.hero.HeroSerializer
@@ -89,6 +90,8 @@ class HeroProgressionTest {
     private fun ledFormation(
         unit: GameUnit,
         heroId: HeroId = HeroId("H-test"),
+        potential: HeroPotential = HeroPotential.LINE_OFFICER,
+        renown: HeroRenown = HeroRenown.UNKNOWN,
     ): CoreFormation {
         val formationId = assertNotNull(FormationIdentity.of(unit))
         val formation =
@@ -111,7 +114,13 @@ class HeroProgressionTest {
                 biographyFacts = HeroBiographyFacts(emergenceEventId = "test"),
                 portrait = PortraitComposition(seed = 1),
             ),
-            HeroState(heroId = heroId, rankId = "lieutenant", assignedFormationId = formationId),
+            HeroState(
+                heroId = heroId,
+                rankId = "lieutenant",
+                potential = potential,
+                renown = renown,
+                assignedFormationId = formationId,
+            ),
         )
         return formation
     }
@@ -207,6 +216,16 @@ class HeroProgressionTest {
         assertEquals(HeroRenown.EXPERIENCED, assertNotNull(HeroCampaign.heroFor(unit)).renown)
     }
 
+    @Test
+    fun authoredStartingRenownNeverFallsBackToTheXpDerivedTier() {
+        val unit = coreUnit()
+        ledFormation(unit, potential = HeroPotential.AUTHORED_LEGENDARY, renown = HeroRenown.DISTINGUISHED)
+
+        HeroCampaign.recordCombat(unit, strongerKill())
+
+        assertEquals(HeroRenown.DISTINGUISHED, assertNotNull(HeroCampaign.heroFor(unit)).renown)
+    }
+
     // --------------------------------------------------------------------------- medals §8.1
 
     @Test
@@ -233,6 +252,29 @@ class HeroProgressionTest {
 
         val hero = assertNotNull(HeroCampaign.heroFor(unit))
         assertEquals("captain", hero.rankId, "one rank up from lieutenant")
+        assertEquals(1, hero.promotionsAwarded)
+    }
+
+    @Test
+    fun potentialAcceleratesOnlyTheFirstPromotionMilestone() {
+        val balance = HeroBalance.DEFAULT
+
+        assertEquals(listOf(80, 220, 420), balance.promotionThresholdsFor(HeroPotential.LINE_OFFICER))
+        assertEquals(listOf(60, 220, 420), balance.promotionThresholdsFor(HeroPotential.PROMISING))
+        assertEquals(listOf(40, 220, 420), balance.promotionThresholdsFor(HeroPotential.DISTINGUISHED))
+        assertEquals(listOf(40, 220, 420), balance.promotionThresholdsFor(HeroPotential.AUTHORED_LEGENDARY))
+    }
+
+    @Test
+    fun promisingHeroIsPromotedAtItsEarlierThreshold() {
+        val unit = coreUnit()
+        ledFormation(unit, potential = HeroPotential.PROMISING)
+
+        repeat(3) { HeroCampaign.recordCombat(unit, strongerKill()) }
+
+        val hero = assertNotNull(HeroCampaign.heroFor(unit))
+        assertEquals(60, hero.experience)
+        assertEquals("captain", hero.rankId)
         assertEquals(1, hero.promotionsAwarded)
     }
 

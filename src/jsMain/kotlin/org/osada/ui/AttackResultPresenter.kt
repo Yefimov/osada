@@ -2,6 +2,7 @@ package org.osada.ui
 
 import org.osada.PlayerType
 import org.osada.hero.HeroCampaign
+import org.osada.i18n.I18n
 import org.osada.model.Cell
 import org.osada.model.CombatResults
 import org.osada.model.GameUnit
@@ -41,7 +42,7 @@ internal class AttackResultPresenter(
 
         attackerPos?.let { ui.render.render(it.row, it.col, radius) }
         showLeaderGainBounceTexts(result, attackerPos, defenderPos)
-        // Present any new-leader events the hero system queued during this combat — after the
+        // Present hero-emergence events queued during this combat — after the
         // animation, per §14.1, never mid-attack.
         HeroEmergencePresenter.announce(HeroCampaign.drainAnnouncements())
         // Same timing rule for a promotion choice (§8.5) on a formation that already has a commander.
@@ -134,11 +135,11 @@ internal class AttackResultPresenter(
     ) {
         if (result.atkLeaderGain && attackerPos != null) {
             val pos = ui.render.cellToScreen(attackerPos.row, attackerPos.col, true)
-            bounceText(pos.x, pos.y, "New Leader", true)
+            bounceText(pos.x, pos.y, I18n.t("hero.emergence.bounce"), true)
         }
         if (result.defLeaderGain && defenderPos != null) {
             val pos = ui.render.cellToScreen(defenderPos.row, defenderPos.col, true)
-            bounceText(pos.x, pos.y, "New Leader", true)
+            bounceText(pos.x, pos.y, I18n.t("hero.emergence.bounce"), true)
         }
     }
 

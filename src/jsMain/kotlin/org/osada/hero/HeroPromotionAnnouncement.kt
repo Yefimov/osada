@@ -1,6 +1,6 @@
 package org.osada.hero
 
-import org.osada.model.Leaders
+import org.osada.i18n.I18n
 
 /**
  * The player-facing payload of a promotion event (§8.5, §14.1's sibling for progression rather
@@ -44,14 +44,21 @@ data class HeroPromotionAnnouncement(
             val evidence = hero.specializationEvidence[def.categoryId.name] ?: 0
             val justification =
                 if (def.requiredEvidence.isEmpty()) {
-                    "Available to any commander at this rank."
+                    I18n.t("hero.promotion.choice.general")
                 } else {
-                    "Available because of $evidence ${def.categoryId.title} evidence."
+                    I18n.t(
+                        "hero.promotion.choice.evidence",
+                        mapOf(
+                            "value" to evidence,
+                            "category" to I18n.t("hero.evidence.${def.categoryId.name.lowercase()}"),
+                        ),
+                    )
                 }
+            val trait = HeroDisplay.trait(def.legacyTrait, "")
             return Choice(
                 traitId = def.id,
-                title = def.title,
-                effectDescription = Leaders.description[def.legacyTrait]?.second.orEmpty(),
+                title = I18n.t("hero.promotion.trait.${def.id}.title"),
+                effectDescription = trait.effect,
                 justification = justification,
             )
         }

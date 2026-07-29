@@ -2,6 +2,7 @@ package org.osada.ui
 
 import org.osada.TooltipColor
 import org.osada.TooltipStyle
+import org.osada.i18n.I18n
 import org.w3c.dom.Element
 
 /**
@@ -28,7 +29,7 @@ internal object TooltipBuilder {
         byId("gameToolTipMessage")?.innerHTML = text
         tooltip.setAttribute("orientation", "left")
         makeVisible("gameToolTip")
-        byId("gameToolTipOk")?.title = "Dismiss this battlefield notice."
+        byId("gameToolTipOk")?.title = I18n.t("hud.tooltip.dismiss.help")
         byId("gameToolTipOk")?.onclick = { _: org.w3c.dom.events.MouseEvent ->
             makeHidden("gameToolTip")
             js("if (typeof game !== 'undefined') game.waitUIAnimation = false")

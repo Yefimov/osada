@@ -63,6 +63,6 @@ class UIBuilderMessagesTest {
         val status = byId("statusbar-extension")
         assertNotNull(status)
         assertEquals("statusbar-extension-animation-reverse", status.className)
-        assertTrue(status.innerHTML.contains("Finished computer turn"))
+        assertTrue(status.innerHTML.contains("Computer turn complete."))
     }
 }

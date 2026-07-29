@@ -3,6 +3,7 @@ package org.osada.ui
 import kotlinx.browser.document
 import org.osada.CombatLog
 import org.osada.LeaderType
+import org.osada.i18n.I18n
 import org.osada.model.Cell
 import org.osada.model.Equipment
 import org.osada.model.Hex
@@ -18,7 +19,7 @@ import org.w3c.dom.HTMLElement
  */
 internal object CombatLogGroups {
     fun buildResupplyGroup(): CombatLogFeed.FeedGroup {
-        val game = gameRef() ?: return CombatLogFeed.emptyGroup("supply", "Resupply")
+        val game = gameRef() ?: return CombatLogFeed.emptyGroup("supply", I18n.t("turn_report.group.resupply"))
         val body = document.createElement("div") as HTMLElement
         body.className = "osada-tr-group__rows"
         val keys = js("Object.keys")(CombatLog.log.resupply) as Array<String>
@@ -29,7 +30,7 @@ internal object CombatLogGroups {
             buildResupplyRow(body, key, entry)
             count++
         }
-        return CombatLogFeed.FeedGroup("supply", "Resupply", body, count)
+        return CombatLogFeed.FeedGroup("supply", I18n.t("turn_report.group.resupply"), body, count)
     }
 
     private fun buildResupplyRow(
@@ -40,22 +41,30 @@ internal object CombatLogGroups {
         val eqData = Equipment.equipment[entry.eqid as Int]
         val icon = CombatLogFeed.resolveUnitIcon(eqData)
         val isCore = entry.isCore as? Boolean == true
-        val corePrefix = if (isCore) CombatLogFeed.numSpan("Core ") else ""
+        val corePrefix = if (isCore) CombatLogFeed.numSpan(I18n.t("turn_report.core_prefix")) else ""
         val title = "$corePrefix${UIBuilder.unitIDToOrdinal(key.toInt())} <b>${eqData.name}</b>"
         val ammo = entry.ammo as? Int ?: 0
         val fuel = entry.fuel as? Int ?: 0
         val maxAmmo = eqData.ammo as? Int ?: 0
         val maxFuel = eqData.fuel as? Int ?: 0
         val detailParts = mutableListOf<String>()
-        if (ammo > 0) detailParts.add("${CombatLogFeed.numSpan("$ammo/$maxAmmo")} ammo")
-        if (fuel > 0 && maxFuel > 0) detailParts.add("${CombatLogFeed.numSpan("$fuel/$maxFuel")} fuel")
+        if (ammo > 0) {
+            detailParts.add(
+                I18n.t("turn_report.resupply.ammo", mapOf("value" to CombatLogFeed.numSpan("$ammo/$maxAmmo"))),
+            )
+        }
+        if (fuel > 0 && maxFuel > 0) {
+            detailParts.add(
+                I18n.t("turn_report.resupply.fuel", mapOf("value" to CombatLogFeed.numSpan("$fuel/$maxFuel"))),
+            )
+        }
         val source = entry.source as? String
         if (!source.isNullOrBlank()) detailParts.add(source)
         CombatLogFeed.addFeedRow(
             body,
             icon,
             title,
-            "Resupplied automatically: " + detailParts.joinToString(" · "),
+            I18n.t("turn_report.resupply.detail", mapOf("details" to detailParts.joinToString(" · "))),
             isCore,
             false,
             null,
@@ -65,7 +74,9 @@ internal object CombatLogGroups {
     fun buildReinforceGroup(): CombatLogFeed.FeedGroup {
         val game = gameRef()
         val list = CombatLog.log.reinforce as? Array<dynamic>
-        if (game == null || list == null) return CombatLogFeed.emptyGroup("upgrade", "Reinforcements")
+        if (game == null || list == null) {
+            return CombatLogFeed.emptyGroup("upgrade", I18n.t("turn_report.group.reinforcements"))
+        }
         val body = document.createElement("div") as HTMLElement
         body.className = "osada-tr-group__rows"
         var count = 0
@@ -75,11 +86,11 @@ internal object CombatLogGroups {
             val eqData = Equipment.equipment[entry.eqid as Int]
             val icon = CombatLogFeed.resolveUnitIcon(eqData)
             val pos = entry.pos as? Cell ?: Cell(0, 0)
-            val title = "<b>${eqData.name}</b> arrived as reinforcement"
+            val title = I18n.t("turn_report.reinforcement.arrived", mapOf("unit" to "<b>${eqData.name}</b>"))
             CombatLogFeed.addFeedRow(body, icon, title, "", false, false, pos)
             count++
         }
-        return CombatLogFeed.FeedGroup("upgrade", "Reinforcements", body, count)
+        return CombatLogFeed.FeedGroup("upgrade", I18n.t("turn_report.group.reinforcements"), body, count)
     }
 
     /** Units that surrendered to the viewing player — encirclement kills, kept apart from ordinary
@@ -87,7 +98,9 @@ internal object CombatLogGroups {
     fun buildSurrenderGroup(): CombatLogFeed.FeedGroup {
         val game = gameRef()
         val list = CombatLog.log.surrenders as? Array<dynamic>
-        if (game == null || list == null) return CombatLogFeed.emptyGroup("attack", "Surrenders")
+        if (game == null || list == null) {
+            return CombatLogFeed.emptyGroup("attack", I18n.t("turn_report.group.surrenders"))
+        }
         val body = document.createElement("div") as HTMLElement
         body.className = "osada-tr-group__rows"
         var count = 0
@@ -97,24 +110,29 @@ internal object CombatLogGroups {
             val eqData = Equipment.equipment[entry.eqid as Int]
             val icon = CombatLogFeed.resolveUnitIcon(eqData)
             val pos = entry.pos as? Cell ?: Cell(0, 0)
-            val title = "<b>${eqData.name}</b> surrendered — encircled, no retreat"
+            val title = I18n.t("turn_report.surrendered", mapOf("unit" to "<b>${eqData.name}</b>"))
             val awarded = entry.prestige as? Int ?: 0
             val detail =
                 if (awarded > 0) {
-                    "Prestige +${CombatLogFeed.numSpan(awarded)}&nbsp;${UIBuilder.currencyIcon}"
+                    I18n.t(
+                        "turn_report.prestige.gained",
+                        mapOf("amount" to CombatLogFeed.numSpan(awarded), "icon" to UIBuilder.currencyIcon),
+                    )
                 } else {
                     ""
                 }
             CombatLogFeed.addFeedRow(body, icon, title, detail, false, false, pos)
             count++
         }
-        return CombatLogFeed.FeedGroup("attack", "Surrenders", body, count)
+        return CombatLogFeed.FeedGroup("attack", I18n.t("turn_report.group.surrenders"), body, count)
     }
 
     fun buildLeadersGroup(): CombatLogFeed.FeedGroup {
         val game = gameRef()
         val list = CombatLog.log.leaders as? Array<dynamic>
-        if (game == null || list == null) return CombatLogFeed.emptyGroup("star", "Unit Leaders")
+        if (game == null || list == null) {
+            return CombatLogFeed.emptyGroup("star", I18n.t("turn_report.group.commanders"))
+        }
         val body = document.createElement("div") as HTMLElement
         body.className = "osada-tr-group__rows"
         var count = 0
@@ -124,22 +142,36 @@ internal object CombatLogGroups {
             buildLeaderRow(body, entry)
             count++
         }
-        return CombatLogFeed.FeedGroup("star", "Unit Leaders", body, count)
+        return CombatLogFeed.FeedGroup("star", I18n.t("turn_report.group.commanders"), body, count)
     }
 
+    @Suppress("LongMethod")
     private fun buildLeaderRow(
         body: HTMLElement,
         entry: dynamic,
     ) {
         val eqData = Equipment.equipment[entry.eqid as Int]
         val isCore = entry.isCore as? Boolean == true
-        val corePrefix = if (isCore) CombatLogFeed.numSpan("Core ") else ""
+        val corePrefix = if (isCore) CombatLogFeed.numSpan(I18n.t("turn_report.core_prefix")) else ""
         val pos = entry.pos as? Cell ?: Cell(0, 0)
         if (entry.isHero as? Boolean == true) {
             val title =
-                "${CombatLogFeed.numSpan(entry.rank as? String ?: "Commander")} " +
-                    "<b>${entry.heroName as? String ?: ""}</b> emerged"
-            val detail = "Took command of ${entry.formationName as? String ?: eqData.name as? String ?: "formation"}"
+                I18n.t(
+                    "turn_report.commander.distinguished",
+                    mapOf(
+                        "rank" to CombatLogFeed.numSpan(entry.rank as? String ?: I18n.t("hero.rank.commander")),
+                        "name" to "<b>${entry.heroName as? String ?: ""}</b>",
+                    ),
+                )
+            val formation =
+                entry.formationName as? String
+                    ?: eqData.name as? String
+                    ?: I18n.t("turn_report.formation.fallback")
+            val detail =
+                I18n.t(
+                    "turn_report.commander.formation",
+                    mapOf("formation" to formation),
+                )
             CombatLogFeed.addFeedRow(
                 body,
                 CombatLogFeed.resolveUnitIcon(eqData),
@@ -152,14 +184,25 @@ internal object CombatLogGroups {
             return
         }
         val title =
-            "$corePrefix${UIBuilder.unitIDToOrdinal(
-                entry.id as Int,
-            )} <b>${eqData.name}</b> received a new leader"
+            I18n.t(
+                "turn_report.commander.gained",
+                mapOf(
+                    "unit" to
+                        "$corePrefix${UIBuilder.unitIDToOrdinal(entry.id as Int)} <b>${eqData.name}</b>",
+                ),
+            )
         val classLeader = LeaderType.entries.find { it.value == entry.classLeader as? Int }
         val unitLeader = LeaderType.entries.find { it.value == entry.leader as? Int }
         val classDesc = classLeader?.let { Leaders.description[it]?.first } ?: ""
         val leaderDesc = unitLeader?.let { Leaders.description[it]?.first } ?: ""
-        val detail = "${CombatLogFeed.numSpan(classDesc)} and ${CombatLogFeed.numSpan(leaderDesc)} abilities"
+        val detail =
+            I18n.t(
+                "turn_report.commander.abilities",
+                mapOf(
+                    "first" to CombatLogFeed.numSpan(classDesc),
+                    "second" to CombatLogFeed.numSpan(leaderDesc),
+                ),
+            )
         CombatLogFeed.addFeedRow(
             body,
             CombatLogFeed.resolveUnitIcon(eqData),
@@ -174,7 +217,9 @@ internal object CombatLogGroups {
     fun buildObjectiveGroup(map: Array<Array<Hex>>): CombatLogFeed.FeedGroup {
         val game = gameRef()
         val list = CombatLog.log.objectives as? Array<dynamic>
-        if (game == null || list == null) return CombatLogFeed.emptyGroup("map", "Objectives")
+        if (game == null || list == null) {
+            return CombatLogFeed.emptyGroup("map", I18n.t("turn_report.group.objectives"))
+        }
         val body = document.createElement("div") as HTMLElement
         body.className = "osada-tr-group__rows"
         var count = 0
@@ -185,7 +230,7 @@ internal object CombatLogGroups {
             buildObjectiveRow(body, entry, hex, pos, game)
             count++
         }
-        return CombatLogFeed.FeedGroup("map", "Objectives", body, count)
+        return CombatLogFeed.FeedGroup("map", I18n.t("turn_report.group.objectives"), body, count)
     }
 
     private fun buildObjectiveRow(
@@ -199,13 +244,17 @@ internal object CombatLogGroups {
         val title: String
         val detail: String
         if (isFriendly) {
-            title = "Captured <b>${hex.name}</b>"
+            title = I18n.t("turn_report.objective.captured", mapOf("objective" to "<b>${hex.name}</b>"))
             // The amount actually awarded (recorded by addObjectiveCapture), falling back to the
             // constant only for entries logged before it carried the real figure.
             val awarded = entry.prestige as? Int ?: prestigeGains["objectiveCapture"] ?: 0
-            detail = "Prestige +${CombatLogFeed.numSpan(awarded)}&nbsp;${UIBuilder.currencyIcon}"
+            detail =
+                I18n.t(
+                    "turn_report.prestige.gained",
+                    mapOf("amount" to CombatLogFeed.numSpan(awarded), "icon" to UIBuilder.currencyIcon),
+                )
         } else {
-            title = "Lost <b>${hex.name}</b>"
+            title = I18n.t("turn_report.objective.lost", mapOf("objective" to "<b>${hex.name}</b>"))
             detail = ""
         }
         // Objectives have no per-unit icon; addFeedRow hides the icon box for an empty src.

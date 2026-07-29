@@ -3,12 +3,13 @@ package org.osada.ui
 import org.osada.CombatLog
 import org.osada.GameHolder
 import org.osada.hero.FormationIdentity
+import org.osada.hero.HeroDisplay
 import org.osada.hero.HeroEmergenceAnnouncement
-import org.osada.hero.HeroPotential
+import org.osada.i18n.I18n
 import org.osada.model.getUnits
 
 /**
- * Presents new-leader events (§14.1) after a combat has fully resolved.
+ * Presents hero-emergence events (§14.1) after a combat has fully resolved.
  *
  * Reads the announcements the hero system queued during combat and shows one message dialog each.
  * Presenting here — from the UI, after the attack animation is done — is what satisfies "trigger
@@ -22,7 +23,7 @@ import org.osada.model.getUnits
 internal object HeroEmergencePresenter {
     fun announce(pending: List<HeroEmergenceAnnouncement>) {
         pending.forEach {
-            UIBuilder.messageDynamic("A New Commander Emerges", body(it))
+            UIBuilder.messageDynamic(I18n.t("hero.emergence.title"), body(it))
             // The layered portrait (§14.1, §15) loads into the placeholder after the dialog is built.
             PortraitRenderer.render(
                 byId("heroEmergencePortrait"),
@@ -39,7 +40,11 @@ internal object HeroEmergencePresenter {
             val rank = rankLabel(it.rankId)
             if (unit != null) {
                 CombatLog.addHero(unit, it.heroName, rank, it.formationName)
-                val message = "$rank ${it.heroName} took command of ${it.formationName}."
+                val message =
+                    I18n.t(
+                        "hero.emergence.log",
+                        mapOf("rank" to rank, "name" to it.heroName, "formation" to it.formationName),
+                    )
                 unit.getPos()?.let { pos -> HudLog.addAt(pos.row, pos.col, HudLog.Segment(message)) }
                     ?: HudLog.add(HudLog.Segment(message))
             }
@@ -50,10 +55,20 @@ internal object HeroEmergencePresenter {
         val sb = StringBuilder()
         sb.append("<div id='heroEmergencePortrait' class='heroEmergencePortrait'></div>")
         sb.append("<div class='heroEmergenceName'><b>${rankLabel(a.rankId)} ${a.heroName}</b></div>")
-        sb.append("<div class='heroEmergenceSub'>${a.characterLabel} · ${potentialLabel(a.potential)}</div>")
-        sb.append("<div class='heroEmergenceFormation'>Commander of ${a.formationName}</div>")
+        sb.append("<div class='heroEmergenceSub'>${a.characterLabel} · ${HeroDisplay.potential(a.potential)}</div>")
+        sb.append(
+            "<div class='heroEmergenceFormation'>" +
+                I18n.t("hero.emergence.formation", mapOf("formation" to a.formationName)) +
+                "</div>",
+        )
         sb.append("<div class='heroEmergenceReason'><i>${a.reason}</i></div>")
-        a.backgroundTitle?.let { sb.append("<div class='heroEmergenceBackground'>Background: $it</div>") }
+        a.backgroundTitle?.let {
+            sb.append(
+                "<div class='heroEmergenceBackground'>" +
+                    I18n.t("hero.emergence.background", mapOf("background" to it)) +
+                    "</div>",
+            )
+        }
         if (a.effects.isNotEmpty()) {
             sb.append("<div class='heroEmergenceEffects'>")
             a.effects.forEach { (title, desc) -> sb.append("<div><b>$title</b> — $desc</div>") }
@@ -62,13 +77,5 @@ internal object HeroEmergencePresenter {
         return sb.toString()
     }
 
-    private fun rankLabel(rankId: String): String = rankId.replaceFirstChar { it.uppercaseChar() }
-
-    private fun potentialLabel(potential: HeroPotential): String =
-        when (potential) {
-            HeroPotential.LINE_OFFICER -> "Line Officer"
-            HeroPotential.PROMISING -> "Promising Officer"
-            HeroPotential.DISTINGUISHED -> "Distinguished Officer"
-            HeroPotential.AUTHORED_LEGENDARY -> "Legendary"
-        }
+    private fun rankLabel(rankId: String): String = HeroDisplay.rank(rankId)
 }

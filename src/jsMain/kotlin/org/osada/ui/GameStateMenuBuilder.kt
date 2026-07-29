@@ -2,6 +2,7 @@ package org.osada.ui
 
 import org.osada.GameHolder
 import org.osada.OSGlue
+import org.osada.i18n.I18n
 import org.osada.ui.GameStateMenuBuilder.applySaveLoadContext
 import org.w3c.dom.HTMLElement
 import kotlin.js.Date
@@ -27,7 +28,7 @@ internal object GameStateMenuBuilder {
         val header = addTag(root, "div")
         header.id = "smStateHeader"
         header.className = "osadaScreenHeader osada-sl-header"
-        header.textContent = "Save / Load"
+        header.textContent = I18n.t("save_load.title")
 
         val body = addTag(root, "div")
         body.className = "osada-sl-body"
@@ -35,10 +36,10 @@ internal object GameStateMenuBuilder {
         val saveBut = addTag(body, "div")
         saveBut.id = "disksave"
         saveBut.className = "osada-sl-btn"
-        saveBut.title = "Download the current campaign or scenario state as a JSON save file."
+        saveBut.title = I18n.t("save_load.save.help")
         saveBut.innerHTML =
-            "<span class='osada-sl-btn__label'>Save to Disk</span>" +
-            "<span class='osada-sl-btn__sub'>Download the current battle as a file</span>" +
+            "<span class='osada-sl-btn__label'>${I18n.t("save_load.save.label")}</span>" +
+            "<span class='osada-sl-btn__sub'>${I18n.t("save_load.save.subtitle")}</span>" +
             "<a id='savedata' hidden download='none'></a>"
         saveBut.onclick = { _: org.w3c.dom.events.MouseEvent ->
             if (!saveBut.classList.contains("osada-sl-btn--disabled")) gameStateButton("disksave")
@@ -49,16 +50,17 @@ internal object GameStateMenuBuilder {
         val loadBut = addTag(body, "div")
         loadBut.id = "diskload"
         loadBut.className = "osada-sl-btn"
-        loadBut.title = "Choose a compatible OSADA JSON save file and replace the current game state with it."
+        loadBut.title = I18n.t("save_load.load.help")
         loadBut.innerHTML =
-            "<span class='osada-sl-btn__label'>Load from Disk</span>" +
-            "<span class='osada-sl-btn__sub'>Restore a battle from a save file</span>" +
+            "<span class='osada-sl-btn__label'>${I18n.t("save_load.load.label")}</span>" +
+            "<span class='osada-sl-btn__sub'>${I18n.t("save_load.load.subtitle")}</span>" +
             OSGlue.diskloadInputHTML
         OSGlue.diskloadEvent(loadBut) { gameStateButton("diskload") }
 
         val info = addTag(body, "div")
         info.className = "osada-sl-info"
-        info.innerHTML = "Last saved to disk: <span id='disksaveupdate'>none</span>"
+        info.innerHTML =
+            "${I18n.t("save_load.last_saved.label")} <span id='disksaveupdate'>${I18n.t("common.none")}</span>"
 
         val error = addTag(body, "div")
         error.id = "diskloaderror"
@@ -68,7 +70,10 @@ internal object GameStateMenuBuilder {
         footer.className = "osada-sl-footer"
         byId("smStOkBut")?.let { footer.appendChild(it) }
 
-        byId("smStOkBut")?.title = "Return to the main menu without saving or loading."
+        byId("smStOkBut")?.apply {
+            title = I18n.t("save_load.close.help")
+            setAttribute("data-label", I18n.t("common.close.label"))
+        }
         byId("smStOkBut")?.onclick = { _: org.w3c.dom.events.MouseEvent ->
             makeHidden("smState")
             makeVisible("smMain")
@@ -81,15 +86,32 @@ internal object GameStateMenuBuilder {
      *  mid-game (pause menu) it is the full "Save / Load". */
     fun applySaveLoadContext() {
         val inGame = GameHolder.instance?.gameStarted == true
-        byId("smStateHeader")?.textContent = if (inGame) "Save / Load" else "Load Game"
+        byId("smStateHeader")?.textContent =
+            I18n.t(if (inGame) "save_load.title" else "save_load.load_game.title")
         val saveBut = byId("disksave") ?: return
         saveBut.classList.toggle("osada-sl-btn--disabled", !inGame)
         (saveBut.query(".osada-sl-btn__sub") as? HTMLElement)?.textContent =
-            if (inGame) {
-                "Download the current battle as a file"
-            } else {
-                "Available during a battle — start or load a game first"
-            }
+            I18n.t(if (inGame) "save_load.save.subtitle" else "save_load.save.unavailable")
+    }
+
+    /** Refreshes the already-built panel after an in-session language switch. */
+    fun refreshLocalization() {
+        byId("disksave")?.apply {
+            title = I18n.t("save_load.save.help")
+            querySelector(".osada-sl-btn__label")?.textContent = I18n.t("save_load.save.label")
+        }
+        byId("diskload")?.apply {
+            title = I18n.t("save_load.load.help")
+            querySelector(".osada-sl-btn__label")?.textContent = I18n.t("save_load.load.label")
+            querySelector(".osada-sl-btn__sub")?.textContent = I18n.t("save_load.load.subtitle")
+        }
+        byId("smStOkBut")?.apply {
+            title = I18n.t("save_load.close.help")
+            setAttribute("data-label", I18n.t("common.close.label"))
+        }
+        byId("disksaveupdate")?.takeIf { it.textContent == "none" || it.textContent == "нет" }?.textContent =
+            I18n.t("common.none")
+        applySaveLoadContext()
     }
 
     private fun onGameLoadSuccess() {
@@ -99,7 +121,7 @@ internal object GameStateMenuBuilder {
     }
 
     private fun onGameLoadError() {
-        byId("diskloaderror")?.textContent = "Error loading game. Cannot parse save game data."
+        byId("diskloaderror")?.textContent = I18n.t("save_load.error.invalid")
     }
 
     fun gameStateButton(id: String) {
@@ -110,10 +132,24 @@ internal object GameStateMenuBuilder {
                 // that context, but keep the invariant here too).
                 if (GameHolder.instance?.gameStarted != true) return
                 val now = Date()
-                val prefix = if (game?.campaign != null) "(Campaign) " else "(Scenario) "
                 val fileName =
-                    "$prefix${game?.scenario?.name} Turn ${game?.scenario?.map?.turn} " +
-                        "${now.toDateString()} ${now.toLocaleTimeString()}.json"
+                    I18n.t(
+                        "save_load.filename",
+                        mapOf(
+                            "mode" to
+                                I18n.t(
+                                    if (game?.campaign != null) {
+                                        "save_load.filename.campaign"
+                                    } else {
+                                        "save_load.filename.scenario"
+                                    },
+                                ),
+                            "name" to (game?.scenario?.name ?: ""),
+                            "turn" to (game?.scenario?.map?.turn ?: 0),
+                            "date" to now.toDateString(),
+                            "time" to now.toLocaleTimeString(),
+                        ),
+                    ) + ".json"
                 OSGlue.disksave(fileName)
             }
             "diskload" -> OSGlue.diskload(::onGameLoadSuccess, ::onGameLoadError)

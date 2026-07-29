@@ -4,10 +4,9 @@ package org.osada.hero
  * Turns one combat's [RecognitionService.Contribution] into progression for an already-led
  * formation — design brief §19's processor, realised for Phase 3's scope.
  *
- * This is the counterpart to [LeaderAcquisitionService]: that decides whether a leaderless
- * formation gets a commander, this decides what happens to a formation that already has one. Both
- * are pure — [HeroCampaign] is the sole writer of roster state, same division of responsibility as
- * Phase 2.
+ * This is the counterpart to [LeaderAcquisitionService]: that decides whether a hero emerges in a
+ * formation, this decides what happens to a formation that already has one. Both are pure —
+ * [HeroCampaign] is the sole writer of roster state, same division of responsibility as Phase 2.
  *
  * A routine action (nothing [HeroAchievements] classifies as notable) changes nothing: no XP, no
  * evidence, no history entries. Progression stays justified the same way emergence is (§4.1).
@@ -64,7 +63,7 @@ internal object HeroProgressionProcessor {
                 specializationEvidence = EvidenceRules.accrue(hero.specializationEvidence, achievements),
                 serviceEvents = hero.serviceEvents + events.map(::serviceEventFor),
             )
-        return updated.copy(renown = HeroRenownService.forExperience(updated.experience, balance))
+        return updated.copy(renown = HeroRenownService.advance(hero.renown, updated.experience, balance))
     }
 
     private fun appendFormationHistory(

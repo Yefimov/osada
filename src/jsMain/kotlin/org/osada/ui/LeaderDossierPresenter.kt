@@ -3,6 +3,7 @@ package org.osada.ui
 import org.osada.hero.HeroCampaign
 import org.osada.hero.HeroId
 import org.osada.hero.LeaderDossierView
+import org.osada.i18n.I18n
 import org.osada.model.GameUnit
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.MouseEvent
@@ -42,13 +43,13 @@ internal object LeaderDossierPresenter {
 
         val tabs =
             listOf(
-                "Overview" to { p: HTMLElement -> overview(p, view) },
-                "Development" to { p: HTMLElement -> development(p, view) },
-                "Service Record" to { p: HTMLElement -> serviceRecord(p, view) },
-                "Medals" to { p: HTMLElement -> medals(p, view) },
-                "Formations" to { p: HTMLElement -> formations(p, view) },
+                "overview" to { p: HTMLElement -> overview(p, view) },
+                "development" to { p: HTMLElement -> development(p, view) },
+                "service" to { p: HTMLElement -> serviceRecord(p, view) },
+                "medals" to { p: HTMLElement -> medals(p, view) },
+                "formations" to { p: HTMLElement -> formations(p, view) },
             )
-        val buttons = tabs.map { (name, _) -> tabButton(tabBar, name) }
+        val buttons = tabs.map { (key, _) -> tabButton(tabBar, key) }
 
         fun select(index: Int) {
             clearTag(body)
@@ -91,30 +92,33 @@ internal object LeaderDossierPresenter {
                 id,
                 "osada-hero-sub",
                 listOfNotNull(
-                    "Potential: ${view.potential}",
-                    "Renown: ${view.renown}",
+                    I18n.t("hero.dossier.potential", mapOf("value" to view.potential)),
+                    I18n.t("hero.dossier.renown", mapOf("value" to view.renown)),
                     view.nickname,
                 ).joinToString(" · "),
             )
         sub.title =
-            "Potential governs career growth. Renown is public reputation; Unknown means newly appointed, not missing."
-        addText(id, "osada-hero-status", "Status: ${view.status}").title =
-            "Current availability and casualty status"
+            I18n.t("hero.dossier.potential_renown.help")
+        addText(
+            id,
+            "osada-hero-status",
+            I18n.t("hero.dossier.status", mapOf("value" to view.status)),
+        ).title = I18n.t("hero.dossier.status.help")
         if (view.inMemoriam) {
             box.classList.add("osada-hero-memoriam")
-            addText(id, "osada-hero-memoriam-tag", "✝ In Memoriam")
+            addText(id, "osada-hero-memoriam-tag", I18n.t("hero.dossier.in_memoriam"))
         }
         val locate = addTag(header, "button")
         locate.className = "osada-hero-locate osada-hero-locate--header"
-        locate.textContent = "Locate unit"
-        locate.title = "Select and centre this commander's deployed formation"
+        locate.textContent = I18n.t("hero.dossier.locate.label")
+        locate.title = I18n.t("hero.dossier.locate.help")
         locate.onclick = { e: MouseEvent ->
             e.stopPropagation()
             locateHero(HeroId(view.heroId))
         }
         val close = addTag(header, "span")
         close.className = "osada-ico osada-ico--close osada-hero-close"
-        close.title = "Close"
+        close.title = I18n.t("common.close.label")
         close.onclick = { _: MouseEvent -> close() }
     }
 
@@ -122,15 +126,21 @@ internal object LeaderDossierPresenter {
         parent: HTMLElement,
         view: LeaderDossierView,
     ) {
-        view.background?.let { (title, desc) -> section(parent, "Background") { s -> keyValue(s, title, desc) } }
-        section(parent, "Traits & Effects") { s ->
-            if (view.traits.isEmpty()) empty(s, "No learned traits yet.")
+        view.background?.let { (title, desc) ->
+            section(parent, I18n.t("hero.dossier.section.background")) { s -> keyValue(s, title, desc) }
+        }
+        section(parent, I18n.t("hero.dossier.section.traits")) { s ->
+            if (view.traits.isEmpty()) empty(s, I18n.t("hero.dossier.traits.empty"))
             view.traits.forEach { t ->
                 val row = addTag(s, "div")
                 row.className = "osada-hero-trait"
                 addText(row, "osada-hero-trait-title", "${t.title}  (${t.source})")
                 addText(row, "osada-hero-trait-effect", t.effect)
-                addText(row, "osada-hero-trait-cond", "Applies: ${t.activation}")
+                addText(
+                    row,
+                    "osada-hero-trait-cond",
+                    I18n.t("hero.dossier.trait.applies", mapOf("activation" to t.activation)),
+                )
             }
         }
     }
@@ -139,17 +149,18 @@ internal object LeaderDossierPresenter {
         parent: HTMLElement,
         view: LeaderDossierView,
     ) {
-        section(parent, "Command Profile") { s ->
+        section(parent, I18n.t("hero.dossier.section.command_profile")) { s ->
             empty(
                 s,
-                "Career record only — these values do not modify combat. " +
-                    "Gameplay effects are listed under Traits & Effects.",
+                I18n.t("hero.dossier.command_profile.help"),
             )
             view.attributes.forEach { (label, value) -> keyValue(s, label, value.toString()) }
         }
-        section(parent, "Leader Experience") { s -> keyValue(s, "Experience", view.leaderExperience.toString()) }
-        section(parent, "Specialization Evidence") { s ->
-            if (view.evidence.isEmpty()) empty(s, "No specialization evidence recorded yet.")
+        section(parent, I18n.t("hero.dossier.section.experience")) { s ->
+            keyValue(s, I18n.t("hero.dossier.experience.label"), view.leaderExperience.toString())
+        }
+        section(parent, I18n.t("hero.dossier.section.evidence")) { s ->
+            if (view.evidence.isEmpty()) empty(s, I18n.t("hero.dossier.evidence.empty"))
             view.evidence.forEach { (title, value) -> keyValue(s, title, value.toString()) }
         }
     }
@@ -159,16 +170,16 @@ internal object LeaderDossierPresenter {
         view: LeaderDossierView,
     ) {
         if (view.inMemoriam) {
-            section(parent, "In Memoriam") { s ->
-                empty(s, "Fallen in the service of the campaign — remembered in the roster and formation history.")
+            section(parent, I18n.t("hero.dossier.section.in_memoriam")) { s ->
+                empty(s, I18n.t("hero.dossier.in_memoriam.help"))
             }
         }
-        section(parent, "Condition") { s ->
-            if (view.injuries.isEmpty()) empty(s, "No recorded wounds.")
+        section(parent, I18n.t("hero.dossier.section.condition")) { s ->
+            if (view.injuries.isEmpty()) empty(s, I18n.t("hero.dossier.injuries.empty"))
             view.injuries.forEach { line -> addText(s, "osada-hero-line", line) }
         }
-        section(parent, "Service Record") { s ->
-            if (view.serviceRecord.isEmpty()) empty(s, "No service events recorded yet.")
+        section(parent, I18n.t("hero.dossier.section.service")) { s ->
+            if (view.serviceRecord.isEmpty()) empty(s, I18n.t("hero.dossier.service.empty"))
             view.serviceRecord.forEach { line -> addText(s, "osada-hero-line", line) }
         }
     }
@@ -177,9 +188,11 @@ internal object LeaderDossierPresenter {
         parent: HTMLElement,
         view: LeaderDossierView,
     ) {
-        section(parent, "Medals") { s ->
-            if (view.medals.isEmpty()) empty(s, "No medals awarded yet.")
-            view.medals.forEach { (title, scenario) -> keyValue(s, title, "scenario $scenario") }
+        section(parent, I18n.t("hero.dossier.section.medals")) { s ->
+            if (view.medals.isEmpty()) empty(s, I18n.t("hero.dossier.medals.empty"))
+            view.medals.forEach { (title, scenario) ->
+                keyValue(s, title, I18n.t("hero.dossier.scenario", mapOf("scenario" to scenario)))
+            }
         }
     }
 
@@ -189,21 +202,27 @@ internal object LeaderDossierPresenter {
     ) {
         val formation = view.formation
         if (formation == null) {
-            section(parent, "Formations") { s -> empty(s, "Not assigned to a formation.") }
+            section(parent, I18n.t("hero.dossier.section.formations")) { s ->
+                empty(s, I18n.t("hero.dossier.formation.unassigned"))
+            }
             return
         }
         section(parent, formation.name) { s ->
-            keyValue(s, "Recognition", formation.recognitionStatus)
-            formation.unitExperience?.let { keyValue(s, "Unit experience", it.toString()) }
+            keyValue(s, I18n.t("hero.dossier.recognition.label"), formation.recognitionStatus)
+            formation.unitExperience?.let {
+                keyValue(s, I18n.t("hero.dossier.unit_experience.label"), it.toString())
+            }
             if (formation.battleHonors.isNotEmpty()) {
-                keyValue(s, "Battle honors", formation.battleHonors.joinToString(", "))
+                keyValue(s, I18n.t("hero.dossier.battle_honours.label"), formation.battleHonors.joinToString(", "))
             }
             if (formation.attachments.isNotEmpty()) {
-                keyValue(s, "Attachments", formation.attachments.joinToString(", "))
+                keyValue(s, I18n.t("hero.dossier.attachments.label"), formation.attachments.joinToString(", "))
             }
         }
         if (formation.history.isNotEmpty()) {
-            section(parent, "History") { s -> formation.history.forEach { addText(s, "osada-hero-line", it) } }
+            section(parent, I18n.t("hero.dossier.section.history")) { s ->
+                formation.history.forEach { addText(s, "osada-hero-line", it) }
+            }
         }
     }
 
@@ -211,19 +230,12 @@ internal object LeaderDossierPresenter {
 
     private fun tabButton(
         bar: HTMLElement,
-        name: String,
+        key: String,
     ): HTMLElement {
         val b = addTag(bar, "div")
         b.className = "osada-hero-tab"
-        b.textContent = name
-        b.title =
-            when (name) {
-                "Overview" -> "Biography, traits and their gameplay effects"
-                "Development" -> "Career-only command profile, experience and specialization evidence"
-                "Service Record" -> "Dated battlefield achievements and casualty history"
-                "Medals" -> "Decorations earned by this commander"
-                else -> "Formation assignment, recognition, attachments and unit history"
-            }
+        b.textContent = I18n.t("hero.dossier.tab.$key.label")
+        b.title = I18n.t("hero.dossier.tab.$key.help")
         return b
     }
 

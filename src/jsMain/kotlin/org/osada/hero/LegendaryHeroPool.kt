@@ -355,7 +355,7 @@ internal object LegendaryHeroPool {
                 yearRange = 1918..1922,
                 compatibleUnitClasses = setOf(UnitClass.INFANTRY.value),
                 backgroundId = "infantry_school_instructor",
-                signatureTrait = LeaderType.TENACIOUS_DEFENSE,
+                signatureTrait = LeaderType.FEROCIOUS_DEFENSE,
                 signatureTitle = "Dug In",
                 signatureDescription = "Chooses ground badly worth holding and then holds it anyway.",
                 startingRankId = "lieutenant",
@@ -513,6 +513,7 @@ internal object LegendaryHeroPool {
                             rankId = hero.startingRankId,
                             birthYear = request.serviceYear?.let { it - LEGENDARY_AGE },
                             serviceYear = request.serviceYear,
+                            country = request.country,
                         ).copy(artId = hero.portraitArtId, female = hero.female),
                 signatureTraitId = signatureId,
             )

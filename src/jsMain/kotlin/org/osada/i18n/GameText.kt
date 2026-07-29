@@ -4,6 +4,7 @@ import org.osada.groundConditionNames
 import org.osada.monthNamesShort
 import org.osada.movMethodNames
 import org.osada.sideNames
+import org.osada.terrainNames
 import org.osada.unitClassNames
 import org.osada.unitTypeNames
 import org.osada.weatherConditionNames
@@ -31,6 +32,8 @@ internal object GameText {
     fun ground(ground: Int): String = indexed("game.ground", ground, groundConditionNames)
 
     fun side(side: Int): String = indexed("game.side", side, sideNames)
+
+    fun terrain(terrain: Int): String = indexed("game.terrain", terrain, terrainNames)
 
     fun equipmentStatLabel(index: Int): String = I18n.t("equipment.detail.stat.$index.label")
 
