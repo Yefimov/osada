@@ -7,11 +7,11 @@ import org.w3c.dom.events.MouseEvent
  * Story-campaign marker (brass open-book icon, on the row and in the dossier header) and the
  * "Story only" filter chip on the campaign register. Split out of [StartMenuCampaignScreen]
  * purely to keep that object within the project's function-count limits. A campaign counts as
- * "story" iff [StoryCampaignDetector] finds authored dialogue/briefing content for it -- there is
+ * "story" iff [StoryCampaignDetector] finds authored dialogue content for it -- there is
  * no manual flag in campaign data, so newly-authored content lights the marker automatically.
  */
 internal object StartMenuCampaignStory {
-    private const val STORY_TOOLTIP = "Story campaign: dialogue & briefings"
+    private const val STORY_TOOLTIP = "Story campaign: authored dialogue"
     private const val ICON_SVG =
         "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\">" +
             "<path d=\"M12 5C10 3.4 7 3 3 3v15c4 0 7 .4 9 2 2-1.6 5-2 9-2V3c-4 0-7 .4-9 2z\" " +
@@ -71,7 +71,7 @@ internal object StartMenuCampaignStory {
         val chip = addTag(chipRow, "div")
         chip.className = "osada-seg"
         chip.textContent = "Story only"
-        chip.title = "Show only campaigns with authored dialogue & briefings"
+        chip.title = "Show only campaigns with authored dialogue"
         list.asDynamic().storyOnly = false
         chip.onclick = { _: MouseEvent ->
             val next = !(list.asDynamic().storyOnly as? Boolean ?: false)

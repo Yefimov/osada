@@ -1,6 +1,7 @@
 package org.osada.ui
 
 import org.osada.Game
+import org.osada.multiplayer.local.LocalTwoTabMultiplayer
 import org.osada.uiSettings
 import org.w3c.dom.HTMLSelectElement
 import org.w3c.dom.events.Event
@@ -18,6 +19,7 @@ internal class StartMenuButtonHandler(
             "newgame" -> makeVisible("smNewGame")
             "newcampaign" -> onNewCampaignButton()
             "newscenario" -> onNewScenarioButton()
+            "multiplayer" -> LocalTwoTabMultiplayer.openHub(ui.game)
             "tutorial" -> onTutorialButton()
             "continuegame" -> {
                 makeHidden("startmenu")

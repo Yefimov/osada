@@ -16,6 +16,7 @@ import org.osada.model.hasRailData
 import org.osada.model.moveUnit
 import org.osada.model.retreatUnit
 import org.osada.model.surrenderUnit
+import org.osada.multiplayer.local.LocalTwoTabMultiplayer
 import org.osada.rules.GameRules
 import org.osada.rules.calculateAttackResults
 import org.osada.rules.getDirection
@@ -48,6 +49,7 @@ internal class AnimationOrchestrator(
 ) {
     private val attackResultPresenter = AttackResultPresenter(ui)
 
+    @Suppress("ReturnCount")
     fun uiUnitMove(
         unit: GameUnit,
         row: Int,
@@ -56,6 +58,9 @@ internal class AnimationOrchestrator(
         val map = ui.game.scenario?.map
         val startPos = unit.getPos()
         if (map == null || startPos == null) return false
+        if (LocalTwoTabMultiplayer.active) {
+            return LocalTwoTabMultiplayer.submitMove(unit, row, col)
+        }
         val radius = getUnitRenderRadius(unit)
 
         ui.game.waitUIAnimation = true

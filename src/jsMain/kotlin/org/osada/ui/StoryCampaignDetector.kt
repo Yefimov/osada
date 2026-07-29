@@ -1,16 +1,16 @@
 package org.osada.ui
 
-import org.osada.ui.briefing.BriefingParsingUtils
+import org.osada.ui.briefing.BriefingParser
 import org.osada.ui.briefing.CampaignBriefingCatalog
 import org.w3c.xhr.XMLHttpRequest
 
 /**
- * Detects whether a campaign counts as "story" -- has authored dialogue/briefing content for at
- * least one of its scenarios -- purely by scanning its own campaign data against
+ * Detects whether a campaign counts as "story" -- has authored dialogue content for at least one
+ * of its scenarios -- purely by scanning its own campaign data against
  * [CampaignBriefingCatalog]. No manual flag lives in campaign data: a scenario gaining a catalog
- * entry (or a campaign JSON gaining an embedded `briefing`/`dialogue`/`dialogues` key) makes its
- * campaign light up here automatically. Each campaign file's data is fetched at most once per
- * session and the result cached; concurrent callers for the same file share one request.
+ * entry (or a campaign JSON gaining parseable dialogue) makes its campaign light up here
+ * automatically. Each campaign file's data is fetched at most once per session and the result
+ * cached; concurrent callers for the same file share one request.
  */
 internal object StoryCampaignDetector {
     private val resultCache = mutableMapOf<String, Boolean>()
@@ -54,7 +54,7 @@ internal object StoryCampaignDetector {
     }
 
     @Suppress("TooGenericExceptionCaught", "SwallowedException")
-    private fun computeStory(responseText: String): Boolean =
+    internal fun computeStory(responseText: String): Boolean =
         try {
             val scenarios: Array<dynamic> = JSON.parse(responseText)
             scenarios.any { entry -> hasStoryContent(entry) }
@@ -65,10 +65,7 @@ internal object StoryCampaignDetector {
     private fun hasStoryContent(entry: dynamic): Boolean {
         val scenarioFile = (entry.scenario as? String)?.lowercase()
         val catalogHit = scenarioFile != null && scenarioFile in CampaignBriefingCatalog.storyScenarioFiles
-        val embedded =
-            BriefingParsingUtils.isPresent(entry.briefing) ||
-                BriefingParsingUtils.isPresent(entry.dialogue) ||
-                BriefingParsingUtils.isPresent(entry.dialogues)
-        return catalogHit || embedded
+        val embeddedDialogue = BriefingParser.parse(scenarioTitle = "", rawData = entry).dialogue.isNotEmpty()
+        return catalogHit || embeddedDialogue
     }
 }

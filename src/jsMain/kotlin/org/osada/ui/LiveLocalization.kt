@@ -33,6 +33,7 @@ internal object LiveLocalization {
             mapOf(
                 "continuegame" to "menu.main.continue",
                 "newcampaign" to "menu.main.new_campaign",
+                "multiplayer" to "menu.main.multiplayer",
                 "newscenario" to "menu.main.single_scenario",
                 "settings" to "menu.main.settings",
                 "tutorial" to "menu.main.tutorial",
