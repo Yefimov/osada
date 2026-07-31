@@ -11,6 +11,7 @@ import org.osada.model.Cell
 import org.osada.model.GameMap
 import org.osada.model.Hex
 import org.osada.model.Player
+import org.osada.model.effectivePrestigeIncome
 import org.osada.model.getPlayer
 import org.osada.monthNamesShort
 import org.osada.scenario.Scenario
@@ -193,7 +194,7 @@ internal class StatusBarController(
         map: GameMap,
     ) {
         val el = byId("osadaPrestige") ?: return
-        val delta = player.prestigePerTurn.getOrNull(map.turn) ?: 0
+        val delta = player.effectivePrestigeIncome(player.prestigePerTurn.getOrNull(map.turn) ?: 0)
         val deltaHtml = if (delta > 0) "<span class=\"osada-tb-delta\">+$delta</span>" else ""
         el.innerHTML = "<span class=\"osada-tb-prestige-val\">${player.prestige}</span>$deltaHtml"
         el.title =

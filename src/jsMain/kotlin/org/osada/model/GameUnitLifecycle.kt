@@ -11,6 +11,30 @@ private const val ENTRENCH_TICK_SLOPE = 9
 private const val ENTRENCH_TICK_BASE = 4
 private const val MAX_ENTRENCHMENT_ABOVE_TERRAIN = 5
 
+/** Converts mutable resource pools exactly once when the mode is toggled or a new unit appears. */
+internal fun GameUnit.synchronizeStalinRegime(enabled: Boolean) {
+    if (stalinRegimeBoosted == enabled) return
+    val multiplier = GameUnit.STALIN_REGIME_MULTIPLIER
+    if (enabled) {
+        moveLeft *= multiplier
+        ammo *= multiplier
+        fuel *= multiplier
+        transport?.let {
+            it.ammo *= multiplier
+            it.fuel *= multiplier
+        }
+    } else {
+        moveLeft /= multiplier
+        ammo /= multiplier
+        fuel /= multiplier
+        transport?.let {
+            it.ammo /= multiplier
+            it.fuel /= multiplier
+        }
+    }
+    stalinRegimeBoosted = enabled
+}
+
 /** Entrenchment/turn-lifecycle actions for [GameUnit], split out to keep its function count in bounds. */
 fun GameUnit.entrench(): Boolean {
     val hex = this.hex
@@ -40,20 +64,32 @@ fun GameUnit.entrench(): Boolean {
 
 fun GameUnit.refillAmmoFuel() {
     Equipment.getEquipment(eqid)?.let {
-        ammo = it.ammo
-        fuel = it.fuel
+        val data =
+            if (stalinRegimeBoosted) {
+                it.withStatMultiplier(GameUnit.STALIN_REGIME_MULTIPLIER)
+            } else {
+                it
+            }
+        ammo = data.ammo
+        fuel = data.fuel
     }
     transport?.let { tr ->
         Equipment.getEquipment(tr.eqid)?.let {
-            tr.ammo = it.ammo
-            tr.fuel = it.fuel
+            val data =
+                if (stalinRegimeBoosted) {
+                    it.withStatMultiplier(GameUnit.STALIN_REGIME_MULTIPLIER)
+                } else {
+                    it
+                }
+            tr.ammo = data.ammo
+            tr.fuel = data.fuel
         }
     }
 }
 
 fun GameUnit.unitEndTurn(spotSide: Int) {
     entrench()
-    moveLeft = Equipment.equipment[eqid]?.movpoints ?: 0
+    moveLeft = unitData(useReal = true).movpoints
     hasMoved = false
     hasFired = false
     hasOverstrength = false

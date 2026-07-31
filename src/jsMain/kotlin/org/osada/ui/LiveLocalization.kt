@@ -381,6 +381,8 @@ internal object LiveLocalization {
                 Pair("settings.gameplay.optional_objectives.label", "settings.gameplay.optional_objectives.help"),
             "confirmEndTurn" to
                 Pair("settings.gameplay.confirm_end_turn.label", "settings.gameplay.confirm_end_turn.help"),
+            "stalinRegime" to
+                Pair("settings.gameplay.stalin_regime.label", "settings.gameplay.stalin_regime.help"),
             "muteUnitSounds" to Pair("settings.sound.mute_unit_sounds.label", "settings.sound.mute_unit_sounds.help"),
             "noFOW" to Pair("settings.observer.no_fow.label", "settings.observer.no_fow.help"),
             "showHiddenVictoryHexes" to

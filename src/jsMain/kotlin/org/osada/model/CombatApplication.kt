@@ -225,9 +225,9 @@ internal class CombatApplication(
             loggedObjective = true
         }
 
+        prestigeGain = player.awardPrestige(prestigeGain)
         gameMap.undoState.prestigeGain = prestigeGain
         gameMap.undoState.scoreGain = scoreGain
-        player.prestige += prestigeGain
         player.updateScore(scoreGain)
         result["prestigeGain"] = prestigeGain
         // Logged only once the total is final, so the Turn Report reports the prestige actually

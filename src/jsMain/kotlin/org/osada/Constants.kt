@@ -565,6 +565,9 @@ class UiSettings {
     // OSADA: gate the top-bar inline End-Turn confirm (Task 1 state machine); default on.
     var confirmEndTurn: Boolean = true
 
+    // Optional player-only power mode. Kept in UI settings so it survives scenario transitions.
+    var stalinRegime: Boolean = false
+
     /** Get/set a boolean setting by its string key. The settings menu is data-driven by key, but
      *  this is a typed Kotlin object — its properties compile to mangled getters/setters, NOT plain
      *  JS keys, so `asDynamic()[key]` does NOT reach them (reads undefined, writes a dead property).
@@ -582,6 +585,7 @@ class UiSettings {
             "showDetailInfoToolTips" -> showDetailInfoToolTips
             "showHiddenVictoryHexes" -> showHiddenVictoryHexes
             "confirmEndTurn" -> confirmEndTurn
+            "stalinRegime" -> stalinRegime
             else -> false
         }
 
@@ -601,6 +605,7 @@ class UiSettings {
             "showDetailInfoToolTips" -> showDetailInfoToolTips = value
             "showHiddenVictoryHexes" -> showHiddenVictoryHexes = value
             "confirmEndTurn" -> confirmEndTurn = value
+            "stalinRegime" -> stalinRegime = value
         }
     }
 
@@ -640,6 +645,7 @@ class UiSettings {
         o.showDetailInfoToolTips = showDetailInfoToolTips
         o.showHiddenVictoryHexes = showHiddenVictoryHexes
         o.confirmEndTurn = confirmEndTurn
+        o.stalinRegime = stalinRegime
         return o
     }
 }

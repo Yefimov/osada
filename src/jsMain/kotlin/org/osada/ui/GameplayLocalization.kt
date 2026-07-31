@@ -24,6 +24,7 @@ import org.osada.i18n.I18n
 import org.osada.model.Equipment
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
+import org.osada.model.effectivePrestigeIncome
 import org.osada.model.getCountryName
 import org.osada.model.getUnits
 import org.osada.rules.GameRules
@@ -279,7 +280,7 @@ internal object GameplayLocalization {
     private fun refreshPrestige() {
         val map = GameHolder.instance?.scenario?.map ?: return
         val player = map.currentPlayer ?: return
-        val delta = player.prestigePerTurn.getOrElse(map.turn) { 0 }
+        val delta = player.effectivePrestigeIncome(player.prestigePerTurn.getOrElse(map.turn) { 0 })
         byId("osadaPrestige")?.title =
             if (delta > 0) {
                 I18n.t("hud.prestige.value_with_income", mapOf("prestige" to player.prestige, "delta" to delta))

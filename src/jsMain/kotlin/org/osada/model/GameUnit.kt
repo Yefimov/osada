@@ -9,6 +9,10 @@ import org.osada.rules.isTransportable
 class GameUnit(
     var eqid: Int,
 ) {
+    companion object {
+        internal const val STALIN_REGIME_MULTIPLIER = 10
+    }
+
     var id: Int = -1
     var owner: Int = -1
     var flag: Int = owner
@@ -48,6 +52,13 @@ class GameUnit(
     var leader: Int = -1
     var tempSpotted: Boolean = false
     var nodossier: Boolean = false
+
+    /**
+     * Whether mutable resource pools have been converted to Stalin Regime scale. Persisting this
+     * prevents a loaded unit's remaining movement, ammo and fuel from being multiplied twice.
+     */
+    var stalinRegimeBoosted: Boolean = false
+    private val boostedDataCache: MutableMap<EquipmentData, EquipmentData> = mutableMapOf()
 
     /** Set when this AA unit has already intercepted a moving aircraft this turn under
      *  `g2a_intercept_mode` bit 1 ("disables air-defense after interception") -- checked by
@@ -99,7 +110,16 @@ class GameUnit(
             else -> eqid
         }
 
-    fun unitData(useReal: Boolean = false): EquipmentData = Equipment.equipment[getEqid(useReal)] ?: EquipmentData()
+    fun unitData(useReal: Boolean = false): EquipmentData {
+        // Keep the receiver concrete: calling a Kotlin extension on `dynamic` emits a runtime
+        // `.withStatMultiplier(...)` method call, which EquipmentData does not actually expose.
+        val data: EquipmentData = Equipment.getEquipment(getEqid(useReal)) ?: EquipmentData()
+        return if (stalinRegimeBoosted) {
+            boostedDataCache.getOrPut(data) { data.withStatMultiplier(STALIN_REGIME_MULTIPLIER) }
+        } else {
+            data
+        }
+    }
 
     fun getMovesLeft(): Int =
         when {
@@ -169,6 +189,8 @@ class GameUnit(
         entrenchment = other.entrenchment
         entrenchTicks = other.entrenchTicks
         leader = other.leader
+        nodossier = other.nodossier
+        stalinRegimeBoosted = other.stalinRegimeBoosted
         isTemporaryBorrowed = other.isTemporaryBorrowed
         formationId = other.formationId
         player = Player().apply { copy(other.player ?: return@apply) }

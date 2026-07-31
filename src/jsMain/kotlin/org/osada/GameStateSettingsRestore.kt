@@ -56,6 +56,7 @@ internal fun applyMiscSettings(data: dynamic) {
     // blob missing this key (older saves) silently re-enabled observer mode on every load.
     uiSettings.showHiddenVictoryHexes = data.showHiddenVictoryHexes as? Boolean ?: false
     uiSettings.confirmEndTurn = data.confirmEndTurn as? Boolean ?: true
+    uiSettings.stalinRegime = data.stalinRegime as? Boolean ?: false
 }
 
 internal fun applySettingsIsAI(data: dynamic) {

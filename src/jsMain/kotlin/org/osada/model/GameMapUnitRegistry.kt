@@ -14,6 +14,9 @@ fun GameMap.addUnit(unit: GameUnit) {
     unit.transport?.let { unitImages.add(it.eqid) }
     if (unit.carrier > 0) unitImages.add(unit.carrier)
     unit.player = getPlayer(unit.owner)
+    if (GameHolder.instance?.scenario?.isLoaded == true) {
+        unit.synchronizeStalinRegime(unit.player?.usesStalinRegime() == true)
+    }
     GameHolder.instance
         ?.getCampaignPlayer()
         ?.takeIf { it.id == unit.owner }

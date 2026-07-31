@@ -183,9 +183,10 @@ class UIBuilderStartMenuTest {
     @Test
     fun buildStartMenuCreatesSettingsCheckboxes() {
         UIBuilder.buildStartMenu()
-        listOf("showGridTerrain", "quickAnimation", "muteUnitSounds", "noFOW", "useRetina").forEach { id ->
-            assertNotNull(byId(id), "Missing checkbox $id")
-        }
+        listOf("showGridTerrain", "quickAnimation", "stalinRegime", "muteUnitSounds", "noFOW", "useRetina")
+            .forEach { id ->
+                assertNotNull(byId(id), "Missing checkbox $id")
+            }
     }
 
     @Test

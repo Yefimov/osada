@@ -142,6 +142,7 @@ object GameStateSerializer {
         // shape is unchanged by the hero system.
         unit.formationId?.let { obj.asDynamic().formationId = it }
         if (unit.isTemporaryBorrowed) obj.asDynamic().temporaryBorrowed = true
+        if (unit.stalinRegimeBoosted) obj.asDynamic().stalinRegimeBoosted = true
         return obj
     }
 
@@ -240,6 +241,7 @@ object GameStateSerializer {
         unit.customName?.let { obj.asDynamic().customName = it }
         unit.formationId?.let { obj.asDynamic().formationId = it }
         if (unit.isTemporaryBorrowed) obj.asDynamic().temporaryBorrowed = true
+        if (unit.stalinRegimeBoosted) obj.asDynamic().stalinRegimeBoosted = true
         return obj
     }
 }

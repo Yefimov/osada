@@ -4,6 +4,7 @@ import org.osada.UNIT_MAX_EXPERIENCE
 import org.osada.model.Equipment
 import org.osada.model.Player
 import org.osada.model.acquireUnit
+import org.osada.model.awardPrestige
 
 /**
  * Applies typed campaign effects to real game objects.
@@ -70,7 +71,7 @@ internal object CampaignEffectApplier {
         player: Player?,
     ) {
         val target = player ?: return
-        target.prestige = (target.prestige + effect.amount).coerceAtLeast(0)
+        target.awardPrestige(effect.amount)
     }
 
     private fun applyGrantUnit(
@@ -111,10 +112,10 @@ internal object CampaignEffectApplier {
     ) {
         val target = player ?: return
         target.getCoreUnitList().forEach { unit ->
-            val data = Equipment.getEquipment(unit.eqid)
+            val data = unit.unitData(useReal = true)
             effect.strength?.let { unit.strength = unit.strength.coerceAtLeast(it) }
-            if (effect.refuel) data?.fuel?.let { unit.fuel = it }
-            if (effect.rearm) data?.ammo?.let { unit.ammo = it }
+            if (effect.refuel) unit.fuel = data.fuel
+            if (effect.rearm) unit.ammo = data.ammo
         }
     }
 }

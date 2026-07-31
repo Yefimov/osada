@@ -2,6 +2,7 @@ package org.osada.model
 
 import org.osada.GameHolder
 import org.osada.OVERSTRENGTH_PENALTY
+import org.osada.PlayerType
 import org.osada.hero.HeroCampaign
 import org.osada.rules.Attachments
 import org.osada.rules.GameRules
@@ -11,6 +12,27 @@ import org.osada.rules.calculateUnitSellCost
 import org.osada.rules.calculateUpgradeCosts
 import org.osada.scenario.getSideUnitsAvgExp
 import org.osada.scoreGains
+import org.osada.uiSettings
+
+internal fun Player.usesStalinRegime(): Boolean = uiSettings.stalinRegime && type == PlayerType.HUMAN_LOCAL
+
+/**
+ * Adds prestige and returns the amount actually applied. Only positive income is multiplied;
+ * purchases, penalties and refunds retain their normal values.
+ */
+fun Player.awardPrestige(baseAmount: Int): Int {
+    val amount = effectivePrestigeIncome(baseAmount)
+    prestige = (prestige + amount).coerceAtLeast(0)
+    return amount
+}
+
+/** The amount shown by income previews and applied by [awardPrestige]. */
+fun Player.effectivePrestigeIncome(baseAmount: Int): Int =
+    if (baseAmount > 0 && usesStalinRegime()) {
+        baseAmount * GameUnit.STALIN_REGIME_MULTIPLIER
+    } else {
+        baseAmount
+    }
 
 /** Unit purchase/upgrade/resupply/reinforce economy for [Player], split out to keep its function count in bounds. */
 fun Player.buyUnit(
@@ -35,6 +57,7 @@ fun Player.acquireUnit(
     unit.owner = id
     unit.flag = country + 1
     unit.player = this
+    unit.synchronizeStalinRegime(usesStalinRegime())
     if (GameHolder.instance?.campaign == null) {
         unit.experience = GameHolder.instance?.scenario?.getSideUnitsAvgExp(1 - side) ?: 0
     }

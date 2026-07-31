@@ -43,6 +43,45 @@ class EquipmentData {
     var monthexpired: Int = 12
 }
 
+/**
+ * Returns an equipment view whose player-facing numeric capabilities are multiplied by [multiplier].
+ * Identity, classification, price and availability stay unchanged: multiplying `uclass`, `target`,
+ * `movmethod`, dates or cost would corrupt rule dispatch/economy rather than strengthen the unit.
+ */
+internal fun EquipmentData.withStatMultiplier(multiplier: Int): EquipmentData =
+    EquipmentData().also { result ->
+        result.eqid = eqid
+        result.gunrange = gunrange * multiplier
+        result.icon = icon
+        result.yearexpired = yearexpired
+        result.cost = cost
+        result.initiative = initiative * multiplier
+        result.spotrange = spotrange * multiplier
+        result.hardatk = hardatk * multiplier
+        result.softatk = softatk * multiplier
+        result.uclass = uclass
+        result.airdef = airdef * multiplier
+        result.fuel = fuel * multiplier
+        result.airseaweight = airseaweight
+        result.rangedefmod = rangedefmod * multiplier
+        result.airatk = airatk * multiplier
+        result.groundweight = groundweight
+        result.movmethod = movmethod
+        result.navalatk = navalatk * multiplier
+        result.movpoints = movpoints * multiplier
+        result.grounddef = grounddef * multiplier
+        result.target = target
+        result.yearavailable = yearavailable
+        result.name = name
+        result.country = country
+        result.closedef = closedef * multiplier
+        result.ammo = ammo * multiplier
+        result.attr = attr
+        result.embark = embark
+        result.monthavailable = monthavailable
+        result.monthexpired = monthexpired
+    }
+
 /** Whether this equipment can be bought/found in [year]/[month] (1-based month, matching
  *  monthavailable/monthexpired). Shared by the equipment window, the unit-card tooltip, and the
  *  AI's own purchase filter so all three agree on the same availability window. */

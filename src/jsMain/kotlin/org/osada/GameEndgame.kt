@@ -5,6 +5,7 @@ import org.osada.hero.HeroCampaign
 import org.osada.i18n.I18n
 import org.osada.model.Player
 import org.osada.model.addOutcomeToDossier
+import org.osada.model.awardPrestige
 import org.osada.model.collectPersistentCampaignUnits
 import org.osada.model.deployReinforcement
 import org.osada.model.ensureFormationIds
@@ -68,7 +69,7 @@ fun Game.continueCampaign(
     // to record the REAL outcome. recordScenarioCompletion is idempotent per scenario: the
     // move-capture and end-turn completion paths can both reach here for the same battle.
     recordCampaignOutcome(outcome, routeOverride)
-    player.prestige += campaign!!.getOutcomePrestige(outcome)
+    player.awardPrestige(campaign!!.getOutcomePrestige(outcome))
     player.addOutcomeToDossier(outcome, scenario!!.name)
     OSGlue.reportScore(player.score)
     val carryOver = scenario!!.map.collectPersistentCampaignUnits(player)

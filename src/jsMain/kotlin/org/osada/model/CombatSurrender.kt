@@ -34,7 +34,7 @@ fun GameMap.surrenderUnit(
     // PC2's economic payoff for encirclement: the captor banks the value of the strength still
     // standing, rather than destroying it. See SURRENDER_PRESTIGE_FRACTION.
     val prestige = (GameRules.calculateUnitCostPerStrength(unit) * remaining * SURRENDER_PRESTIGE_FRACTION).toInt()
-    captor.player?.let { it.prestige += prestige }
+    val awardedPrestige = captor.player?.awardPrestige(prestige) ?: prestige
     updateUnitList()
-    return prestige
+    return awardedPrestige
 }

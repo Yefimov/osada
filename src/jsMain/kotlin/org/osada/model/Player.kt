@@ -79,7 +79,7 @@ class Player {
     fun endTurn(turn: Int) {
         playedTurn = turn
         if (turn < prestigePerTurn.size) {
-            prestige += prestigePerTurn[turn]
+            awardPrestige(prestigePerTurn[turn])
         }
         updateScore(scoreGains["endTurn"] ?: 0)
     }

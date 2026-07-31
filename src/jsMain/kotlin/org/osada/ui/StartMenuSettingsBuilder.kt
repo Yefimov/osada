@@ -5,6 +5,7 @@ package org.osada.ui
 import kotlinx.browser.window
 import org.osada.GameHolder
 import org.osada.i18n.I18n
+import org.osada.synchronizeStalinRegimeUnits
 import org.osada.uiSettings
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.MouseEvent
@@ -61,6 +62,7 @@ internal object StartMenuSettingsBuilder {
                     "quickAnimation" to "settings.gameplay.quick_animation.label",
                     "showDetailInfoToolTips" to "settings.gameplay.optional_objectives.label",
                     "confirmEndTurn" to "settings.gameplay.confirm_end_turn.label",
+                    "stalinRegime" to "settings.gameplay.stalin_regime.label",
                 ),
             ),
             SettingSection(
@@ -89,6 +91,7 @@ internal object StartMenuSettingsBuilder {
             "quickAnimation" to "settings.gameplay.quick_animation.help",
             "showDetailInfoToolTips" to "settings.gameplay.optional_objectives.help",
             "confirmEndTurn" to "settings.gameplay.confirm_end_turn.help",
+            "stalinRegime" to "settings.gameplay.stalin_regime.help",
             "muteUnitSounds" to "settings.sound.mute_unit_sounds.help",
             "noFOW" to "settings.observer.no_fow.help",
             "showHiddenVictoryHexes" to "settings.observer.hidden_victory_hexes.help",
@@ -232,6 +235,9 @@ internal object StartMenuSettingsBuilder {
         val current = uiSettings.getFlag(id)
         uiSettings.setFlag(id, !current)
         valueDiv.classList.toggle("checked", !current)
+        if (id == "stalinRegime") {
+            GameHolder.instance?.synchronizeStalinRegimeUnits()
+        }
         if (id == "useRetina") applyRetinaScaleAdjustment()
         // Observer badge (Task 5): the settings dialog covers the top bar anyway, so
         // updating it live vs. on close is invisible to the player either way — but

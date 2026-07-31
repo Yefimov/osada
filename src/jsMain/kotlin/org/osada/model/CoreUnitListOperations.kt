@@ -101,6 +101,12 @@ internal class CoreUnitListOperations(
         unit.hasOverstrength = savedUnit.hasOverstrength as? Boolean ?: false
         unit.customName = savedUnit.customName as? String // optional key (rename feature)
         unit.isTemporaryBorrowed = savedUnit.temporaryBorrowed as? Boolean ?: false
+        unit.stalinRegimeBoosted = savedUnit.stalinRegimeBoosted as? Boolean ?: false
+        if (unit.stalinRegimeBoosted) {
+            unit.moveLeft *= GameUnit.STALIN_REGIME_MULTIPLIER
+            unit.ammo *= GameUnit.STALIN_REGIME_MULTIPLIER
+            unit.fuel *= GameUnit.STALIN_REGIME_MULTIPLIER
+        }
         // Carried, never re-minted: this is the scenario transition the formation id exists to
         // survive. A pre-hero save has no key here and gets one on addCoreUnit below.
         unit.formationId = savedUnit.formationId as? String

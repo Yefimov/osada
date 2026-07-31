@@ -6,6 +6,7 @@ import org.osada.i18n.GameText
 import org.osada.i18n.I18n
 import org.osada.model.Cell
 import org.osada.model.GameMap
+import org.osada.model.effectivePrestigeIncome
 import org.osada.weatherIconImg
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.MouseEvent
@@ -146,7 +147,8 @@ internal object CombatLogHeader {
             currentPlayer.score.toString(),
             explanation = I18n.t("turn_report.score.help"),
         )
-        val nextTurnPrestige = currentPlayer.prestigePerTurn.getOrNull(map.turn + 1) ?: 0
+        val nextTurnPrestige =
+            currentPlayer.effectivePrestigeIncome(currentPlayer.prestigePerTurn.getOrNull(map.turn + 1) ?: 0)
         tile(
             I18n.t("turn_report.prestige.label"),
             "${currentPlayer.prestige}&nbsp;${UIBuilder.currencyIcon}",
