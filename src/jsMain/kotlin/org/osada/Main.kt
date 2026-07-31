@@ -14,20 +14,15 @@ fun main() {
         console.log("[osada] window.load event")
         I18n.initialize {
             val game = Game()
-            val gameRules = GameRules
-            val equipment = Equipment
-            val leaders = Leaders
-            val settings = uiSettings
-            val eventHandler = EventHandler
-            val combatLog = CombatLog
-            js("window.game = game")
+            val globals = window.asDynamic()
+            globals.game = game
             console.log("[osada] window.game set", game)
-            js("window.GameRules = gameRules")
-            js("window.Equipment = equipment")
-            js("window.Leaders = leaders")
-            js("window.uiSettings = settings")
-            js("window.EventHandler = eventHandler")
-            js("window.CombatLog = combatLog")
+            globals.GameRules = GameRules
+            globals.Equipment = Equipment
+            globals.Leaders = Leaders
+            globals.uiSettings = uiSettings
+            globals.EventHandler = EventHandler
+            globals.CombatLog = CombatLog
             UnitDescriptions.load()
             console.log("[osada] calling game.init()")
             game.init()

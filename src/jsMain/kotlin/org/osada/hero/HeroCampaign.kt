@@ -155,9 +155,8 @@ internal object HeroCampaign {
     fun synchronizeFormation(unit: GameUnit): CoreFormation? {
         val formationId = FormationIdentity.of(unit) ?: return null
         val current = roster.formation(formationId)
-        val equipmentChanged = current != null && current.currentEquipmentId != unit.eqid
         val history =
-            if (equipmentChanged && current != null) {
+            if (current != null && current.currentEquipmentId != unit.eqid) {
                 val oldName =
                     Equipment.getEquipment(current.currentEquipmentId)?.name ?: "#${current.currentEquipmentId}"
                 val newName = unit.unitData(true).name

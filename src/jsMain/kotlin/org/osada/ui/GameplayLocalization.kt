@@ -202,7 +202,7 @@ internal object GameplayLocalization {
     }
 
     private fun showWeatherTooltip(anchor: HTMLElement) {
-        val scenario = GameHolder.instance?.scenario ?: return
+        if (GameHolder.instance?.scenario == null) return
         val tip =
             byId("osadaWeatherTip") ?: addTag("mainbody", "div").also {
                 it.id = "osadaWeatherTip"

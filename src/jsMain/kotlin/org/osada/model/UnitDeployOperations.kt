@@ -43,8 +43,8 @@ internal fun canDeployOnTerrain(
 }
 
 /**
- * Upgrade, disband, deploy, resupply and reinforce unit operations. Split from [UnitOperations]
- * (SRP / function-count limits).
+ * Upgrade, disband, deploy, resupply and reinforce unit operations. Split from the former
+ * unit-operations component (SRP / function-count limits).
  */
 internal class UnitDeployOperations(
     private val gameMap: GameMap,
@@ -96,11 +96,11 @@ internal class UnitDeployOperations(
         row: Int,
         col: Int,
     ): Boolean {
-        val hex = gameMap.map?.getOrNull(row)?.getOrNull(col)
+        val hex = gameMap.map?.getOrNull(row)?.getOrNull(col) ?: return false
         val isAir = GameRules.isAir(unit)
-        val free = hex != null && if (isAir) hex.airunit == null else hex.unit == null
-        val allowed = !unit.isDeployed && hex != null && free && canDeployOnTerrain(unit, hex, isAir)
-        if (allowed && hex != null) {
+        val free = if (isAir) hex.airunit == null else hex.unit == null
+        val allowed = !unit.isDeployed && free && canDeployOnTerrain(unit, hex, isAir)
+        if (allowed) {
             if (!isAir && hex.terrain == TerrainType.OCEAN.value) {
                 unit.embark(UnitClass.NAVAL_TRANSPORT)
             }

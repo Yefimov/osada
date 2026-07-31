@@ -13,7 +13,8 @@ import org.osada.rules.getResupplyValue
  * sequencing, and delegates specialized behaviour to focused collaborators:
  * - [CombatApplication] — damage, capture, retreat
  * - [MoveExecutor] — path movement and undo
- * - [UnitOperations] — mount/embark/upgrade/deploy/supply lifecycle
+ * - [UnitMountOperations], [UnitDeployOperations] and [CoreUnitListOperations] —
+ *   mount/embark/upgrade/deploy/supply lifecycle
  *
  * Split (Single Responsibility) into cohesive sibling files to stay within the project's
  * function-count limits: grid allocation/hex access ([GameMapGrid]), the unit/player registries

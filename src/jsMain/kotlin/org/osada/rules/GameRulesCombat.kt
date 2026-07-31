@@ -62,7 +62,7 @@ fun GameRules.shouldDefenderSurrender(
 ): Boolean = CombatResolver.shouldDefenderSurrender(defender, blockedByOwnUnitsOnly)
 
 fun GameRules.isRetreatBlockedByOwnUnitsOnly(
-    map: Array<Array<org.osada.model.Hex>>?,
+    map: Array<Array<Hex>>?,
     unit: GameUnit,
     rows: Int,
 ): Boolean = CombatPositioning.isRetreatBlockedByOwnUnitsOnly(map, unit, rows)

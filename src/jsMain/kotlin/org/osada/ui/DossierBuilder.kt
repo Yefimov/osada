@@ -221,7 +221,7 @@ internal object DossierBuilder {
         val medalMod = mapOf("briliant" to "gold", "victory" to "silver", "tactical" to "bronze", "lose" to "none")
         for (outcome in outcomeOrder) {
             val list = dossierData.outcomes[outcome] as? Array<dynamic>
-            if (list == null || list.isEmpty()) continue
+            if (list.isNullOrEmpty()) continue
             hasResults = true
             val row = addTag(medSection, "div")
             row.className = "osada-dsr-medal-row"

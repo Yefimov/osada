@@ -7,8 +7,8 @@ import org.osada.rules.getEmbarkType
 import org.osada.rules.setSpotRange
 
 /**
- * Mount/unmount and embark/disembark unit operations. Split from [UnitOperations] (SRP /
- * function-count limits).
+ * Mount/unmount and embark/disembark unit operations. Split from the former unit-operations
+ * component (SRP / function-count limits).
  */
 internal class UnitMountOperations(
     private val gameMap: GameMap,

@@ -8,7 +8,7 @@ import org.osada.rules.setZOCRange
 
 /**
  * Campaign core-unit list management: build, undeploy, restore (save-game load) and prune.
- * Split from [UnitOperations] (SRP / function-count limits).
+ * Split from the former unit-operations component (SRP / function-count limits).
  */
 internal class CoreUnitListOperations(
     private val gameMap: GameMap,

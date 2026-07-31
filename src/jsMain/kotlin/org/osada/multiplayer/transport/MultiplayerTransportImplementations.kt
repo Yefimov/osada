@@ -76,7 +76,7 @@ class BroadcastChannelTransport(
         check(currentState == TransportState.DISCONNECTED)
         val room = request.roomCode ?: error("BroadcastChannel transport requires a room code")
         currentState = TransportState.CONNECTING
-        channel = js("new BroadcastChannel(channelPrefix + '-' + room)")
+        channel = newBroadcastChannel("$channelPrefix-$room")
         channel.onmessage = { event: dynamic ->
             val raw = event.data as? String
             if (raw != null) {
@@ -127,7 +127,7 @@ class WebSocketMultiplayerTransport : MultiplayerTransport {
             )
         val separator = if ("?" in request.endpoint.webSocketBaseUrl) "&" else "?"
         val url = request.endpoint.webSocketBaseUrl + separator + parameters.joinToString("&")
-        socket = js("new WebSocket(url)")
+        socket = newWebSocket(url)
         socket.onopen = { currentState = TransportState.CONNECTED }
         socket.onclose = { currentState = TransportState.DISCONNECTED }
         socket.onerror = {
@@ -168,5 +168,11 @@ class WebSocketMultiplayerTransport : MultiplayerTransport {
 
 @Suppress("UnusedParameter")
 private fun encodeURIComponent(value: String): String = js("encodeURIComponent(value)") as String
+
+@Suppress("UnusedParameter")
+private fun newBroadcastChannel(name: String): dynamic = js("new BroadcastChannel(name)")
+
+@Suppress("UnusedParameter")
+private fun newWebSocket(url: String): dynamic = js("new WebSocket(url)")
 
 private const val NORMAL_CLOSE_CODE = 1000

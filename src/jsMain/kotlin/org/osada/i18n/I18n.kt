@@ -262,7 +262,7 @@ internal object I18n {
         request.onload = {
             val status = request.status.toInt()
             val body = request.responseText
-            if ((status in HTTP_OK_MIN..HTTP_OK_MAX || status == 0) && !body.isNullOrBlank()) {
+            if ((status in HTTP_OK_MIN..HTTP_OK_MAX || status == 0) && body.isNotBlank()) {
                 finish(parseBundle(body, "i18n/${bundleLanguage.code}/$domain.json"))
             } else {
                 if (bundleLanguage == Language.ENGLISH) {

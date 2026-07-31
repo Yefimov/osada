@@ -165,9 +165,8 @@ internal object UILayout {
         // settings-OK click (same inline-beats-stylesheet failure as the dossier above).
         val ids = listOf("container-unitlist")
         ids.forEach { id ->
-            val width = size
-            byId(id)?.style?.width = "${width}px"
-            byId(id)?.style?.marginLeft = "${-(width / 2)}px"
+            byId(id)?.style?.width = "${size}px"
+            byId(id)?.style?.marginLeft = "${-(size / 2)}px"
         }
         uiSettings.uiSize = size
     }

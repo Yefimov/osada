@@ -16,8 +16,7 @@ function seedFrom(...parts) {
 
 // One mulberry32 draw from a fully-formed 32-bit seed — same stream as SeededRandom.
 function draw(seed) {
-  let s = (seed + 0x6d2b79f5) | 0;
-  let t = s;
+  let t = (seed + 0x6d2b79f5) | 0;
   t = Math.imul(t ^ (t >>> 15), t | 1);
   t = (t + Math.imul(t ^ (t >>> 7), t | 61)) ^ t;
   return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
@@ -62,8 +61,10 @@ function woundIdFor(manifest, val) {
   if (byTag) return byTag.id;
   return manifest.layers.wound.find((l) => l.id === val)?.id || null;
 }
-const hairModeOf = (manifest, headgearId) =>
-  manifest.layers.headgear.find((l) => l.id === headgearId)?.tags?.hairMode || 'FULL_HAIR';
+const hairModeOf = (manifest, headgearId) => {
+  const layer = manifest.layers.headgear.find((l) => l.id === headgearId);
+  return (layer && layer.tags && layer.tags.hairMode) || 'FULL_HAIR';
+};
 
 /** id -> "v2/layers/<dir>/<id>.svg" (relative to the resources root). */
 export function layerPath(manifest, id) {

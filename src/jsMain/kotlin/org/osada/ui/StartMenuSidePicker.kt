@@ -120,8 +120,6 @@ internal object StartMenuSidePicker {
             } else {
                 available.indexOfFirst { it }.coerceAtLeast(0)
             }
-        val focusSide = effectiveSelected
-
         val playersRoot = byId("smScenPlayers")
         playersRoot?.apply {
             className = "osada-side-picker"
@@ -153,7 +151,7 @@ internal object StartMenuSidePicker {
         for (side in 0..1) {
             val container = byId("smSide$side") ?: continue
             clearTag(container)
-            buildSideCardContent(container, scenario, side, effectiveSelected, available[side], focusSide, eqpName)
+            buildSideCardContent(container, scenario, side, effectiveSelected, available[side], eqpName)
         }
         return effectiveSelected
     }
@@ -164,7 +162,6 @@ internal object StartMenuSidePicker {
         side: Int,
         selectedSide: Int,
         available: Boolean,
-        focusSide: Int,
         eqpName: String,
     ) {
         val (name, extra) = sideLabel(scenario, side, eqpName)
@@ -173,7 +170,7 @@ internal object StartMenuSidePicker {
         val extraNames = countries.drop(1).mapNotNull { countryLabel(it, eqpName) }
         val isSelected = available && side == selectedSide
 
-        applySideCardAttrs(container, isSelected, available, side == focusSide)
+        applySideCardAttrs(container, isSelected, available, side == selectedSide)
         container.title =
             if (available) {
                 I18n.t(

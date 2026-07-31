@@ -14,10 +14,10 @@ fun changeViewPort() {
     val gameState = js("new GameState(null)")
     gameState.restoreSettings()
 
-    var scale = 1.0
-    var maxScale = 1.0
+    val scale = 1.0
+    val maxScale = 1.0
     var prefix = "width=device-width, "
-    val pixelRatio = window.devicePixelRatio
+    var pixelRatio = window.devicePixelRatio
 
     val metas = document.getElementsByTagName("meta").asDynamic()
     var viewport: HTMLMetaElement? = null
@@ -39,19 +39,15 @@ fun changeViewPort() {
     val ua = window.navigator.userAgent
     if (ua.contains(Regex("(iPhone|iPod)", RegexOption.IGNORE_CASE))) {
         prefix = ""
-        if (pixelRatio == 1.0) {
-            @Suppress("UNUSED_VARIABLE")
-            val ratio = 2.0
-        }
+        if (pixelRatio == 1.0) pixelRatio = 2.0
     }
 
     var d = scale
     var l = maxScale
-    var k = pixelRatio
-    if (k > 1 && k < 2) k = 2.0
+    if (pixelRatio > 1 && pixelRatio < 2) pixelRatio = 2.0
     if (uiSettings.useRetina) {
-        l = 1 / k
-        d = 1 / k
+        l = 1 / pixelRatio
+        d = 1 / pixelRatio
     }
     viewport.content = "${prefix}initial-scale=$d,maximum-scale=$l, user-scalable=1"
 }

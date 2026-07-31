@@ -76,6 +76,6 @@ internal object BriefingIntroTracker {
     private fun seenList(record: dynamic): List<String> {
         val seen = record.seen
         if (seen == null || seen == undefined || !BriefingParsingUtils.isArray(seen)) return emptyList()
-        return seen.unsafeCast<Array<dynamic>>().mapNotNull { it as? String }
+        return seen.unsafeCast<Array<dynamic>>().filterIsInstance<String>()
     }
 }

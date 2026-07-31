@@ -1,6 +1,7 @@
 package org.osada.model
 
 import org.osada.GameHolder
+import org.osada.PlayerSide
 import org.osada.getCampaignPlayer
 import org.osada.rules.GameRules
 import org.osada.rules.setSpotRange
@@ -41,6 +42,19 @@ fun GameMap.getUnitImagesList(): dynamic {
 
 fun GameMap.hasAliveUnits(side: Int): Boolean = units.any { it.player?.side == side && !it.destroyed }
 
+/** The surviving side after combat eliminated its opponent; null while both sides still fight. */
+internal fun GameMap.getEliminationWinner(): Int? {
+    val axisAlive = hasAliveUnits(PlayerSide.AXIS.value)
+    val alliesAlive = hasAliveUnits(PlayerSide.ALLIES.value)
+    return when {
+        axisAlive && !alliesAlive -> PlayerSide.AXIS.value
+        alliesAlive && !axisAlive -> PlayerSide.ALLIES.value
+        else -> null
+    }
+}
+
+/** Original `GameMap` compatibility operation; kept even though current flows do not call it. */
+@Suppress("unused")
 fun GameMap.removeAllSideUnits(side: Int) {
     units.filter { it.player?.side == side }.forEach { it.destroyed = true }
     updateUnitList()
@@ -72,6 +86,8 @@ internal fun recordsInCampaignDossier(
     noDossier: Boolean,
 ): Boolean = hasCampaign && !noDossier
 
+/** Legacy unfiltered unit cycling; the modern HUD uses `ReadyUnitNavigator` instead. */
+@Suppress("unused")
 fun GameMap.getUnitNeighbor(
     unit: GameUnit,
     direction: Int,

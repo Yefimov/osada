@@ -63,7 +63,7 @@ private fun Game.createAIHandler(player: Player): dynamic = AI(player, scenario!
 
 private fun Game.createScriptedAIHandler(player: Player): dynamic = AIScripted(player, scenario!!.map)
 
-internal fun Game.countHumanSides(players: List<Player>): Int {
+internal fun countHumanSides(players: List<Player>): Int {
     val humanSides =
         players
             .filter { it.type == PlayerType.HUMAN_LOCAL || it.type == PlayerType.AI_SCRIPTED }

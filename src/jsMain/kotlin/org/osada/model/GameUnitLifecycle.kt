@@ -105,6 +105,8 @@ fun GameUnit.unitEndTurn(spotSide: Int) {
     }
 }
 
+/** Retained as the leaf lifecycle hook used by [Hex.cleanup]; units currently own no external resources. */
+@Suppress("UnusedReceiverParameter")
 fun GameUnit.cleanup() {
     // nothing to cleanup explicitly in Kotlin
 }

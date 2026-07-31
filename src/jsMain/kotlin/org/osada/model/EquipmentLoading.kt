@@ -60,7 +60,7 @@ private fun Equipment.loadCountryEquipment(
         val status = request.status.toInt()
         if (status in httpSuccessRange || status == 0) {
             val text = request.responseText
-            if (!text.isNullOrBlank()) {
+            if (text.isNotBlank()) {
                 parseCountryEquipment(country, JSON.parse(text))
             }
         }

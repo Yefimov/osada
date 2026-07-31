@@ -1,12 +1,14 @@
 package org.osada.ui
 
 import org.osada.PlayerType
+import org.osada.handleMoveVictory
 import org.osada.hero.HeroCampaign
 import org.osada.i18n.I18n
 import org.osada.model.Cell
 import org.osada.model.CombatResults
 import org.osada.model.GameUnit
 import org.osada.model.delCurrentUnit
+import org.osada.model.getEliminationWinner
 import org.osada.model.updateUnitList
 import org.osada.uiAnimationFinished
 
@@ -31,11 +33,11 @@ internal class AttackResultPresenter(
         val attackerPos = attacker.getPos()
         val defenderPos = defender.getPos()
 
+        val map = ui.game.scenario?.map
         if (attacker.destroyed || defender.destroyed) {
-            ui.game.scenario
-                ?.map
-                ?.updateUnitList()
+            map?.updateUnitList()
         }
+        map?.getEliminationWinner()?.let(ui.game::handleMoveVictory)
 
         showCombatBounceTexts(result, attackerPos, defenderPos)
         logCombatToHud(attacker, defender, result, defenderPos)

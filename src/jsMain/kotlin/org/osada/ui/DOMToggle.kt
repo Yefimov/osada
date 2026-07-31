@@ -126,8 +126,7 @@ fun toggleCheckboxWithImage(element: dynamic): Boolean {
             is HTMLElement -> element
             else -> element as? HTMLElement
         }
-    val image = node as? HTMLImageElement
-    if (image == null) return false
+    val image = node as? HTMLImageElement ?: return false
     val src = image.src
     val dir = src.substring(0, src.lastIndexOf("/") + 1)
     val name = src.substring(src.lastIndexOf("/") + 1)

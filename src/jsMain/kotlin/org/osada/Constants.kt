@@ -1,3 +1,5 @@
+@file:Suppress("unused") // Compatibility constants mirror the original JS public vocabulary.
+
 package org.osada
 
 // Enums and constants ported from the top of osada.js

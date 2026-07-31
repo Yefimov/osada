@@ -28,12 +28,12 @@ internal object EmbarkRules {
         val data = unit.unitData()
         val canEmbarkAir =
             hex.terrain == TerrainType.AIRFIELD.value &&
-                unit.player?.airTransports ?: 0 > 0 &&
+                (unit.player?.airTransports ?: 0) > 0 &&
                 data.embark > EmbarkType.NAVAL.value &&
                 hex.airunit == null
         val canEmbarkNaval =
             hex.terrain == TerrainType.PORT.value &&
-                unit.player?.navalTransports ?: 0 > 0 &&
+                (unit.player?.navalTransports ?: 0) > 0 &&
                 data.embark > EmbarkType.NONE.value
         return when {
             canEmbarkAir -> UnitClass.AIR_TRANSPORT.value

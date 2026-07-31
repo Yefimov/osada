@@ -23,7 +23,7 @@ fun UnitPredicates.unitLowFuel(
     threshold: Int,
 ): Boolean {
     if (!unitUsesFuel(unit)) return false
-    return if (!unit.isMounted) unit.fuel < threshold else unit.transport?.fuel ?: 0 < threshold
+    return if (!unit.isMounted) unit.fuel < threshold else (unit.transport?.fuel ?: 0) < threshold
 }
 
 fun UnitPredicates.unitUsesAmmo(unit: GameUnit): Boolean = unit.unitData().ammo > 0
@@ -33,5 +33,5 @@ fun UnitPredicates.unitLowAmmo(
     threshold: Int,
 ): Boolean {
     if (!unitUsesAmmo(unit)) return false
-    return if (!unit.isMounted) unit.ammo < threshold else unit.transport?.ammo ?: 0 < threshold
+    return if (!unit.isMounted) unit.ammo < threshold else (unit.transport?.ammo ?: 0) < threshold
 }

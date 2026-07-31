@@ -55,7 +55,7 @@ class Game {
 
         // camelCase kept (not SCREAMING_SNAKE_CASE) because `Game` is @JsExport: this constant
         // is part of the exported JS-facing API surface as `Game.defaultScenario`.
-        @Suppress("ktlint:standard:property-naming")
+        @Suppress("ConstPropertyName", "ktlint:standard:property-naming")
         const val defaultScenario: String = DEFAULT_SCENARIO
         val defaultScenarioAI: List<Int> = DEFAULT_SCENARIO_AI
     }

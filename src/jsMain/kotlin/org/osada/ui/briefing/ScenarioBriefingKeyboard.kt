@@ -80,7 +80,8 @@ private fun ScenarioBriefingController.handleChoiceArrowKey(
     val forward = key == "ArrowDown" || key == "ArrowRight"
     val nextIndex = if (forward) (activeIndex + 1) % length else (activeIndex - 1 + length) % length
     e.preventDefault()
-    choices.item(nextIndex).asDynamic().focus()
+    val nextChoice: dynamic = choices.item(nextIndex)
+    nextChoice.focus()
     return true
 }
 

@@ -10,7 +10,7 @@ import org.osada.model.awardPrestige
  * Applies typed campaign effects to real game objects.
  *
  * Idempotency is enforced HERE and nowhere else: [apply] consults
- * [CampaignNarrativeState.markApplied] before touching anything, so an effect whose id has
+ * [CampaignEffectLedger.markApplied] before touching anything, so an effect whose id has
  * already been applied in this campaign run is a no-op regardless of how it was reached
  * (briefing reopened, dialogue reviewed, save restored, double-click, transition fired twice).
  *
@@ -84,7 +84,7 @@ internal object CampaignEffectApplier {
         }
         val acquired = known && player != null && player.acquireUnit(effect.eqid, 0)
         if (acquired) {
-            player?.getCoreUnitList()?.lastOrNull()?.let { unit ->
+            player.getCoreUnitList().lastOrNull()?.let { unit ->
                 unit.experience = effect.experience.coerceIn(0, UNIT_MAX_EXPERIENCE)
                 unit.strength = effect.strength.coerceIn(1, EffectLimits.MAX_STRENGTH)
             }

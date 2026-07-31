@@ -68,12 +68,12 @@ class GameStateRestore(
             val owner = unit.owner as? Int ?: continue
             val player = players.firstOrNull { it.id == owner } ?: continue
             val countries =
-                listOf(
+                listOfNotNull(
                     unit.equipmentCountry as? Int,
                     unit.transportEquipmentCountry as? Int,
                     unit.carrierEquipmentCountry as? Int,
                     unit.flag as? Int,
-                ).filterNotNull()
+                )
 
             countries.filter { it > 0 }.forEach { country ->
                 if (country !in player.supportCountries) player.supportCountries.add(country)
@@ -186,21 +186,20 @@ class GameStateRestore(
             onReady()
             return
         }
-        val data = campaignData
-        val campaignId = data.id as Int
-        val file = data.file as String
+        val campaignId = campaignData.id as Int
+        val file = campaignData.file as String
         // Old saves have no `narrative` key: deserialize(null) yields empty state, so a
         // pre-narrative save loads with no callbacks rather than failing.
-        CampaignNarrative.restore(data.narrative)
+        CampaignNarrative.restore(campaignData.narrative)
         // Same absence rule: a save written before the hero system has no `heroes` key and
         // restores to an empty roster, which the migration below then populates.
-        HeroCampaign.restore(data.heroes)
+        HeroCampaign.restore(campaignData.heroes)
         val campaignIndex = Campaign.findCampaignByFile(file)
         game.campaign =
-            Campaign(if (campaignIndex >= 0) campaignIndex else campaignId, data.difficulty as Int) {
-                game.campaign?.setScenarioById(data.scenario as Int)
+            Campaign(if (campaignIndex >= 0) campaignIndex else campaignId, campaignData.difficulty as Int) {
+                game.campaign?.setScenarioById(campaignData.scenario as Int)
                 val campaignPlayer = game.getCampaignPlayer()
-                val savedCoreUnits = data.coreUnits
+                val savedCoreUnits = campaignData.coreUnits
                 if (campaignPlayer != null && savedCoreUnits != null) {
                     newScenario.map.restoreCoreUnitList(
                         campaignPlayer,

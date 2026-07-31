@@ -17,6 +17,7 @@
     --osada-metal-800: #1d2127;   /* panel background               */
     --osada-metal-700: #2a2f38;   /* raised element / button base   */
     --osada-metal-600: #3a414c;   /* border / bevel highlight       */
+    --osada-panel:     var(--osada-metal-800);
     --osada-paper:     #d9cba8;   /* staff-folder paper             */
     --osada-paper-ink: #2b2317;   /* text on paper                  */
 
@@ -114,7 +115,6 @@
 
 hr {
     height: 2px;
-    background-image: linear-gradient(left, rgba(0,0,0,0), var(--osada-brass), rgba(0,0,0,0));
     background-image: linear-gradient(to right, rgba(0,0,0,0), var(--osada-brass), rgba(0,0,0,0));
 }
 

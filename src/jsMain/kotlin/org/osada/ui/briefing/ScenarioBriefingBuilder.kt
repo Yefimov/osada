@@ -158,7 +158,7 @@ internal object ScenarioBriefingBuilder {
         // click-anywhere surface.
         transcript.addEventListener("click", { e ->
             val selection = js("window.getSelection()")
-            val selecting = (selection != null && (selection.toString() as String).isNotEmpty())
+            val selecting = selection != null && selection.toString().isNotEmpty()
             if (selecting) e.stopPropagation()
         })
 

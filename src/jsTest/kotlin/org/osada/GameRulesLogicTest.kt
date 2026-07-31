@@ -1,17 +1,45 @@
 package org.osada
 
+import org.osada.model.GameMap
+import org.osada.model.GameUnit
+import org.osada.model.Player
+import org.osada.model.getEliminationWinner
 import org.osada.rules.Dice
 import org.osada.rules.HexGeometry
 import org.osada.rules.UnitPredicates
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 /**
  * Tests for pure-logic GameRules helpers that do not require loaded equipment data.
  */
 class GameRulesLogicTest {
+    @Test
+    fun eliminationWinnerRequiresExactlyOneSurvivingSide() {
+        val map = GameMap()
+        assertNull(map.getEliminationWinner())
+
+        map.units += unitOnSide(PlayerSide.AXIS.value)
+        assertEquals(PlayerSide.AXIS.value, map.getEliminationWinner())
+
+        map.units += unitOnSide(PlayerSide.ALLIES.value)
+        assertNull(map.getEliminationWinner())
+
+        map.units.last().destroyed = true
+        assertEquals(PlayerSide.AXIS.value, map.getEliminationWinner())
+
+        map.units.first().destroyed = true
+        assertNull(map.getEliminationWinner())
+    }
+
+    private fun unitOnSide(side: Int): GameUnit =
+        GameUnit(0).apply {
+            player = Player().apply { this.side = side }
+        }
+
     @Test
     fun distanceOnHexGrid() {
         // Same cell

@@ -76,7 +76,7 @@ class HeroLegendaryTest {
             )
         val result = LeaderAcquisitionService.tryGenerate(ctx)
         assertTrue(result is LeaderAcquisitionService.EmergenceResult.Emerged)
-        val emerged = result as LeaderAcquisitionService.EmergenceResult.Emerged
+        val emerged = result
         assertTrue(emerged.legendary)
         assertTrue(!emerged.guaranteed, "the legendary must never be announced as guaranteed (§6.3)")
         assertEquals(HeroPotential.AUTHORED_LEGENDARY, emerged.state.potential)
