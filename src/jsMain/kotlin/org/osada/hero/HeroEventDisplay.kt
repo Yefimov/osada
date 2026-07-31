@@ -30,8 +30,10 @@ internal object HeroEventDisplay {
         titles[eventId] ?: when {
             eventId.startsWith("commander_promoted_to_") ->
                 "Commander promoted to ${HeroDisplay.rank(eventId.removePrefix("commander_promoted_to_"))}"
+
             eventId.startsWith("promoted_to_") ->
                 "Promoted to ${HeroDisplay.rank(eventId.removePrefix("promoted_to_"))}"
+
             else -> eventId.replace('_', ' ').replaceFirstChar(Char::uppercaseChar)
         }
 

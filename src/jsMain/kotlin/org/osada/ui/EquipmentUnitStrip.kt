@@ -25,6 +25,7 @@ import org.w3c.dom.events.MouseEvent
  */
 internal fun hideEquipmentWindow() {
     AttachmentPickerPresenter.close()
+    CompactEquipmentNavigation.showList()
     makeHidden("equipment")
 }
 
@@ -146,7 +147,7 @@ internal object EquipmentUnitStrip {
         val formation = if (unit.isCore) "core formation" else "scenario unit"
         container.title =
             "Select ${unit.customName ?: data.name}: $formation, $location. " +
-            "Card symbols show attack available, movement available, low supply, or reserve status."
+                "Card symbols show attack available, movement available, low supply, or reserve status."
         iconsDiv.className = if (unit.isDeployed) "eqUnitBoxIconsMenu" else "eqUnitBoxIcons"
         var icons = ""
         if (unit.isDeployed) {
@@ -332,6 +333,7 @@ internal object EquipmentUnitStrip {
                     }
                 }
                 ui.updateEquipmentWindow(item.asDynamic().eqclass as? Int ?: org.osada.UnitClass.TANK.value)
+                if (!uiSettings.deployMode) CompactEquipmentNavigation.showDetail()
             }
             hscroll?.asDynamic()?.scrollLeft = eqUserSel?.unitscroll
 

@@ -1,6 +1,7 @@
 package org.osada.hero
 
 import org.osada.LeaderType
+import org.osada.hero.LegacyTraitMapping.toTraitId
 
 /**
  * Bridge between the legacy integer trait world and the string trait ids the hero model uses.

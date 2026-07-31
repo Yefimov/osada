@@ -1,5 +1,8 @@
 package org.osada.model
 
+import org.osada.model.EfileConfig.attachments
+import org.osada.model.EfileConfig.flag
+import org.osada.model.EfileConfig.intKey
 import org.w3c.xhr.XMLHttpRequest
 import kotlin.js.Json
 

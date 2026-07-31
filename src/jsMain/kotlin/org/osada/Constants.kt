@@ -570,10 +570,31 @@ class UiSettings {
     // Optional player-only power mode. Kept in UI settings so it survives scenario transitions.
     var stalinRegime: Boolean = false
 
+    // ---- Mobile browser experience ----
+    // Only real user PREFERENCES live here. The layout mode itself is derived from the measured
+    // viewport every frame and is deliberately NOT persisted: a temporary viewport (a rotated
+    // phone, a split screen, a resized window) must never become a stored setting.
+
+    /** Mobile interface: "auto" (measure the device), "on" (force), "off" (force desktop). */
+    var mobileUiMode: String = "auto"
+
+    /** Confirm attacks before they execute: "auto" (on for a coarse pointer), "on", "off". */
+    var confirmAttacks: String = "auto"
+
+    /** Control density on touch layouts: "compact", "standard", "large". */
+    var interfaceDensity: String = "standard"
+
+    /** Highest gesture-tutorial version the player has dismissed; 0 means never shown. */
+    var gestureTutorialVersion: Int = 0
+
+    /** Shorter animations and less decorative work, for large scenarios on modest phones. */
+    var reducedEffects: Boolean = false
+
     /** Get/set a boolean setting by its string key. The settings menu is data-driven by key, but
      *  this is a typed Kotlin object — its properties compile to mangled getters/setters, NOT plain
      *  JS keys, so `asDynamic()[key]` does NOT reach them (reads undefined, writes a dead property).
      *  These map the checkbox keys to the real typed properties so the menu actually toggles them. */
+    @Suppress("CyclomaticComplexMethod")
     fun getFlag(key: String): Boolean =
         when (key) {
             "hexGrid" -> hexGrid
@@ -588,6 +609,7 @@ class UiSettings {
             "showHiddenVictoryHexes" -> showHiddenVictoryHexes
             "confirmEndTurn" -> confirmEndTurn
             "stalinRegime" -> stalinRegime
+            "reducedEffects" -> reducedEffects
             else -> false
         }
 
@@ -608,6 +630,7 @@ class UiSettings {
             "showHiddenVictoryHexes" -> showHiddenVictoryHexes = value
             "confirmEndTurn" -> confirmEndTurn = value
             "stalinRegime" -> stalinRegime = value
+            "reducedEffects" -> reducedEffects = value
         }
     }
 
@@ -648,6 +671,11 @@ class UiSettings {
         o.showHiddenVictoryHexes = showHiddenVictoryHexes
         o.confirmEndTurn = confirmEndTurn
         o.stalinRegime = stalinRegime
+        o.mobileUiMode = mobileUiMode
+        o.confirmAttacks = confirmAttacks
+        o.interfaceDensity = interfaceDensity
+        o.gestureTutorialVersion = gestureTutorialVersion
+        o.reducedEffects = reducedEffects
         return o
     }
 }

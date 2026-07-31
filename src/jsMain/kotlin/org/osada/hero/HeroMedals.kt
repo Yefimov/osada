@@ -1,5 +1,8 @@
 package org.osada.hero
 
+import org.osada.hero.HeroMedals.award
+
+
 /**
  * The (currently small) medal catalogue (§8.1, §10) and the rule that awards from it.
  *

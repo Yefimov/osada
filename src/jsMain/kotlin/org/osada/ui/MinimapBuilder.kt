@@ -35,7 +35,6 @@ internal object MinimapBuilder {
 
     private var canvas: dynamic = null
     private var ctx: dynamic = null
-    private var dragging = false
 
     fun build() {
         val frame = byId("osadaMinimapFrame") ?: return
@@ -49,9 +48,9 @@ internal object MinimapBuilder {
         canvas = cv
         ctx = cv.getContext("2d")
 
-        wireInteraction(cv.unsafeCast<org.w3c.dom.HTMLElement>())
+        MinimapPointerInput.wire(cv)
         byId("game")?.addEventListener("scroll", { refreshViewportOnly() })
-        window.setInterval({ refresh() }, FALLBACK_INTERVAL_MS)
+        window.setInterval({ if (isDrawerVisible()) refresh() }, FALLBACK_INTERVAL_MS)
 
         buildZoomControls(frame.parentElement)
     }
@@ -160,13 +159,13 @@ internal object MinimapBuilder {
         if (tw > 0.0 && th > 0.0) {
             try {
                 g.drawImage(terrain, 0.0, 0.0, tw, th, 0.0, 0.0, tw / srcW * w, th / srcH * h)
-            } catch (t: Throwable) {
+            } catch (_: Throwable) {
                 // Not-yet-decoded image: the flat fill above stands in for this frame.
             }
         }
         try {
             g.drawImage(hexesCanvas, 0.0, 0.0, srcW, srcH, 0.0, 0.0, w, h)
-        } catch (t: Throwable) {
+        } catch (_: Throwable) {
             // A cross-origin or not-yet-ready canvas would throw on drawImage; the fill/terrain
             // above already stand in as the fallback in that case.
         }
@@ -266,53 +265,57 @@ internal object MinimapBuilder {
         g.strokeRect(vx, vy, vw, vh)
     }
 
-    /** Click/drag scrolls the main map — sets #game's own scroll only, never touches a game
-     *  canvas (hard constraint). */
-    private fun wireInteraction(el: org.w3c.dom.HTMLElement) {
-        // The guard chain below early-exits via labeled (lambda-local) returns rather than
-        // function-level ones, so a miss on any single prerequisite just skips the rest of this
-        // scroll — same net effect as the original sequence of guard-clause returns.
-        fun scrollToLocal(
-            clientX: Double,
-            clientY: Double,
-        ) = run {
-            val c = canvas ?: return@run
-            val ui = GameHolder.instance?.ui ?: return@run
-            val hexesCanvas = ui.render.getHexesCanvas() ?: return@run
-            val srcW = (hexesCanvas.width as? Number)?.toDouble() ?: 0.0
-            val srcH = (hexesCanvas.height as? Number)?.toDouble() ?: 0.0
-            if (srcW <= 0.0 || srcH <= 0.0) return@run
-            val game = byId("game") ?: return@run
-            val rect = c.getBoundingClientRect()
-            val mx = (clientX - (rect.left as Double)).coerceIn(0.0, WIDTH.toDouble())
-            val my = (clientY - (rect.top as Double)).coerceIn(0.0, HEIGHT.toDouble())
-            val gd = game.asDynamic()
-            // Same native/zoomed normalization as drawViewportRect: do the math in native
-            // (unzoomed) space to match srcW/srcH, then scale the FINAL target back up to
-            // #game's own (zoomed) scroll space before assigning.
-            val zoom = MapZoom.level
-            val clientWidth = ((gd.clientWidth as? Number)?.toDouble() ?: 0.0) / zoom
-            val clientHeight = ((gd.clientHeight as? Number)?.toDouble() ?: 0.0) / zoom
-            val targetX = mx / WIDTH * srcW - clientWidth / 2.0
-            val targetY = my / HEIGHT * srcH - clientHeight / 2.0
-            gd.scrollLeft = (targetX.coerceIn(0.0, (srcW - clientWidth).coerceAtLeast(0.0))) * zoom
-            gd.scrollTop = (targetY.coerceIn(0.0, (srcH - clientHeight).coerceAtLeast(0.0))) * zoom
-            refreshViewportOnly()
-        }
-
-        el.addEventListener("mousedown", { e: org.w3c.dom.events.Event ->
-            val me = e as MouseEvent
-            dragging = true
-            scrollToLocal(me.clientX.toDouble(), me.clientY.toDouble())
-        })
-        window.addEventListener("mousemove", { e: org.w3c.dom.events.Event ->
-            if (!dragging) return@addEventListener
-            val me = e as MouseEvent
-            scrollToLocal(me.clientX.toDouble(), me.clientY.toDouble())
-        })
-        window.addEventListener("mouseup", { dragging = false })
+    /**
+     * Centres the main map on a minimap position — sets `#game`'s own scroll only, and never
+     * touches a game canvas (hard constraint). Public to the package so [MinimapPointerInput] can
+     * drive it without reimplementing the coordinate conversion.
+     */
+    fun scrollMapTo(
+        clientX: Double,
+        clientY: Double,
+    ) = run {
+        val c = canvas ?: return@run
+        val ui = GameHolder.instance?.ui ?: return@run
+        val hexesCanvas = ui.render.getHexesCanvas() ?: return@run
+        val srcW = (hexesCanvas.width as? Number)?.toDouble() ?: 0.0
+        val srcH = (hexesCanvas.height as? Number)?.toDouble() ?: 0.0
+        if (srcW <= 0.0 || srcH <= 0.0) return@run
+        val game = byId("game") ?: return@run
+        val rect = c.getBoundingClientRect()
+        val xFraction = minimapFraction(clientX, rect.left as Double, rect.width as Double)
+        val yFraction = minimapFraction(clientY, rect.top as Double, rect.height as Double)
+        val gd = game.asDynamic()
+        // Same native/zoomed normalization as drawViewportRect: do the math in native
+        // (unzoomed) space to match srcW/srcH, then scale the FINAL target back up to
+        // #game's own (zoomed) scroll space before assigning.
+        val zoom = MapZoom.level
+        val clientWidth = ((gd.clientWidth as? Number)?.toDouble() ?: 0.0) / zoom
+        val clientHeight = ((gd.clientHeight as? Number)?.toDouble() ?: 0.0) / zoom
+        val targetX = xFraction * srcW - clientWidth / 2.0
+        val targetY = yFraction * srcH - clientHeight / 2.0
+        gd.scrollLeft = (targetX.coerceIn(0.0, (srcW - clientWidth).coerceAtLeast(0.0))) * zoom
+        gd.scrollTop = (targetY.coerceIn(0.0, (srcH - clientHeight).coerceAtLeast(0.0))) * zoom
+        refreshViewportOnly()
     }
 }
+
+/** Client coordinate normalized against the canvas's rendered CSS box, not its bitmap size. */
+internal fun minimapFraction(
+    clientCoordinate: Double,
+    renderedStart: Double,
+    renderedSize: Double,
+): Double =
+    if (renderedSize <= 0.0) {
+        0.0
+    } else {
+        ((clientCoordinate - renderedStart) / renderedSize).coerceIn(0.0, 1.0)
+    }
+
+/**
+ * A closed mobile drawer hides the minimap entirely, and repainting an invisible canvas twice a
+ * second is pure battery cost on a phone. The drawer refreshes on open, so nothing is stale.
+ */
+private fun isDrawerVisible(): Boolean = !MobileLayoutController.mode.isPhone || MobileDrawer.isOpen
 
 private fun isUnitSpotted(
     map: GameMap,

@@ -41,10 +41,12 @@ class AuthorityCommandProcessor(
                 restoredRevision = snapshot.revision
                 AuthorityDecision.Commit(snapshot)
             }
+
             is CommandValidation.Rejected -> AuthorityDecision.Reject(validation.rejection)
         }
     }
 
+    @Suppress("unused")
     fun restoreRevision(snapshot: MultiplayerSnapshot) {
         restoredRevision = snapshot.revision
         appliedMessageIds.clear()

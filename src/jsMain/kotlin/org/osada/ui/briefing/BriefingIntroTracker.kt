@@ -1,6 +1,7 @@
 package org.osada.ui.briefing
 
 import kotlinx.browser.localStorage
+import org.osada.ui.briefing.BriefingIntroTracker.reset
 
 /**
  * Remembers which campaign scenarios have already played their intro ceremony (dialogue +
@@ -76,6 +77,6 @@ internal object BriefingIntroTracker {
     private fun seenList(record: dynamic): List<String> {
         val seen = record.seen
         if (seen == null || seen == undefined || !BriefingParsingUtils.isArray(seen)) return emptyList()
-        return seen.unsafeCast<Array<dynamic>>().filterIsInstance<String>()
+        return seen.unsafeCast<Array<dynamic>>().mapNotNull { it as? String }
     }
 }

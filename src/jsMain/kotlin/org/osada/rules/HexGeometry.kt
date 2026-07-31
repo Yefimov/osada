@@ -3,6 +3,7 @@ package org.osada.rules
 import org.osada.Direction
 import org.osada.model.Cell
 import org.osada.model.ExtendedCell
+import org.osada.rules.HexGeometry.getAdjacent
 import kotlin.math.abs
 
 /**

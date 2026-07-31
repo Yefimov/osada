@@ -8,6 +8,10 @@ import org.osada.model.ATTR_MASK_SUPPORT_FIRE
 import org.osada.model.EquipmentData
 import org.osada.model.GameUnit
 import org.osada.model.Leaders
+import org.osada.rules.UnitCapabilities.CAPTURING_CLASSES
+import org.osada.rules.UnitCapabilities.canCaptureHex
+import org.osada.rules.UnitCapabilities.hasSupportFire
+import org.osada.rules.UnitCapabilities.isHeadquarters
 
 /** Intrinsic, equipment-defined capabilities that are neither leaders nor purchased attachments. */
 object UnitCapabilities {

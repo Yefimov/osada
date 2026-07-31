@@ -39,8 +39,8 @@ internal object GameStateMenuBuilder {
         saveBut.title = I18n.t("save_load.save.help")
         saveBut.innerHTML =
             "<span class='osada-sl-btn__label'>${I18n.t("save_load.save.label")}</span>" +
-            "<span class='osada-sl-btn__sub'>${I18n.t("save_load.save.subtitle")}</span>" +
-            "<a id='savedata' hidden download='none'></a>"
+                "<span class='osada-sl-btn__sub'>${I18n.t("save_load.save.subtitle")}</span>" +
+                "<a id='savedata' hidden download='none'></a>"
         saveBut.onclick = { _: org.w3c.dom.events.MouseEvent ->
             if (!saveBut.classList.contains("osada-sl-btn--disabled")) gameStateButton("disksave")
         }
@@ -53,8 +53,8 @@ internal object GameStateMenuBuilder {
         loadBut.title = I18n.t("save_load.load.help")
         loadBut.innerHTML =
             "<span class='osada-sl-btn__label'>${I18n.t("save_load.load.label")}</span>" +
-            "<span class='osada-sl-btn__sub'>${I18n.t("save_load.load.subtitle")}</span>" +
-            OSGlue.diskloadInputHTML
+                "<span class='osada-sl-btn__sub'>${I18n.t("save_load.load.subtitle")}</span>" +
+                OSGlue.diskloadInputHTML
         OSGlue.diskloadEvent(loadBut) { gameStateButton("diskload") }
 
         val info = addTag(body, "div")
@@ -152,6 +152,7 @@ internal object GameStateMenuBuilder {
                     ) + ".json"
                 OSGlue.disksave(fileName)
             }
+
             "diskload" -> OSGlue.diskload(::onGameLoadSuccess, ::onGameLoadError)
         }
     }

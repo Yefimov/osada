@@ -177,6 +177,7 @@ internal object CampaignEffectParser {
                     clampInt(item.amount, EffectLimits.MAX_EXPERIENCE_DELTA),
                     BriefingDynamic.int(item.unitClass),
                 )
+
             "resupply" ->
                 CampaignEffect.Resupply(
                     id,
@@ -184,12 +185,14 @@ internal object CampaignEffectParser {
                     BriefingDynamic.bool(item.refuel) ?: true,
                     BriefingDynamic.bool(item.rearm) ?: true,
                 )
+
             "shiftReinforcements" ->
                 CampaignEffect.ShiftReinforcements(
                     id,
                     BriefingDynamic.int(item.side) ?: 0,
                     clampInt(item.turns, EffectLimits.MAX_TURN_SHIFT),
                 )
+
             "deploymentSlots" -> CampaignEffect.DeploymentSlots(id, clampInt(item.delta, EffectLimits.MAX_SLOT_DELTA))
             else -> null
         }

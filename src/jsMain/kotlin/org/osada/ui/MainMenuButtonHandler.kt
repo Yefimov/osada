@@ -27,6 +27,7 @@ internal class MainMenuButtonHandler(
                 ui.toggleStrategicZoom()
                 ui.render.render()
             }
+
             "inspectunit" -> onInspectUnitButton(map)
             "buy" -> onBuyButton(map)
             "endturn" -> ui.onEndTurnClick()
@@ -80,6 +81,7 @@ internal class MainMenuButtonHandler(
             ui.updateStatusBar()
             ui.render.render()
         } else {
+            CompactEquipmentNavigation.showList()
             byId("equipment")?.style?.display = "grid"
             makeVisible("container-unitlist")
             byId("buy")?.let { toggleButton(it, true) }

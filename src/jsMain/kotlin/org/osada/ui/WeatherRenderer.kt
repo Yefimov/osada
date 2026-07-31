@@ -3,6 +3,7 @@ package org.osada.ui
 import kotlinx.browser.document
 import kotlinx.browser.window
 import org.osada.WeatherCondition
+import org.osada.ui.WeatherRenderer.start
 
 /**
  * Runtime precipitation overlay. Draws OG's rain/snow scroll textures (keyed transparent in

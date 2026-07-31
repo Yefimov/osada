@@ -242,8 +242,10 @@ internal class UnitStatCard(
                     when {
                         progress.recognition < progress.target ->
                             I18n.t("unit_info.leader.checks_unlock", mapOf("target" to progress.target))
+
                         progress.drought >= progress.guaranteedAfterFailures ->
                             I18n.t("unit_info.leader.guaranteed")
+
                         else ->
                             I18n.t(
                                 "unit_info.leader.chance",
@@ -420,7 +422,7 @@ private fun fillFormationDetail(unit: GameUnit) {
         row.className = "osada-formation-detail__event"
         row.textContent =
             HeroEventDisplay.title(event.eventId) +
-            HeroEventDisplay.context(event.scenarioId, event.turn, event.date, event.location)
+                HeroEventDisplay.context(event.scenarioId, event.turn, event.date, event.location)
     }
 }
 

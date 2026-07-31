@@ -34,6 +34,7 @@ import org.osada.rules.airGroundedByWeather
 import org.osada.rules.getReinforceValue
 import org.osada.rules.getResupplyValue
 import org.osada.rules.isAir
+import org.osada.ui.GameplayLocalization.refreshUnitIdentity
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.MouseEvent
 
@@ -179,10 +180,10 @@ internal object GameplayLocalization {
             )
         byId("statusmsg")?.innerHTML =
             "<span class=\"osada-tb-op\" title=\"${scenario.name}\">${scenario.name}</span>" +
-            "<span class=\"osada-tb-field\"><b>${I18n.t("hud.turn.label")}</b>" +
-            "${I18n.formatNumber(map.turn)}/${I18n.formatNumber(map.maxTurns)}</span>" +
-            "<span class=\"osada-tb-field osada-tb-date\">$dateText</span>" +
-            phaseChip
+                "<span class=\"osada-tb-field\"><b>${I18n.t("hud.turn.label")}</b>" +
+                "${I18n.formatNumber(map.turn)}/${I18n.formatNumber(map.maxTurns)}</span>" +
+                "<span class=\"osada-tb-field osada-tb-date\">$dateText</span>" +
+                phaseChip
     }
 
     private fun refreshWeather() {
@@ -192,9 +193,9 @@ internal object GameplayLocalization {
         byId("weathermsg")?.let { element ->
             element.innerHTML =
                 org.osada.weatherIconImg(atmos, "osada-tb-weather-img") +
-                org.osada.groundIconImg(ground, "osada-tb-weather-img") +
-                "<span class=\"osada-tb-weather-txt\">${GameText.weatherShort(atmos)} · " +
-                "${GameText.ground(ground)}</span>"
+                    org.osada.groundIconImg(ground, "osada-tb-weather-img") +
+                    "<span class=\"osada-tb-weather-txt\">${GameText.weatherShort(atmos)} · " +
+                    "${GameText.ground(ground)}</span>"
             element.title = ""
             element.onmouseenter = { _: MouseEvent -> showWeatherTooltip(element) }
             element.onmouseleave = { _: MouseEvent -> byId("osadaWeatherTip")?.style?.display = "none" }
@@ -243,10 +244,12 @@ internal object GameplayLocalization {
                 lines += "good" to I18n.t("hud.weather.effect.frozen_crossing")
                 lines += "bad" to I18n.t("hud.weather.effect.frozen_wheeled")
             }
+
             GroundCondition.MUD.value -> {
                 lines += "bad" to I18n.t("hud.weather.effect.mud_movement")
                 lines += "bad" to I18n.t("hud.weather.effect.mud_swamps")
             }
+
             else -> lines += "good" to I18n.t("hud.weather.effect.dry_movement")
         }
         if (scenario.weatherCanChangeGround) {
@@ -614,6 +617,7 @@ internal object GameplayLocalization {
                 leader.title = "$label\n${I18n.t("unit_info.leader.open_dossier.help")}"
                 leader.setAttribute("aria-label", I18n.t("unit_info.leader.open_dossier.aria", mapOf("label" to label)))
             }
+
             unit.leader >= 0 -> {
                 val descriptions =
                     org.osada.model.Leaders
@@ -624,16 +628,19 @@ internal object GameplayLocalization {
                 if (descriptions.isEmpty()) leader.title = label
                 leader.setAttribute("aria-label", label)
             }
+
             unit.isTemporaryBorrowed || unit.nodossier -> {
                 leader.textContent = I18n.t("unit_info.leader.temporary.label")
                 leader.title = I18n.t("unit_info.leader.temporary.help")
                 leader.setAttribute("aria-label", leader.title)
             }
+
             unit.formationId == null -> {
                 leader.textContent = I18n.t("unit_info.leader.scenario_only.label")
                 leader.title = I18n.t("unit_info.leader.scenario_only.help")
                 leader.setAttribute("aria-label", leader.title)
             }
+
             else -> {
                 val progress = HeroCampaign.recognitionProgress(unit)
                 val label = I18n.t("unit_info.leader.candidate.label")
@@ -649,8 +656,10 @@ internal object GameplayLocalization {
                                         "unit_info.leader.checks_unlock",
                                         mapOf("target" to progress.target),
                                     )
+
                                 progress.drought >= progress.guaranteedAfterFailures ->
                                     I18n.t("unit_info.leader.guaranteed")
+
                                 else ->
                                     I18n.t(
                                         "unit_info.leader.chance",
@@ -723,6 +732,7 @@ internal object GameplayLocalization {
                 I18n.t(
                     if (unit.carrier > 0) "unit_info.action.disembark.help" else "unit_info.action.embark.help",
                 )
+
             "resupply" -> unitActionResupplyHelp(map, unit)
             "reinforce" -> unitActionReinforceHelp(map, unit)
             "overstrength" -> I18n.t("unit_info.action.overstrength.help")

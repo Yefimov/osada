@@ -88,12 +88,15 @@ internal object ScenarioActionEvaluator {
                     val held = rule.hexes.count { ownedByPlayer(it, end) }
                     held >= (rule.atLeast ?: rule.hexes.size) && rule.hexes.isNotEmpty()
                 }
+
                 is ScenarioActionRule.HexesNotHeld ->
                     rule.hexes.isNotEmpty() && rule.hexes.none { ownedByPlayer(it, end) }
+
                 is ScenarioActionRule.UnitsSurvived ->
                     end.map
                         .getUnits()
                         .count { it.id in rule.unitIds && !it.destroyed } >= rule.atLeast
+
                 is ScenarioActionRule.FinishedByTurn -> end.turn <= rule.turn
                 is ScenarioActionRule.CoreLossesAtMost -> end.coreLosses <= rule.maxLosses
             }
@@ -149,6 +152,7 @@ internal object ScenarioActionParser {
         when (type) {
             "hexesHeld" ->
                 ScenarioActionRule.HexesHeld(id, parseHexes(item.hexes), BriefingDynamic.int(item.atLeast))
+
             "hexesNotHeld" -> ScenarioActionRule.HexesNotHeld(id, parseHexes(item.hexes))
             "unitsSurvived" ->
                 ScenarioActionRule.UnitsSurvived(
@@ -156,10 +160,13 @@ internal object ScenarioActionParser {
                     parseIntList(item.unitIds),
                     BriefingDynamic.int(item.atLeast) ?: 1,
                 )
+
             "finishedByTurn" ->
                 BriefingDynamic.int(item.turn)?.let { ScenarioActionRule.FinishedByTurn(id, it) }
+
             "coreLossesAtMost" ->
                 BriefingDynamic.int(item.maxLosses)?.let { ScenarioActionRule.CoreLossesAtMost(id, it) }
+
             else -> {
                 console.warn("[OSADA] unknown scenario action type '$type' on '$id', rule dropped")
                 null

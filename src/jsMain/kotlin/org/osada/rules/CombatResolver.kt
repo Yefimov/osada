@@ -13,6 +13,10 @@ import org.osada.model.GameUnit
 import org.osada.model.Leaders
 import org.osada.model.hasNoSurrender
 import org.osada.model.ignoresEntrenchment
+import org.osada.rules.CombatResolver.DEFAULT_HIT_THRESHOLD
+import org.osada.rules.CombatResolver.SPECIAL_TARGET_HIT_THRESHOLD
+import org.osada.rules.CombatResolver.isEntrenchmentIntact
+import org.osada.rules.CombatResolver.shouldDefenderRetreat
 import org.osada.unitEntrenchRate
 import kotlin.math.roundToInt
 import kotlin.random.Random
@@ -102,7 +106,7 @@ object CombatResolver {
             if (q > EV_ROLL_MAX) q = EV_ROLL_MAX
             kills = (EV_MULTIPLIER * q * attacker.strength + EV_ROUNDING_OFFSET) / EV_SCALE
         } else {
-            for (i in 0 until attacker.strength) {
+            repeat(attacker.strength) {
                 var roll = ((Random.nextDouble() * DICE_MAX_ROLL).toInt() + 1).toDouble()
                 if (roll > DICE_MIN_ROLL && roll < DICE_MAX_ROLL) roll += p
                 if (roll >= target) kills += 1

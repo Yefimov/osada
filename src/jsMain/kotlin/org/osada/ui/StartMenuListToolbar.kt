@@ -3,6 +3,11 @@ package org.osada.ui
 import org.osada.i18n.I18n
 import org.osada.model.Equipment
 import org.osada.model.getCountryName
+import org.osada.ui.StartMenuListToolbar.THEATER_CENTERED
+import org.osada.ui.StartMenuListToolbar.countryDisplayLabel
+import org.osada.ui.StartMenuListToolbar.extractYears
+import org.osada.ui.StartMenuListToolbar.syncListHighlight
+import org.osada.ui.StartMenuListToolbar.theaterPlaceholder
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLOptionElement
 import org.w3c.dom.events.Event
@@ -159,7 +164,7 @@ internal object StartMenuListToolbar {
      *  row's scenario/campaign — a row matches the dropdown if ANY of them is selected. Empty
      *  (group headers) never matches a side filter. [forceHidden] permanently excludes the row
      *  regardless of filter/search/sort state (used to hide specific campaigns from this
-     *  register — see [StartMenuCampaignScreen.hiddenCampaignFiles]). */
+     *  register — see [StartMenuCampaignData.hiddenCampaignFiles]). */
     fun tagRow(
         row: HTMLElement,
         index: Int,
@@ -197,7 +202,7 @@ internal object StartMenuListToolbar {
     // countryDisplayLabel re-labels the handful of ids where that actually matters (user request);
     // everything else falls back to Equipment.getCountryName so no country can silently vanish.
 
-    /** Curated overrides for country ids whose raw [Equipment.countryNames] entry either collides
+    /** Curated overrides for country ids whose raw `countryNames` entry either collides
      *  with another id's name, or would otherwise scatter alphabetically away from the other
      *  factions of the same nation. The dominant/"default" id for a nation (e.g. plain Germany,
      *  id 7, reused across every era after the eqp-merge) is deliberately left unlabeled — only

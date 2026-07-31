@@ -230,6 +230,7 @@ internal object EquipmentWindowBuilder {
      *  #equipment plus a property on #eqUserSel (the user-selection tracker). */
     fun setEquipmentMode(mode: String) {
         val eq = byId("equipment") ?: return
+        CompactEquipmentNavigation.showList()
         byId("eqUserSel")?.asDynamic()?.eqmode = mode
         listOf("purchase", "upgrade", "reserve").forEach { m ->
             if (m == mode) eq.classList.add("osada-eq--$m") else eq.classList.remove("osada-eq--$m")

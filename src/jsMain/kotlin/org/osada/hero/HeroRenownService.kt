@@ -1,5 +1,8 @@
 package org.osada.hero
 
+import org.osada.hero.HeroRenownService.advance
+
+
 /**
  * Derives earned public standing (§4.4, §8.1) from a hero's accumulated leader XP.
  *

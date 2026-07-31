@@ -1,5 +1,7 @@
 package org.osada.hero
 
+import org.osada.hero.HeroNamePools.GENERIC
+import org.osada.hero.HeroNamePools.nameFor
 import org.osada.model.countryNames
 
 /**
@@ -139,7 +141,7 @@ internal object HeroNamePools {
     /**
      * Country id → pool. Ids index [countryNames]; only the belligerents the campaigns field are
      * listed and everything else takes [GENERIC]. Kept as id literals with the name in a comment so
-     * a shift in [countryNames] is caught by [org.osada.ConstantsConsistencyTest]-style checks.
+     * a shift in [countryNames] is caught by `ConstantsConsistencyTest`-style checks.
      */
     private val byCountry: Map<Int, NamePool> =
         mapOf(

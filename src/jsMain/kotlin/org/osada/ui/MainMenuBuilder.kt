@@ -20,6 +20,7 @@ internal object MainMenuBuilder {
         val statusbar = byId("statusbar") ?: return
 
         buildBrandAndObserver(statusbar)
+        buildDrawerButton(statusbar)
 
         // Reparent the existing status elements (ids kept — StatusBarController fills them).
         // --- scenario / turn / date (center-left) ---
@@ -69,6 +70,29 @@ internal object MainMenuBuilder {
         observer.title =
             "Observer mode is active (fog of war disabled and/or hidden objectives shown) — affects game balance"
         observer.style.display = "none"
+    }
+
+    /**
+     * Opens the operational drawer on phone/tablet layouts (spec §15). Hidden by CSS on desktop,
+     * where the same panels are the permanent sidebar. It is deliberately an explicit button and
+     * not only an edge swipe: Android's back gesture and iOS Safari's edge navigation both eat
+     * edge swipes, so a swipe-only drawer is unreachable on exactly the devices that need it.
+     */
+    private fun buildDrawerButton(statusbar: org.w3c.dom.HTMLElement) {
+        val button = addTag(statusbar, "div")
+        button.id = "osadaDrawerBtn"
+        button.className = "osada-tb-btn osada-tb-drawer"
+        button.title = I18n.t("mobile.drawer.open.help")
+        button.setAttribute("aria-expanded", "false")
+        button.setAttribute("aria-controls", "osada-sidebar")
+        val glyph = addTag(button, "span")
+        glyph.className = "osada-tb-drawer__glyph"
+        glyph.setAttribute("aria-hidden", "true")
+        glyph.textContent = "≡"
+        val label = addTag(button, "span")
+        label.className = "osada-tb-drawer__label"
+        label.textContent = I18n.t("mobile.drawer.open.label")
+        button.asButton(I18n.t("mobile.drawer.open.label")) { MobileDrawer.toggle() }
     }
 
     private fun buildCombatLogSpacer(statusbar: org.w3c.dom.HTMLElement) {
@@ -224,6 +248,7 @@ internal object MainMenuBuilder {
         unitsBarButton?.title = I18n.t("hud.deploy_strip.open.help")
         unitsBarButton?.onclick = { _: org.w3c.dom.events.MouseEvent ->
             makeHidden("unitsBarButton")
+            CompactEquipmentNavigation.showList()
             byId("equipment")?.style?.display = "grid"
         }
     }

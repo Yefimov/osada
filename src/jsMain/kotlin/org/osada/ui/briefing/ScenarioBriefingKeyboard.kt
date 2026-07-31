@@ -56,6 +56,7 @@ private fun ScenarioBriefingController.handleNavigationKey(
                 e.preventDefault()
                 advanceOrComplete()
             }
+
         "Escape" -> {
             e.preventDefault()
             e.stopPropagation()

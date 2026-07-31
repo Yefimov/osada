@@ -1,6 +1,7 @@
 package org.osada.hero
 
 import org.osada.LeaderType
+import org.osada.hero.ProceduralHeroGenerator.UNIVERSAL_FALLBACKS
 import org.osada.model.Leaders
 
 /**

@@ -47,6 +47,7 @@ internal object AIReinforcement {
                 aiUnit.noReinforce = true
                 ReinforceOutcome(availablePrestige, true)
             }
+
             else -> applyReinforcement(aiUnit, unit, map, availablePrestige, costPerStrength, addAction)
         }
     }

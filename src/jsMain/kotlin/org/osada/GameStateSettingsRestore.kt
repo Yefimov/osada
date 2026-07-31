@@ -38,7 +38,9 @@ internal fun applyMarkerSettings(data: dynamic) {
     uiSettings.markFOW = data.markFOW as? Boolean ?: false
     uiSettings.noFOW = data.noFOW as? Boolean ?: false
     uiSettings.quickAnimation = data.quickAnimation as? Boolean ?: false
-    uiSettings.hasTouch = data.hasTouch as? Boolean ?: false
+    // hasTouch is deliberately NOT restored: it is a property of the device running the game, not
+    // of the save. A save written on a phone must not put a desktop into touch mode (or the other
+    // way round) — MobileLayoutController re-derives it from the live media queries instead.
     uiSettings.use3D = data.use3D as? Boolean ?: false
     uiSettings.useRetina = data.useRetina as? Boolean ?: false
     uiSettings.allowZoom = data.allowZoom as? Boolean ?: false
@@ -57,6 +59,20 @@ internal fun applyMiscSettings(data: dynamic) {
     uiSettings.showHiddenVictoryHexes = data.showHiddenVictoryHexes as? Boolean ?: false
     uiSettings.confirmEndTurn = data.confirmEndTurn as? Boolean ?: true
     uiSettings.stalinRegime = data.stalinRegime as? Boolean ?: false
+    applyMobileSettings(data)
+}
+
+/**
+ * Mobile preferences (spec §55). Every one falls back to its field default, so a save written
+ * before these existed restores exactly as it did before — "auto" behaviour, no tutorial replay
+ * and no forced layout.
+ */
+private fun applyMobileSettings(data: dynamic) {
+    uiSettings.mobileUiMode = data.mobileUiMode as? String ?: "auto"
+    uiSettings.confirmAttacks = data.confirmAttacks as? String ?: "auto"
+    uiSettings.interfaceDensity = data.interfaceDensity as? String ?: "standard"
+    uiSettings.gestureTutorialVersion = (data.gestureTutorialVersion as? Number)?.toInt() ?: 0
+    uiSettings.reducedEffects = data.reducedEffects as? Boolean ?: false
 }
 
 internal fun applySettingsIsAI(data: dynamic) {

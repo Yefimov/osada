@@ -158,7 +158,7 @@ internal class HexCellRenderer(
                 hex.isSpotted(GameHolder.instance?.spotSide ?: 0) ||
                     unit.tempSpotted ||
                     unit.player?.side == GameHolder.instance?.spotSide
-            )
+                )
 
     private fun drawCellUnits(
         frame: RenderFrame,

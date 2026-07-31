@@ -127,7 +127,7 @@ class GameStateRestore(
 
         newScenario.map.turn = (scenarioData.turn as? Int)
             ?: (scenarioData.map?.turn as? Int)
-            ?: 1
+                ?: 1
         val currentPlayerId =
             (scenarioData.currentPlayerId as? Int)
                 ?: (scenarioData.currentPlayer?.id as? Int)

@@ -63,6 +63,7 @@ internal class UnitMountOperations(
             UnitClass.AIR_TRANSPORT.value ->
                 unit.player?.airTransports =
                     unit.player?.airTransports?.minus(1) ?: 0
+
             UnitClass.NAVAL_TRANSPORT.value ->
                 unit.player?.navalTransports =
                     unit.player?.navalTransports?.minus(1) ?: 0

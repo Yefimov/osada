@@ -81,6 +81,7 @@ internal object InMemoryRoomServer {
             MultiplayerMessageType.LEAVE_ROOM -> disconnect(transport)
             MultiplayerMessageType.SNAPSHOT, MultiplayerMessageType.RESYNC_REQUEST ->
                 relaySnapshotMessage(transport, message)
+
             else -> relay(transport, message)
         }
     }

@@ -3,6 +3,9 @@ package org.osada.model
 import org.osada.GroundCondition
 import org.osada.MovMethod
 import org.osada.TerrainType
+import org.osada.model.TerrainMovementCost.load
+import org.osada.model.TerrainMovementCost.overlayRow
+import org.osada.model.TerrainMovementCost.table
 import org.osada.movTableDry
 import org.osada.movTableFrozen
 import org.osada.movTableMud

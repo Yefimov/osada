@@ -245,15 +245,19 @@ internal class RenderContext(
     companion object {
         private const val CURSOR_BACKBUFFER_SIZE = 54
         private const val UNIT_BACKBUFFER_SIZE = 120
-        private const val ICONSET_JUNGLE = 3
-
         // The terrain image is 65px shorter than the canvases, which get +65 for the last hex row.
         internal const val LAST_HEX_ROW_HEIGHT = 65.0
         private const val Z_INDEX_UNIT_BACKBUFFER = 3
 
-        // Top-bar height the map area starts below (matches StrategicZoomController.topbarHeight / #game's
-        // own `top`/#statusbar's CSS height).
-        private const val TOPBAR_HEIGHT = 30.0
+        // Fallback only, for the moment before the HUD exists (start menu, first paint). The real
+        // top-bar height is MEASURED — the renderer must not own a HUD constant, or the desktop
+        // 30px bar and the taller mobile bar cannot both be right (MOB-AUDIT-008).
+        private const val TOPBAR_FALLBACK_HEIGHT = 30.0
+
+        internal fun topBarHeight(): Double {
+            val measured = ViewportMetricsService.current.topBarHeight
+            return if (measured > 0.0) measured else TOPBAR_FALLBACK_HEIGHT
+        }
     }
 
     // Hex geometry constants (match legacy JS exactly)
@@ -365,6 +369,7 @@ internal class RenderContext(
         if (state.loaded >= state.total) callback()
     }
 
+    @Suppress("ReturnCount")
     fun positionLayers() {
         val z = terrainImage ?: return
         val game = document.getElementById("game")?.asDynamic() ?: return
@@ -382,10 +387,6 @@ internal class RenderContext(
         val scaledH = zh * zoom
         var left = window.innerWidth / 2.0 - scaledW / 2.0
         if (left < 0) left = 0.0
-        console.log(
-            "[osada] Render.positionLayers mapSize=${zw.toInt()}x${zh.toInt()} zoom=$zoom " +
-                "gameWidth=${game.style.width} gameHeight=${game.style.height} left=${left.toInt()}",
-        )
 
         mapCanvas.style.zIndex = 0
         mapCanvas.style.position = "absolute"
@@ -421,23 +422,54 @@ internal class RenderContext(
         wrap?.style?.height = "${(zh + LAST_HEX_ROW_HEIGHT).toInt()}px"
         wrap?.style?.zoom = zoom.toString()
 
+        if (MobileLayoutController.cssOwnsMapViewport) {
+            positionForMobileShell(game, wrap, scaledW)
+            return
+        }
+
+        wrap?.style?.marginLeft = "0px"
+        val topBar = topBarHeight()
         val fitW = window.innerWidth >= scaledW
-        val fitH = window.innerHeight >= scaledH + 30.0
+        val fitH = window.innerHeight >= scaledH + topBar
         val g = if (fitW) 0.0 else 10.0
         val k = if (fitH) 0.0 else 30.0
 
         game.style.width = if (fitW) "${(scaledW + k).toInt()}px" else "${window.innerWidth}px"
         game.style.height =
             if (fitH) {
-                "${(scaledH + TOPBAR_HEIGHT + g).toInt()}px"
+                "${(scaledH + topBar + g).toInt()}px"
             } else {
-                "${(window.innerHeight - TOPBAR_HEIGHT).toInt()}px"
+                "${(window.innerHeight - topBar).toInt()}px"
             }
         game.style.position = "absolute"
         game.style.left = "${left.toInt()}px"
-        game.style.top = "30px"
+        game.style.top = "${topBar.toInt()}px"
         game.tabIndex = 1
         game.focus()
+    }
+
+    /**
+     * Mobile/tablet shells: `#game`'s box belongs to CSS, which is the only place that can combine
+     * safe-area insets, the measured top bar and the bottom dock in one rule. Writing inline
+     * width/height/left/top here would silently beat that stylesheet, so the renderer restricts
+     * itself to centring the map content inside whatever rectangle CSS granted it.
+     *
+     * `focus()` is also skipped: on mobile it can summon the software keyboard and scroll the page.
+     */
+    private fun positionForMobileShell(
+        game: dynamic,
+        wrap: dynamic,
+        scaledW: Double,
+    ) {
+        game.style.width = ""
+        game.style.height = ""
+        game.style.left = ""
+        game.style.top = ""
+        game.style.position = ""
+        val clientWidth = (game.clientWidth as? Number)?.toDouble() ?: 0.0
+        val margin = ((clientWidth - scaledW) / 2.0).coerceAtLeast(0.0)
+        wrap?.style?.marginLeft = "${margin.toInt()}px"
+        game.tabIndex = 1
     }
 
     fun setNewMap(newMap: GameMap) {
@@ -473,18 +505,20 @@ internal class RenderContext(
 
         if (absolute) {
             val zoom = MapZoom.level
-            val game = document.getElementById("game")?.asDynamic()
-            if (game != null) {
-                // mapWidth*zoom matches positionLayers' own centering calc (same formula,
-                // scaledW there) — #game is centered based on its RENDERED (post-zoom) size.
-                val left = window.innerWidth / 2.0 - mapWidth * zoom / 2.0
-                x += left - (game.clientLeft as? Number)?.toDouble()!! - (game.offsetLeft as? Number)?.toDouble()!!
-                y +=
-                    TOPBAR_HEIGHT - (game.clientTop as? Number)?.toDouble()!! -
-                    (game.offsetTop as? Number)?.toDouble()!!
-            }
             x *= zoom
             y *= zoom
+            // Result space is #game's own SCROLL CONTENT space (what scrollLeft/scrollTop and the
+            // absolutely-positioned map tooltips inside #game are expressed in). The canvases sit
+            // at the zoom wrapper's origin and the wrapper is #game's only in-flow child, so the
+            // wrapper's measured offset — which already includes any centring margin — is the
+            // entire conversion. Deliberately NOT derived from window size plus a hardcoded
+            // top-bar height: those two agree only in the desktop layout (MOB-AUDIT-007/008).
+            val game = document.getElementById("game")?.asDynamic()
+            val wrap = document.getElementById("game-zoom-wrap")?.asDynamic()
+            if (game != null && wrap != null) {
+                x += doubleOf(wrap.offsetLeft) - doubleOf(game.clientLeft)
+                y += doubleOf(wrap.offsetTop) - doubleOf(game.clientTop)
+            }
         }
         return ScreenPos(x, y)
     }
@@ -555,6 +589,9 @@ internal class RenderContext(
         )
     }
 }
+
+/** Reads a DOM numeric layout property that Kotlin only sees as `dynamic`, defaulting to 0. */
+private fun doubleOf(value: dynamic): Double = (value as? Number)?.toDouble() ?: 0.0
 
 private fun RenderContext.applyTerrainImageSize(img: dynamic) {
     val lastHexRowHeight = RenderContext.LAST_HEX_ROW_HEIGHT

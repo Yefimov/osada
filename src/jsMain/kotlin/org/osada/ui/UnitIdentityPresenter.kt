@@ -110,6 +110,7 @@ internal object UnitIdentityPresenter {
                 }
                 enableKeyboardActivation(leader)
             }
+
             unit.leader >= 0 -> {
                 val descriptions = Leaders.getUnitLeaderDescriptions(unit)
                 val trait = descriptions.firstOrNull()?.first ?: I18n.t("unit_info.leader.authored_commander")
@@ -123,18 +124,21 @@ internal object UnitIdentityPresenter {
                 }
                 enableKeyboardActivation(leader)
             }
+
             unit.isTemporaryBorrowed || unit.nodossier -> {
                 leader.textContent = I18n.t("unit_info.leader.temporary.label")
                 leader.classList.add("uc-commander-line--disabled")
                 leader.title = I18n.t("unit_info.leader.temporary.help")
                 disableInteraction(leader)
             }
+
             unit.formationId == null -> {
                 leader.textContent = I18n.t("unit_info.leader.scenario_only.label")
                 leader.classList.add("uc-commander-line--disabled")
                 leader.title = I18n.t("unit_info.leader.scenario_only.help")
                 disableInteraction(leader)
             }
+
             else -> {
                 val progress = HeroCampaign.recognitionProgress(unit)
                 val label = I18n.t("unit_info.leader.candidate.label")
@@ -148,8 +152,10 @@ internal object UnitIdentityPresenter {
                             when {
                                 progress.recognition < progress.target ->
                                     I18n.t("unit_info.leader.checks_unlock", mapOf("target" to progress.target))
+
                                 progress.drought >= progress.guaranteedAfterFailures ->
                                     I18n.t("unit_info.leader.guaranteed")
+
                                 else ->
                                     I18n.t(
                                         "unit_info.leader.chance",
@@ -324,7 +330,7 @@ internal object UnitIdentityPresenter {
             row.className = "osada-formation-detail__event"
             row.textContent =
                 FormationServiceRecordPresenter.eventTitle(event.eventId) +
-                HeroEventDisplay.context(event.scenarioId, event.turn, event.date, event.location)
+                    HeroEventDisplay.context(event.scenarioId, event.turn, event.date, event.location)
         }
     }
 }

@@ -94,18 +94,23 @@ internal class MapClickHandler(
         return when {
             currentUnit != null && hex.isAttackSel && !currentUnit.hasFired ->
                 tryAttackAt(cell.row, cell.col)
+
             currentUnit != null && hex.isMoveSel && !currentUnit.hasMoved -> {
                 ui.uiUnitMove(currentUnit, cell.row, cell.col)
                 true
             }
+
             canDeploySelected ->
                 DeploymentSelection.deploySelected(ui, cell.row, cell.col)
+
             currentUnit != null && currentUnit.id == unit.id -> {
                 deselectCurrentUnit()
                 false
             }
+
             unit.player?.id == map.currentPlayer?.id ->
                 selectOtherUnit(cell.row, cell.col)
+
             else -> false
         }
     }
@@ -124,6 +129,7 @@ internal class MapClickHandler(
                 ui.uiUnitMove(currentUnit, cell.row, cell.col)
                 true
             }
+
             uiSettings.deployMode && isValidDeployTarget(hex, map, currentPlayerSide) -> {
                 // A hex this unit's movement method cannot occupy falls through to the picker
                 // rather than to deploySelected, which would return false with no message at all
@@ -137,6 +143,7 @@ internal class MapClickHandler(
                     true
                 }
             }
+
             else -> {
                 // Same as the re-click-deselect above: never clear the Inspect pin here.
                 deselectCurrentUnit()
@@ -217,6 +224,7 @@ internal class MapClickHandler(
         ui.render.render(pos.row, pos.col, radius)
     }
 
+    @Suppress("ReturnCount")
     private fun tryAttackAt(
         row: Int,
         col: Int,
@@ -227,6 +235,16 @@ internal class MapClickHandler(
         val target =
             if (currentUnit != null && hex != null) hex.getAttackableUnit(currentUnit, uiSettings.airMode) else null
         if (currentUnit == null || target == null) return false
+        // Touch has no hover, so the forecast has to be reachable by tapping the target. The first
+        // tap opens it; the attack is committed by the second tap or the Attack button. Which of
+        // the two this tap is, is [TargetPreviewController]'s decision — the eligibility test above
+        // (the rules layer's own `getAttackableUnit`) stays the single gate on whether an attack is
+        // possible at all.
+        if (TargetPreviewController.shouldPreview(currentUnit, row, col)) {
+            TargetPreviewController.preview(ui, currentUnit, target, row, col)
+            return true
+        }
+        TargetPreviewController.clear()
         ui.uiUnitAttack(currentUnit, target)
         return true
     }

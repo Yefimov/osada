@@ -236,7 +236,7 @@ object LocalTwoTabMultiplayer {
         renderLobby(I18n.t("multiplayer.status.connecting"))
     }
 
-    @Suppress("UnusedParameter")
+    @Suppress("UnusedParameter", "UNUSED_PARAMETER")
     private fun openChannel(code: String) {
         channel?.close()
         channel = js("new BroadcastChannel('osada-mp-' + code)")
@@ -360,6 +360,7 @@ object LocalTwoTabMultiplayer {
                 game?.ui?.render?.render()
                 renderOnlineStatus()
             }
+
             is CommandValidation.Rejected -> rejectCommand(senderTabId, commandId, result.rejection.code.name)
         }
     }
@@ -574,7 +575,7 @@ object LocalTwoTabMultiplayer {
             val start = button(I18n.t("multiplayer.start.label"), primary = true)
             start.disabled =
                 participants.size != MAX_PARTICIPANTS ||
-                participants.values.any { !it.ready }
+                    participants.values.any { !it.ready }
             start.onclick = { startMatch() }
             footer.appendChild(start)
         }

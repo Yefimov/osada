@@ -197,11 +197,13 @@ internal object StartMenuBuilder {
                         "menu.save.summary_full",
                         mapOf("name" to name, "turn" to turn, "maxTurns" to maxTurns),
                     )
+
                 name != null && turn != null ->
                     I18n.t(
                         "menu.save.summary_short",
                         mapOf("name" to name, "turn" to turn),
                     )
+
                 else -> ""
             }
         } catch (_: Throwable) {

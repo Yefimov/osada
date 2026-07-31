@@ -18,7 +18,7 @@ object OSGlue {
             diskloadInputHTML = ""
             canvasErrorMsg =
                 "<b>Couldn't create game surface.</b> <br/>This usually means that your device doesn't " +
-                "allow game surface to be created with dimensions over a certain limit."
+                    "allow game surface to be created with dimensions over a certain limit."
         } else {
             diskloadHTML = "Load from Disk <input id='diskloadfile' type='file'/>"
             diskloadInputHTML = "<input id='diskloadfile' type='file'/>"
@@ -71,7 +71,7 @@ object OSGlue {
         }
     }
 
-    @Suppress("UnusedParameter", "EmptyFunctionBlock")
+    @Suppress("UnusedParameter", "UNUSED_PARAMETER", "EmptyFunctionBlock")
     fun reportScore(score: Int) {
         // No-op stub on every NATIVE_PLATFORM in the legacy JS too (openpanzer.js's own
         // `ios`/`generic` OSGlue variants both define this as empty `function(a){}`) -- kept
@@ -79,7 +79,7 @@ object OSGlue {
         // meaningful if a real platform integration is ever added.
     }
 
-    @Suppress("UnusedParameter", "EmptyFunctionBlock")
+    @Suppress("UnusedParameter", "UNUSED_PARAMETER", "EmptyFunctionBlock")
     fun reportAchievement(achievement: String) {
         // No-op stub on every NATIVE_PLATFORM in the legacy JS too (openpanzer.js's own
         // `ios`/`generic` OSGlue variants both define this as empty `function(a){}`) -- kept

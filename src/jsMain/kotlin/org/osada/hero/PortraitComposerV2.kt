@@ -1,6 +1,7 @@
 package org.osada.hero
 
 import org.osada.UnitClass
+import org.osada.hero.PortraitComposerV2.deriveFacts
 
 /**
  * Kotlin port of the v2 head-centric dossier portrait generator — the twin of
@@ -328,6 +329,7 @@ object PortraitComposerV2 {
                         if (chance(seed, "hairvol", HAIR_VOLUME_CHANCE)) "hair_back_full" else "hair_back_short"
                     chosen["hair_front"] = pick(MALE_FRONT, seed, "hairfront")
                 }
+
                 "UNDER_CAP" -> {
                     chosen["hair_back"] = "hair_back_short"
                     chosen["under_headgear_hair"] = "under_hair_temples"
@@ -370,6 +372,7 @@ object PortraitComposerV2 {
         when (facts.pool) {
             Pool.USSR_1942 ->
                 if (facts.branch == "aviation") "collar_aviation" else "collar_${facts.branch}_${facts.season}"
+
             Pool.REVOLUTION_1919 -> "collar_rev1919_field"
             Pool.SPANISH_REPUBLIC_1936 -> "collar_spanish_republic"
             Pool.YUGOSLAV_PARTISAN_1941 -> "collar_yugoslav_partisan"
@@ -472,12 +475,14 @@ object PortraitComposerV2 {
             UnitClass.FLAK.value,
             UnitClass.AIR_DEFENCE.value,
             UnitClass.ANTI_TANK.value,
-            -> "artillery"
+                -> "artillery"
+
             UnitClass.FIGHTER.value,
             UnitClass.TACTICAL_BOMBER.value,
             UnitClass.LEVEL_BOMBER.value,
             UnitClass.AIR_TRANSPORT.value,
-            -> "aviation"
+                -> "aviation"
+
             else -> "infantry"
         }
 

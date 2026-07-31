@@ -1,6 +1,7 @@
 package org.osada.campaign
 
 import org.osada.UNIT_MAX_EXPERIENCE
+import org.osada.campaign.CampaignEffectApplier.apply
 import org.osada.model.Equipment
 import org.osada.model.Player
 import org.osada.model.acquireUnit
@@ -58,7 +59,7 @@ internal object CampaignEffectApplier {
                 is CampaignEffect.ShiftReinforcements,
                 is CampaignEffect.UnlockEquipment,
                 is CampaignEffect.DeploymentSlots,
-                -> Unit
+                    -> Unit
             }
         } catch (e: Throwable) {
             console.warn("[OSADA] campaign effect '${effect.id}' failed to apply; campaign continues", e)

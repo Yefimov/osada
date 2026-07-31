@@ -69,6 +69,7 @@ class OsadaGameCommandValidator(
                         !unit.destroyed &&
                         !unit.hasMoved &&
                         map.map?.getOrNull(command.to.y)?.getOrNull(command.to.x) != null
+
                 is AttackUnit -> {
                     val defender = map.getUnitById(command.defenderUnitId)
                     unit != null &&
@@ -77,6 +78,7 @@ class OsadaGameCommandValidator(
                         !unit.destroyed &&
                         unit.player?.side != defender.player?.side
                 }
+
                 is ResupplyUnit -> unit != null && SupplyRules.canResupply(map, unit)
                 is ReinforceUnit -> unit != null && SupplyRules.canReinforce(map, unit, command.strengthPoints != null)
                 is MountUnit -> unit != null && UnitPredicates.canMount(unit)
@@ -86,6 +88,7 @@ class OsadaGameCommandValidator(
                         .getPlayer(command.actorPlayerId)
                         .getCoreUnitList()
                         .any { it.id == command.unitId && !it.isDeployed }
+
                 is UndeployUnit -> unit?.isCore == true && unit.isDeployed
                 is PurchaseUnit -> command.equipmentId > 0
                 is UpgradeUnit -> unit != null && command.equipmentId > 0
@@ -118,12 +121,14 @@ class OsadaGameCommandApplier(
                 val result = map.moveUnit(requireUnit(map, command.unitId), command.to.y, command.to.x)
                 if (result.isVictorySide >= 0) game.handleMoveVictory(result.isVictorySide)
             }
+
             is AttackUnit ->
                 map.attackUnit(
                     requireUnit(map, command.attackerUnitId),
                     requireUnit(map, command.defenderUnitId),
                     supportFire = false,
                 )
+
             is ResupplyUnit -> map.resupplyUnit(requireUnit(map, command.unitId))
             is ReinforceUnit -> map.reinforceUnit(requireUnit(map, command.unitId), command.strengthPoints != null)
             is MountUnit -> map.mountUnit(requireUnit(map, command.unitId))
@@ -133,6 +138,7 @@ class OsadaGameCommandApplier(
                 val unit = player.getCoreUnitList().first { it.id == command.unitId }
                 check(map.deployPlayerUnit(player, unit, command.destination.y, command.destination.x))
             }
+
             is UndeployUnit -> check(map.undeployUnit(requireUnit(map, command.unitId)))
             is PurchaseUnit ->
                 check(
@@ -141,6 +147,7 @@ class OsadaGameCommandApplier(
                         command.transportEquipmentId ?: -1,
                     ),
                 )
+
             is UpgradeUnit ->
                 check(
                     map.upgradeUnit(
@@ -149,6 +156,7 @@ class OsadaGameCommandApplier(
                         command.transportEquipmentId ?: -1,
                     ),
                 )
+
             is DisbandUnit -> check(map.disbandUnit(command.unitId))
             is ReorderReserve -> reorderReserve(map, command)
             is SetUnitAssignment -> assignmentHandler(command.unitId, command.assignedParticipantId)
@@ -158,6 +166,7 @@ class OsadaGameCommandApplier(
                 check(dialogueChoiceHandler(command.dialogueId, command.optionId)) {
                     "Dialogue choice was not accepted"
                 }
+
             is ContinueCampaign -> game.continueCampaign(command.outcome, EndGameType.MOVE_CAPTURE)
         }
     }

@@ -13,6 +13,7 @@ import org.osada.model.GameUnit
 import org.osada.model.Hex
 import org.osada.model.Leaders
 import org.osada.model.TerrainEx
+import org.osada.rules.AttackCalculation.resolveCombatContext
 import kotlin.math.abs
 
 /**
@@ -142,14 +143,17 @@ internal object AttackCalculation {
                 stats.defenderAttack = defenderData.airatk
                 stats.defenderDefense = defenderData.airdef
             }
+
             UnitType.SOFT.value -> {
                 stats.defenderAttack = defenderData.softatk
                 stats.defenderDefense = defenderData.grounddef
             }
+
             UnitType.HARD.value -> {
                 stats.defenderAttack = defenderData.hardatk
                 stats.defenderDefense = defenderData.grounddef
             }
+
             UnitType.SEA.value -> {
                 stats.defenderAttack = defenderData.navalatk
                 stats.defenderDefense = defenderData.grounddef
@@ -161,14 +165,17 @@ internal object AttackCalculation {
                 stats.attackerAttack = attackerData.airatk
                 stats.attackerDefense = attackerData.airdef
             }
+
             UnitType.SOFT.value -> {
                 stats.attackerAttack = attackerData.softatk
                 stats.attackerDefense = attackerData.grounddef
             }
+
             UnitType.HARD.value -> {
                 stats.attackerAttack = attackerData.hardatk
                 stats.attackerDefense = attackerData.grounddef
             }
+
             UnitType.SEA.value -> {
                 stats.attackerAttack = attackerData.navalatk
                 stats.attackerDefense = attackerData.grounddef
@@ -189,7 +196,7 @@ internal object AttackCalculation {
             (
                 UnitPredicates.isCloseCombatTerrain(context.dTerrain) ||
                     defenderData.uclass == UnitClass.FORTIFICATION.value
-            ) &&
+                ) &&
                 context.attackerData.uclass == UnitClass.INFANTRY.value
         if (closeCombat) {
             stats.defenderDefense = defenderData.closedef
@@ -453,7 +460,7 @@ internal object AttackCalculation {
             (
                 (attackerKillExp * (defender.strength / CombatResolver.FULL_STRENGTH) + attackerSurviveExp) *
                     result.kills
-            ).toInt()
+                ).toInt()
         result.defExpGained = 2 * result.kills
         if (result.defcanfire) {
             result.atkExpGained += 2 * result.losses
@@ -461,7 +468,7 @@ internal object AttackCalculation {
                 (
                     (defenderKillExp * (attacker.strength / CombatResolver.FULL_STRENGTH) + defenderSurviveExp) *
                         result.losses
-                ).toInt()
+                    ).toInt()
         }
 
         val maxAtkExp = UNIT_MAX_EXPERIENCE - attacker.experience

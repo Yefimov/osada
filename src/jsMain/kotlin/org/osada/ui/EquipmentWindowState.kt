@@ -62,7 +62,7 @@ internal object EquipmentWindowState {
             map.getUnits().sortedWith(unitComparator(true))
         }
 
-    /** Recomputes [uiSettings.deployMode] from [currentPlayer], resolves the matching unit list,
+    /** Recomputes `uiSettings.deployMode` from [currentPlayer], resolves the matching unit list,
      *  and re-renders the map when the deploy/combat-log mode actually changed. */
     fun updateDeployModeAndUnitList(
         ui: UI,
@@ -152,6 +152,7 @@ internal object EquipmentWindowState {
             eq.movmethod == MovMethod.DEEP_NAVAL.value && isGroundClass -> !map.hasRailData()
             eq.movmethod == MovMethod.DEEP_NAVAL.value ||
                 eq.movmethod == MovMethod.NAVAL.value -> !map.hasOpenWaterAccess()
+
             eq.movmethod == MovMethod.COASTAL.value -> !map.hasWaterAccess()
             else -> false
         }

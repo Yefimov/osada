@@ -35,6 +35,7 @@ fun UI.showGameToolTip(
     UIBuilder.gameToolTip(message, pos.x.toInt(), pos.y.toInt())
 }
 
+@Suppress("UnusedReceiverParameter")
 fun UI.removeAllSmallToolTips(clearUnitTooltips: Boolean = false) {
     val list = UIBuilder.smallToolTipList.toList()
     list.reversed().forEach { id ->
@@ -58,6 +59,7 @@ fun UI.addSmallToolTips(all: Boolean = false) {
     }
 }
 
+@Suppress("UnusedReceiverParameter")
 fun UI.removeUnitToolTip(unitId: Int) {
     val id = "gsttu$unitId"
     delTag(byId(id))
@@ -95,13 +97,13 @@ private fun addHexFlagToolTip(
     if (hex.terrain == TerrainType.AIRFIELD.value && currentPlayer.airTransports > 0) {
         text =
             "${currentPlayer.airTransports}&nbsp;" +
-            "<span style='font-family: osada-menu;'>&#xe900;</span> "
+                "<span style='font-family: osada-menu;'>&#xe900;</span> "
         style = TooltipStyle.PIN
     }
     if (hex.terrain == TerrainType.PORT.value && currentPlayer.navalTransports > 0) {
         text =
             "${currentPlayer.navalTransports}&nbsp;" +
-            "<span style='font-family: osada-menu;'>&#xe901;</span>"
+                "<span style='font-family: osada-menu;'>&#xe901;</span>"
         style = TooltipStyle.PIN
     }
     text?.let {

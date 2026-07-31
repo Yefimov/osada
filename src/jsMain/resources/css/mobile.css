@@ -1,0 +1,969 @@
+/* ============================================================================
+ * OSADA — mobile browser experience.
+ *
+ * Loaded AFTER osada-theme.css so it can override desktop geometry by cascade
+ * order rather than by an ever-growing pile of !important. Where !important
+ * does appear it is for exactly one reason: the element carries an INLINE
+ * style written by Kotlin (legacy layout code, makeVisible/makeHidden), and an
+ * inline style always beats a stylesheet rule regardless of specificity.
+ *
+ * The primary control surface is the set of semantic body classes published by
+ * MobileLayoutController:
+ *
+ *   osada-layout-desktop | -tablet | -phone | -compact
+ *   osada-orientation-landscape | -portrait
+ *   osada-input-coarse | -fine        osada-no-hover | osada-has-hover
+ *   osada-density-compact | -large    osada-reduced-effects
+ *   osada-drawer-open                 osada-map-zooming
+ *
+ * The media queries near the end are a FALLBACK for the moment before those
+ * classes exist (first paint) and for capability styling that does not depend
+ * on layout mode. They deliberately duplicate very little.
+ *
+ * Sections:
+ *   1. tokens                     7. drawer and bottom dock
+ *   2. root sizing                8. mobile workspaces
+ *   3. touch-action               9. safe area
+ *   4. coarse-pointer common     10. reduced motion / reduced effects
+ *   5. phone landscape shell     11. capability fallbacks
+ *   6. compact + tablet
+ * ========================================================================== */
+
+/* ==========================================================================
+ * 1. TOKENS
+ *
+ * Kotlin does NOT repeat any of these as layout constants — it measures the
+ * resulting rectangles through ViewportMetrics instead. That is the whole
+ * point of MOB-AUDIT-008: one owner per number.
+ * ========================================================================== */
+:root {
+    --osada-safe-top: env(safe-area-inset-top, 0px);
+    --osada-safe-right: env(safe-area-inset-right, 0px);
+    --osada-safe-bottom: env(safe-area-inset-bottom, 0px);
+    --osada-safe-left: env(safe-area-inset-left, 0px);
+
+    /* 44px is the absolute product minimum, 48px the preferred target. Both are
+     * larger than WCAG 2.2 AA's 24px floor on purpose: a mis-tap here does not
+     * annoy, it moves a division into an ambush. */
+    --osada-touch-target-min: 44px;
+    --osada-touch-target: 48px;
+    --osada-touch-gap: 8px;
+
+    --osada-mobile-topbar-h: 48px;
+    --osada-mobile-bottom-h: 78px;
+    --osada-dock-h: var(--osada-mobile-bottom-h);
+    --osada-mobile-drawer-w: min(84vw, 360px);
+
+    /* Slotted into osada-theme.css's existing tiers (--z-hud 10, --z-dim 90,
+     * --z-window 100, --z-msg 1000). The drawer sits above the HUD but below a
+     * modal workspace; the orientation gate and the first-run tutorial sit
+     * above everything, because both must be answerable before anything else. */
+    --osada-mobile-z-scrim: 78;
+    --osada-mobile-z-drawer: 80;
+    --osada-mobile-z-gate: 1100;
+}
+
+body.osada-density-compact {
+    --osada-touch-target: 44px;
+    --osada-mobile-topbar-h: 44px;
+    --osada-mobile-bottom-h: 68px;
+}
+
+body.osada-density-large {
+    --osada-touch-target: 56px;
+    --osada-mobile-topbar-h: 56px;
+    --osada-mobile-bottom-h: 92px;
+}
+
+/* ==========================================================================
+ * 2. ROOT SIZING
+ * `100dvh` tracks the dynamic viewport (address bar in or out); the `100vh`
+ * line before it is the fallback for engines without dvh, and must stay first.
+ * ========================================================================== */
+html,
+body,
+#mainbody {
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+@supports (min-height: 100dvh) {
+    html,
+    body,
+    #mainbody {
+        min-height: 100dvh;
+    }
+}
+
+/* ==========================================================================
+ * 3. TOUCH-ACTION
+ * Applied LOCALLY. `touch-action: none` on the document would kill page zoom
+ * and every native scroll in the game, which is the opposite of the goal.
+ * ========================================================================== */
+
+/* The map claims all of its own gestures: pan, pinch and long press are the
+ * game's, so the browser must not also scroll, zoom or open a callout here. */
+#cursor,
+#game-zoom-wrap {
+    touch-action: none;
+}
+
+#game {
+    overscroll-behavior: contain;
+}
+
+.osada-action,
+.osada-tb-btn,
+.osada-tb-icon,
+.osada-et,
+.osada-btn,
+.smallButton,
+button,
+[role="button"] {
+    touch-action: manipulation;
+}
+
+#eqSelClass,
+#eqClassTabs,
+#eqModeTabs,
+.hscroll-container {
+    touch-action: pan-x;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+}
+
+.osada-side-section,
+#eqListPane,
+#eqDetailPane,
+#smSettingsContainer,
+#osadaSideBody {
+    touch-action: pan-y;
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* ==========================================================================
+ * 4. COARSE-POINTER COMMON
+ * Applies to phone AND tablet: a finger is a finger regardless of screen size.
+ * ========================================================================== */
+body.osada-input-coarse .osada-action,
+body.osada-input-coarse .osada-tb-btn,
+body.osada-input-coarse .osada-tb-icon,
+body.osada-input-coarse .osada-sb-toggle,
+body.osada-input-coarse .osada-zoom-btn,
+body.osada-input-coarse .osada-btn,
+body.osada-input-coarse .smallButton {
+    min-height: var(--osada-touch-target-min);
+    min-width: var(--osada-touch-target-min);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+body.osada-input-coarse .osada-tb-icons {
+    gap: var(--osada-touch-gap);
+}
+
+/* Coarse devices keep a sticky false :hover after a tap, which then blocks the
+ * next interaction ("why is this row still highlighted?"). Pressed and selected
+ * states carry the feedback instead. */
+body.osada-no-hover *:hover {
+    transition: none;
+}
+
+body.osada-input-coarse .osada-action:active,
+body.osada-input-coarse .osada-btn:active,
+body.osada-input-coarse .osada-tb-btn:active,
+body.osada-input-coarse .smallButton:active {
+    filter: brightness(1.25);
+}
+
+/* Generic labelled action button used by the mobile-only surfaces (combat
+ * confirmation, orientation gate, tutorial). Text is never optional on these —
+ * an icon may supplement a critical action, never replace it. */
+.osada-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-height: var(--osada-touch-target);
+    padding: 0 16px;
+    border-radius: 4px;
+    border: 1px solid var(--osada-metal-600, #3a3d45);
+    background: linear-gradient(180deg, rgba(42, 47, 56, .95), rgba(20, 22, 26, .97));
+    color: var(--osada-text, #e7e2d4);
+    font-family: var(--osada-font-ui, sans-serif), sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    user-select: none;
+}
+
+.osada-btn:focus-visible {
+    outline: 2px solid var(--osada-brass, #d9b25a);
+    outline-offset: 2px;
+}
+
+.osada-btn--primary {
+    border-color: var(--osada-brass, #d9b25a);
+    color: #f4e3c6;
+}
+
+.osada-btn--danger {
+    border-color: #8f2020;
+    background: linear-gradient(180deg, #8f2020, #5c1414);
+    color: #f6e6e6;
+}
+
+.osada-btn--secondary {
+    color: var(--osada-text-dim, #a9a494);
+}
+
+/* ==========================================================================
+ * 5. PHONE LANDSCAPE SHELL
+ * ========================================================================== */
+
+/* ---- Top bar: ~48px of interactive row plus the top safe area ---- */
+body.osada-layout-phone #statusbar {
+    height: calc(var(--osada-mobile-topbar-h) + var(--osada-safe-top)) !important;
+    max-height: calc(var(--osada-mobile-topbar-h) + var(--osada-safe-top)) !important;
+    padding-top: var(--osada-safe-top);
+    padding-left: var(--osada-safe-left);
+    padding-right: var(--osada-safe-right);
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Decorative end caps and the large logo are the first things to go: they cost
+ * width that End Turn, prestige and ready-unit navigation need (spec §14.2). */
+body.osada-layout-phone #statusbar::before,
+body.osada-layout-phone #statusbar::after,
+body.osada-layout-phone #osadaBrand,
+body.osada-layout-phone #weathermsg,
+body.osada-layout-phone #locmsg {
+    display: none !important;
+}
+
+body.osada-layout-phone #statusmsg {
+    flex: 1 1 auto;
+    min-width: 0;
+    height: auto;
+    line-height: 1.2;
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+body.osada-layout-phone .osada-tb-spacer {
+    display: none;
+}
+
+body.osada-layout-phone #osadaEndTurn {
+    flex: 0 0 auto;
+    min-height: var(--osada-touch-target);
+    min-width: 88px;
+    /* Separated from Options so a mis-tap cannot end the turn (spec §14.3). */
+    margin-left: var(--osada-touch-gap);
+}
+
+body.osada-layout-phone .osada-et__label {
+    display: inline;
+    font-size: 13px;
+}
+
+/* ---- Map viewport ----
+ * `#game` occupies exactly the rectangle between the top bar and the bottom
+ * dock, inside the safe area. RenderContext.positionForMobileShell clears its
+ * inline width/height/left/top precisely so this rule can own the box.
+ *
+ * `--osada-dock-h` is the MEASURED dock height, republished by
+ * ViewportMetricsService whenever the dock resizes. A static token cannot work
+ * here: the dock grows and shrinks with the selected unit's action chips, and
+ * guessing low makes it cover the map while guessing high wastes it. The token
+ * below is only the pre-measurement fallback for the first paint. */
+body.osada-layout-phone #game,
+body.osada-layout-tablet #game {
+    position: fixed;
+    top: calc(var(--osada-safe-top) + var(--osada-mobile-topbar-h));
+    right: var(--osada-safe-right);
+    bottom: calc(var(--osada-safe-bottom) + var(--osada-dock-h, var(--osada-mobile-bottom-h)));
+    left: var(--osada-safe-left);
+    width: auto;
+    height: auto;
+    margin: 0;
+}
+
+/* ---- Bottom action dock ---- */
+body.osada-layout-phone #osada-bottomzone {
+    right: var(--osada-safe-right);
+    left: var(--osada-safe-left);
+    height: auto;
+    min-height: var(--osada-mobile-bottom-h);
+    max-height: 65dvh;
+    padding: 0 8px calc(6px + var(--osada-safe-bottom));
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "card";
+    gap: 6px;
+}
+
+/* Target preview and hover forecast both need attacker, forecast and defender
+ * side by side; the columns flex so this still fits at 667px. */
+body.osada-layout-phone #osada-bottomzone.bz--hover {
+    grid-template-columns: minmax(0, 1.2fr) minmax(120px, auto) minmax(0, 1fr);
+    grid-template-areas: "card forecast enemy";
+}
+
+body.osada-layout-phone #osada-bottomzone.bz--enemy-only {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "enemy";
+}
+
+body.osada-layout-phone #uc-portrait {
+    width: 48px;
+    height: 48px;
+}
+
+/* Action chips scroll horizontally with a partial next chip visible, so the
+ * strip reads as scrollable without a scrollbar (spec §16.3). */
+body.osada-layout-phone #uc-actions {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: var(--osada-touch-gap);
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x proximity;
+    touch-action: pan-x;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+}
+
+body.osada-layout-phone #uc-actions::-webkit-scrollbar {
+    display: none;
+}
+
+/* The desktop chip is a fixed 52px box with an 8px label, which clips any word
+ * longer than "Undo" — and a clipped action label is exactly what a no-hover
+ * device cannot recover from. On touch the chip sizes to its text instead. */
+body.osada-layout-phone .osada-action {
+    flex: 0 0 auto;
+    /* Glyph beside the label, not stacked above it: at 48px tall a stacked
+     * glyph and a full word have nowhere to go but on top of each other. */
+    flex-direction: row;
+    gap: 6px;
+    width: auto;
+    min-width: var(--osada-touch-target-min);
+    min-height: var(--osada-touch-target);
+    padding: 0 10px;
+    scroll-snap-align: start;
+}
+
+body.osada-layout-phone .osada-action__glyph {
+    font-size: 14px;
+    line-height: 1;
+}
+
+body.osada-layout-phone .osada-action__label {
+    font-size: 10px;
+    white-space: nowrap;
+}
+
+/* The desktop 165px box exists so the chips WRAP into a two-row block beside
+ * the unit stats; on a phone that block would make the dock (and so the map)
+ * taller with every extra action. `nowrap` keeps them on one line and lets
+ * #uc-actions scroll instead. `display` is deliberately not set here: this
+ * element's display is toggled inline by makeVisible/makeHidden, and an inline
+ * style always wins — the chips are inline-flex and lay themselves out anyway. */
+body.osada-layout-phone #unit-context {
+    width: auto;
+    /* `min-width: max-content` is the load-bearing part: as a flex item inside
+     * the scrolling #uc-actions it would otherwise shrink below its content and
+     * wrap the chips again, whatever `white-space` says. */
+    min-width: max-content;
+    flex: 0 0 auto;
+    white-space: nowrap;
+}
+
+body.osada-layout-phone .osada-action {
+    margin-right: var(--osada-touch-gap);
+}
+
+/* The dock is subtracted from the map, so every pixel it does not need is a row
+ * of hexes the player gets back. */
+body.osada-layout-phone #unit-info {
+    padding: 6px 8px;
+}
+
+body.osada-layout-compact #uc-inner {
+    gap: 8px;
+}
+
+body.osada-layout-compact #uc-bars {
+    gap: 3px;
+}
+
+/* Undo is visually separated: it is the one rescue action in the strip. */
+body.osada-layout-phone .osada-action--undo {
+    margin-left: 12px;
+    border-color: var(--osada-brass, #d9b25a);
+}
+
+/* Expanded dock: the full unit card as a bottom sheet, capped so the map is
+ * never fully covered. */
+body.osada-layout-phone #unit-info.uc--expanded #statsRowContainer {
+    position: fixed;
+    left: var(--osada-safe-left);
+    right: var(--osada-safe-right);
+    bottom: calc(var(--osada-mobile-bottom-h) + var(--osada-safe-bottom));
+    max-height: 45dvh;
+    overflow-y: auto;
+    touch-action: pan-y;
+    overscroll-behavior-y: contain;
+    background: rgba(16, 18, 21, .98);
+    border-top: 1px solid var(--osada-brass, #d9b25a);
+    z-index: var(--osada-mobile-z-scrim);
+}
+
+/* ---- Combat confirmation controls ----
+ * NOTE: nothing here may set `display` on #osadaForecast. Its visibility is the
+ * bottom-zone state machine's (`.bz--hover` / `.bz--target-preview`), and an
+ * unscoped `display: flex` here silently pinned the forecast strip open, which
+ * added a phantom grid row under the unit card and pushed the dock 40px taller
+ * than its content. */
+.osada-fc-actions {
+    display: none;
+    gap: var(--osada-touch-gap);
+    margin-top: 4px;
+}
+
+/* Only shown while a target preview is actually open — the desktop hover
+ * forecast has no confirmation step and must not sprout buttons. */
+#osada-bottomzone.bz--target-preview .osada-fc-actions {
+    display: flex;
+}
+
+#osada-bottomzone.bz--target-preview .osada-fc-actions .osada-btn {
+    flex: 1 1 0;
+    min-height: var(--osada-touch-target-min);
+    padding: 0 10px;
+    font-size: 12px;
+}
+
+/* ---- Transient status strip (tap on an empty hex) ---- */
+.osada-mobile-status {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: calc(var(--osada-mobile-bottom-h) + var(--osada-safe-bottom) + 8px);
+    max-width: min(92vw, 520px);
+    padding: 6px 12px;
+    border-radius: 4px;
+    background: rgba(12, 13, 16, .92);
+    border: 1px solid var(--osada-metal-600, #3a3d45);
+    color: var(--osada-text, #e7e2d4);
+    font-family: var(--osada-font-ui, sans-serif), sans-serif;
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .15s;
+    z-index: var(--osada-mobile-z-scrim);
+}
+
+.osada-mobile-status--visible {
+    opacity: 1;
+}
+
+/* ==========================================================================
+ * 6. COMPACT-HEIGHT AND TABLET
+ * ========================================================================== */
+body.osada-layout-compact {
+    --osada-mobile-topbar-h: 44px;
+    --osada-mobile-bottom-h: 66px;
+}
+
+/* Progressive disclosure rather than shrinking everything: at 375px of height
+ * the subtitle text is what goes, not the control sizes. */
+body.osada-layout-compact #uc-bars .osada-bar--fuel,
+body.osada-layout-compact .osada-fc-strengths,
+body.osada-layout-compact .osada-ec-sub {
+    display: none;
+}
+
+body.osada-layout-compact #uc-portrait {
+    width: 40px;
+    height: 40px;
+}
+
+/* Tablet keeps the persistent sidebar — it has the room — but at touch sizes. */
+body.osada-layout-tablet #osada-sidebar {
+    top: calc(var(--osada-safe-top) + var(--osada-mobile-topbar-h));
+    padding-bottom: var(--osada-safe-bottom);
+}
+
+body.osada-layout-tablet #game {
+    right: calc(var(--osada-safe-right) + 270px);
+}
+
+/* ==========================================================================
+ * 7. DRAWER
+ * ========================================================================== */
+#osadaDrawerBtn {
+    display: none;
+}
+
+body.osada-layout-phone #osadaDrawerBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    flex: 0 0 auto;
+    min-height: var(--osada-touch-target);
+    padding: 0 10px;
+}
+
+.osada-tb-drawer__glyph {
+    font-size: 18px;
+    line-height: 1;
+}
+
+body.osada-layout-compact .osada-tb-drawer__label {
+    display: none;
+}
+
+body.osada-layout-phone #osada-sidebar {
+    top: calc(var(--osada-safe-top) + var(--osada-mobile-topbar-h));
+    right: 0;
+    bottom: 0;
+    width: var(--osada-mobile-drawer-w);
+    padding-right: var(--osada-safe-right);
+    padding-bottom: var(--osada-safe-bottom);
+    z-index: var(--osada-mobile-z-drawer);
+    transform: translateX(105%);
+    transition: transform .18s ease-out;
+}
+
+body.osada-layout-phone.osada-drawer-open #osada-sidebar {
+    transform: translateX(0);
+}
+
+/* The desktop collapse rail is meaningless once the whole panel is a drawer. */
+body.osada-layout-phone .osada-sb-collapse,
+body.osada-layout-phone .osada-sb-rail {
+    display: none !important;
+}
+
+body.osada-layout-phone #osada-sidebar.osada-sidebar--collapsed {
+    width: var(--osada-mobile-drawer-w);
+}
+
+/* The panel stack scrolls; the close control stays pinned below it. Without the
+ * `min-height: 0` the flex item refuses to shrink and the panels grow straight
+ * through the close button instead of scrolling. */
+body.osada-layout-phone #osadaSideBody {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    touch-action: pan-y;
+    overscroll-behavior-y: contain;
+}
+
+.osada-drawer-close {
+    display: none;
+}
+
+body.osada-layout-phone .osada-drawer-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    min-height: var(--osada-touch-target);
+    margin: 8px 10px calc(8px + var(--osada-safe-bottom));
+    border: 1px solid var(--osada-metal-600, #3a3d45);
+    border-radius: 4px;
+    color: var(--osada-text, #e7e2d4);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    cursor: pointer;
+}
+
+.osada-drawer-scrim {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .5);
+    z-index: var(--osada-mobile-z-scrim);
+}
+
+body.osada-layout-phone.osada-drawer-open .osada-drawer-scrim {
+    display: block;
+}
+
+/* The minimap fills the drawer width but keeps its aspect ratio, and its zoom
+ * controls take full touch targets. */
+body.osada-layout-phone #osada-minimap {
+    width: 100%;
+    height: auto;
+    min-height: 144px;
+}
+
+body.osada-layout-phone .osada-zoom-btn,
+body.osada-layout-phone .osada-zoom-pct {
+    min-width: var(--osada-touch-target);
+    min-height: var(--osada-touch-target);
+}
+
+/* ==========================================================================
+ * 8. MOBILE WORKSPACES
+ * Equipment, dossier, turn report and the settings screen become full-screen
+ * surfaces with a scrollable body — a centred 840px box does not exist at
+ * 667x375. `!important` here fights UILayout's inline top/width writes.
+ * ========================================================================== */
+body.osada-layout-phone #equipment,
+body.osada-layout-phone #dossier,
+body.osada-layout-phone #combatLog,
+body.osada-layout-phone #smSettings {
+    position: fixed !important;
+    top: var(--osada-safe-top) !important;
+    right: var(--osada-safe-right) !important;
+    bottom: var(--osada-safe-bottom) !important;
+    left: var(--osada-safe-left) !important;
+    width: auto !important;
+    height: auto !important;
+    max-width: none !important;
+    max-height: none !important;
+    margin: 0 !important;
+    transform: none !important;
+    border-radius: 0 !important;
+    overflow: hidden;
+}
+
+/* The workspace keeps its own named grid areas — only the ROW HEIGHTS and the
+ * list/detail split are retuned. Replacing the template outright collapsed the
+ * five areas onto four rows and stacked the header on top of the tabs. */
+body.osada-layout-phone #equipment {
+    grid-template-rows:
+        var(--osada-touch-target-min)
+        38px
+        var(--osada-touch-target-min)
+        minmax(0, 1fr)
+        calc(var(--osada-touch-target) + var(--osada-safe-bottom));
+    grid-template-columns: minmax(0, 1fr) minmax(0, 40%);
+}
+
+/* Short landscape equipment is two screens, not two cramped columns. Card selection opens the
+ * detail/action screen; Back restores the list without clearing #eqUserSel. Reserve deployment
+ * remains list-only because choosing a reserve hands control straight back to the map. */
+body.osada-layout-compact #equipment {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+        "header"
+        "modetabs"
+        "classtabs"
+        "content"
+        "footer";
+}
+
+body.osada-layout-compact #eqListPane,
+body.osada-layout-compact #eqDetailPane {
+    grid-area: content;
+}
+
+body.osada-layout-compact #equipment:not(.osada-eq--reserve) #eqDetailPane {
+    display: none;
+}
+
+body.osada-layout-compact #equipment.osada-eq-detail-open:not(.osada-eq--reserve) #eqListPane {
+    display: none;
+}
+
+body.osada-layout-compact #equipment.osada-eq-detail-open:not(.osada-eq--reserve) #eqDetailPane {
+    display: flex;
+    grid-column: 1 / -1;
+    border-left: 0;
+    overflow: hidden;
+}
+
+#eqDetailBack {
+    display: none;
+}
+
+body.osada-layout-compact #equipment.osada-eq-detail-open #eqDetailBack {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-self: flex-start;
+    min-width: var(--osada-touch-target-min);
+    min-height: var(--osada-touch-target-min);
+    margin: 8px 10px 0;
+}
+
+body.osada-layout-phone #eqFooter {
+    padding-bottom: var(--osada-safe-bottom);
+}
+
+body.osada-layout-phone #eqClassTabs > *,
+body.osada-layout-phone #eqModeTabs > * {
+    min-height: var(--osada-touch-target-min);
+    scroll-snap-align: start;
+}
+
+body.osada-layout-phone #eqClassTabs {
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    touch-action: pan-x;
+    overscroll-behavior-x: contain;
+}
+
+body.osada-layout-phone .eqUnitBox {
+    min-width: 96px;
+    min-height: 72px;
+}
+
+/* Briefings and campaign dialogue: the overlay already fills the viewport, so
+ * the mobile work is safe-area padding, a body that actually scrolls, one
+ * column instead of two, and choices/buttons at touch size. */
+body.osada-layout-phone .osada-briefing {
+    padding: var(--osada-safe-top) var(--osada-safe-right) var(--osada-safe-bottom) var(--osada-safe-left);
+}
+
+body.osada-layout-phone .osada-briefing__orders,
+body.osada-layout-phone .osada-briefing__orders-panel {
+    padding: 12px;
+    touch-action: pan-y;
+    overscroll-behavior-y: contain;
+}
+
+/* Two columns of order text at 667px leaves ~300px per column — one column
+ * reads, two do not. */
+body.osada-layout-phone .osada-briefing__orders-content {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+body.osada-layout-phone .osada-briefing__footer {
+    padding-bottom: var(--osada-safe-bottom);
+}
+
+body.osada-layout-phone .osada-briefing__button,
+body.osada-layout-phone .osada-briefing__decision-option {
+    min-height: var(--osada-touch-target);
+}
+
+body.osada-layout-phone #smSettingsContainer {
+    max-height: none;
+    height: 100%;
+    overflow-y: auto;
+    touch-action: pan-y;
+    overscroll-behavior-y: contain;
+}
+
+/* Start menu: smaller logo, two-column commands, still 48px tall each. */
+body.osada-layout-phone #smLogoText {
+    max-height: 56px;
+    overflow: hidden;
+}
+
+body.osada-layout-phone #smButtons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--osada-touch-gap);
+}
+
+body.osada-layout-phone #smButtons > * {
+    min-height: var(--osada-touch-target);
+}
+
+body.osada-layout-compact #smCredits {
+    display: none;
+}
+
+/* Campaign/scenario browser: no forced 40/60 split at 667x375. */
+body.osada-layout-compact #smCamp,
+body.osada-layout-compact #smScen {
+    flex-direction: column;
+}
+
+body.osada-layout-compact .smSelect > * {
+    min-height: var(--osada-touch-target-min);
+}
+
+body.osada-layout-compact #smCampButtons,
+body.osada-layout-compact #smScenButtons {
+    position: sticky;
+    bottom: 0;
+    padding-bottom: var(--osada-safe-bottom);
+    background: rgba(12, 13, 16, .96);
+}
+
+/* ---- Orientation gate ---- */
+.osada-orientation-gate {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: var(--osada-mobile-z-gate);
+    align-items: center;
+    justify-content: center;
+    background: rgba(8, 9, 11, .94);
+    padding: calc(16px + var(--osada-safe-top)) calc(16px + var(--osada-safe-right)) calc(16px + var(--osada-safe-bottom)) calc(16px + var(--osada-safe-left));
+}
+
+.osada-orientation-gate__card {
+    max-width: min(92vw, 420px);
+    text-align: center;
+    color: var(--osada-text, #e7e2d4);
+    font-family: var(--osada-font-ui, sans-serif), sans-serif;
+}
+
+.osada-orientation-gate__icon {
+    font-size: 40px;
+    color: var(--osada-brass, #d9b25a);
+}
+
+.osada-orientation-gate__title {
+    margin: 10px 0 6px;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+}
+
+.osada-orientation-gate__body {
+    font-size: 13px;
+    color: var(--osada-text-dim, #a9a494);
+}
+
+.osada-orientation-gate__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--osada-touch-gap);
+    margin-top: 16px;
+}
+
+/* ---- Gesture tutorial ---- */
+.osada-tutorial {
+    position: fixed;
+    inset: 0;
+    z-index: var(--osada-mobile-z-gate);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(8, 9, 11, .9);
+    padding: calc(16px + var(--osada-safe-top)) calc(16px + var(--osada-safe-right)) calc(16px + var(--osada-safe-bottom)) calc(16px + var(--osada-safe-left));
+}
+
+.osada-tutorial__card {
+    max-width: min(92vw, 520px);
+    max-height: 80dvh;
+    overflow-y: auto;
+    touch-action: pan-y;
+    padding: 16px;
+    background: rgba(18, 20, 24, .98);
+    border: 1px solid var(--osada-brass, #d9b25a);
+    border-radius: 6px;
+    color: var(--osada-text, #e7e2d4);
+    font-family: var(--osada-font-ui, sans-serif), sans-serif;
+}
+
+.osada-tutorial__title {
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    margin-bottom: 10px;
+}
+
+.osada-tutorial__list {
+    margin: 0 0 14px;
+    padding-left: 18px;
+}
+
+.osada-tutorial__step {
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.osada-tutorial__done {
+    width: 100%;
+}
+
+/* ==========================================================================
+ * 9. SAFE AREA
+ * Checked in BOTH landscape rotations — the cutout can be on either side, so
+ * every fixed control pads from its own inset rather than from a single side.
+ * ========================================================================== */
+body.osada-layout-phone #statusbar-extension,
+body.osada-layout-phone #unitsBarButton,
+body.osada-layout-phone #statusBarButton {
+    left: auto;
+    right: calc(var(--osada-safe-right) + 8px);
+    margin-left: 0;
+}
+
+/* ==========================================================================
+ * 10. REDUCED MOTION AND REDUCED EFFECTS
+ * ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Explicit player choice, for large scenarios on modest hardware. Gameplay is
+ * never reduced — only decoration (spec §48.3). */
+body.osada-reduced-effects .animatedBackground {
+    display: none;
+}
+
+body.osada-reduced-effects *,
+body.osada-reduced-effects *::before,
+body.osada-reduced-effects *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+}
+
+/* While a pinch preview is running, DOM-positioned map labels are placed in map
+ * coordinates and cannot cheaply follow it — hide them rather than let them
+ * drift, and show them again at commit (which rebuilds them anyway). */
+body.osada-map-zooming #game > div:not(#game-zoom-wrap) {
+    visibility: hidden;
+}
+
+/* ==========================================================================
+ * 11. CAPABILITY FALLBACKS
+ * Used before the body classes exist (first paint) and where the rule is a
+ * property of the input device rather than of the layout mode.
+ * ========================================================================== */
+@media (hover: none) and (pointer: coarse) {
+    :root {
+        --osada-touch-target: 48px;
+    }
+
+    /* A `title` tooltip cannot be reached without hover, so it must never be
+     * the only explanation for a control. Anything relying on it also carries
+     * a visible label or an info action; this just stops the cursor lying. */
+    [title] {
+        cursor: default;
+    }
+}
+
+@media (hover: none) and (pointer: coarse) and (orientation: landscape) and (max-height: 600px) {
+    #statusbar {
+        height: calc(48px + env(safe-area-inset-top, 0px)) !important;
+        max-height: calc(48px + env(safe-area-inset-top, 0px)) !important;
+    }
+}

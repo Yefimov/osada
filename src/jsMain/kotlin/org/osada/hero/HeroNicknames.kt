@@ -1,5 +1,8 @@
 package org.osada.hero
 
+import org.osada.hero.HeroNicknames.displayText
+
+
 /**
  * Nicknames (§8.1, §10) — assigned once, deterministically, when a hero first reaches
  * [HeroRenown.HERO] or better. Picked from the pool of the evidence category the hero has

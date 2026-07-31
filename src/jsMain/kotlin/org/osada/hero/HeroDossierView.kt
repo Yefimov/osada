@@ -155,18 +155,22 @@ object HeroDisplay {
         when (leader) {
             LeaderType.TENACIOUS_DEFENSE, LeaderType.DETERMINED_DEFENSE, LeaderType.FEROCIOUS_DEFENSE,
             LeaderType.RESILIENCE,
-            -> I18n.t("hero.trait.activation.defending")
+                -> I18n.t("hero.trait.activation.defending")
+
             LeaderType.AGGRESSIVE_ATTACK, LeaderType.OVERWHELMING_ATTACK, LeaderType.FIRST_STRIKE,
-            -> I18n.t("hero.trait.activation.attacking")
+                -> I18n.t("hero.trait.activation.attacking")
+
             LeaderType.TANK_KILLER -> I18n.t("hero.trait.activation.armored_targets")
             LeaderType.STREET_FIGHTER -> I18n.t("hero.trait.activation.urban")
             LeaderType.INFILTRATION_TACTICS -> I18n.t("hero.trait.activation.forest")
             LeaderType.AGGRESSIVE_MANEUVER, LeaderType.AGGRESSIVE_TANK_MANEUVER,
-            -> I18n.t("hero.trait.activation.movement")
+                -> I18n.t("hero.trait.activation.movement")
+
             LeaderType.SUPERIOR_MANEUVER -> I18n.t("hero.trait.activation.zoc")
             LeaderType.RECON_MOVEMENT -> I18n.t("hero.trait.activation.phased_movement")
             LeaderType.ELITE_RECON_VETERAN, LeaderType.BATTLEFIELD_INTELLIGENCE, LeaderType.SKILLED_RECONNAISSANCE,
-            -> I18n.t("hero.trait.activation.spotting")
+                -> I18n.t("hero.trait.activation.spotting")
+
             LeaderType.MARKSMAN -> I18n.t("hero.trait.activation.ranged_fire")
             LeaderType.SKILLED_INTERCEPTOR -> I18n.t("hero.trait.activation.interception")
             LeaderType.SKILLED_GROUND_ATTACK -> I18n.t("hero.trait.activation.ground_attack")

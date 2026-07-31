@@ -5,6 +5,8 @@ package org.osada.i18n
 import kotlinx.browser.document
 import kotlinx.browser.localStorage
 import kotlinx.browser.window
+import org.osada.i18n.I18n.reportMissing
+import org.osada.i18n.I18n.t
 import org.w3c.xhr.XMLHttpRequest
 
 /**

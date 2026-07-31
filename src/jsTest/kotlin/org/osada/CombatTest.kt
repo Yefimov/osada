@@ -386,6 +386,7 @@ class CombatTest {
             place(map, d, 1, 2, TerrainType.CLEAR.value)
             return CombatResolver.calculateAttackResults(a, d, true)
         }
+
         val normal = result(false)
         val surprised = result(true)
         assertTrue(surprised.kills <= normal.kills, "surprised attacker deals <= kills")

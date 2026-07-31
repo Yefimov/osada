@@ -1,6 +1,9 @@
 package org.osada.ui.briefing
 
 import kotlinx.browser.window
+import org.osada.ui.briefing.BriefingTypewriter.cancel
+import org.osada.ui.briefing.BriefingTypewriter.complete
+import org.osada.ui.briefing.BriefingTypewriter.start
 import org.w3c.dom.HTMLElement
 
 /**
@@ -72,7 +75,7 @@ internal object BriefingTypewriter {
     private fun reducedMotion(): Boolean =
         try {
             window.matchMedia("(prefers-reduced-motion: reduce)").matches
-        } catch (e: Throwable) {
+        } catch (_: Throwable) {
             false
         }
 }

@@ -469,7 +469,9 @@ internal object BottomZoneBuilder {
         val bz = byId("osada-bottomzone") ?: return
         bz.classList.remove("bz--visible", "bz--hover", "bz--enemy-only")
         when (mode) {
-            "hidden" -> { /* leave all state classes off; CSS hides when none are present */ }
+            "hidden" -> { /* leave all state classes off; CSS hides when none are present */
+            }
+
             "own" -> bz.classList.add("bz--visible")
             "hover" -> bz.classList.add("bz--visible", "bz--hover")
             "enemyAlone" -> bz.classList.add("bz--visible", "bz--enemy-only")

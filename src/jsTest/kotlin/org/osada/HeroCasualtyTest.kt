@@ -86,10 +86,12 @@ class HeroCasualtyTest {
                     assertEquals("light_wound", outcome.injury?.injuryId)
                     assertEquals(false, outcome.injury?.permanent)
                 }
+
                 HeroCasualtyService.Disposition.SERIOUSLY_WOUNDED -> {
                     assertEquals("serious_wound", outcome.injury?.injuryId)
                     assertEquals(true, outcome.injury?.permanent)
                 }
+
                 else -> assertNull(outcome.injury)
             }
         }
@@ -122,7 +124,7 @@ class HeroCasualtyTest {
         )
     }
 
-    /** A destroyed core unit whose formation already has a commander — the [applyCasualty] entry state. */
+    /** A destroyed core unit whose formation already has a commander — the `applyCasualty` entry state. */
     private fun destroyedLedUnit(): GameUnit {
         Equipment.resetEquipment()
         Equipment.putEquipment(

@@ -116,7 +116,7 @@ class Scenario(
                 val playerId = unit.player?.id ?: -1
                 scoreMap[playerId] =
                     (scoreMap[playerId] ?: 0) +
-                    if (unit.isCore) (scoreGains["coreUnit"] ?: 0) else (scoreGains["normalUnit"] ?: 0)
+                        if (unit.isCore) (scoreGains["coreUnit"] ?: 0) else (scoreGains["normalUnit"] ?: 0)
             }
             players.forEach { player ->
                 player.updateScore(scoreMap[player.id] ?: 0)

@@ -49,6 +49,7 @@ interface GameCommandApplier {
     fun apply(command: GameCommand)
 }
 
+@Suppress("unused")
 class OfflineGameCommandGateway(
     private val validator: GameCommandValidator,
     private val applier: GameCommandApplier,
@@ -60,12 +61,14 @@ class OfflineGameCommandGateway(
                 applier.apply(command)
                 CommandSubmission(messageId, CommandSubmissionStatus.APPLIED)
             }
+
             is CommandValidation.Rejected ->
                 CommandSubmission(messageId, CommandSubmissionStatus.REJECTED, validation.rejection)
         }
     }
 }
 
+@Suppress("unused")
 class MultiplayerGameCommandGateway(
     private val session: MultiplayerSession,
     private val transport: MultiplayerTransport,

@@ -1,5 +1,12 @@
 package org.osada.campaign
 
+import org.osada.campaign.CampaignNarrative.commitChoice
+import org.osada.campaign.CampaignNarrative.consumePendingFor
+import org.osada.campaign.CampaignNarrative.queueForNextScenario
+import org.osada.campaign.CampaignNarrative.recordScenarioCompletion
+import org.osada.campaign.CampaignNarrative.reset
+import org.osada.campaign.CampaignNarrative.restore
+import org.osada.campaign.CampaignNarrative.snapshot
 import org.osada.model.Player
 
 /**

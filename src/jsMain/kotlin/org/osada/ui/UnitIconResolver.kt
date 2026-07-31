@@ -1,7 +1,6 @@
 package org.osada.ui
 
 import org.osada.GameHolder
-import kotlin.js.jsTypeOf
 
 /**
  * Resolves an equipment ID and its default icon to the scenario-season variant generated from

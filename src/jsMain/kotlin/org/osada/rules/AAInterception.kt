@@ -8,6 +8,7 @@ import org.osada.model.GameUnit
 import org.osada.model.fire
 import org.osada.model.getUnits
 import org.osada.model.hit
+import org.osada.rules.AAInterception.fires
 
 /**
  * AA interception of moving aircraft (DEFERRED.md §1.1, `docs/design/aa-interception.md`).

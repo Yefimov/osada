@@ -14,12 +14,14 @@ object GameCommandJson {
                     path = coordinates(value.path),
                     actorPlayerId = actor,
                 )
+
             AttackUnit::class.simpleName ->
                 AttackUnit(
                     requiredInt(value.attackerUnitId, "attackerUnitId"),
                     requiredInt(value.defenderUnitId, "defenderUnitId"),
                     actor,
                 )
+
             ResupplyUnit::class.simpleName -> ResupplyUnit(requiredInt(value.unitId, "unitId"), actor)
             ReinforceUnit::class.simpleName ->
                 ReinforceUnit(
@@ -27,15 +29,18 @@ object GameCommandJson {
                     (value.strengthPoints as? Number)?.toInt(),
                     actor,
                 )
+
             MountUnit::class.simpleName ->
                 MountUnit(
                     requiredInt(value.unitId, "unitId"),
                     (value.transportEquipmentId as? Number)?.toInt(),
                     actor,
                 )
+
             UnmountUnit::class.simpleName -> UnmountUnit(requiredInt(value.unitId, "unitId"), actor)
             DeployUnit::class.simpleName ->
                 DeployUnit(requiredInt(value.unitId, "unitId"), coordinate(value.destination), actor)
+
             UndeployUnit::class.simpleName -> UndeployUnit(requiredInt(value.unitId, "unitId"), actor)
             PurchaseUnit::class.simpleName ->
                 PurchaseUnit(
@@ -43,6 +48,7 @@ object GameCommandJson {
                     (value.transportEquipmentId as? Number)?.toInt(),
                     actor,
                 )
+
             UpgradeUnit::class.simpleName ->
                 UpgradeUnit(
                     requiredInt(value.unitId, "unitId"),
@@ -50,6 +56,7 @@ object GameCommandJson {
                     (value.transportEquipmentId as? Number)?.toInt(),
                     actor,
                 )
+
             DisbandUnit::class.simpleName -> DisbandUnit(requiredInt(value.unitId, "unitId"), actor)
             ReorderReserve::class.simpleName ->
                 ReorderReserve(
@@ -57,12 +64,14 @@ object GameCommandJson {
                     requiredInt(value.destinationIndex, "destinationIndex"),
                     actor,
                 )
+
             SetUnitAssignment::class.simpleName ->
                 SetUnitAssignment(
                     requiredInt(value.unitId, "unitId"),
                     value.assignedParticipantId as? String,
                     actor,
                 )
+
             EndTurnReady::class.simpleName -> EndTurnReady(value.ready as? Boolean ?: false, actor)
             EndPlayerTurn::class.simpleName -> EndPlayerTurn(actor)
             ChooseCampaignDialogueOption::class.simpleName ->
@@ -71,8 +80,10 @@ object GameCommandJson {
                     requiredString(value.optionId, "optionId"),
                     actor,
                 )
+
             ContinueCampaign::class.simpleName ->
                 ContinueCampaign(requiredString(value.outcome, "outcome"), actor)
+
             else -> error("Unknown game command kind")
         }
     }

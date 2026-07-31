@@ -6,6 +6,7 @@ import org.osada.LeaderType
 import org.osada.UNIT_MAX_EXPERIENCE
 import org.osada.UnitClass
 import org.osada.hero.HeroTraitResolver
+import org.osada.model.Leaders.getUnitClassLeader
 
 object Leaders {
     const val LEADER_CHANCE_THRESHOLD = 8

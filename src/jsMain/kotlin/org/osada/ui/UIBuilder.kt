@@ -4,6 +4,8 @@ package org.osada.ui
 
 import org.osada.UnitClass
 import org.osada.model.Equipment
+import org.osada.ui.UIBuilder.classesForTab
+import org.osada.ui.UIBuilder.eqClassTabGroups
 
 /** Shared accessor for the JS `game` global, used by several UI builders. */
 internal fun gameRef(): dynamic = js("typeof game !== 'undefined' ? game : null")
@@ -23,8 +25,6 @@ internal fun gameRef(): dynamic = js("typeof game !== 'undefined' ? game : null"
  * surface (and the data other files read) is unchanged.
  */
 object UIBuilder {
-    var startMenuImgPath = "resources/ui/dialogs/startmenu/images/"
-    var menuImgPath = "resources/ui/menu/images/"
     var eqImgPath = "resources/ui/dialogs/equipment/images/"
     var currencyIcon = "<img src='${eqImgPath}currency.png'/>"
     var navalReplacementIcon = "resources/units/images/le211.png"
@@ -344,7 +344,7 @@ object UIBuilder {
     // eqp param unused since the merge (one shared flags_med.png for every campaign) -- kept so
     // every call site (which passes the scenario's own eqp, now just its availability-set key)
     // doesn't need to change.
-    @Suppress("UnusedParameter")
+    @Suppress("UnusedParameter", "UNUSED_PARAMETER")
     fun setEquipmentFlags(eqp: String?) {
         if (flagStyleSheets.isEmpty()) {
             listOf("#eqSelCountry", ".playerCountry", ".uSmallFlag").forEach { selector ->
@@ -365,7 +365,7 @@ object UIBuilder {
      *  top-bar buttons don't stopPropagation and this ran on every equipment-window refresh,
      *  clobbering MainMenuBuilder's one-time `statusbar.onclick = null`. The log button is its
      *  own always-visible, always-clickable control now, so nothing needs to be swapped. */
-    @Suppress("UnusedParameter")
+    @Suppress("UnusedParameter", "UNUSED_PARAMETER")
     fun setDeployOrCombatLogState(deploy: Boolean) {
         makeVisible("combatLogButton")
     }

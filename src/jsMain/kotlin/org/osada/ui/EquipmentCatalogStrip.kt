@@ -69,6 +69,7 @@ internal object EquipmentCatalogStrip {
                 ui.showEquipmentInfo(eq)
                 ui.updateEquipmentWindow(selectedClass)
                 eqHscroll?.asDynamic()?.scrollLeft = eqUserSel?.eqscroll
+                CompactEquipmentNavigation.showDetail()
             }
         }
         return eqScrollPos
@@ -120,6 +121,7 @@ internal object EquipmentCatalogStrip {
                     eqUserSel?.detailfocus = "transport"
                     ui.showEquipmentInfo(transport)
                     ui.updateEquipmentWindow(selectedClass)
+                    CompactEquipmentNavigation.showDetail()
                 }
             }
         }

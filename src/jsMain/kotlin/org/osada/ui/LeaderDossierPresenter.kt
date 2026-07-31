@@ -5,6 +5,8 @@ import org.osada.hero.HeroId
 import org.osada.hero.LeaderDossierView
 import org.osada.i18n.I18n
 import org.osada.model.GameUnit
+import org.osada.ui.LeaderDossierPresenter.openForHero
+import org.osada.ui.LeaderDossierPresenter.openForUnit
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.MouseEvent
 

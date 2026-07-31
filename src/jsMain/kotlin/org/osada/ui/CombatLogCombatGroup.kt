@@ -75,6 +75,7 @@ internal object CombatLogCombatGroup {
             when {
                 assaults >= defends || supports >= defends ->
                     if (supports >= assaults) "support" else "assault"
+
                 else -> "defence"
             }
         val corePrefix = if (isCore) CombatLogFeed.numSpan(I18n.t("turn_report.core_prefix")) else ""

@@ -120,49 +120,59 @@ fun GameCommand.toPayloadJson(): String {
             payload["to"] = to.toJson()
             payload["path"] = path.map { it.toJson() }.toTypedArray()
         }
+
         is AttackUnit -> {
             payload["attackerUnitId"] = attackerUnitId
             payload["defenderUnitId"] = defenderUnitId
         }
+
         is ResupplyUnit -> payload["unitId"] = unitId
         is ReinforceUnit -> {
             payload["unitId"] = unitId
             payload["strengthPoints"] = strengthPoints
         }
+
         is MountUnit -> {
             payload["unitId"] = unitId
             payload["transportEquipmentId"] = transportEquipmentId
         }
+
         is UnmountUnit -> payload["unitId"] = unitId
         is DeployUnit -> {
             payload["unitId"] = unitId
             payload["destination"] = destination.toJson()
         }
+
         is UndeployUnit -> payload["unitId"] = unitId
         is PurchaseUnit -> {
             payload["equipmentId"] = equipmentId
             payload["transportEquipmentId"] = transportEquipmentId
         }
+
         is UpgradeUnit -> {
             payload["unitId"] = unitId
             payload["equipmentId"] = equipmentId
             payload["transportEquipmentId"] = transportEquipmentId
         }
+
         is DisbandUnit -> payload["unitId"] = unitId
         is ReorderReserve -> {
             payload["unitId"] = unitId
             payload["destinationIndex"] = destinationIndex
         }
+
         is SetUnitAssignment -> {
             payload["unitId"] = unitId
             payload["assignedParticipantId"] = assignedParticipantId
         }
+
         is EndTurnReady -> payload["ready"] = ready
         is EndPlayerTurn -> Unit
         is ChooseCampaignDialogueOption -> {
             payload["dialogueId"] = dialogueId
             payload["optionId"] = optionId
         }
+
         is ContinueCampaign -> payload["outcome"] = outcome
     }
     return JSON.stringify(payload)

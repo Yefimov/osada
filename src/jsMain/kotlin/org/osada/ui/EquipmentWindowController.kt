@@ -26,6 +26,7 @@ internal class EquipmentWindowController(
 
     fun toggleUnitsAndEquipmentWindow(show: Boolean) {
         if (show) {
+            CompactEquipmentNavigation.showList()
             makeVisible("container-unitlist")
             // Inline grid (not makeVisible's display:inline) so the area layout applies.
             byId("equipment")?.style?.display = "grid"
@@ -82,7 +83,7 @@ internal class EquipmentWindowController(
         val (selectedClass, isAll) = resolveSelectedClassAndTabs(unitClass, eqmode, eqUserSel)
         byId("eqInfoText")?.innerHTML =
             "$year ${EquipmentWindowState.classLabel(isAll, selectedClass)} upgrades for " +
-            EquipmentWindowState.countryLabel(countryCtx.allCountries, countryCtx.countryId)
+                EquipmentWindowState.countryLabel(countryCtx.allCountries, countryCtx.countryId)
 
         populateCatalogAndTransport(
             eqUserSel,

@@ -210,6 +210,7 @@ private fun isLoadableSave(parsed: dynamic): Boolean {
             )
             false
         }
+
         else -> true
     }
 }

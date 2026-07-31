@@ -1,6 +1,14 @@
 package org.osada.hero
 
 import org.osada.GameHolder
+import org.osada.hero.HeroCampaign.drainAnnouncements
+import org.osada.hero.HeroCampaign.reconContactsCredited
+import org.osada.hero.HeroCampaign.recordCombat
+import org.osada.hero.HeroCampaign.reset
+import org.osada.hero.HeroCampaign.restore
+import org.osada.hero.HeroCampaign.setContext
+import org.osada.hero.HeroCampaign.snapshot
+import org.osada.hero.HeroCampaign.transferCommander
 import org.osada.model.EfileConfig
 import org.osada.model.Equipment
 import org.osada.model.GameUnit
@@ -44,7 +52,7 @@ internal object HeroCampaign {
         setOf(HeroStatus.RESERVE, HeroStatus.WOUNDED, HeroStatus.SERIOUSLY_WOUNDED)
 
     /** Whether [status] is a benched state [transferCommander] can recall from -- the single
-     *  source of truth [CommanderRosterPresenter] queries instead of keeping its own copy of this
+     *  source of truth the commander-roster presenter queries instead of keeping its own copy of this
      *  set (DEFERRED.md §4.10: the two used to state the rule twice and could drift). */
     fun isTransferEligible(status: HeroStatus): Boolean = status in transferEligibleStatuses
 
@@ -354,9 +362,6 @@ internal object HeroCampaign {
             HeroDossierAssembler.commanderRow(definition, state, formationName)
         }
 
-    /** True when the campaign has produced at least one commander (to show/hide the HQ entry). */
-    fun hasCommanders(): Boolean = roster.allDefinitions().isNotEmpty()
-
     /**
      * Feeds one core unit's part in a resolved combat into the hero system and reports whether an
      * officer emerged this call (so the caller can flag the leader-gain bounce).
@@ -382,11 +387,13 @@ internal object HeroCampaign {
                 recordCasualty(unit, turn)
                 false
             }
+
             unit.destroyed -> false
             heroId != null -> {
                 progressCommander(unit, formation, heroId, contribution, turn)
                 false
             }
+
             else -> attemptEmergence(unit, formation, contribution, turn)
         }
     }
@@ -680,6 +687,7 @@ internal object HeroCampaign {
                 }
                 pendingAnnouncements += HeroEmergenceAnnouncement.from(result, formation)
             }
+
             is LeaderAcquisitionService.EmergenceResult.NoLeader -> {
                 roster.putFormation(checked)
                 if (result.eligible) roster.drought += 1

@@ -112,9 +112,9 @@ internal object Sha256 {
             val start = offset + index * 4
             words[index] =
                 ((input[start].toInt() and 0xff) shl 24) or
-                ((input[start + 1].toInt() and 0xff) shl 16) or
-                ((input[start + 2].toInt() and 0xff) shl 8) or
-                (input[start + 3].toInt() and 0xff)
+                    ((input[start + 1].toInt() and 0xff) shl 16) or
+                    ((input[start + 2].toInt() and 0xff) shl 8) or
+                    (input[start + 3].toInt() and 0xff)
         }
         for (index in 16 until 64) {
             val s0 =

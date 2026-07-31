@@ -3,6 +3,7 @@ package org.osada.ui
 import org.osada.i18n.I18n
 import org.osada.model.Equipment
 import org.osada.model.getCountryNameByEqp
+import org.osada.ui.StartMenuSidePicker.selectScenarioSide
 import org.osada.uiSettings
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.KeyboardEvent
@@ -63,7 +64,7 @@ internal object StartMenuSidePicker {
         return Pair(name, maxOf(0, countries.size - 1))
     }
 
-    /** Sets which side is human (mutating the SAME [uiSettings.isAI] the game launch reads —
+    /** Sets which side is human (mutating the SAME `uiSettings.isAI` the game launch reads —
      *  deliberately not a second selection state), then rebuilds the two cards and the Start
      *  button label. A side with no players at all (shouldn't happen in real data, but the UI
      *  contract requires it) can't be selected. */
@@ -268,6 +269,7 @@ internal object StartMenuSidePicker {
                 e.preventDefault()
                 selectScenarioSide(scenario, side)
             }
+
             "ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown" -> {
                 e.preventDefault()
                 val other = 1 - side

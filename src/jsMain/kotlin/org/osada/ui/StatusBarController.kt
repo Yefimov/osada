@@ -52,9 +52,9 @@ internal class StatusBarController(
                 "${scenario.date.getFullYear()}"
         byId("statusmsg")?.innerHTML =
             "<span class=\"osada-tb-op\" title=\"${scenario.name}\">${scenario.name}</span>" +
-            "<span class=\"osada-tb-field\"><b>Turn</b>${map.turn}/${map.maxTurns}</span>" +
-            "<span class=\"osada-tb-field osada-tb-date\">$dateText</span>" +
-            phaseChip
+                "<span class=\"osada-tb-field\"><b>Turn</b>${map.turn}/${map.maxTurns}</span>" +
+                "<span class=\"osada-tb-field osada-tb-date\">$dateText</span>" +
+                phaseChip
 
         // --- weather as words + weather/ground image icons (asset-sheet extracts) ---
         val atmos = scenario.atmosferic
@@ -62,10 +62,12 @@ internal class StatusBarController(
         byId("weathermsg")?.let { w ->
             w.innerHTML =
                 weatherIconImg(atmos, "osada-tb-weather-img") +
-                groundIconImg(ground, "osada-tb-weather-img") +
-                "<span class=\"osada-tb-weather-txt\">${weatherWords.getOrNull(
-                    atmos,
-                ) ?: ""} · ${groundConditionNames.getOrNull(ground) ?: ""}</span>"
+                    groundIconImg(ground, "osada-tb-weather-img") +
+                    "<span class=\"osada-tb-weather-txt\">${
+                        weatherWords.getOrNull(
+                            atmos,
+                        ) ?: ""
+                    } · ${groundConditionNames.getOrNull(ground) ?: ""}</span>"
             // Rich hover panel replaces the bare native title: it spells out what the current
             // weather/ground actually DO to the rules — bonuses green, penalties red.
             w.asDynamic().title = ""
@@ -169,10 +171,12 @@ internal class StatusBarController(
                 line("good", "Frozen rivers and swamps can be crossed by ground units.")
                 line("bad", "Wheeled transport struggles off-road (forests cost all movement).")
             }
+
             GroundCondition.MUD.value -> {
                 line("bad", "Ground movement much slower — wheeled vehicles bog down hardest.")
                 line("bad", "Swamps are impassable morass.")
             }
+
             else -> line("good", "Firm going — normal movement costs for all units.")
         }
         if (canChangeGround) {
@@ -182,6 +186,7 @@ internal class StatusBarController(
                         "dim",
                         "Continued rain keeps the ground muddy; a clear spell dries it out.",
                     )
+
                 WeatherCondition.SNOW.value -> line("dim", "Snowfall keeps the ground frozen; a clear spell thaws it.")
                 else -> {}
             }

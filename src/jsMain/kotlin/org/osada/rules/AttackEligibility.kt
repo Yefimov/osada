@@ -62,15 +62,19 @@ internal object AttackEligibility {
             attacker.destroyed || defender.destroyed -> "a unit is destroyed"
             !UnitPredicates.isEnemy(attacker, defender) ->
                 "not an enemy (same side ${attacker.player?.side})"
+
             airGroundedByWeather(attacker) -> "attacker is an air unit grounded by weather"
             attacker.getAmmo() <= 0 -> "attacker is out of ammo"
             UnitPredicates.isAir(defender) && attacker.unitData().airatk <= 0 ->
                 "attacker cannot target air (airatk=${attacker.unitData().airatk})"
+
             !Equipment.canInitiateAttackOnUnitType(attacker.getEqid(), defender.getEqid()) ->
                 "target-type matrix (attacker attr=${attacker.unitData().attr}, target=${defender.unitData().target})"
+
             attacker.hasFired -> "attacker has already fired"
             !isInAttackRange(attacker, defender) ->
                 "out of range (range=${getUnitAttackRange(attacker)})"
+
             else -> null
         }
 

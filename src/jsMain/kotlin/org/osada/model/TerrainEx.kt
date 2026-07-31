@@ -3,6 +3,7 @@ package org.osada.model
 import org.osada.GroundCondition
 import org.osada.RoadType
 import org.osada.TerrainType
+import org.osada.model.TerrainEx.movementCostTable
 import org.osada.movTableDry
 import org.osada.terrainEntrenchment
 import org.osada.terrainInitiative

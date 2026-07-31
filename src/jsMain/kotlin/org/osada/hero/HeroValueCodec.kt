@@ -1,6 +1,7 @@
 package org.osada.hero
 
 import org.osada.campaign.BriefingDynamic
+import org.osada.hero.HeroValueCodec.readBiography
 import kotlin.js.json
 
 /**

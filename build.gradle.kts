@@ -35,12 +35,14 @@ kotlin {
             languageSettings.optIn("kotlin.js.ExperimentalJsExport")
         }
 
+        @Suppress("UNUSED_VARIABLE")
         val jsMain by getting {
             dependencies {
                 // Kotlin/JS dependencies can be added here.
             }
         }
 
+        @Suppress("UNUSED_VARIABLE")
         val jsTest by getting {
             dependencies {
                 implementation(kotlin("test-js"))
@@ -210,6 +212,26 @@ tasks.register<Exec>("verifyProductionSmokeTest") {
 
     workingDir = file("scripts/verify")
     commandLine("node", "verify.mjs")
+}
+
+/*
+ * Mobile viewport smoke test.
+ *
+ * Kept separate from verifyProductionSmokeTest on purpose: that task is the desktop-regression
+ * gate and must not be weakened into a touch-emulating hybrid. Chrome emulation is also not
+ * evidence for iOS Safari — real-device results belong in the PR.
+ */
+tasks.register<Exec>("verifyMobileSmokeTest") {
+    group = "verification"
+    description = "Verifies the mobile shell at 667x375 with a coarse pointer in headless Chrome"
+
+    dependsOn(
+        "jsBrowserDistribution",
+        "verifyProductionSmokeTestNpmInstall",
+    )
+
+    workingDir = file("scripts/verify")
+    commandLine("node", "mobile-smoke.mjs")
 }
 
 /*

@@ -106,6 +106,7 @@ internal object AIPositionEvaluation {
                     UnitClass.INFANTRY.value -> CLOSE_COMBAT_INFANTRY_BONUS
                     UnitClass.ARTILLERY.value, UnitClass.ANTI_TANK.value, UnitClass.AIR_DEFENCE.value ->
                         CLOSE_COMBAT_SUPPORT_BONUS
+
                     else -> -CLOSE_COMBAT_OTHER_PENALTY
                 }
         }
@@ -199,6 +200,7 @@ internal object AIPositionEvaluation {
             UnitClass.ARTILLERY.value, UnitClass.FLAK.value -> ADJACENT_VICTORY_SUPPORT_BONUS
             UnitClass.INFANTRY.value ->
                 if (friendly) ADJACENT_VICTORY_INFANTRY_FRIENDLY_BONUS else ADJACENT_VICTORY_INFANTRY_ENEMY_BONUS
+
             else -> if (friendly) ADJACENT_VICTORY_FRIENDLY_BONUS else ADJACENT_VICTORY_ENEMY_BONUS
         }
     }

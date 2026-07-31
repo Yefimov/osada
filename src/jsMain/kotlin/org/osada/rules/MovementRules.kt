@@ -76,6 +76,7 @@ object MovementRules {
             UnitPredicates.isGround(unit) || UnitPredicates.isSea(unit) ->
                 hex.unit == null ||
                     hex.unit!!.player?.side == unit.player?.side
+
             else -> false
         }
     }

@@ -7,7 +7,7 @@ import org.osada.i18n.I18n
 // split out to keep that object within the project's function-count limits (each operates on its
 // own disjoint set of DOM ids and has no shared state with the others).
 
-internal fun EquipmentWindowBuilder.showBuyCost(
+internal fun showBuyCost(
     prestige: Int,
     buy: Int,
     buyBlockedReason: String?,
@@ -29,8 +29,8 @@ internal fun EquipmentWindowBuilder.showBuyCost(
             val diff = buy - prestige
             eqNewText?.innerHTML =
                 "<span style='color:#BB7575'>" +
-                I18n.t("equipment.cost.need_buy", mapOf("amount" to diff)) +
-                "</span>"
+                    I18n.t("equipment.cost.need_buy", mapOf("amount" to diff)) +
+                    "</span>"
         } else {
             eqNewText?.textContent = ""
         }
@@ -39,7 +39,7 @@ internal fun EquipmentWindowBuilder.showBuyCost(
     }
 }
 
-internal fun EquipmentWindowBuilder.showUpgradeCost(
+internal fun showUpgradeCost(
     prestige: Int,
     upgrade: Int,
 ) {
@@ -55,8 +55,8 @@ internal fun EquipmentWindowBuilder.showUpgradeCost(
             val diff = upgrade - prestige
             eqUpgradeText?.innerHTML =
                 "<span style='color:#BB7575'>" +
-                I18n.t("equipment.cost.need_upgrade", mapOf("amount" to diff)) +
-                "</span>"
+                    I18n.t("equipment.cost.need_upgrade", mapOf("amount" to diff)) +
+                    "</span>"
         } else {
             eqUpgradeText?.textContent = ""
         }
@@ -65,7 +65,7 @@ internal fun EquipmentWindowBuilder.showUpgradeCost(
     }
 }
 
-internal fun EquipmentWindowBuilder.showSellCost(sell: Int) {
+internal fun showSellCost(sell: Int) {
     val eqSellText = byId("eqSellText")
     val eqSellCost = byId("eqSellCost")
     val eqSellBut = byId("eqSellBut")
@@ -80,7 +80,7 @@ internal fun EquipmentWindowBuilder.showSellCost(sell: Int) {
     }
 }
 
-internal fun EquipmentWindowBuilder.showCurrentPrestige(prestige: Int) {
+internal fun showCurrentPrestige(prestige: Int) {
     val currentPrestige = byId("currentPrestige")
     currentPrestige?.textContent =
         I18n.t(

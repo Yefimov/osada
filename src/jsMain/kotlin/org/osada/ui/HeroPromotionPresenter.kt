@@ -5,6 +5,11 @@ import org.osada.hero.HeroDisplay
 import org.osada.hero.HeroId
 import org.osada.hero.HeroPromotionAnnouncement
 import org.osada.i18n.I18n
+import org.osada.ui.HeroPromotionPresenter.BOX_ID
+import org.osada.ui.HeroPromotionPresenter.isOpen
+import org.osada.ui.HeroPromotionPresenter.present
+import org.osada.ui.HeroPromotionPresenter.queue
+import org.osada.ui.HeroPromotionPresenter.show
 import org.w3c.dom.HTMLElement
 
 /**

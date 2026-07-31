@@ -52,6 +52,7 @@ private fun Game.assignScenarioPlayerType(player: Player) {
             player.type = PlayerType.AI_LOCAL
             player.handler = createAIHandler(player)
         }
+
         uiSettings.isAI[player.id] == 2 || player.type == PlayerType.AI_SCRIPTED -> {
             player.type = PlayerType.AI_SCRIPTED
             player.handler = createScriptedAIHandler(player)

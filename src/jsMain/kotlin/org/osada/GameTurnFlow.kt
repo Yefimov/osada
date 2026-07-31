@@ -71,6 +71,7 @@ private fun Game.executeAction(action: dynamic) {
             waitUIAnimation = true
             ui?.uiUnitMove(unit, cell.row, cell.col)
         }
+
         ActionType.ATTACK.value -> {
             val attacker = param[0] as org.osada.model.GameUnit
             val defender = param[1] as org.osada.model.GameUnit
@@ -81,14 +82,17 @@ private fun Game.executeAction(action: dynamic) {
                 waitUIAnimation = false
             }
         }
+
         ActionType.RESUPPLY.value -> {
             val unit = param[0] as org.osada.model.GameUnit
             scenario?.map?.resupplyUnit(unit)
         }
+
         ActionType.REINFORCE.value -> {
             val unit = param[0] as org.osada.model.GameUnit
             scenario?.map?.reinforceUnit(unit, false)
         }
+
         ActionType.MOUNT.value -> scenario?.map?.mountUnit(param[0] as org.osada.model.GameUnit)
         ActionType.UMOUNT.value -> scenario?.map?.unmountUnit(param[0] as org.osada.model.GameUnit)
         ActionType.SELECT.value -> {
@@ -96,6 +100,7 @@ private fun Game.executeAction(action: dynamic) {
             ui?.uiSetUnitOnViewPort(unit)
             ui?.uiUnitSelect(unit)
         }
+
         ActionType.MESSAGE.value -> {
             val message = param[0] as String
             val cell = param[1] as Cell
@@ -103,6 +108,7 @@ private fun Game.executeAction(action: dynamic) {
             ui?.showGameToolTip(message, cell.row, cell.col)
             ui?.uiSetCellOnViewPort(cell)
         }
+
         ActionType.MODAL_MESSAGE.value -> {
             val title = param[0] as String
             val body = param[1] as String
@@ -112,6 +118,7 @@ private fun Game.executeAction(action: dynamic) {
                 uiAnimationFinished()
             }
         }
+
         ActionType.VIEWPORT.value -> {
             ui?.uiSetCellOnViewPort(param[0] as Cell)
         }

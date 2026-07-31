@@ -7,6 +7,11 @@ import org.osada.model.Equipment
 import org.osada.model.GameUnit
 import org.osada.model.Leaders
 import org.osada.model.isBridge
+import org.osada.rules.Attachments.IMPLEMENTED_SLOTS
+import org.osada.rules.Attachments.MAX_PER_UNIT
+import org.osada.rules.Attachments.availableSlots
+import org.osada.rules.Attachments.bonus
+import org.osada.rules.Attachments.has
 
 /**
  * Attachments (DEFERRED.md §1.4, `docs/design/attachments.md`): per-efile purchasable per-unit

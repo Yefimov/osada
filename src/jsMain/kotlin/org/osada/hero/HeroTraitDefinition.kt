@@ -2,6 +2,7 @@ package org.osada.hero
 
 import org.osada.LeaderType
 import org.osada.UnitClass
+import org.osada.hero.HeroTraitCatalog.choose
 
 /**
  * One entry in the data-driven promotion-choice catalogue (§20).
@@ -27,7 +28,7 @@ data class HeroTraitDefinition(
 )
 
 /**
- * The catalogue itself. Every [legacyTrait] used here is either already reachable through the
+ * The catalogue itself. Every [HeroTraitDefinition.legacyTrait] used here is either already reachable through the
  * class-signature/personal-trait paths ([HeroBackgrounds], [ProceduralHeroGenerator]) — offered
  * again here at a higher evidence bar for a formation that did not start with it — or one of the
  * traits `docs/leaders.md` §8 flags as "defined but unobtainable... nonetheless honoured in combat

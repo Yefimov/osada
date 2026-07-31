@@ -9,14 +9,14 @@ import org.osada.uiSettings
 internal class StrategicZoomController(
     private val ui: UI,
 ) {
-    private val topbarHeight = 30.0
     private val strategicZoomPercentBase = 100.0
 
     fun toggleStrategicZoom() {
         val gameDiv = byId("game") ?: return
+        val metrics = ViewportMetricsService.refresh()
         if (uiSettings.strategicZoom) {
-            gameDiv.style.width = "${windowInnerWidth()}px"
-            gameDiv.style.height = "${windowInnerHeight()}px"
+            gameDiv.style.width = "${metrics.usableWidth.toInt()}px"
+            gameDiv.style.height = "${metrics.usableHeight.toInt()}px"
             // .style.zoom, NOT a bare .zoom on the element: `zoom` isn't a standard reflected
             // IDL attribute, so `gameDiv.asDynamic().zoom = ...` (the pre-existing code here)
             // only ever set a meaningless custom expando property — no CSS zoom was EVER applied,
@@ -35,10 +35,14 @@ internal class StrategicZoomController(
             ui.render.positionLayers()
         } else {
             val mapCanvas: dynamic = ui.render.getMapCanvas()
-            val mapWidth = mapCanvas?.width as? Int ?: windowInnerWidth()
-            val mapHeight = mapCanvas?.height as? Int ?: windowInnerHeight()
-            val scaleX = 100.0 * windowInnerWidth() / (mapWidth * uiSettings.zoomLevel)
-            val scaleY = 100.0 * windowInnerHeight() / (mapHeight * uiSettings.zoomLevel)
+            // The overview must fit the area the map actually gets — not the whole window. The
+            // top bar, the bottom dock and any device cutout are all excluded by usableWidth/
+            // usableHeight, so a phone in landscape shows the whole theatre rather than sliding a
+            // third of it under the HUD.
+            val mapWidth = mapCanvas?.width as? Int ?: metrics.usableWidth.toInt()
+            val mapHeight = mapCanvas?.height as? Int ?: metrics.usableHeight.toInt()
+            val scaleX = 100.0 * metrics.usableWidth / (mapWidth * uiSettings.zoomLevel)
+            val scaleY = 100.0 * metrics.usableHeight / (mapHeight * uiSettings.zoomLevel)
             val percent = minOf(scaleX, scaleY)
             gameDiv.style.asDynamic().zoom = "${percent.toInt()}%"
             // Size #game to the MAP, not to the viewport (which is what left the shrunken map in
@@ -69,6 +73,9 @@ internal class StrategicZoomController(
      * offset, and solve for the px-per-css-px factor. Two forced layouts, once per toggle.
      */
     private fun centerStrategicMap(gameDiv: org.w3c.dom.HTMLElement) {
+        val metrics = ViewportMetricsService.current
+        val originLeft = metrics.safeLeft
+        val originTop = metrics.safeTop + metrics.topBarHeight
         val style = gameDiv.style
         style.left = "0px"
         style.top = "0px"
@@ -82,17 +89,13 @@ internal class StrategicZoomController(
         // A zero factor would mean `left`/`top` don't move the box at all (some future engine
         // quirk) — leave it where positionLayers put it rather than dividing by zero.
         if (scaleX == 0.0 || scaleY == 0.0) {
-            style.left = "0px"
-            style.top = "${topbarHeight}px"
+            style.left = "${originLeft}px"
+            style.top = "${originTop}px"
             return
         }
-        val targetLeft = maxOf(0.0, (windowInnerWidth() - base.width) / 2.0)
-        val targetTop = topbarHeight + maxOf(0.0, (windowInnerHeight() - topbarHeight - base.height) / 2.0)
+        val targetLeft = originLeft + maxOf(0.0, (metrics.usableWidth - base.width) / 2.0)
+        val targetTop = originTop + maxOf(0.0, (metrics.usableHeight - base.height) / 2.0)
         style.left = "${(targetLeft - base.left) / scaleX}px"
         style.top = "${(targetTop - base.top) / scaleY}px"
     }
-
-    private fun windowInnerWidth(): Int = js("window.innerWidth") as Int
-
-    private fun windowInnerHeight(): Int = js("window.innerHeight") as Int
 }

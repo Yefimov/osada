@@ -1,5 +1,6 @@
 package org.osada.campaign
 
+import org.osada.campaign.CampaignNarrativeSerializer.deserialize
 import kotlin.js.json
 
 /**
@@ -163,19 +164,23 @@ internal object CampaignEffectSerializer {
                 obj.experience = effect.experience
                 obj.strength = effect.strength
             }
+
             is CampaignEffect.GrantExperience -> {
                 obj.amount = effect.amount
                 effect.unitClass?.let { obj.unitClass = it }
             }
+
             is CampaignEffect.Resupply -> {
                 effect.strength?.let { obj.strength = it }
                 obj.refuel = effect.refuel
                 obj.rearm = effect.rearm
             }
+
             is CampaignEffect.ShiftReinforcements -> {
                 obj.side = effect.side
                 obj.turns = effect.turns
             }
+
             is CampaignEffect.UnlockEquipment -> obj.eqid = effect.eqid
             is CampaignEffect.DeploymentSlots -> obj.delta = effect.delta
             is CampaignEffect.Route -> obj.scenarioIndex = effect.scenarioIndex

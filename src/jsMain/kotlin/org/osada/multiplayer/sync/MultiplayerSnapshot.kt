@@ -113,11 +113,13 @@ private fun canonicalizeValue(value: dynamic): String =
         js("Array.isArray(value)") as Boolean ->
             (0 until (value.length as Number).toInt())
                 .joinToString(prefix = "[", postfix = "]") { canonicalizeValue(value[it]) }
+
         jsTypeOf(value) == "object" -> {
             val keys = (js("Object.keys(value)") as Array<String>).sorted()
             keys.joinToString(prefix = "{", postfix = "}") { key ->
                 "${JSON.stringify(key)}:${canonicalizeValue(value[key])}"
             }
         }
+
         else -> JSON.stringify(value)
     }

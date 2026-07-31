@@ -55,6 +55,7 @@ internal fun GameMap.collectPersistentCampaignUnits(player: Player): CampaignCar
                 duplicateFormationIds++
                 survivorsByFormation[formationId] = unit
             }
+
             else -> duplicateFormationIds++
         }
     }

@@ -25,6 +25,7 @@ internal class StartMenuButtonHandler(
                 makeHidden("startmenu")
                 byId("options")?.let { toggleButton(it, false) }
             }
+
             "saveload" -> onSaveLoadButton()
             "settings" -> onSettingsButton()
         }

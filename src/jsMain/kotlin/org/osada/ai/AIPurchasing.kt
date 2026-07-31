@@ -35,7 +35,7 @@ internal object AIPurchasing {
                     ?.scenario
                     ?.date
                     ?.getMonth() ?: 0
-            ) + 1
+                ) + 1
         var remaining = budget
         var classIndex = 0
         var exhausted = false

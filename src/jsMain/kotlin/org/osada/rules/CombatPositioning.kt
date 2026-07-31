@@ -7,6 +7,7 @@ import org.osada.model.GameUnit
 import org.osada.model.Hex
 import org.osada.model.getAttackableUnit
 import org.osada.movTable
+import org.osada.rules.CombatPositioning.getUnitAttackCells
 import kotlin.math.abs
 
 /**

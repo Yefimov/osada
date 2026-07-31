@@ -10,6 +10,9 @@ import org.osada.multiplayer.sync.SnapshotSynchronizer
 import org.osada.multiplayer.transport.MultiplayerTransport
 import org.osada.multiplayer.transport.Subscription
 
+// Command transport wiring is the reusable online-multiplayer path. The current local two-tab
+// mode uses its in-process channel directly, so this stays dormant until remote transport lands.
+@Suppress("unused")
 class MultiplayerCommandRuntime(
     private val transport: MultiplayerTransport,
     private val authorityProcessor: AuthorityCommandProcessor,
@@ -34,6 +37,7 @@ class MultiplayerCommandRuntime(
             MultiplayerMessageType.COMMAND_FOR_AUTHORITY -> processAuthorityCommand(message)
             MultiplayerMessageType.COMMAND_COMMIT, MultiplayerMessageType.SNAPSHOT ->
                 synchronizer.acceptCommit(message)
+
             MultiplayerMessageType.COMMAND_REJECT -> handleRejection(message)
             else -> Unit
         }
@@ -50,6 +54,7 @@ class MultiplayerCommandRuntime(
                         MultiplayerSnapshotJson.encode(decision.snapshot),
                     ),
                 )
+
             is AuthorityDecision.Reject ->
                 transport.send(
                     ClientProtocolMessage(

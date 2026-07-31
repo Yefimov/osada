@@ -1,59 +1,50 @@
 package org.osada.ui
 
 import org.osada.PlayerType
-import org.osada.RoadType
-import org.osada.i18n.I18n
 import org.osada.model.Cell
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
 import org.osada.rules.GameRules
 import org.osada.rules.isAir
-import org.osada.terrainNames
+import org.osada.ui.input.MapActivationKind
+import org.osada.ui.input.MapPointerController
 import org.osada.uiSettings
-import org.w3c.dom.events.MouseEvent
 
 /**
- * Owns the cursor state and all map mouse-event logic: click dispatch (select / move / attack /
- * deploy), drag-to-scroll, cursor drawing, and location messages. Extracted from the former
- * `UI` god-class (SRP). Click routing itself lives in [MapClickHandler].
+ * Facade over the map's input layer (spec §31):
+ *
+ * ```
+ * MapInputController
+ *  ├─ MapPointerController   (Pointer Events -> gestures)
+ *  ├─ desktop Ctrl+wheel zoom
+ *  └─ MapClickHandler        (semantic routing into game rules)
+ * ```
+ *
+ * It owns the coordinate bridge (client pixels -> native canvas pixels -> hex) and the post-action
+ * HUD refresh; it deliberately owns no gesture recognition and no game rules. Mouse, pen and touch
+ * all arrive here through the same two entry points, [onActivate] and [onHover], so there is no
+ * separate touch code path to drift out of sync — and in particular no "skip dragging when the
+ * device has a touchscreen" branch, which is what used to make the map unpannable on a phone.
  */
 internal class MapInputController(
     private val ui: UI,
 ) {
     private val clickHandler = MapClickHandler(ui)
-
-    private var curDown = false
-
-    // Drag-to-scroll anchor: viewport (client) mouse position + #game's own scroll position at
-    // drag start. clientX/Y deltas map 1:1 onto scrollLeft/scrollTop deltas regardless of zoom —
-    // both are already expressed in #game's own rendered ("post-zoom") pixel space, so no zoom
-    // division is needed here (unlike getClickPos, which converts INTO native canvas space for
-    // hex hit-testing — a different destination space entirely).
-    private var dragStartClientX = 0.0
-    private var dragStartClientY = 0.0
-    private var dragStartScrollLeft = 0.0
-    private var dragStartScrollTop = 0.0
-
-    private data class ClickInfo(
-        val x: Double,
-        val y: Double,
-        val rightClick: Boolean,
-    )
+    private val pointerController = MapPointerController(this)
 
     fun attachMapEventListeners() {
         val cursorCanvas = ui.render.getCursorCanvas() ?: return
-        cursorCanvas.addEventListener("mousedown", { event: MouseEvent -> handleMapMouseDown(event) })
-        cursorCanvas.addEventListener("mousemove", { event: MouseEvent -> handleMapMouseMove(event) })
-        cursorCanvas.addEventListener("contextmenu", { event: MouseEvent -> event.preventDefault() })
-        js("window").addEventListener("mouseup", { _: MouseEvent -> curDown = false })
-        // Ctrl+wheel = map zoom toward the cursor. `{passive:false}` is required for
-        // preventDefault() to actually suppress the browser's own page-zoom (Chrome defaults
-        // wheel listeners to passive, which silently ignores preventDefault otherwise) — PM's
-        // Ctrl+wheel WAS that unsuppressed browser zoom, which is why it enlarged the whole HUD;
-        // capturing it here and scaling only the map wrapper is the fix.
-        // cursorCanvas is ALREADY dynamic (Render.getCursorCanvas() returns dynamic) — calling
-        // .asDynamic() on an already-dynamic receiver emits a broken REAL method call (no such
-        // JS method), not a reinterpret-cast; it crashed UI construction outright at startup.
+        pointerController.attach(cursorCanvas)
+        attachDesktopWheelZoom(cursorCanvas)
+    }
+
+    /**
+     * Ctrl+wheel = map zoom toward the cursor, unchanged desktop behaviour. `{passive:false}` is
+     * required for preventDefault() to actually suppress the browser's own page zoom (Chrome
+     * defaults wheel listeners to passive and silently ignores preventDefault otherwise) — PM's
+     * Ctrl+wheel WAS that unsuppressed browser zoom, which is why it enlarged the whole HUD.
+     */
+    private fun attachDesktopWheelZoom(cursorCanvas: dynamic) {
         cursorCanvas.addEventListener("wheel", { event: dynamic ->
             if (event.ctrlKey == true) {
                 event.preventDefault()
@@ -71,17 +62,80 @@ internal class MapInputController(
         }, js("({passive: false})"))
     }
 
-    private fun handleMapMouseDown(event: MouseEvent) {
-        val map = resolvePlayableMap()
-        val canvas = ui.render.getCursorCanvas()
-        if (map == null || canvas == null) return
+    /**
+     * A tap, a click or a long press resolved to a map position. [touch] separates the two kinds
+     * of inspection: a long press must leave the selection alone (spec §26), while a desktop
+     * right-click on empty ground keeps its long-standing deselect behaviour.
+     */
+    @Suppress("ReturnCount")
+    fun onActivate(
+        clientX: Double,
+        clientY: Double,
+        kind: MapActivationKind,
+        touch: Boolean,
+    ) {
+        val map = resolvePlayableMap() ?: return
+        val cell = cellAt(clientX, clientY) ?: return
+        val hex = resolveHex(map, cell) ?: return
+        if (uiSettings.strategicZoom) {
+            ui.toggleStrategicZoom()
+            ui.uiSetCellOnViewPort(cell)
+            return
+        }
+        val currentPlayerSide = map.currentPlayer?.side ?: 0
+        val unit = clickHandler.resolveVisibleUnit(hex, currentPlayerSide)
+        if (kind == MapActivationKind.INSPECT) {
+            inspect(map, cell, unit, touch)
+            return
+        }
+        // A tap anywhere other than the previewed target ends that preview (spec §17.2.7); the
+        // tap itself then routes normally, so tapping a different enemy re-previews immediately.
+        if (!TargetPreviewController.isPendingCell(cell.row, cell.col)) TargetPreviewController.cancel(ui)
+        val handled =
+            if (unit != null) {
+                clickHandler.handleLeftClickWithUnit(map, cell, hex, unit)
+            } else {
+                clickHandler.handleLeftClickEmpty(map, cell, hex, currentPlayerSide)
+            }
+        if (!handled) updateMapLocationMessage(ui, cell.row, cell.col)
+        finishClick(map, unit, handled, cell)
+    }
 
-        val info = getClickPos(canvas, event)
-        trackDragStart(event)
+    /** Fine-pointer motion over the map: cursor art, location line and the sidebar inspector. */
+    fun onHover(
+        clientX: Double,
+        clientY: Double,
+    ) {
+        val cell = cellAt(clientX, clientY) ?: return
+        if (ui.game.scenario
+                ?.map
+                ?.currentUnit != null &&
+            !uiSettings.strategicZoom
+        ) {
+            ui.render.drawCursor(cell)
+        }
+        updateMapLocationMessage(ui, cell.row, cell.col)
+        // Sidebar "Under Cursor" inspector (cell-change guarded inside, so cheap).
+        ui.updateHoverInfo(cell.row, cell.col)
+    }
 
-        val cell = ui.render.screenToCell(info.x.toInt(), info.y.toInt())
-        val hex = resolveHex(map, cell)
-        if (hex != null) dispatchClick(map, cell, hex, info, event)
+    /**
+     * Inspection only: show whose unit this is and what the ground is, and change nothing. Long
+     * press must not move, attack or deselect — it is the safe half of what right-click does.
+     */
+    private fun inspect(
+        map: GameMap,
+        cell: Cell,
+        unit: GameUnit?,
+        touch: Boolean,
+    ) {
+        if (unit != null) {
+            clickHandler.handleRightClick(map, unit)
+        } else if (!touch) {
+            // Desktop right-click on empty ground keeps deselecting, as it always has.
+            clickHandler.handleRightClick(map, null)
+        }
+        updateMapLocationMessage(ui, cell.row, cell.col)
     }
 
     private fun resolvePlayableMap(): GameMap? {
@@ -97,48 +151,6 @@ internal class MapInputController(
     ): org.osada.model.Hex? {
         val inBounds = cell.row in 0 until map.rows && cell.col in 0 until map.cols
         return if (inBounds) map.map?.get(cell.row)?.get(cell.col) else null
-    }
-
-    private fun dispatchClick(
-        map: GameMap,
-        cell: Cell,
-        hex: org.osada.model.Hex,
-        info: ClickInfo,
-        event: MouseEvent,
-    ) {
-        if (uiSettings.strategicZoom) {
-            ui.toggleStrategicZoom()
-            ui.uiSetCellOnViewPort(cell)
-            return
-        }
-
-        val currentPlayerSide = map.currentPlayer?.side ?: 0
-        val unit = clickHandler.resolveVisibleUnit(hex, currentPlayerSide)
-
-        if (info.rightClick) {
-            clickHandler.handleRightClick(map, unit)
-            return
-        }
-
-        val handled =
-            if (unit != null) {
-                clickHandler.handleLeftClickWithUnit(map, cell, hex, unit)
-            } else {
-                clickHandler.handleLeftClickEmpty(map, cell, hex, currentPlayerSide)
-            }
-        if (!handled && uiSettings.hasTouch) updateLocationMessage(cell.row, cell.col)
-        finishClick(map, unit, handled, cell)
-        event.preventDefault()
-    }
-
-    private fun trackDragStart(event: MouseEvent) {
-        if (uiSettings.hasTouch) return
-        curDown = true
-        dragStartClientX = event.clientX.toDouble()
-        dragStartClientY = event.clientY.toDouble()
-        val gameDiv = byId("game")?.asDynamic()
-        dragStartScrollLeft = (gameDiv?.scrollLeft as? Number)?.toDouble() ?: 0.0
-        dragStartScrollTop = (gameDiv?.scrollTop as? Number)?.toDouble() ?: 0.0
     }
 
     /** Post-click refresh: air-mode toggle from the (possibly changed) selection, enemy-card vs
@@ -161,85 +173,36 @@ internal class MapInputController(
         val isAir = currentUnit?.let { GameRules.isAir(it) } ?: false
         uiSettings.airMode = isAir
         byId("air")?.let { toggleButton(it, isAir) }
-        if (!handled && unit != null && unit.player?.id != map.currentPlayer?.id) {
-            ui.showEnemyCard(unit)
-        } else {
-            currentUnit?.let { ui.showUnitInfo(it) }
-        }
-        currentUnit?.getPos()?.let { updateLocationMessage(it.row, it.col) }
-            ?: updateLocationMessage(cell.row, cell.col)
-    }
-
-    private fun handleMapMouseMove(event: MouseEvent) {
-        val canvas = ui.render.getCursorCanvas()
-        if (canvas != null) {
-            val info = getClickPos(canvas, event)
-            val cell = ui.render.screenToCell(info.x.toInt(), info.y.toInt())
-            if (ui.game.scenario
-                    ?.map
-                    ?.currentUnit != null &&
-                uiSettings.strategicZoom != true
-            ) {
-                ui.render.drawCursor(cell)
+        if (!TargetPreviewController.hasPending) {
+            if (!handled && unit != null && unit.player?.id != map.currentPlayer?.id) {
+                ui.showEnemyCard(unit)
+            } else {
+                currentUnit?.let { ui.showUnitInfo(it) }
             }
-            updateLocationMessage(cell.row, cell.col)
-            // Sidebar "Under Cursor" inspector (cell-change guarded inside, so cheap).
-            ui.updateHoverInfo(cell.row, cell.col)
         }
-        if (!curDown) return
-        val gameDiv = byId("game") ?: return
-        gameDiv.asDynamic().scrollLeft = dragStartScrollLeft + (dragStartClientX - event.clientX)
-        gameDiv.asDynamic().scrollTop = dragStartScrollTop + (dragStartClientY - event.clientY)
+        currentUnit?.getPos()?.let { updateMapLocationMessage(ui, it.row, it.col) }
+            ?: updateMapLocationMessage(ui, cell.row, cell.col)
     }
 
-    /** Converts a mouse event to a native (unzoomed) canvas pixel coordinate — the space
-     *  [Render.screenToCell]'s hex math expects. Built on `getBoundingClientRect()` +
-     *  `event.clientX/Y`, which is robust to CSS `zoom` on any ancestor (map zoom's wrapper,
-     *  strategic zoom's `#game`) and to DOM nesting generally, unlike the old manual
-     *  offsetLeft/scrollLeft arithmetic this replaced — that version pre-dates zoom entirely and
-     *  had no way to account for it (screenToCell used to compensate separately/redundantly). */
-    private fun getClickPos(
-        canvas: dynamic,
-        event: MouseEvent,
-    ): ClickInfo {
-        val which = event.asDynamic().which as? Int ?: 0
-        val rightClick = which == 3 || event.button.toInt() == 2
+    /**
+     * Viewport (client) pixels -> the hex under them.
+     *
+     * Built on `getBoundingClientRect()` rather than manual offset/scroll arithmetic, so it is
+     * robust to CSS `zoom` on any ancestor (the map-zoom wrapper, strategic zoom's `#game`) and to
+     * DOM nesting generally — and it works for pointer, mouse, tests and keyboard activation
+     * alike, unlike the `MouseEvent`-typed helper it replaced.
+     */
+    @Suppress("ReturnCount")
+    fun cellAt(
+        clientX: Double,
+        clientY: Double,
+    ): Cell? {
+        val canvas = ui.render.getCursorCanvas() ?: return null
         val rect = canvas.getBoundingClientRect()
         val totalZoom = MapZoom.level * (if (uiSettings.strategicZoom) 1.0 / uiSettings.strategicZoomLevel else 1.0)
-        val x = (event.clientX.toDouble() - (rect.left as Double)) / totalZoom
-        val y = (event.clientY.toDouble() - (rect.top as Double)) / totalZoom
-        return ClickInfo(x, y, rightClick)
-    }
-
-    private fun updateLocationMessage(
-        row: Int,
-        col: Int,
-    ) {
-        val map = ui.game.scenario?.map ?: return
-        val hex = map.map?.get(row)?.get(col) ?: return
-        val currentSide = map.currentPlayer?.side ?: 0
-        val sb = StringBuilder()
-        sb.append(terrainNames.getOrNull(hex.terrain) ?: "Unknown")
-        if (hex.road != RoadType.NONE.value) sb.append(", Road")
-        if (hex.name.isNotEmpty()) sb.append(" - ${hex.name}")
-        val unit = hex.getUnit(uiSettings.airMode)
-        val unitVisible =
-            unit != null && (hex.isSpotted(currentSide) || unit.tempSpotted || unit.player?.side == currentSide)
-        if (unitVisible) {
-            val data = unit.unitData()
-            sb.append(" (${data.name}")
-            if (unit.strength > 0) sb.append(" ${unit.strength}")
-            sb.append(")")
-        }
-        sb
-            .append(" (")
-            .append(col)
-            .append(",")
-            .append(row)
-            .append(")")
-        // §1.15: the dashed ring alone doesn't say the danger is conditional on landing here (as
-        // opposed to merely flying over it on the way to a farther, unmarked hex) -- spell it out.
-        if (hex.isAaThreat) sb.append(" — ").append(I18n.t("hud.status.location.aa_threat"))
-        byId("locmsg")?.innerHTML = sb.toString()
+        if (totalZoom <= 0.0) return null
+        val x = (clientX - (rect.left as Double)) / totalZoom
+        val y = (clientY - (rect.top as Double)) / totalZoom
+        return ui.render.screenToCell(x.toInt(), y.toInt())
     }
 }

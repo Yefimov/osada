@@ -1,5 +1,6 @@
 package org.osada.hero
 
+import org.osada.hero.FormationIdentity.nextFor
 import org.osada.model.GameUnit
 
 /**

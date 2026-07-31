@@ -100,6 +100,7 @@ internal object RecognitionService {
             contribution.destroyedEnemy && contribution.enemyStronger -> EmergenceEvent.DESTROYED_STRONGER_ENEMY
             contribution.role == Contribution.Role.DEFENDER && contribution.survivedCriticalDamage ->
                 EmergenceEvent.HELD_UNDER_ATTACK
+
             contribution.survivedCriticalDamage -> EmergenceEvent.SURVIVED_CRITICAL_DAMAGE
             contribution.destroyedEnemy -> EmergenceEvent.DESTROYED_ENEMY
             contribution.gainedLevel -> EmergenceEvent.DISTINGUISHED_SERVICE

@@ -78,8 +78,16 @@ class UI(
         // Scenario briefings are opened by setNewScenario() after map resources are ready. Keeping
         // the constructor silent prevents duplicate briefings and replay after save restoration.
         render.cacheImages { }
-        uiSettings.hasTouch = hasTouch()
+        // Layout services first: the pointer pipeline, the renderer and the drawer all ask
+        // MobileLayoutController which shell they are in, so it must have measured once already.
+        MobileLayoutController.install()
+        MobileDrawer.install()
+        // Kept only as a derived compatibility flag for the few renderers that still read it
+        // (attack-cursor sizing). Layout and input decisions go through MobileLayoutController —
+        // `('ontouchstart' in window)` cannot tell a phone from a touchscreen laptop.
+        uiSettings.hasTouch = MobileLayoutController.isCoarsePointer
         mapInputController.attachMapEventListeners()
+        MobileOnboarding.showIfNeeded()
 
         // Escape opens/closes the pause menu, or closes whatever modal is topmost — registered
         // once here since UI is constructed exactly once per page load (Game reuses this instance
@@ -91,11 +99,21 @@ class UI(
         })
     }
 
+    /**
+     * Centres [cell] in the MAP viewport — `#game`'s own client box — not in the browser window.
+     * The window includes the top bar, the bottom dock and any device cutout, so centring against
+     * it pushed the target cell down behind the HUD on any short landscape phone. `#game` already
+     * excludes all three, so no compensating offset is added here (spec §35).
+     */
     fun uiSetCellOnViewPort(cell: Cell): Boolean {
-        val gameDiv = byId("game") ?: return false
+        val gameDiv = byId("game")?.asDynamic() ?: return false
         val screenPos = render.cellToScreen(cell.row, cell.col, true)
-        gameDiv.asDynamic().scrollLeft = screenPos.x - (windowInnerWidth() / 2)
-        gameDiv.asDynamic().scrollTop = screenPos.y - (windowInnerHeight() / 2)
+        val clientWidth = (gameDiv.clientWidth as? Number)?.toDouble() ?: 0.0
+        val clientHeight = (gameDiv.clientHeight as? Number)?.toDouble() ?: 0.0
+        val maxLeft = (((gameDiv.scrollWidth as? Number)?.toDouble() ?: 0.0) - clientWidth).coerceAtLeast(0.0)
+        val maxTop = (((gameDiv.scrollHeight as? Number)?.toDouble() ?: 0.0) - clientHeight).coerceAtLeast(0.0)
+        gameDiv.scrollLeft = (screenPos.x - clientWidth / 2.0).coerceIn(0.0, maxLeft)
+        gameDiv.scrollTop = (screenPos.y - clientHeight / 2.0).coerceIn(0.0, maxTop)
         return true
     }
 
@@ -272,7 +290,4 @@ class UI(
         }
     }
 
-    private fun windowInnerWidth(): Int = js("window.innerWidth") as Int
-
-    private fun windowInnerHeight(): Int = js("window.innerHeight") as Int
 }

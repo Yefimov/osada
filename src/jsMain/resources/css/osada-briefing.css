@@ -6,7 +6,7 @@
     inset: 0;
     z-index: 1200;
     color: var(--osada-text);
-    font-family: var(--osada-font-ui);
+    font-family: var(--osada-font-ui), sans-serif;
     box-sizing: border-box;
 }
 
@@ -30,9 +30,8 @@
     content: "";
     position: absolute;
     inset: 0;
-    background:
-        linear-gradient(180deg, rgba(10, 11, 13, .42), rgba(8, 9, 11, .62)),
-        radial-gradient(130% 100% at 28% 38%, rgba(0, 0, 0, 0) 24%, rgba(0, 0, 0, .62) 100%);
+    background: linear-gradient(180deg, rgba(10, 11, 13, .42), rgba(8, 9, 11, .62)),
+    radial-gradient(130% 100% at 28% 38%, rgba(0, 0, 0, 0) 24%, rgba(0, 0, 0, .62) 100%);
     backdrop-filter: saturate(.75) contrast(1.05);
     transition: background .4s ease;
 }
@@ -41,9 +40,8 @@
  * over the art can come up. This is the whole reason the cards are translucent — a dark slab
  * plus a dark wash would show nothing either way. */
 .osada-briefing--dialogue .osada-briefing__backdrop::before {
-    background:
-        linear-gradient(180deg, rgba(10, 11, 13, .2), rgba(8, 9, 11, .42)),
-        radial-gradient(130% 100% at 28% 38%, rgba(0, 0, 0, 0) 34%, rgba(0, 0, 0, .55) 100%);
+    background: linear-gradient(180deg, rgba(10, 11, 13, .2), rgba(8, 9, 11, .42)),
+    radial-gradient(130% 100% at 28% 38%, rgba(0, 0, 0, 0) 34%, rgba(0, 0, 0, .55) 100%);
 }
 
 .osada-briefing__shade {
@@ -320,8 +318,13 @@
  * line is current. So the log recedes with age — newest at full strength, the one before it
  * dimmed, everything older further back. Hovering or focusing the transcript restores all of it,
  * because reading back through the conversation is a supported gesture. */
-.osada-dialogue__turn:nth-last-child(n + 2) { opacity: .6; }
-.osada-dialogue__turn:nth-last-child(n + 4) { opacity: .34; }
+.osada-dialogue__turn:nth-last-child(n + 2) {
+    opacity: .6;
+}
+
+.osada-dialogue__turn:nth-last-child(n + 4) {
+    opacity: .34;
+}
 
 .osada-dialogue__transcript:hover .osada-dialogue__turn,
 .osada-dialogue__transcript:focus-within .osada-dialogue__turn {
@@ -395,8 +398,14 @@
 }
 
 @keyframes osada-turn-enter {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .osada-dialogue__skip {
@@ -412,7 +421,7 @@
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(180, 138, 60, .22);
     border-radius: var(--osada-radius);
-    font-family: var(--osada-font-ui);
+    font-family: var(--osada-font-ui), sans-serif;
     font-size: 10px;
     font-weight: 700;
     letter-spacing: .1em;
@@ -565,8 +574,12 @@
 }
 
 @keyframes osada-hint-pulse {
-    0%, 100% { opacity: .55; }
-    50% { opacity: 1; }
+    0%, 100% {
+        opacity: .55;
+    }
+    50% {
+        opacity: 1;
+    }
 }
 
 @media (max-width: 760px) {

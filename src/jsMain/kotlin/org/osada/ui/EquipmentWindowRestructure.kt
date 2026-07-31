@@ -31,6 +31,23 @@ internal fun EquipmentWindowBuilder.restructureEquipmentWindow() {
     // keypress — e.g. closing equipment AND toggling the pause menu on one Escape tap).
 }
 
+/**
+ * Compact equipment is a two-step workspace: browse the catalogue, then inspect/act on the
+ * selected record. Selection remains in #eqUserSel while this object changes presentation only,
+ * so returning to the list never loses the chosen card or its scroll position.
+ */
+internal object CompactEquipmentNavigation {
+    private const val DETAIL_OPEN_CLASS = "osada-eq-detail-open"
+
+    fun showDetail() {
+        byId("equipment")?.classList?.add(DETAIL_OPEN_CLASS)
+    }
+
+    fun showList() {
+        byId("equipment")?.classList?.remove(DETAIL_OPEN_CLASS)
+    }
+}
+
 private fun moveInto(
     id: String,
     into: HTMLElement,
@@ -38,7 +55,7 @@ private fun moveInto(
     byId(id)?.let { into.appendChild(it) }
 }
 
-private fun EquipmentWindowBuilder.buildEqHeader(eq: HTMLElement) {
+private fun buildEqHeader(eq: HTMLElement) {
     // --- header: title · prestige (always visible) · fixed-size close ---
     val header = addTag(eq, "div")
     header.id = "eqGridHeader"
@@ -124,7 +141,7 @@ private fun EquipmentWindowBuilder.buildEqClassTabsRow(eq: HTMLElement) {
     buildSortSelect(tools)
 }
 
-private fun EquipmentWindowBuilder.buildEqListPane(eq: HTMLElement) {
+private fun buildEqListPane(eq: HTMLElement) {
     // --- list pane: unit strip (upgrade/reserve) + equipment/transport lists ---
     val listPane = addTag(eq, "div")
     listPane.id = "eqListPane"
@@ -146,10 +163,15 @@ private fun EquipmentWindowBuilder.buildEqListPane(eq: HTMLElement) {
     moveInto("hscroll-eqTransportList", listPane)
 }
 
-private fun EquipmentWindowBuilder.buildEqDetailPane(eq: HTMLElement) {
+private fun buildEqDetailPane(eq: HTMLElement) {
     // --- detail column: selected unit record + primary action ---
     val detail = addTag(eq, "div")
     detail.id = "eqDetailPane"
+    val back = addTag(detail, "div")
+    back.id = "eqDetailBack"
+    back.className = "osada-btn osada-btn--secondary"
+    back.textContent = I18n.t("mobile.equipment.back.label")
+    back.asButton(I18n.t("mobile.equipment.back.help")) { CompactEquipmentNavigation.showList() }
     val detailBody = addTag(detail, "div")
     detailBody.id = "eqDetailBody"
     val actions = addTag(detail, "div")
@@ -166,7 +188,7 @@ private fun EquipmentWindowBuilder.buildEqDetailPane(eq: HTMLElement) {
     moveInto("eqUpgradeText", upgradeRow)
 }
 
-private fun EquipmentWindowBuilder.buildEqFooter(eq: HTMLElement) {
+private fun buildEqFooter(eq: HTMLElement) {
     // --- footer: secondary (sell/disband) ---
     val footer = addTag(eq, "div")
     footer.id = "eqFooter"
@@ -177,7 +199,7 @@ private fun EquipmentWindowBuilder.buildEqFooter(eq: HTMLElement) {
 
 /** Country selector for sides with support countries (e.g. Germany + Romania). Populated by
  *  EquipmentWindowController.syncCountrySelect; hidden when the side has a single country. */
-private fun EquipmentWindowBuilder.buildCountrySelect(parent: HTMLElement) {
+private fun buildCountrySelect(parent: HTMLElement) {
     val select = addTag(parent, "select")
     select.id = "osadaEqCountry"
     select.title =
@@ -202,7 +224,7 @@ private fun EquipmentWindowBuilder.buildCountrySelect(parent: HTMLElement) {
 }
 
 /** Compact sort control in the class-tabs row — replaces the broken #eqSortOptions panel. */
-private fun EquipmentWindowBuilder.buildSortSelect(parent: HTMLElement) {
+private fun buildSortSelect(parent: HTMLElement) {
     val select = addTag(parent, "select")
     select.id = "osadaEqSort"
     select.title = I18n.t("equipment.sort.help")

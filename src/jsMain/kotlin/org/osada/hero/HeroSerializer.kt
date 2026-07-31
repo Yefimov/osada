@@ -1,6 +1,7 @@
 package org.osada.hero
 
 import org.osada.campaign.BriefingDynamic
+import org.osada.hero.HeroSerializer.deserialize
 import kotlin.js.json
 
 /**

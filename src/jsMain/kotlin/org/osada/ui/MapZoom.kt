@@ -67,16 +67,38 @@ internal object MapZoom {
         val nativeX = (anchorClientX - oldLeft + oldScrollLeft) / oldZoom
         val nativeY = (anchorClientY - oldTop + oldScrollTop) / oldZoom
 
-        uiSettings.zoomLevel = clamped
+        applyLevel(clamped, anchorClientX, anchorClientY, nativeX, nativeY)
+    }
+
+    /**
+     * The one heavy zoom application: persist the level, re-lay-out and re-render the map, put the
+     * anchored content point back under [anchorClientX]/[anchorClientY], then refresh everything
+     * that is positioned in map space. [nativeX]/[nativeY] are the anchored point in NATIVE
+     * (unzoomed) canvas pixels.
+     *
+     * Shared by [set] and by [MapZoomPreview.commit] so a pinch commits through exactly the same
+     * path a +/- button press takes — a pinch must never leave the HUD in a different state than
+     * the controls would.
+     */
+    fun applyLevel(
+        level: Double,
+        anchorClientX: Double,
+        anchorClientY: Double,
+        nativeX: Double,
+        nativeY: Double,
+    ) {
+        val ui = GameHolder.instance?.ui ?: return
+        uiSettings.zoomLevel = level
         ui.render.positionLayers()
         ui.render.render()
 
+        val gameDiv = byId("game")?.asDynamic()
         if (gameDiv != null) {
             val newRect = gameDiv.getBoundingClientRect()
             val newLeft = (newRect?.left as? Number)?.toDouble() ?: 0.0
             val newTop = (newRect?.top as? Number)?.toDouble() ?: 0.0
-            gameDiv.scrollLeft = nativeX * clamped - (anchorClientX - newLeft)
-            gameDiv.scrollTop = nativeY * clamped - (anchorClientY - newTop)
+            gameDiv.scrollLeft = nativeX * level - (anchorClientX - newLeft)
+            gameDiv.scrollTop = nativeY * level - (anchorClientY - newTop)
         }
         MinimapBuilder.refresh()
         AttackRingBuilder.refresh()

@@ -66,6 +66,13 @@ internal object StartMenuSettingsBuilder {
                 ),
             ),
             SettingSection(
+                "settings.section.mobile.title",
+                "settings.section.mobile.caption",
+                listOf(
+                    "reducedEffects" to "settings.mobile.reduced_effects.label",
+                ),
+            ),
+            SettingSection(
                 "settings.section.sound.title",
                 null,
                 listOf(
@@ -92,6 +99,7 @@ internal object StartMenuSettingsBuilder {
             "showDetailInfoToolTips" to "settings.gameplay.optional_objectives.help",
             "confirmEndTurn" to "settings.gameplay.confirm_end_turn.help",
             "stalinRegime" to "settings.gameplay.stalin_regime.help",
+            "reducedEffects" to "settings.mobile.reduced_effects.help",
             "muteUnitSounds" to "settings.sound.mute_unit_sounds.help",
             "noFOW" to "settings.observer.no_fow.help",
             "showHiddenVictoryHexes" to "settings.observer.hidden_victory_hexes.help",
@@ -197,6 +205,9 @@ internal object StartMenuSettingsBuilder {
         // continuation of the section's own items, not separate top-level controls.
         // Two levels (user request): discrete unit/fire cues vs the continuous weather loop.
         if (section.titleKey == "settings.section.sound.title") buildSoundSliders()
+        // Same continuation pattern: the mobile selects belong to the mobile section, and live in
+        // their own builder only because this object is at the project's function-count limit.
+        if (section.titleKey == "settings.section.mobile.title") MobileSettingsBuilder.buildControls()
     }
 
     private fun buildSettingCheckbox(
@@ -262,8 +273,14 @@ internal object StartMenuSettingsBuilder {
         }
     }
 
+    /**
+     * Retina changes the canvas BACKING resolution; on a phone or tablet it must not also change
+     * how large the controls are (spec §42). The interface-scale nudge below therefore applies to
+     * desktop only — on a touch layout, control size is owned by the mobile density setting.
+     */
     private fun applyRetinaScaleAdjustment() {
         byId("smSettings")?.asDynamic()?.needPageReload = true
+        if (MobileLayoutController.mode.isMobileShell) return
         if (window.devicePixelRatio >= 1.0) {
             if (uiSettings.useRetina && uiSettings.uiScale <= 1.0) {
                 byId("uiscale")?.asDynamic()?.value = RETINA_UI_SCALE

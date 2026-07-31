@@ -1,5 +1,9 @@
 package org.osada.hero
 
+import org.osada.hero.HeroPortraitArt.ALL
+import org.osada.hero.HeroPortraitArt.pathFor
+
+
 /**
  * The authored (painted) hero portrait catalogue — the second of the two portrait paths.
  *

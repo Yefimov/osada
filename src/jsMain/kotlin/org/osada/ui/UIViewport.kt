@@ -3,6 +3,10 @@ package org.osada.ui
 import org.osada.model.GameUnit
 import org.osada.model.ScreenPos
 
+private const val DESKTOP_MARGIN = 0.15
+private const val PHONE_MARGIN_X = 0.12
+private const val PHONE_MARGIN_Y = 0.18
+
 /** Viewport scrolling helpers for [UI], split out to keep its function count in bounds. */
 fun UI.uiSetUnitOnViewPort(unit: GameUnit): Boolean {
     val pos = unit.getPos() ?: return false
@@ -45,9 +49,11 @@ private fun isUnitScrolledIntoView(
     val scrollLeft = (gameDiv.scrollLeft as? Number)?.toDouble() ?: 0.0
     val scrollTop = (gameDiv.scrollTop as? Number)?.toDouble() ?: 0.0
     // Margin so the unit isn't left flush against the very edge either — still comfortably
-    // clickable/visible, just not dead-center.
-    val marginX = clientWidth * 0.15
-    val marginY = clientHeight * 0.15
+    // clickable/visible, just not dead-center. A phone gets a taller vertical margin: the map
+    // viewport is short, a fingertip is wide, and the bottom dock sits right under the edge.
+    val phone = MobileLayoutController.mode.isPhone
+    val marginX = clientWidth * (if (phone) PHONE_MARGIN_X else DESKTOP_MARGIN)
+    val marginY = clientHeight * (if (phone) PHONE_MARGIN_Y else DESKTOP_MARGIN)
     return screenPos.x >= scrollLeft + marginX &&
         screenPos.x <= scrollLeft + clientWidth - marginX &&
         screenPos.y >= scrollTop + marginY &&

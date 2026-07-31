@@ -109,6 +109,7 @@ object WeatherModel {
                         } else {
                             s.ground // clear spell dries back to designed ground
                         }
+
                     else -> s.ground // Overcast: leave ground as-is
                 }
             if (newGround != s.ground) {
