@@ -2,6 +2,7 @@ package org.osada
 
 import org.osada.hero.CoreFormation
 import org.osada.hero.FormationId
+import org.osada.hero.HeroBalance
 import org.osada.hero.HeroBiographyFacts
 import org.osada.hero.HeroCampaign
 import org.osada.hero.HeroDefinition
@@ -9,6 +10,7 @@ import org.osada.hero.HeroId
 import org.osada.hero.HeroOrigin
 import org.osada.hero.HeroState
 import org.osada.hero.HeroStatus
+import org.osada.hero.HeroTransferService
 import org.osada.hero.PortraitComposition
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
@@ -57,6 +59,16 @@ class HeroTransferTest {
             portrait = PortraitComposition(seed = 3),
         )
 
+    private fun activeState(
+        formationId: FormationId,
+        id: HeroId = heroId,
+    ) = HeroState(
+        heroId = id,
+        rankId = "major",
+        status = HeroStatus.ACTIVE,
+        assignedFormationId = formationId,
+    )
+
     private fun formation(
         id: FormationId,
         assignedHeroId: HeroId? = null,
@@ -84,7 +96,7 @@ class HeroTransferTest {
             HeroState(heroId = heroId, rankId = "major", status = HeroStatus.WOUNDED),
         )
 
-        assertTrue(HeroCampaign.transferCommander(heroId, emptyFormationId))
+        assertTrue(HeroTransferService.transferCommander(heroId, emptyFormationId))
 
         val hero = assertNotNull(HeroCampaign.roster().state(heroId))
         assertEquals(HeroStatus.ACTIVE, hero.status, "a transferred commander returns to active service")
@@ -101,25 +113,85 @@ class HeroTransferTest {
             HeroState(heroId = heroId, rankId = "major", status = HeroStatus.RESERVE),
         )
 
-        assertEquals(listOf(emptyFormationId), HeroCampaign.transferableFormations(heroId).map { it.id })
+        assertEquals(listOf(emptyFormationId), HeroTransferService.transferableFormations(heroId).map { it.id })
     }
 
     @Test
-    fun anActiveCommanderCannotBeTransferredOutFromUnderTheirFormation() {
+    fun anActiveCommanderCanBePostedToAnUnledFormation() {
         HeroCampaign.roster().putFormation(formation(ledFormationId, assignedHeroId = heroId))
-        HeroCampaign.roster().putHero(
-            definition(),
-            HeroState(
-                heroId = heroId,
-                rankId = "major",
-                status = HeroStatus.ACTIVE,
-                assignedFormationId = ledFormationId,
-            ),
-        )
+        HeroCampaign.roster().putHero(definition(), activeState(ledFormationId))
         HeroCampaign.roster().putFormation(formation(emptyFormationId))
 
-        assertEquals(emptyList(), HeroCampaign.transferableFormations(heroId))
-        assertFalse(HeroCampaign.transferCommander(heroId, emptyFormationId))
+        assertEquals(listOf(emptyFormationId), HeroTransferService.transferableFormations(heroId).map { it.id })
+        assertTrue(HeroTransferService.transferCommander(heroId, emptyFormationId))
+
+        val hero = assertNotNull(HeroCampaign.roster().state(heroId))
+        assertEquals(emptyFormationId, hero.assignedFormationId)
+        assertNull(
+            assertNotNull(HeroCampaign.roster().formation(ledFormationId)).assignedHeroId,
+            "the formation the commander left must be unled, not still pointing at them",
+        )
+    }
+
+    @Test
+    fun aCommandersOwnFormationIsNeverOfferedAsATransferTarget() {
+        HeroCampaign.roster().putFormation(formation(ledFormationId, assignedHeroId = heroId))
+        HeroCampaign.roster().putHero(definition(), activeState(ledFormationId))
+
+        assertEquals(emptyList(), HeroTransferService.transferableFormations(heroId))
+        assertFalse(HeroTransferService.transferCommander(heroId, ledFormationId))
+    }
+
+    @Test
+    fun twoActiveCommandersExchangeFormations() {
+        val otherHeroId = HeroId("H-T2")
+        HeroCampaign.roster().putFormation(formation(emptyFormationId, assignedHeroId = heroId))
+        HeroCampaign.roster().putFormation(formation(ledFormationId, assignedHeroId = otherHeroId))
+        HeroCampaign.roster().putHero(definition(), activeState(emptyFormationId))
+        HeroCampaign.roster().putHero(definition().copy(id = otherHeroId), activeState(ledFormationId, otherHeroId))
+
+        assertTrue(HeroTransferService.transferCommander(heroId, ledFormationId))
+
+        assertEquals(ledFormationId, assertNotNull(HeroCampaign.roster().state(heroId)).assignedFormationId)
+        assertEquals(
+            emptyFormationId,
+            assertNotNull(HeroCampaign.roster().state(otherHeroId)).assignedFormationId,
+            "the incumbent takes the other officer's formation rather than being left with none",
+        )
+        assertEquals(heroId, assertNotNull(HeroCampaign.roster().formation(ledFormationId)).assignedHeroId)
+        assertEquals(otherHeroId, assertNotNull(HeroCampaign.roster().formation(emptyFormationId)).assignedHeroId)
+    }
+
+    @Test
+    fun bothSidesOfAnExchangeAreSettlingInAndGrantNoTraits() {
+        val otherHeroId = HeroId("H-T2")
+        HeroCampaign.roster().putFormation(formation(emptyFormationId, assignedHeroId = heroId))
+        HeroCampaign.roster().putFormation(formation(ledFormationId, assignedHeroId = otherHeroId))
+        HeroCampaign.roster().putHero(definition(), activeState(emptyFormationId))
+        HeroCampaign.roster().putHero(definition().copy(id = otherHeroId), activeState(ledFormationId, otherHeroId))
+
+        HeroTransferService.transferCommander(heroId, ledFormationId)
+
+        listOf(heroId, otherHeroId).forEach { id ->
+            val hero = assertNotNull(HeroCampaign.roster().state(id))
+            assertTrue(HeroTransferService.isSettlingIn(hero), "$id must be settling into its new formation")
+            assertEquals(HeroBalance.DEFAULT.transferSettlingTurns, HeroTransferService.settlingTurnsLeft(hero))
+        }
+    }
+
+    @Test
+    fun settlingInEndsOnceTheFormationHasBeenCommandedLongEnough() {
+        HeroCampaign.roster().putFormation(formation(emptyFormationId))
+        HeroCampaign.roster().putHero(
+            definition(),
+            HeroState(heroId = heroId, rankId = "major", status = HeroStatus.RESERVE),
+        )
+        HeroTransferService.transferCommander(heroId, emptyFormationId)
+
+        val hero = assertNotNull(HeroCampaign.roster().state(heroId))
+        map.turn = map.turn + HeroBalance.DEFAULT.transferSettlingTurns
+        assertFalse(HeroTransferService.isSettlingIn(hero), "the settling period is over once its last turn passes")
+        assertEquals(0, HeroTransferService.settlingTurnsLeft(hero))
     }
 
     @Test
@@ -131,11 +203,17 @@ class HeroTransferTest {
                 definition().copy(id = id),
                 HeroState(heroId = id, rankId = "major", status = status),
             )
-            assertEquals(emptyList(), HeroCampaign.transferableFormations(id), "$status must not be transfer-eligible")
-            assertFalse(HeroCampaign.transferCommander(id, emptyFormationId), "$status must refuse the transfer")
+            assertEquals(
+                emptyList(),
+                HeroTransferService.transferableFormations(id),
+                "$status must not be transfer-eligible",
+            )
+            assertFalse(HeroTransferService.transferCommander(id, emptyFormationId), "$status must refuse the transfer")
         }
     }
 
+    /** An exchange needs two seats. An UNASSIGNED officer has none to offer, so posting them onto a
+     *  led formation would displace its commander to nowhere — refused, not silently resolved. */
     @Test
     fun cannotTransferOntoAFormationThatAlreadyHasACommander() {
         HeroCampaign.roster().putFormation(formation(ledFormationId, assignedHeroId = HeroId("H-other")))
@@ -144,7 +222,7 @@ class HeroTransferTest {
             HeroState(heroId = heroId, rankId = "major", status = HeroStatus.WOUNDED),
         )
 
-        assertFalse(HeroCampaign.transferCommander(heroId, ledFormationId))
+        assertFalse(HeroTransferService.transferCommander(heroId, ledFormationId))
         val hero = assertNotNull(HeroCampaign.roster().state(heroId))
         assertEquals(HeroStatus.WOUNDED, hero.status, "a refused transfer must not mutate the hero")
         assertNull(hero.assignedFormationId)
@@ -158,7 +236,7 @@ class HeroTransferTest {
             HeroState(heroId = heroId, rankId = "major", status = HeroStatus.RESERVE),
         )
 
-        HeroCampaign.transferCommander(heroId, emptyFormationId)
+        HeroTransferService.transferCommander(heroId, emptyFormationId)
 
         val hero = assertNotNull(HeroCampaign.roster().state(heroId))
         assertTrue(hero.serviceEvents.any { it.eventId == "transferred" })
@@ -179,8 +257,8 @@ class HeroTransferTest {
                 hasMoved = true
             }
 
-        assertEquals(emptyList(), HeroCampaign.transferableFormations(heroId))
-        assertFalse(HeroCampaign.transferCommander(heroId, emptyFormationId))
+        assertEquals(emptyList(), HeroTransferService.transferableFormations(heroId))
+        assertFalse(HeroTransferService.transferCommander(heroId, emptyFormationId))
         assertEquals(HeroStatus.RESERVE, assertNotNull(HeroCampaign.roster().state(heroId)).status)
     }
 
@@ -193,6 +271,6 @@ class HeroTransferTest {
         )
         map.turn = 2
 
-        assertFalse(HeroCampaign.transferCommander(heroId, emptyFormationId))
+        assertFalse(HeroTransferService.transferCommander(heroId, emptyFormationId))
     }
 }

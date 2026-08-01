@@ -5,14 +5,27 @@ package org.osada.model
 import org.osada.hero.FormationIdentity
 import org.osada.hero.HeroCampaign
 
-/** Summary of one scenario-end persistent-army reconciliation. */
+/**
+ * Summary of one scenario-end persistent-army reconciliation.
+ *
+ * [candidates] counts **the player's own** formations considered, not every unit on the map. It
+ * used to be the raw candidate list, which included the enemy's units, so the headline read as a
+ * survival rate while comparing your army against your army plus theirs: N_Kiel logged
+ * `17/26 formations` with `destroyed=0`, and the nine "missing" formations were mostly Germans. A
+ * log line whose only job is to tell you whether you lost anything must not be able to invent a
+ * loss (reported 2026-08-01).
+ *
+ * [reMintedFormationIds] is likewise not a loss. Colliding ids used to cause a unit to be dropped;
+ * since that was fixed the collision is repaired by minting a fresh id and **keeping both units**,
+ * so the number is a note about save hygiene, not casualties.
+ */
 internal data class CampaignCarryOverReport(
     val candidates: Int,
     val survivors: Int,
     val destroyed: Int,
     val temporary: Int,
     val noDossier: Int,
-    val duplicateFormationIds: Int,
+    val reMintedFormationIds: Int,
 )
 
 /**
@@ -41,6 +54,9 @@ internal fun GameMap.collectPersistentCampaignUnits(player: Player): CampaignCar
     ensureFormationIds(player)
 
     val candidates = (player.getCoreUnitList() + getUnits().toList()).distinct()
+    // Every other figure in the report is already scoped to the player; `candidates` was not, and
+    // it is the one the headline divides by. See [CampaignCarryOverReport].
+    val owned = candidates.count { it.owner == player.id }
     val destroyed = candidates.count { it.owner == player.id && it.destroyed }
     val temporary = candidates.count { it.owner == player.id && it.isTemporaryBorrowed }
     val noDossier = candidates.count { it.owner == player.id && it.nodossier }
@@ -50,7 +66,7 @@ internal fun GameMap.collectPersistentCampaignUnits(player: Player): CampaignCar
             HeroCampaign.roster().allFormations().mapTo(this) { formation -> formation.id.value }
         }.toMutableSet()
     val survivorsByFormation = linkedMapOf<String, GameUnit>()
-    var duplicateFormationIds = 0
+    var reMintedFormationIds = 0
 
     candidates.filter { it.isCampaignPersistentFor(player) }.forEach { unit ->
         var formationId = FormationIdentity.ensure(unit, usedIds).value
@@ -58,7 +74,7 @@ internal fun GameMap.collectPersistentCampaignUnits(player: Player): CampaignCar
 
         val previous = survivorsByFormation[formationId]
         if (previous !== unit && previous != null) {
-            duplicateFormationIds++
+            reMintedFormationIds++
             // Re-mint past every id already spoken for, so the two formations separate instead of
             // one of them being dropped. HeroCampaign.synchronizeFormation below then registers the
             // new id, and any commander bound to the OLD id stays with `previous` — the unit that
@@ -77,11 +93,11 @@ internal fun GameMap.collectPersistentCampaignUnits(player: Player): CampaignCar
     player.setCoreUnitList(survivors)
 
     return CampaignCarryOverReport(
-        candidates = candidates.size,
+        candidates = owned,
         survivors = survivors.size,
         destroyed = destroyed,
         temporary = temporary,
         noDossier = noDossier,
-        duplicateFormationIds = duplicateFormationIds,
+        reMintedFormationIds = reMintedFormationIds,
     )
 }

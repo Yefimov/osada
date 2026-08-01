@@ -158,6 +158,14 @@ private fun buildEqListPane(eq: HTMLElement) {
     val reserveEmpty = addTag(reservePane, "div")
     reserveEmpty.id = "eqReserveEmpty"
     reserveEmpty.textContent = I18n.t("equipment.reserve.empty")
+    // Bulk refit bar. Its label carries the total price and it disables itself when there is
+    // nothing to buy, so the whole army's readiness is one glance and one click —
+    // ReserveRefitPresenter fills it on every window update.
+    val refitBar = addTag(reservePane, "div")
+    refitBar.id = "eqRefitBar"
+    val refitAll = addTag(refitBar, "div")
+    refitAll.id = "eqRefitAllBut"
+    refitAll.className = "osada-btn osada-btn--secondary"
     moveInto("container-unitlist", reservePane)
     moveInto("hscroll-eqUnitList", listPane)
     moveInto("hscroll-eqTransportList", listPane)

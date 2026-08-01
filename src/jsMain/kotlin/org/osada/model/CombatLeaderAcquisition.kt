@@ -20,7 +20,18 @@ import org.osada.rules.UnitPredicates
 internal object CombatLeaderAcquisition {
     private const val EXPERIENCE_PER_LEVEL = 100
 
-    /** Resolves acquisition for [unit] and reports whether it gained a leader (for the bounce text). */
+    /**
+     * Resolves acquisition for [unit] and reports whether **a hero emerged** — which is what the
+     * caller turns into the "Hero Emerged" bounce text.
+     *
+     * The legacy path deliberately reports `false` even when it did hand out a leader. The two
+     * mechanics are not the same event: an emerged hero has a dossier, a roster entry, a portrait
+     * and a name, while a legacy leader is a bare integer on a scenario unit. Announcing both under
+     * one label meant an ENEMY unit — every enemy is formation-less, so every enemy takes the legacy
+     * path — could bounce "Hero Emerged" over its own hex during the player's attack. Reported
+     * 2026-08-01: "I see 'Hero emerges!' when I kill enemy units." The legacy gain is still recorded
+     * in the combat log by [acquireLegacyLeader], which is where it belongs.
+     */
     fun acquire(
         unit: GameUnit,
         enemy: GameUnit,
@@ -29,12 +40,35 @@ internal object CombatLeaderAcquisition {
         turn: Int = 0,
     ): Boolean {
         val expGained = if (isAttacker) combatResult.atkExpGained else combatResult.defExpGained
-        return if (FormationIdentity.of(unit) != null) {
-            val contribution = contributionFor(unit, enemy, combatResult, isAttacker, expGained)
-            HeroCampaign.recordCombat(unit, contribution, turn)
-        } else {
-            acquireLegacyLeader(unit, expGained)
+        if (FormationIdentity.of(unit) == null) {
+            acquireLegacyLeader(unit, expGained, turn)
+            return false
         }
+        val contribution = contributionFor(unit, enemy, combatResult, isAttacker, expGained)
+        val emerged = HeroCampaign.recordCombat(unit, contribution, turn)
+        if (emerged) log(unit, "HERO", turn)
+        return emerged
+    }
+
+    /**
+     * One line per leader gain, naming **which of the two mechanics** produced it, whose unit it
+     * was, and on what turn.
+     *
+     * Neither path logged anything before, which is precisely why a player reporting "'Hero
+     * emerges!' when I kill enemy units" could not be answered from their console log: the log's
+     * only evidence was the *absence* of a hero line, and that absence is meaningless unless you
+     * already know that the legacy path is silent too. Both are now audible and distinguishable.
+     */
+    private fun log(
+        unit: GameUnit,
+        mechanic: String,
+        turn: Int,
+    ) {
+        val pos = unit.getPos()
+        console.log(
+            "[OSADA] leader gained: $mechanic unit=${unit.id}(${unit.unitData(true).name}) " +
+                "owner=${unit.owner} side=${unit.player?.side} at ${pos?.row},${pos?.col} turn=$turn",
+        )
     }
 
     private fun contributionFor(
@@ -98,14 +132,23 @@ internal object CombatLeaderAcquisition {
         expGained > 0 &&
             experienceAfter / EXPERIENCE_PER_LEVEL > (experienceAfter - expGained) / EXPERIENCE_PER_LEVEL
 
+    /**
+     * The pre-hero path for a formation-less unit (`docs/leaders.md` §5).
+     *
+     * The destroyed guard is this side's counterpart of [HeroCampaign.recordCombat]'s own — a unit
+     * that just ceased to exist must not be promoted. `generateLeaderWithChance` never checked, so
+     * the enemy formation the player had just wiped out could still roll a leader and log it.
+     */
     private fun acquireLegacyLeader(
         unit: GameUnit,
         expGained: Int,
-    ): Boolean {
+        turn: Int,
+    ) {
+        if (unit.destroyed) return
         val leader = Leaders.generateLeaderWithChance(unit, expGained)
-        if (leader == -1) return false
+        if (leader == -1) return
         unit.leader = leader
         CombatLog.addLeader(unit)
-        return true
+        log(unit, "LEGACY", turn)
     }
 }

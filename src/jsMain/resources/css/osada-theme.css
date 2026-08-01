@@ -6027,6 +6027,14 @@ hr {
     color: var(--osada-text-dim);
 }
 
+/* Settling in after a transfer (DEFERRED.md §1.10): the officer's traits are suppressed, so this
+ * is a warning next to the status rather than another dim label beside it. */
+.osada-hero-settling {
+    margin-top: 3px;
+    font-size: 11px;
+    color: var(--osada-red);
+}
+
 .osada-hero-close {
     flex: 0 0 auto;
     width: 26px;
@@ -6706,6 +6714,86 @@ hr {
     background: var(--osada-brass);
     color: #14171b;
     border-color: var(--osada-brass);
+}
+
+/* Heroic commander on a reserve card. Bottom-left, so it collides with neither the attachment
+ * badge (top-left) nor the rename pencil (top-right), and always visible: whether a formation is
+ * led is exactly what the player is choosing between here. Not a button -- the dossier is one
+ * click away on the card itself, and swallowing the click would break card selection. */
+.osada-hero-pip {
+    position: absolute;
+    bottom: 2px;
+    left: 2px;
+    width: 14px;
+    height: 14px;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    background: rgba(0, 0, 0, .55);
+    color: var(--osada-brass);
+    font-family: var(--osada-font-ui);
+    font-size: 10px;
+    line-height: 1;
+    cursor: help;
+    pointer-events: auto;
+}
+
+/* Transferred and not yet settled: the traits are off, so the badge must not read as a live bonus. */
+.osada-hero-pip--settling {
+    color: var(--osada-text-dim);
+    opacity: .75;
+}
+
+/* Reserve refit (2026-08-01): the free end-of-scenario refit is gone, so restoring the army is a
+ * priced action taken here. The bar sits above the unit strip and hides itself when the whole tray
+ * is already at full readiness. */
+#eqRefitBar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 2px 0 4px;
+}
+
+#eqRefitAllBut {
+    min-height: 26px;
+    padding: 0 10px;
+    font-size: 11px;
+}
+
+/* Per-card refit. Bottom-right is the last free corner: attachments hold top-left, rename
+ * top-right, the commander pip bottom-left. Brass because it spends prestige. */
+.osada-refit-btn {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    height: 16px;
+    padding: 0 4px;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--osada-brass);
+    border-radius: 3px;
+    background: rgba(0, 0, 0, .6);
+    color: var(--osada-brass);
+    font-family: var(--osada-font-ui);
+    font-size: 9px;
+    line-height: 1;
+    cursor: pointer;
+    transition: color .12s, background .12s;
+}
+
+.osada-refit-btn:hover {
+    background: var(--osada-brass);
+    color: #14171b;
+}
+
+/* Shared "cannot afford this right now" state for the metal buttons. */
+.osada-btn--disabled {
+    opacity: .5;
+    cursor: not-allowed;
 }
 
 @media (max-width: 560px) {

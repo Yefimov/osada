@@ -31,12 +31,12 @@ internal class EquipmentWindowController(
             // Inline grid (not makeVisible's display:inline) so the area layout applies.
             byId("equipment")?.style?.display = "grid"
             EquipmentWindowBuilder.setEquipmentMode("reserve")
-            uiSettings.deployMode = true
+            setDeployMode(true, "units-and-equipment window opened")
             AttackRingBuilder.clear() // rings clear while any modal window is open (spec)
         } else {
             makeHidden("container-unitlist")
             hideEquipmentWindow()
-            uiSettings.deployMode = false
+            setDeployMode(false, "units-and-equipment window closed")
             ui.hideUnitInfoIfNotPinned()
             // Restore the normal turn status line (updateEquipmentWindow overwrote it with the
             // "Units currently deployed on map." / deploy message). Mirrors PM's z() calling y().
@@ -74,6 +74,7 @@ internal class EquipmentWindowController(
         val month = scenario.date.getMonth() + 1
         val coreList = currentPlayer.getCoreUnitList()
         val unitList = EquipmentWindowState.updateDeployModeAndUnitList(ui, currentPlayer, map, coreList)
+        ReserveRefitPresenter.refreshBar(ui, currentPlayer)
 
         val eqUserSel = byId("eqUserSel")?.asDynamic()
         val eqmode = eqUserSel?.eqmode as? String ?: "purchase"

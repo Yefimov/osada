@@ -71,7 +71,7 @@ internal object EquipmentWindowState {
         coreList: List<GameUnit>,
     ): List<GameUnit> {
         val previousDeployMode = uiSettings.deployMode
-        uiSettings.deployMode = currentPlayer.hasUndeployedUnits()
+        setDeployMode(currentPlayer.hasUndeployedUnits(), "reserve tray recount")
         val unitList = resolveUnitList(currentPlayer, map, coreList)
         UIBuilder.setDeployOrCombatLogState(uiSettings.deployMode)
         if (previousDeployMode != uiSettings.deployMode) ui.render.render()

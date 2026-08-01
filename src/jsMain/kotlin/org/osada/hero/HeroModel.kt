@@ -138,6 +138,14 @@ data class HeroEvent(
  * [promotionsAwarded] counts milestones already consumed (§8.5), so [HeroPromotionService] knows
  * which [HeroBalance.promotionThresholds] entry is next and never re-offers a milestone the hero
  * already passed.
+ *
+ * [settlingScenarioId] / [settlingUntilTurn] are the cost of a commander transfer (§1.10): an
+ * officer handed a formation they have never commanded needs time to learn it, and until
+ * [settlingUntilTurn] none of their traits apply to it ([HeroTraitResolver]). Stored as a
+ * (scenario, turn) pair rather than a countdown so it cannot drift: turn numbers restart at 1 each
+ * battle, so a bare "turns remaining" would have to be ticked down by someone, and a scenario
+ * transition or a reload would be one more place to get that wrong. A stale scenario id simply
+ * reads as settled.
  */
 data class HeroState(
     val heroId: HeroId,
@@ -155,4 +163,6 @@ data class HeroState(
     val nicknameId: String? = null,
     val serviceEvents: List<HeroEvent> = emptyList(),
     val promotionsAwarded: Int = 0,
+    val settlingScenarioId: String? = null,
+    val settlingUntilTurn: Int = 0,
 )

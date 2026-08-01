@@ -51,6 +51,9 @@ data class LeaderDossierView(
     val inMemoriam: Boolean,
     val serviceRecord: List<String>,
     val formation: FormationView?,
+    /** Set while a transferred commander is still learning this formation and grants it none of
+     *  their traits (§1.10). §26 forbids hidden modifiers, so a suppressed bonus has to say so. */
+    val settlingNote: String?,
     /** Ordered v2 portrait layer paths to stack (§15), and the seed for its palette. */
     val portrait: List<String>,
     val portraitSeed: Int,
@@ -71,6 +74,8 @@ data class CommanderRow(
     val formationName: String?,
     /** Worthy of the cross-campaign Hall of Fame (§14.6): a renowned, authored, or fallen commander. */
     val notable: Boolean,
+    /** Short "still settling in" marker for the roster sub-line, or null once settled (§1.10). */
+    val settlingLabel: String? = null,
 )
 
 /** Localization-ready label resolution — the one place enum/id → display text lives. */
@@ -186,6 +191,7 @@ object HeroDossierAssembler {
         state: HeroState,
         formation: CoreFormation?,
         unitExperience: Int?,
+        settlingTurns: Int = 0,
     ): LeaderDossierView {
         val background = HeroBackgrounds.byId(definition.backgroundId)
         val backgroundTrait = background?.grantedTrait
@@ -236,6 +242,7 @@ object HeroDossierAssembler {
             inMemoriam = state.status == HeroStatus.KILLED,
             serviceRecord = serviceLines(state, definition),
             formation = formation?.let { formationView(it, unitExperience) },
+            settlingNote = settlingNote(settlingTurns),
             portrait =
                 PortraitComposerV2.forHero(
                     definition,
@@ -248,10 +255,23 @@ object HeroDossierAssembler {
         )
     }
 
+    /** The long-form settling notice, or null once the commander knows the formation (§1.10). */
+    fun settlingNote(settlingTurns: Int): String? =
+        settlingTurns
+            .takeIf { it > 0 }
+            ?.let { I18n.t("hero.transfer.settling.note", mapOf("turns" to it)) }
+
+    /** The compact settling marker for a roster row or a card badge. */
+    fun settlingLabel(settlingTurns: Int): String? =
+        settlingTurns
+            .takeIf { it > 0 }
+            ?.let { I18n.t("hero.transfer.settling.short", mapOf("turns" to it)) }
+
     fun commanderRow(
         definition: HeroDefinition,
         state: HeroState,
         formationName: String?,
+        settlingTurns: Int = 0,
     ): CommanderRow =
         CommanderRow(
             heroId = definition.id.value,
@@ -268,6 +288,7 @@ object HeroDossierAssembler {
                     state.renown == HeroRenown.LEGEND ||
                     state.potential == HeroPotential.AUTHORED_LEGENDARY ||
                     state.status == HeroStatus.KILLED,
+            settlingLabel = settlingLabel(settlingTurns),
         )
 
     private fun formationView(

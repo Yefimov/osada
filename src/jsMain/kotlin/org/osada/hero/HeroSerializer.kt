@@ -123,6 +123,7 @@ internal object HeroSerializer {
             Pair("attributes", HeroValueCodec.serializeAttributes(state?.attributes ?: CommandAttributes.BASELINE)),
             Pair("evidence", HeroValueCodec.serializeEvidence(state?.specializationEvidence ?: emptyMap())),
             Pair("promotions", state?.promotionsAwarded ?: 0),
+            Pair("settling", serializeSettling(state)),
             Pair("nickname", state?.nicknameId.orEmpty()),
             Pair("medals", (state?.medals ?: emptyList()).map(HeroEventCodec::serializeHeroMedal).toTypedArray()),
             Pair(
@@ -134,6 +135,31 @@ internal object HeroSerializer {
                 (state?.serviceEvents ?: emptyList()).map(HeroEventCodec::serializeHeroEvent).toTypedArray(),
             ),
         )
+
+    /**
+     * Settling-in after a commander transfer (§1.10), as its own object.
+     *
+     * Nested rather than two more flat keys because the scenario id and the turn are one fact and
+     * are meaningless apart: a turn number without the battle it belongs to would read as a live
+     * penalty in the next scenario. A save written before transfers existed has no `settling` key
+     * at all, which [readSettling] reads as "settled" — which every commander in such a save is.
+     */
+    private fun serializeSettling(state: HeroState?): dynamic =
+        json(
+            Pair("scenario", state?.settlingScenarioId.orEmpty()),
+            Pair("untilTurn", state?.settlingUntilTurn ?: 0),
+        )
+
+    /** [serializeSettling]'s inverse: (scenario id or null, first turn the traits count again). */
+    private fun readSettling(item: dynamic): Pair<String?, Int> {
+        val settling = item?.settling
+        return if (BriefingDynamic.isObject(settling)) {
+            BriefingDynamic.str(settling.scenario)?.takeIf { it.isNotBlank() } to
+                (BriefingDynamic.int(settling.untilTurn) ?: 0)
+        } else {
+            null to 0
+        }
+    }
 
     /**
      * An authored hero's stated gender, or `""` for "not stated" — a procedural hero must keep
@@ -177,8 +203,9 @@ internal object HeroSerializer {
     private fun readState(
         item: dynamic,
         heroId: HeroId,
-    ): HeroState =
-        HeroState(
+    ): HeroState {
+        val (settlingScenario, settlingUntilTurn) = readSettling(item)
+        return HeroState(
             heroId = heroId,
             rankId = BriefingDynamic.str(item?.rank).orEmpty(),
             status =
@@ -206,9 +233,12 @@ internal object HeroSerializer {
             learnedTraitIds = BriefingDynamic.strList(item?.traits).toSet(),
             specializationEvidence = HeroValueCodec.readEvidence(item?.evidence),
             promotionsAwarded = BriefingDynamic.int(item?.promotions) ?: 0,
+            settlingScenarioId = settlingScenario,
+            settlingUntilTurn = settlingUntilTurn,
             nicknameId = BriefingDynamic.str(item?.nickname)?.takeIf { it.isNotBlank() },
             medals = BriefingDynamic.mapArray(item?.medals, HeroEventCodec::readHeroMedal),
             injuries = BriefingDynamic.mapArray(item?.injuries, HeroEventCodec::readHeroInjury),
             serviceEvents = BriefingDynamic.mapArray(item?.events, HeroEventCodec::readHeroEvent),
         )
+    }
 }

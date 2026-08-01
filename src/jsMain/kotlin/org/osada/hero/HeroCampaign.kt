@@ -1,7 +1,6 @@
 package org.osada.hero
 
 import org.osada.GameHolder
-import org.osada.PlayerType
 import org.osada.hero.HeroCampaign.drainAnnouncements
 import org.osada.hero.HeroCampaign.reconContactsCredited
 import org.osada.hero.HeroCampaign.recordCombat
@@ -9,11 +8,9 @@ import org.osada.hero.HeroCampaign.reset
 import org.osada.hero.HeroCampaign.restore
 import org.osada.hero.HeroCampaign.setContext
 import org.osada.hero.HeroCampaign.snapshot
-import org.osada.hero.HeroCampaign.transferCommander
 import org.osada.model.EfileConfig
 import org.osada.model.Equipment
 import org.osada.model.GameUnit
-import org.osada.model.isInitialDeploymentWindow
 import org.osada.rules.Attachments
 
 /**
@@ -47,16 +44,6 @@ internal object HeroCampaign {
     // so it is the only one that needs its own anti-farming guard -- movement is repeatable at will
     // in a way that being shot at is not. Cleared by [reset] with the rest of the run's state.
     private val reconContactsCredited = mutableSetOf<String>()
-
-    // §1.10: benched statuses a transfer can recall from. MISSING/CAPTURED have no confirmed fate,
-    // RETIRED has left service and KILLED is final -- none of those are "just benched".
-    private val transferEligibleStatuses =
-        setOf(HeroStatus.RESERVE, HeroStatus.WOUNDED, HeroStatus.SERIOUSLY_WOUNDED)
-
-    /** Whether [status] is a benched state [transferCommander] can recall from -- the single
-     *  source of truth the commander-roster presenter queries instead of keeping its own copy of this
-     *  set (DEFERRED.md §4.10: the two used to state the rule twice and could drift). */
-    fun isTransferEligible(status: HeroStatus): Boolean = status in transferEligibleStatuses
 
     /** The campaign facts an emergence needs that are not on the [GameUnit]. Set on scenario load. */
     data class EmergenceCampaignContext(
@@ -245,7 +232,7 @@ internal object HeroCampaign {
      * disables it (LXF disables Bridging); the formation is already at `Attachments.MAX_PER_UNIT`;
      * or it already has this slot. This is the actual gate, not the UI —
      * `Attachments.availableSlots` is expected to only ever offer legal choices, but re-checked
-     * here independently, the same discipline `transferCommander` already applies. Prestige is the
+     * here independently, the same discipline `HeroTransferService.transferCommander` applies. Prestige is the
      * caller's concern (`Player.purchaseAttachment` mirrors `Player.upgradeUnit`'s own pattern of
      * checking cost, calling the mutation, then deducting).
      */
@@ -267,80 +254,6 @@ internal object HeroCampaign {
         return true
     }
 
-    /** Whether [hero] is eligible to be transferred to a new formation (§1.10): unassigned, and
-     *  not in a status where the officer's fate/service is unresolved rather than merely benched.
-     *  RESERVE (evacuated) and WOUNDED/SERIOUSLY_WOUNDED can return; MISSING and CAPTURED have no
-     *  confirmed fate to transfer *from*, RETIRED has left service, and KILLED needs no explanation. */
-    private fun isTransferEligible(hero: HeroState): Boolean =
-        hero.assignedFormationId == null &&
-            hero.status in transferEligibleStatuses
-
-    /** Commander reassignment is a scenario-start setup action, not a mid-battle recovery tool. */
-    private fun isCommanderTransferWindowOpen(): Boolean {
-        val game = GameHolder.instance ?: return false
-        val map = game.scenario?.map ?: return false
-        val player = game.campaignPlayer ?: map.currentPlayer ?: return false
-        return player.type == PlayerType.HUMAN_LOCAL && map.isInitialDeploymentWindow(player)
-    }
-
-    /** Unled formations that could receive [heroId] during the initial deployment window (§1.10),
-     *  or empty when the hero or timing is not eligible. A formation not present on the map is still
-     *  a valid target because the roster (not the live map) is what deployment reads `heroFor`
-     *  against. */
-    fun transferableFormations(heroId: HeroId): List<CoreFormation> {
-        val hero = roster.state(heroId)
-        return if (hero != null && isTransferEligible(hero) && isCommanderTransferWindowOpen()) {
-            roster.allFormations().filter { it.assignedHeroId == null }
-        } else {
-            emptyList()
-        }
-    }
-
-    /**
-     * Assigns [heroId] to command [formationId] (§1.10) — the roster's own "way back" for a
-     * benched commander, closing the state `applyCasualty` leaves a lightly wounded officer in
-     * (detached, unassigned, and previously with no way to be reassigned). Returns false if either
-     * side of the transfer is not currently legal; the caller (`CommanderRosterPresenter`) is
-     * expected to only ever offer legal choices, but this is the actual gate, not the UI.
-     */
-    fun transferCommander(
-        heroId: HeroId,
-        formationId: FormationId,
-    ): Boolean {
-        val hero = roster.state(heroId)
-        val formation = roster.formation(formationId)
-        val legal =
-            hero != null &&
-                formation != null &&
-                isTransferEligible(hero) &&
-                formation.assignedHeroId == null &&
-                isCommanderTransferWindowOpen()
-        if (hero == null || formation == null || !legal) return false
-        val event = HeroEvent("transferred", currentScenarioLabel(), currentTurn(), currentDate(), null)
-        roster.updateState(
-            hero.copy(
-                status = HeroStatus.ACTIVE,
-                assignedFormationId = formationId,
-                serviceEvents = hero.serviceEvents + event,
-            ),
-        )
-        roster.putFormation(
-            formation.copy(
-                assignedHeroId = heroId,
-                history =
-                    formation.history +
-                        FormationEvent(
-                            "commander_transferred",
-                            currentScenarioLabel(),
-                            currentTurn(),
-                            currentDate(),
-                            null,
-                        ),
-            ),
-        )
-        return true
-    }
-
     // ---------------------------------------------------------- Phase 4 read side
 
     /** The dossier view for [unit]'s commander (§14.2/14.4), or null when the unit has no hero. */
@@ -351,7 +264,13 @@ internal object HeroCampaign {
         val definition = heroId?.let { roster.definition(it) }
         val state = heroId?.let { roster.state(it) }
         return if (formation != null && definition != null && state != null) {
-            HeroDossierAssembler.dossier(definition, state, formation, experience)
+            HeroDossierAssembler.dossier(
+                definition,
+                state,
+                formation,
+                experience,
+                HeroTransferService.settlingTurnsLeft(state),
+            )
         } else {
             null
         }
@@ -363,7 +282,13 @@ internal object HeroCampaign {
         val state = roster.state(heroId)
         val formation = state?.assignedFormationId?.let { roster.formation(it) }
         return if (definition != null && state != null) {
-            HeroDossierAssembler.dossier(definition, state, formation, null)
+            HeroDossierAssembler.dossier(
+                definition,
+                state,
+                formation,
+                null,
+                HeroTransferService.settlingTurnsLeft(state),
+            )
         } else {
             null
         }
@@ -374,7 +299,12 @@ internal object HeroCampaign {
         roster.allDefinitions().mapNotNull { definition ->
             val state = roster.state(definition.id) ?: return@mapNotNull null
             val formationName = state.assignedFormationId?.let { roster.formation(it)?.displayName }
-            HeroDossierAssembler.commanderRow(definition, state, formationName)
+            HeroDossierAssembler.commanderRow(
+                definition,
+                state,
+                formationName,
+                HeroTransferService.settlingTurnsLeft(state),
+            )
         }
 
     /**
@@ -723,13 +653,16 @@ internal object HeroCampaign {
         }
     }
 
-    private fun currentTurn(): Int =
+    // Not private: [HeroTransferService] dates its paperwork and scopes its settling period the
+    // same way every other event in this system is dated, and there is no second definition of
+    // "which scenario/turn is it now" to be had.
+    fun currentTurn(): Int =
         GameHolder.instance
             ?.scenario
             ?.map
             ?.turn ?: 0
 
-    private fun currentScenarioLabel(): String =
+    fun currentScenarioLabel(): String =
         GameHolder.instance
             ?.scenario
             ?.name
@@ -737,7 +670,7 @@ internal object HeroCampaign {
             ?: context?.scenarioIndex?.toString().orEmpty()
 
     @Suppress("MagicNumber")
-    private fun currentDate(): String? {
+    fun currentDate(): String? {
         val date = GameHolder.instance?.scenario?.date ?: return null
         val month = (date.getMonth() + 1).toString().padStart(2, '0')
         val day = date.getDate().toString().padStart(2, '0')

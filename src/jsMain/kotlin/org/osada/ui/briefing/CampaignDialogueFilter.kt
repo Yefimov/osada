@@ -72,7 +72,12 @@ internal object CampaignDialogueFilter {
             (listOfNotNull(line.next) + line.choices.mapNotNull { it.next })
                 .filterNot { it in ids }
                 .distinct()
-        console.warn(
+        // debug, not warn. A conditional reaction and its opposite are mutually exclusive BY
+        // CONSTRUCTION -- `callback-naval-base` points at `callback-naval-base-lost`, and exactly
+        // one of the pair ever survives filtering -- so this fires on every correct run of a
+        // reactive campaign and can never indicate a problem. Sharing a channel with warnings that
+        // CAN indicate one just trains the reader to ignore both (reported 2026-08-01).
+        console.asDynamic().debug(
             "[OSADA] dialogue line '${line.id}' points at filtered-out node(s) " +
                 "${broken.joinToString(", ")}; falling through to the next visible line",
         )

@@ -57,11 +57,22 @@ internal object ScenarioBriefingController {
         lastFacts = scenarioFacts
     }
 
+    /**
+     * Re-opens the briefing from the HUD button — on the **orders sheet**, not the conversation.
+     *
+     * Replaying the dialogue was actively harmful, not just verbose. Every decision in it has
+     * already been committed (`CampaignNarrative.commitChoice` is a once-only gate), so the choice
+     * buttons came back live but inert; and pressing SKIP on the replay made
+     * [pendingChoiceLine] report the decision as unanswered again, which
+     * [renderPendingDecision] answers by DISABLING "RETURN TO BATTLE" until the player re-decides
+     * something that can no longer have any effect. Reported 2026-08-01. The conversation is a
+     * scene that plays once; the orders are the reference sheet, and that is what a re-read wants.
+     */
     fun reopenLast(onClosed: () -> Unit): Boolean {
         val parsed = lastBriefing
         val reopenFacts = lastFacts
         if (parsed == null || reopenFacts == null) return false
-        showParsed(parsed, reopenFacts, "RETURN TO BATTLE", onClosed)
+        showParsed(parsed, reopenFacts, "RETURN TO BATTLE", onClosed, reviewing = true)
         return true
     }
 
@@ -84,6 +95,7 @@ internal object ScenarioBriefingController {
         scenarioFacts: ScenarioFacts,
         beginLabel: String,
         onFinished: () -> Unit,
+        reviewing: Boolean = false,
     ) {
         close(runCallback = false)
 
@@ -91,9 +103,11 @@ internal object ScenarioBriefingController {
         facts = scenarioFacts
         finishCallback = onFinished
         previousFocus = document.activeElement as? HTMLElement
-        stage = if (parsed.dialogue.isNotEmpty()) BriefingStage.DIALOGUE else BriefingStage.ORDERS
+        stage = if (parsed.dialogue.isNotEmpty() && !reviewing) BriefingStage.DIALOGUE else BriefingStage.ORDERS
         path.clear()
-        parsed.dialogue.firstOrNull()?.let { path += DialogueStep(it.id) }
+        // A review leaves the path EMPTY on purpose: `pendingChoiceLine` reads the head of the
+        // path, so an empty path is what makes the decision block (and its BEGIN gate) stay away.
+        if (!reviewing) parsed.dialogue.firstOrNull()?.let { path += DialogueStep(it.id) }
 
         val created =
             ScenarioBriefingBuilder.create(

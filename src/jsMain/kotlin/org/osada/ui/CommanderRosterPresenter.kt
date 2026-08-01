@@ -4,17 +4,18 @@ import org.osada.hero.CommanderRow
 import org.osada.hero.HeroCampaign
 import org.osada.hero.HeroDisplay
 import org.osada.hero.HeroId
+import org.osada.hero.HeroTransferService
 import org.osada.i18n.I18n
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.MouseEvent
 
 /**
  * The campaign commander roster (design brief §14.3) — Headquarters → Commanders, with
- * Active / Reserve / Wounded / Missing / Fallen tabs. A row opens the leader dossier; an eligible
- * benched officer (Reserve/Wounded, currently unassigned — [HeroCampaign.transferableFormations])
- * also gets a Transfer action (DEFERRED.md §1.10), the "way back" a wounded or evacuated commander
- * previously had no route to. Built from the pure [CommanderRow] list, dynamic values via
- * `textContent`.
+ * Active / Reserve / Wounded / Missing / Fallen tabs. A row opens the leader dossier; during the
+ * initial deployment window it also gets a Transfer action, which is both the "way back" a wounded
+ * or evacuated commander previously had no route to and the exchange of two serving officers
+ * (DEFERRED.md §1.10). The dialog itself lives in [CommanderTransferPicker]. Built from the pure
+ * [CommanderRow] list, dynamic values via `textContent`.
  *
  * **Localized in full (DEFERRED.md §4.15).** §7.37 localized only the transfer picker inside this
  * file and left the roster around it in English, which was the worst of both. Note what the tab
@@ -25,7 +26,6 @@ import org.w3c.dom.events.MouseEvent
  */
 internal object CommanderRosterPresenter {
     private const val BOX_ID = "uiCommanderRoster"
-    private const val TRANSFER_BOX_ID = "uiHeroTransferBox"
 
     fun close() = delTag(byId(BOX_ID))
 
@@ -34,9 +34,9 @@ internal object CommanderRosterPresenter {
 
     /** Whether the transfer picker is on screen. It layers ABOVE the roster, so Escape has to
      *  offer it first — see [MainMenuButtonHandler.handleGlobalEscape] (§4.13). */
-    fun isTransferPickerOpen(): Boolean = byId(TRANSFER_BOX_ID) != null
+    fun isTransferPickerOpen(): Boolean = CommanderTransferPicker.isOpen()
 
-    fun closeTransferPicker() = delTag(byId(TRANSFER_BOX_ID))
+    fun closeTransferPicker() = CommanderTransferPicker.close()
 
     fun open() {
         close()
@@ -121,7 +121,11 @@ internal object CommanderRosterPresenter {
         val copy = addTag(card, "div")
         copy.className = "osada-hero-rosterrow-copy"
         addText(copy, "osada-hero-rosterrow-name", "${row.rank} ${row.name}")
-        val sub = listOfNotNull(row.formationName, row.potential, row.renown, row.statusLabel).joinToString(" · ")
+        // settlingLabel leads the sub-line: while it is set the officer's traits are doing nothing,
+        // which matters more to the player right now than their renown or potential does.
+        val sub =
+            listOfNotNull(row.settlingLabel, row.formationName, row.potential, row.renown, row.statusLabel)
+                .joinToString(" · ")
         addText(copy, "osada-hero-rosterrow-sub", sub)
 
         val locate = addTag(card, "button")
@@ -132,58 +136,21 @@ internal object CommanderRosterPresenter {
             e.stopPropagation()
             locateHero(HeroId(row.heroId))
         }
-        if (row.formationName == null && HeroCampaign.isTransferEligible(row.status)) {
+        // Offered for an ASSIGNED officer too, now that a transfer can be a two-way exchange — that
+        // is the move players actually ask for ("swap the heroes on these two units"), and it was
+        // the one the roster had no button for. Gated on the window rather than only on the hero,
+        // so the action is absent when it cannot be taken instead of opening an empty picker.
+        if (HeroTransferService.isTransferEligible(row.status) && HeroTransferService.isWindowOpen()) {
             val transfer = addTag(card, "button")
             transfer.className = "osada-hero-locate"
             transfer.textContent = I18n.t("hero.roster.transfer.label")
             transfer.title = I18n.t("hero.roster.transfer.help")
             transfer.onclick = { e: MouseEvent ->
                 e.stopPropagation()
-                openTransferPicker(HeroId(row.heroId), row.name)
+                CommanderTransferPicker.open(HeroId(row.heroId), row.name) { open() }
             }
         }
         card.onclick = { _: MouseEvent -> LeaderDossierPresenter.openForHero(HeroId(row.heroId)) }
-    }
-
-    // Reuses HeroPromotionPresenter's `.osada-hpp` dialog shape (DEFERRED.md §4.10/§4.12) rather
-    // than the legacy `.smallButton heroPromotionChoice` this used to copy: same ICON-font trap
-    // (real words rendering as glyphs) and same hardcoded z-index that opens behind #equipment.
-    private fun openTransferPicker(
-        heroId: HeroId,
-        heroName: String,
-    ) {
-        val mainBody = byId("mainbody") ?: return
-        closeTransferPicker()
-        val choices = HeroCampaign.transferableFormations(heroId)
-
-        val box = addTag(mainBody, "div")
-        box.id = TRANSFER_BOX_ID
-        box.className = "osada-hpp"
-
-        val titleEl = addTag(box, "div")
-        titleEl.className = "osada-hpp__title"
-        titleEl.textContent = I18n.t("hero.roster.transfer.title", mapOf("name" to heroName))
-
-        if (choices.isEmpty()) {
-            val bodyEl = addTag(box, "div")
-            bodyEl.className = "osada-hpp__body"
-            bodyEl.textContent = I18n.t("hero.roster.transfer.empty")
-        } else {
-            choices.forEach { formation ->
-                val option = addTag(box, "div")
-                option.className = "osada-hpp__choice"
-                option.textContent = formation.displayName
-                option.asButton {
-                    HeroCampaign.transferCommander(heroId, formation.id)
-                    delTag(box)
-                    open()
-                }
-            }
-        }
-        val cancel = addTag(box, "div")
-        cancel.className = "osada-hpp__choice"
-        cancel.textContent = I18n.t("common.cancel.label")
-        cancel.asButton { delTag(box) }
     }
 
     /** [tabId] is the untranslated [HeroDisplay.ROSTER_TABS] entry — the grouping key, not display

@@ -11,10 +11,6 @@ import org.osada.sideNames
 @JsExport
 @JsName("Player")
 class Player {
-    companion object {
-        private const val FULL_STRENGTH = 10
-    }
-
     var id: Int = -1
     var side: Int = -1
     var country: Int = -1
@@ -95,15 +91,21 @@ class Player {
             if (unit.destroyed) {
                 iter.remove()
             } else {
-                // Preserve the campaign's existing free replacement/refit rule while carrying
-                // every persistent formation instead of only the legacy core subset.
+                // Returns the formation to the tray ready to ACT, not ready to fight: the turn
+                // flags and movement are reset, but strength, ammo and fuel are carried forward as
+                // the battle left them.
+                //
+                // This used to also do `if (strength < 10) strength = 10; refillAmmoFuel()` -- a
+                // free, unconditional, full refit of the whole army after every scenario. That made
+                // attrition nearly meaningless between battles and voided every authored `resupply`
+                // campaign effect, which could only ever top up units the pass had already filled.
+                // Restoring readiness is now a paid decision the player makes in the reserve tray
+                // ([ReserveRefit]).
                 unit.hasMoved = false
                 unit.hasFired = false
                 unit.hasResupplied = false
                 unit.isSurprised = false
                 unit.isDeployed = false
-                if (unit.strength < FULL_STRENGTH) unit.strength = FULL_STRENGTH
-                unit.refillAmmoFuel()
                 unit.moveLeft = unit.unitData().movpoints
                 unit.entrenchment = 0
                 unit.entrenchTicks = 0

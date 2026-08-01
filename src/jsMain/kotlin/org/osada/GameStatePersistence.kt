@@ -161,29 +161,33 @@ class GameStatePersistence(
         localStorageGet(settingsKey) { restorer.applySettings(it) }
     }
 
+    // Silent on success. This fires five times per turn end (and writes the campaign key twice),
+    // so it was ~40 lines of every pasted bug report and told nobody anything: an autosave that
+    // WORKED is not news. A failure is -- a full quota is how a campaign silently stops saving --
+    // so that is what is logged now.
+    // Throwable is the right net here: the only failure that matters is the browser refusing the
+    // write (quota, private mode, disabled storage), and the DOM throws a plain JS error for it.
+    @Suppress("TooGenericExceptionCaught")
     private fun localStorageSet(
         key: String,
         value: dynamic,
     ) {
-        console.log("[osada] localStorageSet", key)
-        localStorage.setItem(key, JSON.stringify(value))
+        try {
+            localStorage.setItem(key, JSON.stringify(value))
+        } catch (e: Throwable) {
+            console.error("[osada] localStorageSet FAILED for", key, "-- the game is no longer saving", e)
+        }
     }
 
     private fun localStorageGet(
         key: String,
         callback: (dynamic) -> Unit,
     ) {
-        console.log("[osada] localStorageGet", key)
         val item = localStorage.getItem(key)
         val parsed = if (item != null) JSON.parse(item) else null
-        console.log(
-            "[osada] localStorageGet",
-            key,
-            "item!=null:",
-            item != null,
-            "parsed type:",
-            js("typeof parsed"),
-        )
+        // One line, not three. Reads only happen at boot, so they are worth keeping -- but the
+        // separate "requesting" and "parsed type" lines said nothing the result line does not.
+        console.log("[osada] localStorageGet $key present=${item != null}")
         callback(parsed)
     }
 

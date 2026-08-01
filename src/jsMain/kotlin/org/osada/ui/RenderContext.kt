@@ -657,12 +657,21 @@ private fun RenderContext.loadTerrainImage(state: ImageLoadState) {
     }
 }
 
+/** Last `map|count` pair logged by [loadUnitImages], so an unchanged sprite set stays quiet. */
+private var lastUnitImageSignature: String? = null
+
 /** [RenderContext.cacheImages] step: every distinct unit sprite image referenced by the current map. */
 private fun RenderContext.loadUnitImages(state: ImageLoadState) {
     val list = map?.getUnitImagesList() ?: js("{}")
     val keys = js("Object.keys(list)")
     val keyCount = (keys.length as? Number)?.toInt() ?: 0
-    console.log("[osada] Render.cacheImages map=${map?.name} unitImagesToLoad=$keyCount")
+    // Only when the set actually changes. cacheImages runs on every render pass that may have
+    // introduced a sprite, so an unchanged map logged the same line three or four times per turn.
+    val signature = "${map?.name}|$keyCount"
+    if (signature != lastUnitImageSignature) {
+        lastUnitImageSignature = signature
+        console.log("[osada] Render.cacheImages map=${map?.name} unitImagesToLoad=$keyCount")
+    }
     for (i in 0 until keyCount) {
         val key = keys[i] as? String
         val baseSrc = if (key == null) null else list[key] as? String

@@ -44,10 +44,19 @@ internal object HeroTraitResolver {
         }
     }
 
+    /**
+     * A commander still settling into a formation they were transferred into (§1.10) grants none of
+     * their traits to it. Suppressing them HERE rather than at each rule is the whole point of this
+     * adapter existing: `AttackCalculation`, `CombatResolver`, `MovementRules`, `AttackEligibility`
+     * and `CombatApplication` all ask through `Leaders.unitHasLeader`, so one early return disables
+     * every bonus at once and no rule can be forgotten. Note this does not fall through to the
+     * legacy path — a led formation without its commander's traits has NO traits, not the old ones.
+     */
     private fun heroHasTrait(
         hero: HeroState,
         leader: LeaderType,
     ): Boolean {
+        if (HeroTransferService.isSettlingIn(hero)) return false
         val learned = LegacyTraitMapping.toTraitId(leader) in hero.learnedTraitIds
         val fromBackground =
             HeroCampaign

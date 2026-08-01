@@ -81,7 +81,7 @@ class HeroSystemFixesTest {
 
         val report = GameMap().collectPersistentCampaignUnits(player)
 
-        assertEquals(1, report.duplicateFormationIds)
+        assertEquals(1, report.reMintedFormationIds)
         assertEquals(setOf("F-0-1", "F-0-3"), player.getCoreUnitList().mapNotNull { it.formationId }.toSet())
         assertNotNull(HeroCampaign.roster().formation(FormationId("F-0-2")))
         assertNotNull(HeroCampaign.roster().formation(FormationId("F-0-3")))

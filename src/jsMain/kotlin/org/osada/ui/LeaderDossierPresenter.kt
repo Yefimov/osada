@@ -110,6 +110,9 @@ internal object LeaderDossierPresenter {
             box.classList.add("osada-hero-memoriam")
             addText(id, "osada-hero-memoriam-tag", I18n.t("hero.dossier.in_memoriam"))
         }
+        // §26: no hidden modifiers. While this is set, every trait listed below is inactive, so it
+        // belongs next to the status rather than buried in the service record.
+        view.settlingNote?.let { addText(id, "osada-hero-settling", it) }
         val locate = addTag(header, "button")
         locate.className = "osada-hero-locate osada-hero-locate--header"
         locate.textContent = I18n.t("hero.dossier.locate.label")

@@ -84,9 +84,9 @@ fun Game.continueCampaign(
         )
     }
     console.log(
-        "[OSADA] campaign carry-over: ${carryOver.survivors}/${carryOver.candidates} formations; " +
-            "destroyed=${carryOver.destroyed}, temporary=${carryOver.temporary}, " +
-            "nodossier=${carryOver.noDossier}, duplicateIds=${carryOver.duplicateFormationIds}",
+        "[OSADA] campaign carry-over: ${carryOver.survivors}/${carryOver.candidates} of YOUR formations " +
+            "carried forward; lost: destroyed=${carryOver.destroyed}, temporary=${carryOver.temporary}, " +
+            "nodossier=${carryOver.noDossier} (re-minted ids=${carryOver.reMintedFormationIds}, not a loss)",
     )
     player.setPlayerToHQ()
     savedCampaignPlayer = Player().apply { copy(player) }
@@ -111,11 +111,22 @@ fun Game.continueCampaign(
 
 fun Game.getCampaignPlayer(): Player? = campaignPlayer
 
+/**
+ * Hands the spotting side to whoever is now playing, and prints the log's **turn banner**.
+ *
+ * This runs on every hand-off, which makes it the one place that can date everything after it. It
+ * used to print only `humanSides`/`spotSide`/`side`, so a log had no turn numbers anywhere in it —
+ * a bug report of the form "on turn 2 I saw X" could not be checked against its own log, and the
+ * only way to tell which turn a line belonged to was to count these lines by hand. Player id, side
+ * and type are all here too, because "the enemy's turn" is a claim about `type`, not about `side`.
+ */
 fun Game.setCurrentSide() {
     spotSide = if (humanSides == 2) scenario?.map?.currentPlayer?.side ?: 0 else humanSides
+    val map = scenario?.map
+    val player = map?.currentPlayer
     console.log(
-        "[OSADA] setCurrentSide humanSides=$humanSides spotSide=$spotSide " +
-            "currentPlayer.side=${scenario?.map?.currentPlayer?.side}",
+        "[OSADA] === turn ${map?.turn}/${map?.maxTurns} · player ${player?.id} " +
+            "(side ${player?.side}, ${player?.type?.name}) · spotSide=$spotSide ===",
     )
 }
 

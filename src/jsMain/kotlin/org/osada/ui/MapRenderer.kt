@@ -1,5 +1,6 @@
 package org.osada.ui
 
+import org.osada.PlayerType
 import org.osada.model.Cell
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
@@ -79,7 +80,16 @@ internal class MapRenderer(
     ): RenderFrame {
         val rows = q.rows
         val cols = q.cols
-        val deployMode = uiSettings.deployMode
+        // The deploy overlay is drawn against `currentPlayer`'s side ([HexCellRenderer]), and
+        // `uiSettings.deployMode` is a UI-global with no owner binding: it survives the ✕
+        // (EquipmentWindowBuilder deliberately leaves it set so a picked reserve can still be
+        // placed) and it is persisted, so it also survives a reload. Left set through the turn
+        // hand-off it therefore lit up the AI's deploy zone -- including ports it had just
+        // captured -- while the AI moved. EndTurnFlow now clears it unconditionally; this is the
+        // second half, at the point of use, so no other path can reintroduce the leak. Hotseat is
+        // unaffected: both human players are HUMAN_LOCAL and each sees their own zone on their own
+        // turn. Reported 2026-08-01, "it's the enemy's turn now and I was seeing hexes for the enemy".
+        val deployMode = uiSettings.deployMode && q.currentPlayer?.type == PlayerType.HUMAN_LOCAL
 
         // The reserve unit awaiting placement, resolved exactly as the click path resolves it
         // (DeploymentSelection.selectedUnit) so the highlight cannot promise a hex the click would

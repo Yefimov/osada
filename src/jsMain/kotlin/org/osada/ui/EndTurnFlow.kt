@@ -86,10 +86,14 @@ internal class EndTurnFlow(
         if (isVisible("equipment")) {
             hideEquipmentWindow()
             makeHidden("container-unitlist")
-            uiSettings.deployMode = false
-            byId("buy")?.let { toggleButton(it, false) }
             ui.hideUnitInfoIfNotPinned()
         }
+        // Outside the `isVisible` branch on purpose: the equipment window's own ✕ hides the window
+        // but deliberately leaves deployMode set, so a turn ended after closing it that way carried
+        // the flag into the next player's turn and drew THEIR deploy zone (see MapRenderer).
+        setDeployMode(false, "turn ended")
+        DeploymentSelection.reset()
+        byId("buy")?.let { toggleButton(it, false) }
         if (isVisible("unit-info")) makeHidden("unit-info")
         UICombatLog.forceClose()
         makeHidden("uiToolTip")

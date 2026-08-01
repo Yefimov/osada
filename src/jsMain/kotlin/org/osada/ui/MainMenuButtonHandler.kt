@@ -73,7 +73,7 @@ internal class MainMenuButtonHandler(
         if (equipment != null && isVisible("equipment")) {
             hideEquipmentWindow()
             makeHidden("container-unitlist")
-            uiSettings.deployMode = false
+            setDeployMode(false, "Reserves button closed the window")
             byId("buy")?.let { toggleButton(it, false) }
             ui.hideUnitInfoIfNotPinned()
             // Restore the normal turn status; updateEquipmentWindow() had overwritten it
@@ -81,6 +81,10 @@ internal class MainMenuButtonHandler(
             ui.updateStatusBar()
             ui.render.render()
         } else {
+            // Not on someone else's turn. `updateEquipmentWindow` already refuses to populate for a
+            // player whose side is not the spotting side, so opening it then produced a stale window
+            // over a live AI turn — and the deploy overlay it implies belongs to whoever is moving.
+            if (map.currentPlayer?.type != PlayerType.HUMAN_LOCAL) return
             CompactEquipmentNavigation.showList()
             byId("equipment")?.style?.display = "grid"
             makeVisible("container-unitlist")

@@ -43,6 +43,14 @@ data class HeroBalance(
     /** Leader XP awarded per notable combat action, once a formation has a commander (§8, §27). */
     val leaderXpPerCombat: Int = 20,
     /**
+     * Turns a transferred commander spends learning a formation that is new to them (§1.10). None
+     * of their traits apply to it until then — the price of moving an officer, so reassignment is a
+     * decision rather than free optimisation. Counted from the turn of the transfer, which is
+     * always turn 1 (the window is the initial deployment window), so 3 means "your traits are back
+     * on turn 4".
+     */
+    val transferSettlingTurns: Int = 3,
+    /**
      * Cumulative leader XP at which the next promotion milestone fires (§8.5). Exactly three
      * entries: [HeroNaming]'s rank ladder has four rungs, so a hero can be promoted three times.
      */

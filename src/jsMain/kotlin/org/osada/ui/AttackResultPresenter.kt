@@ -130,6 +130,9 @@ internal class AttackResultPresenter(
         }
     }
 
+    /** Both flags now mean "a HERO emerged" and nothing else — see
+     *  [org.osada.model.CombatLeaderAcquisition.acquire], which stopped reporting a legacy leader
+     *  here so an enemy scenario unit could no longer bounce "Hero Emerged" over its own hex. */
     private fun showLeaderGainBounceTexts(
         result: CombatResults,
         attackerPos: Cell?,

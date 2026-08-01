@@ -1,5 +1,8 @@
 package org.osada.ui
 
+import org.osada.hero.HeroCampaign
+import org.osada.hero.HeroDisplay
+import org.osada.hero.HeroTransferService
 import org.osada.i18n.I18n
 import org.osada.model.delCurrentUnit
 import org.osada.model.getUnitById
@@ -169,7 +172,51 @@ internal object EquipmentUnitStrip {
             startCardRename(ui, container, nameDiv, unit)
         }
         addAttachmentButton(ui, container, unit)
+        addCommanderBadge(container, unit)
+        ReserveRefitPresenter.addCardButton(ui, container, unit)
         return container
+    }
+
+    /**
+     * Marks a formation whose commander is a HERO, with the officer on hover (2026-08-01 request).
+     *
+     * The Reserve tab is the one place the player picks between formations without seeing any of
+     * them on the map, so "which of these has a commander" was invisible exactly where it decides
+     * the order things get deployed in. The map has carried a leader badge since Phase 4
+     * ([UnitRenderer.drawLeaderBadge]); this is the same fact on the card.
+     *
+     * [HeroCampaign.heroFor], not `hasAnyCommander`: a legacy `unit.leader` integer has no name, no
+     * rank and no dossier, so there is nothing to put in a tooltip and nothing worth a badge. A
+     * settling-in commander (§1.10) is shown DIMMED and says so, because for the next few turns
+     * their traits are doing nothing and the badge would otherwise promise a bonus that is off.
+     */
+    private fun addCommanderBadge(
+        container: HTMLElement,
+        unit: org.osada.model.GameUnit,
+    ) {
+        val hero = HeroCampaign.heroFor(unit) ?: return
+        // Read straight off the roster rather than through `HeroCampaign.dossier`: this runs once
+        // per card on every strip rebuild, and a dossier composes a portrait and narrates a whole
+        // biography to produce the three words a tooltip needs.
+        val name = HeroCampaign.roster().definition(hero.heroId)?.displayName ?: return
+        val rank = HeroDisplay.rank(hero.rankId)
+        val settling = HeroTransferService.settlingTurnsLeft(hero)
+        val badge = addTag(container, "span")
+        badge.className = "osada-hero-pip" + if (settling > 0) " osada-hero-pip--settling" else ""
+        badge.textContent = "★"
+        badge.title =
+            if (settling > 0) {
+                I18n.t(
+                    "equipment.reserve.commander.settling",
+                    mapOf("rank" to rank, "name" to name, "turns" to settling),
+                )
+            } else {
+                I18n.t(
+                    "equipment.reserve.commander.help",
+                    mapOf("rank" to rank, "name" to name, "renown" to HeroDisplay.renown(hero.renown)),
+                )
+            }
+        badge.setAttribute("aria-label", badge.title)
     }
 
     /** Attachments (DEFERRED.md §1.4, §1.18). This strip is the attachment surface: OG allows
