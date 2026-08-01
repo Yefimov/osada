@@ -71,6 +71,18 @@ class Hex(
         }
     }
 
+    /**
+     * Zeroes both sides' spotting counters, for a full recompute (see
+     * `GameMap.recomputeSpotting`).
+     *
+     * These are reference counts, added and removed one unit at a time, so they only stay correct
+     * while every remove uses the same range its add did. Anything that changes a unit's spot range
+     * out from under them — Stalin Regime being toggled, or a build that changes how the range is
+     * derived — leaves counters that never fall back to zero, and the fog stays permanently lifted
+     * over those hexes. Recomputing from the units is the only way back.
+     */
+    fun clearSpotted() = spotted.fill(0)
+
     fun copy(other: Hex) {
         terrain = other.terrain
         road = other.road

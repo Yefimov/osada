@@ -13,6 +13,7 @@ import org.osada.model.Hex
 import org.osada.model.Player
 import org.osada.model.effectivePrestigeIncome
 import org.osada.model.getPlayer
+import org.osada.model.isInitialDeploymentWindow
 import org.osada.monthNamesShort
 import org.osada.scenario.Scenario
 import org.osada.uiSettings
@@ -40,13 +41,7 @@ internal class StatusBarController(
         val currentPlayer = map.currentPlayer ?: return
 
         // --- scenario · turn · date (NOT the campaign name) ---
-        val phaseChip =
-            if (currentPlayer.hasUndeployedUnits() && currentPlayer.type == PlayerType.HUMAN_LOCAL) {
-                "<span class=\"osada-tb-field osada-tb-field--phase\" " +
-                    "title=\"Place your units on the highlighted deployment hexes\"><b>Phase</b>DEPLOY</span>"
-            } else {
-                ""
-            }
+        val phaseChip = deploymentPhaseChip(map, currentPlayer)
         val dateText =
             "${scenario.date.getDate()} ${monthNamesShort.getOrNull(scenario.date.getMonth()) ?: ""} " +
                 "${scenario.date.getFullYear()}"
@@ -213,11 +208,15 @@ internal class StatusBarController(
             }
     }
 
-    /** Task 5: persistent "OBSERVER" badge in the top bar while either fog-of-war or hidden-
-     *  victory-hex disclosure is on — both are "affects game balance" toggles the player should
-     *  never forget are active. */
+    /** Task 5: persistent "OBSERVER" badge in the top bar while any Observer Mode toggle is on —
+     *  they all "affect game balance", and the player should never forget one is active.
+     *
+     *  Stalin Regime counts. It is the single largest balance override in the game (every combat,
+     *  movement and prestige number for the local player ×10) and it now lives in this section for
+     *  exactly that reason, so leaving it out of the badge would have been the one balance switch
+     *  with no persistent reminder. */
     private fun updateObserverBadge() {
-        val on = uiSettings.noFOW || uiSettings.showHiddenVictoryHexes
+        val on = uiSettings.noFOW || uiSettings.showHiddenVictoryHexes || uiSettings.stalinRegime
         byId("osadaObserverBadge")?.style?.display = if (on) "flex" else "none"
     }
 
@@ -319,3 +318,20 @@ internal class StatusBarController(
         }
     }
 }
+
+/** Kept in one place so a locale refresh and an ordinary status refresh render the same phase. */
+internal fun deploymentPhaseChip(
+    map: GameMap,
+    player: Player,
+): String =
+    if (
+        player.hasUndeployedUnits() &&
+        player.type == PlayerType.HUMAN_LOCAL &&
+        map.isInitialDeploymentWindow(player)
+    ) {
+        "<span class=\"osada-tb-field osada-tb-field--phase\" " +
+            "title=\"${I18n.t("hud.phase.deploy.help")}\"><b>${I18n.t("hud.phase.label")}</b>" +
+            I18n.t("hud.phase.deploy.label") + "</span>"
+    } else {
+        ""
+    }

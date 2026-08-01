@@ -5,6 +5,7 @@ import org.osada.SURRENDER_ON_FAILED_RETREAT
 import org.osada.TerrainType
 import org.osada.UNIT_RETREAT_THRESHOLD
 import org.osada.UnitClass
+import org.osada.entrenchRateFor
 import org.osada.model.Cell
 import org.osada.model.CombatResults
 import org.osada.model.EfileConfig
@@ -17,7 +18,6 @@ import org.osada.rules.CombatResolver.DEFAULT_HIT_THRESHOLD
 import org.osada.rules.CombatResolver.SPECIAL_TARGET_HIT_THRESHOLD
 import org.osada.rules.CombatResolver.isEntrenchmentIntact
 import org.osada.rules.CombatResolver.shouldDefenderRetreat
-import org.osada.unitEntrenchRate
 import kotlin.math.roundToInt
 import kotlin.random.Random
 
@@ -355,8 +355,8 @@ object CombatResolver {
         var dExp = defender.experience / 100 + 2
         if (Leaders.unitHasLeader(attacker, LeaderType.TENACIOUS_DEFENSE)) aExp += 2
         if (Leaders.unitHasLeader(defender, LeaderType.TENACIOUS_DEFENSE)) dExp += 2
-        val aRate = unitEntrenchRate[attacker.unitData().uclass] + 1
-        val dRate = unitEntrenchRate[defender.unitData().uclass] + 1
+        val aRate = entrenchRateFor(attacker.unitData().uclass) + 1
+        val dRate = entrenchRateFor(defender.unitData().uclass) + 1
         // Floating-point throughout, as in the JS reference (integer division here
         // would truncate intermediate results and change the trigger threshold).
         return RUGGED_DEFENSE_THRESHOLD <

@@ -379,7 +379,7 @@
   "hud.observer.help": "Observer mode is active (fog of war disabled and/or hidden objectives shown) — affects game balance.",
   "hud.observer.label": "OBSERVER",
   "hud.options.help": "Options & menu (Esc) — save or load the game, change settings, or return to the battle.",
-  "hud.phase.deploy.help": "Place your units on the highlighted deployment hexes.",
+  "hud.phase.deploy.help": "Initial deployment lasts until your first move or attack. During it, you can place reserve units and assign available commanders to formations. Reserve units can still be deployed later.",
   "hud.phase.deploy.label": "DEPLOY",
   "hud.phase.label": "Phase",
   "hud.prestige.help": "Prestige — campaign resources spent on buying, upgrading and reinforcing units. The green value is next turn’s income.",
@@ -525,7 +525,7 @@
   "settings.gameplay.optional_objectives.label": "Show optional objectives tooltips",
   "settings.gameplay.quick_animation.help": "Shortens movement and combat animations. Rules and results are unchanged.",
   "settings.gameplay.quick_animation.label": "Quick combat and move animations",
-  "settings.gameplay.stalin_regime.help": "Multiplies the local player's unit attack, defence, initiative, movement, spotting, range, ammunition and fuel stats, and all positive prestige income, by 10.",
+  "settings.gameplay.stalin_regime.help": "Multiplies the local player's unit attack, defence, initiative, movement, range, ammunition and fuel stats, and all positive prestige income, by 10. Spotting range is not changed, so fog of war still applies.",
   "settings.gameplay.stalin_regime.label": "STALIN REGIME",
   "settings.language.help": "Choose the interface language. The game updates immediately without reloading the current battle.",
   "settings.map.mark_enemy_units.help": "Uses red strength markers for spotted enemy units. This does not reveal units hidden by fog of war.",
@@ -765,7 +765,7 @@
   "hud.sidebar.objective_counter.help": "Visible objectives held by your side / total visible objectives.",
   "hud.sidebar.new_events.help": "New battle-log events arrived while the sidebar was collapsed.",
   "hud.sidebar.minimap.label": "Minimap",
-  "hud.sidebar.minimap.help": "Friendly units are green, spotted enemies red, and objectives brass. Click or drag to centre the main map.",
+  "hud.sidebar.minimap.help": "Your units are red, spotted enemies white, and objectives brass. Click or drag to centre the main map.",
   "hud.sidebar.minimap.canvas.help": "Minimap: the pale rectangle shows your current view. Click or drag to centre the main map.",
   "hud.sidebar.minimap.loading": "Preparing minimap…",
   "hud.sidebar.objectives.label": "Objectives",
@@ -1210,5 +1210,6 @@
   "settings.mobile.tutorial.help": "Show the touch controls card again.",
   "settings.mobile.tutorial.replay": "Replay",
   "settings.mobile.reduced_effects.label": "Reduced effects",
-  "settings.mobile.reduced_effects.help": "Shorten animations and drop decorative motion. Gameplay is unchanged — use this if large scenarios feel slow on this device."
+  "settings.mobile.reduced_effects.help": "Shorten animations and drop decorative motion. Gameplay is unchanged — use this if large scenarios feel slow on this device.",
+  "settings.section.display.title": "Display"
 }

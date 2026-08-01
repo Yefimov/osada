@@ -57,11 +57,57 @@ internal object MessageDialogs {
             }
     }
 
+    /**
+     * Dialogs waiting their turn, oldest first. One [messageDynamic] box is on screen at a time and
+     * dismissing it opens the next.
+     *
+     * **This used to be unqueued, and it lost messages for entire scenarios.** Every box was created
+     * with the same id `uiMessageBoxDynamic`, and `makeVisible(id)` resolves through `byId`, which
+     * returns the FIRST match — so when a single combat produced two hero events (an emergence and,
+     * on the next blow, that commander's casualty) the second box was appended already hidden and
+     * nothing ever showed it. It then sat in `#mainbody` indefinitely, still matching the id, until
+     * some later `makeVisible("uiMessageBoxDynamic")` happened to pick it up. That is precisely the
+     * two symptoms reported on 2026-07-31: a commander lost on turn 1 announced on turn **4**, and a
+     * hero message about a Frigate from the PREVIOUS scenario appearing on Willhelmshafen turn 1 —
+     * the stale box outlived the scenario transition, because nothing tears these down.
+     */
+    private data class DynamicMessage(
+        val title: String,
+        val body: String,
+        /** Runs once this box is actually in the DOM and visible. Anything that decorates the box's
+         *  own markup — the hero portrait painted into `#heroEmergencePortrait` — has to happen
+         *  here rather than at the call site, which may now be several dismissals early. */
+        val onShown: (() -> Unit)?,
+    )
+
+    private val pendingDynamicMessages = mutableListOf<DynamicMessage>()
+    private var dynamicMessageShowing = false
+
     fun messageDynamic(
         title: String,
         body: String,
+        onShown: (() -> Unit)? = null,
     ) {
+        pendingDynamicMessages += DynamicMessage(title, body, onShown)
+        showNextDynamicMessage()
+    }
+
+    /** Drops every queued and on-screen dynamic message. Called on scenario teardown: an
+     *  announcement about the battle just finished must not surface in the next one. */
+    fun clearDynamicMessages() {
+        pendingDynamicMessages.clear()
+        dynamicMessageShowing = false
+        byId("uiMessageBoxDynamic")?.let { box ->
+            clearTag(box)
+            delTag(box)
+        }
+    }
+
+    private fun showNextDynamicMessage() {
+        if (dynamicMessageShowing || pendingDynamicMessages.isEmpty()) return
         val mainBody = byId("mainbody") ?: return
+        val message = pendingDynamicMessages.removeAt(0)
+        dynamicMessageShowing = true
         val box = addTag(mainBody, "div")
         box.className = "uiMessageBox"
         box.id = "uiMessageBoxDynamic"
@@ -74,13 +120,16 @@ internal object MessageDialogs {
         okButton.className = "smallButton uiMessageBoxButton"
         okButton.title = I18n.t("message.continue.help")
         okButton.setAttribute("data-label", I18n.t("common.continue.label"))
-        titleEl.innerHTML = title
-        bodyEl.innerHTML = body
+        titleEl.innerHTML = message.title
+        bodyEl.innerHTML = message.body
         okButton.innerHTML = "1"
         makeVisible("uiMessageBoxDynamic")
+        message.onShown?.invoke()
         okButton.onclick = { _: org.w3c.dom.events.MouseEvent ->
             clearTag(box)
             delTag(box)
+            dynamicMessageShowing = false
+            showNextDynamicMessage()
         }
     }
 

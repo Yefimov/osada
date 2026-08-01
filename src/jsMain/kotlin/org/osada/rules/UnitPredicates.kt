@@ -3,9 +3,9 @@ package org.osada.rules
 import org.osada.MovMethod
 import org.osada.TerrainType
 import org.osada.UnitClass
+import org.osada.entrenchRateFor
 import org.osada.model.Equipment
 import org.osada.model.GameUnit
-import org.osada.unitEntrenchRate
 
 /**
  * Stateless predicates classifying a unit by movement domain (air/sea/ground/train),
@@ -94,7 +94,7 @@ object UnitPredicates {
 
     fun canEntrench(unit: GameUnit): Boolean {
         if (unit.carrier != 0) return false
-        return unitEntrenchRate[unit.unitData().uclass] > 0
+        return entrenchRateFor(unit.unitData().uclass) > 0
     }
 
     fun canMount(unit: GameUnit): Boolean = !unit.hasMoved && isGround(unit) && unit.transport != null

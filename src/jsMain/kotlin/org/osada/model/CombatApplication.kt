@@ -199,6 +199,9 @@ internal class CombatApplication(
 
         gameMap.undoState.oldOwner = hex.owner
         hex.owner = player.id
+        // Ownership decides the supply-hex half of the deploy zone, so the cached zones are stale
+        // the moment a hex changes hands — capturing a port has to open deployment on it this turn.
+        gameMap.invalidateDeployZones()
         val multiplier = if (Leaders.unitHasLeader(unit, LeaderType.LIBERATOR)) 2 else 1
         var prestigeGain = 0
         var scoreGain = 0

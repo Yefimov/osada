@@ -160,14 +160,7 @@ internal object GameplayLocalization {
         val scenario = GameHolder.instance?.scenario ?: return
         val map = scenario.map
         val currentPlayer = map.currentPlayer ?: return
-        val phaseChip =
-            if (currentPlayer.hasUndeployedUnits() && currentPlayer.type == PlayerType.HUMAN_LOCAL) {
-                "<span class=\"osada-tb-field osada-tb-field--phase\" " +
-                    "title=\"${I18n.t("hud.phase.deploy.help")}\"><b>${I18n.t("hud.phase.label")}</b>" +
-                    I18n.t("hud.phase.deploy.label") + "</span>"
-            } else {
-                ""
-            }
+        val phaseChip = deploymentPhaseChip(map, currentPlayer)
         val dateText =
             I18n.t(
                 "hud.date",

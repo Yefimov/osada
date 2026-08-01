@@ -5,9 +5,8 @@ import org.osada.ai.AIScripted
 import org.osada.model.Player
 import org.osada.model.getPlayers
 import org.osada.model.getUnits
+import org.osada.model.recomputeSpotting
 import org.osada.model.synchronizeStalinRegime
-import org.osada.rules.GameRules
-import org.osada.rules.setSpotRange
 
 internal fun Game.setupPlayers() {
     val players = scenario?.map?.getPlayers() ?: return
@@ -89,10 +88,15 @@ internal fun Game.synchronizeStalinRegimeUnits() {
     deployed.forEach { unit ->
         val enabled = uiSettings.stalinRegime && unit.player?.type == PlayerType.HUMAN_LOCAL
         if (unit.stalinRegimeBoosted == enabled) return@forEach
-        GameRules.setSpotRange(map, unit, false)
         unit.synchronizeStalinRegime(enabled)
-        GameRules.setSpotRange(map, unit, true)
     }
+    // Rebuild the counters wholesale rather than removing each unit's old ring and adding its new
+    // one. The paired remove/add only stays balanced while the range on both sides matches, and it
+    // did not: Stalin Regime used to multiply `spotrange` too, so a save written with the mode on
+    // carries hexes spotted at ×10 that no later remove can ever bring back to zero — the fog
+    // stayed lifted with both Stalin Regime and Observer Mode switched off. A full recompute is the
+    // repair path for those saves as well as the correct behaviour going forward.
+    map.recomputeSpotting()
 
     map
         .getPlayers()

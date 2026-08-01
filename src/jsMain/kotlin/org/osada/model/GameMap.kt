@@ -58,6 +58,13 @@ class GameMap {
     internal var hasWaterAccessCache: Boolean? = null
     internal var hasOpenWaterAccessCache: Boolean? = null
 
+    /** Per-side deploy zones, cached because the renderer asks per hex per frame. Unlike the three
+     *  caches above this one is NOT load-time-constant: capturing a port opens a new zone
+     *  mid-scenario, so [invalidateDeployZones] drops it on every ownership change. */
+    internal var deployZoneCache: MutableMap<Int, Set<Int>> = mutableMapOf()
+
+    internal fun invalidateDeployZones() = deployZoneCache.clear()
+
     fun endTurn() {
         delMoveSel()
         delAttackSel()

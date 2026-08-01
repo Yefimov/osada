@@ -9,6 +9,7 @@ import org.osada.model.canDeployOnTerrain
 import org.osada.model.delCurrentUnit
 import org.osada.model.getAttackableUnit
 import org.osada.model.getPlayer
+import org.osada.model.isInDeployZone
 import org.osada.rules.AttackEligibility
 import org.osada.rules.GameRules
 import org.osada.rules.isAir
@@ -164,7 +165,10 @@ internal class MapClickHandler(
         map: GameMap,
         currentPlayerSide: Int,
     ): Boolean {
-        val onDeploymentHex = hex.isDeployment != -1 && map.getPlayer(hex.isDeployment).side == currentPlayerSide
+        // Shared with the deploy highlight and the AI's placement pass: an owned supply hex and its
+        // ring count as deploy zone too, not just the author's `deploy=`/`supply=` attribute.
+        val pos = hex.getPos()
+        val onDeploymentHex = map.isInDeployZone(currentPlayerSide, pos.row, pos.col)
         // Aircraft can always be based on an airfield, even outside the deploy zone (OG)
         // — but only a FRIENDLY one. hex.owner is a player id, not a side (getPlayer(-1)
         // falls back to player 0, so an unowned/-1 airfield must be excluded explicitly

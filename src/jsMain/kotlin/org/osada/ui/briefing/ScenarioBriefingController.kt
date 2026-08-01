@@ -131,9 +131,22 @@ internal object ScenarioBriefingController {
         }
     }
 
-    /** Rebuilds the whole conversation log for the current branch, then typewriter-reveals only
-     *  its newest turn -- everything the player has already read stays on screen, in order, and
-     *  stays scrollable. */
+    /** Turns already in the transcript DOM, so [renderDialogueStage] can APPEND the new ones
+     *  instead of rebuilding the log. Reset by [close] and whenever the branch is re-rendered from
+     *  scratch. */
+    private var renderedTurns: List<DialogueTurn> = emptyList()
+
+    /** Extends the conversation log to the current branch, then typewriter-reveals only its newest
+     *  turn -- everything the player has already read stays on screen, in order, and stays
+     *  scrollable.
+     *
+     *  Every advance used to `clearTranscript` and re-append every turn from the beginning. That is
+     *  what the player saw as "all dialogue disappears for a second and then reloads" when clicking
+     *  to skip the typewriter: the click completes the line, the completion callback re-renders the
+     *  stage, and the whole log is torn out of the DOM and rebuilt one node at a time. Appending
+     *  only what is new keeps the read history untouched, so nothing flashes. The full rebuild is
+     *  still there for the cases that need it -- a first render, and going BACK up the branch after
+     *  a choice, where the tail of the log is no longer what is on screen. */
     private fun renderDialogueStage(currentView: ScenarioBriefingView) {
         val data = briefing
         val current = currentLine()
@@ -144,11 +157,19 @@ internal object ScenarioBriefingController {
             return
         }
 
-        ScenarioBriefingBuilder.clearTranscript(currentView)
-        turns.dropLast(1).forEach { turn ->
+        val alreadyRendered = turns.size > renderedTurns.size && turns.startsWithTurns(renderedTurns)
+        val from =
+            if (alreadyRendered) {
+                renderedTurns.size
+            } else {
+                ScenarioBriefingBuilder.clearTranscript(currentView)
+                0
+            }
+        turns.subList(from, turns.size - 1).forEach { turn ->
             ScenarioBriefingBuilder.appendTurn(currentView, turn).textContent = plainText(turn.text)
         }
         val newestEl = ScenarioBriefingBuilder.appendTurn(currentView, newest)
+        renderedTurns = turns
         revealingLine = newestEl
 
         val pendingChoice = path.lastOrNull()?.selectedChoice
@@ -171,9 +192,16 @@ internal object ScenarioBriefingController {
         }
     }
 
+    /** Whether this log still begins with exactly the turns already on screen. [DialogueTurn] and
+     *  [BriefingParticipant] are data classes, so this is a value comparison and survives
+     *  `buildTurns` rebuilding its list from the path each time. */
+    private fun List<DialogueTurn>.startsWithTurns(prefix: List<DialogueTurn>): Boolean =
+        prefix.indices.all { this[it] == prefix[it] }
+
     private fun close(runCallback: Boolean) {
         BriefingTypewriter.cancel()
         revealingLine = null
+        renderedTurns = emptyList()
         val current = view
         view = null
         current?.root?.parentElement?.removeChild(current.root)

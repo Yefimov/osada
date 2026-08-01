@@ -47,6 +47,14 @@ class EquipmentData {
  * Returns an equipment view whose player-facing numeric capabilities are multiplied by [multiplier].
  * Identity, classification, price and availability stay unchanged: multiplying `uclass`, `target`,
  * `movmethod`, dates or cost would corrupt rule dispatch/economy rather than strengthen the unit.
+ *
+ * **`spotrange` is deliberately excluded.** It is not a strength stat — it is the fog-of-war input.
+ * At ×10 every unit saw the whole map, so switching Stalin Regime on silently disabled fog of war,
+ * and enemy units stayed revealed afterwards because the hexes had already been spotted. That made
+ * a power toggle also an information toggle, which is what "Observer Mode" is separately for
+ * (`noFOW`) — the two must stay independent, and the player must be able to run Stalin Regime with
+ * fog intact. Reported 2026-07-31 ("Stalin Regime shouldn't disable fog of war"; "I can see enemy
+ * units even when I disable Stalin Regime and Observer Mode").
  */
 internal fun EquipmentData.withStatMultiplier(multiplier: Int): EquipmentData =
     EquipmentData().also { result ->
@@ -56,7 +64,7 @@ internal fun EquipmentData.withStatMultiplier(multiplier: Int): EquipmentData =
         result.yearexpired = yearexpired
         result.cost = cost
         result.initiative = initiative * multiplier
-        result.spotrange = spotrange * multiplier
+        result.spotrange = spotrange
         result.hardatk = hardatk * multiplier
         result.softatk = softatk * multiplier
         result.uclass = uclass

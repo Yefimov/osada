@@ -243,7 +243,11 @@ internal class MoveExecutor(
         GameRules.setZOCRange(gameMap, unit, true)
         GameRules.setSpotRange(gameMap, unit, true)
         gameMap.selectUnit(unit)
-        gameMap.undoState.oldOwner?.let { fromHex.owner = it }
+        gameMap.undoState.oldOwner?.let {
+            fromHex.owner = it
+            // Undoing a capture takes the hex (and any deploy zone it opened) back too.
+            gameMap.invalidateDeployZones()
+        }
         gameMap.undoState.oldFlag?.let { fromHex.flag = it }
         gameMap.undoState.oldVictorySide?.let { vs ->
             gameMap.updateVictorySides(1 - player.side, fromHex.getPos())

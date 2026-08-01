@@ -1,10 +1,10 @@
 package org.osada.model
 
 import org.osada.UnitClass
+import org.osada.entrenchRateFor
 import org.osada.rules.Attachments
 import org.osada.rules.GameRules
 import org.osada.rules.canEntrench
-import org.osada.unitEntrenchRate
 
 private const val EXPERIENCE_ENTRENCH_DIVISOR = 100
 private const val ENTRENCH_TICK_SLOPE = 9
@@ -48,7 +48,7 @@ fun GameUnit.entrench(): Boolean {
     if (entrenchment >= terrainEnt) {
         var extra = entrenchment - terrainEnt
         var limit = ENTRENCH_TICK_SLOPE * extra + ENTRENCH_TICK_BASE
-        entrenchTicks += experience / EXPERIENCE_ENTRENCH_DIVISOR + (terrainEnt + 1) * unitEntrenchRate[unitClass]
+        entrenchTicks += experience / EXPERIENCE_ENTRENCH_DIVISOR + (terrainEnt + 1) * entrenchRateFor(unitClass)
         while (entrenchTicks >= limit && entrenchment < terrainEnt + MAX_ENTRENCHMENT_ABOVE_TERRAIN) {
             entrenchTicks -= limit
             entrenchment++

@@ -72,6 +72,19 @@ val unitClassNames =
 
 val unitEntrenchRate = listOf(0, 3, 1, 2, 2, 1, 1, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 
+/**
+ * [unitEntrenchRate] for [uclass], or 0 for a class outside the table.
+ *
+ * Never index [unitEntrenchRate] directly. OG's own class enum is 24 wide (0..23) against this
+ * PM-derived 22, and some efiles carry values outside even OG's range — `eqp-atomic` and
+ * `eqp-united` each hold one record with `uclass = 82`. A raw `unitEntrenchRate[uclass]` threw
+ * `IndexOutOfBoundsException` out of `UnitPredicates.canEntrench`, which `unitEndTurn` calls for
+ * every unit at every turn change: the exception escaped the AI turn loop, so the turn never
+ * completed and the "Computer turn complete" banner stayed on screen forever (user report,
+ * Willhelmshafen turn 2). A class this code has no rule for simply does not dig in.
+ */
+fun entrenchRateFor(uclass: Int): Int = unitEntrenchRate.getOrElse(uclass) { 0 }
+
 /** 0-based (index 0 = January), matching JS `Date.getMonth()`. Equipment `monthavailable`/
  *  `monthexpired` are the OG CSV's own 1-based convention instead — subtract 1 when indexing here. */
 val monthNamesShort = listOf("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")

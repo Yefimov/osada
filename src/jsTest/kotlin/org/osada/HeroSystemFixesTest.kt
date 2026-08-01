@@ -23,6 +23,7 @@ import org.osada.model.GameUnit
 import org.osada.model.Player
 import org.osada.model.addPlayer
 import org.osada.model.allocMap
+import org.osada.model.collectPersistentCampaignUnits
 import org.osada.model.ensureFormationIds
 import org.osada.model.recordsInCampaignDossier
 import org.osada.scenario.Scenario
@@ -59,6 +60,31 @@ class HeroSystemFixesTest {
         assertEquals("F-0-8", restored.formationId, "restored identity must not be reminted")
         assertNull(FormationIdentity.of(borrowed), "only an explicitly temporary borrowed unit opts out")
         assertNull(FormationIdentity.of(enemy), "another player's unit is not directly controlled")
+    }
+
+    @Test
+    fun duplicateCarryOverIdDoesNotOverwriteARosterOnlyFormation() {
+        val player = Player().apply { id = 0 }
+        val first = controlledUnit(player).apply { formationId = "F-0-1" }
+        val duplicate = controlledUnit(player).apply { formationId = "F-0-1" }
+        player.setCoreUnitList(listOf(first, duplicate))
+        HeroCampaign.roster().putFormation(
+            CoreFormation(
+                id = FormationId("F-0-2"),
+                ownerId = 0,
+                country = 19,
+                displayName = "Roster-only formation",
+                currentEquipmentId = 1,
+                unitClass = UnitClass.INFANTRY.value,
+            ),
+        )
+
+        val report = GameMap().collectPersistentCampaignUnits(player)
+
+        assertEquals(1, report.duplicateFormationIds)
+        assertEquals(setOf("F-0-1", "F-0-3"), player.getCoreUnitList().mapNotNull { it.formationId }.toSet())
+        assertNotNull(HeroCampaign.roster().formation(FormationId("F-0-2")))
+        assertNotNull(HeroCampaign.roster().formation(FormationId("F-0-3")))
     }
 
     @Test

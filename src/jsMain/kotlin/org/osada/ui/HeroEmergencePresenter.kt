@@ -23,14 +23,19 @@ import org.osada.model.getUnits
 internal object HeroEmergencePresenter {
     fun announce(pending: List<HeroEmergenceAnnouncement>) {
         pending.forEach {
-            UIBuilder.messageDynamic(I18n.t("hero.emergence.title"), body(it))
-            // The layered portrait (§14.1, §15) loads into the placeholder after the dialog is built.
-            PortraitRenderer.render(
-                byId("heroEmergencePortrait"),
-                it.portrait,
-                it.portraitSeed,
-                artPath = it.portraitArt,
-            )
+            // The layered portrait (§14.1, §15) loads into the placeholder — as an onShown
+            // callback, because dialogs are QUEUED: with two hero events from one combat, this
+            // box may not be in the DOM until the player dismisses the one before it, and
+            // painting into a `#heroEmergencePortrait` that does not exist yet (or, worse, into
+            // the PREVIOUS dialog's placeholder) is exactly what the queue exists to prevent.
+            UIBuilder.messageDynamic(I18n.t("hero.emergence.title"), body(it)) {
+                PortraitRenderer.render(
+                    byId("heroEmergencePortrait"),
+                    it.portrait,
+                    it.portraitSeed,
+                    artPath = it.portraitArt,
+                )
+            }
             val unit =
                 GameHolder.instance
                     ?.scenario

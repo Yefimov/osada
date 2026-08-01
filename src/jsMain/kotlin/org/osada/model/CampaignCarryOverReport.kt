@@ -25,7 +25,17 @@ internal fun GameUnit.isCampaignPersistentFor(player: Player): Boolean =
 /**
  * Rebuilds the campaign reserve roster from every surviving player formation: deployed ground and
  * air units plus units already in the reserve/deployment tray. Stable formation ids are retained;
- * a duplicate id is collapsed deterministically instead of spawning two copies next scenario.
+ * a unit that shares an id with one already collected is **re-minted a fresh id and kept**.
+ *
+ * It used to be dropped instead ("collapsed deterministically instead of spawning two copies next
+ * scenario"), which quietly deleted real units: `Player.addCoreUnit` seeded id minting from the
+ * core roster alone, so purchases collided with pre-placed scenario units and N_Kiel carried 14 of
+ * 26 formations forward (`duplicateIds=12`) — the player's bought artillery among them. The minting
+ * bug is fixed at source in [org.osada.model.Player.addCoreUnit]; re-minting here is what repairs a
+ * save that already holds colliding ids, and is the safer failure mode either way. Two objects that
+ * reach this point are two distinct units — identical references are already removed by `distinct()`
+ * and by the `previous === unit` check — so keeping both can at worst preserve a unit the old code
+ * would have destroyed.
  */
 internal fun GameMap.collectPersistentCampaignUnits(player: Player): CampaignCarryOverReport {
     ensureFormationIds(player)
@@ -35,29 +45,31 @@ internal fun GameMap.collectPersistentCampaignUnits(player: Player): CampaignCar
     val temporary = candidates.count { it.owner == player.id && it.isTemporaryBorrowed }
     val noDossier = candidates.count { it.owner == player.id && it.nodossier }
     val usedIds =
-        candidates
-            .mapNotNull { unit -> unit.formationId?.takeIf { id -> id.isNotEmpty() } }
-            .toMutableSet()
+        buildSet {
+            candidates.mapNotNullTo(this) { unit -> unit.formationId?.takeIf { id -> id.isNotEmpty() } }
+            HeroCampaign.roster().allFormations().mapTo(this) { formation -> formation.id.value }
+        }.toMutableSet()
     val survivorsByFormation = linkedMapOf<String, GameUnit>()
     var duplicateFormationIds = 0
 
     candidates.filter { it.isCampaignPersistentFor(player) }.forEach { unit ->
-        val formationId = FormationIdentity.ensure(unit, usedIds).value
+        var formationId = FormationIdentity.ensure(unit, usedIds).value
         usedIds += formationId
-        unit.isCore = true
-        unit.player = player
 
         val previous = survivorsByFormation[formationId]
-        if (previous === unit) return@forEach
-        when {
-            previous == null -> survivorsByFormation[formationId] = unit
-            unit.isDeployed && !previous.isDeployed -> {
-                duplicateFormationIds++
-                survivorsByFormation[formationId] = unit
-            }
-
-            else -> duplicateFormationIds++
+        if (previous !== unit && previous != null) {
+            duplicateFormationIds++
+            // Re-mint past every id already spoken for, so the two formations separate instead of
+            // one of them being dropped. HeroCampaign.synchronizeFormation below then registers the
+            // new id, and any commander bound to the OLD id stays with `previous` — the unit that
+            // held it first, which is also the one the roster already knows.
+            formationId = FormationIdentity.nextFor(unit.owner, usedIds).value
+            unit.formationId = formationId
+            usedIds += formationId
         }
+        unit.isCore = true
+        unit.player = player
+        survivorsByFormation[formationId] = unit
     }
 
     val survivors = survivorsByFormation.values.toList()

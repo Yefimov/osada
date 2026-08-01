@@ -5646,6 +5646,38 @@ hr {
     margin: 10px 0 2px auto;
 }
 
+/* Labelled buttons INSIDE a settings row (currently the mobile "Gesture tutorial" replay).
+ * These used .smallButton, which is the 26px round brass plate meant for a single icon glyph —
+ * a whole word stretched its background image into a blurry oval. Same dark panel as the
+ * "Done" button above, sized to the label rather than to a disc. */
+.osada-settings-btn {
+    display: inline-block;
+    min-width: 96px;
+    height: 28px;
+    line-height: 26px;
+    padding: 0 14px;
+    margin-right: 0;
+    border: 1px solid var(--osada-metal-600);
+    border-radius: 3px;
+    background: linear-gradient(180deg, #2f343d, #1b1e24);
+    box-shadow: none;
+    font-family: var(--osada-font-ui);
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    text-align: center;
+    text-shadow: none;
+    color: var(--osada-text);
+    cursor: pointer;
+}
+
+.osada-settings-btn:hover {
+    border-color: var(--osada-brass);
+    background: linear-gradient(180deg, #363c46, #20242b);
+    color: var(--osada-brass);
+}
+
 /* ---- Narrative messages (briefings, campaign outcome texts) read on staff paper;
  * system messages keep the metal body. Class toggled by MessageDialogs.message(). ---- */
 .uiMessageBox--narrative .uiMessageBoxBody {

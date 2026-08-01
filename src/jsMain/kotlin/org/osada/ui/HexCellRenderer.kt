@@ -7,6 +7,7 @@ import org.osada.model.Hex
 import org.osada.model.canDeployOnTerrain
 import org.osada.model.getAttackableUnit
 import org.osada.model.getPlayer
+import org.osada.model.isInDeployZone
 
 /**
  * Per-cell drawing for [MapRenderer]: grid outline, current-unit highlight, deploy highlight,
@@ -83,8 +84,9 @@ internal class HexCellRenderer(
                 hex.terrain == TerrainType.AIRFIELD.value &&
                 hex.owner != -1 &&
                 frame.q.getPlayer(hex.owner).side == frame.q.currentPlayer?.side
-        val isOwnDeployZone =
-            hex.isDeployment != -1 && frame.q.getPlayer(hex.isDeployment).side == frame.q.currentPlayer?.side
+        val ownSide = frame.q.currentPlayer?.side
+        val pos = hex.getPos()
+        val isOwnDeployZone = ownSide != null && frame.q.isInDeployZone(ownSide, pos.row, pos.col)
         val terrainAllowsUnit =
             frame.deployUnit?.let { canDeployOnTerrain(it, hex, frame.airDeploySelected) } ?: true
         val showDeployHighlight =

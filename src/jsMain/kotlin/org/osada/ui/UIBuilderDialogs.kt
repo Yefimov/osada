@@ -34,7 +34,8 @@ fun UIBuilder.clearScenarioBriefing() = ScenarioBriefingController.clearLast()
 fun UIBuilder.messageDynamic(
     title: String,
     body: String,
-) = MessageDialogs.messageDynamic(title, body)
+    onShown: (() -> Unit)? = null,
+) = MessageDialogs.messageDynamic(title, body, onShown)
 
 fun UIBuilder.showPrototypeAwardMessage(eqid: Int) = MessageDialogs.showPrototypeAwardMessage(eqid)
 

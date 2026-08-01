@@ -13,6 +13,7 @@ import org.osada.model.getPlayer
 import org.osada.scenario.getReinforcements
 import org.osada.scenario.removeReinforcement
 import org.osada.ui.HudLog
+import org.osada.ui.MessageDialogs
 import org.osada.ui.UIBuilder
 import org.osada.ui.handleReinforcementDeployment
 import org.osada.ui.mainMenuButton
@@ -177,6 +178,13 @@ fun Game.cleanup() {
         .stop()
     org.osada.ui.WeatherModel
         .stop()
+    // Nothing about the battle just finished may follow the player into the next one. Both of these
+    // outlived the transition: HeroCampaign's queues are on a long-lived object cleared only by
+    // reset() (a NEW RUN, not a new scenario), and MessageDialogs' boxes are plain DOM nodes under
+    // #mainbody that no teardown touched. That is how a Frigate's hero announcement from N_Kiel
+    // opened on Willhelmshafen turn 1.
+    HeroCampaign.discardPendingAnnouncements()
+    MessageDialogs.clearDynamicMessages()
     state?.clear()
     scenario?.map?.cleanup()
     scenario = null

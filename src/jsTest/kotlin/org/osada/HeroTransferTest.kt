@@ -10,7 +10,13 @@ import org.osada.hero.HeroOrigin
 import org.osada.hero.HeroState
 import org.osada.hero.HeroStatus
 import org.osada.hero.PortraitComposition
+import org.osada.model.GameMap
+import org.osada.model.GameUnit
+import org.osada.model.Player
+import org.osada.model.addPlayer
+import org.osada.scenario.Scenario
 import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -27,6 +33,19 @@ class HeroTransferTest {
     private val heroId = HeroId("H-T1")
     private val emptyFormationId = FormationId("F-T1")
     private val ledFormationId = FormationId("F-T2")
+    private lateinit var map: GameMap
+
+    @BeforeTest
+    fun openInitialDeploymentWindow() {
+        val game = Game()
+        val scenario = Scenario(null)
+        val player = Player().apply { id = 0 }
+        map = scenario.map
+        map.addPlayer(player)
+        map.currentPlayer = player
+        game.scenario = scenario
+        game.campaignPlayer = player
+    }
 
     private fun definition() =
         HeroDefinition(
@@ -54,6 +73,7 @@ class HeroTransferTest {
     @AfterTest
     fun cleanup() {
         HeroCampaign.reset()
+        GameHolder.instance = null
     }
 
     @Test
@@ -144,5 +164,35 @@ class HeroTransferTest {
         assertTrue(hero.serviceEvents.any { it.eventId == "transferred" })
         val target = assertNotNull(HeroCampaign.roster().formation(emptyFormationId))
         assertTrue(target.history.any { it.eventId == "commander_transferred" })
+    }
+
+    @Test
+    fun commanderTransferClosesAfterTheFirstUnitAction() {
+        HeroCampaign.roster().putFormation(formation(emptyFormationId))
+        HeroCampaign.roster().putHero(
+            definition(),
+            HeroState(heroId = heroId, rankId = "major", status = HeroStatus.RESERVE),
+        )
+        map.units +=
+            GameUnit(1).apply {
+                owner = 0
+                hasMoved = true
+            }
+
+        assertEquals(emptyList(), HeroCampaign.transferableFormations(heroId))
+        assertFalse(HeroCampaign.transferCommander(heroId, emptyFormationId))
+        assertEquals(HeroStatus.RESERVE, assertNotNull(HeroCampaign.roster().state(heroId)).status)
+    }
+
+    @Test
+    fun commanderTransferDoesNotReopenOnALaterTurn() {
+        HeroCampaign.roster().putFormation(formation(emptyFormationId))
+        HeroCampaign.roster().putHero(
+            definition(),
+            HeroState(heroId = heroId, rankId = "major", status = HeroStatus.RESERVE),
+        )
+        map.turn = 2
+
+        assertFalse(HeroCampaign.transferCommander(heroId, emptyFormationId))
     }
 }

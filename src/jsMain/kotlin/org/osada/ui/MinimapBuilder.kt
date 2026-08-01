@@ -31,6 +31,10 @@ internal object MinimapBuilder {
     private const val HEIGHT = 160
     private const val FALLBACK_INTERVAL_MS = 2000
     private const val UNIT_DOT_RADIUS = 2.2
+    private const val ENEMY_UNIT_DOT_RIM = 1.0
+    private const val OWN_UNIT_DOT_COLOR = "#c9463d"
+    private const val ENEMY_UNIT_DOT_COLOR = "#f2f0e8"
+    private const val ENEMY_UNIT_DOT_RIM_COLOR = "#0b0c0e"
     private const val VIEWPORT_RECT_LINE_WIDTH = 1.5
 
     private var canvas: dynamic = null
@@ -191,8 +195,12 @@ internal object MinimapBuilder {
         }
     }
 
-    /** Units: own green, spotted enemies red. Same spotting rule as everywhere else in the
-     *  HUD (hex.isSpotted / tempSpotted) — no new information leaked. */
+    /** Units: own RED, spotted enemies WHITE with a black rim (user request). Same spotting rule as
+     *  everywhere else in the HUD (hex.isSpotted / tempSpotted) — no new information leaked.
+     *
+     *  The rim is not decoration: the minimap composites real terrain artwork underneath, and a
+     *  plain white dot vanishes over snow, coast surf and pale towns. Red-on-white also survives
+     *  the common colour-vision deficiencies that green-vs-red did not. */
     private fun drawUnitDots(
         g: dynamic,
         ui: UI,
@@ -209,7 +217,14 @@ internal object MinimapBuilder {
             val spotted = own || (pos != null && isUnitSpotted(map, pos, side, unit))
             if (pos == null || !spotted) continue
             val p = ui.render.cellToScreen(pos.row, pos.col, false)
-            dot(g, p.x / srcW * w, p.y / srcH * h, if (own) "#7fa86a" else "#c9463d", UNIT_DOT_RADIUS)
+            val x = p.x / srcW * w
+            val y = p.y / srcH * h
+            if (own) {
+                dot(g, x, y, OWN_UNIT_DOT_COLOR, UNIT_DOT_RADIUS)
+            } else {
+                dot(g, x, y, ENEMY_UNIT_DOT_RIM_COLOR, UNIT_DOT_RADIUS + ENEMY_UNIT_DOT_RIM)
+                dot(g, x, y, ENEMY_UNIT_DOT_COLOR, UNIT_DOT_RADIUS)
+            }
         }
     }
 

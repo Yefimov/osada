@@ -1,6 +1,7 @@
 package org.osada.hero
 
 import org.osada.GameHolder
+import org.osada.PlayerType
 import org.osada.hero.HeroCampaign.drainAnnouncements
 import org.osada.hero.HeroCampaign.reconContactsCredited
 import org.osada.hero.HeroCampaign.recordCombat
@@ -12,6 +13,7 @@ import org.osada.hero.HeroCampaign.transferCommander
 import org.osada.model.EfileConfig
 import org.osada.model.Equipment
 import org.osada.model.GameUnit
+import org.osada.model.isInitialDeploymentWindow
 import org.osada.rules.Attachments
 
 /**
@@ -273,13 +275,21 @@ internal object HeroCampaign {
         hero.assignedFormationId == null &&
             hero.status in transferEligibleStatuses
 
-    /** Unled formations that could receive [heroId] in a transfer (§1.10), or empty when the hero
-     *  itself is not currently eligible. Between-scenario by nature: a formation not present in the
-     *  scenario on the map right now is still a valid target, since the roster (not the live map)
-     *  is what the next scenario load reads `heroFor` against. */
+    /** Commander reassignment is a scenario-start setup action, not a mid-battle recovery tool. */
+    private fun isCommanderTransferWindowOpen(): Boolean {
+        val game = GameHolder.instance ?: return false
+        val map = game.scenario?.map ?: return false
+        val player = game.campaignPlayer ?: map.currentPlayer ?: return false
+        return player.type == PlayerType.HUMAN_LOCAL && map.isInitialDeploymentWindow(player)
+    }
+
+    /** Unled formations that could receive [heroId] during the initial deployment window (§1.10),
+     *  or empty when the hero or timing is not eligible. A formation not present on the map is still
+     *  a valid target because the roster (not the live map) is what deployment reads `heroFor`
+     *  against. */
     fun transferableFormations(heroId: HeroId): List<CoreFormation> {
         val hero = roster.state(heroId)
-        return if (hero != null && isTransferEligible(hero)) {
+        return if (hero != null && isTransferEligible(hero) && isCommanderTransferWindowOpen()) {
             roster.allFormations().filter { it.assignedHeroId == null }
         } else {
             emptyList()
@@ -299,7 +309,12 @@ internal object HeroCampaign {
     ): Boolean {
         val hero = roster.state(heroId)
         val formation = roster.formation(formationId)
-        val legal = hero != null && formation != null && isTransferEligible(hero) && formation.assignedHeroId == null
+        val legal =
+            hero != null &&
+                formation != null &&
+                isTransferEligible(hero) &&
+                formation.assignedHeroId == null &&
+                isCommanderTransferWindowOpen()
         if (hero == null || formation == null || !legal) return false
         val event = HeroEvent("transferred", currentScenarioLabel(), currentTurn(), currentDate(), null)
         roster.updateState(
@@ -597,6 +612,19 @@ internal object HeroCampaign {
         val out = pendingCasualties.toList()
         pendingCasualties.clear()
         return out
+    }
+
+    /**
+     * Drops every announcement not yet presented. Called on scenario teardown (`Game.cleanup`).
+     *
+     * [reset] clears these too, but only starts a NEW RUN — between two scenarios of one campaign
+     * the queues simply carried over, and an event queued by the last combat of a battle (which
+     * ends the battle, so no further combat ever drains it) surfaced in the next scenario instead.
+     */
+    fun discardPendingAnnouncements() {
+        pendingAnnouncements.clear()
+        pendingPromotions.clear()
+        pendingCasualties.clear()
     }
 
     /** Applies the player's choice for a pending promotion (§8.5): learns the trait, gains one attribute point. */

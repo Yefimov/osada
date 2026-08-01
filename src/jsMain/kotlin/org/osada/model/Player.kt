@@ -44,7 +44,7 @@ class Player {
         if (unit == null || coreUnits.any { it === unit }) return false
         unit.isCore = true
         if (!unit.isTemporaryBorrowed) {
-            FormationIdentity.ensure(unit, coreUnits.mapNotNull { it.formationId })
+            FormationIdentity.ensure(unit, knownFormationIds(getCoreUnitList()))
             HeroCampaign.synchronizeFormation(unit)
         }
         coreUnits.add(unit)

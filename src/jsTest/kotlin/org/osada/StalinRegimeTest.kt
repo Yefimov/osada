@@ -71,7 +71,12 @@ class StalinRegimeTest {
         assertEquals(60, boosted.grounddef)
         assertEquals(80, boosted.initiative)
         assertEquals(60, boosted.movpoints)
-        assertEquals(30, boosted.spotrange)
+        // spotrange is NOT multiplied: it is the fog-of-war input, not a strength stat. At x10
+        // every unit saw the whole map, so Stalin Regime silently doubled as "disable fog of war" —
+        // and because Hex.setSpotted is a reference count, the hexes it revealed stayed revealed
+        // after the mode was switched back off. Observer Mode's own noFOW toggle is the way to
+        // lift the fog; these two must stay independent.
+        assertEquals(3, boosted.spotrange)
         assertEquals(20, boosted.gunrange)
         assertEquals(90, boosted.ammo)
         assertEquals(400, boosted.fuel)

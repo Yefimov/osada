@@ -24,10 +24,20 @@ internal object StartMenuSettingsBuilder {
 
     // Task 5: regrouped from one flat list into named sections. Same keys/labels (plus the
     // new confirmEndTurn toggle) — CSS + markup only, no checkbox logic changed.
-    private data class SettingSection(
+    //
+    // THIS LIST IS THE SOLE SOURCE OF TRUTH for the settings screen's structure. [LiveLocalization]
+    // re-labels the already-built DOM on a language change by walking the same list; it used to keep
+    // a second, hand-maintained copy, which silently went stale when the Mobile section was added.
+    // Because that copy matched headers BY INDEX, every title from Mobile onwards was written into
+    // the wrong header: Mobile was captioned "Sound", Sound was captioned "Observer Mode", and the
+    // real Observer Mode header was never reached at all.
+    internal data class SettingSection(
         val titleKey: String,
         val captionKey: String?,
         val items: List<Pair<String, String>>,
+        /** Draws the red "affects game balance" treatment. Observer Mode only — a caption alone is
+         *  not a warning, and Mobile's caption is ordinary explanatory text. */
+        val balanceWarning: Boolean = false,
     )
 
     // Settings that change what the CANVAS draws — re-rendered on click, not deferred to
@@ -43,7 +53,13 @@ internal object StartMenuSettingsBuilder {
             "showDetailInfoToolTips",
         )
 
-    private val settingSections =
+    /** Title of the section the top sliders belong to. They are built by [buildTopSliders] rather
+     *  than from [settingSections] (they are sliders, not checkboxes), but they still need a header
+     *  of their own — without one they sat above the first title and read as belonging to Map View,
+     *  or to nothing at all. */
+    internal const val DISPLAY_SECTION_TITLE_KEY = "settings.section.display.title"
+
+    internal val settingSections =
         listOf(
             SettingSection(
                 "settings.section.map_view.title",
@@ -62,7 +78,6 @@ internal object StartMenuSettingsBuilder {
                     "quickAnimation" to "settings.gameplay.quick_animation.label",
                     "showDetailInfoToolTips" to "settings.gameplay.optional_objectives.label",
                     "confirmEndTurn" to "settings.gameplay.confirm_end_turn.label",
-                    "stalinRegime" to "settings.gameplay.stalin_regime.label",
                 ),
             ),
             SettingSection(
@@ -79,17 +94,24 @@ internal object StartMenuSettingsBuilder {
                     "muteUnitSounds" to "settings.sound.mute_unit_sounds.label",
                 ),
             ),
+            // Stalin Regime lives here, not under Gameplay. It multiplies every combat, movement
+            // and prestige number for the local player by ten — the largest balance override in the
+            // game, and squarely what this section's "affects game balance" warning is for. It also
+            // now raises the same persistent OBSERVER badge the other two do
+            // ([StatusBarController.updateObserverBadge]).
             SettingSection(
                 "settings.section.observer.title",
                 "settings.section.observer.caption",
                 listOf(
+                    "stalinRegime" to "settings.gameplay.stalin_regime.label",
                     "noFOW" to "settings.observer.no_fow.label",
                     "showHiddenVictoryHexes" to "settings.observer.hidden_victory_hexes.label",
                 ),
+                balanceWarning = true,
             ),
         )
 
-    private val settingHelpKeys =
+    internal val settingHelpKeys =
         mapOf(
             "showGridTerrain" to "settings.map.show_grid_terrain.help",
             "markOwnUnits" to "settings.map.mark_own_units.help",
@@ -105,7 +127,16 @@ internal object StartMenuSettingsBuilder {
             "showHiddenVictoryHexes" to "settings.observer.hidden_victory_hexes.help",
         )
 
-    private val sliderHelpKeys =
+    internal val sliderLabelKeys =
+        mapOf(
+            "uiresize" to "settings.slider.interface_width.label",
+            "uiscale" to "settings.slider.interface_scale.label",
+            "mapscale" to "settings.slider.map_scale.label",
+            "soundvolume" to "settings.slider.effects_volume.label",
+            "ambientvolume" to "settings.slider.ambient_volume.label",
+        )
+
+    internal val sliderHelpKeys =
         mapOf(
             "uiresize" to "settings.slider.interface_width.help",
             "uiscale" to "settings.slider.interface_scale.help",
@@ -119,6 +150,7 @@ internal object StartMenuSettingsBuilder {
         UILayout.scaleUI(uiSettings.uiScale)
         UILayout.setLayoutConstrains(false)
         LanguageSelector.buildSettingsControl()
+        buildSectionHeader(SettingSection(DISPLAY_SECTION_TITLE_KEY, null, emptyList()))
         buildTopSliders()
         settingSections.forEach { buildSettingSection(it) }
         wireSettingsOkHandler()
@@ -188,18 +220,25 @@ internal object StartMenuSettingsBuilder {
         }
     }
 
-    private fun buildSettingSection(section: SettingSection) {
+    private fun buildSectionHeader(section: SettingSection) {
         val header = addTag("smSettingsContainer", "div")
         header.className = "osada-settings-header"
+        // The red treatment is driven by balanceWarning, NOT by "has a caption". Keying it to the
+        // caption meant adding an explanatory line to the Mobile section also painted its title as
+        // a balance warning, which it is not.
+        if (section.balanceWarning) header.classList.add("osada-settings-header--observer")
         val title = addTag(header, "span")
         title.className = "osada-settings-header__title"
         title.textContent = I18n.t(section.titleKey)
         section.captionKey?.let { captionKey ->
-            header.classList.add("osada-settings-header--observer")
             val caption = addTag(header, "span")
             caption.className = "osada-settings-header__caption"
             caption.textContent = I18n.t(captionKey)
         }
+    }
+
+    private fun buildSettingSection(section: SettingSection) {
+        buildSectionHeader(section)
         section.items.forEach { (id, labelKey) -> buildSettingCheckbox(id, labelKey) }
         // Volume sliders live inside the Sound section, right after its checkbox — a
         // continuation of the section's own items, not separate top-level controls.
@@ -223,6 +262,7 @@ internal object StartMenuSettingsBuilder {
         // explanation that reads as "the setting is broken" (user report).
         val label = I18n.t(labelKey)
         textDiv.title = settingHelpKeys[id]?.let { I18n.t(it) } ?: label
+        container.title = textDiv.title
         textDiv.className = "settingText left"
         textDiv.textContent = label
         val valueDiv = addTag(container, "div")
@@ -254,7 +294,7 @@ internal object StartMenuSettingsBuilder {
         // updating it live vs. on close is invisible to the player either way — but
         // do it here too for the instant the dialog closes, not just on the next
         // turn-change/selection-driven updateStatusBar refresh.
-        if (id == "noFOW" || id == "showHiddenVictoryHexes") {
+        if (id == "noFOW" || id == "showHiddenVictoryHexes" || id == "stalinRegime") {
             gameRef()?.ui?.updateStatusBar()
         }
         // Live-apply map-visual toggles (Stage 3.5 follow-up): re-render the canvas

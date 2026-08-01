@@ -4,6 +4,22 @@ import org.osada.MovMethod
 import org.osada.RoadType
 import org.osada.TerrainType
 import org.osada.movTable
+import org.osada.rules.GameRules
+import org.osada.rules.setSpotRange
+
+/**
+ * Recomputes every hex's spotting counters from the units currently on the map.
+ *
+ * `Hex.setSpotted` keeps a per-side REFERENCE COUNT, so the fog is only correct while every remove
+ * cancels an add made at the same range. Any change to how a unit's spot range is derived breaks
+ * that pairing and strands counters above zero — permanently revealed hexes that no toggle can put
+ * back. This is the only way to re-derive the truth; call it after anything that can change spot
+ * ranges en masse.
+ */
+fun GameMap.recomputeSpotting() {
+    map?.forEach { row -> row.forEach { it.clearSpotted() } }
+    getUnits().forEach { GameRules.setSpotRange(this, it, true) }
+}
 
 /** Grid allocation & hex access for [GameMap], split out to keep its function count in bounds. */
 fun GameMap.allocMap() {
@@ -11,6 +27,7 @@ fun GameMap.allocMap() {
     hasRailDataCache = null
     hasWaterAccessCache = null
     hasOpenWaterAccessCache = null
+    invalidateDeployZones()
 }
 
 /** Whether this map's grid carries ANY rail data. Computed once and cached on first access
@@ -122,16 +139,6 @@ fun GameMap.updateVictorySides(
         sidesVictoryHexes[enemySide].add(pos)
     }
     return sidesVictoryHexes.getOrNull(side)?.isEmpty() ?: false
-}
-
-fun GameMap.getDeployHexes(side: Int): Array<Cell> {
-    val result = mutableListOf<Cell>()
-    map?.forEachIndexed { r, row ->
-        row.forEachIndexed { c, hex ->
-            if (hex.isDeployment != -1 && getPlayer(hex.isDeployment).side == side) result.add(Cell(r, c))
-        }
-    }
-    return result.toTypedArray()
 }
 
 /**

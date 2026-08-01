@@ -98,31 +98,56 @@ internal object LiveLocalization {
         }
     }
 
+    /**
+     * Re-labels the already-built settings screen after an in-session language change.
+     *
+     * Everything here is derived from [StartMenuSettingsBuilder]'s own declarations rather than
+     * restated. The previous version kept a hand-written copy of the section list and the checkbox
+     * key map, and both went stale the moment the Mobile section was added:
+     *
+     * - the section list still had four entries against the screen's five, and matched them to
+     *   headers BY INDEX — so from Mobile onwards every header got the title of the section *after*
+     *   it (Mobile read "Sound", Sound read "Observer Mode") and the real Observer Mode header was
+     *   never written to at all;
+     * - `reducedEffects` was missing from the checkbox map, and [MobileSettingsBuilder]'s selects
+     *   and Replay button were not covered by anything, so those rows kept whatever language they
+     *   were built in — the "Упрощённые эффекты" / "Показать" rows a player saw under English.
+     *
+     * Deriving from the builder is what makes those two failure modes structurally impossible.
+     */
     private fun refreshSettings() {
         LanguageSelector.refreshAll()
-        val sectionKeys =
-            listOf(
-                "settings.section.map_view.title" to null,
-                "settings.section.gameplay.title" to null,
-                "settings.section.sound.title" to null,
-                "settings.section.observer.title" to "settings.section.observer.caption",
-            )
+        refreshSettingsHeaders()
+        StartMenuSettingsBuilder.settingSections
+            .flatMap { it.items }
+            .forEach { (id, labelKey) ->
+                refreshSettingRow(id, labelKey, StartMenuSettingsBuilder.settingHelpKeys[id] ?: labelKey)
+            }
+        StartMenuSettingsBuilder.sliderLabelKeys.forEach { (id, labelKey) ->
+            refreshSettingRow(id, labelKey, StartMenuSettingsBuilder.sliderHelpKeys[id] ?: labelKey)
+        }
+        MobileSettingsBuilder.refreshLocalization()
+        byId("smSetOkBut")?.apply {
+            title = I18n.t("settings.done.help")
+            setAttribute("data-label", I18n.t("common.done.label"))
+        }
+        byId("uiokbut")?.setAttribute("data-label", I18n.t("common.continue.label"))
+    }
+
+    private fun refreshSettingsHeaders() {
+        // Same order the builder emits: the Display header for the top sliders, then one per
+        // section. Index matching is only safe because both sides now read the same list.
+        val titles =
+            listOf(StartMenuSettingsBuilder.DISPLAY_SECTION_TITLE_KEY to null) +
+                StartMenuSettingsBuilder.settingSections.map { it.titleKey to it.captionKey }
         val headers = byId("smSettingsContainer")?.querySelectorAll(".osada-settings-header")
-        sectionKeys.forEachIndexed { index, (titleKey, captionKey) ->
+        titles.forEachIndexed { index, (titleKey, captionKey) ->
             val header = headers?.item(index) as? org.w3c.dom.HTMLElement ?: return@forEachIndexed
             header.querySelector(".osada-settings-header__title")?.textContent = I18n.t(titleKey)
             captionKey?.let { key ->
                 header.querySelector(".osada-settings-header__caption")?.textContent = I18n.t(key)
             }
         }
-
-        settingKeys.forEach { (id, keys) -> refreshSettingRow(id, keys.first, keys.second) }
-        sliderKeys.forEach { (id, keys) -> refreshSettingRow(id, keys.first, keys.second) }
-        byId("smSetOkBut")?.apply {
-            title = I18n.t("settings.done.help")
-            setAttribute("data-label", I18n.t("common.done.label"))
-        }
-        byId("uiokbut")?.setAttribute("data-label", I18n.t("common.continue.label"))
     }
 
     private fun refreshSettingRow(
@@ -369,34 +394,5 @@ internal object LiveLocalization {
         listOf(
             StartMenuListToolbar.SORT_DEFAULT,
             StartMenuListToolbar.SORT_NAME,
-        )
-
-    private val settingKeys =
-        mapOf(
-            "showGridTerrain" to Pair("settings.map.show_grid_terrain.label", "settings.map.show_grid_terrain.help"),
-            "markOwnUnits" to Pair("settings.map.mark_own_units.label", "settings.map.mark_own_units.help"),
-            "markEnemyUnits" to Pair("settings.map.mark_enemy_units.label", "settings.map.mark_enemy_units.help"),
-            "useRetina" to Pair("settings.map.use_retina.label", "settings.map.use_retina.help"),
-            "quickAnimation" to
-                Pair("settings.gameplay.quick_animation.label", "settings.gameplay.quick_animation.help"),
-            "showDetailInfoToolTips" to
-                Pair("settings.gameplay.optional_objectives.label", "settings.gameplay.optional_objectives.help"),
-            "confirmEndTurn" to
-                Pair("settings.gameplay.confirm_end_turn.label", "settings.gameplay.confirm_end_turn.help"),
-            "stalinRegime" to
-                Pair("settings.gameplay.stalin_regime.label", "settings.gameplay.stalin_regime.help"),
-            "muteUnitSounds" to Pair("settings.sound.mute_unit_sounds.label", "settings.sound.mute_unit_sounds.help"),
-            "noFOW" to Pair("settings.observer.no_fow.label", "settings.observer.no_fow.help"),
-            "showHiddenVictoryHexes" to
-                Pair("settings.observer.hidden_victory_hexes.label", "settings.observer.hidden_victory_hexes.help"),
-        )
-
-    private val sliderKeys =
-        mapOf(
-            "uiresize" to Pair("settings.slider.interface_width.label", "settings.slider.interface_width.help"),
-            "uiscale" to Pair("settings.slider.interface_scale.label", "settings.slider.interface_scale.help"),
-            "mapscale" to Pair("settings.slider.map_scale.label", "settings.slider.map_scale.help"),
-            "soundvolume" to Pair("settings.slider.effects_volume.label", "settings.slider.effects_volume.help"),
-            "ambientvolume" to Pair("settings.slider.ambient_volume.label", "settings.slider.ambient_volume.help"),
         )
 }
