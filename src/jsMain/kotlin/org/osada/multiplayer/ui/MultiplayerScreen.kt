@@ -8,7 +8,10 @@ import org.osada.ui.makeHidden
 import org.osada.ui.makeVisible
 import org.w3c.dom.HTMLButtonElement
 import org.w3c.dom.HTMLDivElement
+import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLInputElement
+import org.w3c.dom.HTMLOptionElement
+import org.w3c.dom.HTMLSelectElement
 
 /** A seat as the lobby renders it — no transport or game types leak into the DOM layer. */
 data class LobbyRow(
@@ -21,23 +24,32 @@ data class LobbyRow(
 class HubModel(
     val displayName: String,
     val onlineAvailable: Boolean,
-    val onlinePreferred: Boolean,
     val backendLabel: String,
-    val onCreate: (displayName: String, online: Boolean) -> Unit,
-    val onJoin: (roomCode: String, displayName: String, online: Boolean) -> Unit,
+    val onCreate: (displayName: String) -> Unit,
+    val onJoin: (roomCode: String, displayName: String) -> Unit,
     val onBack: () -> Unit,
+)
+
+/** One row of the scenario picker; [group] is the campaign the scenario belongs to. */
+data class ScenarioChoice(
+    val file: String,
+    val name: String,
+    val group: String,
 )
 
 class LobbyModel(
     val roomCode: String?,
-    val online: Boolean,
     val message: String?,
     val rows: List<LobbyRow>,
     val maxParticipants: Int,
     val selfReady: Boolean,
     val readyEnabled: Boolean,
     val isHost: Boolean,
+    val scenarios: List<ScenarioChoice>,
+    val selectedScenarioFile: String?,
+    val selectedScenarioName: String?,
     val startEnabled: Boolean,
+    val onScenarioSelected: (String) -> Unit,
     val onToggleReady: () -> Unit,
     val onStart: () -> Unit,
     val onLeave: () -> Unit,
@@ -59,12 +71,11 @@ object MultiplayerScreen {
         makeVisible("startmenu")
         val root = ensureRoot()
         root.innerHTML = ""
-        val online = model.onlineAvailable && model.onlinePreferred
         appendHeader(
             root,
-            if (online) I18n.t("multiplayer.online.eyebrow") else I18n.t("multiplayer.local.eyebrow"),
-            if (online) I18n.t("multiplayer.title") else I18n.t("multiplayer.local.title"),
-            if (online) I18n.t("multiplayer.online.description") else I18n.t("multiplayer.local.description"),
+            I18n.t("multiplayer.online.eyebrow"),
+            I18n.t("multiplayer.title"),
+            I18n.t("multiplayer.online.description"),
         )
 
         val body = panel("osada-mp-body")
@@ -77,7 +88,7 @@ object MultiplayerScreen {
         identity.appendChild(field(I18n.t("multiplayer.display_name.label"), nameInput))
         body.appendChild(identity)
 
-        body.appendChild(modeCard(model))
+        if (!model.onlineAvailable) body.appendChild(offlineNotice())
 
         val choices = panel("osada-mp-choices")
         body.appendChild(choices)
@@ -86,13 +97,7 @@ object MultiplayerScreen {
 
         val footer = panel("osada-mp-footer")
         footer.appendChild(
-            text(
-                if (online) {
-                    I18n.t("multiplayer.online.same_build.help")
-                } else {
-                    I18n.t("multiplayer.local.same_profile.help")
-                },
-            ).apply { className = "osada-mp-footnote" },
+            text(I18n.t("multiplayer.online.same_build.help")).apply { className = "osada-mp-footnote" },
         )
         val back = button(I18n.t("multiplayer.back.label"), quiet = true)
         back.onclick = { model.onBack() }
@@ -105,7 +110,7 @@ object MultiplayerScreen {
         root.innerHTML = ""
         appendHeader(
             root,
-            if (model.online) I18n.t("multiplayer.online.eyebrow") else I18n.t("multiplayer.local.eyebrow"),
+            I18n.t("multiplayer.online.eyebrow"),
             I18n.t("multiplayer.lobby.title"),
             I18n.t("multiplayer.lobby.description"),
         )
@@ -116,6 +121,7 @@ object MultiplayerScreen {
         model.message?.let {
             body.appendChild(text(it).apply { className = "osada-mp-alert osada-mp-alert--info" })
         }
+        body.appendChild(scenarioCard(model))
         body.appendChild(rosterCard(model))
         root.appendChild(lobbyFooter(model))
     }
@@ -160,18 +166,11 @@ object MultiplayerScreen {
         (document.getElementById(STATUS_ID) as? HTMLDivElement)?.textContent = value
     }
 
-    private fun modeCard(model: HubModel): HTMLDivElement {
-        val card = panel("osada-mp-card osada-mp-mode-card")
-        card.appendChild(cardHeading(I18n.t("multiplayer.mode.title"), I18n.t("multiplayer.mode.help")))
-        val label =
-            when {
-                !model.onlineAvailable -> I18n.t("multiplayer.mode.online_unavailable")
-                model.onlinePreferred -> I18n.t("multiplayer.backend", mapOf("environment" to model.backendLabel))
-                else -> I18n.t("multiplayer.mode.local_selected")
-            }
-        card.appendChild(text(label).apply { className = "osada-mp-card-copy" })
-        return card
-    }
+    /** Shown when the page was not served over HTTP, where no socket can be opened at all. */
+    private fun offlineNotice(): HTMLDivElement =
+        panel("osada-mp-alert osada-mp-alert--error").apply {
+            textContent = I18n.t("multiplayer.online.unavailable")
+        }
 
     private fun createCard(
         model: HubModel,
@@ -180,19 +179,10 @@ object MultiplayerScreen {
         val card = panel("osada-mp-card osada-mp-action-card osada-mp-action-card--host")
         card.appendChild(stepBadge("01", I18n.t("multiplayer.host.label")))
         card.appendChild(cardHeading(I18n.t("multiplayer.create.title"), I18n.t("multiplayer.create.help")))
-        val online = model.onlineAvailable && model.onlinePreferred
         val create = button(I18n.t("multiplayer.create.label"), primary = true)
-        create.onclick = { model.onCreate(nameInput.value, online) }
+        create.disabled = !model.onlineAvailable
+        create.onclick = { model.onCreate(nameInput.value) }
         card.appendChild(create)
-        if (model.onlineAvailable) {
-            val alternate =
-                button(
-                    if (online) I18n.t("multiplayer.mode.use_local") else I18n.t("multiplayer.mode.use_online"),
-                    quiet = true,
-                )
-            alternate.onclick = { model.onCreate(nameInput.value, !online) }
-            card.appendChild(alternate)
-        }
         return card
     }
 
@@ -208,9 +198,9 @@ object MultiplayerScreen {
         card.appendChild(stepBadge("02", I18n.t("multiplayer.join_step.label")))
         card.appendChild(cardHeading(I18n.t("multiplayer.join.title"), I18n.t("multiplayer.join.help")))
         card.appendChild(field(I18n.t("multiplayer.room_code.label"), codeInput))
-        val online = model.onlineAvailable && model.onlinePreferred
         val join = button(I18n.t("multiplayer.join.label"))
-        join.onclick = { model.onJoin(codeInput.value, nameInput.value, online) }
+        join.disabled = !model.onlineAvailable
+        join.onclick = { model.onJoin(codeInput.value, nameInput.value) }
         card.appendChild(join)
         return card
     }
@@ -222,15 +212,71 @@ object MultiplayerScreen {
         )
         room.appendChild(text(model.roomCode ?: "—").apply { className = "osada-mp-room-code" })
         room.appendChild(
-            text(
-                if (model.online) {
-                    I18n.t("multiplayer.online.room_code.help")
-                } else {
-                    I18n.t("multiplayer.room_code.help")
-                },
-            ).apply { className = "osada-mp-room-help" },
+            text(I18n.t("multiplayer.online.room_code.help")).apply { className = "osada-mp-room-help" },
         )
         return room
+    }
+
+    /**
+     * Which battle the room will play. Only the host can change it; the guest sees the same line
+     * read-only, because the server clears everyone's readiness whenever the choice changes.
+     */
+    private fun scenarioCard(model: LobbyModel): HTMLDivElement {
+        val card = panel("osada-mp-card osada-mp-scenario-card")
+        card.appendChild(
+            cardHeading(
+                I18n.t("multiplayer.scenario.title"),
+                if (model.isHost) {
+                    I18n.t("multiplayer.scenario.help.host")
+                } else {
+                    I18n.t("multiplayer.scenario.help.guest")
+                },
+            ),
+        )
+        if (model.isHost) {
+            card.appendChild(scenarioSelect(model))
+        } else {
+            card.appendChild(
+                text(model.selectedScenarioName ?: I18n.t("multiplayer.scenario.waiting"))
+                    .apply { className = "osada-mp-scenario-name" },
+            )
+        }
+        return card
+    }
+
+    private fun scenarioSelect(model: LobbyModel): HTMLElement {
+        val select = document.createElement("select") as HTMLSelectElement
+        select.className = "osada-mp-input osada-mp-scenario-select"
+        if (model.selectedScenarioFile == null) {
+            val placeholder = document.createElement("option") as HTMLOptionElement
+            placeholder.value = ""
+            placeholder.textContent = I18n.t("multiplayer.scenario.choose")
+            select.appendChild(placeholder)
+        }
+        // Campaigns become <optgroup>s, which is exactly the folded-by-campaign reading the
+        // scenario register gives — for free, and with the browser's own keyboard search.
+        var group: HTMLElement? = null
+        var groupName = ""
+        model.scenarios.forEach { choice ->
+            if (choice.group != groupName || group == null) {
+                groupName = choice.group
+                group =
+                    (document.createElement("optgroup") as HTMLElement).also {
+                        it.setAttribute("label", groupName)
+                        select.appendChild(it)
+                    }
+            }
+            val option = document.createElement("option") as HTMLOptionElement
+            option.value = choice.file
+            option.textContent = choice.name
+            option.selected = choice.file == model.selectedScenarioFile
+            group?.appendChild(option)
+        }
+        select.onchange = {
+            val value = select.value
+            if (value.isNotEmpty()) model.onScenarioSelected(value)
+        }
+        return select
     }
 
     private fun rosterCard(model: LobbyModel): HTMLDivElement {

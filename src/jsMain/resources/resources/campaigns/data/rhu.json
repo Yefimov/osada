@@ -39,7 +39,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Comrade, you failed our revolution, the workers and peasants of our Soviet Republic. You are going to face the firing squad."
+    "text": "The front has collapsed. The Republic has lost the army and time it needed; hostile forces advance while counterrevolutionary detachments prepare their reprisals."
    }
   },
   "briefing": {
@@ -51,6 +51,14 @@
     "side": "left"
    },
    "dialogue": [
+    {
+     "id": "campaign-framing",
+     "speaker": "Revolutionary Governing Council",
+     "role": "Commission of Appointment",
+     "side": "left",
+     "text": "You are the Governing Council's front commissar, attached in turn to whichever army group carries the Republic's main crisis. The field commander directs tactics; you have authority to decide when military necessity, revolutionary policy and the survival of the state pull in different directions.",
+     "next": "fekete-cold-open"
+    },
     {
      "id": "fekete-cold-open",
      "speaker": "András Fekete",
@@ -75,6 +83,15 @@
      "role": "People's Commissar for Military Affairs",
      "side": "left",
      "text": "On this map the eastern front is a red pencil line. Outside this carriage it is battalions without artillery, officers without staffs and villages receiving three contradictory orders in one day. The Romanian army crossed at dawn. This detachment cannot stop the offensive; it can keep the railway open long enough to save the nucleus of a new Red Army.",
+     "next": "bohm-political-objection",
+     "portrait": "resources/campaigns/portraits/vilmos-bohm.png"
+    },
+    {
+     "id": "bohm-political-objection",
+     "speaker": "Vilmos Böhm",
+     "role": "Social Democrat and People's Commissar for Military Affairs",
+     "side": "left",
+     "text": "Kun speaks of world revolution. The officers loading those trains speak of a country being cut apart, and most of the soldiers understand that language better. Build an army only from proclamations and it will dissolve when patriotism and socialism demand different roads.",
      "next": "kun-political",
      "portrait": "resources/campaigns/portraits/vilmos-bohm.png"
     },
@@ -83,7 +100,7 @@
      "speaker": "Béla Kun",
      "role": "People's Commissar for Foreign Affairs",
      "side": "right",
-     "text": "Paris called its demarcation lines temporary. Romanian guns are making them permanent. We have sent protests and appeals to the workers beyond the frontier, but neither will rescue an encircled army. Decide what Nagykároly buys us: time at the station, or freedom of movement on the roads.",
+     "text": "And build it only for the old frontiers, Böhm, and the officers will discard the councils the moment Paris offers them a flag without socialism. We need both motives today. Commissar, decide what Nagykároly buys us: time at the station, or freedom of movement on the roads.",
      "choices": [
       {
        "id": "railway-first",
@@ -115,7 +132,7 @@
          "rearm": true
         }
        ],
-       "hint": "Gain an organised infantry detachment and near-full supply, but commit the command to a slower, position-based retreat."
+       "hint": "Gain an entrenched infantry detachment and near-full core resupply, but forgo the prestige and reconnaissance experience of the mobile rear guard."
       },
       {
        "id": "mobile-guard",
@@ -144,7 +161,7 @@
          "unitClass": 3
         }
        ],
-       "hint": "Gain resources and experience for mobile troops, but accept greater risk to the railway evacuation."
+       "hint": "Gain a prestige award and experience for every core reconnaissance unit, but forgo the infantry detachment and near-full resupply."
       }
      ],
      "portrait": "resources/campaigns/portraits/bela-kun.png"
@@ -247,7 +264,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Comrade, you failed our revolution, the workers and peasants of our Soviet Republic. You are going to face the firing squad."
+    "text": "The front has collapsed. The Republic has lost the army and time it needed; hostile forces advance while counterrevolutionary detachments prepare their reprisals."
    }
   },
   "briefing": {
@@ -261,10 +278,10 @@
    "dialogue": [
     {
      "id": "reaction-briliant",
-     "speaker": "Aurél Stromfeld",
-     "role": "Red Army Staff Planner",
-     "side": "left",
-     "portrait": "resources/campaigns/portraits/aurel-stromfeld.png",
+     "speaker": "András Fekete",
+     "role": "Railway Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/andras-fekete.png",
      "text": "The rear guard held longer than the enemy's timetable allowed for. That is the first hour this army has won back since the intervention began.",
      "conditions": {
       "previousOutcome": [
@@ -275,10 +292,10 @@
     },
     {
      "id": "reaction-tactical",
-     "speaker": "Aurél Stromfeld",
-     "role": "Red Army Staff Planner",
-     "side": "left",
-     "portrait": "resources/campaigns/portraits/aurel-stromfeld.png",
+     "speaker": "András Fekete",
+     "role": "Railway Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/andras-fekete.png",
      "text": "The line broke before the transport was clear. We saved the army, but not its equipment, and not its confidence.",
      "conditions": {
       "previousOutcome": [
@@ -289,14 +306,42 @@
     },
     {
      "id": "reaction-victory",
-     "speaker": "Aurél Stromfeld",
-     "role": "Red Army Staff Planner",
-     "side": "left",
-     "portrait": "resources/campaigns/portraits/aurel-stromfeld.png",
+     "speaker": "András Fekete",
+     "role": "Railway Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/andras-fekete.png",
      "text": "The withdrawal was carried out in order. The formations are intact, which is more than the staff expected to be able to report.",
      "conditions": {
       "previousOutcome": [
        "victory"
+      ]
+     },
+     "next": "nyiregyhaza-platform"
+    },
+    {
+     "id": "callback-railway-rearguard",
+     "speaker": "András Fekete",
+     "role": "Railway Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/andras-fekete.png",
+     "text": "You made the station the heart of the defence. More guns and wounded men reached this line because infantry held beside the tracks. Böhm called the position slow; the railway crews call those hours the reason they are still crews instead of prisoners.",
+     "conditions": {
+      "allFlags": [
+       "favours_methodical_consolidation"
+      ]
+     },
+     "next": "callback-mobile-rearguard"
+    },
+    {
+     "id": "callback-mobile-rearguard",
+     "speaker": "Vilmos Böhm",
+     "role": "Commander of the Eastern Army",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/vilmos-bohm.png",
+     "text": "The mobile rear guard kept its formations out of the Romanian pincers. Fekete will tell you which wagons the railway lost while we preserved them. Both accounts are true; this retreat has no choice without someone recording its cost.",
+     "conditions": {
+      "allFlags": [
+       "favours_rapid_offensive"
       ]
      },
      "next": "nyiregyhaza-platform"
@@ -352,7 +397,7 @@
          "amount": 25
         }
        ],
-       "hint": "Gain initiative, prestige, and army experience, but expose the retreat to a sharp operational gamble."
+       "hint": "Gain a prestige award and experience for every core formation, but forgo full resupply and the additional transport column."
       },
       {
        "id": "phased-retreat",
@@ -384,7 +429,7 @@
          "strength": 10
         }
        ],
-       "hint": "Gain a fresh detachment and full supply, but surrender tempo and ground to preserve the army."
+       "hint": "Fully resupply every core formation and gain a transport column, but forgo the counterstroke's prestige and core-wide experience."
       }
      ],
      "portrait": "resources/campaigns/portraits/vilmos-bohm.png"
@@ -497,7 +542,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Comrade, you failed our revolution, the workers and peasants of our Soviet Republic. You are going to face the firing squad."
+    "text": "The front has collapsed. The Republic has lost the army and time it needed; hostile forces advance while counterrevolutionary detachments prepare their reprisals."
    }
   },
   "briefing": {
@@ -511,10 +556,10 @@
    "dialogue": [
     {
      "id": "reaction-briliant",
-     "speaker": "Vilmos Böhm",
-     "role": "Commander of the Eastern Army",
-     "side": "left",
-     "portrait": "resources/campaigns/portraits/vilmos-bohm.png",
+     "speaker": "Béla Szántó",
+     "role": "People's Commissar for Military Affairs",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/bela-szanto.png",
      "text": "The Romanians expected a rout and found a front. Budapest has stopped drafting evacuation orders.",
      "conditions": {
       "previousOutcome": [
@@ -525,10 +570,10 @@
     },
     {
      "id": "reaction-tactical",
-     "speaker": "Vilmos Böhm",
-     "role": "Commander of the Eastern Army",
-     "side": "left",
-     "portrait": "resources/campaigns/portraits/vilmos-bohm.png",
+     "speaker": "Béla Szántó",
+     "role": "People's Commissar for Military Affairs",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/bela-szanto.png",
      "text": "We are on the Tisza because there was nowhere further to fall back to. The Council is asking questions this army cannot yet answer.",
      "conditions": {
       "previousOutcome": [
@@ -539,10 +584,10 @@
     },
     {
      "id": "reaction-victory",
-     "speaker": "Vilmos Böhm",
-     "role": "Commander of the Eastern Army",
-     "side": "left",
-     "portrait": "resources/campaigns/portraits/vilmos-bohm.png",
+     "speaker": "Béla Szántó",
+     "role": "People's Commissar for Military Affairs",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/bela-szanto.png",
      "text": "We hold the Tisza. The government will call it a victory; the staff will call it a reprieve.",
      "conditions": {
       "previousOutcome": [
@@ -632,7 +677,7 @@
          "strength": 10
         }
        ],
-       "hint": "Gain another organised detachment and protect the depots, but leave the eastern bank to the enemy initiative."
+       "hint": "Gain an entrenched infantry detachment and a smaller prestige award, but forgo the larger prestige and core-wide experience of the eastern bridgehead."
       },
       {
        "id": "reserve-east",
@@ -660,7 +705,7 @@
          "amount": 20
         }
        ],
-       "hint": "Gain more prestige and army experience through an aggressive bridgehead, but risk the reserve beyond the river."
+       "hint": "Gain a larger prestige award and experience for every core formation, but forgo the additional entrenched infantry detachment."
       }
      ],
      "portrait": "resources/campaigns/portraits/aurel-stromfeld.png"
@@ -791,7 +836,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Comrade, you failed our revolution, the workers and peasants of our Soviet Republic. You are going to face the firing squad."
+    "text": "The front has collapsed. The Republic has lost the army and time it needed; hostile forces advance while counterrevolutionary detachments prepare their reprisals."
    }
   },
   "briefing": {
@@ -805,10 +850,10 @@
    "dialogue": [
     {
      "id": "reaction-briliant",
-     "speaker": "Gyula Hevesi",
-     "role": "People's Commissar and Industrial Organiser",
+     "speaker": "János Kovács",
+     "role": "Miners' Battalion Delegate — Fictional Composite",
      "side": "left",
-     "portrait": "resources/campaigns/portraits/gyula-hevesi.png",
+     "portrait": "resources/campaigns/portraits/janos-kovacs.png",
      "text": "The eastern front held, and the factories heard about it. Salgotarjan's workers are arming themselves without waiting for authorisation.",
      "conditions": {
       "previousOutcome": [
@@ -819,10 +864,10 @@
     },
     {
      "id": "reaction-tactical",
-     "speaker": "Gyula Hevesi",
-     "role": "People's Commissar and Industrial Organiser",
+     "speaker": "János Kovács",
+     "role": "Miners' Battalion Delegate — Fictional Composite",
      "side": "left",
-     "portrait": "resources/campaigns/portraits/gyula-hevesi.png",
+     "portrait": "resources/campaigns/portraits/janos-kovacs.png",
      "text": "The front held at a price the industry cannot pay twice. Salgotarjan's output is already falling.",
      "conditions": {
       "previousOutcome": [
@@ -833,10 +878,10 @@
     },
     {
      "id": "reaction-victory",
-     "speaker": "Gyula Hevesi",
-     "role": "People's Commissar and Industrial Organiser",
+     "speaker": "János Kovács",
+     "role": "Miners' Battalion Delegate — Fictional Composite",
      "side": "left",
-     "portrait": "resources/campaigns/portraits/gyula-hevesi.png",
+     "portrait": "resources/campaigns/portraits/janos-kovacs.png",
      "text": "The front is stable. Whether the industrial districts can be held is a separate question, and it is being decided this week.",
      "conditions": {
       "previousOutcome": [
@@ -871,6 +916,74 @@
        "rhu190501.xml.military_base_captured"
       ]
      },
+     "next": "callback-reserve-west-vindicated"
+    },
+    {
+     "id": "callback-reserve-west-vindicated",
+     "speaker": "Béla Szántó",
+     "role": "People's Commissar for Military Affairs",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/bela-szanto.png",
+     "text": "You kept the reserve west, and it recovered the base with stores intact. I argued that caution would surrender the initiative; instead it gave this front ammunition. I was wrong about the immediate cost.",
+     "conditions": {
+      "allFlags": [
+       "reserve_held_west"
+      ],
+      "completedActions": [
+       "rhu190501.xml.military_base_captured"
+      ]
+     },
+     "next": "callback-reserve-west-questioned"
+    },
+    {
+     "id": "callback-reserve-west-questioned",
+     "speaker": "Aurél Stromfeld",
+     "role": "Chief of Staff, Hungarian Red Army",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/aurel-stromfeld.png",
+     "text": "We held the reserve behind the river and still failed to recover the military stores. A reserve preserved until the decisive hour is prudence; preserved after that hour passes, it is only an unused formation.",
+     "conditions": {
+      "allFlags": [
+       "reserve_held_west"
+      ],
+      "failedActions": [
+       "rhu190501.xml.military_base_captured"
+      ]
+     },
+     "next": "callback-reserve-east-vindicated"
+    },
+    {
+     "id": "callback-reserve-east-vindicated",
+     "speaker": "Aurél Stromfeld",
+     "role": "Chief of Staff, Hungarian Red Army",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/aurel-stromfeld.png",
+     "text": "You sent the reserve east and the bridgehead held. Böhm called it enthusiasm outrunning supply; the result forced the Romanian staff to treat the Tisza as a front instead of a finish line.",
+     "conditions": {
+      "allFlags": [
+       "reserve_pushed_east"
+      ],
+      "completedActions": [
+       "rhu190501.xml.szolnok_bridgehead_held"
+      ]
+     },
+     "next": "callback-reserve-east-cost"
+    },
+    {
+     "id": "callback-reserve-east-cost",
+     "speaker": "Gyula Hevesi",
+     "role": "People's Commissar and Industrial Organiser",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/gyula-hevesi.png",
+     "text": "The reserve crossed east and the bridgehead did not hold. Those battalions are absent from the relief trains arriving here. The miners will defend their city knowing where the army spent the men who might have stood beside them.",
+     "conditions": {
+      "allFlags": [
+       "reserve_pushed_east"
+      ],
+      "failedActions": [
+       "rhu190501.xml.szolnok_bridgehead_held"
+      ]
+     },
      "next": "callback-doctrine-methodical"
     },
     {
@@ -879,7 +992,7 @@
      "role": "People's Commissar and Industrial Organiser",
      "side": "left",
      "portrait": "resources/campaigns/portraits/gyula-hevesi.png",
-     "text": "This army has been fighting deliberately, and it still has its equipment. Salgotarjan's workers are asking whether that caution will extend to them.",
+     "text": "In the last operation this army chose caution, and it still has much of its equipment. Salgótarján's workers are asking whether that caution will extend to them—or merely keep the field formations outside their streets.",
      "conditions": {
       "allFlags": [
        "favours_methodical_consolidation"
@@ -920,12 +1033,12 @@
         {
          "id": "rhu190509.choice.kisterenye.flag",
          "type": "setFlag",
-         "flag": "favours_rapid_offensive"
+         "flag": "kisterenye_pincer_struck"
         },
         {
          "id": "rhu190509.choice.kisterenye.clear",
          "type": "clearFlag",
-         "flag": "favours_methodical_consolidation"
+         "flag": "workers_armed"
         },
         {
          "id": "rhu190509.choice.kisterenye.experience",
@@ -938,7 +1051,7 @@
          "amount": 80
         }
        ],
-       "hint": "Gain experience and initiative by breaking one arm of the encirclement, but leave the industrial centre dependent on its own defenders."
+       "hint": "Gain a prestige award and substantial experience for every core formation, but forgo the two worker battalions."
       },
       {
        "id": "reinforce-workers",
@@ -949,6 +1062,11 @@
          "id": "rhu190509.choice.workers.flag",
          "type": "setFlag",
          "flag": "workers_armed"
+        },
+        {
+         "id": "rhu190509.choice.workers.clear",
+         "type": "clearFlag",
+         "flag": "kisterenye_pincer_struck"
         },
         {
          "id": "rhu190509.choice.workers.unit1",
@@ -970,7 +1088,7 @@
          "amount": -50
         }
        ],
-       "hint": "Raise two worker battalions and strengthen Salgótarján, but divert scarce resources from the field army."
+       "hint": "Raise two worker battalions and earn their later support, but pay prestige and forgo the core-wide experience award."
       }
      ],
      "portrait": "resources/campaigns/portraits/aurel-stromfeld.png"
@@ -1118,7 +1236,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Comrade, you failed our revolution, the workers and peasants of our Soviet Republic. You are going to face the firing squad."
+    "text": "The front has collapsed. The Republic has lost the army and time it needed; hostile forces advance while counterrevolutionary detachments prepare their reprisals."
    }
   },
   "briefing": {
@@ -1132,10 +1250,10 @@
    "dialogue": [
     {
      "id": "reaction-briliant",
-     "speaker": "Aurél Stromfeld",
-     "role": "Chief of Staff, Hungarian Red Army",
-     "side": "left",
-     "portrait": "resources/campaigns/portraits/aurel-stromfeld.png",
+     "speaker": "Gyula Hevesi",
+     "role": "People's Commissar and Industrial Organiser",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/gyula-hevesi.png",
      "text": "Salgotarjan is intact and the Czechoslovak command has lost a week it cannot recover. The northern operation can begin from a position no one planned for.",
      "conditions": {
       "previousOutcome": [
@@ -1146,10 +1264,10 @@
     },
     {
      "id": "reaction-tactical",
-     "speaker": "Aurél Stromfeld",
-     "role": "Chief of Staff, Hungarian Red Army",
-     "side": "left",
-     "portrait": "resources/campaigns/portraits/aurel-stromfeld.png",
+     "speaker": "Gyula Hevesi",
+     "role": "People's Commissar and Industrial Organiser",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/gyula-hevesi.png",
      "text": "We hold the mines, not the initiative. Any northern operation begins with formations that have not been rested or replaced.",
      "conditions": {
       "previousOutcome": [
@@ -1160,10 +1278,10 @@
     },
     {
      "id": "reaction-victory",
-     "speaker": "Aurél Stromfeld",
-     "role": "Chief of Staff, Hungarian Red Army",
-     "side": "left",
-     "portrait": "resources/campaigns/portraits/aurel-stromfeld.png",
+     "speaker": "Gyula Hevesi",
+     "role": "People's Commissar and Industrial Organiser",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/gyula-hevesi.png",
      "text": "The industrial district is held. We may go north - carefully, and with the supply columns kept close behind the mobile formations.",
      "conditions": {
       "previousOutcome": [
@@ -1205,14 +1323,68 @@
     },
     {
      "id": "callback-workers",
+     "speaker": "János Kovács",
+     "role": "Miners' Battalion Delegate — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/janos-kovacs.png",
+     "text": "You sent us cadres and rifles instead of another promise. The battalions were inexperienced, but the furnaces are still working because they did not break. The miners remember who trusted them with weapons when the city needed them.",
+     "conditions": {
+      "allFlags": [
+       "workers_armed"
+      ],
+      "completedActions": [
+       "rhu190509.xml.industrial_north_held"
+      ]
+     },
+     "next": "callback-workers-grudge"
+    },
+    {
+     "id": "callback-workers-grudge",
+     "speaker": "János Kovács",
+     "role": "Miners' Battalion Delegate — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/janos-kovacs.png",
+     "text": "You armed the workers, and they paid for every yard the field army could not hold. Some pits will not reopen. Do not thank us for our sacrifice, Commissar; tell us why the promised relief arrived after the furnaces went cold.",
+     "conditions": {
+      "allFlags": [
+       "workers_armed"
+      ],
+      "failedActions": [
+       "rhu190509.xml.industrial_north_held"
+      ]
+     },
+     "next": "callback-kisterenye-vindicated"
+    },
+    {
+     "id": "callback-kisterenye-vindicated",
      "speaker": "Aurél Stromfeld",
      "role": "Chief of Staff, Hungarian Red Army",
      "side": "left",
      "portrait": "resources/campaigns/portraits/aurel-stromfeld.png",
-     "text": "The armed workers' battalions have held their ground. They are inexperienced and they know it - but they did not break, and they will not be disarmed quietly.",
+     "text": "Breaking the Kisterenye pincer looked like abandoning the city to its barricades. The road opened, the industrial belt held, and Landler's operational gamble is vindicated. The miners may not forgive the hours they stood alone, but they have factories to return to.",
      "conditions": {
       "allFlags": [
-       "workers_armed"
+       "kisterenye_pincer_struck"
+      ],
+      "completedActions": [
+       "rhu190509.xml.industrial_north_held"
+      ]
+     },
+     "next": "callback-kisterenye-grudge"
+    },
+    {
+     "id": "callback-kisterenye-grudge",
+     "speaker": "János Kovács",
+     "role": "Miners' Battalion Delegate — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/janos-kovacs.png",
+     "text": "Headquarters broke its pincer and left us to prove the city could hold alone. It could not—not all of it. When officers call the manoeuvre necessary, the miners hear the names of pits and workshops that disappeared from their maps.",
+     "conditions": {
+      "allFlags": [
+       "kisterenye_pincer_struck"
+      ],
+      "failedActions": [
+       "rhu190509.xml.industrial_north_held"
       ]
      },
      "next": "miskolc-rail-yard"
@@ -1250,12 +1422,12 @@
         {
          "id": "rhu190523.choice.turning.flag",
          "type": "setFlag",
-         "flag": "favours_rapid_offensive"
+         "flag": "miskolc_turning_attack"
         },
         {
          "id": "rhu190523.choice.turning.clear",
          "type": "clearFlag",
-         "flag": "favours_methodical_consolidation"
+         "flag": "miskolc_concentric_attack"
         },
         {
          "id": "rhu190523.choice.turning.experience",
@@ -1269,7 +1441,7 @@
          "amount": 120
         }
        ],
-       "hint": "Gain mobile-unit experience and prestige by forcing an enemy withdrawal, but rely on speed and exposed flanks."
+       "hint": "Gain a prestige award and experience for every core reconnaissance unit, but forgo the artillery detachment and near-full resupply."
       },
       {
        "id": "concentric-attack",
@@ -1279,12 +1451,12 @@
         {
          "id": "rhu190523.choice.concentric.flag",
          "type": "setFlag",
-         "flag": "favours_methodical_consolidation"
+         "flag": "miskolc_concentric_attack"
         },
         {
          "id": "rhu190523.choice.concentric.clear",
          "type": "clearFlag",
-         "flag": "favours_rapid_offensive"
+         "flag": "miskolc_turning_attack"
         },
         {
          "id": "rhu190523.choice.concentric.unit",
@@ -1301,7 +1473,7 @@
          "rearm": true
         }
        ],
-       "hint": "Gain a fresh detachment and strong supply for a coordinated assault, but sacrifice the chance of a rapid turning movement."
+       "hint": "Gain a mountain-artillery detachment and near-full core resupply, but forgo the turning attack's prestige and reconnaissance experience."
       }
      ],
      "portrait": "resources/campaigns/portraits/jeno-landler.png"
@@ -1312,8 +1484,17 @@
      "role": "Chief of Staff, Hungarian Red Army",
      "side": "left",
      "text": "Good. The city is important, but the enemy field force matters more. Threaten its communications and make withdrawal more dangerous than resistance.",
-     "next": "bohm-warning",
+     "next": "bohm-turning-objection",
      "portrait": "resources/campaigns/portraits/aurel-stromfeld.png"
+    },
+    {
+     "id": "bohm-turning-objection",
+     "speaker": "Vilmos Böhm",
+     "role": "Commander-in-Chief, Hungarian Red Army",
+     "side": "right",
+     "text": "You two speak as if an enemy withdrawal were the only possible result. If the turning column stalls, the workers in front will fight the garrison while the mobile troops fight for their own road home. I accept the order; I do not accept calling the flank safe.",
+     "next": "bohm-warning",
+     "portrait": "resources/campaigns/portraits/vilmos-bohm.png"
     },
     {
      "id": "landler-concentric",
@@ -1321,8 +1502,17 @@
      "role": "Commander, III Corps",
      "side": "right",
      "text": "Then the attacks must be simultaneous. A piecemeal assault will feed inexperienced battalions into prepared positions one after another.",
-     "next": "bohm-warning",
+     "next": "stromfeld-concentric-objection",
      "portrait": "resources/campaigns/portraits/jeno-landler.png"
+    },
+    {
+     "id": "stromfeld-concentric-objection",
+     "speaker": "Aurél Stromfeld",
+     "role": "Chief of Staff, Hungarian Red Army",
+     "side": "left",
+     "text": "Simultaneous on paper. One broken telephone and it becomes three separate attacks asking where the others are. I will write the timetable, Landler, but every commander must know what he does when the timetable fails.",
+     "next": "bohm-warning",
+     "portrait": "resources/campaigns/portraits/aurel-stromfeld.png"
     },
     {
      "id": "bohm-warning",
@@ -1450,7 +1640,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Comrade, you failed our revolution, the workers and peasants of our Soviet Republic. You are going to face the firing squad."
+    "text": "The front has collapsed. The Republic has lost the army and time it needed; hostile forces advance while counterrevolutionary detachments prepare their reprisals."
    }
   },
   "briefing": {
@@ -1464,10 +1654,10 @@
    "dialogue": [
     {
      "id": "reaction-briliant",
-     "speaker": "Jenő Landler",
-     "role": "Commander, III Corps",
-     "side": "left",
-     "portrait": "resources/campaigns/portraits/jeno-landler.png",
+     "speaker": "Mária Tóth",
+     "role": "Railway Workers' Liaison — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/maria-toth.png",
      "text": "Miskolc fell faster than the Czechoslovak staff believed possible. Their northern grouping is separating from its supply.",
      "conditions": {
       "previousOutcome": [
@@ -1478,10 +1668,10 @@
     },
     {
      "id": "reaction-tactical",
-     "speaker": "Jenő Landler",
-     "role": "Commander, III Corps",
-     "side": "left",
-     "portrait": "resources/campaigns/portraits/jeno-landler.png",
+     "speaker": "Mária Tóth",
+     "role": "Railway Workers' Liaison — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/maria-toth.png",
      "text": "Miskolc cost us more than the map suggests. The corps needs replacements before it is asked to exploit anything.",
      "conditions": {
       "previousOutcome": [
@@ -1492,10 +1682,10 @@
     },
     {
      "id": "reaction-victory",
-     "speaker": "Jenő Landler",
-     "role": "Commander, III Corps",
-     "side": "left",
-     "portrait": "resources/campaigns/portraits/jeno-landler.png",
+     "speaker": "Mária Tóth",
+     "role": "Railway Workers' Liaison — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/maria-toth.png",
      "text": "Miskolc is ours. The advance can continue, though the mobile formations have already outrun their columns.",
      "conditions": {
       "previousOutcome": [
@@ -1542,6 +1732,74 @@
      "conditions": {
       "completedActions": [
        "rhu190523.xml.miskolc_held"
+      ]
+     },
+     "next": "callback-turning-vindicated"
+    },
+    {
+     "id": "callback-turning-vindicated",
+     "speaker": "Aurél Stromfeld",
+     "role": "Chief of Staff, Hungarian Red Army",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/aurel-stromfeld.png",
+     "text": "Your turning movement forced the evacuation without sacrificing the works. Landler wanted speed; Hevesi demanded the factories. This time one manoeuvre satisfied both of them, and neither will admit how narrow the margin was.",
+     "conditions": {
+      "allFlags": [
+       "miskolc_turning_attack"
+      ],
+      "completedActions": [
+       "rhu190523.xml.industrial_complex_saved"
+      ]
+     },
+     "next": "callback-turning-cost"
+    },
+    {
+     "id": "callback-turning-cost",
+     "speaker": "Gyula Hevesi",
+     "role": "People's Commissar and Industrial Organiser",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/gyula-hevesi.png",
+     "text": "The mobile columns found their open road. Ozd and Kazincbarcika paid for the exposed industrial flank. Do not tell the workers that losing their mills was the price of momentum; they know whose plan placed the price on their towns.",
+     "conditions": {
+      "allFlags": [
+       "miskolc_turning_attack"
+      ],
+      "completedActions": [
+       "rhu190523.xml.industrial_complex_lost"
+      ]
+     },
+     "next": "callback-concentric-vindicated"
+    },
+    {
+     "id": "callback-concentric-vindicated",
+     "speaker": "Jenő Landler",
+     "role": "Commander, III Corps",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/jeno-landler.png",
+     "text": "I called the concentric attack too deliberate for a retreating enemy. The stations fell together, the works survived and the corps remained coherent. Stromfeld's timetable was better than my impatience.",
+     "conditions": {
+      "allFlags": [
+       "miskolc_concentric_attack"
+      ],
+      "completedActions": [
+       "rhu190523.xml.industrial_complex_saved"
+      ]
+     },
+     "next": "callback-concentric-cost"
+    },
+    {
+     "id": "callback-concentric-cost",
+     "speaker": "Aurél Stromfeld",
+     "role": "Chief of Staff, Hungarian Red Army",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/aurel-stromfeld.png",
+     "text": "The coordinated assault became the costly battle it was designed to avoid, and the industrial works were lost with it. A careful plan is not absolved by its caution, Commissar. It must still answer for its result.",
+     "conditions": {
+      "allFlags": [
+       "miskolc_concentric_attack"
+      ],
+      "completedActions": [
+       "rhu190523.xml.industrial_complex_lost"
       ]
      },
      "next": "kassa-rail-report"
@@ -1597,7 +1855,7 @@
          "amount": 20
         }
        ],
-       "hint": "Gain prestige and experience by striking before Kassa is organised, but advance with less preparation and supply."
+       "hint": "Gain a larger prestige award and experience for every core formation, but forgo the armoured train and full resupply."
       },
       {
        "id": "prepared-attack",
@@ -1629,7 +1887,7 @@
          "rearm": true
         }
        ],
-       "hint": "Gain a fresh supporting unit and full supply for a sustained battle, but give the enemy time to organise."
+       "hint": "Gain an armoured train and fully resupply every core formation, but forgo the rapid pursuit's prestige and core-wide experience."
       }
      ],
      "portrait": "resources/campaigns/portraits/aurel-stromfeld.png"
@@ -1760,7 +2018,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Comrade, you failed our revolution, the workers and peasants of our Soviet Republic. You are going to face the firing squad."
+    "text": "The front has collapsed. The Republic has lost the army and time it needed; hostile forces advance while counterrevolutionary detachments prepare their reprisals."
    }
   },
   "briefing": {
@@ -1774,11 +2032,11 @@
    "dialogue": [
     {
      "id": "reaction-briliant",
-     "speaker": "Aurél Stromfeld",
-     "role": "Chief of Staff, Hungarian Red Army",
-     "side": "left",
-     "portrait": "resources/campaigns/portraits/aurel-stromfeld.png",
-     "text": "Kassa is taken, and delegates in Eperjes are already drafting the proclamation of a Slovak republic of councils. The historical timetable has been broken—the Entente expected this army to collapse in May.",
+     "speaker": "Antonín Janoušek",
+     "role": "Czech and Slovak Communist Liaison",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/antonin-janousek.png",
+     "text": "Kassa is taken and the Slovak Soviet Republic has been proclaimed. The historical timetable has already been broken - the Entente expected this army to collapse in May.",
      "conditions": {
       "previousOutcome": [
        "briliant"
@@ -1788,11 +2046,11 @@
     },
     {
      "id": "reaction-tactical",
-     "speaker": "Aurél Stromfeld",
-     "role": "Chief of Staff, Hungarian Red Army",
-     "side": "left",
-     "portrait": "resources/campaigns/portraits/aurel-stromfeld.png",
-     "text": "We took Kassa and little ground beyond it. The delegates in Eperjes are preparing a proclamation whose survival will depend on positions the army has not yet secured.",
+     "speaker": "Antonín Janoušek",
+     "role": "Czech and Slovak Communist Liaison",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/antonin-janousek.png",
+     "text": "We took Kassa and very little else. The proclamation in Presov will have to stand in for the ground we did not gain.",
      "conditions": {
       "previousOutcome": [
        "tactical"
@@ -1802,11 +2060,11 @@
     },
     {
      "id": "reaction-victory",
-     "speaker": "Aurél Stromfeld",
-     "role": "Chief of Staff, Hungarian Red Army",
-     "side": "left",
-     "portrait": "resources/campaigns/portraits/aurel-stromfeld.png",
-     "text": "Kassa is in our hands. In Eperjes, Slovak and Czech communists are moving from petitions to plans for a republic of councils faster than our supply columns can move north.",
+     "speaker": "Antonín Janoušek",
+     "role": "Czech and Slovak Communist Liaison",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/antonin-janousek.png",
+     "text": "Kassa is in our hands. The political consequences are being announced in Presov faster than the military ones can be secured.",
      "conditions": {
       "previousOutcome": [
        "victory"
@@ -1834,10 +2092,24 @@
      "role": "Chief of Staff, Hungarian Red Army",
      "side": "left",
      "portrait": "resources/campaigns/portraits/aurel-stromfeld.png",
-     "text": "The mobile formations have carried this campaign further than the plan allowed for. They are also further from their supply than the plan allowed for.",
+     "text": "At Kassa you chose pursuit over preparation. The junction fell before reinforcements arrived, and the mobile formations now treat every timetable as an insult. They are also further from their supply than the plan allowed for.",
      "conditions": {
       "allFlags": [
        "favours_rapid_offensive"
+      ]
+     },
+     "next": "callback-doctrine-methodical"
+    },
+    {
+     "id": "callback-doctrine-methodical",
+     "speaker": "Jenő Landler",
+     "role": "Commander, III Corps",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/jeno-landler.png",
+     "text": "At Kassa you made us wait for guns and railway crews. Stromfeld has his supplied divisions; the enemy also had hours to recover. The argument is not settled by taking the city—it follows us onto the next road.",
+     "conditions": {
+      "allFlags": [
+       "favours_methodical_consolidation"
       ]
      },
      "next": "presov-printing-room"
@@ -1866,6 +2138,24 @@
      "role": "Czech and Slovak Communist Liaison",
      "side": "right",
      "text": "Workers in the occupied towns ask whether the Red Army has come to restore old Hungarian rule or to help them elect councils of their own. Forbid undisciplined requisition, publish orders in the local languages, and make the answer visible before nationalist officers provide one of their own.",
+     "next": "landler-national-answer",
+     "portrait": "resources/campaigns/portraits/antonin-janousek.png"
+    },
+    {
+     "id": "landler-national-answer",
+     "speaker": "Jenő Landler",
+     "role": "Commander, III Corps",
+     "side": "left",
+     "text": "Many of these soldiers marched because Kassa was taken from Hungary, not because they had studied your programme. Tell them that every victory merely creates another state beyond Budapest and you may keep internationalism while losing the army that carried it north.",
+     "next": "janousek-internationalist-reply",
+     "portrait": "resources/campaigns/portraits/jeno-landler.png"
+    },
+    {
+     "id": "janousek-internationalist-reply",
+     "speaker": "Antonín Janoušek",
+     "role": "Czech and Slovak Communist Liaison",
+     "side": "right",
+     "text": "Then tell them the truth: Hungarian workers cannot ask Slovak workers to reject Prague while obeying Budapest. If the councils mean only the old kingdom under red flags, the villages will resist us—and they will be right to doubt our proclamations.",
      "next": "landler-question",
      "portrait": "resources/campaigns/portraits/antonin-janousek.png"
     },
@@ -1874,7 +2164,7 @@
      "speaker": "Jenő Landler",
      "role": "Commander, III Corps",
      "side": "left",
-     "text": "The Czechoslovak line is disorganised, but the mountain roads favour ambush and delay. How do you secure the advance?",
+     "text": "The political answer will be judged on roads that favour ambush and delay. Do we bind the advance to one disciplined railway axis, or let parallel columns reach more valleys at the cost of tighter control?",
      "choices": [
       {
        "id": "railway-axis",
@@ -1885,6 +2175,11 @@
          "id": "rhu190609.choice.railway.flag",
          "type": "setFlag",
          "flag": "railways_controlled"
+        },
+        {
+         "id": "rhu190609.choice.railway.clear",
+         "type": "clearFlag",
+         "flag": "parallel_valley_columns"
         },
         {
          "id": "rhu190609.choice.railway.unit",
@@ -1906,7 +2201,7 @@
          "rearm": true
         }
        ],
-       "hint": "Gain transport support, resources, and better supply, but concentrate the advance along a predictable route."
+       "hint": "Gain a transport column, a larger prestige award and near-full core resupply, but forgo the parallel advance's core-wide experience."
       },
       {
        "id": "parallel-columns",
@@ -1916,12 +2211,12 @@
         {
          "id": "rhu190609.choice.columns.flag",
          "type": "setFlag",
-         "flag": "favours_rapid_offensive"
+         "flag": "parallel_valley_columns"
         },
         {
          "id": "rhu190609.choice.columns.clear",
          "type": "clearFlag",
-         "flag": "favours_methodical_consolidation"
+         "flag": "railways_controlled"
         },
         {
          "id": "rhu190609.choice.columns.experience",
@@ -1934,7 +2229,7 @@
          "amount": 90
         }
        ],
-       "hint": "Gain army experience and manoeuvre freedom, but accept thinner supply and weaker mutual support."
+       "hint": "Gain a prestige award and experience for every core formation, but forgo the transport column and near-full resupply."
       }
      ],
      "portrait": "resources/campaigns/portraits/jeno-landler.png"
@@ -2064,7 +2359,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Comrade, you failed our revolution, the workers and peasants of our Soviet Republic. You are going to face the firing squad."
+    "text": "The front has collapsed. The Republic has lost the army and time it needed; hostile forces advance while counterrevolutionary detachments prepare their reprisals."
    }
   },
   "briefing": {
@@ -2078,10 +2373,10 @@
    "dialogue": [
     {
      "id": "reaction-briliant",
-     "speaker": "Tibor Szamuely",
-     "role": "People's Commissar and Revolutionary Envoy",
-     "side": "left",
-     "portrait": "resources/campaigns/portraits/tibor-szamuely.png",
+     "speaker": "Béla Kun",
+     "role": "People's Commissar for Foreign Affairs",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/bela-kun.png",
      "text": "The northern operation has succeeded beyond anything the Entente allowed for. That success is precisely why Clemenceau's note arrived this morning.",
      "conditions": {
       "previousOutcome": [
@@ -2092,10 +2387,10 @@
     },
     {
      "id": "reaction-tactical",
-     "speaker": "Tibor Szamuely",
-     "role": "People's Commissar and Revolutionary Envoy",
-     "side": "left",
-     "portrait": "resources/campaigns/portraits/tibor-szamuely.png",
+     "speaker": "Béla Kun",
+     "role": "People's Commissar for Foreign Affairs",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/bela-kun.png",
      "text": "The advance has stalled, and the note from Paris is timed to exploit exactly that.",
      "conditions": {
       "previousOutcome": [
@@ -2106,10 +2401,10 @@
     },
     {
      "id": "reaction-victory",
-     "speaker": "Tibor Szamuely",
-     "role": "People's Commissar and Revolutionary Envoy",
-     "side": "left",
-     "portrait": "resources/campaigns/portraits/tibor-szamuely.png",
+     "speaker": "Béla Kun",
+     "role": "People's Commissar for Foreign Affairs",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/bela-kun.png",
      "text": "The north is held. And now Paris sends us a map with our borders already drawn upon it.",
      "conditions": {
       "previousOutcome": [
@@ -2144,6 +2439,34 @@
        "rhu190609.xml.full_northern_advance"
       ]
      },
+     "next": "callback-railway-axis"
+    },
+    {
+     "id": "callback-railway-axis",
+     "speaker": "Mária Tóth",
+     "role": "Railway Workers' Liaison — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/maria-toth.png",
+     "text": "You kept the advance on the railway. Our crews carried shells north and brought wounded men south under one timetable. Landler called the route predictable; the railwaymen call it the reason the army can still move as one body.",
+     "conditions": {
+      "allFlags": [
+       "railways_controlled"
+      ]
+     },
+     "next": "callback-parallel-columns"
+    },
+    {
+     "id": "callback-parallel-columns",
+     "speaker": "Antonín Janoušek",
+     "role": "Czech and Slovak Communist Liaison",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/antonin-janousek.png",
+     "text": "Your parallel columns reached valleys the railway would have passed by, and several villages elected councils before the main force arrived. They also received three different requisition orders. Internationalism cannot sound convincing when every column speaks with a different authority.",
+     "conditions": {
+      "allFlags": [
+       "parallel_valley_columns"
+      ]
+     },
      "next": "clemenceau-note"
     },
     {
@@ -2160,16 +2483,34 @@
      "speaker": "Tibor Szamuely",
      "role": "People's Commissar and Revolutionary Envoy",
      "side": "left",
-     "text": "I returned from Moscow with greetings, agreements and no army crossing the Carpathians. Soviet Russia is fighting for its own survival. Whatever we hold in the north must be held by Hungarian soldiers, Slovak workers and the strength we can move along these railways.",
-     "next": "kun-diplomacy",
+     "text": "I returned from Moscow with greetings, agreements and no army crossing the Carpathians. Whatever we hold must be held by our soldiers and Slovak workers. Give it up for a promise with no Romanian order behind it, and the army will learn that Paris can reverse victories more easily than the enemy can.",
+     "next": "kun-coalition-answer",
      "portrait": "resources/campaigns/portraits/tibor-szamuely.png"
+    },
+    {
+     "id": "kun-coalition-answer",
+     "speaker": "Béla Kun",
+     "role": "People's Commissar for Foreign Affairs",
+     "side": "right",
+     "text": "Reject it, and Paris can present every neighbouring army as the enforcement arm of one settlement. The Republic cannot fight Romania, Czechoslovakia and the Entente's diplomacy indefinitely because indignation feels firmer than paper.",
+     "next": "stromfeld-between-them",
+     "portrait": "resources/campaigns/portraits/bela-kun.png"
+    },
+    {
+     "id": "stromfeld-between-them",
+     "speaker": "Aurél Stromfeld",
+     "role": "Chief of Staff, Hungarian Red Army",
+     "side": "left",
+     "text": "One of you asks the army to hold territory the government may surrender; the other asks it to surrender territory before the promised withdrawal begins. Decide the politics in Budapest. Here, Commissar, decide how this front survives the attack already moving against it.",
+     "next": "kun-diplomacy",
+     "portrait": "resources/campaigns/portraits/aurel-stromfeld.png"
     },
     {
      "id": "kun-diplomacy",
      "speaker": "Béla Kun",
      "role": "People's Commissar for Foreign Affairs",
      "side": "right",
-     "text": "Paris has drawn a frontier and demands our withdrawal. The Czechoslovak command is not waiting for our answer; its columns are attacking between Nyitra, the Vág and the Garam. Do we trade exposed ground for time at the crossings, or break the strongest column before diplomacy becomes a military fact?",
+     "text": "The Czechoslovak columns are attacking between Nyitra, the Vág and the Garam. Do we hold the crossings and use depth, or concentrate at once and break the strongest column before diplomacy becomes a military fact?",
      "choices": [
       {
        "id": "elastic-defence",
@@ -2201,7 +2542,7 @@
          "strength": 10
         }
        ],
-       "hint": "Gain a fresh detachment and full supply while waiting for reinforcements, but concede exposed ground and political momentum."
+       "hint": "Fully resupply every core formation and gain an entrenched infantry detachment, but forgo the counterattack's prestige and core-wide experience."
       },
       {
        "id": "local-counterattack",
@@ -2229,7 +2570,7 @@
          "amount": 25
         }
        ],
-       "hint": "Gain prestige and experience by attacking immediately, but risk the reserve before the enemy plan is fully known."
+       "hint": "Gain a prestige award and experience for every core formation, but forgo full resupply and the additional infantry detachment."
       }
      ],
      "portrait": "resources/campaigns/portraits/bela-kun.png"
@@ -2364,7 +2705,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Comrade, you failed our revolution, the workers and peasants of our Soviet Republic. You are going to face the firing squad."
+    "text": "The front has collapsed. The Republic has lost the army and time it needed; hostile forces advance while counterrevolutionary detachments prepare their reprisals."
    }
   },
   "briefing": {
@@ -2378,10 +2719,10 @@
    "dialogue": [
     {
      "id": "reaction-briliant",
-     "speaker": "Jenő Landler",
-     "role": "Commander-in-Chief, Hungarian Red Army",
-     "side": "left",
-     "portrait": "resources/campaigns/portraits/jeno-landler.png",
+     "speaker": "Ferenc Julier",
+     "role": "Chief of Staff, Hungarian Red Army",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/ferenc-julier.png",
      "text": "Comrade, this army withdrew from Slovakia undefeated. Whatever the government has promised Paris, the formations that crossed back are still capable of an offensive.",
      "conditions": {
       "previousOutcome": [
@@ -2392,10 +2733,10 @@
     },
     {
      "id": "reaction-tactical",
-     "speaker": "Jenő Landler",
-     "role": "Commander-in-Chief, Hungarian Red Army",
-     "side": "left",
-     "portrait": "resources/campaigns/portraits/jeno-landler.png",
+     "speaker": "Ferenc Julier",
+     "role": "Chief of Staff, Hungarian Red Army",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/ferenc-julier.png",
      "text": "We gave up Slovakia and gained nothing for it. Stromfeld resigned rather than sign the order, and the staff has not recovered from it.",
      "conditions": {
       "previousOutcome": [
@@ -2406,10 +2747,10 @@
     },
     {
      "id": "reaction-victory",
-     "speaker": "Jenő Landler",
-     "role": "Commander-in-Chief, Hungarian Red Army",
-     "side": "left",
-     "portrait": "resources/campaigns/portraits/jeno-landler.png",
+     "speaker": "Ferenc Julier",
+     "role": "Chief of Staff, Hungarian Red Army",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/ferenc-julier.png",
      "text": "We evacuated the north as ordered. The army is intact; its confidence in the government is not.",
      "conditions": {
       "previousOutcome": [
@@ -2438,10 +2779,24 @@
      "role": "Commander-in-Chief, Hungarian Red Army",
      "side": "left",
      "portrait": "resources/campaigns/portraits/jeno-landler.png",
-     "text": "This army has been handled carefully for three months. It is still a coherent instrument - which is the only reason an offensive across the Tisza can even be discussed.",
+     "text": "At Érsekújvár you chose elastic defence. The crossings remained organised and much of the army returned intact. That caution is the only reason another offensive can be discussed—though the men ask why preserved formations surrendered victorious ground.",
      "conditions": {
       "allFlags": [
        "favours_methodical_consolidation"
+      ]
+     },
+     "next": "callback-doctrine-rapid"
+    },
+    {
+     "id": "callback-doctrine-rapid",
+     "speaker": "Jenő Landler",
+     "role": "Commander-in-Chief, Hungarian Red Army",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/jeno-landler.png",
+     "text": "At Érsekújvár you answered the enemy attack with one of our own. The army withdrew from Slovakia knowing it had not been driven out. It also spent formations and ammunition the new staff must now find replacements for.",
+     "conditions": {
+      "allFlags": [
+       "favours_rapid_offensive"
       ]
      },
      "next": "empty-chair"
@@ -2497,7 +2852,7 @@
          "amount": 20
         }
        ],
-       "hint": "Gain prestige and experience from a decisive drive, but commit the reserve beyond easy recovery."
+       "hint": "Gain a prestige award and experience for every core formation, but forgo full resupply and the experienced International Brigade."
       },
       {
        "id": "support-flanks",
@@ -2529,7 +2884,7 @@
          "strength": 10
         }
        ],
-       "hint": "Gain a veteran detachment and full supply with a flexible reserve, but sacrifice the chance of an early deep breakthrough."
+       "hint": "Fully resupply every core formation and gain an experienced International Brigade, but forgo the deep thrust's prestige and core-wide experience."
       }
      ],
      "portrait": "resources/campaigns/portraits/ferenc-julier.png"
@@ -2540,8 +2895,17 @@
      "role": "Commander-in-Chief, Hungarian Red Army",
      "side": "left",
      "text": "A decisive centre can unhinge the entire Romanian line. Keep engineers, artillery, and supply columns close behind the assault divisions; distance will destroy the bridgehead faster than enemy fire.",
-     "next": "kun-warning",
+     "next": "julier-deep-objection",
      "portrait": "resources/campaigns/portraits/jeno-landler.png"
+    },
+    {
+     "id": "julier-deep-objection",
+     "speaker": "Ferenc Julier",
+     "role": "Chief of Staff, Hungarian Red Army",
+     "side": "right",
+     "text": "Then the reserve ceases to be a reserve the moment it crosses. If the bridgehead stalls, there will be no untouched formation to answer the counterattack. I will execute the decision, Landler, but the map must show that debt before anyone calls the thrust free.",
+     "next": "kun-warning",
+     "portrait": "resources/campaigns/portraits/ferenc-julier.png"
     },
     {
      "id": "julier-central",
@@ -2549,8 +2913,17 @@
      "role": "Chief of Staff, Hungarian Red Army",
      "side": "right",
      "text": "Flexibility protects us from a failed crossing, but the reserve must not spend the battle marching between rumours. Establish clear conditions for its release before the first boats enter the river.",
-     "next": "kun-warning",
+     "next": "landler-central-objection",
      "portrait": "resources/campaigns/portraits/ferenc-julier.png"
+    },
+    {
+     "id": "landler-central-objection",
+     "speaker": "Jenő Landler",
+     "role": "Commander-in-Chief, Hungarian Red Army",
+     "side": "left",
+     "text": "A reserve waiting for certainty will arrive after the decisive hour. The men did not cross the Tisza to establish a committee for choosing which bridgehead may live. Hold it centrally if you must, but give one commander authority to release it.",
+     "next": "kun-warning",
+     "portrait": "resources/campaigns/portraits/jeno-landler.png"
     },
     {
      "id": "kun-warning",
@@ -2694,7 +3067,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Comrade, you failed our revolution, the workers and peasants of our Soviet Republic. You are going to face the firing squad."
+    "text": "The front has collapsed. The Republic has lost the army and time it needed; hostile forces advance while counterrevolutionary detachments prepare their reprisals."
    }
   },
   "briefing": {
@@ -2710,7 +3083,7 @@
      "id": "reaction-briliant",
      "speaker": "Ferenc Julier",
      "role": "Chief of Staff, Hungarian Red Army",
-     "side": "left",
+     "side": "right",
      "portrait": "resources/campaigns/portraits/ferenc-julier.png",
      "text": "The Tisza crossing succeeded. I will not pretend the staff expected it - the Romanian command certainly did not.",
      "conditions": {
@@ -2724,7 +3097,7 @@
      "id": "reaction-tactical",
      "speaker": "Ferenc Julier",
      "role": "Chief of Staff, Hungarian Red Army",
-     "side": "left",
+     "side": "right",
      "portrait": "resources/campaigns/portraits/ferenc-julier.png",
      "text": "The offensive has broken on the far bank. What remains is to decide where this army makes its last stand.",
      "conditions": {
@@ -2738,7 +3111,7 @@
      "id": "reaction-victory",
      "speaker": "Ferenc Julier",
      "role": "Chief of Staff, Hungarian Red Army",
-     "side": "left",
+     "side": "right",
      "portrait": "resources/campaigns/portraits/ferenc-julier.png",
      "text": "We hold a bridgehead. Whether it can be supplied across a river under observed artillery is the only question that now matters.",
      "conditions": {
@@ -2752,9 +3125,9 @@
      "id": "extra-alternate-history",
      "speaker": "Ferenc Julier",
      "role": "Chief of Staff, Hungarian Red Army",
-     "side": "left",
+     "side": "right",
      "portrait": "resources/campaigns/portraits/ferenc-julier.png",
-     "text": "Comrade, by every calculation in Paris and Bucharest this republic ended weeks ago. It has not. The government now faces choices that history never offered it.",
+     "text": "Paris expected the northern army to dissolve after the evacuation. Bucharest expected the Tisza to be the end of us. Neither expectation has yet become a fact; what remains is an army, a government, and very little time.",
      "conditions": {
       "minSuccesses": 8
      },
@@ -2801,6 +3174,20 @@
      "conditions": {
       "allFlags": [
        "tisza_committed_deep"
+      ]
+     },
+     "next": "callback-held-central"
+    },
+    {
+     "id": "callback-held-central",
+     "speaker": "Ferenc Julier",
+     "role": "Chief of Staff, Hungarian Red Army",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/ferenc-julier.png",
+     "text": "You held the reserve centrally, and it remains the one formation on this map not committed to a collapsing report. Landler wanted it across the river sooner. Today he wants to know whether preserving it was foresight—or merely postponing the order it must now receive.",
+     "conditions": {
+      "allFlags": [
+       "tisza_held_central"
       ]
      },
      "next": "telephone-lines-fail"
@@ -2851,7 +3238,7 @@
          "amount": 20
         }
        ],
-       "hint": "Gain prestige and experience by contesting the initiative east of the river, but risk exhausted formations in a final stand."
+       "hint": "Gain a larger prestige award and experience for every core formation, but forgo the withdrawal's full resupply."
       },
       {
        "id": "phased-withdrawal",
@@ -2876,7 +3263,7 @@
          "amount": 60
         }
        ],
-       "hint": "Restore the exhausted army and preserve more resources, but concede the eastern bridgehead and political momentum."
+       "hint": "Fully resupply every core formation and gain a smaller prestige award, but forgo the final stand's core-wide experience."
       }
      ],
      "portrait": "resources/campaigns/portraits/jeno-landler.png"
@@ -2887,8 +3274,17 @@
      "role": "Chief of Staff, Hungarian Red Army",
      "side": "left",
      "text": "Then shorten the perimeter and mass the guns. Do not defend empty ground. The bridgehead survives only if its flanks and the bridge itself remain under one command.",
-     "next": "kun-crisis",
+     "next": "landler-hold-warning",
      "portrait": "resources/campaigns/portraits/ferenc-julier.png"
+    },
+    {
+     "id": "landler-hold-warning",
+     "speaker": "Jenő Landler",
+     "role": "Commander-in-Chief, Hungarian Red Army",
+     "side": "right",
+     "text": "I asked for a decision and you have given one. Do not mistake refusal to yield for a plan, Commissar. If the bridgehead cannot feed itself, courage will consume the last reserve exactly as retreat would have surrendered the ground.",
+     "next": "kun-crisis",
+     "portrait": "resources/campaigns/portraits/jeno-landler.png"
     },
     {
      "id": "landler-withdraw",
@@ -2896,8 +3292,17 @@
      "role": "Commander-in-Chief, Hungarian Red Army",
      "side": "right",
      "text": "A withdrawal may save the army, but it must begin before the enemy reaches the bridges. Mark the order of movement now and leave disciplined rear guards, not abandoned battalions.",
-     "next": "kun-crisis",
+     "next": "julier-withdraw-warning",
      "portrait": "resources/campaigns/portraits/jeno-landler.png"
+    },
+    {
+     "id": "julier-withdraw-warning",
+     "speaker": "Ferenc Julier",
+     "role": "Chief of Staff, Hungarian Red Army",
+     "side": "left",
+     "text": "And understand what the order will sound like east of the river: after Slovakia, another withdrawal promised as preservation. If the first regiment believes the government has abandoned the bridgehead, no timetable will prevent the fifth from calling it a rout.",
+     "next": "kun-crisis",
+     "portrait": "resources/campaigns/portraits/ferenc-julier.png"
     },
     {
      "id": "kun-crisis",
@@ -2964,6 +3369,68 @@
     "id": "core_losses_light",
     "type": "coreLossesAtMost",
     "maxLosses": 2
+   }
+  ],
+  "epilogues": [
+   {
+    "id": "east-bank-victory",
+    "outcomes": [
+     "briliant",
+     "victory",
+     "tactical"
+    ],
+    "speaker": "Ferenc Julier",
+    "role": "Chief of Staff, Hungarian Red Army",
+    "text": "The eastern bridgehead held because you refused to let the offensive end as a withdrawal order. The surviving formations call it proof that the Republic can still compel events. The staff calls it a victory purchased with reserves it cannot replace. Both judgments will shape whatever government survives this summer.",
+    "conditions": {
+     "allFlags": [
+      "final_stand_east"
+     ]
+    }
+   },
+   {
+    "id": "east-bank-defeat",
+    "outcomes": [
+     "lose"
+    ],
+    "speaker": "Jenő Landler",
+    "role": "Commander-in-Chief, Hungarian Red Army",
+    "text": "The final reserve died east of the river with the bridgehead it was ordered to save. As organised resistance collapses, counterrevolutionary detachments prepare to settle political accounts through the White Terror. The soldiers who survive will argue that defiance inspired them—and that command spent them after the position was already lost.",
+    "conditions": {
+     "allFlags": [
+      "final_stand_east"
+     ]
+    }
+   },
+   {
+    "id": "west-bank-victory",
+    "outcomes": [
+     "briliant",
+     "victory",
+     "tactical"
+    ],
+    "speaker": "Béla Kun",
+    "role": "People's Commissar for Foreign Affairs",
+    "text": "The bridgehead was surrendered, but the army crossed in order and denied Bucharest the collapse it expected. You preserved an organised force capable of defending Budapest—and of demanding a voice in what the Republic becomes next. Landler will call that survival. Julier will remind us how much ground survival has already cost.",
+    "conditions": {
+     "allFlags": [
+      "final_withdrawal_west"
+     ]
+    }
+   },
+   {
+    "id": "west-bank-defeat",
+    "outcomes": [
+     "lose"
+    ],
+    "speaker": "Ferenc Julier",
+    "role": "Chief of Staff, Hungarian Red Army",
+    "text": "The phased withdrawal saved formations but not the front. The Republic's opponents will call every surviving battalion evidence that it lacked the will to fight; the White detachments gathering behind the advance will not reward restraint. What remains is an army fragment that may protect comrades even when it can no longer protect the state.",
+    "conditions": {
+     "allFlags": [
+      "final_withdrawal_west"
+     ]
+    }
    }
   ]
  }

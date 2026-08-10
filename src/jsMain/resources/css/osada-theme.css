@@ -535,6 +535,29 @@ input[type=text], input[type=search] {
     border: none;
 }
 
+/* A campaign header that folds its scenarios away. The caret sits after the name because the row
+   is a flex line whose text comes first; `order: -1` pulls it back to the left without changing
+   the DOM the row renderer builds. */
+.osadaListRow--collapsible {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.osadaListRow--collapsible:hover {
+    color: var(--osada-parchment, #e8dcc0);
+}
+
+.osadaListRowCaret {
+    order: -1;
+    flex: 0 0 auto;
+    width: 12px;
+    font-style: normal;
+    line-height: 1;
+    opacity: .8;
+}
+
 .osadaFlag {
     flex: 0 0 auto;
     width: 22px;
@@ -1824,6 +1847,23 @@ input[type=text], input[type=search] {
     margin-top: 12px;
     font-size: 13px;
     color: var(--osada-text);
+}
+
+.osada-campaign-epilogue {
+    max-width: 720px;
+    margin: 14px auto 0;
+    padding: 12px 14px 2px;
+    border-top: 1px solid rgba(196, 158, 88, .45);
+    text-align: left;
+    line-height: 1.45;
+}
+
+.osada-campaign-epilogue strong {
+    color: var(--osada-brass);
+}
+
+.osada-campaign-epilogue em {
+    color: var(--osada-text-dim);
 }
 
 /* =====================  SETTINGS SCREEN  ================================ */
@@ -7086,6 +7126,32 @@ hr {
     font: 14px var(--osada-font-ui);
     box-shadow: inset 0 2px 7px rgba(0, 0, 0, .55);
     transition: border-color .13s, box-shadow .13s;
+}
+
+/* The lobby's scenario picker is a native <select> so it keeps the browser's own keyboard search
+   over 500 scenarios; it only borrows the shared field styling. */
+#smMultiplayerLocal .osada-mp-scenario-select {
+    height: 40px;
+    padding: 0 10px;
+    cursor: pointer;
+}
+
+#smMultiplayerLocal .osada-mp-scenario-select optgroup {
+    color: var(--osada-brass);
+    font-style: italic;
+}
+
+#smMultiplayerLocal .osada-mp-scenario-select option {
+    color: #f1ecdf;
+    font-style: normal;
+}
+
+.osada-mp-scenario-name {
+    padding: 9px 12px;
+    border: 1px dashed #4b4435;
+    border-radius: 3px;
+    color: #f1ecdf;
+    font: 14px var(--osada-font-ui);
 }
 
 #smMultiplayerLocal .osada-mp-input:hover {

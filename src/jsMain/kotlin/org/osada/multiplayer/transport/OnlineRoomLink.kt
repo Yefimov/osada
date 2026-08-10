@@ -27,8 +27,6 @@ class OnlineRoomLink(
     private var currentState = RoomLinkState.IDLE
     private var pendingHandshake: (() -> Unit)? = null
 
-    override val serverManaged: Boolean = true
-
     override val state: RoomLinkState
         get() = currentState
 
@@ -148,7 +146,11 @@ class OnlineRoomLink(
                     )
             }
         }
-        listener.onLobby(payload.hostParticipantId as? String, participants)
+        listener.onLobby(
+            payload.hostParticipantId as? String,
+            participants,
+            payload.scenarioFile as? String,
+        )
     }
 
     private fun welcomeOf(payload: dynamic): RoomWelcome =

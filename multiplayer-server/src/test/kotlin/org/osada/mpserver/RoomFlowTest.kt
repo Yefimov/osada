@@ -229,3 +229,86 @@ class OriginEnforcementTest {
             }
         }
 }
+
+class ScenarioChoiceTest {
+    @Test
+    fun `the host picks the scenario and both commanders see it`() =
+        roomTest { host, guest ->
+            val code = createRoom(host, "Ilya")
+            joinRoom(guest, code, "Guest")
+            awaitLobby(host) { it.size == 2 }
+
+            host.sendMessage(
+                MessageType.LOBBY_PATCH_PROPOSE,
+                payloadOf("scenarioFile" to "bn9s00.xml"),
+            )
+            // The guest already received the lobby it joined into, which carried no scenario yet.
+            var scenario: String? = null
+            while (scenario == null) {
+                scenario = guest.await(MessageType.LOBBY_STATE).payload.stringOrNull("scenarioFile")
+            }
+            assertEquals("bn9s00.xml", scenario)
+        }
+
+    @Test
+    fun `changing the scenario clears readiness`() =
+        roomTest { host, guest ->
+            val code = createRoom(host, "Ilya")
+            joinRoom(guest, code, "Guest")
+            host.sendMessage(MessageType.SET_READY, payloadOf("ready" to true))
+            guest.sendMessage(MessageType.SET_READY, payloadOf("ready" to true))
+            awaitLobby(host) { participants ->
+                participants.size == 2 && participants.all { it.jsonObject["isReady"].toString().toBoolean() }
+            }
+
+            host.sendMessage(MessageType.LOBBY_PATCH_PROPOSE, payloadOf("scenarioFile" to "bn9s00.xml"))
+            val participants =
+                awaitLobby(host) { rows ->
+                    rows.none { it.jsonObject["isReady"].toString().toBoolean() }
+                }
+            assertEquals(2, participants.size)
+        }
+
+    @Test
+    fun `a guest cannot change the scenario`() =
+        roomTest { host, guest ->
+            val code = createRoom(host, "Ilya")
+            joinRoom(guest, code, "Guest")
+            guest.sendMessage(MessageType.LOBBY_PATCH_PROPOSE, payloadOf("scenarioFile" to "bn9s00.xml"))
+            val error = guest.await(MessageType.ROOM_ERROR)
+            assertEquals(ErrorCode.NOT_ROOM_HOST.name, error.payload.stringOrNull("code"))
+        }
+
+    @Test
+    fun `a scenario reference that is not a scenario file is refused`() =
+        roomTest { host, guest ->
+            val code = createRoom(host, "Ilya")
+            joinRoom(guest, code, "Guest")
+            host.sendMessage(MessageType.LOBBY_PATCH_PROPOSE, payloadOf("scenarioFile" to "../../etc/passwd"))
+            val error = host.await(MessageType.ROOM_ERROR)
+            assertEquals(ErrorCode.INVALID_MESSAGE.name, error.payload.stringOrNull("code"))
+        }
+
+    @Test
+    fun `the match starts on the scenario chosen in the lobby`() =
+        roomTest { host, guest ->
+            val code = createRoom(host, "Ilya")
+            joinRoom(guest, code, "Guest")
+            // Choose first and let the choice land: picking a scenario clears readiness, so a
+            // ready sent alongside the patch could be wiped by it.
+            host.sendMessage(MessageType.LOBBY_PATCH_PROPOSE, payloadOf("scenarioFile" to "bn9s00.xml"))
+            while (host.await(MessageType.LOBBY_STATE).payload.stringOrNull("scenarioFile") == null) {
+                // keep reading until the patched lobby arrives
+            }
+            host.sendMessage(MessageType.SET_READY, payloadOf("ready" to true))
+            guest.sendMessage(MessageType.SET_READY, payloadOf("ready" to true))
+            awaitLobby(host) { participants ->
+                participants.size == 2 && participants.all { it.jsonObject["isReady"].toString().toBoolean() }
+            }
+            // No scenarioFile in the start message: the server falls back to the lobby's choice.
+            host.sendMessage(MessageType.START_GAME_PROPOSE, payloadOf("hostParticipantId" to "x"))
+            val started = guest.await(MessageType.START_GAME, MessageType.ROOM_ERROR)
+            assertEquals(MessageType.START_GAME, started.type)
+            assertEquals("bn9s00.xml", started.payload.stringOrNull("scenarioFile"))
+        }
+}

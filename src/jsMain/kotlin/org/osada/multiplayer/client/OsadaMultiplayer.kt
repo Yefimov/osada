@@ -2,7 +2,6 @@
 
 package org.osada.multiplayer.client
 
-import kotlinx.browser.sessionStorage
 import kotlinx.browser.window
 import org.osada.Game
 import org.osada.PlayerType
@@ -27,7 +26,6 @@ import org.osada.multiplayer.sync.MultiplayerSnapshot
 import org.osada.multiplayer.sync.MultiplayerSnapshotFactory
 import org.osada.multiplayer.sync.MultiplayerSnapshotJson
 import org.osada.multiplayer.sync.MultiplayerSnapshotValidator
-import org.osada.multiplayer.transport.LocalRoomLink
 import org.osada.multiplayer.transport.OnlineRoomLink
 import org.osada.multiplayer.transport.RoomLink
 import org.osada.multiplayer.transport.RoomLinkListener
@@ -38,6 +36,8 @@ import org.osada.multiplayer.ui.HubModel
 import org.osada.multiplayer.ui.LobbyModel
 import org.osada.multiplayer.ui.LobbyRow
 import org.osada.multiplayer.ui.MultiplayerScreen
+import org.osada.multiplayer.ui.ScenarioChoice
+import org.osada.ui.StartMenuBuilder
 import org.osada.uiSettings
 import kotlin.js.Date
 import kotlin.js.json
@@ -46,9 +46,9 @@ import kotlin.random.Random
 /**
  * The multiplayer session on the client.
  *
- * Transport-agnostic: it drives either [LocalRoomLink] (two tabs, no server) or [OnlineRoomLink]
- * (the self-hosted room server). Either way the host client stays the game authority — it validates
- * a proposed command against the real rules, applies it once and publishes the resulting snapshot.
+ * The room server owns the lobby — the roster, the room code, the chosen scenario and the ordering
+ * of commands. The host client stays the *game* authority: it validates a proposed command against
+ * the real rules, applies it once and publishes the resulting snapshot.
  */
 object OsadaMultiplayer : RoomLinkListener {
     private data class Participant(
@@ -65,6 +65,7 @@ object OsadaMultiplayer : RoomLinkListener {
     private var roomCode: String? = null
     private var hostParticipantId: String? = null
     private var displayName = ""
+    private var scenarioFile: String? = null
     private val participants = linkedMapOf<String, Participant>()
     private var revision = 0L
     private var authorityEpoch = 0L
@@ -81,12 +82,6 @@ object OsadaMultiplayer : RoomLinkListener {
     val active: Boolean
         get() = started && link != null
 
-    private val tabId: String by lazy {
-        sessionStorage.getItem(TAB_ID_KEY)
-            ?: "tab-${Date.now().toLong().toString(ID_RADIX)}-${Random.nextInt().toUInt().toString(ID_RADIX)}"
-                .also { sessionStorage.setItem(TAB_ID_KEY, it) }
-    }
-
     fun openHub(game: Game) {
         this.game = game
         reset()
@@ -94,7 +89,6 @@ object OsadaMultiplayer : RoomLinkListener {
             HubModel(
                 displayName = storedDisplayName(),
                 onlineAvailable = MultiplayerEndpoint.isOnlineAvailable(),
-                onlinePreferred = MultiplayerEndpoint.isOnlineAvailable(),
                 backendLabel = MultiplayerEndpoint.resolve().environment,
                 onCreate = ::createRoom,
                 onJoin = ::joinRoom,
@@ -153,19 +147,15 @@ object OsadaMultiplayer : RoomLinkListener {
         }
     }
 
-    private fun createRoom(
-        rawName: String,
-        online: Boolean,
-    ) {
+    private fun createRoom(rawName: String) {
         displayName = rememberDisplayName(rawName)
-        openLink(online)
+        openLink()
         link?.createRoom(displayName)
     }
 
     private fun joinRoom(
         rawCode: String,
         rawName: String,
-        online: Boolean,
     ) {
         val code = rawCode.trim().uppercase()
         if (!ROOM_CODE.matches(code)) {
@@ -173,19 +163,14 @@ object OsadaMultiplayer : RoomLinkListener {
             return
         }
         displayName = rememberDisplayName(rawName)
-        openLink(online)
+        openLink()
         link?.joinRoom(code, displayName, reconnectTokenFor(code))
     }
 
-    private fun openLink(online: Boolean) {
+    private fun openLink() {
         link?.close()
         participants.clear()
-        link =
-            if (online) {
-                OnlineRoomLink(MultiplayerEndpoint.resolve(), this)
-            } else {
-                LocalRoomLink(tabId, this, ::generateRoomCode)
-            }
+        link = OnlineRoomLink(MultiplayerEndpoint.resolve(), this)
     }
 
     // -- RoomLinkListener ---------------------------------------------------------------------
@@ -211,11 +196,9 @@ object OsadaMultiplayer : RoomLinkListener {
         isHost = welcome.isHost
         revision = welcome.revision
         paused = welcome.paused
+        welcome.scenarioFile?.let { scenarioFile = it }
         if (welcome.isHost) hostParticipantId = welcome.participantId
         welcome.reconnectToken?.let { rememberReconnectToken(welcome.roomCode, it) }
-        if (link?.serverManaged != true) {
-            participants[selfId] = Participant(selfId, displayName, ready = false)
-        }
         if (welcome.started) {
             // Rejoining a match in progress: the server pushes its stored snapshot next.
             started = true
@@ -228,8 +211,10 @@ object OsadaMultiplayer : RoomLinkListener {
     override fun onLobby(
         hostParticipantId: String?,
         participants: List<RoomLobbyParticipant>,
+        scenarioFile: String?,
     ) {
         this.hostParticipantId = hostParticipantId
+        this.scenarioFile = scenarioFile ?: this.scenarioFile
         this.participants.clear()
         participants.forEach { participant ->
             this.participants[participant.participantId] =
@@ -244,18 +229,12 @@ object OsadaMultiplayer : RoomLinkListener {
         if (!started) renderLobby()
     }
 
-    @Suppress("CyclomaticComplexMethod")
     override fun onRoomMessage(
         type: String,
         senderParticipantId: String,
         payload: dynamic,
     ) {
-        val peerManaged = link?.serverManaged != true
         when (type) {
-            MultiplayerMessageType.JOIN_ROOM.name -> if (peerManaged && isHost) peerJoined(senderParticipantId, payload)
-            MultiplayerMessageType.LOBBY_STATE.name -> if (peerManaged && !isHost) applyPeerLobby(payload)
-            MultiplayerMessageType.SET_READY.name -> if (peerManaged && isHost) peerReady(senderParticipantId, payload)
-            MultiplayerMessageType.LEAVE_ROOM.name -> if (peerManaged && isHost) peerLeft(senderParticipantId)
             MultiplayerMessageType.START_GAME.name -> handleStart(payload)
             MultiplayerMessageType.SNAPSHOT.name, MultiplayerMessageType.COMMAND_COMMIT.name -> applySnapshot(payload)
             MultiplayerMessageType.COMMAND_PROPOSE.name -> if (isHost) handleProposal(senderParticipantId, payload)
@@ -274,82 +253,25 @@ object OsadaMultiplayer : RoomLinkListener {
 
     // -- Lobby --------------------------------------------------------------------------------
 
-    private fun peerJoined(
-        participantId: String,
-        payload: dynamic,
-    ) {
-        if (started || participants.size >= MAX_PARTICIPANTS) return
-        participants[participantId] =
-            Participant(participantId, normalizedName(payload?.displayName as? String), ready = false)
-        broadcastPeerLobby()
-        renderLobby()
-    }
-
-    private fun peerReady(
-        participantId: String,
-        payload: dynamic,
-    ) {
-        participants[participantId]?.ready = payload?.ready as? Boolean ?: false
-        broadcastPeerLobby()
-        renderLobby()
-    }
-
-    private fun peerLeft(participantId: String) {
-        participants.remove(participantId)
-        broadcastPeerLobby()
-        renderLobby()
-    }
-
-    private fun applyPeerLobby(payload: dynamic) {
-        hostParticipantId = payload.hostParticipantId as? String
-        participants.clear()
-        val values = payload.participants
-        if (js("Array.isArray(values)") as Boolean) {
-            for (index in 0 until (values.length as Number).toInt()) {
-                val value = values[index]
-                val id = value.participantId as? String ?: continue
-                participants[id] =
-                    Participant(
-                        participantId = id,
-                        displayName = value.displayName as? String ?: I18n.t("multiplayer.default_name"),
-                        ready = value.ready as? Boolean ?: false,
-                    )
-            }
-        }
-        renderLobby()
-    }
-
-    private fun broadcastPeerLobby() {
-        val values =
-            participants.values
-                .map {
-                    json("participantId" to it.participantId, "displayName" to it.displayName, "ready" to it.ready)
-                }.toTypedArray()
-        post(
-            MultiplayerMessageType.LOBBY_STATE,
-            json("hostParticipantId" to selfId, "participants" to values),
-        )
-    }
-
     private fun setReady(ready: Boolean) {
         participants[selfId]?.ready = ready
-        if (link?.serverManaged == true) {
-            post(MultiplayerMessageType.SET_READY, json("ready" to ready))
-        } else if (isHost) {
-            broadcastPeerLobby()
-            renderLobby()
-        } else {
-            post(MultiplayerMessageType.SET_READY, json("ready" to ready))
-            renderLobby()
-        }
+        post(MultiplayerMessageType.SET_READY, json("ready" to ready))
+    }
+
+    private fun chooseScenario(file: String) {
+        if (!isHost || file.isBlank()) return
+        scenarioFile = file
+        post(MultiplayerMessageType.LOBBY_PATCH_PROPOSE, json("scenarioFile" to file))
     }
 
     private fun startMatch() {
+        val file = scenarioFile ?: return
         if (!isHost || !everyoneReady()) return
-        val payload = json("scenarioFile" to SMOKE_SCENARIO, "hostParticipantId" to selfId)
-        post(MultiplayerMessageType.START_GAME, payload)
-        // Over a server the START_GAME broadcast comes back to everyone, including this client.
-        if (link?.serverManaged != true) handleStart(payload)
+        post(
+            MultiplayerMessageType.START_GAME,
+            json("scenarioFile" to file, "hostParticipantId" to selfId),
+        )
+        // The server broadcasts START_GAME back to everyone, this client included.
     }
 
     private fun everyoneReady(): Boolean =
@@ -363,10 +285,10 @@ object OsadaMultiplayer : RoomLinkListener {
 
     private fun renderLobby() {
         if (started) return
+        val chosen = scenarioFile
         MultiplayerScreen.showLobby(
             LobbyModel(
                 roomCode = roomCode,
-                online = link?.serverManaged == true,
                 message = lobbyMessage,
                 rows =
                     participants.values.map {
@@ -379,15 +301,41 @@ object OsadaMultiplayer : RoomLinkListener {
                     },
                 maxParticipants = MAX_PARTICIPANTS,
                 selfReady = participants[selfId]?.ready == true,
-                readyEnabled = participants[selfId] != null,
+                readyEnabled = participants[selfId] != null && chosen != null,
                 isHost = isHost,
-                startEnabled = everyoneReady(),
+                scenarios = scenarioChoices(),
+                selectedScenarioFile = chosen,
+                selectedScenarioName = chosen?.let(::scenarioNameOf),
+                startEnabled = everyoneReady() && chosen != null,
+                onScenarioSelected = ::chooseScenario,
                 onToggleReady = { setReady(participants[selfId]?.ready != true) },
                 onStart = ::startMatch,
                 onLeave = ::leaveRoom,
             ),
         )
     }
+
+    /**
+     * The scenario register, flattened for a picker: `scenariolist.js` is a run of rows where a
+     * one-element row opens a new group and every following row belongs to it.
+     */
+    private fun scenarioChoices(): List<ScenarioChoice> {
+        val choices = mutableListOf<ScenarioChoice>()
+        var group = ""
+        StartMenuBuilder.scenarioList().forEach { row ->
+            val length = row.length as? Int ?: 0
+            if (length == 1) {
+                group = (row[0] as? String).orEmpty()
+            } else {
+                val file = row[0] as? String ?: return@forEach
+                choices += ScenarioChoice(file, (row[1] as? String).orEmpty(), group)
+            }
+        }
+        return choices
+    }
+
+    private fun scenarioNameOf(file: String): String =
+        scenarioChoices().firstOrNull { it.file == file }?.name ?: file
 
     // -- Match --------------------------------------------------------------------------------
 
@@ -399,14 +347,16 @@ object OsadaMultiplayer : RoomLinkListener {
         authorityEpoch = 0
         waitingForScenario = true
         MultiplayerScreen.hide()
-        loadScenario(payload.scenarioFile as? String ?: SMOKE_SCENARIO)
+        val file = payload.scenarioFile as? String ?: scenarioFile ?: return
+        scenarioFile = file
+        loadScenario(file)
     }
 
-    private fun loadScenario(scenarioFile: String) {
+    private fun loadScenario(file: String) {
         val currentGame = game ?: return
         currentGame.campaign = null
         uiSettings.isAI.indices.forEach { uiSettings.isAI[it] = if (it == 0) 0 else 1 }
-        currentGame.newScenario(scenarioFile, null)
+        currentGame.newScenario(file, null)
     }
 
     private fun handlePause(payload: dynamic) {
@@ -511,7 +461,7 @@ object OsadaMultiplayer : RoomLinkListener {
             adapter = GameStateNetworkAdapter { game },
             hasher = CanonicalStateHasher(),
             gameVersion = org.osada.VERSION,
-            contentManifestHash = "scenario:$SMOKE_SCENARIO",
+            contentManifestHash = "scenario:${scenarioFile.orEmpty()}",
             roomConfigHash = "room:${roomCode ?: ""}",
         ).create(runtime)
     }
@@ -572,6 +522,7 @@ object OsadaMultiplayer : RoomLinkListener {
         selfId = ""
         roomCode = null
         hostParticipantId = null
+        scenarioFile = null
         participants.clear()
         revision = 0
         authorityEpoch = 0
@@ -623,23 +574,15 @@ object OsadaMultiplayer : RoomLinkListener {
             ?.takeIf { it.isNotBlank() }
             ?: I18n.t("multiplayer.default_name")
 
-    private fun generateRoomCode(): String =
-        buildString {
-            repeat(ROOM_CODE_LENGTH) { append(ROOM_ALPHABET.random()) }
-        }
-
     private fun newCommandId(): String =
-        "${selfId.ifEmpty { tabId }}-${Date.now().toLong().toString(ID_RADIX)}" +
+        "${selfId.ifEmpty { "local" }}-${Date.now().toLong().toString(ID_RADIX)}" +
             "-${Random.nextInt().toUInt().toString(ID_RADIX)}"
 
-    private const val TAB_ID_KEY = "osada-mp-tab-id-v1"
     private const val DISPLAY_NAME_KEY = "osada-mp-display-name-v1"
     private const val SESSION_KEY = "osada-mp-session-v1"
-    private const val SMOKE_SCENARIO = "bn9s00.xml"
     private const val MAX_PARTICIPANTS = 2
     private const val MAX_NAME_LENGTH = 40
     private const val ROOM_CODE_LENGTH = 6
     private const val ID_RADIX = 36
     private val ROOM_CODE = Regex("[A-Z2-9]{$ROOM_CODE_LENGTH}")
-    private const val ROOM_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
 }

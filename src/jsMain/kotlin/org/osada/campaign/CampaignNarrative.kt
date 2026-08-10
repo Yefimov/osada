@@ -8,6 +8,7 @@ import org.osada.campaign.CampaignNarrative.reset
 import org.osada.campaign.CampaignNarrative.restore
 import org.osada.campaign.CampaignNarrative.snapshot
 import org.osada.model.Player
+import org.osada.scenario.Campaign
 
 /**
  * The single entry point the rest of the engine uses to talk to the narrative system.
@@ -146,3 +147,76 @@ internal object CampaignNarrative {
             state = current,
         )
 }
+
+/**
+ * One authored campaign-ending voice selected from the real final outcome and accumulated
+ * narrative state. Epilogues live on the final scenario entry because that is the point at which
+ * the campaign still has both its unadvanced scenario index and every committed choice flag.
+ */
+internal data class CampaignEpilogue(
+    val id: String,
+    val outcomes: List<String>,
+    val speaker: String,
+    val role: String,
+    val text: String,
+    val condition: CampaignCondition,
+)
+
+internal object CampaignEpilogueParser {
+    fun parseList(value: dynamic): List<CampaignEpilogue> =
+        BriefingDynamic.mapArray(value) { item ->
+            if (!BriefingDynamic.isObject(item)) return@mapArray null
+            val id = BriefingDynamic.str(item.id) ?: return@mapArray null
+            val text = BriefingDynamic.str(item.text) ?: return@mapArray null
+            CampaignEpilogue(
+                id = id,
+                outcomes = BriefingDynamic.strList(item.outcomes),
+                speaker = BriefingDynamic.str(item.speaker) ?: "",
+                role = BriefingDynamic.str(item.role) ?: "",
+                text = text,
+                condition = CampaignConditionParser.parse(item.conditions),
+            )
+        }
+}
+
+internal object CampaignEpilogueResolver {
+    fun resolve(
+        value: dynamic,
+        outcome: String,
+        context: CampaignContext,
+    ): CampaignEpilogue? =
+        CampaignEpilogueParser.parseList(value).firstOrNull { epilogue ->
+            (epilogue.outcomes.isEmpty() || outcome in epilogue.outcomes) &&
+                CampaignConditionEvaluator.matches(epilogue.condition, context)
+        }
+}
+
+/** Returns display-safe HTML appended to the ordinary final outcome text. */
+internal fun Campaign.resolveEpilogue(outcome: String): String? {
+    val scenario = getCurrentScenario() ?: return null
+    val epilogue =
+        CampaignEpilogueResolver.resolve(
+            value = scenario.epilogues,
+            outcome = outcome,
+            context = CampaignNarrative.context(file, scenario.scenario as? String ?: "", currentScenarioIndex),
+        )
+    return epilogue?.let { selected ->
+        val byline =
+            buildString {
+                if (selected.speaker.isNotBlank()) {
+                    append("<strong>${escapeEpilogueHtml(selected.speaker)}</strong>")
+                }
+                if (selected.role.isNotBlank()) append(" — <em>${escapeEpilogueHtml(selected.role)}</em>")
+            }
+        "<div class=\"osada-campaign-epilogue\">" +
+            "$byline<p>${escapeEpilogueHtml(selected.text)}</p></div>"
+    }
+}
+
+private fun escapeEpilogueHtml(value: String): String =
+    value
+        .replace("&", "&amp;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+        .replace("\"", "&quot;")
+        .replace("'", "&#39;")

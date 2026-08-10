@@ -39,6 +39,7 @@ internal object StartMenuListToolbar {
     private const val UNDATED_SORT_YEAR = 9999
     private const val SORT_YEAR_PAD_WIDTH = 4
     private const val UNSIZED_SORT_VALUE = 99999
+    private const val GROUP_RANK_PAD_WIDTH = 2
 
     /**
      * Builds a visible row list mirrored to a hidden native <select> (the source of truth).
@@ -49,6 +50,7 @@ internal object StartMenuListToolbar {
     fun buildSyncedList(
         select: HTMLElement,
         container: HTMLElement,
+        collapsibleGroups: Boolean = false,
         renderRow: (option: HTMLOptionElement, index: Int, row: HTMLElement, selectable: Boolean) -> Unit,
     ) {
         clearTag(container)
@@ -71,9 +73,64 @@ internal object StartMenuListToolbar {
                     select.asDynamic().selectedIndex = i
                     select.dispatchEvent(Event("change"))
                 }
+            } else if (collapsibleGroups) {
+                makeGroupCollapsible(container, row)
             }
         }
         syncListHighlight(select, container)
+    }
+
+    /**
+     * Turns a group header into a disclosure control: clicking it folds its scenarios away and
+     * clicking again brings them back. With two dozen campaigns in one register, an unfoldable list
+     * buries the tutorial and the standalone battles under hundreds of rows.
+     */
+    private fun makeGroupCollapsible(
+        list: HTMLElement,
+        row: HTMLElement,
+    ) {
+        val caret = addTag(row, "div")
+        caret.className = "osadaListRowCaret"
+        row.classList.add("osadaListRow--collapsible")
+        row.title = I18n.t("list.group.toggle.help")
+        row.onclick = { _: org.w3c.dom.events.MouseEvent ->
+            val key = row.asDynamic().groupKey as? String ?: ""
+            val collapsed = collapsedGroups(list)
+            if (collapsed[key] == true) {
+                collapsed[key] = false
+            } else {
+                collapsed[key] = true
+            }
+            applyListView(list)
+        }
+        refreshGroupCaret(row, collapsedGroups(list)[row.asDynamic().groupKey as? String ?: ""] == true)
+    }
+
+    private fun refreshGroupCaret(
+        row: HTMLElement,
+        collapsed: Boolean,
+    ) {
+        val caret = row.querySelector(".osadaListRowCaret") as? HTMLElement ?: return
+        caret.textContent = if (collapsed) "▸" else "▾"
+        row.setAttribute("aria-expanded", (!collapsed).toString())
+    }
+
+    /** Per-list set of folded group keys, created on first use. */
+    private fun collapsedGroups(list: HTMLElement): dynamic {
+        val existing = list.asDynamic().collapsedGroups
+        if (existing != null && existing != undefined) return existing
+        val created = js("{}")
+        list.asDynamic().collapsedGroups = created
+        return created
+    }
+
+    /** Folds every group whose key is in [keys]; call before the first [applyListView]. */
+    fun collapseGroups(
+        list: HTMLElement,
+        keys: Collection<String>,
+    ) {
+        val collapsed = collapsedGroups(list)
+        keys.forEach { collapsed[it] = true }
     }
 
     /** Re-highlights the row whose optionIndex matches the select's current selectedIndex. */
@@ -174,6 +231,8 @@ internal object StartMenuListToolbar {
         size: Int? = null,
         sides: List<String> = emptyList(),
         forceHidden: Boolean = false,
+        groupKey: String? = null,
+        groupRank: Int = 0,
     ) {
         // Sort keys are strings, and numeric ones are zero-padded to a fixed width, so one plain
         // string comparison serves every mode (no per-mode comparator plumbing).
@@ -183,7 +242,10 @@ internal object StartMenuListToolbar {
         ) = value.toString().padStart(width, '0')
 
         val dyn = row.asDynamic()
-        dyn.sortDefault = pad(index)
+        dyn.groupKey = groupKey
+        // The rank prefixes the position, so whole groups can be lifted or sunk in the default view
+        // while the order inside each one stays exactly as the scenario list declares it.
+        dyn.sortDefault = pad(groupRank, GROUP_RANK_PAD_WIDTH) + pad(index)
         dyn.sortName = name.lowercase()
         // Undated/unsized rows sort last rather than silently first. Name is appended as a
         // tie-breaker so equal years / equal lengths still come out in a stable, readable order.
@@ -282,7 +344,7 @@ internal object StartMenuListToolbar {
             }
         sorted.forEach { list.appendChild(it) }
 
-        val matches = applyRowVisibility(sorted, grouped, query, side, storyOnly)
+        val matches = applyRowVisibility(list, sorted, grouped, query, side, storyOnly)
 
         (list.asDynamic().counterEl as? HTMLElement)?.let { counter ->
             val counterKey = list.asDynamic().counterKey as? String ?: return@let
@@ -293,6 +355,7 @@ internal object StartMenuListToolbar {
     /** Hides non-matching rows, then hides any group header left with nothing under it. Returns
      *  the number of matching (non-group) rows. */
     private fun applyRowVisibility(
+        list: HTMLElement,
         sorted: List<HTMLElement>,
         grouped: Boolean,
         query: String,
@@ -302,6 +365,11 @@ internal object StartMenuListToolbar {
         var currentGroup: HTMLElement? = null
         var groupHasMatch = false
         var matches = 0
+        // While the player is searching or filtering, a folded group must not swallow its hits:
+        // the fold is a reading aid, not a second filter.
+        val filtering = query.isNotEmpty() || side != SIDE_ALL || storyOnly
+        val collapsed = collapsedGroups(list)
+        var groupFolded = false
 
         fun closeGroup() {
             currentGroup?.style?.display = if (grouped && groupHasMatch) "" else "none"
@@ -311,11 +379,16 @@ internal object StartMenuListToolbar {
                 closeGroup()
                 currentGroup = row
                 groupHasMatch = false
+                val key = row.asDynamic().groupKey as? String ?: ""
+                groupFolded = grouped && !filtering && collapsed[key] == true
+                refreshGroupCaret(row, collapsed[key] == true)
                 continue
             }
             if (applyRowMatch(row, query, side, storyOnly)) {
                 groupHasMatch = true
                 matches++
+                // Counted either way: a folded row still exists, it is only out of sight.
+                if (groupFolded) row.style.display = "none"
             }
         }
         closeGroup()

@@ -52,6 +52,14 @@
    },
    "dialogue": [
     {
+     "id": "campaign-framing",
+     "speaker": "Campaign Chronicle",
+     "role": "Player Perspective",
+     "side": "left",
+     "text": "This campaign follows four successive local commands as the revolution moves from Kiel to Wilhelmshaven, Frankfurt and Berlin. In each city you act as the council delegate or column commander named in the briefing—not as one officer racing across Germany.",
+     "next": "artelt-cold-open"
+    },
+    {
      "id": "artelt-cold-open",
      "speaker": "Karl Artelt",
      "role": "Sailor, First Torpedo Division",
@@ -113,7 +121,7 @@
          "amount": 50
         }
        ],
-       "hint": "Gain a veteran sailor detachment and public confidence, but leave the telegraph and arsenals unsecured for now."
+       "hint": "Gain an experienced sailor detachment and a small prestige award, but forgo the larger prestige and core-wide experience granted by securing communications."
       },
       {
        "id": "secure-communications-first",
@@ -141,7 +149,7 @@
          "amount": 25
         }
        ],
-       "hint": "Gain resources and better-coordinated forces, but the imprisoned sailors will not join you as a veteran detachment."
+       "hint": "Gain a larger prestige award and experience for every core formation, but forgo the additional sailor detachment."
       }
      ],
      "portrait": "resources/campaigns/portraits/lothar-popp.png"
@@ -306,10 +314,10 @@
    "dialogue": [
     {
      "id": "reaction-briliant",
-     "speaker": "Bernhard Kuhnt",
-     "role": "Chairman of the Council of 21",
-     "side": "left",
-     "portrait": "resources/campaigns/portraits/bernhard-kuhnt.png",
+     "speaker": "Marta Reimers",
+     "role": "Shipyard Workers' Courier — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/marta-reimers.png",
      "text": "Kiel went further than anyone dared hope. Word of the fleet's refusal reached the yards here before our own couriers did, and the garrison has been arguing with itself ever since.",
      "conditions": {
       "previousOutcome": [
@@ -320,10 +328,10 @@
     },
     {
      "id": "reaction-tactical",
-     "speaker": "Bernhard Kuhnt",
-     "role": "Chairman of the Council of 21",
-     "side": "left",
-     "portrait": "resources/campaigns/portraits/bernhard-kuhnt.png",
+     "speaker": "Marta Reimers",
+     "role": "Shipyard Workers' Courier — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/marta-reimers.png",
      "text": "Kiel was won slowly, and the yards are counting the cost. The officers here have had time to read the same telegrams we did, and to prepare for us.",
      "conditions": {
       "previousOutcome": [
@@ -334,10 +342,10 @@
     },
     {
      "id": "reaction-victory",
-     "speaker": "Bernhard Kuhnt",
-     "role": "Chairman of the Council of 21",
-     "side": "left",
-     "portrait": "resources/campaigns/portraits/bernhard-kuhnt.png",
+     "speaker": "Marta Reimers",
+     "role": "Shipyard Workers' Courier — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/marta-reimers.png",
      "text": "Kiel holds. That is enough to make Wilhelmshaven listen - though the officers here have not lost their nerve, and they still command the harbour batteries.",
      "conditions": {
       "previousOutcome": [
@@ -455,7 +463,7 @@
          "amount": 130
         }
        ],
-       "hint": "Gain another revolutionary unit and momentum across the region, but advance before the base and supply system are fully secured."
+       "hint": "Gain an untested soldiers' detachment and a prestige award, but forgo full core resupply and the entrenched infantry detachment."
       },
       {
        "id": "secure-base",
@@ -487,7 +495,7 @@
          "strength": 10
         }
        ],
-       "hint": "Begin with a rested force and an entrenched detachment, but surrender time and political momentum beyond the harbour."
+       "hint": "Fully resupply every core formation and gain an entrenched infantry detachment, but forgo the soldiers' detachment and prestige award."
       }
      ],
      "portrait": "resources/campaigns/portraits/paul-hug.png"
@@ -498,8 +506,17 @@
      "role": "Chairman of the Council of 21",
      "side": "left",
      "text": "Agreed. Each column must carry delegates as well as rifles. We are not occupying foreign towns; we are helping their soldiers and workers form councils of their own.",
-     "next": "oldenburg-report",
+     "next": "hug-regional-objection",
      "portrait": "resources/campaigns/portraits/bernhard-kuhnt.png"
+    },
+    {
+     "id": "hug-regional-objection",
+     "speaker": "Paul Hug",
+     "role": "Rüstringen Deputy and Council Representative",
+     "side": "right",
+     "text": "And if Oldenburg strikes while our rifles are scattered among three roads? I will carry the council's order, Kuhnt, but do not call speed a substitute for a defensible base. The towns may welcome our delegates; the garrison will count our battalions.",
+     "next": "oldenburg-report",
+     "portrait": "resources/campaigns/portraits/paul-hug.png"
     },
     {
      "id": "hug-consolidate",
@@ -507,8 +524,17 @@
      "role": "Rüstringen Deputy and Council Representative",
      "side": "right",
      "text": "Then make the base secure quickly. The Oldenburg garrison is the greatest remaining obstacle, and delay gives its officers time to isolate the coast.",
-     "next": "oldenburg-report",
+     "next": "kuhnt-consolidate-objection",
      "portrait": "resources/campaigns/portraits/paul-hug.png"
+    },
+    {
+     "id": "kuhnt-consolidate-objection",
+     "speaker": "Bernhard Kuhnt",
+     "role": "Chairman of the Council of 21",
+     "side": "left",
+     "text": "You will have your secure harbour. Beyond it, workers who rose because Kiel moved first will watch us guard warehouses while they face their officers alone. If their courage cools before our columns arrive, fortifications will not recover it.",
+     "next": "oldenburg-report",
+     "portrait": "resources/campaigns/portraits/bernhard-kuhnt.png"
     },
     {
      "id": "oldenburg-report",
@@ -810,7 +836,7 @@
          "amount": 20
         }
        ],
-       "hint": "Gain resources, coordination, and experienced troops, but forgo the mass mobilisation of armed workers."
+       "hint": "Gain a prestige award and experience for every core formation, but forgo the two additional worker battalions."
       },
       {
        "id": "declare-council",
@@ -847,7 +873,7 @@
          "amount": -60
         }
        ],
-       "hint": "Raise two worker battalions and strengthen political legitimacy, but divert labour and resources from the war effort."
+       "hint": "Raise two worker battalions and earn their later political support, but pay prestige and forgo core-wide experience."
       }
      ],
      "portrait": "resources/campaigns/portraits/otto-weber.png"
@@ -857,9 +883,18 @@
      "speaker": "Dr. Jakob Adler",
      "role": "Municipal Liaison — Fictional Composite",
      "side": "right",
-     "text": "Then take the switchboards, bridges and post without turning the city into a conquered town. The waterworks clerks and food offices will stay at their desks if the council protects them. A revolution that cannot deliver bread will lose the streets it wins.",
-     "next": "loyalist-warning",
+     "text": "Take the switchboards, then—but do not confuse machinery with consent. If the square sees armed soldiers before it sees an elected council, the old officials will call this another occupation and some workers will believe them. A revolution that cannot deliver bread will lose the streets it wins.",
+     "next": "keller-infrastructure-answer",
      "portrait": "resources/campaigns/portraits/dr-jakob-adler.png"
+    },
+    {
+     "id": "keller-infrastructure-answer",
+     "speaker": "Anna Keller",
+     "role": "Railway Workers' Delegate — Fictional Composite",
+     "side": "left",
+     "text": "The railwaymen will open the stations to the council, not to a new barracks command. But Adler is right about one thing: seize a telegraph office without explaining whose orders it carries, and fear will explain it for us.",
+     "next": "loyalist-warning",
+     "portrait": "resources/campaigns/portraits/anna-keller.png"
     },
     {
      "id": "keller-assembly",
@@ -867,8 +902,17 @@
      "role": "Railway Workers' Delegate — Fictional Composite",
      "side": "left",
      "text": "The unions can fill the square before noon, and soldiers who will not follow a secret committee may follow a council elected in front of them. But while the speeches are being made, trusted crews must close the stations to hostile troop movements.",
-     "next": "loyalist-warning",
+     "next": "weber-assembly-objection",
      "portrait": "resources/campaigns/portraits/anna-keller.png"
+    },
+    {
+     "id": "weber-assembly-objection",
+     "speaker": "Otto Weber",
+     "role": "Soldiers' Council Sergeant — Fictional Composite",
+     "side": "right",
+     "text": "A public mandate may bring hesitant companies over. It will not stop the troop train already signalled from the west. Give the speeches their square, but if the railway crews wait for the vote before pulling that signal, legitimacy will arrive under guard.",
+     "next": "loyalist-warning",
+     "portrait": "resources/campaigns/portraits/otto-weber.png"
     },
     {
      "id": "loyalist-warning",
@@ -1080,7 +1124,7 @@
      "role": "Revolutionary Shop Stewards and USPD",
      "side": "left",
      "portrait": "resources/campaigns/portraits/emil-barth.png",
-     "text": "Comrade, by every calculation made in the ministries this movement should have been contained weeks ago. It has not been. We face choices that the men who planned our defeat never prepared for.",
+     "text": "The ministries planned to isolate each rising before the next city moved. Instead every victory has carried delegates, rifles and confidence toward Berlin. Their plans assumed obedience would travel faster than revolt; this week proved the opposite.",
      "conditions": {
       "minSuccesses": 3
      },
@@ -1112,6 +1156,20 @@
        "n_frankfurt.xml.frankfurt_city_held"
       ]
      },
+     "next": "callback-frankfurt-railways"
+    },
+    {
+     "id": "callback-frankfurt-railways",
+     "speaker": "Anna Keller",
+     "role": "Frankfurt Workers' and Soldiers' Council",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-keller.png",
+     "text": "You told us to take the railway before the proclamations. We did. The government still has telephones, but the delegates arriving at Berlin carry our orders and our account of Frankfurt. Do not waste what we bought you.",
+     "conditions": {
+      "allFlags": [
+       "railways_controlled"
+      ]
+     },
      "next": "berlin-awakens"
     },
     {
@@ -1129,15 +1187,24 @@
      "role": "Revolutionary Shop Stewards and USPD",
      "side": "left",
      "text": "The general strike is no longer a proposal. It is moving through Berlin street by street: workers leaving machines, soldiers electing councils, prison gates and barracks opening under pressure from the crowds. The old government still occupies the centre, but obedience is draining away from it by the hour.",
-     "next": "liebknecht-question",
+     "next": "haase-counterargument",
      "portrait": "resources/campaigns/portraits/emil-barth.png"
+    },
+    {
+     "id": "haase-counterargument",
+     "speaker": "Hugo Haase",
+     "role": "USPD Chairman",
+     "side": "right",
+     "text": "Karl, a republic proclaimed from the street can still starve in the street. Millions who want the Kaiser gone do not all want the councils to replace elections. If we make every clerk and returning soldier choose between Ebert and civil war today, fear will choose for them.",
+     "next": "liebknecht-question",
+     "portrait": "resources/campaigns/portraits/hugo-haase.png"
     },
     {
      "id": "liebknecht-question",
      "speaker": "Karl Liebknecht",
      "role": "Spartacus League",
      "side": "right",
-     "text": "A monarchy can collapse before a new power is ready to replace it. The Majority Socialists will offer a republic from the ministries; the councils can claim power from the streets. Where does your column strike before the old apparatus learns to wear a new name?",
+     "text": "And a ministry can call elections while the old officers, judges and police remain at their desks. Ebert offers continuity because he fears chaos; I fear continuity because it can bury the revolution without restoring the Kaiser. Delegate, which danger does your column answer first?",
      "choices": [
       {
        "id": "government-quarter",
@@ -1160,7 +1227,7 @@
          "amount": 15
         }
        ],
-       "hint": "Gain political prestige and hardened troops through a direct symbolic strike, but receive no extra supply or sailor reinforcement."
+       "hint": "Gain a prestige award and experience for every core formation, but forgo full resupply and the experienced sailor detachment."
       },
       {
        "id": "barracks-stations",
@@ -1187,7 +1254,7 @@
          "strength": 10
         }
        ],
-       "hint": "Gain full supply and a veteran sailor detachment, but concede the political initiative in the government quarter."
+       "hint": "Fully resupply every core formation and gain an experienced sailor detachment, but forgo the government-quarter prestige and core-wide experience."
       }
      ],
      "portrait": "resources/campaigns/portraits/karl-liebknecht.png"
@@ -1197,7 +1264,7 @@
      "speaker": "Hugo Haase",
      "role": "USPD Chairman",
      "side": "right",
-     "text": "A march on the centre may decide the symbol of the day, but symbols do not feed columns or keep soldiers together. Maintain contact between the workers' districts, the barracks and the council delegates as you advance.",
+     "text": "Then you have chosen Liebknecht's symbol over my caution. I will not obstruct the march, but symbols do not feed columns or keep soldiers together. Maintain contact with the workers' districts and barracks—or the government quarter will become a stage surrounded by someone else's troops.",
      "next": "ebert-dispatch",
      "portrait": "resources/campaigns/portraits/hugo-haase.png"
     },
@@ -1207,8 +1274,17 @@
      "role": "Revolutionary Shop Stewards and USPD",
      "side": "left",
      "text": "Then the stations and telegraph offices must fall in the first hours. Stop military trains, seize government messages, and make every captured barracks elect delegates. We need obedience to pass from the officers to the councils, not merely buildings to change hands.",
-     "next": "ebert-dispatch",
+     "next": "liebknecht-infrastructure-objection",
      "portrait": "resources/campaigns/portraits/emil-barth.png"
+    },
+    {
+     "id": "liebknecht-infrastructure-objection",
+     "speaker": "Karl Liebknecht",
+     "role": "Spartacus League",
+     "side": "right",
+     "text": "Necessary—and politically timid. Every hour spent securing a signal box is an hour in which the Majority Socialists speak for the revolution from imperial offices. Win your barracks, Delegate. Then decide whether you have preserved the councils' power or merely made Ebert's republic safe.",
+     "next": "ebert-dispatch",
+     "portrait": "resources/campaigns/portraits/karl-liebknecht.png"
     },
     {
      "id": "ebert-dispatch",
@@ -1301,6 +1377,68 @@
     "id": "core_losses_light",
     "type": "coreLossesAtMost",
     "maxLosses": 2
+   }
+  ],
+  "epilogues": [
+   {
+    "id": "government-quarter-victory",
+    "outcomes": [
+     "briliant",
+     "victory",
+     "tactical"
+    ],
+    "speaker": "Emil Barth",
+    "role": "Revolutionary Shop Stewards and USPD",
+    "text": "Berlin saw organised council columns enter the political centre before imperial authority could disguise its retreat. The monarchy has fallen, but Haase was right about the next struggle: tomorrow the councils must decide whether they govern beside the new republic or surrender power to it.",
+    "conditions": {
+     "allFlags": [
+      "struck_for_government_quarter"
+     ]
+    }
+   },
+   {
+    "id": "government-quarter-defeat",
+    "outcomes": [
+     "lose"
+    ],
+    "speaker": "Hugo Haase",
+    "role": "USPD Chairman",
+    "text": "You made the government quarter the measure of the revolution and concentrated every enemy around it. The surviving councils will remember the courage of the march—and argue for years over whether its symbol cost them the organised force they needed.",
+    "conditions": {
+     "allFlags": [
+      "struck_for_government_quarter"
+     ]
+    }
+   },
+   {
+    "id": "military-infrastructure-victory",
+    "outcomes": [
+     "briliant",
+     "victory",
+     "tactical"
+    ],
+    "speaker": "Karl Liebknecht",
+    "role": "Spartacus League",
+    "text": "Your stations and barracks made the revolution harder to crush, Delegate. They also gave Ebert time to inherit the ministries while the councils secured his communications. The monarchy has fallen; whether power changed hands or merely changed its uniform remains unsettled.",
+    "conditions": {
+     "allFlags": [
+      "secured_military_infrastructure"
+     ]
+    }
+   },
+   {
+    "id": "military-infrastructure-defeat",
+    "outcomes": [
+     "lose"
+    ],
+    "speaker": "Emil Barth",
+    "role": "Revolutionary Shop Stewards and USPD",
+    "text": "We held messages, platforms and armouries, but never joined them into power. The old command recovered one institution at a time. Survivors will say your caution preserved them; others will say it taught the revolution to defend buildings instead of deciding who governed.",
+    "conditions": {
+     "allFlags": [
+      "secured_military_infrastructure"
+     ]
+    }
    }
   ]
  }

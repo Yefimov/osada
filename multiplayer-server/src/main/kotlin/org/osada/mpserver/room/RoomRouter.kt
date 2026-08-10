@@ -55,6 +55,7 @@ class RoomRouter(
     ) {
         when (envelope.type) {
             MessageType.SET_READY -> setReady(connection, room, envelope.payload)
+            MessageType.LOBBY_PATCH_PROPOSE -> patchLobby(connection, room, envelope.payload)
             MessageType.START_GAME_PROPOSE -> startGame(connection, room, envelope.payload)
             MessageType.LEAVE_ROOM -> leaveRoom(connection, room)
             MessageType.HEARTBEAT -> connection.send(MessageType.HEARTBEAT, EMPTY)
@@ -85,13 +86,47 @@ class RoomRouter(
         room.broadcast(MessageType.LOBBY_STATE, room.lobbyState())
     }
 
-    private fun startGame(
+    /**
+     * The host choosing which scenario the room will play, before it starts.
+     *
+     * Readiness is cleared on every change: agreeing to fight one battle is not agreeing to fight
+     * whichever one the host picked afterwards.
+     */
+    private fun patchLobby(
         connection: RoomConnection,
         room: Room,
         payload: JsonObject,
     ) {
         if (room.started) return
         val scenarioFile = payload.stringOrNull("scenarioFile").orEmpty()
+        val refusal =
+            when {
+                !room.isHost(connection.participantId) ->
+                    ErrorCode.NOT_ROOM_HOST to "Only the room host can change the setup."
+
+                !Identifiers.isScenarioFile(scenarioFile) ->
+                    ErrorCode.INVALID_MESSAGE to "Invalid scenario reference."
+
+                else -> null
+            }
+        if (refusal != null) {
+            connection.sendError(refusal.first, refusal.second)
+            return
+        }
+        if (room.scenarioFile != scenarioFile) {
+            room.scenarioFile = scenarioFile
+            room.members.forEach { it.ready = false }
+            room.broadcast(MessageType.LOBBY_STATE, room.lobbyState())
+        }
+    }
+
+    private fun startGame(
+        connection: RoomConnection,
+        room: Room,
+        payload: JsonObject,
+    ) {
+        if (room.started) return
+        val scenarioFile = payload.stringOrNull("scenarioFile") ?: room.scenarioFile.orEmpty()
         val refusal =
             when {
                 !room.isHost(connection.participantId) ->

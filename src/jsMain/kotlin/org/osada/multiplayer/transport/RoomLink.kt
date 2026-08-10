@@ -1,17 +1,5 @@
 package org.osada.multiplayer.transport
 
-/**
- * The client's connection to the other commander.
- *
- * Two implementations share one message vocabulary (the `MultiplayerMessageType` names), so the
- * session logic above does not care whether the peer sits in a second browser tab or on the room
- * server:
- *
- *  - [LocalRoomLink] — `BroadcastChannel` between two tabs of one browser profile. There is no
- *    server, so the host client also keeps the lobby roster ([serverManaged] is false).
- *  - [OnlineRoomLink] — WebSocket to the self-hosted room server, which owns the roster, the room
- *    code, revision ordering and the stored snapshot ([serverManaged] is true).
- */
 enum class RoomLinkState {
     IDLE,
     CONNECTING,
@@ -48,6 +36,7 @@ interface RoomLinkListener {
     fun onLobby(
         hostParticipantId: String?,
         participants: List<RoomLobbyParticipant>,
+        scenarioFile: String?,
     )
 
     /** Everything the session itself interprets: START_GAME, SNAPSHOT, COMMAND_*. */
@@ -63,10 +52,21 @@ interface RoomLinkListener {
     )
 }
 
-interface RoomLink {
-    /** True when a room server owns the lobby roster and the client must not build its own. */
-    val serverManaged: Boolean
+/**
+ * The client's connection to the other commander.
+ *
+ * [OnlineRoomLink] is the only implementation: a WebSocket to the self-hosted room server, which
+ * owns the roster, the room code, revision ordering and the stored snapshot. The interface stays
+ * because the session above is written against it, and a second transport (a relay, a local test
+ * double) can be dropped in without touching the session.
+ *
+ * A `BroadcastChannel` two-tab mode used to live here as well. It was removed once the server was
+ * running: it could only ever join two tabs of one browser profile — never two browsers, never two
+ * devices — which is not what anyone means by multiplayer, and it made every message path exist in
+ * two variants. Point a local build at a server with `?mpEndpoint=ws://host/mp` instead.
+ */
 
+interface RoomLink {
     val state: RoomLinkState
 
     fun createRoom(displayName: String)

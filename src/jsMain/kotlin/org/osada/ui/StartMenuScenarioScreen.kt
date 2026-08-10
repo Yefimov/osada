@@ -152,16 +152,24 @@ internal object StartMenuScenarioScreen {
         // from per-efile to per-campaign), so carry the group name into each row: it becomes the
         // row's second line, and makes the campaign searchable from the scenario filter.
         var group = ""
+        var rank = GROUP_RANK_CAMPAIGN
+        val campaignGroups = mutableListOf<String>()
         val played = playedScenarios()
-        StartMenuListToolbar.buildSyncedList(scenSelect, list) { option, index, row, selectable ->
+        StartMenuListToolbar.buildSyncedList(scenSelect, list, collapsibleGroups = true) {
+                option, index, row, selectable ->
             if (!selectable) {
                 group = option.text.replace("»", "").trim()
+                rank = groupRankOf(group)
+                if (rank == GROUP_RANK_CAMPAIGN) campaignGroups += group
                 row.textContent = group
-                StartMenuListToolbar.tagRow(row, index, group)
+                StartMenuListToolbar.tagRow(row, index, group, groupKey = group, groupRank = rank)
             } else {
-                renderScenarioRow(option, index, row, group, played)
+                renderScenarioRow(option, index, row, group, played, rank)
             }
         }
+        // The two dozen campaigns start folded so the register opens on what a new player needs
+        // first -- the tutorial, then the standalone battles -- instead of on 500 scrolling rows.
+        StartMenuListToolbar.collapseGroups(list, campaignGroups)
         // No Year sort: scenariolist.js carries no date per scenario (it's in the scenario XML, which
         // isn't loaded until you start one). Campaign order already reads chronologically anyway.
         StartMenuListToolbar.buildListToolbar(
@@ -179,6 +187,7 @@ internal object StartMenuScenarioScreen {
         row: HTMLElement,
         group: String,
         played: Set<String>,
+        groupRank: Int = GROUP_RANK_CAMPAIGN,
     ) {
         // `dynamic` indexes with brackets, NOT ?.get(n) — a safe-call `get` compiles to a real
         // .get() METHOD call, which a JS array doesn't have ("scenario.get is not a function").
@@ -239,6 +248,8 @@ internal object StartMenuScenarioScreen {
             title,
             "$title $group ${allCountryNames.joinToString(" ")}",
             sides = allCountries.mapNotNull { StartMenuListToolbar.countryDisplayLabel(it) },
+            groupKey = group,
+            groupRank = groupRank,
         )
     }
 
@@ -303,3 +314,22 @@ internal object StartMenuScenarioScreen {
         localStorage.setItem(PLAYED_SCENARIOS_KEY, JSON.stringify(updated.toTypedArray()))
     }
 }
+
+/**
+ * Where a scenario group sits in the register's default view. `scenariolist.js` ends with the
+ * standalone battles, but they are the second thing a player looks for after the tutorial, so they
+ * are lifted above the campaigns instead of being left under two dozen of them.
+ *
+ * File-level rather than a member: it reads no state, and the screen object is already at detekt's
+ * function ceiling.
+ */
+private fun groupRankOf(group: String): Int =
+    when {
+        group.contains("Tutorial", ignoreCase = true) -> GROUP_RANK_TUTORIAL
+        group.contains("Standalone", ignoreCase = true) -> GROUP_RANK_STANDALONE
+        else -> GROUP_RANK_CAMPAIGN
+    }
+
+private const val GROUP_RANK_TUTORIAL = 0
+private const val GROUP_RANK_STANDALONE = 1
+private const val GROUP_RANK_CAMPAIGN = 2

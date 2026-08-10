@@ -7,6 +7,7 @@ import org.osada.campaign.CampaignContext
 import org.osada.campaign.CampaignEffect
 import org.osada.campaign.CampaignEffectApplier
 import org.osada.campaign.CampaignEffectParser
+import org.osada.campaign.CampaignEpilogueResolver
 import org.osada.campaign.CampaignNarrative
 import org.osada.campaign.CampaignNarrativeSerializer
 import org.osada.campaign.CampaignNarrativeState
@@ -463,5 +464,49 @@ class CampaignNarrativeTest {
     @Test
     fun emptyConditionMatchesEverything() {
         assertTrue(CampaignConditionEvaluator.matches(CampaignCondition.EMPTY, contextFor(CampaignNarrativeState())))
+    }
+
+    // --------------------------------------------------------------- epilogues
+
+    @Test
+    fun finalEpilogueMatchesBothRealOutcomeAndRememberedChoice() {
+        val state = CampaignNarrativeState()
+        state.setFlag("final_stand_east")
+        val entries =
+            parse(
+                """
+                [
+                  {"id":"hold-victory","outcomes":["briliant","victory","tactical"],
+                   "speaker":"Jenő Landler","role":"People's Commissar of the Interior",
+                   "text":"The line held.","conditions":{"allFlags":["final_stand_east"]}},
+                  {"id":"withdraw-victory","outcomes":["briliant","victory","tactical"],
+                   "speaker":"Ferenc Julier","role":"Chief of the General Staff",
+                   "text":"The army escaped.","conditions":{"allFlags":["final_withdrawal_west"]}}
+                ]
+                """.trimIndent(),
+            )
+
+        val selected = CampaignEpilogueResolver.resolve(entries, "victory", contextFor(state, "rhu190724.xml", 9))
+
+        assertEquals("hold-victory", selected?.id)
+        assertEquals("Jenő Landler", selected?.speaker)
+    }
+
+    @Test
+    fun finalEpilogueDoesNotClaimAnUnmetChoiceOrWrongOutcome() {
+        val state = CampaignNarrativeState()
+        state.setFlag("final_withdrawal_west")
+        val entries =
+            parse(
+                """
+                [{"id":"withdraw-defeat","outcomes":["lose"],"speaker":"Ferenc Julier",
+                  "text":"We preserved what we could.",
+                  "conditions":{"allFlags":["final_withdrawal_west"]}}]
+                """.trimIndent(),
+            )
+        val context = contextFor(state, "rhu190724.xml", 9)
+
+        assertNull(CampaignEpilogueResolver.resolve(entries, "victory", context))
+        assertEquals("withdraw-defeat", CampaignEpilogueResolver.resolve(entries, "lose", context)?.id)
     }
 }

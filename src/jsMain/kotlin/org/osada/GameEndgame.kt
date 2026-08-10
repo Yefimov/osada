@@ -1,6 +1,7 @@
 package org.osada
 
 import org.osada.campaign.CampaignNarrative
+import org.osada.campaign.resolveEpilogue
 import org.osada.hero.HeroCampaign
 import org.osada.i18n.I18n
 import org.osada.model.Player
@@ -92,7 +93,9 @@ fun Game.continueCampaign(
     savedCampaignPlayer = Player().apply { copy(player) }
     removeNonCampaignUnitsFlag = true
     buildCoreUnitsFlag = false
-    val text = campaign!!.getOutcomeText(outcome)
+    val outcomeText = campaign!!.getOutcomeText(outcome)
+    val epilogue = campaign!!.resolveEpilogue(outcome)
+    val text = if (epilogue == null) outcomeText else "$outcomeText<hr>$epilogue"
     nextScenarioData = campaign!!.loadNextScenario(outcome, routeOverride)
     continueCampaignFlag = true
     if (nextScenarioData == null) {
