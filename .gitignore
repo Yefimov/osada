@@ -44,6 +44,11 @@ bin/
 ### Mac OS ###
 .DS_Store
 
+### Deployment target ###
+# This repository is public. The address and login of the VPS live here, outside git, so that the
+# deploy scripts stay useful without advertising "root@<ip>" to anyone reading the project.
+scripts/deploy/target.local
+
 ### Ad-hoc backup files/dirs (DEFERRED.md §4.5 -- these used to pollute greps and weren't ignored) ###
 *.bak
 .osada-hotfix-backups/

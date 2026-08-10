@@ -197,7 +197,7 @@ class Game {
         ensureUiCreated()
         console.log("[OSADA] onScenarioLoadFinished calling setNewScenario")
         ui?.setNewScenario()
-        org.osada.multiplayer.local.LocalTwoTabMultiplayer
+        org.osada.multiplayer.client.OsadaMultiplayer
             .onScenarioLoaded()
     }
 

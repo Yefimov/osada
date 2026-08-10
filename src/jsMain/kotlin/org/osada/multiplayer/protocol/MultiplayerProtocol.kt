@@ -27,6 +27,7 @@ enum class MultiplayerMessageType {
     AUTHORITY_CHANGED,
     AUTHORITY_READY,
     MATCH_ENDED,
+    ROOM_ERROR,
     PRESENCE_SELECT_UNIT,
     PRESENCE_MAP_PING,
     PRESENCE_VIEWPORT,
@@ -47,8 +48,14 @@ enum class MultiplayerErrorCode {
     PROTOCOL_MISMATCH,
     INVALID_MESSAGE,
     ROOM_FULL,
+    ROOM_NOT_FOUND,
     MATCH_ALREADY_STARTED,
+    MATCH_NOT_STARTED,
     RECONNECT_TOKEN_INVALID,
+    COMMAND_PENDING,
+    NOT_ROOM_HOST,
+    RATE_LIMITED,
+    SERVER_BUSY,
 }
 
 data class MessageEnvelope<T>(
@@ -134,6 +141,10 @@ class MultiplayerProtocolCodec {
 
     private companion object {
         const val PROTOCOL_VERSION = 1
-        const val MAX_MESSAGE_SIZE = 1_048_576
+
+        // A committed snapshot carries the whole serialized game state in one message, so the cap
+        // has to clear the largest scenario rather than a typical lobby packet. It must stay in
+        // step with OSADA_MAX_FRAME_BYTES on the room server.
+        const val MAX_MESSAGE_SIZE = 8 * 1_048_576
     }
 }

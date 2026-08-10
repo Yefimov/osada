@@ -1,0 +1,6 @@
+# core.autocrlf=true on the development machine would check these out with CRLF, and a shell script
+# whose shebang line ends in \r fails on the Ubuntu VPS with a bare "not found". The deploy scripts
+# and the files they install on the server must stay LF everywhere.
+*.sh text eol=lf
+scripts/deploy/osada.service text eol=lf
+scripts/deploy/nginx-osada.conf text eol=lf
