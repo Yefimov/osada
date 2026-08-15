@@ -97,6 +97,13 @@ class Game {
     fun endTurn() {
         val side = scenario?.map?.currentPlayer?.side ?: return
         waitUIAnimation = false
+        // BEFORE scenario.endTurn(): that call hands the turn over and, for an AI player, builds
+        // its ENTIRE action list for the turn in one pass (GameMap.endTurn -> handler.buildActions).
+        // A unit an event places after that point is invisible to the plan already made, so the
+        // garrison would ignore freshly revealed prisoners for a whole activation. The move-animation
+        // hook is what normally fires proximity events mid-turn; this keeps the turn-hand-off safety
+        // net behaving identically instead of one turn late.
+        evaluateScenarioEvents()
         scenario?.endTurn()
         val timedOutcome = scenario?.checkTimedOutcome(side, humanSides)
         if (timedOutcome != null) {

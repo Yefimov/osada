@@ -3,6 +3,7 @@ package org.osada.ui
 import org.osada.CombatLog
 import org.osada.PlayerType
 import org.osada.addSurrender
+import org.osada.evaluateScenarioEvents
 import org.osada.handleMoveVictory
 import org.osada.hero.HeroCampaign
 import org.osada.model.Cell
@@ -350,6 +351,10 @@ internal class AnimationOrchestrator(
         ) {
             ui.updateStatusBar()
         }
+        // After the camera has settled on the unit that moved: an authored proximity event fires
+        // because THIS arrival brought someone into its radius, and its own anchored callout must
+        // not be scrolled out from under itself.
+        ui.game.evaluateScenarioEvents()
         ui.game.waitUIAnimation = false
         ui.game.uiAnimationFinished()
     }

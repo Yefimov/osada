@@ -4,6 +4,7 @@ import org.osada.campaign.CampaignEffectParser
 import org.osada.campaign.CampaignNarrative
 import org.osada.campaign.ScenarioActionParser
 import org.osada.campaign.ScenarioEndState
+import org.osada.scenario.firedEventIds
 import org.osada.scenario.getCurrentScenarioActions
 import org.osada.scenario.getOutcomeEffects
 import org.osada.scenario.peekNextScenarioFile
@@ -67,6 +68,7 @@ private fun Game.buildScenarioEndState(): ScenarioEndState? {
             playerSide = player.side,
             turn = map.turn,
             coreLosses = player.getCoreUnitList().count { it.destroyed },
+            firedEvents = scenario?.firedEventIds() ?: emptySet(),
         )
     }
 }

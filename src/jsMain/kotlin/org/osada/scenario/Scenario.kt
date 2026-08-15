@@ -73,6 +73,16 @@ class Scenario(
      *  shown when that wave actually deploys. Empty for scenarios that do not author one. */
     var reinforcementMessages: MutableMap<Int, String> = mutableMapOf()
 
+    /**
+     * Optional authored `<events>` (see [ScenarioEvent]): declarative, once-only reactions to the
+     * battle reaching a place or a state. Empty for every scenario that does not author any, which
+     * is what makes the feature invisible to the ~700 imported scenarios.
+     *
+     * `internal` deliberately: [Scenario] is `@JsExport`, and events are engine-side data with no
+     * JS-facing consumer.
+     */
+    internal var events: MutableList<ScenarioEvent> = mutableListOf()
+
     /** Optional OG-style objective-hold thresholds for the turn-limit outcome, ordered
      * brilliant / victory / tactical. Empty keeps the legacy all-objectives-or-defeat rule. */
     var victoryHoldCounts: List<Int> = emptyList()
@@ -228,6 +238,7 @@ class Scenario(
                 addReinforcement(turn, r.row, r.col, unit)
             }
         }
+        copyEventsFrom(other)
         map.copy(other.map)
         file?.let { /* keep */ }
         setMoveTable()

@@ -124,6 +124,8 @@ class GameStateRestore(
         restoreMap(newScenario, scenarioData.map)
         console.log("[osada] restoreGame restoreReinforcements start")
         restoreReinforcements(newScenario, scenarioData.reinforcements)
+        // Absent in saves written before scenario events existed -> empty list, no events to fire.
+        restoreScenarioEvents(newScenario, scenarioData.events)
 
         newScenario.map.turn = (scenarioData.turn as? Int)
             ?: (scenarioData.map?.turn as? Int)

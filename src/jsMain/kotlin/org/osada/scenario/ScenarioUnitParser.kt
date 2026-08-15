@@ -42,6 +42,10 @@ internal object ScenarioUnitParser {
         el.getAttribute("ent")?.toIntOrNull()?.let { unit.entrenchment = it }
         el.getAttribute("str")?.toIntOrNull()?.let { unit.strength = it }
         unit.isTemporaryBorrowed = el.getAttribute("temporaryBorrowed")?.toBooleanStrictOrNull() ?: false
+        // Scripted non-combatants (detainees, refugees, civilian columns) are not formations: their
+        // destruction must not be filed as an equipment loss, and surviving must not enrol them in
+        // the campaign core. Absent attribute keeps every existing scenario's behaviour unchanged.
+        unit.nodossier = el.getAttribute("nodossier")?.toBooleanStrictOrNull() ?: false
         if (el.hasAttribute("ldr")) {
             unit.leader = Leaders.generateLeader(unit)
         }

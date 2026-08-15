@@ -43,8 +43,140 @@
    }
   },
   "briefing": {
+   "act": "ACT I — LESSONS BEFORE THE GREAT WAR",
+   "location": "South of Madrid, Spain — 29 October 1936",
+   "player": {
+    "speaker": "Commander",
+    "role": "Composite Operational Group",
+    "side": "left"
+   },
+   "dialogue": [
+    {
+     "id": "campaign-framing",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "This Story Mode follows one composite operational dossier across successive Soviet commands from Spain to Manchuria. Volkov, Sokolova, Antonov, and Orlov are fictional staff figures: they make the decisions audible without attributing invented words or impossible careers to real commanders.",
+     "next": "scene"
+    },
+    {
+     "id": "scene",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The tank crews have painted over every marking, but the dust identifies them well enough. Spanish infantrymen watch the engines turn over and ask the interpreters whether armour can really decide the day before nightfall.",
+     "next": "decision"
+    },
+    {
+     "id": "decision",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "This is our first live test of a force built around tanks, aircraft, and radio. We can drive hard for the western towns, or keep the arms close enough that a local success does not leave Seseña exposed. Which lesson do we intend to learn?",
+     "choices": [
+      {
+       "id": "armoured-spearhead",
+       "text": "Concentrate the tanks and aircraft on a fast thrust toward Illescas.",
+       "next": "choice-a-response",
+       "hint": "Gain prestige and formation experience from a bold armoured demonstration, but forgo the prepared refit of the balanced plan.",
+       "effects": [
+        {
+         "id": "bn9s00.choice.armoured-spearhead.flag",
+         "type": "setFlag",
+         "flag": "rac_sesena_armoured_spearhead"
+        },
+        {
+         "id": "bn9s00.choice.armoured-spearhead.prestige",
+         "type": "prestige",
+         "amount": 70
+        },
+        {
+         "id": "bn9s00.choice.armoured-spearhead.experience",
+         "type": "experience",
+         "amount": 10
+        }
+       ]
+      },
+      {
+       "id": "balanced-advance",
+       "text": "Advance by bounds, keeping infantry and artillery tied to the armoured column.",
+       "next": "choice-b-response",
+       "hint": "Restore every core unit to at least eight strength, replenish fuel and ammunition, and gain deeper formation experience; forgo the prestige award attached to the faster plan.",
+       "effects": [
+        {
+         "id": "bn9s00.choice.balanced-advance.flag",
+         "type": "setFlag",
+         "flag": "rac_sesena_balanced_advance"
+        },
+        {
+         "id": "bn9s00.choice.balanced-advance.experience",
+         "type": "experience",
+         "amount": 20
+        },
+        {
+         "id": "bn9s00.choice.balanced-advance.supply",
+         "type": "resupply",
+         "strength": 8,
+         "refuel": true,
+         "rearm": true
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "choice-a-response",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "Then speed is the protection. The leading companies will bypass resistance that cannot threaten the road and leave marked targets for the aircraft.",
+     "next": "closing-order"
+    },
+    {
+     "id": "choice-b-response",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Then no arm outruns the others. The tanks will take the towns, but every captured road must remain usable by the infantry and guns behind them.",
+     "next": "closing-order"
+    },
+    {
+     "id": "closing-order",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Whatever happens here will be studied far from Spain. Make certain the report records more than the number of kilometres gained."
+    }
+   ],
+   "orders": {
+    "situation": "A small Soviet-supported armoured group is committed south of Madrid while Republican infantry holds Seseña.",
+    "mission": "Take Esquivias and Illescas, support the advance from the air, and keep the Seseña position from becoming isolated.",
+    "secondaryObjectives": [
+     "Preserve the persistent core and its commanders for the next operation",
+     "Carry out the selected staff plan without changing the scenario's real victory conditions"
+    ],
+    "notes": "The original scenario order below remains authoritative for exact thresholds, turn limits, and exits."
+   },
    "background": "resources/ui/wallpapers/rac-1.jpg"
-  }
+  },
+  "actions": [
+   {
+    "id": "core_intact",
+    "type": "coreLossesAtMost",
+    "maxLosses": 0
+   },
+   {
+    "id": "core_losses_light",
+    "type": "coreLossesAtMost",
+    "maxLosses": 2
+   }
+  ]
  },
  {
   "id": 1,
@@ -90,8 +222,243 @@
    }
   },
   "briefing": {
+   "act": "ACT I — LESSONS BEFORE THE GREAT WAR",
+   "location": "Lake Khasan, Soviet Far East — 2 August 1938",
+   "player": {
+    "speaker": "Commander",
+    "role": "Composite Operational Group",
+    "side": "left"
+   },
+   "dialogue": [
+    {
+     "id": "reaction-briliant",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The result at Seseña exceeded the operation's timetable. The staff arrives with confidence—and with expectations that the next battle will be just as clean.",
+     "conditions": {
+      "previousOutcome": [
+       "briliant"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-victory",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Seseña was secured, though the formations carry its cost into the new operation. The result gives us options, not immunity from another mistake.",
+     "conditions": {
+      "previousOutcome": [
+       "victory"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-tactical",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The force came through Seseña by the narrowest acceptable margin. Headquarters calls the objective achieved; the replacement lists describe how little room remains.",
+     "conditions": {
+      "previousOutcome": [
+       "tactical"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-lose",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Seseña ended in failure, but the campaign has not released this command. The surviving formations report for another operation before the previous losses have been fully counted.",
+     "conditions": {
+      "previousOutcome": [
+       "lose"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "callback-choice-a",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—armoured spearhead—is now part of the staff's working method. Its advantage is visible, but so is the capability we chose not to prepare.",
+     "conditions": {
+      "allFlags": [
+       "rac_sesena_armoured_spearhead"
+      ]
+     },
+     "next": "callback-choice-b"
+    },
+    {
+     "id": "callback-choice-b",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—balanced advance—carried the force here in better order. It also gave the enemy time or ground that cannot be reclaimed by paperwork.",
+     "conditions": {
+      "allFlags": [
+       "rac_sesena_balanced_advance"
+      ]
+     },
+     "next": "callback-core-intact"
+    },
+    {
+     "id": "callback-core-intact",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The core reports no formation destroyed in the last operation. That continuity is now a real advantage: crews know one another, and orders move faster than replacements.",
+     "conditions": {
+      "completedActions": [
+       "bn9s00.xml.core_intact"
+      ]
+     },
+     "next": "callback-core-heavy-losses"
+    },
+    {
+     "id": "callback-core-heavy-losses",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The last operation cost more than two core formations. New crews have filled spaces on the strength return, but not the habits and trust that vanished with them.",
+     "conditions": {
+      "failedActions": [
+       "bn9s00.xml.core_losses_light"
+      ]
+     },
+     "next": "scene"
+    },
+    {
+     "id": "scene",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "Survey stakes disappear into the mud as quickly as the engineers plant them. From the observation post the hills look close; every approach between here and their slopes is wet, exposed, and already registered by enemy guns.",
+     "next": "decision"
+    },
+    {
+     "id": "decision",
+     "speaker": "Nikolai Orlov",
+     "role": "Political Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
+     "text": "The border must be restored, but a map line does not tell us how to reach it. We can mass everything against the heights, or spend precious hours preparing lanes through the marsh and coordinating the batteries.",
+     "choices": [
+      {
+       "id": "mass-the-assault",
+       "text": "Mass the striking force and keep pressure on both heights without pause.",
+       "next": "choice-a-response",
+       "hint": "Gain prestige and formation experience through relentless pressure, but forgo the full ammunition and recovery programme.",
+       "effects": [
+        {
+         "id": "bn9s01.choice.mass-the-assault.flag",
+         "type": "setFlag",
+         "flag": "rac_khasan_mass_the_assault"
+        },
+        {
+         "id": "bn9s01.choice.mass-the-assault.prestige",
+         "type": "prestige",
+         "amount": 70
+        },
+        {
+         "id": "bn9s01.choice.mass-the-assault.experience",
+         "type": "experience",
+         "amount": 10
+        }
+       ]
+      },
+      {
+       "id": "prepare-the-ground",
+       "text": "Let engineers mark firm approaches and artillery register before the infantry moves.",
+       "next": "choice-b-response",
+       "hint": "Restore every core unit to at least eight strength, replenish fuel and ammunition, and gain deeper formation experience; forgo the prestige award attached to the faster plan.",
+       "effects": [
+        {
+         "id": "bn9s01.choice.prepare-the-ground.flag",
+         "type": "setFlag",
+         "flag": "rac_khasan_prepare_the_ground"
+        },
+        {
+         "id": "bn9s01.choice.prepare-the-ground.experience",
+         "type": "experience",
+         "amount": 20
+        },
+        {
+         "id": "bn9s01.choice.prepare-the-ground.supply",
+         "type": "resupply",
+         "strength": 8,
+         "refuel": true,
+         "rearm": true
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "choice-a-response",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The attack will not stop to reorganise on the lower slopes. Reserves follow the first success before the defenders can shift between the hills.",
+     "next": "closing-order"
+    },
+    {
+     "id": "choice-b-response",
+     "speaker": "Nikolai Orlov",
+     "role": "Political Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
+     "text": "The first wave waits for marked lanes and observed fire. We lose surprise in minutes, but not battalions in unmarked marsh.",
+     "next": "closing-order"
+    },
+    {
+     "id": "closing-order",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The heights are the visible objective. The harder task is proving that command and supply can reach them together."
+    }
+   ],
+   "orders": {
+    "situation": "Japanese forces hold the disputed Bezymyannaya and Zaozyornaya heights above marshy ground near Lake Khasan.",
+    "mission": "Retake the occupied heights while preserving enough combat power to hold them after the assault.",
+    "secondaryObjectives": [
+     "Preserve the persistent core and its commanders for the next operation",
+     "Carry out the selected staff plan without changing the scenario's real victory conditions"
+    ],
+    "notes": "The original scenario order below remains authoritative for exact thresholds, turn limits, and exits."
+   },
    "background": "resources/ui/wallpapers/rac-1.jpg"
-  }
+  },
+  "actions": [
+   {
+    "id": "core_intact",
+    "type": "coreLossesAtMost",
+    "maxLosses": 0
+   },
+   {
+    "id": "core_losses_light",
+    "type": "coreLossesAtMost",
+    "maxLosses": 2
+   }
+  ]
  },
  {
   "id": 2,
@@ -137,8 +504,243 @@
    }
   },
   "briefing": {
+   "act": "ACT I — LESSONS BEFORE THE GREAT WAR",
+   "location": "Khalkhin Gol, Mongolian People's Republic — 3 July 1939",
+   "player": {
+    "speaker": "Commander",
+    "role": "Composite Operational Group",
+    "side": "left"
+   },
+   "dialogue": [
+    {
+     "id": "reaction-briliant",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The result at Lake Khasan exceeded the operation's timetable. The staff arrives with confidence—and with expectations that the next battle will be just as clean.",
+     "conditions": {
+      "previousOutcome": [
+       "briliant"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-victory",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Lake Khasan was secured, though the formations carry its cost into the new operation. The result gives us options, not immunity from another mistake.",
+     "conditions": {
+      "previousOutcome": [
+       "victory"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-tactical",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The force came through Lake Khasan by the narrowest acceptable margin. Headquarters calls the objective achieved; the replacement lists describe how little room remains.",
+     "conditions": {
+      "previousOutcome": [
+       "tactical"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-lose",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Lake Khasan ended in failure, but the campaign has not released this command. The surviving formations report for another operation before the previous losses have been fully counted.",
+     "conditions": {
+      "previousOutcome": [
+       "lose"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "callback-choice-a",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—mass the assault—is now part of the staff's working method. Its advantage is visible, but so is the capability we chose not to prepare.",
+     "conditions": {
+      "allFlags": [
+       "rac_khasan_mass_the_assault"
+      ]
+     },
+     "next": "callback-choice-b"
+    },
+    {
+     "id": "callback-choice-b",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—prepare the ground—carried the force here in better order. It also gave the enemy time or ground that cannot be reclaimed by paperwork.",
+     "conditions": {
+      "allFlags": [
+       "rac_khasan_prepare_the_ground"
+      ]
+     },
+     "next": "callback-core-intact"
+    },
+    {
+     "id": "callback-core-intact",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The core reports no formation destroyed in the last operation. That continuity is now a real advantage: crews know one another, and orders move faster than replacements.",
+     "conditions": {
+      "completedActions": [
+       "bn9s01.xml.core_intact"
+      ]
+     },
+     "next": "callback-core-heavy-losses"
+    },
+    {
+     "id": "callback-core-heavy-losses",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The last operation cost more than two core formations. New crews have filled spaces on the strength return, but not the habits and trust that vanished with them.",
+     "conditions": {
+      "failedActions": [
+       "bn9s01.xml.core_losses_light"
+      ]
+     },
+     "next": "scene"
+    },
+    {
+     "id": "scene",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "A windstorm lifts the steppe into the command tent. On the map the river is a blue pencil stroke; outside, fuel trucks, Mongolian cavalry, tank columns, and field kitchens are all trying to use the same tracks.",
+     "next": "decision"
+    },
+    {
+     "id": "decision",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "A local counterattack can throw them off Baintsagan. A deeper blow can also cut the crossing and trap the force west of the river—but only if our columns keep moving after the first contact.",
+     "choices": [
+      {
+       "id": "deep-counterstroke",
+       "text": "Drive beyond the heights and cut the bridgehead from its crossings.",
+       "next": "choice-a-response",
+       "hint": "Gain prestige and formation experience for operational reach, but give up the deliberate refit behind a secure river line.",
+       "effects": [
+        {
+         "id": "bn9s02.choice.deep-counterstroke.flag",
+         "type": "setFlag",
+         "flag": "rac_khalkhin_gol_deep_counterstroke"
+        },
+        {
+         "id": "bn9s02.choice.deep-counterstroke.prestige",
+         "type": "prestige",
+         "amount": 70
+        },
+        {
+         "id": "bn9s02.choice.deep-counterstroke.experience",
+         "type": "experience",
+         "amount": 10
+        }
+       ]
+      },
+      {
+       "id": "secure-the-river",
+       "text": "Crush the bridgehead methodically and rebuild the river position before pursuing.",
+       "next": "choice-b-response",
+       "hint": "Restore every core unit to at least eight strength, replenish fuel and ammunition, and gain deeper formation experience; forgo the prestige award attached to the faster plan.",
+       "effects": [
+        {
+         "id": "bn9s02.choice.secure-the-river.flag",
+         "type": "setFlag",
+         "flag": "rac_khalkhin_gol_secure_the_river"
+        },
+        {
+         "id": "bn9s02.choice.secure-the-river.experience",
+         "type": "experience",
+         "amount": 20
+        },
+        {
+         "id": "bn9s02.choice.secure-the-river.supply",
+         "type": "resupply",
+         "strength": 8,
+         "refuel": true,
+         "rearm": true
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "choice-a-response",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The heights are not the finish line. Mobile detachments will pass through as soon as the first position breaks and aim for the crossings.",
+     "next": "closing-order"
+    },
+    {
+     "id": "choice-b-response",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The river line comes first. Every captured height receives guns and supply before the next one is attacked.",
+     "next": "closing-order"
+    },
+    {
+     "id": "closing-order",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The steppe punishes any plan that exists only at headquarters. Keep the columns supplied, or the river will decide for us."
+    }
+   ],
+   "orders": {
+    "situation": "Japanese troops have crossed the Khalkhin Gol and seized the Baintsagan heights in an attempt to turn the Soviet-Mongolian position.",
+    "mission": "Break the northern bridgehead, restore the river line, and seize the positions needed to defeat the two-pronged attack.",
+    "secondaryObjectives": [
+     "Preserve the persistent core and its commanders for the next operation",
+     "Carry out the selected staff plan without changing the scenario's real victory conditions"
+    ],
+    "notes": "The original scenario order below remains authoritative for exact thresholds, turn limits, and exits."
+   },
    "background": "resources/ui/wallpapers/rac-1.jpg"
-  }
+  },
+  "actions": [
+   {
+    "id": "core_intact",
+    "type": "coreLossesAtMost",
+    "maxLosses": 0
+   },
+   {
+    "id": "core_losses_light",
+    "type": "coreLossesAtMost",
+    "maxLosses": 2
+   }
+  ]
  },
  {
   "id": 3,
@@ -184,8 +786,243 @@
    }
   },
   "briefing": {
+   "act": "ACT II — BORDERS, WINTER, CATASTROPHE",
+   "location": "Southeast of Grodno, eastern Poland — 20 September 1939",
+   "player": {
+    "speaker": "Commander",
+    "role": "Composite Operational Group",
+    "side": "left"
+   },
+   "dialogue": [
+    {
+     "id": "reaction-briliant",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The result at Khalkhin Gol exceeded the operation's timetable. The staff arrives with confidence—and with expectations that the next battle will be just as clean.",
+     "conditions": {
+      "previousOutcome": [
+       "briliant"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-victory",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Khalkhin Gol was secured, though the formations carry its cost into the new operation. The result gives us options, not immunity from another mistake.",
+     "conditions": {
+      "previousOutcome": [
+       "victory"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-tactical",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The force came through Khalkhin Gol by the narrowest acceptable margin. Headquarters calls the objective achieved; the replacement lists describe how little room remains.",
+     "conditions": {
+      "previousOutcome": [
+       "tactical"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-lose",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Khalkhin Gol ended in failure, but the campaign has not released this command. The surviving formations report for another operation before the previous losses have been fully counted.",
+     "conditions": {
+      "previousOutcome": [
+       "lose"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "callback-choice-a",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—deep counterstroke—is now part of the staff's working method. Its advantage is visible, but so is the capability we chose not to prepare.",
+     "conditions": {
+      "allFlags": [
+       "rac_khalkhin_gol_deep_counterstroke"
+      ]
+     },
+     "next": "callback-choice-b"
+    },
+    {
+     "id": "callback-choice-b",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—secure the river—carried the force here in better order. It also gave the enemy time or ground that cannot be reclaimed by paperwork.",
+     "conditions": {
+      "allFlags": [
+       "rac_khalkhin_gol_secure_the_river"
+      ]
+     },
+     "next": "callback-core-intact"
+    },
+    {
+     "id": "callback-core-intact",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The core reports no formation destroyed in the last operation. That continuity is now a real advantage: crews know one another, and orders move faster than replacements.",
+     "conditions": {
+      "completedActions": [
+       "bn9s02.xml.core_intact"
+      ]
+     },
+     "next": "callback-core-heavy-losses"
+    },
+    {
+     "id": "callback-core-heavy-losses",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The last operation cost more than two core formations. New crews have filled spaces on the strength return, but not the habits and trust that vanished with them.",
+     "conditions": {
+      "failedActions": [
+       "bn9s02.xml.core_losses_light"
+      ]
+     },
+     "next": "scene"
+    },
+    {
+     "id": "scene",
+     "speaker": "Nikolai Orlov",
+     "role": "Political Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
+     "text": "The printed order calls this a march to secure the frontier. The road says otherwise: Polish soldiers, local militias, refugees, and Soviet columns are all moving through the same villages under different assumptions about who has authority.",
+     "next": "decision"
+    },
+    {
+     "id": "decision",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "Resistance in Grodno can be bypassed only if the border routes are sealed early. We can lead with mobile groups and risk broken communications, or keep a coherent front and accept that more enemy units may reach Lithuania.",
+     "choices": [
+      {
+       "id": "seal-the-border",
+       "text": "Send the mobile group past Grodno first and close the northern exits.",
+       "next": "choice-a-response",
+       "hint": "Gain prestige and experience for tempo, but forgo the refit and tighter control of the deliberate advance.",
+       "effects": [
+        {
+         "id": "bn9s03.choice.seal-the-border.flag",
+         "type": "setFlag",
+         "flag": "rac_grodno_seal_the_border"
+        },
+        {
+         "id": "bn9s03.choice.seal-the-border.prestige",
+         "type": "prestige",
+         "amount": 70
+        },
+        {
+         "id": "bn9s03.choice.seal-the-border.experience",
+         "type": "experience",
+         "amount": 10
+        }
+       ]
+      },
+      {
+       "id": "control-the-advance",
+       "text": "Clear the approaches in sequence and keep every formation under direct control.",
+       "next": "choice-b-response",
+       "hint": "Restore every core unit to at least eight strength, replenish fuel and ammunition, and gain deeper formation experience; forgo the prestige award attached to the faster plan.",
+       "effects": [
+        {
+         "id": "bn9s03.choice.control-the-advance.flag",
+         "type": "setFlag",
+         "flag": "rac_grodno_control_the_advance"
+        },
+        {
+         "id": "bn9s03.choice.control-the-advance.experience",
+         "type": "experience",
+         "amount": 20
+        },
+        {
+         "id": "bn9s03.choice.control-the-advance.supply",
+         "type": "resupply",
+         "strength": 8,
+         "refuel": true,
+         "rearm": true
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "choice-a-response",
+     "speaker": "Nikolai Orlov",
+     "role": "Political Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
+     "text": "The mobile group will not become an excuse for indiscriminate fire. It closes roads, reports movement, and leaves the city fight to the forces assigned to it.",
+     "next": "closing-order"
+    },
+    {
+     "id": "choice-b-response",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "Then the advance moves on confirmed orders, not rumour. We may catch fewer columns, but no detached battalion is to invent its own war.",
+     "next": "closing-order"
+    },
+    {
+     "id": "closing-order",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Record what the map cannot: civilians on the roads, prisoners taken, and every order that prevented avoidable bloodshed."
+    }
+   ],
+   "orders": {
+    "situation": "Soviet forces are advancing into eastern Poland after the Polish state has been struck from the west by Germany. Grodno and the routes toward Lithuania remain contested.",
+    "mission": "Occupy Grodno and the surrounding objectives while preventing organised enemy columns from escaping across the Lithuanian border.",
+    "secondaryObjectives": [
+     "Preserve the persistent core and its commanders for the next operation",
+     "Carry out the selected staff plan without changing the scenario's real victory conditions"
+    ],
+    "notes": "The original scenario order below remains authoritative for exact thresholds, turn limits, and exits."
+   },
    "background": "resources/ui/wallpapers/rac-2.jpg"
-  }
+  },
+  "actions": [
+   {
+    "id": "core_intact",
+    "type": "coreLossesAtMost",
+    "maxLosses": 0
+   },
+   {
+    "id": "core_losses_light",
+    "type": "coreLossesAtMost",
+    "maxLosses": 2
+   }
+  ]
  },
  {
   "id": 4,
@@ -231,8 +1068,243 @@
    }
   },
   "briefing": {
+   "act": "ACT II — BORDERS, WINTER, CATASTROPHE",
+   "location": "Raate–Suomussalmi road, Finland — 2 January 1940",
+   "player": {
+    "speaker": "Commander",
+    "role": "Composite Operational Group",
+    "side": "left"
+   },
+   "dialogue": [
+    {
+     "id": "reaction-briliant",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The result at Grodno exceeded the operation's timetable. The staff arrives with confidence—and with expectations that the next battle will be just as clean.",
+     "conditions": {
+      "previousOutcome": [
+       "briliant"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-victory",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Grodno was secured, though the formations carry its cost into the new operation. The result gives us options, not immunity from another mistake.",
+     "conditions": {
+      "previousOutcome": [
+       "victory"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-tactical",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The force came through Grodno by the narrowest acceptable margin. Headquarters calls the objective achieved; the replacement lists describe how little room remains.",
+     "conditions": {
+      "previousOutcome": [
+       "tactical"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-lose",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Grodno ended in failure, but the campaign has not released this command. The surviving formations report for another operation before the previous losses have been fully counted.",
+     "conditions": {
+      "previousOutcome": [
+       "lose"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "callback-choice-a",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—seal the border—is now part of the staff's working method. Its advantage is visible, but so is the capability we chose not to prepare.",
+     "conditions": {
+      "allFlags": [
+       "rac_grodno_seal_the_border"
+      ]
+     },
+     "next": "callback-choice-b"
+    },
+    {
+     "id": "callback-choice-b",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—control the advance—carried the force here in better order. It also gave the enemy time or ground that cannot be reclaimed by paperwork.",
+     "conditions": {
+      "allFlags": [
+       "rac_grodno_control_the_advance"
+      ]
+     },
+     "next": "callback-core-intact"
+    },
+    {
+     "id": "callback-core-intact",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The core reports no formation destroyed in the last operation. That continuity is now a real advantage: crews know one another, and orders move faster than replacements.",
+     "conditions": {
+      "completedActions": [
+       "bn9s03.xml.core_intact"
+      ]
+     },
+     "next": "callback-core-heavy-losses"
+    },
+    {
+     "id": "callback-core-heavy-losses",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The last operation cost more than two core formations. New crews have filled spaces on the strength return, but not the habits and trust that vanished with them.",
+     "conditions": {
+      "failedActions": [
+       "bn9s03.xml.core_losses_light"
+      ]
+     },
+     "next": "scene"
+    },
+    {
+     "id": "scene",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "Engines freeze faster than the mechanics can warm them. The road is a narrow white corridor through trees; abandoned lorries already mark where a column stopped long enough for the forest to close around it.",
+     "next": "decision"
+    },
+    {
+     "id": "decision",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "A single heavy column carries guns and supplies but offers the enemy one long target. Smaller groups can screen the road and move through the trees, yet they risk arriving without the weight to break a roadblock.",
+     "choices": [
+      {
+       "id": "drive-the-column",
+       "text": "Keep the relief column concentrated and force the road open with weight.",
+       "next": "choice-a-response",
+       "hint": "Gain prestige and experience from concentrated action, but forgo the winter refit of the dispersed approach.",
+       "effects": [
+        {
+         "id": "bn9s04.choice.drive-the-column.flag",
+         "type": "setFlag",
+         "flag": "rac_raate_road_drive_the_column"
+        },
+        {
+         "id": "bn9s04.choice.drive-the-column.prestige",
+         "type": "prestige",
+         "amount": 70
+        },
+        {
+         "id": "bn9s04.choice.drive-the-column.experience",
+         "type": "experience",
+         "amount": 10
+        }
+       ]
+      },
+      {
+       "id": "break-into-groups",
+       "text": "Split into mutually supporting groups that clear the forest before the road column advances.",
+       "next": "choice-b-response",
+       "hint": "Restore every core unit to at least eight strength, replenish fuel and ammunition, and gain deeper formation experience; forgo the prestige award attached to the faster plan.",
+       "effects": [
+        {
+         "id": "bn9s04.choice.break-into-groups.flag",
+         "type": "setFlag",
+         "flag": "rac_raate_road_break_into_groups"
+        },
+        {
+         "id": "bn9s04.choice.break-into-groups.experience",
+         "type": "experience",
+         "amount": 20
+        },
+        {
+         "id": "bn9s04.choice.break-into-groups.supply",
+         "type": "resupply",
+         "strength": 8,
+         "refuel": true,
+         "rearm": true
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "choice-a-response",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The guns remain together and every halt has a time limit. If the head of the column stops, the rear forms a perimeter before the enemy chooses one for us.",
+     "next": "closing-order"
+    },
+    {
+     "id": "choice-b-response",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Each group receives a compass bearing, a rendezvous, and authority to turn back before isolation becomes heroism. The road moves only after its flanks are reported clear.",
+     "next": "closing-order"
+    },
+    {
+     "id": "closing-order",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Cold is not background. Treat every engine, boot, and hour of daylight as part of the order of battle."
+    }
+   ],
+   "orders": {
+    "situation": "The 163rd Rifle Division is cut off near Suomussalmi. Forest, cold, and Finnish detachments have broken the relief route into isolated road-bound columns.",
+    "mission": "Open the road to Suomussalmi, get at least five ground units through, and avoid losses that turn relief into another encirclement.",
+    "secondaryObjectives": [
+     "Preserve the persistent core and its commanders for the next operation",
+     "Carry out the selected staff plan without changing the scenario's real victory conditions"
+    ],
+    "notes": "The original scenario order below remains authoritative for exact thresholds, turn limits, and exits."
+   },
    "background": "resources/ui/wallpapers/rac-2.jpg"
-  }
+  },
+  "actions": [
+   {
+    "id": "core_intact",
+    "type": "coreLossesAtMost",
+    "maxLosses": 0
+   },
+   {
+    "id": "core_losses_light",
+    "type": "coreLossesAtMost",
+    "maxLosses": 2
+   }
+  ]
  },
  {
   "id": 5,
@@ -278,8 +1350,243 @@
    }
   },
   "briefing": {
+   "act": "ACT II — BORDERS, WINTER, CATASTROPHE",
+   "location": "Vyborg Bay, Finland — 5 March 1940",
+   "player": {
+    "speaker": "Commander",
+    "role": "Composite Operational Group",
+    "side": "left"
+   },
+   "dialogue": [
+    {
+     "id": "reaction-briliant",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The result at Raate Road exceeded the operation's timetable. The staff arrives with confidence—and with expectations that the next battle will be just as clean.",
+     "conditions": {
+      "previousOutcome": [
+       "briliant"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-victory",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Raate Road was secured, though the formations carry its cost into the new operation. The result gives us options, not immunity from another mistake.",
+     "conditions": {
+      "previousOutcome": [
+       "victory"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-tactical",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The force came through Raate Road by the narrowest acceptable margin. Headquarters calls the objective achieved; the replacement lists describe how little room remains.",
+     "conditions": {
+      "previousOutcome": [
+       "tactical"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-lose",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Raate Road ended in failure, but the campaign has not released this command. The surviving formations report for another operation before the previous losses have been fully counted.",
+     "conditions": {
+      "previousOutcome": [
+       "lose"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "callback-choice-a",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—drive the column—is now part of the staff's working method. Its advantage is visible, but so is the capability we chose not to prepare.",
+     "conditions": {
+      "allFlags": [
+       "rac_raate_road_drive_the_column"
+      ]
+     },
+     "next": "callback-choice-b"
+    },
+    {
+     "id": "callback-choice-b",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—break into groups—carried the force here in better order. It also gave the enemy time or ground that cannot be reclaimed by paperwork.",
+     "conditions": {
+      "allFlags": [
+       "rac_raate_road_break_into_groups"
+      ]
+     },
+     "next": "callback-core-intact"
+    },
+    {
+     "id": "callback-core-intact",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The core reports no formation destroyed in the last operation. That continuity is now a real advantage: crews know one another, and orders move faster than replacements.",
+     "conditions": {
+      "completedActions": [
+       "bn9s04.xml.core_intact"
+      ]
+     },
+     "next": "callback-core-heavy-losses"
+    },
+    {
+     "id": "callback-core-heavy-losses",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The last operation cost more than two core formations. New crews have filled spaces on the strength return, but not the habits and trust that vanished with them.",
+     "conditions": {
+      "failedActions": [
+       "bn9s04.xml.core_losses_light"
+      ]
+     },
+     "next": "scene"
+    },
+    {
+     "id": "scene",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "A telephone clerk writes two times on the same message: the hour the guns must open and the hour diplomats may make further firing unnecessary. Neither staff will wait for the other.",
+     "next": "decision"
+    },
+    {
+     "id": "decision",
+     "speaker": "Nikolai Orlov",
+     "role": "Political Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
+     "text": "The quickest attack may gain ground before the ceasefire. A deliberate crossing will cost less strength, but the war may end while our bridgeheads are still being organised.",
+     "choices": [
+      {
+       "id": "press-the-deadline",
+       "text": "Attack across the bay approaches now and exploit every foothold immediately.",
+       "next": "choice-a-response",
+       "hint": "Gain prestige and experience for beating the deadline, but forgo the prepared replenishment of the deliberate crossing.",
+       "effects": [
+        {
+         "id": "bn9s05.choice.press-the-deadline.flag",
+         "type": "setFlag",
+         "flag": "rac_vyborg_bay_press_the_deadline"
+        },
+        {
+         "id": "bn9s05.choice.press-the-deadline.prestige",
+         "type": "prestige",
+         "amount": 70
+        },
+        {
+         "id": "bn9s05.choice.press-the-deadline.experience",
+         "type": "experience",
+         "amount": 10
+        }
+       ]
+      },
+      {
+       "id": "prepare-the-crossing",
+       "text": "Register the guns, secure each crossing site, and advance only behind established support.",
+       "next": "choice-b-response",
+       "hint": "Restore every core unit to at least eight strength, replenish fuel and ammunition, and gain deeper formation experience; forgo the prestige award attached to the faster plan.",
+       "effects": [
+        {
+         "id": "bn9s05.choice.prepare-the-crossing.flag",
+         "type": "setFlag",
+         "flag": "rac_vyborg_bay_prepare_the_crossing"
+        },
+        {
+         "id": "bn9s05.choice.prepare-the-crossing.experience",
+         "type": "experience",
+         "amount": 20
+        },
+        {
+         "id": "bn9s05.choice.prepare-the-crossing.supply",
+         "type": "resupply",
+         "strength": 8,
+         "refuel": true,
+         "rearm": true
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "choice-a-response",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "Every foothold becomes an assembly area, not a place to stop. The advance continues until the next position or the ceasefire order arrives.",
+     "next": "closing-order"
+    },
+    {
+     "id": "choice-b-response",
+     "speaker": "Nikolai Orlov",
+     "role": "Political Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
+     "text": "No unit crosses without fire support and a return route. If diplomacy ends the battle first, we will at least possess a force fit for the peace that follows.",
+     "next": "closing-order"
+    },
+    {
+     "id": "closing-order",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The negotiation does not make the shells less real. Keep the final hours under tighter control than the first."
+    }
+   ],
+   "orders": {
+    "situation": "Finland has asked for ceasefire terms, but fighting continues around Vyborg Bay while negotiations proceed.",
+    "mission": "Secure the western shore and Vyborg objectives before the political deadline ends the operation.",
+    "secondaryObjectives": [
+     "Preserve the persistent core and its commanders for the next operation",
+     "Carry out the selected staff plan without changing the scenario's real victory conditions"
+    ],
+    "notes": "The original scenario order below remains authoritative for exact thresholds, turn limits, and exits."
+   },
    "background": "resources/ui/wallpapers/rac-2.jpg"
-  }
+  },
+  "actions": [
+   {
+    "id": "core_intact",
+    "type": "coreLossesAtMost",
+    "maxLosses": 0
+   },
+   {
+    "id": "core_losses_light",
+    "type": "coreLossesAtMost",
+    "maxLosses": 2
+   }
+  ]
  },
  {
   "id": 6,
@@ -325,8 +1632,243 @@
    }
   },
   "briefing": {
+   "act": "ACT II — BORDERS, WINTER, CATASTROPHE",
+   "location": "West of Minsk, Belarus — 27 June 1941",
+   "player": {
+    "speaker": "Commander",
+    "role": "Composite Operational Group",
+    "side": "left"
+   },
+   "dialogue": [
+    {
+     "id": "reaction-briliant",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The result at Vyborg Bay exceeded the operation's timetable. The staff arrives with confidence—and with expectations that the next battle will be just as clean.",
+     "conditions": {
+      "previousOutcome": [
+       "briliant"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-victory",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Vyborg Bay was secured, though the formations carry its cost into the new operation. The result gives us options, not immunity from another mistake.",
+     "conditions": {
+      "previousOutcome": [
+       "victory"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-tactical",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The force came through Vyborg Bay by the narrowest acceptable margin. Headquarters calls the objective achieved; the replacement lists describe how little room remains.",
+     "conditions": {
+      "previousOutcome": [
+       "tactical"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-lose",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Vyborg Bay ended in failure, but the campaign has not released this command. The surviving formations report for another operation before the previous losses have been fully counted.",
+     "conditions": {
+      "previousOutcome": [
+       "lose"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "callback-choice-a",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—press the deadline—is now part of the staff's working method. Its advantage is visible, but so is the capability we chose not to prepare.",
+     "conditions": {
+      "allFlags": [
+       "rac_vyborg_bay_press_the_deadline"
+      ]
+     },
+     "next": "callback-choice-b"
+    },
+    {
+     "id": "callback-choice-b",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—prepare the crossing—carried the force here in better order. It also gave the enemy time or ground that cannot be reclaimed by paperwork.",
+     "conditions": {
+      "allFlags": [
+       "rac_vyborg_bay_prepare_the_crossing"
+      ]
+     },
+     "next": "callback-core-intact"
+    },
+    {
+     "id": "callback-core-intact",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The core reports no formation destroyed in the last operation. That continuity is now a real advantage: crews know one another, and orders move faster than replacements.",
+     "conditions": {
+      "completedActions": [
+       "bn9s05.xml.core_intact"
+      ]
+     },
+     "next": "callback-core-heavy-losses"
+    },
+    {
+     "id": "callback-core-heavy-losses",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The last operation cost more than two core formations. New crews have filled spaces on the strength return, but not the habits and trust that vanished with them.",
+     "conditions": {
+      "failedActions": [
+       "bn9s05.xml.core_losses_light"
+      ]
+     },
+     "next": "scene"
+    },
+    {
+     "id": "scene",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The wireless net is a wall of callsigns speaking over one another. Some headquarters no longer answer. Others issue orders from positions the enemy passed yesterday. Only the roads east still provide a fact everyone can verify.",
+     "next": "decision"
+    },
+    {
+     "id": "decision",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "We can move the core at once and preserve the one formation we still control. Or we can hold one corridor open for stragglers and accept that every hour spent helping them narrows our own escape.",
+     "choices": [
+      {
+       "id": "save-the-core",
+       "text": "Break contact immediately and drive the core east before the roads are cut.",
+       "next": "choice-a-response",
+       "hint": "Gain prestige and experience for disciplined escape, but forgo the organised replenishment attached to holding the corridor.",
+       "effects": [
+        {
+         "id": "bn9s06.choice.save-the-core.flag",
+         "type": "setFlag",
+         "flag": "rac_minsk_pocket_save_the_core"
+        },
+        {
+         "id": "bn9s06.choice.save-the-core.prestige",
+         "type": "prestige",
+         "amount": 70
+        },
+        {
+         "id": "bn9s06.choice.save-the-core.experience",
+         "type": "experience",
+         "amount": 10
+        }
+       ]
+      },
+      {
+       "id": "hold-the-corridor",
+       "text": "Keep one route open long enough to gather stragglers, then withdraw as a formed column.",
+       "next": "choice-b-response",
+       "hint": "Restore every core unit to at least eight strength, replenish fuel and ammunition, and gain deeper formation experience; forgo the prestige award attached to the faster plan.",
+       "effects": [
+        {
+         "id": "bn9s06.choice.hold-the-corridor.flag",
+         "type": "setFlag",
+         "flag": "rac_minsk_pocket_hold_the_corridor"
+        },
+        {
+         "id": "bn9s06.choice.hold-the-corridor.experience",
+         "type": "experience",
+         "amount": 20
+        },
+        {
+         "id": "bn9s06.choice.hold-the-corridor.supply",
+         "type": "resupply",
+         "strength": 8,
+         "refuel": true,
+         "rearm": true
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "choice-a-response",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "No counterattack for appearances. Rear guards disengage on schedule, bridges are crossed in order, and any vehicle that blocks the road is pushed aside.",
+     "next": "closing-order"
+    },
+    {
+     "id": "choice-b-response",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The corridor gets a closing hour now, before sympathy turns it into a last stand. We leave with whoever reaches it in time and we do not move that hour twice.",
+     "next": "closing-order"
+    },
+    {
+     "id": "closing-order",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Survival is the mission. There will be time later to decide who failed; today we save the means to fight again."
+    }
+   ],
+   "orders": {
+    "situation": "The German invasion has shattered the Western Front. Command links are failing and Soviet formations west of Minsk face encirclement.",
+    "mission": "Escape east with at least ten core ground units before the pocket closes; preserving the force matters more than holding doomed positions.",
+    "secondaryObjectives": [
+     "Preserve the persistent core and its commanders for the next operation",
+     "Carry out the selected staff plan without changing the scenario's real victory conditions"
+    ],
+    "notes": "The original scenario order below remains authoritative for exact thresholds, turn limits, and exits."
+   },
    "background": "resources/ui/wallpapers/rac-2.jpg"
-  }
+  },
+  "actions": [
+   {
+    "id": "core_intact",
+    "type": "coreLossesAtMost",
+    "maxLosses": 0
+   },
+   {
+    "id": "core_losses_light",
+    "type": "coreLossesAtMost",
+    "maxLosses": 2
+   }
+  ]
  },
  {
   "id": 7,
@@ -372,8 +1914,243 @@
    }
   },
   "briefing": {
+   "act": "ACT II — BORDERS, WINTER, CATASTROPHE",
+   "location": "Yelnya, southeast of Smolensk — 2 September 1941",
+   "player": {
+    "speaker": "Commander",
+    "role": "Composite Operational Group",
+    "side": "left"
+   },
+   "dialogue": [
+    {
+     "id": "reaction-briliant",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The result at Białystok–Minsk exceeded the operation's timetable. The staff arrives with confidence—and with expectations that the next battle will be just as clean.",
+     "conditions": {
+      "previousOutcome": [
+       "briliant"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-victory",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Białystok–Minsk was secured, though the formations carry its cost into the new operation. The result gives us options, not immunity from another mistake.",
+     "conditions": {
+      "previousOutcome": [
+       "victory"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-tactical",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The force came through Białystok–Minsk by the narrowest acceptable margin. Headquarters calls the objective achieved; the replacement lists describe how little room remains.",
+     "conditions": {
+      "previousOutcome": [
+       "tactical"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-lose",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Białystok–Minsk ended in failure, but the campaign has not released this command. The surviving formations report for another operation before the previous losses have been fully counted.",
+     "conditions": {
+      "previousOutcome": [
+       "lose"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "callback-choice-a",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—save the core—is now part of the staff's working method. Its advantage is visible, but so is the capability we chose not to prepare.",
+     "conditions": {
+      "allFlags": [
+       "rac_minsk_pocket_save_the_core"
+      ]
+     },
+     "next": "callback-choice-b"
+    },
+    {
+     "id": "callback-choice-b",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—hold the corridor—carried the force here in better order. It also gave the enemy time or ground that cannot be reclaimed by paperwork.",
+     "conditions": {
+      "allFlags": [
+       "rac_minsk_pocket_hold_the_corridor"
+      ]
+     },
+     "next": "callback-core-intact"
+    },
+    {
+     "id": "callback-core-intact",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The core reports no formation destroyed in the last operation. That continuity is now a real advantage: crews know one another, and orders move faster than replacements.",
+     "conditions": {
+      "completedActions": [
+       "bn9s06.xml.core_intact"
+      ]
+     },
+     "next": "callback-core-heavy-losses"
+    },
+    {
+     "id": "callback-core-heavy-losses",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The last operation cost more than two core formations. New crews have filled spaces on the strength return, but not the habits and trust that vanished with them.",
+     "conditions": {
+      "failedActions": [
+       "bn9s06.xml.core_losses_light"
+      ]
+     },
+     "next": "scene"
+    },
+    {
+     "id": "scene",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "Replacement tanks arrive with factory paint still tacky. Beside them stand crews who escaped Minsk without their machines. Neither group has trained together, but the attack timetable treats them as a division.",
+     "next": "decision"
+    },
+    {
+     "id": "decision",
+     "speaker": "Nikolai Orlov",
+     "role": "Political Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
+     "text": "A concentrated blow may break the salient before the defenders withdraw. Rotating the assault echelons will preserve the rebuilt force, but gives the enemy more time to empty the pocket.",
+     "choices": [
+      {
+       "id": "break-the-salient",
+       "text": "Concentrate the rebuilt armour and artillery on one rupture, then fan out behind it.",
+       "next": "choice-a-response",
+       "hint": "Gain prestige and experience through a decisive rupture, but forgo the full replenishment of the rotation plan.",
+       "effects": [
+        {
+         "id": "bn9s07.choice.break-the-salient.flag",
+         "type": "setFlag",
+         "flag": "rac_yelnya_break_the_salient"
+        },
+        {
+         "id": "bn9s07.choice.break-the-salient.prestige",
+         "type": "prestige",
+         "amount": 70
+        },
+        {
+         "id": "bn9s07.choice.break-the-salient.experience",
+         "type": "experience",
+         "amount": 10
+        }
+       ]
+      },
+      {
+       "id": "rotate-the-echelons",
+       "text": "Attack in measured echelons and replace the leading formations before exhaustion stops them.",
+       "next": "choice-b-response",
+       "hint": "Restore every core unit to at least eight strength, replenish fuel and ammunition, and gain deeper formation experience; forgo the prestige award attached to the faster plan.",
+       "effects": [
+        {
+         "id": "bn9s07.choice.rotate-the-echelons.flag",
+         "type": "setFlag",
+         "flag": "rac_yelnya_rotate_the_echelons"
+        },
+        {
+         "id": "bn9s07.choice.rotate-the-echelons.experience",
+         "type": "experience",
+         "amount": 20
+        },
+        {
+         "id": "bn9s07.choice.rotate-the-echelons.supply",
+         "type": "resupply",
+         "strength": 8,
+         "refuel": true,
+         "rearm": true
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "choice-a-response",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The survivors lead the route briefing; the new crews supply the machines. Once the line opens, mobile groups move for the exits instead of fighting every strongpoint.",
+     "next": "closing-order"
+    },
+    {
+     "id": "choice-b-response",
+     "speaker": "Nikolai Orlov",
+     "role": "Political Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
+     "text": "No battalion stays forward simply because another has not arrived. Relief timings are orders, and the artillery programme moves with them.",
+     "next": "closing-order"
+    },
+    {
+     "id": "closing-order",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "A victory bought by destroying the rebuilt army would answer one crisis by creating the next. Count formations as carefully as objectives."
+    }
+   ],
+   "orders": {
+    "situation": "The German Yelnya salient threatens the approaches toward Vyazma and Moscow. Soviet command needs both the ground and proof that the enemy can be driven back.",
+    "mission": "Destroy the salient, take every objective, and stop withdrawing enemy formations from escaping through the rear exits.",
+    "secondaryObjectives": [
+     "Preserve the persistent core and its commanders for the next operation",
+     "Carry out the selected staff plan without changing the scenario's real victory conditions"
+    ],
+    "notes": "The original scenario order below remains authoritative for exact thresholds, turn limits, and exits."
+   },
    "background": "resources/ui/wallpapers/rac-2.jpg"
-  }
+  },
+  "actions": [
+   {
+    "id": "core_intact",
+    "type": "coreLossesAtMost",
+    "maxLosses": 0
+   },
+   {
+    "id": "core_losses_light",
+    "type": "coreLossesAtMost",
+    "maxLosses": 2
+   }
+  ]
  },
  {
   "id": 8,
@@ -419,8 +2196,243 @@
    }
   },
   "briefing": {
+   "act": "ACT II — BORDERS, WINTER, CATASTROPHE",
+   "location": "Dmitrov–Klin sector, north of Moscow — 9 December 1941",
+   "player": {
+    "speaker": "Commander",
+    "role": "Composite Operational Group",
+    "side": "left"
+   },
+   "dialogue": [
+    {
+     "id": "reaction-briliant",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The result at Yelnya exceeded the operation's timetable. The staff arrives with confidence—and with expectations that the next battle will be just as clean.",
+     "conditions": {
+      "previousOutcome": [
+       "briliant"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-victory",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Yelnya was secured, though the formations carry its cost into the new operation. The result gives us options, not immunity from another mistake.",
+     "conditions": {
+      "previousOutcome": [
+       "victory"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-tactical",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The force came through Yelnya by the narrowest acceptable margin. Headquarters calls the objective achieved; the replacement lists describe how little room remains.",
+     "conditions": {
+      "previousOutcome": [
+       "tactical"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-lose",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Yelnya ended in failure, but the campaign has not released this command. The surviving formations report for another operation before the previous losses have been fully counted.",
+     "conditions": {
+      "previousOutcome": [
+       "lose"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "callback-choice-a",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—break the salient—is now part of the staff's working method. Its advantage is visible, but so is the capability we chose not to prepare.",
+     "conditions": {
+      "allFlags": [
+       "rac_yelnya_break_the_salient"
+      ]
+     },
+     "next": "callback-choice-b"
+    },
+    {
+     "id": "callback-choice-b",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—rotate the echelons—carried the force here in better order. It also gave the enemy time or ground that cannot be reclaimed by paperwork.",
+     "conditions": {
+      "allFlags": [
+       "rac_yelnya_rotate_the_echelons"
+      ]
+     },
+     "next": "callback-core-intact"
+    },
+    {
+     "id": "callback-core-intact",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The core reports no formation destroyed in the last operation. That continuity is now a real advantage: crews know one another, and orders move faster than replacements.",
+     "conditions": {
+      "completedActions": [
+       "bn9s07.xml.core_intact"
+      ]
+     },
+     "next": "callback-core-heavy-losses"
+    },
+    {
+     "id": "callback-core-heavy-losses",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The last operation cost more than two core formations. New crews have filled spaces on the strength return, but not the habits and trust that vanished with them.",
+     "conditions": {
+      "failedActions": [
+       "bn9s07.xml.core_losses_light"
+      ]
+     },
+     "next": "scene"
+    },
+    {
+     "id": "scene",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "Fresh ski tracks cross the map table where the paper was carried in from outside. Intelligence reports enemy exhaustion, then lists intact guns at every road junction. Both statements are true.",
+     "next": "decision"
+    },
+    {
+     "id": "decision",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "We can pursue across the railway before the retreat becomes orderly, or secure the flanks and bring the guns forward before entering Klin. Winter will punish whichever delay we choose.",
+     "choices": [
+      {
+       "id": "pursue-across-the-railway",
+       "text": "Cross the railway in the first bound and keep contact with the withdrawing columns.",
+       "next": "choice-a-response",
+       "hint": "Gain prestige and experience from rapid pursuit, but forgo the winter refit of the secured advance.",
+       "effects": [
+        {
+         "id": "bn9s08.choice.pursue-across-the-railway.flag",
+         "type": "setFlag",
+         "flag": "rac_moscow_pursue_across_the_railway"
+        },
+        {
+         "id": "bn9s08.choice.pursue-across-the-railway.prestige",
+         "type": "prestige",
+         "amount": 70
+        },
+        {
+         "id": "bn9s08.choice.pursue-across-the-railway.experience",
+         "type": "experience",
+         "amount": 10
+        }
+       ]
+      },
+      {
+       "id": "secure-the-flanks",
+       "text": "Clear the railway approaches and bring artillery forward before the drive on Klin.",
+       "next": "choice-b-response",
+       "hint": "Restore every core unit to at least eight strength, replenish fuel and ammunition, and gain deeper formation experience; forgo the prestige award attached to the faster plan.",
+       "effects": [
+        {
+         "id": "bn9s08.choice.secure-the-flanks.flag",
+         "type": "setFlag",
+         "flag": "rac_moscow_secure_the_flanks"
+        },
+        {
+         "id": "bn9s08.choice.secure-the-flanks.experience",
+         "type": "experience",
+         "amount": 20
+        },
+        {
+         "id": "bn9s08.choice.secure-the-flanks.supply",
+         "type": "resupply",
+         "strength": 8,
+         "refuel": true,
+         "rearm": true
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "choice-a-response",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "Forward detachments carry fuel before comforts. If the enemy stops, we attack from the march before the snow around his guns is packed hard.",
+     "next": "closing-order"
+    },
+    {
+     "id": "choice-b-response",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The railway becomes our supply line, not merely a line crossed on the map. Guns and fuel move first enough that Klin is attacked by an army, not scattered pursuers.",
+     "next": "closing-order"
+    },
+    {
+     "id": "closing-order",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Moscow has survived the immediate danger. Do not mistake that relief for permission to become careless."
+    }
+   ],
+   "orders": {
+    "situation": "The German drive on Moscow has been halted. Soviet armies are beginning a winter counteroffensive against exhausted but still dangerous formations.",
+    "mission": "Cross the Moscow–Leningrad railway, liberate Klin, and deny the enemy time to form another defensive line.",
+    "secondaryObjectives": [
+     "Preserve the persistent core and its commanders for the next operation",
+     "Carry out the selected staff plan without changing the scenario's real victory conditions"
+    ],
+    "notes": "The original scenario order below remains authoritative for exact thresholds, turn limits, and exits."
+   },
    "background": "resources/ui/wallpapers/rac-2.jpg"
-  }
+  },
+  "actions": [
+   {
+    "id": "core_intact",
+    "type": "coreLossesAtMost",
+    "maxLosses": 0
+   },
+   {
+    "id": "core_losses_light",
+    "type": "coreLossesAtMost",
+    "maxLosses": 2
+   }
+  ]
  },
  {
   "id": 9,
@@ -466,8 +2478,243 @@
    }
   },
   "briefing": {
+   "act": "ACT III — FROM DEFEAT TO OPERATIONAL MASTERY",
+   "location": "Volchansk, northeast of Kharkov — 12 May 1942",
+   "player": {
+    "speaker": "Commander",
+    "role": "Composite Operational Group",
+    "side": "left"
+   },
+   "dialogue": [
+    {
+     "id": "reaction-briliant",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The result at Moscow exceeded the operation's timetable. The staff arrives with confidence—and with expectations that the next battle will be just as clean.",
+     "conditions": {
+      "previousOutcome": [
+       "briliant"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-victory",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Moscow was secured, though the formations carry its cost into the new operation. The result gives us options, not immunity from another mistake.",
+     "conditions": {
+      "previousOutcome": [
+       "victory"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-tactical",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The force came through Moscow by the narrowest acceptable margin. Headquarters calls the objective achieved; the replacement lists describe how little room remains.",
+     "conditions": {
+      "previousOutcome": [
+       "tactical"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-lose",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Moscow ended in failure, but the campaign has not released this command. The surviving formations report for another operation before the previous losses have been fully counted.",
+     "conditions": {
+      "previousOutcome": [
+       "lose"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "callback-choice-a",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—pursue across the railway—is now part of the staff's working method. Its advantage is visible, but so is the capability we chose not to prepare.",
+     "conditions": {
+      "allFlags": [
+       "rac_moscow_pursue_across_the_railway"
+      ]
+     },
+     "next": "callback-choice-b"
+    },
+    {
+     "id": "callback-choice-b",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—secure the flanks—carried the force here in better order. It also gave the enemy time or ground that cannot be reclaimed by paperwork.",
+     "conditions": {
+      "allFlags": [
+       "rac_moscow_secure_the_flanks"
+      ]
+     },
+     "next": "callback-core-intact"
+    },
+    {
+     "id": "callback-core-intact",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The core reports no formation destroyed in the last operation. That continuity is now a real advantage: crews know one another, and orders move faster than replacements.",
+     "conditions": {
+      "completedActions": [
+       "bn9s08.xml.core_intact"
+      ]
+     },
+     "next": "callback-core-heavy-losses"
+    },
+    {
+     "id": "callback-core-heavy-losses",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The last operation cost more than two core formations. New crews have filled spaces on the strength return, but not the habits and trust that vanished with them.",
+     "conditions": {
+      "failedActions": [
+       "bn9s08.xml.core_losses_light"
+      ]
+     },
+     "next": "scene"
+    },
+    {
+     "id": "scene",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The situation map shows arrows meeting west of Kharkov. The intelligence annex shows German reserves whose locations are uncertain and road capacity that is not. The arrows are drawn in thicker ink.",
+     "next": "decision"
+    },
+    {
+     "id": "decision",
+     "speaker": "Nikolai Orlov",
+     "role": "Political Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
+     "text": "Command expects the northern pincer to keep advancing. We can commit fully to the timetable, or narrow the attack and preserve a reserve against the counterstroke our reconnaissance keeps reporting.",
+     "choices": [
+      {
+       "id": "commit-to-the-pincer",
+       "text": "Drive the northern pincer on schedule and force the enemy to react to us.",
+       "next": "choice-a-response",
+       "hint": "Gain prestige and experience for offensive commitment, but forgo the replenished reserve of the cautious plan.",
+       "effects": [
+        {
+         "id": "bn9s09.choice.commit-to-the-pincer.flag",
+         "type": "setFlag",
+         "flag": "rac_kharkov_1942_commit_to_the_pincer"
+        },
+        {
+         "id": "bn9s09.choice.commit-to-the-pincer.prestige",
+         "type": "prestige",
+         "amount": 70
+        },
+        {
+         "id": "bn9s09.choice.commit-to-the-pincer.experience",
+         "type": "experience",
+         "amount": 10
+        }
+       ]
+      },
+      {
+       "id": "hold-a-mobile-reserve",
+       "text": "Narrow the first objective and keep a mobile reserve behind the salient.",
+       "next": "choice-b-response",
+       "hint": "Restore every core unit to at least eight strength, replenish fuel and ammunition, and gain deeper formation experience; forgo the prestige award attached to the faster plan.",
+       "effects": [
+        {
+         "id": "bn9s09.choice.hold-a-mobile-reserve.flag",
+         "type": "setFlag",
+         "flag": "rac_kharkov_1942_hold_a_mobile_reserve"
+        },
+        {
+         "id": "bn9s09.choice.hold-a-mobile-reserve.experience",
+         "type": "experience",
+         "amount": 20
+        },
+        {
+         "id": "bn9s09.choice.hold-a-mobile-reserve.supply",
+         "type": "resupply",
+         "strength": 8,
+         "refuel": true,
+         "rearm": true
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "choice-a-response",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The timetable stands. Reconnaissance reports go to the leading group so that speed is informed, not blind.",
+     "next": "closing-order"
+    },
+    {
+     "id": "choice-b-response",
+     "speaker": "Nikolai Orlov",
+     "role": "Political Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
+     "text": "The reserve remains out of the opening fight even if the first reports are favourable. Its purpose is to answer the event the plan did not predict.",
+     "next": "closing-order"
+    },
+    {
+     "id": "closing-order",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "An offensive can be courageous and still rest on a false estimate. Watch the flanks as closely as the road to Kharkov."
+    }
+   ],
+   "orders": {
+    "situation": "A Soviet offensive is opening from the Volchansk and Barvenkovo salients. The northern attack must support an ambitious double envelopment of Kharkov.",
+    "mission": "Inflict the required losses while keeping Soviet casualties below the operation's limit and preventing the northern pincer from becoming isolated.",
+    "secondaryObjectives": [
+     "Preserve the persistent core and its commanders for the next operation",
+     "Carry out the selected staff plan without changing the scenario's real victory conditions"
+    ],
+    "notes": "The original scenario order below remains authoritative for exact thresholds, turn limits, and exits."
+   },
    "background": "resources/ui/wallpapers/rac-3.jpg"
-  }
+  },
+  "actions": [
+   {
+    "id": "core_intact",
+    "type": "coreLossesAtMost",
+    "maxLosses": 0
+   },
+   {
+    "id": "core_losses_light",
+    "type": "coreLossesAtMost",
+    "maxLosses": 2
+   }
+  ]
  },
  {
   "id": 10,
@@ -513,8 +2760,243 @@
    }
   },
   "briefing": {
+   "act": "ACT III — FROM DEFEAT TO OPERATIONAL MASTERY",
+   "location": "Volovo, northwest of Voronezh — 28 June 1942",
+   "player": {
+    "speaker": "Commander",
+    "role": "Composite Operational Group",
+    "side": "left"
+   },
+   "dialogue": [
+    {
+     "id": "reaction-briliant",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The result at Second Kharkov exceeded the operation's timetable. The staff arrives with confidence—and with expectations that the next battle will be just as clean.",
+     "conditions": {
+      "previousOutcome": [
+       "briliant"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-victory",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Second Kharkov was secured, though the formations carry its cost into the new operation. The result gives us options, not immunity from another mistake.",
+     "conditions": {
+      "previousOutcome": [
+       "victory"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-tactical",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The force came through Second Kharkov by the narrowest acceptable margin. Headquarters calls the objective achieved; the replacement lists describe how little room remains.",
+     "conditions": {
+      "previousOutcome": [
+       "tactical"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-lose",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Second Kharkov ended in failure, but the campaign has not released this command. The surviving formations report for another operation before the previous losses have been fully counted.",
+     "conditions": {
+      "previousOutcome": [
+       "lose"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "callback-choice-a",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—commit to the pincer—is now part of the staff's working method. Its advantage is visible, but so is the capability we chose not to prepare.",
+     "conditions": {
+      "allFlags": [
+       "rac_kharkov_1942_commit_to_the_pincer"
+      ]
+     },
+     "next": "callback-choice-b"
+    },
+    {
+     "id": "callback-choice-b",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—hold a mobile reserve—carried the force here in better order. It also gave the enemy time or ground that cannot be reclaimed by paperwork.",
+     "conditions": {
+      "allFlags": [
+       "rac_kharkov_1942_hold_a_mobile_reserve"
+      ]
+     },
+     "next": "callback-core-intact"
+    },
+    {
+     "id": "callback-core-intact",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The core reports no formation destroyed in the last operation. That continuity is now a real advantage: crews know one another, and orders move faster than replacements.",
+     "conditions": {
+      "completedActions": [
+       "bn9s09.xml.core_intact"
+      ]
+     },
+     "next": "callback-core-heavy-losses"
+    },
+    {
+     "id": "callback-core-heavy-losses",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The last operation cost more than two core formations. New crews have filled spaces on the strength return, but not the habits and trust that vanished with them.",
+     "conditions": {
+      "failedActions": [
+       "bn9s09.xml.core_losses_light"
+      ]
+     },
+     "next": "scene"
+    },
+    {
+     "id": "scene",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "Men from Kharkov dig beside units that have never heard a shot. The trenches are shallow because the order to hold this line arrived after the enemy columns were already moving.",
+     "next": "decision"
+    },
+    {
+     "id": "decision",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "We can build fixed strongpoints around the objectives, or use a mobile reserve to trade ground for time and counterattack exposed spearheads. Neither method creates the reserves we are waiting for.",
+     "choices": [
+      {
+       "id": "mobile-defence",
+       "text": "Keep armour mobile and counterattack only where an enemy spearhead outruns its support.",
+       "next": "choice-a-response",
+       "hint": "Gain prestige and experience for active defence, but forgo the prepared refit of the strongpoint plan.",
+       "effects": [
+        {
+         "id": "bn9s10.choice.mobile-defence.flag",
+         "type": "setFlag",
+         "flag": "rac_voronezh_mobile_defence"
+        },
+        {
+         "id": "bn9s10.choice.mobile-defence.prestige",
+         "type": "prestige",
+         "amount": 70
+        },
+        {
+         "id": "bn9s10.choice.mobile-defence.experience",
+         "type": "experience",
+         "amount": 10
+        }
+       ]
+      },
+      {
+       "id": "anchor-the-line",
+       "text": "Fortify the objective belt and force every German column to deploy against it.",
+       "next": "choice-b-response",
+       "hint": "Restore every core unit to at least eight strength, replenish fuel and ammunition, and gain deeper formation experience; forgo the prestige award attached to the faster plan.",
+       "effects": [
+        {
+         "id": "bn9s10.choice.anchor-the-line.flag",
+         "type": "setFlag",
+         "flag": "rac_voronezh_anchor_the_line"
+        },
+        {
+         "id": "bn9s10.choice.anchor-the-line.experience",
+         "type": "experience",
+         "amount": 20
+        },
+        {
+         "id": "bn9s10.choice.anchor-the-line.supply",
+         "type": "resupply",
+         "strength": 8,
+         "refuel": true,
+         "rearm": true
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "choice-a-response",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The reserve receives fuel priority and no sector owns it. A local commander may request help; only the army commander releases it.",
+     "next": "closing-order"
+    },
+    {
+     "id": "choice-b-response",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Every strongpoint stores ammunition before the battle and marks a fallback route before it is needed. Holding does not mean being surprised in place.",
+     "next": "closing-order"
+    },
+    {
+     "id": "closing-order",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Ten turns are an operational resource. Spend space only when it buys time, and lives only when they buy both."
+    }
+   ],
+   "orders": {
+    "situation": "German mobile forces are driving toward Voronezh while Soviet reserves are still assembling behind the threatened sector.",
+    "mission": "Delay the breakthrough for ten turns and retain enough objectives to keep the road to Voronezh contested.",
+    "secondaryObjectives": [
+     "Preserve the persistent core and its commanders for the next operation",
+     "Carry out the selected staff plan without changing the scenario's real victory conditions"
+    ],
+    "notes": "The original scenario order below remains authoritative for exact thresholds, turn limits, and exits."
+   },
    "background": "resources/ui/wallpapers/rac-3.jpg"
-  }
+  },
+  "actions": [
+   {
+    "id": "core_intact",
+    "type": "coreLossesAtMost",
+    "maxLosses": 0
+   },
+   {
+    "id": "core_losses_light",
+    "type": "coreLossesAtMost",
+    "maxLosses": 2
+   }
+  ]
  },
  {
   "id": 11,
@@ -560,8 +3042,243 @@
    }
   },
   "briefing": {
+   "act": "ACT III — FROM DEFEAT TO OPERATIONAL MASTERY",
+   "location": "Bolshinka, west of Stalingrad — 22 December 1942",
+   "player": {
+    "speaker": "Commander",
+    "role": "Composite Operational Group",
+    "side": "left"
+   },
+   "dialogue": [
+    {
+     "id": "reaction-briliant",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The result at Voronezh exceeded the operation's timetable. The staff arrives with confidence—and with expectations that the next battle will be just as clean.",
+     "conditions": {
+      "previousOutcome": [
+       "briliant"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-victory",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Voronezh was secured, though the formations carry its cost into the new operation. The result gives us options, not immunity from another mistake.",
+     "conditions": {
+      "previousOutcome": [
+       "victory"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-tactical",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The force came through Voronezh by the narrowest acceptable margin. Headquarters calls the objective achieved; the replacement lists describe how little room remains.",
+     "conditions": {
+      "previousOutcome": [
+       "tactical"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-lose",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Voronezh ended in failure, but the campaign has not released this command. The surviving formations report for another operation before the previous losses have been fully counted.",
+     "conditions": {
+      "previousOutcome": [
+       "lose"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "callback-choice-a",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—mobile defence—is now part of the staff's working method. Its advantage is visible, but so is the capability we chose not to prepare.",
+     "conditions": {
+      "allFlags": [
+       "rac_voronezh_mobile_defence"
+      ]
+     },
+     "next": "callback-choice-b"
+    },
+    {
+     "id": "callback-choice-b",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—anchor the line—carried the force here in better order. It also gave the enemy time or ground that cannot be reclaimed by paperwork.",
+     "conditions": {
+      "allFlags": [
+       "rac_voronezh_anchor_the_line"
+      ]
+     },
+     "next": "callback-core-intact"
+    },
+    {
+     "id": "callback-core-intact",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The core reports no formation destroyed in the last operation. That continuity is now a real advantage: crews know one another, and orders move faster than replacements.",
+     "conditions": {
+      "completedActions": [
+       "bn9s10.xml.core_intact"
+      ]
+     },
+     "next": "callback-core-heavy-losses"
+    },
+    {
+     "id": "callback-core-heavy-losses",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The last operation cost more than two core formations. New crews have filled spaces on the strength return, but not the habits and trust that vanished with them.",
+     "conditions": {
+      "failedActions": [
+       "bn9s10.xml.core_losses_light"
+      ]
+     },
+     "next": "scene"
+    },
+    {
+     "id": "scene",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "Captured road signs are stacked beside the map. None points back toward friendly lines. The airfield photographs show rows of transport aircraft; the latest report shows enemy armour turning toward the same roads we need for withdrawal.",
+     "next": "decision"
+    },
+    {
+     "id": "decision",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "We can devote every mobile group to destroying the airlift, or assign a rear guard and open the return route before the airfield is fully wrecked. A raid succeeds only if its effect outlives its raiders.",
+     "choices": [
+      {
+       "id": "wreck-the-airlift",
+       "text": "Drive every available group onto the airfield and destroy the transports before they can disperse.",
+       "next": "choice-a-response",
+       "hint": "Gain prestige and experience for maximum disruption, but forgo the replenished withdrawal group of the guarded plan.",
+       "effects": [
+        {
+         "id": "bn9s11.choice.wreck-the-airlift.flag",
+         "type": "setFlag",
+         "flag": "rac_tatsinskaya_wreck_the_airlift"
+        },
+        {
+         "id": "bn9s11.choice.wreck-the-airlift.prestige",
+         "type": "prestige",
+         "amount": 70
+        },
+        {
+         "id": "bn9s11.choice.wreck-the-airlift.experience",
+         "type": "experience",
+         "amount": 10
+        }
+       ]
+      },
+      {
+       "id": "guard-the-return",
+       "text": "Assign a mobile rear guard now and preserve a marked route back to friendly lines.",
+       "next": "choice-b-response",
+       "hint": "Restore every core unit to at least eight strength, replenish fuel and ammunition, and gain deeper formation experience; forgo the prestige award attached to the faster plan.",
+       "effects": [
+        {
+         "id": "bn9s11.choice.guard-the-return.flag",
+         "type": "setFlag",
+         "flag": "rac_tatsinskaya_guard_the_return"
+        },
+        {
+         "id": "bn9s11.choice.guard-the-return.experience",
+         "type": "experience",
+         "amount": 20
+        },
+        {
+         "id": "bn9s11.choice.guard-the-return.supply",
+         "type": "resupply",
+         "strength": 8,
+         "refuel": true,
+         "rearm": true
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "choice-a-response",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The airfield is the centre of gravity. Demolition groups receive priority, and the column turns only after the transport rows are burning.",
+     "next": "closing-order"
+    },
+    {
+     "id": "choice-b-response",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The rear guard moves first, not last. It will seize road junctions on the way in and hold them open on the way out.",
+     "next": "closing-order"
+    },
+    {
+     "id": "closing-order",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Set the withdrawal condition before the attack begins. A commander who decides it under encirclement has already waited too long."
+    }
+   ],
+   "orders": {
+    "situation": "A mobile corps is ordered deep into the German rear against Tatsinskaya airfield, a major base for the Stalingrad airlift.",
+    "mission": "Strike the airfield and withdraw at least eight ground units through the exit before converging enemy forces cut the raiding column off.",
+    "secondaryObjectives": [
+     "Preserve the persistent core and its commanders for the next operation",
+     "Carry out the selected staff plan without changing the scenario's real victory conditions"
+    ],
+    "notes": "The original scenario order below remains authoritative for exact thresholds, turn limits, and exits."
+   },
    "background": "resources/ui/wallpapers/rac-3.jpg"
-  }
+  },
+  "actions": [
+   {
+    "id": "core_intact",
+    "type": "coreLossesAtMost",
+    "maxLosses": 0
+   },
+   {
+    "id": "core_losses_light",
+    "type": "coreLossesAtMost",
+    "maxLosses": 2
+   }
+  ]
  },
  {
   "id": 12,
@@ -607,8 +3324,243 @@
    }
   },
   "briefing": {
+   "act": "ACT III — FROM DEFEAT TO OPERATIONAL MASTERY",
+   "location": "South of Kharkov, Ukraine — 7 March 1943",
+   "player": {
+    "speaker": "Commander",
+    "role": "Composite Operational Group",
+    "side": "left"
+   },
+   "dialogue": [
+    {
+     "id": "reaction-briliant",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The result at Tatsinskaya exceeded the operation's timetable. The staff arrives with confidence—and with expectations that the next battle will be just as clean.",
+     "conditions": {
+      "previousOutcome": [
+       "briliant"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-victory",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Tatsinskaya was secured, though the formations carry its cost into the new operation. The result gives us options, not immunity from another mistake.",
+     "conditions": {
+      "previousOutcome": [
+       "victory"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-tactical",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The force came through Tatsinskaya by the narrowest acceptable margin. Headquarters calls the objective achieved; the replacement lists describe how little room remains.",
+     "conditions": {
+      "previousOutcome": [
+       "tactical"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-lose",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Tatsinskaya ended in failure, but the campaign has not released this command. The surviving formations report for another operation before the previous losses have been fully counted.",
+     "conditions": {
+      "previousOutcome": [
+       "lose"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "callback-choice-a",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—wreck the airlift—is now part of the staff's working method. Its advantage is visible, but so is the capability we chose not to prepare.",
+     "conditions": {
+      "allFlags": [
+       "rac_tatsinskaya_wreck_the_airlift"
+      ]
+     },
+     "next": "callback-choice-b"
+    },
+    {
+     "id": "callback-choice-b",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—guard the return—carried the force here in better order. It also gave the enemy time or ground that cannot be reclaimed by paperwork.",
+     "conditions": {
+      "allFlags": [
+       "rac_tatsinskaya_guard_the_return"
+      ]
+     },
+     "next": "callback-core-intact"
+    },
+    {
+     "id": "callback-core-intact",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The core reports no formation destroyed in the last operation. That continuity is now a real advantage: crews know one another, and orders move faster than replacements.",
+     "conditions": {
+      "completedActions": [
+       "bn9s11.xml.core_intact"
+      ]
+     },
+     "next": "callback-core-heavy-losses"
+    },
+    {
+     "id": "callback-core-heavy-losses",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The last operation cost more than two core formations. New crews have filled spaces on the strength return, but not the habits and trust that vanished with them.",
+     "conditions": {
+      "failedActions": [
+       "bn9s11.xml.core_losses_light"
+      ]
+     },
+     "next": "scene"
+    },
+    {
+     "id": "scene",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The staff table still carries the red arrows of last month's advance. Sokolova places blue counters across them one by one until the map tells a different story: exposed columns, tired infantry, and an enemy concentrating faster than expected.",
+     "next": "decision"
+    },
+    {
+     "id": "decision",
+     "speaker": "Nikolai Orlov",
+     "role": "Political Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
+     "text": "We can insist on the city approaches and risk being fixed there, or conduct an elastic defence that preserves the army while surrendering ground command expected us to hold.",
+     "choices": [
+      {
+       "id": "hold-the-approaches",
+       "text": "Stand on the Kharkov approaches and make the counterattack pay for every objective.",
+       "next": "choice-a-response",
+       "hint": "Gain prestige and experience for determined defence, but forgo the refit and freedom of the elastic plan.",
+       "effects": [
+        {
+         "id": "bn9s12.choice.hold-the-approaches.flag",
+         "type": "setFlag",
+         "flag": "rac_kharkov_1943_hold_the_approaches"
+        },
+        {
+         "id": "bn9s12.choice.hold-the-approaches.prestige",
+         "type": "prestige",
+         "amount": 70
+        },
+        {
+         "id": "bn9s12.choice.hold-the-approaches.experience",
+         "type": "experience",
+         "amount": 10
+        }
+       ]
+      },
+      {
+       "id": "elastic-defence",
+       "text": "Trade forward ground for organised counterattacks and keep the withdrawal routes open.",
+       "next": "choice-b-response",
+       "hint": "Restore every core unit to at least eight strength, replenish fuel and ammunition, and gain deeper formation experience; forgo the prestige award attached to the faster plan.",
+       "effects": [
+        {
+         "id": "bn9s12.choice.elastic-defence.flag",
+         "type": "setFlag",
+         "flag": "rac_kharkov_1943_elastic_defence"
+        },
+        {
+         "id": "bn9s12.choice.elastic-defence.experience",
+         "type": "experience",
+         "amount": 20
+        },
+        {
+         "id": "bn9s12.choice.elastic-defence.supply",
+         "type": "resupply",
+         "strength": 8,
+         "refuel": true,
+         "rearm": true
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "choice-a-response",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The line is held by reserves behind it as much as by troops on it. Every penetration gets a planned counterattack, not a general rush forward.",
+     "next": "closing-order"
+    },
+    {
+     "id": "choice-b-response",
+     "speaker": "Nikolai Orlov",
+     "role": "Political Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
+     "text": "Fallback lines are issued in writing, with times and road priorities. We withdraw formations, not survivors.",
+     "next": "closing-order"
+    },
+    {
+     "id": "closing-order",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Kharkov has become a symbol twice over. Symbols do not protect flanks; staffs must."
+    }
+   ],
+   "orders": {
+    "situation": "German forces are counterattacking toward Kharkov after the Soviet winter advance has outrun its support.",
+    "mission": "Hold the required objective belt for ten turns, inflict losses, and prevent a local defence from becoming another encirclement.",
+    "secondaryObjectives": [
+     "Preserve the persistent core and its commanders for the next operation",
+     "Carry out the selected staff plan without changing the scenario's real victory conditions"
+    ],
+    "notes": "The original scenario order below remains authoritative for exact thresholds, turn limits, and exits."
+   },
    "background": "resources/ui/wallpapers/rac-3.jpg"
-  }
+  },
+  "actions": [
+   {
+    "id": "core_intact",
+    "type": "coreLossesAtMost",
+    "maxLosses": 0
+   },
+   {
+    "id": "core_losses_light",
+    "type": "coreLossesAtMost",
+    "maxLosses": 2
+   }
+  ]
  },
  {
   "id": 13,
@@ -654,8 +3606,243 @@
    }
   },
   "briefing": {
+   "act": "ACT III — FROM DEFEAT TO OPERATIONAL MASTERY",
+   "location": "Prokhorovka sector, south of Kursk — 11 July 1943",
+   "player": {
+    "speaker": "Commander",
+    "role": "Composite Operational Group",
+    "side": "left"
+   },
+   "dialogue": [
+    {
+     "id": "reaction-briliant",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The result at Third Kharkov exceeded the operation's timetable. The staff arrives with confidence—and with expectations that the next battle will be just as clean.",
+     "conditions": {
+      "previousOutcome": [
+       "briliant"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-victory",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Third Kharkov was secured, though the formations carry its cost into the new operation. The result gives us options, not immunity from another mistake.",
+     "conditions": {
+      "previousOutcome": [
+       "victory"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-tactical",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The force came through Third Kharkov by the narrowest acceptable margin. Headquarters calls the objective achieved; the replacement lists describe how little room remains.",
+     "conditions": {
+      "previousOutcome": [
+       "tactical"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-lose",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Third Kharkov ended in failure, but the campaign has not released this command. The surviving formations report for another operation before the previous losses have been fully counted.",
+     "conditions": {
+      "previousOutcome": [
+       "lose"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "callback-choice-a",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—hold the approaches—is now part of the staff's working method. Its advantage is visible, but so is the capability we chose not to prepare.",
+     "conditions": {
+      "allFlags": [
+       "rac_kharkov_1943_hold_the_approaches"
+      ]
+     },
+     "next": "callback-choice-b"
+    },
+    {
+     "id": "callback-choice-b",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—elastic defence—carried the force here in better order. It also gave the enemy time or ground that cannot be reclaimed by paperwork.",
+     "conditions": {
+      "allFlags": [
+       "rac_kharkov_1943_elastic_defence"
+      ]
+     },
+     "next": "callback-core-intact"
+    },
+    {
+     "id": "callback-core-intact",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The core reports no formation destroyed in the last operation. That continuity is now a real advantage: crews know one another, and orders move faster than replacements.",
+     "conditions": {
+      "completedActions": [
+       "bn9s12.xml.core_intact"
+      ]
+     },
+     "next": "callback-core-heavy-losses"
+    },
+    {
+     "id": "callback-core-heavy-losses",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The last operation cost more than two core formations. New crews have filled spaces on the strength return, but not the habits and trust that vanished with them.",
+     "conditions": {
+      "failedActions": [
+       "bn9s12.xml.core_losses_light"
+      ]
+     },
+     "next": "scene"
+    },
+    {
+     "id": "scene",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The reserve's tanks wait in assembly areas already churned into dust. Crews can hear the battle but see only runners bringing revised map references. Every hour promises better coordination and a narrower defensive margin.",
+     "next": "decision"
+    },
+    {
+     "id": "decision",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "An immediate armoured counterattack may strike before the enemy reorganises. Waiting for artillery and reconnaissance reduces confusion, but the last defensive positions may not survive the delay.",
+     "choices": [
+      {
+       "id": "counterattack-now",
+       "text": "Commit the armoured reserve now and seize the initiative at close range.",
+       "next": "choice-a-response",
+       "hint": "Gain prestige and experience for immediate action, but forgo the complete refit of the coordinated plan.",
+       "effects": [
+        {
+         "id": "bn9s13.choice.counterattack-now.flag",
+         "type": "setFlag",
+         "flag": "rac_kursk_counterattack_now"
+        },
+        {
+         "id": "bn9s13.choice.counterattack-now.prestige",
+         "type": "prestige",
+         "amount": 70
+        },
+        {
+         "id": "bn9s13.choice.counterattack-now.experience",
+         "type": "experience",
+         "amount": 10
+        }
+       ]
+      },
+      {
+       "id": "coordinate-the-blow",
+       "text": "Wait for confirmed axes, artillery preparation, and marked start lines before committing.",
+       "next": "choice-b-response",
+       "hint": "Restore every core unit to at least eight strength, replenish fuel and ammunition, and gain deeper formation experience; forgo the prestige award attached to the faster plan.",
+       "effects": [
+        {
+         "id": "bn9s13.choice.coordinate-the-blow.flag",
+         "type": "setFlag",
+         "flag": "rac_kursk_coordinate_the_blow"
+        },
+        {
+         "id": "bn9s13.choice.coordinate-the-blow.experience",
+         "type": "experience",
+         "amount": 20
+        },
+        {
+         "id": "bn9s13.choice.coordinate-the-blow.supply",
+         "type": "resupply",
+         "strength": 8,
+         "refuel": true,
+         "rearm": true
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "choice-a-response",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The reserve moves on the current map, not the perfect one. Leading brigades report by radio and the second echelon changes axis if the ground is already blocked.",
+     "next": "closing-order"
+    },
+    {
+     "id": "choice-b-response",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The start time stands. Reconnaissance and guns use every minute before it so the reserve enters one battle instead of twenty separate collisions.",
+     "next": "closing-order"
+    },
+    {
+     "id": "closing-order",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Prepared defence has bought this decision. Do not spend that purchase without knowing what the counterattack must accomplish."
+    }
+   ],
+   "orders": {
+    "situation": "German forces continue toward Kursk through prepared Soviet defences. The armoured reserve is being committed near Prokhorovka.",
+    "mission": "Counterattack, regain every objective, and prevent the enemy from breaking the final defensive belt.",
+    "secondaryObjectives": [
+     "Preserve the persistent core and its commanders for the next operation",
+     "Carry out the selected staff plan without changing the scenario's real victory conditions"
+    ],
+    "notes": "The original scenario order below remains authoritative for exact thresholds, turn limits, and exits."
+   },
    "background": "resources/ui/wallpapers/rac-3.jpg"
-  }
+  },
+  "actions": [
+   {
+    "id": "core_intact",
+    "type": "coreLossesAtMost",
+    "maxLosses": 0
+   },
+   {
+    "id": "core_losses_light",
+    "type": "coreLossesAtMost",
+    "maxLosses": 2
+   }
+  ]
  },
  {
   "id": 14,
@@ -701,8 +3888,243 @@
    }
   },
   "briefing": {
+   "act": "ACT IV — LIBERATION AND PURSUIT",
+   "location": "East of Zhytomyr, Ukraine — 27 December 1943",
+   "player": {
+    "speaker": "Commander",
+    "role": "Composite Operational Group",
+    "side": "left"
+   },
+   "dialogue": [
+    {
+     "id": "reaction-briliant",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The result at Kursk exceeded the operation's timetable. The staff arrives with confidence—and with expectations that the next battle will be just as clean.",
+     "conditions": {
+      "previousOutcome": [
+       "briliant"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-victory",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Kursk was secured, though the formations carry its cost into the new operation. The result gives us options, not immunity from another mistake.",
+     "conditions": {
+      "previousOutcome": [
+       "victory"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-tactical",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The force came through Kursk by the narrowest acceptable margin. Headquarters calls the objective achieved; the replacement lists describe how little room remains.",
+     "conditions": {
+      "previousOutcome": [
+       "tactical"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-lose",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Kursk ended in failure, but the campaign has not released this command. The surviving formations report for another operation before the previous losses have been fully counted.",
+     "conditions": {
+      "previousOutcome": [
+       "lose"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "callback-choice-a",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—counterattack now—is now part of the staff's working method. Its advantage is visible, but so is the capability we chose not to prepare.",
+     "conditions": {
+      "allFlags": [
+       "rac_kursk_counterattack_now"
+      ]
+     },
+     "next": "callback-choice-b"
+    },
+    {
+     "id": "callback-choice-b",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—coordinate the blow—carried the force here in better order. It also gave the enemy time or ground that cannot be reclaimed by paperwork.",
+     "conditions": {
+      "allFlags": [
+       "rac_kursk_coordinate_the_blow"
+      ]
+     },
+     "next": "callback-core-intact"
+    },
+    {
+     "id": "callback-core-intact",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The core reports no formation destroyed in the last operation. That continuity is now a real advantage: crews know one another, and orders move faster than replacements.",
+     "conditions": {
+      "completedActions": [
+       "bn9s13.xml.core_intact"
+      ]
+     },
+     "next": "callback-core-heavy-losses"
+    },
+    {
+     "id": "callback-core-heavy-losses",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The last operation cost more than two core formations. New crews have filled spaces on the strength return, but not the habits and trust that vanished with them.",
+     "conditions": {
+      "failedActions": [
+       "bn9s13.xml.core_losses_light"
+      ]
+     },
+     "next": "scene"
+    },
+    {
+     "id": "scene",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "Civilian reports arrive before reconnaissance patrols: which bridges still stand, which roads are mined, which villages contain German rear guards. For the first time the map is filling with names the staff recognises as home.",
+     "next": "decision"
+    },
+    {
+     "id": "decision",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "We can widen the attack to liberate more ground at once, or concentrate on one rupture and let mobile groups exploit deep before the flanks catch up.",
+     "choices": [
+      {
+       "id": "rupture-and-exploit",
+       "text": "Concentrate on one rupture and release the mobile group toward Berdychiv as soon as it opens.",
+       "next": "choice-a-response",
+       "hint": "Gain prestige and experience for deep exploitation, but forgo the broad front's organised replenishment.",
+       "effects": [
+        {
+         "id": "bn9s14.choice.rupture-and-exploit.flag",
+         "type": "setFlag",
+         "flag": "rac_zhitomir_rupture_and_exploit"
+        },
+        {
+         "id": "bn9s14.choice.rupture-and-exploit.prestige",
+         "type": "prestige",
+         "amount": 70
+        },
+        {
+         "id": "bn9s14.choice.rupture-and-exploit.experience",
+         "type": "experience",
+         "amount": 10
+        }
+       ]
+      },
+      {
+       "id": "advance-on-a-broad-front",
+       "text": "Clear the objective belt in parallel and keep neighbouring armies connected.",
+       "next": "choice-b-response",
+       "hint": "Restore every core unit to at least eight strength, replenish fuel and ammunition, and gain deeper formation experience; forgo the prestige award attached to the faster plan.",
+       "effects": [
+        {
+         "id": "bn9s14.choice.advance-on-a-broad-front.flag",
+         "type": "setFlag",
+         "flag": "rac_zhitomir_advance_on_a_broad_front"
+        },
+        {
+         "id": "bn9s14.choice.advance-on-a-broad-front.experience",
+         "type": "experience",
+         "amount": 20
+        },
+        {
+         "id": "bn9s14.choice.advance-on-a-broad-front.supply",
+         "type": "resupply",
+         "strength": 8,
+         "refuel": true,
+         "rearm": true
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "choice-a-response",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The breakthrough group carries bridging stores and fuel ahead of comfort. Strongpoints outside the corridor are masked until the second echelon arrives.",
+     "next": "closing-order"
+    },
+    {
+     "id": "choice-b-response",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "No liberated district becomes an exposed pocket. Infantry, guns, and supply move on each axis before its armour reaches for the next town.",
+     "next": "closing-order"
+    },
+    {
+     "id": "closing-order",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The army is no longer fighting merely to survive. That makes discipline more important, not less, wherever civilians and returning authority follow the advance."
+    }
+   ],
+   "orders": {
+    "situation": "Soviet forces are attacking the German Fourth Panzer Army to liberate Zhytomyr, Berdychiv, and the surrounding region.",
+    "mission": "Rupture the defence, capture every objective, and turn the winter advance into a sustained operational breakthrough.",
+    "secondaryObjectives": [
+     "Preserve the persistent core and its commanders for the next operation",
+     "Carry out the selected staff plan without changing the scenario's real victory conditions"
+    ],
+    "notes": "The original scenario order below remains authoritative for exact thresholds, turn limits, and exits."
+   },
    "background": "resources/ui/wallpapers/rac-4.jpg"
-  }
+  },
+  "actions": [
+   {
+    "id": "core_intact",
+    "type": "coreLossesAtMost",
+    "maxLosses": 0
+   },
+   {
+    "id": "core_losses_light",
+    "type": "coreLossesAtMost",
+    "maxLosses": 2
+   }
+  ]
  },
  {
   "id": 15,
@@ -748,8 +4170,243 @@
    }
   },
   "briefing": {
+   "act": "ACT IV — LIBERATION AND PURSUIT",
+   "location": "East of Sevastopol, Crimea — 7 May 1944",
+   "player": {
+    "speaker": "Commander",
+    "role": "Composite Operational Group",
+    "side": "left"
+   },
+   "dialogue": [
+    {
+     "id": "reaction-briliant",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The result at Zhytomyr–Berdychiv exceeded the operation's timetable. The staff arrives with confidence—and with expectations that the next battle will be just as clean.",
+     "conditions": {
+      "previousOutcome": [
+       "briliant"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-victory",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Zhytomyr–Berdychiv was secured, though the formations carry its cost into the new operation. The result gives us options, not immunity from another mistake.",
+     "conditions": {
+      "previousOutcome": [
+       "victory"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-tactical",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The force came through Zhytomyr–Berdychiv by the narrowest acceptable margin. Headquarters calls the objective achieved; the replacement lists describe how little room remains.",
+     "conditions": {
+      "previousOutcome": [
+       "tactical"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-lose",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Zhytomyr–Berdychiv ended in failure, but the campaign has not released this command. The surviving formations report for another operation before the previous losses have been fully counted.",
+     "conditions": {
+      "previousOutcome": [
+       "lose"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "callback-choice-a",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—rupture and exploit—is now part of the staff's working method. Its advantage is visible, but so is the capability we chose not to prepare.",
+     "conditions": {
+      "allFlags": [
+       "rac_zhitomir_rupture_and_exploit"
+      ]
+     },
+     "next": "callback-choice-b"
+    },
+    {
+     "id": "callback-choice-b",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—advance on a broad front—carried the force here in better order. It also gave the enemy time or ground that cannot be reclaimed by paperwork.",
+     "conditions": {
+      "allFlags": [
+       "rac_zhitomir_advance_on_a_broad_front"
+      ]
+     },
+     "next": "callback-core-intact"
+    },
+    {
+     "id": "callback-core-intact",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The core reports no formation destroyed in the last operation. That continuity is now a real advantage: crews know one another, and orders move faster than replacements.",
+     "conditions": {
+      "completedActions": [
+       "bn9s14.xml.core_intact"
+      ]
+     },
+     "next": "callback-core-heavy-losses"
+    },
+    {
+     "id": "callback-core-heavy-losses",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The last operation cost more than two core formations. New crews have filled spaces on the strength return, but not the habits and trust that vanished with them.",
+     "conditions": {
+      "failedActions": [
+       "bn9s14.xml.core_losses_light"
+      ]
+     },
+     "next": "scene"
+    },
+    {
+     "id": "scene",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "Through binoculars the harbour is a forest of masts, smoke, and demolition fires. The road to Sevastopol is defended; the roads away from it are crowded. Every hour changes which target matters most.",
+     "next": "decision"
+    },
+    {
+     "id": "decision",
+     "speaker": "Nikolai Orlov",
+     "role": "Political Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
+     "text": "We can drive directly for the city and its political weight, or send mobile groups to the coast first and risk slowing the main assault while the evacuation routes are sealed.",
+     "choices": [
+      {
+       "id": "seal-the-coast",
+       "text": "Send mobile groups past the city approaches to cut the embarkation roads first.",
+       "next": "choice-a-response",
+       "hint": "Gain prestige and experience for trapping the evacuation, but forgo the prepared refit of the direct city assault.",
+       "effects": [
+        {
+         "id": "bn9s15.choice.seal-the-coast.flag",
+         "type": "setFlag",
+         "flag": "rac_crimea_seal_the_coast"
+        },
+        {
+         "id": "bn9s15.choice.seal-the-coast.prestige",
+         "type": "prestige",
+         "amount": 70
+        },
+        {
+         "id": "bn9s15.choice.seal-the-coast.experience",
+         "type": "experience",
+         "amount": 10
+        }
+       ]
+      },
+      {
+       "id": "take-sevastopol-first",
+       "text": "Concentrate on the fortified approaches and break into Sevastopol before dividing the force.",
+       "next": "choice-b-response",
+       "hint": "Restore every core unit to at least eight strength, replenish fuel and ammunition, and gain deeper formation experience; forgo the prestige award attached to the faster plan.",
+       "effects": [
+        {
+         "id": "bn9s15.choice.take-sevastopol-first.flag",
+         "type": "setFlag",
+         "flag": "rac_crimea_take_sevastopol_first"
+        },
+        {
+         "id": "bn9s15.choice.take-sevastopol-first.experience",
+         "type": "experience",
+         "amount": 20
+        },
+        {
+         "id": "bn9s15.choice.take-sevastopol-first.supply",
+         "type": "resupply",
+         "strength": 8,
+         "refuel": true,
+         "rearm": true
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "choice-a-response",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The coastal groups receive the fastest vehicles and no permission to become involved in the city fight. Their objectives are roads, piers, and time.",
+     "next": "closing-order"
+    },
+    {
+     "id": "choice-b-response",
+     "speaker": "Nikolai Orlov",
+     "role": "Political Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
+     "text": "The city defence is the hinge. Break it with every gun available, then turn the released formations toward the coast before evacuation becomes escape.",
+     "next": "closing-order"
+    },
+    {
+     "id": "closing-order",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Liberation and pursuit happen among people who have endured occupation and siege. Keep the roads open for them as well as for us."
+    }
+   ],
+   "orders": {
+    "situation": "German and Romanian forces are withdrawing toward Sevastopol and evacuation points on the Black Sea.",
+    "mission": "Liberate Sevastopol, capture every objective, and prevent more than four enemy formations from escaping by sea.",
+    "secondaryObjectives": [
+     "Preserve the persistent core and its commanders for the next operation",
+     "Carry out the selected staff plan without changing the scenario's real victory conditions"
+    ],
+    "notes": "The original scenario order below remains authoritative for exact thresholds, turn limits, and exits."
+   },
    "background": "resources/ui/wallpapers/rac-4.jpg"
-  }
+  },
+  "actions": [
+   {
+    "id": "core_intact",
+    "type": "coreLossesAtMost",
+    "maxLosses": 0
+   },
+   {
+    "id": "core_losses_light",
+    "type": "coreLossesAtMost",
+    "maxLosses": 2
+   }
+  ]
  },
  {
   "id": 16,
@@ -795,8 +4452,243 @@
    }
   },
   "briefing": {
+   "act": "ACT IV — LIBERATION AND PURSUIT",
+   "location": "North of Iași, Romania — 20 August 1944",
+   "player": {
+    "speaker": "Commander",
+    "role": "Composite Operational Group",
+    "side": "left"
+   },
+   "dialogue": [
+    {
+     "id": "reaction-briliant",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The result at Crimea exceeded the operation's timetable. The staff arrives with confidence—and with expectations that the next battle will be just as clean.",
+     "conditions": {
+      "previousOutcome": [
+       "briliant"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-victory",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Crimea was secured, though the formations carry its cost into the new operation. The result gives us options, not immunity from another mistake.",
+     "conditions": {
+      "previousOutcome": [
+       "victory"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-tactical",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The force came through Crimea by the narrowest acceptable margin. Headquarters calls the objective achieved; the replacement lists describe how little room remains.",
+     "conditions": {
+      "previousOutcome": [
+       "tactical"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-lose",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Crimea ended in failure, but the campaign has not released this command. The surviving formations report for another operation before the previous losses have been fully counted.",
+     "conditions": {
+      "previousOutcome": [
+       "lose"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "callback-choice-a",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—seal the coast—is now part of the staff's working method. Its advantage is visible, but so is the capability we chose not to prepare.",
+     "conditions": {
+      "allFlags": [
+       "rac_crimea_seal_the_coast"
+      ]
+     },
+     "next": "callback-choice-b"
+    },
+    {
+     "id": "callback-choice-b",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—take sevastopol first—carried the force here in better order. It also gave the enemy time or ground that cannot be reclaimed by paperwork.",
+     "conditions": {
+      "allFlags": [
+       "rac_crimea_take_sevastopol_first"
+      ]
+     },
+     "next": "callback-core-intact"
+    },
+    {
+     "id": "callback-core-intact",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The core reports no formation destroyed in the last operation. That continuity is now a real advantage: crews know one another, and orders move faster than replacements.",
+     "conditions": {
+      "completedActions": [
+       "bn9s15.xml.core_intact"
+      ]
+     },
+     "next": "callback-core-heavy-losses"
+    },
+    {
+     "id": "callback-core-heavy-losses",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The last operation cost more than two core formations. New crews have filled spaces on the strength return, but not the habits and trust that vanished with them.",
+     "conditions": {
+      "failedActions": [
+       "bn9s15.xml.core_losses_light"
+      ]
+     },
+     "next": "scene"
+    },
+    {
+     "id": "scene",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The deception maps still show quiet sectors and routine traffic. The real table is almost empty: breakthrough artillery has been hidden until the last hours, and mobile formations wait beyond sight of enemy reconnaissance.",
+     "next": "decision"
+    },
+    {
+     "id": "decision",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Once the line breaks, we can turn inward immediately to close the pocket, or drive west for crossings that may decide whether the encirclement remains sealed next week.",
+     "choices": [
+      {
+       "id": "close-the-pocket",
+       "text": "Turn the mobile group inward and close the ring before the Sixth Army can react.",
+       "next": "choice-a-response",
+       "hint": "Gain prestige and experience for decisive encirclement, but forgo the refit and reach of the western drive.",
+       "effects": [
+        {
+         "id": "bn9s16.choice.close-the-pocket.flag",
+         "type": "setFlag",
+         "flag": "rac_jassy_kishinev_close_the_pocket"
+        },
+        {
+         "id": "bn9s16.choice.close-the-pocket.prestige",
+         "type": "prestige",
+         "amount": 70
+        },
+        {
+         "id": "bn9s16.choice.close-the-pocket.experience",
+         "type": "experience",
+         "amount": 10
+        }
+       ]
+      },
+      {
+       "id": "seize-the-crossings",
+       "text": "Drive west for the river and road crossings while infantry compresses the pocket.",
+       "next": "choice-b-response",
+       "hint": "Restore every core unit to at least eight strength, replenish fuel and ammunition, and gain deeper formation experience; forgo the prestige award attached to the faster plan.",
+       "effects": [
+        {
+         "id": "bn9s16.choice.seize-the-crossings.flag",
+         "type": "setFlag",
+         "flag": "rac_jassy_kishinev_seize_the_crossings"
+        },
+        {
+         "id": "bn9s16.choice.seize-the-crossings.experience",
+         "type": "experience",
+         "amount": 20
+        },
+        {
+         "id": "bn9s16.choice.seize-the-crossings.supply",
+         "type": "resupply",
+         "strength": 8,
+         "refuel": true,
+         "rearm": true
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "choice-a-response",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The mobile group turns on the first confirmed rupture. No pause for a perfect front line; neighbouring spearheads become the line when they meet.",
+     "next": "closing-order"
+    },
+    {
+     "id": "choice-b-response",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The crossings are tomorrow's encirclement wall. We leave the pocket to the following armies and make retreat beyond it impossible.",
+     "next": "closing-order"
+    },
+    {
+     "id": "closing-order",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The breakthrough plan is powerful because every front has a different task. Do not improve ours by stealing another formation's purpose."
+    }
+   ],
+   "orders": {
+    "situation": "A major Soviet offensive is opening against German and Romanian forces around Iași and Chișinău, with the German Sixth Army exposed to encirclement.",
+    "mission": "Break through on the right wing, seize every objective, and help close the operational pocket before the enemy can withdraw west.",
+    "secondaryObjectives": [
+     "Preserve the persistent core and its commanders for the next operation",
+     "Carry out the selected staff plan without changing the scenario's real victory conditions"
+    ],
+    "notes": "The original scenario order below remains authoritative for exact thresholds, turn limits, and exits."
+   },
    "background": "resources/ui/wallpapers/rac-4.jpg"
-  }
+  },
+  "actions": [
+   {
+    "id": "core_intact",
+    "type": "coreLossesAtMost",
+    "maxLosses": 0
+   },
+   {
+    "id": "core_losses_light",
+    "type": "coreLossesAtMost",
+    "maxLosses": 2
+   }
+  ]
  },
  {
   "id": 17,
@@ -842,8 +4734,243 @@
    }
   },
   "briefing": {
+   "act": "ACT IV — LIBERATION AND PURSUIT",
+   "location": "West of Belgrade, Yugoslavia — 12 October 1944",
+   "player": {
+    "speaker": "Commander",
+    "role": "Composite Operational Group",
+    "side": "left"
+   },
+   "dialogue": [
+    {
+     "id": "reaction-briliant",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The result at Iași–Chișinău exceeded the operation's timetable. The staff arrives with confidence—and with expectations that the next battle will be just as clean.",
+     "conditions": {
+      "previousOutcome": [
+       "briliant"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-victory",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Iași–Chișinău was secured, though the formations carry its cost into the new operation. The result gives us options, not immunity from another mistake.",
+     "conditions": {
+      "previousOutcome": [
+       "victory"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-tactical",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The force came through Iași–Chișinău by the narrowest acceptable margin. Headquarters calls the objective achieved; the replacement lists describe how little room remains.",
+     "conditions": {
+      "previousOutcome": [
+       "tactical"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-lose",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Iași–Chișinău ended in failure, but the campaign has not released this command. The surviving formations report for another operation before the previous losses have been fully counted.",
+     "conditions": {
+      "previousOutcome": [
+       "lose"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "callback-choice-a",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—close the pocket—is now part of the staff's working method. Its advantage is visible, but so is the capability we chose not to prepare.",
+     "conditions": {
+      "allFlags": [
+       "rac_jassy_kishinev_close_the_pocket"
+      ]
+     },
+     "next": "callback-choice-b"
+    },
+    {
+     "id": "callback-choice-b",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—seize the crossings—carried the force here in better order. It also gave the enemy time or ground that cannot be reclaimed by paperwork.",
+     "conditions": {
+      "allFlags": [
+       "rac_jassy_kishinev_seize_the_crossings"
+      ]
+     },
+     "next": "callback-core-intact"
+    },
+    {
+     "id": "callback-core-intact",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The core reports no formation destroyed in the last operation. That continuity is now a real advantage: crews know one another, and orders move faster than replacements.",
+     "conditions": {
+      "completedActions": [
+       "bn9s16.xml.core_intact"
+      ]
+     },
+     "next": "callback-core-heavy-losses"
+    },
+    {
+     "id": "callback-core-heavy-losses",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The last operation cost more than two core formations. New crews have filled spaces on the strength return, but not the habits and trust that vanished with them.",
+     "conditions": {
+      "failedActions": [
+       "bn9s16.xml.core_losses_light"
+      ]
+     },
+     "next": "scene"
+    },
+    {
+     "id": "scene",
+     "speaker": "Nikolai Orlov",
+     "role": "Political Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
+     "text": "Three liaison teams stand around one map and use three sets of place names. The Partisan officer knows tracks absent from every printed sheet; the Bulgarian staff knows when its artillery can move; our timetable knows only the hour.",
+     "next": "decision"
+    },
+    {
+     "id": "decision",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "We can impose one central axis and reduce confusion, or divide sectors according to local knowledge and accept that the assault will not look tidy from headquarters.",
+     "choices": [
+      {
+       "id": "shared-sector-plan",
+       "text": "Give each allied force a defined sector and build the timetable around local routes.",
+       "next": "choice-a-response",
+       "hint": "Gain prestige and experience through coalition initiative, but forgo the centrally organised refit.",
+       "effects": [
+        {
+         "id": "bn9s17.choice.shared-sector-plan.flag",
+         "type": "setFlag",
+         "flag": "rac_belgrade_shared_sector_plan"
+        },
+        {
+         "id": "bn9s17.choice.shared-sector-plan.prestige",
+         "type": "prestige",
+         "amount": 70
+        },
+        {
+         "id": "bn9s17.choice.shared-sector-plan.experience",
+         "type": "experience",
+         "amount": 10
+        }
+       ]
+      },
+      {
+       "id": "single-command-axis",
+       "text": "Concentrate the heavy forces on one axis under a single fire plan.",
+       "next": "choice-b-response",
+       "hint": "Restore every core unit to at least eight strength, replenish fuel and ammunition, and gain deeper formation experience; forgo the prestige award attached to the faster plan.",
+       "effects": [
+        {
+         "id": "bn9s17.choice.single-command-axis.flag",
+         "type": "setFlag",
+         "flag": "rac_belgrade_single_command_axis"
+        },
+        {
+         "id": "bn9s17.choice.single-command-axis.experience",
+         "type": "experience",
+         "amount": 20
+        },
+        {
+         "id": "bn9s17.choice.single-command-axis.supply",
+         "type": "resupply",
+         "strength": 8,
+         "refuel": true,
+         "rearm": true
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "choice-a-response",
+     "speaker": "Nikolai Orlov",
+     "role": "Political Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
+     "text": "Partisan guides lead the routes they know, Bulgarian guns support the sector assigned to them, and our mobile group exploits between both. Liaison officers carry authority, not merely messages.",
+     "next": "closing-order"
+    },
+    {
+     "id": "choice-b-response",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The central axis gets every heavy gun and one traffic plan. Allied detachments secure the flanks without being pulled into a battle they were not briefed to fight.",
+     "next": "closing-order"
+    },
+    {
+     "id": "closing-order",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Belgrade is a capital and a living city, not a coloured objective. Coordination must reduce both delay and destruction."
+    }
+   ],
+   "orders": {
+    "situation": "Soviet forces are approaching Belgrade alongside Yugoslav Partisans and Bulgarian troops while German formations attempt to retain an escape corridor.",
+    "mission": "Coordinate the allied assault, capture every objective, and liberate Belgrade without allowing separate commands to obstruct one another.",
+    "secondaryObjectives": [
+     "Preserve the persistent core and its commanders for the next operation",
+     "Carry out the selected staff plan without changing the scenario's real victory conditions"
+    ],
+    "notes": "The original scenario order below remains authoritative for exact thresholds, turn limits, and exits."
+   },
    "background": "resources/ui/wallpapers/rac-4.jpg"
-  }
+  },
+  "actions": [
+   {
+    "id": "core_intact",
+    "type": "coreLossesAtMost",
+    "maxLosses": 0
+   },
+   {
+    "id": "core_losses_light",
+    "type": "coreLossesAtMost",
+    "maxLosses": 2
+   }
+  ]
  },
  {
   "id": 18,
@@ -889,8 +5016,243 @@
    }
   },
   "briefing": {
+   "act": "ACT IV — LIBERATION AND PURSUIT",
+   "location": "East of Lake Balaton, Hungary — 16 March 1945",
+   "player": {
+    "speaker": "Commander",
+    "role": "Composite Operational Group",
+    "side": "left"
+   },
+   "dialogue": [
+    {
+     "id": "reaction-briliant",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The result at Belgrade exceeded the operation's timetable. The staff arrives with confidence—and with expectations that the next battle will be just as clean.",
+     "conditions": {
+      "previousOutcome": [
+       "briliant"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-victory",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Belgrade was secured, though the formations carry its cost into the new operation. The result gives us options, not immunity from another mistake.",
+     "conditions": {
+      "previousOutcome": [
+       "victory"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-tactical",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The force came through Belgrade by the narrowest acceptable margin. Headquarters calls the objective achieved; the replacement lists describe how little room remains.",
+     "conditions": {
+      "previousOutcome": [
+       "tactical"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-lose",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Belgrade ended in failure, but the campaign has not released this command. The surviving formations report for another operation before the previous losses have been fully counted.",
+     "conditions": {
+      "previousOutcome": [
+       "lose"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "callback-choice-a",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—shared sector plan—is now part of the staff's working method. Its advantage is visible, but so is the capability we chose not to prepare.",
+     "conditions": {
+      "allFlags": [
+       "rac_belgrade_shared_sector_plan"
+      ]
+     },
+     "next": "callback-choice-b"
+    },
+    {
+     "id": "callback-choice-b",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—single command axis—carried the force here in better order. It also gave the enemy time or ground that cannot be reclaimed by paperwork.",
+     "conditions": {
+      "allFlags": [
+       "rac_belgrade_single_command_axis"
+      ]
+     },
+     "next": "callback-core-intact"
+    },
+    {
+     "id": "callback-core-intact",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The core reports no formation destroyed in the last operation. That continuity is now a real advantage: crews know one another, and orders move faster than replacements.",
+     "conditions": {
+      "completedActions": [
+       "bn9s17.xml.core_intact"
+      ]
+     },
+     "next": "callback-core-heavy-losses"
+    },
+    {
+     "id": "callback-core-heavy-losses",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The last operation cost more than two core formations. New crews have filled spaces on the strength return, but not the habits and trust that vanished with them.",
+     "conditions": {
+      "failedActions": [
+       "bn9s17.xml.core_losses_light"
+      ]
+     },
+     "next": "scene"
+    },
+    {
+     "id": "scene",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "Recovery crews tow damaged tanks in both directions. Some are ours from the defence, some German machines abandoned in mud, and all of them block the roads the counterattack needs at dawn.",
+     "next": "decision"
+    },
+    {
+     "id": "decision",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The enemy is disordered now. We can attack before our own formations refit, or spend a day restoring fuel and ammunition while accepting that more German armour will escape west.",
+     "choices": [
+      {
+       "id": "attack-before-dawn",
+       "text": "Launch the counterattack before the enemy can disengage from the failed offensive.",
+       "next": "choice-a-response",
+       "hint": "Gain prestige and experience for immediate exploitation, but forgo the complete refit of the delayed attack.",
+       "effects": [
+        {
+         "id": "bn9s18.choice.attack-before-dawn.flag",
+         "type": "setFlag",
+         "flag": "rac_balaton_attack_before_dawn"
+        },
+        {
+         "id": "bn9s18.choice.attack-before-dawn.prestige",
+         "type": "prestige",
+         "amount": 70
+        },
+        {
+         "id": "bn9s18.choice.attack-before-dawn.experience",
+         "type": "experience",
+         "amount": 10
+        }
+       ]
+      },
+      {
+       "id": "refit-then-strike",
+       "text": "Clear the roads, replenish the formations, and attack as a fully supplied force.",
+       "next": "choice-b-response",
+       "hint": "Restore every core unit to at least eight strength, replenish fuel and ammunition, and gain deeper formation experience; forgo the prestige award attached to the faster plan.",
+       "effects": [
+        {
+         "id": "bn9s18.choice.refit-then-strike.flag",
+         "type": "setFlag",
+         "flag": "rac_balaton_refit_then_strike"
+        },
+        {
+         "id": "bn9s18.choice.refit-then-strike.experience",
+         "type": "experience",
+         "amount": 20
+        },
+        {
+         "id": "bn9s18.choice.refit-then-strike.supply",
+         "type": "resupply",
+         "strength": 8,
+         "refuel": true,
+         "rearm": true
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "choice-a-response",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "Leading units attack on the fuel they have. Recovery and supply follow one road behind; no formation turns back merely because its paperwork says the offensive starts tomorrow.",
+     "next": "closing-order"
+    },
+    {
+     "id": "choice-b-response",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The attack begins after every mobile formation reports fuel and ammunition. We may meet a cleaner enemy line, but we will strike it with a coherent army.",
+     "next": "closing-order"
+    },
+    {
+     "id": "closing-order",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The war is nearing its end, which makes the temptation to spend lives for the calendar especially dangerous."
+    }
+   ],
+   "orders": {
+    "situation": "The last major German offensive in Hungary has stalled short of the Danube, leaving armoured formations exposed east of Lake Balaton.",
+    "mission": "Counterattack, take every objective, and destroy the attacking force before it can withdraw into another prepared line.",
+    "secondaryObjectives": [
+     "Preserve the persistent core and its commanders for the next operation",
+     "Carry out the selected staff plan without changing the scenario's real victory conditions"
+    ],
+    "notes": "The original scenario order below remains authoritative for exact thresholds, turn limits, and exits."
+   },
    "background": "resources/ui/wallpapers/rac-4.jpg"
-  }
+  },
+  "actions": [
+   {
+    "id": "core_intact",
+    "type": "coreLossesAtMost",
+    "maxLosses": 0
+   },
+   {
+    "id": "core_losses_light",
+    "type": "coreLossesAtMost",
+    "maxLosses": 2
+   }
+  ]
  },
  {
   "id": 19,
@@ -936,8 +5298,243 @@
    }
   },
   "briefing": {
+   "act": "ACT IV — LIBERATION AND PURSUIT",
+   "location": "East of Vienna, Austria — 3 April 1945",
+   "player": {
+    "speaker": "Commander",
+    "role": "Composite Operational Group",
+    "side": "left"
+   },
+   "dialogue": [
+    {
+     "id": "reaction-briliant",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The result at Lake Balaton exceeded the operation's timetable. The staff arrives with confidence—and with expectations that the next battle will be just as clean.",
+     "conditions": {
+      "previousOutcome": [
+       "briliant"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-victory",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Lake Balaton was secured, though the formations carry its cost into the new operation. The result gives us options, not immunity from another mistake.",
+     "conditions": {
+      "previousOutcome": [
+       "victory"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-tactical",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The force came through Lake Balaton by the narrowest acceptable margin. Headquarters calls the objective achieved; the replacement lists describe how little room remains.",
+     "conditions": {
+      "previousOutcome": [
+       "tactical"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-lose",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Lake Balaton ended in failure, but the campaign has not released this command. The surviving formations report for another operation before the previous losses have been fully counted.",
+     "conditions": {
+      "previousOutcome": [
+       "lose"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "callback-choice-a",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—attack before dawn—is now part of the staff's working method. Its advantage is visible, but so is the capability we chose not to prepare.",
+     "conditions": {
+      "allFlags": [
+       "rac_balaton_attack_before_dawn"
+      ]
+     },
+     "next": "callback-choice-b"
+    },
+    {
+     "id": "callback-choice-b",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—refit then strike—carried the force here in better order. It also gave the enemy time or ground that cannot be reclaimed by paperwork.",
+     "conditions": {
+      "allFlags": [
+       "rac_balaton_refit_then_strike"
+      ]
+     },
+     "next": "callback-core-intact"
+    },
+    {
+     "id": "callback-core-intact",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The core reports no formation destroyed in the last operation. That continuity is now a real advantage: crews know one another, and orders move faster than replacements.",
+     "conditions": {
+      "completedActions": [
+       "bn9s18.xml.core_intact"
+      ]
+     },
+     "next": "callback-core-heavy-losses"
+    },
+    {
+     "id": "callback-core-heavy-losses",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The last operation cost more than two core formations. New crews have filled spaces on the strength return, but not the habits and trust that vanished with them.",
+     "conditions": {
+      "failedActions": [
+       "bn9s18.xml.core_losses_light"
+      ]
+     },
+     "next": "scene"
+    },
+    {
+     "id": "scene",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "Interrogation reports agree on one fact: every road west is crowded. They disagree on which columns are combat units, refugees, forced labourers, or headquarters. Air reconnaissance sees movement but not intent.",
+     "next": "decision"
+    },
+    {
+     "id": "decision",
+     "speaker": "Nikolai Orlov",
+     "role": "Political Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
+     "text": "We can drive mobile groups through the retreat and close the exits, or secure the supply roads so the pursuit arrives at Vienna with artillery and fuel enough to continue.",
+     "choices": [
+      {
+       "id": "cut-the-retreat",
+       "text": "Send mobile groups for the western exits and force the retreating columns to surrender or disperse.",
+       "next": "choice-a-response",
+       "hint": "Gain prestige and experience for relentless pursuit, but forgo the replenished supply line of the deliberate advance.",
+       "effects": [
+        {
+         "id": "bn9s19.choice.cut-the-retreat.flag",
+         "type": "setFlag",
+         "flag": "rac_vienna_cut_the_retreat"
+        },
+        {
+         "id": "bn9s19.choice.cut-the-retreat.prestige",
+         "type": "prestige",
+         "amount": 70
+        },
+        {
+         "id": "bn9s19.choice.cut-the-retreat.experience",
+         "type": "experience",
+         "amount": 10
+        }
+       ]
+      },
+      {
+       "id": "secure-the-road",
+       "text": "Clear the road network in sequence and keep artillery and supply inside the advance.",
+       "next": "choice-b-response",
+       "hint": "Restore every core unit to at least eight strength, replenish fuel and ammunition, and gain deeper formation experience; forgo the prestige award attached to the faster plan.",
+       "effects": [
+        {
+         "id": "bn9s19.choice.secure-the-road.flag",
+         "type": "setFlag",
+         "flag": "rac_vienna_secure_the_road"
+        },
+        {
+         "id": "bn9s19.choice.secure-the-road.experience",
+         "type": "experience",
+         "amount": 20
+        },
+        {
+         "id": "bn9s19.choice.secure-the-road.supply",
+         "type": "resupply",
+         "strength": 8,
+         "refuel": true,
+         "rearm": true
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "choice-a-response",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The mobile groups identify military columns before engaging and leave marked lanes for civilians. Their purpose is to prevent another defence, not turn every road into a battlefield.",
+     "next": "closing-order"
+    },
+    {
+     "id": "choice-b-response",
+     "speaker": "Nikolai Orlov",
+     "role": "Political Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
+     "text": "Traffic control becomes part of the attack. Every captured junction receives engineers and guards before the leading guns move through it.",
+     "next": "closing-order"
+    },
+    {
+     "id": "closing-order",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Victory is close enough to imagine and still far enough to be lost locally. Keep the pursuit under command."
+    }
+   ],
+   "orders": {
+    "situation": "German forces are withdrawing toward Vienna and trying to establish another defensive belt before the Soviet pursuit can reach the city.",
+    "mission": "Capture every objective and prevent withdrawing ground formations from escaping into the Vienna defences.",
+    "secondaryObjectives": [
+     "Preserve the persistent core and its commanders for the next operation",
+     "Carry out the selected staff plan without changing the scenario's real victory conditions"
+    ],
+    "notes": "The original scenario order below remains authoritative for exact thresholds, turn limits, and exits."
+   },
    "background": "resources/ui/wallpapers/rac-4.jpg"
-  }
+  },
+  "actions": [
+   {
+    "id": "core_intact",
+    "type": "coreLossesAtMost",
+    "maxLosses": 0
+   },
+   {
+    "id": "core_losses_light",
+    "type": "coreLossesAtMost",
+    "maxLosses": 2
+   }
+  ]
  },
  {
   "id": 20,
@@ -983,7 +5580,312 @@
    }
   },
   "briefing": {
+   "act": "ACT V — EAST AFTER VICTORY",
+   "location": "Khabarovsk, Soviet Far East — 9 August 1945",
+   "player": {
+    "speaker": "Commander",
+    "role": "Composite Operational Group",
+    "side": "left"
+   },
+   "dialogue": [
+    {
+     "id": "reaction-briliant",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The result at Vienna exceeded the operation's timetable. The staff arrives with confidence—and with expectations that the next battle will be just as clean.",
+     "conditions": {
+      "previousOutcome": [
+       "briliant"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-victory",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Vienna was secured, though the formations carry its cost into the new operation. The result gives us options, not immunity from another mistake.",
+     "conditions": {
+      "previousOutcome": [
+       "victory"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-tactical",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The force came through Vienna by the narrowest acceptable margin. Headquarters calls the objective achieved; the replacement lists describe how little room remains.",
+     "conditions": {
+      "previousOutcome": [
+       "tactical"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "reaction-lose",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "Vienna ended in failure, but the campaign has not released this command. The surviving formations report for another operation before the previous losses have been fully counted.",
+     "conditions": {
+      "previousOutcome": [
+       "lose"
+      ]
+     },
+     "next": "callback-choice-a"
+    },
+    {
+     "id": "callback-choice-a",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—cut the retreat—is now part of the staff's working method. Its advantage is visible, but so is the capability we chose not to prepare.",
+     "conditions": {
+      "allFlags": [
+       "rac_vienna_cut_the_retreat"
+      ]
+     },
+     "next": "callback-choice-b"
+    },
+    {
+     "id": "callback-choice-b",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The previous decision—secure the road—carried the force here in better order. It also gave the enemy time or ground that cannot be reclaimed by paperwork.",
+     "conditions": {
+      "allFlags": [
+       "rac_vienna_secure_the_road"
+      ]
+     },
+     "next": "callback-core-intact"
+    },
+    {
+     "id": "callback-core-intact",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The core reports no formation destroyed in the last operation. That continuity is now a real advantage: crews know one another, and orders move faster than replacements.",
+     "conditions": {
+      "completedActions": [
+       "bn9s19.xml.core_intact"
+      ]
+     },
+     "next": "callback-core-heavy-losses"
+    },
+    {
+     "id": "callback-core-heavy-losses",
+     "speaker": "Pavel Antonov",
+     "role": "Armoured-Force Liaison — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+     "text": "The last operation cost more than two core formations. New crews have filled spaces on the strength return, but not the habits and trust that vanished with them.",
+     "conditions": {
+      "failedActions": [
+       "bn9s19.xml.core_losses_light"
+      ]
+     },
+     "next": "scene"
+    },
+    {
+     "id": "scene",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "European place names have been erased from the board and replaced by rivers, railways, and distances most of the staff last studied before 1941. Veteran formations recognise the procedure; none recognises the country ahead.",
+     "next": "decision"
+    },
+    {
+     "id": "decision",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "We can force the crossings on the first timetable and pursue before the defence understands the scale of the attack, or build secure bridgeheads that can carry the whole army into the interior.",
+     "choices": [
+      {
+       "id": "race-beyond-the-rivers",
+       "text": "Force the crossings at once and send mobile columns west before resistance can organise.",
+       "next": "choice-a-response",
+       "hint": "Gain prestige and experience for a final rapid operation, but forgo the complete replenishment of the secure bridgeheads.",
+       "effects": [
+        {
+         "id": "bn9s20.choice.race-beyond-the-rivers.flag",
+         "type": "setFlag",
+         "flag": "rac_manchuria_race_beyond_the_rivers"
+        },
+        {
+         "id": "bn9s20.choice.race-beyond-the-rivers.prestige",
+         "type": "prestige",
+         "amount": 70
+        },
+        {
+         "id": "bn9s20.choice.race-beyond-the-rivers.experience",
+         "type": "experience",
+         "amount": 10
+        }
+       ]
+      },
+      {
+       "id": "build-the-bridgeheads",
+       "text": "Secure every crossing with engineers, artillery, and supply before releasing the pursuit.",
+       "next": "choice-b-response",
+       "hint": "Restore every core unit to at least eight strength, replenish fuel and ammunition, and gain deeper formation experience; forgo the prestige award attached to the faster plan.",
+       "effects": [
+        {
+         "id": "bn9s20.choice.build-the-bridgeheads.flag",
+         "type": "setFlag",
+         "flag": "rac_manchuria_build_the_bridgeheads"
+        },
+        {
+         "id": "bn9s20.choice.build-the-bridgeheads.experience",
+         "type": "experience",
+         "amount": 20
+        },
+        {
+         "id": "bn9s20.choice.build-the-bridgeheads.supply",
+         "type": "resupply",
+         "strength": 8,
+         "refuel": true,
+         "rearm": true
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "choice-a-response",
+     "speaker": "Anna Sokolova",
+     "role": "Intelligence Officer — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+     "text": "The first columns carry fuel and bridging stores ahead of everything else. Once across, they do not wait for a European-style front to form around them.",
+     "next": "closing-order"
+    },
+    {
+     "id": "choice-b-response",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "The bridgeheads are the operation's foundation. The pursuit begins when roads, guns, and ambulances can cross the same river as the tanks.",
+     "next": "closing-order"
+    },
+    {
+     "id": "closing-order",
+     "speaker": "Sergei Volkov",
+     "role": "Operations Officer — Fictional Composite",
+     "side": "left",
+     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+     "text": "From Madrid to Khabarovsk, the recurring question has never been speed or strength alone. It has been whether command can turn either one into an operation that survives its first success."
+    }
+   ],
+   "orders": {
+    "situation": "Three months after victory in Europe, the Soviet Union has entered the war against Japan. Forces near Khabarovsk must cross the border rivers and break into Manchuria.",
+    "mission": "Overcome the river defences, seize every objective, and open the route west before distance and terrain slow the offensive.",
+    "secondaryObjectives": [
+     "Preserve the persistent core and its commanders for the next operation",
+     "Carry out the selected staff plan without changing the scenario's real victory conditions"
+    ],
+    "notes": "The original scenario order below remains authoritative for exact thresholds, turn limits, and exits."
+   },
    "background": "resources/ui/wallpapers/rac-4.jpg"
-  }
+  },
+  "actions": [
+   {
+    "id": "core_intact",
+    "type": "coreLossesAtMost",
+    "maxLosses": 0
+   },
+   {
+    "id": "core_losses_light",
+    "type": "coreLossesAtMost",
+    "maxLosses": 2
+   }
+  ],
+  "epilogues": [
+   {
+    "id": "manchuria-tempo-success",
+    "outcomes": [
+     "briliant",
+     "victory",
+     "tactical"
+    ],
+    "speaker": "Anna Sokolova",
+    "role": "Intelligence Officer — Fictional Composite",
+    "side": "right",
+    "portrait": "resources/campaigns/portraits/anna-sokolova.png",
+    "text": "The river line broke before a stable front could form. The final pages of the dossier record distance, surrendered garrisons, and an army still moving when Japan's capitulation made further objectives unnecessary.",
+    "conditions": {
+     "allFlags": [
+      "rac_manchuria_race_beyond_the_rivers"
+     ]
+    }
+   },
+   {
+    "id": "manchuria-bridgehead-success",
+    "outcomes": [
+     "briliant",
+     "victory",
+     "tactical"
+    ],
+    "speaker": "Pavel Antonov",
+    "role": "Armoured-Force Liaison — Fictional Composite",
+    "side": "left",
+    "portrait": "resources/campaigns/portraits/pavel-antonov.png",
+    "text": "The bridgeheads carried guns, fuel, ambulances, and then the pursuing columns. The final pages of the dossier record an operation that did not outrun its own support before Japan's capitulation ended the campaign.",
+    "conditions": {
+     "allFlags": [
+      "rac_manchuria_build_the_bridgeheads"
+     ]
+    }
+   },
+   {
+    "id": "manchuria-tempo-defeat",
+    "outcomes": [
+     "lose"
+    ],
+    "speaker": "Sergei Volkov",
+    "role": "Operations Officer — Fictional Composite",
+    "side": "left",
+    "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+    "text": "The attempt to race beyond the rivers spent its momentum before it could become an operation. The war ended elsewhere, leaving this command to account for a final objective it did not secure.",
+    "conditions": {
+     "allFlags": [
+      "rac_manchuria_race_beyond_the_rivers"
+     ]
+    }
+   },
+   {
+    "id": "manchuria-bridgehead-defeat",
+    "outcomes": [
+     "lose"
+    ],
+    "speaker": "Sergei Volkov",
+    "role": "Operations Officer — Fictional Composite",
+    "side": "left",
+    "portrait": "resources/campaigns/portraits/sergei-volkov.png",
+    "text": "The crossings were organised, but the advance never broke the border defence in time. The war ended elsewhere, and the dossier closes on a force preserved without completing its last mission.",
+    "conditions": {
+     "allFlags": [
+      "rac_manchuria_build_the_bridgeheads"
+     ]
+    }
+   }
+  ]
  }
 ]

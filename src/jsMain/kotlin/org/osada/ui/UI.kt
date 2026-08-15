@@ -4,6 +4,7 @@ import kotlinx.browser.document
 import org.osada.CombatLog
 import org.osada.Game
 import org.osada.UnitClass
+import org.osada.evaluateScenarioEvents
 import org.osada.i18n.I18n
 import org.osada.model.Cell
 import org.osada.model.Equipment
@@ -179,6 +180,11 @@ class UI(
             if (!showBriefing) {
                 UIBuilder.clearScenarioBriefing()
                 game.uiMessageClicked = true
+                // The restore path never reaches releaseToBattle, so scenario events get their
+                // start-of-battle evaluation here instead. Already-fired events are restored as
+                // fired and are no-ops; this is what stops a save taken before an authored `start`
+                // event fired from resuming into a battle where it never happens.
+                game.evaluateScenarioEvents()
             } else if (!campaignCeremony) {
                 openScenarioCeremony(rawBriefing)
             }
@@ -196,6 +202,10 @@ class UI(
         val start = {
             // Dialogue decisions and their immediate campaign effects are committed by now, while
             // neither the player nor the AI has received control yet: this is the true mission start.
+            // Authored `start` scenario events run FIRST, before the checkpoint is taken, for two
+            // reasons: they may depend on a flag a briefing choice just set, and "Restart mission"
+            // must reproduce the same opening situation rather than a map without them.
+            game.evaluateScenarioEvents()
             game.missionRestartCheckpoint.capture()
             game.uiMessageClicked = true
             game.processTurn()

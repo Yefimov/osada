@@ -81,6 +81,8 @@ object GameStateSerializer {
             Pair("turn", scenario.map.turn),
             Pair("map", serializeMap(scenario.map)),
             Pair("reinforcements", serializeReinforcements(scenario.reinforcements)),
+            // Authored scenario events, definitions AND progress — see GameStateEventSerialization.
+            Pair("events", serializeScenarioEvents(scenario.events)),
         )
 
     fun serializeMap(map: GameMap): dynamic {

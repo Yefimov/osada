@@ -83,19 +83,28 @@
      "role": "USPD Organiser and Shipyard Worker",
      "side": "right",
      "text": "Then stop speaking as isolated crews. The USPD, the unions and the shipyard men will open their halls, carry messages and bring workers into the streets. But they need the sailors to prove that the fleet can refuse its officers and remain united.",
-     "next": "popp-coordination",
+     "next": "artelt-confronts-popp",
      "portrait": "resources/campaigns/portraits/lothar-popp.png"
+    },
+    {
+     "id": "artelt-confronts-popp",
+     "speaker": "Karl Artelt",
+     "role": "Sailor, First Torpedo Division",
+     "side": "left",
+     "text": "You ask the men to rise with us while forty-seven comrades can hear the guards working the bolts. I stood in that hall tonight, Lothar. They did not come to be told about telegraph offices. If we march past that compound to seize a switchboard, every stoker in Kiel will know exactly what our word is worth.",
+     "next": "popp-coordination",
+     "portrait": "resources/campaigns/portraits/karl-artelt.png"
     },
     {
      "id": "popp-coordination",
      "speaker": "Lothar Popp",
      "role": "USPD Organiser and Shipyard Worker",
      "side": "right",
-     "text": "The governor is closing meeting halls, patrols are loading live ammunition, and the officers intend to separate the ships from the yards before dawn. We have one night to turn refusal into an organised movement. Where does the first column go?",
+     "text": "If the station and telegraph remain in the governor's hands, we may open one cell and lose the whole city. Nobody outside Kiel would even hear that we had risen — the first news of us would be the Admiralty's version, printed after we were finished. The halls are being closed, the patrols have live ammunition, and the officers mean to separate the ships from the yards before dawn. You have the first column, comrade. Say where it goes.",
      "choices": [
       {
        "id": "free-prisoners-first",
-       "text": "March on the detention compound first. Freeing the prisoners will prove that the movement protects its own.",
+       "text": "Break them out tonight. We take out what we can through the service gate before the alarm — and we do not pretend that everyone will come out with us.",
        "next": "garbe-prisoners",
        "effects": [
         {
@@ -111,9 +120,9 @@
         {
          "id": "n_kiel.choice.prisoners.unit",
          "type": "grantUnit",
-         "eqid": 39130,
+         "eqid": 46706,
          "experience": 60,
-         "strength": 10
+         "strength": 5
         },
         {
          "id": "n_kiel.choice.prisoners.prestige",
@@ -121,11 +130,11 @@
          "amount": 50
         }
        ],
-       "hint": "Gain an experienced sailor detachment and a small prestige award, but forgo the larger prestige and core-wide experience granted by securing communications."
+       "hint": "The men who get out tonight join you as an experienced sailor detachment; those left in the inner yard are already under the guns, and the arsenals' prestige and the army-wide drill go unclaimed."
       },
       {
        "id": "secure-communications-first",
-       "text": "Secure the railway station, telegraph and armouries first. The revolt must not be isolated before it can spread.",
+       "text": "The station, the telegraph and the armouries first. One cell opened is worth nothing if the city is sealed off by morning.",
        "next": "garbe-communications",
        "effects": [
         {
@@ -141,15 +150,15 @@
         {
          "id": "n_kiel.choice.comms.prestige",
          "type": "prestige",
-         "amount": 200
+         "amount": 140
         },
         {
          "id": "n_kiel.choice.comms.experience",
          "type": "experience",
-         "amount": 25
+         "amount": 15
         }
        ],
-       "hint": "Gain a larger prestige award and experience for every core formation, but forgo the additional sailor detachment."
+       "hint": "Prestige from the arsenals and drill for every formation you command — and the cells stay shut. The guards will open fire the moment your troops are seen near the compound, and getting there in time is then your problem."
       }
      ],
      "portrait": "resources/campaigns/portraits/lothar-popp.png"
@@ -159,7 +168,7 @@
      "speaker": "Gustav Garbe",
      "role": "Trade-Union Leader and Workers' Representative",
      "side": "right",
-     "text": "The shipyard workers will cover the march. Once the prisoners are out, send trusted men to the station before reinforcements from outside Kiel arrive.",
+     "text": "The shipyard men will hold the service gate as long as they can. Some are already out and asking for rifles — but the rest are still in the inner yard, and the alarm has been given. If you want them alive, a column has to reach that compound.",
      "next": "souchon-warning",
      "portrait": "resources/campaigns/portraits/gustav-garbe.png"
     },
@@ -168,7 +177,7 @@
      "speaker": "Gustav Garbe",
      "role": "Trade-Union Leader and Workers' Representative",
      "side": "right",
-     "text": "Good. Control of the station and telegraph will buy us time, but the imprisoned sailors cannot be left behind. Their release must follow immediately.",
+     "text": "Then the city stays connected, and that is worth a great deal. But those forty-seven are still behind that wall, and the guards will fire the moment we are seen near the naval base. Reach the compound while there is still someone in it to release.",
      "next": "souchon-warning",
      "portrait": "resources/campaigns/portraits/gustav-garbe.png"
     },
@@ -246,6 +255,13 @@
       "row": 17,
       "col": 34
      }
+    ]
+   },
+   {
+    "id": "prisoners_rescued",
+    "type": "eventFired",
+    "events": [
+     "kiel-prisoners-rescued"
     ]
    },
    {
@@ -380,20 +396,6 @@
        "n_kiel.xml.naval_base_held"
       ]
      },
-     "next": "callback-sailors"
-    },
-    {
-     "id": "callback-sailors",
-     "speaker": "Bernhard Kuhnt",
-     "role": "Chairman of the Council of 21",
-     "side": "left",
-     "portrait": "resources/campaigns/portraits/bernhard-kuhnt.png",
-     "text": "The men we took out of the detention compound have not gone home. They are here, they have brought others, and they are asking where the fighting is.",
-     "conditions": {
-      "allFlags": [
-       "sailors_liberated"
-      ]
-     },
      "next": "callback-comms"
     },
     {
@@ -406,6 +408,54 @@
      "conditions": {
       "allFlags": [
        "communications_secured"
+      ]
+     },
+     "next": "callback-prisoners-freed"
+    },
+    {
+     "id": "callback-prisoners-freed",
+     "speaker": "Marta Reimers",
+     "role": "Shipyard Workers' Courier — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/marta-reimers.png",
+     "text": "The men from the Arrestlokal are here. They came north on the first train they could stop, and they have not once let anyone forget who opened that gate. Half the sailors in this room joined because of what they were told about Kiel.",
+     "conditions": {
+      "completedActions": [
+       "n_kiel.xml.prisoners_rescued"
+      ]
+     },
+     "next": "callback-prisoners-breakout-partial"
+    },
+    {
+     "id": "callback-prisoners-breakout-partial",
+     "speaker": "Marta Reimers",
+     "role": "Shipyard Workers' Courier — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/marta-reimers.png",
+     "text": "The ones who came out through the service gate are with us, and they have not sat down since. The rest were still behind that wall when the guards cleared the yard, and they were still behind it when we left Kiel. Artelt sends word that Souchon may yet let them go. He also sends word that he is done waiting on Souchon's mercy.",
+     "conditions": {
+      "allFlags": [
+       "sailors_liberated"
+      ],
+      "failedActions": [
+       "n_kiel.xml.prisoners_rescued"
+      ]
+     },
+     "next": "callback-prisoners-abandoned"
+    },
+    {
+     "id": "callback-prisoners-abandoned",
+     "speaker": "Marta Reimers",
+     "role": "Shipyard Workers' Courier — Fictional Composite",
+     "side": "right",
+     "portrait": "resources/campaigns/portraits/marta-reimers.png",
+     "text": "I carried your despatches all that night, comrade, and I will carry this one too. The crowd went down to the Arrestlokal without us. Steinhäuser's men were across the street with the order already given - eight dead, twenty-nine carried away, and the cells still locked when the firing stopped. The telegraph worked perfectly. That is what I had to tell the families, standing in a room where the wire was the only thing that had held.",
+     "conditions": {
+      "allFlags": [
+       "communications_secured"
+      ],
+      "failedActions": [
+       "n_kiel.xml.prisoners_rescued"
       ]
      },
      "next": "parkhaus-scene"
@@ -453,7 +503,7 @@
         {
          "id": "n_willhelmsh.choice.expand.unit",
          "type": "grantUnit",
-         "eqid": 39128,
+         "eqid": 46704,
          "experience": 0,
          "strength": 10
         },
@@ -490,7 +540,7 @@
         {
          "id": "n_willhelmsh.choice.consolidate.unit",
          "type": "grantUnit",
-         "eqid": 39135,
+         "eqid": 46711,
          "experience": 20,
          "strength": 10
         }
@@ -856,14 +906,14 @@
         {
          "id": "n_frankfurt.choice.council.unit1",
          "type": "grantUnit",
-         "eqid": 39129,
+         "eqid": 46705,
          "experience": 0,
          "strength": 10
         },
         {
          "id": "n_frankfurt.choice.council.unit2",
          "type": "grantUnit",
-         "eqid": 39129,
+         "eqid": 46705,
          "experience": 0,
          "strength": 10
         },
@@ -1249,7 +1299,7 @@
         {
          "id": "n_berlin.choice.barracks.unit",
          "type": "grantUnit",
-         "eqid": 39130,
+         "eqid": 46706,
          "experience": 40,
          "strength": 10
         }

@@ -144,6 +144,17 @@ tasks.register<Exec>("verifyCampaignDialogue") {
     commandLine("python", "scripts/check_campaign_dialogue.py")
 }
 
+/*
+ * Валидация событий сценария: ссылки между событиями, координаты, идентификаторы техники.
+ */
+tasks.register<Exec>("verifyScenarioEvents") {
+    group = "verification"
+    description = "Validates authored <events> in scenario XML: references, anchors and spawn eqids"
+
+    workingDir = rootDir
+    commandLine("python", "scripts/check_scenario_events.py")
+}
+
 tasks.register<Exec>("verifyUnitDescriptions") {
     group = "verification"
     description = "Validates row-specific equipment narrative descriptions"
@@ -244,6 +255,7 @@ tasks.named("check") {
     dependsOn(
         "verifyStaticChecks",
         "verifyCampaignDialogue",
+        "verifyScenarioEvents",
         "verifyUnitDescriptions",
         "verifyTranslations",
         "verifyTrackedSources",

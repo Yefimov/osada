@@ -31,6 +31,7 @@ internal object ScenarioPlayerParser {
         Equipment.addPlayersEquipment(players) {
             players.forEach { scenario.map.addPlayer(it) }
             ScenarioReinforcementParser.parse(scenario, doc)
+            ScenarioEventParser.parse(scenario, doc)
             ScenarioHexParser.parse(scenario, doc)
             scenario.isLoaded = true
             scenario.onLoadFinished()

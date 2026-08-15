@@ -71,7 +71,14 @@ class ScenarioActionEvaluatorTest {
         map: GameMap,
         turn: Int = 5,
         coreLosses: Int = 0,
-    ) = ScenarioEndState(map = map, playerSide = PLAYER_SIDE, turn = turn, coreLosses = coreLosses)
+        firedEvents: Set<String> = emptySet(),
+    ) = ScenarioEndState(
+        map = map,
+        playerSide = PLAYER_SIDE,
+        turn = turn,
+        coreLosses = coreLosses,
+        firedEvents = firedEvents,
+    )
 
     private fun airfield() =
         ScenarioActionRule.HexesHeld(
@@ -191,6 +198,37 @@ class ScenarioActionEvaluatorTest {
         )
     }
 
+    // ---------------------------------------------------------------- event fired
+
+    @Test
+    fun eventFiredCreditsOnlyWhenTheScenarioActuallyFiredIt() {
+        val map = buildMap()
+        val rescue = ScenarioActionRule.EventFired("prisoners_rescued", listOf("kiel-prisoners-rescued"))
+
+        val rescued = endState(map, firedEvents = setOf("kiel-prisoners-rescued"))
+        val onlyAlarm = endState(map, firedEvents = setOf("kiel-prison-alarm"))
+
+        assertEquals(setOf("prisoners_rescued"), ScenarioActionEvaluator.evaluate(listOf(rescue), rescued))
+        assertTrue(
+            ScenarioActionEvaluator.evaluate(listOf(rescue), onlyAlarm).isEmpty(),
+            "another event firing must not credit this objective",
+        )
+        assertTrue(
+            ScenarioActionEvaluator.evaluate(listOf(rescue), endState(map)).isEmpty(),
+            "no event fired at all is the ordinary 'never reached the compound' case",
+        )
+    }
+
+    @Test
+    fun eventFiredWithNoNamedEventsCreditsNothing() {
+        val map = buildMap()
+        val empty = ScenarioActionRule.EventFired("broken", emptyList())
+        assertTrue(
+            ScenarioActionEvaluator.evaluate(listOf(empty), endState(map, firedEvents = setOf("anything"))).isEmpty(),
+            "an unauthored event list must fail closed like every other unevaluable rule",
+        )
+    }
+
     // ------------------------------------------------------------------ fail-safe
 
     @Test
@@ -220,14 +258,16 @@ class ScenarioActionEvaluatorTest {
                     """[
                       {"id":"airfield_held_at_end","type":"hexesHeld","hexes":[{"row":2,"col":3}]},
                       {"id":"refugees_all_rescued","type":"unitsSurvived","unitIds":[101,102],"atLeast":2},
-                      {"id":"quick","type":"finishedByTurn","turn":8}
+                      {"id":"quick","type":"finishedByTurn","turn":8},
+                      {"id":"prisoners_rescued","type":"eventFired","events":["kiel-prisoners-rescued"]}
                     ]""",
                 ),
             )
-        assertEquals(3, rules.size)
+        assertEquals(4, rules.size)
         assertEquals("airfield_held_at_end", rules[0].id)
         assertEquals(2, (rules[1] as ScenarioActionRule.UnitsSurvived).atLeast)
         assertEquals(8, (rules[2] as ScenarioActionRule.FinishedByTurn).turn)
+        assertEquals(listOf("kiel-prisoners-rescued"), (rules[3] as ScenarioActionRule.EventFired).events)
     }
 
     @Test

@@ -51,6 +51,21 @@ internal sealed class ScenarioActionRule {
         override val id: String,
         val maxLosses: Int,
     ) : ScenarioActionRule()
+
+    /**
+     * At least one of the named authored `<event>`s in the scenario XML actually fired.
+     *
+     * This is the one rule that reads a fact established DURING the battle rather than from the
+     * end-state map, because some facts are not visible in the end state at all: a rescue that
+     * converted a unit leaves nothing behind to count, and "captured at some point but later lost"
+     * is exactly the distinction end-state evaluation cannot make. The fact is still real gameplay
+     * — an event fires only when its authored trigger was genuinely satisfied — and it is still
+     * evaluated once, at scenario completion, like every other rule here.
+     */
+    data class EventFired(
+        override val id: String,
+        val events: List<String>,
+    ) : ScenarioActionRule()
 }
 
 internal data class HexRef(
@@ -64,6 +79,8 @@ internal data class ScenarioEndState(
     val playerSide: Int,
     val turn: Int,
     val coreLosses: Int,
+    /** Ids of the scenario's authored events that fired during the battle. */
+    val firedEvents: Set<String> = emptySet(),
 )
 
 internal object ScenarioActionEvaluator {
@@ -99,6 +116,8 @@ internal object ScenarioActionEvaluator {
 
                 is ScenarioActionRule.FinishedByTurn -> end.turn <= rule.turn
                 is ScenarioActionRule.CoreLossesAtMost -> end.coreLosses <= rule.maxLosses
+                is ScenarioActionRule.EventFired ->
+                    rule.events.isNotEmpty() && rule.events.any { it in end.firedEvents }
             }
         } catch (e: Throwable) {
             console.warn("[OSADA] scenario action rule '${rule.id}' failed to evaluate, treated as NOT achieved", e)
@@ -166,6 +185,8 @@ internal object ScenarioActionParser {
 
             "coreLossesAtMost" ->
                 BriefingDynamic.int(item.maxLosses)?.let { ScenarioActionRule.CoreLossesAtMost(id, it) }
+
+            "eventFired" -> ScenarioActionRule.EventFired(id, BriefingDynamic.strList(item.events))
 
             else -> {
                 console.warn("[OSADA] unknown scenario action type '$type' on '$id', rule dropped")

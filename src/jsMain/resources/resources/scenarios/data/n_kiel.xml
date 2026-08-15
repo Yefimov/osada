@@ -44,6 +44,71 @@
       <unit id="43129" owner="1" flag="118" face="0" transport="43103" exp="120" str="6"/>
     </at>
   </reinforce>
+  <!--
+    WHAT THIS MODELS - read before changing the text.
+
+    The unit these events place is NOT "the detainees standing in their cell yard being executed".
+    There is no Soviet or GDR source for a shooting of the prisoners inside the compound, and the
+    documented event on 3 November is the opposite: the demonstration that MARCHED ON the prison to
+    demand their release was fired on by Steinhaeuser's detachment - 8 dead and 29 seriously wounded
+    in the Soviet "Vsemirnaya istoriya" account, which calls it a bloody reprisal against the
+    DEMONSTRATORS. Souchon then gave way and released the arrested sailors on 4 November.
+
+    So the unit is an unarmed group CAUGHT IN THE OPEN at the compound - the men coming over the
+    wall in the breakout branch, the column at the gate with the crowd that came for them in the
+    other. Losing it means that attempt was broken up under fire and the cells stayed shut; it does
+    not mean forty-seven men were executed. Reaching it means the guards were overrun and the men
+    were let out, which is what actually happened a day later. Keep the messages on that side of
+    the line: guards firing on a breakout or a rescue attempt, never a shooting of prisoners in
+    their cells.
+
+    The forty-seven arrested Markgraf sailors are NOT a unit on the map at load time: an unarmed,
+    player-owned detachment standing inside the naval base among MG positions and towers was
+    destroyed on the loyalists' first activation, before the player could reach it, which made
+    "free the prisoners" a decision with no gameplay behind it.
+
+    Which of the first two events runs is decided by the briefing choice:
+      * `sailors_liberated`  -> `kiel-partial-breakout` fires at mission start. Part of the group
+        is already out (that is the Volksmarine detachment the choice grants); a reduced group is
+        left in the inner yard with the alarm already raised.
+      * otherwise            -> `kiel-prison-alarm` waits until revolutionary troops come within
+        TWO hexes of the compound. Until then the detainees are simply detained: there is nothing
+        on the map for the guards to shoot at, and nothing for the AI to target.
+
+    Radius two, not three, is the whole balance of the branch. Measured against the real AI
+    (scripts/verify/kiel-prisoners-probe.mjs): an unarmed unit at (10,34) is the loyalists'
+    preferred target - maximum kills, zero return fire - and four to seven of them engage it, so
+    the column is broken up in a SINGLE activation whatever its strength or entrenchment. That is
+    deliberate and it is the documented outcome; what it means is that the player has the rest of
+    the turn in which the alarm went up to break through, not several turns. Radius two is what
+    gives them that turn: the alarm goes up as the assault reaches (11,33)/(11,34), and a player
+    who has already cleared an adjacent hex can be at the gate before the guards activate.
+    Radius three would raise the alarm before the assault has begun, which is the bug this whole
+    sequence replaced.
+
+    Either way the loyalist garrison can attack them normally from its next activation onward -
+    no combat-rule exception, no third side, no Stealth abuse. Reaching the compound while any of
+    them survive fires `kiel-prisoners-rescued`, which converts the survivors into a Volksmarine
+    detachment for THIS battle only (temporaryBorrowed) and is what the campaign reads back as
+    `prisoners_rescued`.
+  -->
+  <events>
+    <event id="kiel-partial-breakout" trigger="start" row="10" col="34" allFlags="sailors_liberated" message="A detachment has escaped through the service gate. The rest are still coming over the wall, and the guards are firing on them.">
+      <spawn row="10" col="34">
+        <unit id="218" owner="0" flag="189" face="0" str="4" temporaryBorrowed="true" nodossier="true"/>
+      </spawn>
+    </event>
+    <event id="kiel-prison-alarm" trigger="proximity" row="10" col="34" radius="2" side="1" combat="1" noneFlags="sailors_liberated" message="Alarm at the detention compound! The crowd has reached the gate and the guards are firing into it. If we do not break through now, the column will be scattered and the cells will stay shut.">
+      <spawn row="10" col="34">
+        <unit id="218" owner="0" flag="189" face="0" str="9" temporaryBorrowed="true" nodossier="true"/>
+      </spawn>
+    </event>
+    <event id="kiel-prisoners-rescued" trigger="proximity" row="10" col="34" radius="1" side="1" combat="1" requiresUnitsFrom="kiel-partial-breakout,kiel-prison-alarm" removeFrom="kiel-partial-breakout,kiel-prison-alarm" message="The gates are open. The surviving sailors seize rifles and join the uprising.">
+      <spawn row="10" col="34">
+        <unit id="46706" owner="0" flag="189" face="0" exp="60" str="5" temporaryBorrowed="true"/>
+      </spawn>
+    </event>
+  </events>
   <hex row="0" col="0">
     <unit id="43232" owner="1" flag="118" face="0" exp="100" str="6"/>
   </hex>
@@ -338,9 +403,7 @@
   <hex row="10" col="33" terrain="1" name="Marinebasis">
     <unit id="728" owner="1" flag="118" face="0" exp="170" str="9"/>
   </hex>
-  <hex row="10" col="34" terrain="1" name="Marinebasis">
-    <unit id="218" owner="0" flag="189" face="0" exp="110" str="9"/>
-  </hex>
+  <hex row="10" col="34" terrain="1" name="Arrestlokal Marinebasis"/>
   <hex row="10" col="35">
     <unit id="939" owner="1" flag="118" face="0" exp="130"/>
   </hex>
