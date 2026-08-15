@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="ASCII"?>
 <map file="volarm_15.xscn" name="Petrograd" turns="14, 17, 20" date="January 26, 1920" dayturns="0" ground="1" atmosferic="3" latitude="3" iconset="1" weatherchg="0" rows="35" cols="43" eqp="eqp-kaiser" image="resources/maps/images/map_506.png" eqpv="united1">
-<player id="0" country="103" side="0" airtrans="0" navaltrans="0" support="104, 0, 0, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
-<player id="1" country="100" side="1" airtrans="0" navaltrans="0" support="152, 101, 0, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+<player id="0" country="103" side="0" airtrans="0" navaltrans="0" support="104,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+<player id="1" country="100" side="1" airtrans="0" navaltrans="0" support="152,101,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <hex row="0" col="1">
-    <unit id="34970" owner="0" flag="104" face="0" exp="40"/>
+    <unit id="42333" owner="0" flag="104" face="0" exp="40"/>
   </hex>
   <hex row="0" col="15" road="40"/>
   <hex row="0" col="17" road="40"/>
@@ -171,7 +171,7 @@
   <hex row="9" col="18" road="17"/>
   <hex row="9" col="24" terrain="3"/>
   <hex row="9" col="27" terrain="1" owner="0" flag="103">
-    <unit id="441" owner="0" flag="104" face="0" exp="144"/>
+    <unit id="616" owner="0" flag="104" face="0" exp="144"/>
   </hex>
   <hex row="9" col="28" road="18"/>
   <hex row="9" col="29" road="40"/>
@@ -186,7 +186,7 @@
   <hex row="10" col="3" terrain="9" name="Finland Gulf"/>
   <hex row="10" col="4" terrain="9" name="Finland Gulf"/>
   <hex row="10" col="5" terrain="9" name="Finland Gulf">
-    <unit id="35085" owner="0" flag="104" face="0" exp="100"/>
+    <unit id="42448" owner="0" flag="104" face="0" exp="100"/>
   </hex>
   <hex row="10" col="6" terrain="9" name="Finland Gulf"/>
   <hex row="10" col="7" terrain="9" name="Finland Gulf"/>
@@ -201,7 +201,7 @@
   <hex row="10" col="17" terrain="1" name="Petrograd"/>
   <hex row="10" col="18" terrain="1" name="Petrograd"/>
   <hex row="10" col="19" terrain="1" name="Petrograd">
-    <unit id="367" owner="0" flag="104" face="0" exp="144"/>
+    <unit id="502" owner="0" flag="104" face="0" exp="144"/>
   </hex>
   <hex row="10" col="20" terrain="1" name="Petrograd"/>
   <hex row="10" col="21" terrain="1" name="Petrograd"/>
@@ -212,7 +212,7 @@
   <hex row="10" col="30" road="130"/>
   <hex row="10" col="32" road="136"/>
   <hex row="10" col="33" terrain="1" road="130" owner="0" flag="103">
-    <unit id="441" owner="0" flag="104" face="0" exp="144"/>
+    <unit id="616" owner="0" flag="104" face="0" exp="144"/>
   </hex>
   <hex row="10" col="34" road="40"/>
   <hex row="10" col="35" road="136"/>
@@ -241,14 +241,14 @@
   <hex row="11" col="16" terrain="10" name="Neva"/>
   <hex row="11" col="17" terrain="10" road="34" name="Neva"/>
   <hex row="11" col="18" terrain="1" road="32" name="Petrograd">
-    <unit id="501" owner="0" flag="104" face="0" exp="44"/>
+    <unit id="711" owner="0" flag="104" face="0" exp="44"/>
   </hex>
   <hex row="11" col="19" terrain="1" road="32" name="Petrograd">
-    <unit id="367" owner="0" flag="104" face="0" exp="144"/>
+    <unit id="502" owner="0" flag="104" face="0" exp="144"/>
   </hex>
   <hex row="11" col="20" terrain="1" name="Petrograd"/>
   <hex row="11" col="21" terrain="1" name="Petrograd">
-    <unit id="34961" owner="0" flag="104" face="0" transport="34981" exp="144" ldr="1"/>
+    <unit id="42324" owner="0" flag="104" face="0" transport="42344" exp="144" ldr="1"/>
   </hex>
   <hex row="11" col="22" terrain="1" name="Petrograd"/>
   <hex row="11" col="23" terrain="1" name="Petrograd"/>
@@ -278,7 +278,7 @@
   <hex row="12" col="14" terrain="9" name="Finland Gulf"/>
   <hex row="12" col="15" terrain="9" name="Finland Gulf"/>
   <hex row="12" col="16" terrain="1" road="10" name="Petrograd (Petrovsky Island)" owner="0" flag="103" victory="0">
-    <unit id="502" owner="0" flag="104" face="0" exp="144"/>
+    <unit id="712" owner="0" flag="104" face="0" exp="144"/>
   </hex>
   <hex row="12" col="17" terrain="1" road="138" name="Petrograd (Petrovsky Island)"/>
   <hex row="12" col="18" terrain="10" road="34" name="Neva"/>
@@ -286,7 +286,7 @@
   <hex row="12" col="20" terrain="1" name="Petrograd (Finland Station)"/>
   <hex row="12" col="21" terrain="1" name="Petrograd"/>
   <hex row="12" col="22" terrain="1" name="Petrograd" owner="0" flag="103" victory="0">
-    <unit id="34909" owner="0" flag="104" face="0" transport="34981" exp="144" ldr="1"/>
+    <unit id="42272" owner="0" flag="104" face="0" transport="42344" exp="144" ldr="1"/>
   </hex>
   <hex row="12" col="23" terrain="1" name="Petrograd"/>
   <hex row="12" col="26" road="18"/>
@@ -302,13 +302,13 @@
   <hex row="13" col="2" terrain="9" name="Finland Gulf"/>
   <hex row="13" col="3" terrain="9" name="Finland Gulf"/>
   <hex row="13" col="4" terrain="9" name="Finland Gulf">
-    <unit id="35085" owner="0" flag="104" face="0" exp="10"/>
+    <unit id="42448" owner="0" flag="104" face="0" exp="10"/>
   </hex>
   <hex row="13" col="5" terrain="9" name="Finland Gulf"/>
   <hex row="13" col="6" terrain="9" name="Finland Gulf"/>
   <hex row="13" col="7" terrain="9" name="Finland Gulf"/>
   <hex row="13" col="8" terrain="9" name="Finland Gulf">
-    <unit id="35089" owner="0" flag="104" face="0" exp="100"/>
+    <unit id="42452" owner="0" flag="104" face="0" exp="100"/>
   </hex>
   <hex row="13" col="9" terrain="9" name="Finland Gulf"/>
   <hex row="13" col="10" terrain="9" name="Finland Gulf"/>
@@ -320,17 +320,17 @@
   <hex row="13" col="16" terrain="10" name="Neva"/>
   <hex row="13" col="17" terrain="10" name="Neva"/>
   <hex row="13" col="18" terrain="1" road="136" name="Petrograd">
-    <unit id="35038" owner="0" flag="104" face="0" transport="34978" exp="44" ldr="1"/>
+    <unit id="42401" owner="0" flag="104" face="0" transport="42341" exp="44" ldr="1"/>
   </hex>
   <hex row="13" col="19" terrain="10" road="136" name="Neva"/>
   <hex row="13" col="20" terrain="10" name="Neva"/>
   <hex row="13" col="21" terrain="10" road="34" name="Neva"/>
   <hex row="13" col="22" terrain="1" road="34" name="Petrograd"/>
   <hex row="13" col="23" terrain="1" name="Petrograd">
-    <unit id="367" owner="0" flag="104" face="0" exp="144"/>
+    <unit id="502" owner="0" flag="104" face="0" exp="144"/>
   </hex>
   <hex row="13" col="24" terrain="1" name="Petrograd">
-    <unit id="34900" owner="0" flag="104" face="0" transport="34981" exp="144"/>
+    <unit id="42263" owner="0" flag="104" face="0" transport="42344" exp="144"/>
   </hex>
   <hex row="13" col="25" road="34"/>
   <hex row="13" col="26" road="33"/>
@@ -361,24 +361,24 @@
   <hex row="14" col="17" terrain="10" name="Neva"/>
   <hex row="14" col="18" terrain="10" name="Neva"/>
   <hex row="14" col="19" terrain="1" name="Petrograd">
-    <unit id="34892" owner="0" flag="104" face="0" transport="34987" exp="50" str="8" ldr="1"/>
+    <unit id="42255" owner="0" flag="104" face="0" transport="42350" exp="50" str="8" ldr="1"/>
   </hex>
   <hex row="14" col="20" terrain="1" road="146" name="Petrograd">
-    <unit id="35034" owner="0" flag="104" face="0" transport="34978" exp="44"/>
+    <unit id="42397" owner="0" flag="104" face="0" transport="42341" exp="44"/>
   </hex>
   <hex row="14" col="21" terrain="10" name="Neva"/>
   <hex row="14" col="22" terrain="1" name="Petrograd (Moscow Station)">
-    <unit id="501" owner="0" flag="104" face="0" exp="44"/>
+    <unit id="711" owner="0" flag="104" face="0" exp="44"/>
   </hex>
   <hex row="14" col="23" terrain="1" name="Petrograd">
-    <unit id="367" owner="0" flag="104" face="0" exp="144"/>
+    <unit id="502" owner="0" flag="104" face="0" exp="144"/>
   </hex>
   <hex row="14" col="24" terrain="1" road="130" name="Petrograd"/>
   <hex row="14" col="34">
-    <unit id="441" owner="0" flag="104" face="0" exp="144"/>
+    <unit id="616" owner="0" flag="104" face="0" exp="144"/>
   </hex>
   <hex row="14" col="35">
-    <unit id="367" owner="0" flag="104" face="0" exp="144"/>
+    <unit id="502" owner="0" flag="104" face="0" exp="144"/>
   </hex>
   <hex row="14" col="38" road="18"/>
   <hex row="15" col="4" terrain="9" name="Finland Gulf"/>
@@ -392,20 +392,20 @@
   <hex row="15" col="12" terrain="9" name="Finland Gulf"/>
   <hex row="15" col="13" terrain="9" name="Finland Gulf"/>
   <hex row="15" col="14" terrain="12" name="Petrograd" owner="0" flag="103" victory="0">
-    <unit id="652" owner="0" flag="104" face="0" exp="200"/>
+    <unit id="895" owner="0" flag="104" face="0" exp="200"/>
   </hex>
   <hex row="15" col="15" terrain="1" name="Petrograd (Baltic Station)">
-    <unit id="367" owner="0" flag="104" face="0" exp="144"/>
+    <unit id="502" owner="0" flag="104" face="0" exp="144"/>
   </hex>
   <hex row="15" col="16" terrain="10" name="Neva"/>
   <hex row="15" col="17" terrain="1" name="Petrograd (Warsaw Station)">
-    <unit id="367" owner="0" flag="104" face="0" exp="144"/>
+    <unit id="502" owner="0" flag="104" face="0" exp="144"/>
   </hex>
   <hex row="15" col="18" terrain="1" name="Petrograd" owner="0" flag="103" victory="0">
-    <unit id="34900" owner="0" flag="104" face="0" transport="34981" exp="144" ldr="1"/>
+    <unit id="42263" owner="0" flag="104" face="0" transport="42344" exp="144" ldr="1"/>
   </hex>
   <hex row="15" col="19" terrain="1" name="Petrograd (Vitebsk Station)">
-    <unit id="34961" owner="0" flag="104" face="0" transport="34981" exp="144" ldr="1"/>
+    <unit id="42324" owner="0" flag="104" face="0" transport="42344" exp="144" ldr="1"/>
   </hex>
   <hex row="15" col="20" terrain="1" road="9" name="Petrograd"/>
   <hex row="15" col="21" terrain="1" road="136" name="Petrograd"/>
@@ -413,13 +413,13 @@
   <hex row="15" col="23" terrain="10" name="Neva"/>
   <hex row="15" col="24" terrain="1" name="Petrograd"/>
   <hex row="15" col="25">
-    <unit id="495" owner="0" flag="104" face="0" exp="144"/>
+    <unit id="703" owner="0" flag="104" face="0" exp="144"/>
   </hex>
   <hex row="15" col="28" terrain="2" owner="0" flag="103">
-    <unit id="34897" owner="0" flag="104" face="0" transport="34981" exp="144" ldr="1"/>
+    <unit id="42260" owner="0" flag="104" face="0" transport="42344" exp="144" ldr="1"/>
   </hex>
   <hex row="15" col="33" terrain="1" owner="0" flag="103">
-    <unit id="34908" owner="0" flag="104" face="0" transport="34981" exp="144"/>
+    <unit id="42271" owner="0" flag="104" face="0" transport="42344" exp="144"/>
   </hex>
   <hex row="15" col="37" road="18"/>
   <hex row="15" col="38" terrain="1" road="33" owner="0" flag="103"/>
@@ -438,17 +438,17 @@
   <hex row="16" col="12" terrain="9" name="Finland Gulf"/>
   <hex row="16" col="13" terrain="9" name="Finland Gulf"/>
   <hex row="16" col="14" terrain="1" road="18" name="Krasnograd">
-    <unit id="367" owner="0" flag="104" face="0" exp="144"/>
+    <unit id="502" owner="0" flag="104" face="0" exp="144"/>
   </hex>
   <hex row="16" col="15" terrain="1" name="Krasnograd"/>
   <hex row="16" col="16" terrain="1" name="Krasnograd"/>
   <hex row="16" col="17" terrain="1" name="Petrograd"/>
   <hex row="16" col="18" terrain="1" name="Petrograd">
-    <unit id="367" owner="0" flag="104" face="0" exp="144"/>
+    <unit id="502" owner="0" flag="104" face="0" exp="144"/>
   </hex>
   <hex row="16" col="19" terrain="1" name="Petrograd"/>
   <hex row="16" col="20" terrain="1" name="Petrograd">
-    <unit id="34900" owner="0" flag="104" face="0" transport="34981" exp="144" ldr="1"/>
+    <unit id="42263" owner="0" flag="104" face="0" transport="42344" exp="144" ldr="1"/>
   </hex>
   <hex row="16" col="21" terrain="1" name="Petrograd"/>
   <hex row="16" col="22" terrain="1" road="136" name="Petrograd"/>
@@ -456,7 +456,7 @@
   <hex row="16" col="24" terrain="10" name="Neva"/>
   <hex row="16" col="25" terrain="10" name="Neva"/>
   <hex row="16" col="27">
-    <unit id="495" owner="0" flag="104" face="0" exp="144"/>
+    <unit id="703" owner="0" flag="104" face="0" exp="144"/>
   </hex>
   <hex row="16" col="37" road="17"/>
   <hex row="17" col="6" road="136"/>
@@ -469,13 +469,13 @@
   <hex row="17" col="13" road="130"/>
   <hex row="17" col="14" road="49"/>
   <hex row="17" col="15">
-    <unit id="34908" owner="0" flag="104" face="0" transport="34981" exp="144" ldr="1"/>
+    <unit id="42271" owner="0" flag="104" face="0" transport="42344" exp="144" ldr="1"/>
   </hex>
   <hex row="17" col="18" terrain="1" road="17" name="Petrograd"/>
   <hex row="17" col="19" terrain="1" name="Petrograd"/>
   <hex row="17" col="20" terrain="1" name="Petrograd"/>
   <hex row="17" col="23">
-    <unit id="367" owner="0" flag="104" face="0" exp="144"/>
+    <unit id="502" owner="0" flag="104" face="0" exp="144"/>
   </hex>
   <hex row="17" col="24" road="136" name="Moscow Road"/>
   <hex row="17" col="25" road="136" name="Moscow Road"/>
@@ -484,60 +484,60 @@
   <hex row="17" col="37" road="17"/>
   <hex row="17" col="39" terrain="2" owner="0" flag="103"/>
   <hex row="18" col="8" terrain="1" road="130" name="Strelnia" owner="0" flag="103">
-    <unit id="34973" owner="0" flag="104" face="0" exp="144"/>
+    <unit id="42336" owner="0" flag="104" face="0" exp="144"/>
   </hex>
   <hex row="18" col="10" road="130"/>
   <hex row="18" col="13" road="18"/>
   <hex row="18" col="14" road="33"/>
   <hex row="18" col="16">
-    <unit id="441" owner="0" flag="104" face="0" exp="144"/>
+    <unit id="616" owner="0" flag="104" face="0" exp="144"/>
   </hex>
   <hex row="18" col="17">
-    <unit id="367" owner="0" flag="104" face="0" exp="144"/>
+    <unit id="502" owner="0" flag="104" face="0" exp="144"/>
   </hex>
   <hex row="18" col="18" terrain="1" road="17" name="Petrograd"/>
   <hex row="18" col="20">
-    <unit id="34918" owner="0" flag="104" face="0" transport="34981" exp="144"/>
+    <unit id="42281" owner="0" flag="104" face="0" transport="42344" exp="144"/>
   </hex>
   <hex row="18" col="22">
-    <unit id="441" owner="0" flag="104" face="0" exp="144"/>
+    <unit id="616" owner="0" flag="104" face="0" exp="144"/>
   </hex>
   <hex row="18" col="23">
-    <unit id="367" owner="0" flag="104" face="0" exp="144"/>
+    <unit id="502" owner="0" flag="104" face="0" exp="144"/>
   </hex>
   <hex row="18" col="26" road="144" name="Moscow Road"/>
   <hex row="18" col="28" terrain="10" name="Neva"/>
   <hex row="18" col="29" terrain="10" name="Neva"/>
   <hex row="18" col="32">
-    <unit id="441" owner="0" flag="104" face="0" exp="144"/>
+    <unit id="616" owner="0" flag="104" face="0" exp="144"/>
   </hex>
   <hex row="18" col="33">
-    <unit id="367" owner="0" flag="104" face="0" exp="144"/>
+    <unit id="502" owner="0" flag="104" face="0" exp="144"/>
   </hex>
   <hex row="18" col="37" road="17"/>
   <hex row="19" col="13" terrain="1" road="17" name="Urizk" owner="0" flag="103">
-    <unit id="34973" owner="0" flag="104" face="0" exp="144"/>
+    <unit id="42336" owner="0" flag="104" face="0" exp="144"/>
   </hex>
   <hex row="19" col="16">
-    <unit id="367" owner="0" flag="104" face="0" exp="144"/>
+    <unit id="502" owner="0" flag="104" face="0" exp="144"/>
   </hex>
   <hex row="19" col="17" road="18"/>
   <hex row="19" col="18" road="33"/>
   <hex row="19" col="24" terrain="2" name=" Airport">
-    <unit id="35038" owner="0" flag="104" face="0" transport="34978" exp="44"/>
+    <unit id="42401" owner="0" flag="104" face="0" transport="42341" exp="44"/>
   </hex>
   <hex row="19" col="25" terrain="2" name=" Airport">
-    <unit id="34909" owner="0" flag="104" face="0" transport="34981" exp="144" ldr="1"/>
+    <unit id="42272" owner="0" flag="104" face="0" transport="42344" exp="144" ldr="1"/>
   </hex>
   <hex row="19" col="26" road="9" name="Moscow Road"/>
   <hex row="19" col="27" road="144" name="Moscow Road"/>
   <hex row="19" col="29">
-    <unit id="495" owner="0" flag="104" face="0" exp="144"/>
+    <unit id="703" owner="0" flag="104" face="0" exp="144"/>
   </hex>
   <hex row="19" col="30" terrain="10" name="Neva"/>
   <hex row="19" col="31" terrain="10" name="Neva"/>
   <hex row="19" col="32">
-    <unit id="367" owner="0" flag="104" face="0" exp="144"/>
+    <unit id="502" owner="0" flag="104" face="0" exp="144"/>
   </hex>
   <hex row="19" col="35" terrain="3"/>
   <hex row="19" col="36" terrain="3"/>
@@ -547,17 +547,17 @@
   <hex row="20" col="13" road="33"/>
   <hex row="20" col="17" road="9"/>
   <hex row="20" col="19" terrain="1" name="Pulkovo" owner="0" flag="103">
-    <unit id="34973" owner="0" flag="104" face="0" exp="144"/>
+    <unit id="42336" owner="0" flag="104" face="0" exp="144"/>
   </hex>
   <hex row="20" col="24" terrain="2" name=" Airport" owner="0" flag="103" victory="0">
-    <unit id="34908" owner="0" flag="104" face="0" transport="34981" exp="144" ldr="1"/>
+    <unit id="42271" owner="0" flag="104" face="0" transport="42344" exp="144" ldr="1"/>
   </hex>
   <hex row="20" col="27" road="9" name="Moscow Road"/>
   <hex row="20" col="28">
-    <unit id="367" owner="0" flag="104" face="0" exp="144"/>
+    <unit id="502" owner="0" flag="104" face="0" exp="144"/>
   </hex>
   <hex row="20" col="29">
-    <unit id="367" owner="0" flag="104" face="0" exp="144"/>
+    <unit id="502" owner="0" flag="104" face="0" exp="144"/>
   </hex>
   <hex row="20" col="32" terrain="10" name="Neva"/>
   <hex row="20" col="36" terrain="3"/>
@@ -572,7 +572,7 @@
   <hex row="21" col="6" terrain="3"/>
   <hex row="21" col="12" road="18"/>
   <hex row="21" col="15">
-    <unit id="34918" owner="0" flag="104" face="0" transport="34981" exp="144"/>
+    <unit id="42281" owner="0" flag="104" face="0" transport="42344" exp="144"/>
   </hex>
   <hex row="21" col="18" road="144"/>
   <hex row="21" col="28" road="136" name="Moscow Road"/>
@@ -595,12 +595,12 @@
   <hex row="22" col="12" road="33"/>
   <hex row="22" col="18" road="17"/>
   <hex row="22" col="25">
-    <unit id="367" owner="0" flag="104" face="0" exp="144"/>
+    <unit id="502" owner="0" flag="104" face="0" exp="144"/>
   </hex>
   <hex row="22" col="32" road="144" name="Moscow Road"/>
   <hex row="22" col="33" terrain="10" name="Neva"/>
   <hex row="22" col="35" terrain="1" road="2" owner="0" flag="103">
-    <unit id="441" owner="0" flag="104" face="0" exp="144"/>
+    <unit id="616" owner="0" flag="104" face="0" exp="144"/>
   </hex>
   <hex row="22" col="36" road="42"/>
   <hex row="22" col="37" road="136"/>
@@ -614,10 +614,10 @@
   <hex row="23" col="18" road="9"/>
   <hex row="23" col="19" road="160"/>
   <hex row="23" col="24">
-    <unit id="495" owner="0" flag="104" face="0" exp="144"/>
+    <unit id="703" owner="0" flag="104" face="0" exp="144"/>
   </hex>
   <hex row="23" col="25">
-    <unit id="367" owner="0" flag="104" face="0" exp="144"/>
+    <unit id="502" owner="0" flag="104" face="0" exp="144"/>
   </hex>
   <hex row="23" col="32" road="9"/>
   <hex row="23" col="33" road="144" name="Moscow Road"/>
@@ -627,17 +627,17 @@
   <hex row="23" col="41" terrain="10" name="Neva"/>
   <hex row="23" col="42" terrain="10" name="Neva"/>
   <hex row="24" col="5" terrain="1" name="Ilino" owner="1" flag="100">
-    <unit id="34747" owner="1" flag="101" face="0" exp="24"/>
+    <unit id="42110" owner="1" flag="101" face="0" exp="24"/>
   </hex>
   <hex row="24" col="9" road="33"/>
   <hex row="24" col="10" terrain="1" road="129" name="Krasnoe Selo" owner="1" flag="100">
-    <unit id="34747" owner="1" flag="101" face="0" exp="124"/>
+    <unit id="42110" owner="1" flag="101" face="0" exp="124"/>
   </hex>
   <hex row="24" col="17" terrain="3"/>
   <hex row="24" col="18" road="10"/>
   <hex row="24" col="19" road="160"/>
   <hex row="24" col="21" terrain="1" name="Puschkin" owner="0" flag="103">
-    <unit id="34961" owner="0" flag="104" face="0" transport="34981" exp="144"/>
+    <unit id="42324" owner="0" flag="104" face="0" transport="42344" exp="144"/>
   </hex>
   <hex row="24" col="33" road="25" name="Moscow Road"/>
   <hex row="24" col="34" terrain="10" name="Neva"/>
@@ -667,7 +667,7 @@
   <hex row="26" col="6" road="34"/>
   <hex row="26" col="9" terrain="2"/>
   <hex row="26" col="10">
-    <unit id="37665" owner="1" flag="152" face="0" exp="180"/>
+    <unit id="45158" owner="1" flag="152" face="0" exp="180"/>
   </hex>
   <hex row="26" col="11" terrain="2"/>
   <hex row="26" col="17" terrain="3"/>
@@ -675,7 +675,7 @@
   <hex row="26" col="33" terrain="3"/>
   <hex row="26" col="34" road="144" name="Moscow Road"/>
   <hex row="26" col="35" terrain="1" owner="0" flag="103">
-    <unit id="34972" owner="0" flag="104" face="0" exp="144"/>
+    <unit id="42335" owner="0" flag="104" face="0" exp="144"/>
   </hex>
   <hex row="26" col="36" road="136"/>
   <hex row="26" col="37" road="130"/>
@@ -689,7 +689,7 @@
   <hex row="27" col="15" terrain="3"/>
   <hex row="27" col="20" road="144"/>
   <hex row="27" col="23" terrain="1" name="Sluzk" owner="0" flag="103">
-    <unit id="34972" owner="0" flag="104" face="0" exp="144"/>
+    <unit id="42335" owner="0" flag="104" face="0" exp="144"/>
   </hex>
   <hex row="27" col="32" terrain="3"/>
   <hex row="27" col="33" terrain="3"/>

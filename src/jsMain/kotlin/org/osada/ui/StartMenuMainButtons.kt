@@ -15,6 +15,7 @@ internal object StartMenuMainButtons {
         val mainButtons =
             listOf(
                 Triple("continuegame", "menu.main.continue", "primary"),
+                Triple("restartmission", "menu.main.restart_mission", ""),
                 Triple("newcampaign", "menu.main.new_campaign", ""),
                 Triple("newscenario", "menu.main.single_scenario", ""),
                 Triple("multiplayer", "menu.main.multiplayer", ""),
@@ -25,6 +26,7 @@ internal object StartMenuMainButtons {
         val menuIcons =
             mapOf(
                 "continuegame" to "star",
+                "restartmission" to "supply",
                 "newcampaign" to "map",
                 "newscenario" to "attack",
                 "multiplayer" to "map",

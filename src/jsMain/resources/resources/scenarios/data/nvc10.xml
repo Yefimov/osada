@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="ASCII"?>
 <map file="nvc10.xscn" name="Liberation of Saigon" turns="16, 18, 20" date="April 24, 1975" dayturns="0" ground="0" atmosferic="0" latitude="4" iconset="0" weatherchg="0" rows="38" cols="43" eqp="eqp-olgcw" image="resources/maps/images/map_647.png" eqpv="united1">
-  <player id="0" country="246" side="0" airtrans="0" navaltrans="0" support="247, 0, 0, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200"/>
-  <player id="1" country="253" side="1" airtrans="0" navaltrans="0" support="10, 254, 0, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200"/>
+  <player id="0" country="246" side="0" airtrans="0" navaltrans="0" support="247,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200"/>
+  <player id="1" country="253" side="1" airtrans="0" navaltrans="0" support="10,254,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200"/>
   <reinforce turn="2">
     <at row="2" col="15">
-      <unit id="41226" owner="0" flag="247" face="0"/>
+      <unit id="49254" owner="0" flag="247" face="0"/>
     </at>
     <at row="1" col="15">
-      <unit id="41226" owner="0" flag="247" face="0"/>
+      <unit id="49254" owner="0" flag="247" face="0"/>
     </at>
     <at row="3" col="16">
-      <unit id="41226" owner="0" flag="247" face="0"/>
+      <unit id="49254" owner="0" flag="247" face="0"/>
     </at>
     <at row="0" col="15">
-      <unit id="41288" owner="0" flag="247" face="0" transport="41274"/>
+      <unit id="49348" owner="0" flag="247" face="0" transport="49330"/>
     </at>
   </reinforce>
   <reinforce turn="4">
     <at row="1" col="14">
-      <unit id="41226" owner="0" flag="247" face="0"/>
+      <unit id="49254" owner="0" flag="247" face="0"/>
     </at>
     <at row="1" col="15">
-      <unit id="41226" owner="0" flag="247" face="0"/>
+      <unit id="49254" owner="0" flag="247" face="0"/>
     </at>
     <at row="1" col="16">
-      <unit id="41226" owner="0" flag="247" face="0"/>
+      <unit id="49254" owner="0" flag="247" face="0"/>
     </at>
     <at row="0" col="15">
-      <unit id="42472" owner="0" flag="247" face="0" transport="41274"/>
+      <unit id="50751" owner="0" flag="247" face="0" transport="49330"/>
     </at>
   </reinforce>
   <hex row="0" col="14" road="8"/>
@@ -73,14 +73,14 @@
   <hex row="1" col="41" terrain="4"/>
   <hex row="2" col="1" terrain="1" road="56" name="Tay Ninh West"/>
   <hex row="2" col="2" terrain="2" owner="0" flag="246" deploy="0">
-    <unit id="41226" owner="0" flag="247" face="0"/>
+    <unit id="49254" owner="0" flag="247" face="0"/>
   </hex>
   <hex row="2" col="10" terrain="10" name="Saigon river"/>
   <hex row="2" col="11" terrain="10" name="Saigon river"/>
   <hex row="2" col="15" deploy="0"/>
   <hex row="2" col="16" road="144"/>
   <hex row="2" col="19" deploy="0">
-    <unit id="41288" owner="0" flag="247" face="0" transport="41274"/>
+    <unit id="49348" owner="0" flag="247" face="0" transport="49330"/>
   </hex>
   <hex row="2" col="21" terrain="4"/>
   <hex row="2" col="22" terrain="4"/>
@@ -102,13 +102,13 @@
   <hex row="2" col="42" terrain="4"/>
   <hex row="3" col="0" terrain="1" road="26"/>
   <hex row="3" col="1" terrain="1" road="187" name="Tay Ninh West" owner="0" flag="246" victory="0" deploy="0">
-    <unit id="41288" owner="0" flag="247" face="0" transport="41274"/>
+    <unit id="49348" owner="0" flag="247" face="0" transport="49330"/>
   </hex>
   <hex row="3" col="2" terrain="1" road="176" name="Tay Ninh West"/>
   <hex row="3" col="12" terrain="10" name="Saigon river"/>
   <hex row="3" col="16" road="9" deploy="0"/>
   <hex row="3" col="17" road="144" deploy="0">
-    <unit id="41225" owner="0" flag="247" face="0" transport="41275" str="5" ldr="1"/>
+    <unit id="49253" owner="0" flag="247" face="0" transport="49331" str="5" ldr="1"/>
   </hex>
   <hex row="3" col="22" terrain="4"/>
   <hex row="3" col="23" terrain="4"/>
@@ -128,12 +128,12 @@
   <hex row="3" col="42" terrain="4" road="34"/>
   <hex row="4" col="0" terrain="1"/>
   <hex row="4" col="1" terrain="1" road="139" name="Tay Ninh West" deploy="0">
-    <unit id="41226" owner="0" flag="247" face="0"/>
+    <unit id="49254" owner="0" flag="247" face="0"/>
   </hex>
   <hex row="4" col="2" terrain="1" road="177" name="Tay Ninh West"/>
   <hex row="4" col="12" terrain="10" name="Saigon river"/>
   <hex row="4" col="17" terrain="1" road="9" name="Ap Bau Bang" owner="0" flag="246" deploy="0">
-    <unit id="41226" owner="0" flag="247" face="0"/>
+    <unit id="49254" owner="0" flag="247" face="0"/>
   </hex>
   <hex row="4" col="19" road="40"/>
   <hex row="4" col="23" terrain="4"/>
@@ -142,7 +142,7 @@
   <hex row="4" col="28" terrain="4"/>
   <hex row="4" col="30" terrain="4"/>
   <hex row="4" col="33" terrain="1" road="50" name="Phuoc Vinh" owner="0" flag="246" victory="0" deploy="0">
-    <unit id="41288" owner="0" flag="247" face="0" transport="41274"/>
+    <unit id="49348" owner="0" flag="247" face="0" transport="49330"/>
   </hex>
   <hex row="4" col="34" terrain="1" road="40" name="Phuoc Vinh"/>
   <hex row="4" col="35" road="130"/>
@@ -152,24 +152,24 @@
   <hex row="5" col="1" terrain="10" name="West Vom Co Dong river"/>
   <hex row="5" col="2" road="137"/>
   <hex row="5" col="3" terrain="1" road="136" name="Tay Ninh" owner="0" flag="246" deploy="0">
-    <unit id="41226" owner="0" flag="247" face="0"/>
+    <unit id="49254" owner="0" flag="247" face="0"/>
   </hex>
   <hex row="5" col="7" deploy="0">
-    <unit id="42472" owner="0" flag="247" face="0" transport="41274"/>
+    <unit id="50751" owner="0" flag="247" face="0" transport="49330"/>
   </hex>
   <hex row="5" col="9" deploy="0">
-    <unit id="41226" owner="0" flag="247" face="0"/>
+    <unit id="49254" owner="0" flag="247" face="0"/>
   </hex>
   <hex row="5" col="12" terrain="10" name="Saigon river"/>
   <hex row="5" col="14" deploy="0">
-    <unit id="41226" owner="0" flag="247" face="0" transport="41274"/>
+    <unit id="49254" owner="0" flag="247" face="0" transport="49330"/>
   </hex>
   <hex row="5" col="18" road="146"/>
   <hex row="5" col="20" road="144" deploy="0">
-    <unit id="41241" owner="0" flag="247" face="0"/>
+    <unit id="49287" owner="0" flag="247" face="0"/>
   </hex>
   <hex row="5" col="23" deploy="0">
-    <unit id="41222" owner="0" flag="247" face="0" transport="41274" ldr="1"/>
+    <unit id="49250" owner="0" flag="247" face="0" transport="49330" ldr="1"/>
   </hex>
   <hex row="5" col="31" road="34"/>
   <hex row="5" col="32" road="42"/>
@@ -182,7 +182,7 @@
   <hex row="6" col="2" terrain="10" name="West Vom Co Dong river"/>
   <hex row="6" col="4" terrain="1" road="144" name="Tay Ninh"/>
   <hex row="6" col="7" deploy="0">
-    <unit id="41226" owner="0" flag="247" face="0"/>
+    <unit id="49254" owner="0" flag="247" face="0"/>
   </hex>
   <hex row="6" col="12" terrain="10" name="Saigon river"/>
   <hex row="6" col="17" road="50"/>
@@ -204,7 +204,7 @@
   <hex row="7" col="3" terrain="10" name="West Vom Co Dong river"/>
   <hex row="7" col="4" road="17"/>
   <hex row="7" col="5" deploy="0">
-    <unit id="41226" owner="0" flag="247" face="0"/>
+    <unit id="49254" owner="0" flag="247" face="0"/>
   </hex>
   <hex row="7" col="12" terrain="10" name="Saigon river"/>
   <hex row="7" col="13" name="Cu Chi"/>
@@ -215,10 +215,10 @@
   <hex row="7" col="26" terrain="4"/>
   <hex row="7" col="27" road="34"/>
   <hex row="7" col="28" road="34" deploy="0">
-    <unit id="41226" owner="0" flag="247" face="0"/>
+    <unit id="49254" owner="0" flag="247" face="0"/>
   </hex>
   <hex row="7" col="31" deploy="0">
-    <unit id="41226" owner="0" flag="247" face="0"/>
+    <unit id="49254" owner="0" flag="247" face="0"/>
   </hex>
   <hex row="7" col="34" road="17"/>
   <hex row="7" col="36" terrain="9" name="LAKE"/>
@@ -240,7 +240,7 @@
   <hex row="8" col="30" terrain="3"/>
   <hex row="8" col="31" terrain="10" name="Dong Nai river"/>
   <hex row="8" col="34" road="9" deploy="0">
-    <unit id="41226" owner="0" flag="247" face="0"/>
+    <unit id="49254" owner="0" flag="247" face="0"/>
   </hex>
   <hex row="8" col="35" terrain="10" road="144" name="Dong Nai river"/>
   <hex row="8" col="38" terrain="9" name="LAKE"/>
@@ -252,7 +252,7 @@
   <hex row="9" col="4" road="17"/>
   <hex row="9" col="13" terrain="10" name="Saigon river"/>
   <hex row="9" col="16" terrain="1" road="9" name="Ben Coi" owner="1" flag="253">
-    <unit id="41875" owner="1" flag="254" face="0" exp="78"/>
+    <unit id="49973" owner="1" flag="254" face="0" exp="78"/>
   </hex>
   <hex row="9" col="17" road="154"/>
   <hex row="9" col="18" road="48"/>
@@ -281,7 +281,7 @@
   <hex row="10" col="16" terrain="3"/>
   <hex row="10" col="17" terrain="3" road="51"/>
   <hex row="10" col="18" terrain="1" road="161" name="Ben San" owner="1" flag="253">
-    <unit id="41875" owner="1" flag="254" face="0" exp="76"/>
+    <unit id="49973" owner="1" flag="254" face="0" exp="76"/>
   </hex>
   <hex row="10" col="19" terrain="3"/>
   <hex row="10" col="23" road="34"/>
@@ -293,7 +293,7 @@
   <hex row="10" col="31" road="40"/>
   <hex row="10" col="33" road="58"/>
   <hex row="10" col="34" terrain="1" road="50" name="Xa Gia Kien" owner="1" flag="253">
-    <unit id="41875" owner="1" flag="254" face="0" exp="200"/>
+    <unit id="49973" owner="1" flag="254" face="0" exp="200"/>
   </hex>
   <hex row="10" col="36" road="144"/>
   <hex row="10" col="40" terrain="9" name="LAKE"/>
@@ -308,7 +308,7 @@
   <hex row="11" col="6" terrain="1" road="184" name="Hieu Thien"/>
   <hex row="11" col="7" terrain="1" road="160" name="Hieu Thien"/>
   <hex row="11" col="11">
-    <unit id="41875" owner="1" flag="254" face="0" exp="125"/>
+    <unit id="49973" owner="1" flag="254" face="0" exp="125"/>
   </hex>
   <hex row="11" col="13" terrain="10" name="Saigon river"/>
   <hex row="11" col="15" terrain="3"/>
@@ -328,23 +328,23 @@
   <hex row="11" col="33" road="163"/>
   <hex row="11" col="34" road="161"/>
   <hex row="11" col="36" road="9">
-    <unit id="385" owner="1" flag="254" face="0" str="20"/>
+    <unit id="528" owner="1" flag="254" face="0" str="20"/>
   </hex>
   <hex row="11" col="37" road="136"/>
   <hex row="11" col="39" deploy="0">
-    <unit id="41226" owner="0" flag="247" face="0" exp="150" ldr="1"/>
+    <unit id="49254" owner="0" flag="247" face="0" exp="150" ldr="1"/>
   </hex>
   <hex row="11" col="41" deploy="0">
-    <unit id="42472" owner="0" flag="247" face="0" str="8"/>
+    <unit id="50751" owner="0" flag="247" face="0" str="8"/>
   </hex>
   <hex row="11" col="42" deploy="0">
-    <unit id="41293" owner="0" flag="247" face="0" exp="124" str="5"/>
+    <unit id="49355" owner="0" flag="247" face="0" exp="124" str="5"/>
   </hex>
   <hex row="12" col="3" terrain="10" name="West Vom Co Dong river"/>
   <hex row="12" col="4" terrain="10" road="138" name="West Vom Co Dong river"/>
   <hex row="12" col="5" road="139"/>
   <hex row="12" col="6" terrain="1" road="179" name="Hieu Thien" owner="1" flag="253">
-    <unit id="41875" owner="1" flag="254" face="0" exp="125"/>
+    <unit id="49973" owner="1" flag="254" face="0" exp="125"/>
   </hex>
   <hex row="12" col="14" terrain="10" name="Saigon river"/>
   <hex row="12" col="15" terrain="10" name="Saigon river"/>
@@ -354,12 +354,12 @@
   <hex row="12" col="19" terrain="3"/>
   <hex row="12" col="20" terrain="1" road="26" name="Co Mi"/>
   <hex row="12" col="21" terrain="1" road="161" name="Co Mi" owner="1" flag="253">
-    <unit id="41875" owner="1" flag="254" face="0" exp="90"/>
+    <unit id="49973" owner="1" flag="254" face="0" exp="90"/>
   </hex>
   <hex row="12" col="22" terrain="10" name="Dong Nai river"/>
   <hex row="12" col="28" terrain="3"/>
   <hex row="12" col="29" terrain="3" road="40">
-    <unit id="41875" owner="1" flag="254" face="0" exp="34"/>
+    <unit id="49973" owner="1" flag="254" face="0" exp="34"/>
   </hex>
   <hex row="12" col="30" terrain="3"/>
   <hex row="12" col="31" road="34"/>
@@ -367,13 +367,13 @@
   <hex row="12" col="38" road="136"/>
   <hex row="12" col="39" road="152"/>
   <hex row="12" col="40" deploy="0">
-    <unit id="41241" owner="0" flag="247" face="0" exp="155" str="8" ldr="1"/>
+    <unit id="49287" owner="0" flag="247" face="0" exp="155" str="8" ldr="1"/>
   </hex>
   <hex row="12" col="41" road="40" deploy="0">
-    <unit id="41226" owner="0" flag="247" face="0" exp="125"/>
+    <unit id="49254" owner="0" flag="247" face="0" exp="125"/>
   </hex>
   <hex row="12" col="42" deploy="0">
-    <unit id="41225" owner="0" flag="247" face="0" transport="41275" str="5" ldr="1"/>
+    <unit id="49253" owner="0" flag="247" face="0" transport="49331" str="5" ldr="1"/>
   </hex>
   <hex row="13" col="2" terrain="10" name="West Vom Co Dong river"/>
   <hex row="13" col="4" terrain="10" name="Saigon river"/>
@@ -381,12 +381,12 @@
   <hex row="13" col="6" road="137"/>
   <hex row="13" col="7" road="136"/>
   <hex row="13" col="13">
-    <unit id="385" owner="1" flag="254" face="0" str="20"/>
+    <unit id="528" owner="1" flag="254" face="0" str="20"/>
   </hex>
   <hex row="13" col="15" terrain="10" road="40" name="Saigon river"/>
   <hex row="13" col="16" terrain="3"/>
   <hex row="13" col="17" terrain="3" road="51">
-    <unit id="41911" owner="1" flag="254" face="0" transport="41901" exp="124"/>
+    <unit id="50010" owner="1" flag="254" face="0" transport="50000" exp="124"/>
   </hex>
   <hex row="13" col="18" terrain="3" road="169"/>
   <hex row="13" col="19" terrain="3" road="130"/>
@@ -396,29 +396,29 @@
   <hex row="13" col="25" road="40" name="Xa Gia Kien"/>
   <hex row="13" col="27" road="50"/>
   <hex row="13" col="28" road="34">
-    <unit id="41885" owner="1" flag="254" face="0" exp="44" str="7"/>
+    <unit id="49984" owner="1" flag="254" face="0" exp="44" str="7"/>
   </hex>
   <hex row="13" col="29" terrain="4">
-    <unit id="41881" owner="1" flag="254" face="0" transport="41903" exp="194" str="7" ldr="1"/>
+    <unit id="49979" owner="1" flag="254" face="0" transport="50002" exp="194" str="7" ldr="1"/>
   </hex>
   <hex row="13" col="30" road="130"/>
   <hex row="13" col="38">
-    <unit id="385" owner="1" flag="254" face="0" str="20"/>
+    <unit id="528" owner="1" flag="254" face="0" str="20"/>
   </hex>
   <hex row="13" col="39" terrain="3" road="35"/>
   <hex row="13" col="40" terrain="3" road="162"/>
   <hex row="13" col="41" terrain="3" deploy="0">
-    <unit id="41241" owner="0" flag="247" face="0"/>
+    <unit id="49287" owner="0" flag="247" face="0"/>
   </hex>
   <hex row="13" col="42" road="130" deploy="0">
-    <unit id="41288" owner="0" flag="247" face="0" exp="250" str="8"/>
+    <unit id="49348" owner="0" flag="247" face="0" exp="250" str="8"/>
   </hex>
   <hex row="14" col="2" terrain="10" name="West Vom Co Dong river"/>
   <hex row="14" col="3" terrain="10" name="West Vom Co Dong river"/>
   <hex row="14" col="5" terrain="10" name="Saigon river"/>
   <hex row="14" col="8" road="152"/>
   <hex row="14" col="9" terrain="1" road="170" name="Cu Chi" owner="1" flag="253">
-    <unit id="41875" owner="1" flag="254" face="0" exp="19"/>
+    <unit id="49973" owner="1" flag="254" face="0" exp="19"/>
   </hex>
   <hex row="14" col="10" terrain="1" road="48" name="Cu Chi"/>
   <hex row="14" col="13" road="34"/>
@@ -432,7 +432,7 @@
   <hex row="14" col="21" terrain="10" name="Dong Nai river"/>
   <hex row="14" col="23" road="42"/>
   <hex row="14" col="24" road="50">
-    <unit id="41918" owner="1" flag="254" face="0" str="6"/>
+    <unit id="50017" owner="1" flag="254" face="0" str="6"/>
   </hex>
   <hex row="14" col="25" terrain="3"/>
   <hex row="14" col="26" terrain="3" road="138"/>
@@ -445,10 +445,10 @@
   <hex row="14" col="39" terrain="3"/>
   <hex row="14" col="40" terrain="3"/>
   <hex row="14" col="41" terrain="3" deploy="0">
-    <unit id="41226" owner="0" flag="247" face="0"/>
+    <unit id="49254" owner="0" flag="247" face="0"/>
   </hex>
   <hex row="14" col="42" deploy="0">
-    <unit id="41288" owner="0" flag="247" face="0" transport="41274"/>
+    <unit id="49348" owner="0" flag="247" face="0" transport="49330"/>
   </hex>
   <hex row="15" col="3" terrain="10" name="West Vom Co Dong river"/>
   <hex row="15" col="5" terrain="10" name="Saigon river"/>
@@ -459,12 +459,12 @@
   <hex row="15" col="12" road="34"/>
   <hex row="15" col="13" terrain="10" name="Saigon river"/>
   <hex row="15" col="14">
-    <unit id="41911" owner="1" flag="254" face="0" transport="41901" exp="88"/>
+    <unit id="50010" owner="1" flag="254" face="0" transport="50000" exp="88"/>
   </hex>
   <hex row="15" col="15" terrain="2" owner="1" flag="253"/>
   <hex row="15" col="16" terrain="10" name="Saigon river"/>
   <hex row="15" col="17" road="17">
-    <unit id="385" owner="1" flag="254" face="0" str="20"/>
+    <unit id="528" owner="1" flag="254" face="0" str="20"/>
   </hex>
   <hex row="15" col="18" terrain="10" name="Saigon river"/>
   <hex row="15" col="19" terrain="3"/>
@@ -472,22 +472,22 @@
   <hex row="15" col="22" terrain="10" road="18" name="Dong Nai river"/>
   <hex row="15" col="23" terrain="10" name="Dong Nai river"/>
   <hex row="15" col="24" road="137">
-    <unit id="41911" owner="1" flag="254" face="0" transport="41904" exp="200" str="8"/>
+    <unit id="50010" owner="1" flag="254" face="0" transport="50003" exp="200" str="8"/>
   </hex>
   <hex row="15" col="25" terrain="4" road="136"/>
   <hex row="15" col="27" terrain="4"/>
   <hex row="15" col="28" terrain="4" road="136">
-    <unit id="41909" owner="1" flag="254" face="0" exp="100" str="5"/>
+    <unit id="50008" owner="1" flag="254" face="0" exp="100" str="5"/>
   </hex>
   <hex row="15" col="29" terrain="4" road="136"/>
   <hex row="15" col="30" terrain="3">
-    <unit id="41888" owner="1" flag="254" face="0" exp="200" str="5"/>
+    <unit id="49987" owner="1" flag="254" face="0" exp="200" str="5"/>
   </hex>
   <hex row="15" col="31" terrain="4"/>
   <hex row="15" col="33" terrain="3"/>
   <hex row="15" col="38" road="17"/>
   <hex row="15" col="39" terrain="3">
-    <unit id="385" owner="1" flag="254" face="0" str="20"/>
+    <unit id="528" owner="1" flag="254" face="0" str="20"/>
   </hex>
   <hex row="15" col="40" terrain="3"/>
   <hex row="15" col="41" terrain="3"/>
@@ -500,7 +500,7 @@
   <hex row="16" col="11" terrain="10" name="Saigon river"/>
   <hex row="16" col="12" terrain="10" name="Saigon river"/>
   <hex row="16" col="13" terrain="1" road="8" name="Ap Bac Lan" owner="1" flag="253">
-    <unit id="41880" owner="1" flag="254" face="0" exp="194" ldr="1"/>
+    <unit id="49978" owner="1" flag="254" face="0" exp="194" ldr="1"/>
   </hex>
   <hex row="16" col="14" terrain="10" name="Saigon river"/>
   <hex row="16" col="15" terrain="10" name="Saigon river"/>
@@ -518,18 +518,18 @@
   <hex row="16" col="28" terrain="4"/>
   <hex row="16" col="29" terrain="4"/>
   <hex row="16" col="30" terrain="4" road="136">
-    <unit id="41872" owner="1" flag="254" face="0" transport="41901" exp="94"/>
+    <unit id="49970" owner="1" flag="254" face="0" transport="50000" exp="94"/>
   </hex>
   <hex row="16" col="31" terrain="4" road="136"/>
   <hex row="16" col="32" terrain="3"/>
   <hex row="16" col="35" road="40"/>
   <hex row="16" col="36" terrain="2" owner="1" flag="253">
-    <unit id="41875" owner="1" flag="254" face="0" transport="41901" exp="233"/>
+    <unit id="49973" owner="1" flag="254" face="0" transport="50000" exp="233"/>
   </hex>
   <hex row="16" col="37" terrain="2" road="58"/>
   <hex row="16" col="38" road="57"/>
   <hex row="16" col="39" terrain="1" road="184" name="Xuan Loc" owner="1" flag="253" victory="1">
-    <unit id="41875" owner="1" flag="254" face="0" exp="194" str="12"/>
+    <unit id="49973" owner="1" flag="254" face="0" exp="194" str="12"/>
   </hex>
   <hex row="16" col="40" terrain="3"/>
   <hex row="16" col="41" terrain="3"/>
@@ -560,12 +560,12 @@
   <hex row="17" col="33" road="130"/>
   <hex row="17" col="34" road="34"/>
   <hex row="17" col="36" road="138">
-    <unit id="41910" owner="1" flag="254" face="0" transport="41901"/>
+    <unit id="50009" owner="1" flag="254" face="0" transport="50000"/>
   </hex>
   <hex row="17" col="37" terrain="1" name="Xuan Loc"/>
   <hex row="17" col="38" terrain="1" road="187" name="Xuan Loc" owner="1" flag="253" victory="1"/>
   <hex row="17" col="39" terrain="1" road="171" name="Xuan Loc" owner="1" flag="253" victory="1">
-    <unit id="41875" owner="1" flag="254" face="0" exp="244" str="12" ldr="1"/>
+    <unit id="49973" owner="1" flag="254" face="0" exp="244" str="12" ldr="1"/>
   </hex>
   <hex row="17" col="40" terrain="1" road="176" name="Xuan Loc"/>
   <hex row="17" col="41" terrain="3"/>
@@ -593,11 +593,11 @@
   <hex row="18" col="32" terrain="10" name="Dong Nai river"/>
   <hex row="18" col="33" terrain="10" name="Dong Nai river"/>
   <hex row="18" col="37">
-    <unit id="41880" owner="1" flag="254" face="0" transport="41903" exp="88" str="7"/>
+    <unit id="49978" owner="1" flag="254" face="0" transport="50002" exp="88" str="7"/>
   </hex>
   <hex row="18" col="38" road="147"/>
   <hex row="18" col="40" road="145">
-    <unit id="385" owner="1" flag="254" face="0" str="20"/>
+    <unit id="528" owner="1" flag="254" face="0" str="20"/>
   </hex>
   <hex row="18" col="41" terrain="3"/>
   <hex row="18" col="42" terrain="3"/>
@@ -626,11 +626,11 @@
   <hex row="19" col="36" terrain="3"/>
   <hex row="19" col="37" terrain="3"/>
   <hex row="19" col="38" terrain="1" road="17" name="Xa Cam My" owner="1" flag="253">
-    <unit id="41873" owner="1" flag="254" face="0" transport="41901" exp="244" str="6"/>
+    <unit id="49971" owner="1" flag="254" face="0" transport="50000" exp="244" str="6"/>
   </hex>
   <hex row="19" col="40" road="9"/>
   <hex row="19" col="41" terrain="3" road="130" deploy="0">
-    <unit id="41226" owner="0" flag="247" face="0" exp="200"/>
+    <unit id="49254" owner="0" flag="247" face="0" exp="200"/>
   </hex>
   <hex row="19" col="42" terrain="3" road="34"/>
   <hex row="20" col="1" road="40"/>
@@ -644,7 +644,7 @@
   <hex row="20" col="18" terrain="10" name="Saigon river"/>
   <hex row="20" col="19" terrain="10" name="Saigon river"/>
   <hex row="20" col="21" terrain="1" road="49" name="Bien Hoa">
-    <unit id="385" owner="1" flag="254" face="0" str="20"/>
+    <unit id="528" owner="1" flag="254" face="0" str="20"/>
   </hex>
   <hex row="20" col="23" terrain="10" name="Dong Nai river"/>
   <hex row="20" col="24" terrain="10" name="Dong Nai river"/>
@@ -663,13 +663,13 @@
   <hex row="20" col="37" terrain="3"/>
   <hex row="20" col="38" terrain="3" road="17"/>
   <hex row="20" col="40">
-    <unit id="385" owner="1" flag="254" face="0" str="20"/>
+    <unit id="528" owner="1" flag="254" face="0" str="20"/>
   </hex>
   <hex row="20" col="41" terrain="3" deploy="0">
-    <unit id="41226" owner="0" flag="247" face="0" exp="200"/>
+    <unit id="49254" owner="0" flag="247" face="0" exp="200"/>
   </hex>
   <hex row="20" col="42" terrain="3" deploy="0">
-    <unit id="42472" owner="0" flag="247" face="0" transport="41274" exp="244"/>
+    <unit id="50751" owner="0" flag="247" face="0" transport="49330" exp="244"/>
   </hex>
   <hex row="21" col="0" road="2"/>
   <hex row="21" col="2" road="136"/>
@@ -685,14 +685,14 @@
   <hex row="21" col="18" terrain="1" road="184" name="Saigon"/>
   <hex row="21" col="19" terrain="10" road="162" name="Saigon river"/>
   <hex row="21" col="20" terrain="1" road="42" name="Bien Hoa" owner="1" flag="253" victory="1">
-    <unit id="41874" owner="1" flag="254" face="0" transport="41902" str="5"/>
+    <unit id="49972" owner="1" flag="254" face="0" transport="50001" str="5"/>
   </hex>
   <hex row="21" col="21" terrain="1" road="129" name="Bien Hoa"/>
   <hex row="21" col="22" terrain="10" name="Dong Nai river"/>
   <hex row="21" col="24" terrain="10" name="Dong Nai river"/>
   <hex row="21" col="26" terrain="3"/>
   <hex row="21" col="27" terrain="1" road="25" name="Long Binh" owner="1" flag="253">
-    <unit id="41875" owner="1" flag="254" face="0" transport="41901" exp="244" str="15" ldr="1"/>
+    <unit id="49973" owner="1" flag="254" face="0" transport="50000" exp="244" str="15" ldr="1"/>
   </hex>
   <hex row="21" col="31" terrain="4"/>
   <hex row="21" col="32" terrain="13"/>
@@ -702,10 +702,10 @@
   <hex row="21" col="38" terrain="3" road="17"/>
   <hex row="21" col="39" terrain="3"/>
   <hex row="21" col="41" terrain="3" deploy="0">
-    <unit id="41226" owner="0" flag="247" face="0" exp="200"/>
+    <unit id="49254" owner="0" flag="247" face="0" exp="200"/>
   </hex>
   <hex row="21" col="42" terrain="3" deploy="0">
-    <unit id="41288" owner="0" flag="247" face="0" transport="41274"/>
+    <unit id="49348" owner="0" flag="247" face="0" transport="49330"/>
   </hex>
   <hex row="22" col="4" road="130"/>
   <hex row="22" col="5" terrain="10" name="West Vom Co Dong river"/>
@@ -718,12 +718,12 @@
   <hex row="22" col="13" terrain="1" road="187" name="Saigon"/>
   <hex row="22" col="14" terrain="1" road="187" name="Saigon"/>
   <hex row="22" col="15" terrain="1" road="187" name="Saigon">
-    <unit id="41874" owner="1" flag="254" face="0" transport="41902"/>
+    <unit id="49972" owner="1" flag="254" face="0" transport="50001"/>
   </hex>
   <hex row="22" col="16" terrain="1" road="187" name="Saigon [Radio Station]" owner="1" flag="253"/>
   <hex row="22" col="17" terrain="1" road="187" name="Saigon"/>
   <hex row="22" col="18" terrain="1" road="179" name="Saigon" owner="1" flag="253" victory="1">
-    <unit id="41875" owner="1" flag="254" face="0" exp="150" str="14"/>
+    <unit id="49973" owner="1" flag="254" face="0" exp="150" str="14"/>
   </hex>
   <hex row="22" col="19" terrain="10" name="Saigon river"/>
   <hex row="22" col="20" terrain="10" name="Dong Nai river"/>
@@ -754,7 +754,7 @@
   <hex row="23" col="14" terrain="1" road="187" name="Saigon"/>
   <hex row="23" col="15" terrain="1" road="187" name="Saigon [Independence Palace]" owner="1" flag="253"/>
   <hex row="23" col="16" terrain="1" road="187" name="Saigon [US Embassy]" owner="1" flag="253" victory="1">
-    <unit id="9630" owner="1" flag="10" face="0"/>
+    <unit id="12028" owner="1" flag="10" face="0"/>
   </hex>
   <hex row="23" col="17" terrain="1" name="Saigon"/>
   <hex row="23" col="18" terrain="1" road="177" name="Saigon"/>
@@ -766,7 +766,7 @@
   <hex row="23" col="34" terrain="3"/>
   <hex row="23" col="35" terrain="3"/>
   <hex row="23" col="36" terrain="3">
-    <unit id="43181" owner="0" flag="247" face="0" exp="199" str="8"/>
+    <unit id="51487" owner="0" flag="247" face="0" exp="199" str="8"/>
   </hex>
   <hex row="23" col="37" terrain="3"/>
   <hex row="23" col="38" terrain="10" road="17"/>
@@ -777,20 +777,20 @@
   <hex row="24" col="3" terrain="8"/>
   <hex row="24" col="5" terrain="10" name="West Vom Co Dong river"/>
   <hex row="24" col="9" terrain="2" owner="1" flag="253" victory="1">
-    <unit id="41920" owner="1" flag="254" face="0" exp="100"/>
+    <unit id="50019" owner="1" flag="254" face="0" exp="100"/>
   </hex>
   <hex row="24" col="10" terrain="1" road="139" name="Saigon" owner="1" flag="253"/>
   <hex row="24" col="11" terrain="1" road="155" name="Saigon"/>
   <hex row="24" col="12" terrain="1" road="187" name="Saigon"/>
   <hex row="24" col="13" terrain="1" road="187" name="Saigon"/>
   <hex row="24" col="14" terrain="1" road="187" name="Saigon [Independence Palace]" owner="1" flag="253" victory="1">
-    <unit id="41919" owner="1" flag="254" face="0"/>
+    <unit id="50018" owner="1" flag="254" face="0"/>
   </hex>
   <hex row="24" col="15" terrain="12" road="187"/>
   <hex row="24" col="16" terrain="1" road="187" name="Saigon"/>
   <hex row="24" col="17" terrain="1" road="187" name="Saigon"/>
   <hex row="24" col="18" terrain="1" road="185" name="Saigon" owner="1" flag="253" victory="1">
-    <unit id="41875" owner="1" flag="254" face="0" exp="200" str="14" ldr="1"/>
+    <unit id="49973" owner="1" flag="254" face="0" exp="200" str="14" ldr="1"/>
   </hex>
   <hex row="24" col="19" terrain="1" road="160" name="Saigon"/>
   <hex row="24" col="20" terrain="10" name="Saigon river"/>
@@ -815,10 +815,10 @@
   <hex row="25" col="6" terrain="10" name="West Vom Co Dong river"/>
   <hex row="25" col="7" terrain="10" name="West Vom Co Dong river"/>
   <hex row="25" col="8" terrain="1" name="Saigon" owner="1" flag="253">
-    <unit id="41880" owner="1" flag="254" face="0" exp="244" ldr="1"/>
+    <unit id="49978" owner="1" flag="254" face="0" exp="244" ldr="1"/>
   </hex>
   <hex row="25" col="10" terrain="2">
-    <unit id="41921" owner="1" flag="254" face="0"/>
+    <unit id="50020" owner="1" flag="254" face="0"/>
   </hex>
   <hex row="25" col="11" terrain="1" road="43" name="Saigon"/>
   <hex row="25" col="12" terrain="1" road="187" name="Saigon" owner="1" flag="253"/>
@@ -835,7 +835,7 @@
   <hex row="25" col="30" terrain="3" road="136"/>
   <hex row="25" col="31" terrain="3" road="136"/>
   <hex row="25" col="34" terrain="3">
-    <unit id="43181" owner="0" flag="247" face="0" exp="100" str="5"/>
+    <unit id="51487" owner="0" flag="247" face="0" exp="100" str="5"/>
   </hex>
   <hex row="25" col="36" terrain="3"/>
   <hex row="25" col="37" terrain="3"/>
@@ -868,7 +868,7 @@
   <hex row="26" col="36" terrain="3"/>
   <hex row="26" col="37" terrain="3"/>
   <hex row="26" col="38" terrain="3" road="17">
-    <unit id="43181" owner="0" flag="247" face="0" exp="134" str="7"/>
+    <unit id="51487" owner="0" flag="247" face="0" exp="134" str="7"/>
   </hex>
   <hex row="26" col="39" terrain="3"/>
   <hex row="26" col="40" terrain="3"/>
@@ -897,7 +897,7 @@
   <hex row="27" col="33" road="144"/>
   <hex row="27" col="34" terrain="13"/>
   <hex row="27" col="35">
-    <unit id="43181" owner="0" flag="247" face="0" exp="244"/>
+    <unit id="51487" owner="0" flag="247" face="0" exp="244"/>
   </hex>
   <hex row="27" col="37" terrain="3" road="18"/>
   <hex row="27" col="38" terrain="3" road="33"/>
@@ -905,7 +905,7 @@
   <hex row="27" col="40" terrain="3"/>
   <hex row="27" col="41" terrain="3"/>
   <hex row="27" col="42" terrain="1" name="Xa Bin Hia" owner="0" flag="246" victory="0">
-    <unit id="43181" owner="0" flag="247" face="0" exp="78" str="5"/>
+    <unit id="51487" owner="0" flag="247" face="0" exp="78" str="5"/>
   </hex>
   <hex row="28" col="6" terrain="10" name="West Vom Co Dong river"/>
   <hex row="28" col="7" terrain="10" name="West Vom Co Dong river"/>
@@ -941,7 +941,7 @@
   <hex row="29" col="11" terrain="9"/>
   <hex row="29" col="12" road="153"/>
   <hex row="29" col="13" road="178">
-    <unit id="41911" owner="1" flag="254" face="0" exp="100"/>
+    <unit id="50010" owner="1" flag="254" face="0" exp="100"/>
   </hex>
   <hex row="29" col="14" terrain="12" road="34" name="Can Duoc"/>
   <hex row="29" col="15" terrain="9"/>
@@ -966,7 +966,7 @@
   <hex row="29" col="37" road="17"/>
   <hex row="29" col="38" terrain="10"/>
   <hex row="29" col="40" terrain="3">
-    <unit id="43181" owner="0" flag="247" face="0" exp="56" str="9"/>
+    <unit id="51487" owner="0" flag="247" face="0" exp="56" str="9"/>
   </hex>
   <hex row="29" col="42" terrain="3"/>
   <hex row="30" col="6" terrain="8"/>
@@ -977,7 +977,7 @@
   <hex row="30" col="11" terrain="9"/>
   <hex row="30" col="12" road="11"/>
   <hex row="30" col="13" road="145">
-    <unit id="385" owner="1" flag="254" face="0" str="20"/>
+    <unit id="528" owner="1" flag="254" face="0" str="20"/>
   </hex>
   <hex row="30" col="14" terrain="9"/>
   <hex row="30" col="15" terrain="9"/>
@@ -1010,7 +1010,7 @@
   <hex row="31" col="11" terrain="9"/>
   <hex row="31" col="12" terrain="3"/>
   <hex row="31" col="13" road="17">
-    <unit id="41875" owner="1" flag="254" face="0"/>
+    <unit id="49973" owner="1" flag="254" face="0"/>
   </hex>
   <hex row="31" col="14" terrain="9"/>
   <hex row="31" col="15" terrain="9"/>
@@ -1059,8 +1059,8 @@
   <hex row="32" col="34" road="136"/>
   <hex row="32" col="35" road="138"/>
   <hex row="32" col="36" terrain="1" road="58" name="Phuoc Le" owner="1" flag="253" victory="1">
-    <unit id="41900" owner="1" flag="254" face="0"/>
-    <unit id="41879" owner="1" flag="254" face="0" exp="244" ldr="1"/>
+    <unit id="49999" owner="1" flag="254" face="0"/>
+    <unit id="49977" owner="1" flag="254" face="0" exp="244" ldr="1"/>
   </hex>
   <hex row="32" col="37" terrain="1" road="177" name="Phuoc Le"/>
   <hex row="32" col="38" terrain="10"/>
@@ -1071,7 +1071,7 @@
   <hex row="33" col="1" terrain="10" name="Vom Co Dong river"/>
   <hex row="33" col="3" terrain="10" name="Vom Co Dong river"/>
   <hex row="33" col="7">
-    <unit id="41226" owner="0" flag="247" face="0"/>
+    <unit id="49254" owner="0" flag="247" face="0"/>
   </hex>
   <hex row="33" col="11" terrain="9"/>
   <hex row="33" col="12" terrain="9"/>
@@ -1106,7 +1106,7 @@
   <hex row="34" col="3" road="40"/>
   <hex row="34" col="5" road="40"/>
   <hex row="34" col="9" road="40">
-    <unit id="41226" owner="0" flag="247" face="0"/>
+    <unit id="49254" owner="0" flag="247" face="0"/>
   </hex>
   <hex row="34" col="12" terrain="9"/>
   <hex row="34" col="13" terrain="10"/>
@@ -1138,7 +1138,7 @@
   <hex row="35" col="4" road="130"/>
   <hex row="35" col="6" road="136"/>
   <hex row="35" col="7" road="146">
-    <unit id="42472" owner="0" flag="247" face="0" transport="41274"/>
+    <unit id="50751" owner="0" flag="247" face="0" transport="49330"/>
   </hex>
   <hex row="35" col="8" road="34"/>
   <hex row="35" col="10" road="136"/>
@@ -1171,17 +1171,17 @@
   <hex row="36" col="3" terrain="10"/>
   <hex row="36" col="5" terrain="10"/>
   <hex row="36" col="7" terrain="1" road="33" name="My Tho" owner="0" flag="246" victory="0">
-    <unit id="43181" owner="0" flag="247" face="0" exp="100" str="5"/>
+    <unit id="51487" owner="0" flag="247" face="0" exp="100" str="5"/>
   </hex>
   <hex row="36" col="11">
-    <unit id="41226" owner="0" flag="247" face="0"/>
+    <unit id="49254" owner="0" flag="247" face="0"/>
   </hex>
   <hex row="36" col="12" terrain="10" road="136"/>
   <hex row="36" col="13" terrain="8" road="136" name="Crops"/>
   <hex row="36" col="14" terrain="8" name="Crops"/>
   <hex row="36" col="15" terrain="8" road="34" name="Crops"/>
   <hex row="36" col="16" terrain="1" road="35" name="Go Cong" owner="0" flag="246">
-    <unit id="41875" owner="1" flag="254" face="0" exp="100"/>
+    <unit id="49973" owner="1" flag="254" face="0" exp="100"/>
   </hex>
   <hex row="36" col="17" terrain="8" name="Crops"/>
   <hex row="36" col="18" terrain="8" name="Crops"/>

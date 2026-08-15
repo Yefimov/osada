@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <map file="bn8s10.xscn" name="Banja Luka Strike" turns="18, 20, 24" date="December 18, 1943" dayturns="0" ground="1" atmosferic="0" latitude="3" iconset="1" weatherchg="0" rows="38" cols="28" eqp="eqp-lxf" image="resources/maps/images/map_325.png" eqpv="united1">
-  <player id="0" country="43" side="1" airtrans="0" navaltrans="0" support="44, 0, 0, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
-  <player id="1" country="41" side="0" airtrans="0" navaltrans="0" support="8, 42, 0, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <player id="0" country="43" side="1" airtrans="0" navaltrans="0" support="44,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <player id="1" country="41" side="0" airtrans="0" navaltrans="0" support="8,42,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <hex row="0" col="1" terrain="6"/>
   <hex row="0" col="2" terrain="6"/>
   <hex row="0" col="3" terrain="6"/>
@@ -19,7 +19,7 @@
   <hex row="0" col="15" terrain="16"/>
   <hex row="0" col="16" terrain="16"/>
   <hex row="0" col="17" terrain="16">
-    <unit id="26449" owner="0" flag="44" face="0" exp="44" str="2"/>
+    <unit id="32387" owner="0" flag="44" face="0" exp="44" str="2"/>
   </hex>
   <hex row="0" col="18" terrain="16"/>
   <hex row="0" col="19" terrain="16" deploy="0"/>
@@ -35,7 +35,7 @@
   <hex row="1" col="6" terrain="3" road="40" deploy="0"/>
   <hex row="1" col="7" terrain="3" road="138"/>
   <hex row="1" col="8" terrain="1" road="50" name="Village" owner="1" flag="41">
-    <unit id="25549" owner="1" flag="42" face="0" exp="200" str="6"/>
+    <unit id="31350" owner="1" flag="42" face="0" exp="200" str="6"/>
   </hex>
   <hex row="1" col="10" terrain="16"/>
   <hex row="1" col="11" terrain="16"/>
@@ -50,7 +50,7 @@
   <hex row="1" col="22" terrain="10"/>
   <hex row="1" col="23" terrain="2"/>
   <hex row="1" col="24" terrain="2" owner="1" flag="41">
-    <unit id="25744" owner="1" flag="42" face="0" exp="44" str="5"/>
+    <unit id="31578" owner="1" flag="42" face="0" exp="44" str="5"/>
   </hex>
   <hex row="1" col="26" terrain="15" name="Vrbas River"/>
   <hex row="2" col="0" terrain="6"/>
@@ -75,7 +75,7 @@
   <hex row="2" col="21" terrain="10"/>
   <hex row="2" col="22" terrain="10"/>
   <hex row="2" col="24" terrain="11">
-    <unit id="507" owner="1" flag="42" face="0" exp="44" str="5"/>
+    <unit id="717" owner="1" flag="42" face="0" exp="44" str="5"/>
   </hex>
   <hex row="2" col="26" terrain="15" name="Vrbas River"/>
   <hex row="3" col="0" terrain="6"/>
@@ -94,7 +94,7 @@
   <hex row="3" col="16" terrain="16"/>
   <hex row="3" col="19" road="35"/>
   <hex row="3" col="20" terrain="1" road="161" name="Village" owner="1" flag="41">
-    <unit id="25598" owner="1" flag="42" face="0" exp="200" str="8"/>
+    <unit id="31406" owner="1" flag="42" face="0" exp="200" str="8"/>
   </hex>
   <hex row="3" col="21" terrain="10"/>
   <hex row="3" col="23" terrain="16"/>
@@ -132,10 +132,10 @@
   <hex row="5" col="13" road="40"/>
   <hex row="5" col="15" road="40"/>
   <hex row="5" col="16" terrain="1" road="10" name="Maglajani" owner="1" flag="41" victory="1">
-    <unit id="25598" owner="1" flag="42" face="0" exp="44" str="8"/>
+    <unit id="31406" owner="1" flag="42" face="0" exp="44" str="8"/>
   </hex>
   <hex row="5" col="17" terrain="1" road="177" name="Maglajani">
-    <unit id="25598" owner="1" flag="42" face="0" exp="44" str="8"/>
+    <unit id="31406" owner="1" flag="42" face="0" exp="44" str="8"/>
   </hex>
   <hex row="5" col="18" terrain="16"/>
   <hex row="5" col="19" terrain="16"/>
@@ -152,14 +152,14 @@
   <hex row="6" col="5" terrain="3" road="40"/>
   <hex row="6" col="6" terrain="3"/>
   <hex row="6" col="7" terrain="1" road="40" name="Village" owner="1" flag="41">
-    <unit id="25549" owner="1" flag="42" face="0" exp="200" str="6"/>
+    <unit id="31350" owner="1" flag="42" face="0" exp="200" str="6"/>
   </hex>
   <hex row="6" col="9" road="35"/>
   <hex row="6" col="10" road="162"/>
   <hex row="6" col="12" road="130"/>
   <hex row="6" col="14" road="130"/>
   <hex row="6" col="15" terrain="11">
-    <unit id="507" owner="1" flag="42" face="0" exp="44" str="5"/>
+    <unit id="717" owner="1" flag="42" face="0" exp="44" str="5"/>
   </hex>
   <hex row="6" col="16" road="130"/>
   <hex row="6" col="17" road="33"/>
@@ -195,7 +195,7 @@
   <hex row="8" col="5" terrain="3"/>
   <hex row="8" col="16" road="17"/>
   <hex row="8" col="17">
-    <unit id="25722" owner="1" flag="42" face="0" transport="25687" exp="44" str="5"/>
+    <unit id="31548" owner="1" flag="42" face="0" transport="31505" exp="44" str="5"/>
   </hex>
   <hex row="8" col="19" terrain="10"/>
   <hex row="8" col="21" terrain="16"/>
@@ -218,7 +218,7 @@
   <hex row="9" col="22" terrain="15" name="Vrbas River"/>
   <hex row="9" col="25" terrain="3" road="18"/>
   <hex row="9" col="26" terrain="3" road="40" name="Allies Deployment" owner="0" flag="43" victory="0">
-    <unit id="26156" owner="0" flag="44" face="0" exp="44" str="7"/>
+    <unit id="32048" owner="0" flag="44" face="0" exp="44" str="7"/>
   </hex>
   <hex row="9" col="27" terrain="6" road="130"/>
   <hex row="10" col="0" terrain="6"/>
@@ -253,7 +253,7 @@
   <hex row="11" col="18" terrain="10"/>
   <hex row="11" col="19" road="34"/>
   <hex row="11" col="20" terrain="11" road="40">
-    <unit id="496" owner="1" flag="42" face="0" exp="44" str="5"/>
+    <unit id="704" owner="1" flag="42" face="0" exp="44" str="5"/>
   </hex>
   <hex row="11" col="21" terrain="10" name="Vrbas River"/>
   <hex row="11" col="22" road="40"/>
@@ -272,13 +272,13 @@
   <hex row="12" col="8" road="130"/>
   <hex row="12" col="12" road="130"/>
   <hex row="12" col="14" terrain="1" road="154" name="Laktasi" owner="1" flag="41" victory="1">
-    <unit id="25578" owner="1" flag="42" face="0" exp="44" str="8"/>
+    <unit id="31384" owner="1" flag="42" face="0" exp="44" str="8"/>
   </hex>
   <hex row="12" col="15" terrain="1" road="137" name="Laktasi">
-    <unit id="25578" owner="1" flag="42" face="0" exp="44" str="8"/>
+    <unit id="31384" owner="1" flag="42" face="0" exp="44" str="8"/>
   </hex>
   <hex row="12" col="16" terrain="11">
-    <unit id="507" owner="1" flag="42" face="0" exp="44" str="5"/>
+    <unit id="717" owner="1" flag="42" face="0" exp="44" str="5"/>
   </hex>
   <hex row="12" col="17" terrain="10" road="34"/>
   <hex row="12" col="18" road="34"/>
@@ -286,7 +286,7 @@
   <hex row="12" col="21" terrain="15" name="Vrbas River"/>
   <hex row="12" col="24" road="138"/>
   <hex row="12" col="25" terrain="1" road="144" name="Village" owner="1" flag="41">
-    <unit id="25549" owner="1" flag="42" face="0" exp="200" str="6"/>
+    <unit id="31350" owner="1" flag="42" face="0" exp="200" str="6"/>
   </hex>
   <hex row="12" col="26" terrain="6"/>
   <hex row="13" col="0" terrain="6"/>
@@ -297,7 +297,7 @@
   <hex row="13" col="5" terrain="3"/>
   <hex row="13" col="10" terrain="16"/>
   <hex row="13" col="12">
-    <unit id="25578" owner="1" flag="42" face="0" exp="44" str="8"/>
+    <unit id="31384" owner="1" flag="42" face="0" exp="44" str="8"/>
   </hex>
   <hex row="13" col="14" road="17"/>
   <hex row="13" col="16" terrain="10" road="130"/>
@@ -335,7 +335,7 @@
   <hex row="15" col="11" terrain="16"/>
   <hex row="15" col="13" road="33"/>
   <hex row="15" col="14">
-    <unit id="25733" owner="1" flag="42" face="0" transport="25699" exp="44" str="5" ldr="1"/>
+    <unit id="31563" owner="1" flag="42" face="0" transport="31518" exp="44" str="5" ldr="1"/>
   </hex>
   <hex row="15" col="15" terrain="10"/>
   <hex row="15" col="17" terrain="15" name="Vrbas River"/>
@@ -393,7 +393,7 @@
   <hex row="18" col="5" terrain="3"/>
   <hex row="18" col="6" terrain="16"/>
   <hex row="18" col="7" terrain="11">
-    <unit id="496" owner="1" flag="42" face="0" exp="44" str="5"/>
+    <unit id="704" owner="1" flag="42" face="0" exp="44" str="5"/>
   </hex>
   <hex row="18" col="8" terrain="16"/>
   <hex row="18" col="9" terrain="16"/>
@@ -418,10 +418,10 @@
   <hex row="19" col="5" terrain="5" road="40"/>
   <hex row="19" col="6" terrain="3"/>
   <hex row="19" col="7" terrain="2" owner="1" flag="41">
-    <unit id="25744" owner="1" flag="42" face="0" exp="44" str="5"/>
+    <unit id="31578" owner="1" flag="42" face="0" exp="44" str="5"/>
   </hex>
   <hex row="19" col="8" terrain="2">
-    <unit id="25792" owner="1" flag="42" face="0" exp="44" str="2"/>
+    <unit id="31632" owner="1" flag="42" face="0" exp="44" str="2"/>
   </hex>
   <hex row="19" col="10" road="18"/>
   <hex row="19" col="13" terrain="10"/>
@@ -441,21 +441,21 @@
   <hex row="20" col="0" terrain="6" road="34"/>
   <hex row="20" col="1" terrain="6"/>
   <hex row="20" col="2" terrain="1" road="152" name="Village" owner="1" flag="41">
-    <unit id="25598" owner="1" flag="42" face="0" exp="200" str="8"/>
+    <unit id="31406" owner="1" flag="42" face="0" exp="200" str="8"/>
   </hex>
   <hex row="20" col="3" terrain="6" road="162"/>
   <hex row="20" col="4" terrain="6" road="34"/>
   <hex row="20" col="5" terrain="3"/>
   <hex row="20" col="6" terrain="3" road="136"/>
   <hex row="20" col="7" road="130">
-    <unit id="25730" owner="1" flag="42" face="0" transport="25712" exp="44" str="5" ldr="1"/>
+    <unit id="31558" owner="1" flag="42" face="0" transport="31534" exp="44" str="5" ldr="1"/>
   </hex>
   <hex row="20" col="8" road="40"/>
   <hex row="20" col="9" terrain="1" road="138" name="Banja Luka" owner="1" flag="41" victory="1">
-    <unit id="25598" owner="1" flag="42" face="0" exp="44" str="8"/>
+    <unit id="31406" owner="1" flag="42" face="0" exp="44" str="8"/>
   </hex>
   <hex row="20" col="10" terrain="11" road="49" name="Banja Luka">
-    <unit id="483" owner="1" flag="42" face="0" exp="144"/>
+    <unit id="685" owner="1" flag="42" face="0" exp="144"/>
   </hex>
   <hex row="20" col="11" terrain="10"/>
   <hex row="20" col="12" terrain="10"/>
@@ -480,18 +480,18 @@
   <hex row="21" col="6" terrain="3"/>
   <hex row="21" col="7" terrain="3"/>
   <hex row="21" col="8">
-    <unit id="25652" owner="1" flag="42" face="0" exp="44" str="8"/>
+    <unit id="31465" owner="1" flag="42" face="0" exp="44" str="8"/>
   </hex>
   <hex row="21" col="9" terrain="10"/>
   <hex row="21" col="10" terrain="10" road="137"/>
   <hex row="21" col="11" terrain="1" road="152" name="Banja Luka">
-    <unit id="25598" owner="1" flag="42" face="0" exp="44" str="8"/>
+    <unit id="31406" owner="1" flag="42" face="0" exp="44" str="8"/>
   </hex>
   <hex row="21" col="13" road="40"/>
   <hex row="21" col="15" terrain="10" road="40"/>
   <hex row="21" col="17" terrain="10" name="Vrbas River"/>
   <hex row="21" col="19" terrain="1" road="49" name="Village" owner="1" flag="41">
-    <unit id="25549" owner="1" flag="42" face="0" exp="200" str="6"/>
+    <unit id="31350" owner="1" flag="42" face="0" exp="200" str="6"/>
   </hex>
   <hex row="21" col="20" terrain="3"/>
   <hex row="21" col="21" terrain="6"/>
@@ -510,17 +510,17 @@
   <hex row="22" col="6" terrain="3"/>
   <hex row="22" col="7" terrain="3"/>
   <hex row="22" col="8">
-    <unit id="25633" owner="1" flag="42" face="0" exp="44" str="8" ldr="1"/>
+    <unit id="31443" owner="1" flag="42" face="0" exp="44" str="8" ldr="1"/>
   </hex>
   <hex row="22" col="9" terrain="10"/>
   <hex row="22" col="11" road="11"/>
   <hex row="22" col="12" road="162"/>
   <hex row="22" col="14" terrain="11" road="130">
-    <unit id="496" owner="1" flag="42" face="0" exp="44" str="5"/>
+    <unit id="704" owner="1" flag="42" face="0" exp="44" str="5"/>
   </hex>
   <hex row="22" col="15" terrain="10"/>
   <hex row="22" col="16" terrain="11" road="130">
-    <unit id="496" owner="1" flag="42" face="0" exp="44" str="5"/>
+    <unit id="704" owner="1" flag="42" face="0" exp="44" str="5"/>
   </hex>
   <hex row="22" col="17" terrain="15" name="Vrbas River"/>
   <hex row="22" col="18" road="138"/>
@@ -543,13 +543,13 @@
   <hex row="23" col="7" terrain="3"/>
   <hex row="23" col="9" terrain="10"/>
   <hex row="23" col="10">
-    <unit id="8052" owner="1" flag="8" face="0" exp="44" str="9"/>
+    <unit id="10179" owner="1" flag="8" face="0" exp="44" str="9"/>
   </hex>
   <hex row="23" col="12" road="144">
-    <unit id="25722" owner="1" flag="42" face="0" transport="25687" exp="44" str="5"/>
+    <unit id="31548" owner="1" flag="42" face="0" transport="31505" exp="44" str="5"/>
   </hex>
   <hex row="23" col="15" terrain="1" road="48" name="Village" owner="1" flag="41">
-    <unit id="25598" owner="1" flag="42" face="0" exp="200" str="8"/>
+    <unit id="31406" owner="1" flag="42" face="0" exp="200" str="8"/>
   </hex>
   <hex row="23" col="16" terrain="10"/>
   <hex row="23" col="17" terrain="15" name="Vrbas River"/>
@@ -572,7 +572,7 @@
   <hex row="24" col="7" terrain="3"/>
   <hex row="24" col="8" terrain="10"/>
   <hex row="24" col="10">
-    <unit id="7364" owner="1" flag="8" face="0" exp="44" str="9"/>
+    <unit id="9161" owner="1" flag="8" face="0" exp="44" str="9"/>
   </hex>
   <hex row="24" col="12" road="25"/>
   <hex row="24" col="13" road="162"/>
@@ -596,11 +596,11 @@
   <hex row="25" col="5" terrain="6"/>
   <hex row="25" col="6" terrain="3"/>
   <hex row="25" col="7" terrain="1" road="40" name="Village" owner="1" flag="41">
-    <unit id="25598" owner="1" flag="42" face="0" exp="200" str="8"/>
+    <unit id="31406" owner="1" flag="42" face="0" exp="200" str="8"/>
   </hex>
   <hex row="25" col="8" terrain="10"/>
   <hex row="25" col="10">
-    <unit id="7072" owner="1" flag="8" face="0" exp="44" str="9"/>
+    <unit id="8770" owner="1" flag="8" face="0" exp="44" str="9"/>
   </hex>
   <hex row="25" col="12" road="19"/>
   <hex row="25" col="13" terrain="16"/>
@@ -677,7 +677,7 @@
   <hex row="29" col="21" terrain="16"/>
   <hex row="29" col="24" road="25"/>
   <hex row="29" col="25" terrain="1" road="168" name="Village" owner="1" flag="41">
-    <unit id="25549" owner="1" flag="42" face="0" exp="200" str="6"/>
+    <unit id="31350" owner="1" flag="42" face="0" exp="200" str="6"/>
   </hex>
   <hex row="29" col="27" road="40"/>
   <hex row="30" col="0" terrain="6"/>
@@ -734,7 +734,7 @@
   <hex row="33" col="2" terrain="3"/>
   <hex row="33" col="8" terrain="3"/>
   <hex row="33" col="9" terrain="1" road="26" name="Village" owner="1" flag="41">
-    <unit id="25598" owner="1" flag="42" face="0" exp="200" str="8"/>
+    <unit id="31406" owner="1" flag="42" face="0" exp="200" str="8"/>
   </hex>
   <hex row="33" col="10" road="50"/>
   <hex row="33" col="12" terrain="10"/>
@@ -761,7 +761,7 @@
   <hex row="34" col="27" terrain="3"/>
   <hex row="35" col="2" terrain="15"/>
   <hex row="35" col="3" terrain="1" road="26" name="Village" owner="1" flag="41">
-    <unit id="25578" owner="1" flag="42" face="0" exp="44" str="8"/>
+    <unit id="31384" owner="1" flag="42" face="0" exp="44" str="8"/>
   </hex>
   <hex row="35" col="4" terrain="1" road="48" name="Village"/>
   <hex row="35" col="9" road="17"/>
@@ -771,7 +771,7 @@
   <hex row="35" col="18" road="18"/>
   <hex row="35" col="19" terrain="16"/>
   <hex row="35" col="20" terrain="1" road="129" name="Village" owner="1" flag="41">
-    <unit id="25549" owner="1" flag="42" face="0" exp="200" str="6"/>
+    <unit id="31350" owner="1" flag="42" face="0" exp="200" str="6"/>
   </hex>
   <hex row="35" col="21" terrain="6"/>
   <hex row="35" col="23" terrain="6"/>
@@ -783,7 +783,7 @@
   <hex row="36" col="3" road="9"/>
   <hex row="36" col="4" terrain="1" road="129" name="Village"/>
   <hex row="36" col="5" terrain="11">
-    <unit id="507" owner="1" flag="42" face="0" exp="44" str="5"/>
+    <unit id="717" owner="1" flag="42" face="0" exp="44" str="5"/>
   </hex>
   <hex row="36" col="7" terrain="16"/>
   <hex row="36" col="9" road="17"/>
@@ -806,20 +806,20 @@
   <hex row="37" col="3" terrain="16"/>
   <hex row="37" col="4" road="136"/>
   <hex row="37" col="5" road="136">
-    <unit id="25733" owner="1" flag="42" face="0" transport="25699" exp="44" str="5"/>
+    <unit id="31563" owner="1" flag="42" face="0" transport="31518" exp="44" str="5"/>
   </hex>
   <hex row="37" col="7" terrain="1" road="40" name="Krupa na Vrbasu" owner="1" flag="41" victory="1">
-    <unit id="25578" owner="1" flag="42" face="0" exp="44" str="8"/>
+    <unit id="31384" owner="1" flag="42" face="0" exp="44" str="8"/>
   </hex>
   <hex row="37" col="9" terrain="1" road="33" name="Krupa na Vrbasu">
-    <unit id="25578" owner="1" flag="42" face="0" exp="44" str="8" ldr="1"/>
+    <unit id="31384" owner="1" flag="42" face="0" exp="44" str="8" ldr="1"/>
   </hex>
   <hex row="37" col="10" terrain="10"/>
   <hex row="37" col="14" terrain="16"/>
   <hex row="37" col="16" terrain="15" name="Vrbas River"/>
   <hex row="37" col="17" terrain="16" road="18"/>
   <hex row="37" col="18" terrain="16" road="33">
-    <unit id="466" owner="1" flag="42" face="0" exp="44" str="5"/>
+    <unit id="662" owner="1" flag="42" face="0" exp="44" str="5"/>
   </hex>
   <hex row="37" col="19" terrain="6"/>
   <hex row="37" col="20" terrain="6"/>

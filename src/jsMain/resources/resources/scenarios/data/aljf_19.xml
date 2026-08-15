@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="ASCII"?>
 <map file="aljf_19.xscn" name="Sigel&#x27;s Last Command" turns="16, 20, 25" date="July 4, 1864" dayturns="0" ground="0" atmosferic="0" latitude="15" iconset="0" weatherchg="0" rows="38" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_1420.png" eqpv="united1">
-  <player id="0" country="162" side="1" airtrans="0" navaltrans="0" support="163, 0, 0, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
-  <player id="1" country="150" side="0" airtrans="0" navaltrans="0" support="151, 0, 0, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <player id="0" country="162" side="1" airtrans="0" navaltrans="0" support="163,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <player id="1" country="150" side="0" airtrans="0" navaltrans="0" support="151,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="2">
     <at row="20" col="41">
-      <unit id="754" owner="0" flag="163" face="0" transport="38469" exp="218"/>
+      <unit id="1017" owner="0" flag="163" face="0" transport="45993" exp="218"/>
     </at>
   </reinforce>
   <hex row="0" col="3" terrain="3"/>
@@ -230,13 +230,13 @@
   <hex row="10" col="0" terrain="3"/>
   <hex row="10" col="2" road="136"/>
   <hex row="10" col="3" road="136">
-    <unit id="37328" owner="1" flag="151" face="0" transport="37321" exp="46"/>
+    <unit id="44821" owner="1" flag="151" face="0" transport="44814" exp="46"/>
   </hex>
   <hex row="10" col="4">
-    <unit id="37298" owner="1" flag="151" face="0" exp="78"/>
+    <unit id="44791" owner="1" flag="151" face="0" exp="78"/>
   </hex>
   <hex row="10" col="5" terrain="1" name="Duffield">
-    <unit id="37307" owner="1" flag="151" face="0" exp="5"/>
+    <unit id="44800" owner="1" flag="151" face="0" exp="5"/>
   </hex>
   <hex row="10" col="7" terrain="3"/>
   <hex row="10" col="8" terrain="3"/>
@@ -262,7 +262,7 @@
   <hex row="10" col="42" terrain="5" name="South Mountain"/>
   <hex row="10" col="43" terrain="5" name="South Mountain"/>
   <hex row="11" col="4" terrain="1" road="136" name="Duffield" owner="1" flag="150">
-    <unit id="37312" owner="1" flag="151" face="0" exp="50"/>
+    <unit id="44805" owner="1" flag="151" face="0" exp="50"/>
   </hex>
   <hex row="11" col="5" road="136"/>
   <hex row="11" col="6" terrain="3"/>
@@ -288,7 +288,7 @@
   <hex row="11" col="42" terrain="5" name="South Mountain"/>
   <hex row="11" col="43" terrain="5" name="South Mountain"/>
   <hex row="12" col="4">
-    <unit id="37298" owner="1" flag="151" face="0" exp="180"/>
+    <unit id="44791" owner="1" flag="151" face="0" exp="180"/>
   </hex>
   <hex row="12" col="6" road="136"/>
   <hex row="12" col="7" road="136"/>
@@ -324,7 +324,7 @@
   <hex row="13" col="9" road="136"/>
   <hex row="13" col="17" road="34"/>
   <hex row="13" col="18" road="33">
-    <unit id="37288" owner="1" flag="151" face="0" exp="185"/>
+    <unit id="44781" owner="1" flag="151" face="0" exp="185"/>
   </hex>
   <hex row="13" col="19" terrain="10" name="Potomac River"/>
   <hex row="13" col="20" terrain="10" name="Potomac River"/>
@@ -354,10 +354,10 @@
   <hex row="14" col="7" terrain="3"/>
   <hex row="14" col="10" road="136"/>
   <hex row="14" col="11" road="136">
-    <unit id="37307" owner="1" flag="151" face="0" exp="90"/>
+    <unit id="44800" owner="1" flag="151" face="0" exp="90"/>
   </hex>
   <hex row="14" col="12" terrain="1" road="24" name="Keller">
-    <unit id="37299" owner="1" flag="151" face="0" exp="192"/>
+    <unit id="44792" owner="1" flag="151" face="0" exp="192"/>
   </hex>
   <hex row="14" col="13" road="168"/>
   <hex row="14" col="15" road="34"/>
@@ -389,7 +389,7 @@
   <hex row="15" col="4" terrain="5"/>
   <hex row="15" col="11" road="34"/>
   <hex row="15" col="12" road="171" owner="1" flag="150">
-    <unit id="37333" owner="1" flag="151" face="0" transport="37321" exp="190"/>
+    <unit id="44826" owner="1" flag="151" face="0" transport="44814" exp="190"/>
   </hex>
   <hex row="15" col="13" road="136"/>
   <hex row="15" col="14" road="130"/>
@@ -436,7 +436,7 @@
   <hex row="16" col="25" terrain="5" name="Maryland Heights"/>
   <hex row="16" col="26" terrain="5" name="Maryland Heights"/>
   <hex row="16" col="27" terrain="5" name="Maryland Heights" owner="0" flag="162" victory="0">
-    <unit id="38434" owner="0" flag="163" face="0" transport="38463" exp="9"/>
+    <unit id="45958" owner="0" flag="163" face="0" transport="45987" exp="9"/>
   </hex>
   <hex row="16" col="28" terrain="5" name="Blue Ridge"/>
   <hex row="16" col="29" terrain="5" name="Blue Ridge"/>
@@ -462,7 +462,7 @@
   <hex row="17" col="15" terrain="3"/>
   <hex row="17" col="16" terrain="3" road="136"/>
   <hex row="17" col="17" road="136">
-    <unit id="37294" owner="1" flag="151" face="0" exp="2"/>
+    <unit id="44787" owner="1" flag="151" face="0" exp="2"/>
   </hex>
   <hex row="17" col="18" terrain="10" name="Potomac River"/>
   <hex row="17" col="19" terrain="10" name="Potomac River"/>
@@ -493,10 +493,10 @@
   <hex row="18" col="14" terrain="3"/>
   <hex row="18" col="16" terrain="3"/>
   <hex row="18" col="17" terrain="5" name="Bolivar Heights" owner="1" flag="150" victory="1">
-    <unit id="37334" owner="1" flag="151" face="0" exp="78"/>
+    <unit id="44827" owner="1" flag="151" face="0" exp="78"/>
   </hex>
   <hex row="18" col="18" road="136">
-    <unit id="37288" owner="1" flag="151" face="0" exp="39"/>
+    <unit id="44781" owner="1" flag="151" face="0" exp="39"/>
   </hex>
   <hex row="18" col="19" terrain="1" road="144" name="Harpers Ferry"/>
   <hex row="18" col="20" terrain="10" name="Potomac River"/>
@@ -505,7 +505,7 @@
   <hex row="18" col="23" terrain="10" name="Potomac River"/>
   <hex row="18" col="24" terrain="5" road="144" name="Maryland Heights"/>
   <hex row="18" col="25" terrain="3">
-    <unit id="38447" owner="0" flag="163" face="0" transport="38466" exp="168"/>
+    <unit id="45971" owner="0" flag="163" face="0" transport="45990" exp="168"/>
   </hex>
   <hex row="18" col="26" terrain="5" name="Maryland Heights"/>
   <hex row="18" col="27" terrain="5" name="Maryland Heights"/>
@@ -533,7 +533,7 @@
   <hex row="19" col="18" terrain="5" name="Bolivar Heights"/>
   <hex row="19" col="19" terrain="1" road="25" name="Harpers Ferry"/>
   <hex row="19" col="20" terrain="1" name="Harpers Ferry">
-    <unit id="37305" owner="1" flag="151" face="0" exp="255" ldr="1"/>
+    <unit id="44798" owner="1" flag="151" face="0" exp="255" ldr="1"/>
   </hex>
   <hex row="19" col="21" terrain="1" road="40" name="Harpers Ferry"/>
   <hex row="19" col="22" terrain="10" name="Potomac River"/>
@@ -564,22 +564,22 @@
   <hex row="20" col="12" terrain="3"/>
   <hex row="20" col="13" terrain="3"/>
   <hex row="20" col="15">
-    <unit id="37288" owner="1" flag="151" face="0" exp="247"/>
+    <unit id="44781" owner="1" flag="151" face="0" exp="247"/>
   </hex>
   <hex row="20" col="16" terrain="5" name="Bolivar Heights"/>
   <hex row="20" col="17" terrain="5" name="Bolivar Heights"/>
   <hex row="20" col="18" terrain="5" name="Bolivar Heights"/>
   <hex row="20" col="19" terrain="1" road="19" name="Harpers Ferry">
-    <unit id="37291" owner="1" flag="151" face="0" transport="37315" exp="99" str="12" ldr="1"/>
+    <unit id="44784" owner="1" flag="151" face="0" transport="44808" exp="99" str="12" ldr="1"/>
   </hex>
   <hex row="20" col="20" terrain="1" road="170" name="Harpers Ferry" owner="1" flag="150" victory="1">
-    <unit id="37334" owner="1" flag="151" face="0" exp="165" ldr="1"/>
+    <unit id="44827" owner="1" flag="151" face="0" exp="165" ldr="1"/>
   </hex>
   <hex row="20" col="21" terrain="1" road="130" name="Harpers Ferry">
-    <unit id="37288" owner="1" flag="151" face="0" exp="191"/>
+    <unit id="44781" owner="1" flag="151" face="0" exp="191"/>
   </hex>
   <hex row="20" col="22" terrain="1" road="168" name="Harpers Ferry">
-    <unit id="37300" owner="1" flag="151" face="0" exp="100" str="14"/>
+    <unit id="44793" owner="1" flag="151" face="0" exp="100" str="14"/>
   </hex>
   <hex row="20" col="23" road="130"/>
   <hex row="20" col="24" terrain="10" road="34" name="Potomac River"/>
@@ -610,7 +610,7 @@
   <hex row="21" col="15" terrain="5" name="Bolivar Heights"/>
   <hex row="21" col="16" terrain="5" name="Bolivar Heights"/>
   <hex row="21" col="17" terrain="5" name="Bolivar Heights" owner="1" flag="150" victory="1">
-    <unit id="37334" owner="1" flag="151" face="0" exp="150"/>
+    <unit id="44827" owner="1" flag="151" face="0" exp="150"/>
   </hex>
   <hex row="21" col="18" terrain="5" name="Bolivar Heights"/>
   <hex row="21" col="19" terrain="1" road="33" name="Harpers Ferry"/>
@@ -638,7 +638,7 @@
   <hex row="21" col="41" terrain="3"/>
   <hex row="22" col="4" terrain="3"/>
   <hex row="22" col="7" road="17">
-    <unit id="37294" owner="1" flag="151" face="0" exp="89"/>
+    <unit id="44787" owner="1" flag="151" face="0" exp="89"/>
   </hex>
   <hex row="22" col="8" terrain="3"/>
   <hex row="22" col="9" road="34"/>
@@ -650,10 +650,10 @@
   <hex row="22" col="15" terrain="5" name="Bolivar Heights"/>
   <hex row="22" col="16" terrain="5" name="Bolivar Heights"/>
   <hex row="22" col="17" terrain="3" road="34">
-    <unit id="37288" owner="1" flag="151" face="0" exp="47"/>
+    <unit id="44781" owner="1" flag="151" face="0" exp="47"/>
   </hex>
   <hex row="22" col="18" road="34">
-    <unit id="37288" owner="1" flag="151" face="0" exp="156"/>
+    <unit id="44781" owner="1" flag="151" face="0" exp="156"/>
   </hex>
   <hex row="22" col="19" terrain="10" name="Shenandoah River"/>
   <hex row="22" col="20" terrain="10" name="Shenandoah River"/>
@@ -687,10 +687,10 @@
   <hex row="23" col="4" terrain="3" road="40"/>
   <hex row="23" col="5" terrain="3" road="130"/>
   <hex row="23" col="6" terrain="1" road="56" name="Halltown">
-    <unit id="37303" owner="1" flag="151" face="0" exp="157"/>
+    <unit id="44796" owner="1" flag="151" face="0" exp="157"/>
   </hex>
   <hex row="23" col="7" terrain="1" road="163" name="Halltown" owner="1" flag="150">
-    <unit id="37302" owner="1" flag="151" face="0" exp="39" str="12" ldr="1"/>
+    <unit id="44795" owner="1" flag="151" face="0" exp="39" str="12" ldr="1"/>
   </hex>
   <hex row="23" col="8" road="34"/>
   <hex row="23" col="12" terrain="3" road="130"/>
@@ -845,10 +845,10 @@
   <hex row="28" col="4" terrain="3"/>
   <hex row="28" col="8" road="136"/>
   <hex row="28" col="9" road="136">
-    <unit id="37328" owner="1" flag="151" face="0" transport="37321" exp="186"/>
+    <unit id="44821" owner="1" flag="151" face="0" transport="44814" exp="186"/>
   </hex>
   <hex row="28" col="10">
-    <unit id="37299" owner="1" flag="151" face="0" exp="85"/>
+    <unit id="44792" owner="1" flag="151" face="0" exp="85"/>
   </hex>
   <hex row="28" col="13" terrain="10" name="Shenandoah River"/>
   <hex row="28" col="14" terrain="10" name="Shenandoah River"/>
@@ -875,10 +875,10 @@
   <hex row="29" col="5" terrain="13"/>
   <hex row="29" col="7" terrain="13"/>
   <hex row="29" col="9" road="18">
-    <unit id="37307" owner="1" flag="151" face="0" exp="170"/>
+    <unit id="44800" owner="1" flag="151" face="0" exp="170"/>
   </hex>
   <hex row="29" col="10" terrain="1" road="160" name="Millvill" owner="1" flag="150">
-    <unit id="37294" owner="1" flag="151" face="0" exp="170"/>
+    <unit id="44787" owner="1" flag="151" face="0" exp="170"/>
   </hex>
   <hex row="29" col="11" terrain="10" name="Shenandoah River"/>
   <hex row="29" col="12" terrain="10" name="Shenandoah River"/>

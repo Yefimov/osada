@@ -83,7 +83,8 @@ internal class MapInputController(
             return
         }
         val currentPlayerSide = map.currentPlayer?.side ?: 0
-        val unit = clickHandler.resolveVisibleUnit(hex, currentPlayerSide)
+        val currentPlayerId = map.currentPlayer?.id ?: -1
+        val unit = clickHandler.resolveVisibleUnit(hex, currentPlayerSide, currentPlayerId)
         if (kind == MapActivationKind.INSPECT) {
             inspect(map, cell, unit, touch)
             return

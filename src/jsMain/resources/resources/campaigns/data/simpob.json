@@ -358,7 +358,7 @@
   "intro": "The tide turns: Chistopol<br><br>May 26th, 1919<br><br>The spring wasn't over yet, and it seemed that we were about to repel the last counterattacks made by the Bolsheviks. Reaching the Volga wasn't a long term plan anymore. Victory was so close that I could almost grasp it. <br><br>But there was a last effort that we had to do. Most of the Second Red Army had gathered in Chistopol, and it had launched a new, desperate counteroffensive against us. I trusted my men, but I knew that the attack of our enemies was dangerous. If we didn't stop the communists Bugulma would fall, Ufa would be in danger, and all our front could fall apart. That could not happen. Not then. Not when the Volga was so near. We had to prevail.<br><br>Victory conditions:<br>- After 19 turns, you must hold 5 VHs for a BV, 4 VHs for a V, and 3 VHs for a TacV.",
   "outcome": {
    "briliant": {
-    "goto": 10,
+    "goto": 17,
     "gotoplayed": [
      0,
      0
@@ -367,7 +367,7 @@
     "text": "When we finally liberated Chistopol I felt a great relief. At last we had brought the war back to the Volga. If we kept a cool head, the Soviets would never retake the initiative and we would eventually win this terrible civil war. The nightmarish revolution would be over, and Russia would be saved."
    },
    "victory": {
-    "goto": 10,
+    "goto": 17,
     "gotoplayed": [
      0,
      0
@@ -376,7 +376,7 @@
     "text": "When we finally liberated Chistopol I felt a great relief. At last we had brought the war back to the Volga. If we kept a cool head, the Soviets would never retake the initiative and we would eventually win this terrible civil war. The nightmarish revolution would be over, and Russia would be saved."
    },
    "tactical": {
-    "goto": 10,
+    "goto": 17,
     "gotoplayed": [
      0,
      0
@@ -393,13 +393,60 @@
     "prestige": 300,
     "text": "The Bolsheviks were unstoppable. After some days of fighting we had to leave Bugulma, retreat to Ufa and build a new line of defence there."
    }
+  },
+  "briefing": {
+   "dialogue": [
+    {
+     "id": "simpob_09-choice",
+     "speaker": "General Staff",
+     "role": "Path selection",
+     "side": "right",
+     "text": "The campaign divides here. Choose the path you will follow.",
+     "choices": [
+      {
+       "id": "simpob_09-choice.0",
+       "text": "Retreat path",
+       "effects": [
+        {
+         "id": "simpob_09-choice.0.route",
+         "type": "route",
+         "scenarioIndex": 17
+        },
+        {
+         "id": "simpob_09-choice.0.flag",
+         "type": "setFlag",
+         "flag": "simpob_simpob_09_choice_0"
+        }
+       ],
+       "hint": "You've chosen to play Kolchak's retreat into Siberia."
+      },
+      {
+       "id": "simpob_09-choice.1",
+       "text": "Victory path.",
+       "effects": [
+        {
+         "id": "simpob_09-choice.1.route",
+         "type": "route",
+         "scenarioIndex": 10
+        },
+        {
+         "id": "simpob_09-choice.1.flag",
+         "type": "setFlag",
+         "flag": "simpob_simpob_09_choice_1"
+        }
+       ],
+       "hint": "You've chosen to play the victory path."
+      }
+     ]
+    }
+   ]
   }
  },
  {
   "id": 9,
   "scenario": "simpob_09.xml",
   "startprestige": 0,
-  "intro": "This entry appears to be an unused legacy node in the original campaign tree: the source CSV contains no battle title, briefing, date, location, countries, or outcome text, and every result loops back to the opening Komuch scenario. Rather than invent a battle that may never have been authored, OSADA should treat this scenario as a dormant placeholder and hide it from normal campaign selection. If the XML contains recoverable map or objective data, it can later be rebuilt as a bonus operation between Chistopol and Kazan; until then, no historical selling description can be supplied responsibly.",
+  "intro": "",
   "outcome": {
    "briliant": {
     "goto": 0,
@@ -886,7 +933,7 @@
   "intro": "Not dead yet: The Tobol offensive (I)<br><br>September 1st, 1919<br><br>All our efforts during the summer of 1919 had allowed us to retreat in order to the relative protection of the river Ishim. However, we knew that if we didn't launch a counteroffensive, the Red Army would destroy us completely before the next year. In fact, the Soviets acted as if they had already defeated us. Having learnt nothing from their setbacks at Ekaterinburg and Chelyabinsk, their quick advances in Siberia had convinced them that we were a bunch of corrupt incompetents, and they even had started to retire some units from the front, in order to send them against Denikin's Armed Forces of Southern Russia, or even further to the west, against the Polish Army.<br><br>The arrogance of the Bolsheviks gave us a chance to surprise them. As I've already written before, in July Kolchak had ordered the reorganization of the front and the unification of the Siberian Army and Western Army. General Diterikhs had been appointed as Commander in Chief of the Eastern Front. New armies and independent groups were created, mainly the 1st, the 2nd and the 3rd Armies. When the Tobol offensive began, I was serving in the latter.<br><br>Once the reorganization was complete, Diterikhs prepared our armies for the counteroffensive, which would begin in September. All our units would participate, but the 3rd Army, along with the Separate Siberian Cossack Corps, would inflict the main blow along the Omsk-Petropavlovsk-Kurgan railroad line, on our left flank. While our other units pinned the enemy down near the Ishim, the Cossacks and the 3rd Army would penetrate deeply into the rear of the 5th Red Army, allowing the encirclement and destruction of the Bolshevik divisions that were deployed further to the north.<br><br>It was a daring plan, and it needed to be perfectly executed if we were to have any chances of success. As the beginning of the offensive came close, I was overwhelmed by anxiety. I knew that this would be our last chance. If we let the Soviets live to fight another day, they would attack again soon, stronger that ever. And if that moment came, we'd have nothing left to defend ourselves.<br><br>Victory conditions:<br>- Take all the VHs.<br><br>Special note:<br>- You can buy equipment from the Cossack Hosts in this scenario.",
   "outcome": {
    "briliant": {
-    "goto": 22,
+    "goto": 23,
     "gotoplayed": [
      0,
      0
@@ -921,13 +968,60 @@
     "prestige": 100,
     "text": "I can't understand what happened to us. We tried everything, but nothing worked. The Reds resisted. We threw everything that we had at them, and they were still capable of fighting back. Our offensive was a complete failure.<br><br>My last hopes were gone. We were doomed. Soon we'd have to choose between death, a life under the Bolshevik yoke, or leaving Russia forever.<br><br>It hasn't passed one single day that I haven't thought that, if we had advanced faster, or if the Cossacks had been more disciplined, we could have actually encircled the Soviet Army. But we failed at the worst possible time. We were facing a bleak future, and things would get much worse before the war was over."
    }
+  },
+  "briefing": {
+   "dialogue": [
+    {
+     "id": "simpob_21-choice",
+     "speaker": "General Staff",
+     "role": "Path selection",
+     "side": "right",
+     "text": "The campaign divides here. Choose the path you will follow.",
+     "choices": [
+      {
+       "id": "simpob_21-choice.0",
+       "text": "Retreat path",
+       "effects": [
+        {
+         "id": "simpob_21-choice.0.route",
+         "type": "route",
+         "scenarioIndex": 23
+        },
+        {
+         "id": "simpob_21-choice.0.flag",
+         "type": "setFlag",
+         "flag": "simpob_simpob_21_choice_0"
+        }
+       ],
+       "hint": "You've chosen to play Kappel's retreat into Siberia."
+      },
+      {
+       "id": "simpob_21-choice.1",
+       "text": "Treaty path.",
+       "effects": [
+        {
+         "id": "simpob_21-choice.1.route",
+         "type": "route",
+         "scenarioIndex": 22
+        },
+        {
+         "id": "simpob_21-choice.1.flag",
+         "type": "setFlag",
+         "flag": "simpob_simpob_21_choice_1"
+        }
+       ],
+       "hint": "You've chosen to play the treaty path."
+      }
+     ]
+    }
+   ]
   }
  },
  {
   "id": 21,
   "scenario": "simpob_21.xml",
   "startprestige": 0,
-  "intro": "This entry appears to be a second unused legacy node in the original campaign tree. No battle name, briefing, date, location, participating countries, or outcome narrative survives in the extracted data, and all four results incorrectly return to the campaign’s first scenario. OSADA should therefore mark it as a dormant placeholder rather than present it as a finished battle. The position between the first and second Tobol operations suggests that it may once have been intended as an alternate branch, but assigning a specific historical event would be speculation without the original scenario metadata.",
+  "intro": "",
   "outcome": {
    "briliant": {
     "goto": 0,

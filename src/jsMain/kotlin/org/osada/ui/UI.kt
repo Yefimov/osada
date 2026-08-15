@@ -194,6 +194,9 @@ class UI(
      *  drawable. Whichever finishes second calls the other's completion. */
     private fun releaseToBattle() {
         val start = {
+            // Dialogue decisions and their immediate campaign effects are committed by now, while
+            // neither the player nor the AI has received control yet: this is the true mission start.
+            game.missionRestartCheckpoint.capture()
             game.uiMessageClicked = true
             game.processTurn()
         }

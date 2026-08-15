@@ -3,6 +3,7 @@ package org.osada
 import org.osada.model.Equipment
 import org.osada.model.getPlayers
 import org.osada.model.resetEquipment
+import kotlin.js.JSON
 import kotlin.js.Promise
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -13,6 +14,66 @@ import kotlin.test.assertTrue
  * Integration tests for [GameState] using a real save file as a fixture.
  */
 class GameStateIntegrationTest {
+    /**
+     * The embedded fixtures exercise restore/round-trip behaviour, not migration from builds that
+     * predate the public release. Keep their payload at the current format without preserving a
+     * deliberately unsupported legacy-format test case.
+     */
+    private fun currentFormatFixture(data: String): String {
+        val parsed = JSON.parse<dynamic>(data)
+        parsed.fmt = GameStateSerializer.SAVE_FORMAT_VERSION
+        return JSON.stringify(parsed)
+    }
+
+    @Test
+    fun missionRestartRestoresImmutableOpeningCheckpoint(): Promise<Unit> {
+        Equipment.resetEquipment()
+        Equipment.asyncLoad = false
+        js(
+            """
+            if (typeof window.scenariolist === 'undefined') {
+                window.scenariolist = [
+                    ['Test Theater'],
+                    ['bizerte.xml','Bizerte','Bizerte scenario',[],[],'eqp-adlerkorps']
+                ];
+            }
+        """,
+        )
+
+        val game = Game()
+        game.state = GameState(game)
+        game.missionRestartCheckpoint.clear()
+
+        return Promise { resolve, reject ->
+            val loaded =
+                game.state?.restoreFromString(currentFormatFixture(BIZERTE_SAVE_JSON)) {
+                    try {
+                        game.missionRestartCheckpoint.capture()
+                        assertTrue(game.missionRestartCheckpoint.isAvailable())
+                        game.scenario?.map?.turn = 9
+                        // A second capture attempt inside the same mission must not overwrite
+                        // the opening payload with the now-progressed state.
+                        game.missionRestartCheckpoint.capture()
+
+                        val restarted =
+                            game.missionRestartCheckpoint.restart {
+                                try {
+                                    assertEquals(1, game.scenario?.map?.turn)
+                                    game.missionRestartCheckpoint.clear()
+                                    resolve(Unit)
+                                } catch (error: Throwable) {
+                                    reject(error)
+                                }
+                            }
+                        if (!restarted) reject(Throwable("mission restart returned false"))
+                    } catch (error: Throwable) {
+                        reject(error)
+                    }
+                }
+            if (loaded != true) reject(Throwable("restoreFromString returned false"))
+        }
+    }
+
     @Test
     fun loadBizerteSaveRestoresScenarioPlayersAndMap(): Promise<Unit> {
         Equipment.resetEquipment()
@@ -33,7 +94,7 @@ class GameStateIntegrationTest {
 
         return Promise { resolve, reject ->
             val ok =
-                game.state?.restoreFromString(BIZERTE_SAVE_JSON) {
+                game.state?.restoreFromString(currentFormatFixture(BIZERTE_SAVE_JSON)) {
                     try {
                         val scenario = game.scenario
                         assertNotNull(scenario)
@@ -87,7 +148,7 @@ class GameStateIntegrationTest {
 
         return Promise { resolve, reject ->
             val ok =
-                game.state?.restoreFromString(BIZERTE_SAVE_JSON) {
+                game.state?.restoreFromString(currentFormatFixture(BIZERTE_SAVE_JSON)) {
                     try {
                         val exported = game.state?.exportGameState()
                         assertNotNull(exported)
@@ -144,7 +205,7 @@ class GameStateIntegrationTest {
 
         return Promise { resolve, reject ->
             val ok =
-                game.state?.restoreFromString(OPERATION_URANUS_SAVE_JSON) {
+                game.state?.restoreFromString(currentFormatFixture(OPERATION_URANUS_SAVE_JSON)) {
                     try {
                         val scenario = game.scenario
                         assertNotNull(scenario)
@@ -200,7 +261,7 @@ class GameStateIntegrationTest {
 
         return Promise { resolve, reject ->
             val ok =
-                game.state?.restoreFromString(OPERATION_URANUS_SAVE_JSON) {
+                game.state?.restoreFromString(currentFormatFixture(OPERATION_URANUS_SAVE_JSON)) {
                     try {
                         val exported = game.state?.exportGameState()
                         assertNotNull(exported)

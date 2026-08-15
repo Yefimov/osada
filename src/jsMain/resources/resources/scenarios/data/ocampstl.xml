@@ -1,19 +1,19 @@
 <?xml version='1.0' encoding='ASCII'?>
 <map file="ocampstl.scn" name="Operation Cobra" turns="7, 9, 14" date="July 25, 1944" dayturns="3" ground="0" atmosferic="0" latitude="2" rows="40" cols="45" eqp="eqp-adlerkorps" image="resources/maps/images/map_18.png" eqpv="united1">
-  <player id="0" country="9" side="1" airtrans="0" navaltrans="0" support="0, 0, 0, 0" turnprestige="50, 50, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100"/>
-  <player id="1" country="7" side="0" airtrans="0" navaltrans="0" support="0, 0, 0, 0" turnprestige="30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <player id="0" country="9" side="1" airtrans="0" navaltrans="0" support="0,0,0,0" turnprestige="50, 50, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100"/>
+  <player id="1" country="7" side="0" airtrans="0" navaltrans="0" support="0,0,0,0" turnprestige="30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="2">
     <at row="27" col="32">
-      <unit id="8291" owner="1" flag="8" face="9" exp="157" str="7"/>
+      <unit id="10538" owner="1" flag="8" face="9" exp="157" str="7"/>
     </at>
     <at row="1" col="35">
-      <unit id="10821" owner="0" flag="10" face="15" exp="44" str="7"/>
+      <unit id="13732" owner="0" flag="10" face="15" exp="44" str="7"/>
     </at>
     <at row="1" col="34">
-      <unit id="10821" owner="0" flag="10" face="14" exp="157" str="6"/>
+      <unit id="13732" owner="0" flag="10" face="14" exp="157" str="6"/>
     </at>
     <at row="28" col="32">
-      <unit id="7155" owner="1" flag="8" face="9" exp="245" str="4"/>
+      <unit id="8886" owner="1" flag="8" face="9" exp="245" str="4"/>
     </at>
   </reinforce>
   <hex row="0" col="0" terrain="10"/>
@@ -32,11 +32,11 @@
   <hex row="0" col="13" terrain="4"/>
   <hex row="0" col="14" terrain="8"/>
   <hex row="0" col="15" terrain="10" name="Merderet River">
-    <unit id="10784" owner="0" flag="10" face="0" exp="157" str="7"/>
+    <unit id="13682" owner="0" flag="10" face="0" exp="157" str="7"/>
   </hex>
   <hex row="0" col="16" terrain="4"/>
   <hex row="0" col="17" terrain="4" road="48">
-    <unit id="10784" owner="0" flag="10" face="0" exp="54" str="6"/>
+    <unit id="13682" owner="0" flag="10" face="0" exp="54" str="6"/>
   </hex>
   <hex row="0" col="18" terrain="4"/>
   <hex row="0" col="19" terrain="4"/>
@@ -66,7 +66,7 @@
   <hex row="1" col="6" terrain="4"/>
   <hex row="1" col="7" terrain="4"/>
   <hex row="1" col="8" terrain="1" road="18" name="St Souveur le Vicomte" flag="9" owner="0">
-    <unit id="10542" owner="0" flag="10" face="15" exp="66" str="6"/>
+    <unit id="13356" owner="0" flag="10" face="15" exp="66" str="6"/>
   </hex>
   <hex row="1" col="9" terrain="10" name="Douve River"/>
   <hex row="1" col="10" terrain="4" road="137"/>
@@ -98,7 +98,7 @@
   <hex row="1" col="36" terrain="9"/>
   <hex row="2" col="0" terrain="4" road="8"/>
   <hex row="2" col="1" terrain="4" road="136">
-    <unit id="10017" owner="0" flag="10" face="2" exp="57" str="7"/>
+    <unit id="12599" owner="0" flag="10" face="2" exp="57" str="7"/>
   </hex>
   <hex row="2" col="2" terrain="4"/>
   <hex row="2" col="3" terrain="4"/>
@@ -107,7 +107,7 @@
   <hex row="2" col="6" terrain="4"/>
   <hex row="2" col="7" terrain="4"/>
   <hex row="2" col="8" terrain="4" road="17">
-    <unit id="9580" owner="0" flag="10" face="0" transport="10362" exp="155" str="7"/>
+    <unit id="11978" owner="0" flag="10" face="0" transport="13080" exp="155" str="7"/>
   </hex>
   <hex row="2" col="9" terrain="10" name="Douve River"/>
   <hex row="2" col="10" terrain="8"/>
@@ -140,7 +140,7 @@
   <hex row="3" col="0" terrain="4"/>
   <hex row="3" col="1" terrain="1" name="Portail" flag="9" owner="0"/>
   <hex row="3" col="2" terrain="4" road="136">
-    <unit id="10017" owner="0" flag="10" face="1" exp="155" str="6"/>
+    <unit id="12599" owner="0" flag="10" face="1" exp="155" str="6"/>
   </hex>
   <hex row="3" col="3" terrain="4" road="144"/>
   <hex row="3" col="4" terrain="10"/>
@@ -148,7 +148,7 @@
   <hex row="3" col="6" terrain="10"/>
   <hex row="3" col="7" terrain="8"/>
   <hex row="3" col="8" terrain="8" road="17">
-    <unit id="10024" owner="0" flag="10" face="0" exp="66" str="8"/>
+    <unit id="12610" owner="0" flag="10" face="0" exp="66" str="8"/>
   </hex>
   <hex row="3" col="9" terrain="8"/>
   <hex row="3" col="10" terrain="10" name="Douve River"/>
@@ -267,11 +267,11 @@
   <hex row="6" col="21" terrain="10" road="42" name="Taute River"/>
   <hex row="6" col="22" road="40"/>
   <hex row="6" col="23" road="147">
-    <unit id="9580" owner="0" flag="10" face="0" transport="10362" exp="157" str="7"/>
+    <unit id="11978" owner="0" flag="10" face="0" transport="13080" exp="157" str="7"/>
   </hex>
   <hex row="6" col="24" road="40" deploy="0"/>
   <hex row="6" col="25" road="136">
-    <unit id="9580" owner="0" flag="10" face="0" transport="10362" exp="157" str="8"/>
+    <unit id="11978" owner="0" flag="10" face="0" transport="13080" exp="157" str="8"/>
   </hex>
   <hex row="6" col="26" terrain="15" name="Vire River"/>
   <hex row="6" col="27" terrain="1" road="50" name="Isigny" flag="9" owner="0"/>
@@ -307,10 +307,10 @@
   <hex row="7" col="21" terrain="15" name="Taute River"/>
   <hex row="7" col="22" road="128"/>
   <hex row="7" col="23" road="17">
-    <unit id="10017" owner="0" flag="10" face="0" exp="57" str="7"/>
+    <unit id="12599" owner="0" flag="10" face="0" exp="57" str="7"/>
   </hex>
   <hex row="7" col="24">
-    <unit id="10542" owner="0" flag="10" face="0" exp="66" str="7"/>
+    <unit id="13356" owner="0" flag="10" face="0" exp="66" str="7"/>
   </hex>
   <hex row="7" col="25" terrain="15" name="Vire River"/>
   <hex row="7" col="26" terrain="10" road="154" name="Vire River"/>
@@ -329,7 +329,7 @@
   <hex row="8" col="2" terrain="4"/>
   <hex row="8" col="3" terrain="4"/>
   <hex row="8" col="4" terrain="4">
-    <unit id="10400" owner="0" flag="10" face="1" transport="10312" exp="157" ent="3" str="8"/>
+    <unit id="13137" owner="0" flag="10" face="1" transport="13020" exp="157" ent="3" str="8"/>
   </hex>
   <hex row="8" col="5" terrain="4"/>
   <hex row="8" col="6" terrain="4"/>
@@ -339,7 +339,7 @@
   <hex row="8" col="10" terrain="4"/>
   <hex row="8" col="11" terrain="4" road="18"/>
   <hex row="8" col="12" terrain="4" road="33">
-    <unit id="10400" owner="0" flag="10" face="0" transport="10312" exp="254" ent="3" str="8"/>
+    <unit id="13137" owner="0" flag="10" face="0" transport="13020" exp="254" ent="3" str="8"/>
   </hex>
   <hex row="8" col="13" terrain="8"/>
   <hex row="8" col="14" terrain="8"/>
@@ -349,10 +349,10 @@
   <hex row="8" col="21" terrain="15" name="Taute River"/>
   <hex row="8" col="22" terrain="4"/>
   <hex row="8" col="23" terrain="4" road="9">
-    <unit id="10045" owner="0" flag="10" face="0" exp="254" str="7"/>
+    <unit id="12641" owner="0" flag="10" face="0" exp="254" str="7"/>
   </hex>
   <hex row="8" col="24">
-    <unit id="10017" owner="0" flag="10" face="0" exp="157" str="7" ldr="1"/>
+    <unit id="12599" owner="0" flag="10" face="0" exp="157" str="7" ldr="1"/>
   </hex>
   <hex row="8" col="25" terrain="15" name="Vire River"/>
   <hex row="8" col="26" road="1"/>
@@ -372,19 +372,19 @@
   <hex row="9" col="3" terrain="4"/>
   <hex row="9" col="4" terrain="4"/>
   <hex row="9" col="5" terrain="4">
-    <unit id="9584" owner="0" flag="10" face="1" transport="10312" exp="254" ent="3" str="7"/>
+    <unit id="11982" owner="0" flag="10" face="1" transport="13020" exp="254" ent="3" str="7"/>
   </hex>
   <hex row="9" col="6" terrain="4">
-    <unit id="9584" owner="0" flag="10" face="15" transport="10312" exp="254" ent="3" str="8"/>
+    <unit id="11982" owner="0" flag="10" face="15" transport="13020" exp="254" ent="3" str="8"/>
   </hex>
   <hex row="9" col="7" terrain="4" road="17"/>
   <hex row="9" col="8" terrain="4">
-    <unit id="10400" owner="0" flag="10" face="15" transport="10312" exp="157" ent="2" str="8"/>
+    <unit id="13137" owner="0" flag="10" face="15" transport="13020" exp="157" ent="2" str="8"/>
   </hex>
   <hex row="9" col="9" terrain="4"/>
   <hex row="9" col="10" terrain="10"/>
   <hex row="9" col="11" terrain="4" road="17">
-    <unit id="9584" owner="0" flag="10" face="15" transport="10312" exp="254" ent="3" str="8"/>
+    <unit id="11982" owner="0" flag="10" face="15" transport="13020" exp="254" ent="3" str="8"/>
   </hex>
   <hex row="9" col="12" terrain="4"/>
   <hex row="9" col="13" terrain="4"/>
@@ -398,7 +398,7 @@
   <hex row="9" col="22" terrain="4"/>
   <hex row="9" col="23" terrain="4" deploy="0"/>
   <hex row="9" col="24" terrain="4" road="144">
-    <unit id="10007" owner="0" flag="10" face="0" exp="157" str="8"/>
+    <unit id="12586" owner="0" flag="10" face="0" exp="157" str="8"/>
   </hex>
   <hex row="9" col="25" terrain="4" deploy="0"/>
   <hex row="9" col="26" terrain="15" name="Vire River"/>
@@ -416,34 +416,34 @@
   <hex row="10" col="1" terrain="9"/>
   <hex row="10" col="2" terrain="9"/>
   <hex row="10" col="4" terrain="4">
-    <unit id="9584" owner="0" flag="10" face="1" transport="10312" exp="157" ent="2" str="8"/>
+    <unit id="11982" owner="0" flag="10" face="1" transport="13020" exp="157" ent="2" str="8"/>
   </hex>
   <hex row="10" col="5" terrain="10"/>
   <hex row="10" col="6" terrain="10"/>
   <hex row="10" col="7" terrain="1" road="25" name="Lessay" flag="9" owner="0" victory="1">
-    <unit id="9584" owner="0" flag="10" face="15" transport="10312" exp="254" ent="2" str="7"/>
+    <unit id="11982" owner="0" flag="10" face="15" transport="13020" exp="254" ent="2" str="7"/>
   </hex>
   <hex row="10" col="8" terrain="4"/>
   <hex row="10" col="9" terrain="4">
-    <unit id="9584" owner="0" flag="10" face="1" transport="10312" exp="255" ent="3" str="7"/>
+    <unit id="11982" owner="0" flag="10" face="1" transport="13020" exp="255" ent="3" str="7"/>
   </hex>
   <hex row="10" col="10" terrain="10"/>
   <hex row="10" col="11" terrain="4" road="17"/>
   <hex row="10" col="12" terrain="4">
-    <unit id="9584" owner="0" flag="10" face="15" transport="10312" exp="254" ent="2" str="8"/>
+    <unit id="11982" owner="0" flag="10" face="15" transport="13020" exp="254" ent="2" str="8"/>
   </hex>
   <hex row="10" col="13" terrain="4">
-    <unit id="9584" owner="0" flag="10" face="15" transport="10312" exp="157" ent="3" str="9"/>
+    <unit id="11982" owner="0" flag="10" face="15" transport="13020" exp="157" ent="3" str="9"/>
   </hex>
   <hex row="10" col="14" terrain="4"/>
   <hex row="10" col="15" terrain="4">
-    <unit id="10017" owner="0" flag="10" face="14" exp="157" str="8"/>
+    <unit id="12599" owner="0" flag="10" face="14" exp="157" str="8"/>
   </hex>
   <hex row="10" col="16" terrain="1" road="18" name="Sainteny" flag="9" owner="0">
-    <unit id="10542" owner="0" flag="10" face="14" exp="57" str="7"/>
+    <unit id="13356" owner="0" flag="10" face="14" exp="57" str="7"/>
   </hex>
   <hex row="10" col="17" terrain="4">
-    <unit id="10017" owner="0" flag="10" face="14" exp="155" str="7"/>
+    <unit id="12599" owner="0" flag="10" face="14" exp="155" str="7"/>
   </hex>
   <hex row="10" col="18" terrain="10"/>
   <hex row="10" col="19" terrain="15" name="Taute River"/>
@@ -470,26 +470,26 @@
   <hex row="11" col="3" terrain="9"/>
   <hex row="11" col="4" terrain="10"/>
   <hex row="11" col="5" terrain="4">
-    <unit id="6817" owner="1" flag="8" face="7" exp="157" ent="5" str="7"/>
+    <unit id="8323" owner="1" flag="8" face="7" exp="157" ent="5" str="7"/>
   </hex>
   <hex row="11" col="6" terrain="10"/>
   <hex row="11" col="7" terrain="10" road="51"/>
   <hex row="11" col="8" terrain="4" road="168">
-    <unit id="9584" owner="0" flag="10" face="0" transport="10312" exp="155" ent="3" str="8"/>
+    <unit id="11982" owner="0" flag="10" face="0" transport="13020" exp="155" ent="3" str="8"/>
   </hex>
   <hex row="11" col="9" terrain="10" road="136"/>
   <hex row="11" col="10" terrain="10"/>
   <hex row="11" col="11" terrain="4" road="17">
-    <unit id="6781" owner="1" flag="8" face="7" transport="7812" exp="455" ent="5" str="8"/>
+    <unit id="8273" owner="1" flag="8" face="7" transport="9830" exp="455" ent="5" str="8"/>
   </hex>
   <hex row="11" col="12" terrain="4"/>
   <hex row="11" col="13" terrain="4"/>
   <hex row="11" col="14" terrain="4"/>
   <hex row="11" col="15" terrain="4" road="34">
-    <unit id="9580" owner="0" flag="10" face="14" transport="10362" exp="157" ent="2" str="7"/>
+    <unit id="11978" owner="0" flag="10" face="14" transport="13080" exp="157" ent="2" str="7"/>
   </hex>
   <hex row="11" col="16" terrain="4" road="33">
-    <unit id="10024" owner="0" flag="10" face="14" exp="254" str="8"/>
+    <unit id="12610" owner="0" flag="10" face="14" exp="254" str="8"/>
   </hex>
   <hex row="11" col="17" terrain="10" name="Taute River"/>
   <hex row="11" col="18" terrain="15" name="Taute River"/>
@@ -518,28 +518,28 @@
   <hex row="12" col="4" terrain="4"/>
   <hex row="12" col="5" terrain="4"/>
   <hex row="12" col="6" terrain="4" road="2">
-    <unit id="6817" owner="1" flag="8" face="6" transport="74" exp="216" ent="4" str="7"/>
+    <unit id="8323" owner="1" flag="8" face="6" transport="99" exp="216" ent="4" str="7"/>
   </hex>
   <hex row="12" col="7" terrain="4" road="17" flag="7" owner="1" victory="0">
-    <unit id="6327" owner="1" flag="8" face="7" transport="74" exp="157" ent="6" str="9"/>
+    <unit id="7715" owner="1" flag="8" face="7" transport="99" exp="157" ent="6" str="9"/>
   </hex>
   <hex row="12" col="8" terrain="10"/>
   <hex row="12" col="9" terrain="10"/>
   <hex row="12" col="10" terrain="4" road="136">
-    <unit id="7404" owner="1" flag="8" face="10" exp="452" ent="2" str="8"/>
+    <unit id="9236" owner="1" flag="8" face="10" exp="452" ent="2" str="8"/>
   </hex>
   <hex row="12" col="11" terrain="4" road="137"/>
   <hex row="12" col="12" terrain="4">
-    <unit id="6939" owner="1" flag="8" face="7" exp="357" ent="3" str="8" ldr="1"/>
+    <unit id="8609" owner="1" flag="8" face="7" exp="357" ent="3" str="8" ldr="1"/>
   </hex>
   <hex row="12" col="13" terrain="4" road="34">
-    <unit id="6781" owner="1" flag="8" face="6" transport="7775" exp="544" ent="5" str="8"/>
+    <unit id="8273" owner="1" flag="8" face="6" transport="9769" exp="544" ent="5" str="8"/>
   </hex>
   <hex row="12" col="14" terrain="4" road="34"/>
   <hex row="12" col="15" terrain="10" name="Taute River"/>
   <hex row="12" col="16" terrain="10" name="Taute River"/>
   <hex row="12" col="17" terrain="4">
-    <unit id="10400" owner="0" flag="10" face="15" transport="10312" exp="157" ent="3" str="7"/>
+    <unit id="13137" owner="0" flag="10" face="15" transport="13020" exp="157" ent="3" str="7"/>
   </hex>
   <hex row="12" col="18" terrain="10"/>
   <hex row="12" col="19" terrain="10"/>
@@ -569,21 +569,21 @@
   <hex row="13" col="6" terrain="4"/>
   <hex row="13" col="7" terrain="4" road="9"/>
   <hex row="13" col="8" terrain="4">
-    <unit id="6327" owner="1" flag="8" face="8" exp="254" ent="5" str="7"/>
+    <unit id="7715" owner="1" flag="8" face="8" exp="254" ent="5" str="7"/>
   </hex>
   <hex row="13" col="9" terrain="4">
-    <unit id="6327" owner="1" flag="8" face="6" exp="254" ent="4" str="6"/>
+    <unit id="7715" owner="1" flag="8" face="6" exp="254" ent="4" str="6"/>
   </hex>
   <hex row="13" col="10" terrain="10"/>
   <hex row="13" col="11" terrain="4"/>
   <hex row="13" col="12" terrain="1" road="154" name="Periers" flag="7" owner="1" victory="1">
-    <unit id="6319" owner="1" flag="8" face="7" exp="257" ent="5" str="7"/>
+    <unit id="7707" owner="1" flag="8" face="7" exp="257" ent="5" str="7"/>
   </hex>
   <hex row="13" col="13" terrain="4" road="130"/>
   <hex row="13" col="14" terrain="10" road="40" name="Taute River"/>
   <hex row="13" col="15" terrain="4" road="136"/>
   <hex row="13" col="16" terrain="4">
-    <unit id="9584" owner="0" flag="10" face="15" transport="10312" exp="254" ent="4" str="8"/>
+    <unit id="11982" owner="0" flag="10" face="15" transport="13020" exp="254" ent="4" str="8"/>
   </hex>
   <hex row="13" col="17" terrain="4" road="16"/>
   <hex row="13" col="18" terrain="10"/>
@@ -613,22 +613,22 @@
   <hex row="14" col="5" terrain="4"/>
   <hex row="14" col="6" terrain="4"/>
   <hex row="14" col="7" terrain="4">
-    <unit id="7851" owner="1" flag="8" face="8" exp="157" ent="5" str="4"/>
+    <unit id="9892" owner="1" flag="8" face="8" exp="157" ent="5" str="4"/>
   </hex>
   <hex row="14" col="8" terrain="4" road="144"/>
   <hex row="14" col="9" terrain="4"/>
   <hex row="14" col="10" terrain="10"/>
   <hex row="14" col="11" terrain="10"/>
   <hex row="14" col="12" terrain="4" road="17">
-    <unit id="7851" owner="1" flag="8" face="8" exp="254" ent="4" str="8"/>
+    <unit id="9892" owner="1" flag="8" face="8" exp="254" ent="4" str="8"/>
   </hex>
   <hex row="14" col="13" terrain="10" name="Taute River"/>
   <hex row="14" col="14" terrain="10" name="Taute River"/>
   <hex row="14" col="15" terrain="4">
-    <unit id="6781" owner="1" flag="8" face="6" exp="354" ent="5" str="8"/>
+    <unit id="8273" owner="1" flag="8" face="6" exp="354" ent="5" str="8"/>
   </hex>
   <hex row="14" col="16" terrain="4" road="152">
-    <unit id="9584" owner="0" flag="10" face="14" transport="10312" exp="254" ent="1" str="5"/>
+    <unit id="11982" owner="0" flag="10" face="14" transport="13020" exp="254" ent="1" str="5"/>
   </hex>
   <hex row="14" col="17" terrain="10" road="169"/>
   <hex row="14" col="18" terrain="10"/>
@@ -637,7 +637,7 @@
   <hex row="14" col="21" terrain="4"/>
   <hex row="14" col="22" terrain="10"/>
   <hex row="14" col="23" terrain="4">
-    <unit id="10400" owner="0" flag="10" face="15" exp="157" ent="2" str="7"/>
+    <unit id="13137" owner="0" flag="10" face="15" exp="157" ent="2" str="7"/>
   </hex>
   <hex row="14" col="24" terrain="4" road="17"/>
   <hex row="14" col="25" terrain="10" name="Vire River"/>
@@ -669,18 +669,18 @@
   <hex row="15" col="14" terrain="4"/>
   <hex row="15" col="15" terrain="4"/>
   <hex row="15" col="16" terrain="4" road="19" flag="7" owner="1" victory="0">
-    <unit id="7538" owner="1" flag="8" face="6" exp="355" ent="5" str="5" ldr="1"/>
+    <unit id="9419" owner="1" flag="8" face="6" exp="355" ent="5" str="5" ldr="1"/>
   </hex>
   <hex row="15" col="17" terrain="10"/>
   <hex row="15" col="18" road="138">
-    <unit id="6319" owner="1" flag="8" face="7" exp="354" ent="4" str="7"/>
+    <unit id="7707" owner="1" flag="8" face="7" exp="354" ent="4" str="7"/>
   </hex>
   <hex row="15" col="19" terrain="10" road="154"/>
   <hex row="15" col="20" terrain="4" road="185">
-    <unit id="9584" owner="0" flag="10" face="0" transport="10312" exp="254" str="5"/>
+    <unit id="11982" owner="0" flag="10" face="0" transport="13020" exp="254" str="5"/>
   </hex>
   <hex row="15" col="21" terrain="10" road="136">
-    <unit id="9584" owner="0" flag="10" face="15" transport="10312" exp="257" str="3" ldr="1"/>
+    <unit id="11982" owner="0" flag="10" face="15" transport="13020" exp="257" str="3" ldr="1"/>
   </hex>
   <hex row="15" col="22" terrain="10"/>
   <hex row="15" col="23" terrain="4" road="34"/>
@@ -688,17 +688,17 @@
   <hex row="15" col="25" terrain="10" road="152" name="Vire River"/>
   <hex row="15" col="26" terrain="4"/>
   <hex row="15" col="27" terrain="1" road="18" name="Villers Fossard" flag="9">
-    <unit id="10400" owner="0" flag="10" face="15" transport="10312" exp="254" ent="3" str="8"/>
+    <unit id="13137" owner="0" flag="10" face="15" transport="13020" exp="254" ent="3" str="8"/>
   </hex>
   <hex row="15" col="28" terrain="4" road="33"/>
   <hex row="15" col="29" terrain="4">
-    <unit id="10400" owner="0" flag="10" face="1" transport="10312" exp="155" ent="2" str="7"/>
+    <unit id="13137" owner="0" flag="10" face="1" transport="13020" exp="155" ent="2" str="7"/>
   </hex>
   <hex row="15" col="30" terrain="10"/>
   <hex row="15" col="31" terrain="4"/>
   <hex row="15" col="32" terrain="3" name="Foret de Cerisy: FOREST"/>
   <hex row="15" col="33" terrain="4" road="33">
-    <unit id="10400" owner="0" flag="10" face="0" transport="10312" exp="157" ent="2" str="7"/>
+    <unit id="13137" owner="0" flag="10" face="0" transport="13020" exp="157" ent="2" str="7"/>
   </hex>
   <hex row="15" col="34" terrain="4"/>
   <hex row="15" col="35" terrain="10"/>
@@ -719,38 +719,38 @@
   <hex row="16" col="13" terrain="10" road="130" name="Taute River"/>
   <hex row="16" col="14" terrain="4" road="40"/>
   <hex row="16" col="15" terrain="4" road="170">
-    <unit id="7910" owner="1" flag="8" face="7" exp="257" ent="5" str="5"/>
+    <unit id="9969" owner="1" flag="8" face="7" exp="257" ent="5" str="5"/>
   </hex>
   <hex row="16" col="16" terrain="4" road="49"/>
   <hex row="16" col="17" terrain="10">
-    <unit id="8070" owner="1" flag="8" face="6" exp="254" ent="5" str="6"/>
+    <unit id="10209" owner="1" flag="8" face="6" exp="254" ent="5" str="6"/>
   </hex>
   <hex row="16" col="18" terrain="10"/>
   <hex row="16" col="19" terrain="4" road="1">
-    <unit id="6319" owner="1" flag="8" face="6" exp="257" ent="3" str="6"/>
+    <unit id="7707" owner="1" flag="8" face="6" exp="257" ent="3" str="6"/>
   </hex>
   <hex row="16" col="20" terrain="4" road="145">
-    <unit id="6702" owner="1" flag="8" face="6" transport="7775" exp="357" ent="6" str="6"/>
+    <unit id="8171" owner="1" flag="8" face="6" transport="9769" exp="357" ent="6" str="6"/>
   </hex>
   <hex row="16" col="21" terrain="10"/>
   <hex row="16" col="22" terrain="4" road="146"/>
   <hex row="16" col="23" terrain="4"/>
   <hex row="16" col="24" terrain="10" name="Vire River"/>
   <hex row="16" col="25" terrain="4" road="9">
-    <unit id="10187" owner="0" flag="10" face="14" exp="157" ent="1" str="5"/>
+    <unit id="12847" owner="0" flag="10" face="14" exp="157" ent="1" str="5"/>
   </hex>
   <hex row="16" col="26" terrain="4" road="128"/>
   <hex row="16" col="27" terrain="4" road="33"/>
   <hex row="16" col="28" terrain="4"/>
   <hex row="16" col="29" terrain="4" road="40">
-    <unit id="9584" owner="0" flag="10" face="0" transport="10312" exp="254" ent="3" str="7"/>
+    <unit id="11982" owner="0" flag="10" face="0" transport="13020" exp="254" ent="3" str="7"/>
   </hex>
   <hex row="16" col="30" terrain="4"/>
   <hex row="16" col="31" terrain="4" road="34">
-    <unit id="9584" owner="0" flag="10" face="0" transport="10312" exp="55" ent="2" str="7"/>
+    <unit id="11982" owner="0" flag="10" face="0" transport="13020" exp="55" ent="2" str="7"/>
   </hex>
   <hex row="16" col="32" terrain="1" road="34" name="Berigny" flag="9" owner="0">
-    <unit id="10187" owner="0" flag="10" face="0" exp="155" ent="1" str="5"/>
+    <unit id="12847" owner="0" flag="10" face="0" exp="155" ent="1" str="5"/>
   </hex>
   <hex row="16" col="33" terrain="4"/>
   <hex row="16" col="34" terrain="4"/>
@@ -776,39 +776,39 @@
   <hex row="17" col="17" terrain="4" road="130"/>
   <hex row="17" col="18" terrain="10" road="40"/>
   <hex row="17" col="19" terrain="4" road="136">
-    <unit id="7915" owner="1" flag="8" face="7" transport="7819" exp="257" ent="4" str="6"/>
+    <unit id="9975" owner="1" flag="8" face="7" transport="9843" exp="257" ent="4" str="6"/>
   </hex>
   <hex row="17" col="20" terrain="4" road="17">
-    <unit id="6928" owner="1" flag="8" face="5" exp="452" ent="3" str="6"/>
+    <unit id="8598" owner="1" flag="8" face="5" exp="452" ent="3" str="6"/>
   </hex>
   <hex row="17" col="21" terrain="10"/>
   <hex row="17" col="22" terrain="4" road="9">
-    <unit id="9584" owner="0" flag="10" face="14" transport="10312" exp="157" ent="1" str="7"/>
+    <unit id="11982" owner="0" flag="10" face="14" transport="13020" exp="157" ent="1" str="7"/>
   </hex>
   <hex row="17" col="23" terrain="4" road="152">
-    <unit id="9584" owner="0" flag="10" face="14" transport="10312" exp="157" ent="2" str="8"/>
+    <unit id="11982" owner="0" flag="10" face="14" transport="13020" exp="157" ent="2" str="8"/>
   </hex>
   <hex row="17" col="24" terrain="10" name="Vire River"/>
   <hex row="17" col="25" terrain="1" road="58" name="St. Lo" flag="9" owner="0" victory="1">
-    <unit id="9584" owner="0" flag="10" face="14" transport="10312" exp="254" ent="5" str="7"/>
+    <unit id="11982" owner="0" flag="10" face="14" transport="13020" exp="254" ent="5" str="7"/>
   </hex>
   <hex row="17" col="26" terrain="1" road="178" name="St Lo"/>
   <hex row="17" col="27" terrain="4" road="34">
-    <unit id="9584" owner="0" flag="10" face="2" transport="10312" exp="254" ent="2" str="9"/>
+    <unit id="11982" owner="0" flag="10" face="2" transport="13020" exp="254" ent="2" str="9"/>
   </hex>
   <hex row="17" col="28" terrain="4" road="34">
-    <unit id="9584" owner="0" flag="10" face="1" transport="10312" exp="157" ent="2" str="7"/>
+    <unit id="11982" owner="0" flag="10" face="1" transport="13020" exp="157" ent="2" str="7"/>
   </hex>
   <hex row="17" col="29" terrain="4"/>
   <hex row="17" col="30" terrain="4" road="130">
-    <unit id="9584" owner="0" flag="10" face="0" transport="10312" exp="133" ent="3" str="8"/>
+    <unit id="11982" owner="0" flag="10" face="0" transport="13020" exp="133" ent="3" str="8"/>
   </hex>
   <hex row="17" col="31" terrain="4"/>
   <hex row="17" col="32" terrain="4">
-    <unit id="9584" owner="0" flag="10" face="15" transport="10312" exp="155" ent="2" str="8"/>
+    <unit id="11982" owner="0" flag="10" face="15" transport="13020" exp="155" ent="2" str="8"/>
   </hex>
   <hex row="17" col="33" terrain="4">
-    <unit id="9584" owner="0" flag="10" face="15" transport="10312" exp="267" ent="3" str="8"/>
+    <unit id="11982" owner="0" flag="10" face="15" transport="13020" exp="267" ent="3" str="8"/>
   </hex>
   <hex row="17" col="34" terrain="4"/>
   <hex row="17" col="35" terrain="10"/>
@@ -830,27 +830,27 @@
   <hex row="18" col="14" terrain="4"/>
   <hex row="18" col="15" terrain="4"/>
   <hex row="18" col="16" terrain="4" road="1">
-    <unit id="8190" owner="1" flag="8" face="6" exp="157" ent="3" str="7"/>
+    <unit id="10385" owner="1" flag="8" face="6" exp="157" ent="3" str="7"/>
   </hex>
   <hex row="18" col="17" terrain="10"/>
   <hex row="18" col="18" terrain="10"/>
   <hex row="18" col="19" terrain="4" road="34">
-    <unit id="6702" owner="1" flag="8" face="6" exp="257" ent="3" str="7"/>
+    <unit id="8171" owner="1" flag="8" face="6" exp="257" ent="3" str="7"/>
   </hex>
   <hex row="18" col="20" terrain="1" road="185" name="Marigny" flag="7" owner="1" victory="1">
-    <unit id="6817" owner="1" flag="8" face="6" exp="254" ent="5" str="7"/>
+    <unit id="8323" owner="1" flag="8" face="6" exp="254" ent="5" str="7"/>
   </hex>
   <hex row="18" col="21" terrain="10" road="170"/>
   <hex row="18" col="22" terrain="4" road="56">
-    <unit id="6817" owner="1" flag="8" face="7" transport="74" exp="157" ent="6" str="6"/>
+    <unit id="8323" owner="1" flag="8" face="7" transport="99" exp="157" ent="6" str="6"/>
   </hex>
   <hex row="18" col="23" terrain="4" road="131">
-    <unit id="6327" owner="1" flag="8" face="6" transport="74" exp="354" ent="5" str="6"/>
+    <unit id="7715" owner="1" flag="8" face="6" transport="99" exp="354" ent="5" str="6"/>
   </hex>
   <hex row="18" col="24" terrain="10" road="178" name="Vire River"/>
   <hex row="18" col="25" terrain="10" road="51" name="Vire River"/>
   <hex row="18" col="26" terrain="1" road="171" name="St Lo">
-    <unit id="9584" owner="0" flag="10" face="0" transport="10312" exp="157" ent="3" str="8"/>
+    <unit id="11982" owner="0" flag="10" face="0" transport="13020" exp="157" ent="3" str="8"/>
   </hex>
   <hex row="18" col="27" terrain="4" road="152"/>
   <hex row="18" col="28" terrain="4"/>
@@ -883,32 +883,32 @@
   <hex row="19" col="18" terrain="4" road="34"/>
   <hex row="19" col="19" terrain="4" road="34"/>
   <hex row="19" col="20" terrain="4" road="35">
-    <unit id="6817" owner="1" flag="8" face="6" exp="254" ent="5" str="7"/>
+    <unit id="8323" owner="1" flag="8" face="6" exp="254" ent="5" str="7"/>
   </hex>
   <hex row="19" col="21" terrain="10"/>
   <hex row="19" col="22" terrain="4" road="145"/>
   <hex row="19" col="23" terrain="4" road="34"/>
   <hex row="19" col="24" terrain="4" road="51">
-    <unit id="6702" owner="1" flag="8" face="6" exp="257" ent="5" str="4" ldr="1"/>
+    <unit id="8171" owner="1" flag="8" face="6" exp="257" ent="5" str="4" ldr="1"/>
   </hex>
   <hex row="19" col="25" terrain="4" road="17">
-    <unit id="6817" owner="1" flag="8" face="6" transport="74" exp="157" ent="6" str="7"/>
+    <unit id="8323" owner="1" flag="8" face="6" transport="99" exp="157" ent="6" str="7"/>
   </hex>
   <hex row="19" col="26" terrain="10" name="Vire River"/>
   <hex row="19" col="27" terrain="4" road="9">
-    <unit id="6817" owner="1" flag="8" face="9" transport="74" exp="254" ent="3" str="7"/>
+    <unit id="8323" owner="1" flag="8" face="9" transport="99" exp="254" ent="3" str="7"/>
   </hex>
   <hex row="19" col="28" terrain="4" road="130"/>
   <hex row="19" col="29" terrain="4">
-    <unit id="6817" owner="1" flag="8" face="8" transport="74" exp="157" ent="4" str="7"/>
+    <unit id="8323" owner="1" flag="8" face="8" transport="99" exp="157" ent="4" str="7"/>
   </hex>
   <hex row="19" col="30" terrain="4" road="136"/>
   <hex row="19" col="31" terrain="4" road="130">
-    <unit id="6319" owner="1" flag="8" face="7" exp="354" ent="3" str="7"/>
+    <unit id="7707" owner="1" flag="8" face="7" exp="354" ent="3" str="7"/>
   </hex>
   <hex row="19" col="32" terrain="4" road="40"/>
   <hex row="19" col="33" terrain="4" road="130">
-    <unit id="6319" owner="1" flag="8" face="9" exp="354" ent="4" str="8"/>
+    <unit id="7707" owner="1" flag="8" face="9" exp="354" ent="4" str="8"/>
   </hex>
   <hex row="19" col="34" terrain="10" road="162"/>
   <hex row="19" col="35" terrain="10" road="35"/>
@@ -932,14 +932,14 @@
   <hex row="20" col="16" terrain="4"/>
   <hex row="20" col="17" terrain="4"/>
   <hex row="20" col="18" terrain="4" road="146">
-    <unit id="7851" owner="1" flag="8" face="7" exp="157" ent="4" str="7"/>
+    <unit id="9892" owner="1" flag="8" face="7" exp="157" ent="4" str="7"/>
   </hex>
   <hex row="20" col="19" terrain="4"/>
   <hex row="20" col="20" terrain="10"/>
   <hex row="20" col="21" terrain="4" road="34"/>
   <hex row="20" col="22" terrain="4" road="43"/>
   <hex row="20" col="23" terrain="4" road="146">
-    <unit id="7894" owner="1" flag="8" face="7" exp="157" ent="7" str="6"/>
+    <unit id="9944" owner="1" flag="8" face="7" exp="157" ent="7" str="6"/>
   </hex>
   <hex row="20" col="24" terrain="4" road="33"/>
   <hex row="20" col="25" terrain="4" road="17"/>
@@ -984,11 +984,11 @@
   <hex row="21" col="28" terrain="4" road="9"/>
   <hex row="21" col="29" terrain="4" road="144"/>
   <hex row="21" col="30" terrain="4">
-    <unit id="7851" owner="1" flag="8" face="9" exp="157" ent="4" str="4"/>
+    <unit id="9892" owner="1" flag="8" face="9" exp="157" ent="4" str="4"/>
   </hex>
   <hex row="21" col="31" terrain="4" road="34"/>
   <hex row="21" col="32" terrain="4" road="34">
-    <unit id="8008" owner="1" flag="8" face="7" exp="254" ent="5" str="7"/>
+    <unit id="10103" owner="1" flag="8" face="7" exp="254" ent="5" str="7"/>
   </hex>
   <hex row="21" col="33" terrain="4"/>
   <hex row="21" col="34" terrain="4"/>
@@ -1010,7 +1010,7 @@
   <hex row="22" col="14" terrain="10"/>
   <hex row="22" col="15" terrain="4"/>
   <hex row="22" col="16" terrain="2" road="10" flag="7" owner="1">
-    <unit id="8192" owner="1" flag="8" face="7" exp="254" ent="3" str="8"/>
+    <unit id="10387" owner="1" flag="8" face="7" exp="254" ent="3" str="8"/>
   </hex>
   <hex row="22" col="17" terrain="4" road="137"/>
   <hex row="22" col="18" terrain="4" road="9"/>
@@ -1025,7 +1025,7 @@
   <hex row="22" col="27" terrain="10" name="Vire River"/>
   <hex row="22" col="28" terrain="4"/>
   <hex row="22" col="29" terrain="1" road="43" name="Torigni-sur-Vire" flag="7" owner="1" victory="1">
-    <unit id="6702" owner="1" flag="8" face="9" transport="7812" exp="254" ent="2" str="4"/>
+    <unit id="8171" owner="1" flag="8" face="9" transport="9830" exp="254" ent="2" str="4"/>
   </hex>
   <hex row="22" col="30" terrain="4" road="34"/>
   <hex row="22" col="31" terrain="4"/>
@@ -1132,17 +1132,17 @@
   <hex row="25" col="23" terrain="4"/>
   <hex row="25" col="24" terrain="4"/>
   <hex row="25" col="25" terrain="1" road="43" name="Tessay-sur-Vire" flag="7" owner="1" victory="1" supply="1">
-    <unit id="6702" owner="1" flag="8" face="9" exp="357" ent="3" str="7"/>
+    <unit id="8171" owner="1" flag="8" face="9" exp="357" ent="3" str="7"/>
   </hex>
   <hex row="25" col="26" terrain="10" road="50" name="Vire River"/>
   <hex row="25" col="27" terrain="10" name="Vire River"/>
   <hex row="25" col="28" terrain="4"/>
   <hex row="25" col="29" terrain="4"/>
   <hex row="25" col="30" terrain="4" road="9">
-    <unit id="6702" owner="1" flag="8" face="9" transport="7812" exp="257" str="6"/>
+    <unit id="8171" owner="1" flag="8" face="9" transport="9830" exp="257" str="6"/>
   </hex>
   <hex row="25" col="31" terrain="4" road="146">
-    <unit id="7538" owner="1" flag="8" face="9" exp="354" str="5"/>
+    <unit id="9419" owner="1" flag="8" face="9" exp="354" str="5"/>
   </hex>
   <hex row="25" col="32" terrain="4" road="34"/>
   <hex row="25" col="33" terrain="3"/>
@@ -1170,7 +1170,7 @@
   <hex row="26" col="19" terrain="4" road="40"/>
   <hex row="26" col="20" terrain="4"/>
   <hex row="26" col="21" terrain="4" road="50" flag="7" owner="1" victory="1">
-    <unit id="6702" owner="1" flag="8" face="8" exp="354" ent="4" str="8"/>
+    <unit id="8171" owner="1" flag="8" face="8" exp="354" ent="4" str="8"/>
   </hex>
   <hex row="26" col="22" terrain="4" road="41"/>
   <hex row="26" col="23" terrain="4" road="146"/>
@@ -1182,7 +1182,7 @@
   <hex row="26" col="29" terrain="4"/>
   <hex row="26" col="30" terrain="4"/>
   <hex row="26" col="31" terrain="4" road="17">
-    <unit id="8122" owner="1" flag="8" face="9" exp="254" str="5"/>
+    <unit id="10284" owner="1" flag="8" face="9" exp="254" str="5"/>
   </hex>
   <hex row="26" col="32" terrain="4"/>
   <hex row="26" col="33" terrain="4"/>
@@ -1220,7 +1220,7 @@
   <hex row="27" col="29" terrain="4"/>
   <hex row="27" col="30" terrain="4"/>
   <hex row="27" col="31" terrain="4" road="17">
-    <unit id="7155" owner="1" flag="8" face="8" exp="235" str="4"/>
+    <unit id="8886" owner="1" flag="8" face="8" exp="235" str="4"/>
   </hex>
   <hex row="27" col="32" terrain="4"/>
   <hex row="27" col="33" terrain="4"/>

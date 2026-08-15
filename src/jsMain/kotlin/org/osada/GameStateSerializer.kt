@@ -22,8 +22,21 @@ import kotlin.js.json
 object GameStateSerializer {
     /** Bumped when a save's eqids/country codes stop being resolvable by the running game --
      *  e.g. the eqp-united equipment merge renumbered every id, so pre-merge saves (fmt<2 or
-     *  missing) are rejected outright rather than loaded with stale ids. See GameStateRestore. */
-    const val SAVE_FORMAT_VERSION = 2
+     *  missing) are rejected outright rather than loaded with stale ids. See GameStateRestore.
+     *
+     *  3 = the eqp-pzliga addition (2026-08-15). Merged ids are handed out sequentially over a list
+     *  sorted by country/unit-class/name, so adding an efile interleaves its ~3,200 new units and
+     *  shifts every id after each insertion: all 46,978 previously merged ids changed, and the
+     *  roster grew to 50,589. Deployed scenario XML was carried across by
+     *  tools/eqp-merge/remap_united_ids.py, but saves on players' machines cannot be, so fmt=2 is
+     *  now rejected too. Note this makes GameStateRestore's fmt=2 `flag` fallback unreachable;
+     *  it is kept rather than deleted so the next bump does not have to re-derive it.
+     *
+     *  4 = the eqp-cc76 addition (2026-08-15, same day). Same mechanism again: 50,589 -> 56,970
+     *  merged records, every id renumbered. **Every efile added renumbers everything**, so batch
+     *  efile imports into one merge rather than adding them one at a time — each one costs the
+     *  players their saves. */
+    const val SAVE_FORMAT_VERSION = 4
 
     /** Full save payload as a JSON string: `{ fmt, scenario, players, campaign }`. */
     fun exportGameState(game: Game): String {

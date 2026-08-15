@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <map file="mao1.xscn" name="Nanchang Uprising" turns="8, 10, 13" date="August 1, 1927" dayturns="0" ground="0" atmosferic="0" latitude="1" iconset="0" weatherchg="0" rows="31" cols="35" eqp="eqp-olgww2" image="resources/maps/images/map_907.png" eqpv="united1">
-  <player id="0" country="21" side="1" airtrans="0" navaltrans="0" support="22, 0, 0, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
-  <player id="1" country="15" side="0" airtrans="0" navaltrans="0" support="16, 0, 0, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <player id="0" country="21" side="1" airtrans="0" navaltrans="0" support="22,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <player id="1" country="15" side="0" airtrans="0" navaltrans="0" support="16,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <hex row="0" col="3" terrain="6"/>
   <hex row="0" col="4" terrain="6"/>
   <hex row="0" col="5" terrain="6" road="34"/>
@@ -250,10 +250,10 @@
   <hex row="11" col="13" road="136"/>
   <hex row="11" col="18" road="144"/>
   <hex row="11" col="21">
-    <unit id="18096" owner="0" flag="22" face="0" str="6"/>
+    <unit id="22650" owner="0" flag="22" face="0" str="6"/>
   </hex>
   <hex row="11" col="23" terrain="10" name="Gan River">
-    <unit id="381" owner="0" flag="22" face="0" str="5"/>
+    <unit id="523" owner="0" flag="22" face="0" str="5"/>
   </hex>
   <hex row="11" col="25" terrain="9" name="Gan River (Only passable with boats)"/>
   <hex row="11" col="26" terrain="9" name="Gan River (Only passable with boats)"/>
@@ -271,10 +271,10 @@
   <hex row="12" col="18" road="9"/>
   <hex row="12" col="19" road="152"/>
   <hex row="12" col="20">
-    <unit id="40325" owner="0" flag="22" face="0" transport="40296" str="7"/>
+    <unit id="47996" owner="0" flag="22" face="0" transport="47967" str="7"/>
   </hex>
   <hex row="12" col="21" road="32">
-    <unit id="18096" owner="0" flag="22" face="0"/>
+    <unit id="22650" owner="0" flag="22" face="0"/>
   </hex>
   <hex row="12" col="23" terrain="9" name="Gan River"/>
   <hex row="12" col="24" terrain="10" road="8" name="Gan River"/>
@@ -292,16 +292,16 @@
   <hex row="13" col="8" terrain="3"/>
   <hex row="13" col="16" road="136"/>
   <hex row="13" col="17" terrain="1" road="136" name="Xinjian" owner="0" flag="21" victory="0">
-    <unit id="18096" owner="0" flag="22" face="0" str="6"/>
+    <unit id="22650" owner="0" flag="22" face="0" str="6"/>
   </hex>
   <hex row="13" col="18">
-    <unit id="18096" owner="0" flag="22" face="0" str="8"/>
+    <unit id="22650" owner="0" flag="22" face="0" str="8"/>
   </hex>
   <hex row="13" col="19" road="33"/>
   <hex row="13" col="20" road="130"/>
   <hex row="13" col="21" terrain="9" name="Gan River (Only passable with boats)"/>
   <hex row="13" col="22" terrain="10" name="Gan River (Bridge)">
-    <unit id="381" owner="0" flag="22" face="0" str="5"/>
+    <unit id="523" owner="0" flag="22" face="0" str="5"/>
   </hex>
   <hex row="13" col="23" road="16"/>
   <hex row="13" col="27" road="17"/>
@@ -324,13 +324,13 @@
   <hex row="14" col="21" terrain="9" name="Gan River (Only passable with boats)"/>
   <hex row="14" col="22" terrain="9" name="Gan River (Only passable with boats)"/>
   <hex row="14" col="23" terrain="1" road="25" name="Nanchang">
-    <unit id="15270" owner="1" flag="16" face="0" str="9"/>
+    <unit id="18908" owner="1" flag="16" face="0" str="9"/>
   </hex>
   <hex row="14" col="25">
-    <unit id="18096" owner="0" flag="22" face="0" str="8"/>
+    <unit id="22650" owner="0" flag="22" face="0" str="8"/>
   </hex>
   <hex row="14" col="26">
-    <unit id="18096" owner="0" flag="22" face="0" str="9"/>
+    <unit id="22650" owner="0" flag="22" face="0" str="9"/>
   </hex>
   <hex row="14" col="27" road="33"/>
   <hex row="14" col="31" terrain="9" name="LAKE"/>
@@ -353,17 +353,17 @@
   <hex row="15" col="18" terrain="10"/>
   <hex row="15" col="21" terrain="9" name="Gan River (Only passable with boats)"/>
   <hex row="15" col="22" terrain="1" name="Nanchang">
-    <unit id="15378" owner="1" flag="16" face="0" str="5"/>
+    <unit id="19016" owner="1" flag="16" face="0" str="5"/>
   </hex>
   <hex row="15" col="23" terrain="1" road="41" name="Nanchang" owner="1" flag="15" victory="1">
-    <unit id="15270" owner="1" flag="16" face="0" str="7"/>
+    <unit id="18908" owner="1" flag="16" face="0" str="7"/>
   </hex>
   <hex row="15" col="24" terrain="1" road="152" name="Nanchang" deploy="0">
-    <unit id="40325" owner="0" flag="22" face="0" exp="90" str="7"/>
+    <unit id="47996" owner="0" flag="22" face="0" exp="90" str="7"/>
   </hex>
   <hex row="15" col="25" terrain="1" road="152" name="Nanchang"/>
   <hex row="15" col="26" terrain="1" road="18" name="Nanchang">
-    <unit id="18096" owner="0" flag="22" face="0"/>
+    <unit id="22650" owner="0" flag="22" face="0"/>
   </hex>
   <hex row="15" col="31" terrain="9" name="LAKE"/>
   <hex row="15" col="32" terrain="4"/>
@@ -375,13 +375,13 @@
   <hex row="16" col="22" terrain="12" road="34"/>
   <hex row="16" col="23" terrain="10"/>
   <hex row="16" col="24" terrain="1" road="153" name="Nanchang" deploy="0">
-    <unit id="18096" owner="0" flag="22" face="0" exp="100" str="5" ldr="1"/>
+    <unit id="22650" owner="0" flag="22" face="0" exp="100" str="5" ldr="1"/>
   </hex>
   <hex row="16" col="25" terrain="1" road="137" name="Nanchang">
-    <unit id="15270" owner="1" flag="16" face="0" str="7"/>
+    <unit id="18908" owner="1" flag="16" face="0" str="7"/>
   </hex>
   <hex row="16" col="26" terrain="1" road="145" name="Nanchang" owner="1" flag="15" victory="1">
-    <unit id="15270" owner="1" flag="16" face="0" str="8"/>
+    <unit id="18908" owner="1" flag="16" face="0" str="8"/>
   </hex>
   <hex row="16" col="27" terrain="6"/>
   <hex row="16" col="29" terrain="6"/>
@@ -391,10 +391,10 @@
   <hex row="17" col="19" terrain="9" name="Gan River (Only passable with boats)"/>
   <hex row="17" col="20" terrain="9" name="Gan River (Only passable with boats)"/>
   <hex row="17" col="22" terrain="1" road="136" name="Nanchang">
-    <unit id="15378" owner="1" flag="16" face="0" str="5"/>
+    <unit id="19016" owner="1" flag="16" face="0" str="5"/>
   </hex>
   <hex row="17" col="23" terrain="1" road="136" name="Nanchang" owner="1" flag="15" victory="1">
-    <unit id="15270" owner="1" flag="16" face="0" str="7"/>
+    <unit id="18908" owner="1" flag="16" face="0" str="7"/>
   </hex>
   <hex row="17" col="24" terrain="10" road="17"/>
   <hex row="17" col="25" terrain="10"/>
@@ -409,13 +409,13 @@
   <hex row="18" col="13" road="34"/>
   <hex row="18" col="14" road="33"/>
   <hex row="18" col="19" terrain="9" name="Gan River (Only passable with boats)">
-    <unit id="1047" owner="1" flag="16" face="0" str="3"/>
+    <unit id="1389" owner="1" flag="16" face="0" str="3"/>
   </hex>
   <hex row="18" col="20" terrain="9" name="Gan River (Only passable with boats)"/>
   <hex row="18" col="22" terrain="3"/>
   <hex row="18" col="23" terrain="3"/>
   <hex row="18" col="24" terrain="1" road="129" name="Nanchang">
-    <unit id="15270" owner="1" flag="16" face="0" str="7"/>
+    <unit id="18908" owner="1" flag="16" face="0" str="7"/>
   </hex>
   <hex row="18" col="25" terrain="10"/>
   <hex row="18" col="26" road="17"/>
@@ -447,7 +447,7 @@
   <hex row="20" col="24" terrain="10"/>
   <hex row="20" col="25" road="18"/>
   <hex row="20" col="26" road="41">
-    <unit id="18096" owner="0" flag="22" face="0"/>
+    <unit id="22650" owner="0" flag="22" face="0"/>
   </hex>
   <hex row="20" col="27" road="130"/>
   <hex row="20" col="28" terrain="2"/>
@@ -467,10 +467,10 @@
   <hex row="21" col="18" terrain="9" name="Gan River (Only passable with boats)"/>
   <hex row="21" col="24" terrain="10"/>
   <hex row="21" col="25" terrain="1" road="25" name="Qingyunpu" owner="0" flag="21" victory="0">
-    <unit id="40325" owner="0" flag="22" face="0" transport="40296" str="7"/>
+    <unit id="47996" owner="0" flag="22" face="0" transport="47967" str="7"/>
   </hex>
   <hex row="21" col="26">
-    <unit id="18096" owner="0" flag="22" face="0" str="7"/>
+    <unit id="22650" owner="0" flag="22" face="0" str="7"/>
   </hex>
   <hex row="21" col="27" road="34"/>
   <hex row="21" col="28" road="34"/>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <map file="mao2.xscn" name="Autumn Harvest Uprising" turns="6, 9, 11" date="September 7, 1927" dayturns="0" ground="0" atmosferic="0" latitude="1" iconset="0" weatherchg="0" rows="31" cols="42" eqp="eqp-olgww2" image="resources/maps/images/map_545.png" eqpv="united1">
-  <player id="0" country="21" side="1" airtrans="0" navaltrans="0" support="22, 0, 0, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
-  <player id="1" country="15" side="0" airtrans="0" navaltrans="0" support="16, 0, 0, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <player id="0" country="21" side="1" airtrans="0" navaltrans="0" support="22,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <player id="1" country="15" side="0" airtrans="0" navaltrans="0" support="16,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <hex row="0" col="2" terrain="3"/>
   <hex row="0" col="3" terrain="3"/>
   <hex row="0" col="4" terrain="3"/>
@@ -233,10 +233,10 @@
   <hex row="7" col="37" terrain="3"/>
   <hex row="7" col="38" terrain="3"/>
   <hex row="7" col="39" terrain="1" road="34" name="Shashi" owner="0" flag="21" deploy="0">
-    <unit id="15228" owner="0" flag="22" face="0" str="4"/>
+    <unit id="18866" owner="0" flag="22" face="0" str="4"/>
   </hex>
   <hex row="7" col="40" road="34" deploy="0">
-    <unit id="15378" owner="0" flag="22" face="0" transport="15365" str="3"/>
+    <unit id="19016" owner="0" flag="22" face="0" transport="19003" str="3"/>
   </hex>
   <hex row="8" col="1" terrain="3"/>
   <hex row="8" col="2" terrain="3"/>
@@ -382,7 +382,7 @@
   <hex row="11" col="34" terrain="4"/>
   <hex row="11" col="35" terrain="3" road="34"/>
   <hex row="11" col="36" terrain="1" road="34" name="Huanghuashi" owner="0" flag="21">
-    <unit id="18074" owner="0" flag="22" face="0" str="5"/>
+    <unit id="22624" owner="0" flag="22" face="0" str="5"/>
   </hex>
   <hex row="11" col="37" terrain="3"/>
   <hex row="11" col="38" terrain="3"/>
@@ -417,7 +417,7 @@
   <hex row="12" col="25" terrain="5"/>
   <hex row="12" col="26" terrain="5"/>
   <hex row="12" col="27" terrain="1" road="40" name="Langlishi" owner="0" flag="21" victory="0">
-    <unit id="18074" owner="0" flag="22" face="0" str="3"/>
+    <unit id="22624" owner="0" flag="22" face="0" str="3"/>
   </hex>
   <hex row="12" col="29" terrain="4" road="40"/>
   <hex row="12" col="30" terrain="4"/>
@@ -456,7 +456,7 @@
   <hex row="13" col="23" terrain="1" road="56" name="Changsha"/>
   <hex row="13" col="24" terrain="10" name="Luoyang River"/>
   <hex row="13" col="25" terrain="1" road="34" name="Changsha" owner="1" flag="15">
-    <unit id="15228" owner="1" flag="16" face="0" str="5"/>
+    <unit id="18866" owner="1" flag="16" face="0" str="5"/>
   </hex>
   <hex row="13" col="26" road="34"/>
   <hex row="13" col="28" road="130"/>
@@ -478,14 +478,14 @@
   <hex row="14" col="8" terrain="4"/>
   <hex row="14" col="9" terrain="4"/>
   <hex row="14" col="10" terrain="3" road="25">
-    <unit id="40211" owner="0" flag="22" face="0" exp="100" str="3" ldr="1"/>
+    <unit id="47882" owner="0" flag="22" face="0" exp="100" str="3" ldr="1"/>
   </hex>
   <hex row="14" col="11" terrain="1" road="162" name="Ningxiang"/>
   <hex row="14" col="12" terrain="4" road="40"/>
   <hex row="14" col="13" terrain="3" road="130"/>
   <hex row="14" col="14" terrain="4" road="40"/>
   <hex row="14" col="15" terrain="3" road="130">
-    <unit id="18074" owner="0" flag="22" face="0" str="5"/>
+    <unit id="22624" owner="0" flag="22" face="0" str="5"/>
   </hex>
   <hex row="14" col="16" terrain="4" road="40"/>
   <hex row="14" col="17" terrain="3" road="130"/>
@@ -494,19 +494,19 @@
   <hex row="14" col="20" terrain="3" road="40"/>
   <hex row="14" col="21" terrain="3" road="138"/>
   <hex row="14" col="22" terrain="1" road="58" name="Changsha" owner="1" flag="15" victory="1">
-    <unit id="15270" owner="1" flag="16" face="0" str="5"/>
+    <unit id="18908" owner="1" flag="16" face="0" str="5"/>
   </hex>
   <hex row="14" col="23" terrain="1" road="187" name="Changsha"/>
   <hex row="14" col="24" terrain="10" road="178" name="Luoyang River">
-    <unit id="15378" owner="1" flag="16" face="0" str="3"/>
+    <unit id="19016" owner="1" flag="16" face="0" str="3"/>
   </hex>
   <hex row="14" col="25" terrain="10" name="Luoyang River"/>
   <hex row="14" col="26">
-    <unit id="15228" owner="1" flag="16" face="0" str="5"/>
+    <unit id="18866" owner="1" flag="16" face="0" str="5"/>
   </hex>
   <hex row="14" col="31" terrain="3"/>
   <hex row="14" col="32" terrain="3" road="137" owner="1" flag="15" victory="1">
-    <unit id="15270" owner="1" flag="16" face="0" str="2"/>
+    <unit id="18908" owner="1" flag="16" face="0" str="2"/>
   </hex>
   <hex row="14" col="33" terrain="3" road="136"/>
   <hex row="14" col="34" terrain="3"/>
@@ -525,7 +525,7 @@
   <hex row="15" col="8" terrain="4"/>
   <hex row="15" col="9" terrain="6" road="18"/>
   <hex row="15" col="10" terrain="1" road="35" name="Ningxiang" owner="0" flag="21" victory="0">
-    <unit id="18074" owner="0" flag="22" face="0" str="6"/>
+    <unit id="22624" owner="0" flag="22" face="0" str="6"/>
   </hex>
   <hex row="15" col="11" terrain="4"/>
   <hex row="15" col="12" terrain="4"/>
@@ -541,7 +541,7 @@
   <hex row="15" col="22" terrain="1" road="155" name="Changsha"/>
   <hex row="15" col="23" terrain="1" road="171" name="Changsha"/>
   <hex row="15" col="24" terrain="1" road="177" name="Changsha" owner="1" flag="15" victory="1">
-    <unit id="15256" owner="1" flag="16" face="0" str="3"/>
+    <unit id="18894" owner="1" flag="16" face="0" str="3"/>
   </hex>
   <hex row="15" col="25" terrain="10" name="Luoyang River"/>
   <hex row="15" col="31" terrain="3"/>
@@ -549,7 +549,7 @@
   <hex row="15" col="33" terrain="3"/>
   <hex row="15" col="34" terrain="3" road="152"/>
   <hex row="15" col="35" terrain="1" road="168" name="Wumeishan" owner="0" flag="21">
-    <unit id="18074" owner="0" flag="22" face="0" str="4"/>
+    <unit id="22624" owner="0" flag="22" face="0" str="4"/>
   </hex>
   <hex row="15" col="36" terrain="3"/>
   <hex row="15" col="37" terrain="3" road="40"/>
@@ -579,11 +579,11 @@
   <hex row="16" col="20" terrain="3"/>
   <hex row="16" col="21" terrain="3"/>
   <hex row="16" col="22" terrain="1" road="3" name="Changsha" owner="1" flag="15">
-    <unit id="15270" owner="1" flag="16" face="0" str="7"/>
+    <unit id="18908" owner="1" flag="16" face="0" str="7"/>
   </hex>
   <hex row="16" col="23" terrain="3"/>
   <hex row="16" col="24" terrain="1" road="137" name="Changsha" owner="1" flag="15" victory="1">
-    <unit id="15270" owner="1" flag="16" face="0" str="6"/>
+    <unit id="18908" owner="1" flag="16" face="0" str="6"/>
   </hex>
   <hex row="16" col="25" terrain="1" road="136" name="Changsha"/>
   <hex row="16" col="26" terrain="10" name="Luoyang River"/>
@@ -592,7 +592,7 @@
   <hex row="16" col="31" terrain="3"/>
   <hex row="16" col="32" terrain="3"/>
   <hex row="16" col="33" terrain="1" road="34" name="Bayiashan" owner="1" flag="15" victory="1">
-    <unit id="15270" owner="1" flag="16" face="0" str="2"/>
+    <unit id="18908" owner="1" flag="16" face="0" str="2"/>
   </hex>
   <hex row="16" col="34" terrain="3" road="35"/>
   <hex row="16" col="35" terrain="3"/>
@@ -897,7 +897,7 @@
   <hex row="24" col="26" terrain="3"/>
   <hex row="24" col="27" terrain="3"/>
   <hex row="24" col="28" terrain="3">
-    <unit id="18074" owner="0" flag="22" face="0" str="5"/>
+    <unit id="22624" owner="0" flag="22" face="0" str="5"/>
   </hex>
   <hex row="24" col="29" terrain="3" road="34"/>
   <hex row="24" col="30" terrain="10" road="34" name="Luoyang River"/>
@@ -930,7 +930,7 @@
   <hex row="25" col="23" terrain="6" road="27"/>
   <hex row="25" col="24" terrain="1" name="Xiangtan"/>
   <hex row="25" col="25" terrain="1" road="163" name="Xiangtan" owner="1" flag="15" victory="1">
-    <unit id="15270" owner="1" flag="16" face="0" str="2"/>
+    <unit id="18908" owner="1" flag="16" face="0" str="2"/>
   </hex>
   <hex row="25" col="26" terrain="3" road="168"/>
   <hex row="25" col="27" terrain="3" road="130"/>

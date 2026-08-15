@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <map file="aljf_9.xscn" name="Assault at Kernstown" turns="12, 16, 24" date="March 23, 1862" dayturns="0" ground="0" atmosferic="1" latitude="9" iconset="0" weatherchg="0" rows="23" cols="40" eqp="eqp-kaiser" image="resources/maps/images/map_863.png" eqpv="united1">
-  <player id="0" country="162" side="1" airtrans="0" navaltrans="0" support="163, 0, 0, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
-  <player id="1" country="150" side="0" airtrans="0" navaltrans="0" support="151, 0, 0, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <player id="0" country="162" side="1" airtrans="0" navaltrans="0" support="163,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <player id="1" country="150" side="0" airtrans="0" navaltrans="0" support="151,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <hex row="0" col="1" terrain="3"/>
   <hex row="0" col="2" terrain="3"/>
   <hex row="0" col="3" terrain="3"/>
@@ -242,7 +242,7 @@
   <hex row="11" col="1" road="9"/>
   <hex row="11" col="2" terrain="10" name="Opequon Creek"/>
   <hex row="11" col="5" terrain="1" name="Glass House" owner="1" flag="150" victory="1">
-    <unit id="37304" owner="1" flag="151" face="0" exp="179"/>
+    <unit id="44797" owner="1" flag="151" face="0" exp="179"/>
   </hex>
   <hex row="11" col="13" terrain="6" name="Sandy Ridge"/>
   <hex row="11" col="14" terrain="6" name="Sandy Ridge"/>
@@ -250,7 +250,7 @@
   <hex row="11" col="16" road="34"/>
   <hex row="11" col="17" road="9"/>
   <hex row="11" col="18" terrain="3">
-    <unit id="38439" owner="0" flag="163" face="0" exp="106"/>
+    <unit id="45963" owner="0" flag="163" face="0" exp="106"/>
   </hex>
   <hex row="11" col="20" terrain="3"/>
   <hex row="11" col="21" terrain="3"/>
@@ -261,7 +261,7 @@
   <hex row="12" col="2" terrain="10" road="136" name="Opequon Creek"/>
   <hex row="12" col="3" road="136"/>
   <hex row="12" col="8" terrain="3">
-    <unit id="37294" owner="1" flag="151" face="0" exp="152"/>
+    <unit id="44787" owner="1" flag="151" face="0" exp="152"/>
   </hex>
   <hex row="12" col="11" terrain="6" name="Sandy Ridge"/>
   <hex row="12" col="12" terrain="6" name="Sandy Ridge"/>
@@ -269,17 +269,17 @@
   <hex row="12" col="14" terrain="6" road="34" name="Sandy Ridge"/>
   <hex row="12" col="18" road="144"/>
   <hex row="12" col="20" terrain="3">
-    <unit id="38439" owner="0" flag="163" face="0" exp="93"/>
+    <unit id="45963" owner="0" flag="163" face="0" exp="93"/>
   </hex>
   <hex row="12" col="21" terrain="3">
-    <unit id="38439" owner="0" flag="163" face="0" exp="82"/>
+    <unit id="45963" owner="0" flag="163" face="0" exp="82"/>
   </hex>
   <hex row="12" col="22" terrain="6" name="Pritchard&#x27;s Hill"/>
   <hex row="12" col="23" terrain="6" name="Pritchard&#x27;s Hill">
-    <unit id="38439" owner="0" flag="163" face="0" exp="107"/>
+    <unit id="45963" owner="0" flag="163" face="0" exp="107"/>
   </hex>
   <hex row="12" col="24">
-    <unit id="38434" owner="0" flag="163" face="0" exp="190"/>
+    <unit id="45958" owner="0" flag="163" face="0" exp="190"/>
   </hex>
   <hex row="12" col="25" road="17" deploy="0"/>
   <hex row="12" col="26" terrain="4"/>
@@ -291,10 +291,10 @@
   <hex row="13" col="5" road="136"/>
   <hex row="13" col="9" terrain="6" name="Sandy Ridge"/>
   <hex row="13" col="10" terrain="6" name="Sandy Ridge">
-    <unit id="37294" owner="1" flag="151" face="0" exp="97"/>
+    <unit id="44787" owner="1" flag="151" face="0" exp="97"/>
   </hex>
   <hex row="13" col="11" terrain="6" name="Sandy Ridge">
-    <unit id="37294" owner="1" flag="151" face="0" exp="134"/>
+    <unit id="44787" owner="1" flag="151" face="0" exp="134"/>
   </hex>
   <hex row="13" col="12" terrain="6" name="Sandy Ridge"/>
   <hex row="13" col="13" road="33"/>
@@ -303,13 +303,13 @@
   <hex row="13" col="21" terrain="3"/>
   <hex row="13" col="22" deploy="0"/>
   <hex row="13" col="24">
-    <unit id="38447" owner="0" flag="163" face="0" exp="114"/>
+    <unit id="45971" owner="0" flag="163" face="0" exp="114"/>
   </hex>
   <hex row="13" col="25" road="17">
-    <unit id="38439" owner="0" flag="163" face="0" exp="92"/>
+    <unit id="45963" owner="0" flag="163" face="0" exp="92"/>
   </hex>
   <hex row="13" col="26" terrain="4">
-    <unit id="38439" owner="0" flag="163" face="0" exp="97"/>
+    <unit id="45963" owner="0" flag="163" face="0" exp="97"/>
   </hex>
   <hex row="13" col="33" terrain="10"/>
   <hex row="13" col="38" terrain="4"/>
@@ -320,10 +320,10 @@
   <hex row="14" col="9" terrain="6" name="Sandy Ridge"/>
   <hex row="14" col="10" terrain="6" name="Sandy Ridge"/>
   <hex row="14" col="11" terrain="6" name="Sandy Ridge">
-    <unit id="37332" owner="1" flag="151" face="0" transport="37321" exp="180"/>
+    <unit id="44825" owner="1" flag="151" face="0" transport="44814" exp="180"/>
   </hex>
   <hex row="14" col="12" terrain="6" road="18" name="Sandy Ridge">
-    <unit id="37294" owner="1" flag="151" face="0" exp="171"/>
+    <unit id="44787" owner="1" flag="151" face="0" exp="171"/>
   </hex>
   <hex row="14" col="20" road="136"/>
   <hex row="14" col="21" road="144"/>
@@ -342,10 +342,10 @@
   <hex row="15" col="12" road="57"/>
   <hex row="15" col="13" road="168"/>
   <hex row="15" col="14">
-    <unit id="37294" owner="1" flag="151" face="0" exp="90"/>
+    <unit id="44787" owner="1" flag="151" face="0" exp="90"/>
   </hex>
   <hex row="15" col="15">
-    <unit id="37294" owner="1" flag="151" face="0" exp="135"/>
+    <unit id="44787" owner="1" flag="151" face="0" exp="135"/>
   </hex>
   <hex row="15" col="16" terrain="10" name="Hogg Run"/>
   <hex row="15" col="17" terrain="10" name="Hogg Run"/>
@@ -353,7 +353,7 @@
   <hex row="15" col="23" road="34"/>
   <hex row="15" col="24" road="34"/>
   <hex row="15" col="25" terrain="3">
-    <unit id="38446" owner="0" flag="163" face="0" exp="92"/>
+    <unit id="45970" owner="0" flag="163" face="0" exp="92"/>
   </hex>
   <hex row="15" col="26" terrain="3"/>
   <hex row="15" col="32" terrain="4"/>
@@ -370,10 +370,10 @@
   <hex row="16" col="12" road="163"/>
   <hex row="16" col="14" road="136"/>
   <hex row="16" col="15" road="136">
-    <unit id="37333" owner="1" flag="151" face="0" transport="37321" exp="159"/>
+    <unit id="44826" owner="1" flag="151" face="0" transport="44814" exp="159"/>
   </hex>
   <hex row="16" col="16">
-    <unit id="37294" owner="1" flag="151" face="0" exp="148"/>
+    <unit id="44787" owner="1" flag="151" face="0" exp="148"/>
   </hex>
   <hex row="16" col="17" terrain="10" name="Hogg Run"/>
   <hex row="16" col="19" terrain="10" name="Hogg Run"/>
@@ -381,7 +381,7 @@
   <hex row="16" col="21" terrain="10" name="Hogg Run"/>
   <hex row="16" col="22" road="146"/>
   <hex row="16" col="23">
-    <unit id="37305" owner="1" flag="151" face="0" exp="142"/>
+    <unit id="44798" owner="1" flag="151" face="0" exp="142"/>
   </hex>
   <hex row="16" col="26" terrain="3"/>
   <hex row="16" col="32" terrain="4"/>
@@ -401,10 +401,10 @@
   <hex row="17" col="18" terrain="10" name="Hogg Run"/>
   <hex row="17" col="19" road="34"/>
   <hex row="17" col="20" terrain="1" road="40" name="Opequon Church" owner="1" flag="150" victory="1">
-    <unit id="37294" owner="1" flag="151" face="0" exp="117"/>
+    <unit id="44787" owner="1" flag="151" face="0" exp="117"/>
   </hex>
   <hex row="17" col="21" road="154">
-    <unit id="37294" owner="1" flag="151" face="0" exp="172"/>
+    <unit id="44787" owner="1" flag="151" face="0" exp="172"/>
   </hex>
   <hex row="17" col="22" terrain="10" road="49" name="Hogg Run"/>
   <hex row="17" col="23" terrain="10" name="Hogg Run"/>
@@ -422,13 +422,13 @@
   <hex row="18" col="16" terrain="10" name="Hogg Run"/>
   <hex row="18" col="18" road="130"/>
   <hex row="18" col="21" road="43">
-    <unit id="37291" owner="1" flag="151" face="0" transport="37315" exp="4" ldr="1"/>
+    <unit id="44784" owner="1" flag="151" face="0" transport="44808" exp="4" ldr="1"/>
   </hex>
   <hex row="18" col="22" terrain="1" road="185" name="Kernstown">
-    <unit id="37293" owner="1" flag="151" face="0" exp="156"/>
+    <unit id="44786" owner="1" flag="151" face="0" exp="156"/>
   </hex>
   <hex row="18" col="23" terrain="1" road="176" name="Kernstown">
-    <unit id="37293" owner="1" flag="151" face="0" exp="177"/>
+    <unit id="44786" owner="1" flag="151" face="0" exp="177"/>
   </hex>
   <hex row="18" col="24" terrain="10" name="Hogg Run"/>
   <hex row="18" col="25" terrain="10" name="Hogg Run"/>
@@ -442,13 +442,13 @@
   <hex row="19" col="20" road="34"/>
   <hex row="19" col="21" terrain="4"/>
   <hex row="19" col="22" terrain="1" road="139" name="Kernstown" owner="1" flag="150" victory="1">
-    <unit id="37332" owner="1" flag="151" face="0" exp="102"/>
+    <unit id="44825" owner="1" flag="151" face="0" exp="102"/>
   </hex>
   <hex row="19" col="23" terrain="4" road="145">
-    <unit id="37296" owner="1" flag="151" face="0" exp="102"/>
+    <unit id="44789" owner="1" flag="151" face="0" exp="102"/>
   </hex>
   <hex row="19" col="25">
-    <unit id="37304" owner="1" flag="151" face="0" exp="131"/>
+    <unit id="44797" owner="1" flag="151" face="0" exp="131"/>
   </hex>
   <hex row="19" col="26" terrain="10" name="Hogg Run"/>
   <hex row="20" col="3" terrain="10" name="Opequon Creek"/>

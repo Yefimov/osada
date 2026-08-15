@@ -41,10 +41,10 @@ class UIBuilderMessagesTest {
 
     @Test
     fun messageDynamicCreatesMessageBox() {
-        UIBuilder.messageDynamic("Dynamic Title", "Dynamic Body")
+        UIBuilder.messageDynamic("Dynamic Title", "Dynamic Body", dialogClass = "test-layout")
         val box = byId("uiMessageBoxDynamic")
         assertNotNull(box)
-        assertEquals("uiMessageBox", box.className)
+        assertEquals("uiMessageBox test-layout", box.className)
         assertTrue(box.querySelector(".uiMessageBoxButton")?.getAttribute("title")?.contains("continue") == true)
     }
 

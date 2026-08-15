@@ -1,51 +1,51 @@
 <?xml version="1.0" encoding="ASCII"?>
 <map file="n_kiel.xscn" name="1918 Kieler Matrosenaufstand" turns="12, 15, 18" date="November 1, 1918" dayturns="0" ground="0" atmosferic="1" latitude="2" iconset="0" weatherchg="0" rows="39" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_512.png" eqpv="united1">
-  <player id="0" country="188" side="1" airtrans="0" navaltrans="0" support="189, 0, 0, 0" turnprestige="30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30"/>
-  <player id="1" country="117" side="0" airtrans="0" navaltrans="0" support="118, 0, 0, 0" turnprestige="30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30"/>
+  <player id="0" country="188" side="1" airtrans="0" navaltrans="0" support="189,0,0,0" turnprestige="30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30"/>
+  <player id="1" country="117" side="0" airtrans="0" navaltrans="0" support="118,0,0,0" turnprestige="30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30"/>
   <reinforce turn="2" message="The workers of Kiel stand with your uprising! Reinforcements have arrived.">
     <at row="15" col="24">
-      <unit id="39127" owner="0" flag="189" face="0" transport="39138" exp="210"/>
+      <unit id="46703" owner="0" flag="189" face="0" transport="46714" exp="210"/>
     </at>
     <at row="15" col="25">
-      <unit id="39130" owner="0" flag="189" face="0" exp="110" str="9"/>
+      <unit id="46706" owner="0" flag="189" face="0" exp="110" str="9"/>
     </at>
     <at row="14" col="25">
-      <unit id="39130" owner="0" flag="189" face="0" exp="110"/>
+      <unit id="46706" owner="0" flag="189" face="0" exp="110"/>
     </at>
   </reinforce>
   <reinforce turn="4">
     <at row="2" col="19">
-      <unit id="1121" owner="0" flag="189" face="0" exp="50" str="5"/>
+      <unit id="1467" owner="0" flag="189" face="0" exp="50" str="5"/>
     </at>
     <at row="2" col="21">
-      <unit id="1204" owner="0" flag="189" face="0" exp="50" str="8"/>
+      <unit id="1560" owner="0" flag="189" face="0" exp="50" str="8"/>
     </at>
     <at row="13" col="28">
-      <unit id="39127" owner="0" flag="189" face="0" transport="39138" exp="190"/>
+      <unit id="46703" owner="0" flag="189" face="0" transport="46714" exp="190"/>
     </at>
     <at row="13" col="29">
-      <unit id="39129" owner="0" flag="189" face="0" exp="130"/>
+      <unit id="46705" owner="0" flag="189" face="0" exp="130"/>
     </at>
     <at row="14" col="28">
-      <unit id="39129" owner="0" flag="189" face="0" exp="80" str="12"/>
+      <unit id="46705" owner="0" flag="189" face="0" exp="80" str="12"/>
     </at>
   </reinforce>
   <reinforce turn="8">
     <at row="25" col="42">
-      <unit id="35559" owner="1" flag="118" face="0" transport="35664" exp="110" str="6"/>
+      <unit id="42977" owner="1" flag="118" face="0" transport="43094" exp="110" str="6"/>
     </at>
     <at row="26" col="41">
-      <unit id="35559" owner="1" flag="118" face="0" transport="35664" exp="110" str="6"/>
+      <unit id="42977" owner="1" flag="118" face="0" transport="43094" exp="110" str="6"/>
     </at>
     <at row="25" col="41">
-      <unit id="35550" owner="1" flag="118" face="0" transport="35664" exp="110" str="4"/>
+      <unit id="42967" owner="1" flag="118" face="0" transport="43094" exp="110" str="4"/>
     </at>
     <at row="26" col="42">
-      <unit id="35690" owner="1" flag="118" face="0" transport="35672" exp="120" str="6"/>
+      <unit id="43129" owner="1" flag="118" face="0" transport="43103" exp="120" str="6"/>
     </at>
   </reinforce>
   <hex row="0" col="0">
-    <unit id="35784" owner="1" flag="118" face="0" exp="100" str="6"/>
+    <unit id="43232" owner="1" flag="118" face="0" exp="100" str="6"/>
   </hex>
   <hex row="0" col="7" terrain="3"/>
   <hex row="0" col="9" terrain="3"/>
@@ -268,7 +268,7 @@
   <hex row="8" col="27" terrain="9" name="Kieler F&#246;rde"/>
   <hex row="8" col="28" terrain="9" name="Kieler F&#246;rde"/>
   <hex row="8" col="29" terrain="9" name="Kieler F&#246;rde">
-    <unit id="35857" owner="1" flag="118" face="0" exp="60" str="5"/>
+    <unit id="43309" owner="1" flag="118" face="0" exp="60" str="5"/>
   </hex>
   <hex row="8" col="30" terrain="8"/>
   <hex row="8" col="31" terrain="8"/>
@@ -292,17 +292,17 @@
   <hex row="9" col="27" terrain="9" name="Kieler F&#246;rde"/>
   <hex row="9" col="28" terrain="9" name="Kieler F&#246;rde"/>
   <hex row="9" col="29" terrain="9" name="Kieler F&#246;rde">
-    <unit id="35858" owner="1" flag="118" face="0" exp="60" str="5"/>
+    <unit id="43310" owner="1" flag="118" face="0" exp="60" str="5"/>
   </hex>
   <hex row="9" col="32" road="17"/>
   <hex row="9" col="33" terrain="1">
-    <unit id="682" owner="1" flag="118" face="0" exp="130"/>
+    <unit id="939" owner="1" flag="118" face="0" exp="130"/>
   </hex>
   <hex row="9" col="34" terrain="1">
-    <unit id="35650" owner="1" flag="118" face="0" exp="130"/>
+    <unit id="43079" owner="1" flag="118" face="0" exp="130"/>
   </hex>
   <hex row="9" col="35" terrain="1" name="Marinebasis" owner="1" flag="117" victory="1">
-    <unit id="35545" owner="1" flag="118" face="0" exp="140" str="9"/>
+    <unit id="42961" owner="1" flag="118" face="0" exp="140" str="9"/>
   </hex>
   <hex row="9" col="39" road="34"/>
   <hex row="9" col="40" road="34"/>
@@ -332,17 +332,17 @@
   <hex row="10" col="27" terrain="9" name="Kieler F&#246;rde"/>
   <hex row="10" col="28" terrain="9" name="Kieler F&#246;rde"/>
   <hex row="10" col="29" terrain="9" name="Kieler F&#246;rde">
-    <unit id="35858" owner="1" flag="118" face="0" exp="60" str="5"/>
+    <unit id="43310" owner="1" flag="118" face="0" exp="60" str="5"/>
   </hex>
   <hex row="10" col="32" road="17"/>
   <hex row="10" col="33" terrain="1" name="Marinebasis">
-    <unit id="513" owner="1" flag="118" face="0" exp="170" str="9"/>
+    <unit id="728" owner="1" flag="118" face="0" exp="170" str="9"/>
   </hex>
   <hex row="10" col="34" terrain="1" name="Marinebasis">
-    <unit id="151" owner="0" flag="189" face="0" exp="110" str="9"/>
+    <unit id="218" owner="0" flag="189" face="0" exp="110" str="9"/>
   </hex>
   <hex row="10" col="35">
-    <unit id="682" owner="1" flag="118" face="0" exp="130"/>
+    <unit id="939" owner="1" flag="118" face="0" exp="130"/>
   </hex>
   <hex row="10" col="37" road="34"/>
   <hex row="10" col="38" road="34"/>
@@ -376,7 +376,7 @@
   <hex row="11" col="32" road="33"/>
   <hex row="11" col="33" terrain="1"/>
   <hex row="11" col="34" terrain="1" name="Marinebasis" owner="1" flag="117" victory="1">
-    <unit id="35650" owner="1" flag="118" face="0" exp="130"/>
+    <unit id="43079" owner="1" flag="118" face="0" exp="130"/>
   </hex>
   <hex row="11" col="35" road="34"/>
   <hex row="11" col="36" road="34"/>
@@ -418,7 +418,7 @@
   <hex row="13" col="17" terrain="4"/>
   <hex row="13" col="21" road="17"/>
   <hex row="13" col="23" terrain="9" name="Kieler F&#246;rde">
-    <unit id="1121" owner="0" flag="189" face="0" exp="50" str="5"/>
+    <unit id="1467" owner="0" flag="189" face="0" exp="50" str="5"/>
   </hex>
   <hex row="13" col="24" terrain="9" name="Kieler F&#246;rde"/>
   <hex row="13" col="26" terrain="9" name="Kieler F&#246;rde"/>
@@ -471,7 +471,7 @@
   <hex row="15" col="19" terrain="4"/>
   <hex row="15" col="21" road="33"/>
   <hex row="15" col="22" terrain="9" name="Kieler F&#246;rde">
-    <unit id="1204" owner="0" flag="189" face="0" exp="50" str="8"/>
+    <unit id="1560" owner="0" flag="189" face="0" exp="50" str="8"/>
   </hex>
   <hex row="15" col="24" terrain="1" road="50" name="Kiel"/>
   <hex row="15" col="25" terrain="1" road="17" name="Kiel"/>
@@ -501,27 +501,27 @@
   <hex row="16" col="20" road="34"/>
   <hex row="16" col="22" terrain="9" name="Kieler F&#246;rde"/>
   <hex row="16" col="23" terrain="1" name="Gewerkschaftshaus" owner="0" flag="188" victory="0">
-    <unit id="39135" owner="0" flag="189" face="0" transport="39129" exp="110" str="8"/>
+    <unit id="46711" owner="0" flag="189" face="0" transport="46705" exp="110" str="8"/>
   </hex>
   <hex row="16" col="24" terrain="1" road="153" name="Kiel"/>
   <hex row="16" col="25" terrain="1" road="153" name="Kiel">
-    <unit id="35569" owner="1" flag="118" face="0" exp="160" str="8"/>
+    <unit id="42990" owner="1" flag="118" face="0" exp="160" str="8"/>
   </hex>
   <hex row="16" col="26" terrain="1" name="Kiel"/>
   <hex row="16" col="27" terrain="1" name="Kiel"/>
   <hex row="16" col="28" terrain="1" name="Exerzierplatz" owner="1" flag="117" victory="1">
-    <unit id="35647" owner="1" flag="118" face="0" transport="35569" exp="190" str="11"/>
+    <unit id="43076" owner="1" flag="118" face="0" transport="42990" exp="190" str="11"/>
   </hex>
   <hex row="16" col="29" terrain="1" name="Kiel"/>
   <hex row="16" col="30" terrain="1" road="136" name="Kiel"/>
   <hex row="16" col="31" terrain="1" road="136" name="Kasernenkomplex Westtor" owner="1" flag="117" victory="1">
-    <unit id="35650" owner="1" flag="118" face="0" exp="160" str="12"/>
+    <unit id="43079" owner="1" flag="118" face="0" exp="160" str="12"/>
   </hex>
   <hex row="16" col="32" terrain="1" name="Kaserne">
-    <unit id="35650" owner="1" flag="118" face="0" exp="110" str="11"/>
+    <unit id="43079" owner="1" flag="118" face="0" exp="110" str="11"/>
   </hex>
   <hex row="16" col="33" terrain="1" name="Kaserne">
-    <unit id="513" owner="1" flag="118" face="0" exp="160" str="12"/>
+    <unit id="728" owner="1" flag="118" face="0" exp="160" str="12"/>
   </hex>
   <hex row="16" col="37" road="34"/>
   <hex row="16" col="38" road="34"/>
@@ -539,12 +539,12 @@
   <hex row="17" col="20" road="136"/>
   <hex row="17" col="21" terrain="10" road="136" name="Kieler F&#246;rde"/>
   <hex row="17" col="22" terrain="9" name="Kieler F&#246;rde">
-    <unit id="1204" owner="0" flag="189" face="0" exp="50" str="8"/>
+    <unit id="1560" owner="0" flag="189" face="0" exp="50" str="8"/>
   </hex>
   <hex row="17" col="23" terrain="1" name="Kiel"/>
   <hex row="17" col="24" road="17" name="Kiel"/>
   <hex row="17" col="25" terrain="1" road="17" name="Kiel">
-    <unit id="35569" owner="1" flag="118" face="0" exp="90" str="9"/>
+    <unit id="42990" owner="1" flag="118" face="0" exp="90" str="9"/>
   </hex>
   <hex row="17" col="26" terrain="1" name="Kiel"/>
   <hex row="17" col="27" terrain="1" name="Kiel"/>
@@ -553,13 +553,13 @@
   <hex row="17" col="30" terrain="1" name="Kiel"/>
   <hex row="17" col="31" terrain="1" road="138" name="Kiel"/>
   <hex row="17" col="32" terrain="1" road="168" name="Kaserne">
-    <unit id="513" owner="1" flag="118" face="0" exp="110" str="11"/>
+    <unit id="728" owner="1" flag="118" face="0" exp="110" str="11"/>
   </hex>
   <hex row="17" col="33" terrain="1" road="136" name="Kaserne">
-    <unit id="35650" owner="1" flag="118" face="0" exp="110" str="11"/>
+    <unit id="43079" owner="1" flag="118" face="0" exp="110" str="11"/>
   </hex>
   <hex row="17" col="34" terrain="1" name="Kasernenkomplex Osttor" owner="1" flag="117" victory="1">
-    <unit id="35650" owner="1" flag="118" face="0" exp="160" str="12"/>
+    <unit id="43079" owner="1" flag="118" face="0" exp="160" str="12"/>
   </hex>
   <hex row="17" col="35" road="34"/>
   <hex row="17" col="36" road="34"/>
@@ -585,7 +585,7 @@
   <hex row="18" col="24" road="17" name="Kiel"/>
   <hex row="18" col="25" terrain="1" road="17" name="Kiel"/>
   <hex row="18" col="26" terrain="1" name="Kiel">
-    <unit id="35569" owner="1" flag="118" face="0" exp="110"/>
+    <unit id="42990" owner="1" flag="118" face="0" exp="110"/>
   </hex>
   <hex row="18" col="27" terrain="1" name="Kiel"/>
   <hex row="18" col="28" terrain="1" name="Kiel"/>
@@ -685,7 +685,7 @@
   <hex row="21" col="26" terrain="1" road="137" name="Kiel"/>
   <hex row="21" col="27" road="155"/>
   <hex row="21" col="28" road="185" name="Rathaus" owner="1" flag="117" victory="1">
-    <unit id="35647" owner="1" flag="118" face="0" transport="35569" exp="190" str="9"/>
+    <unit id="43076" owner="1" flag="118" face="0" transport="42990" exp="190" str="9"/>
   </hex>
   <hex row="21" col="29" road="153"/>
   <hex row="21" col="30" terrain="1" name="Kiel"/>

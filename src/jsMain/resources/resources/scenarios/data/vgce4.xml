@@ -1,59 +1,59 @@
 <?xml version="1.0" encoding="ASCII"?>
 <map file="vgce4.xscn" name="Ceuta" turns="24, 26, 28" date="August 5, 1939" dayturns="0" ground="0" atmosferic="0" latitude="0" iconset="0" weatherchg="1" rows="35" cols="35" eqp="eqp-gce" image="resources/maps/images/map_807.png" eqpv="united1">
-  <player id="0" country="226" side="1" airtrans="0" navaltrans="0" support="227, 0, 0, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 45, 45, 45, 45, 45, 0, 0, 0, 45, 45, 45, 45, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
-  <player id="1" country="225" side="0" airtrans="0" navaltrans="0" support="209, 215, 226, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <player id="0" country="226" side="1" airtrans="0" navaltrans="0" support="227,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 45, 45, 45, 45, 45, 0, 0, 0, 45, 45, 45, 45, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <player id="1" country="225" side="0" airtrans="0" navaltrans="0" support="209,215,226,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="4">
     <at row="0" col="7">
-      <unit id="40049" owner="0" flag="227" face="0"/>
+      <unit id="47625" owner="0" flag="227" face="0"/>
     </at>
     <at row="1" col="8">
-      <unit id="40058" owner="0" flag="227" face="0"/>
+      <unit id="47634" owner="0" flag="227" face="0"/>
     </at>
     <at row="1" col="7">
-      <unit id="40057" owner="0" flag="227" face="0"/>
+      <unit id="47633" owner="0" flag="227" face="0"/>
     </at>
   </reinforce>
   <reinforce turn="5">
     <at row="28" col="12">
-      <unit id="39782" owner="1" flag="215" face="0" transport="791" exp="111" str="9"/>
+      <unit id="47358" owner="1" flag="215" face="0" transport="1062" exp="111" str="9"/>
     </at>
   </reinforce>
   <reinforce turn="6">
     <at row="27" col="12">
-      <unit id="39815" owner="1" flag="215" face="0" transport="791" exp="54" str="7"/>
+      <unit id="47391" owner="1" flag="215" face="0" transport="1062" exp="54" str="7"/>
     </at>
   </reinforce>
   <reinforce turn="8">
     <at row="12" col="23">
-      <unit id="40068" owner="0" flag="227" face="0"/>
+      <unit id="47644" owner="0" flag="227" face="0"/>
     </at>
     <at row="15" col="23">
-      <unit id="40072" owner="0" flag="227" face="0"/>
+      <unit id="47648" owner="0" flag="227" face="0"/>
     </at>
     <at row="14" col="24">
-      <unit id="40071" owner="0" flag="227" face="0"/>
+      <unit id="47647" owner="0" flag="227" face="0"/>
     </at>
     <at row="15" col="26">
-      <unit id="40070" owner="0" flag="227" face="0"/>
+      <unit id="47646" owner="0" flag="227" face="0"/>
     </at>
     <at row="27" col="13">
-      <unit id="39786" owner="1" flag="215" face="0" transport="791" exp="44" str="5"/>
+      <unit id="47362" owner="1" flag="215" face="0" transport="1062" exp="44" str="5"/>
     </at>
     <at row="25" col="13">
-      <unit id="39788" owner="1" flag="215" face="0" transport="791" exp="194" str="7"/>
+      <unit id="47364" owner="1" flag="215" face="0" transport="1062" exp="194" str="7"/>
     </at>
     <at row="24" col="13">
-      <unit id="39788" owner="1" flag="215" face="0" transport="791" exp="194" str="6"/>
+      <unit id="47364" owner="1" flag="215" face="0" transport="1062" exp="194" str="6"/>
     </at>
   </reinforce>
   <reinforce turn="9">
     <at row="26" col="13">
-      <unit id="39782" owner="1" flag="215" face="0" transport="791" exp="210" str="7"/>
+      <unit id="47358" owner="1" flag="215" face="0" transport="1062" exp="210" str="7"/>
     </at>
   </reinforce>
   <hex row="0" col="2" terrain="9"/>
   <hex row="0" col="3" terrain="9">
-    <unit id="40049" owner="0" flag="227" face="0"/>
+    <unit id="47625" owner="0" flag="227" face="0"/>
   </hex>
   <hex row="0" col="4" terrain="9"/>
   <hex row="0" col="5" terrain="9"/>
@@ -90,20 +90,20 @@
   <hex row="1" col="2" terrain="9"/>
   <hex row="1" col="3" terrain="9"/>
   <hex row="1" col="4" terrain="9">
-    <unit id="40046" owner="0" flag="227" face="0"/>
+    <unit id="47622" owner="0" flag="227" face="0"/>
   </hex>
   <hex row="1" col="5" terrain="7">
-    <unit id="39966" owner="0" flag="227" face="0" exp="146" str="9"/>
+    <unit id="47542" owner="0" flag="227" face="0" exp="146" str="9"/>
   </hex>
   <hex row="1" col="6" terrain="7"/>
   <hex row="1" col="7" terrain="7" road="40"/>
   <hex row="1" col="8" terrain="9"/>
   <hex row="1" col="9" terrain="7" road="40">
-    <unit id="39883" owner="1" flag="226" face="0"/>
+    <unit id="47459" owner="1" flag="226" face="0"/>
   </hex>
   <hex row="1" col="10" terrain="9"/>
   <hex row="1" col="11" terrain="1" road="40" name="Benzu" owner="1" flag="225">
-    <unit id="39728" owner="1" flag="209" face="0" exp="199" str="6" ldr="1"/>
+    <unit id="47304" owner="1" flag="209" face="0" exp="199" str="6" ldr="1"/>
   </hex>
   <hex row="1" col="12" terrain="9"/>
   <hex row="1" col="13" terrain="7"/>
@@ -115,16 +115,16 @@
   <hex row="1" col="19" terrain="9"/>
   <hex row="1" col="20" terrain="9"/>
   <hex row="1" col="21" terrain="9">
-    <unit id="39954" owner="1" flag="226" face="0"/>
+    <unit id="47530" owner="1" flag="226" face="0"/>
   </hex>
   <hex row="1" col="22" terrain="9">
-    <unit id="39957" owner="1" flag="226" face="0"/>
+    <unit id="47533" owner="1" flag="226" face="0"/>
   </hex>
   <hex row="1" col="23" terrain="9">
-    <unit id="39955" owner="1" flag="226" face="0"/>
+    <unit id="47531" owner="1" flag="226" face="0"/>
   </hex>
   <hex row="1" col="24" terrain="9">
-    <unit id="39959" owner="1" flag="226" face="0"/>
+    <unit id="47535" owner="1" flag="226" face="0"/>
   </hex>
   <hex row="1" col="25" terrain="9"/>
   <hex row="1" col="26" terrain="9"/>
@@ -140,25 +140,25 @@
   <hex row="2" col="2" terrain="9"/>
   <hex row="2" col="3" terrain="9"/>
   <hex row="2" col="4" terrain="1" name="Dalya">
-    <unit id="39966" owner="0" flag="227" face="0" exp="191" str="7"/>
+    <unit id="47542" owner="0" flag="227" face="0" exp="191" str="7"/>
   </hex>
   <hex row="2" col="5" terrain="1" road="34" name="Dalya">
-    <unit id="39881" owner="1" flag="226" face="0"/>
+    <unit id="47457" owner="1" flag="226" face="0"/>
   </hex>
   <hex row="2" col="6" terrain="7" road="34">
-    <unit id="39881" owner="1" flag="226" face="0"/>
+    <unit id="47457" owner="1" flag="226" face="0"/>
   </hex>
   <hex row="2" col="7" terrain="7"/>
   <hex row="2" col="8" terrain="7" road="130"/>
   <hex row="2" col="9" terrain="7">
-    <unit id="39881" owner="1" flag="226" face="0"/>
+    <unit id="47457" owner="1" flag="226" face="0"/>
   </hex>
   <hex row="2" col="10" terrain="7" road="130"/>
   <hex row="2" col="11" terrain="1"/>
   <hex row="2" col="12" terrain="1" road="136"/>
   <hex row="2" col="13" terrain="7" road="136"/>
   <hex row="2" col="14" terrain="7">
-    <unit id="39881" owner="1" flag="226" face="0"/>
+    <unit id="47457" owner="1" flag="226" face="0"/>
   </hex>
   <hex row="2" col="15" terrain="7" road="40"/>
   <hex row="2" col="16" terrain="7"/>
@@ -166,7 +166,7 @@
   <hex row="2" col="18" terrain="9"/>
   <hex row="2" col="19" terrain="9"/>
   <hex row="2" col="20" name="Ceuta [PORT]" owner="1" flag="225" victory="1">
-    <unit id="373" owner="1" flag="226" face="0" str="6"/>
+    <unit id="508" owner="1" flag="226" face="0" str="6"/>
   </hex>
   <hex row="2" col="21" terrain="1" road="170" name="Ceuta"/>
   <hex row="2" col="22" terrain="1" road="34" name="Ceuta"/>
@@ -185,10 +185,10 @@
   <hex row="3" col="1" terrain="9"/>
   <hex row="3" col="2" terrain="9"/>
   <hex row="3" col="3" terrain="7" road="18" deploy="0">
-    <unit id="39966" owner="0" flag="227" face="0" exp="102" str="7"/>
+    <unit id="47542" owner="0" flag="227" face="0" exp="102" str="7"/>
   </hex>
   <hex row="3" col="4" terrain="1" road="34" name="Dalya" owner="0" flag="226">
-    <unit id="39966" owner="0" flag="227" face="0" exp="138" str="8"/>
+    <unit id="47542" owner="0" flag="227" face="0" exp="138" str="8"/>
   </hex>
   <hex row="3" col="5" terrain="7"/>
   <hex row="3" col="6" terrain="7"/>
@@ -202,25 +202,25 @@
   <hex row="3" col="14" terrain="7" road="130"/>
   <hex row="3" col="15" terrain="7"/>
   <hex row="3" col="16" terrain="7" road="130">
-    <unit id="39879" owner="1" flag="226" face="0"/>
+    <unit id="47455" owner="1" flag="226" face="0"/>
   </hex>
   <hex row="3" col="17" terrain="7">
-    <unit id="39834" owner="1" flag="215" face="0"/>
+    <unit id="47410" owner="1" flag="215" face="0"/>
   </hex>
   <hex row="3" col="18" terrain="7" road="136">
-    <unit id="39728" owner="1" flag="209" face="0" exp="183" str="6"/>
+    <unit id="47304" owner="1" flag="209" face="0" exp="183" str="6"/>
   </hex>
   <hex row="3" col="19" road="162" name="Ceuta">
-    <unit id="39898" owner="1" flag="226" face="0" transport="39892" str="6"/>
+    <unit id="47474" owner="1" flag="226" face="0" transport="47468" str="6"/>
   </hex>
   <hex row="3" col="20" terrain="1" road="34" name="Ceuta" owner="1" flag="225">
-    <unit id="39849" owner="1" flag="226" face="0"/>
+    <unit id="47425" owner="1" flag="226" face="0"/>
   </hex>
   <hex row="3" col="21" terrain="1" name="Ceuta">
-    <unit id="39881" owner="1" flag="226" face="0"/>
+    <unit id="47457" owner="1" flag="226" face="0"/>
   </hex>
   <hex row="3" col="22" terrain="1" road="136" name="Ceuta" owner="1" flag="225" victory="1">
-    <unit id="39881" owner="1" flag="226" face="0"/>
+    <unit id="47457" owner="1" flag="226" face="0"/>
   </hex>
   <hex row="3" col="23" terrain="9"/>
   <hex row="3" col="24" terrain="9"/>
@@ -235,18 +235,18 @@
   <hex row="3" col="33" terrain="9"/>
   <hex row="4" col="0" terrain="9"/>
   <hex row="4" col="1" terrain="7">
-    <unit id="40024" owner="0" flag="227" face="0" transport="40009" exp="100" str="5"/>
+    <unit id="47600" owner="0" flag="227" face="0" transport="47585" exp="100" str="5"/>
   </hex>
   <hex row="4" col="2" terrain="9"/>
   <hex row="4" col="3" terrain="1" road="33" name="El Haouma" owner="0" flag="226" victory="0" deploy="0">
-    <unit id="39966" owner="0" flag="227" face="0" exp="205" str="7"/>
+    <unit id="47542" owner="0" flag="227" face="0" exp="205" str="7"/>
   </hex>
   <hex row="4" col="4" terrain="7"/>
   <hex row="4" col="5" terrain="7"/>
   <hex row="4" col="6" terrain="7"/>
   <hex row="4" col="7" terrain="7"/>
   <hex row="4" col="8" terrain="7">
-    <unit id="39883" owner="1" flag="226" face="0"/>
+    <unit id="47459" owner="1" flag="226" face="0"/>
   </hex>
   <hex row="4" col="9" terrain="7"/>
   <hex row="4" col="10" terrain="7"/>
@@ -256,16 +256,16 @@
   <hex row="4" col="14" terrain="7"/>
   <hex row="4" col="15" terrain="7"/>
   <hex row="4" col="16" terrain="2" owner="1" flag="225" victory="1">
-    <unit id="39916" owner="1" flag="226" face="0"/>
-    <unit id="39828" owner="1" flag="215" face="0"/>
+    <unit id="47492" owner="1" flag="226" face="0"/>
+    <unit id="47404" owner="1" flag="215" face="0"/>
   </hex>
   <hex row="4" col="17" road="32" name="R.R."/>
   <hex row="4" col="18" road="32" name="R.R.">
-    <unit id="39849" owner="1" flag="226" face="0"/>
+    <unit id="47425" owner="1" flag="226" face="0"/>
   </hex>
   <hex row="4" col="19" terrain="9"/>
   <hex row="4" col="20" terrain="1" name="Ceuta">
-    <unit id="39849" owner="1" flag="226" face="0"/>
+    <unit id="47425" owner="1" flag="226" face="0"/>
   </hex>
   <hex row="4" col="21" terrain="9"/>
   <hex row="4" col="22" terrain="9"/>
@@ -282,22 +282,22 @@
   <hex row="4" col="33" terrain="9"/>
   <hex row="5" col="0" terrain="7"/>
   <hex row="5" col="1" terrain="7" road="34">
-    <unit id="39976" owner="0" flag="227" face="0" exp="88" str="8"/>
+    <unit id="47552" owner="0" flag="227" face="0" exp="88" str="8"/>
   </hex>
   <hex row="5" col="2" terrain="1" road="34" name="El Haouma" deploy="0">
-    <unit id="39966" owner="0" flag="227" face="0" exp="142" str="8"/>
+    <unit id="47542" owner="0" flag="227" face="0" exp="142" str="8"/>
   </hex>
   <hex row="5" col="3" terrain="1" name="El Haouma">
-    <unit id="39966" owner="0" flag="227" face="0" exp="138" str="9"/>
+    <unit id="47542" owner="0" flag="227" face="0" exp="138" str="9"/>
   </hex>
   <hex row="5" col="4" terrain="7">
-    <unit id="39966" owner="0" flag="227" face="0" exp="143" str="8"/>
+    <unit id="47542" owner="0" flag="227" face="0" exp="143" str="8"/>
   </hex>
   <hex row="5" col="5" terrain="7"/>
   <hex row="5" col="6" terrain="7"/>
   <hex row="5" col="7" terrain="7"/>
   <hex row="5" col="8" terrain="7">
-    <unit id="39883" owner="1" flag="226" face="0"/>
+    <unit id="47459" owner="1" flag="226" face="0"/>
   </hex>
   <hex row="5" col="9" terrain="7"/>
   <hex row="5" col="10" terrain="7"/>
@@ -327,7 +327,7 @@
   <hex row="6" col="0" terrain="7"/>
   <hex row="6" col="1" name="R.R."/>
   <hex row="6" col="2" terrain="7">
-    <unit id="39968" owner="0" flag="227" face="0" transport="40001" exp="190" str="5"/>
+    <unit id="47544" owner="0" flag="227" face="0" transport="47577" exp="190" str="5"/>
   </hex>
   <hex row="6" col="3" name="R.R."/>
   <hex row="6" col="4" terrain="7"/>
@@ -335,11 +335,11 @@
   <hex row="6" col="6" terrain="7"/>
   <hex row="6" col="7" name="R.R."/>
   <hex row="6" col="8" terrain="1" name="El Bioutz" owner="1" flag="225" victory="1">
-    <unit id="39855" owner="1" flag="226" face="0" exp="218" str="7"/>
+    <unit id="47431" owner="1" flag="226" face="0" exp="218" str="7"/>
   </hex>
   <hex row="6" col="9" name="R.R."/>
   <hex row="6" col="10" terrain="1" name="Federiko" owner="1" flag="225">
-    <unit id="39881" owner="1" flag="226" face="0"/>
+    <unit id="47457" owner="1" flag="226" face="0"/>
   </hex>
   <hex row="6" col="11" road="8" name="R.R."/>
   <hex row="6" col="12" terrain="7"/>
@@ -366,7 +366,7 @@
   <hex row="6" col="33" terrain="9"/>
   <hex row="7" col="1" terrain="7" road="2"/>
   <hex row="7" col="2" road="8" name="R.R.">
-    <unit id="39966" owner="0" flag="227" face="0" exp="160" str="8"/>
+    <unit id="47542" owner="0" flag="227" face="0" exp="160" str="8"/>
   </hex>
   <hex row="7" col="3" terrain="7" road="2"/>
   <hex row="7" col="4" road="2" name="R.R."/>
@@ -382,7 +382,7 @@
   <hex row="7" col="14" road="17" name="R.R."/>
   <hex row="7" col="15" terrain="1"/>
   <hex row="7" col="16" terrain="1" name="Fnideq" owner="1" flag="225">
-    <unit id="39881" owner="1" flag="226" face="0"/>
+    <unit id="47457" owner="1" flag="226" face="0"/>
   </hex>
   <hex row="7" col="17" terrain="9"/>
   <hex row="7" col="18" terrain="9"/>
@@ -410,7 +410,7 @@
   <hex row="8" col="7" terrain="7"/>
   <hex row="8" col="8" terrain="7"/>
   <hex row="8" col="9" terrain="1" name="Dchar Loudana" owner="1" flag="225">
-    <unit id="39881" owner="1" flag="226" face="0"/>
+    <unit id="47457" owner="1" flag="226" face="0"/>
   </hex>
   <hex row="8" col="10" terrain="7"/>
   <hex row="8" col="11" terrain="7"/>
@@ -427,7 +427,7 @@
   <hex row="8" col="22" terrain="9"/>
   <hex row="8" col="23" terrain="9"/>
   <hex row="8" col="24" terrain="9">
-    <unit id="1014" owner="1" flag="215" face="0" str="6"/>
+    <unit id="1346" owner="1" flag="215" face="0" str="6"/>
   </hex>
   <hex row="8" col="25" terrain="9"/>
   <hex row="8" col="26" terrain="9"/>
@@ -484,7 +484,7 @@
   <hex row="10" col="11" terrain="7"/>
   <hex row="10" col="12" terrain="7"/>
   <hex row="10" col="13" road="16" name="[R.R. Station]" owner="1" flag="225" victory="1" deploy="0">
-    <unit id="378" owner="1" flag="226" face="0" str="5"/>
+    <unit id="520" owner="1" flag="226" face="0" str="5"/>
   </hex>
   <hex row="10" col="14" terrain="7" road="17"/>
   <hex row="10" col="15" terrain="7"/>
@@ -518,7 +518,7 @@
   <hex row="11" col="10" terrain="7"/>
   <hex row="11" col="11" terrain="1"/>
   <hex row="11" col="12" terrain="1" name="Douar Harraka" owner="1" flag="225">
-    <unit id="39883" owner="1" flag="226" face="0" exp="245" str="5"/>
+    <unit id="47459" owner="1" flag="226" face="0" exp="245" str="5"/>
   </hex>
   <hex row="11" col="13" road="16" name="R.R."/>
   <hex row="11" col="14" terrain="7" road="9"/>
@@ -688,11 +688,11 @@
   <hex row="16" col="13" road="16" name="R.R."/>
   <hex row="16" col="14" terrain="7"/>
   <hex row="16" col="15" terrain="7">
-    <unit id="39879" owner="1" flag="226" face="0" exp="88" str="5"/>
+    <unit id="47455" owner="1" flag="226" face="0" exp="88" str="5"/>
   </hex>
   <hex row="16" col="16" terrain="7" road="144"/>
   <hex row="16" col="17" terrain="7">
-    <unit id="39849" owner="1" flag="226" face="0"/>
+    <unit id="47425" owner="1" flag="226" face="0"/>
   </hex>
   <hex row="16" col="18" terrain="7"/>
   <hex row="16" col="19" terrain="7" deploy="0"/>
@@ -725,16 +725,16 @@
   <hex row="17" col="13" road="16" name="R.R."/>
   <hex row="17" col="14" terrain="7"/>
   <hex row="17" col="15" terrain="7">
-    <unit id="39915" owner="1" flag="226" face="0" exp="199" str="6"/>
+    <unit id="47491" owner="1" flag="226" face="0" exp="199" str="6"/>
   </hex>
   <hex row="17" col="16" terrain="1" road="17" name="Sania Torres" owner="1" flag="225" victory="1">
-    <unit id="39849" owner="1" flag="226" face="0" exp="132" str="6" ldr="1"/>
+    <unit id="47425" owner="1" flag="226" face="0" exp="132" str="6" ldr="1"/>
   </hex>
   <hex row="17" col="17" terrain="7"/>
   <hex row="17" col="18" terrain="7"/>
   <hex row="17" col="19" terrain="7" deploy="0"/>
   <hex row="17" col="20" terrain="7" deploy="0">
-    <unit id="39968" owner="0" flag="227" face="0" transport="40001"/>
+    <unit id="47544" owner="0" flag="227" face="0" transport="47577"/>
   </hex>
   <hex row="17" col="21" terrain="9"/>
   <hex row="17" col="22" terrain="9"/>
@@ -765,13 +765,13 @@
   <hex row="18" col="14" terrain="7"/>
   <hex row="18" col="15" terrain="7"/>
   <hex row="18" col="16" terrain="7" road="9">
-    <unit id="39856" owner="1" flag="226" face="0" transport="39892" exp="200" str="5" ldr="1"/>
+    <unit id="47432" owner="1" flag="226" face="0" transport="47468" exp="200" str="5" ldr="1"/>
   </hex>
   <hex row="18" col="17" terrain="7" road="136"/>
   <hex row="18" col="18" terrain="7"/>
   <hex row="18" col="19" terrain="7" deploy="0"/>
   <hex row="18" col="20" terrain="7" deploy="0">
-    <unit id="39971" owner="0" flag="227" face="0" exp="124" ldr="1"/>
+    <unit id="47547" owner="0" flag="227" face="0" exp="124" ldr="1"/>
   </hex>
   <hex row="18" col="21" terrain="9"/>
   <hex row="18" col="22" terrain="9"/>
@@ -802,7 +802,7 @@
   <hex row="19" col="14" terrain="7"/>
   <hex row="19" col="15" terrain="7"/>
   <hex row="19" col="16" terrain="1" name="Dar Guarda" owner="1" flag="225">
-    <unit id="39849" owner="1" flag="226" face="0" exp="132" str="6"/>
+    <unit id="47425" owner="1" flag="226" face="0" exp="132" str="6"/>
   </hex>
   <hex row="19" col="17" terrain="1" name="Dar Guarda"/>
   <hex row="19" col="18" terrain="7" road="144"/>
@@ -840,7 +840,7 @@
   <hex row="20" col="17" terrain="7"/>
   <hex row="20" col="18" terrain="7" road="17"/>
   <hex row="20" col="19" terrain="7" name="M&#x27;diq" owner="1" flag="225">
-    <unit id="39881" owner="1" flag="226" face="0"/>
+    <unit id="47457" owner="1" flag="226" face="0"/>
   </hex>
   <hex row="20" col="20" terrain="7"/>
   <hex row="20" col="21" terrain="7"/>
@@ -874,11 +874,11 @@
   <hex row="21" col="16" terrain="7"/>
   <hex row="21" col="17" terrain="7"/>
   <hex row="21" col="18" terrain="7" road="17">
-    <unit id="39815" owner="1" flag="215" face="0" transport="39806" exp="144" str="7" ldr="1"/>
+    <unit id="47391" owner="1" flag="215" face="0" transport="47382" exp="144" str="7" ldr="1"/>
   </hex>
   <hex row="21" col="19" terrain="7"/>
   <hex row="21" col="20" terrain="7">
-    <unit id="39781" owner="1" flag="215" face="0" transport="39792" exp="88" str="6"/>
+    <unit id="47357" owner="1" flag="215" face="0" transport="47368" exp="88" str="6"/>
   </hex>
   <hex row="21" col="21" terrain="7"/>
   <hex row="21" col="22" terrain="7"/>
@@ -915,7 +915,7 @@
   <hex row="22" col="20" terrain="7"/>
   <hex row="22" col="21" terrain="7"/>
   <hex row="22" col="22" terrain="7" name="El Groura" owner="1" flag="225">
-    <unit id="39781" owner="1" flag="215" face="0" transport="39792" exp="187" str="8" ldr="1"/>
+    <unit id="47357" owner="1" flag="215" face="0" transport="47368" exp="187" str="8" ldr="1"/>
   </hex>
   <hex row="22" col="23" terrain="7"/>
   <hex row="22" col="24" terrain="9"/>
@@ -1106,10 +1106,10 @@
   <hex row="28" col="11" terrain="7"/>
   <hex row="28" col="12" terrain="7"/>
   <hex row="28" col="13" terrain="1" road="16" name="Tetuan">
-    <unit id="39854" owner="1" flag="226" face="0" transport="791" exp="100"/>
+    <unit id="47430" owner="1" flag="226" face="0" transport="1062" exp="100"/>
   </hex>
   <hex row="28" col="14" terrain="7">
-    <unit id="39854" owner="1" flag="226" face="0" transport="791" exp="100"/>
+    <unit id="47430" owner="1" flag="226" face="0" transport="1062" exp="100"/>
   </hex>
   <hex row="28" col="15" terrain="7" road="34"/>
   <hex row="28" col="16" terrain="7" road="33"/>
@@ -1139,22 +1139,22 @@
   <hex row="29" col="7" terrain="7"/>
   <hex row="29" col="8" terrain="7"/>
   <hex row="29" col="9" terrain="2" owner="1" flag="225">
-    <unit id="39827" owner="1" flag="215" face="0"/>
+    <unit id="47403" owner="1" flag="215" face="0"/>
   </hex>
   <hex row="29" col="10" terrain="7">
-    <unit id="39827" owner="1" flag="215" face="0"/>
+    <unit id="47403" owner="1" flag="215" face="0"/>
   </hex>
   <hex row="29" col="11" terrain="1" name="Tetuan" owner="1" flag="225">
-    <unit id="39854" owner="1" flag="226" face="0" transport="791" exp="100"/>
+    <unit id="47430" owner="1" flag="226" face="0" transport="1062" exp="100"/>
   </hex>
   <hex row="29" col="12" terrain="1" name="Tetuan">
-    <unit id="39880" owner="1" flag="226" face="0" transport="791"/>
+    <unit id="47456" owner="1" flag="226" face="0" transport="1062"/>
   </hex>
   <hex row="29" col="13" terrain="1" road="18" name="Tetuan" owner="1" flag="225" victory="1">
-    <unit id="371" owner="1" flag="226" face="0" exp="245" str="5"/>
+    <unit id="506" owner="1" flag="226" face="0" exp="245" str="5"/>
   </hex>
   <hex row="29" col="14" terrain="1" road="34" name="Tetuan">
-    <unit id="39850" owner="1" flag="226" face="0" transport="39885" exp="199" str="5" ldr="1"/>
+    <unit id="47426" owner="1" flag="226" face="0" transport="47461" exp="199" str="5" ldr="1"/>
   </hex>
   <hex row="29" col="15" terrain="7"/>
   <hex row="29" col="16" terrain="7"/>
@@ -1185,11 +1185,11 @@
   <hex row="30" col="8" terrain="7"/>
   <hex row="30" col="9" terrain="7" road="40"/>
   <hex row="30" col="10" terrain="7">
-    <unit id="39834" owner="1" flag="215" face="0"/>
+    <unit id="47410" owner="1" flag="215" face="0"/>
   </hex>
   <hex row="30" col="11" terrain="7" road="34"/>
   <hex row="30" col="12" terrain="1" road="40" name="Tetuan">
-    <unit id="39881" owner="1" flag="226" face="0"/>
+    <unit id="47457" owner="1" flag="226" face="0"/>
   </hex>
   <hex row="30" col="13" terrain="7" road="131"/>
   <hex row="30" col="14" terrain="1" road="40" name="Tetuan"/>
@@ -1273,7 +1273,7 @@
   <hex row="32" col="26" terrain="7" road="136"/>
   <hex row="32" col="27" terrain="7" road="136"/>
   <hex row="32" col="28" terrain="7">
-    <unit id="39967" owner="0" flag="227" face="0" transport="40007" exp="144" str="5" ldr="1"/>
+    <unit id="47543" owner="0" flag="227" face="0" transport="47583" exp="144" str="5" ldr="1"/>
   </hex>
   <hex row="32" col="29" terrain="7"/>
   <hex row="32" col="30" terrain="7"/>

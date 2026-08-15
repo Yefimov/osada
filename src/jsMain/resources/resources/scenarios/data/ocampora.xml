@@ -1,52 +1,52 @@
 <?xml version='1.0' encoding='ASCII'?>
 <map file="ocampora.scn" name="Oran" turns="6, 8, 12" date="November 08, 1942" dayturns="3" ground="0" atmosferic="0" latitude="0" rows="40" cols="45" eqp="eqp-adlerkorps" image="resources/maps/images/map_114.png" eqpv="united1">
-  <player id="0" country="9" side="1" airtrans="0" navaltrans="0" support="23, 0, 0, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
-  <player id="1" country="6" side="0" airtrans="0" navaltrans="0" support="0, 0, 0, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <player id="0" country="9" side="1" airtrans="0" navaltrans="0" support="23,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <player id="1" country="6" side="0" airtrans="0" navaltrans="0" support="0,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="2">
     <at row="21" col="12">
-      <unit id="5101" owner="1" flag="7" face="8" exp="25" str="5"/>
+      <unit id="6265" owner="1" flag="7" face="8" exp="25" str="5"/>
     </at>
     <at row="18" col="19">
-      <unit id="4542" owner="1" flag="7" face="11" exp="135" str="5"/>
+      <unit id="5634" owner="1" flag="7" face="11" exp="135" str="5"/>
     </at>
     <at row="20" col="34">
-      <unit id="4537" owner="1" flag="7" face="7" exp="157" str="5"/>
+      <unit id="5629" owner="1" flag="7" face="7" exp="157" str="5"/>
     </at>
     <at row="20" col="17">
-      <unit id="4542" owner="1" flag="7" face="9" exp="25" str="7"/>
+      <unit id="5634" owner="1" flag="7" face="9" exp="25" str="7"/>
     </at>
     <at row="20" col="18">
-      <unit id="5595" owner="1" flag="7" face="11" exp="33" str="5"/>
+      <unit id="6839" owner="1" flag="7" face="11" exp="33" str="5"/>
     </at>
     <at row="22" col="14">
-      <unit id="4542" owner="1" flag="7" face="6" exp="135" str="5"/>
+      <unit id="5634" owner="1" flag="7" face="6" exp="135" str="5"/>
     </at>
   </reinforce>
   <reinforce turn="3">
     <at row="27" col="23">
-      <unit id="5067" owner="1" flag="7" face="7" exp="35" str="5"/>
+      <unit id="6228" owner="1" flag="7" face="7" exp="35" str="5"/>
     </at>
     <at row="27" col="24">
-      <unit id="5217" owner="1" flag="7" face="7" exp="57" str="7"/>
+      <unit id="6397" owner="1" flag="7" face="7" exp="57" str="7"/>
     </at>
     <at row="27" col="26">
-      <unit id="5744" owner="1" flag="7" face="8" exp="122" str="7"/>
+      <unit id="7030" owner="1" flag="7" face="8" exp="122" str="7"/>
     </at>
     <at row="27" col="27">
-      <unit id="5217" owner="1" flag="7" face="8" exp="35" str="5"/>
+      <unit id="6397" owner="1" flag="7" face="8" exp="35" str="5"/>
     </at>
     <at row="27" col="28">
-      <unit id="5965" owner="1" flag="7" face="8" exp="58" str="9"/>
+      <unit id="7290" owner="1" flag="7" face="8" exp="58" str="9"/>
     </at>
   </reinforce>
   <reinforce turn="4">
     <at row="27" col="25">
-      <unit id="5067" owner="1" flag="7" face="7" exp="57" str="6"/>
+      <unit id="6228" owner="1" flag="7" face="7" exp="57" str="6"/>
     </at>
   </reinforce>
   <reinforce turn="6">
     <at row="12" col="1">
-      <unit id="19607" owner="0" flag="23" face="3" exp="124" str="6"/>
+      <unit id="24663" owner="0" flag="23" face="3" exp="124" str="6"/>
     </at>
   </reinforce>
   <hex row="0" col="0" terrain="9" name="Mediterranean sea"/>
@@ -224,8 +224,8 @@
   <hex row="3" col="37" terrain="9" name="Mediterranean sea"/>
   <hex row="3" col="38" terrain="9" name="Mediterranean sea"/>
   <hex row="3" col="39" terrain="9" name="Mediterranean sea">
-    <unit id="20156" owner="0" flag="23" face="11" exp="35" str="6"/>
-    <unit id="19640" owner="0" flag="23" face="11" exp="33" str="7"/>
+    <unit id="25315" owner="0" flag="23" face="11" exp="35" str="6"/>
+    <unit id="24707" owner="0" flag="23" face="11" exp="33" str="7"/>
   </hex>
   <hex row="3" col="40" terrain="9" name="Mediterranean sea"/>
   <hex row="3" col="41" terrain="9" name="Mediterranean sea"/>
@@ -359,15 +359,15 @@
   <hex row="6" col="34" terrain="9" name="Mediterranean sea"/>
   <hex row="6" col="35" terrain="9" name="Mediterranean sea"/>
   <hex row="6" col="36" terrain="9" name="Mediterranean sea">
-    <unit id="19988" owner="0" flag="23" face="12" exp="57" str="8"/>
+    <unit id="25124" owner="0" flag="23" face="12" exp="57" str="8"/>
   </hex>
   <hex row="6" col="37" terrain="9" name="Mediterranean sea">
-    <unit id="19604" owner="0" flag="23" face="15" exp="37" str="5"/>
+    <unit id="24660" owner="0" flag="23" face="15" exp="37" str="5"/>
   </hex>
   <hex row="6" col="38" terrain="9" name="Mediterranean sea"/>
   <hex row="6" col="39" terrain="9" name="Mediterranean sea"/>
   <hex row="6" col="40" terrain="9" name="Mediterranean sea">
-    <unit id="918" owner="0" flag="23" face="15" exp="34" str="5"/>
+    <unit id="1226" owner="0" flag="23" face="15" exp="34" str="5"/>
   </hex>
   <hex row="6" col="41" terrain="9" name="Mediterranean sea"/>
   <hex row="6" col="42" terrain="9" name="Mediterranean sea"/>
@@ -413,11 +413,11 @@
   <hex row="7" col="37" terrain="9" name="Mediterranean sea"/>
   <hex row="7" col="38" terrain="9" name="Mediterranean sea"/>
   <hex row="7" col="39" terrain="9" name="Mediterranean sea">
-    <unit id="20189" owner="0" flag="23" face="13" exp="24" str="7"/>
+    <unit id="25368" owner="0" flag="23" face="13" exp="24" str="7"/>
   </hex>
   <hex row="7" col="40" terrain="9" name="Mediterranean sea"/>
   <hex row="7" col="41" terrain="9" name="Mediterranean sea">
-    <unit id="9580" owner="0" flag="10" face="15" carrier="11306" exp="33" str="7"/>
+    <unit id="11978" owner="0" flag="10" face="15" carrier="14373" exp="33" str="7"/>
   </hex>
   <hex row="7" col="42" terrain="9" name="Mediterranean sea"/>
   <hex row="7" col="43" terrain="9" name="Mediterranean sea"/>
@@ -459,17 +459,17 @@
   <hex row="8" col="34" terrain="9" name="Mediterranean sea"/>
   <hex row="8" col="35" terrain="9" name="Mediterranean sea"/>
   <hex row="8" col="36" terrain="9" name="Mediterranean sea">
-    <unit id="20036" owner="0" flag="23" face="11" exp="157" str="7"/>
+    <unit id="25178" owner="0" flag="23" face="11" exp="157" str="7"/>
   </hex>
   <hex row="8" col="37" terrain="9" name="Mediterranean sea"/>
   <hex row="8" col="38" terrain="9" name="Mediterranean sea"/>
   <hex row="8" col="39" terrain="9" name="Mediterranean sea"/>
   <hex row="8" col="40" terrain="9" name="Mediterranean sea"/>
   <hex row="8" col="41" terrain="9" name="Mediterranean sea">
-    <unit id="10167" owner="0" flag="10" face="15" transport="10293" carrier="11306" exp="34" str="7"/>
+    <unit id="12804" owner="0" flag="10" face="15" transport="12997" carrier="14373" exp="34" str="7"/>
   </hex>
   <hex row="8" col="42" terrain="9" name="Mediterranean sea">
-    <unit id="10562" owner="0" flag="10" face="15" carrier="11306" exp="25" str="6"/>
+    <unit id="13387" owner="0" flag="10" face="15" carrier="14373" exp="25" str="6"/>
   </hex>
   <hex row="8" col="43" terrain="9" name="Mediterranean sea"/>
   <hex row="8" col="44" terrain="9"/>
@@ -514,7 +514,7 @@
   <hex row="9" col="38" terrain="9" name="Mediterranean sea"/>
   <hex row="9" col="39" terrain="9" name="Mediterranean sea" deploy="0"/>
   <hex row="9" col="40" terrain="9" name="Mediterranean sea">
-    <unit id="19604" owner="0" flag="23" face="15" exp="35" str="6"/>
+    <unit id="24660" owner="0" flag="23" face="15" exp="35" str="6"/>
   </hex>
   <hex row="9" col="41" terrain="9" name="Mediterranean sea" deploy="0"/>
   <hex row="9" col="42" terrain="9" name="Mediterranean sea"/>
@@ -551,21 +551,21 @@
   <hex row="10" col="28" terrain="9" name="Mediterranean sea"/>
   <hex row="10" col="30" terrain="9" name="Mediterranean sea"/>
   <hex row="10" col="32" name="Cap Carbon : CLEAR">
-    <unit id="497" owner="1" flag="7" face="7" exp="24" ent="2" str="4"/>
+    <unit id="705" owner="1" flag="7" face="7" exp="24" ent="2" str="4"/>
   </hex>
   <hex row="10" col="34" terrain="9" name="Mediterranean sea">
-    <unit id="9576" owner="0" flag="10" face="13" carrier="11306" exp="154" str="4" ldr="1"/>
+    <unit id="11974" owner="0" flag="10" face="13" carrier="14373" exp="154" str="4" ldr="1"/>
   </hex>
   <hex row="10" col="35" terrain="9" name="Mediterranean sea"/>
   <hex row="10" col="36" terrain="9" name="Mediterranean sea" deploy="0"/>
   <hex row="10" col="37" terrain="9" name="Mediterranean sea"/>
   <hex row="10" col="38" terrain="9" name="Mediterranean sea">
-    <unit id="10251" owner="0" flag="10" face="14" carrier="11306" exp="24" str="6"/>
+    <unit id="12941" owner="0" flag="10" face="14" carrier="14373" exp="24" str="6"/>
   </hex>
   <hex row="10" col="39" terrain="9" name="Mediterranean sea" deploy="0"/>
   <hex row="10" col="40" terrain="9" name="Mediterranean sea" deploy="0"/>
   <hex row="10" col="41" terrain="9" name="Mediterranean sea" deploy="0">
-    <unit id="78" owner="0" flag="10" face="14" transport="10293" carrier="11306"/>
+    <unit id="104" owner="0" flag="10" face="14" transport="12997" carrier="14373"/>
   </hex>
   <hex row="10" col="42" terrain="9" name="Mediterranean sea"/>
   <hex row="10" col="43" terrain="9" name="Mediterranean sea"/>
@@ -601,14 +601,14 @@
   <hex row="11" col="28" terrain="9" name="Mediterranean sea"/>
   <hex row="11" col="34" terrain="1" road="16" name="Arzew"/>
   <hex row="11" col="35" terrain="1" road="32" name="Arzew" flag="6" owner="1" victory="1">
-    <unit id="497" owner="1" flag="7" face="5" exp="37" ent="3" str="4"/>
+    <unit id="705" owner="1" flag="7" face="5" exp="37" ent="3" str="4"/>
   </hex>
   <hex row="11" col="36" terrain="9" name="Mediterranean sea"/>
   <hex row="11" col="37" terrain="9" name="Mediterranean sea" deploy="0"/>
   <hex row="11" col="38" terrain="9" name="Mediterranean sea"/>
   <hex row="11" col="39" terrain="9" name="Mediterranean sea" deploy="0"/>
   <hex row="11" col="40" terrain="9" name="Mediterranean sea">
-    <unit id="10050" owner="0" flag="10" face="14" carrier="11306" exp="47" str="6"/>
+    <unit id="12646" owner="0" flag="10" face="14" carrier="14373" exp="47" str="6"/>
   </hex>
   <hex row="11" col="41" terrain="9" name="Mediterranean sea"/>
   <hex row="11" col="42" terrain="9" name="Mediterranean sea"/>
@@ -637,12 +637,12 @@
   <hex row="12" col="20" terrain="9" name="Mediterranean sea"/>
   <hex row="12" col="21" terrain="9" name="Mediterranean sea"/>
   <hex row="12" col="22" terrain="9" name="Mediterranean sea">
-    <unit id="6145" owner="1" flag="7" face="5" exp="135" str="7"/>
+    <unit id="7498" owner="1" flag="7" face="5" exp="135" str="7"/>
   </hex>
   <hex row="12" col="23" terrain="9" name="Mediterranean sea"/>
   <hex row="12" col="24" terrain="9" name="Mediterranean sea"/>
   <hex row="12" col="25" terrain="9" name="Mediterranean sea">
-    <unit id="6098" owner="1" flag="7" face="7" exp="38" str="5"/>
+    <unit id="7434" owner="1" flag="7" face="7" exp="38" str="5"/>
   </hex>
   <hex row="12" col="26" terrain="9" name="Mediterranean sea"/>
   <hex row="12" col="27" terrain="9" name="Mediterranean sea"/>
@@ -654,7 +654,7 @@
   <hex row="12" col="37" terrain="9" name="Mediterranean sea" deploy="0"/>
   <hex row="12" col="38" terrain="9" name="Mediterranean sea" deploy="0"/>
   <hex row="12" col="39" terrain="9" name="Mediterranean sea">
-    <unit id="10251" owner="0" flag="10" face="14" carrier="11306" exp="33" str="6"/>
+    <unit id="12941" owner="0" flag="10" face="14" carrier="14373" exp="33" str="6"/>
   </hex>
   <hex row="12" col="40" terrain="9" name="Mediterranean sea" deploy="0"/>
   <hex row="12" col="41" terrain="9" name="Mediterranean sea" deploy="0"/>
@@ -674,7 +674,7 @@
   <hex row="13" col="10" terrain="9" name="Mediterranean sea"/>
   <hex row="13" col="11" terrain="9" name="Mediterranean sea"/>
   <hex row="13" col="12" terrain="9" name="Mediterranean sea">
-    <unit id="19988" owner="0" flag="23" face="3" exp="66" str="8"/>
+    <unit id="25124" owner="0" flag="23" face="3" exp="66" str="8"/>
   </hex>
   <hex row="13" col="13" terrain="9" name="Mediterranean sea"/>
   <hex row="13" col="14" terrain="9" name="Mediterranean sea"/>
@@ -684,7 +684,7 @@
   <hex row="13" col="18" terrain="9" name="Mediterranean sea"/>
   <hex row="13" col="19" terrain="9" name="Mediterranean sea"/>
   <hex row="13" col="20" terrain="9" name="Mediterranean sea">
-    <unit id="6136" owner="1" flag="7" face="11" exp="57" str="8"/>
+    <unit id="7485" owner="1" flag="7" face="11" exp="57" str="8"/>
   </hex>
   <hex row="13" col="21" terrain="9" name="Mediterranean sea"/>
   <hex row="13" col="22" terrain="9" name="Mediterranean sea"/>
@@ -700,7 +700,7 @@
   <hex row="13" col="37" terrain="9" name="Mediterranean sea" deploy="0"/>
   <hex row="13" col="38" terrain="9" name="Mediterranean sea" deploy="0"/>
   <hex row="13" col="39" terrain="9" name="Mediterranean sea">
-    <unit id="10050" owner="0" flag="10" face="15" carrier="11306" exp="33" str="5"/>
+    <unit id="12646" owner="0" flag="10" face="15" carrier="14373" exp="33" str="5"/>
   </hex>
   <hex row="13" col="40" terrain="9" name="Mediterranean sea" deploy="0"/>
   <hex row="13" col="41" terrain="9" name="Mediterranean sea"/>
@@ -727,14 +727,14 @@
   <hex row="14" col="17" terrain="9" name="Mediterranean sea"/>
   <hex row="14" col="18" terrain="9" name="Mediterranean sea"/>
   <hex row="14" col="19" terrain="9" name="Mediterranean sea">
-    <unit id="6136" owner="1" flag="7" face="3" exp="35" str="8"/>
+    <unit id="7485" owner="1" flag="7" face="3" exp="35" str="8"/>
   </hex>
   <hex row="14" col="20" terrain="9" name="Mediterranean sea"/>
   <hex row="14" col="21" terrain="9" name="Mediterranean sea"/>
   <hex row="14" col="22" terrain="9" name="Mediterranean sea"/>
   <hex row="14" col="23" terrain="9" name="Mediterranean sea"/>
   <hex row="14" col="24" terrain="9" name="Mediterranean sea">
-    <unit id="6136" owner="1" flag="7" face="14" exp="157" str="5"/>
+    <unit id="7485" owner="1" flag="7" face="14" exp="157" str="5"/>
   </hex>
   <hex row="14" col="25" terrain="9" name="Mediterranean sea"/>
   <hex row="14" col="26" terrain="9" name="Mediterranean sea"/>
@@ -763,38 +763,38 @@
   <hex row="15" col="12" terrain="9" name="Mediterranean sea"/>
   <hex row="15" col="13" terrain="9" name="Mediterranean sea" deploy="0"/>
   <hex row="15" col="14" terrain="9" name="Mediterranean sea">
-    <unit id="10251" owner="0" flag="10" face="2" carrier="11306" exp="24" str="6"/>
+    <unit id="12941" owner="0" flag="10" face="2" carrier="14373" exp="24" str="6"/>
   </hex>
   <hex row="15" col="15" terrain="9" name="Mediterranean sea" deploy="0"/>
   <hex row="15" col="16" terrain="9" name="Mediterranean sea"/>
   <hex row="15" col="17">
-    <unit id="497" owner="1" flag="7" face="9" exp="35" ent="3" str="5"/>
+    <unit id="705" owner="1" flag="7" face="9" exp="35" ent="3" str="5"/>
   </hex>
   <hex row="15" col="18" terrain="9" name="Mediterranean sea"/>
   <hex row="15" col="19" terrain="9" name="Mediterranean sea"/>
   <hex row="15" col="20" terrain="9" name="Mediterranean sea"/>
   <hex row="15" col="21" terrain="9" name="Mediterranean sea"/>
   <hex row="15" col="22" terrain="9" name="Mediterranean sea">
-    <unit id="1044" owner="0" flag="23" face="15" exp="57" str="5"/>
+    <unit id="1386" owner="0" flag="23" face="15" exp="57" str="5"/>
   </hex>
   <hex row="15" col="23" terrain="9" name="Mediterranean sea">
-    <unit id="1044" owner="0" flag="23" face="1" exp="42" str="6"/>
+    <unit id="1386" owner="0" flag="23" face="1" exp="42" str="6"/>
   </hex>
   <hex row="15" col="24" terrain="9" name="Mediterranean sea"/>
   <hex row="15" col="25" terrain="9" name="Mediterranean sea"/>
   <hex row="15" col="26" name="Pointe Canastel : CLEAR">
-    <unit id="497" owner="1" flag="7" face="11" exp="57" ent="3" str="6"/>
+    <unit id="705" owner="1" flag="7" face="11" exp="57" ent="3" str="6"/>
   </hex>
   <hex row="15" col="28">
-    <unit id="519" owner="1" flag="7" face="4" exp="57" ent="8" str="8"/>
+    <unit id="734" owner="1" flag="7" face="4" exp="57" ent="8" str="8"/>
   </hex>
   <hex row="15" col="29" road="34">
-    <unit id="4537" owner="1" flag="7" face="5" transport="74" exp="35" ent="5" str="6"/>
+    <unit id="5629" owner="1" flag="7" face="5" transport="99" exp="35" ent="5" str="6"/>
   </hex>
   <hex row="15" col="30" road="42"/>
   <hex row="15" col="31" road="144"/>
   <hex row="15" col="32">
-    <unit id="4537" owner="1" flag="7" face="5" exp="28" str="8"/>
+    <unit id="5629" owner="1" flag="7" face="5" exp="28" str="8"/>
   </hex>
   <hex row="15" col="33" terrain="15" name="Salt Lake"/>
   <hex row="15" col="34" road="144"/>
@@ -803,7 +803,7 @@
   <hex row="15" col="40" road="40"/>
   <hex row="15" col="41" road="130"/>
   <hex row="15" col="42" terrain="1" road="40" name="La Macta" flag="6" owner="1">
-    <unit id="4537" owner="1" flag="7" face="12" exp="133" str="6"/>
+    <unit id="5629" owner="1" flag="7" face="12" exp="133" str="6"/>
   </hex>
   <hex row="15" col="43" terrain="8" road="130"/>
   <hex row="15" col="44" terrain="8" road="34"/>
@@ -825,20 +825,20 @@
   <hex row="16" col="15" terrain="9" name="Mediterranean sea" deploy="0"/>
   <hex row="16" col="16" deploy="0"/>
   <hex row="16" col="18" terrain="1" road="24" name="Ain el Turk" flag="6" owner="1">
-    <unit id="385" owner="1" flag="7" face="11" exp="35" ent="5" str="5"/>
+    <unit id="528" owner="1" flag="7" face="11" exp="35" ent="5" str="5"/>
   </hex>
   <hex row="16" col="19" road="130"/>
   <hex row="16" col="20" road="48"/>
   <hex row="16" col="21" terrain="9" name="Mediterranean sea"/>
   <hex row="16" col="22" terrain="9" name="Mediterranean sea"/>
   <hex row="16" col="23" terrain="12" name="Oran harbour">
-    <unit id="6098" owner="1" flag="7" face="4" exp="35" str="5"/>
+    <unit id="7434" owner="1" flag="7" face="4" exp="35" str="5"/>
   </hex>
   <hex row="16" col="24" terrain="9" name="Mediterranean sea"/>
   <hex row="16" col="27" road="34"/>
   <hex row="16" col="28" road="34"/>
   <hex row="16" col="29">
-    <unit id="5221" owner="1" flag="7" face="5" transport="385" exp="155" ent="5" str="7"/>
+    <unit id="6401" owner="1" flag="7" face="5" transport="528" exp="155" ent="5" str="7"/>
   </hex>
   <hex row="16" col="31" road="33"/>
   <hex row="16" col="32" terrain="15" name="Salt Lake"/>
@@ -862,34 +862,34 @@
   <hex row="17" col="14" terrain="9" name="Mediterranean sea" deploy="0"/>
   <hex row="17" col="15" name="Beach Y" flag="9" owner="0" victory="1"/>
   <hex row="17" col="17" terrain="1" road="34" name="Bou Sfer" flag="6" owner="1">
-    <unit id="4542" owner="1" flag="7" face="11" exp="25" ent="1" str="4"/>
+    <unit id="5634" owner="1" flag="7" face="11" exp="25" ent="1" str="4"/>
   </hex>
   <hex row="17" col="18" road="33"/>
   <hex row="17" col="20" terrain="1" road="9" name="Mars el Kebir" flag="6" owner="1">
-    <unit id="497" owner="1" flag="7" face="7" exp="42" ent="2" str="3"/>
+    <unit id="705" owner="1" flag="7" face="7" exp="42" ent="2" str="3"/>
   </hex>
   <hex row="17" col="21" road="136">
-    <unit id="519" owner="1" flag="7" face="11" exp="33" ent="5" str="5"/>
+    <unit id="734" owner="1" flag="7" face="11" exp="33" ent="5" str="5"/>
   </hex>
   <hex row="17" col="22" terrain="1" name="Oran"/>
   <hex row="17" col="23" terrain="1" road="56" name="Oran" flag="6" owner="1" victory="1">
-    <unit id="478" owner="1" flag="7" face="5" exp="157" ent="7" str="8"/>
+    <unit id="679" owner="1" flag="7" face="5" exp="157" ent="7" str="8"/>
   </hex>
   <hex row="17" col="25" road="34"/>
   <hex row="17" col="26" road="34"/>
   <hex row="17" col="27" terrain="5"/>
   <hex row="17" col="28">
-    <unit id="5519" owner="1" flag="7" face="5" exp="25" ent="3" str="6"/>
+    <unit id="6749" owner="1" flag="7" face="5" exp="25" ent="3" str="6"/>
   </hex>
   <hex row="17" col="29" road="18"/>
   <hex row="17" col="30" terrain="1" road="34" name="St. Cloud" flag="6" owner="1" victory="1">
-    <unit id="4537" owner="1" flag="7" face="5" transport="74" exp="135" ent="3" str="7"/>
+    <unit id="5629" owner="1" flag="7" face="5" transport="99" exp="135" ent="3" str="7"/>
   </hex>
   <hex row="17" col="33">
-    <unit id="4537" owner="1" flag="7" face="6" exp="135" str="8"/>
+    <unit id="5629" owner="1" flag="7" face="6" exp="135" str="8"/>
   </hex>
   <hex row="17" col="34" road="17">
-    <unit id="4553" owner="1" flag="7" face="7" exp="144" str="8"/>
+    <unit id="5645" owner="1" flag="7" face="7" exp="144" str="8"/>
   </hex>
   <hex row="17" col="35" terrain="15" name="Salt Lake"/>
   <hex row="17" col="36" terrain="15" name="Salt Lake"/>
@@ -918,11 +918,11 @@
   <hex row="18" col="21" terrain="1" road="18" name="Oran"/>
   <hex row="18" col="22" terrain="1" road="162" name="Oran"/>
   <hex row="18" col="23" road="17">
-    <unit id="5692" owner="1" flag="7" face="5" exp="157" ent="3" str="7"/>
+    <unit id="6961" owner="1" flag="7" face="5" exp="157" ent="3" str="7"/>
   </hex>
   <hex row="18" col="24" road="138"/>
   <hex row="18" col="25" road="136">
-    <unit id="385" owner="1" flag="7" face="11" exp="138" ent="12" str="8"/>
+    <unit id="528" owner="1" flag="7" face="11" exp="138" ent="12" str="8"/>
   </hex>
   <hex row="18" col="26" terrain="5"/>
   <hex row="18" col="27" road="40"/>
@@ -938,18 +938,18 @@
   <hex row="19" col="0" terrain="9" name="Mediterranean sea"/>
   <hex row="19" col="1" terrain="9" name="Mediterranean sea"/>
   <hex row="19" col="2" terrain="9" name="Mediterranean sea">
-    <unit id="20208" owner="0" flag="23" face="5" exp="57" str="6"/>
+    <unit id="25390" owner="0" flag="23" face="5" exp="57" str="6"/>
   </hex>
   <hex row="19" col="3" terrain="9" name="Mediterranean sea"/>
   <hex row="19" col="4" terrain="9" name="Mediterranean sea">
-    <unit id="19988" owner="0" flag="23" face="6" exp="157" str="7"/>
+    <unit id="25124" owner="0" flag="23" face="6" exp="157" str="7"/>
   </hex>
   <hex row="19" col="5" terrain="9" name="Mediterranean sea"/>
   <hex row="19" col="6" terrain="9" name="Mediterranean sea"/>
   <hex row="19" col="7" terrain="9" name="Mediterranean sea"/>
   <hex row="19" col="8" terrain="9" name="Mediterranean sea"/>
   <hex row="19" col="9">
-    <unit id="519" owner="1" flag="7" face="11" exp="25" ent="7" str="6"/>
+    <unit id="734" owner="1" flag="7" face="11" exp="25" ent="7" str="6"/>
   </hex>
   <hex row="19" col="13" road="33"/>
   <hex row="19" col="15" terrain="6" name="Djebel Murdjajdo"/>
@@ -957,14 +957,14 @@
   <hex row="19" col="17" terrain="6" name="Djebel Murdjajdo"/>
   <hex row="19" col="18" terrain="6" name="Djebel Murdjajdo"/>
   <hex row="19" col="19" terrain="6" name="Djebel Murdjajdo">
-    <unit id="5519" owner="1" flag="7" face="11" exp="25" ent="2" str="5"/>
+    <unit id="6749" owner="1" flag="7" face="11" exp="25" ent="2" str="5"/>
   </hex>
   <hex row="19" col="20" terrain="6" name="Djebel Murdjajdo"/>
   <hex row="19" col="21" road="17"/>
   <hex row="19" col="23" terrain="1" road="49" name="La Senia"/>
   <hex row="19" col="26" road="130"/>
   <hex row="19" col="28" road="130">
-    <unit id="385" owner="1" flag="7" face="10" exp="157" ent="8" str="8"/>
+    <unit id="528" owner="1" flag="7" face="10" exp="157" ent="8" str="8"/>
   </hex>
   <hex row="19" col="31" road="34"/>
   <hex row="19" col="32" road="34"/>
@@ -988,28 +988,28 @@
   <hex row="20" col="18" terrain="6" name="Djebel Murdjajdo"/>
   <hex row="20" col="19" terrain="6" name="Djebel Murdjajdo"/>
   <hex row="20" col="21" road="35" name="Misserrhin">
-    <unit id="385" owner="1" flag="7" face="11" exp="33" ent="5" str="7"/>
+    <unit id="528" owner="1" flag="7" face="11" exp="33" ent="5" str="7"/>
   </hex>
   <hex row="20" col="22" road="34"/>
   <hex row="20" col="23" road="9"/>
   <hex row="20" col="30" road="18"/>
   <hex row="20" col="41">
-    <unit id="4537" owner="1" flag="7" face="9" exp="257" str="7" ldr="1"/>
+    <unit id="5629" owner="1" flag="7" face="9" exp="257" str="7" ldr="1"/>
   </hex>
   <hex row="20" col="42">
-    <unit id="4537" owner="1" flag="7" face="9" exp="257" str="8"/>
+    <unit id="5629" owner="1" flag="7" face="9" exp="257" str="8"/>
   </hex>
   <hex row="21" col="0" terrain="9" name="Mediterranean sea"/>
   <hex row="21" col="1" terrain="9" name="Mediterranean sea">
-    <unit id="20071" owner="0" flag="23" face="7" exp="33" str="8"/>
+    <unit id="25214" owner="0" flag="23" face="7" exp="33" str="8"/>
   </hex>
   <hex row="21" col="2" terrain="9" name="Mediterranean sea"/>
   <hex row="21" col="3" terrain="9" name="Mediterranean sea">
-    <unit id="10562" owner="0" flag="10" face="2" carrier="11306" exp="24" str="6"/>
+    <unit id="13387" owner="0" flag="10" face="2" carrier="14373" exp="24" str="6"/>
   </hex>
   <hex row="21" col="4" terrain="9" name="Mediterranean sea"/>
   <hex row="21" col="5" terrain="9" name="Mediterranean sea">
-    <unit id="9580" owner="0" flag="10" face="2" carrier="11306" exp="52" str="7"/>
+    <unit id="11978" owner="0" flag="10" face="2" carrier="14373" exp="52" str="7"/>
   </hex>
   <hex row="21" col="9" terrain="5"/>
   <hex row="21" col="10" terrain="5" name="Djebel Murdjajdo"/>
@@ -1024,7 +1024,7 @@
   <hex row="21" col="19" road="34"/>
   <hex row="21" col="20" road="34"/>
   <hex row="21" col="24" terrain="2" road="144" name="La Senia Airport" flag="6" owner="1" victory="1">
-    <unit id="385" owner="1" flag="7" face="10" exp="135" ent="12" str="8"/>
+    <unit id="528" owner="1" flag="7" face="10" exp="135" ent="12" str="8"/>
   </hex>
   <hex row="21" col="30" road="17"/>
   <hex row="21" col="35" terrain="5"/>
@@ -1033,7 +1033,7 @@
   <hex row="22" col="1" terrain="9" name="Mediterranean sea"/>
   <hex row="22" col="2" terrain="9" name="Mediterranean sea"/>
   <hex row="22" col="4" terrain="9" name="Mediterranean sea">
-    <unit id="10045" owner="0" flag="10" face="2" carrier="11306" exp="55" str="5"/>
+    <unit id="12641" owner="0" flag="10" face="2" carrier="14373" exp="55" str="5"/>
   </hex>
   <hex row="22" col="5" road="136" name="Beach X" flag="9" owner="0" victory="1"/>
   <hex row="22" col="9" terrain="5"/>
@@ -1041,14 +1041,14 @@
   <hex row="22" col="11" terrain="5" name="Djebel Murdjajdo"/>
   <hex row="22" col="12" road="9"/>
   <hex row="22" col="13" terrain="1" road="168" name="Bou Thelis" flag="6" owner="1">
-    <unit id="385" owner="1" flag="7" face="10" exp="33" ent="3" str="5"/>
+    <unit id="528" owner="1" flag="7" face="10" exp="33" ent="3" str="5"/>
   </hex>
   <hex row="22" col="14" terrain="6" name="Djebel Murdjajdo"/>
   <hex row="22" col="15" road="34">
-    <unit id="519" owner="1" flag="7" face="15" exp="35" ent="7" str="7"/>
+    <unit id="734" owner="1" flag="7" face="15" exp="35" ent="7" str="7"/>
   </hex>
   <hex row="22" col="16" terrain="1" road="34" name="Bredea">
-    <unit id="385" owner="1" flag="7" face="9" exp="57" ent="6" str="7"/>
+    <unit id="528" owner="1" flag="7" face="9" exp="57" ent="6" str="7"/>
   </hex>
   <hex row="22" col="18" road="130"/>
   <hex row="22" col="19" terrain="15" name="Sebkra d'Oran Lake"/>
@@ -1066,13 +1066,13 @@
   <hex row="23" col="2" terrain="9" name="Mediterranean sea"/>
   <hex row="23" col="6" road="136"/>
   <hex row="23" col="7" road="136">
-    <unit id="5101" owner="1" flag="7" face="11" exp="57" str="5"/>
+    <unit id="6265" owner="1" flag="7" face="11" exp="57" str="5"/>
   </hex>
   <hex row="23" col="8" terrain="5"/>
   <hex row="23" col="9" terrain="5"/>
   <hex row="23" col="10" terrain="5" name="Djebel Murdjajdo"/>
   <hex row="23" col="11" road="34">
-    <unit id="519" owner="1" flag="7" face="14" exp="57" ent="8" str="5"/>
+    <unit id="734" owner="1" flag="7" face="14" exp="57" ent="8" str="5"/>
   </hex>
   <hex row="23" col="12" road="34"/>
   <hex row="23" col="13" terrain="15" name="Sebkra d'Oran Lake"/>

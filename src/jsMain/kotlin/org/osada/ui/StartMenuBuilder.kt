@@ -157,6 +157,7 @@ internal object StartMenuBuilder {
      *  makes Continue appear without a page reload. */
     internal fun applyContinueButtonState() {
         showRandomQuote()
+        applyRestartButtonState()
         // Save/Load menu entry mirrors what the window can actually do from here: pre-game
         // only loading is possible; from the in-game pause menu it is the full pair.
         byId("saveload")?.let { btn ->
@@ -179,6 +180,13 @@ internal object StartMenuBuilder {
             // Update only the subtitle so the icon + label built above stay intact.
             (button.query(".osada-menu-btn__sub") as? HTMLElement)?.textContent = summary
         }
+    }
+
+    /** Restart is an in-game action backed by the immutable opening checkpoint. It is absent on
+     *  the pre-game menu, for old saves without a checkpoint, and in multiplayer. */
+    internal fun applyRestartButtonState() {
+        val available = GameHolder.instance?.missionRestartCheckpoint?.isAvailable() == true
+        byId("restartmission")?.style?.display = if (available) "" else "none"
     }
 
     /** null -> no saved game (hide Continue); "" -> save exists but metadata unreadable;

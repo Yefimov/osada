@@ -96,6 +96,174 @@ try {
     JSON.stringify(startScreens));
   await page.evaluate(() => document.querySelector('.osada-tutorial__done')?.click());
 
+  // ---- start menu + campaign browser reachability in both phone orientations ----
+  const menuLandscape = await page.evaluate(() => {
+    const scroller = document.getElementById('smButtons');
+    const last = scroller.lastElementChild;
+    scroller.scrollTop = scroller.scrollHeight;
+    const r = last.getBoundingClientRect();
+    return {
+      overflowY: getComputedStyle(scroller).overflowY,
+      canScroll: scroller.scrollHeight > scroller.clientHeight,
+      lastTop: Math.round(r.top), lastBottom: Math.round(r.bottom), viewport: window.innerHeight,
+    };
+  });
+  ok('landscape main menu keeps its final command reachable',
+    menuLandscape.lastTop >= 0 && menuLandscape.lastBottom <= menuLandscape.viewport + 1,
+    JSON.stringify(menuLandscape));
+
+  await page.evaluate(() => document.getElementById('newcampaign').click());
+  await sleep(200);
+  const campaignLandscape = await page.evaluate(() => {
+    const root = document.getElementById('smCamp').getBoundingClientRect();
+    const footer = document.getElementById('smCampButtons').getBoundingClientRect();
+    const list = document.getElementById('osadaCampList');
+    return {
+      root: { left: Math.round(root.left), top: Math.round(root.top), right: Math.round(root.right), bottom: Math.round(root.bottom) },
+      footer: { left: Math.round(footer.left), top: Math.round(footer.top), right: Math.round(footer.right), bottom: Math.round(footer.bottom) },
+      listScrollable: list.scrollHeight > list.clientHeight,
+      viewport: { width: window.innerWidth, height: window.innerHeight },
+    };
+  });
+  ok('landscape campaign footer stays inside the panel',
+    campaignLandscape.footer.top >= campaignLandscape.root.top &&
+      campaignLandscape.footer.bottom <= campaignLandscape.root.bottom + 1 &&
+      campaignLandscape.footer.left >= campaignLandscape.root.left &&
+      campaignLandscape.footer.right <= campaignLandscape.root.right + 1,
+    JSON.stringify(campaignLandscape));
+  ok('landscape campaign list has its own scroll area', campaignLandscape.listScrollable);
+  await page.evaluate(() => document.getElementById('smCBackBut').click());
+  await sleep(120);
+
+  await page.setViewport({ width: 390, height: 844, isMobile: true, hasTouch: true, deviceScaleFactor: 2 });
+  await sleep(250);
+  const portraitMain = await page.evaluate(() => {
+    const buttons = [...document.querySelectorAll('#smButtons > *')];
+    const root = document.getElementById('smMain');
+    root.scrollTop = root.scrollHeight;
+    const outside = buttons.map((el) => {
+      const r = el.getBoundingClientRect();
+      return { id: el.id, left: Math.round(r.left), right: Math.round(r.right) };
+    }).filter((r) => r.left < -1 || r.right > window.innerWidth + 1);
+    const last = buttons.at(-1).getBoundingClientRect();
+    return {
+      cls: document.body.className,
+      outside,
+      lastTop: Math.round(last.top), lastBottom: Math.round(last.bottom), viewport: window.innerHeight,
+    };
+  });
+  ok('portrait main menu is one column with no horizontal clipping',
+    /osada-orientation-portrait/.test(portraitMain.cls) && portraitMain.outside.length === 0,
+    JSON.stringify(portraitMain));
+  ok('portrait main menu keeps its final command reachable',
+    portraitMain.lastTop >= 0 && portraitMain.lastBottom <= portraitMain.viewport + 1,
+    JSON.stringify(portraitMain));
+
+  await page.evaluate(() => document.getElementById('newcampaign').click());
+  await sleep(200);
+  const campaignPortrait = await page.evaluate(() => {
+    const rootEl = document.getElementById('smCamp');
+    const body = document.getElementById('smCampBody');
+    const footerEl = document.getElementById('smCampButtons');
+    const root = rootEl.getBoundingClientRect();
+    const footer = footerEl.getBoundingClientRect();
+    return {
+      root: { left: Math.round(root.left), top: Math.round(root.top), right: Math.round(root.right), bottom: Math.round(root.bottom) },
+      footer: { left: Math.round(footer.left), top: Math.round(footer.top), right: Math.round(footer.right), bottom: Math.round(footer.bottom) },
+      bodyOverflow: body.scrollWidth - body.clientWidth,
+      rootOverflow: rootEl.scrollWidth - rootEl.clientWidth,
+      viewport: { width: window.innerWidth, height: window.innerHeight },
+    };
+  });
+  ok('portrait campaign workspace does not overflow horizontally',
+    campaignPortrait.bodyOverflow <= 1 && campaignPortrait.rootOverflow <= 1,
+    JSON.stringify(campaignPortrait));
+  ok('portrait campaign footer remains fully reachable',
+    campaignPortrait.footer.left >= campaignPortrait.root.left &&
+      campaignPortrait.footer.right <= campaignPortrait.root.right + 1 &&
+      campaignPortrait.footer.bottom <= campaignPortrait.root.bottom + 1,
+    JSON.stringify(campaignPortrait));
+  await page.evaluate(() => document.getElementById('smCBackBut').click());
+
+  // The story stylesheet is lazy-loaded by ScenarioBriefingController. Load it explicitly and
+  // exercise the same DOM contract here so portrait overflow cannot regress unnoticed.
+  await page.evaluate(async () => {
+    if (document.querySelector('link[href$="osada-briefing.css"]')) return;
+    await new Promise((resolve, reject) => {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = 'css/osada-briefing.css';
+      link.onload = resolve;
+      link.onerror = reject;
+      document.head.appendChild(link);
+    });
+  });
+  const storyPortrait = await page.evaluate(async () => {
+    const node = (tag, cls, parent, text = '') => {
+      const el = document.createElement(tag);
+      el.className = cls;
+      el.textContent = text;
+      parent.appendChild(el);
+      return el;
+    };
+    const root = node('div', 'osada-briefing osada-briefing--dialogue', document.body);
+    root.id = 'mobile-story-fixture';
+    root.style.visibility = 'hidden';
+    const shade = node('div', 'osada-briefing__shade', root);
+    const shell = node('div', 'osada-briefing__shell', shade);
+    const header = node('header', 'osada-briefing__header', shell);
+    const titleBlock = node('div', 'osada-briefing__title-block', header);
+    node('h1', 'osada-briefing__title', titleBlock, '1919/04/16 Escaping from Zilah (Zalau)');
+    node('div', 'osada-briefing__subtitle', titleBlock, 'ACT I — THE EASTERN FRONT BREAKS · ZILAH–NAGYKAROLY');
+    node('div', 'osada-briefing__date', header, 'Wed Apr 16 1919');
+    const stage = node('section', 'osada-dialogue-stage', shell);
+    const panel = node('div', 'osada-dialogue', stage);
+    const transcript = node('div', 'osada-dialogue__transcript', panel);
+    for (let i = 0; i < 2; i++) {
+      const turn = node('article', i ? 'osada-dialogue__turn osada-dialogue__turn--right' : 'osada-dialogue__turn', transcript);
+      node('div', 'osada-dialogue__portrait', turn);
+      const body = node('div', 'osada-dialogue__body', turn);
+      node('div', 'osada-dialogue__speaker', body, i ? 'BÉLA KUN' : 'VILMOS BÖHM');
+      node('p', 'osada-dialogue__text', body,
+        'The Romanian army crossed at dawn. Keep the railway open long enough to save the numbered formations and every remaining supply train.');
+    }
+    const controls = node('div', 'osada-dialogue__controls osada-dialogue__controls--deciding', panel);
+    const choices = node('div', 'osada-dialogue__choices', controls);
+    choices.style.display = 'grid';
+    for (let i = 0; i < 2; i++) {
+      const choice = node('button', 'osada-dialogue__choice', choices);
+      node('span', 'osada-dialogue__choice-number', choice, String(i + 1));
+      node('span', 'osada-dialogue__choice-text', choice,
+        'Fortify the station and approaches. Every additional hour lets another organised formation escape west.');
+      node('span', 'osada-dialogue__choice-hint', choice,
+        'Gain an organised detachment and protect the retreat, but surrender movement on the roads.');
+    }
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    const frame = root.getBoundingClientRect();
+    const measured = [...root.querySelectorAll('.osada-dialogue__body, .osada-dialogue__choice')].map((el) => {
+      const r = el.getBoundingClientRect();
+      return { cls: el.className, left: Math.round(r.left), right: Math.round(r.right), width: Math.round(r.width) };
+    });
+    const outside = measured.filter((r) => r.left < frame.left - 1 || r.right > frame.right + 1);
+    const result = {
+      frame: { left: Math.round(frame.left), right: Math.round(frame.right) },
+      outside,
+      controlsScrollable: controls.scrollHeight > controls.clientHeight,
+      controlsOverflowY: getComputedStyle(controls).overflowY,
+    };
+    root.remove();
+    return result;
+  });
+  ok('portrait story dialogue cards and choices stay inside the viewport',
+    storyPortrait.outside.length === 0,
+    JSON.stringify(storyPortrait));
+  ok('long portrait story decisions have a vertical scroll owner',
+    storyPortrait.controlsOverflowY === 'auto',
+    JSON.stringify(storyPortrait));
+
+  await page.setViewport({ width: 667, height: 375, isMobile: true, hasTouch: true, deviceScaleFactor: 2 });
+  await sleep(250);
+
   await page.evaluate((scenario) => {
     window.game.campaign = null;
     window.game.newScenario(scenario, 'x');

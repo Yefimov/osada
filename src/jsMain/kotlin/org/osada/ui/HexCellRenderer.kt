@@ -110,7 +110,7 @@ internal class HexCellRenderer(
         if (hex.isSpotted(frame.q.currentPlayer?.side ?: 0)) {
             val u = if (frame.airMode) hex.airunit else hex.unit
             if (u != null) {
-                flag = u.player?.country ?: -1
+                flag = strategicUnitFlag(u)
                 scale = STRATEGIC_ZOOM_UNIT_FLAG_SCALE
                 if (u.hasMoved) rc.hexesCtx.globalAlpha = MOVED_UNIT_FLAG_ALPHA
             }
@@ -225,3 +225,8 @@ internal class HexCellRenderer(
         rc.hexesCtx.drawImage(cursor, x - rc.hexTopWidth / 2.0, y)
     }
 }
+
+/** Unit flags are sprite-sheet indices, while Player.country is the zero-based equipment-country
+ * id. Scenario-authored units may also deliberately use a flag different from their owner, so the
+ * renderer must use the unit's stable flag value rather than re-deriving it from the player. */
+internal fun strategicUnitFlag(unit: GameUnit): Int = unit.flag

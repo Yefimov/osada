@@ -459,10 +459,12 @@ body.osada-layout-phone #unit-info.uc--expanded #statsRowContainer {
 /* ---- Transient status strip (tap on an empty hex) ---- */
 .osada-mobile-status {
     position: fixed;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: calc(var(--osada-mobile-bottom-h) + var(--osada-safe-bottom) + 8px);
-    max-width: min(92vw, 520px);
+    top: calc(var(--osada-safe-top) + var(--osada-mobile-topbar-h) + 8px);
+    right: calc(var(--osada-safe-right) + 8px);
+    bottom: auto;
+    left: calc(var(--osada-safe-left) + 8px);
+    transform: none;
+    max-width: min(calc(100vw - var(--osada-safe-left) - var(--osada-safe-right) - 16px), 520px);
     padding: 6px 12px;
     border-radius: 4px;
     background: rgba(12, 13, 16, .92);
@@ -742,6 +744,27 @@ body.osada-layout-phone .osada-briefing__orders-panel {
     overscroll-behavior-y: contain;
 }
 
+/* There must be exactly one vertical scroll owner. The legacy briefing made
+ * both the stage and the paper panel scroll, which traps a finger at either
+ * boundary and can leave the Begin button outside the reachable area. */
+body.osada-layout-phone .osada-briefing__orders {
+    overflow: hidden;
+}
+
+body.osada-layout-phone .osada-briefing__orders-panel {
+    box-sizing: border-box;
+    height: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+body.osada-layout-phone .osada-briefing__footer {
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+    background: linear-gradient(180deg, rgba(18, 20, 24, 0), rgba(18, 20, 24, .98) 24%);
+}
+
 /* Two columns of order text at 667px leaves ~300px per column — one column
  * reads, two do not. */
 body.osada-layout-phone .osada-briefing__orders-content {
@@ -757,6 +780,144 @@ body.osada-layout-phone .osada-briefing__decision-option {
     min-height: var(--osada-touch-target);
 }
 
+/* Story-mode conversation. osada-briefing.css is lazy-loaded after this file,
+ * so these body-qualified selectors intentionally carry higher specificity.
+ * Its narrow-screen rule gave the card max-width:100% while a portrait and gap
+ * still occupied the same flex row: total width became 100% + portrait and the
+ * right side of every line was clipped. */
+body.osada-layout-phone .osada-dialogue-stage,
+body.osada-layout-phone .osada-dialogue,
+body.osada-layout-phone .osada-dialogue__transcript,
+body.osada-layout-phone .osada-dialogue__turn,
+body.osada-layout-phone .osada-dialogue__controls,
+body.osada-layout-phone .osada-dialogue__choices {
+    min-width: 0;
+    max-width: 100%;
+}
+
+/* Grid items default to min-width:auto. A long act/location subtitle therefore
+ * enlarged the shell's single grid column even though the dialogue children
+ * themselves were capped, shifting the whole stage past the right edge. */
+body.osada-layout-phone .osada-briefing__shade,
+body.osada-layout-phone .osada-briefing__shell,
+body.osada-layout-phone .osada-briefing__header,
+body.osada-layout-phone .osada-briefing__title-block,
+body.osada-layout-phone .osada-briefing__subtitle {
+    min-width: 0;
+    max-width: 100%;
+}
+
+body.osada-layout-phone .osada-briefing__shade,
+body.osada-layout-phone .osada-briefing__shell {
+    width: 100%;
+}
+
+body.osada-layout-phone .osada-dialogue-stage {
+    width: 100%;
+    overflow: hidden;
+}
+
+body.osada-layout-phone .osada-dialogue {
+    width: 100%;
+}
+
+body.osada-layout-phone .osada-dialogue__transcript,
+body.osada-layout-phone .osada-dialogue__turn,
+body.osada-layout-phone .osada-dialogue__controls {
+    width: 100%;
+}
+
+body.osada-layout-phone .osada-dialogue__turn {
+    gap: 8px;
+}
+
+body.osada-layout-phone .osada-dialogue__portrait {
+    width: 44px;
+    height: 44px;
+}
+
+body.osada-layout-phone .osada-dialogue__body {
+    flex: 1 1 0;
+    width: auto;
+    min-width: 0;
+    max-width: calc(100% - 52px);
+}
+
+body.osada-layout-phone .osada-dialogue__turn--player .osada-dialogue__body {
+    max-width: 100%;
+}
+
+body.osada-layout-phone .osada-dialogue__text,
+body.osada-layout-phone .osada-dialogue__choice-text,
+body.osada-layout-phone .osada-dialogue__choice-hint,
+body.osada-layout-phone .osada-briefing__decision-text,
+body.osada-layout-phone .osada-briefing__decision-hint {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+body.osada-layout-phone .osada-dialogue__choices,
+body.osada-layout-phone .osada-briefing__decision-options {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+/* Long story choices must not push the transcript or the second choice off the
+ * physical screen. The decision strip is the sole scroll owner while choosing. */
+body.osada-layout-phone .osada-dialogue__controls--deciding {
+    max-height: min(44dvh, 360px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    touch-action: pan-y;
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+}
+
+body.osada-layout-phone .osada-dialogue__choice,
+body.osada-layout-phone .osada-briefing__decision-option {
+    width: 100%;
+    min-width: 0;
+}
+
+body.osada-layout-phone.osada-orientation-portrait .osada-briefing__header {
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px 12px;
+}
+
+body.osada-layout-phone.osada-orientation-portrait .osada-briefing__title {
+    display: -webkit-box;
+    overflow: hidden;
+    white-space: normal;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+body.osada-layout-phone.osada-orientation-portrait .osada-briefing__date {
+    display: none;
+}
+
+body.osada-layout-phone.osada-orientation-portrait .osada-dialogue-stage {
+    padding: 6px;
+}
+
+body.osada-layout-phone.osada-orientation-portrait .osada-dialogue {
+    padding: 34px 0 2px;
+}
+
+body.osada-layout-phone.osada-orientation-portrait .osada-dialogue__body {
+    padding: 9px 10px 11px;
+}
+
+body.osada-layout-phone.osada-orientation-portrait .osada-dialogue__text {
+    font-size: 14px;
+    line-height: 1.42;
+}
+
+body.osada-layout-phone .osada-dialogue__skip {
+    min-width: var(--osada-touch-target-min);
+    min-height: var(--osada-touch-target-min);
+}
+
 body.osada-layout-phone #smSettingsContainer {
     max-height: none;
     height: 100%;
@@ -765,7 +926,16 @@ body.osada-layout-phone #smSettingsContainer {
     overscroll-behavior-y: contain;
 }
 
-/* Start menu: smaller logo, two-column commands, still 48px tall each. */
+/* Start menu: it owns its scrolling instead of letting absolutely positioned
+ * buttons escape the viewport. */
+body.osada-layout-phone #smMain {
+    overflow-x: hidden;
+    overflow-y: auto;
+    touch-action: pan-y;
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+}
+
 body.osada-layout-phone #smLogoText {
     max-height: 56px;
     overflow: hidden;
@@ -773,35 +943,326 @@ body.osada-layout-phone #smLogoText {
 
 body.osada-layout-phone #smButtons {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
     gap: var(--osada-touch-gap);
 }
 
 body.osada-layout-phone #smButtons > * {
+    width: 100%;
     min-height: var(--osada-touch-target);
 }
 
+/* The decorative quotation is valuable on desktop but competes with the menu
+ * itself on every phone aspect ratio. */
+body.osada-layout-phone .osada-quote,
 body.osada-layout-compact #smCredits {
     display: none;
 }
 
-/* Campaign/scenario browser: no forced 40/60 split at 667x375. */
-body.osada-layout-compact #smCamp,
-body.osada-layout-compact #smScen {
-    flex-direction: column;
+/* Landscape phone: keep the logo and commands compact, and scroll only the
+ * command column. This covers both 667x375 and the taller 880x400 P40 viewport. */
+body.osada-layout-phone.osada-orientation-landscape #smLogo {
+    top: 12px;
+    left: calc(var(--osada-safe-left) + 16px);
+    width: min(42vw, 360px);
+    height: 92px;
 }
 
-body.osada-layout-compact .smSelect > * {
+body.osada-layout-phone.osada-orientation-landscape .smBottomCenter {
+    top: 122px;
+    bottom: calc(var(--osada-safe-bottom) + 34px);
+    left: calc(var(--osada-safe-left) + 16px);
+    width: min(360px, calc(48vw - var(--osada-safe-left) - 24px));
+}
+
+body.osada-layout-phone.osada-orientation-landscape #smButtons {
+    max-height: 100%;
+    overflow-y: auto;
+    padding-right: 4px;
+    scrollbar-width: thin;
+}
+
+body.osada-layout-phone.osada-orientation-landscape .smMainButton.osada-menu-btn {
+    width: 100%;
+}
+
+/* Portrait phone: put the command column back into normal flow so it gives the
+ * scroller a real height. Absolute children do not contribute to scrollHeight. */
+body.osada-layout-phone.osada-orientation-portrait #smLogo {
+    top: 72px;
+    left: 16px;
+    width: calc(100% - 32px);
+    height: 126px;
+}
+
+body.osada-layout-phone.osada-orientation-portrait .smBottomCenter {
+    position: relative;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    width: auto;
+    margin: 230px 16px 100px;
+}
+
+body.osada-layout-phone.osada-orientation-portrait .smMainButton.osada-menu-btn {
+    width: 100%;
+}
+
+body.osada-layout-phone.osada-orientation-portrait #smMiscButs {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    justify-content: center;
+    margin: -78px 16px 22px;
+}
+
+body.osada-layout-phone.osada-orientation-portrait #smCredits {
+    display: none;
+}
+
+/* Campaign/scenario browser: fixed safe-area frame, one scroll owner per list,
+ * and a footer that cannot migrate to the top of a short landscape screen. */
+body.osada-layout-phone #smCamp,
+body.osada-layout-phone #smScen {
+    position: fixed;
+    inset: var(--osada-safe-top) var(--osada-safe-right) var(--osada-safe-bottom) var(--osada-safe-left);
+    width: auto;
+    max-width: none;
+    height: auto;
+    max-height: none;
+    margin: 0;
+    padding: 8px 12px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+body.osada-layout-phone #smCamp .osadaScreenHeader,
+body.osada-layout-phone #smScen .osadaScreenHeader {
+    top: 4px;
+    left: 12px;
+    right: 12px;
+    font-size: clamp(17px, 4vw, 24px);
+}
+
+body.osada-layout-phone #smCamp .osadaScreenBody,
+body.osada-layout-phone #smScen .osadaScreenBody {
+    top: 46px;
+    right: 12px;
+    bottom: 64px;
+    left: 12px;
+    gap: 10px;
+    min-width: 0;
+}
+
+body.osada-layout-phone #smCampButtons,
+body.osada-layout-phone #smScenButtons {
+    position: absolute;
+    right: 12px;
+    bottom: 8px;
+    left: 12px;
+    z-index: 4;
+    min-height: 48px;
+    padding: 0;
+    background: rgba(12, 13, 16, .96);
+}
+
+body.osada-layout-phone #smCBackBut,
+body.osada-layout-phone #smSBackBut,
+body.osada-layout-phone #smCPlayBut,
+body.osada-layout-phone #smSPlayBut {
+    min-width: 0;
     min-height: var(--osada-touch-target-min);
 }
 
-body.osada-layout-compact #smCampButtons,
-body.osada-layout-compact #smScenButtons {
-    position: sticky;
-    bottom: 0;
-    padding-bottom: var(--osada-safe-bottom);
-    background: rgba(12, 13, 16, .96);
+body.osada-layout-phone .osadaList {
+    overflow-y: auto;
+    touch-action: pan-y;
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+}
+
+body.osada-layout-phone.osada-orientation-landscape .osadaRegister {
+    flex: 0 0 42%;
+}
+
+body.osada-layout-phone.osada-orientation-landscape .osadaDossier {
+    overflow-y: auto;
+    touch-action: pan-y;
+}
+
+body.osada-layout-phone.osada-orientation-landscape .osadaDossierHead {
+    height: 132px;
+}
+
+/* Portrait uses a single vertical workspace. The register keeps its own list
+ * scroll while dossier content is reachable through the body scroll. */
+body.osada-layout-phone.osada-orientation-portrait #smCamp .osadaScreenBody,
+body.osada-layout-phone.osada-orientation-portrait #smScen .osadaScreenBody {
+    display: block;
+    overflow-x: hidden;
+    overflow-y: auto;
+    touch-action: pan-y;
+    overscroll-behavior-y: contain;
+}
+
+body.osada-layout-phone.osada-orientation-portrait .osadaRegister {
+    height: min(44dvh, 360px);
+    min-height: 250px;
+}
+
+body.osada-layout-phone.osada-orientation-portrait .osadaDossier {
+    margin-top: 12px;
+    overflow: visible;
+}
+
+body.osada-layout-phone.osada-orientation-portrait .osadaDossierHead {
+    height: 180px;
+}
+
+body.osada-layout-phone.osada-orientation-portrait #smCampButtons,
+body.osada-layout-phone.osada-orientation-portrait #smScenButtons {
+    display: flex;
+    gap: 8px;
+}
+
+body.osada-layout-phone.osada-orientation-portrait #smCBackBut,
+body.osada-layout-phone.osada-orientation-portrait #smSBackBut {
+    flex: 0 1 36%;
+    width: auto;
+}
+
+body.osada-layout-phone.osada-orientation-portrait #smCPlayBut,
+body.osada-layout-phone.osada-orientation-portrait #smSPlayBut {
+    flex: 1 1 auto;
+    width: auto;
+}
+
+/* Phone map scrollbars consume visible map pixels and look like controls.
+ * Panning remains available through Pointer Events. */
+body.osada-layout-phone #game {
+    scrollbar-width: none;
+}
+
+body.osada-layout-phone #game::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hero emergence has denser authored copy than a generic notification. Give
+ * it a named responsive layout instead of relying on whichever content happens
+ * to fit in a fixed desktop-height body. */
+body.osada-layout-phone .uiMessageBox {
+    width: calc(100vw - var(--osada-safe-left) - var(--osada-safe-right) - 16px);
+    max-width: 760px;
+    max-height: calc(var(--osada-vv-h, 100dvh) - var(--osada-safe-top) - var(--osada-safe-bottom) - 16px);
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* The legacy OK control is floated. Contain it without changing `display`,
+ * because visibility for this element is still controlled by an inline style. */
+body.osada-layout-phone .uiMessageBox::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+body.osada-layout-phone .uiMessageBoxBody {
+    max-height: calc(var(--osada-vv-h, 100dvh) - var(--osada-safe-top) - var(--osada-safe-bottom) - 116px);
+    overflow-y: auto;
+    touch-action: pan-y;
+    overscroll-behavior-y: contain;
+}
+
+body.osada-layout-phone.osada-orientation-landscape .uiMessageBox--hero .uiMessageBoxBody {
+    display: grid;
+    grid-template-columns: 112px minmax(0, 1fr);
+    column-gap: 14px;
+    align-content: start;
+}
+
+body.osada-layout-phone.osada-orientation-landscape .uiMessageBox--hero .heroEmergencePortrait {
+    grid-column: 1;
+    grid-row: 1 / span 12;
+    width: 96px;
+    height: 128px;
+    margin: 0 auto;
+}
+
+body.osada-layout-phone.osada-orientation-landscape .uiMessageBox--hero .uiMessageBoxBody > :not(.heroEmergencePortrait) {
+    grid-column: 2;
+}
+
+body.osada-layout-phone.osada-orientation-portrait .uiMessageBox--hero .heroEmergencePortrait {
+    width: min(44vw, 150px);
+    height: min(58vw, 198px);
+    margin: 0 auto 12px;
+}
+
+/* In the normal landscape dock, do not stretch the unit summary until its
+ * action chips are stranded at the opposite edge of the screen. */
+body.osada-layout-phone.osada-orientation-landscape #unit-info {
+    max-width: 700px;
+    justify-self: start;
+}
+
+body.osada-layout-phone.osada-orientation-landscape #uc-main {
+    flex: 0 1 380px;
+}
+
+/* Portrait combat is a vertical workspace, not three desktop cards squeezed
+ * into narrow columns. */
+body.osada-layout-phone.osada-orientation-portrait #osada-bottomzone {
+    max-height: 58dvh;
+    overflow-y: auto;
+}
+
+body.osada-layout-phone.osada-orientation-portrait #osada-bottomzone.bz--hover {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "card" "forecast" "enemy";
+}
+
+body.osada-layout-phone.osada-orientation-portrait #uc-inner {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr) auto;
+    grid-template-areas:
+        "portrait main expand"
+        "portrait actions actions";
+    align-items: center;
+    gap: 6px 8px;
+}
+
+body.osada-layout-phone.osada-orientation-portrait #uc-portrait { grid-area: portrait; }
+body.osada-layout-phone.osada-orientation-portrait #uc-main { grid-area: main; }
+body.osada-layout-phone.osada-orientation-portrait #uc-actions { grid-area: actions; }
+body.osada-layout-phone.osada-orientation-portrait #uc-expand { grid-area: expand; }
+
+/* Keep End Turn reachable in portrait. Secondary tools stay available from
+ * the drawer/settings surfaces instead of pushing the critical action away. */
+body.osada-layout-phone.osada-orientation-portrait #statusmsg,
+body.osada-layout-phone.osada-orientation-portrait #combatLogButton,
+body.osada-layout-phone.osada-orientation-portrait #zoom,
+body.osada-layout-phone.osada-orientation-portrait #osadaHqBtn,
+body.osada-layout-phone.osada-orientation-portrait #osadaNav {
+    display: none;
+}
+
+body.osada-layout-phone.osada-orientation-portrait #statusbar {
+    gap: 4px;
+}
+
+body.osada-layout-phone.osada-orientation-portrait #osadaPrestige {
+    margin-left: 0;
+}
+
+body.osada-layout-phone.osada-orientation-portrait #osadaEndTurn {
+    margin-left: auto;
+}
+
+body.osada-layout-phone .smSelect > * {
+    min-height: var(--osada-touch-target-min);
 }
 
 /* ---- Orientation gate ---- */

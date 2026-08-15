@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="ASCII"?>
 <map file="ccampros.xscn" name="Rostov" turns="9, 12, 15" date="January 6, 1920" dayturns="0" ground="1" atmosferic="0" latitude="3" iconset="1" weatherchg="1" rows="39" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_347.png" eqpv="united1">
-  <player id="0" country="103" side="0" airtrans="0" navaltrans="0" support="0, 0, 0, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
-  <player id="1" country="100" side="1" airtrans="0" navaltrans="0" support="101, 0, 0, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <player id="0" country="103" side="0" airtrans="0" navaltrans="0" support="0,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <player id="1" country="100" side="1" airtrans="0" navaltrans="0" support="101,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="2">
     <at row="8" col="27">
-      <unit id="34722" owner="1" flag="101" face="0" exp="67" str="6"/>
+      <unit id="42085" owner="1" flag="101" face="0" exp="67" str="6"/>
     </at>
     <at row="12" col="30">
-      <unit id="34723" owner="1" flag="101" face="0" exp="157" str="5"/>
+      <unit id="42086" owner="1" flag="101" face="0" exp="157" str="5"/>
     </at>
   </reinforce>
   <reinforce turn="3">
     <at row="1" col="21">
-      <unit id="34722" owner="1" flag="101" face="0" exp="33" str="7"/>
+      <unit id="42085" owner="1" flag="101" face="0" exp="33" str="7"/>
     </at>
     <at row="2" col="22">
-      <unit id="34722" owner="1" flag="101" face="0" exp="154" str="5" ldr="1"/>
+      <unit id="42085" owner="1" flag="101" face="0" exp="154" str="5" ldr="1"/>
     </at>
   </reinforce>
   <reinforce turn="4">
     <at row="3" col="22">
-      <unit id="34723" owner="1" flag="101" face="0" exp="33" str="6"/>
+      <unit id="42086" owner="1" flag="101" face="0" exp="33" str="6"/>
     </at>
   </reinforce>
   <hex row="0" col="2" terrain="7" name="SNOW"/>
@@ -90,7 +90,7 @@
   <hex row="1" col="25" terrain="3"/>
   <hex row="1" col="26" terrain="3"/>
   <hex row="1" col="29">
-    <unit id="34688" owner="1" flag="101" face="0" exp="33" str="6"/>
+    <unit id="42051" owner="1" flag="101" face="0" exp="33" str="6"/>
   </hex>
   <hex row="1" col="30" terrain="7" name="SNOW"/>
   <hex row="1" col="31" terrain="7" name="SNOW"/>
@@ -125,7 +125,7 @@
   <hex row="2" col="19" terrain="7" name="SNOW"/>
   <hex row="2" col="20" terrain="7" name="SNOW"/>
   <hex row="2" col="21" terrain="3">
-    <unit id="34678" owner="1" flag="101" face="0" transport="34752" exp="28" str="7"/>
+    <unit id="42041" owner="1" flag="101" face="0" transport="42115" exp="28" str="7"/>
   </hex>
   <hex row="2" col="22" terrain="7"/>
   <hex row="2" col="23" terrain="7" name="SNOW"/>
@@ -312,7 +312,7 @@
   <hex row="7" col="11" terrain="7" name="SNOW"/>
   <hex row="7" col="12" terrain="7" name="SNOW"/>
   <hex row="7" col="13" terrain="5">
-    <unit id="34688" owner="1" flag="101" face="0" exp="75" str="7"/>
+    <unit id="42051" owner="1" flag="101" face="0" exp="75" str="7"/>
   </hex>
   <hex row="7" col="14" terrain="7" name="SNOW"/>
   <hex row="7" col="15" terrain="7" name="SNOW"/>
@@ -330,7 +330,7 @@
   <hex row="7" col="31" terrain="7" name="SNOW"/>
   <hex row="7" col="32" terrain="7" name="SNOW"/>
   <hex row="7" col="33" terrain="1" road="27" name="Novocherkassk" owner="1" flag="100" rail="187">
-    <unit id="34678" owner="1" flag="101" face="0" transport="34752" exp="157" str="5"/>
+    <unit id="42041" owner="1" flag="101" face="0" transport="42115" exp="157" str="5"/>
   </hex>
   <hex row="7" col="34" terrain="1" road="176" name="Novocherkassk"/>
   <hex row="7" col="35" terrain="15" name="Tuzlov River"/>
@@ -350,13 +350,13 @@
   <hex row="8" col="8" terrain="7" name="SNOW"/>
   <hex row="8" col="9" terrain="3"/>
   <hex row="8" col="11">
-    <unit id="34747" owner="1" flag="101" face="0" exp="157" str="7"/>
+    <unit id="42110" owner="1" flag="101" face="0" exp="157" str="7"/>
   </hex>
   <hex row="8" col="12" terrain="7" name="SNOW"/>
   <hex row="8" col="13" terrain="7" name="SNOW"/>
   <hex row="8" col="14" terrain="5"/>
   <hex row="8" col="15" terrain="5">
-    <unit id="34688" owner="1" flag="101" face="0" exp="35" str="7"/>
+    <unit id="42051" owner="1" flag="101" face="0" exp="35" str="7"/>
   </hex>
   <hex row="8" col="16" terrain="7" name="SNOW"/>
   <hex row="8" col="17" terrain="7" name="SNOW"/>
@@ -370,7 +370,7 @@
   <hex row="8" col="27" terrain="7"/>
   <hex row="8" col="28" terrain="1" road="137" name="Grushevskaya"/>
   <hex row="8" col="31">
-    <unit id="34688" owner="1" flag="101" face="0" exp="38" str="7"/>
+    <unit id="42051" owner="1" flag="101" face="0" exp="38" str="7"/>
   </hex>
   <hex row="8" col="33" rail="187"/>
   <hex row="8" col="34" terrain="1" road="161" name="Novocherkassk"/>
@@ -391,10 +391,10 @@
   <hex row="9" col="8" terrain="3"/>
   <hex row="9" col="9" terrain="3"/>
   <hex row="9" col="10" terrain="7" name="SNOW">
-    <unit id="34747" owner="1" flag="101" face="0" exp="167" str="8"/>
+    <unit id="42110" owner="1" flag="101" face="0" exp="167" str="8"/>
   </hex>
   <hex row="9" col="11">
-    <unit id="34738" owner="1" flag="101" face="0" transport="513" exp="157" str="5"/>
+    <unit id="42101" owner="1" flag="101" face="0" transport="728" exp="157" str="5"/>
   </hex>
   <hex row="9" col="12" terrain="7" name="SNOW"/>
   <hex row="9" col="13" terrain="7" name="SNOW"/>
@@ -533,7 +533,7 @@
   <hex row="13" col="4" terrain="7" name="SNOW"/>
   <hex row="13" col="5" terrain="7" name="SNOW"/>
   <hex row="13" col="6" terrain="7" name="SNOW">
-    <unit id="34688" owner="1" flag="101" face="0" exp="155" str="7"/>
+    <unit id="42051" owner="1" flag="101" face="0" exp="155" str="7"/>
   </hex>
   <hex row="13" col="7" terrain="7" name="SNOW"/>
   <hex row="13" col="8" terrain="7" name="SNOW"/>
@@ -569,7 +569,7 @@
   <hex row="14" col="1" terrain="7" name="SNOW"/>
   <hex row="14" col="3" terrain="1" road="153" name="Sinyavka"/>
   <hex row="14" col="11" terrain="1" road="136" name="Chaltyr&#x27;" owner="1" flag="100" rail="187">
-    <unit id="34678" owner="1" flag="101" face="0" transport="34752" exp="38" str="8"/>
+    <unit id="42041" owner="1" flag="101" face="0" transport="42115" exp="38" str="8"/>
   </hex>
   <hex row="14" col="12" terrain="7" name="SNOW"/>
   <hex row="14" col="14" terrain="7" name="SNOW"/>
@@ -651,7 +651,7 @@
   <hex row="16" col="21" terrain="1" road="187" name="Rostov"/>
   <hex row="16" col="22" terrain="1" road="187" name="Rostov"/>
   <hex row="16" col="23" terrain="1" road="185" name="Aleksandrovskaya" owner="1" flag="100" victory="1" rail="187">
-    <unit id="34688" owner="1" flag="101" face="0" exp="38" str="5"/>
+    <unit id="42051" owner="1" flag="101" face="0" exp="38" str="5"/>
   </hex>
   <hex row="16" col="24" terrain="7" name="SNOW" rail="187"/>
   <hex row="16" col="25" terrain="1" road="51" name="Aksaiskaya"/>
@@ -691,7 +691,7 @@
   <hex row="17" col="17" terrain="1" road="155" name="Krasnyi Gorod-Sad"/>
   <hex row="17" col="18" terrain="1" road="187" name="Rostov" rail="187"/>
   <hex row="17" col="19" terrain="1" road="187" name="Rostov" owner="1" flag="100" victory="1" rail="187">
-    <unit id="34688" owner="1" flag="101" face="0" exp="45" str="5"/>
+    <unit id="42051" owner="1" flag="101" face="0" exp="45" str="5"/>
   </hex>
   <hex row="17" col="20" terrain="1" road="187" name="Rostov"/>
   <hex row="17" col="21" terrain="1" road="187" name="Rostov" rail="187"/>
@@ -1009,7 +1009,7 @@
   <hex row="25" col="17" terrain="3"/>
   <hex row="25" col="18" terrain="7" name="SNOW"/>
   <hex row="25" col="21" owner="1" flag="100" victory="1" rail="187">
-    <unit id="34700" owner="1" flag="101" face="0" exp="77" str="5"/>
+    <unit id="42063" owner="1" flag="101" face="0" exp="77" str="5"/>
   </hex>
   <hex row="25" col="22" terrain="7" name="SNOW"/>
   <hex row="25" col="23" terrain="7" name="SNOW"/>
@@ -1430,7 +1430,7 @@
   <hex row="35" col="37" terrain="7" name="SNOW"/>
   <hex row="35" col="38" rail="187"/>
   <hex row="35" col="39" terrain="7" name="SNOW" rail="187">
-    <unit id="519" owner="1" flag="101" face="0" exp="254" str="8"/>
+    <unit id="734" owner="1" flag="101" face="0" exp="254" str="8"/>
   </hex>
   <hex row="35" col="42" terrain="7" name="SNOW"/>
   <hex row="35" col="43" terrain="7" name="SNOW"/>

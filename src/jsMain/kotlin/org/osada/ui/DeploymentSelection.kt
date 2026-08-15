@@ -112,6 +112,10 @@ internal object DeploymentSelection {
         ui.render.cacheImages { ui.render.render(row, col, 1) }
         ui.updateEquipmentWindow(unitClass)
         ui.updateStatusBar()
+        // Deployment happens before the first end-turn autosave. Persist each successful
+        // placement so a refresh restores the exact deployment instead of the scenario's empty
+        // pre-placement snapshot.
+        ui.game.state?.save()
 
         // After a successful placement return focus to the map. The next unit may be selected
         // first, or the next deployment hex may be clicked first.

@@ -1,20 +1,20 @@
 <?xml version='1.0' encoding='ASCII'?>
 <map file="ruscam09.scn" name="Iasi Invasion" turns="17, 19, 21" date="April 13, 1944" dayturns="3" ground="0" atmosferic="0" latitude="1" iconset="0" rows="39" cols="44" eqp="eqp-adlerkorps" image="resources/maps/images/map_336.png" eqpv="united1">
-  <player id="0" country="61" side="1" airtrans="0" navaltrans="0" support="0, 0, 0, 0" turnprestige="250, 50, 50, 50, 200, 50, 50, 50, 200, 50, 50, 50, 200, 50, 50, 50, 200, 50, 50, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 190"/>
-  <player id="1" country="13" side="0" airtrans="0" navaltrans="0" support="8, 0, 0, 0" turnprestige="50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 250"/>
+  <player id="0" country="61" side="1" airtrans="0" navaltrans="0" support="0,0,0,0" turnprestige="250, 50, 50, 50, 200, 50, 50, 50, 200, 50, 50, 50, 200, 50, 50, 50, 200, 50, 50, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 190"/>
+  <player id="1" country="13" side="0" airtrans="0" navaltrans="0" support="8,0,0,0" turnprestige="50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 250"/>
   <reinforce turn="2">
     <at row="2" col="18">
-      <unit id="29508" owner="0" flag="62" face="1" exp="390"/>
+      <unit id="35850" owner="0" flag="62" face="1" exp="390"/>
     </at>
   </reinforce>
   <reinforce turn="3">
     <at row="15" col="13">
-      <unit id="29508" owner="0" flag="62" face="7" exp="390"/>
+      <unit id="35850" owner="0" flag="62" face="7" exp="390"/>
     </at>
   </reinforce>
   <reinforce turn="4">
     <at row="34" col="41">
-      <unit id="29508" owner="0" flag="62" face="9" exp="390"/>
+      <unit id="35850" owner="0" flag="62" face="9" exp="390"/>
     </at>
   </reinforce>
   <hex row="0" col="2" road="9"/>
@@ -27,10 +27,10 @@
   <hex row="0" col="39" road="17"/>
   <hex row="1" col="1" terrain="2" road="8"/>
   <hex row="1" col="2">
-    <unit id="14813" owner="1" flag="14" face="3" exp="450"/>
+    <unit id="18403" owner="1" flag="14" face="3" exp="450"/>
   </hex>
   <hex row="1" col="3" road="17">
-    <unit id="14734" owner="1" flag="14" face="3" exp="550" ldr="1"/>
+    <unit id="18313" owner="1" flag="14" face="3" exp="550" ldr="1"/>
   </hex>
   <hex row="1" col="17" terrain="3"/>
   <hex row="1" col="18" terrain="3" road="136"/>
@@ -45,10 +45,10 @@
   <hex row="2" col="0" terrain="10" name="Siret River"/>
   <hex row="2" col="1" terrain="10" name="Siret River"/>
   <hex row="2" col="2" terrain="2" road="136" flag="13" owner="1">
-    <unit id="14799" owner="1" flag="14" face="3" exp="450"/>
+    <unit id="18389" owner="1" flag="14" face="3" exp="450"/>
   </hex>
   <hex row="2" col="3" road="137">
-    <unit id="14804" owner="1" flag="14" face="3" exp="450" ldr="1"/>
+    <unit id="18394" owner="1" flag="14" face="3" exp="450" ldr="1"/>
   </hex>
   <hex row="2" col="5" road="56"/>
   <hex row="2" col="7" terrain="1" road="40" name="Doroho" flag="13" owner="1"/>
@@ -64,14 +64,14 @@
   <hex row="2" col="24" terrain="1" road="185" name="Saveni"/>
   <hex row="2" col="25" terrain="1" road="176" name="Saveni"/>
   <hex row="2" col="29">
-    <unit id="14179" owner="1" flag="14" face="4" transport="14552" exp="450"/>
+    <unit id="17691" owner="1" flag="14" face="4" transport="18104" exp="450"/>
   </hex>
   <hex row="2" col="31" terrain="10" name="Prut River"/>
   <hex row="2" col="37" road="17"/>
   <hex row="2" col="40" road="144"/>
   <hex row="3" col="1" terrain="10" name="Siret River"/>
   <hex row="3" col="2">
-    <unit id="8442" owner="1" flag="8" face="3" exp="250"/>
+    <unit id="10725" owner="1" flag="8" face="3" exp="250"/>
   </hex>
   <hex row="3" col="4" terrain="1" road="138" name="Siret"/>
   <hex row="3" col="5" terrain="1" road="129" name="Siret" flag="13" owner="1"/>
@@ -90,7 +90,7 @@
   <hex row="3" col="24" terrain="1" road="187" name="Saveni" flag="13" owner="1"/>
   <hex row="3" col="25" terrain="1" road="161" name="Saveni"/>
   <hex row="3" col="30">
-    <unit id="14179" owner="1" flag="14" face="4" exp="450"/>
+    <unit id="17691" owner="1" flag="14" face="4" exp="450"/>
   </hex>
   <hex row="3" col="31" terrain="10" name="Prut River"/>
   <hex row="3" col="37" road="9"/>
@@ -109,10 +109,10 @@
   <hex row="4" col="24" terrain="1" road="131" name="Saveni"/>
   <hex row="4" col="25" terrain="3"/>
   <hex row="4" col="27">
-    <unit id="14410" owner="1" flag="14" face="2" exp="550"/>
+    <unit id="17940" owner="1" flag="14" face="2" exp="550"/>
   </hex>
   <hex row="4" col="30">
-    <unit id="14179" owner="1" flag="14" face="4" exp="450"/>
+    <unit id="17691" owner="1" flag="14" face="4" exp="450"/>
   </hex>
   <hex row="4" col="31" terrain="10" name="Prut River"/>
   <hex row="4" col="38" road="136"/>
@@ -131,16 +131,16 @@
   <hex row="5" col="23" terrain="3"/>
   <hex row="5" col="24" terrain="3"/>
   <hex row="5" col="26">
-    <unit id="14175" owner="1" flag="14" face="2" exp="450"/>
+    <unit id="17687" owner="1" flag="14" face="2" exp="450"/>
   </hex>
   <hex row="5" col="27">
-    <unit id="14175" owner="1" flag="14" face="2" exp="550" ldr="1"/>
+    <unit id="17687" owner="1" flag="14" face="2" exp="550" ldr="1"/>
   </hex>
   <hex row="5" col="30">
-    <unit id="14179" owner="1" flag="14" face="4" exp="450"/>
+    <unit id="17691" owner="1" flag="14" face="4" exp="450"/>
   </hex>
   <hex row="5" col="31" terrain="10" name="Prut River">
-    <unit id="14179" owner="1" flag="14" face="5" transport="14552" exp="350"/>
+    <unit id="17691" owner="1" flag="14" face="5" transport="18104" exp="350"/>
   </hex>
   <hex row="5" col="40" road="137"/>
   <hex row="5" col="41" road="152"/>
@@ -165,10 +165,10 @@
   <hex row="6" col="23" terrain="3"/>
   <hex row="6" col="24" terrain="3"/>
   <hex row="6" col="26">
-    <unit id="14175" owner="1" flag="14" face="2" exp="550"/>
+    <unit id="17687" owner="1" flag="14" face="2" exp="550"/>
   </hex>
   <hex row="6" col="31">
-    <unit id="14179" owner="1" flag="14" face="4" transport="14552" exp="450"/>
+    <unit id="17691" owner="1" flag="14" face="4" transport="18104" exp="450"/>
   </hex>
   <hex row="6" col="32" terrain="10" name="Prut River"/>
   <hex row="6" col="33" terrain="10" name="Prut River"/>
@@ -186,10 +186,10 @@
   <hex row="7" col="23" terrain="3"/>
   <hex row="7" col="24" terrain="3"/>
   <hex row="7" col="31">
-    <unit id="14461" owner="1" flag="14" face="4" transport="14552" exp="550" ldr="1"/>
+    <unit id="17996" owner="1" flag="14" face="4" transport="18104" exp="550" ldr="1"/>
   </hex>
   <hex row="7" col="32">
-    <unit id="14179" owner="1" flag="14" face="4" transport="14552" exp="550"/>
+    <unit id="17691" owner="1" flag="14" face="4" transport="18104" exp="550"/>
   </hex>
   <hex row="7" col="33" terrain="10" name="Prut River"/>
   <hex row="7" col="41" road="43"/>
@@ -199,7 +199,7 @@
   <hex row="8" col="6" terrain="10" name="Siret River"/>
   <hex row="8" col="7" terrain="10" name="Siret River"/>
   <hex row="8" col="10" terrain="1" road="3" name="Suceava" flag="13" owner="1" supply="1">
-    <unit id="14181" owner="1" flag="14" face="4" exp="550"/>
+    <unit id="17693" owner="1" flag="14" face="4" exp="550"/>
   </hex>
   <hex row="8" col="11" deploy="1"/>
   <hex row="8" col="12" road="138" deploy="1"/>
@@ -208,10 +208,10 @@
   <hex row="8" col="15" road="136"/>
   <hex row="8" col="17" road="40"/>
   <hex row="8" col="31">
-    <unit id="14673" owner="1" flag="14" face="6" transport="14549" exp="450"/>
+    <unit id="18245" owner="1" flag="14" face="6" transport="18101" exp="450"/>
   </hex>
   <hex row="8" col="32">
-    <unit id="14464" owner="1" flag="14" face="6" transport="14549" exp="450"/>
+    <unit id="17999" owner="1" flag="14" face="6" transport="18101" exp="450"/>
   </hex>
   <hex row="8" col="33" terrain="10" name="Prut River"/>
   <hex row="8" col="39" terrain="2" road="10" flag="61" owner="0"/>
@@ -228,7 +228,7 @@
   <hex row="9" col="18" road="144"/>
   <hex row="9" col="19" terrain="8"/>
   <hex row="9" col="32">
-    <unit id="14179" owner="1" flag="14" face="5" transport="14552" exp="350"/>
+    <unit id="17691" owner="1" flag="14" face="5" transport="18104" exp="350"/>
   </hex>
   <hex row="9" col="33" terrain="10" name="Prut River"/>
   <hex row="9" col="37" deploy="0"/>
@@ -250,7 +250,7 @@
   <hex row="10" col="20" terrain="8"/>
   <hex row="10" col="21" terrain="8"/>
   <hex row="10" col="32">
-    <unit id="14179" owner="1" flag="14" face="4" transport="14552" exp="450"/>
+    <unit id="17691" owner="1" flag="14" face="4" transport="18104" exp="450"/>
   </hex>
   <hex row="10" col="33" terrain="10" name="Prut River"/>
   <hex row="10" col="37" deploy="0"/>
@@ -267,11 +267,11 @@
   <hex row="11" col="16" deploy="1"/>
   <hex row="11" col="17" deploy="1"/>
   <hex row="11" col="18" terrain="1" road="17" name="Botosani" flag="13" owner="1" victory="1">
-    <unit id="14181" owner="1" flag="14" face="4" exp="550"/>
+    <unit id="17693" owner="1" flag="14" face="4" exp="550"/>
   </hex>
   <hex row="11" col="21" terrain="8"/>
   <hex row="11" col="32">
-    <unit id="14179" owner="1" flag="14" face="5" transport="14552" exp="550"/>
+    <unit id="17691" owner="1" flag="14" face="5" transport="18104" exp="550"/>
   </hex>
   <hex row="11" col="33" terrain="10" name="Prut River"/>
   <hex row="11" col="37" terrain="1" road="58" name="Falesti" flag="61" owner="0" deploy="0"/>
@@ -288,7 +288,7 @@
   <hex row="12" col="26" terrain="15" name="Lake Jija"/>
   <hex row="12" col="27" terrain="15" name="Lake Jija"/>
   <hex row="12" col="32">
-    <unit id="14179" owner="1" flag="14" face="4" transport="14552" exp="550"/>
+    <unit id="17691" owner="1" flag="14" face="4" transport="18104" exp="550"/>
   </hex>
   <hex row="12" col="33" terrain="10" name="Prut River"/>
   <hex row="12" col="36" terrain="1" road="26" name="Falesti" deploy="0"/>
@@ -310,7 +310,7 @@
   <hex row="13" col="28" terrain="15" name="Lake Jija"/>
   <hex row="13" col="29" terrain="15" name="Lake Jija"/>
   <hex row="13" col="32">
-    <unit id="14176" owner="1" flag="14" face="4" exp="550"/>
+    <unit id="17688" owner="1" flag="14" face="4" exp="550"/>
   </hex>
   <hex row="13" col="33" terrain="10" name="Prut River"/>
   <hex row="13" col="36" road="27" deploy="0"/>
@@ -331,11 +331,11 @@
   <hex row="14" col="22" road="136"/>
   <hex row="14" col="23" road="144"/>
   <hex row="14" col="28">
-    <unit id="14415" owner="1" flag="14" face="2" exp="450" ldr="1"/>
+    <unit id="17945" owner="1" flag="14" face="2" exp="450" ldr="1"/>
   </hex>
   <hex row="14" col="30" terrain="15" name="Lake Jija"/>
   <hex row="14" col="32">
-    <unit id="14176" owner="1" flag="14" face="4" exp="450"/>
+    <unit id="17688" owner="1" flag="14" face="4" exp="450"/>
   </hex>
   <hex row="14" col="33" terrain="10" name="Prut River"/>
   <hex row="14" col="36" terrain="1" road="3" name="Skulyany" flag="61" owner="0" deploy="0"/>
@@ -356,7 +356,7 @@
   <hex row="15" col="14" terrain="3"/>
   <hex row="15" col="23" road="17"/>
   <hex row="15" col="32">
-    <unit id="14176" owner="1" flag="14" face="4" exp="550"/>
+    <unit id="17688" owner="1" flag="14" face="4" exp="550"/>
   </hex>
   <hex row="15" col="33" terrain="10" name="Prut River"/>
   <hex row="15" col="35" terrain="3"/>
@@ -381,16 +381,16 @@
   <hex row="16" col="14" terrain="3"/>
   <hex row="16" col="23" road="17"/>
   <hex row="16" col="27">
-    <unit id="14392" owner="1" flag="14" face="2" exp="450"/>
+    <unit id="17922" owner="1" flag="14" face="2" exp="450"/>
   </hex>
   <hex row="16" col="28">
-    <unit id="14379" owner="1" flag="14" face="2" exp="550"/>
+    <unit id="17908" owner="1" flag="14" face="2" exp="550"/>
   </hex>
   <hex row="16" col="32">
-    <unit id="14189" owner="1" flag="14" face="5" exp="350"/>
+    <unit id="17701" owner="1" flag="14" face="5" exp="350"/>
   </hex>
   <hex row="16" col="33">
-    <unit id="14189" owner="1" flag="14" face="5" exp="450"/>
+    <unit id="17701" owner="1" flag="14" face="5" exp="450"/>
   </hex>
   <hex row="16" col="34" terrain="10" name="Prut River"/>
   <hex row="16" col="36" terrain="3"/>
@@ -415,19 +415,19 @@
   <hex row="17" col="14" terrain="3"/>
   <hex row="17" col="23" road="17"/>
   <hex row="17" col="27">
-    <unit id="14404" owner="1" flag="14" face="2" exp="450"/>
+    <unit id="17934" owner="1" flag="14" face="2" exp="450"/>
   </hex>
   <hex row="17" col="28">
-    <unit id="14398" owner="1" flag="14" face="3" exp="550" ldr="1"/>
+    <unit id="17928" owner="1" flag="14" face="3" exp="550" ldr="1"/>
   </hex>
   <hex row="17" col="31">
-    <unit id="14663" owner="1" flag="14" face="6" transport="14549" exp="550"/>
+    <unit id="18233" owner="1" flag="14" face="6" transport="18101" exp="550"/>
   </hex>
   <hex row="17" col="32">
-    <unit id="14461" owner="1" flag="14" face="5" transport="14552" exp="450"/>
+    <unit id="17996" owner="1" flag="14" face="5" transport="18104" exp="450"/>
   </hex>
   <hex row="17" col="33" terrain="1" road="32" name="Hirlau" flag="13" owner="1">
-    <unit id="14189" owner="1" flag="14" face="5" exp="450"/>
+    <unit id="17701" owner="1" flag="14" face="5" exp="450"/>
   </hex>
   <hex row="17" col="34" terrain="10" name="Prut River"/>
   <hex row="17" col="39" road="19"/>
@@ -449,19 +449,19 @@
   <hex row="18" col="19" terrain="1" road="8" name="Falticeni"/>
   <hex row="18" col="23" road="9"/>
   <hex row="18" col="26">
-    <unit id="7896" owner="1" flag="8" face="3" transport="7741" exp="550"/>
+    <unit id="9951" owner="1" flag="8" face="3" transport="9724" exp="550"/>
   </hex>
   <hex row="18" col="27">
-    <unit id="6288" owner="1" flag="8" face="2" exp="450"/>
+    <unit id="7676" owner="1" flag="8" face="2" exp="450"/>
   </hex>
   <hex row="18" col="28">
-    <unit id="6927" owner="1" flag="8" face="3" exp="550"/>
+    <unit id="8597" owner="1" flag="8" face="3" exp="550"/>
   </hex>
   <hex row="18" col="32" road="18">
-    <unit id="8190" owner="1" flag="8" face="6" transport="7741" exp="450"/>
+    <unit id="10385" owner="1" flag="8" face="6" transport="9724" exp="450"/>
   </hex>
   <hex row="18" col="33">
-    <unit id="14189" owner="1" flag="14" face="5" exp="450"/>
+    <unit id="17701" owner="1" flag="14" face="5" exp="450"/>
   </hex>
   <hex row="18" col="34" terrain="10" name="Prut River"/>
   <hex row="18" col="35" terrain="3"/>
@@ -489,28 +489,28 @@
   <hex row="19" col="24" road="168"/>
   <hex row="19" col="25" road="136"/>
   <hex row="19" col="26">
-    <unit id="7896" owner="1" flag="8" face="3" transport="7741" exp="450"/>
+    <unit id="9951" owner="1" flag="8" face="3" transport="9724" exp="450"/>
   </hex>
   <hex row="19" col="27">
-    <unit id="6288" owner="1" flag="8" face="2" exp="450"/>
+    <unit id="7676" owner="1" flag="8" face="2" exp="450"/>
   </hex>
   <hex row="19" col="28">
-    <unit id="6288" owner="1" flag="8" face="2" exp="450"/>
+    <unit id="7676" owner="1" flag="8" face="2" exp="450"/>
   </hex>
   <hex row="19" col="29">
-    <unit id="8191" owner="1" flag="8" face="3" exp="550"/>
+    <unit id="10386" owner="1" flag="8" face="3" exp="550"/>
   </hex>
   <hex row="19" col="32" road="17"/>
   <hex row="19" col="33">
-    <unit id="7337" owner="1" flag="8" face="5" exp="550"/>
+    <unit id="9109" owner="1" flag="8" face="5" exp="550"/>
   </hex>
   <hex row="19" col="34" terrain="10" name="Prut River">
-    <unit id="14189" owner="1" flag="14" face="5" exp="450"/>
+    <unit id="17701" owner="1" flag="14" face="5" exp="450"/>
   </hex>
   <hex row="19" col="35" terrain="10" name="Prut River"/>
   <hex row="19" col="36" terrain="3"/>
   <hex row="19" col="37" terrain="3">
-    <unit id="14476" owner="1" flag="14" face="7" transport="14546" exp="350"/>
+    <unit id="18015" owner="1" flag="14" face="7" transport="18098" exp="350"/>
   </hex>
   <hex row="19" col="39" road="33"/>
   <hex row="19" col="41" terrain="3"/>
@@ -532,33 +532,33 @@
   <hex row="20" col="14" terrain="10" name="Siret River"/>
   <hex row="20" col="15" terrain="10" name="Siret River"/>
   <hex row="20" col="26" road="136">
-    <unit id="8184" owner="1" flag="8" face="2" exp="550"/>
+    <unit id="10375" owner="1" flag="8" face="2" exp="550"/>
   </hex>
   <hex row="20" col="27" road="136">
-    <unit id="14492" owner="1" flag="14" face="3" exp="450"/>
+    <unit id="18036" owner="1" flag="14" face="3" exp="450"/>
   </hex>
   <hex row="20" col="28">
-    <unit id="6288" owner="1" flag="8" face="2" exp="450"/>
+    <unit id="7676" owner="1" flag="8" face="2" exp="450"/>
   </hex>
   <hex row="20" col="29">
-    <unit id="7538" owner="1" flag="8" face="3" exp="450"/>
+    <unit id="9419" owner="1" flag="8" face="3" exp="450"/>
   </hex>
   <hex row="20" col="31">
-    <unit id="14495" owner="1" flag="14" face="3" exp="450"/>
+    <unit id="18039" owner="1" flag="14" face="3" exp="450"/>
   </hex>
   <hex row="20" col="32" road="17"/>
   <hex row="20" col="34">
-    <unit id="14478" owner="1" flag="14" face="5" transport="14546" exp="450"/>
+    <unit id="18017" owner="1" flag="14" face="5" transport="18098" exp="450"/>
   </hex>
   <hex row="20" col="35" terrain="10" name="Prut River"/>
   <hex row="20" col="36" terrain="3">
-    <unit id="14183" owner="1" flag="14" face="6" exp="450"/>
+    <unit id="17695" owner="1" flag="14" face="6" exp="450"/>
   </hex>
   <hex row="20" col="37" road="18">
-    <unit id="14665" owner="1" flag="14" face="6" transport="14576" exp="550"/>
+    <unit id="18235" owner="1" flag="14" face="6" transport="18133" exp="550"/>
   </hex>
   <hex row="20" col="38" road="34">
-    <unit id="14207" owner="1" flag="14" face="6" exp="550"/>
+    <unit id="17719" owner="1" flag="14" face="6" exp="550"/>
   </hex>
   <hex row="20" col="39" terrain="3"/>
   <hex row="20" col="40" terrain="3"/>
@@ -584,37 +584,37 @@
   <hex row="21" col="21" terrain="8"/>
   <hex row="21" col="23" terrain="8"/>
   <hex row="21" col="28" road="136">
-    <unit id="14494" owner="1" flag="14" face="3" exp="450"/>
+    <unit id="18038" owner="1" flag="14" face="3" exp="450"/>
   </hex>
   <hex row="21" col="29" road="136">
-    <unit id="7430" owner="1" flag="8" face="3" exp="450" ldr="1"/>
+    <unit id="9282" owner="1" flag="8" face="3" exp="450" ldr="1"/>
   </hex>
   <hex row="21" col="31" road="18">
-    <unit id="14708" owner="1" flag="14" face="3" transport="14549" exp="750"/>
+    <unit id="18282" owner="1" flag="14" face="3" transport="18101" exp="750"/>
   </hex>
   <hex row="21" col="32" road="33"/>
   <hex row="21" col="33">
-    <unit id="14631" owner="1" flag="14" face="6" transport="14549" exp="450"/>
+    <unit id="18196" owner="1" flag="14" face="6" transport="18101" exp="450"/>
   </hex>
   <hex row="21" col="34">
-    <unit id="14206" owner="1" flag="14" face="5" transport="14592" exp="450"/>
+    <unit id="17718" owner="1" flag="14" face="5" transport="18151" exp="450"/>
   </hex>
   <hex row="21" col="35">
-    <unit id="14206" owner="1" flag="14" face="5" transport="14592" exp="450"/>
+    <unit id="17718" owner="1" flag="14" face="5" transport="18151" exp="450"/>
   </hex>
   <hex row="21" col="36" terrain="10" name="Prut River"/>
   <hex row="21" col="37" road="17">
-    <unit id="14618" owner="1" flag="14" face="6" transport="14576" exp="450"/>
+    <unit id="18180" owner="1" flag="14" face="6" transport="18133" exp="450"/>
   </hex>
   <hex row="21" col="38" terrain="3">
-    <unit id="14470" owner="1" flag="14" face="7" transport="14549" exp="550"/>
+    <unit id="18007" owner="1" flag="14" face="7" transport="18101" exp="550"/>
   </hex>
   <hex row="21" col="39" terrain="3">
-    <unit id="14207" owner="1" flag="14" face="6" exp="450"/>
+    <unit id="17719" owner="1" flag="14" face="6" exp="450"/>
   </hex>
   <hex row="21" col="40" terrain="3"/>
   <hex row="21" col="41" terrain="3">
-    <unit id="6764" owner="1" flag="8" face="8" exp="450"/>
+    <unit id="8256" owner="1" flag="8" face="8" exp="450"/>
   </hex>
   <hex row="21" col="42" terrain="3"/>
   <hex row="21" col="43" terrain="3"/>
@@ -640,36 +640,36 @@
   <hex row="22" col="24" terrain="8"/>
   <hex row="22" col="25" terrain="8"/>
   <hex row="22" col="30" road="136">
-    <unit id="14667" owner="1" flag="14" face="3" transport="14549" exp="450"/>
+    <unit id="18237" owner="1" flag="14" face="3" transport="18101" exp="450"/>
   </hex>
   <hex row="22" col="31" terrain="1" road="169" name="Jassy" flag="13" owner="1" victory="1">
-    <unit id="14477" owner="1" flag="14" face="4" transport="14592" exp="350"/>
+    <unit id="18016" owner="1" flag="14" face="4" transport="18151" exp="350"/>
   </hex>
   <hex row="22" col="33">
-    <unit id="14416" owner="1" flag="14" face="2" exp="450"/>
+    <unit id="17946" owner="1" flag="14" face="2" exp="450"/>
   </hex>
   <hex row="22" col="34">
-    <unit id="14617" owner="1" flag="14" face="6" transport="14546" exp="450"/>
+    <unit id="18179" owner="1" flag="14" face="6" transport="18098" exp="450"/>
   </hex>
   <hex row="22" col="35">
-    <unit id="14206" owner="1" flag="14" face="5" transport="14592" exp="550"/>
+    <unit id="17718" owner="1" flag="14" face="5" transport="18151" exp="550"/>
   </hex>
   <hex row="22" col="36" terrain="10" name="Prut River"/>
   <hex row="22" col="37" road="17"/>
   <hex row="22" col="38" terrain="3">
-    <unit id="14637" owner="1" flag="14" face="6" transport="14546" exp="450"/>
+    <unit id="18202" owner="1" flag="14" face="6" transport="18098" exp="450"/>
   </hex>
   <hex row="22" col="39" terrain="3">
-    <unit id="14207" owner="1" flag="14" face="6" exp="450"/>
+    <unit id="17719" owner="1" flag="14" face="6" exp="450"/>
   </hex>
   <hex row="22" col="40" terrain="3">
-    <unit id="6764" owner="1" flag="8" face="8" exp="450"/>
+    <unit id="8256" owner="1" flag="8" face="8" exp="450"/>
   </hex>
   <hex row="22" col="41" terrain="3">
-    <unit id="6764" owner="1" flag="8" face="8" exp="550" ldr="1"/>
+    <unit id="8256" owner="1" flag="8" face="8" exp="550" ldr="1"/>
   </hex>
   <hex row="22" col="42" terrain="3">
-    <unit id="7323" owner="1" flag="8" face="8" transport="7789" exp="350"/>
+    <unit id="9091" owner="1" flag="8" face="8" transport="9801" exp="350"/>
   </hex>
   <hex row="22" col="43" terrain="3"/>
   <hex row="23" col="0" terrain="6"/>
@@ -699,30 +699,30 @@
   <hex row="23" col="30" road="34"/>
   <hex row="23" col="32" terrain="1" road="144" name="Jassy"/>
   <hex row="23" col="33">
-    <unit id="14714" owner="1" flag="14" face="6" transport="14602" exp="450"/>
+    <unit id="18291" owner="1" flag="14" face="6" transport="18162" exp="450"/>
   </hex>
   <hex row="23" col="34">
-    <unit id="14670" owner="1" flag="14" face="6" transport="14549" exp="550"/>
+    <unit id="18240" owner="1" flag="14" face="6" transport="18101" exp="550"/>
   </hex>
   <hex row="23" col="35" terrain="10" name="Prut River">
-    <unit id="14476" owner="1" flag="14" face="6" transport="14546" exp="450"/>
+    <unit id="18015" owner="1" flag="14" face="6" transport="18098" exp="450"/>
   </hex>
   <hex row="23" col="36" terrain="10" name="Prut River"/>
   <hex row="23" col="37" terrain="1" road="17" name="Unghani" flag="13" owner="1">
-    <unit id="14720" owner="1" flag="14" face="8" transport="14559" exp="450"/>
+    <unit id="18298" owner="1" flag="14" face="8" transport="18112" exp="450"/>
   </hex>
   <hex row="23" col="38" terrain="3"/>
   <hex row="23" col="39">
-    <unit id="8003" owner="1" flag="8" face="8" transport="7756" exp="450"/>
+    <unit id="10097" owner="1" flag="8" face="8" transport="9746" exp="450"/>
   </hex>
   <hex row="23" col="40">
-    <unit id="8003" owner="1" flag="8" face="8" transport="7756" exp="550"/>
+    <unit id="10097" owner="1" flag="8" face="8" transport="9746" exp="550"/>
   </hex>
   <hex row="23" col="41">
-    <unit id="6764" owner="1" flag="8" face="8" exp="450"/>
+    <unit id="8256" owner="1" flag="8" face="8" exp="450"/>
   </hex>
   <hex row="23" col="42">
-    <unit id="6764" owner="1" flag="8" face="8" exp="450"/>
+    <unit id="8256" owner="1" flag="8" face="8" exp="450"/>
   </hex>
   <hex row="24" col="0" terrain="6"/>
   <hex row="24" col="1" terrain="6"/>
@@ -751,19 +751,19 @@
   <hex row="24" col="32" road="9"/>
   <hex row="24" col="33" road="136"/>
   <hex row="24" col="34">
-    <unit id="7541" owner="1" flag="8" face="7" exp="550" ldr="1"/>
+    <unit id="9422" owner="1" flag="8" face="7" exp="550" ldr="1"/>
   </hex>
   <hex row="24" col="35" terrain="1" road="48" name="Bucium"/>
   <hex row="24" col="36" terrain="10" name="Prut River"/>
   <hex row="24" col="37" road="17"/>
   <hex row="24" col="38">
-    <unit id="14642" owner="1" flag="14" face="8" transport="14602" exp="450"/>
+    <unit id="18208" owner="1" flag="14" face="8" transport="18162" exp="450"/>
   </hex>
   <hex row="24" col="39">
-    <unit id="7525" owner="1" flag="8" face="8" exp="450"/>
+    <unit id="9399" owner="1" flag="8" face="8" exp="450"/>
   </hex>
   <hex row="24" col="40">
-    <unit id="7561" owner="1" flag="8" face="7" transport="7727" exp="550"/>
+    <unit id="9453" owner="1" flag="8" face="7" transport="9703" exp="550"/>
   </hex>
   <hex row="24" col="41" terrain="3"/>
   <hex row="24" col="42" terrain="3"/>
@@ -793,7 +793,7 @@
   <hex row="25" col="33" road="34"/>
   <hex row="25" col="34" road="170"/>
   <hex row="25" col="35" terrain="1" road="137" name="Bucium" flag="13" owner="1">
-    <unit id="14206" owner="1" flag="14" face="5" transport="14592" exp="450"/>
+    <unit id="17718" owner="1" flag="14" face="5" transport="18151" exp="450"/>
   </hex>
   <hex row="25" col="36" terrain="10" name="Prut River"/>
   <hex row="25" col="37" terrain="10" road="41" name="Prut River"/>
@@ -1121,7 +1121,7 @@
   <hex row="35" col="26" terrain="10" name="Siret River"/>
   <hex row="35" col="33" terrain="1" road="35" name="Piatra Neamt"/>
   <hex row="35" col="34" terrain="1" road="168" name="Piatra Neamt" flag="13" owner="1" victory="1">
-    <unit id="14181" owner="1" flag="14" face="4" exp="450"/>
+    <unit id="17693" owner="1" flag="14" face="4" exp="450"/>
   </hex>
   <hex row="35" col="35" road="144"/>
   <hex row="35" col="36" terrain="3"/>

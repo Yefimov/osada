@@ -124,6 +124,7 @@ class UIBuilderStartMenuTest {
                 (smButtons.childNodes.asDynamic()[i] as? HTMLElement)?.id
             }
         assertTrue(ids.contains("continuegame"))
+        assertTrue(ids.contains("restartmission"))
         assertTrue(ids.contains("newcampaign"))
         assertTrue(ids.contains("newscenario"))
         assertTrue(ids.contains("saveload"))

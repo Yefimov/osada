@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="ASCII"?>
 <map file="ccamprov.xscn" name="Delay at Rovno" turns="11, 15, 25" date="July 1, 1920" dayturns="0" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="32" cols="37" eqp="eqp-kaiser" image="resources/maps/images/map_236.png" eqpv="united1">
-  <player id="0" country="103" side="0" airtrans="0" navaltrans="0" support="0, 0, 0, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
-  <player id="1" country="20" side="1" airtrans="0" navaltrans="0" support="65, 21, 0, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <player id="0" country="103" side="0" airtrans="0" navaltrans="0" support="0,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <player id="1" country="20" side="1" airtrans="0" navaltrans="0" support="65,21,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="2">
     <at row="1" col="28">
-      <unit id="17277" owner="1" flag="21" face="0" exp="254" str="5"/>
+      <unit id="21455" owner="1" flag="21" face="0" exp="254" str="5"/>
     </at>
     <at row="0" col="27">
-      <unit id="17238" owner="1" flag="21" face="0" exp="254" str="7"/>
+      <unit id="21405" owner="1" flag="21" face="0" exp="254" str="7"/>
     </at>
   </reinforce>
   <reinforce turn="3">
     <at row="1" col="27">
-      <unit id="17277" owner="1" flag="21" face="0" exp="1" str="5"/>
+      <unit id="21455" owner="1" flag="21" face="0" exp="1" str="5"/>
     </at>
     <at row="1" col="35">
-      <unit id="17791" owner="1" flag="21" face="0" exp="132" str="5"/>
+      <unit id="22177" owner="1" flag="21" face="0" exp="132" str="5"/>
     </at>
   </reinforce>
   <hex row="0" col="2" terrain="3"/>
@@ -84,7 +84,7 @@
   <hex row="2" col="25" terrain="3"/>
   <hex row="2" col="26" terrain="3"/>
   <hex row="2" col="28" terrain="1" road="144" name="Klevan&#x27;">
-    <unit id="17351" owner="1" flag="21" face="0" exp="244" str="5"/>
+    <unit id="21545" owner="1" flag="21" face="0" exp="244" str="5"/>
   </hex>
   <hex row="2" col="32" terrain="10" name="Goryn&#x27; River"/>
   <hex row="2" col="33" terrain="10" name="Goryn&#x27; River"/>
@@ -186,7 +186,7 @@
   <hex row="8" col="12" road="144"/>
   <hex row="8" col="13" road="9"/>
   <hex row="8" col="14">
-    <unit id="17534" owner="1" flag="21" face="0" exp="54" str="7"/>
+    <unit id="21803" owner="1" flag="21" face="0" exp="54" str="7"/>
   </hex>
   <hex row="8" col="15" terrain="10" road="40" name="Styr&#x27; River"/>
   <hex row="8" col="16" terrain="3"/>
@@ -211,7 +211,7 @@
   <hex row="9" col="10" terrain="1" road="129" name="Senkevichevka" owner="1" flag="20"/>
   <hex row="9" col="12" road="17"/>
   <hex row="9" col="13">
-    <unit id="513" owner="1" flag="21" face="0" exp="154" str="7"/>
+    <unit id="728" owner="1" flag="21" face="0" exp="154" str="7"/>
   </hex>
   <hex row="9" col="14" terrain="10" road="130" name="Styr&#x27; River"/>
   <hex row="9" col="16" road="136"/>
@@ -229,10 +229,10 @@
   <hex row="9" col="31" road="34"/>
   <hex row="9" col="32" terrain="1" road="58" name="Rovno"/>
   <hex row="9" col="33" terrain="1" road="177" name="Rovno" owner="1" flag="20" victory="1">
-    <unit id="17534" owner="1" flag="21" face="0" exp="154" str="5"/>
+    <unit id="21803" owner="1" flag="21" face="0" exp="154" str="5"/>
   </hex>
   <hex row="9" col="36">
-    <unit id="17041" owner="1" flag="21" face="0" exp="254" str="7"/>
+    <unit id="21134" owner="1" flag="21" face="0" exp="254" str="7"/>
   </hex>
   <hex row="10" col="0" terrain="3"/>
   <hex row="10" col="2" terrain="3"/>
@@ -240,7 +240,7 @@
   <hex row="10" col="6" terrain="3"/>
   <hex row="10" col="8" road="18"/>
   <hex row="10" col="12" road="9">
-    <unit id="17534" owner="1" flag="21" face="0" exp="157" str="6"/>
+    <unit id="21803" owner="1" flag="21" face="0" exp="157" str="6"/>
   </hex>
   <hex row="10" col="13" terrain="10" road="136" name="Styr&#x27; River"/>
   <hex row="10" col="14" terrain="15" name="Styr&#x27; River: IMPASSABLE RIVER"/>
@@ -251,7 +251,7 @@
   <hex row="10" col="32" terrain="1" road="19" name="Rovno"/>
   <hex row="10" col="33" road="17"/>
   <hex row="10" col="36">
-    <unit id="17041" owner="1" flag="21" face="0" exp="157" str="7" ldr="1"/>
+    <unit id="21134" owner="1" flag="21" face="0" exp="157" str="7" ldr="1"/>
   </hex>
   <hex row="11" col="7" road="18"/>
   <hex row="11" col="8" road="33"/>
@@ -264,7 +264,7 @@
   <hex row="11" col="32" road="17"/>
   <hex row="11" col="33" road="9"/>
   <hex row="11" col="36">
-    <unit id="17041" owner="1" flag="21" face="0" exp="167" str="8"/>
+    <unit id="21134" owner="1" flag="21" face="0" exp="167" str="8"/>
   </hex>
   <hex row="12" col="7" road="33"/>
   <hex row="12" col="8" terrain="8"/>
@@ -277,13 +277,13 @@
   <hex row="12" col="27" terrain="3"/>
   <hex row="12" col="28" terrain="3"/>
   <hex row="12" col="32" road="17">
-    <unit id="367" owner="1" flag="21" face="0" exp="34" str="7"/>
+    <unit id="502" owner="1" flag="21" face="0" exp="34" str="7"/>
   </hex>
   <hex row="12" col="34" road="144">
-    <unit id="367" owner="1" flag="21" face="0" exp="55" str="7"/>
+    <unit id="502" owner="1" flag="21" face="0" exp="55" str="7"/>
   </hex>
   <hex row="13" col="6" road="18">
-    <unit id="367" owner="1" flag="21" face="0" exp="14" str="8"/>
+    <unit id="502" owner="1" flag="21" face="0" exp="14" str="8"/>
   </hex>
   <hex row="13" col="10" terrain="3"/>
   <hex row="13" col="11" terrain="3"/>
@@ -299,7 +299,7 @@
   <hex row="13" col="27" terrain="3"/>
   <hex row="13" col="30" road="24"/>
   <hex row="13" col="31" road="130">
-    <unit id="17041" owner="1" flag="21" face="0" exp="67" str="8"/>
+    <unit id="21134" owner="1" flag="21" face="0" exp="67" str="8"/>
   </hex>
   <hex row="13" col="32" road="33"/>
   <hex row="13" col="34" road="9"/>
@@ -317,10 +317,10 @@
   <hex row="14" col="24" terrain="3"/>
   <hex row="14" col="26" terrain="8"/>
   <hex row="14" col="28">
-    <unit id="17041" owner="1" flag="21" face="0" exp="55" str="9"/>
+    <unit id="21134" owner="1" flag="21" face="0" exp="55" str="9"/>
   </hex>
   <hex row="14" col="29">
-    <unit id="17711" owner="1" flag="21" face="0" transport="17628" exp="254" str="6"/>
+    <unit id="22046" owner="1" flag="21" face="0" transport="21927" exp="254" str="6"/>
   </hex>
   <hex row="14" col="30" road="17"/>
   <hex row="14" col="36" road="144"/>
@@ -360,11 +360,11 @@
   <hex row="16" col="19" road="144"/>
   <hex row="16" col="24" terrain="3"/>
   <hex row="16" col="27">
-    <unit id="17041" owner="1" flag="21" face="0" exp="254" str="7"/>
+    <unit id="21134" owner="1" flag="21" face="0" exp="254" str="7"/>
   </hex>
   <hex row="16" col="28" road="18"/>
   <hex row="16" col="30">
-    <unit id="17041" owner="1" flag="21" face="0" exp="167" str="8"/>
+    <unit id="21134" owner="1" flag="21" face="0" exp="167" str="8"/>
   </hex>
   <hex row="17" col="3" road="49"/>
   <hex row="17" col="6" terrain="3"/>
@@ -464,7 +464,7 @@
   <hex row="21" col="22" road="17"/>
   <hex row="21" col="24" road="9"/>
   <hex row="21" col="25" road="144">
-    <unit id="367" owner="1" flag="21" face="0" exp="35" str="8"/>
+    <unit id="502" owner="1" flag="21" face="0" exp="35" str="8"/>
   </hex>
   <hex row="21" col="27" terrain="15" name="Ikva River: IMPASSABLE RIVER"/>
   <hex row="21" col="31" terrain="3"/>
@@ -505,7 +505,7 @@
   <hex row="23" col="20" road="34"/>
   <hex row="23" col="26" road="136"/>
   <hex row="23" col="27" road="130">
-    <unit id="194" owner="1" flag="65" face="0" exp="38" str="8"/>
+    <unit id="272" owner="1" flag="65" face="0" exp="38" str="8"/>
   </hex>
   <hex row="23" col="28" terrain="10" road="40" name="Ikva River"/>
   <hex row="23" col="29" road="136"/>
@@ -531,7 +531,7 @@
   <hex row="24" col="27" terrain="15" name="Ikva River: IMPASSABLE RIVER"/>
   <hex row="24" col="28" terrain="15" name="Ikva River: IMPASSABLE RIVER"/>
   <hex row="24" col="29">
-    <unit id="194" owner="1" flag="65" face="0" exp="34" str="8"/>
+    <unit id="272" owner="1" flag="65" face="0" exp="34" str="8"/>
   </hex>
   <hex row="24" col="30" road="144"/>
   <hex row="24" col="32" terrain="3"/>
@@ -551,7 +551,7 @@
   <hex row="25" col="27" terrain="15" name="Ikva River: IMPASSABLE RIVER"/>
   <hex row="25" col="30" road="9"/>
   <hex row="25" col="31" road="144">
-    <unit id="194" owner="1" flag="65" face="0" exp="25" str="8"/>
+    <unit id="272" owner="1" flag="65" face="0" exp="25" str="8"/>
   </hex>
   <hex row="25" col="32" terrain="3"/>
   <hex row="25" col="33" terrain="3"/>

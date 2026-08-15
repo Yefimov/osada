@@ -1,6 +1,8 @@
 package org.osada.ui
 
+import kotlinx.browser.window
 import org.osada.Game
+import org.osada.i18n.I18n
 import org.osada.multiplayer.client.OsadaMultiplayer
 import org.osada.uiSettings
 import org.w3c.dom.HTMLSelectElement
@@ -25,6 +27,8 @@ internal class StartMenuButtonHandler(
                 makeHidden("startmenu")
                 byId("options")?.let { toggleButton(it, false) }
             }
+
+            "restartmission" -> onRestartMissionButton()
 
             "saveload" -> onSaveLoadButton()
             "settings" -> onSettingsButton()
@@ -83,6 +87,23 @@ internal class StartMenuButtonHandler(
         // Pre-game the window is "Load Game" with Save muted; mid-game the full pair.
         GameStateMenuBuilder.applySaveLoadContext()
         makeVisible("smState")
+    }
+
+    private fun onRestartMissionButton() {
+        val checkpoint = ui.game.missionRestartCheckpoint
+        if (!checkpoint.isAvailable()) return
+        if (!window.confirm(I18n.t("menu.main.restart_mission.confirm"))) return
+
+        makeHidden("startmenu")
+        byId("options")?.let { toggleButton(it, false) }
+        if (!checkpoint.restart()) {
+            makeVisible("startmenu")
+            makeVisible("smMain")
+            UIBuilder.message(
+                I18n.t("game.error.title"),
+                I18n.t("menu.main.restart_mission.failed"),
+            )
+        }
     }
 
     private fun onSettingsButton() {

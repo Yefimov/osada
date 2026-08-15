@@ -1,55 +1,55 @@
 <?xml version="1.0" encoding="ASCII"?>
 <map file="nvc02.xscn" name="Attack on the Plei Me Camp" turns="20, 20, 20" date="October 19, 1965" dayturns="0" ground="0" atmosferic="0" latitude="4" iconset="0" weatherchg="0" rows="31" cols="32" eqp="eqp-olgcw" image="resources/maps/images/map_772.png" eqpv="united1">
-  <player id="0" country="276" side="0" airtrans="0" navaltrans="0" support="247, 0, 0, 0" turnprestige="10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10"/>
-  <player id="1" country="253" side="1" airtrans="0" navaltrans="0" support="10, 254, 0, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <player id="0" country="276" side="0" airtrans="0" navaltrans="0" support="247,0,0,0" turnprestige="10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10"/>
+  <player id="1" country="253" side="1" airtrans="0" navaltrans="0" support="10,254,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="4">
     <at row="27" col="17">
-      <unit id="41901" owner="1" flag="254" face="0" str="8"/>
+      <unit id="50000" owner="1" flag="254" face="0" str="8"/>
     </at>
     <at row="28" col="17">
-      <unit id="41904" owner="1" flag="254" face="0" str="5"/>
+      <unit id="50003" owner="1" flag="254" face="0" str="5"/>
     </at>
   </reinforce>
   <reinforce turn="7">
     <at row="15" col="21">
-      <unit id="10817" owner="1" flag="10" face="0" exp="46" str="5"/>
+      <unit id="13728" owner="1" flag="10" face="0" exp="46" str="5"/>
     </at>
   </reinforce>
   <reinforce turn="8">
     <at row="22" col="18">
-      <unit id="11016" owner="1" flag="10" face="0" str="4"/>
+      <unit id="14002" owner="1" flag="10" face="0" str="4"/>
     </at>
     <at row="23" col="18">
-      <unit id="11016" owner="1" flag="10" face="0" str="4"/>
+      <unit id="14002" owner="1" flag="10" face="0" str="4"/>
     </at>
   </reinforce>
   <reinforce turn="9">
     <at row="1" col="20">
-      <unit id="41875" owner="1" flag="254" face="0" transport="41903" exp="189" str="8"/>
+      <unit id="49973" owner="1" flag="254" face="0" transport="50002" exp="189" str="8"/>
     </at>
     <at row="14" col="18">
-      <unit id="9629" owner="1" flag="10" face="0" exp="190"/>
+      <unit id="12027" owner="1" flag="10" face="0" exp="190"/>
     </at>
     <at row="21" col="16">
-      <unit id="9629" owner="1" flag="10" face="0" exp="100" str="11"/>
+      <unit id="12027" owner="1" flag="10" face="0" exp="100" str="11"/>
     </at>
     <at row="23" col="16">
-      <unit id="9629" owner="1" flag="10" face="0" exp="99" str="11"/>
+      <unit id="12027" owner="1" flag="10" face="0" exp="99" str="11"/>
     </at>
     <at row="17" col="17">
-      <unit id="9635" owner="1" flag="10" face="0" exp="190" str="8"/>
+      <unit id="12033" owner="1" flag="10" face="0" exp="190" str="8"/>
     </at>
     <at row="21" col="17">
-      <unit id="10402" owner="1" flag="10" face="0" transport="10376" exp="99" str="7"/>
+      <unit id="13139" owner="1" flag="10" face="0" transport="13102" exp="99" str="7"/>
     </at>
     <at row="21" col="18">
-      <unit id="9628" owner="1" flag="10" face="0" str="6" ldr="1"/>
+      <unit id="12026" owner="1" flag="10" face="0" str="6" ldr="1"/>
     </at>
     <at row="1" col="21">
-      <unit id="41891" owner="1" flag="254" face="0" exp="150" str="5"/>
+      <unit id="49990" owner="1" flag="254" face="0" exp="150" str="5"/>
     </at>
     <at row="0" col="21">
-      <unit id="41881" owner="1" flag="254" face="0" transport="41903" exp="200" str="5" ldr="1"/>
+      <unit id="49979" owner="1" flag="254" face="0" transport="50002" exp="200" str="5" ldr="1"/>
     </at>
   </reinforce>
   <hex row="0" col="2" terrain="3" name="Jungle"/>
@@ -222,7 +222,7 @@
   <hex row="5" col="15" terrain="3" name="Jungle"/>
   <hex row="5" col="16" terrain="3" name="Jungle"/>
   <hex row="5" col="17" terrain="1" name="Plei Neute" owner="1" flag="253" victory="1">
-    <unit id="41877" owner="1" flag="254" face="0" str="5"/>
+    <unit id="49975" owner="1" flag="254" face="0" str="5"/>
   </hex>
   <hex row="5" col="18" terrain="6"/>
   <hex row="5" col="19" terrain="6"/>
@@ -310,7 +310,7 @@
   <hex row="8" col="9" terrain="3" name="Jungle"/>
   <hex row="8" col="10" terrain="3" name="Jungle"/>
   <hex row="8" col="11" terrain="3" name="Jungle">
-    <unit id="41234" owner="0" flag="247" face="0" exp="167" str="9"/>
+    <unit id="49263" owner="0" flag="247" face="0" exp="167" str="9"/>
   </hex>
   <hex row="8" col="12" terrain="3" name="Jungle"/>
   <hex row="8" col="13" terrain="3" name="Jungle"/>
@@ -342,7 +342,7 @@
   <hex row="9" col="8" terrain="3" name="Jungle" deploy="0"/>
   <hex row="9" col="9" terrain="3" name="Jungle" deploy="0"/>
   <hex row="9" col="10" terrain="3" name="Jungle">
-    <unit id="41294" owner="0" flag="247" face="0" transport="43388" exp="123" str="7"/>
+    <unit id="49356" owner="0" flag="247" face="0" transport="51694" exp="123" str="7"/>
   </hex>
   <hex row="9" col="11" terrain="3" name="Jungle"/>
   <hex row="9" col="12" terrain="3" name="Jungle"/>
@@ -411,7 +411,7 @@
   <hex row="11" col="14" terrain="3" name="Jungle"/>
   <hex row="11" col="15" terrain="3" name="Jungle"/>
   <hex row="11" col="16" terrain="1" name="Plei Tpang" owner="1" flag="253">
-    <unit id="41877" owner="1" flag="254" face="0" str="5"/>
+    <unit id="49975" owner="1" flag="254" face="0" str="5"/>
   </hex>
   <hex row="11" col="17" terrain="3" name="Jungle"/>
   <hex row="11" col="18" terrain="3" name="Jungle"/>
@@ -654,13 +654,13 @@
   <hex row="19" col="10" terrain="3" name="Jungle"/>
   <hex row="19" col="11" terrain="3" name="Jungle"/>
   <hex row="19" col="12" terrain="3" name="Jungle">
-    <unit id="367" owner="1" flag="254" face="0" str="7"/>
+    <unit id="502" owner="1" flag="254" face="0" str="7"/>
   </hex>
   <hex row="19" col="13" terrain="2" road="48" name="Plei Me SF Camp [AIRFIELD]">
-    <unit id="529" owner="1" flag="254" face="0" str="5"/>
+    <unit id="749" owner="1" flag="254" face="0" str="5"/>
   </hex>
   <hex row="19" col="14" terrain="3" name="Jungle">
-    <unit id="367" owner="1" flag="254" face="0" str="5"/>
+    <unit id="502" owner="1" flag="254" face="0" str="5"/>
   </hex>
   <hex row="19" col="15" terrain="3" name="Jungle"/>
   <hex row="19" col="16" road="18" name="Provincial Road 6C"/>
@@ -690,10 +690,10 @@
   <hex row="20" col="10" terrain="3" name="Jungle"/>
   <hex row="20" col="11" terrain="3" name="Jungle"/>
   <hex row="20" col="12" terrain="2" road="10" name="Plei Me SF Camp [AIRFIELD]">
-    <unit id="385" owner="1" flag="254" face="0" str="7"/>
+    <unit id="528" owner="1" flag="254" face="0" str="7"/>
   </hex>
   <hex row="20" col="13" terrain="2" road="137" name="Plei Me SF Camp [AIRFIELD]" owner="1" flag="253" victory="1">
-    <unit id="41873" owner="1" flag="254" face="0" str="8"/>
+    <unit id="49971" owner="1" flag="254" face="0" str="8"/>
   </hex>
   <hex row="20" col="15" terrain="3" name="Jungle"/>
   <hex row="20" col="16" road="17" name="Provincial Road 6C"/>
@@ -724,7 +724,7 @@
   <hex row="21" col="10" terrain="3" name="Jungle"/>
   <hex row="21" col="11" terrain="3" name="Jungle"/>
   <hex row="21" col="12" terrain="3" name="Jungle">
-    <unit id="367" owner="1" flag="254" face="0" str="6"/>
+    <unit id="502" owner="1" flag="254" face="0" str="6"/>
   </hex>
   <hex row="21" col="14" road="136"/>
   <hex row="21" col="15" road="138"/>
@@ -747,7 +747,7 @@
   <hex row="22" col="1" terrain="3" name="Jungle"/>
   <hex row="22" col="2" terrain="3" name="Jungle"/>
   <hex row="22" col="3" terrain="3" name="Jungle">
-    <unit id="41299" owner="0" flag="247" face="0" transport="41280" str="3"/>
+    <unit id="49361" owner="0" flag="247" face="0" transport="49338" str="3"/>
   </hex>
   <hex row="22" col="4" terrain="3" name="Jungle" deploy="0"/>
   <hex row="22" col="5" terrain="3" name="Jungle"/>

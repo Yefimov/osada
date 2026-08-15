@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <map file="forward26.xscn" name="Fortress K&#252;strin" turns="6, 8, 10" date="March 26, 1945" dayturns="0" ground="2" atmosferic="3" latitude="6" iconset="1" weatherchg="0" rows="32" cols="22" eqp="eqp-atomic" image="resources/maps/images/map_1037.png" eqpv="united1">
-  <player id="0" country="89" side="1" airtrans="0" navaltrans="0" support="0, 0, 0, 0" turnprestige="200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200"/>
-  <player id="1" country="7" side="0" airtrans="0" navaltrans="0" support="8, 0, 0, 0" turnprestige="10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10"/>
+  <player id="0" country="89" side="1" airtrans="0" navaltrans="0" support="0,0,0,0" turnprestige="200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200"/>
+  <player id="1" country="7" side="0" airtrans="0" navaltrans="0" support="8,0,0,0" turnprestige="10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10"/>
   <hex row="0" col="1" terrain="3"/>
   <hex row="0" col="2" terrain="3" road="8"/>
   <hex row="0" col="3" road="136"/>
@@ -30,7 +30,7 @@
   <hex row="1" col="7" terrain="3"/>
   <hex row="1" col="8" road="17" deploy="0"/>
   <hex row="1" col="9" terrain="3" deploy="0"/>
-  <hex row="1" col="10" road="153" owner="0" flag="89" victory="0" deploy="0"/>
+  <hex row="1" col="10" road="153" owner="0" flag="19" victory="0" deploy="0"/>
   <hex row="1" col="11" terrain="1" road="144" name="Muehlenfuenftel" deploy="0"/>
   <hex row="1" col="12" deploy="0"/>
   <hex row="1" col="13" terrain="1" road="34" name="Neu Wilkersdorf" deploy="0"/>
@@ -81,13 +81,13 @@
   <hex row="4" col="4" terrain="15" name="Oder"/>
   <hex row="4" col="5" terrain="15" name="Oder"/>
   <hex row="4" col="6" terrain="1" road="144" name="Drewitz">
-    <unit id="7674" owner="1" flag="8" face="0" exp="164"/>
+    <unit id="9578" owner="1" flag="8" face="0" exp="164"/>
   </hex>
   <hex row="4" col="7" road="9">
-    <unit id="6819" owner="1" flag="8" face="0" exp="141" str="8"/>
+    <unit id="8325" owner="1" flag="8" face="0" exp="141" str="8"/>
   </hex>
   <hex row="4" col="8" road="17">
-    <unit id="6819" owner="1" flag="8" face="0" exp="158" str="8" ldr="1"/>
+    <unit id="8325" owner="1" flag="8" face="0" exp="158" str="8" ldr="1"/>
   </hex>
   <hex row="4" col="9" road="17"/>
   <hex row="4" col="10" terrain="10"/>
@@ -102,17 +102,17 @@
   <hex row="4" col="21" terrain="10" name="Warthe"/>
   <hex row="5" col="1" road="40"/>
   <hex row="5" col="5" terrain="15" name="Oder">
-    <unit id="7202" owner="1" flag="8" face="0" exp="3" str="5"/>
+    <unit id="8947" owner="1" flag="8" face="0" exp="3" str="5"/>
   </hex>
   <hex row="5" col="6" road="9">
-    <unit id="7642" owner="1" flag="8" face="0" transport="7776" exp="40" str="6"/>
+    <unit id="9544" owner="1" flag="8" face="0" transport="9770" exp="40" str="6"/>
   </hex>
   <hex row="5" col="7" terrain="1" road="154" name="Kuestrin"/>
   <hex row="5" col="8" terrain="1" road="185" name="Kuestrin">
-    <unit id="7674" owner="1" flag="8" face="0" exp="41"/>
+    <unit id="9578" owner="1" flag="8" face="0" exp="41"/>
   </hex>
   <hex row="5" col="9" terrain="1" road="161" name="Kuestrin">
-    <unit id="6405" owner="1" flag="8" face="0" transport="7796" exp="138" str="5"/>
+    <unit id="7800" owner="1" flag="8" face="0" transport="9811" exp="138" str="5"/>
   </hex>
   <hex row="5" col="10" terrain="10"/>
   <hex row="5" col="11" terrain="10" name="Warthe"/>
@@ -130,14 +130,14 @@
   <hex row="6" col="1" terrain="10" name="Alte Oder"/>
   <hex row="6" col="2" terrain="1" road="144" name="Schaeferei"/>
   <hex row="6" col="5" terrain="1" road="16" name="Bleyen">
-    <unit id="8078" owner="1" flag="8" face="0" exp="33" str="5"/>
+    <unit id="10217" owner="1" flag="8" face="0" exp="33" str="5"/>
   </hex>
   <hex row="6" col="6" terrain="15" name="Oder"/>
   <hex row="6" col="7" terrain="11" road="35" name="Festung Kuestrin">
-    <unit id="7887" owner="1" flag="8" face="0" transport="7794" exp="102" str="5"/>
+    <unit id="9936" owner="1" flag="8" face="0" transport="9809" exp="102" str="5"/>
   </hex>
   <hex row="6" col="8" terrain="1" road="179" name="Kuestrin" owner="1" flag="7" victory="1">
-    <unit id="7676" owner="1" flag="8" face="0" exp="179"/>
+    <unit id="9584" owner="1" flag="8" face="0" exp="179"/>
   </hex>
   <hex row="6" col="9" terrain="10" name="Warthe"/>
   <hex row="6" col="10" terrain="10" name="Warthe"/>
@@ -154,20 +154,20 @@
   <hex row="6" col="21" terrain="8"/>
   <hex row="7" col="0" terrain="10" name="Alte Oder"/>
   <hex row="7" col="1" terrain="1" road="10" name="Gorgast">
-    <unit id="6673" owner="1" flag="8" face="0" exp="154" str="5"/>
+    <unit id="8140" owner="1" flag="8" face="0" exp="154" str="5"/>
   </hex>
   <hex row="7" col="2" terrain="10" road="33" name="Alte Oder"/>
   <hex row="7" col="3">
-    <unit id="7653" owner="1" flag="8" face="0" exp="193" str="5"/>
+    <unit id="9556" owner="1" flag="8" face="0" exp="193" str="5"/>
   </hex>
   <hex row="7" col="4">
-    <unit id="7881" owner="1" flag="8" face="0" transport="7762" exp="104" str="8"/>
+    <unit id="9930" owner="1" flag="8" face="0" transport="9754" exp="104" str="8"/>
   </hex>
   <hex row="7" col="5" terrain="1" road="51" name="Kuestrin-Kietz" owner="1" flag="7" victory="1">
-    <unit id="6636" owner="1" flag="8" face="0" exp="101" str="7"/>
+    <unit id="8086" owner="1" flag="8" face="0" exp="101" str="7"/>
   </hex>
   <hex row="7" col="6" terrain="10" road="34" name="Oder">
-    <unit id="7353" owner="1" flag="8" face="0" transport="7792" exp="244" str="5"/>
+    <unit id="9128" owner="1" flag="8" face="0" transport="9805" exp="244" str="5"/>
   </hex>
   <hex row="7" col="7" terrain="15" name="Oder"/>
   <hex row="7" col="8" terrain="10" road="25" name="Warthe"/>
@@ -185,13 +185,13 @@
   <hex row="8" col="2" terrain="11" road="144" name="Fort Gorgast"/>
   <hex row="8" col="3" road="34"/>
   <hex row="8" col="4" road="34">
-    <unit id="7394" owner="1" flag="8" face="0" exp="110" str="5"/>
+    <unit id="9223" owner="1" flag="8" face="0" exp="110" str="5"/>
   </hex>
   <hex row="8" col="5" road="17">
-    <unit id="8256" owner="1" flag="8" face="0" exp="24" str="5"/>
+    <unit id="10482" owner="1" flag="8" face="0" exp="24" str="5"/>
   </hex>
   <hex row="8" col="6">
-    <unit id="7353" owner="1" flag="8" face="0" transport="7792" exp="111" str="5"/>
+    <unit id="9128" owner="1" flag="8" face="0" transport="9805" exp="111" str="5"/>
   </hex>
   <hex row="8" col="7" terrain="15" name="Oder"/>
   <hex row="8" col="8" terrain="10" road="19"/>
@@ -207,12 +207,12 @@
   <hex row="8" col="20" road="18"/>
   <hex row="8" col="21" terrain="3" road="9"/>
   <hex row="9" col="1" terrain="1" road="50" name="Manschnow" owner="1" flag="7" victory="1">
-    <unit id="6636" owner="1" flag="8" face="0" exp="102" str="7"/>
+    <unit id="8086" owner="1" flag="8" face="0" exp="102" str="7"/>
   </hex>
   <hex row="9" col="2" terrain="11" road="35" name="Fort Gorgast"/>
   <hex row="9" col="3" terrain="10" name="Alte Oder"/>
   <hex row="9" col="4">
-    <unit id="7477" owner="1" flag="8" face="0" exp="64" str="5"/>
+    <unit id="9344" owner="1" flag="8" face="0" exp="64" str="5"/>
   </hex>
   <hex row="9" col="5" road="17"/>
   <hex row="9" col="6" terrain="15" name="Oder"/>
@@ -288,7 +288,7 @@
   <hex row="13" col="9" road="11"/>
   <hex row="13" col="10" road="40"/>
   <hex row="13" col="11" terrain="3" road="130">
-    <unit id="7204" owner="1" flag="8" face="0" exp="133" str="6"/>
+    <unit id="8949" owner="1" flag="8" face="0" exp="133" str="6"/>
   </hex>
   <hex row="13" col="12" road="56"/>
   <hex row="13" col="13" terrain="3" road="130"/>
@@ -321,7 +321,7 @@
   <hex row="14" col="20" terrain="3" road="9"/>
   <hex row="14" col="21" road="136"/>
   <hex row="15" col="1" road="17">
-    <unit id="8415" owner="1" flag="8" face="0" exp="80" str="5"/>
+    <unit id="10695" owner="1" flag="8" face="0" exp="80" str="5"/>
   </hex>
   <hex row="15" col="2" road="18"/>
   <hex row="15" col="3" terrain="5" name="Reitweiner Sporn"/>
@@ -329,10 +329,10 @@
   <hex row="15" col="6" road="146"/>
   <hex row="15" col="8" terrain="10" name="Oder"/>
   <hex row="15" col="10" terrain="1" road="155" name="Goeritz" owner="1" flag="7" victory="1">
-    <unit id="6601" owner="1" flag="8" face="0" exp="249" str="6"/>
+    <unit id="8043" owner="1" flag="8" face="0" exp="249" str="6"/>
   </hex>
   <hex row="15" col="11" road="136">
-    <unit id="6819" owner="1" flag="8" face="0" exp="138" str="8"/>
+    <unit id="8325" owner="1" flag="8" face="0" exp="138" str="8"/>
   </hex>
   <hex row="15" col="12" terrain="3" road="144"/>
   <hex row="15" col="13" terrain="3"/>
@@ -344,7 +344,7 @@
   <hex row="15" col="19" terrain="3"/>
   <hex row="15" col="21" terrain="3"/>
   <hex row="16" col="1" road="51">
-    <unit id="8511" owner="1" flag="8" face="0" exp="117" str="5"/>
+    <unit id="10798" owner="1" flag="8" face="0" exp="117" str="5"/>
   </hex>
   <hex row="16" col="2" terrain="5" road="33" name="Reitweiner Sporn"/>
   <hex row="16" col="3" terrain="5" name="Reitweiner Sporn"/>
@@ -367,7 +367,7 @@
   <hex row="16" col="21" terrain="3"/>
   <hex row="17" col="0" terrain="1" road="10" name="Podelzig"/>
   <hex row="17" col="1" road="177">
-    <unit id="8701" owner="1" flag="8" face="0" exp="58" str="8"/>
+    <unit id="11005" owner="1" flag="8" face="0" exp="58" str="8"/>
   </hex>
   <hex row="17" col="2" terrain="5" name="Reitweiner Sporn"/>
   <hex row="17" col="3" terrain="5" name="Reitweiner Sporn"/>
@@ -389,7 +389,7 @@
   <hex row="17" col="21" terrain="3"/>
   <hex row="18" col="0" road="8"/>
   <hex row="18" col="1" terrain="1" road="145" name="Klessin">
-    <unit id="8526" owner="1" flag="8" face="0" exp="190" str="5"/>
+    <unit id="10814" owner="1" flag="8" face="0" exp="190" str="5"/>
   </hex>
   <hex row="18" col="2" terrain="5" name="Reitweiner Sporn"/>
   <hex row="18" col="3" terrain="5" name="Reitweiner Sporn"/>
@@ -410,7 +410,7 @@
   <hex row="18" col="20" terrain="1" road="152" name="Seefeld"/>
   <hex row="18" col="21" road="130"/>
   <hex row="19" col="1" terrain="5" road="17" name="Reitweiner Sporn">
-    <unit id="8365" owner="1" flag="8" face="0" exp="48" str="5"/>
+    <unit id="10634" owner="1" flag="8" face="0" exp="48" str="5"/>
   </hex>
   <hex row="19" col="2" terrain="5" name="Reitweiner Sporn"/>
   <hex row="19" col="3" terrain="5" name="Reitweiner Sporn"/>
@@ -537,7 +537,7 @@
   <hex row="26" col="10" terrain="3"/>
   <hex row="26" col="11" terrain="3"/>
   <hex row="26" col="12" terrain="10" name="Bischofsee"/>
-  <hex row="26" col="13" terrain="1" road="16" name="Bischofsee" owner="0" flag="89"/>
+  <hex row="26" col="13" terrain="1" road="16" name="Bischofsee" owner="0" flag="19"/>
   <hex row="26" col="14" terrain="5"/>
   <hex row="26" col="15" terrain="5"/>
   <hex row="26" col="16" terrain="5"/>
@@ -591,7 +591,7 @@
   <hex row="29" col="4" road="18"/>
   <hex row="29" col="6" terrain="3"/>
   <hex row="29" col="7" terrain="3">
-    <unit id="6453" owner="1" flag="8" face="0" transport="7796" exp="168" str="5"/>
+    <unit id="7869" owner="1" flag="8" face="0" transport="9811" exp="168" str="5"/>
   </hex>
   <hex row="29" col="8" terrain="13"/>
   <hex row="29" col="9" terrain="13"/>
@@ -610,22 +610,22 @@
   <hex row="30" col="0" terrain="1" road="8" name="Frankfurt an der Oder"/>
   <hex row="30" col="1" terrain="1" road="186" name="Frankfurt an der Oder"/>
   <hex row="30" col="2" terrain="1" road="176" name="Frankfurt an der Oder">
-    <unit id="8257" owner="1" flag="8" face="0" exp="101" str="6"/>
+    <unit id="10483" owner="1" flag="8" face="0" exp="101" str="6"/>
   </hex>
   <hex row="30" col="3" terrain="10" road="34" name="Oder">
-    <unit id="7256" owner="1" flag="8" face="0" exp="148" str="5"/>
+    <unit id="9009" owner="1" flag="8" face="0" exp="148" str="5"/>
   </hex>
   <hex row="30" col="4" terrain="1" road="41" name="Dammvorstadt">
-    <unit id="7351" owner="1" flag="8" face="0" transport="7801" exp="133" str="7" ldr="1"/>
+    <unit id="9124" owner="1" flag="8" face="0" transport="9816" exp="133" str="7" ldr="1"/>
   </hex>
   <hex row="30" col="5" terrain="1" road="138" name="Dammvorstadt" owner="1" flag="7" victory="1">
-    <unit id="7674" owner="1" flag="8" face="0" exp="246"/>
+    <unit id="9578" owner="1" flag="8" face="0" exp="246"/>
   </hex>
   <hex row="30" col="6" terrain="1" road="34" name="Dammvorstadt"/>
   <hex row="30" col="7" terrain="3"/>
   <hex row="30" col="8" terrain="3"/>
   <hex row="30" col="9" terrain="1" road="34" name="Kunersdorf">
-    <unit id="6636" owner="1" flag="8" face="0" exp="188" str="7"/>
+    <unit id="8086" owner="1" flag="8" face="0" exp="188" str="7"/>
   </hex>
   <hex row="30" col="10" terrain="13" road="34"/>
   <hex row="30" col="11" terrain="3"/>
@@ -642,13 +642,13 @@
   <hex row="31" col="0" terrain="1" road="10" name="Frankfurt an der Oder"/>
   <hex row="31" col="1" terrain="1" road="147" name="Frankfurt an der Oder"/>
   <hex row="31" col="2" terrain="1" road="171" name="Frankfurt an der Oder">
-    <unit id="7965" owner="1" flag="8" face="0" exp="161" str="5"/>
+    <unit id="10043" owner="1" flag="8" face="0" exp="161" str="5"/>
   </hex>
   <hex row="31" col="3" terrain="1" road="144" name="Frankfurt an der Oder"/>
   <hex row="31" col="4" terrain="15" name="Oder"/>
   <hex row="31" col="6" road="152"/>
   <hex row="31" col="7" road="130">
-    <unit id="7541" owner="1" flag="8" face="0" exp="79" str="7" ldr="1"/>
+    <unit id="9422" owner="1" flag="8" face="0" exp="79" str="7" ldr="1"/>
   </hex>
   <hex row="31" col="8" road="34"/>
   <hex row="31" col="9" road="42"/>

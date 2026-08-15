@@ -365,6 +365,21 @@ internal val countryNames =
         "Russian Cossack Forces (Axis-aligned)",
         "Russian Federation",
         "Unassigned Flag (lxf)",
+        // Added with eqp-pzliga: service arms EFILE_PzLIGA models as separate nations.
+        "Kriegsmarine",
+        "Luftwaffe",
+        "Royal Air Force",
+        "Royal Navy",
+        "US Navy",
+        "USAAF",
+        "USACE",
+        "Parachute Regiment",
+        // Added with eqp-cc76. That efile models four Polish formations separately, so its
+        // Western-allied one could not take the shared "Poland" entry (the 1939 army).
+        "Armia Krajowa",
+        "Terrorists",
+        "Sri Lanka",
+        "Polish Armed Forces in the West",
     )
 
 fun Equipment.getCountryName(country: Int): String =

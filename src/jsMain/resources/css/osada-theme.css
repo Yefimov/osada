@@ -2389,6 +2389,36 @@ hr {
     color: var(--osada-brass);
 }
 
+/* A running battle has two extra commands (Continue + Restart Mission). Keep all eight plates
+ * above the footer on short desktop/laptop screens; phone layouts own their scrolling in
+ * mobile.css and are deliberately excluded here. */
+@media (min-width: 801px) and (max-height: 780px) {
+    .smBottomCenter {
+        top: 206px;
+    }
+
+    .smCenter {
+        gap: 6px;
+    }
+
+    .smMainButton.osada-menu-btn {
+        min-height: 48px;
+    }
+
+    .osada-menu-btn__ico {
+        width: 36px;
+        height: 36px;
+    }
+
+    .osada-menu-btn__label {
+        font-size: 14px;
+    }
+
+    .osada-menu-btn__sub {
+        font-size: 10px;
+    }
+}
+
 /* Version bottom-left, social/help icons bottom-right. */
 #smCredits {
     position: fixed;
@@ -6333,11 +6363,8 @@ hr {
 }
 
 #unit-context {
-    display: flex !important;
     width: auto;
     max-width: 165px;
-    justify-content: flex-end;
-    flex-wrap: wrap;
 }
 
 .osada-action {

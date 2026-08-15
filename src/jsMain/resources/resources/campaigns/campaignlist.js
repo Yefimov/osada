@@ -52,16 +52,6 @@ var campaignlist =
   "title": "North Korea (1950-1953)"
  },
  {
-  "desc": "This is the great Soviet war campaign: a sweeping 44-operation journey through the crises, disasters, recoveries, and victories of 1939–1945. Command forces that must learn under fire—from the difficult campaigns of the pre-Barbarossa years through the catastrophic summer of 1941, the defence of the great cities, the turning points at Stalingrad and Kursk, and the immense offensives that carried the Red Army into Central Europe. You will fight with what history provides: understrength rifle formations, new tank armies, Guards units, artillery concentrations, aviation, and reserves that must be committed at the decisive moment. “Forward, Comrade!” is for players who want the broadest possible Eastern Front odyssey.",
-  "eqp": "eqp-atomic",
-  "file": "forward.json",
-  "flag": 89,
-  "deployphase": true,
-  "prestige": 2300,
-  "scenarios": 44,
-  "title": "Forward, Comrade! (1939-1945)"
- },
- {
   "desc": "A revolution can be defeated without ending its journey. Follow the German Forty-Eighters from the barricades of 1848, through exile across the Atlantic, and into the ranks of the Union Army during the American Civil War. Inspired by figures such as Franz Sigel, Friedrich Hecker, and Carl Schurz, this unusual campaign links democratic revolution in Europe with the struggle against slavery and secession in the United States. Fight street battles, survive political defeat and emigration, then rebuild your cause in a new land among German-American volunteers. Across two continents and nearly two decades, the campaign turns exile into experience—and experience into a second chance to fight for freedom.",
   "eqp": "eqp-kaiser",
   "file": "aljf.json",
@@ -110,16 +100,6 @@ var campaignlist =
   "prestige": 300,
   "scenarios": 19,
   "title": "The Defeat of Denikin (1918-1920)"
- },
- {
-  "desc": "The fate of the revolution will be decided along the rivers and railways of the East. Face the Czechoslovak Legion, Komuch, Siberian armies, Cossack hosts, and Admiral Kolchak’s dictatorship in a vast campaign stretching from the Volga and Kazan across the Urals toward Omsk, Siberia, and the Pacific. Under commanders such as Mikhail Frunze, Red forces must seize railway junctions, protect communications, and use armoured trains to carry firepower across enormous distances. The front is fluid, the climate unforgiving, and every captured station opens the next stage of the advance. Break the White armies, cross the mountains, and push the counter-revolution ever farther east.",
-  "eqp": "eqp-kaiser",
-  "file": "simpob.json",
-  "flag": 103,
-  "deployphase": false,
-  "prestige": 300,
-  "scenarios": 25,
-  "title": "Sim Pobedishi! - The Red East (1918-1920)"
  },
  {
   "desc": "Begin at Zborov, where Czechoslovak volunteers fight Austria-Hungary for the promise of national independence, and then embark on one of the strangest military odysseys of the twentieth century. After the Russian Revolution and Brest-Litovsk, the Legion’s route home runs not west but thousands of kilometres east along the Trans-Siberian Railway. Command legionnaires, captured artillery, and famous armoured trains through Chelyabinsk, the Volga, Siberian stations, Lake Baikal, and the long withdrawal to Vladivostok. Surrounded by civil war and shifting alliances, you must control the rails, preserve the force, and keep moving until an army trapped inside Russia can finally reach the sea.",
@@ -218,5 +198,35 @@ var campaignlist =
   "prestige": 500,
   "scenarios": 27,
   "title": "Soviet Counter-Offensive Campaign (1942-1946)"
+ },
+ {
+  "desc": "From the Italian invasion of 1940 and the mountain resistance against the Wehrmacht to the civil war of 1943-49. Partway through, the campaign asks you to choose your side: the Hellenic Army of the Greek government, or the Communist Party's ELAS/Democratic Army. From the LXF efile (camp6bn4).",
+  "eqp": "eqp-lxf",
+  "file": "camp6bn4.json",
+  "flag": 39,
+  "deployphase": false,
+  "prestige": 300,
+  "scenarios": 29,
+  "title": "Greece: Resistance and Civil War (1940-1949)"
+ },
+ {
+  "desc": "A Soviet World War 2 campaign from 1939 to 1945, from the Atomic efile (forward).",
+  "eqp": "eqp-atomic",
+  "file": "forward.json",
+  "flag": 89,
+  "deployphase": true,
+  "prestige": 2300,
+  "scenarios": 44,
+  "title": "Forward, Comrade! (1939-1945)"
+ },
+ {
+  "desc": "The Russian Civil War in the East, from the Volga to Vladivostok, from the Kaiser efile (simpob) — flipped to play the Red side against the anti-Bolshevik forces.",
+  "eqp": "eqp-kaiser",
+  "file": "simpob.json",
+  "flag": 100,
+  "deployphase": false,
+  "prestige": 300,
+  "scenarios": 25,
+  "title": "Sim Pobedishi! - The Red East (1918-1920)"
  }
 ]

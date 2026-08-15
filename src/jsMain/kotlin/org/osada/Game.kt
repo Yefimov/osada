@@ -31,6 +31,8 @@ class Game {
     var state: GameState? = null
     var ui: UI? = null
 
+    internal val missionRestartCheckpoint = MissionRestartCheckpoint(this)
+
     var gameStarted: Boolean = false
     var gameEnded: Boolean = false
     var waitUIAnimation: Boolean = false
@@ -149,6 +151,9 @@ class Game {
             }
             return newScenario(defaultScenario, null)
         }
+        // A checkpoint belongs to exactly one operation. Clear it before loading another one;
+        // restoreFromString does not pass through here, so restarting keeps its immutable source.
+        missionRestartCheckpoint.clear()
         cleanup()
         scenario = Scenario(file)
         scenario?.load {

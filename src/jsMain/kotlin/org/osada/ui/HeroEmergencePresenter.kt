@@ -28,7 +28,11 @@ internal object HeroEmergencePresenter {
             // box may not be in the DOM until the player dismisses the one before it, and
             // painting into a `#heroEmergencePortrait` that does not exist yet (or, worse, into
             // the PREVIOUS dialog's placeholder) is exactly what the queue exists to prevent.
-            UIBuilder.messageDynamic(I18n.t("hero.emergence.title"), body(it)) {
+            UIBuilder.messageDynamic(
+                I18n.t("hero.emergence.title"),
+                body(it),
+                dialogClass = "uiMessageBox--hero",
+            ) {
                 PortraitRenderer.render(
                     byId("heroEmergencePortrait"),
                     it.portrait,

@@ -33,6 +33,7 @@ internal object LiveLocalization {
         val buttonKeys =
             mapOf(
                 "continuegame" to "menu.main.continue",
+                "restartmission" to "menu.main.restart_mission",
                 "newcampaign" to "menu.main.new_campaign",
                 "multiplayer" to "menu.main.multiplayer",
                 "newscenario" to "menu.main.single_scenario",

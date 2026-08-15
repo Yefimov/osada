@@ -48,13 +48,14 @@ internal class EquipmentWindowButtons(
         var transport = eqUserSel.eqtransport as? Int ?: -1
         if (equnit <= 0) return
         if (transport < 0) transport = -1
-        player.buyUnit(equnit, transport)
+        if (!player.buyUnit(equnit, transport)) return
         Equipment.getEquipment(equnit)?.let { ui.updateEquipmentWindow(it.uclass) }
         // Refreshes the Reserves button's undeployed-count badge — buying grows the
         // reserve pool, but nothing else on this path calls updateStatusBar (it's
         // normally driven by turn changes / window open-close), so without this the
         // badge silently stayed stale until some unrelated event happened to refresh it.
         ui.updateStatusBar()
+        saveReserveChanges()
     }
 
     private fun onUpgrade(
@@ -71,11 +72,13 @@ internal class EquipmentWindowButtons(
             val unit = player.getCoreUnitList().getOrNull(deployUnitId)
             if (unit != null && player.upgradeUnit(unit, equnit, transport)) {
                 ui.updateEquipmentWindow(unit.unitData(true).uclass)
+                saveReserveChanges()
             }
         } else {
             if (map.upgradeUnit(userUnitId, equnit, transport)) {
                 ui.render.cacheImages { ui.render.render() }
                 if (equnit > 0) Equipment.getEquipment(equnit)?.let { ui.updateEquipmentWindow(it.uclass) }
+                saveReserveChanges()
             }
         }
     }
@@ -94,13 +97,21 @@ internal class EquipmentWindowButtons(
                 player.removeUndeployedCoreUnit(deployUnitId)
                 ui.updateEquipmentWindow(unit.unitData(true).uclass)
                 ui.updateStatusBar() // reserve pool shrank — refresh the badge, see "buy" above
+                saveReserveChanges()
             }
         } else {
             if (map.disbandUnit(userUnitId)) {
                 ui.render.cacheImages { ui.render.render() }
                 eqUserSel.userunit = -1
                 if (equnit > 0) Equipment.getEquipment(equnit)?.let { ui.updateEquipmentWindow(it.uclass) }
+                saveReserveChanges()
             }
         }
+    }
+
+    /** Purchase/refit decisions are part of deployment preparation and must survive a reload even
+     * before the player ends turn one. */
+    private fun saveReserveChanges() {
+        ui.game.state?.save()
     }
 }

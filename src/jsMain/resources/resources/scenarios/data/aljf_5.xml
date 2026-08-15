@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <map file="aljf_5.xscn" name="The Boonville Races" turns="10, 14, 20" date="June 17, 1861" dayturns="0" ground="0" atmosferic="0" latitude="16" iconset="0" weatherchg="0" rows="16" cols="24" eqp="eqp-kaiser" image="resources/maps/images/map_1401.png" eqpv="united1">
-  <player id="0" country="162" side="1" airtrans="0" navaltrans="0" support="163, 0, 0, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
-  <player id="1" country="150" side="0" airtrans="0" navaltrans="0" support="151, 0, 0, 0" turnprestige="10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10"/>
+  <player id="0" country="162" side="1" airtrans="0" navaltrans="0" support="163,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <player id="1" country="150" side="0" airtrans="0" navaltrans="0" support="151,0,0,0" turnprestige="10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10"/>
   <hex row="0" col="4" road="17"/>
   <hex row="0" col="8" terrain="5"/>
   <hex row="0" col="9" terrain="5"/>
@@ -99,7 +99,7 @@
   <hex row="6" col="3" terrain="15" road="17" name="Missouri River"/>
   <hex row="6" col="4" terrain="15" name="Missouri River"/>
   <hex row="6" col="5" terrain="1" name="Boonville">
-    <unit id="37293" owner="1" flag="151" face="0" exp="90"/>
+    <unit id="44786" owner="1" flag="151" face="0" exp="90"/>
   </hex>
   <hex row="6" col="6" terrain="15" name="Missouri River"/>
   <hex row="6" col="7" terrain="15" name="Missouri River"/>
@@ -123,10 +123,10 @@
   <hex row="7" col="2" terrain="15" name="Missouri River"/>
   <hex row="7" col="3" road="9"/>
   <hex row="7" col="4" terrain="1" name="Boonville" owner="1" flag="150" victory="1" deploy="1">
-    <unit id="37337" owner="1" flag="151" face="0" exp="40"/>
+    <unit id="44830" owner="1" flag="151" face="0" exp="40"/>
   </hex>
   <hex row="7" col="5" terrain="1" road="34" name="Boonville">
-    <unit id="37293" owner="1" flag="151" face="0" exp="80"/>
+    <unit id="44786" owner="1" flag="151" face="0" exp="80"/>
   </hex>
   <hex row="7" col="6" road="40"/>
   <hex row="7" col="7" road="136"/>
@@ -134,7 +134,7 @@
   <hex row="7" col="9" terrain="3"/>
   <hex row="7" col="10" terrain="15" name="Missouri River"/>
   <hex row="7" col="11" terrain="1" name="Camp Bacon" owner="1" flag="150" victory="1">
-    <unit id="37293" owner="1" flag="151" face="0" exp="90"/>
+    <unit id="44786" owner="1" flag="151" face="0" exp="90"/>
   </hex>
   <hex row="7" col="12" terrain="15" name="Missouri River"/>
   <hex row="7" col="13" terrain="5"/>
@@ -144,7 +144,7 @@
   <hex row="7" col="17" terrain="15" name="Missouri River"/>
   <hex row="7" col="18" terrain="15" name="Missouri River"/>
   <hex row="7" col="19" terrain="15" name="Missouri River">
-    <unit id="1231" owner="0" flag="163" face="0" exp="40"/>
+    <unit id="1600" owner="0" flag="163" face="0" exp="40"/>
   </hex>
   <hex row="7" col="20" terrain="15" name="Missouri River"/>
   <hex row="7" col="21" terrain="15" name="Missouri River"/>
@@ -154,7 +154,7 @@
   <hex row="8" col="1" terrain="3"/>
   <hex row="8" col="3" road="50"/>
   <hex row="8" col="4" terrain="1" road="162" name="Boonville">
-    <unit id="37293" owner="1" flag="151" face="0" exp="90"/>
+    <unit id="44786" owner="1" flag="151" face="0" exp="90"/>
   </hex>
   <hex row="8" col="7" terrain="5"/>
   <hex row="8" col="8" terrain="5" road="136"/>
@@ -182,12 +182,12 @@
   <hex row="9" col="8" terrain="5"/>
   <hex row="9" col="9" terrain="5"/>
   <hex row="9" col="11" terrain="5">
-    <unit id="37296" owner="1" flag="151" face="0" exp="40"/>
+    <unit id="44789" owner="1" flag="151" face="0" exp="40"/>
   </hex>
   <hex row="9" col="12" terrain="5" road="130"/>
   <hex row="9" col="13" terrain="5"/>
   <hex row="9" col="14" terrain="1" road="130" name="Adams House" owner="1" flag="150">
-    <unit id="37296" owner="1" flag="151" face="0" exp="40"/>
+    <unit id="44789" owner="1" flag="151" face="0" exp="40"/>
   </hex>
   <hex row="9" col="16" road="130"/>
   <hex row="9" col="18" road="130" deploy="0"/>
@@ -255,7 +255,7 @@
   <hex row="14" col="18" terrain="13" name="Petite Saline Creek"/>
   <hex row="14" col="19" terrain="13" name="Petite Saline Creek"/>
   <hex row="14" col="20" terrain="5">
-    <unit id="37306" owner="1" flag="151" face="0" exp="90"/>
+    <unit id="44799" owner="1" flag="151" face="0" exp="90"/>
   </hex>
   <hex row="14" col="21" terrain="13" name="Petite Saline Creek"/>
   <hex row="14" col="22" terrain="13" name="Petite Saline Creek"/>

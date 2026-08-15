@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <map file="forward35.xscn" name="Battle at the Ruhr" turns="9, 10, 11" date="July 26, 1945" dayturns="0" ground="0" atmosferic="0" latitude="6" iconset="0" weatherchg="0" rows="38" cols="44" eqp="eqp-atomic" image="resources/maps/images/map_85.png" eqpv="united1">
-  <player id="0" country="89" side="1" airtrans="0" navaltrans="0" support="8, 0, 0, 0" turnprestige="100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100"/>
-  <player id="1" country="22" side="0" airtrans="0" navaltrans="0" support="7, 10, 23, 0" turnprestige="60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60"/>
+  <player id="0" country="89" side="1" airtrans="0" navaltrans="0" support="8,0,0,0" turnprestige="100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100"/>
+  <player id="1" country="22" side="0" airtrans="0" navaltrans="0" support="7,10,23,0" turnprestige="60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60"/>
   <hex row="0" col="1" road="136"/>
   <hex row="0" col="4" road="16"/>
   <hex row="0" col="5" terrain="9" name="Rhein"/>
@@ -41,16 +41,16 @@
   <hex row="2" col="26" terrain="1" road="10" name="Gladbeck"/>
   <hex row="2" col="27" road="144"/>
   <hex row="2" col="28">
-    <unit id="19435" owner="1" flag="23" face="0" exp="232" str="9" ldr="1"/>
+    <unit id="24450" owner="1" flag="23" face="0" exp="232" str="9" ldr="1"/>
   </hex>
   <hex row="2" col="29">
-    <unit id="18866" owner="1" flag="23" face="0" exp="160"/>
+    <unit id="23739" owner="1" flag="23" face="0" exp="160"/>
   </hex>
   <hex row="2" col="32">
-    <unit id="19049" owner="1" flag="23" face="0" exp="224" str="12"/>
+    <unit id="23963" owner="1" flag="23" face="0" exp="224" str="12"/>
   </hex>
   <hex row="2" col="33" terrain="1" name="Recklinghausen">
-    <unit id="611" owner="1" flag="7" face="0" exp="176"/>
+    <unit id="839" owner="1" flag="7" face="0" exp="176"/>
   </hex>
   <hex row="2" col="34" terrain="1" name="Recklinghausen"/>
   <hex row="2" col="35" terrain="1" name="Recklinghausen"/>
@@ -62,7 +62,7 @@
   <hex row="3" col="3" road="40"/>
   <hex row="3" col="5" terrain="1" road="49"/>
   <hex row="3" col="6" terrain="10" road="136">
-    <unit id="367" owner="1" flag="7" face="0" exp="128"/>
+    <unit id="502" owner="1" flag="7" face="0" exp="128"/>
   </hex>
   <hex row="3" col="7" terrain="10" road="136"/>
   <hex row="3" col="10" terrain="6"/>
@@ -78,13 +78,13 @@
   <hex row="3" col="27" terrain="1" road="33" name="Gladbeck"/>
   <hex row="3" col="28" terrain="1" name="Gladbeck"/>
   <hex row="3" col="31">
-    <unit id="10482" owner="1" flag="10" face="0" exp="79"/>
+    <unit id="13265" owner="1" flag="10" face="0" exp="79"/>
   </hex>
   <hex row="3" col="32">
-    <unit id="27577" owner="1" flag="10" face="0" exp="163" ldr="1"/>
+    <unit id="33709" owner="1" flag="10" face="0" exp="163" ldr="1"/>
   </hex>
   <hex row="3" col="34" terrain="1" name="Recklinghausen">
-    <unit id="19132" owner="1" flag="23" face="0"/>
+    <unit id="24061" owner="1" flag="23" face="0"/>
   </hex>
   <hex row="3" col="35" terrain="1" road="18" name="Recklinghausen"/>
   <hex row="3" col="36" terrain="1" road="34" name="Recklinghausen" deploy="0"/>
@@ -115,14 +115,14 @@
   <hex row="4" col="22" terrain="1" road="136" name="Gelsenkirchen"/>
   <hex row="4" col="23" terrain="1" road="168" name="Gelsenkirchen"/>
   <hex row="4" col="24" terrain="1" name="Gladbeck" owner="1" flag="22" victory="1">
-    <unit id="461" owner="1" flag="23" face="0"/>
+    <unit id="652" owner="1" flag="23" face="0"/>
   </hex>
   <hex row="4" col="25" terrain="1" road="34" name="Gladbeck"/>
   <hex row="4" col="26" terrain="1" road="34" name="Gladbeck"/>
   <hex row="4" col="27" terrain="1" name="Gladbeck"/>
   <hex row="4" col="31" terrain="1" name="Herne"/>
   <hex row="4" col="33">
-    <unit id="611" owner="1" flag="23" face="0"/>
+    <unit id="839" owner="1" flag="23" face="0"/>
   </hex>
   <hex row="4" col="34" terrain="3"/>
   <hex row="4" col="35" terrain="1" road="17" name="Recklinghausen"/>
@@ -130,7 +130,7 @@
   <hex row="4" col="37" deploy="0"/>
   <hex row="5" col="2" terrain="3"/>
   <hex row="5" col="3" terrain="3">
-    <unit id="19763" owner="1" flag="23" face="0" exp="58" str="9"/>
+    <unit id="24854" owner="1" flag="23" face="0" exp="58" str="9"/>
   </hex>
   <hex row="5" col="4" terrain="3"/>
   <hex row="5" col="5" road="17"/>
@@ -149,10 +149,10 @@
   <hex row="5" col="22" terrain="1" road="34" name="Gelsenkirchen"/>
   <hex row="5" col="23" terrain="1" name="Gelsenkirchen"/>
   <hex row="5" col="24" terrain="1" road="146" name="Gelsenkirchen">
-    <unit id="359" owner="1" flag="23" face="0" exp="144"/>
+    <unit id="493" owner="1" flag="23" face="0" exp="144"/>
   </hex>
   <hex row="5" col="25" terrain="1" name="Gelsenkirchen">
-    <unit id="10202" owner="1" flag="10" face="0" exp="91" str="9"/>
+    <unit id="12872" owner="1" flag="10" face="0" exp="91" str="9"/>
   </hex>
   <hex row="5" col="26" terrain="1" name="Gelsenkirchen"/>
   <hex row="5" col="27" terrain="1" name="Gelsenkirchen"/>
@@ -161,17 +161,17 @@
   <hex row="5" col="32" terrain="1" name="Herne"/>
   <hex row="5" col="33" terrain="1" name="Herne"/>
   <hex row="5" col="34" terrain="1" name="Herne">
-    <unit id="362" owner="1" flag="7" face="0" exp="106"/>
+    <unit id="496" owner="1" flag="7" face="0" exp="106"/>
   </hex>
   <hex row="5" col="35" terrain="1" road="33" name="Herne"/>
   <hex row="5" col="36" terrain="1" name="Recklinghausen" deploy="0"/>
-  <hex row="5" col="38" terrain="2" owner="0" flag="89" deploy="0"/>
+  <hex row="5" col="38" terrain="2" owner="0" flag="19" deploy="0"/>
   <hex row="5" col="39" terrain="2"/>
   <hex row="6" col="2">
-    <unit id="10873" owner="1" flag="10" face="0" exp="101" str="12"/>
+    <unit id="13804" owner="1" flag="10" face="0" exp="101" str="12"/>
   </hex>
   <hex row="6" col="3">
-    <unit id="19540" owner="1" flag="23" face="0" exp="152" str="9"/>
+    <unit id="24585" owner="1" flag="23" face="0" exp="152" str="9"/>
   </hex>
   <hex row="6" col="5" terrain="1" road="17"/>
   <hex row="6" col="6" terrain="9" name="Duesseldorf"/>
@@ -192,7 +192,7 @@
   <hex row="6" col="22" terrain="1" name="Gelsenkirchen"/>
   <hex row="6" col="23" terrain="1" name="Gelsenkirchen"/>
   <hex row="6" col="24" terrain="1" road="17" name="Gelsenkirchen">
-    <unit id="611" owner="1" flag="23" face="0"/>
+    <unit id="839" owner="1" flag="23" face="0"/>
   </hex>
   <hex row="6" col="25" terrain="1" name="Gelsenkirchen"/>
   <hex row="6" col="26" terrain="1" name="Gelsenkirchen"/>
@@ -201,7 +201,7 @@
   <hex row="6" col="29" terrain="1" name="Gelsenkirchen"/>
   <hex row="6" col="31" terrain="1" name="Herne"/>
   <hex row="6" col="32" terrain="1">
-    <unit id="10044" owner="1" flag="10" face="0" exp="225" str="9"/>
+    <unit id="12640" owner="1" flag="10" face="0" exp="225" str="9"/>
   </hex>
   <hex row="6" col="33" terrain="1" road="34" name="Herne"/>
   <hex row="6" col="34" terrain="1" road="34" name="Herne"/>
@@ -219,7 +219,7 @@
   <hex row="7" col="14" terrain="1" road="136" name="Oberhausen"/>
   <hex row="7" col="15" terrain="1" road="136" name="Oberhausen"/>
   <hex row="7" col="16" terrain="1" name="Dinslaken" owner="1" flag="22" victory="1">
-    <unit id="443" owner="1" flag="23" face="0"/>
+    <unit id="618" owner="1" flag="23" face="0"/>
   </hex>
   <hex row="7" col="17" terrain="1" name="Bottrop"/>
   <hex row="7" col="18" terrain="1" name="Bottrop"/>
@@ -231,18 +231,18 @@
   <hex row="7" col="24" terrain="1" road="17" name="Gelsenkirchen"/>
   <hex row="7" col="25" terrain="1" name="Gelsenkirchen"/>
   <hex row="7" col="26" terrain="1" name="Gelsenkirchen" owner="1" flag="22" victory="1">
-    <unit id="443" owner="1" flag="23" face="0"/>
+    <unit id="618" owner="1" flag="23" face="0"/>
   </hex>
   <hex row="7" col="27" terrain="1" name="Gelsenkirchen"/>
   <hex row="7" col="28" terrain="1" name="Gelsenkirchen"/>
   <hex row="7" col="29" terrain="1" name="Gelsenkirchen"/>
   <hex row="7" col="30" terrain="1" name="Gelsenkirchen"/>
   <hex row="7" col="31" terrain="1" name="Herne">
-    <unit id="5657" owner="1" flag="7" face="0" exp="180" str="9"/>
+    <unit id="6914" owner="1" flag="7" face="0" exp="180" str="9"/>
   </hex>
   <hex row="7" col="32" terrain="1" road="18" name="Herne"/>
   <hex row="7" col="33" terrain="1" name="Herne">
-    <unit id="611" owner="1" flag="23" face="0"/>
+    <unit id="839" owner="1" flag="23" face="0"/>
   </hex>
   <hex row="7" col="34" terrain="1" name="Herne" deploy="0"/>
   <hex row="7" col="35" deploy="0"/>
@@ -266,27 +266,27 @@
   <hex row="8" col="18" terrain="1" road="40" name="Oberhausen"/>
   <hex row="8" col="19" terrain="1" road="130" name="Bottrop"/>
   <hex row="8" col="20" terrain="1" road="40" name="Bottrop">
-    <unit id="367" owner="1" flag="23" face="0"/>
+    <unit id="502" owner="1" flag="23" face="0"/>
   </hex>
   <hex row="8" col="21" terrain="1" road="130" name="Bottrop"/>
   <hex row="8" col="22" terrain="1" road="40" name="Oberhausen"/>
   <hex row="8" col="23" terrain="1" road="130" name="Oberhausen" owner="1" flag="22" victory="1">
-    <unit id="461" owner="1" flag="23" face="0"/>
+    <unit id="652" owner="1" flag="23" face="0"/>
   </hex>
   <hex row="8" col="24" terrain="1" road="57" name="Essen"/>
   <hex row="8" col="25" terrain="1" road="130" name="Essen"/>
   <hex row="8" col="26" terrain="1" road="40" name="Essen"/>
   <hex row="8" col="27" terrain="1" road="130" name="Gelsenkirchen"/>
   <hex row="8" col="28" terrain="1" road="40" name="Gelsenkirchen">
-    <unit id="18838" owner="1" flag="23" face="0" exp="126" str="9"/>
+    <unit id="23711" owner="1" flag="23" face="0" exp="126" str="9"/>
   </hex>
   <hex row="8" col="29" terrain="1" road="130" name="Gelsenkirchen"/>
   <hex row="8" col="30" terrain="1" road="56" name="Gelsenkirchen">
-    <unit id="18495" owner="1" flag="23" face="0" transport="19217" exp="88" str="9"/>
+    <unit id="23208" owner="1" flag="23" face="0" transport="24173" exp="88" str="9"/>
   </hex>
   <hex row="8" col="31" terrain="1" road="130" name="Gelsenkirchen"/>
   <hex row="8" col="32" terrain="1" road="33" name="Herne">
-    <unit id="1789" owner="1" flag="23" face="0" transport="19154" exp="152"/>
+    <unit id="2221" owner="1" flag="23" face="0" transport="24092" exp="152"/>
   </hex>
   <hex row="8" col="33" terrain="1" name="Herne"/>
   <hex row="8" col="34" terrain="1" name="Herne"/>
@@ -295,12 +295,12 @@
   <hex row="8" col="37" terrain="1" name="Dortmund" deploy="0"/>
   <hex row="8" col="38" terrain="1" name="Dortmund"/>
   <hex row="8" col="39" name="Dortmund"/>
-  <hex row="8" col="41" terrain="1" name="Velbert" owner="0" flag="89" victory="0" deploy="0"/>
+  <hex row="8" col="41" terrain="1" name="Velbert" owner="0" flag="19" victory="0" deploy="0"/>
   <hex row="8" col="42" terrain="1" name="Velbert"/>
   <hex row="9" col="0" road="136"/>
   <hex row="9" col="1" road="136"/>
   <hex row="9" col="2" road="18">
-    <unit id="19671" owner="1" flag="23" face="0" exp="104" str="9"/>
+    <unit id="24742" owner="1" flag="23" face="0" exp="104" str="9"/>
   </hex>
   <hex row="9" col="4" terrain="5"/>
   <hex row="9" col="5" terrain="5"/>
@@ -321,7 +321,7 @@
   <hex row="9" col="20" terrain="1" name="Oberhausen"/>
   <hex row="9" col="21" terrain="1" name="Oberhausen"/>
   <hex row="9" col="22" terrain="1" name="Oberhausen">
-    <unit id="10473" owner="1" flag="10" face="0" exp="111" str="9"/>
+    <unit id="13256" owner="1" flag="10" face="0" exp="111" str="9"/>
   </hex>
   <hex row="9" col="23" terrain="1" name="Essen"/>
   <hex row="9" col="24" terrain="1" road="17" name="Essen"/>
@@ -331,17 +331,17 @@
   <hex row="9" col="28" terrain="1" name="Gelsenkirchen"/>
   <hex row="9" col="29" terrain="1" name="Gelsenkirchen"/>
   <hex row="9" col="30" terrain="1" road="17" name="Gelsenkirchen" owner="1" flag="22" victory="1">
-    <unit id="461" owner="1" flag="23" face="0"/>
+    <unit id="652" owner="1" flag="23" face="0"/>
   </hex>
   <hex row="9" col="31" terrain="1" name="Gelsenkirchen">
-    <unit id="19362" owner="1" flag="23" face="0" exp="107" str="9"/>
+    <unit id="24360" owner="1" flag="23" face="0" exp="107" str="9"/>
   </hex>
   <hex row="9" col="32" terrain="1" name="Bochum">
-    <unit id="5250" owner="1" flag="7" face="0" exp="135" str="11"/>
+    <unit id="6432" owner="1" flag="7" face="0" exp="135" str="11"/>
   </hex>
   <hex row="9" col="33" terrain="1" name="Bochum"/>
   <hex row="9" col="34" terrain="1" name="Bochum">
-    <unit id="367" owner="1" flag="23" face="0"/>
+    <unit id="502" owner="1" flag="23" face="0"/>
   </hex>
   <hex row="9" col="35" terrain="1" name="Dortmund" deploy="0"/>
   <hex row="9" col="36" terrain="1" name="Dortmund" deploy="0"/>
@@ -351,7 +351,7 @@
   <hex row="9" col="40" terrain="1" name="Velbert" deploy="0"/>
   <hex row="9" col="42" terrain="1" name="Velbert"/>
   <hex row="10" col="2" road="137">
-    <unit id="11033" owner="1" flag="10" face="0" exp="109"/>
+    <unit id="14028" owner="1" flag="10" face="0" exp="109"/>
   </hex>
   <hex row="10" col="3" road="136"/>
   <hex row="10" col="6" terrain="5"/>
@@ -378,7 +378,7 @@
   <hex row="10" col="30" terrain="1" road="17" name="Bochum"/>
   <hex row="10" col="31" terrain="1" name="Bochum"/>
   <hex row="10" col="32" terrain="1" name="Bochum">
-    <unit id="9889" owner="1" flag="10" face="0" exp="224"/>
+    <unit id="12412" owner="1" flag="10" face="0" exp="224"/>
   </hex>
   <hex row="10" col="33" terrain="1" name="Bochum"/>
   <hex row="10" col="34" terrain="1" name="Bochum"/>
@@ -397,7 +397,7 @@
   <hex row="11" col="14" terrain="1" name="Duisburg"/>
   <hex row="11" col="15" terrain="1" name="Muehlheim an der Ruhr"/>
   <hex row="11" col="16" terrain="1" name="Muehlheim an der Ruhr" owner="1" flag="22" victory="1">
-    <unit id="443" owner="1" flag="23" face="0"/>
+    <unit id="618" owner="1" flag="23" face="0"/>
   </hex>
   <hex row="11" col="17" terrain="1" road="19" name="Muehlheim an der Ruhr"/>
   <hex row="11" col="18" terrain="1" road="40" name="Muehlheim an der Ruhr"/>
@@ -414,14 +414,14 @@
   <hex row="11" col="29" terrain="1" name="Essen"/>
   <hex row="11" col="30" terrain="1" road="17" name="Bochum"/>
   <hex row="11" col="31" terrain="1" road="40" name="Bochum">
-    <unit id="18495" owner="1" flag="23" face="0" exp="244" str="9" ldr="1"/>
+    <unit id="23208" owner="1" flag="23" face="0" exp="244" str="9" ldr="1"/>
   </hex>
   <hex row="11" col="32" terrain="1" name="Bochum">
-    <unit id="18459" owner="1" flag="23" face="0" exp="60" str="9"/>
+    <unit id="23150" owner="1" flag="23" face="0" exp="60" str="9"/>
   </hex>
   <hex row="11" col="33" terrain="1" name="Bochum"/>
   <hex row="11" col="34" terrain="1" name="Bochum">
-    <unit id="19130" owner="1" flag="23" face="0"/>
+    <unit id="24059" owner="1" flag="23" face="0"/>
   </hex>
   <hex row="11" col="35" terrain="1" name="Bochum"/>
   <hex row="11" col="36" terrain="1" name="Bochum"/>
@@ -459,7 +459,7 @@
   <hex row="12" col="31" terrain="1" name="Bochum"/>
   <hex row="12" col="32" terrain="1" road="136" name="Bochum"/>
   <hex row="12" col="33" terrain="1" road="130" name="Bochum">
-    <unit id="492" owner="1" flag="23" face="0" exp="144"/>
+    <unit id="697" owner="1" flag="23" face="0" exp="144"/>
   </hex>
   <hex row="12" col="34" terrain="1" road="40" name="Bochum"/>
   <hex row="12" col="35" terrain="1" road="136" name="Bochum"/>
@@ -484,7 +484,7 @@
   <hex row="13" col="16" terrain="1" road="34" name="Muehlheim an der Ruhr"/>
   <hex row="13" col="17" road="17"/>
   <hex row="13" col="18">
-    <unit id="10187" owner="1" flag="10" face="0" exp="74" str="12"/>
+    <unit id="12847" owner="1" flag="10" face="0" exp="74" str="12"/>
   </hex>
   <hex row="13" col="20" terrain="1" name="Muehlheim an der Ruhr"/>
   <hex row="13" col="21" road="18"/>
@@ -496,10 +496,10 @@
   <hex row="13" col="30" terrain="1" road="17" name="Essen"/>
   <hex row="13" col="31" terrain="1" name="Bochum"/>
   <hex row="13" col="32" terrain="1" name="Bochum">
-    <unit id="18887" owner="1" flag="23" face="0" exp="131" str="9"/>
+    <unit id="23766" owner="1" flag="23" face="0" exp="131" str="9"/>
   </hex>
   <hex row="13" col="34" terrain="1" name="Bochum">
-    <unit id="611" owner="1" flag="7" face="0" exp="121"/>
+    <unit id="839" owner="1" flag="7" face="0" exp="121"/>
   </hex>
   <hex row="13" col="35" terrain="1" name="Bochum"/>
   <hex row="13" col="36" terrain="1" road="130" name="Bochum"/>
@@ -514,7 +514,7 @@
   <hex row="14" col="7" terrain="10"/>
   <hex row="14" col="8" terrain="9" name="Rhein"/>
   <hex row="14" col="12" terrain="9" name="Ruhr">
-    <unit id="10828" owner="1" flag="10" face="0" exp="50"/>
+    <unit id="13741" owner="1" flag="10" face="0" exp="50"/>
   </hex>
   <hex row="14" col="13" terrain="10"/>
   <hex row="14" col="14" road="34"/>
@@ -547,7 +547,7 @@
   <hex row="15" col="13" terrain="15" name="Ruhr"/>
   <hex row="15" col="17" road="17"/>
   <hex row="15" col="19" terrain="2" owner="1" flag="22">
-    <unit id="10178" owner="1" flag="10" face="0" transport="10375" exp="186" str="9" ldr="1"/>
+    <unit id="12816" owner="1" flag="10" face="0" transport="13099" exp="186" str="9" ldr="1"/>
   </hex>
   <hex row="15" col="20" terrain="2"/>
   <hex row="15" col="22" terrain="15" name="Ruhr"/>
@@ -623,7 +623,7 @@
   <hex row="19" col="23" road="18"/>
   <hex row="19" col="24" road="34"/>
   <hex row="19" col="27">
-    <unit id="18746" owner="1" flag="23" face="0" exp="172" str="9"/>
+    <unit id="23568" owner="1" flag="23" face="0" exp="172" str="9"/>
   </hex>
   <hex row="19" col="33" road="34"/>
   <hex row="19" col="34" road="40"/>
@@ -644,10 +644,10 @@
   <hex row="20" col="19" road="17"/>
   <hex row="20" col="23" road="33"/>
   <hex row="20" col="26">
-    <unit id="10534" owner="1" flag="10" face="0" exp="62"/>
+    <unit id="13343" owner="1" flag="10" face="0" exp="62"/>
   </hex>
   <hex row="20" col="27" terrain="2">
-    <unit id="10575" owner="1" flag="10" face="0" transport="10301" exp="204" str="11" ldr="1"/>
+    <unit id="13404" owner="1" flag="10" face="0" transport="13006" exp="204" str="11" ldr="1"/>
   </hex>
   <hex row="20" col="31" road="42"/>
   <hex row="20" col="32" road="34"/>
@@ -667,10 +667,10 @@
   <hex row="21" col="23" terrain="3"/>
   <hex row="21" col="25" terrain="2"/>
   <hex row="21" col="26" terrain="2" owner="1" flag="22">
-    <unit id="507" owner="1" flag="23" face="0" exp="144" ldr="1"/>
+    <unit id="717" owner="1" flag="23" face="0" exp="144" ldr="1"/>
   </hex>
   <hex row="21" col="27">
-    <unit id="362" owner="1" flag="7" face="0" exp="106"/>
+    <unit id="496" owner="1" flag="7" face="0" exp="106"/>
   </hex>
   <hex row="21" col="29" road="34"/>
   <hex row="21" col="30" road="34"/>
@@ -717,23 +717,23 @@
   <hex row="23" col="19" road="59"/>
   <hex row="23" col="20" road="34"/>
   <hex row="23" col="23" terrain="1" name="Velbert">
-    <unit id="5595" owner="1" flag="7" face="0" exp="153" str="9"/>
+    <unit id="6839" owner="1" flag="7" face="0" exp="153" str="9"/>
   </hex>
   <hex row="23" col="24">
-    <unit id="18733" owner="1" flag="23" face="0" exp="231" ldr="1"/>
+    <unit id="23555" owner="1" flag="23" face="0" exp="231" ldr="1"/>
   </hex>
   <hex row="23" col="25" terrain="1" road="34" name="Velbert"/>
   <hex row="23" col="26" road="34"/>
   <hex row="23" col="28">
-    <unit id="18771" owner="1" flag="23" face="0" exp="35" str="11"/>
+    <unit id="23603" owner="1" flag="23" face="0" exp="35" str="11"/>
   </hex>
   <hex row="23" col="35">
-    <unit id="7475" owner="0" flag="8" face="0" exp="243" str="5"/>
+    <unit id="9342" owner="0" flag="8" face="0" exp="243" str="5"/>
   </hex>
   <hex row="23" col="36" deploy="0"/>
   <hex row="23" col="37" deploy="0"/>
   <hex row="23" col="38">
-    <unit id="8402" owner="0" flag="8" face="0" exp="243" str="6"/>
+    <unit id="10676" owner="0" flag="8" face="0" exp="243" str="6"/>
   </hex>
   <hex row="23" col="42" road="146"/>
   <hex row="24" col="6" road="17"/>
@@ -750,15 +750,15 @@
   <hex row="24" col="21" road="130"/>
   <hex row="24" col="22" road="56"/>
   <hex row="24" col="23" terrain="1" road="162" name="Velbert">
-    <unit id="5682" owner="1" flag="7" face="0" transport="5407" exp="171" str="9"/>
+    <unit id="6946" owner="1" flag="7" face="0" transport="6617" exp="171" str="9"/>
   </hex>
   <hex row="24" col="24" terrain="1" road="34" name="Velbert" owner="1" flag="22" victory="1">
-    <unit id="18634" owner="1" flag="23" face="0" exp="240" str="12"/>
+    <unit id="23383" owner="1" flag="23" face="0" exp="240" str="12"/>
   </hex>
   <hex row="24" col="25" terrain="1" name="Velbert"/>
   <hex row="24" col="26" terrain="3"/>
   <hex row="24" col="27">
-    <unit id="10024" owner="1" flag="10" face="0" exp="79" str="12"/>
+    <unit id="12610" owner="1" flag="10" face="0" exp="79" str="12"/>
   </hex>
   <hex row="24" col="36" deploy="0"/>
   <hex row="24" col="37" deploy="0"/>
@@ -800,7 +800,7 @@
   <hex row="26" col="42" road="17"/>
   <hex row="27" col="4" terrain="1" road="146" name="Wuppertal"/>
   <hex row="27" col="5" terrain="1" name="Wuppertal" owner="1" flag="22" victory="1">
-    <unit id="1805" owner="1" flag="23" face="0" exp="58" str="9"/>
+    <unit id="2237" owner="1" flag="23" face="0" exp="58" str="9"/>
   </hex>
   <hex row="27" col="7" terrain="9" name="Rhein"/>
   <hex row="27" col="8" terrain="9" name="Rhein"/>
@@ -808,7 +808,7 @@
   <hex row="27" col="12" terrain="1" name="Angermund"/>
   <hex row="27" col="15" road="34"/>
   <hex row="27" col="16" road="34">
-    <unit id="18817" owner="1" flag="23" face="0" exp="170"/>
+    <unit id="23684" owner="1" flag="23" face="0" exp="170"/>
   </hex>
   <hex row="27" col="20" road="18"/>
   <hex row="27" col="23" terrain="5"/>
@@ -831,7 +831,7 @@
   <hex row="28" col="13" road="34"/>
   <hex row="28" col="14" road="34"/>
   <hex row="28" col="16">
-    <unit id="18836" owner="1" flag="23" face="0" exp="170"/>
+    <unit id="23706" owner="1" flag="23" face="0" exp="170"/>
   </hex>
   <hex row="28" col="19" road="34"/>
   <hex row="28" col="20" road="33"/>
@@ -968,7 +968,7 @@
   <hex row="33" col="33" terrain="10" name="Wupper"/>
   <hex row="33" col="34" terrain="10" name="Wupper"/>
   <hex row="33" col="35" terrain="5" road="34">
-    <unit id="623" owner="1" flag="23" face="0"/>
+    <unit id="857" owner="1" flag="23" face="0"/>
   </hex>
   <hex row="33" col="36" terrain="10" road="34" name="Wupper"/>
   <hex row="33" col="37" terrain="5"/>
@@ -986,7 +986,7 @@
   <hex row="34" col="7" terrain="9" name="Rhein"/>
   <hex row="34" col="8" terrain="9" name="Rhein"/>
   <hex row="34" col="10" terrain="2" owner="1" flag="22" victory="1">
-    <unit id="18840" owner="1" flag="23" face="0" exp="138" str="9"/>
+    <unit id="23713" owner="1" flag="23" face="0" exp="138" str="9"/>
   </hex>
   <hex row="34" col="11" terrain="2"/>
   <hex row="34" col="12" road="19"/>
@@ -1001,7 +1001,7 @@
   <hex row="34" col="31" terrain="10" name="Wupper"/>
   <hex row="34" col="32" terrain="10" name="Wupper"/>
   <hex row="34" col="33" terrain="5" road="34">
-    <unit id="367" owner="1" flag="23" face="0"/>
+    <unit id="502" owner="1" flag="23" face="0"/>
   </hex>
   <hex row="34" col="34" terrain="5" road="34"/>
   <hex row="34" col="35" terrain="5"/>
@@ -1022,7 +1022,7 @@
   <hex row="35" col="12" road="17"/>
   <hex row="35" col="18" road="136"/>
   <hex row="35" col="19" road="136">
-    <unit id="19020" owner="1" flag="23" face="0" exp="7"/>
+    <unit id="23928" owner="1" flag="23" face="0" exp="7"/>
   </hex>
   <hex row="35" col="20" terrain="1" name="Mettmann"/>
   <hex row="35" col="21" terrain="1" road="40" name="Mettmann"/>
@@ -1053,7 +1053,7 @@
   <hex row="36" col="10" terrain="1" name="Duesseldorf"/>
   <hex row="36" col="11" terrain="1" name="Duesseldorf"/>
   <hex row="36" col="12" terrain="1" road="17" name="Duesseldorf">
-    <unit id="551" owner="1" flag="23" face="0" exp="44"/>
+    <unit id="775" owner="1" flag="23" face="0" exp="44"/>
   </hex>
   <hex row="36" col="13" road="40"/>
   <hex row="36" col="15" road="40"/>
@@ -1066,10 +1066,10 @@
   <hex row="36" col="27" terrain="10" name="Wupper"/>
   <hex row="36" col="28" terrain="10" name="Wupper"/>
   <hex row="36" col="29" terrain="1" road="34" name="Wuppertal">
-    <unit id="19315" owner="1" flag="23" face="0" exp="148" str="9"/>
+    <unit id="24289" owner="1" flag="23" face="0" exp="148" str="9"/>
   </hex>
   <hex row="36" col="30" terrain="1" road="34" name="Wuppertal" owner="1" flag="22" victory="1">
-    <unit id="4692" owner="1" flag="7" face="0" exp="173" str="9"/>
+    <unit id="5786" owner="1" flag="7" face="0" exp="173" str="9"/>
   </hex>
   <hex row="36" col="31" terrain="5"/>
   <hex row="36" col="32" terrain="5"/>
@@ -1093,10 +1093,10 @@
   <hex row="37" col="9" terrain="10" road="136"/>
   <hex row="37" col="10" terrain="12" name="Duesseldorf"/>
   <hex row="37" col="11" terrain="1" road="34" name="Duesseldorf">
-    <unit id="19320" owner="1" flag="23" face="0" transport="19224" exp="138"/>
+    <unit id="24295" owner="1" flag="23" face="0" transport="24181" exp="138"/>
   </hex>
   <hex row="37" col="12" terrain="1" road="35" name="Duesseldorf" owner="1" flag="22" victory="1">
-    <unit id="18450" owner="1" flag="23" face="0" transport="19221" exp="140" str="9"/>
+    <unit id="23141" owner="1" flag="23" face="0" transport="24178" exp="140" str="9"/>
   </hex>
   <hex row="37" col="13" terrain="1"/>
   <hex row="37" col="14" road="130"/>

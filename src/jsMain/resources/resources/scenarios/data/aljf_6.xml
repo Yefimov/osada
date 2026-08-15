@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <map file="aljf_6.xscn" name="Flank them at Wilson&#x27;s Creek" turns="6, 8, 16" date="August 10, 1861" dayturns="0" ground="0" atmosferic="0" latitude="15" iconset="0" weatherchg="0" rows="38" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_1409.png" eqpv="united1">
-  <player id="0" country="162" side="1" airtrans="0" navaltrans="0" support="163, 0, 0, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
-  <player id="1" country="150" side="0" airtrans="0" navaltrans="0" support="151, 0, 0, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <player id="0" country="162" side="1" airtrans="0" navaltrans="0" support="163,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <player id="1" country="150" side="0" airtrans="0" navaltrans="0" support="151,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <hex row="0" col="8" terrain="3"/>
   <hex row="0" col="9" terrain="3"/>
   <hex row="0" col="10" terrain="3"/>
@@ -209,10 +209,10 @@
   <hex row="12" col="25" terrain="3"/>
   <hex row="12" col="26" road="9"/>
   <hex row="12" col="27" terrain="5" road="136">
-    <unit id="38438" owner="0" flag="163" face="0" exp="84"/>
+    <unit id="45962" owner="0" flag="163" face="0" exp="84"/>
   </hex>
   <hex row="12" col="28" terrain="5">
-    <unit id="38447" owner="0" flag="163" face="0" exp="95"/>
+    <unit id="45971" owner="0" flag="163" face="0" exp="95"/>
   </hex>
   <hex row="12" col="29" terrain="10" name="Wilson&#x27;s Creek"/>
   <hex row="12" col="30" terrain="10" name="Wilson&#x27;s Creek"/>
@@ -266,7 +266,7 @@
   <hex row="15" col="25" terrain="5"/>
   <hex row="15" col="26" terrain="10" name="Wilson&#x27;s Creek"/>
   <hex row="15" col="27" terrain="1" road="18" name="Gibson&#x27;s Farm and Mill" owner="1" flag="150">
-    <unit id="37308" owner="1" flag="151" face="0" exp="109"/>
+    <unit id="44801" owner="1" flag="151" face="0" exp="109"/>
   </hex>
   <hex row="15" col="28" road="34"/>
   <hex row="15" col="31" terrain="5"/>
@@ -277,16 +277,16 @@
   <hex row="16" col="8" road="34"/>
   <hex row="16" col="15" terrain="3"/>
   <hex row="16" col="22">
-    <unit id="38483" owner="0" flag="163" face="0" transport="38469" exp="95"/>
+    <unit id="46007" owner="0" flag="163" face="0" transport="45993" exp="95"/>
   </hex>
   <hex row="16" col="23" terrain="3">
-    <unit id="38447" owner="0" flag="163" face="0" exp="73"/>
+    <unit id="45971" owner="0" flag="163" face="0" exp="73"/>
   </hex>
   <hex row="16" col="24" terrain="3"/>
   <hex row="16" col="25" terrain="5"/>
   <hex row="16" col="26" terrain="10" name="Wilson&#x27;s Creek"/>
   <hex row="16" col="27" terrain="1" road="9" name="Confederate Camp" owner="1" flag="150">
-    <unit id="37294" owner="1" flag="151" face="0" exp="116"/>
+    <unit id="44787" owner="1" flag="151" face="0" exp="116"/>
   </hex>
   <hex row="16" col="31" terrain="5"/>
   <hex row="16" col="36" terrain="3"/>
@@ -296,10 +296,10 @@
   <hex row="17" col="6" road="34"/>
   <hex row="17" col="11" terrain="3"/>
   <hex row="17" col="21">
-    <unit id="38485" owner="0" flag="163" face="0" transport="38469" exp="61"/>
+    <unit id="46009" owner="0" flag="163" face="0" transport="45993" exp="61"/>
   </hex>
   <hex row="17" col="22">
-    <unit id="38439" owner="0" flag="163" face="0" exp="61"/>
+    <unit id="45963" owner="0" flag="163" face="0" exp="61"/>
   </hex>
   <hex row="17" col="24" terrain="3"/>
   <hex row="17" col="25" terrain="5"/>
@@ -321,21 +321,21 @@
   <hex row="18" col="7" terrain="3"/>
   <hex row="18" col="8" terrain="3"/>
   <hex row="18" col="21">
-    <unit id="38439" owner="0" flag="163" face="0" exp="120"/>
+    <unit id="45963" owner="0" flag="163" face="0" exp="120"/>
   </hex>
   <hex row="18" col="22">
-    <unit id="38453" owner="0" flag="163" face="0" exp="85"/>
+    <unit id="45977" owner="0" flag="163" face="0" exp="85"/>
   </hex>
   <hex row="18" col="25" terrain="1" name="Confederate Camp" owner="1" flag="150" victory="1">
-    <unit id="37294" owner="1" flag="151" face="0" exp="113"/>
+    <unit id="44787" owner="1" flag="151" face="0" exp="113"/>
   </hex>
   <hex row="18" col="26" terrain="5">
-    <unit id="37293" owner="1" flag="151" face="0" exp="74"/>
+    <unit id="44786" owner="1" flag="151" face="0" exp="74"/>
   </hex>
   <hex row="18" col="27" terrain="10" name="Wilson&#x27;s Creek"/>
   <hex row="18" col="28" road="17"/>
   <hex row="18" col="30" terrain="3">
-    <unit id="37293" owner="1" flag="151" face="0" exp="83"/>
+    <unit id="44786" owner="1" flag="151" face="0" exp="83"/>
   </hex>
   <hex row="18" col="31" terrain="3"/>
   <hex row="18" col="32" terrain="5"/>
@@ -361,18 +361,18 @@
   <hex row="19" col="20" deploy="0"/>
   <hex row="19" col="21" deploy="0"/>
   <hex row="19" col="22">
-    <unit id="38449" owner="0" flag="163" face="0" exp="97"/>
+    <unit id="45973" owner="0" flag="163" face="0" exp="97"/>
   </hex>
   <hex row="19" col="25" terrain="5">
-    <unit id="37294" owner="1" flag="151" face="0" exp="75"/>
+    <unit id="44787" owner="1" flag="151" face="0" exp="75"/>
   </hex>
   <hex row="19" col="26" terrain="5">
-    <unit id="37293" owner="1" flag="151" face="0" exp="91"/>
+    <unit id="44786" owner="1" flag="151" face="0" exp="91"/>
   </hex>
   <hex row="19" col="27" terrain="10" name="Wilson&#x27;s Creek"/>
   <hex row="19" col="28" road="9"/>
   <hex row="19" col="29" terrain="1" road="136" name="Confederate Camp" owner="1" flag="150">
-    <unit id="37294" owner="1" flag="151" face="0" exp="62"/>
+    <unit id="44787" owner="1" flag="151" face="0" exp="62"/>
   </hex>
   <hex row="19" col="31" terrain="13"/>
   <hex row="19" col="32" terrain="13"/>
@@ -402,23 +402,23 @@
   <hex row="20" col="18" terrain="3"/>
   <hex row="20" col="19" terrain="3" deploy="0"/>
   <hex row="20" col="20" terrain="3">
-    <unit id="38439" owner="0" flag="163" face="0" exp="90"/>
+    <unit id="45963" owner="0" flag="163" face="0" exp="90"/>
   </hex>
   <hex row="20" col="21">
-    <unit id="38434" owner="0" flag="163" face="0" transport="38463" exp="163"/>
+    <unit id="45958" owner="0" flag="163" face="0" transport="45987" exp="163"/>
   </hex>
   <hex row="20" col="23" terrain="3"/>
   <hex row="20" col="25" terrain="5">
-    <unit id="37294" owner="1" flag="151" face="0" exp="118"/>
+    <unit id="44787" owner="1" flag="151" face="0" exp="118"/>
   </hex>
   <hex row="20" col="26" terrain="5">
-    <unit id="37333" owner="1" flag="151" face="0" transport="37321" exp="112"/>
+    <unit id="44826" owner="1" flag="151" face="0" transport="44814" exp="112"/>
   </hex>
   <hex row="20" col="27" terrain="10" name="Wilson&#x27;s Creek"/>
   <hex row="20" col="29" terrain="13"/>
   <hex row="20" col="30" terrain="13" road="136"/>
   <hex row="20" col="31" road="162">
-    <unit id="37334" owner="1" flag="151" face="0" transport="37317" exp="86"/>
+    <unit id="44827" owner="1" flag="151" face="0" transport="44810" exp="86"/>
   </hex>
   <hex row="20" col="32" road="34"/>
   <hex row="20" col="33" terrain="5"/>
@@ -449,16 +449,16 @@
   <hex row="21" col="20" terrain="5" deploy="0"/>
   <hex row="21" col="21" terrain="3"/>
   <hex row="21" col="23">
-    <unit id="37294" owner="1" flag="151" face="0" exp="119"/>
+    <unit id="44787" owner="1" flag="151" face="0" exp="119"/>
   </hex>
   <hex row="21" col="24" terrain="3">
-    <unit id="37294" owner="1" flag="151" face="0" exp="88"/>
+    <unit id="44787" owner="1" flag="151" face="0" exp="88"/>
   </hex>
   <hex row="21" col="25">
-    <unit id="37291" owner="1" flag="151" face="0" transport="37315" exp="165"/>
+    <unit id="44784" owner="1" flag="151" face="0" transport="44808" exp="165"/>
   </hex>
   <hex row="21" col="26" terrain="5">
-    <unit id="37307" owner="1" flag="151" face="0" exp="89"/>
+    <unit id="44800" owner="1" flag="151" face="0" exp="89"/>
   </hex>
   <hex row="21" col="27" terrain="5"/>
   <hex row="21" col="28" terrain="10" name="Wilson&#x27;s Creek"/>
@@ -486,10 +486,10 @@
   <hex row="22" col="21" terrain="5"/>
   <hex row="22" col="22" terrain="5"/>
   <hex row="22" col="23" terrain="5">
-    <unit id="37294" owner="1" flag="151" face="0" exp="67"/>
+    <unit id="44787" owner="1" flag="151" face="0" exp="67"/>
   </hex>
   <hex row="22" col="24">
-    <unit id="37303" owner="1" flag="151" face="0" exp="98"/>
+    <unit id="44796" owner="1" flag="151" face="0" exp="98"/>
   </hex>
   <hex row="22" col="25" terrain="3"/>
   <hex row="22" col="27" terrain="3"/>
@@ -515,10 +515,10 @@
   <hex row="23" col="20" terrain="13" name="Skegg&#x27;s Branch"/>
   <hex row="23" col="21" terrain="13" name="Skegg&#x27;s Branch"/>
   <hex row="23" col="22" terrain="5">
-    <unit id="37294" owner="1" flag="151" face="0" exp="75"/>
+    <unit id="44787" owner="1" flag="151" face="0" exp="75"/>
   </hex>
   <hex row="23" col="23" terrain="5">
-    <unit id="37293" owner="1" flag="151" face="0" exp="83"/>
+    <unit id="44786" owner="1" flag="151" face="0" exp="83"/>
   </hex>
   <hex row="23" col="24" terrain="5"/>
   <hex row="23" col="25" terrain="5"/>
@@ -606,7 +606,7 @@
   <hex row="26" col="26" terrain="13" road="17" name="Skegg&#x27;s Branch"/>
   <hex row="26" col="27" terrain="10" name="Wilson&#x27;s Creek"/>
   <hex row="26" col="28" terrain="1" name="Confederate Camp" owner="1" flag="150">
-    <unit id="37334" owner="1" flag="151" face="0" transport="37317" exp="119"/>
+    <unit id="44827" owner="1" flag="151" face="0" transport="44810" exp="119"/>
   </hex>
   <hex row="26" col="29" terrain="5"/>
   <hex row="26" col="30" terrain="5"/>
@@ -625,7 +625,7 @@
   <hex row="27" col="19" terrain="3"/>
   <hex row="27" col="25" terrain="3" road="34"/>
   <hex row="27" col="26" terrain="1" road="41" name="Sharp&#x27;s Farm" owner="1" flag="150" victory="1">
-    <unit id="37294" owner="1" flag="151" face="0" exp="87"/>
+    <unit id="44787" owner="1" flag="151" face="0" exp="87"/>
   </hex>
   <hex row="27" col="27" road="144"/>
   <hex row="27" col="28" terrain="10" name="Wilson&#x27;s Creek"/>
@@ -687,7 +687,7 @@
   <hex row="30" col="26" terrain="3"/>
   <hex row="30" col="27" terrain="5"/>
   <hex row="30" col="28" road="17">
-    <unit id="37332" owner="1" flag="151" face="0" transport="37321" exp="109"/>
+    <unit id="44825" owner="1" flag="151" face="0" transport="44814" exp="109"/>
   </hex>
   <hex row="30" col="29" terrain="10" name="Wilson&#x27;s Creek"/>
   <hex row="30" col="32" terrain="5"/>
@@ -718,7 +718,7 @@
   <hex row="31" col="26" terrain="5"/>
   <hex row="31" col="27" terrain="13" name="Terrell Creek"/>
   <hex row="31" col="28" terrain="1" road="17" name="Confederate Camp" owner="1" flag="150" victory="1">
-    <unit id="37294" owner="1" flag="151" face="0" exp="92"/>
+    <unit id="44787" owner="1" flag="151" face="0" exp="92"/>
   </hex>
   <hex row="31" col="29" terrain="10" name="Wilson&#x27;s Creek"/>
   <hex row="31" col="32" terrain="5"/>
@@ -762,7 +762,7 @@
   <hex row="32" col="35" terrain="3"/>
   <hex row="32" col="36" terrain="5"/>
   <hex row="32" col="37" terrain="5">
-    <unit id="38434" owner="0" flag="163" face="0" transport="38463" exp="160" ldr="1"/>
+    <unit id="45958" owner="0" flag="163" face="0" transport="45987" exp="160" ldr="1"/>
   </hex>
   <hex row="32" col="38" terrain="5"/>
   <hex row="32" col="39" terrain="5"/>
@@ -792,7 +792,7 @@
   <hex row="33" col="26" terrain="5"/>
   <hex row="33" col="27" terrain="3"/>
   <hex row="33" col="28" terrain="5">
-    <unit id="37308" owner="1" flag="151" face="0" exp="90"/>
+    <unit id="44801" owner="1" flag="151" face="0" exp="90"/>
   </hex>
   <hex row="33" col="29" terrain="10" name="Wilson&#x27;s Creek"/>
   <hex row="33" col="30" terrain="10" road="136" name="Wilson&#x27;s Creek"/>

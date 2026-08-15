@@ -1,90 +1,90 @@
 <?xml version="1.0" encoding="ASCII"?>
 <map file="n_frankfurt.xscn" name="1918 Der Aufstand erfasst Frankfurt am Main" turns="16, 19, 23" date="November 7, 1918" dayturns="0" ground="0" atmosferic="1" latitude="2" iconset="0" weatherchg="0" rows="39" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_697.png" eqpv="united1">
-  <player id="0" country="188" side="1" airtrans="0" navaltrans="0" support="189, 0, 0, 0" turnprestige="10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10"/>
-  <player id="1" country="117" side="0" airtrans="0" navaltrans="0" support="118, 0, 0, 0" turnprestige="10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10"/>
+  <player id="0" country="188" side="1" airtrans="0" navaltrans="0" support="189,0,0,0" turnprestige="10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10"/>
+  <player id="1" country="117" side="0" airtrans="0" navaltrans="0" support="118,0,0,0" turnprestige="10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10"/>
   <reinforce turn="2">
     <at row="36" col="10">
-      <unit id="35562" owner="1" flag="118" face="0" transport="35654" exp="90" str="9" ldr="1"/>
+      <unit id="42982" owner="1" flag="118" face="0" transport="43083" exp="90" str="9" ldr="1"/>
     </at>
     <at row="35" col="9">
-      <unit id="35562" owner="1" flag="118" face="0" transport="35654" exp="150"/>
+      <unit id="42982" owner="1" flag="118" face="0" transport="43083" exp="150"/>
     </at>
     <at row="36" col="8">
-      <unit id="35562" owner="1" flag="118" face="0" transport="35654" exp="80" str="12"/>
+      <unit id="42982" owner="1" flag="118" face="0" transport="43083" exp="80" str="12"/>
     </at>
     <at row="36" col="9">
-      <unit id="35718" owner="1" flag="118" face="0" transport="35654" exp="90" str="8"/>
+      <unit id="43163" owner="1" flag="118" face="0" transport="43083" exp="90" str="8"/>
     </at>
   </reinforce>
   <reinforce turn="4">
     <at row="6" col="6">
-      <unit id="35550" owner="1" flag="118" face="0" transport="35654" exp="90"/>
+      <unit id="42967" owner="1" flag="118" face="0" transport="43083" exp="90"/>
     </at>
     <at row="5" col="5">
-      <unit id="35590" owner="1" flag="118" face="0" exp="80" str="7"/>
+      <unit id="43015" owner="1" flag="118" face="0" exp="80" str="7"/>
     </at>
     <at row="6" col="3">
-      <unit id="35550" owner="1" flag="118" face="0" transport="35654" exp="130" str="9"/>
+      <unit id="42967" owner="1" flag="118" face="0" transport="43083" exp="130" str="9"/>
     </at>
     <at row="6" col="4">
-      <unit id="35713" owner="1" flag="118" face="0" transport="35653" exp="90"/>
+      <unit id="43158" owner="1" flag="118" face="0" transport="43082" exp="90"/>
     </at>
     <at row="6" col="5">
-      <unit id="35639" owner="1" flag="118" face="0" transport="35652" exp="200" str="7"/>
+      <unit id="43068" owner="1" flag="118" face="0" transport="43081" exp="200" str="7"/>
     </at>
   </reinforce>
   <reinforce turn="6">
     <at row="31" col="41">
-      <unit id="39128" owner="0" flag="189" face="0" transport="39136" exp="90" str="8"/>
+      <unit id="46704" owner="0" flag="189" face="0" transport="46712" exp="90" str="8"/>
     </at>
     <at row="32" col="40">
-      <unit id="39128" owner="0" flag="189" face="0" transport="39136" exp="190" str="7"/>
+      <unit id="46704" owner="0" flag="189" face="0" transport="46712" exp="190" str="7"/>
     </at>
     <at row="32" col="39">
-      <unit id="39128" owner="0" flag="189" face="0" transport="39136" exp="110" str="9"/>
+      <unit id="46704" owner="0" flag="189" face="0" transport="46712" exp="110" str="9"/>
     </at>
     <at row="33" col="40">
-      <unit id="39132" owner="0" flag="189" face="0" exp="110" str="9"/>
+      <unit id="46708" owner="0" flag="189" face="0" exp="110" str="9"/>
     </at>
     <at row="32" col="41">
-      <unit id="39143" owner="0" flag="189" face="0" transport="39141" exp="110" str="9"/>
+      <unit id="46719" owner="0" flag="189" face="0" transport="46717" exp="110" str="9"/>
     </at>
     <at row="3" col="23">
-      <unit id="35596" owner="1" flag="118" face="0" exp="80" str="7"/>
+      <unit id="43021" owner="1" flag="118" face="0" exp="80" str="7"/>
     </at>
     <at row="4" col="22">
-      <unit id="35596" owner="1" flag="118" face="0" exp="80" str="8"/>
+      <unit id="43021" owner="1" flag="118" face="0" exp="80" str="8"/>
     </at>
     <at row="3" col="22">
-      <unit id="35714" owner="1" flag="118" face="0" exp="90" str="6"/>
+      <unit id="43159" owner="1" flag="118" face="0" exp="90" str="6"/>
     </at>
   </reinforce>
   <reinforce turn="8">
     <at row="3" col="31">
-      <unit id="35714" owner="1" flag="118" face="0" exp="90" str="5"/>
+      <unit id="43159" owner="1" flag="118" face="0" exp="90" str="5"/>
     </at>
     <at row="4" col="30">
-      <unit id="35596" owner="1" flag="118" face="0" exp="110" str="8"/>
+      <unit id="43021" owner="1" flag="118" face="0" exp="110" str="8"/>
     </at>
     <at row="4" col="31">
-      <unit id="35596" owner="1" flag="118" face="0" exp="110" str="7"/>
+      <unit id="43021" owner="1" flag="118" face="0" exp="110" str="7"/>
     </at>
   </reinforce>
   <reinforce turn="10">
     <at row="35" col="21">
-      <unit id="39131" owner="0" flag="189" face="0" exp="90"/>
+      <unit id="46707" owner="0" flag="189" face="0" exp="90"/>
     </at>
     <at row="36" col="19">
-      <unit id="39131" owner="0" flag="189" face="0" exp="190" str="9"/>
+      <unit id="46707" owner="0" flag="189" face="0" exp="190" str="9"/>
     </at>
     <at row="36" col="22">
-      <unit id="39131" owner="0" flag="189" face="0" exp="110" str="11"/>
+      <unit id="46707" owner="0" flag="189" face="0" exp="110" str="11"/>
     </at>
     <at row="36" col="20">
-      <unit id="39132" owner="0" flag="189" face="0" exp="10" str="12"/>
+      <unit id="46708" owner="0" flag="189" face="0" exp="10" str="12"/>
     </at>
     <at row="36" col="21">
-      <unit id="841" owner="0" flag="189" face="0" exp="90"/>
+      <unit id="1123" owner="0" flag="189" face="0" exp="90"/>
     </at>
   </reinforce>
   <hex row="0" col="3" terrain="3"/>
@@ -216,7 +216,7 @@
   <hex row="4" col="22" terrain="13"/>
   <hex row="4" col="25" road="57"/>
   <hex row="4" col="27" terrain="1" road="42" name="Nidda" owner="1" flag="117">
-    <unit id="35569" owner="1" flag="118" face="0" transport="35654" exp="80" str="12"/>
+    <unit id="42990" owner="1" flag="118" face="0" transport="43083" exp="80" str="12"/>
   </hex>
   <hex row="4" col="28" terrain="1" road="50" name="Nidda"/>
   <hex row="4" col="32" terrain="4"/>
@@ -246,7 +246,7 @@
   <hex row="5" col="16" terrain="4"/>
   <hex row="5" col="17" terrain="1" road="11" name="Wolfersheim"/>
   <hex row="5" col="18" terrain="1" road="184" name="Wolfersheim" owner="1" flag="117">
-    <unit id="35569" owner="1" flag="118" face="0" transport="35654" exp="90"/>
+    <unit id="42990" owner="1" flag="118" face="0" transport="43083" exp="90"/>
   </hex>
   <hex row="5" col="19" terrain="4" road="168"/>
   <hex row="5" col="21" terrain="1" road="33" name="Echzell" owner="1" flag="117"/>
@@ -415,10 +415,10 @@
   <hex row="10" col="20" terrain="4"/>
   <hex row="10" col="21" terrain="10"/>
   <hex row="10" col="22" road="145">
-    <unit id="35758" owner="1" flag="118" face="0" exp="90"/>
+    <unit id="43206" owner="1" flag="118" face="0" exp="90"/>
   </hex>
   <hex row="10" col="23" terrain="2" name="Landwehr Alzenau" owner="1" flag="117" victory="1">
-    <unit id="35730" owner="1" flag="118" face="0" transport="35666" exp="90" str="8"/>
+    <unit id="43177" owner="1" flag="118" face="0" transport="43096" exp="90" str="8"/>
   </hex>
   <hex row="10" col="24" terrain="3"/>
   <hex row="10" col="25" terrain="3"/>
@@ -531,7 +531,7 @@
   <hex row="15" col="0" road="2"/>
   <hex row="15" col="1" terrain="4"/>
   <hex row="15" col="2" terrain="1" road="154" name="Werheim" owner="1" flag="117" victory="1">
-    <unit id="35569" owner="1" flag="118" face="0" transport="35652" exp="90"/>
+    <unit id="42990" owner="1" flag="118" face="0" transport="43081" exp="90"/>
   </hex>
   <hex row="15" col="3" terrain="1" road="163" name="Werheim"/>
   <hex row="15" col="4" terrain="3" road="161"/>
@@ -593,7 +593,7 @@
   <hex row="16" col="34" terrain="3"/>
   <hex row="16" col="35" terrain="1" road="35" name="Buedingen"/>
   <hex row="16" col="36" terrain="1" road="169" name="Buedingen" owner="1" flag="117" victory="1">
-    <unit id="35569" owner="1" flag="118" face="0" transport="35652" exp="90"/>
+    <unit id="42990" owner="1" flag="118" face="0" transport="43081" exp="90"/>
   </hex>
   <hex row="16" col="37" terrain="1" road="136" name="Buedingen"/>
   <hex row="16" col="41" terrain="3" road="40"/>
@@ -763,7 +763,7 @@
   <hex row="22" col="2" terrain="3"/>
   <hex row="22" col="5" terrain="1" road="27" name="Homburg"/>
   <hex row="22" col="6" terrain="1" road="184" name="Homburg" owner="1" flag="117" victory="1">
-    <unit id="35569" owner="1" flag="118" face="0" transport="35652" exp="90"/>
+    <unit id="42990" owner="1" flag="118" face="0" transport="43081" exp="90"/>
   </hex>
   <hex row="22" col="7" road="176"/>
   <hex row="22" col="11" terrain="3"/>
@@ -857,7 +857,7 @@
   <hex row="25" col="9" terrain="4"/>
   <hex row="25" col="10" terrain="4" road="138"/>
   <hex row="25" col="11" terrain="1" road="155" name="Bad Vilbel" owner="1" flag="117">
-    <unit id="35569" owner="1" flag="118" face="0" transport="35652" exp="90"/>
+    <unit id="42990" owner="1" flag="118" face="0" transport="43081" exp="90"/>
   </hex>
   <hex row="25" col="12" road="179"/>
   <hex row="25" col="13" terrain="4"/>
@@ -939,13 +939,13 @@
   <hex row="28" col="14" terrain="10"/>
   <hex row="28" col="16" deploy="0"/>
   <hex row="28" col="17" deploy="0">
-    <unit id="39129" owner="0" flag="189" face="0" transport="39137" exp="110"/>
+    <unit id="46705" owner="0" flag="189" face="0" transport="46713" exp="110"/>
   </hex>
   <hex row="28" col="18" terrain="3" deploy="0">
-    <unit id="39132" owner="0" flag="189" face="0" exp="90"/>
+    <unit id="46708" owner="0" flag="189" face="0" exp="90"/>
   </hex>
   <hex row="28" col="19" terrain="3" road="49" deploy="0">
-    <unit id="39134" owner="0" flag="189" face="0" transport="39136" exp="120"/>
+    <unit id="46710" owner="0" flag="189" face="0" transport="46712" exp="120"/>
   </hex>
   <hex row="28" col="20" terrain="3" deploy="0"/>
   <hex row="28" col="21" deploy="0"/>
@@ -973,19 +973,19 @@
   <hex row="29" col="14" terrain="10"/>
   <hex row="29" col="15" terrain="1" road="24" name="Frankfurt am Main"/>
   <hex row="29" col="16" deploy="0">
-    <unit id="39128" owner="0" flag="189" face="0" transport="39136" exp="90"/>
+    <unit id="46704" owner="0" flag="189" face="0" transport="46712" exp="90"/>
   </hex>
   <hex row="29" col="17" terrain="1" road="50" name="Frankfurt am Main" deploy="0">
-    <unit id="39143" owner="0" flag="189" face="0" transport="39141" exp="90" str="8"/>
+    <unit id="46719" owner="0" flag="189" face="0" transport="46717" exp="90" str="8"/>
   </hex>
   <hex row="29" col="18" road="42" deploy="0">
-    <unit id="39127" owner="0" flag="189" face="0" transport="39138" exp="120" str="8" ldr="1"/>
+    <unit id="46703" owner="0" flag="189" face="0" transport="46714" exp="120" str="8" ldr="1"/>
   </hex>
   <hex row="29" col="19" road="137" deploy="0">
-    <unit id="39142" owner="0" flag="189" face="0" transport="39141" exp="150" str="9"/>
+    <unit id="46718" owner="0" flag="189" face="0" transport="46717" exp="150" str="9"/>
   </hex>
   <hex row="29" col="20" deploy="0">
-    <unit id="39130" owner="0" flag="189" face="0" transport="39136" exp="150" str="9"/>
+    <unit id="46706" owner="0" flag="189" face="0" transport="46712" exp="150" str="9"/>
   </hex>
   <hex row="29" col="21" deploy="0"/>
   <hex row="29" col="24" terrain="3"/>
@@ -1011,22 +1011,22 @@
   <hex row="30" col="14" terrain="10"/>
   <hex row="30" col="15" terrain="10" road="43"/>
   <hex row="30" col="16" terrain="1" road="186" name="Frankfurt am Main" owner="0" flag="188" victory="0" deploy="0">
-    <unit id="39135" owner="0" flag="189" face="0" transport="39128" exp="90"/>
+    <unit id="46711" owner="0" flag="189" face="0" transport="46704" exp="90"/>
   </hex>
   <hex row="30" col="17" terrain="1" road="161" name="Frankfurt am Main" deploy="0">
-    <unit id="39129" owner="0" flag="189" face="0" transport="39136" exp="90" str="8"/>
+    <unit id="46705" owner="0" flag="189" face="0" transport="46712" exp="90" str="8"/>
   </hex>
   <hex row="30" col="18" deploy="0">
-    <unit id="39128" owner="0" flag="189" face="0" transport="39136" exp="120" str="8"/>
+    <unit id="46704" owner="0" flag="189" face="0" transport="46712" exp="120" str="8"/>
   </hex>
   <hex row="30" col="19" deploy="0">
-    <unit id="39130" owner="0" flag="189" face="0" transport="39136" exp="150" str="9"/>
+    <unit id="46706" owner="0" flag="189" face="0" transport="46712" exp="150" str="9"/>
   </hex>
   <hex row="30" col="20" road="136" deploy="0">
-    <unit id="39127" owner="0" flag="189" face="0" transport="39138" exp="120" str="8" ldr="1"/>
+    <unit id="46703" owner="0" flag="189" face="0" transport="46714" exp="120" str="8" ldr="1"/>
   </hex>
   <hex row="30" col="21" road="136" deploy="0">
-    <unit id="39132" owner="0" flag="189" face="0" exp="90"/>
+    <unit id="46708" owner="0" flag="189" face="0" exp="90"/>
   </hex>
   <hex row="30" col="23" terrain="1" road="56" name="Hanau" owner="1" flag="117"/>
   <hex row="30" col="35" terrain="1" road="35" name="Freigericht" owner="1" flag="117"/>
@@ -1040,16 +1040,16 @@
   <hex row="31" col="6" terrain="1" road="186" name="Frankfurt am Main"/>
   <hex row="31" col="7" terrain="1" road="187" name="Frankfurt am Main"/>
   <hex row="31" col="8" terrain="1" road="187" name="Frankfurt am Main" owner="1" flag="117">
-    <unit id="513" owner="1" flag="118" face="0" exp="90" str="8"/>
+    <unit id="728" owner="1" flag="118" face="0" exp="90" str="8"/>
   </hex>
   <hex row="31" col="9" terrain="1" road="187" name="Frankfurt am Main"/>
   <hex row="31" col="10" terrain="1" road="186" name="Frankfurt am Main"/>
   <hex row="31" col="11" terrain="1" road="187" name="Frankfurt am Main"/>
   <hex row="31" col="12" terrain="1" road="187" name="Frankfurt am Main" owner="1" flag="117" victory="1">
-    <unit id="35647" owner="1" flag="118" face="0" exp="90" str="12"/>
+    <unit id="43076" owner="1" flag="118" face="0" exp="90" str="12"/>
   </hex>
   <hex row="31" col="13" terrain="1" road="171" name="Frankfurt am Main">
-    <unit id="513" owner="1" flag="118" face="0" exp="90" str="11"/>
+    <unit id="728" owner="1" flag="118" face="0" exp="90" str="11"/>
   </hex>
   <hex row="31" col="14" road="178"/>
   <hex row="31" col="15" terrain="10" name="Main River"/>
@@ -1078,7 +1078,7 @@
   <hex row="32" col="9" terrain="1" road="187" name="Frankfurt am Main"/>
   <hex row="32" col="10" terrain="1" road="187" name="Frankfurt am Main"/>
   <hex row="32" col="11" terrain="1" road="163" name="Frankfurt am Main">
-    <unit id="318" owner="1" flag="118" face="0" exp="90" str="6"/>
+    <unit id="434" owner="1" flag="118" face="0" exp="90" str="6"/>
   </hex>
   <hex row="32" col="12" terrain="1" road="163" name="Frankfurt am Main"/>
   <hex row="32" col="13" terrain="10" name="Main River"/>
@@ -1098,14 +1098,14 @@
   <hex row="33" col="1" road="10"/>
   <hex row="33" col="2" terrain="1" road="58" name="Frankfurt am Main"/>
   <hex row="33" col="3" terrain="1" road="187" name="Frankfurt am Main" owner="1" flag="117">
-    <unit id="513" owner="1" flag="118" face="0" exp="90"/>
+    <unit id="728" owner="1" flag="118" face="0" exp="90"/>
   </hex>
   <hex row="33" col="4" terrain="1" road="187" name="Frankfurt am Main"/>
   <hex row="33" col="5" terrain="1" road="171" name="Frankfurt am Main"/>
   <hex row="33" col="6" terrain="1" road="187" name="Frankfurt am Main"/>
   <hex row="33" col="7" terrain="1" road="179" name="Frankfurt am Main"/>
   <hex row="33" col="8" terrain="1" road="171" name="Frankfurt am Main" owner="1" flag="117" victory="1">
-    <unit id="588" owner="1" flag="118" face="0" exp="90"/>
+    <unit id="813" owner="1" flag="118" face="0" exp="90"/>
   </hex>
   <hex row="33" col="9" terrain="1" road="139" name="Frankfurt am Main"/>
   <hex row="33" col="10" terrain="1" road="179" name="Frankfurt am Main"/>
@@ -1152,7 +1152,7 @@
   <hex row="34" col="29" road="144"/>
   <hex row="34" col="32" terrain="1" road="25" name="Alzenau"/>
   <hex row="34" col="33" terrain="1" road="160" name="Alzenau" owner="1" flag="117">
-    <unit id="35569" owner="1" flag="118" face="0" transport="35652" exp="90"/>
+    <unit id="42990" owner="1" flag="118" face="0" transport="43081" exp="90"/>
   </hex>
   <hex row="34" col="34" terrain="4"/>
   <hex row="34" col="35" terrain="4"/>
@@ -1170,18 +1170,18 @@
   <hex row="35" col="5" terrain="10" name="Main River"/>
   <hex row="35" col="6" terrain="10" name="Main River"/>
   <hex row="35" col="7" terrain="1" road="59" name="Frankfurt am Main" owner="1" flag="117" victory="1">
-    <unit id="588" owner="1" flag="118" face="0" exp="90"/>
+    <unit id="813" owner="1" flag="118" face="0" exp="90"/>
   </hex>
   <hex row="35" col="8" terrain="1" road="184" name="Frankfurt am Main"/>
   <hex row="35" col="9" terrain="1" road="186" name="Frankfurt am Main"/>
   <hex row="35" col="10" terrain="1" road="59" name="Frankfurt am Main" owner="1" flag="117">
-    <unit id="675" owner="1" flag="118" face="0" exp="90"/>
+    <unit id="932" owner="1" flag="118" face="0" exp="90"/>
   </hex>
   <hex row="35" col="11" terrain="1" road="187" name="Frankfurt am Main"/>
   <hex row="35" col="12" terrain="1" road="187" name="Frankfurt am Main"/>
   <hex row="35" col="13" terrain="1" road="163" name="Frankfurt am Main"/>
   <hex row="35" col="14" terrain="1" road="171" name="Frankfurt am Main" owner="1" flag="117" victory="1">
-    <unit id="35647" owner="1" flag="118" face="0" exp="90" str="9"/>
+    <unit id="43076" owner="1" flag="118" face="0" exp="90" str="9"/>
   </hex>
   <hex row="35" col="15" terrain="1" road="131" name="Frankfurt am Main"/>
   <hex row="35" col="16" road="169"/>
@@ -1239,7 +1239,7 @@
   <hex row="37" col="0" road="2"/>
   <hex row="37" col="2" road="130"/>
   <hex row="37" col="3" terrain="2" name="Hahn" owner="1" flag="117">
-    <unit id="35730" owner="1" flag="118" face="0" transport="35666" exp="90" str="8"/>
+    <unit id="43177" owner="1" flag="118" face="0" transport="43096" exp="90" str="8"/>
   </hex>
   <hex row="37" col="4" terrain="2" road="138"/>
   <hex row="37" col="5" road="139"/>

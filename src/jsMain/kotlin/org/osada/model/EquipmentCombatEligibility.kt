@@ -51,6 +51,16 @@ package org.osada.model
  *  - `32768` was `ATTR_MASK_SPECIAL_ANTI_AIR`. It is **`CAN Air Atk`** -- the same idea (a unit that
  *    may attack aircraft although its class would not), so the one use of it is unaffected; only the
  *    name was wrong.
+ *
+ * WHERE `attr` STOPS. The importer packs only three of OG's five special bytes --
+ * `attr = Special1 + (Special2 shl 8) + (Special3 shl 16)` -- so bits 0..23 are all there is here.
+ * `Special4` and `SpecialEx` are NOT carried, and ten decoded OG abilities live in them and cannot
+ * be expressed by any mask in this file: `Build/Repair`, `D.AfterMove`, `Rocket bomber`,
+ * `All weather`, `Partizan`, `Exploit Success`, `Anti Sub (ASW)`, `AD Support`, `Kamikaze` and
+ * `Supply unit`. Adding one of those means widening the import first, not inventing a mask above 23.
+ * The full bit->name table (source byte and bit, with how each was verified) is
+ * `tools/og-import/OG_ABILITY_AUDIT.md` section 7.1; the binary layout it is read from is documented
+ * in `tools/og-import/xeqp_to_csv.py`.
  */
 private const val ATTR_MASK_IGNORES_ENTRENCHMENT = 4
 private const val ATTR_MASK_BRIDGE = 8

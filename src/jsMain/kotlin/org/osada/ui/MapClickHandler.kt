@@ -28,11 +28,9 @@ internal class MapClickHandler(
     fun resolveVisibleUnit(
         hex: Hex,
         currentPlayerSide: Int,
+        currentPlayerId: Int,
     ): GameUnit? {
-        val unit = hex.getUnit(uiSettings.airMode) ?: return null
-        val isHiddenEnemy =
-            !hex.isSpotted(currentPlayerSide) && !unit.tempSpotted && unit.player?.side != currentPlayerSide
-        return if (isHiddenEnemy) null else unit
+        return resolveVisibleUnitForClick(hex, uiSettings.airMode, currentPlayerSide, currentPlayerId)
     }
 
     fun handleRightClick(
@@ -256,6 +254,32 @@ internal class MapClickHandler(
     /** True if the unit currently picked in the deploy/equipment window is an air unit (so it may
      *  be placed on an airfield outside the deploy zone). */
     private fun selectedDeployUnitIsAir(): Boolean = DeploymentSelection.selectedUnit(ui)?.let(GameRules::isAir) == true
+}
+
+/**
+ * Resolve a click across both occupancy layers. The active air-mode layer remains the default,
+ * but an own unit on the other layer wins over a foreign unit on the active layer. Without that
+ * exception an own aircraft above an enemy ground unit could only be selected after manually
+ * enabling Air Mode, even though the aircraft was plainly visible and selectable from the ready-
+ * unit navigator.
+ */
+internal fun resolveVisibleUnitForClick(
+    hex: Hex,
+    airMode: Boolean,
+    currentPlayerSide: Int,
+    currentPlayerId: Int,
+): GameUnit? {
+    val primary = hex.getUnit(airMode)
+    val secondary = hex.getUnit(!airMode)
+    val unit =
+        when {
+            primary?.player?.id == currentPlayerId -> primary
+            secondary?.player?.id == currentPlayerId -> secondary
+            else -> primary ?: secondary
+        } ?: return null
+    val isHiddenEnemy =
+        !hex.isSpotted(currentPlayerSide) && !unit.tempSpotted && unit.player?.side != currentPlayerSide
+    return if (isHiddenEnemy) null else unit
 }
 
 /** DIAGNOSTIC (DEFERRED: T-34/ZP-40 "can't attack an adjacent enemy"). When the player clicks an

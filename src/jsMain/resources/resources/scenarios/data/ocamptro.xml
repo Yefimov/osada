@@ -1,13 +1,13 @@
 <?xml version='1.0' encoding='ASCII'?>
 <map file="ocamptro.scn" name="Troina" turns="9, 12, 16" date="July 31, 1943" dayturns="2" ground="0" atmosferic="0" latitude="1" rows="40" cols="45" eqp="eqp-adlerkorps" image="resources/maps/images/map_411.png" eqpv="united1">
-  <player id="0" country="9" side="1" airtrans="0" navaltrans="0" support="7, 0, 0, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50"/>
-  <player id="1" country="7" side="0" airtrans="0" navaltrans="0" support="13, 0, 0, 0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <player id="0" country="9" side="1" airtrans="0" navaltrans="0" support="7,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50"/>
+  <player id="1" country="7" side="0" airtrans="0" navaltrans="0" support="13,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="3">
     <at row="1" col="6">
-      <unit id="10413" owner="0" flag="10" face="2" transport="10380" exp="57" str="4"/>
+      <unit id="13158" owner="0" flag="10" face="2" transport="13110" exp="57" str="4"/>
     </at>
     <at row="16" col="1">
-      <unit id="10413" owner="0" flag="10" face="4" transport="10380" exp="88" str="4"/>
+      <unit id="13158" owner="0" flag="10" face="4" transport="13110" exp="88" str="4"/>
     </at>
   </reinforce>
   <hex row="0" col="0" terrain="6"/>
@@ -71,16 +71,16 @@
   <hex row="1" col="14" terrain="10" name="Salso River"/>
   <hex row="1" col="15" terrain="3"/>
   <hex row="1" col="16" terrain="5">
-    <unit id="385" owner="1" flag="8" face="4" exp="254" ent="11" str="8"/>
+    <unit id="528" owner="1" flag="8" face="4" exp="254" ent="11" str="8"/>
   </hex>
   <hex row="1" col="17" terrain="6"/>
   <hex row="1" col="18" terrain="6"/>
   <hex row="1" col="19" terrain="6"/>
   <hex row="1" col="20" terrain="6">
-    <unit id="6308" owner="1" flag="8" face="13" exp="254" str="7"/>
+    <unit id="7696" owner="1" flag="8" face="13" exp="254" str="7"/>
   </hex>
   <hex row="1" col="21" terrain="6">
-    <unit id="7896" owner="1" flag="8" face="13" exp="254" str="5"/>
+    <unit id="9951" owner="1" flag="8" face="13" exp="254" str="5"/>
   </hex>
   <hex row="1" col="22" terrain="6"/>
   <hex row="1" col="23" terrain="6"/>
@@ -125,7 +125,7 @@
   <hex row="2" col="18" terrain="6"/>
   <hex row="2" col="19" terrain="6"/>
   <hex row="2" col="20" terrain="6">
-    <unit id="6308" owner="1" flag="8" face="12" exp="254" str="6" ldr="1"/>
+    <unit id="7696" owner="1" flag="8" face="12" exp="254" str="6" ldr="1"/>
   </hex>
   <hex row="2" col="21" terrain="6"/>
   <hex row="2" col="22" terrain="6"/>
@@ -133,7 +133,7 @@
   <hex row="2" col="24" terrain="16" deploy="1"/>
   <hex row="2" col="25" terrain="16" deploy="1"/>
   <hex row="2" col="26" terrain="16" road="18" name="ROUGH: Highway 120 (To Randazzo and Messina)" flag="7" owner="1" victory="1" supply="0">
-    <unit id="7306" owner="1" flag="8" face="15" exp="154" ent="3" str="7"/>
+    <unit id="9072" owner="1" flag="8" face="15" exp="154" ent="3" str="7"/>
   </hex>
   <hex row="2" col="27" terrain="10"/>
   <hex row="2" col="28" terrain="6"/>
@@ -171,14 +171,14 @@
   <hex row="3" col="16" terrain="6" name="Monte Basilio: MOUNTAIN"/>
   <hex row="3" col="17" terrain="6" name="Monte Basilio: MOUNTAIN"/>
   <hex row="3" col="18" terrain="6" name="Monte Basilio: MOUNTAIN" flag="7" owner="1" victory="1">
-    <unit id="6308" owner="1" flag="8" face="12" transport="74" exp="254" ent="13" str="6"/>
+    <unit id="7696" owner="1" flag="8" face="12" transport="99" exp="254" ent="13" str="6"/>
   </hex>
   <hex row="3" col="19" terrain="6"/>
   <hex row="3" col="20" terrain="6"/>
   <hex row="3" col="21" terrain="6" road="34"/>
   <hex row="3" col="22" terrain="6" road="40"/>
   <hex row="3" col="23" terrain="1" road="136" name="Fondachello" flag="7" owner="1" victory="1">
-    <unit id="6552" owner="1" flag="8" face="14" transport="74" exp="257" ent="3" str="7"/>
+    <unit id="7991" owner="1" flag="8" face="14" transport="99" exp="257" ent="3" str="7"/>
   </hex>
   <hex row="3" col="24" terrain="16" deploy="1"/>
   <hex row="3" col="25" terrain="16" road="34" name="ROUGH: Highway 120" deploy="1"/>
@@ -220,15 +220,15 @@
   <hex row="4" col="17" terrain="6" name="Monte Basilio: MOUNTAIN"/>
   <hex row="4" col="18" terrain="6" name="Monte Basilio: MOUNTAIN"/>
   <hex row="4" col="19" terrain="6" road="34">
-    <unit id="385" owner="1" flag="8" face="10" exp="125" ent="18" str="8"/>
+    <unit id="528" owner="1" flag="8" face="10" exp="125" ent="18" str="8"/>
   </hex>
   <hex row="4" col="20" terrain="6" road="34"/>
   <hex row="4" col="21" terrain="6">
-    <unit id="7851" owner="1" flag="8" face="13" exp="154" ent="3" str="7"/>
+    <unit id="9892" owner="1" flag="8" face="13" exp="154" ent="3" str="7"/>
   </hex>
   <hex row="4" col="22" terrain="16"/>
   <hex row="4" col="23" terrain="6" road="18" name="HILL: Highway 120">
-    <unit id="8190" owner="1" flag="8" face="13" transport="7337" exp="154" ent="5" str="7"/>
+    <unit id="10385" owner="1" flag="8" face="13" transport="9109" exp="154" ent="5" str="7"/>
   </hex>
   <hex row="4" col="24" terrain="6" road="162" name="MOUNTAIN: Highway 120" deploy="1"/>
   <hex row="4" col="25" terrain="6" deploy="1"/>
@@ -270,12 +270,12 @@
   <hex row="5" col="17" terrain="6" road="130"/>
   <hex row="5" col="18" terrain="6" road="34"/>
   <hex row="5" col="19" terrain="6">
-    <unit id="6552" owner="1" flag="8" face="13" transport="74" exp="254" ent="13" str="7"/>
+    <unit id="7991" owner="1" flag="8" face="13" transport="99" exp="254" ent="13" str="7"/>
   </hex>
   <hex row="5" col="20" terrain="6"/>
   <hex row="5" col="21" terrain="6"/>
   <hex row="5" col="22" terrain="6">
-    <unit id="6308" owner="1" flag="8" face="13" exp="354" str="7"/>
+    <unit id="7696" owner="1" flag="8" face="13" exp="354" str="7"/>
   </hex>
   <hex row="5" col="23" terrain="6" road="33" name="MOUNTAIN: Highway 120"/>
   <hex row="5" col="24" terrain="6"/>
@@ -322,10 +322,10 @@
   <hex row="6" col="21" terrain="6" road="18" name="MOUNTAIN: Highway 120"/>
   <hex row="6" col="22" terrain="6" road="34" name="MOUNTAIN: Highway 120"/>
   <hex row="6" col="23" terrain="6">
-    <unit id="7851" owner="1" flag="8" face="15" exp="154" ent="3" str="8"/>
+    <unit id="9892" owner="1" flag="8" face="15" exp="154" ent="3" str="8"/>
   </hex>
   <hex row="6" col="24" terrain="6">
-    <unit id="6308" owner="1" flag="8" face="13" exp="254" str="7"/>
+    <unit id="7696" owner="1" flag="8" face="13" exp="254" str="7"/>
   </hex>
   <hex row="6" col="25" terrain="6"/>
   <hex row="6" col="26" terrain="10"/>
@@ -368,7 +368,7 @@
   <hex row="7" col="19" terrain="6"/>
   <hex row="7" col="20" terrain="6"/>
   <hex row="7" col="21" terrain="5" road="33" name="HILL: Highway 120">
-    <unit id="385" owner="1" flag="8" face="1" exp="154" ent="15" str="8"/>
+    <unit id="528" owner="1" flag="8" face="1" exp="154" ent="15" str="8"/>
   </hex>
   <hex row="7" col="22" terrain="6"/>
   <hex row="7" col="23" terrain="6"/>
@@ -411,24 +411,24 @@
   <hex row="8" col="16" terrain="3"/>
   <hex row="8" col="17" terrain="6" road="18" name="HILL: Highway 120"/>
   <hex row="8" col="18" terrain="6" road="40" name="HILL: Highway 120">
-    <unit id="9568" owner="0" flag="10" face="13" exp="154" str="5"/>
+    <unit id="11966" owner="0" flag="10" face="13" exp="154" str="5"/>
   </hex>
   <hex row="8" col="19" terrain="1" road="138" name="Troina"/>
   <hex row="8" col="20" terrain="1" road="58" name="Troina" flag="7" owner="1" victory="1">
-    <unit id="6308" owner="1" flag="8" face="13" transport="74" exp="254" ent="15" str="8"/>
-    <unit id="6308" owner="1" flag="8" face="13" transport="74" exp="254" ent="12" str="8"/>
+    <unit id="7696" owner="1" flag="8" face="13" transport="99" exp="254" ent="15" str="8"/>
+    <unit id="7696" owner="1" flag="8" face="13" transport="99" exp="254" ent="12" str="8"/>
   </hex>
   <hex row="8" col="21" terrain="1" road="168" name="Troina">
-    <unit id="12641" owner="1" flag="13" face="14" transport="74" exp="254" ent="3" str="5"/>
+    <unit id="15910" owner="1" flag="13" face="14" transport="99" exp="254" ent="3" str="5"/>
   </hex>
   <hex row="8" col="22" terrain="6"/>
   <hex row="8" col="23" terrain="6">
-    <unit id="13255" owner="1" flag="13" face="14" exp="157" ent="7" str="7"/>
+    <unit id="16576" owner="1" flag="13" face="14" exp="157" ent="7" str="7"/>
   </hex>
   <hex row="8" col="24" terrain="6"/>
   <hex row="8" col="25" terrain="10"/>
   <hex row="8" col="26" terrain="5">
-    <unit id="385" owner="1" flag="8" face="9" exp="154" ent="7" str="8"/>
+    <unit id="528" owner="1" flag="8" face="9" exp="154" ent="7" str="8"/>
   </hex>
   <hex row="8" col="27" terrain="5"/>
   <hex row="8" col="28" terrain="6"/>
@@ -468,14 +468,14 @@
   <hex row="9" col="18" terrain="6"/>
   <hex row="9" col="19" terrain="6"/>
   <hex row="9" col="20" terrain="1" road="131" name="Troina">
-    <unit id="9568" owner="0" flag="10" face="7" exp="144" str="3"/>
+    <unit id="11966" owner="0" flag="10" face="7" exp="144" str="3"/>
   </hex>
   <hex row="9" col="21" terrain="14"/>
   <hex row="9" col="22" terrain="6" road="144"/>
   <hex row="9" col="23" terrain="10"/>
   <hex row="9" col="24" terrain="10"/>
   <hex row="9" col="25" terrain="6" flag="7" owner="1" victory="1">
-    <unit id="6552" owner="1" flag="8" face="1" exp="254" ent="8" str="7"/>
+    <unit id="7991" owner="1" flag="8" face="1" exp="254" ent="8" str="7"/>
   </hex>
   <hex row="9" col="26" terrain="5"/>
   <hex row="9" col="27" terrain="1" road="16" name="Village"/>
@@ -518,7 +518,7 @@
   <hex row="10" col="20" terrain="6"/>
   <hex row="10" col="21" terrain="6" road="18"/>
   <hex row="10" col="22" terrain="6" road="33">
-    <unit id="9568" owner="0" flag="10" face="1" exp="122" str="4"/>
+    <unit id="11966" owner="0" flag="10" face="1" exp="122" str="4"/>
   </hex>
   <hex row="10" col="23" terrain="10"/>
   <hex row="10" col="24" terrain="6"/>
@@ -601,7 +601,7 @@
   <hex row="12" col="13" terrain="5" road="40" name="HILL: Highway 120" deploy="0"/>
   <hex row="12" col="14" terrain="1" road="136" name="Nicosia" deploy="0"/>
   <hex row="12" col="15" terrain="1" road="178" name="Nicosia" flag="9" owner="0" victory="1">
-    <unit id="4555" owner="0" flag="7" face="5" exp="354" str="6" ldr="1"/>
+    <unit id="5647" owner="0" flag="7" face="5" exp="354" str="6" ldr="1"/>
   </hex>
   <hex row="12" col="16" terrain="10" road="33" name="Salso River"/>
   <hex row="12" col="17" terrain="16"/>

@@ -74,6 +74,8 @@ internal object MessageDialogs {
     private data class DynamicMessage(
         val title: String,
         val body: String,
+        /** Optional presentation hook for messages with a distinct responsive layout. */
+        val dialogClass: String,
         /** Runs once this box is actually in the DOM and visible. Anything that decorates the box's
          *  own markup — the hero portrait painted into `#heroEmergencePortrait` — has to happen
          *  here rather than at the call site, which may now be several dismissals early. */
@@ -86,9 +88,10 @@ internal object MessageDialogs {
     fun messageDynamic(
         title: String,
         body: String,
+        dialogClass: String = "",
         onShown: (() -> Unit)? = null,
     ) {
-        pendingDynamicMessages += DynamicMessage(title, body, onShown)
+        pendingDynamicMessages += DynamicMessage(title, body, dialogClass, onShown)
         showNextDynamicMessage()
     }
 
@@ -109,7 +112,7 @@ internal object MessageDialogs {
         val message = pendingDynamicMessages.removeAt(0)
         dynamicMessageShowing = true
         val box = addTag(mainBody, "div")
-        box.className = "uiMessageBox"
+        box.className = listOf("uiMessageBox", message.dialogClass).filter { it.isNotBlank() }.joinToString(" ")
         box.id = "uiMessageBoxDynamic"
         box.style.zIndex = "98"
         val titleEl = addTag(box, "div")

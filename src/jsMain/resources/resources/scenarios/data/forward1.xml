@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <map file="forward1.xscn" name="Battle of Suomussalmi" turns="13, 15, 17" date="December 7, 1939" dayturns="0" ground="1" atmosferic="3" latitude="2" iconset="1" weatherchg="0" rows="34" cols="31" eqp="eqp-atomic" image="resources/maps/images/map_1.png" eqpv="united1">
-  <player id="0" country="89" side="1" airtrans="0" navaltrans="0" support="90, 0, 0, 0" turnprestige="280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280"/>
-  <player id="1" country="38" side="0" airtrans="0" navaltrans="0" support="39, 0, 0, 0" turnprestige="30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30"/>
+  <player id="0" country="89" side="1" airtrans="0" navaltrans="0" support="90,0,0,0" turnprestige="280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280"/>
+  <player id="1" country="38" side="0" airtrans="0" navaltrans="0" support="39,0,0,0" turnprestige="30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30"/>
   <hex row="0" col="3" terrain="3"/>
   <hex row="0" col="5" terrain="3"/>
   <hex row="0" col="13" terrain="3"/>
@@ -26,7 +26,7 @@
   <hex row="1" col="11" terrain="3"/>
   <hex row="1" col="12" terrain="3"/>
   <hex row="1" col="13" terrain="3">
-    <unit id="24009" owner="1" flag="39" face="0" exp="55"/>
+    <unit id="29580" owner="1" flag="39" face="0" exp="55"/>
   </hex>
   <hex row="1" col="15" terrain="3"/>
   <hex row="1" col="18" terrain="3"/>
@@ -48,10 +48,10 @@
   <hex row="2" col="10" road="136"/>
   <hex row="2" col="11" terrain="1" road="152" name="Piispajarvi"/>
   <hex row="2" col="12" terrain="1" name="Piispajarvi">
-    <unit id="24391" owner="1" flag="39" face="0" exp="30" str="9"/>
+    <unit id="30018" owner="1" flag="39" face="0" exp="30" str="9"/>
   </hex>
-  <hex row="2" col="13" terrain="1" name="Piispajarvi" owner="1" flag="38" victory="1">
-    <unit id="24047" owner="1" flag="39" face="0" transport="24238" exp="2" str="8"/>
+  <hex row="2" col="13" terrain="1" name="Piispajarvi" owner="1" flag="5" victory="1">
+    <unit id="29627" owner="1" flag="39" face="0" transport="29845" exp="2" str="8"/>
   </hex>
   <hex row="2" col="14" terrain="3"/>
   <hex row="2" col="18" terrain="3"/>
@@ -70,11 +70,11 @@
   <hex row="3" col="10" terrain="10" name="LAKE"/>
   <hex row="3" col="11" terrain="10" road="51" name="LAKE"/>
   <hex row="3" col="12" terrain="1" road="160" name="Piispajarvi">
-    <unit id="24156" owner="1" flag="39" face="0" exp="30" str="7"/>
+    <unit id="29746" owner="1" flag="39" face="0" exp="30" str="7"/>
   </hex>
   <hex row="3" col="13" terrain="1" name="Piispajarvi"/>
   <hex row="3" col="17" terrain="3">
-    <unit id="24035" owner="1" flag="39" face="0" exp="17"/>
+    <unit id="29610" owner="1" flag="39" face="0" exp="17"/>
   </hex>
   <hex row="3" col="24" terrain="3"/>
   <hex row="3" col="26" terrain="3"/>
@@ -107,11 +107,11 @@
   <hex row="5" col="12" terrain="3"/>
   <hex row="5" col="13" terrain="13"/>
   <hex row="5" col="16" terrain="3">
-    <unit id="24035" owner="1" flag="39" face="0" exp="11"/>
+    <unit id="29610" owner="1" flag="39" face="0" exp="11"/>
   </hex>
   <hex row="5" col="17" terrain="3"/>
   <hex row="5" col="18">
-    <unit id="24130" owner="1" flag="39" face="0" exp="19" str="7"/>
+    <unit id="29716" owner="1" flag="39" face="0" exp="19" str="7"/>
   </hex>
   <hex row="5" col="20" terrain="3"/>
   <hex row="5" col="21" name="Airfield"/>
@@ -149,8 +149,8 @@
   <hex row="7" col="19" road="8"/>
   <hex row="7" col="20" terrain="10" name="LAKE"/>
   <hex row="7" col="21" terrain="1" road="40" name="Juntusranta"/>
-  <hex row="7" col="22" terrain="2" owner="1" flag="38">
-    <unit id="675" owner="1" flag="39" face="0" exp="49"/>
+  <hex row="7" col="22" terrain="2" owner="1" flag="5">
+    <unit id="932" owner="1" flag="39" face="0" exp="49"/>
   </hex>
   <hex row="7" col="25" road="50"/>
   <hex row="7" col="26" road="34" deploy="0"/>
@@ -164,12 +164,12 @@
   <hex row="8" col="12" terrain="13"/>
   <hex row="8" col="13" terrain="10" name="LAKE"/>
   <hex row="8" col="15" terrain="3">
-    <unit id="23989" owner="1" flag="39" face="0" exp="34" ldr="1"/>
+    <unit id="29558" owner="1" flag="39" face="0" exp="34" ldr="1"/>
   </hex>
   <hex row="8" col="19" road="34"/>
   <hex row="8" col="20" terrain="10" road="170"/>
-  <hex row="8" col="21" terrain="1" road="128" name="Juntusranta" owner="1" flag="38" victory="1">
-    <unit id="23989" owner="1" flag="39" face="0" exp="8"/>
+  <hex row="8" col="21" terrain="1" road="128" name="Juntusranta" owner="1" flag="5" victory="1">
+    <unit id="29558" owner="1" flag="39" face="0" exp="8"/>
   </hex>
   <hex row="8" col="22" terrain="1" road="136" name="Juntusranta"/>
   <hex row="8" col="23" terrain="3" road="130"/>
@@ -211,7 +211,7 @@
   <hex row="10" col="13" terrain="3"/>
   <hex row="10" col="14" terrain="3" road="136"/>
   <hex row="10" col="15" terrain="3" road="130">
-    <unit id="23989" owner="1" flag="39" face="0" exp="1"/>
+    <unit id="29558" owner="1" flag="39" face="0" exp="1"/>
   </hex>
   <hex row="10" col="16" terrain="3" road="34"/>
   <hex row="10" col="17" terrain="3"/>
@@ -226,7 +226,7 @@
   <hex row="10" col="29" terrain="3"/>
   <hex row="10" col="30" terrain="3"/>
   <hex row="11" col="1">
-    <unit id="24451" owner="1" flag="39" face="0" exp="41" str="9"/>
+    <unit id="30091" owner="1" flag="39" face="0" exp="41" str="9"/>
   </hex>
   <hex row="11" col="2" terrain="3"/>
   <hex row="11" col="3" terrain="3"/>
@@ -376,8 +376,8 @@
   <hex row="18" col="15" terrain="3"/>
   <hex row="18" col="16" terrain="3"/>
   <hex row="18" col="18" terrain="3"/>
-  <hex row="18" col="20" terrain="1" name="Puras" owner="1" flag="38">
-    <unit id="384" owner="1" flag="39" face="0" exp="32"/>
+  <hex row="18" col="20" terrain="1" name="Puras" owner="1" flag="5">
+    <unit id="527" owner="1" flag="39" face="0" exp="32"/>
   </hex>
   <hex row="18" col="21" terrain="1" road="33" name="Puras"/>
   <hex row="18" col="22" terrain="10" name="LAKE"/>
@@ -441,19 +441,19 @@
   <hex row="22" col="3" road="130"/>
   <hex row="22" col="4" road="41"/>
   <hex row="22" col="5" road="136">
-    <unit id="23987" owner="1" flag="39" face="0" exp="25"/>
+    <unit id="29556" owner="1" flag="39" face="0" exp="25"/>
   </hex>
   <hex row="22" col="6" terrain="15" name="LAKE"/>
   <hex row="22" col="7" terrain="10" name="LAKE"/>
   <hex row="22" col="8" terrain="10" road="137" name="LAKE"/>
   <hex row="22" col="9" terrain="1" road="168" name="Suomussalimi">
-    <unit id="24383" owner="1" flag="39" face="0" exp="14"/>
+    <unit id="30007" owner="1" flag="39" face="0" exp="14"/>
   </hex>
   <hex row="22" col="10" terrain="1" name="Suomussalmi">
-    <unit id="24408" owner="1" flag="39" face="0" exp="19" str="7"/>
+    <unit id="30039" owner="1" flag="39" face="0" exp="19" str="7"/>
   </hex>
-  <hex row="22" col="11" terrain="1" name="Suomussalmi" owner="1" flag="38" victory="1">
-    <unit id="24019" owner="1" flag="39" face="0" str="7"/>
+  <hex row="22" col="11" terrain="1" name="Suomussalmi" owner="1" flag="5" victory="1">
+    <unit id="29590" owner="1" flag="39" face="0" str="7"/>
   </hex>
   <hex row="22" col="12" terrain="1" name="Suomussalmi"/>
   <hex row="22" col="13" terrain="3"/>
@@ -476,7 +476,7 @@
   <hex row="23" col="8" terrain="10" road="50" name="LAKE"/>
   <hex row="23" col="9" terrain="10" name="LAKE"/>
   <hex row="23" col="10" road="136">
-    <unit id="23973" owner="1" flag="39" face="0" exp="4" str="7"/>
+    <unit id="29531" owner="1" flag="39" face="0" exp="4" str="7"/>
   </hex>
   <hex row="23" col="11" terrain="1" road="136" name="Suomussalmi"/>
   <hex row="23" col="12" terrain="1" road="16" name="Suomussalmi"/>
@@ -489,15 +489,15 @@
   <hex row="23" col="21" terrain="13"/>
   <hex row="23" col="22" terrain="3"/>
   <hex row="23" col="23" terrain="3">
-    <unit id="32507" owner="0" flag="90" face="0" exp="27"/>
+    <unit id="39732" owner="0" flag="90" face="0" exp="27"/>
   </hex>
   <hex row="23" col="24" terrain="3"/>
   <hex row="23" col="25" terrain="3"/>
   <hex row="23" col="26" terrain="13"/>
   <hex row="23" col="27" terrain="10" name="LAKE"/>
   <hex row="23" col="28" terrain="10" name="LAKE"/>
-  <hex row="24" col="1" terrain="2" owner="1" flag="38" victory="1">
-    <unit id="24063" owner="1" flag="39" face="0" exp="1" str="8"/>
+  <hex row="24" col="1" terrain="2" owner="1" flag="5" victory="1">
+    <unit id="29644" owner="1" flag="39" face="0" exp="1" str="8"/>
   </hex>
   <hex row="24" col="2" terrain="2"/>
   <hex row="24" col="3" terrain="15" name="LAKE"/>
@@ -513,21 +513,21 @@
   <hex row="24" col="13" terrain="3" road="130"/>
   <hex row="24" col="14" road="40"/>
   <hex row="24" col="15" road="138">
-    <unit id="24105" owner="1" flag="39" face="0" exp="10" str="8" ldr="1"/>
+    <unit id="29689" owner="1" flag="39" face="0" exp="10" str="8" ldr="1"/>
   </hex>
   <hex row="24" col="16" road="33"/>
   <hex row="24" col="17" terrain="3">
-    <unit id="24391" owner="1" flag="39" face="0" exp="48" str="9"/>
+    <unit id="30018" owner="1" flag="39" face="0" exp="48" str="9"/>
   </hex>
   <hex row="24" col="18">
-    <unit id="24035" owner="1" flag="39" face="0" exp="16"/>
+    <unit id="29610" owner="1" flag="39" face="0" exp="16"/>
   </hex>
   <hex row="24" col="19" terrain="3"/>
   <hex row="24" col="21" terrain="13"/>
   <hex row="24" col="23" road="40" deploy="0"/>
   <hex row="24" col="24" deploy="0"/>
   <hex row="24" col="26" terrain="3"/>
-  <hex row="24" col="27" terrain="2" owner="0" flag="89"/>
+  <hex row="24" col="27" terrain="2" owner="0" flag="19"/>
   <hex row="24" col="28" terrain="2"/>
   <hex row="25" col="2" terrain="2"/>
   <hex row="25" col="3" terrain="15" name="LAKE"/>
@@ -545,17 +545,17 @@
   <hex row="25" col="16" road="136"/>
   <hex row="25" col="17" road="136"/>
   <hex row="25" col="18" terrain="3">
-    <unit id="24141" owner="1" flag="39" face="0" exp="46" str="7"/>
+    <unit id="29728" owner="1" flag="39" face="0" exp="46" str="7"/>
   </hex>
   <hex row="25" col="20" road="8">
-    <unit id="23989" owner="1" flag="39" face="0" exp="11"/>
+    <unit id="29558" owner="1" flag="39" face="0" exp="11"/>
   </hex>
   <hex row="25" col="21" terrain="13" road="162"/>
   <hex row="25" col="22" road="34"/>
   <hex row="25" col="24" road="136" deploy="0"/>
   <hex row="25" col="25" road="136" deploy="0"/>
   <hex row="25" col="26" terrain="10" name="LAKE"/>
-  <hex row="25" col="27" terrain="1" name="Raate" owner="0" flag="89" victory="0" deploy="0"/>
+  <hex row="25" col="27" terrain="1" name="Raate" owner="0" flag="19" victory="0" deploy="0"/>
   <hex row="26" col="1" terrain="15" name="LAKE"/>
   <hex row="26" col="2" terrain="15" name="LAKE"/>
   <hex row="26" col="3" terrain="3" road="34"/>
@@ -570,7 +570,7 @@
   <hex row="26" col="15" terrain="3"/>
   <hex row="26" col="18" road="136"/>
   <hex row="26" col="19" road="138">
-    <unit id="24159" owner="1" flag="39" face="0" exp="41" str="9"/>
+    <unit id="29750" owner="1" flag="39" face="0" exp="41" str="9"/>
   </hex>
   <hex row="26" col="20" road="34"/>
   <hex row="26" col="21" terrain="13"/>
@@ -596,7 +596,7 @@
   <hex row="27" col="20" terrain="13" road="136"/>
   <hex row="27" col="21" road="136"/>
   <hex row="27" col="22">
-    <unit id="33165" owner="0" flag="90" face="0" transport="32916" exp="60" str="7"/>
+    <unit id="40390" owner="0" flag="90" face="0" transport="40141" exp="60" str="7"/>
   </hex>
   <hex row="27" col="23" terrain="3" deploy="0"/>
   <hex row="27" col="24" terrain="3"/>
