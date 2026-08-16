@@ -94,13 +94,23 @@ internal object ScenarioPlayerParser {
                 if (v < minTurnPrestige) minTurnPrestige else v
             }?.toMutableList() ?: mutableListOf()
         player.prestige = player.prestigePerTurn.getOrElse(0) { 0 }
+        // Split on the comma alone and trim, NOT on ", ". `turnprestige` is written with a space
+        // after each comma, `support` is not (`support="251,298,0,0"`) — so splitting both the same
+        // way yielded ONE token, "251,298,0,0", which parses to null and was then dropped by the
+        // `> 0` filter. Every scenario in the register therefore loaded with NO support countries.
+        //
+        // The damage is invisible until a scenario actually places a unit from a support nation:
+        // its equipment file is never fetched, `Equipment.getEquipment(eqid)` returns an empty
+        // EquipmentData, and the unit draws with no icon, no name (the unit card falls back to its
+        // numeric id — "27th") and movpoints 0, so it cannot be moved. Reported 2026-08-16 against
+        // "Victory at Kampala" (8,29): a UNLA Militia from country 250, one of Tanzania's two
+        // declared support nations.
         player.supportCountries =
             el
                 .getAttribute("support")
-                ?.split(", ")
-                ?.map {
-                    it.toIntOrNull() ?: 0
-                }?.filter { it > 0 }
+                ?.split(",")
+                ?.map { it.trim().toIntOrNull() ?: 0 }
+                ?.filter { it > 0 }
                 ?.toMutableList()
                 ?: mutableListOf()
         return player

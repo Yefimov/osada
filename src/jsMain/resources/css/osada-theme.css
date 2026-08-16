@@ -1233,6 +1233,28 @@ input[type=text], input[type=search] {
     background: rgba(16, 18, 21, .85);
 }
 
+/* Map hex labels grow to fit their name instead of being clipped by base.css's fixed 101x15 box,
+ * which was sized for "No Ammo" — Sierra Maestra's "Central Azucarera/Sugar Mill" (and every other
+ * long objective name) spilled outside it (2026-08-16 user report).
+ *
+ * TooltipBuilder positions the box at `left = hexCenterX - 38`, i.e. it assumes the old 101px
+ * width and centres the box 12.5px right of the hex. Re-centring in CSS keeps that exact anchor
+ * for a 101px-wide label and grows every wider one symmetrically about the SAME point, so no
+ * Kotlin geometry changes and nothing shifts for the short labels. The pin variant (airfield /
+ * port counters) has its own 36px width and its own -8 offset, so it must stay out of this. */
+.smallToolTip:not([shape="pin"]) {
+    width: max-content;
+    min-width: 101px;
+    max-width: 190px;
+    height: auto;
+    min-height: 15px;
+    box-sizing: content-box;
+    white-space: normal;
+    overflow-wrap: break-word;
+    line-height: 1.25;
+    transform: translateX(calc(50.5px - 50%));
+}
+
 /* Flat brass edge, NOT the frame_turn_report.png 9-slice (tried and reverted at the user's
  * request): a 16px ornamental border on a window whose body scrolls reads as clutter around
  * moving content, and it ate 32px of the panel's width and height. The bigger .mainPanel frame
@@ -2381,6 +2403,29 @@ hr {
     color: rgba(244, 227, 198, .75);
 }
 
+/* Caution plate (Restart Mission): brass, not red. It discards the battle, so it must stand apart
+ * from the neutral grey plates below it — but it sits immediately under the red CONTINUE plate,
+ * and a second red plate there is mis-clickable at a glance. Brass is the theme's existing
+ * "attention, not danger" accent (settings' balance-warning header uses the same family). */
+.smMainButton.osada-menu-btn--caution {
+    border-color: var(--osada-brass);
+    background: linear-gradient(180deg, rgba(62, 52, 32, .96), rgba(32, 27, 18, .97));
+}
+
+.smMainButton.osada-menu-btn--caution:hover {
+    border-color: #d9b25a;
+    background: linear-gradient(180deg, rgba(78, 64, 38, .97), rgba(42, 35, 22, .98));
+    box-shadow: inset 0 0 0 1px rgba(217, 178, 90, .3), 0 0 14px rgba(180, 138, 60, .3), 0 2px 8px rgba(0, 0, 0, .5);
+}
+
+.osada-menu-btn--caution .osada-menu-btn__label {
+    color: #d9b25a;
+}
+
+.osada-menu-btn--caution .osada-menu-btn__sub {
+    color: rgba(217, 178, 90, .7);
+}
+
 .osada-menu-btn--muted .osada-menu-btn__label {
     color: var(--osada-text-dim);
 }
@@ -2578,6 +2623,45 @@ hr {
 
 .osada-settings-header--observer .osada-settings-header__title {
     color: #d9463d;
+}
+
+/* Observer Mode locked for the length of a multiplayer match (StartMenuSettingsBuilder
+ * .refreshObserverLock). The red "affects balance" treatment is dropped — the toggles are off and
+ * cannot be turned on, so there is no balance risk left to warn about — and replaced by a plain
+ * "Disabled in multiplayer" note so the player sees WHY the rows no longer respond, rather than
+ * finding a section that silently ignores clicks. */
+.osada-settings-header--locked {
+    border-top-color: var(--osada-metal-600);
+    background: none;
+}
+
+.osada-settings-header--locked .osada-settings-header__title,
+.osada-settings-header--locked .osada-settings-header__caption {
+    color: var(--osada-text-dim);
+    opacity: .6;
+}
+
+.osada-settings-header__lock {
+    margin-left: 8px;
+    font-size: 11px;
+    font-weight: normal;
+    font-style: italic;
+    letter-spacing: .02em;
+    color: var(--osada-steel);
+}
+
+.settingContainer--locked {
+    opacity: .45;
+    cursor: not-allowed;
+}
+
+.settingContainer--locked:hover {
+    background-color: transparent;
+}
+
+.osada-checkbox--locked {
+    cursor: not-allowed;
+    pointer-events: none;
 }
 
 /* ============================================================================
@@ -4930,6 +5014,16 @@ hr {
     height: 48px;
     min-height: 48px;
     line-height: 48px;
+    /* The label is a ::after pseudo-element on a fixed 48px line box: a long side name
+     * ("Start as Communist Yugoslavia") wrapped to a second row and rendered OUTSIDE the plate
+     * (2026-08-16 user report). Flex-centre it and keep it on one line — StartMenuSidePicker now
+     * also feeds the plate the short nation name, so the ellipsis is a last resort, not the norm. */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 12px;
+    box-sizing: border-box;
+    overflow: hidden;
     background: linear-gradient(180deg, #a5322f, #6f1a18) !important;
     border: 1px solid var(--osada-brass) !important;
     border-radius: 3px;
@@ -5202,6 +5296,16 @@ hr {
 /* Reserves button with undeployed-count badge */
 .osada-tb-reserves {
     position: relative;
+}
+
+/* The crate glyph only appears once the label is hidden (see the max-width:1180px block below);
+ * on a wide bar the word "Reserves" is the whole button. */
+.osada-tb-reserves__ico {
+    display: none;
+    width: 22px;
+    height: 22px;
+    flex: 0 0 auto;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .6));
 }
 
 .osada-tb-reserves__badge {
@@ -5496,6 +5600,19 @@ hr {
 @media (max-width: 1180px) {
     .osada-tb-reserves__label {
         display: none;
+    }
+
+    /* Swap the hidden word for the supply-crate sprite so the plate is never a blank square. */
+    .osada-tb-reserves__ico {
+        display: block;
+    }
+
+    .osada-tb-reserves {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-left: 8px;
+        padding-right: 8px;
     }
 
     .osada-tb-brand-logo {
@@ -5866,6 +5983,28 @@ hr {
 .osadaListRowNote--new {
     color: var(--osada-text-dim);
     font-weight: normal;
+}
+
+/* Guarded "start over" link next to an in-progress/completed campaign row's note -- see
+ * StartMenuCampaignScreen.renderCampaignRow. Deliberately understated (small, dim, underline-only
+ * on hover/focus) so it never reads as the primary row action; Play/Start already resumes. */
+.osadaListRowStartOver {
+    flex: 0 0 auto;
+    margin-left: 8px;
+    padding-left: 8px;
+    border-left: 1px solid var(--osada-border-dim, rgba(255, 255, 255, 0.2));
+    white-space: nowrap;
+    font-size: 10px;
+    font-weight: normal;
+    color: var(--osada-text-dim);
+    cursor: pointer;
+}
+
+.osadaListRowStartOver:hover,
+.osadaListRowStartOver:focus {
+    color: var(--osada-brass);
+    text-decoration: underline;
+    outline: none;
 }
 
 /* Story-campaign marker (row + dossier header) — brass open-book icon, see
@@ -6488,6 +6627,17 @@ hr {
 /* Late overrides replace fixed English pseudo-element labels with localized data attributes. */
 #smCPlayBut::after, #smSPlayBut::after, #smCBackBut::after, #smSBackBut::after {
     content: attr(data-label);
+    display: block;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Only the two Play plates are flex-centred (see their block above); the Back plates still get
+ * their vertical centring from the legacy line-height, so they must keep inheriting it. */
+#smCPlayBut::after, #smSPlayBut::after {
+    line-height: 1.15;
 }
 
 @media (max-width: 640px) {
@@ -7580,4 +7730,32 @@ hr {
     .osada-mp-action-card {
         min-height: 205px;
     }
+}
+
+/* Quiet save-state indicator in the top status bar (docs/design/save-recovery.md sec 6) --
+ * presentation only, see SaveStatusPresenter.kt for the state machine it renders. */
+.osadaSaveStatus {
+    flex: 0 0 auto;
+    margin-left: 8px;
+    padding: 0 4px;
+    font-size: 10px;
+    font-weight: normal;
+    white-space: nowrap;
+    color: var(--osada-text-dim);
+    min-width: 0;
+}
+
+.osadaSaveStatus--saving {
+    color: var(--osada-text-dim);
+}
+
+.osadaSaveStatus--saved {
+    color: var(--osada-brass);
+}
+
+.osadaSaveStatus--failed {
+    color: #ff6b6b;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: underline;
 }

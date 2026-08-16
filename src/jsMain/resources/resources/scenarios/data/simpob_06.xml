@@ -34,11 +34,11 @@
   <hex row="4" col="16" terrain="10" name="Salmysh"/>
   <hex row="4" col="19" road="33"/>
   <hex row="4" col="22" road="17"/>
-  <hex row="4" col="24" rail="17" owner="0" flag="53" victory="0"/>
+  <hex row="4" col="24" rail="17" owner="0" flag="100" victory="0"/>
   <hex row="5" col="7" terrain="10" name="Yangiz"/>
   <hex row="5" col="14" road="17"/>
   <hex row="5" col="15" terrain="10" name="Salmysh"/>
-  <hex row="5" col="17" terrain="1" road="187" name="Imangulovo" owner="0" flag="53"/>
+  <hex row="5" col="17" terrain="1" road="187" name="Imangulovo" owner="0" flag="100"/>
   <hex row="5" col="18" road="34"/>
   <hex row="5" col="19" terrain="2"/>
   <hex row="5" col="22" road="9"/>
@@ -49,7 +49,7 @@
   <hex row="6" col="15" road="24"/>
   <hex row="6" col="16" terrain="10" road="18" name="Salmysh"/>
   <hex row="6" col="19" terrain="2"/>
-  <hex row="6" col="20" terrain="2" owner="0" flag="53"/>
+  <hex row="6" col="20" terrain="2" owner="0" flag="100"/>
   <hex row="6" col="23" road="9" rail="34"/>
   <hex row="6" col="24" rail="33"/>
   <hex row="7" col="0" terrain="10" name="Kargalka"/>
@@ -106,13 +106,13 @@
   <hex row="11" col="22" rail="160" deploy="0"/>
   <hex row="11" col="23" deploy="0"/>
   <hex row="11" col="25" deploy="0"/>
-  <hex row="11" col="27" terrain="1" road="187" name="Grigoryevka" owner="0" flag="53"/>
+  <hex row="11" col="27" terrain="1" road="187" name="Grigoryevka" owner="0" flag="100"/>
   <hex row="11" col="28" terrain="1" road="187" name="Grigoryevka"/>
   <hex row="12" col="6" terrain="10" name="Kargalka"/>
   <hex row="12" col="7" terrain="10" name="Kargalka"/>
   <hex row="12" col="14" terrain="10" name="Yangiz"/>
   <hex row="12" col="15" terrain="10" road="18" name="Yangiz"/>
-  <hex row="12" col="16" terrain="1" road="187" name="Maryevskyi" owner="1" flag="19"/>
+  <hex row="12" col="16" terrain="1" road="187" name="Maryevskyi" owner="1" flag="103"/>
   <hex row="12" col="20" terrain="10" name="Salmysh"/>
   <hex row="12" col="21" rail="10"/>
   <hex row="12" col="22" rail="160" deploy="0"/>
@@ -145,12 +145,12 @@
   <hex row="14" col="21" terrain="8"/>
   <hex row="14" col="22" rail="144"/>
   <hex row="14" col="26" deploy="0"/>
-  <hex row="14" col="27" terrain="1" road="187" name="Petropavloskoye" owner="0" flag="53" deploy="0"/>
+  <hex row="14" col="27" terrain="1" road="187" name="Petropavloskoye" owner="0" flag="100" deploy="0"/>
   <hex row="14" col="28" road="33" deploy="0"/>
   <hex row="15" col="2" terrain="10" name="Srednyaya Kargalka"/>
   <hex row="15" col="3" terrain="10" name="Srednyaya Kargalka"/>
   <hex row="15" col="11" terrain="10" name="Kargalka"/>
-  <hex row="15" col="13" terrain="1" road="187" name="Mayorskoye" owner="1" flag="19"/>
+  <hex row="15" col="13" terrain="1" road="187" name="Mayorskoye" owner="1" flag="103"/>
   <hex row="15" col="14" road="49"/>
   <hex row="15" col="16" terrain="8"/>
   <hex row="15" col="17" terrain="8"/>
@@ -240,7 +240,7 @@
   <hex row="18" col="20" terrain="10" name="Sakmara"/>
   <hex row="18" col="21" rail="26"/>
   <hex row="18" col="22" rail="33"/>
-  <hex row="18" col="24" terrain="1" road="187" name="Nizhnie Chebenki " owner="1" flag="19" victory="1">
+  <hex row="18" col="24" terrain="1" road="187" name="Nizhnie Chebenki " owner="1" flag="103" victory="1">
     <unit id="42270" owner="1" flag="104" face="0" transport="42344" exp="200"/>
   </hex>
   <hex row="18" col="25">
@@ -248,7 +248,7 @@
   </hex>
   <hex row="18" col="26" road="130"/>
   <hex row="18" col="28" terrain="1" road="187"/>
-  <hex row="18" col="29" terrain="1" road="187" name="Verkhnie Chebenki" owner="1" flag="19" victory="1">
+  <hex row="18" col="29" terrain="1" road="187" name="Verkhnie Chebenki" owner="1" flag="103" victory="1">
     <unit id="42270" owner="1" flag="104" face="0" transport="42344" exp="44" ldr="1"/>
   </hex>
   <hex row="18" col="30" terrain="10" name="Sakmara"/>
@@ -269,7 +269,7 @@
   <hex row="19" col="13" terrain="10" name="Sakmara"/>
   <hex row="19" col="14" terrain="10" name="Kargalka"/>
   <hex row="19" col="15" terrain="10" name="Sakmara"/>
-  <hex row="19" col="16" terrain="1" road="187" name="Sakmara" owner="1" flag="19" victory="1">
+  <hex row="19" col="16" terrain="1" road="187" name="Sakmara" owner="1" flag="103" victory="1">
     <unit id="42401" owner="1" flag="104" face="0" transport="42349" exp="160"/>
   </hex>
   <hex row="19" col="17" terrain="10" name="Sakmara"/>
@@ -319,7 +319,7 @@
   <hex row="20" col="22" rail="9">
     <unit id="42270" owner="1" flag="104" face="0" exp="200"/>
   </hex>
-  <hex row="20" col="23" terrain="1" road="187" rail="136" name="Belovka" owner="1" flag="19">
+  <hex row="20" col="23" terrain="1" road="187" rail="136" name="Belovka" owner="1" flag="103">
     <unit id="42270" owner="1" flag="104" face="0" transport="42344" exp="4"/>
   </hex>
   <hex row="20" col="24" terrain="1" road="187" name="Belovka"/>
@@ -348,7 +348,7 @@
   <hex row="21" col="7" rail="144"/>
   <hex row="21" col="8" terrain="10" name="Sakmara"/>
   <hex row="21" col="9" terrain="10" road="18" name="Sakmara"/>
-  <hex row="21" col="10" terrain="1" road="33" name="Seitovsky Posad " owner="1" flag="19" victory="1">
+  <hex row="21" col="10" terrain="1" road="33" name="Seitovsky Posad " owner="1" flag="103" victory="1">
     <unit id="42397" owner="1" flag="104" face="0" transport="42349" exp="100"/>
   </hex>
   <hex row="21" col="11" terrain="10" name="Sakmara"/>
@@ -443,7 +443,7 @@
     <unit id="502" owner="1" flag="104" face="0" exp="4"/>
   </hex>
   <hex row="23" col="30" rail="130"/>
-  <hex row="23" col="32" terrain="1" road="187" rail="136" name="Chebenki" owner="1" flag="19">
+  <hex row="23" col="32" terrain="1" road="187" rail="136" name="Chebenki" owner="1" flag="103">
     <unit id="42270" owner="1" flag="104" face="0" transport="42344" exp="100"/>
   </hex>
   <hex row="23" col="33" rail="136">
@@ -578,7 +578,7 @@
   <hex row="27" col="26">
     <unit id="502" owner="1" flag="104" face="0" exp="4"/>
   </hex>
-  <hex row="27" col="37" terrain="1" road="17" name="Studentsy" owner="1" flag="19"/>
+  <hex row="27" col="37" terrain="1" road="17" name="Studentsy" owner="1" flag="103"/>
   <hex row="28" col="0" terrain="8"/>
   <hex row="28" col="1" terrain="8"/>
   <hex row="28" col="2" terrain="10" name="Sakmara"/>
@@ -586,7 +586,7 @@
   <hex row="28" col="4" terrain="8"/>
   <hex row="28" col="5" terrain="8"/>
   <hex row="28" col="6" terrain="1" road="187" name="Orenburg"/>
-  <hex row="28" col="7" terrain="1" road="187" name="Orenburg" owner="1" flag="19">
+  <hex row="28" col="7" terrain="1" road="187" name="Orenburg" owner="1" flag="103">
     <unit id="42267" owner="1" flag="104" face="0" exp="4"/>
   </hex>
   <hex row="28" col="8" terrain="1" road="187" rail="17" name="Orenburg">
@@ -654,7 +654,7 @@
   <hex row="30" col="5" terrain="1" road="187" name="Orenburg"/>
   <hex row="30" col="6" terrain="1" road="187" name="Orenburg"/>
   <hex row="30" col="7" terrain="1" road="187" name="Orenburg"/>
-  <hex row="30" col="8" terrain="1" road="187" rail="17" name="Orenburg" owner="1" flag="19" victory="1">
+  <hex row="30" col="8" terrain="1" road="187" rail="17" name="Orenburg" owner="1" flag="103" victory="1">
     <unit id="42267" owner="1" flag="104" face="0" exp="4"/>
   </hex>
   <hex row="30" col="9" terrain="1" road="187" name="Orenburg">
@@ -669,7 +669,7 @@
     <unit id="502" owner="1" flag="104" face="0" exp="4"/>
   </hex>
   <hex row="30" col="20" terrain="2"/>
-  <hex row="30" col="21" terrain="2" owner="1" flag="19">
+  <hex row="30" col="21" terrain="2" owner="1" flag="103">
     <unit id="42267" owner="1" flag="104" face="0" exp="4"/>
   </hex>
   <hex row="30" col="22">
@@ -684,7 +684,7 @@
   <hex row="31" col="1" terrain="8"/>
   <hex row="31" col="2" terrain="15" name="Ural"/>
   <hex row="31" col="3" terrain="8"/>
-  <hex row="31" col="6" terrain="1" road="187" name="Orenburg" owner="1" flag="19">
+  <hex row="31" col="6" terrain="1" road="187" name="Orenburg" owner="1" flag="103">
     <unit id="42267" owner="1" flag="104" face="0" exp="4"/>
   </hex>
   <hex row="31" col="7" terrain="1" road="187" name="Orenburg"/>
@@ -698,7 +698,7 @@
   <hex row="31" col="14" road="40"/>
   <hex row="31" col="15" road="130"/>
   <hex row="31" col="16" road="40"/>
-  <hex row="31" col="17" terrain="1" road="171" name="Nezhinka" owner="1" flag="19">
+  <hex row="31" col="17" terrain="1" road="171" name="Nezhinka" owner="1" flag="103">
     <unit id="42267" owner="1" flag="104" face="0" exp="4"/>
   </hex>
   <hex row="31" col="18" road="40"/>
@@ -725,7 +725,7 @@
   <hex row="32" col="5" terrain="15" name="Ural"/>
   <hex row="32" col="6" terrain="15" name="Ural"/>
   <hex row="32" col="7" terrain="10" road="17" name="Ural"/>
-  <hex row="32" col="8" terrain="1" road="187" rail="17" name="Orenburg" owner="1" flag="19">
+  <hex row="32" col="8" terrain="1" road="187" rail="17" name="Orenburg" owner="1" flag="103">
     <unit id="42267" owner="1" flag="104" face="0" exp="4"/>
   </hex>
   <hex row="32" col="9" terrain="15" name="Ural"/>
@@ -765,7 +765,7 @@
   <hex row="33" col="12" terrain="15" name="Ural"/>
   <hex row="33" col="13" terrain="15" name="Ural"/>
   <hex row="33" col="14" terrain="15" name="Ural"/>
-  <hex row="33" col="15" terrain="1" road="187" name="Blagoslovenka" owner="1" flag="19">
+  <hex row="33" col="15" terrain="1" road="187" name="Blagoslovenka" owner="1" flag="103">
     <unit id="728" owner="1" flag="104" face="0" exp="4"/>
   </hex>
   <hex row="33" col="16" terrain="15" name="Ural"/>
@@ -807,7 +807,7 @@
   <hex row="34" col="23" terrain="8"/>
   <hex row="34" col="24" terrain="15" name="Ural"/>
   <hex row="34" col="25" terrain="15" name="Ural"/>
-  <hex row="34" col="26" terrain="1" road="187" name="Kamenno-Ozornoye" owner="0" flag="53">
+  <hex row="34" col="26" terrain="1" road="187" name="Kamenno-Ozornoye" owner="0" flag="100">
     <unit id="46756" owner="0" flag="192" face="0" exp="200"/>
   </hex>
   <hex row="34" col="28" road="136"/>
@@ -871,7 +871,7 @@
   <hex row="36" col="30" terrain="8"/>
   <hex row="36" col="31" terrain="8"/>
   <hex row="36" col="32" terrain="1" road="187" name="Vyazovka"/>
-  <hex row="36" col="33" terrain="1" road="187" name="Vyazovka" owner="0" flag="53"/>
+  <hex row="36" col="33" terrain="1" road="187" name="Vyazovka" owner="0" flag="100"/>
   <hex row="36" col="34" road="40"/>
   <hex row="36" col="35" road="136"/>
   <hex row="37" col="5" road="33"/>

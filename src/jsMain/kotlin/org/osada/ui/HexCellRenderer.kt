@@ -226,7 +226,19 @@ internal class HexCellRenderer(
     }
 }
 
-/** Unit flags are sprite-sheet indices, while Player.country is the zero-based equipment-country
- * id. Scenario-authored units may also deliberately use a flag different from their owner, so the
- * renderer must use the unit's stable flag value rather than re-deriving it from the player. */
-internal fun strategicUnitFlag(unit: GameUnit): Int = unit.flag
+/**
+ * The `flags_med.png` COLUMN for [unit]'s flag, for the strategic-zoom overlay.
+ *
+ * Scenario-authored units may deliberately fly a flag other than their owner's (partisans, foreign
+ * volunteers, captured equipment), so the unit's own stable `flag` is the source — never
+ * `Player.country` re-derived from the owner.
+ *
+ * `GameUnit.flag` is ONE-BASED, though: the scenario XML writes `country + 1` (Spartacus' Roman
+ * player is country 307 and its units carry `flag="308"`), which is also why the big-flag asset is
+ * `flag_big_${unit.flag}.png` and why `CursorRenderer`/`EquipmentWindowBuilder` both subtract one
+ * before indexing the sheet. `Hex.flag`, by contrast, is the zero-based country id — the same
+ * numbering `Player.country` uses, which is what lets `OverlayRenderer.drawVictoryHexes` fall back
+ * to `getPlayer(hex.owner).country` for a hidden objective. Returning `unit.flag` raw mixed the two
+ * conventions in one function and drew every strategic-zoom unit flag one country to the right.
+ */
+internal fun strategicUnitFlag(unit: GameUnit): Int = (unit.flag - 1).coerceAtLeast(0)

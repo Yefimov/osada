@@ -1,9 +1,10 @@
 package org.osada.ui
 
-import kotlinx.browser.localStorage
-import org.osada.VERSION
+import org.osada.Game
+import org.osada.current
 import org.osada.difficultyModifiers
 import org.osada.i18n.I18n
+import org.osada.save.CampaignRunMetadata
 import org.osada.scenario.Campaign
 import kotlin.math.roundToInt
 
@@ -97,27 +98,62 @@ internal object StartMenuCampaignData {
         val difficulty = byId("smCamp")?.asDynamic()?.selectedDifficulty as? Int ?: DIFFICULTY_HISTORICAL
         byId("smCampPrestige")?.innerHTML = "<b>${I18n.t("campaign.start_prestige.label")}</b><br/>" +
             I18n.formatNumber(Campaign.computeStartPrestige(base, difficulty)) + "&nbsp;" + UIBuilder.currencyIcon
+        updatePlayButtonLabel(campaign.file as? String)
     }
 
-    /** The in-progress campaign from localStorage: (campaign file, 0-based scenario index).
-     *  This is the SAME single-slot campaign block the main menu's Continue restores from —
-     *  there is no per-campaign progress storage, so at most one campaign can be annotated. */
-    fun activeCampaignProgress(): Pair<String, Int>? {
-        val majorVersion = VERSION.split(".").take(2).joinToString(".")
-        val raw = localStorage.getItem("osada-campaign-$majorVersion")
-        return if (raw == null) {
-            null
-        } else {
-            try {
-                val data = JSON.parse<dynamic>(raw)
-                val file = data.file as? String
-                // Campaign.setScenarioById treats this id as the index into the campaign's
-                // scenario array, so it doubles as the operation ordinal.
-                if (file == null) null else Pair(file, data.scenario as? Int ?: 0)
-            } catch (_: Throwable) {
-                null
+    /** The Play button resumes an existing run rather than silently restarting it (design doc
+     *  save-recovery.md sec 2: "Selecting an In progress campaign resumes its run directly"). Its
+     *  label reflects that so the button never claims "Start" while it is actually about to resume. */
+    private fun updatePlayButtonLabel(file: String?) {
+        val playBut = byId("smCPlayBut") ?: return
+        val hasRun = file != null && campaignRunsByFile().containsKey(file)
+        playBut.title = I18n.t(if (hasRun) "campaign.resume.help" else "campaign.start.help")
+        playBut.setAttribute("data-label", I18n.t(if (hasRun) "campaign.resume.label" else "campaign.start.label"))
+    }
+
+    /** Every campaign run currently in the browser repository, keyed by campaign file --
+     *  replaces the old single-slot `activeCampaignProgress()`: every campaign row can now show
+     *  its own independent progress instead of at most one campaign ever being annotated. */
+    fun campaignRunsByFile(): Map<String, CampaignRunMetadata> =
+        Game.current
+            ?.state
+            ?.listCampaignRuns()
+            ?.associateBy { it.campaignFile }
+            ?: emptyMap()
+
+    /**
+     * Localized note text + tooltip for one campaign row, shared by the initial render
+     * ([StartMenuCampaignScreen]) and the language-switch re-render ([LiveLocalization]) so the
+     * wording is defined in exactly one place.
+     *
+     * A finished run reports what it finished AS: a campaign that ended in defeat says so rather
+     * than borrowing "Completed", which in both shipped locales reads as an accomplishment
+     * ("Пройдена"). The tooltip carries the last-played timestamp, which the roadmap's P0 row item
+     * asks for but which had nowhere to go on a single-line note.
+     */
+    fun progressNoteText(
+        metadata: CampaignRunMetadata,
+        operations: Int?,
+    ): Pair<String, String> {
+        val current = metadata.campaignScenario + 1
+        val text =
+            when {
+                metadata.completed && metadata.outcome == "lose" -> I18n.t("campaign.progress.defeated")
+                metadata.completed -> I18n.t("campaign.progress.completed")
+                operations != null ->
+                    I18n.t("campaign.progress.full", mapOf("current" to current, "total" to operations))
+                else -> I18n.t("campaign.progress.short", mapOf("current" to current))
             }
-        }
+        return text to lastPlayedTooltip(metadata)
+    }
+
+    /** "<what the note means> — Last played 16.08.2026 14:03", or just the former when the run
+     *  predates the index carrying a timestamp (`lastPlayedAt` 0.0 = unknown, never epoch 1970). */
+    private fun lastPlayedTooltip(metadata: CampaignRunMetadata): String {
+        val help = I18n.t("campaign.progress.help")
+        if (metadata.lastPlayedAt <= 0.0) return help
+        val stamp = I18n.formatDateTime(metadata.lastPlayedAt)
+        return "$help — " + I18n.t("campaign.progress.last_played", mapOf("when" to stamp))
     }
 
     /** Lazily computes and toggles the collapsible campaign-path (victory/defeat tree). */

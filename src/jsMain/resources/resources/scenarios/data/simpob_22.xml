@@ -110,7 +110,7 @@
   <hex row="3" col="16" terrain="3"/>
   <hex row="3" col="17" terrain="3"/>
   <hex row="3" col="18" terrain="3"/>
-  <hex row="3" col="19" terrain="1" road="187" name="Nizhnetobolnoye" owner="1" flag="19">
+  <hex row="3" col="19" terrain="1" road="187" name="Nizhnetobolnoye" owner="1" flag="103">
     <unit id="42271" owner="1" flag="104" face="0" transport="42344" exp="144"/>
   </hex>
   <hex row="3" col="20" terrain="10" name="Tobol"/>
@@ -215,7 +215,7 @@
   <hex row="7" col="1" terrain="3"/>
   <hex row="7" col="2" terrain="3"/>
   <hex row="7" col="3" terrain="3"/>
-  <hex row="7" col="4" terrain="1" road="187" name="Chashinskiy" owner="1" flag="19" victory="1">
+  <hex row="7" col="4" terrain="1" road="187" name="Chashinskiy" owner="1" flag="103" victory="1">
     <unit id="42271" owner="1" flag="104" face="0" transport="42344" exp="144"/>
   </hex>
   <hex row="7" col="5" terrain="3"/>
@@ -359,10 +359,10 @@
   <hex row="12" col="9" terrain="3" road="3"/>
   <hex row="12" col="10" road="40"/>
   <hex row="12" col="11" terrain="3" road="130"/>
-  <hex row="12" col="12" terrain="1" road="187" name="Sirenevyy" owner="1" flag="19">
+  <hex row="12" col="12" terrain="1" road="187" name="Sirenevyy" owner="1" flag="103">
     <unit id="42271" owner="1" flag="104" face="0" transport="42344" exp="144"/>
   </hex>
-  <hex row="12" col="14" terrain="2" owner="1" flag="19">
+  <hex row="12" col="14" terrain="2" owner="1" flag="103">
     <unit id="42271" owner="1" flag="104" face="0" transport="42344" exp="164"/>
   </hex>
   <hex row="12" col="16" terrain="10" name="Tobol"/>
@@ -406,7 +406,7 @@
   <hex row="14" col="3" terrain="3" road="130"/>
   <hex row="14" col="4" road="40"/>
   <hex row="14" col="5" terrain="1" road="187" name="Vvedenskoye "/>
-  <hex row="14" col="6" terrain="1" road="187" name="Vvedenskoye " owner="1" flag="19">
+  <hex row="14" col="6" terrain="1" road="187" name="Vvedenskoye " owner="1" flag="103">
     <unit id="42271" owner="1" flag="104" face="0" transport="42344" exp="164" ldr="1"/>
   </hex>
   <hex row="14" col="7" road="136"/>
@@ -421,7 +421,7 @@
   <hex row="14" col="12" terrain="1" road="187" rail="40" name="Kurgan">
     <unit id="42255" owner="1" flag="104" face="0" transport="42350" exp="38" ldr="1"/>
   </hex>
-  <hex row="14" col="13" terrain="1" road="187" rail="168" name="Kurgan" owner="1" flag="19" victory="1">
+  <hex row="14" col="13" terrain="1" road="187" rail="168" name="Kurgan" owner="1" flag="103" victory="1">
     <unit id="42271" owner="1" flag="104" face="0" transport="42344" exp="144" ldr="1"/>
   </hex>
   <hex row="14" col="14" terrain="1" road="187" name="Kurgan"/>
@@ -529,7 +529,7 @@
   <hex row="17" col="24" road="40">
     <unit id="42324" owner="1" flag="104" face="0" transport="42344" exp="164"/>
   </hex>
-  <hex row="17" col="25" terrain="1" road="187" rail="16" name="Vargashi" owner="1" flag="19" victory="1">
+  <hex row="17" col="25" terrain="1" road="187" rail="16" name="Vargashi" owner="1" flag="103" victory="1">
     <unit id="42271" owner="1" flag="104" face="0" transport="42344" exp="154"/>
   </hex>
   <hex row="17" col="31" road="24"/>
@@ -541,7 +541,7 @@
     <unit id="42271" owner="1" flag="104" face="0" transport="42344" exp="144"/>
   </hex>
   <hex row="18" col="10" terrain="10" name="Tobol"/>
-  <hex row="18" col="14" terrain="1" road="187" name="Pridorozhnyy" owner="1" flag="19">
+  <hex row="18" col="14" terrain="1" road="187" name="Pridorozhnyy" owner="1" flag="103">
     <unit id="42271" owner="1" flag="104" face="0" transport="42344" exp="154"/>
   </hex>
   <hex row="18" col="15" terrain="3"/>
@@ -560,7 +560,7 @@
   <hex row="18" col="30" road="40"/>
   <hex row="18" col="31" road="129"/>
   <hex row="18" col="32" road="130"/>
-  <hex row="18" col="36" terrain="2" owner="0" flag="53" deploy="0"/>
+  <hex row="18" col="36" terrain="2" owner="0" flag="100" deploy="0"/>
   <hex row="18" col="37" terrain="2" deploy="0"/>
   <hex row="19" col="7" road="34"/>
   <hex row="19" col="8" road="34">
@@ -568,7 +568,7 @@
   </hex>
   <hex row="19" col="10" terrain="10" name="Tobol"/>
   <hex row="19" col="12" terrain="1" name="Ketovo"/>
-  <hex row="19" col="13" terrain="1" road="187" name="Ketovo" owner="1" flag="19">
+  <hex row="19" col="13" terrain="1" road="187" name="Ketovo" owner="1" flag="103">
     <unit id="42271" owner="1" flag="104" face="0" transport="42344" exp="144"/>
   </hex>
   <hex row="19" col="14" terrain="3" road="33"/>
@@ -643,7 +643,7 @@
   <hex row="22" col="36" terrain="15"/>
   <hex row="22" col="37" deploy="0"/>
   <hex row="22" col="38" rail="136"/>
-  <hex row="22" col="39" rail="130" owner="0" flag="53" victory="0"/>
+  <hex row="22" col="39" rail="130" owner="0" flag="100" victory="0"/>
   <hex row="22" col="40" rail="48"/>
   <hex row="22" col="41" rail="40"/>
   <hex row="23" col="0" road="34"/>
@@ -665,7 +665,7 @@
   <hex row="24" col="8">
     <unit id="42271" owner="1" flag="104" face="0" transport="42344" exp="144"/>
   </hex>
-  <hex row="24" col="9" terrain="10" name="Tobol" owner="1" flag="19" victory="1"/>
+  <hex row="24" col="9" terrain="10" name="Tobol" owner="1" flag="103" victory="1"/>
   <hex row="24" col="10" terrain="10" name="Tobol"/>
   <hex row="24" col="11" terrain="3"/>
   <hex row="24" col="12" terrain="3"/>
@@ -721,7 +721,7 @@
     <unit id="46756" owner="2" flag="192" face="0" exp="204"/>
   </hex>
   <hex row="29" col="26" rail="9"/>
-  <hex row="29" col="27" rail="144" owner="2" flag="77" victory="2">
+  <hex row="29" col="27" rail="144" owner="2" flag="191" victory="2">
     <unit id="46756" owner="2" flag="192" face="0" exp="204"/>
   </hex>
   <hex row="29" col="29">

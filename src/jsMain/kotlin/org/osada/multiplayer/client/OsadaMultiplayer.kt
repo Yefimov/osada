@@ -37,6 +37,7 @@ import org.osada.multiplayer.ui.LobbyModel
 import org.osada.multiplayer.ui.LobbyRow
 import org.osada.multiplayer.ui.MultiplayerScreen
 import org.osada.multiplayer.ui.ScenarioChoice
+import org.osada.ui.ObserverModeLock
 import org.osada.ui.StartMenuBuilder
 import org.osada.uiSettings
 import kotlin.js.Date
@@ -201,7 +202,7 @@ object OsadaMultiplayer : RoomLinkListener {
         welcome.reconnectToken?.let { rememberReconnectToken(welcome.roomCode, it) }
         if (welcome.started) {
             // Rejoining a match in progress: the server pushes its stored snapshot next.
-            started = true
+            beginMatch()
             waitingForScenario = true
             welcome.scenarioFile?.let(::loadScenario)
         }
@@ -339,8 +340,23 @@ object OsadaMultiplayer : RoomLinkListener {
 
     // -- Match --------------------------------------------------------------------------------
 
-    private fun handleStart(payload: dynamic) {
+    /**
+     * Marks this client as being IN a match — the single place `started` is raised.
+     *
+     * Observer Mode is switched off here rather than left to the settings screen: no fog of war and
+     * shown hidden objectives give one seat information the other does not have, and Stalin Regime
+     * multiplies that seat's combat/movement/prestige by ten. All three are single-player
+     * conveniences and none of them may follow a player into a shared, host-authoritative match
+     * (2026-08-16 user request). [ObserverModeLock.refresh] then keeps the
+     * controls greyed out and unclickable for as long as [active] stays true.
+     */
+    private fun beginMatch() {
         started = true
+        ObserverModeLock.clearAll()
+    }
+
+    private fun handleStart(payload: dynamic) {
+        beginMatch()
         hostParticipantId = payload.hostParticipantId as? String ?: hostParticipantId
         isHost = hostParticipantId == selfId
         revision = 0

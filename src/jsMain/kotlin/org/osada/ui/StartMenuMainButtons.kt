@@ -15,7 +15,10 @@ internal object StartMenuMainButtons {
         val mainButtons =
             listOf(
                 Triple("continuegame", "menu.main.continue", "primary"),
-                Triple("restartmission", "menu.main.restart_mission", ""),
+                // Its own brass "caution" plate: it sits directly under the red CONTINUE plate and
+                // throws away the whole battle, so it must not read as one more neutral grey entry
+                // next to New Campaign / Load Game (2026-08-16 user request).
+                Triple("restartmission", "menu.main.restart_mission", "caution"),
                 Triple("newcampaign", "menu.main.new_campaign", ""),
                 Triple("newscenario", "menu.main.single_scenario", ""),
                 Triple("multiplayer", "menu.main.multiplayer", ""),
@@ -43,6 +46,7 @@ internal object StartMenuMainButtons {
             button.className = "smMainButton osada-menu-btn" +
                 when (variant) {
                     "primary" -> " osada-menu-btn--primary"
+                    "caution" -> " osada-menu-btn--caution"
                     "muted" -> " osada-menu-btn--muted"
                     else -> ""
                 }

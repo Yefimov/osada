@@ -1,5 +1,6 @@
 package org.osada.ui
 
+import org.osada.ui.briefing.BriefingLine
 import org.osada.ui.briefing.BriefingParser
 import org.osada.ui.briefing.CampaignBriefingCatalog
 import org.w3c.xhr.XMLHttpRequest
@@ -65,7 +66,31 @@ internal object StoryCampaignDetector {
     private fun hasStoryContent(entry: dynamic): Boolean {
         val scenarioFile = (entry.scenario as? String)?.lowercase()
         val catalogHit = scenarioFile != null && scenarioFile in CampaignBriefingCatalog.storyScenarioFiles
-        val embeddedDialogue = BriefingParser.parse(scenarioTitle = "", rawData = entry).dialogue.isNotEmpty()
-        return catalogHit || embeddedDialogue
+        val authoredDialogue =
+            BriefingParser
+                .parse(scenarioTitle = "", rawData = entry)
+                .dialogue
+                .any { !isPathSelectionPrompt(it) }
+        return catalogHit || authoredDialogue
     }
+
+    /**
+     * A branch node's own prompt is NOT story content.
+     *
+     * `tools/og-import/deploy_campaigns.py` emits one dialogue line per OG choice node, so that the
+     * player can pick a path, and marks it `speaker = "General Staff"` / `role = "Path selection"`
+     * precisely because no character is speaking — it is a menu OG renders as a system screen. Every
+     * imported branching campaign therefore has "dialogue" whether or not anyone wrote a word of it,
+     * which is what put the story badge on "Forward, Comrade!", "Greece: Resistance and Civil War"
+     * and "Sim Pobedishi!" — three campaigns with no authored narrative at all.
+     *
+     * Matched on the generator's own two marker fields rather than on the presence of `choices`: an
+     * authored conversation may legitimately branch too, and must keep counting as story.
+     */
+    private fun isPathSelectionPrompt(line: BriefingLine): Boolean =
+        line.role.equals(PATH_SELECTION_ROLE, ignoreCase = true) &&
+            line.speaker.equals(PATH_SELECTION_SPEAKER, ignoreCase = true)
+
+    private const val PATH_SELECTION_ROLE = "Path selection"
+    private const val PATH_SELECTION_SPEAKER = "General Staff"
 }

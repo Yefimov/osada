@@ -207,9 +207,12 @@ internal object StartMenuScenarioScreen {
         // two sides, so "this scenario's side" can only mean the playable one.
         val eqpName = (if (scenario != null) scenario[5] else null) as? String ?: ""
         val humanCountry = humanCountryOf(scenario)
+        // Curated name first (so the flag tooltip agrees with the side card and the Start plate),
+        // raw countryNames entry only as the fallback for the ids the table doesn't cover.
         val countryName =
             if (humanCountry != null) {
-                Equipment.getCountryNameByEqp(humanCountry, eqpName)
+                StartMenuListToolbar.countryDisplayLabel(humanCountry)
+                    ?: Equipment.getCountryNameByEqp(humanCountry, eqpName)
             } else {
                 ""
             }
@@ -235,19 +238,24 @@ internal object StartMenuScenarioScreen {
         // findable under "Spain" too, since the scenario dossier's own AI/human toggles let
         // you take either side. All country names go into the search text for the same reason.
         val allCountries = allCountriesOf(scenario)
+        // Search text carries the raw name AND both curated labels, so "vietnam" finds the Viet
+        // Minh scenario, "spain" finds Milicias Comunistas, and the pre-rename names players may
+        // still type ("Russian Empire", "Socialist Cuba") keep working.
         val allCountryNames =
-            allCountries.mapNotNull {
-                Equipment.getCountryName(it).takeIf { n ->
-                    n.isNotBlank() &&
-                        n != "Unknown"
-                }
-            }
+            allCountries
+                .flatMap {
+                    listOfNotNull(
+                        Equipment.getCountryName(it).takeIf { n -> n.isNotBlank() && n != "Unknown" },
+                        StartMenuListToolbar.countryDisplayLabel(it),
+                        StartMenuListToolbar.countryGroupLabel(it),
+                    )
+                }.distinct()
         StartMenuListToolbar.tagRow(
             row,
             index,
             title,
             "$title $group ${allCountryNames.joinToString(" ")}",
-            sides = allCountries.mapNotNull { StartMenuListToolbar.countryDisplayLabel(it) },
+            sides = allCountries.mapNotNull { StartMenuListToolbar.countryGroupLabel(it) }.distinct(),
             groupKey = group,
             groupRank = groupRank,
         )

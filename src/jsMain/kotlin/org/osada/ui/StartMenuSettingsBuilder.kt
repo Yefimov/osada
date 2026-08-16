@@ -154,6 +154,7 @@ internal object StartMenuSettingsBuilder {
         buildTopSliders()
         settingSections.forEach { buildSettingSection(it) }
         wireSettingsOkHandler()
+        ObserverModeLock.refresh()
     }
 
     // Slider rows need the same row scaffold as the checkbox rows below (and as PM): a
@@ -226,7 +227,11 @@ internal object StartMenuSettingsBuilder {
         // The red treatment is driven by balanceWarning, NOT by "has a caption". Keying it to the
         // caption meant adding an explanatory line to the Mobile section also painted its title as
         // a balance warning, which it is not.
-        if (section.balanceWarning) header.classList.add("osada-settings-header--observer")
+        if (section.balanceWarning) {
+            header.classList.add("osada-settings-header--observer")
+            // The only balance-warning section there is; [ObserverModeLock] needs to find it.
+            header.id = ObserverModeLock.HEADER_ID
+        }
         val title = addTag(header, "span")
         title.className = "osada-settings-header__title"
         title.textContent = I18n.t(section.titleKey)
@@ -283,6 +288,9 @@ internal object StartMenuSettingsBuilder {
         id: String,
         valueDiv: HTMLElement,
     ) {
+        // Locked during a multiplayer match — the click is a no-op rather than a silently-ignored
+        // state change, so the checkbox and the flag can never disagree.
+        if (id in ObserverModeLock.lockedIds && ObserverModeLock.isLocked()) return
         val current = uiSettings.getFlag(id)
         uiSettings.setFlag(id, !current)
         valueDiv.classList.toggle("checked", !current)

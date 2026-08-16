@@ -2,9 +2,7 @@
 
 package org.osada.ui
 
-import kotlinx.browser.localStorage
 import org.osada.GameHolder
-import org.osada.VERSION
 import org.osada.i18n.I18n
 import org.osada.model.Equipment
 import org.osada.model.getCountryNameByEqp
@@ -45,7 +43,7 @@ internal object LiveLocalization {
             "saveload",
             if (GameHolder.instance?.gameStarted == true) "menu.main.save_load" else "menu.main.load_game",
         )
-        savedGameSummary()?.takeIf(String::isNotBlank)?.let { summary ->
+        StartMenuBuilder.savedGameSummary()?.takeIf(String::isNotBlank)?.let { summary ->
             byId("continuegame")?.querySelector(".osada-menu-btn__sub")?.textContent = summary
         }
 
@@ -68,34 +66,6 @@ internal object LiveLocalization {
             title = subtitle
             querySelector(".osada-menu-btn__label")?.textContent = label
             querySelector(".osada-menu-btn__sub")?.textContent = subtitle
-        }
-    }
-
-    private fun savedGameSummary(): String? {
-        val majorVersion = VERSION.split(".").take(2).joinToString(".")
-        val raw = localStorage.getItem("osada-scenario-$majorVersion") ?: return null
-        return try {
-            val data = JSON.parse<dynamic>(raw)
-            val name = data.name as? String
-            val turn = data.turn as? Int
-            val maxTurns = data.maxTurns as? Int
-            when {
-                name != null && turn != null && maxTurns != null ->
-                    I18n.t(
-                        "menu.save.summary_full",
-                        mapOf("name" to name, "turn" to turn, "maxTurns" to maxTurns),
-                    )
-
-                name != null && turn != null ->
-                    I18n.t(
-                        "menu.save.summary_short",
-                        mapOf("name" to name, "turn" to turn),
-                    )
-
-                else -> ""
-            }
-        } catch (_: Throwable) {
-            ""
         }
     }
 
@@ -128,6 +98,9 @@ internal object LiveLocalization {
             refreshSettingRow(id, labelKey, StartMenuSettingsBuilder.sliderHelpKeys[id] ?: labelKey)
         }
         MobileSettingsBuilder.refreshLocalization()
+        // Re-written after the rows above: while a multiplayer match is running the Observer Mode
+        // rows carry the lock explanation, not their own help text.
+        ObserverModeLock.refresh()
         byId("smSetOkBut")?.apply {
             title = I18n.t("settings.done.help")
             setAttribute("data-label", I18n.t("common.done.label"))
@@ -238,7 +211,7 @@ internal object LiveLocalization {
         val list = byId("osadaCampList") ?: return
         val select = byId("smCampSel")?.querySelector("select") ?: return
         val options = select.asDynamic().options
-        val progress = StartMenuCampaignData.activeCampaignProgress()
+        val runs = StartMenuCampaignData.campaignRunsByFile()
         val rows = list.children
         for (index in 0 until rows.length) {
             val row = rows.item(index) as? org.w3c.dom.HTMLElement ?: continue
@@ -246,7 +219,7 @@ internal object LiveLocalization {
             val option = options[optionIndex] ?: continue
             val campaignIndex = (option.value as? String)?.toIntOrNull() ?: continue
             val campaign = StartMenuBuilder.campaignList().getOrNull(campaignIndex) ?: continue
-            applyCampaignRow(row, option, campaign, progress)
+            applyCampaignRow(row, option, campaign, runs)
         }
     }
 
@@ -254,7 +227,7 @@ internal object LiveLocalization {
         row: org.w3c.dom.HTMLElement,
         option: dynamic,
         campaign: dynamic,
-        progress: Pair<String, Int>?,
+        runs: Map<String, org.osada.save.CampaignRunMetadata>,
     ) {
         val operations = campaign.scenarios as? Int
         val years = StartMenuListToolbar.extractYears(option.text as? String ?: "")
@@ -268,25 +241,20 @@ internal object LiveLocalization {
                 "list.select_dossier.help",
                 mapOf("name" to (option.text as? String ?: "").trim()),
             )
-        applyCampaignProgressNote(row, campaign.file as? String, operations, progress)
+        applyCampaignProgressNote(row, campaign.file as? String, operations, runs)
     }
 
     private fun applyCampaignProgressNote(
         row: org.w3c.dom.HTMLElement,
         file: String?,
         operations: Int?,
-        progress: Pair<String, Int>?,
+        runs: Map<String, org.osada.save.CampaignRunMetadata>,
     ) {
-        if (progress == null || file != progress.first) return
+        val run = file?.let { runs[it] } ?: return
         val note = row.querySelector(".osadaListRowNote") as? org.w3c.dom.HTMLElement ?: return
-        val current = progress.second + 1
-        note.textContent =
-            if (operations != null) {
-                I18n.t("campaign.progress.full", mapOf("current" to current, "total" to operations))
-            } else {
-                I18n.t("campaign.progress.short", mapOf("current" to current))
-            }
-        note.title = I18n.t("campaign.progress.help")
+        val (text, title) = StartMenuCampaignData.progressNoteText(run, operations)
+        note.textContent = text
+        note.title = title
     }
 
     private fun refreshScenarioScreen() {

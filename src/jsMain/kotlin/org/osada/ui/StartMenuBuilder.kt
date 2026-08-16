@@ -1,8 +1,6 @@
 package org.osada.ui
 
-import kotlinx.browser.localStorage
 import org.osada.GameHolder
-import org.osada.VERSION
 import org.osada.i18n.I18n
 import org.w3c.dom.HTMLElement
 
@@ -50,6 +48,24 @@ internal object StartMenuBuilder {
         game?.newCampaign(campaignId, difficulty)
         byId("options")?.let { toggleButton(it, false) }
         game?.state?.saveSettings()
+    }
+
+    /** Resumes an existing campaign run (the campaign register's default Play action once a run
+     *  exists, and "Continue"'s per-row equivalent) instead of starting a fresh one. */
+    fun resumeCampaignRun(campaignRunId: String) {
+        makeHidden("gameToolTip")
+        makeHidden("smCamp")
+        makeHidden("startmenu")
+        val game = gameRef()
+        game?.state?.restoreCampaignRun(
+            campaignRunId,
+            onSuccess = { byId("options")?.let { toggleButton(it, false) } },
+            onFail = {
+                console.error("[osada] resumeCampaignRun failed for", campaignRunId)
+                makeVisible("startmenu")
+                makeVisible("smCamp")
+            },
+        )
     }
 
     fun startNewScenario(
@@ -189,33 +205,33 @@ internal object StartMenuBuilder {
         byId("restartmission")?.style?.display = if (available) "" else "none"
     }
 
-    /** null -> no saved game (hide Continue); "" -> save exists but metadata unreadable;
-     *  otherwise a short "Name · Turn n/m" summary. Reads a single localStorage key. */
-    private fun savedGameSummary(): String? {
-        val majorVersion = VERSION.split(".").take(2).joinToString(".")
-        val raw = localStorage.getItem("osada-scenario-$majorVersion") ?: return null
-        return try {
-            val data = JSON.parse<dynamic>(raw)
-            val name = data.name as? String
-            val turn = data.turn as? Int
-            val maxTurns = data.maxTurns as? Int
-            when {
-                name != null && turn != null && maxTurns != null ->
-                    I18n.t(
-                        "menu.save.summary_full",
-                        mapOf("name" to name, "turn" to turn, "maxTurns" to maxTurns),
-                    )
+    /**
+     * null -> no saved game (hide Continue); "" -> a save exists but its metadata is unreadable
+     * (show Continue, leave the subtitle alone); otherwise a short "Name · Turn n/m" summary.
+     *
+     * The save state itself comes from [org.osada.GameStatePersistence.savedGameSummary], which
+     * owns the storage keys. This used to read `osada-scenario-<major>` directly -- a key the
+     * per-campaign-run repository no longer writes and `clear()` deletes -- so Continue vanished
+     * from the menu entirely. Only the localization of an already-decided answer belongs here.
+     *
+     * Not private: [LiveLocalization] re-renders the same subtitle after a language switch and
+     * must phrase it identically.
+     */
+    internal fun savedGameSummary(): String? {
+        val summary = GameHolder.instance?.state?.savedGameSummary() ?: return null
+        return when {
+            summary.name.isBlank() -> ""
+            summary.maxTurns > 0 ->
+                I18n.t(
+                    "menu.save.summary_full",
+                    mapOf("name" to summary.name, "turn" to summary.turn, "maxTurns" to summary.maxTurns),
+                )
 
-                name != null && turn != null ->
-                    I18n.t(
-                        "menu.save.summary_short",
-                        mapOf("name" to name, "turn" to turn),
-                    )
-
-                else -> ""
-            }
-        } catch (_: Throwable) {
-            ""
+            else ->
+                I18n.t(
+                    "menu.save.summary_short",
+                    mapOf("name" to summary.name, "turn" to summary.turn),
+                )
         }
     }
 }

@@ -1,10 +1,8 @@
 package org.osada.ui
 
 import org.osada.i18n.I18n
-import org.osada.model.Equipment
-import org.osada.model.getCountryName
 import org.osada.ui.StartMenuListToolbar.THEATER_CENTERED
-import org.osada.ui.StartMenuListToolbar.countryDisplayLabel
+import org.osada.ui.StartMenuListToolbar.countryGroupLabel
 import org.osada.ui.StartMenuListToolbar.extractYears
 import org.osada.ui.StartMenuListToolbar.syncListHighlight
 import org.osada.ui.StartMenuListToolbar.theaterPlaceholder
@@ -217,7 +215,7 @@ internal object StartMenuListToolbar {
 
     /** Stamps the sort/search keys a row is ranked and filtered by. [year] and [size] are absent
      *  for scenario rows, which sort by campaign (document order) or by name only. [sides] is the
-     *  full set of side-filter labels ([countryDisplayLabel]) for every country playable in this
+     *  full set of side-filter labels ([countryGroupLabel]) for every country playable in this
      *  row's scenario/campaign — a row matches the dropdown if ANY of them is selected. Empty
      *  (group headers) never matches a side filter. [forceHidden] permanently excludes the row
      *  regardless of filter/search/sort state (used to hide specific campaigns from this
@@ -261,56 +259,15 @@ internal object StartMenuListToolbar {
     // Equipment.countryNames share a literal name ("Germany" appears 3 times, "USSR"/"Soviet
     // Union" 3 times) while others read confusingly on their own ("Red Russia" / "White Russia" /
     // "Cossack Hosts" don't visually cluster as "the same country" in an alphabetical dropdown).
-    // countryDisplayLabel re-labels the handful of ids where that actually matters (user request);
-    // everything else falls back to Equipment.getCountryName so no country can silently vanish.
+    // The naming table itself lives in [StartMenuCountryLabels] (class-size budget); these two
+    // one-liners exist so call sites keep reading against this object.
 
-    /** Curated overrides for country ids whose raw `countryNames` entry either collides
-     *  with another id's name, or would otherwise scatter alphabetically away from the other
-     *  factions of the same nation. The dominant/"default" id for a nation (e.g. plain Germany,
-     *  id 7, reused across every era after the eqp-merge) is deliberately left unlabeled — only
-     *  the rarer, colliding ids get a "Nation — Faction" suffix so they cluster under it. Verified
-     *  against the ~400 scenarios in scenariolist.js (2026-07-14): 55 distinct country ids appear;
-     *  every id below was confirmed by checking which scenario(s) actually use it. */
-    private val countryDisplayOverrides =
-        mapOf(
-            // Germany: id 7 stays plain "Germany" (113 scenarios, every era); id 86 is the same
-            // regime under a different eqp-lxf code (RD Road To/Siege Of Berlin, 1945) — merge it.
-            86 to "Germany",
-            117 to "Germany — Empire", // German Empire (Kaiserreich, WW1-era campaigns)
-            196 to "Germany — Revolutionaries", // German Revolutionaries (1918-19 Räterepublik)
-            188 to "Germany — Communists", // Red Germany
-            303 to "Germany — Waffen SS",
-            // Russia: id 19/61/89 are three efiles' spelling of the same Soviet Union and stay
-            // merged as before; the OTHER Russia-named factions are civil-war-era and distinct from
-            // each other AND from the USSR, but read better clustered under "Russia — X".
-            19 to "Soviet Union",
-            61 to "Soviet Union",
-            89 to "Soviet Union",
-            103 to "Russia — Communists", // Red Russia
-            100 to "Russia — Whites", // White Russia
-            189 to "Russia — Greens", // Russian Green Armies
-            191 to "Russia — Cossacks", // Cossack Hosts
-            // Hungary: id 4 stays plain; Red Hungary is the 1919 Soviet Republic.
-            187 to "Hungary — Communists",
-            // Spain: bn9s00 "Battle of Sesena" (eqp-lxf, id 28) confirmed vs a Soviet Union opponent —
-            // a 1936 Nationalist offensive on Madrid, so id 28 is the Nationalist side, same as id 225.
-            28 to "Spain — Nationalists",
-            225 to "Spain — Nationalists",
-            226 to "Spain — Republicans (Popular Army)",
-            91 to "Spain — Republicans",
-            // USA: id 9 stays plain; the Civil War factions don't share the "USA" word at all.
-            150 to "USA — Confederacy", // Confederate States
-            162 to "USA — Union", // Union States
-        )
+    /** The name this faction is CALLED — side cards, flag tooltips, "Start as ...". */
+    fun countryDisplayLabel(id: Int): String? = StartMenuCountryLabels.displayLabel(id)
 
-    /** The side-filter label for country [id], or null (never matches a filter) for an invalid/
-     *  blank/"Unknown" code — mirrors the old name-based blank check. */
-    fun countryDisplayLabel(id: Int): String? {
-        val override = countryDisplayOverrides[id]
-        if (override != null) return override
-        val name = Equipment.getCountryName(id)
-        return if (name.isBlank() || name == "Unknown") null else name
-    }
+    /** The country-filter BUCKET this faction answers to, or null (never matches a filter) for an
+     *  invalid/blank/"Unknown"/flagless code. Several ids deliberately share one bucket. */
+    fun countryGroupLabel(id: Int): String? = StartMenuCountryLabels.groupLabel(id)
 
     private fun rowsOf(list: HTMLElement): List<HTMLElement> {
         val children = list.children

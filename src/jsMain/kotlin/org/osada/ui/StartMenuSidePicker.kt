@@ -2,7 +2,7 @@ package org.osada.ui
 
 import org.osada.i18n.I18n
 import org.osada.model.Equipment
-import org.osada.model.getCountryNameByEqp
+import org.osada.model.getCountryName
 import org.osada.ui.StartMenuSidePicker.selectScenarioSide
 import org.osada.uiSettings
 import org.w3c.dom.HTMLElement
@@ -34,18 +34,23 @@ internal object StartMenuSidePicker {
 
     /** Distinct countries fighting on [side], primary player first, followed by any additional
      *  player/support countries — same de-dup rules as [StartMenuScenarioScreen.allCountriesOf]
-     *  but scoped to one side. */
+     *  but scoped to one side. Ids that name no nation (see [StartMenuCountryLabels]) are dropped
+     *  here rather than downstream: they must not inflate the card's "+N also fighting" count
+     *  either, and a null label would leave that badge counting a faction it cannot name. */
     private fun sideCountries(
         scenario: dynamic,
         side: Int,
     ): List<Int> {
         val players = scenario[3 + side] as? Array<dynamic> ?: return emptyList()
         val result = mutableListOf<Int>()
+
+        fun add(id: Int) {
+            if (id !in result && countryLabel(id) != null) result.add(id)
+        }
+
         for (player in players) {
-            (player.country as? Int)?.let { if (it !in result) result.add(it) }
-            (player.support as? Array<dynamic>)?.forEach { s ->
-                (s as? Int)?.let { if (it !in result) result.add(it) }
-            }
+            (player.country as? Int)?.let { add(it) }
+            (player.support as? Array<dynamic>)?.forEach { s -> (s as? Int)?.let { add(it) } }
         }
         return result
     }
@@ -55,11 +60,10 @@ internal object StartMenuSidePicker {
     private fun sideLabel(
         scenario: dynamic,
         side: Int,
-        eqpName: String,
     ): Pair<String, Int> {
         val countries = sideCountries(scenario, side)
         val name =
-            countries.firstOrNull()?.let { countryLabel(it, eqpName) }
+            countries.firstOrNull()?.let { countryLabel(it) }
                 ?: I18n.t("scenario.side.number", mapOf("number" to side + 1))
         return Pair(name, maxOf(0, countries.size - 1))
     }
@@ -92,16 +96,20 @@ internal object StartMenuSidePicker {
         updateStartButtonLabel(scenario, effectiveSide)
     }
 
+    /** The Start plate is a fixed-width single-line button, so it takes the SHORT form of the
+     *  side's name: "Start as Yugoslavia", not "Start as Yugoslavia — Communists" (which wrapped
+     *  onto a second row and spilled outside the plate — 2026-08-16 user report). The full label
+     *  stays on the side card right above it, and in the button's own hover title. */
     private fun updateStartButtonLabel(
         scenario: dynamic,
         side: Int,
     ) {
-        val eqpName = scenario[5] as? String ?: ""
-        val (name, _) = sideLabel(scenario, side, eqpName)
-        byId("smSPlayBut")?.setAttribute(
-            "data-label",
-            I18n.t("scenario.side.start_as", mapOf("country" to name)),
-        )
+        val (name, _) = sideLabel(scenario, side)
+        val short = sideCountries(scenario, side).firstOrNull()?.let { StartMenuCountryLabels.shortLabel(it) } ?: name
+        byId("smSPlayBut")?.apply {
+            setAttribute("data-label", I18n.t("scenario.side.start_as", mapOf("country" to short)))
+            title = I18n.t("scenario.side.start_as", mapOf("country" to name))
+        }
     }
 
     /** Rebuilds the two side cards + divider in place. Never recreates #smScenPlayers/#smSide0/
@@ -111,7 +119,6 @@ internal object StartMenuSidePicker {
         scenario: dynamic,
         selectedSide: Int,
     ): Int {
-        val eqpName = scenario[5] as? String ?: ""
         val players0 = scenario[3] as? Array<dynamic> ?: emptyArray()
         val players1 = scenario[4] as? Array<dynamic> ?: emptyArray()
         val available = booleanArrayOf(players0.isNotEmpty(), players1.isNotEmpty())
@@ -152,7 +159,7 @@ internal object StartMenuSidePicker {
         for (side in 0..1) {
             val container = byId("smSide$side") ?: continue
             clearTag(container)
-            buildSideCardContent(container, scenario, side, effectiveSelected, available[side], eqpName)
+            buildSideCardContent(container, scenario, side, effectiveSelected, available[side])
         }
         return effectiveSelected
     }
@@ -163,12 +170,11 @@ internal object StartMenuSidePicker {
         side: Int,
         selectedSide: Int,
         available: Boolean,
-        eqpName: String,
     ) {
-        val (name, extra) = sideLabel(scenario, side, eqpName)
+        val (name, extra) = sideLabel(scenario, side)
         val countries = sideCountries(scenario, side)
         val primaryCountry = countries.firstOrNull()
-        val extraNames = countries.drop(1).mapNotNull { countryLabel(it, eqpName) }
+        val extraNames = countries.drop(1).mapNotNull { countryLabel(it) }
         val isSelected = available && side == selectedSide
 
         applySideCardAttrs(container, isSelected, available, side == selectedSide)
@@ -280,12 +286,12 @@ internal object StartMenuSidePicker {
 }
 
 /** Naming fallback chain: curated [StartMenuListToolbar.countryDisplayLabel] -> raw country name
- *  (via the scenario's equipment set) -> null if neither resolves to something real. Top-level
- *  (not a [StartMenuSidePicker] member) purely to keep that object's function count in bounds. */
-private fun countryLabel(
-    country: Int,
-    eqpName: String,
-): String? =
+ *  -> null if neither resolves to something real. Top-level (not a [StartMenuSidePicker] member)
+ *  purely to keep that object's function count in bounds.
+ *
+ *  No eqp parameter: `getCountryNameByEqp` has ignored it since the eqp-merge (one shared
+ *  countryNames list), and the curated table is keyed by country id alone. */
+private fun countryLabel(country: Int): String? =
     StartMenuListToolbar.countryDisplayLabel(country) ?: Equipment
-        .getCountryNameByEqp(country, eqpName)
+        .getCountryName(country)
         .let { n -> if (n.isBlank() || n == "Unknown") null else n }

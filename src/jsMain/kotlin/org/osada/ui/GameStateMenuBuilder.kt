@@ -39,8 +39,8 @@ internal object GameStateMenuBuilder {
         saveBut.title = I18n.t("save_load.save.help")
         saveBut.innerHTML =
             "<span class='osada-sl-btn__label'>${I18n.t("save_load.save.label")}</span>" +
-                "<span class='osada-sl-btn__sub'>${I18n.t("save_load.save.subtitle")}</span>" +
-                "<a id='savedata' hidden download='none'></a>"
+            "<span class='osada-sl-btn__sub'>${I18n.t("save_load.save.subtitle")}</span>" +
+            "<a id='savedata' hidden download='none'></a>"
         saveBut.onclick = { _: org.w3c.dom.events.MouseEvent ->
             if (!saveBut.classList.contains("osada-sl-btn--disabled")) gameStateButton("disksave")
         }
@@ -53,14 +53,16 @@ internal object GameStateMenuBuilder {
         loadBut.title = I18n.t("save_load.load.help")
         loadBut.innerHTML =
             "<span class='osada-sl-btn__label'>${I18n.t("save_load.load.label")}</span>" +
-                "<span class='osada-sl-btn__sub'>${I18n.t("save_load.load.subtitle")}</span>" +
-                OSGlue.diskloadInputHTML
+            "<span class='osada-sl-btn__sub'>${I18n.t("save_load.load.subtitle")}</span>" +
+            OSGlue.diskloadInputHTML
         OSGlue.diskloadEvent(loadBut) { gameStateButton("diskload") }
 
         val info = addTag(body, "div")
         info.className = "osada-sl-info"
         info.innerHTML =
             "${I18n.t("save_load.last_saved.label")} <span id='disksaveupdate'>${I18n.t("common.none")}</span>"
+
+        buildProfileBackupRow(body)
 
         val error = addTag(body, "div")
         error.id = "diskloaderror"
@@ -79,6 +81,45 @@ internal object GameStateMenuBuilder {
             makeVisible("smMain")
             byId("diskloaderror")?.textContent = ""
         }
+    }
+
+    /** Export/import EVERY campaign run in the browser repository as one file (design doc sec 6's
+     *  "combined profile backup"), distinct from the single-campaign disk save/load above it. */
+    private fun buildProfileBackupRow(body: HTMLElement) {
+        val exportBut = addTag(body, "div")
+        exportBut.id = "profileBackupExport"
+        exportBut.className = "osada-sl-btn"
+        exportBut.title = I18n.t("save_load.profile_export.help")
+        exportBut.innerHTML =
+            "<span class='osada-sl-btn__label'>${I18n.t("save_load.profile_export.label")}</span>" +
+            "<span class='osada-sl-btn__sub'>${I18n.t("save_load.profile_export.subtitle")}</span>"
+        exportBut.onclick = { _: org.w3c.dom.events.MouseEvent -> ProfileBackup.exportToFile() }
+
+        val importBut = addTag(body, "div")
+        importBut.id = "profileBackupImport"
+        importBut.className = "osada-sl-btn"
+        importBut.title = I18n.t("save_load.profile_import.help")
+        importBut.innerHTML =
+            "<span class='osada-sl-btn__label'>${I18n.t("save_load.profile_import.label")}</span>" +
+            "<span class='osada-sl-btn__sub'>${I18n.t("save_load.profile_import.subtitle")}</span>" +
+            "<input id='profileBackupImportFile' type='file' accept='.json'/>"
+        byId("profileBackupImportFile")?.addEventListener(
+            "change",
+            { _ ->
+                val files = js("document.getElementById('profileBackupImportFile').files")
+                if (files.length > 0) {
+                    ProfileBackup.importFromFile(
+                        files[0],
+                        onSuccess = { count ->
+                            byId("diskloaderror")?.textContent =
+                                I18n.t("save_load.profile_import.success", mapOf("count" to count))
+                        },
+                        onError = { byId("diskloaderror")?.textContent = I18n.t("save_load.error.invalid") },
+                    )
+                    js("document.getElementById('profileBackupImportFile').value = ''")
+                }
+            },
+        )
     }
 
     /** Called every time the screen is opened (StartMenuButtonHandler "saveload"): pre-game there is

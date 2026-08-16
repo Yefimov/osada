@@ -109,6 +109,9 @@ internal class StartMenuButtonHandler(
     private fun onSettingsButton() {
         makeHidden("startmenu")
         makeHidden("smNewGame")
+        // Observer Mode is locked for the length of a multiplayer match; the screen itself is
+        // built once at startup, so the lock has to be re-applied every time it opens.
+        ObserverModeLock.refresh()
         makeVisible("smSettings")
         if (isVisible("ui-message")) {
             makeHidden("ui-message")

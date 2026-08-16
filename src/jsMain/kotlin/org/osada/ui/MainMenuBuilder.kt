@@ -39,6 +39,8 @@ internal object MainMenuBuilder {
         buildReadyUnitNav(statusbar)
         buildEndTurnButton(statusbar)
 
+        buildSaveStatus(statusbar)
+
         // --- hex coords / terrain (far right, muted) ---
         byId("locmsg")?.let {
             statusbar.appendChild(it)
@@ -52,6 +54,16 @@ internal object MainMenuBuilder {
         byId("menu")?.style?.display = "none"
 
         wireLegacyButtons()
+    }
+
+    /** Quiet Saving.../Saved HH:MM/Save failed indicator (docs/design/save-recovery.md sec 6).
+     *  Presentation/state lives in [SaveStatusPresenter]; this only places the element once. */
+    private fun buildSaveStatus(statusbar: org.w3c.dom.HTMLElement) {
+        val existing = byId("osadaSaveStatus")
+        val el = existing ?: addTag(statusbar, "div")
+        el.id = "osadaSaveStatus"
+        el.className = "osadaSaveStatus"
+        SaveStatusPresenter.install()
     }
 
     private fun buildBrandAndObserver(statusbar: org.w3c.dom.HTMLElement) {
@@ -130,6 +142,13 @@ internal object MainMenuBuilder {
         reserves.className = "osada-tb-btn osada-tb-reserves"
         reserves.title =
             "Reserves (R) — buy new units, upgrade existing formations, and deploy purchased units from the reserve tray."
+        // Narrow/phone layouts hide the word "Reserves" (there is no room for it), which left an
+        // empty square plate — an unlabelled button with no glyph at all (2026-08-16 user report).
+        // The supply crate from hud_icons_grid (row 2, col 1) takes its place: CSS shows exactly
+        // one of the two, so the desktop bar is unchanged.
+        val reservesIcon = addTag(reserves, "span")
+        reservesIcon.className = "osada-tb-reserves__ico osada-ico osada-ico--supply"
+        reservesIcon.setAttribute("aria-hidden", "true")
         val reservesLabel = addTag(reserves, "span")
         reservesLabel.className = "osada-tb-reserves__label"
         reservesLabel.textContent = I18n.t("hud.reserves.label")

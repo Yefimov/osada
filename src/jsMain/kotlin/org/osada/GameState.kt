@@ -15,6 +15,7 @@ package org.osada
  */
 @JsExport
 @JsName("GameState")
+@Suppress("TooManyFunctions") // thin facade preserving the exported JS surface, see class doc
 class GameState(
     private val game: Game,
 ) {
@@ -48,4 +49,33 @@ class GameState(
     fun restoreSettings() = persistence.restoreSettings()
 
     fun exportGameState(): String = GameStateSerializer.exportGameState(game)
+
+    // ---- per-campaign-run repository (docs/design/save-recovery.md) ---------------------------
+
+    fun listCampaignRuns() = persistence.listCampaignRuns()
+
+    /** Drives the main menu's Continue button; null = nothing to continue. */
+    fun savedGameSummary() = persistence.savedGameSummary()
+
+    fun restoreCampaignRun(
+        campaignRunId: String,
+        onSuccess: () -> Unit,
+        onFail: () -> Unit,
+    ) = persistence.restoreCampaignRun(campaignRunId, onSuccess, onFail)
+
+    fun clearCampaignRun(campaignRunId: String) = persistence.clearCampaignRun(campaignRunId)
+
+    /** Records that a campaign run reached its end; see [GameStatePersistence.markCampaignRunCompleted]. */
+    fun markCampaignRunCompleted(
+        campaignRunId: String,
+        outcome: String,
+    ) = persistence.markCampaignRunCompleted(campaignRunId, outcome)
+
+    fun exportCampaignRun(campaignRunId: String) = persistence.exportCampaignRun(campaignRunId)
+
+    fun importCampaignRun(bundle: org.osada.save.CampaignRunBundle) = persistence.importCampaignRun(bundle)
+
+    fun exportProfile() = persistence.exportProfile()
+
+    fun importProfile(bundle: org.osada.save.ProfileBundle) = persistence.importProfile(bundle)
 }

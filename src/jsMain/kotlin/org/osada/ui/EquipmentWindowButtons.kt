@@ -6,6 +6,7 @@ import org.osada.model.GameMap
 import org.osada.model.Player
 import org.osada.model.buyUnit
 import org.osada.model.disbandUnit
+import org.osada.model.getUnitById
 import org.osada.model.sellUnit
 import org.osada.model.upgradeUnit
 
@@ -92,19 +93,29 @@ internal class EquipmentWindowButtons(
         val deployUnitId = eqUserSel.deployunit as? Int ?: -1
         val equnit = eqUserSel.equnit as? Int ?: -1
         if (userUnitId == -1) {
-            val unit = player.getCoreUnitList().getOrNull(deployUnitId)
-            if (unit != null && player.sellUnit(unit)) {
-                player.removeUndeployedCoreUnit(deployUnitId)
-                ui.updateEquipmentWindow(unit.unitData(true).uclass)
-                ui.updateStatusBar() // reserve pool shrank — refresh the badge, see "buy" above
-                saveReserveChanges()
+            val unit = player.getCoreUnitList().getOrNull(deployUnitId) ?: return
+            // Permanent action (action-affordances-and-objectives.md sec 5): confirm before
+            // committing. The commit itself re-reads the reserve list by index so a stale
+            // selection (e.g. the reserve changed while the dialog was open) fails safely instead
+            // of selling the wrong slot.
+            SellDisbandConfirmDialog.open(unit, isDisband = false) {
+                val current = player.getCoreUnitList().getOrNull(deployUnitId)
+                if (current === unit && player.sellUnit(unit)) {
+                    player.removeUndeployedCoreUnit(deployUnitId)
+                    ui.updateEquipmentWindow(unit.unitData(true).uclass)
+                    ui.updateStatusBar() // reserve pool shrank — refresh the badge, see "buy" above
+                    saveReserveChanges()
+                }
             }
         } else {
-            if (map.disbandUnit(userUnitId)) {
-                ui.render.cacheImages { ui.render.render() }
-                eqUserSel.userunit = -1
-                if (equnit > 0) Equipment.getEquipment(equnit)?.let { ui.updateEquipmentWindow(it.uclass) }
-                saveReserveChanges()
+            val unit = map.getUnitById(userUnitId) ?: return
+            SellDisbandConfirmDialog.open(unit, isDisband = true) {
+                if (map.getUnitById(userUnitId) === unit && map.disbandUnit(userUnitId)) {
+                    ui.render.cacheImages { ui.render.render() }
+                    eqUserSel.userunit = -1
+                    if (equnit > 0) Equipment.getEquipment(equnit)?.let { ui.updateEquipmentWindow(it.uclass) }
+                    saveReserveChanges()
+                }
             }
         }
     }

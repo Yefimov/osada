@@ -103,6 +103,11 @@ fun Game.continueCampaign(
         UIBuilder.showCampaignEnd(outcome, finalText) { ui?.mainMenuButton("options") }
         gameEnded = true
         gameStarted = false
+        // The campaign register's "Completed" state, recorded here because this is the only place
+        // that knows a campaign is over -- no further save is written once gameStarted is false,
+        // so it can never be inferred from a stored generation. The outcome rides along so a
+        // campaign that ended in DEFEAT is not labelled as one the player completed.
+        state?.markCampaignRunCompleted(campaign!!.file, outcome)
         if (outcome != "lose") {
             OSGlue.reportAchievement(campaign!!.file)
         }

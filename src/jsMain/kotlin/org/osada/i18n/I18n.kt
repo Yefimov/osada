@@ -171,6 +171,15 @@ internal object I18n {
         return formatter.format(value) as String
     }
 
+    /** Short locale-aware date + time for a millisecond epoch, e.g. a save's last-played stamp.
+     *  Uses the selected language's locale so ru renders 16.08.2026, 14:03 rather than 8/16/2026. */
+    fun formatDateTime(epochMillis: Double): String {
+        val constructor = js("Intl.DateTimeFormat")
+        val options = js("({ dateStyle: 'short', timeStyle: 'short' })")
+        val formatter = js("Reflect.construct")(constructor, arrayOf(language.locale, options))
+        return formatter.format(js("new Date")(epochMillis)) as String
+    }
+
     internal fun installBundlesForTests(
         english: String,
         selected: String,

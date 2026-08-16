@@ -1,6 +1,8 @@
 package org.osada.ui
 
 import org.osada.DEBUG_CAMPAIGN
+import org.osada.Game
+import org.osada.current
 import org.osada.i18n.I18n
 import org.osada.model.Equipment
 import org.osada.model.getCountryNameByEqp
@@ -109,7 +111,17 @@ internal object StartMenuCampaignScreen {
             val selectedCampaign = byId("smCamp")?.asDynamic()?.selectedCampaign as? Int
             val difficulty =
                 byId("smCamp")?.asDynamic()?.selectedDifficulty as? Int ?: StartMenuCampaignData.DIFFICULTY_HISTORICAL
-            selectedCampaign?.let { StartMenuBuilder.startNewCampaign(it, difficulty) }
+            val campaign = selectedCampaign?.let { StartMenuBuilder.campaignList().getOrNull(it) }
+            val file = campaign?.file as? String
+            val existingRun = file?.let { StartMenuCampaignData.campaignRunsByFile()[it] }
+            when {
+                selectedCampaign == null -> Unit
+                // Pressing Play/Start on an already-started campaign resumes it, never silently
+                // replaces it (save-recovery.md sec 2). Starting over is a separate, guarded
+                // action -- see the row's "Start over" link, built in renderCampaignRow.
+                existingRun != null -> StartMenuBuilder.resumeCampaignRun(existingRun.campaignRunId)
+                else -> StartMenuBuilder.startNewCampaign(selectedCampaign, difficulty)
+            }
         }
 
         byId("smCFlowBut")?.title = I18n.t("campaign.flow.help")
@@ -147,7 +159,10 @@ internal object StartMenuCampaignScreen {
         val value = if (selectedIndex < 0) null else campSelect.asDynamic().options[selectedIndex].value as? String
         val campaign = value?.let { StartMenuBuilder.campaignList().getOrNull(it.toInt()) }
         if (value == null || campaign == null) return
-        val country = Equipment.getCountryNameByEqp(campaign.flag as? Int ?: 0, campaign.eqp as? String ?: "")
+        val flagId = campaign.flag as? Int ?: 0
+        val country =
+            StartMenuListToolbar.countryDisplayLabel(flagId)
+                ?: Equipment.getCountryNameByEqp(flagId, campaign.eqp as? String ?: "")
         byId("smCampDesc")?.innerHTML = formatCampaignDescription(campaign.desc as? String ?: "")
         byId("smCampCountry")?.innerHTML = "<b>${I18n.t("campaign.country.label")}</b><br/>" + country
         val operations = campaign.scenarios as? Int
@@ -215,9 +230,9 @@ internal object StartMenuCampaignScreen {
         // The native flow glyph is superseded by the collapsible "Campaign path" line.
         byId("smCFlowBut")?.style?.display = "none"
 
-        val progress = StartMenuCampaignData.activeCampaignProgress()
+        val runs = StartMenuCampaignData.campaignRunsByFile()
         StartMenuListToolbar.buildSyncedList(campSelect, list) { option, index, row, _ ->
-            renderCampaignRow(option, index, row, list, progress)
+            renderCampaignRow(option, index, row, list, runs)
         }
         StartMenuListToolbar.buildListToolbar(
             register,
@@ -274,7 +289,7 @@ internal object StartMenuCampaignScreen {
         index: Int,
         row: HTMLElement,
         list: HTMLElement,
-        progress: Pair<String, Int>?,
+        runs: Map<String, org.osada.save.CampaignRunMetadata>,
     ) {
         // option.value = the campaign's ORIGINAL campaignlist index; `index` is only the
         // option's position, and the two diverge once hidden campaigns are skipped at
@@ -302,37 +317,42 @@ internal object StartMenuCampaignScreen {
                 StartMenuListToolbar.extractYears(option.text).ifBlank { null },
                 ops?.let { I18n.plural("campaign.row.operations", it) },
             ).joinToString(" &middot; ")
-        // In-progress annotation, right-aligned. Only ever ONE campaign can carry it: the
-        // storage holds a single campaign slot (the one Continue resumes) — there is no
-        // per-campaign progress history, and therefore no "Completed" state to show either.
+        // Every campaign can independently show In progress/Completed now (was: at most one
+        // campaign ever carried this, because storage held a single shared slot).
         val file = campaign?.file as? String
-        if (progress != null && file != null && progress.first == file) {
+        val runMetadata = file?.let { runs[it] }
+        if (runMetadata != null) {
             val note = addTag(row, "div")
             note.className = "osadaListRowNote"
-            val operation = progress.second + 1
-            note.textContent =
-                if (ops != null) {
-                    I18n.t(
-                        "campaign.progress.full",
-                        mapOf("current" to operation, "total" to ops),
-                    )
-                } else {
-                    I18n.t(
-                        "campaign.progress.short",
-                        mapOf("current" to operation),
-                    )
-                }
-            note.title = I18n.t("campaign.progress.help")
+            val (text, title) = StartMenuCampaignData.progressNoteText(runMetadata, ops)
+            note.textContent = text
+            note.title = title
+            // Explicit, guarded "start over": the default Play action resumes (safe), so
+            // discarding progress needs its own affordance + confirmation (design doc sec 9),
+            // never a silent side effect of pressing the primary button.
+            val startOver = addTag(row, "div")
+            startOver.className = "osadaListRowStartOver"
+            startOver.textContent = I18n.t("campaign.replace_run.start_over.label")
+            startOver.title = I18n.t("campaign.replace_run.start_over.help")
+            startOver.setAttribute("tabindex", "0")
+            startOver.setAttribute("role", "button")
+            startOver.onclick = { e ->
+                e.stopPropagation()
+                confirmStartOver(campaignIndex, runMetadata, text)
+            }
         }
         // Country is searchable too, so "soviet"/"spain" finds a campaign whose title says neither.
+        // Both the raw name and the curated labels go in, so the pre-rename spelling keeps working.
         val country = Equipment.getCountryNameByEqp(flagId, eqp)
-        val sideKey = StartMenuListToolbar.countryDisplayLabel(flagId)
+        val sideKey = StartMenuListToolbar.countryGroupLabel(flagId)
+        val searchNames =
+            listOfNotNull(country, StartMenuListToolbar.countryDisplayLabel(flagId), sideKey).distinct()
         StartMenuListToolbar.tagRow(
             row,
             index,
             option.text,
-            "${option.text} $country",
-            startYear(option.text),
+            "${option.text} ${searchNames.joinToString(" ")}",
+            endYear(option.text),
             ops,
             sides = listOfNotNull(sideKey),
             forceHidden = file != null && file in StartMenuCampaignData.hiddenCampaignFiles,
@@ -340,13 +360,42 @@ internal object StartMenuCampaignScreen {
         StartMenuCampaignStory.applyRowBadge(row, list, file)
     }
 
-    /** First 4-digit year in a campaign title ("Red Army Campaign (1936-1945)" -> 1936), used as
-     *  the chronological sort key. Spartacus is dated "(73-71 BC)" — no 4-digit year to find, and
-     *  it must sort FIRST, not last, so map any BC title to year 0 rather than to "unknown". */
-    private fun startYear(title: String): Int? {
+    /** Guarded "start over" for a campaign that already has a run: names the campaign and its
+     *  current progress before permanently replacing it (action-affordances-and-objectives.md
+     *  sec 5's confirmation shape, reused here for a run replacement rather than a unit sale). */
+    private fun confirmStartOver(
+        campaignIndex: Int,
+        run: org.osada.save.CampaignRunMetadata,
+        progressText: String,
+    ) {
+        val campaign = StartMenuBuilder.campaignList().getOrNull(campaignIndex) ?: return
+        val name = (campaign.title as? String) ?: run.campaignName
+        ConfirmCard.open(
+            I18n.t("campaign.replace_run.confirm.title", mapOf("campaign" to name)),
+            I18n.t("campaign.replace_run.confirm.body", mapOf("progress" to progressText)),
+            I18n.t("campaign.replace_run.confirm.confirm_button"),
+        ) {
+            Game.current?.state?.clearCampaignRun(run.campaignRunId)
+            val difficulty =
+                byId("smCamp")?.asDynamic()?.selectedDifficulty as? Int ?: StartMenuCampaignData.DIFFICULTY_HISTORICAL
+            StartMenuBuilder.startNewCampaign(campaignIndex, difficulty)
+        }
+    }
+
+    /** LAST 4-digit year in a campaign title ("Red Army Campaign (1936-1945)" -> 1945), used as
+     *  the chronological sort key. The end date, not the start: campaigns overlap heavily at their
+     *  openings, so sorting by first year buried the ones that run longest among the ones that only
+     *  begin alongside them — "Bolshevik Cavalry (1918-1920)" sorted level with "The November
+     *  Revolution (1918)", and "Greece (1940-1949)" ahead of "Soviet Black Sea Fleet (1941-1944)"
+     *  (2026-08-16 user report). Single-year titles are unaffected (start == end).
+     *
+     *  Spartacus is dated "(73-71 BC)" — no 4-digit year to find, and it must sort FIRST, not
+     *  last, so map any BC title to year 0 rather than to "unknown". */
+    private fun endYear(title: String): Int? {
         if (title.contains("BC")) return 0
         return Regex("\\b(\\d{4})\\b")
-            .find(title)
+            .findAll(title)
+            .lastOrNull()
             ?.groupValues
             ?.get(1)
             ?.toIntOrNull()

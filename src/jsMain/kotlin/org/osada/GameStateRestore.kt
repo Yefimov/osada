@@ -46,6 +46,7 @@ class GameStateRestore(
         val rawPlayers = playersData.unsafeCast<Array<dynamic>>()
         val typedPlayers = rawPlayers.map { GameStateDeserializer.deserializePlayer(it) }.toTypedArray()
         addCampaignCoreEquipmentCountries(typedPlayers, campaignData)
+        addSavedUnitEquipmentCountries(typedPlayers, scenarioData)
         Equipment.addPlayersEquipment(typedPlayers.toList()) {
             restorePlayersAndFinish(newScenario, scenarioData, typedPlayers, campaignData, onReady)
         }
@@ -79,6 +80,51 @@ class GameStateRestore(
                 if (country !in player.supportCountries) player.supportCountries.add(country)
             }
         }
+    }
+
+    /**
+     * Adds the nationality of every unit ALREADY ON THE SAVED MAP to its owner's equipment load set.
+     *
+     * A player's `supportCountries` list normally says which extra nations' equipment files a
+     * scenario needs, and the save carries that list verbatim. Saves written before the
+     * `support="a,b,c,d"` parse fix ([org.osada.scenario.ScenarioPlayerParser]) carry an EMPTY list,
+     * so restoring one fetched only the two primary nations' equipment and every support-nation unit
+     * on the map came back as an unnamed, iconless, immovable shell with movpoints 0.
+     *
+     * A unit's own `flag` is the same 1-based country code the `support` attribute uses, so the map
+     * itself is a sufficient source to repair those saves — and once the parser fix is in, this
+     * simply re-adds ids that are already present. Deliberately map-wide rather than
+     * campaign-core-only: the broken units are ordinary scenario units, which
+     * [addCampaignCoreEquipmentCountries] never sees.
+     */
+    private fun addSavedUnitEquipmentCountries(
+        players: Array<Player>,
+        scenarioData: dynamic,
+    ) {
+        val mapData = scenarioData.map ?: return
+        val hexes = resolveHexRows(mapData) ?: return
+        for (r in 0 until (hexes.length as? Int ?: 0)) {
+            val row = hexes[r] ?: continue
+            for (c in 0 until (row.length as? Int ?: 0)) {
+                val hex = row[c] ?: continue
+                addUnitCountry(players, hex.unit)
+                addUnitCountry(players, hex.airunit)
+            }
+        }
+    }
+
+    private fun addUnitCountry(
+        players: Array<Player>,
+        unit: dynamic,
+    ) {
+        if (unit == null || unit == undefined) return
+        val flag = (unit.flag as? Int)?.takeIf { it > 0 } ?: return
+        val owner = unit.owner as? Int
+        players
+            .firstOrNull { it.id == owner }
+            ?.takeIf { flag !in it.supportCountries }
+            ?.supportCountries
+            ?.add(flag)
     }
 
     private fun applyScenarioMetadata(
