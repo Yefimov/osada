@@ -81,8 +81,10 @@ internal class StatusBarController(
 
     // ---- Weather hover panel -----------------------------------------------------------------
     // Every effect line below states something the RULES actually do, sourced from:
-    // CombatResolver.airGroundedByWeather (any non-Fair weather blocks air ATTACKS, defence still
-    // works), Scenario.setMoveTable + movTableFrozen/movTableMud (frozen: rivers/swamps become
+    // AttackEligibility.airGroundedByWeather (any non-Fair weather blocks air ATTACKS, defence still
+    // works, All Weather Combat exempt), WeatherCombatRules (air↔ground fire at half strength in bad
+    // weather; +3 defence in rain/snow; spotting halved — aircraft in any non-Fair sky, everyone else
+    // in rain/snow), Scenario.setMoveTable + movTableFrozen/movTableMud (frozen: rivers/swamps become
     // crossable, wheeled bogs down in forest; mud: most ground costs up, swamps shut), and
     // WeatherModel.onChange (rain→Mud / snow→Frozen only when the scenario sets weatherchg).
 

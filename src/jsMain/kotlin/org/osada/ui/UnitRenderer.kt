@@ -31,17 +31,38 @@ internal class UnitRenderer(
         // of (FACING_MIRROR_BASE - facing), so only 9 sprite frames are needed per unit.
         private const val MAX_FACING_INDEX = 8
         private const val FACING_MIRROR_BASE = 16
+
+        // Recessed, not hidden: the inactive layer is still part of the battlefield the player is
+        // reading. Chosen lighter than the disabled action chips' .5, which sit on a flat panel
+        // rather than over painted terrain.
+        private const val RECESSED_ALPHA = 0.65
+        private const val RECESSED_FILTER = "saturate(45%)"
     }
 
+    /**
+     * [dimmed] recesses the unit because a click on its hex will NOT act on it -- it is the
+     * occupant of the layer Air Mode is not currently commanding
+     * (`docs/design/action-affordances-and-objectives.md` §7).
+     *
+     * Deliberately subdued rather than dark: the player still has to read the battlefield while in
+     * Air Mode, and this shares a visual axis with fog and the moved-unit text, which must stay
+     * legible next to it.
+     */
     fun drawUnit(
         ctx: dynamic,
         x: Double,
         y: Double,
         unit: GameUnit,
         showStats: Boolean,
+        dimmed: Boolean = false,
     ) {
-        if (!drawUnitSprite(ctx, x, y, unit)) return
-        if (!showStats || unit.strength < 1) return
+        // A recessed unit keeps its sprite but loses its stat overlay: the strength box, ammo mark
+        // and leader badge all describe an action, and no action on this hex reaches this unit.
+        if (dimmed) {
+            withRecessedInk(ctx) { drawUnitSprite(ctx, x, y, unit) }
+            return
+        }
+        if (!drawUnitSprite(ctx, x, y, unit) || !showStats || unit.strength < 1) return
 
         val side = unit.player?.side ?: 0
         val isCore = unit.isCore
@@ -137,6 +158,25 @@ internal class UnitRenderer(
         if (!HeroCampaign.hasAnyCommander(unit)) return
         val img = if (side == 1) rc.leaderAlliedImage else rc.leaderAxisImage
         ctx.drawImage(img, boxX + boxW + 1.0, y + 2.0 * rc.v - LEADER_ICON_Y_OFFSET)
+    }
+
+    /**
+     * Runs [draw] with the recessed-ink treatment applied, then restores the context exactly.
+     *
+     * Alpha carries the effect on its own, because `CanvasRenderingContext2D.filter` is not
+     * universally available (Safari only shipped it in 17). Desaturation is applied on top where
+     * the browser has it, and simply omitted where it does not -- a slightly less pronounced cue
+     * beats a blank sprite.
+     */
+    private inline fun withRecessedInk(
+        ctx: dynamic,
+        draw: () -> Unit,
+    ) {
+        ctx.save()
+        ctx.globalAlpha = RECESSED_ALPHA
+        if (ctx.filter != undefined) ctx.filter = RECESSED_FILTER
+        draw()
+        ctx.restore()
     }
 
     private fun drawUnitSprite(

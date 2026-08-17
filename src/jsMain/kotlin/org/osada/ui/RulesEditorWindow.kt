@@ -132,8 +132,8 @@ internal object RulesEditorWindow {
         label.textContent = RulesText.ruleLabel(rule)
         label.title = RulesText.ruleHelp(rule)
         when (rule) {
-            RuleKey.AA_INTERCEPT_MODE -> choiceControl(row, rule)
-            RuleKey.FLAK_RANGE -> stepperControl(row, rule)
+            RuleKey.AA_INTERCEPT_MODE, RuleKey.GROUND_FOLLOWS_WEATHER -> choiceControl(row, rule)
+            RuleKey.FLAK_RANGE, RuleKey.GROUND_CHANGE_TURNS -> stepperControl(row, rule)
             else -> switchControl(row, rule)
         }
     }

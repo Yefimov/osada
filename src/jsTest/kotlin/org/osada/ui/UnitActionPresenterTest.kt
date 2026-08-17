@@ -1,5 +1,8 @@
 package org.osada.ui
 
+import org.osada.Game
+import org.osada.GameHolder
+import org.osada.GroundCondition
 import org.osada.MovMethod
 import org.osada.TerrainType
 import org.osada.UnitClass
@@ -20,6 +23,7 @@ import org.osada.rules.SupplyRules
 import org.osada.rules.UnitActionAvailability
 import org.osada.rules.UnitActionContext
 import org.osada.rules.UnitActionId
+import org.osada.scenario.Scenario
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -38,6 +42,7 @@ class UnitActionPresenterTest {
     @AfterTest
     fun cleanup() {
         TerrainEx.resetForTest()
+        GameHolder.instance = null
     }
 
     @BeforeTest
@@ -142,6 +147,66 @@ class UnitActionPresenterTest {
         val text = panelText(map, unit, player)
 
         assertTrue(text.contains("1 adjacent enemy: supply divided by 1.5"), text)
+    }
+
+    /** ATOMIC/BASEKORP-shaped: the only two shipped efiles whose `supply_modifiers` actually
+     *  penalise frozen or muddy ground. There the term is real and must be named. */
+    @Test
+    fun theGroundConditionIsNamedWhenTheEquipmentFilePenalisesIt() {
+        val map = map()
+        val player = map.currentPlayer!!
+        val unit = place(map, player)
+        unit.ammo = 1
+        map.map!![1][1].terrain = TerrainType.CLEAR.value
+        GameHolder.instance = Game().apply { scenario = Scenario(null).apply { ground = GroundCondition.MUD.value } }
+        TerrainEx.setForTest(
+            emptyMap(),
+            supplyFactorMap = mapOf(TerrainType.CLEAR.value to 70),
+            supplyModifierMap = mapOf("mud" to -30),
+        )
+
+        val text = panelText(map, unit, player)
+
+        assertTrue(text.contains("-30"), text)
+        assertTrue(text.contains("Effective supply: 40%"), text)
+    }
+
+    /** Everywhere else the ground genuinely does nothing to supply. Silence would read as "the game
+     *  forgot my mud"; the panel says which of the two it is. */
+    @Test
+    fun theGroundConditionIsCalledOutEvenWhenTheEquipmentFileIgnoresIt() {
+        val map = map()
+        val player = map.currentPlayer!!
+        val unit = place(map, player)
+        unit.ammo = 1
+        map.map!![1][1].terrain = TerrainType.CLEAR.value
+        GameHolder.instance = Game().apply { scenario = Scenario(null).apply { ground = GroundCondition.MUD.value } }
+        // LXF/KAISER/AG-shaped: the modifier exists and is zero.
+        TerrainEx.setForTest(
+            emptyMap(),
+            supplyFactorMap = mapOf(TerrainType.CLEAR.value to 70),
+            supplyModifierMap = mapOf("mud" to 0),
+        )
+
+        val text = panelText(map, unit, player)
+
+        assertTrue(text.contains("no supply effect in this equipment file"), text)
+        assertTrue(text.contains("Effective supply: 70%"), text)
+    }
+
+    @Test
+    fun dryGroundAddsNoLineAtAll() {
+        val map = map()
+        val player = map.currentPlayer!!
+        val unit = place(map, player)
+        unit.ammo = 1
+        map.map!![1][1].terrain = TerrainType.CLEAR.value
+        TerrainEx.setForTest(emptyMap(), supplyFactorMap = mapOf(TerrainType.CLEAR.value to 70))
+
+        val text = panelText(map, unit, player)
+
+        assertFalse(text.contains("no supply effect"), text)
+        assertFalse(text.contains("ground"), "dry ground is not a factor worth a line: $text")
     }
 
     // ---- harness ------------------------------------------------------------------------------

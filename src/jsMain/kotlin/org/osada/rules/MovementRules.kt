@@ -146,13 +146,15 @@ object MovementRules {
         return newlySpotted
     }
 
-    /** Spotting range for [unit] including recon leader bonuses. */
+    /** Spotting range for [unit] including recon leader bonuses, then the weather.
+     *  Weather comes last so it halves the range the unit would otherwise have, bonuses included
+     *  (`WeatherCombatRules.spotRange`). */
     fun getUnitSpotRange(unit: GameUnit): Int {
         var range = unit.unitData().spotrange
         if (Leaders.unitHasLeader(unit, LeaderType.ELITE_RECON_VETERAN)) range += 2
         if (Leaders.unitHasLeader(unit, LeaderType.SKILLED_RECONNAISSANCE)) range += 1
         range += Attachments.bonus(unit, Attachments.SLOT_RECON)
-        return range
+        return WeatherCombatRules.spotRange(unit, range)
     }
 
     /** First free, passable hex at/around (row,col) where a reinforcement may deploy, or null. */

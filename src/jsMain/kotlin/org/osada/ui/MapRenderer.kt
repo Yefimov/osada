@@ -112,6 +112,7 @@ internal class MapRenderer(
             drawBounds = rc.getBounds(centerRow, centerCol, radius + 2, rows, cols),
             currentPos = q.currentUnit?.getPos(),
             airMode = uiSettings.airMode,
+            markInactiveLayer = !uiSettings.reducedEffects,
             hexGrid = uiSettings.hexGrid,
             deployMode = deployMode,
             strategicZoom = uiSettings.strategicZoom,
@@ -160,6 +161,10 @@ internal class RenderFrame(
     val drawBounds: RenderContext.Bounds,
     val currentPos: Cell?,
     val airMode: Boolean,
+    /** Whether to recess the unit on the layer Air Mode is not commanding, and mark the hexes where
+     *  that ambiguity exists at all. Polish, so it follows the reduced-effects setting; the
+     *  targeting rule itself is `Hex.getActiveLayerTarget` and does not depend on it. */
+    val markInactiveLayer: Boolean,
     val hexGrid: Boolean,
     val deployMode: Boolean,
     val strategicZoom: Boolean,

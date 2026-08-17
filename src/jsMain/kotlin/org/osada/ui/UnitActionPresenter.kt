@@ -1,5 +1,6 @@
 package org.osada.ui
 
+import org.osada.GroundCondition
 import org.osada.i18n.GameText
 import org.osada.i18n.I18n
 import org.osada.model.GameMap
@@ -167,19 +168,7 @@ internal object UnitActionPresenter {
                 }
             lines += Line(DIM, I18n.t(key, mapOf("value" to signed(factor.roadPercent))))
         }
-        if (factor.groundPercent != 0) {
-            lines +=
-                Line(
-                    DIM,
-                    I18n.t(
-                        "unit_info.supply_factor.ground",
-                        mapOf(
-                            "ground" to GameText.ground(context.groundCondition),
-                            "value" to signed(factor.groundPercent),
-                        ),
-                    ),
-                )
-        }
+        lines += groundConditionLine(context, factor)
         if (context.adjacentEnemies > 0) {
             lines +=
                 Line(
@@ -193,6 +182,42 @@ internal object UnitActionPresenter {
         }
         lines += Line(DIM, I18n.t("unit_info.supply_factor.total", mapOf("value" to context.efficiencyPercent)))
         return lines
+    }
+
+    /**
+     * The ground-condition term, and — when there is none — WHY there is none.
+     *
+     * Frozen and muddy ground change supply only in the equipment files that ship a
+     * `supply_modifiers` entry for it: ATOMIC (frozen -10%, mud -30%) and BASEKORP (-30/-30) of the
+     * ten OSADA ships. Everywhere else the ground is genuinely ignored, and staying silent about it
+     * is what makes a player on a mud map think the game forgot the mud. Saying so is not a "+0%"
+     * line — it names a different fact.
+     */
+    private fun groundConditionLine(
+        context: SupplyContext,
+        factor: TerrainEx.SupplyFactorBreakdown,
+    ): List<Line> {
+        val ground = GameText.ground(context.groundCondition)
+        return when {
+            // The whole efile-factor model is off, so terrain, road, rail and ground all are.
+            !factor.usesEfileFactors -> listOf(Line(DIM, I18n.t("unit_info.supply_factor.flat_model")))
+
+            factor.groundPercent != 0 ->
+                listOf(
+                    Line(
+                        DIM,
+                        I18n.t(
+                            "unit_info.supply_factor.ground",
+                            mapOf("ground" to ground, "value" to signed(factor.groundPercent)),
+                        ),
+                    ),
+                )
+
+            context.groundCondition != GroundCondition.DRY.value ->
+                listOf(Line(DIM, I18n.t("unit_info.supply_factor.ground_ignored", mapOf("ground" to ground))))
+
+            else -> emptyList()
+        }
     }
 
     /** `+20` / `-30`, so a modifier reads as a modifier rather than an absolute percentage. */

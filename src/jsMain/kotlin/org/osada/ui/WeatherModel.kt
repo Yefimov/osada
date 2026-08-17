@@ -1,6 +1,7 @@
 package org.osada.ui
 
 import org.osada.GameHolder
+import org.osada.rules.GroundConditionModel
 import org.osada.scenario.Scenario
 import org.osada.ui.WeatherModel.advance
 import org.osada.ui.WeatherModel.init
@@ -12,9 +13,14 @@ import kotlin.random.Random
  * atmospheric condition (Fair/Overcast/Rain/Snow) using the climate-zone monthly table
  * ([weatherZones], indexed by `scenario.latitude` + month): clear spells alternate with overcast
  * spells, and an overcast spell may precipitate (rain, or snow by the zone's snow probability).
- * On a change it drives the [WeatherRenderer] overlay, refreshes the status-bar glyph, and — when
- * the scenario's "weather can change ground" option is set — flips the ground to Mud (rain) /
- * Frozen (snow). Per-scenario state; call [init] on scenario load and [advance] each turn.
+ * On a change it drives the [WeatherRenderer] overlay and refreshes the status-bar glyph.
+ *
+ * The ground itself is [GroundConditionModel]'s job and is ticked EVERY turn, not only on a weather
+ * change: OG mires and freezes ground after a run of turns, so the interesting turn is usually one
+ * where the sky did not change at all. Gated on the scenario's "weather can change ground" option,
+ * which 155 of the 502 shipped scenarios set.
+ *
+ * Per-scenario state; call [init] on scenario load and [advance] each turn.
  */
 object WeatherModel {
     private const val FAIR = 0
@@ -34,8 +40,6 @@ object WeatherModel {
     private var counter = 0 // turns left in the current spell
     private var lastTurn = -1
     private var active = false
-    private var initialGround = 0 // scenario's designed ground; weather-induced mud/frozen reverts here
-    private var groundByWeather = false
 
     fun init(s: Scenario?) {
         if (s == null || weatherZones.isEmpty()) {
@@ -47,8 +51,7 @@ object WeatherModel {
         clearPhase = s.atmosferic == FAIR
         counter = phaseLen(if (clearPhase) 0 else 1)
         lastTurn = s.map.turn
-        initialGround = s.ground
-        groundByWeather = false
+        GroundConditionModel.reset()
         active = true
     }
 
@@ -59,6 +62,12 @@ object WeatherModel {
     fun advance(s: Scenario?) {
         if (!active || s == null || s.map.turn == lastTurn) return // fire once per game turn
         lastTurn = s.map.turn
+        rollIfSpellEnded(s)
+        // Every turn, including the ones the sky spent unchanged -- that is where a run completes.
+        advanceGround(s)
+    }
+
+    private fun rollIfSpellEnded(s: Scenario) {
         if (counter > 0) {
             counter--
             if (counter > 0) return
@@ -91,32 +100,20 @@ object WeatherModel {
 
     private fun onChange(s: Scenario) {
         WeatherRenderer.start(s.atmosferic)
-        if (s.weatherCanChangeGround) {
-            val newGround =
-                when (s.atmosferic) {
-                    RAIN -> {
-                        groundByWeather = true
-                        2
-                    } // Mud
-                    SNOW -> {
-                        groundByWeather = true
-                        1
-                    } // Frozen
-                    FAIR ->
-                        if (groundByWeather) {
-                            groundByWeather = false
-                            initialGround
-                        } else {
-                            s.ground // clear spell dries back to designed ground
-                        }
+        GameHolder.instance?.ui?.refreshWeatherDisplay()
+    }
 
-                    else -> s.ground // Overcast: leave ground as-is
-                }
-            if (newGround != s.ground) {
-                s.ground = newGround
-                s.setMoveTable() // activate the movement table (mud/frozen = reduced move; frozen crosses rivers)
-            }
-        }
+    /**
+     * One turn of ground simulation. The scenario's own ground stands unless the author opted into
+     * weather-driven ground with `weatherchg` — or the ruleset overrides that either way.
+     */
+    private fun advanceGround(s: Scenario) {
+        if (!GroundConditionModel.followsWeather(s.weatherCanChangeGround)) return
+        val newGround = GroundConditionModel.advance(s.ground, s.atmosferic)
+        if (newGround == s.ground) return
+        s.ground = newGround
+        // Activate the movement table (mud/frozen = reduced move; frozen crosses rivers).
+        s.setMoveTable()
         GameHolder.instance?.ui?.refreshWeatherDisplay()
     }
 }

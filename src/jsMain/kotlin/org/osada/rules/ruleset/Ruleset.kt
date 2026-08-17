@@ -11,8 +11,14 @@ package org.osada.rules.ruleset
  * run is an explicit non-goal (§10) -- it would make this window a list of promises.
  */
 
-/** Bumped when the MEANING of a key changes, never for display copy. Part of the hash (§5). */
-const val RULESET_SCHEMA_VERSION = 1
+/**
+ * Bumped when the MEANING of a key changes, never for display copy. Part of the hash (§5).
+ *
+ * 2 (2026-08-17) added the four weather switches. Additive: a schema-1 profile stays selectable and
+ * simply names none of them, so those four keep following the content, which is exactly the
+ * behaviour that profile already had.
+ */
+const val RULESET_SCHEMA_VERSION = 2
 
 /**
  * One configurable rule.
@@ -47,6 +53,37 @@ enum class RuleKey(
 
     /** OSADA's own Stalin-regime rewrite of the player's formations. */
     STALIN_REGIME("stalin_regime", null, 0, 1),
+
+    // ---- weather (schema 2) ---------------------------------------------------------------
+    // Four switches rather than one, because they are four separate branches with four separate
+    // call sites -- collapsing them would hide from the player which of the four they turned off.
+    // All default ON, so the shipped game is unchanged unless somebody deliberately changes them.
+
+    /** Whether bad weather stops aircraft initiating attacks at all
+     *  (`AttackEligibility.airGroundedByWeather`). */
+    WEATHER_GROUNDS_AIRCRAFT("weather_grounds_aircraft", null, 0, 1),
+
+    /** Whether bad weather halves the strength points an air<->ground exchange brings to bear
+     *  (`WeatherCombatRules.firingStrength`). */
+    WEATHER_HALVES_AIR_GROUND("weather_halves_air_ground", null, 0, 1),
+
+    /** Whether rain and snow add +3 to defence (`WeatherCombatRules.defenseBonus`). */
+    WEATHER_DEFENSE_BONUS("weather_defense_bonus", null, 0, 1),
+
+    /** Whether bad weather halves spotting range (`WeatherCombatRules.spotRange`). */
+    WEATHER_HALVES_SPOTTING("weather_halves_spotting", null, 0, 1),
+
+    /**
+     * Whether rain and snow turn the ground to mud and frozen at all
+     * (`GroundConditionModel`). Three states rather than a switch, because the scenario author has
+     * an opinion of their own here (`weatherchg`) and the honest default is to keep it:
+     * 0 = never, 1 = as each scenario authorises, 2 = always.
+     */
+    GROUND_FOLLOWS_WEATHER("ground_follows_weather", null, 0, 2),
+
+    /** How many continuous turns of one sky it takes to move the ground one step
+     *  (`GroundConditionModel.TURNS_TO_CHANGE`). */
+    GROUND_CHANGE_TURNS("ground_change_turns", null, 1, 6),
     ;
 
     /** Editor-only bounds. Never applied to a value that came from content (§2). */
@@ -181,5 +218,14 @@ object RulesetDefaults {
             // PM's flat formula, so "efile factors" is what OSADA runs today.
             RuleKey.SUPPLY_MODEL to 1,
             RuleKey.STALIN_REGIME to 0,
+            // Every weather rule ships on: these are Open General's own rules
+            // (`tools/og-import/DEFERRED.md` §7.45), and each is already a no-op in Fair weather.
+            RuleKey.WEATHER_GROUNDS_AIRCRAFT to 1,
+            RuleKey.WEATHER_HALVES_AIR_GROUND to 1,
+            RuleKey.WEATHER_DEFENSE_BONUS to 1,
+            RuleKey.WEATHER_HALVES_SPOTTING to 1,
+            // Ground: follow whatever each scenario authorises, and OG's own "several turns".
+            RuleKey.GROUND_FOLLOWS_WEATHER to 1,
+            RuleKey.GROUND_CHANGE_TURNS to 3,
         )
 }

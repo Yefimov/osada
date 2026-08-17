@@ -85,6 +85,10 @@ object TerrainEx {
         val roadPercent: Int,
         val groundPercent: Int,
         val totalPercent: Int,
+        /** False when the ruleset selected PM's flat model, which switches off the efile's terrain
+         *  factors AND its road/rail/ground modifiers together. Carried so the UI can say why the
+         *  modifiers are absent instead of leaving the player to guess. */
+        val usesEfileFactors: Boolean = true,
     ) {
         internal companion object {
             /** Lays the active efile's `supply_modifiers` over an already-resolved [base] terrain
@@ -125,6 +129,7 @@ object TerrainEx {
                     roadPercent = roadRailBonus,
                     groundPercent = groundBonus,
                     totalPercent = (base + roadRailBonus + groundBonus).coerceIn(0, PERCENT_MAX),
+                    usesEfileFactors = useEfileModifiers,
                 )
             }
         }

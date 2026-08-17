@@ -90,6 +90,10 @@ object CombatResolver {
         useRandom: Boolean,
     ): Int {
         val attackerClass = attacker.unitData().uclass
+        // OG: bad weather halves the strength points an air<->ground exchange brings to bear.
+        // Applied here rather than to the attack VALUE because the manual says "the number of
+        // strength points used for attack", and this is the one place that number is read.
+        val firingStrength = WeatherCombatRules.firingStrength(attacker, defender)
         var p = (attackPower - defense).toDouble()
         var target = DEFAULT_HIT_THRESHOLD
         if (p > COMPRESSION_PIVOT) {
@@ -105,9 +109,9 @@ object CombatResolver {
             var q = p + ROLL_TO_HIT_OFFSET - target
             if (q < EV_ROLL_MIN) q = EV_ROLL_MIN
             if (q > EV_ROLL_MAX) q = EV_ROLL_MAX
-            kills = (EV_MULTIPLIER * q * attacker.strength + EV_ROUNDING_OFFSET) / EV_SCALE
+            kills = (EV_MULTIPLIER * q * firingStrength + EV_ROUNDING_OFFSET) / EV_SCALE
         } else {
-            repeat(attacker.strength) {
+            repeat(firingStrength) {
                 var roll = ((Random.nextDouble() * DICE_MAX_ROLL).toInt() + 1).toDouble()
                 if (roll > DICE_MIN_ROLL && roll < DICE_MAX_ROLL) roll += p
                 if (roll >= target) kills += 1
@@ -154,6 +158,7 @@ object CombatResolver {
         val closeCombat = AttackCalculation.applyCloseCombat(stats, context)
         AttackCalculation.applyLeaderBonuses(stats, attacker, defender, context)
         AttackCalculation.applyTerrainBonuses(stats, context)
+        WeatherCombatRules.applyDefenseBonus(stats)
         AttackCalculation.applyEntrenchment(stats, attacker, defender, context, closeCombat)
         AttackCalculation.applyExperienceAndHitsPenalty(
             stats,

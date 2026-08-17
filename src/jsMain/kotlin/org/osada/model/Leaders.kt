@@ -84,6 +84,11 @@ object Leaders {
                 LeaderType.FIRE_DISCIPLINE,
                 LeaderType.INFILTRATION_TACTICS,
             )
+        // ALL_WEATHER_COMBAT is on the two air classes that both roll leaders and initiate attacks.
+        // Its rule (`AttackEligibility.airGroundedByWeather`) only ever fires for an air unit, so
+        // without an air-class source it would stay inert no matter how many commanders held it --
+        // which is exactly what happened while its only holder was a TANK/RECON legendary hero.
+        // OG grants it to air units for the same reason.
         unitClassLeaders[UnitClass.FIGHTER.value] =
             listOf(
                 LeaderType.SKILLED_INTERCEPTOR,
@@ -92,6 +97,7 @@ object Leaders {
                 LeaderType.BATTLEFIELD_INTELLIGENCE,
                 LeaderType.DETERMINED_DEFENSE,
                 LeaderType.FIRST_STRIKE,
+                LeaderType.ALL_WEATHER_COMBAT,
             )
         unitClassLeaders[UnitClass.TACTICAL_BOMBER.value] =
             listOf(
@@ -101,6 +107,7 @@ object Leaders {
                 LeaderType.DETERMINED_DEFENSE,
                 LeaderType.FIRE_DISCIPLINE,
                 LeaderType.FIRST_STRIKE,
+                LeaderType.ALL_WEATHER_COMBAT,
             )
         unitClassLeaders[UnitClass.LEVEL_BOMBER.value] = emptyList()
         unitClassLeaders[UnitClass.AIR_TRANSPORT.value] = emptyList()

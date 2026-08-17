@@ -163,7 +163,11 @@ internal object LegendaryHeroPool {
                 yearRange = 1941..1954,
                 compatibleUnitClasses = setOf(UnitClass.TANK.value, UnitClass.RECON.value),
                 backgroundId = "armored_academy_graduate",
-                signatureTrait = LeaderType.ALL_WEATHER_COMBAT,
+                // Was ALL_WEATHER_COMBAT until 2026-08-17, which could never do anything for him:
+                // that rule only fires for an air unit and he commands TANK/RECON. Resilience keeps
+                // the winter-attrition reading of "Winter Crews" and is a live rule for his classes
+                // (`CombatResolver.attackValue` lowers incoming effectiveness by 2 when he defends).
+                signatureTrait = LeaderType.RESILIENCE,
                 signatureTitle = "Winter Crews",
                 signatureDescription = "Keeps engines turning and crews fighting when the cold does the killing.",
                 startingRankId = "captain",

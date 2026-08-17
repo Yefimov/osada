@@ -22,6 +22,16 @@ internal class HexCellRenderer(
     private val cursorRenderer: CursorRenderer,
 ) {
     companion object {
+        // Stacked-layer marker: two short bars at the top of the hex. Brass is the HUD's own
+        // "this is the live one" colour; the idle bar stays visible so the player can see there
+        // are two layers at all, which is the whole point of the mark.
+        private const val LAYER_MARKER_ACTIVE = "rgba(180, 138, 60, 0.95)"
+        private const val LAYER_MARKER_IDLE = "rgba(231, 226, 212, 0.35)"
+        private const val LAYER_MARKER_TOP = 3.0
+        private const val LAYER_MARKER_BAR_W = 9.0
+        private const val LAYER_MARKER_BAR_H = 2.5
+        private const val LAYER_MARKER_GAP = 2.0
+
         private const val STRATEGIC_ZOOM_UNIT_FLAG_SCALE = 1.4
         private const val MOVED_UNIT_FLAG_ALPHA = 0.6
         private const val STRATEGIC_ZOOM_VICTORY_FLAG_SCALE = 3.0
@@ -168,13 +178,21 @@ internal class HexCellRenderer(
         x: Double,
         y: Double,
     ) {
-        // Primary unit (!airMode) – sprite only
+        // A hex is ambiguous only when BOTH layers are occupied. Everywhere else `Hex.getUnit`
+        // resolves to the single occupant in either mode, and that occupant really is what a click
+        // acts on -- recessing it would be a false statement
+        // (`docs/design/action-affordances-and-objectives.md` §7).
+        val stacked = hex.unit != null && hex.airunit != null
+
+        val recess = stacked && frame.markInactiveLayer
+
+        // Primary unit (!airMode) – sprite only, and recessed when it is the layer not in command
         val primary = hex.getUnit(!frame.airMode)
         if (primary != null && isUnitVisible(hex, primary)) {
             if (frame.markOwnUnits && primary.player?.id == frame.q.currentPlayer?.id) {
                 rc.drawHex(rc.hexesCtx, x, y, hexStyles["ownunit"])
             }
-            unitRenderer.drawUnit(rc.hexesCtx, x, y, primary, false)
+            unitRenderer.drawUnit(rc.hexesCtx, x, y, primary, false, dimmed = recess)
         }
 
         // Secondary unit (airMode) – sprite + stats
@@ -185,6 +203,39 @@ internal class HexCellRenderer(
             }
             unitRenderer.drawUnit(rc.hexesCtx, x, y, secondary, true)
         }
+        if (recess && secondary != null && isUnitVisible(hex, secondary)) {
+            drawLayerMarker(frame, x, y)
+        }
+    }
+
+    /**
+     * Two stacked bars on a hex that holds both a ground/naval unit and an aircraft: the lit bar is
+     * the layer Air Mode is commanding, the dim one is the layer that is merely present.
+     *
+     * A shape rather than a letter, so it needs no localization and survives the map's smallest
+     * zoom step. Drawn at the top of the hex, which is the only part no unit badge uses -- strength,
+     * ammo and leader all sit along the bottom edge.
+     */
+    private fun drawLayerMarker(
+        frame: RenderFrame,
+        x: Double,
+        y: Double,
+    ) {
+        val ctx = rc.hexesCtx
+        val left = x + rc.hexSlantWidth / 2.0
+        ctx.save()
+        for (index in 0 until 2) {
+            // index 0 is the air bar (upper), index 1 the ground bar (lower).
+            val active = if (index == 0) frame.airMode else !frame.airMode
+            ctx.fillStyle = if (active) LAYER_MARKER_ACTIVE else LAYER_MARKER_IDLE
+            ctx.fillRect(
+                left,
+                y + LAYER_MARKER_TOP + index * (LAYER_MARKER_BAR_H + LAYER_MARKER_GAP),
+                LAYER_MARKER_BAR_W,
+                LAYER_MARKER_BAR_H,
+            )
+        }
+        ctx.restore()
     }
 
     // Move / attack overlays — для spotSide; видны и в deploy-режиме

@@ -230,7 +230,15 @@ internal object GameplayLocalization {
         if (atmos == WeatherCondition.FAIR.value) {
             lines += "good" to I18n.t("hud.weather.effect.aircraft_free")
         } else {
+            // Every line below is a rule `WeatherCombatRules` actually executes, in the order the
+            // player meets them: who can attack, how hard, how well anyone sees.
             lines += "bad" to I18n.t("hud.weather.effect.aircraft_grounded")
+            lines += "bad" to I18n.t("hud.weather.effect.air_ground_halved")
+            lines += "bad" to I18n.t("hud.weather.effect.spotting_air")
+        }
+        if (atmos == WeatherCondition.RAIN.value || atmos == WeatherCondition.SNOW.value) {
+            lines += "good" to I18n.t("hud.weather.effect.defense_bonus")
+            lines += "bad" to I18n.t("hud.weather.effect.spotting_ground")
         }
         when (ground) {
             GroundCondition.FROZEN.value -> {

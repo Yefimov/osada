@@ -30,6 +30,8 @@ internal object RulesText {
         when (rule) {
             RuleKey.AA_INTERCEPT_MODE -> interceptMode(value)
             RuleKey.FLAK_RANGE -> I18n.plural("rules.flak_range.value", value)
+            RuleKey.GROUND_FOLLOWS_WEATHER -> I18n.t("rules.ground_follows_weather.value.$value")
+            RuleKey.GROUND_CHANGE_TURNS -> I18n.plural("rules.ground_change_turns.value", value)
             else -> I18n.t(if (value != 0) "rules.value.on" else "rules.value.off")
         }
 
