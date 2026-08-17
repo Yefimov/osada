@@ -5,6 +5,8 @@ import org.osada.RoadType
 import org.osada.TerrainType
 import org.osada.model.TerrainEx.movementCostTable
 import org.osada.movTableDry
+import org.osada.rules.ruleset.ActiveRuleset
+import org.osada.rules.ruleset.RuleKey
 import org.osada.terrainEntrenchment
 import org.osada.terrainInitiative
 import org.w3c.xhr.XMLHttpRequest
@@ -65,25 +67,90 @@ object TerrainEx {
         road: Int,
         rail: Int,
         ground: Int,
-    ): Int {
-        loadIfNeeded()
-        val base = supplyFactorByTerrain[terrain] ?: fallbackSupplyFactor(terrain)
-        val roadRailBonus =
-            maxOf(
-                if (road != RoadType.NONE.value) supplyModifiers["road"] ?: 0 else 0,
-                if (rail != RoadType.NONE.value) supplyModifiers["rail"] ?: 0 else 0,
-            )
-        val groundBonus =
-            when (ground) {
-                GroundCondition.FROZEN.value -> supplyModifiers["frozen"] ?: 0
-                GroundCondition.MUD.value -> supplyModifiers["mud"] ?: 0
-                else -> 0
+    ): Int = supplyFactorBreakdown(terrain, road, rail, ground).totalPercent
+
+    /** Which of the two mutually exclusive linear-infrastructure modifiers actually applied. */
+    enum class SupplyRoadKind { NONE, ROAD, RAIL }
+
+    /**
+     * The individually named terms behind one [supplyFactor] result, so a tooltip can list exactly
+     * the factors that participated instead of reciting a hard-coded table
+     * (`docs/design/action-affordances-and-objectives.md` §4). [totalPercent] is the value the rules
+     * use; the terms are informational and may sum past the 0..100 clamp.
+     */
+    data class SupplyFactorBreakdown(
+        val basePercent: Int,
+        val baseFromEfileData: Boolean,
+        val roadKind: SupplyRoadKind,
+        val roadPercent: Int,
+        val groundPercent: Int,
+        val totalPercent: Int,
+    ) {
+        internal companion object {
+            /** Lays the active efile's `supply_modifiers` over an already-resolved [base] terrain
+             *  percentage. Reads [supplyModifiers] directly, so callers cannot pass a stale map. */
+            fun of(
+                base: Int,
+                baseFromEfileData: Boolean,
+                road: Int,
+                rail: Int,
+                ground: Int,
+                useEfileModifiers: Boolean = true,
+            ): SupplyFactorBreakdown {
+                // PM had no road/rail/weather supply modifiers at all, so selecting its flat model
+                // has to drop them too rather than layer OG's modifiers onto a PM base.
+                val modifiers = if (useEfileModifiers) supplyModifiers else emptyMap()
+                val roadBonus = if (road != RoadType.NONE.value) modifiers["road"] ?: 0 else 0
+                val railBonus = if (rail != RoadType.NONE.value) modifiers["rail"] ?: 0 else 0
+                // Road and rail do not stack: the larger single modifier wins. Ties resolve to road
+                // so the reported kind is deterministic; every shipped efile that sets both uses
+                // the same value.
+                val roadRailBonus = maxOf(roadBonus, railBonus)
+                val roadKind =
+                    when {
+                        roadRailBonus == 0 -> SupplyRoadKind.NONE
+                        roadBonus >= railBonus -> SupplyRoadKind.ROAD
+                        else -> SupplyRoadKind.RAIL
+                    }
+                val groundBonus =
+                    when (ground) {
+                        GroundCondition.FROZEN.value -> modifiers["frozen"] ?: 0
+                        GroundCondition.MUD.value -> modifiers["mud"] ?: 0
+                        else -> 0
+                    }
+                return SupplyFactorBreakdown(
+                    basePercent = base,
+                    baseFromEfileData = baseFromEfileData,
+                    roadKind = roadKind,
+                    roadPercent = roadRailBonus,
+                    groundPercent = groundBonus,
+                    totalPercent = (base + roadRailBonus + groundBonus).coerceIn(0, PERCENT_MAX),
+                )
             }
-        return (base + roadRailBonus + groundBonus).coerceIn(0, PERCENT_MAX)
+        }
     }
 
-    private fun fallbackSupplyFactor(terrain: Int): Int =
-        if (terrain == TerrainType.CITY.value) PERCENT_MAX else (PERCENT_MAX / OFF_CITY_SUPPLY_PENALTY).roundToInt()
+    fun supplyFactorBreakdown(
+        terrain: Int,
+        road: Int,
+        rail: Int,
+        ground: Int,
+    ): SupplyFactorBreakdown {
+        loadIfNeeded()
+        // A ruleset may select PM's flat off-city formula instead of this efile's own factors
+        // (`docs/design/ruleset-profiles.md` §1). That is not a new rule: it is the very fallback
+        // this loader already applies to the five efiles that ship no TerrainEx data.
+        val useEfileFactors = ActiveRuleset.currentOrNull()?.flag(RuleKey.SUPPLY_MODEL) != false
+        val efileBase = if (useEfileFactors) supplyFactorByTerrain[terrain] else null
+        // PM's own flat off-city rule is the per-terrain-id fallback (see the KDoc on [supplyFactor]).
+        val base =
+            efileBase ?: if (terrain == TerrainType.CITY.value) {
+                PERCENT_MAX
+            } else {
+                (PERCENT_MAX / OFF_CITY_SUPPLY_PENALTY).roundToInt()
+            }
+        return SupplyFactorBreakdown.of(base, efileBase != null, road, rail, ground, useEfileFactors)
+    }
 
     /**
      * PM's movement table for [ground], with the active efile's own OG `[terrain-cost]` laid over

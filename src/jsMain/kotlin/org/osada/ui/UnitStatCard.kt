@@ -422,7 +422,7 @@ private fun fillFormationDetail(unit: GameUnit) {
         row.className = "osada-formation-detail__event"
         row.textContent =
             HeroEventDisplay.title(event.eventId) +
-                HeroEventDisplay.context(event.scenarioId, event.turn, event.date, event.location)
+            HeroEventDisplay.context(event.scenarioId, event.turn, event.date, event.location)
     }
 }
 

@@ -3,7 +3,7 @@ package org.osada.ui
 import kotlinx.browser.document
 import org.osada.model.Cell
 import org.osada.model.GameUnit
-import org.osada.model.getAttackableUnit
+import org.osada.model.getActiveLayerTarget
 import org.osada.model.getUnits
 import org.osada.rules.GameRules
 import org.osada.rules.calculateCombatResults
@@ -30,7 +30,7 @@ internal class CursorRenderer(
         val hex = q.map?.getOrNull(cell.row)?.getOrNull(cell.col) ?: return
         val currentUnit = q.currentUnit
         if (hex.isAttackSel && currentUnit != null && !currentUnit.hasFired) {
-            val target = hex.getAttackableUnit(currentUnit, uiSettings.airMode)
+            val target = hex.getActiveLayerTarget(currentUnit, uiSettings.airMode)
             if (target != null) {
                 if (cursorUnit?.id != currentUnit.id ||
                     cursorCell?.row != cell.row ||

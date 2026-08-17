@@ -8,7 +8,6 @@ import org.osada.UnitClass
 import org.osada.entrenchRateFor
 import org.osada.model.Cell
 import org.osada.model.CombatResults
-import org.osada.model.EfileConfig
 import org.osada.model.Equipment
 import org.osada.model.GameUnit
 import org.osada.model.Leaders
@@ -18,6 +17,8 @@ import org.osada.rules.CombatResolver.DEFAULT_HIT_THRESHOLD
 import org.osada.rules.CombatResolver.SPECIAL_TARGET_HIT_THRESHOLD
 import org.osada.rules.CombatResolver.isEntrenchmentIntact
 import org.osada.rules.CombatResolver.shouldDefenderRetreat
+import org.osada.rules.ruleset.ActiveRuleset
+import org.osada.rules.ruleset.RuleKey
 import kotlin.math.roundToInt
 import kotlin.random.Random
 
@@ -265,7 +266,7 @@ object CombatResolver {
         // unaffected and keeps using its own gunrange.
         val range =
             if (UnitPredicates.isAir(attacker)) {
-                EfileConfig.intKey("flak_range", DEFAULT_FLAK_RANGE)
+                ActiveRuleset.intKey(RuleKey.FLAK_RANGE, DEFAULT_FLAK_RANGE)
             } else if (sData.gunrange == 0) {
                 1
             } else {

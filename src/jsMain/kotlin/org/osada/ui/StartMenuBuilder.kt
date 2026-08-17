@@ -44,6 +44,10 @@ internal object StartMenuBuilder {
         makeHidden("gameToolTip")
         makeHidden("smCamp")
         makeHidden("startmenu")
+        // A campaign's rules are resolved and locked here, once, and stay immutable through every
+        // mission, save, transition and Restart Mission (`docs/design/ruleset-profiles.md` §4).
+        // Editing, renaming or deleting the named profile afterwards affects future starts only.
+        RulesetSelection.apply(RulesetSelection.Surface.CAMPAIGN)
         val game = gameRef()
         game?.newCampaign(campaignId, difficulty)
         byId("options")?.let { toggleButton(it, false) }
@@ -76,6 +80,8 @@ internal object StartMenuBuilder {
         makeHidden("smScen")
         makeHidden("startmenu")
         StartMenuScenarioScreen.markScenarioPlayed(file) // cosmetic New/Played chip only; touches no game save
+        // A standalone scenario resolves once per launch; replaying it may choose another profile.
+        RulesetSelection.apply(RulesetSelection.Surface.SCENARIO)
         val game = gameRef()
         if (game != null) {
             game.campaign = null

@@ -29,8 +29,8 @@ internal fun showBuyCost(
             val diff = buy - prestige
             eqNewText?.innerHTML =
                 "<span style='color:#BB7575'>" +
-                    I18n.t("equipment.cost.need_buy", mapOf("amount" to diff)) +
-                    "</span>"
+                I18n.t("equipment.cost.need_buy", mapOf("amount" to diff)) +
+                "</span>"
         } else {
             eqNewText?.textContent = ""
         }
@@ -55,8 +55,8 @@ internal fun showUpgradeCost(
             val diff = upgrade - prestige
             eqUpgradeText?.innerHTML =
                 "<span style='color:#BB7575'>" +
-                    I18n.t("equipment.cost.need_upgrade", mapOf("amount" to diff)) +
-                    "</span>"
+                I18n.t("equipment.cost.need_upgrade", mapOf("amount" to diff)) +
+                "</span>"
         } else {
             eqUpgradeText?.textContent = ""
         }

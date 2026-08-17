@@ -52,6 +52,12 @@ class MovementResults {
      *  entire point of hidden AA (docs/design/aa-interception.md §3.4). */
     var wasIntercepted: Boolean = false
 
+    /** Every AA gun that actually fired on this move, with the strength it took off. Empty unless
+     *  [wasIntercepted]. The HUD raises a non-modal event from this; the combat log keeps the
+     *  detail. Nothing here exists before the gun fires. */
+    @JsExport.Ignore
+    var interceptions: MutableList<InterceptionEvent> = mutableListOf()
+
     /** Set when the walk terminated because the unit became adjacent to an enemy its own side had
      *  not spotted (`MoveExecutor.stoppedByUnseenZoc`, DEFERRED.md §7.32 item 4). The move range is
      *  deliberately optimistic about unseen ZOC so the overlay cannot betray a hidden unit's

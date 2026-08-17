@@ -4,6 +4,8 @@ package org.osada.multiplayer.ui
 
 import kotlinx.browser.document
 import org.osada.i18n.I18n
+import org.osada.ui.RulesWindow
+import org.osada.ui.RulesetSelection
 import org.osada.ui.makeHidden
 import org.osada.ui.makeVisible
 import org.w3c.dom.HTMLButtonElement
@@ -241,6 +243,9 @@ object MultiplayerScreen {
                     .apply { className = "osada-mp-scenario-name" },
             )
         }
+        // The host owns the room's rules; a guest gets the same window read-only
+        // (`docs/design/ruleset-profiles.md` §§5, 6).
+        RulesWindow.installButton(card, RulesetSelection.Surface.MULTIPLAYER, readOnlyWindow = !model.isHost)
         return card
     }
 

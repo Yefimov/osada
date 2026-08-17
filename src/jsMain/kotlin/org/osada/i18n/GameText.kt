@@ -1,8 +1,12 @@
 package org.osada.i18n
 
+import org.osada.TerrainType
 import org.osada.groundConditionNames
 import org.osada.monthNamesShort
 import org.osada.movMethodNames
+import org.osada.rules.SupplyContext
+import org.osada.rules.SupplyContextRules
+import org.osada.rules.SupplySource
 import org.osada.sideNames
 import org.osada.terrainNames
 import org.osada.unitClassNames
@@ -41,30 +45,56 @@ internal object GameText {
 
     fun unitStatHelp(id: String): String = I18n.t("unit_info.stat.$id.help")
 
-    fun supplyContext(legacyLabel: String): String {
-        val adjacent =
-            Regex(
-                "(\\d+) adjacent enem(?:y|ies)",
-            ).find(legacyLabel)?.groupValues?.getOrNull(1)?.toIntOrNull()
-        val baseKey =
-            when {
-                legacyLabel.startsWith("airfield/carrier") -> "unit_info.supply_context.airfield_carrier"
-                legacyLabel.startsWith("naval") -> "unit_info.supply_context.naval"
-                legacyLabel.startsWith("no supply") -> "unit_info.supply_context.none"
-                legacyLabel.startsWith("city") -> "unit_info.supply_context.city"
-                else -> "unit_info.supply_context.field"
-            }
-        val base = I18n.t(baseKey)
-        return if (adjacent == null) {
+    /** Short one-line summary of a [SupplyContext] -- supply source plus enemy
+     *  pressure. The exact per-factor breakdown belongs in the action tooltip, not here. */
+    fun supplyContextSummary(context: SupplyContext): String {
+        val base = I18n.t(supplyContextSourceKey(context))
+        return if (context.adjacentEnemies <= 0) {
             base
         } else {
             I18n.plural(
                 "unit_info.supply_context.with_adjacent_enemies",
-                adjacent,
+                context.adjacentEnemies,
                 mapOf("base" to base),
             )
         }
     }
+
+    /** Same summary rebuilt from the two stable tokens a turn-report entry stores, so a log row
+     *  written under one language still renders in the language selected now. */
+    fun supplyContextSummary(
+        source: String?,
+        adjacentEnemies: Int,
+    ): String {
+        val key =
+            when (source) {
+                SupplySource.AIRFIELD_CARRIER.name -> "unit_info.supply_context.airfield_carrier"
+                SupplySource.NAVAL.name -> "unit_info.supply_context.naval"
+                SupplySource.NONE.name -> "unit_info.supply_context.none"
+                SupplyContextRules.CITY_SUPPLY_TOKEN -> "unit_info.supply_context.city"
+                SupplySource.GROUND.name -> "unit_info.supply_context.field"
+                else -> return ""
+            }
+        val base = I18n.t(key)
+        return if (adjacentEnemies <= 0) {
+            base
+        } else {
+            I18n.plural("unit_info.supply_context.with_adjacent_enemies", adjacentEnemies, mapOf("base" to base))
+        }
+    }
+
+    private fun supplyContextSourceKey(context: SupplyContext): String =
+        when (context.source) {
+            SupplySource.AIRFIELD_CARRIER -> "unit_info.supply_context.airfield_carrier"
+            SupplySource.NAVAL -> "unit_info.supply_context.naval"
+            SupplySource.NONE -> "unit_info.supply_context.none"
+            SupplySource.GROUND ->
+                if (context.terrain == TerrainType.CITY.value) {
+                    "unit_info.supply_context.city"
+                } else {
+                    "unit_info.supply_context.field"
+                }
+        }
 
     private fun indexed(
         prefix: String,

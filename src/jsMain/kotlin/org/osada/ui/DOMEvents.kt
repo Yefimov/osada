@@ -4,7 +4,7 @@ import org.osada.uiSettings
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.MouseEvent
 
-/**
+/*
  * Touch/mouse gesture and user-agent/environment helpers ported from the legacy UI. Split from
  * `DOM.kt` purely to keep that file within the project's function-count limits.
  */

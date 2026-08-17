@@ -18,7 +18,7 @@ object OSGlue {
             diskloadInputHTML = ""
             canvasErrorMsg =
                 "<b>Couldn't create game surface.</b> <br/>This usually means that your device doesn't " +
-                    "allow game surface to be created with dimensions over a certain limit."
+                "allow game surface to be created with dimensions over a certain limit."
         } else {
             diskloadHTML = "Load from Disk <input id='diskloadfile' type='file'/>"
             diskloadInputHTML = "<input id='diskloadfile' type='file'/>"

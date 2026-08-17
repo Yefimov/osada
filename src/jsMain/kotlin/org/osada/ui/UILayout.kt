@@ -137,7 +137,7 @@ internal object UILayout {
         inputContainer.className = "osada-slider"
         inputContainer.innerHTML =
             "<input type='range' id='$id' min='$min' max='$max' step='$step' value='$value'>" +
-                "<span class='osada-slider__value' id='$id-value'></span>"
+            "<span class='osada-slider__value' id='$id-value'></span>"
         showValue(value)
         byId(id)?.asDynamic()?.oninput = {
             showValue((byId(id)?.asDynamic()?.value as? String)?.toDoubleOrNull() ?: value)

@@ -183,7 +183,7 @@ object UICombatLog {
         button.title = I18n.t("turn_report.expand.help")
         button.innerHTML =
             I18n.t("turn_report.expand.label") +
-                "<span class=\"osada-ico osada-ico--map osada-tr-expand__ico\"></span>"
+            "<span class=\"osada-ico osada-ico--map osada-tr-expand__ico\"></span>"
         button.onclick = { _: MouseEvent -> showCombatLog(true) }
         return button
     }

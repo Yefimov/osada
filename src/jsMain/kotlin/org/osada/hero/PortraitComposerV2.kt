@@ -475,13 +475,13 @@ object PortraitComposerV2 {
             UnitClass.FLAK.value,
             UnitClass.AIR_DEFENCE.value,
             UnitClass.ANTI_TANK.value,
-                -> "artillery"
+            -> "artillery"
 
             UnitClass.FIGHTER.value,
             UnitClass.TACTICAL_BOMBER.value,
             UnitClass.LEVEL_BOMBER.value,
             UnitClass.AIR_TRANSPORT.value,
-                -> "aviation"
+            -> "aviation"
 
             else -> "infantry"
         }

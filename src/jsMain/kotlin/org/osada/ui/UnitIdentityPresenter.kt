@@ -330,7 +330,7 @@ internal object UnitIdentityPresenter {
             row.className = "osada-formation-detail__event"
             row.textContent =
                 FormationServiceRecordPresenter.eventTitle(event.eventId) +
-                    HeroEventDisplay.context(event.scenarioId, event.turn, event.date, event.location)
+                HeroEventDisplay.context(event.scenarioId, event.turn, event.date, event.location)
         }
     }
 }

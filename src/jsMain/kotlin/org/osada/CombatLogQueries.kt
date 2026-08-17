@@ -3,9 +3,13 @@ package org.osada
 import org.osada.model.Cell
 import org.osada.model.GameUnit
 
+/** [source] is a stable [org.osada.rules.SupplySource] token (see
+ *  `GameText.supplyContextToken`), never display text: the turn report is re-rendered after a
+ *  live language change, so a pre-localized English label would freeze into the log. */
 fun CombatLog.addResupply(
     unit: GameUnit,
     source: String? = null,
+    adjacentEnemies: Int = 0,
 ) {
     val player = unit.player ?: return
     val id = unit.id
@@ -20,6 +24,7 @@ fun CombatLog.addResupply(
     entry.isCore = unit.isCore
     entry.side = player.side
     entry.source = source
+    entry.sourceAdjacentEnemies = adjacentEnemies
 }
 
 /** [prestige] is the prestige ACTUALLY awarded for this capture, not the `objectiveCapture`
@@ -62,5 +67,6 @@ private fun newUnitEndTurnInfo(): dynamic {
     o.side = -1
     o.isCore = false
     o.source = null
+    o.sourceAdjacentEnemies = 0
     return o
 }

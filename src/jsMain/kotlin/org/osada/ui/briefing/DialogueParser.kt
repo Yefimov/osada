@@ -93,7 +93,7 @@ internal object DialogueParser {
             (
                 utils.readString(item)
                     ?: if (isObject) utils.readFirstString(item.text, item.label, item.response) else null
-                )?.trim().orEmpty()
+            )?.trim().orEmpty()
         if (text.isBlank()) return null
 
         val id =

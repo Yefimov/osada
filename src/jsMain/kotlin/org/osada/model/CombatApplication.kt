@@ -29,7 +29,7 @@ internal class CombatApplication(
         supportFire: Boolean,
         isOverrun: Boolean = false,
     ): CombatResults {
-        gameMap.undoState.unit = null
+        gameMap.undoState.invalidate(attacker, UndoInvalidation.COMBAT)
         val from = attacker.getPos()
         val to = defender.getPos()
         return if (from != null && to != null) {

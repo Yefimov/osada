@@ -1,6 +1,7 @@
 package org.osada.rules
 
 import org.osada.CURRENCY_MULTIPLIER
+import org.osada.OVERSTRENGTH_PENALTY
 import org.osada.UPGRADE_PENALTY
 import org.osada.model.Equipment
 import org.osada.model.GameUnit
@@ -73,6 +74,19 @@ object CostCalculator {
 
     /** Prestige cost of a single strength point of [unit]'s equipment. */
     fun calculateUnitCostPerStrength(unit: GameUnit): Int = unit.unitData().cost * CURRENCY_MULTIPLIER / FULL_STRENGTH
+
+    /**
+     * Prestige actually charged per restored strength point, with the overstrength surcharge
+     * applied. `Player.reinforceUnit` bills exactly this, and the action tooltip quotes exactly
+     * this -- they must never be computed in two places.
+     */
+    fun reinforceCostPerStrength(
+        unit: GameUnit,
+        overStrength: Boolean,
+    ): Int {
+        val penalty = if (overStrength) OVERSTRENGTH_PENALTY else 1.0
+        return kotlin.math.round(calculateUnitCostPerStrength(unit) * penalty).toInt()
+    }
 
     /** Prestige refunded when disbanding/selling [unit] at its current strength. */
     fun calculateUnitSellCost(unit: GameUnit): Int {

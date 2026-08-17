@@ -19,18 +19,28 @@ import org.osada.model.getUnits
 internal sealed class ScenarioActionRule {
     abstract val id: String
 
+    /**
+     * Optional authored player-facing name for the objectives rail. The stable [id]
+     * (`airfield_held_at_end`) is a campaign fact key, never UI copy
+     * (`docs/design/action-affordances-and-objectives.md` §9); when no label is authored the rail
+     * describes the rule from its own parameters instead of showing the id.
+     */
+    abstract val label: String?
+
     /** All listed hexes are owned by the player's side when the scenario ends ("held at end"). */
     data class HexesHeld(
         override val id: String,
         val hexes: List<HexRef>,
         /** Allow partial success: N of M suffices. Defaults to all. */
         val atLeast: Int?,
+        override val label: String? = null,
     ) : ScenarioActionRule()
 
     /** No listed hex is owned by the player's side at scenario end ("lost" / "never taken"). */
     data class HexesNotHeld(
         override val id: String,
         val hexes: List<HexRef>,
+        override val label: String? = null,
     ) : ScenarioActionRule()
 
     /** At least [atLeast] of the named units are alive at scenario end (escort / detachment survival). */
@@ -38,18 +48,21 @@ internal sealed class ScenarioActionRule {
         override val id: String,
         val unitIds: List<Int>,
         val atLeast: Int,
+        override val label: String? = null,
     ) : ScenarioActionRule()
 
     /** The scenario finished on or before [turn] — "objective taken before turn 8". */
     data class FinishedByTurn(
         override val id: String,
         val turn: Int,
+        override val label: String? = null,
     ) : ScenarioActionRule()
 
     /** At most [maxLosses] core units were destroyed. */
     data class CoreLossesAtMost(
         override val id: String,
         val maxLosses: Int,
+        override val label: String? = null,
     ) : ScenarioActionRule()
 
     /**
@@ -65,6 +78,7 @@ internal sealed class ScenarioActionRule {
     data class EventFired(
         override val id: String,
         val events: List<String>,
+        override val label: String? = null,
     ) : ScenarioActionRule()
 }
 
@@ -167,32 +181,35 @@ internal object ScenarioActionParser {
         id: String,
         type: String,
         item: dynamic,
-    ): ScenarioActionRule? =
-        when (type) {
+    ): ScenarioActionRule? {
+        val label = BriefingDynamic.str(item?.label)?.trim()?.takeIf { it.isNotBlank() }
+        return when (type) {
             "hexesHeld" ->
-                ScenarioActionRule.HexesHeld(id, parseHexes(item.hexes), BriefingDynamic.int(item.atLeast))
+                ScenarioActionRule.HexesHeld(id, parseHexes(item.hexes), BriefingDynamic.int(item.atLeast), label)
 
-            "hexesNotHeld" -> ScenarioActionRule.HexesNotHeld(id, parseHexes(item.hexes))
+            "hexesNotHeld" -> ScenarioActionRule.HexesNotHeld(id, parseHexes(item.hexes), label)
             "unitsSurvived" ->
                 ScenarioActionRule.UnitsSurvived(
                     id,
                     parseIntList(item.unitIds),
                     BriefingDynamic.int(item.atLeast) ?: 1,
+                    label,
                 )
 
             "finishedByTurn" ->
-                BriefingDynamic.int(item.turn)?.let { ScenarioActionRule.FinishedByTurn(id, it) }
+                BriefingDynamic.int(item.turn)?.let { ScenarioActionRule.FinishedByTurn(id, it, label) }
 
             "coreLossesAtMost" ->
-                BriefingDynamic.int(item.maxLosses)?.let { ScenarioActionRule.CoreLossesAtMost(id, it) }
+                BriefingDynamic.int(item.maxLosses)?.let { ScenarioActionRule.CoreLossesAtMost(id, it, label) }
 
-            "eventFired" -> ScenarioActionRule.EventFired(id, BriefingDynamic.strList(item.events))
+            "eventFired" -> ScenarioActionRule.EventFired(id, BriefingDynamic.strList(item.events), label)
 
             else -> {
                 console.warn("[OSADA] unknown scenario action type '$type' on '$id', rule dropped")
                 null
             }
         }
+    }
 
     private fun parseHexes(value: dynamic): List<HexRef> =
         BriefingDynamic.mapArray(value) { item ->

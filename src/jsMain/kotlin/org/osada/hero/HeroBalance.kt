@@ -2,7 +2,6 @@ package org.osada.hero
 
 import org.osada.hero.HeroBalance.Companion.DEFAULT
 
-
 /**
  * Externalised tuning for acquisition — design brief §27.
  *

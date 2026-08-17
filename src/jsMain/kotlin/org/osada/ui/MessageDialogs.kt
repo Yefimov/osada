@@ -142,8 +142,8 @@ internal object MessageDialogs {
         if (eq != null) {
             body +=
                 "<div class='uImageAnimation' style='margin-left: 120px;background-image: " +
-                    "url(${UnitIconResolver.forCurrentScenario(eqid, eq.icon)})'></div>" +
-                    "<b>${eq.name} ${unitClassNames[eq.uclass]}</b>"
+                "url(${UnitIconResolver.forCurrentScenario(eqid, eq.icon)})'></div>" +
+                "<b>${eq.name} ${unitClassNames[eq.uclass]}</b>"
         }
         messageDynamic(I18n.t("message.prototype.title"), body)
     }

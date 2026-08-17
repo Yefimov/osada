@@ -6,6 +6,7 @@ import org.osada.addSurrender
 import org.osada.evaluateScenarioEvents
 import org.osada.handleMoveVictory
 import org.osada.hero.HeroCampaign
+import org.osada.i18n.I18n
 import org.osada.model.Cell
 import org.osada.model.CombatResults
 import org.osada.model.GameMap
@@ -309,6 +310,7 @@ internal class AnimationOrchestrator(
             ui.showAlert(cell.row, cell.col, "Surprised", true)
             unit.isSurprised = false
         }
+        reportInterceptions(ui, unit, result, pos)
         if (result.isCapture) {
             ui.showAlert(pos.row, pos.col, "Captured", true)
             val hexName =
@@ -358,4 +360,45 @@ internal class AnimationOrchestrator(
         ui.game.waitUIAnimation = false
         ui.game.uiAnimationFinished()
     }
+}
+
+/**
+ * AA fired on this move. The player never chose this combat and never watched it resolve, so it
+ * gets an obvious non-modal banner plus a clickable HUD-log line; the combat log keeps the full
+ * detail it always did. Nothing is published before a gun fires -- these events only exist for
+ * interceptions that already happened.
+ *
+ * Top-level (not a method) to keep [AnimationOrchestrator] within the project's
+ * function-per-class limit.
+ */
+private fun reportInterceptions(
+    ui: UI,
+    unit: GameUnit,
+    result: MovementResults,
+    pos: Cell,
+) {
+    if (result.interceptions.isEmpty()) return
+    val observerSide = ui.game.spotSide
+    InterceptionBanner.show(ui, result.interceptions, observerSide)
+    result.interceptions
+        .filter { it.plane.player?.side == observerSide || it.interceptor.player?.side == observerSide }
+        .forEach { event ->
+            HudLog.addAt(
+                pos.row,
+                pos.col,
+                HudLog.Segment(
+                    I18n.t(
+                        if (event.planeDestroyed) "combat.interception.destroyed" else "combat.interception.damaged",
+                        mapOf(
+                            "gun" to event.interceptor.unitData(true).name,
+                            "plane" to event.plane.unitData(true).name,
+                            "losses" to event.losses,
+                        ),
+                    ),
+                    ownLoss = event.plane.player?.side == observerSide,
+                ),
+            )
+        }
+    // The aircraft's own state changed under the player; refresh what shows it.
+    ui.showUnitInfo(unit)
 }

@@ -245,6 +245,7 @@ internal class RenderContext(
     companion object {
         private const val CURSOR_BACKBUFFER_SIZE = 54
         private const val UNIT_BACKBUFFER_SIZE = 120
+
         // The terrain image is 65px shorter than the canvases, which get +65 for the last hex row.
         internal const val LAST_HEX_ROW_HEIGHT = 65.0
         private const val Z_INDEX_UNIT_BACKBUFFER = 3

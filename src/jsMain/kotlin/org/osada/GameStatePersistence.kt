@@ -1,6 +1,8 @@
 package org.osada
 
 import kotlinx.browser.localStorage
+import org.osada.rules.ruleset.ActiveRuleset
+import org.osada.rules.ruleset.deserializeRuleset
 import org.osada.save.CampaignRunBundle
 import org.osada.save.CampaignRunMetadata
 import org.osada.save.LocalStorageSaveSnapshotStore
@@ -330,6 +332,9 @@ class GameStatePersistence(
                 onFail()
                 return
             }
+            // Legacy migration path: those saves predate rulesets entirely and ran with no
+            // overlay, which is exactly what a null active ruleset reproduces.
+            ActiveRuleset.set(null)
             restorer.restoreGame(scenarioData, playersData, campaignData) {
                 // Fold the migrated state into the new repository immediately so it only ever
                 // needs to happen once, then retire the legacy keys.
@@ -357,6 +362,9 @@ class GameStatePersistence(
             val parsed = JSON.parse<dynamic>(data)
             if (isLoadableSave(parsed)) {
                 game.cleanup()
+                // The rules this battle ran under are restored BEFORE the model is rebuilt: unit
+                // synchronisation and supply reads during restore must already see them.
+                ActiveRuleset.set(deserializeRuleset(parsed.ruleset))
                 restorer.restoreGame(parsed.scenario, parsed.players, parsed.campaign) {
                     game.setupGameState()
                     onReady()

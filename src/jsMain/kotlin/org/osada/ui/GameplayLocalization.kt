@@ -15,7 +15,6 @@ package org.osada.ui
 import kotlinx.browser.window
 import org.osada.GameHolder
 import org.osada.GroundCondition
-import org.osada.PlayerType
 import org.osada.UNIT_MAX_EXPERIENCE
 import org.osada.WeatherCondition
 import org.osada.hero.HeroCampaign
@@ -27,12 +26,13 @@ import org.osada.model.GameUnit
 import org.osada.model.effectivePrestigeIncome
 import org.osada.model.getCountryName
 import org.osada.model.getUnits
+import org.osada.multiplayer.client.OsadaMultiplayer
 import org.osada.rules.GameRules
-import org.osada.rules.SupplyRules
+import org.osada.rules.UnitActionAvailability
+import org.osada.rules.UnitActionContext
+import org.osada.rules.UnitActionId
 import org.osada.rules.UnitCapabilities
 import org.osada.rules.airGroundedByWeather
-import org.osada.rules.getReinforceValue
-import org.osada.rules.getResupplyValue
 import org.osada.rules.isAir
 import org.osada.ui.GameplayLocalization.refreshUnitIdentity
 import org.w3c.dom.HTMLElement
@@ -173,10 +173,10 @@ internal object GameplayLocalization {
             )
         byId("statusmsg")?.innerHTML =
             "<span class=\"osada-tb-op\" title=\"${scenario.name}\">${scenario.name}</span>" +
-                "<span class=\"osada-tb-field\"><b>${I18n.t("hud.turn.label")}</b>" +
-                "${I18n.formatNumber(map.turn)}/${I18n.formatNumber(map.maxTurns)}</span>" +
-                "<span class=\"osada-tb-field osada-tb-date\">$dateText</span>" +
-                phaseChip
+            "<span class=\"osada-tb-field\"><b>${I18n.t("hud.turn.label")}</b>" +
+            "${I18n.formatNumber(map.turn)}/${I18n.formatNumber(map.maxTurns)}</span>" +
+            "<span class=\"osada-tb-field osada-tb-date\">$dateText</span>" +
+            phaseChip
     }
 
     private fun refreshWeather() {
@@ -186,9 +186,9 @@ internal object GameplayLocalization {
         byId("weathermsg")?.let { element ->
             element.innerHTML =
                 org.osada.weatherIconImg(atmos, "osada-tb-weather-img") +
-                    org.osada.groundIconImg(ground, "osada-tb-weather-img") +
-                    "<span class=\"osada-tb-weather-txt\">${GameText.weatherShort(atmos)} · " +
-                    "${GameText.ground(ground)}</span>"
+                org.osada.groundIconImg(ground, "osada-tb-weather-img") +
+                "<span class=\"osada-tb-weather-txt\">${GameText.weatherShort(atmos)} · " +
+                "${GameText.ground(ground)}</span>"
             element.title = ""
             element.onmouseenter = { _: MouseEvent -> showWeatherTooltip(element) }
             element.onmouseleave = { _: MouseEvent -> byId("osadaWeatherTip")?.style?.display = "none" }
@@ -686,85 +686,34 @@ internal object GameplayLocalization {
         }
     }
 
+    /** Only the visible label needs re-localizing here: the anchored panel is rebuilt from the
+     *  live availability every time it opens, so it is already in the current language. */
     private fun applyUnitActionButton(
         button: HTMLElement,
         action: String,
         unit: GameUnit,
         map: GameMap,
     ) {
-        val asleep = action == "sleep" && button.getAttribute("data-action-variant") == "wake"
-        val mounted = action == "mount" && unit.isMounted
-        val label = I18n.t(unitActionLabelKey(action, asleep, mounted))
+        val actionId = UnitActionId.entries.firstOrNull { it.id == action } ?: return
+        val asleep = button.getAttribute("data-action-variant") == "wake"
+        val label = I18n.t("unit_info.action.${UnitActionPresenter.variantKey(actionId, unit, asleep)}.label")
         button.querySelector(".osada-action__label")?.textContent = label
-        button.title = unitActionHelp(action, unit, map, asleep, mounted, button.title)
         button.setAttribute("aria-label", label)
-    }
-
-    private fun unitActionLabelKey(
-        action: String,
-        asleep: Boolean,
-        mounted: Boolean,
-    ): String =
-        when {
-            action == "mount" && mounted -> "unit_info.action.dismount.label"
-            action == "sleep" && asleep -> "unit_info.action.wake.label"
-            else -> "unit_info.action.$action.label"
-        }
-
-    private fun unitActionHelp(
-        action: String,
-        unit: GameUnit,
-        map: GameMap,
-        asleep: Boolean,
-        mounted: Boolean,
-        fallbackTitle: String,
-    ): String =
-        when (action) {
-            "mount" -> I18n.t(if (mounted) "unit_info.action.dismount.help" else "unit_info.action.mount.help")
-            "embark" ->
-                I18n.t(
-                    if (unit.carrier > 0) "unit_info.action.disembark.help" else "unit_info.action.embark.help",
-                )
-
-            "resupply" -> unitActionResupplyHelp(map, unit)
-            "reinforce" -> unitActionReinforceHelp(map, unit)
-            "overstrength" -> I18n.t("unit_info.action.overstrength.help")
-            "undo" -> I18n.t("unit_info.action.undo.help")
-            "sleep" -> I18n.t(if (asleep) "unit_info.action.wake.help" else "unit_info.action.sleep.help")
-            else -> fallbackTitle
-        }
-
-    private fun unitActionResupplyHelp(
-        map: GameMap,
-        unit: GameUnit,
-    ): String {
-        val value = GameRules.getResupplyValue(map, unit)
-        val context = SupplyRules.getSupplyContext(map, unit)
-        return I18n.t(
-            "unit_info.action.resupply.help",
-            mapOf(
-                "ammo" to value.ammo,
-                "fuel" to value.fuel,
-                "context" to GameText.supplyContext(context.label),
-                "efficiency" to context.efficiencyPercent,
-            ),
-        )
-    }
-
-    private fun unitActionReinforceHelp(
-        map: GameMap,
-        unit: GameUnit,
-    ): String {
-        val strength = GameRules.getReinforceValue(map, unit, false)
-        val context = SupplyRules.getSupplyContext(map, unit)
-        return I18n.t(
-            "unit_info.action.reinforce.help",
-            mapOf(
-                "strength" to strength,
-                "context" to GameText.supplyContext(context.label),
-                "efficiency" to context.efficiencyPercent,
-            ),
-        )
+        val currentPlayer = map.currentPlayer ?: return
+        val availability =
+            UnitActionAvailability.forAction(
+                actionId,
+                UnitActionContext(
+                    map = map,
+                    unit = unit,
+                    currentPlayer = currentPlayer,
+                    localTurn = OsadaMultiplayer.acceptsLocalCommands(),
+                    hasAnyAction = GameHolder.instance?.ui?.hasAnyAction(unit) ?: true,
+                    asleep = asleep,
+                ),
+            )
+        button.querySelector("#ucActionDesc-$action")?.textContent =
+            UnitActionPresenter.view(availability, unit, map, asleep).semanticText()
     }
 
     private fun refreshUnitSlots(unit: GameUnit) {

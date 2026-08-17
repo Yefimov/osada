@@ -2,7 +2,6 @@ package org.osada.hero
 
 import org.osada.hero.LeaderAcquisitionService.tryGenerate
 
-
 /**
  * Decides whether a formation's ordinary command produces a distinguished heroic commander —
  * design brief §7.2, §22.
@@ -153,7 +152,7 @@ internal object LeaderAcquisitionService {
                 (context.earlyLegendaryQualifyingCombats - 1).coerceAtLeast(0) *
                 balance.legendaryReplacementCombatScale +
                 context.scenarioIndex * balance.legendaryReplacementScenarioScale
-            ).coerceIn(0.0, 1.0)
+        ).coerceIn(0.0, 1.0)
 
     /**
      * Emergence chance (§22). Rises with recognition above the floor and with accumulated drought,

@@ -150,7 +150,7 @@ internal object EquipmentUnitStrip {
         val formation = if (unit.isCore) "core formation" else "scenario unit"
         container.title =
             "Select ${unit.customName ?: data.name}: $formation, $location. " +
-                "Card symbols show attack available, movement available, low supply, or reserve status."
+            "Card symbols show attack available, movement available, low supply, or reserve status."
         iconsDiv.className = if (unit.isDeployed) "eqUnitBoxIconsMenu" else "eqUnitBoxIcons"
         var icons = ""
         if (unit.isDeployed) {

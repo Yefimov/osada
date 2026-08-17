@@ -7,8 +7,9 @@ import org.osada.model.GameUnit
 import org.osada.model.Hex
 import org.osada.model.canDeployOnTerrain
 import org.osada.model.delCurrentUnit
-import org.osada.model.getAttackableUnit
+import org.osada.model.getActiveLayerTarget
 import org.osada.model.getPlayer
+import org.osada.model.inactiveLayerEnemy
 import org.osada.model.isInDeployZone
 import org.osada.rules.AttackEligibility
 import org.osada.rules.GameRules
@@ -29,9 +30,7 @@ internal class MapClickHandler(
         hex: Hex,
         currentPlayerSide: Int,
         currentPlayerId: Int,
-    ): GameUnit? {
-        return resolveVisibleUnitForClick(hex, uiSettings.airMode, currentPlayerSide, currentPlayerId)
-    }
+    ): GameUnit? = resolveVisibleUnitForClick(hex, uiSettings.airMode, currentPlayerSide, currentPlayerId)
 
     fun handleRightClick(
         map: GameMap,
@@ -235,7 +234,10 @@ internal class MapClickHandler(
         val currentUnit = map?.currentUnit
         val hex = map?.map?.get(row)?.get(col)
         val target =
-            if (currentUnit != null && hex != null) hex.getAttackableUnit(currentUnit, uiSettings.airMode) else null
+            if (currentUnit != null && hex != null) hex.getActiveLayerTarget(currentUnit, uiSettings.airMode) else null
+        if (currentUnit != null && hex != null && target == null) {
+            return offerOtherLayer(ui, hex, currentUnit, row, col)
+        }
         if (currentUnit == null || target == null) return false
         // Touch has no hover, so the forecast has to be reachable by tapping the target. The first
         // tap opens it; the attack is committed by the second tap or the Attack button. Which of
@@ -280,6 +282,29 @@ internal fun resolveVisibleUnitForClick(
     val isHiddenEnemy =
         !hex.isSpotted(currentPlayerSide) && !unit.tempSpotted && unit.player?.side != currentPlayerSide
     return if (isHiddenEnemy) null else unit
+}
+
+/**
+ * The active layer has nothing to shoot at, but the other layer plainly shows an enemy
+ * (`docs/design/action-affordances-and-objectives.md` §7). Open its inspector and raise the
+ * mode-switch hint. Deliberately does NOT attack and does NOT toggle Air Mode: the global layer is
+ * the player's declaration of intent, and a click must never rewrite it.
+ *
+ * Returns true when the click was consumed by the inspection, so it does not fall through to
+ * deselecting the unit the player is still commanding. Top-level (not a method) to keep
+ * [MapClickHandler] within the project's function-per-class limit.
+ */
+private fun offerOtherLayer(
+    ui: UI,
+    hex: Hex,
+    currentUnit: GameUnit,
+    row: Int,
+    col: Int,
+): Boolean {
+    val other = hex.inactiveLayerEnemy(currentUnit, uiSettings.airMode) ?: return false
+    ui.showEnemyCard(other)
+    AirModeHint.show(ui, row, col, otherLayerIsAir = GameRules.isAir(other))
+    return true
 }
 
 /** DIAGNOSTIC (DEFERRED: T-34/ZP-40 "can't attack an adjacent enemy"). When the player clicks an

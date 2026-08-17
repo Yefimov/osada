@@ -191,7 +191,7 @@ var campaignlist =
   "title": "The Great Patriotic War USSR Campaign (1942-1945)"
  },
  {
-  "desc": "Assume the role of Marshal Georgy Zhukov at the moment the strategic tide begins to turn. Encircle the Axis armies at Stalingrad in Operation Uranus, expand the catastrophe through Saturn, recover Rostov and the Black Sea coast, and fight through Kharkov, Kanev, Kiev, Odessa, Sevastopol, and the long road to the Reichstag. Twenty-seven operations test your ability to absorb counterstrokes, rebuild exhausted armies, mass artillery, and commit armour at the decisive point. History ends in Berlin—but this campaign does not. After the fall of the Third Reich, an alternate path carries the offensive across Western Europe, Britain, and ultimately the Atlantic. Can victory become world revolution?\n\nOriginal Author: Tim Ruger\r\n",
+  "desc": "Assume the role of Marshal Georgy Zhukov at the moment the strategic tide begins to turn. Encircle the Axis armies at Stalingrad in Operation Uranus, expand the catastrophe through Saturn, recover Rostov and the Black Sea coast, and fight through Kharkov, Kanev, Kiev, Odessa, Sevastopol, and the long road to the Reichstag. Twenty-seven operations test your ability to absorb counterstrokes, rebuild exhausted armies, mass artillery, and commit armour at the decisive point. History ends in Berlin—but this campaign does not. After the fall of the Third Reich, an alternate path carries the offensive across Western Europe, Britain, and ultimately the Atlantic. Can victory become world revolution?",
   "eqp": "eqp-adlerkorps",
   "file": "camp6.json",
   "flag": 61,

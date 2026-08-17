@@ -7,6 +7,8 @@ import org.osada.model.getPlayers
 import org.osada.model.getUnits
 import org.osada.model.recomputeSpotting
 import org.osada.model.synchronizeStalinRegime
+import org.osada.rules.ruleset.ActiveRuleset
+import org.osada.rules.ruleset.RuleKey
 
 internal fun Game.setupPlayers() {
     val players = scenario?.map?.getPlayers() ?: return
@@ -86,7 +88,9 @@ internal fun Game.synchronizeStalinRegimeUnits() {
     val map = scenario?.map ?: return
     val deployed = map.getUnits().toList()
     deployed.forEach { unit ->
-        val enabled = uiSettings.stalinRegime && unit.player?.type == PlayerType.HUMAN_LOCAL
+        val enabled =
+            ActiveRuleset.flag(RuleKey.STALIN_REGIME, uiSettings.stalinRegime) &&
+                unit.player?.type == PlayerType.HUMAN_LOCAL
         if (unit.stalinRegimeBoosted == enabled) return@forEach
         unit.synchronizeStalinRegime(enabled)
     }
@@ -104,7 +108,9 @@ internal fun Game.synchronizeStalinRegimeUnits() {
         .filter { it !in deployed }
         .distinct()
         .forEach { unit ->
-            val enabled = uiSettings.stalinRegime && unit.player?.type == PlayerType.HUMAN_LOCAL
+            val enabled =
+                ActiveRuleset.flag(RuleKey.STALIN_REGIME, uiSettings.stalinRegime) &&
+                    unit.player?.type == PlayerType.HUMAN_LOCAL
             unit.synchronizeStalinRegime(enabled)
         }
 }

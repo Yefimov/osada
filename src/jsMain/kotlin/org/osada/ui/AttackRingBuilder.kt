@@ -6,7 +6,7 @@ import org.osada.model.Cell
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
 import org.osada.model.Hex
-import org.osada.model.getAttackableUnit
+import org.osada.model.getActiveLayerTarget
 import org.osada.rules.GameRules
 import org.osada.rules.getRing
 import org.osada.rules.getUnitAttackRange
@@ -116,7 +116,7 @@ internal object AttackRingBuilder {
             ring.add(Cell(row, col))
             for (cell in ring) {
                 val hex = map.map?.getOrNull(cell.row)?.getOrNull(cell.col) ?: continue
-                val target = hex.getAttackableUnit(unit, uiSettings.airMode) ?: continue
+                val target = hex.getActiveLayerTarget(unit, uiSettings.airMode) ?: continue
                 val attackerIsAir = GameRules.isAir(unit)
                 val targetIsAir = GameRules.isAir(target)
                 if (!attackPreviewAllowsTarget(attackerIsAir, targetIsAir, row, col, cell)) continue

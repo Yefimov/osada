@@ -7759,3 +7759,577 @@ hr {
     cursor: pointer;
     text-decoration: underline;
 }
+
+/* ---- Unit-context action strip and its anchored explanation panel ----
+ * docs/design/action-affordances-and-objectives.md sec 3-4. #unit-context's own display is
+ * toggled inline (makeVisible sets display:inline), so the flex/gap/wrap container is this
+ * INNER row instead -- an inline style on the parent can never defeat it, and Sleep and Mount
+ * can no longer overlap however many chips an applicable-but-disabled action adds. */
+.osada-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 3px;
+}
+
+/* The gap is now the only source of spacing; the chips' own legacy margins would add to it and
+ * cost one chip per row inside #unit-context's fixed width. */
+.osada-actions .osada-action {
+    margin: 0;
+}
+
+/* Applicable but blocked right now: still readable, clearly not pressable. The chip keeps its
+ * hover/focus tooltip -- that panel is the only place the blocking rule is stated. */
+.osada-action--disabled {
+    opacity: .5;
+    cursor: default;
+    border-style: dashed;
+}
+
+.osada-action--disabled:hover {
+    border-color: var(--osada-metal-600);
+    background: var(--osada-metal-700);
+}
+
+.osada-action--disabled:active {
+    transform: none;
+}
+
+/* Available/Unavailable line under the panel title. */
+.osada-atip__status {
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
+.osada-atip__status--ok {
+    color: #8fce7a;
+}
+
+.osada-atip__status--no {
+    color: #e07a72;
+}
+
+/* Screen-reader mirror of a panel's text (aria-describedby target). */
+.osada-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ============================================================================
+ * F1 Controls card (docs/design/keyboard-shortcuts-and-help.md §6)
+ * ============================================================================ */
+
+/* Above every gameplay window (#combatLog is 202, the pause menu 300) -- the card is opened
+ * on top of whatever the player was looking at and Escape closes it first. */
+.osada-controls-card {
+    position: fixed;
+    z-index: 400;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 720px;
+    max-width: 94vw;
+    max-height: 88vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--osada-panel);
+    border: var(--osada-frame-brass);
+    border-radius: var(--osada-radius);
+    box-shadow: var(--osada-shadow);
+    color: var(--osada-text);
+    font-family: var(--osada-font-ui);
+    font-size: 13px;
+    padding: 14px 16px;
+}
+
+.osada-controls-card__title {
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--osada-brass);
+    border-bottom: var(--osada-border);
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+}
+
+/* Two columns on a desktop, one on anything narrow; the body itself is what scrolls, so a short
+ * landscape phone still reaches the last row. */
+.osada-controls-card__body {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 22px;
+    align-content: start;
+}
+
+.osada-controls-group {
+    break-inside: avoid;
+    margin-bottom: 10px;
+}
+
+.osada-controls-group__title {
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--osada-steel);
+    margin: 6px 0 4px;
+}
+
+.osada-controls-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    padding: 2px 0;
+}
+
+.osada-controls-row__cap {
+    flex: 0 0 auto;
+    min-width: 62px;
+    text-align: center;
+    font-family: monospace;
+    font-size: 12px;
+    color: var(--osada-text);
+    background: var(--osada-metal-700);
+    border: var(--osada-border);
+    border-bottom-width: 2px;
+    border-radius: var(--osada-radius);
+    padding: 1px 5px;
+}
+
+.osada-controls-row__text {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.osada-controls-row__label {
+    display: block;
+    font-weight: bold;
+}
+
+.osada-controls-row__help {
+    display: block;
+    color: var(--osada-text-dim);
+    font-size: 12px;
+}
+
+.osada-controls-card__footer {
+    color: var(--osada-text-dim);
+    font-size: 12px;
+    border-top: var(--osada-border);
+    padding-top: 8px;
+    margin-top: 4px;
+}
+
+.osada-controls-card__close {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+}
+
+.osada-controls-card__close:focus {
+    outline: 2px solid var(--osada-cyan);
+    outline-offset: 2px;
+}
+
+@media (max-width: 700px), (max-height: 520px) {
+    .osada-controls-card__body {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Key cap riding in an anchored action panel's title row (keyboard design §7). Hidden on coarse
+ * input, where there is no keyboard to press -- the accessible mirror still carries the label. */
+.osada-atip__cap {
+    float: right;
+    font-family: monospace;
+    font-size: 11px;
+    font-weight: normal;
+    color: var(--osada-text-dim);
+    background: var(--osada-metal-700);
+    border: var(--osada-border);
+    border-radius: var(--osada-radius);
+    padding: 0 4px;
+    margin-left: 8px;
+}
+
+@media (pointer: coarse) {
+    .osada-atip__cap {
+        display: none;
+    }
+}
+
+/* ============================================================================
+ * Objectives rail sections (docs/design/action-affordances-and-objectives.md §§8, 9)
+ * ============================================================================ */
+
+/* Section heading inside the rail: required objectives, optional capture points, hidden
+ * objectives (Observer Mode only), the victory-tier strip and the mission-end conditions. */
+.osada-obj-section {
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--osada-steel);
+    margin: 8px 0 2px;
+    padding-bottom: 2px;
+    border-bottom: 1px solid rgba(180, 138, 60, .25);
+    cursor: help;
+}
+
+.osada-obj-section:first-child {
+    margin-top: 0;
+}
+
+/* A hidden victory objective is only ever listed under Observer Mode; the dashed edge keeps it
+ * visually separate from what an ordinary player would see. */
+.osada-obj--hidden {
+    border-style: dashed;
+    border-color: rgba(180, 138, 60, .45);
+}
+
+.osada-obj-tier,
+.osada-obj-end {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 3px 6px;
+    font-size: 12px;
+}
+
+.osada-obj-tier__name,
+.osada-obj-end__name {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.osada-obj-tier__value,
+.osada-obj-end__state {
+    flex: 0 0 auto;
+    color: var(--osada-text-dim);
+    font-size: 11px;
+}
+
+/* A deadline that has passed stays visible: it explains why the best grade is gone. */
+.osada-obj-tier--missed {
+    opacity: .55;
+}
+
+.osada-obj-tier--missed .osada-obj-tier__name {
+    text-decoration: line-through;
+}
+
+.osada-obj-end__name {
+    white-space: normal;
+}
+
+.osada-obj-end--ok .osada-obj-end__state {
+    color: #7fa86a;
+}
+
+.osada-obj-end--missed .osada-obj-end__state {
+    color: #e07a72;
+}
+
+/* Short landscape phones: the rail's own panel scrolls rather than pushing the minimap off. */
+@media (max-height: 520px) {
+    #osadaObjectives {
+        max-height: 34vh;
+        overflow-y: auto;
+    }
+}
+
+/* Anchored "switch to Air Mode (A)" hint over a stacked hex
+ * (docs/design/action-affordances-and-objectives.md §7). Positioned inside #game's scroll-content
+ * space like the other map tooltips, so it tracks the hex through scroll and zoom. */
+.osada-airmode-hint {
+    position: absolute;
+    z-index: 12;
+    transform: translate(-50%, -100%);
+    max-width: 260px;
+    padding: 4px 8px;
+    border: 1px solid var(--osada-brass);
+    border-radius: var(--osada-radius);
+    background: rgba(20, 22, 26, .92);
+    color: var(--osada-text);
+    font-family: var(--osada-font-ui);
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1.3;
+    text-align: center;
+    pointer-events: none;
+    box-shadow: var(--osada-shadow);
+}
+
+/* ============================================================================
+ * AA interception event banner (docs/design/aa-interception.md)
+ * ============================================================================ */
+
+/* Non-modal: no backdrop, no focus trap, dismisses itself. Sits under the top bar so it reads as
+ * an event report rather than a dialog demanding an answer. */
+.osada-intercept-banner {
+    position: fixed;
+    z-index: 210;
+    left: 50%;
+    top: calc(var(--osada-topbar-h) + 10px);
+    transform: translateX(-50%);
+    min-width: 260px;
+    max-width: min(420px, 92vw);
+    padding: 8px 12px;
+    background: var(--osada-panel);
+    border: 1px solid var(--osada-red);
+    border-left: 4px solid var(--osada-red);
+    border-radius: var(--osada-radius);
+    box-shadow: var(--osada-shadow);
+    color: var(--osada-text);
+    font-family: var(--osada-font-ui);
+    font-size: 12px;
+    cursor: pointer;
+    animation: osada-intercept-in .18s ease-out;
+}
+
+.osada-intercept-banner__title {
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--osada-red-bright);
+    margin-bottom: 4px;
+}
+
+.osada-intercept-banner__line {
+    line-height: 1.35;
+}
+
+/* The player's own aircraft taking the hit, in the same red the HUD log uses for own losses. */
+.osada-intercept-banner__line--own {
+    color: #e07a72;
+}
+
+@keyframes osada-intercept-in {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .osada-intercept-banner {
+        animation: none;
+    }
+}
+
+/* Author/Authors metadata row on the campaign and scenario selection dossiers
+ * (docs/player-comfort-roadmap.md, "Authorship metadata contract"). Its own row, above the
+ * synopsis, so the label can be translated while the names never are. */
+.osadaAuthorRow {
+    margin: 0 0 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(180, 138, 60, .25);
+    color: var(--osada-text-dim);
+    font-size: 13px;
+    font-weight: normal;
+}
+
+.osadaAuthorRow b {
+    color: var(--osada-brass);
+    font-weight: bold;
+    margin-right: 4px;
+}
+
+/* ============================================================================
+ * Ruleset selection window (docs/design/ruleset-profiles.md §6)
+ * ============================================================================ */
+
+.osadaRulesButton {
+    min-width: 64px;
+    padding: 0 10px;
+    border-radius: var(--osada-radius);
+    font-family: var(--osada-font-ui);
+    font-size: 13px;
+    line-height: 26px;
+}
+
+.osadaRulesWindow {
+    position: fixed;
+    z-index: 320;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 480px;
+    max-width: 94vw;
+    max-height: 86vh;
+    overflow-y: auto;
+    padding: 14px 16px;
+    background: var(--osada-panel);
+    border: var(--osada-frame-brass);
+    border-radius: var(--osada-radius);
+    box-shadow: var(--osada-shadow);
+    color: var(--osada-text);
+    font-family: var(--osada-font-ui);
+    font-size: 13px;
+}
+
+.osadaRulesWindow__title {
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--osada-brass);
+    border-bottom: var(--osada-border);
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+}
+
+.osadaRulesRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 4px 0;
+}
+
+.osadaRulesRow__label {
+    flex: 1 1 auto;
+    min-width: 0;
+    cursor: help;
+}
+
+.osadaRulesRow input,
+.osadaRulesSelect {
+    flex: 0 0 auto;
+    min-width: 120px;
+    height: 26px;
+    padding: 0 6px;
+    background: var(--osada-metal-700);
+    color: var(--osada-text);
+    border: var(--osada-border);
+    border-radius: var(--osada-radius);
+    font-family: var(--osada-font-ui);
+    font-size: 13px;
+}
+
+.osadaRulesSummary {
+    margin: 10px 0;
+    padding: 8px 0;
+    border-top: var(--osada-border);
+    border-bottom: var(--osada-border);
+}
+
+.osadaRulesSummary__row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 3px 0;
+}
+
+.osadaRulesSummary__name {
+    flex: 0 0 auto;
+    color: var(--osada-text-dim);
+    cursor: help;
+}
+
+.osadaRulesSummary__value {
+    flex: 1 1 auto;
+    text-align: right;
+    min-width: 0;
+}
+
+.osadaRulesWindow__close {
+    margin-top: 10px;
+    float: right;
+}
+
+/* Ruleset window additions: provenance note, actions, editor and hash details. */
+.osadaRulesNote {
+    color: var(--osada-text-dim);
+    font-size: 12px;
+    margin: 2px 0 6px;
+}
+
+.osadaRulesSummary__row--unavailable .osadaRulesSummary__value {
+    color: #e0a072;
+    font-style: italic;
+}
+
+.osadaRulesActions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 10px 0 4px;
+}
+
+.osadaRulesAction,
+.osadaRulesActionPrimary {
+    min-width: 64px;
+    padding: 0 10px;
+    border-radius: var(--osada-radius);
+    font-family: var(--osada-font-ui);
+    font-size: 13px;
+    line-height: 26px;
+}
+
+.osadaRulesActionPrimary {
+    border-color: var(--osada-brass);
+}
+
+.osadaRulesError {
+    min-height: 16px;
+    color: #e07a72;
+    font-size: 12px;
+}
+
+.osadaRulesHash {
+    margin-top: 8px;
+    color: var(--osada-text-dim);
+    font-size: 12px;
+}
+
+.osadaRulesHash summary {
+    cursor: help;
+}
+
+.osadaRulesHash__value {
+    display: block;
+    margin-top: 4px;
+    padding: 4px 6px;
+    background: var(--osada-metal-900);
+    border: var(--osada-border);
+    border-radius: var(--osada-radius);
+    font-family: monospace;
+    font-size: 11px;
+    word-break: break-all;
+    -webkit-user-select: text;
+    user-select: text;
+}
+
+/* The editor sits above the Rules window it was opened from. */
+.osadaRulesEditorWindow {
+    z-index: 330;
+}
+
+/* 667x375: the window scrolls internally, so Save/Close never leave the screen. */
+@media (max-height: 420px) {
+    .osadaRulesWindow {
+        max-height: 92vh;
+    }
+}

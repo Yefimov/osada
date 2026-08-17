@@ -40,7 +40,7 @@ internal object BriefingChoicePreview {
             is CampaignEffect.UnlockEquipment,
             is CampaignEffect.DeploymentSlots,
             is CampaignEffect.ShiftReinforcements,
-                -> null
+            -> null
         }
 
     private fun describeExperience(effect: CampaignEffect.GrantExperience): String {

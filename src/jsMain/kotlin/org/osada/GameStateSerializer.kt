@@ -8,6 +8,8 @@ import org.osada.model.Hex
 import org.osada.model.Player
 import org.osada.model.Transport
 import org.osada.model.getPlayers
+import org.osada.rules.ruleset.ActiveRuleset
+import org.osada.rules.ruleset.serializeRuleset
 import org.osada.scenario.Scenario
 import kotlin.js.json
 
@@ -54,6 +56,9 @@ object GameStateSerializer {
                         ?.toTypedArray(),
                 ),
                 Pair("campaign", buildCampaignData(game)),
+                // The effective rules this battle actually ran under. Values, not just a profile
+                // id -- see `docs/design/ruleset-profiles.md` §4.
+                Pair("ruleset", serializeRuleset(ActiveRuleset.currentOrNull())),
             )
         return JSON.stringify(base)
     }

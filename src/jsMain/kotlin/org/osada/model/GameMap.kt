@@ -5,7 +5,7 @@ import org.osada.GameHolder
 import org.osada.PlayerType
 import org.osada.addResupply
 import org.osada.rules.GameRules
-import org.osada.rules.SupplyRules
+import org.osada.rules.SupplyContextRules
 import org.osada.rules.getResupplyValue
 
 /**
@@ -82,7 +82,8 @@ class GameMap {
                 val needsTransportSupply = supply.transportAmmo > 0 || supply.transportFuel > 0
                 if (needsAmmoOrFuel || needsTransportSupply) {
                     unit.resupply(supply)
-                    CombatLog.addResupply(unit, SupplyRules.getSupplyContext(this, unit).label)
+                    val context = SupplyContextRules.getSupplyContext(this, unit)
+                    CombatLog.addResupply(unit, SupplyContextRules.logToken(context), context.adjacentEnemies)
                 }
                 unit.unitEndTurn(GameHolder.instance?.spotSide ?: 0)
             }

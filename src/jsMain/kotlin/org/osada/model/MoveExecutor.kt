@@ -135,7 +135,7 @@ internal class MoveExecutor(
         unit.getHex()?.delUnit(unit)
         setup.map[cell.row][cell.col].setUnit(unit)
         GameRules.setSpotRange(gameMap, unit, true)
-        AAInterception.applyInterception(gameMap, unit, interceptors)
+        result.interceptions.addAll(AAInterception.applyInterception(gameMap, unit, interceptors))
         result.wasIntercepted = true
         return true
     }
@@ -201,31 +201,45 @@ internal class MoveExecutor(
         unit.facing = GameRules.getDirection(from.row, from.col, last.row, last.col) ?: unit.facing
         GameRules.setZOCRange(gameMap, unit, true)
         val newlySpotted = GameRules.setSpotRange(gameMap, unit, true)
-        // §7.43 reconnaissance evidence. Safe against undo without any bookkeeping: `isUndoable`
+        // §7.43 reconnaissance evidence. Safe against undo without any bookkeeping: `undoFinality`
         // below already refuses to offer an undo for a move that revealed something, so a credited
         // contact can never be rewound out from under the evidence it granted.
         HeroCampaign.recordReconnaissance(unit, newlySpotted)
         gameMap.setMoveRange(unit)
         gameMap.setAttackRange(unit)
-        gameMap.undoState.unit =
-            if (isUndoable(newlySpotted, unit, result.wasIntercepted, result.stoppedByUnseenEnemy)) unit else null
+        if (unit.player?.type != PlayerType.HUMAN_LOCAL) {
+            // No record was ever saved for a non-local player, and its units never show the action
+            // strip -- there is nothing to explain.
+            gameMap.undoState.unit = null
+            return
+        }
+        val finality = undoFinality(newlySpotted, unit, result.wasIntercepted, result.stoppedByUnseenEnemy)
+        if (finality == null) {
+            gameMap.undoState.unit = unit
+        } else {
+            gameMap.undoState.invalidate(unit, finality)
+        }
     }
 
-    private fun isUndoable(
+    /** Null when the move stays undoable, otherwise the single reason it became final. Order is
+     *  the reporting order too: the most immediate cause first. */
+    private fun undoFinality(
         newlySpotted: Int,
         unit: GameUnit,
         wasIntercepted: Boolean,
         stoppedByUnseenEnemy: Boolean,
-    ): Boolean =
-        newlySpotted == 0 &&
-            !unit.isSurprised &&
-            !wasIntercepted &&
+    ): UndoInvalidation? =
+        when {
+            wasIntercepted -> UndoInvalidation.INTERCEPTED
+            unit.isSurprised -> UndoInvalidation.SURPRISED
+            newlySpotted != 0 -> UndoInvalidation.NEW_INTELLIGENCE
             // Same reasoning as an intercepted move: rewinding a move that a hidden enemy stopped
             // would make probing for hidden units free (DEFERRED.md §7.32 item 4). In practice a
             // stop usually reveals the enemy anyway, which `newlySpotted` already catches -- this
             // covers the case where it stopped without spotting it.
-            !stoppedByUnseenEnemy &&
-            unit.player?.type == PlayerType.HUMAN_LOCAL
+            stoppedByUnseenEnemy -> UndoInvalidation.STOPPED_BY_HIDDEN_ENEMY
+            else -> null
+        }
 
     fun undoLastMove() {
         val ctx = resolveUndoContext() ?: return

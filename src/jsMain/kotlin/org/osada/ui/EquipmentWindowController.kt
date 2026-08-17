@@ -84,7 +84,7 @@ internal class EquipmentWindowController(
         val (selectedClass, isAll) = resolveSelectedClassAndTabs(unitClass, eqmode, eqUserSel)
         byId("eqInfoText")?.innerHTML =
             "$year ${EquipmentWindowState.classLabel(isAll, selectedClass)} upgrades for " +
-                EquipmentWindowState.countryLabel(countryCtx.allCountries, countryCtx.countryId)
+            EquipmentWindowState.countryLabel(countryCtx.allCountries, countryCtx.countryId)
 
         populateCatalogAndTransport(
             eqUserSel,

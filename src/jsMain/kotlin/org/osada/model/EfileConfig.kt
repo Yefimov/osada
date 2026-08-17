@@ -58,6 +58,15 @@ object EfileConfig {
         return intKeys[name] ?: default
     }
 
+    /** Whether the active efile's `equip.cfg` names [name] EXPLICITLY, as opposed to the caller
+     *  falling back to its own documented default. Needed by the ruleset window, which has to tell
+     *  the player "the author chose this" apart from "nobody said, so this is the default"
+     *  (`docs/design/ruleset-profiles.md` §3). */
+    fun hasIntKey(name: String): Boolean {
+        loadIfNeeded()
+        return intKeys.containsKey(name)
+    }
+
     /** Boolean reading of an int `equip.cfg` key: present and non-zero -> true. */
     fun flag(
         name: String,

@@ -1,12 +1,11 @@
 package org.osada.model
 
 import org.osada.GameHolder
-import org.osada.OVERSTRENGTH_PENALTY
 import org.osada.PlayerType
 import org.osada.hero.HeroCampaign
 import org.osada.rules.Attachments
+import org.osada.rules.CostCalculator
 import org.osada.rules.GameRules
-import org.osada.rules.calculateUnitCostPerStrength
 import org.osada.rules.calculateUnitCosts
 import org.osada.rules.calculateUnitSellCost
 import org.osada.rules.calculateUpgradeCosts
@@ -108,9 +107,7 @@ fun Player.reinforceUnit(
     strength: Int,
     overStrength: Boolean,
 ): Int {
-    val penalty = if (overStrength) OVERSTRENGTH_PENALTY else 1.0
-    val costPerStrength = GameRules.calculateUnitCostPerStrength(unit)
-    val unitCost = kotlin.math.round(costPerStrength * penalty).toInt()
+    val unitCost = CostCalculator.reinforceCostPerStrength(unit, overStrength)
     val maxAffordable = prestige / unitCost
     val toReinforce = if (maxAffordable < 1) 0 else kotlin.math.min(maxAffordable, strength)
     // Nothing to add (e.g. unit ineligible for overstrength): bail out WITHOUT calling

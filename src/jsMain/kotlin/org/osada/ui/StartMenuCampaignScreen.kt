@@ -163,7 +163,9 @@ internal object StartMenuCampaignScreen {
         val country =
             StartMenuListToolbar.countryDisplayLabel(flagId)
                 ?: Equipment.getCountryNameByEqp(flagId, campaign.eqp as? String ?: "")
-        byId("smCampDesc")?.innerHTML = formatCampaignDescription(campaign.desc as? String ?: "")
+        // Structured credits ride in their own row, never inside the synopsis.
+        byId("smCampDesc")?.innerHTML =
+            AuthorRow.html(campaign.file as? String) + formatCampaignDescription(campaign.desc as? String ?: "")
         byId("smCampCountry")?.innerHTML = "<b>${I18n.t("campaign.country.label")}</b><br/>" + country
         val operations = campaign.scenarios as? Int
         byId("smCampScenarios")?.innerHTML = "<b>${I18n.t("campaign.operations.label")}</b><br/>" +
@@ -226,7 +228,12 @@ internal object StartMenuCampaignScreen {
         buildCampaignDossierHead(dossier)
         buildCampaignPathCollapse(dossier)
 
-        byId("smCampButtons")?.let { root.appendChild(it) }
+        byId("smCampButtons")?.let { buttons ->
+            root.appendChild(buttons)
+            // Page-level Rules button, never an automatic modal in front of the launch
+            // (`docs/design/ruleset-profiles.md` §6).
+            RulesWindow.installButton(buttons, RulesetSelection.Surface.CAMPAIGN)
+        }
         // The native flow glyph is superseded by the collapsible "Campaign path" line.
         byId("smCFlowBut")?.style?.display = "none"
 

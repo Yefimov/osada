@@ -2,13 +2,15 @@ package org.osada.rules
 
 import org.osada.CombatLog
 import org.osada.model.Cell
-import org.osada.model.EfileConfig
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
+import org.osada.model.InterceptionEvent
 import org.osada.model.fire
 import org.osada.model.getUnits
 import org.osada.model.hit
 import org.osada.rules.AAInterception.fires
+import org.osada.rules.ruleset.ActiveRuleset
+import org.osada.rules.ruleset.RuleKey
 
 /**
  * AA interception of moving aircraft (DEFERRED.md §1.1, `docs/design/aa-interception.md`).
@@ -37,8 +39,8 @@ internal object AAInterception {
         isDestination: Boolean,
     ): List<GameUnit> {
         val planeSide = plane.player?.side ?: return emptyList()
-        val mode = EfileConfig.intKey("g2a_intercept_mode", 0)
-        val range = EfileConfig.intKey("flak_range", DEFAULT_FLAK_RANGE)
+        val mode = ActiveRuleset.intKey(RuleKey.AA_INTERCEPT_MODE, 0)
+        val range = ActiveRuleset.intKey(RuleKey.FLAK_RANGE, DEFAULT_FLAK_RANGE)
         return map.getUnits().filter { aa ->
             isEligibleInterceptor(aa, plane, planeSide, cell, range) && fires(aa, planeSide, mode, isDestination)
         }
@@ -61,9 +63,9 @@ internal object AAInterception {
         side: Int,
         forPlane: GameUnit,
     ): Set<Pair<Int, Int>> {
-        val mode = EfileConfig.intKey("g2a_intercept_mode", 0)
+        val mode = ActiveRuleset.intKey(RuleKey.AA_INTERCEPT_MODE, 0)
         if ((mode and MODE_SPOTTED_INTERCEPTS_AT_DESTINATION) == 0) return emptySet()
-        val range = EfileConfig.intKey("flak_range", DEFAULT_FLAK_RANGE)
+        val range = ActiveRuleset.intKey(RuleKey.FLAK_RANGE, DEFAULT_FLAK_RANGE)
         val threatened = mutableSetOf<Pair<Int, Int>>()
         val rows = map.rows
         val cols = map.cols
@@ -91,10 +93,11 @@ internal object AAInterception {
         map: GameMap,
         plane: GameUnit,
         interceptors: List<GameUnit>,
-    ) {
-        val mode = EfileConfig.intKey("g2a_intercept_mode", 0)
+    ): List<InterceptionEvent> {
+        val mode = ActiveRuleset.intKey(RuleKey.AA_INTERCEPT_MODE, 0)
         val units = map.getUnits().toList()
         val turn = map.turn
+        val events = mutableListOf<InterceptionEvent>()
         for (aa in interceptors) {
             if (plane.destroyed) break
             val logId = CombatLog.addCombatStart(aa, plane, turn)
@@ -103,7 +106,10 @@ internal object AAInterception {
             aa.fire(false)
             if ((mode and MODE_NO_AIR_DEFENSE_AFTER_INTERCEPT) != 0) aa.hasInterceptedThisTurn = true
             CombatLog.addCombatEnd(aa, plane, logId, true)
+            // Reported to the HUD only now that the gun has fired -- see [InterceptionEvent].
+            events += InterceptionEvent(aa, plane, result.kills, plane.destroyed)
         }
+        return events
     }
 
     private fun isEligibleInterceptor(

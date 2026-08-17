@@ -244,7 +244,7 @@ internal object DossierBuilder {
             empty.className = "osada-dsr-empty"
             empty.textContent =
                 "No scenario results recorded yet. " +
-                    "Hero decorations are shown in each commander's dossier."
+                "Hero decorations are shown in each commander's dossier."
         }
     }
 

@@ -37,6 +37,8 @@ import org.osada.multiplayer.ui.LobbyModel
 import org.osada.multiplayer.ui.LobbyRow
 import org.osada.multiplayer.ui.MultiplayerScreen
 import org.osada.multiplayer.ui.ScenarioChoice
+import org.osada.rules.ruleset.ActiveRuleset
+import org.osada.rules.ruleset.RulesetCompatibility
 import org.osada.ui.ObserverModeLock
 import org.osada.ui.StartMenuBuilder
 import org.osada.uiSettings
@@ -82,6 +84,13 @@ object OsadaMultiplayer : RoomLinkListener {
 
     val active: Boolean
         get() = started && link != null
+
+    /**
+     * Whether a local command may be issued at all right now. Outside a room this is always true;
+     * inside one it mirrors exactly the gate [submitMove] applies, so the action strip disables the
+     * same commands the transport would refuse instead of failing silently on click.
+     */
+    fun acceptsLocalCommands(): Boolean = !active || (!paused && pendingCommandId == null)
 
     fun openHub(game: Game) {
         this.game = game
@@ -335,8 +344,7 @@ object OsadaMultiplayer : RoomLinkListener {
         return choices
     }
 
-    private fun scenarioNameOf(file: String): String =
-        scenarioChoices().firstOrNull { it.file == file }?.name ?: file
+    private fun scenarioNameOf(file: String): String = scenarioChoices().firstOrNull { it.file == file }?.name ?: file
 
     // -- Match --------------------------------------------------------------------------------
 
@@ -492,6 +500,7 @@ object OsadaMultiplayer : RoomLinkListener {
         runCatching {
             val validation = MultiplayerSnapshotValidator().validate(snapshot)
             require(validation.valid) { validation.errors.joinToString() }
+            requireCompatibleRules(snapshot.gameStateJson)
             val state = requireNotNull(game?.state) { "No active game state" }
             require(
                 state.restoreFromString(snapshot.gameStateJson) {
@@ -506,6 +515,59 @@ object OsadaMultiplayer : RoomLinkListener {
             MultiplayerScreen.setStatus(I18n.t("multiplayer.status.sync_failed"))
         }
     }
+
+    /**
+     * The host's effective rules travel inside the shared game state
+     * (`docs/design/ruleset-profiles.md` §8). A client with no ruleset of its own adopts them; a
+     * client that deliberately resolved a DIFFERENT one, or a room declaring a schema or a rule this
+     * build cannot execute, is refused here with both hashes rather than silently switched into
+     * somebody else's game.
+     */
+    @Suppress("TooGenericExceptionCaught")
+    private fun requireCompatibleRules(gameStateJson: String) {
+        val remoteBlock =
+            try {
+                JSON.parse<dynamic>(gameStateJson).ruleset
+            } catch (e: Throwable) {
+                console.warn("[multiplayer] host ruleset unreadable; adopting the shared state as-is", e)
+                null
+            } ?: return
+        val verdict = RulesetCompatibility.verdict(ActiveRuleset.currentOrNull(), remoteBlock)
+        require(verdict.allowed) { rulesRefusalMessage(verdict) }
+    }
+
+    private fun rulesRefusalMessage(verdict: RulesetCompatibility.Verdict): String {
+        val hashes =
+            mapOf(
+                "localHash" to shortHash(verdict.localHash),
+                "remoteHash" to shortHash(verdict.remoteHash),
+            )
+        return when (verdict.refusal) {
+            RulesetCompatibility.Refusal.UNSUPPORTED_SCHEMA ->
+                I18n.t("multiplayer.rules.unsupported_schema", hashes)
+
+            RulesetCompatibility.Refusal.UNKNOWN_RULES ->
+                I18n.t(
+                    "multiplayer.rules.unknown",
+                    hashes + ("rules" to verdict.unknownKeys.sorted().joinToString(", ")),
+                )
+
+            else ->
+                I18n.t(
+                    "multiplayer.rules.mismatch",
+                    hashes +
+                        (
+                            "rules" to
+                                verdict.differingRules.joinToString(", ") { rule ->
+                                    I18n.t("rules.${rule.key}.label")
+                                }
+                        ),
+                )
+        }
+    }
+
+    /** Enough of the fingerprint to compare by eye in a bug report, without a wall of hex. */
+    private fun shortHash(hash: String): String = if (hash.length <= HASH_PREVIEW) hash else hash.take(HASH_PREVIEW)
 
     private fun prepareGameForSharedControl() {
         val currentGame = game ?: return
@@ -600,5 +662,8 @@ object OsadaMultiplayer : RoomLinkListener {
     private const val MAX_NAME_LENGTH = 40
     private const val ROOM_CODE_LENGTH = 6
     private const val ID_RADIX = 36
+
+    /** Enough hash to compare by eye in a bug report. */
+    private const val HASH_PREVIEW = 12
     private val ROOM_CODE = Regex("[A-Z2-9]{$ROOM_CODE_LENGTH}")
 }

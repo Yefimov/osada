@@ -59,7 +59,7 @@ internal object CampaignEffectApplier {
                 is CampaignEffect.ShiftReinforcements,
                 is CampaignEffect.UnlockEquipment,
                 is CampaignEffect.DeploymentSlots,
-                    -> Unit
+                -> Unit
             }
         } catch (e: Throwable) {
             console.warn("[OSADA] campaign effect '${effect.id}' failed to apply; campaign continues", e)

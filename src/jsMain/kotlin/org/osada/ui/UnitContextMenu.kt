@@ -1,5 +1,7 @@
 package org.osada.ui
 
+import org.osada.i18n.GameText
+import org.osada.i18n.I18n
 import org.osada.model.Cell
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
@@ -10,7 +12,7 @@ import org.osada.model.reinforceUnit
 import org.osada.model.resupplyUnit
 import org.osada.model.undoLastMove
 import org.osada.model.unmountUnit
-import org.osada.rules.SupplyRules
+import org.osada.rules.SupplyContextRules
 
 /**
  * [UnitInfoPanel]'s per-unit action context menu action execution (Mount/Embark/Resupply/
@@ -102,14 +104,13 @@ internal class UnitContextMenu(
     ) {
         val supply = map.resupplyUnit(unit)
         val parts = mutableListOf<String>()
-        if (supply.ammo > 0) parts.add("+${supply.ammo} ammo")
-        if (supply.fuel > 0) parts.add("+${supply.fuel} fuel")
-        val context = SupplyRules.getSupplyContext(map, unit)
+        if (supply.ammo > 0) parts.add(I18n.t("unit_info.action.gain.ammo", mapOf("value" to supply.ammo)))
+        if (supply.fuel > 0) parts.add(I18n.t("unit_info.action.gain.fuel", mapOf("value" to supply.fuel)))
         val message =
             if (parts.isEmpty()) {
-                "Can't resupply"
+                I18n.t("unit_info.action.resupply.blocked")
             } else {
-                "${parts.joinToString(" ")} · ${context.label} (${context.efficiencyPercent}%)"
+                gainAlert(map, unit, parts)
             }
         ui.showAlert(pos.row, pos.col, message, true)
     }
@@ -125,16 +126,35 @@ internal class UnitContextMenu(
         val strength = result.strength as? Int ?: 0
         val ammo = result.ammo as? Int ?: 0
         val fuel = result.fuel as? Int ?: 0
-        if (strength > 0) parts.add("+$strength units")
-        if (ammo > 0) parts.add("+$ammo ammo")
-        if (fuel > 0) parts.add("+$fuel fuel")
+        if (strength > 0) parts.add(I18n.t("unit_info.action.gain.strength", mapOf("value" to strength)))
+        if (ammo > 0) parts.add(I18n.t("unit_info.action.gain.ammo", mapOf("value" to ammo)))
+        if (fuel > 0) parts.add(I18n.t("unit_info.action.gain.fuel", mapOf("value" to fuel)))
         val message =
             if (parts.isEmpty()) {
-                if (overStrength) "No overstrength" else "Can't reinforce"
+                I18n.t(
+                    if (overStrength) "unit_info.action.overstrength.blocked" else "unit_info.action.reinforce.blocked",
+                )
             } else {
-                val context = SupplyRules.getSupplyContext(map, unit)
-                "${parts.joinToString(" ")} · ${context.label} (${context.efficiencyPercent}%)"
+                gainAlert(map, unit, parts)
             }
         ui.showAlert(pos.row, pos.col, message, true)
+    }
+
+    /** The committed gain plus the very context that produced it -- read from the same
+     *  [SupplyContextRules.getSupplyContext] the action tooltip showed, so the two can never disagree. */
+    private fun gainAlert(
+        map: GameMap,
+        unit: GameUnit,
+        parts: List<String>,
+    ): String {
+        val context = SupplyContextRules.getSupplyContext(map, unit)
+        return I18n.t(
+            "unit_info.action.gain.summary",
+            mapOf(
+                "gains" to parts.joinToString(" "),
+                "context" to GameText.supplyContextSummary(context),
+                "efficiency" to context.efficiencyPercent,
+            ),
+        )
     }
 }

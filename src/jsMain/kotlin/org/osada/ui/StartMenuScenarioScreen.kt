@@ -15,7 +15,12 @@ import org.w3c.dom.HTMLOptionElement
  * the project's function-count/class-size limits -- not expected to be called from elsewhere.
  * The human/AI side picker lives in [StartMenuSidePicker]; shared register plumbing in
  * [StartMenuListToolbar].
+ *
+ * 12 vs. the 11-function budget: the screen's scaffold and its register-filling half are one
+ * concept split only because the whole thing exceeds the method-length limit. Splitting again
+ * across files would scatter one screen's construction for no readability gain.
  */
+@Suppress("TooManyFunctions")
 internal object StartMenuScenarioScreen {
     // scenariolist row tuple index: ['file','name','desc',[],[],'eqp'] -- see ScenarioLoader.
     private const val SCENARIO_EQP_INDEX = 5
@@ -77,7 +82,9 @@ internal object StartMenuScenarioScreen {
         val scenarioIndex = value?.toIntOrNull()
         val scenario = scenarioIndex?.let { StartMenuBuilder.scenarioList().getOrNull(it) }
         if (scenarioIndex == null || scenario == null) return
-        byId("smScenDesc")?.innerHTML = scenario[2] as? String ?: ""
+        // Structured credits ride in their own row, never inside the synopsis.
+        byId("smScenDesc")?.innerHTML =
+            AuthorRow.html(scenario[0] as? String) + (scenario[2] as? String ?: "")
         UIBuilder.setEquipmentFlags(scenario[SCENARIO_EQP_INDEX] as? String)
         // Reset to the scenario's own default: whichever side player id 0 belongs to is
         // human, everyone else is AI — same default the old per-player toggles used, now
@@ -146,8 +153,22 @@ internal object StartMenuScenarioScreen {
         byId("smScenPlayers")?.let { dossier.appendChild(it) }
         byId("smScenDesc")?.let { dossier.appendChild(it) }
 
-        byId("smScenButtons")?.let { root.appendChild(it) }
+        byId("smScenButtons")?.let { buttons ->
+            root.appendChild(buttons)
+            // Page-level Rules button (`docs/design/ruleset-profiles.md` §6).
+            RulesWindow.installButton(buttons, RulesetSelection.Surface.SCENARIO)
+        }
 
+        fillScenarioRegister(scenSelect, register, list)
+    }
+
+    /** The register's rows and toolbar. Split from [buildScenarioScreen] purely to keep both within
+     *  the project's method-length limit. */
+    private fun fillScenarioRegister(
+        scenSelect: HTMLElement,
+        register: HTMLElement,
+        list: HTMLElement,
+    ) {
         // Group headers now name the CAMPAIGN each scenario belongs to (scenariolist.js was regrouped
         // from per-efile to per-campaign), so carry the group name into each row: it becomes the
         // row's second line, and makes the campaign searchable from the scenario filter.
@@ -156,7 +177,11 @@ internal object StartMenuScenarioScreen {
         val campaignGroups = mutableListOf<String>()
         val played = playedScenarios()
         StartMenuListToolbar.buildSyncedList(scenSelect, list, collapsibleGroups = true) {
-                option, index, row, selectable ->
+            option,
+            index,
+            row,
+            selectable,
+            ->
             if (!selectable) {
                 group = option.text.replace("»", "").trim()
                 rank = groupRankOf(group)

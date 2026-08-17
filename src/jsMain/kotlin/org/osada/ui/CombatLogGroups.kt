@@ -3,6 +3,7 @@ package org.osada.ui
 import kotlinx.browser.document
 import org.osada.CombatLog
 import org.osada.LeaderType
+import org.osada.i18n.GameText
 import org.osada.i18n.I18n
 import org.osada.model.Cell
 import org.osada.model.Equipment
@@ -58,8 +59,8 @@ internal object CombatLogGroups {
                 I18n.t("turn_report.resupply.fuel", mapOf("value" to CombatLogFeed.numSpan("$fuel/$maxFuel"))),
             )
         }
-        val source = entry.source as? String
-        if (!source.isNullOrBlank()) detailParts.add(source)
+        val source = GameText.supplyContextSummary(entry.source as? String, entry.sourceAdjacentEnemies as? Int ?: 0)
+        if (source.isNotBlank()) detailParts.add(source)
         CombatLogFeed.addFeedRow(
             body,
             icon,

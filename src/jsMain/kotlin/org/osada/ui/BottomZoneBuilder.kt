@@ -423,8 +423,7 @@ internal object BottomZoneBuilder {
         byId("ecName")?.title = tooltip
         // unit.flag (like the player card's #uFlag), NOT data.country: the equipment record's
         // country is a catalogue index (0 = shared/generic) that maps to "Unknown" here.
-        byId("ecSub")?.textContent =
-            I18n.t("combat.enemy.side_country", mapOf("country" to Equipment.getCountryName(unit.flag - 1)))
+        byId("ecSub")?.textContent = enemyCardSubtitle(unit)
         byId("ecStrBarFill")?.style?.width =
             "${(unit.strength / FULL_STRENGTH * PERCENT_SCALE).coerceIn(0.0, PERCENT_SCALE)}%"
         byId("ecStat")?.textContent =
@@ -456,6 +455,20 @@ internal object BottomZoneBuilder {
         CombatTransparencyPresenter.presentEnemy(unit)
     }
 
+    /**
+     * Country line, plus which occupancy layer is being inspected when the hex is stacked
+     * (`docs/design/action-affordances-and-objectives.md` §7). Inspecting the other layer must never
+     * change the active attack layer, so it has to at least say which unit the player is looking at.
+     */
+    private fun enemyCardSubtitle(unit: GameUnit): String {
+        val country = Equipment.getCountryName(unit.flag - 1)
+        val hex = unit.getHex()
+        val stacked = hex?.unit != null && hex.airunit != null
+        if (!stacked) return I18n.t("combat.enemy.side_country", mapOf("country" to country))
+        val layer = I18n.t(if (GameRules.isAir(unit)) "combat.layer.air" else "combat.layer.ground")
+        return I18n.t("combat.enemy.side_country_layer", mapOf("country" to country, "layer" to layer))
+    }
+
     /** "Enemy clicked, nothing own selected" — the enemy card takes the player-card's slot. */
     fun showEnemyAlone(unit: GameUnit) {
         cancelHoverPersistTimer()
@@ -469,7 +482,7 @@ internal object BottomZoneBuilder {
         val bz = byId("osada-bottomzone") ?: return
         bz.classList.remove("bz--visible", "bz--hover", "bz--enemy-only")
         when (mode) {
-            "hidden" -> { /* leave all state classes off; CSS hides when none are present */
+            "hidden" -> { // leave all state classes off; CSS hides when none are present
             }
 
             "own" -> bz.classList.add("bz--visible")

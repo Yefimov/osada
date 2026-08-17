@@ -28,3 +28,8 @@ fun GameMap.moveUnit(
 fun GameMap.undoLastMove() = moveExecutor.undoLastMove()
 
 fun GameMap.canUndoMove(unit: GameUnit): Boolean = moveExecutor.canUndoMove(unit)
+
+/** Why [unit]'s last move stopped being undoable, or null when it never had a record or still
+ *  has one. Transient: the next recorded move for anybody clears it. */
+internal fun GameMap.undoInvalidationFor(unit: GameUnit): UndoInvalidation? =
+    undoState.invalidation.takeIf { undoState.invalidatedUnitId == unit.id }

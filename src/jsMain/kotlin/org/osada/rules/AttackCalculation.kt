@@ -196,7 +196,7 @@ internal object AttackCalculation {
             (
                 UnitPredicates.isCloseCombatTerrain(context.dTerrain) ||
                     defenderData.uclass == UnitClass.FORTIFICATION.value
-                ) &&
+            ) &&
                 context.attackerData.uclass == UnitClass.INFANTRY.value
         if (closeCombat) {
             stats.defenderDefense = defenderData.closedef
@@ -460,7 +460,7 @@ internal object AttackCalculation {
             (
                 (attackerKillExp * (defender.strength / CombatResolver.FULL_STRENGTH) + attackerSurviveExp) *
                     result.kills
-                ).toInt()
+            ).toInt()
         result.defExpGained = 2 * result.kills
         if (result.defcanfire) {
             result.atkExpGained += 2 * result.losses
@@ -468,7 +468,7 @@ internal object AttackCalculation {
                 (
                     (defenderKillExp * (attacker.strength / CombatResolver.FULL_STRENGTH) + defenderSurviveExp) *
                         result.losses
-                    ).toInt()
+                ).toInt()
         }
 
         val maxAtkExp = UNIT_MAX_EXPERIENCE - attacker.experience

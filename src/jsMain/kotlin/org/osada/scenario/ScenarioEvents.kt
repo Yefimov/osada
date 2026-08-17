@@ -2,7 +2,7 @@ package org.osada.scenario
 
 import org.osada.model.GameUnit
 
-/**
+/*
  * [ScenarioEvent] collection operations for [Scenario], split out for the same reason
  * [ScenarioReinforcements] is: [Scenario] is already at the project's per-class function limit.
  */

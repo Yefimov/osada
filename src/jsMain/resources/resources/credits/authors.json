@@ -1,0 +1,24 @@
+{
+  "_comment": [
+    "Hand-authored credits sidecar, keyed by stable campaign/scenario file id.",
+    "See docs/player-comfort-roadmap.md 'Authorship metadata contract'.",
+    "Deliberately NOT produced by the OG importer and deliberately not stored inside the generated",
+    "positional arrays in campaignlist.js / scenariolist.js, where a re-import would erase it.",
+    "role is one of: original, conversion, adaptation, translation."
+  ],
+  "version": 1,
+  "entries": {
+    "camp6.json": [
+      {
+        "name": "Tim Ruger",
+        "role": "original"
+      }
+    ],
+    "n_kiel.xml": [
+      {
+        "name": "Matze (M. Kessler)",
+        "role": "original"
+      }
+    ]
+  }
+}

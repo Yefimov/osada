@@ -56,7 +56,7 @@ internal class UnitDeployOperations(
     ): Boolean {
         val unit = gameMap.getUnitById(unitId)
         if (unit == null || !unit.player!!.upgradeUnit(unit, newEqid, transportEqid)) return false
-        gameMap.undoState.unit = null
+        gameMap.undoState.invalidate(unit, UndoInvalidation.IRREVERSIBLE_ACTION)
         gameMap.unitImages.add(unit.eqid)
         unit.transport?.let { gameMap.unitImages.add(it.eqid) }
         if (unit.carrier > 0) gameMap.unitImages.add(unit.carrier)
@@ -67,7 +67,7 @@ internal class UnitDeployOperations(
         val unit = gameMap.getUnitById(unitId) ?: return false
         unit.destroyed = true
         unit.nodossier = true
-        gameMap.undoState.unit = null
+        gameMap.undoState.invalidate(unit, UndoInvalidation.IRREVERSIBLE_ACTION)
         unit.player?.sellUnit(unit)
         gameMap.delCurrentUnit()
         gameMap.updateUnitList()
@@ -140,7 +140,7 @@ internal class UnitDeployOperations(
     }
 
     fun resupplyUnit(unit: GameUnit): Supply {
-        gameMap.undoState.unit = null
+        gameMap.undoState.invalidate(unit, UndoInvalidation.IRREVERSIBLE_ACTION)
         val supply = GameRules.getResupplyValue(gameMap, unit)
         unit.player?.resupplyUnit(unit, supply)
         gameMap.delAttackSel()
@@ -158,7 +158,7 @@ internal class UnitDeployOperations(
         val reinforced = player?.reinforceUnit(unit, strengthValue, overStrength) ?: 0
         // Only commit (and forfeit undo) once we know the unit was actually reinforced.
         if (player == null || reinforced <= 0) return json(Pair("strength", 0), Pair("ammo", 0), Pair("fuel", 0))
-        gameMap.undoState.unit = null
+        gameMap.undoState.invalidate(unit, UndoInvalidation.IRREVERSIBLE_ACTION)
         player.resupplyUnit(unit, supply)
         gameMap.delAttackSel()
         gameMap.delMoveSel()

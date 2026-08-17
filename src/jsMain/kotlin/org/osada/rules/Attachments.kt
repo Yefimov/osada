@@ -12,6 +12,8 @@ import org.osada.rules.Attachments.MAX_PER_UNIT
 import org.osada.rules.Attachments.availableSlots
 import org.osada.rules.Attachments.bonus
 import org.osada.rules.Attachments.has
+import org.osada.rules.ruleset.ActiveRuleset
+import org.osada.rules.ruleset.RuleKey
 
 /**
  * Attachments (DEFERRED.md §1.4, `docs/design/attachments.md`): per-efile purchasable per-unit
@@ -64,12 +66,24 @@ internal object Attachments {
     private const val DEFAULT_FACTOR_PCT = 25
     private const val PERCENT = 100
 
+    /**
+     * The attachment system's configuration, honouring the active ruleset
+     * (`docs/design/ruleset-profiles.md` §1). A ruleset can only turn attachments OFF; it cannot
+     * invent slots an efile never defined, so "on" still means whatever the efile actually ships.
+     */
+    private fun attachmentConfig(): EfileConfig.AttachmentConfig? =
+        if (ActiveRuleset.currentOrNull()?.flag(RuleKey.ATTACHMENTS) == false) {
+            null
+        } else {
+            EfileConfig.attachments()
+        }
+
     /** This unit's currently-purchased attachment slots as `slotNumber to slot`, or empty for a
      *  scenario-only unit (no formation record) or an efile with attachments off. The slot NUMBER
      *  is carried because the malus-type default table is keyed on it (`AttachmentPenalties`). */
     fun purchasedSlots(unit: GameUnit): List<Pair<Int, EfileConfig.AttachmentSlot>> {
         val formation = HeroCampaign.formationFor(unit)
-        val config = EfileConfig.attachments()
+        val config = attachmentConfig()
         return if (formation == null || config == null) {
             emptyList()
         } else {
@@ -133,7 +147,7 @@ internal object Attachments {
         unit: GameUnit,
         slotNumber: Int,
     ): Int {
-        val config = EfileConfig.attachments()
+        val config = attachmentConfig()
         val raw = config?.slots?.get(slotNumber)?.bonus ?: 0
         return if (raw == 0) 0 else scaleConditionalSlot(unit, slotNumber, raw, config)
     }
@@ -179,7 +193,7 @@ internal object Attachments {
      * (`docs/design/attachments.md` §2.3, §4 Tier 2).
      */
     fun availableSlots(unit: GameUnit): List<Pair<Int, EfileConfig.AttachmentSlot>> {
-        val config = EfileConfig.attachments()
+        val config = attachmentConfig()
         val formation = HeroCampaign.formationFor(unit)
         return if (config == null || formation == null || formation.attachmentIds.size >= MAX_PER_UNIT) {
             emptyList()
@@ -224,7 +238,7 @@ internal object Attachments {
         unit: GameUnit,
         slotNumber: Int,
     ): Int? {
-        val config = EfileConfig.attachments()
+        val config = attachmentConfig()
         val slot = config?.slots?.get(slotNumber)
         return if (config == null || slot == null) {
             null

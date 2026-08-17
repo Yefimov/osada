@@ -1,6 +1,5 @@
 package org.osada.ui
 
-import kotlinx.browser.document
 import org.osada.CombatLog
 import org.osada.Game
 import org.osada.UnitClass
@@ -15,6 +14,7 @@ import org.osada.model.selectUnit
 import org.osada.sideNames
 import org.osada.ui.briefing.BriefingIntroTracker
 import org.osada.ui.briefing.ScenarioFacts
+import org.osada.ui.keyboard.CommandRouter
 import org.osada.uiSettings
 
 /**
@@ -90,14 +90,12 @@ class UI(
         mapInputController.attachMapEventListeners()
         MobileOnboarding.showIfNeeded()
 
-        // Escape opens/closes the pause menu, or closes whatever modal is topmost — registered
-        // once here since UI is constructed exactly once per page load (Game reuses this instance
-        // across scenario/campaign transitions).
-        document.addEventListener("keydown", { e ->
-            if ((e.asDynamic().key as? String) == "Escape" && !UIBuilder.isScenarioBriefingVisible()) {
-                mainMenuButtonHandler.handleGlobalEscape()
-            }
-        })
+        // The one document-level gameplay keyboard listener, registered once here since UI is
+        // constructed exactly once per page load (Game reuses this instance across scenario/
+        // campaign transitions). It owns Escape as well: a second independent listener would fire
+        // on the same press, which is how Escape once closed a window underneath a modal
+        // (DEFERRED.md §4.13).
+        CommandRouter.install(this)
     }
 
     /**
@@ -302,5 +300,4 @@ class UI(
             I18n.t("briefing.sides", mapOf("left" to axis, "right" to allies))
         }
     }
-
 }

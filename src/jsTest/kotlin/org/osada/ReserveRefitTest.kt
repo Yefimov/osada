@@ -42,7 +42,11 @@ class ReserveRefitTest {
         GameHolder.instance = null
     }
 
-    private fun player(prestige: Int) = Player().apply { id = 0; this.prestige = prestige }
+    private fun player(prestige: Int) =
+        Player().apply {
+            id = 0
+            this.prestige = prestige
+        }
 
     private fun reserveUnit(
         owner: Player,

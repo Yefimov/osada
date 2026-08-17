@@ -171,6 +171,38 @@ tasks.register<Exec>("verifyTranslations") {
     commandLine("python", "scripts/check_translations.py")
 }
 
+tasks.register<Exec>("verifyRulesetKeys") {
+    group = "verification"
+    description = "Checks every ruleset rule has a live engine read and complete en/ru copy"
+
+    workingDir = rootDir
+    commandLine("python", "scripts/check_ruleset_keys.py")
+}
+
+tasks.register<Exec>("verifyAuthorCredits") {
+    group = "verification"
+    description = "Validates the authorship sidecar and keeps credits out of description prose"
+
+    workingDir = rootDir
+    commandLine("python", "scripts/check_author_credits.py")
+}
+
+tasks.register<Exec>("verifyObjectiveVisibility") {
+    group = "verification"
+    description = "Locks the hidden/visible victory-objective audit the objectives rail relies on"
+
+    workingDir = rootDir
+    commandLine("python", "scripts/check_objective_visibility.py")
+}
+
+tasks.register<Exec>("verifyKeyboardManual") {
+    group = "verification"
+    description = "Checks manual.html's shortcut list against the game's keyboard command catalog"
+
+    workingDir = rootDir
+    commandLine("python", "scripts/check_keyboard_manual.py")
+}
+
 tasks.register<Exec>("verifyTrackedSources") {
     group = "verification"
     description = "Fails when a Kotlin source under src/ is untracked by git (DEFERRED.md §4.7)"
@@ -258,6 +290,10 @@ tasks.named("check") {
         "verifyScenarioEvents",
         "verifyUnitDescriptions",
         "verifyTranslations",
+        "verifyKeyboardManual",
+        "verifyObjectiveVisibility",
+        "verifyAuthorCredits",
+        "verifyRulesetKeys",
         "verifyTrackedSources",
         "detekt",
         "ktlintCheck",

@@ -53,11 +53,17 @@ internal fun Game.recordCampaignOutcome(
 }
 
 /**
- * Snapshot of live end-of-scenario facts for optional-objective evaluation. Null when the map or
- * campaign player is unavailable, in which case the outcome is still recorded but no optional
- * objective is credited — never the reverse.
+ * Snapshot of live facts for optional-objective evaluation. Null when the map or campaign player is
+ * unavailable, in which case the outcome is still recorded but no optional objective is credited —
+ * never the reverse.
+ *
+ * Also used MID-BATTLE by the objectives rail's preview
+ * (`docs/design/action-affordances-and-objectives.md` §9). That is safe precisely because this is a
+ * read of live state and `ScenarioActionEvaluator.evaluate` is pure: previewing records no campaign
+ * fact, queues no effect and touches no ledger. What the preview reports is therefore "satisfied as
+ * of right now", which is why the rail must label it that way rather than as `Complete`.
  */
-private fun Game.buildScenarioEndState(): ScenarioEndState? {
+internal fun Game.buildScenarioEndState(): ScenarioEndState? {
     val map = scenario?.map
     val player = campaignPlayer
     return if (map == null || player == null) {

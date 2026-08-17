@@ -22,7 +22,7 @@ internal object HeroCasualtyPresenter {
             HeroCasualtyService.Disposition.KILLED -> I18n.t("hero.casualty.killed.title")
             HeroCasualtyService.Disposition.MISSING,
             HeroCasualtyService.Disposition.CAPTURED,
-                -> I18n.t("hero.casualty.lost.title")
+            -> I18n.t("hero.casualty.lost.title")
 
             else -> I18n.t("hero.casualty.report.title")
         }

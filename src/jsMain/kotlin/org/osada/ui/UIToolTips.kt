@@ -97,13 +97,13 @@ private fun addHexFlagToolTip(
     if (hex.terrain == TerrainType.AIRFIELD.value && currentPlayer.airTransports > 0) {
         text =
             "${currentPlayer.airTransports}&nbsp;" +
-                "<span style='font-family: osada-menu;'>&#xe900;</span> "
+            "<span style='font-family: osada-menu;'>&#xe900;</span> "
         style = TooltipStyle.PIN
     }
     if (hex.terrain == TerrainType.PORT.value && currentPlayer.navalTransports > 0) {
         text =
             "${currentPlayer.navalTransports}&nbsp;" +
-                "<span style='font-family: osada-menu;'>&#xe901;</span>"
+            "<span style='font-family: osada-menu;'>&#xe901;</span>"
         style = TooltipStyle.PIN
     }
     text?.let {

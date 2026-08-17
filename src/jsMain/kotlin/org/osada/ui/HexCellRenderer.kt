@@ -5,7 +5,7 @@ import org.osada.TerrainType
 import org.osada.model.GameUnit
 import org.osada.model.Hex
 import org.osada.model.canDeployOnTerrain
-import org.osada.model.getAttackableUnit
+import org.osada.model.getActiveLayerTarget
 import org.osada.model.getPlayer
 import org.osada.model.isInDeployZone
 
@@ -160,7 +160,7 @@ internal class HexCellRenderer(
                 hex.isSpotted(GameHolder.instance?.spotSide ?: 0) ||
                     unit.tempSpotted ||
                     unit.player?.side == GameHolder.instance?.spotSide
-                )
+            )
 
     private fun drawCellUnits(
         frame: RenderFrame,
@@ -220,7 +220,7 @@ internal class HexCellRenderer(
     ) {
         val currentUnit = frame.q.currentUnit
         if (!frame.hasTouch || !hex.isAttackSel || currentUnit == null) return
-        val target = hex.getAttackableUnit(currentUnit, frame.airMode) ?: return
+        val target = hex.getActiveLayerTarget(currentUnit, frame.airMode) ?: return
         val cursor = cursorRenderer.generateAttackCursor(currentUnit, target)
         rc.hexesCtx.drawImage(cursor, x - rc.hexTopWidth / 2.0, y)
     }

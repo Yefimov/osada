@@ -2,7 +2,6 @@ package org.osada.hero
 
 import org.osada.hero.HeroNaming.nameFor
 
-
 /**
  * Deterministic name and rank selection.
  *

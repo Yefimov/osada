@@ -2,7 +2,7 @@ package org.osada.ui
 
 import org.osada.i18n.I18n
 import org.osada.model.GameUnit
-import org.osada.model.getAttackableUnit
+import org.osada.model.getActiveLayerTarget
 import org.osada.uiSettings
 
 /**
@@ -89,7 +89,8 @@ internal object TargetPreviewController {
         val map = ui.game.scenario?.map
         val attacker = map?.currentUnit
         val hex = map?.map?.get(pendingRow)?.get(pendingCol)
-        val target = if (attacker != null && hex != null) hex.getAttackableUnit(attacker, uiSettings.airMode) else null
+        val target =
+            if (attacker != null && hex != null) hex.getActiveLayerTarget(attacker, uiSettings.airMode) else null
         val stillValid =
             attacker != null &&
                 target != null &&
