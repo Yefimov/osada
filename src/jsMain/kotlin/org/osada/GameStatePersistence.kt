@@ -299,6 +299,24 @@ class GameStatePersistence(
             false
         }
 
+    /**
+     * The best readable generation of [campaignRunId] for a READ-ONLY projection -- the hero desk's
+     * live cards (`docs/design/hero-desk-and-profile-archive.md` §2).
+     *
+     * Falls through current -> recovery on exactly the same previous-good path [openCampaignRun]
+     * uses, and applies the same [isRestorableGeneration] check, so the desk never shows a roster
+     * out of a generation the game itself would refuse to load. Returns null when neither
+     * generation is valid; the caller then omits that run and surfaces the register's own recovery
+     * warning rather than inventing a roster.
+     *
+     * Restores nothing: no `GameHolder` mutation, no active-campaign change, no settings load.
+     */
+    fun readableGeneration(campaignRunId: String): SaveSnapshot? {
+        val current = store.readCurrent(campaignRunId)
+        if (current != null && isRestorableGeneration(current)) return current
+        return store.readRecovery(campaignRunId)?.takeIf { isRestorableGeneration(it) }
+    }
+
     /** Records that this campaign run reached its end, with the outcome it ended on. Called from
      *  the single campaign-end funnel (`Game.continueCampaign`), because no save is written after
      *  a campaign finishes and the state therefore cannot be inferred from any generation. */

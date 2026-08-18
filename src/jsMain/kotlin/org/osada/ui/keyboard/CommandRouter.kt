@@ -4,6 +4,7 @@ import kotlinx.browser.document
 import org.osada.ui.AttachmentPickerPresenter
 import org.osada.ui.CommanderRosterPresenter
 import org.osada.ui.ConfirmCard
+import org.osada.ui.HeroDeskPresenter
 import org.osada.ui.HeroPromotionPresenter
 import org.osada.ui.UI
 import org.osada.ui.UIBuilder
@@ -122,6 +123,7 @@ internal object CommandRouter {
             CommanderRosterPresenter.isTransferPickerOpen() -> Scope.CLOSE_ONLY
             AttachmentPickerPresenter.isOpen() -> Scope.CLOSE_ONLY
             CommanderRosterPresenter.isOpen() -> Scope.CLOSE_ONLY
+            HeroDeskPresenter.isOpen() -> Scope.CLOSE_ONLY
             isVisible("startmenu") -> Scope.CLOSE_ONLY
             isVisible("equipment") -> Scope.PANEL
             else -> Scope.GAMEPLAY

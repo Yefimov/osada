@@ -27,14 +27,9 @@ import org.w3c.dom.events.MouseEvent
  * selection highlights), then the dot/viewport overlays.
  */
 internal object MinimapBuilder {
-    private const val WIDTH = 240
-    private const val HEIGHT = 160
+    private const val WIDTH = MinimapMarkers.BITMAP_WIDTH
+    private const val HEIGHT = MinimapMarkers.BITMAP_HEIGHT
     private const val FALLBACK_INTERVAL_MS = 2000
-    private const val UNIT_DOT_RADIUS = 2.2
-    private const val ENEMY_UNIT_DOT_RIM = 1.0
-    private const val OWN_UNIT_DOT_COLOR = "#c9463d"
-    private const val ENEMY_UNIT_DOT_COLOR = "#f2f0e8"
-    private const val ENEMY_UNIT_DOT_RIM_COLOR = "#0b0c0e"
     private const val VIEWPORT_RECT_LINE_WIDTH = 1.5
 
     private var canvas: dynamic = null
@@ -105,7 +100,11 @@ internal object MinimapBuilder {
         val rc = buildRefreshContext() ?: return
         val w = WIDTH.toDouble()
         val h = HEIGHT.toDouble()
-        val side = rc.map.currentPlayer?.side ?: 0
+        // The SPOTTING side, not `currentPlayer`. Keyed to the current player, every dot's
+        // allegiance inverted for the duration of the AI's turn -- the player's own units were
+        // drawn as spotted enemies (white with the black rim) and the AI's as friendly red, on the
+        // one refresh the player spends the most time looking at.
+        val side = GameHolder.instance?.spotSide ?: rc.map.currentPlayer?.side ?: 0
 
         paintBase(rc.g, rc.ui, rc.hexesCanvas, rc.srcW, rc.srcH, w, h)
         drawVictoryHexes(rc.g, rc.ui, rc.map, rc.srcW, rc.srcH, w, h)
@@ -190,7 +189,7 @@ internal object MinimapBuilder {
                 val hex = map.map?.get(r)?.get(col)
                 if (!isVictoryHexVisible(hex)) continue
                 val p = ui.render.cellToScreen(r, col, false)
-                dot(g, p.x / srcW * w, p.y / srcH * h, "#d9b25a", 2.0)
+                dot(g, p.x / srcW * w, p.y / srcH * h, MinimapMarkers.OBJECTIVE_FILL, MinimapMarkers.OBJECTIVE_RADIUS)
             }
         }
     }
@@ -200,7 +199,9 @@ internal object MinimapBuilder {
      *
      *  The rim is not decoration: the minimap composites real terrain artwork underneath, and a
      *  plain white dot vanishes over snow, coast surf and pale towns. Red-on-white also survives
-     *  the common colour-vision deficiencies that green-vs-red did not. */
+     *  the common colour-vision deficiencies that green-vs-red did not. Its thickness comes from
+     *  [MinimapMarkers], which keeps it at least one RENDERED pixel wide at every scale the layout
+     *  can give this canvas — see that file for the design §3 audit it answers. */
     private fun drawUnitDots(
         g: dynamic,
         ui: UI,
@@ -211,6 +212,7 @@ internal object MinimapBuilder {
         h: Double,
         side: Int,
     ) {
+        val enemyOuterRadius = MinimapMarkers.enemyOuterRadius(minimapRenderScale(canvas))
         for (unit in map.getUnits()) {
             val pos = unit.getPos()
             val own = unit.player?.side == side
@@ -220,10 +222,10 @@ internal object MinimapBuilder {
             val x = p.x / srcW * w
             val y = p.y / srcH * h
             if (own) {
-                dot(g, x, y, OWN_UNIT_DOT_COLOR, UNIT_DOT_RADIUS)
+                dot(g, x, y, MinimapMarkers.OWN_FILL, MinimapMarkers.CORE_RADIUS)
             } else {
-                dot(g, x, y, ENEMY_UNIT_DOT_RIM_COLOR, UNIT_DOT_RADIUS + ENEMY_UNIT_DOT_RIM)
-                dot(g, x, y, ENEMY_UNIT_DOT_COLOR, UNIT_DOT_RADIUS)
+                dot(g, x, y, MinimapMarkers.ENEMY_RIM_FILL, enemyOuterRadius)
+                dot(g, x, y, MinimapMarkers.ENEMY_FILL, MinimapMarkers.CORE_RADIUS)
             }
         }
     }
@@ -312,6 +314,19 @@ internal object MinimapBuilder {
         gd.scrollTop = (targetY.coerceIn(0.0, (srcH - clientHeight).coerceAtLeast(0.0))) * zoom
         refreshViewportOnly()
     }
+}
+
+/**
+ * Rendered CSS width / bitmap width. 1.0 on desktop, where the stylesheet pins the canvas to its
+ * 240x160 bitmap; below 1.0 inside a narrow phone drawer, where `width: 100%` shrinks it.
+ * [MinimapMarkers] uses this so the enemy rim stays at least one RENDERED pixel thick.
+ *
+ * Top-level (not a member) so it does not count against [MinimapBuilder]'s function budget.
+ */
+private fun minimapRenderScale(canvas: dynamic): Double {
+    if (canvas == null) return 1.0
+    val rendered = (canvas.getBoundingClientRect()?.width as? Number)?.toDouble() ?: 0.0
+    return if (rendered <= 0.0) 1.0 else rendered / MinimapMarkers.BITMAP_WIDTH.toDouble()
 }
 
 /** Client coordinate normalized against the canvas's rendered CSS box, not its bitmap size. */

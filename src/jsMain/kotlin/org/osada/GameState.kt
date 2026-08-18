@@ -71,6 +71,10 @@ class GameState(
         outcome: String,
     ) = persistence.markCampaignRunCompleted(campaignRunId, outcome)
 
+    /** Read-only access to a run's best readable generation, for the Hero Desk's projection.
+     *  Restores nothing; see [GameStatePersistence.readableGeneration]. */
+    fun readableGeneration(campaignRunId: String) = persistence.readableGeneration(campaignRunId)
+
     fun exportCampaignRun(campaignRunId: String) = persistence.exportCampaignRun(campaignRunId)
 
     fun importCampaignRun(bundle: org.osada.save.CampaignRunBundle) = persistence.importCampaignRun(bundle)

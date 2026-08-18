@@ -24,20 +24,44 @@ import org.w3c.dom.events.MouseEvent
 internal object LeaderDossierPresenter {
     private const val BOX_ID = "uiLeaderDossier"
 
-    fun openForUnit(unit: GameUnit?) = HeroCampaign.dossier(unit)?.let(::show)
+    fun openForUnit(unit: GameUnit?) = HeroCampaign.dossier(unit)?.let { show(it) }
 
-    fun openForHero(heroId: HeroId) = HeroCampaign.dossier(heroId)?.let(::show)
+    fun openForHero(heroId: HeroId) = HeroCampaign.dossier(heroId)?.let { show(it) }
+
+    /**
+     * Source-neutral entry point (`docs/design/hero-desk-and-profile-archive.md` §6): opens the
+     * SAME presentation for a view assembled from an archived roster as for a live one. Live and
+     * archived records reach this through one assembler, so parity is structural rather than
+     * maintained by hand.
+     *
+     * [parent] lets the main-menu Hero Desk mount it over `body` instead of the in-game `#mainbody`,
+     * which is not on screen there. [allowLocate] is false for an archived career: there is no map
+     * to locate an officer on, and a button that quietly does nothing is worse than no button.
+     */
+    fun openForView(
+        view: LeaderDossierView,
+        parent: HTMLElement?,
+        allowLocate: Boolean = true,
+        onClose: () -> Unit = {},
+    ) = show(view, parent, allowLocate, onClose)
 
     fun close() = delTag(byId(BOX_ID))
 
-    private fun show(view: LeaderDossierView) {
+    fun isOpen(): Boolean = byId(BOX_ID) != null
+
+    private fun show(
+        view: LeaderDossierView,
+        parent: HTMLElement? = null,
+        allowLocate: Boolean = true,
+        onClose: () -> Unit = {},
+    ) {
         close()
-        val mainBody = byId("mainbody") ?: return
+        val mainBody = parent ?: byId("mainbody") ?: return
         val box = addTag(mainBody, "div")
         box.id = BOX_ID
         box.className = "osada-dossier osada-hero-dossier"
 
-        buildHeader(box, view)
+        buildHeader(box, view, allowLocate, onClose)
         val tabBar = addTag(box, "div")
         tabBar.className = "osada-hero-tabs"
         val body = addTag(box, "div")
@@ -66,6 +90,8 @@ internal object LeaderDossierPresenter {
     private fun buildHeader(
         box: HTMLElement,
         view: LeaderDossierView,
+        allowLocate: Boolean,
+        onClose: () -> Unit,
     ) {
         val header = addTag(box, "div")
         header.className = "osada-hero-header"
@@ -113,6 +139,21 @@ internal object LeaderDossierPresenter {
         // §26: no hidden modifiers. While this is set, every trait listed below is inactive, so it
         // belongs next to the status rather than buried in the service record.
         view.settlingNote?.let { addText(id, "osada-hero-settling", it) }
+        if (allowLocate) buildLocateButton(header, view)
+        val close = addTag(header, "span")
+        close.className = "osada-ico osada-ico--close osada-hero-close"
+        close.title = I18n.t("common.close.label")
+        close.asButton(ariaLabel = I18n.t("common.close.label")) {
+            close()
+            onClose()
+        }
+    }
+
+    /** Absent for an archived career: there is no loaded map to locate that officer on. */
+    private fun buildLocateButton(
+        header: HTMLElement,
+        view: LeaderDossierView,
+    ) {
         val locate = addTag(header, "button")
         locate.className = "osada-hero-locate osada-hero-locate--header"
         locate.textContent = I18n.t("hero.dossier.locate.label")
@@ -121,10 +162,6 @@ internal object LeaderDossierPresenter {
             e.stopPropagation()
             locateHero(HeroId(view.heroId))
         }
-        val close = addTag(header, "span")
-        close.className = "osada-ico osada-ico--close osada-hero-close"
-        close.title = I18n.t("common.close.label")
-        close.onclick = { _: MouseEvent -> close() }
     }
 
     private fun overview(

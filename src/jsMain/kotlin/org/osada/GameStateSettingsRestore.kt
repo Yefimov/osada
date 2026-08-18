@@ -38,6 +38,9 @@ internal fun applyMarkerSettings(data: dynamic) {
     uiSettings.markOwnUnits = data.markOwnUnits as? Boolean ?: false
     uiSettings.markEnemyUnits = data.markEnemyUnits as? Boolean ?: false
     uiSettings.markFOW = data.markFOW as? Boolean ?: false
+    // Accessibility opt-in, default off: a settings blob written before this existed must not turn
+    // the badges on for a player who never asked for them.
+    uiSettings.enhancedSideMarkers = data.enhancedSideMarkers as? Boolean ?: false
     uiSettings.noFOW = data.noFOW as? Boolean ?: false
     uiSettings.quickAnimation = data.quickAnimation as? Boolean ?: false
     // hasTouch is deliberately NOT restored: it is a property of the device running the game, not

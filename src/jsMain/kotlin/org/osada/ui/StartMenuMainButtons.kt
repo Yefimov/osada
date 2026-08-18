@@ -65,7 +65,7 @@ internal object StartMenuMainButtons {
             }
         }
 
-        buildHallOfFameButton()
+        buildHeroDeskButton()
 
         byId("smLogoText")?.textContent = I18n.t("menu.main.tagline")
         // Display version only — decoupled from the engine VERSION constant, which is baked
@@ -77,24 +77,31 @@ internal object StartMenuMainButtons {
         LanguageSelector.buildMainMenuControl()
     }
 
-    // Hall of Fame (§14.6): a cross-campaign collection, shown only once legends exist. Wired
-    // directly (not through the startMenuButton action router) since it opens its own overlay.
-    private fun buildHallOfFameButton() {
-        if (!HallOfFame.isNotEmpty()) return
-        val hof = addTag("smButtons", "div")
-        hof.id = "hallOfFame"
-        hof.className = "smMainButton osada-menu-btn osada-menu-btn--muted"
-        hof.title = I18n.t("menu.main.hall_of_fame.help")
-        val ico = addTag(hof, "span")
+    /**
+     * Hero Desk (`docs/design/hero-desk-and-profile-archive.md` §6): the cross-campaign commander
+     * archive, and the surface that replaced the old Hall of Fame button — the Hall of Fame is now
+     * one of the desk's filters, not a separate summary-only collection.
+     *
+     * **Always present**, unlike the button it replaces, which appeared only once legends existed.
+     * A player with no archived career needs to be told the desk exists and is empty; a menu entry
+     * that materializes later cannot be found by anyone looking for it. Wired directly (not through
+     * the startMenuButton action router) since it opens its own overlay.
+     */
+    private fun buildHeroDeskButton() {
+        val desk = addTag("smButtons", "div")
+        desk.id = "heroDesk"
+        desk.className = "smMainButton osada-menu-btn osada-menu-btn--muted"
+        desk.title = I18n.t("menu.main.hero_desk.help")
+        val ico = addTag(desk, "span")
         ico.className = "osada-menu-btn__ico osada-ico osada-ico--star"
-        val text = addTag(hof, "span")
+        val text = addTag(desk, "span")
         text.className = "osada-menu-btn__text"
         val label = addTag(text, "span")
         label.className = "osada-menu-btn__label"
-        label.textContent = I18n.t("menu.main.hall_of_fame.label")
+        label.textContent = I18n.t("menu.main.hero_desk.label")
         val sub = addTag(text, "span")
         sub.className = "osada-menu-btn__sub"
-        sub.textContent = I18n.t("menu.main.hall_of_fame.subtitle")
-        hof.onclick = { _: org.w3c.dom.events.MouseEvent -> HallOfFamePresenter.open() }
+        sub.textContent = I18n.t("menu.main.hero_desk.subtitle")
+        desk.asButton(ariaLabel = I18n.t("menu.main.hero_desk.label")) { HeroDeskPresenter.open() }
     }
 }

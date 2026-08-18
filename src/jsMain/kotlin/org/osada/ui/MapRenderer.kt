@@ -1,5 +1,6 @@
 package org.osada.ui
 
+import org.osada.GameHolder
 import org.osada.PlayerType
 import org.osada.model.Cell
 import org.osada.model.GameMap
@@ -118,6 +119,11 @@ internal class MapRenderer(
             strategicZoom = uiSettings.strategicZoom,
             showHiddenVictoryHexes = uiSettings.showHiddenVictoryHexes,
             markOwnUnits = uiSettings.markOwnUnits,
+            enhancedSideMarkers = uiSettings.enhancedSideMarkers,
+            // Allegiance is read from the SPOTTING side, not `currentPlayer`: during an AI turn and
+            // in observer mode the current player is not the person looking at the map, and a badge
+            // that flipped every hand-off would be worse than no badge at all.
+            spotSide = GameHolder.instance?.spotSide ?: 0,
             hasTouch = uiSettings.hasTouch,
             airDeploySelected = airDeploySelected,
             deployUnit = deployUnit,
@@ -170,6 +176,10 @@ internal class RenderFrame(
     val strategicZoom: Boolean,
     val showHiddenVictoryHexes: Boolean,
     val markOwnUnits: Boolean,
+    /** Opt-in star/skull allegiance badges on strategic unit flags (accessibility, off by default). */
+    val enhancedSideMarkers: Boolean,
+    /** The side whose point of view the map is drawn from -- `game.spotSide`, not the current player. */
+    val spotSide: Int,
     val hasTouch: Boolean,
     val airDeploySelected: Boolean,
     /** Reserve unit awaiting placement, or null when none is picked yet. */

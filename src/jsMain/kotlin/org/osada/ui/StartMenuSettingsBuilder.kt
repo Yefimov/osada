@@ -48,6 +48,7 @@ internal object StartMenuSettingsBuilder {
             "showGridTerrain",
             "markOwnUnits",
             "markEnemyUnits",
+            "enhancedSideMarkers",
             "noFOW",
             "showHiddenVictoryHexes",
             "showDetailInfoToolTips",
@@ -68,6 +69,10 @@ internal object StartMenuSettingsBuilder {
                     "showGridTerrain" to "settings.map.show_grid_terrain.label",
                     "markOwnUnits" to "settings.map.mark_own_units.label",
                     "markEnemyUnits" to "settings.map.mark_enemy_units.label",
+                    // Accessibility (`docs/design/accessible-side-identification.md`): a plain
+                    // checkbox in the section that already owns map marking, not a new settings
+                    // subsystem for one boolean.
+                    "enhancedSideMarkers" to "settings.map.enhanced_side_markers.label",
                     "useRetina" to "settings.map.use_retina.label",
                 ),
             ),
@@ -116,6 +121,7 @@ internal object StartMenuSettingsBuilder {
             "showGridTerrain" to "settings.map.show_grid_terrain.help",
             "markOwnUnits" to "settings.map.mark_own_units.help",
             "markEnemyUnits" to "settings.map.mark_enemy_units.help",
+            "enhancedSideMarkers" to "settings.map.enhanced_side_markers.help",
             "useRetina" to "settings.map.use_retina.help",
             "quickAnimation" to "settings.gameplay.quick_animation.help",
             "showDetailInfoToolTips" to "settings.gameplay.optional_objectives.help",

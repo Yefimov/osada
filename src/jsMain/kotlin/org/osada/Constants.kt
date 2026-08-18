@@ -561,6 +561,14 @@ class UiSettings {
     var markOwnUnits: Boolean = false
     var markEnemyUnits: Boolean = false
     var markFOW: Boolean = false
+
+    /**
+     * Accessibility: adds a star to friendly and a skull to enemy strategic unit flags
+     * (`docs/design/accessible-side-identification.md`). Device-local, opt-in, and deliberately
+     * NOT part of the Observer badge -- it adds no information the player could not already read
+     * from the flag, it only adds a second channel for reading it.
+     */
+    var enhancedSideMarkers: Boolean = false
     var noFOW: Boolean = false
     var quickAnimation: Boolean = false
     var hasTouch: Boolean = false
@@ -617,6 +625,7 @@ class UiSettings {
             "useRetina" -> useRetina
             "markOwnUnits" -> markOwnUnits
             "markEnemyUnits" -> markEnemyUnits
+            "enhancedSideMarkers" -> enhancedSideMarkers
             "quickAnimation" -> quickAnimation
             "showDetailInfoToolTips" -> showDetailInfoToolTips
             "showHiddenVictoryHexes" -> showHiddenVictoryHexes
@@ -626,6 +635,7 @@ class UiSettings {
             else -> false
         }
 
+    @Suppress("CyclomaticComplexMethod") // one branch per checkbox key, mirroring getFlag exactly
     fun setFlag(
         key: String,
         value: Boolean,
@@ -638,6 +648,7 @@ class UiSettings {
             "useRetina" -> useRetina = value
             "markOwnUnits" -> markOwnUnits = value
             "markEnemyUnits" -> markEnemyUnits = value
+            "enhancedSideMarkers" -> enhancedSideMarkers = value
             "quickAnimation" -> quickAnimation = value
             "showDetailInfoToolTips" -> showDetailInfoToolTips = value
             "showHiddenVictoryHexes" -> showHiddenVictoryHexes = value
@@ -670,6 +681,7 @@ class UiSettings {
         o.markOwnUnits = markOwnUnits
         o.markEnemyUnits = markEnemyUnits
         o.markFOW = markFOW
+        o.enhancedSideMarkers = enhancedSideMarkers
         o.noFOW = noFOW
         o.quickAnimation = quickAnimation
         o.hasTouch = hasTouch

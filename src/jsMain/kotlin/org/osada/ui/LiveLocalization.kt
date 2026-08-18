@@ -48,10 +48,11 @@ internal object LiveLocalization {
         }
 
         byId("smLogoText")?.textContent = I18n.t("menu.main.tagline")
-        byId("hallOfFame")?.apply {
-            title = I18n.t("menu.main.hall_of_fame.help")
-            querySelector(".osada-menu-btn__label")?.textContent = I18n.t("menu.main.hall_of_fame.label")
-            querySelector(".osada-menu-btn__sub")?.textContent = I18n.t("menu.main.hall_of_fame.subtitle")
+        byId("heroDesk")?.apply {
+            title = I18n.t("menu.main.hero_desk.help")
+            setAttribute("aria-label", I18n.t("menu.main.hero_desk.label"))
+            querySelector(".osada-menu-btn__label")?.textContent = I18n.t("menu.main.hero_desk.label")
+            querySelector(".osada-menu-btn__sub")?.textContent = I18n.t("menu.main.hero_desk.subtitle")
         }
         StartMenuBuilder.refreshRandomQuote()
     }

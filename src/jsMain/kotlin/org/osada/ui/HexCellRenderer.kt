@@ -116,20 +116,28 @@ internal class HexCellRenderer(
         val fy = y + rc.v - rc.flagIconHeight - 2.0
         var flag = -1
         var scale = 0.0
+        // The unit whose OWN flag is the one about to be drawn, so the allegiance badge is attached
+        // to a unit marker and never to a bare objective flag (design §2). A victory flag overrides
+        // the unit flag below, and that case clears this back to null on purpose.
+        var flaggedUnit: GameUnit? = null
 
         if (hex.isSpotted(frame.q.currentPlayer?.side ?: 0)) {
             val u = if (frame.airMode) hex.airunit else hex.unit
             if (u != null) {
                 flag = strategicUnitFlag(u)
                 scale = STRATEGIC_ZOOM_UNIT_FLAG_SCALE
+                flaggedUnit = u
                 if (u.hasMoved) rc.hexesCtx.globalAlpha = MOVED_UNIT_FLAG_ALPHA
             }
         }
         if (hex.flag != -1 && hex.victorySide != -1) {
             flag = hex.flag
             scale = STRATEGIC_ZOOM_VICTORY_FLAG_SCALE
+            flaggedUnit = null
         }
         if (flag != -1) {
+            val flagWidth = scale * rc.hexTopWidth
+            val flagHeight = scale * rc.hexTopWidth / (rc.flagIconWidth / rc.flagIconHeight)
             rc.hexesCtx.drawImage(
                 rc.flagImage,
                 rc.flagIconWidth * flag,
@@ -138,11 +146,32 @@ internal class HexCellRenderer(
                 rc.flagIconHeight,
                 fx,
                 fy,
-                scale * rc.hexTopWidth,
-                scale * rc.hexTopWidth / (rc.flagIconWidth / rc.flagIconHeight),
+                flagWidth,
+                flagHeight,
             )
+            drawSideMarker(frame, flaggedUnit, fx, fy, flagWidth, flagHeight)
             rc.hexesCtx.globalAlpha = 1.0
         }
+    }
+
+    /**
+     * The opt-in star/skull badge on a strategic unit flag
+     * (`docs/design/accessible-side-identification.md`).
+     *
+     * Reached only from inside the spotting-gated unit-flag branch above, so it inherits that
+     * check exactly: an unspotted enemy has no flag here and therefore no badge either.
+     */
+    private fun drawSideMarker(
+        frame: RenderFrame,
+        unit: GameUnit?,
+        fx: Double,
+        fy: Double,
+        flagWidth: Double,
+        flagHeight: Double,
+    ) {
+        if (!frame.enhancedSideMarkers || unit == null) return
+        val marker = SideMarkers.classify(unit.player?.side, frame.spotSide) ?: return
+        SideMarkers.draw(rc.hexesCtx, marker, fx, fy, flagWidth, flagHeight)
     }
 
     private fun drawNormalZoomCell(

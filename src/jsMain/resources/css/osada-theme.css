@@ -8333,3 +8333,76 @@ hr {
         max-height: 92vh;
     }
 }
+
+/* ---------------------------------------------------------------------------
+ * Hero Desk (docs/design/hero-desk-and-profile-archive.md §6)
+ *
+ * Layers over the start menu, so it reuses .osada-hero-roster's panel box and the roster row's
+ * card language rather than inventing a second hero surface. Only the desk-specific parts live
+ * here: the filter bar, the search row, the source/warning notes, and the narrow-viewport rules
+ * that keep the card readable at 667x375.
+ * ------------------------------------------------------------------------ */
+
+.osada-hero-desk {
+    z-index: 520; /* above #startmenu's backdrop, which the desk opens on top of */
+}
+
+.osada-hero-desk-filters {
+    flex-wrap: wrap;
+}
+
+.osada-hero-desk-search {
+    padding: 6px 14px 0;
+}
+
+.osada-hero-desk-search input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 6px 8px;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, .32);
+    border: 1px solid var(--osada-metal-600);
+    color: var(--osada-text);
+    font-family: var(--osada-font-ui);
+    font-size: 12px;
+}
+
+.osada-hero-desk-search input:focus-visible {
+    outline: 2px solid var(--osada-brass);
+    outline-offset: 1px;
+}
+
+.osada-hero-desk-card:focus-visible {
+    outline: 2px solid var(--osada-brass);
+    outline-offset: 2px;
+}
+
+/* Provenance note: deliberately quiet. It answers "where did this card come from?" only for the
+ * player who asks, and never competes with the officer's own name. */
+.osada-hero-desk-source {
+    margin-top: 3px;
+    font-size: 10px;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: var(--osada-text-dim);
+}
+
+/* An unreadable campaign run is a persistence failure, not a footnote. */
+.osada-hero-desk-warning {
+    margin-top: 4px;
+    font-size: 11px;
+    color: #d99;
+}
+
+/* 667x375: the card stacks its portrait above the copy so the name never truncates to initials,
+ * and the delete action keeps a full-width touch target instead of a 20px sliver. */
+@media (max-width: 700px), (max-height: 430px) {
+    .osada-hero-desk-card {
+        flex-wrap: wrap;
+    }
+
+    .osada-hero-desk-card .osada-hero-locate {
+        flex: 1 0 100%;
+        margin-top: 6px;
+    }
+}

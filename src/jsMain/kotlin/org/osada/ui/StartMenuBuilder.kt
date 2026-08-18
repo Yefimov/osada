@@ -1,6 +1,7 @@
 package org.osada.ui
 
 import org.osada.GameHolder
+import org.osada.hero.HeroArchiveService
 import org.osada.i18n.I18n
 import org.w3c.dom.HTMLElement
 
@@ -48,6 +49,10 @@ internal object StartMenuBuilder {
         // mission, save, transition and Restart Mission (`docs/design/ruleset-profiles.md` §4).
         // Editing, renaming or deleting the named profile afterwards affects future starts only.
         RulesetSelection.apply(RulesetSelection.Surface.CAMPAIGN)
+        // A new run REPLACES this campaign's prior archived roster/history and gets a fresh epoch
+        // (`docs/design/hero-desk-and-profile-archive.md` §4). Done here, at the one place a run
+        // begins, and after the player has confirmed the replacement in the register.
+        (campaignList().getOrNull(campaignId)?.file as? String)?.let(HeroArchiveService::beginRun)
         val game = gameRef()
         game?.newCampaign(campaignId, difficulty)
         byId("options")?.let { toggleButton(it, false) }

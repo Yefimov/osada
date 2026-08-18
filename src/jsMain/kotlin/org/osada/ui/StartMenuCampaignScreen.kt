@@ -3,6 +3,7 @@ package org.osada.ui
 import org.osada.DEBUG_CAMPAIGN
 import org.osada.Game
 import org.osada.current
+import org.osada.hero.HeroArchiveService
 import org.osada.i18n.I18n
 import org.osada.model.Equipment
 import org.osada.model.getCountryNameByEqp
@@ -120,7 +121,13 @@ internal object StartMenuCampaignScreen {
                 // replaces it (save-recovery.md sec 2). Starting over is a separate, guarded
                 // action -- see the row's "Start over" link, built in renderCampaignRow.
                 existingRun != null -> StartMenuBuilder.resumeCampaignRun(existingRun.campaignRunId)
-                else -> StartMenuBuilder.startNewCampaign(selectedCampaign, difficulty)
+                // No live run, but a career from a completed or cleared run may still be archived
+                // — and starting over replaces it (`hero-desk-and-profile-archive.md` §4). That
+                // needs the same one explicit confirmation the live-run path already gives.
+                else ->
+                    confirmArchiveReplacement(file, campaign?.title as? String) {
+                        StartMenuBuilder.startNewCampaign(selectedCampaign, difficulty)
+                    }
             }
         }
 
@@ -377,9 +384,20 @@ internal object StartMenuCampaignScreen {
     ) {
         val campaign = StartMenuBuilder.campaignList().getOrNull(campaignIndex) ?: return
         val name = (campaign.title as? String) ?: run.campaignName
+        // One confirmation covering BOTH losses (§4): the resumable run and this campaign's
+        // archived roster/history, which starting over also replaces. The archive line appears only
+        // when there is a career to lose, so the dialog never overstates what it is about to do.
+        val archivedHeroes = HeroArchiveService.archivedHeroCount(run.campaignRunId)
+        val body =
+            I18n.t("campaign.replace_run.confirm.body", mapOf("progress" to progressText)) +
+                if (archivedHeroes > 0) {
+                    "<br>" + I18n.t("campaign.replace_run.confirm.archive", mapOf("count" to archivedHeroes))
+                } else {
+                    ""
+                }
         ConfirmCard.open(
             I18n.t("campaign.replace_run.confirm.title", mapOf("campaign" to name)),
-            I18n.t("campaign.replace_run.confirm.body", mapOf("progress" to progressText)),
+            body,
             I18n.t("campaign.replace_run.confirm.confirm_button"),
         ) {
             Game.current?.state?.clearCampaignRun(run.campaignRunId)
@@ -387,6 +405,33 @@ internal object StartMenuCampaignScreen {
                 byId("smCamp")?.asDynamic()?.selectedDifficulty as? Int ?: StartMenuCampaignData.DIFFICULTY_HISTORICAL
             StartMenuBuilder.startNewCampaign(campaignIndex, difficulty)
         }
+    }
+
+    /**
+     * The archived-career half of the replay confirmation (`hero-desk-and-profile-archive.md` §4).
+     *
+     * Clearing a campaign's slot deliberately KEEPS its archived roster — that is how a fallen
+     * officer survives an abandoned run — so a campaign with no live run can still have a complete
+     * career behind it, and starting over is what finally replaces that career. When there is
+     * nothing archived this asks nothing and starts immediately: a confirmation with no loss behind
+     * it teaches players to dismiss the ones that do.
+     */
+    private fun confirmArchiveReplacement(
+        file: String?,
+        title: String?,
+        start: () -> Unit,
+    ) {
+        val heroes = file?.let(HeroArchiveService::archivedHeroCount) ?: 0
+        if (heroes == 0) {
+            start()
+            return
+        }
+        val name = title ?: HeroArchiveService.archivedCampaign(file!!)?.campaignName ?: file
+        ConfirmCard.open(
+            I18n.t("campaign.replace_archive.confirm.title", mapOf("campaign" to name)),
+            I18n.t("campaign.replace_archive.confirm.body", mapOf("count" to heroes)),
+            I18n.t("campaign.replace_archive.confirm.confirm_button"),
+        ) { start() }
     }
 
     /** LAST 4-digit year in a campaign title ("Red Army Campaign (1936-1945)" -> 1945), used as

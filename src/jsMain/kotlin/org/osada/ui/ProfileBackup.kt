@@ -3,6 +3,9 @@ package org.osada.ui
 import kotlinx.browser.document
 import org.osada.Game
 import org.osada.current
+import org.osada.hero.HeroArchive
+import org.osada.hero.HeroArchiveCodec
+import org.osada.hero.HeroArchiveService
 import org.osada.i18n.I18n
 import org.osada.rules.ruleset.RulesetProfileStore
 import org.osada.save.CampaignRunBundle
@@ -21,10 +24,10 @@ import kotlin.js.json
  * existing hidden-anchor download technique from [org.osada.OSGlue.disksave] rather than adding a
  * second download mechanism.
  *
- * Scoping note: the hero archive is not yet part of the exported bundle -- the hero desk
- * workstream (`docs/player-comfort-roadmap.md` workstream 10) that would produce a profile-level
- * archive distinct from each campaign's own save has not been built. This exports every campaign
- * run's own saved state, which already includes that run's in-campaign hero roster.
+ * The bundle carries three things: every campaign run's saved state, the named ruleset library, and
+ * the profile-level hero archive (`docs/design/hero-desk-and-profile-archive.md` §4). The last two
+ * are additive fields -- a backup written before either existed simply lacks them and imports with
+ * the local copy left alone rather than cleared.
  */
 internal object ProfileBackup {
     fun exportToFile() {
@@ -58,8 +61,8 @@ internal object ProfileBackup {
         val reader = js("new FileReader()")
         reader.onloadend = {
             try {
-                val bundle = jsonToBundle(JSON.parse<dynamic>(reader.result as String))
-                if (bundle == null) onError() else confirmThenApply(bundle, onSuccess, onError)
+                val parsed = jsonToBundle(JSON.parse<dynamic>(reader.result as String))
+                if (parsed == null) onError() else confirmThenApply(parsed, onSuccess, onError)
             } catch (e: Throwable) {
                 console.error("[osada] profile backup import failed", e)
                 onError()
@@ -68,8 +71,22 @@ internal object ProfileBackup {
         reader.readAsText(file)
     }
 
+    /**
+     * A parsed backup file, before anything has been applied.
+     *
+     * The whole file is decoded and validated first and written only after the player confirms.
+     * That ordering is the point: the ruleset library used to be replaced inside the PARSER, so
+     * picking a backup and then cancelling the confirmation still overwrote every named profile the
+     * player had -- a destructive side effect of reading a file.
+     */
+    private data class ParsedProfile(
+        val bundle: ProfileBundle,
+        val rulesetProfiles: dynamic,
+        val heroArchive: HeroArchive?,
+    )
+
     private fun confirmThenApply(
-        bundle: ProfileBundle,
+        parsed: ParsedProfile,
         onSuccess: (Int) -> Unit,
         onError: () -> Unit,
     ) {
@@ -80,11 +97,19 @@ internal object ProfileBackup {
                 .orEmpty()
         ConfirmCard.open(
             I18n.t("save_load.profile_import.confirm.title"),
-            buildPreview(bundle, existing),
+            buildPreview(parsed.bundle, existing),
             I18n.t("save_load.profile_import.confirm.confirm_button"),
         ) {
-            val result: SaveResult? = Game.current?.state?.importProfile(bundle)
-            if (result?.isSuccess == true) onSuccess(bundle.runs.size) else onError()
+            val result: SaveResult? = Game.current?.state?.importProfile(parsed.bundle)
+            if (result?.isSuccess == true) {
+                // Applied together with the runs, and only once they are in: a file whose runs were
+                // rejected must leave the local rulesets and hero archive exactly as they were.
+                restoreRulesetProfiles(parsed.rulesetProfiles)
+                parsed.heroArchive?.let(HeroArchiveService::replaceAll)
+                onSuccess(parsed.bundle.runs.size)
+            } else {
+                onError()
+            }
         }
     }
 
@@ -137,6 +162,9 @@ internal object ProfileBackup {
             // campaign-only export (`docs/design/ruleset-profiles.md` §6). A backup written before
             // this field existed simply has no `rulesetProfiles`, and imports unchanged.
             Pair("rulesetProfiles", JSON.parse<dynamic>(RulesetProfileStore.serialize(RulesetProfileStore.custom()))),
+            // Same rule for the complete versioned hero archive: it is profile-level state, not
+            // per-campaign, so it belongs to the whole-profile backup and to nothing smaller.
+            Pair("heroArchive", HeroArchiveCodec.serialize(HeroArchiveService.archive())),
         )
 
     private fun runToJson(run: CampaignRunBundle): dynamic =
@@ -162,7 +190,7 @@ internal object ProfileBackup {
         )
 
     @Suppress("TooGenericExceptionCaught", "ReturnCount", "CyclomaticComplexMethod")
-    private fun jsonToBundle(d: dynamic): ProfileBundle? {
+    private fun jsonToBundle(d: dynamic): ParsedProfile? {
         val rawRuns = d?.runs as? Array<dynamic> ?: return null
         val runs =
             rawRuns.mapNotNull { r ->
@@ -195,10 +223,21 @@ internal object ProfileBackup {
                 CampaignRunBundle(metadata, current, recovery)
             }
         if (runs.isEmpty()) return null
-        restoreRulesetProfiles(d.rulesetProfiles)
-        return ProfileBundle(runs, d.exportedAt as? Double ?: 0.0, d.gameVersion as? String ?: "")
+        return ParsedProfile(
+            bundle = ProfileBundle(runs, d.exportedAt as? Double ?: 0.0, d.gameVersion as? String ?: ""),
+            rulesetProfiles = d.rulesetProfiles,
+            // An older profile file without `heroArchive` imports with the local archive left
+            // alone; the desk then rebuilds live cards from the imported runs' own hero blocks,
+            // which is exactly what §4 asks for.
+            heroArchive = readHeroArchive(d.heroArchive),
+        )
     }
 }
+
+/** Null for a backup written before the hero archive existed, which leaves the local archive alone
+ *  rather than clearing it (`docs/design/hero-desk-and-profile-archive.md` §4). */
+private fun readHeroArchive(raw: dynamic): HeroArchive? =
+    if (raw == null || raw == undefined) null else HeroArchiveCodec.parse(raw)
 
 /**
  * Replaces the ruleset library from a whole-profile backup, transactionally with the runs

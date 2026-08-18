@@ -159,6 +159,10 @@ internal class MainMenuButtonHandler(
             CommanderRosterPresenter.isTransferPickerOpen() -> CommanderRosterPresenter.closeTransferPicker()
             AttachmentPickerPresenter.isOpen() -> AttachmentPickerPresenter.close()
             CommanderRosterPresenter.isOpen() -> CommanderRosterPresenter.close()
+            // The Hero Desk layers a dossier over itself, so Escape has to peel them in that order
+            // -- the same ordered-stack rule the transfer picker above follows (DEFERRED.md §4.13).
+            HeroDeskPresenter.isDossierOpen() -> HeroDeskPresenter.closeDossier()
+            HeroDeskPresenter.isOpen() -> HeroDeskPresenter.close()
             isVisible("equipment") -> byId("eqCloseBut")?.click()
             isVisible("combatLog") -> UICombatLog.toggleCombatLog(false, true)
             else -> ui.mainMenuButton("options")

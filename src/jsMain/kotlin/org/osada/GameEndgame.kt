@@ -2,6 +2,8 @@ package org.osada
 
 import org.osada.campaign.CampaignNarrative
 import org.osada.campaign.resolveEpilogue
+import org.osada.hero.ArchiveRunStatus
+import org.osada.hero.HeroArchiveService
 import org.osada.hero.HeroCampaign
 import org.osada.i18n.I18n
 import org.osada.model.Player
@@ -11,6 +13,8 @@ import org.osada.model.collectPersistentCampaignUnits
 import org.osada.model.deployReinforcement
 import org.osada.model.ensureFormationIds
 import org.osada.model.getPlayer
+import org.osada.save.SaveStatus
+import org.osada.save.SaveStatusBus
 import org.osada.scenario.getReinforcements
 import org.osada.scenario.removeReinforcement
 import org.osada.ui.HudLog
@@ -84,6 +88,16 @@ fun Game.continueCampaign(
             location = I18n.t("game.history.outcome", mapOf("outcome" to outcomeLabel)),
         )
     }
+    // Formation experience is captured HERE, before `setPlayerToHQ` drops destroyed units from the
+    // core roster, so the archive keeps the number the dossier would have shown at the end of the
+    // battle (`docs/design/hero-desk-and-profile-archive.md` §4: archive before scenario cleanup
+    // can discard a formation detail).
+    val formationExperience =
+        player
+            .getCoreUnitList()
+            .mapNotNull { unit -> unit.formationId?.takeIf { it.isNotEmpty() }?.let { it to unit.experience } }
+            .toMap()
+    archiveHeroRoster(formationExperience, ArchiveRunStatus.IN_PROGRESS)
     console.log(
         "[OSADA] campaign carry-over: ${carryOver.survivors}/${carryOver.candidates} of YOUR formations " +
             "carried forward; lost: destroyed=${carryOver.destroyed}, temporary=${carryOver.temporary}, " +
@@ -108,12 +122,47 @@ fun Game.continueCampaign(
         // so it can never be inferred from a stored generation. The outcome rides along so a
         // campaign that ended in DEFEAT is not labelled as one the player completed.
         state?.markCampaignRunCompleted(campaign!!.file, outcome)
+        // The final upsert (§4). OSADA writes no autosave after a campaign ends, so without this
+        // the archive would keep saying the run is still in progress and its survivors would never
+        // present as retired from it. Idempotent: the same complete roster, one status later.
+        archiveHeroRoster(formationExperience, ArchiveRunStatus.forOutcome(outcome))
         if (outcome != "lose") {
             OSGlue.reportAchievement(campaign!!.file)
         }
     } else {
         UIBuilder.message(localizedOutcomeName(outcome), text, narrative = true)
         if (outcome == "briliant") awardPrototype = true
+    }
+}
+
+/**
+ * Upserts this campaign run's complete hero roster into the profile archive
+ * (`docs/design/hero-desk-and-profile-archive.md` §4).
+ *
+ * Runs inside `continueCampaign`, the single funnel that knows a mission outcome is committed, so
+ * the archive is written in the same logical operation as the campaign transition. A failed write
+ * never marks the mission incomplete — the game save has already committed by this point — but it
+ * raises the persistent save-status warning, because a silently missing career is exactly the loss
+ * the archive exists to prevent.
+ */
+private fun Game.archiveHeroRoster(
+    formationExperience: Map<String, Int>,
+    runStatus: ArchiveRunStatus,
+) {
+    val campaign = campaign ?: return
+    val result =
+        HeroArchiveService.upsert(
+            roster = HeroCampaign.roster(),
+            formationExperience = formationExperience,
+            campaignRunId = campaign.file,
+            campaignFile = campaign.file,
+            campaignName = campaign.name,
+            lastScenarioId = scenario?.name.orEmpty(),
+            lastScenarioIndex = campaign.currentScenarioIndex,
+            runStatus = runStatus,
+        )
+    if (result != null && !result.isSuccess) {
+        SaveStatusBus.update(SaveStatus.Failed(result.message ?: result.kind.name))
     }
 }
 
