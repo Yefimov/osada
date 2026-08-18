@@ -4,6 +4,7 @@ package org.osada.i18n
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class I18nTest {
     @Test
@@ -74,6 +75,30 @@ class I18nTest {
         assertEquals("2 операции", I18n.plural("operations", 2))
         assertEquals("5 операций", I18n.plural("operations", 5))
         assertEquals("21 операция", I18n.plural("operations", 21))
+    }
+}
+
+class DateTimeFormattingTest {
+    /**
+     * Regression guard for a formatter that threw on EVERY call: `js("new Date")(millis)` compiles
+     * to `(new Date())(millis)`, so the campaign register's last-played tooltip took the whole
+     * start-menu build down as soon as any campaign run had a timestamp.
+     */
+    @Test
+    fun formatsAnInstantWithoutThrowing() {
+        I18n.installBundlesForTests(english = "{}", selected = "{}", selectedLanguage = Language.ENGLISH)
+        val formatted = I18n.formatDateTime(1_700_000_000_000.0)
+        assertTrue(formatted.isNotBlank(), "formatted timestamp was blank")
+    }
+
+    /** Proves it formats the instant it was GIVEN rather than "now", which is what the broken
+     *  zero-argument construction silently did whenever it did not throw. */
+    @Test
+    fun formatsTheGivenInstantRatherThanTheCurrentTime() {
+        I18n.installBundlesForTests(english = "{}", selected = "{}", selectedLanguage = Language.ENGLISH)
+        val earlier = I18n.formatDateTime(1_000_000_000_000.0)
+        val later = I18n.formatDateTime(1_700_000_000_000.0)
+        assertTrue(earlier != later, "two different instants formatted identically: $earlier")
     }
 }
 

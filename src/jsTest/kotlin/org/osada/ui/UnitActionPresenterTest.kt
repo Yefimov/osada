@@ -19,6 +19,8 @@ import org.osada.model.addUnit
 import org.osada.model.allocMap
 import org.osada.model.getPlayer
 import org.osada.model.resetEquipment
+import org.osada.rules.ActionEffectKind
+import org.osada.rules.ReplacementExperience
 import org.osada.rules.SupplyRules
 import org.osada.rules.UnitActionAvailability
 import org.osada.rules.UnitActionContext
@@ -236,6 +238,58 @@ class UnitActionPresenterTest {
     }
 
     private var nextUnitId = 1
+
+    /**
+     * The replacement-experience preview the roadmap requires before the player commits
+     * (P2 item 9). Asserted through the presenter rather than the rules layer, because the promise
+     * is that the player SEES the resulting number -- and that it is not painted as a gain.
+     */
+    @Test
+    fun theReinforcePanelPreviewsTheExperienceItWouldCost() {
+        val map = map()
+        val player = map.currentPlayer!!
+        player.prestige = 10_000
+        val unit = place(map, player)
+        unit.strength = 3
+        unit.experience = 400
+        map.map!![1][1].terrain = TerrainType.CLEAR.value
+
+        val availability =
+            UnitActionAvailability.forAction(
+                UnitActionId.REINFORCE,
+                UnitActionContext(map = map, unit = unit, currentPlayer = player),
+            )
+        // The points actually restorable here, not a guess: local supply efficiency decides them,
+        // and the preview is only honest if it dilutes by the same number the command will restore.
+        val restored = availability.effects.first { it.kind == ActionEffectKind.STRENGTH_GAIN }.amount
+        val expected = ReplacementExperience.diluted(400, 3, restored)
+
+        val view = UnitActionPresenter.view(availability, unit, map, asleep = false)
+        val line = view.lines.firstOrNull { it.text.contains("Experience") }
+
+        assertTrue(restored > 0, "nothing restorable on this hex, so there is no preview to test")
+        assertTrue(line != null, "no experience line in ${view.lines}")
+        assertTrue(line.text.contains("400"), line.text)
+        assertTrue(line.text.contains("$expected"), "expected $expected in: ${line.text}")
+        assertTrue(expected < 400, "the preview must show a loss: ${line.text}")
+        assertEquals("dim", line.kind, "dilution is a cost, not a gain: ${line.text}")
+    }
+
+    /** A green formation has no experience to lose, so the panel must not carry a line about it. */
+    @Test
+    fun theReinforcePanelOmitsTheExperienceLineWhenThereIsNothingToDilute() {
+        val map = map()
+        val player = map.currentPlayer!!
+        player.prestige = 10_000
+        val unit = place(map, player)
+        unit.strength = 3
+        unit.experience = 0
+        map.map!![1][1].terrain = TerrainType.CLEAR.value
+
+        val view = view(map, unit, player, UnitActionId.REINFORCE)
+
+        assertFalse(view.lines.any { it.text.contains("Experience") }, "${view.lines}")
+    }
 
     private fun place(
         map: GameMap,

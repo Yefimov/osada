@@ -149,6 +149,11 @@ enum class ActionEffectKind {
     /** `amount` strength points restored. */
     STRENGTH_GAIN,
 
+    /** Experience falls from `detail` to `amount` because the replacements are untrained
+     *  (`ReplacementExperience`). Emitted only when the rule is on and there is experience to lose,
+     *  so a formation with none never shows a line about it. */
+    EXPERIENCE_DILUTION,
+
     /** `amount` prestige spent. */
     PRESTIGE_COST,
 

@@ -165,6 +165,7 @@ internal object LiveLocalization {
         refreshDifficultySelector()
         refreshSelectedCampaignDossier()
         refreshCampaignRows()
+        CampaignBackupButtons.refresh()
         byId("osadaCampList")?.let { list ->
             refreshListToolbar(list, "campaign.filter.placeholder", campaignModes)
             StartMenuListToolbar.applyListView(list)
@@ -207,8 +208,15 @@ internal object LiveLocalization {
         byId("smCampScenarios")?.innerHTML = "<b>${I18n.t("campaign.operations.label")}</b><br/>$operationValue"
     }
 
+    /**
+     * Re-renders every campaign row from current state.
+     *
+     * `internal` rather than private because it is not only a language-switch concern: importing a
+     * campaign file changes one row's operation/turn note, and re-running this is what keeps the
+     * register from showing the run the import just replaced ([CampaignBackupButtons]).
+     */
     @Suppress("LoopWithTooManyJumpStatements")
-    private fun refreshCampaignRows() {
+    internal fun refreshCampaignRows() {
         val list = byId("osadaCampList") ?: return
         val select = byId("smCampSel")?.querySelector("select") ?: return
         val options = select.asDynamic().options

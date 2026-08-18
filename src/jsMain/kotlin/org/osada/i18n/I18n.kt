@@ -8,6 +8,7 @@ import kotlinx.browser.window
 import org.osada.i18n.I18n.reportMissing
 import org.osada.i18n.I18n.t
 import org.w3c.xhr.XMLHttpRequest
+import kotlin.js.Date
 
 /**
  * OSADA localization runtime.
@@ -171,13 +172,22 @@ internal object I18n {
         return formatter.format(value) as String
     }
 
-    /** Short locale-aware date + time for a millisecond epoch, e.g. a save's last-played stamp.
-     *  Uses the selected language's locale so ru renders 16.08.2026, 14:03 rather than 8/16/2026. */
+    /**
+     * Short locale-aware date + time for a millisecond epoch, e.g. a save's last-played stamp.
+     * Uses the selected language's locale so ru renders 16.08.2026, 14:03 rather than 8/16/2026.
+     *
+     * The instant is built with `kotlin.js.Date` rather than `js("new Date")(epochMillis)`: that
+     * expression compiles to `(new Date())(epochMillis)`, which constructs the CURRENT date with no
+     * arguments and then calls the resulting object as a function. Every call threw
+     * "(intermediate value) is not a function", which took the campaign register's row rendering --
+     * and with it the whole start-menu build -- down for any player who had a campaign run with a
+     * timestamp.
+     */
     fun formatDateTime(epochMillis: Double): String {
         val constructor = js("Intl.DateTimeFormat")
         val options = js("({ dateStyle: 'short', timeStyle: 'short' })")
         val formatter = js("Reflect.construct")(constructor, arrayOf(language.locale, options))
-        return formatter.format(js("new Date")(epochMillis)) as String
+        return formatter.format(Date(epochMillis)) as String
     }
 
     internal fun installBundlesForTests(

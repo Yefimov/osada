@@ -1,6 +1,7 @@
 package org.osada
 
 import org.osada.hero.HeroCampaign
+import org.osada.hero.LeaderMigration
 import org.osada.model.acquireUnit
 import org.osada.model.buildCoreUnitList
 import org.osada.model.ensureFormationIds
@@ -8,6 +9,7 @@ import org.osada.model.getPlayers
 import org.osada.model.getUnits
 import org.osada.model.initDossier
 import org.osada.model.removeNonCampaignUnits
+import org.osada.model.restoreCoreUnitList
 import org.osada.model.undeployCoreUnits
 import org.osada.scenario.getBalancedPrestige
 import org.osada.scenario.getRandomPrototype
@@ -16,6 +18,24 @@ import org.osada.ui.UIBuilder
 import org.osada.ui.briefing.CampaignBriefingCatalog
 import org.osada.ui.hideStartMenu
 import org.osada.ui.showPrototypeAwardMessage
+
+/**
+ * Applies a restored save's core roster, which `GameStateRestore.restoreCampaign` parks rather than
+ * applying itself: [Game.campaignPlayer] is assigned by `setupPlayers()`, which runs after the
+ * campaign block has been read, so restoring there always saw a null player and silently dropped
+ * the whole roster.
+ *
+ * Consumed exactly once, and before `ensureFormationIds`, so restored core units keep the formation
+ * ids they were saved with instead of being minted new ones.
+ */
+private fun Game.applyPendingCoreUnitRestore() {
+    val pending = pendingCoreUnitRestore ?: return
+    pendingCoreUnitRestore = null
+    val player = campaignPlayer ?: return
+    scenario!!.map.restoreCoreUnitList(player, pending.savedUnits)
+    // Idempotent, so running it on an already-migrated save changes nothing.
+    LeaderMigration.migrate(player, pending.campaignFile)
+}
 
 internal fun Game.handleCampaignScenarioLoaded() {
     console.log("[OSADA] onScenarioLoadFinished campaign branch")
@@ -31,6 +51,7 @@ internal fun Game.handleCampaignScenarioLoaded() {
             campaignPlayer?.let { scenario!!.map.undeployCoreUnits(it) }
         }
     }
+    applyPendingCoreUnitRestore()
     // The player's whole force is their army and thus hero-eligible (§9.1) — not just the units on
     // deployment hexes. Mint a formation id for every remaining on-map unit so a pre-placed campaign
     // enters the hero system instead of falling back to the dossier-less legacy leader.

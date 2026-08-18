@@ -115,18 +115,26 @@ internal class CoreUnitListOperations(
         return unit
     }
 
+    /**
+     * Restores a core unit's saved transport.
+     *
+     * The saved transport is pulled into a local and null-checked explicitly rather than written as
+     * `savedUnit.transport?.let { }`: on a `dynamic` receiver, `?.let` is not the Kotlin scope
+     * function but a MEMBER lookup on the JS object, so every unit that actually had a transport
+     * threw "tmp0_safe_receiver.let is not a function" and aborted the whole core-roster restore
+     * partway through.
+     */
     private fun applyRestoredTransport(
         savedUnit: dynamic,
         unit: GameUnit,
     ) {
-        savedUnit.transport?.let { t ->
-            val teqid = t.eqid as? Int ?: 0
-            if (teqid > 0) {
-                unit.setTransport(teqid)
-                unit.transport?.ammo = t.ammo as? Int ?: 0
-                unit.transport?.fuel = t.fuel as? Int ?: 0
-            }
-        }
+        val transport: dynamic = savedUnit.transport
+        if (transport == null || transport == undefined) return
+        val teqid = transport.eqid as? Int ?: 0
+        if (teqid <= 0) return
+        unit.setTransport(teqid)
+        unit.transport?.ammo = transport.ammo as? Int ?: 0
+        unit.transport?.fuel = transport.fuel as? Int ?: 0
     }
 
     fun removeNonCampaignUnits(player: Player) {

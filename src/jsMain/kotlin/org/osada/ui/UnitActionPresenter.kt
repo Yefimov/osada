@@ -45,9 +45,15 @@ internal object UnitActionPresenter {
         fun semanticText(): String = (listOf(label, status, description) + lines.map { it.text }).joinToString(". ")
     }
 
-    /** Effects that state a cost or a caveat rather than a gain -- rendered as neutral notes. */
+    /** Effects that state a cost or a caveat rather than a gain -- rendered as neutral notes.
+     *  Experience dilution belongs here rather than with the gains: it is what the replacement
+     *  costs the formation, and painting it the same green as "+3 strength" would misread it. */
     private val NEUTRAL_EFFECTS =
-        setOf(ActionEffectKind.ENDS_UNIT_ACTION, ActionEffectKind.LIMBER_TOGGLE_FREE)
+        setOf(
+            ActionEffectKind.ENDS_UNIT_ACTION,
+            ActionEffectKind.LIMBER_TOGGLE_FREE,
+            ActionEffectKind.EXPERIENCE_DILUTION,
+        )
 
     private const val GOOD = "good"
     private const val BAD = "bad"

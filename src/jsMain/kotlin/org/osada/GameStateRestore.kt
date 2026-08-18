@@ -2,7 +2,6 @@ package org.osada
 
 import org.osada.campaign.CampaignNarrative
 import org.osada.hero.HeroCampaign
-import org.osada.hero.LeaderMigration
 import org.osada.model.Equipment
 import org.osada.model.GameMap
 import org.osada.model.Hex
@@ -12,7 +11,6 @@ import org.osada.model.addPlayersEquipment
 import org.osada.model.allocMap
 import org.osada.model.getPlayer
 import org.osada.model.getPlayers
-import org.osada.model.restoreCoreUnitList
 import org.osada.model.setHex
 import org.osada.scenario.Campaign
 import org.osada.scenario.Scenario
@@ -195,7 +193,7 @@ class GameStateRestore(
 
         console.log("[osada] restoreGame setting game.scenario")
         game.scenario = newScenario
-        restoreCampaign(newScenario, campaignData, onReady)
+        restoreCampaign(campaignData, onReady)
     }
 
     private fun restoreScenarioArrays(
@@ -226,7 +224,6 @@ class GameStateRestore(
     }
 
     private fun restoreCampaign(
-        newScenario: Scenario,
         campaignData: dynamic?,
         onReady: () -> Unit,
     ) {
@@ -246,17 +243,20 @@ class GameStateRestore(
         game.campaign =
             Campaign(if (campaignIndex >= 0) campaignIndex else campaignId, campaignData.difficulty as Int) {
                 game.campaign?.setScenarioById(campaignData.scenario as Int)
-                val campaignPlayer = game.getCampaignPlayer()
-                val savedCoreUnits = campaignData.coreUnits
-                if (campaignPlayer != null && savedCoreUnits != null) {
-                    newScenario.map.restoreCoreUnitList(
-                        campaignPlayer,
-                        savedCoreUnits.unsafeCast<Array<dynamic>>().toList(),
-                    )
-                }
-                // After the core roster exists, so every core unit has a formation id to key on.
-                // Idempotent, so running it on an already-migrated save changes nothing.
-                campaignPlayer?.let { LeaderMigration.migrate(it, file) }
+                // DEFERRED, not applied here: `Game.campaignPlayer` is assigned by `setupPlayers()`,
+                // which runs from `setupGameState()` AFTER this callback -- `onReady()` below is what
+                // reaches it. Restoring the roster here therefore always saw a null campaign player
+                // and silently dropped the whole saved core list: an undeployed pre-deployment
+                // reserve vanished outright, and a deployed core came back as on-map units that
+                // belonged to no core roster (so carry-over and the reserve tray saw nothing).
+                // `handleCampaignScenarioLoaded` consumes this once the player exists.
+                val savedCoreUnits: dynamic = campaignData.coreUnits
+                game.pendingCoreUnitRestore =
+                    if (savedCoreUnits == null || savedCoreUnits == undefined) {
+                        null
+                    } else {
+                        PendingCoreUnitRestore(savedCoreUnits.unsafeCast<Array<dynamic>>().toList(), file)
+                    }
                 onReady()
             }
     }
@@ -411,3 +411,14 @@ private fun restoreReinforcementsFromMap(
         }
     }
 }
+
+/**
+ * The campaign core roster read out of a save, waiting for the campaign player to exist.
+ *
+ * Carries [campaignFile] as well as the units because the legacy leader migration is keyed to the
+ * campaign and was gated behind the same null check, so it never ran on a restore either.
+ */
+internal data class PendingCoreUnitRestore(
+    val savedUnits: List<dynamic>,
+    val campaignFile: String,
+)

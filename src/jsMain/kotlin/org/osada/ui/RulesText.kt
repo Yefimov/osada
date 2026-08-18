@@ -32,6 +32,9 @@ internal object RulesText {
             RuleKey.FLAK_RANGE -> I18n.plural("rules.flak_range.value", value)
             RuleKey.GROUND_FOLLOWS_WEATHER -> I18n.t("rules.ground_follows_weather.value.$value")
             RuleKey.GROUND_CHANGE_TURNS -> I18n.plural("rules.ground_change_turns.value", value)
+            // Named states rather than On/Off: "off" reads as "no replacements" instead of "keeps
+            // its experience", which is the opposite of what this rule does.
+            RuleKey.REPLACEMENT_EXPERIENCE -> I18n.t("rules.replacement_experience.value.$value")
             else -> I18n.t(if (value != 0) "rules.value.on" else "rules.value.off")
         }
 

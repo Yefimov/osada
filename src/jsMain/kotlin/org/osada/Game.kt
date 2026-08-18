@@ -45,6 +45,10 @@ class Game {
     internal var continueCampaignFlag: Boolean = false
     internal var removeNonCampaignUnitsFlag: Boolean = false
     internal var buildCoreUnitsFlag: Boolean = false
+
+    /** A restored save's core roster, parked until [setupPlayers] has assigned [campaignPlayer].
+     *  Consumed exactly once, by `handleCampaignScenarioLoaded`. */
+    internal var pendingCoreUnitRestore: PendingCoreUnitRestore? = null
     internal var awardPrototype: Boolean = false
     internal var nextScenarioData: dynamic = null
 

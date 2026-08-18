@@ -1,6 +1,5 @@
 package org.osada.ui
 
-import kotlinx.browser.document
 import org.osada.Game
 import org.osada.current
 import org.osada.hero.HeroArchive
@@ -8,9 +7,8 @@ import org.osada.hero.HeroArchiveCodec
 import org.osada.hero.HeroArchiveService
 import org.osada.i18n.I18n
 import org.osada.rules.ruleset.RulesetProfileStore
-import org.osada.save.CampaignRunBundle
+import org.osada.save.CampaignRunCodec
 import org.osada.save.CampaignRunMetadata
-import org.osada.save.LocalStorageSaveSnapshotStore
 import org.osada.save.ProfileBundle
 import org.osada.save.SaveResult
 import kotlin.js.Date
@@ -33,11 +31,7 @@ internal object ProfileBackup {
     fun exportToFile() {
         val bundle = Game.current?.state?.exportProfile() ?: return
         val json = bundleToJson(bundle)
-        val fileName = "osada-profile-backup-${Date().getTime().toLong()}.json"
-        val anchor = document.createElement("a").asDynamic()
-        anchor.download = fileName
-        anchor.href = "data:application/force-download," + encodeURIComponentSafe(JSON.stringify(json))
-        anchor.click()
+        downloadJson("osada-profile-backup-${Date().getTime().toLong()}.json", json)
     }
 
     /**
@@ -137,16 +131,8 @@ internal object ProfileBackup {
     private fun describe(m: CampaignRunMetadata): String {
         val name = m.campaignName.ifBlank { m.campaignRunId }
         val where = m.scenarioName.ifBlank { null }
-        return escapeHtml(if (where == null) name else "$name — $where")
+        return escapeBackupHtml(if (where == null) name else "$name — $where")
     }
-
-    /** The preview is injected as HTML (the list needs line breaks), and campaign/scenario names
-     *  in an imported file are attacker-controlled text, so they are escaped rather than trusted. */
-    private fun escapeHtml(value: String): String =
-        value
-            .replace("&", "&amp;")
-            .replace("<", "&lt;")
-            .replace(">", "&gt;")
 
     private fun bundleToJson(bundle: ProfileBundle): dynamic =
         json(
@@ -155,7 +141,7 @@ internal object ProfileBackup {
             Pair(
                 "runs",
                 bundle.runs
-                    .map { runToJson(it) }
+                    .map { CampaignRunCodec.runToJson(it) }
                     .toTypedArray(),
             ),
             // Additive: the named ruleset library travels with a WHOLE-profile backup, never with a
@@ -167,61 +153,10 @@ internal object ProfileBackup {
             Pair("heroArchive", HeroArchiveCodec.serialize(HeroArchiveService.archive())),
         )
 
-    private fun runToJson(run: CampaignRunBundle): dynamic =
-        json(
-            Pair("metadata", metadataToJson(run.metadata)),
-            Pair("current", LocalStorageSaveSnapshotStore.snapshotToJson(run.current)),
-            Pair("recovery", run.recovery?.let { LocalStorageSaveSnapshotStore.snapshotToJson(it) }),
-        )
-
-    private fun metadataToJson(m: CampaignRunMetadata): dynamic =
-        json(
-            Pair("campaignRunId", m.campaignRunId),
-            Pair("campaignFile", m.campaignFile),
-            Pair("campaignName", m.campaignName),
-            Pair("scenarioName", m.scenarioName),
-            Pair("campaignScenario", m.campaignScenario),
-            Pair("phase", m.phase),
-            Pair("lastPlayedAt", m.lastPlayedAt),
-            Pair("completed", m.completed),
-            Pair("turn", m.turn),
-            Pair("maxTurns", m.maxTurns),
-            Pair("outcome", m.outcome),
-        )
-
-    @Suppress("TooGenericExceptionCaught", "ReturnCount", "CyclomaticComplexMethod")
+    @Suppress("ReturnCount") // two early rejections (no runs array, no readable run) plus the result
     private fun jsonToBundle(d: dynamic): ParsedProfile? {
         val rawRuns = d?.runs as? Array<dynamic> ?: return null
-        val runs =
-            rawRuns.mapNotNull { r ->
-                val metaRaw = r?.metadata ?: return@mapNotNull null
-                val metadata =
-                    CampaignRunMetadata(
-                        campaignRunId = metaRaw.campaignRunId as? String ?: return@mapNotNull null,
-                        campaignFile = metaRaw.campaignFile as? String ?: "",
-                        campaignName = metaRaw.campaignName as? String ?: "",
-                        scenarioName = metaRaw.scenarioName as? String ?: "",
-                        campaignScenario = metaRaw.campaignScenario as? Int ?: 0,
-                        phase = metaRaw.phase as? String ?: "",
-                        lastPlayedAt = metaRaw.lastPlayedAt as? Double ?: 0.0,
-                        completed = metaRaw.completed as? Boolean ?: false,
-                        turn = metaRaw.turn as? Int ?: 0,
-                        maxTurns = metaRaw.maxTurns as? Int ?: 0,
-                        outcome = metaRaw.outcome as? String ?: "",
-                    )
-                val currentRaw: dynamic = r.current
-                val current =
-                    LocalStorageSaveSnapshotStore.jsonToSnapshot(JSON.stringify(currentRaw))
-                        ?: return@mapNotNull null
-                val recoveryRaw: dynamic = r.recovery
-                val recovery =
-                    if (recoveryRaw == null || recoveryRaw == undefined) {
-                        null
-                    } else {
-                        LocalStorageSaveSnapshotStore.jsonToSnapshot(JSON.stringify(recoveryRaw))
-                    }
-                CampaignRunBundle(metadata, current, recovery)
-            }
+        val runs = rawRuns.mapNotNull { CampaignRunCodec.jsonToRun(it) }
         if (runs.isEmpty()) return null
         return ParsedProfile(
             bundle = ProfileBundle(runs, d.exportedAt as? Double ?: 0.0, d.gameVersion as? String ?: ""),
@@ -251,5 +186,3 @@ private fun restoreRulesetProfiles(raw: dynamic) {
     if (raw == null || raw == undefined) return
     RulesetProfileStore.replaceAll(RulesetProfileStore.parse(JSON.stringify(raw)))
 }
-
-private fun encodeURIComponentSafe(value: String): String = js("encodeURIComponent")(value) as String

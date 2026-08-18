@@ -3,6 +3,7 @@ package org.osada.model
 import org.osada.LeaderType
 import org.osada.UnitClass
 import org.osada.rules.GameRules
+import org.osada.rules.ReplacementExperience
 import org.osada.rules.unitUsesFuel
 
 /** Movement/combat actions for [GameUnit], split out to keep its function count in bounds. */
@@ -62,10 +63,24 @@ fun GameUnit.resupply(supply: Supply) {
     hasResupplied = true
 }
 
+/**
+ * Adds [amount] strength points and spends the formation's action for the turn.
+ *
+ * Ordinary replacements dilute experience -- the new intake arrives untrained, so the formation's
+ * experience becomes the strength-weighted average ([ReplacementExperience]). Overstrength does not:
+ * see that object for why the premium veteran action is exempt. Experience is read BEFORE strength
+ * changes, because the weighting is over the strength the veterans actually represent.
+ *
+ * Hero experience is untouched here and lives on `HeroCampaign`'s own roster, which is what keeps a
+ * commander's record separate from the formation's (roadmap P2 item 9's standing constraint).
+ */
 fun GameUnit.reinforce(
     amount: Int,
     overStrength: Boolean,
 ) {
+    if (!overStrength) {
+        experience = ReplacementExperience.afterReplacement(experience, strength, amount)
+    }
     strength += amount
     hasMoved = true
     hasFired = true

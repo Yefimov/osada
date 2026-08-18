@@ -8169,6 +8169,33 @@ hr {
     line-height: 26px;
 }
 
+/* Campaign register footer: per-campaign export/import (save-recovery.md sec 2). Matches the
+   neighbouring Rules button so the footer reads as one row of page-level actions. */
+.osadaCampBackupButton {
+    min-width: 64px;
+    padding: 0 10px;
+    border-radius: var(--osada-radius);
+    font-family: var(--osada-font-ui);
+    font-size: 13px;
+    line-height: 26px;
+}
+
+/* Export with no stored run stays visible and focusable, with the reason in its tooltip, rather
+   than disappearing and changing the footer's shape between campaign selections. */
+.osadaCampBackupButton--disabled {
+    opacity: 0.45;
+    cursor: default;
+}
+
+.osadaCampBackupStatus {
+    flex-basis: 100%;
+    min-height: 14px;
+    font-family: var(--osada-font-ui);
+    font-size: 12px;
+    color: var(--osada-text-dim);
+    text-align: center;
+}
+
 .osadaRulesWindow {
     position: fixed;
     z-index: 320;

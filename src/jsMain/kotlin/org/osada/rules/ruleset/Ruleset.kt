@@ -17,8 +17,13 @@ package org.osada.rules.ruleset
  * 2 (2026-08-17) added the four weather switches. Additive: a schema-1 profile stays selectable and
  * simply names none of them, so those four keep following the content, which is exactly the
  * behaviour that profile already had.
+ *
+ * 3 (2026-08-18) added [RuleKey.REPLACEMENT_EXPERIENCE]. Additive on the same terms, but note that
+ * its default is ON: a schema-2 profile that names nothing gets dilution, because the owner's
+ * decision is that dilution is what OSADA should do. A campaign that wants the old behaviour selects
+ * it explicitly.
  */
-const val RULESET_SCHEMA_VERSION = 2
+const val RULESET_SCHEMA_VERSION = 3
 
 /**
  * One configurable rule.
@@ -84,6 +89,18 @@ enum class RuleKey(
     /** How many continuous turns of one sky it takes to move the ground one step
      *  (`GroundConditionModel.TURNS_TO_CHANGE`). */
     GROUND_CHANGE_TURNS("ground_change_turns", null, 1, 6),
+
+    // ---- replacements (schema 3) ----------------------------------------------------------
+
+    /**
+     * Whether ordinary replacements dilute a formation's experience
+     * (`rules/ReplacementExperience`). 1 = the strength-weighted average, 0 = the pre-2026-08-18
+     * behaviour, which preserved experience completely.
+     *
+     * OSADA owns this outright: no `equip.cfg` key expresses it, and the fidelity register records
+     * nothing about what OG or PM do here, so it must not be presented as content-derived.
+     */
+    REPLACEMENT_EXPERIENCE("replacement_experience", null, 0, 1),
     ;
 
     /** Editor-only bounds. Never applied to a value that came from content (§2). */
@@ -227,5 +244,9 @@ object RulesetDefaults {
             // Ground: follow whatever each scenario authorises, and OG's own "several turns".
             RuleKey.GROUND_FOLLOWS_WEATHER to 1,
             RuleKey.GROUND_CHANGE_TURNS to 3,
+            // On by owner decision (2026-08-18). This is the one default in this table that
+            // deliberately CHANGES shipped behaviour rather than describing it: replacements
+            // preserved experience completely before schema 3.
+            RuleKey.REPLACEMENT_EXPERIENCE to 1,
         )
 }

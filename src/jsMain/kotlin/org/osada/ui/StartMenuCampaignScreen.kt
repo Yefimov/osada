@@ -178,6 +178,7 @@ internal object StartMenuCampaignScreen {
         byId("smCampScenarios")?.innerHTML = "<b>${I18n.t("campaign.operations.label")}</b><br/>" +
             (operations?.let(I18n::formatNumber) ?: (campaign.scenarios as? String ?: ""))
         byId("smCamp")?.asDynamic()?.selectedCampaign = value.toInt()
+        CampaignBackupButtons.refresh()
         StartMenuCampaignData.updateCampaignPrestigeDisplay()
         updateCampaignDossierHead(campSelect, campaign, country)
     }
@@ -240,6 +241,9 @@ internal object StartMenuCampaignScreen {
             // Page-level Rules button, never an automatic modal in front of the launch
             // (`docs/design/ruleset-profiles.md` §6).
             RulesWindow.installButton(buttons, RulesetSelection.Surface.CAMPAIGN)
+            // Per-campaign file export/import, acting on the register's selected campaign
+            // (`docs/design/save-recovery.md` §2).
+            CampaignBackupButtons.install(buttons)
         }
         // The native flow glyph is superseded by the collapsible "Campaign path" line.
         byId("smCFlowBut")?.style?.display = "none"

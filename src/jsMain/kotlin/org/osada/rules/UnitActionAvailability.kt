@@ -222,10 +222,16 @@ object UnitActionAvailability {
         val enabled = SupplyRules.canReinforce(context.map, unit, false) && gain > 0 && reasons.isEmpty()
         val supplyContext = SupplyContextRules.getSupplyContext(context.map, unit)
         val affordable = affordablePoints(context, perPoint, gain)
+        // The exact resulting experience, computed from the points the player can actually afford --
+        // the roadmap requires the preview to state what will happen, so it must use the same input
+        // and the same function the mutation will (`ReplacementExperience`).
+        val dilutedExperience = ReplacementExperience.afterReplacement(unit.experience, unit.strength, affordable)
         val effects =
-            listOf(
+            listOfNotNull(
                 ActionEffect(ActionEffectKind.STRENGTH_GAIN, affordable),
                 ActionEffect(ActionEffectKind.PRESTIGE_COST, affordable * perPoint),
+                ActionEffect(ActionEffectKind.EXPERIENCE_DILUTION, dilutedExperience, unit.experience)
+                    .takeIf { dilutedExperience < unit.experience },
                 ActionEffect(ActionEffectKind.SUPPLY_EFFICIENCY, supplyContext.efficiencyPercent),
                 ActionEffect(ActionEffectKind.ENDS_UNIT_ACTION),
             )
