@@ -1,10 +1,12 @@
 package org.osada.rules
 
 import org.osada.CURRENCY_MULTIPLIER
+import org.osada.LeaderType
 import org.osada.OVERSTRENGTH_PENALTY
 import org.osada.UPGRADE_PENALTY
 import org.osada.model.Equipment
 import org.osada.model.GameUnit
+import org.osada.model.Leaders
 
 /**
  * Prestige cost calculations for buying, upgrading and selling units (including their
@@ -14,6 +16,17 @@ import org.osada.model.GameUnit
  */
 object CostCalculator {
     private const val FULL_STRENGTH = 10
+
+    /**
+     * The upgrade surcharge an `Influence` commander pays instead of [UPGRADE_PENALTY].
+     *
+     * OG's trait reads *"allows the unit to upgrade to better equipment at reduced prestige cost"*
+     * and names no number, so the honest reading of "reduced" is the one that costs the player
+     * nothing beyond the equipment itself: the 20% re-equipping surcharge is waived, and the new
+     * kit is still paid for in full. Waiving more than the surcharge would make an upgrade cheaper
+     * than the machine it buys, which no reading of the sentence supports.
+     */
+    private const val INFLUENCE_UPGRADE_PENALTY = 1.0
 
     /** Combined buy cost of a unit and (optionally) its transport. Pass -1 to skip either. */
     fun calculateUnitCosts(
@@ -37,12 +50,18 @@ object CostCalculator {
         newEqid: Int,
         transportEqid: Int,
     ): Int {
+        // OG's `Influence` leader waives the re-equipping surcharge -- advertised to the player and
+        // backed by no rule anywhere until 2026-08-18 (`docs/og-fidelity-plan.md` A.4). It applies
+        // only to the CHANGED-equipment branches, because the same-id branches never charged the
+        // surcharge in the first place.
+        val penalty =
+            if (Leaders.unitHasLeader(unit, LeaderType.INFLUENCE)) INFLUENCE_UPGRADE_PENALTY else UPGRADE_PENALTY
         val newUnitCost =
             if (newEqid > 0) {
                 if (unit.eqid == newEqid) {
                     calculateUnitCosts(unit.eqid, -1)
                 } else {
-                    (calculateUnitCosts(newEqid, -1) * UPGRADE_PENALTY).toInt()
+                    (calculateUnitCosts(newEqid, -1) * penalty).toInt()
                 }
             } else {
                 calculateUnitCosts(unit.eqid, -1)
@@ -52,7 +71,7 @@ object CostCalculator {
                 if (unit.transport?.eqid == transportEqid) {
                     calculateUnitCosts(-1, transportEqid)
                 } else {
-                    (calculateUnitCosts(-1, transportEqid) * UPGRADE_PENALTY).toInt()
+                    (calculateUnitCosts(-1, transportEqid) * penalty).toInt()
                 }
             } else {
                 0

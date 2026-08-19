@@ -239,11 +239,17 @@ private fun addSideColumnCells(
 
 /**
  * Dice/random rolls used by the rules engine. Mirrors the legacy `rollDice` helper.
+ *
+ * Draws from [GameRandomSource] rather than `kotlin.random.Random`, even though nothing calls it
+ * today: it is the obvious helper to reach for when adding a rule, and a gameplay roll that skipped
+ * the shared stream would desync two multiplayer peers. Anything that must NOT be on the shared
+ * stream — scenario setup, AI deliberation, id generation — should say so and use
+ * `kotlin.random.Random` explicitly.
  */
 object Dice {
     /** Uniform integer roll in [min, max], matching the original `rollDice` formula. */
     fun roll(
         min: Int,
         max: Int,
-    ): Int = (kotlin.random.Random.nextDouble() * (max - min + 1)).toInt() + min
+    ): Int = GameRandomSource.nextInRange(min, max)
 }

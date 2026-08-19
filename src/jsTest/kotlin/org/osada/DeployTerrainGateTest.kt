@@ -38,6 +38,7 @@ class DeployTerrainGateTest {
     private val coastalEqid = 300
     private val legEqid = 301
     private val fighterEqid = 302
+    private val trainEqid = 303
 
     @BeforeTest
     fun setup() {
@@ -75,6 +76,17 @@ class DeployTerrainGateTest {
                 movpoints = 8
                 fuel = 40
                 ammo = 4
+            },
+        )
+        Equipment.putEquipment(
+            trainEqid,
+            EquipmentData().apply {
+                // e.g. eqp-kaiser/eqp-united's Bronevagon (armoured train) rolling stock.
+                uclass = UnitClass.ARTILLERY.value
+                movmethod = MovMethod.RAIL.value
+                movpoints = 6
+                fuel = 0
+                ammo = 8
             },
         )
     }
@@ -200,6 +212,37 @@ class DeployTerrainGateTest {
         assertEquals(255, movTableDry[MovMethod.LEG.value][TerrainType.OCEAN.value])
 
         assertTrue(accepts(map, legEqid, TerrainType.OCEAN.value))
+    }
+
+    /** `movTable[RAIL]` is intentionally all-255 (Constants.kt: real rail movement is resolved by
+     *  `hex.rail`, not this table) -- `canDeployOnTerrain` must resolve a train through WHEELED
+     *  the same way [org.osada.rules.getReinforcementDeployPositions] already does for scripted
+     *  reinforcements, or every hex reads as impassable and a train can never be deployed at all
+     *  (2026-08-19 user report: "Reserves of Trains are not working ... click on them and nothing
+     *  happens"). */
+    @Test
+    fun aTrainDeploysOnOrdinaryTerrainInsteadOfEveryHexReadingImpassable() {
+        val map = buildMap()
+        assertEquals(
+            255,
+            movTableDry[MovMethod.RAIL.value][TerrainType.CLEAR.value],
+            "test assumption: RAIL's own row is all-255",
+        )
+
+        assertTrue(accepts(map, trainEqid, TerrainType.CLEAR.value))
+    }
+
+    @Test
+    fun deployPlayerUnitPlacesATrainOnAnOrdinaryClearHex() {
+        val map = buildMap()
+        val clear = hexAt(map, 1, 1, TerrainType.CLEAR.value)
+        val unit = reserve(map, trainEqid)
+
+        val placed = map.deployPlayerUnit(map.getPlayer(0), unit, 1, 1)
+
+        assertTrue(placed)
+        assertEquals(unit.id, clear.unit?.id)
+        assertTrue(unit.isDeployed)
     }
 
     @Test

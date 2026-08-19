@@ -37,7 +37,14 @@ internal object RulesWindow {
     private var readOnly = false
     private var previouslyFocused: HTMLElement? = null
 
-    /** Adds the Rules button to [host]; safe to call more than once. */
+    /** Adds the Rules button to [host]; safe to call more than once.
+     *
+     * Campaign Selection, Scenario Selection and the multiplayer host's Scenario Selection are
+     * all built once and stay in the DOM (only one is ever visible), so each needs its OWN button
+     * rather than sharing [BUTTON_ID]: a single shared id meant the last screen built silently
+     * stole the only button element, leaving the earlier screen's host empty (the button existed
+     * in the DOM, just re-parented under a hidden sibling screen).
+     */
     fun installButton(
         host: HTMLElement?,
         forSurface: RulesetSelection.Surface,
@@ -46,10 +53,11 @@ internal object RulesWindow {
         val parent = host ?: return null
         surface = forSurface
         readOnly = readOnlyWindow
-        byId(BUTTON_ID)?.let { delTag(it) }
+        val id = buttonId(forSurface)
+        byId(id)?.let { delTag(it) }
         val button = addTag(parent, "div")
-        button.id = BUTTON_ID
-        button.className = "smallButton osadaRulesButton"
+        button.id = id
+        button.className = "osada-button osadaRulesButton"
         button.textContent = I18n.t("rules.button.label")
         button.title = I18n.t(if (readOnlyWindow) "rules.button.help.locked" else "rules.button.help")
         button.asButton(onActivate = { open(forSurface, readOnlyWindow) })
@@ -89,10 +97,35 @@ internal object RulesWindow {
         title.className = "osadaRulesWindow__title"
         title.textContent = I18n.t("rules.title")
 
+        // Read-only was documented ("a guest in a room, and an in-progress campaign, see the same
+        // window read-only") but only ever WIRED for the multiplayer guest case -- Campaign
+        // Selection always installed its button with readOnlyWindow=false regardless of whether the
+        // selected campaign already had a run, so picking a different profile there silently did
+        // nothing (rules lock in at campaign start; resuming a run never re-resolves the
+        // selection). Now that StartMenuCampaignScreen reinstalls the button read-only for a
+        // campaign that already has one, say WHY in the window itself, not just the button's hover
+        // tooltip -- a tooltip is exactly what got missed (2026-08-19 user report).
+        if (readOnly) {
+            val banner = addTag(window, "div")
+            banner.className = "osadaRulesLockedBanner"
+            banner.textContent =
+                I18n.t(
+                    if (forSurface == RulesetSelection.Surface.CAMPAIGN) {
+                        "rules.locked.campaign_in_progress"
+                    } else {
+                        "rules.locked.multiplayer_guest"
+                    },
+                )
+        }
+
         buildPicker(window)
         addTag(window, "div").apply {
             id = NOTE_ID
             className = "osadaRulesNote"
+        }
+        addTag(window, "div").apply {
+            id = GAPS_ID
+            className = "osadaRulesGaps"
         }
         addTag(window, "div").apply {
             id = SUMMARY_ID
@@ -103,7 +136,7 @@ internal object RulesWindow {
         refresh()
 
         val closeButton = addTag(window, "button")
-        closeButton.className = "smallButton osadaRulesWindow__close"
+        closeButton.className = "osada-button osadaRulesWindow__close"
         closeButton.textContent = I18n.t("common.close.label")
         closeButton.onclick = { _: MouseEvent -> close() }
         closeButton.focus()
@@ -117,6 +150,7 @@ internal object RulesWindow {
         byId(NOTE_ID)?.let { note ->
             note.textContent = RulesText.sourceNote(resolved)
         }
+        byId(GAPS_ID)?.let { gaps -> refreshGaps(gaps, resolved) }
         byId(SUMMARY_ID)?.let { summary ->
             clearTag(summary)
             RuleKey.entries.forEach { rule -> summaryRow(summary, rule, resolved) }
@@ -182,6 +216,30 @@ internal object RulesWindow {
         value.title = RulesText.provenance(entry)
     }
 
+    /**
+     * The "partial" disclaimer for Open General Fidelity (`docs/og-fidelity-plan.md` D.2).
+     *
+     * Rendered as a list next to the profile rather than as a help topic, and empty for every other
+     * selection. A profile that calls itself partial and never says what is missing would be the
+     * unverifiable claim §0.2 of that plan forbids -- and the last line says plainly that no profile
+     * changes AI behaviour, which is the gap players most often assume a ruleset closes.
+     */
+    private fun refreshGaps(
+        host: HTMLElement,
+        resolved: ResolvedRuleset,
+    ) {
+        clearTag(host)
+        if (resolved.source != RulesetSource.OG_FIDELITY) return
+        val intro = addTag(host, "div")
+        intro.className = "osadaRulesGaps__intro"
+        intro.textContent = I18n.t("rules.og_fidelity.gaps.intro")
+        val list = addTag(host, "ul")
+        list.className = "osadaRulesGaps__list"
+        RulesText.ogFidelityGaps().forEach { text ->
+            addTag(list, "li").textContent = text
+        }
+    }
+
     private fun buildActions(window: HTMLElement) {
         val actions = addTag(window, "div")
         actions.id = ACTIONS_ID
@@ -207,7 +265,7 @@ internal object RulesWindow {
         onActivate: () -> Unit,
     ) {
         val button = addTag(actions, "div")
-        button.className = "smallButton osadaRulesAction"
+        button.className = "osada-button osadaRulesAction"
         button.textContent = I18n.t("$key.label")
         button.title = I18n.t("$key.help")
         button.asButton(onActivate = onActivate)
@@ -243,12 +301,15 @@ internal object RulesWindow {
         close()
         readOnly = false
         surface = RulesetSelection.Surface.SCENARIO
-        byId(BUTTON_ID)?.let { delTag(it) }
+        RulesetSelection.Surface.entries.forEach { byId(buttonId(it))?.let { button -> delTag(button) } }
     }
 
     internal fun currentSurface(): RulesetSelection.Surface = surface
 
+    private fun buttonId(forSurface: RulesetSelection.Surface): String = "$BUTTON_ID-${forSurface.name.lowercase()}"
+
     private const val NOTE_ID = "osadaRulesNote"
+    private const val GAPS_ID = "osadaRulesGaps"
     private const val SUMMARY_ID = "osadaRulesSummaryBody"
     private const val ACTIONS_ID = "osadaRulesActionsBody"
     private const val HASH_ID = "osadaRulesHashValue"

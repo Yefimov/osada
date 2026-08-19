@@ -311,6 +311,7 @@ internal class AnimationOrchestrator(
             unit.isSurprised = false
         }
         reportInterceptions(ui, unit, result, pos)
+        reportMinefield(ui, unit, result, pos)
         if (result.isCapture) {
             ui.showAlert(pos.row, pos.col, "Captured", true)
             val hexName =
@@ -363,6 +364,40 @@ internal class AnimationOrchestrator(
 }
 
 /**
+ * This move walked into a minefield (`rules/Minefields`, OG 9.9).
+ *
+ * Reported for the same reason interception is: the formation stopped short, and possibly lost
+ * strength, from something the player did not order and did not watch. `DEFERRED.md` §1.1 is
+ * explicit that movement damage with no visible cause reads as a bug, and an undetected minefield is
+ * the one case in this engine that can produce it — so it gets an alert on the hex and a clickable
+ * HUD-log line, and the wording distinguishes a field that was already known from one that was not.
+ *
+ * Top-level for the same reason as [reportInterceptions]: [AnimationOrchestrator]'s function budget.
+ */
+private fun reportMinefield(
+    ui: UI,
+    unit: GameUnit,
+    result: MovementResults,
+    pos: Cell,
+) {
+    if (!result.hitMinefield) return
+    val key =
+        when {
+            result.minefieldLosses > 0 -> "combat.minefield.hidden"
+            result.minefieldWasHidden -> "combat.minefield.hidden.nodamage"
+            else -> "combat.minefield.known"
+        }
+    val text =
+        I18n.t(
+            key,
+            mapOf("unit" to unit.unitData(true).name, "losses" to result.minefieldLosses),
+        )
+    ui.showAlert(pos.row, pos.col, I18n.t("combat.minefield.alert"), true)
+    HudLog.addAt(pos.row, pos.col, HudLog.Segment(text, ownLoss = result.minefieldLosses > 0))
+    ui.showUnitInfo(unit)
+}
+
+/**
  * AA fired on this move. The player never chose this combat and never watched it resolve, so it
  * gets an obvious non-modal banner plus a clickable HUD-log line; the combat log keeps the full
  * detail it always did. Nothing is published before a gun fires -- these events only exist for
@@ -388,7 +423,7 @@ private fun reportInterceptions(
                 pos.col,
                 HudLog.Segment(
                     I18n.t(
-                        if (event.planeDestroyed) "combat.interception.destroyed" else "combat.interception.damaged",
+                        MoveReactionText.lineKey(event.kind, event.planeDestroyed),
                         mapOf(
                             "gun" to event.interceptor.unitData(true).name,
                             "plane" to event.plane.unitData(true).name,

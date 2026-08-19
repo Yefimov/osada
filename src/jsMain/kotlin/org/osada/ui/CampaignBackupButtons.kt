@@ -31,12 +31,12 @@ internal object CampaignBackupButtons {
 
         val export = addTag(parent, "div")
         export.id = EXPORT_ID
-        export.className = "smallButton osadaCampBackupButton"
+        export.className = "osada-button osadaCampBackupButton"
         export.asButton(onActivate = { onExport() })
 
         val importBut = addTag(parent, "div")
         importBut.id = IMPORT_ID
-        importBut.className = "smallButton osadaCampBackupButton"
+        importBut.className = "osada-button osadaCampBackupButton"
 
         // A real file input, kept out of the layout and opened by the button, so the control stays
         // keyboard-activatable through `asButton` instead of relying on a click landing on a

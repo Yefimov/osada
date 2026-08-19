@@ -42,6 +42,15 @@ internal object ScenarioHexParser {
         el.getAttribute("terrain")?.toIntOrNull()?.let { hex.terrain = it }
         el.getAttribute("road")?.toIntOrNull()?.let { hex.road = it }
         el.getAttribute("rail")?.toIntOrNull()?.let { hex.rail = it }
+        // Pre-placed land minefields, as a per-side bitmask (`1 shl side`). OG authors them in the
+        // scenario binary's `byte6` -- bit 1 Axis, bit 2 Allied -- and 27 of the 502 scenarios OSADA
+        // ships carry 320 mined hexes between them, every one of which was silently dropped on
+        // import before this attribute existed (`docs/og-fidelity-plan.md` C.1). Absent on every
+        // scenario not yet re-exported, which reads as "no minefields" and is correct for them.
+        //
+        // Detection is deliberately NOT authored: a pre-placed field starts undetected by everyone
+        // and is revealed by standing next to it, so an authored field ambushes exactly once.
+        el.getAttribute("mines")?.toIntOrNull()?.let { hex.mines = it }
         el.getAttribute("name")?.let { hex.name = it }
         el.getAttribute("flag")?.toIntOrNull()?.let { hex.flag = it }
         el.getAttribute("owner")?.toIntOrNull()?.let { hex.owner = it }

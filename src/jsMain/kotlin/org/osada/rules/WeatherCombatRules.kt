@@ -35,6 +35,9 @@ internal object WeatherCombatRules {
     /** OG: "In rain or snow defense is modified by +3." */
     private const val RAIN_SNOW_DEFENSE_BONUS = 3
 
+    /** OG 6.23: "in snow ... it uses two points of fuel for each movement point". */
+    private const val SNOW_FUEL_PER_MOVE_POINT = 2
+
     private fun atmospheric(): Int = GameHolder.instance?.scenario?.atmosferic ?: WeatherCondition.FAIR.value
 
     /** Anything worse than Fair. The same threshold `airGroundedByWeather` uses. */
@@ -43,6 +46,24 @@ internal object WeatherCombatRules {
     /** Precipitation specifically — the two conditions that also change the ground. */
     fun isPrecipitation(): Boolean =
         atmospheric() == WeatherCondition.RAIN.value || atmospheric() == WeatherCondition.SNOW.value
+
+    /**
+     * Fuel spent per movement point, quoted verbatim from OG 6.23: *"it spends one point of fuel for
+     * each movement point used, **except in snow, when it uses two points of fuel for each movement
+     * point**."*
+     *
+     * Nothing in the engine read `atmosferic` for fuel before 2026-08-18; the rule ships behind
+     * `snow_fuel` and defaults to 1, so no shipped scenario changes unless a profile asks for it.
+     * Both the spend ([org.osada.model.move]) and the move-range preview
+     * ([MovementRules.getUnitMoveRange]) read this one function -- a preview that promised a route
+     * the unit could not finish would be worse than not having the rule.
+     */
+    fun fuelPerMovePoint(): Int =
+        if (atmospheric() == WeatherCondition.SNOW.value && ActiveRuleset.flag(RuleKey.SNOW_FUEL, false)) {
+            SNOW_FUEL_PER_MOVE_POINT
+        } else {
+            1
+        }
 
     /**
      * `INFERENCE`: the +3 is stated without naming a side, in a sentence of its own after the

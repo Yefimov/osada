@@ -20,7 +20,6 @@ import org.osada.rules.CombatResolver.shouldDefenderRetreat
 import org.osada.rules.ruleset.ActiveRuleset
 import org.osada.rules.ruleset.RuleKey
 import kotlin.math.roundToInt
-import kotlin.random.Random
 
 /**
  * Combat resolution: damage rolls, the full cross-indexed attack/defence calculation,
@@ -88,12 +87,19 @@ object CombatResolver {
         attacker: GameUnit,
         defender: GameUnit,
         useRandom: Boolean,
+        halveStrength: Boolean = false,
     ): Int {
         val attackerClass = attacker.unitData().uclass
         // OG: bad weather halves the strength points an air<->ground exchange brings to bear.
         // Applied here rather than to the attack VALUE because the manual says "the number of
         // strength points used for attack", and this is the one place that number is read.
-        val firingStrength = WeatherCombatRules.firingStrength(attacker, defender)
+        //
+        // [halveStrength] is OG 6.24's support-fire distance rule arriving by the same road, for the
+        // same reason: it too halves STRENGTH POINTS, not the attack value. Rounded up, matching
+        // `WeatherCombatRules.firingStrength` -- a supporter reduced to firing zero points would be
+        // a silent no-op, and the two halvings compound rather than either one winning.
+        val weatherStrength = WeatherCombatRules.firingStrength(attacker, defender)
+        val firingStrength = if (halveStrength) (weatherStrength + 1) / 2 else weatherStrength
         var p = (attackPower - defense).toDouble()
         var target = DEFAULT_HIT_THRESHOLD
         if (p > COMPRESSION_PIVOT) {
@@ -112,7 +118,7 @@ object CombatResolver {
             kills = (EV_MULTIPLIER * q * firingStrength + EV_ROUNDING_OFFSET) / EV_SCALE
         } else {
             repeat(firingStrength) {
-                var roll = ((Random.nextDouble() * DICE_MAX_ROLL).toInt() + 1).toDouble()
+                var roll = ((GameRandomSource.nextDouble() * DICE_MAX_ROLL).toInt() + 1).toDouble()
                 if (roll > DICE_MIN_ROLL && roll < DICE_MAX_ROLL) roll += p
                 if (roll >= target) kills += 1
             }
@@ -149,6 +155,8 @@ object CombatResolver {
         useRandom: Boolean,
         units: List<GameUnit> = emptyList(),
         attackerIsFiringSupport: Boolean = false,
+        halveStrength: Boolean = false,
+        committed: Boolean = false,
     ): CombatResults {
         val result = CombatResults()
         val context = AttackCalculation.resolveCombatContext(attacker, defender) ?: return result
@@ -169,10 +177,21 @@ object CombatResolver {
             UnitCapabilities.combatSupportBars(units, defender),
         )
         AttackCalculation.applyRangeDefenseModifier(stats, attacker, defender, context, closeCombat)
-        AttackCalculation.applyInitiativeBonus(stats, attacker, defender, context)
+        // Last of the defence modifiers, so it halves what the unit would actually have defended
+        // with (OG 6.23, behind `dry_unit_penalties`; a no-op with the key off).
+        UnitConditionPenalties.applyMinefieldPenalty(stats, attacker, defender)
+        UnitConditionPenalties.applyDryUnitPenalties(stats, attacker, defender)
+        // [committed] and `useRandom` are different questions and must not be confused. `useRandom`
+        // selects the DAMAGE formula (its `true` branch is the expected-value one; its dice branch is
+        // a dead port artifact). [committed] says whether this call is the one that actually applies
+        // the result, and it is the only thing allowed to draw from the shared random stream --
+        // a preview that drew would advance one peer's cursor and not the other's
+        // (`rules/GameRandomSource`).
+        AttackCalculation.applyInitiativeBonus(stats, attacker, defender, context, committed)
         AttackCalculation.resolveRuggedSurpriseAndFireEligibility(stats, attacker, defender, context, result)
 
-        result.kills = attackValue(stats.attackerAttack, stats.defenderDefense, attacker, defender, useRandom)
+        result.kills =
+            attackValue(stats.attackerAttack, stats.defenderDefense, attacker, defender, useRandom, halveStrength)
         if (result.defcanfire) {
             result.losses = attackValue(stats.defenderAttack, stats.attackerDefense, defender, attacker, useRandom)
         }
@@ -201,10 +220,18 @@ object CombatResolver {
         var visibleKills = 0
         var visibleLosses = 0
 
+        val defenderPos = defender.getPos()
         supportUnits.forEach { support ->
             val supportHex = support.getHex() ?: return@forEach
             val supportResult =
-                calculateAttackResults(support, attacker, useRandom, units, attackerIsFiringSupport = true)
+                calculateAttackResults(
+                    support,
+                    attacker,
+                    useRandom,
+                    units,
+                    attackerIsFiringSupport = true,
+                    halveStrength = supportFiresAtHalfStrength(support, defenderPos),
+                )
             if (supportHex.isSpotted(attackerSide) || support.tempSpotted) {
                 visibleKills += supportResult.kills
                 visibleLosses += supportResult.losses
@@ -395,3 +422,27 @@ object CombatResolver {
         return !bypassed
     }
 }
+
+/**
+ * OG 6.24: *"units adjacent to the attacked unit give full strength support fire, while others
+ * do it with halved strength."*
+ *
+ * The distance that matters is to the ATTACKED unit, not to the attacker -- an artillery piece
+ * two hexes behind the line supports at half, however close the assault comes to its own hex.
+ * Behind `support_fire_range_falloff`, off by default: OSADA fired every eligible supporter at
+ * full strength before 2026-08-18, and turning that on universally would re-tune every shipped
+ * scenario that fields artillery in depth.
+ */
+private fun supportFiresAtHalfStrength(
+    support: GameUnit,
+    defenderPos: Cell?,
+): Boolean {
+    val sPos = support.getPos()
+    if (sPos == null || defenderPos == null || !ActiveRuleset.flag(RuleKey.SUPPORT_FIRE_FALLOFF, false)) {
+        return false
+    }
+    return HexGeometry.distance(sPos.row, sPos.col, defenderPos.row, defenderPos.col) > ADJACENT_DISTANCE
+}
+
+/** One hex away. Named because "> 1" in the falloff test reads as a magic number otherwise. */
+private const val ADJACENT_DISTANCE = 1

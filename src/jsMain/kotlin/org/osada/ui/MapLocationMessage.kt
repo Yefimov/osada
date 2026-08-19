@@ -2,6 +2,7 @@ package org.osada.ui
 
 import org.osada.RoadType
 import org.osada.i18n.I18n
+import org.osada.rules.UnitConcealment
 import org.osada.terrainNames
 import org.osada.uiSettings
 
@@ -23,8 +24,7 @@ internal fun updateMapLocationMessage(
     if (hex.road != RoadType.NONE.value) sb.append(", Road")
     if (hex.name.isNotEmpty()) sb.append(" - ${hex.name}")
     val unit = hex.getUnit(uiSettings.airMode)
-    val unitVisible =
-        unit != null && (hex.isSpotted(currentSide) || unit.tempSpotted || unit.player?.side == currentSide)
+    val unitVisible = unit != null && UnitConcealment.isVisibleTo(unit, currentSide)
     if (unitVisible) {
         val data = unit.unitData()
         sb.append(" (${data.name}")

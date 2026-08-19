@@ -2,6 +2,7 @@ package org.osada.ui.keyboard
 
 import kotlinx.browser.document
 import org.osada.i18n.I18n
+import org.osada.ui.ManualLink
 import org.osada.ui.addTag
 import org.osada.ui.byId
 import org.osada.ui.clearTag
@@ -50,9 +51,20 @@ internal object ControlsCard {
         val footer = addTag(card, "div")
         footer.className = "osada-controls-card__footer"
         footer.textContent = I18n.t("controls.footer.close")
+        // The footer used to END with "The full manual has the complete rules" and offer no way to
+        // reach it -- `manual.html` shipped with nothing in the game linking to it. The sentence is
+        // now a real link (`ManualLink`, shared with the main-menu entry); a real <a> rather than a
+        // scripted div so it keeps middle-click, "open in new tab" and keyboard activation for free.
+        addTag(footer, "span").textContent = " "
+        val manualLink = addTag(footer, "a")
+        manualLink.className = "osada-controls-card__manual"
+        manualLink.textContent = I18n.t("controls.footer.manual")
+        manualLink.setAttribute("href", ManualLink.FILE)
+        manualLink.setAttribute("target", "_blank")
+        manualLink.setAttribute("rel", "noopener")
 
         val closeButton = addTag(card, "button")
-        closeButton.className = "smallButton osada-controls-card__close"
+        closeButton.className = "osada-button osada-controls-card__close"
         closeButton.textContent = I18n.t("controls.close.label")
         closeButton.onclick = { _ -> close() }
 

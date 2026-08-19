@@ -66,6 +66,8 @@
       <unit id="8949" owner="1" flag="8" face="0" exp="122" str="6"/>
     </at>
   </reinforce>
+  <hex row="13" col="46" mines="1"/>
+  <hex row="14" col="47" mines="1"/>
   <hex row="0" col="3" terrain="3"/>
   <hex row="0" col="4" terrain="3"/>
   <hex row="0" col="6" road="17"/>
@@ -755,7 +757,7 @@
   <hex row="13" col="33" road="40"/>
   <hex row="13" col="34" terrain="10" name="Finow-Kanal"/>
   <hex row="13" col="35" terrain="1" road="41" name="Eberswalde"/>
-  <hex row="13" col="36" terrain="10" rail="17" name="Finow-Kanal"/>
+  <hex row="13" col="36" terrain="10" rail="17" name="Finow-Kanal" mines="1"/>
   <hex row="13" col="37" road="40"/>
   <hex row="13" col="38" terrain="10" name="Finow-Kanal"/>
   <hex row="13" col="39" terrain="10" name="Finow-Kanal"/>
@@ -763,8 +765,8 @@
   <hex row="13" col="41" terrain="10" name="Alte Oder"/>
   <hex row="13" col="44" terrain="8"/>
   <hex row="13" col="45" terrain="8"/>
-  <hex row="13" col="47" road="34"/>
-  <hex row="13" col="48" terrain="10" road="34" name="Oder (Odra)"/>
+  <hex row="13" col="47" road="34" mines="1"/>
+  <hex row="13" col="48" terrain="10" road="34" name="Oder (Odra)" mines="1"/>
   <hex row="13" col="49" terrain="3"/>
   <hex row="13" col="50" terrain="3"/>
   <hex row="13" col="51" terrain="3"/>
@@ -811,8 +813,8 @@
   <hex row="14" col="39" road="136"/>
   <hex row="14" col="40" terrain="10" name="Finow-Kanal"/>
   <hex row="14" col="41" terrain="10" name="Alte Oder"/>
-  <hex row="14" col="45" road="34"/>
-  <hex row="14" col="46" road="34"/>
+  <hex row="14" col="45" road="34" mines="1"/>
+  <hex row="14" col="46" road="34" mines="1"/>
   <hex row="14" col="48" terrain="10" name="Oder (Odra)"/>
   <hex row="14" col="49" terrain="10" name="Oder (Odra)"/>
   <hex row="14" col="51" terrain="3"/>
@@ -1206,7 +1208,7 @@
   <hex row="22" col="10" road="33"/>
   <hex row="22" col="15" road="9"/>
   <hex row="22" col="18" terrain="10" name="Havel"/>
-  <hex row="22" col="21" terrain="1" name="Berlin"/>
+  <hex row="22" col="21" terrain="1" name="Berlin" mines="1"/>
   <hex row="22" col="22" road="17"/>
   <hex row="22" col="24" rail="144"/>
   <hex row="22" col="25" rail="34"/>
@@ -1252,7 +1254,7 @@
   <hex row="23" col="23" road="176"/>
   <hex row="23" col="24" rail="19"/>
   <hex row="23" col="26" road="18"/>
-  <hex row="23" col="30" road="154"/>
+  <hex row="23" col="30" road="154" mines="1"/>
   <hex row="23" col="31" road="144"/>
   <hex row="23" col="35" terrain="3"/>
   <hex row="23" col="36" terrain="3"/>
@@ -1471,7 +1473,7 @@
   <hex row="27" col="15" terrain="3"/>
   <hex row="27" col="17" terrain="10" name="Havel"/>
   <hex row="27" col="18" terrain="1" name="Berlin"/>
-  <hex row="27" col="19" terrain="1" road="17" name="Berlin"/>
+  <hex row="27" col="19" terrain="1" road="17" name="Berlin" mines="1"/>
   <hex row="27" col="20" terrain="1" name="Berlin"/>
   <hex row="27" col="21" terrain="1" road="34" name="Berlin"/>
   <hex row="27" col="22" terrain="1" road="170" name="Berlin" owner="1" flag="7" victory="1">
@@ -1512,7 +1514,7 @@
   </hex>
   <hex row="27" col="54" terrain="5"/>
   <hex row="27" col="56" terrain="10" name="Alte Oder"/>
-  <hex row="27" col="57" terrain="5" road="17"/>
+  <hex row="27" col="57" terrain="5" road="17" mines="1"/>
   <hex row="27" col="58" terrain="5"/>
   <hex row="27" col="59" terrain="10" name="Oder (Odra)"/>
   <hex row="27" col="60" terrain="10" name="Oder (Odra)"/>

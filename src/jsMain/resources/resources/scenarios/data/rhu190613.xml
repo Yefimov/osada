@@ -1834,8 +1834,8 @@
   <hex row="38" col="3" terrain="11" road="40" name="Kom&#225;romi v&#225;r">
     <unit id="33303" owner="1" flag="48" face="0" exp="250" str="20"/>
   </hex>
-  <hex row="38" col="4" terrain="10" name="Csall&#243;k&#246;zi Kis-Duna"/>
-  <hex row="38" col="5" terrain="10" road="34" name="V&#225;g-Duna"/>
+  <hex row="38" col="4" terrain="10" name="Csall&#243;k&#246;zi Kis-Duna" mines="2"/>
+  <hex row="38" col="5" terrain="10" road="34" name="V&#225;g-Duna" mines="2"/>
   <hex row="38" col="6" road="33"/>
   <hex row="38" col="16" road="136"/>
   <hex row="38" col="17" road="130"/>
@@ -1871,11 +1871,11 @@
   <hex row="38" col="45" terrain="3"/>
   <hex row="39" col="1" terrain="15" name="Duna"/>
   <hex row="39" col="2" road="130"/>
-  <hex row="39" col="3" terrain="15" road="18" name="Duna"/>
+  <hex row="39" col="3" terrain="15" road="18" name="Duna" mines="2"/>
   <hex row="39" col="4" terrain="1" road="178" name="R&#233;vkom&#225;rom" owner="1" flag="47">
     <unit id="33302" owner="1" flag="48" face="0" exp="250" str="20"/>
   </hex>
-  <hex row="39" col="5" terrain="10" name="V&#225;g-Duna"/>
+  <hex row="39" col="5" terrain="10" name="V&#225;g-Duna" mines="2"/>
   <hex row="39" col="17" terrain="15" name="Duna"/>
   <hex row="39" col="21" terrain="15" name="Duna"/>
   <hex row="39" col="22" terrain="15" road="136" name="Duna"/>
@@ -1901,7 +1901,7 @@
   <hex row="40" col="3" terrain="1" road="41" name="Kom&#225;rom" owner="0" flag="187">
     <unit id="46673" owner="0" flag="188" face="0" exp="144" str="20"/>
   </hex>
-  <hex row="40" col="4" terrain="15" road="17" name="Duna"/>
+  <hex row="40" col="4" terrain="15" road="17" name="Duna" mines="2"/>
   <hex row="40" col="5" terrain="15" name="Duna"/>
   <hex row="40" col="6" terrain="15" name="Duna"/>
   <hex row="40" col="7" terrain="15" name="Duna"/>

@@ -53,7 +53,10 @@ internal object InterceptionBanner {
 
         val title = addTag(banner, "div")
         title.className = "osada-intercept-banner__title"
-        title.textContent = I18n.t("combat.interception.title")
+        // One banner, two reactions: AA interception and `Overwatch` opportunity fire. The title
+        // follows the FIRST relevant event -- a move that draws both is vanishingly rare, and a
+        // title that named neither would be worse than one that names the first.
+        title.textContent = I18n.t(MoveReactionText.titleKey(first.kind))
 
         relevant.forEach { event -> addLine(banner, event, observerSide) }
 
@@ -81,12 +84,7 @@ internal object InterceptionBanner {
         val line = addTag(banner, "div")
         val ownLoss = event.plane.player?.side == observerSide
         line.className = "osada-intercept-banner__line" + if (ownLoss) " osada-intercept-banner__line--own" else ""
-        val key =
-            if (event.planeDestroyed) {
-                "combat.interception.destroyed"
-            } else {
-                "combat.interception.damaged"
-            }
+        val key = MoveReactionText.lineKey(event.kind, event.planeDestroyed)
         line.textContent =
             I18n.t(
                 key,

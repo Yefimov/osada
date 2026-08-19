@@ -8,6 +8,8 @@ import org.osada.model.canDeployOnTerrain
 import org.osada.model.getActiveLayerTarget
 import org.osada.model.getPlayer
 import org.osada.model.isInDeployZone
+import org.osada.rules.Minefields
+import org.osada.rules.UnitConcealment
 
 /**
  * Per-cell drawing for [MapRenderer]: grid outline, current-unit highlight, deploy highlight,
@@ -193,13 +195,15 @@ internal class HexCellRenderer(
     private fun isUnitVisible(
         hex: Hex,
         unit: GameUnit,
-    ): Boolean =
-        !unit.hasAnimation &&
-            (
-                hex.isSpotted(GameHolder.instance?.spotSide ?: 0) ||
-                    unit.tempSpotted ||
-                    unit.player?.side == GameHolder.instance?.spotSide
-            )
+    ): Boolean {
+        val spotSide = GameHolder.instance?.spotSide ?: 0
+        // `hex` is unused now that [UnitConcealment.isVisibleTo] resolves the unit's own hex, but the
+        // parameter stays: every caller has it, and dropping it would churn the call sites for
+        // nothing.
+        @Suppress("UNUSED_EXPRESSION")
+        hex
+        return !unit.hasAnimation && UnitConcealment.isVisibleTo(unit, spotSide)
+    }
 
     private fun drawCellUnits(
         frame: RenderFrame,
@@ -289,6 +293,12 @@ internal class HexCellRenderer(
         // by construction of AAInterception.visibleThreatHexes (DEFERRED.md §1.1).
         if (hex.isAaThreat) {
             rc.drawHex(rc.hexesCtx, x, y, hexStyles["aathreat"])
+        }
+        // A minefield THIS side has detected. Drawn last so it sits over the move fill -- the player
+        // must be able to see it while planning the very route it would stop. Undetected fields are
+        // unreachable through this predicate and are never drawn.
+        if (Minefields.isKnownThreat(hex, frame.q.currentPlayer?.side ?: 0)) {
+            rc.drawHex(rc.hexesCtx, x, y, hexStyles["minefield"])
         }
     }
 

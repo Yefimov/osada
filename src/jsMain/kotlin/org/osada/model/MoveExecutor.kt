@@ -1,13 +1,9 @@
 package org.osada.model
 
-import org.osada.LeaderType
 import org.osada.PlayerType
 import org.osada.hero.HeroCampaign
-import org.osada.rules.AAInterception
 import org.osada.rules.GameRules
-import org.osada.rules.UnitPredicates
 import org.osada.rules.canCapture
-import org.osada.rules.canPassInto
 import org.osada.rules.getDirection
 import org.osada.rules.getShortestPath
 import org.osada.rules.setSpotRange
@@ -78,8 +74,14 @@ internal class MoveExecutor(
             }
     }
 
-    // Two distinct early-exit conditions (blocked terrain, AA interception) genuinely both belong
-    // in this per-cell walk -- splitting them apart would relocate the `when`, not simplify it.
+    /**
+     * Walks the path one hex at a time, accumulating cost, until it ends or something stops it.
+     *
+     * Every way a move can be interrupted after the first hex -- blocked terrain, AA interception,
+     * `Overwatch` opportunity fire, a minefield, an unseen enemy ZOC -- lives in
+     * [reactionStoppingMove] (`MoveReactions.kt`) rather than here, so this stays a walk and that
+     * stays a list of interruptions.
+     */
     @Suppress("LoopWithTooManyJumpStatements")
     private fun traversePath(
         unit: GameUnit,
@@ -88,69 +90,20 @@ internal class MoveExecutor(
     ): Int {
         val enemySide = 1 - setup.side
         var totalCost = 0
+        // Ids of `Overwatch` commanders that have already answered THIS move, so each fires once
+        // per moving formation rather than once per hex it walks.
+        val overwatchSpent = mutableSetOf<Int>()
         for (i in setup.path.indices) {
             val cell = setup.path[i]
-            if (i > 0 && !GameRules.canPassInto(setup.map, unit, cell)) {
-                markSurprise(unit, cell, result)
-                break
-            }
             if (isCellVisible(unit, setup.map, cell, enemySide)) {
                 result.isVisible = true
                 if (cell is ExtendedCell) cell.isVisible = true
             }
             result.passedCells.add(cell)
             totalCost += if (cell is ExtendedCell) cell.cost else 1
-            if (i > 0 && applyAAInterception(unit, setup, cell, i == setup.path.lastIndex, result)) {
-                break
-            }
-            if (i > 0 && stoppedByUnseenZoc(unit, setup.map, setup.side, cell, enemySide)) {
-                result.stoppedByUnseenEnemy = true
-                break
-            }
+            if (i > 0 && reactionStoppingMove(unit, setup, cell, i, overwatchSpent, result)) break
         }
         return totalCost
-    }
-
-    /** AA interception of a moving aircraft (DEFERRED.md §1.1). Checks the cell [unit] just
-     *  entered; if any enemy AA fires, relocates [unit] there (so the combat resolves against
-     *  where it actually is, not its stale start-of-move position) and applies one-sided damage.
-     *  Returns true when interception fired -- the walk must stop at this cell regardless of
-     *  whether the plane survived (docs/design/aa-interception.md §3.4). */
-    private fun applyAAInterception(
-        unit: GameUnit,
-        setup: MoveSetup,
-        cell: Cell,
-        isDestination: Boolean,
-        result: MovementResults,
-    ): Boolean {
-        val interceptors =
-            if (UnitPredicates.isAir(unit)) {
-                AAInterception.interceptorsFor(gameMap, unit, cell, isDestination)
-            } else {
-                emptyList()
-            }
-        if (interceptors.isEmpty()) return false
-
-        GameRules.setSpotRange(gameMap, unit, false)
-        unit.getHex()?.delUnit(unit)
-        setup.map[cell.row][cell.col].setUnit(unit)
-        GameRules.setSpotRange(gameMap, unit, true)
-        result.interceptions.addAll(AAInterception.applyInterception(gameMap, unit, interceptors))
-        result.wasIntercepted = true
-        return true
-    }
-
-    private fun markSurprise(
-        unit: GameUnit,
-        cell: Cell,
-        result: MovementResults,
-    ) {
-        if (!Leaders.unitHasLeader(unit, LeaderType.BATTLEFIELD_INTELLIGENCE) &&
-            !Leaders.unitHasLeader(unit, LeaderType.SKILLED_ASSAULT)
-        ) {
-            unit.isSurprised = true
-            result.surpriseCell.add(cell)
-        }
     }
 
     /** DEFERRED.md §1.12: whether `AI_SCRIPTED` bypassing fog here (animating in full through
@@ -194,6 +147,14 @@ internal class MoveExecutor(
 
         val totalCost = if (totalCostIn < 0) 0 else totalCostIn
         unit.move(totalCost)
+        // OG 9.9: entering a minefield "consumes all remaining movement", detected or not. The
+        // overlay's ZOC sentinel already stops a route continuing through a KNOWN field, but it does
+        // not zero the allowance -- and an undetected field has no overlay cost at all, so without
+        // this a unit could stroll on after being mined.
+        if (result.hitMinefield) {
+            unit.moveLeft = 0
+            unit.hasMoved = true
+        }
         GameRules.setZOCRange(gameMap, unit, false)
         GameRules.setSpotRange(gameMap, unit, false)
         setup.fromHex.delUnit(unit)
@@ -213,7 +174,15 @@ internal class MoveExecutor(
             gameMap.undoState.unit = null
             return
         }
-        val finality = undoFinality(newlySpotted, unit, result.wasIntercepted, result.stoppedByUnseenEnemy)
+        val finality =
+            undoFinality(
+                newlySpotted,
+                unit,
+                result.wasIntercepted,
+                result.stoppedByUnseenEnemy,
+                result.wasFiredOnWhileMoving,
+                result.hitMinefield,
+            )
         if (finality == null) {
             gameMap.undoState.unit = unit
         } else {
@@ -228,9 +197,16 @@ internal class MoveExecutor(
         unit: GameUnit,
         wasIntercepted: Boolean,
         stoppedByUnseenEnemy: Boolean,
+        wasFiredOnWhileMoving: Boolean,
+        hitMinefield: Boolean,
     ): UndoInvalidation? =
         when {
             wasIntercepted -> UndoInvalidation.INTERCEPTED
+            // Overwatch fire is combat that followed the move, and it must be as final as
+            // interception is -- see MovementResults.wasFiredOnWhileMoving.
+            wasFiredOnWhileMoving -> UndoInvalidation.COMBAT
+            // Walking into a minefield revealed it. Undo would hand that intelligence back for free.
+            hitMinefield -> UndoInvalidation.NEW_INTELLIGENCE
             unit.isSurprised -> UndoInvalidation.SURPRISED
             newlySpotted != 0 -> UndoInvalidation.NEW_INTELLIGENCE
             // Same reasoning as an intercepted move: rewinding a move that a hidden enemy stopped
@@ -272,7 +248,9 @@ internal class MoveExecutor(
         gameMap.undoState.clear()
     }
 
-    private class MoveSetup(
+    // Internal (not private): MoveReactions.kt's per-cell reaction extensions (moved out to keep
+    // this class under detekt's TooManyFunctions budget) take one from another file.
+    internal class MoveSetup(
         val map: Array<Array<Hex>>,
         val from: Cell,
         val fromHex: Hex,

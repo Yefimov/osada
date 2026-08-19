@@ -8,6 +8,7 @@ import org.osada.model.Hex
 import org.osada.model.Player
 import org.osada.model.Transport
 import org.osada.model.getPlayers
+import org.osada.rules.GameRandomSource
 import org.osada.rules.ruleset.ActiveRuleset
 import org.osada.rules.ruleset.serializeRuleset
 import org.osada.scenario.Scenario
@@ -59,6 +60,14 @@ object GameStateSerializer {
                 // The effective rules this battle actually ran under. Values, not just a profile
                 // id -- see `docs/design/ruleset-profiles.md` §4.
                 Pair("ruleset", serializeRuleset(ActiveRuleset.currentOrNull())),
+                // The gameplay random stream and how far into it this battle is. Two plain numbers
+                // rather than the generator's internal word, so the meaning survives a reader that
+                // has never heard of xorshift and cannot be corrupted into an unreachable state.
+                // This is also what makes a multiplayer client adopt the host's stream: a joining or
+                // resyncing peer restores the host's whole state, this block included
+                // (`rules/GameRandomSource`).
+                Pair("randomSeed", GameRandomSource.seed().toString()),
+                Pair("randomCursor", GameRandomSource.cursor().toString()),
             )
         return JSON.stringify(base)
     }
@@ -111,19 +120,33 @@ object GameStateSerializer {
         )
     }
 
-    fun serializeHex(hex: Hex): dynamic =
-        json(
-            Pair("terrain", hex.terrain),
-            Pair("road", hex.road),
-            Pair("rail", hex.rail),
-            Pair("owner", hex.owner),
-            Pair("flag", hex.flag),
-            Pair("isDeployment", hex.isDeployment),
-            Pair("victorySide", hex.victorySide),
-            Pair("name", hex.name),
-            Pair("unit", hex.unit?.let { serializeUnit(it) }),
-            Pair("airunit", hex.airunit?.let { serializeUnit(it) }),
-        )
+    fun serializeHex(hex: Hex): dynamic {
+        val obj =
+            json(
+                Pair("terrain", hex.terrain),
+                Pair("road", hex.road),
+                Pair("rail", hex.rail),
+                Pair("owner", hex.owner),
+                Pair("flag", hex.flag),
+                Pair("isDeployment", hex.isDeployment),
+                Pair("victorySide", hex.victorySide),
+                Pair("name", hex.name),
+                Pair("unit", hex.unit?.let { serializeUnit(it) }),
+                Pair("airunit", hex.airunit?.let { serializeUnit(it) }),
+            )
+        // Optional keys, on the same byte-stability rule the unit record uses: a map with no
+        // minefields anywhere -- which is every map unless the `minefields` key is on -- serializes
+        // exactly as it did before the mechanic existed, and every pre-2026-08-18 save loads with
+        // both fields at 0, which is the correct state for it.
+        if (hex.mines != 0) obj.asDynamic().mines = hex.mines
+        if (hex.minesDetected != 0) obj.asDynamic().minesDetected = hex.minesDetected
+        // Same optional-key rule. `spotMemory` is genuinely turn state -- a save taken mid-turn under
+        // `spotting_memory` has to restore what the player could see when they saved it, or reloading
+        // would quietly un-spot hexes their recon had already found. `installationSpotted` is NOT
+        // stored: it is derived wholly from ownership and is rebuilt by `GameMap.recomputeSpotting`.
+        if (hex.spotMemory != 0) obj.asDynamic().spotMemory = hex.spotMemory
+        return obj
+    }
 
     fun serializeUnit(unit: GameUnit): dynamic {
         val obj =
@@ -161,6 +184,12 @@ object GameStateSerializer {
         // Same rule for the core-formation id: scenario-only units have none, so their saved
         // shape is unchanged by the hero system.
         unit.formationId?.let { obj.asDynamic().formationId = it }
+        // Optional keys, same byte-stability rule as `customName`: a formation that has not
+        // attacked, carries no half-paid `Fire Discipline` point and holds no lasting suppression
+        // serializes exactly as it did before these traits were wired.
+        if (unit.shotsThisTurn != 0) obj.asDynamic().shotsThisTurn = unit.shotsThisTurn
+        if (unit.halfShotPending) obj.asDynamic().halfShotPending = true
+        if (unit.lastingHits != 0) obj.asDynamic().lastingHits = unit.lastingHits
         if (unit.isTemporaryBorrowed) obj.asDynamic().temporaryBorrowed = true
         if (unit.stalinRegimeBoosted) obj.asDynamic().stalinRegimeBoosted = true
         return obj

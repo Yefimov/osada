@@ -329,6 +329,12 @@ internal object AttackCalculation {
         stats.defenderAttack += defender.experience / EXPERIENCE_STAT_DIVISOR + defenderSupportBars
         stats.defenderDefense += defender.experience / EXPERIENCE_STAT_DIVISOR + defenderSupportBars
 
+        // Suppression (`GameUnit.hits`) is spent here, and the gate is on the ATTACKER's class --
+        // those classes do not EXPLOIT a suppressed defender, they are not immune to being
+        // suppressed themselves. Verified 2026-08-18 against `openpanzer.js:2424`, where the same
+        // test reads `s.uclass` (the attacker's equipment) while the penalty reads `k.hits` (the
+        // defender's counter): `docs/og-fidelity-plan.md` A.7. The player-facing string said the
+        // opposite and was corrected, not the code.
         val attackerData = context.attackerData
         val hitsPenaltyApplies =
             attackerData.uclass != UnitClass.ARTILLERY.value &&
@@ -382,16 +388,33 @@ internal object AttackCalculation {
         attacker: GameUnit,
         defender: GameUnit,
         context: CombatContext,
+        committed: Boolean = false,
     ) {
         val cap = TerrainEx.initiativeCap(context.dTerrain)
         // Attachments.initiativePenalty is already <= 0 (a summed malus-type-2 penalty), so adding
         // it reduces initiative; applied before the terrain cap, matching how the cap is meant to
         // clamp the unit's EFFECTIVE initiative, not just its base equipment stat.
-        val attackerInitiative =
-            minOf(context.attackerData.initiative + Attachments.initiativePenalty(attacker), cap)
-        val defenderInitiative =
-            minOf(context.defenderData.initiative + Attachments.initiativePenalty(defender), cap)
-        var initiativeDiff = attackerInitiative - defenderInitiative
+        // OG 6.10 names experience as a third input; OSADA's own model does not read it. Added
+        // before the terrain cap for the same reason the attachment penalty is: the cap clamps the
+        // initiative a formation EFFECTIVELY brings into the hex. Behind `initiative_model`.
+        val attackerBase =
+            context.attackerData.initiative + Attachments.initiativePenalty(attacker) +
+                InitiativeModel.experienceBonus(attacker)
+        val defenderBase =
+            context.defenderData.initiative + Attachments.initiativePenalty(defender) +
+                InitiativeModel.experienceBonus(defender)
+        // OG 6.23 halves an empty unit's initiative, behind `dry_unit_penalties`; a no-op with the
+        // key off. Applied after the terrain cap, on the initiative the unit would actually have had.
+        val attackerInitiative = UnitConditionPenalties.dryInitiative(attacker, minOf(attackerBase, cap))
+        val defenderInitiative = UnitConditionPenalties.dryInitiative(defender, minOf(defenderBase, cap))
+        // OG 6.10's other half: *"adjusted by a random value, to simulate combat uncertainty"*,
+        // rolled independently per side and AFTER the cap, because chance is not a property of the
+        // terrain. Drawn from the shared seeded stream and only on the COMMITTED path, so both
+        // multiplayer peers roll the same swing and no preview or repaint can move the cursor
+        // ([InitiativeModel], `rules/GameRandomSource`). Zero on both counts with the key off.
+        var initiativeDiff =
+            (attackerInitiative + InitiativeModel.randomAdjustment(committed)) -
+                (defenderInitiative + InitiativeModel.randomAdjustment(committed))
         if (Leaders.unitHasLeader(attacker, LeaderType.FIRST_STRIKE)) initiativeDiff = abs(initiativeDiff)
         if (Leaders.unitHasLeader(defender, LeaderType.FIRST_STRIKE)) initiativeDiff = -abs(initiativeDiff)
         if (initiativeDiff >= 0) {

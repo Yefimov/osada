@@ -9,6 +9,7 @@ import org.osada.model.GameMap
 import org.osada.model.GameUnit
 import org.osada.model.Hex
 import org.osada.model.getUnits
+import org.osada.rules.UnitConcealment
 import org.osada.ui.MinimapBuilder.refresh
 import org.osada.uiSettings
 import org.w3c.dom.events.MouseEvent
@@ -353,8 +354,10 @@ private fun isUnitSpotted(
     side: Int,
     unit: GameUnit,
 ): Boolean {
-    val hex = map.map?.get(pos.row)?.get(pos.col)
-    return (hex?.isSpotted(side) == true) || unit.tempSpotted
+    // `map`/`pos` are the caller's already-resolved position; visibility itself is asked of the
+    // unit so `Forest Camouflage` cannot be honoured on the map and ignored on the minimap.
+    map.map?.get(pos.row)?.get(pos.col)
+    return UnitConcealment.isVisibleTo(unit, side)
 }
 
 private fun isVictoryHexVisible(hex: Hex?): Boolean {

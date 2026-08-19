@@ -128,6 +128,44 @@ internal object CombatLogGroups {
         return CombatLogFeed.FeedGroup("attack", I18n.t("turn_report.group.surrenders"), body, count)
     }
 
+    /**
+     * Formations lost between turns rather than in an exchange -- today only aircraft that ran out
+     * of fuel away from base under `air_fuel` (`rules/AirOperations`).
+     *
+     * Its own group, and shown to the OWNER rather than to an opponent: nobody took these units, and
+     * a formation that vanishes with no line here is exactly the "loss with no visible cause"
+     * `tools/og-import/DEFERRED.md` §1.1 forbids. Empty, and therefore invisible, for every player
+     * who has not switched the rule on.
+     */
+    fun buildAttritionGroup(): CombatLogFeed.FeedGroup {
+        val game = gameRef()
+        val list = CombatLog.log.attrition as? Array<dynamic>
+        if (game == null || list == null) {
+            return CombatLogFeed.emptyGroup("attack", I18n.t("turn_report.group.attrition"))
+        }
+        val body = document.createElement("div") as HTMLElement
+        body.className = "osada-tr-group__rows"
+        var count = 0
+        for (i in 0 until list.size) {
+            val entry = list[i]
+            if (entry.side != game.spotSide) continue
+            val eqData = Equipment.equipment[entry.eqid as Int]
+            val icon = CombatLogFeed.resolveUnitIcon(eqData)
+            val isCore = entry.isCore as? Boolean == true
+            val corePrefix = if (isCore) CombatLogFeed.numSpan(I18n.t("turn_report.core_prefix")) else ""
+            val title =
+                I18n.t(
+                    "turn_report.attrition.lost",
+                    mapOf("unit" to "$corePrefix<b>${eqData.name}</b>"),
+                )
+            // The reason is a stable token, localized here, so a live language change re-renders it.
+            val detail = I18n.t("turn_report.attrition.reason.${entry.reason as? String ?: "unknown"}")
+            CombatLogFeed.addFeedRow(body, icon, title, detail, isCore, false, entry.pos as? Cell)
+            count++
+        }
+        return CombatLogFeed.FeedGroup("attack", I18n.t("turn_report.group.attrition"), body, count)
+    }
+
     fun buildLeadersGroup(): CombatLogFeed.FeedGroup {
         val game = gameRef()
         val list = CombatLog.log.leaders as? Array<dynamic>

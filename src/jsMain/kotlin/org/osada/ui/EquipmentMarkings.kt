@@ -17,7 +17,13 @@ internal object EquipmentMarkings {
     ) {
         if (parent == null) return
         clearTag(parent)
-        if (UnitCapabilities.isHeadquarters(data)) {
+        // The name-based label (isHeadquarters) misses 85% of records that actually carry OG's
+        // `Combat Support` grant -- General Staff among them (UnitCapabilities.hasCombatSupport) --
+        // so the mark shows for either: a plain-named "HQ" unit keeps its badge, and a real
+        // Combat-Support unit whose name gives no hint (General Staff, Komissar, squadron leaders)
+        // now gets one too.
+        val hasCombatSupport = if (unit != null) UnitCapabilities.hasCombatSupport(unit) else UnitCapabilities.grantsCombatSupport(data)
+        if (UnitCapabilities.isHeadquarters(data) || hasCombatSupport) {
             addHeadquartersMark(parent, unit?.experience?.div(UnitCapabilities.EXPERIENCE_PER_BAR))
         }
         if (UnitCapabilities.hasPhasedMovement(

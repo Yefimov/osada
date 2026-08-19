@@ -1,6 +1,5 @@
 package org.osada.ui
 
-import kotlinx.browser.window
 import org.osada.Game
 import org.osada.i18n.I18n
 import org.osada.multiplayer.client.OsadaMultiplayer
@@ -92,17 +91,23 @@ internal class StartMenuButtonHandler(
     private fun onRestartMissionButton() {
         val checkpoint = ui.game.missionRestartCheckpoint
         if (!checkpoint.isAvailable()) return
-        if (!window.confirm(I18n.t("menu.main.restart_mission.confirm"))) return
-
-        makeHidden("startmenu")
-        byId("options")?.let { toggleButton(it, false) }
-        if (!checkpoint.restart()) {
-            makeVisible("startmenu")
-            makeVisible("smMain")
-            UIBuilder.message(
-                I18n.t("game.error.title"),
-                I18n.t("menu.main.restart_mission.failed"),
-            )
+        // The game's own anchored confirmation card, not the browser's native window.confirm:
+        // every other destructive/replacing action in the app already asks this way.
+        ConfirmCard.open(
+            I18n.t("menu.main.restart_mission.confirm.title"),
+            I18n.t("menu.main.restart_mission.confirm.body"),
+            I18n.t("menu.main.restart_mission.confirm.confirm_button"),
+        ) {
+            makeHidden("startmenu")
+            byId("options")?.let { toggleButton(it, false) }
+            if (!checkpoint.restart()) {
+                makeVisible("startmenu")
+                makeVisible("smMain")
+                UIBuilder.message(
+                    I18n.t("game.error.title"),
+                    I18n.t("menu.main.restart_mission.failed"),
+                )
+            }
         }
     }
 

@@ -15,12 +15,22 @@ internal fun GameRules.attackValue(
     useRandom: Boolean,
 ): Int = CombatResolver.attackValue(attackPower, defense, attacker, defender, useRandom)
 
+/**
+ * [committed] marks the call that actually APPLIES the exchange, as opposed to previewing it.
+ *
+ * Only a committed call may draw from the shared random stream, and defaulting it to `false` is the
+ * safe direction: a preview that forgets to say so is merely deterministic, while a commit that
+ * forgets would leave two multiplayer peers at different stream positions
+ * (`rules/GameRandomSource`). Exactly three call sites pass `true` -- `CombatApplication`,
+ * `AAInterception` and `OverwatchFire`.
+ */
 fun GameRules.calculateAttackResults(
     attacker: GameUnit,
     defender: GameUnit,
     useRandom: Boolean,
     units: List<GameUnit> = emptyList(),
-): CombatResults = CombatResolver.calculateAttackResults(attacker, defender, useRandom, units)
+    committed: Boolean = false,
+): CombatResults = CombatResolver.calculateAttackResults(attacker, defender, useRandom, units, committed = committed)
 
 fun GameRules.calculateCombatResults(
     attacker: GameUnit,

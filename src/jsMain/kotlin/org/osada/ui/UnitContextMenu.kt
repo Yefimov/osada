@@ -5,8 +5,11 @@ import org.osada.i18n.I18n
 import org.osada.model.Cell
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
+import org.osada.model.MineActionResult
+import org.osada.model.clearMinefield
 import org.osada.model.disembarkUnit
 import org.osada.model.embarkUnit
+import org.osada.model.layMinefield
 import org.osada.model.mountUnit
 import org.osada.model.reinforceUnit
 import org.osada.model.resupplyUnit
@@ -78,6 +81,8 @@ internal class UnitContextMenu(
             "embark" -> if (unit.carrier > 0) map.disembarkUnit(unit) else map.embarkUnit(unit)
             "resupply" -> performResupply(map, unit, pos)
             "reinforce", "overstrength" -> performReinforce(map, unit, pos, action == "overstrength")
+            "lay_mines" -> performMineAction(map.layMinefield(unit), map, unit, pos)
+            "clear_mines" -> performMineAction(map.clearMinefield(unit), map, unit, pos)
             "undo" -> map.undoLastMove()
             "sleep" -> ui.toggleUnitSleep(unit)
         }
@@ -138,6 +143,31 @@ internal class UnitContextMenu(
                 gainAlert(map, unit, parts)
             }
         ui.showAlert(pos.row, pos.col, message, true)
+    }
+
+    /**
+     * Reports what a minefield command actually did. Laying and clearing both change the MAP rather
+     * than the unit, so without a message the player would have to infer the outcome from an overlay
+     * they may not be looking at -- and a failed clearing attempt would be indistinguishable from a
+     * misclick.
+     */
+    private fun performMineAction(
+        result: MineActionResult,
+        map: GameMap,
+        unit: GameUnit,
+        pos: Cell,
+    ) {
+        val key =
+            when (result) {
+                MineActionResult.LAID -> "unit_info.action.lay_mines.done"
+                MineActionResult.CLEARED -> "unit_info.action.clear_mines.done"
+                MineActionResult.FAILED_ATTEMPT -> "unit_info.action.clear_mines.failed"
+                MineActionResult.NOT_ALLOWED -> "unit_info.action.lay_mines.blocked"
+            }
+        ui.showAlert(pos.row, pos.col, I18n.t(key), true)
+        // The minefield overlay is a per-hex fact, so the surrounding cells have to be repainted --
+        // the caller only re-renders around the unit itself.
+        map.map?.let { ui.render.render(pos.row, pos.col, getUnitRenderRadius(unit)) }
     }
 
     /** The committed gain plus the very context that produced it -- read from the same

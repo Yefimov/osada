@@ -22,6 +22,11 @@ object CombatLog {
         // Enemy units taken by surrender rather than damage — reported as their own Turn Report
         // group so encirclement reads as a distinct result, not just another kill.
         l.surrenders = js("[]")
+        // Formations lost between turns rather than in an exchange -- today only aircraft that ran
+        // dry away from base under `air_fuel`. Its own group because a unit that vanishes with no
+        // line in the Turn Report is the "damage with no visible cause" failure DEFERRED.md 1.1
+        // forbids, and an end-of-turn sweep is even less visible than movement damage.
+        l.attrition = js("[]")
         return l
     }
 

@@ -5,6 +5,7 @@ import org.osada.RoadType
 import org.osada.TerrainType
 import org.osada.movTable
 import org.osada.rules.GameRules
+import org.osada.rules.SpottingModel
 import org.osada.rules.setSpotRange
 
 /**
@@ -19,6 +20,11 @@ import org.osada.rules.setSpotRange
 fun GameMap.recomputeSpotting() {
     map?.forEach { row -> row.forEach { it.clearSpotted() } }
     getUnits().forEach { GameRules.setSpotRange(this, it, true) }
+    // OG's installation vision is derived from ownership rather than from any unit, so it is never
+    // stored and is rebuilt here as well as once per turn. A no-op with `installation_spotting` off,
+    // and it zeroes the layer either way, which is what makes turning the key off take effect at
+    // once instead of at the next turn (`rules/SpottingModel`).
+    SpottingModel.recomputeInstallations(this)
 }
 
 /** Grid allocation & hex access for [GameMap], split out to keep its function count in bounds. */

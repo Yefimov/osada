@@ -57,6 +57,19 @@ internal val hexStyles =
                 "lineJoin" to "miter",
                 "lineDash" to arrayOf(4, 3),
             ),
+        // Detected enemy minefield (OG 9.9, `rules/Minefields`). Solid, unlike "aathreat", because
+        // the warning is UNCONDITIONAL: entering this hex costs the rest of the move, whatever the
+        // route was going to do afterwards. It is drawn for DETECTED fields only, by construction of
+        // `Minefields.isKnownThreat` -- an undetected field must never appear, exactly as hidden AA
+        // never does (DEFERRED.md §1.1). Outline plus a light fill so it reads on a spotted and an
+        // unspotted hex alike.
+        "minefield" to
+            json(
+                "fillColor" to "rgba(180, 30, 30, 0.22)",
+                "lineColor" to "rgba(220, 60, 60, 0.9)",
+                "lineWidth" to 2,
+                "lineJoin" to "miter",
+            ),
         "current" to
             json(
                 "fillColor" to null,

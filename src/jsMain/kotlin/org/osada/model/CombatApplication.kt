@@ -47,7 +47,10 @@ internal class CombatApplication(
         supportFire: Boolean,
         isOverrun: Boolean,
     ): CombatResults {
-        val combatResult = GameRules.calculateAttackResults(attacker, defender, true, gameMap.getUnits().toList())
+        // committed: this is the call whose result is applied to the map, so it is the one allowed
+        // to draw from the shared random stream (`rules/GameRandomSource`).
+        val combatResult =
+            GameRules.calculateAttackResults(attacker, defender, true, gameMap.getUnits().toList(), committed = true)
         val logId = CombatLog.addCombatStart(attacker, defender, gameMap.turn)
         applyCombatFacing(attacker, defender, from, to)
         unmountDefenderIfNeeded(defender)
@@ -104,10 +107,13 @@ internal class CombatApplication(
         attacker.experience = kotlin.math.round(attacker.experience + combatResult.atkExpGained.toDouble()).toInt()
         defender.experience = kotlin.math.round(defender.experience + combatResult.defExpGained.toDouble()).toInt()
         if (supportFire || isOverrun) attacker.fire(false) else attacker.fire(true)
-        defender.hit(combatResult.kills)
+        // OG's `Shock Tactics`: suppression this commander inflicts outlives the round wrap that
+        // clears everybody else's. Resolved here, on the side that DEALT the damage -- `hit` runs
+        // on the victim and cannot see who hit it (`docs/og-fidelity-plan.md` A.4).
+        defender.hit(combatResult.kills, Leaders.unitHasLeader(attacker, LeaderType.SHOCK_TACTICS))
         if (combatResult.defcanfire && !supportFire) {
             defender.fire(false)
-            attacker.hit(combatResult.losses)
+            attacker.hit(combatResult.losses, Leaders.unitHasLeader(defender, LeaderType.SHOCK_TACTICS))
         }
         if (!supportFire) gameMap.delAttackSel()
     }

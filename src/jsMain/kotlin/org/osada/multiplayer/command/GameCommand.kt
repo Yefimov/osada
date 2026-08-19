@@ -47,6 +47,25 @@ data class UnmountUnit(
     override val actorPlayerId: Int,
 ) : GameCommand
 
+/**
+ * OG 9.9's two minefield actions (`docs/og-fidelity-plan.md` C.1).
+ *
+ * They belong in the command set for the same reason every other unit action does, and for one more:
+ * [ClearMines] is the only unit action whose OUTCOME is rolled rather than derived, so it is the one
+ * command that would visibly diverge between peers if it were left out of the replayed path. It does
+ * not carry the outcome — the roll comes from the shared seeded stream
+ * (`rules/GameRandomSource`), so both peers resolve the same attempt from the same cursor.
+ */
+data class LayMines(
+    val unitId: Int,
+    override val actorPlayerId: Int,
+) : GameCommand
+
+data class ClearMines(
+    val unitId: Int,
+    override val actorPlayerId: Int,
+) : GameCommand
+
 data class DeployUnit(
     val unitId: Int,
     val destination: HexCoordinate,
@@ -138,6 +157,8 @@ fun GameCommand.toPayloadJson(): String {
         }
 
         is UnmountUnit -> payload["unitId"] = unitId
+        is LayMines -> payload["unitId"] = unitId
+        is ClearMines -> payload["unitId"] = unitId
         is DeployUnit -> {
             payload["unitId"] = unitId
             payload["destination"] = destination.toJson()

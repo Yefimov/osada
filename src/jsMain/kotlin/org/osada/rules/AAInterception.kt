@@ -1,10 +1,12 @@
 package org.osada.rules
 
 import org.osada.CombatLog
+import org.osada.LeaderType
 import org.osada.model.Cell
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
 import org.osada.model.InterceptionEvent
+import org.osada.model.Leaders
 import org.osada.model.fire
 import org.osada.model.getUnits
 import org.osada.model.hit
@@ -101,10 +103,20 @@ internal object AAInterception {
         for (aa in interceptors) {
             if (plane.destroyed) break
             val logId = CombatLog.addCombatStart(aa, plane, turn)
-            val result = GameRules.calculateAttackResults(aa, plane, true, units)
+            val result = GameRules.calculateAttackResults(aa, plane, true, units, committed = true)
             plane.hit(result.kills)
             aa.fire(false)
-            if ((mode and MODE_NO_AIR_DEFENSE_AFTER_INTERCEPT) != 0) aa.hasInterceptedThisTurn = true
+            // OG's `Skilled Interceptor` ("can intercept multiple enemy fighters in the defensive
+            // phase"): the gun keeps its defensive fire after intercepting, so the one flag that
+            // spends it is never set. `hasInterceptedThisTurn` is read in exactly one place
+            // (`CombatResolver.isSupportFireEligible`), which is why the exemption belongs here
+            // rather than at the read -- the trait was advertised and inert until 2026-08-18
+            // (`docs/og-fidelity-plan.md` A.4), and it is the guaranteed class trait of every
+            // Fighter commander.
+            val keepsDefensiveFire = Leaders.unitHasLeader(aa, LeaderType.SKILLED_INTERCEPTOR)
+            if ((mode and MODE_NO_AIR_DEFENSE_AFTER_INTERCEPT) != 0 && !keepsDefensiveFire) {
+                aa.hasInterceptedThisTurn = true
+            }
             CombatLog.addCombatEnd(aa, plane, logId, true)
             // Reported to the HUD only now that the gun has fired -- see [InterceptionEvent].
             events += InterceptionEvent(aa, plane, result.kills, plane.destroyed)

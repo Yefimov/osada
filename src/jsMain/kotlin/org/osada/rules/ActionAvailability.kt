@@ -11,7 +11,15 @@ package org.osada.rules
  * explains their answer, it does not re-decide it.
  */
 
-/** The seven unit-context commands, in the stable order the action strip renders them. */
+/**
+ * The unit-context commands, in the stable order the action strip renders them.
+ *
+ * [LAY_MINES] and [CLEAR_MINES] were added 2026-08-18 with the minefield mechanic
+ * (`docs/og-fidelity-plan.md` C.1). They sit after the supply group and before Undo because that is
+ * where an engineer's work belongs in the reading order, and both are NOT APPLICABLE — absent from
+ * the strip entirely — unless the `minefields` ruleset key is on and the formation actually carries
+ * OG's ability, so no existing campaign gains a chip.
+ */
 enum class UnitActionId(
     val id: String,
 ) {
@@ -20,6 +28,8 @@ enum class UnitActionId(
     RESUPPLY("resupply"),
     REINFORCE("reinforce"),
     OVERSTRENGTH("overstrength"),
+    LAY_MINES("lay_mines"),
+    CLEAR_MINES("clear_mines"),
     UNDO("undo"),
     SLEEP("sleep"),
 }
@@ -52,9 +62,6 @@ enum class ActionBlockReason {
 
     /** Aircraft is neither on nor beside an own airfield, nor on an own carrier. */
     NO_AIRFIELD,
-
-    /** Naval units resupply at sea; the port hex is not a manual resupply source. */
-    NO_NAVAL_RESUPPLY_IN_PORT,
 
     /** Terrain/domain does not support a manual supply action for this unit at all. */
     INVALID_SUPPLY_TERRAIN,
@@ -100,6 +107,18 @@ enum class ActionBlockReason {
 
     /** The unit has nothing left to do this turn. */
     NO_ACTION_LEFT,
+
+    /** OG requires a mine-laying unit to have taken no other action this turn. */
+    MINES_NEED_UNSPENT_TURN,
+
+    /** Not enough ammunition left to lay a minefield; `amount` is how much more is needed. */
+    NOT_ENOUGH_AMMO_FOR_MINES,
+
+    /** This hex already carries this side's minefield. */
+    MINEFIELD_ALREADY_HERE,
+
+    /** There is no minefield on this hex to clear. */
+    NO_MINEFIELD_HERE,
 
     /** Not the local human player's turn, so no command may be issued. */
     NOT_LOCAL_TURN,
@@ -171,6 +190,15 @@ enum class ActionEffectKind {
 
     /** Returns the unit to ready-unit navigation. */
     WAKE_RESTORE,
+
+    /** Lays a minefield on this hex; `amount` ammunition points spent. */
+    LAY_MINEFIELD,
+
+    /** Attempts to clear the minefield here; `amount` is the percentage chance of success. */
+    CLEAR_MINEFIELD,
+
+    /** A failed clearing attempt suppresses the formation. */
+    CLEAR_MINEFIELD_RISK,
 }
 
 /** One effect line plus its quantities. */

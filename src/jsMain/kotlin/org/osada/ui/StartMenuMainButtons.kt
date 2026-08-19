@@ -66,6 +66,7 @@ internal object StartMenuMainButtons {
         }
 
         buildHeroDeskButton()
+        buildManualButton()
 
         byId("smLogoText")?.textContent = I18n.t("menu.main.tagline")
         // Display version only — decoupled from the engine VERSION constant, which is baked
@@ -103,5 +104,30 @@ internal object StartMenuMainButtons {
         sub.className = "osada-menu-btn__sub"
         sub.textContent = I18n.t("menu.main.hero_desk.subtitle")
         desk.asButton(ariaLabel = I18n.t("menu.main.hero_desk.label")) { HeroDeskPresenter.open() }
+    }
+
+    /**
+     * The field manual. Wired directly rather than through the `startMenuButton` action router,
+     * like the Hero Desk above, because it opens a page instead of a screen.
+     *
+     * Last in the column and muted: it is reference material, not somewhere a player goes to
+     * start playing. The `F1` Controls card links to the same page ([ManualLink]).
+     */
+    private fun buildManualButton() {
+        val manual = addTag("smButtons", "div")
+        manual.id = "manual"
+        manual.className = "smMainButton osada-menu-btn osada-menu-btn--muted"
+        manual.title = I18n.t("menu.main.manual.help")
+        val ico = addTag(manual, "span")
+        ico.className = "osada-menu-btn__ico osada-ico osada-ico--info"
+        val text = addTag(manual, "span")
+        text.className = "osada-menu-btn__text"
+        val label = addTag(text, "span")
+        label.className = "osada-menu-btn__label"
+        label.textContent = I18n.t("menu.main.manual.label")
+        val sub = addTag(text, "span")
+        sub.className = "osada-menu-btn__sub"
+        sub.textContent = I18n.t("menu.main.manual.subtitle")
+        manual.asButton(ariaLabel = I18n.t("menu.main.manual.label")) { ManualLink.open() }
     }
 }

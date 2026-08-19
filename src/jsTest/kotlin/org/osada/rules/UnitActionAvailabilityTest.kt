@@ -284,11 +284,27 @@ class UnitActionAvailabilityTest {
                 UnitActionId.EMBARK,
                 UnitActionId.RESUPPLY,
                 UnitActionId.REINFORCE,
-                UnitActionId.OVERSTRENGTH,
+                // Undo rides right after Reinforce, not at the tail -- it is the strip's one rescue
+                // action and must stay reachable rather than risk scrolling out of view.
                 UnitActionId.UNDO,
+                UnitActionId.OVERSTRENGTH,
+                // The two minefield commands are always RESOLVED -- `all()` returns every action,
+                // applicable or not -- but a tank carries neither ability and the `minefields` key
+                // is off in this harness, so both come back not-applicable and the strip omits them
+                // (`docs/og-fidelity-plan.md` C.1).
+                UnitActionId.LAY_MINES,
+                UnitActionId.CLEAR_MINES,
                 UnitActionId.SLEEP,
             ),
             UnitActionAvailability.all(context(world, unit)).map { it.action },
+        )
+        // A tank carries neither mine ability and the harness leaves `minefields` off, so both
+        // chips resolve as not-applicable and never reach the strip.
+        assertTrue(
+            UnitActionAvailability
+                .all(context(world, unit))
+                .filter { it.action == UnitActionId.LAY_MINES || it.action == UnitActionId.CLEAR_MINES }
+                .none { it.applicable },
         )
     }
 

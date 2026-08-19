@@ -41,11 +41,27 @@ object MovementRules {
     fun getUnitMoveRange(unit: GameUnit): Int {
         var range = unit.getMovesLeft()
         val data = unit.unitData()
-        if (UnitPredicates.unitUsesFuel(unit) && unit.getFuel() < range) range = unit.getFuel()
+        // The fuel clamp is in MOVEMENT POINTS, so it must divide by what a point actually costs --
+        // in snow under `snow_fuel` that is two (OG 6.23). Reading the raw fuel here would promise a
+        // route the unit runs dry halfway along, which is the whole reason `docs/og-fidelity-plan.md`
+        // B.2 calls the preview the real work rather than the multiplication.
+        val fuelPerPoint = WeatherCombatRules.fuelPerMovePoint()
+        // Aircraft additionally have to be able to afford the whole sortie floor before they may
+        // take off at all under `air_fuel`, so the budget is not simply fuel/point for them
+        // ([AirOperations.affordableMovePoints]). Identical to the raw division with the key off.
+        val affordableByFuel = AirOperations.affordableMovePoints(unit, fuelPerPoint)
+        if (UnitPredicates.unitUsesFuel(unit) && affordableByFuel < range) range = affordableByFuel
         if (Leaders.unitHasLeader(unit, LeaderType.AGGRESSIVE_TANK_MANEUVER)) range += 1
         if (Leaders.unitHasLeader(unit, LeaderType.AGGRESSIVE_MANEUVER)) range += 1
         range += Attachments.bonus(unit, Attachments.SLOT_FAST_SPEED) + Attachments.movementPenalty(unit)
         if (range < 0) range = 0
+        // OG 9.9: "While in a minefield a unit has 1 movement point and decreased defense." The cap
+        // is applied AFTER every bonus, because it is a cap and not a subtraction -- a commander
+        // with Aggressive Maneuver does not drive out of a minefield faster. The defence half lives
+        // in `AttackCalculation.applyMinefieldPenalty`.
+        if (Minefields.threatens(unit.getHex(), unit.player?.side ?: -1)) {
+            range = minOf(range, Minefields.MOVEMENT_IN_MINEFIELD)
+        }
         val isStrandedTowedGun =
             data.movmethod == MovMethod.TOWED.value &&
                 unit.transport == null &&

@@ -5,6 +5,7 @@ import org.osada.hero.HeroCampaign
 import org.osada.i18n.I18n
 import org.osada.model.Player
 import org.osada.model.getPlayers
+import org.osada.rules.GameRandomSource
 import org.osada.scenario.Campaign
 import org.osada.scenario.Scenario
 import org.osada.ui.UI
@@ -13,6 +14,7 @@ import org.osada.ui.briefing.BriefingIntroTracker
 import org.osada.ui.makeVisible
 import org.osada.ui.messageDynamic
 import org.osada.ui.showAIStatus
+import kotlin.js.Date
 
 private const val DEFAULT_SCENARIO = "tutorial.xml"
 private val DEFAULT_SCENARIO_AI = listOf(0, 1, 0, 0)
@@ -192,6 +194,11 @@ class Game {
         // even though Scenario's own ctor had already seeded a good description from the scenariolist
         // entry — the very text the scenario-select screen shows. Fall back to it instead.
         intro?.takeIf { it.isNotBlank() }?.let { scenario?.setDescription(it) }
+        // A NEW battle gets a fresh gameplay random stream; a restored one keeps the stream position
+        // its save recorded, which `GameStatePersistence.restoreFromString` has already put back by
+        // the time this runs. Re-seeding here on a restore would re-roll every outcome still ahead
+        // of the save (`rules/GameRandomSource`).
+        if (!fromRestore) GameRandomSource.start(Date.now().toLong())
         setupPlayers()
         humanSides = countHumanSides(scenario?.map?.getPlayers()?.toList() ?: emptyList())
         setCurrentSide()

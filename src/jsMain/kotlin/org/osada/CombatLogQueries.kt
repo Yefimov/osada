@@ -59,6 +59,29 @@ fun CombatLog.addSurrender(
     pushTo(log.surrenders, entry)
 }
 
+/**
+ * A formation lost between turns rather than in combat. [reason] is a stable token (today only
+ * `out_of_fuel`), never display text, for the same reason [addResupply]'s `source` is: the Turn
+ * Report is re-rendered after a live language change and a pre-localized label would freeze in.
+ *
+ * [side] is the OWNER's side, unlike [addSurrender]'s captor side -- nobody took this unit, and the
+ * player who has to plan around the loss is the one who lost it.
+ */
+fun CombatLog.addAttritionLoss(
+    unit: GameUnit,
+    cell: Cell?,
+    reason: String,
+) {
+    val entry = js("{}")
+    entry.eqid = unit.eqid
+    entry.id = unit.id
+    entry.pos = if (cell == null) null else Cell(cell.row, cell.col)
+    entry.side = unit.player?.side ?: -1
+    entry.isCore = unit.isCore
+    entry.reason = reason
+    pushTo(log.attrition, entry)
+}
+
 private fun newUnitEndTurnInfo(): dynamic {
     val o = js("{}")
     o.eqid = 0

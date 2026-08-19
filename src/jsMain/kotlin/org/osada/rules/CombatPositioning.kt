@@ -30,7 +30,14 @@ internal object CombatPositioning {
         cols: Int,
     ): Array<Cell> {
         val result = mutableListOf<Cell>()
-        val cannotAttack = unit.hasFired || unit.getAmmo() <= 0 || AttackEligibility.airGroundedByWeather(unit)
+        // `blockedByMoveThenFire` is checked here as well as inside `canInitiateAttack` so the
+        // overlay never paints a target the rule would then refuse -- the same reason
+        // `airGroundedByWeather` is duplicated here. It is a no-op unless `heavy_move_fire` is on.
+        val cannotAttack =
+            unit.hasFired ||
+                unit.getAmmo() <= 0 ||
+                AttackEligibility.airGroundedByWeather(unit) ||
+                AttackEligibility.blockedByMoveThenFire(unit)
         val pos = if (cannotAttack) null else unit.getPos()
         if (pos == null) return result.toTypedArray()
         val range = AttackEligibility.getUnitAttackRange(unit)

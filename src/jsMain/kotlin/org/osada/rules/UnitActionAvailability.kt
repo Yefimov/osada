@@ -38,15 +38,22 @@ object UnitActionAvailability {
     private const val OVERSTRENGTH_MIN_EXPERIENCE = 100
 
     /** Every action, in the stable strip order, including the ones that are not applicable --
-     *  callers filter on [ActionAvailability.applicable]. */
+     *  callers filter on [ActionAvailability.applicable].
+     *
+     *  Undo sits right after Reinforce rather than at the tail, next to Lay/Clear Mines and Sleep:
+     *  it is the one rescue action in the strip (a misclick undone before it costs a whole turn),
+     *  and at the tail it could scroll out of reach on a full strip -- exactly the report that moved
+     *  it here. */
     fun all(context: UnitActionContext): List<ActionAvailability> =
         listOf(
             mount(context),
             embark(context),
             resupply(context),
             reinforce(context),
-            overstrength(context),
             undo(context),
+            overstrength(context),
+            layMines(context),
+            clearMines(context),
             sleep(context),
         )
 
@@ -60,6 +67,8 @@ object UnitActionAvailability {
             UnitActionId.RESUPPLY -> resupply(context)
             UnitActionId.REINFORCE -> reinforce(context)
             UnitActionId.OVERSTRENGTH -> overstrength(context)
+            UnitActionId.LAY_MINES -> layMines(context)
+            UnitActionId.CLEAR_MINES -> clearMines(context)
             UnitActionId.UNDO -> undo(context)
             UnitActionId.SLEEP -> sleep(context)
         }
@@ -306,6 +315,65 @@ object UnitActionAvailability {
             null -> ActionBlockReason.UNDO_NOTHING_TO_UNDO
         }
 
+    // ---- Minefields --------------------------------------------------------------------------
+
+    /**
+     * OG 9.9: a unit with `Drop mines` lays a field on the hex it stands on, *"having taken no
+     * previous action that turn"*, for two ammunition points.
+     *
+     * Not applicable at all — no chip on the strip — unless the `minefields` key is on and this
+     * equipment carries the ability. A chip that could never be used would be exactly the "switch in
+     * the editor that changes nothing" `ruleset-profiles.md` §2 exists to prevent, in the action bar
+     * instead of the rules window.
+     */
+    private fun layMines(context: UnitActionContext): ActionAvailability {
+        val unit = context.unit
+        if (!MineAbilities.canDropMines(unit)) return ActionAvailability.notApplicable(UnitActionId.LAY_MINES)
+        val side = unit.player?.side ?: -1
+        val hex = unit.getHex()
+        val reasons = mutableListOf<ActionBlock>()
+        addTurnBlock(context, reasons)
+        if (unit.hasMoved || unit.hasFired || unit.hasResupplied) {
+            reasons += ActionBlock(ActionBlockReason.MINES_NEED_UNSPENT_TURN)
+        }
+        val missingAmmo = Minefields.LAY_MINES_AMMO_COST - unit.getAmmo()
+        if (missingAmmo > 0) reasons += ActionBlock(ActionBlockReason.NOT_ENOUGH_AMMO_FOR_MINES, missingAmmo)
+        if (hex != null && Minefields.isDetectedBy(hex, side) && !Minefields.threatens(hex, side)) {
+            reasons += ActionBlock(ActionBlockReason.MINEFIELD_ALREADY_HERE)
+        }
+        val effects =
+            listOf(
+                ActionEffect(ActionEffectKind.LAY_MINEFIELD, Minefields.LAY_MINES_AMMO_COST),
+                ActionEffect(ActionEffectKind.ENDS_UNIT_ACTION),
+            )
+        return ActionAvailability(UnitActionId.LAY_MINES, true, reasons.isEmpty(), reasons, effects)
+    }
+
+    /**
+     * OG 9.9: a unit able to clear mines must be STANDING in the field, and *"the attempt can fail,
+     * and a failed attempt suppresses the unit."*
+     *
+     * The unit may have moved onto the field this turn — OG imposes the no-previous-action rule on
+     * laying, not on clearing, and a sapper that walked to the minefield has done exactly what it
+     * was sent to do. It may not have fired.
+     */
+    private fun clearMines(context: UnitActionContext): ActionAvailability {
+        val unit = context.unit
+        if (!MineAbilities.canClearMines(unit)) return ActionAvailability.notApplicable(UnitActionId.CLEAR_MINES)
+        val hex = unit.getHex()
+        val reasons = mutableListOf<ActionBlock>()
+        addTurnBlock(context, reasons)
+        if (unit.hasFired || unit.hasResupplied) reasons += ActionBlock(ActionBlockReason.ALREADY_FIRED)
+        if (hex == null || hex.mines == 0) reasons += ActionBlock(ActionBlockReason.NO_MINEFIELD_HERE)
+        val effects =
+            listOf(
+                ActionEffect(ActionEffectKind.CLEAR_MINEFIELD, MineAbilities.clearSuccessPercent()),
+                ActionEffect(ActionEffectKind.CLEAR_MINEFIELD_RISK),
+                ActionEffect(ActionEffectKind.ENDS_UNIT_ACTION),
+            )
+        return ActionAvailability(UnitActionId.CLEAR_MINES, true, reasons.isEmpty(), reasons, effects)
+    }
+
     // ---- Sleep / wake ------------------------------------------------------------------------
 
     /** Applicable while the unit could still be cycled to, or is already asleep and needs waking. */
@@ -357,10 +425,9 @@ object UnitActionAvailability {
             UnitPredicates.isAir(unit) ->
                 if (!MovementRules.hasAirfield(context.map, unit)) reasons += ActionBlock(ActionBlockReason.NO_AIRFIELD)
 
-            UnitPredicates.isSea(unit) ->
-                if (unit.getHex()?.terrain == TerrainType.PORT.value) {
-                    reasons += ActionBlock(ActionBlockReason.NO_NAVAL_RESUPPLY_IN_PORT)
-                }
+            // A warship is eligible wherever it floats, port included -- the inverted PORT test
+            // both surfaces used to assert was A.2's defect, not a rule.
+            UnitPredicates.isSea(unit) -> Unit
 
             !UnitPredicates.isGround(unit) -> reasons += ActionBlock(ActionBlockReason.INVALID_SUPPLY_TERRAIN)
         }

@@ -1,6 +1,7 @@
 package org.osada
 
 import kotlinx.browser.localStorage
+import org.osada.rules.GameRandomSource
 import org.osada.rules.ruleset.ActiveRuleset
 import org.osada.rules.ruleset.deserializeRuleset
 import org.osada.save.CampaignRunBundle
@@ -383,6 +384,11 @@ class GameStatePersistence(
                 // The rules this battle ran under are restored BEFORE the model is rebuilt: unit
                 // synchronisation and supply reads during restore must already see them.
                 ActiveRuleset.set(deserializeRuleset(parsed.ruleset))
+                // Before the model is rebuilt, for the same reason the ruleset is: anything that
+                // draws during restore must already be on the stream this save recorded. A save
+                // written before the stream existed has neither key, and starts a fresh one --
+                // correct, because nothing in it was rolled from a shared stream either.
+                restoreRandomStream(parsed)
                 restorer.restoreGame(parsed.scenario, parsed.players, parsed.campaign) {
                     game.setupGameState()
                     onReady()
@@ -395,6 +401,25 @@ class GameStatePersistence(
             console.error("restoreFromString failed: " + e.message, e)
             false
         }
+
+    /**
+     * Puts the gameplay random stream back where the save left it (`rules/GameRandomSource`).
+     *
+     * Both numbers are stored as STRINGS: a draw cursor is a `Long`, and Kotlin/JS `Long` does not
+     * survive a `JSON.stringify`/`parse` round trip as a number. Parsing them back leniently means a
+     * malformed or absent pair starts a fresh stream rather than failing the whole restore -- a
+     * battle that loses its stream position re-rolls its future, which is bad; a battle that fails
+     * to load at all is worse.
+     */
+    private fun restoreRandomStream(parsed: dynamic) {
+        val seed = (parsed.randomSeed as? String)?.toLongOrNull()
+        val cursor = (parsed.randomCursor as? String)?.toLongOrNull()
+        if (seed == null) {
+            GameRandomSource.start(Date.now().toLong())
+        } else {
+            GameRandomSource.restore(seed, cursor ?: 0L)
+        }
+    }
 
     /** "Clear campaign" from the register: removes one campaign's browser run. Downloaded files
      *  and other campaigns' runs are untouched. */

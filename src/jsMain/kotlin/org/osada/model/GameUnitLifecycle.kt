@@ -96,7 +96,13 @@ fun GameUnit.unitEndTurn(spotSide: Int) {
     hasResupplied = false
     isSurprised = false
     hasInterceptedThisTurn = false
-    hits = 0
+    shotsThisTurn = 0
+    // Suppression clears once per ROUND (`GameMap.endTurn` drives this for every unit at the wrap
+    // back to player 0), except for points inflicted by a `Shock Tactics` commander: those survive
+    // exactly one clear, which is how OG's "lasts the entire player turn" is expressed against
+    // OSADA's round-scoped counter (`docs/og-fidelity-plan.md` 0.1).
+    hits = lastingHits
+    lastingHits = 0
     if (unitData().uclass != UnitClass.FORTIFICATION.value) {
         val hex = this.hex
         if (hex == null || !hex.isSpotted(spotSide)) {

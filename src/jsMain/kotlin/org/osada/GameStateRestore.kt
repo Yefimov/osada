@@ -357,6 +357,14 @@ private fun buildHex(
     hex.terrain = hexData.terrain as? Int ?: TerrainType.CLEAR.value
     hex.road = hexData.road as? Int ?: RoadType.NONE.value
     hex.rail = hexData.rail as? Int ?: RoadType.NONE.value
+    // Absent in every save written before minefields existed, and in every save of a game played
+    // without them -- 0 is exactly "no minefield here" (`rules/Minefields`).
+    hex.mines = hexData.mines as? Int ?: 0
+    hex.minesDetected = hexData.minesDetected as? Int ?: 0
+    // Absent in every save written without `spotting_memory`; 0 is exactly "remembers nothing".
+    // `installationSpotted` is deliberately not read -- `recomputeSpotting` derives it from
+    // ownership, so a stored copy could only ever go stale (`rules/SpottingModel`).
+    hex.spotMemory = hexData.spotMemory as? Int ?: 0
     hex.owner = hexData.owner as? Int ?: -1
     hex.flag = hexData.flag as? Int ?: -1
     hex.isDeployment = hexData.isDeployment as? Int ?: -1

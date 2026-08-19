@@ -152,6 +152,20 @@ internal object GameStateMenuBuilder {
         }
         byId("disksaveupdate")?.takeIf { it.textContent == "none" || it.textContent == "нет" }?.textContent =
             I18n.t("common.none")
+        // Built once (buildProfileBackupRow) with their labels baked into innerHTML, so a later
+        // language switch left them stuck in whatever language the panel first opened in -- the
+        // whole-profile Export/Import row was the one pair on this screen refreshLocalization never
+        // touched (2026-08-19 user report: "Export/Import" stayed Russian under English).
+        byId("profileBackupExport")?.apply {
+            title = I18n.t("save_load.profile_export.help")
+            querySelector(".osada-sl-btn__label")?.textContent = I18n.t("save_load.profile_export.label")
+            querySelector(".osada-sl-btn__sub")?.textContent = I18n.t("save_load.profile_export.subtitle")
+        }
+        byId("profileBackupImport")?.apply {
+            title = I18n.t("save_load.profile_import.help")
+            querySelector(".osada-sl-btn__label")?.textContent = I18n.t("save_load.profile_import.label")
+            querySelector(".osada-sl-btn__sub")?.textContent = I18n.t("save_load.profile_import.subtitle")
+        }
         applySaveLoadContext()
     }
 

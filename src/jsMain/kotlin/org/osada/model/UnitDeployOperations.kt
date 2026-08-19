@@ -1,9 +1,11 @@
 package org.osada.model
 
+import org.osada.MovMethod
 import org.osada.TerrainType
 import org.osada.UnitClass
 import org.osada.movTable
 import org.osada.rules.GameRules
+import org.osada.rules.UnitPredicates
 import org.osada.rules.getReinforceValue
 import org.osada.rules.getReinforcementDeployPositions
 import org.osada.rules.getResupplyValue
@@ -38,7 +40,14 @@ internal fun canDeployOnTerrain(
     isAir: Boolean,
 ): Boolean {
     val exempt = isAir || hex.terrain == TerrainType.OCEAN.value
-    val cost = movTable.getOrNull(unit.unitData().movmethod)?.getOrNull(hex.terrain)
+    // movTable[RAIL] is intentionally all-255 (Constants.kt): a train's own movement is resolved
+    // through rail-specific logic elsewhere, never this general terrain table. Resolving RAIL's
+    // own row here read every hex as impassable, so a player-bought train from Reserves could
+    // never be deployed -- the highlighted deploy hexes just silently rejected every click
+    // (2026-08-19 user report). Same WHEELED substitution [ReinforcementDeployment] already makes
+    // for scripted reinforcements.
+    val movmethod = if (UnitPredicates.isTrain(unit)) MovMethod.WHEELED.value else unit.unitData().movmethod
+    val cost = movTable.getOrNull(movmethod)?.getOrNull(hex.terrain)
     return exempt || cost == null || cost != IMPASSABLE_TERRAIN_COST
 }
 

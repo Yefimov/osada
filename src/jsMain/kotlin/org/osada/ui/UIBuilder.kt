@@ -38,6 +38,8 @@ object UIBuilder {
             "resupply" to "!",
             "reinforce" to "#",
             "overstrength" to "J",
+            "lay_mines" to "*",
+            "clear_mines" to "x",
             "undo" to "_",
             "sleep" to "t",
         )

@@ -3,6 +3,7 @@ package org.osada.rules
 import org.osada.LeaderType
 import org.osada.MovMethod
 import org.osada.RoadType
+import org.osada.TerrainType
 import org.osada.model.ExtendedCell
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
@@ -34,6 +35,7 @@ internal object MoveRangeCalculation {
         val enforceRail: Boolean,
         val movementTable: List<Int>,
         val ignoresZoc: Boolean,
+        val alpineTrained: Boolean,
     )
 
     fun getMoveRange(
@@ -88,7 +90,24 @@ internal object MoveRangeCalculation {
         // the unit ignores enemy ZOC, and here ZOC is the only thing the flag may touch.
         val ignoresZoc = Leaders.unitHasLeader(unit, LeaderType.SUPERIOR_MANEUVER)
 
-        return MoveContext(gameMap, pos, maxRange, unitSide, cells, enforceRail, movementTable, ignoresZoc)
+        // OG's Alpine Training: "When moving the unit treats forest and mountain hexes as clear
+        // terrain." Advertised since the port began with no rule behind it -- the same defect class
+        // as Superior Maneuver above (`docs/og-fidelity-plan.md` A.4). It is a MOVEMENT-COST rule
+        // only: the trait says nothing about combat, so terrain defence, entrenchment baselines and
+        // close-combat all keep reading the real terrain.
+        val alpineTrained = Leaders.unitHasLeader(unit, LeaderType.ALPINE_TRAINING)
+
+        return MoveContext(
+            gameMap,
+            pos,
+            maxRange,
+            unitSide,
+            cells,
+            enforceRail,
+            movementTable,
+            ignoresZoc,
+            alpineTrained,
+        )
     }
 
     private fun isValidEdgeCell(
@@ -178,16 +197,39 @@ internal object MoveRangeCalculation {
             when {
                 context.enforceRail -> if (hex.rail > RoadType.NONE.value) 1 else IMPASSABLE_TERRAIN_COST
                 onRoad && roadCost != IMPASSABLE_TERRAIN_COST -> roadCost
-                else -> context.movementTable[hex.terrain]
+                else -> context.movementTable[alpineTerrain(hex.terrain, context.alpineTrained)]
             }
         val inEnemyZoc =
             !context.ignoresZoc &&
                 (hex.isSpotted(context.unitSide) || hex.unit?.tempSpotted == true) &&
                 hex.isZOC(enemySide)
-        if (inEnemyZoc && neighbor.cost < ZOC_MOVE_COST) {
+        // A minefield this side has DETECTED gets the ZOC cost floor, which is exactly OG's rule --
+        // "entering a detected minefield consumes all remaining movement". Reusing the sentinel
+        // rather than inventing one means the overlay, the pathfinder and `GameUnit.move`'s /254
+        // normalisation all already understand it.
+        //
+        // An UNDETECTED field is deliberately absent from this calculation. Costing it here would
+        // paint it on the move overlay, which is the whole ambush given away -- the same reason
+        // `AAInterception.visibleThreatHexes` refuses to derive threat hexes from hidden guns.
+        val onKnownMinefield = Minefields.isKnownThreat(hex, context.unitSide)
+        if ((inEnemyZoc || onKnownMinefield) && neighbor.cost < ZOC_MOVE_COST) {
             neighbor.cost = ZOC_MOVE_COST
         }
     }
+
+    /** The terrain column this unit pays for: its own, unless Alpine Training reads a forest or a
+     *  mountain as clear. Impassable stays impassable -- the trait discounts difficult ground, it
+     *  does not open ground the movement method cannot use, and the table's own 255 sentinel is
+     *  never reached for FOREST/MOUNTAIN by any land method anyway. */
+    private fun alpineTerrain(
+        terrain: Int,
+        alpineTrained: Boolean,
+    ): Int =
+        if (alpineTrained && (terrain == TerrainType.FOREST.value || terrain == TerrainType.MOUNTAIN.value)) {
+            TerrainType.CLEAR.value
+        } else {
+            terrain
+        }
 
     /** Propagates [current]'s cumulative cost (cout) into [neighbor]'s entry cost (cin/cout),
      *  taking the cheaper of any two paths already found to reach it. */

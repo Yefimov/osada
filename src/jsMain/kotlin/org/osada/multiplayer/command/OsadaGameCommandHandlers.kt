@@ -9,10 +9,12 @@ import org.osada.model.GameMap
 import org.osada.model.GameUnit
 import org.osada.model.attackUnit
 import org.osada.model.buyUnit
+import org.osada.model.clearMinefield
 import org.osada.model.deployPlayerUnit
 import org.osada.model.disbandUnit
 import org.osada.model.getPlayer
 import org.osada.model.getUnitById
+import org.osada.model.layMinefield
 import org.osada.model.mountUnit
 import org.osada.model.moveUnit
 import org.osada.model.reinforceUnit
@@ -22,6 +24,7 @@ import org.osada.model.unmountUnit
 import org.osada.model.upgradeUnit
 import org.osada.multiplayer.model.MultiplayerSession
 import org.osada.multiplayer.protocol.MultiplayerErrorCode
+import org.osada.rules.Minefields
 import org.osada.rules.SupplyRules
 import org.osada.rules.UnitPredicates
 
@@ -83,6 +86,11 @@ class OsadaGameCommandValidator(
                 is ReinforceUnit -> unit != null && SupplyRules.canReinforce(map, unit, command.strengthPoints != null)
                 is MountUnit -> unit != null && UnitPredicates.canMount(unit)
                 is UnmountUnit -> unit != null && UnitPredicates.canUnmount(unit)
+                // Eligibility is not re-derived here: `layMinefield`/`clearMinefield` re-check every
+                // fact they would be unsafe to assume, precisely because a command handler can reach
+                // them with no action chip ever having been drawn. Both return NOT_ALLOWED rather
+                // than mutating anything, so a rejected attempt costs no random draw either.
+                is LayMines, is ClearMines -> unit != null && Minefields.enabled()
                 is DeployUnit ->
                     map
                         .getPlayer(command.actorPlayerId)
@@ -133,6 +141,8 @@ class OsadaGameCommandApplier(
             is ReinforceUnit -> map.reinforceUnit(requireUnit(map, command.unitId), command.strengthPoints != null)
             is MountUnit -> map.mountUnit(requireUnit(map, command.unitId))
             is UnmountUnit -> map.unmountUnit(requireUnit(map, command.unitId))
+            is LayMines -> map.layMinefield(requireUnit(map, command.unitId))
+            is ClearMines -> map.clearMinefield(requireUnit(map, command.unitId))
             is DeployUnit -> {
                 val player = map.getPlayer(command.actorPlayerId)
                 val unit = player.getCoreUnitList().first { it.id == command.unitId }
@@ -190,14 +200,26 @@ class OsadaGameCommandApplier(
     ): GameUnit = requireNotNull(map.getUnitById(unitId)) { "Unknown unit $unitId" }
 }
 
+/**
+ * The unit a command acts on, or `null` for the commands that act on a player or the run.
+ *
+ * One exhaustive branch per command, and deliberately not collapsed. The complexity score counts
+ * arms rather than decisions -- there is no logic here to simplify -- and exhaustiveness over the
+ * sealed hierarchy is the point: adding a command must fail to compile here until someone has said
+ * which unit, if any, it belongs to. `GameCommandJson.decode` carries the same suppression for the
+ * same reason.
+ */
+@Suppress("CyclomaticComplexMethod")
 private fun GameCommand.unitIdOrNull(): Int? =
     when (this) {
-        is MoveUnit -> unitId
         is AttackUnit -> attackerUnitId
+        is MoveUnit -> unitId
         is ResupplyUnit -> unitId
         is ReinforceUnit -> unitId
         is MountUnit -> unitId
         is UnmountUnit -> unitId
+        is LayMines -> unitId
+        is ClearMines -> unitId
         is DeployUnit -> unitId
         is UndeployUnit -> unitId
         is UpgradeUnit -> unitId

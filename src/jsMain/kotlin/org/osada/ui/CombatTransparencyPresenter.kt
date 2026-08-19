@@ -12,6 +12,7 @@ import org.osada.model.TerrainEx
 import org.osada.model.getCountryName
 import org.osada.model.getUnits
 import org.osada.rules.CombatResolver
+import org.osada.rules.InitiativeModel
 import org.osada.rules.UnitCapabilities
 import org.osada.terrainNames
 import org.osada.unitClassNames
@@ -63,9 +64,15 @@ internal object CombatTransparencyPresenter {
         // surface explains a single combat modifier this way, so it gets its own chip + tooltip line
         // rather than a silent number.
         val initiativeCap = unit.getHex()?.terrain?.let { TerrainEx.initiativeCap(it) }
-        val initiativeCapped = initiativeCap != null && data.initiative > initiativeCap
+        // The base the cap actually bites on, not the raw equipment stat: under `initiative_model`
+        // a veteran brings its experience bars into the hex too, and the resolver caps the sum
+        // (`AttackCalculation.applyInitiativeBonus`). Reading `data.initiative` alone would tell the
+        // player a veteran was uncapped in a town when the resolver had just capped it, which is
+        // precisely the unexplained roll this chip was added to prevent. Adds 0 with the key off.
+        val initiativeBase = data.initiative + InitiativeModel.experienceBonus(unit)
+        val initiativeCapped = initiativeCap != null && initiativeBase > initiativeCap
         val entrenchmentBypassed = unit.entrenchment > 0 && isEntrenchmentBypassed(unit)
-        val iniCapArgs = mapOf("cap" to initiativeCap, "base" to data.initiative)
+        val iniCapArgs = mapOf("cap" to initiativeCap, "base" to initiativeBase)
         val entrenchmentHelp =
             if (entrenchmentBypassed) {
                 "combat.enemy.chip.entrenchment.bypassed.help"

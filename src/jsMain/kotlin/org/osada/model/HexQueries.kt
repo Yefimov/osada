@@ -1,6 +1,7 @@
 package org.osada.model
 
 import org.osada.rules.GameRules
+import org.osada.rules.UnitConcealment
 import org.osada.rules.canInitiateAttack
 
 private fun isAttackable(
@@ -9,7 +10,11 @@ private fun isAttackable(
     spotted: Boolean,
 ): Boolean {
     if (target == null) return false
-    val visible = spotted || target.tempSpotted
+    // `Forest Camouflage` hides a unit whose HEX is spotted, which the reference-counted fog cannot
+    // express on its own -- see [UnitConcealment] for why it is a layer over the counters and not a
+    // change to them. A concealed unit cannot be targeted by anything: this predicate is what the
+    // player's click, the attack overlay and the AI all resolve through.
+    val visible = (spotted || target.tempSpotted) && !UnitConcealment.isConcealed(target, attacker.player?.side ?: -1)
     return visible && GameRules.canInitiateAttack(attacker, target)
 }
 
@@ -77,6 +82,7 @@ fun Hex.inactiveLayerEnemy(
         other != null &&
             other.id != (active?.id ?: -1) &&
             other.player?.side != attackerSide &&
-            (isSpotted(attackerSide) || other.tempSpotted)
+            (isSpotted(attackerSide) || other.tempSpotted) &&
+            !UnitConcealment.isConcealed(other, attackerSide)
     return if (distinctEnemy) other else null
 }

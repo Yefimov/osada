@@ -22,8 +22,20 @@ package org.osada.rules.ruleset
  * its default is ON: a schema-2 profile that names nothing gets dilution, because the owner's
  * decision is that dilution is what OSADA should do. A campaign that wants the old behaviour selects
  * it explicitly.
+ *
+ * 4 (2026-08-18) added [RuleKey.HEAVY_MOVE_FIRE], [RuleKey.SNOW_FUEL], [RuleKey.SUPPORT_FIRE_FALLOFF],
+ * [RuleKey.DRY_UNIT_PENALTIES] and [RuleKey.MINEFIELDS] (`docs/og-fidelity-plan.md` B.1, B.2, B.7,
+ * B.8 and C.1). Additive, and every one of the five defaults to the behaviour OSADA already ran, so
+ * a schema-1..3 profile that names none of them is byte-identical in play to what it was.
+ *
+ * 5 (2026-08-19) added [RuleKey.AIR_FUEL], [RuleKey.INITIATIVE_MODEL], [RuleKey.SPOTTING_MEMORY],
+ * [RuleKey.INSTALLATION_SPOTTING] and [RuleKey.GROUND_AUTO_SUPPLY] (`docs/og-fidelity-plan.md` B.3,
+ * B.6, B.4, B.5 and A.3 item 2) -- the last five rules that document names. Additive on the same
+ * terms as schema 4, and every one of the five again defaults to what OSADA already ran. This is
+ * also the schema the third built-in profile ([RulesetProfile.OG_FIDELITY_ID]) is written against;
+ * see [RulesetDefaults.OG_FIDELITY].
  */
-const val RULESET_SCHEMA_VERSION = 3
+const val RULESET_SCHEMA_VERSION = 5
 
 /**
  * One configurable rule.
@@ -101,6 +113,143 @@ enum class RuleKey(
      * nothing about what OG or PM do here, so it must not be presented as content-derived.
      */
     REPLACEMENT_EXPERIENCE("replacement_experience", null, 0, 1),
+
+    // ---- Open General rules OSADA did not execute at all (schema 4) -------------------------
+    // Each of these is a BRANCH, not a tuning number, and each defaults to today's behaviour, so
+    // selecting nothing leaves all 502 shipped scenarios arithmetically untouched.
+
+    /**
+     * Whether artillery and air defence must fire BEFORE moving (OG) or may do either order
+     * (OSADA today). 0 = `flexible`, 1 = `og_mechanized`.
+     *
+     * At 1 the restriction is waived for equipment carrying OG's `Mechanized` attribute
+     * (`attr` bit 21) and for a `Mechanized Veteran` commander — the same two-source pattern
+     * `Recon Skill` / `Reconnaissance Movement` already use for phased movement.
+     * Call site: `rules/AttackEligibility.blockedByMoveThenFire`.
+     */
+    HEAVY_MOVE_FIRE("heavy_move_fire", null, 0, 1),
+
+    /**
+     * Whether snow doubles fuel spent per movement point, quoted verbatim from OG 6.23:
+     * *"it spends one point of fuel for each movement point used, except in snow, when it uses two
+     * points of fuel for each movement point."* 0 = `normal`, 1 = `double`.
+     * Call site: `model/GameUnitActions.move`, previewed by `rules/MovementRules.getUnitMoveRange`.
+     */
+    SNOW_FUEL("snow_fuel", null, 0, 1),
+
+    /**
+     * Whether non-adjacent support fire lands at half strength (OG 6.24: *"units adjacent to the
+     * attacked unit give full strength support fire, while others do it with halved strength"*).
+     * 0 = `full`, 1 = `og_halved`. Call site: `rules/CombatResolver.calculateCombatResults`.
+     */
+    SUPPORT_FIRE_FALLOFF("support_fire_range_falloff", null, 0, 1),
+
+    /**
+     * Whether an empty unit is penalised as well as prohibited (OG 6.23: no ammo *"defends with
+     * halved unsuppressed strength and halved initiative"*, no fuel *"cannot move and have its
+     * initiative halved"*). 0 = `off`, 1 = `og`. OSADA already enforces both PROHIBITIONS; this
+     * key adds only the halvings. Call site: `rules/AttackCalculation.applyDryUnitPenalties`.
+     */
+    DRY_UNIT_PENALTIES("dry_unit_penalties", null, 0, 1),
+
+    /**
+     * Whether land minefields exist at all — pre-placed by the scenario author, laid by units with
+     * OG's `Drop mines` attribute and cleared by engineers (OG 9.9, `docs/og-fidelity-plan.md`
+     * C.1). 0 = `off`, 1 = `og`.
+     *
+     * **Default off, and deliberately so.** Undetected mines damage a unit mid-move with no visible
+     * cause, which is precisely the failure `DEFERRED.md` §1.1 forbids for AA interception
+     * (*"Movement damage with no visible cause reads as a bug"*). Detected fields are drawn and warn
+     * before a route commits; only undetected ones ambush. A player who has not asked for the
+     * mechanic never meets either.
+     */
+    MINEFIELDS("minefields", null, 0, 1),
+
+    // ---- the last five named gaps (schema 5) -----------------------------------------------
+    // Same admission rule as schema 4: mechanic, typed call site, en/ru copy and serialization
+    // first; the key last. All five default to the branch OSADA already took.
+
+    /**
+     * Whether aircraft are held to OG's operational fuel model (6.23). 0 = `forgiving`,
+     * 1 = `og_operational`.
+     *
+     * Two rules, one key, because they are one model and neither is playable without the other:
+     *
+     *  - a sortie spends at least a third of the aircraft's full movement in fuel, however short
+     *    the hop ([org.osada.rules.AirOperations.chargedMovePoints], read by
+     *    `model/GameUnitActions.move` and previewed by `rules/MovementRules.getUnitMoveRange`);
+     *  - an aircraft that ends its owner's turn with no fuel and no airfield or carrier within
+     *    reach *"crashes and it is destroyed"* ([org.osada.rules.AirOperations.strandedAircraft],
+     *    swept in `model/GameMap.endTurn`). OSADA alone merely stops it moving.
+     *
+     * Default `forgiving` by an owner decision recorded in `docs/og-fidelity-plan.md` B.3: the
+     * crash rule is genuinely punitive and OSADA Default is deliberately the gentler game. That is
+     * why this is a key and not a section-A correction.
+     */
+    AIR_FUEL("air_fuel", null, 0, 1),
+
+    /**
+     * Which inputs decide combat initiative (OG 6.10: *"determined by equipment, terrain and
+     * experience of the units; it also it's adjusted by a random value, to simulate combat
+     * uncertainty"*). 0 = `equipment_terrain`, 1 = `og_full`.
+     *
+     * OSADA reads equipment initiative, the attachment penalty and the terrain cap, and nothing
+     * else. At 1 both of OG's further inputs join them: the crews' experience, one point per
+     * completed bar, and a bounded random swing ([org.osada.rules.InitiativeModel]).
+     *
+     * **This is the only key in the catalogue that makes combat stochastic, and it is only safe
+     * because of two things built alongside it.** The swing is drawn from
+     * [org.osada.rules.GameRandomSource] — one seeded stream whose seed and cursor ride in the save
+     * envelope, so both multiplayer peers roll identically even though multiplayer REPLAYS combat
+     * rather than transmitting its result — and only on the COMMITTED path, so no preview, hover,
+     * repaint or AI evaluation can move the cursor. With the key on the combat forecast stops being
+     * an exact figure; with it off nothing draws and the forecast is exact, as it always was.
+     *
+     * Default `equipment_terrain`, and the reason is the `DEFERRED.md` §5.10 hazard rather than
+     * caution: experience re-tunes every imported campaign in the veteran's favour, and both halves
+     * change what `First Strike` is worth, since that trait re-signs the initiative difference.
+     * Call site: `rules/AttackCalculation.applyInitiativeBonus`.
+     */
+    INITIATIVE_MODEL("initiative_model", null, 0, 1),
+
+    /**
+     * Whether a hex a side has spotted stays spotted until that side's turn ends. 0 = `live`,
+     * 1 = `until_turn_end`.
+     *
+     * OSADA's fog is a per-side REFERENCE COUNT that moves with the unit, so a recon element that
+     * spots a hex and drives on takes the visibility with it. OG remembers it for the turn. The
+     * memory is a separate per-hex layer beside the counters rather than an adjustment to them
+     * ([org.osada.model.Hex.spotMemory]) -- the add/remove symmetry of those counters is the whole
+     * reason the fog is ever correct, and a turn-scoped rule must not be able to strand one.
+     * Call site: `rules/SpottingModel`, read through `model/Hex.isSpotted`.
+     */
+    SPOTTING_MEMORY("spotting_memory", null, 0, 1),
+
+    /**
+     * Whether owned cities, ports and airfields spot their own hex and its neighbours with no unit
+     * present. 0 = `off`, 1 = `on`.
+     *
+     * Kept apart from [SPOTTING_MEMORY] on the precedent the four `weather_*` keys already set: a
+     * different branch with a different call site, and a player who turns one off should not
+     * silently lose the other. Recomputed wholesale per turn rather than reference-counted, because
+     * an installation has no unit to cancel its visibility when the hex changes hands.
+     * Call site: `rules/SpottingModel.recomputeInstallations`.
+     */
+    INSTALLATION_SPOTTING("installation_spotting", null, 0, 1),
+
+    /**
+     * How far the once-a-round automatic resupply of an idle GROUND formation reaches.
+     * 0 = `city_only` (OSADA today), 1 = `og_anywhere`.
+     *
+     * OG 6.23 resupplies *"ground units that do nothing in the turn"* and states no terrain
+     * condition; OSADA additionally requires a `CITY` hex with no adjacent enemies. That extra
+     * condition is a BALANCE decision rather than a defect -- relaxing it hands every idle
+     * formation in the field a free full refit -- so `docs/og-fidelity-plan.md` A.3 item 2 required
+     * that it be relaxed behind a key if at all, never universally. This is that key; the adjacent-
+     * enemy condition is untouched by it, because a unit being shot at is idle in neither game.
+     * Call site: `rules/SupplyRules.computeResupplyValue`.
+     */
+    GROUND_AUTO_SUPPLY("ground_auto_supply", null, 0, 1),
     ;
 
     /** Editor-only bounds. Never applied to a value that came from content (§2). */
@@ -124,6 +273,11 @@ enum class RuleProvenance {
 
     /** OSADA's own baseline, including the legacy preference `stalin_regime` is seeded from. */
     OSADA_DEFAULT,
+
+    /** The Open General Fidelity profile names this rule explicitly ([RulesetDefaults.OG_FIDELITY]).
+     *  Distinct from [CUSTOM_OVERRIDE] so the window can say which OG rule the player actually
+     *  bought into, and distinct from [EFILE_EXPLICIT] because the content did not ask for it. */
+    OG_FIDELITY,
 
     /** A custom profile asked for this value. */
     CUSTOM_OVERRIDE,
@@ -175,6 +329,7 @@ data class RulesetProfile(
     companion object {
         const val AUTHORS_VISION_ID = "authors-vision"
         const val OSADA_DEFAULT_ID = "osada-default"
+        const val OG_FIDELITY_ID = "og-fidelity"
     }
 }
 
@@ -184,6 +339,20 @@ enum class RulesetSource {
 
     /** OSADA's single documented baseline, identical for every content. */
     OSADA_DEFAULT,
+
+    /**
+     * Every Open General rule OSADA has built, on at once ([RulesetDefaults.OG_FIDELITY]).
+     *
+     * A third built-in amends this document's 1 rather than adding a catalogue row, which is why
+     * it is a source of its own rather than a pre-seeded CUSTOM profile: a saved battle must be
+     * able to say *which* ruleset it ran under after the local profile library has been edited,
+     * and only the source enum survives that (`docs/og-fidelity-plan.md` D.3).
+     *
+     * Deliberately kept AFTER [OSADA_DEFAULT] here: the enum's own order is not the picker's, but
+     * appending rather than inserting keeps every previously serialized `source` name reading back
+     * as the same member.
+     */
+    OG_FIDELITY,
 
     /** A named profile the player saved. */
     CUSTOM,
@@ -248,5 +417,75 @@ object RulesetDefaults {
             // deliberately CHANGES shipped behaviour rather than describing it: replacements
             // preserved experience completely before schema 3.
             RuleKey.REPLACEMENT_EXPERIENCE to 1,
+            // The five schema-4 keys all default to what OSADA already did, so the shipped game is
+            // unchanged until a profile asks otherwise. `minefields` additionally must stay off in
+            // OSADA Default as a product decision, not merely a conservative one -- see its doc.
+            RuleKey.HEAVY_MOVE_FIRE to 0,
+            RuleKey.SNOW_FUEL to 0,
+            RuleKey.SUPPORT_FIRE_FALLOFF to 0,
+            RuleKey.DRY_UNIT_PENALTIES to 0,
+            RuleKey.MINEFIELDS to 0,
+            // The five schema-5 keys, on the same terms: each is what OSADA already did.
+            RuleKey.AIR_FUEL to 0,
+            RuleKey.INITIATIVE_MODEL to 0,
+            RuleKey.SPOTTING_MEMORY to 0,
+            RuleKey.INSTALLATION_SPOTTING to 0,
+            RuleKey.GROUND_AUTO_SUPPLY to 0,
+        )
+
+    /**
+     * **Open General Fidelity** (`docs/og-fidelity-plan.md` D.1/D.2).
+     *
+     * The third built-in, and the only profile in which every Open General rule OSADA has actually
+     * built is on at once.
+     *
+     * **Shipped without the "partial" qualifier D.2 called for, and that is D.2's own test, not a
+     * relaxation of it.** That section says to drop the word once its groups 1 and 2 are done --
+     * move/fire ordering, snow fuel, aircraft fuel and dry-unit penalties, then spotting persistence
+     * and installation spotting -- and explicitly refuses to let rail, aviation and naval extensions
+     * "hold the label hostage" because they are scenario-specific. All six of those rules exist as of
+     * schema 5, so the qualifier goes. What does NOT go is the disclaimer: the picker still lists
+     * every system this profile does not reproduce (`ui/RulesWindow.refreshGaps`), because a
+     * fidelity claim that never says where it stops is the unverifiable claim that plan's §0.2
+     * forbids. Written as a complete table rather than as an overlay of differences,
+     * for the same reason [OSADA] is: a reader must be able to see what the profile executes
+     * without holding a second table in their head.
+     *
+     * **The three content keys are deliberately absent.** `aa_intercept_mode`, `flak_range` and
+     * `attachments` name an `equip.cfg` value, and naming them here would flatten a content value
+     * this profile has no opinion about -- exactly the `flak_range = 4` failure
+     * `docs/design/ruleset-profiles.md` 2 forbids. An absent key keeps following the content, which
+     * for these three IS the Open General answer.
+     *
+     * `stalin_regime` is absent for a different reason: it is an OSADA rule with no OG counterpart,
+     * so a profile claiming fidelity must not have an opinion on it in either direction.
+     */
+    val OG_FIDELITY: Map<RuleKey, Int> =
+        mapOf(
+            // OSADA runs each efile's own terrain factors, which is what OG does.
+            RuleKey.SUPPLY_MODEL to 1,
+            // OG's own weather rules, all four (`tools/og-import/DEFERRED.md` 7.45).
+            RuleKey.WEATHER_GROUNDS_AIRCRAFT to 1,
+            RuleKey.WEATHER_HALVES_AIR_GROUND to 1,
+            RuleKey.WEATHER_DEFENSE_BONUS to 1,
+            RuleKey.WEATHER_HALVES_SPOTTING to 1,
+            // "As authored": `weatherchg` is the scenario author's own opinion and OG honours it.
+            RuleKey.GROUND_FOLLOWS_WEATHER to 1,
+            // OSADA's INFERENCE, not a quoted rule -- OG says "several continuous turns" and never
+            // says how many. Named here so the profile is complete, not because OG states 3.
+            RuleKey.GROUND_CHANGE_TURNS to 3,
+            // OG 6.19: "Using replacements preserve the unit's experience and leaders."
+            RuleKey.REPLACEMENT_EXPERIENCE to 0,
+            // Every rule sections A-C of the fidelity plan actually built.
+            RuleKey.HEAVY_MOVE_FIRE to 1,
+            RuleKey.SNOW_FUEL to 1,
+            RuleKey.SUPPORT_FIRE_FALLOFF to 1,
+            RuleKey.DRY_UNIT_PENALTIES to 1,
+            RuleKey.MINEFIELDS to 1,
+            RuleKey.AIR_FUEL to 1,
+            RuleKey.INITIATIVE_MODEL to 1,
+            RuleKey.SPOTTING_MEMORY to 1,
+            RuleKey.INSTALLATION_SPOTTING to 1,
+            RuleKey.GROUND_AUTO_SUPPLY to 1,
         )
 }

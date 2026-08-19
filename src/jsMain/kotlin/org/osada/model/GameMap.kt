@@ -3,8 +3,12 @@ package org.osada.model
 import org.osada.CombatLog
 import org.osada.GameHolder
 import org.osada.PlayerType
+import org.osada.addAttritionLoss
 import org.osada.addResupply
+import org.osada.rules.AirOperations
 import org.osada.rules.GameRules
+import org.osada.rules.Minefields
+import org.osada.rules.SpottingModel
 import org.osada.rules.SupplyContextRules
 import org.osada.rules.getResupplyValue
 
@@ -70,27 +74,75 @@ class GameMap {
         delAttackSel()
         delCurrentUnit()
         undoState.clear()
+        // Both of these belong to the player whose turn is ENDING, so they run before the hand-over.
+        // OG's turn-scoped spotting memory is dropped on the way out rather than on the way in, so
+        // it cannot survive the opponent's turn and hand the player free vision of hexes the enemy
+        // moved through (`rules/SpottingModel.forgetTurnMemory`). The aircraft sweep is OG 6.23's
+        // crash rule; both are no-ops unless their key is on.
+        currentPlayer?.side?.let { SpottingModel.forgetTurnMemory(this, it) }
+        currentPlayer?.side?.let { crashStrandedAircraft(it) }
         currentPlayer?.endTurn(turn)
         val currentIndex = players.indexOf(currentPlayer)
         currentPlayer = if (currentIndex + 1 < players.size) players[currentIndex + 1] else players[0]
-        if (currentPlayer?.id == 0) {
-            turn++
-            units.forEach { unit ->
-                if (unit.isMounted) unmountUnitHandler(unit)
-                val supply = GameRules.getResupplyValue(this, unit, true)
-                val needsAmmoOrFuel = supply.ammo > 0 || supply.fuel > 0
-                val needsTransportSupply = supply.transportAmmo > 0 || supply.transportFuel > 0
-                if (needsAmmoOrFuel || needsTransportSupply) {
-                    unit.resupply(supply)
-                    val context = SupplyContextRules.getSupplyContext(this, unit)
-                    CombatLog.addResupply(unit, SupplyContextRules.logToken(context), context.adjacentEnemies)
-                }
-                unit.unitEndTurn(GameHolder.instance?.spotSide ?: 0)
-            }
-        }
+        if (currentPlayer?.id == 0) beginNewRound()
+        // Minefield detection is refreshed for the side about to play, from where its units now
+        // stand. Doing it here rather than during movement means the player sees every field their
+        // sappers are next to BEFORE planning a route, which is the half of the mechanic that keeps
+        // an undetected field an ambush rather than a trap with no counterplay
+        // (`rules/Minefields.revealAdjacent`). A no-op unless `minefields` is on.
+        currentPlayer?.side?.let { Minefields.revealAdjacent(this, it) }
+        // Installation vision is rebuilt wholesale rather than reference-counted, so a city taken
+        // during the turn that just ended sees for its new owner immediately and its old owner stops
+        // seeing at the same instant. A no-op unless `installation_spotting` is on.
+        SpottingModel.recomputeInstallations(this)
         if (currentPlayer?.type == PlayerType.AI_LOCAL || currentPlayer?.type == PlayerType.AI_SCRIPTED) {
             currentPlayer?.handler?.buildActions()
         }
+    }
+
+    /**
+     * The once-a-ROUND pass: the turn counter, automatic resupply of every idle formation, and each
+     * unit's own end-of-turn reset.
+     *
+     * Extracted from [endTurn] rather than inlined, and the boundary is a real one: everything in
+     * [endTurn] happens on every hand-over, while everything here happens only when the turn wraps
+     * back to player 0. That distinction is a byte-faithful port of `openpanzer.js:3565-3587` and is
+     * the reason suppression and resupply are round-scoped rather than turn-scoped
+     * (`docs/og-fidelity-plan.md` §0.1.1).
+     */
+    private fun beginNewRound() {
+        turn++
+        units.forEach { unit ->
+            if (unit.isMounted) unmountUnitHandler(unit)
+            val supply = GameRules.getResupplyValue(this, unit, true)
+            val needsAmmoOrFuel = supply.ammo > 0 || supply.fuel > 0
+            val needsTransportSupply = supply.transportAmmo > 0 || supply.transportFuel > 0
+            if (needsAmmoOrFuel || needsTransportSupply) {
+                unit.resupply(supply)
+                val context = SupplyContextRules.getSupplyContext(this, unit)
+                CombatLog.addResupply(unit, SupplyContextRules.logToken(context), context.adjacentEnemies)
+            }
+            unit.unitEndTurn(GameHolder.instance?.spotSide ?: 0)
+        }
+    }
+
+    /**
+     * OG 6.23's crash rule (`docs/og-fidelity-plan.md` B.3), behind `air_fuel`: an aircraft that
+     * ends its owner's turn out of fuel and with no airfield or friendly carrier within reach is
+     * destroyed rather than merely immobilised.
+     *
+     * Every loss gets its own Turn Report row before the sweep removes it. A formation that
+     * disappears between turns with no explanation is the failure `DEFERRED.md` 1.1 forbids, and it
+     * is less visible here than anywhere else in the engine, so the reporting is not optional.
+     */
+    private fun crashStrandedAircraft(side: Int) {
+        val lost = AirOperations.strandedAircraft(this, side)
+        if (lost.isEmpty()) return
+        lost.forEach { unit ->
+            CombatLog.addAttritionLoss(unit, AirOperations.lossPosition(unit), AirOperations.LOSS_OUT_OF_FUEL)
+            unit.destroyed = true
+        }
+        updateUnitList()
     }
 
     fun copy(other: GameMap) {

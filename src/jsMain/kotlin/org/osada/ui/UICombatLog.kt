@@ -113,6 +113,7 @@ object UICombatLog {
             listOf(
                 CombatLogCombatGroup.buildCombatGroup(map),
                 CombatLogGroups.buildSurrenderGroup(),
+                CombatLogGroups.buildAttritionGroup(),
                 CombatLogGroups.buildObjectiveGroup(map),
                 CombatLogGroups.buildResupplyGroup(),
                 CombatLogGroups.buildReinforceGroup(),

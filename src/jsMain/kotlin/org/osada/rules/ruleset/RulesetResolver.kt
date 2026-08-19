@@ -43,6 +43,15 @@ object RulesetResolver {
             profile.source == RulesetSource.OSADA_DEFAULT ->
                 RulesetDefaults.OSADA.getValue(rule).let { ResolvedRule(it, it, RuleProvenance.OSADA_DEFAULT) }
 
+            // Open General Fidelity names only the rules it has an opinion about. The three content
+            // keys and `stalin_regime` are absent from its table on purpose, so they fall through to
+            // Author's Vision below and keep following the efile -- LXF's `flak_range = 4` survives
+            // selecting this profile, which is the whole point of §2's rule about content values.
+            profile.source == RulesetSource.OG_FIDELITY && RulesetDefaults.OG_FIDELITY.containsKey(rule) ->
+                RulesetDefaults.OG_FIDELITY.getValue(rule).let {
+                    ResolvedRule(it, it, RuleProvenance.OG_FIDELITY)
+                }
+
             // The editor's bounds are the only place a value is narrowed; a stored override has
             // already been through them.
             override != null ->

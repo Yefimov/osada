@@ -4,6 +4,7 @@ import org.osada.LeaderType
 import org.osada.UnitClass
 import org.osada.model.ATTR_MASK_CAPTURE_FLAG
 import org.osada.model.ATTR_MASK_COMBAT_SUPPORT
+import org.osada.model.ATTR_MASK_MECHANIZED
 import org.osada.model.ATTR_MASK_SUPPORT_FIRE
 import org.osada.model.EquipmentData
 import org.osada.model.GameUnit
@@ -66,6 +67,33 @@ object UnitCapabilities {
 
     fun hasPhasedMovement(data: EquipmentData): Boolean = data.uclass == UnitClass.RECON.value
 
+    /**
+     * Classes OG makes fire BEFORE moving unless they are mechanized: the heavy weapons that have to
+     * be unlimbered to shoot.
+     *
+     * Only consulted while `heavy_move_fire` asks for OG's ordering -- OSADA Default has no move/fire
+     * ordering restriction at all, and adding one universally would re-tune every shipped scenario.
+     */
+    private val MOVE_THEN_FIRE_RESTRICTED_CLASSES =
+        setOf(
+            UnitClass.ARTILLERY.value,
+            UnitClass.AIR_DEFENCE.value,
+        )
+
+    /** Whether OG's move/fire ordering restriction applies to this equipment's class at all. */
+    fun isHeavyWeapon(data: EquipmentData): Boolean = data.uclass in MOVE_THEN_FIRE_RESTRICTED_CLASSES
+
+    /**
+     * Whether this equipment carries OG's `Mechanized` attribute (`attr` bit 21): the crew rides its
+     * own prime mover, so the gun is exempt from the fire-before-moving restriction.
+     *
+     * A plain grant, not one of the six toggles -- it sits in `Special3` and is read exactly as it
+     * is written. The `Mechanized Veteran` leader is the second source of the same exemption, the
+     * same way `Reconnaissance Movement` is the second source of phased movement; see
+     * [AttackEligibility.blockedByMoveThenFire], which ORs them.
+     */
+    fun isMechanized(data: EquipmentData): Boolean = data.attr and ATTR_MASK_MECHANIZED != 0
+
     fun canOverrun(data: EquipmentData): Boolean = data.uclass == UnitClass.TANK.value
 
     /**
@@ -102,16 +130,20 @@ object UnitCapabilities {
      * **`Support Fire` is a TOGGLE, not a grant** — `OG_ABILITY_AUDIT.md` §2 says so
      * (`reverses fire support, on by default for Artillery`) and warns that reading any of OG's six
      * toggles as "has ability X" is wrong for half the units carrying it. The data agrees decisively.
-     * Measured over 46,978 `eqp-united` records, all three toggles that survive the importer are
+     * Measured over 46,978 `eqp-united` records, both toggles that survive the importer are
      * **rare on the very class they default to**, which only makes sense if the bit means "reverse":
      *
      * | bit | ability | on its own default class | on all other classes |
      * |---|---|---|---|
-     * | 0 | Lasting Sup. | 12% of Tactical Bomber | 8,622 |
      * | 10 | Recon Skill | **0.3% of Recon** (10 of 2,880) | 3,848 |
      * | 12 | Support Fire | 13% of Artillery (700 of 5,254) | 7,237 |
      *
      * Recon Skill settles it: a grant would be set on nearly every Recon unit, and it is set on ten.
+     *
+     * **A third row was dropped 2026-08-18: "bit 0 Lasting Sup., 12% of Tactical Bomber".** Bit 0 is
+     * `Drop mines`, a plain grant, and those 12% are maritime-patrol minelayers; `Lasting Sup.` is
+     * `SpecialEx` 60.1 and is not imported. Proved by controlled staircase — `OG_ABILITY_AUDIT.md`
+     * §7.1.1. The conclusion below is unaffected: it never rested on that row.
      *
      * So OG's effective rule is `classDefault xor bit`. Against PM's plain `uclass == ARTILLERY`
      * this keeps support fire on the 87% of artillery that has it, removes it from the 700 records
@@ -160,6 +192,14 @@ object UnitCapabilities {
     fun hasCombatSupport(unit: GameUnit): Boolean =
         unit.unitData(true).attr and ATTR_MASK_COMBAT_SUPPORT != 0 ||
             Leaders.unitHasLeader(unit, LeaderType.COMBAT_SUPPORT)
+
+    /**
+     * The equipment-record half of [hasCombatSupport]: OG's `Combat Support` grant (`attr` bit 16)
+     * read straight off the record, with no live unit and so no leader-conferred half. For the
+     * catalog/purchase-list surfaces ([EquipmentMarkings], [equipmentMechanicsNote]) that show a
+     * badge before a unit exists to own a leader.
+     */
+    fun grantsCombatSupport(data: EquipmentData): Boolean = data.attr and ATTR_MASK_COMBAT_SUPPORT != 0
 
     /** Sum of experience bars lent by adjacent friendly Combat Support units. */
     fun combatSupportBars(

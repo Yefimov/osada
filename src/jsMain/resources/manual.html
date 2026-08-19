@@ -1,0 +1,2384 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="utf-8"/>
+    <title>OSADA — Field Manual</title>
+    <meta name="author" content="OSADA project"/>
+    <meta name="description" content="Field manual for OSADA, a turn-based World War II strategy game"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="icon" href="resources/ui/page/icon/icon-60x60-fos.png" type="image/png"/>
+
+    <!--
+        TRANSLATION
+        ===========
+        Every translatable block carries a stable `data-mkey`. To add a language:
+
+          1. copy this file to `manual.<lang>.html` (e.g. `manual.ru.html`),
+          2. set `<html lang="...">`,
+          3. translate the TEXT ONLY — never change a `data-mkey`, an `id`, or the
+             `data-command` / `<kbd>` contents of the Keyboard chapter,
+          4. add the file to `LANGUAGES` in the script at the bottom of this page.
+
+        `data-mkey` is what lets a translated file be diffed against this one when the
+        English text changes, so a stale paragraph can be found without re-reading the page.
+
+        WARNING — the Keyboard chapter is machine-checked.
+        `scripts/check_keyboard_manual.py` (gradle task `verifyKeyboardManual`) parses the
+        shortcut section in Chapter 10 and compares every command id and key cap in it against
+        `CommandCatalog.kt`. Those rows are generated from the game's own command catalog: do not
+        edit the ids or the key caps by hand, and do not translate them. See the comment marked
+        MACHINE-CHECKED in that chapter for the exact contract.
+
+        Do not reproduce that section's opening tag or its row markup anywhere else in this file,
+        including in a comment — the checker matches on the first occurrence in the text.
+    -->
+
+    <style>
+        /* ------------------------------------------------------------------
+           Theme — the same tokens as css/osada-theme.css, inlined so the
+           manual opens standalone (file://, a new tab, or an offline build).
+           ------------------------------------------------------------------ */
+        :root {
+            --metal-900: #14161a;
+            --metal-850: #191c22;
+            --metal-800: #1d2127;
+            --metal-750: #23272f;
+            --metal-700: #2a2f38;
+            --metal-600: #3a414c;
+            --paper: #d9cba8;
+            --paper-ink: #2b2317;
+            --red: #a51e22;
+            --red-bright: #d0342c;
+            --brass: #b48a3c;
+            --brass-dim: #7d6229;
+            --steel: #8a929c;
+            --text: #e7e2d4;
+            --text-dim: #a9a494;
+            --radius: 3px;
+            --nav-w: 288px;
+            --measure: 72ch;
+            --font-ui: Arial, "Segoe UI", Roboto, sans-serif;
+            --font-mono: "Cascadia Mono", Consolas, "DejaVu Sans Mono", monospace;
+            color-scheme: dark;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+        }
+
+        body {
+            margin: 0;
+            background: var(--metal-900);
+            color: var(--text);
+            font: 16px/1.65 var(--font-ui);
+            -webkit-text-size-adjust: 100%;
+        }
+
+        a {
+            color: var(--brass);
+            text-decoration-thickness: 1px;
+            text-underline-offset: 2px;
+        }
+
+        a:hover {
+            color: #d8ab55;
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--brass);
+            outline-offset: 2px;
+        }
+
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            top: 0;
+            z-index: 100;
+            padding: 10px 16px;
+            background: var(--metal-700);
+            border: 1px solid var(--brass);
+            color: var(--text);
+        }
+
+        .skip-link:focus {
+            left: 8px;
+            top: 8px;
+        }
+
+        /* ------------------------------------------------------------------
+           Shell
+           ------------------------------------------------------------------ */
+        .shell {
+            display: grid;
+            grid-template-columns: var(--nav-w) minmax(0, 1fr);
+            min-height: 100vh;
+        }
+
+        /* --- sidebar ------------------------------------------------------ */
+        .sidebar {
+            position: sticky;
+            top: 0;
+            align-self: start;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--metal-850);
+            border-right: 1px solid var(--metal-600);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 18px 14px;
+            border-bottom: 1px solid var(--metal-600);
+        }
+
+        .brand img {
+            width: 48px;
+            height: 48px;
+            flex: none;
+            image-rendering: auto;
+        }
+
+        .brand-text {
+            min-width: 0;
+        }
+
+        .brand-name {
+            font-size: 19px;
+            font-weight: bold;
+            letter-spacing: .14em;
+            line-height: 1.1;
+        }
+
+        .brand-sub {
+            font-size: 12px;
+            color: var(--text-dim);
+            letter-spacing: .04em;
+        }
+
+        .search-wrap {
+            padding: 14px 18px 10px;
+        }
+
+        .search-wrap label {
+            display: block;
+            font-size: 11px;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--steel);
+            margin-bottom: 6px;
+        }
+
+        #manualSearch {
+            width: 100%;
+            padding: 8px 10px;
+            background: var(--metal-900);
+            border: 1px solid var(--metal-600);
+            border-radius: var(--radius);
+            color: var(--text);
+            font: inherit;
+            font-size: 14px;
+        }
+
+        #manualSearch:focus {
+            border-color: var(--brass);
+        }
+
+        .nav-scroll {
+            flex: 1 1 auto;
+            overflow-y: auto;
+            padding: 4px 10px 18px;
+        }
+
+        .toc {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .toc a {
+            display: flex;
+            gap: 10px;
+            align-items: baseline;
+            padding: 8px 10px;
+            border-radius: var(--radius);
+            border-left: 3px solid transparent;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 14.5px;
+            line-height: 1.35;
+        }
+
+        .toc a:hover {
+            background: var(--metal-750);
+        }
+
+        .toc a[aria-current="page"] {
+            background: var(--metal-700);
+            border-left-color: var(--red);
+            color: #fff;
+        }
+
+        .toc .num {
+            flex: none;
+            width: 1.4em;
+            color: var(--steel);
+            font-size: 12px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .toc a[aria-current="page"] .num {
+            color: var(--brass);
+        }
+
+        .toc .no-results {
+            padding: 10px;
+            color: var(--text-dim);
+            font-size: 14px;
+        }
+
+        .sidebar-foot {
+            padding: 12px 18px 16px;
+            border-top: 1px solid var(--metal-600);
+            font-size: 12.5px;
+            color: var(--text-dim);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 14px;
+            align-items: center;
+        }
+
+        .linkbutton {
+            background: none;
+            border: none;
+            padding: 0;
+            font: inherit;
+            color: var(--brass);
+            cursor: pointer;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
+        .linkbutton:hover {
+            color: #d8ab55;
+        }
+
+        /* --- mobile drawer ------------------------------------------------ */
+        .navbar {
+            display: none;
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 12px;
+            background: var(--metal-850);
+            border-bottom: 1px solid var(--metal-600);
+        }
+
+        .navbar img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .navbar .navbar-title {
+            font-weight: bold;
+            letter-spacing: .1em;
+            font-size: 15px;
+        }
+
+        .iconbutton {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 40px;
+            min-height: 40px;
+            padding: 6px 12px;
+            background: var(--metal-700);
+            border: 1px solid var(--metal-600);
+            border-radius: var(--radius);
+            color: var(--text);
+            font: inherit;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .iconbutton:hover {
+            background: var(--metal-600);
+        }
+
+        /* --- content ------------------------------------------------------ */
+        .content {
+            min-width: 0;
+            width: 100%;
+            max-width: 1040px;
+            margin-inline: auto;
+            padding: 40px clamp(20px, 5vw, 64px) 96px;
+        }
+
+        /* The reading measure applies to PROSE. Wide blocks — tables, card grids, figures —
+           are allowed the full content width, so a reference table is not squeezed into a
+           column sized for sentences. */
+        .chapter > h1,
+        .chapter > h2,
+        .chapter > h3,
+        .chapter > h4,
+        .chapter > p,
+        .chapter > ul:not(.cards):not(.weather-grid),
+        .chapter > ol,
+        .chapter > dl,
+        .chapter > hr,
+        .chapter > .note,
+        .chapter > .switch,
+        .chapter > .warn,
+        .chapter > figure,
+        .chapter > section > h3,
+        .chapter > section > p,
+        .chapter > section > ul {
+            max-width: var(--measure);
+        }
+
+        .chapter[hidden] {
+            display: none;
+        }
+
+        .eyebrow {
+            font-size: 11.5px;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--brass);
+            margin: 0 0 6px;
+        }
+
+        h1 {
+            font-size: clamp(28px, 4vw, 38px);
+            line-height: 1.15;
+            margin: 0 0 10px;
+            letter-spacing: .01em;
+        }
+
+        h2 {
+            font-size: clamp(28px, 4vw, 38px);
+            line-height: 1.15;
+            margin: 0 0 10px;
+            letter-spacing: .01em;
+            scroll-margin-top: 24px;
+        }
+
+        h2:focus {
+            outline: none;
+        }
+
+        h3 {
+            font-size: 20px;
+            margin: 2.2em 0 .5em;
+            color: #fff;
+            scroll-margin-top: 24px;
+        }
+
+        h4 {
+            font-size: 16px;
+            margin: 1.7em 0 .4em;
+            color: var(--brass);
+            letter-spacing: .02em;
+        }
+
+        .lede {
+            font-size: 17.5px;
+            color: var(--text-dim);
+            margin: 0 0 6px;
+        }
+
+        .rule {
+            height: 1px;
+            border: 0;
+            margin: 22px 0 26px;
+            background: linear-gradient(to right, var(--brass), rgba(180, 138, 60, 0));
+        }
+
+        p {
+            margin: 0 0 1.05em;
+        }
+
+        ul,
+        ol {
+            margin: 0 0 1.05em;
+            padding-left: 1.35em;
+        }
+
+        li {
+            margin-bottom: .4em;
+        }
+
+        li > ul,
+        li > ol {
+            margin-top: .4em;
+        }
+
+        strong {
+            color: #fff;
+        }
+
+        code,
+        kbd {
+            font-family: var(--font-mono);
+            font-size: .88em;
+        }
+
+        code {
+            background: var(--metal-800);
+            border: 1px solid var(--metal-600);
+            border-radius: var(--radius);
+            padding: 1px 5px;
+            color: #e8d9b4;
+        }
+
+        kbd {
+            display: inline-block;
+            min-width: 1.9em;
+            text-align: center;
+            padding: 2px 7px;
+            background: linear-gradient(180deg, var(--metal-700), var(--metal-900));
+            border: 1px solid var(--metal-600);
+            border-bottom-width: 2px;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        /* --- callouts ----------------------------------------------------- */
+        .note,
+        .switch,
+        .warn {
+            margin: 1.4em 0;
+            padding: 14px 16px;
+            border: 1px solid var(--metal-600);
+            border-left: 3px solid var(--steel);
+            border-radius: var(--radius);
+            background: var(--metal-850);
+        }
+
+        .note > :last-child,
+        .switch > :last-child,
+        .warn > :last-child {
+            margin-bottom: 0;
+        }
+
+        .warn {
+            border-left-color: var(--red-bright);
+        }
+
+        .switch {
+            border-left-color: var(--brass);
+        }
+
+        .callout-title {
+            display: block;
+            font-size: 11.5px;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--steel);
+            margin-bottom: 6px;
+        }
+
+        .warn .callout-title {
+            color: var(--red-bright);
+        }
+
+        .switch .callout-title {
+            color: var(--brass);
+        }
+
+        .switch .key {
+            font-family: var(--font-mono);
+            font-size: 12.5px;
+            color: #e8d9b4;
+        }
+
+        /* --- tables ------------------------------------------------------- */
+        .table-scroll {
+            overflow-x: auto;
+            margin: 1.3em 0;
+            border: 1px solid var(--metal-600);
+            border-radius: var(--radius);
+            max-width: 100%;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 14.5px;
+        }
+
+        caption {
+            caption-side: top;
+            text-align: left;
+            padding: 10px 12px;
+            color: var(--text-dim);
+            font-size: 13.5px;
+            background: var(--metal-850);
+            border-bottom: 1px solid var(--metal-600);
+        }
+
+        th,
+        td {
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--metal-600);
+            text-align: left;
+            vertical-align: top;
+        }
+
+        thead th {
+            position: sticky;
+            top: 0;
+            background: var(--metal-750);
+            color: #fff;
+            font-size: 13px;
+            letter-spacing: .04em;
+            white-space: nowrap;
+        }
+
+        tbody tr:last-child th,
+        tbody tr:last-child td {
+            border-bottom: 0;
+        }
+
+        tbody tr:nth-child(even) {
+            background: rgba(255, 255, 255, .022);
+        }
+
+        tbody th {
+            font-weight: normal;
+            color: #fff;
+            white-space: nowrap;
+        }
+
+        td.num,
+        th.num {
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+            white-space: nowrap;
+        }
+
+        .cell-block {
+            color: var(--red-bright);
+        }
+
+        .cell-all {
+            color: var(--brass);
+        }
+
+        /* --- misc content blocks ------------------------------------------ */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 14px;
+            margin: 1.3em 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .cards li {
+            margin: 0;
+            padding: 14px 16px;
+            background: var(--metal-800);
+            border: 1px solid var(--metal-600);
+            border-top: 2px solid var(--brass-dim);
+            border-radius: var(--radius);
+        }
+
+        .cards h4 {
+            margin: 0 0 6px;
+        }
+
+        .cards p {
+            margin: 0;
+            font-size: 14.5px;
+            color: var(--text-dim);
+        }
+
+        .weather-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+            margin: 1.3em 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .weather-grid li {
+            margin: 0;
+            padding: 12px;
+            text-align: center;
+            background: var(--metal-800);
+            border: 1px solid var(--metal-600);
+            border-radius: var(--radius);
+        }
+
+        .weather-grid img {
+            width: 44px;
+            height: 44px;
+        }
+
+        .weather-grid .wname {
+            display: block;
+            font-weight: bold;
+            margin: 6px 0 2px;
+        }
+
+        .weather-grid .wnote {
+            display: block;
+            font-size: 13px;
+            color: var(--text-dim);
+            line-height: 1.45;
+        }
+
+        dl.glossary {
+            margin: 1.2em 0;
+        }
+
+        dl.glossary dt {
+            margin-top: 1.2em;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        dl.glossary dt:first-child {
+            margin-top: 0;
+        }
+
+        dl.glossary dd {
+            margin: .3em 0 0;
+            color: var(--text-dim);
+        }
+
+        figure {
+            margin: 1.5em 0;
+        }
+
+        figure img {
+            max-width: 100%;
+            height: auto;
+            image-rendering: pixelated;
+            border: 1px solid var(--metal-600);
+            border-radius: var(--radius);
+            background: var(--metal-800);
+        }
+
+        figcaption {
+            margin-top: 8px;
+            font-size: 13.5px;
+            color: var(--text-dim);
+        }
+
+        .inline-icon {
+            width: 1.15em;
+            height: 1.15em;
+            vertical-align: -.2em;
+        }
+
+        /* --- chapter footer ----------------------------------------------- */
+        .chapter-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            max-width: var(--measure);
+            margin-top: 48px;
+            padding-top: 20px;
+            border-top: 1px solid var(--metal-600);
+        }
+
+        .chapter-nav a {
+            max-width: 46%;
+            padding: 10px 14px;
+            background: var(--metal-800);
+            border: 1px solid var(--metal-600);
+            border-radius: var(--radius);
+            color: var(--text);
+            text-decoration: none;
+            font-size: 14.5px;
+            line-height: 1.35;
+        }
+
+        .chapter-nav a:hover {
+            background: var(--metal-700);
+            border-color: var(--brass);
+        }
+
+        .chapter-nav .dir {
+            display: block;
+            font-size: 11px;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--steel);
+        }
+
+        .chapter-nav a:last-child {
+            margin-left: auto;
+            text-align: right;
+        }
+
+        /* --- "show everything" mode --------------------------------------- */
+        body.all-chapters .chapter[hidden] {
+            display: block;
+        }
+
+        body.all-chapters .chapter {
+            padding-bottom: 40px;
+            border-bottom: 1px solid var(--metal-600);
+            margin-bottom: 40px;
+        }
+
+        body.all-chapters .chapter-nav {
+            display: none;
+        }
+
+        /* ------------------------------------------------------------------
+           Responsive
+           ------------------------------------------------------------------ */
+        @media (max-width: 900px) {
+            .shell {
+                grid-template-columns: minmax(0, 1fr);
+            }
+
+            .navbar {
+                display: flex;
+            }
+
+            .sidebar {
+                position: fixed;
+                inset: 0 auto 0 0;
+                z-index: 30;
+                width: min(320px, 86vw);
+                transform: translateX(-102%);
+                transition: transform .18s ease-out;
+                box-shadow: 0 0 40px rgba(0, 0, 0, .7);
+            }
+
+            body.nav-open .sidebar {
+                transform: none;
+            }
+
+            body.nav-open .scrim {
+                display: block;
+            }
+
+            .scrim {
+                display: none;
+                position: fixed;
+                inset: 0;
+                z-index: 25;
+                background: rgba(0, 0, 0, .6);
+                border: 0;
+                padding: 0;
+            }
+
+            .content {
+                padding: 26px 18px 72px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .sidebar {
+                transition: none;
+            }
+        }
+
+        @media print {
+            .sidebar,
+            .navbar,
+            .chapter-nav,
+            .scrim,
+            .skip-link {
+                display: none !important;
+            }
+
+            .shell {
+                display: block;
+            }
+
+            .chapter[hidden] {
+                display: block !important;
+            }
+
+            body {
+                background: #fff;
+                color: #000;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<a class="skip-link" href="#chapters">Skip to content</a>
+
+<header class="navbar">
+    <button type="button" class="iconbutton" id="navToggle" aria-expanded="false" aria-controls="sidebar">Contents
+    </button>
+    <img src="resources/ui/page/icon/icon-60x60-fos.png"
+         srcset="resources/ui/page/icon/icon-60x60-fos.png 1x, resources/ui/page/icon/icon-128x128-fos.png 2x"
+         width="30" height="30" alt=""/>
+    <span class="navbar-title">OSADA</span>
+</header>
+
+<button type="button" class="scrim" id="navScrim" tabindex="-1" aria-hidden="true"></button>
+
+<div class="shell">
+    <nav class="sidebar" id="sidebar" aria-label="Manual contents">
+        <div class="brand">
+            <img src="resources/ui/page/icon/icon-60x60-fos.png"
+                 srcset="resources/ui/page/icon/icon-60x60-fos.png 1x, resources/ui/page/icon/icon-128x128-fos.png 2x"
+                 width="48" height="48" alt=""/>
+            <span class="brand-text">
+                <span class="brand-name">OSADA</span>
+                <span class="brand-sub" data-mkey="brand.sub">Field Manual</span>
+            </span>
+        </div>
+
+        <div class="search-wrap">
+            <label for="manualSearch" data-mkey="search.label">Search the manual</label>
+            <input type="search" id="manualSearch" autocomplete="off" spellcheck="false"
+                   data-mkey="search.placeholder" placeholder="entrenchment, prestige, undo…"/>
+        </div>
+
+        <div class="nav-scroll">
+            <ul class="toc" id="toc"></ul>
+        </div>
+
+        <div class="sidebar-foot">
+            <button type="button" class="linkbutton" id="allChaptersToggle" data-mkey="nav.showall">Show all
+                chapters
+            </button>
+            <span data-mkey="nav.version">v2 · 2026</span>
+        </div>
+    </nav>
+
+    <main class="content" id="chapters">
+
+        <!-- ============================================================ -->
+        <!-- 1. GETTING STARTED                                            -->
+        <!-- ============================================================ -->
+        <section class="chapter" id="start" data-title="Getting started"
+                 data-keywords="campaign scenario multiplayer tutorial difficulty prestige start new game formation unit">
+            <p class="eyebrow" data-mkey="start.eyebrow">Chapter 1</p>
+            <h1 tabindex="-1" data-mkey="start.h1">Getting started</h1>
+            <p class="lede" data-mkey="start.lede">OSADA is a turn-based strategy game of the Second World War,
+                fought on a hex map by formations of ten strength points.</p>
+            <hr class="rule"/>
+
+            <p data-mkey="start.p1">Everything you command is a <strong>formation</strong>: a regiment or brigade
+                represented by one counter, with a strength of 1 to 10 points, its own equipment, ammunition, fuel and
+                accumulated experience. A formation reduced to zero strength is destroyed. Almost every rule in this
+                manual is about keeping formations alive and experienced for longer than your opponent can.</p>
+
+            <h3 data-mkey="start.ways.h">Four ways to play</h3>
+            <ul class="cards">
+                <li>
+                    <h4 data-mkey="start.ways.campaign.h">New Campaign</h4>
+                    <p data-mkey="start.ways.campaign.p">A chain of scenarios fought by one army. Your core formations,
+                        their experience and their commanders carry across every battle, and the outcome of each battle
+                        decides which one you fight next.</p>
+                </li>
+                <li>
+                    <h4 data-mkey="start.ways.scenario.h">Single Scenario</h4>
+                    <p data-mkey="start.ways.scenario.p">One standalone battle. Nothing persists afterwards, and both
+                        sides are given prestige balanced against the value of the forces on the map.</p>
+                </li>
+                <li>
+                    <h4 data-mkey="start.ways.multiplayer.h">Multiplayer</h4>
+                    <p data-mkey="start.ways.multiplayer.p">A local two-tab cooperative game. Both tabs replay the same
+                        commands rather than exchanging results, which is why the combat rules below are deterministic
+                        by default.</p>
+                </li>
+                <li>
+                    <h4 data-mkey="start.ways.tutorial.h">Tutorial</h4>
+                    <p data-mkey="start.ways.tutorial.p">A short guided battle that teaches selection, movement, attack
+                        and ending a turn. Start here if you have never played a hex wargame.</p>
+                </li>
+            </ul>
+
+            <h3 data-mkey="start.difficulty.h">Difficulty</h3>
+            <p data-mkey="start.difficulty.p">A campaign asks for a difficulty before it starts, and the picker states
+                exactly what each setting is worth in starting prestige, prestige per turn, extra turns and final
+                score.</p>
+            <div class="table-scroll">
+                <table>
+                    <caption data-mkey="start.difficulty.caption">Campaign difficulty settings.</caption>
+                    <thead>
+                    <tr>
+                        <th scope="col" data-mkey="start.difficulty.th.name">Setting</th>
+                        <th scope="col" class="num" data-mkey="start.difficulty.th.start">Starting prestige</th>
+                        <th scope="col" class="num" data-mkey="start.difficulty.th.turnly">Prestige per turn</th>
+                        <th scope="col" class="num" data-mkey="start.difficulty.th.turns">Turn limit</th>
+                        <th scope="col" class="num" data-mkey="start.difficulty.th.score">Score</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row" data-mkey="start.difficulty.historical">Historical <em>(default)</em></th>
+                        <td class="num">—</td>
+                        <td class="num">—</td>
+                        <td class="num">—</td>
+                        <td class="num">100%</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" data-mkey="start.difficulty.tactical">Tactical</th>
+                        <td class="num">+20%</td>
+                        <td class="num">+10%</td>
+                        <td class="num">+20%</td>
+                        <td class="num">80%</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" data-mkey="start.difficulty.operational">Operational</th>
+                        <td class="num">+50%</td>
+                        <td class="num">+25%</td>
+                        <td class="num">+50%</td>
+                        <td class="num">50%</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p data-mkey="start.difficulty.p2">Historical is full difficulty: no bonuses, the standard turn limit and
+                the full score. The two easier settings buy you prestige and time at the cost of score.</p>
+
+            <h3 data-mkey="start.first.h">Your first turn, in order</h3>
+            <ol>
+                <li data-mkey="start.first.1">Read the briefing. It names the objectives you must take and, when the
+                    scenario is one of the ones that can only be survived rather than won, says so.</li>
+                <li data-mkey="start.first.2">Press <kbd>Z</kbd> for the strategic map and find the gold-bordered
+                    victory objectives. Everything else on the map is optional.</li>
+                <li data-mkey="start.first.3">Deploy from the reserve pool if the scenario gives you one
+                    (<kbd>D</kbd>).</li>
+                <li data-mkey="start.first.4">Move reconnaissance first. It sees furthest, it moves in stages, and
+                    what it finds decides where everything else goes.</li>
+                <li data-mkey="start.first.5">Bring artillery within range of where the assault will happen before
+                    the assault happens — it fires in support of whatever is attacked next to it.</li>
+                <li data-mkey="start.first.6">Attack, then move up. Press <kbd>N</kbd> repeatedly until no formation
+                    is left with anything to do, then end the turn.</li>
+            </ol>
+
+            <div class="note">
+                <span class="callout-title" data-mkey="start.note.title">Where the rules come from</span>
+                <p data-mkey="start.note.p">OSADA is a port of Panzer Marshal that has since taken on a large part of
+                    Open General's rule set. Several rules therefore exist in two versions, and which one runs is
+                    decided by the <a href="#rulesets">ruleset profile</a> and by the equipment file the campaign was
+                    built on. Wherever that is the case, this manual states the default and marks the switch.</p>
+            </div>
+
+            <div class="chapter-nav" data-nav></div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- 2. THE TURN                                                   -->
+        <!-- ============================================================ -->
+        <section class="chapter" id="turn" data-title="The turn"
+                 data-keywords="turn end turn sleep wake initiative order entrench resupply automatic turn report date">
+            <p class="eyebrow" data-mkey="turn.eyebrow">Chapter 2</p>
+            <h2 tabindex="-1" data-mkey="turn.h">The turn</h2>
+            <p class="lede" data-mkey="turn.lede">A battle lasts a fixed number of turns. Everything you can do
+                happens inside yours.</p>
+            <hr class="rule"/>
+
+            <p data-mkey="turn.p1">The current turn and the limit are shown in the top left of the screen. Within a
+                turn each side moves in sequence; while it is your turn, every formation you own may take
+                <strong>one action</strong> and, separately, <strong>move</strong>. Ending the turn passes control on
+                and cannot be taken back.</p>
+
+            <h3 data-mkey="turn.spend.h">What a formation can spend in one turn</h3>
+            <ul>
+                <li data-mkey="turn.spend.move">A <strong>move</strong>, worth its movement allowance in points.
+                    Reconnaissance and formations with the Reconnaissance Movement trait may split it into several
+                    stages.</li>
+                <li data-mkey="turn.spend.fire">An <strong>attack</strong>, costing one ammunition point. Moving and
+                    attacking in either order is allowed by default; see <a href="#combat">Combat</a> for the
+                    ruleset switch that restricts guns.</li>
+                <li data-mkey="turn.spend.action">Or <strong>one action instead</strong>: resupply, reinforce,
+                    overstrength, laying or clearing mines. These end the formation's turn outright — a formation
+                    that resupplies has moved and fired as far as the rules are concerned.</li>
+            </ul>
+            <p data-mkey="turn.spend.p">Mounting and dismounting from organic transport is free and does not grant a
+                second move. A command that cannot be run right now stays on screen greyed out, and its tooltip states
+                the reason rather than leaving you to guess.</p>
+
+            <h3 data-mkey="turn.sleep.h">Sleep and wake</h3>
+            <p data-mkey="turn.sleep.p">A formation you have decided to leave where it is can be put to
+                <strong>sleep</strong>, which skips it in <kbd>N</kbd> / <kbd>P</kbd> navigation for the rest of the
+                turn. It still counts in the end-of-turn warning that tells you formations can still act, so sleeping
+                a formation hides it from the cycle without hiding it from you.</p>
+
+            <h3 data-mkey="turn.end.h">What happens when the turn ends</h3>
+            <ol>
+                <li data-mkey="turn.end.1"><strong>Formations that did not move dig in.</strong> Entrenchment rises
+                    by one step whenever enough progress has accumulated; see
+                    <a href="#combat">Entrenchment</a>.</li>
+                <li data-mkey="turn.end.2"><strong>Idle ground formations resupply themselves</strong> — by default
+                    only in a city hex, and never with an enemy adjacent.</li>
+                <li data-mkey="turn.end.3"><strong>The weather is rolled and the ground may shift.</strong> Rain and
+                    snow do not change the ground immediately; see <a href="#weather">Weather &amp; terrain</a>.</li>
+                <li data-mkey="turn.end.4"><strong>The date advances</strong> once the scenario's turns-per-day count
+                    is reached, which is what makes equipment become available or obsolete mid-campaign.</li>
+                <li data-mkey="turn.end.5"><strong>Losses outside combat are reported.</strong> Anything that
+                    disappeared between turns gets a line in the Turn Report (<kbd>T</kbd>) rather than vanishing
+                    silently.</li>
+            </ol>
+
+            <h3 data-mkey="turn.victory.h">Winning and losing</h3>
+            <p data-mkey="turn.victory.p1">Battles are won by taking or holding <strong>victory objectives</strong> —
+                the hexes with gold-bordered flags. Towns, supply points, ports and airfields that are not victory
+                objectives pay prestige when captured but do not move you towards victory. Destroying every enemy
+                formation also ends the battle in your favour.</p>
+            <p data-mkey="turn.victory.p2">How fast you finish decides the grade. Each scenario carries three turn
+                thresholds:</p>
+            <ul>
+                <li data-mkey="turn.victory.brilliant"><strong>Brilliant victory</strong> — inside the first
+                    threshold. Pays the most prestige, and awards a <strong>prototype</strong> formation to your core
+                    army in the next scenario.</li>
+                <li data-mkey="turn.victory.normal"><strong>Victory</strong> — inside the second threshold.</li>
+                <li data-mkey="turn.victory.tactical"><strong>Tactical victory</strong> — inside the third.</li>
+            </ul>
+            <p data-mkey="turn.victory.p3">Running out of turns is normally a defeat, and in a campaign it may end the
+                run depending on how that campaign's branches are drawn. Scenarios written in Open General's style
+                instead grade the final turn by <em>how many</em> objectives you were still holding, so a battle you
+                could not finish can still be a victory if you held enough ground.</p>
+
+            <div class="chapter-nav" data-nav></div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- 3. READING THE BATTLEFIELD                                    -->
+        <!-- ============================================================ -->
+        <section class="chapter" id="battlefield" data-title="Reading the battlefield"
+                 data-keywords="hex spotting fog of war zone of control zoc air mode layer objectives capture flag strategic map labels">
+            <p class="eyebrow" data-mkey="field.eyebrow">Chapter 3</p>
+            <h2 tabindex="-1" data-mkey="field.h">Reading the battlefield</h2>
+            <p class="lede" data-mkey="field.lede">Two layers, six neighbours per hex, and only as much of the enemy
+                as you can actually see.</p>
+            <hr class="rule"/>
+
+            <h3 data-mkey="field.layers.h">Two layers</h3>
+            <p data-mkey="field.layers.p">Every hex has a <strong>ground layer</strong> and an <strong>air
+                layer</strong>, and a hex may hold one formation in each. <kbd>A</kbd> switches which layer your
+                clicks address, so a click on a hex with a tank under a fighter selects the one you meant. Zones of
+                control, interception and most combat rules apply within a layer; the exceptions are named where they
+                occur.</p>
+
+            <h3 data-mkey="field.spot.h">Spotting and fog of war</h3>
+            <p data-mkey="field.spot.p1">Each formation has a <strong>spotting range</strong> in hexes. There are no
+                terrain restrictions on it — a mountain does not block sight past it — but bad weather shortens it,
+                and being spotted is what makes an enemy attackable at all.</p>
+            <p data-mkey="field.spot.p2">Visibility follows your formations by default: a reconnaissance element that
+                spots a hex and drives on takes the visibility with it. Any formation that moves and does not cancel
+                the move surveys everything within its spotting range as it goes.</p>
+            <div class="switch">
+                <span class="callout-title" data-mkey="field.spot.switch.title">Ruleset-dependent</span>
+                <p data-mkey="field.spot.switch.p"><strong>Spotted hexes stay spotted</strong>
+                    (<span class="key">spotting_memory</span>) makes a hex your side has seen this turn stay visible
+                    until your turn ends. <strong>Cities and airfields watch</strong>
+                    (<span class="key">installation_spotting</span>) lets a city, port or airfield you own see its own
+                    hex and its neighbours with no garrison at all. Both are <strong>off</strong> by default.</p>
+            </div>
+
+            <h3 data-mkey="field.zoc.h">Zone of control</h3>
+            <p data-mkey="field.zoc.p1">A formation exerts a zone of control over the six hexes around it. Ground
+                zones affect ground formations and air zones affect air formations. Entering a hex in a
+                <strong>spotted</strong> enemy's zone of control consumes the whole remaining movement allowance, so
+                the move stops there; the formation may still attack from where it stands.</p>
+            <p data-mkey="field.zoc.p2">Two things get past it. Reconnaissance, and anything with the
+                Reconnaissance Movement trait, moves in stages and can therefore keep going after being stopped once.
+                A commander with <strong>Superior Maneuver</strong> ignores enemy zones of control outright.</p>
+            <p data-mkey="field.zoc.p3">An enemy you have <em>not</em> spotted projects no zone of control, because
+                you cannot plan around what you cannot see. Instead, a move that runs into a hidden formation is a
+                <strong>surprise</strong>: the move ends there, combat resolves with the penalties described under
+                <a href="#combat">Combat</a>, and the move cannot be undone.</p>
+
+            <h3 data-mkey="field.obj.h">Objectives and capture</h3>
+            <p data-mkey="field.obj.p1">Only <strong>infantry, tanks, reconnaissance and anti-tank</strong>
+                formations flip a hex's owner and flag by occupying it, plus any equipment that carries Open General's
+                <em>Capture Flag</em> attribute. Artillery, air defence, aircraft, ships, transports and
+                fortifications can hold a hex and deny it to the enemy without ever taking it — a common way to lose
+                a battle you thought you had won.</p>
+            <p data-mkey="field.obj.p2"><kbd>L</kbd> toggles the name labels on optional capture points. Victory
+                objectives stay labelled either way, because those are the ones you were ordered to take.</p>
+
+            <h3 data-mkey="field.tools.h">Tools for looking</h3>
+            <dl class="glossary">
+                <dt data-mkey="field.tools.strategic.dt">Strategic map — <kbd>Z</kbd></dt>
+                <dd data-mkey="field.tools.strategic.dd">Zooms out to the whole map. The fastest way to see where the
+                    objectives are and which of them have changed hands.</dd>
+                <dt data-mkey="field.tools.grid.dt">Hex grid — <kbd>H</kbd></dt>
+                <dd data-mkey="field.tools.grid.dd">Draws the hex outlines, which makes counting range and
+                    adjacency exact instead of approximate.</dd>
+                <dt data-mkey="field.tools.inspector.dt">Unit inspector — <kbd>I</kbd></dt>
+                <dd data-mkey="field.tools.inspector.dd">Pins the selected formation's full statistics so they stay
+                    on screen while you look at something else.</dd>
+                <dt data-mkey="field.tools.report.dt">Turn report — <kbd>T</kbd></dt>
+                <dd data-mkey="field.tools.report.dd">This turn's events, losses and score, including anything that
+                    happened while the other side was moving.</dd>
+            </dl>
+
+            <figure>
+                <img src="resources/ui/manual/unit.png" alt="A formation counter: class icon, national flag,
+                     strength plaque below, and the leader mark beside it." width="135" height="111"/>
+                <figcaption data-mkey="field.counter.cap">A formation counter. The strength plaque sits below the
+                    icon; a greyed-out plaque means the formation has already moved. The mark beside it, when
+                    present, is its commander.</figcaption>
+            </figure>
+
+            <div class="chapter-nav" data-nav></div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- 4. MOVEMENT                                                   -->
+        <!-- ============================================================ -->
+        <section class="chapter" id="movement" data-title="Movement"
+                 data-keywords="movement points fuel roads rivers bridging mount dismount embark disembark transport undo phased recon paratroopers minefield">
+            <p class="eyebrow" data-mkey="move.eyebrow">Chapter 4</p>
+            <h2 tabindex="-1" data-mkey="move.h">Movement</h2>
+            <p class="lede" data-mkey="move.lede">Movement points, spent per hex according to terrain, weather and
+                what the formation moves on.</p>
+            <hr class="rule"/>
+
+            <p data-mkey="move.p1">Each formation has a movement allowance in points. Entering a hex costs a number
+                of points taken from the movement table for its <a href="#reference">movement type</a>; a road or a
+                bridge between two hexes charges the road cost instead. The overlay drawn when you select a formation
+                already accounts for terrain, weather, fuel and zones of control, so a hex it offers is a hex the
+                formation can actually reach.</p>
+
+            <h3 data-mkey="move.fuel.h">Fuel</h3>
+            <p data-mkey="move.fuel.p">Formations that burn fuel spend one point per movement point. Leg and towed
+                formations carry no fuel rating at all and can instead be given transport. Running dry does not
+                destroy anything by default — it stops the formation moving until it is resupplied.</p>
+            <div class="switch">
+                <span class="callout-title" data-mkey="move.fuel.switch.title">Ruleset-dependent</span>
+                <p data-mkey="move.fuel.switch.p1"><strong>Snow doubles fuel use</strong>
+                    (<span class="key">snow_fuel</span>): two fuel per movement point in snow. Off by default.</p>
+                <p data-mkey="move.fuel.switch.p2"><strong>Aircraft fuel model</strong>
+                    (<span class="key">air_fuel</span>): a sortie costs at least one third of the aircraft's full
+                    movement in fuel however short the hop, and an aircraft that ends the turn dry with no airfield or
+                    carrier in reach is <em>lost</em>. Off by default — OSADA's own model simply grounds a dry
+                    aircraft. Every loss it does cause is reported in the Turn Report.</p>
+            </div>
+
+            <h3 data-mkey="move.phased.h">Phased movement</h3>
+            <p data-mkey="move.phased.p">Reconnaissance formations may move, stop, look at what they revealed, and
+                move again while they still have points left. Any formation whose commander has
+                <strong>Reconnaissance Movement</strong> gains the same allowance. Everything else spends its move in
+                one commitment.</p>
+
+            <h3 data-mkey="move.transport.h">Transport</h3>
+            <dl class="glossary">
+                <dt data-mkey="move.transport.mount.dt">Mount / Dismount — <kbd>M</kbd></dt>
+                <dd data-mkey="move.transport.mount.dd">Loads the formation onto its own organic ground transport,
+                    which usually moves further but fights far worse: while mounted, the transport's movement and
+                    vulnerability apply, and a mounted formation that moves cannot fire that turn. Infantry is the
+                    exception — it bails out when attacked and takes no combat penalty for having been mounted.
+                    Limbering is free and does not grant a second move, but it also does not return a move already
+                    spent.</dd>
+                <dt data-mkey="move.transport.embark.dt">Embark / Disembark — <kbd>E</kbd></dt>
+                <dd data-mkey="move.transport.embark.dd">Boards air or naval transport, and only at a port or
+                    airfield with a transport point left in the pool. The formation must not have moved yet this
+                    turn. A carried formation cannot fight normally, and disembarking needs a free adjacent hex to
+                    unload into. Paratroopers are the exception that can drop anywhere.</dd>
+            </dl>
+
+            <h3 data-mkey="move.rivers.h">Rivers</h3>
+            <p data-mkey="move.rivers.p">Entering a river hex ends a ground formation's movement, and it may leave
+                normally the following turn — unless the river is <strong>frozen</strong>, which removes the penalty
+                entirely. Dismounted bridging engineers act as a bridge for the hex they occupy, including where
+                there is no ford; a pontoon appears and friendly formations cross it freely. Some rivers are drawn as
+                impassable and cannot be bridged at all. A formation carrying the <strong>Bridging</strong>
+                attachment or trait treats passable river hexes as rough terrain instead.</p>
+
+            <h3 data-mkey="move.undo.h">Undo — and when it is refused</h3>
+            <p data-mkey="move.undo.p1"><kbd>U</kbd> or <kbd>Ctrl</kbd>+<kbd>Z</kbd> rewinds the most recent move,
+                restoring position, fuel and movement state. It is deliberately unavailable once the move
+                <em>revealed</em> something, because taking it back would let you keep the intelligence and un-spend
+                the move:</p>
+            <ul>
+                <li data-mkey="move.undo.1">the move revealed new information;</li>
+                <li data-mkey="move.undo.2">the formation was caught by surprise;</li>
+                <li data-mkey="move.undo.3">a hidden enemy stopped the move;</li>
+                <li data-mkey="move.undo.4">anti-air fire intercepted the move;</li>
+                <li data-mkey="move.undo.5">any combat happened;</li>
+                <li data-mkey="move.undo.6">a later irreversible command was issued.</li>
+            </ul>
+            <p data-mkey="move.undo.p2">This is a rule, not a bug, and the greyed-out button says which of the six
+                applies.</p>
+
+            <h3 data-mkey="move.mines.h">Minefields</h3>
+            <p data-mkey="move.mines.p1">Minefields are a hex property, not a formation. They exist only when the
+                campaign's ruleset turns them on, and they are <strong>off by default</strong>.</p>
+            <p data-mkey="move.mines.p2">When they are on: entering a field you have <em>detected</em> costs the rest
+                of your movement and no strength; entering one you have <em>not</em> also costs strength and reveals
+                the field in the same instant. A formation standing in a minefield has one movement point and reduced
+                defence. Formations able to drop mines can lay a field for two ammunition points and their whole turn,
+                and your own formations cross your own fields freely. Clearing is an attempt that can fail, and a
+                failed attempt suppresses the formation; either way it spends the turn.</p>
+
+            <div class="chapter-nav" data-nav></div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- 5. COMBAT                                                     -->
+        <!-- ============================================================ -->
+        <section class="chapter" id="combat" data-title="Combat"
+                 data-keywords="attack forecast losses close combat entrenchment rugged defense surprise support fire overrun retreat surrender initiative ammunition experience interception air">
+            <p class="eyebrow" data-mkey="combat.eyebrow">Chapter 5</p>
+            <h2 tabindex="-1" data-mkey="combat.h">Combat</h2>
+            <p class="lede" data-mkey="combat.lede">Hover an enemy in range and the forecast tells you what will
+                happen. By default it is not an estimate.</p>
+            <hr class="rule"/>
+
+            <h3 data-mkey="combat.forecast.h">The forecast is exact</h3>
+            <p data-mkey="combat.forecast.p1">Passing the pointer over an enemy inside your selected formation's
+                firing range raises the attack reticule and the forecast: your projected casualties under your flag,
+                the enemy's under theirs. On touch devices it appears automatically for every formation in
+                range.</p>
+            <p data-mkey="combat.forecast.p2"><strong>Under the default rules nothing about combat is random.</strong>
+                Initiative is decided by equipment, its attachments and the terrain the defender stands in, and the
+                damage is an expected value rather than a die roll — so the same attack from the same position always
+                produces the same result, and the number in the forecast is the number you will get. This is also
+                what allows multiplayer to replay combat on both clients instead of transmitting the outcome.</p>
+            <div class="switch">
+                <span class="callout-title" data-mkey="combat.forecast.switch.title">Ruleset-dependent</span>
+                <p data-mkey="combat.forecast.switch.p"><strong>Combat initiative</strong>
+                    (<span class="key">initiative_model</span>) can be set to Open General's full model, which adds
+                    the crews' experience — one point per completed experience bar — and a small random swing for the
+                    uncertainty of battle. With it on, the forecast shows the deterministic part and the swing lands
+                    when the attack is made. It is <strong>off</strong> by default, and it is the only setting in the
+                    game that makes combat stochastic.</p>
+            </div>
+
+            <h3 data-mkey="combat.values.h">What decides the result</h3>
+            <p data-mkey="combat.values.p">Each strength point makes its own attack. The attacker's power against the
+                defender's <em>target type</em> — hard, soft, air or naval — is cross-indexed against the matching
+                defence value, and the difference is what casualties are drawn from. On top of that, in order:</p>
+            <ul>
+                <li data-mkey="combat.values.1"><strong>Attachments</strong> fitted to either formation.</li>
+                <li data-mkey="combat.values.2"><strong>Close combat</strong>, when infantry is involved in a city or
+                    forest hex.</li>
+                <li data-mkey="combat.values.3"><strong>Commander traits</strong> on either side.</li>
+                <li data-mkey="combat.values.4"><strong>Terrain</strong>, and the initiative ceiling it imposes.</li>
+                <li data-mkey="combat.values.5"><strong>Weather</strong> — rain and snow give every defender
+                    +3 defence.</li>
+                <li data-mkey="combat.values.6"><strong>Entrenchment</strong>, unless it is bypassed.</li>
+                <li data-mkey="combat.values.7"><strong>Experience</strong>, and any Combat Support in reach.</li>
+                <li data-mkey="combat.values.8"><strong>Range</strong>: a defender uses its close-combat defence
+                    against an adjacent attacker and its ranged defence against a distant one.</li>
+                <li data-mkey="combat.values.9"><strong>Initiative</strong>. The side with the higher initiative
+                    takes reduced damage.</li>
+            </ul>
+
+            <h3 data-mkey="combat.ammo.h">Ammunition</h3>
+            <p data-mkey="combat.ammo.p">Each attack costs one ammunition point. A formation out of ammunition
+                cannot initiate an attack and cannot return fire when attacked, and artillery out of ammunition
+                cannot fire in support.</p>
+            <div class="switch">
+                <span class="callout-title" data-mkey="combat.ammo.switch.title">Ruleset-dependent</span>
+                <p data-mkey="combat.ammo.switch.p"><strong>Empty units fight worse</strong>
+                    (<span class="key">dry_unit_penalties</span>) adds Open General's penalties on top of those
+                    prohibitions: a formation out of ammunition defends with halved strength and halved initiative,
+                    one out of fuel has its initiative halved. Off by default.</p>
+            </div>
+
+            <h3 data-mkey="combat.entrench.h">Entrenchment</h3>
+            <p data-mkey="combat.entrench.p1">A formation that has not moved digs in at the end of its turn, even if
+                it attacked, resupplied or did anything else. Moving out of the hex loses every level.</p>
+            <p data-mkey="combat.entrench.p2">Every terrain type carries a <strong>base entrenchment</strong> that a
+                formation in that hex snaps to immediately — it replaces the current level rather than adding to it.
+                Above the base, levels accumulate slowly, faster for experienced formations and for classes that dig
+                well (infantry digs fastest, then reconnaissance, anti-tank, artillery and air defence; aircraft and
+                ships not at all). The ceiling is <strong>five levels above the terrain's base</strong>.</p>
+            <p data-mkey="combat.entrench.p3">Every attack, successful or not, knocks one level off. Repeated attacks
+                in the same turn can push a defender below the terrain's own base, which is why a bombardment by
+                aircraft and artillery before the ground assault works. Engineers — other than bridging engineers —
+                and anything carrying the <strong>Bunker Buster</strong> attachment ignore entrenchment entirely, as
+                do the Infiltration Tactics and Street Fighter traits in cities, rough terrain and ports.
+                <strong>Ferocious Defense</strong> makes a defender's entrenchment impossible to ignore.</p>
+
+            <h3 data-mkey="combat.close.h">Close combat</h3>
+            <p data-mkey="combat.close.p">In a city or forest hex, an exchange involving infantry is fought against
+                the non-infantry formation's <strong>close-combat defence</strong>, which is usually much lower than
+                its ground defence. That is the whole reason infantry holds cities and forests and tanks do not.
+                Infantry keeps none of this advantage in clear terrain, where armour is dominant instead.</p>
+
+            <h3 data-mkey="combat.rugged.h">Rugged defense and surprise</h3>
+            <p data-mkey="combat.rugged.p1">A well dug-in defender may put up a <strong>rugged defense</strong>
+                against an adjacent attacker: the attacker's own defence drops to zero and its attack is halved for
+                that exchange. It becomes more likely the deeper the defender is entrenched, the better it digs, and
+                the further its experience runs ahead of the attacker's.</p>
+            <p data-mkey="combat.rugged.p2">A formation caught by <strong>surprise</strong> — by walking into a
+                hidden enemy, or by an ambush trait — suffers the same treatment, and additionally receives no
+                supporting fire from its neighbours.</p>
+
+            <h3 data-mkey="combat.support.h">Supporting fire</h3>
+            <p data-mkey="combat.support.p1">When an attacker moves <strong>adjacent</strong> to the formation it is
+                attacking, friendly formations near the defender fire back on the defender's behalf, at no ammunition
+                or action cost to the defender:</p>
+            <ul>
+                <li data-mkey="combat.support.ground"><strong>Artillery</strong> fires in support against a ground
+                    attacker, out to its own gun range.</li>
+                <li data-mkey="combat.support.air"><strong>Flak, air defence and fighters</strong> fire in support
+                    against an air attacker, out to the anti-aircraft reach the ruleset sets.</li>
+            </ul>
+            <p data-mkey="combat.support.p2">Supporting fire is one of the strongest tools in the game and it is the
+                reason a gun line placed behind the front is worth its prestige. It does not happen at all when the
+                attack is made from a distance, or when the attacker is surprised.</p>
+            <div class="switch">
+                <span class="callout-title" data-mkey="combat.support.switch.title">Ruleset-dependent</span>
+                <p data-mkey="combat.support.switch.p"><strong>Distant supporting fire is halved</strong>
+                    (<span class="key">support_fire_range_falloff</span>): only a supporter adjacent to the
+                    <em>defender</em> fires at full strength, everything further away at half. Off by default, where
+                    every eligible supporter fires at full strength.</p>
+            </div>
+
+            <h3 data-mkey="combat.overrun.h">Overrun</h3>
+            <p data-mkey="combat.overrun.p">A <strong>tank</strong> that destroys an adjacent enemy outright while
+                taking no more than one point of loss itself, and was not surprised, <strong>overruns</strong> it. The
+                defender does not fire back, the attack does not spend the tank's action for the turn, and the tank
+                gets a movement point back — so it may move on and attack again. A single strong tank formation can
+                roll up a line of weakened defenders in one turn this way.</p>
+
+            <h3 data-mkey="combat.retreat.h">Retreat and surrender</h3>
+            <p data-mkey="combat.retreat.p1">A ground defender that loses roughly 60% of its strength to a ground
+                attacker <strong>retreats</strong> into an adjacent hex. The threshold is not fixed: an already
+                weakened formation breaks sooner. Artillery, tactical bombers and fortifications never retreat.</p>
+            <p data-mkey="combat.retreat.p2">A formation that must retreat and has nowhere legal to go
+                <strong>surrenders</strong> and is destroyed. Encirclement is therefore a weapon in itself. Equipment
+                marked as never surrendering, and a commander with <strong>Ferocious Defense</strong>, are exempt;
+                so is a formation whose only blocked escape routes are its own side's.</p>
+
+            <h3 data-mkey="combat.exp.h">Experience from combat</h3>
+            <p data-mkey="combat.exp.p">Both sides gain experience from every exchange, attacker and defender alike.
+                You gain most by destroying — or forcing back — an enemy that was more experienced or better equipped
+                than you. Experience is capped at <strong>500</strong>, which is five full bars. See
+                <a href="#supply">Supply, strength &amp; prestige</a> for what experience buys and how replacements
+                dilute it.</p>
+
+            <h3 data-mkey="combat.air.h">Air combat and interception</h3>
+            <p data-mkey="combat.air.p1">Aircraft cannot start an attack in overcast, rain or snow, though they still
+                defend themselves; a commander with <strong>All Weather Combat</strong> is exempt. Any exchange that
+                crosses the air/ground boundary — anti-aircraft guns firing upward as much as aircraft striking down —
+                brings half its strength points to bear in bad weather.</p>
+            <p data-mkey="combat.air.p2"><strong>Anti-aircraft interception</strong> fires on aircraft as they move,
+                not only when they attack. Concealed anti-aircraft guns intercept an aircraft that moves through or
+                stops within reach; that is the baseline and it is not switchable off. Depending on the equipment
+                file, a gun that has intercepted may be unable to also fire in air defence that turn, and spotted guns
+                may intercept aircraft that stop within reach — a spotted gun never intercepts one merely passing by.
+                Hexes covered by <em>spotted</em> anti-aircraft guns that can actually intercept are drawn on the map
+                before you commit a route. An interception makes the move final.</p>
+
+            <div class="chapter-nav" data-nav></div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- 6. SUPPLY, STRENGTH & PRESTIGE                                -->
+        <!-- ============================================================ -->
+        <section class="chapter" id="supply" data-title="Supply, strength &amp; prestige"
+                 data-keywords="resupply reinforce overstrength prestige buy upgrade sell reserves core auxiliary replacement experience dilution supply efficiency">
+            <p class="eyebrow" data-mkey="supply.eyebrow">Chapter 6</p>
+            <h2 tabindex="-1" data-mkey="supply.h">Supply, strength &amp; prestige</h2>
+            <p class="lede" data-mkey="supply.lede">Ammunition and fuel are free. Bodies are not.</p>
+            <hr class="rule"/>
+
+            <h3 data-mkey="supply.actions.h">The three restoring actions</h3>
+            <p data-mkey="supply.actions.p">All three require that the formation has not yet moved, fired or
+                supplied this turn, and all three spend its turn.</p>
+            <div class="table-scroll">
+                <table>
+                    <caption data-mkey="supply.actions.caption">Restoring a formation.</caption>
+                    <thead>
+                    <tr>
+                        <th scope="col" data-mkey="supply.actions.th.action">Action</th>
+                        <th scope="col" data-mkey="supply.actions.th.does">Restores</th>
+                        <th scope="col" data-mkey="supply.actions.th.cost">Prestige</th>
+                        <th scope="col" data-mkey="supply.actions.th.req">Requires</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row" data-mkey="supply.actions.resupply">Resupply <kbd>S</kbd></th>
+                        <td data-mkey="supply.actions.resupply.does">Ammunition and fuel, for the formation and its
+                            organic transport</td>
+                        <td data-mkey="supply.actions.resupply.cost"><strong>Free</strong></td>
+                        <td data-mkey="supply.actions.resupply.req">Ground anywhere; aircraft on or beside an own
+                            airfield or carrier; ships anywhere, best in port</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" data-mkey="supply.actions.reinforce">Reinforce <kbd>R</kbd></th>
+                        <td data-mkey="supply.actions.reinforce.does">Strength back up to 10, and resupplies at the
+                            same time</td>
+                        <td data-mkey="supply.actions.reinforce.cost">Charged per strength point</td>
+                        <td data-mkey="supply.actions.reinforce.req">Below full strength</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" data-mkey="supply.actions.over">Overstrength <kbd>O</kbd></th>
+                        <td data-mkey="supply.actions.over.does">Strength <em>above</em> 10</td>
+                        <td data-mkey="supply.actions.over.cost">Charged per point, at a premium</td>
+                        <td data-mkey="supply.actions.over.req">Already at full strength, at least 100 experience,
+                            and not used before</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="warn">
+                <span class="callout-title" data-mkey="supply.free.title">Resupply costs nothing</span>
+                <p data-mkey="supply.free.p">Earlier versions of this manual, inherited from the engine OSADA was
+                    ported from, claimed resupply is paid for in prestige. It is not, and never has been in OSADA.
+                    Only reinforcement and overstrength are charged.</p>
+            </div>
+
+            <h3 data-mkey="supply.local.h">Local supply efficiency</h3>
+            <p data-mkey="supply.local.p">How much a resupply or reinforcement actually restores depends on where the
+                formation is standing: the terrain, the road and rail links it can draw on, the ground condition, and
+                how many enemy formations are adjacent. A city with no enemy nearby restores everything; a river hex
+                with two enemies next to it restores very little. The action panel states the exact percentage and the
+                exact gain before you commit, so there is nothing to estimate.</p>
+
+            <h3 data-mkey="supply.auto.h">Automatic resupply</h3>
+            <p data-mkey="supply.auto.p">A ground formation that does nothing at all for a whole turn resupplies
+                itself once, at the turn change. By default this requires a <strong>city</strong> hex; under
+                <strong>Idle ground units resupply anywhere</strong> (<span class="key">ground_auto_supply</span>) it
+                works wherever the formation stands. Under either setting an adjacent enemy blocks it, because a
+                formation being shot at is not idle.</p>
+
+            <h3 data-mkey="supply.over.h">Overstrength</h3>
+            <p data-mkey="supply.over.p">Every <strong>completed</strong> experience bar buys one strength point
+                above the normal maximum of 10; a partial bar buys nothing. With the experience cap at 500 the
+                ceiling is <strong>15</strong>. Overstrength is used once per formation, is priced at a premium, and
+                is the one restoring action that does <em>not</em> dilute experience.</p>
+
+            <h3 data-mkey="supply.dilute.h">Replacements dilute experience</h3>
+            <p data-mkey="supply.dilute.p1">Ordinary replacements arrive untrained. A formation's experience becomes
+                the strength-weighted average of its surviving veterans and its new intake — a formation at strength
+                3 with 400 experience, rebuilt to 10, comes out with 120.</p>
+            <p data-mkey="supply.dilute.p2">This is on by default and it is a real strategic constraint: there is no
+                way to heal a damaged veteran without spending some of what made it veteran. The alternative is to
+                pull it out of the line and let it fight at reduced strength. The reinforcement preview states the
+                new experience before you buy.</p>
+            <div class="switch">
+                <span class="callout-title" data-mkey="supply.dilute.switch.title">Ruleset-dependent</span>
+                <p data-mkey="supply.dilute.switch.p"><strong>Replacements dilute experience</strong>
+                    (<span class="key">replacement_experience</span>) can be set to <em>Preserved</em>, which is how
+                    OSADA behaved before August 2026. Default is <em>Diluted</em>.</p>
+            </div>
+
+            <h3 data-mkey="supply.prestige.h">Prestige</h3>
+            <p data-mkey="supply.prestige.p1">Prestige is the currency, and it represents standing with the high
+                command rather than money. You earn it by capturing objectives and other flagged hexes, by winning
+                scenarios — the better the grade the larger the award — and, in scenarios that grant it, by an amount
+                each turn set by the scenario and scaled by difficulty.</p>
+            <p data-mkey="supply.prestige.p2">You spend it on new formations, on reinforcement and overstrength, on
+                upgrading a formation's equipment, and on attachments. The <strong>Influence</strong> trait reduces
+                upgrade costs; <strong>Liberator</strong> doubles the prestige from every objective and victory hex
+                its formation captures.</p>
+
+            <h3 data-mkey="supply.core.h">Core, auxiliary and the reserve</h3>
+            <p data-mkey="supply.core.p1">In a campaign your force is split. <strong>Core</strong> formations are
+                yours: they carry their experience, their commanders and their attachments from one scenario to the
+                next. <strong>Auxiliary</strong> formations are lent to you for one battle and do not come with you,
+                so spending prestige on them is spending it on nothing.</p>
+            <p data-mkey="supply.core.p2">The <strong>Reserve</strong> (<kbd>D</kbd>) holds core formations not
+                deployed on the current map. The Equipment window (<kbd>B</kbd>) is where buying, upgrading and
+                selling happen. What you can buy is limited by the campaign's own equipment list and by the current
+                date — equipment becomes available and becomes obsolete as the campaign's calendar advances.</p>
+
+            <h3 data-mkey="supply.attach.h">Attachments</h3>
+            <p data-mkey="supply.attach.p">Where the campaign's equipment file defines them, a core formation may be
+                fitted with up to <strong>two</strong> attachments, each bought with prestige and each carrying a
+                stated penalty as well as a bonus. The implemented slots are Recon, Air Defense, Bridging, Anti-Tank,
+                Support/Ammunition, Fast Entrench, Bunker Buster, Fuel Pods and Fast Speed. Attachments are a
+                per-campaign feature — most campaigns' equipment files define none, and the ruleset can only switch
+                them off, never invent slots the content never had.</p>
+
+            <div class="chapter-nav" data-nav></div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- 7. COMMANDERS                                                 -->
+        <!-- ============================================================ -->
+        <section class="chapter" id="commanders" data-title="Commanders"
+                 data-keywords="hero leader commander trait renown promotion wound death hero desk hall of fame emergence recognition background legacy">
+            <p class="eyebrow" data-mkey="cmd.eyebrow">Chapter 7</p>
+            <h2 tabindex="-1" data-mkey="cmd.h">Commanders</h2>
+            <p class="lede" data-mkey="cmd.lede">In a campaign, officers are named people with careers. In a
+                standalone scenario they are a pair of traits.</p>
+            <hr class="rule"/>
+
+            <div class="note">
+                <span class="callout-title" data-mkey="cmd.two.title">Two systems, and which one you meet</span>
+                <p data-mkey="cmd.two.p">A <strong>campaign core formation</strong> gets the persistent commander
+                    system described first. A formation that belongs to a standalone scenario has no formation record
+                    behind it and takes the older path described at the end of this chapter. You never see both for
+                    the same formation.</p>
+            </div>
+
+            <h3 data-mkey="cmd.emerge.h">How an officer emerges</h3>
+            <p data-mkey="cmd.emerge.p">Notable actions — not every routine attack — accumulate
+                <strong>recognition</strong> on a formation, surfaced as a coarse status such as "officer
+                recommendation pending". When enough has accumulated, a check produces an officer, with protection
+                against a campaign-long drought so a formation that keeps distinguishing itself does eventually get
+                one. The result is seeded from the formation's own history, so reloading an autosave and refighting
+                the same battle produces the same officer: you cannot reroll a better one.</p>
+            <p data-mkey="cmd.emerge.p2">A new commander arrives with a name drawn from their nation, a birth year,
+                a birthplace, a social background, a pre-war profession, a military education and a prior service
+                record — and with the distinguishing action that produced them recorded as the reason. The event is
+                shown after combat resolves, never during the attack animation.</p>
+
+            <h3 data-mkey="cmd.traits.h">What a commander is worth</h3>
+            <p data-mkey="cmd.traits.p">Each officer carries two effective traits: a <strong>professional
+                background</strong>, which follows from the formation's class and the officer's own history, and a
+                <strong>learned trait</strong> derived from the action that made them. Later traits are learned from
+                evidence rather than granted at random — an officer does not acquire river-crossing expertise while
+                fighting in a desert.</p>
+
+            <h3 data-mkey="cmd.renown.h">Renown, promotion and mortality</h3>
+            <p data-mkey="cmd.renown.p1">Accumulated command experience raises an officer through five tiers of
+                <strong>renown</strong>: Unknown, Experienced, Distinguished, Hero, Legend. Renown gates entry to the
+                Hall of Fame and is shown wherever the officer is.</p>
+            <p data-mkey="cmd.renown.p2">Officers can be <strong>wounded</strong> and can be <strong>killed</strong>.
+                A wound takes them out of the line for a time; a death is permanent and is memorialised. This is the
+                reason a veteran formation is worth more than the sum of its equipment, and the reason spending it
+                carelessly costs more than the replacements.</p>
+
+            <h3 data-mkey="cmd.desk.h">The Hero Desk and the Hall of Fame</h3>
+            <p data-mkey="cmd.desk.p">The <strong>Hero Desk</strong>, on the main menu, holds every commander you
+                have led: the active officers of campaigns in progress, and the archived careers of the completed,
+                the retired and the fallen. The <strong>Hall of Fame</strong> collects the ones who reached the
+                highest renown. Both survive across campaigns; starting a campaign over replaces that campaign's
+                archived roster, and the confirmation says so before it happens.</p>
+
+            <h3 data-mkey="cmd.legacy.h">Scenario units: the legacy system</h3>
+            <p data-mkey="cmd.legacy.p">A formation with no campaign formation behind it takes the older path. It
+                may earn a leader after a combat once it has at least one experience level, and reaching the
+                experience cap of 500 guarantees one. That leader grants <strong>two</strong> traits: its class's
+                signature trait, and one rolled from the rest of its class list. A formation that has a leader can
+                never get another.</p>
+            <div class="table-scroll">
+                <table>
+                    <caption data-mkey="cmd.sig.caption">Signature trait by class, granted automatically on the
+                        legacy path.</caption>
+                    <thead>
+                    <tr>
+                        <th scope="col" data-mkey="cmd.sig.th.class">Class</th>
+                        <th scope="col" data-mkey="cmd.sig.th.trait">Signature trait</th>
+                        <th scope="col" data-mkey="cmd.sig.th.effect">Effect</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">Infantry</th>
+                        <td>Tenacious Defense</td>
+                        <td data-mkey="cmd.sig.inf">Ground defence increased by 4.</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Tank</th>
+                        <td>Aggressive Maneuver</td>
+                        <td data-mkey="cmd.sig.tank">Movement increased by 1.</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Recon</th>
+                        <td>Elite Recon Veteran</td>
+                        <td data-mkey="cmd.sig.recon">Spotting range increased by 2.</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Anti-Tank</th>
+                        <td>Tank Killer</td>
+                        <td data-mkey="cmd.sig.at">No penalty for moving into combat.</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Artillery</th>
+                        <td>Marksman</td>
+                        <td data-mkey="cmd.sig.arty">Attack range increased by 1.</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Air Defence</th>
+                        <td>Mechanized Veteran</td>
+                        <td data-mkey="cmd.sig.ad">May move and fire in the same turn.</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Fighter</th>
+                        <td>Skilled Interceptor</td>
+                        <td data-mkey="cmd.sig.fighter">May intercept several enemy fighters in the defensive
+                            phase.</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Tactical Bomber</th>
+                        <td>Skilled Assault</td>
+                        <td data-mkey="cmd.sig.bomber">Cannot be surprised while moving.</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 data-mkey="cmd.catalogue.h">Trait catalogue</h3>
+            <p data-mkey="cmd.catalogue.p">These are the traits that can be held on either path. A few are marked
+                where their effect is worth knowing precisely.</p>
+            <div class="table-scroll">
+                <table>
+                    <caption data-mkey="cmd.cat.caption">Commander traits.</caption>
+                    <thead>
+                    <tr>
+                        <th scope="col" data-mkey="cmd.cat.th.name">Trait</th>
+                        <th scope="col" data-mkey="cmd.cat.th.effect">Effect</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr><th scope="row">Aggressive Attack</th><td data-mkey="cmd.cat.aggr">Every attack value
+                        increased by 2.</td></tr>
+                    <tr><th scope="row">Aggressive Maneuver</th><td data-mkey="cmd.cat.man">Movement increased by
+                        1.</td></tr>
+                    <tr><th scope="row">All Weather Combat</th><td data-mkey="cmd.cat.allw">The aircraft is not
+                        affected by weather: it can attack in overcast, rain and snow, is not halved in air/ground
+                        exchanges, and does not lose spotting range. Air formations only.</td></tr>
+                    <tr><th scope="row">Alpine Training</th><td data-mkey="cmd.cat.alpine">Treats forest and mountain
+                        hexes as clear terrain <em>when moving</em>. Terrain defence, entrenchment and close combat
+                        still read the real terrain.</td></tr>
+                    <tr><th scope="row">Battlefield Intelligence</th><td data-mkey="cmd.cat.bi">Cannot be
+                        surprised.</td></tr>
+                    <tr><th scope="row">Bridging</th><td data-mkey="cmd.cat.bridge">Treats passable river hexes as
+                        rough terrain when moving.</td></tr>
+                    <tr><th scope="row">Combat Support</th><td data-mkey="cmd.cat.cs">Grants an experience bonus to
+                        adjacent friendly formations.</td></tr>
+                    <tr><th scope="row">Determined Defense</th><td data-mkey="cmd.cat.dd">Every defence factor
+                        increased by 2.</td></tr>
+                    <tr><th scope="row">Devastating Fire</th><td data-mkey="cmd.cat.df">May fire twice in a turn. The
+                        first shot consumes the bonus but does not otherwise count as an attack, so a formation that
+                        has not moved can still resupply after firing once.</td></tr>
+                    <tr><th scope="row">Ferocious Defense</th><td data-mkey="cmd.cat.fd">Entrenchment cannot be
+                        ignored by the enemy, and the formation never surrenders for want of a retreat hex.</td></tr>
+                    <tr><th scope="row">Fire Discipline</th><td data-mkey="cmd.cat.fdisc">Spends only half an
+                        ammunition point per attack.</td></tr>
+                    <tr><th scope="row">First Strike</th><td data-mkey="cmd.cat.fs">Fires first against an enemy when
+                        it wins the initiative in a combat round.</td></tr>
+                    <tr><th scope="row">Forest Camouflage</th><td data-mkey="cmd.cat.fc">In a forest hex, cannot be
+                        spotted unless an enemy moves adjacent.</td></tr>
+                    <tr><th scope="row">Infiltration Tactics</th><td data-mkey="cmd.cat.inf">Ignores enemy
+                        entrenchment when resolving combat.</td></tr>
+                    <tr><th scope="row">Influence</th><td data-mkey="cmd.cat.infl">Upgrades to better equipment cost
+                        less prestige.</td></tr>
+                    <tr><th scope="row">Liberator</th><td data-mkey="cmd.cat.lib">Double prestige for every objective
+                        and victory hex this formation captures.</td></tr>
+                    <tr><th scope="row">Marksman</th><td data-mkey="cmd.cat.marks">Attack range increased by
+                        1.</td></tr>
+                    <tr><th scope="row">Mechanized Veteran</th><td data-mkey="cmd.cat.mech">May move and fire in the
+                        same turn — which matters only where the ruleset makes guns fire before moving.</td></tr>
+                    <tr><th scope="row">Overwatch</th><td data-mkey="cmd.cat.ow">Fires at any enemy that moves within
+                        range. The enemy is automatically surprised, so this formation fires first and against the
+                        enemy's close-assault rather than ground defence factor.</td></tr>
+                    <tr><th scope="row">Overwhelming Attack</th><td data-mkey="cmd.cat.oa">Converts some of the
+                        suppression it would inflict into kills.</td></tr>
+                    <tr><th scope="row">Reconnaissance Movement</th><td data-mkey="cmd.cat.rm">Phased movement, like
+                        a reconnaissance formation.</td></tr>
+                    <tr><th scope="row">Resilience</th><td data-mkey="cmd.cat.res">Suffers fewer casualties than
+                        normal when attacked.</td></tr>
+                    <tr><th scope="row">Shock Tactics</th><td data-mkey="cmd.cat.st">Suppression it inflicts lasts
+                        the whole enemy turn rather than the combat round.</td></tr>
+                    <tr><th scope="row">Skilled Assault</th><td data-mkey="cmd.cat.sa">The bomber cannot be surprised
+                        while moving.</td></tr>
+                    <tr><th scope="row">Skilled Ground Attack</th><td data-mkey="cmd.cat.sga">Inflicts more
+                        casualties than normal when attacking.</td></tr>
+                    <tr><th scope="row">Skilled Interceptor</th><td data-mkey="cmd.cat.si">May intercept several
+                        enemy fighters in the defensive phase.</td></tr>
+                    <tr><th scope="row">Skilled Reconnaissance</th><td data-mkey="cmd.cat.sr">Spotting range
+                        increased by 1.</td></tr>
+                    <tr><th scope="row">Street Fighter</th><td data-mkey="cmd.cat.sf">Ignores an enemy's city
+                        entrenchment when resolving combat.</td></tr>
+                    <tr><th scope="row">Superior Maneuver</th><td data-mkey="cmd.cat.sm">Bypasses enemy zones of
+                        control entirely.</td></tr>
+                    <tr><th scope="row">Tank Killer</th><td data-mkey="cmd.cat.tk">No penalty for moving into
+                        combat.</td></tr>
+                    <tr><th scope="row">Tenacious Defense</th><td data-mkey="cmd.cat.td">Ground defence increased by
+                        4, and rugged defense becomes more likely.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="chapter-nav" data-nav></div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- 8. WEATHER & TERRAIN                                          -->
+        <!-- ============================================================ -->
+        <section class="chapter" id="weather" data-title="Weather &amp; terrain"
+                 data-keywords="weather fair overcast rain snow mud frozen dry ground condition terrain entrenchment initiative cap movement cost table">
+            <p class="eyebrow" data-mkey="wx.eyebrow">Chapter 8</p>
+            <h2 tabindex="-1" data-mkey="wx.h">Weather &amp; terrain</h2>
+            <p class="lede" data-mkey="wx.lede">The sky changes what everyone can do. The ground changes how far they
+                can go.</p>
+            <hr class="rule"/>
+
+            <h3 data-mkey="wx.sky.h">The sky</h3>
+            <ul class="weather-grid">
+                <li>
+                    <img src="resources/ui/osada/ico_weather_clear.png" alt="" width="44" height="44"/>
+                    <span class="wname" data-mkey="wx.fair">Fair</span>
+                    <span class="wnote" data-mkey="wx.fair.n">No effect.</span>
+                </li>
+                <li>
+                    <img src="resources/ui/osada/ico_weather_overcast.png" alt="" width="44" height="44"/>
+                    <span class="wname" data-mkey="wx.overcast">Overcast</span>
+                    <span class="wnote" data-mkey="wx.overcast.n">Aircraft cannot attack. Air/ground fire halved.
+                        Aircraft spot half as far.</span>
+                </li>
+                <li>
+                    <img src="resources/ui/osada/ico_weather_rain.png" alt="" width="44" height="44"/>
+                    <span class="wname" data-mkey="wx.rain">Raining</span>
+                    <span class="wnote" data-mkey="wx.rain.n">As overcast, plus +3 defence for every defender, and
+                        everyone spots half as far. A run of rain turns the ground to mud.</span>
+                </li>
+                <li>
+                    <img src="resources/ui/osada/ico_weather_snow.png" alt="" width="44" height="44"/>
+                    <span class="wname" data-mkey="wx.snow">Snowing</span>
+                    <span class="wnote" data-mkey="wx.snow.n">As raining. A run of snow freezes the ground.</span>
+                </li>
+            </ul>
+            <p data-mkey="wx.sky.p">Four rules follow from bad weather, and each is separately switchable in the
+                ruleset. All four ship <strong>on</strong>.</p>
+            <ul>
+                <li data-mkey="wx.sky.1"><strong>Aircraft are grounded</strong> in overcast, rain or snow: they
+                    cannot <em>initiate</em> an attack, though they still defend themselves.
+                    (<span class="key">weather_grounds_aircraft</span>)</li>
+                <li data-mkey="wx.sky.2"><strong>Air/ground fire is halved.</strong> Any exchange that crosses the
+                    air/ground boundary brings half its strength points to bear — flak firing upward as much as
+                    aircraft striking down. Combat within one layer is untouched.
+                    (<span class="key">weather_halves_air_ground</span>)</li>
+                <li data-mkey="wx.sky.3"><strong>Rain and snow give +3 defence</strong> to whoever is defending, on
+                    land, at sea and in the air alike. Overcast does not.
+                    (<span class="key">weather_defense_bonus</span>)</li>
+                <li data-mkey="wx.sky.4"><strong>Sight is halved</strong> — for aircraft in anything worse than fair,
+                    for everyone else in rain or snow. (<span class="key">weather_halves_spotting</span>)</li>
+            </ul>
+            <p data-mkey="wx.sky.p2">A commander with <strong>All Weather Combat</strong> is exempt from all
+                four.</p>
+
+            <h3 data-mkey="wx.ground.h">The ground</h3>
+            <ul class="weather-grid">
+                <li>
+                    <img src="resources/ui/osada/ico_ground_dry.png" alt="" width="44" height="44"/>
+                    <span class="wname" data-mkey="wx.dry">Dry</span>
+                    <span class="wnote" data-mkey="wx.dry.n">Baseline movement costs.</span>
+                </li>
+                <li>
+                    <img src="resources/ui/osada/ico_ground_mud.png" alt="" width="44" height="44"/>
+                    <span class="wname" data-mkey="wx.mud">Mud</span>
+                    <span class="wnote" data-mkey="wx.mud.n">Movement is markedly more expensive, worst for wheeled
+                        vehicles.</span>
+                </li>
+                <li>
+                    <img src="resources/ui/osada/ico_ground_frozen.png" alt="" width="44" height="44"/>
+                    <span class="wname" data-mkey="wx.frozen">Frozen</span>
+                    <span class="wnote" data-mkey="wx.frozen.n">Rivers can be crossed without ending the move;
+                        movement is otherwise slower than dry.</span>
+                </li>
+            </ul>
+            <p data-mkey="wx.ground.p1">The ground does <strong>not</strong> change on the first turn of bad
+                weather. It takes a run of the same sky — <strong>three continuous turns</strong> by default — to move
+                the ground one step, and a thaw goes Frozen → Mud → Dry, one step per run, rather than snapping back.
+                Overcast counts as neither rain nor snow, so it dries the ground like fair weather does. Freezing
+                beats miring: a snow squall in the middle of a wet spell still freezes.</p>
+            <div class="switch">
+                <span class="callout-title" data-mkey="wx.ground.switch.title">Ruleset-dependent</span>
+                <p data-mkey="wx.ground.switch.p"><strong>Weather changes the ground</strong>
+                    (<span class="key">ground_follows_weather</span>) is three-way: never, <em>as each scenario
+                    decides</em> (the default — scenario authors set this per battle), or always. <strong>Turns of
+                    weather before the ground shifts</strong> (<span class="key">ground_change_turns</span>) sets the
+                    run length, 1 to 6, default 3.</p>
+            </div>
+
+            <h3 data-mkey="wx.terrain.h">Terrain</h3>
+            <p data-mkey="wx.terrain.p1">Terrain does three things: it sets a <strong>base entrenchment</strong> that
+                any ground formation in the hex immediately obtains, it imposes an <strong>initiative ceiling</strong>
+                on whoever is defending in it, and it decides the <strong>movement cost</strong> per movement
+                type.</p>
+            <div class="warn">
+                <span class="callout-title" data-mkey="wx.terrain.warn.title">These numbers are the baseline</span>
+                <p data-mkey="wx.terrain.warn.p">A campaign built on its own equipment file can override every one of
+                    them, and several shipped campaigns do. The table below is what applies when the content says
+                    nothing — treat it as the default, not as universal law. The formation panel always shows the
+                    values actually in force for the hex you are looking at.</p>
+            </div>
+            <div class="table-scroll">
+                <table>
+                    <caption data-mkey="wx.terrain.caption">Baseline terrain: entrenchment obtained, defender's
+                        initiative ceiling, and dry-ground movement cost by movement type. <strong>×</strong> = the
+                        whole remaining allowance; <strong>—</strong> = impassable; 99 = no initiative
+                        ceiling.</caption>
+                    <thead>
+                    <tr>
+                        <th scope="col" data-mkey="wx.t.th.terrain">Terrain</th>
+                        <th scope="col" class="num" data-mkey="wx.t.th.ent">Entr.</th>
+                        <th scope="col" class="num" data-mkey="wx.t.th.ini">Ini. cap</th>
+                        <th scope="col" class="num" data-mkey="wx.t.th.leg">Leg</th>
+                        <th scope="col" class="num" data-mkey="wx.t.th.tracked">Tracked</th>
+                        <th scope="col" class="num" data-mkey="wx.t.th.half">Half-tr.</th>
+                        <th scope="col" class="num" data-mkey="wx.t.th.wheel">Wheeled</th>
+                        <th scope="col" class="num" data-mkey="wx.t.th.towed">Towed</th>
+                        <th scope="col" class="num" data-mkey="wx.t.th.at">All-terr.</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr><th scope="row">Clear</th><td class="num">0</td><td class="num">99</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">2</td><td class="num">1</td><td class="num">1</td></tr>
+                    <tr><th scope="row">City</th><td class="num">3</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td></tr>
+                    <tr><th scope="row">Airfield</th><td class="num">0</td><td class="num">99</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td></tr>
+                    <tr><th scope="row">Forest</th><td class="num">2</td><td class="num">3</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">4</td><td class="num">2</td><td class="num">1</td></tr>
+                    <tr><th scope="row">Bocage</th><td class="num">2</td><td class="num">3</td><td class="num">2</td><td class="num">4</td><td class="num cell-all">×</td><td class="num cell-all">×</td><td class="num cell-all">×</td><td class="num">1</td></tr>
+                    <tr><th scope="row">Hill</th><td class="num">1</td><td class="num">5</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">3</td><td class="num">2</td><td class="num">1</td></tr>
+                    <tr><th scope="row">Mountain</th><td class="num">2</td><td class="num">1</td><td class="num cell-all">×</td><td class="num cell-all">×</td><td class="num cell-all">×</td><td class="num cell-all">×</td><td class="num cell-all">×</td><td class="num">1</td></tr>
+                    <tr><th scope="row">Sand</th><td class="num">0</td><td class="num">99</td><td class="num">2</td><td class="num">1</td><td class="num">1</td><td class="num">3</td><td class="num">1</td><td class="num">1</td></tr>
+                    <tr><th scope="row">Swamp</th><td class="num">0</td><td class="num">2</td><td class="num">2</td><td class="num">4</td><td class="num">4</td><td class="num cell-all">×</td><td class="num cell-block">—</td><td class="num">1</td></tr>
+                    <tr><th scope="row">Rough</th><td class="num">2</td><td class="num">3</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">1</td><td class="num">1</td></tr>
+                    <tr><th scope="row">River</th><td class="num">0</td><td class="num">99</td><td class="num cell-all">×</td><td class="num cell-all">×</td><td class="num cell-all">×</td><td class="num cell-all">×</td><td class="num cell-all">×</td><td class="num cell-all">×</td></tr>
+                    <tr><th scope="row">Stream</th><td class="num">0</td><td class="num">99</td><td class="num">1</td><td class="num">2</td><td class="num">2</td><td class="num">4</td><td class="num cell-all">×</td><td class="num">1</td></tr>
+                    <tr><th scope="row">Impassable river</th><td class="num">0</td><td class="num">99</td><td class="num cell-block">—</td><td class="num cell-block">—</td><td class="num cell-block">—</td><td class="num cell-block">—</td><td class="num cell-block">—</td><td class="num cell-block">—</td></tr>
+                    <tr><th scope="row">Fortification</th><td class="num">4</td><td class="num">3</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">2</td><td class="num">1</td><td class="num">1</td></tr>
+                    <tr><th scope="row">Port</th><td class="num">1</td><td class="num">5</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td></tr>
+                    <tr><th scope="row">Ocean</th><td class="num">0</td><td class="num">99</td><td class="num cell-block">—</td><td class="num cell-block">—</td><td class="num cell-block">—</td><td class="num cell-block">—</td><td class="num cell-block">—</td><td class="num cell-block">—</td></tr>
+                    <tr><th scope="row">Escarpment</th><td class="num">0</td><td class="num">99</td><td class="num cell-block">—</td><td class="num cell-block">—</td><td class="num cell-block">—</td><td class="num cell-block">—</td><td class="num cell-block">—</td><td class="num cell-block">—</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p data-mkey="wx.terrain.p2">Roads and bridges are charged separately from the terrain they cross, which
+                is what makes a road through a forest worth using. Mud and frozen ground each have their own cost
+                table; the movement overlay uses whichever is in force.</p>
+
+            <h3 data-mkey="wx.terrain.tactics.h">What this means in practice</h3>
+            <ul>
+                <li data-mkey="wx.tac.1">Cities and fortifications are where defenders live: the highest base
+                    entrenchment, and an initiative ceiling of 1 or 3 that strips fast attackers of their
+                    advantage.</li>
+                <li data-mkey="wx.tac.2">Hills and ports leave the ceiling at 5, so a fast, well-equipped attacker
+                    keeps most of its edge there.</li>
+                <li data-mkey="wx.tac.3">Clear terrain has no ceiling at all and no entrenchment. It is where armour
+                    wins and where infantry dies.</li>
+                <li data-mkey="wx.tac.4">Wheeled vehicles are the ones terrain punishes: they cannot cross swamp at
+                    all, and pay double or worse almost everywhere that is not a road.</li>
+                <li data-mkey="wx.tac.5">All-terrain formations pay 1 nearly everywhere. Where a campaign fields
+                    them, they are the ones to send into the mountains.</li>
+            </ul>
+
+            <div class="chapter-nav" data-nav></div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- 9. RULESET PROFILES                                           -->
+        <!-- ============================================================ -->
+        <section class="chapter" id="rulesets" data-title="Ruleset profiles"
+                 data-keywords="ruleset profile open general fidelity author vision osada default rules keys switches efile equipment file">
+            <p class="eyebrow" data-mkey="rs.eyebrow">Chapter 9</p>
+            <h2 tabindex="-1" data-mkey="rs.h">Ruleset profiles</h2>
+            <p class="lede" data-mkey="rs.lede">Which version of a switchable rule runs, and who decided.</p>
+            <hr class="rule"/>
+
+            <p data-mkey="rs.p1">A number of rules in this manual exist in two versions: the one OSADA runs by
+                default, and Open General's. Rather than pick one for everybody, the game exposes them as a
+                <strong>ruleset</strong> chosen before a campaign or scenario starts. Three profiles always
+                exist:</p>
+            <ul class="cards">
+                <li>
+                    <h4 data-mkey="rs.av.h">Author's Vision</h4>
+                    <p data-mkey="rs.av.p">Follows the configuration this content actually ships with. What the
+                        campaign's designer intended.</p>
+                </li>
+                <li>
+                    <h4 data-mkey="rs.od.h">OSADA Default</h4>
+                    <p data-mkey="rs.od.p">OSADA's documented baseline, identical for every campaign and scenario.
+                        This is what the rest of this manual describes.</p>
+                </li>
+                <li>
+                    <h4 data-mkey="rs.og.h">Open General Fidelity</h4>
+                    <p data-mkey="rs.og.p">Every Open General rule OSADA has built, switched on together. Rules the
+                        content's equipment file decides for itself are left to it.</p>
+                </li>
+            </ul>
+            <p data-mkey="rs.p2">You can also save your own profiles. A profile that names nothing for a rule leaves
+                that rule following the content, which is what makes one profile meaningful across campaigns built on
+                different equipment files. The ruleset window states, per rule, where the value in force came
+                from.</p>
+
+            <div class="note">
+                <span class="callout-title" data-mkey="rs.limits.title">What a profile cannot do</span>
+                <p data-mkey="rs.limits.p">A profile can only steer branches the engine already runs. It cannot
+                    invent a mechanic the content never defined — turning attachments "on" for a campaign whose
+                    equipment file has no attachment slots does nothing — and no profile changes how the AI plays.
+                    Air missions, carrier hangars, rail transport and the extended naval rules are Open General
+                    systems OSADA does not reproduce at all.</p>
+            </div>
+
+            <h3 data-mkey="rs.table.h">The switchable rules</h3>
+            <div class="table-scroll">
+                <table>
+                    <caption data-mkey="rs.table.caption">Every ruleset key, with the value OSADA runs when nothing
+                        overrides it.</caption>
+                    <thead>
+                    <tr>
+                        <th scope="col" data-mkey="rs.th.rule">Rule</th>
+                        <th scope="col" data-mkey="rs.th.key">Key</th>
+                        <th scope="col" data-mkey="rs.th.default">Default</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr><th scope="row">Anti-aircraft interception</th><td><code>aa_intercept_mode</code></td><td data-mkey="rs.k.aa">Set by the equipment file. Concealed guns always intercept.</td></tr>
+                    <tr><th scope="row">Anti-aircraft reach</th><td><code>flak_range</code></td><td data-mkey="rs.k.flak">Set by the equipment file; 1 hex where it says nothing.</td></tr>
+                    <tr><th scope="row">Attachments</th><td><code>attachments</code></td><td data-mkey="rs.k.att">Set by the equipment file. Most campaigns define none.</td></tr>
+                    <tr><th scope="row">Supply model</th><td><code>supply_model</code></td><td data-mkey="rs.k.sup">Per-terrain supply factors where the content ships them.</td></tr>
+                    <tr><th scope="row">Stalin regime</th><td><code>stalin_regime</code></td><td data-mkey="rs.k.stalin">Off unless the campaign asks for it.</td></tr>
+                    <tr><th scope="row">Bad weather grounds aircraft</th><td><code>weather_grounds_aircraft</code></td><td data-mkey="rs.k.wga"><strong>On</strong></td></tr>
+                    <tr><th scope="row">Bad weather halves fire between air and ground</th><td><code>weather_halves_air_ground</code></td><td data-mkey="rs.k.whag"><strong>On</strong></td></tr>
+                    <tr><th scope="row">Rain and snow favour every defender</th><td><code>weather_defense_bonus</code></td><td data-mkey="rs.k.wdb"><strong>On</strong></td></tr>
+                    <tr><th scope="row">Bad weather shortens sight for everyone</th><td><code>weather_halves_spotting</code></td><td data-mkey="rs.k.whs"><strong>On</strong></td></tr>
+                    <tr><th scope="row">Weather changes the ground</th><td><code>ground_follows_weather</code></td><td data-mkey="rs.k.gfw">As each scenario decides</td></tr>
+                    <tr><th scope="row">Turns of weather before the ground shifts</th><td><code>ground_change_turns</code></td><td data-mkey="rs.k.gct">3 turns</td></tr>
+                    <tr><th scope="row">Replacements dilute experience</th><td><code>replacement_experience</code></td><td data-mkey="rs.k.re"><strong>Diluted</strong></td></tr>
+                    <tr><th scope="row">Guns must fire before they move</th><td><code>heavy_move_fire</code></td><td data-mkey="rs.k.hmf">Off — either order</td></tr>
+                    <tr><th scope="row">Snow doubles fuel use</th><td><code>snow_fuel</code></td><td data-mkey="rs.k.sf">Off</td></tr>
+                    <tr><th scope="row">Distant supporting fire is halved</th><td><code>support_fire_range_falloff</code></td><td data-mkey="rs.k.sff">Off — always full strength</td></tr>
+                    <tr><th scope="row">Empty units fight worse</th><td><code>dry_unit_penalties</code></td><td data-mkey="rs.k.dup">Off</td></tr>
+                    <tr><th scope="row">Minefields</th><td><code>minefields</code></td><td data-mkey="rs.k.mf">Off</td></tr>
+                    <tr><th scope="row">Aircraft fuel model</th><td><code>air_fuel</code></td><td data-mkey="rs.k.af">Off — dry aircraft are grounded, not lost</td></tr>
+                    <tr><th scope="row">Combat initiative</th><td><code>initiative_model</code></td><td data-mkey="rs.k.im">Equipment and terrain only</td></tr>
+                    <tr><th scope="row">Spotted hexes stay spotted</th><td><code>spotting_memory</code></td><td data-mkey="rs.k.sm">Off — visibility follows your units</td></tr>
+                    <tr><th scope="row">Cities and airfields watch</th><td><code>installation_spotting</code></td><td data-mkey="rs.k.is">Off</td></tr>
+                    <tr><th scope="row">Idle ground units resupply anywhere</th><td><code>ground_auto_supply</code></td><td data-mkey="rs.k.gas">Off — only in a city</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p data-mkey="rs.p3">Selecting Open General Fidelity turns on every rule in the lower half of that table
+                at once. It is the most opinionated of the three profiles, and it makes the game harder in several
+                directions simultaneously — guns must unlimber, snow burns fuel, aircraft can be lost outright,
+                combat stops being predictable, and empty formations are punished as well as prohibited.</p>
+
+            <div class="chapter-nav" data-nav></div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- 10. KEYBOARD & INTERFACE                                      -->
+        <!-- ============================================================ -->
+        <section class="chapter" id="keyboard" data-title="Keyboard &amp; interface"
+                 data-keywords="keyboard shortcuts keys hotkeys controls f1 esc pause cyrillic layout">
+            <p class="eyebrow" data-mkey="kb.eyebrow">Chapter 10</p>
+            <h2 tabindex="-1" data-mkey="kb.h">Keyboard &amp; interface</h2>
+            <p class="lede" data-mkey="kb.lede">Press <kbd>F1</kbd> or <kbd>?</kbd> in game for this same list on a
+                card.</p>
+            <hr class="rule"/>
+
+            <p data-mkey="kb.p1">This list is generated from the game's own command catalog and is checked against it
+                by <code>scripts/check_keyboard_manual.py</code>, so the manual cannot promise a key the game does not
+                handle.</p>
+            <p data-mkey="kb.p2">Letter commands are matched on the physical key, so they keep working while a
+                Cyrillic keyboard layout is active.</p>
+
+            <!-- MACHINE-CHECKED. `scripts/check_keyboard_manual.py` matches this exact opening tag and
+                 every `<li data-command="..."><kbd>...</kbd>` between it and the first `</section>`
+                 against CommandCatalog.kt. Do not rename the id, nest another <section> inside it,
+                 edit the ids or key caps, or translate the <kbd> contents. -->
+            <section id="nav_keyboard">
+            <h3 data-mkey="kb.unit.h">Unit</h3>
+            <ul>
+                <li data-command="mount"><kbd>M</kbd> &mdash; Mount / Dismount</li>
+                <li data-command="embark"><kbd>E</kbd> &mdash; Embark / Disembark</li>
+                <li data-command="supply"><kbd>S</kbd> &mdash; Supply</li>
+                <li data-command="reinforce"><kbd>R</kbd> &mdash; Reinforce</li>
+                <li data-command="overstrength"><kbd>O</kbd> &mdash; Overstrength</li>
+                <li data-command="undo"><kbd>U / Ctrl+Z</kbd> &mdash; Undo move</li>
+                <li data-command="next_unit"><kbd>N</kbd> &mdash; Next unit</li>
+                <li data-command="prev_unit"><kbd>P</kbd> &mdash; Previous unit</li>
+            </ul>
+            <p data-mkey="kb.unit.p">Two rules people meet through these keys rather than through the manual.
+                Mounting or dismounting does <em>not</em> grant a second move. Undo is deliberately unavailable once
+                the move revealed something &mdash; new spotting, a surprise or hidden enemy, an anti-air interception
+                &mdash; or once combat happened; that is the rule, not a bug. A command that cannot run right now
+                keeps its button on screen, greyed out, and its tooltip states the reason.</p>
+
+            <h3 data-mkey="kb.map.h">Map</h3>
+            <ul>
+                <li data-command="air_mode"><kbd>A</kbd> &mdash; Air Mode</li>
+                <li data-command="hex_grid"><kbd>H</kbd> &mdash; Hex grid</li>
+                <li data-command="map_labels"><kbd>L</kbd> &mdash; Optional objective labels</li>
+                <li data-command="strategic_map"><kbd>Z</kbd> &mdash; Strategic map</li>
+                <li data-command="zoom_in"><kbd>+ / =</kbd> &mdash; Zoom in</li>
+                <li data-command="zoom_out"><kbd>-</kbd> &mdash; Zoom out</li>
+                <li data-command="pan"><kbd>&uarr; / &darr; / &larr; / &rarr;</kbd> &mdash; Pan map</li>
+            </ul>
+
+            <h3 data-mkey="kb.panels.h">Panels</h3>
+            <ul>
+                <li data-command="equipment"><kbd>B</kbd> &mdash; Equipment</li>
+                <li data-command="inspector"><kbd>I</kbd> &mdash; Unit inspector</li>
+                <li data-command="reserves"><kbd>D</kbd> &mdash; Reserves</li>
+                <li data-command="turn_report"><kbd>T</kbd> &mdash; Turn report</li>
+            </ul>
+
+            <h3 data-mkey="kb.general.h">General</h3>
+            <ul>
+                <li data-command="help"><kbd>F1 / ?</kbd> &mdash; Controls</li>
+                <li data-command="close"><kbd>Esc</kbd> &mdash; Close / Pause</li>
+            </ul>
+            </section>
+            <!-- end machine-checked section -->
+
+            <p data-mkey="kb.general.p"><kbd>Esc</kbd> closes the topmost open window; with nothing open it toggles
+                the pause menu. There is deliberately no key bound to disband, sale, restarting a turn or loading a
+                save.</p>
+
+            <div class="chapter-nav" data-nav></div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- 11. REFERENCE                                                 -->
+        <!-- ============================================================ -->
+        <section class="chapter" id="reference" data-title="Reference"
+                 data-keywords="unit classes infantry tank recon anti-tank artillery air defence fighter bomber stats glossary price strength fuel ammo range experience initiative spotting movement type target type">
+            <p class="eyebrow" data-mkey="ref.eyebrow">Chapter 11</p>
+            <h2 tabindex="-1" data-mkey="ref.h">Reference</h2>
+            <p class="lede" data-mkey="ref.lede">Classes, statistics and movement types, for looking up rather than
+                reading.</p>
+            <hr class="rule"/>
+
+            <h3 data-mkey="ref.classes.h">Unit classes</h3>
+            <ul class="cards">
+                <li>
+                    <h4 data-mkey="ref.inf.h">Infantry</h4>
+                    <p data-mkey="ref.inf.p">Bails out of transport when attacked with no combat penalty. Fights in
+                        close combat in cities, forests and against fortifications, which is where it is strongest.
+                        Digs in faster than anything else. Specialised variants include engineers (ignore
+                        entrenchment), bridging engineers (act as bridges), paratroopers (drop anywhere from air
+                        transport), and mortar, anti-tank and air-defence infantry.</p>
+                </li>
+                <li>
+                    <h4 data-mkey="ref.tank.h">Tank</h4>
+                    <p data-mkey="ref.tank.p">The only class that can overrun: destroy a weakened adjacent enemy
+                        outright without loss and attack again. Dominant in clear terrain, badly handicapped in
+                        cities and forests. Captures hexes.</p>
+                </li>
+                <li>
+                    <h4 data-mkey="ref.at.h">Anti-Tank</h4>
+                    <p data-mkey="ref.at.p">Ambushes armour that passes unspotted. Strongest against tanks,
+                        especially when self-propelled. Captures hexes.</p>
+                </li>
+                <li>
+                    <h4 data-mkey="ref.recon.h">Recon</h4>
+                    <p data-mkey="ref.recon.p">Phased movement: move, look, move again. The longest sight in the army
+                        and the only class that can drive out of a zone of control it was stopped by. Captures
+                        hexes.</p>
+                </li>
+                <li>
+                    <h4 data-mkey="ref.arty.h">Artillery</h4>
+                    <p data-mkey="ref.arty.p">Fires in support of any adjacent friendly formation that is attacked,
+                        at no cost to that formation. Fires at range without being fired back at. Good at breaking
+                        entrenchments. Never retreats — and never captures a hex.</p>
+                </li>
+                <li>
+                    <h4 data-mkey="ref.ad.h">Air Defence</h4>
+                    <p data-mkey="ref.ad.p">Fires in support against air attackers, and intercepts aircraft moving
+                        within reach even when concealed. Fires at range without being fired back at.</p>
+                </li>
+                <li>
+                    <h4 data-mkey="ref.fighter.h">Air Fighter</h4>
+                    <p data-mkey="ref.fighter.p">Fires in support against enemy aircraft attacking an adjacent
+                        friendly formation. High mobility, useful for reconnaissance.</p>
+                </li>
+                <li>
+                    <h4 data-mkey="ref.bomber.h">Air Bomber</h4>
+                    <p data-mkey="ref.bomber.p">Breaks formations fortified in cities and disrupts supply lines and
+                        transports. Never retreats.</p>
+                </li>
+            </ul>
+            <p data-mkey="ref.classes.p">Beyond these, campaigns field flak, fortifications, ground transports, level
+                bombers, air transports and a full range of naval classes — submarines, destroyers, cruisers,
+                battleships, carriers and naval transports.</p>
+
+            <h3 data-mkey="ref.stats.h">Statistics glossary</h3>
+            <dl class="glossary">
+                <dt data-mkey="ref.s.price.dt">Price</dt>
+                <dd data-mkey="ref.s.price.dd">Cost in prestige to buy the formation.</dd>
+
+                <dt data-mkey="ref.s.strength.dt">Strength</dt>
+                <dd data-mkey="ref.s.strength.dd">1 to 10 points, shown on the plaque below the counter; up to 15 with
+                    overstrength. Each point attacks separately. Zero means destroyed.</dd>
+
+                <dt data-mkey="ref.s.fuel.dt">Fuel</dt>
+                <dd data-mkey="ref.s.fuel.dd">Movement points the formation can spend before it is stuck. Leg and
+                    towed formations have none and never run out.</dd>
+
+                <dt data-mkey="ref.s.ammo.dt">Ammo</dt>
+                <dd data-mkey="ref.s.ammo.dd">Attacks the formation can make. One per attack. Out of ammunition means
+                    it cannot attack and cannot return fire.</dd>
+
+                <dt data-mkey="ref.s.range.dt">Firing range</dt>
+                <dd data-mkey="ref.s.range.dd">Hexes at which it can attack. Artillery reaches furthest, but strong
+                    tanks, anti-tank guns, air defence and even some infantry reach 2.</dd>
+
+                <dt data-mkey="ref.s.move.dt">Movement range</dt>
+                <dd data-mkey="ref.s.move.dd">Movement points per turn, spent against the terrain table.</dd>
+
+                <dt data-mkey="ref.s.exp.dt">Experience</dt>
+                <dd data-mkey="ref.s.exp.dd">0 to 500, displayed as up to five bars. Reduces casualties taken,
+                    increases casualties inflicted, sets the overstrength ceiling and reduces the risk of rugged
+                    defense. Two or three bars is veteran; four or five is elite. It affects initiative only under
+                    Open General's initiative model.</dd>
+
+                <dt data-mkey="ref.s.ent.dt">Entrenchment</dt>
+                <dd data-mkey="ref.s.ent.dd">Current dug-in level, from the terrain's base up to five above it.</dd>
+
+                <dt data-mkey="ref.s.ini.dt">Combat initiative</dt>
+                <dd data-mkey="ref.s.ini.dd">How quickly the formation reacts. The higher side takes reduced damage.
+                    By default it comes from equipment, its attachments and the terrain the defender stands in.
+                    Rugged defense and tactical surprise reduce the attacker's to zero.</dd>
+
+                <dt data-mkey="ref.s.spot.dt">Spotting range</dt>
+                <dd data-mkey="ref.s.spot.dd">Hexes at which enemies are revealed. No terrain blocks it; bad weather
+                    halves it.</dd>
+
+                <dt data-mkey="ref.s.pow.dt">Power vs hard / soft / air / naval</dt>
+                <dd data-mkey="ref.s.pow.dd">Attack strength against each target class. Zero means it cannot attack
+                    that class at all.</dd>
+
+                <dt data-mkey="ref.s.defg.dt">Defence vs ground / air attacker</dt>
+                <dd data-mkey="ref.s.defg.dd">Resistance to land and naval attacks, and to air attacks. Aircraft use
+                    their air-defence value against everything.</dd>
+
+                <dt data-mkey="ref.s.defc.dt">Defence in close combat</dt>
+                <dd data-mkey="ref.s.defc.dd">Used by a non-infantry ground formation fighting infantry in a city or
+                    forest hex, and by any attacker against infantry that puts up a rugged defense. Usually much
+                    lower than ground defence, which is what makes infantry dangerous in difficult terrain.</dd>
+
+                <dt data-mkey="ref.s.defr.dt">Defence in ranged combat</dt>
+                <dd data-mkey="ref.s.defr.dd">Resistance to ranged fire from ground formations other than artillery —
+                    long-barrelled tanks, anti-tank guns and the like.</dd>
+
+                <dt data-mkey="ref.s.mtype.dt">Movement type</dt>
+                <dd data-mkey="ref.s.mtype.dd">Which row of the terrain table the formation reads: tracked,
+                    half-tracked, wheeled, leg, towed, air, deep naval, coastal, all-terrain tracked, amphibious,
+                    naval, all-terrain leg, or rail.</dd>
+
+                <dt data-mkey="ref.s.ttype.dt">Target type</dt>
+                <dd data-mkey="ref.s.ttype.dd">Soft, hard, air or naval — which of an attacker's four power values is
+                    used against this formation.</dd>
+            </dl>
+
+            <h3 data-mkey="ref.indicators.h">Counter indicators</h3>
+            <div class="table-scroll">
+                <table>
+                    <caption data-mkey="ref.ind.caption">Marks on and around a formation counter.</caption>
+                    <thead>
+                    <tr>
+                        <th scope="col" data-mkey="ref.ind.th.mark">Mark</th>
+                        <th scope="col" data-mkey="ref.ind.th.means">Meaning</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row"><img class="inline-icon" src="resources/ui/indicators/unit-fire.png" alt=""
+                                             width="11" height="11"/> Fire mark</th>
+                        <td data-mkey="ref.ind.fire">The formation can still attack this turn.</td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><img class="inline-icon"
+                                             src="resources/ui/indicators/unit-fire-no-ammo.png" alt=""
+                                             width="11" height="11"/> Crossed fire mark</th>
+                        <td data-mkey="ref.ind.noammo">Out of ammunition: it cannot attack and cannot return
+                            fire.</td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><img class="inline-icon" src="resources/ui/indicators/unit-leader.png" alt=""
+                                             width="11" height="11"/> Leader mark</th>
+                        <td data-mkey="ref.ind.leader">The formation has a commander. Its traits are listed on the
+                            unit card.</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" data-mkey="ref.ind.grey.th">Greyed-out strength plaque</th>
+                        <td data-mkey="ref.ind.grey">The formation has already moved this turn.</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" data-mkey="ref.ind.none.th">No mark at all</th>
+                        <td data-mkey="ref.ind.none">The formation has already attacked this turn.</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="chapter-nav" data-nav></div>
+        </section>
+
+    </main>
+</div>
+
+<script>
+    (function () {
+        'use strict';
+
+        /* Translated copies register themselves here — see the TRANSLATION note in <head>. */
+        var LANGUAGES = [{code: 'en', file: 'manual.html', label: 'English'}];
+
+        var chapters = Array.prototype.slice.call(document.querySelectorAll('.chapter'));
+        var toc = document.getElementById('toc');
+        var search = document.getElementById('manualSearch');
+        var body = document.body;
+
+        /* ---- table of contents ---------------------------------------- */
+        var links = chapters.map(function (chapter, index) {
+            var li = document.createElement('li');
+            var a = document.createElement('a');
+            a.href = '#' + chapter.id;
+            a.innerHTML = '<span class="num">' + (index + 1) + '</span><span class="txt"></span>';
+            a.querySelector('.txt').innerHTML = chapter.dataset.title;
+            li.appendChild(a);
+            toc.appendChild(li);
+            return {el: a, li: li, chapter: chapter};
+        });
+
+        var empty = document.createElement('li');
+        empty.className = 'no-results';
+        empty.hidden = true;
+        empty.textContent = 'Nothing matches.';
+        toc.appendChild(empty);
+
+        /* ---- chapter footers ------------------------------------------ */
+        chapters.forEach(function (chapter, index) {
+            var nav = chapter.querySelector('[data-nav]');
+            if (!nav) return;
+            if (index > 0) {
+                nav.appendChild(navLink(chapters[index - 1], 'Previous'));
+            }
+            if (index < chapters.length - 1) {
+                nav.appendChild(navLink(chapters[index + 1], 'Next'));
+            }
+        });
+
+        function navLink(target, direction) {
+            var a = document.createElement('a');
+            a.href = '#' + target.id;
+            a.innerHTML = '<span class="dir"></span><span class="ttl"></span>';
+            a.querySelector('.dir').textContent = direction;
+            a.querySelector('.ttl').innerHTML = target.dataset.title;
+            return a;
+        }
+
+        /* ---- routing --------------------------------------------------- */
+        function show(id, focus) {
+            var target = document.getElementById(id);
+            /* An id inside a chapter (e.g. the legacy #nav_keyboard anchor) resolves to its
+               chapter, so old deep links keep working. */
+            while (target && target.className.indexOf('chapter') === -1) {
+                target = target.parentElement;
+            }
+            if (!target) target = chapters[0];
+            chapters.forEach(function (chapter) {
+                chapter.hidden = chapter !== target;
+            });
+            links.forEach(function (link) {
+                if (link.chapter === target) {
+                    link.el.setAttribute('aria-current', 'page');
+                } else {
+                    link.el.removeAttribute('aria-current');
+                }
+            });
+            document.title = stripTags(target.dataset.title) + ' — OSADA Field Manual';
+            if (focus) {
+                var heading = target.querySelector('h1, h2');
+                if (heading) heading.focus();
+                window.scrollTo(0, 0);
+            }
+            closeDrawer();
+        }
+
+        function stripTags(html) {
+            var tmp = document.createElement('div');
+            tmp.innerHTML = html;
+            return tmp.textContent || '';
+        }
+
+        function currentId() {
+            return (location.hash || '').replace(/^#/, '');
+        }
+
+        window.addEventListener('hashchange', function () {
+            if (body.className.indexOf('all-chapters') !== -1) return;
+            show(currentId(), true);
+        });
+
+        /* ---- search ---------------------------------------------------- */
+        search.addEventListener('input', function () {
+            var q = search.value.trim().toLowerCase();
+            var hits = 0;
+            links.forEach(function (link) {
+                var haystack = (stripTags(link.chapter.dataset.title) + ' ' +
+                    (link.chapter.dataset.keywords || '')).toLowerCase();
+                var match = !q || haystack.indexOf(q) !== -1;
+                link.li.hidden = !match;
+                if (match) hits++;
+            });
+            empty.hidden = hits !== 0;
+        });
+
+        search.addEventListener('keydown', function (event) {
+            if (event.key !== 'Enter') return;
+            var first = links.filter(function (link) { return !link.li.hidden; })[0];
+            if (first) {
+                event.preventDefault();
+                location.hash = '#' + first.chapter.id;
+            }
+        });
+
+        /* ---- show-everything mode (for Ctrl+F and printing) ------------ */
+        var allToggle = document.getElementById('allChaptersToggle');
+        allToggle.addEventListener('click', function () {
+            var on = body.className.indexOf('all-chapters') === -1;
+            body.className = on ? 'all-chapters' : '';
+            allToggle.textContent = on ? 'Show one chapter' : 'Show all chapters';
+            if (!on) show(currentId(), false);
+        });
+
+        /* ---- mobile drawer --------------------------------------------- */
+        var navToggle = document.getElementById('navToggle');
+        var scrim = document.getElementById('navScrim');
+
+        function closeDrawer() {
+            body.className = body.className.replace(/\s*nav-open/, '');
+            navToggle.setAttribute('aria-expanded', 'false');
+        }
+
+        navToggle.addEventListener('click', function () {
+            var open = body.className.indexOf('nav-open') === -1;
+            body.className = open ? (body.className + ' nav-open').trim() : body.className.replace(/\s*nav-open/, '');
+            navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+
+        scrim.addEventListener('click', closeDrawer);
+
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') closeDrawer();
+            if (event.key === '/' && document.activeElement !== search) {
+                event.preventDefault();
+                search.focus();
+                search.select();
+            }
+        });
+
+        /* ---- go ---------------------------------------------------------- */
+        show(currentId(), false);
+        void LANGUAGES;
+    }());
+</script>
+</body>
+
+</html>

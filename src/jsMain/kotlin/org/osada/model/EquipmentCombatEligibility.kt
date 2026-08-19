@@ -17,7 +17,7 @@ package org.osada.model
  *
  * | bit | mask | OG ability | bit | mask | OG ability |
  * |---|---|---|---|---|---|
- * | 0 | 1 | Lasting Sup. | 12 | 4096 | **Support Fire** |
+ * | 0 | 1 | Drop mines (see below) | 12 | 4096 | **Support Fire** |
  * | 1 | 2 | Can Blow | 13 | 8192 | Air Support |
  * | 2 | 4 | **Ignore trench** | 14 | 16384 | Air Transportable |
  * | 3 | 8 | **Bridge** | 15 | 32768 | **CAN Air Atk** |
@@ -74,13 +74,55 @@ private const val ATTR_MASK_CAN_AIR_ATK = 32768
  * OG's `Support Fire`, bit 12 — a **TOGGLE that reverses the class default**, not a grant.
  *
  * Fire support is on by default for Artillery; this bit flips whichever way the class defaults. See
- * `UnitCapabilities.hasSupportFire` for the evidence (three surviving toggles are all rare on the
- * class they default to; `Recon Skill` is on 10 of 2,880 Recon records). Four of OG's toggles are in
- * range of our data — bit 0 `Lasting Sup.`, bit 10 `Recon Skill`, bit 11 `Dismount`, bit 12
- * `Support Fire` — and **only bit 12 is read as a toggle today**. Do not read any of the others as a
- * plain "has ability" flag.
+ * `UnitCapabilities.hasSupportFire` for the evidence (the surviving toggles are all rare on the
+ * class they default to; `Recon Skill` is on 10 of 2,880 Recon records). Three of OG's toggles are in
+ * range of our data — bit 10 `Recon Skill`, bit 11 `Dismount`, bit 12 `Support Fire` — and **only
+ * bit 12 is read as a toggle today**. Do not read either of the others as a plain "has ability" flag.
+ *
+ * **Bit 0 was `Lasting Sup.` here until 2026-08-18 and is not.** A controlled OpenSuite staircase on
+ * `E:05242 Train - RTP` (25 saves, one checkbox each, every step moving exactly one bit) put
+ * `Lasting Sup.` at `SpecialEx` 60.1 — outside `attr` entirely — and bit 0 at **`Drop mines`**, a
+ * plain grant, not a toggle. The population settles it beyond argument: the 478 LXF records carrying
+ * bit 0 are Engineers/Commandos/Partisans, destroyers and motor launches (`ML`), minesweepers
+ * (`Bird MS`), submarines, cruisers, and the maritime-patrol bombers that actually laid mines
+ * (`Hampden I`, `Catalina II`, `Ventura GR.V`). It also explains the one anomaly
+ * `OG_ABILITY_AUDIT.md` §7.5 had recorded and shrugged at — `Repair Crew`'s unexplained extra bit 0.
+ * An engineering unit carrying `Drop mines` is coherent; one carrying lasting suppression was not.
+ * See `OG_ABILITY_AUDIT.md` §7.1 for the full run.
  */
 internal const val ATTR_MASK_SUPPORT_FIRE = 4096
+
+/**
+ * OG's `Drop mines`, bit 0 — a plain grant: the unit can lay a land minefield on the hex it stands
+ * on (OG manual 9.9, two ammunition points, no previous action that turn).
+ *
+ * **This bit was documented as `Lasting Sup.` until 2026-08-18 and never read by anything.** The
+ * controlled OpenSuite staircase recorded in `OG_ABILITY_AUDIT.md` §7.1.1 put `Lasting Sup.` at
+ * `SpecialEx` 60.1, outside `attr` entirely, and this bit at `Drop mines`. The population settles
+ * it: the 478 `eqp-lxf` records carrying it are engineers, commandos and partisans, destroyers and
+ * motor launches, minesweepers, submarines, and the maritime-patrol bombers that actually laid
+ * mines. See [org.osada.rules.Minefields], which is the only reader.
+ *
+ * Its two companions are NOT in our data and must not be faked from this one: `Clear mines` is
+ * `SpecialEx` 60.6 and `AirDropMines` is `SpecialEx` 62.1, both outside the three special bytes the
+ * importer packs. `MineAbilities.canClearMines` documents the stand-in it uses meanwhile.
+ */
+internal const val ATTR_MASK_DROP_MINES = 1
+
+/**
+ * OG's `Mechanized`, bit 21 — a plain grant: the crew rides its own prime mover, so the gun may
+ * move and still fire in the same turn.
+ *
+ * Read by [org.osada.rules.AttackEligibility.blockedByMoveThenFire], which only ever consults it
+ * while the `heavy_move_fire` ruleset key asks for OG's ordering. Under OSADA Default there is no
+ * ordering restriction at all, so the bit decides nothing — that is the deliberate default, chosen
+ * so no shipped campaign is re-tuned.
+ *
+ * **Acceptance-test it on `eqp-basekorp` or `eqp-comww2`, never on an LXF campaign**: `Mechanized`
+ * is set on ZERO LXF records, so the four deployed LXF campaigns would show no change and read as a
+ * failure (`docs/og-fidelity-plan.md` B.1).
+ */
+internal const val ATTR_MASK_MECHANIZED = 2097152
 
 /**
  * OG's `Combat Support`, bit 16 — a plain grant (not one of the six toggles): the unit lends

@@ -1007,15 +1007,22 @@ input[type=text], input[type=search] {
     margin: 0;
 }
 
+/* Back sits immediately to the left of Start/Play, not off with Rules/Export/Import on the far
+ * side of the row -- it carries the auto margin (not Start) so it pins to the row's right edge
+ * together with Start regardless of how many order-0 utility buttons precede it. Campaign
+ * Selection used to look right only by accident: its wide, near-invisible campaignRunBackupStatus
+ * spacer (flex-basis 100%) happened to eat enough middle space to shove Back rightward on its own;
+ * Scenario Selection has no such spacer, so Back sat right next to Rules instead (2026-08-19 user
+ * report). */
 #smCBackBut, #smSBackBut {
-    order: 1;
+    order: 2;
+    margin-left: auto;
     width: 120px;
     min-width: 120px;
 }
 
 #smCPlayBut, #smSPlayBut {
     order: 3;
-    margin-left: auto;
     width: 210px;
     min-width: 210px;
 }
@@ -2781,7 +2788,11 @@ hr {
     grid-template-columns: minmax(360px, 520px) 150px 340px;
     grid-template-areas: "card forecast enemy";
     gap: 8px;
-    padding: 0 10px 8px;
+    /* Bottom padding grows the zone's own footprint (content-box, not border-box: the fixed 92px
+     * content height is untouched), pushing the whole bar off the physical bottom edge of the
+     * viewport. At 8px the last visible bar (Ammo, when a unit carries no fuel) and a wrapped 2nd
+     * row of action chips sat right on the edge. */
+    padding: 0 10px 14px;
     font-family: var(--osada-font-ui);
 }
 
@@ -4926,6 +4937,67 @@ hr {
     float: right;
 }
 
+/* [ConfirmCard] (Restart Mission, Start Over, delete/replace confirmations, ...): its own
+ * `.osadaConfirmBox*` classes were only ever styled in `ui.css`, a stale pre-rename copy of this
+ * file that `index.html` does not load -- every use of the shared confirm dialog was therefore
+ * running on ZERO styling of its own. It inherited `.uiMessageBox`'s dark panel above (fine), but:
+ *  - no z-index, so `#startmenu` (base.css, z-index 300, its own stacking context) painted over it
+ *    whenever the dialog opened from a startmenu screen (Campaign Selection's "Start over") or the
+ *    in-game pause overlay (Restart Mission) -- the card existed in the DOM, fully built, simply
+ *    invisible;
+ *  - no button-row layout and no button styling at all, so Cancel/Confirm fell back to bare
+ *    `.smallButton` -- the round brass icon-font plate, stretched over "Cancel"/"Restart Mission"
+ *    text instead of a single glyph (2026-08-19 user report: "buttons not in CSS but weird
+ *    overstretched icon").
+ * `--z-msg` (1000) is the same tier the equipment/dossier message dialogs already use to sit above
+ * `--z-window` (100); it comfortably clears `#startmenu`'s 300 too. */
+.osadaConfirmBox {
+    z-index: var(--z-msg, 1000) !important;
+}
+
+.osadaConfirmBoxButtons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 0 18px 16px;
+}
+
+.osadaConfirmBoxCancel, .osadaConfirmBoxConfirm {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 90px;
+    height: 34px;
+    padding: 0 14px;
+    border: var(--osada-border);
+    border-radius: var(--osada-radius);
+    background: var(--osada-metal-700);
+    color: var(--osada-text);
+    font-family: var(--osada-font-ui);
+    font-weight: bold;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.osadaConfirmBoxCancel:hover, .osadaConfirmBoxConfirm:hover {
+    background: var(--osada-metal-600);
+}
+
+.osadaConfirmBoxConfirm {
+    background: var(--osada-red);
+    border-color: var(--osada-red-bright);
+    color: #fff;
+}
+
+.osadaConfirmBoxConfirm:hover {
+    background: var(--osada-red-bright);
+}
+
+.osadaConfirmBoxCancel:focus-visible, .osadaConfirmBoxConfirm:focus-visible {
+    outline: 2px solid var(--osada-cyan);
+    outline-offset: 2px;
+}
+
 #uiokbut {
     min-width: 150px;
     height: 40px;
@@ -5040,6 +5112,16 @@ hr {
     height: 44px;
     min-height: 44px;
     line-height: 44px;
+    /* Same fix as #smCPlayBut/#smSPlayBut just above, and for the same reason: the label is a
+     * ::after pseudo-element, and without flex-centering it the line box escaped the plate's own
+     * background/border entirely -- "Назад"/"Back" rendered below the panel's own border, past the
+     * button, instead of inside it (2026-08-19 user report: "Back button has text out of the
+     * borders"). */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    overflow: hidden;
     background: linear-gradient(180deg, #2f353f, #191c21) !important;
     border: 1px solid var(--osada-metal-600) !important;
     border-radius: 3px;
@@ -7934,6 +8016,20 @@ hr {
     margin-top: 4px;
 }
 
+/* The footer's link to manual.html. Brass rather than the dim footer colour so it reads as the
+   one actionable thing in a block of instructions -- the sentence it replaced promised a manual
+   the card gave no way to open. */
+.osada-controls-card__manual {
+    color: var(--osada-brass);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.osada-controls-card__manual:hover,
+.osada-controls-card__manual:focus-visible {
+    color: var(--osada-gold);
+}
+
 .osada-controls-card__close {
     position: absolute;
     top: 8px;
@@ -8227,6 +8323,18 @@ hr {
     margin-bottom: 10px;
 }
 
+/* Why the picker below is disabled -- shown in the window itself, not just the button's hover
+ * tooltip (a tooltip is exactly what a player locked out of a change is likely to never see). */
+.osadaRulesLockedBanner {
+    margin: 0 0 10px;
+    padding: 8px 10px;
+    border-left: 2px solid var(--osada-brass);
+    background: rgba(217, 178, 90, .1);
+    color: var(--osada-text);
+    font-size: 12px;
+    line-height: 1.4;
+}
+
 .osadaRulesRow {
     display: flex;
     align-items: center;
@@ -8252,6 +8360,17 @@ hr {
     border-radius: var(--osada-radius);
     font-family: var(--osada-font-ui);
     font-size: 13px;
+}
+
+/* Some rules (e.g. aa_intercept_mode) spell their choices out as full sentences -- long enough
+ * that an auto-sized <select> would blow past the 480px window. Capped and ellipsised instead;
+ * the full text still reaches the player through the select's title tooltip (set in Kotlin) and
+ * each <option>'s own title when the dropdown is open. */
+.osadaRulesSelect {
+    max-width: 220px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .osadaRulesSummary {
@@ -8291,6 +8410,35 @@ hr {
     color: var(--osada-text-dim);
     font-size: 12px;
     margin: 2px 0 6px;
+}
+
+/* Open General Fidelity's "what this does not reproduce" list. Empty for every other profile, so
+   the block collapses to nothing rather than reserving space. */
+.osadaRulesGaps:empty {
+    display: none;
+}
+
+.osadaRulesGaps {
+    color: var(--osada-text-dim);
+    font-size: 12px;
+    margin: 0 0 8px;
+    padding: 6px 8px;
+    border-left: 2px solid var(--osada-brass);
+    background: rgba(0, 0, 0, 0.15);
+}
+
+.osadaRulesGaps__intro {
+    margin-bottom: 3px;
+}
+
+.osadaRulesGaps__list {
+    margin: 0;
+    padding-left: 16px;
+    list-style: disc;
+}
+
+.osadaRulesGaps__list li {
+    margin: 1px 0;
 }
 
 .osadaRulesSummary__row--unavailable .osadaRulesSummary__value {

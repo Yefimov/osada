@@ -53,6 +53,9 @@ internal object UnitActionPresenter {
             ActionEffectKind.ENDS_UNIT_ACTION,
             ActionEffectKind.LIMBER_TOGGLE_FREE,
             ActionEffectKind.EXPERIENCE_DILUTION,
+            // A failed clearing attempt is a stated risk, not a gain -- painting it the same green
+            // as "+3 strength" would read as a benefit.
+            ActionEffectKind.CLEAR_MINEFIELD_RISK,
         )
 
     private const val GOOD = "good"

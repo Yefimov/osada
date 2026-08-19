@@ -69,6 +69,11 @@ object GameStateDeserializer {
         unit.entrenchTicks = data.entrenchTicks as? Int ?: 0
         unit.experience = data.experience as? Int ?: 0
         unit.hits = data.hits as? Int ?: 0
+        // Absent in every pre-2026-08-18 save, which is exactly the state a formation with no
+        // Devastating Fire / Fire Discipline / Shock Tactics history has.
+        unit.shotsThisTurn = data.shotsThisTurn as? Int ?: 0
+        unit.halfShotPending = data.halfShotPending as? Boolean ?: false
+        unit.lastingHits = data.lastingHits as? Int ?: 0
         unit.leader = data.leader as? Int ?: -1
         unit.nodossier = data.nodossier as? Boolean ?: false
         unit.isTemporaryBorrowed = data.temporaryBorrowed as? Boolean ?: false

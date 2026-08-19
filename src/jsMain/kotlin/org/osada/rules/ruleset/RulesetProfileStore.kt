@@ -17,7 +17,13 @@ import kotlinx.browser.localStorage
 object RulesetProfileStore {
     private const val KEY = "osada-ruleset-profiles"
 
-    /** The two entries that always exist, in the picker's documented order (§1). */
+    /**
+     * The three entries that always exist, in the picker's documented order (§1).
+     *
+     * Open General Fidelity joined them on 2026-08-19 (`docs/og-fidelity-plan.md` D.1/D.3). It sits
+     * last of the three because it is the most opinionated: the first entry follows the content,
+     * the second is OSADA's baseline, and only the third asserts a whole foreign ruleset.
+     */
     fun builtIns(): List<RulesetProfile> =
         listOf(
             RulesetProfile(
@@ -29,6 +35,11 @@ object RulesetProfileStore {
                 id = RulesetProfile.OSADA_DEFAULT_ID,
                 name = "",
                 source = RulesetSource.OSADA_DEFAULT,
+            ),
+            RulesetProfile(
+                id = RulesetProfile.OG_FIDELITY_ID,
+                name = "",
+                source = RulesetSource.OG_FIDELITY,
             ),
         )
 

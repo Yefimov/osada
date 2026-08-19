@@ -147,11 +147,19 @@ internal object RulesEditorWindow {
         for (mode in rule.editorMin..rule.editorMax) {
             val option = addTag(select, "option")
             option.asDynamic().value = mode.toString()
-            option.textContent = RulesText.value(rule, mode)
+            val text = RulesText.value(rule, mode)
+            option.textContent = text
+            // Some choices (aa_intercept_mode) are full sentences; the CSS ellipsises the closed
+            // select, so the untruncated text has to survive as a tooltip -- on the option for the
+            // open dropdown, and kept in sync on the select itself for the closed control.
+            option.title = text
         }
         select.asDynamic().value = current(rule).toString()
+        select.title = RulesText.value(rule, current(rule))
         select.asDynamic().onchange = {
-            draft[rule] = (select.asDynamic().value as? String)?.toIntOrNull() ?: current(rule)
+            val mode = (select.asDynamic().value as? String)?.toIntOrNull() ?: current(rule)
+            draft[rule] = mode
+            select.title = RulesText.value(rule, mode)
             Unit
         }
     }
@@ -197,13 +205,13 @@ internal object RulesEditorWindow {
         error.setAttribute("role", "alert")
 
         val cancel = addTag(footer, "button")
-        cancel.className = "smallButton"
+        cancel.className = "osada-button"
         cancel.textContent = I18n.t("common.cancel.label")
         cancel.onclick = { _: MouseEvent -> close() }
 
         val save = addTag(footer, "button")
         save.id = SAVE_ID
-        save.className = "smallButton osadaRulesActionPrimary"
+        save.className = "osada-button osadaRulesActionPrimary"
         save.textContent = I18n.t("rules.editor.save.label")
         save.onclick = { _: MouseEvent -> saveDraft() }
         (byId(NAME_ID) as? HTMLInputElement)?.focus()

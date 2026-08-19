@@ -179,8 +179,25 @@ internal object StartMenuCampaignScreen {
             (operations?.let(I18n::formatNumber) ?: (campaign.scenarios as? String ?: ""))
         byId("smCamp")?.asDynamic()?.selectedCampaign = value.toInt()
         CampaignBackupButtons.refresh()
+        refreshRulesLockForSelection(campaign.file as? String)
         StartMenuCampaignData.updateCampaignPrestigeDisplay()
         updateCampaignDossierHead(campSelect, campaign, country)
+    }
+
+    /**
+     * A campaign's ruleset locks in at its own start (`docs/design/ruleset-profiles.md` §4) and
+     * survives Continue -- so once a campaign already has a saved run, picking a different profile
+     * in this window has no effect on it. `RulesWindow.installButton` only ever took a static
+     * readOnlyWindow at screen-build time, before any campaign was selected, so the button was
+     * always editable regardless of which row was actually picked. Reinstalling it here, on every
+     * selection change, keeps it in sync with the CURRENTLY selected row instead
+     * (2026-08-19 user report: changing rules on an in-progress campaign silently did nothing).
+     */
+    private fun refreshRulesLockForSelection(file: String?) {
+        val hasRun = file != null && file in StartMenuCampaignData.campaignRunsByFile()
+        byId("smCampButtons")?.let {
+            RulesWindow.installButton(it, RulesetSelection.Surface.CAMPAIGN, readOnlyWindow = hasRun)
+        }
     }
 
     // OSADA dossier head + register highlight (single source of truth = the hidden select).

@@ -48,6 +48,30 @@ internal object AttackEligibility {
             (GameHolder.instance?.scenario?.atmosferic ?: 0) != 0 &&
             !Leaders.unitHasLeader(attacker, LeaderType.ALL_WEATHER_COMBAT)
 
+    /**
+     * OG's move/fire ordering: artillery and air defence *"must fire before moving unless they carry
+     * the Mechanized ability"* (`docs/og-fidelity-plan.md` B.1). OSADA has no ordering restriction of
+     * its own, so this is entirely gated on `heavy_move_fire` and is a no-op under every default.
+     *
+     * Two independent exemptions, ORed: the equipment's own `Mechanized` attribute (`attr` bit 21),
+     * and a `Mechanized Veteran` commander — whose description has read *"Air Defence unit may move
+     * and fire in the same turn"* since the port began with no rule behind it, and which is the
+     * GUARANTEED class trait of every Air Defence commander, so every one of them rolled a no-op
+     * (A.4). This is that rule.
+     *
+     * The restriction is on having MOVED, not on having spent the whole allowance: a gun that has
+     * taken one step has unlimbered, and OG does not let it shoot afterwards either way.
+     */
+    fun blockedByMoveThenFire(attacker: GameUnit): Boolean {
+        if (!ActiveRuleset.flag(RuleKey.HEAVY_MOVE_FIRE, false)) return false
+        val data = attacker.unitData()
+        val hasLeftItsPosition = attacker.hasMoved || attacker.moveLeft < attacker.unitData(useReal = true).movpoints
+        return hasLeftItsPosition &&
+            UnitCapabilities.isHeavyWeapon(data) &&
+            !UnitCapabilities.isMechanized(data) &&
+            !Leaders.unitHasLeader(attacker, LeaderType.MECHANIZED_VETERAN)
+    }
+
     fun canInitiateAttack(
         attacker: GameUnit,
         defender: GameUnit,
@@ -55,6 +79,7 @@ internal object AttackEligibility {
         if (attacker.destroyed || defender.destroyed) return false
         val eligible =
             !airGroundedByWeather(attacker) &&
+                !blockedByMoveThenFire(attacker) &&
                 UnitPredicates.isEnemy(attacker, defender) &&
                 Equipment.canInitiateAttackOnUnitType(attacker.getEqid(), defender.getEqid())
         return eligible && canFire(attacker, defender)
@@ -92,6 +117,9 @@ internal object AttackEligibility {
                 "target-type matrix (attacker attr=${attacker.unitData().attr}, target=${defender.unitData().target})"
 
             attacker.hasFired -> "attacker has already fired"
+            blockedByMoveThenFire(attacker) ->
+                "heavy_move_fire: this gun had to fire before moving (no Mechanized attribute or leader)"
+
             !isInAttackRange(attacker, defender) ->
                 "out of range (range=${getUnitAttackRange(attacker)})"
 

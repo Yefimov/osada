@@ -199,6 +199,14 @@
       <unit id="8007" owner="1" flag="8" face="0" exp="151" str="11"/>
     </at>
   </reinforce>
+  <hex row="2" col="27" mines="2"/>
+  <hex row="4" col="30" mines="2"/>
+  <hex row="5" col="32" mines="2"/>
+  <hex row="6" col="34" mines="2"/>
+  <hex row="7" col="15" mines="1"/>
+  <hex row="9" col="24" mines="1"/>
+  <hex row="16" col="18" mines="1"/>
+  <hex row="19" col="27" mines="2"/>
   <hex row="0" col="2" terrain="1"/>
   <hex row="0" col="3" terrain="1" name="Kolpino"/>
   <hex row="0" col="4" terrain="1"/>
@@ -343,7 +351,7 @@
   <hex row="8" col="13">
     <unit id="9073" owner="1" flag="8" face="0" exp="106" str="11"/>
   </hex>
-  <hex row="8" col="20" name="October R.R. Leningrad - Moscow"/>
+  <hex row="8" col="20" name="October R.R. Leningrad - Moscow" mines="1"/>
   <hex row="8" col="21" name="October R.R. Leningrad - Moscow"/>
   <hex row="9" col="1" road="16"/>
   <hex row="9" col="6" terrain="10" name="Ishera River"/>
@@ -492,7 +500,7 @@
     <unit id="9073" owner="1" flag="8" face="0" exp="60" str="11"/>
   </hex>
   <hex row="14" col="21" road="8"/>
-  <hex row="14" col="22" terrain="1" name="Krasny Bor"/>
+  <hex row="14" col="22" terrain="1" name="Krasny Bor" mines="1"/>
   <hex row="14" col="23" terrain="1" name="Krasny Bor"/>
   <hex row="14" col="24" terrain="1" name="Krasny Bor">
     <unit id="502" owner="1" flag="8" face="0" exp="59"/>
@@ -547,7 +555,7 @@
   <hex row="17" col="28" terrain="3"/>
   <hex row="17" col="29" terrain="3"/>
   <hex row="17" col="32" name="October R.R. Leningrad - Moscow"/>
-  <hex row="17" col="33" name="October R.R. Leningrad - Moscow"/>
+  <hex row="17" col="33" name="October R.R. Leningrad - Moscow" mines="2"/>
   <hex row="18" col="1" road="16"/>
   <hex row="18" col="3" terrain="3"/>
   <hex row="18" col="7" terrain="10" name="Ishera River"/>
@@ -569,7 +577,7 @@
   <hex row="19" col="23" terrain="3"/>
   <hex row="19" col="26" terrain="3"/>
   <hex row="19" col="29" deploy="0"/>
-  <hex row="19" col="30" road="8"/>
+  <hex row="19" col="30" road="8" mines="2"/>
   <hex row="19" col="31" road="8" deploy="0"/>
   <hex row="19" col="32" deploy="0"/>
   <hex row="19" col="33" terrain="1" deploy="0"/>

@@ -17,4 +17,23 @@ data class InterceptionEvent(
     /** Strength points the aircraft actually lost to this gun. */
     val losses: Int,
     val planeDestroyed: Boolean,
+    /** Which reaction this was, so the banner and the HUD log can name it correctly. Defaults to
+     *  AA interception, the case this type was built for. */
+    val kind: MoveReactionKind = MoveReactionKind.AA_INTERCEPTION,
 )
+
+/**
+ * The kinds of fire a MOVE can draw, as opposed to an attack the player ordered.
+ *
+ * One vocabulary rather than three parallel event types, because every one of them has the same
+ * player-facing problem and therefore the same answer: a formation arrives weaker from a combat
+ * nobody watched, so it must be named out loud in the same banner and the same HUD log
+ * (`DEFERRED.md` §1.1 — *"Movement damage with no visible cause reads as a bug"*).
+ */
+enum class MoveReactionKind {
+    /** Anti-aircraft fire on a moving aircraft (`rules/AAInterception`). */
+    AA_INTERCEPTION,
+
+    /** Opportunity fire by an `Overwatch` commander (`rules/OverwatchFire`). */
+    OVERWATCH,
+}

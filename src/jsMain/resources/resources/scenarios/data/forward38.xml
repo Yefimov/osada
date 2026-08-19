@@ -7,6 +7,7 @@
       <unit id="8009" owner="1" flag="8" face="0" exp="247" str="3" ldr="1"/>
     </at>
   </reinforce>
+  <hex row="25" col="41" mines="1"/>
   <hex row="0" col="1" terrain="9" name="Azovskoye More"/>
   <hex row="0" col="2" terrain="9" name="Azovskoye More"/>
   <hex row="0" col="3" terrain="9" name="Azovskoye More"/>
@@ -1016,7 +1017,7 @@
   <hex row="17" col="34" terrain="9" name="Azovskoye More"/>
   <hex row="17" col="35" terrain="9" name="Azovskoye More"/>
   <hex row="17" col="36" terrain="9" name="Azovskoye More"/>
-  <hex row="17" col="37" terrain="16"/>
+  <hex row="17" col="37" terrain="16" mines="1"/>
   <hex row="17" col="39" terrain="8"/>
   <hex row="17" col="40" terrain="16"/>
   <hex row="17" col="41" terrain="15"/>
@@ -1400,7 +1401,7 @@
     <unit id="697" owner="1" flag="8" face="0" exp="248"/>
   </hex>
   <hex row="24" col="38" terrain="16"/>
-  <hex row="24" col="39" terrain="8" road="50"/>
+  <hex row="24" col="39" terrain="8" road="50" mines="1"/>
   <hex row="24" col="40" road="42"/>
   <hex row="24" col="41" road="130"/>
   <hex row="24" col="42" road="40"/>
@@ -1522,7 +1523,7 @@
     <unit id="8009" owner="1" flag="8" face="0" exp="151" str="11" ldr="1"/>
   </hex>
   <hex row="26" col="25" road="130"/>
-  <hex row="26" col="26" road="40" rail="130"/>
+  <hex row="26" col="26" road="40" rail="130" mines="1"/>
   <hex row="26" col="27" road="130"/>
   <hex row="26" col="28" road="50" rail="136"/>
   <hex row="26" col="29" rail="144"/>
@@ -1788,7 +1789,7 @@
     <unit id="493" owner="1" flag="8" face="0" exp="236"/>
   </hex>
   <hex row="31" col="49" road="34"/>
-  <hex row="31" col="50" road="34"/>
+  <hex row="31" col="50" road="34" mines="1"/>
   <hex row="31" col="52" rail="17"/>
   <hex row="31" col="56" terrain="3" deploy="0"/>
   <hex row="31" col="58" terrain="8"/>
@@ -1905,7 +1906,7 @@
   </hex>
   <hex row="33" col="50" terrain="10"/>
   <hex row="33" col="51" terrain="10" rail="34"/>
-  <hex row="33" col="52" rail="33"/>
+  <hex row="33" col="52" rail="33" mines="1"/>
   <hex row="33" col="53" terrain="15"/>
   <hex row="33" col="54" terrain="15"/>
   <hex row="33" col="55" terrain="14"/>
@@ -2119,7 +2120,7 @@
   <hex row="36" col="53" road="40"/>
   <hex row="36" col="55" terrain="3" road="40"/>
   <hex row="36" col="56" terrain="10"/>
-  <hex row="36" col="58" terrain="3"/>
+  <hex row="36" col="58" terrain="3" mines="1"/>
   <hex row="36" col="59" terrain="3" road="33"/>
   <hex row="36" col="60" terrain="3"/>
   <hex row="36" col="61" deploy="0"/>
@@ -2336,7 +2337,7 @@
   <hex row="39" col="56" terrain="3"/>
   <hex row="39" col="57" terrain="10"/>
   <hex row="39" col="58" rail="136"/>
-  <hex row="39" col="59" terrain="1" road="25" rail="130" name="Akhtyrskiy"/>
+  <hex row="39" col="59" terrain="1" road="25" rail="130" name="Akhtyrskiy" mines="1"/>
   <hex row="39" col="60" rail="40"/>
   <hex row="39" col="61" road="40" rail="130" deploy="0"/>
   <hex row="39" col="62" rail="40" deploy="0"/>
@@ -2910,7 +2911,7 @@
   <hex row="47" col="45" terrain="9" name="Tsemesskaya Bukhta"/>
   <hex row="47" col="46" terrain="9" name="Tsemesskaya Bukhta"/>
   <hex row="47" col="47" terrain="15" name="Tsemesskaya Bukhta"/>
-  <hex row="47" col="48" terrain="16" road="17"/>
+  <hex row="47" col="48" terrain="16" road="17" mines="1"/>
   <hex row="47" col="49" terrain="5"/>
   <hex row="47" col="50" terrain="5"/>
   <hex row="47" col="51" terrain="5"/>

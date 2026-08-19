@@ -4,6 +4,8 @@ import org.osada.TerrainType
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
 import org.osada.model.Supply
+import org.osada.rules.ruleset.ActiveRuleset
+import org.osada.rules.ruleset.RuleKey
 import kotlin.math.roundToInt
 
 /**
@@ -14,17 +16,27 @@ import kotlin.math.roundToInt
  */
 object SupplyRules {
     private const val FULL_STRENGTH = 10
-    private const val EXPERIENCE_STRENGTH_DIVISOR = 100.0
+    private const val EXPERIENCE_STRENGTH_DIVISOR = 100
     private const val OVERSTRENGTH_MIN_EXPERIENCE = 100
 
-    /** True when [unit]'s type/terrain make it eligible for a supply action at all. */
+    /**
+     * True when [unit]'s type/terrain make it eligible for a supply action at all.
+     *
+     * **The naval branch carried an inverted terrain test until 2026-08-18**
+     * (`docs/og-fidelity-plan.md` A.2): it refused a warship standing in a PORT and allowed one in
+     * open water. OG manual 6.23 names the port as the place a warship is resupplied
+     * (*"naval units in a port that end the turn there"*), so the one hex the rule certainly permits
+     * was the one hex OSADA forbade. The exclusion is deleted rather than reversed -- forbidding
+     * resupply at sea is not an alternative design either, and reversing it would strand every fleet
+     * the 502 shipped scenarios operate away from a port.
+     */
     private fun isSupplyEligibleType(
         map: GameMap,
         unit: GameUnit,
     ): Boolean {
         val groundEligible = UnitPredicates.isGround(unit)
         val airEligible = UnitPredicates.isAir(unit) && MovementRules.hasAirfield(map, unit)
-        val seaEligible = UnitPredicates.isSea(unit) && unit.getHex()?.terrain != TerrainType.PORT.value
+        val seaEligible = UnitPredicates.isSea(unit)
         return groundEligible || airEligible || seaEligible
     }
 
@@ -59,7 +71,17 @@ object SupplyRules {
             Supply(0, 0, 0, 0)
         } else {
             val adjacentEnemies = SupplyContextRules.countAdjacentEnemies(map, unit, pos)
-            if (full && (adjacentEnemies > 0 || hex?.terrain != TerrainType.CITY.value)) {
+            // OG 6.23 resupplies "ground units that do nothing in the turn" and names no terrain;
+            // OSADA additionally requires a CITY hex. `docs/og-fidelity-plan.md` A.3 item 2 records
+            // that as a BALANCE decision rather than a defect -- relaxing it hands every idle
+            // formation in the field a free full refit -- and required that it move behind a key if
+            // it moved at all. `ground_auto_supply`, `city_only` by default.
+            //
+            // The adjacent-enemy condition is NOT part of the key: a formation being shot at is not
+            // idle in either game, and OG's own wording ("do nothing in the turn") agrees.
+            val offCityBlocks = !ActiveRuleset.flag(RuleKey.GROUND_AUTO_SUPPLY, false)
+            val outOfSupplyTerrain = offCityBlocks && hex?.terrain != TerrainType.CITY.value
+            if (full && (adjacentEnemies > 0 || outOfSupplyTerrain)) {
                 Supply(0, 0, 0, 0)
             } else {
                 val terrainMod = SupplyContextRules.supplyPenaltyModifier(hex, adjacentEnemies)
@@ -132,9 +154,17 @@ object SupplyRules {
         return needsAmmo || needsFuel || transportNeedsAmmo || transportNeedsFuel
     }
 
-    /** Strength ceiling [unit]'s experience allows it to be raised to by overstrength. */
-    fun overstrengthCap(unit: GameUnit): Int =
-        FULL_STRENGTH + (unit.experience / EXPERIENCE_STRENGTH_DIVISOR).roundToInt()
+    /**
+     * Strength ceiling [unit]'s experience allows it to be raised to by overstrength: one point per
+     * **completed** experience bar.
+     *
+     * **Integer division, not [roundToInt] (2026-08-18, `docs/og-fidelity-plan.md` A.1).** Rounding
+     * gave a half-finished bar a whole strength point -- 150 XP bought two extra points where OG
+     * manual 6.7 grants one (*"Each experience bar allows for one strength point over the normal
+     * maximum"*), and the Overstrength button's own description repeats the same rule. A partial bar
+     * now buys nothing, which is what both surfaces already promised the player.
+     */
+    fun overstrengthCap(unit: GameUnit): Int = FULL_STRENGTH + unit.experience / EXPERIENCE_STRENGTH_DIVISOR
 
     /** True when [unit] is eligible to resupply (hasn't acted, needs supply, valid terrain). */
     fun canResupply(

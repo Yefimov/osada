@@ -7,6 +7,7 @@ import org.osada.UNIT_MAX_EXPERIENCE
 import org.osada.UnitClass
 import org.osada.hero.HeroTraitResolver
 import org.osada.model.Leaders.getUnitClassLeader
+import org.osada.rules.GameRandomSource
 
 object Leaders {
     const val LEADER_CHANCE_THRESHOLD = 8
@@ -218,7 +219,7 @@ object Leaders {
         return if (leaders == null || leaders.size < 2) {
             -1
         } else {
-            leaders[(kotlin.random.Random.nextDouble() * (leaders.size - 1)).toInt() + 1].value
+            leaders[(GameRandomSource.nextDouble() * (leaders.size - 1)).toInt() + 1].value
         }
     }
 
@@ -240,7 +241,7 @@ object Leaders {
         val level = unit.experience / 100
         val levelAfter = (unit.experience - expGained) / 100
         if (levelAfter <= 0) return -1
-        val chance = kotlin.random.Random.nextInt(level, 10 - level + 1)
+        val chance = GameRandomSource.nextInRange(level, 10 - level)
         return if (chance > LEADER_CHANCE_THRESHOLD) generateLeader(unit) else -1
     }
 

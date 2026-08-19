@@ -68,6 +68,46 @@ class GameUnit(
     var hasInterceptedThisTurn: Boolean = false
 
     /**
+     * How many attacks this formation has RESOLVED AS THE ATTACKER since its last [unitEndTurn].
+     *
+     * `hasFired` alone cannot express OG's `Devastating Fire` ("the unit may fire twice in a turn"),
+     * because it is a one-bit answer to a question that now has three states: not yet fired, fired
+     * once and allowed one more, spent. Ordinary formations still spend their attack on shot 1 --
+     * [org.osada.model.fire] sets `hasFired` unless the count says another shot is owed -- so the
+     * counter changes nothing for a unit without the trait.
+     *
+     * Serialized only when non-zero, so a save of a formation that has not attacked keeps its exact
+     * previous layout.
+     */
+    var shotsThisTurn: Int = 0
+
+    /**
+     * Half an ammunition point already paid for but not yet spent, under OG's `Fire Discipline`
+     * ("the unit will expend only one-half of an ammunition point each time it attacks").
+     *
+     * Ammunition is an integer everywhere else in the engine and must stay one -- the equipment
+     * card, the resupply arithmetic and the save format all assume it. So the half-point is carried
+     * here instead: the first attack debits a whole point and sets this, the next attack spends the
+     * unpaid half and clears it. Over any even number of attacks the formation has paid exactly half
+     * a point per shot, which is the rule as written.
+     *
+     * Survives the turn deliberately -- a half point already bought is not forfeited at midnight.
+     */
+    var halfShotPending: Boolean = false
+
+    /**
+     * Suppression points on this formation that survive ONE round-wrap clear, under OG's
+     * `Shock Tactics` ("suppression inflicted lasts the entire player turn").
+     *
+     * OSADA's suppression is [hits], cleared for every unit at once when the turn wraps back to
+     * player 0 (`GameMap.endTurn`) -- see `docs/og-fidelity-plan.md` 0.1.1 for why that timing is a
+     * faithful port and is not being changed. Lasting suppression is therefore expressed the only
+     * way it can be here, and the way that document prescribes: as points that survive the victim's
+     * next [unitEndTurn] rather than as a second suppression pool with its own units.
+     */
+    var lastingHits: Int = 0
+
+    /**
      * Explicit hero-system opt-out for a unit loaned only for the current battle.
      * Campaign-player control, not [isCore], is otherwise the participation rule.
      */
@@ -185,6 +225,9 @@ class GameUnit(
         flag = other.flag
         destroyed = other.destroyed
         hits = other.hits
+        lastingHits = other.lastingHits
+        shotsThisTurn = other.shotsThisTurn
+        halfShotPending = other.halfShotPending
         experience = other.experience
         entrenchment = other.entrenchment
         entrenchTicks = other.entrenchTicks

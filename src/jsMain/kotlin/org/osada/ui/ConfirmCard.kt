@@ -47,12 +47,12 @@ internal object ConfirmCard {
         buttonRow.className = "osadaConfirmBoxButtons"
 
         val cancelButton = addTag(buttonRow, "button")
-        cancelButton.className = "smallButton osadaConfirmBoxCancel"
+        cancelButton.className = "osadaConfirmBoxCancel"
         cancelButton.textContent = I18n.t("common.cancel.label")
         cancelButton.setAttribute("tabindex", "0")
 
         val confirmButton = addTag(buttonRow, "button")
-        confirmButton.className = "smallButton osadaConfirmBoxConfirm"
+        confirmButton.className = "osadaConfirmBoxConfirm"
         confirmButton.textContent = confirmLabel
         confirmButton.setAttribute("tabindex", "0")
 
