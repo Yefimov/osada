@@ -202,6 +202,13 @@
 
         .nav-scroll {
             flex: 1 1 auto;
+            /* Without this, a flex item's automatic minimum size is its CONTENT size (the classic
+             * flexbox scrolling pitfall) -- the table of contents is taller than 100vh minus the
+             * brand/search/filter chrome above it, so .nav-scroll refused to shrink to the space
+             * actually left for it and grew the whole .sidebar past the viewport instead of
+             * scrolling internally. .sidebar-foot, last in the flex column, landed below the fold
+             * and needed a page scroll to reach (2026-08-19 user report). */
+            min-height: 0;
             overflow-y: auto;
             padding: 4px 10px 18px;
         }
@@ -290,6 +297,16 @@
             padding: 8px 12px;
             background: var(--metal-850);
             border-bottom: 1px solid var(--metal-600);
+        }
+
+        /* Base state for the mobile drawer's backdrop button: hidden outside the drawer media
+         * query below (`body.nav-open .scrim`/`.scrim` there only ever set `display:block`/`none`
+         * again, never anything else that would need it kept out of the base rule). Without this,
+         * #navScrim had no rule at all above 900px width and rendered as a stray, functionless
+         * native <button> above the sidebar on desktop -- there is no drawer open to dismiss there
+         * (2026-08-19 user report). */
+        .scrim {
+            display: none;
         }
 
         .navbar img {

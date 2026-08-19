@@ -265,10 +265,7 @@ internal object StartMenuCampaignScreen {
         // The native flow glyph is superseded by the collapsible "Campaign path" line.
         byId("smCFlowBut")?.style?.display = "none"
 
-        val runs = StartMenuCampaignData.campaignRunsByFile()
-        StartMenuListToolbar.buildSyncedList(campSelect, list) { option, index, row, _ ->
-            renderCampaignRow(option, index, row, list, runs)
-        }
+        refreshRegisterRows(campSelect, list)
         StartMenuListToolbar.buildListToolbar(
             register,
             list,
@@ -284,6 +281,39 @@ internal object StartMenuCampaignScreen {
         (register.querySelector(".osadaChipRow") as? HTMLElement)?.let { chipRow ->
             StartMenuCampaignStory.buildStoryOnlyChip(chipRow, list)
         }
+    }
+
+    /** Rebuilds the register's rows against a FRESH [StartMenuCampaignData.campaignRunsByFile]
+     *  snapshot. Existing filter/sort state on [list] itself (`filterQuery`/`sideFilter`, set by
+     *  [StartMenuListToolbar.buildListToolbar]) survives the rebuild -- it lives on the list
+     *  element, not the rows -- but must be re-applied to the newly built rows. */
+    private fun refreshRegisterRows(
+        campSelect: HTMLElement,
+        list: HTMLElement,
+    ) {
+        val runs = StartMenuCampaignData.campaignRunsByFile()
+        StartMenuListToolbar.buildSyncedList(campSelect, list) { option, index, row, _ ->
+            renderCampaignRow(option, index, row, list, runs)
+        }
+        StartMenuListToolbar.applyListView(list)
+        StartMenuListToolbar.syncListHighlight(campSelect, list)
+    }
+
+    /**
+     * Re-renders the campaign register's rows so a run started (or started over, or cleared) since
+     * the screen was last built shows up immediately -- [buildCampaignScreen] itself only ever runs
+     * ONCE per page load, so the "in progress" note and "Start over" link (`renderCampaignRow`) were
+     * baked in from whatever [StartMenuCampaignData.campaignRunsByFile] returned at that first build
+     * and never refreshed afterward. A campaign played earlier in the SAME session therefore showed
+     * no note and no Start-over link when the player came back to this screen -- indistinguishable
+     * from never having been played, and with no way back to Start over short of a page reload
+     * (2026-08-19 user report: "can't find button to restart campaign"). Called every time this
+     * screen becomes visible ([org.osada.ui.StartMenuButtonHandler.onNewCampaignButton]).
+     */
+    fun refreshRegister() {
+        val campSelect = byId("smCampSel")?.firstChild as? HTMLElement ?: return
+        val list = byId("osadaCampList") ?: return
+        refreshRegisterRows(campSelect, list)
     }
 
     private fun buildCampaignDossierHead(dossier: HTMLElement) {
@@ -422,9 +452,16 @@ internal object StartMenuCampaignScreen {
             I18n.t("campaign.replace_run.confirm.confirm_button"),
         ) {
             Game.current?.state?.clearCampaignRun(run.campaignRunId)
-            val difficulty =
-                byId("smCamp")?.asDynamic()?.selectedDifficulty as? Int ?: StartMenuCampaignData.DIFFICULTY_HISTORICAL
-            StartMenuBuilder.startNewCampaign(campaignIndex, difficulty)
+            // Clears the save and stops there -- it used to launch straight into a fresh run with
+            // whatever ruleset was already selected, which left no way back to Rules: the window's
+            // own locked banner says "use Start Over" for exactly this campaign, and Start Over
+            // immediately re-locked a (possibly still wrong) profile in again. Now the player lands
+            // back on this same row with a clean slate -- the note and this link gone, Play reading
+            // "Start", Rules editable again -- and picks the profile before pressing Start themselves
+            // (2026-08-19 user report).
+            refreshRegister()
+            refreshRulesLockForSelection(campaign.file as? String)
+            StartMenuCampaignData.updateCampaignPrestigeDisplay()
         }
     }
 

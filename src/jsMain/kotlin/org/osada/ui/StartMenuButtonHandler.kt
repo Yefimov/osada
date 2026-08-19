@@ -38,6 +38,9 @@ internal class StartMenuButtonHandler(
         makeHidden("smNewGame")
         makeHidden("smMain")
         makeVisible("smCamp")
+        // Picks up any run started, started over or cleared since this screen was last built
+        // (`StartMenuCampaignScreen.refreshRegister`'s own doc comment).
+        StartMenuCampaignScreen.refreshRegister()
         val campSelect = byId("smCampSel")?.firstChild as? HTMLSelectElement
         val campaign = ui.game.campaign
         if (campaign == null) {

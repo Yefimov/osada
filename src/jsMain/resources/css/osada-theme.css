@@ -2433,10 +2433,6 @@ hr {
     color: rgba(217, 178, 90, .7);
 }
 
-.osada-menu-btn--muted .osada-menu-btn__label {
-    color: var(--osada-text-dim);
-}
-
 .osada-menu-btn--muted:hover .osada-menu-btn__label {
     color: var(--osada-brass);
 }
@@ -6583,9 +6579,16 @@ hr {
     justify-content: flex-end;
 }
 
+/* Was max-width: 165px (2026-07-23 hotfix), tuned for at most ~5 simultaneous action chips at 3
+ * per row (2 rows). Minefields (2026-08-19) added lay_mines/clear_mines, and an engineer-class
+ * formation with both applicable now shows up to 7 -- 3 rows at the old width, and the fixed-height
+ * #osada-bottomzone band (UnitIdentityStyles) has no room for a third row, so it pushed into
+ * whatever sat below (Sleep, last in the strip, disappearing under Lay/Clear Mines -- user report).
+ * Widened to fit 4 chips per row (4*52px + 3*3px gap = 217px) instead of 3, keeping every realistic
+ * combination inside the 2 rows the band was actually sized for. */
 #unit-context {
     width: auto;
-    max-width: 165px;
+    max-width: 220px;
 }
 
 .osada-action {

@@ -27,8 +27,16 @@ import org.osada.ui.showPrototypeAwardMessage
  *
  * Consumed exactly once, and before `ensureFormationIds`, so restored core units keep the formation
  * ids they were saved with instead of being minted new ones.
+ *
+ * `internal`, not `private`: [Game.setupGameState] -- the completion of every `restoreFromString`
+ * call (a saved-game load, "Continue" on a campaign run, and `MissionRestartCheckpoint.restart`) --
+ * calls this too. Those paths never run `onScenarioLoadFinished`/`handleCampaignScenarioLoaded` at
+ * all, so a save's undeployed reserve was parked in [Game.pendingCoreUnitRestore] and never claimed:
+ * the roster came back with every on-map unit but an empty reserve tray (2026-08-19 user report --
+ * "if I Restart the campaign my Reserves are empty"). Safe to call from both places: consuming sets
+ * the field to `null`, so whichever call site runs second is a no-op.
  */
-private fun Game.applyPendingCoreUnitRestore() {
+internal fun Game.applyPendingCoreUnitRestore() {
     val pending = pendingCoreUnitRestore ?: return
     pendingCoreUnitRestore = null
     val player = campaignPlayer ?: return

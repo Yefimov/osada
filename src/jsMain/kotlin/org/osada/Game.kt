@@ -138,6 +138,12 @@ class Game {
         console.log("[OSADA] setupGameState")
         savedCampaignPlayer = null
         setupPlayers()
+        // Claims a campaign restore's parked reserve/roster now that `campaignPlayer` exists
+        // (`GameScenarioLoading.applyPendingCoreUnitRestore`'s own doc comment). This completion
+        // path never runs `onScenarioLoadFinished`, so without this call a save's undeployed core
+        // units -- the reserve tray -- came back empty on every "Continue", campaign-run resume and
+        // mission restart, even though the save itself had them.
+        applyPendingCoreUnitRestore()
         humanSides = countHumanSides(scenario?.map?.getPlayers()?.toList() ?: emptyList())
         if (DEBUG_AI_MOVES) humanSides = 2
         setCurrentSide()

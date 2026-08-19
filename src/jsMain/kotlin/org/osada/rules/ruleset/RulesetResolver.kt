@@ -68,11 +68,28 @@ object RulesetResolver {
      * value to be corrected (§2).
      */
     fun authorsVisionRule(rule: RuleKey): ResolvedRule {
+        if (rule == RuleKey.ATTACHMENTS) return authorsVisionAttachments()
         val efileKey = rule.efileKey
         if (efileKey == null) return ownedRule(rule)
         val value = EfileConfig.intKey(efileKey, RulesetDefaults.OSADA.getValue(rule))
         val provenance =
             if (EfileConfig.hasIntKey(efileKey)) RuleProvenance.EFILE_EXPLICIT else RuleProvenance.EFILE_DEFAULT
+        return ResolvedRule(value, value, provenance)
+    }
+
+    /**
+     * `attach_on` never appears as a plain `equip.cfg` int key: `equip_cfg_to_json.py` always emits
+     * it as the nested `attachments.on` block together with the slot table, never into `keys`/`raw`.
+     * Reading it through [EfileConfig.intKey] (as every other efile-backed rule does) therefore
+     * always misses, and Author's Vision resolved every attachment-using efile (LXF, ATOMIC, GCE,
+     * BASEKORP) to "off" -- silently turning off attachments for campaigns whose OG source has them.
+     * [EfileConfig.attachments] is the one accessor that actually parses that block, so it is the
+     * only correct source of truth here.
+     */
+    private fun authorsVisionAttachments(): ResolvedRule {
+        val on = EfileConfig.attachments() != null
+        val value = if (on) 1 else 0
+        val provenance = if (on) RuleProvenance.EFILE_EXPLICIT else RuleProvenance.EFILE_DEFAULT
         return ResolvedRule(value, value, provenance)
     }
 
