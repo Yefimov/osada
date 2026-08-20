@@ -147,5 +147,12 @@ internal object WeatherCombatRules {
      * own description — in OG's ability list and in ours — is "not affected by weather conditions",
      * and a trait that is affected by weather two thirds of the time does not say that.
      */
-    private fun isAllWeather(unit: GameUnit): Boolean = Leaders.unitHasLeader(unit, LeaderType.ALL_WEATHER_COMBAT)
+    /**
+     * Two independent sources, OR'd — the leader trait, and OG's equipment-level `All Weather`
+     * special (`attrEx` bit 2, wired 2026-08-19: `UnitCapabilities.hasAllWeather`, see its header
+     * for why the importer previously could not carry the bit at all). A unit with both is still
+     * just "all-weather", not doubly so — this is a boolean, not a stacking bonus.
+     */
+    private fun isAllWeather(unit: GameUnit): Boolean =
+        Leaders.unitHasLeader(unit, LeaderType.ALL_WEATHER_COMBAT) || UnitCapabilities.hasAllWeather(unit)
 }

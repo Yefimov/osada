@@ -1,5 +1,7 @@
 package org.osada.rules
 
+import org.osada.model.ATTR_EX_MASK_AIR_DROP_MINES
+import org.osada.model.ATTR_EX_MASK_CLEAR_MINES
 import org.osada.model.ATTR_MASK_DROP_MINES
 import org.osada.model.Cell
 import org.osada.model.GameMap
@@ -24,22 +26,21 @@ import org.osada.rules.ruleset.RuleKey
  * two halves that make it fair — a **detected** field is drawn, costs the rest of the move and does
  * no damage; only an **undetected** field ambushes, and it reveals itself in the same instant.
  *
- * ### Where the two abilities come from
+ * ### Where the three abilities come from
  *
- * `Drop mines` is `attr` bit 0 and is **already in our shipped data** — 478 `eqp-lxf` records carry
- * it: engineers, commandos and partisans, destroyers and motor launches, minesweepers, submarines,
- * and the maritime-patrol bombers that historically laid mines. (The bit was mislabelled
- * `Lasting Sup.` until a controlled OpenSuite staircase settled it on 2026-08-18;
+ * `Drop mines` is `attr` bit 0 and has been in our shipped data since the importer existed — 478
+ * `eqp-lxf` records carry it: engineers, commandos and partisans, destroyers and motor launches,
+ * minesweepers, submarines, and the maritime-patrol bombers that historically laid mines. (The bit
+ * was mislabelled `Lasting Sup.` until a controlled OpenSuite staircase settled it on 2026-08-18;
  * `OG_ABILITY_AUDIT.md` §7.1.1.)
  *
- * `Clear mines` is `SpecialEx` 60.6 and is **not imported at all** — it lives outside the three
- * special bytes the importer packs into `attr`, so no mask can express it
- * (`model/EquipmentCombatEligibility.kt`'s "WHERE `attr` STOPS" note). Rather than invent a mask
- * above bit 23, [canClearMines] reads `Drop mines` as the stand-in and says so out loud: the two
- * populations are very nearly the same set in OG's own data — every engineer and every minesweeper
- * that clears also lays — so the approximation errs by granting clearing to some minelaying bombers
- * and submarines, which is a bounded, visible error rather than a silent one. When the importer is
- * widened (the same change `All weather` needs), this is the one function to correct.
+ * `Clear mines` (`SpecialEx` 60.6, `attrEx` bit 6) and `AirDropMines` (`SpecialEx` 62.1, `attrEx`
+ * bit 17) were **imported 2026-08-19** once `attrEx` widened the import past `attr`'s 24 bits
+ * (`model/EquipmentCombatEligibility.kt`'s header). Until then [canClearMines] read `Drop mines` as
+ * a stand-in, on the strength of the two populations nearly coinciding; that approximation is gone
+ * — [canClearMines] now reads its own bit. `AirDropMines` carries the prerequisite OG's own UI
+ * enforces (greyed out unless the unit already has `Drop mines`): [canDropMines] honours it by
+ * requiring both bits on an air unit rather than either alone.
  */
 internal object Minefields {
     /** Strength points an undetected field takes off the formation that walks into it. OG says only
@@ -166,17 +167,28 @@ internal object MineAbilities {
     private const val FULL_ROLL = 10
     private const val PERCENT_PER_ROLL_STEP = 10
 
-    /** OG's `Drop mines` (`attr` bit 0). Ground and naval units only — an aircraft needs
-     *  `AirDropMines` on top, which is `SpecialEx` 62.1 and is not imported, so aircraft are
-     *  refused here rather than silently granted a second ability they do not have. */
-    fun canDropMines(unit: GameUnit): Boolean =
+    /** OG's `Drop mines` (`attr` bit 0). Ground and naval units need only the one bit. An aircraft
+     *  needs `AirDropMines` (`attrEx` bit 17) as well — OG's own UI greys that checkbox out unless
+     *  the unit already carries `Drop mines`, so an air unit is eligible only with BOTH bits, never
+     *  `AirDropMines` alone. */
+    fun canDropMines(unit: GameUnit): Boolean {
+        if (!Minefields.enabled()) return false
+        val data = unit.unitData(true)
+        if (data.attr and ATTR_MASK_DROP_MINES == 0) return false
+        return !UnitPredicates.isAir(unit) || data.attrEx and ATTR_EX_MASK_AIR_DROP_MINES != 0
+    }
+
+    /** OG's `Clear mines` (`SpecialEx` 60.6, `attrEx` bit 6) — its own bit, independent of
+     *  `Drop mines`: OG's own data has units that clear without laying and vice versa
+     *  (`OG_ABILITY_AUDIT.md` §7.1.1's `Clear mines` cross-check). Ground/naval only, matching
+     *  [canDropMines]'s reasoning and the manual's *"the unit must be standing in the mined
+     *  hex"* — a handful of aircraft carry the bit in the merged data but the minefield-entry
+     *  model (1 movement point, reduced defence while standing in the hex) is not one an
+     *  overflying aircraft ever enters. */
+    fun canClearMines(unit: GameUnit): Boolean =
         Minefields.enabled() &&
             !UnitPredicates.isAir(unit) &&
-            unit.unitData(true).attr and ATTR_MASK_DROP_MINES != 0
-
-    /** See [Minefields]' header: `Clear mines` is not in our data, so `Drop mines` stands in for it
-     *  until the importer is widened. */
-    fun canClearMines(unit: GameUnit): Boolean = canDropMines(unit)
+            unit.unitData(true).attrEx and ATTR_EX_MASK_CLEAR_MINES != 0
 
     /** The success chance as a percentage, for the action tooltip. Derived from the same constant
      *  the roll uses, so the number the player is shown is the number that is rolled. */

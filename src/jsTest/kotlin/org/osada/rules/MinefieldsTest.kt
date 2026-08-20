@@ -66,6 +66,10 @@ class MinefieldsTest {
                 softatk = 6
                 // OG's `Drop mines`, attr bit 0.
                 attr = 1
+                // OG's `Clear mines`, SpecialEx 60.6 / attrEx bit 6 -- a real engineer carries both
+                // (OG_ABILITY_AUDIT.md §7.1.1's UI cross-check names "Engineers" as a holder),
+                // independent bits rather than one standing in for the other.
+                attrEx = 64
             },
         )
         Equipment.putEquipment(
@@ -131,6 +135,73 @@ class MinefieldsTest {
         val rifles = place(map, infantryEqid, 2, 2)
         assertFalse(MineAbilities.canDropMines(rifles))
         assertEquals(MineActionResult.NOT_ALLOWED, map.layMinefield(rifles))
+    }
+
+    @Test
+    fun dropAndClearAreIndependentBits() {
+        // OG_ABILITY_AUDIT.md §7.1.1: some units clear without laying and vice versa. A unit with
+        // only `Drop mines` (attr bit 0) must not also read as able to clear.
+        ruleset(RuleKey.MINEFIELDS to 1)
+        Equipment.putEquipment(
+            engineerEqid,
+            Equipment.getEquipment(engineerEqid)!!.also { it.attrEx = 0 },
+        )
+        val map = world()
+        val engineer = place(map, engineerEqid, 2, 2)
+        assertTrue(MineAbilities.canDropMines(engineer), "still has attr bit 0")
+        assertFalse(MineAbilities.canClearMines(engineer), "attrEx bit 6 was cleared")
+    }
+
+    @Test
+    fun anAirUnitNeedsBothDropMinesAndAirDropMinesToLay() {
+        ruleset(RuleKey.MINEFIELDS to 1)
+        val minelayerEqid = 902
+        Equipment.putEquipment(
+            minelayerEqid,
+            EquipmentData().apply {
+                name = "Minelayer Bomber"
+                uclass = UnitClass.TACTICAL_BOMBER.value
+                target = UnitType.SOFT.value
+                movmethod = MovMethod.AIR.value
+                movpoints = 8
+                ammo = 6
+                fuel = 40
+                softatk = 4
+                attr = 1 // Drop mines
+            },
+        )
+        val map = world()
+        val bomber = place(map, minelayerEqid, 2, 2)
+        assertFalse(MineAbilities.canDropMines(bomber), "Drop mines alone is not enough for an aircraft")
+
+        Equipment.putEquipment(
+            minelayerEqid,
+            Equipment.getEquipment(minelayerEqid)!!.also { it.attrEx = 131072 }, // AirDropMines
+        )
+        assertTrue(MineAbilities.canDropMines(bomber), "both bits together satisfy OG's prerequisite")
+    }
+
+    @Test
+    fun airDropMinesAloneIsNotEnough() {
+        ruleset(RuleKey.MINEFIELDS to 1)
+        val minelayerEqid = 903
+        Equipment.putEquipment(
+            minelayerEqid,
+            EquipmentData().apply {
+                name = "Confused Bomber"
+                uclass = UnitClass.TACTICAL_BOMBER.value
+                target = UnitType.SOFT.value
+                movmethod = MovMethod.AIR.value
+                movpoints = 8
+                ammo = 6
+                fuel = 40
+                softatk = 4
+                attrEx = 131072 // AirDropMines, WITHOUT Drop mines -- OG greys this out
+            },
+        )
+        val map = world()
+        val bomber = place(map, minelayerEqid, 2, 2)
+        assertFalse(MineAbilities.canDropMines(bomber), "OG's own UI never allows this combination")
     }
 
     @Test

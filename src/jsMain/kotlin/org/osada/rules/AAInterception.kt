@@ -77,6 +77,11 @@ internal object AAInterception {
             if (aa.player?.side == side || aaHex == null || aaPos == null) return@forEach
             if (!aaHex.isSpotted(side)) return@forEach
             if (!UnitCapabilities.hasAirDefenceFire(aa.unitData())) return@forEach
+            // OG's `No Intercept Air`: disables the INTERCEPTION path specifically for AD/FlaK/
+            // Fighter, while leaving ordinary defensive AA fire untouched -- see
+            // UnitCapabilities.hasNoInterceptAir's header. Checked here rather than folded into
+            // hasAirDefenceFire so the AA badge and any non-interception defensive fire are unaffected.
+            if (UnitCapabilities.hasNoInterceptAir(aa)) return@forEach
             if (!AttackEligibility.canInitiateAttack(aa, forPlane)) return@forEach
             val cells = HexGeometry.getRing(aaPos.row, aaPos.col, range, rows, cols, false)
             cells.add(Cell(aaPos.row, aaPos.col))
@@ -135,6 +140,7 @@ internal object AAInterception {
         val inRange = HexGeometry.distance(aaPos.row, aaPos.col, cell.row, cell.col) <= range
         return aa.player?.side != planeSide &&
             UnitCapabilities.hasAirDefenceFire(aa.unitData()) &&
+            !UnitCapabilities.hasNoInterceptAir(aa) &&
             inRange &&
             AttackEligibility.canInitiateAttack(aa, plane)
     }

@@ -111,6 +111,20 @@ class AllWeatherCombatTest {
         }
     }
 
+    /** OG's `All Weather` equipment special (`SpecialEx` bit 60.2, `attrEx` bit 2), wired
+     *  2026-08-19 as the second, equipment-level source of the same exemption -- see
+     *  `UnitCapabilities.hasAllWeather`'s header. */
+    @Test
+    fun theEquipmentLevelAllWeatherSpecialAlsoFliesInEveryNonFairSky() {
+        Equipment.getEquipment(fighterEqid)!!.attrEx = 4 // All Weather
+        val plane = unit(fighterEqid)
+
+        listOf(WeatherCondition.OVERCAST, WeatherCondition.RAIN, WeatherCondition.SNOW).forEach { sky ->
+            setWeather(sky.value)
+            assertFalse(AttackEligibility.airGroundedByWeather(plane), "flies in ${sky.name}")
+        }
+    }
+
     @Test
     fun theExemptionIsSpecificToThisTraitAndNotToHavingAnyCommander() {
         setWeather(WeatherCondition.OVERCAST.value)

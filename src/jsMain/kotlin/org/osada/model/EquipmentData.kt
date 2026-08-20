@@ -35,6 +35,25 @@ class EquipmentData {
     var attr: Int = 0
     var embark: Int = 0
 
+    /**
+     * OG's `Special4` byte, added 2026-08-19 (`docs/og-fidelity-plan.md` §C). Bits 0..7:
+     * Build/Repair, Dismount After Move, No Dirt Airfields, Rocket Bomber, Cut LOS, Allow LOF,
+     * No ZOC, Evade. Defaults to 0 ("no data imported") for any equipment JSON whose parsehints
+     * don't carry it -- see [EquipmentCombatEligibility.kt] for the full bit table and which of
+     * these are read by anything today.
+     */
+    var attr2: Int = 0
+
+    /**
+     * OG's `SpecialEx` bytes 0..2, packed the same way `attr` packs `Special1..3`
+     * (`byte0 + (byte1 shl 8) + (byte2 shl 16)`), added 2026-08-19. Bits 0..23: No Leader,
+     * Lasting Sup., All Weather, Overrun toggle, No Ammo penalty, No Intercept Air, Clear mines,
+     * NoNeedStation, Torpedo bomber, Counter Battery, Partizan, Exploit Success, Anti Sub (ASW),
+     * AD Support, *(unused)*, SingleFireSup., Kamikaze, AirDropMines, Saboteur, Jet (Stealth),
+     * Supply Unit, *(unused x3)*. Defaults to 0, same rule as [attr2].
+     */
+    var attrEx: Int = 0
+
     // 1-based (1=January), matching the OG CSV's own MonthAvail/MonthExpired convention. Default
     // to full-year coverage: any equipment JSON whose parsehints don't include these two fields
     // (PM's own original adlerkorps/pacific sets, never touched by the OG import) behaves exactly
@@ -86,6 +105,8 @@ internal fun EquipmentData.withStatMultiplier(multiplier: Int): EquipmentData =
         result.ammo = ammo * multiplier
         result.attr = attr
         result.embark = embark
+        result.attr2 = attr2
+        result.attrEx = attrEx
         result.monthavailable = monthavailable
         result.monthexpired = monthexpired
     }
@@ -113,6 +134,7 @@ fun Json.toEquipmentData(parseHints: List<String>): EquipmentData {
         data.applyEquipmentFieldsA(hint, value)
         data.applyEquipmentFieldsB(hint, value)
         data.applyEquipmentFieldsC(hint, value)
+        data.applyEquipmentFieldsD(hint, value)
     }
     return data
 }
@@ -167,5 +189,16 @@ private fun EquipmentData.applyEquipmentFieldsC(
         "embark" -> embark = value as Int
         "monthavailable" -> monthavailable = value as Int
         "monthexpired" -> monthexpired = value as Int
+    }
+}
+
+/** OG's `Special4`/`SpecialEx`, added 2026-08-19 -- see [EquipmentData.attr2] / [EquipmentData.attrEx]. */
+private fun EquipmentData.applyEquipmentFieldsD(
+    hint: String,
+    value: dynamic,
+) {
+    when (hint) {
+        "attr2" -> attr2 = value as Int
+        "attrEx" -> attrEx = value as Int
     }
 }

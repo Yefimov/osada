@@ -107,13 +107,14 @@ internal class CombatApplication(
         attacker.experience = kotlin.math.round(attacker.experience + combatResult.atkExpGained.toDouble()).toInt()
         defender.experience = kotlin.math.round(defender.experience + combatResult.defExpGained.toDouble()).toInt()
         if (supportFire || isOverrun) attacker.fire(false) else attacker.fire(true)
-        // OG's `Shock Tactics`: suppression this commander inflicts outlives the round wrap that
-        // clears everybody else's. Resolved here, on the side that DEALT the damage -- `hit` runs
-        // on the victim and cannot see who hit it (`docs/og-fidelity-plan.md` A.4).
-        defender.hit(combatResult.kills, Leaders.unitHasLeader(attacker, LeaderType.SHOCK_TACTICS))
+        // OG's `Shock Tactics` leader trait / `Lasting Suppression` equipment special: suppression
+        // this side inflicts outlives the round wrap that clears everybody else's. Resolved here,
+        // on the side that DEALT the damage -- `hit` runs on the victim and cannot see who hit it
+        // (`docs/og-fidelity-plan.md` A.4, and the equipment half added 2026-08-19 per §0.1).
+        defender.hit(combatResult.kills, UnitCapabilities.hasLastingSuppression(attacker))
         if (combatResult.defcanfire && !supportFire) {
             defender.fire(false)
-            attacker.hit(combatResult.losses, Leaders.unitHasLeader(defender, LeaderType.SHOCK_TACTICS))
+            attacker.hit(combatResult.losses, UnitCapabilities.hasLastingSuppression(defender))
         }
         if (!supportFire) gameMap.delAttackSel()
     }

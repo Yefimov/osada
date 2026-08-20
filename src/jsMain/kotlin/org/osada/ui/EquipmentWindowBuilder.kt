@@ -9,6 +9,7 @@ import org.osada.i18n.I18n
 import org.osada.model.EquipmentData
 import org.osada.model.GameUnit
 import org.osada.model.UnitDescriptions
+import org.osada.model.abilityCatalogKeys
 import org.osada.monthNamesShort
 import org.osada.unitClassNames
 
@@ -17,13 +18,21 @@ import org.osada.unitClassNames
  *  reviewed description (most non-Soviet equipment, for now) simply show no description. */
 internal fun equipmentDescriptionOrNull(eq: EquipmentData): String? = UnitDescriptions.get(eq)
 
-/** Explicitly says when an evocative equipment name has no extra rules beyond shown stats. */
+/**
+ * Explicitly says when an evocative equipment name has no extra rules beyond shown stats.
+ *
+ * Two tiers, deliberately worded differently (`docs/og-fidelity-plan.md` §C): the first three
+ * lines describe OSADA's own five badge abilities in full sentences; [org.osada.model.abilityCatalogKeys]
+ * appends one line per OTHER named OG special the equipment carries — everything decoded from
+ * `equip.xeqp` that does not (and, per the plan's own guidance, should not) get a sixth badge.
+ */
 internal fun equipmentMechanicsNote(eq: EquipmentData): String? =
     buildList {
         val capabilities = org.osada.rules.UnitCapabilities
         if (capabilities.isHeadquarters(eq) || capabilities.grantsCombatSupport(eq)) add(I18n.t("equipment.mechanics.headquarters"))
         if (capabilities.hasPhasedMovement(eq)) add(I18n.t("equipment.mechanics.recon_movement"))
         if (capabilities.canOverrun(eq)) add(I18n.t("equipment.mechanics.tank_overrun"))
+        eq.abilityCatalogKeys().forEach { add(I18n.t(it)) }
     }.takeIf { it.isNotEmpty() }?.joinToString(" ")
 
 /** "Available from Mon YYYY" — shared so the equipment window's detail bay and the unit-card

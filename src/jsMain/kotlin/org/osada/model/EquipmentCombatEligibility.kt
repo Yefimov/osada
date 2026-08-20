@@ -52,23 +52,66 @@ package org.osada.model
  *    may attack aircraft although its class would not), so the one use of it is unaffected; only the
  *    name was wrong.
  *
- * WHERE `attr` STOPS. The importer packs only three of OG's five special bytes --
- * `attr = Special1 + (Special2 shl 8) + (Special3 shl 16)` -- so bits 0..23 are all there is here.
- * `Special4` and `SpecialEx` are NOT carried, and ten decoded OG abilities live in them and cannot
- * be expressed by any mask in this file: `Build/Repair`, `D.AfterMove`, `Rocket bomber`,
- * `All weather`, `Partizan`, `Exploit Success`, `Anti Sub (ASW)`, `AD Support`, `Kamikaze` and
- * `Supply unit`. Adding one of those means widening the import first, not inventing a mask above 23.
- * The full bit->name table (source byte and bit, with how each was verified) is
- * `tools/og-import/OG_ABILITY_AUDIT.md` section 7.1; the binary layout it is read from is documented
- * in `tools/og-import/xeqp_to_csv.py`.
+ * WIDENED 2026-08-19 (`docs/og-fidelity-plan.md` §C). `attr` itself still stops at bit 23 -- it is
+ * three OG special bytes packed by the importer, unchanged -- but two more fields now carry the
+ * other two: `EquipmentData.attr2` is `Special4` (8 bits) and `EquipmentData.attrEx` is
+ * `SpecialEx` bytes 0..2 (24 bits, packed the identical way `attr` packs Special1..3). Together the
+ * three fields cover all 52 of OG's equipment specials -- nothing OG can express is unreadable any
+ * more. `eqp-united`'s existing records were back-filled additively by
+ * `tools/eqp-merge/add_special4_specialex.py`, which re-identifies each record's true (efile,
+ * ECode) against 8 of the 11 OG-imported efiles whose `equip.xeqp` layout is cracked (cc76,
+ * pzliga, kaiser, atomic, basekorp, lxf, gce, ag); `eqp-olgcw` (`equip97.eqp`, an older format),
+ * `eqp-olgww2` and `eqp-comww2` (both a differently-sized `equip.xeqp`) are not yet crackable this
+ * way, so records whose only source is one of those three keep `attr2`/`attrEx` at 0 -- "no data",
+ * not "no abilities". `csv_to_eqp.py` now packs both fields going forward for any efile it can read.
+ *
+ * ```
+ * attr2  = Special4
+ * attrEx = SpecialExByte0 + (SpecialExByte1 shl 8) + (SpecialExByte2 shl 16)
+ * ```
+ *
+ * | `attr2` bit | mask | OG ability | | `attrEx` bit | mask | OG ability |
+ * |---|---|---|---|---|---|---|
+ * | 0 | 1 | Build/Repair | | 0 | 1 | No Leader |
+ * | 1 | 2 | Dismount After Move | | 1 | 2 | Lasting Sup. |
+ * | 2 | 4 | No Dirt Airfields | | 2 | 4 | **All Weather** |
+ * | 3 | 8 | Rocket Bomber | | 3 | 8 | **Overrun toggle** |
+ * | 4 | 16 | Cut LOS | | 4 | 16 | No Ammo penalty |
+ * | 5 | 32 | Allow LOF | | 5 | 32 | No Intercept Air |
+ * | 6 | 64 | No ZOC | | 6 | 64 | **Clear mines** |
+ * | 7 | 128 | Evade | | 7 | 128 | NoNeedStation |
+ * | | | | | 8 | 256 | Torpedo bomber |
+ * | | | | | 9 | 512 | Counter Battery |
+ * | | | | | 10 | 1024 | Partizan |
+ * | | | | | 11 | 2048 | Exploit Success |
+ * | | | | | 12 | 4096 | Anti Sub (ASW) |
+ * | | | | | 13 | 8192 | **AD Support** |
+ * | | | | | 14 | 16384 | *(unused)* |
+ * | | | | | 15 | 32768 | SingleFireSup. |
+ * | | | | | 16 | 65536 | Kamikaze |
+ * | | | | | 17 | 131072 | **AirDropMines** |
+ * | | | | | 18 | 262144 | Saboteur |
+ * | | | | | 19 | 524288 | Jet (Stealth) -- CONFIRMED-BIT, UNCONFIRMED-EFFECT; do not guess one from the name |
+ * | | | | | 20 | 1048576 | Supply Unit |
+ * | | | | | 21..23 | | *(unused)* |
+ *
+ * Bold = read by the engine today (in this file or its callers). The rest have a named
+ * `equipment.mechanics.*` line in the purchase window (`EquipmentWindowBuilder.equipmentMechanicsNote`)
+ * but no gameplay subsystem yet -- deliberately: each would need its own design under
+ * `ruleset-profiles.md` §2's admission rule (a mechanic like `Kamikaze` or `Partizan` is not a
+ * bitmask read, it is new combat/movement behaviour). The full bit->name table (source byte and
+ * bit, with how each was verified) is `tools/og-import/OG_ABILITY_AUDIT.md` section 7.1.1; the
+ * binary layout it is read from is documented in `tools/og-import/xeqp_to_csv.py`.
  */
-private const val ATTR_MASK_IGNORES_ENTRENCHMENT = 4
-private const val ATTR_MASK_BRIDGE = 8
-private const val ATTR_MASK_CANNOT_ATTACK_SOFT = 16
-private const val ATTR_MASK_CANNOT_ATTACK_HARD = 32
-private const val ATTR_MASK_CANNOT_ATTACK_AIR = 64
+// internal (not private): also read by EquipmentAbilityCatalog.kt's purchase-window ability list,
+// so a unit's catalog line and its actual combat-eligibility check can never name different bits.
+internal const val ATTR_MASK_IGNORES_ENTRENCHMENT = 4
+internal const val ATTR_MASK_BRIDGE = 8
+internal const val ATTR_MASK_CANNOT_ATTACK_SOFT = 16
+internal const val ATTR_MASK_CANNOT_ATTACK_HARD = 32
+internal const val ATTR_MASK_CANNOT_ATTACK_AIR = 64
 private const val ATTR_MASK_CANNOT_BUY = 128
-private const val ATTR_MASK_CAN_AIR_ATK = 32768
+internal const val ATTR_MASK_CAN_AIR_ATK = 32768
 
 /**
  * OG's `Support Fire`, bit 12 — a **TOGGLE that reverses the class default**, not a grant.
@@ -139,8 +182,88 @@ internal const val ATTR_MASK_COMBAT_SUPPORT = 65536
  */
 internal const val ATTR_MASK_CAPTURE_FLAG = 1048576
 
-/** OG's `NoSurrender`: never destroyed-as-surrendered for a retreat it cannot make. Bit 23. */
-private const val ATTR_MASK_NO_SURRENDER = 8388608
+/** OG's `NoSurrender`: never destroyed-as-surrendered for a retreat it cannot make. Bit 23.
+ *  internal (not private): also read by EquipmentAbilityCatalog.kt, see the note above. */
+internal const val ATTR_MASK_NO_SURRENDER = 8388608
+
+/**
+ * `attrEx` masks for the five `SpecialEx` abilities wired into gameplay so far (2026-08-19). See
+ * this file's header for the complete bit table, including the ones below that are NOT wired.
+ */
+/** OG's `Clear mines`, `SpecialEx` bit 60.6 (`attrEx` bit 6). See [org.osada.rules.MineAbilities]. */
+internal const val ATTR_EX_MASK_CLEAR_MINES = 64
+
+/**
+ * OG's `AirDropMines`, `SpecialEx` bit 62.1 (`attrEx` bit 17) — an air unit's ability to lay mines
+ * from the air. **Has a prerequisite OG enforces in its own UI**: greyed out unless the unit also
+ * carries `Drop mines` (`attr` bit 0). See [org.osada.rules.MineAbilities.canDropMines].
+ */
+internal const val ATTR_EX_MASK_AIR_DROP_MINES = 131072
+
+/**
+ * OG's `All Weather`, `SpecialEx` bit 60.2 (`attrEx` bit 2) — the equipment-level override that
+ * lets a unit attack (and be attacked) despite bad weather. `WeatherCombatRules.isAllWeather`
+ * previously read only the `ALL_WEATHER_COMBAT` leader trait; this is the second, equipment-level
+ * source `OG_ABILITY_AUDIT.md` §2 named as missing. Do not double-apply: a unit with both the bit
+ * and the leader trait is still just "all-weather", not doubly so.
+ */
+internal const val ATTR_EX_MASK_ALL_WEATHER = 4
+
+/**
+ * OG's `Overrun toggle`, `SpecialEx` bit 60.3 (`attrEx` bit 3) — a **TOGGLE that reverses the Tank
+ * class default**, exactly the shape `Support Fire` and `Recon Skill` already have (see
+ * `UnitCapabilities.hasSupportFire`'s header for why toggles must be read as `classDefault xor
+ * bit`, never as a plain grant). `UnitCapabilities.canOverrun` previously read the Tank class alone
+ * — `docs/og-fidelity-plan.md`'s own approximations list named this the OVR badge's stand-in.
+ */
+internal const val ATTR_EX_MASK_OVERRUN_TOGGLE = 8
+
+/**
+ * OG's `Recon Skill`, `attr` bit 10 (already inside the original 24-bit `attr` word — no import
+ * widening needed) — a **TOGGLE that reverses the Recon class default**. Measured on 2,880 Recon
+ * records: set on only 10 of them (0.3%), which settles it as a toggle rather than a grant
+ * (`OG_ABILITY_AUDIT.md` §2's "FOUR OF THESE BITS ARE TOGGLES" table). `UnitCapabilities.hasPhasedMovement`
+ * previously read the Recon class alone — the plan's other named approximation, alongside OVR above.
+ */
+internal const val ATTR_MASK_RECON_SKILL = 1024
+
+/**
+ * OG's `AD Support`, `SpecialEx` bit 61.5 (`attrEx` bit 13) — the equipment-level anti-air support
+ * grant `OG_ABILITY_AUDIT.md` §2 named as the third missing piece behind OSADA's class-only AA
+ * badge (alongside RCN/OVR above). **Supplements** [org.osada.rules.UnitCapabilities.hasAirDefenceFire]'s
+ * class list rather than replacing it, the same shape `Capture Flag` supplements its four classes:
+ * it is a grant, not a toggle, so OR is correct and a class already in the AA set is unaffected by
+ * also carrying the bit.
+ */
+internal const val ATTR_EX_MASK_AD_SUPPORT = 8192
+
+/**
+ * OG's `ASW` (Anti Submarine Warfare), `SpecialEx` bit 61.4 (`attrEx` bit 12) — a plain grant,
+ * `Manual_OG-en.pdf` §7.2: *"ASW: can attack submarines."* See [canAttackSubmarineTarget].
+ */
+internal const val ATTR_EX_MASK_ANTI_SUB = 4096
+
+/**
+ * OG's `No Intercept Air`, `SpecialEx` bit 60.5 (`attrEx` bit 5) — narrower than its name and the
+ * manual's own "Intercept toggle" paragraph suggest. `OG_ABILITY_AUDIT.md` §2's measured table
+ * (cross-checked against OG's own interception rules) is the more precise source: it "disables
+ * movement interception for AD/FlaK/Fighter... not necessarily all AD support" and leaves ordinary
+ * defensive AA fire **unaffected**. So this is a veto on the INTERCEPTION path specifically
+ * (`AAInterception.isEligibleInterceptor` / `visibleThreatHexes`), never on
+ * [org.osada.rules.UnitCapabilities.hasAirDefenceFire] itself — that would also suppress the
+ * badge and ordinary defensive fire, which OG does not do.
+ */
+internal const val ATTR_EX_MASK_NO_INTERCEPT_AIR = 32
+
+/**
+ * OG's `Lasting Suppression`, `SpecialEx` bit 60.1 (`attrEx` bit 1) — `Manual_OG-en.pdf` §7.2:
+ * *"suppression inflicted by the unit lasts until end of turn."* The second, equipment-level
+ * source of the same effect the `SHOCK_TACTICS` leader trait already grants
+ * (`GameUnit.lastingHits`) — see [org.osada.rules.UnitCapabilities.hasLastingSuppression], which
+ * ORs the two exactly as `docs/og-fidelity-plan.md` §0.1 anticipated this bit being wired: *"this
+ * unit's `hits` survive the victim's `unitEndTurn`"*, not a second suppression statistic.
+ */
+internal const val ATTR_EX_MASK_LASTING_SUPPRESSION = 2
 
 /** Attribute-bitmask combat eligibility checks, split out of [Equipment] to keep its function count in bounds. */
 fun Equipment.isBridge(eqid: Int): Boolean = (equipmentMap[eqid]?.attr?.and(ATTR_MASK_BRIDGE) ?: 0) != 0
@@ -204,13 +327,20 @@ fun Equipment.canInitiateAttackOnUnitType(
     return canAttackSubmarineTarget(attacker, defender) && canAttackTargetType(attacker, defender.target)
 }
 
+/**
+ * Whether [attacker] may target a submarine: the class default, **plus** OG's `ASW` (Anti
+ * Submarine Warfare) grant (`SpecialEx` bit 61.4, `attrEx` bit 12) -- the same `CAN Air Atk`
+ * shape [canAttackAirTarget] already uses for aircraft targets, added 2026-08-19. `Manual_OG-en.pdf`
+ * §7.2 states it as a plain grant, not a toggle: *"ASW: can attack submarines"*.
+ */
 private fun canAttackSubmarineTarget(
     attacker: EquipmentData,
     defender: EquipmentData,
 ): Boolean {
     if (defender.uclass != org.osada.UnitClass.SUBMARINE.value) return true
     return attacker.uclass == org.osada.UnitClass.DESTROYER.value ||
-        attacker.uclass == org.osada.UnitClass.TACTICAL_BOMBER.value
+        attacker.uclass == org.osada.UnitClass.TACTICAL_BOMBER.value ||
+        attacker.attrEx.and(ATTR_EX_MASK_ANTI_SUB) != 0
 }
 
 private fun canAttackTargetType(

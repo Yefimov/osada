@@ -62,6 +62,45 @@ class EquipmentMarkingsTest {
         assertEquals("SUP", parent.firstElementChild?.textContent, "74% of OG anti-tank is toggled ON")
     }
 
+    /**
+     * `Recon Skill` (`attr` bit 10) and `Overrun toggle` (`attrEx` bit 3) are toggles that reverse
+     * the Recon/Tank class default, wired 2026-08-19 — the same shape `Support Fire` already has.
+     * `docs/og-fidelity-plan.md`'s approximations list named the plain class read as each badge's
+     * stand-in for these two OG toggles.
+     */
+    @Test
+    fun rconAndOvrBadgesFollowTheirToggledClassDefaults() {
+        val parent = document.createElement("div") as HTMLElement
+
+        EquipmentMarkings.render(parent, EquipmentData().apply { uclass = UnitClass.RECON.value; attr = RECON_SKILL_ATTR })
+        assertEquals(null, parent.firstElementChild, "Recon Skill REVERSES the Recon default, so no RCN badge")
+
+        EquipmentMarkings.render(parent, EquipmentData().apply { uclass = UnitClass.INFANTRY.value; attr = RECON_SKILL_ATTR })
+        assertEquals("RCN", parent.firstElementChild?.textContent, "the toggle grants it to a non-Recon record")
+
+        EquipmentMarkings.render(parent, EquipmentData().apply { uclass = UnitClass.TANK.value; attrEx = OVERRUN_TOGGLE_ATTR_EX })
+        assertEquals(null, parent.firstElementChild, "Overrun toggle REVERSES the Tank default, so no OVR badge")
+
+        EquipmentMarkings.render(parent, EquipmentData().apply { uclass = UnitClass.INFANTRY.value; attrEx = OVERRUN_TOGGLE_ATTR_EX })
+        assertEquals("OVR", parent.firstElementChild?.textContent, "the toggle grants it to a non-Tank record")
+    }
+
+    /** OG's `AD Support` (`SpecialEx` 61.5, `attrEx` bit 13) is a GRANT, not a toggle: it
+     *  supplements the class list rather than replacing it, so a non-AA class carrying it alone
+     *  gets the AA badge too. Wired 2026-08-19. */
+    @Test
+    fun adSupportGrantsTheAntiAirBadgeOutsideTheClassList() {
+        val parent = document.createElement("div") as HTMLElement
+        EquipmentMarkings.render(
+            parent,
+            EquipmentData().apply {
+                uclass = UnitClass.CRUISER.value
+                attrEx = AD_SUPPORT_ATTR_EX
+            },
+        )
+        assertEquals("AA", parent.lastElementChild?.textContent, "AD Support grants the badge outside the class list")
+    }
+
     @Test
     fun airDefenceClassesAdvertiseAntiAirFire() {
         val parent = document.createElement("div") as HTMLElement
@@ -143,5 +182,14 @@ class EquipmentMarkingsTest {
     private companion object {
         /** `Equipment.attr` bit 12 — OG's `Support Fire`. */
         const val SUPPORT_FIRE_ATTR = 4096
+
+        /** `Equipment.attr` bit 10 — OG's `Recon Skill`. */
+        const val RECON_SKILL_ATTR = 1024
+
+        /** `Equipment.attrEx` bit 3 — OG's `Overrun toggle`. */
+        const val OVERRUN_TOGGLE_ATTR_EX = 8
+
+        /** `Equipment.attrEx` bit 13 — OG's `AD Support`. */
+        const val AD_SUPPORT_ATTR_EX = 8192
     }
 }

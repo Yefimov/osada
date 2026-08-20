@@ -37,16 +37,18 @@ internal object AttackEligibility {
      *
      * The rule itself is switchable through the ruleset (`weather_grounds_aircraft`); it ships on.
      *
-     * OG also grants the exception through an EQUIPMENT special (`All weather`, `equip.xeqp` bit
-     * 60.2). That half stays unimplemented and is not faked here: the bit lives in
-     * `Special4`/`SpecialEx`, which the importer's 24-bit `attr` cannot carry at all
-     * (`DEFERRED.md` §1.5). Granting it from a unit name or class would be an invention.
+     * OG also grants the exception through an EQUIPMENT special (`All weather`, `SpecialEx` bit
+     * 60.2). **Wired 2026-08-19** (`UnitCapabilities.hasAllWeather`) now that `attrEx` carries
+     * `SpecialEx` at all — until then the bit lived outside the importer's 24-bit `attr` word
+     * entirely (`docs/og-fidelity-plan.md` §C) and granting it from a unit name or class would
+     * have been an invention.
      */
     fun airGroundedByWeather(attacker: GameUnit): Boolean =
         ActiveRuleset.flag(RuleKey.WEATHER_GROUNDS_AIRCRAFT, true) &&
             UnitPredicates.isAir(attacker) &&
             (GameHolder.instance?.scenario?.atmosferic ?: 0) != 0 &&
-            !Leaders.unitHasLeader(attacker, LeaderType.ALL_WEATHER_COMBAT)
+            !Leaders.unitHasLeader(attacker, LeaderType.ALL_WEATHER_COMBAT) &&
+            !UnitCapabilities.hasAllWeather(attacker)
 
     /**
      * OG's move/fire ordering: artillery and air defence *"must fire before moving unless they carry

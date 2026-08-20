@@ -99,7 +99,7 @@ internal object OverwatchFire {
             if (mover.destroyed) break
             val logId = CombatLog.addCombatStart(watcher, mover, turn)
             val result = GameRules.calculateAttackResults(watcher, mover, true, units, committed = true)
-            mover.hit(result.kills, Leaders.unitHasLeader(watcher, LeaderType.SHOCK_TACTICS))
+            mover.hit(result.kills, UnitCapabilities.hasLastingSuppression(watcher))
             // `fire(true)` rather than `fire(false)`: the shot is spent, which is the cost that
             // keeps one commander from answering every enemy move of the turn. Devastating Fire
             // still applies on top, through `fire` itself -- a commander with both really does get

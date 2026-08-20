@@ -733,6 +733,17 @@ input[type=text], input[type=search] {
     margin: 0;
 }
 
+/* Narrative descriptions are normal readable text:
+ * allow desktop selection/copy and mobile long-press selection.
+ * base.css disables selection globally for game UI. */
+#smCampDesc,
+#smCampDesc *,
+#smScenDesc,
+#smScenDesc * {
+    -webkit-user-select: text;
+    user-select: text;
+}
+
 /* --- collapsible campaign path (victory/defeat tree) --- */
 .osadaCollapse {
     flex: 0 0 auto;

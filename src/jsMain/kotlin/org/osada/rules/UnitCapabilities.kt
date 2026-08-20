@@ -2,9 +2,15 @@ package org.osada.rules
 
 import org.osada.LeaderType
 import org.osada.UnitClass
+import org.osada.model.ATTR_EX_MASK_AD_SUPPORT
+import org.osada.model.ATTR_EX_MASK_ALL_WEATHER
+import org.osada.model.ATTR_EX_MASK_LASTING_SUPPRESSION
+import org.osada.model.ATTR_EX_MASK_NO_INTERCEPT_AIR
+import org.osada.model.ATTR_EX_MASK_OVERRUN_TOGGLE
 import org.osada.model.ATTR_MASK_CAPTURE_FLAG
 import org.osada.model.ATTR_MASK_COMBAT_SUPPORT
 import org.osada.model.ATTR_MASK_MECHANIZED
+import org.osada.model.ATTR_MASK_RECON_SKILL
 import org.osada.model.ATTR_MASK_SUPPORT_FIRE
 import org.osada.model.EquipmentData
 import org.osada.model.GameUnit
@@ -65,7 +71,20 @@ object UnitCapabilities {
         return data.name.contains("headquarters", ignoreCase = true) || words.any { it.equals("HQ", ignoreCase = true) }
     }
 
-    fun hasPhasedMovement(data: EquipmentData): Boolean = data.uclass == UnitClass.RECON.value
+    /**
+     * Whether this equipment has phased movement: OG's class default for Recon, **reversed** by
+     * its `Recon Skill` attribute (`attr` bit 10) — the same `classDefault xor bit` shape as
+     * [hasSupportFire], not a plain grant. `Recon Skill` was already inside the original 24-bit
+     * `attr` word (no importer widening needed for this one), but was read only as the Recon class
+     * until 2026-08-19 — `docs/og-fidelity-plan.md`'s own approximations list named this as one of
+     * three badges (RCN/OVR/AA) sourced from class alone rather than OG's real equipment toggle.
+     *
+     * Measured over 46,978 `eqp-united` records: bit 10 is set on 10 of 2,880 Recon records
+     * (0.3%) and 3,848 non-Recon ones — a grant would land on nearly every Recon unit, not ten, so
+     * the toggle reading is the only one the data supports (`OG_ABILITY_AUDIT.md` §2).
+     */
+    fun hasPhasedMovement(data: EquipmentData): Boolean =
+        (data.uclass == UnitClass.RECON.value) xor (data.attr and ATTR_MASK_RECON_SKILL != 0)
 
     /**
      * Classes OG makes fire BEFORE moving unless they are mechanized: the heavy weapons that have to
@@ -94,7 +113,21 @@ object UnitCapabilities {
      */
     fun isMechanized(data: EquipmentData): Boolean = data.attr and ATTR_MASK_MECHANIZED != 0
 
-    fun canOverrun(data: EquipmentData): Boolean = data.uclass == UnitClass.TANK.value
+    /**
+     * Whether this equipment may Overrun: OG's class default for Tank, **reversed** by its
+     * `Overrun toggle` attribute (`SpecialEx` bit 60.3, `attrEx` bit 3) — `classDefault xor bit`,
+     * the same shape [hasPhasedMovement] and [hasSupportFire] already use. Wired 2026-08-19 once
+     * `attrEx` widened the import past `attr`'s 24 bits; the plan's own approximations list named
+     * the plain Tank-class read as the OVR badge's stand-in for OG's real toggle.
+     *
+     * `eqp-united` population: 296 records carry the bit. Read [org.osada.model.EquipmentCombatEligibility]'s
+     * header before trusting a raw count here — records whose only source efile is one of the
+     * three not-yet-crackable formats (`eqp-olgcw`/`eqp-olgww2`/`eqp-comww2`) keep `attrEx` at 0,
+     * so this toggle is inert (falls back to the Tank-class default) for any unit sourced only
+     * from those three until they are cracked too.
+     */
+    fun canOverrun(data: EquipmentData): Boolean =
+        (data.uclass == UnitClass.TANK.value) xor (data.attrEx and ATTR_EX_MASK_OVERRUN_TOGGLE != 0)
 
     /**
      * Whether this equipment flips a hex's owner and flag: [CAPTURING_CLASSES] by default, **plus**
@@ -167,8 +200,21 @@ object UnitCapabilities {
      * `AttackEligibility.canInitiateAttack`, which fails on a zero air attack. So the badge claimed
      * a role combat would never grant — the §4.6 failure mode, in the very predicate §7.14 shared
      * to prevent it. Sharing the class list was not enough; the capability has to be checked too.
+     *
+     * **Extended 2026-08-19** with OG's `AD Support` grant (`SpecialEx` bit 61.5, `attrEx` bit 13),
+     * added 2026-08-19. `AD Support` is a plain grant, not a toggle — it **supplements**
+     * [AIR_DEFENCE_FIRE_CLASSES] the same way `Capture Flag` supplements its four ground classes,
+     * so OR is correct here: a class already in the set is unaffected by also carrying the bit,
+     * and a unit outside the set gains the role only by carrying it. `docs/og-fidelity-plan.md`'s
+     * approximations list named this the AA badge's third missing source, alongside RCN/OVR above.
+     * No separate `airatk > 0` guard is needed on the bit path: `AttackEligibility.canFire` already
+     * requires a nonzero `airatk` before any air target can be engaged, regardless of which path
+     * granted eligibility — measured over `eqp-united`, only 1 of 745 `AD Support` records has
+     * `airatk = 0`, so this is not a live concern either way.
      */
-    fun hasAirDefenceFire(data: EquipmentData): Boolean = data.uclass in AIR_DEFENCE_FIRE_CLASSES && data.airatk > 0
+    fun hasAirDefenceFire(data: EquipmentData): Boolean =
+        (data.uclass in AIR_DEFENCE_FIRE_CLASSES && data.airatk > 0) ||
+            data.attrEx and ATTR_EX_MASK_AD_SUPPORT != 0
 
     /**
      * Whether [unit] lends experience bars to adjacent friendlies — OG's `Combat Support` equipment
@@ -223,4 +269,38 @@ object UnitCapabilities {
             if (eligible) supporter.experience / EXPERIENCE_PER_BAR else 0
         }
     }
+
+    /**
+     * Whether [unit] carries OG's `All Weather` equipment special (`SpecialEx` bit 60.2, `attrEx`
+     * bit 2) — allows attacking (and being attacked) despite bad weather, the equipment-level
+     * source `WeatherCombatRules.isAllWeather` was missing until 2026-08-19: it previously read
+     * only [LeaderType.ALL_WEATHER_COMBAT]. Read on the unit's REAL equipment (`useReal = true`,
+     * matching [hasCombatSupport]) rather than a carrier/transport it happens to be riding.
+     */
+    fun hasAllWeather(unit: GameUnit): Boolean =
+        unit.unitData(true).attrEx and ATTR_EX_MASK_ALL_WEATHER != 0
+
+    /**
+     * Whether suppression [unit] inflicts survives the round wrap instead of clearing at the
+     * ordinary per-round reset (`model/GameUnitLifecycle.kt`'s `unitEndTurn`, see §0.1.1) — OG's
+     * `Lasting Suppression` equipment special (`SpecialEx` bit 60.1, `attrEx` bit 1) and the
+     * `SHOCK_TACTICS` leader trait are two independent sources of the identical effect. Wired
+     * 2026-08-19 exactly as `docs/og-fidelity-plan.md` §0.1 said it must be when it became
+     * reachable: *"this unit's `hits` survive the victim's `unitEndTurn`"*, not a second
+     * suppression statistic — [GameUnit.lastingHits] is that same field either way.
+     */
+    fun hasLastingSuppression(unit: GameUnit): Boolean =
+        Leaders.unitHasLeader(unit, LeaderType.SHOCK_TACTICS) ||
+            unit.unitData(true).attrEx and ATTR_EX_MASK_LASTING_SUPPRESSION != 0
+
+    /**
+     * Whether OG's `No Intercept Air` special (`SpecialEx` bit 60.5, `attrEx` bit 5) vetoes [unit]
+     * from the interception system specifically. **Not** a general anti-air eligibility check —
+     * `OG_ABILITY_AUDIT.md` §2's measured table is explicit that this bit "disables movement
+     * interception for AD/FlaK/Fighter... [and leaves] ordinary defensive AA fire unaffected", so
+     * it is read only by [org.osada.rules.AAInterception]'s interception path, never by
+     * [hasAirDefenceFire] (which also drives the AA badge and would incorrectly hide it too).
+     */
+    fun hasNoInterceptAir(unit: GameUnit): Boolean =
+        unit.unitData(true).attrEx and ATTR_EX_MASK_NO_INTERCEPT_AIR != 0
 }

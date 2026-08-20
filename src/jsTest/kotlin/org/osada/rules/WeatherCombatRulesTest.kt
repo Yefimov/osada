@@ -174,6 +174,17 @@ class WeatherCombatRulesTest {
         assertEquals(10, WeatherCombatRules.firingStrength(plane, unit(flakEqid, enemy)))
     }
 
+    /** OG's `All Weather` equipment special (`attrEx` bit 2), wired 2026-08-19 as the second source
+     *  of the same exemption `UnitCapabilities.hasAllWeather` grants alongside the leader trait. */
+    @Test
+    fun theAllWeatherEquipmentSpecialAlsoFiresAtFullStrength() {
+        weather(WeatherCondition.RAIN)
+        Equipment.getEquipment(fighterEqid)!!.attrEx = 4 // All Weather
+        val plane = unit(fighterEqid)
+
+        assertEquals(10, WeatherCombatRules.firingStrength(plane, unit(flakEqid, enemy)))
+    }
+
     /** Rounded up, so a one-strength unit still fires. A silent attack that can never do anything
      *  is indistinguishable from a bug. */
     @Test

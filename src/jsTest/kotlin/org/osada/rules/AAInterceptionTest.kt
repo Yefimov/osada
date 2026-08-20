@@ -156,6 +156,22 @@ class AAInterceptionTest {
         assertTrue(aa.tempSpotted, "firing reveals a hidden flak")
     }
 
+    /** OG's `No Intercept Air` (`SpecialEx` 60.5, `attrEx` bit 5): disables the INTERCEPTION path
+     *  specifically, while leaving ordinary defensive fire alone -- `OG_ABILITY_AUDIT.md` §2. */
+    @Test
+    fun noInterceptAirVetoesInterceptionButNotTheBadgeEligibility() {
+        EfileConfig.setForTest(mapOf("g2a_intercept_mode" to 0))
+        Equipment.getEquipment(flakEqid)!!.attrEx = 32 // No Intercept Air
+        val plane = plane(5, 5)
+        val aa = flak(5, 6, spotted = false)
+        val throughCell = Cell(5, 6)
+
+        val interceptors = AAInterception.interceptorsFor(map, plane, throughCell, isDestination = false)
+
+        assertEquals(emptyList(), interceptors, "No Intercept Air must veto the interception path")
+        assertTrue(UnitCapabilities.hasAirDefenceFire(aa.unitData()), "ordinary defensive AA fire is unaffected")
+    }
+
     @Test
     fun spottedFlakDoesNotInterceptAPlaneFlyingThrough() {
         EfileConfig.setForTest(mapOf("g2a_intercept_mode" to 0))
