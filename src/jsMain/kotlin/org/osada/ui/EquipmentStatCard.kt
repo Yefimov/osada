@@ -48,7 +48,7 @@ internal object EquipmentStatCard {
             "url('resources/ui/flags/${Equipment.UNITED_NAME}/flag_big_${data.country}.png')"
         byId("uFlag")?.textContent = Equipment.getCountryName(data.country - 1)
         byId("uName")?.textContent = "${data.name} ${GameText.unitClass(data.uclass)}"
-        EquipmentMarkings.render(byId("osadaUcMarkings"), data)
+        EquipmentMarkings.render(byId("osadaUcMarkings"), data, extended = true)
         byId("ucRename")?.style?.display = "none" // catalogue entries aren't renamable
     }
 

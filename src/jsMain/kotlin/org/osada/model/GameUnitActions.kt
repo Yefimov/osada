@@ -105,12 +105,24 @@ fun GameUnit.move(cost: Int) {
     // the same allowance to any other formation, without touching the class's own free grant.
     val phasedMovement =
         unitData().uclass == UnitClass.RECON.value || Leaders.unitHasLeader(this, LeaderType.RECON_MOVEMENT)
-    if (!phasedMovement || moveLeft <= 0) {
+    // OG's `Marine` (attr bit 22): amphibious-assault troops come ashore ready to fight rather
+    // than spending the turn on the landing. `carrier < 0` is exactly the landing leg -- the
+    // disembark negated it and the line below clears it again -- so the rule needs no new state.
+    // Wired 2026-08-25 with `Mountain`; both were badges with no rule behind them until then.
+    val marineLanding = carrier < 0 && isMarineLanding()
+    if ((!phasedMovement && !marineLanding) || moveLeft <= 0) {
         hasMoved = true
         hasOverstrength = true
     }
     if (carrier < 0) carrier = 0
 }
+
+/** Whether this unit is stepping ashore from a NAVAL transport under OG's `Marine` ability --
+ *  the air-transport half of the same disembark is a paradrop, which the ability says nothing
+ *  about. Call only while [GameUnit.carrier] is still negative (the landing leg). */
+private fun GameUnit.isMarineLanding(): Boolean =
+    unitData().landsReadyFromTransport() &&
+        Equipment.getEquipment(-carrier)?.uclass == UnitClass.NAVAL_TRANSPORT.value
 
 fun GameUnit.resupply(supply: Supply) {
     ammo += supply.ammo

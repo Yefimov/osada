@@ -60,10 +60,18 @@ package org.osada.model
  * more. `eqp-united`'s existing records were back-filled additively by
  * `tools/eqp-merge/add_special4_specialex.py`, which re-identifies each record's true (efile,
  * ECode) against 8 of the 11 OG-imported efiles whose `equip.xeqp` layout is cracked (cc76,
- * pzliga, kaiser, atomic, basekorp, lxf, gce, ag); `eqp-olgcw` (`equip97.eqp`, an older format),
- * `eqp-olgww2` and `eqp-comww2` (both a differently-sized `equip.xeqp`) are not yet crackable this
- * way, so records whose only source is one of those three keep `attr2`/`attrEx` at 0 -- "no data",
- * not "no abilities". `csv_to_eqp.py` now packs both fields going forward for any efile it can read.
+ * pzliga, kaiser, atomic, basekorp, lxf, gce, ag). `csv_to_eqp.py` now packs both fields going
+ * forward for any efile it can read.
+ *
+ * COMPLETED 2026-08-23 (`docs/og-fidelity-plan.md` §J). The other three efiles are readable through
+ * OpenSuite's `*_sel.xeqp` exports, which use the same 4 + N*122 layout; `tools/eqp-merge/
+ * verify_specials.py` audits EVERY shipped record's `attr`/`attr2`/`attrEx` against OG's own binary
+ * and back-filled 440 `attr2` and 1,996 `attrEx` values that had been 0 for want of a readable
+ * source. `attr` itself was faithful apart from five column-shifted EFILE_ATOMIC CSV rows, also
+ * corrected. ONE gap is permanent and deliberate: `eqp-olgcw`'s `SpecialEx` is manufactured by
+ * OpenSuite's up-conversion from the 73-byte `equip97.eqp` (which has no such field) and is a pure
+ * function of the unit class, so its 2,681 records keep `attrEx = 0` -- "OG never authored this",
+ * proven byte by byte in §J.2, not "we failed to import it".
  *
  * ```
  * attr2  = Special4
@@ -185,6 +193,36 @@ internal const val ATTR_MASK_CAPTURE_FLAG = 1048576
 /** OG's `NoSurrender`: never destroyed-as-surrendered for a retreat it cannot make. Bit 23.
  *  internal (not private): also read by EquipmentAbilityCatalog.kt, see the note above. */
 internal const val ATTR_MASK_NO_SURRENDER = 8388608
+
+/**
+ * OG's `Mountain`, bit 9 — mountain-trained infantry. WIRED 2026-08-25.
+ *
+ * It reuses the movement-cost path the `Alpine Training` leader already runs on
+ * (`MoveRangeCalculation.terrainColumn`): hill, mountain and rough ground are costed as clear.
+ * That lands the unit on the same cost `ALL_TERRAIN_LEG` (OG's own "Mountain Leg" movement method,
+ * `movTable` row 11) pays for those three columns, so a mountain-trained rifle regiment climbs
+ * exactly as well as one whose movement METHOD says mountain — which is how OG expresses it for
+ * most records. Movement only: terrain defence, entrenchment and close combat still read the real
+ * terrain, the same limit `Alpine Training` documents.
+ */
+internal const val ATTR_MASK_MOUNTAIN = 512
+
+/**
+ * OG's `Marine`, bit 22 — amphibious-assault troops. WIRED 2026-08-25.
+ *
+ * The landing leg of a disembark is the one move where `GameUnit.carrier` is negative
+ * (`UnitMountOperations.disembarkUnit` negates it and `GameUnit.move` clears it again), so
+ * [org.osada.model.landsReadyFromTransport] can recognise it without a new "just landed" flag:
+ * a marine coming off a naval transport keeps whatever movement it has left instead of having its
+ * turn spent by the landing.
+ */
+internal const val ATTR_MASK_MARINE = 4194304
+
+/** Whether this equipment is mountain-trained — see [ATTR_MASK_MOUNTAIN]. */
+fun EquipmentData.isMountainTrained(): Boolean = attr and ATTR_MASK_MOUNTAIN != 0
+
+/** Whether this equipment lands from a naval transport with its move intact — see [ATTR_MASK_MARINE]. */
+fun EquipmentData.landsReadyFromTransport(): Boolean = attr and ATTR_MASK_MARINE != 0
 
 /**
  * `attrEx` masks for the five `SpecialEx` abilities wired into gameplay so far (2026-08-19). See

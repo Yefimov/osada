@@ -2,6 +2,7 @@
 
 package org.osada.ui
 
+import org.osada.EmbarkType
 import org.osada.GameHolder
 import org.osada.UnitClass
 import org.osada.i18n.GameText
@@ -19,19 +20,25 @@ import org.osada.unitClassNames
 internal fun equipmentDescriptionOrNull(eq: EquipmentData): String? = UnitDescriptions.get(eq)
 
 /**
- * Explicitly says when an evocative equipment name has no extra rules beyond shown stats.
+ * One sentence for EVERY ability the equipment has — the prose behind the badges, in badge order.
  *
- * Two tiers, deliberately worded differently (`docs/og-fidelity-plan.md` §C): the first three
- * lines describe OSADA's own five badge abilities in full sentences; [org.osada.model.abilityCatalogKeys]
- * appends one line per OTHER named OG special the equipment carries — everything decoded from
- * `equip.xeqp` that does not (and, per the plan's own guidance, should not) get a sixth badge.
+ * **`Support Fire` and `Anti-Air` were missing here until 2026-08-23**, reported directly: *"in
+ * `osada-eqd-mechanics` nothing says about Support Fire"*, and, of an LXF `Headquarters` carrying
+ * both marks, *"why is there a description only about HQ, but nothing about SUP?"* The note listed
+ * three of the five primary badges and then the catalog, so a unit could wear a badge whose rule
+ * the panel never explained. All five lead now, in the same order [EquipmentMarkings] draws them
+ * (HQ, RCN, OVR, SUP, AA), and [org.osada.model.abilityCatalogKeys] appends the rest — so badge row
+ * and prose are the same list, and neither can silently drop an ability the other shows.
  */
 internal fun equipmentMechanicsNote(eq: EquipmentData): String? =
     buildList {
         val capabilities = org.osada.rules.UnitCapabilities
-        if (capabilities.isHeadquarters(eq) || capabilities.grantsCombatSupport(eq)) add(I18n.t("equipment.mechanics.headquarters"))
+        if (capabilities.grantsCombatSupport(eq)) add(I18n.t("equipment.mechanics.headquarters"))
         if (capabilities.hasPhasedMovement(eq)) add(I18n.t("equipment.mechanics.recon_movement"))
         if (capabilities.canOverrun(eq)) add(I18n.t("equipment.mechanics.tank_overrun"))
+        if (capabilities.hasSupportFire(eq)) add(I18n.t("equipment.mechanics.support_fire"))
+        if (capabilities.hasAirDefenceFire(eq)) add(I18n.t("equipment.mechanics.anti_air"))
+        if (eq.embark == EmbarkType.AIRBORNE.value) add(I18n.t("equipment.mechanics.airborne"))
         eq.abilityCatalogKeys().forEach { add(I18n.t(it)) }
     }.takeIf { it.isNotEmpty() }?.joinToString(" ")
 

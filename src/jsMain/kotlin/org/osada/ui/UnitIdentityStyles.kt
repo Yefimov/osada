@@ -22,29 +22,59 @@ internal object UnitIdentityStyles {
 /* ============================================================================
  * UNIT IDENTITY / COMBAT TRANSPARENCY / SERVICE RECORD (2026-07-23)
  * ============================================================================ */
-#osada-bottomzone { height: 112px; grid-template-columns: minmax(420px, 600px) 150px minmax(340px, 460px); }
-#unit-info { padding: 7px 10px; }
+/* The unit card's own track was capped at 600px while the zone is ~1650px wide and the other two
+   tracks (hover forecast, enemy card) are hidden most of the time -- which is the "there is plenty
+   of space" in the report about the name and the commander line being cramped. 840px still leaves
+   840+150+460 = 1450 < 1650, so the forecast and enemy card lose nothing when they do appear.
+
+   `fit-content(840px)`, not `minmax(420px, 840px)`: the TRACK hugs the card, instead of the card
+   hugging inside a track that stays 840px wide. With minmax, a 670px card in an 840px track left
+   170px of dead grid between it and the forecast -- reported as *"on a wide screen there is too
+   much room to the left of #osadaForecast and to the right of #uc-inner"*. 840px is still the
+   ceiling; the floor moved onto the card as `min-width`, since fit-content() takes no minimum. */
+#osada-bottomzone { height: 112px; grid-template-columns: fit-content(840px) 150px minmax(340px, 460px); }
+/* The card fills its (now content-sized) track. `min-width` is what stops a one-word unit name
+   from shrinking the whole card to a stub, and it is also the track's automatic minimum. */
+#unit-info { padding: 7px 10px; width: auto; min-width: 420px; max-width: 100%; }
 #uc-inner { gap: 9px; }
 #uc-main { justify-content: flex-start; gap: 3px; }
+/* ONE line, always. A second line of name pushed the whole card down by ~16px, which is what put
+   the FUEL bar past the bottom of the zone ("for 32nd 76mm 29-K I can't see the FUEL"). The full
+   name is never lost -- #uName carries it as a title, set in UnitStatCard.showUnitInfo. */
 #uName {
-    white-space: normal; overflow: hidden; text-overflow: clip; line-height: 1.15;
-    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.15;
     text-transform: none; font-size: 14px;
 }
 
-/* OSADA compact unit name / rename alignment */
+/* OSADA compact unit name / rename / commander alignment: all three share one row. */
 #uc-nameline {
-    display: flex; align-items: flex-start; justify-content: flex-start;
-    gap: 4px; min-width: 0;
+    display: flex; align-items: center; justify-content: flex-start;
+    gap: 4px; min-width: 0; width: 100%;
 }
+/* The name box is exactly as wide as the name (`flex-grow: 0`) -- it used to grow into all the
+   free width, which is the blank the report is about. It still gets first claim when the row is
+   full: both it and the commander line may shrink, but the commander line yields three times as
+   fast, because a truncated unit name is worse than a truncated "no permanent commander". */
 #uName {
-    flex: 0 1 auto; width: auto; max-width: calc(100% - 26px); min-width: 0;
+    flex: 0 1 auto; width: auto; max-width: 100%; min-width: 0;
 }
 #ucRename {
     position: static !important; inset: auto !important; flex: 0 0 auto;
-    width: 20px; min-width: 20px; margin: 0; align-self: flex-start;
+    width: 20px; min-width: 20px; margin: 0; align-self: center;
 }
-#uc-commandline { min-width: 0; display: flex; align-items: center; }
+/* Follows the name instead of being pinned to the far right, so the two read as one line rather
+   than as two ends of an empty one; it is also the half that gives way when the row is full.
+   NO max-width: the card is `width: fit-content`, so a 45% clamp truncated the commander line
+   ("Hero yet to eme...") while the card still had room to grow -- reported for 14th T-34/41. The
+   name is protected by the 3x shrink factor here, which is what the clamp was standing in for. */
+#uc-commandline {
+    flex: 0 3 auto; min-width: 0;
+    display: flex; align-items: center; justify-content: flex-start;
+}
+.uc-commander-line { text-align: left; }
+/* The class/status chips must not stack either: the row wraps only as a last resort, and the
+   longest chip (unit class + "SCENARIO PART") ellipsises instead of taking a second line. */
+#osadaUcClass { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: block; }
 .uc-commander-line {
     position: static; flex: 1 1 auto; min-width: 0; height: auto; width: auto;
     display: block; padding: 1px 0; border: 0; border-radius: 0; background: none;
@@ -55,7 +85,7 @@ internal object UnitIdentityStyles {
 .uc-commander-line--hero { color: #e5c979; font-weight: bold; }
 .uc-commander-line--candidate { color: #b9ad8c; font-style: italic; }
 .uc-commander-line--disabled { color: #777; cursor: default; }
-#uc-statusline { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; min-height: 18px; }
+#uc-statusline { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 3px; min-height: 18px; }
 .uc-chip, .osada-ec-chip {
     display: inline-flex; align-items: center; min-height: 16px; padding: 0 5px; box-sizing: border-box;
     border: 1px solid var(--osada-metal-600); border-radius: 3px; background: rgba(0,0,0,.28);
@@ -122,6 +152,9 @@ internal object UnitIdentityStyles {
 
 @media (max-width: 1120px) {
     #osada-bottomzone { right: 40px; grid-template-columns: minmax(360px, 1fr) 120px minmax(300px, .8fr); }
+    /* The 420px floor is for reclaiming space on a wide zone; here there is none to reclaim, and
+       holding it would push the forecast and enemy card off their own tracks. */
+    #unit-info { min-width: 0; }
     .osada-service-record__summary { grid-template-columns: repeat(2, minmax(0,1fr)); }
 }
 

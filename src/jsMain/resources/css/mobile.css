@@ -397,8 +397,18 @@ body.osada-layout-phone .osada-action {
 
 /* The dock is subtracted from the map, so every pixel it does not need is a row
  * of hexes the player gets back. */
+/* The desktop card sits in a content-sized track with a 420px floor (UnitIdentityStyles.kt), so a
+ * short unit name is not paid for in empty card. On a phone the card already owns the whole 1fr
+ * row and there is no neighbour to give the space back to: it fills the row, and the 420px floor
+ * would overflow a 390px screen outright. Higher specificity, so stylesheet order does not matter. */
 body.osada-layout-phone #unit-info {
     padding: 6px 8px;
+    width: auto;
+    min-width: 0;
+}
+
+body.osada-layout-phone #osadaEnemyCard {
+    width: auto;
 }
 
 body.osada-layout-compact #uc-inner {

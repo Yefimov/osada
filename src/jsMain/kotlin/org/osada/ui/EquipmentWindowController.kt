@@ -1,6 +1,7 @@
 package org.osada.ui
 
 import org.osada.UnitClass
+import org.osada.i18n.I18n
 import org.osada.model.Equipment
 import org.osada.model.getCountryName
 import org.osada.model.hasWaterAccess
@@ -82,9 +83,19 @@ internal class EquipmentWindowController(
 
         UIBuilder.syncNavalTabVisibility(map.hasWaterAccess())
         val (selectedClass, isAll) = resolveSelectedClassAndTabs(unitClass, eqmode, eqUserSel)
-        byId("eqInfoText")?.innerHTML =
-            "$year ${EquipmentWindowState.classLabel(isAll, selectedClass)} upgrades for " +
-            EquipmentWindowState.countryLabel(countryCtx.allCountries, countryCtx.countryId)
+        // Localized, and it names what the tab actually does. It was one hardcoded English string
+        // ending "upgrades for <country>" in all three modes, so the Purchase tab -- where nothing
+        // is being upgraded -- read "1942 Infantry upgrades for USSR", and a Russian UI got English.
+        byId("eqInfoText")?.textContent =
+            I18n.t(
+                "equipment.heading.$eqmode",
+                mapOf(
+                    "year" to year.toString(),
+                    "class" to EquipmentWindowState.classLabel(isAll, selectedClass),
+                    "country" to
+                        EquipmentWindowState.countryLabel(countryCtx.allCountries, countryCtx.countryId),
+                ),
+            )
 
         populateCatalogAndTransport(
             eqUserSel,

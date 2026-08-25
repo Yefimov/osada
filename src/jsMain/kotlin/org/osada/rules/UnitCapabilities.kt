@@ -18,7 +18,6 @@ import org.osada.model.Leaders
 import org.osada.rules.UnitCapabilities.CAPTURING_CLASSES
 import org.osada.rules.UnitCapabilities.canCaptureHex
 import org.osada.rules.UnitCapabilities.hasSupportFire
-import org.osada.rules.UnitCapabilities.isHeadquarters
 
 /** Intrinsic, equipment-defined capabilities that are neither leaders nor purchased attachments. */
 object UnitCapabilities {
@@ -65,11 +64,6 @@ object UnitCapabilities {
             UnitClass.AIR_DEFENCE.value,
             UnitClass.FIGHTER.value,
         )
-
-    fun isHeadquarters(data: EquipmentData): Boolean {
-        val words = data.name.split(' ', '-', '/', '(', ')')
-        return data.name.contains("headquarters", ignoreCase = true) || words.any { it.equals("HQ", ignoreCase = true) }
-    }
 
     /**
      * Whether this equipment has phased movement: OG's class default for Recon, **reversed** by
@@ -120,11 +114,22 @@ object UnitCapabilities {
      * `attrEx` widened the import past `attr`'s 24 bits; the plan's own approximations list named
      * the plain Tank-class read as the OVR badge's stand-in for OG's real toggle.
      *
-     * `eqp-united` population: 296 records carry the bit. Read [org.osada.model.EquipmentCombatEligibility]'s
-     * header before trusting a raw count here — records whose only source efile is one of the
-     * three not-yet-crackable formats (`eqp-olgcw`/`eqp-olgww2`/`eqp-comww2`) keep `attrEx` at 0,
-     * so this toggle is inert (falls back to the Tank-class default) for any unit sourced only
-     * from those three until they are cracked too.
+     * **The toggle reading is proven, not inferred** — OG's own localisation template
+     * (`OPENTXT_SAMPLE/strings-en-template.txt`) carries this attribute as a PAIR of alternative
+     * labels, line 872 `Can Overrun` and line 873 `Cannot Overrun`, exactly as it does for
+     * [hasSupportFire] (845/846) and `Dismount` (843/844). See [hasSupportFire]'s doc for the full
+     * block. A grant would need one label, not two opposite ones.
+     *
+     * So a TANK carrying the bit shows **no** OVR badge, and that is faithful: asked about
+     * `OT-133`, `OT-134` and `BT-7TU` (EFILE_ATOMIC, all Tank class, all carrying `attrEx` bit 3),
+     * the answer is that OG switches Overrun off for those three itself. The flame-tank and
+     * command-tank variants are precisely the ones an efile author would exclude from an overrun
+     * charge.
+     *
+     * `eqp-united` population: 353 records carry the bit after the 2026-08-23 back-fill
+     * (`docs/og-fidelity-plan.md` §J). One source of inertness remains and is deliberate: a record
+     * whose only source is `eqp-olgcw` keeps `attrEx` at 0 because that efile's format has no
+     * `SpecialEx` field at all (§J.2), so the Tank-class default stands for it.
      */
     fun canOverrun(data: EquipmentData): Boolean =
         (data.uclass == UnitClass.TANK.value) xor (data.attrEx and ATTR_EX_MASK_OVERRUN_TOGGLE != 0)
@@ -168,10 +173,35 @@ object UnitCapabilities {
      *
      * | bit | ability | on its own default class | on all other classes |
      * |---|---|---|---|
-     * | 10 | Recon Skill | **0.3% of Recon** (10 of 2,880) | 3,848 |
-     * | 12 | Support Fire | 13% of Artillery (700 of 5,254) | 7,237 |
+     * | 10 | Recon Skill | **0.4% of Recon** (14 of 3,312) | 4,977 |
+     * | 12 | Support Fire | 13.9% of Artillery (893 of 6,409) | 8,357 |
      *
-     * Recon Skill settles it: a grant would be set on nearly every Recon unit, and it is set on ten.
+     * Recon Skill settles it: a grant would be set on nearly every Recon unit, and it is set on 14.
+     *
+     * **PROVEN OUTRIGHT 2026-08-23, from OG's own UI strings**, after the owner asked directly of
+     * artillery units wearing the SUP badge unevenly: *"Some Artillery units have SUP. Why not all
+     * of them? Are you sure that you are not wrong?"* `C:\Games\Open General\OPENTXT_SAMPLE     * strings-en-template.txt` is OG's own localisation template, and its "Special attributes"
+     * block (lines 837-877) gives ONE attribute two alternative renderings wherever the attribute
+     * is a toggle:
+     *
+     * ```
+     * 845: NO support fire        <- shown when the unit's class defaults to support fire
+     * 846: Support fire           <- shown when it does not
+     * 872: Can Overrun            <- the same pair for `Overrun toggle`
+     * 873: Cannot Overrun
+     * 843: NO dismount when attacked / 844: Dismount if attacked   -- and for `Dismount`
+     * ```
+     *
+     * and the same file's PEBM letter-code list spells the artillery case out in full: line 424
+     * reads **"Artillery without support fire"**. One bit, two opposite meanings depending on the
+     * class — which is `classDefault xor bit` exactly. Three toggles are named this way and OSADA
+     * reads all three; no fourth attribute in that block is paired, so no other bit is a toggle.
+     *
+     * So the answer to "why not all artillery" is: OG itself switches support fire OFF for 893 of
+     * its 6,409 artillery records, and ON for 8,357 records outside the class — 75% of Anti-Tank,
+     * 58% of Flak, 50% of Destroyer, 34% of Fortification and Cruiser, and 18% of Infantry, which
+     * is why a campaign drawing on an efile that uses the bit heavily can field infantry that all
+     * carry SUP. That is OG's authored data, not an OSADA rule.
      *
      * **A third row was dropped 2026-08-18: "bit 0 Lasting Sup., 12% of Tactical Bomber".** Bit 0 is
      * `Drop mines`, a plain grant, and those 12% are maritime-patrol minelayers; `Lasting Sup.` is
@@ -179,10 +209,9 @@ object UnitCapabilities {
      * §7.1.1. The conclusion below is unaffected: it never rested on that row.
      *
      * So OG's effective rule is `classDefault xor bit`. Against PM's plain `uclass == ARTILLERY`
-     * this keeps support fire on the 87% of artillery that has it, removes it from the 700 records
-     * OG explicitly switches off, and adds the 7,237 non-artillery records OG switches on — 74% of
-     * Anti-Tank, 63% of Flak, 49% of Destroyer, 46% of Fortification, 41% of Cruiser. 11,791 records
-     * end up with the role against PM's 5,254.
+     * this keeps support fire on the 86% of artillery that has it, removes it from the 893 records
+     * OG explicitly switches off, and adds the 8,357 non-artillery records OG switches on. 13,873
+     * records end up with the role against PM's 6,409.
      *
      * No class filter is layered on top of the toggle: 109 of the switched-on records are aircraft,
      * and whether OG lets an aircraft support-fire against a ground attacker is unverified — but
@@ -227,13 +256,17 @@ object UnitCapabilities {
      * only enabled ability is `Combat Support` and whose `attr` is exactly `65536`, and `Komissar`,
      * which reports it among five.
      *
-     * The name rule was badly wrong, measured over 46,978 `eqp-united` records: 1,368 carry bit 16,
-     * the name test matched 227 records, of which 211 agree — so it **missed 1,157 (85%)** and
-     * invented 16. The misses are not edge cases: `04 General Staff`, `21 Alpini`, `24 KOP`,
-     * `30 Bruckenpioniere`, commissars, squadron leaders.
+     * The name rule was badly wrong, measured over the 56,970 shipped `eqp-united` records: 1,645
+     * carry bit 16, the name test matched 306 records, of which 290 agree — so it **missed 1,355**
+     * and invented 16. The misses are not edge cases: `04 General Staff`, `70 Estado Mayor`,
+     * `21 Alpini`, `24 KOP`, commissars, squadron leaders. Nor are the inventions: five of the
+     * sixteen (`HQ-1`, `HQ-2`, `HQ-7`, `HQ-17`, `Hong Qi HQ-1`) are Chinese surface-to-air
+     * missiles whose designation merely begins "HQ".
      *
-     * [isHeadquarters] is kept for the equipment card's descriptive "headquarters" note, which is a
-     * label and not a capability.
+     * `isHeadquarters` was deleted 2026-08-23. It survived until then as the source of the
+     * equipment card's descriptive "headquarters" note, on the reasoning that a label is not a
+     * capability — but the note it produced is the Combat Support rule stated in full, so on the
+     * card it read as exactly the capability claim the badge makes. Both surfaces read the bit now.
      */
     fun hasCombatSupport(unit: GameUnit): Boolean =
         unit.unitData(true).attr and ATTR_MASK_COMBAT_SUPPORT != 0 ||

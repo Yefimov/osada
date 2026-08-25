@@ -3353,10 +3353,16 @@ hr {
 }
 
 /* ---- Enemy unit card ---- */
+/* `width: fit-content` for the same reason the player card has it (UnitIdentityStyles.kt): when
+ * an enemy is clicked with nothing of ours selected, this card moves into the `card` track and
+ * would otherwise stretch across all of it — reported as "the enemy unit info box is too wide".
+ * `max-width: 100%` keeps the track a ceiling, so a long name still gets the whole width. */
 #osadaEnemyCard {
     grid-area: enemy;
     position: relative;
     display: none;
+    width: fit-content;
+    max-width: 100%;
     align-items: center;
     gap: 10px;
     padding: 8px 10px;
@@ -4277,6 +4283,16 @@ hr {
     align-items: center;
     justify-content: center;
     gap: 8px;
+}
+
+/* The badge row is its own centred, wrapping line under the name — inside the name it shoved a
+ * record like `41 Parashutisti` off centre as soon as it carried more than a badge or two. */
+.osada-eqd-marks {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 3px;
+    margin: 4px 0 0;
 }
 
 /* Reuses .osadaFlag's sprite sizing; min-width so long names can't squash the flag away. */
@@ -6565,6 +6581,26 @@ hr {
     box-sizing: border-box;
 }
 
+/* Extended ability badges (2026-08-23): one per ability the record carries, past the primary
+   ones. TWO tiers, one meaning — brass = the rules apply it, muted grey = the record carries it
+   but no rule reads it yet. There used to be a third, blue tier splitting "primary five" from
+   "other applied", which is an internal distinction with nothing in it for the player, and it
+   made the colour code unreadable (asked outright: *"what does it mean when some abilities are
+   blue and some gold?"*). `--ability` now inherits the brass base and only exists as a hook.
+   `--ability-more` is the `+N` overflow chip; its tooltip lists what it folded away. */
+.osada-capability-mark--ability-descriptive {
+    border-color: rgba(120, 120, 120, 0.45);
+    border-style: dashed;
+    color: #8b8b8b;
+    background: rgba(16, 16, 18, 0.9);
+}
+
+.osada-capability-mark--ability-more {
+    border-color: rgba(150, 168, 190, 0.45);
+    color: #93a2b4;
+    background: rgba(18, 24, 32, 0.75);
+}
+
 .eqUnitBox > .osada-capability-marks {
     position: absolute;
     top: 3px;
@@ -6580,8 +6616,11 @@ hr {
     width: 100%;
 }
 
+/* Shrink-to-fit, NOT grow: a name box wider than its name is blank card the player pays for in
+ * width. UnitIdentityStyles.kt states the same rule (its <style> is appended after this sheet, so
+ * it would win either way) — kept in step here so the two are not in open contradiction. */
 #uName {
-    flex: 1 1 auto;
+    flex: 0 1 auto;
 }
 
 #uc-actions {

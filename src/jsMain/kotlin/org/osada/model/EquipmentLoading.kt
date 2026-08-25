@@ -85,6 +85,11 @@ fun Equipment.parseCountryEquipment(
         if (eqid != null && unitJson != undefined) {
             val equipment = unitJson.unsafeCast<kotlin.js.Json>().toEquipmentData(parseHints.toList())
             equipment.eqid = eqid
+            // Per-efile content overrides, applied here so every later reader (combat, purchase
+            // window, unit card, AI buy filter) sees one consistent record. `Equipment.name` is
+            // set from the scenario's `eqp` before any country file is fetched. See
+            // [EquipmentOverrides] for why a shared merged record needs this instead of an edit.
+            EquipmentOverrides.apply(eqid, equipment)
             equipmentMap[eqid] = equipment
             loaded++
         }

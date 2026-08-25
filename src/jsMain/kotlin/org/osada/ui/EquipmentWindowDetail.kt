@@ -51,9 +51,12 @@ private fun EquipmentWindowBuilder.buildEqDetailHeader(
     }
     val nameText = addTag(name, "span")
     nameText.textContent = eq.name
-    val markings = addTag(name, "span")
-    markings.className = "osada-capability-marks"
-    EquipmentMarkings.render(markings, eq)
+    // Own row UNDER the name, not inside it. Reported of `41 Parashutisti`: *"the name slides
+    // out of place because of the pile of abilities"* -- a record with eight badges pushed the
+    // name off its own line, and the badge row is variable-length by nature.
+    val markings = addTag(body, "div")
+    markings.className = "osada-capability-marks osada-eqd-marks"
+    EquipmentMarkings.render(markings, eq, extended = true)
     val cls = addTag(body, "div")
     cls.className = "osada-eqd-class"
     cls.textContent = "${unitClassNames.getOrNull(eq.uclass) ?: ""} · ${Equipment.getCountryName(eq.country - 1)}"

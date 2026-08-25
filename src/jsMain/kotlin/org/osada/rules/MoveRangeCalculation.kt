@@ -10,6 +10,7 @@ import org.osada.model.GameUnit
 import org.osada.model.Hex
 import org.osada.model.Leaders
 import org.osada.model.hasRailData
+import org.osada.model.isMountainTrained
 import org.osada.movTable
 import org.osada.rules.MoveRangeCalculation.ZOC_MOVE_COST
 
@@ -36,6 +37,7 @@ internal object MoveRangeCalculation {
         val movementTable: List<Int>,
         val ignoresZoc: Boolean,
         val alpineTrained: Boolean,
+        val mountainTrained: Boolean,
     )
 
     fun getMoveRange(
@@ -97,6 +99,10 @@ internal object MoveRangeCalculation {
         // close-combat all keep reading the real terrain.
         val alpineTrained = Leaders.unitHasLeader(unit, LeaderType.ALPINE_TRAINING)
 
+        // OG's `Mountain` equipment ability -- the same shape of rule, from the record instead of
+        // a leader. See [terrainColumn].
+        val mountainTrained = unitData.isMountainTrained()
+
         return MoveContext(
             gameMap,
             pos,
@@ -107,6 +113,7 @@ internal object MoveRangeCalculation {
             movementTable,
             ignoresZoc,
             alpineTrained,
+            mountainTrained,
         )
     }
 
@@ -197,7 +204,7 @@ internal object MoveRangeCalculation {
             when {
                 context.enforceRail -> if (hex.rail > RoadType.NONE.value) 1 else IMPASSABLE_TERRAIN_COST
                 onRoad && roadCost != IMPASSABLE_TERRAIN_COST -> roadCost
-                else -> context.movementTable[alpineTerrain(hex.terrain, context.alpineTrained)]
+                else -> context.movementTable[terrainColumn(hex.terrain, context)]
             }
         val inEnemyZoc =
             !context.ignoresZoc &&
@@ -217,19 +224,37 @@ internal object MoveRangeCalculation {
         }
     }
 
-    /** The terrain column this unit pays for: its own, unless Alpine Training reads a forest or a
-     *  mountain as clear. Impassable stays impassable -- the trait discounts difficult ground, it
-     *  does not open ground the movement method cannot use, and the table's own 255 sentinel is
-     *  never reached for FOREST/MOUNTAIN by any land method anyway. */
-    private fun alpineTerrain(
+    /**
+     * The terrain column this unit pays for: its own, unless difficult ground reads as clear.
+     *
+     * Two sources, deliberately sharing one code path because they are the same kind of rule:
+     *  - **Alpine Training** (leader): forest and mountain as clear.
+     *  - **`Mountain`** (equipment, `attr` bit 9): hill, mountain and rough as clear -- the same
+     *    cost `ALL_TERRAIN_LEG` (OG's "Mountain Leg" method) pays for those three columns, which
+     *    is how OG expresses mountain training for the records that use the method instead of the
+     *    bit. Wired 2026-08-25, reported as *"Gornostrelky should have MOUNTAIN, they are mountain
+     *    troops"* -- and, of the ability prose, *"let it be so in Osada"*.
+     *
+     * A COST rule only: terrain defence, entrenchment baselines and close combat all keep reading
+     * the real terrain. Impassable stays impassable -- the table's 255 sentinel is never reached
+     * for these columns by any land method, so nothing here floats a ship or an aircraft.
+     */
+    private fun terrainColumn(
         terrain: Int,
-        alpineTrained: Boolean,
+        context: MoveContext,
     ): Int =
-        if (alpineTrained && (terrain == TerrainType.FOREST.value || terrain == TerrainType.MOUNTAIN.value)) {
-            TerrainType.CLEAR.value
-        } else {
-            terrain
+        when {
+            context.alpineTrained &&
+                (terrain == TerrainType.FOREST.value || terrain == TerrainType.MOUNTAIN.value) ->
+                TerrainType.CLEAR.value
+
+            context.mountainTrained && terrain in MOUNTAIN_TRAINED_TERRAIN -> TerrainType.CLEAR.value
+            else -> terrain
         }
+
+    /** The three columns OG's `Mountain` ability discounts; see [terrainColumn]. */
+    private val MOUNTAIN_TRAINED_TERRAIN =
+        setOf(TerrainType.HILL.value, TerrainType.MOUNTAIN.value, TerrainType.ROUGH.value)
 
     /** Propagates [current]'s cumulative cost (cout) into [neighbor]'s entry cost (cin/cout),
      *  taking the cheaper of any two paths already found to reach it. */

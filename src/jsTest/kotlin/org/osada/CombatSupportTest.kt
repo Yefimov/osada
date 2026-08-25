@@ -157,9 +157,13 @@ class CombatSupportTest {
      * `Combat Support` is the ATTRIBUTE (bit 16), never the name. Confirmed by BASEKORP `43 HQ`
      * (`E 3814`), whose sole enabled ability is `Combat Support` and whose `attr` is exactly 65536.
      *
-     * The old name test (`isHeadquarters`) matched 227 records and agreed on 211, missing **1,157**
-     * that carry the bit — `04 General Staff`, `21 Alpini`, `24 KOP`, commissars, squadron leaders —
-     * and inventing 16 that do not. §1 of `OG_ABILITY_AUDIT.md`: *never infer a layer from a name.*
+     * The old name test (`isHeadquarters`) matched 306 of the 56,970 shipped records and agreed on
+     * 290, missing **1,355** that carry the bit — `04 General Staff`, `70 Estado Mayor`,
+     * `21 Alpini`, `24 KOP`, commissars, squadron leaders — and inventing 16 that do not, five of
+     * them Chinese `HQ-x` surface-to-air missiles. §1 of `OG_ABILITY_AUDIT.md`: *never infer a
+     * layer from a name.* The predicate itself was deleted 2026-08-23, once the equipment card's
+     * "headquarters" note (its last reader) moved onto the bit as well; this test now pins the
+     * whole surface, not just the combat half.
      */
     @Test
     fun combatSupportComesFromTheAttributeNotTheName() {
@@ -183,7 +187,10 @@ class CombatSupportTest {
             UnitCapabilities.combatSupportBars(listOf(recipient, hqNamedButUnflagged), recipient),
             "an HQ-sounding name without the attribute lends nothing",
         )
-        assertTrue(UnitCapabilities.isHeadquarters(Equipment.getEquipment(3)!!), "but it is still LABELLED an HQ")
+        assertFalse(
+            UnitCapabilities.grantsCombatSupport(Equipment.getEquipment(3)!!),
+            "and the record-level predicate the badge and the equipment card both read agrees",
+        )
     }
 
     private companion object {

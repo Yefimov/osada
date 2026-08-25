@@ -104,7 +104,7 @@ internal class UnitStatCard(
         val cardTooltip = equipmentCardTooltip(unit, data, tooltipName)
         byId("uImage")?.title = cardTooltip
         byId("uName")?.title = cardTooltip
-        EquipmentMarkings.render(byId("osadaUcMarkings"), data, unit)
+        EquipmentMarkings.render(byId("osadaUcMarkings"), data, unit, extended = true)
 
         // Rename affordance (Stage 3.5, Task 2): own units only — never enemies, never
         // browsed equipment entries (showEquipmentInfo hides it).
@@ -342,6 +342,13 @@ internal class UnitStatCard(
             nameEl.style.display = ""
             if (commit) unit.customName = value.ifEmpty { null }
             showUnitInfo(unit)
+            // ...and the identity layer on top of it. Without this the rename repainted the card
+            // through THIS class alone, and #uLeader is written by both: `fillUnitLeaderSlot`
+            // leaves it as the equipment-catalogue star SLOT, `UnitIdentityPresenter` turns it
+            // back into the commander LINE. Skipping the presenter left the star behind --
+            // reported as *"the #uLeader icon only appears if you press rename"*. It also left
+            // the commander line, status chips and badge row showing the previous unit's state.
+            UnitIdentityPresenter.present(ui, unit)
             // The reserves/upgrade strip shows the same name — refresh it if it's open.
             if (isVisible("equipment")) {
                 val eqclass = byId("eqUserSel")?.asDynamic()?.eqclass as? Int ?: UnitClass.TANK.value

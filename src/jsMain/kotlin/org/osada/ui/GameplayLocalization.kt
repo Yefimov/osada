@@ -443,9 +443,12 @@ internal object GameplayLocalization {
                 ui.countriesOnSpotSide.getOrNull(countryIndex)?.let { Equipment.getCountryName(it) }
                     ?: I18n.t("common.unknown")
             }
+        // Same key family EquipmentWindowController.updateEquipmentWindow uses, so a locale switch
+        // cannot re-render the heading in a different wording than the window's own refresh does.
+        val mode = userSel?.eqmode as? String ?: "purchase"
         byId("eqInfoText")?.textContent =
             I18n.t(
-                "equipment.heading",
+                "equipment.heading.$mode",
                 mapOf(
                     "year" to scenario.date.getFullYear().toString(),
                     "class" to if (all) I18n.t("equipment.all_classes") else GameText.unitClass(selectedClass),

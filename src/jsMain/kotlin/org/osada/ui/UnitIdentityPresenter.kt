@@ -38,11 +38,13 @@ internal object UnitIdentityPresenter {
         val bars = byId("uc-bars")
         val nameLine = byId("uc-nameline") ?: return
 
+        // The commander line shares the NAME row rather than owning one of its own. Reported:
+        // *"for T-26 TU Tank the #uc-commandline is not on the right side, but on the next line.
+        // There is plenty of space."* It is also the cheapest ~18px of height available, and height
+        // is what was clipping the FUEL bar out of the bottom zone on long-named units.
         val commandLine =
-            byId("uc-commandline") ?: addTag(main, "div").also {
-                it.id = "uc-commandline"
-                main.insertBefore(it, bars)
-            }
+            byId("uc-commandline") ?: addTag(nameLine, "div").also { it.id = "uc-commandline" }
+        nameLine.appendChild(commandLine)
         byId("uLeader")?.let { commandLine.appendChild(it) }
 
         val statusLine =
@@ -56,8 +58,9 @@ internal object UnitIdentityPresenter {
         listOf("osadaUcStars", "osadaUcEnt", "osadaUcMarkings", "osadaUcWeather", "uTransport", "uCarrier")
             .forEach { id -> byId(id)?.let { statusLine.appendChild(it) } }
 
-        // Name/rename alone own the first line; identity must not compete with tactical badges.
-        byId("ucRename")?.let { nameLine.appendChild(it) }
+        // Name, rename pencil, then the commander line filling the rest of the row. Tactical
+        // badges still live on #uc-statusline below -- identity does not compete with them.
+        byId("ucRename")?.let { nameLine.insertBefore(it, commandLine) }
     }
 
     private fun ensureChip(
