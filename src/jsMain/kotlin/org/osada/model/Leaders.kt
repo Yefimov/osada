@@ -8,6 +8,7 @@ import org.osada.UnitClass
 import org.osada.hero.HeroTraitResolver
 import org.osada.model.Leaders.getUnitClassLeader
 import org.osada.rules.GameRandomSource
+import org.osada.rules.UnitCapabilities
 
 object Leaders {
     const val LEADER_CHANCE_THRESHOLD = 8
@@ -214,7 +215,12 @@ object Leaders {
      * by any means. See `tools/og-import/DEFERRED.md` §7.43.
      */
     fun generateLeader(unit: GameUnit?): Int {
-        if (unit == null) return -1
+        // OG's `Cannot get a leader` (`attrEx` bit 0), wired 2026-08-26. Checked here rather than
+        // at the three callers because this is the only place a legacy leader is minted -- combat
+        // promotion, the full-experience grant and the leaders a scenario's own units are born
+        // with (`ScenarioUnitParser`) all come through it. The hero system's half of the same
+        // ability is in `HeroCampaign.attemptEmergence`.
+        if (unit == null || !UnitCapabilities.canProduceLeader(unit.unitData(true))) return -1
         val leaders = unitClassLeaders[unit.unitData().uclass]
         return if (leaders == null || leaders.size < 2) {
             -1

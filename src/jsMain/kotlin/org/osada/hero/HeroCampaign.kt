@@ -12,6 +12,7 @@ import org.osada.model.EfileConfig
 import org.osada.model.Equipment
 import org.osada.model.GameUnit
 import org.osada.rules.Attachments
+import org.osada.rules.UnitCapabilities
 
 /**
  * Campaign-run entry point for the hero system — the direct counterpart of
@@ -478,8 +479,16 @@ internal object HeroCampaign {
         contribution: RecognitionService.Contribution,
         turn: Int,
     ): Boolean {
+        // OG's `Cannot get a leader` (`attrEx` bit 0), wired 2026-08-26: equipment that never
+        // produces a commander does not emerge one here either. Blocked BEFORE the recognition
+        // record, so a formation issued such equipment neither emerges nor banks progress toward
+        // emerging while it holds it. A formation that already HAS a commander takes
+        // `progressCommander` instead and is deliberately untouched -- the hero belongs to the
+        // formation, not to the equipment currently issued to it
+        // (`rules/UnitCapabilities.canProduceLeader`).
+        val producesLeaders = UnitCapabilities.canProduceLeader(unit.unitData(true))
         val assessment = RecognitionService.assess(contribution)
-        if (!assessment.isNotable) return false
+        if (!producesLeaders || !assessment.isNotable) return false
         val eventId = assessment.event?.eventId ?: EmergenceEvent.DISTINGUISHED_SERVICE.eventId
         val recorded = recordFormationEvent(unit, eventId, turn) ?: formation
         val checked =

@@ -293,6 +293,9 @@ class UnitActionAvailabilityTest {
                 // is off in this harness, so both come back not-applicable and the strip omits them
                 // (`docs/og-fidelity-plan.md` C.1).
                 UnitActionId.LAY_MINES,
+                // OG 9.2's barrage sits with them for the same reason: always resolved, and
+                // not-applicable for a tank, which has no Bomber Size (added 2026-08-26).
+                UnitActionId.BARRAGE,
                 UnitActionId.CLEAR_MINES,
                 // OG 9.3's six engineering commands, added 2026-08-25, on exactly the same terms:
                 // always resolved, and all six not-applicable here because a tank is neither a

@@ -29,6 +29,11 @@ import org.osada.rules.ruleset.RuleKey
  * `repair_turn=1,2,2,2,1,1`, and LXF backs four deployed campaigns; `eqp-atomic` and `eqp-basekorp`
  * add `blow_any_terrain`, `build_start_ex` and `build_terr_ex`.
  *
+ * **`blow_any_terrain` is read since 2026-08-26** — it decides what a demolition reaches, in
+ * [EngineeringWork.razeableTerrain]. It is the first of OG's authored engineering switches any rule
+ * here consults; `build_start_ex` and `build_terr_ex` are still unread, and their names are the
+ * whole of their documentation.
+ *
  * ### What is built, and the two things that are not
  *
  * | OG | Here |
@@ -73,6 +78,31 @@ internal object Engineering {
     /** Whether the rule is in force. Off in every profile except Open General Fidelity. */
     fun enabled(): Boolean = ActiveRuleset.flag(RuleKey.BUILD_AND_REPAIR, false)
 
+    /**
+     * Whether the SCENARIO authorises [work], on top of [enabled] — OG's own *"All this options
+     * must be enabled by the scenario designer to work"* (§9.3's opening line), imported
+     * 2026-08-26 as `canbuild` / `canblow` / `canrepair`.
+     *
+     * OG has three switches where OSADA has one key, so each job asks the one that owns it:
+     * construction asks Build, the two demolitions ask Blow, and Repair asks Repair. Measured over
+     * the 397 scenarios that carry the attributes, ~90% authorise all three — so this is not a
+     * mechanic being switched off, it is the tenth that says no finally being heard.
+     *
+     * **An unimported scenario (`null`) is permitted**, not refused: 105 deployed scenarios name a
+     * source that could not be read or found, and reading their silence as a prohibition would make
+     * re-export the difference between a rule existing and not.
+     */
+    fun authorisedByScenario(work: EngineeringWork): Boolean {
+        val scenario = GameHolder.instance?.scenario ?: return true
+        val authored =
+            when {
+                work == EngineeringWork.REPAIR -> scenario.canRepair
+                work.demolition -> scenario.canBlow
+                else -> scenario.canBuild
+            }
+        return authored ?: true
+    }
+
     /** Whether [unit] carries OG's `Build/Repair` (Sapper) ability. */
     fun isSapper(unit: GameUnit): Boolean = unit.unitData(true).attr2 and ATTR2_MASK_BUILD_REPAIR != 0
 
@@ -113,7 +143,7 @@ internal object Engineering {
                 ?.map
         return EngineeringWork.entries.filter { work ->
             val hasAbility = if (work.demolition) demolisher else sapper
-            hasAbility && work.possibleOn(hex, grid)
+            hasAbility && authorisedByScenario(work) && work.possibleOn(hex, grid)
         }
     }
 
@@ -324,10 +354,12 @@ internal object Engineering {
         if (hex.razedTerrain >= 0) {
             hex.terrain = hex.razedTerrain
             hex.razedTerrain = -1
+            hex.rubble = false
             claim(hex, owner)
         } else if (hex.blownRoad != 0) {
             hex.road = hex.blownRoad
             hex.blownRoad = 0
+            hex.rubble = false
         }
     }
 

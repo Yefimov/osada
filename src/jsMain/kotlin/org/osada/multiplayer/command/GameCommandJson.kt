@@ -39,6 +39,13 @@ object GameCommandJson {
 
             UnmountUnit::class.simpleName -> UnmountUnit(requiredInt(value.unitId, "unitId"), actor)
             LayMines::class.simpleName -> LayMines(requiredInt(value.unitId, "unitId"), actor)
+            BarrageHex::class.simpleName ->
+                BarrageHex(
+                    unitId = requiredInt(value.unitId, "unitId"),
+                    target = coordinate(value.target),
+                    actorPlayerId = actor,
+                )
+
             ClearMines::class.simpleName -> ClearMines(requiredInt(value.unitId, "unitId"), actor)
             BeginEngineering::class.simpleName ->
                 BeginEngineering(

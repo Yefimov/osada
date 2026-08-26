@@ -50,6 +50,10 @@ class GameMap {
     internal val unitImages: MutableSet<Int> = mutableSetOf()
     internal val currentMoveRange: MutableList<Cell> = mutableListOf()
     internal val currentAttackRange: MutableList<Cell> = mutableListOf()
+
+    /** Hexes the Barrage targeting mode is currently offering (OG 9.2, `model/BarrageOperations`).
+     *  Empty whenever the mode is closed, which is most of the time. */
+    internal val currentBarrageTargets: MutableList<Cell> = mutableListOf()
     internal val undoState = UndoState()
 
     /**

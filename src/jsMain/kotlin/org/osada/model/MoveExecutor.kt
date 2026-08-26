@@ -3,6 +3,7 @@ package org.osada.model
 import org.osada.PlayerType
 import org.osada.hero.HeroCampaign
 import org.osada.rules.GameRules
+import org.osada.rules.UnitCapabilities
 import org.osada.rules.canCapture
 import org.osada.rules.getDirection
 import org.osada.rules.getShortestPath
@@ -27,8 +28,16 @@ internal class MoveExecutor(
         col: Int,
     ): MovementResults {
         val result = MovementResults()
-        val setup = setupMove(unit, row, col) ?: return result
-        saveUndoState(unit)
+        // The undo snapshot is taken BEFORE the auto-mount, so rewinding a ride puts the formation
+        // back on the ground where it started rather than sitting in a truck it never asked for.
+        val snapshot = undoSnapshot(unit)
+        val mounted = autoMountForMove(unit, row, col)
+        val setup = setupMove(unit, row, col)
+        if (setup == null) {
+            if (mounted) revertAutoMount(unit)
+            return result
+        }
+        commitUndoState(unit, snapshot)
         val totalCost = traversePath(unit, setup, result)
         // AA interception can destroy the plane mid-path (§3.4, docs/design/aa-interception.md):
         // it is already correctly positioned at the intercepting cell (applyAAInterception moved
@@ -63,15 +72,27 @@ internal class MoveExecutor(
         }
     }
 
-    private fun saveUndoState(unit: GameUnit) {
-        if (unit.player?.type != PlayerType.HUMAN_LOCAL) return
-        gameMap.undoState.clear()
-        gameMap.undoState.unit = unit
-        gameMap.undoState.savedUnit =
+    /** A detached copy of [unit] as it stands right now, or null for a player whose moves were
+     *  never undoable. Split from [commitUndoState] so the snapshot can be taken before the move
+     *  changes anything and kept only once the move is certain to happen. */
+    private fun undoSnapshot(unit: GameUnit): GameUnit? =
+        if (unit.player?.type != PlayerType.HUMAN_LOCAL) {
+            null
+        } else {
             GameUnit(unit.eqid).apply {
                 copy(unit)
                 setHex(unit.getHex())
             }
+        }
+
+    private fun commitUndoState(
+        unit: GameUnit,
+        snapshot: GameUnit?,
+    ) {
+        if (snapshot == null) return
+        gameMap.undoState.clear()
+        gameMap.undoState.unit = unit
+        gameMap.undoState.savedUnit = snapshot
     }
 
     /**
@@ -166,6 +187,7 @@ internal class MoveExecutor(
         // below already refuses to offer an undo for a move that revealed something, so a credited
         // contact can never be rewound out from under the evidence it granted.
         HeroCampaign.recordReconnaissance(unit, newlySpotted)
+        dismountAfterMove(unit)
         gameMap.setMoveRange(unit)
         gameMap.setAttackRange(unit)
         if (unit.player?.type != PlayerType.HUMAN_LOCAL) {
@@ -188,6 +210,29 @@ internal class MoveExecutor(
         } else {
             gameMap.undoState.invalidate(unit, finality)
         }
+    }
+
+    /**
+     * OG's `Dismount after movement` (`attr2` bit 1): *"unit dismounts from its transport after
+     * completing movement"* (manual §7.2).
+     *
+     * **Automatic, not an action, and free.** OG 8.3's base rule is that everyone else *"can only
+     * mount or dismount before moving"* and a formation that rode stays aboard until its next turn;
+     * this ability is the exception, and it fires by itself the moment the ride ends. It costs no
+     * movement point and needs none left — a truck that spent its last point still puts its
+     * passengers down, because completing the movement is the whole trigger.
+     *
+     * Runs after the arrival's spotting is in place, so `unmountUnitHandler`'s own remove/add pair
+     * swaps the transport's spotting range for the passengers' with both counts balanced.
+     *
+     * A first pass on 2026-08-26 read this as a permission that spent the remaining movement. That
+     * was a mechanic invented beyond the rules, and the manual says otherwise — corrected the same
+     * day (§Q).
+     */
+    private fun dismountAfterMove(unit: GameUnit) {
+        if (!unit.isMounted || unit.destroyed) return
+        if (!UnitCapabilities.dismountsAfterMove(unit.unitData(true))) return
+        gameMap.unmountUnitHandler(unit)
     }
 
     /** Null when the move stays undoable, otherwise the single reason it became final. Order is
@@ -221,13 +266,17 @@ internal class MoveExecutor(
         val ctx = resolveUndoContext() ?: return
         val unit = ctx.unit
         val fromHex = ctx.fromHex
+        // Both reference counts come off BEFORE the state is restored, because they were added with
+        // the state the unit has NOW. A move that auto-mounted added the transport's spotting range
+        // and would otherwise have the passengers' removed -- the add/remove asymmetry that strands
+        // fog permanently, and the same one §L.12 fixed on in-place upgrades.
+        GameRules.setZOCRange(gameMap, unit, false)
+        GameRules.setSpotRange(gameMap, unit, false)
         unit.copy(ctx.saved)
         // copy() detaches unit.player onto a throwaway Player; re-point it at the shared
         // instance so refunds below land on the real player, not a copy of a copy.
         val player = gameMap.getPlayer(unit.player?.id ?: 0)
         unit.player = player
-        GameRules.setZOCRange(gameMap, unit, false)
-        GameRules.setSpotRange(gameMap, unit, false)
         fromHex.delUnit(unit)
         ctx.savedHex.setUnit(unit)
         GameRules.setZOCRange(gameMap, unit, true)

@@ -172,6 +172,8 @@ object GameStateSerializer {
         }
         if (hex.razedTerrain >= 0) obj.asDynamic().razedTerrain = hex.razedTerrain
         if (hex.blownRoad != 0) obj.asDynamic().blownRoad = hex.blownRoad
+        if (hex.rubble) obj.asDynamic().rubble = 1
+        if (hex.crater) obj.asDynamic().crater = 1
         return obj
     }
 

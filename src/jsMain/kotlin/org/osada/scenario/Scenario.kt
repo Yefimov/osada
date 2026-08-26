@@ -65,6 +65,48 @@ class Scenario(
                 }
 
     var weatherCanChangeGround: Boolean = false
+
+    /**
+     * Open General's own per-scenario **Game settings** switches, imported 2026-08-26 from the
+     * `.xscn` bitfield at bytes 1009-1017 (`tools/og-import/SCENARIO_FORMAT_NOTES.md`).
+     *
+     * **`null` means the scenario was never re-exported, and is NOT the same as `false`.** 397 of
+     * the 502 deployed scenarios carry these attributes; the rest name a source this install cannot
+     * read (29 legacy `.scn`) or cannot find (76). A rule that consults them must treat `null` as
+     * *"the author did not say"* and fall back to its ruleset key alone — otherwise re-exporting a
+     * scenario would be the difference between a mechanic existing and not, which is the §5.10
+     * hazard in a new costume.
+     *
+     * These are the missing half of `rules.og_fidelity.gap.authored_options`: OG lets each scenario
+     * decide, and until now OSADA applied one set of rules to all of them. Measured over the
+     * 397 scenarios that do carry them: Repair 362, Build 360, Blow 350, Extended LOS 321,
+     * barrage 298, extended naval 203, TrueDLOF 131, Air ZOC 79, UnitsBlockDLOF 23, and air
+     * missions **0** — the last of which is why building air missions would serve no shipped
+     * battle at all.
+     */
+    var canBuild: Boolean? = null
+    var canBlow: Boolean? = null
+    var canRepair: Boolean? = null
+    var extendedLos: Boolean? = null
+
+    /**
+     * The authored switches OSADA imports but does not yet execute, kept as fields rather than
+     * dropped so the register in `docs/og-fidelity-plan.md` §O can be answered from the data
+     * instead of re-derived from the binaries: `TrueDLOF`, `UnitsBlockDLOF`, Air ZOC and extended
+     * naval. `airMissions` is a fifth, and the only one no shipped scenario sets at all.
+     *
+     * **[barrageAllowed] is NOT one of them** — it moved out of this group with schema 7
+     * (2026-08-26) and is now read for real: it is the scenario half of the `barrage` ruleset key's
+     * gate in `rules/Barrage`, and 356 of the 457 readable scenarios allow it. It stays declared
+     * here only because the whole option bitfield is parsed in one place.
+     */
+    var trueDirectLof: Boolean? = null
+    var unitsBlockLof: Boolean? = null
+    var barrageAllowed: Boolean? = null
+    var airZoc: Boolean? = null
+    var airMissions: Boolean? = null
+    var extendedNaval: Boolean? = null
+
     var turnsPerDay: Int = 1
     var dayTurn: Int = 0
     var reinforcements: MutableMap<Int, MutableList<Reinforcement>> = mutableMapOf()
@@ -223,6 +265,16 @@ class Scenario(
         atmosferic = other.atmosferic
         latitude = other.latitude
         weatherCanChangeGround = other.weatherCanChangeGround
+        canBuild = other.canBuild
+        canBlow = other.canBlow
+        canRepair = other.canRepair
+        extendedLos = other.extendedLos
+        trueDirectLof = other.trueDirectLof
+        unitsBlockLof = other.unitsBlockLof
+        barrageAllowed = other.barrageAllowed
+        airZoc = other.airZoc
+        airMissions = other.airMissions
+        extendedNaval = other.extendedNaval
         iconset = other.iconset
         ground = other.ground
         lockedEffectiveIconset = other.effectiveIconset

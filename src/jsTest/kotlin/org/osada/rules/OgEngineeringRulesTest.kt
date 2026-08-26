@@ -4,6 +4,7 @@ import org.osada.GameHolder
 import org.osada.GameStateSerializer
 import org.osada.RoadType
 import org.osada.TerrainType
+import org.osada.model.EfileConfig
 import org.osada.model.EngineeringActionResult
 import org.osada.model.Hex
 import org.osada.model.beginEngineering
@@ -325,6 +326,10 @@ class OgEngineeringRulesTest : OgRulesTestHarness() {
         GameHolder.instance = holderFor(map)
         val hex = map.map!![2][2]
         hex.terrain = TerrainType.FOREST.value
+        // Woods are only demolishable where the efile says so (`blow_any_terrain`, wired
+        // 2026-08-26). This test is about what the razed record does afterwards, so it asks for
+        // the efile that authorises the raze rather than moving to a terrain that needs no switch.
+        EfileConfig.setForTest(intKeyMap = mapOf("blow_any_terrain" to 1))
         val sapper = place(map, sapperEqid, 2, 2, side = 0)
 
         map.beginEngineering(sapper, EngineeringWork.RAZE)

@@ -82,7 +82,7 @@ var campaignlist =
   "title": "Bolshevik Cavalry (1918-1920)"
  },
  {
-  "desc": "The German Empire is collapsing, the fleet is ordered toward a final suicidal battle, and the sailors of Kiel refuse. From mutiny in the naval bases to workers’ and soldiers’ councils across the country, the November Revolution reaches Berlin and brings down the Kaiser in a matter of days. Command revolutionary sailors, armed workers, and defecting soldiers through a compact campaign of seized arsenals, occupied stations, street fighting, and political uncertainty. Rosa Luxemburg and Karl Liebknecht stand for a more radical future, while the old officer corps and the Freikorps prepare their answer. Can the councils survive the birth of the republic—or will the revolution be contained and crushed?",
+  "desc": "The German Empire is collapsing, the fleet is ordered toward a final suicidal battle, and the sailors of Kiel refuse. You are a fictional sailor-delegate elected to Kiel’s revolutionary action committee, entrusted with its first armed column and sent by the councils from one rising city to the next. The campaign compresses several overlapping local uprisings into your journey through Wilhelmshaven and Frankfurt to Berlin: local councils lend you troops, but their political leaders will argue over every priority—prisoners or communications, expansion or consolidation, public legitimacy or control of the state machinery. Can the councils turn mutiny into a new power before the old officer corps and the emerging republic contain the revolution?",
   "eqp": "eqp-kaiser",
   "file": "novemberrevolution.json",
   "flag": 188,

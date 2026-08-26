@@ -40,11 +40,20 @@ package org.osada.rules.ruleset
  * OPTIONAL RULES (manual section 9)
  * that `docs/og-fidelity-plan.md` section C never listed at all. Additive on the same terms as
  * schemas 4 and 5, and all three again default to what OSADA already ran, so the 502 shipped
- * scenarios stay arithmetically unchanged until a profile asks otherwise. The two section-9 rules
- * still missing after this -- Barrage (9.2) and Triggers (9.10) -- have no key, because neither
- * mechanic exists; they are named in the profile's own gap list instead.
+ * scenarios stay arithmetically unchanged until a profile asks otherwise.
+ *
+ * 7 (2026-08-26) added [RuleKey.BARRAGE] -- the fourth of section 9's optional rules, and the one
+ * schema 6 called permanently keyless. It was held back only because §L.6 had filed
+ * `Can bombard/barrage` as an undecoded special bit; §Q.2 found it is not a bit at all but the
+ * record's Bomber Size, and the rule followed. Additive and defaulted off, on the same terms.
+ * The one section-9 rule still missing after this is Triggers (9.10), which has no key because the
+ * mechanic does not exist; it is named in the profile's own gap list instead.
+ *
+ * 8 (2026-08-26) added [RuleKey.CRATERS] -- the first key in this enum that is NOT an Open General
+ * rule, and it is off in [RulesetProfile.OG_FIDELITY_ID] deliberately and permanently. See its own
+ * documentation for why a house rule is allowed a key at all.
  */
-const val RULESET_SCHEMA_VERSION = 6
+const val RULESET_SCHEMA_VERSION = 8
 
 /**
  * One configurable rule.
@@ -303,6 +312,44 @@ enum class RuleKey(
     BUILD_AND_REPAIR("build_and_repair", null, 0, 1),
 
     /**
+     * OG 9.2: a unit with Bomber Size above zero shells a hex it cannot see. 0 = off (OSADA
+     * today), 1 = `og`. **Schema 7**, and the fourth of section 9's optional rules to be built.
+     *
+     * Held back from schema 6 for one reason only, which no longer holds: §L.6 filed Barrage as
+     * blocked because the `Can bombard/barrage` ability was *"not among the decoded 52"* special
+     * bits. It is not a bit at all — it is the record's **Bomber Size** (`EquipmentData.bombsize`,
+     * imported 2026-08-26), which is exactly what OG's own `tips1.txt` tells the player to look for
+     * as the `'='` mark. 6,872 merged records carry it.
+     *
+     * **Authored content, twice over**: the scenario must also allow it, and 356 of the 457 shipped
+     * scenarios whose source is readable do (`Scenario.barrageAllowed`, imported with the rest of
+     * the option bitfield). Call site: `rules/Barrage`.
+     */
+    BARRAGE("barrage", null, 0, 1),
+
+    /**
+     * **Shell craters — an OSADA rule, not an Open General one.** 0 = off, 1 = on. Schema 8.
+     *
+     * A barrage that lands on open ground (clear, snow or sand) with nothing to wreck digs craters
+     * instead of doing nothing. They cost a movement point to enter, and they give the formation
+     * standing in them a FLOOR of one entrenchment level — cover you did not have to dig.
+     *
+     * **Off in Open General Fidelity, deliberately and permanently.** No OG source grants a crater
+     * cover of any kind; OG's own barrage takes entrenchment AWAY (`Barrage.ENTRENCHMENT_DAMAGE`).
+     * A profile whose whole claim is "these are OG's rules" must not quietly carry one of ours —
+     * `docs/design/ruleset-profiles.md` §2, and §0.2's rule against unverifiable fidelity claims.
+     * It is reachable from OSADA Default and from custom rulesets, which is where an OSADA
+     * invention belongs.
+     *
+     * **A floor rather than a bonus, and that is the anti-farm design.** If craters ADDED
+     * entrenchment, shelling your own front line would be free fortification: artillery in the rear
+     * preparing positions for the infantry, at the cost of ammunition nobody else was going to
+     * spend. As a floor it can never beat digging in, so it is worth doing where you have no time
+     * to dig and worthless where you have. Call site: `rules/Craters`.
+     */
+    CRATERS("craters", null, 0, 1),
+
+    /**
      * Whether OG's per-record ability TOGGLES decide phased movement and overrun, or the unit's
      * class alone does. 0 = `class` (OSADA today), 1 = `og_record`.
      *
@@ -514,6 +561,11 @@ object RulesetDefaults {
             RuleKey.COUNTERBATTERY to 0,
             RuleKey.EXTENDED_LOS to 0,
             RuleKey.BUILD_AND_REPAIR to 0,
+            // Schema 7. Off for the same reason the schema-6 three are: OSADA does not shell
+            // unseen hexes today, so off is a description of the shipped game.
+            RuleKey.BARRAGE to 0,
+            // OSADA's own rule (schema 8), off until a player asks for it.
+            RuleKey.CRATERS to 0,
             // Class defaults, which is what every shipped scenario has always run on.
             RuleKey.EQUIPMENT_TOGGLES to 0,
         )
@@ -578,6 +630,10 @@ object RulesetDefaults {
             RuleKey.COUNTERBATTERY to 1,
             RuleKey.EXTENDED_LOS to 1,
             RuleKey.BUILD_AND_REPAIR to 1,
+            // Schema 7: OG 9.2, on for the same reason the other three section-9 rules are.
+            RuleKey.BARRAGE to 1,
+            // NOT OG's: craters are an OSADA invention and must never be on in this profile.
+            RuleKey.CRATERS to 0,
             // OG reads these two off the record, not off the class.
             RuleKey.EQUIPMENT_TOGGLES to 1,
         )

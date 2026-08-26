@@ -52,14 +52,6 @@
    },
    "dialogue": [
     {
-     "id": "campaign-framing",
-     "speaker": "Revolutionary Governing Council",
-     "role": "Commission of Appointment",
-     "side": "left",
-     "text": "You are the Governing Council's front commissar, attached in turn to whichever army group carries the Republic's main crisis. The field commander directs tactics; you have authority to decide when military necessity, revolutionary policy and the survival of the state pull in different directions.",
-     "next": "fekete-cold-open"
-    },
-    {
      "id": "fekete-cold-open",
      "speaker": "András Fekete",
      "role": "Railway Officer — Fictional Composite",
@@ -73,7 +65,7 @@
      "speaker": "Béla Kun",
      "role": "People's Commissar for Foreign Affairs — Field Telephone",
      "side": "right",
-     "text": "Four weeks ago the Károlyi government refused another territorial ultimatum and surrendered power. Social Democrats and Communists proclaimed a republic of councils because no old government would defend the country without restoring the old order. Now the intervention has begun before that republic has finished building an army.",
+     "text": "Böhm, every hour that railway remains open is an answer to Paris. Károlyi resigned rather than order the army behind another demarcation line; we inherited his empty depots and an ultimatum already marching west in Romanian boots. Do not tell me this retreat is merely a staff calculation.",
      "next": "bohm-opening",
      "portrait": "resources/campaigns/portraits/bela-kun.png"
     },
@@ -2036,7 +2028,7 @@
      "role": "Czech and Slovak Communist Liaison",
      "side": "right",
      "portrait": "resources/campaigns/portraits/antonin-janousek.png",
-     "text": "Kassa is taken and the Slovak Soviet Republic has been proclaimed. The historical timetable has already been broken - the Entente expected this army to collapse in May.",
+     "text": "Kassa is taken. In its workers' districts, appeals for councils are being copied in Slovak and passed north by rail. Janoušek's organisers speak openly of a Slovak republic—but ink and expectation are not yet a government.",
      "conditions": {
       "previousOutcome": [
        "briliant"
@@ -2050,7 +2042,7 @@
      "role": "Czech and Slovak Communist Liaison",
      "side": "right",
      "portrait": "resources/campaigns/portraits/antonin-janousek.png",
-     "text": "We took Kassa and very little else. The proclamation in Presov will have to stand in for the ground we did not gain.",
+     "text": "We took Kassa and very little else. Leaflets promise councils and a Slovak republic as though ink could hold the road to Eperjes. Unless the army opens that road, the proclamation remains a rumour.",
      "conditions": {
       "previousOutcome": [
        "tactical"
@@ -2064,7 +2056,7 @@
      "role": "Czech and Slovak Communist Liaison",
      "side": "right",
      "portrait": "resources/campaigns/portraits/antonin-janousek.png",
-     "text": "Kassa is in our hands. The political consequences are being announced in Presov faster than the military ones can be secured.",
+     "text": "Kassa is in our hands. Bundles of Slovak appeals are already moving north, and revolutionary committees are forming wherever the old officials have lost their nerve. No one yet agrees which committee has the right to speak for a new republic.",
      "conditions": {
       "previousOutcome": [
        "victory"
@@ -2119,7 +2111,7 @@
      "speaker": "Antonín Janoušek",
      "role": "Czech and Slovak Communist Liaison",
      "side": "right",
-     "text": "The printing room in Eperjes works through the night. One compositor sets the proclamation in Slovak, another in Hungarian; outside, workers ask whether the red flags mean liberation or only a new army speaking another language. What your soldiers do in the villages will answer before our leaflets can.",
+     "text": "The presses in Kassa work through the night. One compositor sets an appeal in Slovak, another in Hungarian; bundles are marked for Eperjes and the northern towns. Workers there ask whether the red flags mean councils of their own or only the old Hungarian rule in a new colour. Our leaflets will arrive before our battalions. What the battalions do will decide whether anyone believes them.",
      "next": "stromfeld-opening",
      "portrait": "resources/campaigns/portraits/antonin-janousek.png"
     },
@@ -2419,7 +2411,7 @@
      "role": "People's Commissar and Revolutionary Envoy",
      "side": "left",
      "portrait": "resources/campaigns/portraits/tibor-szamuely.png",
-     "text": "Eperjes is held, and its workers' delegates are preparing to proclaim a Slovak republic of councils. That is precisely the political fact Paris now wants removed before it can take root.",
+     "text": "Eperjes is held. In the town hall, workers' and soldiers' delegates argue over a proclamation they intend to make within days, while printers wait for the name to place above it. Paris is demanding our withdrawal before that argument can harden into a government.",
      "conditions": {
       "completedActions": [
        "rhu190609.xml.eperjes_held"
@@ -3040,7 +3032,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Comrade Commisar, you did what you could. Unfortunately, the Romanians crossed the Tisza at Tokaj, the Revolutionary Governing Council has resigned, most leaders are fleeing to Vienna. Our Soviet Republic has collapsed. However, we don't stop dreaming about a better future. Save your life and join your comrades fighting for a perfect, communist society all around the world!<br><br>Thanks for playing the campaign!"
+    "text": "The Romanian counterattack failed to destroy the Szolnok command before the battle ended. The surviving formations still answered orders, but one sector could not reverse the collapse around it. Over the following week the wider front gave way; on 1 August the Revolutionary Governing Council resigned. Your last decision did not decide whether the Republic survived—it decided what survived it."
    },
    "victory": {
     "goto": 254,
@@ -3049,7 +3041,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Comrade Commisar, you did what you could. Unfortunately, the Romanians crossed the Tisza at Tokaj, the Revolutionary Governing Council has resigned, most leaders are fleeing to Vienna. Our Soviet Republic has collapsed. However, we don't stop dreaming about a better future. Save your life and join your comrades fighting for a perfect, communist society all around the world!<br><br>Thanks for playing the campaign!"
+    "text": "The Szolnok front survived the first blow and denied the Romanian command an immediate decision. It bought the Republic days, not a reversal. As the wider front disintegrated, the Revolutionary Governing Council resigned on 1 August. What remained under discipline at Szolnok became part of the Republic's legacy rather than its rescue."
    },
    "tactical": {
     "goto": 254,
@@ -3058,7 +3050,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Comrade Commisar, you did what you could. Unfortunately, the Romanians crossed the Tisza at Tokaj, the Revolutionary Governing Council has resigned, most leaders are fleeing to Vienna. Our Soviet Republic has collapsed. However, we don't stop dreaming about a better future. Save your life and join your comrades fighting for a perfect, communist society all around the world!<br><br>Thanks for playing the campaign!"
+    "text": "Szolnok did not become an immediate rout, but the battle ended without a force capable of restoring the offensive. Romanian troops broke the wider front in the following days, and on 1 August the Revolutionary Governing Council resigned. The Republic fell; the people and formations preserved here still had to survive its defeat."
    },
    "lose": {
     "goto": 255,
@@ -3067,7 +3059,7 @@
      0
     ],
     "prestige": 0,
-    "text": "The front has collapsed. The Republic has lost the army and time it needed; hostile forces advance while counterrevolutionary detachments prepare their reprisals."
+    "text": "The Szolnok front collapsed under the Romanian counterattack. Disintegration spread faster than orders could contain it; on 1 August the Revolutionary Governing Council resigned. With organised resistance shattered, counterrevolutionary forces began settling political accounts against an increasingly defenceless enemy."
    }
   },
   "briefing": {
@@ -3381,7 +3373,7 @@
     ],
     "speaker": "Ferenc Julier",
     "role": "Chief of Staff, Hungarian Red Army",
-    "text": "The eastern bridgehead held because you refused to let the offensive end as a withdrawal order. The surviving formations call it proof that the Republic can still compel events. The staff calls it a victory purchased with reserves it cannot replace. Both judgments will shape whatever government survives this summer.",
+    "text": "The eastern bridgehead held through the counterattack, and for several days the surviving formations could still be moved by orders rather than rumours. It did not save the Republic. Landler calls the stand proof that the army was not defeated in spirit; I count the reserves it spent. Your decision left comrades a final victory—and fewer guns with which to survive its aftermath.",
     "conditions": {
      "allFlags": [
       "final_stand_east"
@@ -3395,7 +3387,7 @@
     ],
     "speaker": "Jenő Landler",
     "role": "Commander-in-Chief, Hungarian Red Army",
-    "text": "The final reserve died east of the river with the bridgehead it was ordered to save. As organised resistance collapses, counterrevolutionary detachments prepare to settle political accounts through the White Terror. The soldiers who survive will argue that defiance inspired them—and that command spent them after the position was already lost.",
+    "text": "The final reserve died east of the river with the bridgehead it was ordered to save. The Republic fell with no organised force left on this sector to cover fugitives or restrain reprisals. As counterrevolutionary vengeance hardens into the White Terror, surviving soldiers will say that defiance inspired them—and that command spent their comrades after the position was already lost.",
     "conditions": {
      "allFlags": [
       "final_stand_east"
@@ -3411,7 +3403,7 @@
     ],
     "speaker": "Béla Kun",
     "role": "People's Commissar for Foreign Affairs",
-    "text": "The bridgehead was surrendered, but the army crossed in order and denied Bucharest the collapse it expected. You preserved an organised force capable of defending Budapest—and of demanding a voice in what the Republic becomes next. Landler will call that survival. Julier will remind us how much ground survival has already cost.",
+    "text": "The bridgehead was surrendered, but the army crossed in order and denied Bucharest the destruction it expected. It could not keep the Governing Council in power; after 1 August its remaining battalions no longer defended a state. They could still escort threatened comrades, preserve weapons and cadres, and deny the counterrevolution an entirely helpless enemy. Landler will call that survival. Julier will count what was saved.",
     "conditions": {
      "allFlags": [
       "final_withdrawal_west"
@@ -3425,7 +3417,7 @@
     ],
     "speaker": "Ferenc Julier",
     "role": "Chief of Staff, Hungarian Red Army",
-    "text": "The phased withdrawal saved formations but not the front. The Republic's opponents will call every surviving battalion evidence that it lacked the will to fight; the White detachments gathering behind the advance will not reward restraint. What remains is an army fragment that may protect comrades even when it can no longer protect the state.",
+    "text": "The phased withdrawal began too late to preserve a coherent army. Scattered battalions reached the west bank, but they could no longer impose order on the retreat or terms on the victors. As the White Terror begins settling political accounts, those fragments may protect some comrades even though they can no longer protect the state.",
     "conditions": {
      "allFlags": [
       "final_withdrawal_west"

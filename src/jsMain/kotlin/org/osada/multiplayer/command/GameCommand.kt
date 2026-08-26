@@ -61,6 +61,20 @@ data class LayMines(
     override val actorPlayerId: Int,
 ) : GameCommand
 
+/**
+ * OG 9.2's barrage: shell a hex nobody can see (`rules/Barrage`, added 2026-08-26).
+ *
+ * Carries the TARGET and not the outcome, for the same reason [LayMines] carries neither: the
+ * success roll comes from the shared seeded stream, so both peers resolve the same shot from the
+ * same cursor. Replaying it through `GameMap.fireBarrage` is what keeps a wrecked bridge, a razed
+ * city and a rubbled hex identical on both sides.
+ */
+data class BarrageHex(
+    val unitId: Int,
+    val target: HexCoordinate,
+    override val actorPlayerId: Int,
+) : GameCommand
+
 data class ClearMines(
     val unitId: Int,
     override val actorPlayerId: Int,
@@ -146,6 +160,13 @@ data class ContinueCampaign(
     override val actorPlayerId: Int,
 ) : GameCommand
 
+/** OG 9.2's barrage carries a unit and a target hex. Written here rather than inline so
+ *  [toPayloadJson] stays inside detekt's length budget. */
+private fun BarrageHex.writeBarrage(payload: dynamic) {
+    payload["unitId"] = unitId
+    payload["target"] = target.toJson()
+}
+
 fun GameCommand.kind(): String = this::class.simpleName ?: error("Anonymous game command")
 
 @Suppress("CyclomaticComplexMethod")
@@ -177,6 +198,7 @@ fun GameCommand.toPayloadJson(): String {
 
         is UnmountUnit -> payload["unitId"] = unitId
         is LayMines -> payload["unitId"] = unitId
+        is BarrageHex -> writeBarrage(payload)
         is ClearMines -> payload["unitId"] = unitId
         is BeginEngineering -> putEngineering(payload, unitId, work)
         is DeployUnit -> {

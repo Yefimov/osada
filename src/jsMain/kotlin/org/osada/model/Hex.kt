@@ -103,6 +103,42 @@ class Hex(
     var blownRoad: Int = 0
 
     /**
+     * Whether what stood on this hex has been shelled into wreckage (OG 9.2, `rules/Barrage`).
+     *
+     * **A state of a DESTROYED facility or road, not a crater on open ground.** Open General School
+     * theme 5 lists what barrage and demolition can destroy — airfield, bridge, city, fortification,
+     * port and road — and says the wreck *"loses its usual functions and costs more to move
+     * through"*. Clear ground, snow and sand are not in that list, and an efile only widens it by
+     * setting `blow_any_terrain` (`EngineeringWork.razeableTerrain`, which barrage reads too). So
+     * this is only ever set where something was actually wrecked.
+     *
+     * **A flag rather than OG's own rubble TERRAIN, and that is a finding.** OG carries rubble as
+     * terrain index 17, but the index is an efile-authored slot: across the 35 `TerrainEx` tables in
+     * the OG install, 25 efiles call it `custom`, 7 `snow` and only 3 `rubble` — LXF, which backs
+     * four deployed campaigns, is a `custom` one. Claiming that index would misname terrain most
+     * shipped content authored as something else.
+     *
+     * Read by `MoveRangeCalculation` as a movement surcharge and cleared by Repair, which is what
+     * *"unusable until Repaired"* means. What it deliberately does NOT do is give cover: no source
+     * grants a crater entrenchment, and the barrage that made it takes 2 entrenchment OFF the unit
+     * standing there. Serialized only when set.
+     */
+    var rubble: Boolean = false
+
+    /**
+     * Whether shelling has cratered this open ground — OSADA's own rule, not Open General's
+     * (`rules/Craters`, behind `RuleKey.CRATERS`).
+     *
+     * Separate from [rubble] because the two do opposite things to a defender: wreckage is a
+     * destroyed facility and gives no cover, while a crater is a hole to lie in and sets a floor
+     * under the occupant's entrenchment. They share only the movement surcharge.
+     *
+     * Only ever set on clear, snow or sand — ground with nothing on it to destroy. Serialized when
+     * set, so a map nobody has shelled saves exactly as it did before the rule existed.
+     */
+    var crater: Boolean = false
+
+    /**
      * The two Open General spotting layers that sit BESIDE the reference counts below, as per-side
      * bitmasks (`1 shl side`): what a side has seen so far this turn (`spotting_memory`, OG's
      * "a hex once spotted stays spotted for the active turn"), and what its own cities, ports and
@@ -135,6 +171,16 @@ class Hex(
      *  selected unit is an aircraft (DEFERRED.md §1.1). Never derived from hidden AA -- see
      *  `AAInterception.visibleThreatHexes`. Cleared in `delMoveSel`. */
     var isAaThreat: Boolean = false
+
+    /** Set alongside [isMoveSel] when the selected formation can reach this hex ONLY by climbing
+     *  into its own organic transport first (`rules/AutoMount`). Drawn dashed and hovered with the
+     *  truck cursor, so "my legs do not reach that far" is visible while the player is still
+     *  planning. Cleared in `delMoveSel`. */
+    var needsTransport: Boolean = false
+
+    /** Set while the Barrage targeting mode is open and this hex is one the selected formation may
+     *  shell (OG 9.2). Cleared with the rest of the selection overlay. */
+    var isBarrageSel: Boolean = false
 
     private val zoc: IntArray = IntArray(2)
     private val spotted: IntArray = IntArray(2)

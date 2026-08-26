@@ -36,6 +36,10 @@ enum class UnitActionId(
     REINFORCE("reinforce"),
     OVERSTRENGTH("overstrength"),
     LAY_MINES("lay_mines"),
+
+    /** OG 9.2's barrage. Unlike every other action here it needs a TARGET, so choosing it opens a
+     *  targeting mode rather than doing something at once (`rules/Barrage`, added 2026-08-26). */
+    BARRAGE("barrage"),
     CLEAR_MINES("clear_mines"),
     BUILD_BRIDGE("build_bridge"),
     BUILD_FORTIFICATION("build_fortification"),
@@ -54,6 +58,10 @@ enum class ActionBlockReason {
 
     /** The unit has already fired this turn. */
     ALREADY_FIRED,
+
+    /** Barrage: every hex in range is already spotted, so there is nothing to shell blind. Not an
+     *  error — a gun that can see everything in front of it simply attacks instead (OG 9.2). */
+    NO_BARRAGE_TARGET,
 
     /** The unit already resupplied or reinforced this turn. */
     ALREADY_RESUPPLIED,
@@ -212,6 +220,10 @@ enum class ActionEffectKind {
 
     /** Lays a minefield on this hex; `amount` ammunition points spent. */
     LAY_MINEFIELD,
+
+    /** Opens the Barrage targeting mode; `amount` is how many hexes are currently shellable, so the
+     *  chip can say "no unseen hex in range" before the player enters a mode with nothing in it. */
+    OPEN_BARRAGE_TARGETING,
 
     /** Attempts to clear the minefield here; `amount` is the percentage chance of success. */
     CLEAR_MINEFIELD,

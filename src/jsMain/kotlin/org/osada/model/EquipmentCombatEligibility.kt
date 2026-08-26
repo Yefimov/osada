@@ -298,6 +298,41 @@ internal const val ATTR2_MASK_NO_ZOC = 64
  */
 internal const val ATTR_EX_MASK_COUNTER_BATTERY = 512
 
+/**
+ * OG's `Dismount after movement` (`Special4` bit 1, `attr2` bit 1; template line 860) — the
+ * formation may leave its transport after it has already moved, which every other mounted
+ * formation may not.
+ *
+ * WIRED 2026-08-26; 662 shipped records carry it, and every one of them is a mountable ground
+ * class (Infantry 427, Artillery 157, Recon 32, Ground Transport 19, Anti-Tank 12). A plain grant,
+ * not a toggle — see [org.osada.rules.UnitCapabilities.dismountsAfterMove], and do not confuse it
+ * with [ATTR_MASK_DISMOUNT], which decides which STATISTICS a mounted formation fights with.
+ */
+internal const val ATTR2_MASK_DISMOUNT_AFTER_MOVE = 2
+
+/**
+ * OG's `Cannot get a leader` (`SpecialEx` bit 0, `attrEx` bit 0; template line 869) — this
+ * equipment never produces a commander.
+ *
+ * WIRED 2026-08-26; 537 shipped records carry it, led by Infantry (207), Tactical Bomber (91),
+ * Fortification (69) and Flak (35). Read by both of OSADA's leader mechanics through
+ * [org.osada.rules.UnitCapabilities.canProduceLeader]: the legacy integer leader and Phase 2 hero
+ * emergence. It blocks PRODUCTION only — a formation that already has a commander and upgrades
+ * into such a record keeps them.
+ */
+internal const val ATTR_EX_MASK_NO_LEADER = 1
+
+/**
+ * OG's `No run out ammo penalty` (`SpecialEx` bit 4, `attrEx` bit 4; template line 874) — the
+ * formation does not pay OG 6.23's halvings for fighting with an empty magazine.
+ *
+ * WIRED 2026-08-26 behind `RuleKey.DRY_UNIT_PENALTIES`, which is the only rule that imposes those
+ * halvings; 824 shipped records carry it, led by Submarine (141), Tactical Bomber (123), Destroyer
+ * (118) and Air Transport (92). It lifts the penalties and NOT the prohibition — see
+ * [org.osada.rules.UnitCapabilities.ignoresDryAmmoPenalty].
+ */
+internal const val ATTR_EX_MASK_NO_AMMO_PENALTY = 16
+
 /** Whether this equipment is mountain-trained — see [ATTR_MASK_MOUNTAIN]. */
 fun EquipmentData.isMountainTrained(): Boolean = attr and ATTR_MASK_MOUNTAIN != 0
 
