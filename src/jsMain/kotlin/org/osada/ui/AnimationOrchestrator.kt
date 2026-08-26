@@ -131,6 +131,7 @@ internal class AnimationOrchestrator(
             attacker.destroyed || GameRules.isLossOverRetreatThreshold(attacker.strength, attackerOldStrength)
         val defenderOldStrength = defender.strength
         val result = resolveAttackResult(map, attacker, defender, preview, attackStopped)
+        reportCounterBattery(ui, map, attackerPos)
 
         if (!attackStopped && !defender.destroyed) {
             applyDefenderRetreat(map, attacker, defender, defenderOldStrength)
@@ -395,6 +396,51 @@ private fun reportMinefield(
     ui.showAlert(pos.row, pos.col, I18n.t("combat.minefield.alert"), true)
     HudLog.addAt(pos.row, pos.col, HudLog.Segment(text, ownLoss = result.minefieldLosses > 0))
     ui.showUnitInfo(unit)
+}
+
+/**
+ * Counterbattery fire the player's attack (or the AI's) just drew, reported through exactly the
+ * surface an AA interception gets: a non-modal banner plus a clickable HUD-log line, pinned to the
+ * hex of the artillery that was answered.
+ *
+ * The player DID order this combat, unlike an interception -- but they did not order the reply, and
+ * an artillery piece that comes back from a successful bombardment two points weaker with nothing
+ * on screen to explain it is the same `DEFERRED.md` 1.1 failure by another route.
+ *
+ * `GameMap.lastCounterBattery` is a one-shot channel cleared at the start of every attack, so this
+ * can be called unconditionally: it does nothing on a combat that drew none.
+ *
+ * Top-level (not a method) to keep [AnimationOrchestrator] within the project's
+ * function-per-class limit, the same reason [reportInterceptions] is.
+ */
+private fun reportCounterBattery(
+    ui: UI,
+    map: GameMap,
+    pos: Cell,
+) {
+    val events = map.lastCounterBattery
+    if (events.isEmpty()) return
+    val observerSide = ui.game.spotSide
+    InterceptionBanner.show(ui, events, observerSide)
+    events
+        .filter { it.plane.player?.side == observerSide || it.interceptor.player?.side == observerSide }
+        .forEach { event ->
+            HudLog.addAt(
+                pos.row,
+                pos.col,
+                HudLog.Segment(
+                    I18n.t(
+                        MoveReactionText.lineKey(event.kind, event.planeDestroyed),
+                        mapOf(
+                            "gun" to event.interceptor.unitData(true).name,
+                            "plane" to event.plane.unitData(true).name,
+                            "losses" to event.losses,
+                        ),
+                    ),
+                    ownLoss = event.plane.player?.side == observerSide,
+                ),
+            )
+        }
 }
 
 /**

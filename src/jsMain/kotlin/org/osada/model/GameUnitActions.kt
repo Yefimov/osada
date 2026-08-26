@@ -5,6 +5,7 @@ import org.osada.UnitClass
 import org.osada.rules.AirOperations
 import org.osada.rules.GameRules
 import org.osada.rules.ReplacementExperience
+import org.osada.rules.UnitCapabilities
 import org.osada.rules.WeatherCombatRules
 import org.osada.rules.unitUsesFuel
 
@@ -103,8 +104,14 @@ fun GameUnit.move(cost: Int) {
     }
     // Recon class gets phased movement innately; a Reconnaissance Movement leader (§1.6) extends
     // the same allowance to any other formation, without touching the class's own free grant.
+    //
+    // The class test moved into `UnitCapabilities.hasPhasedMovement` on 2026-08-25, so this rule
+    // and the RCN badge finally read the SAME function. Under `equipment_toggles` that function
+    // answers with OG's per-record toggle instead of the class; with the key off -- every profile
+    // but Open General Fidelity -- it is the identical class test this line always ran.
     val phasedMovement =
-        unitData().uclass == UnitClass.RECON.value || Leaders.unitHasLeader(this, LeaderType.RECON_MOVEMENT)
+        UnitCapabilities.hasPhasedMovement(unitData()) ||
+            Leaders.unitHasLeader(this, LeaderType.RECON_MOVEMENT)
     // OG's `Marine` (attr bit 22): amphibious-assault troops come ashore ready to fight rather
     // than spending the turn on the landing. `carrier < 0` is exactly the landing leg -- the
     // disembark negated it and the line below clears it again -- so the rule needs no new state.

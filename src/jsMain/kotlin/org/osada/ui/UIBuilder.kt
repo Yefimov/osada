@@ -40,6 +40,15 @@ object UIBuilder {
             "overstrength" to "J",
             "lay_mines" to "*",
             "clear_mines" to "x",
+            // OG 9.3 Build and Repair. Glyphs picked from the same osada-menu font the rest of the
+            // strip uses; the five constructions share one builder mark because the chip label is
+            // what names the facility, and no hex ever offers more than a couple of them at once.
+            "build_bridge" to "B",
+            "build_fortification" to "F",
+            "build_airfield" to "A",
+            "build_port" to "P",
+            "repair" to "R",
+            "demolish" to "D",
             "undo" to "_",
             "sleep" to "t",
         )

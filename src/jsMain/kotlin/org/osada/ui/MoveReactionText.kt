@@ -14,6 +14,7 @@ internal object MoveReactionText {
         when (kind) {
             MoveReactionKind.AA_INTERCEPTION -> "combat.interception.title"
             MoveReactionKind.OVERWATCH -> "combat.overwatch.title"
+            MoveReactionKind.COUNTER_BATTERY -> "combat.counter_battery.title"
         }
 
     fun lineKey(
@@ -26,5 +27,8 @@ internal object MoveReactionText {
 
             MoveReactionKind.OVERWATCH ->
                 if (destroyed) "combat.overwatch.destroyed" else "combat.overwatch.damaged"
+
+            MoveReactionKind.COUNTER_BATTERY ->
+                if (destroyed) "combat.counter_battery.destroyed" else "combat.counter_battery.damaged"
         }
 }

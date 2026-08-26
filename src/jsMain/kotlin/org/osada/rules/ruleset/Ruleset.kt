@@ -34,8 +34,17 @@ package org.osada.rules.ruleset
  * terms as schema 4, and every one of the five again defaults to what OSADA already ran. This is
  * also the schema the third built-in profile ([RulesetProfile.OG_FIDELITY_ID]) is written against;
  * see [RulesetDefaults.OG_FIDELITY].
+ *
+ * 6 (2026-08-25) added [RuleKey.COUNTERBATTERY], [RuleKey.EXTENDED_LOS],
+ * [RuleKey.BUILD_AND_REPAIR] and [RuleKey.EQUIPMENT_TOGGLES] -- three of the five Open General
+ * OPTIONAL RULES (manual section 9)
+ * that `docs/og-fidelity-plan.md` section C never listed at all. Additive on the same terms as
+ * schemas 4 and 5, and all three again default to what OSADA already ran, so the 502 shipped
+ * scenarios stay arithmetically unchanged until a profile asks otherwise. The two section-9 rules
+ * still missing after this -- Barrage (9.2) and Triggers (9.10) -- have no key, because neither
+ * mechanic exists; they are named in the profile's own gap list instead.
  */
-const val RULESET_SCHEMA_VERSION = 5
+const val RULESET_SCHEMA_VERSION = 6
 
 /**
  * One configurable rule.
@@ -250,6 +259,75 @@ enum class RuleKey(
      * Call site: `rules/SupplyRules.computeResupplyValue`.
      */
     GROUND_AUTO_SUPPLY("ground_auto_supply", null, 0, 1),
+
+    // ---- Open General optional rules, manual section 9 (schema 6) --------------------------
+    // Three separate keys rather than one "optional rules" switch, on the precedent the four
+    // weather keys set: they are three separate branches with three separate call sites, and OG
+    // itself lists them as three independently selectable scenario options.
+
+    /**
+     * OG 9.4: artillery carrying `Counter Battery` answers enemy artillery that fires on a
+     * friendly unit, once per turn. 0 = off (OSADA today), 1 = `og`.
+     *
+     * 818 shipped records carry the ability, and it had no call site at all before schema 6 --
+     * `docs/og-fidelity-plan.md` section C mis-filed it inside the extended NAVAL set, which is a
+     * different optional rule (9.6) and does not contain it. Call site:
+     * `rules/CounterBatteryFire`, reached from `CombatApplication.resolveCombat`.
+     */
+    COUNTERBATTERY("counterbattery", null, 0, 1),
+
+    /**
+     * OG 9.5: closed terrain cuts line of sight, forests hide ground units from all but adjacent
+     * observers, and forest/city hexes hide from aircraft beyond 2 hexes. 0 = off (OSADA today),
+     * 1 = `og`.
+     *
+     * This is the key B.5 predicted (*"Extended LOS, if ever built, is a third key and not a value
+     * of either"*) -- a third spotting key beside [SPOTTING_MEMORY] and [INSTALLATION_SPOTTING],
+     * never a value of them. It also gives the two decoded-but-unread equipment bits
+     * `Cut LOS` and `Allow LOF` their first reader. Call site: `rules/ExtendedLos`, read by
+     * `SpottingModel` and by `AttackEligibility`'s line-of-fire test.
+     */
+    EXTENDED_LOS("extended_los", null, 0, 1),
+
+    /**
+     * OG 9.3: sappers build bridges, fortifications, airfields, ports and rail stations for
+     * prestige and over several turns, and `Can Blow` units demolish bridges. 0 = off (OSADA
+     * today), 1 = `og`.
+     *
+     * The strongest of the three on the argument section C.1 used to promote minefields: this is
+     * **authored content OSADA discards**, not a hypothetical. `eqp-lxf`'s own `equip.cfg` ships
+     * `build_cost=12,48,60,36,24`, `build_turn=2,3,3,3,2` and `repair_turn=1,2,2,2,1,1`, and LXF
+     * backs four deployed campaigns. 1,298 shipped records carry `Build/Repair` and 5,047 carry
+     * `Can Blow`. Call site: `rules/Engineering`.
+     */
+    BUILD_AND_REPAIR("build_and_repair", null, 0, 1),
+
+    /**
+     * Whether OG's per-record ability TOGGLES decide phased movement and overrun, or the unit's
+     * class alone does. 0 = `class` (OSADA today), 1 = `og_record`.
+     *
+     * **This key exists because §I closed the wrong half of the problem, and a 2026-08-25 review
+     * caught it.** That pass changed `UnitCapabilities.hasPhasedMovement` and `canOverrun` to
+     * `classDefault xor bit` and called the RCN/OVR badge approximations closed. They were not:
+     * both functions were read only by the BADGE and the equipment card. The rules themselves
+     * kept testing the class directly (`GameUnitActions`' phased-movement branch,
+     * `AttackCalculation.resolveOverrunAndExperienceGain`), so a record carrying either bit wore
+     * a badge stating a rule the engine would not apply -- the exact failure §J.4 deleted
+     * `isHeadquarters` to prevent, in two more places.
+     *
+     * **And the fix could not be universal, which is why this is a key rather than a one-line
+     * correction.** Measured over the 56,970 shipped records: reading the toggles would hand
+     * phased movement to **4,998 non-Recon records** and take overrun off **211 Tank records**.
+     * That is not an approximation being made exact, it is the arithmetic of every one of the
+     * 502 shipped scenarios changing at once -- the §5.10 hazard this whole catalogue exists to
+     * keep out of the default profile.
+     *
+     * The badge follows the key rather than the other way round: with it off both helpers report
+     * the class answer, so what a player is shown is what the engine will do in either profile.
+     * Call sites: `UnitCapabilities.hasPhasedMovement` / `canOverrun`, and through them
+     * `GameUnitActions.move` and `AttackCalculation.resolveOverrunAndExperienceGain`.
+     */
+    EQUIPMENT_TOGGLES("equipment_toggles", null, 0, 1),
     ;
 
     /** Editor-only bounds. Never applied to a value that came from content (§2). */
@@ -431,6 +509,13 @@ object RulesetDefaults {
             RuleKey.SPOTTING_MEMORY to 0,
             RuleKey.INSTALLATION_SPOTTING to 0,
             RuleKey.GROUND_AUTO_SUPPLY to 0,
+            // The three schema-6 keys, on the same terms again: OSADA runs none of these three
+            // optional rules today, so off is a description of the shipped game, not a choice.
+            RuleKey.COUNTERBATTERY to 0,
+            RuleKey.EXTENDED_LOS to 0,
+            RuleKey.BUILD_AND_REPAIR to 0,
+            // Class defaults, which is what every shipped scenario has always run on.
+            RuleKey.EQUIPMENT_TOGGLES to 0,
         )
 
     /**
@@ -487,5 +572,13 @@ object RulesetDefaults {
             RuleKey.SPOTTING_MEMORY to 1,
             RuleKey.INSTALLATION_SPOTTING to 1,
             RuleKey.GROUND_AUTO_SUPPLY to 1,
+            // Section 9's optional rules, schema 6. On here for the same reason `minefields` is:
+            // Open General ships them, the efiles OSADA imports configure them, and this is the
+            // one profile whose whole claim is that it runs OG's rules.
+            RuleKey.COUNTERBATTERY to 1,
+            RuleKey.EXTENDED_LOS to 1,
+            RuleKey.BUILD_AND_REPAIR to 1,
+            // OG reads these two off the record, not off the class.
+            RuleKey.EQUIPMENT_TOGGLES to 1,
         )
 }

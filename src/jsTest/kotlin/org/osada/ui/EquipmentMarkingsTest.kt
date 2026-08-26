@@ -4,7 +4,14 @@ import kotlinx.browser.document
 import org.osada.UnitClass
 import org.osada.i18n.installEnglishUiBundleForTests
 import org.osada.model.EquipmentData
+import org.osada.rules.ruleset.ActiveRuleset
+import org.osada.rules.ruleset.RULESET_SCHEMA_VERSION
+import org.osada.rules.ruleset.RuleKey
+import org.osada.rules.ruleset.RulesetDefaults
+import org.osada.rules.ruleset.RulesetResolver
+import org.osada.rules.ruleset.RulesetSource
 import org.w3c.dom.HTMLElement
+import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -14,6 +21,26 @@ class EquipmentMarkingsTest {
     @BeforeTest
     fun setup() {
         installEnglishUiBundleForTests()
+        ActiveRuleset.resetForTest()
+    }
+
+    @AfterTest
+    fun tearDown() {
+        ActiveRuleset.resetForTest()
+    }
+
+    /** Locks `equipment_toggles` for one test. The badge reads the live ruleset, so a test about
+     *  what a badge says has to state which profile it is speaking for. */
+    private fun withEquipmentToggles(value: Int) {
+        ActiveRuleset.set(
+            RulesetResolver.fromEffective(
+                id = "badge-test",
+                name = "Test",
+                source = RulesetSource.CUSTOM,
+                schemaVersion = RULESET_SCHEMA_VERSION,
+                effective = RulesetDefaults.OSADA + mapOf(RuleKey.EQUIPMENT_TOGGLES to value),
+            ),
+        )
     }
 
     @Test
@@ -63,26 +90,86 @@ class EquipmentMarkingsTest {
     }
 
     /**
-     * `Recon Skill` (`attr` bit 10) and `Overrun toggle` (`attrEx` bit 3) are toggles that reverse
-     * the Recon/Tank class default, wired 2026-08-19 — the same shape `Support Fire` already has.
-     * `docs/og-fidelity-plan.md`'s approximations list named the plain class read as each badge's
-     * stand-in for these two OG toggles.
+     * `Recon Skill` (`attr` bit 10) and `Overrun toggle` (`attrEx` bit 3) reverse the Recon/Tank
+     * class default — **but only under `equipment_toggles`**, and this test now says so.
+     *
+     * It used to assert the toggle unconditionally, which is what let a 2026-08-25 review find that
+     * the badge and the rule disagreed: the badge read `classDefault xor bit` while movement and
+     * combat still tested the class, so a record carrying either bit wore a mark the engine would
+     * not honour. Both now read the same function, and that function reads the key — so the honest
+     * assertion is per profile, not absolute. The OFF case is the one the 502 shipped scenarios run.
      */
     @Test
     fun rconAndOvrBadgesFollowTheirToggledClassDefaults() {
         val parent = document.createElement("div") as HTMLElement
+        withEquipmentToggles(1)
 
-        EquipmentMarkings.render(parent, EquipmentData().apply { uclass = UnitClass.RECON.value; attr = RECON_SKILL_ATTR })
+        val recon =
+            EquipmentData().apply {
+                uclass = UnitClass.RECON.value
+                attr = RECON_SKILL_ATTR
+            }
+        EquipmentMarkings.render(parent, recon)
         assertEquals(null, parent.firstElementChild, "Recon Skill REVERSES the Recon default, so no RCN badge")
 
-        EquipmentMarkings.render(parent, EquipmentData().apply { uclass = UnitClass.INFANTRY.value; attr = RECON_SKILL_ATTR })
+        val reconOnInfantry =
+            EquipmentData().apply {
+                uclass = UnitClass.INFANTRY.value
+                attr = RECON_SKILL_ATTR
+            }
+        EquipmentMarkings.render(parent, reconOnInfantry)
         assertEquals("RCN", parent.firstElementChild?.textContent, "the toggle grants it to a non-Recon record")
 
-        EquipmentMarkings.render(parent, EquipmentData().apply { uclass = UnitClass.TANK.value; attrEx = OVERRUN_TOGGLE_ATTR_EX })
+        val tank =
+            EquipmentData().apply {
+                uclass = UnitClass.TANK.value
+                attrEx = OVERRUN_TOGGLE_ATTR_EX
+            }
+        EquipmentMarkings.render(parent, tank)
         assertEquals(null, parent.firstElementChild, "Overrun toggle REVERSES the Tank default, so no OVR badge")
 
-        EquipmentMarkings.render(parent, EquipmentData().apply { uclass = UnitClass.INFANTRY.value; attrEx = OVERRUN_TOGGLE_ATTR_EX })
+        val overrunOnInfantry =
+            EquipmentData().apply {
+                uclass = UnitClass.INFANTRY.value
+                attrEx = OVERRUN_TOGGLE_ATTR_EX
+            }
+        EquipmentMarkings.render(parent, overrunOnInfantry)
         assertEquals("OVR", parent.firstElementChild?.textContent, "the toggle grants it to a non-Tank record")
+    }
+
+    /**
+     * With `equipment_toggles` off — every profile but Open General Fidelity, and therefore every
+     * shipped scenario — the two badges state the CLASS answer, because that is what the engine
+     * will do. The badge is not allowed to be more Open General than the rule behind it.
+     */
+    @Test
+    fun rconAndOvrBadgesStateTheClassAnswerWhenTheKeyIsOff() {
+        val parent = document.createElement("div") as HTMLElement
+        withEquipmentToggles(0)
+
+        val reconCarryingTheBit =
+            EquipmentData().apply {
+                uclass = UnitClass.RECON.value
+                attr = RECON_SKILL_ATTR
+            }
+        EquipmentMarkings.render(parent, reconCarryingTheBit)
+        assertEquals("RCN", parent.firstElementChild?.textContent, "the class decides, so the badge stays")
+
+        val infantryCarryingTheBit =
+            EquipmentData().apply {
+                uclass = UnitClass.INFANTRY.value
+                attr = RECON_SKILL_ATTR
+            }
+        EquipmentMarkings.render(parent, infantryCarryingTheBit)
+        assertEquals(null, parent.firstElementChild, "and the bit grants nothing the engine would honour")
+
+        val tankCarryingTheBit =
+            EquipmentData().apply {
+                uclass = UnitClass.TANK.value
+                attrEx = OVERRUN_TOGGLE_ATTR_EX
+            }
+        EquipmentMarkings.render(parent, tankCarryingTheBit)
+        assertEquals("OVR", parent.firstElementChild?.textContent, "a tank still overruns, so it still says so")
     }
 
     /** OG's `AD Support` (`SpecialEx` 61.5, `attrEx` bit 13) is a GRANT, not a toggle: it

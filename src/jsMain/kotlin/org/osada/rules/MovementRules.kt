@@ -113,13 +113,21 @@ object MovementRules {
         return Equipment.isBridge(bridgeUnit.eqid) || Attachments.has(bridgeUnit, Attachments.SLOT_BRIDGING)
     }
 
-    /** Adds or removes [unit]'s zone of control on its neighbouring hexes. */
+    /**
+     * Adds or removes [unit]'s zone of control on its neighbouring hexes.
+     *
+     * Two kinds of unit project none at all and are skipped here rather than at either reader:
+     * air units (as always), and records carrying OG's `No ZOC` attribute (wired 2026-08-25, see
+     * [UnitCapabilities.projectsZoneOfControl] for why that ability stopped being "not
+     * representable"). Skipping at this one choke point keeps the add and the remove symmetric,
+     * which the hex's reference count depends on.
+     */
     fun setZOCRange(
         map: GameMap,
         unit: GameUnit,
         add: Boolean,
     ) {
-        val skip = UnitPredicates.isAir(unit)
+        val skip = !UnitCapabilities.projectsZoneOfControl(unit)
         val pos = if (skip) null else unit.getPos()
         val side = if (skip) null else unit.player?.side
         if (pos == null || side == null) return
@@ -133,7 +141,16 @@ object MovementRules {
         }
     }
 
-    /** Adds or removes [unit]'s spotting; returns how many enemy units became newly spotted. */
+    /**
+     * Adds or removes [unit]'s spotting; returns how many enemy units became newly spotted.
+     *
+     * Under `extended_los` (OG 9.5 bullet 1) a cell whose line from this unit is cut by mountain,
+     * hill, forest, city or bocage is skipped entirely. Skipping is safe here — and ONLY here —
+     * because the test reads terrain, which is fixed for the scenario: the add and the matching
+     * remove therefore cover the same cells, which is the invariant the per-side reference counts
+     * depend on (`model/GameMapGrid.recomputeSpotting`). `rules/Engineering`, the one thing that
+     * can change terrain mid-scenario, calls that wholesale rebuild for this reason.
+     */
     fun setSpotRange(
         map: GameMap,
         unit: GameUnit,
@@ -149,6 +166,7 @@ object MovementRules {
         cells.forEach { cell ->
             if (cell.row in 0 until map.rows && cell.col in 0 until map.cols) {
                 val hex = map.map?.getOrNull(cell.row)?.getOrNull(cell.col) ?: return@forEach
+                if (!ExtendedLos.hasLineOfSight(map.map, pos.row, pos.col, cell.row, cell.col)) return@forEach
                 if (add && !hex.isSpotted(side)) {
                     val enemy = hex.getUnit(false)
                     if (enemy != null && enemy.player?.side != side) {

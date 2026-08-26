@@ -76,8 +76,43 @@ internal object RulesText {
      */
     fun ogFidelityGaps(): List<String> = OG_FIDELITY_GAP_KEYS.map { I18n.t("rules.og_fidelity.gap.$it") }
 
+    /**
+     * **Audited against Open General's manual section 9 on 2026-08-25, and it was short by five.**
+     *
+     * OG lists ten OPTIONAL RULES. This list named four of them plus the standing AI note, so the
+     * profile shipped without the "partial" qualifier while its own disclaimer under-stated what
+     * was missing — the exact failure the disclaimer exists to prevent. The audit found
+     * `docs/og-fidelity-plan.md` §C had never tracked Barrage (9.2), Build and Repair (9.3),
+     * Counterbattery (9.4), Extended LOS (9.5) or Triggers (9.10) at all.
+     *
+     * Three of those five were then BUILT (schema 6), so they are not on this list: Build and
+     * Repair, Counterbattery and Extended LOS are rules the profile now turns on. What remains is
+     * the two that are genuinely absent, plus one narrowing inside a rule that otherwise ships
+     * whole — OSADA builds four of OG's five facilities and no railroad station, because it has no
+     * rail transport for a station to serve (`rules/Engineering`).
+     *
+     * **`authored_options` was added on review, 2026-08-25**, and it is the subtlest entry here.
+     * The three rules schema 6 added are real Open General mechanics, but OG lets each scenario and
+     * each efile decide what may be built, blown and seen (`build_mask`, `blow_mask`,
+     * `blow_any_terrain`, `TrueDLOF`, `UnitsBlockDLOF`, and the per-scenario Can Build / Can Blow /
+     * Can Repair switches). None of those is imported, so this profile applies ONE set of
+     * engineering and sight rules to content that authored many. Saying so out loud is the
+     * difference between a rule that is Open General's and one that is merely OG-shaped.
+     *
+     * In the order a player meets them rather than the order they would be built.
+     */
     private val OG_FIDELITY_GAP_KEYS =
-        listOf("rail", "air_missions", "carriers", "extended_naval", "ai")
+        listOf(
+            "rail",
+            "stations",
+            "air_missions",
+            "carriers",
+            "extended_naval",
+            "barrage",
+            "authored_options",
+            "triggers",
+            "ai",
+        )
 
     /** The full summary line, including the "unavailable for this equipment file" case, which must
      *  never read as though the player had simply switched it off (§2). */

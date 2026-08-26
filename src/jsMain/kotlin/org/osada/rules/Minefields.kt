@@ -172,10 +172,9 @@ internal object MineAbilities {
      *  the unit already carries `Drop mines`, so an air unit is eligible only with BOTH bits, never
      *  `AirDropMines` alone. */
     fun canDropMines(unit: GameUnit): Boolean {
-        if (!Minefields.enabled()) return false
         val data = unit.unitData(true)
-        if (data.attr and ATTR_MASK_DROP_MINES == 0) return false
-        return !UnitPredicates.isAir(unit) || data.attrEx and ATTR_EX_MASK_AIR_DROP_MINES != 0
+        val laysMines = Minefields.enabled() && data.attr and ATTR_MASK_DROP_MINES != 0
+        return laysMines && (!UnitPredicates.isAir(unit) || data.attrEx and ATTR_EX_MASK_AIR_DROP_MINES != 0)
     }
 
     /** OG's `Clear mines` (`SpecialEx` 60.6, `attrEx` bit 6) — its own bit, independent of

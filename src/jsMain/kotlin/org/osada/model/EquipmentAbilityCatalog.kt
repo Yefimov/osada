@@ -2,6 +2,9 @@
 
 package org.osada.model
 
+import org.osada.rules.CounterBatteryFire
+import org.osada.rules.Engineering
+import org.osada.rules.ExtendedLos
 import org.osada.rules.Minefields
 
 /**
@@ -59,25 +62,18 @@ class EquipmentAbility internal constructor(
     val wired: Boolean,
 )
 
-private const val ATTR_MASK_CAN_BLOW = 2
-private const val ATTR_MASK_DISMOUNT = 2048
 private const val ATTR_MASK_AIR_SUPPORT = 8192
 private const val ATTR_MASK_CARRIER_DEPLOY = 524288
 
-private const val ATTR2_MASK_BUILD_REPAIR = 1
 private const val ATTR2_MASK_DISMOUNT_AFTER_MOVE = 2
 private const val ATTR2_MASK_NO_DIRT_AIRFIELDS = 4
 private const val ATTR2_MASK_ROCKET_BOMBER = 8
-private const val ATTR2_MASK_CUT_LOS = 16
-private const val ATTR2_MASK_ALLOW_LOF = 32
-private const val ATTR2_MASK_NO_ZOC = 64
 private const val ATTR2_MASK_EVADE = 128
 
 private const val ATTR_EX_MASK_NO_LEADER = 1
 private const val ATTR_EX_MASK_NO_AMMO_PENALTY = 16
 private const val ATTR_EX_MASK_NO_NEED_STATION = 128
 private const val ATTR_EX_MASK_TORPEDO_BOMBER = 256
-private const val ATTR_EX_MASK_COUNTER_BATTERY = 512
 private const val ATTR_EX_MASK_PARTIZAN = 1024
 private const val ATTR_EX_MASK_EXPLOIT_SUCCESS = 2048
 private const val ATTR_EX_MASK_SINGLE_FIRE_SUP = 32768
@@ -97,10 +93,18 @@ private val WIRED_ABILITIES: List<AbilityEntry> =
         AbilityEntry({ it.attrEx and ATTR_EX_MASK_CLEAR_MINES != 0 }, "equipment.ability.clear_mines", "CLR"),
         AbilityEntry({ it.attrEx and ATTR_EX_MASK_AIR_DROP_MINES != 0 }, "equipment.ability.air_drop_mines", "AMN"),
         AbilityEntry({ it.attrEx and ATTR_EX_MASK_ALL_WEATHER != 0 }, "equipment.ability.all_weather", "WX"),
-        AbilityEntry({ it.attrEx and ATTR_EX_MASK_LASTING_SUPPRESSION != 0 }, "equipment.ability.lasting_suppression", "LSP"),
+        AbilityEntry(
+            { it.attrEx and ATTR_EX_MASK_LASTING_SUPPRESSION != 0 },
+            "equipment.ability.lasting_suppression",
+            "LSP",
+        ),
         AbilityEntry({ it.attrEx and ATTR_EX_MASK_NO_INTERCEPT_AIR != 0 }, "equipment.ability.no_intercept_air", "NIA"),
         AbilityEntry({ it.attrEx and ATTR_EX_MASK_ANTI_SUB != 0 }, "equipment.ability.anti_sub", "ASW"),
-        AbilityEntry({ it.attr and ATTR_MASK_IGNORES_ENTRENCHMENT != 0 }, "equipment.ability.ignores_entrenchment", "ENG"),
+        AbilityEntry(
+            { it.attr and ATTR_MASK_IGNORES_ENTRENCHMENT != 0 },
+            "equipment.ability.ignores_entrenchment",
+            "ENG",
+        ),
         AbilityEntry({ it.attr and ATTR_MASK_BRIDGE != 0 }, "equipment.ability.bridge", "BRG"),
         AbilityEntry({ it.attr and ATTR_MASK_CANNOT_ATTACK_SOFT != 0 }, "equipment.ability.cannot_attack_soft", "-SA"),
         AbilityEntry({ it.attr and ATTR_MASK_CANNOT_ATTACK_HARD != 0 }, "equipment.ability.cannot_attack_hard", "-HA"),
@@ -113,6 +117,20 @@ private val WIRED_ABILITIES: List<AbilityEntry> =
         // documentation in EquipmentCombatEligibility.kt for what each now actually does.
         AbilityEntry({ it.attr and ATTR_MASK_MOUNTAIN != 0 }, "equipment.ability.mountain", "MTN"),
         AbilityEntry({ it.attr and ATTR_MASK_MARINE != 0 }, "equipment.ability.marine", "MAR"),
+        // Wired 2026-08-25 with OG's Dismount toggle and its three optional rules -- Extended
+        // LOS (9.5), Counterbattery (9.4) and Build and Repair (9.3). Every one of these seven
+        // was a muted grey badge until then; four of them are gated on a ruleset key and are
+        // hidden outright when it is off, exactly as the three minefield abilities are.
+        AbilityEntry({ it.attr and ATTR_MASK_DISMOUNT != 0 }, "equipment.ability.dismount", "DSM"),
+        AbilityEntry({ it.attr2 and ATTR2_MASK_NO_ZOC != 0 }, "equipment.ability.no_zoc", "-ZC"),
+        AbilityEntry({ it.attr and ATTR_MASK_CAN_BLOW != 0 }, "equipment.ability.can_blow", "BLW"),
+        AbilityEntry({ it.attr2 and ATTR2_MASK_BUILD_REPAIR != 0 }, "equipment.ability.build_repair", "SAP"),
+        AbilityEntry({ it.attr2 and ATTR2_MASK_CUT_LOS != 0 }, "equipment.ability.cut_los", "LOS"),
+        AbilityEntry(
+            { it.attrEx and ATTR_EX_MASK_COUNTER_BATTERY != 0 },
+            "equipment.ability.counter_battery",
+            "CBT",
+        ),
     )
 
 /**
@@ -123,23 +141,27 @@ private val WIRED_ABILITIES: List<AbilityEntry> =
  */
 private val DESCRIPTIVE_ABILITIES: List<AbilityEntry> =
     listOf(
-        AbilityEntry({ it.attr and ATTR_MASK_CAN_BLOW != 0 }, "equipment.ability.can_blow", "BLW"),
-        AbilityEntry({ it.attr and ATTR_MASK_DISMOUNT != 0 }, "equipment.ability.dismount", "DSM"),
         AbilityEntry({ it.attr and ATTR_MASK_AIR_SUPPORT != 0 }, "equipment.ability.air_support", "ASP"),
         AbilityEntry({ it.attr and ATTR_MASK_CARRIER_DEPLOY != 0 }, "equipment.ability.carrier_deploy", "CVD"),
-        AbilityEntry({ it.attr2 and ATTR2_MASK_BUILD_REPAIR != 0 }, "equipment.ability.build_repair", "SAP"),
-        AbilityEntry({ it.attr2 and ATTR2_MASK_DISMOUNT_AFTER_MOVE != 0 }, "equipment.ability.dismount_after_move", "DAM"),
+        AbilityEntry(
+            { it.attr2 and ATTR2_MASK_DISMOUNT_AFTER_MOVE != 0 },
+            "equipment.ability.dismount_after_move",
+            "DAM",
+        ),
         AbilityEntry({ it.attr2 and ATTR2_MASK_NO_DIRT_AIRFIELDS != 0 }, "equipment.ability.no_dirt_airfields", "-DA"),
         AbilityEntry({ it.attr2 and ATTR2_MASK_ROCKET_BOMBER != 0 }, "equipment.ability.rocket_bomber", "RKT"),
-        AbilityEntry({ it.attr2 and ATTR2_MASK_CUT_LOS != 0 }, "equipment.ability.cut_los", "LOS"),
-        AbilityEntry({ it.attr2 and ATTR2_MASK_ALLOW_LOF != 0 }, "equipment.ability.allow_lof", "LOF"),
-        AbilityEntry({ it.attr2 and ATTR2_MASK_NO_ZOC != 0 }, "equipment.ability.no_zoc", "-ZC"),
         AbilityEntry({ it.attr2 and ATTR2_MASK_EVADE != 0 }, "equipment.ability.evade", "EVD"),
+        // Demoted back from WIRED on review, 2026-08-25. `Allow LOF` says fire is NOT blocked by
+        // this unit -- which is already true of every unit, because OSADA has no rule that makes
+        // an ordinary unit block line of fire (OG gates that on a `UnitsBlockDLOF` scenario option
+        // the importer does not carry). `ExtendedLos.cutsLineOfSight` still honours the bit as an
+        // override of `Cut LOS` on the same record, but a record carrying `Allow LOF` ALONE gets
+        // no behaviour from it, so a brass badge overstated it.
+        AbilityEntry({ it.attr2 and ATTR2_MASK_ALLOW_LOF != 0 }, "equipment.ability.allow_lof", "LOF"),
         AbilityEntry({ it.attrEx and ATTR_EX_MASK_NO_LEADER != 0 }, "equipment.ability.no_leader", "-LD"),
         AbilityEntry({ it.attrEx and ATTR_EX_MASK_NO_AMMO_PENALTY != 0 }, "equipment.ability.no_ammo_penalty", "-AP"),
         AbilityEntry({ it.attrEx and ATTR_EX_MASK_NO_NEED_STATION != 0 }, "equipment.ability.no_need_station", "RAI"),
         AbilityEntry({ it.attrEx and ATTR_EX_MASK_TORPEDO_BOMBER != 0 }, "equipment.ability.torpedo_bomber", "TRP"),
-        AbilityEntry({ it.attrEx and ATTR_EX_MASK_COUNTER_BATTERY != 0 }, "equipment.ability.counter_battery", "CBT"),
         AbilityEntry({ it.attrEx and ATTR_EX_MASK_PARTIZAN != 0 }, "equipment.ability.partizan", "PTZ"),
         AbilityEntry({ it.attrEx and ATTR_EX_MASK_EXPLOIT_SUCCESS != 0 }, "equipment.ability.exploit_success", "EXP"),
         AbilityEntry({ it.attrEx and ATTR_EX_MASK_SINGLE_FIRE_SUP != 0 }, "equipment.ability.single_fire_sup", "1SF"),
@@ -150,33 +172,65 @@ private val DESCRIPTIVE_ABILITIES: List<AbilityEntry> =
     )
 
 /**
- * i18n keys of every ability [this] carries — the three minefield ones only when [minefieldsEnabled].
+ * The ruleset switches that decide whether an ability does anything at all.
  *
- * Wired abilities first, then descriptive-only ones, both in the table order above. Empty when the
- * record carries none of them (most scenario filler, and every PM-stock `eqp-adlerkorps`/
+ * Defaults read the live ruleset, so ordinary callers pass nothing. Tests pass the flags they
+ * mean instead, which is what keeps the catalog testable with no resolved ruleset -- the
+ * constraint the minefield gate was written to satisfy (§K.4) and the reason this grew into a
+ * type rather than a fourth boolean parameter.
+ */
+class AbilityGates(
+    val minefields: Boolean = Minefields.enabled(),
+    val engineering: Boolean = Engineering.enabled(),
+    val counterBattery: Boolean = CounterBatteryFire.enabled(),
+    val extendedLos: Boolean = ExtendedLos.enabled(),
+)
+
+/**
+ * i18n keys of every ability [this] carries, under [gates].
+ *
+ * Wired abilities first, then descriptive-only ones, both in the table order above. Empty when
+ * the record carries none of them (most scenario filler, and every PM-stock `eqp-adlerkorps`/
  * `eqp-pacific` record, which has no OG source to import `attr2`/`attrEx` from at all —
  * `docs/og-fidelity-plan.md` §J.3).
  */
-fun EquipmentData.abilityCatalogKeys(minefieldsEnabled: Boolean = Minefields.enabled()): List<String> =
-    abilityCatalog(minefieldsEnabled).map { it.key }
+fun EquipmentData.abilityCatalogKeys(gates: AbilityGates = AbilityGates()): List<String> =
+    abilityCatalog(gates).map { it.key }
 
 /**
  * The same list as [abilityCatalogKeys], carrying each ability's badge code and wired/descriptive
  * tier as well — what [org.osada.ui.EquipmentMarkings] renders the extended marks row from.
  */
-fun EquipmentData.abilityCatalog(minefieldsEnabled: Boolean = Minefields.enabled()): List<EquipmentAbility> {
+fun EquipmentData.abilityCatalog(gates: AbilityGates = AbilityGates()): List<EquipmentAbility> {
     val data = this
     return (WIRED_ABILITIES.map { it to true } + DESCRIPTIVE_ABILITIES.map { it to false })
-        .filter { (entry, _) -> entry.key !in MINEFIELD_ABILITY_KEYS || minefieldsEnabled }
+        .filter { (entry, _) -> gateFor(entry.key)?.invoke(gates) ?: true }
         .filter { (entry, _) -> entry.test(data) }
         .map { (entry, wired) -> EquipmentAbility(entry.key, entry.badge, wired) }
 }
 
-/** Abilities that do nothing at all unless `RuleKey.MINEFIELDS` is on — hidden entirely when it is
- *  off, rather than described as a capability the player can never use. See this file's header. */
-private val MINEFIELD_ABILITY_KEYS =
-    setOf(
+/**
+ * The switch an ability depends on, or null when it always applies.
+ *
+ * An ability whose rule is off does nothing whatsoever, so it is hidden entirely rather than
+ * listed as a capability the player can never use — the ruling §K.4 made for the minefield three
+ * (*"Don't show it for rulesets that are not OG (I mean, that don't use mines!)"*), applied to
+ * every ability that has since gained a key of its own.
+ */
+private fun gateFor(key: String): ((AbilityGates) -> Boolean)? =
+    when (key) {
         "equipment.ability.drop_mines",
         "equipment.ability.clear_mines",
         "equipment.ability.air_drop_mines",
-    )
+        -> AbilityGates::minefields
+
+        "equipment.ability.can_blow",
+        "equipment.ability.build_repair",
+        -> AbilityGates::engineering
+
+        "equipment.ability.counter_battery" -> AbilityGates::counterBattery
+
+        "equipment.ability.cut_los" -> AbilityGates::extendedLos
+
+        else -> null
+    }

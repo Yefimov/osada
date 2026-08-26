@@ -8,6 +8,7 @@ import org.osada.handleMoveVictory
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
 import org.osada.model.attackUnit
+import org.osada.model.beginEngineering
 import org.osada.model.buyUnit
 import org.osada.model.clearMinefield
 import org.osada.model.deployPlayerUnit
@@ -24,6 +25,8 @@ import org.osada.model.unmountUnit
 import org.osada.model.upgradeUnit
 import org.osada.multiplayer.model.MultiplayerSession
 import org.osada.multiplayer.protocol.MultiplayerErrorCode
+import org.osada.rules.Engineering
+import org.osada.rules.EngineeringWork
 import org.osada.rules.Minefields
 import org.osada.rules.SupplyRules
 import org.osada.rules.UnitPredicates
@@ -91,6 +94,13 @@ class OsadaGameCommandValidator(
                 // them with no action chip ever having been drawn. Both return NOT_ALLOWED rather
                 // than mutating anything, so a rejected attempt costs no random draw either.
                 is LayMines, is ClearMines -> unit != null && Minefields.enabled()
+                // Same reasoning, plus one of its own: the job NAME is validated here rather than
+                // in `beginEngineering`, because a name this build does not know is a protocol
+                // mismatch and must be refused outright, not silently treated as "no work".
+                is BeginEngineering ->
+                    unit != null &&
+                        Engineering.enabled() &&
+                        EngineeringWork.entries.any { it.name == command.work }
                 is DeployUnit ->
                     map
                         .getPlayer(command.actorPlayerId)
@@ -142,6 +152,12 @@ class OsadaGameCommandApplier(
             is MountUnit -> map.mountUnit(requireUnit(map, command.unitId))
             is UnmountUnit -> map.unmountUnit(requireUnit(map, command.unitId))
             is LayMines -> map.layMinefield(requireUnit(map, command.unitId))
+            is BeginEngineering ->
+                map.beginEngineering(
+                    requireUnit(map, command.unitId),
+                    EngineeringWork.valueOf(command.work),
+                )
+
             is ClearMines -> map.clearMinefield(requireUnit(map, command.unitId))
             is DeployUnit -> {
                 val player = map.getPlayer(command.actorPlayerId)
@@ -220,6 +236,7 @@ private fun GameCommand.unitIdOrNull(): Int? =
         is UnmountUnit -> unitId
         is LayMines -> unitId
         is ClearMines -> unitId
+        is BeginEngineering -> unitId
         is DeployUnit -> unitId
         is UndeployUnit -> unitId
         is UpgradeUnit -> unitId

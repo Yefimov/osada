@@ -23,7 +23,11 @@ class EquipmentAbilityCatalogTest {
         val destroyer = EquipmentData().apply { uclass = UnitClass.DESTROYER.value }
         val tacBomber = EquipmentData().apply { uclass = UnitClass.TACTICAL_BOMBER.value }
         val infantry = EquipmentData().apply { uclass = UnitClass.INFANTRY.value }
-        val submarine = EquipmentData().apply { uclass = UnitClass.SUBMARINE.value; target = UnitType.SEA.value }
+        val submarine =
+            EquipmentData().apply {
+                uclass = UnitClass.SUBMARINE.value
+                target = UnitType.SEA.value
+            }
 
         Equipment.resetEquipment()
         Equipment.putEquipment(1, destroyer)
@@ -40,8 +44,16 @@ class EquipmentAbilityCatalogTest {
      *  submarines" -- a plain grant, the same shape `CAN Air Atk` already has for aircraft. */
     @Test
     fun aswGrantsSubmarineTargetingOutsideTheDefaultClasses() {
-        val cruiser = EquipmentData().apply { uclass = UnitClass.CRUISER.value; attrEx = 4096 } // ASW
-        val submarine = EquipmentData().apply { uclass = UnitClass.SUBMARINE.value; target = UnitType.SEA.value }
+        val cruiser =
+            EquipmentData().apply {
+                uclass = UnitClass.CRUISER.value
+                attrEx = 4096
+            } // ASW
+        val submarine =
+            EquipmentData().apply {
+                uclass = UnitClass.SUBMARINE.value
+                target = UnitType.SEA.value
+            }
 
         Equipment.resetEquipment()
         Equipment.putEquipment(1, cruiser)
@@ -71,11 +83,19 @@ class EquipmentAbilityCatalogTest {
         assertEquals(1, defender.lastingHits, "the bit alone must produce a lasting hit")
     }
 
-    // ---- The purchase-window catalog itself -------------------------------------------------------
+    // ---- The purchase-window catalog itself ---------------------------------------------------
+
+    /** Every ruleset-gated ability visible, so a test about BITS is not also a test about keys. */
+    private fun allGatesOn() =
+        AbilityGates(minefields = true, engineering = true, counterBattery = true, extendedLos = true)
+
+    /** The shipped default: none of the four optional rules on. */
+    private fun allGatesOff() =
+        AbilityGates(minefields = false, engineering = false, counterBattery = false, extendedLos = false)
 
     @Test
     fun aBareRecordCarriesNoAbilityLines() {
-        assertEquals(emptyList(), EquipmentData().abilityCatalogKeys(minefieldsEnabled = true))
+        assertEquals(emptyList(), EquipmentData().abilityCatalogKeys(allGatesOn()))
     }
 
     /**
@@ -93,10 +113,10 @@ class EquipmentAbilityCatalogTest {
             }
         assertEquals(
             listOf("equipment.ability.bridge"),
-            sapper.abilityCatalogKeys(minefieldsEnabled = false),
+            sapper.abilityCatalogKeys(allGatesOff()),
             "with minefields off only the abilities that still do something are listed",
         )
-        val withMines = sapper.abilityCatalogKeys(minefieldsEnabled = true)
+        val withMines = sapper.abilityCatalogKeys(allGatesOn())
         assertTrue("equipment.ability.drop_mines" in withMines)
         assertTrue("equipment.ability.clear_mines" in withMines)
         assertTrue("equipment.ability.bridge" in withMines, "the unrelated ability is unaffected")
@@ -112,7 +132,7 @@ class EquipmentAbilityCatalogTest {
                     attr = -1
                     attr2 = -1
                     attrEx = -1
-                }.abilityCatalog(minefieldsEnabled = true)
+                }.abilityCatalog(allGatesOn())
         val badges = all.map { it.badge }
         assertEquals(badges.toSet().size, badges.size, "badge codes must be unique: $badges")
         assertTrue(badges.all { it.isNotBlank() && it.length <= 3 }, "badges stay short: $badges")
@@ -126,7 +146,7 @@ class EquipmentAbilityCatalogTest {
                 attr = ATTR_MASK_DROP_MINES or ATTR_MASK_MECHANIZED or ATTR_MASK_NO_SURRENDER
                 attrEx = ATTR_EX_MASK_CLEAR_MINES or ATTR_EX_MASK_ALL_WEATHER
             }
-        val keys = data.abilityCatalogKeys(minefieldsEnabled = true)
+        val keys = data.abilityCatalogKeys(allGatesOn())
         assertEquals(keys.toSet().size, keys.size, "no ability should be listed twice")
         assertTrue("equipment.ability.drop_mines" in keys)
         assertTrue("equipment.ability.mechanized" in keys)
@@ -141,6 +161,6 @@ class EquipmentAbilityCatalogTest {
     @Test
     fun jetStealthIsCatalogedAsDescriptiveOnly() {
         val data = EquipmentData().apply { attrEx = 524288 } // Jet (Stealth)
-        assertEquals(listOf("equipment.ability.jet_stealth"), data.abilityCatalogKeys(minefieldsEnabled = true))
+        assertEquals(listOf("equipment.ability.jet_stealth"), data.abilityCatalogKeys(allGatesOn()))
     }
 }

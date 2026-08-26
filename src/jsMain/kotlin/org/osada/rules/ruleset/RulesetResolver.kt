@@ -67,10 +67,19 @@ object RulesetResolver {
      * Deliberately unclamped: `flak_range = 4` in LXF is the author's air war, not an out-of-range
      * value to be corrected (§2).
      */
-    fun authorsVisionRule(rule: RuleKey): ResolvedRule {
-        if (rule == RuleKey.ATTACHMENTS) return authorsVisionAttachments()
-        val efileKey = rule.efileKey
-        if (efileKey == null) return ownedRule(rule)
+    fun authorsVisionRule(rule: RuleKey): ResolvedRule =
+        when {
+            rule == RuleKey.ATTACHMENTS -> authorsVisionAttachments()
+            rule.efileKey == null -> ownedRule(rule)
+            else -> efileBackedRule(rule, rule.efileKey)
+        }
+
+    /** The `equip.cfg`-backed half of [authorsVisionRule], split out to keep that one a plain
+     *  three-way choice rather than a ladder of early returns. */
+    private fun efileBackedRule(
+        rule: RuleKey,
+        efileKey: String,
+    ): ResolvedRule {
         val value = EfileConfig.intKey(efileKey, RulesetDefaults.OSADA.getValue(rule))
         val provenance =
             if (EfileConfig.hasIntKey(efileKey)) RuleProvenance.EFILE_EXPLICIT else RuleProvenance.EFILE_DEFAULT

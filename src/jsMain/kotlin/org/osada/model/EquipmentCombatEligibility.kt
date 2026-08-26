@@ -110,9 +110,11 @@ package org.osada.model
  * bitmask read, it is new combat/movement behaviour). The full bit->name table (source byte and
  * bit, with how each was verified) is `tools/og-import/OG_ABILITY_AUDIT.md` section 7.1.1; the
  * binary layout it is read from is documented in `tools/og-import/xeqp_to_csv.py`.
+ *
+ * These are `internal` rather than `private` because `EquipmentAbilityCatalog.kt`'s ability list
+ * reads the same constants, so a unit's catalog line and its actual combat-eligibility check can
+ * never name different bits.
  */
-// internal (not private): also read by EquipmentAbilityCatalog.kt's purchase-window ability list,
-// so a unit's catalog line and its actual combat-eligibility check can never name different bits.
 internal const val ATTR_MASK_IGNORES_ENTRENCHMENT = 4
 internal const val ATTR_MASK_BRIDGE = 8
 internal const val ATTR_MASK_CANNOT_ATTACK_SOFT = 16
@@ -126,9 +128,14 @@ internal const val ATTR_MASK_CAN_AIR_ATK = 32768
  *
  * Fire support is on by default for Artillery; this bit flips whichever way the class defaults. See
  * `UnitCapabilities.hasSupportFire` for the evidence (the surviving toggles are all rare on the
- * class they default to; `Recon Skill` is on 10 of 2,880 Recon records). Three of OG's toggles are in
- * range of our data — bit 10 `Recon Skill`, bit 11 `Dismount`, bit 12 `Support Fire` — and **only
- * bit 12 is read as a toggle today**. Do not read either of the others as a plain "has ability" flag.
+ * class they default to; `Recon Skill` is on 10 of 2,880 Recon records).
+ *
+ * **The three attributes OG's own string template renders as a PAIR of opposite labels are the
+ * three toggles, and all three are read as toggles now** (the last, `Dismount`, was wired
+ * 2026-08-25): `Support Fire` (845/846) here, `Overrun toggle` ([ATTR_EX_MASK_OVERRUN_TOGGLE]) and
+ * `Dismount` (843/844, [ATTR_MASK_DISMOUNT]). `Recon Skill` ([ATTR_MASK_RECON_SKILL]) is read the
+ * same `classDefault xor bit` way on `OG_ABILITY_AUDIT.md` §2's wording, but it is NOT one of the
+ * paired three — do not cite it as the third when counting them.
  *
  * **Bit 0 was `Lasting Sup.` here until 2026-08-18 and is not.** A controlled OpenSuite staircase on
  * `E:05242 Train - RTP` (25 saves, one checkbox each, every step moving exactly one bit) put
@@ -218,6 +225,79 @@ internal const val ATTR_MASK_MOUNTAIN = 512
  */
 internal const val ATTR_MASK_MARINE = 4194304
 
+/**
+ * OG's `Dismount`, bit 11 — a **TOGGLE that reverses the class default**, the third of the three
+ * and the last to be wired (2026-08-25).
+ *
+ * Mounted infantry dismounts when attacked and fights with its own stats instead of its
+ * transport's; that is on by default for Infantry, and this bit flips whichever way the class
+ * defaults. The toggle reading is not inferred — OG's own localisation template renders this one
+ * attribute as two opposite labels, line 843 `NO dismount when attacked` and line 844
+ * `Dismount if attacked`, exactly as it does for [ATTR_MASK_SUPPORT_FIRE] (845/846) and
+ * [ATTR_EX_MASK_OVERRUN_TOGGLE] (872/873).
+ *
+ * 2,628 of the 56,970 shipped records carry it. Until this was wired, `AttackCalculation` gave
+ * dismount to **every** mounted infantry record unconditionally and the bit drew a grey badge that
+ * meant nothing — the exact shape of approximation §I closed for `Recon Skill`, `Overrun` and
+ * `AD Support`. See [org.osada.rules.UnitCapabilities.dismountsWhenAttacked].
+ */
+internal const val ATTR_MASK_DISMOUNT = 2048
+
+/**
+ * OG's `Can Blow`, bit 1 — the unit can demolish a bridge it stands on, and (where the efile sets
+ * `blow_any_terrain`) destroy the hex's terrain feature outright. OG manual §9.3.1 / §9.3.7.
+ *
+ * WIRED 2026-08-25 behind `RuleKey.BUILD_AND_REPAIR`. 5,047 shipped records carry it. See
+ * [org.osada.rules.Engineering].
+ */
+internal const val ATTR_MASK_CAN_BLOW = 2
+
+/**
+ * OG's `Build/Repair` (`Special4` bit 0, `attr2` bit 0) — the Sapper ability. The unit can build a
+ * bridge, fortification, airfield, port or railroad station on a qualifying hex, and repair a
+ * destroyed one. OG manual §9.3.2-§9.3.6 and §9.3.8.
+ *
+ * WIRED 2026-08-25 behind `RuleKey.BUILD_AND_REPAIR`. 1,298 shipped records carry it. See
+ * [org.osada.rules.Engineering].
+ */
+internal const val ATTR2_MASK_BUILD_REPAIR = 1
+
+/**
+ * OG's `Cut LOS` (`Special4` bit 4, `attr2` bit 4) — the unit blocks line of sight for BOTH sides,
+ * the way a forest or a city hex does. Read only under `RuleKey.EXTENDED_LOS`; 252 shipped records
+ * carry it.
+ */
+internal const val ATTR2_MASK_CUT_LOS = 16
+
+/**
+ * OG's `Allow LOF` (`Special4` bit 5, `attr2` bit 5) — the unit does NOT block an enemy's line of
+ * fire, so ranged fire passes through the hex it occupies. The counterpart of [ATTR2_MASK_CUT_LOS],
+ * and likewise read only under `RuleKey.EXTENDED_LOS`. 561 shipped records carry it.
+ */
+internal const val ATTR2_MASK_ALLOW_LOF = 32
+
+/**
+ * OG's `No ZOC` (`Special4` bit 6, `attr2` bit 6) — the unit projects no Zone of Control at all,
+ * so an enemy moving past it is neither stopped nor slowed. WIRED 2026-08-25.
+ *
+ * `OG_ABILITY_AUDIT.md` recorded this as *"not representable"* on the grounds that `setZOCRange`
+ * gives every non-air unit a full ZOC with no opt-out. **That ruling is superseded**: ZOC is now
+ * asked per unit in [org.osada.rules.UnitCapabilities.projectsZoneOfControl], which the places
+ * that build or test a ZOC funnel through. 609 shipped records carry it.
+ */
+internal const val ATTR2_MASK_NO_ZOC = 64
+
+/**
+ * OG's `Counter Battery` (`SpecialEx` 61.1, `attrEx` bit 9) — artillery that answers enemy
+ * artillery firing on a friendly unit, once per turn. OG manual §9.4, an optional rule in its own
+ * right (it is NOT part of §9.6's extended naval set, where an earlier draft of
+ * `docs/og-fidelity-plan.md` §C filed it).
+ *
+ * WIRED 2026-08-25 behind `RuleKey.COUNTERBATTERY`; 818 shipped records carry it. See
+ * [org.osada.rules.CounterBatteryFire].
+ */
+internal const val ATTR_EX_MASK_COUNTER_BATTERY = 512
+
 /** Whether this equipment is mountain-trained — see [ATTR_MASK_MOUNTAIN]. */
 fun EquipmentData.isMountainTrained(): Boolean = attr and ATTR_MASK_MOUNTAIN != 0
 
@@ -225,10 +305,12 @@ fun EquipmentData.isMountainTrained(): Boolean = attr and ATTR_MASK_MOUNTAIN != 
 fun EquipmentData.landsReadyFromTransport(): Boolean = attr and ATTR_MASK_MARINE != 0
 
 /**
- * `attrEx` masks for the five `SpecialEx` abilities wired into gameplay so far (2026-08-19). See
- * this file's header for the complete bit table, including the ones below that are NOT wired.
+ * OG's `Clear mines`, `SpecialEx` bit 60.6 (`attrEx` bit 6). See [org.osada.rules.MineAbilities].
+ *
+ * This constant opens the block of `attrEx` masks for the `SpecialEx` abilities wired into
+ * gameplay. See this file's header for the complete bit table, including the ones that are NOT
+ * wired and live only in `EquipmentAbilityCatalog.kt`.
  */
-/** OG's `Clear mines`, `SpecialEx` bit 60.6 (`attrEx` bit 6). See [org.osada.rules.MineAbilities]. */
 internal const val ATTR_EX_MASK_CLEAR_MINES = 64
 
 /**

@@ -2,10 +2,10 @@ package org.osada.model
 
 import org.osada.CombatLog
 import org.osada.LeaderType
-import org.osada.UnitClass
 import org.osada.addObjectiveCapture
 import org.osada.hero.HeroCampaign
 import org.osada.prestigeGains
+import org.osada.rules.CounterBatteryFire
 import org.osada.rules.GameRules
 import org.osada.rules.UnitCapabilities
 import org.osada.rules.calculateAttackResults
@@ -19,7 +19,13 @@ import kotlin.js.json
  * hex capture, and unit retreat. Extracted from the former [GameMap] god-class (SRP).
  *
  * All mutations flow through the [GameMap] facade so the exported surface is unchanged.
+ *
+ * `TooManyFunctions` is suppressed because every function here is one NAMED STEP of
+ * [resolveCombat], and that sequence -- facing, dismount, overrun, damage, counterbattery,
+ * scores, leaders -- is the readable statement of what an attack does. Splitting it to satisfy
+ * a count would put half an attack in another file.
  */
+@Suppress("TooManyFunctions")
 internal class CombatApplication(
     private val gameMap: GameMap,
 ) {
@@ -30,6 +36,9 @@ internal class CombatApplication(
         isOverrun: Boolean = false,
     ): CombatResults {
         gameMap.undoState.invalidate(attacker, UndoInvalidation.COMBAT)
+        // Cleared here rather than after reporting, so a combat that draws no counterbattery can
+        // never republish the previous combat's events.
+        gameMap.lastCounterBattery = emptyList()
         val from = attacker.getPos()
         val to = defender.getPos()
         return if (from != null && to != null) {
@@ -56,10 +65,32 @@ internal class CombatApplication(
         unmountDefenderIfNeeded(defender)
         if (isOverrun) applyOverrun(attacker, defender, combatResult)
         applyCombatDamage(attacker, defender, combatResult, supportFire, isOverrun)
+        resolveCounterBattery(attacker, defender, supportFire, isOverrun)
         updateCombatScores(attacker, defender, combatResult)
         generateCombatLeaders(attacker, defender, combatResult)
         CombatLog.addCombatEnd(attacker, defender, logId, supportFire)
         return combatResult
+    }
+
+    /**
+     * OG 9.4: enemy batteries in range answer artillery that has just fired on one of their own.
+     *
+     * Runs AFTER the exchange is applied, so a battery that the attack itself destroyed does not
+     * answer from the grave, and so the counterbattery result is computed against the attacker's
+     * real post-combat strength. Deliberately skipped for support fire and for an overrun: OG's
+     * sentence is about an artillery unit *attacking*, and both of those are something else. See
+     * [org.osada.rules.CounterBatteryFire] for why the narrowing also matters to multiplayer.
+     */
+    private fun resolveCounterBattery(
+        attacker: GameUnit,
+        defender: GameUnit,
+        supportFire: Boolean,
+        isOverrun: Boolean,
+    ) {
+        if (supportFire || isOverrun) return
+        val responders = CounterBatteryFire.respondersTo(gameMap, attacker, defender)
+        if (responders.isEmpty()) return
+        gameMap.lastCounterBattery = CounterBatteryFire.applyCounterBattery(gameMap, attacker, responders)
     }
 
     private fun applyCombatFacing(
@@ -76,10 +107,13 @@ internal class CombatApplication(
         }
     }
 
+    /** The same test `AttackCalculation.resolveCombatContext` uses to swap in the passengers'
+     *  own statistics, so the unit that FIGHTS dismounted is exactly the unit that IS dismounted.
+     *  Both read OG's `Dismount` toggle rather than the bare Infantry class (wired 2026-08-25). */
     private fun unmountDefenderIfNeeded(defender: GameUnit) {
         if (defender.isMounted &&
             !defender.isSurprised &&
-            defender.unitData(true).uclass == UnitClass.INFANTRY.value
+            UnitCapabilities.dismountsWhenAttacked(defender.unitData(true))
         ) {
             gameMap.unmountUnitHandler(defender)
         }

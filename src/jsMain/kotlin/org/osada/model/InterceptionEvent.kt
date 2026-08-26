@@ -36,4 +36,15 @@ enum class MoveReactionKind {
 
     /** Opportunity fire by an `Overwatch` commander (`rules/OverwatchFire`). */
     OVERWATCH,
+
+    /**
+     * A battery answering enemy artillery that fired on a friendly unit (`rules/CounterBatteryFire`,
+     * OG manual 9.4).
+     *
+     * The odd one out in this enum's own name: counterbattery answers an ATTACK, not a move. It
+     * belongs here anyway, because the vocabulary exists for the player-facing problem rather than
+     * for the trigger -- a formation that arrives weaker from a combat nobody watched needs the
+     * same banner and the same HUD line whichever of the three produced it.
+     */
+    COUNTER_BATTERY,
 }

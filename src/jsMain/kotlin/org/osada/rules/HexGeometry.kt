@@ -34,6 +34,81 @@ object HexGeometry {
         return if (dx > dy) ((dx - dy) / 2 + dy) else dy
     }
 
+    /**
+     * The hexes a straight line from (`row1`,`col1`) to (`row2`,`col2`) passes through, ENDPOINTS
+     * EXCLUDED — i.e. exactly what could stand between an observer and what it is looking at.
+     *
+     * Empty for a hex looking at itself or at a neighbour, so a caller testing line of sight over
+     * distance 1 always gets "clear" without a special case.
+     *
+     * Done in cube coordinates, because this grid's own [distance] is a doubled-height metric and
+     * interpolating in doubled coordinates does not give a straight line. The conversion is fixed
+     * by [distance]'s own arithmetic: it forms `2*row + (col and 1)`, which IS the doubled row, so
+     * `q = col` and `r = (doubledRow - col) / 2` is the only cube mapping consistent with the
+     * distances the rest of the engine measures.
+     *
+     * The half-hex nudge on the interpolation is the standard remedy for a line that runs exactly
+     * along a hex edge: without it the rounding picks a side arbitrarily, and "can A see B" would
+     * not always equal "can B see A". With it the two directions agree, which matters because
+     * spotting and fire are both asked from either end.
+     */
+    fun lineBetween(
+        row1: Int,
+        col1: Int,
+        row2: Int,
+        col2: Int,
+    ): List<Cell> {
+        val steps = distance(row1, col1, row2, col2)
+        if (steps < 2) return emptyList()
+        val (q1, r1) = toCube(row1, col1)
+        val (q2, r2) = toCube(row2, col2)
+        val cells = ArrayList<Cell>(steps - 1)
+        for (step in 1 until steps) {
+            val t = step.toDouble() / steps
+            val q = q1 + (q2 - q1) * t + CUBE_NUDGE
+            val r = r1 + (r2 - r1) * t + CUBE_NUDGE
+            cells.add(fromCube(cubeRound(q, r)))
+        }
+        return cells
+    }
+
+    /** Nudges the interpolated point off any exact hex boundary; see [lineBetween]. */
+    private const val CUBE_NUDGE = 1e-6
+
+    private fun toCube(
+        row: Int,
+        col: Int,
+    ): Pair<Int, Int> {
+        val doubledRow = 2 * row + (col and 1)
+        return col to (doubledRow - col) / 2
+    }
+
+    private fun fromCube(cube: Pair<Int, Int>): Cell {
+        val (q, r) = cube
+        return Cell((2 * r + q - (q and 1)) / 2, q)
+    }
+
+    /** Rounds a fractional cube coordinate to the nearest whole hex, correcting the axis that
+     *  moved furthest so the three cube components still sum to zero. */
+    private fun cubeRound(
+        q: Double,
+        r: Double,
+    ): Pair<Int, Int> {
+        val s = -q - r
+        var rq = kotlin.math.round(q)
+        var rr = kotlin.math.round(r)
+        val rs = kotlin.math.round(s)
+        val dq = abs(rq - q)
+        val dr = abs(rr - r)
+        val ds = abs(rs - s)
+        if (dq > dr && dq > ds) {
+            rq = -rr - rs
+        } else if (dr > ds) {
+            rr = -rq - rs
+        }
+        return rq.toInt() to rr.toInt()
+    }
+
     /** The six neighbours of a cell, in the original JS ordering (N, NW, SW, S, SE, NE). */
     fun getAdjacent(
         row: Int,

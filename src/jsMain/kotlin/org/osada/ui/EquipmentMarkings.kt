@@ -45,7 +45,10 @@ internal object EquipmentMarkings {
         // five are Chinese `HQ-1`/`HQ-2`/`HQ-7`/`HQ-17`/`Hong Qi HQ-1` surface-to-air missiles,
         // not headquarters at all. A badge states a rule the combat code will actually apply, and
         // `combatSupportBars` only ever reads the bit, so the name half was a false claim.
-        val hasCombatSupport = if (unit != null) UnitCapabilities.hasCombatSupport(unit) else UnitCapabilities.grantsCombatSupport(data)
+        val hasCombatSupport =
+            unit
+                ?.let { UnitCapabilities.hasCombatSupport(it) }
+                ?: UnitCapabilities.grantsCombatSupport(data)
         if (hasCombatSupport) {
             addHeadquartersMark(parent, unit?.experience?.div(UnitCapabilities.EXPERIENCE_PER_BAR))
         }

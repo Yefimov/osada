@@ -66,6 +66,25 @@ data class ClearMines(
     override val actorPlayerId: Int,
 ) : GameCommand
 
+/**
+ * OG 9.3's Build and Repair order (`rules/Engineering`).
+ *
+ * One command for all six chips, carrying the job by NAME rather than by ordinal: an
+ * `EngineeringWork` ordinal would silently change meaning if a future job were inserted in the
+ * middle of that enum, and a command in flight between two builds must not mean two things. An
+ * unknown name is rejected at validation, so a peer running an older build refuses the order
+ * instead of guessing at it.
+ *
+ * It carries no outcome. Construction is deterministic -- a fixed cost, a fixed duration and a
+ * fixed terrain result -- so both peers reach the same hex state from the same command, and unlike
+ * [ClearMines] there is no roll to keep in step.
+ */
+data class BeginEngineering(
+    val unitId: Int,
+    val work: String,
+    override val actorPlayerId: Int,
+) : GameCommand
+
 data class DeployUnit(
     val unitId: Int,
     val destination: HexCoordinate,
@@ -159,6 +178,7 @@ fun GameCommand.toPayloadJson(): String {
         is UnmountUnit -> payload["unitId"] = unitId
         is LayMines -> payload["unitId"] = unitId
         is ClearMines -> payload["unitId"] = unitId
+        is BeginEngineering -> putEngineering(payload, unitId, work)
         is DeployUnit -> {
             payload["unitId"] = unitId
             payload["destination"] = destination.toJson()
@@ -200,3 +220,14 @@ fun GameCommand.toPayloadJson(): String {
 }
 
 private fun HexCoordinate.toJson(): dynamic = json("x" to x, "y" to y)
+
+/** [BeginEngineering]'s two fields, as one call so `toPayloadJson` stays inside its length
+ *  budget -- it is one branch per command and adding a two-line block to it overflows. */
+private fun putEngineering(
+    payload: dynamic,
+    unitId: Int,
+    work: String,
+) {
+    payload["unitId"] = unitId
+    payload["work"] = work
+}

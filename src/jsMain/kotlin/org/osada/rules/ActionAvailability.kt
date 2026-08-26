@@ -14,6 +14,13 @@ package org.osada.rules
 /**
  * The unit-context commands, in the stable order the action strip renders them.
  *
+ * The six engineering commands were added 2026-08-25 with OG's Build and Repair optional rule
+ * (manual 9.3, `rules/Engineering`). They sit beside the two mine actions for the same reason those
+ * do -- an engineer's work belongs together in the reading order -- and follow the same rule: NOT
+ * APPLICABLE, i.e. absent from the strip entirely, unless `build_and_repair` is on and the
+ * formation carries the ability, so no existing campaign gains a chip. [DEMOLISH] is one chip for
+ * OG's two demolition sub-rules (9.3.1 bridge, 9.3.7 terrain) because a hex can never offer both.
+ *
  * [LAY_MINES] and [CLEAR_MINES] were added 2026-08-18 with the minefield mechanic
  * (`docs/og-fidelity-plan.md` C.1). They sit after the supply group and before Undo because that is
  * where an engineer's work belongs in the reading order, and both are NOT APPLICABLE — absent from
@@ -30,6 +37,12 @@ enum class UnitActionId(
     OVERSTRENGTH("overstrength"),
     LAY_MINES("lay_mines"),
     CLEAR_MINES("clear_mines"),
+    BUILD_BRIDGE("build_bridge"),
+    BUILD_FORTIFICATION("build_fortification"),
+    BUILD_AIRFIELD("build_airfield"),
+    BUILD_PORT("build_port"),
+    REPAIR("repair"),
+    DEMOLISH("demolish"),
     UNDO("undo"),
     SLEEP("sleep"),
 }
@@ -120,6 +133,12 @@ enum class ActionBlockReason {
     /** There is no minefield on this hex to clear. */
     NO_MINEFIELD_HERE,
 
+    /** OG requires an engineering unit to have taken no other action this turn. */
+    ENGINEERING_NEEDS_UNSPENT_TURN,
+
+    /** Another job is already under way on this hex; `amount` is the turns left on it. */
+    ENGINEERING_IN_PROGRESS,
+
     /** Not the local human player's turn, so no command may be issued. */
     NOT_LOCAL_TURN,
 }
@@ -199,6 +218,12 @@ enum class ActionEffectKind {
 
     /** A failed clearing attempt suppresses the formation. */
     CLEAR_MINEFIELD_RISK,
+
+    /** Starts construction here; `amount` is how many of this side's turns it takes. */
+    BUILD_TURNS,
+
+    /** Destroys what is on this hex outright, with no waiting. */
+    DEMOLISH_NOW,
 }
 
 /** One effect line plus its quantities. */

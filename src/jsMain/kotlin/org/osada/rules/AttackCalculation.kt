@@ -112,8 +112,14 @@ internal object AttackCalculation {
         // Mounted infantry that is not surprised dismounts and fights with its own
         // (base) stats instead of the transport's. Mirrors JS: n = Equipment.equipment[k.eqid].
         // defenderTarget below keeps the original (transport) target type, as in JS.
-        if (defender.isMounted && !defender.isSurprised && defender.unitData(true).uclass == UnitClass.INFANTRY.value) {
-            defenderData = defender.unitData(true)
+        //
+        // The Infantry-class test is OG's DEFAULT, not the whole rule: `Dismount` (attr bit 11) is
+        // one of OG's three paired toggles and REVERSES it per record, which
+        // `UnitCapabilities.dismountsWhenAttacked` applies. Wired 2026-08-25; before that the JS's
+        // plain class test stood alone and the 2,628 records carrying the bit were ignored.
+        val ownData = defender.unitData(true)
+        if (defender.isMounted && !defender.isSurprised && UnitCapabilities.dismountsWhenAttacked(ownData)) {
+            defenderData = ownData
         }
 
         return CombatContext(
@@ -454,9 +460,15 @@ internal object AttackCalculation {
         }
     }
 
-    /** Tank overrun (a tank attacker deals a killing blow at range 1 while taking at most one
-     *  loss and isn't surprised), then the experience gained by each side, scaled by the
-     *  opponent's strength and capped at [UNIT_MAX_EXPERIENCE]. */
+    /** Tank overrun (an overrun-capable attacker deals a killing blow at range 1 while taking at
+     *  most one loss and isn't surprised), then the experience gained by each side, scaled by the
+     *  opponent's strength and capped at [UNIT_MAX_EXPERIENCE].
+     *
+     *  The eligibility test moved onto [UnitCapabilities.canOverrun] on 2026-08-25 so that this
+     *  rule and the OVR badge read the same function -- until then the badge was `classDefault xor
+     *  bit` and the rule was the bare Tank class, so 211 tanks wore a mark OG switches OFF for
+     *  them and 145 non-tanks did not wear one OG switches ON. With `equipment_toggles` off this
+     *  is the identical Tank test it has always been. */
     fun resolveOverrunAndExperienceGain(
         stats: CombatStats,
         attacker: GameUnit,
@@ -465,7 +477,7 @@ internal object AttackCalculation {
         result: CombatResults,
     ) {
         val isOverrun =
-            context.attackerData.uclass == UnitClass.TANK.value &&
+            UnitCapabilities.canOverrun(context.attackerData) &&
                 result.losses <= 1 &&
                 result.kills >= defender.strength &&
                 context.distance == 1 &&

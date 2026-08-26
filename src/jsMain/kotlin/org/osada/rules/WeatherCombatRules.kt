@@ -146,8 +146,7 @@ internal object WeatherCombatRules {
      * attack, and says nothing about spotting. It is applied to all three here because the trait's
      * own description — in OG's ability list and in ours — is "not affected by weather conditions",
      * and a trait that is affected by weather two thirds of the time does not say that.
-     */
-    /**
+     *
      * Two independent sources, OR'd — the leader trait, and OG's equipment-level `All Weather`
      * special (`attrEx` bit 2, wired 2026-08-19: `UnitCapabilities.hasAllWeather`, see its header
      * for why the importer previously could not carry the bit at all). A unit with both is still

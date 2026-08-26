@@ -294,6 +294,15 @@ class UnitActionAvailabilityTest {
                 // (`docs/og-fidelity-plan.md` C.1).
                 UnitActionId.LAY_MINES,
                 UnitActionId.CLEAR_MINES,
+                // OG 9.3's six engineering commands, added 2026-08-25, on exactly the same terms:
+                // always resolved, and all six not-applicable here because a tank is neither a
+                // sapper nor a demolition unit and `build_and_repair` is off in this harness.
+                UnitActionId.BUILD_BRIDGE,
+                UnitActionId.BUILD_FORTIFICATION,
+                UnitActionId.BUILD_AIRFIELD,
+                UnitActionId.BUILD_PORT,
+                UnitActionId.REPAIR,
+                UnitActionId.DEMOLISH,
                 UnitActionId.SLEEP,
             ),
             UnitActionAvailability.all(context(world, unit)).map { it.action },

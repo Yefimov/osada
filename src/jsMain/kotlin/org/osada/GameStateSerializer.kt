@@ -8,6 +8,7 @@ import org.osada.model.Hex
 import org.osada.model.Player
 import org.osada.model.Transport
 import org.osada.model.getPlayers
+import org.osada.rules.Engineering
 import org.osada.rules.GameRandomSource
 import org.osada.rules.ruleset.ActiveRuleset
 import org.osada.rules.ruleset.serializeRuleset
@@ -145,6 +146,32 @@ object GameStateSerializer {
         // would quietly un-spot hexes their recon had already found. `installationSpotted` is NOT
         // stored: it is derived wholly from ownership and is rebuilt by `GameMap.recomputeSpotting`.
         if (hex.spotMemory != 0) obj.asDynamic().spotMemory = hex.spotMemory
+        // OG 9.3's engineering state, on the same optional-key rule again: a map with no work in
+        // progress, nothing razed and no bridge blown -- every map unless `build_and_repair` is
+        // on -- serializes exactly as it did before the mechanic existed. `razedTerrain` and
+        // `blownRoad` are stored even when the work is long finished, because they are the only
+        // record of what Repair would put back.
+        //
+        // The job is written as its NAME, not its ordinal. An ordinal is a position in
+        // `EngineeringWork`, so inserting a job mid-enum would silently reinterpret every save
+        // that had one in progress -- and the multiplayer command already carries the name for
+        // exactly that reason. Caught in review 2026-08-25; the two now agree.
+        // The BUILDER travels with the job. It decides whose turn end counts the job down and whose
+        // flag the finished facility flies, so a save that dropped it would hand a half-built
+        // airfield to whichever ally reloaded and ended a turn first (`Hex.constructionPlayer`).
+        // A save written before this field existed simply has no builder, and `Engineering`
+        // falls back to `constructionSide` for exactly that case.
+        Engineering.workName(hex)?.let { obj.asDynamic().construction = it }
+        if (hex.construction >= 0) {
+            obj.asDynamic().constructionTurns = hex.constructionTurns
+            obj.asDynamic().constructionSide = hex.constructionSide
+            if (hex.constructionPlayer >= 0) {
+                obj.asDynamic().constructionPlayer = hex.constructionPlayer
+                obj.asDynamic().constructionCountry = hex.constructionCountry
+            }
+        }
+        if (hex.razedTerrain >= 0) obj.asDynamic().razedTerrain = hex.razedTerrain
+        if (hex.blownRoad != 0) obj.asDynamic().blownRoad = hex.blownRoad
         return obj
     }
 

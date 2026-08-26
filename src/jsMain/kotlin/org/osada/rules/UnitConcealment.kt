@@ -40,9 +40,20 @@ internal object UnitConcealment {
         unit: GameUnit,
         observerSide: Int,
     ): Boolean {
+        if (unit.player?.side == observerSide) return false
+        return concealedByCommander(unit, observerSide) ||
+            ExtendedLos.isConcealedByTerrain(unit, observerSide)
+    }
+
+    /** The `Forest Camouflage` half, unchanged since 2026-08-18. Split out when OG's Extended LOS
+     *  optional rule (9.5 bullets 2 and 3) became a second source of the same layer: two rules,
+     *  two predicates, one answer, so neither surface can honour one and miss the other. */
+    private fun concealedByCommander(
+        unit: GameUnit,
+        observerSide: Int,
+    ): Boolean {
         val hex = unit.getHex() ?: return false
-        return unit.player?.side != observerSide &&
-            !UnitPredicates.isAir(unit) &&
+        return !UnitPredicates.isAir(unit) &&
             hex.terrain == TerrainType.FOREST.value &&
             Leaders.unitHasLeader(unit, LeaderType.FOREST_CAMOUFLAGE) &&
             !hasAdjacentEnemy(unit, observerSide)

@@ -54,6 +54,12 @@ object UnitActionAvailability {
             overstrength(context),
             layMines(context),
             clearMines(context),
+            engineering(context, UnitActionId.BUILD_BRIDGE),
+            engineering(context, UnitActionId.BUILD_FORTIFICATION),
+            engineering(context, UnitActionId.BUILD_AIRFIELD),
+            engineering(context, UnitActionId.BUILD_PORT),
+            engineering(context, UnitActionId.REPAIR),
+            engineering(context, UnitActionId.DEMOLISH),
             sleep(context),
         )
 
@@ -69,6 +75,14 @@ object UnitActionAvailability {
             UnitActionId.OVERSTRENGTH -> overstrength(context)
             UnitActionId.LAY_MINES -> layMines(context)
             UnitActionId.CLEAR_MINES -> clearMines(context)
+            UnitActionId.BUILD_BRIDGE,
+            UnitActionId.BUILD_FORTIFICATION,
+            UnitActionId.BUILD_AIRFIELD,
+            UnitActionId.BUILD_PORT,
+            UnitActionId.REPAIR,
+            UnitActionId.DEMOLISH,
+            -> engineering(context, action)
+
             UnitActionId.UNDO -> undo(context)
             UnitActionId.SLEEP -> sleep(context)
         }
@@ -372,6 +386,71 @@ object UnitActionAvailability {
                 ActionEffect(ActionEffectKind.ENDS_UNIT_ACTION),
             )
         return ActionAvailability(UnitActionId.CLEAR_MINES, true, reasons.isEmpty(), reasons, effects)
+    }
+
+    // ---- Build and repair (OG 9.3) -----------------------------------------------------------
+
+    /** Which engineering job each of the six chips orders. [UnitActionId.DEMOLISH] is deliberately
+     *  absent: it stands for whichever of the two demolitions the hex allows, resolved per hex in
+     *  [engineeringWorkFor], because a river hex offers a bridge to blow and a city offers its
+     *  terrain and no hex ever offers both. */
+    private val ENGINEERING_ACTIONS: Map<UnitActionId, EngineeringWork> =
+        mapOf(
+            UnitActionId.BUILD_BRIDGE to EngineeringWork.BRIDGE,
+            UnitActionId.BUILD_FORTIFICATION to EngineeringWork.FORTIFICATION,
+            UnitActionId.BUILD_AIRFIELD to EngineeringWork.AIRFIELD,
+            UnitActionId.BUILD_PORT to EngineeringWork.PORT,
+            UnitActionId.REPAIR to EngineeringWork.REPAIR,
+        )
+
+    private fun engineeringWorkFor(
+        action: UnitActionId,
+        available: List<EngineeringWork>,
+    ): EngineeringWork? =
+        if (action == UnitActionId.DEMOLISH) {
+            available.firstOrNull { it.demolition }
+        } else {
+            ENGINEERING_ACTIONS[action]?.takeIf { it in available }
+        }
+
+    /**
+     * OG 9.3: a sapper builds, a demolition unit blows, and both must have *"taken no previous
+     * action that turn"*.
+     *
+     * Applicability is decided by [Engineering.availableWork], which answers the whole question at
+     * once -- rule on, ability present, hex suitable, nothing already being built here. So a chip
+     * appears only where the order could genuinely be given, and never on a hex where the terrain
+     * makes it meaningless: no Build Port inland, no Build Bridge away from a crossing.
+     *
+     * The one condition that is a REASON rather than an absence is prestige. A player who cannot
+     * afford a bridge today can afford it next turn, so the chip stays visible with
+     * [ActionBlockReason.NEEDS_PRESTIGE] and the exact shortfall, the same way Reinforce does.
+     */
+    private fun engineering(
+        context: UnitActionContext,
+        action: UnitActionId,
+    ): ActionAvailability {
+        val unit = context.unit
+        val work =
+            engineeringWorkFor(action, Engineering.availableWork(unit))
+                ?: return ActionAvailability.notApplicable(action)
+        val reasons = mutableListOf<ActionBlock>()
+        addTurnBlock(context, reasons)
+        if (unit.hasMoved || unit.hasFired || unit.hasResupplied) {
+            reasons += ActionBlock(ActionBlockReason.ENGINEERING_NEEDS_UNSPENT_TURN)
+        }
+        val missingPrestige = work.cost - (unit.player?.prestige ?: 0)
+        if (missingPrestige > 0) reasons += ActionBlock(ActionBlockReason.NEEDS_PRESTIGE, missingPrestige)
+        val effects = mutableListOf<ActionEffect>()
+        if (work.cost > 0) effects += ActionEffect(ActionEffectKind.PRESTIGE_COST, work.cost)
+        effects +=
+            if (work.turns == 0) {
+                ActionEffect(ActionEffectKind.DEMOLISH_NOW)
+            } else {
+                ActionEffect(ActionEffectKind.BUILD_TURNS, work.turns)
+            }
+        effects += ActionEffect(ActionEffectKind.ENDS_UNIT_ACTION)
+        return ActionAvailability(action, true, reasons.isEmpty(), reasons, effects)
     }
 
     // ---- Sleep / wake ------------------------------------------------------------------------

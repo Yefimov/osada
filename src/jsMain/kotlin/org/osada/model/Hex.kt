@@ -48,6 +48,61 @@ class Hex(
     var minesDetected: Int = 0
 
     /**
+     * Engineering work in progress on this hex (OG manual 9.3, `rules/Engineering`).
+     *
+     * [construction] is an [org.osada.rules.EngineeringWork] ordinal, or `-1` for "nothing being
+     * built"; [constructionTurns] counts down at the END of the BUILDER's turn and completes the
+     * work at zero; [constructionPlayer] and [constructionCountry] are who is paying for it, and
+     * [constructionSide] which side they are on.
+     *
+     * **The builder is stored per-PLAYER, not merely per-side, and that is what decides both the
+     * countdown and the finished facility's flag.** Ticking on the side alone is wrong in the one
+     * case it can be told apart: with two allied players on one side, every one of their turns
+     * would advance every job the side is paying for — so a two-turn bridge would finish in one
+     * round — and the facility would be flagged to whichever ally happened to end the turn it
+     * completed on. Both are latent in shipped content (all 502 scenarios have two opposing
+     * players) and both are real in hot-seat play. Found in review 2026-08-26.
+     * [constructionSide] is still stored and still consulted, but only as the fallback for saves
+     * written before the builder was recorded, where the side is all there is.
+     *
+     * [razedTerrain] is the terrain a `Can Blow` unit destroyed here, or `-1`, and [blownRoad] is
+     * the road/bridge mask one took away, or `0`. They exist so Repair (9.3.8) has something
+     * exact to restore rather than a guess: OG's own rule is to repair *"any destroyed facility"*,
+     * which only means anything if the engine remembers what was destroyed.
+     *
+     * **Both are records of DESTRUCTION only, and construction never writes them.** Building an
+     * airfield used to stash the terrain it covered in [razedTerrain], which made every freshly
+     * completed airfield, port and fortification pass Repair's "was something destroyed here?"
+     * test — so the reward for finishing one was a Repair chip that turned it back into the clear
+     * or forest hex it had been built on. Construction instead CLEARS whichever record it
+     * supersedes: raising a facility on razed ground spends [razedTerrain], and bridging a gap
+     * spends [blownRoad], because after either there is nothing destroyed left to put back.
+     * Found in review 2026-08-26.
+     *
+     * **[blownRoad] is what makes Repair a repair rather than a free bridge.** Found in review
+     * 2026-08-25: Repair was offered on any river hex with no road, and completing it laid a full
+     * bridge mask — so a sapper could build a crossing for nothing by pressing Repair instead of
+     * the 16-prestige Build Bridge. `road == 0` cannot tell "blown" from "never bridged"; this
+     * field can, and it restores the mask the hex actually had rather than an invented full one.
+     *
+     * All four are inert and serialize to nothing unless the `build_and_repair` ruleset key is on,
+     * the same way the minefield fields above are inert without `minefields`.
+     */
+    var construction: Int = -1
+
+    var constructionTurns: Int = 0
+
+    var constructionSide: Int = -1
+
+    var constructionPlayer: Int = -1
+
+    var constructionCountry: Int = -1
+
+    var razedTerrain: Int = -1
+
+    var blownRoad: Int = 0
+
+    /**
      * The two Open General spotting layers that sit BESIDE the reference counts below, as per-side
      * bitmasks (`1 shl side`): what a side has seen so far this turn (`spotting_memory`, OG's
      * "a hex once spotted stays spotted for the active turn"), and what its own cities, ports and
@@ -143,6 +198,13 @@ class Hex(
         terrain = other.terrain
         road = other.road
         rail = other.rail
+        construction = other.construction
+        constructionTurns = other.constructionTurns
+        constructionSide = other.constructionSide
+        constructionPlayer = other.constructionPlayer
+        constructionCountry = other.constructionCountry
+        razedTerrain = other.razedTerrain
+        blownRoad = other.blownRoad
         mines = other.mines
         minesDetected = other.minesDetected
         spotMemory = other.spotMemory

@@ -10,6 +10,8 @@ import org.osada.rules.getReinforceValue
 import org.osada.rules.getReinforcementDeployPositions
 import org.osada.rules.getResupplyValue
 import org.osada.rules.isAir
+import org.osada.rules.setSpotRange
+import org.osada.rules.setZOCRange
 import kotlin.js.json
 
 /** `movTable` sentinel for "this movement method may never enter"; 254 is merely costly. */
@@ -58,18 +60,44 @@ internal fun canDeployOnTerrain(
 internal class UnitDeployOperations(
     private val gameMap: GameMap,
 ) {
+    /**
+     * Re-equips a unit in place, taking its projected ZONE OF CONTROL and SPOTTING down before the
+     * equipment changes and putting them back afterwards.
+     *
+     * **Both are per-side REFERENCE COUNTS on the hex, and both are derived from the equipment
+     * record**, so changing `eqid` under them strands the counters: the remove that eventually
+     * comes cancels a different range from the add that was made. Spotting has been derivable from
+     * the record since the port began (`spotrange`); ZOC became derivable on 2026-08-25, when OG's
+     * `No ZOC` attribute was wired -- so an upgrade between two same-class records that disagree on
+     * that bit could leave a zone of control no unit projects, or decrement one this unit never
+     * contributed. Found in review the same day.
+     *
+     * The pair is unconditional and brackets the whole attempt, including a FAILED one: taking the
+     * ranges down and putting the identical ranges back is a no-op, whereas making the bracket
+     * conditional on success is how the two halves drift apart in the first place.
+     */
     fun upgradeUnit(
         unitId: Int,
         newEqid: Int,
         transportEqid: Int,
     ): Boolean {
-        val unit = gameMap.getUnitById(unitId)
-        if (unit == null || !unit.player!!.upgradeUnit(unit, newEqid, transportEqid)) return false
+        val unit = gameMap.getUnitById(unitId) ?: return false
+        GameRules.setZOCRange(gameMap, unit, false)
+        GameRules.setSpotRange(gameMap, unit, false)
+        val upgraded = unit.player!!.upgradeUnit(unit, newEqid, transportEqid)
+        GameRules.setZOCRange(gameMap, unit, true)
+        GameRules.setSpotRange(gameMap, unit, true)
+        if (upgraded) registerUpgradedImages(unit)
+        return upgraded
+    }
+
+    /** The upgraded unit's new art, plus its transport's and its carrier's. Split out only to keep
+     *  [upgradeUnit] inside the project's return-count budget. */
+    private fun registerUpgradedImages(unit: GameUnit) {
         gameMap.undoState.invalidate(unit, UndoInvalidation.IRREVERSIBLE_ACTION)
         gameMap.unitImages.add(unit.eqid)
         unit.transport?.let { gameMap.unitImages.add(it.eqid) }
         if (unit.carrier > 0) gameMap.unitImages.add(unit.carrier)
-        return true
     }
 
     fun disbandUnit(unitId: Int): Boolean {

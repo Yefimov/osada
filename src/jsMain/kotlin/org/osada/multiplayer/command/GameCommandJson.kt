@@ -40,6 +40,13 @@ object GameCommandJson {
             UnmountUnit::class.simpleName -> UnmountUnit(requiredInt(value.unitId, "unitId"), actor)
             LayMines::class.simpleName -> LayMines(requiredInt(value.unitId, "unitId"), actor)
             ClearMines::class.simpleName -> ClearMines(requiredInt(value.unitId, "unitId"), actor)
+            BeginEngineering::class.simpleName ->
+                BeginEngineering(
+                    requiredInt(value.unitId, "unitId"),
+                    (value.work as? String).orEmpty(),
+                    actor,
+                )
+
             DeployUnit::class.simpleName ->
                 DeployUnit(requiredInt(value.unitId, "unitId"), coordinate(value.destination), actor)
 

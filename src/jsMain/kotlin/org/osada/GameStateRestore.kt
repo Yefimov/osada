@@ -12,6 +12,7 @@ import org.osada.model.allocMap
 import org.osada.model.getPlayer
 import org.osada.model.getPlayers
 import org.osada.model.setHex
+import org.osada.rules.Engineering
 import org.osada.scenario.Campaign
 import org.osada.scenario.Scenario
 import org.osada.scenario.addReinforcement
@@ -361,6 +362,7 @@ private fun buildHex(
     // without them -- 0 is exactly "no minefield here" (`rules/Minefields`).
     hex.mines = hexData.mines as? Int ?: 0
     hex.minesDetected = hexData.minesDetected as? Int ?: 0
+    restoreEngineering(hex, hexData)
     // Absent in every save written without `spotting_memory`; 0 is exactly "remembers nothing".
     // `installationSpotted` is deliberately not read -- `recomputeSpotting` derives it from
     // ownership, so a stored copy could only ever go stale (`rules/SpottingModel`).
@@ -430,3 +432,27 @@ internal data class PendingCoreUnitRestore(
     val savedUnits: List<dynamic>,
     val campaignFile: String,
 )
+
+/** OG 9.3's per-hex engineering state. Split out of `buildHex` purely for its complexity
+ *  budget; every field is an optional save key that defaults to "nothing here".
+ *
+ *  `internal` rather than private so `OgOptionalRulesTest` can round-trip a job through
+ *  `serializeHex` and back: the pair is the thing worth locking, and asserting on the emitted
+ *  JSON alone would not catch a reader that stopped reading a key the writer still writes. */
+internal fun restoreEngineering(
+    hex: Hex,
+    hexData: dynamic,
+) {
+    // Written as a name since 2026-08-25 (see the serializer). An unknown name -- a job this
+    // build does not have -- restores as "nothing in progress" rather than as job zero, which is
+    // the whole reason the format is a name.
+    hex.construction = Engineering.workOrdinal(hexData.construction as? String)
+    hex.constructionTurns = hexData.constructionTurns as? Int ?: 0
+    hex.constructionSide = hexData.constructionSide as? Int ?: -1
+    // Absent in saves written before 2026-08-26; -1 is "builder unknown", which is what
+    // `Engineering.advanceTurn` falls back to `constructionSide` for.
+    hex.constructionPlayer = hexData.constructionPlayer as? Int ?: -1
+    hex.constructionCountry = hexData.constructionCountry as? Int ?: -1
+    hex.razedTerrain = hexData.razedTerrain as? Int ?: -1
+    hex.blownRoad = hexData.blownRoad as? Int ?: 0
+}

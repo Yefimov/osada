@@ -2,6 +2,7 @@ package org.osada.rules
 
 import org.osada.LeaderType
 import org.osada.UnitClass
+import org.osada.model.ATTR2_MASK_NO_ZOC
 import org.osada.model.ATTR_EX_MASK_AD_SUPPORT
 import org.osada.model.ATTR_EX_MASK_ALL_WEATHER
 import org.osada.model.ATTR_EX_MASK_LASTING_SUPPRESSION
@@ -9,6 +10,7 @@ import org.osada.model.ATTR_EX_MASK_NO_INTERCEPT_AIR
 import org.osada.model.ATTR_EX_MASK_OVERRUN_TOGGLE
 import org.osada.model.ATTR_MASK_CAPTURE_FLAG
 import org.osada.model.ATTR_MASK_COMBAT_SUPPORT
+import org.osada.model.ATTR_MASK_DISMOUNT
 import org.osada.model.ATTR_MASK_MECHANIZED
 import org.osada.model.ATTR_MASK_RECON_SKILL
 import org.osada.model.ATTR_MASK_SUPPORT_FIRE
@@ -18,8 +20,20 @@ import org.osada.model.Leaders
 import org.osada.rules.UnitCapabilities.CAPTURING_CLASSES
 import org.osada.rules.UnitCapabilities.canCaptureHex
 import org.osada.rules.UnitCapabilities.hasSupportFire
+import org.osada.rules.ruleset.ActiveRuleset
+import org.osada.rules.ruleset.RuleKey
 
-/** Intrinsic, equipment-defined capabilities that are neither leaders nor purchased attachments. */
+/**
+ * Intrinsic, equipment-defined capabilities that are neither leaders nor purchased attachments.
+ *
+ * `TooManyFunctions` is suppressed rather than split: this is a registry with **one function per
+ * OG equipment attribute**, and the whole value of having them in one place is that the
+ * class-default vs grant vs `classDefault xor bit` shape of each is readable side by side.
+ * Splitting by an arbitrary count would separate attributes that are only correct when compared
+ * against each other -- the mistake that left `Dismount` unwired while its two fellow toggles
+ * were not.
+ */
+@Suppress("TooManyFunctions")
 object UnitCapabilities {
     const val EXPERIENCE_PER_BAR = 100
 
@@ -78,7 +92,22 @@ object UnitCapabilities {
      * the toggle reading is the only one the data supports (`OG_ABILITY_AUDIT.md` §2).
      */
     fun hasPhasedMovement(data: EquipmentData): Boolean =
-        (data.uclass == UnitClass.RECON.value) xor (data.attr and ATTR_MASK_RECON_SKILL != 0)
+        if (equipmentTogglesEnabled()) {
+            (data.uclass == UnitClass.RECON.value) xor (data.attr and ATTR_MASK_RECON_SKILL != 0)
+        } else {
+            data.uclass == UnitClass.RECON.value
+        }
+
+    /**
+     * Whether OG's per-record toggles decide [hasPhasedMovement] and [canOverrun], or the class
+     * alone does ([RuleKey.EQUIPMENT_TOGGLES]).
+     *
+     * Both helpers consult it rather than their callers, and that placement is the point: the
+     * BADGE and the RULE read the same function, so a unit can never wear a mark stating
+     * something the engine will not do. Until 2026-08-25 they could — see the key's own
+     * documentation for what that cost.
+     */
+    fun equipmentTogglesEnabled(): Boolean = ActiveRuleset.flag(RuleKey.EQUIPMENT_TOGGLES, false)
 
     /**
      * Classes OG makes fire BEFORE moving unless they are mechanized: the heavy weapons that have to
@@ -132,7 +161,11 @@ object UnitCapabilities {
      * `SpecialEx` field at all (§J.2), so the Tank-class default stands for it.
      */
     fun canOverrun(data: EquipmentData): Boolean =
-        (data.uclass == UnitClass.TANK.value) xor (data.attrEx and ATTR_EX_MASK_OVERRUN_TOGGLE != 0)
+        if (equipmentTogglesEnabled()) {
+            (data.uclass == UnitClass.TANK.value) xor (data.attrEx and ATTR_EX_MASK_OVERRUN_TOGGLE != 0)
+        } else {
+            data.uclass == UnitClass.TANK.value
+        }
 
     /**
      * Whether this equipment flips a hex's owner and flag: [CAPTURING_CLASSES] by default, **plus**
@@ -180,7 +213,9 @@ object UnitCapabilities {
      *
      * **PROVEN OUTRIGHT 2026-08-23, from OG's own UI strings**, after the owner asked directly of
      * artillery units wearing the SUP badge unevenly: *"Some Artillery units have SUP. Why not all
-     * of them? Are you sure that you are not wrong?"* `C:\Games\Open General\OPENTXT_SAMPLE     * strings-en-template.txt` is OG's own localisation template, and its "Special attributes"
+     * of them? Are you sure that you are not wrong?"* OG's own localisation template
+     * (`OPENTXT_SAMPLE/strings-en-template.txt`, in the Open General install) is ground truth
+     * here, and its "Special attributes"
      * block (lines 837-877) gives ONE attribute two alternative renderings wherever the attribute
      * is a toggle:
      *
@@ -205,8 +240,10 @@ object UnitCapabilities {
      *
      * **A third row was dropped 2026-08-18: "bit 0 Lasting Sup., 12% of Tactical Bomber".** Bit 0 is
      * `Drop mines`, a plain grant, and those 12% are maritime-patrol minelayers; `Lasting Sup.` is
-     * `SpecialEx` 60.1 and is not imported. Proved by controlled staircase — `OG_ABILITY_AUDIT.md`
-     * §7.1.1. The conclusion below is unaffected: it never rested on that row.
+     * `SpecialEx` 60.1, which is `attrEx` bit 1 — imported since 2026-08-19 and read by
+     * [hasLastingSuppression], not the unimported field this comment called it until 2026-08-26.
+     * Proved by controlled staircase — `OG_ABILITY_AUDIT.md` §7.1.1. The conclusion below is
+     * unaffected either way: it never rested on that row.
      *
      * So OG's effective rule is `classDefault xor bit`. Against PM's plain `uclass == ARTILLERY`
      * this keeps support fire on the 86% of artillery that has it, removes it from the 893 records
@@ -310,8 +347,7 @@ object UnitCapabilities {
      * only [LeaderType.ALL_WEATHER_COMBAT]. Read on the unit's REAL equipment (`useReal = true`,
      * matching [hasCombatSupport]) rather than a carrier/transport it happens to be riding.
      */
-    fun hasAllWeather(unit: GameUnit): Boolean =
-        unit.unitData(true).attrEx and ATTR_EX_MASK_ALL_WEATHER != 0
+    fun hasAllWeather(unit: GameUnit): Boolean = unit.unitData(true).attrEx and ATTR_EX_MASK_ALL_WEATHER != 0
 
     /**
      * Whether suppression [unit] inflicts survives the round wrap instead of clearing at the
@@ -334,6 +370,47 @@ object UnitCapabilities {
      * it is read only by [org.osada.rules.AAInterception]'s interception path, never by
      * [hasAirDefenceFire] (which also drives the AA badge and would incorrectly hide it too).
      */
-    fun hasNoInterceptAir(unit: GameUnit): Boolean =
-        unit.unitData(true).attrEx and ATTR_EX_MASK_NO_INTERCEPT_AIR != 0
+    fun hasNoInterceptAir(unit: GameUnit): Boolean = unit.unitData(true).attrEx and ATTR_EX_MASK_NO_INTERCEPT_AIR != 0
+
+    /**
+     * Whether mounted [data] dismounts when attacked and fights with its OWN statistics instead of
+     * its transport's: OG's class default for Infantry, **reversed** by the `Dismount` attribute
+     * (`attr` bit 11) — `classDefault xor bit`, the same shape [hasSupportFire] and [canOverrun]
+     * use.
+     *
+     * **The third and last of OG's three paired toggles to be wired (2026-08-25), and the one this
+     * object's own documentation claimed was already read.** [hasSupportFire]'s note said *"three
+     * toggles are named this way and OSADA reads all three"* and counted [hasPhasedMovement] as
+     * the third — but `Recon Skill` is not one of the paired attributes in OG's string template;
+     * `Dismount` (lines 843 `NO dismount when attacked` / 844 `Dismount if attacked`) is. Until
+     * this function existed, `AttackCalculation.resolveCombatContext` gave the dismount to every
+     * mounted Infantry record unconditionally, and the 2,628 shipped records carrying the bit drew
+     * a grey "decoded, not executed" badge that was telling the truth.
+     *
+     * Takes [EquipmentData] rather than a unit so the equipment card can state it too; the caller
+     * passes the unit's REAL equipment, never the transport it is riding — the ability belongs to
+     * the passengers, not to the truck.
+     */
+    fun dismountsWhenAttacked(data: EquipmentData): Boolean =
+        (data.uclass == UnitClass.INFANTRY.value) xor (data.attr and ATTR_MASK_DISMOUNT != 0)
+
+    /**
+     * Whether [unit] projects a Zone of Control onto its neighbouring hexes at all: everything
+     * non-air does, **except** a record carrying OG's `No ZOC` attribute (`attr2` bit 6).
+     *
+     * `OG_ABILITY_AUDIT.md` filed this ability as **"no — and not representable"**, on the reading
+     * that `MovementRules.setZOCRange` hands every non-air unit a full ZOC with no opt-out. That
+     * was true of the code as it then stood and is not any more: `setZOCRange` is a single choke
+     * point that adds and removes one reference count, so declining to enter the loop is the whole
+     * implementation, and both readers of the result (`MoveRangeCalculation`'s movement floor and
+     * `MoveExecutorHelpers.stoppedByUnseenZoc`) go through `Hex.isZOC`. 609 shipped records carry
+     * the bit.
+     *
+     * **Read on the unit's REAL equipment on purpose.** `setZOCRange` is called once to add and
+     * once to remove, and the two calls must agree or the hex's reference count drifts permanently
+     * — a unit that mounted a transport between them would otherwise remove a ZOC it never added.
+     * `useReal = true` cannot change while a unit is on the map.
+     */
+    fun projectsZoneOfControl(unit: GameUnit): Boolean =
+        !UnitPredicates.isAir(unit) && unit.unitData(true).attr2 and ATTR2_MASK_NO_ZOC == 0
 }

@@ -3,9 +3,11 @@ package org.osada.ui
 import org.osada.i18n.GameText
 import org.osada.i18n.I18n
 import org.osada.model.Cell
+import org.osada.model.EngineeringActionResult
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
 import org.osada.model.MineActionResult
+import org.osada.model.beginEngineering
 import org.osada.model.clearMinefield
 import org.osada.model.disembarkUnit
 import org.osada.model.embarkUnit
@@ -15,6 +17,7 @@ import org.osada.model.reinforceUnit
 import org.osada.model.resupplyUnit
 import org.osada.model.undoLastMove
 import org.osada.model.unmountUnit
+import org.osada.rules.Engineering
 import org.osada.rules.SupplyContextRules
 
 /**
@@ -26,6 +29,13 @@ import org.osada.rules.SupplyContextRules
 internal class UnitContextMenu(
     private val ui: UI,
 ) {
+    private companion object {
+        /** The six Build-and-Repair chip ids, matching `UnitActionId`'s own strings. Kept as a set
+         *  so the `when` above stays one branch rather than six identical ones. */
+        val ENGINEERING_ACTION_IDS =
+            setOf("build_bridge", "build_fortification", "build_airfield", "build_port", "repair", "demolish")
+    }
+
     private val contextButtons = UnitContextButtons(ui) { action, unit -> executeUnitContext(action, unit) }
 
     fun buildUnitContext(unit: GameUnit?) {
@@ -83,6 +93,7 @@ internal class UnitContextMenu(
             "reinforce", "overstrength" -> performReinforce(map, unit, pos, action == "overstrength")
             "lay_mines" -> performMineAction(map.layMinefield(unit), map, unit, pos)
             "clear_mines" -> performMineAction(map.clearMinefield(unit), map, unit, pos)
+            in ENGINEERING_ACTION_IDS -> performEngineering(action, map, unit, pos)
             "undo" -> map.undoLastMove()
             "sleep" -> ui.toggleUnitSleep(unit)
         }
@@ -167,6 +178,44 @@ internal class UnitContextMenu(
         ui.showAlert(pos.row, pos.col, I18n.t(key), true)
         // The minefield overlay is a per-hex fact, so the surrounding cells have to be repainted --
         // the caller only re-renders around the unit itself.
+        map.map?.let { ui.render.render(pos.row, pos.col, getUnitRenderRadius(unit)) }
+    }
+
+    /**
+     * Starts the engineering job the chip names (OG 9.3).
+     *
+     * The chip id maps to an [org.osada.rules.EngineeringWork] the same way
+     * `UnitActionAvailability.engineering` resolves it, so the order carried out is the order the
+     * chip offered -- `DEMOLISH` re-asks the rules layer which of the two demolitions this hex
+     * allows rather than deciding again here.
+     */
+    private fun performEngineering(
+        action: String,
+        map: GameMap,
+        unit: GameUnit,
+        pos: Cell,
+    ) {
+        val available = Engineering.availableWork(unit)
+        val work =
+            if (action == "demolish") {
+                available.firstOrNull { it.demolition }
+            } else {
+                available.firstOrNull { !it.demolition && it.name.lowercase() == action.removePrefix("build_") }
+            }
+        if (work == null) {
+            ui.showAlert(pos.row, pos.col, I18n.t("unit_info.action.engineering.blocked"), true)
+            return
+        }
+        val result = map.beginEngineering(unit, work)
+        val key =
+            when (result) {
+                EngineeringActionResult.DEMOLISHED -> "unit_info.action.demolish.done"
+                EngineeringActionResult.STARTED -> "unit_info.action.build.started"
+                EngineeringActionResult.NOT_ALLOWED -> "unit_info.action.engineering.blocked"
+            }
+        ui.showAlert(pos.row, pos.col, I18n.t(key, mapOf("turns" to work.turns)), true)
+        // Terrain and roads are per-hex facts the neighbours are drawn against, so the surrounding
+        // cells are repainted -- the caller only re-renders around the unit itself.
         map.map?.let { ui.render.render(pos.row, pos.col, getUnitRenderRadius(unit)) }
     }
 

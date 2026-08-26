@@ -52,6 +52,21 @@ class GameMap {
     internal val currentAttackRange: MutableList<Cell> = mutableListOf()
     internal val undoState = UndoState()
 
+    /**
+     * Counterbattery fire drawn by the combat that resolved most recently (`rules/CounterBatteryFire`).
+     *
+     * A transient hand-off, not state: [CombatApplication] fills it during `attackUnit` and the
+     * animation layer drains it immediately afterwards to raise the same banner and HUD line an AA
+     * interception gets. It lives here rather than on [CombatResults] because that class is
+     * `@JsExport`ed and a list of a non-exported type cannot cross that boundary; and it is
+     * cleared at the START of every attack, so a combat that draws no counterbattery can never
+     * report the previous one's.
+     *
+     * Never serialized. The events describe something that has already been applied to the units
+     * themselves, so a save carries the outcome and has nothing to say about the announcement.
+     */
+    internal var lastCounterBattery: List<InterceptionEvent> = emptyList()
+
     internal val combatApplication: CombatApplication by lazy { CombatApplication(this) }
     internal val moveExecutor: MoveExecutor by lazy { MoveExecutor(this) }
     internal val unitMountOperations: UnitMountOperations by lazy { UnitMountOperations(this) }
@@ -81,6 +96,18 @@ class GameMap {
         // crash rule; both are no-ops unless their key is on.
         currentPlayer?.side?.let { SpottingModel.forgetTurnMemory(this, it) }
         currentPlayer?.side?.let { crashStrandedAircraft(it) }
+        // OG 9.3's multi-turn construction advances for the PLAYER whose turn is ending -- their
+        // own jobs only, and the ones finishing now take their flag (`Hex.constructionPlayer`).
+        //
+        // A job STARTED this turn does tick at this same turn end, and the earlier comment here
+        // claimed the opposite (corrected on review, 2026-08-25). That is the intended reading of
+        // the help text rather than an accident: "takes 2 of your turns" means the formation spends
+        // the turn it starts on and one more, so a 2-turn bridge begun on turn 5 is standing when
+        // turn 7 opens. Suppressing the first tick would make every job take one turn longer than
+        // its own tooltip promises.
+        //
+        // A no-op unless `build_and_repair` is on.
+        currentPlayer?.side?.let { advanceEngineering(it) }
         currentPlayer?.endTurn(turn)
         val currentIndex = players.indexOf(currentPlayer)
         currentPlayer = if (currentIndex + 1 < players.size) players[currentIndex + 1] else players[0]

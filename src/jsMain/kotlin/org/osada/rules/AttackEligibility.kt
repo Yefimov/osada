@@ -128,6 +128,18 @@ internal object AttackEligibility {
             else -> null
         }
 
+    /**
+     * Whether [defender] is close enough for [attacker] to strike, and — under `extended_los` —
+     * whether anything stands in the way.
+     *
+     * The line-of-fire half is OG 6.18 (*"hills, mountains, cities, forest and bocage cut the line
+     * of fire of these units, making an attack impossible"*) together with the `Cut LOS` and
+     * `Allow LOF` equipment attributes, and it is the reader those two bits never had. It is behind
+     * the key rather than universal because switching it on for everybody would make authored
+     * attacks impossible across all 502 shipped scenarios at once; see `rules/ExtendedLos` for the
+     * full reasoning. With the key off this is the pure distance test it has always been, and even
+     * with it on an adjacent attack is never blocked.
+     */
     fun isInAttackRange(
         attacker: GameUnit,
         defender: GameUnit,
@@ -135,6 +147,7 @@ internal object AttackEligibility {
         val aPos = attacker.getPos()
         val dPos = defender.getPos()
         if (aPos == null || dPos == null) return false
-        return HexGeometry.distance(aPos.row, aPos.col, dPos.row, dPos.col) <= getUnitAttackRange(attacker)
+        val inRange = HexGeometry.distance(aPos.row, aPos.col, dPos.row, dPos.col) <= getUnitAttackRange(attacker)
+        return inRange && ExtendedLos.hasLineOfFire(attacker, defender)
     }
 }
