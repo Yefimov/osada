@@ -39,6 +39,9 @@ object UIBuilder {
             "reinforce" to "#",
             "overstrength" to "J",
             "lay_mines" to "*",
+            // OG marks a barrage-capable record with `=` at the top of its unit info screen
+            // (`tips1.txt`), so the chip wears the mark the player is told to look for.
+            "barrage" to "=",
             "clear_mines" to "x",
             // OG 9.3 Build and Repair. Glyphs picked from the same osada-menu font the rest of the
             // strip uses; the five constructions share one builder mark because the chip label is

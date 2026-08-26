@@ -27,7 +27,8 @@ import org.osada.rules.SupplyContextRules
  * strip itself lives in [UnitContextButtons].
  */
 internal class UnitContextMenu(
-    private val ui: UI,
+    // Internal, not private: `MapClickBarrage.kt` opens the targeting mode from here.
+    internal val ui: UI,
 ) {
     private companion object {
         /** The six Build-and-Repair chip ids, matching `UnitActionId`'s own strings. Kept as a set
@@ -92,6 +93,7 @@ internal class UnitContextMenu(
             "resupply" -> performResupply(map, unit, pos)
             "reinforce", "overstrength" -> performReinforce(map, unit, pos, action == "overstrength")
             "lay_mines" -> performMineAction(map.layMinefield(unit), map, unit, pos)
+            "barrage" -> toggleBarrageTargeting(map, unit, pos)
             "clear_mines" -> performMineAction(map.clearMinefield(unit), map, unit, pos)
             in ENGINEERING_ACTION_IDS -> performEngineering(action, map, unit, pos)
             "undo" -> map.undoLastMove()

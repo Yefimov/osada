@@ -15,6 +15,11 @@ import org.osada.rules.ruleset.RuleKey
  * Both rules ship OFF. Neither changes any of the 502 shipped scenarios unless a profile asks.
  */
 internal object UnitConditionPenalties {
+    /** Whether the dry-unit halvings are in force at all — the gate every function here already
+     *  applies, exposed so the equipment card can hide `No Ammo Penalty`'s badge when there is no
+     *  penalty to be exempt from (`EquipmentAbilityCatalog.gateFor`). */
+    fun enabled(): Boolean = ActiveRuleset.flag(RuleKey.DRY_UNIT_PENALTIES, false)
+
     /**
      * OG 6.23's dry-unit penalties (`docs/og-fidelity-plan.md` B.8), behind `dry_unit_penalties`.
      *
@@ -39,7 +44,8 @@ internal object UnitConditionPenalties {
         initiative: Int,
     ): Int {
         if (!ActiveRuleset.flag(RuleKey.DRY_UNIT_PENALTIES, false)) return initiative
-        val dry = unit.getAmmo() <= 0 || (UnitPredicates.unitUsesFuel(unit) && unit.getFuel() <= 0)
+        val outOfAmmo = unit.getAmmo() <= 0 && !exemptFromAmmoPenalty(unit)
+        val dry = outOfAmmo || (UnitPredicates.unitUsesFuel(unit) && unit.getFuel() <= 0)
         return if (dry) initiative / 2 else initiative
     }
 
@@ -49,8 +55,23 @@ internal object UnitConditionPenalties {
         defense: Int,
     ): Int {
         if (!ActiveRuleset.flag(RuleKey.DRY_UNIT_PENALTIES, false)) return defense
-        return if (unit.getAmmo() <= 0) defense / 2 else defense
+        return if (unit.getAmmo() <= 0 && !exemptFromAmmoPenalty(unit)) defense / 2 else defense
     }
+
+    /**
+     * OG's `No run out ammo penalty` (`attrEx` bit 4), wired 2026-08-26 — see
+     * [UnitCapabilities.ignoresDryAmmoPenalty] for why it lifts the two halvings and NOT
+     * `AttackEligibility.canFire`'s prohibition.
+     *
+     * The FUEL half of [dryInitiative] is deliberately not covered: the bit is named for ammunition
+     * and OG's dry-fuel sentence is a separate one, so a record carrying it that also runs its tank
+     * dry still loses half its initiative for that.
+     *
+     * Reads the unit's REAL equipment: the exemption belongs to the formation, not to a transport
+     * it happens to be riding.
+     */
+    private fun exemptFromAmmoPenalty(unit: GameUnit): Boolean =
+        UnitCapabilities.ignoresDryAmmoPenalty(unit.unitData(true))
 
     /**
      * Applies the no-ammo defence halving to both sides — either can be the one being shot at,

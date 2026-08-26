@@ -53,6 +53,7 @@ object UnitActionAvailability {
             undo(context),
             overstrength(context),
             layMines(context),
+            barrage(context),
             clearMines(context),
             engineering(context, UnitActionId.BUILD_BRIDGE),
             engineering(context, UnitActionId.BUILD_FORTIFICATION),
@@ -74,6 +75,7 @@ object UnitActionAvailability {
             UnitActionId.REINFORCE -> reinforce(context)
             UnitActionId.OVERSTRENGTH -> overstrength(context)
             UnitActionId.LAY_MINES -> layMines(context)
+            UnitActionId.BARRAGE -> barrage(context)
             UnitActionId.CLEAR_MINES -> clearMines(context)
             UnitActionId.BUILD_BRIDGE,
             UnitActionId.BUILD_FORTIFICATION,
@@ -105,6 +107,11 @@ object UnitActionAvailability {
         val reasons = mutableListOf<ActionBlock>()
         addTurnBlock(context, reasons)
         if (!unit.isMounted && unit.transport == null) reasons += ActionBlock(ActionBlockReason.NO_ORGANIC_TRANSPORT)
+        // OG 8.3: *"Units can only mount or dismount BEFORE moving"* -- for everyone, including a
+        // record carrying `Dismount after movement`. That ability is not a permission the player
+        // exercises; it fires by itself once the ride ends (`MoveExecutor.dismountAfterMove`), so
+        // there is nothing to unblock here. A permission reading briefly stood on 2026-08-26 and
+        // was corrected against the manual the same day -- see the plan's §Q.
         if (unit.hasMoved) reasons += ActionBlock(ActionBlockReason.ALREADY_MOVED)
         val effects =
             if (unit.isMounted) {
@@ -340,6 +347,7 @@ object UnitActionAvailability {
      * the editor that changes nothing" `ruleset-profiles.md` §2 exists to prevent, in the action bar
      * instead of the rules window.
      */
+
     private fun layMines(context: UnitActionContext): ActionAvailability {
         val unit = context.unit
         if (!MineAbilities.canDropMines(unit)) return ActionAvailability.notApplicable(UnitActionId.LAY_MINES)
@@ -361,6 +369,31 @@ object UnitActionAvailability {
                 ActionEffect(ActionEffectKind.ENDS_UNIT_ACTION),
             )
         return ActionAvailability(UnitActionId.LAY_MINES, true, reasons.isEmpty(), reasons, effects)
+    }
+
+    /**
+     * OG 9.2: a formation whose Bomber Size marks it `'='` may shell a hex it cannot see.
+     *
+     * Applicable whenever the equipment can barrage AT ALL under the current rules, so a gun that
+     * has already fired shows a disabled chip with the reason rather than a chip that vanishes --
+     * the contract `docs/design/action-affordances-and-objectives.md` §2 sets for every action here.
+     */
+    private fun barrage(context: UnitActionContext): ActionAvailability {
+        val unit = context.unit
+        if (!Barrage.canBarrage(unit)) return ActionAvailability.notApplicable(UnitActionId.BARRAGE)
+        val reasons = mutableListOf<ActionBlock>()
+        addTurnBlock(context, reasons)
+        if (unit.hasFired) reasons += ActionBlock(ActionBlockReason.ALREADY_FIRED)
+        val missingAmmo = Barrage.AMMO_COST - unit.getAmmo()
+        if (missingAmmo > 0) reasons += ActionBlock(ActionBlockReason.NOT_ENOUGH_AMMO_FOR_MINES, missingAmmo)
+        val targets = Barrage.targets(context.map, unit).size
+        if (targets == 0 && reasons.isEmpty()) reasons += ActionBlock(ActionBlockReason.NO_BARRAGE_TARGET)
+        val effects =
+            listOf(
+                ActionEffect(ActionEffectKind.OPEN_BARRAGE_TARGETING, targets),
+                ActionEffect(ActionEffectKind.ENDS_UNIT_ACTION),
+            )
+        return ActionAvailability(UnitActionId.BARRAGE, true, reasons.isEmpty(), reasons, effects)
     }
 
     /**

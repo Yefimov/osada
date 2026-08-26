@@ -3,6 +3,7 @@ package org.osada.model
 import org.osada.UnitClass
 import org.osada.entrenchRateFor
 import org.osada.rules.Attachments
+import org.osada.rules.Craters
 import org.osada.rules.GameRules
 import org.osada.rules.canEntrench
 
@@ -43,7 +44,11 @@ fun GameUnit.entrench(): Boolean {
     // own entrenchment ceiling for this unit -- both the immediate snap-to-baseline below and the
     // slow tick-up toward baseline+5 pair naturally with the existing per-efile terrain value
     // rather than needing a new mechanic.
-    val terrainEnt = TerrainEx.baseEntrenchment(hex.terrain) + Attachments.bonus(this, Attachments.SLOT_FAST_ENTRENCH)
+    // A crater is cover the shells dug for you (`rules/Craters`, OSADA's own rule): it raises the
+    // FLOOR the terrain gives, so it can never beat entrenching and can never be farmed by shelling
+    // your own line. `maxOf`, not `+`, is the whole of that design.
+    val terrainFloor = maxOf(TerrainEx.baseEntrenchment(hex.terrain), Craters.entrenchmentFloor(hex))
+    val terrainEnt = terrainFloor + Attachments.bonus(this, Attachments.SLOT_FAST_ENTRENCH)
     val unitClass = unitData().uclass
     if (entrenchment >= terrainEnt) {
         var extra = entrenchment - terrainEnt

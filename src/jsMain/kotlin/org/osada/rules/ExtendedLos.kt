@@ -67,8 +67,21 @@ internal object ExtendedLos {
     /** OG's own reading of "more than 2 hexes away" for an air observer (§9.5 bullet 3). */
     private const val AIR_SPOT_LIMIT_IN_COVER = 2
 
-    /** Whether the rule is in force. Off in every profile except Open General Fidelity. */
-    fun enabled(): Boolean = ActiveRuleset.flag(RuleKey.EXTENDED_LOS, false)
+    /**
+     * Whether the rule is in force: the ruleset key AND the scenario's own switch.
+     *
+     * OG states this one as *"When this scenario option is activated"* (§9.5's opening line), and
+     * the option is authored per scenario — imported 2026-08-26 as `extlos`, set by 321 of the 397
+     * scenarios that carry the attribute. Off in every profile except Open General Fidelity either
+     * way.
+     *
+     * **A scenario with no imported attribute (`null`) follows the key alone**, for the reason
+     * `Engineering.authorisedByScenario` gives: 105 deployed scenarios have no readable source, and
+     * their silence must not be read as a prohibition.
+     */
+    fun enabled(): Boolean =
+        ActiveRuleset.flag(RuleKey.EXTENDED_LOS, false) &&
+            (GameHolder.instance?.scenario?.extendedLos ?: true)
 
     /**
      * The terrain OG names as sight-blocking in §9.5 — mountain, hill, forest and city — plus

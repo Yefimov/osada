@@ -107,10 +107,36 @@ object ScenarioLoader {
         scenario.latitude = mapElement.getAttribute("latitude")?.toIntOrNull() ?: 0
         scenario.ground = mapElement.getAttribute("ground")?.toIntOrNull() ?: 0
         scenario.weatherCanChangeGround = (mapElement.getAttribute("weatherchg")?.toIntOrNull() ?: 0) != 0
+        parseAuthoredOptions(scenario, mapElement)
         scenario.iconset = mapElement.getAttribute("iconset")?.toIntOrNull() ?: 0
         scenario.lockedEffectiveIconset = scenario.effectiveIconset
         scenario.turnsPerDay = (mapElement.getAttribute("dayturns")?.toIntOrNull() ?: 1) * 2
         scenario.map.terrainImage = mapElement.getAttribute("image") ?: ""
+    }
+
+    /**
+     * OG's per-scenario Game-Settings switches (`Scenario.canBuild` and friends), imported
+     * 2026-08-26.
+     *
+     * An ABSENT attribute stays `null` rather than becoming `false`: 105 of the 502 deployed
+     * scenarios name a source this project could not read or find, and reading their silence as
+     * "the author forbade it" would switch a mechanic off for them alone.
+     */
+    private fun parseAuthoredOptions(
+        scenario: Scenario,
+        mapElement: Element,
+    ) {
+        fun flag(name: String): Boolean? = mapElement.getAttribute(name)?.toIntOrNull()?.let { it != 0 }
+        scenario.canBuild = flag("canbuild")
+        scenario.canBlow = flag("canblow")
+        scenario.canRepair = flag("canrepair")
+        scenario.extendedLos = flag("extlos")
+        scenario.trueDirectLof = flag("truedlof")
+        scenario.unitsBlockLof = flag("unitsblocklof")
+        scenario.barrageAllowed = flag("barrage")
+        scenario.airZoc = flag("airzoc")
+        scenario.airMissions = flag("airmissions")
+        scenario.extendedNaval = flag("extnaval")
     }
 
     /** The scenario/operation name lives on the <map name="…"> attribute. Standalone scenarios

@@ -1,6 +1,7 @@
 package org.osada.rules
 
 import org.osada.TerrainType
+import org.osada.model.EfileConfig
 import org.osada.model.Hex
 
 /**
@@ -83,24 +84,66 @@ internal enum class EngineeringWork(
             REPAIR -> hex.razedTerrain >= 0 || hex.blownRoad != 0
             BLOW_BRIDGE -> Engineering.isWaterCrossing(hex) && hex.road > 0
             // Only a feature can be razed: clear ground is already clear, and water is not
-            // terrain a demolition charge removes.
-            RAZE -> hex.terrain in RAZEABLE_TERRAIN
+            // terrain a demolition charge removes. WHICH features is the efile's decision, not
+            // ours -- see [razeableTerrain].
+            RAZE -> hex.terrain in razeableTerrain()
         }
     }
 
-    private companion object {
-        /** Terrain a demolition can take back to clear ground: the built works, plus the two kinds
-         *  of cover OG's own `blow_any_terrain` efiles use it on. Never water, never high ground —
-         *  a charge does not remove a mountain. */
+    internal companion object {
+        /**
+         * What OG's own Blow applies to, quoted from the game's string template rather than
+         * inferred: line 568 of `OPENTXT_SAMPLE/strings-en-template.txt` annotates the scenario's
+         * "Allow to BLOW" switch with **"... Applies to bridges, ports, airfields && cities"**.
+         * Bridges are [BLOW_BRIDGE]'s job, so this is the other three, minus the one OG does not
+         * name.
+         *
+         * **Fortification is deliberately NOT here**, which looks odd beside "a sapper can build
+         * one" and is what the quoted sentence says. It moves into reach only under
+         * [EXTENDED_RAZEABLE_TERRAIN], the same place forest and bocage sit.
+         */
         val RAZEABLE_TERRAIN =
             setOf(
                 TerrainType.CITY.value,
-                TerrainType.FOREST.value,
-                TerrainType.BOCAGE.value,
-                TerrainType.FORTIFICATION.value,
                 TerrainType.AIRFIELD.value,
                 TerrainType.PORT.value,
             )
+
+        /**
+         * What `blow_any_terrain` adds — the efile key `eqp-atomic` and `eqp-basekorp` set and
+         * `eqp-lxf` does not (`tools/og-import/out/efile-cfg/`).
+         *
+         * The key's own name is the whole of its documentation; the manual's §9.3.7 describes the
+         * action and never says which terrain it reaches. So the split is an **`INFERENCE`**: what
+         * OG's UI enumerates is always available, and a key called *blow ANY terrain* widens it to
+         * the rest of the cover a charge could plausibly remove. Never water, never high ground —
+         * a demolition does not remove a mountain, and no efile key implies it does.
+         *
+         * Until 2026-08-26 this set was unconditional and the key was unread, so every efile got
+         * ATOMIC's rules. That was the `authored_options` gap in miniature: one set of engineering
+         * rules applied to content that authored two.
+         */
+        val EXTENDED_RAZEABLE_TERRAIN =
+            RAZEABLE_TERRAIN +
+                setOf(
+                    TerrainType.FOREST.value,
+                    TerrainType.BOCAGE.value,
+                    TerrainType.FORTIFICATION.value,
+                )
+
+        /**
+         * [RAZEABLE_TERRAIN], widened by the active efile's own `blow_any_terrain`. An efile with
+         * no `equip.cfg` at all — KAISER backs eight campaigns — says nothing, which reads as the
+         * narrow set, per `docs/design/efile-config.md` §2 trap 4.
+         *
+         * **`Barrage` reads this too** (OG 9.2, 2026-08-26): shelling a hex destroys exactly what a
+         * demolition charge could have destroyed on it, so the two can never disagree about whether
+         * a wood or a snowfield may be turned into rubble. LXF sets neither `blow_any_terrain` nor
+         * `blow_mask`, so in its four campaigns clear ground stays clear however hard it is shelled;
+         * ATOMIC and BASEKORP set it and their guns can churn cover.
+         */
+        fun razeableTerrain(): Set<Int> =
+            if (EfileConfig.flag("blow_any_terrain", false)) EXTENDED_RAZEABLE_TERRAIN else RAZEABLE_TERRAIN
 
         /** Dry land beside open water, with no port on it yet. */
         fun isPortSite(

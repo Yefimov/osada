@@ -6,6 +6,7 @@ import org.osada.rules.CounterBatteryFire
 import org.osada.rules.Engineering
 import org.osada.rules.ExtendedLos
 import org.osada.rules.Minefields
+import org.osada.rules.UnitConditionPenalties
 
 /**
  * Every named OG equipment ability a record carries: a short badge code, and a plain-language line.
@@ -65,13 +66,10 @@ class EquipmentAbility internal constructor(
 private const val ATTR_MASK_AIR_SUPPORT = 8192
 private const val ATTR_MASK_CARRIER_DEPLOY = 524288
 
-private const val ATTR2_MASK_DISMOUNT_AFTER_MOVE = 2
 private const val ATTR2_MASK_NO_DIRT_AIRFIELDS = 4
 private const val ATTR2_MASK_ROCKET_BOMBER = 8
 private const val ATTR2_MASK_EVADE = 128
 
-private const val ATTR_EX_MASK_NO_LEADER = 1
-private const val ATTR_EX_MASK_NO_AMMO_PENALTY = 16
 private const val ATTR_EX_MASK_NO_NEED_STATION = 128
 private const val ATTR_EX_MASK_TORPEDO_BOMBER = 256
 private const val ATTR_EX_MASK_PARTIZAN = 1024
@@ -131,6 +129,19 @@ private val WIRED_ABILITIES: List<AbilityEntry> =
             "equipment.ability.counter_battery",
             "CBT",
         ),
+        // Wired 2026-08-26 (§N). Three abilities whose shipped strings already described a rule
+        // nothing executed: `UnitActionAvailability.mount` lifts the moved-this-turn block for
+        // `Dismount After Move`, `Leaders.generateLeader` and `HeroCampaign.attemptEmergence`
+        // honour `No Leader`, and `UnitConditionPenalties` exempts `No Ammo Penalty` from the
+        // dry-ammo halvings. Only the last is gated on a ruleset key (`dry_unit_penalties`), which
+        // is why the other two are not in `GATED_ABILITIES` below.
+        AbilityEntry(
+            { it.attr2 and ATTR2_MASK_DISMOUNT_AFTER_MOVE != 0 },
+            "equipment.ability.dismount_after_move",
+            "DAM",
+        ),
+        AbilityEntry({ it.attrEx and ATTR_EX_MASK_NO_LEADER != 0 }, "equipment.ability.no_leader", "-LD"),
+        AbilityEntry({ it.attrEx and ATTR_EX_MASK_NO_AMMO_PENALTY != 0 }, "equipment.ability.no_ammo_penalty", "-AP"),
     )
 
 /**
@@ -143,11 +154,6 @@ private val DESCRIPTIVE_ABILITIES: List<AbilityEntry> =
     listOf(
         AbilityEntry({ it.attr and ATTR_MASK_AIR_SUPPORT != 0 }, "equipment.ability.air_support", "ASP"),
         AbilityEntry({ it.attr and ATTR_MASK_CARRIER_DEPLOY != 0 }, "equipment.ability.carrier_deploy", "CVD"),
-        AbilityEntry(
-            { it.attr2 and ATTR2_MASK_DISMOUNT_AFTER_MOVE != 0 },
-            "equipment.ability.dismount_after_move",
-            "DAM",
-        ),
         AbilityEntry({ it.attr2 and ATTR2_MASK_NO_DIRT_AIRFIELDS != 0 }, "equipment.ability.no_dirt_airfields", "-DA"),
         AbilityEntry({ it.attr2 and ATTR2_MASK_ROCKET_BOMBER != 0 }, "equipment.ability.rocket_bomber", "RKT"),
         AbilityEntry({ it.attr2 and ATTR2_MASK_EVADE != 0 }, "equipment.ability.evade", "EVD"),
@@ -158,8 +164,6 @@ private val DESCRIPTIVE_ABILITIES: List<AbilityEntry> =
         // override of `Cut LOS` on the same record, but a record carrying `Allow LOF` ALONE gets
         // no behaviour from it, so a brass badge overstated it.
         AbilityEntry({ it.attr2 and ATTR2_MASK_ALLOW_LOF != 0 }, "equipment.ability.allow_lof", "LOF"),
-        AbilityEntry({ it.attrEx and ATTR_EX_MASK_NO_LEADER != 0 }, "equipment.ability.no_leader", "-LD"),
-        AbilityEntry({ it.attrEx and ATTR_EX_MASK_NO_AMMO_PENALTY != 0 }, "equipment.ability.no_ammo_penalty", "-AP"),
         AbilityEntry({ it.attrEx and ATTR_EX_MASK_NO_NEED_STATION != 0 }, "equipment.ability.no_need_station", "RAI"),
         AbilityEntry({ it.attrEx and ATTR_EX_MASK_TORPEDO_BOMBER != 0 }, "equipment.ability.torpedo_bomber", "TRP"),
         AbilityEntry({ it.attrEx and ATTR_EX_MASK_PARTIZAN != 0 }, "equipment.ability.partizan", "PTZ"),
@@ -184,6 +188,7 @@ class AbilityGates(
     val engineering: Boolean = Engineering.enabled(),
     val counterBattery: Boolean = CounterBatteryFire.enabled(),
     val extendedLos: Boolean = ExtendedLos.enabled(),
+    val dryUnitPenalties: Boolean = UnitConditionPenalties.enabled(),
 )
 
 /**
@@ -231,6 +236,11 @@ private fun gateFor(key: String): ((AbilityGates) -> Boolean)? =
         "equipment.ability.counter_battery" -> AbilityGates::counterBattery
 
         "equipment.ability.cut_los" -> AbilityGates::extendedLos
+
+        // `No Ammo Penalty` exempts a formation from halvings that only exist under
+        // `dry_unit_penalties` (wired 2026-08-26). With that rule off there is nothing to be
+        // exempt from, so the badge would promise a relief the player can never notice.
+        "equipment.ability.no_ammo_penalty" -> AbilityGates::dryUnitPenalties
 
         else -> null
     }

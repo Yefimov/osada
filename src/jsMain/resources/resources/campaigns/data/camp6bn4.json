@@ -1,0 +1,1372 @@
+[
+ {
+  "id": 0,
+  "scenario": "bn4s00.xml",
+  "startprestige": 0,
+  "intro": "BATTLE OF PINDUS - 3 NOV 1940<br><br>Pindus Mountains, Epirus<br><br>In your defense sector an Italian Division tries to advance on the strategic mountain pass at the town of Metsovo and threatens to cut off our supply routes and to separate our troops in Epirus and in Macedonia. Stop the attack and chase away the Italian troops from the Pindus Mountains! Our Cavalry Division will try to surround the enemy on their right flank and encircle the Italians together with your troops.<br><br>GOAL Capture all VH!<br><br>NOTE The unit occupying the town Vovousa, gets the chance of a Leader!",
+  "outcome": {
+   "briliant": {
+    "goto": 1,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 450,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "victory": {
+    "goto": 1,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 400,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "tactical": {
+    "goto": 1,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 350,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "You could not achieve your goals, the mission was a failure! You had your chance, we need commander who successfully complete orders. This was your last combat mission!<br><br>THE END!"
+   }
+  }
+ },
+ {
+  "id": 1,
+  "scenario": "bn4s01.xml",
+  "startprestige": 0,
+  "intro": "BATTLE OF KORYTSA - 16 NOV 1940<br><br>Morava Mountains, Albania<br><br>The Italian attack could be stopped along the entire front! Now we will take the initiative and launch an offensive on the eastern flank of the front. Target of the attack is traffic point Korytsa in Albania. A victory will strengthen the morale of our troops and our nation in general.<br><br>GOAL Capture all VH!<br><br>NOTE The unit occupying the town Korytsa gets the chance of gain experience!",
+  "outcome": {
+   "briliant": {
+    "goto": 2,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 450,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "victory": {
+    "goto": 2,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 400,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "tactical": {
+    "goto": 2,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 350,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "You could not achieve your goals, the mission was a failure! You had your chance, we need commander who successfully complete orders. This was your last combat mission!<br><br>THE END!"
+   }
+  }
+ },
+ {
+  "id": 2,
+  "scenario": "bn4s02.xml",
+  "startprestige": 0,
+  "intro": "KLISURA PASS - 6 JAN 1941<br><br>Trebeshine Heights, Albania<br><br>After your victory at Korytsa we could penetrate deep into Albanian territory. However, we need the strategic important Klisura pass to consolidate our position. You will be the right one for this job. Occupy the Klisura Pass and the surrounding heights of Trebeshine mountain range! <br><br>GOAL Take all Allies VH!<br><br>NOTE The unit occupying the Klisura Pass, gets the chance of a Leader!",
+  "outcome": {
+   "briliant": {
+    "goto": 3,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 500,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "victory": {
+    "goto": 3,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 450,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "tactical": {
+    "goto": 3,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 400,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "You could not achieve your goals, the mission was a failure! You had your chance, we need commander who successfully complete orders. This was your last combat mission!<br><br>THE END!"
+   }
+  }
+ },
+ {
+  "id": 3,
+  "scenario": "bn4s03.xml",
+  "startprestige": 0,
+  "intro": "ITALIAN SPRING OFFENSIVE - 9 MAR 1941<br><br>Trebeshine Heights, Albania<br><br>In the last few weeks the Italians reinforced their army in Albania with fresh troops and we await the start of an offensive. Defend with your troops the Trebeshine Heights and if necessary recapture lost ground! <br><br>GOAL Hold after the tenth turn 10 VH, 9 VH or 8 VH for BV, V or TV!<br><br>NOTE In this mission the AI has the first turn!",
+  "outcome": {
+   "briliant": {
+    "goto": 7,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 500,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "victory": {
+    "goto": 7,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 450,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "tactical": {
+    "goto": 7,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 400,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "You could not achieve your goals, the mission was a failure! You had your chance, we need commander who successfully complete orders. This was your last combat mission!<br><br>THE END!"
+   }
+  },
+  "briefing": {
+   "dialogue": [
+    {
+     "id": "bn4c01-choice",
+     "speaker": "General Staff",
+     "role": "Path selection",
+     "side": "right",
+     "text": "PATH SELECTION — for the next two scenarios. Choose the command under you want the fight:",
+     "choices": [
+      {
+       "id": "bn4c01-choice.0",
+       "text": "WESTERN MACEDONIA ARMY",
+       "effects": [
+        {
+         "id": "bn4c01-choice.0.route",
+         "type": "route",
+         "scenarioIndex": 7
+        },
+        {
+         "id": "bn4c01-choice.0.flag",
+         "type": "setFlag",
+         "flag": "camp6bn4_bn4c01_choice_0"
+        }
+       ],
+       "hint": "Lake Kastoria - Fight against the German 73rd Infantry Division blocking the retreat — Metsovo Pass - Pursuit of the German Leibstandarte SS Adolf Hitler"
+      },
+      {
+       "id": "bn4c01-choice.1",
+       "text": "CENTRAL MACEDONIA ARMY",
+       "effects": [
+        {
+         "id": "bn4c01-choice.1.route",
+         "type": "route",
+         "scenarioIndex": 5
+        },
+        {
+         "id": "bn4c01-choice.1.flag",
+         "type": "setFlag",
+         "flag": "camp6bn4_bn4c01_choice_1"
+        }
+       ],
+       "hint": "Retreat to Thessaloniki - Escape the overwhelming German 2nd Panzer Division — Thessaloniki - Evacuation - Evacuation of Thessaloniki"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "id": 4,
+  "scenario": "bn4c01.xml",
+  "startprestige": 0,
+  "intro": "PATH SELECTION<br><br>for the next two scenarios. Choose the command under you want the fight:<br><br>CENTRAL MACEDONIA ARMY<br><br>Retreat to Thessaloniki - Escape the overwhelming German 2nd Panzer Division <br>Thessaloniki - Evacuation - Evacuation of Thessaloniki<br><br>WESTERN MACEDONIA ARMY<br><br>Lake Kastoria - Fight against the German 73rd Infantry Division blocking the retraction <br>Metsovo Pass - Pursuit the German Leibstandarte SS Adolf Hitler",
+  "outcome": {
+   "briliant": {
+    "goto": 5,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": ""
+   },
+   "victory": {
+    "goto": 5,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": ""
+   },
+   "tactical": {
+    "goto": 5,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": ""
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": ""
+   }
+  }
+ },
+ {
+  "id": 5,
+  "scenario": "bn4s04.xml",
+  "startprestige": 0,
+  "intro": "RETREAT TO THESSALONIKI - 8 APR 1941<br><br>South of Doiran Lake, Central Macedonia<br><br>As expected, the Germans invaded our country in support of their unsuccessful Allies, the Italians. German armored forces, through Yugoslavia bypassing the Metaxas Line, are on their way to Thessaloniki and threaten to encircle our East Macedonia Army. I fear that we are not able to stop the Germans here. Withdraw your troops immediately to Thessaloniki and try to establish a new defense line there. Use for your non-motorized units the railway line Kilkis-Thessaloniki to escape the rapid German forces!<br><br>GOAL Retreat 22 ground units via Exit Points or hold after the eighth turn 4 VH for BV! Hold after the eighth turn 3 VH or 2 VH for V or TV!<br><br>NOTE It is advisable to delay the deployment partly until the second turn, and then to send non-motorized units immediately via train on their journey. In this mission the AI has the first turn!",
+  "outcome": {
+   "briliant": {
+    "goto": 6,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 250,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "victory": {
+    "goto": 6,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 225,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "tactical": {
+    "goto": 6,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 200,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "You could not achieve your goals, the mission was a failure! You had your chance, we need commander who successfully complete orders. This was your last combat mission!<br><br>THE END!"
+   }
+  }
+ },
+ {
+  "id": 6,
+  "scenario": "bn4s05.xml",
+  "startprestige": 0,
+  "intro": "THESSALONIKI - EVACUATION - 9 APR 1941<br><br>Thessaloniki, Central Macedonia<br><br>Thessaloniki is not to hold - Evacuate your troops to Athens via sea immediately! The remains of the Krussia Detachment and the 19th Motorised Infantry Division try to kept clear your back as long as possible!<br><br>GOAL Retreat 9 ground units (in sea transport) via Exit Points or hold after the seventh turn 4 VH for BV! Hold after the seventh turn 3 VH or 2 VH for V or TV!<br><br>NOTE Due to the short time between the missions at HQ no new units can be recruited!",
+  "outcome": {
+   "briliant": {
+    "goto": 9,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 325,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "victory": {
+    "goto": 9,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 300,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "tactical": {
+    "goto": 9,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 275,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "You could not achieve your goals, the mission was a failure! You had your chance, we need commander who successfully complete orders. This was your last combat mission!<br><br>THE END!"
+   }
+  }
+ },
+ {
+  "id": 7,
+  "scenario": "bn4s06.xml",
+  "startprestige": 0,
+  "intro": "LAKE KASTORIA - 15 APR 1941<br><br>Lake Kastoria, West Macedonia<br><br>As expected, the Germans invaded our country in support of their unsuccessful Allies, the Italians. Our East Macedonia Army capitulated already, our forces in Western Macedonia are destroyed and the Germans are close to Kozani. Thus our main forces in Albania threatens to cut off! We have no other choice but to immediate withdrawal from Albania. Advance with your troops immediately to Lake Kastoria and save our line of retreat!<br><br>GOAL Retreat 6 ground units via Exit Point or hold after the ninth turn 4 VH for BV! Hold after the ninth turn 3 VH or 2 VH for V or TV!",
+  "outcome": {
+   "briliant": {
+    "goto": 8,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 250,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "victory": {
+    "goto": 8,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 225,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "tactical": {
+    "goto": 8,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 200,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "You could not achieve your goals, the mission was a failure! You had your chance, we need commander who successfully complete orders. This was your last combat mission!<br><br>THE END!"
+   }
+  }
+ },
+ {
+  "id": 8,
+  "scenario": "bn4s07.xml",
+  "startprestige": 0,
+  "intro": "METSOVO PASS - 19 APR 1941<br><br>South of Grevena, West Macedonia<br><br>After your breakthrough at Lake Kastoria we could not hold open the gap for long time and only a few troops could escaped. You have now the Germans before and behind! A German SS unit, passed Lake Kastoria before, is already on their way to Metsovo pass and there is now the opportunity to attack this force from behind! Prevent the blockade of the Metsovo pass and allow further comrades to escape!<br><br>GOAL Capture all VH!<br><br>NOTE Due to the short time between the missions at HQ no new units can be recruited!",
+  "outcome": {
+   "briliant": {
+    "goto": 9,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 325,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "victory": {
+    "goto": 9,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 300,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "tactical": {
+    "goto": 9,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 275,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "You could not achieve your goals, the mission was a failure! You had your chance, we need commander who successfully complete orders. This was your last combat mission!<br><br>THE END!"
+   }
+  }
+ },
+ {
+  "id": 9,
+  "scenario": "bn4s08.xml",
+  "startprestige": 0,
+  "intro": "LAST STAND AT THERMOPYLAE - 24 APR 1941<br><br>Levadia, Central Greece<br><br>The Empire forces have set up a defensive position at Thermopylae to cover the evacuation of their main forces. Hasten to meet them and take over their positions, so that these forces also have a chance to escape across the sea!<br><br>GOAL Hold after the tenth turn 7 VH, 6 VH or 4 VH for BV, V or TV!<br><br>NOTE In this mission the AI has the first turn!",
+  "outcome": {
+   "briliant": {
+    "goto": 10,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 350,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "victory": {
+    "goto": 10,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 300,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "tactical": {
+    "goto": 10,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 250,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "lose": {
+    "goto": 10,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 225,
+    "text": "You could not achieve your goals, the mission was a failure!"
+   }
+  }
+ },
+ {
+  "id": 10,
+  "scenario": "bn4s09.xml",
+  "startprestige": 0,
+  "intro": "CRETE - INVASION - 20 MAY 1941<br><br>Chania, Crete<br><br>The crazy Germans actually try to conquer Crete from the air! Thwart this venture and destroy the German airborne troops!<br><br>Hold after the twelfth turn 6 VH, 5 VH or 4 VH for BV, V or TV!<br><br>NOTE In this mission the AI has the first turn! Last chance to buy a tank for the next six scenarios! ;)",
+  "outcome": {
+   "briliant": {
+    "goto": 12,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 400,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "victory": {
+    "goto": 11,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 350,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "tactical": {
+    "goto": 11,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 300,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "lose": {
+    "goto": 11,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 225,
+    "text": "You could not achieve your goals, the mission was a failure!"
+   }
+  }
+ },
+ {
+  "id": 11,
+  "scenario": "bn4s10.xml",
+  "startprestige": 0,
+  "intro": "CRETE - EVACUATION - 28 MAY 1941<br><br>Sphakia, Crete<br><br>The withdrawal from Crete, the evacuation to Egypt was ordered - the island is not to hold! Move to the south coast of the island and board the waiting vessels!<br><br>GOAL Retreat 12 ground units (in sea transport) via Exit Points!<br><br>NOTE Due to the short time between the missions at HQ no new units can be recruited!",
+  "outcome": {
+   "briliant": {
+    "goto": 12,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 550,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "victory": {
+    "goto": 12,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 500,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "tactical": {
+    "goto": 12,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 450,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "You could not achieve your goals, the mission was a failure! You had your chance, we need commander who successfully complete orders. This was your last combat mission!<br><br>THE END!"
+   }
+  }
+ },
+ {
+  "id": 12,
+  "scenario": "bn4s11.xml",
+  "startprestige": 0,
+  "intro": "EL ALAMEIN - 23 OCT 1942<br><br>Alam Naghil, south of El Alamein, Egypt<br><br>It is time to expel the Axis from Egypt! The offensive against the German-Italian positions at El Alamein has begun. Your troops have the task to attack the enemy positions east of Ruweisat Ridge and - if possible - to capture. The main attack will take place in the North and - in case of success -  force the entire German-Italian front to retreat!<br><br>GOAL Capture all VH!<br><br>NOTE A fighter squadron, trained and equipped by our British Allies, is subject to your command. Congratulations!",
+  "outcome": {
+   "briliant": {
+    "goto": 14,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 550,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "victory": {
+    "goto": 14,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 450,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "tactical": {
+    "goto": 14,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 400,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "You could not achieve your goals, the mission was a failure! You had your chance, we need commander who successfully complete orders. This was your last combat mission!<br><br>THE END!"
+   }
+  },
+  "briefing": {
+   "dialogue": [
+    {
+     "id": "bn4c02-choice",
+     "speaker": "General Staff",
+     "role": "Path selection",
+     "side": "right",
+     "text": "PATH SELECTION — for the last part of the campaign. Choose the side for which you want to fight:",
+     "choices": [
+      {
+       "id": "bn4c02-choice.0",
+       "text": "GREEK GOVERNMENT (Hellenic Army)",
+       "effects": [
+        {
+         "id": "bn4c02-choice.0.route",
+         "type": "route",
+         "scenarioIndex": 14
+        },
+        {
+         "id": "bn4c02-choice.0.flag",
+         "type": "setFlag",
+         "flag": "camp6bn4_bn4c02_choice_0"
+        }
+       ],
+       "hint": "Italian Campaign 1944 — Battle of Athens 1944-45 — Greek Civil War 1946-49"
+      },
+      {
+       "id": "bn4c02-choice.1",
+       "text": "GREEK COMMUNIST PARTY (ELAS/DSE)",
+       "effects": [
+        {
+         "id": "bn4c02-choice.1.route",
+         "type": "route",
+         "scenarioIndex": 21
+        },
+        {
+         "id": "bn4c02-choice.1.flag",
+         "type": "setFlag",
+         "flag": "camp6bn4_bn4c02_choice_1"
+        }
+       ],
+       "hint": "Resistance in Greek 1943-44 — Battle of Athens 1944-45 — Greek Civil War 1946-49 — ATTENTION! You lose your current core but get a new one with equivalent experience and increased chance for new leaders."
+      }
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "id": 13,
+  "scenario": "bn4c02.xml",
+  "startprestige": 0,
+  "intro": "PATH SELECTION<br><br>for the last part of the campaign. Choose the side for which you want to fight:<br><br>GREEK GOVERNMENT (Hellenic Army)<br><br>Italian Campaign 1944<br>Battle of Athens 1944-45<br>Greek Civil War 1946-49<br><br>GREEK COMMUNIST PARTY (ELAS/DSE)<br><br>Resistance in Greek 1943-44<br>Battle of Athens 1944-45<br>Greek Civil War 1946-49<br><br>ATTENTION! If you choose the communist side, you lose your current core but get a new one with equivalent experience and increased chance for new leaders.",
+  "outcome": {
+   "briliant": {
+    "goto": 14,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": ""
+   },
+   "victory": {
+    "goto": 14,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": ""
+   },
+   "tactical": {
+    "goto": 14,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": ""
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": ""
+   }
+  }
+ },
+ {
+  "id": 14,
+  "scenario": "bn4s12.xml",
+  "startprestige": 0,
+  "intro": "CRUSHING THE MUTINY - 24 APR 1944<br><br>At sea off Alexandria, Egypt<br><br>Bad news from Egypt! A pro-EAM (National Liberation Front of Greece) mutiny inside the Greek Navy and the first Greek Brigade is broke out. Your troops are shipped from Palestine to Alexandria and help to down the revolt!<br><br>GOAL Capture all VH!<br><br>NOTE In this mission the AI has the first turn!",
+  "outcome": {
+   "briliant": {
+    "goto": 15,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 550,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "victory": {
+    "goto": 15,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 500,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "tactical": {
+    "goto": 15,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 450,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "You could not achieve your goals, the mission was a failure! You had your chance, we need commander who successfully complete orders. This was your last combat mission!<br><br>THE END!"
+   }
+  }
+ },
+ {
+  "id": 15,
+  "scenario": "bn4s13.xml",
+  "startprestige": 0,
+  "intro": "FOGLIA RIVER - 2 SEP 1944<br><br>South of Foglia River , Italy<br><br>Welcome in Italy! The attack on the Gothic Line is under way! However, the German resistance is stronger than expected and parts of the British 8th Army must already be taken out of the front due to high losses and exhaustion. Your troops will replace these units. Perform a frontal assault against the German defense at the Foglia River and show our Allies friends to what Greeks are able!<br><br>GOAL Hold after the ninth turn 12 VH, 11 VH or 9 VH for BV, V or TV!<br><br>NOTE The unit occupying the town Morciano Di Romagna gets full replacements!",
+  "outcome": {
+   "briliant": {
+    "goto": 16,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 400,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "victory": {
+    "goto": 16,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 350,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "tactical": {
+    "goto": 16,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 300,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "You could not achieve your goals, the mission was a failure! You had your chance, we need commander who successfully complete orders. This was your last combat mission!<br><br>THE END!"
+   }
+  }
+ },
+ {
+  "id": 16,
+  "scenario": "bn4s14.xml",
+  "startprestige": 0,
+  "intro": "BATTLE OF RIMINI - 15 SEP 1944<br><br>South of Conca River, Italy<br><br>The Germans retreated behind the Conca River and established a new defensive line there. Break through that line, advance on Rimini and free the city!<br><br>GOAL Capture all VH!<br><br>NOTE A bomber squadron, trained and equipped by our British Allies, is subject to your command. Congratulations!",
+  "outcome": {
+   "briliant": {
+    "goto": 17,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 550,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "victory": {
+    "goto": 17,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 450,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "tactical": {
+    "goto": 17,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 400,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "You could not achieve your goals, the mission was a failure! You had your chance, we need commander who successfully complete orders. This was your last combat mission!<br><br>THE END!"
+   }
+  }
+ },
+ {
+  "id": 17,
+  "scenario": "bn4s15.xml",
+  "startprestige": 0,
+  "intro": "BATTLE OF ATHENS - 12 DEC 1944<br><br>Athens, Greece<br><br>In Athens the Communists are gone over to armed struggle! At present, we have insufficient forces stationed in Athens, but the British have pledged to fly in the 4th Indian Division from Italy immediately. Beat back the communists and clear Athens and the surrounding areas from the rebels!<br><br>GOAL Capture all VH!<br><br>NOTE In this mission the AI has the first turn!",
+  "outcome": {
+   "briliant": {
+    "goto": 18,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 750,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "victory": {
+    "goto": 18,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 650,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "tactical": {
+    "goto": 18,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 550,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "You could not achieve your goals, the mission was a failure! You had your chance, we need commander who successfully complete orders. This was your last combat mission!<br><br>THE END!"
+   }
+  }
+ },
+ {
+  "id": 18,
+  "scenario": "bn4s16.xml",
+  "startprestige": 0,
+  "intro": "BATTLE OF KONITSA - 25 DEC 1947<br><br>South of Konitsa, Epirus<br><br>The communist rebels have attacked the city Konitsa on the Greek-Albanian border! The garrison defended the town stubbornly and until now was able to fend off all attacks. Advance on Konitsa and expel the rebels!<br><br>GOAL Capture all VH!<br><br>NOTE In this mission the AI has the first turn!",
+  "outcome": {
+   "briliant": {
+    "goto": 19,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 550,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "victory": {
+    "goto": 19,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 500,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "tactical": {
+    "goto": 19,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 400,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "You could not achieve your goals, the mission was a failure! You had your chance, we need commander who successfully complete orders. This was your last combat mission!<br><br>THE END!"
+   }
+  }
+ },
+ {
+  "id": 19,
+  "scenario": "bn4s17.xml",
+  "startprestige": 0,
+  "intro": "BATTLE OF VITSI - 9 SEP 1948<br><br>South of Lake Kastoria, West Macedonia<br><br>Our last operation in the Grammos mountains was a bust! Most rebels escaped in the Vitsi region. Our job is now to prevent a renewed Redoubt in the Vitsi mountains and to destroy the escaped enemy forces. We plan a coordinated attack from the south and east to encircle the rebels. Your troops will lead the attack from the south and clean the area around the Lake Kastoria!<br><br>GOAL Capture all VH!<br><br>NOTE The unit occupying the town Dendrochori gets full replacements!",
+  "outcome": {
+   "briliant": {
+    "goto": 20,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 900,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "victory": {
+    "goto": 20,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 800,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "tactical": {
+    "goto": 20,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 700,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "You could not achieve your goals, the mission was a failure! You had your chance, we need commander who successfully complete orders. This was your last combat mission!<br><br>THE END!"
+   }
+  }
+ },
+ {
+  "id": 20,
+  "scenario": "bn4s18.xml",
+  "startprestige": 0,
+  "intro": "OPERATION TORCH - 24 AUG 1949<br><br>East of  Mt Grammos, Pindus Mountains<br><br>We are on the verge of winning the war! The defeated rebels have been entrenched in the mountains at the Albania border and the General Staff has ordered a last major operation in order to complete our victory. The Americans have supplied us with modern dive bomber and they should help to destroy the strong fortifications. Chase off the remaining communist troops from their fortifications in the Grammos mountains!<br><br>GOAL Capture all VH!",
+  "outcome": {
+   "briliant": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>CAMPAIGN WON!!!<br><br>Congratulations, you have successfully completed the campaign!"
+   },
+   "victory": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>CAMPAIGN WON!!!<br><br>Congratulations, you have successfully completed the campaign!"
+   },
+   "tactical": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>CAMPAIGN WON!!!<br><br>Congratulations, you have successfully completed the campaign!"
+   },
+   "lose": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "You could not achieve your goals, the mission was a failure!<br><br>THE END!!!<br><br>Congratulations, you have completed the campaign!"
+   }
+  }
+ },
+ {
+  "id": 21,
+  "scenario": "bn4s19.xml",
+  "startprestige": 0,
+  "intro": "ESCAPE FROM EGYPT - 8 MAY 1943<br><br>Military Prison Al-Qabbari, Alexandria<br><br>The renowned hero now only a public enemy! Jailed in the military prison of Al-Qabbari you are waiting for your trial because of communist propaganda and insubordination against the Middle East High Command and the Greek government in exile. However, your friends managed to organize your escape to Greece and to provide you with a getaway car. At the airport of Alexandria a plane is ready for take off and alternatively a vessel waiting for you located in the port of Al Muaddiyah. Reach one of these points without to be caught at the control points of the Brits! Friends on the Greek freighters SS Dimitrios Inglessis and SS Thrace monitor the airport and the port for you!<br><br>GOAL Retreat your MSU via Exit Point!",
+  "outcome": {
+   "briliant": {
+    "goto": 22,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "victory": {
+    "goto": 22,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "tactical": {
+    "goto": 22,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "You could not achieve your goals, the mission was a failure! You had your chance, we need commander who successfully complete orders. This was your last combat mission!<br><br>THE END!"
+   }
+  }
+ },
+ {
+  "id": 22,
+  "scenario": "bn4s20.xml",
+  "startprestige": 0,
+  "intro": "PUNISH THE TRAITORS! - 10 OCT 1943<br><br>East of Kalabaka, Thessaly<br><br>Welcome to Greece, Commander! Experienced leaders like you we are needed urgently. The 13th ELAS Division is now under your command and your first task is a punishment operation against the traitorous EDES Bandits be making common cause with the Germans! Currently, the EDES control parts of the road Ioannina-Metsovo-Kalabaka. You will attack the EDES around Kalabaka and bring the area back under our control!<br><br>GOAL Capture all VH!<br><br>NOTE If you do not like the composition of your new Core, you can sell units and acquire new ones with same experience. However,  the increased 35% chance for a leader get lost. New units start with a chance of 10%!<br><br>The unit occupying the town Spathades, gets the chance of a Leader!",
+  "outcome": {
+   "briliant": {
+    "goto": 23,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 350,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "victory": {
+    "goto": 23,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 300,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "tactical": {
+    "goto": 23,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 250,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "You could not achieve your goals, the mission was a failure! You had your chance, we need commander who successfully complete orders. This was your last combat mission!<br><br>THE END!"
+   }
+  }
+ },
+ {
+  "id": 23,
+  "scenario": "bn4s21.xml",
+  "startprestige": 0,
+  "intro": "BATTLE OF AGORELITSA - 17 JUL 1944<br><br>South of Korifasi, Peloponnese<br><br>You will carry out a strike against the German occupation forces on the western Peloponnese. Target of your attack is the 41st Fortress Division and the neutralization of the coastal artillery near Marathopoli. The Germans have some battle-hardened units in this area, so be careful!<br><br>GOAL Capture all VH!<br><br>NOTE The unit occupying the town Agorelitsa, gets the chance of a Leader!",
+  "outcome": {
+   "briliant": {
+    "goto": 24,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 650,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "victory": {
+    "goto": 24,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 600,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "tactical": {
+    "goto": 24,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 550,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "You could not achieve your goals, the mission was a failure! You had your chance, we need commander who successfully complete orders. This was your last combat mission!<br><br>THE END!"
+   }
+  }
+ },
+ {
+  "id": 24,
+  "scenario": "bn4s22.xml",
+  "startprestige": 0,
+  "intro": "BATTLE OF ATHENS - 12 DEC 1944<br><br>Athens, Greece<br><br>After the withdrawal of the Germans from Greece, the royalists have returned to our country and think they can - with the help of the disgusting Brits - rob the fruits of our liberation struggle! They also not shy away from massacre peaceful protesters to keep themselves in power. Once again it's time to take up arms and to chase these parasites out of our country!<br><br>GOAL Capture all VH!<br><br>NOTE The British will try to fly in reinforcements, so occupy as soon as possible all airfields!",
+  "outcome": {
+   "briliant": {
+    "goto": 25,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 800,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "victory": {
+    "goto": 25,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 750,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "tactical": {
+    "goto": 25,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 700,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "lose": {
+    "goto": 25,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 650,
+    "text": "You could not achieve your goals, the mission was a failure!"
+   }
+  }
+ },
+ {
+  "id": 25,
+  "scenario": "bn4s23.xml",
+  "startprestige": 0,
+  "intro": "BATTLE OF KONITSA - 25 DEC 1947<br><br>Konitsa, Epirus<br><br>Our struggle for a free Greece is now entering a decisive phase. Our political leadership has decided that we need a major city as capital for our government to gain further international validity for our fight. The choice has fallen on the city Konitsa at the Albanian border and the battle is already under way. But reinforcements are on the way to Konitsa to relieve the garrison. Fend off the attacks of the Athenian mercenary troops and bring the liberation of Konitsa to a successful end!<br><br>GOAL Capture all VH!",
+  "outcome": {
+   "briliant": {
+    "goto": 26,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 650,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "victory": {
+    "goto": 26,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 600,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "tactical": {
+    "goto": 26,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 550,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "You could not achieve your goals, the mission was a failure! You had your chance, we need commander who successfully complete orders. This was your last combat mission!<br><br>THE END!"
+   }
+  }
+ },
+ {
+  "id": 26,
+  "scenario": "bn4s24.xml",
+  "startprestige": 0,
+  "intro": "FIRST BATTLE OF GRAMMOS - 18 JUL 1948<br><br>Mt Grammos, Pindus Mountains<br><br>The battle for the Grammos mountains raged for nearly a month and the Athenian fascists send more and more mercenary troops into battle. We have no choice, we must abandon the Grammos mountains temporarily and dare the breakout! To achieve this, you will carry out a concentrated attack on the center of the enemy forces! Beat a breach in the enemy's ranks and lead our troops in Northeast direction to the Vitsi mountains!<br><br>GOAL Retreat 9 ground units via Exit Points!",
+  "outcome": {
+   "briliant": {
+    "goto": 27,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 550,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "victory": {
+    "goto": 27,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 500,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "tactical": {
+    "goto": 27,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 450,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "lose": {
+    "goto": 27,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 400,
+    "text": "You could not achieve your goals, the mission was a failure!"
+   }
+  }
+ },
+ {
+  "id": 27,
+  "scenario": "bn4s25.xml",
+  "startprestige": 0,
+  "intro": "BATTLE OF VITSI - 9 SEP 1948<br><br>Lake Kastoria, West Macedonia<br><br>It has not gone unnoticed that our main forces have retreated into the Vitsi mountains. With a new offensive the enemy wants us to deathblow here. But he underestimated our remaining strength and attack with only weak forces. After we have fool him with our withdraw he is now trapped! Destroy the enemy troops - a victory is urgently needed in order to maintain the morale of our forces!<br><br>GOAL Capture all VH!<br><br>NOTE In this mission the AI has the first turn!",
+  "outcome": {
+   "briliant": {
+    "goto": 28,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 450,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "victory": {
+    "goto": 28,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 400,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "tactical": {
+    "goto": 28,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 350,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!"
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "You could not achieve your goals, the mission was a failure! You had your chance, we need commander who successfully complete orders. This was your last combat mission!<br><br>THE END!"
+   }
+  }
+ },
+ {
+  "id": 28,
+  "scenario": "bn4s26.xml",
+  "startprestige": 0,
+  "intro": "ARIDAEA - 14 DEC 1948<br><br>East of Aridaea, West Macedonia<br><br>The liberation of Greek cities is still at the top of our priorities. Your Division will carry out an surprise attack across the Yugoslav border on Aridaea and free the city! If the resistance is broken here, the further advance on Veroea and Edessa is planned. Let's hope that you succeed and meet an unprepared enemy!<br><br>GOAL Capture all VH!",
+  "outcome": {
+   "briliant": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>CAMPAIGN WON!!!<br><br>Congratulations, you have successfully completed the campaign!"
+   },
+   "victory": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>CAMPAIGN WON!!!<br><br>Congratulations, you have successfully completed the campaign!"
+   },
+   "tactical": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "You have achieved all objectives, the mission was a complete success. Good work!<br><br>CAMPAIGN WON!!!<br><br>Congratulations, you have successfully completed the campaign!"
+   },
+   "lose": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "You could not achieve your goals, the mission was a failure!<br><br>THE END!!!<br><br>Congratulations, you have completed the campaign!"
+   }
+  }
+ }
+]

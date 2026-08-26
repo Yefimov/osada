@@ -13,6 +13,7 @@ import org.osada.model.buyUnit
 import org.osada.model.clearMinefield
 import org.osada.model.deployPlayerUnit
 import org.osada.model.disbandUnit
+import org.osada.model.fireBarrage
 import org.osada.model.getPlayer
 import org.osada.model.getUnitById
 import org.osada.model.layMinefield
@@ -25,6 +26,7 @@ import org.osada.model.unmountUnit
 import org.osada.model.upgradeUnit
 import org.osada.multiplayer.model.MultiplayerSession
 import org.osada.multiplayer.protocol.MultiplayerErrorCode
+import org.osada.rules.Barrage
 import org.osada.rules.Engineering
 import org.osada.rules.EngineeringWork
 import org.osada.rules.Minefields
@@ -94,6 +96,13 @@ class OsadaGameCommandValidator(
                 // them with no action chip ever having been drawn. Both return NOT_ALLOWED rather
                 // than mutating anything, so a rejected attempt costs no random draw either.
                 is LayMines, is ClearMines -> unit != null && Minefields.enabled()
+                // The target is NOT re-derived here: `fireBarrage` re-checks range, ammunition and
+                // the unspotted condition itself and refuses without spending anything, which is
+                // the same contract `layMinefield` has. What is checked is that the hex exists.
+                is BarrageHex ->
+                    unit != null &&
+                        Barrage.enabled() &&
+                        map.map?.getOrNull(command.target.y)?.getOrNull(command.target.x) != null
                 // Same reasoning, plus one of its own: the job NAME is validated here rather than
                 // in `beginEngineering`, because a name this build does not know is a protocol
                 // mismatch and must be refused outright, not silently treated as "no work".
@@ -152,6 +161,8 @@ class OsadaGameCommandApplier(
             is MountUnit -> map.mountUnit(requireUnit(map, command.unitId))
             is UnmountUnit -> map.unmountUnit(requireUnit(map, command.unitId))
             is LayMines -> map.layMinefield(requireUnit(map, command.unitId))
+            is BarrageHex ->
+                map.fireBarrage(requireUnit(map, command.unitId), command.target.y, command.target.x)
             is BeginEngineering ->
                 map.beginEngineering(
                     requireUnit(map, command.unitId),
@@ -235,6 +246,7 @@ private fun GameCommand.unitIdOrNull(): Int? =
         is MountUnit -> unitId
         is UnmountUnit -> unitId
         is LayMines -> unitId
+        is BarrageHex -> unitId
         is ClearMines -> unitId
         is BeginEngineering -> unitId
         is DeployUnit -> unitId

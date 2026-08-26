@@ -6,6 +6,7 @@ import org.osada.MovMethod
 import org.osada.TerrainType
 import org.osada.UnitClass
 import org.osada.UnitType
+import org.osada.model.EfileConfig
 import org.osada.model.Equipment
 import org.osada.model.EquipmentData
 import org.osada.model.GameMap
@@ -72,6 +73,9 @@ abstract class OgRulesTestHarness {
     protected fun installTestWorld() {
         TerrainEx.resetForTest()
         ActiveRuleset.resetForTest()
+        // The efile's own `equip.cfg` decides some of what these rules do (`blow_any_terrain`), and
+        // a leaked key would make one test's efile another test's world.
+        EfileConfig.resetForTest()
         Equipment.resetEquipment()
         Equipment.putEquipment(
             sapperEqid,
@@ -133,6 +137,7 @@ abstract class OgRulesTestHarness {
     protected fun clearTestWorld() {
         TerrainEx.resetForTest()
         ActiveRuleset.resetForTest()
+        EfileConfig.resetForTest()
         GameHolder.instance = null
     }
 

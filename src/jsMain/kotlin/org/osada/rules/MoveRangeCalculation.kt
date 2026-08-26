@@ -206,6 +206,7 @@ internal object MoveRangeCalculation {
                 onRoad && roadCost != IMPASSABLE_TERRAIN_COST -> roadCost
                 else -> context.movementTable[terrainColumn(hex.terrain, context)]
             }
+        neighbor.cost = withRubbleSurcharge(neighbor.cost, hex)
         val inEnemyZoc =
             !context.ignoresZoc &&
                 (hex.isSpotted(context.unitSide) || hex.unit?.tempSpotted == true) &&
@@ -239,6 +240,7 @@ internal object MoveRangeCalculation {
      * the real terrain. Impassable stays impassable -- the table's 255 sentinel is never reached
      * for these columns by any land method, so nothing here floats a ship or an aircraft.
      */
+
     private fun terrainColumn(
         terrain: Int,
         context: MoveContext,
@@ -251,6 +253,28 @@ internal object MoveRangeCalculation {
             context.mountainTrained && terrain in MOUNTAIN_TRAINED_TERRAIN -> TerrainType.CLEAR.value
             else -> terrain
         }
+
+    /**
+     * OG 9.2: *"a successful barrage attack on an empty hex can make the terrain harder to move
+     * through"*.
+     *
+     * Craters (OSADA's own rule, `rules/Craters`) cost the same on entry: a hole in the ground is a
+     * hole whether shells dug it out of a field or out of a village.
+     *
+     * A surcharge rather than a terrain swap, for the reason [org.osada.model.Hex.rubble] gives —
+     * OG's rubble is an efile-authored terrain index that most efiles use for something else.
+     * Applied AFTER the road bonus on purpose: shelled ground is exactly what makes a road worth
+     * less. A sentinel cost is left alone: impassable stays impassable, and the ZOC floor is a
+     * floor rather than a price.
+     */
+    private fun withRubbleSurcharge(
+        cost: Int,
+        hex: Hex,
+    ): Int {
+        val churned = hex.rubble || (hex.crater && Craters.enabled())
+        val chargeable = cost != IMPASSABLE_TERRAIN_COST && cost != ZOC_MOVE_COST
+        return if (churned && chargeable) cost + Barrage.RUBBLE_MOVE_SURCHARGE else cost
+    }
 
     /** The three columns OG's `Mountain` ability discounts; see [terrainColumn]. */
     private val MOUNTAIN_TRAINED_TERRAIN =

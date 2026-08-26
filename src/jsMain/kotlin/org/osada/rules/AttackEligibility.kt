@@ -94,7 +94,41 @@ internal object AttackEligibility {
         val unitsUsable = !attacker.destroyed && attacker.getAmmo() > 0 && !defender.destroyed
         if (!unitsUsable) return false
         val canTargetAir = !UnitPredicates.isAir(defender) || attacker.unitData().airatk > 0
-        return UnitPredicates.isEnemy(attacker, defender) && canTargetAir
+        val canTargetGround = UnitPredicates.isAir(defender) || hasNonAirAttack(attacker)
+        return UnitPredicates.isEnemy(attacker, defender) && canTargetAir && canTargetGround
+    }
+
+    /**
+     * Whether [attacker] can hurt anything that is not an aircraft — any of hard, soft or naval
+     * attack, or the Anti-Tank attachment that supplies one.
+     *
+     * **This is OG's own rule, and OG derives it exactly this way.** Its ability list shows
+     * *"ground attack for AD and Flaks"* on a record when that record's hard/soft attack values are
+     * non-zero, and on no other: three controlled exports settled it on 2026-08-26 with every
+     * special byte zeroed (`docs/og-fidelity-plan.md` §Q.4). Measured over LXF, 340 of 344 FlaK
+     * records display it and the four that do not are `Mobile Radar`; of 138 Air Defence records the
+     * eleven without it are radars and two surface-to-air missiles.
+     *
+     * The air half of the same rule has been here since the AA-badge fix — a radar with `airatk = 0`
+     * cannot engage aircraft — and the ground half was simply missing. Without it **6,011 of the
+     * 56,970 shipped records** could order an attack that resolves for zero damage and draws return
+     * fire: 4,097 ground transports, 566 air transports, 337 naval transports, 325 balloons, 170
+     * fortifications and 127 air-defence records (SAM batteries, radars, `AD Tower`).
+     *
+     * **Deliberately the widest of the possible gates.** A per-stat version — no `hardatk`, no
+     * attacking a tank — would stop infantry engaging armour across all 502 shipped scenarios, which
+     * is the §5.10 hazard this whole document is written around. This one only refuses a formation
+     * that can hurt nothing but aircraft, which is the same thing OG's own display says about it.
+     */
+    private fun hasNonAirAttack(attacker: GameUnit): Boolean {
+        val data = attacker.unitData()
+        return data.hardatk > 0 ||
+            data.softatk > 0 ||
+            data.navalatk > 0 ||
+            // A core formation may fit Anti-Tank, which lands on `attackerAttack` against a hard
+            // target (`AttackCalculationAttachments`). Nothing in `availableSlots` stops a transport
+            // buying it, so a bought capability must not be refused by this gate.
+            Attachments.bonus(attacker, Attachments.SLOT_ANTI_TANK) > 0
     }
 
     /** Diagnostic: names the first eligibility gate that blocks [attacker] from striking
@@ -112,9 +146,7 @@ internal object AttackEligibility {
 
             airGroundedByWeather(attacker) -> "attacker is an air unit grounded by weather"
             attacker.getAmmo() <= 0 -> "attacker is out of ammo"
-            UnitPredicates.isAir(defender) && attacker.unitData().airatk <= 0 ->
-                "attacker cannot target air (airatk=${attacker.unitData().airatk})"
-
+            targetTypeBlockReason(attacker, defender) != null -> targetTypeBlockReason(attacker, defender)
             !Equipment.canInitiateAttackOnUnitType(attacker.getEqid(), defender.getEqid()) ->
                 "target-type matrix (attacker attr=${attacker.unitData().attr}, target=${defender.unitData().target})"
 
@@ -124,6 +156,24 @@ internal object AttackEligibility {
 
             !isInAttackRange(attacker, defender) ->
                 "out of range (range=${getUnitAttackRange(attacker)})"
+
+            else -> null
+        }
+
+    /** The half of [attackBlockReason] that is about what [attacker] can hurt at all: aircraft need
+     *  an air attack, everything else needs [hasNonAirAttack]. Split out to keep the diagnostic
+     *  chain inside detekt's complexity budget. */
+    private fun targetTypeBlockReason(
+        attacker: GameUnit,
+        defender: GameUnit,
+    ): String? =
+        when {
+            UnitPredicates.isAir(defender) && attacker.unitData().airatk <= 0 ->
+                "attacker cannot target air (airatk=${attacker.unitData().airatk})"
+
+            !UnitPredicates.isAir(defender) && !hasNonAirAttack(attacker) ->
+                "attacker has no ground/naval attack at all (hard/soft/naval all 0) - OG shows no " +
+                    "GroundAttack ability on such a record"
 
             else -> null
         }

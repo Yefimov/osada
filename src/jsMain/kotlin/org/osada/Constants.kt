@@ -557,6 +557,11 @@ class UiSettings {
     // discrete unit/fire cues — replaces the old hardcoded soundVolume*0.8 coupling.
     var ambientVolume: Double = 0.4
     var deployMode: Boolean = false
+
+    /** Whether the selected formation is choosing a hex to shell (OG 9.2, `rules/Barrage`).
+     *  Set by the Barrage chip, cleared by firing, by pressing it again, or by selecting anything
+     *  else -- a mode the player can enter by accident must be one they can leave the same way. */
+    var barrageMode: Boolean = false
     var markCombatUnits: Boolean = true
     var markOwnUnits: Boolean = false
     var markEnemyUnits: Boolean = false

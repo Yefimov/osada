@@ -22,7 +22,9 @@ import org.osada.uiSettings
  * function-count/class-size limits -- not expected to be called from elsewhere.
  */
 internal class MapClickHandler(
-    private val ui: UI,
+    // Internal, not private: `MapClickBarrage.kt`'s extension needs it, the same arrangement
+    // `MoveExecutorHelpers.kt` has with `MoveExecutor.gameMap`.
+    internal val ui: UI,
 ) {
     /** The unit under the cursor, or null if it's an enemy hidden by fog-of-war (never surfaced
      *  to click handling — same visibility rule as the map tooltips). */
@@ -89,6 +91,7 @@ internal class MapClickHandler(
                 isValidDeployTarget(hex, map, map.currentPlayer?.side ?: 0)
 
         logIfEnemyUnattackable(map, hex, currentUnit, unit)
+        if (uiSettings.barrageMode) return resolveBarrageClick(map, cell, hex)
         return when {
             currentUnit != null && hex.isAttackSel && !currentUnit.hasFired ->
                 tryAttackAt(cell.row, cell.col)
@@ -120,6 +123,7 @@ internal class MapClickHandler(
         currentPlayerSide: Int,
     ): Boolean {
         val currentUnit = map.currentUnit
+        if (uiSettings.barrageMode) return resolveBarrageClick(map, cell, hex)
         return when {
             // Movement must win over deployment. In particular, aircraft may occupy the air layer
             // above a hex containing an enemy ground unit.

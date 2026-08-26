@@ -10,6 +10,7 @@ import org.osada.model.GameUnit
 import org.osada.model.Hex
 import org.osada.model.TerrainEx
 import org.osada.model.getPlayer
+import org.osada.rules.Craters
 import org.osada.rules.GameRules
 import org.osada.rules.canEntrench
 import org.osada.rules.distance
@@ -91,7 +92,10 @@ internal object AIPositionEvaluation {
         originalHex: Hex,
     ): Int {
         var score = 0
-        if (GameRules.canEntrench(unit) && unit.entrenchment < TerrainEx.baseEntrenchment(hex.terrain)) {
+        // The same floor `GameUnitLifecycle` will actually apply, so the AI prefers a shell hole
+        // for the reason the rule gives it one rather than walking past it (`rules/Craters`).
+        val cover = maxOf(TerrainEx.baseEntrenchment(hex.terrain), Craters.entrenchmentFloor(hex))
+        if (GameRules.canEntrench(unit) && unit.entrenchment < cover) {
             score += TERRAIN_ENTRENCH_BONUS
         }
         if (terrainInitiative[originalHex.terrain] < terrainInitiative[hex.terrain]) score += TERRAIN_INITIATIVE_BONUS

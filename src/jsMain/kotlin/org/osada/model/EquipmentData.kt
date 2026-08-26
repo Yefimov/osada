@@ -54,6 +54,20 @@ class EquipmentData {
      */
     var attrEx: Int = 0
 
+    /**
+     * OG's **Bomber Size** (`equip.xeqp` @22, OpenSuite's `BombCode` column), imported 2026-08-26.
+     *
+     * It is what gates OG's `Can bombard/barrage` ability — the `'='` mark the game's own
+     * `tips1.txt` tells the player to look for — and it is **not** one of the 52 special bits, which
+     * is why the ability was filed as "blocked on an unknown bit" until the owner checked in OG
+     * itself (`docs/og-fidelity-plan.md` §Q.2). Every LXF Level Bomber and every Battleship carries
+     * a non-zero value; 6,872 of the 56,970 merged records do.
+     *
+     * Defaults to 0 for the 4,271 records whose pre-merge source could not be re-identified and for
+     * Panzer Marshal's own stock rosters — "no data", the same rule [attr2] follows.
+     */
+    var bombsize: Int = 0
+
     // 1-based (1=January), matching the OG CSV's own MonthAvail/MonthExpired convention. Default
     // to full-year coverage: any equipment JSON whose parsehints don't include these two fields
     // (PM's own original adlerkorps/pacific sets, never touched by the OG import) behaves exactly
@@ -107,6 +121,7 @@ internal fun EquipmentData.withStatMultiplier(multiplier: Int): EquipmentData =
         result.embark = embark
         result.attr2 = attr2
         result.attrEx = attrEx
+        result.bombsize = bombsize
         result.monthavailable = monthavailable
         result.monthexpired = monthexpired
     }
@@ -192,7 +207,8 @@ private fun EquipmentData.applyEquipmentFieldsC(
     }
 }
 
-/** OG's `Special4`/`SpecialEx`, added 2026-08-19 -- see [EquipmentData.attr2] / [EquipmentData.attrEx]. */
+/** OG's `Special4`/`SpecialEx` (2026-08-19) and Bomber Size (2026-08-26) -- see
+ *  [EquipmentData.attr2], [EquipmentData.attrEx] and [EquipmentData.bombsize]. */
 private fun EquipmentData.applyEquipmentFieldsD(
     hint: String,
     value: dynamic,
@@ -200,5 +216,6 @@ private fun EquipmentData.applyEquipmentFieldsD(
     when (hint) {
         "attr2" -> attr2 = value as Int
         "attrEx" -> attrEx = value as Int
+        "bombsize" -> bombsize = value as Int
     }
 }

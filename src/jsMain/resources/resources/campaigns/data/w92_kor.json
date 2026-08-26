@@ -1,0 +1,530 @@
+[
+ {
+  "id": 0,
+  "scenario": "w92_kor01.xml",
+  "startprestige": 0,
+  "intro": "Good morning commander. I'm going to make a brief introduction of the present situation. The North Korean Peoples Army have crossed the 38th paralel, striking the ROK forces alongside the frontier. So, the situation is hopeless and some people including the president Truman are believing that this is the beginning of the 3rd  World War... The forces of the Republic of Korea with their outdated equipment and few soldiers are not able to stop the Soviet equiped North Korean forces which are now at the gates of the capital of South Korea; Seoul. It's sure that we won't be able to hold Seoul for too long, however we will need some time to make an organised retreat of the ROK forces.<br><br>Your task is; manage the ROK forces to avoid a quick victory of the NKPA forces over Seoul. Fortunately, a US task force will help you from the turn 5. (You will receive enough prestige to build your task force in the 5th turn). <br><br>Good luck commander!",
+  "outcome": {
+   "briliant": {
+    "goto": 1,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 550,
+    "text": "Well, our troops have escaped from the North Korean onslaught for now. We should continue our plans to stop the communists soon."
+   },
+   "victory": {
+    "goto": 1,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 450,
+    "text": "Well, our troops have escaped from the North Korean onslaught for now. We should continue our plans to stop the communists soon."
+   },
+   "tactical": {
+    "goto": 1,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 350,
+    "text": "Well, our troops have escaped from the North Korean onslaught for now. We should continue our plans to stop the communists soon."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Hehe!, a capitalist commander!!! Did you really think that you can defeat the NKPA?, did you really believe that your corrupt western capitalist system would defeat us?. Your next stop will be our POWs concentration camp in Pyongyang!."
+   }
+  }
+ },
+ {
+  "id": 1,
+  "scenario": "w92_kor02.xml",
+  "startprestige": 0,
+  "intro": "The withdrawal continues commander, and the situation has not any sight to be changed for now. The North Korean forces have arrived to the North of the important city of Taejon, which is surrounded by the Kum river.<br><br>Your mission this time is again to get enough time to make a good retreat to the South. You should establish a defensive line on the South bank of the Kum river, to gain enough time to save as much units as possible. Taejon must not fall until the established time, otherwise the remain units in other parts will be surrounded and surely defeated.<br><br>Good Luck.<br><br>NOTE: Deployment zone is limited to 8 hexes.",
+  "outcome": {
+   "briliant": {
+    "goto": 2,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 1100,
+    "text": "Again, we should escape from the communists. But be sure that soon we will be back in Seoul!!!."
+   },
+   "victory": {
+    "goto": 2,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 1000,
+    "text": "Again, we should escape from the communists. But be sure that soon we will be back in Seoul!!!."
+   },
+   "tactical": {
+    "goto": 2,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 900,
+    "text": "Again, we should escape from the communists. But be sure that soon we will be back in Seoul!!!."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Hehe!, a capitalist commander!!! Did you really think that you can defeat the NKPA?, did you really believe that your corrupt western capitalist system would defeat us?. Your next stop will be our POWs concentration camp in Pyongyang!."
+   }
+  }
+ },
+ {
+  "id": 2,
+  "scenario": "w92_kor03.xml",
+  "startprestige": 0,
+  "intro": "Please, sit down general... The NKPA forces have conquered the most of the Korean peninsula. Now, the U.N. forces are trying to resist in the Pusan Perimeter. This area is established around the important port of Pusan, the last capital of the Republic of Korea. Pusan must not fall at any costs!, otherwise, the Communists will be victorious and Korea entirely unified under the communist sign of North Korea.<br><br>Your task is to resist the North Korean strike, and then, stage a counterattack to break the enemy lines. Our 8th Army have received some reinforcements like some M26 Pershing tanks and other units which will be a great help to deal with the commies.<br><br>Good luck commander!.",
+  "outcome": {
+   "briliant": {
+    "goto": 3,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 500,
+    "text": "Excellent!, the North Korean assault on the Pusan Perimeter have been stopped. I'm planning a beach party for our North Korean friends... and you will be the party manager. Be ready for a boat trip."
+   },
+   "victory": {
+    "goto": 3,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 400,
+    "text": "Excellent!, the North Korean assault on the Pusan Perimeter have been stopped. I'm planning a beach party for our North Korean friends... and you will be the party manager. Be ready for a boat trip."
+   },
+   "tactical": {
+    "goto": 3,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 300,
+    "text": "Excellent!, the North Korean assault on the Pusan Perimeter have been stopped. I'm planning a beach party for our North Korean friends... and you will be the party manager. Be ready for a boat trip."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Hehe!, a capitalist commander!!! Did you really think that you can defeat the NKPA?, did you really believe that your corrupt western capitalist system would defeat us?. Your next stop will be our POWs concentration camp in Pyongyang!."
+   }
+  }
+ },
+ {
+  "id": 3,
+  "scenario": "w92_kor04.xml",
+  "startprestige": 0,
+  "intro": "If this operation is not finally sucessful, surely Harry will claim for my head!! hehe. Well, you are the proper commander to land on Inch'on, the traditional port of Seoul. Yes, you are right, the plans are to free Seoul from the North Koreans while they are busy at the Pusan Perimeter. A success in Inch'on, will mean that the NKPA forces will be in a complete disarray.<br><br>Intelligence reports that the enemy forces are consisting of mainly rookie units of two divisions which are currently still in the making.<br><br>Your mission is; land at Inch'on and then drive to Seoul. Liberate the capital from the Communists.<br><br>Good Luck!!!.<br><br>NOTE: Deployment zone is limited to 8 hexes.",
+  "outcome": {
+   "briliant": {
+    "goto": 4,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 500,
+    "text": "Yes!, Seoul is back in our hands!, and the whole NKPA is into chaos after this disembark behind their lines. The situation have experimented a 180 degrees change. I think that we SHOULD continue with the campaign far away from the 38th paralel, and unify Korea under the South Korean flag..."
+   },
+   "victory": {
+    "goto": 4,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 400,
+    "text": "Yes!, Seoul is back in our hands!, and the whole NKPA is into chaos after this disembark behind their lines. The situation have experimented a 180 degrees change. I think that we SHOULD continue with the campaign far away from the 38th paralel, and unify Korea under the South Korean flag..."
+   },
+   "tactical": {
+    "goto": 4,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 300,
+    "text": "Yes!, Seoul is back in our hands!, and the whole NKPA is into chaos after this disembark behind their lines. The situation have experimented a 180 degrees change. I think that we SHOULD continue with the campaign far away from the 38th paralel, and unify Korea under the South Korean flag..."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Hehe!, a capitalist commander!!! Did you really think that you can defeat the NKPA?, did you really believe that your corrupt western capitalist system would defeat us?. Your next stop will be our POWs concentration camp in Pyongyang!."
+   }
+  }
+ },
+ {
+  "id": 4,
+  "scenario": "w92_kor05.xml",
+  "startprestige": 0,
+  "intro": "Good morning, commander. The U.N. forces have completely turned the situation, now we are in front of the North Korean capital. The perimeter of Pyongyang it's defended only by a few enemy divisions, but beware!; the North Koreans still have many U.N. POWs in the nearly areas of Pyongyang, and they can execute them, so a fast action it's mandatory there. <br><br>Take Pyongyang as soon as possible, and free the prisoners taking the North Korean capital city from the commies. Also take care: the North Korean soldiers will act as guerrillas as soon as their units become into disarray.<br><br>Good luck.<br><br>NOTE: Deployment zone is limited to 10 hexes.",
+  "outcome": {
+   "briliant": {
+    "goto": 5,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 400,
+    "text": "Pyongyang it's in our hands, and the POWs are free. However the NKPA units which there are hyden will be surely converted into guerrillas now. Anyway, the North Korean capital has fallen, and the victory is for us!.<br><br>We must continue onwards to the Yalu river!!, nobody can stop us!. Well, the Chinese president Mao Zedong is warming us to not to continue to the Sino - Korean border... but, believe me!, the Chinese won't be able to deal with our brave troops!."
+   },
+   "victory": {
+    "goto": 5,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 300,
+    "text": "Pyongyang it's in our hands, and the POWs are free. However the NKPA units which there are hyden will be surely converted into guerrillas now. Anyway, the North Korean capital has fallen, and the victory is for us!.<br><br>We must continue onwards to the Yalu river!!, nobody can stop us!. Well, the Chinese president Mao Zedong is warming us to not to continue to the Sino - Korean border... but, believe me!, the Chinese won't be able to deal with our brave troops!."
+   },
+   "tactical": {
+    "goto": 5,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 200,
+    "text": "Pyongyang it's in our hands, and the POWs are free. However the NKPA units which there are hyden will be surely converted into guerrillas now. Anyway, the North Korean capital has fallen, and the victory is for us!.<br><br>We must continue onwards to the Yalu river!!, nobody can stop us!. Well, the Chinese president Mao Zedong is warming us to not to continue to the Sino - Korean border... but, believe me!, the Chinese won't be able to deal with our brave troops!."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "WHAT!?, the North Koreans have stopped you enough time to KILL all the prisoners!!!!. You will have a meeting with a military court soon!."
+   }
+  }
+ },
+ {
+  "id": 5,
+  "scenario": "w92_kor06.xml",
+  "startprestige": 0,
+  "intro": "Warning!, a huge chinese force have crossed the Yalu river and it's falling over our positions in North Korea. Your troops in the vicitinies of the Chongchon river are in the way of the chinese army and will receive the assault of the main PLA (Peoples Liberation Army) strike, which is probably intended to free Pyongyang. The mountains will be a great help for us, althought the Chinese army is largely bigger than our troops deployed here.<br><br>Good Luck!.<br><br>NOTE: Deployment zone is limited to 18 hexes.",
+  "outcome": {
+   "briliant": {
+    "goto": 6,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 500,
+    "text": "Congratulations, the Chinese assault has been stopped, but we should retreat our troops from Pyongyang. The enemy human waves have not been enough to defeat our brave soldiers.<br><br>Keep 'em the good work agaisnt the commies!!!."
+   },
+   "victory": {
+    "goto": 6,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 400,
+    "text": "Congratulations, the Chinese assault has been stopped, but we should retreat our troops from Pyongyang. The enemy human waves have not been enough to defeat our brave soldiers.<br><br>Keep 'em the good work agaisnt the commies!!!."
+   },
+   "tactical": {
+    "goto": 6,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 300,
+    "text": "Congratulations, the Chinese assault has been stopped, but we should retreat our troops from Pyongyang. The enemy human waves have not been enough to defeat our brave soldiers.<br><br>Keep 'em the good work agaisnt the commies!!!."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Hehe!, a capitalist commander!!! Did you really think that you can defeat the PLA?, did you really believe that your corrupt western capitalist system would defeat us?. Your next stop will be our POWs concentration camp in Beijing!."
+   }
+  }
+ },
+ {
+  "id": 6,
+  "scenario": "w92_kor07.xml",
+  "startprestige": 0,
+  "intro": "Warning!, the Chinese are launching an incoming strike on our forward positons at the  Chosin Reservoir. We should expect again a human wave assault. Althought the enemy it's outnumbering our troops, we think the higher quality of your troops can stop the chinese hordes, under this horrible icy weather...<br><br>Good luck.<br><br>NOTE: Deployment zone is limited to 8 hexes.",
+  "outcome": {
+   "briliant": {
+    "goto": 7,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 500,
+    "text": "Too hard, commander, too hard. The Chinese hordes are making the things quite difficult for the U.N. side, and the situation it's turning into a desperate match to play agaisnt the PLA human waves."
+   },
+   "victory": {
+    "goto": 7,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 400,
+    "text": "Too hard, commander, too hard. The Chinese hordes are making the things quite difficult for the U.N. side, and the situation it's turning into a desperate match to play agaisnt the PLA human waves."
+   },
+   "tactical": {
+    "goto": 7,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 300,
+    "text": "Too hard, commander, too hard. The Chinese hordes are making the things quite difficult for the U.N. side, and the situation it's turning into a desperate match to play agaisnt the PLA human waves."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Hehe!, a capitalist commander!!! Did you really think that you can defeat the PLA?, did you really believe that your corrupt western capitalist system would defeat us?. Your next stop will be our POWs concentration camp in Beijing!."
+   }
+  }
+ },
+ {
+  "id": 7,
+  "scenario": "w92_kor08.xml",
+  "startprestige": 0,
+  "intro": "This is a really bad situation, a good part of our troops are near to be traped in North Korea, and the only choice for an evacuation, it's to reach the port of Hungnam. Your task is to drive your units quickly to the port of Hungnam. Try to stop the chinese forces as much as possible while our units are embarking in the port... other units are retrating in other points of Korea, and a quick retreat will allow the PLA forces to use their troops agaisnt the other places.<br><br>I will ask Harry for nuclear support agaisnt the chineses, while you are doing your job, commander.<br><br>Good luck.<br><br>NOTE: Deployment zone is limited to 14 hexes.",
+  "outcome": {
+   "briliant": {
+    "goto": 8,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 760,
+    "text": "Well done!!!, I haven't seen an evacuation so good like this since 1940 in Dunkirk!!!. Anyway I'm trying to contact Harry to call for nuclear support...<br><br>[White House telephon]<br><br>RINGG RINGGG...<br><br>- Truman here, what's up?.<br>- Hello Harry!, I'm Doug. I'm calling you because I think we should launch our nuclear power agaisnt the dirty communists now!.<br><br>- CROCK!!! - Toooooo... tooooo...<br><br>- Harry?, er... are you there?, Harry??... hmmm..."
+   },
+   "victory": {
+    "goto": 8,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 660,
+    "text": "Well done!!!, I haven't seen an evacuation so good like this since 1940 in Dunkirk!!!. Anyway I'm trying to contact Harry to call for nuclear support...<br><br>[White House telephon]<br><br>RINGG RINGGG...<br><br>- Truman here, what's up?.<br>- Hello Harry!, I'm Doug. I'm calling you because I think we should launch our nuclear power agaisnt the dirty communists now!.<br><br>- CROCK!!! - Toooooo... tooooo...<br><br>- Harry?, er... are you there?, Harry??... hmmm..."
+   },
+   "tactical": {
+    "goto": 8,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 560,
+    "text": "Well done!!!, I haven't seen an evacuation so good like this since 1940 in Dunkirk!!!. Anyway I'm trying to contact Harry to call for nuclear support...<br><br>[White House telephon]<br><br>RINGG RINGGG...<br><br>- Truman here, what's up?.<br>- Hello Harry!, I'm Doug. I'm calling you because I think we should launch our nuclear power agaisnt the dirty communists now!.<br><br>- CROCK!!! - Toooooo... tooooo...<br><br>- Harry?, er... are you there?, Harry??... hmmm..."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Hehe!, a capitalist commander!!! Did you really think that you can defeat the PLA?, did you really believe that your corrupt western capitalist system would defeat us?. Your next stop will be our POWs concentration camp in Beijing!."
+   }
+  }
+ },
+ {
+  "id": 8,
+  "scenario": "w92_kor09.xml",
+  "startprestige": 0,
+  "intro": "[General Mathew Ridgway speaking]<br><br>Please sit down commander. I'm the new C-I-C of the U.N. forces in Korea. As you know, Seoul it's back on the communist hands. We can't allow a situation such this, so we have planned an operation to liberate Seoul and turn the things into a more favorable scenario for us.<br><br>You should fix the chinese forces at the right or our lines, and make a fast advance to Seoul by the left. Take care, the enemy T-34 are still a menace to our Shermans, althought we have the support of some M26 tanks.<br><br>Your task is clear; liberate Seoul!.",
+  "outcome": {
+   "briliant": {
+    "goto": 9,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 500,
+    "text": "Victory, the communists are kicked out from Seoul. The South Korean presidente Shygman Rhee it's happy to return back again to the South Korea's capitol in Seoul.<br><br>Well done."
+   },
+   "victory": {
+    "goto": 9,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 400,
+    "text": "Victory, the communists are kicked out from Seoul. The South Korean presidente Shygman Rhee it's happy to return back again to the South Korea's capitol in Seoul.<br><br>Well done."
+   },
+   "tactical": {
+    "goto": 9,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 300,
+    "text": "Victory, the communists are kicked out from Seoul. The South Korean presidente Shygman Rhee it's happy to return back again to the South Korea's capitol in Seoul.<br><br>Well done."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Hehe!, a capitalist commander!!! Did you really think that you can defeat the PLA?, did you really believe that your corrupt western capitalist system would defeat us?. Your next stop will be our POWs concentration camp in Beijing!."
+   }
+  }
+ },
+ {
+  "id": 9,
+  "scenario": "w92_kor10.xml",
+  "startprestige": 0,
+  "intro": "Warning!, the PLA and the NKPA are launching a full scale operation agaisnt our lines!. Our troops are largely outnumbered by the communists, but we can count on the higher quality of our brave men to save Seoul from the communist menace again.<br><br>You should try to stop the communist onslaught, and then launch a counterattack to restore the lines. Seoul must not fall!!!.",
+  "outcome": {
+   "briliant": {
+    "goto": 10,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 500,
+    "text": "After a bloody battle, the Chinese hordes can't advance further to Seoul. Now, we should stop their Spring onslaught in other parts of the korean peninsula. Well done commander."
+   },
+   "victory": {
+    "goto": 10,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 400,
+    "text": "After a bloody battle, the Chinese hordes can't advance further to Seoul. Now, we should stop their Spring onslaught in other parts of the korean peninsula. Well done commander."
+   },
+   "tactical": {
+    "goto": 10,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 300,
+    "text": "After a bloody battle, the Chinese hordes can't advance further to Seoul. Now, we should stop their Spring onslaught in other parts of the korean peninsula. Well done commander."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Hehe!, a capitalist commander!!! Did you really think that you can defeat the PLA?, did you really believe that your corrupt western capitalist system would defeat us?. Your next stop will be our POWs concentration camp in Beijing!."
+   }
+  }
+ },
+ {
+  "id": 10,
+  "scenario": "w92_kor11.xml",
+  "startprestige": 0,
+  "intro": "The communist Spring offensive it's closely to be stopped at the Seoul area. However, the enemy offensive remains powerful Eastwards to Seoul. Take control over the situation and stop the communist assault also here.<br><br>Good luck!.<br><br>NOTE: Deployment zone is limited to 17 hexes.",
+  "outcome": {
+   "briliant": {
+    "goto": 11,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 500,
+    "text": "The fifth chinese offensive is defeated, and now it's time to begin the planning of the counterattack. Well done."
+   },
+   "victory": {
+    "goto": 11,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 400,
+    "text": "The fifth chinese offensive is defeated, and now it's time to begin the planning of the counterattack. Well done."
+   },
+   "tactical": {
+    "goto": 11,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 300,
+    "text": "The fifth chinese offensive is defeated, and now it's time to begin the planning of the counterattack. Well done."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Hehe!, a capitalist commander!!! Did you really think that you can defeat the PLA?, did you really believe that your corrupt western capitalist system would defeat us?. Your next stop will be our POWs concentration camp in Beijing!."
+   }
+  }
+ },
+ {
+  "id": 11,
+  "scenario": "w92_kor12.xml",
+  "startprestige": 0,
+  "intro": "Since the last Spring, the PLA keeps some good forward positions which we are going to clear of communist troops, this is really important because there are near to sign a truce with the enemy, and the peace talks will start soon. It's politicaly important to get as much territories as possible, because the conflict can be renewed in the future. The vicitinies of the Soyang reservoir are garrisoned by an important number of PLA troops. Also the NKPA has some units in the North.<br><br>Your task is to recapture the Soyang reservoir area and clear the coast of enemy elements. The navy is here to help you bombing the coastal positions.<br><br>Good luck, maybe we will be in home at Christmas...<br><br>NOTE: Deployment zone is limited to 17 hexes.",
+  "outcome": {
+   "briliant": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Congratulations!, this was a great victory over our communist enemies. We are now mainly at the same positions like in the Summer of 1950, but the North Koreans won't be a threat for a while...<br><br>- The End -<br><br>By The Latin Generals 2006.<br>(Pablo Schlegel & Santiago Fuertes).<br>http://es.geocities.com/latingenerals<br><br>THANKS FOR PLAYING!."
+   },
+   "victory": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Congratulations!, this was a great victory over our communist enemies. We are now mainly at the same positions like in the Summer of 1950, but the North Koreans won't be a threat for a while...<br><br>- The End -<br><br>By The Latin Generals 2006.<br>(Pablo Schlegel & Santiago Fuertes).<br>http://es.geocities.com/latingenerals<br><br>THANKS FOR PLAYING!."
+   },
+   "tactical": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Congratulations!, this was a great victory over our communist enemies. We are now mainly at the same positions like in the Summer of 1950, but the North Koreans won't be a threat for a while...<br><br>- The End -<br><br>By The Latin Generals 2006.<br>(Pablo Schlegel & Santiago Fuertes).<br>http://es.geocities.com/latingenerals<br><br>THANKS FOR PLAYING!."
+   },
+   "lose": {
+    "goto": 0,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "Hehe!, a capitalist commander!!! Did you really think that you can defeat the PLA?, did you really believe that your corrupt western capitalist system would defeat us?. Your next stop will be our POWs concentration camp in Beijing!."
+   }
+  }
+ }
+]

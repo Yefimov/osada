@@ -455,4 +455,6 @@ internal fun restoreEngineering(
     hex.constructionCountry = hexData.constructionCountry as? Int ?: -1
     hex.razedTerrain = hexData.razedTerrain as? Int ?: -1
     hex.blownRoad = hexData.blownRoad as? Int ?: 0
+    hex.rubble = (hexData.rubble as? Int ?: 0) != 0
+    hex.crater = (hexData.crater as? Int ?: 0) != 0
 }

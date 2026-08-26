@@ -2,11 +2,14 @@ package org.osada.rules
 
 import org.osada.LeaderType
 import org.osada.UnitClass
+import org.osada.model.ATTR2_MASK_DISMOUNT_AFTER_MOVE
 import org.osada.model.ATTR2_MASK_NO_ZOC
 import org.osada.model.ATTR_EX_MASK_AD_SUPPORT
 import org.osada.model.ATTR_EX_MASK_ALL_WEATHER
 import org.osada.model.ATTR_EX_MASK_LASTING_SUPPRESSION
+import org.osada.model.ATTR_EX_MASK_NO_AMMO_PENALTY
 import org.osada.model.ATTR_EX_MASK_NO_INTERCEPT_AIR
+import org.osada.model.ATTR_EX_MASK_NO_LEADER
 import org.osada.model.ATTR_EX_MASK_OVERRUN_TOGGLE
 import org.osada.model.ATTR_MASK_CAPTURE_FLAG
 import org.osada.model.ATTR_MASK_COMBAT_SUPPORT
@@ -413,4 +416,61 @@ object UnitCapabilities {
      */
     fun projectsZoneOfControl(unit: GameUnit): Boolean =
         !UnitPredicates.isAir(unit) && unit.unitData(true).attr2 and ATTR2_MASK_NO_ZOC == 0
+
+    /**
+     * Whether [data] is exempt from the penalties an empty formation pays — OG's `No run out ammo
+     * penalty` (`attrEx` bit 4, template line 874), 824 of the 56,970 shipped records.
+     *
+     * **Exempt from the PENALTIES, not from the prohibition.** OG 6.23 says a unit with no
+     * ammunition *"cannot attack and defends with halved unsuppressed strength"* and has *"halved
+     * initiative"*; this bit is named for the penalty, so it lifts the two halvings
+     * ([UnitConditionPenalties.dryInitiative] and its defence half) and leaves
+     * `AttackEligibility.canFire`'s "no ammo, no attack" exactly where it is. Reading it as a
+     * licence to attack from an empty magazine would be inventing a mechanic from a name, which
+     * `OG_ABILITY_AUDIT.md` §1 forbids.
+     *
+     * Inert unless `dry_unit_penalties` is on, because there is no penalty to be exempt from
+     * otherwise — so this changes nothing outside the Open General Fidelity profile. The
+     * population is what the name predicts: submarines (141), tactical bombers (123), destroyers
+     * (118), air transports (92) — units whose ammunition is a sortie rather than a magazine.
+     */
+    fun ignoresDryAmmoPenalty(data: EquipmentData): Boolean = data.attrEx and ATTR_EX_MASK_NO_AMMO_PENALTY != 0
+
+    /**
+     * Whether [data] can ever produce a commander — the inverse of OG's `Cannot get a leader`
+     * (`attrEx` bit 0, template line 869), which 537 shipped records carry.
+     *
+     * **Production, not possession**, which is exactly what the shipped string already promised the
+     * player (*"this equipment never produces a commander"*). Two mechanics produce one in OSADA
+     * and both consult this: the legacy integer leader ([Leaders.generateLeader], which also covers
+     * the leaders a scenario's own units are born with) and Phase 2 hero emergence
+     * (`HeroCampaign.attemptEmergence`). A core formation that ALREADY has a commander and then
+     * upgrades into such a record keeps them and keeps progressing — `HeroCampaign.progressCommander`
+     * is untouched — because a hero belongs to the formation, not to the equipment it is currently
+     * issued.
+     *
+     * The population reads like the rule: Infantry (207) — militia, penal and partisan records —
+     * then Tactical Bomber (91), Fortification (69) and Flak (35).
+     */
+    fun canProduceLeader(data: EquipmentData): Boolean = data.attrEx and ATTR_EX_MASK_NO_LEADER == 0
+
+    /**
+     * Whether mounted [data] steps down by itself once its ride ends — OG's `Dismount after
+     * movement` (`attr2` bit 1, template line 860, manual §7.2: *"unit dismounts from its transport
+     * after completing movement"*), 662 shipped records.
+     *
+     * A plain grant, and an AUTOMATIC one. OG 8.3's base rule is that a formation *"can only mount
+     * or dismount before moving"* and one that moved aboard its transport stays there until its next
+     * turn; this bit is the exception to that, so it is applied by `MoveExecutor.dismountAfterMove`
+     * rather than being offered as an action. It costs nothing and requires no movement left.
+     *
+     * **A permission reading stood for part of 2026-08-26** — that the record MAY dismount after
+     * moving, spending what movement remained — and was corrected against the manual the same day
+     * (§Q). Nothing in OG's rules charges movement for it.
+     *
+     * Distinct from [dismountsWhenAttacked], which is about which statistics a mounted formation
+     * FIGHTS with and is a toggle of the Infantry class default. The population is every mountable
+     * ground class — Infantry 427, Artillery 157, Recon 32, Ground Transport 19, Anti-Tank 12.
+     */
+    fun dismountsAfterMove(data: EquipmentData): Boolean = data.attr2 and ATTR2_MASK_DISMOUNT_AFTER_MOVE != 0
 }

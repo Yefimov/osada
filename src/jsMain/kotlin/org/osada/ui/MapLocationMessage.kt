@@ -40,6 +40,9 @@ internal fun updateMapLocationMessage(
     // §1.15: the dashed ring alone doesn't say the danger is conditional on landing here (as
     // opposed to merely flying over it on the way to a farther, unmarked hex) -- spell it out.
     if (hex.isAaThreat) sb.append(" — ").append(I18n.t("hud.status.location.aa_threat"))
+    // Same reasoning as the AA line: the dashed ring and the truck cursor both say "only by
+    // riding", but neither says what it costs you — arriving mounted (`rules/AutoMount`).
+    if (hex.needsTransport) sb.append(" — ").append(I18n.t("hud.status.location.needs_transport"))
     byId("locmsg")?.innerHTML = sb.toString()
     // On a phone the top bar has no room for a permanent terrain line, so the same text also goes
     // to a transient strip above the bottom dock (spec §18) — one source of truth, two surfaces.

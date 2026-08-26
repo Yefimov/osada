@@ -3,6 +3,7 @@ package org.osada.ui
 import kotlinx.browser.document
 import org.osada.model.Cell
 import org.osada.model.GameUnit
+import org.osada.model.Hex
 import org.osada.model.getActiveLayerTarget
 import org.osada.model.getUnits
 import org.osada.rules.GameRules
@@ -19,6 +20,15 @@ internal class CursorRenderer(
 ) {
     companion object {
         private const val CURSOR_TEXT_X_OFFSET = 4.0
+
+        /** `resources/ui/cursors/transport.png` is 32x17 and was sitting unused in the asset tree
+         *  beside `attack.png`; the hotspot is its centre. Referenced as a plain CSS cursor rather
+         *  than rendered through the back-buffer, because unlike the attack cursor it carries no
+         *  per-target numbers to draw. */
+        private const val TRANSPORT_CURSOR = "url('resources/ui/cursors/transport.png') 16 8, auto"
+
+        /** OG's barrage crosshair (§9.2). `blow.png`, centred. */
+        private const val BARRAGE_CURSOR = "url('resources/ui/cursors/blow.png') 12 12, crosshair"
     }
 
     private var cursorCell: Cell? = null
@@ -29,27 +39,52 @@ internal class CursorRenderer(
         val q = rc.map ?: return
         val hex = q.map?.getOrNull(cell.row)?.getOrNull(cell.col) ?: return
         val currentUnit = q.currentUnit
-        if (hex.isAttackSel && currentUnit != null && !currentUnit.hasFired) {
-            val target = hex.getActiveLayerTarget(currentUnit, uiSettings.airMode)
-            if (target != null) {
-                if (cursorUnit?.id != currentUnit.id ||
-                    cursorCell?.row != cell.row ||
-                    cursorCell?.col != cell.col
-                ) {
-                    cursorUnit = currentUnit
-                    cursorCell = cell
-                    cursorDataUrl = generateAttackCursor(currentUnit, target, true) as? String
-                }
-                cursorDataUrl?.let { url ->
-                    val w = (rc.backBuffer.width as? Number)?.toInt() ?: 54
-                    val h = (rc.backBuffer.height as? Number)?.toInt() ?: 54
-                    rc.cursorCanvas.style.cursor = "url('$url') ${w / 2} ${h / 2}, auto"
-                }
-            } else {
-                rc.cursorCanvas.style.cursor = "default"
-            }
-        } else {
+        when {
+            // Open General's own affordance: over a hex the formation can only reach by riding, the
+            // pointer becomes a truck. The dashed hex ring says the same thing while the player is
+            // still reading the map; this says it at the moment they are about to click
+            // (`rules/AutoMount`). Attack wins over it -- a hex that offers a fight is never a hex
+            // the move order is about.
+            // OG: *"the pointer becomes a crosshair when it is over hexes that it can attack"*
+            // (manual §9.2). `blow.png` was already in the asset tree, unused, beside `attack.png`.
+            hex.isBarrageSel -> rc.cursorCanvas.style.cursor = BARRAGE_CURSOR
+            showsTransportCursor(hex, currentUnit) -> rc.cursorCanvas.style.cursor = TRANSPORT_CURSOR
+            hex.isAttackSel && currentUnit != null && !currentUnit.hasFired ->
+                applyAttackCursor(hex, currentUnit)
+
+            else -> rc.cursorCanvas.style.cursor = "default"
+        }
+    }
+
+    /** Whether the hex under the pointer is one this formation would have to ride to. */
+    private fun showsTransportCursor(
+        hex: Hex,
+        currentUnit: GameUnit?,
+    ): Boolean = hex.needsTransport && !hex.isAttackSel && currentUnit != null && !currentUnit.hasMoved
+
+    private fun applyAttackCursor(
+        hex: Hex,
+        currentUnit: GameUnit,
+    ) {
+        val target = hex.getActiveLayerTarget(currentUnit, uiSettings.airMode)
+        if (target == null) {
             rc.cursorCanvas.style.cursor = "default"
+            return
+        }
+        val cell = hex.getPos()
+        val stale =
+            cursorUnit?.id != currentUnit.id ||
+                cursorCell?.row != cell.row ||
+                cursorCell?.col != cell.col
+        if (stale) {
+            cursorUnit = currentUnit
+            cursorCell = cell
+            cursorDataUrl = generateAttackCursor(currentUnit, target, true) as? String
+        }
+        cursorDataUrl?.let { url ->
+            val w = (rc.backBuffer.width as? Number)?.toInt() ?: 54
+            val h = (rc.backBuffer.height as? Number)?.toInt() ?: 54
+            rc.cursorCanvas.style.cursor = "url('$url') ${w / 2} ${h / 2}, auto"
         }
     }
 

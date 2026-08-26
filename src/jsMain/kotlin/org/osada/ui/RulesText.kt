@@ -85,9 +85,11 @@ internal object RulesText {
      * `docs/og-fidelity-plan.md` §C had never tracked Barrage (9.2), Build and Repair (9.3),
      * Counterbattery (9.4), Extended LOS (9.5) or Triggers (9.10) at all.
      *
-     * Three of those five were then BUILT (schema 6), so they are not on this list: Build and
-     * Repair, Counterbattery and Extended LOS are rules the profile now turns on. What remains is
-     * the two that are genuinely absent, plus one narrowing inside a rule that otherwise ships
+     * **Four of those five are now BUILT** and are therefore not on this list: Build and Repair,
+     * Counterbattery and Extended LOS (schema 6), and **Barrage (schema 7, 2026-08-26)** — which
+     * left this list once its gate turned out to be the record's Bomber Size rather than the
+     * undiscovered special bit §L.6 was waiting for (§Q.2, §R). What remains is Triggers, which is
+     * genuinely absent, plus one narrowing inside a rule that otherwise ships
      * whole — OSADA builds four of OG's five facilities and no railroad station, because it has no
      * rail transport for a station to serve (`rules/Engineering`).
      *
@@ -95,9 +97,29 @@ internal object RulesText {
      * The three rules schema 6 added are real Open General mechanics, but OG lets each scenario and
      * each efile decide what may be built, blown and seen (`build_mask`, `blow_mask`,
      * `blow_any_terrain`, `TrueDLOF`, `UnitsBlockDLOF`, and the per-scenario Can Build / Can Blow /
-     * Can Repair switches). None of those is imported, so this profile applies ONE set of
+     * Can Repair switches). None of those was imported, so this profile applied ONE set of
      * engineering and sight rules to content that authored many. Saying so out loud is the
      * difference between a rule that is Open General's and one that is merely OG-shaped.
+     *
+     * **Narrowed twice on 2026-08-26.** First (§N) `blow_any_terrain` became readable, so a sapper
+     * flattens woods only in the efiles that authorise it. Then (§O) the scenario option bitfield
+     * was cracked and imported, so **each scenario's own Can Build / Can Blow / Can Repair and
+     * Extended LOS switches are now honoured** — 397 of the 502 deployed scenarios carry them, and
+     * the ~10% that forbid a mechanic finally get their way.
+     *
+     * What is left of this entry, and all the string now claims: `TrueDLOF` and `UnitsBlockDLOF`
+     * are imported and unread. `build_mask` and `blow_mask` are not in it at all any more — no
+     * shipped efile sets either one.
+     *
+     * **`naval_mines` and `air_zoc` were added on audit, 2026-08-26** — both were already counted
+     * as absent by `docs/og-fidelity-plan.md` §M and both were missing from this list, which is the
+     * worse of the two ways to be wrong: §M is read by whoever builds, this is read by whoever
+     * plays. Neither is covered by an entry already here. `naval_mines` is NOT the shipped mine
+     * system: OSADA's minefields are a GROUND mechanic with their own option, and OG's naval mines
+     * have their own laying, sweeping and damage model that nothing here implements.
+     * `air_zoc` is the sharper omission of the two, because the option IS imported — 79 shipped
+     * scenarios ask for it and no rule reads it, exactly the shape `authored_options` exists to
+     * confess, but a different mechanic and so a different line.
      *
      * In the order a player meets them rather than the order they would be built.
      */
@@ -108,7 +130,8 @@ internal object RulesText {
             "air_missions",
             "carriers",
             "extended_naval",
-            "barrage",
+            "naval_mines",
+            "air_zoc",
             "authored_options",
             "triggers",
             "ai",

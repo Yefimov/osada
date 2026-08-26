@@ -8,6 +8,7 @@ import org.osada.model.canDeployOnTerrain
 import org.osada.model.getActiveLayerTarget
 import org.osada.model.getPlayer
 import org.osada.model.isInDeployZone
+import org.osada.rules.Craters
 import org.osada.rules.Minefields
 import org.osada.rules.UnitConcealment
 
@@ -294,11 +295,45 @@ internal class HexCellRenderer(
         if (hex.isAaThreat) {
             rc.drawHex(rc.hexesCtx, x, y, hexStyles["aathreat"])
         }
+        // "Your legs do not reach this far" -- the formation would mount its own transport to get
+        // here (`rules/AutoMount`). Drawn over the move fill, like the AA ring.
+        if (hex.needsTransport) {
+            rc.drawHex(rc.hexesCtx, x, y, hexStyles["transportmove"])
+        }
+        // Barrage targeting (OG 9.2). Drawn last of the selection overlays: while the mode is open
+        // it is the only thing a click can act on.
+        if (hex.isBarrageSel) {
+            rc.drawHex(rc.hexesCtx, x, y, hexStyles["barragetarget"])
+        }
         // A minefield THIS side has detected. Drawn last so it sits over the move fill -- the player
         // must be able to see it while planning the very route it would stop. Undetected fields are
         // unreachable through this predicate and are never drawn.
         if (Minefields.isKnownThreat(hex, frame.q.currentPlayer?.side ?: 0)) {
             rc.drawHex(rc.hexesCtx, x, y, hexStyles["minefield"])
+        }
+        drawCraters(hex, x, y)
+    }
+
+    /**
+     * Shell holes on cratered open ground (`rules/Craters`, OSADA's own rule).
+     *
+     * The map is a pre-rendered image, so terrain damage cannot be painted into it — this sprite is
+     * how a cratered hex differs from the field beside it, and without it the movement cost and the
+     * entrenchment floor would be rules with no visible cause, which `DEFERRED.md` §1.1 forbids.
+     * Wreckage from a destroyed facility gets no sprite: that hex already changed terrain.
+     */
+    private fun drawCraters(
+        hex: Hex,
+        x: Double,
+        y: Double,
+    ) {
+        val loaded = rc.craterImage
+        val ready = loaded != null && loaded != undefined
+        val img = if (hex.crater && Craters.enabled() && ready) loaded else null
+        val width = (img?.width as? Number)?.toDouble()
+        val height = (img?.height as? Number)?.toDouble()
+        if (width != null && height != null) {
+            rc.hexesCtx.drawImage(img, x + (rc.hexTopWidth - width) / 2.0, y + rc.v - height / 2.0)
         }
     }
 

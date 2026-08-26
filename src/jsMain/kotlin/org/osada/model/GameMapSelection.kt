@@ -1,10 +1,12 @@
 package org.osada.model
 
 import org.osada.rules.AAInterception
+import org.osada.rules.AutoMount
 import org.osada.rules.GameRules
 import org.osada.rules.UnitPredicates
 import org.osada.rules.getMoveRange
 import org.osada.rules.getUnitAttackCells
+import org.osada.uiSettings
 
 /** Unit-selection & move/attack-range management for [GameMap], split out to keep its function
  *  count in bounds. */
@@ -17,6 +19,10 @@ fun GameMap.delCurrentUnit() {
     currentUnit = null
     delMoveSel()
     delAttackSel()
+    // Selecting anything else leaves the Barrage targeting mode: the offered hexes belonged to the
+    // formation that is no longer selected (OG 9.2, `model/BarrageOperations`).
+    uiSettings.barrageMode = false
+    clearBarrageTargeting()
 }
 
 fun GameMap.delMoveSel() {
@@ -24,6 +30,7 @@ fun GameMap.delMoveSel() {
         map?.getOrNull(cell.row)?.getOrNull(cell.col)?.apply {
             isMoveSel = false
             isAaThreat = false
+            needsTransport = false
         }
     }
     currentMoveRange.clear()
@@ -57,6 +64,26 @@ fun GameMap.setMoveRange(unit: GameUnit) {
         }
         if ((cell.row to cell.col) in threatened) {
             hex?.isAaThreat = true
+        }
+    }
+    addTransportReach(unit)
+}
+
+/**
+ * Marks the hexes this formation can reach only by mounting its own transport, and adds them to the
+ * same move range everything else hit-tests against — so one click both mounts and drives
+ * (`rules/AutoMount`, `MoveExecutor.autoMountForMove`).
+ *
+ * They are ordinary move cells with one extra flag: the renderer draws them dashed and the cursor
+ * turns into a truck over them, which is how Open General says the same thing. A no-op for every
+ * formation without organic transport, which is most of them.
+ */
+private fun GameMap.addTransportReach(unit: GameUnit) {
+    AutoMount.transportOnlyCells(this, unit).forEach { cell ->
+        currentMoveRange.add(cell)
+        map?.getOrNull(cell.row)?.getOrNull(cell.col)?.apply {
+            isMoveSel = true
+            needsTransport = true
         }
     }
 }
