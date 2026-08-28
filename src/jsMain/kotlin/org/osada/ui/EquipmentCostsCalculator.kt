@@ -7,6 +7,7 @@ import org.osada.model.getCountryName
 import org.osada.model.getUnitById
 import org.osada.model.hasPurchaseAnchor
 import org.osada.model.isAvailableIn
+import org.osada.model.isPurchasable
 import org.osada.model.isPurchasableGroundTransport
 import org.osada.rules.GameRules
 import org.osada.rules.calculateUnitCosts
@@ -63,6 +64,10 @@ internal class EquipmentCostsCalculator(
         when {
             eqUnitId <= 0 -> null
             !hasPurchaseAnchor() -> I18n.t("equipment.buy_blocked.no_anchor")
+            // OG's `Can't Buy` (`attr` bit 7), wired 2026-08-27. The card is deliberately still
+            // listed -- the catalogue shows the whole side and explains refusals here rather than
+            // hiding cards, and this record may still be a legal UPGRADE target.
+            !Equipment.isPurchasable(eqUnitId) -> I18n.t("equipment.buy_blocked.cant_buy")
             !Equipment.isPurchasableGroundTransport(eqUnitId) -> I18n.t("equipment.buy_blocked.not_purchasable")
             else -> campaignCountryRefusal(eqUnitId)
         }
@@ -119,6 +124,18 @@ internal class EquipmentCostsCalculator(
         return upgradeCost to sellCost
     }
 
+    /** The record-level half of [resolveBuyCost]'s refusals: OG's `Can't Buy` on either the unit or
+     *  the transport bought with it, and OSADA's flat rule that a bare prime mover is attached
+     *  rather than bought. Named so [resolveBuyCost] stays inside detekt's complexity budget and so
+     *  [resolveBuyBlockedReason] can be read beside it. */
+    private fun offeredForSale(
+        eqUnitId: Int,
+        eqTransportId: Int,
+    ): Boolean =
+        Equipment.isPurchasable(eqUnitId) &&
+            (eqTransportId <= 0 || Equipment.isPurchasable(eqTransportId)) &&
+            Equipment.isPurchasableGroundTransport(eqUnitId)
+
     private fun resolveBuyCost(
         eqUnitId: Int,
         eqTransportId: Int,
@@ -133,7 +150,7 @@ internal class EquipmentCostsCalculator(
             // see GameRules.isPurchasableClass for why PM's selection-based test was dropped.
             newEq != null && !GameRules.isPurchasableClass(newEq.uclass) -> -1
             newEq != null && !newEq.isAvailableIn(year, month) -> -1
-            !Equipment.isPurchasableGroundTransport(eqUnitId) -> -1
+            !offeredForSale(eqUnitId, eqTransportId) -> -1
             ui.game.campaign != null && ui.game.campaign!!.country != newCountry -> -1
             // Nowhere to place a purchase -> OG offers none at all; resolveBuyBlockedReason says why.
             !hasPurchaseAnchor() -> -1

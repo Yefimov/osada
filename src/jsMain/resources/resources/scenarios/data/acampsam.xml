@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="acampsam.xscn" name="Samara" turns="12, 14, 20" date="May 26, 1918" dayturns="0" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="34" cols="41" eqp="eqp-kaiser" image="resources/maps/images/map_499.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="1" airmissions="0" extnaval="1">
+<map file="acampsam.xscn" name="Samara" turns="12, 14, 20" date="May 26, 1918" dayturns="0" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="34" cols="41" eqp="eqp-kaiser" image="resources/maps/images/map_499.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="1" airmissions="0" extnaval="1" airintercept="0" portsnosupply="0" portsnonavaldeploy="0">
   <player id="0" country="144" side="1" airtrans="0" navaltrans="0" support="101,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <player id="1" country="103" side="0" airtrans="0" navaltrans="0" support="104,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="2">
@@ -161,7 +161,7 @@
   <hex row="7" col="32" name="RAILROAD"/>
   <hex row="7" col="33" name="RAILROAD"/>
   <hex row="7" col="34" name="RAILROAD"/>
-  <hex row="7" col="36" road="136" name="RAILROAD" owner="0" flag="144" victory="0"/>
+  <hex row="7" col="36" road="136" name="RAILROAD" owner="0" flag="144" victory="0" station="1"/>
   <hex row="7" col="37" terrain="1" road="162" owner="0" flag="144"/>
   <hex row="7" col="38" road="42"/>
   <hex row="7" col="39" road="136"/>
@@ -223,7 +223,7 @@
   <hex row="10" col="3" name="RAILROAD"/>
   <hex row="10" col="4" road="130" name="RAILROAD"/>
   <hex row="10" col="5" name="RAILROAD"/>
-  <hex row="10" col="6" terrain="1" road="147" name="Samara: RAILROAD" owner="1" flag="103" victory="1">
+  <hex row="10" col="6" terrain="1" road="147" name="Samara: RAILROAD" owner="1" flag="103" victory="1" station="1">
     <unit id="521" owner="1" flag="104" face="0" exp="144" str="8"/>
   </hex>
   <hex row="10" col="7" terrain="1" name="Samara" owner="1" flag="103" victory="1">
@@ -242,7 +242,7 @@
   <hex row="10" col="16" road="130"/>
   <hex row="10" col="17" name="RAILROAD"/>
   <hex row="10" col="18" terrain="1" road="146" name="Kansk"/>
-  <hex row="10" col="19" name="Kansk: RAILROAD" owner="1" flag="103">
+  <hex row="10" col="19" name="Kansk: RAILROAD" owner="1" flag="103" station="1">
     <unit id="521" owner="1" flag="104" face="0" exp="116" str="8"/>
   </hex>
   <hex row="10" col="20" road="144" name="RAILROAD"/>

@@ -7,6 +7,8 @@ import org.osada.model.Equipment
 import org.osada.model.EquipmentData
 import org.osada.model.Player
 import org.osada.model.getCountryEquipmentByClass
+import org.osada.model.isAiPurchasable
+import org.osada.model.isPurchasable
 import org.osada.rules.GameRules
 import org.osada.rules.calculateUnitCosts
 import kotlin.random.Random
@@ -70,12 +72,24 @@ internal object AIPurchasing {
             isPurchasable(eqid, remaining, year, month)
         }
 
+    /**
+     * **OG's two purchase prohibitions are read here since 2026-08-27**, and only one of them is
+     * also a human rule.
+     *
+     * `Can't Buy` (`attr` bit 7) forbids the record to everybody, so `Player.buyUnit` refuses it
+     * too. `No AI buy` (`attr` bit 8) is the AI's alone — 7,065 of the 56,970 merged records carry
+     * it against 4,069 for `Can't Buy` — and it is how OG keeps scenario props and one-off
+     * late-war equipment out of a computer shopping list without hiding any of it from the player.
+     * Applying it to a human catalogue would delete a large part of some efiles on a bit that says
+     * nothing about the player, so it must stay on this side of the line.
+     */
     private fun isPurchasable(
         eqid: Int,
         remaining: Int,
         year: Int,
         month: Int,
     ): Boolean {
+        if (!Equipment.isPurchasable(eqid) || !Equipment.isAiPurchasable(eqid)) return false
         val cost = GameRules.calculateUnitCosts(eqid, -1)
         // Equipment.equipment is dynamic (JS interop); cast once so the year/month
         // comparison below is a proper Int comparison rather than a dynamic operand

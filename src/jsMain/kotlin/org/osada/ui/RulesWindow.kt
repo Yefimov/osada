@@ -150,7 +150,7 @@ internal object RulesWindow {
         byId(NOTE_ID)?.let { note ->
             note.textContent = RulesText.sourceNote(resolved)
         }
-        byId(GAPS_ID)?.let { gaps -> refreshGaps(gaps, resolved) }
+        byId(GAPS_ID)?.let(::refreshGaps)
         byId(SUMMARY_ID)?.let { summary ->
             clearTag(summary)
             RuleKey.entries.forEach { rule -> summaryRow(summary, rule, resolved) }
@@ -217,27 +217,18 @@ internal object RulesWindow {
     }
 
     /**
-     * The "partial" disclaimer for Open General Fidelity (`docs/og-fidelity-plan.md` D.2).
+     * Clears the gap panel.
      *
-     * Rendered as a list next to the profile rather than as a help topic, and empty for every other
-     * selection. A profile that calls itself partial and never says what is missing would be the
-     * unverifiable claim §0.2 of that plan forbids -- and the last line says plainly that no profile
-     * changes AI behaviour, which is the gap players most often assume a ruleset closes.
+     * It used to render the Open General Fidelity profile's list of systems that profile did not
+     * reproduce. That profile was retired on 2026-08-28 (`docs/og-fidelity-plan.md` §AC): Author's
+     * Vision now honours each scenario's own authored switches, so it IS what Open General runs,
+     * and a player who wants a specific rule builds a custom ruleset instead of buying a bundle.
+     *
+     * The function survives as a clear so a list rendered by an older build cannot outlive a
+     * reselect, and so the panel and its CSS keep one owner.
      */
-    private fun refreshGaps(
-        host: HTMLElement,
-        resolved: ResolvedRuleset,
-    ) {
+    private fun refreshGaps(host: HTMLElement) {
         clearTag(host)
-        if (resolved.source != RulesetSource.OG_FIDELITY) return
-        val intro = addTag(host, "div")
-        intro.className = "osadaRulesGaps__intro"
-        intro.textContent = I18n.t("rules.og_fidelity.gaps.intro")
-        val list = addTag(host, "ul")
-        list.className = "osadaRulesGaps__list"
-        RulesText.ogFidelityGaps().forEach { text ->
-            addTag(list, "li").textContent = text
-        }
     }
 
     private fun buildActions(window: HTMLElement) {
@@ -303,8 +294,6 @@ internal object RulesWindow {
         surface = RulesetSelection.Surface.SCENARIO
         RulesetSelection.Surface.entries.forEach { byId(buttonId(it))?.let { button -> delTag(button) } }
     }
-
-    internal fun currentSurface(): RulesetSelection.Surface = surface
 
     private fun buttonId(forSurface: RulesetSelection.Surface): String = "$BUTTON_ID-${forSurface.name.lowercase()}"
 

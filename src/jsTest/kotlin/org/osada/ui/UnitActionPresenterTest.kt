@@ -141,7 +141,7 @@ class UnitActionPresenterTest {
     fun theEnemyPressureDivisorIsNamedAsItsOwnFactor() {
         val map = map()
         val player = map.currentPlayer!!
-        val enemy = map.getPlayer(1)!!
+        val enemy = map.getPlayer(1)
         val unit = place(map, player)
         unit.ammo = 1
         place(map, enemy, row = 1, col = 2)

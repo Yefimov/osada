@@ -5,6 +5,7 @@ import org.osada.LeaderType
 import org.osada.model.Equipment
 import org.osada.model.GameUnit
 import org.osada.model.Leaders
+import org.osada.model.airAttackNeedsAStillAttacker
 import org.osada.model.canInitiateAttackOnUnitType
 import org.osada.rules.ruleset.ActiveRuleset
 import org.osada.rules.ruleset.RuleKey
@@ -67,21 +68,69 @@ internal object AttackEligibility {
     fun blockedByMoveThenFire(attacker: GameUnit): Boolean {
         if (!ActiveRuleset.flag(RuleKey.HEAVY_MOVE_FIRE, false)) return false
         val data = attacker.unitData()
-        val hasLeftItsPosition = attacker.hasMoved || attacker.moveLeft < attacker.unitData(useReal = true).movpoints
-        return hasLeftItsPosition &&
+        return hasLeftItsPosition(attacker) &&
             UnitCapabilities.isHeavyWeapon(data) &&
             !UnitCapabilities.isMechanized(data) &&
             !Leaders.unitHasLeader(attacker, LeaderType.MECHANIZED_VETERAN)
     }
 
+    /**
+     * OG's `CAN Air Attack`, second half: *"active attack requires the unit **has not moved**"*
+     * (`tools/og-import/OG_ABILITY_AUDIT.md` §7.1's three-actions table, and its ability row —
+     * *"ground/naval unit may attack air if it has not moved"*). OSADA granted the targeting and
+     * never read the condition, which `docs/og-fidelity-plan.md` §M.1 listed as one of the four
+     * abilities wired narrower than OG.
+     *
+     * **It applies to the ACTIVE attack only, and that is the whole reason [canInitiateAttack]
+     * takes [asActiveAttack].** The same audit table separates three actions that must not be
+     * merged, and says of this one special: defensive Air Defence support is *"yes (included in
+     * the AD-capable set)"* and movement interception *"yes, since interception uses the same
+     * set"* — neither carries the condition. A gun that has repositioned still answers a plane
+     * that attacks its neighbour, and still intercepts one flying overhead; it simply may not
+     * ORDER a shot at aircraft that turn.
+     *
+     * "Has moved" is [blockedByMoveThenFire]'s own definition, deliberately: one step is enough
+     * there because the gun has unlimbered, and there is no reading of OG under which the same
+     * formation counts as still for one rule and moved for the other.
+     */
+    fun blockedByMovedAirGrant(
+        attacker: GameUnit,
+        defender: GameUnit,
+    ): Boolean =
+        hasLeftItsPosition(attacker) &&
+            Equipment.airAttackNeedsAStillAttacker(attacker.getEqid(), defender.getEqid())
+
+    private fun hasLeftItsPosition(unit: GameUnit): Boolean =
+        unit.hasMoved || unit.moveLeft < unit.unitData(useReal = true).movpoints
+
+    /**
+     * @param asActiveAttack whether this is an attack the owner ORDERS, as opposed to a reaction
+     * the engine fires on their behalf — defensive support fire, AA interception, overwatch and
+     * counterbattery all pass `false`. Two rules distinguish the two: [blockedByMovedAirGrant],
+     * which OG's own table scopes to the active attack alone, and §6.18's line of fire, which is
+     * scoped the same way here only because that is exactly where it applied before.
+     *
+     * **§6.18's line of fire is asked HERE as of 2026-08-27, and that is a fix rather than a
+     * tidy-up.** §T built the rule in [isInAttackRange], which the AI's own order path
+     * (`GameTurnFlow`) and the "why can't I attack this?" diagnostic reach — and nothing else does.
+     * The human player's click resolves through `Hex.getActiveLayerTarget` and the attack overlay
+     * through `Hex.getAttackableUnit`, and BOTH of those funnel through this function, so under
+     * `extended_los` a player could paint and take a shot through a mountain that the same rule
+     * refused the AI. `isInAttackRange` still asks it too; the two now give the same answer, which
+     * is the point.
+     */
     fun canInitiateAttack(
         attacker: GameUnit,
         defender: GameUnit,
+        asActiveAttack: Boolean = true,
     ): Boolean {
         if (attacker.destroyed || defender.destroyed) return false
         val eligible =
             !airGroundedByWeather(attacker) &&
                 !blockedByMoveThenFire(attacker) &&
+                !(asActiveAttack && blockedByMovedAirGrant(attacker, defender)) &&
+                !(asActiveAttack && !ExtendedLos.hasLineOfFire(attacker, defender)) &&
+                !ExtendedNaval.blocksAttack(attacker, defender) &&
                 UnitPredicates.isEnemy(attacker, defender) &&
                 Equipment.canInitiateAttackOnUnitType(attacker.getEqid(), defender.getEqid())
         return eligible && canFire(attacker, defender)
@@ -94,7 +143,10 @@ internal object AttackEligibility {
         val unitsUsable = !attacker.destroyed && attacker.getAmmo() > 0 && !defender.destroyed
         if (!unitsUsable) return false
         val canTargetAir = !UnitPredicates.isAir(defender) || attacker.unitData().airatk > 0
-        val canTargetGround = UnitPredicates.isAir(defender) || hasNonAirAttack(attacker)
+        val canTargetGround =
+            UnitPredicates.isAir(defender) ||
+                hasNonAirAttack(attacker) ||
+                UnitCapabilities.torpedoRunPermitted(attacker, defender)
         return UnitPredicates.isEnemy(attacker, defender) && canTargetAir && canTargetGround
     }
 
@@ -150,6 +202,13 @@ internal object AttackEligibility {
             !Equipment.canInitiateAttackOnUnitType(attacker.getEqid(), defender.getEqid()) ->
                 "target-type matrix (attacker attr=${attacker.unitData().attr}, target=${defender.unitData().target})"
 
+            blockedByMovedAirGrant(attacker, defender) ->
+                "CAN Air Atk grants this shot only to a unit that has not moved this turn"
+
+            ExtendedNaval.blocksAttack(attacker, defender) ->
+                "extended naval rules: a ship attacks a submarine only at range 1, and a submarine " +
+                    "needs a direct line of fire"
+
             attacker.hasFired -> "attacker has already fired"
             blockedByMoveThenFire(attacker) ->
                 "heavy_move_fire: this gun had to fire before moving (no Mechanized attribute or leader)"
@@ -184,11 +243,17 @@ internal object AttackEligibility {
      *
      * The line-of-fire half is OG 6.18 (*"hills, mountains, cities, forest and bocage cut the line
      * of fire of these units, making an attack impossible"*) together with the `Cut LOS` and
-     * `Allow LOF` equipment attributes, and it is the reader those two bits never had. It is behind
+     * `Allow LOF` equipment attributes, and it is the reader those bits never had. It is behind
      * the key rather than universal because switching it on for everybody would make authored
      * attacks impossible across all 502 shipped scenarios at once; see `rules/ExtendedLos` for the
      * full reasoning. With the key off this is the pure distance test it has always been, and even
      * with it on an adjacent attack is never blocked.
+     *
+     * **The shape of that half is the scenario's to set, since §T.** §6.18 exempts artillery and
+     * air defence outright, reaches two hexes unless the scenario sets `TrueDLOF`, and blocks on
+     * units in the way only where it carries `Cut LOS` — or on all of them, where the scenario sets
+     * `UnitsBlockDLOF`. All four conditions live in `ExtendedLos`; nothing here needs to know
+     * them.
      */
     fun isInAttackRange(
         attacker: GameUnit,

@@ -108,6 +108,43 @@ class CombatResults {
     var defcanfire: Boolean = true
     var isRugged: Boolean = false
     var isOverrun: Boolean = false
+
+    /**
+     * The defender slipped the attack entirely — OG's `Evade` (`rules/Evade`, 2026-08-27).
+     *
+     * Set only on the COMMITTED result, never on a forecast: the roll draws from the shared random
+     * stream, which a preview may not advance. So the player sees the ordinary prediction and this
+     * flag is how the outcome is announced afterwards, exactly as [isRugged] is.
+     */
+    var isEvaded: Boolean = false
+
+    /**
+     * The attacker kept its movement after clearing the hex — OG's `Exploit Success`
+     * (`CombatApplication.applyExploitSuccess`, 2026-08-27).
+     *
+     * Reported rather than inferred from the unit's flags, so the UI can say why a formation that
+     * has just attacked may still walk. Unlike [isOverrun] the attack itself is still spent.
+     */
+    var isExploit: Boolean = false
+
+    /**
+     * The attacker's saboteurs got in and the battle never happened — OG's `Saboteur`
+     * (`CombatApplication.applySabotage`, 2026-08-27).
+     *
+     * Like [isEvaded] this is set only on the COMMITTED result: the attempt draws from the shared
+     * random stream, which a forecast may not advance.
+     */
+    var isSabotage: Boolean = false
+
+    /**
+     * A naval shot sank its target outright — OG's `critical_hit` (`rules/CriticalHit`, 2026-08-28).
+     *
+     * Set only on the COMMITTED result, for the same reason [isEvaded] and [isSabotage] are: the
+     * roll draws from the shared random stream, which a forecast may not advance. It is reported
+     * rather than inferred from the strength loss, because "the last two points happened to be
+     * enough" and "this ship was sunk by a magazine hit" are different sentences to show a player.
+     */
+    var isCriticalHit: Boolean = false
     var defLeaderGain: Boolean = false
     var atkLeaderGain: Boolean = false
 }

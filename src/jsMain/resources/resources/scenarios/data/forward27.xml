@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="forward27.xscn" name="Battle of Berlin" turns="22, 25, 28" date="April 16, 1945" dayturns="0" ground="0" atmosferic="1" latitude="6" iconset="0" weatherchg="0" rows="60" cols="71" eqp="eqp-atomic" image="resources/maps/images/map_1475.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="1" barrage="1" airzoc="1" airmissions="0" extnaval="1">
+<map file="forward27.xscn" name="Battle of Berlin" turns="22, 25, 28" date="April 16, 1945" dayturns="0" ground="0" atmosferic="1" latitude="6" iconset="0" weatherchg="0" rows="60" cols="71" eqp="eqp-atomic" image="resources/maps/images/map_1475.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="1" barrage="1" airzoc="1" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0">
   <player id="0" country="89" side="1" airtrans="0" navaltrans="0" support="21,90,0,0" turnprestige="100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100"/>
   <player id="1" country="7" side="0" airtrans="0" navaltrans="0" support="8,0,0,0" turnprestige="10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10"/>
   <reinforce turn="12">
@@ -89,7 +89,7 @@
   <hex row="0" col="28" road="17"/>
   <hex row="0" col="33" terrain="3"/>
   <hex row="0" col="34" terrain="3"/>
-  <hex row="0" col="41" road="18" rail="18"/>
+  <hex row="0" col="41" road="18" rail="18" station="1"/>
   <hex row="0" col="42" road="33" rail="161"/>
   <hex row="0" col="49" terrain="3"/>
   <hex row="0" col="51" terrain="10" name="Oder (Odra)"/>
@@ -191,7 +191,7 @@
   <hex row="3" col="15" terrain="3"/>
   <hex row="3" col="16" terrain="3"/>
   <hex row="3" col="17" terrain="3"/>
-  <hex row="3" col="18" road="17" rail="17"/>
+  <hex row="3" col="18" road="17" rail="17" station="1"/>
   <hex row="3" col="20" terrain="3"/>
   <hex row="3" col="21" terrain="3"/>
   <hex row="3" col="22" terrain="3"/>
@@ -338,7 +338,7 @@
   <hex row="5" col="40">
     <unit id="9236" owner="1" flag="8" face="0" exp="2" str="6"/>
   </hex>
-  <hex row="5" col="41" road="43" rail="17">
+  <hex row="5" col="41" road="43" rail="17" station="1">
     <unit id="8010" owner="1" flag="8" face="0" exp="48" str="8"/>
   </hex>
   <hex row="5" col="42" road="40"/>
@@ -452,7 +452,7 @@
   <hex row="7" col="13" terrain="3"/>
   <hex row="7" col="14" terrain="3"/>
   <hex row="7" col="15" terrain="3"/>
-  <hex row="7" col="18" rail="17"/>
+  <hex row="7" col="18" rail="17" station="1"/>
   <hex row="7" col="21" road="17"/>
   <hex row="7" col="22" terrain="1" name="Zehdenick"/>
   <hex row="7" col="23" terrain="10" name="Havel"/>
@@ -808,7 +808,7 @@
     <unit id="8086" owner="1" flag="8" face="0" exp="20" str="7"/>
   </hex>
   <hex row="14" col="35" terrain="1" rail="34" name="Eberswalde"/>
-  <hex row="14" col="36" road="130" rail="33"/>
+  <hex row="14" col="36" road="130" rail="33" station="1"/>
   <hex row="14" col="38" road="152"/>
   <hex row="14" col="39" road="136"/>
   <hex row="14" col="40" terrain="10" name="Finow-Kanal"/>
@@ -912,7 +912,7 @@
   <hex row="16" col="18">
     <unit id="9556" owner="1" flag="8" face="0" exp="58" str="5" ldr="1"/>
   </hex>
-  <hex row="16" col="19" terrain="1" road="33" rail="17" name="Oranienburg" owner="1" flag="7" victory="1">
+  <hex row="16" col="19" terrain="1" road="33" rail="17" name="Oranienburg" owner="1" flag="7" victory="1" station="1">
     <unit id="10275" owner="1" flag="8" face="0" exp="30" str="6"/>
   </hex>
   <hex row="16" col="20" terrain="10" name="Havel"/>
@@ -1131,7 +1131,7 @@
   <hex row="20" col="28" terrain="1" road="9" name="Bernau" owner="1" flag="7">
     <unit id="8325" owner="1" flag="8" face="0" exp="113" str="8"/>
   </hex>
-  <hex row="20" col="29" terrain="1" road="144" rail="34" name="Bernau"/>
+  <hex row="20" col="29" terrain="1" road="144" rail="34" name="Bernau" station="1"/>
   <hex row="20" col="30" rail="34"/>
   <hex row="20" col="35" road="34"/>
   <hex row="20" col="36" terrain="3" road="34"/>
@@ -1167,7 +1167,7 @@
   <hex row="21" col="19" terrain="10" name="Havel"/>
   <hex row="21" col="20" road="130"/>
   <hex row="21" col="21" terrain="1" name="Berlin"/>
-  <hex row="21" col="22" road="144" rail="136"/>
+  <hex row="21" col="22" road="144" rail="136" station="1"/>
   <hex row="21" col="23" rail="136"/>
   <hex row="21" col="27" rail="34"/>
   <hex row="21" col="28" rail="34"/>
@@ -1416,7 +1416,7 @@
   <hex row="26" col="21" terrain="1" road="136" name="Berlin"/>
   <hex row="26" col="22" terrain="2"/>
   <hex row="26" col="23" terrain="1" road="35" name="Berlin"/>
-  <hex row="26" col="24" terrain="1" road="34" rail="17" name="Berlin">
+  <hex row="26" col="24" terrain="1" road="34" rail="17" name="Berlin" station="1">
     <unit id="8325" owner="1" flag="8" face="0" exp="56" str="8"/>
   </hex>
   <hex row="26" col="25" terrain="1" name="Berlin"/>
@@ -1620,7 +1620,7 @@
   <hex row="29" col="23" terrain="10" rail="18" name="Spree"/>
   <hex row="29" col="24" terrain="1" rail="35" name="Berlin"/>
   <hex row="29" col="25" terrain="1" road="34" name="Berlin"/>
-  <hex row="29" col="26" terrain="1" road="169" rail="136" name="Berlin"/>
+  <hex row="29" col="26" terrain="1" road="169" rail="136" name="Berlin" station="1"/>
   <hex row="29" col="27" terrain="1" road="136" rail="130" name="Berlin"/>
   <hex row="29" col="28" terrain="1" rail="40" name="Berlin"/>
   <hex row="29" col="29" terrain="1" road="17" rail="130" name="Berlin">
@@ -1698,7 +1698,7 @@
   <hex row="30" col="22" terrain="1" road="136" name="Berlin" owner="1" flag="7" victory="1">
     <unit id="7973" owner="1" flag="8" face="0" exp="33" str="8"/>
   </hex>
-  <hex row="30" col="23" terrain="1" road="138" rail="17" name="Berlin">
+  <hex row="30" col="23" terrain="1" road="138" rail="17" name="Berlin" station="1">
     <unit id="9938" owner="1" flag="8" face="0" transport="9810" exp="59" str="8"/>
   </hex>
   <hex row="30" col="24" terrain="10" road="34" name="Spree">
@@ -1823,7 +1823,7 @@
   <hex row="32" col="22" terrain="1" road="136" name="Berlin">
     <unit id="8670" owner="1" flag="8" face="0" exp="25" str="5"/>
   </hex>
-  <hex row="32" col="23" terrain="1" road="146" rail="17" name="Berlin"/>
+  <hex row="32" col="23" terrain="1" road="146" rail="17" name="Berlin" station="1"/>
   <hex row="32" col="24" terrain="1" road="34" name="Berlin"/>
   <hex row="32" col="25" terrain="1" name="Berlin" owner="1" flag="7" victory="1">
     <unit id="7973" owner="1" flag="8" face="0" exp="27" str="8"/>
@@ -1847,7 +1847,7 @@
   <hex row="32" col="40" terrain="3" rail="130"/>
   <hex row="32" col="42" terrain="3" rail="130"/>
   <hex row="32" col="43" terrain="1" name="F&#252;rstenwalde"/>
-  <hex row="32" col="44" rail="130">
+  <hex row="32" col="44" rail="130" station="1">
     <unit id="496" owner="1" flag="8" face="0"/>
   </hex>
   <hex row="32" col="45" terrain="3"/>
@@ -1992,7 +1992,7 @@
     <unit id="9938" owner="1" flag="8" face="0" transport="9737" exp="54" str="8"/>
   </hex>
   <hex row="34" col="55" road="40" rail="130"/>
-  <hex row="34" col="56" terrain="1" road="18" rail="40" name="Frankfurt an der Oder" owner="1" flag="7" victory="1">
+  <hex row="34" col="56" terrain="1" road="18" rail="40" name="Frankfurt an der Oder" owner="1" flag="7" victory="1" station="1">
     <unit id="630" owner="1" flag="8" face="0" exp="32"/>
   </hex>
   <hex row="34" col="57" terrain="1" road="17" rail="130" name="Frankfurt an der Oder"/>
@@ -2005,7 +2005,7 @@
   <hex row="34" col="64" terrain="3" rail="40" deploy="0"/>
   <hex row="34" col="65" terrain="3" road="40" rail="130" deploy="0"/>
   <hex row="34" col="66" road="17" rail="40" deploy="0"/>
-  <hex row="34" col="67" road="40" rail="130" deploy="0"/>
+  <hex row="34" col="67" road="40" rail="130" deploy="0" station="1"/>
   <hex row="34" col="68" rail="40"/>
   <hex row="34" col="69" terrain="3" rail="130"/>
   <hex row="34" col="70" terrain="3" rail="40"/>
@@ -2183,7 +2183,7 @@
   <hex row="38" col="19" rail="17"/>
   <hex row="38" col="22" road="18"/>
   <hex row="38" col="28" terrain="1" name="Mittenwalde" owner="1" flag="7"/>
-  <hex row="38" col="29" road="17" rail="17"/>
+  <hex row="38" col="29" road="17" rail="17" station="1"/>
   <hex row="38" col="31" terrain="15"/>
   <hex row="38" col="32" terrain="15"/>
   <hex row="38" col="33" terrain="15"/>
@@ -2228,7 +2228,7 @@
   <hex row="39" col="12" terrain="1" name="Beelitz" owner="1" flag="7"/>
   <hex row="39" col="15" rail="34"/>
   <hex row="39" col="16" rail="34"/>
-  <hex row="39" col="19" rail="17" owner="1" flag="7"/>
+  <hex row="39" col="19" rail="17" owner="1" flag="7" station="1"/>
   <hex row="39" col="20" terrain="1" name="Trebbin"/>
   <hex row="39" col="21" road="18"/>
   <hex row="39" col="22" road="33"/>
@@ -2319,7 +2319,7 @@
   <hex row="41" col="9" road="34"/>
   <hex row="41" col="10" road="34"/>
   <hex row="41" col="11" rail="34"/>
-  <hex row="41" col="12" road="130" rail="34"/>
+  <hex row="41" col="12" road="130" rail="34" station="1"/>
   <hex row="41" col="14" road="136"/>
   <hex row="41" col="15" road="136"/>
   <hex row="41" col="17" road="48"/>
@@ -2379,7 +2379,7 @@
   <hex row="42" col="24" terrain="15"/>
   <hex row="42" col="29" terrain="15"/>
   <hex row="42" col="30" road="136" rail="136"/>
-  <hex row="42" col="31" road="144" rail="136"/>
+  <hex row="42" col="31" road="144" rail="136" station="1"/>
   <hex row="42" col="32" terrain="3"/>
   <hex row="42" col="33" terrain="3"/>
   <hex row="42" col="34" terrain="3">
@@ -2486,7 +2486,7 @@
   <hex row="44" col="6" road="18" rail="34"/>
   <hex row="44" col="7" terrain="3"/>
   <hex row="44" col="10" terrain="3"/>
-  <hex row="44" col="17" terrain="1" road="34" rail="34" name="Luckenwalde"/>
+  <hex row="44" col="17" terrain="1" road="34" rail="34" name="Luckenwalde" station="1"/>
   <hex row="44" col="18" road="34" rail="34"/>
   <hex row="44" col="19" terrain="2"/>
   <hex row="44" col="20" terrain="2" owner="1" flag="7"/>
@@ -2528,7 +2528,7 @@
   <hex row="44" col="70" terrain="3"/>
   <hex row="45" col="1" road="34"/>
   <hex row="45" col="2" road="34"/>
-  <hex row="45" col="3" terrain="1" rail="34" name="Niemegk"/>
+  <hex row="45" col="3" terrain="1" rail="34" name="Niemegk" station="1"/>
   <hex row="45" col="4" rail="34"/>
   <hex row="45" col="5" road="18"/>
   <hex row="45" col="6" road="33"/>
@@ -2657,7 +2657,7 @@
   <hex row="48" col="9" terrain="3"/>
   <hex row="48" col="10" terrain="3"/>
   <hex row="48" col="11" terrain="3"/>
-  <hex row="48" col="15" road="42" rail="34"/>
+  <hex row="48" col="15" road="42" rail="34" station="1"/>
   <hex row="48" col="16" terrain="3" road="33" rail="33"/>
   <hex row="48" col="20" terrain="3"/>
   <hex row="48" col="21" terrain="3"/>
@@ -2841,7 +2841,7 @@
   <hex row="52" col="4" road="33"/>
   <hex row="52" col="5" road="34"/>
   <hex row="52" col="6" terrain="1" road="42" name="Zahna"/>
-  <hex row="52" col="7" road="144" rail="34"/>
+  <hex row="52" col="7" road="144" rail="34" station="1"/>
   <hex row="52" col="8" road="130" rail="34"/>
   <hex row="52" col="9" terrain="3"/>
   <hex row="52" col="10" terrain="3"/>
@@ -2862,7 +2862,7 @@
   <hex row="52" col="34" terrain="3"/>
   <hex row="52" col="35" terrain="3"/>
   <hex row="52" col="36" terrain="3" road="17"/>
-  <hex row="52" col="38" road="136" rail="17"/>
+  <hex row="52" col="38" road="136" rail="17" station="1"/>
   <hex row="52" col="39" road="136"/>
   <hex row="52" col="40" terrain="10" name="Spree"/>
   <hex row="52" col="41" road="34"/>
@@ -3005,7 +3005,7 @@
   <hex row="54" col="70" terrain="3"/>
   <hex row="55" col="0" road="34"/>
   <hex row="55" col="1" rail="34"/>
-  <hex row="55" col="2" road="17" rail="34" owner="1" flag="7"/>
+  <hex row="55" col="2" road="17" rail="34" owner="1" flag="7" station="1"/>
   <hex row="55" col="4" terrain="10" name="Elbe"/>
   <hex row="55" col="5" terrain="3"/>
   <hex row="55" col="6" terrain="10" name="Elbe"/>
@@ -3194,7 +3194,7 @@
   <hex row="58" col="49" terrain="1" name="Cottbus" owner="1" flag="7" victory="1">
     <unit id="630" owner="1" flag="8" face="0" exp="31"/>
   </hex>
-  <hex row="58" col="50" terrain="1" rail="130" name="Cottbus">
+  <hex row="58" col="50" terrain="1" rail="130" name="Cottbus" station="1">
     <unit id="8325" owner="1" flag="8" face="0" exp="119" str="8"/>
   </hex>
   <hex row="58" col="51" terrain="10" road="34" name="Spree"/>
@@ -3204,7 +3204,7 @@
   <hex row="58" col="56" terrain="2" owner="1" flag="7" victory="1">
     <unit id="10403" owner="1" flag="8" face="0" transport="9737" exp="41" str="6"/>
   </hex>
-  <hex row="58" col="57" road="19" rail="40"/>
+  <hex row="58" col="57" road="19" rail="40" station="1"/>
   <hex row="58" col="58" road="40">
     <unit id="8194" owner="1" flag="8" face="0" exp="142" str="7"/>
   </hex>

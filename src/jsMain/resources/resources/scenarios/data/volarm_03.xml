@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="volarm_03.xscn" name="The liberation of Ekaterinodar" turns="14, 17, 20" date="August 13, 1918" dayturns="0" ground="0" atmosferic="1" latitude="3" iconset="0" weatherchg="1" rows="20" cols="28" eqp="eqp-kaiser" image="resources/maps/images/map_650.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0">
+<map file="volarm_03.xscn" name="The liberation of Ekaterinodar" turns="14, 17, 20" date="August 13, 1918" dayturns="0" ground="0" atmosferic="1" latitude="3" iconset="0" weatherchg="1" rows="20" cols="28" eqp="eqp-kaiser" image="resources/maps/images/map_650.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0">
 <player id="0" country="103" side="0" airtrans="0" navaltrans="0" support="104,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
 <player id="1" country="100" side="1" airtrans="0" navaltrans="0" support="0,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <hex row="0" col="19" road="17" deploy="1"/>
@@ -15,7 +15,7 @@
   <hex row="1" col="21" deploy="1"/>
   <hex row="1" col="22" deploy="1"/>
   <hex row="1" col="24" road="18"/>
-  <hex row="1" col="25" terrain="1" name="Plastunovskaya" owner="1" flag="100" victory="1"/>
+  <hex row="1" col="25" terrain="1" name="Plastunovskaya" owner="1" flag="100" victory="1" station="1"/>
   <hex row="2" col="2" terrain="1" road="137" name="Boykoponura"/>
   <hex row="2" col="3" road="136"/>
   <hex row="2" col="19" road="17"/>
@@ -109,7 +109,7 @@
   <hex row="9" col="18">
     <unit id="502" owner="0" flag="104" face="0" exp="40"/>
   </hex>
-  <hex row="9" col="19" terrain="1" road="17" name="Ekaterinodar" owner="0" flag="103" victory="0">
+  <hex row="9" col="19" terrain="1" road="17" name="Ekaterinodar" owner="0" flag="103" victory="0" station="1">
     <unit id="42270" owner="0" flag="104" face="0" exp="40"/>
   </hex>
   <hex row="9" col="20" road="131"/>
@@ -122,7 +122,7 @@
   <hex row="10" col="1" road="136"/>
   <hex row="10" col="2" road="136"/>
   <hex row="10" col="3" road="168"/>
-  <hex row="10" col="5" terrain="1" road="40" name="Elizabetinskaya" owner="0" flag="103" victory="0">
+  <hex row="10" col="5" terrain="1" road="40" name="Elizabetinskaya" owner="0" flag="103" victory="0" station="1">
     <unit id="42262" owner="0" flag="104" face="0" exp="40"/>
   </hex>
   <hex row="10" col="6">
@@ -145,7 +145,7 @@
     <unit id="42270" owner="0" flag="104" face="0" exp="40"/>
   </hex>
   <hex row="10" col="22" terrain="10" name="Kuban"/>
-  <hex row="10" col="23" terrain="1" road="11" name="Ekaterinodar">
+  <hex row="10" col="23" terrain="1" road="11" name="Ekaterinodar" station="1">
     <unit id="42262" owner="0" flag="104" face="0" exp="40"/>
   </hex>
   <hex row="10" col="24" road="162"/>
@@ -177,7 +177,7 @@
   </hex>
   <hex row="11" col="22" terrain="10" name="Kuban"/>
   <hex row="11" col="24" road="136"/>
-  <hex row="11" col="25" terrain="1" road="136" name="Plodorodny" owner="0" flag="103">
+  <hex row="11" col="25" terrain="1" road="136" name="Plodorodny" owner="0" flag="103" station="1">
     <unit id="42270" owner="0" flag="104" face="0" exp="40"/>
   </hex>
   <hex row="11" col="27" road="40"/>
@@ -249,7 +249,7 @@
   <hex row="14" col="10" terrain="10" name="Kuban"/>
   <hex row="14" col="11" road="40"/>
   <hex row="14" col="13" road="34"/>
-  <hex row="14" col="14" terrain="1" road="34" name="Yablonovsky" owner="0" flag="103">
+  <hex row="14" col="14" terrain="1" road="34" name="Yablonovsky" owner="0" flag="103" station="1">
     <unit id="42274" owner="0" flag="104" face="0" exp="40"/>
   </hex>
   <hex row="14" col="16" road="130"/>
@@ -265,7 +265,7 @@
   <hex row="15" col="2" terrain="5"/>
   <hex row="15" col="3" terrain="1" road="17" name="Afipsip" owner="0" flag="103"/>
   <hex row="15" col="4" terrain="3"/>
-  <hex row="15" col="9" terrain="1" road="34" name="Khomuty" owner="0" flag="103">
+  <hex row="15" col="9" terrain="1" road="34" name="Khomuty" owner="0" flag="103" station="1">
     <unit id="42274" owner="0" flag="104" face="0" exp="40"/>
   </hex>
   <hex row="15" col="10" road="34"/>
@@ -279,7 +279,7 @@
   <hex row="15" col="25" road="130"/>
   <hex row="15" col="26" road="40"/>
   <hex row="15" col="27" road="136"/>
-  <hex row="16" col="1" terrain="1" road="34" name="Kosharskiy" owner="0" flag="103"/>
+  <hex row="16" col="1" terrain="1" road="34" name="Kosharskiy" owner="0" flag="103" station="1"/>
   <hex row="16" col="2" road="40"/>
   <hex row="16" col="3" road="131"/>
   <hex row="16" col="4" road="40"/>

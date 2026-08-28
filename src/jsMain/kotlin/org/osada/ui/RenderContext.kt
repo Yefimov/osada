@@ -93,6 +93,20 @@ internal val hexStyles =
                 "lineWidth" to 2,
                 "lineJoin" to "miter",
             ),
+        // Engineering work in progress (OG 9.3). The map is a pre-rendered image, so a half-built
+        // bridge cannot be painted into it -- this outline is the only way a site under construction
+        // differs from the hex beside it, and `DEFERRED.md` 1.1's rule is that a mechanic the
+        // player pays prestige for must have a visible cause. Dashed and dim, because unlike the
+        // minefield ring it is not a warning: it marks the player's OWN unfinished job, and it
+        // must not read as a threat or compete with the selection overlays drawn under it.
+        "construction" to
+            json(
+                "fillColor" to "rgba(200, 170, 60, 0.16)",
+                "lineColor" to "rgba(230, 200, 90, 0.85)",
+                "lineWidth" to 2,
+                "lineJoin" to "miter",
+                "lineDash" to arrayOf(5, 4),
+            ),
         "current" to
             json(
                 "fillColor" to null,

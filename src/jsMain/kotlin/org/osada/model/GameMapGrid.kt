@@ -163,7 +163,8 @@ fun GameMap.ownsSupplyHex(side: Int): Boolean {
     map?.forEach { row ->
         row.forEach { hex ->
             val owner = hex.owner
-            if (hex.terrain == TerrainType.PORT.value && owner != -1 && getPlayer(owner).side == side) {
+            // A wrecked port anchors no purchases either -- see `Hex.isWorking`.
+            if (hex.isWorking(TerrainType.PORT.value) && owner != -1 && getPlayer(owner).side == side) {
                 return true
             }
         }

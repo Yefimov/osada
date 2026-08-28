@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="bn5s07.xscn" name="RP Kill Bruno" turns="15, 15, 15" date="February 28, 1944" dayturns="0" ground="1" atmosferic="0" latitude="3" iconset="1" weatherchg="0" rows="20" cols="42" eqp="eqp-lxf" image="resources/maps/images/map_1016.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="0" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1">
+<map file="bn5s07.xscn" name="RP Kill Bruno" turns="15, 15, 15" date="February 28, 1944" dayturns="0" ground="1" atmosferic="0" latitude="3" iconset="1" weatherchg="0" rows="20" cols="42" eqp="eqp-lxf" image="resources/maps/images/map_1016.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="0" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0">
   <player id="0" country="19" side="1" airtrans="0" navaltrans="0" support="20,0,0,0" turnprestige="0, 36, 36, 36, 36, 36, 36, 36, 36, 72, 36, 72, 36, 72, 36, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35"/>
   <player id="1" country="7" side="0" airtrans="0" navaltrans="0" support="8,0,0,0" turnprestige="0, 0, 36, 0, 36, 0, 36, 0, 36, 0, 0, 36, 0, 36, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25"/>
   <reinforce turn="2">
@@ -315,7 +315,7 @@
   <hex row="5" col="32" road="17"/>
   <hex row="5" col="33" terrain="2"/>
   <hex row="5" col="34" terrain="2" road="9" owner="1" flag="7"/>
-  <hex row="5" col="35" terrain="1" road="136" name="Village"/>
+  <hex row="5" col="35" terrain="1" road="136" name="Village" station="1"/>
   <hex row="5" col="36" terrain="1" name="Village"/>
   <hex row="5" col="37" road="33"/>
   <hex row="5" col="39" terrain="10"/>
@@ -827,7 +827,7 @@
   <hex row="18" col="1" terrain="3"/>
   <hex row="18" col="2" terrain="3"/>
   <hex row="18" col="3" road="18" name="Railroad"/>
-  <hex row="18" col="4" road="33" name="Railroad"/>
+  <hex row="18" col="4" road="33" name="Railroad" station="1"/>
   <hex row="18" col="5" terrain="3"/>
   <hex row="18" col="6" terrain="3"/>
   <hex row="18" col="7" terrain="3"/>

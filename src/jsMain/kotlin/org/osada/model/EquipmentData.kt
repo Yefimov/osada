@@ -68,6 +68,29 @@ class EquipmentData {
      */
     var bombsize: Int = 0
 
+    /**
+     * OG's **Hangar Capacity** (`equip.xeqp` @120, OpenSuite's `HangarCap` column), imported
+     * 2026-08-27 — how many aircraft a carrier holds (manual §9.7).
+     *
+     * `docs/og-fidelity-plan.md` §M recorded carrier capacity as absent for exactly one reason:
+     * the byte *"is dumped to CSV by `tools/og-import/xeqp_to_csv.py` and is not deployed into the
+     * game's equipment data"*. It is now, by `tools/eqp-merge/add_hangar_capacity.py`.
+     *
+     * **The offset was confirmed by population before anything read it**, the same test §Q.2
+     * applied to [bombsize]: over the eleven OG efiles this project can read, **266 of 322 carrier
+     * records carry a value of 1..6, and every one of the seven efiles that authors the field at
+     * all does so for 100% of its carriers.** The 56 that carry none are `eqp-olgcw` and
+     * `eqp-olgww2`, the two up-converted old-format efiles whose ability bytes §J.2 already showed
+     * to be manufactured rather than authored — so their silence is the same known gap, not a
+     * counter-example. `CV` = 6, `CVL` = 3, `CVE` = 2 in the shipped data, which is the right
+     * shape for fleet, light and escort carriers.
+     *
+     * Defaults to 0 for the 4,271 records whose pre-merge source could not be re-identified and for
+     * Panzer Marshal's own stock rosters — "no data", the same rule [attr2] and [bombsize] follow,
+     * and the reason `rules/CarrierHangar` never reads 0 as *"this ship has no hangar"*.
+     */
+    var hangarCap: Int = 0
+
     // 1-based (1=January), matching the OG CSV's own MonthAvail/MonthExpired convention. Default
     // to full-year coverage: any equipment JSON whose parsehints don't include these two fields
     // (PM's own original adlerkorps/pacific sets, never touched by the OG import) behaves exactly
@@ -122,6 +145,7 @@ internal fun EquipmentData.withStatMultiplier(multiplier: Int): EquipmentData =
         result.attr2 = attr2
         result.attrEx = attrEx
         result.bombsize = bombsize
+        result.hangarCap = hangarCap
         result.monthavailable = monthavailable
         result.monthexpired = monthexpired
     }
@@ -208,7 +232,8 @@ private fun EquipmentData.applyEquipmentFieldsC(
 }
 
 /** OG's `Special4`/`SpecialEx` (2026-08-19) and Bomber Size (2026-08-26) -- see
- *  [EquipmentData.attr2], [EquipmentData.attrEx] and [EquipmentData.bombsize]. */
+ *  [EquipmentData.attr2], [EquipmentData.attrEx], [EquipmentData.bombsize] and (2026-08-27)
+ *  [EquipmentData.hangarCap]. */
 private fun EquipmentData.applyEquipmentFieldsD(
     hint: String,
     value: dynamic,
@@ -217,5 +242,6 @@ private fun EquipmentData.applyEquipmentFieldsD(
         "attr2" -> attr2 = value as Int
         "attrEx" -> attrEx = value as Int
         "bombsize" -> bombsize = value as Int
+        "hangarcap" -> hangarCap = value as Int
     }
 }

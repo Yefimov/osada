@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="bn9s16.xscn" name="Jassy-Kishinev Offensive" turns="9, 12, 18" date="August 20, 1944" dayturns="0" ground="0" atmosferic="0" latitude="6" iconset="3" weatherchg="1" rows="34" cols="44" eqp="eqp-lxf" image="resources/maps/images/map_461.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1">
+<map file="bn9s16.xscn" name="Jassy-Kishinev Offensive" turns="9, 12, 18" date="August 20, 1944" dayturns="0" ground="0" atmosferic="0" latitude="6" iconset="3" weatherchg="1" rows="34" cols="44" eqp="eqp-lxf" image="resources/maps/images/map_461.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="1" portsnonavaldeploy="0">
   <player id="0" country="19" side="1" airtrans="0" navaltrans="0" support="20,0,0,0" turnprestige="0, 240, 240, 240, 240, 240, 240, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <player id="1" country="13" side="0" airtrans="0" navaltrans="0" support="8,14,0,0" turnprestige="0, 200, 200, 200, 200, 200, 200, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="3">
@@ -749,7 +749,7 @@
   <hex row="12" col="36" terrain="3"/>
   <hex row="12" col="39" terrain="5"/>
   <hex row="12" col="40" terrain="5"/>
-  <hex row="12" col="41" terrain="1" name="Cornesti" owner="1" flag="13" victory="1">
+  <hex row="12" col="41" terrain="1" name="Cornesti" owner="1" flag="13" victory="1" station="1">
     <unit id="7909" owner="1" flag="8" face="0" exp="183" str="6"/>
   </hex>
   <hex row="12" col="42" terrain="5"/>
@@ -757,7 +757,7 @@
   <hex row="13" col="1">
     <unit id="18180" owner="1" flag="14" face="0" transport="18130" exp="176"/>
   </hex>
-  <hex row="13" col="2" road="19">
+  <hex row="13" col="2" road="19" station="1">
     <unit id="18237" owner="1" flag="14" face="0" transport="18130" exp="164" str="8"/>
   </hex>
   <hex row="13" col="3" terrain="10" name="Siret"/>
@@ -769,7 +769,7 @@
   <hex row="13" col="10" terrain="1" road="57" name="Targu Frumos" owner="1" flag="13" victory="1">
     <unit id="7976" owner="1" flag="8" face="0" exp="19" str="9"/>
   </hex>
-  <hex row="13" col="11" terrain="1" road="168" name="Targu Frumos"/>
+  <hex row="13" col="11" terrain="1" road="168" name="Targu Frumos" station="1"/>
   <hex row="13" col="12">
     <unit id="9419" owner="1" flag="8" face="0" exp="126" str="7" ldr="1"/>
   </hex>
@@ -818,7 +818,7 @@
   <hex row="14" col="16" road="138">
     <unit id="9419" owner="1" flag="8" face="0" exp="41" str="7"/>
   </hex>
-  <hex row="14" col="17" road="147"/>
+  <hex row="14" col="17" road="147" station="1"/>
   <hex row="14" col="18" terrain="1" road="162" name="Podu Iloaiei" owner="1" flag="13"/>
   <hex row="14" col="20" terrain="10" road="136" name="Bahlui"/>
   <hex row="14" col="21" terrain="10" road="130" name="Bahlui"/>
@@ -912,9 +912,9 @@
   </hex>
   <hex row="16" col="17" road="9"/>
   <hex row="16" col="25" road="11"/>
-  <hex row="16" col="26" terrain="1" road="187" name="Iasi"/>
+  <hex row="16" col="26" terrain="1" road="187" name="Iasi" station="1"/>
   <hex row="16" col="27" terrain="1" road="171" name="Iasi"/>
-  <hex row="16" col="28" terrain="1" road="187" name="Iasi"/>
+  <hex row="16" col="28" terrain="1" road="187" name="Iasi" station="1"/>
   <hex row="16" col="29" terrain="1" road="177" name="Iasi"/>
   <hex row="16" col="30" terrain="10" name="Bahlui"/>
   <hex row="16" col="31" terrain="10"/>
@@ -1216,7 +1216,7 @@
   <hex row="24" col="2" terrain="1" road="136" name="Dulcesti" owner="1" flag="13"/>
   <hex row="24" col="3" terrain="5" road="136"/>
   <hex row="24" col="5" road="58"/>
-  <hex row="24" col="6" road="57"/>
+  <hex row="24" col="6" road="57" station="1"/>
   <hex row="24" col="7" terrain="1" road="184" name="Roman" owner="1" flag="13" victory="1">
     <unit id="7976" owner="1" flag="8" face="0" exp="172" str="9"/>
   </hex>
@@ -1439,7 +1439,7 @@
   <hex row="29" col="26" terrain="10" road="136" name="Barlad"/>
   <hex row="29" col="27" road="144"/>
   <hex row="29" col="28" terrain="5"/>
-  <hex row="29" col="29" terrain="1" name="Zapodeni" owner="1" flag="13"/>
+  <hex row="29" col="29" terrain="1" name="Zapodeni" owner="1" flag="13" station="1"/>
   <hex row="29" col="30" terrain="5"/>
   <hex row="29" col="31" terrain="5"/>
   <hex row="29" col="32" terrain="10" name="Vaslui"/>

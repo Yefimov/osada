@@ -58,6 +58,10 @@ abstract class OgRulesTestHarness {
     protected val infantryEqid = 942
     protected val truckEqid = 943
 
+    /** A RANGED shooter that is not artillery — the only kind OG §6.18 cuts the line of fire of,
+     *  and the one [gunEqid] cannot stand in for now that the artillery exemption is built (§T). */
+    protected val riflemanEqid = 944
+
     protected val friendly =
         Player().apply {
             id = 0
@@ -77,6 +81,12 @@ abstract class OgRulesTestHarness {
         // a leaked key would make one test's efile another test's world.
         EfileConfig.resetForTest()
         Equipment.resetEquipment()
+        putTestEquipment()
+    }
+
+    /** The five records the world is built from, split out of [installTestWorld] and then again
+     *  so no half needs a complexity suppression as the fixture grows. */
+    private fun putTestEquipment() {
         Equipment.putEquipment(
             sapperEqid,
             EquipmentData().apply {
@@ -108,6 +118,10 @@ abstract class OgRulesTestHarness {
                 attrEx = 512
             },
         )
+        putTestInfantryAndTransport()
+    }
+
+    private fun putTestInfantryAndTransport() {
         Equipment.putEquipment(
             infantryEqid,
             EquipmentData().apply {
@@ -120,6 +134,21 @@ abstract class OgRulesTestHarness {
                 softatk = 6
                 grounddef = 5
                 spotrange = 4
+            },
+        )
+        Equipment.putEquipment(
+            riflemanEqid,
+            EquipmentData().apply {
+                name = "Assault Gun Battalion"
+                uclass = UnitClass.TANK.value
+                target = UnitType.HARD.value
+                movmethod = MovMethod.TRACKED.value
+                movpoints = 5
+                gunrange = 4
+                ammo = 8
+                softatk = 9
+                hardatk = 9
+                grounddef = 8
             },
         )
         Equipment.putEquipment(

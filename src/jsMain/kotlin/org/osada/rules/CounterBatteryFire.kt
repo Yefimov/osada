@@ -79,13 +79,11 @@ internal object CounterBatteryFire {
         defender: GameUnit,
     ): List<GameUnit> {
         val defenderSide = defender.player?.side
-        val attackerPos = attacker.getPos()
         val applies =
             enabled() &&
                 defenderSide != null &&
-                attackerPos != null &&
                 attacker.unitData(true).uclass == UnitClass.ARTILLERY.value
-        if (!applies || attackerPos == null) return emptyList()
+        val attackerPos = attacker.getPos()?.takeIf { applies } ?: return emptyList()
         return map.getUnits().filter { gun ->
             gun.player?.side == defenderSide &&
                 gun.id != defender.id &&
@@ -93,7 +91,7 @@ internal object CounterBatteryFire {
                 !gun.destroyed &&
                 hasAbility(gun) &&
                 withinRange(gun, attackerPos.row, attackerPos.col) &&
-                AttackEligibility.canInitiateAttack(gun, attacker)
+                AttackEligibility.canInitiateAttack(gun, attacker, asActiveAttack = false)
         }
     }
 

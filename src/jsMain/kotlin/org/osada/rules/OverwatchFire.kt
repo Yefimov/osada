@@ -77,7 +77,7 @@ internal object OverwatchFire {
             !watcher.destroyed &&
             Leaders.unitHasLeader(watcher, LeaderType.OVERWATCH) &&
             inRange &&
-            AttackEligibility.canInitiateAttack(watcher, mover)
+            AttackEligibility.canInitiateAttack(watcher, mover, asActiveAttack = false)
     }
 
     /**

@@ -23,6 +23,8 @@ fun GameMap.delCurrentUnit() {
     // formation that is no longer selected (OG 9.2, `model/BarrageOperations`).
     uiSettings.barrageMode = false
     clearBarrageTargeting()
+    uiSettings.railMode = false
+    clearRailTargeting()
 }
 
 fun GameMap.delMoveSel() {

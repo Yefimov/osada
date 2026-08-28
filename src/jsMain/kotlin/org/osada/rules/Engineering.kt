@@ -5,8 +5,10 @@ import org.osada.RoadType
 import org.osada.TerrainType
 import org.osada.model.ATTR2_MASK_BUILD_REPAIR
 import org.osada.model.ATTR_MASK_CAN_BLOW
+import org.osada.model.EfileConfig
 import org.osada.model.GameUnit
 import org.osada.model.Hex
+import org.osada.model.getPlayers
 import org.osada.rules.ruleset.ActiveRuleset
 import org.osada.rules.ruleset.RuleKey
 
@@ -79,6 +81,29 @@ internal object Engineering {
     fun enabled(): Boolean = ActiveRuleset.flag(RuleKey.BUILD_AND_REPAIR, false)
 
     /**
+     * Whether [unit] has enough of its turn left to START work — OG's *"hasn't done any action"*,
+     * as relaxed by the efile's own `build_start_ex`.
+     *
+     * > `build_start_ex=1`
+     * > *"Set to 1 to allow start building, blowing or repairing if only unit can fire, regardless
+     * > movement"*  — `EFILE_NOKORP/equip.cfg`
+     *
+     * So with the key on, a sapper that has MOVED may still begin: what it must still have is its
+     * SHOT. `eqp-atomic` and `eqp-basekorp` set it, `eqp-lxf` does not, and an efile with no
+     * `equip.cfg` at all is silent — which reads as the strict rule, per
+     * `docs/design/efile-config.md` §2 trap 4 and for the same reason `build_terr_ex` does.
+     *
+     * The resupply flag stays disqualifying under both readings: OG's relaxation names movement,
+     * and a formation that has taken on ammunition this turn has plainly done an action.
+     */
+    fun mayStartWork(unit: GameUnit): Boolean =
+        if (EfileConfig.flag("build_start_ex", false)) {
+            !unit.hasFired && !unit.hasResupplied
+        } else {
+            !unit.hasMoved && !unit.hasFired && !unit.hasResupplied
+        }
+
+    /**
      * Whether the SCENARIO authorises [work], on top of [enabled] — OG's own *"All this options
      * must be enabled by the scenario designer to work"* (§9.3's opening line), imported
      * 2026-08-26 as `canbuild` / `canblow` / `canrepair`.
@@ -112,6 +137,33 @@ internal object Engineering {
     /** Whether anything is being built on [hex] right now. */
     fun underConstruction(hex: Hex): Boolean = hex.construction >= 0 && hex.constructionTurns > 0
 
+    /**
+     * Whether [side] should see a construction mark on [hex] — its own unfinished job.
+     *
+     * **Only the paying side's own work is drawn.** An enemy site is not shown, for the reason
+     * `DEFERRED.md` §1.1 gives about hidden AA and undetected minefields: the map must not reveal
+     * something the fog has not. A job on a hex whose builder is unrecorded (a save older than the
+     * builder field) falls back to the side that was paying, which is all such a save knows.
+     */
+    fun visibleSiteFor(
+        hex: Hex,
+        side: Int,
+    ): Boolean {
+        if (!enabled() || !underConstruction(hex)) return false
+        val ownerSide =
+            if (hex.constructionPlayer >= 0) {
+                GameHolder.instance
+                    ?.scenario
+                    ?.map
+                    ?.getPlayers()
+                    ?.firstOrNull { it.id == hex.constructionPlayer }
+                    ?.side
+            } else {
+                hex.constructionSide
+            }
+        return ownerSide == side
+    }
+
     /** The stable serialized name of the job on [hex], or null when there is none. Paired with
      *  [workOrdinal]; see `GameStateSerializer` for why saves carry the name and not the ordinal. */
     fun workName(hex: Hex): String? = EngineeringWork.entries.getOrNull(hex.construction)?.name
@@ -131,11 +183,12 @@ internal object Engineering {
      * queue nobody asked for.
      */
     fun availableWork(unit: GameUnit): List<EngineeringWork> {
-        val hex = unit.getHex()
         val sapper = isSapper(unit)
         val demolisher = canDemolish(unit)
-        val couldWork = enabled() && hex != null && !underConstruction(hex) && (sapper || demolisher)
-        if (!couldWork || hex == null) return emptyList()
+        val hex =
+            unit.getHex()?.takeIf {
+                enabled() && !underConstruction(it) && (sapper || demolisher)
+            } ?: return emptyList()
         val grid =
             GameHolder.instance
                 ?.scenario
@@ -143,7 +196,10 @@ internal object Engineering {
                 ?.map
         return EngineeringWork.entries.filter { work ->
             val hasAbility = if (work.demolition) demolisher else sapper
-            hasAbility && authorisedByScenario(work) && work.possibleOn(hex, grid)
+            hasAbility &&
+                authorisedByScenario(work) &&
+                work.permittedByEfileMask() &&
+                work.possibleOn(hex, grid)
         }
     }
 
@@ -159,12 +215,12 @@ internal object Engineering {
         work: EngineeringWork,
         owner: FacilityOwner,
     ) {
-        if (work.turns == 0) {
+        if (work.turnsFor(hex) == 0) {
             complete(hex, work, owner)
             return
         }
         hex.construction = work.ordinal
-        hex.constructionTurns = work.turns
+        hex.constructionTurns = work.turnsFor(hex)
         hex.constructionSide = side
         // The BUILDER, not just their side: it decides whose turn end advances this job and whose
         // flag the finished facility flies. `Hex.constructionPlayer` records what storing only the
@@ -195,12 +251,37 @@ internal object Engineering {
         val finished = mutableListOf<Hex>()
         grid.forEach { row ->
             row.forEach { hex ->
-                if (underConstruction(hex) && advancesNow(hex, side, turnOwner)) {
+                if (underConstruction(hex) && advancesNow(hex, side, turnOwner) && staffed(hex)) {
                     tick(hex, finished, builderOf(hex, turnOwner))
                 }
             }
         }
         return finished
+    }
+
+    /**
+     * Whether an engineer of the paying player is still standing on the job.
+     *
+     * **Work belonged to the HEX and to nothing else until 2026-08-27**, so a bridge finished
+     * itself after the sappers had marched away or been killed on it — three turns of construction
+     * that nobody was doing. The site now advances only while a sapper is on it.
+     *
+     * **It PAUSES rather than cancelling, and that is the reading that cannot overstate.** OG's
+     * §9.3 says nothing about an abandoned job, so the two inventions available were to destroy the
+     * player's prestige (harsh, and unrecoverable) or to let the work finish unattended (the
+     * defect). Pausing does neither: the countdown holds, the investment survives, and the job
+     * resumes the moment an engineer stands there again — which also means a second sapper may take
+     * over a site whose first one was killed, since the job belongs to the player rather than to
+     * one formation.
+     *
+     * The unit is matched by OWNER rather than by id for exactly that reason. Matching an id would
+     * have needed a new serialized field and would have made a dead sapper's site unfinishable by
+     * anyone.
+     */
+    private fun staffed(hex: Hex): Boolean {
+        val unit = hex.unit ?: return false
+        val builder = if (hex.constructionPlayer >= 0) hex.constructionPlayer else unit.owner
+        return !unit.destroyed && unit.owner == builder && isSapper(unit)
     }
 
     /** Whether the turn ending now is the one this job counts down on: its own builder's, or —
@@ -272,6 +353,10 @@ internal object Engineering {
             EngineeringWork.FORTIFICATION -> raiseTerrain(hex, TerrainType.FORTIFICATION.value, owner)
             EngineeringWork.AIRFIELD -> raiseTerrain(hex, TerrainType.AIRFIELD.value, owner)
             EngineeringWork.PORT -> raiseTerrain(hex, TerrainType.PORT.value, owner)
+            // §9.3.6. A station is a FEATURE of a rail hex, not a terrain that replaces it: the
+            // track has to still be there afterwards, so this sets the flag and leaves the terrain
+            // alone -- unlike the three facilities above, which raise a new terrain type.
+            EngineeringWork.STATION -> hex.station = true
             EngineeringWork.BLOW_BRIDGE -> {
                 // Recorded BEFORE it is cleared, so Repair restores the mask this crossing
                 // actually had rather than inventing a full one.
@@ -279,13 +364,28 @@ internal object Engineering {
                 hex.road = RoadType.NONE.value
             }
 
-            EngineeringWork.RAZE -> {
-                hex.razedTerrain = hex.terrain
-                hex.terrain = TerrainType.CLEAR.value
-            }
+            EngineeringWork.RAZE -> razeFeature(hex)
 
             EngineeringWork.REPAIR -> repair(hex, owner)
         }
+    }
+
+    /**
+     * Takes the feature off [hex] — or, on ground that has none, leaves it blown.
+     *
+     * OG's `blow_any_terrain` reaches everything but the four water types, clear ground included,
+     * and it does not re-terrain what it blows: it records a BLOWN STATE. [Hex.rubble] is that
+     * state here, so razing clear ground costs movement and can be repaired, rather than being the
+     * no-op §V.2 refused to offer. Anything with a feature keeps the old behaviour — the feature is
+     * recorded in [Hex.razedTerrain] so Repair has something exact to restore.
+     */
+    private fun razeFeature(hex: Hex) {
+        if (hex.terrain == TerrainType.CLEAR.value) {
+            hex.rubble = true
+            return
+        }
+        hex.razedTerrain = hex.terrain
+        hex.terrain = TerrainType.CLEAR.value
     }
 
     /**
@@ -312,6 +412,11 @@ internal object Engineering {
     ) {
         hex.razedTerrain = -1
         hex.terrain = terrain
+        // OG's `Cannot use dirt airfields` needs to know that this strip was scraped here rather
+        // than being part of the map, and nothing else records it: the construction fields are
+        // cleared as the work completes. Set only for an airfield, because that is the only
+        // facility whose origin any rule asks about. See [org.osada.rules.AirfieldQuality].
+        hex.sapperBuilt = terrain == TerrainType.AIRFIELD.value
         claim(hex, owner)
     }
 
@@ -359,6 +464,9 @@ internal object Engineering {
         } else if (hex.blownRoad != 0) {
             hex.road = hex.blownRoad
             hex.blownRoad = 0
+            hex.rubble = false
+        } else {
+            // Blown ground with nothing to put back: clearing the rubble IS the repair.
             hex.rubble = false
         }
     }

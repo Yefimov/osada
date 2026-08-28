@@ -2,6 +2,7 @@ package org.osada.model
 
 import org.osada.UnitClass
 import org.osada.rules.GameRules
+import org.osada.rules.UnitCapabilities
 import org.osada.rules.getDisembarkPositions
 import org.osada.rules.getEmbarkType
 import org.osada.rules.setSpotRange
@@ -60,15 +61,38 @@ internal class UnitMountOperations(
         val transportClass = if (type > 0) UnitClass.entries.find { it.value == type } else null
         if (transportClass == null || !unit.embark(transportClass)) return false
         when (type) {
-            UnitClass.AIR_TRANSPORT.value ->
+            UnitClass.AIR_TRANSPORT.value -> {
                 unit.player?.airTransports =
                     unit.player?.airTransports?.minus(1) ?: 0
+                leaveGroundedTransportBehind(unit)
+            }
 
             UnitClass.NAVAL_TRANSPORT.value ->
                 unit.player?.navalTransports =
                     unit.player?.navalTransports?.minus(1) ?: 0
         }
         return true
+    }
+
+    /**
+     * OG's organic-transport rule for an AIRLIFT: *"To be able to carry its organic transport into
+     * the air transport, the unit's organic transport must be also Airmobile/Airborne."*
+     *
+     * A prime mover that cannot fly stays on the airfield — the formation arrives on its own legs.
+     * `UnitCapabilities.transportSurvivesAirlift` decides which can, from OG's `Air Transportable`
+     * attribute and the transport's own `embark` field together.
+     *
+     * **Naval embarkation is untouched**, and deliberately: OG states this condition for air
+     * transport alone, and a ship that carries a battalion carries its lorries.
+     *
+     * Wired 2026-08-27. Until then a truck flew wherever its infantry did, which is the one
+     * unenforced constraint `docs/og-fidelity-plan.md` §M's approximations table named for
+     * `Air Transportable` — *"treated as redundant with `embark`"*.
+     */
+    private fun leaveGroundedTransportBehind(unit: GameUnit) {
+        val transport = unit.transport ?: return
+        val data = Equipment.getEquipment(transport.eqid) ?: return
+        if (!UnitCapabilities.transportSurvivesAirlift(data)) unit.transport = null
     }
 
     fun disembarkUnit(unit: GameUnit): Boolean {

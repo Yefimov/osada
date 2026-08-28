@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="volarm_06.xscn" name="Grozny" turns="18, 21, 24" date="February 1, 1919" dayturns="0" ground="0" atmosferic="1" latitude="3" iconset="0" weatherchg="0" rows="39" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_696.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0">
+<map file="volarm_06.xscn" name="Grozny" turns="18, 21, 24" date="February 1, 1919" dayturns="0" ground="0" atmosferic="1" latitude="3" iconset="0" weatherchg="0" rows="39" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_696.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0">
 <player id="0" country="103" side="0" airtrans="0" navaltrans="0" support="104,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
 <player id="1" country="100" side="1" airtrans="0" navaltrans="0" support="101,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <hex row="0" col="1">
@@ -353,7 +353,7 @@
     <unit id="42267" owner="0" flag="104" face="0" exp="40"/>
   </hex>
   <hex row="14" col="20" terrain="8"/>
-  <hex row="14" col="23" terrain="1" road="57" name="Petropavlovskaya"/>
+  <hex row="14" col="23" terrain="1" road="57" name="Petropavlovskaya" station="1"/>
   <hex row="14" col="29" terrain="10" name="Sunzha River"/>
   <hex row="14" col="30" terrain="10" name="Sunzha River"/>
   <hex row="14" col="33" road="18"/>
@@ -695,7 +695,7 @@
     <unit id="502" owner="0" flag="104" face="0" exp="40"/>
   </hex>
   <hex row="22" col="28" terrain="10" name="Argun River"/>
-  <hex row="22" col="30" terrain="1" road="145" name="Argun"/>
+  <hex row="22" col="30" terrain="1" road="145" name="Argun" station="1"/>
   <hex row="22" col="32" terrain="10" name="Argun River"/>
   <hex row="22" col="33" terrain="6"/>
   <hex row="22" col="34" terrain="6"/>
@@ -765,7 +765,7 @@
     <unit id="42262" owner="0" flag="104" face="0" exp="40"/>
   </hex>
   <hex row="24" col="18" terrain="10" name="Sunzha River"/>
-  <hex row="24" col="19" terrain="1" road="26" name="Grozny, Train Station">
+  <hex row="24" col="19" terrain="1" road="26" name="Grozny, Train Station" station="1">
     <unit id="42329" owner="0" flag="104" face="0" exp="80"/>
   </hex>
   <hex row="24" col="20" terrain="1" road="58" name="Grozny"/>
@@ -773,7 +773,7 @@
   <hex row="24" col="22" terrain="1" road="185" name="Grozny"/>
   <hex row="24" col="23" road="168"/>
   <hex row="24" col="25" road="42"/>
-  <hex row="24" col="26" terrain="1" road="56" name="Chechen-Aul">
+  <hex row="24" col="26" terrain="1" road="56" name="Chechen-Aul" station="1">
     <unit id="42270" owner="0" flag="104" face="0" exp="40"/>
   </hex>
   <hex row="24" col="27" terrain="10" road="168" name="Argun River"/>
@@ -857,7 +857,7 @@
   <hex row="27" col="18" road="34"/>
   <hex row="27" col="27" terrain="10" name="Argun River"/>
   <hex row="27" col="31" road="9"/>
-  <hex row="27" col="33" terrain="1" road="48" name="Shali" owner="0" flag="103" victory="0">
+  <hex row="27" col="33" terrain="1" road="48" name="Shali" owner="0" flag="103" victory="0" station="1">
     <unit id="42270" owner="0" flag="104" face="0" exp="40"/>
   </hex>
   <hex row="27" col="34" terrain="10" name="Argun River"/>

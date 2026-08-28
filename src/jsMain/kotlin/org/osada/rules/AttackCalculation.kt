@@ -3,7 +3,6 @@ package org.osada.rules
 import org.osada.LeaderType
 import org.osada.RoadType
 import org.osada.TerrainType
-import org.osada.UNIT_MAX_EXPERIENCE
 import org.osada.UnitClass
 import org.osada.UnitType
 import org.osada.model.Cell
@@ -41,6 +40,9 @@ internal object AttackCalculation {
     private const val CITY_DEFENSE_BONUS = 4
     private const val RIVER_ASSAULT_BONUS = 4
     private const val EXPERIENCE_STAT_DIVISOR = 100
+
+    /** OG's penalty on a sabotaged formation: -2 attack and -2 defence. */
+    private const val SABOTAGE_PENALTY = 2
     private const val INITIATIVE_DEFENSE_BONUS = 4
     private const val INITIATIVE_ATTACK_BONUS_CAP = 4
 
@@ -332,6 +334,16 @@ internal object AttackCalculation {
     ) {
         stats.attackerAttack += attacker.experience / EXPERIENCE_STAT_DIVISOR + attackerSupportBars
         stats.attackerDefense += attacker.experience / EXPERIENCE_STAT_DIVISOR + attackerSupportBars
+        // OG's `Saboteur` leaves its victim at -2 attack and -2 defence until it recovers
+        // (`rules/Sabotage`, `GameUnit.sabotaged`). Applied to whichever side is sabotaged.
+        if (attacker.sabotaged) {
+            stats.attackerAttack -= SABOTAGE_PENALTY
+            stats.attackerDefense -= SABOTAGE_PENALTY
+        }
+        if (defender.sabotaged) {
+            stats.defenderAttack -= SABOTAGE_PENALTY
+            stats.defenderDefense -= SABOTAGE_PENALTY
+        }
         stats.defenderAttack += defender.experience / EXPERIENCE_STAT_DIVISOR + defenderSupportBars
         stats.defenderDefense += defender.experience / EXPERIENCE_STAT_DIVISOR + defenderSupportBars
 
@@ -452,7 +464,13 @@ internal object AttackCalculation {
             UnitPredicates.isSea(attacker) &&
                 UnitPredicates.isSea(defender) &&
                 context.defenderData.gunrange >= context.distance
-        if (context.distance > 1 && !navalGunneryInRange) {
+        // OG §9.6's first bullet -- "Ships return fire to artillery and forts" -- is the second way
+        // a ranged attack can draw an answer, and the only one of the four extended-naval rules
+        // that GIVES rather than restricts. Without the optional rule a shore battery shells a
+        // fleet with complete impunity. See `ExtendedNaval.shipReturnsFireToShoreBattery`.
+        val shoreBatteryAnswered =
+            ExtendedNaval.shipReturnsFireToShoreBattery(attacker, defender, context.distance)
+        if (context.distance > 1 && !navalGunneryInRange && !shoreBatteryAnswered) {
             result.defcanfire = false
         }
         if (!AttackEligibility.canFire(defender, attacker)) {
@@ -462,7 +480,7 @@ internal object AttackCalculation {
 
     /** Tank overrun (an overrun-capable attacker deals a killing blow at range 1 while taking at
      *  most one loss and isn't surprised), then the experience gained by each side, scaled by the
-     *  opponent's strength and capped at [UNIT_MAX_EXPERIENCE].
+     *  opponent's strength and capped at [UnitExperience.cap].
      *
      *  The eligibility test moved onto [UnitCapabilities.canOverrun] on 2026-08-25 so that this
      *  rule and the OVR badge read the same function -- until then the badge was `classDefault xor
@@ -506,9 +524,29 @@ internal object AttackCalculation {
                 ).toInt()
         }
 
-        val maxAtkExp = UNIT_MAX_EXPERIENCE - attacker.experience
+        val cap = UnitExperience.cap()
+        val maxAtkExp = (cap - attacker.experience).coerceAtLeast(0)
         if (result.atkExpGained > maxAtkExp) result.atkExpGained = maxAtkExp
-        val maxDefExp = UNIT_MAX_EXPERIENCE - defender.experience
+        val maxDefExp = (cap - defender.experience).coerceAtLeast(0)
         if (result.defExpGained > maxDefExp) result.defExpGained = maxDefExp
     }
 }
+
+/**
+ * The attacker's raw attack value against a defender of this target type — the cross-indexed
+ * selection [resolveCrossIndexedStats] makes, on its own.
+ *
+ * Added 2026-08-27 for `rules/Sabotage`, whose chance is *"3 x attack value against the
+ * defender"*. It reads the same four fields by the same rule, so a saboteur's odds can never
+ * disagree with the attack it is trying to avoid making.
+ */
+internal fun attackValueAgainst(
+    attackerData: EquipmentData,
+    defenderData: EquipmentData,
+): Int =
+    when (defenderData.target) {
+        UnitType.AIR.value -> attackerData.airatk
+        UnitType.HARD.value -> attackerData.hardatk
+        UnitType.SEA.value -> attackerData.navalatk
+        else -> attackerData.softatk
+    }

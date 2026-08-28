@@ -137,6 +137,12 @@ object ScenarioLoader {
         scenario.airZoc = flag("airzoc")
         scenario.airMissions = flag("airmissions")
         scenario.extendedNaval = flag("extnaval")
+        // Three more of OG's own Game Settings, deployed 2026-08-28 once each had a rule to read it
+        // (`docs/og-fidelity-plan.md` §AD). `add_scenario_options.py`'s standing policy is that an
+        // attribute nothing reads is a promise nothing keeps, so these arrived with their readers.
+        scenario.airIntercept = flag("airintercept")
+        scenario.portsNoSupply = flag("portsnosupply")
+        scenario.portsNoNavalDeploy = flag("portsnonavaldeploy")
     }
 
     /** The scenario/operation name lives on the <map name="…"> attribute. Standalone scenarios

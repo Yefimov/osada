@@ -22,7 +22,7 @@ import org.osada.rules.MoveRangeCalculation.ZOC_MOVE_COST
 internal object MoveRangeCalculation {
     // movTable sentinel costs (see Constants.kt movTableDry doc): 255 = impassable via this
     // table; 254 = a fixed high cost, notably enemy-ZOC. 17 is the road/bridge column index.
-    private const val IMPASSABLE_TERRAIN_COST = 255
+    internal const val IMPASSABLE_TERRAIN_COST = 255
     private const val ZOC_MOVE_COST = 254
     private const val ROAD_MOVE_TABLE_INDEX = 17
     private const val AIR_MOVE_COST = 1
@@ -198,15 +198,15 @@ internal object MoveRangeCalculation {
         // withholds the bonus, not "cannot enter a bridged hex". Falling back to the terrain
         // column changes nothing for land units (their road entry is 1, passable) and does not
         // float a deep-naval ship up a river (its river entry is 255 either way).
-        val roadCost = context.movementTable[ROAD_MOVE_TABLE_INDEX]
-        val onRoad = hex.road > RoadType.NONE.value || MovementRules.isBridgeForSide(hex, context.unitSide)
-        neighbor.cost =
-            when {
-                context.enforceRail -> if (hex.rail > RoadType.NONE.value) 1 else IMPASSABLE_TERRAIN_COST
-                onRoad && roadCost != IMPASSABLE_TERRAIN_COST -> roadCost
-                else -> context.movementTable[terrainColumn(hex.terrain, context)]
-            }
-        neighbor.cost = withRubbleSurcharge(neighbor.cost, hex)
+        val base =
+            baseTerrainCost(
+                hex = hex,
+                roadCost = context.movementTable[ROAD_MOVE_TABLE_INDEX],
+                enforceRail = context.enforceRail,
+                unitSide = context.unitSide,
+                terrainCost = context.movementTable[terrainColumn(hex.terrain, context)],
+            )
+        neighbor.cost = withRubbleSurcharge(base, hex)
         val inEnemyZoc =
             !context.ignoresZoc &&
                 (hex.isSpotted(context.unitSide) || hex.unit?.tempSpotted == true) &&
@@ -309,5 +309,35 @@ internal object MoveRangeCalculation {
         if (!enemyVisible || hex.unit == null) {
             neighbor.canMove = true
         }
+    }
+}
+
+/**
+ * What a hex costs to enter, before rubble: the rail sentinel, a road, or [terrainCost].
+ *
+ * Top-level and taking plain values rather than the private `MoveContext`, because it is here to
+ * keep `resolveNeighborCost` inside detekt's complexity budget -- the same reason
+ * `EfileConfig.listKey` sits outside its object.
+ *
+ * **A pontoon costs exactly what a road costs.** OG's `allow_pontoon_ex` charges road cost + 1 by
+ * default and `eqp-lxf` waives it, and that divergence WAS built on 2026-08-28 and reverted the
+ * same day: equipment is merged into one `eqp-united` database, so a unit must move the same
+ * distance whatever efile it came from. A per-efile movement rule contradicts the merge
+ * (`docs/og-fidelity-plan.md` §AB).
+ */
+private fun baseTerrainCost(
+    hex: Hex,
+    roadCost: Int,
+    enforceRail: Boolean,
+    unitSide: Int,
+    terrainCost: Int,
+): Int {
+    val roadUsable = roadCost != MoveRangeCalculation.IMPASSABLE_TERRAIN_COST
+    val onRoad = hex.road > RoadType.NONE.value || MovementRules.isBridgeForSide(hex, unitSide)
+    return when {
+        enforceRail ->
+            if (hex.rail > RoadType.NONE.value) 1 else MoveRangeCalculation.IMPASSABLE_TERRAIN_COST
+        onRoad && roadUsable -> roadCost
+        else -> terrainCost
     }
 }

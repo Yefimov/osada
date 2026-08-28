@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="gce7.xscn" name="Ofensiva del Ebro" turns="25, 28, 29" date="July 25, 1938" dayturns="0" ground="0" atmosferic="0" latitude="1" iconset="0" weatherchg="1" rows="39" cols="44" eqp="eqp-gce" image="resources/maps/images/map_802.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1">
+<map file="gce7.xscn" name="Ofensiva del Ebro" turns="25, 28, 29" date="July 25, 1938" dayturns="0" ground="0" atmosferic="0" latitude="1" iconset="0" weatherchg="1" rows="39" cols="44" eqp="eqp-gce" image="resources/maps/images/map_802.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0">
   <player id="0" country="226" side="1" airtrans="0" navaltrans="0" support="227,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <player id="1" country="225" side="0" airtrans="0" navaltrans="0" support="208,209,210,215" turnprestige="9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9"/>
   <reinforce turn="3">
@@ -155,7 +155,7 @@
   <hex row="3" col="8" terrain="1" name="Fayon" owner="1" flag="225" victory="1">
     <unit id="47423" owner="1" flag="226" face="0" exp="204" str="7"/>
   </hex>
-  <hex row="3" col="9" terrain="5"/>
+  <hex row="3" col="9" terrain="5" station="1"/>
   <hex row="3" col="11" terrain="10" name="Rio Ebro"/>
   <hex row="3" col="12" terrain="10" name="Rio Ebro"/>
   <hex row="3" col="13" terrain="10" name="Rio Ebro"/>
@@ -319,7 +319,7 @@
   <hex row="8" col="18" road="136"/>
   <hex row="8" col="19" road="136"/>
   <hex row="8" col="20" terrain="5"/>
-  <hex row="8" col="21" terrain="1" name="Flix"/>
+  <hex row="8" col="21" terrain="1" name="Flix" station="1"/>
   <hex row="8" col="22" terrain="5"/>
   <hex row="8" col="23" terrain="5"/>
   <hex row="8" col="24" terrain="10" name="Rio Ebro"/>
@@ -477,7 +477,7 @@
   <hex row="13" col="21" terrain="6"/>
   <hex row="13" col="22" terrain="6"/>
   <hex row="13" col="24" terrain="1" name="Asco"/>
-  <hex row="13" col="25" terrain="5"/>
+  <hex row="13" col="25" terrain="5" station="1"/>
   <hex row="13" col="28" terrain="10" name="Rio Ebro"/>
   <hex row="13" col="29" terrain="10" name="Rio Ebro"/>
   <hex row="13" col="30">
@@ -957,7 +957,7 @@
   <hex row="26" col="31" terrain="5">
     <unit id="47542" owner="0" flag="227" face="0" exp="138" str="8"/>
   </hex>
-  <hex row="26" col="32" terrain="5">
+  <hex row="26" col="32" terrain="5" station="1">
     <unit id="47609" owner="0" flag="227" face="0" transport="47580" exp="128" str="5"/>
   </hex>
   <hex row="26" col="33" terrain="5"/>

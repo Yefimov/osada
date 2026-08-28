@@ -4,6 +4,7 @@ import org.osada.EmbarkType
 import org.osada.PlayerType
 import org.osada.TerrainType
 import org.osada.UnitClass
+import org.osada.model.Equipment
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
 import org.osada.model.Player
@@ -59,6 +60,7 @@ object UnitActionAvailability {
             engineering(context, UnitActionId.BUILD_FORTIFICATION),
             engineering(context, UnitActionId.BUILD_AIRFIELD),
             engineering(context, UnitActionId.BUILD_PORT),
+            engineering(context, UnitActionId.BUILD_STATION),
             engineering(context, UnitActionId.REPAIR),
             engineering(context, UnitActionId.DEMOLISH),
             sleep(context),
@@ -76,11 +78,13 @@ object UnitActionAvailability {
             UnitActionId.OVERSTRENGTH -> overstrength(context)
             UnitActionId.LAY_MINES -> layMines(context)
             UnitActionId.BARRAGE -> barrage(context)
+            UnitActionId.RAIL_MOVE -> railMove(context)
             UnitActionId.CLEAR_MINES -> clearMines(context)
             UnitActionId.BUILD_BRIDGE,
             UnitActionId.BUILD_FORTIFICATION,
             UnitActionId.BUILD_AIRFIELD,
             UnitActionId.BUILD_PORT,
+            UnitActionId.BUILD_STATION,
             UnitActionId.REPAIR,
             UnitActionId.DEMOLISH,
             -> engineering(context, action)
@@ -186,13 +190,25 @@ object UnitActionAvailability {
                 data.embark > EmbarkType.NAVAL.value -> ActionEffectKind.EMBARK_AIR
                 else -> ActionEffectKind.EMBARK_NAVAL
             }
+        val effects = mutableListOf(ActionEffect(effect))
+        if (effect == ActionEffectKind.EMBARK_AIR && losesTransportToAirlift(unit)) {
+            effects += ActionEffect(ActionEffectKind.EMBARK_DROPS_TRANSPORT)
+        }
         return ActionAvailability(
             UnitActionId.EMBARK,
             true,
             reasons.isEmpty(),
             reasons,
-            listOf(ActionEffect(effect)),
+            effects,
         )
+    }
+
+    /** Whether an airlift would leave this formation's organic transport behind — see
+     *  [UnitCapabilities.transportSurvivesAirlift] for OG's rule and
+     *  `UnitMountOperations.leaveGroundedTransportBehind` for the act. */
+    private fun losesTransportToAirlift(unit: GameUnit): Boolean {
+        val data = unit.transport?.let { Equipment.getEquipment(it.eqid) }
+        return data != null && !UnitCapabilities.transportSurvivesAirlift(data)
     }
 
     // ---- Resupply ----------------------------------------------------------------------------
@@ -397,6 +413,38 @@ object UnitActionAvailability {
     }
 
     /**
+     * OG's railway: a ground formation standing on a boarding point may be railed to another one
+     * along connected track, spending one of its player's rail transport points.
+     *
+     * **NOT APPLICABLE unless the player actually has a rail pool**, which no shipped scenario
+     * authors (`rules/RailTransport`) -- so the chip is absent everywhere today rather than present
+     * and permanently disabled. That is the same rule the engineering chips follow: an action a
+     * campaign can never take does not belong on its strip at all.
+     */
+    private fun railMove(context: UnitActionContext): ActionAvailability {
+        val unit = context.unit
+        val pool = unit.player?.railTransports ?: 0
+        val onTrack = RailTransport.isBoardingPoint(unit.getHex(), unit)
+        if (pool <= 0 || !onTrack) {
+            return ActionAvailability.notApplicable(UnitActionId.RAIL_MOVE)
+        }
+        val reasons = mutableListOf<ActionBlock>()
+        addTurnBlock(context, reasons)
+        if (unit.hasMoved) reasons += ActionBlock(ActionBlockReason.ALREADY_MOVED)
+        if (unit.hasFired) reasons += ActionBlock(ActionBlockReason.ALREADY_FIRED)
+        val destinations = RailTransport.destinations(context.map, unit).size
+        if (destinations == 0 && reasons.isEmpty()) {
+            reasons += ActionBlock(ActionBlockReason.NO_RAIL_DESTINATION)
+        }
+        val effects =
+            listOf(
+                ActionEffect(ActionEffectKind.OPEN_RAIL_DESTINATIONS, destinations, pool),
+                ActionEffect(ActionEffectKind.ENDS_UNIT_ACTION),
+            )
+        return ActionAvailability(UnitActionId.RAIL_MOVE, true, reasons.isEmpty(), reasons, effects)
+    }
+
+    /**
      * OG 9.9: a unit able to clear mines must be STANDING in the field, and *"the attempt can fail,
      * and a failed attempt suppresses the unit."*
      *
@@ -433,6 +481,7 @@ object UnitActionAvailability {
             UnitActionId.BUILD_FORTIFICATION to EngineeringWork.FORTIFICATION,
             UnitActionId.BUILD_AIRFIELD to EngineeringWork.AIRFIELD,
             UnitActionId.BUILD_PORT to EngineeringWork.PORT,
+            UnitActionId.BUILD_STATION to EngineeringWork.STATION,
             UnitActionId.REPAIR to EngineeringWork.REPAIR,
         )
 
@@ -469,18 +518,20 @@ object UnitActionAvailability {
                 ?: return ActionAvailability.notApplicable(action)
         val reasons = mutableListOf<ActionBlock>()
         addTurnBlock(context, reasons)
-        if (unit.hasMoved || unit.hasFired || unit.hasResupplied) {
+        // The efile's own `build_start_ex` may relax OG's "hasn't done any action" to "still has
+        // its shot" -- one owner for that reading, so the chip and the order cannot disagree.
+        if (!Engineering.mayStartWork(unit)) {
             reasons += ActionBlock(ActionBlockReason.ENGINEERING_NEEDS_UNSPENT_TURN)
         }
-        val missingPrestige = work.cost - (unit.player?.prestige ?: 0)
+        val missingPrestige = work.costFor() - (unit.player?.prestige ?: 0)
         if (missingPrestige > 0) reasons += ActionBlock(ActionBlockReason.NEEDS_PRESTIGE, missingPrestige)
         val effects = mutableListOf<ActionEffect>()
-        if (work.cost > 0) effects += ActionEffect(ActionEffectKind.PRESTIGE_COST, work.cost)
+        if (work.costFor() > 0) effects += ActionEffect(ActionEffectKind.PRESTIGE_COST, work.costFor())
         effects +=
-            if (work.turns == 0) {
+            if (work.turnsFor(unit.getHex()) == 0) {
                 ActionEffect(ActionEffectKind.DEMOLISH_NOW)
             } else {
-                ActionEffect(ActionEffectKind.BUILD_TURNS, work.turns)
+                ActionEffect(ActionEffectKind.BUILD_TURNS, work.turnsFor(unit.getHex()))
             }
         effects += ActionEffect(ActionEffectKind.ENDS_UNIT_ACTION)
         return ActionAvailability(action, true, reasons.isEmpty(), reasons, effects)

@@ -26,24 +26,28 @@ import org.osada.rules.FacilityOwner
  * prestige. The prestige is charged in full at the START, the way OG's own "The construction of a
  * bridge costs 16 PP" reads, so a job cannot be begun on credit and abandoned.
  */
+@Suppress("ReturnCount") // the two null guards a smart cast needs, the eligibility test, and the answer
 internal fun GameMap.beginEngineering(
     unit: GameUnit,
     work: EngineeringWork,
 ): EngineeringActionResult {
-    val hex = unit.getHex()
-    val player = unit.player
-    val side = player?.side ?: -1
-    val ready = hex != null && player != null && side >= 0 && mayBegin(unit, work)
-    if (!ready || hex == null || player == null) return EngineeringActionResult.NOT_ALLOWED
+    val hex = unit.getHex() ?: return EngineeringActionResult.NOT_ALLOWED
+    val player = unit.player ?: return EngineeringActionResult.NOT_ALLOWED
+    val side = player.side
+    if (side < 0 || !mayBegin(unit, work)) return EngineeringActionResult.NOT_ALLOWED
     undoState.invalidate(unit, UndoInvalidation.IRREVERSIBLE_ACTION)
-    if (work.cost > 0) player.prestige -= work.cost
+    if (work.costFor() > 0) player.prestige -= work.costFor()
     Engineering.begin(hex, side, work, FacilityOwner(player.id, player.country))
     endUnitTurnForEngineering(unit)
     // A demolition changes terrain THIS INSTANT, and `extended_los` blocks line of sight on terrain,
     // so the spotting reference counts have to be re-derived before anyone reads them again. A
     // multi-turn job changes nothing yet and is rebuilt when it completes (`GameMap.endTurn`).
-    if (work.turns == 0) recomputeSpotting()
-    return if (work.turns == 0) EngineeringActionResult.DEMOLISHED else EngineeringActionResult.STARTED
+    if (work.turnsFor(unit.getHex()) == 0) recomputeSpotting()
+    return if (work.turnsFor(unit.getHex()) == 0) {
+        EngineeringActionResult.DEMOLISHED
+    } else {
+        EngineeringActionResult.STARTED
+    }
 }
 
 /**
@@ -81,9 +85,10 @@ private fun mayBegin(
     unit: GameUnit,
     work: EngineeringWork,
 ): Boolean {
-    val spentItsTurn = unit.hasMoved || unit.hasFired || unit.hasResupplied
-    val affordable = (unit.player?.prestige ?: 0) >= work.cost
-    return !spentItsTurn && affordable && work in Engineering.availableWork(unit)
+    // OG's "hasn't done any action", as the efile's own `build_start_ex` relaxes it -- see
+    // `Engineering.mayStartWork`, which is the single owner of that reading.
+    val affordable = (unit.player?.prestige ?: 0) >= work.costFor()
+    return Engineering.mayStartWork(unit) && affordable && work in Engineering.availableWork(unit)
 }
 
 /** Engineering spends the formation's whole turn, exactly as Supply, Reinforce and the two mine

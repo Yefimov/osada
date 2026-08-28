@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="rhu190501.xscn" name="1919/05/01 Szolnok: Securing The Bridgehead" turns="14, 14, 14" date="May 1, 1919" dayturns="0" ground="0" atmosferic="0" latitude="6" iconset="0" weatherchg="1" rows="26" cols="41" eqp="eqp-kaiser" image="resources/maps/images/map_rhu190501.png" eqpv="united1" canblow="0" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="0">
+<map file="rhu190501.xscn" name="1919/05/01 Szolnok: Securing The Bridgehead" turns="14, 14, 14" date="May 1, 1919" dayturns="0" ground="0" atmosferic="0" latitude="6" iconset="0" weatherchg="1" rows="26" cols="41" eqp="eqp-kaiser" image="resources/maps/images/map_rhu190501.png" eqpv="united1" canblow="0" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="1" portsnonavaldeploy="0">
   <player id="0" country="187" side="0" airtrans="0" navaltrans="0" support="188,0,0,0" turnprestige="4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 40, 40, 40, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <player id="1" country="13" side="1" airtrans="0" navaltrans="0" support="14,0,0,0" turnprestige="20, 20, 20, 20, 15, 15, 15, 15, 10, 10, 10, 10, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="2">
@@ -242,7 +242,7 @@
   </hex>
   <hex row="8" col="15" terrain="10" road="130" name="Zagyva"/>
   <hex row="8" col="16" road="32"/>
-  <hex row="8" col="18" terrain="2" road="2" owner="1" flag="13">
+  <hex row="8" col="18" terrain="2" road="2" owner="1" flag="13" station="1">
     <unit id="18040" owner="1" flag="14" face="0" transport="18101" exp="175"/>
   </hex>
   <hex row="8" col="19" road="17">
@@ -270,11 +270,11 @@
   </hex>
   <hex row="9" col="8" terrain="1" road="24" name="Szolnok"/>
   <hex row="9" col="9" terrain="1" road="186" name="Szolnok"/>
-  <hex row="9" col="10" terrain="1" road="59" name="Szolnok" owner="0" flag="187">
+  <hex row="9" col="10" terrain="1" road="59" name="Szolnok" owner="0" flag="187" station="1">
     <unit id="46663" owner="0" flag="188" face="0" exp="150"/>
   </hex>
   <hex row="9" col="11" terrain="1" road="187" name="Szolnok"/>
-  <hex row="9" col="12" terrain="1" road="187" name="Szolnok" owner="1" flag="13" victory="1">
+  <hex row="9" col="12" terrain="1" road="187" name="Szolnok" owner="1" flag="13" victory="1" station="1">
     <unit id="17798" owner="1" flag="14" face="0" exp="175"/>
   </hex>
   <hex row="9" col="13" terrain="1" road="187" name="Szolnok"/>
@@ -309,7 +309,7 @@
   <hex row="10" col="5" deploy="0">
     <unit id="46664" owner="0" flag="188" face="0" exp="140"/>
   </hex>
-  <hex row="10" col="6" road="136" owner="0" flag="187" deploy="0">
+  <hex row="10" col="6" road="136" owner="0" flag="187" deploy="0" station="1">
     <unit id="46667" owner="0" flag="188" face="0" exp="250"/>
   </hex>
   <hex row="10" col="7" road="130" deploy="0">
@@ -343,14 +343,14 @@
   <hex row="10" col="35" road="34"/>
   <hex row="10" col="36" road="34"/>
   <hex row="10" col="38" road="130"/>
-  <hex row="11" col="4" owner="0" flag="187" deploy="0">
+  <hex row="11" col="4" owner="0" flag="187" deploy="0" station="1">
     <unit id="46672" owner="0" flag="188" face="0" exp="225"/>
   </hex>
   <hex row="11" col="7" deploy="0">
     <unit id="46691" owner="0" flag="188" face="0" transport="46677" exp="120"/>
   </hex>
   <hex row="11" col="8" terrain="1" road="11" name="Szolnok"/>
-  <hex row="11" col="9" terrain="1" road="155" name="Szolnok" owner="0" flag="187" victory="0">
+  <hex row="11" col="9" terrain="1" road="155" name="Szolnok" owner="0" flag="187" victory="0" station="1">
     <unit id="46673" owner="0" flag="188" face="0" exp="150"/>
   </hex>
   <hex row="11" col="10" terrain="1" road="187" name="Szolnok"/>
@@ -371,7 +371,7 @@
   <hex row="11" col="24" terrain="15" road="130" name="Tisza"/>
   <hex row="11" col="29" terrain="1" road="42" name="Szajol"/>
   <hex row="11" col="30" terrain="1" road="58" name="Szajol"/>
-  <hex row="11" col="31" terrain="1" road="171" name="Szajol" owner="1" flag="13" victory="1">
+  <hex row="11" col="31" terrain="1" road="171" name="Szajol" owner="1" flag="13" victory="1" station="1">
     <unit id="18089" owner="1" flag="14" face="0" exp="175"/>
   </hex>
   <hex row="11" col="32" terrain="1" road="178" name="Szajol">
@@ -436,14 +436,14 @@
   </hex>
   <hex row="14" col="0" road="136"/>
   <hex row="14" col="1" road="136"/>
-  <hex row="14" col="6" terrain="1" road="10" name="Szolnok" owner="0" flag="187" deploy="0">
+  <hex row="14" col="6" terrain="1" road="10" name="Szolnok" owner="0" flag="187" deploy="0" station="1">
     <unit id="46664" owner="0" flag="188" face="0" exp="150"/>
   </hex>
   <hex row="14" col="7" terrain="1" road="139" name="Szolnok"/>
   <hex row="14" col="8" terrain="1" road="187" name="Szolnok"/>
   <hex row="14" col="9" terrain="1" road="187" name="Szolnok"/>
   <hex row="14" col="10" terrain="1" road="186" name="Szolnok"/>
-  <hex row="14" col="11" terrain="1" road="177" name="Szolnok" owner="0" flag="187" victory="0">
+  <hex row="14" col="11" terrain="1" road="177" name="Szolnok" owner="0" flag="187" victory="0" station="1">
     <unit id="46673" owner="0" flag="188" face="0" exp="150"/>
   </hex>
   <hex row="14" col="12" terrain="15" name="Tisza"/>
@@ -476,7 +476,7 @@
   <hex row="15" col="29" road="9"/>
   <hex row="16" col="4" terrain="1" road="152" name="T&#243;szeg"/>
   <hex row="16" col="5" terrain="1" road="184" name="T&#243;szeg"/>
-  <hex row="16" col="9" terrain="1" road="18" name="Szolnok" owner="0" flag="187">
+  <hex row="16" col="9" terrain="1" road="18" name="Szolnok" owner="0" flag="187" station="1">
     <unit id="46670" owner="0" flag="188" face="0" exp="150"/>
   </hex>
   <hex row="16" col="10" terrain="1" road="163" name="Szolnok"/>
@@ -486,7 +486,7 @@
   <hex row="16" col="16" terrain="10" name="Holt-Tisza"/>
   <hex row="16" col="28" terrain="10" name="Holt-Tisza"/>
   <hex row="16" col="29" terrain="10" name="Holt-Tisza"/>
-  <hex row="16" col="30" road="136" owner="1" flag="13">
+  <hex row="16" col="30" road="136" owner="1" flag="13" station="1">
     <unit id="17955" owner="1" flag="14" face="0" exp="175"/>
   </hex>
   <hex row="16" col="31" road="144"/>
@@ -494,7 +494,7 @@
   <hex row="17" col="3" terrain="1" road="26" name="T&#243;szeg"/>
   <hex row="17" col="4" terrain="1" road="59" name="T&#243;szeg"/>
   <hex row="17" col="5" terrain="1" road="187" name="T&#243;szeg"/>
-  <hex row="17" col="6" terrain="1" road="176" name="T&#243;szeg" owner="0" flag="187">
+  <hex row="17" col="6" terrain="1" road="176" name="T&#243;szeg" owner="0" flag="187" station="1">
     <unit id="46663" owner="0" flag="188" face="0" exp="150"/>
   </hex>
   <hex row="17" col="9" road="33"/>
@@ -511,7 +511,7 @@
   <hex row="18" col="4" terrain="1" road="171" name="T&#243;szeg"/>
   <hex row="18" col="5" terrain="1" road="155" name="T&#243;szeg"/>
   <hex row="18" col="6" terrain="1" road="185" name="T&#243;szeg"/>
-  <hex row="18" col="7" terrain="1" road="178" name="T&#243;szeg" owner="0" flag="187"/>
+  <hex row="18" col="7" terrain="1" road="178" name="T&#243;szeg" owner="0" flag="187" station="1"/>
   <hex row="18" col="8" road="34"/>
   <hex row="18" col="9" terrain="15"/>
   <hex row="18" col="10" terrain="15"/>
@@ -543,7 +543,7 @@
   <hex row="19" col="22" terrain="10" name="Holt-Tisza"/>
   <hex row="19" col="27" road="34"/>
   <hex row="19" col="28" road="34"/>
-  <hex row="20" col="4" terrain="1" road="154" name="T&#243;szeg" owner="0" flag="187"/>
+  <hex row="20" col="4" terrain="1" road="154" name="T&#243;szeg" owner="0" flag="187" station="1"/>
   <hex row="20" col="5" terrain="1" road="163" name="T&#243;szeg"/>
   <hex row="20" col="6" terrain="1" road="163" name="T&#243;szeg"/>
   <hex row="20" col="7" terrain="13"/>

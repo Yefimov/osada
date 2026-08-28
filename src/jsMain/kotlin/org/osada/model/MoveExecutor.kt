@@ -183,6 +183,9 @@ internal class MoveExecutor(
         unit.facing = GameRules.getDirection(from.row, from.col, last.row, last.col) ?: unit.facing
         GameRules.setZOCRange(gameMap, unit, true)
         val newlySpotted = GameRules.setSpotRange(gameMap, unit, true)
+        // A `Cut LOS` unit that moved changed what everybody else can see, and the reference counts
+        // cannot express that on their own (`GameMap.rebuildSpottingForSightBlocker`).
+        gameMap.rebuildSpottingForSightBlocker(unit)
         // §7.43 reconnaissance evidence. Safe against undo without any bookkeeping: `undoFinality`
         // below already refuses to offer an undo for a move that revealed something, so a credited
         // contact can never be rewound out from under the evidence it granted.
@@ -281,6 +284,7 @@ internal class MoveExecutor(
         ctx.savedHex.setUnit(unit)
         GameRules.setZOCRange(gameMap, unit, true)
         GameRules.setSpotRange(gameMap, unit, true)
+        gameMap.rebuildSpottingForSightBlocker(unit)
         gameMap.selectUnit(unit)
         gameMap.undoState.oldOwner?.let {
             fromHex.owner = it

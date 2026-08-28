@@ -21,6 +21,16 @@ class Player {
     var handler: dynamic = null
     var airTransports: Int = 0
     var navalTransports: Int = 0
+
+    /** OG's per-player RAIL transport pool -- *"the player must have some rail transport
+     *  available"*. Scenario attribute `railtrans`, the third of OG's three pools beside
+     *  `airtrans` and `navaltrans`, and consumed the same way (`rules/RailTransport`).
+     *
+     *  **No shipped scenario sets it**, because the `.xscn` field it would be imported from is a
+     *  located-but-unconfirmed candidate at player record `+21` that this project has ruled must
+     *  not be built on (`docs/og-fidelity-plan.md` §Y.2, §Q.2). The RULE reads this attribute and
+     *  never that byte, so confirming the offset later is an importer change and nothing more. */
+    var railTransports: Int = 0
     var supportCountries: MutableList<Int> = mutableListOf()
     var prestigePerTurn: MutableList<Int> = mutableListOf()
 
@@ -85,6 +95,7 @@ class Player {
         prestigePerTurn.clear()
         airTransports = 0
         navalTransports = 0
+        railTransports = 0
         val iter = coreUnits.iterator()
         while (iter.hasNext()) {
             val unit = iter.next()
@@ -131,6 +142,7 @@ class Player {
             score = other.score
             airTransports = other.airTransports
             navalTransports = other.navalTransports
+            railTransports = other.railTransports
             supportCountries.clear()
             supportCountries.addAll(other.supportCountries)
             prestigePerTurn.clear()

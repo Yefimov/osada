@@ -25,6 +25,12 @@ object EfileConfig {
 
     private var loadedForEfile: String? = null
     private var intKeys: Map<String, Int> = emptyMap()
+
+    /** Every `equip.cfg` key as the string the file gave it, including the comma lists
+     *  [parseIntKeys] drops. Read through [listKey], which is a top-level extension purely to keep
+     *  this object inside detekt's function budget. Call [loadIfNeeded] before reading it. */
+    internal var rawKeys: Map<String, String> = emptyMap()
+        private set
     private var attachmentConfig: AttachmentConfig? = null
 
     data class AttachmentSlot(
@@ -86,12 +92,13 @@ object EfileConfig {
 
     // Synchronous, like TerrainEx/EquipmentAvailability's fetches: a small per-efile file, read
     // lazily on first use after the efile changes rather than threaded through scenario loading.
-    private fun loadIfNeeded() {
+    internal fun loadIfNeeded() {
         val efile = Equipment.name
         if (efile == loadedForEfile) return
         loadedForEfile = efile
         val text = fetch(efile)
         intKeys = text?.let(::parseIntKeys) ?: emptyMap()
+        rawKeys = text?.let { parseRawKeys(it) } ?: emptyMap()
         attachmentConfig = text?.let(::parseAttachments)
     }
 
@@ -156,14 +163,17 @@ object EfileConfig {
         intKeyMap: Map<String, Int> = emptyMap(),
         attachmentConfigValue: AttachmentConfig? = null,
         efile: String = Equipment.name,
+        rawKeyMap: Map<String, String> = emptyMap(),
     ) {
         intKeys = intKeyMap
+        rawKeys = rawKeyMap
         attachmentConfig = attachmentConfigValue
         loadedForEfile = efile
     }
 
     internal fun resetForTest() {
         intKeys = emptyMap()
+        rawKeys = emptyMap()
         attachmentConfig = null
         loadedForEfile = null
     }
@@ -174,4 +184,36 @@ object EfileConfig {
     // kept as the documented fallback rather than silently defaulting to 0).
     private const val DEFAULT_FACTOR_PCT = 25
     private const val DEFAULT_MIN_COST_PCT = 30
+}
+
+/** The `raw` block: every key as the string `equip.cfg` gave it, including the comma lists
+ *  [parseIntKeys] deliberately drops. See [listKey]. */
+internal fun parseRawKeys(text: String): Map<String, String> {
+    val raw = JSON.parse<Json>(text).asDynamic().raw
+    if (raw == null || raw == undefined) return emptyMap()
+    val map = mutableMapOf<String, String>()
+    js("Object.keys")(raw).unsafeCast<Array<String>>().forEach { key ->
+        (raw[key] as? String)?.let { map[key] = it }
+    }
+    return map
+}
+
+/**
+ * A COMMA-LIST `equip.cfg` key for the active efile, or an empty list when the efile has no
+ * `equip.cfg`, the key is absent, or any column fails to parse.
+ *
+ * `equip_cfg_to_json.py` keeps `build_cost`, `build_turn`, `repair_turn` and `class_evade` as
+ * raw strings because they are lists rather than plain ints, which is why [intKey] cannot see
+ * them — it reads the `keys` block and these live in `raw`.
+ *
+ * **All-or-nothing on purpose.** A partially parsed list would silently mean "column 3 is the
+ * default", and for `build_cost` that is the difference between a 60-prestige port and a
+ * 12-prestige one. A list that does not parse whole is treated as absent, and the caller falls
+ * back to its own documented default for every column.
+ */
+fun EfileConfig.listKey(name: String): List<Int> {
+    loadIfNeeded()
+    val text = rawKeys[name] ?: return emptyList()
+    val parts = text.split(",").map { it.trim().toIntOrNull() }
+    return if (parts.any { it == null }) emptyList() else parts.filterNotNull()
 }

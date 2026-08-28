@@ -1,9 +1,12 @@
 package org.osada.rules
 
+import org.osada.TerrainType
 import org.osada.model.ATTR_EX_MASK_AIR_DROP_MINES
 import org.osada.model.ATTR_EX_MASK_CLEAR_MINES
 import org.osada.model.ATTR_MASK_DROP_MINES
 import org.osada.model.Cell
+import org.osada.model.EfileConfig
+import org.osada.model.EquipmentData
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
 import org.osada.model.Hex
@@ -43,14 +46,45 @@ import org.osada.rules.ruleset.RuleKey
  * requiring both bits on an air unit rather than either alone.
  */
 internal object Minefields {
-    /** Strength points an undetected field takes off the formation that walks into it. OG says only
-     *  *"suffers some damage and ends its movement"* and names no number.
+    /** The most an undetected field can take off a formation. **Quoted, not inferred**: OG's own
+     *  minefield rules say entering an undetected field can cost *"up to three strength points,
+     *  depending on experience and Engineer status"*. Was a flat inferred 2 until 2026-08-28, when
+     *  the author's Features page turned out to name both the ceiling and the two modifiers
+     *  (`docs/og-fidelity-plan.md` §Z.3). */
+    const val MAX_UNDETECTED_MINE_DAMAGE = 3
+
+    /** The floor. A mine that goes off always costs something -- OG's sentence is "up to three",
+     *  not "up to three or nothing", and a strike that cost nothing would make the reveal read as
+     *  a bug rather than an ambush. */
+    const val MIN_UNDETECTED_MINE_DAMAGE = 1
+
+    /** Bars at which a formation has seen enough minefields to lose one point less. `INFERENCE`:
+     *  OG names experience as a modifier and gives no threshold. */
+    private const val VETERAN_BARS = 3
+
+    /**
+     * Strength points an undetected field takes off [unit], between [MIN_UNDETECTED_MINE_DAMAGE]
+     * and [MAX_UNDETECTED_MINE_DAMAGE].
      *
-     *  `INFERENCE`, and deliberately DETERMINISTIC: multiplayer is host-authoritative but the same
-     *  move is previewed on both clients, and a random mine would be the one movement outcome the
-     *  two could disagree about. Two points is a real bite on a ten-point formation without being
-     *  the sort of loss a player would call a bug. */
-    const val UNDETECTED_MINE_DAMAGE = 2
+     * OG's ceiling and its two modifiers are quoted; **the arithmetic between them is an
+     * `INFERENCE`** and is the open question `docs/og-open-questions.md` Q3.1 asks. One point off
+     * for a veteran, one off for a formation that knows how to clear mines, floored at one: a green
+     * line unit takes the documented maximum, a veteran engineer takes the minimum.
+     *
+     * **Deliberately DETERMINISTIC**, which is the constraint the flat 2 was built under and it has
+     * not changed: multiplayer is host-authoritative but the same move is previewed on both
+     * clients, and a random mine would be the one movement outcome the two could disagree about.
+     * Grading by experience and Engineer status is how OG's "up to" becomes a spread without a die.
+     *
+     * Class-agnostic, so a ship striking a naval mine is charged by the same rule -- which is the
+     * whole of the "naval mine damage" gap `docs/og-fidelity-plan.md` §Y.3 recorded.
+     */
+    fun strikeDamage(unit: GameUnit): Int {
+        var damage = MAX_UNDETECTED_MINE_DAMAGE
+        if (UnitExperience.bars(unit) >= VETERAN_BARS) damage--
+        if (MineAbilities.canClearMines(unit)) damage--
+        return damage.coerceAtLeast(MIN_UNDETECTED_MINE_DAMAGE)
+    }
 
     /** Ammunition an OG mine-laying action costs: *"It costs two ammo points."* Quoted, not inferred. */
     const val LAY_MINES_AMMO_COST = 2
@@ -174,7 +208,33 @@ internal object MineAbilities {
     fun canDropMines(unit: GameUnit): Boolean {
         val data = unit.unitData(true)
         val laysMines = Minefields.enabled() && data.attr and ATTR_MASK_DROP_MINES != 0
-        return laysMines && (!UnitPredicates.isAir(unit) || data.attrEx and ATTR_EX_MASK_AIR_DROP_MINES != 0)
+        return laysMines && (!UnitPredicates.isAir(unit) || airMayMineHere(data, unit.getHex()))
+    }
+
+    /**
+     * Which mines an AIRCRAFT may lay, corrected 2026-08-27.
+     *
+     * OSADA required `AirDropMines` for any air mine-laying at all. The efile key that governs it
+     * says otherwise, in its own comment:
+     *
+     * > `air_landmines=0`
+     * > *"Set to 1 to allow air units having "DropMines" but not "AirDropMines" specials, to drop
+     * > mines in land too (not only in sea)"*
+     *
+     * So `AirDropMines` is the permission for **land** mines from the air. An aircraft carrying only
+     * `Drop mines` may already mine the SEA — which is how OG's naval minefields are laid from the
+     * air — and gains the land as well only where the efile sets `air_landmines`.
+     *
+     * A ground or naval unit is unaffected: it needs `Drop mines` and nothing else, wherever it
+     * stands.
+     */
+    private fun airMayMineHere(
+        data: EquipmentData,
+        hex: Hex?,
+    ): Boolean {
+        if (data.attrEx and ATTR_EX_MASK_AIR_DROP_MINES != 0) return true
+        val overSea = hex?.terrain == TerrainType.OCEAN.value
+        return overSea || EfileConfig.flag("air_landmines", false)
     }
 
     /** OG's `Clear mines` (`SpecialEx` 60.6, `attrEx` bit 6) — its own bit, independent of

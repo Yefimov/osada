@@ -1,14 +1,14 @@
 package org.osada.ui
 
 import org.osada.GameHolder
-import org.osada.TerrainType
 import org.osada.model.GameUnit
 import org.osada.model.Hex
 import org.osada.model.canDeployOnTerrain
 import org.osada.model.getActiveLayerTarget
-import org.osada.model.getPlayer
 import org.osada.model.isInDeployZone
+import org.osada.model.isOutOfZoneDeployTarget
 import org.osada.rules.Craters
+import org.osada.rules.Engineering
 import org.osada.rules.Minefields
 import org.osada.rules.UnitConcealment
 
@@ -92,18 +92,19 @@ internal class HexCellRenderer(
         // -1 must be excluded explicitly) is a legal out-of-zone deploy target; previously
         // this highlighted (and click-to-deploy accepted) any airfield on the map, enemy's
         // included.
-        val friendlyAirfield =
-            frame.airDeploySelected &&
-                hex.terrain == TerrainType.AIRFIELD.value &&
-                hex.owner != -1 &&
-                frame.q.getPlayer(hex.owner).side == frame.q.currentPlayer?.side
         val ownSide = frame.q.currentPlayer?.side
         val pos = hex.getPos()
         val isOwnDeployZone = ownSide != null && frame.q.isInDeployZone(ownSide, pos.row, pos.col)
         val terrainAllowsUnit =
             frame.deployUnit?.let { canDeployOnTerrain(it, hex, frame.airDeploySelected) } ?: true
         val showDeployHighlight =
-            frame.deployMode && !deployOccupied && terrainAllowsUnit && (isOwnDeployZone || friendlyAirfield)
+            frame.deployMode &&
+                !deployOccupied &&
+                terrainAllowsUnit &&
+                (
+                    isOwnDeployZone ||
+                        frame.deployUnit?.let { frame.q.isOutOfZoneDeployTarget(it, pos.row, pos.col) } == true
+                )
         if (showDeployHighlight) {
             rc.drawHex(rc.hexesCtx, x, y, hexStyles["deploy"])
         }
@@ -305,11 +306,25 @@ internal class HexCellRenderer(
         if (hex.isBarrageSel) {
             rc.drawHex(rc.hexesCtx, x, y, hexStyles["barragetarget"])
         }
+        // Railway destinations, for the same reason and with the same shape: while the mode is
+        // open these are the only hexes a click can act on.
+        if (hex.isRailSel) {
+            rc.drawHex(rc.hexesCtx, x, y, hexStyles["barragetarget"])
+        }
         // A minefield THIS side has detected. Drawn last so it sits over the move fill -- the player
         // must be able to see it while planning the very route it would stop. Undetected fields are
         // unreachable through this predicate and are never drawn.
         if (Minefields.isKnownThreat(hex, frame.q.currentPlayer?.side ?: 0)) {
             rc.drawHex(rc.hexesCtx, x, y, hexStyles["minefield"])
+        }
+        // Engineering work in progress (OG 9.3), drawn for the side paying for it. Until 2026-08-27
+        // a site under construction looked exactly like the ground beside it, so three turns of a
+        // bridge and 60 prestige of a port had no visible cause at all -- and, since work now
+        // pauses when its engineer leaves (`Engineering.staffed`), no visible reason for stopping
+        // either. The turns remaining are on the hex tooltip; this is the "something is happening
+        // here" mark.
+        if (Engineering.visibleSiteFor(hex, frame.q.currentPlayer?.side ?: 0)) {
+            rc.drawHex(rc.hexesCtx, x, y, hexStyles["construction"])
         }
         drawCraters(hex, x, y)
     }

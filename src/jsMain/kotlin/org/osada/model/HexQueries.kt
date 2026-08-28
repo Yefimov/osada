@@ -86,3 +86,24 @@ fun Hex.inactiveLayerEnemy(
             !UnitConcealment.isConcealed(other, attackerSide)
     return if (distinctEnemy) other else null
 }
+
+/**
+ * Whether the installation on this hex is WORKING — i.e. it is one and it has not been wrecked.
+ *
+ * OG's own statement of what a barrage or a demolition leaves behind is *"reduce a City,
+ * Airfield, Bridge, or Port to rubble, **making them unusable until Repaired**"* (`tips1.txt`,
+ * and Open General School theme 5). Until 2026-08-27 [rubble] cost movement and nothing else,
+ * so a shelled port still berthed ships, a shelled airfield still refuelled aircraft and a
+ * shelled city still resupplied the formation standing in it — *"unusable"* meant "slower to
+ * walk through".
+ *
+ * Every rule that asks *"is there a working city / port / airfield here?"* goes through this,
+ * so none of them can disagree about a wreck: air basing (`MovementRules.hasAirfield`),
+ * automatic ground resupply (`SupplyRules`), the deploy zone and the purchase anchor
+ * (`GameMapDeployZone`, `GameMapGrid.ownsSupplyHex`).
+ *
+ * **Inert unless something can actually wreck a hex.** Only `rules/Barrage` sets [rubble] and
+ * only Repair clears it, so with both of those rules off no hex is ever wrecked and this is
+ * `terrain == what` exactly as it was before.
+ */
+fun Hex.isWorking(what: Int): Boolean = terrain == what && !rubble

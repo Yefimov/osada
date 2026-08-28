@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="bn9s12.xscn" name="Third Battle of Kharkov" turns="10, 10, 10" holdvictory="6, 4, 3" date="March 7, 1943" dayturns="0" ground="1" atmosferic="0" latitude="3" iconset="1" weatherchg="0" rows="38" cols="37" eqp="eqp-lxf" image="resources/maps/images/map_237.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1">
+<map file="bn9s12.xscn" name="Third Battle of Kharkov" turns="10, 10, 10" holdvictory="6, 4, 3" date="March 7, 1943" dayturns="0" ground="1" atmosferic="0" latitude="3" iconset="1" weatherchg="0" rows="38" cols="37" eqp="eqp-lxf" image="resources/maps/images/map_237.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="1" portsnonavaldeploy="1">
   <player id="0" country="19" side="1" airtrans="0" navaltrans="0" support="20,0,0,0" turnprestige="0, 530, 530, 530, 530, 530, 530, 530, 530, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <player id="1" country="7" side="0" airtrans="0" navaltrans="0" support="8,0,0,0" turnprestige="0, 265, 265, 265, 265, 265, 265, 265, 265, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="3">
@@ -33,6 +33,10 @@
       <unit id="20825" owner="0" flag="20" face="0" exp="204"/>
     </at>
   </reinforce>
+  <hex row="7" col="23" station="1"/>
+  <hex row="17" col="10" station="1"/>
+  <hex row="17" col="36" station="1"/>
+  <hex row="25" col="8" station="1"/>
   <hex row="0" col="7" road="136"/>
   <hex row="0" col="12" terrain="10" name="Uda"/>
   <hex row="0" col="13" terrain="10" name="Uda"/>
@@ -62,7 +66,7 @@
   <hex row="1" col="16" terrain="10" name="Uda"/>
   <hex row="1" col="17" terrain="10" name="Uda"/>
   <hex row="1" col="18" terrain="10" road="136" name="Uda"/>
-  <hex row="1" col="19" terrain="1" road="186" name="Kharkov" owner="0" flag="19" victory="0">
+  <hex row="1" col="19" terrain="1" road="186" name="Kharkov" owner="0" flag="19" victory="0" station="1">
     <unit id="20392" owner="0" flag="20" face="0" exp="32" str="12"/>
   </hex>
   <hex row="1" col="20" terrain="1" road="59" name="Kharkov">
@@ -187,7 +191,7 @@
     <unit id="20391" owner="0" flag="20" face="0" exp="32" str="9"/>
   </hex>
   <hex row="5" col="14" road="17"/>
-  <hex row="5" col="18">
+  <hex row="5" col="18" station="1">
     <unit id="20682" owner="0" flag="20" face="0" transport="20638" exp="23"/>
   </hex>
   <hex row="5" col="20" deploy="0">
@@ -216,7 +220,7 @@
   <hex row="6" col="7" terrain="3"/>
   <hex row="6" col="8" terrain="10"/>
   <hex row="6" col="13" road="18"/>
-  <hex row="6" col="14" road="33"/>
+  <hex row="6" col="14" road="33" station="1"/>
   <hex row="6" col="16" terrain="3"/>
   <hex row="6" col="17" terrain="3"/>
   <hex row="6" col="18" terrain="1" name="Akssjutovka" owner="0" flag="19">
@@ -297,7 +301,7 @@
   <hex row="10" col="19" terrain="3"/>
   <hex row="10" col="20" terrain="3"/>
   <hex row="10" col="21" terrain="3"/>
-  <hex row="10" col="27" owner="0" flag="19" victory="0">
+  <hex row="10" col="27" owner="0" flag="19" victory="0" station="1">
     <unit id="20372" owner="0" flag="20" face="0" exp="219" str="12"/>
   </hex>
   <hex row="10" col="28" road="24"/>
@@ -450,7 +454,7 @@
   <hex row="17" col="11" terrain="1" name="Borki" owner="0" flag="19" victory="0">
     <unit id="20372" owner="0" flag="20" face="0" exp="180" str="12"/>
   </hex>
-  <hex row="17" col="12" terrain="3"/>
+  <hex row="17" col="12" terrain="3" station="1"/>
   <hex row="17" col="17">
     <unit id="20392" owner="0" flag="20" face="0" exp="58" str="11"/>
   </hex>
@@ -753,7 +757,7 @@
   <hex row="29" col="15">
     <unit id="8260" owner="1" flag="8" face="0" transport="9838" exp="106" str="11" ldr="1"/>
   </hex>
-  <hex row="29" col="20" terrain="1" name="Pervomajsky" owner="0" flag="19" victory="0">
+  <hex row="29" col="20" terrain="1" name="Pervomajsky" owner="0" flag="19" victory="0" station="1">
     <unit id="20372" owner="0" flag="20" face="0" exp="230" str="11"/>
   </hex>
   <hex row="29" col="21" terrain="1" name="Pervomajsky"/>
@@ -896,7 +900,7 @@
   <hex row="33" col="2" terrain="1" road="155" name="Krasnograd">
     <unit id="7976" owner="1" flag="8" face="0" exp="22" str="11"/>
   </hex>
-  <hex row="33" col="3" terrain="1" road="177" name="Krasnograd" owner="1" flag="7" victory="1">
+  <hex row="33" col="3" terrain="1" road="177" name="Krasnograd" owner="1" flag="7" victory="1" station="1">
     <unit id="7976" owner="1" flag="8" face="0" exp="51" str="11"/>
   </hex>
   <hex row="33" col="5" terrain="10" name="Berestovaya River"/>
@@ -1024,7 +1028,7 @@
   <hex row="37" col="6" terrain="2" road="32">
     <unit id="10822" owner="1" flag="8" face="0" exp="85"/>
   </hex>
-  <hex row="37" col="8" terrain="1" name="Kegichevka" owner="1" flag="7">
+  <hex row="37" col="8" terrain="1" name="Kegichevka" owner="1" flag="7" station="1">
     <unit id="7976" owner="1" flag="8" face="0" exp="44" str="12"/>
   </hex>
   <hex row="37" col="16">

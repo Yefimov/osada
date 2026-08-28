@@ -65,6 +65,7 @@ object GameStateDeserializer {
         unit: GameUnit,
         data: dynamic,
     ) {
+        unit.sabotaged = (data.sabotaged as? Boolean) == true
         unit.entrenchment = data.entrenchment as? Int ?: 0
         unit.entrenchTicks = data.entrenchTicks as? Int ?: 0
         unit.experience = data.experience as? Int ?: 0
@@ -106,6 +107,7 @@ object GameStateDeserializer {
         player.type = PlayerType.entries.getOrNull(data.type as? Int ?: 0) ?: PlayerType.HUMAN_LOCAL
         player.airTransports = data.airTransports as? Int ?: 0
         player.navalTransports = data.navalTransports as? Int ?: 0
+        player.railTransports = data.railTransports as? Int ?: 0
         player.supportCountries = parseIntArray(data.supportCountries)
         player.prestigePerTurn = parseIntArray(data.prestigePerTurn)
         player.dossier = data.dossier

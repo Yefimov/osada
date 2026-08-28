@@ -4,6 +4,7 @@ import org.osada.TerrainType
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
 import org.osada.model.Supply
+import org.osada.model.isWorking
 import org.osada.rules.ruleset.ActiveRuleset
 import org.osada.rules.ruleset.RuleKey
 import kotlin.math.roundToInt
@@ -34,6 +35,15 @@ object SupplyRules {
         map: GameMap,
         unit: GameUnit,
     ): Boolean {
+        // OG's `Kamikaze` under the efile's "extended missile rules" (`kamikaze=1`): the unit
+        // "is not able to resupply" at all. Under the default model it resupplies normally right up
+        // to the attack that consumes it -- see `rules/Kamikaze`.
+        // Two abilities refuse supply outright before terrain is even asked:
+        //  * OG's `Kamikaze` under the efile's "extended missile rules" (`kamikaze=1`) -- "not able
+        //    to resupply" at all; under the default model it resupplies normally right up to the
+        //    attack that consumes it (`rules/Kamikaze`);
+        //  * OG's `Saboteur` -- a sabotaged formation "cannot reinforce/resupply" until it recovers.
+        if (!Kamikaze.canResupply(unit) || unit.sabotaged) return false
         val groundEligible = UnitPredicates.isGround(unit)
         val airEligible = UnitPredicates.isAir(unit) && MovementRules.hasAirfield(map, unit)
         val seaEligible = UnitPredicates.isSea(unit)
@@ -80,11 +90,20 @@ object SupplyRules {
             // The adjacent-enemy condition is NOT part of the key: a formation being shot at is not
             // idle in either game, and OG's own wording ("do nothing in the turn") agrees.
             val offCityBlocks = !ActiveRuleset.flag(RuleKey.GROUND_AUTO_SUPPLY, false)
-            val outOfSupplyTerrain = offCityBlocks && hex?.terrain != TerrainType.CITY.value
-            if (full && (adjacentEnemies > 0 || outOfSupplyTerrain)) {
+            // A city shelled into rubble stops resupplying anybody until it is repaired -- OG's
+            // "unusable until Repaired", read through `Hex.isWorking`.
+            val outOfSupplyTerrain = offCityBlocks && hex?.isWorking(TerrainType.CITY.value) != true
+            // Looked up ONCE: `supplierFor` walks the six neighbours, and this arithmetic asks the
+            // same question twice.
+            val fromDepot = DepotSupply.supplierFor(map, unit) != null
+            val fieldRefused = (adjacentEnemies > 0 || outOfSupplyTerrain) && !fromDepot
+            if (full && fieldRefused) {
                 Supply(0, 0, 0, 0)
             } else {
-                val terrainMod = SupplyContextRules.supplyPenaltyModifier(hex, adjacentEnemies)
+                // Depot supply ignores the terrain supply factor AND enemy ZOC pressure: NOKORP
+                // names both as restrictions that apply to `supply_ex` mode 2, not to a Depot.
+                val terrainMod =
+                    if (fromDepot) 1.0 else SupplyContextRules.supplyPenaltyModifier(hex, adjacentEnemies)
                 // JS rounds (not truncates) and clamps only ammo/fuel to a minimum of 1;
                 // the transport values are rounded as-is (0 stays 0 for a transportless unit).
                 val ammo = kotlin.math.max(1.0, ammoNeeded * terrainMod)
@@ -171,8 +190,15 @@ object SupplyRules {
         map: GameMap,
         unit: GameUnit,
     ): Boolean {
-        if (unit.hasMoved || unit.hasFired || unit.hasResupplied) return false
-        return if (!needsSupply(unit)) false else isSupplyEligibleType(map, unit)
+        // A Depot lifts the moved/fired bar -- OG's own changelog lists "units failing to resupply
+        // from an adjacent Depot after moving or firing" as a BUG it fixed, and NOKORP names those
+        // restrictions for `supply_ex` mode 2 alone (`rules/DepotSupply`). The once-per-turn latch
+        // still holds either way; nothing supplies the same formation twice.
+        val fromDepot = DepotSupply.supplierFor(map, unit) != null
+        val spentThisTurn = unit.hasResupplied || (!fromDepot && (unit.hasMoved || unit.hasFired))
+        // "Any other value restricts units to resupply only from Depots and/or Cities/Ports."
+        val permitted = !spentThisTurn && DepotSupply.permitsSupply(map, unit)
+        return permitted && needsSupply(unit) && isSupplyEligibleType(map, unit)
     }
 
     /** True when [unit] is eligible to reinforce (optionally over its full strength). */

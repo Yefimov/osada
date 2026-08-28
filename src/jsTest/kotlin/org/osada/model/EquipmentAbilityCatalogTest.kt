@@ -136,7 +136,16 @@ class EquipmentAbilityCatalogTest {
         val badges = all.map { it.badge }
         assertEquals(badges.toSet().size, badges.size, "badge codes must be unique: $badges")
         assertTrue(badges.all { it.isNotBlank() && it.length <= 3 }, "badges stay short: $badges")
-        assertTrue(all.any { it.wired } && all.any { !it.wired }, "both tiers are represented")
+        // Until 2026-08-28 this asserted that BOTH tiers were represented -- that some ability was
+        // still descriptive-only. `Carrier Deploy`, `No Need Station` and `Supply Unit` were the
+        // last three, and §AA wired all of them, so the descriptive tier is now empty and the
+        // assertion is the stronger one: every special OG can express is executed by a rule.
+        //
+        // If a future import decodes a NEW bit, this is the test that should fail first -- adding
+        // it to `DESCRIPTIVE_ABILITIES` is legitimate, and it should be a deliberate act with this
+        // line updated, not a silent regression of the milestone.
+        val unwired = all.filterNot { it.wired }.map { it.key }
+        assertTrue(all.all { it.wired }, "every catalogued ability is wired: $unwired")
     }
 
     @Test

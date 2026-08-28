@@ -280,6 +280,10 @@ class OgEngineeringRulesTest : OgRulesTestHarness() {
         hex.construction = EngineeringWork.FORTIFICATION.ordinal
         hex.constructionTurns = 1
         hex.constructionSide = friendly.side
+        // A site advances only while an engineer stands on it (`Engineering.staffed`, 2026-08-27),
+        // so this fixture needs one -- what it is testing is the BUILDERLESS-save fallback, not
+        // whether unattended work finishes itself.
+        place(map, sapperEqid, 2, 2, side = 0)
 
         assertEquals(1, Engineering.advanceTurn(map.map, friendly.side, builderOwner()).size)
         assertEquals(TerrainType.FORTIFICATION.value, hex.terrain)

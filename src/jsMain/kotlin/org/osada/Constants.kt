@@ -562,6 +562,10 @@ class UiSettings {
      *  Set by the Barrage chip, cleared by firing, by pressing it again, or by selecting anything
      *  else -- a mode the player can enter by accident must be one they can leave the same way. */
     var barrageMode: Boolean = false
+
+    /** OG's railway destination mode is open (`rules/RailTransport`). Mutually exclusive with
+     *  [barrageMode] in practice -- opening either closes the other through `delCurrentUnit`. */
+    var railMode: Boolean = false
     var markCombatUnits: Boolean = true
     var markOwnUnits: Boolean = false
     var markEnemyUnits: Boolean = false

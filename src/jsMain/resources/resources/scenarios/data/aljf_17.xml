@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="aljf_17.xscn" name="Seamonsters at Charleston" turns="24, 30, 36" date="February 17, 1864" dayturns="0" ground="0" atmosferic="0" latitude="15" iconset="0" weatherchg="0" rows="40" cols="54" eqp="eqp-kaiser" image="resources/maps/images/map_1429.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="1">
+<map file="aljf_17.xscn" name="Seamonsters at Charleston" turns="24, 30, 36" date="February 17, 1864" dayturns="0" ground="0" atmosferic="0" latitude="15" iconset="0" weatherchg="0" rows="40" cols="54" eqp="eqp-kaiser" image="resources/maps/images/map_1429.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="1" airintercept="0" portsnosupply="0" portsnonavaldeploy="0">
   <player id="0" country="162" side="1" airtrans="0" navaltrans="0" support="163,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <player id="1" country="150" side="0" airtrans="0" navaltrans="0" support="151,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="5">
@@ -27,6 +27,7 @@
       <unit id="1431" owner="0" flag="163" face="0"/>
     </at>
   </reinforce>
+  <hex row="10" col="4" station="1"/>
   <hex row="0" col="2" terrain="10"/>
   <hex row="0" col="3" terrain="3"/>
   <hex row="0" col="4" terrain="3"/>
@@ -858,7 +859,7 @@
   <hex row="16" col="8" terrain="3"/>
   <hex row="16" col="10" road="25"/>
   <hex row="16" col="11" terrain="1" road="136" name="Charleston"/>
-  <hex row="16" col="12" terrain="1" road="136" name="Charleston"/>
+  <hex row="16" col="12" terrain="1" road="136" name="Charleston" station="1"/>
   <hex row="16" col="13" terrain="1" road="186" name="Charleston">
     <unit id="44827" owner="1" flag="151" face="0" transport="44810" exp="160"/>
   </hex>
@@ -930,7 +931,7 @@
     <unit id="44784" owner="1" flag="151" face="0" transport="44808" exp="12" ldr="1"/>
   </hex>
   <hex row="17" col="16" terrain="1" road="34" name="Charleston"/>
-  <hex row="17" col="17" terrain="1" road="17" name="Charleston"/>
+  <hex row="17" col="17" terrain="1" road="17" name="Charleston" station="1"/>
   <hex row="17" col="18" terrain="12" road="136" name="Charleston Port"/>
   <hex row="17" col="19" terrain="12" road="160" name="Charleston Port"/>
   <hex row="17" col="20" terrain="15" name="Cooper River"/>
@@ -1279,7 +1280,7 @@
   <hex row="23" col="6" terrain="1" name="Priolean"/>
   <hex row="23" col="8" terrain="8"/>
   <hex row="23" col="9" road="34"/>
-  <hex row="23" col="10" terrain="1" road="49" name="R.R.Shops" owner="1" flag="150">
+  <hex row="23" col="10" terrain="1" road="49" name="R.R.Shops" owner="1" flag="150" station="1">
     <unit id="44781" owner="1" flag="151" face="0"/>
   </hex>
   <hex row="23" col="11" terrain="3"/>
@@ -1474,7 +1475,7 @@
   <hex row="27" col="0" road="40"/>
   <hex row="27" col="1" road="130"/>
   <hex row="27" col="2" road="34"/>
-  <hex row="27" col="3" road="17">
+  <hex row="27" col="3" road="17" station="1">
     <unit id="44781" owner="1" flag="151" face="0"/>
   </hex>
   <hex row="27" col="4" terrain="3" road="129"/>

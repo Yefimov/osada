@@ -1,16 +1,24 @@
 package org.osada.rules
 
+import org.osada.GameHolder
 import org.osada.LeaderType
+import org.osada.TerrainType
 import org.osada.UnitClass
 import org.osada.model.ATTR2_MASK_DISMOUNT_AFTER_MOVE
 import org.osada.model.ATTR2_MASK_NO_ZOC
 import org.osada.model.ATTR_EX_MASK_AD_SUPPORT
 import org.osada.model.ATTR_EX_MASK_ALL_WEATHER
+import org.osada.model.ATTR_EX_MASK_EXPLOIT_SUCCESS
+import org.osada.model.ATTR_EX_MASK_JET_STEALTH
 import org.osada.model.ATTR_EX_MASK_LASTING_SUPPRESSION
 import org.osada.model.ATTR_EX_MASK_NO_AMMO_PENALTY
 import org.osada.model.ATTR_EX_MASK_NO_INTERCEPT_AIR
 import org.osada.model.ATTR_EX_MASK_NO_LEADER
 import org.osada.model.ATTR_EX_MASK_OVERRUN_TOGGLE
+import org.osada.model.ATTR_EX_MASK_PARTIZAN
+import org.osada.model.ATTR_EX_MASK_SINGLE_FIRE_SUP
+import org.osada.model.ATTR_EX_MASK_TORPEDO_BOMBER
+import org.osada.model.ATTR_MASK_AIR_TRANSPORTABLE
 import org.osada.model.ATTR_MASK_CAPTURE_FLAG
 import org.osada.model.ATTR_MASK_COMBAT_SUPPORT
 import org.osada.model.ATTR_MASK_DISMOUNT
@@ -38,8 +46,6 @@ import org.osada.rules.ruleset.RuleKey
  */
 @Suppress("TooManyFunctions")
 object UnitCapabilities {
-    const val EXPERIENCE_PER_BAR = 100
-
     /**
      * Unit classes that flip a hex's owner and flag by occupying it **by default**. OG's
      * `Capture Flag` attribute adds to this set per equipment record — see [canCaptureHex].
@@ -339,7 +345,7 @@ object UnitCapabilities {
                     UnitPredicates.isAir(supporter) == recipientIsAir &&
                     HexGeometry.distance(pos.row, pos.col, supporterPos.row, supporterPos.col) == 1 &&
                     hasCombatSupport(supporter)
-            if (eligible) supporter.experience / EXPERIENCE_PER_BAR else 0
+            if (eligible) UnitExperience.bars(supporter) else 0
         }
     }
 
@@ -413,9 +419,16 @@ object UnitCapabilities {
      * once to remove, and the two calls must agree or the hex's reference count drifts permanently
      * — a unit that mounted a transport between them would otherwise remove a ZOC it never added.
      * `useReal = true` cannot change while a unit is on the map.
+     *
+     * **The air exemption became conditional on 2026-08-27.** OG §6.30 says air units *"usually"*
+     * have no zone of control, and the word is a scenario option: see [AirZoneOfControl], which
+     * satisfies the same add/remove symmetry because both of its inputs are fixed for the whole
+     * scenario. `No ZOC` still beats it — a record that says it projects none projects none,
+     * whatever class it is.
      */
     fun projectsZoneOfControl(unit: GameUnit): Boolean =
-        !UnitPredicates.isAir(unit) && unit.unitData(true).attr2 and ATTR2_MASK_NO_ZOC == 0
+        (!UnitPredicates.isAir(unit) || AirZoneOfControl.enabled()) &&
+            unit.unitData(true).attr2 and ATTR2_MASK_NO_ZOC == 0
 
     /**
      * Whether [data] is exempt from the penalties an empty formation pays — OG's `No run out ammo
@@ -435,6 +448,113 @@ object UnitCapabilities {
      * (118), air transports (92) — units whose ammunition is a sortie rather than a magazine.
      */
     fun ignoresDryAmmoPenalty(data: EquipmentData): Boolean = data.attrEx and ATTR_EX_MASK_NO_AMMO_PENALTY != 0
+
+    /**
+     * OG's `SingleFireSup.` (`SpecialEx` 61.7, `attrEx` bit 15) — *"one fire-support action per
+     * turn"*. Wired 2026-08-27; 166 shipped records carry it.
+     *
+     * **A restriction on the SUPPORTER, not on what it supports.** OG §6.24 lets an ordinary
+     * battery answer for every neighbour attacked within its range, as often as it is called on;
+     * this bit is the exception that spends the gun after one answer. Read in
+     * `CombatResolver.isSupportFireEligible` against [org.osada.model.GameUnit.hasSupportedThisTurn],
+     * which `CombatApplication` sets when a support shot is actually committed — never when one is
+     * merely previewed, or the attack forecast would spend a gun that has not fired.
+     *
+     * **Its shape is the one `hasInterceptedThisTurn` already had**, deliberately: OG's own
+     * §6.24 pairs support fire with interception (*"the air equivalent of support fire is
+     * interception... fighters can only do one interception each turn"*), so the once-per-turn
+     * restriction and the flag that expresses it are the same idea on the two sides of that
+     * sentence. It inherits that flag's limitation as well — neither survives a save.
+     */
+    fun supportsOnlyOncePerTurn(data: EquipmentData): Boolean = data.attrEx and ATTR_EX_MASK_SINGLE_FIRE_SUP != 0
+
+    /**
+     * Whether an organic transport may be carried aboard an AIR transport with the formation that
+     * owns it, rather than being left on the airfield. Wired 2026-08-27, **narrowed the same day**.
+     *
+     * > *"AirTransportable special is only needed to be set for transport"* — OpenGen changelog
+     *
+     * That sentence settles what the manual left ambiguous. OG's older text says the organic
+     * transport *"must be also Airmobile/Airborne"*, and PG2 required the special on BOTH the unit
+     * and its transport; OG requires it on the **transport alone**, and the `embark` field is not
+     * an alternative route.
+     *
+     * **The first build ORed the two** — special OR `embark >= Airmobile` — reasoning from the two
+     * fields' partial overlap (401 of the 673 shipped ground transports that carry either). That
+     * was too permissive: it flew 167 transports OG leaves on the ground. Only the bit decides now.
+     *
+     * 506 of the 5,937 shipped ground-transport records carry it, so the great majority of prime
+     * movers stay behind when their formation is airlifted — which is the rule, and why the Embark
+     * action says so before the player commits.
+     */
+    fun transportSurvivesAirlift(data: EquipmentData): Boolean = data.attr and ATTR_MASK_AIR_TRANSPORTABLE != 0
+
+    /**
+     * OG's `Jet (Stealth)` (`attrEx` bit 19) — a jet that ground air defence can only intercept
+     * with a jet-capable interceptor. Wired 2026-08-27; 2,053 records.
+     */
+    fun hasJetStealth(data: EquipmentData): Boolean = data.attrEx and ATTR_EX_MASK_JET_STEALTH != 0
+
+    /**
+     * OG's `Partizan` (`attrEx` bit 10) — the formation is not halted by an enemy zone of control.
+     * Wired 2026-08-27; 720 records, 680 of them Infantry.
+     *
+     * **This is the same behaviour as the `Superior Maneuver` commander**, which OSADA already
+     * runs, so the ability joins that predicate rather than adding a second way to ignore a ZOC.
+     * The manual's *"cannot be surprised"* is a simplification of it: a formation that is never
+     * halted never walks into the ambush a halt sets up.
+     */
+    fun ignoresZoneOfControl(data: EquipmentData): Boolean = data.attrEx and ATTR_EX_MASK_PARTIZAN != 0
+
+    /**
+     * OG's `Exploit Success` (`attrEx` bit 11) — after an ordinary attack that kills the defender
+     * or forces it to retreat, the attacker keeps its remaining movement. Wired 2026-08-27; 456
+     * records, 401 of them Infantry.
+     *
+     * **Not Overrun.** Overrun predicts a zero-loss kill, skips normal combat and returns BOTH
+     * movement and the shot; this fights the combat, spends the shot, and gives back only the
+     * movement. `AttackCalculation.resolveOverrunAndExperienceGain` owns the other one.
+     */
+    fun exploitsSuccess(data: EquipmentData): Boolean = data.attrEx and ATTR_EX_MASK_EXPLOIT_SUCCESS != 0
+
+    /**
+     * OG's `Torpedo bomber` (`attrEx` bit 8) — may attack an adjacent unit while both it and its
+     * target are over SEA terrain. Wired 2026-08-27; 385 records, 323 of them Tactical Bombers.
+     *
+     * A narrow grant: it adds the range-1 attack over water and nothing else — not ammunition, not
+     * target class, not the number of attacks in a turn. Read by
+     * `AttackEligibility.torpedoRunPermitted`.
+     */
+    fun isTorpedoBomber(data: EquipmentData): Boolean = data.attrEx and ATTR_EX_MASK_TORPEDO_BOMBER != 0
+
+    /**
+     * Whether OG's torpedo run is available: [isTorpedoBomber], the target adjacent, and **both
+     * hexes over open sea** — the three conditions OG states and no more.
+     *
+     * It ADDS to `AttackEligibility.canFire`'s "can it hurt anything but aircraft?" gate rather
+     * than replacing it: a torpedo bomber whose record already carries a naval attack was never
+     * refused, and this is for the one whose only weapon is the torpedo.
+     */
+    @Suppress("ReturnCount") // three unresolvable inputs, each of which means "no torpedo run"
+    fun torpedoRunPermitted(
+        attacker: GameUnit,
+        defender: GameUnit,
+    ): Boolean {
+        val aPos = attacker.getPos() ?: return false
+        val dPos = defender.getPos() ?: return false
+        val grid =
+            GameHolder.instance
+                ?.scenario
+                ?.map
+                ?.map ?: return false
+        val overSea = { row: Int, col: Int ->
+            grid.getOrNull(row)?.getOrNull(col)?.terrain == TerrainType.OCEAN.value
+        }
+        return isTorpedoBomber(attacker.unitData(true)) &&
+            HexGeometry.distance(aPos.row, aPos.col, dPos.row, dPos.col) <= 1 &&
+            overSea(aPos.row, aPos.col) &&
+            overSea(dPos.row, dPos.col)
+    }
 
     /**
      * Whether [data] can ever produce a commander — the inverse of OG's `Cannot get a leader`

@@ -36,11 +36,6 @@ object RulesetProfileStore {
                 name = "",
                 source = RulesetSource.OSADA_DEFAULT,
             ),
-            RulesetProfile(
-                id = RulesetProfile.OG_FIDELITY_ID,
-                name = "",
-                source = RulesetSource.OG_FIDELITY,
-            ),
         )
 
     /** Saved profiles, sorted by player-visible name (§1). A malformed library yields an empty list
