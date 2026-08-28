@@ -270,7 +270,18 @@ object CombatResolver {
         val defenderSide = defender.player?.side
         return if (aPos != null && dPos != null && defenderSide != null) {
             if (HexGeometry.distance(aPos.row, aPos.col, dPos.row, dPos.col) <= 1) {
-                units.filter { support -> isSupportFireEligible(support, attacker, defender, defenderSide, aPos) }
+                val eligible =
+                    units.filter { support -> isSupportFireEligible(support, attacker, defender, defenderSide, aPos) }
+                // OG 9.6's escort is ONE destroyer -- its procedure "selects the FIRST destroyer
+                // adjacent to the defender" -- so a convoy screened by four answers once, not four
+                // times. Ordinary support fire is untouched. List order is `map.units` order and
+                // therefore identical on every peer. Added 2026-08-27; the first build let them all
+                // fire (`ExtendedNaval.escortsNavalTransport`).
+                val firstEscort =
+                    eligible.firstOrNull { ExtendedNaval.escortsNavalTransport(it, attacker, defender) }
+                eligible.filter {
+                    it === firstEscort || !ExtendedNaval.escortsNavalTransport(it, attacker, defender)
+                }
             } else {
                 emptyList()
             }
@@ -307,19 +318,31 @@ object CombatResolver {
         val inRange = HexGeometry.distance(sPos.row, sPos.col, aPos.row, aPos.col) <= range
         // Class eligibility lives in UnitCapabilities so the rule and the unit card's SUP/AA
         // badges read the same predicate and cannot drift apart (the §4.6 mistake).
+        // OG §9.6's third bullet -- "Destroyers can escort naval transports against submarine
+        // attacks" -- is built as a third class-eligibility branch rather than as a mechanic of its
+        // own, because OG defines it by an analogy ("just like fighters escort bombers") to
+        // something this engine does not have. `ExtendedNaval.escortsNavalTransport` carries the
+        // full reasoning; here it is simply one more kind of unit that may answer for a neighbour.
         val classEligible =
             if (UnitPredicates.isAir(attacker)) {
                 UnitCapabilities.hasAirDefenceFire(sData)
             } else {
-                UnitCapabilities.hasSupportFire(sData)
+                UnitCapabilities.hasSupportFire(sData) ||
+                    ExtendedNaval.escortsNavalTransport(support, attacker, defender)
             }
         // g2a_intercept_mode bit 1: an AA unit that has already intercepted a moving aircraft
         // this turn cannot also air-defend one (AAInterception.applyInterception sets the flag).
         val notSpentOnInterception = !UnitPredicates.isAir(attacker) || !support.hasInterceptedThisTurn
+        // OG's `SingleFireSup.`: this gun answers once a turn and has already done so. Read on the
+        // supporter's REAL record -- the restriction belongs to the battery, not to a truck towing
+        // it. See `UnitCapabilities.supportsOnlyOncePerTurn`.
+        val notSpentOnSupport =
+            !UnitCapabilities.supportsOnlyOncePerTurn(support.unitData(true)) || !support.hasSupportedThisTurn
         return inRange &&
             classEligible &&
             notSpentOnInterception &&
-            AttackEligibility.canInitiateAttack(support, attacker)
+            notSpentOnSupport &&
+            AttackEligibility.canInitiateAttack(support, attacker, asActiveAttack = false)
     }
 
     /** Whether a unit losing [current] of [original] strength is past its retreat threshold. */

@@ -304,6 +304,7 @@ class UnitActionAvailabilityTest {
                 UnitActionId.BUILD_FORTIFICATION,
                 UnitActionId.BUILD_AIRFIELD,
                 UnitActionId.BUILD_PORT,
+                UnitActionId.BUILD_STATION,
                 UnitActionId.REPAIR,
                 UnitActionId.DEMOLISH,
                 UnitActionId.SLEEP,

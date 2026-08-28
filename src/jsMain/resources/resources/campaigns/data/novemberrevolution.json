@@ -56,7 +56,7 @@
      "speaker": "Karl Artelt",
      "role": "Sailor, First Torpedo Division",
      "side": "left",
-     "text": "Do not fold that order, comrade. Let every stoker see the Admiralty seal. Berlin is asking the Allies for an armistice, and the admirals still mean to send the High Seas Fleet against the British. They call it honour. Below decks we call it choosing our own grave.",
+     "text": "Do not fold that order. Let every stoker see the Admiralty seal. Berlin asks for an armistice; the admirals answer with one last battle against Britain. They call it honour. Below decks we call it choosing our own grave.",
      "next": "artelt-opening",
      "portrait": "resources/campaigns/portraits/karl-artelt.png"
     },
@@ -74,7 +74,7 @@
      "speaker": "Lothar Popp",
      "role": "USPD Organiser and Shipyard Worker",
      "side": "right",
-     "text": "Then stop carrying petitions to men who answer with prison lists. The police are closing the halls. The USPD and the shipyard unions can put workers in the streets and runners on every road—but only if the fleet's refusal becomes the beginning of power, not the last protest of an isolated crew.",
+     "text": "Then stop carrying petitions to men who answer with prison lists. The unions can fill the streets and put runners on every road. But they will not rise merely to applaud one crew's refusal.",
      "next": "artelt-confronts-popp",
      "portrait": "resources/campaigns/portraits/lothar-popp.png"
     },
@@ -83,7 +83,7 @@
      "speaker": "Karl Artelt",
      "role": "Sailor, First Torpedo Division",
      "side": "left",
-     "text": "You ask the men to rise with us while forty-seven comrades can hear the guards working the bolts. I stood in that hall tonight, Lothar. They did not come to be told about telegraph offices. If we march past that compound to seize a switchboard, every stoker in Kiel will know exactly what our word is worth.",
+     "text": "Forty-seven comrades can hear the guards working the bolts, Lothar. I stood in that hall tonight. March past their cells for a switchboard, and every stoker in Kiel learns what our promises are worth.",
      "next": "popp-coordination",
      "portrait": "resources/campaigns/portraits/karl-artelt.png"
     },
@@ -92,7 +92,7 @@
      "speaker": "Lothar Popp",
      "role": "USPD Organiser and Shipyard Worker",
      "side": "right",
-     "text": "And if the governor keeps the station and telegraph, he seals every ship off from the yards and writes the first account of this night. The patrols already have live ammunition; before dawn they may have the depots too. The action committee put its first armed column in your hands, comrade. Do you take it to the prison or to the wires?",
+     "text": "If Souchon keeps the station and telegraph, he cuts the ships off and calls us an isolated mutiny. His patrols already have live ammunition. Your column cannot be in two places, Delegate: the prison or the wires?",
      "choices": [
       {
        "id": "free-prisoners-first",
@@ -424,7 +424,7 @@
      "role": "Shipyard Workers' Courier — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/marta-reimers.png",
-     "text": "The sailors you pulled through the service gate came north with us, and they have not sat down since. The rest were still behind Souchon's wall when your train left. Artelt sends word that the governor may yet release them—and that he is done building plans on the governor's mercy.",
+     "text": "The men you pulled through the service gate came north with us. The rest remained behind Souchon's wall. Artelt says the governor may release them; he no longer builds plans on the governor's mercy.",
      "conditions": {
       "allFlags": [
        "sailors_liberated"
@@ -441,7 +441,7 @@
      "role": "Shipyard Workers' Courier — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/marta-reimers.png",
-     "text": "I carried your despatches all that night, comrade, and I will carry this one too. The crowd went down to the Arrestlokal without us. Steinhäuser's men were across the street with the order already given - eight dead, twenty-nine carried away, and the cells still locked when the firing stopped. The telegraph worked perfectly. That is what I had to tell the families, standing in a room where the wire was the only thing that had held.",
+     "text": "The crowd went to the Arrestlokal without us. Steinhäuser's men fired: eight dead, twenty-nine carried away, the cells still locked. I told the families in the telegraph room. The wire worked perfectly, Delegate.",
      "conditions": {
       "allFlags": [
        "communications_secured"
@@ -466,7 +466,7 @@
      "speaker": "Bernhard Kuhnt",
      "role": "Chairman of the Council of 21",
      "side": "left",
-     "text": "Those crumpled ballots elected the Council of 21. The admiral still has seals and letterhead in his office; he no longer has the gates, the crews or the telephone exchange. That may last an hour or a week. Your work in Kiel bought us this argument, Delegate. It did not settle it.",
+     "text": "Those crumpled ballots elected the Council of 21. The admiral still has seals and letterhead; we have the gates, crews and telephone exchange. Your work in Kiel bought us this hour. It did not settle who commands the next one.",
      "next": "hug-question",
      "portrait": "resources/campaigns/portraits/bernhard-kuhnt.png"
     },
@@ -475,7 +475,7 @@
      "speaker": "Paul Hug",
      "role": "Rüstringen Deputy and Council Representative",
      "side": "right",
-     "text": "Inside the harbour the officers hesitate. Beyond it, Aurich, Emden and Oldenburg are waiting to see whether this is a local mutiny or the beginning of a new power. The council has placed its field columns under you. Do you send them out now, or make this base impossible to retake first?",
+     "text": "The harbour officers hesitate. Aurich, Emden and Oldenburg wait to see whether we move. The council has put its columns under you. Send them out now, or make this base impossible to retake first?",
      "choices": [
       {
        "id": "regional-columns",
@@ -583,7 +583,7 @@
      "speaker": "Marta Reimers",
      "role": "Shipyard Workers' Courier — Fictional Composite",
      "side": "right",
-     "text": "At every railway town, someone ties a red ribbon to my sleeve and asks whose orders your column carries. Workers will stop trains for us and soldiers will listen, but neither will risk everything until they see who controls the roads and armouries. The Oldenburg officers are counting the same rifles.",
+     "text": "At every station someone ties a red ribbon to my sleeve and asks whose orders you carry. Workers will stop trains; soldiers may listen. The Oldenburg officers are counting the same rifles while we talk.",
      "next": "kuhnt-final",
      "portrait": "resources/campaigns/portraits/marta-reimers.png"
     },
@@ -832,7 +832,7 @@
      "speaker": "Anna Keller",
      "role": "Railway Workers' Delegate — Fictional Composite",
      "side": "left",
-     "text": "Keep your men off the tracks, Delegate. The locomotive crews have banked their fires. Soldiers arriving from the west tear the imperial cockades from their caps before stepping onto the platform; the police at the telegraph room pretend not to notice. Everyone is waiting for someone else to move first.",
+     "text": "Keep your men off the tracks. The locomotive crews have banked their fires. Soldiers tear the imperial cockades from their caps; the police at the telegraph room pretend not to notice. Everyone is waiting for someone else to move first.",
      "next": "keller-opening",
      "portrait": "resources/campaigns/portraits/anna-keller.png"
     },
@@ -850,7 +850,7 @@
      "speaker": "Otto Weber",
      "role": "Soldiers' Council Sergeant — Fictional Composite",
      "side": "right",
-     "text": "The barracks are split. One company has elected delegates, another has locked its armoury, and the officers are promising food and order to anyone who obeys. Until Frankfurt elects its council, the soldiers' delegates will follow your field orders. What does the city see first: the council speaking in public, or the old state losing control of its machinery?",
+     "text": "One company has elected delegates; another has locked its armoury. The officers promise hot food to anyone who obeys. Until Frankfurt elects a council, the soldiers will follow your field orders. What do they see first: a public council, or the old command losing its machinery?",
      "choices": [
       {
        "id": "take-infrastructure",
@@ -917,15 +917,15 @@
        ],
        "hint": "Raise two worker battalions and earn their later political support, but pay prestige and forgo core-wide experience."
       }
-     ],
+    ],
      "portrait": "resources/campaigns/portraits/otto-weber.png"
     },
     {
      "id": "adler-infrastructure",
      "speaker": "Dr. Jakob Adler",
-     "role": "Municipal Liaison — Fictional Composite",
+     "role": "Municipal Doctor and Relief Liaison — Fictional Composite",
      "side": "right",
-     "text": "Take the switchboards, then—but do not confuse machinery with consent. If the square sees armed soldiers before it sees an elected council, the old officials will call this another occupation and some workers will believe them. A revolution that cannot deliver bread will lose the streets it wins.",
+     "text": "These keys open the municipal flour stores. I will hand them to an elected council, not to the first armed man at the door. Put one of my clerks beside every guard and I will keep bread carts moving while you take the switchboards.",
      "next": "keller-infrastructure-answer",
      "portrait": "resources/campaigns/portraits/dr-jakob-adler.png"
     },
@@ -934,7 +934,7 @@
      "speaker": "Anna Keller",
      "role": "Railway Workers' Delegate — Fictional Composite",
      "side": "left",
-     "text": "The railwaymen will open the stations to the council, not to a new barracks command. But Adler is right about one thing: seize a telegraph office without explaining whose orders it carries, and fear will explain it for us.",
+     "text": "Keep the keys, Doctor, and send your clerks. The railwaymen will put elected delegates beside our guards. If we do not say whose orders the telegraph carries, fear will answer for us.",
      "next": "loyalist-warning",
      "portrait": "resources/campaigns/portraits/anna-keller.png"
     },
@@ -953,8 +953,17 @@
      "role": "Soldiers' Council Sergeant — Fictional Composite",
      "side": "right",
      "text": "A public mandate may bring hesitant companies over. It will not stop the troop train already signalled from the west. Give the speeches their square, but if the railway crews wait for the vote before pulling that signal, legitimacy will arrive under guard.",
-     "next": "loyalist-warning",
+     "next": "adler-assembly",
      "portrait": "resources/campaigns/portraits/otto-weber.png"
+    },
+    {
+     "id": "adler-assembly",
+     "speaker": "Dr. Jakob Adler",
+     "role": "Municipal Doctor and Relief Liaison — Fictional Composite",
+     "side": "right",
+     "text": "Then let the square elect its council. I have flour for two days and a clinic already short of bandages. Tell the crowd who brings tomorrow's bread before the old officials tell them your speeches stopped it.",
+     "next": "loyalist-warning",
+     "portrait": "resources/campaigns/portraits/dr-jakob-adler.png"
     },
     {
      "id": "loyalist-warning",
@@ -1203,7 +1212,7 @@
     {
      "id": "callback-frankfurt-railways",
      "speaker": "Anna Keller",
-     "role": "Frankfurt Workers' and Soldiers' Council",
+     "role": "Frankfurt Council Delegate — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-keller.png",
      "text": "You told us to take the railway before the proclamations. We did. The government still has telephones, but the delegates arriving at Berlin carry our orders and our account of Frankfurt. Do not waste what we bought you.",
@@ -1228,7 +1237,7 @@
      "speaker": "Emil Barth",
      "role": "Revolutionary Shop Stewards and USPD",
      "side": "left",
-     "text": "Those columns are the general strike made visible: workers leaving machines, soldiers electing councils, prison gates and barracks opening before the crowds. The old government still occupies the centre, but obedience is draining out of it by the hour. If we wait for the ministries to admit that, Ebert will be inside them first.",
+     "text": "The strike is walking toward us: factory hands, soldiers' delegates, prisoners just out of the cells. The ministries still hold the centre. Wait for them to admit they have lost Berlin, and Ebert will be inside before we are.",
      "next": "haase-counterargument",
      "portrait": "resources/campaigns/portraits/emil-barth.png"
     },
@@ -1431,7 +1440,7 @@
     ],
     "speaker": "Emil Barth",
     "role": "Revolutionary Shop Stewards and USPD",
-    "text": "Berlin saw organised council columns enter the political centre before imperial authority could disguise its retreat. The monarchy has fallen, but Haase was right about the next struggle: tomorrow the councils must decide whether they govern beside the new republic or surrender power to it.",
+    "text": "Your council columns reached the political centre before the imperial offices could change their signs. The Kaiser is gone. Haase is already asking who will issue tomorrow's orders—and which councils will still be obeyed.",
     "conditions": {
      "allFlags": [
       "struck_for_government_quarter"
@@ -1445,7 +1454,7 @@
     ],
     "speaker": "Hugo Haase",
     "role": "USPD Chairman",
-    "text": "You made the government quarter the measure of the revolution and concentrated every enemy around it. The surviving councils will remember the courage of the march—and argue for years over whether its symbol cost them the organised force they needed.",
+    "text": "The march fixed every loyal gun on the government quarter. Survivors came back without the centre and without much of the force that tried to take it. They will remember the courage; I will remember what it cost.",
     "conditions": {
      "allFlags": [
       "struck_for_government_quarter"
@@ -1461,7 +1470,7 @@
     ],
     "speaker": "Karl Liebknecht",
     "role": "Spartacus League",
-    "text": "Your stations and barracks made the revolution harder to crush, Delegate. They also gave Ebert time to inherit the ministries while the councils secured his communications. The monarchy has fallen; whether power changed hands or merely changed its uniform remains unsettled.",
+    "text": "No loyal train entered Berlin, and the barracks elected delegates. While you secured them, Ebert entered the ministries. The Kaiser is gone, Delegate. The old desks have new occupants and our guards outside their doors.",
     "conditions": {
      "allFlags": [
       "secured_military_infrastructure"
@@ -1475,7 +1484,7 @@
     ],
     "speaker": "Emil Barth",
     "role": "Revolutionary Shop Stewards and USPD",
-    "text": "We held messages, platforms and armouries, but never joined them into power. The old command recovered one institution at a time. Survivors will say your caution preserved them; others will say it taught the revolution to defend buildings instead of deciding who governed.",
+    "text": "We held platforms, messages and armouries until each became an island. The old command took them back one at a time. Some comrades escaped because of your caution. None of those buildings became power.",
     "conditions": {
      "allFlags": [
       "secured_military_infrastructure"

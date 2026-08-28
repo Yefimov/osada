@@ -94,6 +94,7 @@ internal class UnitContextMenu(
             "reinforce", "overstrength" -> performReinforce(map, unit, pos, action == "overstrength")
             "lay_mines" -> performMineAction(map.layMinefield(unit), map, unit, pos)
             "barrage" -> toggleBarrageTargeting(map, unit, pos)
+            "rail_move" -> toggleRailTargeting(map, unit, pos)
             "clear_mines" -> performMineAction(map.clearMinefield(unit), map, unit, pos)
             in ENGINEERING_ACTION_IDS -> performEngineering(action, map, unit, pos)
             "undo" -> map.undoLastMove()

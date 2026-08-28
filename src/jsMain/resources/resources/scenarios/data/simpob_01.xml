@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="simpob_01.xscn" name="Uncountable trophies: the Komuch offensive (II)" turns="15, 19, 23" date="August 4, 1918" dayturns="0" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="28" cols="38" eqp="eqp-kaiser" image="resources/maps/images/map_52.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0">
+<map file="simpob_01.xscn" name="Uncountable trophies: the Komuch offensive (II)" turns="15, 19, 23" date="August 4, 1918" dayturns="0" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="28" cols="38" eqp="eqp-kaiser" image="resources/maps/images/map_52.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0">
   <player id="0" country="100" side="1" airtrans="0" navaltrans="0" support="145,112,190,0" turnprestige="0, 0, 60, 60, 40, 60, 60, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <player id="1" country="103" side="0" airtrans="0" navaltrans="0" support="104,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="13">
@@ -35,7 +35,7 @@
   <hex row="1" col="11" terrain="9" name="Volga River"/>
   <hex row="1" col="12" road="136"/>
   <hex row="1" col="13" terrain="1" road="131" name="Zelenodolsk"/>
-  <hex row="1" col="14" terrain="1" road="169" rail="25" name="Zelenodolsk" owner="1" flag="103">
+  <hex row="1" col="14" terrain="1" road="169" rail="25" name="Zelenodolsk" owner="1" flag="103" station="1">
     <unit id="728" owner="1" flag="104" face="0" str="5"/>
   </hex>
   <hex row="1" col="15" terrain="1" road="130" rail="136" name="Zelenodolsk"/>
@@ -47,7 +47,7 @@
   <hex row="1" col="22" road="130"/>
   <hex row="1" col="24" road="136"/>
   <hex row="1" col="25" road="136" rail="40"/>
-  <hex row="1" col="27" terrain="1" road="56" rail="34" name="Kazan"/>
+  <hex row="1" col="27" terrain="1" road="56" rail="34" name="Kazan" station="1"/>
   <hex row="1" col="28" rail="42"/>
   <hex row="1" col="29" terrain="8" rail="130"/>
   <hex row="1" col="30" rail="168"/>
@@ -70,13 +70,13 @@
   <hex row="2" col="17" terrain="9" name="Volga River"/>
   <hex row="2" col="18" rail="130"/>
   <hex row="2" col="20" rail="136"/>
-  <hex row="2" col="21" terrain="1" road="136" rail="136" name="Vasilyevo"/>
+  <hex row="2" col="21" terrain="1" road="136" rail="136" name="Vasilyevo" station="1"/>
   <hex row="2" col="23" rail="34"/>
   <hex row="2" col="24" rail="34"/>
   <hex row="2" col="25" terrain="1" road="10" name="Kazan">
     <unit id="42333" owner="1" flag="104" face="0"/>
   </hex>
-  <hex row="2" col="26" terrain="1" road="186" rail="130" name="Kazan Military Academy" owner="1" flag="103" victory="1">
+  <hex row="2" col="26" terrain="1" road="186" rail="130" name="Kazan Military Academy" owner="1" flag="103" victory="1" station="1">
     <unit id="896" owner="1" flag="104" face="0" str="5"/>
   </hex>
   <hex row="2" col="27" terrain="1" road="187" name="Kazan">
@@ -103,7 +103,7 @@
   <hex row="3" col="9" terrain="1" name="Yemetkino" owner="1" flag="103">
     <unit id="42267" owner="1" flag="104" face="0"/>
   </hex>
-  <hex row="3" col="13" terrain="1" road="1" rail="17" name="Nizhniye Vyazovye" owner="1" flag="103">
+  <hex row="3" col="13" terrain="1" road="1" rail="17" name="Nizhniye Vyazovye" owner="1" flag="103" station="1">
     <unit id="42267" owner="1" flag="104" face="0"/>
   </hex>
   <hex row="3" col="14" terrain="9" name="Volga River"/>
@@ -262,7 +262,7 @@
   <hex row="9" col="7" terrain="1" road="35" name="Nurlaty" owner="1" flag="103">
     <unit id="42267" owner="1" flag="104" face="0"/>
   </hex>
-  <hex row="9" col="8" road="40" rail="17"/>
+  <hex row="9" col="8" road="40" rail="17" station="1"/>
   <hex row="9" col="9" terrain="1" road="138" name="Molvino" owner="1" flag="103">
     <unit id="42267" owner="1" flag="104" face="0"/>
   </hex>
@@ -380,7 +380,7 @@
   <hex row="13" col="37" road="144"/>
   <hex row="14" col="4" road="17"/>
   <hex row="14" col="9" road="34"/>
-  <hex row="14" col="10" road="34" rail="144"/>
+  <hex row="14" col="10" road="34" rail="144" station="1"/>
   <hex row="14" col="12" road="136"/>
   <hex row="14" col="13" road="130"/>
   <hex row="14" col="14" road="34"/>

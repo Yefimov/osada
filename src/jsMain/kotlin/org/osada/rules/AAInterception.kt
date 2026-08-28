@@ -1,6 +1,7 @@
 package org.osada.rules
 
 import org.osada.CombatLog
+import org.osada.GameHolder
 import org.osada.LeaderType
 import org.osada.model.Cell
 import org.osada.model.GameMap
@@ -40,7 +41,12 @@ internal object AAInterception {
         cell: Cell,
         isDestination: Boolean,
     ): List<GameUnit> {
-        val planeSide = plane.player?.side ?: return emptyList()
+        // OG's own per-scenario switch, authored by 346 of the 397 scenarios that carry one and
+        // read by nothing until 2026-08-28 (`docs/og-fidelity-plan.md` §AD). A scenario whose
+        // source could not be read is `null` and stays permitted, as every authored switch is.
+        val authorAllows = GameHolder.instance?.scenario?.airIntercept != false
+        val planeSide = if (authorAllows) plane.player?.side else null
+        if (planeSide == null) return emptyList()
         val mode = ActiveRuleset.intKey(RuleKey.AA_INTERCEPT_MODE, 0)
         val range = ActiveRuleset.intKey(RuleKey.FLAK_RANGE, DEFAULT_FLAK_RANGE)
         return map.getUnits().filter { aa ->
@@ -82,7 +88,7 @@ internal object AAInterception {
             // UnitCapabilities.hasNoInterceptAir's header. Checked here rather than folded into
             // hasAirDefenceFire so the AA badge and any non-interception defensive fire are unaffected.
             if (UnitCapabilities.hasNoInterceptAir(aa)) return@forEach
-            if (!AttackEligibility.canInitiateAttack(aa, forPlane)) return@forEach
+            if (!AttackEligibility.canInitiateAttack(aa, forPlane, asActiveAttack = false)) return@forEach
             val cells = HexGeometry.getRing(aaPos.row, aaPos.col, range, rows, cols, false)
             cells.add(Cell(aaPos.row, aaPos.col))
             cells.forEach { c -> if (c.row in 0 until rows && c.col in 0 until cols) threatened.add(c.row to c.col) }
@@ -138,11 +144,18 @@ internal object AAInterception {
     ): Boolean {
         val aaPos = aa.getPos() ?: return false
         val inRange = HexGeometry.distance(aaPos.row, aaPos.col, cell.row, cell.col) <= range
+        // OG's `Jet (Stealth)`: a jet is interceptable from the ground only by an interceptor that
+        // is itself jet-capable. It does NOT stop a fighter -- this is the ground-to-air path only,
+        // which is the whole of what the author's specials reference claims for it.
+        val jetMatched =
+            !UnitCapabilities.hasJetStealth(plane.unitData(true)) ||
+                UnitCapabilities.hasJetStealth(aa.unitData(true))
         return aa.player?.side != planeSide &&
             UnitCapabilities.hasAirDefenceFire(aa.unitData()) &&
             !UnitCapabilities.hasNoInterceptAir(aa) &&
+            jetMatched &&
             inRange &&
-            AttackEligibility.canInitiateAttack(aa, plane)
+            AttackEligibility.canInitiateAttack(aa, plane, asActiveAttack = false)
     }
 
     private fun fires(

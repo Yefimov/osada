@@ -4,6 +4,7 @@ import org.osada.MovMethod
 import org.osada.TerrainType
 import org.osada.UnitClass
 import org.osada.movTable
+import org.osada.rules.DepotSupply
 import org.osada.rules.GameRules
 import org.osada.rules.UnitPredicates
 import org.osada.rules.getReinforceValue
@@ -179,6 +180,10 @@ internal class UnitDeployOperations(
     fun resupplyUnit(unit: GameUnit): Supply {
         gameMap.undoState.invalidate(unit, UndoInvalidation.IRREVERSIBLE_ACTION)
         val supply = GameRules.getResupplyValue(gameMap, unit)
+        // `supply_ex` mode 4: the Depot spends one ammo for the whole turn's work, however many
+        // formations it serves. Charged before the recipient is credited so a depot that cannot
+        // pay has already been excluded by `DepotSupply.serves` (`rules/DepotSupply`).
+        DepotSupply.chargeSupplier(gameMap, unit)
         unit.player?.resupplyUnit(unit, supply)
         gameMap.delAttackSel()
         gameMap.delMoveSel()

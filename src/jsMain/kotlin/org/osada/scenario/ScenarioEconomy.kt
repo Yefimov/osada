@@ -5,10 +5,22 @@ import org.osada.PROTOTYPE_MIN_COST
 import org.osada.SCENARIO_START_PRESTIGE
 import org.osada.UnitClass
 import org.osada.model.Equipment
+import org.osada.model.canBeAwardedAsPrototype
 import org.osada.model.getCountryEquipmentByYearRange
 import kotlin.random.Random
 
-/** Prestige/prototype/experience economy queries for [Scenario], split out to keep its function count in bounds. */
+/**
+ * The pool a brilliant victory's prototype award is drawn from: next year's Tank..Anti-Tank and
+ * Artillery..Tactical Bomber records for [country], above [PROTOTYPE_MIN_COST].
+ *
+ * **OG's `No Prototype` (`attr` bit 17) is honoured since 2026-08-27** — see
+ * [org.osada.model.canBeAwardedAsPrototype]. It is the author's own opt-out from exactly this
+ * draw, and 5,989 of the 56,970 merged records carry it; until it was read, every one of them was
+ * an eligible award.
+ *
+ * Prestige/prototype/experience economy queries for [Scenario], split out to keep its function
+ * count in bounds.
+ */
 fun Scenario.getPrototypeUnitsAvailable(country: Int): List<Int> {
     val year = date.getFullYear() + 1
     val list = Equipment.getCountryEquipmentByYearRange(year, year, country).toMutableList()
@@ -21,7 +33,7 @@ fun Scenario.getPrototypeUnitsAvailable(country: Int): List<Int> {
         val outOfArtilleryRange = uclass < UnitClass.ARTILLERY.value || uclass > UnitClass.TACTICAL_BOMBER.value
         val outOfEligibleClasses = outOfTankRange && outOfArtilleryRange
         val tooCheap = eq.cost * CURRENCY_MULTIPLIER < PROTOTYPE_MIN_COST
-        if (outOfEligibleClasses || tooCheap) {
+        if (outOfEligibleClasses || tooCheap || !Equipment.canBeAwardedAsPrototype(eqid)) {
             iter.remove()
         }
     }

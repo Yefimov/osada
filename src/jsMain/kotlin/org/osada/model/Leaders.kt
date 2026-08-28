@@ -7,6 +7,7 @@ import org.osada.UNIT_MAX_EXPERIENCE
 import org.osada.UnitClass
 import org.osada.hero.HeroTraitResolver
 import org.osada.model.Leaders.getUnitClassLeader
+import org.osada.rules.AuxiliaryLeaders
 import org.osada.rules.GameRandomSource
 import org.osada.rules.UnitCapabilities
 
@@ -215,13 +216,17 @@ object Leaders {
      * by any means. See `tools/og-import/DEFERRED.md` §7.43.
      */
     fun generateLeader(unit: GameUnit?): Int {
-        // OG's `Cannot get a leader` (`attrEx` bit 0), wired 2026-08-26. Checked here rather than
-        // at the three callers because this is the only place a legacy leader is minted -- combat
-        // promotion, the full-experience grant and the leaders a scenario's own units are born
-        // with (`ScenarioUnitParser`) all come through it. The hero system's half of the same
-        // ability is in `HeroCampaign.attemptEmergence`.
-        if (unit == null || !UnitCapabilities.canProduceLeader(unit.unitData(true))) return -1
-        val leaders = unitClassLeaders[unit.unitData().uclass]
+        // TWO refusals, both checked here rather than at the three callers, because this is the only
+        // place a legacy leader is minted -- combat promotion, the full-experience grant and the
+        // leaders a scenario's own units are born with (`ScenarioUnitParser`) all come through it:
+        //  * OG's `Cannot get a leader` (`attrEx` bit 0), wired 2026-08-26. The hero system's half
+        //    of the same ability is in `HeroCampaign.attemptEmergence`;
+        //  * OG's `noldr_auxunits`, wired 2026-08-28 -- an auxiliary formation in a campaign
+        //    (`rules/AuxiliaryLeaders`).
+        if (unit == null) return -1
+        val refused =
+            !UnitCapabilities.canProduceLeader(unit.unitData(true)) || AuxiliaryLeaders.refuses(unit)
+        val leaders = if (refused) null else unitClassLeaders[unit.unitData().uclass]
         return if (leaders == null || leaders.size < 2) {
             -1
         } else {

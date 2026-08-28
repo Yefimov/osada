@@ -139,8 +139,11 @@ internal fun MoveExecutor.applyMinefield(
     result.hitMinefield = true
     result.minefieldWasHidden = wasHidden
     if (wasHidden) {
-        unit.hit(Minefields.UNDETECTED_MINE_DAMAGE)
-        result.minefieldLosses = Minefields.UNDETECTED_MINE_DAMAGE
+        // "Up to three strength points, depending on experience and Engineer status" -- graded per
+        // formation rather than flat since 2026-08-28 (`Minefields.strikeDamage`).
+        val damage = Minefields.strikeDamage(unit)
+        unit.hit(damage)
+        result.minefieldLosses = damage
     }
     return true
 }
@@ -170,4 +173,5 @@ private fun MoveExecutor.relocateTo(
     unit.getHex()?.delUnit(unit)
     setup.map[cell.row][cell.col].setUnit(unit)
     GameRules.setSpotRange(gameMap, unit, true)
+    gameMap.rebuildSpottingForSightBlocker(unit)
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="volarm_13.xscn" name="Tula" turns="24, 27, 30" date="November 3, 1919" dayturns="0" ground="1" atmosferic="3" latitude="3" iconset="0" weatherchg="0" rows="39" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_690.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0">
+<map file="volarm_13.xscn" name="Tula" turns="24, 27, 30" date="November 3, 1919" dayturns="0" ground="1" atmosferic="3" latitude="3" iconset="0" weatherchg="0" rows="39" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_690.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0">
 <player id="0" country="103" side="0" airtrans="0" navaltrans="0" support="104,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
 <player id="1" country="100" side="1" airtrans="0" navaltrans="0" support="101,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <hex row="0" col="1" name="SNOW"/>
@@ -359,7 +359,7 @@
   <hex row="8" col="1" name="SNOW"/>
   <hex row="8" col="2" road="136" name="SNOW"/>
   <hex row="8" col="3" road="130" name="SNOW"/>
-  <hex row="8" col="4" terrain="1" road="58" name="Luvovitsy" owner="0" flag="103">
+  <hex row="8" col="4" terrain="1" road="58" name="Luvovitsy" owner="0" flag="103" station="1">
     <unit id="42272" owner="0" flag="104" face="0" transport="42341" exp="84"/>
   </hex>
   <hex row="8" col="5" road="130" name="SNOW"/>
@@ -479,7 +479,7 @@
   <hex row="10" col="27" name="SNOW"/>
   <hex row="10" col="28" name="SNOW"/>
   <hex row="10" col="29" name="SNOW"/>
-  <hex row="10" col="30" terrain="1" road="26" name="Luznka" owner="0" flag="103">
+  <hex row="10" col="30" terrain="1" road="26" name="Luznka" owner="0" flag="103" station="1">
     <unit id="42331" owner="0" flag="104" face="0" exp="184" ldr="1"/>
   </hex>
   <hex row="10" col="31" road="136" name="SNOW"/>
@@ -504,7 +504,7 @@
   <hex row="11" col="4" name="SNOW"/>
   <hex row="11" col="5" name="SNOW"/>
   <hex row="11" col="6" road="136" name="SNOW"/>
-  <hex row="11" col="7" terrain="1" road="146" name="Storozhevaya" owner="0" flag="103">
+  <hex row="11" col="7" terrain="1" road="146" name="Storozhevaya" owner="0" flag="103" station="1">
     <unit id="42310" owner="0" flag="104" face="0" exp="84"/>
   </hex>
   <hex row="11" col="8" terrain="1" road="40" name="Storozhevaya"/>
@@ -573,7 +573,7 @@
   <hex row="12" col="19" road="34" name="SNOW"/>
   <hex row="12" col="20" road="40" name="SNOW"/>
   <hex row="12" col="21" road="130" name="SNOW"/>
-  <hex row="12" col="22" terrain="1" road="57" name="Rozhdesvenka" owner="0" flag="103">
+  <hex row="12" col="22" terrain="1" road="57" name="Rozhdesvenka" owner="0" flag="103" station="1">
     <unit id="42281" owner="0" flag="104" face="0" transport="42341" exp="184" ldr="1"/>
   </hex>
   <hex row="12" col="23" road="130" name="SNOW"/>
@@ -611,7 +611,7 @@
   <hex row="13" col="9" terrain="10" name="Upa"/>
   <hex row="13" col="10" name="SNOW"/>
   <hex row="13" col="11" terrain="10" name="Upa"/>
-  <hex row="13" col="12" terrain="1" road="136" name="Tula"/>
+  <hex row="13" col="12" terrain="1" road="136" name="Tula" station="1"/>
   <hex row="13" col="13" terrain="1" road="146" name="Tula" owner="0" flag="103" victory="0">
     <unit id="42272" owner="0" flag="104" face="0" transport="42341" exp="204" ldr="1"/>
   </hex>
@@ -1722,7 +1722,7 @@
   <hex row="35" col="2" name="SNOW"/>
   <hex row="35" col="3" name="SNOW"/>
   <hex row="35" col="4" terrain="1" road="24" name="Plavsk"/>
-  <hex row="35" col="5" terrain="1" road="177" name="Plavsk"/>
+  <hex row="35" col="5" terrain="1" road="177" name="Plavsk" station="1"/>
   <hex row="35" col="6" name="SNOW" deploy="1"/>
   <hex row="35" col="7" name="SNOW" deploy="1"/>
   <hex row="35" col="8" name="SNOW" deploy="1"/>

@@ -13,6 +13,7 @@ import org.osada.rules.GameRandomSource
 import org.osada.rules.ruleset.ActiveRuleset
 import org.osada.rules.ruleset.serializeRuleset
 import org.osada.scenario.Scenario
+import kotlin.js.Json
 import kotlin.js.json
 
 /**
@@ -146,32 +147,7 @@ object GameStateSerializer {
         // would quietly un-spot hexes their recon had already found. `installationSpotted` is NOT
         // stored: it is derived wholly from ownership and is rebuilt by `GameMap.recomputeSpotting`.
         if (hex.spotMemory != 0) obj.asDynamic().spotMemory = hex.spotMemory
-        // OG 9.3's engineering state, on the same optional-key rule again: a map with no work in
-        // progress, nothing razed and no bridge blown -- every map unless `build_and_repair` is
-        // on -- serializes exactly as it did before the mechanic existed. `razedTerrain` and
-        // `blownRoad` are stored even when the work is long finished, because they are the only
-        // record of what Repair would put back.
-        //
-        // The job is written as its NAME, not its ordinal. An ordinal is a position in
-        // `EngineeringWork`, so inserting a job mid-enum would silently reinterpret every save
-        // that had one in progress -- and the multiplayer command already carries the name for
-        // exactly that reason. Caught in review 2026-08-25; the two now agree.
-        // The BUILDER travels with the job. It decides whose turn end counts the job down and whose
-        // flag the finished facility flies, so a save that dropped it would hand a half-built
-        // airfield to whichever ally reloaded and ended a turn first (`Hex.constructionPlayer`).
-        // A save written before this field existed simply has no builder, and `Engineering`
-        // falls back to `constructionSide` for exactly that case.
-        Engineering.workName(hex)?.let { obj.asDynamic().construction = it }
-        if (hex.construction >= 0) {
-            obj.asDynamic().constructionTurns = hex.constructionTurns
-            obj.asDynamic().constructionSide = hex.constructionSide
-            if (hex.constructionPlayer >= 0) {
-                obj.asDynamic().constructionPlayer = hex.constructionPlayer
-                obj.asDynamic().constructionCountry = hex.constructionCountry
-            }
-        }
-        if (hex.razedTerrain >= 0) obj.asDynamic().razedTerrain = hex.razedTerrain
-        if (hex.blownRoad != 0) obj.asDynamic().blownRoad = hex.blownRoad
+        serializeHexEngineering(obj, hex)
         if (hex.rubble) obj.asDynamic().rubble = 1
         if (hex.crater) obj.asDynamic().crater = 1
         return obj
@@ -216,6 +192,9 @@ object GameStateSerializer {
         // Optional keys, same byte-stability rule as `customName`: a formation that has not
         // attacked, carries no half-paid `Fire Discipline` point and holds no lasting suppression
         // serializes exactly as it did before these traits were wired.
+        // OG's `Saboteur` leaves a STATE rather than a turn flag, so it has to survive a reload or
+        // the sabotaged unit gets its turn back (`GameUnit.sabotaged`). Optional key, same rule.
+        if (unit.sabotaged) obj.asDynamic().sabotaged = true
         if (unit.shotsThisTurn != 0) obj.asDynamic().shotsThisTurn = unit.shotsThisTurn
         if (unit.halfShotPending) obj.asDynamic().halfShotPending = true
         if (unit.lastingHits != 0) obj.asDynamic().lastingHits = unit.lastingHits
@@ -261,6 +240,7 @@ object GameStateSerializer {
             Pair("type", player.type.value),
             Pair("airTransports", player.airTransports),
             Pair("navalTransports", player.navalTransports),
+            Pair("railTransports", player.railTransports),
             Pair("supportCountries", player.supportCountries.toTypedArray()),
             Pair("prestigePerTurn", player.prestigePerTurn.toTypedArray()),
             Pair("coreUnits", player.getCoreUnitList().map { serializeUnit(it) }.toTypedArray()),
@@ -322,4 +302,56 @@ object GameStateSerializer {
         if (unit.stalinRegimeBoosted) obj.asDynamic().stalinRegimeBoosted = true
         return obj
     }
+}
+
+/**
+ * OG 9.3's engineering state, split out of [serializeHex] to keep that function inside
+ * detekt's complexity budget once the station flag joined it (2026-08-27).
+ *
+ * Every key here is optional, on the same byte-stability rule the unit record uses: a map with
+ * no work in progress, nothing razed and no bridge blown -- every map unless `build_and_repair`
+ * is on -- serializes exactly as it did before the mechanic existed.
+ *
+ * **[Hex.station] is the one exception and is written regardless**, because unlike the rest it
+ * is also AUTHORED map data: 915 stations across 143 shipped scenarios arrive from the
+ * scenario XML rather than from a sapper, so a save that dropped it under a ruleset with
+ * engineering off would lose part of the map.
+ */
+private fun serializeHexEngineering(
+    obj: Json,
+    hex: Hex,
+) {
+    // OG 9.3's engineering state, on the same optional-key rule again: a map with no work in
+    // progress, nothing razed and no bridge blown -- every map unless `build_and_repair` is
+    // on -- serializes exactly as it did before the mechanic existed. `razedTerrain` and
+    // `blownRoad` are stored even when the work is long finished, because they are the only
+    // record of what Repair would put back.
+    //
+    // The job is written as its NAME, not its ordinal. An ordinal is a position in
+    // `EngineeringWork`, so inserting a job mid-enum would silently reinterpret every save
+    // that had one in progress -- and the multiplayer command already carries the name for
+    // exactly that reason. Caught in review 2026-08-25; the two now agree.
+    // The BUILDER travels with the job. It decides whose turn end counts the job down and whose
+    // flag the finished facility flies, so a save that dropped it would hand a half-built
+    // airfield to whichever ally reloaded and ended a turn first (`Hex.constructionPlayer`).
+    // A save written before this field existed simply has no builder, and `Engineering`
+    // falls back to `constructionSide` for exactly that case.
+    Engineering.workName(hex)?.let { obj.asDynamic().construction = it }
+    if (hex.construction >= 0) {
+        obj.asDynamic().constructionTurns = hex.constructionTurns
+        obj.asDynamic().constructionSide = hex.constructionSide
+        if (hex.constructionPlayer >= 0) {
+            obj.asDynamic().constructionPlayer = hex.constructionPlayer
+            obj.asDynamic().constructionCountry = hex.constructionCountry
+        }
+    }
+    if (hex.razedTerrain >= 0) obj.asDynamic().razedTerrain = hex.razedTerrain
+    if (hex.blownRoad != 0) obj.asDynamic().blownRoad = hex.blownRoad
+    // The airfield's ORIGIN, for OG's `Cannot use dirt airfields`. Stored on the same optional-
+    // key rule as the two records above, and for the same reason: it outlives the job that set
+    // it, so a reload must not turn a sapper's strip back into a permanent field.
+    if (hex.sapperBuilt) obj.asDynamic().sapperBuilt = 1
+    // A railroad station is authored map data, but engineers can also build one, so the save
+    // has to carry it: reloading must not demolish a station the player paid 18 prestige for.
+    if (hex.station) obj.asDynamic().station = 1
 }

@@ -275,7 +275,7 @@ object MultiplayerScreen {
             option.value = choice.file
             option.textContent = choice.name
             option.selected = choice.file == model.selectedScenarioFile
-            group?.appendChild(option)
+            group.appendChild(option)
         }
         select.onchange = {
             val value = select.value

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="acampsem.xscn" name="Semenov" turns="9, 11, 17" date="February 10, 1920" dayturns="0" ground="1" atmosferic="0" latitude="3" iconset="1" weatherchg="1" rows="33" cols="43" eqp="eqp-kaiser" image="resources/maps/images/map_429.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1">
+<map file="acampsem.xscn" name="Semenov" turns="9, 11, 17" date="February 10, 1920" dayturns="0" ground="1" atmosferic="0" latitude="3" iconset="1" weatherchg="1" rows="33" cols="43" eqp="eqp-kaiser" image="resources/maps/images/map_429.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0">
   <player id="0" country="144" side="1" airtrans="0" navaltrans="0" support="0,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <player id="1" country="191" side="0" airtrans="0" navaltrans="0" support="192,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="2">
@@ -141,7 +141,7 @@
   <hex row="2" col="5" terrain="3"/>
   <hex row="2" col="6" terrain="3"/>
   <hex row="2" col="7" terrain="3"/>
-  <hex row="2" col="8" name="Chilok: RAILROAD" owner="0" flag="144" victory="0"/>
+  <hex row="2" col="8" name="Chilok: RAILROAD" owner="0" flag="144" victory="0" station="1"/>
   <hex row="2" col="9" road="17" name="RAILROAD"/>
   <hex row="2" col="10" terrain="3"/>
   <hex row="2" col="11" terrain="3"/>
@@ -375,7 +375,7 @@
   <hex row="8" col="12" terrain="3"/>
   <hex row="8" col="13" terrain="3"/>
   <hex row="8" col="14" terrain="3"/>
-  <hex row="8" col="16" terrain="1" name="RAILROAD" deploy="0"/>
+  <hex row="8" col="16" terrain="1" name="RAILROAD" deploy="0" station="1"/>
   <hex row="8" col="17" terrain="15"/>
   <hex row="8" col="18" terrain="3"/>
   <hex row="8" col="19" terrain="3"/>
@@ -487,7 +487,7 @@
   <hex row="10" col="37" terrain="10" name="RAILROAD">
     <unit id="46763" owner="1" flag="192" face="0" exp="188" str="5"/>
   </hex>
-  <hex row="10" col="38" name="RAILROAD" owner="1" flag="191"/>
+  <hex row="10" col="38" name="RAILROAD" owner="1" flag="191" station="1"/>
   <hex row="10" col="40" name="RAILROAD"/>
   <hex row="10" col="41" terrain="2"/>
   <hex row="10" col="42" name="RAILROAD"/>
@@ -599,7 +599,7 @@
   <hex row="13" col="25" terrain="3"/>
   <hex row="13" col="26" terrain="3"/>
   <hex row="13" col="27" terrain="3"/>
-  <hex row="13" col="28" terrain="1" road="16" name="Village" owner="0" flag="144" victory="0" deploy="0"/>
+  <hex row="13" col="28" terrain="1" road="16" name="Village" owner="0" flag="144" victory="0" deploy="0" station="1"/>
   <hex row="13" col="29" terrain="1" name="Village"/>
   <hex row="13" col="30" terrain="10" name="RAILROAD"/>
   <hex row="13" col="31" terrain="8"/>

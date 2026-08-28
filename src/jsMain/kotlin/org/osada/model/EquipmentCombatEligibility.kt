@@ -120,8 +120,168 @@ internal const val ATTR_MASK_BRIDGE = 8
 internal const val ATTR_MASK_CANNOT_ATTACK_SOFT = 16
 internal const val ATTR_MASK_CANNOT_ATTACK_HARD = 32
 internal const val ATTR_MASK_CANNOT_ATTACK_AIR = 64
-private const val ATTR_MASK_CANNOT_BUY = 128
+internal const val ATTR_MASK_CANNOT_BUY = 128
+internal const val ATTR_MASK_NO_AI_BUY = 256
+internal const val ATTR_MASK_NO_PROTOTYPE = 131072
 internal const val ATTR_MASK_CAN_AIR_ATK = 32768
+
+/**
+ * OG's `Can't Naval Atk`, bit 18 — the fourth of the four target-type prohibitions, and the last
+ * to get a reader (2026-08-27). *"Forbids initiating an attack against naval targets"*: the same
+ * shape as [ATTR_MASK_CANNOT_ATTACK_SOFT] / [ATTR_MASK_CANNOT_ATTACK_HARD] /
+ * [ATTR_MASK_CANNOT_ATTACK_AIR], applied to [org.osada.UnitType.SEA], and read in exactly the same
+ * place ([canAttackTargetType]) — so a record's four prohibitions can never be answered by four
+ * different rules.
+ *
+ * **Universal, with no ruleset key**, for §L.3's reason: OSADA already runs OG's target-type
+ * matrix and simply read three quarters of it. Its three siblings have never been behind a key
+ * either, and putting the fourth alone behind one would say the matrix is optional, which it is
+ * not.
+ *
+ * 866 of the 56,970 merged records carry it, 601 of them with a non-zero `navalatk` — so it does
+ * take shots away, which is the point. By class the population is exactly what a naval-attack
+ * prohibition should look like: Air Defence, Naval Transport, Air Transport, Carrier and
+ * Fortification lead it, and there is no Tank or Anti-Tank at all.
+ *
+ * **This bit is the one place PM's `attr` and OG's `attr` disagree outright** (§K.8): PM's engine
+ * reads 262144 as `isPurchasable`. `fix_pm_abilities.py` therefore excluded it from `KEEP_MASK`
+ * when it rebuilt `eqp-adlerkorps`'s PM-only records from their OG twins, and
+ * `fix_pm_cant_naval_atk.py` cleared it on the 57 `eqp-pacific`-only records that script never
+ * covered. Nothing may read this mask on a record whose `attr` came from Panzer Marshal.
+ */
+internal const val ATTR_MASK_CANNOT_ATTACK_NAVAL = 262144
+
+/**
+ * OG's `Air Transportable`, `attr` bit 14 — *"transport can be transported by plane"* (manual §7.2).
+ *
+ * **This file's catalog header used to call it redundant with the `embark` field, and the data says
+ * otherwise.** Over the 5,937 shipped ground-transport records, 568 have `embark` above NAVAL,
+ * 506 carry this bit, and only **401 have both** — related fields, not one field written twice. So
+ * it gets its own reader (2026-08-27), and the two are ORed: a prime mover may fly if EITHER source
+ * says so, which is the "supplements" shape `Capture Flag` and `AD Support` already use and the
+ * direction that takes least from the player.
+ *
+ * See [org.osada.rules.UnitCapabilities.transportSurvivesAirlift].
+ */
+internal const val ATTR_MASK_AIR_TRANSPORTABLE = 16384
+
+/**
+ * OG's `Air support`, `attr` bit 13 — *"can supply air units, the same than an airfield"*
+ * (manual §7.2). WIRED 2026-08-27.
+ *
+ * 632 shipped records carry it, and the population is exactly the sentence: capital ships that
+ * carried floatplanes (Battleship 231, Cruiser 131, Battle Cruiser 121), destroyers (86) and
+ * forward depots on the Fortification class (31). Read by `MovementRules.hasAirfield`, which is the
+ * one predicate that answers *"is this aircraft properly based?"*.
+ */
+internal const val ATTR_MASK_AIR_SUPPORT = 8192
+
+/**
+ * OG's `Evade` (`Special4` bit 7, `attr2` bit 7) — *"unit has a 50% probability of evading any
+ * attack, like submarines"* (manual §7.2). WIRED 2026-08-27.
+ *
+ * 409 shipped records carry it, and the population reads as a grant rather than a class default:
+ * 322 Recon (10% of that class), 32 Infantry, and only 4 of 710 submarines. That distribution is
+ * what settles how OG's `class_evade` table is meant to be read — see [org.osada.rules.Evade].
+ */
+internal const val ATTR2_MASK_EVADE = 128
+
+/**
+ * OG's `Jet (Stealth)`, `SpecialEx` 62.3 (`attrEx` bit 19) — **effect established 2026-08-27**.
+ *
+ * `OG_ABILITY_AUDIT.md` §7.1.1 filed it `CONFIRMED-BIT, UNCONFIRMED-EFFECT`, unable to determine
+ * what it does from the manual or from OG's own UI, and warned against guessing from the name. The
+ * author's specials reference has it: **a jet can be intercepted by ground air-defence only if the
+ * intercepting unit also carries `Jet (Stealth)`.** It is a jet-versus-jet-interceptor rule, not a
+ * general cloak — it does not touch spotting, and it does not stop a FIGHTER intercepting.
+ *
+ * 2,053 shipped records carry it, and the population is exactly right for a jet-age marker: Level
+ * Bomber 610, Air Defence 365, Fighter 296 — the aircraft on one side of it and the missile
+ * batteries meant to catch them on the other. See [org.osada.rules.AAInterception].
+ */
+internal const val ATTR_EX_MASK_JET_STEALTH = 524288
+
+/**
+ * OG's `Partizan`, `SpecialEx` 61.2 (`attrEx` bit 10) — the unit is **not stopped by adjacent
+ * enemies**, which is `Battlefield Intelligence`'s behaviour. Wired 2026-08-27.
+ *
+ * The manual's *"cannot be surprised"* is a simplification of the same thing: what actually happens
+ * is that the formation is not halted on entering a zone of control, so the ambush that a halt sets
+ * up never arises. 720 records carry it and 680 are Infantry, which is what a partisan roster looks
+ * like. See [org.osada.rules.UnitCapabilities.ignoresZoneOfControl].
+ */
+internal const val ATTR_EX_MASK_PARTIZAN = 1024
+
+/**
+ * OG's `Exploit Success`, `SpecialEx` 61.3 (`attrEx` bit 11) — after an ordinary attack that kills
+ * the defender or forces it to retreat, the attacker may spend its REMAINING MOVEMENT. Wired
+ * 2026-08-27; 456 records, 401 of them Infantry.
+ *
+ * **It is not Overrun and must not be collapsed into it.** Overrun predicts a zero-loss kill, skips
+ * the normal combat entirely, and lets the unit go on moving AND firing. This one fights the normal
+ * combat, spends the attack, and gives back only the movement. See
+ * [org.osada.rules.UnitCapabilities.exploitsSuccess].
+ */
+internal const val ATTR_EX_MASK_EXPLOIT_SUCCESS = 2048
+
+/**
+ * OG's `Kamikaze`, `SpecialEx` 62.0 (`attrEx` bit 16) — the formation does not come back. Wired
+ * 2026-08-27; 61 records (Tactical Bomber 17, Submarine 17, Destroyer 9 — the suicide craft).
+ *
+ * **Two models, chosen by the efile's own `kamikaze` key**, which `eqp-lxf` sets to 1:
+ *
+ *  - **default (`kamikaze=0`)**: destroyed after taking part in combat, or once its last ammunition
+ *    is spent;
+ *  - **`kamikaze=1`**, the *"extended missile rules"*: it cannot resupply at all, and is destroyed
+ *    when its FUEL runs out rather than its ammunition.
+ *
+ * See [org.osada.rules.Kamikaze].
+ */
+internal const val ATTR_EX_MASK_KAMIKAZE = 65536
+
+/**
+ * OG's `Torpedo bomber`, `SpecialEx` 61.0 (`attrEx` bit 8) — may attack an adjacent unit while both
+ * it and its target are over SEA terrain. Wired 2026-08-27; 385 records, 323 of them Tactical
+ * Bombers.
+ *
+ * A grant, and a narrow one: it adds the range-1 attack over water and changes nothing about
+ * ammunition, target class or the number of attacks a turn. See
+ * [org.osada.rules.UnitCapabilities.isTorpedoBomber].
+ */
+internal const val ATTR_EX_MASK_TORPEDO_BOMBER = 256
+
+/**
+ * OG's `Saboteur`, `SpecialEx` 62.2 (`attrEx` bit 18) — a pre-combat attempt to disable the
+ * defender outright, at the cost of one ammunition point. Wired 2026-08-27; **10 shipped records**
+ * carry it (Infantry 6, Fighter 3, Recon 1), the smallest population any wired ability has.
+ * See [org.osada.rules.Sabotage].
+ */
+internal const val ATTR_EX_MASK_SABOTEUR = 262144
+
+/**
+ * OG's `Cannot use dirt airfields` (`Special4` bit 2, `attr2` bit 2) — *"unit can't refuel nor
+ * deploy in airfields defined as dirt or built by sappers during the scenario"*. WIRED 2026-08-27,
+ * behind `RuleKey.BUILD_AND_REPAIR`, because that rule is what creates a sapper's strip in the
+ * first place. Jets and heavy bombers carry it. See [org.osada.rules.AirfieldQuality].
+ */
+
+internal const val ATTR2_MASK_NO_DIRT_AIRFIELDS = 4
+
+/**
+ * OG's `Rocket bomber` (`Special4` bit 3, `attr2` bit 3) — *"unit can attack ground units within
+ * full range"*, which `OG_ABILITY_AUDIT.md` §7.10 states more exactly as *"can attack ground units
+ * within its firing range using any hex types"*. WIRED 2026-08-27 as an exemption from §6.18's
+ * TERRAIN check and nothing else; 999 shipped records carry it. See
+ * [org.osada.rules.ExtendedLos].
+ */
+internal const val ATTR2_MASK_ROCKET_BOMBER = 8
+
+/**
+ * OG's `SingleFireSup.` (`SpecialEx` 61.7, `attrEx` bit 15) — *"one fire-support action per turn"*,
+ * a restriction on the SUPPORTING unit rather than on anything it supports. WIRED 2026-08-27; 166
+ * shipped records carry it. See [org.osada.rules.UnitCapabilities.supportsOnlyOncePerTurn].
+ */
+internal const val ATTR_EX_MASK_SINGLE_FIRE_SUP = 32768
 
 /**
  * OG's `Support Fire`, bit 12 — a **TOGGLE that reverses the class default**, not a grant.
@@ -349,6 +509,37 @@ fun EquipmentData.landsReadyFromTransport(): Boolean = attr and ATTR_MASK_MARINE
 internal const val ATTR_EX_MASK_CLEAR_MINES = 64
 
 /**
+ * OG's `Supply Unit`, `SpecialEx` bit 62.4 (`attrEx` bit 20) — a MOBILE DEPOT. A unit carrying it,
+ * or whose organic transport carries it, resupplies adjacent friendly formations on the Depot's
+ * terms rather than the field's. WIRED 2026-08-28; see [org.osada.rules.DepotSupply].
+ *
+ * **0 of 56,970 shipped records carry it**, which is why it stayed descriptive-only for so long.
+ * The rule exists now because its behaviour is documented in full and the bit is its own gate —
+ * content that authors it gets the mechanic; content that does not cannot notice.
+ */
+internal const val ATTR_EX_MASK_SUPPLY_UNIT = 1048576
+
+/**
+ * OG's `No Need Station` (`attrEx` bit 7) — the formation may entrain and detrain anywhere on
+ * rail, with no railroad station at either end. WIRED 2026-08-28; see
+ * [org.osada.rules.RailTransport].
+ *
+ * 11,003 shipped records carry it. It does nothing until a scenario gives its player a rail
+ * transport pool, which no shipped scenario does yet (`railtrans`).
+ */
+internal const val ATTR_EX_MASK_NO_NEED_STATION = 128
+
+/**
+ * OG's `Carrier Deploy` (`attr` bit 19) — *"permits deployment on carriers and dirt airfields"*.
+ * WIRED 2026-08-28; see [org.osada.rules.CarrierDeploy].
+ *
+ * It is a DEPLOYMENT permission, not a hangar: the aircraft may be placed onto a friendly carrier's
+ * hex during deployment, which it otherwise may not be. The dirt-airfield half waits on the per-hex
+ * dirt flag, which is still unlocated.
+ */
+internal const val ATTR_MASK_CARRIER_DEPLOY = 524288
+
+/**
  * OG's `AirDropMines`, `SpecialEx` bit 62.1 (`attrEx` bit 17) — an air unit's ability to lay mines
  * from the air. **Has a prerequisite OG enforces in its own UI**: greyed out unless the unit also
  * carries `Drop mines` (`attr` bit 0). See [org.osada.rules.MineAbilities.canDropMines].
@@ -426,51 +617,9 @@ fun Equipment.isBridge(eqid: Int): Boolean = (equipmentMap[eqid]?.attr?.and(ATTR
 fun Equipment.ignoresEntrenchment(eqid: Int): Boolean =
     (equipmentMap[eqid]?.attr?.and(ATTR_MASK_IGNORES_ENTRENCHMENT) ?: 0) != 0
 
-/**
- * OG's `Can't Buy`, inverted: whether this record may be bought at all.
- *
- * **Was reading the wrong bit** (`262144`, now known to be `Can't Naval Atk`) until the `attr` table
- * above was decoded. Corrected rather than deleted even though **nothing calls it today** — a
- * function named `isPurchasable` that silently answered "can it shoot at ships?" is a trap for the
- * next reader. Wiring it into the Purchase list is a separate decision (`DEFERRED.md` §7.32):
- * `Can't Buy` is set on a great many scenario-only records, so honouring it would visibly shrink
- * what the player may buy in every imported campaign.
- */
-fun Equipment.isPurchasable(eqid: Int): Boolean = (equipmentMap[eqid]?.attr?.and(ATTR_MASK_CANNOT_BUY) ?: 0) == 0
-
 /** OG's `NoSurrender`: the unit is never destroyed-as-surrendered for a retreat it cannot make.
  *  See the `attr` table above for how the bit was identified. */
 fun Equipment.hasNoSurrender(eqid: Int): Boolean = (equipmentMap[eqid]?.attr?.and(ATTR_MASK_NO_SURRENDER) ?: 0) != 0
-
-/**
- * A bare Ground Transport is never bought as a unit of its own. A transport is acquired by
- * ATTACHING it to a unit at purchase time (`eqUserSel.eqtransport`), which this does not affect --
- * only the "buy a Horse as your combat unit" case, which has no defensible reading: it cannot
- * attack, cannot capture, and exists solely to carry something.
- *
- * **This replaced an attr-bit gate on 2026-07-26 (user request).** The previous rule permitted a
- * transport whose `attr` had bit 262144 -- which DEFERRED.md §1.5/§1.7 then recorded as
- * "purchasable" -- with a per-country fallback for countries that never set the bit. That fallback
- * did NOT fire for every country: 29 of 289 `eqp-united` countries do set the bit on a transport,
- * and country 20 (USSR) flags only 4 of its 28, refusing the other 24.
- *
- * **262144 has since been identified, and it was never a purchasability bit: it is `Can't Naval
- * Atk`** -- see this file's own `attr` table above, and DEFERRED.md §7.32/§7.44. That explains every
- * number the old note called "suspect": only 1,060 of 46,978 records carry it (2.3%) with **zero
- * Tank and zero Anti-tank** (class 2 = 0/3,024, class 4 = 0/3,186), which is nonsense for
- * purchasability and exactly right for a naval-attack prohibition.
- *
- * Purchasability is bit 7, `Can't Buy`, inverted -- `Equipment.isPurchasable` reads it and currently
- * has no caller (DEFERRED.md §7.32 item 2c). **So the standing advice is unchanged but for a new
- * reason:** do not restore an attr-based gate *here*, because no attr bit describes what this
- * function decides. The flat class rule below is the rule.
- *
- * (This comment and the file header used to contradict each other -- the header naming the bit while
- * this block called it unidentified. DEFERRED.md §7.44 asked for them to be collapsed; done
- * 2026-07-28.)
- */
-fun Equipment.isPurchasableGroundTransport(eqid: Int): Boolean =
-    equipmentMap[eqid]?.uclass != org.osada.UnitClass.GROUND_TRANSPORT.value
 
 fun Equipment.canInitiateAttackOnUnitType(
     attackerEqid: Int,
@@ -506,20 +655,53 @@ private fun canAttackTargetType(
         org.osada.UnitType.SOFT.value -> attacker.attr.and(ATTR_MASK_CANNOT_ATTACK_SOFT) == 0
         org.osada.UnitType.HARD.value -> attacker.attr.and(ATTR_MASK_CANNOT_ATTACK_HARD) == 0
         org.osada.UnitType.AIR.value -> canAttackAirTarget(attacker)
+        org.osada.UnitType.SEA.value -> attacker.attr.and(ATTR_MASK_CANNOT_ATTACK_NAVAL) == 0
         else -> true
     }
 
-private fun canAttackAirTarget(attacker: EquipmentData): Boolean {
-    if (attacker.attr.and(ATTR_MASK_CANNOT_ATTACK_AIR) != 0) return false
+private fun canAttackAirTarget(attacker: EquipmentData): Boolean =
+    attacker.attr.and(ATTR_MASK_CANNOT_ATTACK_AIR) == 0 &&
+        (isDedicatedAntiAir(attacker) || attacker.attr.and(ATTR_MASK_CAN_AIR_ATK) != 0)
+
+/** The classes whose own definition includes engaging aircraft, so [ATTR_MASK_CAN_AIR_ATK] adds
+ *  nothing to them and its movement condition does not apply. */
+private fun isDedicatedAntiAir(attacker: EquipmentData): Boolean {
     val attackerClass = attacker.uclass
-    val isDedicatedAntiAir =
-        attackerClass == org.osada.UnitClass.AIR_DEFENCE.value ||
-            attackerClass == org.osada.UnitClass.FIGHTER.value ||
-            attackerClass == org.osada.UnitClass.LEVEL_BOMBER.value ||
-            attackerClass == org.osada.UnitClass.TACTICAL_BOMBER.value ||
-            attackerClass == org.osada.UnitClass.BATTLESHIP.value ||
-            attackerClass == org.osada.UnitClass.BATTLE_CRUISER.value ||
-            attackerClass == org.osada.UnitClass.LIGHT_CRUISER.value ||
-            attackerClass == org.osada.UnitClass.AIR_TRANSPORT.value
-    return isDedicatedAntiAir || attacker.attr.and(ATTR_MASK_CAN_AIR_ATK) != 0
+    return attackerClass == org.osada.UnitClass.AIR_DEFENCE.value ||
+        attackerClass == org.osada.UnitClass.FIGHTER.value ||
+        attackerClass == org.osada.UnitClass.LEVEL_BOMBER.value ||
+        attackerClass == org.osada.UnitClass.TACTICAL_BOMBER.value ||
+        attackerClass == org.osada.UnitClass.BATTLESHIP.value ||
+        attackerClass == org.osada.UnitClass.BATTLE_CRUISER.value ||
+        attackerClass == org.osada.UnitClass.LIGHT_CRUISER.value ||
+        attackerClass == org.osada.UnitClass.AIR_TRANSPORT.value
+}
+
+/**
+ * Whether this shot is one that OG's `CAN Air Atk` grants, and therefore one that OG allows only
+ * from a formation that **has not moved this turn**.
+ *
+ * OG states the ability as *"can attack air units, if it hasn't moved"* — one sentence with two
+ * halves, of which OSADA read only the first until 2026-08-27
+ * (`docs/og-fidelity-plan.md` §M.1's approximations table). The condition is attached to the GRANT,
+ * not to the target: a Fighter or an Air Defence gun engages aircraft because of what it is, moves
+ * and fires like any other unit, and is untouched here. Only a record that would be refused the
+ * shot but for this bit has to stand still to take it, which is the reading that cannot overstate
+ * the rule — the alternative would ground every interceptor in the game.
+ *
+ * 1,881 of the 56,970 merged records carry the bit and 1,824 of them are outside the dedicated
+ * anti-air classes, so it is the bit rather than the class that is deciding in almost every case.
+ *
+ * State lives in `rules/AttackEligibility.blockedByMovedAirGrant`, which is what asks this; a
+ * record on its own cannot know whether it has moved.
+ */
+fun Equipment.airAttackNeedsAStillAttacker(
+    attackerEqid: Int,
+    defenderEqid: Int,
+): Boolean {
+    val attacker = equipmentMap[attackerEqid]
+    return attacker != null &&
+        equipmentMap[defenderEqid]?.target == org.osada.UnitType.AIR.value &&
+        !isDedicatedAntiAir(attacker) &&
+        attacker.attr.and(ATTR_MASK_CAN_AIR_ATK) != 0
 }

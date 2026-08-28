@@ -42,6 +42,9 @@ internal object ScenarioHexParser {
         el.getAttribute("terrain")?.toIntOrNull()?.let { hex.terrain = it }
         el.getAttribute("road")?.toIntOrNull()?.let { hex.road = it }
         el.getAttribute("rail")?.toIntOrNull()?.let { hex.rail = it }
+        // OG's railroad station, recovered 2026-08-27 (`Hex.station`). Authored map data like
+        // `rail` beside it, so it is read unconditionally rather than behind a ruleset key.
+        el.getAttribute("station")?.toIntOrNull()?.let { hex.station = it != 0 }
         // Pre-placed land minefields, as a per-side bitmask (`1 shl side`). OG authors them in the
         // scenario binary's `byte6` -- bit 1 Axis, bit 2 Allied -- and 27 of the 502 scenarios OSADA
         // ships carry 320 mined hexes between them, every one of which was silently dropped on

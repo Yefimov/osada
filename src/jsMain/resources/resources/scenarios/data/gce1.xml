@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="gce1.xscn" name="Batalla por Madrid" turns="20, 21, 22" date="November 13, 1936" dayturns="0" ground="0" atmosferic="0" latitude="1" iconset="0" weatherchg="1" rows="39" cols="44" eqp="eqp-gce" image="resources/maps/images/map_804.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1">
+<map file="gce1.xscn" name="Batalla por Madrid" turns="20, 21, 22" date="November 13, 1936" dayturns="0" ground="0" atmosferic="0" latitude="1" iconset="0" weatherchg="1" rows="39" cols="44" eqp="eqp-gce" image="resources/maps/images/map_804.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0">
   <player id="0" country="226" side="1" airtrans="0" navaltrans="0" support="204,206,207,211" turnprestige="5, 5, 14, 5, 5, 34, 5, 5, 34, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5"/>
   <player id="1" country="225" side="0" airtrans="0" navaltrans="0" support="209,210,215,226" turnprestige="7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7"/>
   <reinforce turn="4">
@@ -130,7 +130,7 @@
   <hex row="3" col="30" terrain="1" name="Madrid">
     <unit id="47609" owner="0" flag="227" face="0" transport="47580" str="5"/>
   </hex>
-  <hex row="3" col="31" terrain="1" road="17" name="Madrid" owner="0" flag="226">
+  <hex row="3" col="31" terrain="1" road="17" name="Madrid" owner="0" flag="226" station="1">
     <unit id="47347" owner="0" flag="211" face="0" str="7"/>
   </hex>
   <hex row="3" col="32" terrain="1" name="Madrid"/>
@@ -403,7 +403,7 @@
   <hex row="10" col="22">
     <unit id="47612" owner="0" flag="227" face="0" str="4"/>
   </hex>
-  <hex row="10" col="23" terrain="1" road="33" name="Madrid"/>
+  <hex row="10" col="23" terrain="1" road="33" name="Madrid" station="1"/>
   <hex row="10" col="24" road="130"/>
   <hex row="10" col="26" terrain="4" road="130" name="Moncloa [Madrid]"/>
   <hex row="10" col="27" terrain="4" name="Moncloa [Madrid]" owner="0" flag="226" victory="0"/>
@@ -427,7 +427,7 @@
   <hex row="11" col="2" terrain="5" name="R.R."/>
   <hex row="11" col="3" terrain="5" name="R.R."/>
   <hex row="11" col="4" terrain="5" name="R.R."/>
-  <hex row="11" col="6" terrain="5" name="R.R."/>
+  <hex row="11" col="6" terrain="5" name="R.R." station="1"/>
   <hex row="11" col="7" road="40"/>
   <hex row="11" col="8" terrain="5" name="R.R."/>
   <hex row="11" col="10" terrain="5" name="R.R."/>
@@ -748,7 +748,7 @@
   <hex row="19" col="33" terrain="1" name="Madrid"/>
   <hex row="19" col="34" terrain="1" name="Madrid"/>
   <hex row="19" col="35" terrain="1" name="Madrid"/>
-  <hex row="19" col="36" terrain="1" road="144" name="Madrid" owner="0" flag="226" victory="0" deploy="0">
+  <hex row="19" col="36" terrain="1" road="144" name="Madrid" owner="0" flag="226" victory="0" deploy="0" station="1">
     <unit id="47283" owner="0" flag="207" face="0" transport="47288" exp="124"/>
   </hex>
   <hex row="19" col="37" terrain="5" name="R.R." deploy="0">
@@ -784,7 +784,7 @@
   </hex>
   <hex row="20" col="29" terrain="10" road="33" name="Rio Manzanares"/>
   <hex row="20" col="30" terrain="1" name="Madrid"/>
-  <hex row="20" col="31" terrain="1" name="Madrid">
+  <hex row="20" col="31" terrain="1" name="Madrid" station="1">
     <unit id="47540" owner="0" flag="227" face="0" str="3"/>
   </hex>
   <hex row="20" col="32" terrain="1" name="Madrid"/>
@@ -1340,7 +1340,7 @@
   <hex row="37" col="17" terrain="4" road="34"/>
   <hex row="37" col="18" terrain="4" road="34"/>
   <hex row="37" col="19" terrain="5" name="R.R."/>
-  <hex row="37" col="20" terrain="5" name="R.R."/>
+  <hex row="37" col="20" terrain="5" name="R.R." station="1"/>
   <hex row="37" col="21" terrain="4"/>
   <hex row="37" col="22" terrain="4"/>
   <hex row="37" col="23" terrain="4"/>

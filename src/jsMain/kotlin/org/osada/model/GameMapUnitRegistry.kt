@@ -25,6 +25,7 @@ fun GameMap.addUnit(unit: GameUnit) {
     if (unit.flag == -1) unit.flag = getPlayer(unit.owner).country + 1
     GameRules.setZOCRange(this, unit, true)
     GameRules.setSpotRange(this, unit, true)
+    rebuildSpottingForSightBlocker(unit)
 }
 
 fun GameMap.getUnits(): Array<GameUnit> = units.toTypedArray()
@@ -70,6 +71,9 @@ fun GameMap.updateUnitList() {
                 GameRules.setZOCRange(this, unit, false)
                 GameRules.setSpotRange(this, unit, false)
                 map?.getOrNull(pos.row)?.getOrNull(pos.col)?.delUnit(unit)
+                // A dead blocker stops blocking, and only a rebuild can give back the sight lines
+                // it was masking.
+                rebuildSpottingForSightBlocker(unit)
             }
             // `nodossier` means exactly what its name says: explicitly omit this unit. The old
             // inverted check recorded only omitted units, leaving normal campaign losses at zero.

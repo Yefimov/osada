@@ -40,11 +40,19 @@ enum class UnitActionId(
     /** OG 9.2's barrage. Unlike every other action here it needs a TARGET, so choosing it opens a
      *  targeting mode rather than doing something at once (`rules/Barrage`, added 2026-08-26). */
     BARRAGE("barrage"),
+
+    /** OG's railway transport. Like [BARRAGE] it needs a TARGET, so choosing it opens a
+     *  destination mode rather than doing something at once (`rules/RailTransport`, 2026-08-28). */
+    RAIL_MOVE("rail_move"),
     CLEAR_MINES("clear_mines"),
     BUILD_BRIDGE("build_bridge"),
     BUILD_FORTIFICATION("build_fortification"),
     BUILD_AIRFIELD("build_airfield"),
     BUILD_PORT("build_port"),
+
+    /** OG 9.3.6's railroad station — the fifth facility, added 2026-08-27 once the per-hex station
+     *  flag was located and the 915 authored ones imported (`rules/EngineeringWork.STATION`). */
+    BUILD_STATION("build_station"),
     REPAIR("repair"),
     DEMOLISH("demolish"),
     UNDO("undo"),
@@ -71,6 +79,9 @@ enum class ActionBlockReason {
 
     /** No free air/naval transport point left in the player's pool. */
     NO_TRANSPORT_AVAILABLE,
+
+    /** Railway: nowhere connected to reach -- no free boarding point along this track. */
+    NO_RAIL_DESTINATION,
 
     /** Not standing on the airfield/port the embarkation rule requires. */
     NOT_AT_TRANSPORT_FACILITY,
@@ -174,6 +185,17 @@ enum class ActionEffectKind {
     /** Boards naval transport. */
     EMBARK_NAVAL,
 
+    /**
+     * The formation's organic transport cannot fly and will be left on the airfield — OG's *"to be
+     * able to carry its organic transport into the air transport, the unit's organic transport must
+     * be also Airmobile/Airborne"*.
+     *
+     * Shown BEFORE the player commits, because the rule takes away something they bought and
+     * OSADA has nowhere to park it: `DEFERRED.md` §1.1's rule is that a mechanic with a cost must
+     * have a visible cause, and 5,264 of the 5,937 shipped ground transports cannot fly.
+     */
+    EMBARK_DROPS_TRANSPORT,
+
     /** Leaves the carrier onto an adjacent hex; `amount` is how many hexes qualify. */
     DISEMBARK,
 
@@ -224,6 +246,10 @@ enum class ActionEffectKind {
     /** Opens the Barrage targeting mode; `amount` is how many hexes are currently shellable, so the
      *  chip can say "no unseen hex in range" before the player enters a mode with nothing in it. */
     OPEN_BARRAGE_TARGETING,
+
+    /** Opens the railway destination mode; `amount` is how many stations are reachable along
+     *  connected track, `detail` how many rail transport points the player has left. */
+    OPEN_RAIL_DESTINATIONS,
 
     /** Attempts to clear the minefield here; `amount` is the percentage chance of success. */
     CLEAR_MINEFIELD,

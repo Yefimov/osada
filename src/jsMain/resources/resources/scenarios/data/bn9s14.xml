@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="bn9s14.xscn" name="Zhitomir-Berdichev Offensive" turns="9, 12, 18" date="December 27, 1943" dayturns="0" ground="1" atmosferic="0" latitude="3" iconset="1" weatherchg="0" rows="32" cols="31" eqp="eqp-lxf" image="resources/maps/images/map_234.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1">
+<map file="bn9s14.xscn" name="Zhitomir-Berdichev Offensive" turns="9, 12, 18" date="December 27, 1943" dayturns="0" ground="1" atmosferic="0" latitude="3" iconset="1" weatherchg="0" rows="32" cols="31" eqp="eqp-lxf" image="resources/maps/images/map_234.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="1" portsnonavaldeploy="1">
   <player id="0" country="19" side="1" airtrans="0" navaltrans="0" support="20,48,0,0" turnprestige="0, 460, 460, 460, 460, 460, 460, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <player id="1" country="7" side="0" airtrans="0" navaltrans="0" support="8,18,360,0" turnprestige="0, 230, 230, 230, 230, 230, 230, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="2">
@@ -135,7 +135,7 @@
   <hex row="3" col="4">
     <unit id="8989" owner="1" flag="8" face="0" exp="72" str="6"/>
   </hex>
-  <hex row="3" col="5" owner="1" flag="7">
+  <hex row="3" col="5" owner="1" flag="7" station="1">
     <unit id="8603" owner="1" flag="8" face="0" exp="7" str="8"/>
   </hex>
   <hex row="3" col="6" road="144">
@@ -353,7 +353,7 @@
   <hex row="9" col="6" terrain="10" name="Teterev river"/>
   <hex row="9" col="7" terrain="10" name="Teterev river"/>
   <hex row="9" col="8" terrain="1" road="154" name="Zhitomir"/>
-  <hex row="9" col="9" terrain="1" road="171" name="Zhitomir" owner="1" flag="7" victory="1">
+  <hex row="9" col="9" terrain="1" road="171" name="Zhitomir" owner="1" flag="7" victory="1" station="1">
     <unit id="7909" owner="1" flag="8" face="0" exp="242" str="8"/>
   </hex>
   <hex row="9" col="10" road="162"/>
@@ -549,7 +549,7 @@
   <hex row="15" col="1" terrain="3"/>
   <hex row="15" col="3" terrain="3" road="18"/>
   <hex row="15" col="4" road="34"/>
-  <hex row="15" col="6" owner="1" flag="7">
+  <hex row="15" col="6" owner="1" flag="7" station="1">
     <unit id="8152" owner="1" flag="8" face="0" transport="9878" exp="205" str="6"/>
   </hex>
   <hex row="15" col="8" terrain="3"/>
@@ -710,7 +710,7 @@
   <hex row="21" col="15">
     <unit id="7983" owner="1" flag="8" face="0" transport="9878" exp="250" str="6"/>
   </hex>
-  <hex row="21" col="16" road="19" owner="1" flag="7" victory="1">
+  <hex row="21" col="16" road="19" owner="1" flag="7" victory="1" station="1">
     <unit id="7909" owner="1" flag="8" face="0" exp="182" str="9"/>
   </hex>
   <hex row="21" col="18" road="130"/>
@@ -767,7 +767,7 @@
   <hex row="23" col="5">
     <unit id="10295" owner="1" flag="8" face="0" exp="83" str="4"/>
   </hex>
-  <hex row="23" col="6" owner="1" flag="7">
+  <hex row="23" col="6" owner="1" flag="7" station="1">
     <unit id="8251" owner="1" flag="8" face="0" transport="9830" exp="70" str="9"/>
   </hex>
   <hex row="23" col="8" terrain="3"/>
@@ -826,7 +826,7 @@
   <hex row="26" col="25">
     <unit id="55725" owner="1" flag="360" face="0" exp="197" str="8"/>
   </hex>
-  <hex row="26" col="26" owner="1" flag="7">
+  <hex row="26" col="26" owner="1" flag="7" station="1">
     <unit id="9060" owner="1" flag="8" face="0" transport="9838" exp="51" str="6"/>
   </hex>
   <hex row="26" col="29" terrain="3"/>
@@ -860,7 +860,7 @@
   <hex row="29" col="2" terrain="10"/>
   <hex row="29" col="3" terrain="3"/>
   <hex row="29" col="6" road="17"/>
-  <hex row="29" col="7" terrain="1" name="Berdichev" owner="1" flag="7" victory="1">
+  <hex row="29" col="7" terrain="1" name="Berdichev" owner="1" flag="7" victory="1" station="1">
     <unit id="7976" owner="1" flag="8" face="0" exp="231" str="9"/>
   </hex>
   <hex row="29" col="9">

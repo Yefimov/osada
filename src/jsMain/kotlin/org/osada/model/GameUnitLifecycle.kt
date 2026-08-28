@@ -101,6 +101,16 @@ fun GameUnit.unitEndTurn(spotSide: Int) {
     hasResupplied = false
     isSurprised = false
     hasInterceptedThisTurn = false
+    hasSupportedThisTurn = false
+    // OG's `Saboteur` costs its victim the NEXT move and the NEXT attack, so the state is spent at
+    // the turn boundary that would have restored them: the unit wakes up with neither and is no
+    // longer sabotaged afterwards (`rules/Sabotage`).
+    if (sabotaged) {
+        sabotaged = false
+        hasMoved = true
+        hasFired = true
+        moveLeft = 0
+    }
     shotsThisTurn = 0
     // Suppression clears once per ROUND (`GameMap.endTurn` drives this for every unit at the wrap
     // back to player 0), except for points inflicted by a `Shock Tactics` commander: those survive

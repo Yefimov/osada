@@ -2,7 +2,7 @@
 var campaignlist =
 [
  {
-  "desc": "From the barricades of Republican Spain to the frozen frontier at Lake Khasan, the armoured encirclement at Khalkhin Gol, the life-or-death struggle against Nazi invasion, and the final thunder of the Manchurian Offensive, this campaign follows the Red Army through a decade of transformation. Learn to command tanks, artillery, infantry, and aircraft as an experimental interwar force becomes the vast combined-arms machine that carried the war from the Soviet border to Berlin and then turned east against the Kwantung Army. Every theatre demands a different answer: internationalism in Spain, manoeuvre in Mongolia, endurance in 1941, deep operations in Europe, and speed across Manchuria.",
+  "desc": "From the barricades of Republican Spain to the frozen frontier at Lake Khasan, the armoured encirclement at Khalkhin Gol, the life-or-death struggle against Nazi invasion, and the final thunder of the Manchurian Offensive, this campaign follows the Red Army through a decade of transformation. Learn to command tanks, artillery, infantry, and aircraft as an experimental interwar force becomes the vast combined-arms machine that carried the war from the Soviet border to Berlin and then turned east against the Kwantung Army. Every theatre demands a different answer: internationalism in Spain, manoeuvre in Mongolia, endurance in 1941, deep operations in Europe, and speed across Manchuria. Story Mode compresses these campaigns into the long career of one unnamed commander and four recurring fictional composite staff officers; historical people and events remain distinct from that narrative frame.",
   "eqp": "eqp-lxf",
   "file": "camp6bn9.json",
   "flag": 19,

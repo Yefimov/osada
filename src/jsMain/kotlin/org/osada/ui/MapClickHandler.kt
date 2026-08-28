@@ -1,6 +1,5 @@
 package org.osada.ui
 
-import org.osada.TerrainType
 import org.osada.model.Cell
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
@@ -8,9 +7,9 @@ import org.osada.model.Hex
 import org.osada.model.canDeployOnTerrain
 import org.osada.model.delCurrentUnit
 import org.osada.model.getActiveLayerTarget
-import org.osada.model.getPlayer
 import org.osada.model.inactiveLayerEnemy
 import org.osada.model.isInDeployZone
+import org.osada.model.isOutOfZoneDeployTarget
 import org.osada.rules.AttackEligibility
 import org.osada.rules.GameRules
 import org.osada.rules.isAir
@@ -91,7 +90,16 @@ internal class MapClickHandler(
                 isValidDeployTarget(hex, map, map.currentPlayer?.side ?: 0)
 
         logIfEnemyUnattackable(map, hex, currentUnit, unit)
-        if (uiSettings.barrageMode) return resolveBarrageClick(map, cell, hex)
+        // Both targeting modes swallow the click: an offered hex acts, anything else closes the
+        // mode. Folded into one return so the guard stays inside detekt's budget as modes are
+        // added -- a third would otherwise cost another one.
+        if (uiSettings.barrageMode || uiSettings.railMode) {
+            return if (uiSettings.barrageMode) {
+                resolveBarrageClick(map, cell, hex)
+            } else {
+                resolveRailClick(map, cell, hex)
+            }
+        }
         return when {
             currentUnit != null && hex.isAttackSel && !currentUnit.hasFired ->
                 tryAttackAt(cell.row, cell.col)
@@ -123,7 +131,16 @@ internal class MapClickHandler(
         currentPlayerSide: Int,
     ): Boolean {
         val currentUnit = map.currentUnit
-        if (uiSettings.barrageMode) return resolveBarrageClick(map, cell, hex)
+        // Both targeting modes swallow the click: an offered hex acts, anything else closes the
+        // mode. Folded into one return so the guard stays inside detekt's budget as modes are
+        // added -- a third would otherwise cost another one.
+        if (uiSettings.barrageMode || uiSettings.railMode) {
+            return if (uiSettings.barrageMode) {
+                resolveBarrageClick(map, cell, hex)
+            } else {
+                resolveRailClick(map, cell, hex)
+            }
+        }
         return when {
             // Movement must win over deployment. In particular, aircraft may occupy the air layer
             // above a hex containing an enemy ground unit.
@@ -175,12 +192,13 @@ internal class MapClickHandler(
         // falls back to player 0, so an unowned/-1 airfield must be excluded explicitly
         // or it silently read as "belongs to player 0"), and this clause never checked it
         // at all: any airfield anywhere, including the enemy's, was a legal deploy target.
-        val onFriendlyAirfield =
-            hex.terrain == TerrainType.AIRFIELD.value &&
-                selectedDeployUnitIsAir() &&
-                hex.owner != -1 &&
-                map.getPlayer(hex.owner).side == currentPlayerSide
-        return onDeploymentHex || onFriendlyAirfield
+        // The friendly-airfield exception, and OG's `Carrier Deploy`, both live on the map so the
+        // deploy HIGHLIGHT reads the identical rule (`GameMap.isOutOfZoneDeployTarget`).
+        val outOfZone =
+            DeploymentSelection.selectedUnit(ui)?.let {
+                map.isOutOfZoneDeployTarget(it, pos.row, pos.col)
+            } == true
+        return onDeploymentHex || outOfZone
     }
 
     private fun selectOtherUnit(
@@ -256,10 +274,6 @@ internal class MapClickHandler(
         ui.uiUnitAttack(currentUnit, target)
         return true
     }
-
-    /** True if the unit currently picked in the deploy/equipment window is an air unit (so it may
-     *  be placed on an airfield outside the deploy zone). */
-    private fun selectedDeployUnitIsAir(): Boolean = DeploymentSelection.selectedUnit(ui)?.let(GameRules::isAir) == true
 }
 
 /**

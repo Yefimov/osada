@@ -103,6 +103,42 @@ class Hex(
     var blownRoad: Int = 0
 
     /**
+     * Whether the airfield on this hex was BUILT here rather than being part of the map
+     * (OG manual §7.2, `Cannot use dirt airfields`: *"unit can't refuel nor deploy in airfields
+     * defined as dirt or built by sappers during the scenario"*).
+     *
+     * It exists because that ability needs the airfield's ORIGIN and nothing else recorded it: the
+     * construction fields above are cleared the moment the work finishes, and `terrain ==
+     * AIRFIELD` cannot tell a sapper's strip from a permanent field. Written once by
+     * `Engineering`, read by `MovementRules.hasAirfield`.
+     *
+     * **The "defined as dirt" half of OG's sentence is NOT this flag**, and is not imported: no
+     * per-hex dirt marking has been located in the `.xscn`/`.map` binaries, so a map's own dirt
+     * strips are indistinguishable from its permanent ones here. What is built is the half the
+     * data supports; see `rules/AirfieldQuality`.
+     *
+     * Inert and serializes to nothing unless `build_and_repair` is on — nothing else can set it.
+     */
+    var sapperBuilt: Boolean = false
+
+    /**
+     * Whether this hex carries a **railroad station** (OG manual §9.3.6, and §6.12's rail
+     * transport: *"the unit must be in a station hex"*).
+     *
+     * **Authored data, recovered 2026-08-27** — 915 stations across 143 of the 502 deployed
+     * scenarios, imported by `tools/og-import/add_stations.py` from `.xscn` grid byte @13 bit 5.
+     * That bit had never been located; OpenSuite's own map report counts stations as a per-hex
+     * feature, which gave the correlation an oracle to check against. See `xscn.py` for the decode
+     * and `docs/og-fidelity-plan.md` §U for the evidence.
+     *
+     * Unlike [sapperBuilt] this is NOT inert without a ruleset key: it is part of the map as the
+     * author drew it, exactly as [rail] is, and it is loaded and saved whether or not any rule
+     * reads it. `rules/EngineeringWork.STATION` is the rule that does — OG 9.3.6's construction,
+     * which has to know which rail hexes already have one.
+     */
+    var station: Boolean = false
+
+    /**
      * Whether what stood on this hex has been shelled into wreckage (OG 9.2, `rules/Barrage`).
      *
      * **A state of a DESTROYED facility or road, not a crater on open ground.** Open General School
@@ -181,6 +217,11 @@ class Hex(
     /** Set while the Barrage targeting mode is open and this hex is one the selected formation may
      *  shell (OG 9.2). Cleared with the rest of the selection overlay. */
     var isBarrageSel: Boolean = false
+
+    /** A railway destination currently offered to the selected formation (`rules/RailTransport`).
+     *  Painted and cleared exactly like [isBarrageSel] -- a transient selection overlay, never
+     *  saved. */
+    var isRailSel: Boolean = false
 
     private val zoc: IntArray = IntArray(2)
     private val spotted: IntArray = IntArray(2)

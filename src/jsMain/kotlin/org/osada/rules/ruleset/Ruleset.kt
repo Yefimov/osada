@@ -32,8 +32,8 @@ package org.osada.rules.ruleset
  * [RuleKey.INSTALLATION_SPOTTING] and [RuleKey.GROUND_AUTO_SUPPLY] (`docs/og-fidelity-plan.md` B.3,
  * B.6, B.4, B.5 and A.3 item 2) -- the last five rules that document names. Additive on the same
  * terms as schema 4, and every one of the five again defaults to what OSADA already ran. This is
- * also the schema the third built-in profile ([RulesetProfile.OG_FIDELITY_ID]) is written against;
- * see [RulesetDefaults.OG_FIDELITY].
+ * The built-in profiles are Author's Vision and OSADA Default; the third, Open General Fidelity,
+ * was retired 2026-08-28 (`docs/og-fidelity-plan.md` §AC).
  *
  * 6 (2026-08-25) added [RuleKey.COUNTERBATTERY], [RuleKey.EXTENDED_LOS],
  * [RuleKey.BUILD_AND_REPAIR] and [RuleKey.EQUIPMENT_TOGGLES] -- three of the five Open General
@@ -50,10 +50,34 @@ package org.osada.rules.ruleset
  * mechanic does not exist; it is named in the profile's own gap list instead.
  *
  * 8 (2026-08-26) added [RuleKey.CRATERS] -- the first key in this enum that is NOT an Open General
- * rule, and it is off in [RulesetProfile.OG_FIDELITY_ID] deliberately and permanently. See its own
- * documentation for why a house rule is allowed a key at all.
+ * rule. See its own documentation for why a house rule is allowed a key at all.
+ *
+ * 9 (2026-08-27) added [RuleKey.EXTENDED_NAVAL] -- OG 9.6, and by shipped content the largest gap
+ * this project had: 238 of the 457 scenarios whose source is readable author it. One key for all
+ * four of the manual's bullets, because OG itself has one switch for them. Additive and defaulted
+ * off, on the same terms as every schema since 4 -- but note that two of its four bullets take
+ * shots AWAY, which is exactly why it is behind a key rather than universal.
+ *
+ * 10 (2026-08-27) added [RuleKey.AIR_ZOC] -- OG 6.30's own word *"usually"*, and the shortest rule
+ * in this enum. The option has been imported since section O and read by nothing; 79 of the 457
+ * readable scenarios author it. Additive and defaulted off, on the same terms.
+ *
+ * 11 (2026-08-28) added [RuleKey.NAVAL_CRITICAL_HITS] -- `critical_hit`, a complete OG combat
+ * formula that **`eqp-lxf` has been setting to 2 all along** and nothing read
+ * (`docs/og-fidelity-plan.md` §AA.6). It is the first key in this enum found by reading an efile
+ * key nobody had looked up rather than by working through the manual, and it is behind a key rather
+ * than universal for one reason: it SINKS ships outright, so honouring LXF's own value silently
+ * would rewrite every naval battle in the campaigns built on it. Additive and defaulted off.
+ *
+ * 12 (2026-08-28) added [RuleKey.DEPOT_SUPPLY], [RuleKey.RAIL_TRANSPORT] and
+ * [RuleKey.CARRIER_DEPLOY] -- the three mechanics §AA built with no key at all, because each was
+ * already gated by content that no shipped scenario carries. **That was the wrong reason to skip a
+ * key**: the owner's rule is that anything the port can do belongs in the Rules window so a player
+ * can choose it, not only where the shipped content happens to ask. All three are additive and
+ * defaulted off, and each keeps its content gate on top -- turning one on cannot invent a Depot,
+ * a rail pool or a carrier that the scenario does not have.
  */
-const val RULESET_SCHEMA_VERSION = 8
+const val RULESET_SCHEMA_VERSION = 12
 
 /**
  * One configurable rule.
@@ -328,6 +352,111 @@ enum class RuleKey(
     BARRAGE("barrage", null, 0, 1),
 
     /**
+     * OG's `critical_hit`: a naval shot that sinks its target outright. **Schema 11.**
+     *
+     * > *"0 to disable, 1.. factor N in formula. Chance for critical hit.*
+     * > *C(firing) = ( NA(Firing) * (1+bars(Firing)) * SP(Firing) * N - D(Fired) * (1+Bars(Fired)) *
+     * > SP(Fired) * N ) / 30*
+     * > *NA(Firing) is naval attack of unit firing. SP(Firing/Fired) is unit strength at start of
+     * > combat. D(Fired) is GD or AD depending unit firing is Air/Gnd. Submarines always add 10%
+     * > when firing (either attacking or defending). If C(firing) > 75 then C(firing)=75. If
+     * > C(Firing) < Dice(1,100) then critical hit, fired unit is sunk"*
+     * > — `EFILE_NOKORP/equip.cfg` and `OPENTXT_SAMPLE/equip.cfg`, identically
+     *
+     * **`eqp-lxf` sets `critical_hit = 2`.** It is the efile behind more shipped campaigns than any
+     * other with an `equip.cfg`, and this formula has never run. That is why the key exists: the
+     * mechanic is the author's, the factor is the efile's, and only the decision to let it loose on
+     * an existing campaign is OSADA's.
+     *
+     * Off by default, which is a description of the shipped game rather than a judgement. A player
+     * who wants it turns it on in a custom ruleset, and the efile's own factor then applies. Call
+     * site: `rules/CriticalHit`.
+     *
+     * **`efileKey` is deliberately null**, on [AIR_ZOC]'s precedent: this switch does not carry the
+     * value, it says *"honour the value the efile already wrote"*. `critical_hit` is a FACTOR
+     * (`1..N`), not a flag, and folding a factor into a 0/1 key would either discard `eqp-lxf`'s
+     * chosen 2 or hard-code it into a profile that is meant to work for every efile.
+     */
+    NAVAL_CRITICAL_HITS("naval_critical_hits", null, 0, 1),
+
+    /**
+     * OG's Depot supply — `supply_ex`, and the `Supply Unit` equipment special that marks a mobile
+     * one. **Schema 12.**
+     *
+     * A Depot resupplies ADJACENT friendly land and naval formations on terms the field does not
+     * offer: the terrain supply factor does not apply, enemy ZOC does not reduce it, and neither
+     * party is disqualified by having moved or fired. `rules/DepotSupply` builds all four
+     * `supply_ex` modes, including the one-ammo-per-turn cost and depot-to-depot supply.
+     *
+     * **Two content gates survive this key.** No shipped efile sets `supply_ex` and no shipped
+     * record carries `Supply Unit`, so switching it on changes nothing until content authors one —
+     * which is exactly right: the key says "run the mechanic", not "invent a depot".
+     */
+    DEPOT_SUPPLY("depot_supply", null, 0, 1),
+
+    /**
+     * OG's railway transport, and with it the `No Need Station` equipment special. **Schema 12.**
+     *
+     * A ground formation standing on a boarding point may be railed along connected track to
+     * another one, spending a point of its player's `railtrans` pool. A station is needed at both
+     * ends unless the formation carries `No Need Station`, which 11,003 records do
+     * (`rules/RailTransport`).
+     *
+     * **The content gate survives this key**: a player whose scenario has no rail pool sees no
+     * chip, because there is no train to board. Turning it on cannot create one.
+     */
+    RAIL_TRANSPORT("rail_transport", null, 0, 1),
+
+    /**
+     * OG's `Carrier Deploy` — *"permits deployment on carriers and dirt airfields"*. **Schema 12.**
+     *
+     * An aircraft carrying the attribute may be placed onto a friendly carrier during deployment,
+     * which it otherwise may not be because a ship at sea is never in a deploy zone
+     * (`rules/CarrierDeploy`). Purely additive: no hex that was already a legal target stops being
+     * one, and 322 of 56,970 records carry the bit.
+     */
+    CARRIER_DEPLOY("carrier_deploy", null, 0, 1),
+
+    /**
+     * OG 9.6: the four extended naval rules, as one switch. 0 = off (OSADA today), 1 = `og`.
+     * **Schema 9**, and the fifth of section 9's optional rules to be built.
+     *
+     * > *"Ships return fire to artillery and forts. Ships can only attack submarines at range 1.
+     * > Destroyers can escort naval transports against submarine attacks, just like fighters escort
+     * > bombers. Submarines need direct LOF to attack."*
+     *
+     * **One key rather than four**, which `docs/og-fidelity-plan.md` section C called correctly
+     * from the start: OG treats them as one coherent optional set and the scenario bitfield carries
+     * a single `extnaval` bit, so four keys would invent a granularity no author can express.
+     *
+     * **The largest single gap by content this project had.** 238 of the 457 scenarios whose source
+     * is readable author it (`Scenario.extendedNaval`, imported with the rest of the option
+     * bitfield in section O) and until schema 9 no rule read the switch at all.
+     *
+     * Off by default for a stronger reason than the other section-9 keys: two of its four bullets
+     * are RESTRICTIONS. 4,129 of the 4,990 shipped ship records have a gun range above one and
+     * would lose every long shot at a submarine. Call site: `rules/ExtendedNaval`.
+     */
+    EXTENDED_NAVAL("extended_naval", null, 0, 1),
+
+    /**
+     * OG 6.30's air exemption, made conditional: whether aircraft project a zone of control.
+     * 0 = off (OSADA today, and OG's own default), 1 = `og_scenario`. **Schema 10.**
+     *
+     * > *"The six hexes around a unit are its zone of control... Air units USUALLY don't have a
+     * > zone of control."*
+     *
+     * That one word is a scenario option, authored by 79 of the 457 scenarios whose source is
+     * readable. It is the sharpest of the systems the fidelity profile named to the player as
+     * missing, because unlike the others the switch WAS imported and simply had no reader.
+     *
+     * Not one of section 9's optional rules -- it is a section 6 core rule with an authored
+     * exception -- so it does not change the count of those. Call site:
+     * `UnitCapabilities.projectsZoneOfControl`, through `rules/AirZoneOfControl`.
+     */
+    AIR_ZOC("air_zoc", null, 0, 1),
+
+    /**
      * **Shell craters — an OSADA rule, not an Open General one.** 0 = off, 1 = on. Schema 8.
      *
      * A barrage that lands on open ground (clear, snow or sand) with nothing to wreck digs craters
@@ -399,10 +528,11 @@ enum class RuleProvenance {
     /** OSADA's own baseline, including the legacy preference `stalin_regime` is seeded from. */
     OSADA_DEFAULT,
 
-    /** The Open General Fidelity profile names this rule explicitly ([RulesetDefaults.OG_FIDELITY]).
-     *  Distinct from [CUSTOM_OVERRIDE] so the window can say which OG rule the player actually
-     *  bought into, and distinct from [EFILE_EXPLICIT] because the content did not ask for it. */
-    OG_FIDELITY,
+    /** Author's Vision defers to the SCENARIO's own authored switch for this rule, so the master
+     *  key is on and the scenario decides. Distinct from [EFILE_EXPLICIT] because the opinion is
+     *  the scenario's rather than the efile's, and from [OSADA_DEFAULT] because OSADA is not the
+     *  one choosing (`RulesetResolver.SCENARIO_AUTHORED`). */
+    SCENARIO_AUTHORED,
 
     /** A custom profile asked for this value. */
     CUSTOM_OVERRIDE,
@@ -454,7 +584,6 @@ data class RulesetProfile(
     companion object {
         const val AUTHORS_VISION_ID = "authors-vision"
         const val OSADA_DEFAULT_ID = "osada-default"
-        const val OG_FIDELITY_ID = "og-fidelity"
     }
 }
 
@@ -464,20 +593,6 @@ enum class RulesetSource {
 
     /** OSADA's single documented baseline, identical for every content. */
     OSADA_DEFAULT,
-
-    /**
-     * Every Open General rule OSADA has built, on at once ([RulesetDefaults.OG_FIDELITY]).
-     *
-     * A third built-in amends this document's 1 rather than adding a catalogue row, which is why
-     * it is a source of its own rather than a pre-seeded CUSTOM profile: a saved battle must be
-     * able to say *which* ruleset it ran under after the local profile library has been edited,
-     * and only the source enum survives that (`docs/og-fidelity-plan.md` D.3).
-     *
-     * Deliberately kept AFTER [OSADA_DEFAULT] here: the enum's own order is not the picker's, but
-     * appending rather than inserting keeps every previously serialized `source` name reading back
-     * as the same member.
-     */
-    OG_FIDELITY,
 
     /** A named profile the player saved. */
     CUSTOM,
@@ -564,77 +679,25 @@ object RulesetDefaults {
             // Schema 7. Off for the same reason the schema-6 three are: OSADA does not shell
             // unseen hexes today, so off is a description of the shipped game.
             RuleKey.BARRAGE to 0,
+            // Schema 12. Off is a description of the game before 2026-08-28: OSADA had no Depot
+            // supply, no railway and no carrier deployment. Each keeps its own content gate on top,
+            // so ON is a permission rather than an injection.
+            RuleKey.DEPOT_SUPPLY to 0,
+            RuleKey.RAIL_TRANSPORT to 0,
+            RuleKey.CARRIER_DEPLOY to 0,
+            // Schema 11. `eqp-lxf` sets `critical_hit = 2`, so this is the one key whose OFF is a
+            // divergence from a shipped efile's own instruction -- taken deliberately, because the
+            // rule sinks ships outright and no existing campaign was balanced with it running.
+            RuleKey.NAVAL_CRITICAL_HITS to 0,
             // OSADA's own rule (schema 8), off until a player asks for it.
             RuleKey.CRATERS to 0,
+            // Schema 9. Off on the section-9 terms, and additionally because two of its four
+            // bullets refuse shots the shipped scenarios currently allow.
+            RuleKey.EXTENDED_NAVAL to 0,
+            // Schema 10. Off is OG's OWN default here, not merely OSADA's: §6.30 says air units
+            // "usually" have no zone of control, and the option is the exception.
+            RuleKey.AIR_ZOC to 0,
             // Class defaults, which is what every shipped scenario has always run on.
             RuleKey.EQUIPMENT_TOGGLES to 0,
-        )
-
-    /**
-     * **Open General Fidelity** (`docs/og-fidelity-plan.md` D.1/D.2).
-     *
-     * The third built-in, and the only profile in which every Open General rule OSADA has actually
-     * built is on at once.
-     *
-     * **Shipped without the "partial" qualifier D.2 called for, and that is D.2's own test, not a
-     * relaxation of it.** That section says to drop the word once its groups 1 and 2 are done --
-     * move/fire ordering, snow fuel, aircraft fuel and dry-unit penalties, then spotting persistence
-     * and installation spotting -- and explicitly refuses to let rail, aviation and naval extensions
-     * "hold the label hostage" because they are scenario-specific. All six of those rules exist as of
-     * schema 5, so the qualifier goes. What does NOT go is the disclaimer: the picker still lists
-     * every system this profile does not reproduce (`ui/RulesWindow.refreshGaps`), because a
-     * fidelity claim that never says where it stops is the unverifiable claim that plan's §0.2
-     * forbids. Written as a complete table rather than as an overlay of differences,
-     * for the same reason [OSADA] is: a reader must be able to see what the profile executes
-     * without holding a second table in their head.
-     *
-     * **The three content keys are deliberately absent.** `aa_intercept_mode`, `flak_range` and
-     * `attachments` name an `equip.cfg` value, and naming them here would flatten a content value
-     * this profile has no opinion about -- exactly the `flak_range = 4` failure
-     * `docs/design/ruleset-profiles.md` 2 forbids. An absent key keeps following the content, which
-     * for these three IS the Open General answer.
-     *
-     * `stalin_regime` is absent for a different reason: it is an OSADA rule with no OG counterpart,
-     * so a profile claiming fidelity must not have an opinion on it in either direction.
-     */
-    val OG_FIDELITY: Map<RuleKey, Int> =
-        mapOf(
-            // OSADA runs each efile's own terrain factors, which is what OG does.
-            RuleKey.SUPPLY_MODEL to 1,
-            // OG's own weather rules, all four (`tools/og-import/DEFERRED.md` 7.45).
-            RuleKey.WEATHER_GROUNDS_AIRCRAFT to 1,
-            RuleKey.WEATHER_HALVES_AIR_GROUND to 1,
-            RuleKey.WEATHER_DEFENSE_BONUS to 1,
-            RuleKey.WEATHER_HALVES_SPOTTING to 1,
-            // "As authored": `weatherchg` is the scenario author's own opinion and OG honours it.
-            RuleKey.GROUND_FOLLOWS_WEATHER to 1,
-            // OSADA's INFERENCE, not a quoted rule -- OG says "several continuous turns" and never
-            // says how many. Named here so the profile is complete, not because OG states 3.
-            RuleKey.GROUND_CHANGE_TURNS to 3,
-            // OG 6.19: "Using replacements preserve the unit's experience and leaders."
-            RuleKey.REPLACEMENT_EXPERIENCE to 0,
-            // Every rule sections A-C of the fidelity plan actually built.
-            RuleKey.HEAVY_MOVE_FIRE to 1,
-            RuleKey.SNOW_FUEL to 1,
-            RuleKey.SUPPORT_FIRE_FALLOFF to 1,
-            RuleKey.DRY_UNIT_PENALTIES to 1,
-            RuleKey.MINEFIELDS to 1,
-            RuleKey.AIR_FUEL to 1,
-            RuleKey.INITIATIVE_MODEL to 1,
-            RuleKey.SPOTTING_MEMORY to 1,
-            RuleKey.INSTALLATION_SPOTTING to 1,
-            RuleKey.GROUND_AUTO_SUPPLY to 1,
-            // Section 9's optional rules, schema 6. On here for the same reason `minefields` is:
-            // Open General ships them, the efiles OSADA imports configure them, and this is the
-            // one profile whose whole claim is that it runs OG's rules.
-            RuleKey.COUNTERBATTERY to 1,
-            RuleKey.EXTENDED_LOS to 1,
-            RuleKey.BUILD_AND_REPAIR to 1,
-            // Schema 7: OG 9.2, on for the same reason the other three section-9 rules are.
-            RuleKey.BARRAGE to 1,
-            // NOT OG's: craters are an OSADA invention and must never be on in this profile.
-            RuleKey.CRATERS to 0,
-            // OG reads these two off the record, not off the class.
-            RuleKey.EQUIPMENT_TOGGLES to 1,
         )
 }

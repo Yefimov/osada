@@ -268,8 +268,9 @@ class MinefieldsTest {
 
         assertTrue(result.hitMinefield)
         assertTrue(result.minefieldWasHidden)
-        assertEquals(Minefields.UNDETECTED_MINE_DAMAGE, result.minefieldLosses)
-        assertEquals(before - Minefields.UNDETECTED_MINE_DAMAGE, mover.strength)
+        // A green, non-engineer formation takes OG's documented maximum.
+        assertEquals(Minefields.MAX_UNDETECTED_MINE_DAMAGE, result.minefieldLosses)
+        assertEquals(before - Minefields.MAX_UNDETECTED_MINE_DAMAGE, mover.strength)
         assertTrue(Minefields.isDetectedBy(mined, 0), "walking into it reveals it in the same instant")
         assertEquals(0, mover.moveLeft, "and consumes all remaining movement")
     }

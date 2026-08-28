@@ -29,10 +29,8 @@ import org.osada.rules.UnitConditionPenalties
  * Every description below is quoted or closely paraphrased from `Manual_OG-en.pdf` §7.2 ("Unit
  * abilities") via `tmp/pdfs/og-comparison/manual.txt`'s extraction, not guessed from the bit's
  * label — `OG_ABILITY_AUDIT.md` §1's standing warning against inventing a mechanic from a name
- * applies here as much as it does to engine code. Left out entirely: `Air Transportable` (redundant
- * with the already-surfaced `embark` field), the pure authoring/administrative bits (`Can't Buy`,
- * `No AI buy`, `No Prototype` — none of which OSADA enforces today, so stating them would claim a
- * rule that is not there), and `Combat Support`/`Support Fire`/`Recon Skill`/`Overrun toggle`/
+ * applies here as much as it does to engine code. Left out entirely:
+ * `Combat Support`/`Support Fire`/`Recon Skill`/`Overrun toggle`/
  * `AD Support`/`Mechanized`'s badge, which the five existing badges (or, for Mechanized, its own
  * mechanics note) already state.
  *
@@ -63,23 +61,6 @@ class EquipmentAbility internal constructor(
     val wired: Boolean,
 )
 
-private const val ATTR_MASK_AIR_SUPPORT = 8192
-private const val ATTR_MASK_CARRIER_DEPLOY = 524288
-
-private const val ATTR2_MASK_NO_DIRT_AIRFIELDS = 4
-private const val ATTR2_MASK_ROCKET_BOMBER = 8
-private const val ATTR2_MASK_EVADE = 128
-
-private const val ATTR_EX_MASK_NO_NEED_STATION = 128
-private const val ATTR_EX_MASK_TORPEDO_BOMBER = 256
-private const val ATTR_EX_MASK_PARTIZAN = 1024
-private const val ATTR_EX_MASK_EXPLOIT_SUCCESS = 2048
-private const val ATTR_EX_MASK_SINGLE_FIRE_SUP = 32768
-private const val ATTR_EX_MASK_KAMIKAZE = 65536
-private const val ATTR_EX_MASK_SABOTEUR = 262144
-private const val ATTR_EX_MASK_JET_STEALTH = 524288
-private const val ATTR_EX_MASK_SUPPLY_UNIT = 1048576
-
 /**
  * WIRED abilities that already have a gameplay effect but no badge — Drop Mines through ASW.
  * Kept separate from [DESCRIPTIVE_ABILITIES] so the two phrasings (imperative "does X" vs honest
@@ -107,7 +88,23 @@ private val WIRED_ABILITIES: List<AbilityEntry> =
         AbilityEntry({ it.attr and ATTR_MASK_CANNOT_ATTACK_SOFT != 0 }, "equipment.ability.cannot_attack_soft", "-SA"),
         AbilityEntry({ it.attr and ATTR_MASK_CANNOT_ATTACK_HARD != 0 }, "equipment.ability.cannot_attack_hard", "-HA"),
         AbilityEntry({ it.attr and ATTR_MASK_CANNOT_ATTACK_AIR != 0 }, "equipment.ability.cannot_attack_air", "-AA"),
+        // The fourth target-type prohibition, wired 2026-08-27 alongside the three purchase bits
+        // below. It had a decoded bit and no mask at all until then, which is why it was the one
+        // sibling with no badge -- see ATTR_MASK_CANNOT_ATTACK_NAVAL.
+        AbilityEntry(
+            { it.attr and ATTR_MASK_CANNOT_ATTACK_NAVAL != 0 },
+            "equipment.ability.cannot_attack_naval",
+            "-NA",
+        ),
         AbilityEntry({ it.attr and ATTR_MASK_CAN_AIR_ATK != 0 }, "equipment.ability.can_air_attack", "+AA"),
+        // The three purchase/authoring bits, wired 2026-08-27. This file's header used to give
+        // them as a deliberate omission -- "none of which OSADA enforces today, so stating them
+        // would claim a rule that is not there" -- which was true and is not any more: `Can't Buy`
+        // refuses the Buy button and `Player.buyUnit`, `No AI buy` refuses `ai/AIPurchasing`, and
+        // `No Prototype` refuses the brilliant-victory draw in `Scenario.getPrototypeUnitsAvailable`.
+        AbilityEntry({ it.attr and ATTR_MASK_CANNOT_BUY != 0 }, "equipment.ability.cant_buy", "-BY"),
+        AbilityEntry({ it.attr and ATTR_MASK_NO_AI_BUY != 0 }, "equipment.ability.no_ai_buy", "-AI"),
+        AbilityEntry({ it.attr and ATTR_MASK_NO_PROTOTYPE != 0 }, "equipment.ability.no_prototype", "-PT"),
         AbilityEntry({ it.attr and ATTR_MASK_CAPTURE_FLAG != 0 }, "equipment.ability.capture_flag", "CAP"),
         AbilityEntry({ it.attr and ATTR_MASK_MECHANIZED != 0 }, "equipment.ability.mechanized", "MEC"),
         AbilityEntry({ it.attr and ATTR_MASK_NO_SURRENDER != 0 }, "equipment.ability.no_surrender", "NSR"),
@@ -124,6 +121,15 @@ private val WIRED_ABILITIES: List<AbilityEntry> =
         AbilityEntry({ it.attr and ATTR_MASK_CAN_BLOW != 0 }, "equipment.ability.can_blow", "BLW"),
         AbilityEntry({ it.attr2 and ATTR2_MASK_BUILD_REPAIR != 0 }, "equipment.ability.build_repair", "SAP"),
         AbilityEntry({ it.attr2 and ATTR2_MASK_CUT_LOS != 0 }, "equipment.ability.cut_los", "LOS"),
+        // Demoted to descriptive-only on review 2026-08-25, and RE-WIRED 2026-08-26 by §T --
+        // which is the same test applied twice to a bit whose behaviour changed underneath it.
+        // The demotion was right at the time: `Allow LOF` says fire is NOT blocked by this unit,
+        // and nothing made an ordinary unit block fire, so the bit did nothing on its own. §T
+        // imported and built OG's `UnitsBlockDLOF` scenario option, under which every unit in the
+        // way blocks the shot -- so on the 23 scenarios that set it, this is the only thing that
+        // lets a formation's own fire past its own screen. It stays an override of `Cut LOS` on
+        // the same record everywhere else.
+        AbilityEntry({ it.attr2 and ATTR2_MASK_ALLOW_LOF != 0 }, "equipment.ability.allow_lof", "LOF"),
         AbilityEntry(
             { it.attrEx and ATTR_EX_MASK_COUNTER_BATTERY != 0 },
             "equipment.ability.counter_battery",
@@ -142,6 +148,62 @@ private val WIRED_ABILITIES: List<AbilityEntry> =
         ),
         AbilityEntry({ it.attrEx and ATTR_EX_MASK_NO_LEADER != 0 }, "equipment.ability.no_leader", "-LD"),
         AbilityEntry({ it.attrEx and ATTR_EX_MASK_NO_AMMO_PENALTY != 0 }, "equipment.ability.no_ammo_penalty", "-AP"),
+        // Wired 2026-08-27 (§U) -- the three independent abilities §M's order named next, each
+        // built as the narrowest reading of OG's own sentence and no wider:
+        // `Cannot use dirt airfields` refuses a sapper-built strip in `MovementRules.hasAirfield`
+        // (gated on `build_and_repair`, which is what makes such a strip exist);
+        // `Rocket bomber` exempts a ground attack from §6.18's terrain check in `ExtendedLos`
+        // (gated on `extended_los`, which is what imposes that check); and `SingleFireSup.` spends
+        // the supporting unit's turn in `CombatResolver.isSupportFireEligible`.
+        AbilityEntry(
+            { it.attr2 and ATTR2_MASK_NO_DIRT_AIRFIELDS != 0 },
+            "equipment.ability.no_dirt_airfields",
+            "-DA",
+        ),
+        AbilityEntry({ it.attr2 and ATTR2_MASK_ROCKET_BOMBER != 0 }, "equipment.ability.rocket_bomber", "RKT"),
+        AbilityEntry({ it.attrEx and ATTR_EX_MASK_SINGLE_FIRE_SUP != 0 }, "equipment.ability.single_fire_sup", "1SF"),
+        // `Air Transportable`, wired 2026-08-27. This file's header called it redundant with the
+        // `embark` field; the shipped data disagrees (401 of 673 ground transports carry both, not
+        // all of them), so it has its own reader now -- a prime mover without it is left on the
+        // airfield when its formation is airlifted (`UnitCapabilities.transportSurvivesAirlift`).
+        AbilityEntry({ it.attr and ATTR_MASK_AIR_TRANSPORTABLE != 0 }, "equipment.ability.air_transportable", "ATP"),
+        // `Air support`, wired 2026-08-27: OG's "can supply air units, the same than an airfield",
+        // read by `MovementRules.hasAirfield`. 632 records, led by the capital ships that carried
+        // floatplanes.
+        AbilityEntry({ it.attr and ATTR_MASK_AIR_SUPPORT != 0 }, "equipment.ability.air_support", "ASP"),
+        // Wired 2026-08-28 (§AA) -- the LAST three, and none of them needed the system its
+        // register entry named. `Carrier Deploy` is a DEPLOYMENT permission, not a hangar
+        // (`rules/CarrierDeploy`); `No Need Station` needed a rail pool read from the scenario XML
+        // rather than the unconfirmed `.xscn` byte (`rules/RailTransport`); and `Supply Unit` is a
+        // mobile Depot, whose behaviour was documented in `EFILE_NOKORP/equip.cfg` and in
+        // `DEFERRED.md` §2.10 the whole time (`rules/DepotSupply`).
+        //
+        // Two of the three are inert on shipped content and say so in their own KDoc: no scenario
+        // authors `railtrans`, and no efile sets `supply_ex`. A rule that no content exercises is
+        // still a rule -- what it is not is a claim that the game plays differently today.
+        AbilityEntry({ it.attr and ATTR_MASK_CARRIER_DEPLOY != 0 }, "equipment.ability.carrier_deploy", "CVD"),
+        AbilityEntry({ it.attrEx and ATTR_EX_MASK_NO_NEED_STATION != 0 }, "equipment.ability.no_need_station", "RAI"),
+        AbilityEntry({ it.attrEx and ATTR_EX_MASK_SUPPLY_UNIT != 0 }, "equipment.ability.supply_unit", "SPL"),
+        // `Evade`, wired 2026-08-27 from OG's own `class_evade` / `zoc_evade` / `evade_special`
+        // keys. 409 records, three quarters of them Recon. See `rules/Evade` for the one reading
+        // it had to choose and why it chose the narrow one.
+        AbilityEntry({ it.attr2 and ATTR2_MASK_EVADE != 0 }, "equipment.ability.evade", "EVD"),
+        // Wired 2026-08-27 from the author's own specials reference. `Jet (Stealth)` is the one
+        // this project had filed as CONFIRMED-BIT / UNCONFIRMED-EFFECT and refused to guess at.
+        AbilityEntry({ it.attrEx and ATTR_EX_MASK_JET_STEALTH != 0 }, "equipment.ability.jet_stealth", "JET"),
+        AbilityEntry({ it.attrEx and ATTR_EX_MASK_PARTIZAN != 0 }, "equipment.ability.partizan", "PTZ"),
+        AbilityEntry(
+            { it.attrEx and ATTR_EX_MASK_EXPLOIT_SUCCESS != 0 },
+            "equipment.ability.exploit_success",
+            "EXP",
+        ),
+        AbilityEntry({ it.attrEx and ATTR_EX_MASK_KAMIKAZE != 0 }, "equipment.ability.kamikaze", "KMZ"),
+        AbilityEntry(
+            { it.attrEx and ATTR_EX_MASK_TORPEDO_BOMBER != 0 },
+            "equipment.ability.torpedo_bomber",
+            "TRP",
+        ),
+        AbilityEntry({ it.attrEx and ATTR_EX_MASK_SABOTEUR != 0 }, "equipment.ability.saboteur", "SAB"),
     )
 
 /**
@@ -150,30 +212,7 @@ private val WIRED_ABILITIES: List<AbilityEntry> =
  * under `ruleset-profiles.md` §2's admission rule before it could become a rule — a bitmask read is
  * not that design.
  */
-private val DESCRIPTIVE_ABILITIES: List<AbilityEntry> =
-    listOf(
-        AbilityEntry({ it.attr and ATTR_MASK_AIR_SUPPORT != 0 }, "equipment.ability.air_support", "ASP"),
-        AbilityEntry({ it.attr and ATTR_MASK_CARRIER_DEPLOY != 0 }, "equipment.ability.carrier_deploy", "CVD"),
-        AbilityEntry({ it.attr2 and ATTR2_MASK_NO_DIRT_AIRFIELDS != 0 }, "equipment.ability.no_dirt_airfields", "-DA"),
-        AbilityEntry({ it.attr2 and ATTR2_MASK_ROCKET_BOMBER != 0 }, "equipment.ability.rocket_bomber", "RKT"),
-        AbilityEntry({ it.attr2 and ATTR2_MASK_EVADE != 0 }, "equipment.ability.evade", "EVD"),
-        // Demoted back from WIRED on review, 2026-08-25. `Allow LOF` says fire is NOT blocked by
-        // this unit -- which is already true of every unit, because OSADA has no rule that makes
-        // an ordinary unit block line of fire (OG gates that on a `UnitsBlockDLOF` scenario option
-        // the importer does not carry). `ExtendedLos.cutsLineOfSight` still honours the bit as an
-        // override of `Cut LOS` on the same record, but a record carrying `Allow LOF` ALONE gets
-        // no behaviour from it, so a brass badge overstated it.
-        AbilityEntry({ it.attr2 and ATTR2_MASK_ALLOW_LOF != 0 }, "equipment.ability.allow_lof", "LOF"),
-        AbilityEntry({ it.attrEx and ATTR_EX_MASK_NO_NEED_STATION != 0 }, "equipment.ability.no_need_station", "RAI"),
-        AbilityEntry({ it.attrEx and ATTR_EX_MASK_TORPEDO_BOMBER != 0 }, "equipment.ability.torpedo_bomber", "TRP"),
-        AbilityEntry({ it.attrEx and ATTR_EX_MASK_PARTIZAN != 0 }, "equipment.ability.partizan", "PTZ"),
-        AbilityEntry({ it.attrEx and ATTR_EX_MASK_EXPLOIT_SUCCESS != 0 }, "equipment.ability.exploit_success", "EXP"),
-        AbilityEntry({ it.attrEx and ATTR_EX_MASK_SINGLE_FIRE_SUP != 0 }, "equipment.ability.single_fire_sup", "1SF"),
-        AbilityEntry({ it.attrEx and ATTR_EX_MASK_KAMIKAZE != 0 }, "equipment.ability.kamikaze", "KMZ"),
-        AbilityEntry({ it.attrEx and ATTR_EX_MASK_SABOTEUR != 0 }, "equipment.ability.saboteur", "SAB"),
-        AbilityEntry({ it.attrEx and ATTR_EX_MASK_JET_STEALTH != 0 }, "equipment.ability.jet_stealth", "JET"),
-        AbilityEntry({ it.attrEx and ATTR_EX_MASK_SUPPLY_UNIT != 0 }, "equipment.ability.supply_unit", "SPL"),
-    )
+private val DESCRIPTIVE_ABILITIES: List<AbilityEntry> = emptyList()
 
 /**
  * The ruleset switches that decide whether an ability does anything at all.
@@ -231,11 +270,19 @@ private fun gateFor(key: String): ((AbilityGates) -> Boolean)? =
 
         "equipment.ability.can_blow",
         "equipment.ability.build_repair",
+        // `Cannot use dirt airfields` refuses an airfield the sappers built, and only
+        // `build_and_repair` can build one -- with the key off it has nothing to refuse.
+        "equipment.ability.no_dirt_airfields",
         -> AbilityGates::engineering
 
         "equipment.ability.counter_battery" -> AbilityGates::counterBattery
 
-        "equipment.ability.cut_los" -> AbilityGates::extendedLos
+        "equipment.ability.cut_los",
+        "equipment.ability.allow_lof",
+        // `Rocket bomber` is an exemption from the terrain line-of-fire check, and only
+        // `extended_los` imposes that check -- with the key off it exempts a rule nobody runs.
+        "equipment.ability.rocket_bomber",
+        -> AbilityGates::extendedLos
 
         // `No Ammo Penalty` exempts a formation from halvings that only exist under
         // `dry_unit_penalties` (wired 2026-08-26). With that rule off there is nothing to be

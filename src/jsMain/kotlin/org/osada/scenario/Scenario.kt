@@ -77,8 +77,10 @@ class Scenario(
      * scenario would be the difference between a mechanic existing and not, which is the §5.10
      * hazard in a new costume.
      *
-     * These are the missing half of `rules.og_fidelity.gap.authored_options`: OG lets each scenario
-     * decide, and until now OSADA applied one set of rules to all of them. Measured over the
+     * These were the missing half of `rules.og_fidelity.gap.authored_options` — the profile gap
+     * entry that §T retired, because with `TrueDLOF` and `UnitsBlockDLOF` built there is nothing
+     * left in it. OG lets each scenario decide, and until §O OSADA applied one set of rules to all
+     * of them. Measured over the
      * 397 scenarios that do carry them: Repair 362, Build 360, Blow 350, Extended LOS 321,
      * barrage 298, extended naval 203, TrueDLOF 131, Air ZOC 79, UnitsBlockDLOF 23, and air
      * missions **0** — the last of which is why building air missions would serve no shipped
@@ -90,15 +92,17 @@ class Scenario(
     var extendedLos: Boolean? = null
 
     /**
-     * The authored switches OSADA imports but does not yet execute, kept as fields rather than
-     * dropped so the register in `docs/og-fidelity-plan.md` §O can be answered from the data
-     * instead of re-derived from the binaries: `TrueDLOF`, `UnitsBlockDLOF`, Air ZOC and extended
-     * naval. `airMissions` is a fifth, and the only one no shipped scenario sets at all.
+     * The rest of the option bitfield. Two of these are read and three are not, and the group is
+     * declared together because the whole bitfield is parsed in one place.
      *
-     * **[barrageAllowed] is NOT one of them** — it moved out of this group with schema 7
-     * (2026-08-26) and is now read for real: it is the scenario half of the `barrage` ruleset key's
-     * gate in `rules/Barrage`, and 356 of the 457 readable scenarios allow it. It stays declared
-     * here only because the whole option bitfield is parsed in one place.
+     * **Read:** [barrageAllowed] since schema 7, as the scenario half of the `barrage` key's gate
+     * in `rules/Barrage` (356 of the 457 readable scenarios allow it); [trueDirectLof] and
+     * [unitsBlockLof] since §T, in `rules/ExtendedLos.hasLineOfFire` (131 and 23 of the 397
+     * scenarios that carry the bitfield).
+     *
+     * **Still unread:** [airZoc] and [extendedNaval], both named to the player in the profile's own
+     * gap list, and [airMissions] — the only one **no** shipped scenario sets at all, which is why
+     * `docs/og-fidelity-plan.md` §M puts building it last.
      */
     var trueDirectLof: Boolean? = null
     var unitsBlockLof: Boolean? = null
@@ -106,6 +110,21 @@ class Scenario(
     var airZoc: Boolean? = null
     var airMissions: Boolean? = null
     var extendedNaval: Boolean? = null
+
+    /**
+     * OG's *"air units can be fired on when entering AD range"* — the scenario's own switch for
+     * anti-aircraft interception, authored by **404 of the 457** scenarios whose source parses.
+     *
+     * Null means the scenario's source could not be read, and every reader treats that as
+     * permitted, exactly as the other authored switches do (`docs/og-fidelity-plan.md` §AD).
+     */
+    var airIntercept: Boolean? = null
+
+    /** OG's *"ports do not supply hexes"*. 84 scenarios. */
+    var portsNoSupply: Boolean? = null
+
+    /** OG's *"ports do not deploy naval units"*. 48 scenarios. */
+    var portsNoNavalDeploy: Boolean? = null
 
     var turnsPerDay: Int = 1
     var dayTurn: Int = 0

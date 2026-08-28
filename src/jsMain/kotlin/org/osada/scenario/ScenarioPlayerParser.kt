@@ -86,6 +86,7 @@ internal object ScenarioPlayerParser {
         player.country = el.getAttribute("country")?.toIntOrNull() ?: 0
         player.airTransports = el.getAttribute("airtrans")?.toIntOrNull() ?: 0
         player.navalTransports = el.getAttribute("navaltrans")?.toIntOrNull() ?: 0
+        player.railTransports = el.getAttribute("railtrans")?.toIntOrNull() ?: 0
         player.prestigePerTurn = el
             .getAttribute("turnprestige")
             ?.split(", ")

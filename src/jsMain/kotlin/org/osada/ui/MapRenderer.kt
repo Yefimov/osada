@@ -101,7 +101,7 @@ internal class MapRenderer(
         // When deploying an AIRCRAFT, airfields are valid deploy targets even outside the deploy
         // zone (OG rule, already honoured on click in MapInputController). Highlight them too — but
         // only for aircraft, so ground units don't see airfields lit up. Mirrors
-        // selectedDeployUnitIsAir().
+        // `GameMap.isOutOfZoneDeployTarget`.
         val airDeploySelected = deployUnit != null && GameRules.isAir(deployUnit)
 
         return RenderFrame(

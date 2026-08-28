@@ -8,6 +8,7 @@ import org.osada.model.EquipmentData
 import org.osada.model.GameUnit
 import org.osada.model.abilityCatalog
 import org.osada.rules.UnitCapabilities
+import org.osada.rules.UnitExperience
 import org.w3c.dom.HTMLElement
 
 /**
@@ -50,7 +51,7 @@ internal object EquipmentMarkings {
                 ?.let { UnitCapabilities.hasCombatSupport(it) }
                 ?: UnitCapabilities.grantsCombatSupport(data)
         if (hasCombatSupport) {
-            addHeadquartersMark(parent, unit?.experience?.div(UnitCapabilities.EXPERIENCE_PER_BAR))
+            addHeadquartersMark(parent, unit?.experience?.div(UnitExperience.EXPERIENCE_PER_BAR))
         }
         if (UnitCapabilities.hasPhasedMovement(data)) {
             addMark(parent, "RCN", I18n.t("equipment.mechanics.recon_movement"))

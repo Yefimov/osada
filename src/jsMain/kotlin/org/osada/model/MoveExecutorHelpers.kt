@@ -2,6 +2,7 @@ package org.osada.model
 
 import org.osada.LeaderType
 import org.osada.rules.AutoMount
+import org.osada.rules.UnitCapabilities
 import org.osada.rules.UnitPredicates
 
 internal fun MoveExecutor.resolveUndoContext(): MoveExecutor.UndoContext? {
@@ -67,8 +68,12 @@ internal fun MoveExecutor.stoppedByUnseenZoc(
     val overlayChargedForIt = hex.isSpotted(moverSide) || hex.unit?.tempSpotted == true
     // Air units neither project nor feel ZOC (MovementRules.setZOCRange skips them), and Superior
     // Maneuver bypasses it outright -- the same two exemptions MoveRangeCalculation applies.
+    // ... and OG's `Partizan` (`attrEx` bit 10, wired 2026-08-27), which is the equipment-level
+    // source of the same exemption: "not stopped by adjacent enemies". 720 records, 680 Infantry.
     val subjectToZoc =
-        !UnitPredicates.isAir(unit) && !Leaders.unitHasLeader(unit, LeaderType.SUPERIOR_MANEUVER)
+        !UnitPredicates.isAir(unit) &&
+            !Leaders.unitHasLeader(unit, LeaderType.SUPERIOR_MANEUVER) &&
+            !UnitCapabilities.ignoresZoneOfControl(unit.unitData(true))
     return subjectToZoc && !overlayChargedForIt && hex.isZOC(enemySide)
 }
 

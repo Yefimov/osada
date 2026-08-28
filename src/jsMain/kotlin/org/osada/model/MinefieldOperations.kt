@@ -22,16 +22,15 @@ import org.osada.rules.Minefields
  * `UnitActionAvailability.layMines` and re-asserted here through the same three flags.
  */
 fun GameMap.layMinefield(unit: GameUnit): MineActionResult {
-    val hex = unit.getHex()
+    val rawHex = unit.getHex()
     val side = unit.player?.side ?: -1
     val spentItsTurn = unit.hasMoved || unit.hasFired || unit.hasResupplied
     val allowed =
-        hex != null &&
-            side >= 0 &&
+        side >= 0 &&
             MineAbilities.canDropMines(unit) &&
             !spentItsTurn &&
             unit.getAmmo() >= Minefields.LAY_MINES_AMMO_COST
-    if (!allowed || hex == null) return MineActionResult.NOT_ALLOWED
+    val hex = rawHex?.takeIf { allowed } ?: return MineActionResult.NOT_ALLOWED
     undoState.invalidate(unit, UndoInvalidation.IRREVERSIBLE_ACTION)
     unit.ammo -= Minefields.LAY_MINES_AMMO_COST
     Minefields.lay(hex, side)
@@ -51,14 +50,10 @@ fun GameMap.layMinefield(unit: GameUnit): MineActionResult {
  * sent to do.
  */
 fun GameMap.clearMinefield(unit: GameUnit): MineActionResult {
-    val hex = unit.getHex()
-    val allowed =
-        hex != null &&
-            hex.mines != 0 &&
-            MineAbilities.canClearMines(unit) &&
-            !unit.hasFired &&
-            !unit.hasResupplied
-    if (!allowed || hex == null) return MineActionResult.NOT_ALLOWED
+    val hex =
+        unit.getHex()?.takeIf {
+            it.mines != 0 && MineAbilities.canClearMines(unit) && !unit.hasFired && !unit.hasResupplied
+        } ?: return MineActionResult.NOT_ALLOWED
     undoState.invalidate(unit, UndoInvalidation.IRREVERSIBLE_ACTION)
     val success = MineAbilities.clearAttemptSucceeds()
     if (success) Minefields.clearAll(hex) else unit.hits++

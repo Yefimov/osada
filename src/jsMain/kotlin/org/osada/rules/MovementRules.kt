@@ -4,6 +4,7 @@ import org.osada.LeaderType
 import org.osada.MovMethod
 import org.osada.TerrainType
 import org.osada.UnitClass
+import org.osada.model.ATTR_MASK_AIR_SUPPORT
 import org.osada.model.Cell
 import org.osada.model.Equipment
 import org.osada.model.ExtendedCell
@@ -12,6 +13,7 @@ import org.osada.model.GameUnit
 import org.osada.model.Hex
 import org.osada.model.Leaders
 import org.osada.model.isBridge
+import org.osada.model.isWorking
 
 /**
  * Movement, pathfinding, spotting, zone-of-control and embark/deploy rules.
@@ -117,7 +119,8 @@ object MovementRules {
      * Adds or removes [unit]'s zone of control on its neighbouring hexes.
      *
      * Two kinds of unit project none at all and are skipped here rather than at either reader:
-     * air units (as always), and records carrying OG's `No ZOC` attribute (wired 2026-08-25, see
+     * air units (unless the scenario sets OG's `Air ZOC` option -- §6.30's *"usually"*, wired
+     * 2026-08-27, see [AirZoneOfControl]), and records carrying OG's `No ZOC` attribute (wired 2026-08-25, see
      * [UnitCapabilities.projectsZoneOfControl] for why that ability stopped being "not
      * representable"). Skipping at this one choke point keeps the add and the remove symmetric,
      * which the hex's reference count depends on.
@@ -210,13 +213,39 @@ object MovementRules {
         val pos = unit.getPos()
         val hex = if (pos == null) null else map.map?.getOrNull(pos.row)?.getOrNull(pos.col)
         if (pos == null || hex == null) return false
-        val onOwnAirfield = hex.terrain == TerrainType.AIRFIELD.value && hex.flag == unit.player?.country
+        // OG's `Cannot use dirt airfields` (`attr2` bit 2): a jet or heavy bomber cannot base on a
+        // strip the sappers scraped during the scenario. Read on the unit's REAL record -- the
+        // ability belongs to the airframe, not to anything it is carrying. See [AirfieldQuality].
+        val data = unit.unitData(true)
+        val usable = { candidate: Hex? ->
+            // `isWorking` rather than a bare terrain test: OG's wrecked airfield is "unusable until
+            // Repaired", which has to mean an aircraft cannot base on it (`Hex.isWorking`).
+            candidate?.isWorking(TerrainType.AIRFIELD.value) == true &&
+                candidate.flag == unit.player?.country &&
+                !AirfieldQuality.unusableBy(candidate, data)
+        }
+        val onOwnAirfield = usable(hex)
         val onOwnCarrier = hex.unit?.unitData()?.uclass == UnitClass.CARRIER.value && hex.unit?.owner == unit.player?.id
+        val neighbours = HexGeometry.getAdjacent(pos.row, pos.col)
         val adjacentToAirfield =
-            HexGeometry.getAdjacent(pos.row, pos.col).any { cell ->
-                val neighbor = map.map?.getOrNull(cell.row)?.getOrNull(cell.col)
-                neighbor?.terrain == TerrainType.AIRFIELD.value && neighbor.flag == unit.player?.country
+            neighbours.any { cell ->
+                usable(map.map?.getOrNull(cell.row)?.getOrNull(cell.col))
             }
-        return onOwnAirfield || onOwnCarrier || adjacentToAirfield
+        // OG's `Air support` (`attr` bit 13): "can supply air units, the same than an airfield".
+        // Taken at its word -- an airfield services its own hex AND the ring around it, so a
+        // seaplane tender or a forward depot does too. Own units only, as the carrier test above.
+        val servicedByAirSupport =
+            (listOf(pos) + neighbours).any { cell ->
+                val holder =
+                    map.map
+                        ?.getOrNull(cell.row)
+                        ?.getOrNull(cell.col)
+                        ?.unit
+                holder != null &&
+                    !holder.destroyed &&
+                    holder.owner == unit.player?.id &&
+                    holder.unitData(true).attr and ATTR_MASK_AIR_SUPPORT != 0
+            }
+        return onOwnAirfield || onOwnCarrier || adjacentToAirfield || servicedByAirSupport
     }
 }

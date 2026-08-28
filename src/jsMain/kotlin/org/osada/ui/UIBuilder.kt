@@ -43,6 +43,8 @@ object UIBuilder {
             // (`tips1.txt`), so the chip wears the mark the player is told to look for.
             "barrage" to "=",
             "clear_mines" to "x",
+            // OG's railway transport. The station glyph the five construction chips do not have.
+            "rail_move" to "S",
             // OG 9.3 Build and Repair. Glyphs picked from the same osada-menu font the rest of the
             // strip uses; the five constructions share one builder mark because the chip label is
             // what names the facility, and no hex ever offers more than a couple of them at once.

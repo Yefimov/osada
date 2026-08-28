@@ -258,6 +258,31 @@ tasks.register<Exec>("verifyProductionSmokeTest") {
 }
 
 /*
+ * Scenario regression probe (2026-08-28).
+ *
+ * Added because the question "have the scenarios and maps been verified?" had no gate to answer
+ * it: `verifyProductionSmokeTest` stops at the start menu (it reports `Scenario loaded: null`) and
+ * no jsTest loads a scenario at all. This one drives four real scenarios -- including the largest
+ * shipped map and the one with the most railroad stations -- places their units, resolves their
+ * terrain and ends a turn on each.
+ *
+ * Kept out of `check` for the same reason the two smoke tests are: it needs a built distribution
+ * and a real Chrome.
+ */
+tasks.register<Exec>("verifyScenarioRegression") {
+    group = "verification"
+    description = "Loads four real scenarios in headless Chrome and ends a turn on each"
+
+    dependsOn(
+        "jsBrowserDevelopmentExecutableDistribution",
+        "verifyProductionSmokeTestNpmInstall",
+    )
+
+    workingDir = file("scripts/verify")
+    commandLine("node", "og-fidelity-regression-probe.mjs")
+}
+
+/*
  * Mobile viewport smoke test.
  *
  * Kept separate from verifyProductionSmokeTest on purpose: that task is the desktop-regression

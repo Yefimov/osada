@@ -33,13 +33,29 @@ fun Player.effectivePrestigeIncome(baseAmount: Int): Int =
         baseAmount
     }
 
-/** Unit purchase/upgrade/resupply/reinforce economy for [Player], split out to keep its function count in bounds. */
+/**
+ * Unit purchase/upgrade/resupply/reinforce economy for [Player], split out to keep its function
+ * count in bounds.
+ *
+ * OG's `Can't Buy` is enforced HERE as well as in the window that offers the card, because this is
+ * the only function a purchase must pass through — the UI's Buy button, a future hotkey and a
+ * replayed multiplayer order all land on it. [acquireUnit] deliberately does NOT check it: the
+ * prototype award and campaign carry-over acquire units without buying them, and `Can't Buy` says
+ * nothing about either.
+ *
+ * The transport is checked too. A transport is acquired by attaching it at purchase time rather
+ * than as a unit of its own, so a `Can't Buy` prime mover would otherwise be bought through the
+ * back door of the unit hauling it.
+ */
 fun Player.buyUnit(
     eqid: Int,
     transportEqid: Int,
 ): Boolean {
+    val offered =
+        Equipment.isPurchasable(eqid) &&
+            (transportEqid <= 0 || Equipment.isPurchasable(transportEqid))
     val cost = GameRules.calculateUnitCosts(eqid, transportEqid)
-    val affordable = cost <= prestige
+    val affordable = offered && cost <= prestige
     val acquired = affordable && acquireUnit(eqid, transportEqid)
     if (acquired) prestige -= cost
     return acquired

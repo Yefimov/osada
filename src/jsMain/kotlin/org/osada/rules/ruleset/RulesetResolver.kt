@@ -43,15 +43,6 @@ object RulesetResolver {
             profile.source == RulesetSource.OSADA_DEFAULT ->
                 RulesetDefaults.OSADA.getValue(rule).let { ResolvedRule(it, it, RuleProvenance.OSADA_DEFAULT) }
 
-            // Open General Fidelity names only the rules it has an opinion about. The three content
-            // keys and `stalin_regime` are absent from its table on purpose, so they fall through to
-            // Author's Vision below and keep following the efile -- LXF's `flak_range = 4` survives
-            // selecting this profile, which is the whole point of §2's rule about content values.
-            profile.source == RulesetSource.OG_FIDELITY && RulesetDefaults.OG_FIDELITY.containsKey(rule) ->
-                RulesetDefaults.OG_FIDELITY.getValue(rule).let {
-                    ResolvedRule(it, it, RuleProvenance.OG_FIDELITY)
-                }
-
             // The editor's bounds are the only place a value is narrowed; a stored override has
             // already been through them.
             override != null ->
@@ -103,18 +94,51 @@ object RulesetResolver {
     }
 
     /**
-     * A rule OSADA owns outright. `stalin_regime` is seeded from the existing legacy preference at
-     * resolution time, and locked from then on: changing that old checkbox later must not mutate a
-     * campaign already under way (§2).
+     * OG rules whose MASTER switch Author's Vision turns on so that each scenario's own authored
+     * bit decides — `Scenario.extendedLos`, `.airZoc`, `.extendedNaval`, `.barrageAllowed` and the
+     * `.canBuild`/`.canBlow`/`.canRepair` trio, all imported by §O into 397 scenario XMLs.
+     *
+     * **The key is not the author here; the scenario is.** Every rule in this set already ANDs the
+     * key with its own scenario flag at read time — `ExtendedLos.enabled()`, `AirZoneOfControl`,
+     * `ExtendedNaval`, `Barrage.enabled()` and `Engineering`'s per-work check — and each of those
+     * reads `?: true`, so a scenario whose source could not be read is unaffected either way.
+     *
+     * Resolving these to 1 is therefore not "switch the rule on": it is *stop overriding the
+     * author*. Until 2026-08-28 Author's Vision resolved them to OSADA's off, which silently
+     * discarded every one of those imported bits and made the profile's own name untrue
+     * (`docs/og-fidelity-plan.md` §AC).
+     *
+     * The three with no per-scenario bit — `counterbattery`, `minefields`, `naval_critical_hits` —
+     * are deliberately NOT here: nothing in the content asks for them, so Author's Vision has
+     * nobody to defer to and OSADA's default stands.
      */
-    private fun ownedRule(rule: RuleKey): ResolvedRule {
-        val value =
-            when (rule) {
-                RuleKey.STALIN_REGIME -> if (uiSettings.stalinRegime) 1 else 0
-                else -> RulesetDefaults.OSADA.getValue(rule)
-            }
-        return ResolvedRule(value, value, RuleProvenance.OSADA_DEFAULT)
-    }
+    private val SCENARIO_AUTHORED =
+        setOf(
+            RuleKey.EXTENDED_LOS,
+            RuleKey.AIR_ZOC,
+            RuleKey.EXTENDED_NAVAL,
+            RuleKey.BARRAGE,
+            RuleKey.BUILD_AND_REPAIR,
+        )
+
+    /**
+     * A rule OSADA owns outright.
+     *
+     * `stalin_regime` is seeded from the existing legacy preference at resolution time and locked
+     * from then on: changing that old checkbox later must not mutate a campaign already under way
+     * (§2). Everything in [SCENARIO_AUTHORED] defers to the scenario. The rest gets OSADA's
+     * documented baseline.
+     */
+    private fun ownedRule(rule: RuleKey): ResolvedRule =
+        when {
+            rule == RuleKey.STALIN_REGIME ->
+                (if (uiSettings.stalinRegime) 1 else 0).let { ResolvedRule(it, it, RuleProvenance.OSADA_DEFAULT) }
+
+            rule in SCENARIO_AUTHORED -> ResolvedRule(1, 1, RuleProvenance.SCENARIO_AUTHORED)
+
+            else ->
+                RulesetDefaults.OSADA.getValue(rule).let { ResolvedRule(it, it, RuleProvenance.OSADA_DEFAULT) }
+        }
 
     /**
      * "On" means "allow the slots this efile defines" and can never invent definitions the content

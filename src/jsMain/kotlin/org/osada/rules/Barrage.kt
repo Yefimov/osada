@@ -152,10 +152,13 @@ internal object Barrage {
             unit.ammo -= AMMO_COST
             unit.hasFired = true
         }
-        val landed = hex != null && GameRandomSource.nextInt(FULL_ROLL) < SUCCESS_IN_TEN
-        val victim = hex?.unit
+        // The shot is rolled only where there is a hex to shell, so `landedOn` carries BOTH the
+        // hit and the smart cast -- written as a separate `hex == null` the compiler reported the
+        // second test as always false.
+        val landedOn = hex?.takeIf { GameRandomSource.nextInt(FULL_ROLL) < SUCCESS_IN_TEN }
+        val victim = landedOn?.unit
         return when {
-            !landed || hex == null -> BarrageResult(hit = false)
+            landedOn == null -> BarrageResult(hit = false)
             victim != null && victim.player?.side != unit.player?.side -> hitHiddenUnit(victim)
             Engineering.isWaterCrossing(hex) && hex.road > RoadType.NONE.value -> wreckBridge(hex)
             hex.terrain in EngineeringWork.razeableTerrain() -> wreckTerrain(hex)

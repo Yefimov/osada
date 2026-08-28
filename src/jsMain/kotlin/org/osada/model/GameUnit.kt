@@ -2,6 +2,7 @@ package org.osada.model
 
 import org.osada.UnitClass
 import org.osada.rules.GameRules
+import org.osada.rules.LeaderOnUpgrade
 import org.osada.rules.isTransportable
 
 @JsExport
@@ -66,6 +67,36 @@ class GameUnit(
      *  intercept and then air-defend a friendly unit in the same turn. Reset every turn in
      *  [unitEndTurn]. Deliberately not serialised -- it never survives past the turn it is set. */
     var hasInterceptedThisTurn: Boolean = false
+
+    /**
+     * Whether this formation has already fired in SUPPORT of a neighbour this turn.
+     *
+     * Read only for a record carrying OG's `SingleFireSup.` (`attrEx` bit 15) — see
+     * [org.osada.rules.UnitCapabilities.supportsOnlyOncePerTurn]. Everything else may support as
+     * often as it is called on, which is what OSADA has always done and what OG's §6.24 describes
+     * for an ordinary battery.
+     *
+     * **Turn-scoped and NOT serialized**, exactly like [hasInterceptedThisTurn] beside it: both are
+     * cleared by `GameUnit.unitEndTurn`, and a save taken mid-turn restores a formation that has
+     * not yet spent its support. That is a known and deliberate limitation of both flags rather
+     * than an oversight of this one.
+     */
+    var hasSupportedThisTurn: Boolean = false
+
+    /**
+     * Whether this formation has been SABOTAGED — OG's `Saboteur` (`rules/Sabotage`, 2026-08-27).
+     *
+     * OG's penalties: −2 attack and −2 defence, the next move and the next attack lost, and no
+     * reinforcing, resupplying or evading. Two further clauses — it cannot act as a Depot or a
+     * Healer — are inert here because OSADA has neither, and they are recorded rather than
+     * approximated (`DEFERRED.md` §2.10 is the Depot's own blocker).
+     *
+     * Unlike [hasInterceptedThisTurn] and [hasSupportedThisTurn] beside it this is NOT turn-scoped
+     * and IS serialized: OG describes sabotage as a state a unit is put into, not a flag that
+     * clears at the end of the round, and losing it to a reload would hand the sabotaged unit its
+     * turn back.
+     */
+    var sabotaged: Boolean = false
 
     /**
      * How many attacks this formation has RESOLVED AS THE ATTACKER since its last [unitEndTurn].
@@ -192,6 +223,10 @@ class GameUnit(
             transport = null
         }
         refillAmmoFuel()
+        // OG's `upgrade_ldr`: a leader drawn for the OLD equipment's class may be useless on the
+        // new one, and the efile decides whether to keep, reroll or drop them
+        // (`rules/LeaderOnUpgrade`). A no-op under `eqp-lxf`'s own 0, which is every shipped efile.
+        LeaderOnUpgrade.afterUpgrade(this)
         entrenchment = 0
         if (isDeployed) {
             hasMoved = true

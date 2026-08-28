@@ -54,6 +54,7 @@ class GameMap {
     /** Hexes the Barrage targeting mode is currently offering (OG 9.2, `model/BarrageOperations`).
      *  Empty whenever the mode is closed, which is most of the time. */
     internal val currentBarrageTargets: MutableList<Cell> = mutableListOf()
+    internal val currentRailTargets: MutableList<Cell> = mutableListOf()
     internal val undoState = UndoState()
 
     /**

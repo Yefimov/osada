@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="acampkie.xscn" name="Kiev" turns="11, 11, 11" date="February 28, 1918" dayturns="0" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="30" cols="43" eqp="eqp-kaiser" image="resources/maps/images/map_229.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1">
+<map file="acampkie.xscn" name="Kiev" turns="11, 11, 11" date="February 28, 1918" dayturns="0" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="30" cols="43" eqp="eqp-kaiser" image="resources/maps/images/map_229.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0">
   <player id="0" country="144" side="1" airtrans="0" navaltrans="0" support="104,0,0,0" turnprestige="0, 0, 50, 0, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <player id="1" country="117" side="0" airtrans="0" navaltrans="0" support="65,118,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="2">
@@ -240,7 +240,7 @@
   <hex row="6" col="37" terrain="3"/>
   <hex row="6" col="38" road="18"/>
   <hex row="6" col="39" road="34" name="CLEAR"/>
-  <hex row="6" col="40" terrain="1" road="163" name="Bolshaya"/>
+  <hex row="6" col="40" terrain="1" road="163" name="Bolshaya" station="1"/>
   <hex row="6" col="41" terrain="8" name="CLEAR"/>
   <hex row="6" col="42" terrain="8" name="SWAMP"/>
   <hex row="7" col="0" terrain="1" name="Stantsiya"/>
@@ -318,7 +318,7 @@
   <hex row="8" col="41" terrain="3"/>
   <hex row="8" col="42" terrain="3"/>
   <hex row="9" col="0" road="40"/>
-  <hex row="9" col="1" road="130"/>
+  <hex row="9" col="1" road="130" station="1"/>
   <hex row="9" col="2" road="40" owner="1" flag="117">
     <unit id="43078" owner="1" flag="118" face="0" exp="155" str="8"/>
   </hex>
@@ -447,7 +447,7 @@
   <hex row="13" col="21" terrain="15" name="Dnjepr River"/>
   <hex row="13" col="22" terrain="10" name="Dnjepr River"/>
   <hex row="13" col="23" terrain="13" name="Dnjepr River"/>
-  <hex row="13" col="24" road="136"/>
+  <hex row="13" col="24" road="136" station="1"/>
   <hex row="13" col="25" road="136"/>
   <hex row="13" col="27" road="34"/>
   <hex row="13" col="28" road="162"/>
@@ -512,7 +512,7 @@
   <hex row="15" col="22" terrain="15" name="Dnjepr River"/>
   <hex row="15" col="23" terrain="10" road="34" name="Dnjepr River" owner="0" flag="144" victory="0"/>
   <hex row="15" col="24" terrain="13" road="34" name="Dnjepr River"/>
-  <hex row="15" col="25" road="42"/>
+  <hex row="15" col="25" road="42" station="1"/>
   <hex row="15" col="26" road="34"/>
   <hex row="15" col="27" terrain="1" name="Novaya Darhitsa"/>
   <hex row="15" col="30" road="136"/>
@@ -585,11 +585,11 @@
   <hex row="18" col="12" terrain="10"/>
   <hex row="18" col="13" terrain="10"/>
   <hex row="18" col="14" road="130"/>
-  <hex row="18" col="15" road="34" deploy="0"/>
+  <hex row="18" col="15" road="34" deploy="0" station="1"/>
   <hex row="18" col="16" road="170"/>
   <hex row="18" col="17" road="130"/>
   <hex row="18" col="18" road="40"/>
-  <hex row="18" col="19" terrain="1" road="130" name="Kiev"/>
+  <hex row="18" col="19" terrain="1" road="130" name="Kiev" station="1"/>
   <hex row="18" col="20" terrain="1" road="34" name="Kiev" owner="0" flag="144" deploy="0"/>
   <hex row="18" col="21" terrain="1" name="Kiev"/>
   <hex row="18" col="23" terrain="15" name="Dnjepr River"/>
@@ -675,7 +675,7 @@
   <hex row="20" col="37" terrain="3"/>
   <hex row="20" col="39" road="18"/>
   <hex row="20" col="40" terrain="1" road="168" name="Borispol"/>
-  <hex row="20" col="41" terrain="1" road="136" name="Borispol"/>
+  <hex row="20" col="41" terrain="1" road="136" name="Borispol" station="1"/>
   <hex row="20" col="42" terrain="1" name="Borispol"/>
   <hex row="21" col="0" road="136"/>
   <hex row="21" col="1" terrain="10" road="137"/>
@@ -793,7 +793,7 @@
   <hex row="25" col="8" terrain="1" road="130" name="Glevhakha">
     <unit id="43030" owner="1" flag="118" face="0" exp="87" str="5"/>
   </hex>
-  <hex row="25" col="9" road="17"/>
+  <hex row="25" col="9" road="17" station="1"/>
   <hex row="25" col="10">
     <unit id="43068" owner="1" flag="118" face="0" transport="43100" exp="22" str="5"/>
   </hex>

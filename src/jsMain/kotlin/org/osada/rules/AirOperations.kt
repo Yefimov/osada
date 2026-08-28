@@ -149,15 +149,28 @@ internal object AirOperations {
         map: GameMap,
         side: Int,
     ): List<GameUnit> {
-        if (!enabled()) return emptyList()
+        // NOT gated on `air_fuel` any more: a missile-model kamikaze is removed by its own ability
+        // rather than by the profile's aircraft-fuel rule. `strandedAircraft` keeps that gate.
+        if (map.units.isEmpty()) return emptyList()
         return map.units.filter { unit ->
             unit.player?.side == side &&
                 !unit.destroyed &&
-                governed(unit) &&
-                unit.getFuel() <= 0 &&
-                !MovementRules.hasAirfield(map, unit)
+                (strandedAircraft(map, unit) || Kamikaze.strandedWithoutFuel(unit))
         }
     }
+
+    /**
+     * The ordinary case: an aircraft this rule governs, out of fuel, with nowhere to have refuelled.
+     *
+     * Split out when OG's `Kamikaze` joined the sweep (2026-08-27). A missile-model kamikaze is
+     * removed for its fuel wherever it is — it has no base to reach and cannot resupply — so it
+     * cannot be folded into the airfield test, and it is not gated on `air_fuel` either: the
+     * ability is the rule, not the profile.
+     */
+    private fun strandedAircraft(
+        map: GameMap,
+        unit: GameUnit,
+    ): Boolean = enabled() && governed(unit) && unit.getFuel() <= 0 && !MovementRules.hasAirfield(map, unit)
 
     /** Where [unit] was lost, for the Turn Report row. Null only for a unit with no position at
      *  all, which the sweep cannot produce but the type allows. */

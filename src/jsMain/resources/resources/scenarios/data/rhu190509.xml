@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="rhu190509.xscn" name="1919/05/09 Defending Salg&#243;tarj&#225;n" turns="15, 15, 15" date="May 9, 1919" dayturns="0" ground="0" atmosferic="0" latitude="6" iconset="0" weatherchg="1" rows="33" cols="41" eqp="eqp-kaiser" image="resources/maps/images/map_rhu190509.png" eqpv="united1" canblow="0" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="0">
+<map file="rhu190509.xscn" name="1919/05/09 Defending Salg&#243;tarj&#225;n" turns="15, 15, 15" date="May 9, 1919" dayturns="0" ground="0" atmosferic="0" latitude="6" iconset="0" weatherchg="1" rows="33" cols="41" eqp="eqp-kaiser" image="resources/maps/images/map_rhu190509.png" eqpv="united1" canblow="0" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="1" portsnonavaldeploy="0">
   <player id="0" country="187" side="0" airtrans="0" navaltrans="0" support="188,0,0,0" turnprestige="8, 8, 8, 8, 12, 12, 12, 12, 16, 16, 12, 12, 8, 8, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <player id="1" country="47" side="1" airtrans="0" navaltrans="0" support="48,0,0,0" turnprestige="20, 20, 20, 20, 20, 20, 20, 20, 15, 15, 15, 15, 10, 10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="3">
@@ -231,7 +231,7 @@
   <hex row="3" col="19" terrain="5"/>
   <hex row="3" col="20" terrain="3"/>
   <hex row="3" col="21" road="34"/>
-  <hex row="3" col="22" terrain="1" road="51" name="Losonc" owner="1" flag="47">
+  <hex row="3" col="22" terrain="1" road="51" name="Losonc" owner="1" flag="47" station="1">
     <unit id="33302" owner="1" flag="48" face="0" exp="138"/>
   </hex>
   <hex row="3" col="24" terrain="13"/>
@@ -346,7 +346,7 @@
   <hex row="6" col="23" terrain="10" name="Ipoly"/>
   <hex row="6" col="24" terrain="10" name="Ipoly"/>
   <hex row="6" col="28" road="136"/>
-  <hex row="6" col="29" terrain="2" road="168" owner="1" flag="47">
+  <hex row="6" col="29" terrain="2" road="168" owner="1" flag="47" station="1">
     <unit id="33594" owner="1" flag="48" face="0" exp="117"/>
   </hex>
   <hex row="6" col="32" road="17"/>
@@ -413,7 +413,7 @@
   <hex row="8" col="18" terrain="5"/>
   <hex row="8" col="19" terrain="5"/>
   <hex row="8" col="20" terrain="10" name="Ipoly"/>
-  <hex row="8" col="21" terrain="1" road="17" name="Ipolytarn&#243;c" owner="1" flag="47" victory="1">
+  <hex row="8" col="21" terrain="1" road="17" name="Ipolytarn&#243;c" owner="1" flag="47" victory="1" station="1">
     <unit id="33094" owner="1" flag="48" face="0" transport="33321" exp="114"/>
   </hex>
   <hex row="8" col="23" terrain="3"/>
@@ -423,7 +423,7 @@
   <hex row="8" col="31">
     <unit id="33159" owner="1" flag="48" face="0" exp="113"/>
   </hex>
-  <hex row="8" col="32" terrain="1" road="137" name="F&#252;lek" owner="1" flag="47" victory="1">
+  <hex row="8" col="32" terrain="1" road="137" name="F&#252;lek" owner="1" flag="47" victory="1" station="1">
     <unit id="33302" owner="1" flag="48" face="0" exp="127"/>
   </hex>
   <hex row="8" col="33" road="152"/>
@@ -447,7 +447,7 @@
   <hex row="9" col="11" terrain="3"/>
   <hex row="9" col="12" terrain="3"/>
   <hex row="9" col="13" road="34"/>
-  <hex row="9" col="14" terrain="1" road="40" name="Als&#243;sztregova" owner="1" flag="47">
+  <hex row="9" col="14" terrain="1" road="40" name="Als&#243;sztregova" owner="1" flag="47" station="1">
     <unit id="33062" owner="1" flag="48" face="0" exp="100"/>
   </hex>
   <hex row="9" col="15" road="146"/>
@@ -504,7 +504,7 @@
   <hex row="10" col="33" road="33"/>
   <hex row="10" col="34" terrain="3"/>
   <hex row="10" col="35" terrain="3"/>
-  <hex row="10" col="38" terrain="1" road="130" name="Ajn&#225;csk&#246;" owner="1" flag="47">
+  <hex row="10" col="38" terrain="1" road="130" name="Ajn&#225;csk&#246;" owner="1" flag="47" station="1">
     <unit id="33094" owner="1" flag="48" face="0" transport="33335" exp="134"/>
   </hex>
   <hex row="10" col="39" terrain="3"/>
@@ -564,7 +564,7 @@
   <hex row="12" col="13" terrain="3"/>
   <hex row="12" col="14" terrain="3"/>
   <hex row="12" col="15" terrain="10" name="Ipoly"/>
-  <hex row="12" col="16" terrain="1" road="25" name="N&#243;gr&#225;dszak&#225;l" owner="1" flag="47" victory="1">
+  <hex row="12" col="16" terrain="1" road="25" name="N&#243;gr&#225;dszak&#225;l" owner="1" flag="47" victory="1" station="1">
     <unit id="33302" owner="1" flag="48" face="0" exp="123"/>
   </hex>
   <hex row="12" col="17" road="130">
@@ -703,7 +703,7 @@
   <hex row="15" col="30" terrain="5">
     <unit id="33260" owner="1" flag="48" face="0" transport="33383" exp="111"/>
   </hex>
-  <hex row="15" col="31" terrain="1" road="17" name="Somosk&#246;&#250;jfalu" owner="1" flag="47">
+  <hex row="15" col="31" terrain="1" road="17" name="Somosk&#246;&#250;jfalu" owner="1" flag="47" station="1">
     <unit id="33303" owner="1" flag="48" face="0" exp="128"/>
   </hex>
   <hex row="15" col="32" terrain="5">
@@ -853,7 +853,7 @@
   <hex row="19" col="29" road="40">
     <unit id="703" owner="0" flag="188" face="0" exp="250"/>
   </hex>
-  <hex row="19" col="30" terrain="1" road="152" name="Salg&#243;tarj&#225;n" owner="0" flag="187">
+  <hex row="19" col="30" terrain="1" road="152" name="Salg&#243;tarj&#225;n" owner="0" flag="187" station="1">
     <unit id="46673" owner="0" flag="188" face="0" exp="44"/>
   </hex>
   <hex row="19" col="31" terrain="1" road="160" name="Salg&#243;tarj&#225;n">
@@ -877,7 +877,7 @@
   <hex row="20" col="7" terrain="10" name="Ipoly"/>
   <hex row="20" col="8" terrain="10" name="Ipoly"/>
   <hex row="20" col="12" terrain="10" name="Ipoly"/>
-  <hex row="20" col="13" terrain="1" road="42" name="Sz&#233;cs&#233;ny" owner="1" flag="47">
+  <hex row="20" col="13" terrain="1" road="42" name="Sz&#233;cs&#233;ny" owner="1" flag="47" station="1">
     <unit id="33120" owner="1" flag="48" face="0" transport="33321" exp="102"/>
   </hex>
   <hex row="20" col="14" road="35">
@@ -916,7 +916,7 @@
   <hex row="21" col="0" terrain="10" name="Ipoly"/>
   <hex row="21" col="1" road="34"/>
   <hex row="21" col="2" terrain="1" road="42" name="Balassagyarmat"/>
-  <hex row="21" col="3" terrain="1" road="139" name="Balassagyarmat" owner="0" flag="187">
+  <hex row="21" col="3" terrain="1" road="139" name="Balassagyarmat" owner="0" flag="187" station="1">
     <unit id="46673" owner="0" flag="188" face="0" exp="200"/>
   </hex>
   <hex row="21" col="4" road="40"/>
@@ -948,7 +948,7 @@
     <unit id="46673" owner="0" flag="188" face="0" exp="250"/>
   </hex>
   <hex row="21" col="29" terrain="13" name="Tarj&#225;n-patak"/>
-  <hex row="21" col="30" terrain="2" road="17" owner="0" flag="187">
+  <hex row="21" col="30" terrain="2" road="17" owner="0" flag="187" station="1">
     <unit id="46694" owner="0" flag="188" face="0" exp="200"/>
   </hex>
   <hex row="21" col="31" terrain="5"/>
@@ -1204,7 +1204,7 @@
   <hex row="28" col="37" road="34">
     <unit id="33409" owner="1" flag="48" face="0" exp="119"/>
   </hex>
-  <hex row="28" col="38" terrain="1" road="40" name="M&#225;tramindszent" owner="1" flag="47">
+  <hex row="28" col="38" terrain="1" road="40" name="M&#225;tramindszent" owner="1" flag="47" station="1">
     <unit id="33094" owner="1" flag="48" face="0" exp="118"/>
   </hex>
   <hex row="28" col="39" road="130"/>
@@ -1245,7 +1245,7 @@
   <hex row="29" col="31" road="34" deploy="0">
     <unit id="46683" owner="0" flag="188" face="0" exp="44"/>
   </hex>
-  <hex row="29" col="32" terrain="1" road="35" name="B&#225;torterenye" owner="0" flag="187" deploy="0">
+  <hex row="29" col="32" terrain="1" road="35" name="B&#225;torterenye" owner="0" flag="187" deploy="0" station="1">
     <unit id="46692" owner="0" flag="188" face="0" exp="39" ldr="1"/>
   </hex>
   <hex row="29" col="33" terrain="3"/>
