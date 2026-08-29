@@ -55,6 +55,27 @@ class Player {
     var airTransportsMax: Int = 0
     var navalTransportsMax: Int = 0
     var railTransportsMax: Int = 0
+
+    /**
+     * OG's per-player **default experience** for newly acquired units — player record `+37`,
+     * scenario attribute `defaultxp`, switched on by `opt_default_xp` (224 of the 397 deployed
+     * scenarios whose source parses).
+     *
+     * **0 means the author did not set it**, and the importer writes 0 whenever the scenario's own
+     * switch is off — the value byte carries leftover editor state otherwise. OSADA then keeps the
+     * behaviour it had before this existed rather than substituting a zero the author never chose.
+     */
+    var defaultExperience: Int = 0
+
+    /**
+     * OG's per-player **default strength** for newly acquired units — player record `+39`,
+     * attribute `defaultstr`, switched on by `opt_allow_default_str` (149 scenarios).
+     *
+     * `uspanwar1` states its own value in prose — *"New purchased units will have 5 as default
+     * strength"* — and its byte reads 5, which is what confirmed the offset. 0 means not authored,
+     * exactly as for [defaultExperience].
+     */
+    var defaultStrength: Int = 0
     var supportCountries: MutableList<Int> = mutableListOf()
     var prestigePerTurn: MutableList<Int> = mutableListOf()
 
@@ -123,6 +144,8 @@ class Player {
         airTransportsMax = 0
         navalTransportsMax = 0
         railTransportsMax = 0
+        defaultExperience = 0
+        defaultStrength = 0
         val iter = coreUnits.iterator()
         while (iter.hasNext()) {
             val unit = iter.next()
@@ -173,6 +196,8 @@ class Player {
             airTransportsMax = other.airTransportsMax
             navalTransportsMax = other.navalTransportsMax
             railTransportsMax = other.railTransportsMax
+            defaultExperience = other.defaultExperience
+            defaultStrength = other.defaultStrength
             supportCountries.clear()
             supportCountries.addAll(other.supportCountries)
             prestigePerTurn.clear()

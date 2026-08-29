@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="bn5s06.xscn" name="RP Gypsy Baron" turns="16, 16, 16" date="June 15, 1943" dayturns="0" ground="0" atmosferic="0" latitude="3" iconset="3" weatherchg="0" rows="38" cols="43" eqp="eqp-lxf" image="resources/maps/images/map_508.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0">
-  <player id="0" country="19" side="1" airtrans="1" navaltrans="0" railtrans="0" support="20,0,0,0" turnprestige="0, 25, 50, 25, 50, 25, 50, 25, 50, 25, 50, 50, 25, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25"/>
-  <player id="1" country="359" side="0" airtrans="1" navaltrans="0" railtrans="0" support="8,60,360,0" turnprestige="0, 50, 25, 50, 25, 50, 25, 50, 25, 50, 50, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25"/>
+<map file="bn5s06.xscn" name="RP Gypsy Baron" turns="16, 16, 16" date="June 15, 1943" dayturns="0" ground="0" atmosferic="0" latitude="3" iconset="3" weatherchg="0" rows="38" cols="43" eqp="eqp-lxf" image="resources/maps/images/map_508.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1">
+  <player id="0" country="19" side="1" airtrans="1" navaltrans="0" railtrans="0" defaultxp="25" defaultstr="10" support="20,0,0,0" turnprestige="0, 25, 50, 25, 50, 25, 50, 25, 50, 25, 50, 50, 25, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25"/>
+  <player id="1" country="359" side="0" airtrans="1" navaltrans="0" railtrans="0" defaultxp="25" defaultstr="10" support="8,60,360,0" turnprestige="0, 50, 25, 50, 25, 50, 25, 50, 25, 50, 50, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25"/>
   <reinforce turn="6">
     <at row="24" col="33">
       <unit id="7976" owner="1" flag="8" face="0" exp="100"/>

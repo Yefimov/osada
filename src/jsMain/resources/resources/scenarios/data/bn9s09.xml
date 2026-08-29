@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="bn9s09.xscn" name="Second Battle of Kharkov" turns="7, 9, 11" date="May 12, 1942" dayturns="0" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="0" rows="31" cols="43" eqp="eqp-lxf" image="resources/maps/images/map_83.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="1" portsnonavaldeploy="1">
-  <player id="0" country="19" side="1" airtrans="2" navaltrans="0" railtrans="2" support="20,0,0,0" turnprestige="0, 350, 350, 350, 350, 350, 350, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
-  <player id="1" country="7" side="0" airtrans="1" navaltrans="0" railtrans="2" support="5,8,38,360" turnprestige="0, 175, 175, 175, 175, 175, 175, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+<map file="bn9s09.xscn" name="Second Battle of Kharkov" turns="7, 9, 11" date="May 12, 1942" dayturns="0" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="0" rows="31" cols="43" eqp="eqp-lxf" image="resources/maps/images/map_83.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="1" portsnonavaldeploy="1" prototypes="1" subsneedlof="1">
+  <player id="0" country="19" side="1" airtrans="2" navaltrans="0" railtrans="2" defaultxp="50" defaultstr="10" support="20,0,0,0" turnprestige="0, 350, 350, 350, 350, 350, 350, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <player id="1" country="7" side="0" airtrans="1" navaltrans="0" railtrans="2" defaultxp="200" defaultstr="10" support="5,8,38,360" turnprestige="0, 175, 175, 175, 175, 175, 175, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="2">
     <at row="29" col="42">
       <unit id="20364" owner="0" flag="20" face="0" exp="92" str="11"/>

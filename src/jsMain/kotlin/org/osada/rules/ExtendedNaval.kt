@@ -238,9 +238,18 @@ internal object ExtendedNaval {
      *
      * 627 of the 710 shipped submarine records have a gun range above one, so this bites on the
      * great majority of them; at range 1 there is nothing in between and it never applies.
+     *
+     * **A scenario may switch it back off.** OG's own `Subs no need DLOF` (byte 1017 bit 1, three
+     * scenarios corpus-wide) exempts submarines from this bullet, and `Scenario.subsNeedLineOfFire`
+     * carries it. Null -- the source could not be read -- leaves the bullet in force, which is the
+     * direction §AD prescribes for a SUB-OPTION that only ever removes an obstruction.
      */
     fun submarineLacksLineOfFire(
         attacker: GameUnit,
         defender: GameUnit,
-    ): Boolean = enabled() && isSubmarine(attacker) && !ExtendedLos.lineOfFireClear(attacker, defender)
+    ): Boolean =
+        enabled() &&
+            GameHolder.instance?.scenario?.subsNeedLineOfFire != false &&
+            isSubmarine(attacker) &&
+            !ExtendedLos.lineOfFireClear(attacker, defender)
 }

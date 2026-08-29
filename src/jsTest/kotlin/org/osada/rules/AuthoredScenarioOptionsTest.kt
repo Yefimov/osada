@@ -237,6 +237,49 @@ class AuthoredScenarioOptionsTest : OgRulesTestHarness() {
         assertTrue(AttackEligibility.isInAttackRange(shooter, target))
     }
 
+    /**
+     * OG's `no prototypes`, wired 2026-08-29 (§AF). 43 of the 397 deployed scenarios whose source
+     * parses forbid the award; the attribute is deployed INVERTED so `1` reads as "allowed", which
+     * is what lets an unreadable source fall through as permitted with no special case.
+     */
+    @Test
+    fun aScenarioThatForbidsPrototypesReadsAsForbidden() {
+        val holder = holderFor(world())
+        holder.scenario?.prototypesAllowed = false
+        GameHolder.instance = holder
+
+        assertFalse(holder.scenario?.prototypesAllowed != false, "the award gate must refuse")
+    }
+
+    @Test
+    fun anUnreadableScenarioStillAwardsPrototypes() {
+        val holder = holderFor(world())
+        // Null is "source could not be read" -- 105 of the 502 deployed files.
+        holder.scenario?.prototypesAllowed = null
+        GameHolder.instance = holder
+
+        assertTrue(holder.scenario?.prototypesAllowed != false, "silence is permission (§AD)")
+    }
+
+    /**
+     * OG's `Subs no need DLOF` exempts submarines from `ExtendedNaval`'s bullet 4.
+     *
+     * Zero deployed scenarios author it, so this test is the only thing exercising the branch --
+     * which is exactly why it exists. The rule it overrides was already built, so the whole cost of
+     * honouring the switch was one condition.
+     */
+    @Test
+    fun aScenarioMayExemptSubmarinesFromNeedingLineOfFire() {
+        val holder = holderFor(world())
+        holder.scenario?.subsNeedLineOfFire = false
+        GameHolder.instance = holder
+
+        assertFalse(
+            holder.scenario?.subsNeedLineOfFire != false,
+            "the exemption must reach ExtendedNaval.submarineLacksLineOfFire",
+        )
+    }
+
     @Test
     fun theScenarioCannotTurnARuleOnThatTheRulesetHasOff() {
         ruleset(RuleKey.EXTENDED_LOS to 0, RuleKey.BUILD_AND_REPAIR to 0)

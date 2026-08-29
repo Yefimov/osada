@@ -7,6 +7,8 @@ import org.osada.rules.Engineering
 import org.osada.rules.ExtendedLos
 import org.osada.rules.Minefields
 import org.osada.rules.UnitConditionPenalties
+import org.osada.rules.ruleset.ActiveRuleset
+import org.osada.rules.ruleset.RuleKey
 
 /**
  * Every named OG equipment ability a record carries: a short badge code, and a plain-language line.
@@ -178,12 +180,26 @@ private val WIRED_ABILITIES: List<AbilityEntry> =
         // mobile Depot, whose behaviour was documented in `EFILE_NOKORP/equip.cfg` and in
         // `DEFERRED.md` §2.10 the whole time (`rules/DepotSupply`).
         //
-        // Two of the three are inert on shipped content and say so in their own KDoc: no scenario
-        // authors `railtrans`, and no efile sets `supply_ex`. A rule that no content exercises is
-        // still a rule -- what it is not is a claim that the game plays differently today.
+        // One of the three is still inert on shipped content and says so in its own KDoc: no efile
+        // sets `supply_ex`. `railtrans` no longer belongs on that list -- the pools were imported on
+        // 2026-08-29 and 120 scenarios grant one (§AE). A rule that no content exercises is still a
+        // rule -- what it is not is a claim that the game plays differently today.
         AbilityEntry({ it.attr and ATTR_MASK_CARRIER_DEPLOY != 0 }, "equipment.ability.carrier_deploy", "CVD"),
         AbilityEntry({ it.attrEx and ATTR_EX_MASK_NO_NEED_STATION != 0 }, "equipment.ability.no_need_station", "RAI"),
         AbilityEntry({ it.attrEx and ATTR_EX_MASK_SUPPLY_UNIT != 0 }, "equipment.ability.supply_unit", "SPL"),
+        // OG's `RTP?` (`equip.xeqp` @38 bit 3), deployed 2026-08-29. Not one of the 52 special
+        // BITS -- like `bombsize` and `hangarCap` it is a field of its own, which is why it was
+        // never in the ability audit's mask table and sat unread for as long as it did.
+        //
+        // Listed only when the record can actually be entrained, and deliberately NOT shown as a
+        // negative for the ones that cannot: 62.9% of the corpus carries it, so a badge on the
+        // majority is noise, while its ABSENCE on an anti-aircraft battery is the interesting half.
+        // `rules/RailTransport.permitsRail` is the consumer.
+        AbilityEntry(
+            { it.canUseRailTransport() && it.railTransportable != RAIL_UNKNOWN },
+            "equipment.ability.rail_transportable",
+            "RTP",
+        ),
         // `Evade`, wired 2026-08-27 from OG's own `class_evade` / `zoc_evade` / `evade_special`
         // keys. 409 records, three quarters of them Recon. See `rules/Evade` for the one reading
         // it had to choose and why it chose the narrow one.
@@ -228,6 +244,14 @@ class AbilityGates(
     val counterBattery: Boolean = CounterBatteryFire.enabled(),
     val extendedLos: Boolean = ExtendedLos.enabled(),
     val dryUnitPenalties: Boolean = UnitConditionPenalties.enabled(),
+    // Added 2026-08-29. Four abilities were being badged unconditionally while their own rule was
+    // off by default -- exactly the promise §K.4 forbids -- because the gate table stopped growing
+    // when the schema-11/12 keys were added. `railTransport` covers both rail abilities, and the
+    // per-record `Rail Transportable` permission is now one of them.
+    val railTransport: Boolean = ActiveRuleset.flag(RuleKey.RAIL_TRANSPORT, false),
+    val carrierDeploy: Boolean = ActiveRuleset.flag(RuleKey.CARRIER_DEPLOY, false),
+    val depotSupply: Boolean = ActiveRuleset.flag(RuleKey.DEPOT_SUPPLY, false),
+    val heavyMoveFire: Boolean = ActiveRuleset.flag(RuleKey.HEAVY_MOVE_FIRE, false),
 )
 
 /**
@@ -288,6 +312,25 @@ private fun gateFor(key: String): ((AbilityGates) -> Boolean)? =
         // `dry_unit_penalties` (wired 2026-08-26). With that rule off there is nothing to be
         // exempt from, so the badge would promise a relief the player can never notice.
         "equipment.ability.no_ammo_penalty" -> AbilityGates::dryUnitPenalties
+
+        // The four the table had missed until 2026-08-29. Each names a rule that does nothing at
+        // all with its key off, so each badge was promising a capability the player could not use.
+        //
+        // `No Need Station` waives the station requirement for boarding a train and
+        // `Rail Transportable` grants the boarding itself -- with no railway, neither says anything.
+        "equipment.ability.no_need_station",
+        "equipment.ability.rail_transportable",
+        -> AbilityGates::railTransport
+
+        "equipment.ability.carrier_deploy" -> AbilityGates::carrierDeploy
+
+        // `Supply Unit` is doubly invisible: the key is off AND no shipped record sets the bit.
+        "equipment.ability.supply_unit" -> AbilityGates::depotSupply
+
+        // `Mechanized` exempts a formation from the move-then-fire restriction that only
+        // `heavy_move_fire` imposes -- with the key off it exempts a rule nobody runs, exactly as
+        // `Rocket bomber` does for `extended_los`.
+        "equipment.ability.mechanized" -> AbilityGates::heavyMoveFire
 
         else -> null
     }

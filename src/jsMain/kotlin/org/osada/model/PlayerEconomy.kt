@@ -73,11 +73,38 @@ fun Player.acquireUnit(
     unit.flag = country + 1
     unit.player = this
     unit.synchronizeStalinRegime(usesStalinRegime())
-    if (GameHolder.instance?.campaign == null) {
-        unit.experience = GameHolder.instance?.scenario?.getSideUnitsAvgExp(1 - side) ?: 0
-    }
+    applyPurchaseDefaults(unit)
     addCoreUnit(unit)
     return true
+}
+
+/**
+ * OG's two per-player purchase defaults, wired 2026-08-29 (`docs/og-fidelity-plan.md` §AF).
+ *
+ * The scenario may state what a newly acquired formation arrives with — [Player.defaultExperience]
+ * (`opt_default_xp`, 224 scenarios) and [Player.defaultStrength] (`opt_allow_default_str`, 149).
+ * `uspanwar1` puts the second in its own briefing: *"New purchased units will have 5 as default
+ * strength"*.
+ *
+ * **Both are additive.** 0 means the author did not set it, so an unauthored scenario keeps exactly
+ * what it did before: OSADA's own rule of matching the OPPONENT's average experience outside a
+ * campaign, and full strength. That rule is not OG's and is deliberately left in place where OG has
+ * nothing to say — replacing it with a bare 0 would be reading silence as an instruction.
+ *
+ * Experience is deliberately NOT applied inside a campaign, which is the existing carve-out: a
+ * campaign's core roster carries its own veterans forward and a scenario default must not overwrite
+ * them.
+ */
+private fun Player.applyPurchaseDefaults(unit: GameUnit) {
+    if (GameHolder.instance?.campaign == null) {
+        unit.experience =
+            if (defaultExperience > 0) {
+                defaultExperience
+            } else {
+                GameHolder.instance?.scenario?.getSideUnitsAvgExp(1 - side) ?: 0
+            }
+    }
+    if (defaultStrength > 0) unit.strength = defaultStrength
 }
 
 fun Player.upgradeUnit(

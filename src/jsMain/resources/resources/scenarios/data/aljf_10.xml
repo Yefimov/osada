@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="aljf_10.xscn" name="Retreat at Bull Run" turns="20, 20, 20" date="August 28, 1862" dayturns="0" ground="0" atmosferic="0" latitude="15" iconset="0" weatherchg="0" rows="23" cols="40" eqp="eqp-kaiser" image="resources/maps/images/map_698.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="1" airintercept="0" portsnosupply="0" portsnonavaldeploy="0">
-  <player id="0" country="162" side="1" airtrans="0" navaltrans="0" railtrans="3" support="163,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
-  <player id="1" country="150" side="0" airtrans="0" navaltrans="0" railtrans="9" support="151,0,0,0" turnprestige="100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+<map file="aljf_10.xscn" name="Retreat at Bull Run" turns="20, 20, 20" date="August 28, 1862" dayturns="0" ground="0" atmosferic="0" latitude="15" iconset="0" weatherchg="0" rows="23" cols="40" eqp="eqp-kaiser" image="resources/maps/images/map_698.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="1" airintercept="0" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1">
+  <player id="0" country="162" side="1" airtrans="0" navaltrans="0" railtrans="3" defaultxp="0" defaultstr="0" support="163,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <player id="1" country="150" side="0" airtrans="0" navaltrans="0" railtrans="9" defaultxp="0" defaultstr="0" support="151,0,0,0" turnprestige="100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="3">
     <at row="2" col="31">
       <unit id="45971" owner="0" flag="163" face="0" transport="45990" exp="116"/>

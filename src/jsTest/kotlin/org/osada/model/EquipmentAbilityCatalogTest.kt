@@ -85,13 +85,39 @@ class EquipmentAbilityCatalogTest {
 
     // ---- The purchase-window catalog itself ---------------------------------------------------
 
-    /** Every ruleset-gated ability visible, so a test about BITS is not also a test about keys. */
+    /**
+     * Every ruleset-gated ability visible, so a test about BITS is not also a test about keys.
+     *
+     * Every gate is named explicitly in both helpers on purpose: the defaults read `ActiveRuleset`,
+     * so an omitted one would make these tests depend on whatever ruleset another test left behind.
+     * That is also how the four gates added on 2026-08-29 went missing for as long as they did.
+     */
     private fun allGatesOn() =
-        AbilityGates(minefields = true, engineering = true, counterBattery = true, extendedLos = true)
+        AbilityGates(
+            minefields = true,
+            engineering = true,
+            counterBattery = true,
+            extendedLos = true,
+            dryUnitPenalties = true,
+            railTransport = true,
+            carrierDeploy = true,
+            depotSupply = true,
+            heavyMoveFire = true,
+        )
 
-    /** The shipped default: none of the four optional rules on. */
+    /** The shipped default: none of the optional rules on. */
     private fun allGatesOff() =
-        AbilityGates(minefields = false, engineering = false, counterBattery = false, extendedLos = false)
+        AbilityGates(
+            minefields = false,
+            engineering = false,
+            counterBattery = false,
+            extendedLos = false,
+            dryUnitPenalties = false,
+            railTransport = false,
+            carrierDeploy = false,
+            depotSupply = false,
+            heavyMoveFire = false,
+        )
 
     @Test
     fun aBareRecordCarriesNoAbilityLines() {
@@ -120,6 +146,69 @@ class EquipmentAbilityCatalogTest {
         assertTrue("equipment.ability.drop_mines" in withMines)
         assertTrue("equipment.ability.clear_mines" in withMines)
         assertTrue("equipment.ability.bridge" in withMines, "the unrelated ability is unaffected")
+    }
+
+    /**
+     * The four abilities whose badge was shown unconditionally while their own rule was off.
+     *
+     * `docs/og-fidelity-plan.md` §K.4 settled the principle for the minefield three — *"Don't show
+     * it for rulesets that are not OG (I mean, that don't use mines!)"* — and the gate table simply
+     * stopped growing when the schema-11/12 keys arrived. Until 2026-08-29 a player on the default
+     * ruleset saw `Carrier Deploy`, `No Need Station`, `Supply Unit` and `Mechanized` advertised on
+     * units that could not use any of them.
+     */
+    @Test
+    fun anAbilityWhoseRuleIsOffIsNotAdvertised() {
+        val record =
+            EquipmentData().apply {
+                attr = ATTR_MASK_CARRIER_DEPLOY or ATTR_MASK_MECHANIZED or ATTR_MASK_BRIDGE
+                attrEx = ATTR_EX_MASK_NO_NEED_STATION or ATTR_EX_MASK_SUPPLY_UNIT
+                railTransportable = 1
+            }
+
+        assertEquals(
+            listOf("equipment.ability.bridge"),
+            record.abilityCatalogKeys(allGatesOff()),
+            "only the ability that still does something survives the default ruleset",
+        )
+
+        val on = record.abilityCatalogKeys(allGatesOn())
+        listOf(
+            "equipment.ability.carrier_deploy",
+            "equipment.ability.mechanized",
+            "equipment.ability.no_need_station",
+            "equipment.ability.supply_unit",
+            "equipment.ability.rail_transportable",
+        ).forEach { key -> assertTrue(key in on, "$key must reappear once its rule is on") }
+    }
+
+    /**
+     * OG's `RTP?` is a PERMISSION, so its absence must not be read as a refusal.
+     *
+     * 4,140 shipped records have no OG source at all and carry [RAIL_UNKNOWN]. Badging those would
+     * claim OG granted something it never mentioned; refusing them would strip the railway from
+     * content that never opted out. The catalog says nothing and the rule permits.
+     */
+    @Test
+    fun railTransportableDistinguishesNoDataFromARefusal() {
+        val permitted = EquipmentData().apply { railTransportable = 1 }
+        val refused = EquipmentData().apply { railTransportable = 0 }
+        val noData = EquipmentData()
+
+        assertTrue(permitted.canUseRailTransport())
+        assertFalse(refused.canUseRailTransport(), "0 is OG saying no")
+        assertTrue(noData.canUseRailTransport(), "absence is not a refusal")
+
+        assertEquals(RAIL_UNKNOWN, noData.railTransportable, "the default is the sentinel, not 0")
+        assertEquals(
+            listOf("equipment.ability.rail_transportable"),
+            permitted.abilityCatalogKeys(allGatesOn()),
+        )
+        assertEquals(
+            emptyList(),
+            noData.abilityCatalogKeys(allGatesOn()),
+            "no data earns no badge either way",
+        )
     }
 
     /** Every ability carries a badge code, and no two abilities share one — the badge row would be

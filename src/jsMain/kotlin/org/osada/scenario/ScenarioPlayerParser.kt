@@ -92,6 +92,10 @@ internal object ScenarioPlayerParser {
         player.airTransportsMax = player.airTransports
         player.navalTransportsMax = player.navalTransports
         player.railTransportsMax = player.railTransports
+        // Already gated on the scenario's own `opt_default_xp` / `opt_allow_default_str` switch by
+        // the importer, so 0 here means "not authored" and never "the author chose zero".
+        player.defaultExperience = el.getAttribute("defaultxp")?.toIntOrNull() ?: 0
+        player.defaultStrength = el.getAttribute("defaultstr")?.toIntOrNull() ?: 0
         player.prestigePerTurn = el
             .getAttribute("turnprestige")
             ?.split(", ")

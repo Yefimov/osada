@@ -59,6 +59,9 @@ class AuthorsVisionProfileTest {
             RuleKey.EXTENDED_NAVAL,
             RuleKey.BARRAGE,
             RuleKey.BUILD_AND_REPAIR,
+            // Joined 2026-08-29: its gate is the `railtrans` POOL, which 120 deployed scenarios
+            // now grant. Before the pools were imported this entry would have been meaningless.
+            RuleKey.RAIL_TRANSPORT,
         )
 
     @Test
@@ -102,8 +105,15 @@ class AuthorsVisionProfileTest {
     fun rulesWithNoScenarioSwitchStayOnOsadasDefault() {
         val resolved = authorsVision()
 
-        // Nothing in the content asks for these three, so Author's Vision has nobody to defer to.
-        listOf(RuleKey.COUNTERBATTERY, RuleKey.MINEFIELDS, RuleKey.NAVAL_CRITICAL_HITS).forEach { rule ->
+        // Nothing in the content asks for these, so Author's Vision has nobody to defer to.
+        // `DEPOT_SUPPLY` belongs here rather than above precisely because its gate -- `supply_ex` --
+        // is set by NO shipped efile, which is what separates it from `RAIL_TRANSPORT`.
+        listOf(
+            RuleKey.COUNTERBATTERY,
+            RuleKey.MINEFIELDS,
+            RuleKey.NAVAL_CRITICAL_HITS,
+            RuleKey.DEPOT_SUPPLY,
+        ).forEach { rule ->
             assertEquals(0, resolved.effective(rule), "${rule.key} has no per-scenario switch")
             assertEquals(RuleProvenance.OSADA_DEFAULT, resolved.rule(rule).provenance)
         }

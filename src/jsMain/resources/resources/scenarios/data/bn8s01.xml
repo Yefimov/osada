@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="bn8s01.xscn" name="Battle of Sabac" turns="15, 15, 15" date="September 18, 1941" dayturns="0" ground="0" atmosferic="0" latitude="1" iconset="0" weatherchg="0" rows="22" cols="18" eqp="eqp-lxf" image="resources/maps/images/map_582.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0">
-  <player id="0" country="43" side="1" airtrans="0" navaltrans="0" railtrans="2" support="67,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
-  <player id="1" country="67" side="0" airtrans="0" navaltrans="0" railtrans="2" support="8,68,0,0" turnprestige="0, 25, 0, 25, 0, 25, 0, 25, 0, 25, 0, 25, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+<map file="bn8s01.xscn" name="Battle of Sabac" turns="15, 15, 15" date="September 18, 1941" dayturns="0" ground="0" atmosferic="0" latitude="1" iconset="0" weatherchg="0" rows="22" cols="18" eqp="eqp-lxf" image="resources/maps/images/map_582.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1">
+  <player id="0" country="43" side="1" airtrans="0" navaltrans="0" railtrans="2" defaultxp="0" defaultstr="10" support="67,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <player id="1" country="67" side="0" airtrans="0" navaltrans="0" railtrans="2" defaultxp="100" defaultstr="10" support="8,68,0,0" turnprestige="0, 25, 0, 25, 0, 25, 0, 25, 0, 25, 0, 25, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="7">
     <at row="16" col="16">
       <unit id="8222" owner="1" flag="8" face="0" exp="100" str="8"/>

@@ -416,16 +416,22 @@ object UnitActionAvailability {
      * OG's railway: a ground formation standing on a boarding point may be railed to another one
      * along connected track, spending one of its player's rail transport points.
      *
-     * **NOT APPLICABLE unless the player actually has a rail pool**, which no shipped scenario
-     * authors (`rules/RailTransport`) -- so the chip is absent everywhere today rather than present
-     * and permanently disabled. That is the same rule the engineering chips follow: an action a
-     * campaign can never take does not belong on its strip at all.
+     * **NOT APPLICABLE unless the player actually has a rail pool** -- 120 of the 502 deployed
+     * scenarios grant one since the pools were imported (`docs/og-fidelity-plan.md` §AE.3), so the
+     * chip is absent in the rest rather than present and permanently disabled. That is the same
+     * rule the engineering chips follow: an action a campaign can never take does not belong on
+     * its strip at all.
+     *
+     * **Equipment OG forbids the railway to is not applicable either**, for the same reason and not
+     * merely blocked: a fortification that cannot be entrained is not a formation that has nowhere
+     * to go, and `NO_RAIL_DESTINATION` would say the wrong thing about it. Added with the per-record
+     * permission on 2026-08-29 (`EquipmentData.railTransportable`).
      */
     private fun railMove(context: UnitActionContext): ActionAvailability {
         val unit = context.unit
         val pool = unit.player?.railTransports ?: 0
         val onTrack = RailTransport.isBoardingPoint(unit.getHex(), unit)
-        if (pool <= 0 || !onTrack) {
+        if (pool <= 0 || !onTrack || !unit.unitData(true).canUseRailTransport()) {
             return ActionAvailability.notApplicable(UnitActionId.RAIL_MOVE)
         }
         val reasons = mutableListOf<ActionBlock>()

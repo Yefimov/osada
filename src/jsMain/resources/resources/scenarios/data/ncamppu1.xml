@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="ncamppu1.xscn" name="Pusan Perimeter 1" turns="6, 8, 10" date="August 5, 1950" dayturns="0" ground="0" atmosferic="0" latitude="1" iconset="3" weatherchg="0" rows="39" cols="44" eqp="eqp-lxf" image="resources/maps/images/map_901.png" eqpv="united1" canblow="0" canrepair="0" canbuild="0" extlos="0" truedlof="0" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="0" airintercept="0" portsnosupply="0" portsnonavaldeploy="0">
-  <player id="0" country="25" side="0" airtrans="0" navaltrans="0" railtrans="0" support="26,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
-  <player id="1" country="9" side="1" airtrans="0" navaltrans="0" railtrans="0" support="10,19,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+<map file="ncamppu1.xscn" name="Pusan Perimeter 1" turns="6, 8, 10" date="August 5, 1950" dayturns="0" ground="0" atmosferic="0" latitude="1" iconset="3" weatherchg="0" rows="39" cols="44" eqp="eqp-lxf" image="resources/maps/images/map_901.png" eqpv="united1" canblow="0" canrepair="0" canbuild="0" extlos="0" truedlof="0" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="0" airintercept="0" portsnosupply="0" portsnonavaldeploy="0" prototypes="0" subsneedlof="1">
+  <player id="0" country="25" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="26,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <player id="1" country="9" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="10,19,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="2">
     <at row="11" col="42">
       <unit id="14414" owner="1" flag="10" face="0" exp="120" str="5"/>

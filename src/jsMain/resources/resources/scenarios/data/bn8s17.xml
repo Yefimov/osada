@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="bn8s17.xscn" name="Advance on Trieste" turns="14, 16, 20" date="April 14, 1945" dayturns="0" ground="0" atmosferic="0" latitude="6" iconset="3" weatherchg="0" rows="38" cols="44" eqp="eqp-lxf" image="resources/maps/images/map_321.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0">
-  <player id="0" country="43" side="1" airtrans="2" navaltrans="2" railtrans="0" support="7,23,44,0" turnprestige="0, 50, 75, 100, 125, 125, 125, 125, 125, 125, 100, 75, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
-  <player id="1" country="41" side="0" airtrans="1" navaltrans="2" railtrans="0" support="8,35,42,360" turnprestige="0, 25, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+<map file="bn8s17.xscn" name="Advance on Trieste" turns="14, 16, 20" date="April 14, 1945" dayturns="0" ground="0" atmosferic="0" latitude="6" iconset="3" weatherchg="0" rows="38" cols="44" eqp="eqp-lxf" image="resources/maps/images/map_321.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1">
+  <player id="0" country="43" side="1" airtrans="2" navaltrans="2" railtrans="0" defaultxp="99" defaultstr="10" support="7,23,44,0" turnprestige="0, 50, 75, 100, 125, 125, 125, 125, 125, 125, 100, 75, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <player id="1" country="41" side="0" airtrans="1" navaltrans="2" railtrans="0" defaultxp="100" defaultstr="10" support="8,35,42,360" turnprestige="0, 25, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="2">
     <at row="19" col="1">
       <unit id="25008" owner="0" flag="23" face="0" exp="144"/>

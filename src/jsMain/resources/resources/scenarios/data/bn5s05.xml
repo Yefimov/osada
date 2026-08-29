@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="bn5s05.xscn" name="RP Narva" turns="15, 18, 24" date="July 24, 1944" dayturns="0" ground="0" atmosferic="0" latitude="3" iconset="3" weatherchg="0" rows="38" cols="44" eqp="eqp-lxf" image="resources/maps/images/map_164.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0">
-  <player id="0" country="19" side="1" airtrans="1" navaltrans="3" railtrans="3" support="20,0,0,0" turnprestige="0, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 40"/>
-  <player id="1" country="7" side="0" airtrans="1" navaltrans="3" railtrans="5" support="8,18,36,41" turnprestige="0, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25"/>
+<map file="bn5s05.xscn" name="RP Narva" turns="15, 18, 24" date="July 24, 1944" dayturns="0" ground="0" atmosferic="0" latitude="3" iconset="3" weatherchg="0" rows="38" cols="44" eqp="eqp-lxf" image="resources/maps/images/map_164.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1">
+  <player id="0" country="19" side="1" airtrans="1" navaltrans="3" railtrans="3" defaultxp="40" defaultstr="10" support="20,0,0,0" turnprestige="0, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 40"/>
+  <player id="1" country="7" side="0" airtrans="1" navaltrans="3" railtrans="5" defaultxp="25" defaultstr="10" support="8,18,36,41" turnprestige="0, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25"/>
   <reinforce turn="2">
     <at row="11" col="41">
       <unit id="20803" owner="0" flag="20" face="0" exp="131"/>

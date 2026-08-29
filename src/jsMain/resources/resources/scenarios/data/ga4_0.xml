@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="ga4_0.xscn" name="Khalkin Gol" turns="14, 15, 18" date="August 20, 1939" dayturns="0" ground="0" atmosferic="0" latitude="0" iconset="0" weatherchg="1" rows="39" cols="44" eqp="eqp-comww2" image="resources/maps/images/map_176.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="1" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0">
-  <player id="0" country="89" side="1" airtrans="1" navaltrans="0" railtrans="0" support="305,90,0,0" turnprestige="72, 10, 50, 50, 70, 40, 60, 40, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
-  <player id="1" country="5" side="0" airtrans="1" navaltrans="0" railtrans="0" support="6,25,0,0" turnprestige="0, 300, 0, 0, 200, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+<map file="ga4_0.xscn" name="Khalkin Gol" turns="14, 15, 18" date="August 20, 1939" dayturns="0" ground="0" atmosferic="0" latitude="0" iconset="0" weatherchg="1" rows="39" cols="44" eqp="eqp-comww2" image="resources/maps/images/map_176.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="1" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1">
+  <player id="0" country="89" side="1" airtrans="1" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="10" support="305,90,0,0" turnprestige="72, 10, 50, 50, 70, 40, 60, 40, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <player id="1" country="5" side="0" airtrans="1" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="5" support="6,25,0,0" turnprestige="0, 300, 0, 0, 200, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="2">
     <at row="31" col="12">
       <unit id="39702" owner="0" flag="90" face="0" transport="40192" exp="100" str="9"/>

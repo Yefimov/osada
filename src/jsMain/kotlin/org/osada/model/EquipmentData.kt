@@ -2,6 +2,16 @@ package org.osada.model
 
 import kotlin.js.Json
 
+/**
+ * [EquipmentData.railTransportable] for a record OG never spoke about — a Panzer Marshal stock
+ * roster, or one the merge could not trace back to a source efile.
+ *
+ * Distinct from 0, which is OG positively saying *"this cannot be entrained"*. The two must not
+ * collapse: 4,140 shipped records carry no data, and reading them as a refusal would strip the
+ * railway from content that never opted out of it.
+ */
+const val RAIL_UNKNOWN: Int = -1
+
 @JsExport
 @JsName("EquipmentData")
 class EquipmentData {
@@ -91,6 +101,54 @@ class EquipmentData {
      */
     var hangarCap: Int = 0
 
+    /**
+     * OG's `RTP?` — *"Units be configured to use Train Transport"* (`equip.xeqp` byte @38 bit 3).
+     *
+     * The author's Features page lists four things a scenario needs before trains run, and this is
+     * the fourth: a train, a station, track, **and units permitted to use it**. 62.9% of the
+     * corpus's 198,037 records carry it, and it discriminates inside the ground classes rather than
+     * merely separating ground from sea — Infantry 94.0%, Tank 94.3%, Artillery 86.2%, but
+     * **AirDefence 27.0% and Fortification 31.3%**, against 0–1% for every naval and air class.
+     * Emplaced guns and permanent works mostly cannot be entrained, and OG says so per record.
+     *
+     * **Three-valued, and [RAIL_UNKNOWN] is not a synonym for "no".** Deployed by
+     * `tools/eqp-merge/add_rail_transportable.py`, which leaves the sentinel on the 4,140 Panzer
+     * Marshal stock records that have no OG source at all. Reading those as "cannot rail" would
+     * silently strip the mechanic from content OG never spoke about, so [canUseRailTransport] reads
+     * unknown as PERMITTED — `docs/og-sources.md`: a RULE-level permission reads silence as
+     * permission, and only a sub-option that ADDS an obstruction reads silence as false.
+     */
+    var railTransportable: Int = RAIL_UNKNOWN
+
+    /** Whether OG permits this equipment to be carried by rail. Unknown counts as permitted; see
+     *  [railTransportable] for why that direction rather than the other. */
+    fun canUseRailTransport(): Boolean = railTransportable != 0
+
+    /**
+     * OG's remaining **transport weight masks** — `AtpW` @42, `NtpW` @43, `RtpW` @44, `HtpW` @45
+     * and the container-side `HangarW` @46. Deployed 2026-08-29 by
+     * `tools/eqp-merge/add_transport_weights.py`. [groundweight] is the sixth and shipped already.
+     *
+     * **They are bitmasks, and that much is settled**: the author writes *"weights are implemented
+     * as bit-type data"*, and 82–99.7% of each field's non-zero values are a single bit, with the
+     * eight powers of two the most common values everywhere.
+     *
+     * **Nothing reads them yet, deliberately.** The natural predicate — cargo mask AND transport
+     * mask — is confirmed for ground (`ui/EquipmentCatalogStrip` already applies it to
+     * [groundweight]) and **refuted for naval**: 7,166 of 7,187 naval-transport records carry
+     * `NtpW = 0`, which would make the test vacuous, and [hangarWeight] does not share the cargo
+     * mask space either. The carrier-side field is `docs/og-open-questions.md` Q1.3. The data is
+     * deployed now so that answering it is a rule change and not another import.
+     *
+     * [RAIL_UNKNOWN] on a record with no OG source: 0 is a real mask value here, so it cannot
+     * double as "no data".
+     */
+    var airWeight: Int = RAIL_UNKNOWN
+    var navalWeight: Int = RAIL_UNKNOWN
+    var railWeight: Int = RAIL_UNKNOWN
+    var heloWeight: Int = RAIL_UNKNOWN
+    var hangarWeight: Int = RAIL_UNKNOWN
+
     // 1-based (1=January), matching the OG CSV's own MonthAvail/MonthExpired convention. Default
     // to full-year coverage: any equipment JSON whose parsehints don't include these two fields
     // (PM's own original adlerkorps/pacific sets, never touched by the OG import) behaves exactly
@@ -146,6 +204,12 @@ internal fun EquipmentData.withStatMultiplier(multiplier: Int): EquipmentData =
         result.attrEx = attrEx
         result.bombsize = bombsize
         result.hangarCap = hangarCap
+        result.railTransportable = railTransportable
+        result.airWeight = airWeight
+        result.navalWeight = navalWeight
+        result.railWeight = railWeight
+        result.heloWeight = heloWeight
+        result.hangarWeight = hangarWeight
         result.monthavailable = monthavailable
         result.monthexpired = monthexpired
     }
@@ -231,9 +295,10 @@ private fun EquipmentData.applyEquipmentFieldsC(
     }
 }
 
-/** OG's `Special4`/`SpecialEx` (2026-08-19) and Bomber Size (2026-08-26) -- see
- *  [EquipmentData.attr2], [EquipmentData.attrEx], [EquipmentData.bombsize] and (2026-08-27)
- *  [EquipmentData.hangarCap]. */
+/** OG's `Special4`/`SpecialEx` (2026-08-19), Bomber Size (2026-08-26), Hangar Capacity
+ *  (2026-08-27) and Rail Transportable (2026-08-29) -- see [EquipmentData.attr2],
+ *  [EquipmentData.attrEx], [EquipmentData.bombsize], [EquipmentData.hangarCap] and
+ *  [EquipmentData.railTransportable]. */
 private fun EquipmentData.applyEquipmentFieldsD(
     hint: String,
     value: dynamic,
@@ -243,5 +308,11 @@ private fun EquipmentData.applyEquipmentFieldsD(
         "attrEx" -> attrEx = value as Int
         "bombsize" -> bombsize = value as Int
         "hangarcap" -> hangarCap = value as Int
+        "railtransportable" -> railTransportable = value as Int
+        "airweight" -> airWeight = value as Int
+        "navalweight" -> navalWeight = value as Int
+        "railweight" -> railWeight = value as Int
+        "heloweight" -> heloWeight = value as Int
+        "hangarweight" -> hangarWeight = value as Int
     }
 }
