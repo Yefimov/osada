@@ -60,17 +60,10 @@ internal class UnitMountOperations(
         val type = GameRules.getEmbarkType(gameMap, unit)
         val transportClass = if (type > 0) UnitClass.entries.find { it.value == type } else null
         if (transportClass == null || !unit.embark(transportClass)) return false
-        when (type) {
-            UnitClass.AIR_TRANSPORT.value -> {
-                unit.player?.airTransports =
-                    unit.player?.airTransports?.minus(1) ?: 0
-                leaveGroundedTransportBehind(unit)
-            }
-
-            UnitClass.NAVAL_TRANSPORT.value ->
-                unit.player?.navalTransports =
-                    unit.player?.navalTransports?.minus(1) ?: 0
-        }
+        // The pool point is COMMITTED here, not consumed: `GameUnitActions` hands it back when the
+        // cargo finally steps off. See `model/TransportPools` for the sentence that decides it.
+        unit.player?.takeTransportFromPool(type)
+        if (type == UnitClass.AIR_TRANSPORT.value) leaveGroundedTransportBehind(unit)
         return true
     }
 

@@ -9,6 +9,7 @@ import org.osada.campaign.CampaignNarrative.restore
 import org.osada.campaign.CampaignNarrative.snapshot
 import org.osada.model.Player
 import org.osada.scenario.Campaign
+import org.osada.ui.briefing.BriefingLocalization
 
 /**
  * The single entry point the rest of the engine uses to talk to the narrative system.
@@ -163,17 +164,22 @@ internal data class CampaignEpilogue(
 )
 
 internal object CampaignEpilogueParser {
-    fun parseList(value: dynamic): List<CampaignEpilogue> =
+    fun parseList(
+        value: dynamic,
+        domain: String? = null,
+    ): List<CampaignEpilogue> =
         BriefingDynamic.mapArray(value) { item ->
             if (!BriefingDynamic.isObject(item)) return@mapArray null
             val id = BriefingDynamic.str(item.id) ?: return@mapArray null
             val text = BriefingDynamic.str(item.text) ?: return@mapArray null
+            fun localized(field: String, fallback: String): String =
+                domain?.let { BriefingLocalization.resolve(it, "epilogue.$id.$field", fallback) } ?: fallback
             CampaignEpilogue(
                 id = id,
                 outcomes = BriefingDynamic.strList(item.outcomes),
-                speaker = BriefingDynamic.str(item.speaker) ?: "",
-                role = BriefingDynamic.str(item.role) ?: "",
-                text = text,
+                speaker = localized("speaker", BriefingDynamic.str(item.speaker) ?: ""),
+                role = localized("role", BriefingDynamic.str(item.role) ?: ""),
+                text = localized("text", text),
                 condition = CampaignConditionParser.parse(item.conditions),
             )
         }
@@ -184,8 +190,9 @@ internal object CampaignEpilogueResolver {
         value: dynamic,
         outcome: String,
         context: CampaignContext,
+        domain: String? = null,
     ): CampaignEpilogue? =
-        CampaignEpilogueParser.parseList(value).firstOrNull { epilogue ->
+        CampaignEpilogueParser.parseList(value, domain).firstOrNull { epilogue ->
             (epilogue.outcomes.isEmpty() || outcome in epilogue.outcomes) &&
                 CampaignConditionEvaluator.matches(epilogue.condition, context)
         }
@@ -194,11 +201,13 @@ internal object CampaignEpilogueResolver {
 /** Returns display-safe HTML appended to the ordinary final outcome text. */
 internal fun Campaign.resolveEpilogue(outcome: String): String? {
     val scenario = getCurrentScenario() ?: return null
+    val scenarioFile = scenario.scenario as? String ?: ""
     val epilogue =
         CampaignEpilogueResolver.resolve(
             value = scenario.epilogues,
             outcome = outcome,
-            context = CampaignNarrative.context(file, scenario.scenario as? String ?: "", currentScenarioIndex),
+            context = CampaignNarrative.context(file, scenarioFile, currentScenarioIndex),
+            domain = BriefingLocalization.domain(file, scenarioFile),
         )
     return epilogue?.let { selected ->
         val byline =

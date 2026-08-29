@@ -19,18 +19,42 @@ class Player {
     var playedTurn: Int = -1
     var type: PlayerType = PlayerType.HUMAN_LOCAL
     var handler: dynamic = null
+
+    /**
+     * OG's non-organic transport pools, as **availability** — how many of each are free right now.
+     *
+     * OG itself draws this distinction, in the changelog entry that added the editor field:
+     *
+     * > *"Transport pool **sizes (not availability)** are included in scenario settings dialog"*
+     * > — 0.90.42.2, and *"Available ATP,NTP,RTP are shown for active player when mouse hovers
+     * > Airfields"*.
+     *
+     * So the scenario byte is a SIZE (a ceiling, held in [airTransportsMax] and its two siblings)
+     * and these three are the live count that embarkation spends and disembarkation gives back.
+     * See `model/TransportPools` for the lifetime and the sentence it rests on.
+     */
     var airTransports: Int = 0
     var navalTransports: Int = 0
 
     /** OG's per-player RAIL transport pool -- *"the player must have some rail transport
-     *  available"*. Scenario attribute `railtrans`, the third of OG's three pools beside
-     *  `airtrans` and `navaltrans`, and consumed the same way (`rules/RailTransport`).
+     *  available"*. Scenario attribute `railtrans`, the third of OG's four pools beside
+     *  `airtrans`, `navaltrans` and the helo pool OSADA does not model yet.
      *
-     *  **No shipped scenario sets it**, because the `.xscn` field it would be imported from is a
-     *  located-but-unconfirmed candidate at player record `+21` that this project has ruled must
-     *  not be built on (`docs/og-fidelity-plan.md` §Y.2, §Q.2). The RULE reads this attribute and
-     *  never that byte, so confirming the offset later is an importer change and nothing more. */
+     *  Imported since 2026-08-29 from player record `+21`, confirmed by OpenSuite's own REPORT
+     *  logs (`docs/og-open-questions.md` §Y.1). Spent by `rules/RailTransport` and returned at the
+     *  owner's next turn — `model/TransportPools` carries the reasoning. */
     var railTransports: Int = 0
+
+    /**
+     * The authored SIZE of each pool — the ceiling a release may not push availability past.
+     *
+     * A scenario may deploy a unit that already sits in a transport, and that unit never spent a
+     * pool point; without a ceiling its disembarkation would MINT one. These three are set beside
+     * the available counts by `ScenarioPlayerParser` and carried through saves.
+     */
+    var airTransportsMax: Int = 0
+    var navalTransportsMax: Int = 0
+    var railTransportsMax: Int = 0
     var supportCountries: MutableList<Int> = mutableListOf()
     var prestigePerTurn: MutableList<Int> = mutableListOf()
 
@@ -96,6 +120,9 @@ class Player {
         airTransports = 0
         navalTransports = 0
         railTransports = 0
+        airTransportsMax = 0
+        navalTransportsMax = 0
+        railTransportsMax = 0
         val iter = coreUnits.iterator()
         while (iter.hasNext()) {
             val unit = iter.next()
@@ -143,6 +170,9 @@ class Player {
             airTransports = other.airTransports
             navalTransports = other.navalTransports
             railTransports = other.railTransports
+            airTransportsMax = other.airTransportsMax
+            navalTransportsMax = other.navalTransportsMax
+            railTransportsMax = other.railTransportsMax
             supportCountries.clear()
             supportCountries.addAll(other.supportCountries)
             prestigePerTurn.clear()

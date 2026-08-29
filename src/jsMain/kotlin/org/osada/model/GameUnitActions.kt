@@ -121,7 +121,14 @@ fun GameUnit.move(cost: Int) {
         hasMoved = true
         hasOverstrength = true
     }
-    if (carrier < 0) carrier = 0
+    if (carrier < 0) {
+        // The cargo is ashore, so the transport is free again. OG: *"the transport was not returned
+        // to the pool"* is listed as a BUG in changelog 0.91.1.0, and the pool counts what can be
+        // *"used at any time"* -- `model/TransportPools` quotes both. This is the only completion
+        // point; cancelling a pending disembarkation flips the sign back and costs nothing.
+        Equipment.getEquipment(-carrier)?.let { player?.returnTransportToPool(it.uclass) }
+        carrier = 0
+    }
 }
 
 /** Whether this unit is stepping ashore from a NAVAL transport under OG's `Marine` ability --

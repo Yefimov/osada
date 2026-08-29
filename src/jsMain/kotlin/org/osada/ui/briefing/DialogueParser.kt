@@ -8,7 +8,10 @@ import org.osada.campaign.CampaignEffectParser
  * purely to keep that object within the project's function-count/complexity limits.
  */
 internal object DialogueParser {
-    fun parseDialogue(value: dynamic): List<BriefingLine> {
+    fun parseDialogue(
+        value: dynamic,
+        textResolver: BriefingTextResolver = BriefingLocalization.sourceTextResolver(),
+    ): List<BriefingLine> {
         val utils = BriefingParsingUtils
         if (!utils.isPresent(value) || !utils.isArray(value)) return emptyList()
 
@@ -16,7 +19,7 @@ internal object DialogueParser {
         val usedIds = mutableSetOf<String>()
         val length = (value.length as? Int) ?: 0
         for (index in 0 until length) {
-            val line = parseDialogueLine(value[index], index, usedIds) ?: continue
+            val line = parseDialogueLine(value[index], index, usedIds, textResolver) ?: continue
             result += line
         }
         return result
@@ -26,28 +29,32 @@ internal object DialogueParser {
         item: dynamic,
         index: Int,
         usedIds: MutableSet<String>,
+        textResolver: BriefingTextResolver,
     ): BriefingLine? {
         val utils = BriefingParsingUtils
         val isObject = utils.isObject(item)
-        val speaker =
+        val sourceSpeaker =
             if (isObject) utils.readFirstString(item.speaker, item.name, item.character)?.trim().orEmpty() else ""
-        val text = if (isObject) utils.readFirstString(item.text, item.message, item.body)?.trim().orEmpty() else ""
-        if (!isObject || speaker.isBlank() || text.isBlank()) return null
+        val sourceText =
+            if (isObject) utils.readFirstString(item.text, item.message, item.body)?.trim().orEmpty() else ""
+        if (!isObject || sourceSpeaker.isBlank() || sourceText.isBlank()) return null
 
         val requestedId = utils.readString(item.id)?.trim()?.takeIf { it.isNotBlank() }
         val id = resolveLineId(requestedId, index, usedIds)
         val side = utils.readString(item.side)?.lowercase().let { if (it == "right") "right" else "left" }
+        val speaker = textResolver.resolve("line.$id.speaker", sourceSpeaker)
+        val role = utils.readFirstString(item.role, item.rank, item.title)?.trim().orEmpty()
 
         return BriefingLine(
             id = id,
             speaker = speaker,
-            role = utils.readFirstString(item.role, item.rank, item.title)?.trim().orEmpty(),
-            text = text,
+            role = textResolver.resolve("line.$id.role", role),
+            text = textResolver.resolve("line.$id.text", sourceText),
             portrait = utils.readAssetPath(item.portrait ?: item.image),
             side = side,
             initials = utils.initialsFor(speaker),
             next = utils.readString(item.next ?: item.nextId)?.trim()?.takeIf { it.isNotBlank() },
-            choices = parseChoices(item.choices ?: item.responses ?: item.options, id),
+            choices = parseChoices(item.choices ?: item.responses ?: item.options, id, textResolver),
             condition = CampaignConditionParser.parse(item.conditions ?: item.condition),
         )
     }
@@ -69,6 +76,7 @@ internal object DialogueParser {
     private fun parseChoices(
         value: dynamic,
         lineId: String,
+        textResolver: BriefingTextResolver,
     ): List<BriefingChoice> {
         val utils = BriefingParsingUtils
         if (!utils.isPresent(value) || !utils.isArray(value)) return emptyList()
@@ -76,7 +84,7 @@ internal object DialogueParser {
         val result = mutableListOf<BriefingChoice>()
         val length = (value.length as? Int) ?: 0
         for (index in 0 until length) {
-            val choice = parseChoiceItem(value[index], lineId, index) ?: continue
+            val choice = parseChoiceItem(value[index], lineId, index, textResolver) ?: continue
             result += choice
         }
         return result
@@ -86,6 +94,7 @@ internal object DialogueParser {
         item: dynamic,
         lineId: String,
         index: Int,
+        textResolver: BriefingTextResolver,
     ): BriefingChoice? {
         val utils = BriefingParsingUtils
         val isObject = utils.isObject(item)
@@ -111,6 +120,13 @@ internal object DialogueParser {
             }
         val effects = if (isObject) CampaignEffectParser.parseList(item.effects) else emptyList()
         val hint = (if (isObject) utils.readString(item.hint)?.trim() else null).orEmpty()
-        return BriefingChoice(id = id, text = text, next = next, effects = effects, hint = hint)
+        val prefix = "line.$lineId.choice.$id"
+        return BriefingChoice(
+            id = id,
+            text = textResolver.resolve("$prefix.text", text),
+            next = next,
+            effects = effects,
+            hint = textResolver.resolve("$prefix.hint", hint),
+        )
     }
 }
