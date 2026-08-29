@@ -244,6 +244,8 @@ object GameStateSerializer {
             Pair("airTransportsMax", player.airTransportsMax),
             Pair("navalTransportsMax", player.navalTransportsMax),
             Pair("railTransportsMax", player.railTransportsMax),
+            Pair("defaultExperience", player.defaultExperience),
+            Pair("defaultStrength", player.defaultStrength),
             Pair("supportCountries", player.supportCountries.toTypedArray()),
             Pair("prestigePerTurn", player.prestigePerTurn.toTypedArray()),
             Pair("coreUnits", player.getCoreUnitList().map { serializeUnit(it) }.toTypedArray()),

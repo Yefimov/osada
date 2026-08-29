@@ -108,9 +108,22 @@ object RulesetResolver {
      * discarded every one of those imported bits and made the profile's own name untrue
      * (`docs/og-fidelity-plan.md` §AC).
      *
-     * The three with no per-scenario bit — `counterbattery`, `minefields`, `naval_critical_hits` —
-     * are deliberately NOT here: nothing in the content asks for them, so Author's Vision has
-     * nobody to defer to and OSADA's default stands.
+     * The rules with no per-scenario content gate — `counterbattery`, `minefields`,
+     * `naval_critical_hits`, `depot_supply` — are deliberately NOT here: nothing in the content
+     * asks for them, so Author's Vision has nobody to defer to and OSADA's default stands.
+     * (`depot_supply`'s gate is `supply_ex`, which **no shipped efile sets**.)
+     *
+     * ### `RAIL_TRANSPORT` joined on 2026-08-29, and why it qualifies
+     *
+     * Its gate is not a bit but a POOL — `railtrans`, the per-player rail transport count. That
+     * gate did not exist when this set was written: the importer could not find the field, so every
+     * deployed scenario carried no pool and the entry would have been meaningless. `+21` was
+     * confirmed and the pools imported on 2026-08-28/29, and **120 deployed scenarios now grant
+     * one** (`docs/og-fidelity-plan.md` §AE.3).
+     *
+     * It meets this set's condition exactly: `RailTransport.canEntrain` already ANDs the key with
+     * the player's pool, so resolving it to 1 hands the decision to the scenario rather than
+     * switching a rule on. A scenario with no pool is unaffected, which is 382 of the 502.
      */
     private val SCENARIO_AUTHORED =
         setOf(
@@ -119,6 +132,7 @@ object RulesetResolver {
             RuleKey.EXTENDED_NAVAL,
             RuleKey.BARRAGE,
             RuleKey.BUILD_AND_REPAIR,
+            RuleKey.RAIL_TRANSPORT,
         )
 
     /**

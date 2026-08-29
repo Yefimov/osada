@@ -53,8 +53,13 @@ import org.osada.rules.ruleset.RuleKey
  *
  * `docs/og-fidelity-plan.md` §AA.7 records these; each is unknown rather than skipped:
  *
- *  - **weights.** OG matches rail, unit and transport weights. The rail's own capacity value is not
- *    published and OSADA has no field for it, so no weight is checked.
+ *  - **weights.** OG matches rail, unit and transport weights — *"units and transports must match
+ *    the weight in order to embark"*. The per-record values ARE in the binary (`equip.xeqp` @43
+ *    `NtpW`, @44 `RtpW`, @45 `HtpW`, beside the @40/@42 pair OSADA does import), and
+ *    `xeqp_to_csv.py` already dumps them; `csv_to_eqp.py` reads none of the three. So this is a
+ *    deployable gap rather than an unknown one, unlike the three below it. What the numbers MEAN
+ *    (a capacity, a class, a bitmask) is not published, which is why it was not deployed with the
+ *    rail permission on 2026-08-29.
  *  - **cut track and hostile territory.** [reachableFrom] refuses to path THROUGH a hex an enemy
  *    occupies, which is the minimum any reading requires. Whether an enemy ZOC beside the line, or
  *    ownership of the ground it runs over, also cuts it is not documented.
@@ -93,11 +98,24 @@ object RailTransport {
      */
     fun canEntrain(unit: GameUnit): Boolean {
         if (!ActiveRuleset.flag(RuleKey.RAIL_TRANSPORT, false)) return false
-        val usable = UnitPredicates.isGround(unit) && !unit.destroyed && !unit.isMounted
+        val usable = UnitPredicates.isGround(unit) && !unit.destroyed && !unit.isMounted && permitsRail(unit)
         val idle = !unit.hasMoved && !unit.hasFired
         val hasPool = (unit.player?.railTransports ?: 0) >= POOL_COST
         return usable && idle && hasPool && isBoardingPoint(unit.getHex(), unit)
     }
+
+    /**
+     * OG's per-record rail permission — *"Units be configured to use Train Transport"*.
+     *
+     * Wired 2026-08-29. Before that any ground formation could board, which handed the railway to
+     * the 5-6% of infantry and the **73% of anti-aircraft** and **69% of fortifications** that OG
+     * refuses it to ([EquipmentData.railTransportable] has the distribution). A record with no data
+     * is permitted, not refused.
+     *
+     * Read through [GameUnit.unitData] with `useReal = true`, the same way `needsNoStation` reads
+     * `attrEx`: the permission belongs to the formation itself, never to whatever is carrying it.
+     */
+    private fun permitsRail(unit: GameUnit): Boolean = unit.unitData(true).canUseRailTransport()
 
     /**
      * Every hex [unit] could be railed to: a boarding point it can reach along connected track,

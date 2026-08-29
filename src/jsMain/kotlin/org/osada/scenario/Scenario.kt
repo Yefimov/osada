@@ -126,6 +126,23 @@ class Scenario(
     /** OG's *"ports do not deploy naval units"*. 48 scenarios. */
     var portsNoNavalDeploy: Boolean? = null
 
+    /**
+     * OG's *"no prototypes"* — this scenario awards none, however the campaign is going. 43 of the
+     * 397 deployed scenarios whose source parses.
+     *
+     * Null means the source could not be read, and every reader treats that as PERMITTED, exactly
+     * as the other authored switches do (`docs/og-fidelity-plan.md` §AD).
+     */
+    var prototypesAllowed: Boolean? = null
+
+    /**
+     * OG's *"Subs no need DLOF"* — this scenario exempts submarines from the direct-line-of-fire
+     * requirement `ExtendedNaval` bullet 4 imposes. 3 scenarios corpus-wide, which is why it is the
+     * smallest of the three wired on 2026-08-29 and was wired anyway: the rule it overrides was
+     * already built, so the whole cost was one condition.
+     */
+    var subsNeedLineOfFire: Boolean? = null
+
     var turnsPerDay: Int = 1
     var dayTurn: Int = 0
     var reinforcements: MutableMap<Int, MutableList<Reinforcement>> = mutableMapOf()

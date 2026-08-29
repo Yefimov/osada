@@ -127,6 +127,8 @@ object GameStateDeserializer {
         player.airTransportsMax = data.airTransportsMax as? Int ?: player.airTransports
         player.navalTransportsMax = data.navalTransportsMax as? Int ?: player.navalTransports
         player.railTransportsMax = data.railTransportsMax as? Int ?: player.railTransports
+        player.defaultExperience = data.defaultExperience as? Int ?: 0
+        player.defaultStrength = data.defaultStrength as? Int ?: 0
     }
 
     fun parseIntArray(data: dynamic): MutableList<Int> {

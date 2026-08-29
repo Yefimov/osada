@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="spa6.xscn" name="AC 073 - Escape from the camp of slaves" turns="12, 14, 16" date="November 5, 2000" dayturns="0" ground="0" atmosferic="1" latitude="1" iconset="0" weatherchg="0" rows="21" cols="26" eqp="eqp-ag" image="resources/maps/images/map_1136.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0">
-  <player id="0" country="310" side="0" airtrans="0" navaltrans="0" railtrans="0" support="311,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
-  <player id="1" country="307" side="1" airtrans="0" navaltrans="0" railtrans="0" support="308,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+<map file="spa6.xscn" name="AC 073 - Escape from the camp of slaves" turns="12, 14, 16" date="November 5, 2000" dayturns="0" ground="0" atmosferic="1" latitude="1" iconset="0" weatherchg="0" rows="21" cols="26" eqp="eqp-ag" image="resources/maps/images/map_1136.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1">
+  <player id="0" country="310" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="60" defaultstr="10" support="311,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <player id="1" country="307" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="110" defaultstr="10" support="308,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="4">
     <at row="2" col="14">
       <unit id="53737" owner="1" flag="308" face="0" exp="110"/>

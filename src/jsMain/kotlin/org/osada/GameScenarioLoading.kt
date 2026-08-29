@@ -104,7 +104,9 @@ internal fun Game.handleCampaignScenarioLoaded() {
     // Consume next-scenario effects queued by the previous transition, after the core roster
     // exists and before the player receives control.
     applyPendingCampaignEffects()
-    if (awardPrototype) {
+    // OG's `no prototypes`: a scenario may refuse the award outright. Null (source unreadable)
+    // means permitted, the same direction every other authored switch reads (§AD).
+    if (awardPrototype && scenario?.prototypesAllowed != false) {
         val prototype = scenario!!.getRandomPrototype(campaignPlayer!!.country + 1)
         if (prototype > 0) {
             campaignPlayer?.acquireUnit(prototype, 0)

@@ -103,8 +103,21 @@ class LastThreeAbilitiesTest : OgRulesTestHarness() {
                 attr = attrCarrierDeploy
                 attrEx = attrExNoNeedStation or attrExSupplyUnit
             }
+        // Every gate named explicitly: the unnamed ones default to reading `ActiveRuleset`, and
+        // these three gained gates of their own on 2026-08-29 (they used to be badged even with
+        // their rule off). An omitted gate here would silently hide the very abilities under test.
         val gates =
-            AbilityGates(minefields = true, engineering = true, counterBattery = true, extendedLos = true)
+            AbilityGates(
+                minefields = true,
+                engineering = true,
+                counterBattery = true,
+                extendedLos = true,
+                dryUnitPenalties = true,
+                railTransport = true,
+                carrierDeploy = true,
+                depotSupply = true,
+                heavyMoveFire = true,
+            )
         val abilities = data.abilityCatalog(gates)
 
         assertEquals(3, abilities.size)
@@ -211,7 +224,9 @@ class LastThreeAbilitiesTest : OgRulesTestHarness() {
         map.map!![3][6].station = true
         val unit = place(map, infantryEqid, 3, 1, 0)
 
-        // No shipped scenario authors `railtrans`, so this is every scenario today.
+        // A scenario whose author granted no rail pool -- 382 of the 502 deployed, since the pools
+        // were imported on 2026-08-29. The content gate is what makes the mechanic inert there,
+        // and it has to survive Author's Vision resolving the KEY to on.
         assertEquals(0, friendly.railTransports)
         assertFalse(RailTransport.canEntrain(unit))
         assertTrue(RailTransport.destinations(map, unit).isEmpty())

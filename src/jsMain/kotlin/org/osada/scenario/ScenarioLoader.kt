@@ -143,6 +143,8 @@ object ScenarioLoader {
         scenario.airIntercept = flag("airintercept")
         scenario.portsNoSupply = flag("portsnosupply")
         scenario.portsNoNavalDeploy = flag("portsnonavaldeploy")
+        scenario.prototypesAllowed = flag("prototypes")
+        scenario.subsNeedLineOfFire = flag("subsneedlof")
     }
 
     /** The scenario/operation name lives on the <map name="…"> attribute. Standalone scenarios
