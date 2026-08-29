@@ -16,27 +16,38 @@ import org.osada.rules.ruleset.RuleKey
  * > by default, and the unit *"must not already have acted"* before embarking. `No Need Station`
  * > lifts the station requirement at **both** ends — embarkation and disembarkation alike.
  *
- * ### Why this could be built without confirming player record `+21`
+ * ### Fidelity status — read this before calling the railway "done"
  *
- * `docs/og-fidelity-plan.md` §Y.2 blocks the rail POOL on a controlled OpenSuite diff: `+21` is a
- * strong candidate and §Q.2 is the standing reason not to build on a strong candidate. That blocks
- * the **importer**, not the rule. OSADA already carries two per-player transport pools of exactly
- * this shape — `airtrans` and `navaltrans`, read from the scenario XML — so rail is a third one
- * (`Player.railTransports`, attribute `railtrans`), and **this object never reads a `.xscn` byte**.
+ * **The pool SIZE is exact; the mechanic around it is not.** `railtrans` is imported byte-for-byte
+ * from the scenario binary and 212 shipped player records now carry it. Everything else on this
+ * page is a compression of a mechanic OG builds differently, and the gap is stated in full two
+ * sections down. Air and naval transport, by contrast, now reproduce OG's documented behaviour
+ * closely — a pool point is committed on embarkation and returned when the cargo comes ashore.
  *
- * The consequence is that the mechanic is **inert on all 502 shipped scenarios**, because none of
- * them authors `railtrans`. When somebody confirms `+21`, `add_rail_pools.py` fills the attribute
- * and every scenario gains the mechanic with no change here. If `+21` turns out to be something
- * else, nothing built on it has to be unwound — which is the whole point of §Q.2's rule.
+ * ### Where the pool comes from
  *
- * ### The model: a strategic move, not a container
+ * `Player.railTransports`, scenario attribute `railtrans`, imported from player record `+21`.
+ * That offset was a "strong candidate we must not build on" when this object was written; it was
+ * confirmed on 2026-08-28 against OpenSuite's own REPORT logs, which print
+ * `Avail non organic transports: Air [1] Naval [2] Rail [0] Helo [0]` per player
+ * (`docs/og-open-questions.md` §Y.1). The rule still reads only the attribute.
  *
- * OSADA's air and naval transports work by CONTAINMENT — the unit takes the transport's stats in
- * [GameUnit.carrier] and moves as it. Rail deliberately does not: OG has a rail-transport class
- * (`RT`) that OSADA folds into Ground Transport, so there is no record to become, and picking one
- * per efile would be an invention. Instead a rail move **relocates the formation between two
- * boarding points along connected track**, which is what the pool counts — *trains usable at one
- * time* — and costs it the movement it would have spent getting there.
+ * ### The model: a strategic move where OG has a container — a compression, and a named one
+ *
+ * **OG's railway is containment.** The author's Features page asks the scenario for *"a train
+ * transport able to move on rails, available in the Train Transport Pool"*, the changelog speaks of
+ * *"units embarked in RTP"* that *"will look for the closer free station to disembark"* (0.92.0.0)
+ * and of *"unit transported on trains ... movement on minefields"*, and trains can carry hangars.
+ * A unit boards a real train, the train drives, and it can be caught on the way.
+ *
+ * OSADA does not do that, and cannot cheaply: OG's `RT` class is folded into Ground Transport here,
+ * so there is no train record to become and picking one per efile would be an invention. A rail
+ * move instead **relocates the formation between two boarding points along connected track** and
+ * costs it the movement it would have spent getting there.
+ *
+ * The consequences are real and are listed below and in `docs/og-open-questions.md` §1: there is no
+ * entrained state, so nothing can be attacked or mined in transit, and the pool slot has no journey
+ * to be held for — `model/TransportPools` explains why it is held for the turn instead.
  *
  * ### What is deliberately not built, and it is all one open question
  *
@@ -47,13 +58,18 @@ import org.osada.rules.ruleset.RuleKey
  *  - **cut track and hostile territory.** [reachableFrom] refuses to path THROUGH a hex an enemy
  *    occupies, which is the minimum any reading requires. Whether an enemy ZOC beside the line, or
  *    ownership of the ground it runs over, also cuts it is not documented.
- *  - **combat while entrained.** There is no entrained state to be attacked in: the move is atomic.
+ *  - **combat and minefields while entrained.** There is no entrained state to be attacked in: the
+ *    move is atomic. OG has one — *"unit transported on trains was not handling properly movement
+ *    on minefields"* is a fixed bug, so a train in OG can be mined — and OSADA cannot reproduce it
+ *    without the containment model above.
  *  - **acting after detraining.** The move spends the formation's MOVEMENT and leaves its shot
  *    alone, which is what any other full move does in OSADA. OG says only that the unit must not
  *    have acted BEFORE.
  */
 object RailTransport {
-    /** One boarding, one train. Consumed permanently, exactly as `airtrans`/`navaltrans` are. */
+    /** One boarding, one train, for the rest of the turn — `Player.refreshRailPool` frees it when
+     *  the owner plays again, because OG's pool counts trains usable *"at any time"* rather than
+     *  journeys allowed (`model/TransportPools`). */
     private const val POOL_COST = 1
 
     /** Whether [unit] may board or leave the rail anywhere on it, with no station. */
@@ -156,7 +172,7 @@ object RailTransport {
         target.setUnit(unit)
         GameRules.setZOCRange(map, unit, true)
         GameRules.setSpotRange(map, unit, true)
-        unit.player?.railTransports = (unit.player?.railTransports ?: 0) - POOL_COST
+        unit.player?.railTransports = ((unit.player?.railTransports ?: 0) - POOL_COST).coerceAtLeast(0)
         // The journey IS the formation's move for the turn. Its shot is left alone, which is what
         // any other full move does -- see this object's header for why that is the open half.
         unit.moveLeft = 0

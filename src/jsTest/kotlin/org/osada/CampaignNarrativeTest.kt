@@ -14,6 +14,8 @@ import org.osada.campaign.CampaignNarrativeState
 import org.osada.campaign.EffectLimits
 import org.osada.campaign.PendingEffect
 import org.osada.campaign.ScenarioOutcomeRecord
+import org.osada.i18n.I18n
+import org.osada.i18n.Language
 import org.osada.model.Player
 import org.osada.ui.briefing.BriefingParser
 import kotlin.test.Test
@@ -508,5 +510,37 @@ class CampaignNarrativeTest {
 
         assertNull(CampaignEpilogueResolver.resolve(entries, "victory", context))
         assertEquals("withdraw-defeat", CampaignEpilogueResolver.resolve(entries, "lose", context)?.id)
+    }
+
+    @Test
+    fun epilogueLocalizationChangesOnlyDisplayFields() {
+        val domain = "briefings/rhu/rhu190724"
+        I18n.installBundlesForTests(
+            english =
+                """{"epilogue.hold-victory.speaker":"Jenő Landler",
+                    "epilogue.hold-victory.role":"Commander",
+                    "epilogue.hold-victory.text":"The line held."}""".trimIndent(),
+            selected =
+                """{"epilogue.hold-victory.speaker":"Енё Ландлер",
+                    "epilogue.hold-victory.role":"Командующий",
+                    "epilogue.hold-victory.text":"Рубеж удержан."}""".trimIndent(),
+            selectedLanguage = Language.RUSSIAN,
+            domain = domain,
+        )
+        val state = CampaignNarrativeState().apply { setFlag("final_stand_east") }
+        val entries =
+            parse(
+                """[{"id":"hold-victory","outcomes":["victory"],"speaker":"Jenő Landler",
+                  "role":"Commander","text":"The line held.",
+                  "conditions":{"allFlags":["final_stand_east"]}}]""",
+            )
+
+        val selected = CampaignEpilogueResolver.resolve(entries, "victory", contextFor(state), domain)
+
+        assertEquals("hold-victory", selected?.id)
+        assertEquals(listOf("victory"), selected?.outcomes)
+        assertEquals("Енё Ландлер", selected?.speaker)
+        assertEquals("Командующий", selected?.role)
+        assertEquals("Рубеж удержан.", selected?.text)
     }
 }

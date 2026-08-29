@@ -15,15 +15,19 @@ fun UIBuilder.message(
 ) = MessageDialogs.message(title, body, narrative, callback)
 
 internal fun UIBuilder.showScenarioBriefing(
+    campaignFile: String,
+    scenarioFile: String,
     facts: ScenarioFacts,
     rawData: dynamic,
     onFinished: () -> Unit,
-) = ScenarioBriefingController.show(facts, rawData, onFinished)
+) = ScenarioBriefingController.show(campaignFile, scenarioFile, facts, rawData, onFinished)
 
 internal fun UIBuilder.primeScenarioBriefing(
+    campaignFile: String,
+    scenarioFile: String,
     facts: ScenarioFacts,
     rawData: dynamic,
-) = ScenarioBriefingController.prime(facts, rawData)
+) = ScenarioBriefingController.prime(campaignFile, scenarioFile, facts, rawData)
 
 fun UIBuilder.reopenScenarioBriefing(onClosed: () -> Unit): Boolean = ScenarioBriefingController.reopenLast(onClosed)
 

@@ -116,6 +116,12 @@ class GameMap {
         currentPlayer?.endTurn(turn)
         val currentIndex = players.indexOf(currentPlayer)
         currentPlayer = if (currentIndex + 1 < players.size) players[currentIndex + 1] else players[0]
+        // The trains the incoming player used last turn are idle again. OSADA's railway move is
+        // atomic, so a slot has no journey to be held for and the turn is the shortest span that
+        // still makes the pool mean *"how many trains can be used at any time"*
+        // (`model/TransportPools`). Air and naval are NOT refreshed here: their cargo is still in
+        // the air or at sea, and they come back one at a time as it lands.
+        currentPlayer?.refreshRailPool()
         if (currentPlayer?.id == 0) beginNewRound()
         // Minefield detection is refreshed for the side about to play, from where its units now
         // stand. Doing it here rather than during movement means the player sees every field their

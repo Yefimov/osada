@@ -242,13 +242,13 @@ class UI(
         if (BriefingIntroTracker.isSeen(campaignFile, scenarioFile)) {
             // Retry fast-path: keep the briefing reachable via the reopen button, but skip
             // straight to gameplay — no dialogue, no briefing window.
-            UIBuilder.primeScenarioBriefing(facts, rawBriefing)
+            UIBuilder.primeScenarioBriefing(campaignFile, scenarioFile, facts, rawBriefing)
             finishOpening()
         } else {
             BriefingIntroTracker.markSeen(campaignFile, scenarioFile)
             // The campaign ritual replaces the small legacy scenario-start popup entirely; its
             // text now lives as the briefing's final ORDERS section (facts.ordersText above).
-            UIBuilder.showScenarioBriefing(facts, rawBriefing, finishOpening)
+            UIBuilder.showScenarioBriefing(campaignFile, scenarioFile, facts, rawBriefing, finishOpening)
         }
     }
 

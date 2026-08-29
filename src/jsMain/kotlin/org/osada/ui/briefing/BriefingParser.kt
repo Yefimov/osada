@@ -12,9 +12,10 @@ internal object BriefingParser {
     fun parse(
         scenarioTitle: String,
         rawData: dynamic,
+        textResolver: BriefingTextResolver = BriefingLocalization.sourceTextResolver(),
     ): ScenarioBriefing =
         try {
-            parseUnsafe(scenarioTitle, rawData)
+            parseUnsafe(scenarioTitle, rawData, textResolver)
         } catch (e: Throwable) {
             console.warn("[OSADA] briefing parse failed, falling back to minimal briefing", e)
             ScenarioBriefing(
@@ -23,7 +24,7 @@ internal object BriefingParser {
                 locationLabel = scenarioTitle,
                 background = null,
                 dialogue = emptyList(),
-                player = parsePlayer(null),
+                player = parsePlayer(null, textResolver),
                 orders = BriefingOrders(),
             )
         }
@@ -31,19 +32,28 @@ internal object BriefingParser {
     private fun parseUnsafe(
         scenarioTitle: String,
         rawData: dynamic,
+        textResolver: BriefingTextResolver,
     ): ScenarioBriefing {
         val utils = BriefingParsingUtils
         val root = utils.unwrapBriefing(rawData)
         val isObject = utils.isObject(root)
-        val dialogue = DialogueParser.parseDialogue(resolveDialogueSource(root))
+        val dialogue = DialogueParser.parseDialogue(resolveDialogueSource(root), textResolver)
 
         return ScenarioBriefing(
             title = scenarioTitle,
-            actLabel = if (isObject) resolveActLabel(root) else "CAMPAIGN OPERATION",
-            locationLabel = if (isObject) resolveLocationLabel(root, scenarioTitle) else scenarioTitle,
+            actLabel =
+                textResolver.resolve(
+                    "header.act",
+                    if (isObject) resolveActLabel(root) else "CAMPAIGN OPERATION",
+                ),
+            locationLabel =
+                textResolver.resolve(
+                    "header.location",
+                    if (isObject) resolveLocationLabel(root, scenarioTitle) else scenarioTitle,
+                ),
             background = if (isObject) utils.readAssetPath(root.background) else null,
             dialogue = dialogue,
-            player = parsePlayer(if (isObject) root.player ?: root.commander ?: root.responder else null),
+            player = parsePlayer(if (isObject) root.player ?: root.commander ?: root.responder else null, textResolver),
             orders = parseOrders(resolveOrderSource(root)),
         )
     }
@@ -77,7 +87,10 @@ internal object BriefingParser {
         scenarioTitle: String,
     ): String = BriefingParsingUtils.readString(root.location)?.trim()?.takeIf { it.isNotBlank() } ?: scenarioTitle
 
-    private fun parsePlayer(value: dynamic): BriefingParticipant {
+    private fun parsePlayer(
+        value: dynamic,
+        textResolver: BriefingTextResolver,
+    ): BriefingParticipant {
         val utils = BriefingParsingUtils
         val isObject = utils.isObject(value)
         val speaker =
@@ -95,12 +108,13 @@ internal object BriefingParser {
             }.trim()
 
         val side = if (isObject && utils.readString(value.side)?.lowercase() == "right") "right" else "left"
+        val localizedSpeaker = textResolver.resolve("player.speaker", speaker)
         return BriefingParticipant(
-            speaker = speaker,
-            role = role,
+            speaker = localizedSpeaker,
+            role = textResolver.resolve("player.role", role),
             portrait = if (isObject) utils.readAssetPath(value.portrait ?: value.image) else null,
             side = side,
-            initials = utils.initialsFor(speaker),
+            initials = utils.initialsFor(localizedSpeaker),
         )
     }
 

@@ -8,6 +8,60 @@ import kotlin.test.assertTrue
 
 class BriefingParserTest {
     @Test
+    fun stableDialogueKeysLocalizeDisplayTextWithoutChangingBranchIdentity() {
+        val raw =
+            js(
+                "({ act: 'ACT I', location: 'Kiel', player: { speaker: 'Commander', role: 'HQ' }, " +
+                    "dialogue: [{ id: 'decision', speaker: 'Karl', role: 'Sailor', text: 'Choose.', " +
+                    "conditions: { allFlags: ['keep-routing'] }, " +
+                    "choices: [{ id: 'station', text: 'Take the station.', hint: 'Gain prestige.', " +
+                    "next: 'reply', effects: [{ id: 'keep-effect', type: 'prestige', amount: 50 }] }] }, " +
+                    "{ id: 'reply', speaker: 'Karl', text: 'Good.' }] })",
+            )
+        val translations =
+            mapOf(
+                "header.act" to "АКТ I",
+                "header.location" to "Киль",
+                "player.speaker" to "Командующий",
+                "player.role" to "Штаб",
+                "line.decision.speaker" to "Карл",
+                "line.decision.role" to "Матрос",
+                "line.decision.text" to "Выбирайте.",
+                "line.decision.choice.station.text" to "Занять вокзал.",
+                "line.decision.choice.station.hint" to "Получите престиж.",
+                "line.reply.speaker" to "Карл",
+                "line.reply.text" to "Хорошо.",
+            )
+
+        val briefing =
+            BriefingParser.parse(
+                scenarioTitle = "Kiel",
+                rawData = raw,
+                textResolver = BriefingTextResolver { key, fallback -> translations[key] ?: fallback },
+            )
+
+        assertEquals("АКТ I", briefing.actLabel)
+        assertEquals("Киль", briefing.locationLabel)
+        assertEquals("Командующий", briefing.player.speaker)
+        assertEquals("decision", briefing.dialogue.first().id)
+        assertEquals("Выбирайте.", briefing.dialogue.first().text)
+        assertEquals("station", briefing.dialogue.first().choices.single().id)
+        assertEquals("reply", briefing.dialogue.first().choices.single().next)
+        assertEquals("Занять вокзал.", briefing.dialogue.first().choices.single().text)
+        assertEquals("Получите престиж.", briefing.dialogue.first().choices.single().hint)
+        assertEquals(listOf("keep-routing"), briefing.dialogue.first().condition.allFlags)
+        assertEquals("keep-effect", briefing.dialogue.first().choices.single().effects.single().id)
+    }
+
+    @Test
+    fun briefingDomainUsesOnlyCampaignAndScenarioFileStems() {
+        assertEquals(
+            "briefings/novemberrevolution/n_kiel",
+            BriefingLocalization.domain("campaigns/NovemberRevolution.json", "scenarios/n_kiel.xml"),
+        )
+    }
+
+    @Test
     fun missingBriefingDoesNotCreateReplacementForLegacyIntro() {
         val briefing =
             BriefingParser.parse(

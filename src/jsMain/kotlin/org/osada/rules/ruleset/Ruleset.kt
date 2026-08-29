@@ -404,6 +404,13 @@ enum class RuleKey(
      *
      * **The content gate survives this key**: a player whose scenario has no rail pool sees no
      * chip, because there is no train to board. Turning it on cannot create one.
+     *
+     * **This is not full OG fidelity, and must not be described as such.** The pool SIZE is imported
+     * exactly from the scenario binary (player record `+21`, confirmed against OpenSuite's own
+     * reports). How long a slot stays occupied is an **OSADA compression**: OG entrains a unit in a
+     * real train that drives the map over as many turns as the journey takes, and OSADA relocates
+     * the formation atomically and holds the slot for the turn. `rules/RailTransport` and
+     * `model/TransportPools` carry the reasoning and the quotes that would change it.
      */
     RAIL_TRANSPORT("rail_transport", null, 0, 1),
 

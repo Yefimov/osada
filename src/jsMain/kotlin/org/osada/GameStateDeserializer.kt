@@ -105,13 +105,28 @@ object GameStateDeserializer {
         player.score = data.score as? Int ?: 0
         player.playedTurn = data.playedTurn as? Int ?: -1
         player.type = PlayerType.entries.getOrNull(data.type as? Int ?: 0) ?: PlayerType.HUMAN_LOCAL
-        player.airTransports = data.airTransports as? Int ?: 0
-        player.navalTransports = data.navalTransports as? Int ?: 0
-        player.railTransports = data.railTransports as? Int ?: 0
+        applyPlayerTransportPools(player, data)
         player.supportCountries = parseIntArray(data.supportCountries)
         player.prestigePerTurn = parseIntArray(data.prestigePerTurn)
         player.dossier = data.dossier
         return player
+    }
+
+    /** The three non-organic transport pools, each as a live count plus the SIZE that caps it.
+     *
+     *  A save written before the ceilings existed carries no `*Max`, and falls back to the count it
+     *  did store: an old save then keeps exactly the pool it had, instead of losing it to a zero
+     *  ceiling that would refuse every release (`model/TransportPools`). */
+    private fun applyPlayerTransportPools(
+        player: Player,
+        data: dynamic,
+    ) {
+        player.airTransports = data.airTransports as? Int ?: 0
+        player.navalTransports = data.navalTransports as? Int ?: 0
+        player.railTransports = data.railTransports as? Int ?: 0
+        player.airTransportsMax = data.airTransportsMax as? Int ?: player.airTransports
+        player.navalTransportsMax = data.navalTransportsMax as? Int ?: player.navalTransports
+        player.railTransportsMax = data.railTransportsMax as? Int ?: player.railTransports
     }
 
     fun parseIntArray(data: dynamic): MutableList<Int> {

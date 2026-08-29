@@ -84,9 +84,14 @@ internal object ScenarioPlayerParser {
         player.id = el.getAttribute("id")?.toIntOrNull() ?: 0
         player.side = el.getAttribute("side")?.toIntOrNull() ?: 0
         player.country = el.getAttribute("country")?.toIntOrNull() ?: 0
+        // The authored attribute is the pool SIZE -- OG's own wording, changelog 0.90.42.2 -- so it
+        // seeds the ceiling as well as the count that is free right now (`model/TransportPools`).
         player.airTransports = el.getAttribute("airtrans")?.toIntOrNull() ?: 0
         player.navalTransports = el.getAttribute("navaltrans")?.toIntOrNull() ?: 0
         player.railTransports = el.getAttribute("railtrans")?.toIntOrNull() ?: 0
+        player.airTransportsMax = player.airTransports
+        player.navalTransportsMax = player.navalTransports
+        player.railTransportsMax = player.railTransports
         player.prestigePerTurn = el
             .getAttribute("turnprestige")
             ?.split(", ")

@@ -1,6 +1,7 @@
 package org.osada.ui.briefing
 
 import kotlinx.browser.document
+import org.osada.i18n.I18n
 import org.w3c.dom.HTMLElement
 
 /**
@@ -12,11 +13,6 @@ import org.w3c.dom.HTMLElement
  * (show/reopen/close) and stage rendering, plus the shared mutable state.
  */
 internal object ScenarioBriefingController {
-    // The staff-table photo the main menu uses, so an operation with no authored art of its own
-    // opens on the same desk the player just left. (The old default pointed into the legacy
-    // `animatedBackground` slideshow's stills, which that rotating-photo treatment retired.)
-    private const val DEFAULT_BACKGROUND = "resources/staff_table_background.png"
-
     internal data class DialogueStep(
         val lineId: String,
         var selectedChoice: BriefingChoice? = null,
@@ -24,8 +20,10 @@ internal object ScenarioBriefingController {
 
     internal var briefing: ScenarioBriefing? = null
     internal var facts: ScenarioFacts? = null
-    private var lastBriefing: ScenarioBriefing? = null
+    private var lastSource: BriefingSource? = null
     private var lastFacts: ScenarioFacts? = null
+    internal var currentSource: BriefingSource? = null
+    internal var beginLabelKey: String = "briefing.begin.label"
     internal var view: ScenarioBriefingView? = null
 
     /** Text element of the turn currently typewriter-revealing, so an advance input can complete
@@ -36,25 +34,45 @@ internal object ScenarioBriefingController {
     private var finishCallback: (() -> Unit)? = null
     private var previousFocus: HTMLElement? = null
 
+    init {
+        I18n.onLanguageChanged { refreshLocalization() }
+    }
+
     fun show(
+        campaignFile: String,
+        scenarioFile: String,
         scenarioFacts: ScenarioFacts,
         rawData: dynamic,
         onFinished: () -> Unit,
     ) {
-        val parsed = CampaignDialogueFilter.apply(BriefingParser.parse(scenarioFacts.title, rawData))
-        lastBriefing = parsed
+        val source = BriefingSource(campaignFile, scenarioFile, scenarioFacts.title, rawData)
+        lastSource = source
         lastFacts = scenarioFacts
-        showParsed(parsed, scenarioFacts, "BEGIN OPERATION", onFinished)
+        BriefingLocalization.ensure(source) {
+            if (lastSource !== source) return@ensure
+            showParsed(
+                BriefingLocalization.parse(source),
+                source,
+                scenarioFacts,
+                "briefing.begin.label",
+                onFinished,
+            )
+        }
     }
 
     /** Cache the briefing for the reopen button WITHOUT showing it — used by the retry
      *  fast-path, which skips the ceremony but must keep the briefing reachable in battle. */
     fun prime(
+        campaignFile: String,
+        scenarioFile: String,
         scenarioFacts: ScenarioFacts,
         rawData: dynamic,
     ) {
-        lastBriefing = CampaignDialogueFilter.apply(BriefingParser.parse(scenarioFacts.title, rawData))
+        val source = BriefingSource(campaignFile, scenarioFile, scenarioFacts.title, rawData)
+        lastSource = source
         lastFacts = scenarioFacts
+        // Preload now so reopening the reference sheet never flashes the English source first.
+        BriefingLocalization.ensure(source) {}
     }
 
     /**
@@ -69,10 +87,20 @@ internal object ScenarioBriefingController {
      * scene that plays once; the orders are the reference sheet, and that is what a re-read wants.
      */
     fun reopenLast(onClosed: () -> Unit): Boolean {
-        val parsed = lastBriefing
+        val source = lastSource
         val reopenFacts = lastFacts
-        if (parsed == null || reopenFacts == null) return false
-        showParsed(parsed, reopenFacts, "RETURN TO BATTLE", onClosed, reviewing = true)
+        if (source == null || reopenFacts == null) return false
+        BriefingLocalization.ensure(source) {
+            if (lastSource !== source) return@ensure
+            showParsed(
+                BriefingLocalization.parse(source),
+                source,
+                reopenFacts,
+                "briefing.return_to_battle.label",
+                onClosed,
+                reviewing = true,
+            )
+        }
         return true
     }
 
@@ -86,21 +114,24 @@ internal object ScenarioBriefingController {
     }
 
     fun clearLast() {
-        lastBriefing = null
+        lastSource = null
         lastFacts = null
     }
 
     private fun showParsed(
         parsed: ScenarioBriefing,
+        source: BriefingSource,
         scenarioFacts: ScenarioFacts,
-        beginLabel: String,
+        beginKey: String,
         onFinished: () -> Unit,
         reviewing: Boolean = false,
     ) {
         close(runCallback = false)
 
         briefing = parsed
+        currentSource = source
         facts = scenarioFacts
+        beginLabelKey = beginKey
         finishCallback = onFinished
         previousFocus = document.activeElement as? HTMLElement
         stage = if (parsed.dialogue.isNotEmpty() && !reviewing) BriefingStage.DIALOGUE else BriefingStage.ORDERS
@@ -116,15 +147,7 @@ internal object ScenarioBriefingController {
                 onBegin = { close(runCallback = true) },
             )
         view = created
-        created.title.textContent = parsed.title
-        created.subtitle.textContent = "${parsed.actLabel} · ${parsed.locationLabel}"
-        created.headerDate.textContent = scenarioFacts.dateLabel
-        created.beginButton.textContent = beginLabel
-        val background =
-            parsed.background
-                ?.takeIf { it.isNotBlank() }
-                ?: DEFAULT_BACKGROUND
-        created.backdrop.style.backgroundImage = "url(\"$background\")"
+        renderLocalizedChrome(created, parsed, scenarioFacts)
         created.root.addEventListener("keydown", { e -> handleKeyDown(e) })
 
         renderCurrentStage()
@@ -148,7 +171,7 @@ internal object ScenarioBriefingController {
     /** Turns already in the transcript DOM, so [renderDialogueStage] can APPEND the new ones
      *  instead of rebuilding the log. Reset by [close] and whenever the branch is re-rendered from
      *  scratch. */
-    private var renderedTurns: List<DialogueTurn> = emptyList()
+    internal var renderedTurns: List<DialogueTurn> = emptyList()
 
     /** Extends the conversation log to the current branch, then typewriter-reveals only its newest
      *  turn -- everything the player has already read stays on screen, in order, and stays
@@ -220,6 +243,7 @@ internal object ScenarioBriefingController {
         view = null
         current?.root?.parentElement?.removeChild(current.root)
         briefing = null
+        currentSource = null
         facts = null
         path.clear()
 
