@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="rhu190613.xscn" name="1919/06/13 Defending &#201;rsek&#250;jv&#225;r (Nov&#233; Z&#225;mky)" turns="20, 20, 20" date="June 13, 1919" dayturns="0" ground="0" atmosferic="0" latitude="6" iconset="0" weatherchg="1" rows="43" cols="48" eqp="eqp-kaiser" image="resources/maps/images/map_rhu190613.png" eqpv="united1" canblow="0" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="1" portsnonavaldeploy="0" prototypes="0" subsneedlof="1">
+<map file="rhu190613.xscn" name="1919/06/13 Defending &#201;rsek&#250;jv&#225;r (Nov&#233; Z&#225;mky)" turns="20, 20, 20" date="June 13, 1919" dayturns="0" ground="0" atmosferic="0" latitude="6" iconset="0" weatherchg="1" rows="43" cols="48" eqp="eqp-kaiser" image="resources/maps/images/map_rhu190613.png" eqpv="united1" holdvictory="5, 4, 3" holdvictory1="5, 4, 3" msuunits="1, 0" canblow="0" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="1" portsnonavaldeploy="0" prototypes="0" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="0">
   <player id="0" country="187" side="0" airtrans="0" navaltrans="0" railtrans="5" defaultxp="195" defaultstr="10" support="188,0,0,0" turnprestige="20, 20, 20, 20, 24, 24, 24, 24, 28, 28, 28, 28, 32, 32, 32, 32, 28, 24, 20, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <player id="1" country="47" side="1" airtrans="0" navaltrans="0" railtrans="4" defaultxp="175" defaultstr="10" support="48,0,0,0" turnprestige="30, 30, 30, 30, 25, 25, 25, 25, 20, 20, 20, 20, 15, 15, 15, 15, 10, 10, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="5">
@@ -569,7 +569,7 @@
     <unit id="33159" owner="1" flag="48" face="0" exp="3"/>
   </hex>
   <hex row="7" col="35" terrain="10" name="Garam"/>
-  <hex row="7" col="36" terrain="1" road="153" name="Z&#243;lyom" owner="1" flag="47" victory="1" station="1">
+  <hex row="7" col="36" terrain="1" road="153" name="Z&#243;lyom" owner="1" flag="47" victory="1" trigger="2" trigparam="100" station="1">
     <unit id="33302" owner="1" flag="48" face="0" exp="28"/>
   </hex>
   <hex row="7" col="37" terrain="3" road="130">
@@ -636,10 +636,10 @@
   <hex row="8" col="40" terrain="13" name="Szalatna"/>
   <hex row="8" col="41" terrain="13" name="Szalatna"/>
   <hex row="8" col="42" terrain="3" road="136" deploy="0">
-    <unit id="46692" owner="0" flag="188" face="0" exp="88" ldr="1"/>
+    <unit id="46692" owner="0" flag="188" face="0" exp="88" ldr="1" msu="1"/>
   </hex>
   <hex row="8" col="43" terrain="1" road="144" name="Gyetva" owner="0" flag="187" deploy="0" station="1">
-    <unit id="46683" owner="0" flag="188" face="0" exp="44"/>
+    <unit id="46683" owner="0" flag="188" face="0" exp="44" depot="1"/>
   </hex>
   <hex row="8" col="44" terrain="5"/>
   <hex row="8" col="45" terrain="13" name="Szalatna"/>
@@ -815,7 +815,7 @@
   <hex row="12" col="27" terrain="5">
     <unit id="33094" owner="1" flag="48" face="0" transport="33383" exp="2"/>
   </hex>
-  <hex row="12" col="28" terrain="1" road="144" name="Selmecb&#225;nya" owner="1" flag="47" victory="1" station="1">
+  <hex row="12" col="28" terrain="1" road="144" name="Selmecb&#225;nya" owner="1" flag="47" victory="1" trigger="1" trigparam="0" station="1">
     <unit id="33302" owner="1" flag="48" face="0" exp="10"/>
   </hex>
   <hex row="12" col="29" terrain="3"/>
@@ -1043,7 +1043,7 @@
   <hex row="16" col="46" terrain="5"/>
   <hex row="16" col="47" terrain="5"/>
   <hex row="17" col="2" terrain="10" name="Nyitra"/>
-  <hex row="17" col="3" terrain="1" road="57" name="Nyitra" owner="1" flag="47" victory="1" station="1">
+  <hex row="17" col="3" terrain="1" road="57" name="Nyitra" owner="1" flag="47" victory="1" trigger="1" trigparam="0" station="1">
     <unit id="33302" owner="1" flag="48" face="0" exp="251"/>
   </hex>
   <hex row="17" col="4" terrain="5">
@@ -1239,7 +1239,7 @@
   <hex row="21" col="18" deploy="0">
     <unit id="46664" owner="0" flag="188" face="0" exp="149"/>
   </hex>
-  <hex row="21" col="19" terrain="1" road="50" name="L&#233;va" owner="0" flag="187" victory="0" deploy="0" station="1">
+  <hex row="21" col="19" terrain="1" road="50" name="L&#233;va" owner="0" flag="187" victory="0" deploy="0" trigger="6" trigparam="0" station="1">
     <unit id="46662" owner="0" flag="188" face="0" transport="46675" exp="199" ldr="1"/>
   </hex>
   <hex row="21" col="20" road="40"/>
@@ -1555,7 +1555,7 @@
   </hex>
   <hex row="30" col="3" terrain="10" name="V&#225;g"/>
   <hex row="30" col="4" road="136"/>
-  <hex row="30" col="5" terrain="1" road="147" name="&#201;rsek&#250;jv&#225;r" owner="0" flag="187" victory="0" station="1">
+  <hex row="30" col="5" terrain="1" road="147" name="&#201;rsek&#250;jv&#225;r" owner="0" flag="187" victory="0" trigger="8" trigparam="0" trigequip="4560" station="1">
     <unit id="46673" owner="0" flag="188" face="0" exp="122"/>
   </hex>
   <hex row="30" col="6" terrain="10" road="34" name="Nyitra"/>
@@ -1832,7 +1832,7 @@
   <hex row="38" col="1" road="136"/>
   <hex row="38" col="2" terrain="10" name="Csall&#243;k&#246;zi Kis-Duna"/>
   <hex row="38" col="3" terrain="11" road="40" name="Kom&#225;romi v&#225;r">
-    <unit id="33303" owner="1" flag="48" face="0" exp="250" str="20"/>
+    <unit id="33303" owner="1" flag="48" face="0" exp="250" str="20" bstr="15"/>
   </hex>
   <hex row="38" col="4" terrain="10" name="Csall&#243;k&#246;zi Kis-Duna" mines="2"/>
   <hex row="38" col="5" terrain="10" road="34" name="V&#225;g-Duna" mines="2"/>
@@ -1873,7 +1873,7 @@
   <hex row="39" col="2" road="130"/>
   <hex row="39" col="3" terrain="15" road="18" name="Duna" mines="2"/>
   <hex row="39" col="4" terrain="1" road="178" name="R&#233;vkom&#225;rom" owner="1" flag="47" station="1">
-    <unit id="33302" owner="1" flag="48" face="0" exp="250" str="20"/>
+    <unit id="33302" owner="1" flag="48" face="0" exp="250" str="20" bstr="15"/>
   </hex>
   <hex row="39" col="5" terrain="10" name="V&#225;g-Duna" mines="2"/>
   <hex row="39" col="17" terrain="15" name="Duna"/>
@@ -1899,7 +1899,7 @@
   <hex row="40" col="1" terrain="3"/>
   <hex row="40" col="2" terrain="15" name="Duna"/>
   <hex row="40" col="3" terrain="1" road="41" name="Kom&#225;rom" owner="0" flag="187" station="1">
-    <unit id="46673" owner="0" flag="188" face="0" exp="144" str="20"/>
+    <unit id="46673" owner="0" flag="188" face="0" exp="144" str="20" bstr="15"/>
   </hex>
   <hex row="40" col="4" terrain="15" road="17" name="Duna" mines="2"/>
   <hex row="40" col="5" terrain="15" name="Duna"/>
@@ -1937,7 +1937,7 @@
   <hex row="41" col="1" road="130"/>
   <hex row="41" col="2" road="34"/>
   <hex row="41" col="4" terrain="1" road="153" name="Kom&#225;rom">
-    <unit id="46673" owner="0" flag="188" face="0" exp="144" str="20"/>
+    <unit id="46673" owner="0" flag="188" face="0" exp="144" str="20" bstr="15"/>
   </hex>
   <hex row="41" col="5" road="130"/>
   <hex row="41" col="6" road="40"/>

@@ -4,6 +4,7 @@ import org.osada.MovMethod
 import org.osada.TerrainType
 import org.osada.UnitClass
 import org.osada.entrenchRateFor
+import org.osada.model.EfileConfig
 import org.osada.model.Equipment
 import org.osada.model.GameUnit
 
@@ -77,12 +78,26 @@ object UnitPredicates {
      * exactly a zero-movement unit that must be transportable (`26cm MinenWrf M17`, gw 32, mov 0).
      * Emplacements are the case that has no defensible reading — an entrenchment is built, not
      * loaded onto a lorry.
+     *
+     * A record with no ground weight has nothing to be carried by, which is OG's own gate: `GtpW`
+     * is the organic weight, and 708 of the 710 shipped submarines carry 0.
+     *
+     * **`sub_buytra` lifts that for submarines**, and it is one of the last `equip.cfg` keys
+     * `og-fidelity-plan.md` §Y.3 left unbuilt:
+     *
+     * > *"sub_buytra — Set to 1, to allow subs to buy transport"* — `EFILE_NOKORP/equip.cfg`
+     *
+     * Four shipped efiles set it. The mechanic it represents is surfacing — a submarine that can
+     * take a surface consort — and the key is the whole of what OG says about it, so this is the
+     * whole of what is built: the class stops being excluded from the offer. Purely additive; with
+     * the key absent nothing changes for anybody.
      */
     fun isTransportable(eqid: Int): Boolean {
         val data = if (eqid < 1) null else Equipment.equipment[eqid]
-        return data != null &&
-            data.uclass != UnitClass.FORTIFICATION.value &&
-            data.groundweight > 0
+        if (data == null || data.uclass == UnitClass.FORTIFICATION.value) return false
+        val submarinesMayBuy =
+            data.uclass == UnitClass.SUBMARINE.value && EfileConfig.intKey("sub_buytra", 0) == 1
+        return data.groundweight > 0 || submarinesMayBuy
     }
 
     fun canCapture(unit: GameUnit): Boolean {

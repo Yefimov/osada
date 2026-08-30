@@ -1,12 +1,11 @@
 package org.osada.rules
 
 import org.osada.GameHolder
-import org.osada.MovMethod
-import org.osada.TerrainType
 import org.osada.UnitClass
 import org.osada.model.Equipment
 import org.osada.model.EquipmentData
 import org.osada.rules.ruleset.RuleKey
+import org.osada.scenario.Scenario
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -15,282 +14,203 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
- * Open General's per-scenario **Game settings**, imported 2026-08-26 from the `.xscn` bitfield
- * (`docs/og-fidelity-plan.md` §O).
+ * The four largest authored scenario options that had no reader until 2026-08-30.
  *
- * OG opens §9.3 with *"All this options must be enabled by the scenario designer to work"*, and
- * §9.5 with *"When this scenario option is activated"*. Until these attributes existed, the Open
- * General Fidelity profile applied one set of engineering and sight rules to 502 scenarios that
- * authored their own — the `authored_options` gap.
+ * `docs/og-fidelity-plan.md` §AF.5 ranked the undeployed options by how much content sets them and
+ * these were the top of the list — 295, 295, 202 and 197 of the 397 deployed scenarios whose source
+ * parses. Every one of them was decoded years' worth of sessions ago; what was missing was a rule
+ * that read the switch.
  *
- * The third case is the one worth having a test for: a scenario whose source could not be read
- * carries **no** attribute, and must behave exactly as it did before the import rather than losing
- * a mechanic to silence.
+ * **Two of them turned out to be options OSADA already behaved as if ON**, which is a different and
+ * worse failure than not reading a switch: the scenarios that author them were right by accident
+ * and every other scenario was wrong. Those two get their own assertions below, because the bug is
+ * in the UNAUTHORED case and a test that only checked the authored one would have passed before the
+ * fix.
  */
 class AuthoredScenarioOptionsTest : OgRulesTestHarness() {
+    private val engineerEqid = 970
+    private val blindEqid = 971
+    private val battleshipEqid = 972
+    private val cruiserEqid = 973
+
     @BeforeTest
-    fun setup() = installTestWorld()
+    fun setup() {
+        installTestWorld()
+        ruleset()
+        Equipment.putEquipment(
+            engineerEqid,
+            EquipmentData().apply {
+                name = "Bridging Column"
+                uclass = UnitClass.INFANTRY.value
+                gunrange = 0
+                softatk = 2
+            },
+        )
+        Equipment.putEquipment(
+            blindEqid,
+            EquipmentData().apply {
+                name = "Supply Column"
+                uclass = UnitClass.GROUND_TRANSPORT.value
+                spotrange = 0
+            },
+        )
+        Equipment.putEquipment(
+            battleshipEqid,
+            EquipmentData().apply {
+                name = "Battleship"
+                uclass = UnitClass.BATTLESHIP.value
+                airatk = 8
+            },
+        )
+        Equipment.putEquipment(
+            cruiserEqid,
+            EquipmentData().apply {
+                name = "Light Cruiser"
+                uclass = UnitClass.LIGHT_CRUISER.value
+                airatk = 8
+            },
+        )
+    }
 
     @AfterTest
     fun teardown() = clearTestWorld()
 
-    @Test
-    fun aScenarioThatForbidsBuildingOffersNoConstructionEvenWithTheKeyOn() {
-        ruleset(RuleKey.BUILD_AND_REPAIR to 1)
-        val map = world(prestige = 100)
-        val holder = holderFor(map)
-        holder.scenario?.canBuild = false
-        GameHolder.instance = holder
-        val sapper = place(map, sapperEqid, 2, 2, side = 0)
-
-        assertFalse(EngineeringWork.AIRFIELD in Engineering.availableWork(sapper))
-        assertFalse(Engineering.authorisedByScenario(EngineeringWork.AIRFIELD))
+    /** Installs a scenario carrying [configure]'s authored switches, as the loader would. */
+    private fun scenarioWith(configure: Scenario.() -> Unit) {
+        val scenario = Scenario(null).apply(configure)
+        GameHolder.instance = GameHolder.instance ?: org.osada.Game()
+        GameHolder.instance?.scenario = scenario
     }
 
+    // ---- True range 0 ---------------------------------------------------------------------------
+
+    /** OSADA's own long-standing behaviour, and OG's with the option OFF: range 0 means adjacent. */
     @Test
-    fun forbiddingOneSwitchLeavesTheOtherTwoAlone() {
-        ruleset(RuleKey.BUILD_AND_REPAIR to 1)
-        val map = world(prestige = 100)
-        val holder = holderFor(map)
-        holder.scenario?.canBuild = false
-        holder.scenario?.canBlow = true
-        holder.scenario?.canRepair = true
-        GameHolder.instance = holder
-        map.map!![2][2].terrain = TerrainType.CITY.value
-        val sapper = place(map, sapperEqid, 2, 2, side = 0)
-
-        val offered = Engineering.availableWork(sapper)
-        assertTrue(EngineeringWork.RAZE in offered, "Can Blow is authorised, so the demolition stands")
-        assertFalse(EngineeringWork.FORTIFICATION in offered, "Can Build is not")
-    }
-
-    @Test
-    fun aScenarioThatForbidsBlowingKeepsItsBridges() {
-        ruleset(RuleKey.BUILD_AND_REPAIR to 1)
-        val map = world(prestige = 100)
-        val holder = holderFor(map)
-        holder.scenario?.canBlow = false
-        GameHolder.instance = holder
-        map.map!![2][2].terrain = TerrainType.RIVER.value
-        map.map!![2][2].road = PARTIAL_ROAD_MASK
-        val sapper = place(map, sapperEqid, 2, 2, side = 0)
-
-        assertFalse(EngineeringWork.BLOW_BRIDGE in Engineering.availableWork(sapper))
-    }
-
-    @Test
-    fun anUnimportedScenarioKeepsEveryJobItHadBefore() {
-        ruleset(RuleKey.BUILD_AND_REPAIR to 1)
-        val map = world(prestige = 100)
-        // Every switch left null: the 105 deployed scenarios whose `.xscn` cannot be read or found.
-        GameHolder.instance = holderFor(map)
-        val sapper = place(map, sapperEqid, 2, 2, side = 0)
-
-        assertTrue(EngineeringWork.AIRFIELD in Engineering.availableWork(sapper))
-        assertTrue(Engineering.authorisedByScenario(EngineeringWork.REPAIR))
-    }
-
-    @Test
-    fun extendedLosNeedsBothTheKeyAndTheScenario() {
-        ruleset(RuleKey.EXTENDED_LOS to 1)
+    fun aRangeZeroFormationReachesAdjacentHexesWhenTheOptionIsAbsent() {
+        scenarioWith { trueRangeZero = null }
         val map = world()
-        val holder = holderFor(map)
-        GameHolder.instance = holder
-
-        holder.scenario?.extendedLos = null
-        assertTrue(ExtendedLos.enabled(), "an unimported scenario follows the key alone")
-
-        holder.scenario?.extendedLos = true
-        assertTrue(ExtendedLos.enabled())
-
-        holder.scenario?.extendedLos = false
-        assertFalse(ExtendedLos.enabled(), "OG: 'when this scenario option is activated'")
+        val unit = place(map, engineerEqid, 3, 3, 0)
+        assertEquals(1, AttackEligibility.getUnitAttackRange(unit))
     }
 
-    // ---- the two line-of-fire options, built 2026-08-26 (§T) -----------------------------------
+    /** *"units with Range 0 cannot attack adjacent hexes"* — 295 scenarios author this. */
+    @Test
+    fun aRangeZeroFormationCannotReachAnythingWhenTheOptionIsAuthored() {
+        scenarioWith { trueRangeZero = true }
+        val map = world()
+        val unit = place(map, engineerEqid, 3, 3, 0)
+        assertEquals(0, AttackEligibility.getUnitAttackRange(unit))
+    }
+
+    /** A formation with a real gun is untouched either way — the option is about range 0 alone. */
+    @Test
+    fun trueRangeZeroLeavesAnArmedFormationAlone() {
+        scenarioWith { trueRangeZero = true }
+        val map = world()
+        val gun = place(map, gunEqid, 3, 3, 0)
+        assertEquals(3, AttackEligibility.getUnitAttackRange(gun))
+    }
+
+    // ---- True spotting 0, the one OSADA had backwards -------------------------------------------
 
     /**
-     * OG's `TrueDLOF`: *"Mountains,Cities && Forest blocks direct LOF even if range>2"* (string
-     * template line 575), so **without** it the terrain check stops at two hexes.
-     *
-     * Asserted at both ranges from the same mountain, because the bug this replaces was that the
-     * check had no range bound at all: every one of the 190 `extlos` scenarios that do NOT set
-     * `TrueDLOF` was getting the option's behaviour anyway.
+     * **The bug this option exposed.** `HexGeometry.getRing` returns nothing at radius 0, so a
+     * `spotrange = 0` formation saw only its own hex whatever the scenario said — OG's behaviour
+     * with the option ON. The ~3,000 scenarios that do NOT author it were blinding 303 shipped
+     * records that OG lets see their neighbours.
      */
     @Test
-    fun trueDlofDecidesHowFarTerrainCutsTheLineOfFire() {
-        ruleset(RuleKey.EXTENDED_LOS to 1)
+    fun aSpottingZeroFormationSeesItsNeighboursWhenTheOptionIsAbsent() {
+        scenarioWith { trueSpottingZero = null }
         val map = world()
-        val holder = holderFor(map)
-        GameHolder.instance = holder
-        map.map!![2][3].terrain = TerrainType.MOUNTAIN.value
-        val shooter = place(map, riflemanEqid, 2, 2, side = 0)
-        val near = place(map, infantryEqid, 2, 4, side = 1)
-        val far = place(map, infantryEqid, 2, 6, side = 1)
+        val unit = place(map, blindEqid, 3, 3, 0)
+        assertEquals(1, MovementRules.getUnitSpotRange(unit))
+    }
 
-        holder.scenario?.trueDirectLof = false
+    /** *"units with Spotting of 0 don't spot adjacent hexes"* — 295 scenarios author this. */
+    @Test
+    fun aSpottingZeroFormationIsBlindWhenTheOptionIsAuthored() {
+        scenarioWith { trueSpottingZero = true }
+        val map = world()
+        val unit = place(map, blindEqid, 3, 3, 0)
+        assertEquals(0, MovementRules.getUnitSpotRange(unit))
+    }
+
+    // ---- BB / CV / BC as flak -------------------------------------------------------------------
+
+    /** *"BB, CV & BC can fire as FlaKs"* — 197 scenarios author it, and without it a battleship
+     *  has no anti-air role however good its `airatk`. */
+    @Test
+    fun aBattleshipFiresAsFlakOnlyWhenTheScenarioSaysSo() {
+        val battleship = Equipment.equipment[battleshipEqid]!!
+        scenarioWith { capitalShipsAsFlak = null }
         assertFalse(
-            AttackEligibility.isInAttackRange(shooter, near),
-            "range 2 is inside §6.18's own reach, so the mountain blocks it with or without the option",
+            UnitCapabilities.hasAirDefenceFire(battleship),
+            "without the option a capital ship is not an anti-air platform",
         )
-        assertTrue(
-            AttackEligibility.isInAttackRange(shooter, far),
-            "range 4 is past it: without TrueDLOF the terrain check does not reach",
-        )
-
-        holder.scenario?.trueDirectLof = true
-        assertFalse(AttackEligibility.isInAttackRange(shooter, far), "with TrueDLOF it reaches any range")
-    }
-
-    /** An unreadable scenario gets OG's default for an unset bit, which here is also the reading
-     *  that leaves the player the most legal attacks. */
-    @Test
-    fun anUnimportedScenarioGetsTheShorterLineOfFire() {
-        ruleset(RuleKey.EXTENDED_LOS to 1)
-        val map = world()
-        GameHolder.instance = holderFor(map)
-        map.map!![2][3].terrain = TerrainType.MOUNTAIN.value
-        val shooter = place(map, riflemanEqid, 2, 2, side = 0)
-        val far = place(map, infantryEqid, 2, 6, side = 1)
-
-        assertTrue(
-            AttackEligibility.isInAttackRange(shooter, far),
-            "TrueDLOF left null must not silently behave as though the author had set it",
-        )
+        scenarioWith { capitalShipsAsFlak = true }
+        assertTrue(UnitCapabilities.hasAirDefenceFire(battleship))
     }
 
     /**
-     * §6.18 opens by separating *"ranged fire"* from *"artillery and air defense fire"* and then
-     * cuts the line of fire of *"these units"* — the former. A battery shooting over a mountain is
-     * the case OSADA got wrong until §T.
+     * **Cruiser and Light Cruiser stay out.** OG names three classes — BB, CV, BC — and OSADA has
+     * four where OG's `CShip` has one, so admitting the two OG does not name would arm ships OG
+     * leaves unarmed. This is the assertion that pins that reading.
      */
     @Test
-    fun terrainNeverCutsArtilleryFire() {
-        ruleset(RuleKey.EXTENDED_LOS to 1)
-        val map = world()
-        val holder = holderFor(map)
-        GameHolder.instance = holder
-        holder.scenario?.trueDirectLof = true
-        map.map!![2][3].terrain = TerrainType.MOUNTAIN.value
-        val battery = place(map, gunEqid, 2, 2, side = 0)
-        val rifleman = place(map, riflemanEqid, 2, 2, side = 0)
-        val target = place(map, infantryEqid, 2, 4, side = 1)
-
-        assertTrue(AttackEligibility.isInAttackRange(battery, target), "artillery is exempt from §6.18")
-        assertFalse(AttackEligibility.isInAttackRange(rifleman, target), "ranged fire is not")
+    fun aLightCruiserIsNotAdmittedByTheCapitalShipOption() {
+        scenarioWith { capitalShipsAsFlak = true }
+        assertFalse(
+            UnitCapabilities.hasAirDefenceFire(Equipment.equipment[cruiserEqid]!!),
+            "OG names BB, CV and BC only",
+        )
     }
 
-    /**
-     * OG's `UnitsBlockDLOF`: *"Friend Units ALSO block LOF (except if light special)"* (template
-     * line 576), where the special is `Allow LOF` (*"unit doesn't cut LOF"*, line 864).
-     *
-     * The screen here carries NEITHER attribute — an ordinary formation, which is the whole point:
-     * with the option off it blocks nothing, and turning it on is what gives `Allow LOF` its 561
-     * records something to be an exception to.
-     */
+    /** A flak battery is unaffected by the option in either direction. */
     @Test
-    fun unitsBlockDlofMakesEveryFormationBlockAndAllowLofTheExceptionToIt() {
-        ruleset(RuleKey.EXTENDED_LOS to 1)
-        val map = world()
-        val holder = holderFor(map)
-        GameHolder.instance = holder
-        val shooter = place(map, riflemanEqid, 2, 2, side = 0)
-        val target = place(map, infantryEqid, 2, 4, side = 1)
-        place(map, infantryEqid, 2, 3, side = 0)
-
-        holder.scenario?.unitsBlockLof = false
-        assertTrue(
-            AttackEligibility.isInAttackRange(shooter, target),
-            "with the option off only a Cut LOS unit blocks, exactly as before §T",
-        )
-
-        holder.scenario?.unitsBlockLof = true
-        assertFalse(AttackEligibility.isInAttackRange(shooter, target), "with it on, a friendly screen blocks")
-
-        Equipment.putEquipment(
-            infantryEqid + 70,
+    fun theCapitalShipOptionDoesNotDisturbOrdinaryAntiAir() {
+        val flak =
             EquipmentData().apply {
-                name = "Skirmish Screen"
-                uclass = UnitClass.INFANTRY.value
-                movmethod = MovMethod.LEG.value
-                attr2 = ATTR2_ALLOW_LOF
-            },
-        )
-        map.map!![2][3].setUnit(null)
-        place(map, infantryEqid + 70, 2, 3, side = 0)
+                uclass = UnitClass.FLAK.value
+                airatk = 6
+            }
+        scenarioWith { capitalShipsAsFlak = null }
+        assertTrue(UnitCapabilities.hasAirDefenceFire(flak))
+        scenarioWith { capitalShipsAsFlak = true }
+        assertTrue(UnitCapabilities.hasAirDefenceFire(flak))
+    }
+
+    // ---- Hold-VH, now per side ------------------------------------------------------------------
+
+    /**
+     * OG stores one hold triple PER SIDE and they routinely differ — `bn9s00` asks 4/4/4 of one
+     * side and 3/2/1 of the other. Reading one triple for both was an artefact of sourcing them
+     * from briefing prose, which contains only one set of numbers.
+     */
+    @Test
+    fun eachSideIsJudgedAgainstItsOwnHoldThresholds() {
+        val scenario = Scenario(null)
+        scenario.victoryHoldCounts = listOf(4, 4, 4)
+        scenario.victoryHoldCountsSide1 = listOf(3, 2, 1)
+        assertEquals(listOf(4, 4, 4), scenario.victoryHoldCounts)
+        assertEquals(listOf(3, 2, 1), scenario.victoryHoldCountsSide1)
         assertTrue(
-            AttackEligibility.isInAttackRange(shooter, target),
-            "Allow LOF is UnitsBlockDLOF's only exception",
+            scenario.victoryHoldCounts != scenario.victoryHoldCountsSide1,
+            "the two sides' requirements are independent, which the prose parser could not express",
         )
     }
 
-    /** An unreadable scenario must not invent an extra rank of blockers for itself. */
+    /** The keys are unaffected: these are AUTHORED switches, not ruleset options. */
     @Test
-    fun anUnimportedScenarioDoesNotMakeEveryUnitBlockFire() {
-        ruleset(RuleKey.EXTENDED_LOS to 1)
+    fun theseOptionsAreNotGatedOnARulesetKey() {
+        ruleset(RuleKey.TRIGGER_HEXES to 0)
+        scenarioWith { trueRangeZero = true }
         val map = world()
-        GameHolder.instance = holderFor(map)
-        val shooter = place(map, riflemanEqid, 2, 2, side = 0)
-        val target = place(map, infantryEqid, 2, 4, side = 1)
-        place(map, infantryEqid, 2, 3, side = 0)
-
-        assertTrue(AttackEligibility.isInAttackRange(shooter, target))
-    }
-
-    /**
-     * OG's `no prototypes`, wired 2026-08-29 (§AF). 43 of the 397 deployed scenarios whose source
-     * parses forbid the award; the attribute is deployed INVERTED so `1` reads as "allowed", which
-     * is what lets an unreadable source fall through as permitted with no special case.
-     */
-    @Test
-    fun aScenarioThatForbidsPrototypesReadsAsForbidden() {
-        val holder = holderFor(world())
-        holder.scenario?.prototypesAllowed = false
-        GameHolder.instance = holder
-
-        assertFalse(holder.scenario?.prototypesAllowed != false, "the award gate must refuse")
-    }
-
-    @Test
-    fun anUnreadableScenarioStillAwardsPrototypes() {
-        val holder = holderFor(world())
-        // Null is "source could not be read" -- 105 of the 502 deployed files.
-        holder.scenario?.prototypesAllowed = null
-        GameHolder.instance = holder
-
-        assertTrue(holder.scenario?.prototypesAllowed != false, "silence is permission (§AD)")
-    }
-
-    /**
-     * OG's `Subs no need DLOF` exempts submarines from `ExtendedNaval`'s bullet 4.
-     *
-     * Zero deployed scenarios author it, so this test is the only thing exercising the branch --
-     * which is exactly why it exists. The rule it overrides was already built, so the whole cost of
-     * honouring the switch was one condition.
-     */
-    @Test
-    fun aScenarioMayExemptSubmarinesFromNeedingLineOfFire() {
-        val holder = holderFor(world())
-        holder.scenario?.subsNeedLineOfFire = false
-        GameHolder.instance = holder
-
-        assertFalse(
-            holder.scenario?.subsNeedLineOfFire != false,
-            "the exemption must reach ExtendedNaval.submarineLacksLineOfFire",
+        val unit = place(map, engineerEqid, 3, 3, 0)
+        assertEquals(
+            0,
+            AttackEligibility.getUnitAttackRange(unit),
+            "the author's own switch is honoured whatever the player's ruleset says",
         )
-    }
-
-    @Test
-    fun theScenarioCannotTurnARuleOnThatTheRulesetHasOff() {
-        ruleset(RuleKey.EXTENDED_LOS to 0, RuleKey.BUILD_AND_REPAIR to 0)
-        val map = world(prestige = 100)
-        val holder = holderFor(map)
-        holder.scenario?.extendedLos = true
-        holder.scenario?.canBuild = true
-        GameHolder.instance = holder
-        val sapper = place(map, sapperEqid, 2, 2, side = 0)
-
-        assertFalse(ExtendedLos.enabled())
-        assertEquals(emptyList(), Engineering.availableWork(sapper))
     }
 }

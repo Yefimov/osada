@@ -5,6 +5,7 @@ package org.osada.ui
 import kotlinx.browser.document
 import org.osada.hero.HeroCampaign
 import org.osada.hero.HeroEventDisplay
+import org.osada.i18n.I18n
 import org.osada.model.GameUnit
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.MouseEvent
@@ -30,7 +31,12 @@ internal object FormationServiceRecordPresenter {
 
         val header = child(panel, "header", "osada-service-record__header")
         val titleWrap = child(header, "div", "osada-service-record__titles")
-        child(titleWrap, "div", "osada-service-record__eyebrow", "Formation ${formation.id.value}")
+        child(
+            titleWrap,
+            "div",
+            "osada-service-record__eyebrow",
+            I18n.t("formation.service_record.formation", mapOf("id" to formation.id.value)),
+        )
         child(titleWrap, "h2", "osada-service-record__title", formation.displayName)
         child(titleWrap, "div", "osada-service-record__sub", unit.unitData(true).name)
         val closeButton = child(header, "button", "osada-service-record__close", "×")
@@ -42,22 +48,30 @@ internal object FormationServiceRecordPresenter {
 
         val summaryGrid = child(panel, "div", "osada-service-record__summary")
         val dossier = HeroCampaign.dossier(unit)
-        summary(summaryGrid, "Recognition", formation.recognition.toString())
-        summary(summaryGrid, "Experience", unit.experience.toString())
-        summary(summaryGrid, "Strength", unit.strength.toString())
-        summary(summaryGrid, "Commander", dossier?.let { "${it.rank} ${it.name}" } ?: "None")
+        summary(summaryGrid, I18n.t("formation.service_record.recognition"), formation.recognition.toString())
+        summary(summaryGrid, I18n.t("formation.service_record.experience"), unit.experience.toString())
+        summary(summaryGrid, I18n.t("formation.service_record.strength"), unit.strength.toString())
+        summary(
+            summaryGrid,
+            I18n.t("formation.service_record.commander"),
+            dossier?.let { "${it.rank} ${it.name}" } ?: I18n.t("common.none"),
+        )
         // Nothing writes attachmentIds yet (DEFERRED.md §1.4), so "Attachments: 0" would render
         // forever and read as broken rather than "the feature doesn't exist here yet". Hide the
         // row until there is something to report.
         if (formation.attachmentIds.isNotEmpty()) {
-            summary(summaryGrid, "Attachments", formation.attachmentIds.size.toString())
+            summary(
+                summaryGrid,
+                I18n.t("formation.service_record.attachments"),
+                formation.attachmentIds.size.toString(),
+            )
         }
-        summary(summaryGrid, "Battle honours", formation.battleHonors.size.toString())
+        summary(summaryGrid, I18n.t("formation.service_record.battle_honours"), formation.battleHonors.size.toString())
 
         val history = child(panel, "div", "osada-service-record__history")
-        child(history, "h3", "osada-service-record__section-title", "Chronology")
+        child(history, "h3", "osada-service-record__section-title", I18n.t("formation.service_record.chronology"))
         if (formation.history.isEmpty()) {
-            child(history, "div", "osada-service-record__empty", "No notable events have been recorded yet.")
+            child(history, "div", "osada-service-record__empty", I18n.t("formation.service_record.empty"))
         } else {
             formation.history.forEach { event ->
                 val row = child(history, "article", "osada-service-record__event")
@@ -76,16 +90,13 @@ internal object FormationServiceRecordPresenter {
 
     fun eventTitle(eventId: String): String =
         when (eventId) {
-            "equipment_changed" -> "Formation re-equipped"
-            "objective_captured" -> "Objective captured"
-            "flag_captured" -> "Flag captured"
-            "scenario_completed" -> "Scenario completed"
-            else ->
-                if (eventId.startsWith("commander_")) {
-                    "Commander ${eventId.removePrefix("commander_").replace('_', ' ')}"
-                } else {
-                    HeroEventDisplay.title(eventId)
-                }
+            "equipment_changed" -> I18n.t("hero.event.equipment_changed")
+            "objective_captured" -> I18n.t("hero.event.objective_captured")
+            "flag_captured" -> I18n.t("hero.event.flag_captured")
+            "scenario_completed" -> I18n.t("hero.event.scenario_completed")
+            "commander_departed" -> I18n.t("hero.event.commander_departed")
+            "commander_transferred" -> I18n.t("hero.event.commander_transferred")
+            else -> HeroEventDisplay.title(eventId)
         }
 
     fun close() {

@@ -163,6 +163,7 @@ internal object LiveLocalization {
         }
 
         refreshDifficultySelector()
+        StartMenuCampaignScreen.refreshLocalizedContent()
         refreshSelectedCampaignDossier()
         refreshCampaignRows()
         CampaignBackupButtons.refresh()

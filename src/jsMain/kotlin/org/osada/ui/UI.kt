@@ -4,6 +4,7 @@ import org.osada.CombatLog
 import org.osada.Game
 import org.osada.UnitClass
 import org.osada.evaluateScenarioEvents
+import org.osada.i18n.GameText
 import org.osada.i18n.I18n
 import org.osada.model.Cell
 import org.osada.model.Equipment
@@ -11,7 +12,6 @@ import org.osada.model.GameUnit
 import org.osada.model.getCountriesBySide
 import org.osada.model.getCountryName
 import org.osada.model.selectUnit
-import org.osada.sideNames
 import org.osada.ui.briefing.BriefingIntroTracker
 import org.osada.ui.briefing.ScenarioFacts
 import org.osada.ui.keyboard.CommandRouter
@@ -288,8 +288,8 @@ class UI(
         if (real(name0) && real(name1)) {
             return I18n.t("briefing.sides", mapOf("left" to name0, "right" to name1))
         }
-        val axis = sideNames.getOrNull(0) ?: I18n.t("game.side.0")
-        val allies = sideNames.getOrNull(1) ?: I18n.t("game.side.1")
+        val axis = GameText.side(0)
+        val allies = GameText.side(1)
         val commanded = game.campaignPlayer?.getSideName()
         return if (commanded != null) {
             I18n.t(

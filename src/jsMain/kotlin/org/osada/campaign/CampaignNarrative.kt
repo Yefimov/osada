@@ -172,8 +172,11 @@ internal object CampaignEpilogueParser {
             if (!BriefingDynamic.isObject(item)) return@mapArray null
             val id = BriefingDynamic.str(item.id) ?: return@mapArray null
             val text = BriefingDynamic.str(item.text) ?: return@mapArray null
-            fun localized(field: String, fallback: String): String =
-                domain?.let { BriefingLocalization.resolve(it, "epilogue.$id.$field", fallback) } ?: fallback
+
+            fun localized(
+                field: String,
+                fallback: String,
+            ): String = domain?.let { BriefingLocalization.resolve(it, "epilogue.$id.$field", fallback) } ?: fallback
             CampaignEpilogue(
                 id = id,
                 outcomes = BriefingDynamic.strList(item.outcomes),

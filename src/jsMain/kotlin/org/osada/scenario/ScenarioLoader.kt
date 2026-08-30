@@ -26,6 +26,32 @@ object ScenarioLoader {
     private const val HEX_COLUMN_WIDTH_PAIR = 60
     private const val HOLD_THRESHOLD_COUNT = 3
 
+    /** An authored "N for side 0, N for side 1" pair, or empty when the scenario has none. */
+    private fun perSideCounts(
+        mapElement: Element,
+        attribute: String,
+    ): List<Int> =
+        mapElement
+            .getAttribute(attribute)
+            ?.takeIf { it.isNotBlank() }
+            ?.split(',')
+            ?.mapNotNull { it.trim().toIntOrNull() }
+            ?: emptyList()
+
+    /** One side's authored BV/V/TV objective-hold triple, or empty when the scenario has none for
+     *  that side. OG stores the two sides separately and they routinely differ. */
+    private fun holdCounts(
+        mapElement: Element,
+        attribute: String,
+    ): List<Int> =
+        mapElement
+            .getAttribute(attribute)
+            ?.takeIf { it.isNotBlank() }
+            ?.split(',')
+            ?.mapNotNull { it.trim().toIntOrNull() }
+            ?.takeIf { it.size == HOLD_THRESHOLD_COUNT }
+            ?: emptyList()
+
     private val loadedScenarios: MutableMap<String, Document> = mutableMapOf()
 
     fun loadScenario(scenario: Scenario) {
@@ -88,14 +114,11 @@ object ScenarioLoader {
         scenario.map.victoryTurns[2] = kotlin.math.round(turns[2] * difficultyMultiplier).toInt()
         scenario.map.maxTurns = scenario.map.victoryTurns[2]
         scenario.maxTurns = scenario.map.maxTurns
-        scenario.victoryHoldCounts =
-            mapElement
-                .getAttribute("holdvictory")
-                ?.takeIf { it.isNotBlank() }
-                ?.split(',')
-                ?.mapNotNull { it.trim().toIntOrNull() }
-                ?.takeIf { it.size == HOLD_THRESHOLD_COUNT }
-                ?: emptyList()
+        scenario.victoryHoldCounts = holdCounts(mapElement, "holdvictory")
+        scenario.victoryHoldCountsSide1 = holdCounts(mapElement, "holdvictory1")
+        scenario.retreatUnitsPerSide = perSideCounts(mapElement, "retreatunits")
+        scenario.killUnitsPerSide = perSideCounts(mapElement, "killunits")
+        scenario.mustSurvivePerSide = perSideCounts(mapElement, "msuunits")
         scenario.date = Date(Date.parse(mapElement.getAttribute("date") ?: ""))
     }
 
@@ -145,6 +168,14 @@ object ScenarioLoader {
         scenario.portsNoNavalDeploy = flag("portsnonavaldeploy")
         scenario.prototypesAllowed = flag("prototypes")
         scenario.subsNeedLineOfFire = flag("subsneedlof")
+        // Four more, deployed 2026-08-30 under the same policy -- each arrived with its reader.
+        // They are the largest authored options that had none: 295 / 295 / 202 / 197 scenarios.
+        scenario.trueRangeZero = flag("truerange0")
+        scenario.trueSpottingZero = flag("truespotting0")
+        scenario.reinforcementsWhenActive = flag("reinfwhenactive")
+        scenario.capitalShipsAsFlak = flag("capitalflak")
+        scenario.useBasicStrength = flag("basicstrength")
+        scenario.typedVictoryHexes = flag("typedvh")
     }
 
     /** The scenario/operation name lives on the <map name="…"> attribute. Standalone scenarios

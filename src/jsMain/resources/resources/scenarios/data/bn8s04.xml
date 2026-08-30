@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="bn8s04.xscn" name="Rail Raid" turns="8, 10, 15" date="February 8, 1942" dayturns="0" ground="1" atmosferic="0" latitude="3" iconset="1" weatherchg="0" rows="20" cols="42" eqp="eqp-lxf" image="resources/maps/images/map_1016.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1">
+<map file="bn8s04.xscn" name="Rail Raid" turns="8, 10, 15" date="February 8, 1942" dayturns="0" ground="1" atmosferic="0" latitude="3" iconset="1" weatherchg="0" rows="20" cols="42" eqp="eqp-lxf" image="resources/maps/images/map_1016.png" eqpv="united1" retreatunits="1, 0" msuunits="3, 0" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1">
   <player id="0" country="43" side="1" airtrans="0" navaltrans="0" railtrans="2" defaultxp="25" defaultstr="10" support="44,0,0,0" turnprestige="0, 100, 100, 100, 100, 100, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <player id="1" country="41" side="0" airtrans="1" navaltrans="0" railtrans="2" defaultxp="200" defaultstr="10" support="8,42,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="2">
@@ -265,13 +265,13 @@
   <hex row="5" col="30" terrain="3"/>
   <hex row="5" col="32" road="17"/>
   <hex row="5" col="33" terrain="11">
-    <unit id="717" owner="1" flag="42" face="0" exp="200" str="8"/>
+    <unit id="717" owner="1" flag="42" face="0" exp="200" str="8" bstr="1"/>
   </hex>
   <hex row="5" col="34" terrain="2" road="9" owner="1" flag="41">
-    <unit id="31489" owner="1" flag="42" face="0" exp="200" str="5"/>
+    <unit id="31489" owner="1" flag="42" face="0" exp="200" str="5" bstr="5"/>
   </hex>
   <hex row="5" col="35" terrain="1" road="138" name="Bradina - Axis Ground Exit"/>
-  <hex row="5" col="36" terrain="1" road="50" name="Bradina - Axis Ground Exit" owner="1" flag="41" station="1"/>
+  <hex row="5" col="36" terrain="1" road="50" name="Bradina - Axis Ground Exit" owner="1" flag="41" escapeground="1" station="1"/>
   <hex row="5" col="37" road="40"/>
   <hex row="5" col="39" terrain="10"/>
   <hex row="5" col="40" terrain="10"/>
@@ -305,7 +305,7 @@
   <hex row="6" col="32" road="33"/>
   <hex row="6" col="35" terrain="3"/>
   <hex row="6" col="36" terrain="11" road="131" name="Bradina - Axis Ground Exit">
-    <unit id="640" owner="1" flag="42" face="0" exp="200" str="20"/>
+    <unit id="640" owner="1" flag="42" face="0" exp="200" str="20" bstr="1"/>
   </hex>
   <hex row="6" col="37" terrain="3"/>
   <hex row="6" col="38" road="136"/>
@@ -450,7 +450,7 @@
   <hex row="10" col="21" road="40"/>
   <hex row="10" col="22" terrain="3"/>
   <hex row="10" col="23" terrain="11" road="34">
-    <unit id="717" owner="1" flag="42" face="0" exp="200" str="8"/>
+    <unit id="717" owner="1" flag="42" face="0" exp="200" str="8" bstr="1" msu="1"/>
   </hex>
   <hex row="10" col="24" terrain="10" road="34"/>
   <hex row="10" col="25" road="32"/>
@@ -483,7 +483,7 @@
   <hex row="11" col="17" road="40"/>
   <hex row="11" col="18" terrain="3"/>
   <hex row="11" col="19" road="34">
-    <unit id="336" owner="0" flag="44" face="0" exp="200" str="2"/>
+    <unit id="336" owner="0" flag="44" face="0" exp="200" str="2" bstr="2"/>
   </hex>
   <hex row="11" col="20" road="34"/>
   <hex row="11" col="22" road="130"/>
@@ -515,7 +515,7 @@
   <hex row="12" col="10" terrain="10"/>
   <hex row="12" col="11" terrain="10"/>
   <hex row="12" col="15" terrain="11" road="34">
-    <unit id="717" owner="1" flag="42" face="0" exp="200" str="8"/>
+    <unit id="717" owner="1" flag="42" face="0" exp="200" str="8" bstr="1" msu="1"/>
   </hex>
   <hex row="12" col="16" terrain="10" road="34"/>
   <hex row="12" col="17" road="32"/>
@@ -615,7 +615,7 @@
   <hex row="15" col="6" terrain="10"/>
   <hex row="15" col="7" terrain="10" road="34"/>
   <hex row="15" col="8" road="34">
-    <unit id="336" owner="0" flag="44" face="0" exp="200" str="2"/>
+    <unit id="336" owner="0" flag="44" face="0" exp="200" str="2" bstr="2"/>
   </hex>
   <hex row="15" col="9" road="32"/>
   <hex row="15" col="11" terrain="3"/>
@@ -637,7 +637,7 @@
   <hex row="15" col="33" terrain="3"/>
   <hex row="15" col="34" terrain="3"/>
   <hex row="15" col="35" terrain="3"/>
-  <hex row="15" col="38" terrain="2" owner="0" flag="43"/>
+  <hex row="15" col="38" terrain="2" owner="0" flag="43" dirt="1"/>
   <hex row="15" col="40" terrain="3"/>
   <hex row="15" col="41" terrain="3"/>
   <hex row="16" col="0" terrain="3"/>
@@ -647,7 +647,7 @@
   <hex row="16" col="4" terrain="3"/>
   <hex row="16" col="5" road="35"/>
   <hex row="16" col="6" terrain="11" road="162" name="Village" owner="1" flag="41">
-    <unit id="704" owner="1" flag="42" face="0" exp="200"/>
+    <unit id="704" owner="1" flag="42" face="0" exp="200" bstr="1"/>
   </hex>
   <hex row="16" col="7" road="2"/>
   <hex row="16" col="8" terrain="10" road="34"/>
@@ -688,8 +688,8 @@
   <hex row="17" col="3" terrain="3"/>
   <hex row="17" col="4" terrain="3" road="18"/>
   <hex row="17" col="7" terrain="2" owner="1" flag="41">
-    <unit id="31489" owner="1" flag="42" face="0" exp="200" str="5"/>
-    <unit id="31631" owner="1" flag="42" face="0" exp="200" str="5"/>
+    <unit id="31489" owner="1" flag="42" face="0" exp="200" str="5" bstr="5"/>
+    <unit id="31631" owner="1" flag="42" face="0" exp="200" str="5" bstr="5"/>
   </hex>
   <hex row="17" col="8" terrain="10"/>
   <hex row="17" col="9" terrain="3"/>

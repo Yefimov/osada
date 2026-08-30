@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="aljf_7.xscn" name="Battle of the Hemp Bales" turns="12, 12, 12" date="September 20, 1861" dayturns="0" ground="0" atmosferic="0" latitude="15" iconset="0" weatherchg="0" rows="30" cols="34" eqp="eqp-kaiser" image="resources/maps/images/map_1413.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="1" airintercept="0" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1">
+<map file="aljf_7.xscn" name="Battle of the Hemp Bales" turns="12, 12, 12" date="September 20, 1861" dayturns="0" ground="0" atmosferic="0" latitude="15" iconset="0" weatherchg="0" rows="30" cols="34" eqp="eqp-kaiser" image="resources/maps/images/map_1413.png" eqpv="united1" holdvictory1="4, 2, 1" msuunits="0, 1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="1" airintercept="0" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="0" typedvh="0" truerange0="0" truespotting0="0" reinfwhenactive="0" capitalflak="0">
   <player id="0" country="162" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="163,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <player id="1" country="150" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="151,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <hex row="0" col="5" terrain="3"/>
@@ -165,7 +165,7 @@
   <hex row="10" col="20" terrain="15" name="Missouri River"/>
   <hex row="10" col="21" terrain="14"/>
   <hex row="10" col="22" terrain="16">
-    <unit id="44830" owner="1" flag="151" face="0" transport="44814" exp="52" str="6"/>
+    <unit id="44830" owner="1" flag="151" face="0" transport="44814" exp="52" str="6" bstr="6"/>
   </hex>
   <hex row="10" col="23" terrain="5"/>
   <hex row="10" col="24" terrain="5"/>
@@ -177,7 +177,7 @@
   <hex row="10" col="30" terrain="5"/>
   <hex row="10" col="31" terrain="5"/>
   <hex row="10" col="32" terrain="5">
-    <unit id="44789" owner="1" flag="151" face="0" str="8"/>
+    <unit id="44789" owner="1" flag="151" face="0" str="8" bstr="8"/>
   </hex>
   <hex row="10" col="33" terrain="5"/>
   <hex row="11" col="8" terrain="3"/>
@@ -230,7 +230,7 @@
   <hex row="12" col="28" terrain="3"/>
   <hex row="12" col="30" terrain="3"/>
   <hex row="12" col="31">
-    <unit id="44830" owner="1" flag="151" face="0" transport="44814" exp="45" str="6"/>
+    <unit id="44830" owner="1" flag="151" face="0" transport="44814" exp="45" str="6" bstr="6"/>
   </hex>
   <hex row="13" col="0" road="34"/>
   <hex row="13" col="2" terrain="16"/>
@@ -275,7 +275,7 @@
   <hex row="14" col="15" terrain="15" name="Missouri River"/>
   <hex row="14" col="16" terrain="15" name="Missouri River"/>
   <hex row="14" col="17" terrain="16">
-    <unit id="44830" owner="1" flag="151" face="0" transport="44814" exp="57" str="6"/>
+    <unit id="44830" owner="1" flag="151" face="0" transport="44814" exp="57" str="6" bstr="6"/>
   </hex>
   <hex row="14" col="18">
     <unit id="44786" owner="1" flag="151" face="0" exp="43"/>
@@ -359,7 +359,7 @@
     <unit id="44787" owner="1" flag="151" face="0" exp="47"/>
   </hex>
   <hex row="16" col="30">
-    <unit id="44830" owner="1" flag="151" face="0" transport="44814" exp="35" str="6"/>
+    <unit id="44830" owner="1" flag="151" face="0" transport="44814" exp="35" str="6" bstr="6"/>
   </hex>
   <hex row="16" col="32" terrain="5"/>
   <hex row="16" col="33" terrain="5"/>
@@ -387,7 +387,7 @@
     <unit id="44784" owner="1" flag="151" face="0" transport="44808" exp="213"/>
   </hex>
   <hex row="17" col="20" terrain="1" road="168" name="Lexington">
-    <unit id="44830" owner="1" flag="151" face="0" transport="44814" exp="43" str="6"/>
+    <unit id="44830" owner="1" flag="151" face="0" transport="44814" exp="43" str="6" bstr="6"/>
   </hex>
   <hex row="17" col="21" terrain="1" road="168" name="Lexington"/>
   <hex row="17" col="23" terrain="5" road="34"/>
@@ -434,7 +434,7 @@
   <hex row="19" col="10" terrain="5"/>
   <hex row="19" col="11" road="18"/>
   <hex row="19" col="12" road="34">
-    <unit id="44792" owner="1" flag="151" face="0" exp="31" str="8"/>
+    <unit id="44792" owner="1" flag="151" face="0" exp="31" str="8" bstr="8"/>
   </hex>
   <hex row="19" col="17" road="17"/>
   <hex row="19" col="21" terrain="3"/>
@@ -448,7 +448,7 @@
   <hex row="20" col="9" terrain="5"/>
   <hex row="20" col="10" terrain="5"/>
   <hex row="20" col="11" road="33">
-    <unit id="44786" owner="1" flag="151" face="0" exp="51" str="8"/>
+    <unit id="44786" owner="1" flag="151" face="0" exp="51" str="8" bstr="8"/>
   </hex>
   <hex row="20" col="17" road="17"/>
   <hex row="20" col="20" terrain="3"/>
@@ -513,7 +513,7 @@
   <hex row="23" col="24" terrain="3"/>
   <hex row="23" col="28" road="136"/>
   <hex row="23" col="29" road="136">
-    <unit id="44791" owner="1" flag="151" face="0" exp="44" str="8"/>
+    <unit id="44791" owner="1" flag="151" face="0" exp="44" str="8" bstr="8"/>
   </hex>
   <hex row="23" col="30" terrain="3"/>
   <hex row="23" col="31" terrain="3"/>
@@ -528,7 +528,7 @@
   <hex row="24" col="22" terrain="1" name="Farm"/>
   <hex row="24" col="23" terrain="3"/>
   <hex row="24" col="30" road="136">
-    <unit id="44791" owner="1" flag="151" face="0" exp="25" str="8"/>
+    <unit id="44791" owner="1" flag="151" face="0" exp="25" str="8" bstr="8"/>
   </hex>
   <hex row="24" col="31" road="136"/>
   <hex row="24" col="32" terrain="3"/>
@@ -541,7 +541,7 @@
   <hex row="25" col="32" road="136"/>
   <hex row="25" col="33" road="136"/>
   <hex row="26" col="1" road="34" owner="1" flag="150">
-    <unit id="44805" owner="1" flag="151" face="0" str="2"/>
+    <unit id="44805" owner="1" flag="151" face="0" str="2" bstr="2"/>
   </hex>
   <hex row="26" col="2" road="34"/>
   <hex row="26" col="3" terrain="5"/>

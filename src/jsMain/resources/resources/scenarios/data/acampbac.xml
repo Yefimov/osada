@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="acampbac.xscn" name="Bachmatsj" turns="6, 8, 12" date="March 13, 1918" dayturns="0" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="38" cols="43" eqp="eqp-kaiser" image="resources/maps/images/map_278.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1">
+<map file="acampbac.xscn" name="Bachmatsj" turns="6, 8, 12" date="March 13, 1918" dayturns="0" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="38" cols="43" eqp="eqp-kaiser" image="resources/maps/images/map_278.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1">
   <player id="0" country="144" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="104,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <player id="1" country="117" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="118,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="2">
@@ -177,7 +177,7 @@
   <hex row="5" col="41" terrain="3"/>
   <hex row="5" col="42" terrain="3"/>
   <hex row="6" col="1" road="9">
-    <unit id="43041" owner="1" flag="118" face="0" exp="34" str="5"/>
+    <unit id="43041" owner="1" flag="118" face="0" exp="34" str="5" bstr="2"/>
   </hex>
   <hex row="6" col="3" terrain="3"/>
   <hex row="6" col="4" terrain="3"/>
@@ -331,7 +331,7 @@
   <hex row="10" col="41" terrain="3"/>
   <hex row="10" col="42" terrain="3"/>
   <hex row="11" col="1">
-    <unit id="43021" owner="1" flag="118" face="0" exp="212" str="5" ldr="1"/>
+    <unit id="43021" owner="1" flag="118" face="0" exp="212" str="5" ldr="1" bstr="2"/>
   </hex>
   <hex row="11" col="3" road="17"/>
   <hex row="11" col="8" road="17"/>
@@ -467,10 +467,10 @@
   <hex row="17" col="0" terrain="10" name="Desna River"/>
   <hex row="17" col="3" terrain="10" name="Doch River"/>
   <hex row="17" col="4" road="9" name="RAILROAD">
-    <unit id="42990" owner="1" flag="118" face="0" transport="43087" exp="182" str="8"/>
+    <unit id="42990" owner="1" flag="118" face="0" transport="43087" exp="182" str="8" bstr="3"/>
   </hex>
   <hex row="17" col="5" road="144" name="RAILROAD">
-    <unit id="43072" owner="1" flag="118" face="0" exp="57" str="8"/>
+    <unit id="43072" owner="1" flag="118" face="0" exp="57" str="8" bstr="4"/>
   </hex>
   <hex row="17" col="9" terrain="1" road="17" name="Velikoye Ust&#x27;ye"/>
   <hex row="17" col="12" terrain="10" name="Seym River"/>
@@ -489,10 +489,10 @@
   <hex row="18" col="4" terrain="10" name="Doch River"/>
   <hex row="18" col="5" road="17"/>
   <hex row="18" col="6" name="RAILROAD">
-    <unit id="43041" owner="1" flag="118" face="0" exp="134" str="6"/>
+    <unit id="43041" owner="1" flag="118" face="0" exp="134" str="6" bstr="2"/>
   </hex>
   <hex row="18" col="7" name="RAILROAD">
-    <unit id="43151" owner="1" flag="118" face="0" transport="43094" exp="80" str="7"/>
+    <unit id="43151" owner="1" flag="118" face="0" transport="43094" exp="80" str="7" bstr="4"/>
   </hex>
   <hex row="18" col="9" road="17"/>
   <hex row="18" col="11" terrain="3"/>
@@ -521,7 +521,7 @@
   <hex row="19" col="4" terrain="10" name="Doch River"/>
   <hex row="19" col="5" road="33"/>
   <hex row="19" col="6">
-    <unit id="42990" owner="1" flag="118" face="0" exp="90" str="7"/>
+    <unit id="42990" owner="1" flag="118" face="0" exp="90" str="7" bstr="4"/>
   </hex>
   <hex row="19" col="7" name="RAILROAD"/>
   <hex row="19" col="9" road="9"/>
@@ -552,7 +552,7 @@
   <hex row="20" col="3" terrain="10" name="Doch River"/>
   <hex row="20" col="4" terrain="1" road="18" name="Jaduty"/>
   <hex row="20" col="6">
-    <unit id="42990" owner="1" flag="118" face="0" exp="196" str="5"/>
+    <unit id="42990" owner="1" flag="118" face="0" exp="196" str="5" bstr="3"/>
   </hex>
   <hex row="20" col="7" terrain="3"/>
   <hex row="20" col="8" name="RAILROAD"/>
@@ -561,7 +561,7 @@
   <hex row="20" col="11" road="34"/>
   <hex row="20" col="12" road="34"/>
   <hex row="20" col="13">
-    <unit id="42990" owner="1" flag="118" face="0" transport="43087" exp="41" str="7"/>
+    <unit id="42990" owner="1" flag="118" face="0" transport="43087" exp="41" str="7" bstr="4"/>
   </hex>
   <hex row="20" col="20" terrain="10" name="Seym River"/>
   <hex row="20" col="21" terrain="10" name="Seym River"/>
@@ -639,7 +639,7 @@
   <hex row="23" col="7" terrain="10" name="Borzna River"/>
   <hex row="23" col="9" road="34"/>
   <hex row="23" col="10" road="41" name="Velikaya Doch" station="1">
-    <unit id="42958" owner="1" flag="118" face="0" transport="43090" exp="178" str="5"/>
+    <unit id="42958" owner="1" flag="118" face="0" transport="43090" exp="178" str="5" bstr="3"/>
   </hex>
   <hex row="23" col="11" road="138" name="RAILROAD"/>
   <hex row="23" col="12" road="34"/>
@@ -706,7 +706,7 @@
   <hex row="25" col="29" road="41"/>
   <hex row="25" col="30" road="144" name="RAILROAD"/>
   <hex row="25" col="31" terrain="1" name="Konotop">
-    <unit id="42262" owner="0" flag="104" face="0" exp="25" str="9"/>
+    <unit id="42262" owner="0" flag="104" face="0" exp="25" str="9" bstr="4"/>
   </hex>
   <hex row="25" col="32" terrain="10" name="Ezuch River"/>
   <hex row="25" col="33" road="34"/>
@@ -725,10 +725,10 @@
   <hex row="26" col="28" terrain="10" road="130" name="Kukolka River"/>
   <hex row="26" col="29" road="34" name="RAILROAD"/>
   <hex row="26" col="30" terrain="1" road="169" name="Konotop" owner="0" flag="144" victory="0" station="1">
-    <unit id="42262" owner="0" flag="104" face="0" exp="96" str="6"/>
+    <unit id="42262" owner="0" flag="104" face="0" exp="96" str="6" bstr="4"/>
   </hex>
   <hex row="26" col="31" terrain="1" road="170" name="Konotop">
-    <unit id="42262" owner="0" flag="104" face="0" exp="33" str="7"/>
+    <unit id="42262" owner="0" flag="104" face="0" exp="33" str="7" bstr="5"/>
   </hex>
   <hex row="26" col="32" terrain="10" road="34" name="Ezuch River"/>
   <hex row="26" col="33" terrain="10" name="Ezuch River"/>
@@ -840,13 +840,13 @@
   <hex row="31" col="39" terrain="1" road="136" name="Krasnoye"/>
   <hex row="32" col="0" road="40" name="RAILROAD"/>
   <hex row="32" col="1" road="130" name="RAILROAD">
-    <unit id="42343" owner="0" flag="104" face="0" exp="143" str="7"/>
+    <unit id="42343" owner="0" flag="104" face="0" exp="143" str="7" bstr="4"/>
   </hex>
   <hex row="32" col="2" road="40" name="RAILROAD">
-    <unit id="42343" owner="0" flag="104" face="0" exp="250" str="5"/>
+    <unit id="42343" owner="0" flag="104" face="0" exp="250" str="5" bstr="3"/>
   </hex>
   <hex row="32" col="3" road="130" name="RAILROAD">
-    <unit id="42348" owner="0" flag="104" face="0" transport="42344" exp="21" str="8"/>
+    <unit id="42348" owner="0" flag="104" face="0" transport="42344" exp="21" str="8" bstr="4"/>
   </hex>
   <hex row="32" col="4" road="40" name="RAILROAD"/>
   <hex row="32" col="5" road="130" name="RAILROAD"/>
@@ -854,7 +854,7 @@
   <hex row="32" col="7" road="144"/>
   <hex row="32" col="8" road="130" name="RAILROAD"/>
   <hex row="32" col="11">
-    <unit id="42990" owner="1" flag="118" face="0" exp="5" str="5"/>
+    <unit id="42990" owner="1" flag="118" face="0" exp="5" str="5" bstr="2"/>
   </hex>
   <hex row="32" col="14" name="RAILROAD"/>
   <hex row="32" col="17" road="9"/>
@@ -869,10 +869,10 @@
   <hex row="33" col="5" terrain="2"/>
   <hex row="33" col="7" road="17"/>
   <hex row="33" col="12">
-    <unit id="42990" owner="1" flag="118" face="0" exp="205" str="6"/>
+    <unit id="42990" owner="1" flag="118" face="0" exp="205" str="6" bstr="4"/>
   </hex>
   <hex row="33" col="13" name="RAILROAD">
-    <unit id="42959" owner="1" flag="118" face="0" exp="157" str="6"/>
+    <unit id="42959" owner="1" flag="118" face="0" exp="157" str="6" bstr="4"/>
   </hex>
   <hex row="33" col="14" name="RAILROAD"/>
   <hex row="33" col="18" road="154" name="RAILROAD"/>
@@ -889,7 +889,7 @@
   <hex row="34" col="7" terrain="1" road="17" name="Ivangorod"/>
   <hex row="34" col="11" name="RAILROAD"/>
   <hex row="34" col="12" name="RAILROAD">
-    <unit id="45884" owner="1" flag="118" face="0" exp="57" str="7"/>
+    <unit id="45884" owner="1" flag="118" face="0" exp="57" str="7" bstr="2"/>
   </hex>
   <hex row="34" col="16" terrain="1" name="Zelenovka"/>
   <hex row="34" col="18" road="17" name="RAILROAD"/>
@@ -927,14 +927,14 @@
   <hex row="35" col="37" terrain="10" name="Romen River"/>
   <hex row="35" col="39" terrain="10" name="Romen River"/>
   <hex row="36" col="1">
-    <unit id="42270" owner="0" flag="104" face="0" exp="4" str="7"/>
+    <unit id="42270" owner="0" flag="104" face="0" exp="4" str="7" bstr="3"/>
   </hex>
   <hex row="36" col="7" road="17"/>
   <hex row="36" col="11" name="RAILROAD" station="1">
-    <unit id="42990" owner="1" flag="118" face="0" exp="244" str="8"/>
+    <unit id="42990" owner="1" flag="118" face="0" exp="244" str="8" bstr="3"/>
   </hex>
   <hex row="36" col="12" terrain="1" name="Martinovka" owner="1" flag="117">
-    <unit id="43042" owner="1" flag="118" face="0" exp="136" str="5"/>
+    <unit id="43042" owner="1" flag="118" face="0" exp="136" str="5" bstr="1"/>
   </hex>
   <hex row="36" col="14" terrain="10" name="Romen River"/>
   <hex row="36" col="15" terrain="10" name="Romen River"/>
@@ -948,14 +948,14 @@
   <hex row="36" col="38" terrain="10" name="Romen River"/>
   <hex row="36" col="40" terrain="13" name="Korabutovo"/>
   <hex row="37" col="1">
-    <unit id="42394" owner="0" flag="104" face="0" transport="42344" exp="83" str="7"/>
+    <unit id="42394" owner="0" flag="104" face="0" transport="42344" exp="83" str="7" bstr="4"/>
   </hex>
   <hex row="37" col="2">
-    <unit id="42270" owner="0" flag="104" face="0" exp="40" str="8"/>
+    <unit id="42270" owner="0" flag="104" face="0" exp="40" str="8" bstr="4"/>
   </hex>
   <hex row="37" col="7" road="17"/>
   <hex row="37" col="10">
-    <unit id="42990" owner="1" flag="118" face="0" exp="233" str="7"/>
+    <unit id="42990" owner="1" flag="118" face="0" exp="233" str="7" bstr="1"/>
   </hex>
   <hex row="37" col="11" name="RAILROAD"/>
   <hex row="37" col="20" road="144" name="RAILROAD"/>

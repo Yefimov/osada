@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="aljf_8.xscn" name="Spearhead at Pea Ridge" turns="6, 10, 18" date="March 3, 1862" dayturns="0" ground="0" atmosferic="0" latitude="16" iconset="0" weatherchg="0" rows="38" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_1238.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="1" airintercept="0" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1">
+<map file="aljf_8.xscn" name="Spearhead at Pea Ridge" turns="6, 10, 18" date="March 3, 1862" dayturns="0" ground="0" atmosferic="0" latitude="16" iconset="0" weatherchg="0" rows="38" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_1238.png" eqpv="united1" msuunits="0, 2" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="1" airintercept="0" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="0" typedvh="0" truerange0="0" truespotting0="0" reinfwhenactive="0" capitalflak="0">
   <player id="0" country="162" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="163,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <player id="1" country="150" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="151,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <hex row="0" col="3" terrain="3"/>
@@ -74,7 +74,7 @@
   <hex row="7" col="1" road="40"/>
   <hex row="7" col="3" road="34"/>
   <hex row="7" col="4" terrain="1" road="40" name="Twelve Corner&#x27;s Church" owner="1" flag="150">
-    <unit id="835" owner="1" flag="151" face="0" exp="140" str="6"/>
+    <unit id="835" owner="1" flag="151" face="0" exp="140" str="6" bstr="6"/>
   </hex>
   <hex row="7" col="5" terrain="5" road="130"/>
   <hex row="7" col="6" terrain="5" road="34"/>
@@ -88,10 +88,10 @@
     <unit id="44789" owner="1" flag="151" face="0" exp="87"/>
   </hex>
   <hex row="7" col="36">
-    <unit id="44826" owner="1" flag="151" face="0" transport="44814" exp="133" str="6"/>
+    <unit id="44826" owner="1" flag="151" face="0" transport="44814" exp="133" str="6" bstr="6"/>
   </hex>
   <hex row="7" col="37" road="18">
-    <unit id="44826" owner="1" flag="151" face="0" transport="44814" exp="109" str="6"/>
+    <unit id="44826" owner="1" flag="151" face="0" transport="44814" exp="109" str="6" bstr="6"/>
   </hex>
   <hex row="7" col="38" road="33"/>
   <hex row="7" col="39">
@@ -124,7 +124,7 @@
     <unit id="44789" owner="1" flag="151" face="0" exp="91"/>
   </hex>
   <hex row="8" col="40">
-    <unit id="44826" owner="1" flag="151" face="0" transport="44814" exp="139" str="6"/>
+    <unit id="44826" owner="1" flag="151" face="0" transport="44814" exp="139" str="6" bstr="6"/>
   </hex>
   <hex row="9" col="1" terrain="3"/>
   <hex row="9" col="4" terrain="5"/>
@@ -192,7 +192,7 @@
     <unit id="44796" owner="1" flag="151" face="0" exp="122"/>
   </hex>
   <hex row="11" col="42">
-    <unit id="44826" owner="1" flag="151" face="0" transport="44814" exp="129" str="6"/>
+    <unit id="44826" owner="1" flag="151" face="0" transport="44814" exp="129" str="6" bstr="6"/>
   </hex>
   <hex row="11" col="43" road="34"/>
   <hex row="12" col="5" terrain="5"/>
@@ -276,10 +276,10 @@
     <unit id="44781" owner="1" flag="151" face="0" exp="135"/>
   </hex>
   <hex row="16" col="24" road="136">
-    <unit id="44826" owner="1" flag="151" face="0" transport="44814" exp="102" str="6"/>
+    <unit id="44826" owner="1" flag="151" face="0" transport="44814" exp="102" str="6" bstr="6"/>
   </hex>
   <hex row="16" col="25" road="136">
-    <unit id="44826" owner="1" flag="151" face="0" transport="44814" exp="105" str="6"/>
+    <unit id="44826" owner="1" flag="151" face="0" transport="44814" exp="105" str="6" bstr="6"/>
   </hex>
   <hex row="16" col="27" road="34"/>
   <hex row="16" col="28" road="40"/>
@@ -333,7 +333,7 @@
     <unit id="44784" owner="1" flag="151" face="0" exp="138"/>
   </hex>
   <hex row="18" col="27" terrain="5">
-    <unit id="44826" owner="1" flag="151" face="0" transport="44814" exp="99" str="6"/>
+    <unit id="44826" owner="1" flag="151" face="0" transport="44814" exp="99" str="6" bstr="6"/>
   </hex>
   <hex row="18" col="28" terrain="5">
     <unit id="44825" owner="1" flag="151" face="0" transport="44814" exp="109"/>
@@ -385,7 +385,7 @@
     <unit id="46008" owner="0" flag="163" face="0" transport="45989" exp="115"/>
   </hex>
   <hex row="19" col="35">
-    <unit id="45958" owner="0" flag="163" face="0" transport="45987" exp="192" ldr="1"/>
+    <unit id="45958" owner="0" flag="163" face="0" transport="45987" exp="192" ldr="1" msu="1"/>
   </hex>
   <hex row="19" col="36">
     <unit id="46009" owner="0" flag="163" face="0" transport="45993" exp="126"/>

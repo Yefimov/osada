@@ -91,6 +91,7 @@ object UnitActionAvailability {
 
             UnitActionId.UNDO -> undo(context)
             UnitActionId.SLEEP -> sleep(context)
+            else -> forSecondaryAction(action, context)
         }
 
     // ---- Mount / dismount --------------------------------------------------------------------
@@ -244,6 +245,73 @@ object UnitActionAvailability {
         effects += ActionEffect(ActionEffectKind.SUPPLY_EFFICIENCY, supplyContext.efficiencyPercent)
         effects += ActionEffect(ActionEffectKind.ENDS_UNIT_ACTION)
         return ActionAvailability(UnitActionId.RESUPPLY, true, enabled, reasons, effects)
+    }
+
+    /** The tail of [forAction]'s dispatch, split off to keep it inside detekt's complexity budget
+     *  as OG's green replacements and leader dismissal joined the list. */
+    private fun forSecondaryAction(
+        action: UnitActionId,
+        context: UnitActionContext,
+    ): ActionAvailability =
+        when (action) {
+            UnitActionId.GREEN_REINFORCE -> greenReinforce(context)
+            UnitActionId.DISMISS_LEADER -> dismissLeader(context)
+            else -> ActionAvailability.notApplicable(action)
+        }
+
+    // ---- Dismiss the commander (`rem_leader`) -----------------------------------------------------
+
+    /** Applicable only to a formation that HAS a commander, under an efile that allows dismissal. */
+    private fun dismissLeader(context: UnitActionContext): ActionAvailability {
+        val unit = context.unit
+        if (!LeaderDismissal.canDismiss(unit)) {
+            return ActionAvailability.notApplicable(UnitActionId.DISMISS_LEADER)
+        }
+        val reasons = mutableListOf<ActionBlock>()
+        addTurnBlock(context, reasons)
+        // No ENDS_UNIT_ACTION: dismissal is free, so the formation keeps its turn.
+        return ActionAvailability(UnitActionId.DISMISS_LEADER, true, reasons.isEmpty(), reasons, mutableListOf())
+    }
+
+    // ---- Green replacements ---------------------------------------------------------------------
+
+    /**
+     * OG's cheap replacement, offered beside the ordinary one when the efile enables it.
+     *
+     * Applicable on exactly the same terms as [reinforce] — the two differ in price and in what
+     * they do to experience, not in when they may be used — so it reuses `SupplyRules` throughout
+     * rather than inventing a second eligibility rule that could drift from the first.
+     */
+    private fun greenReinforce(context: UnitActionContext): ActionAvailability {
+        val unit = context.unit
+        val applicable = GreenReplacements.enabled() && unit.strength < unit.basicStrength
+        if (!applicable) return ActionAvailability.notApplicable(UnitActionId.GREEN_REINFORCE)
+
+        val reasons = mutableListOf<ActionBlock>()
+        addTurnBlock(context, reasons)
+        addSpentActionBlocks(unit, reasons)
+        addSupplyTerrainBlocks(context, reasons)
+        val gain = SupplyRules.getReinforceValue(context.map, unit, false)
+        if (SupplyRules.canReinforce(context.map, unit, false) && gain <= 0) {
+            reasons += ActionBlock(ActionBlockReason.NO_STRENGTH_RESTORED_HERE)
+        }
+        val perPoint = GreenReplacements.costPerStrength(unit)
+        addPrestigeBlock(context, perPoint, reasons)
+
+        val enabled = SupplyRules.canReinforce(context.map, unit, false) && gain > 0 && reasons.isEmpty()
+        val affordable = affordablePoints(context, perPoint, gain)
+        val diluted = GreenReplacements.experienceAfter(unit, affordable)
+        val effects =
+            listOfNotNull(
+                ActionEffect(ActionEffectKind.STRENGTH_GAIN, affordable),
+                ActionEffect(ActionEffectKind.PRESTIGE_COST, affordable * perPoint),
+                // Green replacements dilute by construction -- that is what they are FOR -- so the
+                // preview always states the resulting experience where there is any to lose.
+                ActionEffect(ActionEffectKind.EXPERIENCE_DILUTION, diluted, unit.experience)
+                    .takeIf { diluted < unit.experience },
+                ActionEffect(ActionEffectKind.ENDS_UNIT_ACTION),
+            ).toMutableList()
+        return ActionAvailability(UnitActionId.GREEN_REINFORCE, true, enabled, reasons, effects)
     }
 
     // ---- Reinforce ---------------------------------------------------------------------------

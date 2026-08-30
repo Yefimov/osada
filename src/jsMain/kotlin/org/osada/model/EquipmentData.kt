@@ -120,6 +120,30 @@ class EquipmentData {
      */
     var railTransportable: Int = RAIL_UNKNOWN
 
+    /**
+     * OG's other three non-organic transport permissions — `equip.xeqp` `@38` bits 0, 1 and 2.
+     *
+     * **They exist because [embark] cannot hold them.** `embark` is an ORDINAL (Para 3 > ATP 2 >
+     * NTP 1), so a record carrying more than one keeps only the highest — and **40,375 of the
+     * 198,037 shipped records carry more than one**. Measured on the deployed rosters, the ordinal
+     * was losing naval transportability for **15,037 records** and air for 1,739: a marine
+     * battalion OG lets ride either a landing craft or a transport aircraft could board only the
+     * aircraft.
+     *
+     * Exactly the defect §AF.1 found for rail and fixed the same way — a field per permission
+     * rather than one ordinal pretending to be four. Deployed by
+     * `tools/eqp-merge/add_transport_permissions.py` 2026-08-30.
+     *
+     * Three-valued like [railTransportable]: [RAIL_UNKNOWN] is "OG said nothing", which
+     * `EmbarkRules` reads as permitted, and 0 is OG saying no. [embark] is deliberately left in
+     * place and unchanged — the purchase UI, the AI and the save format all read it.
+     */
+    var navalTransportable: Int = RAIL_UNKNOWN
+
+    var airTransportable: Int = RAIL_UNKNOWN
+
+    var paraDroppable: Int = RAIL_UNKNOWN
+
     /** Whether OG permits this equipment to be carried by rail. Unknown counts as permitted; see
      *  [railTransportable] for why that direction rather than the other. */
     fun canUseRailTransport(): Boolean = railTransportable != 0
@@ -205,6 +229,9 @@ internal fun EquipmentData.withStatMultiplier(multiplier: Int): EquipmentData =
         result.bombsize = bombsize
         result.hangarCap = hangarCap
         result.railTransportable = railTransportable
+        result.navalTransportable = navalTransportable
+        result.airTransportable = airTransportable
+        result.paraDroppable = paraDroppable
         result.airWeight = airWeight
         result.navalWeight = navalWeight
         result.railWeight = railWeight
@@ -309,6 +336,9 @@ private fun EquipmentData.applyEquipmentFieldsD(
         "bombsize" -> bombsize = value as Int
         "hangarcap" -> hangarCap = value as Int
         "railtransportable" -> railTransportable = value as Int
+        "navaltransportable" -> navalTransportable = value as Int
+        "airtransportable" -> airTransportable = value as Int
+        "paradroppable" -> paraDroppable = value as Int
         "airweight" -> airWeight = value as Int
         "navalweight" -> navalWeight = value as Int
         "railweight" -> railWeight = value as Int

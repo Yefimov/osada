@@ -46,6 +46,21 @@ class MovementResults {
      *  the way OG does ("You gain 40 prestige"). 0 when the move captured nothing. */
     var capturePrestige: Int = 0
 
+    /** The authored message of an OG trigger hex this move set off (`rules/TriggerHexes`), or null.
+     *  Only 33 of the corpus's 850 triggers carry text, so a silent trigger is the normal case and
+     *  leaves this null. */
+    var triggerMessage: String? = null
+
+    /** Set when this move fired a trigger hex at all, message or not. Like [wasIntercepted] it
+     *  must make the move final: every trigger action is a one-off GIFT, and undo would otherwise
+     *  let the player keep the prestige, the leader or the free formation and take the move back. */
+    var firedTrigger: Boolean = false
+
+    /** Set when this move took the formation OFF the map through an OG escape hex
+     *  (`rules/ExtendedVictory`). The unit no longer exists on the board, so the UI must not try
+     *  to select it, scroll to it or show its action row afterwards. */
+    var withdrew: Boolean = false
+
     /** Set when AA fired on this move (`AAInterception`), whether or not the unit survived. An
      *  intercepted move must never be undoable -- see `MoveExecutor.isUndoable` -- allowing undo
      *  would let a player probe for hidden AA for free and take the probe back, destroying the

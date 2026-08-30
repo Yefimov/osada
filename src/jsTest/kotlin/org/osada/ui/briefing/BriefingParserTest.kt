@@ -7,8 +7,11 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class BriefingParserTest {
-    @Test
-    fun stableDialogueKeysLocalizeDisplayTextWithoutChangingBranchIdentity() {
+    /**
+     * The Kiel fixture both halves of the stable-key contract are checked against: one authored
+     * briefing, one Russian translation table keyed by the STABLE ids rather than by the text.
+     */
+    private fun localizedKielBriefing(): ScenarioBriefing {
         val raw =
             js(
                 "({ act: 'ACT I', location: 'Kiel', player: { speaker: 'Commander', role: 'HQ' }, " +
@@ -32,25 +35,46 @@ class BriefingParserTest {
                 "line.reply.speaker" to "Карл",
                 "line.reply.text" to "Хорошо.",
             )
+        return BriefingParser.parse(
+            scenarioTitle = "Kiel",
+            rawData = raw,
+            textResolver = BriefingTextResolver { key, fallback -> translations[key] ?: fallback },
+        )
+    }
 
-        val briefing =
-            BriefingParser.parse(
-                scenarioTitle = "Kiel",
-                rawData = raw,
-                textResolver = BriefingTextResolver { key, fallback -> translations[key] ?: fallback },
-            )
+    /** Half one of the contract: every DISPLAYED string comes from the translation table. */
+    @Test
+    fun stableDialogueKeysLocalizeDisplayText() {
+        val briefing = localizedKielBriefing()
+        val choice =
+            briefing.dialogue
+                .first()
+                .choices
+                .single()
 
         assertEquals("АКТ I", briefing.actLabel)
         assertEquals("Киль", briefing.locationLabel)
         assertEquals("Командующий", briefing.player.speaker)
-        assertEquals("decision", briefing.dialogue.first().id)
         assertEquals("Выбирайте.", briefing.dialogue.first().text)
-        assertEquals("station", briefing.dialogue.first().choices.single().id)
-        assertEquals("reply", briefing.dialogue.first().choices.single().next)
-        assertEquals("Занять вокзал.", briefing.dialogue.first().choices.single().text)
-        assertEquals("Получите престиж.", briefing.dialogue.first().choices.single().hint)
-        assertEquals(listOf("keep-routing"), briefing.dialogue.first().condition.allFlags)
-        assertEquals("keep-effect", briefing.dialogue.first().choices.single().effects.single().id)
+        assertEquals("Занять вокзал.", choice.text)
+        assertEquals("Получите престиж.", choice.hint)
+    }
+
+    /**
+     * Half two, and the one that matters for saves: localizing must NOT move any identity. A
+     * branch is followed by id, so a translated `next` or `id` would silently reroute the story.
+     */
+    @Test
+    fun stableDialogueKeysLeaveBranchIdentityUnchanged() {
+        val briefing = localizedKielBriefing()
+        val line = briefing.dialogue.first()
+        val choice = line.choices.single()
+
+        assertEquals("decision", line.id)
+        assertEquals("station", choice.id)
+        assertEquals("reply", choice.next)
+        assertEquals(listOf("keep-routing"), line.condition.allFlags)
+        assertEquals("keep-effect", choice.effects.single().id)
     }
 
     @Test

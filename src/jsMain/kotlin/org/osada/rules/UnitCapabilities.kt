@@ -89,6 +89,30 @@ object UnitCapabilities {
         )
 
     /**
+     * OG's *"BB, CV && BC can fire as flaks"* — the capital-ship classes the scenario option
+     * `opt_capitals_as_flak` adds to [AIR_DEFENCE_FIRE_CLASSES]. **197 of the 397 deployed
+     * scenarios author it**, wired 2026-08-30.
+     *
+     * > *"BB, CV & BC can fire as FlaKs: those ship classes can defend from air attacks with a
+     * > range of 1, and attack planes at their range."* — `Manual_OSuite-Scenario.pdf` p.23
+     *
+     * OG's three abbreviations map onto OSADA's own classes exactly: BB = Battleship, CV = Carrier,
+     * BC = Battle Cruiser. **Cruiser and Light Cruiser are deliberately excluded** — OG names three
+     * classes and OSADA has four where OG's `CShip` has one (`docs/og-sources.md`), so adding the
+     * two OG does not name would arm ships OG leaves unarmed. That is the reading that cannot
+     * overstate; if `CShip` turns out to cover all four, this set is the one line to widen.
+     *
+     * The `airatk > 0` test in [hasAirDefenceFire] still applies, so this cannot give a ship an
+     * anti-air role its own equipment record does not support.
+     */
+    private val CAPITAL_FLAK_CLASSES =
+        setOf(
+            UnitClass.BATTLESHIP.value,
+            UnitClass.CARRIER.value,
+            UnitClass.BATTLE_CRUISER.value,
+        )
+
+    /**
      * Whether this equipment has phased movement: OG's class default for Recon, **reversed** by
      * its `Recon Skill` attribute (`attr` bit 10) — the same `classDefault xor bit` shape as
      * [hasSupportFire], not a plain grant. `Recon Skill` was already inside the original 24-bit
@@ -287,9 +311,13 @@ object UnitCapabilities {
      * granted eligibility — measured over `eqp-united`, only 1 of 745 `AD Support` records has
      * `airatk = 0`, so this is not a live concern either way.
      */
-    fun hasAirDefenceFire(data: EquipmentData): Boolean =
-        (data.uclass in AIR_DEFENCE_FIRE_CLASSES && data.airatk > 0) ||
-            data.attrEx and ATTR_EX_MASK_AD_SUPPORT != 0
+    fun hasAirDefenceFire(data: EquipmentData): Boolean {
+        val capitalFires =
+            GameHolder.instance?.scenario?.capitalShipsAsFlak == true &&
+                data.uclass in CAPITAL_FLAK_CLASSES
+        val byClass = data.uclass in AIR_DEFENCE_FIRE_CLASSES || capitalFires
+        return (byClass && data.airatk > 0) || data.attrEx and ATTR_EX_MASK_AD_SUPPORT != 0
+    }
 
     /**
      * Whether [unit] lends experience bars to adjacent friendlies — OG's `Combat Support` equipment

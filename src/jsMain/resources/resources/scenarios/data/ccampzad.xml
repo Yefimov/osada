@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="ccampzad.xscn" name="Battle of Zadworze" turns="9, 11, 14" date="August 17, 1920" dayturns="0" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="28" cols="43" eqp="eqp-kaiser" image="resources/maps/images/map_350.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1">
+<map file="ccampzad.xscn" name="Battle of Zadworze" turns="9, 11, 14" date="August 17, 1920" dayturns="0" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="28" cols="43" eqp="eqp-kaiser" image="resources/maps/images/map_350.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1">
   <player id="0" country="103" side="0" airtrans="0" navaltrans="0" railtrans="3" defaultxp="0" defaultstr="0" support="0,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <player id="1" country="20" side="1" airtrans="0" navaltrans="0" railtrans="3" defaultxp="0" defaultstr="0" support="21,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <hex row="0" col="13" terrain="10"/>
@@ -251,7 +251,7 @@
   <hex row="11" col="32" terrain="3"/>
   <hex row="11" col="33" terrain="3"/>
   <hex row="11" col="34">
-    <unit id="734" owner="1" flag="21" face="0" exp="254" str="8"/>
+    <unit id="734" owner="1" flag="21" face="0" exp="254" str="8" bstr="5"/>
   </hex>
   <hex row="11" col="37" terrain="10"/>
   <hex row="12" col="0" road="40"/>
@@ -277,18 +277,18 @@
   <hex row="13" col="11" road="130"/>
   <hex row="13" col="12" road="40"/>
   <hex row="13" col="13" road="145" name="Crossroad" owner="1" flag="20" victory="1">
-    <unit id="21803" owner="1" flag="21" face="0" exp="254" str="8"/>
+    <unit id="21803" owner="1" flag="21" face="0" exp="254" str="8" bstr="5"/>
   </hex>
   <hex row="13" col="29" road="17"/>
   <hex row="13" col="30" terrain="8"/>
   <hex row="13" col="31" road="17" rail="187"/>
   <hex row="13" col="32">
-    <unit id="734" owner="1" flag="21" face="0" exp="254" str="8"/>
+    <unit id="734" owner="1" flag="21" face="0" exp="254" str="8" bstr="5"/>
   </hex>
   <hex row="13" col="42" terrain="15"/>
   <hex row="14" col="13" road="17"/>
   <hex row="14" col="28">
-    <unit id="734" owner="1" flag="21" face="0" exp="254" str="8"/>
+    <unit id="734" owner="1" flag="21" face="0" exp="254" str="8" bstr="5"/>
   </hex>
   <hex row="14" col="29" road="17"/>
   <hex row="14" col="31" road="17" rail="187"/>
@@ -299,13 +299,13 @@
   <hex row="15" col="13" road="9"/>
   <hex row="15" col="15" road="40"/>
   <hex row="15" col="17">
-    <unit id="21134" owner="1" flag="21" face="0" exp="201" str="8" ldr="1"/>
+    <unit id="21134" owner="1" flag="21" face="0" exp="201" str="8" ldr="1" bstr="5"/>
   </hex>
   <hex row="15" col="18">
-    <unit id="21215" owner="1" flag="21" face="0" exp="157" str="17"/>
+    <unit id="21215" owner="1" flag="21" face="0" exp="157" str="17" bstr="4"/>
   </hex>
   <hex row="15" col="19">
-    <unit id="21134" owner="1" flag="21" face="0" exp="198" str="9"/>
+    <unit id="21134" owner="1" flag="21" face="0" exp="198" str="9" bstr="4"/>
   </hex>
   <hex row="15" col="29" road="41"/>
   <hex row="15" col="31" road="17" rail="187"/>
@@ -316,7 +316,7 @@
   <hex row="16" col="16" road="136"/>
   <hex row="16" col="17" road="130"/>
   <hex row="16" col="18" road="40">
-    <unit id="21215" owner="1" flag="21" face="0" exp="254" str="16"/>
+    <unit id="21215" owner="1" flag="21" face="0" exp="254" str="16" bstr="5"/>
   </hex>
   <hex row="16" col="19" road="130"/>
   <hex row="16" col="20" road="40"/>
@@ -329,14 +329,14 @@
   <hex row="16" col="27" road="130"/>
   <hex row="16" col="28" road="34"/>
   <hex row="16" col="30" terrain="1" road="152" name="Zadworze" owner="1" flag="20" victory="1">
-    <unit id="21134" owner="1" flag="21" face="0" transport="21803" exp="198" str="7"/>
-    <unit id="21134" owner="1" flag="21" face="0" transport="21803" exp="66" str="8" ldr="1"/>
-    <unit id="21757" owner="1" flag="21" face="0" transport="21803" exp="42" str="7"/>
+    <unit id="21134" owner="1" flag="21" face="0" transport="21803" exp="198" str="7" bstr="5"/>
+    <unit id="21134" owner="1" flag="21" face="0" transport="21803" exp="66" str="8" ldr="1" bstr="5"/>
+    <unit id="21757" owner="1" flag="21" face="0" transport="21803" exp="42" str="7" bstr="4"/>
   </hex>
   <hex row="16" col="31" road="153" rail="187"/>
   <hex row="16" col="33" road="34"/>
   <hex row="16" col="34" road="40">
-    <unit id="22046" owner="1" flag="21" face="0" exp="198" str="8"/>
+    <unit id="22046" owner="1" flag="21" face="0" exp="198" str="8" bstr="5"/>
   </hex>
   <hex row="16" col="35" road="130"/>
   <hex row="16" col="36" road="34"/>
@@ -371,12 +371,12 @@
   <hex row="18" col="19" terrain="3"/>
   <hex row="18" col="20" terrain="3"/>
   <hex row="18" col="29">
-    <unit id="734" owner="1" flag="21" face="0" exp="254" str="8"/>
+    <unit id="734" owner="1" flag="21" face="0" exp="254" str="8" bstr="5"/>
   </hex>
   <hex row="18" col="30" road="17"/>
   <hex row="18" col="31" road="17" rail="187"/>
   <hex row="18" col="32">
-    <unit id="734" owner="1" flag="21" face="0" exp="254" str="8"/>
+    <unit id="734" owner="1" flag="21" face="0" exp="254" str="8" bstr="5"/>
   </hex>
   <hex row="18" col="34" terrain="3"/>
   <hex row="18" col="35" terrain="3"/>
@@ -459,7 +459,7 @@
   <hex row="21" col="30" road="43" rail="187"/>
   <hex row="21" col="31" terrain="1" road="145" name="Krasne" owner="1" flag="20" rail="187" station="1"/>
   <hex row="21" col="32">
-    <unit id="734" owner="1" flag="21" face="0" exp="254" str="8"/>
+    <unit id="734" owner="1" flag="21" face="0" exp="254" str="8" bstr="5"/>
   </hex>
   <hex row="21" col="36" terrain="3"/>
   <hex row="21" col="37" terrain="3"/>

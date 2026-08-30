@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="aljf_22.xscn" name="The U.S.C.T. attacks Fort Fisher" turns="18, 26, 36" date="January 13, 1865" dayturns="0" ground="0" atmosferic="0" latitude="15" iconset="0" weatherchg="0" rows="38" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_1428.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="1" airintercept="0" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1">
+<map file="aljf_22.xscn" name="The U.S.C.T. attacks Fort Fisher" turns="18, 26, 36" date="January 13, 1865" dayturns="0" ground="0" atmosferic="0" latitude="15" iconset="0" weatherchg="0" rows="38" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_1428.png" eqpv="united1" msuunits="0, 1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="1" airintercept="0" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="0" typedvh="0" truerange0="0" truespotting0="0" reinfwhenactive="0" capitalflak="0">
   <player id="0" country="162" side="1" airtrans="0" navaltrans="48" railtrans="0" defaultxp="99" defaultstr="0" support="163,0,0,0" turnprestige="40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <player id="1" country="150" side="0" airtrans="0" navaltrans="22" railtrans="0" defaultxp="0" defaultstr="0" support="151,0,0,0" turnprestige="60, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10"/>
   <reinforce turn="2">
@@ -42,7 +42,7 @@
   <hex row="0" col="15" terrain="3"/>
   <hex row="0" col="16" road="17"/>
   <hex row="0" col="17">
-    <unit id="44824" owner="1" flag="151" face="0" exp="243" str="6"/>
+    <unit id="44824" owner="1" flag="151" face="0" exp="243" str="6" bstr="6"/>
   </hex>
   <hex row="0" col="18" terrain="15" name="Cape Fear River"/>
   <hex row="0" col="19" terrain="15" name="Cape Fear River"/>
@@ -80,7 +80,7 @@
     <unit id="44787" owner="1" flag="151" face="0" exp="186"/>
   </hex>
   <hex row="1" col="17" terrain="11" name="Fort Anderson" owner="1" flag="150" victory="1">
-    <unit id="647" owner="1" flag="151" face="0" exp="205" str="6"/>
+    <unit id="647" owner="1" flag="151" face="0" exp="205" str="6" bstr="6"/>
   </hex>
   <hex row="1" col="18" terrain="16">
     <unit id="44787" owner="1" flag="151" face="0" exp="184"/>
@@ -337,7 +337,7 @@
   <hex row="7" col="14" terrain="3"/>
   <hex row="7" col="15" terrain="3" road="34"/>
   <hex row="7" col="16" road="34"/>
-  <hex row="7" col="17" terrain="1" road="17" name="Farm" owner="1" flag="150"/>
+  <hex row="7" col="17" terrain="1" road="17" name="Farm" owner="1" flag="150" trigger="8" trigparam="0" trigequip="3109"/>
   <hex row="7" col="18" terrain="15" name="Cape Fear River"/>
   <hex row="7" col="19" terrain="15" name="Cape Fear River"/>
   <hex row="7" col="20" terrain="15" name="Cape Fear River"/>
@@ -447,7 +447,7 @@
   <hex row="10" col="10" terrain="8"/>
   <hex row="10" col="11" road="34"/>
   <hex row="10" col="12" road="33"/>
-  <hex row="10" col="15" terrain="1" name="Farm" owner="1" flag="150">
+  <hex row="10" col="15" terrain="1" name="Farm" owner="1" flag="150" trigger="8" trigparam="0" trigequip="3109">
     <unit id="44800" owner="1" flag="151" face="0" exp="24"/>
   </hex>
   <hex row="10" col="17" road="17"/>
@@ -557,7 +557,7 @@
   <hex row="13" col="4" terrain="3" road="9"/>
   <hex row="13" col="5" terrain="3" road="130"/>
   <hex row="13" col="6" terrain="8" road="34"/>
-  <hex row="13" col="7" terrain="1" name="Farm" owner="1" flag="150"/>
+  <hex row="13" col="7" terrain="1" name="Farm" owner="1" flag="150" trigger="8" trigparam="0" trigequip="3109"/>
   <hex row="13" col="9" terrain="3"/>
   <hex row="13" col="10" terrain="3"/>
   <hex row="13" col="16" terrain="3"/>
@@ -597,7 +597,7 @@
   <hex row="14" col="9" terrain="3"/>
   <hex row="14" col="10" terrain="3"/>
   <hex row="14" col="11" terrain="3"/>
-  <hex row="14" col="16" terrain="1" road="18" name="Farm" owner="1" flag="150"/>
+  <hex row="14" col="16" terrain="1" road="18" name="Farm" owner="1" flag="150" trigger="8" trigparam="0" trigequip="3109"/>
   <hex row="14" col="18" terrain="15" name="Cape Fear River"/>
   <hex row="14" col="19" terrain="15" name="Cape Fear River"/>
   <hex row="14" col="20" terrain="15" name="Cape Fear River"/>
@@ -755,7 +755,7 @@
   <hex row="18" col="29" terrain="14"/>
   <hex row="18" col="30" terrain="9"/>
   <hex row="18" col="31" terrain="9">
-    <unit id="46020" owner="0" flag="163" face="0" exp="184" str="11"/>
+    <unit id="46020" owner="0" flag="163" face="0" exp="184" str="11" bstr="11"/>
   </hex>
   <hex row="18" col="32" terrain="9"/>
   <hex row="18" col="33" terrain="9"/>
@@ -784,7 +784,7 @@
   <hex row="19" col="21" terrain="15" name="Cape Fear River"/>
   <hex row="19" col="23" road="17"/>
   <hex row="19" col="24" terrain="3">
-    <unit id="44800" owner="1" flag="151" face="0" exp="8" str="12" ldr="1"/>
+    <unit id="44800" owner="1" flag="151" face="0" exp="8" str="12" ldr="1" bstr="12"/>
   </hex>
   <hex row="19" col="29" terrain="9">
     <unit id="46020" owner="0" flag="163" face="0" exp="164"/>
@@ -869,7 +869,7 @@
   </hex>
   <hex row="21" col="28" terrain="9"/>
   <hex row="21" col="29" terrain="9">
-    <unit id="46020" owner="0" flag="163" face="0" exp="204" str="12"/>
+    <unit id="46020" owner="0" flag="163" face="0" exp="204" str="12" bstr="12"/>
   </hex>
   <hex row="21" col="30" terrain="9"/>
   <hex row="21" col="31" terrain="9"/>
@@ -971,7 +971,7 @@
   <hex row="24" col="3" terrain="3"/>
   <hex row="24" col="4" terrain="13"/>
   <hex row="24" col="8" road="136"/>
-  <hex row="24" col="9" terrain="1" road="137" name="Farm" owner="1" flag="150">
+  <hex row="24" col="9" terrain="1" road="137" name="Farm" owner="1" flag="150" trigger="8" trigparam="0" trigequip="3109">
     <unit id="44800" owner="1" flag="151" face="0" exp="34"/>
   </hex>
   <hex row="24" col="14" terrain="10"/>
@@ -990,14 +990,14 @@
   <hex row="24" col="26" terrain="14"/>
   <hex row="24" col="27" terrain="9"/>
   <hex row="24" col="28" terrain="9">
-    <unit id="46020" owner="0" flag="163" face="0" exp="224" str="13"/>
+    <unit id="46020" owner="0" flag="163" face="0" exp="224" str="13" bstr="13"/>
   </hex>
   <hex row="24" col="29" terrain="9"/>
   <hex row="24" col="30" terrain="9"/>
   <hex row="24" col="31" terrain="9"/>
   <hex row="24" col="32" terrain="9"/>
   <hex row="24" col="33" terrain="9">
-    <unit id="46020" owner="0" flag="163" face="0" exp="243" str="12"/>
+    <unit id="46020" owner="0" flag="163" face="0" exp="243" str="12" bstr="12"/>
   </hex>
   <hex row="24" col="34" terrain="9">
     <unit id="46020" owner="0" flag="163" face="0" exp="126"/>
@@ -1122,8 +1122,8 @@
   <hex row="27" col="18" terrain="15" name="Cape Fear River"/>
   <hex row="27" col="19" terrain="15" name="Cape Fear River"/>
   <hex row="27" col="20" terrain="15" name="Cape Fear River"/>
-  <hex row="27" col="21" terrain="12" road="8" owner="1" flag="150" victory="1" deploy="2">
-    <unit id="44788" owner="1" flag="151" face="0" exp="234" str="16"/>
+  <hex row="27" col="21" terrain="12" road="8" owner="1" flag="150" victory="1">
+    <unit id="44788" owner="1" flag="151" face="0" exp="234" str="16" bstr="16"/>
   </hex>
   <hex row="27" col="22" road="17">
     <unit id="44824" owner="1" flag="151" face="0" exp="159" ldr="1"/>
@@ -1205,7 +1205,7 @@
   <hex row="28" col="41" terrain="9"/>
   <hex row="28" col="42" terrain="9"/>
   <hex row="28" col="43" terrain="9"/>
-  <hex row="29" col="7" terrain="1" road="34" name="Farm" owner="1" flag="150"/>
+  <hex row="29" col="7" terrain="1" road="34" name="Farm" owner="1" flag="150" trigger="8" trigparam="0" trigequip="3109"/>
   <hex row="29" col="8" road="33"/>
   <hex row="29" col="11" terrain="16"/>
   <hex row="29" col="12" terrain="15" name="Cape Fear River"/>
@@ -1300,7 +1300,7 @@
   <hex row="31" col="7" terrain="3"/>
   <hex row="31" col="8" terrain="3"/>
   <hex row="31" col="10">
-    <unit id="932" owner="1" flag="151" face="0" exp="171" str="8"/>
+    <unit id="932" owner="1" flag="151" face="0" exp="171" str="8" bstr="8"/>
   </hex>
   <hex row="31" col="11" terrain="15" name="Cape Fear River"/>
   <hex row="31" col="12" terrain="15" name="Cape Fear River"/>
@@ -1358,7 +1358,7 @@
   <hex row="32" col="15" terrain="9"/>
   <hex row="32" col="16" terrain="15" name="Cape Fear River"/>
   <hex row="32" col="17" terrain="16">
-    <unit id="709" owner="1" flag="151" face="0" exp="65" str="12"/>
+    <unit id="709" owner="1" flag="151" face="0" exp="65" str="12" bstr="12"/>
   </hex>
   <hex row="32" col="18" terrain="11" name="Battery Buchanan" owner="1" flag="150" victory="1">
     <unit id="647" owner="1" flag="151" face="0" exp="161"/>
@@ -1434,7 +1434,7 @@
   <hex row="34" col="4" road="18"/>
   <hex row="34" col="5" terrain="3"/>
   <hex row="34" col="7">
-    <unit id="932" owner="1" flag="151" face="0" exp="218" str="6"/>
+    <unit id="932" owner="1" flag="151" face="0" exp="218" str="6" bstr="6"/>
   </hex>
   <hex row="34" col="8" terrain="16"/>
   <hex row="34" col="9" terrain="9"/>
@@ -1540,13 +1540,13 @@
   <hex row="35" col="43" terrain="9"/>
   <hex row="36" col="1" road="42"/>
   <hex row="36" col="2" terrain="1" road="50" name="Smithville" owner="1" flag="150" deploy="1">
-    <unit id="44788" owner="1" flag="151" face="0" exp="225" str="12" ldr="1"/>
+    <unit id="44788" owner="1" flag="151" face="0" exp="225" str="12" ldr="1" bstr="12"/>
   </hex>
   <hex row="36" col="3">
-    <unit id="44824" owner="1" flag="151" face="0" exp="4" str="6"/>
+    <unit id="44824" owner="1" flag="151" face="0" exp="4" str="6" bstr="6"/>
   </hex>
   <hex row="36" col="4" terrain="11" name="Fort Johnston" owner="1" flag="150">
-    <unit id="647" owner="1" flag="151" face="0" exp="154" str="6"/>
+    <unit id="647" owner="1" flag="151" face="0" exp="154" str="6" bstr="6"/>
   </hex>
   <hex row="36" col="5" terrain="11" name="Fort Johnston"/>
   <hex row="36" col="7" terrain="15"/>
@@ -1599,7 +1599,7 @@
   <hex row="37" col="9" terrain="9"/>
   <hex row="37" col="10" terrain="9"/>
   <hex row="37" col="12" terrain="3">
-    <unit id="44824" owner="1" flag="151" face="0" exp="234" str="8" ldr="1"/>
+    <unit id="44824" owner="1" flag="151" face="0" exp="234" str="8" ldr="1" bstr="8"/>
   </hex>
   <hex row="37" col="13" terrain="3">
     <unit id="647" owner="1" flag="151" face="0" exp="155"/>

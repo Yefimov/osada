@@ -7,6 +7,9 @@ import org.osada.rules.SpottingModel
 import org.osada.rules.isAir
 import org.osada.uiSettings
 
+/** OG's Typed-VH mask with every level set — an ordinary victory hex. */
+const val ALL_VICTORY_TIERS: Int = 7
+
 @JsExport
 @JsName("Hex")
 class Hex(
@@ -139,6 +142,95 @@ class Hex(
     var station: Boolean = false
 
     /**
+     * Whether this airfield (or port) is a **dirt** one — a scraped strip rather than a permanent
+     * installation.
+     *
+     * > *"Dirt Airfield - deploy and supply Air Units"* — OG's own string,
+     * > `OPENTXT_SAMPLE/strings-en-template.txt:850`
+     *
+     * **Authored data, recovered 2026-08-29** from `.xscn` grid byte `@19` bit 6, by the controlled
+     * OpenSuite diff `docs/og-fidelity-plan.md` §Y.1 had been asking for since 2026-08-25. OG uses
+     * **one flag for both airfield and port**, which was the open half of that question: clearing
+     * it on two airfield hexes and setting it on a port hex moved the same bit each time.
+     *
+     * 29 hexes across 15 of the 502 deployed scenarios, imported by
+     * `tools/og-import/add_dirt_airfields.py`. Corpus-wide the population is 193 hexes, **87% of
+     * them Airfield terrain** — against the candidate ruled out in §X.4 (`@13` bit 0: 13,612 hexes,
+     * 54.6% of them cities). The offset was proved to survive OG's 0027-2 → 0030-2 format change by
+     * an oracle rather than by assumption: the shipped `bn6s09.xscn` carries it on exactly the two
+     * hexes the editor showed as already Dirt.
+     *
+     * Authored map data like [station] and [rail], so it is read and saved unconditionally rather
+     * than behind a ruleset key. [org.osada.rules.AirfieldQuality] is the rule that consumes it.
+     *
+     * **This is the authored twin of [sapperBuilt], not a replacement for it.** OG's
+     * `Cannot use dirt airfields` names two kinds of unusable field — *"airfields defined as dirt
+     * or built by sappers during the scenario"* — and until this flag was located only the second
+     * existed here.
+     */
+    var dirt: Boolean = false
+
+    /**
+     * OG's **Escape Hexes** — the map side of manual §3.7.4's *"retreat N units"* victory
+     * condition. A formation that ends its move here is withdrawn from the map and counted.
+     *
+     * **Two separate flags, because OG splits them**: `.xscn` grid `@13` bit 3 is the GROUND exit
+     * and `@12` bit 4 the AIR one, and a hex may carry either or both. Recovered 2026-08-30 by a
+     * controlled OpenSuite diff in which three hexes were marked Escape-Ground, Escape-Air and
+     * Escape-Both, and produced exactly those bits.
+     *
+     * 419 corpus hexes are ground exits (Clear/Ocean/City/Forest — map-edge terrain) and 156 air
+     * exits (87% Airfield or Ocean). `@13` bit 3 is also the bit `SCENARIO_FORMAT_NOTES.md` had
+     * recorded as *"used by something else, on 419 hexes of which only 8.6% carry rail"*.
+     *
+     * Authored map data, so both are read and saved unconditionally;
+     * [org.osada.rules.ExtendedVictory] decides what happens on one.
+     */
+    var escapeGround: Boolean = false
+
+    var escapeAir: Boolean = false
+
+    /**
+     * OG's **trigger** on this hex — *"a hex where if a unit ends there its move, something
+     * happens"* (`Manual_OSuite-Scenario.pdf` §3.4).
+     *
+     * [trigger] is the action code 1..9 and 0 means none; [triggerParam] is OG's 0–255 parameter,
+     * whose meaning depends on the action; [triggerEquip] is the equipment id that actions 8 and 9
+     * award; [triggerMessage] is the text OG keeps in a `.xtrig` sidecar and OSADA carries inline.
+     *
+     * **Recovered 2026-08-29** from `.xscn` grid bytes `@20`/`@21`/`@22`/`@26`, by the controlled
+     * OpenSuite diff `docs/og-fidelity-plan.md` §Y.1 had been waiting on. 311 trigger hexes across
+     * 86 of the 502 deployed scenarios; corpus-wide 858 across 401. `@20` takes no value outside
+     * 0..9 anywhere in the corpus, which a mis-located byte could not manage.
+     *
+     * [org.osada.rules.TriggerHexes] is the rule, and it names which of the nine it executes.
+     *
+     * Authored map data, so all four are read and saved unconditionally; whether anything fires is
+     * the rule's question.
+     */
+    var trigger: Int = 0
+
+    var triggerParam: Int = 0
+
+    var triggerEquip: Int = 0
+
+    var triggerMessage: String = ""
+
+    /**
+     * Whether this hex's [trigger] has already fired.
+     *
+     * **A trigger is once-only, and that is an inference** — OG's manual says only what happens,
+     * never how often. It is the reading that cannot overstate (`docs/og-sources.md`): a repeating
+     * trigger is a prestige, experience and free-unit tap the player can farm by stepping off the
+     * hex and back on, which would silently re-tune every one of the 86 scenarios that author one.
+     * Once-only takes less from nobody and can only under-deliver.
+     *
+     * If OG turns out to repeat them, this is the field to remove and this is the sentence to come
+     * back to. Serialized, because a reload must not re-arm a trigger the player already spent.
+     */
+    var triggerFired: Boolean = false
+
+    /**
      * Whether what stood on this hex has been shelled into wreckage (OG 9.2, `rules/Barrage`).
      *
      * **A state of a DESTROYED facility or road, not a crater on open ground.** Open General School
@@ -199,6 +291,22 @@ class Hex(
     var flag: Int = -1
     var isDeployment: Int = -1
     var victorySide: Int = -1
+
+    /**
+     * Which VICTORY LEVELS this objective counts for — OG's *"Typed VH"*, manual §3.7.2.
+     *
+     * A 3-bit mask: `1` brilliant, `2` victory, `4` tactical. **7 means "every level"**, which is
+     * what an ordinary victory hex is and what OSADA has always assumed, so that is the default and
+     * a scenario without typed hexes behaves exactly as before.
+     *
+     * > *"Typed VH allow you to set some VH as needed for a level of victory."*
+     *
+     * **Decoded 2026-08-30** from `.xscn` grid `@10`, which turns out to be two nibbles — one per
+     * side — each a tier mask rather than the plain flag this project read. The corpus values are
+     * exactly the combinations that predicts (7, 1, 3, 6, 4) and they reproduce the manual's own
+     * two worked examples; the enabling switch is `opt_specific_vh` at `@1010` bit 1.
+     */
+    var victoryTiers: Int = ALL_VICTORY_TIERS
     var name: String = ""
     var isMoveSel: Boolean = false
     var isAttackSel: Boolean = false
@@ -300,6 +408,7 @@ class Hex(
         flag = other.flag
         isDeployment = other.isDeployment
         victorySide = other.victorySide
+        victoryTiers = other.victoryTiers
         name = other.name
         setUnit(other.unit)
         setUnit(other.airunit)

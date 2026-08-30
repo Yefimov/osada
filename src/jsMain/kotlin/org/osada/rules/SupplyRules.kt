@@ -16,7 +16,6 @@ import kotlin.math.roundToInt
  * helpers.
  */
 object SupplyRules {
-    private const val FULL_STRENGTH = 10
     private const val EXPERIENCE_STRENGTH_DIVISOR = 100
     private const val OVERSTRENGTH_MIN_EXPERIENCE = 100
 
@@ -129,7 +128,7 @@ object SupplyRules {
             if (overStrength) {
                 overstrengthCap(unit) - unit.strength
             } else {
-                FULL_STRENGTH - unit.strength
+                unit.basicStrength - unit.strength
             }
         val pos = unit.getPos()
         return if (UnitPredicates.isAir(unit)) {
@@ -182,8 +181,14 @@ object SupplyRules {
      * manual 6.7 grants one (*"Each experience bar allows for one strength point over the normal
      * maximum"*), and the Overstrength button's own description repeats the same rule. A partial bar
      * now buys nothing, which is what both surfaces already promised the player.
+     *
+     * **The base is the formation's own, not a hardcoded 10 (2026-08-30).** OG's rule is
+     * *"overstrength equals BASE strength plus experience bars"*, and base strength is
+     * [GameUnit.basicStrength] — scenario unit `@23`, which nothing read until that day. A
+     * formation with no authored value still gets 10, so nothing outside the 361 patched scenarios
+     * moves.
      */
-    fun overstrengthCap(unit: GameUnit): Int = FULL_STRENGTH + unit.experience / EXPERIENCE_STRENGTH_DIVISOR
+    fun overstrengthCap(unit: GameUnit): Int = unit.basicStrength + unit.experience / EXPERIENCE_STRENGTH_DIVISOR
 
     /** True when [unit] is eligible to resupply (hasn't acted, needs supply, valid terrain). */
     fun canResupply(
@@ -210,13 +215,15 @@ object SupplyRules {
         if (unit.hasOverstrength) return false
         val blocked =
             if (overStrength) {
-                // Overstrength applies only to a unit already at full strength (>=10);
+                // Overstrength applies only to a unit already at full strength;
                 // JS guards `10 > strength` (strength < 10), which was inverted here.
-                unit.strength < FULL_STRENGTH ||
+                // "Full" is the formation's own BASE strength, not a hardcoded 10 -- a unit
+                // authored 10/5 is already above its base and is not a candidate.
+                unit.strength < unit.basicStrength ||
                     unit.experience < OVERSTRENGTH_MIN_EXPERIENCE ||
                     unit.strength >= overstrengthCap(unit)
             } else {
-                unit.hasResupplied || unit.strength >= FULL_STRENGTH
+                unit.hasResupplied || unit.strength >= unit.basicStrength
             }
         return if (blocked) false else isSupplyEligibleType(map, unit)
     }

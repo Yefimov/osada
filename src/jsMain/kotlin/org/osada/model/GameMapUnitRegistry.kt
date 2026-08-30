@@ -3,6 +3,7 @@ package org.osada.model
 import org.osada.GameHolder
 import org.osada.PlayerSide
 import org.osada.getCampaignPlayer
+import org.osada.rules.CarrierHangars
 import org.osada.rules.GameRules
 import org.osada.rules.setSpotRange
 import org.osada.rules.setZOCRange
@@ -80,6 +81,10 @@ fun GameMap.updateUnitList() {
             if (recordsInCampaignDossier(GameHolder.instance?.campaign != null, unit.nodossier)) {
                 GameHolder.instance?.getCampaignPlayer()?.addDestroyedUnitToDossier(unit)
             }
+            // A carrier takes its hangar down with it -- an aircraft cannot outlive the ship it
+            // was contained in (`rules/CarrierHangars`).
+            CarrierHangars.sinkWith(unit)
+            creditKill(unit)
             iter.remove()
         }
     }
@@ -111,4 +116,19 @@ fun GameMap.getUnitNeighbor(
             (index - 1 + sameSideUnits.size) % sameSideUnits.size
         }
     return sameSideUnits[newIndex]
+}
+
+/**
+ * OG's *"kill N enemy units"* victory condition (`@1021` bit 4, 55 corpus scenarios).
+ *
+ * Counted in [updateUnitList] because that is the one sweep every death passes through, whatever
+ * killed it -- combat, a minefield, surrender, running out of fuel. The credit goes to the OTHER
+ * side, so a self-inflicted loss (kamikaze, disband) credits nobody.
+ */
+private fun creditKill(unit: GameUnit) {
+    val victimSide = unit.player?.side ?: return
+    val scenario = GameHolder.instance?.scenario ?: return
+    scenario.unitsKilled.indices
+        .filter { it != victimSide }
+        .forEach { scenario.unitsKilled[it] = scenario.unitsKilled[it] + 1 }
 }

@@ -50,10 +50,11 @@ internal object ScenarioBriefingController {
         lastFacts = scenarioFacts
         BriefingLocalization.ensure(source) {
             if (lastSource !== source) return@ensure
+            val localizedFacts = BriefingLocalization.localizeFacts(source, scenarioFacts)
             showParsed(
                 BriefingLocalization.parse(source),
                 source,
-                scenarioFacts,
+                localizedFacts,
                 "briefing.begin.label",
                 onFinished,
             )
@@ -92,10 +93,11 @@ internal object ScenarioBriefingController {
         if (source == null || reopenFacts == null) return false
         BriefingLocalization.ensure(source) {
             if (lastSource !== source) return@ensure
+            val localizedFacts = BriefingLocalization.localizeFacts(source, reopenFacts)
             showParsed(
                 BriefingLocalization.parse(source),
                 source,
-                reopenFacts,
+                localizedFacts,
                 "briefing.return_to_battle.label",
                 onClosed,
                 reviewing = true,

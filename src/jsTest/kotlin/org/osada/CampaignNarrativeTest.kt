@@ -517,13 +517,17 @@ class CampaignNarrativeTest {
         val domain = "briefings/rhu/rhu190724"
         I18n.installBundlesForTests(
             english =
-                """{"epilogue.hold-victory.speaker":"Jenő Landler",
-                    "epilogue.hold-victory.role":"Commander",
-                    "epilogue.hold-victory.text":"The line held."}""".trimIndent(),
+                """
+                {"epilogue.hold-victory.speaker":"Jenő Landler",
+                "epilogue.hold-victory.role":"Commander",
+                "epilogue.hold-victory.text":"The line held."}
+                """.trimIndent(),
             selected =
-                """{"epilogue.hold-victory.speaker":"Енё Ландлер",
-                    "epilogue.hold-victory.role":"Командующий",
-                    "epilogue.hold-victory.text":"Рубеж удержан."}""".trimIndent(),
+                """
+                {"epilogue.hold-victory.speaker":"Енё Ландлер",
+                "epilogue.hold-victory.role":"Командующий",
+                "epilogue.hold-victory.text":"Рубеж удержан."}
+                """.trimIndent(),
             selectedLanguage = Language.RUSSIAN,
             domain = domain,
         )

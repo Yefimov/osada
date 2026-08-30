@@ -45,6 +45,7 @@ internal object ScenarioHexParser {
         // OG's railroad station, recovered 2026-08-27 (`Hex.station`). Authored map data like
         // `rail` beside it, so it is read unconditionally rather than behind a ruleset key.
         el.getAttribute("station")?.toIntOrNull()?.let { hex.station = it != 0 }
+        applyDiffRecoveredAttributes(el, hex)
         // Pre-placed land minefields, as a per-side bitmask (`1 shl side`). OG authors them in the
         // scenario binary's `byte6` -- bit 1 Axis, bit 2 Allied -- and 27 of the 502 scenarios OSADA
         // ships carry 320 mined hexes between them, every one of which was silently dropped on
@@ -58,8 +59,39 @@ internal object ScenarioHexParser {
         el.getAttribute("flag")?.toIntOrNull()?.let { hex.flag = it }
         el.getAttribute("owner")?.toIntOrNull()?.let { hex.owner = it }
         el.getAttribute("victory")?.toIntOrNull()?.let { hex.victorySide = it }
+        // OG's Typed VH tier mask (manual 3.7.2). Absent means 7 -- "counts for every level" --
+        // which is the ordinary victory hex and OSADA's long-standing behaviour.
+        el.getAttribute("victiers")?.toIntOrNull()?.let { hex.victoryTiers = it }
         el.getAttribute("deploy")?.toIntOrNull()?.let { hex.isDeployment = it }
         el.getAttribute("supply")?.toIntOrNull()?.let { hex.isDeployment = it }
+    }
+
+    /**
+     * The three per-hex properties recovered by the 2026-08-29 controlled OpenSuite diff
+     * (`SCENARIO_FORMAT_NOTES.md`), split from [applyHexAttributes] purely to keep that function
+     * inside detekt's complexity budget — adding them took it from 12 to 17.
+     *
+     * All authored map data, like `station` and `rail`, so all read unconditionally rather than
+     * behind a ruleset key. Whether any of it DOES anything is a rule's question:
+     * [org.osada.rules.AirfieldQuality] for the dirt strip, [org.osada.rules.TriggerHexes] for the
+     * trigger.
+     */
+    private fun applyDiffRecoveredAttributes(
+        el: Element,
+        hex: Hex,
+    ) {
+        // Dirt airfield/port -- `.xscn` grid @19 bit 6, one flag covering both.
+        el.getAttribute("dirt")?.toIntOrNull()?.let { hex.dirt = it != 0 }
+        // OG's escape hexes (manual 3.7.4), `@13` bit 3 and `@12` bit 4 -- separate ground and air
+        // exits, either or both on one hex.
+        el.getAttribute("escapeground")?.toIntOrNull()?.let { hex.escapeGround = it != 0 }
+        el.getAttribute("escapeair")?.toIntOrNull()?.let { hex.escapeAir = it != 0 }
+        // Trigger hexes -- @20 type, @21 parameter, @22 equipment id for actions 8/9, and the
+        // message text inlined from OG's own `.xtrig` sidecar rather than kept as its line index.
+        el.getAttribute("trigger")?.toIntOrNull()?.let { hex.trigger = it }
+        el.getAttribute("trigparam")?.toIntOrNull()?.let { hex.triggerParam = it }
+        el.getAttribute("trigequip")?.toIntOrNull()?.let { hex.triggerEquip = it }
+        el.getAttribute("trigmsg")?.let { hex.triggerMessage = it }
     }
 
     private fun parseHexUnits(

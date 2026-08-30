@@ -24,11 +24,19 @@ import org.osada.model.Hex
  *    airfield, because nothing else recorded the origin — the construction fields are cleared as
  *    the work completes, and `terrain == AIRFIELD` cannot tell a scraped strip from a permanent
  *    one.
- *  - **Authored dirt: NOT BUILT, and not imported.** No per-hex "this field is dirt" marking has
- *    been located in OG's `.xscn` or `.map` binaries, so a map's own dirt strips are
- *    indistinguishable from its concrete ones in this project's data. Recorded as an open question
- *    rather than approximated: guessing which airfields are dirt would ground aircraft on fields OG
- *    lets them use, which is the failure direction that costs the player something.
+ *  - **Authored dirt: BUILT 2026-08-29**, once the flag stopped being missing. `.xscn` grid byte
+ *    `@19` bit 6, found by the controlled OpenSuite diff `og-fidelity-plan.md` §Y.1 had been
+ *    waiting on — 29 hexes across 15 shipped scenarios, [Hex.dirt]. The refusal to approximate it
+ *    was the right call and cost nothing: when the real flag arrived, the rule gained one clause
+ *    rather than having to unpick a guess.
+ *
+ * ### The two halves have DIFFERENT gates, and collapsing them was a real bug
+ *
+ * A sapper strip cannot exist with `build_and_repair` off, because nothing else sets
+ * [Hex.sapperBuilt] — so gating the whole ability on `Engineering.enabled()` was correct while
+ * that was the only half. **An authored dirt field is on the map whatever the ruleset says**, so
+ * that gate now has to sit on the sapper clause alone; leaving it where it was would let a jet
+ * refuel on an authored dirt strip in every default game.
  *
  * ### Refuelling, and why "nor deploy" is not a second call site here
  *
@@ -43,26 +51,28 @@ import org.osada.model.Hex
  * airfield test (`model/GameMapDeployZone`), so there is no distinct deploy check for this to
  * refuse. The refuel half is where the sentence bites in this engine.
  *
- * ### Gated on `build_and_repair`, because without it there are no sapper strips
- *
- * Nothing but `Engineering` can set [Hex.sapperBuilt], and `Engineering` does nothing at all with
- * the key off — so with the key off this ability has nothing to refuse and its badge would
- * advertise a restriction the player can never meet. That is `Minefields`' own gate argument
- * (§K.4), applied to the one ability whose subject the other rule creates.
+ * The badge follows the same correction: `equipment.ability.no_dirt_airfields` was hidden behind
+ * `AbilityGates::engineering` on the old argument and is now ungated, because with 29 authored dirt
+ * hexes in shipped content the ability refuses something in a default game.
  */
 internal object AirfieldQuality {
     /** Whether [data] carries OG's `Cannot use dirt airfields`. */
-    fun refusesDirtAirfields(data: EquipmentData): Boolean =
-        Engineering.enabled() && data.attr2 and ATTR2_MASK_NO_DIRT_AIRFIELDS != 0
+    fun refusesDirtAirfields(data: EquipmentData): Boolean = data.attr2 and ATTR2_MASK_NO_DIRT_AIRFIELDS != 0
+
+    /**
+     * Whether [hex] is a dirt field at all — authored by the scenario, or scraped by sappers under
+     * a ruleset that lets them scrape.
+     */
+    fun isDirt(hex: Hex): Boolean = hex.dirt || (hex.sapperBuilt && Engineering.enabled())
 
     /**
      * Whether [hex] is an airfield that [data]'s aircraft may not use.
      *
      * A carrier is not an airfield and is not asked about here; `Carrier Deploy` is the ability
-     * that governs those, and it is still descriptive-only.
+     * that governs those.
      */
     fun unusableBy(
         hex: Hex?,
         data: EquipmentData,
-    ): Boolean = hex != null && hex.sapperBuilt && refusesDirtAirfields(data)
+    ): Boolean = hex != null && isDirt(hex) && refusesDirtAirfields(data)
 }
