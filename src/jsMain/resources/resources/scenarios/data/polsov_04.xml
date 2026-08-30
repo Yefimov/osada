@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="polsov_04.xscn" name="Battle of Dyneburg" turns="16, 19, 23" date="January 3, 1920" dayturns="0" ground="1" atmosferic="0" latitude="2" iconset="1" weatherchg="1" rows="38" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_67.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1">
+<map file="polsov_04.xscn" name="Battle of Dyneburg" turns="16, 19, 23" date="January 3, 1920" dayturns="0" ground="1" atmosferic="0" latitude="2" iconset="1" weatherchg="1" rows="38" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_67.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="0" capitalflak="0">
 <player id="0" country="103" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="50" defaultstr="0" support="61,104,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
 <player id="1" country="20" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="60,21,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50, 0, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50"/>
   <hex row="0" col="1" terrain="1" road="136" name="Tilti"/>
@@ -19,10 +19,10 @@
   <hex row="1" col="1" terrain="1" name="Tilti"/>
   <hex row="1" col="2" terrain="1" road="136" name="Tilti"/>
   <hex row="1" col="3" name="Jakub&#243;w-Dyneburg RR" station="1">
-    <unit id="35621" owner="1" flag="60" face="0" transport="35570" exp="40" str="6"/>
+    <unit id="35621" owner="1" flag="60" face="0" transport="35570" exp="40" str="6" bstr="6"/>
   </hex>
   <hex row="1" col="4" terrain="2" name="Tilti Aerodrome">
-    <unit id="35607" owner="1" flag="60" face="0" transport="35584" exp="50" str="8"/>
+    <unit id="35607" owner="1" flag="60" face="0" transport="35584" exp="50" str="8" bstr="8"/>
   </hex>
   <hex row="1" col="5" terrain="2" road="34" name="Tilti Aerodrome" owner="1" flag="20" victory="1">
     <unit id="35509" owner="1" flag="60" face="0" transport="35576" exp="150"/>
@@ -42,7 +42,7 @@
     <unit id="35475" owner="1" flag="60" face="0" transport="35570" exp="250"/>
   </hex>
   <hex row="1" col="21" name="Rubeniski Depot" station="1">
-    <unit id="35531" owner="1" flag="60" face="0" exp="70" str="5"/>
+    <unit id="35531" owner="1" flag="60" face="0" exp="70" str="5" bstr="5"/>
   </hex>
   <hex row="1" col="24" terrain="10"/>
   <hex row="1" col="25" terrain="10"/>
@@ -108,7 +108,7 @@
   <hex row="3" col="41" terrain="10"/>
   <hex row="3" col="43" terrain="10"/>
   <hex row="4" col="6">
-    <unit id="35523" owner="1" flag="60" face="0" exp="200" str="7"/>
+    <unit id="35523" owner="1" flag="60" face="0" exp="200" str="7" bstr="7"/>
   </hex>
   <hex row="4" col="8" name="Jakub&#243;w-Dyneburg RR"/>
   <hex row="4" col="13" road="9"/>
@@ -148,7 +148,7 @@
   <hex row="6" col="24" name="Rzezyca-Dyneburg RR"/>
   <hex row="6" col="32" road="18"/>
   <hex row="6" col="33" terrain="2" owner="0" flag="103">
-    <unit id="42409" owner="0" flag="104" face="0" exp="10" str="7"/>
+    <unit id="42409" owner="0" flag="104" face="0" exp="10" str="7" bstr="7"/>
   </hex>
   <hex row="6" col="34" terrain="2"/>
   <hex row="6" col="37" terrain="3"/>
@@ -192,7 +192,7 @@
   <hex row="9" col="17" road="9"/>
   <hex row="9" col="19" terrain="11" name="Jauna Fort"/>
   <hex row="9" col="20" terrain="1" name="Jauna" owner="0" flag="103">
-    <unit id="42295" owner="0" flag="104" face="0" exp="80" str="8"/>
+    <unit id="42295" owner="0" flag="104" face="0" exp="80" str="8" bstr="8"/>
   </hex>
   <hex row="9" col="21" terrain="11" name="Jauna Fort"/>
   <hex row="9" col="22" terrain="11" name="Jauna Fort"/>
@@ -201,7 +201,7 @@
   <hex row="9" col="29" terrain="10" road="40"/>
   <hex row="9" col="30" terrain="15"/>
   <hex row="9" col="31" terrain="1" road="59" name="Laci" owner="0" flag="103" victory="0">
-    <unit id="728" owner="0" flag="104" face="0" exp="100" str="8"/>
+    <unit id="728" owner="0" flag="104" face="0" exp="100" str="8" bstr="8"/>
   </hex>
   <hex row="9" col="32" terrain="10" road="34"/>
   <hex row="9" col="33" terrain="15"/>
@@ -233,13 +233,13 @@
   <hex row="11" col="13" terrain="11" name="Cietoksnis Fort"/>
   <hex row="11" col="14" terrain="11" name="Cietoksnis Fort"/>
   <hex row="11" col="15" name="Jakub&#243;w-Dyneburg RR">
-    <unit id="42303" owner="0" flag="104" face="0" exp="75" str="5"/>
+    <unit id="42303" owner="0" flag="104" face="0" exp="75" str="5" bstr="5"/>
   </hex>
   <hex row="11" col="16" terrain="11" name="Cietoksnis Fort"/>
   <hex row="11" col="17" terrain="1" name="Cietoksnis"/>
   <hex row="11" col="18" terrain="11" road="9" name="Jauna Fort"/>
   <hex row="11" col="19" terrain="11" road="144" name="Jauna Fort">
-    <unit id="728" owner="0" flag="104" face="0" exp="155" str="7"/>
+    <unit id="728" owner="0" flag="104" face="0" exp="155" str="7" bstr="7"/>
   </hex>
   <hex row="11" col="20" terrain="11" name="Jauna Fort"/>
   <hex row="11" col="21" terrain="1" name="Jauna"/>
@@ -301,7 +301,7 @@
   <hex row="13" col="13" terrain="11" name="Cietoksnis Fort"/>
   <hex row="13" col="14" terrain="1" name="Cietoksnis"/>
   <hex row="13" col="15" terrain="1" name="Cietoksnis" owner="0" flag="103" victory="0">
-    <unit id="528" owner="0" flag="104" face="0" exp="255" str="8"/>
+    <unit id="528" owner="0" flag="104" face="0" exp="255" str="8" bstr="8"/>
   </hex>
   <hex row="13" col="16" name="Jakub&#243;w-Dyneburg RR">
     <unit id="42324" owner="0" flag="104" face="0" transport="42344" exp="110"/>
@@ -313,7 +313,7 @@
   <hex row="13" col="21" terrain="1" name="Dyneburg (Daugavpils)"/>
   <hex row="13" col="22" terrain="1" name="Dyneburg (Daugavpils)"/>
   <hex row="13" col="23" terrain="2" name="Dyneburg Aerodrome" owner="0" flag="103">
-    <unit id="42409" owner="0" flag="104" face="0" exp="30" str="6"/>
+    <unit id="42409" owner="0" flag="104" face="0" exp="30" str="6" bstr="6"/>
   </hex>
   <hex row="13" col="24" name="Rzezyca-Dyneburg RR"/>
   <hex row="13" col="25" terrain="1" name="Kimiku Ciemats"/>
@@ -341,7 +341,7 @@
   <hex row="14" col="14" terrain="1" name="Cietoksnis"/>
   <hex row="14" col="15" terrain="1" name="Cietoksnis"/>
   <hex row="14" col="16" terrain="1" name="Cietoksnis">
-    <unit id="42368" owner="0" flag="104" face="0" transport="42356" exp="60" str="5"/>
+    <unit id="42368" owner="0" flag="104" face="0" transport="42356" exp="60" str="5" bstr="5"/>
   </hex>
   <hex row="14" col="17" name="Jakub&#243;w-Dyneburg RR"/>
   <hex row="14" col="18" terrain="1" name="Cietoksnis"/>
@@ -370,7 +370,7 @@
   <hex row="15" col="15" terrain="15" name="Daugava River (Impass)"/>
   <hex row="15" col="16" terrain="1" name="Cietoksnis"/>
   <hex row="15" col="17" terrain="1" road="34" name="Cietoksnis">
-    <unit id="728" owner="0" flag="104" face="0" exp="155" str="6"/>
+    <unit id="728" owner="0" flag="104" face="0" exp="155" str="6" bstr="6"/>
   </hex>
   <hex row="15" col="18" name="Dyneburg Depot"/>
   <hex row="15" col="19" terrain="1" name="Dyneburg (Daugavpils)"/>
@@ -435,7 +435,7 @@
   <hex row="17" col="13" terrain="1" road="34" name="Griva"/>
   <hex row="17" col="14" terrain="1" road="34" name="Griva"/>
   <hex row="17" col="15" terrain="1" name="Griva">
-    <unit id="528" owner="0" flag="104" face="0" exp="255" str="7"/>
+    <unit id="528" owner="0" flag="104" face="0" exp="255" str="7" bstr="7"/>
   </hex>
   <hex row="17" col="16" terrain="1" name="Judovka"/>
   <hex row="17" col="17" terrain="1" name="Judovka"/>
@@ -477,14 +477,14 @@
   <hex row="18" col="11" terrain="1" road="18" name="Griva"/>
   <hex row="18" col="12" terrain="1" road="34" name="Griva"/>
   <hex row="18" col="13" terrain="2" name="Griva Aerodrome" owner="0" flag="103">
-    <unit id="42409" owner="0" flag="104" face="0" exp="10" str="5"/>
+    <unit id="42409" owner="0" flag="104" face="0" exp="10" str="5" bstr="5"/>
   </hex>
   <hex row="18" col="14" terrain="1" name="Griva"/>
   <hex row="18" col="15" terrain="1" name="Griva"/>
   <hex row="18" col="16" terrain="1" name="Judovka"/>
   <hex row="18" col="17" terrain="3"/>
   <hex row="18" col="18" terrain="1" name="Judovka">
-    <unit id="728" owner="0" flag="104" face="0" exp="100" str="5"/>
+    <unit id="728" owner="0" flag="104" face="0" exp="100" str="5" bstr="5"/>
   </hex>
   <hex row="18" col="19" terrain="15" name="Daugava River (Impass)"/>
   <hex row="18" col="20" terrain="1" name="Dyneburg (Daugavpils)"/>
@@ -523,7 +523,7 @@
   <hex row="19" col="18" terrain="3"/>
   <hex row="19" col="19" terrain="15" name="Daugava River (Impass)"/>
   <hex row="19" col="20" terrain="1" name="Dyneburg (Daugavpils)">
-    <unit id="728" owner="0" flag="104" face="0" exp="155" str="7"/>
+    <unit id="728" owner="0" flag="104" face="0" exp="155" str="7" bstr="7"/>
   </hex>
   <hex row="19" col="21" name="Dyneburg-Wilno RR"/>
   <hex row="19" col="22" name="Dyneburg-Wilno RR"/>
@@ -531,7 +531,7 @@
     <unit id="42260" owner="0" flag="104" face="0" exp="220"/>
   </hex>
   <hex row="19" col="24" terrain="11" road="185" name="Gajoks Castle">
-    <unit id="528" owner="0" flag="104" face="0" exp="135" str="8"/>
+    <unit id="528" owner="0" flag="104" face="0" exp="135" str="8" bstr="8"/>
   </hex>
   <hex row="19" col="25" terrain="11" road="184" name="Gajoks Castle">
     <unit id="42260" owner="0" flag="104" face="0" exp="200"/>
@@ -568,16 +568,16 @@
   <hex row="20" col="21" terrain="15" name="Daugava River (Impass)"/>
   <hex row="20" col="22" terrain="11" road="10" name="Gajoks Castle"/>
   <hex row="20" col="23" terrain="11" road="155" name="Gajoks Castle">
-    <unit id="728" owner="0" flag="104" face="0" exp="100" str="5"/>
+    <unit id="728" owner="0" flag="104" face="0" exp="100" str="5" bstr="5"/>
   </hex>
   <hex row="20" col="24" terrain="11" road="187" name="Gajoks Castle" owner="0" flag="103" victory="0">
-    <unit id="42255" owner="0" flag="104" face="0" transport="42342" exp="64" str="5"/>
+    <unit id="42255" owner="0" flag="104" face="0" transport="42342" exp="64" str="5" bstr="5"/>
   </hex>
   <hex row="20" col="25" terrain="11" road="171" name="Gajoks Castle">
-    <unit id="42373" owner="0" flag="104" face="0" transport="42356" exp="30" str="5"/>
+    <unit id="42373" owner="0" flag="104" face="0" transport="42356" exp="30" str="5" bstr="5"/>
   </hex>
   <hex row="20" col="26" terrain="11" road="176" name="Gajoks Castle">
-    <unit id="42409" owner="0" flag="104" face="0" exp="30" str="7"/>
+    <unit id="42409" owner="0" flag="104" face="0" exp="30" str="7" bstr="7"/>
   </hex>
   <hex row="20" col="27" terrain="1" name="Dyneburg (Daugavpils)"/>
   <hex row="20" col="28" terrain="15"/>
@@ -615,7 +615,7 @@
   </hex>
   <hex row="21" col="25" terrain="15" name="Daugava River (Impass)"/>
   <hex row="21" col="26" terrain="11" road="145" name="Gajoks Castle">
-    <unit id="528" owner="0" flag="104" face="0" exp="255" str="8"/>
+    <unit id="528" owner="0" flag="104" face="0" exp="255" str="8" bstr="8"/>
   </hex>
   <hex row="21" col="27" terrain="1" name="Dyneburg (Daugavpils)" owner="0" flag="103"/>
   <hex row="21" col="28" terrain="15"/>
@@ -647,7 +647,7 @@
   <hex row="22" col="20" terrain="1" name="Dyneburg (Daugavpils)"/>
   <hex row="22" col="21" terrain="15" name="Daugava River (Impass)"/>
   <hex row="22" col="22" terrain="1" road="10" name="Dyneburg (Daugavpils)">
-    <unit id="528" owner="0" flag="104" face="0" exp="255" str="8"/>
+    <unit id="528" owner="0" flag="104" face="0" exp="255" str="8" bstr="8"/>
   </hex>
   <hex row="22" col="23" terrain="10" road="136" name="Daugava River"/>
   <hex row="22" col="24" terrain="10" road="136" name="Daugava River"/>
@@ -670,7 +670,7 @@
   <hex row="23" col="10" road="18"/>
   <hex row="23" col="12" terrain="1" name="Ninerkuni"/>
   <hex row="23" col="13" terrain="1" name="Ninerkuni" owner="0" flag="103">
-    <unit id="728" owner="0" flag="104" face="0" exp="205" str="8"/>
+    <unit id="728" owner="0" flag="104" face="0" exp="205" str="8" bstr="8"/>
   </hex>
   <hex row="23" col="14" terrain="1" name="Ninerkuni"/>
   <hex row="23" col="15" terrain="1" name="Dyneburg (Daugavpils)"/>
@@ -778,7 +778,7 @@
   <hex row="26" col="22" terrain="1" name="Dyneburg (Daugavpils)"/>
   <hex row="26" col="23" terrain="1" name="Dyneburg (Daugavpils)"/>
   <hex row="26" col="24" terrain="1" name="Dyneburg (Daugavpils)" owner="0" flag="103">
-    <unit id="728" owner="0" flag="104" face="0" exp="100" str="5"/>
+    <unit id="728" owner="0" flag="104" face="0" exp="100" str="5" bstr="5"/>
   </hex>
   <hex row="26" col="25" terrain="1" name="Dyneburg (Daugavpils)">
     <unit id="42260" owner="0" flag="104" face="0" exp="90"/>
@@ -888,10 +888,10 @@
   <hex row="30" col="18" terrain="11"/>
   <hex row="30" col="19" name="Dyneburg-Wilno RR"/>
   <hex row="30" col="20" terrain="11">
-    <unit id="728" owner="0" flag="104" face="0" exp="200" str="7"/>
+    <unit id="728" owner="0" flag="104" face="0" exp="200" str="7" bstr="7"/>
   </hex>
   <hex row="30" col="21" road="34">
-    <unit id="42303" owner="0" flag="104" face="0" exp="50" str="6"/>
+    <unit id="42303" owner="0" flag="104" face="0" exp="50" str="6" bstr="6"/>
   </hex>
   <hex row="30" col="22" road="33"/>
   <hex row="30" col="24" terrain="3"/>
@@ -942,12 +942,12 @@
   <hex row="32" col="9" terrain="3" road="33"/>
   <hex row="32" col="10" road="145"/>
   <hex row="32" col="15" deploy="1">
-    <unit id="21405" owner="1" flag="21" face="0" exp="180" str="8" ldr="1"/>
+    <unit id="21405" owner="1" flag="21" face="0" exp="180" str="8" ldr="1" bstr="8"/>
   </hex>
   <hex row="32" col="16" road="136"/>
   <hex row="32" col="17" road="136"/>
   <hex row="32" col="19" name="Dyneburg-Wilno RR">
-    <unit id="21533" owner="1" flag="21" face="0" exp="100" str="5"/>
+    <unit id="21533" owner="1" flag="21" face="0" exp="100" str="5" bstr="5"/>
   </hex>
   <hex row="32" col="20" road="17"/>
   <hex row="32" col="27" deploy="1">
@@ -1013,14 +1013,14 @@
   </hex>
   <hex row="34" col="20" road="137"/>
   <hex row="34" col="21" road="144" deploy="1">
-    <unit id="21190" owner="1" flag="21" face="0" transport="21948" exp="120" str="5"/>
+    <unit id="21190" owner="1" flag="21" face="0" transport="21948" exp="120" str="5" bstr="5"/>
   </hex>
   <hex row="34" col="22" deploy="1">
     <unit id="21211" owner="1" flag="21" face="0" exp="130"/>
   </hex>
   <hex row="34" col="23" terrain="1" name="Sauszemes Speki" deploy="1"/>
   <hex row="34" col="24">
-    <unit id="21393" owner="1" flag="21" face="0" exp="74" str="4"/>
+    <unit id="21393" owner="1" flag="21" face="0" exp="74" str="4" bstr="4"/>
   </hex>
   <hex row="34" col="30" road="17">
     <unit id="21749" owner="1" flag="21" face="0" transport="21927" exp="255"/>
@@ -1043,7 +1043,7 @@
     <unit id="22043" owner="1" flag="21" face="0" transport="21948" exp="80"/>
   </hex>
   <hex row="35" col="19" name="Dyneburg-Wilno RR" owner="1" flag="20" victory="1" station="1">
-    <unit id="21014" owner="1" flag="21" face="0" transport="21917" exp="144" str="5"/>
+    <unit id="21014" owner="1" flag="21" face="0" transport="21917" exp="144" str="5" bstr="5"/>
   </hex>
   <hex row="35" col="21" road="17"/>
   <hex row="35" col="24" terrain="1" name="Sauszemes Speki"/>

@@ -1,5 +1,6 @@
 package org.osada.rules
 
+import org.osada.GameHolder
 import org.osada.LeaderType
 import org.osada.MovMethod
 import org.osada.TerrainType
@@ -188,6 +189,13 @@ object MovementRules {
      *  (`WeatherCombatRules.spotRange`). */
     fun getUnitSpotRange(unit: GameUnit): Int {
         var range = unit.unitData().spotrange
+        // OG's `True spotting 0` INVERTED, and this is the one option OSADA had backwards.
+        // `HexGeometry.getRing` returns nothing at radius 0, so a `spotrange = 0` formation has
+        // always seen only its own hex here -- which is OG's behaviour with the option ON. The 295
+        // scenarios that set it were already right; the rest were blinding 303 shipped records that
+        // OG lets see their adjacent ring. Absent or unreadable reads as "not authored", which is
+        // the direction that gives the formation its neighbours back.
+        if (range == 0 && GameHolder.instance?.scenario?.trueSpottingZero != true) range = 1
         if (Leaders.unitHasLeader(unit, LeaderType.ELITE_RECON_VETERAN)) range += 2
         if (Leaders.unitHasLeader(unit, LeaderType.SKILLED_RECONNAISSANCE)) range += 1
         range += Attachments.bonus(unit, Attachments.SLOT_RECON)

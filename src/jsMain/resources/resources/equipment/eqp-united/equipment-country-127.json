@@ -51,7 +51,10 @@
     "navalweight",
     "railweight",
     "heloweight",
-    "hangarweight"
+    "hangarweight",
+    "navaltransportable",
+    "airtransportable",
+    "paradroppable"
   ],
   "units": {
     "43989": [
@@ -93,7 +96,10 @@
       0,
       0,
       0,
-      32768
+      32768,
+      0,
+      0,
+      0
     ],
     "43990": [
       2,
@@ -133,6 +139,9 @@
       0,
       16,
       16,
+      0,
+      0,
+      1,
       0,
       0
     ],
@@ -174,6 +183,9 @@
       0,
       16,
       64,
+      0,
+      0,
+      1,
       0,
       0
     ]

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="nvc08.xscn" name="Laos Counteroffensive" turns="15, 16, 18" date="February 12, 1971" dayturns="0" ground="0" atmosferic="0" latitude="4" iconset="0" weatherchg="0" rows="20" cols="43" eqp="eqp-olgcw" image="resources/maps/images/map_797.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="1" airzoc="1" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1">
+<map file="nvc08.xscn" name="Laos Counteroffensive" turns="15, 16, 18" date="February 12, 1971" dayturns="0" ground="0" atmosferic="0" latitude="4" iconset="0" weatherchg="0" rows="20" cols="43" eqp="eqp-olgcw" image="resources/maps/images/map_797.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="1" airzoc="1" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="0" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1">
   <player id="0" country="246" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="247,0,0,0" turnprestige="5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5"/>
   <player id="1" country="253" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="10,254,0,0" turnprestige="10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10"/>
   <hex row="0" col="1" terrain="6"/>
@@ -180,7 +180,7 @@
   <hex row="4" col="6" terrain="6"/>
   <hex row="4" col="7" terrain="6"/>
   <hex row="4" col="8" terrain="6">
-    <unit id="49995" owner="1" flag="254" face="0" exp="44" str="4"/>
+    <unit id="49995" owner="1" flag="254" face="0" exp="44" str="4" bstr="4"/>
   </hex>
   <hex row="4" col="9" terrain="6">
     <unit id="49978" owner="1" flag="254" face="0" exp="38" str="8" ldr="1"/>
@@ -231,7 +231,7 @@
   <hex row="5" col="8" terrain="6"/>
   <hex row="5" col="9" terrain="6"/>
   <hex row="5" col="10" terrain="6" name="Hope (Landing Site)" owner="1" flag="253" victory="1">
-    <unit id="49978" owner="1" flag="254" face="0" exp="88" str="8"/>
+    <unit id="49978" owner="1" flag="254" face="0" exp="88" str="8" bstr="8"/>
   </hex>
   <hex row="5" col="11" terrain="6"/>
   <hex row="5" col="12" terrain="6"/>
@@ -291,7 +291,7 @@
   <hex row="6" col="19" terrain="6"/>
   <hex row="6" col="20" terrain="6"/>
   <hex row="6" col="21" terrain="6">
-    <unit id="50014" owner="1" flag="254" face="0" str="7"/>
+    <unit id="50014" owner="1" flag="254" face="0" str="7" bstr="7"/>
   </hex>
   <hex row="6" col="22" terrain="6"/>
   <hex row="6" col="23" terrain="6"/>
@@ -364,7 +364,7 @@
     <unit id="49254" owner="0" flag="247" face="0"/>
   </hex>
   <hex row="8" col="3" road="34" name="Route 9" deploy="0">
-    <unit id="49346" owner="0" flag="247" face="0" transport="49338" str="5"/>
+    <unit id="49346" owner="0" flag="247" face="0" transport="49338" str="5" bstr="5"/>
   </hex>
   <hex row="8" col="4" road="34" name="Route 9" deploy="0">
     <unit id="49254" owner="0" flag="247" face="0"/>
@@ -467,7 +467,7 @@
   </hex>
   <hex row="10" col="3" terrain="10" name="Ye Pon River"/>
   <hex row="10" col="4" deploy="0">
-    <unit id="49283" owner="0" flag="247" face="0" str="5"/>
+    <unit id="49283" owner="0" flag="247" face="0" str="5" bstr="5"/>
   </hex>
   <hex row="10" col="5" terrain="10" name="Ye Pon River"/>
   <hex row="10" col="6" terrain="10" name="Ye Pon River"/>
@@ -499,7 +499,7 @@
   </hex>
   <hex row="11" col="2" terrain="10" name="Ye Pon River"/>
   <hex row="11" col="3" deploy="0">
-    <unit id="49257" owner="0" flag="247" face="0" transport="49338" str="5"/>
+    <unit id="49257" owner="0" flag="247" face="0" transport="49338" str="5" bstr="5"/>
   </hex>
   <hex row="11" col="4" terrain="10" name="Ye Pon River"/>
   <hex row="11" col="9" terrain="6"/>
@@ -515,7 +515,7 @@
   <hex row="11" col="20" terrain="3" road="40" name="Route 9"/>
   <hex row="11" col="21" terrain="3" road="136" name="Route 9"/>
   <hex row="11" col="22" terrain="3">
-    <unit id="49992" owner="1" flag="254" face="0" exp="89" str="8"/>
+    <unit id="49992" owner="1" flag="254" face="0" exp="89" str="8" bstr="8"/>
   </hex>
   <hex row="11" col="23" terrain="3" road="40" name="Route 9">
     <unit id="50013" owner="1" flag="254" face="0" exp="200" str="8"/>
@@ -563,7 +563,7 @@
   </hex>
   <hex row="12" col="23" terrain="3"/>
   <hex row="12" col="24" terrain="3" road="130" name="Route 9">
-    <unit id="49972" owner="1" flag="254" face="0" transport="50002" exp="100" str="5" ldr="1"/>
+    <unit id="49972" owner="1" flag="254" face="0" transport="50002" exp="100" str="5" ldr="1" bstr="5"/>
   </hex>
   <hex row="12" col="25" terrain="3"/>
   <hex row="12" col="26" road="130" name="Route 9"/>
@@ -631,7 +631,7 @@
   <hex row="14" col="13" terrain="6"/>
   <hex row="14" col="18" road="136"/>
   <hex row="14" col="19" road="144">
-    <unit id="49990" owner="1" flag="254" face="0" exp="199" str="7"/>
+    <unit id="49990" owner="1" flag="254" face="0" exp="199" str="7" bstr="7"/>
   </hex>
   <hex row="14" col="24" terrain="10" name="Ye Pon River"/>
   <hex row="14" col="25" terrain="10" name="Ye Pon River"/>
@@ -671,10 +671,10 @@
   <hex row="15" col="38" terrain="10" name="Ye Pon River"/>
   <hex row="15" col="40" terrain="10" name="Ye Pon River"/>
   <hex row="15" col="41">
-    <unit id="13772" owner="1" flag="10" face="0" exp="100" str="5"/>
+    <unit id="13772" owner="1" flag="10" face="0" exp="100" str="5" bstr="5"/>
   </hex>
   <hex row="15" col="42">
-    <unit id="13495" owner="1" flag="10" face="0" exp="75" str="4"/>
+    <unit id="13495" owner="1" flag="10" face="0" exp="75" str="4" bstr="4"/>
   </hex>
   <hex row="16" col="1" terrain="6"/>
   <hex row="16" col="2" terrain="6"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="rhu190416.xscn" name="1919/04/16 Escaping from Zilah (Zalau)" turns="12, 9, 6" date="April 16, 1919" dayturns="0" ground="0" atmosferic="0" latitude="6" iconset="0" weatherchg="1" rows="24" cols="31" eqp="eqp-kaiser" image="resources/maps/images/map_rhu190416.png" eqpv="united1" canblow="0" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="1" portsnonavaldeploy="0" prototypes="0" subsneedlof="1">
+<map file="rhu190416.xscn" name="1919/04/16 Escaping from Zilah (Zalau)" turns="12, 9, 6" date="April 16, 1919" dayturns="0" ground="0" atmosferic="0" latitude="6" iconset="0" weatherchg="1" rows="24" cols="31" eqp="eqp-kaiser" image="resources/maps/images/map_rhu190416.png" eqpv="united1" retreatunits="1, 0" msuunits="1, 0" canblow="0" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="1" portsnonavaldeploy="0" prototypes="0" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="0">
   <player id="0" country="187" side="0" airtrans="0" navaltrans="0" railtrans="3" defaultxp="90" defaultstr="8" support="188,0,0,0" turnprestige="16, 16, 16, 12, 12, 12, 8, 8, 8, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <player id="1" country="13" side="1" airtrans="0" navaltrans="0" railtrans="1" defaultxp="150" defaultstr="10" support="14,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="4">
@@ -34,7 +34,7 @@
   <hex row="0" col="10" road="136"/>
   <hex row="0" col="11" road="136"/>
   <hex row="0" col="13">
-    <unit id="46690" owner="0" flag="188" face="0" exp="90" str="8"/>
+    <unit id="46690" owner="0" flag="188" face="0" exp="90" str="8" bstr="8"/>
   </hex>
   <hex row="0" col="14" road="17"/>
   <hex row="0" col="16" terrain="10" name="Kraszna"/>
@@ -49,9 +49,9 @@
   <hex row="1" col="6" road="17"/>
   <hex row="1" col="8" terrain="3"/>
   <hex row="1" col="12" road="136"/>
-  <hex row="1" col="13" terrain="1" road="170" name="Nagyk&#225;roly" owner="0" flag="187" station="1"/>
+  <hex row="1" col="13" terrain="1" road="170" name="Nagyk&#225;roly" owner="0" flag="187" escapeground="1" station="1"/>
   <hex row="1" col="14" terrain="1" road="33" name="Nagyk&#225;roly" owner="0" flag="187" victory="0">
-    <unit id="46673" owner="0" flag="188" face="0" exp="100"/>
+    <unit id="46673" owner="0" flag="188" face="0" exp="100" bstr="8"/>
   </hex>
   <hex row="1" col="18" terrain="10" name="Kraszna"/>
   <hex row="1" col="19" terrain="10" name="Kraszna"/>
@@ -151,7 +151,7 @@
   <hex row="6" col="3" road="136"/>
   <hex row="6" col="5" terrain="13" road="34"/>
   <hex row="6" col="6" terrain="1" road="51" name="&#201;rmih&#225;lyfalva" owner="0" flag="187" station="1">
-    <unit id="46673" owner="0" flag="188" face="0" exp="90" str="8"/>
+    <unit id="46673" owner="0" flag="188" face="0" exp="90" str="8" bstr="8"/>
   </hex>
   <hex row="6" col="10" terrain="3"/>
   <hex row="6" col="12" terrain="13" name="&#201;r"/>
@@ -175,7 +175,7 @@
   <hex row="7" col="12" terrain="13" name="&#201;r"/>
   <hex row="7" col="16" terrain="13"/>
   <hex row="7" col="17" terrain="1" road="17" name="Tasn&#225;d" owner="0" flag="187" station="1">
-    <unit id="46673" owner="0" flag="188" face="0" exp="90" str="8"/>
+    <unit id="46673" owner="0" flag="188" face="0" exp="90" str="8" bstr="8"/>
   </hex>
   <hex row="7" col="19" terrain="13" name="&#201;r"/>
   <hex row="7" col="21" terrain="3"/>
@@ -206,8 +206,8 @@
   <hex row="8" col="30" terrain="13"/>
   <hex row="9" col="4" terrain="13"/>
   <hex row="9" col="5" road="34"/>
-  <hex row="9" col="6" terrain="1" road="41" name="Sz&#233;kelyh&#237;d" owner="0" flag="187" victory="0" station="1">
-    <unit id="46673" owner="0" flag="188" face="0" exp="90" str="8"/>
+  <hex row="9" col="6" terrain="1" road="41" name="Sz&#233;kelyh&#237;d" owner="0" flag="187" victory="0" trigger="8" trigparam="0" station="1">
+    <unit id="46673" owner="0" flag="188" face="0" exp="90" str="8" bstr="8"/>
   </hex>
   <hex row="9" col="7" terrain="13" road="136" name="&#201;r"/>
   <hex row="9" col="8" terrain="13" name="&#201;r"/>
@@ -256,8 +256,8 @@
   <hex row="11" col="8" terrain="3"/>
   <hex row="11" col="9" road="34"/>
   <hex row="11" col="10" road="168"/>
-  <hex row="11" col="11" terrain="1" road="162" name="Margitta" owner="0" flag="187" station="1">
-    <unit id="46673" owner="0" flag="188" face="0" exp="90" str="8"/>
+  <hex row="11" col="11" terrain="1" road="162" name="Margitta" owner="0" flag="187" trigger="7" trigparam="0" station="1">
+    <unit id="46673" owner="0" flag="188" face="0" exp="90" str="8" bstr="8"/>
   </hex>
   <hex row="11" col="12" road="42"/>
   <hex row="11" col="13" road="136"/>
@@ -278,7 +278,7 @@
   <hex row="11" col="29" terrain="5"/>
   <hex row="11" col="30" terrain="13"/>
   <hex row="12" col="3" terrain="1" road="41" name="Bihardi&#243;szeg" owner="0" flag="187" station="1">
-    <unit id="46673" owner="0" flag="188" face="0" exp="90" str="8"/>
+    <unit id="46673" owner="0" flag="188" face="0" exp="90" str="8" bstr="8"/>
   </hex>
   <hex row="12" col="4" terrain="13" name="&#201;r"/>
   <hex row="12" col="7" road="34"/>
@@ -317,8 +317,8 @@
   <hex row="13" col="11" terrain="13"/>
   <hex row="13" col="14" terrain="10" name="Beretty&#243;"/>
   <hex row="13" col="16" terrain="10" name="Beretty&#243;"/>
-  <hex row="13" col="17" terrain="1" road="9" name="Beretty&#243;sz&#233;plak" owner="0" flag="187" station="1">
-    <unit id="46673" owner="0" flag="188" face="0" exp="90" str="8"/>
+  <hex row="13" col="17" terrain="1" road="9" name="Beretty&#243;sz&#233;plak" owner="0" flag="187" trigger="8" trigparam="0" trigequip="2130" station="1">
+    <unit id="46673" owner="0" flag="188" face="0" exp="90" str="8" bstr="8"/>
   </hex>
   <hex row="13" col="18" terrain="3"/>
   <hex row="13" col="19" terrain="5"/>
@@ -376,8 +376,8 @@
   <hex row="15" col="19" terrain="10" name="Beretty&#243;"/>
   <hex row="15" col="20" terrain="5" road="136"/>
   <hex row="15" col="21" terrain="5" road="146"/>
-  <hex row="15" col="22" terrain="1" road="40" name="Szil&#225;gysomly&#243;" owner="0" flag="187" station="1">
-    <unit id="46673" owner="0" flag="188" face="0" exp="90" str="8"/>
+  <hex row="15" col="22" terrain="1" road="40" name="Szil&#225;gysomly&#243;" owner="0" flag="187" trigger="7" trigparam="0" station="1">
+    <unit id="46673" owner="0" flag="188" face="0" exp="90" str="8" bstr="8"/>
   </hex>
   <hex row="15" col="23" terrain="5" road="130"/>
   <hex row="15" col="24" terrain="13" road="34" name="Kraszna"/>
@@ -386,7 +386,7 @@
     <unit id="46670" owner="0" flag="188" face="0" transport="46676" exp="99" str="8"/>
   </hex>
   <hex row="15" col="27" terrain="5" road="136" deploy="0">
-    <unit id="46692" owner="0" flag="188" face="0" exp="99" str="8"/>
+    <unit id="46692" owner="0" flag="188" face="0" exp="99" str="8" msu="1"/>
   </hex>
   <hex row="15" col="28" terrain="13"/>
   <hex row="15" col="29" terrain="5" deploy="0">
@@ -430,8 +430,8 @@
   <hex row="17" col="1" road="17"/>
   <hex row="17" col="4" terrain="13"/>
   <hex row="17" col="8" terrain="13"/>
-  <hex row="17" col="9" terrain="1" road="17" name="S&#243;stelek" owner="0" flag="187">
-    <unit id="46673" owner="0" flag="188" face="0" exp="90" str="8"/>
+  <hex row="17" col="9" terrain="1" road="17" name="S&#243;stelek" owner="0" flag="187" trigger="7" trigparam="0">
+    <unit id="46673" owner="0" flag="188" face="0" exp="90" str="8" bstr="8"/>
   </hex>
   <hex row="17" col="10" terrain="5"/>
   <hex row="17" col="11" terrain="5"/>
@@ -484,7 +484,7 @@
   <hex row="18" col="30" terrain="5"/>
   <hex row="19" col="0" road="136"/>
   <hex row="19" col="1" terrain="1" road="153" name="Nagyv&#225;rad" owner="0" flag="187" victory="0" station="1">
-    <unit id="46673" owner="0" flag="188" face="0" exp="100"/>
+    <unit id="46673" owner="0" flag="188" face="0" exp="100" bstr="8"/>
   </hex>
   <hex row="19" col="3" road="41"/>
   <hex row="19" col="5" road="40"/>
@@ -551,7 +551,7 @@
   <hex row="20" col="29" terrain="13"/>
   <hex row="20" col="30" terrain="13"/>
   <hex row="21" col="1" terrain="1" road="41" name="Nagyv&#225;rad" owner="0" flag="187" station="1">
-    <unit id="46673" owner="0" flag="188" face="0" exp="100"/>
+    <unit id="46673" owner="0" flag="188" face="0" exp="100" bstr="8"/>
   </hex>
   <hex row="21" col="2" terrain="10" name="Sebes-K&#246;r&#246;s"/>
   <hex row="21" col="4" terrain="10" name="Sebes-K&#246;r&#246;s"/>
@@ -627,7 +627,7 @@
   <hex row="22" col="28" terrain="3"/>
   <hex row="22" col="29" terrain="5"/>
   <hex row="22" col="30" terrain="3">
-    <unit id="502" owner="1" flag="14" face="0" str="1"/>
+    <unit id="502" owner="1" flag="14" face="0" str="1" bstr="1"/>
   </hex>
   <hex row="23" col="4" road="144"/>
   <hex row="23" col="11" road="17"/>

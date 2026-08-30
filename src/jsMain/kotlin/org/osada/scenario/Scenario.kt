@@ -10,6 +10,7 @@ import org.osada.model.getPlayers
 import org.osada.model.getUnits
 import org.osada.model.invalidateWaterAccessCache
 import org.osada.movTable
+import org.osada.rules.TypedVictoryHexes
 import org.osada.scoreGains
 import kotlin.js.Date
 import kotlin.js.json
@@ -100,8 +101,17 @@ class Scenario(
      * [unitsBlockLof] since §T, in `rules/ExtendedLos.hasLineOfFire` (131 and 23 of the 397
      * scenarios that carry the bitfield).
      *
-     * **Still unread:** [airZoc] and [extendedNaval], both named to the player in the profile's own
-     * gap list, and [airMissions] — the only one **no** shipped scenario sets at all, which is why
+     * **[airZoc] and [extendedNaval] have had readers since §U** (`rules/AirZoneOfControl` and
+     * `rules/ExtendedNaval`); this paragraph was not updated when they did.
+     *
+     * **[airMissions] is the one genuinely dead field, and it is deliberately kept.** It is
+     * parsed, deployed and read by no rule — but **0 of the 397 deployed scenarios and 108 of the
+     * whole 6,046-file OG corpus set it**, so there is nothing for a rule to run on. Removing the
+     * attribute would cost the import a decoded bit and gain nothing; building the mechanic would
+     * serve no content OSADA ships. It stays as data with a stated reason, and
+     * `docs/og-fidelity-plan.md` §Y.4's standing instruction applies: re-take the measurement if
+     * an imported campaign ever authors it, and it jumps the queue. The old text read
+     * [airMissions] — the only one **no** shipped scenario sets at all, which is why
      * `docs/og-fidelity-plan.md` §M puts building it last.
      */
     var trueDirectLof: Boolean? = null
@@ -143,6 +153,91 @@ class Scenario(
      */
     var subsNeedLineOfFire: Boolean? = null
 
+    /**
+     * OG's *"True range 0: units with Range 0 cannot attack adjacent hexes"*
+     * (`Manual_OSuite-Scenario.pdf` p.23). **295 of the 397 deployed scenarios whose source parses.**
+     *
+     * OSADA has always read a `gunrange` of 0 as "adjacent only" ([AttackEligibility]'s
+     * `if (range == 0) range = 1`), which IS OG's behaviour with this option off. With it on, such a
+     * formation cannot attack at all — 3,434 of the 56,970 shipped records carry `gunrange = 0`,
+     * and they are the engineering, transport and support units OG means by it.
+     *
+     * Null means the source could not be read, and every reader treats that as the option being
+     * OFF — the direction that keeps today's behaviour for the 105 unreadable scenarios.
+     */
+    var trueRangeZero: Boolean? = null
+
+    /**
+     * OG's *"True spotting 0: units with Spotting of 0 don't spot adjacent hexes"* (same page).
+     * **295 scenarios**, and the one place OSADA was wrong in the OPPOSITE direction.
+     *
+     * `HexGeometry.getRing` returns nothing for a radius of 0, so a `spotrange = 0` formation has
+     * always seen only its own hex here — which is OG's behaviour with the option **ON**. The
+     * scenarios that set it were therefore already right, and the ~3,000 that do not were quietly
+     * blinding 303 records that OG lets see their neighbours. Reading this switch is what lets the
+     * unauthored case get its adjacent ring back.
+     */
+    var trueSpottingZero: Boolean? = null
+
+    /**
+     * OG's *"Reinforces arrive when player is active: reinforcements arrive in the player turn, not
+     * at the start of the Player 1 turn"* (same page). **202 scenarios.**
+     */
+    var reinforcementsWhenActive: Boolean? = null
+
+    /**
+     * OG's *"BB, CV & BC can fire as FlaKs: those ship classes can defend from air attacks with a
+     * range of 1, and attack planes at their range"* (same page). **197 scenarios.**
+     */
+    var capitalShipsAsFlak: Boolean? = null
+
+    /**
+     * OG's *"Use current/basic strength as defined"* — **332 scenarios**, the largest authored
+     * option in the list and the last to be wired (2026-08-30).
+     *
+     * ON leaves the authored current and basic strengths alone; OFF resets `current := basic` at
+     * load. See [org.osada.model.GameUnit.basicStrength] for why OFF is the harsher of the two and
+     * why that inversion held this back for a day.
+     */
+    var useBasicStrength: Boolean? = null
+
+    /**
+     * OG manual §3.7.4's *"number of units to retreat"*, per side, and §3.7's kill quota — both
+     * recovered 2026-08-30 (`@1021` bits 2 and 4, counts at `Moff-34/-33` and `Moff-30/-29`).
+     *
+     * 0 means the side has no such objective, which is not the same as "retreat none": a side
+     * without a quota simply cannot win this way. [org.osada.rules.ExtendedVictory] reads both.
+     *
+     * [unitsWithdrawn] and [unitsKilled] are the running counts, and they are live game state —
+     * serialized, because a reload that forgot them would reset an objective the player had half
+     * completed.
+     */
+    var retreatUnitsPerSide: List<Int> = emptyList()
+
+    var killUnitsPerSide: List<Int> = emptyList()
+
+    /**
+     * OG manual §3.7.1's *"number of the MSU that need to survive not to lose the scenario"*, per
+     * side (`@1021` bit 3, counts at `Moff-32/-31`).
+     *
+     * Unlike the retreat and kill quotas beside it this is a **losing** condition rather than a
+     * winning one: falling below it loses the scenario. `zero_msu` lets an efile author 0 meaning
+     * *"none of them has to survive"* rather than *"all of them must"* — `EFILE_NOKORP/equip.cfg`
+     * spells that out, which is why 0 is stored as "no requirement" and not as a trap.
+     */
+    var mustSurvivePerSide: List<Int> = emptyList()
+
+    /**
+     * OG's *"Allow Typed VH"* (`opt_specific_vh`, `@1010` bit 1) — manual §3.7.2's per-level
+     * victory hexes. With it off every objective counts for every level, which is OSADA's
+     * long-standing behaviour and what [Hex.victoryTiers]' default of 7 already expresses.
+     */
+    var typedVictoryHexes: Boolean? = null
+
+    var unitsWithdrawn: MutableList<Int> = mutableListOf(0, 0)
+
+    var unitsKilled: MutableList<Int> = mutableListOf(0, 0)
+
     var turnsPerDay: Int = 1
     var dayTurn: Int = 0
     var reinforcements: MutableMap<Int, MutableList<Reinforcement>> = mutableMapOf()
@@ -162,8 +257,25 @@ class Scenario(
     internal var events: MutableList<ScenarioEvent> = mutableListOf()
 
     /** Optional OG-style objective-hold thresholds for the turn-limit outcome, ordered
-     * brilliant / victory / tactical. Empty keeps the legacy all-objectives-or-defeat rule. */
+     * brilliant / victory / tactical. Empty keeps the legacy all-objectives-or-defeat rule.
+     *
+     * This is SIDE 0's triple. [victoryHoldCountsSide1] carries side 1's, because OG stores one
+     * per side and they routinely differ — see [checkTimedOutcome]. */
     var victoryHoldCounts: List<Int> = emptyList()
+
+    /**
+     * Side 1's objective-hold thresholds, OG's second triple.
+     *
+     * **Recovered from the binary 2026-08-30** at `Moff-37..-35`, beside side 0's at `Moff-41..-39`
+     * and the BV/V/TV turn limits at `Moff-45`. Until then [victoryHoldCounts] was parsed out of
+     * the BRIEFING PROSE — a regex over *"After N turns control 4/3/2 VHs"* — which only ever
+     * worked where an author wrote that sentence in English, and gave both sides the same numbers
+     * because prose has only one of them. 58 of the 502 deployed scenarios author a hold condition.
+     *
+     * Empty means this side has none, which is not the same as "hold zero": a side with no hold
+     * requirement falls back to the ordinary turn-limit outcome.
+     */
+    var victoryHoldCountsSide1: List<Int> = emptyList()
     var map: GameMap = GameMap()
     var expPerSide: MutableList<dynamic> =
         mutableListOf(
@@ -223,13 +335,16 @@ class Scenario(
         return false
     }
 
-    fun checkVictory(): String =
-        when {
-            map.turn <= map.victoryTurns[0] -> "briliant"
-            map.turn <= map.victoryTurns[1] -> "victory"
-            map.turn <= map.victoryTurns[2] -> "tactical"
-            else -> "lose"
-        }
+    /**
+     * The result a capture win earns, capped by how long it took.
+     *
+     * **OG's Typed VH (manual §3.7.2) raises the floor, never the ceiling.** With typed hexes
+     * authored, the level a side has actually completed is the best it can claim; the turn limits
+     * then cap it exactly as before, so taking the brilliant-victory hex on the last turn still
+     * yields whatever the clock allows. Without them — which is every scenario that does not set
+     * `opt_specific_vh` — this is the turn-based answer OSADA has always given.
+     */
+    fun checkVictory(): String = victoryOutcome(this, map.currentPlayer?.side ?: 0)
 
     /** Returns the authored result when the final human turn has actually completed. */
     fun checkTimedOutcome(
@@ -237,21 +352,19 @@ class Scenario(
         humanSides: Int,
     ): String? {
         if (!checkDefeat(side, humanSides)) return null
+        // OG stores a hold requirement PER SIDE and the two routinely differ -- `bn9s00` asks 4/4/4
+        // of one side and 3/2/1 of the other. Reading one triple for both was an artefact of
+        // sourcing them from briefing prose, which has only one set of numbers in it.
+        val counts = if (side == 0) victoryHoldCounts else victoryHoldCountsSide1
         val result =
-            if (victoryHoldCounts.size < HOLD_OUTCOME_TIERS) {
+            if (counts.size < HOLD_OUTCOME_TIERS) {
                 "lose"
             } else {
-                var held = 0
-                for (row in 0 until map.rows) {
-                    for (col in 0 until map.cols) {
-                        val hex = map.map?.getOrNull(row)?.getOrNull(col) ?: continue
-                        if (hex.victorySide != -1 && hex.owner != -1 && map.getPlayer(hex.owner).side == side) held++
-                    }
-                }
+                val held = objectivesHeldBy(map, side)
                 when {
-                    held >= victoryHoldCounts[BRILLIANT_TIER] -> "briliant"
-                    held >= victoryHoldCounts[VICTORY_TIER] -> "victory"
-                    held >= victoryHoldCounts[TACTICAL_TIER] -> "tactical"
+                    held >= counts[BRILLIANT_TIER] -> "briliant"
+                    held >= counts[VICTORY_TIER] -> "victory"
+                    held >= counts[TACTICAL_TIER] -> "tactical"
                     else -> "lose"
                 }
             }
@@ -339,4 +452,51 @@ class Scenario(
         val unit: GameUnit,
         val id: Int,
     )
+}
+
+/**
+ * Objective hexes currently owned by [side].
+ *
+ * Split out of [Scenario.checkTimedOutcome] to keep that function inside detekt's complexity budget
+ * once the hold thresholds became per-side, and kept at FILE level rather than as a method because
+ * [Scenario] is already at its function budget too.
+ */
+private fun objectivesHeldBy(
+    map: GameMap,
+    side: Int,
+): Int {
+    var held = 0
+    for (row in 0 until map.rows) {
+        for (col in 0 until map.cols) {
+            val hex = map.map?.getOrNull(row)?.getOrNull(col) ?: continue
+            if (hex.victorySide != -1 && hex.owner != -1 && map.getPlayer(hex.owner).side == side) held++
+        }
+    }
+    return held
+}
+
+/** Outcome names by tier index, brilliant first — the strings the campaign layer expects. */
+private val OUTCOME_NAMES = listOf("briliant", "victory", "tactical")
+
+/**
+ * The result a capture win earns [side], capped by how long it took.
+ *
+ * At file level because [Scenario] is at its function budget. OG's Typed VH (manual §3.7.2) raises
+ * the floor and never the ceiling: the level a side has actually completed is the best it can
+ * claim, and the turn limits then cap it exactly as before.
+ */
+private fun victoryOutcome(
+    scenario: Scenario,
+    side: Int,
+): String {
+    val map = scenario.map
+    val byTurn =
+        when {
+            map.turn <= map.victoryTurns[0] -> 0
+            map.turn <= map.victoryTurns[1] -> 1
+            map.turn <= map.victoryTurns[2] -> 2
+            else -> return "lose"
+        }
+    val byHexes = TypedVictoryHexes.completedTier(scenario, map, side) ?: byTurn
+    return OUTCOME_NAMES[maxOf(byTurn, byHexes)]
 }

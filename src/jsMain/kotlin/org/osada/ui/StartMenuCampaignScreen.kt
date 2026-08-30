@@ -35,7 +35,7 @@ internal object StartMenuCampaignScreen {
             if ((campaign.file as? String) in StartMenuCampaignData.hiddenCampaignFiles) return@forEachIndexed
             val option = addTag(campSelect, "option")
             option.asDynamic().value = index.toString()
-            option.textContent = campaign.title as? String ?: ""
+            option.textContent = CampaignContentLocalization.title(campaign)
         }
         return campSelect
     }
@@ -172,7 +172,8 @@ internal object StartMenuCampaignScreen {
                 ?: Equipment.getCountryNameByEqp(flagId, campaign.eqp as? String ?: "")
         // Structured credits ride in their own row, never inside the synopsis.
         byId("smCampDesc")?.innerHTML =
-            AuthorRow.html(campaign.file as? String) + formatCampaignDescription(campaign.desc as? String ?: "")
+            AuthorRow.html(campaign.file as? String) +
+            formatCampaignDescription(CampaignContentLocalization.description(campaign))
         byId("smCampCountry")?.innerHTML = "<b>${I18n.t("campaign.country.label")}</b><br/>" + country
         val operations = campaign.scenarios as? Int
         byId("smCampScenarios")?.innerHTML = "<b>${I18n.t("campaign.operations.label")}</b><br/>" +
@@ -182,6 +183,23 @@ internal object StartMenuCampaignScreen {
         refreshRulesLockForSelection(campaign.file as? String)
         StartMenuCampaignData.updateCampaignPrestigeDisplay()
         updateCampaignDossierHead(campSelect, campaign, country)
+    }
+
+    /** Rewrites localized campaign metadata without rebuilding the selection or losing filters. */
+    fun refreshLocalizedContent() {
+        val select = byId("smCampSel")?.querySelector("select") as? HTMLElement ?: return
+        val options = select.asDynamic().options
+        for (index in 0 until (options.length as Int)) {
+            val option = options[index]
+            // One `continue` rather than two: detekt refuses a loop with more than one jump, and
+            // the two guards are the same guard -- "this option does not name a campaign".
+            val campaign =
+                (option.value as? String)
+                    ?.toIntOrNull()
+                    ?.let { StartMenuBuilder.campaignList().getOrNull(it) } ?: continue
+            option.textContent = CampaignContentLocalization.title(campaign)
+        }
+        onCampSelectChange(select)
     }
 
     /**
@@ -209,13 +227,13 @@ internal object StartMenuCampaignScreen {
     ) {
         val campaignTitleClean =
             StartMenuListToolbar.campaignDisplayTitle(
-                campaign.title as? String ?: "",
+                CampaignContentLocalization.title(campaign),
             )
         byId("smCampTitle")?.innerHTML = campaignTitleClean
         byId("smCampDossierSub")?.innerHTML =
             listOfNotNull(
                 country.ifBlank { null },
-                StartMenuListToolbar.extractYears(campaign.title as? String ?: "").ifBlank { null },
+                StartMenuListToolbar.extractYears(CampaignContentLocalization.title(campaign)).ifBlank { null },
             ).joinToString(" &middot; ")
         byId("smCampDossierHeadText")?.let {
             StartMenuCampaignStory.applyDossierBadge(it, campaign.file as? String)

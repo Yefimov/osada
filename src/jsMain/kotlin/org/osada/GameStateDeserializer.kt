@@ -22,6 +22,9 @@ object GameStateDeserializer {
         applyUnitCombatStats(unit, data)
         applyUnitProgress(unit, data)
         applyUnitTransport(unit, data)
+        // A carrier's contained aircraft, restored as full units -- they are off the map, so
+        // nothing else would bring them back.
+        (data.hangar as? Array<dynamic>)?.forEach { unit.hangar.add(deserializeUnit(it)) }
         return unit
     }
 
@@ -78,6 +81,7 @@ object GameStateDeserializer {
         unit.leader = data.leader as? Int ?: -1
         unit.nodossier = data.nodossier as? Boolean ?: false
         unit.isTemporaryBorrowed = data.temporaryBorrowed as? Boolean ?: false
+        applyScenarioUnitProperties(unit, data)
         unit.stalinRegimeBoosted = data.stalinRegimeBoosted as? Boolean ?: false
         unit.customName = data.customName as? String // optional key; absent in pre-rename saves
         unit.formationId = data.formationId as? String // optional key; absent in pre-hero saves
@@ -140,4 +144,15 @@ object GameStateDeserializer {
         }
         return result
     }
+}
+
+/** The counterpart of `serializeScenarioUnitProperties`, split out for the same budget reason. */
+private fun applyScenarioUnitProperties(
+    unit: GameUnit,
+    data: dynamic,
+) {
+    unit.isScenarioDepot = data.depot as? Boolean ?: false
+    unit.mustSurvive = data.msu as? Boolean ?: false
+    unit.basicStrength = data.basicStrength as? Int ?: GameUnit.DEFAULT_BASIC_STRENGTH
+    unit.landedTurn = data.landedTurn as? Int ?: -1
 }

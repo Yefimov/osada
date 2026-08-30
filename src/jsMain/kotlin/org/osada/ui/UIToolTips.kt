@@ -3,6 +3,7 @@ package org.osada.ui
 import org.osada.TerrainType
 import org.osada.TooltipColor
 import org.osada.TooltipStyle
+import org.osada.i18n.I18n
 import org.osada.model.GameMap
 import org.osada.model.Hex
 import org.osada.model.Player
@@ -127,11 +128,25 @@ private fun addUnitStatusToolTips(
     val unitTipId = "gsttu${unit.id}"
     if (GameRules.unitLowAmmo(unit, 1)) {
         val pos = ui.render.cellToScreen(r, c, true)
-        UIBuilder.gameSmallToolTip("No Ammo", pos.x.toInt(), pos.y.toInt(), 0, unitTipId, TooltipStyle.TEXT)
+        UIBuilder.gameSmallToolTip(
+            I18n.t("map.unit_status.no_ammo"),
+            pos.x.toInt(),
+            pos.y.toInt(),
+            0,
+            unitTipId,
+            TooltipStyle.TEXT,
+        )
     }
     if (GameRules.unitLowFuel(unit, 1)) {
         val pos = ui.render.cellToScreen(r, c, true)
-        UIBuilder.gameSmallToolTip("No Fuel", pos.x.toInt(), pos.y.toInt(), 0, unitTipId, TooltipStyle.TEXT)
+        UIBuilder.gameSmallToolTip(
+            I18n.t("map.unit_status.no_fuel"),
+            pos.x.toInt(),
+            pos.y.toInt(),
+            0,
+            unitTipId,
+            TooltipStyle.TEXT,
+        )
     }
     // Bad weather silently empties an air unit's attack range (CombatResolver.
     // airGroundedByWeather) with zero explanation otherwise — reads exactly like a
@@ -145,6 +160,13 @@ private fun addUnitStatusToolTips(
         // box sized for "No Ammo"/"No Fuel" — the longer text overflowed it, with
         // "(Weather)" clipped outside the box. Matches the unit-card badge's own
         // wording (osadaUcWeather), which carries the full explanation on hover.
-        UIBuilder.gameSmallToolTip("Grounded", pos.x.toInt(), pos.y.toInt(), 0, "${unitTipId}w", TooltipStyle.TEXT)
+        UIBuilder.gameSmallToolTip(
+            I18n.t("map.unit_status.grounded"),
+            pos.x.toInt(),
+            pos.y.toInt(),
+            0,
+            "${unitTipId}w",
+            TooltipStyle.TEXT,
+        )
     }
 }

@@ -34,6 +34,13 @@ enum class UnitActionId(
     EMBARK("embark"),
     RESUPPLY("resupply"),
     REINFORCE("reinforce"),
+
+    /** OG's cheap, veterancy-costing replacement (`rules/GreenReplacements`, 2026-08-30). A
+     *  SIBLING of [REINFORCE] rather than a replacement for it: OG offers both. */
+    GREEN_REINFORCE("green_reinforce"),
+
+    /** OG's `rem_leader` — dismiss the formation's commander (`rules/LeaderDismissal`, 2026-08-30). */
+    DISMISS_LEADER("dismiss_leader"),
     OVERSTRENGTH("overstrength"),
     LAY_MINES("lay_mines"),
 

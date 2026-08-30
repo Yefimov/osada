@@ -7,8 +7,11 @@ import org.osada.model.EngineeringActionResult
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
 import org.osada.model.MineActionResult
+import org.osada.model.UndoInvalidation
 import org.osada.model.beginEngineering
 import org.osada.model.clearMinefield
+import org.osada.model.delAttackSel
+import org.osada.model.delMoveSel
 import org.osada.model.disembarkUnit
 import org.osada.model.embarkUnit
 import org.osada.model.layMinefield
@@ -18,7 +21,10 @@ import org.osada.model.resupplyUnit
 import org.osada.model.undoLastMove
 import org.osada.model.unmountUnit
 import org.osada.rules.Engineering
+import org.osada.rules.GreenReplacements
+import org.osada.rules.LeaderDismissal
 import org.osada.rules.SupplyContextRules
+import org.osada.rules.SupplyRules
 
 /**
  * [UnitInfoPanel]'s per-unit action context menu action execution (Mount/Embark/Resupply/
@@ -90,8 +96,7 @@ internal class UnitContextMenu(
         when (action) {
             "mount" -> if (unit.isMounted) map.unmountUnit(unit) else map.mountUnit(unit)
             "embark" -> if (unit.carrier > 0) map.disembarkUnit(unit) else map.embarkUnit(unit)
-            "resupply" -> performResupply(map, unit, pos)
-            "reinforce", "overstrength" -> performReinforce(map, unit, pos, action == "overstrength")
+            in SUPPLY_ACTION_IDS -> performSupplyAction(action, map, unit, pos)
             "lay_mines" -> performMineAction(map.layMinefield(unit), map, unit, pos)
             "barrage" -> toggleBarrageTargeting(map, unit, pos)
             "rail_move" -> toggleRailTargeting(map, unit, pos)
@@ -116,7 +121,7 @@ internal class UnitContextMenu(
         ui.render.render(newPos.row, newPos.col, newRadius)
     }
 
-    private fun performResupply(
+    internal fun performResupply(
         map: GameMap,
         unit: GameUnit,
         pos: Cell,
@@ -134,7 +139,7 @@ internal class UnitContextMenu(
         ui.showAlert(pos.row, pos.col, message, true)
     }
 
-    private fun performReinforce(
+    internal fun performReinforce(
         map: GameMap,
         unit: GameUnit,
         pos: Cell,
@@ -238,5 +243,64 @@ internal class UnitContextMenu(
                 "efficiency" to context.efficiencyPercent,
             ),
         )
+    }
+}
+
+/**
+ * OG's cheap replacement (`rules/GreenReplacements`).
+ *
+ * Reported like the ordinary one plus the experience it cost — a player who is not told what the
+ * discount bought would have no way to tell the two actions apart after the fact.
+ *
+ * At file level because [UnitContextMenu] is at its function budget.
+ */
+private fun UI.performGreenReinforce(
+    map: GameMap,
+    unit: GameUnit,
+    pos: Cell,
+) {
+    val before = unit.experience
+    val available = SupplyRules.getReinforceValue(map, unit, false)
+    val gained = GreenReplacements.apply(unit, available)
+    val message =
+        if (gained <= 0) {
+            I18n.t("unit_info.action.reinforce.blocked")
+        } else {
+            I18n.t(
+                "unit_info.action.green_reinforce.done",
+                mapOf("value" to gained, "from" to before, "to" to unit.experience),
+            )
+        }
+    map.undoState.invalidate(unit, UndoInvalidation.IRREVERSIBLE_ACTION)
+    map.delMoveSel()
+    map.delAttackSel()
+    showAlert(pos.row, pos.col, message, true)
+    showUnitInfo(unit)
+}
+
+/** The prestige-spending self-actions [performSupplyAction] owns. */
+private val SUPPLY_ACTION_IDS =
+    setOf("resupply", "reinforce", "overstrength", "green_reinforce", "dismiss_leader")
+
+/**
+ * The four ways a formation spends prestige on itself, dispatched together to keep
+ * [UnitContextMenu.performAction] inside detekt's complexity budget as OG's green replacements
+ * joined them. At file level because that class is at its function budget too.
+ */
+private fun UnitContextMenu.performSupplyAction(
+    action: String,
+    map: GameMap,
+    unit: GameUnit,
+    pos: Cell,
+) {
+    when (action) {
+        "resupply" -> performResupply(map, unit, pos)
+        "green_reinforce" -> ui.performGreenReinforce(map, unit, pos)
+        "dismiss_leader" ->
+            if (LeaderDismissal.dismiss(unit)) {
+                ui.showAlert(pos.row, pos.col, I18n.t("unit_info.action.dismiss_leader.done"), true)
+                ui.showUnitInfo(unit)
+            }
+        else -> performReinforce(map, unit, pos, action == "overstrength")
     }
 }

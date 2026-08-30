@@ -23,9 +23,9 @@ import org.osada.LeaderType
  * [ProceduralHeroGenerator] resolves [preferredTrait] against the unit's class list so the choice
  * is always class-appropriate; this enum only states the intent.
  *
- * Display strings are the English source text. §29.20 asks for localization-ready strings: they are
- * centralised here and keyed by [eventId], so a later i18n pass swaps the bodies without touching
- * any call site.
+ * [characterLabel] and [reason] remain the canonical English source text for data and tests. The
+ * UI resolves both through stable keys derived from [eventId], so a saved event is rendered in the
+ * language selected when it is viewed.
  */
 enum class EmergenceEvent(
     /** Stable id stored in [HeroBiographyFacts.emergenceEventId] and used as a localization key. */

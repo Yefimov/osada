@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="ga4_5.xscn" name="Operation Iskra" turns="11, 13, 17" date="January 12, 1943" dayturns="0" ground="1" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="39" cols="44" eqp="eqp-comww2" image="resources/maps/images/map_158.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="1" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="0" subsneedlof="1">
+<map file="ga4_5.xscn" name="Operation Iskra" turns="11, 13, 17" date="January 12, 1943" dayturns="0" ground="1" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="39" cols="44" eqp="eqp-comww2" image="resources/maps/images/map_158.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="1" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="0" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="0" truespotting0="0" reinfwhenactive="1" capitalflak="0">
   <player id="0" country="89" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="40" defaultstr="10" support="90,0,0,0" turnprestige="0, 0, 0, 100, 0, 80, 80, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 40"/>
   <player id="1" country="7" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="20" defaultstr="5" support="304,8,0,0" turnprestige="0, 0, 1500, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20"/>
   <reinforce turn="2">
@@ -332,7 +332,7 @@
   <hex row="5" col="13" terrain="10" name="Neva River"/>
   <hex row="5" col="14" terrain="10" name="Neva River"/>
   <hex row="5" col="16" terrain="1" name="Shlisselburg" owner="1" flag="7" victory="1">
-    <unit id="159" owner="1" flag="8" face="0" exp="100" str="7"/>
+    <unit id="159" owner="1" flag="8" face="0" exp="100" str="7" bstr="1"/>
   </hex>
   <hex row="5" col="17" terrain="1" name="Shlisselburg"/>
   <hex row="5" col="18" terrain="9" name="Lake Ladoga"/>
@@ -367,7 +367,7 @@
   <hex row="6" col="15" road="34"/>
   <hex row="6" col="16" terrain="1" road="32" name="Shlisselburg"/>
   <hex row="6" col="17" terrain="1" name="Shlisselburg">
-    <unit id="7991" owner="1" flag="8" face="0"/>
+    <unit id="7991" owner="1" flag="8" face="0" bstr="4"/>
   </hex>
   <hex row="6" col="18" road="144"/>
   <hex row="6" col="19" terrain="9" name="Lake Ladoga"/>
@@ -455,7 +455,7 @@
   <hex row="10" col="8" road="144"/>
   <hex row="10" col="12" terrain="10" name="Neva River"/>
   <hex row="10" col="13" terrain="1" road="16" name="Marino" owner="1" flag="7">
-    <unit id="717" owner="1" flag="8" face="0" exp="50" str="7"/>
+    <unit id="717" owner="1" flag="8" face="0" exp="50" str="7" bstr="1"/>
   </hex>
   <hex row="10" col="14" terrain="1" road="3" name="Marino"/>
   <hex row="10" col="16" road="136"/>
@@ -468,13 +468,13 @@
     <unit id="9969" owner="1" flag="8" face="0" exp="200" str="5"/>
   </hex>
   <hex row="10" col="30" terrain="1" name="Lipka">
-    <unit id="839" owner="1" flag="8" face="0" exp="44"/>
+    <unit id="839" owner="1" flag="8" face="0" exp="44" bstr="1"/>
   </hex>
   <hex row="10" col="31" terrain="1" name="Lipka">
-    <unit id="7991" owner="1" flag="8" face="0" exp="100"/>
+    <unit id="7991" owner="1" flag="8" face="0" exp="100" bstr="4"/>
   </hex>
   <hex row="10" col="36" terrain="2" name="Nazija Airfield" owner="1" flag="7" victory="1">
-    <unit id="7991" owner="1" flag="8" face="0" exp="79" str="8"/>
+    <unit id="7991" owner="1" flag="8" face="0" exp="79" str="8" bstr="1"/>
     <unit id="11" owner="1" flag="8" face="0" exp="100" str="7"/>
   </hex>
   <hex row="10" col="37" road="130"/>
@@ -493,12 +493,12 @@
   <hex row="11" col="21" road="136"/>
   <hex row="11" col="23" road="17"/>
   <hex row="11" col="24">
-    <unit id="9088" owner="1" flag="8" face="0" exp="100" str="6"/>
+    <unit id="9088" owner="1" flag="8" face="0" exp="100" str="6" bstr="1"/>
   </hex>
   <hex row="11" col="28" terrain="1" road="24" name="Village"/>
   <hex row="11" col="29" road="136"/>
   <hex row="11" col="30" terrain="1" name="Lipka" owner="1" flag="7" victory="1">
-    <unit id="7991" owner="1" flag="8" face="0" exp="100"/>
+    <unit id="7991" owner="1" flag="8" face="0" exp="100" bstr="1"/>
   </hex>
   <hex row="11" col="31" terrain="1" name="Lipka"/>
   <hex row="11" col="32" terrain="1" name="Lipka"/>
@@ -511,18 +511,18 @@
   <hex row="12" col="12" road="10"/>
   <hex row="12" col="13" road="144"/>
   <hex row="12" col="15" name="SNOW">
-    <unit id="9969" owner="1" flag="8" face="0" exp="200" str="6"/>
+    <unit id="9969" owner="1" flag="8" face="0" exp="200" str="6" bstr="1"/>
   </hex>
   <hex row="12" col="17" terrain="3"/>
   <hex row="12" col="22" terrain="1" road="136" name="Poselok 1" owner="1" flag="7" victory="1">
-    <unit id="1148" owner="1" flag="8" face="0" exp="144" str="6"/>
+    <unit id="1148" owner="1" flag="8" face="0" exp="144" str="6" bstr="1"/>
   </hex>
   <hex row="12" col="23" road="145"/>
   <hex row="12" col="27" road="18"/>
   <hex row="12" col="28" road="33"/>
   <hex row="12" col="30" road="136"/>
   <hex row="12" col="31" road="130">
-    <unit id="375" owner="1" flag="8" face="0" exp="100" str="7"/>
+    <unit id="375" owner="1" flag="8" face="0" exp="100" str="7" bstr="1"/>
   </hex>
   <hex row="12" col="32" road="48"/>
   <hex row="12" col="37" terrain="3"/>
@@ -537,7 +537,7 @@
   <hex row="13" col="9" road="144"/>
   <hex row="13" col="11" terrain="10" name="Neva River"/>
   <hex row="13" col="13" road="33">
-    <unit id="839" owner="1" flag="8" face="0" exp="44" str="9"/>
+    <unit id="839" owner="1" flag="8" face="0" exp="44" str="9" bstr="1"/>
   </hex>
   <hex row="13" col="15" terrain="3"/>
   <hex row="13" col="16" terrain="3"/>
@@ -551,10 +551,10 @@
     <unit id="9892" owner="1" flag="8" face="0" exp="48" str="6"/>
   </hex>
   <hex row="13" col="28" terrain="1" name="Poselok 4" owner="1" flag="7">
-    <unit id="159" owner="1" flag="8" face="0" exp="100" str="5"/>
+    <unit id="159" owner="1" flag="8" face="0" exp="100" str="5" bstr="1"/>
   </hex>
   <hex row="13" col="30">
-    <unit id="7991" owner="1" flag="8" face="0" exp="200" str="8"/>
+    <unit id="7991" owner="1" flag="8" face="0" exp="200" str="8" bstr="4"/>
   </hex>
   <hex row="13" col="31" road="18"/>
   <hex row="13" col="32" road="33"/>
@@ -600,7 +600,7 @@
   <hex row="15" col="10" terrain="10" name="Neva River"/>
   <hex row="15" col="12" terrain="1" name="Kirovsk"/>
   <hex row="15" col="13" terrain="1" name="Kirovsk" owner="1" flag="7" victory="1">
-    <unit id="7991" owner="1" flag="8" face="0"/>
+    <unit id="7991" owner="1" flag="8" face="0" bstr="1"/>
   </hex>
   <hex row="15" col="14" terrain="3"/>
   <hex row="15" col="15" terrain="1" name="Kirovsk">
@@ -608,12 +608,12 @@
   </hex>
   <hex row="15" col="16" terrain="3"/>
   <hex row="15" col="18">
-    <unit id="9484" owner="1" flag="8" face="0" str="5"/>
+    <unit id="9484" owner="1" flag="8" face="0" str="5" bstr="1"/>
   </hex>
   <hex row="15" col="20" terrain="3"/>
   <hex row="15" col="22" road="18"/>
   <hex row="15" col="23" terrain="1" name="Poselok 5" owner="1" flag="7" victory="1">
-    <unit id="8151" owner="1" flag="8" face="0" str="5"/>
+    <unit id="8151" owner="1" flag="8" face="0" str="5" bstr="1"/>
     <unit id="644" owner="1" flag="8" face="0" exp="200" str="7"/>
   </hex>
   <hex row="15" col="25">
@@ -642,7 +642,7 @@
   </hex>
   <hex row="16" col="19" terrain="3"/>
   <hex row="16" col="20" terrain="3">
-    <unit id="52495" owner="1" flag="304" face="0" str="5"/>
+    <unit id="52495" owner="1" flag="304" face="0" str="5" bstr="1"/>
   </hex>
   <hex row="16" col="22" road="9"/>
   <hex row="16" col="23" road="144"/>
@@ -675,7 +675,7 @@
   <hex row="17" col="25" terrain="3"/>
   <hex row="17" col="26" terrain="3"/>
   <hex row="17" col="28">
-    <unit id="8151" owner="1" flag="8" face="0" exp="200" str="7"/>
+    <unit id="8151" owner="1" flag="8" face="0" exp="200" str="7" bstr="7"/>
   </hex>
   <hex row="17" col="32" road="136"/>
   <hex row="17" col="33" road="136"/>
@@ -842,7 +842,7 @@
   <hex row="24" col="13" road="34"/>
   <hex row="24" col="14" road="34"/>
   <hex row="24" col="15">
-    <unit id="10589" owner="1" flag="8" face="0" exp="50" str="7"/>
+    <unit id="10589" owner="1" flag="8" face="0" exp="50" str="7" bstr="7"/>
   </hex>
   <hex row="24" col="18" terrain="2" name="Village"/>
   <hex row="24" col="20" road="17"/>

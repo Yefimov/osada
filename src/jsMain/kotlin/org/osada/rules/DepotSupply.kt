@@ -48,14 +48,22 @@ import org.osada.rules.ruleset.RuleKey
  * Depot as a mechanic nobody understood; §Z found it documented in a file this project had already
  * read, in `DEFERRED.md` §2.10, and on the author's own Features page.
  *
- * ### The scenario-designated Depot is still missing, and this is not it
+ * ### Both of OG's two ways to BE a Depot are now read
  *
- * OG has TWO ways to make a Depot: the **scenario designation** on a placed Ground Transport /
- * Fortification / Naval Transport, and the later (May 2024) **`Supply Unit` equipment special**.
- * Only the second is expressible from data OSADA imports — the scenario flag's byte offset in the
- * 120-byte `.xscn` unit record is still unlocated, and its correlation search is exhausted
- * (`DEFERRED.md` §2.10). [isDepot] therefore reads the equipment bit alone. When the flag is found,
- * this is the object that gains a second source, not a second mechanic.
+ * OG has TWO: the **scenario designation** on a placed Ground Transport / Fortification / Naval
+ * Transport, and the later (May 2024) **`Supply Unit` equipment special**. This rule was built
+ * against the second alone, because the first was a byte nobody had located.
+ *
+ * **The byte was located 2026-08-29** — `.xscn` unit record `@50` bit 1, by the controlled
+ * OpenSuite diff `DEFERRED.md` §2.10 had been asking for since the beginning — so [isDepot] now
+ * reads both, and the prediction that entry made held exactly: *"this is the object that gains a
+ * second source, not a second mechanic"*. Nothing below this line changed.
+ *
+ * **It also changes what "inert" means here.** `Supply Unit` is carried by 0 of 56,970 shipped
+ * equipment records, so before this the rule could not fire on any shipped content whatever the
+ * ruleset said. Eight deployed scenarios designate a Depot, so the mechanic now has content —
+ * still behind `supply_ex`, which no shipped efile sets, so what it waits on is an efile rather
+ * than evidence.
  */
 object DepotSupply {
     /** `1` — units may resupply from an adjacent Depot. */
@@ -103,14 +111,18 @@ object DepotSupply {
      * Unit* (`DEFERRED.md` §2.10). A lorry-borne depot is the shape the ability was added for.
      */
     fun isDepot(unit: GameUnit): Boolean {
-        if (unit.destroyed) return false
-        val own = unit.unitData(true).attrEx and ATTR_EX_MASK_SUPPLY_UNIT != 0
+        // The SCENARIO designation, recovered 2026-08-29 (`GameUnit.isScenarioDepot`): the designer
+        // saying "this placed formation is a depot", which is how OG made depots before the 2024
+        // special existed. Eight shipped scenarios use it; `Supply Unit` is used by none.
+        val own =
+            unit.isScenarioDepot ||
+                unit.unitData(true).attrEx and ATTR_EX_MASK_SUPPLY_UNIT != 0
         val carried =
             unit.transport
                 ?.unitData()
                 ?.attrEx
                 ?.and(ATTR_EX_MASK_SUPPLY_UNIT) ?: 0
-        return own || carried != 0
+        return !unit.destroyed && (own || carried != 0)
     }
 
     /**

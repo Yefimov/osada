@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="ncampwdr.xscn" name="Wonju Deep Raid" turns="15, 18, 22" date="January 7, 1951" dayturns="0" ground="0" atmosferic="0" latitude="2" iconset="3" weatherchg="0" rows="32" cols="44" eqp="eqp-lxf" image="resources/maps/images/map_424.png" eqpv="united1" canblow="0" canrepair="0" canbuild="0" extlos="0" truedlof="0" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="0" airintercept="0" portsnosupply="0" portsnonavaldeploy="0" prototypes="0" subsneedlof="1">
+<map file="ncampwdr.xscn" name="Wonju Deep Raid" turns="15, 18, 22" date="January 7, 1951" dayturns="0" ground="0" atmosferic="0" latitude="2" iconset="3" weatherchg="0" rows="32" cols="44" eqp="eqp-lxf" image="resources/maps/images/map_424.png" eqpv="united1" canblow="0" canrepair="0" canbuild="0" extlos="0" truedlof="0" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="0" airintercept="0" portsnosupply="0" portsnonavaldeploy="0" prototypes="0" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="0" truespotting0="0" reinfwhenactive="0" capitalflak="0">
   <player id="0" country="25" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="26,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <player id="1" country="9" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="7,10,18,19" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="2">
@@ -662,7 +662,7 @@
   <hex row="14" col="11" terrain="10" road="34"/>
   <hex row="14" col="12" terrain="10" road="42"/>
   <hex row="14" col="13" terrain="1" road="155" name="Wonju">
-    <unit id="13322" owner="1" flag="10" face="0" transport="13026" exp="244" str="7"/>
+    <unit id="13322" owner="1" flag="10" face="0" transport="13026" exp="244" str="7" bstr="5"/>
   </hex>
   <hex row="14" col="14" terrain="10" road="187"/>
   <hex row="14" col="15" terrain="1" road="179" name="Wonju"/>
@@ -710,7 +710,7 @@
   <hex row="15" col="14" terrain="1" road="187" name="Wonju"/>
   <hex row="15" col="15" terrain="1" road="185" name="Wonju"/>
   <hex row="15" col="16" terrain="2" owner="1" flag="9">
-    <unit id="13429" owner="1" flag="10" face="0" transport="13089" exp="6" str="8"/>
+    <unit id="13429" owner="1" flag="10" face="0" transport="13089" exp="6" str="8" bstr="5"/>
   </hex>
   <hex row="15" col="17" terrain="1" road="59" name="Wonju"/>
   <hex row="15" col="18" terrain="10" road="187"/>
@@ -1172,7 +1172,7 @@
   <hex row="28" col="3" terrain="5"/>
   <hex row="28" col="5" terrain="5"/>
   <hex row="28" col="10" terrain="2" owner="1" flag="9">
-    <unit id="13427" owner="1" flag="10" face="0" exp="21" str="8"/>
+    <unit id="13427" owner="1" flag="10" face="0" exp="21" str="8" bstr="5"/>
   </hex>
   <hex row="28" col="13" terrain="3"/>
   <hex row="28" col="14" terrain="3"/>

@@ -294,10 +294,13 @@ private fun gateFor(key: String): ((AbilityGates) -> Boolean)? =
 
         "equipment.ability.can_blow",
         "equipment.ability.build_repair",
-        // `Cannot use dirt airfields` refuses an airfield the sappers built, and only
-        // `build_and_repair` can build one -- with the key off it has nothing to refuse.
-        "equipment.ability.no_dirt_airfields",
         -> AbilityGates::engineering
+
+        // `equipment.ability.no_dirt_airfields` was gated here until 2026-08-29, on the argument
+        // that it refuses an airfield the sappers built and only `build_and_repair` can build one.
+        // That stopped being true when OG's AUTHORED dirt flag was located (`Hex.dirt`): 29 hexes
+        // across 15 shipped scenarios are dirt whatever the ruleset says, so the ability now
+        // refuses something in a default game and hiding its badge would understate the unit.
 
         "equipment.ability.counter_battery" -> AbilityGates::counterBattery
 

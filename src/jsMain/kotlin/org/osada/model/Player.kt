@@ -5,8 +5,8 @@ import org.osada.PlayerType
 import org.osada.difficultyModifiers
 import org.osada.hero.FormationIdentity
 import org.osada.hero.HeroCampaign
+import org.osada.i18n.GameText
 import org.osada.scoreGains
-import org.osada.sideNames
 
 @JsExport
 @JsName("Player")
@@ -115,7 +115,7 @@ class Player {
 
     fun getCountryName(): String = Equipment.getCountryName(country)
 
-    fun getSideName(): String = sideNames[side]
+    fun getSideName(): String = GameText.side(side)
 
     fun hasUndeployedUnits(): Boolean = coreUnits.any { !it.isDeployed }
 

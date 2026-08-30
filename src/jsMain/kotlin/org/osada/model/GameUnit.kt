@@ -12,6 +12,9 @@ class GameUnit(
 ) {
     companion object {
         internal const val STALIN_REGIME_MULTIPLIER = 10
+
+        /** OG's own full strength, and what a formation with no authored Basic Strength gets. */
+        const val DEFAULT_BASIC_STRENGTH = 10
     }
 
     var id: Int = -1
@@ -53,6 +56,98 @@ class GameUnit(
     var leader: Int = -1
     var tempSpotted: Boolean = false
     var nodossier: Boolean = false
+
+    /**
+     * Whether the SCENARIO DESIGNER designated this placed formation an Open General **Depot**.
+     *
+     * OG has two ways to make a Depot and this is the older one — the other is the May 2024
+     * `Supply Unit` equipment special, which [org.osada.rules.DepotSupply.isDepot] already read.
+     * OpenSuite spells this one *"Can supply units on ZOC"* in a unit's right-click Misc. panel;
+     * `DEFERRED.md` §2.10 quotes *"enemy ZOC does not reduce it"* as one of the three clauses that
+     * define what a Depot does.
+     *
+     * **Recovered 2026-08-29** from `.xscn` unit record `@50` bit 1, by controlled OpenSuite diff.
+     * It defeated `depot_flag_hunt.py`'s 328,638-record correlation sweep because that sweep
+     * looked for a bit EXCLUSIVE to the depot-capable classes, and this one sits on five classes —
+     * 21.7% of class 7 down to 0.02% of class 17. Eight of the 502 deployed scenarios carry one
+     * (the Hungarian Soviet Republic campaign), imported by `tools/og-import/add_depots.py`.
+     *
+     * Authored scenario data, so it is parsed and saved unconditionally; whether it does anything
+     * is [org.osada.rules.DepotSupply]'s question, and that rule has its own two gates.
+     */
+    var isScenarioDepot: Boolean = false
+
+    /**
+     * OG's **Basic Strength** — *"the maximum strength of the unit when you assign it
+     * replacements"* (`Manual_OSuite-Scenario.pdf` p.9), scenario unit record `@23`.
+     *
+     * Distinct from [strength], which is OG's CURRENT strength at `@24`. A formation authored
+     * `10/5` is at full strength now and rebuilds only to 5 once it takes losses — which is how a
+     * designer says *"this unit will not be made whole again"*.
+     *
+     * ### The option that decides which of the two you start on
+     *
+     * `opt_use_basic_strength`, OG's *"Use current/basic strength as defined"*, and the local
+     * OpenSuite report spells out the half the manual leaves implicit:
+     *
+     * > *"Use current / basic strength as defined (**so no reset current to basic**)"*
+     *
+     * So the option ON keeps both as authored, and OFF resets `current := basic` at load. **OFF is
+     * the harsher setting, not ON** — a 10/5 formation starts at 5 there. That inversion is why
+     * this was held back on 2026-08-30 pending an answer: with the plain reading it looked as if
+     * turning the option ON would cap most of an army below its own strength, and the measurement
+     * (244,437 of 395,657 corpus units have basic below current) made that look catastrophic. It is
+     * the unauthored case that moves, and it moves to what OG does.
+     *
+     * **Defaults to 10, so nothing without an authored value changes.** A bought formation, a
+     * campaign core unit and every scenario that does not author `@23` all keep the old behaviour
+     * exactly, because 10 is what [SupplyRules] hardcoded before this field existed.
+     */
+    var basicStrength: Int = DEFAULT_BASIC_STRENGTH
+
+    /**
+     * Whether the scenario designer marked this formation a **Must-Survive Unit** (OG manual
+     * §3.7.1) — one of the units a side has to keep alive, or lose the scenario.
+     *
+     * > *"you must define any number of units as Must Survive Units (MSU) ... and type the number
+     * > of the MSU that need to survive not to lose the scenario."*
+     *
+     * **Recovered 2026-08-30** from `.xscn` unit record `@43` bit 0, by controlled OpenSuite diff:
+     * one placed BA-20 was ticked and exactly that bit moved on exactly that record.
+     *
+     * `@43` is one of the near-always-nonzero bytes `SCENARIO_FORMAT_NOTES.md` had written off as
+     * *"OG's cached copy of the equipment record"*, which is exactly why correlation was never
+     * going to find it — like [isScenarioDepot] it shares a byte with something common, so no bit
+     * is ever exclusive to a unit class. 2,996 records across 385 scenarios, on every class.
+     *
+     * Read by [org.osada.rules.ExtendedVictory]; the per-side quota of how many must live is
+     * [org.osada.scenario.Scenario.mustSurvivePerSide].
+     */
+    var mustSurvive: Boolean = false
+
+    /**
+     * Aircraft currently INSIDE this carrier's hangar (`rules/CarrierHangars`, OG's
+     * `ground_carrier` / `hangarCap`).
+     *
+     * A contained aircraft is off the map entirely — not in `GameMap.units`, not on a hex, not
+     * spottable and not occupying the hex's one air slot. That containment is the whole difference
+     * between a hangar and parking an aircraft on top of a ship, which is what `Hex.airunit` has
+     * always done and still does.
+     *
+     * Empty for every unit that is not a carrier, and for every carrier under a ruleset that
+     * leaves `carrier_hangars` off — so it serializes to nothing in an ordinary game.
+     */
+    @JsExport.Ignore
+    var hangar: MutableList<GameUnit> = mutableListOf()
+
+    /**
+     * The turn this aircraft last landed in a hangar, or -1.
+     *
+     * OG does not let an aircraft take off again on the turn it came aboard; without this a carrier
+     * would be a free within-turn teleport. Serialized, because a save taken between landing and
+     * the next turn must not hand the flight back.
+     */
+    var landedTurn: Int = -1
 
     /**
      * Whether mutable resource pools have been converted to Stalin Regime scale. Persisting this
@@ -268,6 +363,10 @@ class GameUnit(
         entrenchTicks = other.entrenchTicks
         leader = other.leader
         nodossier = other.nodossier
+        isScenarioDepot = other.isScenarioDepot
+        basicStrength = other.basicStrength
+        mustSurvive = other.mustSurvive
+        landedTurn = other.landedTurn
         stalinRegimeBoosted = other.stalinRegimeBoosted
         isTemporaryBorrowed = other.isTemporaryBorrowed
         formationId = other.formationId

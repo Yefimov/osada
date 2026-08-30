@@ -16,10 +16,21 @@ import org.osada.rules.ruleset.RuleKey
  * purely to keep [CombatResolver] within the project's function-count/class-size limits.
  */
 internal object AttackEligibility {
-    /** Attack range for [unit] (min 1, plus the Marksman leader bonus). */
+    /**
+     * Attack range for [unit] (min 1, plus the Marksman leader bonus).
+     *
+     * **Unless the scenario authored OG's `True range 0`**, in which case a `gunrange` of 0 stays 0
+     * and the formation cannot attack anything at all — *"units with Range 0 cannot attack adjacent
+     * hexes"* (`Manual_OSuite-Scenario.pdf` p.23). 295 of the 397 deployed scenarios set it, and
+     * 3,434 of the 56,970 shipped records carry `gunrange = 0`.
+     *
+     * The Marksman bonus is deliberately applied AFTER the floor and so lifts a true zero to 1: a
+     * commander who improves a formation's reach cannot be the reason it has none, and OG's
+     * sentence is about the equipment's own range rather than about what a leader adds to it.
+     */
     fun getUnitAttackRange(unit: GameUnit): Int {
         var range = unit.unitData().gunrange
-        if (range == 0) range = 1
+        if (range == 0 && GameHolder.instance?.scenario?.trueRangeZero != true) range = 1
         if (Leaders.unitHasLeader(unit, LeaderType.MARKSMAN)) range += 1
         return range
     }

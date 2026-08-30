@@ -1,8 +1,11 @@
 package org.osada.model
 
+import org.osada.GameHolder
 import org.osada.PlayerType
 import org.osada.hero.HeroCampaign
+import org.osada.rules.ExtendedVictory
 import org.osada.rules.GameRules
+import org.osada.rules.TriggerHexes
 import org.osada.rules.UnitCapabilities
 import org.osada.rules.canCapture
 import org.osada.rules.getDirection
@@ -190,6 +193,14 @@ internal class MoveExecutor(
         // below already refuses to offer an undo for a move that revealed something, so a credited
         // contact can never be rewound out from under the evidence it granted.
         HeroCampaign.recordReconnaissance(unit, newlySpotted)
+        // OG 9.10: "a hex where if a unit ends there its move, something happens". Fired here, in
+        // the model, rather than in the animation layer, so an AI arrival and a replayed
+        // multiplayer order set off the same triggers a local player does.
+        //
+        // AFTER the arrival's spotting and ZOC are in place: `Extra spot` reveals from where the
+        // unit now stands, and a reveal computed before `setSpotRange` would be immediately
+        // overwritten by it.
+        if (applyArrivalEffects(gameMap, unit, toHex, result)) return
         dismountAfterMove(unit)
         gameMap.setMoveRange(unit)
         gameMap.setAttackRange(unit)
@@ -207,6 +218,7 @@ internal class MoveExecutor(
                 result.stoppedByUnseenEnemy,
                 result.wasFiredOnWhileMoving,
                 result.hitMinefield,
+                result.firedTrigger,
             )
         if (finality == null) {
             gameMap.undoState.unit = unit
@@ -247,9 +259,15 @@ internal class MoveExecutor(
         stoppedByUnseenEnemy: Boolean,
         wasFiredOnWhileMoving: Boolean,
         hitMinefield: Boolean,
+        firedTrigger: Boolean,
     ): UndoInvalidation? =
         when {
             wasIntercepted -> UndoInvalidation.INTERCEPTED
+            // A trigger hex paid out. Undo would hand back the move while the player keeps the
+            // prestige, experience, leader or free formation -- and `Hex.triggerFired` means
+            // stepping on it again yields nothing, so the reward could not even be re-earned
+            // honestly. Final for the same reason interception is.
+            firedTrigger -> UndoInvalidation.IRREVERSIBLE_ACTION
             // Overwatch fire is combat that followed the move, and it must be as final as
             // interception is -- see MovementResults.wasFiredOnWhileMoving.
             wasFiredOnWhileMoving -> UndoInvalidation.COMBAT
@@ -320,4 +338,30 @@ internal class MoveExecutor(
         val fromHex: Hex,
         val savedHex: Hex,
     )
+}
+
+/**
+ * What the destination hex does to a formation that has just stopped on it.
+ *
+ * Returns true when the unit LEFT THE MAP, in which case the caller must stop: a withdrawn
+ * formation has no spotting to restore, no dismount to run and no undo record to write.
+ *
+ * Order matters. OG manual 3.7.4's escape hex is checked before 9.10's trigger because a unit that
+ * has left cannot also collect a reward on the hex it left from.
+ *
+ * At FILE level rather than as a method because [MoveExecutor] is already at its function budget.
+ */
+private fun applyArrivalEffects(
+    gameMap: GameMap,
+    unit: GameUnit,
+    toHex: Hex,
+    result: MovementResults,
+): Boolean {
+    val withdrew =
+        GameHolder.instance?.scenario?.let { ExtendedVictory.withdraw(it, unit, toHex) } == true
+    result.withdrew = withdrew
+    if (withdrew) return true
+    TriggerHexes.fire(gameMap, unit, toHex)?.let { result.triggerMessage = it }
+    result.firedTrigger = toHex.triggerFired && toHex.trigger != 0
+    return false
 }

@@ -93,6 +93,11 @@ object GameStateSerializer {
             Pair("unitsCostPerSide", scenario.unitsCostPerSide.toTypedArray()),
             Pair("victoryTurns", scenario.map.victoryTurns.toTypedArray()),
             Pair("victoryHoldCounts", scenario.victoryHoldCounts.toTypedArray()),
+            Pair("victoryHoldCountsSide1", scenario.victoryHoldCountsSide1.toTypedArray()),
+            // The running totals of OG's two counted victory conditions. Live game state: a reload
+            // that forgot them would reset an evacuation the player had half completed.
+            Pair("unitsWithdrawn", scenario.unitsWithdrawn.toTypedArray()),
+            Pair("unitsKilled", scenario.unitsKilled.toTypedArray()),
             Pair("currentPlayerId", scenario.map.currentPlayer?.id ?: 0),
             Pair("turn", scenario.map.turn),
             Pair("map", serializeMap(scenario.map)),
@@ -200,6 +205,9 @@ object GameStateSerializer {
         if (unit.lastingHits != 0) obj.asDynamic().lastingHits = unit.lastingHits
         if (unit.isTemporaryBorrowed) obj.asDynamic().temporaryBorrowed = true
         if (unit.stalinRegimeBoosted) obj.asDynamic().stalinRegimeBoosted = true
+        // The scenario Depot designation. Optional key on the byte-stability rule: 8 of 502
+        // scenarios author one, so every other save is unchanged.
+        serializeScenarioUnitProperties(obj, unit)
         return obj
     }
 
@@ -305,6 +313,9 @@ object GameStateSerializer {
         unit.formationId?.let { obj.asDynamic().formationId = it }
         if (unit.isTemporaryBorrowed) obj.asDynamic().temporaryBorrowed = true
         if (unit.stalinRegimeBoosted) obj.asDynamic().stalinRegimeBoosted = true
+        // The scenario Depot designation. Optional key on the byte-stability rule: 8 of 502
+        // scenarios author one, so every other save is unchanged.
+        serializeScenarioUnitProperties(obj, unit)
         return obj
     }
 }
@@ -359,4 +370,41 @@ private fun serializeHexEngineering(
     // A railroad station is authored map data, but engineers can also build one, so the save
     // has to carry it: reloading must not demolish a station the player paid 18 prestige for.
     if (hex.station) obj.asDynamic().station = 1
+    // A dirt strip is authored map data that no rule can create or remove, so it never changes
+    // during play -- but the save restores the map from JSON rather than re-reading the scenario
+    // XML, so dropping it here would turn every authored dirt field into a permanent one on load.
+    if (hex.dirt) obj.asDynamic().dirt = 1
+    // A trigger is authored map data whose FIRED half is live game state, so both travel. The
+    // action, parameter, equipment and message are restored so a save does not disarm the hex;
+    // `triggerFired` is restored so a reload does not re-arm one the player already spent.
+    if (hex.trigger != 0) {
+        obj.asDynamic().trigger = hex.trigger
+        obj.asDynamic().triggerParam = hex.triggerParam
+        if (hex.triggerEquip != 0) obj.asDynamic().triggerEquip = hex.triggerEquip
+        if (hex.triggerMessage.isNotEmpty()) obj.asDynamic().triggerMessage = hex.triggerMessage
+        if (hex.triggerFired) obj.asDynamic().triggerFired = 1
+    }
+}
+
+/**
+ * The scenario-authored unit properties and the carrier hangar, split out of `serializeUnit` to
+ * keep it inside detekt's complexity budget as the 2026-08-30 mechanics landed.
+ *
+ * Every key is optional, on the same byte-stability rule the rest of the record uses: a game with
+ * no depots, no Must-Survive Units, no authored basic strength and no hangars serializes exactly as
+ * it did before any of them existed.
+ */
+private fun serializeScenarioUnitProperties(
+    obj: Json,
+    unit: GameUnit,
+) {
+    if (unit.isScenarioDepot) obj.asDynamic().depot = true
+    if (unit.mustSurvive) obj.asDynamic().msu = true
+    if (unit.basicStrength != GameUnit.DEFAULT_BASIC_STRENGTH) {
+        obj.asDynamic().basicStrength = unit.basicStrength
+    }
+    if (unit.landedTurn >= 0) obj.asDynamic().landedTurn = unit.landedTurn
+    if (unit.hangar.isNotEmpty()) {
+        obj.asDynamic().hangar = unit.hangar.map { GameStateSerializer.serializeUnit(it) }.toTypedArray()
+    }
 }

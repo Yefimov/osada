@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="mao5.xscn" name="Pingxingguan Pass" turns="10, 12, 18" date="September 25, 1937" dayturns="0" ground="0" atmosferic="0" latitude="1" iconset="0" weatherchg="0" rows="31" cols="39" eqp="eqp-olgww2" image="resources/maps/images/map_569.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="1" airzoc="1" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1">
+<map file="mao5.xscn" name="Pingxingguan Pass" turns="10, 12, 18" date="September 25, 1937" dayturns="0" ground="0" atmosferic="0" latitude="1" iconset="0" weatherchg="0" rows="31" cols="39" eqp="eqp-olgww2" image="resources/maps/images/map_569.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="1" airzoc="1" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1">
   <player id="0" country="21" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="90" defaultstr="0" support="22,0,0,0" turnprestige="15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 90"/>
   <player id="1" country="5" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="6,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <hex row="0" col="2" terrain="5"/>
@@ -394,7 +394,7 @@
   <hex row="14" col="14" road="34"/>
   <hex row="14" col="20" deploy="0"/>
   <hex row="14" col="21" terrain="6" deploy="0">
-    <unit id="22624" owner="0" flag="22" face="0" exp="110" str="7"/>
+    <unit id="22624" owner="0" flag="22" face="0" exp="110" str="7" bstr="7"/>
   </hex>
   <hex row="14" col="28" terrain="3"/>
   <hex row="14" col="29" terrain="6"/>
@@ -453,7 +453,7 @@
   <hex row="16" col="13" terrain="3"/>
   <hex row="16" col="14" terrain="3"/>
   <hex row="16" col="17">
-    <unit id="47996" owner="0" flag="22" face="0" transport="47967" exp="120" str="7"/>
+    <unit id="47996" owner="0" flag="22" face="0" transport="47967" exp="120" str="7" bstr="7"/>
   </hex>
   <hex row="16" col="18" terrain="6"/>
   <hex row="16" col="19" terrain="6"/>
@@ -487,7 +487,7 @@
   <hex row="17" col="11" terrain="5"/>
   <hex row="17" col="12" terrain="5"/>
   <hex row="17" col="16">
-    <unit id="47882" owner="0" flag="22" face="0" transport="47967" exp="200" str="4" ldr="1"/>
+    <unit id="47882" owner="0" flag="22" face="0" transport="47967" exp="200" str="4" ldr="1" bstr="4"/>
   </hex>
   <hex row="17" col="17" terrain="6"/>
   <hex row="17" col="18" terrain="6"/>
@@ -521,7 +521,7 @@
   <hex row="18" col="10" terrain="5"/>
   <hex row="18" col="15" terrain="6"/>
   <hex row="18" col="16" terrain="6" deploy="0">
-    <unit id="22624" owner="0" flag="22" face="0" str="7"/>
+    <unit id="22624" owner="0" flag="22" face="0" str="7" bstr="7"/>
   </hex>
   <hex row="18" col="17" terrain="6"/>
   <hex row="18" col="18" terrain="6"/>
@@ -571,7 +571,7 @@
   <hex row="19" col="30" terrain="6" road="40" owner="0" flag="21" victory="0"/>
   <hex row="19" col="31" road="130" name="Pingxingguang Pass"/>
   <hex row="19" col="32" road="34" name="Pingxingguang Pass">
-    <unit id="3958" owner="1" flag="6" face="0" transport="4544" exp="250" str="11"/>
+    <unit id="3958" owner="1" flag="6" face="0" transport="4544" exp="250" str="11" bstr="5"/>
   </hex>
   <hex row="19" col="33" name="Pingxingguang Pass"/>
   <hex row="19" col="34" name="Pingxingguang Pass"/>
@@ -590,7 +590,7 @@
   <hex row="20" col="16" terrain="6"/>
   <hex row="20" col="17" terrain="6"/>
   <hex row="20" col="18" terrain="6" deploy="0">
-    <unit id="22611" owner="0" flag="22" face="0" str="6"/>
+    <unit id="22611" owner="0" flag="22" face="0" str="6" bstr="6"/>
   </hex>
   <hex row="20" col="19" terrain="6"/>
   <hex row="20" col="20" terrain="6"/>
@@ -625,7 +625,7 @@
   <hex row="21" col="11" terrain="6"/>
   <hex row="21" col="12" terrain="6"/>
   <hex row="21" col="13" terrain="6" deploy="0">
-    <unit id="22624" owner="0" flag="22" face="0" exp="145" str="9"/>
+    <unit id="22624" owner="0" flag="22" face="0" exp="145" str="9" bstr="9"/>
   </hex>
   <hex row="21" col="14" terrain="6"/>
   <hex row="21" col="15" terrain="6"/>
@@ -640,7 +640,7 @@
   <hex row="21" col="25" road="34" name="Pingxingguang Pass"/>
   <hex row="21" col="26" road="34" name="Pingxingguang Pass"/>
   <hex row="21" col="27" name="Pingxingguang Pass">
-    <unit id="4750" owner="1" flag="6" face="0" transport="4544" exp="44"/>
+    <unit id="4750" owner="1" flag="6" face="0" transport="4544" exp="44" bstr="5"/>
   </hex>
   <hex row="21" col="28" name="Pingxingguang Pass"/>
   <hex row="21" col="29" name="Pingxingguang Pass"/>
@@ -714,7 +714,7 @@
   <hex row="23" col="21" name="Pingxingguang Pass"/>
   <hex row="23" col="22" road="18" name="Pingxingguang Pass"/>
   <hex row="23" col="23" name="Pingxingguang Pass">
-    <unit id="4108" owner="1" flag="6" face="0" transport="4544" exp="190" str="5" ldr="1"/>
+    <unit id="4108" owner="1" flag="6" face="0" transport="4544" exp="190" str="5" ldr="1" bstr="5"/>
   </hex>
   <hex row="23" col="24" name="Pingxingguang Pass">
     <unit id="3958" owner="1" flag="6" face="0"/>
@@ -744,7 +744,7 @@
   <hex row="24" col="11" terrain="6"/>
   <hex row="24" col="12" terrain="6"/>
   <hex row="24" col="13" terrain="6" deploy="0">
-    <unit id="22624" owner="0" flag="22" face="0" exp="110" str="7"/>
+    <unit id="22624" owner="0" flag="22" face="0" exp="110" str="7" bstr="7"/>
   </hex>
   <hex row="24" col="14" terrain="6"/>
   <hex row="24" col="15" terrain="6"/>
@@ -788,7 +788,7 @@
   <hex row="25" col="20" terrain="6"/>
   <hex row="25" col="21" name="Pingxingguang Pass"/>
   <hex row="25" col="22" road="17" name="Pingxingguang Pass">
-    <unit id="4010" owner="1" flag="6" face="0" exp="199" str="5" ldr="1"/>
+    <unit id="4010" owner="1" flag="6" face="0" exp="199" str="5" ldr="1" bstr="1"/>
   </hex>
   <hex row="25" col="23" terrain="6" name="Pingxingguang Pass"/>
   <hex row="25" col="24" terrain="6"/>
@@ -811,7 +811,7 @@
   <hex row="26" col="7" terrain="6"/>
   <hex row="26" col="8" terrain="6"/>
   <hex row="26" col="9" terrain="6" deploy="0">
-    <unit id="22611" owner="0" flag="22" face="0" str="11"/>
+    <unit id="22611" owner="0" flag="22" face="0" str="11" bstr="11"/>
   </hex>
   <hex row="26" col="10" terrain="6"/>
   <hex row="26" col="11" terrain="6"/>
@@ -848,7 +848,7 @@
   <hex row="27" col="8" terrain="6"/>
   <hex row="27" col="9" terrain="6"/>
   <hex row="27" col="10" terrain="6" deploy="0">
-    <unit id="47927" owner="0" flag="22" face="0" transport="47967" str="6"/>
+    <unit id="47927" owner="0" flag="22" face="0" transport="47967" str="6" bstr="6"/>
   </hex>
   <hex row="27" col="11" terrain="6"/>
   <hex row="27" col="12" terrain="6"/>
@@ -929,7 +929,7 @@
   <hex row="29" col="18" terrain="6"/>
   <hex row="29" col="19" road="40" name="Pingxingguang Pass"/>
   <hex row="29" col="20">
-    <unit id="3958" owner="1" flag="6" face="0" transport="4544" exp="200"/>
+    <unit id="3958" owner="1" flag="6" face="0" transport="4544" exp="200" bstr="5"/>
   </hex>
   <hex row="29" col="21" road="34" name="Pingxingguang Pass"/>
   <hex row="29" col="22" road="33" name="Pingxingguang Pass"/>

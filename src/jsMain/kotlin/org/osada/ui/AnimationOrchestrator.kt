@@ -19,6 +19,7 @@ import org.osada.model.moveUnit
 import org.osada.model.retreatUnit
 import org.osada.model.surrenderUnit
 import org.osada.multiplayer.client.OsadaMultiplayer
+import org.osada.rules.ExtendedVictory
 import org.osada.rules.GameRules
 import org.osada.rules.calculateAttackResults
 import org.osada.rules.getDirection
@@ -313,6 +314,7 @@ internal class AnimationOrchestrator(
         }
         reportInterceptions(ui, unit, result, pos)
         reportMinefield(ui, unit, result, pos)
+        reportTrigger(ui, unit, result, pos)
         if (result.isCapture) {
             ui.showAlert(pos.row, pos.col, "Captured", true)
             val hexName =
@@ -332,6 +334,20 @@ internal class AnimationOrchestrator(
         }
         if (result.isVictorySide >= 0) {
             ui.game.handleMoveVictory(result.isVictorySide)
+        }
+        // OG manual 3.7: an extended condition is an ALTERNATIVE route to victory -- "you must only
+        // meet ONE of them to win" -- so it is checked beside the ordinary capture win rather than
+        // instead of it. Retreating the last required formation, or killing the last required
+        // enemy, ends the scenario the moment it happens.
+        reportWithdrawal(ui, unit, result, pos)
+        ui.game.scenario?.let { scenario ->
+            ExtendedVictory.satisfiedSide(scenario, scenario.map)?.let { ui.game.handleMoveVictory(it) }
+            // Manual 3.7.1 is a DEFEAT condition, so the side that fails it hands the scenario to
+            // the OTHER one. Checked here as well as after combat because a Must-Survive formation
+            // can also be lost to a minefield or to running out of fuel on a move.
+            ExtendedVictory.defeatedSide(scenario, scenario.map)?.let { loser ->
+                ui.game.handleMoveVictory(if (loser == 0) 1 else 0)
+            }
         }
 
         // Scroll-into-view-if-needed, NOT an unconditional recenter — see uiScrollUnitIntoView's
@@ -375,6 +391,7 @@ internal class AnimationOrchestrator(
  *
  * Top-level for the same reason as [reportInterceptions]: [AnimationOrchestrator]'s function budget.
  */
+
 private fun reportMinefield(
     ui: UI,
     unit: GameUnit,
@@ -395,6 +412,62 @@ private fun reportMinefield(
         )
     ui.showAlert(pos.row, pos.col, I18n.t("combat.minefield.alert"), true)
     HudLog.addAt(pos.row, pos.col, HudLog.Segment(text, ownLoss = result.minefieldLosses > 0))
+    ui.showUnitInfo(unit)
+}
+
+/**
+ * A formation left the map through an OG escape hex (`rules/ExtendedVictory`, manual 3.7.4).
+ *
+ * Announced for the same reason a capture is: the unit is GONE from the player's order of battle
+ * and they did not order it destroyed. Saying so, with the running count against the quota, is what
+ * makes an evacuation objective legible -- otherwise a division simply vanishes.
+ */
+private fun reportWithdrawal(
+    ui: UI,
+    unit: GameUnit,
+    result: MovementResults,
+    pos: Cell,
+) {
+    val scenario = ui.game.scenario
+    val side = unit.player?.side
+    if (!result.withdrew || scenario == null || side == null) return
+    val text =
+        I18n.t(
+            "victory.withdrawn",
+            mapOf(
+                "unit" to unit.unitData(true).name,
+                "count" to (scenario.unitsWithdrawn.getOrNull(side) ?: 0),
+                "total" to (scenario.retreatUnitsPerSide.getOrNull(side) ?: 0),
+            ),
+        )
+    ui.showAlert(pos.row, pos.col, I18n.t("victory.withdrawn.alert"), true)
+    HudLog.addAt(pos.row, pos.col, text)
+}
+
+/**
+ * This move set off an OG trigger hex (`rules/TriggerHexes`, OG 9.10).
+ *
+ * Reported for the same reason a capture is: something happened that the player did not order and
+ * that changed their position -- prestige, experience, a leader or a formation appeared out of the
+ * map. `DEFERRED.md` 1.1's rule is about damage with no visible cause, and a silent GIFT is the
+ * same failure with the sign flipped: a player who never sees it cannot tell the mechanic works.
+ *
+ * The author's own text is used verbatim where they wrote one, because it is authored scenario
+ * prose in the same sense a briefing is -- 33 of the corpus's 850 triggers carry text, and OG's
+ * own examples ("Through exploration, experience is found", "From this cliff you see very, very
+ * far...") say more than a generated line could. Where there is none, the generic line names the
+ * action so the reward is still attributable.
+ */
+private fun reportTrigger(
+    ui: UI,
+    unit: GameUnit,
+    result: MovementResults,
+    pos: Cell,
+) {
+    if (!result.firedTrigger) return
+    val text = result.triggerMessage ?: I18n.t("trigger.fired", mapOf("unit" to unit.unitData(true).name))
+    ui.showAlert(pos.row, pos.col, I18n.t("trigger.alert"), true)
+    HudLog.addAt(pos.row, pos.col, text)
     ui.showUnitInfo(unit)
 }
 

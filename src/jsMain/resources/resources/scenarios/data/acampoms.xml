@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="acampoms.xscn" name="Omsk" turns="7, 9, 12" date="December 22, 1918" dayturns="0" ground="1" atmosferic="0" latitude="3" iconset="1" weatherchg="1" rows="38" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_303.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1">
+<map file="acampoms.xscn" name="Omsk" turns="7, 9, 12" date="December 22, 1918" dayturns="0" ground="1" atmosferic="0" latitude="3" iconset="1" weatherchg="1" rows="38" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_303.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1">
   <player id="0" country="144" side="1" airtrans="0" navaltrans="0" railtrans="10" defaultxp="0" defaultstr="0" support="101,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <player id="1" country="148" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="149,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="2">
@@ -204,7 +204,7 @@
   <hex row="6" col="42" terrain="3"/>
   <hex row="6" col="43" terrain="3"/>
   <hex row="7" col="3">
-    <unit id="46756" owner="0" flag="101" face="0" exp="119" str="5"/>
+    <unit id="46756" owner="0" flag="101" face="0" exp="119" str="5" bstr="3"/>
   </hex>
   <hex row="7" col="6" road="136"/>
   <hex row="7" col="7" terrain="10" road="136" name="Irtysh River"/>
@@ -294,7 +294,7 @@
   <hex row="10" col="17" road="17"/>
   <hex row="10" col="23" road="17"/>
   <hex row="10" col="27">
-    <unit id="46756" owner="0" flag="101" face="0" exp="43" str="7"/>
+    <unit id="46756" owner="0" flag="101" face="0" exp="43" str="7" bstr="4"/>
   </hex>
   <hex row="10" col="31" terrain="3"/>
   <hex row="10" col="32" terrain="3"/>
@@ -367,7 +367,7 @@
   <hex row="13" col="7" terrain="15" name="Irtysh River"/>
   <hex row="13" col="8" terrain="1" name="Omsk"/>
   <hex row="13" col="9" terrain="1" name="Omsk" owner="0" flag="144" victory="0">
-    <unit id="835" owner="0" flag="101" face="0" exp="24" str="5"/>
+    <unit id="835" owner="0" flag="101" face="0" exp="24" str="5" bstr="2"/>
   </hex>
   <hex row="13" col="10" terrain="1" name="Omsk"/>
   <hex row="13" col="11" terrain="1" name="Omsk"/>
@@ -395,17 +395,17 @@
   <hex row="14" col="9" terrain="1" name="Omsk"/>
   <hex row="14" col="10" terrain="1" name="Omsk"/>
   <hex row="14" col="11" terrain="1" name="Omsk">
-    <unit id="42062" owner="0" flag="101" face="0" exp="20" str="5"/>
+    <unit id="42062" owner="0" flag="101" face="0" exp="20" str="5" bstr="2"/>
   </hex>
   <hex row="14" col="12" terrain="1" road="17" name="Omsk"/>
   <hex row="14" col="13" terrain="1">
-    <unit id="272" owner="1" flag="149" face="0" exp="64" str="9"/>
+    <unit id="272" owner="1" flag="149" face="0" exp="64" str="9" bstr="5"/>
   </hex>
   <hex row="14" col="14">
-    <unit id="44726" owner="1" flag="149" face="0" exp="199" str="7"/>
+    <unit id="44726" owner="1" flag="149" face="0" exp="199" str="7" bstr="5"/>
   </hex>
   <hex row="14" col="15" terrain="1" name="Omsk" owner="1" flag="148" victory="1">
-    <unit id="44726" owner="1" flag="149" face="0" exp="201" str="7"/>
+    <unit id="44726" owner="1" flag="149" face="0" exp="201" str="7" bstr="4"/>
   </hex>
   <hex row="14" col="16" terrain="1" name="Omsk"/>
   <hex row="14" col="18" road="144"/>
@@ -476,7 +476,7 @@
   <hex row="16" col="16" terrain="1" road="138" name="Omsk"/>
   <hex row="16" col="17" terrain="1" road="144" name="Omsk"/>
   <hex row="16" col="18" terrain="1" name="Omsk">
-    <unit id="272" owner="1" flag="149" face="0" exp="5" str="8"/>
+    <unit id="272" owner="1" flag="149" face="0" exp="5" str="8" bstr="4"/>
   </hex>
   <hex row="16" col="19" terrain="15"/>
   <hex row="16" col="20" terrain="1" road="138" name="Omsk"/>
@@ -511,7 +511,7 @@
   <hex row="17" col="13" road="144"/>
   <hex row="17" col="14" terrain="15" name="Irtysh River"/>
   <hex row="17" col="16" terrain="1" name="Omsk" owner="0" flag="144" victory="0">
-    <unit id="835" owner="0" flag="101" face="0" exp="30" str="8"/>
+    <unit id="835" owner="0" flag="101" face="0" exp="30" str="8" bstr="5"/>
   </hex>
   <hex row="17" col="17" terrain="1" road="17" name="Omsk"/>
   <hex row="17" col="18" terrain="1" name="Omsk"/>
@@ -550,7 +550,7 @@
   <hex row="18" col="18" terrain="15"/>
   <hex row="18" col="19" terrain="1" name="Omsk"/>
   <hex row="18" col="20" terrain="1" name="Omsk" owner="0" flag="144" victory="0">
-    <unit id="42062" owner="0" flag="101" face="0" exp="20" str="4"/>
+    <unit id="42062" owner="0" flag="101" face="0" exp="20" str="4" bstr="2"/>
   </hex>
   <hex row="18" col="21" terrain="1" road="18" name="Omsk"/>
   <hex row="18" col="22" road="33"/>
@@ -579,12 +579,12 @@
   <hex row="19" col="15" terrain="16"/>
   <hex row="19" col="16" terrain="15" name="Irtysh River"/>
   <hex row="19" col="17" terrain="1" road="17" name="Omsk" owner="1" flag="148" victory="1">
-    <unit id="44726" owner="1" flag="149" face="0" exp="241" str="6"/>
+    <unit id="44726" owner="1" flag="149" face="0" exp="241" str="6" bstr="4"/>
   </hex>
   <hex row="19" col="18" terrain="1" name="Omsk"/>
   <hex row="19" col="19" terrain="1" name="Omsk"/>
   <hex row="19" col="20" terrain="1" name="Omsk">
-    <unit id="272" owner="1" flag="149" face="0" exp="48" str="9"/>
+    <unit id="272" owner="1" flag="149" face="0" exp="48" str="9" bstr="5"/>
   </hex>
   <hex row="19" col="21" road="35"/>
   <hex row="19" col="22" road="34"/>
@@ -624,7 +624,7 @@
   <hex row="20" col="31" road="144" name="RAILROAD"/>
   <hex row="20" col="32" name="RAILROAD"/>
   <hex row="20" col="41">
-    <unit id="46756" owner="0" flag="101" face="0" exp="26" str="7" ldr="1"/>
+    <unit id="46756" owner="0" flag="101" face="0" exp="26" str="7" ldr="1" bstr="4"/>
   </hex>
   <hex row="21" col="0" road="34" name="RAILROAD"/>
   <hex row="21" col="1" name="RAILROAD" owner="0" flag="144" station="1"/>
@@ -640,14 +640,14 @@
   <hex row="21" col="11" name="RAILROAD"/>
   <hex row="21" col="12" name="RAILROAD"/>
   <hex row="21" col="13" name="Bolshaye Rebrovka: RAILROAD">
-    <unit id="44726" owner="1" flag="149" face="0" exp="111" str="7"/>
+    <unit id="44726" owner="1" flag="149" face="0" exp="111" str="7" bstr="4"/>
   </hex>
   <hex row="21" col="14" name="Bolshaye Rebrovka: RAILROAD" owner="0" flag="144" station="1"/>
   <hex row="21" col="15" terrain="15" name="Irtysh River"/>
   <hex row="21" col="16" terrain="15" name="Irtysh River"/>
   <hex row="21" col="17" terrain="1" name="Omsk"/>
   <hex row="21" col="18" terrain="1" road="146" name="Omsk">
-    <unit id="44726" owner="1" flag="149" face="0" exp="143" str="9"/>
+    <unit id="44726" owner="1" flag="149" face="0" exp="143" str="9" bstr="4"/>
   </hex>
   <hex row="21" col="19" terrain="1" name="Omsk"/>
   <hex row="21" col="21" terrain="2"/>
@@ -686,7 +686,7 @@
   <hex row="23" col="13" name="RAILROAD"/>
   <hex row="23" col="14" terrain="15" name="Irtysh River"/>
   <hex row="23" col="16" terrain="1" name="Omsk" owner="0" flag="144" victory="0">
-    <unit id="835" owner="0" flag="101" face="0" exp="68" str="5"/>
+    <unit id="835" owner="0" flag="101" face="0" exp="68" str="5" bstr="3"/>
   </hex>
   <hex row="23" col="17" terrain="1" name="Omsk"/>
   <hex row="23" col="18" road="17" name="Omsk: RAILROAD"/>
@@ -708,7 +708,7 @@
   <hex row="25" col="3" road="18"/>
   <hex row="25" col="4" road="33"/>
   <hex row="25" col="7">
-    <unit id="46756" owner="0" flag="101" face="0" exp="211" str="6"/>
+    <unit id="46756" owner="0" flag="101" face="0" exp="211" str="6" bstr="4"/>
   </hex>
   <hex row="25" col="12" name="RAILROAD"/>
   <hex row="25" col="14" terrain="15" name="Irtysh River"/>

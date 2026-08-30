@@ -38,9 +38,10 @@ import org.osada.rules.ruleset.RuleKey
  * - `air2container_deploy`, when the efile sets it: *"restrict the deployment when container is
  *   located at a port airfield"* — the carrier must be in port. Only `eqp-basekorp` sets it.
  *
- * **The dirt-airfield half is not built**, because the per-hex dirt flag is still unlocated and its
- * correlation search has been run (`SCENARIO_FORMAT_NOTES.md`, `@13` bit 0 ruled out). When the
- * flag is found this ability gains a second permitted hex type, not a second mechanic.
+ * **The dirt-airfield half is BUILT as of 2026-08-30**, once the flag stopped being missing:
+ * `.xscn` grid `@19` bit 6, found by controlled OpenSuite diff ([Hex.dirt]). The prediction this
+ * KDoc made held exactly — *"this ability gains a second permitted hex type, not a second
+ * mechanic"* — and [permits] now ORs the two.
  */
 object CarrierDeploy {
     /** Whether [unit]'s own record carries the permission. */
@@ -67,8 +68,20 @@ object CarrierDeploy {
             } else {
                 null
             }
-        return hex != null && hex.airunit == null && receivingCarrier(hex, unit) != null
+        val free = hex != null && hex.airunit == null
+        return free && (receivingCarrier(hex!!, unit) != null || isDirtStrip(hex))
     }
+
+    /**
+     * The other half of *"permits deployment on carriers **and dirt airfields**"*.
+     *
+     * A dirt strip is not in a deploy zone any more than a ship at sea is, so the same ability
+     * opens both. `AirfieldQuality.isDirt` is the single predicate for "is this a dirt field",
+     * shared with `Cannot use dirt airfields` so the two abilities can never disagree about which
+     * hexes are dirt.
+     */
+    private fun isDirtStrip(hex: Hex): Boolean =
+        hex.terrain == TerrainType.AIRFIELD.value && AirfieldQuality.isDirt(hex)
 
     /** The friendly, hangar-bearing carrier on [hex] that could receive [unit], or null. */
     private fun receivingCarrier(

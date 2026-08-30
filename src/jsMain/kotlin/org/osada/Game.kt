@@ -124,13 +124,44 @@ class Game {
             setCurrentSide()
             org.osada.ui.WeatherModel
                 .advance(scenario)
-            deployReinforcements(scenario!!.map.turn, scenario!!.map.currentPlayer!!.id)
+            deployArrivingReinforcements()
             // Show the "Computer turn in progress" banner the moment the AI turn begins (was only
             // shown via the delayed end-turn-info path, so it never appeared while the AI was thinking).
             val nextType = scenario?.map?.currentPlayer?.type
             if (nextType == PlayerType.AI_LOCAL || nextType == PlayerType.AI_SCRIPTED) {
                 UIBuilder.showAIStatus(true)
             }
+        }
+    }
+
+    /**
+     * OG's *"Reinforces arrive when player is active: reinforcements arrive in the player turn, not
+     * at the start of the Player 1 turn"* (`Manual_OSuite-Scenario.pdf` p.23) — **202 of the 397
+     * deployed scenarios whose source parses**, wired 2026-08-30.
+     *
+     * **OSADA has always done the option-ON behaviour**, because [deployReinforcements] was only
+     * ever called for the player whose turn was starting. So the 202 scenarios that author it were
+     * already right and the other 195 were not: OG's DEFAULT is that every side's arrivals appear
+     * together, at the top of the round.
+     *
+     * Nothing about the arriving units changes — a formation that appears at the top of the round
+     * still cannot act until its own player's turn. What changes is when the player SEES it, which
+     * is the whole point of the option: the author chose whether the enemy's build-up is visible
+     * before you move or only after.
+     *
+     * An unreadable source (null) keeps today's per-player behaviour, so the 105 scenarios whose
+     * `.xscn` this project cannot read are untouched.
+     */
+    private fun Game.deployArrivingReinforcements() {
+        val map = scenario?.map ?: return
+        val current = map.currentPlayer ?: return
+        if (scenario?.reinforcementsWhenActive != false) {
+            deployReinforcements(map.turn, current.id)
+        } else if (current.id == map.getPlayers().firstOrNull()?.id) {
+            // Option OFF: everybody's arrivals land at the top of the round, which is the first
+            // player's turn. `getReinforcements` filters by owner and `removeReinforcement`
+            // consumes each one, so a later pass in the same round finds nothing left to place.
+            map.getPlayers().forEach { player -> deployReinforcements(map.turn, player.id) }
         }
     }
 

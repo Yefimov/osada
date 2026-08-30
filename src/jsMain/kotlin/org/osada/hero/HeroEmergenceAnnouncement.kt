@@ -1,15 +1,14 @@
 package org.osada.hero
 
-import org.osada.model.Leaders
+import org.osada.i18n.I18n
 
 /**
  * The player-facing payload of a hero-emergence event — design brief §14.1.
  *
  * A plain view-model built in the hero layer and drained by the UI, so the "presented after combat
  * resolution, never during attack animation" requirement is met by *when the UI reads it*, not by
- * the model reaching into the UI. Every field is source text for a future i18n pass (§29.20); the
- * fancy portrait/dossier-button presentation of §14.1 waits on Phase 4/5 (portraits are the Phase 5
- * art blocker), so a Phase 2 event is these strings in a message dialog with a placeholder frame.
+ * the model reaching into the UI. Player-facing enum values are resolved through i18n while this
+ * view model is assembled, so the message contains no untranslated emergence labels or trait effects.
  */
 data class HeroEmergenceAnnouncement(
     val formationId: FormationId,
@@ -35,18 +34,20 @@ data class HeroEmergenceAnnouncement(
         ): HeroEmergenceAnnouncement {
             val background = HeroBackgrounds.byId(emerged.definition.backgroundId)
             val effects = mutableListOf<Pair<String, String>>()
-            background?.grantedTrait?.let { Leaders.description[it]?.let(effects::add) }
+            background?.grantedTrait?.let { trait ->
+                HeroDisplay.trait(trait, "").let { effects += it.title to it.effect }
+            }
             emerged.state.learnedTraitIds
                 .mapNotNull { LegacyTraitMapping.fromTraitId(it) }
-                .forEach { trait -> Leaders.description[trait]?.let(effects::add) }
+                .forEach { trait -> HeroDisplay.trait(trait, "").let { effects += it.title to it.effect } }
             return HeroEmergenceAnnouncement(
                 formationId = formation.id,
                 formationName = formation.displayName,
                 heroName = emerged.definition.displayName,
                 rankId = emerged.state.rankId,
-                characterLabel = emerged.event.characterLabel,
-                reason = emerged.event.reason,
-                backgroundTitle = background?.title,
+                characterLabel = I18n.t("hero.emergence.event.${emerged.event.eventId}.character"),
+                reason = I18n.t("hero.emergence.event.${emerged.event.eventId}.reason"),
+                backgroundTitle = background?.let { I18n.t("hero.background.${it.id}.title") },
                 effects = effects,
                 potential = emerged.state.potential,
                 guaranteed = emerged.guaranteed,

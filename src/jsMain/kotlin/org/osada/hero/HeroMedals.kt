@@ -1,6 +1,7 @@
 package org.osada.hero
 
 import org.osada.hero.HeroMedals.award
+import org.osada.i18n.I18n
 
 /**
  * The (currently small) medal catalogue (§8.1, §10) and the rule that awards from it.
@@ -13,9 +14,8 @@ import org.osada.hero.HeroMedals.award
 internal object HeroMedals {
     const val VALOR_MEDAL_ID = "valor_medal"
 
-    private val titles: Map<String, String> = mapOf(VALOR_MEDAL_ID to "Medal of Valor")
-
-    fun title(medalId: String): String? = titles[medalId]
+    fun title(medalId: String): String? =
+        if (medalId == VALOR_MEDAL_ID) I18n.t("hero.medal.valor_medal.title") else null
 
     /** Awards medals earned by [achievements], if [hero] does not already hold them. */
     fun award(

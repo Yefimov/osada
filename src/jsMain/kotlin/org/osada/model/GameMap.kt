@@ -6,6 +6,7 @@ import org.osada.PlayerType
 import org.osada.addAttritionLoss
 import org.osada.addResupply
 import org.osada.rules.AirOperations
+import org.osada.rules.CarrierHangars
 import org.osada.rules.GameRules
 import org.osada.rules.Minefields
 import org.osada.rules.SpottingModel
@@ -150,6 +151,9 @@ class GameMap {
      */
     private fun beginNewRound() {
         turn++
+        // A hangar is a working airfield: an aircraft inside one refuels and rearms with the round,
+        // exactly as one parked on a carrier's deck always has (`rules/CarrierHangars`).
+        units.forEach { CarrierHangars.resupplyContained(this, it) }
         units.forEach { unit ->
             if (unit.isMounted) unmountUnitHandler(unit)
             val supply = GameRules.getResupplyValue(this, unit, true)

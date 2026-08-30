@@ -143,11 +143,7 @@ class GameStateRestore(
         newScenario.lockedEffectiveIconset =
             scenarioData.effectiveIconset as? Int ?: newScenario.effectiveIconset
         newScenario.eqp = scenarioData.eqp as? String ?: Equipment.DEFAULT_NAME
-        val holdCounts = scenarioData.victoryHoldCounts
-        if (holdCounts != null) {
-            newScenario.victoryHoldCounts =
-                (0 until holdCounts.length).mapNotNull { i -> holdCounts[i] as? Int }
-        }
+        restoreHoldCounts(newScenario, scenarioData)
     }
 
     private fun restorePlayersAndFinish(
@@ -457,6 +453,48 @@ internal fun restoreEngineering(
     hex.blownRoad = hexData.blownRoad as? Int ?: 0
     hex.sapperBuilt = (hexData.sapperBuilt as? Int ?: 0) != 0
     hex.station = (hexData.station as? Int ?: 0) != 0
+    hex.dirt = (hexData.dirt as? Int ?: 0) != 0
+    restoreHexTrigger(hex, hexData)
     hex.rubble = (hexData.rubble as? Int ?: 0) != 0
     hex.crater = (hexData.crater as? Int ?: 0) != 0
+}
+
+/**
+ * An OG trigger hex's four authored fields plus its live fired flag, split from
+ * [restoreEngineering] to keep that function inside detekt's complexity budget.
+ *
+ * The authored half travels so a save does not disarm the hex; `triggerFired` travels so a reload
+ * does not re-arm one the player already spent (`rules/TriggerHexes`).
+ */
+private fun restoreHexTrigger(
+    hex: Hex,
+    hexData: dynamic,
+) {
+    hex.trigger = hexData.trigger as? Int ?: 0
+    hex.triggerParam = hexData.triggerParam as? Int ?: 0
+    hex.triggerEquip = hexData.triggerEquip as? Int ?: 0
+    hex.triggerMessage = hexData.triggerMessage as? String ?: ""
+    hex.triggerFired = (hexData.triggerFired as? Int ?: 0) != 0
+}
+
+/** A serialized `Int` array as a list, or null when the key was absent from the save. */
+private fun intList(raw: dynamic): List<Int>? =
+    if (raw == null) null else (0 until (raw.length as Int)).mapNotNull { i -> raw[i] as? Int }
+
+/**
+ * OG's per-side objective-hold thresholds.
+ *
+ * A save written before the counts became per-side (2026-08-30) carries only the one array, and
+ * side 1 correctly restores empty -- which is the same "no hold requirement" it had then.
+ */
+private fun restoreHoldCounts(
+    newScenario: Scenario,
+    scenarioData: dynamic,
+) {
+    newScenario.victoryHoldCounts =
+        intList(scenarioData.victoryHoldCounts) ?: newScenario.victoryHoldCounts
+    newScenario.victoryHoldCountsSide1 =
+        intList(scenarioData.victoryHoldCountsSide1) ?: newScenario.victoryHoldCountsSide1
+    intList(scenarioData.unitsWithdrawn)?.let { newScenario.unitsWithdrawn = it.toMutableList() }
+    intList(scenarioData.unitsKilled)?.let { newScenario.unitsKilled = it.toMutableList() }
 }

@@ -1,5 +1,7 @@
 package org.osada.model
 
+import org.osada.i18n.I18n
+
 /** Country display names for [Equipment], split out to keep its function count/size in bounds. */
 internal val countryNames =
     listOf(
@@ -383,7 +385,11 @@ internal val countryNames =
     )
 
 fun Equipment.getCountryName(country: Int): String =
-    if (country in countryNames.indices) countryNames[country] else "Unknown"
+    if (country in countryNames.indices) {
+        I18n.tOrNull("game.country.$country") ?: countryNames[country]
+    } else {
+        "Unknown"
+    }
 
 // eqpName is unused since the merge (one shared countryNames list for every campaign) --
 // kept as a parameter so every existing call site (which passes the scenario's own eqp,

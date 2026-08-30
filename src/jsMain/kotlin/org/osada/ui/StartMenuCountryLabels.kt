@@ -1,5 +1,6 @@
 package org.osada.ui
 
+import org.osada.i18n.I18n
 import org.osada.model.Equipment
 import org.osada.model.getCountryName
 
@@ -121,19 +122,28 @@ internal object StartMenuCountryLabels {
         )
 
     /** The faction's own name, or null for an invalid/blank/suppressed code. */
-    fun displayLabel(id: Int): String? = resolve(id) { it.display }
+    fun displayLabel(id: Int): String? = resolve(id, "display") { it.display }
 
     /** The country-filter bucket this faction answers to (never matches a filter when null). */
-    fun groupLabel(id: Int): String? = resolve(id) { it.group }
+    fun groupLabel(id: Int): String? = resolve(id, "group") { it.group }
 
     /** Curated entry via [pick], else the raw `countryNames` name, else null. */
     private fun resolve(
         id: Int,
+        variant: String,
         pick: (Label) -> String,
     ): String? =
         when {
             id in suppressedCountries -> null
-            labels[id] != null -> labels[id]?.let(pick)
+            labels[id] != null ->
+                labels[id]?.let { label ->
+                    I18n.tOrNull("game.country.curated.$id.$variant")
+                        ?: if (variant == "group" && label.group == label.display) {
+                            I18n.tOrNull("game.country.curated.$id.display") ?: pick(label)
+                        } else {
+                            pick(label)
+                        }
+                }
             else -> Equipment.getCountryName(id).takeIf { it.isNotBlank() && it != "Unknown" }
         }
 
