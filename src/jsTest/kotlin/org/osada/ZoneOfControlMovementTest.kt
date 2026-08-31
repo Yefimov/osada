@@ -40,6 +40,7 @@ import kotlin.test.assertTrue
 class ZoneOfControlMovementTest {
     private val legEqid = 400
     private val fighterEqid = 401
+    private val partisanEqid = 402
     private val rows = 3
     private val cols = 9
 
@@ -56,6 +57,17 @@ class ZoneOfControlMovementTest {
                 movpoints = 6
                 fuel = 0
                 ammo = 6
+            },
+        )
+        Equipment.putEquipment(
+            partisanEqid,
+            EquipmentData().apply {
+                uclass = UnitClass.INFANTRY.value
+                movmethod = MovMethod.LEG.value
+                movpoints = 6
+                fuel = 0
+                ammo = 6
+                attrEx = 1024 // Partizan: the equipment-level equivalent of Superior Maneuver.
             },
         )
     }
@@ -187,6 +199,25 @@ class ZoneOfControlMovementTest {
         assertTrue((1 to 4) in got)
         assertTrue((1 to 5) in got, "the ZOC hex no longer terminates the move")
         assertTrue((1 to 8) in got, "full 6-point allowance straight through the ZOC")
+    }
+
+    @Test
+    fun partizanEquipmentAbilityAlsoIgnoresEnemyZocInTheMoveOverlay() {
+        val map = corridor()
+        withEnemyProjectingZocInto(map, 0, 4)
+        val unit =
+            GameUnit(partisanEqid).apply {
+                owner = 0
+                player = map.getPlayer(0)
+                strength = 10
+            }
+        map.map!![1][2].setUnit(unit)
+
+        val got = reach(map, unit)
+
+        assertTrue((1 to 4) in got)
+        assertTrue((1 to 5) in got, "Partizan must agree with the move executor and bypass visible ZOC")
+        assertTrue((1 to 8) in got, "equipment ability and hero trait must stack as equivalent permissions")
     }
 
     /** Control: a different leader must not bypass ZOC. Guards against the flag being wired to the

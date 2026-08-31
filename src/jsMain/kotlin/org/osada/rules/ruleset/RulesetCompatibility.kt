@@ -8,6 +8,9 @@ package org.osada.rules.ruleset
  * be a lie about the state of the match.
  */
 object RulesetCompatibility {
+    /** Schema 15 made authored trigger hexes unconditional; older peers can suppress them. */
+    private const val MIN_MULTIPLAYER_SCHEMA = 15
+
     /** Why a join was refused. */
     enum class Refusal {
         /** The room declares a schema this build does not implement. */
@@ -54,7 +57,7 @@ object RulesetCompatibility {
         val unknown = unknownRulesetKeys(remoteData)
         val remote = deserializeRuleset(remoteData)
         return when {
-            schema != null && schema > RULESET_SCHEMA_VERSION ->
+            schema != null && (schema > RULESET_SCHEMA_VERSION || schema < MIN_MULTIPLAYER_SCHEMA) ->
                 Verdict(false, Refusal.UNSUPPORTED_SCHEMA, remoteHash = remote?.deterministicHash.orEmpty())
 
             unknown.isNotEmpty() ->

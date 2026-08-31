@@ -126,26 +126,47 @@ class GameUnit(
     var mustSurvive: Boolean = false
 
     /**
-     * Aircraft currently INSIDE this carrier's hangar (`rules/CarrierHangars`, OG's
+     * Formations currently INSIDE this unit's container (`rules/CarrierHangars`, OG's
      * `ground_carrier` / `hangarCap`).
      *
-     * A contained aircraft is off the map entirely — not in `GameMap.units`, not on a hex, not
-     * spottable and not occupying the hex's one air slot. That containment is the whole difference
-     * between a hangar and parking an aircraft on top of a ship, which is what `Hex.airunit` has
-     * always done and still does.
+     * **Not only aircraft, and not only carriers.** `hangarCap` is on 916 shipped records across
+     * **13 unit classes** — battleships and cruisers, but also 57 tanks (the IFVs: `M2 Bradley`
+     * and its marks), 54 of class 6, and eight infantry records. OG's own key is called
+     * `ground_carrier` and its bit 8 reads *"allow **land units** to enter naval-class carriers out
+     * of port"*, so a landing ship with a battalion below decks and a bunker with a garrison are
+     * the mechanic, not an extension of it.
      *
-     * Empty for every unit that is not a carrier, and for every carrier under a ruleset that
-     * leaves `carrier_hangars` off — so it serializes to nothing in an ordinary game.
+     * A contained formation is off the map entirely — not in `GameMap.units`, not on a hex, not
+     * spottable and not occupying either of the hex's unit slots. That containment is the whole
+     * difference between a container and parking an aircraft on top of a ship, which is what
+     * `Hex.airunit` has always done and still does.
+     *
+     * Empty for every unit with no capacity, and for every container under a ruleset that leaves
+     * `carrier_hangars` off — so it serializes to nothing in an ordinary game.
      */
     @JsExport.Ignore
     var hangar: MutableList<GameUnit> = mutableListOf()
 
     /**
-     * The turn this aircraft last landed in a hangar, or -1.
+     * The container this formation is riding inside, or null when it is on the map.
      *
-     * OG does not let an aircraft take off again on the turn it came aboard; without this a carrier
-     * would be a free within-turn teleport. Serialized, because a save taken between landing and
-     * the next turn must not hand the flight back.
+     * The back half of [hangar], maintained by `rules/CarrierHangars` and restored by
+     * `GameStateDeserializer` from the hangar it was read out of. **Derived, never serialized** —
+     * the hangar list is the stored form, and a second stored copy could disagree with it.
+     *
+     * It exists because OG's `ground_carrier` bit 2 lets a contained formation support the battle
+     * from where its container stands: answering that needs the passenger to name its container,
+     * and scanning every unit's hangar for every support test would be quadratic.
+     */
+    @JsExport.Ignore
+    var containedIn: GameUnit? = null
+
+    /**
+     * The turn this formation last boarded a container, or -1.
+     *
+     * OG does not let a passenger leave again on the turn it came aboard; without this a container
+     * would be a free within-turn teleport. Serialized, because a save taken between boarding and
+     * the next turn must not hand the move back.
      */
     var landedTurn: Int = -1
 

@@ -1,6 +1,7 @@
 package org.osada.rules
 
 import org.osada.EmbarkType
+import org.osada.GameHolder
 import org.osada.TerrainType
 import org.osada.UnitClass
 import org.osada.model.Cell
@@ -73,14 +74,35 @@ internal object EmbarkRules {
         if (cannotDisembark || movementMethod == null || pos == null) return result
 
         val movementTable = movTable[movementMethod]
+        val oceanBarred = data.uclass == UnitClass.AIR_TRANSPORT.value && oceanParadropForbidden()
         HexGeometry.getAdjacent(pos.row, pos.col).forEach { cell ->
             val hex = map.map?.getOrNull(cell.row)?.getOrNull(cell.col) ?: return@forEach
-            if (hex.unit == null && movementTable[hex.terrain] < IMPASSABLE_TERRAIN_COST) {
-                result.add(cell)
-            }
+            val barred = oceanBarred && hex.terrain == TerrainType.OCEAN.value
+            val enterable = hex.unit == null && movementTable[hex.terrain] < IMPASSABLE_TERRAIN_COST
+            if (enterable && !barred) result.add(cell)
         }
         return result
     }
+
+    /**
+     * OG's *"avoid paratroop drops on ocean"* (`opt_no_paradrop_ocean`, `@1009` bit 4) — **19
+     * deployed scenarios, 526 corpus-wide**.
+     *
+     * **The option exists because the drop IS otherwise possible**, and it is here: the eligible
+     * cells above are filtered with the TRANSPORT's movement table, and an aircraft's table makes
+     * ocean passable. So a paratroop battalion can currently be put into the sea, and 19 scenarios
+     * asked OG not to allow it.
+     *
+     * Restricted to the AIR transport deliberately. A naval transport unloading onto ocean is
+     * already impossible by the same filter (its cargo is going ashore, and the option's own words
+     * are about paratroops), so widening it would be an inference where OG gave a sentence.
+     *
+     * Absent means permitted — `Scenario.paradropOnOceanAllowed` is deployed as a PERMISSION, the
+     * same inversion `prototypes` and `subsneedlof` use, so a scenario whose source could not be
+     * read keeps exactly the behaviour it had.
+     */
+    private fun oceanParadropForbidden(): Boolean =
+        GameHolder.instance?.scenario?.paradropOnOceanAllowed == false
 
     fun canEmbark(
         map: GameMap,

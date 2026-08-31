@@ -66,12 +66,31 @@ class HeroPortraitV2Test {
                 21 to PortraitComposerV2.Pool.EAST_ASIAN_REVOLUTIONARY,
                 25 to PortraitComposerV2.Pool.EAST_ASIAN_REVOLUTIONARY,
                 276 to PortraitComposerV2.Pool.EAST_ASIAN_REVOLUTIONARY,
-                310 to PortraitComposerV2.Pool.NONE,
+                39 to PortraitComposerV2.Pool.GREEK_1940,
+                100 to PortraitComposerV2.Pool.WHITE_ARMY_1919,
+                310 to PortraitComposerV2.Pool.ANCIENT_REBEL,
             )
 
         expected.forEach { (country, pool) ->
             assertEquals(pool, PortraitComposerV2.poolFor(country), "country $country")
         }
+    }
+
+    @Test
+    fun sovietInterwarCampaignDoesNotUseWartimeShoulderBoards() {
+        val portrait =
+            PortraitComposerV2.composeFor(
+                seed = 17,
+                unitClass = UnitClass.INFANTRY.value,
+                rankId = "captain",
+                birthYear = 1905,
+                serviceYear = 1936,
+                country = 19,
+            )
+
+        assertEquals(PortraitComposerV2.Pool.SOVIET_INTERWAR.id, portrait.poolId)
+        assertTrue("rank_rev1919_captain" in portrait.layerIds)
+        assertFalse("rank_captain" in portrait.layerIds)
     }
 
     @Test
@@ -82,12 +101,24 @@ class HeroPortraitV2Test {
                 226 to listOf("collar_spanish_republic", "rank_spanish_major"),
                 43 to listOf("collar_yugoslav_partisan", "rank_yugoslav_major"),
                 21 to listOf("collar_east_asian_field", "rank_east_asian_major"),
+                39 to listOf("collar_greek_1940", "rank_greek_major"),
+                100 to listOf("collar_white_army_1919", "rank_white_major"),
+                310 to listOf("collar_ancient_rebel", "rank_ancient_major"),
             )
 
         expected.forEach { (country, nationalLayers) ->
+            val serviceYear =
+                when (country) {
+                    310 -> -72
+                    21 -> 1935
+                    226 -> 1937
+                    43 -> 1943
+                    39 -> 1941
+                    else -> 1919
+                }
             val ids =
                 PortraitComposerV2
-                    .composeFor(77, UnitClass.TANK.value, "major", 1900, 1942, country = country)
+                    .composeFor(77, UnitClass.TANK.value, "major", serviceYear - 35, serviceYear, country = country)
                     .layerIds
             nationalLayers.forEach { assertTrue(it in ids, "country $country should use $it") }
             assertFalse("rank_major" in ids, "country $country must not use Soviet rank plates")
@@ -96,29 +127,29 @@ class HeroPortraitV2Test {
     }
 
     @Test
-    fun countryWithoutArtUsesMonogramFallback() {
+    fun unknownCountryUsesMonogramFallback() {
         val portrait =
             PortraitComposerV2.composeFor(
                 seed = 73,
                 unitClass = UnitClass.INFANTRY.value,
                 rankId = "captain",
                 birthYear = null,
-                serviceYear = -72,
-                country = 310,
+                serviceYear = 1942,
+                country = 999,
             )
 
-        assertTrue(portrait.layerIds.isEmpty(), "Spartacus must not wear a twentieth-century uniform")
+        assertTrue(portrait.layerIds.isEmpty())
         assertEquals(PortraitComposerV2.Pool.NONE.id, portrait.poolId)
     }
 
     @Test
     fun savedNoPortraitVerdictSurvivesWithoutFormationCountry() {
-        val heroId = HeroId("H-spartacus")
+        val heroId = HeroId("H-unknown")
         val definition =
             HeroDefinition(
                 id = heroId,
                 origin = HeroOrigin.PROCEDURAL,
-                displayName = "Spartacus",
+                displayName = "Unknown officer",
                 backgroundId = "partisan_organizer",
                 biographyFacts = HeroBiographyFacts(emergenceEventId = "x"),
                 portrait =
@@ -127,8 +158,8 @@ class HeroPortraitV2Test {
                         unitClass = UnitClass.INFANTRY.value,
                         rankId = "captain",
                         birthYear = null,
-                        serviceYear = -72,
-                        country = 310,
+                        serviceYear = 1942,
+                        country = 999,
                     ),
             )
 

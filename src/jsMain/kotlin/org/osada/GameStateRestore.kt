@@ -2,6 +2,7 @@ package org.osada
 
 import org.osada.campaign.CampaignNarrative
 import org.osada.hero.HeroCampaign
+import org.osada.model.ALL_VICTORY_TIERS
 import org.osada.model.Equipment
 import org.osada.model.GameMap
 import org.osada.model.Hex
@@ -143,7 +144,7 @@ class GameStateRestore(
         newScenario.lockedEffectiveIconset =
             scenarioData.effectiveIconset as? Int ?: newScenario.effectiveIconset
         newScenario.eqp = scenarioData.eqp as? String ?: Equipment.DEFAULT_NAME
-        restoreHoldCounts(newScenario, scenarioData)
+        restoreVictoryMetadata(newScenario, scenarioData)
     }
 
     private fun restorePlayersAndFinish(
@@ -367,10 +368,20 @@ private fun buildHex(
     hex.flag = hexData.flag as? Int ?: -1
     hex.isDeployment = hexData.isDeployment as? Int ?: -1
     hex.victorySide = hexData.victorySide as? Int ?: -1
+    restoreTypedVictoryHexes(hex, hexData)
     hex.name = hexData.name as? String ?: ""
     applyHexUnitIfPresent(hexData.unit, hex, map)
     applyHexUnitIfPresent(hexData.airunit, hex, map)
     return hex
+}
+
+/** Optional because every save predating Typed VH correctly means ordinary mask 7 for both sides. */
+internal fun restoreTypedVictoryHexes(
+    hex: Hex,
+    hexData: dynamic,
+) {
+    hex.victoryTiersSide0 = hexData.victoryTiersSide0 as? Int ?: ALL_VICTORY_TIERS
+    hex.victoryTiersSide1 = hexData.victoryTiersSide1 as? Int ?: ALL_VICTORY_TIERS
 }
 
 private fun applyHexUnitIfPresent(
@@ -487,7 +498,7 @@ private fun intList(raw: dynamic): List<Int>? =
  * A save written before the counts became per-side (2026-08-30) carries only the one array, and
  * side 1 correctly restores empty -- which is the same "no hold requirement" it had then.
  */
-private fun restoreHoldCounts(
+internal fun restoreVictoryMetadata(
     newScenario: Scenario,
     scenarioData: dynamic,
 ) {
@@ -497,4 +508,8 @@ private fun restoreHoldCounts(
         intList(scenarioData.victoryHoldCountsSide1) ?: newScenario.victoryHoldCountsSide1
     intList(scenarioData.unitsWithdrawn)?.let { newScenario.unitsWithdrawn = it.toMutableList() }
     intList(scenarioData.unitsKilled)?.let { newScenario.unitsKilled = it.toMutableList() }
+    intList(scenarioData.retreatUnitsPerSide)?.let { newScenario.retreatUnitsPerSide = it }
+    intList(scenarioData.killUnitsPerSide)?.let { newScenario.killUnitsPerSide = it }
+    intList(scenarioData.mustSurvivePerSide)?.let { newScenario.mustSurvivePerSide = it }
+    newScenario.typedVictoryHexes = scenarioData.typedVictoryHexes as? Boolean
 }

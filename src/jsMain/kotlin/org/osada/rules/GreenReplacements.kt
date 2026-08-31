@@ -65,9 +65,15 @@ object GreenReplacements {
      * Derived from the ordinary per-point cost so the two actions can never drift apart, and
      * floored at 1: a free replacement is not what *"cost percent"* means, and 25% of a cheap
      * formation rounds to nothing.
+     *
+     * **The base is the STANDARD cost, not the elite one.** `green_cost` and `elite_cost` are both
+     * *"relative to standar cost"* in `equip.cfg`'s own words, so they are siblings rather than
+     * nested: routing this through `CostCalculator.reinforceCostPerStrength` would charge
+     * `green_cost` percent of `elite_cost` percent and make `eqp-gce`'s 100% green cost 133% of
+     * base. [EliteReplacements] carries the pair.
      */
     fun costPerStrength(unit: GameUnit): Int =
-        (CostCalculator.reinforceCostPerStrength(unit, false) * costPercent() / PERCENT).coerceAtLeast(1)
+        (CostCalculator.calculateUnitCostPerStrength(unit) * costPercent() / PERCENT).coerceAtLeast(1)
 
     /** `green_exp` — what fraction of the formation's own experience the intake arrives with. */
     private fun intakeExperiencePercent(): Int = EfileConfig.intKey("green_exp", 0).coerceIn(0, PERCENT)

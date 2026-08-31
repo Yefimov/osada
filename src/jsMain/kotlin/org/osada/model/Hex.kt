@@ -302,11 +302,14 @@ class Hex(
      * > *"Typed VH allow you to set some VH as needed for a level of victory."*
      *
      * **Decoded 2026-08-30** from `.xscn` grid `@10`, which turns out to be two nibbles — one per
-     * side — each a tier mask rather than the plain flag this project read. The corpus values are
+     * primary player — each a tier mask rather than the plain flag this project read. Import maps
+     * those players to OSADA sides; keeping both masks matters in scenarios where player 0 is on
+     * side 1. The corpus values are
      * exactly the combinations that predicts (7, 1, 3, 6, 4) and they reproduce the manual's own
      * two worked examples; the enabling switch is `opt_specific_vh` at `@1010` bit 1.
      */
-    var victoryTiers: Int = ALL_VICTORY_TIERS
+    var victoryTiersSide0: Int = ALL_VICTORY_TIERS
+    var victoryTiersSide1: Int = ALL_VICTORY_TIERS
     var name: String = ""
     var isMoveSel: Boolean = false
     var isAttackSel: Boolean = false
@@ -408,7 +411,8 @@ class Hex(
         flag = other.flag
         isDeployment = other.isDeployment
         victorySide = other.victorySide
-        victoryTiers = other.victoryTiers
+        victoryTiersSide0 = other.victoryTiersSide0
+        victoryTiersSide1 = other.victoryTiersSide1
         name = other.name
         setUnit(other.unit)
         setUnit(other.airunit)

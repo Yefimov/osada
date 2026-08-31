@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="acampbac.xscn" name="Bachmatsj" turns="6, 8, 12" date="March 13, 1918" dayturns="0" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="38" cols="43" eqp="eqp-kaiser" image="resources/maps/images/map_278.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1">
+<map file="acampbac.xscn" name="Bachmatsj" turns="6, 8, 12" date="March 13, 1918" dayturns="0" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="38" cols="43" eqp="eqp-kaiser" image="resources/maps/images/map_278.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1" ehmsuonly="0" paradropocean="1">
   <player id="0" country="144" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="104,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <player id="1" country="117" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="118,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="2">
@@ -331,7 +331,7 @@
   <hex row="10" col="41" terrain="3"/>
   <hex row="10" col="42" terrain="3"/>
   <hex row="11" col="1">
-    <unit id="43021" owner="1" flag="118" face="0" exp="212" str="5" ldr="1" bstr="2"/>
+    <unit id="43021" owner="1" flag="118" face="0" exp="212" str="5" ldr="1" bstr="2" ammo="9"/>
   </hex>
   <hex row="11" col="3" road="17"/>
   <hex row="11" col="8" road="17"/>
@@ -470,7 +470,7 @@
     <unit id="42990" owner="1" flag="118" face="0" transport="43087" exp="182" str="8" bstr="3"/>
   </hex>
   <hex row="17" col="5" road="144" name="RAILROAD">
-    <unit id="43072" owner="1" flag="118" face="0" exp="57" str="8" bstr="4"/>
+    <unit id="43072" owner="1" flag="118" face="0" exp="57" str="8" bstr="4" fuel="59" ammo="9"/>
   </hex>
   <hex row="17" col="9" terrain="1" road="17" name="Velikoye Ust&#x27;ye"/>
   <hex row="17" col="12" terrain="10" name="Seym River"/>
@@ -840,10 +840,10 @@
   <hex row="31" col="39" terrain="1" road="136" name="Krasnoye"/>
   <hex row="32" col="0" road="40" name="RAILROAD"/>
   <hex row="32" col="1" road="130" name="RAILROAD">
-    <unit id="42343" owner="0" flag="104" face="0" exp="143" str="7" bstr="4"/>
+    <unit id="42343" owner="0" flag="104" face="0" exp="143" str="7" bstr="4" ammo="4"/>
   </hex>
   <hex row="32" col="2" road="40" name="RAILROAD">
-    <unit id="42343" owner="0" flag="104" face="0" exp="250" str="5" bstr="3"/>
+    <unit id="42343" owner="0" flag="104" face="0" exp="250" str="5" bstr="3" ammo="4"/>
   </hex>
   <hex row="32" col="3" road="130" name="RAILROAD">
     <unit id="42348" owner="0" flag="104" face="0" transport="42344" exp="21" str="8" bstr="4"/>
@@ -889,7 +889,7 @@
   <hex row="34" col="7" terrain="1" road="17" name="Ivangorod"/>
   <hex row="34" col="11" name="RAILROAD"/>
   <hex row="34" col="12" name="RAILROAD">
-    <unit id="45884" owner="1" flag="118" face="0" exp="57" str="7" bstr="2"/>
+    <unit id="45884" owner="1" flag="118" face="0" exp="57" str="7" bstr="2" fuel="59"/>
   </hex>
   <hex row="34" col="16" terrain="1" name="Zelenovka"/>
   <hex row="34" col="18" road="17" name="RAILROAD"/>
@@ -927,7 +927,7 @@
   <hex row="35" col="37" terrain="10" name="Romen River"/>
   <hex row="35" col="39" terrain="10" name="Romen River"/>
   <hex row="36" col="1">
-    <unit id="42270" owner="0" flag="104" face="0" exp="4" str="7" bstr="3"/>
+    <unit id="42270" owner="0" flag="104" face="0" exp="4" str="7" bstr="3" ammo="5"/>
   </hex>
   <hex row="36" col="7" road="17"/>
   <hex row="36" col="11" name="RAILROAD" station="1">
@@ -951,7 +951,7 @@
     <unit id="42394" owner="0" flag="104" face="0" transport="42344" exp="83" str="7" bstr="4"/>
   </hex>
   <hex row="37" col="2">
-    <unit id="42270" owner="0" flag="104" face="0" exp="40" str="8" bstr="4"/>
+    <unit id="42270" owner="0" flag="104" face="0" exp="40" str="8" bstr="4" ammo="5"/>
   </hex>
   <hex row="37" col="7" road="17"/>
   <hex row="37" col="10">

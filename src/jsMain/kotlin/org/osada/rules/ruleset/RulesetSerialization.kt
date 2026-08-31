@@ -54,7 +54,7 @@ fun unknownRulesetKeys(data: dynamic): Set<String> {
     if (effective == null || effective == undefined) return emptySet()
     return js("Object.keys")(effective)
         .unsafeCast<Array<String>>()
-        .filter { RuleKey.byKey(it) == null }
+        .filter { RuleKey.byKey(it) == null && it !in RETIRED_RULE_KEYS }
         .toSet()
 }
 

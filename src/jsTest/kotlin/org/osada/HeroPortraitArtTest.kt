@@ -22,18 +22,19 @@ import kotlin.test.assertTrue
  * Guards the painted (authored) portrait path added for `DEFERRED.md` §6.6 item 6a — the half of
  * `docs/design/hero-presentation.md` §3 that was blocked on art.
  *
- * The invariants that matter are not "the picture is pretty" but: an authored hero's art exists and
- * dates correctly for the campaigns it can reach; an unknown art id degrades to the procedural layer
- * stack rather than to an empty frame (§3.4); and the prose gender follows the painting, not the
- * seed roll (§4.11 — the exact defect §7.35 fixed for procedural heroes).
+ * The invariants that matter are not "the picture is pretty" but: every authored hero that requests
+ * painted art names an existing, correctly dated asset; layered authored heroes may omit it; an
+ * unknown art id degrades to the procedural layer stack rather than to an empty frame (§3.4); and
+ * prose gender follows the painting, not the seed roll (§4.11).
  */
 class HeroPortraitArtTest {
     @Test
-    fun everyAuthoredHeroNamesArtThatExistsInTheCatalogue() {
-        LegendaryHeroPool.ALL.forEach { hero ->
+    fun everyPaintedAuthoredHeroNamesArtThatExistsInTheCatalogue() {
+        LegendaryHeroPool.ALL.filter { it.portraitArtId != null }.forEach { hero ->
+            val artId = assertNotNull(hero.portraitArtId)
             assertNotNull(
-                HeroPortraitArt.byId(hero.portraitArtId),
-                "${hero.id} names unknown portrait art '${hero.portraitArtId}'",
+                HeroPortraitArt.byId(artId),
+                "${hero.id} names unknown portrait art '$artId'",
             )
         }
     }
@@ -41,14 +42,14 @@ class HeroPortraitArtTest {
     @Test
     fun eachPortraitIsUsedByExactlyOneAuthoredHero() {
         // Two officers wearing the same face in one campaign reads as a bug, not as a pool.
-        val used = LegendaryHeroPool.ALL.map { it.portraitArtId }
+        val used = LegendaryHeroPool.ALL.mapNotNull { it.portraitArtId }
         assertEquals(used.size, used.toSet().size, "a painted portrait is shared by two heroes: $used")
     }
 
     @Test
     fun authoredGenderMatchesTheArtItPointsAt() {
-        LegendaryHeroPool.ALL.forEach { hero ->
-            val art = assertNotNull(HeroPortraitArt.byId(hero.portraitArtId))
+        LegendaryHeroPool.ALL.filter { it.portraitArtId != null }.forEach { hero ->
+            val art = assertNotNull(HeroPortraitArt.byId(assertNotNull(hero.portraitArtId)))
             assertEquals(art.female, hero.female, "${hero.id}'s stated gender disagrees with its portrait")
         }
     }
@@ -57,8 +58,8 @@ class HeroPortraitArtTest {
     fun aHeroNeverReachesACampaignItsUniformCannotBeWornIn() {
         // A budenovka cannot appear in 1942 and pogony cannot appear in 1919, whatever both sides
         // call themselves. The era's window is the honest bound; the hero's own range must sit in it.
-        LegendaryHeroPool.ALL.forEach { hero ->
-            val art = assertNotNull(HeroPortraitArt.byId(hero.portraitArtId))
+        LegendaryHeroPool.ALL.filter { it.portraitArtId != null }.forEach { hero ->
+            val art = assertNotNull(HeroPortraitArt.byId(assertNotNull(hero.portraitArtId)))
             assertTrue(
                 hero.yearRange.first >= art.era.years.first && hero.yearRange.last <= art.era.years.last,
                 "${hero.id} spans ${hero.yearRange} but wears ${art.era} art (${art.era.years})",
@@ -70,7 +71,7 @@ class HeroPortraitArtTest {
     fun anUnknownArtIdFallsBackToTheProceduralFaceRatherThanAnEmptyFrame() {
         assertNull(HeroPortraitArt.pathFor("no_such_asset"))
         assertNull(HeroPortraitArt.pathFor(null))
-        val known = LegendaryHeroPool.ALL.first().portraitArtId
+        val known = assertNotNull(LegendaryHeroPool.ALL.firstNotNullOfOrNull { it.portraitArtId })
         assertEquals("resources/heroes/$known.png", HeroPortraitArt.pathFor(known))
     }
 

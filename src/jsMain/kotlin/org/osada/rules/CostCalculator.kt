@@ -98,13 +98,21 @@ object CostCalculator {
      * Prestige actually charged per restored strength point, with the overstrength surcharge
      * applied. `Player.reinforceUnit` bills exactly this, and the action tooltip quotes exactly
      * this -- they must never be computed in two places.
+     *
+     * **OG's `elite_cost` is applied here** ([EliteReplacements]), which is what makes this the
+     * price of the ELITE/normal replacement rather than the bare per-point cost. Overstrength is
+     * bought with the same replacement points and is priced through the same key, so the two keep
+     * the ratio `OVERSTRENGTH_PENALTY` gives them. `GreenReplacements` deliberately does NOT come
+     * through here: `green_cost` and `elite_cost` are both percentages of the SAME standard cost,
+     * so charging one on top of the other would compound them.
      */
     fun reinforceCostPerStrength(
         unit: GameUnit,
         overStrength: Boolean,
     ): Int {
         val penalty = if (overStrength) OVERSTRENGTH_PENALTY else 1.0
-        return kotlin.math.round(calculateUnitCostPerStrength(unit) * penalty).toInt()
+        val standard = kotlin.math.round(calculateUnitCostPerStrength(unit) * penalty).toInt()
+        return EliteReplacements.priced(standard)
     }
 
     /** Prestige refunded when disbanding/selling [unit] at its current strength. */

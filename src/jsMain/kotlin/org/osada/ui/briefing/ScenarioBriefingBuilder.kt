@@ -258,6 +258,7 @@ internal object ScenarioBriefingBuilder {
         clear(view.ordersContent)
         addTextSection(view.ordersContent, "SITUATION", orders.situation)
         addTextSection(view.ordersContent, "MISSION", orders.mission)
+        addExtendedObjectiveSection(view.ordersContent, facts?.extendedObjectives.orEmpty())
         addListSection(view.ordersContent, "PRIMARY OBJECTIVES", orders.primaryObjectives, primary = true)
         addListSection(view.ordersContent, "SECONDARY OBJECTIVES", orders.secondaryObjectives, primary = false)
         addTextSection(view.ordersContent, "ENEMY INTELLIGENCE", orders.enemyIntelligence)

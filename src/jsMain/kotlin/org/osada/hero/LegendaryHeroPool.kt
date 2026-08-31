@@ -18,12 +18,11 @@ import org.osada.UnitClass
  * without an authored match receive a deterministic procedural reservation rather than an
  * incompatible Soviet officer (§23).
  *
- * **Two eras are covered, because the art is.** Each hero names a painted portrait from
- * [HeroPortraitArt], and a painted uniform dates its wearer: the Great Patriotic War entries wear
- * pilotka/ushanka/peaked cap, the Russian Civil War entries budenovka and papakha and no shoulder
- * boards. That is why [yearRange] and [campaignIds] are per hero rather than per pool — a 1919
- * commander must be unable to reach a 1942 campaign even though both sides call themselves the Red
- * Army. Campaign ids and [nationIds] were read from the deployed scenarios' own `player id="0"`
+ * Every shipped player side has at least one candidate. The original Soviet and Russian Civil War
+ * entries use painted portraits; the broader campaign set uses the matching deterministic layered
+ * national/era pool. That is why [yearRange] and [campaignIds] are per hero rather than per pool —
+ * a 1919 commander must be unable to reach a 1942 campaign even when both sides call themselves the
+ * Red Army. Campaign ids and [nationIds] were read from the deployed scenarios' own `player id="0"`
  * country, not from the campaign list's prose label.
  *
  * **[female] is authored, not rolled.** The painting already decided; the biography narrator and
@@ -44,7 +43,8 @@ internal object LegendaryHeroPool {
         val signatureTitle: String,
         val signatureDescription: String,
         val startingRankId: String,
-        val portraitArtId: String,
+        /** Painted portrait when one exists; null deliberately uses the matching procedural pool. */
+        val portraitArtId: String? = null,
         val female: Boolean = false,
     )
 
@@ -60,6 +60,15 @@ internal object LegendaryHeroPool {
     private const val NATION_SOVIET_UNION_19 = 19
     private const val NATION_USSR_89 = 89
     private const val NATION_RED_RUSSIA_103 = 103
+
+    private val COMMON_LAND_CLASSES =
+        setOf(
+            UnitClass.INFANTRY.value,
+            UnitClass.TANK.value,
+            UnitClass.RECON.value,
+            UnitClass.ANTI_TANK.value,
+            UnitClass.ARTILLERY.value,
+        )
 
     /** Great Patriotic War, 1936–1954 — pilotka, ushanka, peaked cap, later-war pogony. */
     private val SOVIET_WW2: List<LegendaryHero> =
@@ -412,7 +421,184 @@ internal object LegendaryHeroPool {
             ),
         )
 
-    val ALL: List<LegendaryHero> = SOVIET_WW2 + RUSSIAN_CIVIL_WAR
+    /** One authored-fictional composite for every remaining player side in the shipped campaigns. */
+    private val OTHER_CAMPAIGN_SIDES: List<LegendaryHero> =
+        listOf(
+            LegendaryHero(
+                id = "red_army_internationalist",
+                name = "Captain Alexei Serebryakov",
+                campaignIds = setOf("camp6bn9.json"),
+                nationIds = setOf(19),
+                yearRange = 1936..1940,
+                compatibleUnitClasses = COMMON_LAND_CLASSES,
+                backgroundId = "infantry_school_instructor",
+                signatureTrait = LeaderType.COMBAT_SUPPORT,
+                signatureTitle = "International Detachment",
+                signatureDescription = "Turns unfamiliar weapons and mixed detachments into a coordinated formation.",
+                startingRankId = "captain",
+            ),
+            LegendaryHero(
+                id = "yugoslav_woodland",
+                name = "Captain Milan Vukovic",
+                campaignIds = setOf("camp6bn8.json"),
+                nationIds = setOf(43),
+                yearRange = 1941..1945,
+                compatibleUnitClasses = COMMON_LAND_CLASSES,
+                backgroundId = "veteran_reconnaissance_officer",
+                signatureTrait = LeaderType.FOREST_CAMOUFLAGE,
+                signatureTitle = "Mountain Detachment",
+                signatureDescription =
+                    "Moves a brigade through wooded high ground without offering the enemy a target.",
+                startingRankId = "captain",
+            ),
+            LegendaryHero(
+                id = "north_korean_vanguard",
+                name = "Captain Kang Chol",
+                campaignIds = setOf("ncampdfn.json"),
+                nationIds = setOf(25),
+                yearRange = 1950..1953,
+                compatibleUnitClasses = COMMON_LAND_CLASSES,
+                backgroundId = "armored_academy_graduate",
+                signatureTrait = LeaderType.OVERWHELMING_ATTACK,
+                signatureTitle = "Vanguard Column",
+                signatureDescription = "Turns a breach into a pursuit before the defending line can reform.",
+                startingRankId = "captain",
+            ),
+            LegendaryHero(
+                id = "german_fortyeighter",
+                name = "Captain Friedrich Adler",
+                campaignIds = setOf("aljf.json"),
+                nationIds = setOf(196),
+                yearRange = 1848..1865,
+                compatibleUnitClasses = COMMON_LAND_CLASSES,
+                backgroundId = "infantry_school_instructor",
+                signatureTrait = LeaderType.INFLUENCE,
+                signatureTitle = "Citizen Officer",
+                signatureDescription = "Finds arms, horses and willing hands wherever the cause still has friends.",
+                startingRankId = "captain",
+            ),
+            LegendaryHero(
+                id = "red_hungarian_mobile",
+                name = "Captain Laszlo Farkas",
+                campaignIds = setOf("rhu.json"),
+                nationIds = setOf(187),
+                yearRange = 1919..1919,
+                compatibleUnitClasses = COMMON_LAND_CLASSES,
+                backgroundId = "veteran_reconnaissance_officer",
+                signatureTrait = LeaderType.SUPERIOR_MANEUVER,
+                signatureTitle = "Northern Column",
+                signatureDescription = "Keeps the advance moving through gaps the enemy believes are closed.",
+                startingRankId = "captain",
+            ),
+            LegendaryHero(
+                id = "red_german_council_guard",
+                name = "Captain Otto Reimers",
+                campaignIds = setOf("novemberrevolution.json"),
+                nationIds = setOf(188),
+                yearRange = 1918..1919,
+                compatibleUnitClasses = COMMON_LAND_CLASSES,
+                backgroundId = "infantry_school_instructor",
+                signatureTrait = LeaderType.COMBAT_SUPPORT,
+                signatureTitle = "Council Network",
+                signatureDescription = "Links scattered detachments into a line that shares what each has learned.",
+                startingRankId = "captain",
+            ),
+            LegendaryHero(
+                id = "czechoslovak_rail_guard",
+                name = "Captain Jan Novak",
+                campaignIds = setOf("acampdf2.json"),
+                nationIds = setOf(144),
+                yearRange = 1917..1920,
+                compatibleUnitClasses = COMMON_LAND_CLASSES,
+                backgroundId = "transport_column_officer",
+                signatureTrait = LeaderType.RESILIENCE,
+                signatureTitle = "Railway Legion",
+                signatureDescription =
+                    "Keeps men and machines together through another thousand kilometres of retreat.",
+                startingRankId = "captain",
+            ),
+            LegendaryHero(
+                id = "spanish_popular_army",
+                name = "Captain Isabel Navarro",
+                campaignIds = setOf("gce.json"),
+                nationIds = setOf(226),
+                yearRange = 1936..1939,
+                compatibleUnitClasses = COMMON_LAND_CLASSES,
+                backgroundId = "infantry_school_instructor",
+                signatureTrait = LeaderType.STREET_FIGHTER,
+                signatureTitle = "Barricade Command",
+                signatureDescription = "Makes every courtyard and stairwell part of the defensive plan.",
+                startingRankId = "captain",
+                female = true,
+            ),
+            LegendaryHero(
+                id = "ancient_rebel_liberator",
+                name = "Castus",
+                campaignIds = setOf("spa.json"),
+                nationIds = setOf(310),
+                yearRange = -73..-71,
+                compatibleUnitClasses = COMMON_LAND_CLASSES,
+                backgroundId = "infantry_school_instructor",
+                signatureTrait = LeaderType.LIBERATOR,
+                signatureTitle = "Broken Chains",
+                signatureDescription = "Every captured settlement brings more people and supplies to the uprising.",
+                startingRankId = "captain",
+            ),
+            LegendaryHero(
+                id = "viet_cong_trailmaster",
+                name = "Tran Minh",
+                campaignIds = setOf("nvc.json"),
+                nationIds = setOf(276),
+                yearRange = 1964..1975,
+                compatibleUnitClasses = COMMON_LAND_CLASSES,
+                backgroundId = "veteran_reconnaissance_officer",
+                signatureTrait = LeaderType.INFILTRATION_TACTICS,
+                signatureTitle = "Hidden Approach",
+                signatureDescription = "Finds the covered route that puts the formation inside the enemy position.",
+                startingRankId = "captain",
+            ),
+            LegendaryHero(
+                id = "chinese_long_march_scout",
+                name = "Wang Ming",
+                campaignIds = setOf("rsoc.json"),
+                nationIds = setOf(21),
+                yearRange = 1927..1949,
+                compatibleUnitClasses = COMMON_LAND_CLASSES,
+                backgroundId = "veteran_reconnaissance_officer",
+                signatureTrait = LeaderType.RECON_MOVEMENT,
+                signatureTitle = "Long March Screen",
+                signatureDescription = "Keeps contact ahead of the column without surrendering the road behind it.",
+                startingRankId = "captain",
+            ),
+            LegendaryHero(
+                id = "greek_mountain_officer",
+                name = "Captain Dimitrios Karalis",
+                campaignIds = setOf("camp6bn4.json"),
+                nationIds = setOf(39),
+                yearRange = 1940..1949,
+                compatibleUnitClasses = COMMON_LAND_CLASSES,
+                backgroundId = "infantry_school_instructor",
+                signatureTrait = LeaderType.ALPINE_TRAINING,
+                signatureTitle = "Pindus Paths",
+                signatureDescription = "Treats steep tracks and forested ridges as roads known since childhood.",
+                startingRankId = "captain",
+            ),
+            LegendaryHero(
+                id = "white_russian_rearguard",
+                name = "Captain Nikolai Orlov",
+                campaignIds = setOf("simpob.json"),
+                nationIds = setOf(100),
+                yearRange = 1918..1920,
+                compatibleUnitClasses = COMMON_LAND_CLASSES,
+                backgroundId = "infantry_school_instructor",
+                signatureTrait = LeaderType.FIRST_STRIKE,
+                signatureTitle = "Rearguard Reflex",
+                signatureDescription = "Has the line firing before the advancing enemy finishes deploying.",
+                startingRankId = "captain",
+            ),
+        )
+
+    val ALL: List<LegendaryHero> = SOVIET_WW2 + RUSSIAN_CIVIL_WAR + OTHER_CAMPAIGN_SIDES
 
     private val byId: Map<String, LegendaryHero> = ALL.associateBy { it.id }
 

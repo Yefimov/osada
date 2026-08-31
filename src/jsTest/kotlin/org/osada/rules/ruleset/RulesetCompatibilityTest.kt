@@ -93,6 +93,15 @@ class RulesetCompatibilityTest {
         assertEquals(RulesetCompatibility.Refusal.UNSUPPORTED_SCHEMA, verdict.refusal)
     }
 
+    /** Pre-15 clients can disable authored triggers, so their multiplayer semantics differ. */
+    @Test
+    fun aPreTriggerRetirementSchemaIsRefused() {
+        val verdict = RulesetCompatibility.verdict(local(baseline), block(schemaVersion = 14))
+
+        assertFalse(verdict.allowed)
+        assertEquals(RulesetCompatibility.Refusal.UNSUPPORTED_SCHEMA, verdict.refusal)
+    }
+
     @Test
     fun anUnknownRuleIsRefusedAndNamedRatherThanIgnored() {
         val verdict = RulesetCompatibility.verdict(local(baseline), block(extraKey = "warp_drive" to 1))

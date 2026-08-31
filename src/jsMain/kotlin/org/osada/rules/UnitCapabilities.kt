@@ -354,7 +354,14 @@ object UnitCapabilities {
      */
     fun grantsCombatSupport(data: EquipmentData): Boolean = data.attr and ATTR_MASK_COMBAT_SUPPORT != 0
 
-    /** Sum of experience bars lent by adjacent friendly Combat Support units. */
+    /**
+     * Sum of experience bars lent by adjacent friendly Combat Support units.
+     *
+     * **`ground_carrier` bit 2 widens the list**, exactly as it widens `CombatResolver`'s: a staff
+     * element riding inside a container lends its bars from the container's hex. Both rules go
+     * through [CarrierHangars.supportPosition] so they can never disagree about where a passenger
+     * stands, and [CarrierHangars.supportingPassengers] returns nothing when the bit is off.
+     */
     fun combatSupportBars(
         units: List<GameUnit>,
         recipient: GameUnit,
@@ -363,8 +370,8 @@ object UnitCapabilities {
         val side = recipient.player?.side
         if (pos == null || side == null) return 0
         val recipientIsAir = UnitPredicates.isAir(recipient)
-        return units.sumOf { supporter ->
-            val supporterPos = supporter.getPos()
+        return (units + CarrierHangars.supportingPassengers(units)).sumOf { supporter ->
+            val supporterPos = CarrierHangars.supportPosition(supporter)
             val eligible =
                 supporter !== recipient &&
                     !supporter.destroyed &&

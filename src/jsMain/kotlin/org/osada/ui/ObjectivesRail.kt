@@ -22,12 +22,13 @@ import org.w3c.dom.events.MouseEvent
  * The sidebar OBJECTIVES panel
  * (`docs/design/action-affordances-and-objectives.md` §§8, 9).
  *
- * Four sections, each of which exists only when the scenario actually has that thing:
+ * Five sections, each of which exists only when the scenario actually has that thing:
  *  1. required victory objectives, with a `held / visible` summary;
- *  2. optional capture points, labelled as optional and never counted toward the summary;
- *  3. the victory-tier strip -- turn deadlines, or the authored hold thresholds when the scenario
+ *  2. authored evacuation, kill and Must-Survive conditions, with live progress;
+ *  3. optional capture points, labelled as optional and never counted toward the summary;
+ *  4. the victory-tier strip -- turn deadlines, or the authored hold thresholds when the scenario
  *     is graded by how many objectives survive the turn limit instead;
- *  4. for a campaign scenario, its authored `scenario.actions` as a SECOND objective phase, marked
+ *  5. for a campaign scenario, its authored `scenario.actions` as a SECOND objective phase, marked
  *     "currently satisfied - checked at mission end" rather than complete.
  *
  * The top-left `Turn n/max` field is untouched; this panel never repeats it.
@@ -43,12 +44,13 @@ internal object ObjectivesRail {
         // is the opponent, which inverts every Held/Enemy label.
         val report = scenario.objectiveReport(game.spotSide, uiSettings.showHiddenVictoryHexes)
 
-        if (report.rows.isEmpty()) {
+        if (report.rows.isEmpty() && report.extended.isEmpty()) {
             val empty = addTag(container, "div")
             empty.className = "osada-side-empty"
             empty.textContent = I18n.t("hud.objective.none_visible")
         } else {
             renderVictory(container, report, game)
+            ExtendedObjectivesRail.render(container, report)
             renderOptional(container, report, game)
             renderHidden(container, report, game)
         }

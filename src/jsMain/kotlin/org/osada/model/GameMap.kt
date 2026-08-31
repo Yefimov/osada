@@ -151,9 +151,11 @@ class GameMap {
      */
     private fun beginNewRound() {
         turn++
-        // A hangar is a working airfield: an aircraft inside one refuels and rearms with the round,
-        // exactly as one parked on a carrier's deck always has (`rules/CarrierHangars`).
-        units.forEach { CarrierHangars.resupplyContained(this, it) }
+        // A container is a working depot: a formation inside one refuels, rearms and gets its
+        // per-turn flags back with the round (`rules/CarrierHangars`). The flag reset matters as
+        // much as the supply now that `ground_carrier` bit 2 lets a passenger fire in support --
+        // nothing else in this sweep ever touches a unit that is not on the map.
+        units.forEach { CarrierHangars.endRoundForContained(this, it, GameHolder.instance?.spotSide ?: 0) }
         units.forEach { unit ->
             if (unit.isMounted) unmountUnitHandler(unit)
             val supply = GameRules.getResupplyValue(this, unit, true)

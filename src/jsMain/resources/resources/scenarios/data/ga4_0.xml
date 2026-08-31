@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="ga4_0.xscn" name="Khalkin Gol" turns="14, 15, 18" date="August 20, 1939" dayturns="0" ground="0" atmosferic="0" latitude="0" iconset="0" weatherchg="1" rows="39" cols="44" eqp="eqp-comww2" image="resources/maps/images/map_176.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="1" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="0" truespotting0="0" reinfwhenactive="0" capitalflak="0">
+<map file="ga4_0.xscn" name="Khalkin Gol" turns="14, 15, 18" date="August 20, 1939" dayturns="0" ground="0" atmosferic="0" latitude="0" iconset="0" weatherchg="1" rows="39" cols="44" eqp="eqp-comww2" image="resources/maps/images/map_176.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="1" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="0" truespotting0="1" reinfwhenactive="0" capitalflak="0" ehmsuonly="0" paradropocean="0">
   <player id="0" country="89" side="1" airtrans="1" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="10" support="305,90,0,0" turnprestige="72, 10, 50, 50, 70, 40, 60, 40, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <player id="1" country="5" side="0" airtrans="1" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="5" support="6,25,0,0" turnprestige="0, 300, 0, 0, 200, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="2">
@@ -34,7 +34,7 @@
       <unit id="39702" owner="0" flag="90" face="0" transport="40192" exp="200" str="8"/>
     </at>
     <at row="29" col="21">
-      <unit id="39873" owner="0" flag="90" face="0" exp="143" str="9"/>
+      <unit id="39873" owner="0" flag="90" face="0" exp="143" str="9" fuel="66" ammo="8"/>
     </at>
     <at row="29" col="18">
       <unit id="39656" owner="0" flag="90" face="0" transport="40192" exp="112" str="8"/>
@@ -46,12 +46,12 @@
       <unit id="4108" owner="1" flag="6" face="0" str="5"/>
     </at>
     <at row="15" col="32">
-      <unit id="4920" owner="1" flag="6" face="0" str="4"/>
+      <unit id="4920" owner="1" flag="6" face="0" str="4" fuel="42" ammo="1"/>
     </at>
   </reinforce>
   <reinforce turn="3">
     <at row="4" col="4">
-      <unit id="52594" owner="0" flag="305" face="0" exp="100"/>
+      <unit id="52594" owner="0" flag="305" face="0" exp="100" ammo="5"/>
     </at>
     <at row="6" col="7">
       <unit id="39724" owner="0" flag="90" face="0" transport="40192" exp="25"/>
@@ -69,7 +69,7 @@
       <unit id="39733" owner="0" flag="90" face="0" exp="100" str="9"/>
     </at>
     <at row="9" col="3">
-      <unit id="40338" owner="0" flag="90" face="0" exp="100" str="8"/>
+      <unit id="40338" owner="0" flag="90" face="0" exp="100" str="8" ammo="6"/>
     </at>
     <at row="3" col="13">
       <unit id="3958" owner="1" flag="6" face="0" exp="25" str="7"/>
@@ -96,7 +96,7 @@
       <unit id="4662" owner="1" flag="6" face="0" exp="50" str="6"/>
     </at>
     <at row="14" col="33">
-      <unit id="4910" owner="1" flag="6" face="0" exp="25" str="5"/>
+      <unit id="4910" owner="1" flag="6" face="0" exp="25" str="5" fuel="41"/>
     </at>
     <at row="15" col="35">
       <unit id="5266" owner="1" flag="6" face="0" str="5"/>
@@ -116,10 +116,10 @@
       <unit id="40451" owner="0" flag="90" face="0" exp="25"/>
     </at>
     <at row="22" col="9">
-      <unit id="40443" owner="0" flag="90" face="0" exp="99" str="9"/>
+      <unit id="40443" owner="0" flag="90" face="0" exp="99" str="9" ammo="5"/>
     </at>
     <at row="22" col="7">
-      <unit id="40614" owner="0" flag="90" face="0" str="5"/>
+      <unit id="40614" owner="0" flag="90" face="0" str="5" fuel="81"/>
     </at>
     <at row="3" col="19">
       <unit id="3958" owner="1" flag="6" face="0" exp="100" str="6"/>
@@ -134,7 +134,7 @@
       <unit id="4642" owner="1" flag="6" face="0" exp="25" str="5"/>
     </at>
     <at row="23" col="37">
-      <unit id="4312" owner="1" flag="6" face="0" exp="125"/>
+      <unit id="4312" owner="1" flag="6" face="0" exp="125" fuel="0"/>
     </at>
   </reinforce>
   <reinforce turn="5">
@@ -163,7 +163,7 @@
       <unit id="3958" owner="1" flag="6" face="0" exp="25" str="8"/>
     </at>
     <at row="11" col="36">
-      <unit id="4910" owner="1" flag="6" face="0" exp="10" str="6"/>
+      <unit id="4910" owner="1" flag="6" face="0" exp="10" str="6" fuel="41"/>
     </at>
     <at row="10" col="37">
       <unit id="5266" owner="1" flag="6" face="0" str="6"/>
@@ -599,7 +599,7 @@
   <hex row="14" col="7" road="130"/>
   <hex row="14" col="8" road="40"/>
   <hex row="14" col="9" terrain="10" road="130" name="Halha River">
-    <unit id="375" owner="0" flag="90" face="0" exp="100" bstr="1"/>
+    <unit id="375" owner="0" flag="90" face="0" exp="100" bstr="1" ammo="10"/>
   </hex>
   <hex row="14" col="10" road="40"/>
   <hex row="14" col="11" terrain="16">
@@ -680,7 +680,7 @@
   <hex row="16" col="9" terrain="15" name="Halha River"/>
   <hex row="16" col="10" terrain="16"/>
   <hex row="16" col="11" terrain="16">
-    <unit id="40294" owner="0" flag="90" face="0" transport="40148" exp="200" str="7" bstr="7"/>
+    <unit id="40294" owner="0" flag="90" face="0" transport="40148" exp="200" str="7" bstr="7" ammo="8"/>
   </hex>
   <hex row="16" col="12" terrain="16">
     <unit id="39702" owner="0" flag="90" face="0" transport="40192" exp="200" str="9" bstr="9"/>

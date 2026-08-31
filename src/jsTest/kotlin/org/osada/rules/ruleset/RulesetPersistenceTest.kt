@@ -98,6 +98,19 @@ class RulesetPersistenceTest {
         assertFalse(profile.supported)
     }
 
+    /** Schema 13/14 profiles may name the retired trigger key; it is migrated away, not rejected. */
+    @Test
+    fun theRetiredTriggerKeyIsDroppedFromAnOldProfile() {
+        val stored =
+            """[{"id":"custom-1","name":"Old","schemaVersion":14,"overrides":{"trigger_hexes":0}}]"""
+
+        val profile = RulesetProfileStore.parse(stored).single()
+
+        assertTrue(profile.supported)
+        assertTrue(profile.overrides.isEmpty())
+        assertTrue(profile.unknownKeys.isEmpty())
+    }
+
     @Test
     fun aNewerSchemaIsVisibleButUnsupported() {
         val stored = """[{"id":"custom-1","name":"Future","schemaVersion":99,"overrides":{}}]"""
@@ -187,5 +200,17 @@ class RulesetPersistenceTest {
 
         assertEquals(setOf("warp_drive"), unknownRulesetKeys(block))
         assertEquals(1, readRulesetSchemaVersion(block))
+    }
+
+    /** Old battle saves also carry the retired key in their effective block. */
+    @Test
+    fun theRetiredTriggerKeyIsKnownButIgnoredInAnOldSave() {
+        val block = js("({})")
+        block.id = "osada-default"
+        block.schemaVersion = 14
+        block.effective = js("({trigger_hexes: 0})")
+
+        assertTrue(unknownRulesetKeys(block).isEmpty())
+        assertTrue(deserializeRuleset(block) != null)
     }
 }

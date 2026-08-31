@@ -1,11 +1,19 @@
 package org.osada.rules
 
+import org.osada.LeaderType
 import org.osada.MovMethod
 import org.osada.TerrainType
 import org.osada.UnitClass
 import org.osada.hero.CoreFormation
 import org.osada.hero.FormationId
+import org.osada.hero.HeroBiographyFacts
 import org.osada.hero.HeroCampaign
+import org.osada.hero.HeroDefinition
+import org.osada.hero.HeroId
+import org.osada.hero.HeroOrigin
+import org.osada.hero.HeroState
+import org.osada.hero.LegacyTraitMapping
+import org.osada.hero.PortraitComposition
 import org.osada.model.EfileConfig
 import org.osada.model.Equipment
 import org.osada.model.EquipmentData
@@ -272,6 +280,43 @@ class AttachmentsTest {
         val pods = Attachments.bonus(unit, Attachments.SLOT_FUEL_PODS)
         assertEquals(1, fast, "ATOMIC Fast Speed 1 with no minmove is a flat +1 MP")
         assertEquals(15, pods, "ATOMIC Fuel Pods 15 with no minfuel is a flat +15 fuel")
+    }
+
+    @Test
+    fun heroMovementTraitAndFastSpeedAttachmentStack() {
+        val config =
+            withScaledSlots(
+                lxfShapedConfig(),
+                fastSpeedBonus = 1,
+                fuelPodsBonus = 15,
+                minMove = 0,
+                minFuel = 0,
+            )
+        EfileConfig.setForTest(attachmentConfigValue = config)
+        val heroId = HeroId("H-MOVE")
+        val formationId = FormationId("F-HERO-MOVE")
+        HeroCampaign.roster().putFormation(formation(formationId.value).copy(assignedHeroId = heroId))
+        HeroCampaign.roster().putHero(
+            HeroDefinition(
+                id = heroId,
+                origin = HeroOrigin.PROCEDURAL,
+                displayName = "Test Commander",
+                backgroundId = "veteran_reconnaissance_officer",
+                biographyFacts = HeroBiographyFacts(emergenceEventId = "test"),
+                portrait = PortraitComposition(seed = 1),
+            ),
+            HeroState(
+                heroId = heroId,
+                rankId = "captain",
+                assignedFormationId = formationId,
+                learnedTraitIds = setOf(LegacyTraitMapping.toTraitId(LeaderType.AGGRESSIVE_MANEUVER)),
+            ),
+        )
+        val unit = coreUnit(formationId.value)
+
+        assertTrue(HeroCampaign.purchaseAttachment(unit, Attachments.SLOT_FAST_SPEED))
+
+        assertEquals(8, MovementRules.getUnitMoveRange(unit), "base 6 + hero 1 + Fast Speed 1")
     }
 
     /** LXF-shaped: `attach_minmove`/`attach_minfuel` are set, so slots 11/12's columns are

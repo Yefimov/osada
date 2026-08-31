@@ -73,4 +73,30 @@ class HeroNamePoolsTest {
 
         assertEquals(first, second)
     }
+
+    @Test
+    fun everyShippedCampaignSideHasANationalNamePool() {
+        val campaignCountries =
+            setOf(19, 21, 25, 39, 43, 61, 89, 100, 103, 144, 187, 188, 196, 226, 276, 310)
+        val generic = HeroNamePools.poolFor(999)
+
+        campaignCountries.forEach { country ->
+            assertTrue(HeroNamePools.poolFor(country) !== generic, "country $country must not use the generic pool")
+        }
+    }
+
+    @Test
+    fun eastAsianNamesPutTheFamilyNameFirst() {
+        listOf(21, 25, 276).forEach { country ->
+            val pool = HeroNamePools.poolFor(country)
+            val name = HeroNaming.nameFor(4242, country)
+
+            assertTrue(name.substringBefore(" ") in pool.surnames, "country $country should lead with the family name")
+        }
+    }
+
+    @Test
+    fun ancientRebelNamesAreMononyms() {
+        assertTrue(" " !in HeroNaming.nameFor(4242, 310))
+    }
 }

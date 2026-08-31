@@ -203,7 +203,7 @@ class AuthoredScenarioOptionsTest : OgRulesTestHarness() {
     /** The keys are unaffected: these are AUTHORED switches, not ruleset options. */
     @Test
     fun theseOptionsAreNotGatedOnARulesetKey() {
-        ruleset(RuleKey.TRIGGER_HEXES to 0)
+        ruleset(RuleKey.MINEFIELDS to 0)
         scenarioWith { trueRangeZero = true }
         val map = world()
         val unit = place(map, engineerEqid, 3, 3, 0)

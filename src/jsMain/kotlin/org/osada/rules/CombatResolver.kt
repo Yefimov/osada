@@ -259,7 +259,15 @@ object CombatResolver {
         return result
     }
 
-    /** Adjacent friendly units that fire in support of [defender] against [attacker]. */
+    /**
+     * Adjacent friendly units that fire in support of [defender] against [attacker].
+     *
+     * **The candidate list is widened by OG's `ground_carrier` bit 2** — *"enables these options:
+     * Combat Support, AirDefense and FireSupport"* — which lets a formation riding inside a
+     * container answer from the container's hex without leaving it. Those passengers are not in
+     * `GameMap.units`, so no caller can pass them in; [CarrierHangars.supportingPassengers] is the
+     * one place they are added, and it returns nothing whenever the bit is off.
+     */
     fun getSupportFireUnits(
         units: List<GameUnit>,
         attacker: GameUnit,
@@ -270,8 +278,11 @@ object CombatResolver {
         val defenderSide = defender.player?.side
         return if (aPos != null && dPos != null && defenderSide != null) {
             if (HexGeometry.distance(aPos.row, aPos.col, dPos.row, dPos.col) <= 1) {
+                val candidates = units + CarrierHangars.supportingPassengers(units)
                 val eligible =
-                    units.filter { support -> isSupportFireEligible(support, attacker, defender, defenderSide, aPos) }
+                    candidates.filter { support ->
+                        isSupportFireEligible(support, attacker, defender, defenderSide, aPos)
+                    }
                 // OG 9.6's escort is ONE destroyer -- its procedure "selects the FIRST destroyer
                 // adjacent to the defender" -- so a convoy screened by four answers once, not four
                 // times. Ordinary support fire is untouched. List order is `map.units` order and
@@ -300,7 +311,10 @@ object CombatResolver {
         aPos: Cell,
     ): Boolean {
         val isFriendlyNotDefender = support.player?.side == defenderSide && support.id != defender.id
-        val sPos = support.getPos()
+        // A contained supporter fires from its container's hex -- `ground_carrier` bit 2. Having no
+        // hex of its own is exactly what makes the container's hex its effective position, so this
+        // is the one accessor every range test here goes through.
+        val sPos = CarrierHangars.supportPosition(support)
         if (!isFriendlyNotDefender || sPos == null) return false
         val sData = support.unitData()
         // OG's `flak_range` governs ALL flak-type actions -- interception AND this air-defense

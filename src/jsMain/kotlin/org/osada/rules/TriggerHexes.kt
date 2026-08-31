@@ -10,8 +10,6 @@ import org.osada.model.Leaders
 import org.osada.model.Player
 import org.osada.model.acquireUnit
 import org.osada.model.reinforce
-import org.osada.rules.ruleset.ActiveRuleset
-import org.osada.rules.ruleset.RuleKey
 import org.osada.scenario.getRandomPrototype
 
 /**
@@ -85,12 +83,12 @@ import org.osada.scenario.getRandomPrototype
  * contested. `eqp-atomic` and `eqp-basekorp` set `1`; `eqp-nokorp` and `eqp-roi` set `0`; every
  * other efile is silent and gets OG's stated default of 0.
  *
- * ### Gated, and why the default is off
+ * ### Scenario content, not a ruleset choice
  *
- * [RuleKey.TRIGGER_HEXES], schema 13, defaulted **off**. Every action gives something away, so
- * turning it on makes 86 scenarios materially easier for both sides — a re-tuning the player
- * chooses rather than inherits. Author's Vision resolves it on, because a trigger hex is the
- * author's own content in the same sense a rail pool is.
+ * A trigger exists only because the scenario author placed it and chose its exact effect. It is
+ * therefore always active, like an escape hex or an MSU designation. Schema 15 retired the former
+ * `trigger_hexes` ruleset key: allowing a profile to erase Kieler Hafen's authored prestige event
+ * was allowing a generic rules toggle to rewrite the scenario itself.
  */
 object TriggerHexes {
     /** OG's nine action codes, in the order `Manual_OSuite-Scenario.pdf` §3.4 lists them. */
@@ -119,7 +117,12 @@ object TriggerHexes {
     /** `trigger_ex = 0`, OG's stated default: the trigger is owned and only the other side fires it. */
     private const val OWNED_TRIGGERS = 0
 
-    fun enabled(): Boolean = ActiveRuleset.flag(RuleKey.TRIGGER_HEXES, false)
+    /** Result needed by the movement layer. A silent trigger still returns an outcome: it fired,
+     *  made the move final, and may have awarded prestige even though it authored no message. */
+    data class FireOutcome(
+        val message: String?,
+        val prestigeAwarded: Int,
+    )
 
     /** Whether [hex] carries a trigger that could still fire for somebody. */
     fun isArmed(hex: Hex): Boolean = hex.trigger != 0 && !hex.triggerFired
@@ -133,11 +136,12 @@ object TriggerHexes {
     fun activatableBy(
         unit: GameUnit,
         hex: Hex,
+        ownerAtArrival: Int = hex.owner,
     ): Boolean =
         if (EfileConfig.intKey("trigger_ex", OWNED_TRIGGERS) != OWNED_TRIGGERS) {
             true
         } else {
-            hex.owner >= 0 && hex.owner != unit.owner
+            ownerAtArrival >= 0 && ownerAtArrival != unit.owner
         }
 
     /**
@@ -154,22 +158,27 @@ object TriggerHexes {
     /**
      * Fire [hex]'s trigger for [unit], which has just ended its move there.
      *
-     * Returns the message to show the player, or null when nothing fired. The message is the
+     * Returns the applied outcome, or null when nothing fired. [FireOutcome.message] is the
      * author's own [Hex.triggerMessage] where they wrote one; a trigger with no authored text
      * fires silently, exactly as OG's own content does — only 33 of 850 corpus triggers carry one.
+     * [ownerAtArrival] preserves the owner the unit encountered when capture has already planted
+     * the arriving side's flag by the time this method runs.
      */
     fun fire(
         map: GameMap,
         unit: GameUnit,
         hex: Hex,
-    ): String? {
-        val allowed = enabled() && isArmed(hex) && !unit.destroyed && activatableBy(unit, hex)
+        ownerAtArrival: Int = hex.owner,
+    ): FireOutcome? {
+        val allowed = isArmed(hex) && !unit.destroyed && activatableBy(unit, hex, ownerAtArrival)
         val player = unit.player?.takeIf { allowed } ?: return null
         // Set BEFORE any effect, exactly as `ScenarioEvent.fired` is: an action that re-enters this
         // path -- a spawned unit, a spotting sweep that moves something -- must not fire it twice.
         hex.triggerFired = true
+        val prestigeBefore = player.prestige
         val applied = apply(map, unit, player, hex)
-        return if (applied && hex.triggerMessage.isNotEmpty()) hex.triggerMessage else null
+        val message = if (applied && hex.triggerMessage.isNotEmpty()) hex.triggerMessage else null
+        return FireOutcome(message, (player.prestige - prestigeBefore).coerceAtLeast(0))
     }
 
     /** The action dispatch, split from [fire] to keep that function inside detekt's complexity

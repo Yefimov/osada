@@ -1,7 +1,9 @@
 package org.osada.scenario
 
 import org.osada.model.Hex
+import org.osada.model.getPlayers
 import org.osada.model.setHex
+import org.osada.model.setVictoryTiersForSide
 import org.w3c.dom.Document
 import org.w3c.dom.Element
 
@@ -30,7 +32,7 @@ internal object ScenarioHexParser {
         val inBounds = row != null && col != null && row < scenario.map.rows && col < scenario.map.cols
         if (!inBounds) return
         val hex = scenario.map.map!![row][col]
-        applyHexAttributes(el, hex)
+        applyHexAttributes(el, hex, scenario)
         parseHexUnits(el, hex, scenario)
         scenario.map.setHex(row, col)
     }
@@ -38,6 +40,7 @@ internal object ScenarioHexParser {
     private fun applyHexAttributes(
         el: Element,
         hex: Hex,
+        scenario: Scenario,
     ) {
         el.getAttribute("terrain")?.toIntOrNull()?.let { hex.terrain = it }
         el.getAttribute("road")?.toIntOrNull()?.let { hex.road = it }
@@ -59,11 +62,33 @@ internal object ScenarioHexParser {
         el.getAttribute("flag")?.toIntOrNull()?.let { hex.flag = it }
         el.getAttribute("owner")?.toIntOrNull()?.let { hex.owner = it }
         el.getAttribute("victory")?.toIntOrNull()?.let { hex.victorySide = it }
-        // OG's Typed VH tier mask (manual 3.7.2). Absent means 7 -- "counts for every level" --
-        // which is the ordinary victory hex and OSADA's long-standing behaviour.
-        el.getAttribute("victiers")?.toIntOrNull()?.let { hex.victoryTiers = it }
+        applyTypedVictoryAttributes(el, hex, scenario)
         el.getAttribute("deploy")?.toIntOrNull()?.let { hex.isDeployment = it }
         el.getAttribute("supply")?.toIntOrNull()?.let { hex.isDeployment = it }
+    }
+
+    /**
+     * OG's Typed VH masks (manual 3.7.2), normalized by importer to OSADA side. Absent means 7 —
+     * counts for every level. `victiers` is the one-mask format briefly deployed on 2026-08-30;
+     * keep reading it and attach it to the objective's owning side so old saves/custom XML work.
+     */
+    private fun applyTypedVictoryAttributes(
+        el: Element,
+        hex: Hex,
+        scenario: Scenario,
+    ) {
+        el.getAttribute("victiers")?.toIntOrNull()?.let { legacy ->
+            val ownerSide =
+                scenario.map
+                    .getPlayers()
+                    .firstOrNull { it.id == hex.owner }
+                    ?.side
+                    ?: hex.victorySide.takeIf { it in 0..1 }
+                    ?: 0
+            hex.setVictoryTiersForSide(ownerSide, legacy)
+        }
+        el.getAttribute("victiers0")?.toIntOrNull()?.let { hex.victoryTiersSide0 = it }
+        el.getAttribute("victiers1")?.toIntOrNull()?.let { hex.victoryTiersSide1 = it }
     }
 
     /**

@@ -102,6 +102,10 @@ internal class CoreUnitListOperations(
         unit.customName = savedUnit.customName as? String // optional key (rename feature)
         unit.isTemporaryBorrowed = savedUnit.temporaryBorrowed as? Boolean ?: false
         unit.stalinRegimeBoosted = savedUnit.stalinRegimeBoosted as? Boolean ?: false
+        // Core units bypass GameStateDeserializer because the campaign roster has a deliberately
+        // smaller save shape. Restore the scenario-instance flags here too: in particular, an OG
+        // Must-Survive unit may be the one formation carried through an entire campaign.
+        unit.applySerializedScenarioProperties(savedUnit)
         if (unit.stalinRegimeBoosted) {
             unit.moveLeft *= GameUnit.STALIN_REGIME_MULTIPLIER
             unit.ammo *= GameUnit.STALIN_REGIME_MULTIPLIER

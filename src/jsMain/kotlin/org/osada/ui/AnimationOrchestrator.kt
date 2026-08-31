@@ -329,7 +329,11 @@ internal class AnimationOrchestrator(
             val place = if (!hexName.isNullOrEmpty()) hexName else "(${pos.col},${pos.row})"
             // OG reports the reward on capture ("You gain 40 prestige"); the amount was computed
             // in applyHexCapture but never surfaced, so a capture read as worth nothing.
-            val reward = if (result.capturePrestige > 0) " (+${result.capturePrestige} prestige)" else ""
+            // A silent prestige trigger on a captured flag (Kieler Hafen) is the capture reward,
+            // not a second unrelated discovery. Fold it into this one line; an authored trigger
+            // message is still reported separately by reportTrigger.
+            val totalPrestige = result.capturePrestige + result.triggerPrestige
+            val reward = if (totalPrestige > 0) " (+$totalPrestige prestige)" else ""
             HudLog.addAt(pos.row, pos.col, "${unit.unitData(true).name} captured $place$reward")
         }
         if (result.isVictorySide >= 0) {
@@ -465,9 +469,11 @@ private fun reportTrigger(
     pos: Cell,
 ) {
     if (!result.firedTrigger) return
+    if (result.isCapture && result.triggerMessage == null && result.triggerPrestige > 0) return
     val text = result.triggerMessage ?: I18n.t("trigger.fired", mapOf("unit" to unit.unitData(true).name))
+    val reward = if (result.triggerPrestige > 0) " (+${result.triggerPrestige} prestige)" else ""
     ui.showAlert(pos.row, pos.col, I18n.t("trigger.alert"), true)
-    HudLog.addAt(pos.row, pos.col, text)
+    HudLog.addAt(pos.row, pos.col, "$text$reward")
     ui.showUnitInfo(unit)
 }
 

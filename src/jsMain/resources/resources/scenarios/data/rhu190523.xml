@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="rhu190523.xscn" name="1919/05/23 Liberating Miskolc" turns="15, 17, 20" date="May 23, 1919" dayturns="0" ground="0" atmosferic="0" latitude="6" iconset="0" weatherchg="1" rows="34" cols="42" eqp="eqp-kaiser" image="resources/maps/images/map_rhu190523.png" eqpv="united1" msuunits="1, 0" canblow="0" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="1" portsnonavaldeploy="1" prototypes="0" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="0">
+<map file="rhu190523.xscn" name="1919/05/23 Liberating Miskolc" turns="15, 17, 20" date="May 23, 1919" dayturns="0" ground="0" atmosferic="0" latitude="6" iconset="0" weatherchg="1" rows="34" cols="42" eqp="eqp-kaiser" image="resources/maps/images/map_rhu190523.png" eqpv="united1" msuunits="1, 0" canblow="0" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="1" portsnonavaldeploy="1" prototypes="0" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="0" ehmsuonly="0" paradropocean="1">
   <player id="0" country="187" side="0" airtrans="0" navaltrans="0" railtrans="5" defaultxp="170" defaultstr="10" support="188,0,0,0" turnprestige="8, 8, 8, 8, 8, 12, 12, 12, 12, 12, 16, 16, 16, 16, 16, 12, 8, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <player id="1" country="47" side="1" airtrans="0" navaltrans="0" railtrans="3" defaultxp="110" defaultstr="10" support="48,0,0,0" turnprestige="25, 25, 25, 25, 25, 20, 20, 20, 20, 20, 15, 15, 15, 15, 15, 10, 10, 5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="8">
@@ -13,7 +13,7 @@
       <unit id="33062" owner="1" flag="48" face="0" exp="151"/>
     </at>
     <at row="1" col="1">
-      <unit id="33352" owner="1" flag="48" face="0" exp="135"/>
+      <unit id="33352" owner="1" flag="48" face="0" exp="135" fuel="0" ammo="4"/>
     </at>
     <at row="4" col="38">
       <unit id="33094" owner="1" flag="48" face="0" transport="33335" exp="163"/>
@@ -36,7 +36,7 @@
       <unit id="33120" owner="1" flag="48" face="0" transport="33335" exp="193"/>
     </at>
     <at row="1" col="1">
-      <unit id="33352" owner="1" flag="48" face="0" exp="145"/>
+      <unit id="33352" owner="1" flag="48" face="0" exp="145" fuel="0" ammo="7"/>
     </at>
   </reinforce>
   <hex row="0" col="2" terrain="5"/>
@@ -353,7 +353,7 @@
     <unit id="33208" owner="1" flag="48" face="0" exp="160" bstr="8"/>
   </hex>
   <hex row="9" col="25" terrain="1" road="145" name="Saj&#243;szentp&#233;ter" owner="1" flag="47" station="1">
-    <unit id="33081" owner="1" flag="48" face="0" transport="33383" exp="145" bstr="8"/>
+    <unit id="33081" owner="1" flag="48" face="0" transport="33383" exp="145" bstr="8" ammo="5"/>
   </hex>
   <hex row="9" col="26" terrain="10" name="Saj&#243;"/>
   <hex row="9" col="27" terrain="10" name="Saj&#243;"/>
@@ -535,7 +535,7 @@
     <unit id="33408" owner="1" flag="48" face="0" transport="33374" exp="181" bstr="8"/>
   </hex>
   <hex row="14" col="32" terrain="1" road="41" name="Fels&#246;zsolca" owner="1" flag="47" trigger="7" trigparam="5" station="1">
-    <unit id="33096" owner="1" flag="48" face="0" transport="33383" exp="155" bstr="8"/>
+    <unit id="33096" owner="1" flag="48" face="0" transport="33383" exp="155" bstr="8" ammo="4"/>
   </hex>
   <hex row="14" col="33" road="130"/>
   <hex row="14" col="34" terrain="10" road="40" name="Hern&#225;d"/>

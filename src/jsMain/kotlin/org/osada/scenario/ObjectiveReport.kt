@@ -2,6 +2,7 @@ package org.osada.scenario
 
 import org.osada.model.Hex
 import org.osada.model.getPlayer
+import org.osada.rules.ExtendedVictory
 
 /*
  * The objectives rail's progress model
@@ -53,12 +54,34 @@ data class HoldThreshold(
     val count: Int,
 )
 
+/** Open General's scenario-level conditions that are not ordinary victory-hex captures. */
+enum class ExtendedObjectiveKind {
+    /** Withdraw the authored number of friendly formations through compatible Escape Hexes. */
+    RETREAT,
+
+    /** Destroy the authored number of enemy formations. */
+    KILL,
+
+    /** Keep at least the authored number of MSU-marked friendly formations alive. */
+    MUST_SURVIVE,
+}
+
+data class ExtendedObjectiveProgress(
+    val kind: ExtendedObjectiveKind,
+    val current: Int,
+    val required: Int,
+) {
+    val satisfied: Boolean get() = current >= required
+    val failed: Boolean get() = kind == ExtendedObjectiveKind.MUST_SURVIVE && !satisfied
+}
+
 data class ObjectiveReport(
     val rows: List<ObjectiveRow>,
     val turn: Int,
     val maxTurns: Int,
     val deadlines: List<VictoryDeadline>,
     val holdThresholds: List<HoldThreshold>,
+    val extended: List<ExtendedObjectiveProgress>,
 ) {
     val victory: List<ObjectiveRow> get() = rows.filter { it.kind == ObjectiveKind.VICTORY }
     val optional: List<ObjectiveRow> get() = rows.filter { it.kind == ObjectiveKind.OPTIONAL_CAPTURE }
@@ -106,6 +129,7 @@ fun Scenario.objectiveReport(
             }
         }
     }
+    val sideHoldCounts = if (side == 0) victoryHoldCounts else victoryHoldCountsSide1
     return ObjectiveReport(
         rows = rows,
         turn = map.turn,
@@ -115,13 +139,48 @@ fun Scenario.objectiveReport(
                 map.victoryTurns.getOrNull(tier.ordinal)?.let { VictoryDeadline(tier, it) }
             },
         holdThresholds =
-            if (victoryHoldCounts.size < VictoryTier.entries.size) {
+            if (sideHoldCounts.size < VictoryTier.entries.size) {
                 emptyList()
             } else {
-                VictoryTier.entries.map { tier -> HoldThreshold(tier, victoryHoldCounts[tier.ordinal]) }
+                VictoryTier.entries.map { tier -> HoldThreshold(tier, sideHoldCounts[tier.ordinal]) }
             },
+        extended = extendedObjectiveProgress(side),
     )
 }
+
+private fun Scenario.extendedObjectiveProgress(side: Int): List<ExtendedObjectiveProgress> =
+    buildList {
+        val retreatRequired = retreatUnitsPerSide.getOrNull(side) ?: 0
+        if (retreatRequired > 0) {
+            add(
+                ExtendedObjectiveProgress(
+                    ExtendedObjectiveKind.RETREAT,
+                    unitsWithdrawn.getOrNull(side) ?: 0,
+                    retreatRequired,
+                ),
+            )
+        }
+        val killRequired = killUnitsPerSide.getOrNull(side) ?: 0
+        if (killRequired > 0) {
+            add(
+                ExtendedObjectiveProgress(
+                    ExtendedObjectiveKind.KILL,
+                    unitsKilled.getOrNull(side) ?: 0,
+                    killRequired,
+                ),
+            )
+        }
+        val mustSurviveRequired = mustSurvivePerSide.getOrNull(side) ?: 0
+        if (mustSurviveRequired > 0) {
+            add(
+                ExtendedObjectiveProgress(
+                    ExtendedObjectiveKind.MUST_SURVIVE,
+                    ExtendedVictory.mustSurviveUnitsAlive(map, side),
+                    mustSurviveRequired,
+                ),
+            )
+        }
+    }
 
 /**
  * A hex with no owner is invisible to the rail even when it carries a flag: the existing map

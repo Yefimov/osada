@@ -106,7 +106,7 @@ data class HeroDefinition(
     val signatureTraitId: String? = null,
 )
 
-/** A decoration. Reserved for a later phase; nothing in Phase 1 awards one. */
+/** A one-time career decoration. Medal ids are additive so old saves remain valid as the catalogue grows. */
 data class HeroMedal(
     val medalId: String,
     val scenarioId: String,

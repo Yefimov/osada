@@ -21,10 +21,14 @@ object PortraitComposerV2 {
         val id: String,
     ) {
         USSR_1942("ussr_1942"),
+        SOVIET_INTERWAR("soviet_interwar"),
         REVOLUTION_1919("revolution_1919"),
         SPANISH_REPUBLIC_1936("spanish_republic_1936"),
         YUGOSLAV_PARTISAN_1941("yugoslav_partisan_1941"),
         EAST_ASIAN_REVOLUTIONARY("east_asian_revolutionary"),
+        GREEK_1940("greek_1940"),
+        WHITE_ARMY_1919("white_army_1919"),
+        ANCIENT_REBEL("ancient_rebel"),
         NONE("none"),
     }
 
@@ -169,6 +173,23 @@ object PortraitComposerV2 {
             groundPrimary = "headgear_east_asian_field_cap",
             groundSecondary = "headgear_east_asian_boonie",
         )
+    private val GREEK_HEADGEAR =
+        seasonalFieldHeadgear(
+            groundPrimary = "headgear_greek_side_cap",
+            groundSecondary = "headgear_greek_field_cap",
+        )
+    private val WHITE_ARMY_HEADGEAR =
+        seasonalFieldHeadgear(
+            groundPrimary = "headgear_white_army_cap",
+            groundSecondary = "headgear_white_army_papakha",
+        )
+    private val ANCIENT_HEADGEAR =
+        uniformHeadgear(
+            groundPrimary = "headgear_ancient_pilos",
+            groundSecondary = "headgear_ancient_phrygian",
+            primaryWeight = 0.45,
+            secondaryWeight = 0.35,
+        )
     private val HAIR_MODE =
         mapOf(
             "headgear_officer_cap" to "UNDER_CAP",
@@ -183,6 +204,12 @@ object PortraitComposerV2 {
             "headgear_yugoslav_partisan_cap" to "UNDER_CAP",
             "headgear_east_asian_field_cap" to "UNDER_CAP",
             "headgear_east_asian_boonie" to "UNDER_CAP",
+            "headgear_greek_side_cap" to "UNDER_CAP",
+            "headgear_greek_field_cap" to "UNDER_CAP",
+            "headgear_white_army_cap" to "UNDER_CAP",
+            "headgear_white_army_papakha" to "UNDER_FUR_HAT",
+            "headgear_ancient_pilos" to "UNDER_CAP",
+            "headgear_ancient_phrygian" to "UNDER_CAP",
         )
 
     data class Facts(
@@ -232,7 +259,7 @@ object PortraitComposerV2 {
         val headgear = pickHeadgear(facts, seed)
         val hairMode = if (headgear == null) "FULL_HAIR" else HAIR_MODE.getValue(headgear)
         chosen["background"] = pick(BACKGROUNDS, seed, "bg")
-        chosen["uniform_back"] = "back_${facts.branch}"
+        chosen["uniform_back"] = if (facts.pool == Pool.ANCIENT_REBEL) "back_ancient_tunic" else "back_${facts.branch}"
         putHair(chosen, facts, seed, hairMode)
         chosen["face"] = "face_${facts.archetype(seed)}"
         ageLayer(facts.age)?.let { chosen["age_face"] = it }
@@ -240,7 +267,7 @@ object PortraitComposerV2 {
         chosen["facial_hair"] = facialHair(facts, seed)
         chosen["uniform_front_collar"] = collarFor(facts)
         chosen["rank"] = rankFor(facts)
-        chosen["branch"] = "branch_${facts.branch}"
+        chosen["branch"] = if (facts.pool == Pool.ANCIENT_REBEL) "branch_ancient_rebel" else "branch_${facts.branch}"
         headgear?.let { chosen["headgear"] = it }
         facts.wound?.let { chosen["wound"] = it }
         return ORDER.mapNotNull { chosen[it] }
@@ -357,10 +384,14 @@ object PortraitComposerV2 {
         val catalog =
             when (facts.pool) {
                 Pool.USSR_1942 -> HEADGEAR_BY_BRANCH_SEASON
+                Pool.SOVIET_INTERWAR -> REVOLUTION_HEADGEAR
                 Pool.REVOLUTION_1919 -> REVOLUTION_HEADGEAR
                 Pool.SPANISH_REPUBLIC_1936 -> SPANISH_HEADGEAR
                 Pool.YUGOSLAV_PARTISAN_1941 -> YUGOSLAV_HEADGEAR
                 Pool.EAST_ASIAN_REVOLUTIONARY -> EAST_ASIAN_HEADGEAR
+                Pool.GREEK_1940 -> GREEK_HEADGEAR
+                Pool.WHITE_ARMY_1919 -> WHITE_ARMY_HEADGEAR
+                Pool.ANCIENT_REBEL -> ANCIENT_HEADGEAR
                 Pool.NONE -> return null
             }
         val key =
@@ -373,20 +404,28 @@ object PortraitComposerV2 {
             Pool.USSR_1942 ->
                 if (facts.branch == "aviation") "collar_aviation" else "collar_${facts.branch}_${facts.season}"
 
+            Pool.SOVIET_INTERWAR -> "collar_rev1919_field"
             Pool.REVOLUTION_1919 -> "collar_rev1919_field"
             Pool.SPANISH_REPUBLIC_1936 -> "collar_spanish_republic"
             Pool.YUGOSLAV_PARTISAN_1941 -> "collar_yugoslav_partisan"
             Pool.EAST_ASIAN_REVOLUTIONARY -> "collar_east_asian_field"
+            Pool.GREEK_1940 -> "collar_greek_1940"
+            Pool.WHITE_ARMY_1919 -> "collar_white_army_1919"
+            Pool.ANCIENT_REBEL -> "collar_ancient_rebel"
             Pool.NONE -> error("A no-portrait pool has no collar")
         }
 
     private fun rankFor(facts: Facts): String =
         when (facts.pool) {
             Pool.USSR_1942 -> "rank_${facts.rank}"
+            Pool.SOVIET_INTERWAR -> "rank_rev1919_${facts.rank}"
             Pool.REVOLUTION_1919 -> "rank_rev1919_${facts.rank}"
             Pool.SPANISH_REPUBLIC_1936 -> "rank_spanish_${facts.rank}"
             Pool.YUGOSLAV_PARTISAN_1941 -> "rank_yugoslav_${facts.rank}"
             Pool.EAST_ASIAN_REVOLUTIONARY -> "rank_east_asian_${facts.rank}"
+            Pool.GREEK_1940 -> "rank_greek_${facts.rank}"
+            Pool.WHITE_ARMY_1919 -> "rank_white_${facts.rank}"
+            Pool.ANCIENT_REBEL -> "rank_ancient_${facts.rank}"
             Pool.NONE -> error("A no-portrait pool has no rank layer")
         }
 
@@ -428,7 +467,7 @@ object PortraitComposerV2 {
             season = season,
             scar = permanentInjury,
             wound = if (wounded) pick(WOUNDS, seed, "wound") else null,
-            pool = poolOverride ?: poolFor(country),
+            pool = poolOverride ?: poolFor(country, serviceYear),
         )
     }
 
@@ -439,13 +478,20 @@ object PortraitComposerV2 {
      * threading.
      */
     @Suppress("MagicNumber") // Stable equipment-country ids, not arithmetic constants.
-    fun poolFor(country: Int?): Pool =
+    fun poolFor(
+        country: Int?,
+        serviceYear: Int? = null,
+    ): Pool =
         when (country) {
-            null, 19, 61, 89 -> Pool.USSR_1942
+            19 -> if (serviceYear != null && serviceYear < 1941) Pool.SOVIET_INTERWAR else Pool.USSR_1942
+            null, 61, 89 -> Pool.USSR_1942
             103, 144, 187, 188, 196 -> Pool.REVOLUTION_1919
             226 -> Pool.SPANISH_REPUBLIC_1936
             43 -> Pool.YUGOSLAV_PARTISAN_1941
             21, 25, 276 -> Pool.EAST_ASIAN_REVOLUTIONARY
+            39 -> Pool.GREEK_1940
+            100 -> Pool.WHITE_ARMY_1919
+            310 -> Pool.ANCIENT_REBEL
             else -> Pool.NONE
         }
 
@@ -540,6 +586,51 @@ object PortraitComposerV2 {
             "armor" to ground,
             "artillery" to ground,
             "aviation" to aviation,
+        )
+    }
+
+    /** A field cap in summer, its cold-weather alternative in winter; aviation keeps its helmet. */
+    private fun seasonalFieldHeadgear(
+        groundPrimary: String,
+        groundSecondary: String,
+    ): Map<String, Map<String, Map<String, Double>>> {
+        val ground =
+            mapOf(
+                "summer" to mapOf(groundPrimary to 0.55, groundSecondary to 0.25, "none" to 0.2),
+                "winter" to mapOf(groundSecondary to 0.55, groundPrimary to 0.25, "none" to 0.2),
+            )
+        val aviation =
+            mapOf(
+                "summer" to mapOf("headgear_flight_helmet" to 0.55, groundPrimary to 0.25, "none" to 0.2),
+                "winter" to mapOf("headgear_flight_helmet" to 0.55, groundPrimary to 0.25, "none" to 0.2),
+            )
+        return mapOf(
+            "infantry" to ground,
+            "armor" to ground,
+            "artillery" to ground,
+            "aviation" to aviation,
+        )
+    }
+
+    /** The ancient pool has no twentieth-century flight helmet; every branch shares its two caps. */
+    private fun uniformHeadgear(
+        groundPrimary: String,
+        groundSecondary: String,
+        primaryWeight: Double,
+        secondaryWeight: Double,
+    ): Map<String, Map<String, Map<String, Double>>> {
+        val weights =
+            mapOf(
+                "summer" to
+                    mapOf(groundPrimary to primaryWeight, groundSecondary to secondaryWeight, "none" to 0.2),
+                "winter" to
+                    mapOf(groundPrimary to primaryWeight, groundSecondary to secondaryWeight, "none" to 0.2),
+            )
+        return mapOf(
+            "infantry" to weights,
+            "armor" to weights,
+            "artillery" to weights,
+            "aviation" to weights,
         )
     }
 

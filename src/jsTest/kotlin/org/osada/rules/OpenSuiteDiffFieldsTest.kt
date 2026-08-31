@@ -6,6 +6,9 @@ import org.osada.model.Equipment
 import org.osada.model.EquipmentData
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
+import org.osada.model.captureHex
+import org.osada.model.moveUnit
+import org.osada.model.setMoveRange
 import org.osada.rules.ruleset.RuleKey
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
@@ -156,16 +159,73 @@ class OpenSuiteDiffFieldsTest : OgRulesTestHarness() {
     /** *"the player receives extra prestige points"*, with OG's literal parameter. */
     @Test
     fun aPrestigeTriggerPaysItsAuthoredAmountOnce() {
-        ruleset(RuleKey.TRIGGER_HEXES to 1)
         val map = world(prestige = 100)
         val hex = triggerHex(map, TriggerHexes.PRESTIGE, param = 250, message = "A supply dump!")
         val unit = place(map, infantryEqid, 4, 4, 0)
 
-        assertEquals("A supply dump!", TriggerHexes.fire(map, unit, hex))
+        assertEquals("A supply dump!", TriggerHexes.fire(map, unit, hex)?.message)
         assertEquals(350, friendly.prestige, "the authored parameter is the literal amount")
 
         assertNull(TriggerHexes.fire(map, unit, hex), "a spent trigger must not fire again")
         assertEquals(350, friendly.prestige, "and must not pay again")
+    }
+
+    /**
+     * N_Kiel's two Kieler Hafen hexes are enemy-owned flags carrying trigger type 2, parameter 40.
+     * Capture changes the ordinary owner before arrival effects run, so the pre-capture owner must
+     * be retained; and the authored +40 replaces PM's inherited flat +50 rather than stacking.
+     */
+    @Test
+    fun kielPortCapturePaysTheAuthoredFortyOnce() {
+        val map = world(prestige = 100)
+        val port =
+            map.map!![4][5].apply {
+                owner = hostile.id
+                flag = 117
+                trigger = TriggerHexes.PRESTIGE
+                triggerParam = 40
+            }
+        val unit = place(map, infantryEqid, 4, 4, 0)
+
+        map.setMoveRange(unit)
+        val result = map.moveUnit(unit, 4, 5)
+
+        assertEquals(friendly.id, port.owner, "the infantry still captures Kieler Hafen")
+        assertTrue(result.isCapture)
+        assertTrue(result.firedTrigger, "capture must not make the enemy-owned trigger look friendly")
+        assertEquals(40, result.triggerPrestige)
+        assertEquals(0, result.capturePrestige, "the legacy +50 must not stack with the authored reward")
+        assertEquals(140, friendly.prestige, "Kieler Hafen is worth exactly its authored +40")
+    }
+
+    /** A ship can discover Kiel's reward without capturing the flag. Infantry arriving later must
+     * not resurrect the legacy +50 and turn that one authored reward into +90. */
+    @Test
+    fun aSpentPrestigeTriggerStillReplacesTheLegacyFlagAward() {
+        val map = world()
+        val port = triggerHex(map, TriggerHexes.PRESTIGE, param = 40).apply { flag = 117 }
+        val shipLikeUnit = place(map, gunEqid, 4, 4, 0)
+        TriggerHexes.fire(map, shipLikeUnit, port)
+        assertEquals(40, friendly.prestige)
+
+        val captor = place(map, infantryEqid, 4, 5, 0)
+        val capture = map.captureHex(port, captor)
+
+        assertEquals(0, capture.prestigeGain as? Int)
+        assertEquals(40, friendly.prestige, "the spent authored reward remains the port's only reward")
+    }
+
+    /** An authored prestige trigger owns the reward even before it fires; +50 must never stack. */
+    @Test
+    fun anAuthoredPrestigeTriggerAlwaysReplacesTheLegacyFlagAward() {
+        val map = world()
+        val port = triggerHex(map, TriggerHexes.PRESTIGE, param = 40).apply { flag = 117 }
+
+        val capture = map.captureHex(port, place(map, infantryEqid, 4, 5, 0))
+
+        assertEquals(0, capture.prestigeGain as? Int)
+        assertEquals(0, friendly.prestige)
+        assertTrue(TriggerHexes.isArmed(port), "direct capture did not run the arrival event")
     }
 
     /**
@@ -175,7 +235,6 @@ class OpenSuiteDiffFieldsTest : OgRulesTestHarness() {
      */
     @Test
     fun aSpentTriggerStaysSpentForADifferentUnitToo() {
-        ruleset(RuleKey.TRIGGER_HEXES to 1)
         val map = world()
         val hex = triggerHex(map, TriggerHexes.PRESTIGE, param = 100)
         val first = place(map, infantryEqid, 4, 4, 0)
@@ -188,18 +247,16 @@ class OpenSuiteDiffFieldsTest : OgRulesTestHarness() {
     /** *"the unit receives a leader, **if it hasn't one**"* — OG's own condition. */
     @Test
     fun aLeaderTriggerSkipsAFormationThatAlreadyHasOne() {
-        ruleset(RuleKey.TRIGGER_HEXES to 1)
         val map = world()
         val hex = triggerHex(map, TriggerHexes.LEADER, message = "An officer joins")
         val unit = place(map, infantryEqid, 4, 4, 0).apply { leader = 3 }
-        assertNull(TriggerHexes.fire(map, unit, hex), "nothing happened, so there is nothing to announce")
+        assertNull(TriggerHexes.fire(map, unit, hex)?.message, "nothing happened, so there is nothing to announce")
         assertEquals(3, unit.leader, "the existing commander must not be replaced")
     }
 
     /** *"the unit receives extra experience points"*, clamped to the engine's own ceiling. */
     @Test
     fun anExperienceTriggerAwardsItsAuthoredAmount() {
-        ruleset(RuleKey.TRIGGER_HEXES to 1)
         val map = world()
         val hex = triggerHex(map, TriggerHexes.EXPERIENCE, param = 120)
         val unit = place(map, infantryEqid, 4, 4, 0).apply { experience = 50 }
@@ -215,25 +272,24 @@ class OpenSuiteDiffFieldsTest : OgRulesTestHarness() {
      */
     @Test
     fun theAiStanceActionIsConsumedWithoutDoingAnything() {
-        ruleset(RuleKey.TRIGGER_HEXES to 1)
         val map = world(prestige = 40)
         val hex = triggerHex(map, TriggerHexes.AI_STANCE, message = "The enemy hesitates")
         val unit = place(map, infantryEqid, 4, 4, 0)
-        assertNull(TriggerHexes.fire(map, unit, hex), "nothing was applied, so nothing is announced")
+        assertNull(TriggerHexes.fire(map, unit, hex)?.message, "nothing was applied, so nothing is announced")
         assertEquals(40, friendly.prestige, "the refused action must not pay out as some other one")
         assertFalse(TriggerHexes.isArmed(hex), "but it is spent, so it cannot fire later under a new model")
     }
 
-    /** The key gates the whole mechanic, and the default ruleset leaves it off. */
+    /** An unrelated custom ruleset cannot suppress an event the scenario authored. */
     @Test
-    fun noTriggerFiresWithTheKeyOff() {
-        ruleset(RuleKey.TRIGGER_HEXES to 0)
+    fun aRulesetCannotDisableAnAuthoredTrigger() {
+        ruleset(RuleKey.MINEFIELDS to 0)
         val map = world(prestige = 10)
         val hex = triggerHex(map, TriggerHexes.PRESTIGE, param = 100, message = "A supply dump!")
         val unit = place(map, infantryEqid, 4, 4, 0)
-        assertNull(TriggerHexes.fire(map, unit, hex))
-        assertEquals(10, friendly.prestige, "the key off means the map's triggers do nothing at all")
-        assertTrue(TriggerHexes.isArmed(hex), "and it is not consumed either -- turning the key on must arm it")
+        assertEquals("A supply dump!", TriggerHexes.fire(map, unit, hex)?.message)
+        assertEquals(110, friendly.prestige)
+        assertFalse(TriggerHexes.isArmed(hex), "the authored one-shot event is consumed")
     }
 
     /**
@@ -242,7 +298,6 @@ class OpenSuiteDiffFieldsTest : OgRulesTestHarness() {
      */
     @Test
     fun theOwningPlayersOwnFormationCannotSetOffItsTrigger() {
-        ruleset(RuleKey.TRIGGER_HEXES to 1)
         val map = world(prestige = 7)
         val hex = triggerHex(map, TriggerHexes.PRESTIGE, param = 100)
         val ownersOwn = place(map, infantryEqid, 4, 4, 1)
@@ -259,7 +314,6 @@ class OpenSuiteDiffFieldsTest : OgRulesTestHarness() {
      *  owner" and the one that cannot hand out a contested reward for free. */
     @Test
     fun anUnownedTriggerIsInertUnderTheDefault() {
-        ruleset(RuleKey.TRIGGER_HEXES to 1)
         val map = world()
         val hex = triggerHex(map, TriggerHexes.PRESTIGE, param = 100).apply { owner = -1 }
         val unit = place(map, infantryEqid, 4, 4, 0)
@@ -267,10 +321,9 @@ class OpenSuiteDiffFieldsTest : OgRulesTestHarness() {
         assertNull(TriggerHexes.fire(map, unit, hex))
     }
 
-    /** A hex with no authored trigger is not one, whatever the key says. */
+    /** A hex with no authored trigger is not one. */
     @Test
     fun anOrdinaryHexIsNotATrigger() {
-        ruleset(RuleKey.TRIGGER_HEXES to 1)
         val map = world()
         val plain = map.map!![4][4]
         val unit: GameUnit = place(map, infantryEqid, 4, 4, 0)

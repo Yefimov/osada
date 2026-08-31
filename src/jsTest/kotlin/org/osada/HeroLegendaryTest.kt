@@ -13,6 +13,7 @@ import org.osada.hero.LegacyTraitMapping
 import org.osada.hero.LegendaryHeroPool
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
@@ -56,6 +57,54 @@ class HeroLegendaryTest {
     fun reservationIsDeterministic() {
         assertEquals(LegendaryHeroPool.reserve("uranus", 1942), LegendaryHeroPool.reserve("uranus", 1942))
         assertNotNull(LegendaryHeroPool.reserve("uranus", 1942))
+    }
+
+    @Test
+    fun everyShippedCampaignPlayerSideHasAnAuthoredLegendaryCandidate() {
+        val campaigns =
+            listOf(
+                Triple("062d.json", 61, 1942),
+                Triple("camp6.json", 61, 1942),
+                Triple("rcampdfr.json", 61, 1941),
+                Triple("camp6bn9.json", 19, 1936),
+                Triple("camp6bn5.json", 19, 1941),
+                Triple("reddestiny.json", 19, 1946),
+                Triple("forward.json", 89, 1939),
+                Triple("ga4.json", 89, 1939),
+                Triple("ccampdfc.json", 103, 1918),
+                Triple("volarm.json", 103, 1918),
+                Triple("polsov.json", 103, 1919),
+                Triple("simpob.json", 100, 1918),
+                Triple("camp6bn8.json", 43, 1941),
+                Triple("ncampdfn.json", 25, 1950),
+                Triple("aljf.json", 196, 1848),
+                Triple("rhu.json", 187, 1919),
+                Triple("novemberrevolution.json", 188, 1918),
+                Triple("acampdf2.json", 144, 1917),
+                Triple("gce.json", 226, 1936),
+                Triple("spa.json", 310, -72),
+                Triple("nvc.json", 276, 1964),
+                Triple("rsoc.json", 21, 1927),
+                Triple("camp6bn4.json", 39, 1940),
+            )
+        val availableClasses =
+            setOf(
+                UnitClass.INFANTRY.value,
+                UnitClass.TANK.value,
+                UnitClass.RECON.value,
+                UnitClass.ANTI_TANK.value,
+                UnitClass.ARTILLERY.value,
+            )
+
+        campaigns.forEach { (campaign, country, year) ->
+            val reservation = LegendaryHeroPool.reserve(campaign, country, year, availableClasses)
+            assertNotEquals(
+                LegendaryHeroPool.PROCEDURAL_FALLBACK_ID,
+                reservation,
+                "$campaign / country $country",
+            )
+            assertNotNull(LegendaryHeroPool.byId(reservation), "$campaign must reserve an authored hero")
+        }
     }
 
     @Test

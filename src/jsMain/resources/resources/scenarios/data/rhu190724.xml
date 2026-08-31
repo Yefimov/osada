@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="rhu190724.xscn" name="1919/07/21 Szolnok: The Collapse" turns="20, 20, 20" date="July 24, 1919" dayturns="0" ground="0" atmosferic="0" latitude="6" iconset="0" weatherchg="1" rows="32" cols="41" eqp="eqp-kaiser" image="resources/maps/images/map_rhu190724.png" eqpv="united1" holdvictory="8, 5, 3" holdvictory1="9, 8, 7" msuunits="1, 0" canblow="0" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="1" portsnonavaldeploy="0" prototypes="0" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="0">
+<map file="rhu190724.xscn" name="1919/07/21 Szolnok: The Collapse" turns="20, 20, 20" date="July 24, 1919" dayturns="0" ground="0" atmosferic="0" latitude="6" iconset="0" weatherchg="1" rows="32" cols="41" eqp="eqp-kaiser" image="resources/maps/images/map_rhu190724.png" eqpv="united1" holdvictory="8, 5, 3" holdvictory1="9, 8, 7" msuunits="1, 0" canblow="0" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="1" portsnonavaldeploy="0" prototypes="0" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="0" ehmsuonly="0" paradropocean="1">
   <player id="0" country="187" side="0" airtrans="0" navaltrans="0" railtrans="4" defaultxp="195" defaultstr="9" support="188,0,0,0" turnprestige="8, 8, 8, 8, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <player id="1" country="13" side="1" airtrans="0" navaltrans="0" railtrans="4" defaultxp="225" defaultstr="10" support="14,0,0,0" turnprestige="20, 20, 25, 25, 30, 30, 35, 35, 40, 40, 45, 45, 50, 50, 55, 55, 60, 60, 65, 65, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="5">
@@ -26,7 +26,7 @@
       <unit id="18433" owner="1" flag="14" face="0" exp="134" str="11"/>
     </at>
     <at row="28" col="38">
-      <unit id="18172" owner="1" flag="14" face="0" exp="174" str="11"/>
+      <unit id="18172" owner="1" flag="14" face="0" exp="174" str="11" fuel="0" ammo="7"/>
     </at>
     <at row="6" col="38">
       <unit id="17798" owner="1" flag="14" face="0" transport="18108" exp="134" str="11" ldr="1"/>
@@ -79,13 +79,13 @@
   </reinforce>
   <reinforce turn="9">
     <at row="6" col="38">
-      <unit id="17738" owner="1" flag="14" face="0" exp="134" ldr="1"/>
+      <unit id="17738" owner="1" flag="14" face="0" exp="134" ldr="1" ammo="3"/>
     </at>
     <at row="4" col="38">
       <unit id="17865" owner="1" flag="14" face="0" transport="18137" exp="134"/>
     </at>
     <at row="4" col="40">
-      <unit id="18172" owner="1" flag="14" face="0" exp="124"/>
+      <unit id="18172" owner="1" flag="14" face="0" exp="124" fuel="0" ammo="7"/>
     </at>
     <at row="5" col="37">
       <unit id="17798" owner="1" flag="14" face="0" transport="18108" exp="143"/>
@@ -140,7 +140,7 @@
   <hex row="1" col="21" road="144"/>
   <hex row="1" col="23" terrain="3"/>
   <hex row="1" col="25" road="18">
-    <unit id="46684" owner="0" flag="188" face="0" transport="46677" exp="78" str="7" bstr="5"/>
+    <unit id="46684" owner="0" flag="188" face="0" transport="46677" exp="78" str="7" bstr="5" ammo="3"/>
   </hex>
   <hex row="1" col="26" terrain="1" road="35" name="Kunhegyes" owner="0" flag="187" victory="0" trigger="8" trigparam="0" trigequip="4558" station="1">
     <unit id="46673" owner="0" flag="188" face="0" exp="65" str="7" bstr="5"/>
@@ -163,7 +163,7 @@
   <hex row="2" col="24" terrain="8"/>
   <hex row="2" col="25" road="17"/>
   <hex row="2" col="26">
-    <unit id="46672" owner="0" flag="188" face="0" exp="117" str="7" bstr="5"/>
+    <unit id="46672" owner="0" flag="188" face="0" exp="117" str="7" bstr="5" fuel="33" ammo="6" halfshot="1"/>
   </hex>
   <hex row="2" col="33">
     <unit id="17843" owner="1" flag="14" face="0" transport="18108" exp="164" str="12" bstr="9"/>
@@ -191,13 +191,13 @@
   <hex row="4" col="2" terrain="10" name="Zagyva"/>
   <hex row="4" col="3" terrain="10" name="Zagyva"/>
   <hex row="4" col="9" terrain="1" road="18" name="Beseny&#246;sz&#246;g" owner="0" flag="187">
-    <unit id="46664" owner="0" flag="188" face="0" transport="46676" exp="91" str="7" bstr="5"/>
+    <unit id="46664" owner="0" flag="188" face="0" transport="46676" exp="91" str="7" bstr="5" ammo="3"/>
   </hex>
   <hex row="4" col="10" terrain="13" road="33" name="Mill&#233;r-patak"/>
   <hex row="4" col="18" terrain="15" name="Tisza"/>
   <hex row="4" col="19" terrain="15" name="Tisza"/>
   <hex row="4" col="20" terrain="1" road="17" name="Tiszab&#246;" owner="0" flag="187">
-    <unit id="46664" owner="0" flag="188" face="0" transport="46676" exp="126" str="7" bstr="5"/>
+    <unit id="46664" owner="0" flag="188" face="0" transport="46676" exp="126" str="7" bstr="5" ammo="3"/>
   </hex>
   <hex row="4" col="22" terrain="15" name="Halast&#243;"/>
   <hex row="4" col="23" terrain="8"/>
@@ -205,7 +205,7 @@
   <hex row="4" col="25" road="33"/>
   <hex row="4" col="29" terrain="15" name="Halast&#243;"/>
   <hex row="4" col="34">
-    <unit id="17738" owner="1" flag="14" face="0" exp="121" str="12" bstr="9"/>
+    <unit id="17738" owner="1" flag="14" face="0" exp="121" str="12" bstr="9" ammo="3"/>
   </hex>
   <hex row="4" col="35">
     <unit id="18248" owner="1" flag="14" face="0" exp="164" str="12" ldr="1" bstr="9"/>
@@ -226,7 +226,7 @@
   <hex row="5" col="24" road="18"/>
   <hex row="5" col="26" terrain="8"/>
   <hex row="5" col="28">
-    <unit id="46664" owner="0" flag="188" face="0" exp="135" str="7" bstr="5"/>
+    <unit id="46664" owner="0" flag="188" face="0" exp="135" str="7" bstr="5" ammo="3"/>
   </hex>
   <hex row="5" col="34">
     <unit id="17798" owner="1" flag="14" face="0" transport="18101" exp="103" str="12" bstr="9"/>
@@ -286,7 +286,7 @@
   <hex row="7" col="21" terrain="10" name="Holt-Tisza"/>
   <hex row="7" col="22" road="17"/>
   <hex row="7" col="23" road="33">
-    <unit id="46670" owner="0" flag="188" face="0" transport="46676" exp="82" str="7" bstr="5"/>
+    <unit id="46670" owner="0" flag="188" face="0" transport="46676" exp="82" str="7" bstr="5" ammo="6"/>
   </hex>
   <hex row="7" col="27" road="40"/>
   <hex row="7" col="35" road="17">
@@ -313,13 +313,13 @@
   <hex row="8" col="26" road="34"/>
   <hex row="8" col="27" terrain="3"/>
   <hex row="8" col="28" terrain="1" road="136" name="Kenderes" owner="0" flag="187" deploy="0" station="1">
-    <unit id="46664" owner="0" flag="188" face="0" exp="49" bstr="8"/>
+    <unit id="46664" owner="0" flag="188" face="0" exp="49" bstr="8" ammo="3"/>
   </hex>
   <hex row="8" col="29" road="144" deploy="0">
-    <unit id="46668" owner="0" flag="188" face="0" transport="46676" exp="41" bstr="8"/>
+    <unit id="46668" owner="0" flag="188" face="0" transport="46676" exp="41" bstr="8" ammo="4" halfshot="1"/>
   </hex>
   <hex row="8" col="31" deploy="0">
-    <unit id="46670" owner="0" flag="188" face="0" transport="46676" exp="13" ldr="1" bstr="8"/>
+    <unit id="46670" owner="0" flag="188" face="0" transport="46676" exp="13" ldr="1" bstr="8" ammo="6"/>
   </hex>
   <hex row="8" col="35" road="33"/>
   <hex row="8" col="36">
@@ -339,21 +339,21 @@
   <hex row="9" col="11" terrain="15" name="Tisza"/>
   <hex row="9" col="12" terrain="3"/>
   <hex row="9" col="20" road="18">
-    <unit id="46686" owner="0" flag="188" face="0" transport="46674" exp="48" str="7" bstr="5"/>
+    <unit id="46686" owner="0" flag="188" face="0" transport="46674" exp="48" str="7" bstr="5" ammo="1" halfshot="1"/>
   </hex>
   <hex row="9" col="21">
-    <unit id="46694" owner="0" flag="188" face="0" transport="46676" exp="49" str="7" bstr="5"/>
+    <unit id="46694" owner="0" flag="188" face="0" transport="46676" exp="49" str="7" bstr="5" ammo="6"/>
   </hex>
   <hex row="9" col="22" road="144"/>
   <hex row="9" col="24" road="130"/>
   <hex row="9" col="29" road="9" deploy="0">
-    <unit id="46691" owner="0" flag="188" face="0" transport="46677" exp="80" ldr="1" bstr="8"/>
+    <unit id="46691" owner="0" flag="188" face="0" transport="46677" exp="80" ldr="1" bstr="8" ammo="4"/>
   </hex>
   <hex row="9" col="31" road="40" deploy="0">
-    <unit id="46662" owner="0" flag="188" face="0" transport="46675" exp="245" ldr="1" bstr="8"/>
+    <unit id="46662" owner="0" flag="188" face="0" transport="46675" exp="245" ldr="1" bstr="8" ammo="1" halfshot="1"/>
   </hex>
   <hex row="9" col="32" deploy="0">
-    <unit id="46665" owner="0" flag="188" face="0" exp="44" bstr="8"/>
+    <unit id="46665" owner="0" flag="188" face="0" exp="44" bstr="8" ammo="5"/>
   </hex>
   <hex row="9" col="33" road="34"/>
   <hex row="9" col="34" road="34"/>
@@ -367,7 +367,7 @@
   <hex row="10" col="4" road="144"/>
   <hex row="10" col="5" terrain="10" name="Zagyva"/>
   <hex row="10" col="7" terrain="2" road="19" owner="0" flag="187">
-    <unit id="46696" owner="0" flag="188" face="0" exp="101" str="7" bstr="5"/>
+    <unit id="46696" owner="0" flag="188" face="0" exp="101" str="7" bstr="5" fuel="20" ammo="2"/>
   </hex>
   <hex row="10" col="8" terrain="13" road="34" name="Mill&#233;r-patak"/>
   <hex row="10" col="9" terrain="10" name="Holt-Tisza"/>
@@ -377,19 +377,19 @@
   <hex row="10" col="20" road="33"/>
   <hex row="10" col="22" road="17"/>
   <hex row="10" col="26">
-    <unit id="46664" owner="0" flag="188" face="0" exp="96" str="7" bstr="5"/>
+    <unit id="46664" owner="0" flag="188" face="0" exp="96" str="7" bstr="5" ammo="3"/>
   </hex>
   <hex row="10" col="29" deploy="0">
-    <unit id="46683" owner="0" flag="188" face="0" exp="44" depot="1" bstr="8"/>
+    <unit id="46683" owner="0" flag="188" face="0" exp="44" depot="1" bstr="8" fuel="37" ammo="4"/>
   </hex>
   <hex row="10" col="30" road="130" deploy="0">
-    <unit id="46692" owner="0" flag="188" face="0" exp="198" ldr="1" bstr="8" msu="1"/>
+    <unit id="46692" owner="0" flag="188" face="0" exp="198" ldr="1" bstr="8" msu="1" fuel="29" ammo="4"/>
   </hex>
   <hex row="10" col="31" road="18" deploy="0">
-    <unit id="46672" owner="0" flag="188" face="0" ldr="1" bstr="8"/>
+    <unit id="46672" owner="0" flag="188" face="0" ldr="1" bstr="8" fuel="33" ammo="6" halfshot="1"/>
   </hex>
   <hex row="10" col="32" terrain="1" road="170" name="Kis&#250;jsz&#225;ll&#225;s" owner="0" flag="187" victory="0" deploy="0" trigger="8" trigparam="0" trigequip="4558" station="1">
-    <unit id="46664" owner="0" flag="188" face="0" exp="68" ldr="1" bstr="8"/>
+    <unit id="46664" owner="0" flag="188" face="0" exp="68" ldr="1" bstr="8" ammo="3"/>
   </hex>
   <hex row="10" col="33" road="136"/>
   <hex row="10" col="38">
@@ -400,7 +400,7 @@
   <hex row="11" col="3" road="40" name="Szolnok Teherp&#225;lyaudvar" station="1"/>
   <hex row="11" col="4" road="9"/>
   <hex row="11" col="5" terrain="1" road="152" name="Szolnok" owner="0" flag="187" victory="0" station="1">
-    <unit id="46673" owner="0" flag="188" face="0" exp="65" str="7" bstr="5"/>
+    <unit id="46673" owner="0" flag="188" face="0" exp="65" str="7" bstr="5" ammo="5"/>
   </hex>
   <hex row="11" col="6" terrain="10" name="Zagyva"/>
   <hex row="11" col="7" terrain="10" road="41" name="Zagyva"/>
@@ -411,16 +411,16 @@
   <hex row="11" col="12" terrain="10" name="Holt-Tisza"/>
   <hex row="11" col="15" road="34"/>
   <hex row="11" col="16" terrain="1" road="40" name="T&#246;r&#246;kszentmikl&#243;s">
-    <unit id="46684" owner="0" flag="188" face="0" transport="46677" exp="89" str="7" bstr="5"/>
+    <unit id="46684" owner="0" flag="188" face="0" transport="46677" exp="89" str="7" bstr="5" ammo="3"/>
   </hex>
   <hex row="11" col="17" terrain="1" road="162" name="T&#246;r&#246;kszentmikl&#243;s" owner="0" flag="187" victory="0" trigger="8" trigparam="0" trigequip="4560" station="1">
     <unit id="46673" owner="0" flag="188" face="0" exp="50" str="7" bstr="5"/>
   </hex>
   <hex row="11" col="18" terrain="1" road="34" name="T&#246;r&#246;kszentmikl&#243;s">
-    <unit id="46670" owner="0" flag="188" face="0" transport="46676" exp="20" str="7" bstr="5"/>
+    <unit id="46670" owner="0" flag="188" face="0" transport="46676" exp="20" str="7" bstr="5" ammo="6"/>
   </hex>
   <hex row="11" col="22" terrain="1" road="17" name="&#214;rm&#233;nyes" owner="0" flag="187">
-    <unit id="46664" owner="0" flag="188" face="0" transport="46676" exp="43" str="7" bstr="5"/>
+    <unit id="46664" owner="0" flag="188" face="0" transport="46676" exp="43" str="7" bstr="5" ammo="3"/>
   </hex>
   <hex row="11" col="31" road="17"/>
   <hex row="11" col="34" road="136"/>
@@ -432,30 +432,30 @@
   <hex row="11" col="40" terrain="10" name="Hortob&#225;gy-Beretty&#243;"/>
   <hex row="12" col="2" road="130"/>
   <hex row="12" col="4" terrain="1" road="136" name="Szolnok">
-    <unit id="46686" owner="0" flag="188" face="0" transport="46674" exp="82" str="7" bstr="5"/>
+    <unit id="46686" owner="0" flag="188" face="0" transport="46674" exp="82" str="7" bstr="5" ammo="1" halfshot="1"/>
   </hex>
   <hex row="12" col="5" terrain="1" road="171" name="Szolnok">
-    <unit id="46670" owner="0" flag="188" face="0" transport="46676" exp="77" str="7" bstr="5"/>
+    <unit id="46670" owner="0" flag="188" face="0" transport="46676" exp="77" str="7" bstr="5" ammo="6"/>
   </hex>
   <hex row="12" col="6" terrain="1" road="162" name="Szolnok"/>
   <hex row="12" col="7" terrain="15" name="Tisza"/>
   <hex row="12" col="8" terrain="1" road="136" name="Szolnok" owner="0" flag="187" station="1">
-    <unit id="46656" owner="0" flag="188" face="0" transport="46677" exp="40" str="7" bstr="5"/>
+    <unit id="46656" owner="0" flag="188" face="0" transport="46677" exp="40" str="7" bstr="5" ammo="2"/>
   </hex>
   <hex row="12" col="9" terrain="15" road="136" name="Tisza"/>
   <hex row="12" col="10" terrain="15" name="Tisza"/>
   <hex row="12" col="11" terrain="1" road="40" name="Szajol" station="1">
-    <unit id="46660" owner="0" flag="188" face="0" transport="46677" exp="70" str="7" bstr="5"/>
+    <unit id="46660" owner="0" flag="188" face="0" transport="46677" exp="70" str="7" bstr="5" ammo="2"/>
   </hex>
   <hex row="12" col="12" terrain="10" name="Holt-Tisza"/>
   <hex row="12" col="13" road="34"/>
   <hex row="12" col="14" road="34"/>
   <hex row="12" col="16" road="18">
-    <unit id="46662" owner="0" flag="188" face="0" transport="46682" exp="43" str="7" bstr="5"/>
+    <unit id="46662" owner="0" flag="188" face="0" transport="46682" exp="43" str="7" bstr="5" ammo="1" halfshot="1"/>
   </hex>
   <hex row="12" col="22" road="17"/>
   <hex row="12" col="30" deploy="0">
-    <unit id="46667" owner="0" flag="188" face="0" exp="2" bstr="8"/>
+    <unit id="46667" owner="0" flag="188" face="0" exp="2" bstr="8" ammo="3" halfshot="1"/>
   </hex>
   <hex row="12" col="31" road="17"/>
   <hex row="12" col="36" road="136"/>
@@ -465,14 +465,14 @@
   </hex>
   <hex row="12" col="39" terrain="10" name="Hortob&#225;gy-Beretty&#243;"/>
   <hex row="13" col="4" terrain="1" road="18" name="Szolnok" owner="0" flag="187" station="1">
-    <unit id="46664" owner="0" flag="188" face="0" exp="76" str="7" bstr="5"/>
+    <unit id="46664" owner="0" flag="188" face="0" exp="76" str="7" bstr="5" ammo="3"/>
   </hex>
   <hex row="13" col="5" terrain="15" name="Tisza"/>
   <hex row="13" col="6" terrain="15" road="144" name="Tisza"/>
   <hex row="13" col="7" terrain="8" road="40" name="Holt-Tisza"/>
   <hex row="13" col="8" terrain="15" name="Tisza"/>
   <hex row="13" col="9" terrain="3" road="34">
-    <unit id="46691" owner="0" flag="188" face="0" transport="46677" exp="97" str="7" bstr="5"/>
+    <unit id="46691" owner="0" flag="188" face="0" transport="46677" exp="97" str="7" bstr="5" ammo="4"/>
   </hex>
   <hex row="13" col="10" road="162"/>
   <hex row="13" col="12" road="130"/>
@@ -481,7 +481,7 @@
   <hex row="13" col="17" road="136"/>
   <hex row="13" col="22" road="17"/>
   <hex row="13" col="31" road="17" deploy="0">
-    <unit id="46664" owner="0" flag="188" face="0" transport="46676" exp="246" ldr="1" bstr="8"/>
+    <unit id="46664" owner="0" flag="188" face="0" transport="46676" exp="246" ldr="1" bstr="8" ammo="3"/>
   </hex>
   <hex row="13" col="36" terrain="8"/>
   <hex row="13" col="37" terrain="10" name="Hortob&#225;gy-Beretty&#243;"/>
@@ -492,14 +492,14 @@
   <hex row="14" col="4" road="17"/>
   <hex row="14" col="5" terrain="15" name="Tisza"/>
   <hex row="14" col="6" road="19">
-    <unit id="46691" owner="0" flag="188" face="0" transport="46677" exp="141" str="7" bstr="5"/>
+    <unit id="46691" owner="0" flag="188" face="0" transport="46677" exp="141" str="7" bstr="5" ammo="4"/>
   </hex>
   <hex row="14" col="7" terrain="10" name="Holt-Tisza"/>
   <hex row="14" col="8" road="130"/>
   <hex row="14" col="9" terrain="10" name="Holt-Tisza"/>
   <hex row="14" col="10" terrain="10" name="Holt-Tisza"/>
   <hex row="14" col="15" terrain="1" road="33" name="Tiszateny&#246;" owner="0" flag="187" station="1">
-    <unit id="46664" owner="0" flag="188" face="0" transport="46676" exp="120" str="7" bstr="5"/>
+    <unit id="46664" owner="0" flag="188" face="0" transport="46676" exp="120" str="7" bstr="5" ammo="3"/>
   </hex>
   <hex row="14" col="18" road="136"/>
   <hex row="14" col="19" road="144"/>
@@ -515,22 +515,22 @@
   <hex row="15" col="4" road="33"/>
   <hex row="15" col="5" terrain="15" name="Tisza"/>
   <hex row="15" col="6" road="9">
-    <unit id="46659" owner="0" flag="188" face="0" transport="46676" exp="79" str="7" bstr="5"/>
+    <unit id="46659" owner="0" flag="188" face="0" transport="46676" exp="79" str="7" bstr="5" ammo="3"/>
   </hex>
   <hex row="15" col="7" road="136"/>
   <hex row="15" col="8" terrain="10" name="Holt-Tisza"/>
   <hex row="15" col="9" terrain="2" owner="0" flag="187" deploy="0">
-    <unit id="46700" owner="0" flag="188" face="0" exp="82" bstr="8"/>
+    <unit id="46700" owner="0" flag="188" face="0" exp="82" bstr="8" fuel="35" ammo="3"/>
   </hex>
   <hex row="15" col="10" terrain="11" name="Szolnom Military Base"/>
   <hex row="15" col="14" road="18"/>
   <hex row="15" col="19" road="9"/>
   <hex row="15" col="20" terrain="3"/>
   <hex row="15" col="22" terrain="1" road="17" name="Kuncsorba" owner="0" flag="187">
-    <unit id="46664" owner="0" flag="188" face="0" transport="46676" exp="32" str="7" bstr="5"/>
+    <unit id="46664" owner="0" flag="188" face="0" transport="46676" exp="32" str="7" bstr="5" ammo="3"/>
   </hex>
   <hex row="15" col="29" deploy="0">
-    <unit id="46691" owner="0" flag="188" face="0" transport="46677" exp="206" ldr="1" bstr="8"/>
+    <unit id="46691" owner="0" flag="188" face="0" transport="46677" exp="206" ldr="1" bstr="8" ammo="4"/>
   </hex>
   <hex row="15" col="31" road="33"/>
   <hex row="15" col="33" terrain="3"/>
@@ -558,7 +558,7 @@
     <unit id="46659" owner="0" flag="188" face="0" transport="46676" exp="56" ldr="1" bstr="8"/>
   </hex>
   <hex row="16" col="30" terrain="1" road="34" name="T&#250;rkeve" owner="0" flag="187" deploy="0" station="1">
-    <unit id="46664" owner="0" flag="188" face="0" exp="111" bstr="8"/>
+    <unit id="46664" owner="0" flag="188" face="0" exp="111" bstr="8" ammo="3"/>
   </hex>
   <hex row="16" col="33" terrain="10" name="Hortob&#225;gy-Beretty&#243;"/>
   <hex row="16" col="34" terrain="3"/>
@@ -568,22 +568,22 @@
   <hex row="16" col="39" road="33"/>
   <hex row="16" col="40" terrain="3"/>
   <hex row="17" col="4" terrain="1" road="136" name="T&#243;szeg" owner="0" flag="187" station="1">
-    <unit id="46659" owner="0" flag="188" face="0" exp="40" str="7" bstr="5"/>
+    <unit id="46659" owner="0" flag="188" face="0" exp="40" str="7" bstr="5" ammo="3"/>
   </hex>
   <hex row="17" col="5" road="144"/>
   <hex row="17" col="6" terrain="15" name="Tisza"/>
   <hex row="17" col="8" terrain="1" road="17" name="R&#225;k&#243;czifalva" owner="0" flag="187">
-    <unit id="46659" owner="0" flag="188" face="0" transport="46676" exp="62" str="7" bstr="5"/>
+    <unit id="46659" owner="0" flag="188" face="0" transport="46676" exp="62" str="7" bstr="5" ammo="3"/>
   </hex>
   <hex row="17" col="10" terrain="13"/>
   <hex row="17" col="13" terrain="1" road="17" name="Kengyel" owner="0" flag="187" station="1">
-    <unit id="46664" owner="0" flag="188" face="0" transport="46676" exp="40" str="7" bstr="5"/>
+    <unit id="46664" owner="0" flag="188" face="0" transport="46676" exp="40" str="7" bstr="5" ammo="3"/>
   </hex>
   <hex row="17" col="18">
-    <unit id="46693" owner="0" flag="188" face="0" exp="162" str="7" bstr="5"/>
+    <unit id="46693" owner="0" flag="188" face="0" exp="162" str="7" bstr="5" fuel="33" ammo="4"/>
   </hex>
   <hex row="17" col="20" road="27">
-    <unit id="46668" owner="0" flag="188" face="0" transport="46676" exp="37" str="7" bstr="5"/>
+    <unit id="46668" owner="0" flag="188" face="0" transport="46676" exp="37" str="7" bstr="5" ammo="4" halfshot="1"/>
   </hex>
   <hex row="17" col="21" road="136"/>
   <hex row="17" col="28" road="18"/>
@@ -603,12 +603,12 @@
   <hex row="18" col="12" terrain="13"/>
   <hex row="18" col="13" road="33"/>
   <hex row="18" col="19" terrain="1" road="2" name="K&#233;tp&#243;" owner="0" flag="187" station="1">
-    <unit id="46664" owner="0" flag="188" face="0" exp="71" str="7" bstr="5"/>
+    <unit id="46664" owner="0" flag="188" face="0" exp="71" str="7" bstr="5" ammo="3"/>
   </hex>
   <hex row="18" col="20" road="33"/>
   <hex row="18" col="22" road="144"/>
   <hex row="18" col="26" deploy="0">
-    <unit id="46664" owner="0" flag="188" face="0" exp="205" ldr="1" bstr="8"/>
+    <unit id="46664" owner="0" flag="188" face="0" exp="205" ldr="1" bstr="8" ammo="3"/>
   </hex>
   <hex row="18" col="27" road="34"/>
   <hex row="18" col="28" road="33"/>
@@ -643,7 +643,7 @@
   <hex row="20" col="7" terrain="15" name="Tisza"/>
   <hex row="20" col="8" terrain="15" name="Tisza"/>
   <hex row="20" col="9" terrain="2" owner="0" flag="187">
-    <unit id="46697" owner="0" flag="188" face="0" exp="131" str="7" bstr="5"/>
+    <unit id="46697" owner="0" flag="188" face="0" exp="131" str="7" bstr="5" fuel="20" ammo="2"/>
   </hex>
   <hex row="20" col="10" terrain="15" name="Tisza"/>
   <hex row="20" col="11" road="17"/>
@@ -652,10 +652,10 @@
   <hex row="20" col="19" terrain="3"/>
   <hex row="20" col="20" terrain="3"/>
   <hex row="20" col="24" road="144" deploy="0">
-    <unit id="46694" owner="0" flag="188" face="0" transport="46676" exp="204" bstr="8"/>
+    <unit id="46694" owner="0" flag="188" face="0" transport="46676" exp="204" bstr="8" ammo="6"/>
   </hex>
   <hex row="20" col="25" road="17" deploy="0">
-    <unit id="46668" owner="0" flag="188" face="0" transport="46676" exp="177" bstr="8"/>
+    <unit id="46668" owner="0" flag="188" face="0" transport="46676" exp="177" bstr="8" ammo="4" halfshot="1"/>
   </hex>
   <hex row="20" col="26" terrain="8"/>
   <hex row="20" col="27" terrain="10" name="Hortob&#225;gy-Beretty&#243;"/>
@@ -674,7 +674,7 @@
   <hex row="21" col="9" terrain="15" name="Tisza"/>
   <hex row="21" col="10" terrain="15" name="Tisza"/>
   <hex row="21" col="11" terrain="1" road="35" name="Martf&#252;" owner="0" flag="187" station="1">
-    <unit id="46660" owner="0" flag="188" face="0" transport="46677" exp="91" str="7" bstr="5"/>
+    <unit id="46660" owner="0" flag="188" face="0" transport="46677" exp="91" str="7" bstr="5" ammo="2"/>
   </hex>
   <hex row="21" col="12" road="40"/>
   <hex row="21" col="13" road="136"/>
@@ -687,10 +687,10 @@
   <hex row="21" col="22" terrain="3"/>
   <hex row="21" col="23" terrain="3"/>
   <hex row="21" col="24" road="9" deploy="0">
-    <unit id="46691" owner="0" flag="188" face="0" transport="46677" exp="105" ldr="1" bstr="8"/>
+    <unit id="46691" owner="0" flag="188" face="0" transport="46677" exp="105" ldr="1" bstr="8" ammo="4"/>
   </hex>
   <hex row="21" col="25" terrain="1" road="145" name="Mez&#246;t&#250;r" owner="0" flag="187" victory="0" deploy="0" trigger="8" trigparam="0" trigequip="4558" station="1">
-    <unit id="46664" owner="0" flag="188" face="0" exp="117" ldr="1" bstr="8"/>
+    <unit id="46664" owner="0" flag="188" face="0" exp="117" ldr="1" bstr="8" ammo="3"/>
   </hex>
   <hex row="21" col="26" terrain="10" name="Hortob&#225;gy-Beretty&#243;"/>
   <hex row="21" col="32">
@@ -708,7 +708,7 @@
   <hex row="22" col="10" road="34"/>
   <hex row="22" col="14" road="136"/>
   <hex row="22" col="15" terrain="1" road="168" name="Mez&#246;h&#233;k" owner="0" flag="187">
-    <unit id="46656" owner="0" flag="188" face="0" transport="46677" exp="97" str="7" bstr="5"/>
+    <unit id="46656" owner="0" flag="188" face="0" transport="46677" exp="97" str="7" bstr="5" ammo="2"/>
   </hex>
   <hex row="22" col="17" road="40"/>
   <hex row="22" col="18" terrain="3"/>
@@ -718,10 +718,10 @@
   <hex row="22" col="22" terrain="3"/>
   <hex row="22" col="23" road="34"/>
   <hex row="22" col="24" road="40" deploy="0">
-    <unit id="46667" owner="0" flag="188" face="0" exp="1" bstr="8"/>
+    <unit id="46667" owner="0" flag="188" face="0" exp="1" bstr="8" ammo="3" halfshot="1"/>
   </hex>
   <hex row="22" col="25" terrain="1" road="163" name="Mez&#246;t&#250;r" deploy="0">
-    <unit id="46664" owner="0" flag="188" face="0" transport="46676" exp="226" bstr="8"/>
+    <unit id="46664" owner="0" flag="188" face="0" transport="46676" exp="226" bstr="8" ammo="3"/>
   </hex>
   <hex row="22" col="26" terrain="10" road="40" name="Hortob&#225;gy-Beretty&#243;"/>
   <hex row="22" col="27" road="136"/>
@@ -734,7 +734,7 @@
   <hex row="23" col="4" terrain="15" name="Tisza"/>
   <hex row="23" col="5" terrain="8" name="Holt-Tisza"/>
   <hex row="23" col="9" road="17">
-    <unit id="46690" owner="0" flag="188" face="0" transport="46677" exp="83" str="7" bstr="5"/>
+    <unit id="46690" owner="0" flag="188" face="0" transport="46677" exp="83" str="7" bstr="5" ammo="5"/>
   </hex>
   <hex row="23" col="10" terrain="15" name="Halast&#243;"/>
   <hex row="23" col="11" road="34"/>
@@ -765,23 +765,23 @@
   <hex row="24" col="4" terrain="15" name="Tisza"/>
   <hex row="24" col="5" terrain="10" name="Holt-Tisza"/>
   <hex row="24" col="8">
-    <unit id="46670" owner="0" flag="188" face="0" transport="46676" exp="115" str="7" bstr="5"/>
+    <unit id="46670" owner="0" flag="188" face="0" transport="46676" exp="115" str="7" bstr="5" ammo="6"/>
   </hex>
   <hex row="24" col="9" terrain="1" road="35" name="Tiszaf&#246;ldv&#225;r" owner="0" flag="187" victory="0" trigger="8" trigparam="0" trigequip="4558" station="1">
     <unit id="46673" owner="0" flag="188" face="0" exp="78" str="7" bstr="5"/>
   </hex>
   <hex row="24" col="10" road="34">
-    <unit id="46668" owner="0" flag="188" face="0" transport="46676" exp="121" str="7" bstr="5"/>
+    <unit id="46668" owner="0" flag="188" face="0" transport="46676" exp="121" str="7" bstr="5" ammo="4" halfshot="1"/>
   </hex>
   <hex row="24" col="15">
-    <unit id="46670" owner="0" flag="188" face="0" transport="46676" exp="207" str="7" bstr="5"/>
+    <unit id="46670" owner="0" flag="188" face="0" transport="46676" exp="207" str="7" bstr="5" ammo="6"/>
   </hex>
   <hex row="24" col="16" road="17">
-    <unit id="46690" owner="0" flag="188" face="0" transport="46677" exp="107" str="7" bstr="5"/>
+    <unit id="46690" owner="0" flag="188" face="0" transport="46677" exp="107" str="7" bstr="5" ammo="5"/>
   </hex>
   <hex row="24" col="23" road="34"/>
   <hex row="24" col="24" road="33">
-    <unit id="46664" owner="0" flag="188" face="0" exp="135" str="7" bstr="5"/>
+    <unit id="46664" owner="0" flag="188" face="0" exp="135" str="7" bstr="5" ammo="3"/>
   </hex>
   <hex row="24" col="26" terrain="10" name="Hortob&#225;gy-Beretty&#243;"/>
   <hex row="24" col="28" terrain="8"/>
@@ -801,13 +801,13 @@
   <hex row="25" col="9" terrain="3"/>
   <hex row="25" col="15" road="18"/>
   <hex row="25" col="16" terrain="1" road="33" name="Mestersz&#225;ll&#225;s" owner="0" flag="187">
-    <unit id="46664" owner="0" flag="188" face="0" transport="46676" exp="52" str="7" bstr="5"/>
+    <unit id="46664" owner="0" flag="188" face="0" transport="46676" exp="52" str="7" bstr="5" ammo="3"/>
   </hex>
   <hex row="25" col="19">
-    <unit id="46665" owner="0" flag="188" face="0" exp="156" str="7" bstr="5"/>
+    <unit id="46665" owner="0" flag="188" face="0" exp="156" str="7" bstr="5" ammo="5"/>
   </hex>
   <hex row="25" col="22" road="18">
-    <unit id="46685" owner="0" flag="188" face="0" transport="46676" exp="29" str="7" bstr="5"/>
+    <unit id="46685" owner="0" flag="188" face="0" transport="46676" exp="29" str="7" bstr="5" ammo="3"/>
   </hex>
   <hex row="25" col="23" terrain="13" name="Holt-K&#246;r&#246;s"/>
   <hex row="25" col="24" terrain="13" name="Holt-K&#246;r&#246;s"/>
@@ -832,7 +832,7 @@
   <hex row="26" col="13" terrain="10" name="K&#246;r&#246;s"/>
   <hex row="26" col="15" terrain="8" road="17"/>
   <hex row="26" col="22" road="17">
-    <unit id="46664" owner="0" flag="188" face="0" transport="46676" exp="90" str="7" bstr="5"/>
+    <unit id="46664" owner="0" flag="188" face="0" transport="46676" exp="90" str="7" bstr="5" ammo="3"/>
   </hex>
   <hex row="26" col="23" terrain="13" name="Holt-K&#246;r&#246;s"/>
   <hex row="26" col="25" terrain="10" name="K&#246;r&#246;s"/>
@@ -868,7 +868,7 @@
   <hex row="27" col="23" terrain="10" name="K&#246;r&#246;s"/>
   <hex row="27" col="24" terrain="10" name="K&#246;r&#246;s"/>
   <hex row="27" col="28">
-    <unit id="17738" owner="1" flag="14" face="0" exp="164" str="12" bstr="9"/>
+    <unit id="17738" owner="1" flag="14" face="0" exp="164" str="12" bstr="9" ammo="3"/>
   </hex>
   <hex row="27" col="30" terrain="10" name="K&#246;r&#246;s"/>
   <hex row="27" col="31">
@@ -997,7 +997,7 @@
     <unit id="17892" owner="1" flag="14" face="0" transport="18104" exp="100" str="12" bstr="9"/>
   </hex>
   <hex row="30" col="9">
-    <unit id="17738" owner="1" flag="14" face="0" exp="96" str="12" bstr="9"/>
+    <unit id="17738" owner="1" flag="14" face="0" exp="96" str="12" bstr="9" ammo="3"/>
   </hex>
   <hex row="30" col="10" terrain="10" name="K&#246;r&#246;s"/>
   <hex row="30" col="11" terrain="8"/>
