@@ -1,8 +1,8 @@
 package org.osada.rules
 
-import org.osada.model.ALL_VICTORY_TIERS
 import org.osada.model.GameMap
 import org.osada.model.getPlayer
+import org.osada.model.victoryTiersForSide
 import org.osada.scenario.Scenario
 
 /**
@@ -83,7 +83,7 @@ object TypedVictoryHexes {
                         ?.getOrNull(row)
                         ?.getOrNull(col)
                         ?.takeIf { it.victorySide != -1 }
-                        ?.takeIf { (it.victoryTiers.takeIf { m -> m != 0 } ?: ALL_VICTORY_TIERS) and tier != 0 }
+                        ?.takeIf { it.victoryTiersForSide(side) and tier != 0 }
                         ?: continue
                 required++
                 if (hex.owner != -1 && map.getPlayer(hex.owner).side == side) held++

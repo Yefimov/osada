@@ -32,7 +32,8 @@
       { "id": "back_infantry", "tags": { "branch": ["infantry"] } },
       { "id": "back_armor", "tags": { "branch": ["armor"] } },
       { "id": "back_artillery", "tags": { "branch": ["artillery"] } },
-      { "id": "back_aviation", "tags": { "branch": ["aviation"] } }
+      { "id": "back_aviation", "tags": { "branch": ["aviation"] } },
+      { "id": "back_ancient_tunic", "tags": { "nation": "ANCIENT_REBEL" } }
     ],
     "uniform_front_collar": [
       { "id": "collar_infantry_summer", "tags": { "nation": "USSR", "branch": ["infantry"], "season": "summer" } },
@@ -45,7 +46,10 @@
       { "id": "collar_rev1919_field", "tags": { "nation": "REVOLUTIONARY_1919", "season": "any" } },
       { "id": "collar_spanish_republic", "tags": { "nation": "SPANISH_REPUBLIC", "season": "any" } },
       { "id": "collar_yugoslav_partisan", "tags": { "nation": "YUGOSLAV_PARTISAN", "season": "any" } },
-      { "id": "collar_east_asian_field", "tags": { "nation": "EAST_ASIAN_REVOLUTIONARY", "season": "any" } }
+      { "id": "collar_east_asian_field", "tags": { "nation": "EAST_ASIAN_REVOLUTIONARY", "season": "any" } },
+      { "id": "collar_greek_1940", "tags": { "nation": "GREEK_1940", "season": "any" } },
+      { "id": "collar_white_army_1919", "tags": { "nation": "WHITE_ARMY_1919", "season": "any" } },
+      { "id": "collar_ancient_rebel", "tags": { "nation": "ANCIENT_REBEL", "season": "any" } }
     ],
     "hair_back": [
       { "id": "hair_back_short" },
@@ -108,13 +112,26 @@
       { "id": "rank_east_asian_lieutenant", "tags": { "nation": "EAST_ASIAN_REVOLUTIONARY", "rank": "lieutenant" } },
       { "id": "rank_east_asian_captain", "tags": { "nation": "EAST_ASIAN_REVOLUTIONARY", "rank": "captain" } },
       { "id": "rank_east_asian_major", "tags": { "nation": "EAST_ASIAN_REVOLUTIONARY", "rank": "major" } },
-      { "id": "rank_east_asian_colonel", "tags": { "nation": "EAST_ASIAN_REVOLUTIONARY", "rank": "colonel" } }
+      { "id": "rank_east_asian_colonel", "tags": { "nation": "EAST_ASIAN_REVOLUTIONARY", "rank": "colonel" } },
+      { "id": "rank_greek_lieutenant", "tags": { "nation": "GREEK_1940", "rank": "lieutenant" } },
+      { "id": "rank_greek_captain", "tags": { "nation": "GREEK_1940", "rank": "captain" } },
+      { "id": "rank_greek_major", "tags": { "nation": "GREEK_1940", "rank": "major" } },
+      { "id": "rank_greek_colonel", "tags": { "nation": "GREEK_1940", "rank": "colonel" } },
+      { "id": "rank_white_lieutenant", "tags": { "nation": "WHITE_ARMY_1919", "rank": "lieutenant" } },
+      { "id": "rank_white_captain", "tags": { "nation": "WHITE_ARMY_1919", "rank": "captain" } },
+      { "id": "rank_white_major", "tags": { "nation": "WHITE_ARMY_1919", "rank": "major" } },
+      { "id": "rank_white_colonel", "tags": { "nation": "WHITE_ARMY_1919", "rank": "colonel" } },
+      { "id": "rank_ancient_lieutenant", "tags": { "nation": "ANCIENT_REBEL", "rank": "lieutenant" } },
+      { "id": "rank_ancient_captain", "tags": { "nation": "ANCIENT_REBEL", "rank": "captain" } },
+      { "id": "rank_ancient_major", "tags": { "nation": "ANCIENT_REBEL", "rank": "major" } },
+      { "id": "rank_ancient_colonel", "tags": { "nation": "ANCIENT_REBEL", "rank": "colonel" } }
     ],
     "branch": [
       { "id": "branch_infantry", "tags": { "branch": ["infantry"] } },
       { "id": "branch_armor", "tags": { "branch": ["armor"] } },
       { "id": "branch_artillery", "tags": { "branch": ["artillery"] } },
-      { "id": "branch_aviation", "tags": { "branch": ["aviation"] } }
+      { "id": "branch_aviation", "tags": { "branch": ["aviation"] } },
+      { "id": "branch_ancient_rebel", "tags": { "nation": "ANCIENT_REBEL" } }
     ],
     "headgear": [
       { "id": "headgear_officer_cap", "tags": { "nation": "USSR", "hairMode": "UNDER_CAP", "branch": ["infantry", "armor", "artillery", "aviation"] } },
@@ -128,7 +145,13 @@
       { "id": "headgear_yugoslav_titovka", "tags": { "nation": "YUGOSLAV_PARTISAN", "hairMode": "UNDER_CAP" } },
       { "id": "headgear_yugoslav_partisan_cap", "tags": { "nation": "YUGOSLAV_PARTISAN", "hairMode": "UNDER_CAP" } },
       { "id": "headgear_east_asian_field_cap", "tags": { "nation": "EAST_ASIAN_REVOLUTIONARY", "hairMode": "UNDER_CAP" } },
-      { "id": "headgear_east_asian_boonie", "tags": { "nation": "EAST_ASIAN_REVOLUTIONARY", "hairMode": "UNDER_CAP" } }
+      { "id": "headgear_east_asian_boonie", "tags": { "nation": "EAST_ASIAN_REVOLUTIONARY", "hairMode": "UNDER_CAP" } },
+      { "id": "headgear_greek_side_cap", "tags": { "nation": "GREEK_1940", "hairMode": "UNDER_CAP" } },
+      { "id": "headgear_greek_field_cap", "tags": { "nation": "GREEK_1940", "hairMode": "UNDER_CAP" } },
+      { "id": "headgear_white_army_cap", "tags": { "nation": "WHITE_ARMY_1919", "hairMode": "UNDER_CAP" } },
+      { "id": "headgear_white_army_papakha", "tags": { "nation": "WHITE_ARMY_1919", "hairMode": "UNDER_FUR_HAT" } },
+      { "id": "headgear_ancient_pilos", "tags": { "nation": "ANCIENT_REBEL", "hairMode": "UNDER_CAP" } },
+      { "id": "headgear_ancient_phrygian", "tags": { "nation": "ANCIENT_REBEL", "hairMode": "UNDER_CAP" } }
     ],
     "wound": [
       { "id": "wound_eye_patch", "tags": { "wound": "eye" } },
@@ -193,6 +216,23 @@
       "theater": "eastern_front",
       "defaultSeason": "winter",
       "branches": ["infantry", "armor", "artillery", "aviation"]
+    },
+    "soviet_interwar": {
+      "label": "Soviet interwar forces, 1936-1940",
+      "nation": "SOVIET_INTERWAR",
+      "countries": [19],
+      "yearFrom": 1936,
+      "yearTo": 1940,
+      "defaultSeason": "summer",
+      "branches": ["infantry", "armor", "artillery", "aviation"],
+      "collar": "collar_rev1919_field",
+      "rankPrefix": "rank_rev1919_",
+      "headgear": {
+        "infantry": { "summer": { "headgear_rev1919_field_cap": 0.55, "headgear_rev1919_service_cap": 0.25, "none": 0.2 }, "winter": { "headgear_rev1919_field_cap": 0.55, "headgear_rev1919_service_cap": 0.25, "none": 0.2 } },
+        "armor": { "summer": { "headgear_rev1919_field_cap": 0.55, "headgear_rev1919_service_cap": 0.25, "none": 0.2 }, "winter": { "headgear_rev1919_field_cap": 0.55, "headgear_rev1919_service_cap": 0.25, "none": 0.2 } },
+        "artillery": { "summer": { "headgear_rev1919_field_cap": 0.55, "headgear_rev1919_service_cap": 0.25, "none": 0.2 }, "winter": { "headgear_rev1919_field_cap": 0.55, "headgear_rev1919_service_cap": 0.25, "none": 0.2 } },
+        "aviation": { "summer": { "headgear_flight_helmet": 0.55, "headgear_rev1919_service_cap": 0.25, "none": 0.2 }, "winter": { "headgear_flight_helmet": 0.55, "headgear_rev1919_service_cap": 0.25, "none": 0.2 } }
+      }
     },
     "revolution_1919": {
       "label": "European revolutionary forces, 1917-1920",
@@ -260,6 +300,59 @@
         "armor": { "summer": { "headgear_east_asian_field_cap": 0.55, "headgear_east_asian_boonie": 0.25, "none": 0.2 }, "winter": { "headgear_east_asian_field_cap": 0.55, "headgear_east_asian_boonie": 0.25, "none": 0.2 } },
         "artillery": { "summer": { "headgear_east_asian_field_cap": 0.55, "headgear_east_asian_boonie": 0.25, "none": 0.2 }, "winter": { "headgear_east_asian_field_cap": 0.55, "headgear_east_asian_boonie": 0.25, "none": 0.2 } },
         "aviation": { "summer": { "headgear_flight_helmet": 0.55, "headgear_east_asian_field_cap": 0.25, "none": 0.2 }, "winter": { "headgear_flight_helmet": 0.55, "headgear_east_asian_field_cap": 0.25, "none": 0.2 } }
+      }
+    },
+    "greek_1940": {
+      "label": "Greek armed forces and resistance, 1940-1949",
+      "nation": "GREEK_1940",
+      "countries": [39],
+      "yearFrom": 1940,
+      "yearTo": 1949,
+      "defaultSeason": "summer",
+      "branches": ["infantry", "armor", "artillery", "aviation"],
+      "collar": "collar_greek_1940",
+      "rankPrefix": "rank_greek_",
+      "headgear": {
+        "infantry": { "summer": { "headgear_greek_side_cap": 0.55, "headgear_greek_field_cap": 0.25, "none": 0.2 }, "winter": { "headgear_greek_field_cap": 0.55, "headgear_greek_side_cap": 0.25, "none": 0.2 } },
+        "armor": { "summer": { "headgear_greek_side_cap": 0.55, "headgear_greek_field_cap": 0.25, "none": 0.2 }, "winter": { "headgear_greek_field_cap": 0.55, "headgear_greek_side_cap": 0.25, "none": 0.2 } },
+        "artillery": { "summer": { "headgear_greek_side_cap": 0.55, "headgear_greek_field_cap": 0.25, "none": 0.2 }, "winter": { "headgear_greek_field_cap": 0.55, "headgear_greek_side_cap": 0.25, "none": 0.2 } },
+        "aviation": { "summer": { "headgear_flight_helmet": 0.55, "headgear_greek_side_cap": 0.25, "none": 0.2 }, "winter": { "headgear_flight_helmet": 0.55, "headgear_greek_side_cap": 0.25, "none": 0.2 } }
+      }
+    },
+    "white_army_1919": {
+      "label": "White Russian forces, 1918-1920",
+      "nation": "WHITE_ARMY_1919",
+      "countries": [100],
+      "yearFrom": 1918,
+      "yearTo": 1920,
+      "defaultSeason": "winter",
+      "branches": ["infantry", "armor", "artillery", "aviation"],
+      "collar": "collar_white_army_1919",
+      "rankPrefix": "rank_white_",
+      "headgear": {
+        "infantry": { "summer": { "headgear_white_army_cap": 0.55, "headgear_white_army_papakha": 0.25, "none": 0.2 }, "winter": { "headgear_white_army_papakha": 0.55, "headgear_white_army_cap": 0.25, "none": 0.2 } },
+        "armor": { "summer": { "headgear_white_army_cap": 0.55, "headgear_white_army_papakha": 0.25, "none": 0.2 }, "winter": { "headgear_white_army_papakha": 0.55, "headgear_white_army_cap": 0.25, "none": 0.2 } },
+        "artillery": { "summer": { "headgear_white_army_cap": 0.55, "headgear_white_army_papakha": 0.25, "none": 0.2 }, "winter": { "headgear_white_army_papakha": 0.55, "headgear_white_army_cap": 0.25, "none": 0.2 } },
+        "aviation": { "summer": { "headgear_flight_helmet": 0.55, "headgear_white_army_cap": 0.25, "none": 0.2 }, "winter": { "headgear_flight_helmet": 0.55, "headgear_white_army_cap": 0.25, "none": 0.2 } }
+      }
+    },
+    "ancient_rebel": {
+      "label": "Ancient Mediterranean rebel army",
+      "nation": "ANCIENT_REBEL",
+      "countries": [310],
+      "yearFrom": -100,
+      "yearTo": -1,
+      "defaultSeason": "summer",
+      "branches": ["infantry", "armor", "artillery", "aviation"],
+      "uniformBack": "back_ancient_tunic",
+      "collar": "collar_ancient_rebel",
+      "rankPrefix": "rank_ancient_",
+      "branchLayer": "branch_ancient_rebel",
+      "headgear": {
+        "infantry": { "summer": { "headgear_ancient_pilos": 0.45, "headgear_ancient_phrygian": 0.35, "none": 0.2 }, "winter": { "headgear_ancient_pilos": 0.45, "headgear_ancient_phrygian": 0.35, "none": 0.2 } },
+        "armor": { "summer": { "headgear_ancient_pilos": 0.45, "headgear_ancient_phrygian": 0.35, "none": 0.2 }, "winter": { "headgear_ancient_pilos": 0.45, "headgear_ancient_phrygian": 0.35, "none": 0.2 } },
+        "artillery": { "summer": { "headgear_ancient_pilos": 0.45, "headgear_ancient_phrygian": 0.35, "none": 0.2 }, "winter": { "headgear_ancient_pilos": 0.45, "headgear_ancient_phrygian": 0.35, "none": 0.2 } },
+        "aviation": { "summer": { "headgear_ancient_pilos": 0.45, "headgear_ancient_phrygian": 0.35, "none": 0.2 }, "winter": { "headgear_ancient_pilos": 0.45, "headgear_ancient_phrygian": 0.35, "none": 0.2 } }
       }
     }
   }

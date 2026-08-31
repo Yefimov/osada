@@ -2,6 +2,7 @@ package org.osada
 
 import org.osada.campaign.CampaignNarrative
 import org.osada.hero.HeroCampaign
+import org.osada.model.ALL_VICTORY_TIERS
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
 import org.osada.model.Hex
@@ -94,6 +95,10 @@ object GameStateSerializer {
             Pair("victoryTurns", scenario.map.victoryTurns.toTypedArray()),
             Pair("victoryHoldCounts", scenario.victoryHoldCounts.toTypedArray()),
             Pair("victoryHoldCountsSide1", scenario.victoryHoldCountsSide1.toTypedArray()),
+            Pair("retreatUnitsPerSide", scenario.retreatUnitsPerSide.toTypedArray()),
+            Pair("killUnitsPerSide", scenario.killUnitsPerSide.toTypedArray()),
+            Pair("mustSurvivePerSide", scenario.mustSurvivePerSide.toTypedArray()),
+            Pair("typedVictoryHexes", scenario.typedVictoryHexes == true),
             // The running totals of OG's two counted victory conditions. Live game state: a reload
             // that forgot them would reset an evacuation the player had half completed.
             Pair("unitsWithdrawn", scenario.unitsWithdrawn.toTypedArray()),
@@ -152,6 +157,12 @@ object GameStateSerializer {
         // would quietly un-spot hexes their recon had already found. `installationSpotted` is NOT
         // stored: it is derived wholly from ownership and is rebuilt by `GameMap.recomputeSpotting`.
         if (hex.spotMemory != 0) obj.asDynamic().spotMemory = hex.spotMemory
+        if (hex.victoryTiersSide0 != ALL_VICTORY_TIERS) {
+            obj.asDynamic().victoryTiersSide0 = hex.victoryTiersSide0
+        }
+        if (hex.victoryTiersSide1 != ALL_VICTORY_TIERS) {
+            obj.asDynamic().victoryTiersSide1 = hex.victoryTiersSide1
+        }
         serializeHexEngineering(obj, hex)
         if (hex.rubble) obj.asDynamic().rubble = 1
         if (hex.crater) obj.asDynamic().crater = 1

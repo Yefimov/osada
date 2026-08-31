@@ -1,5 +1,6 @@
 package org.osada.rules
 
+import org.osada.GameHolder
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
 import org.osada.model.Hex
@@ -21,7 +22,7 @@ import org.osada.scenario.Scenario
  * | §3.7 | condition | here |
  * |---|---|---|
  * | 3.7.1 | Must-Survive Units | **built here** — the per-unit flag is `@43` bit 0 |
- * | 3.7.2 | Typed victory hexes | not built |
+ * | 3.7.2 | Typed victory hexes | built, [TypedVictoryHexes] |
  * | 3.7.3 | Hold N victory hexes | built, `Scenario.checkTimedOutcome`, per side |
  * | 3.7.4 | **Retreat N units to an Escape Hex** | **built here** |
  * | — | Kill N enemy units | **built here** (not in the v0.1 manual; `@1021` bit 4) |
@@ -53,11 +54,29 @@ import org.osada.scenario.Scenario
  * the one function to change.
  */
 object ExtendedVictory {
-    /** Whether [unit] may leave the map through [hex] — the air/ground split is OG's own. */
+    /**
+     * Whether [unit] may leave the map through [hex] — the air/ground split is OG's own, and so is
+     * the Must-Survive restriction.
+     *
+     * **`opt_eh_for_msu_only`** (`Scenario.escapeHexesForMsuOnly`, `@1016` bit 6, 15 deployed
+     * scenarios): with it on the exit accepts only a formation the author designated Must-Survive.
+     * That reads oddly beside §3.7.4's quota until you notice the two conditions are usually
+     * authored together — the scenario asks for N units brought out AND names which ones matter, so
+     * without this switch any spare truck could satisfy the objective the author wrote for a
+     * commander. Absent means unrestricted, as everywhere else in this file.
+     */
     fun canWithdrawThrough(
         unit: GameUnit,
         hex: Hex,
-    ): Boolean = if (UnitPredicates.isAir(unit)) hex.escapeAir else hex.escapeGround
+        scenario: Scenario? = null,
+    ): Boolean {
+        val kindMatches = if (UnitPredicates.isAir(unit)) hex.escapeAir else hex.escapeGround
+        // The scenario is passed in wherever the caller has one ([withdraw] always does) and looked
+        // up only as a fallback: `GameHolder` still points at the PREVIOUS battle while one is
+        // loading, which is the trap `ScenarioUnitParser.applyBasicStrength` documents.
+        val msuOnly = (scenario ?: GameHolder.instance?.scenario)?.escapeHexesForMsuOnly == true
+        return kindMatches && (!msuOnly || unit.mustSurvive)
+    }
 
     /** The side credited when [unit] walks off the map. See the KDoc's named inference. */
     private fun withdrawalSide(unit: GameUnit): Int? = unit.player?.side
@@ -75,7 +94,7 @@ object ExtendedVictory {
     ): Boolean {
         val side = withdrawalSide(unit)
         val quota = scenario.retreatUnitsPerSide.getOrNull(side ?: -1) ?: 0
-        if (side == null || quota <= 0 || !canWithdrawThrough(unit, hex)) return false
+        if (side == null || quota <= 0 || !canWithdrawThrough(unit, hex, scenario)) return false
         scenario.unitsWithdrawn[side] = scenario.unitsWithdrawn[side] + 1
         // Off the map, but NOT destroyed: no casualty, no kill credited, no core-roster loss.
         // `GameMap.updateUnitList` only sweeps `destroyed`, so the removal is done here.
@@ -116,12 +135,22 @@ object ExtendedVictory {
     ): Boolean {
         val required = scenario.mustSurvivePerSide.getOrNull(side) ?: 0
         if (required <= 0) return false
-        val alive =
-            map.units.count { unit ->
-                unit.mustSurvive && !unit.destroyed && unit.player?.side == side
-            }
-        return alive < required
+        return mustSurviveUnitsAlive(map, side) < required
     }
+
+    /** Live progress for the MSU defeat condition, shared by the evaluator and objectives rail. */
+    fun mustSurviveUnitsAlive(
+        map: GameMap,
+        side: Int,
+    ): Int =
+        (
+            map.units +
+                map
+                    .getPlayers()
+                    .flatMap { it.getCoreUnitList() }
+        ).distinct().count { unit ->
+            unit.mustSurvive && !unit.destroyed && unit.player?.side == side
+        }
 
     /** The side that has LOST by §3.7.1, or null. Separate from [satisfiedSide] by design. */
     fun defeatedSide(

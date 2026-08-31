@@ -82,13 +82,18 @@ package org.osada.rules.ruleset
  * Like the schema-12 three it keeps a content gate on top -- the efile's own `green` key -- and
  * unlike them four shipped efiles set it.
  *
- * 13 (2026-08-29) added [RuleKey.TRIGGER_HEXES], OG 9.10. The mechanic was blocked for four days on
- * two byte offsets nobody had located; the owner took the controlled OpenSuite diff and both fell
- * in one sitting (`SCENARIO_FORMAT_NOTES.md`). Additive and defaulted off, and unlike the schema-12
- * three this one has content the moment it is switched on -- 311 trigger hexes across 86 shipped
- * scenarios -- which is exactly why it is the player's choice and not a silent change.
+ * 13 (2026-08-29) added the former `trigger_hexes` key, OG 9.10.
+ *
+ * 15 (2026-08-31) retired that key. Trigger hexes are authored scenario content, like escape hexes
+ * and MSU designations, and now always execute when present. Stored schema-13/14 profiles and saves
+ * may still contain the retired stable key; readers ignore it rather than misclassifying it as an
+ * unknown future rule. Multiplayer requires schema 15 so an older client that can suppress the
+ * same trigger cannot join while claiming equivalent rules.
  */
-const val RULESET_SCHEMA_VERSION = 14
+const val RULESET_SCHEMA_VERSION = 15
+
+/** Serialized keys understood historically but no longer configurable or gameplay-relevant. */
+internal val RETIRED_RULE_KEYS: Set<String> = setOf("trigger_hexes")
 
 /**
  * One configurable rule.
@@ -436,22 +441,6 @@ enum class RuleKey(
     CARRIER_DEPLOY("carrier_deploy", null, 0, 1),
 
     /**
-     * OG 9.10's **trigger hexes** — *"a hex where if a unit ends there its move, something
-     * happens"*. **Schema 13.**
-     *
-     * The scenario designer marks a hex with one of nine actions and a 0–255 parameter;
-     * `rules/TriggerHexes` executes eight of them and states in its own KDoc why the ninth
-     * (Change AI stance) is imported and not run. 311 trigger hexes across 86 of the 502 deployed
-     * scenarios, so this key has real content behind it the moment it is switched on.
-     *
-     * **Off by default, because every action is a GIFT to whoever steps on the hex** — prestige,
-     * experience, a leader, a free formation. Turning it on makes 86 scenarios materially easier
-     * for both sides, which is a re-tuning the player should choose rather than inherit. Author's
-     * Vision resolves it on, since it is authored scenario content.
-     */
-    TRIGGER_HEXES("trigger_hexes", null, 0, 1),
-
-    /**
      * OG's **green replacements** — a second, cheap replacement action that costs veterancy.
      * **Schema 14.**
      *
@@ -749,7 +738,6 @@ object RulesetDefaults {
             RuleKey.DEPOT_SUPPLY to 0,
             RuleKey.RAIL_TRANSPORT to 0,
             RuleKey.CARRIER_DEPLOY to 0,
-            RuleKey.TRIGGER_HEXES to 0,
             RuleKey.GREEN_REPLACEMENTS to 0,
             RuleKey.CARRIER_HANGARS to 0,
             // Schema 11. `eqp-lxf` sets `critical_hit = 2`, so this is the one key whose OFF is a

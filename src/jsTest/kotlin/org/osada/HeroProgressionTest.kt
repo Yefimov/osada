@@ -1,5 +1,6 @@
 package org.osada
 
+import org.osada.hero.AchievementType
 import org.osada.hero.CommandAttribute
 import org.osada.hero.CommandAttributes
 import org.osada.hero.CoreFormation
@@ -238,6 +239,68 @@ class HeroProgressionTest {
 
         val hero = assertNotNull(HeroCampaign.heroFor(unit))
         assertEquals(1, hero.medals.count { it.medalId == HeroMedals.VALOR_MEDAL_ID })
+    }
+
+    @Test
+    fun cumulativeServiceMedalsAreAwardedAtTheirEvidenceThresholdExactlyOnce() {
+        val unit = coreUnit()
+        ledFormation(unit)
+
+        repeat(3) { HeroCampaign.recordCombat(unit, riverStand()) }
+
+        val hero = assertNotNull(HeroCampaign.heroFor(unit))
+        assertEquals(1, hero.medals.count { it.medalId == HeroMedals.STEADFAST_MEDAL_ID })
+        assertEquals(1, hero.medals.count { it.medalId == HeroMedals.RIVER_OPERATIONS_MEDAL_ID })
+    }
+
+    @Test
+    fun reconnaissanceContactsCanAwardTheirOwnServiceMedal() {
+        val unit = coreUnit()
+        ledFormation(unit)
+
+        repeat(6) { index -> HeroCampaign.recordReconnaissance(unit, newlySpotted = 1, turn = index + 1) }
+
+        val hero = assertNotNull(HeroCampaign.heroFor(unit))
+        assertEquals(1, hero.medals.count { it.medalId == HeroMedals.RECONNAISSANCE_MEDAL_ID })
+    }
+
+    @Test
+    fun everyMedalInTheExpandedCatalogueCanBeAwardedAndNeverDuplicates() {
+        val evidence = EvidenceCategory.entries.associate { it.name to 100 }
+        val hero =
+            HeroState(
+                heroId = HeroId("H-ALL-MEDALS"),
+                rankId = "captain",
+                specializationEvidence = evidence,
+            )
+        val once =
+            HeroMedals.award(
+                hero,
+                listOf(AchievementType.DESTROYED_STRONGER_ENEMY),
+                scenarioId = "test",
+            )
+        val twice =
+            HeroMedals.award(
+                once,
+                listOf(AchievementType.DESTROYED_STRONGER_ENEMY),
+                scenarioId = "test",
+            )
+        val expected =
+            setOf(
+                HeroMedals.VALOR_MEDAL_ID,
+                HeroMedals.STEADFAST_MEDAL_ID,
+                HeroMedals.ARMOR_HUNTER_MEDAL_ID,
+                HeroMedals.RIVER_OPERATIONS_MEDAL_ID,
+                HeroMedals.URBAN_COMBAT_MEDAL_ID,
+                HeroMedals.FOREST_SERVICE_MEDAL_ID,
+                HeroMedals.MOUNTAIN_SERVICE_MEDAL_ID,
+                HeroMedals.MANEUVER_MEDAL_ID,
+                HeroMedals.RECONNAISSANCE_MEDAL_ID,
+                HeroMedals.GROUND_ATTACK_MEDAL_ID,
+            )
+
+        assertEquals(expected, once.medals.map { it.medalId }.toSet())
+        assertEquals(once.medals, twice.medals)
     }
 
     // ----------------------------------------------------------------------- promotion §8.5

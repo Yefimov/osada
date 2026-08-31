@@ -6,6 +6,7 @@ import org.osada.hero.HeroCampaign
 import org.osada.rules.ExtendedVictory
 import org.osada.rules.GameRules
 import org.osada.rules.TriggerHexes
+import org.osada.rules.TypedVictoryHexes
 import org.osada.rules.UnitCapabilities
 import org.osada.rules.canCapture
 import org.osada.rules.getDirection
@@ -162,11 +163,18 @@ internal class MoveExecutor(
     ) {
         val from = setup.from
         val toHex = setup.map[last.row][last.col]
+        // `trigger_ex=0` compares the arriving unit with the owner it ENCOUNTERED. Capture below
+        // changes `toHex.owner`, so preserve the pre-capture value for the later arrival effect.
+        val triggerOwnerAtArrival = toHex.owner
         if (last.row == row && last.col == col && GameRules.canCapture(unit)) {
             val capture = gameMap.captureHex(toHex, unit)
             result.isCapture = capture.isCapture
             result.capturePrestige = capture.prestigeGain as? Int ?: 0
-            if (capture.isWin) result.isVictorySide = setup.side
+            val scenario = GameHolder.instance?.scenario?.takeIf { it.map === gameMap }
+            val typedWin =
+                scenario != null &&
+                    TypedVictoryHexes.completedTier(scenario, gameMap, setup.side) != null
+            if (capture.isWin || typedWin) result.isVictorySide = setup.side
         }
 
         val totalCost = if (totalCostIn < 0) 0 else totalCostIn
@@ -200,7 +208,7 @@ internal class MoveExecutor(
         // AFTER the arrival's spotting and ZOC are in place: `Extra spot` reveals from where the
         // unit now stands, and a reveal computed before `setSpotRange` would be immediately
         // overwritten by it.
-        if (applyArrivalEffects(gameMap, unit, toHex, result)) return
+        if (applyArrivalEffects(gameMap, unit, toHex, triggerOwnerAtArrival, result)) return
         dismountAfterMove(unit)
         gameMap.setMoveRange(unit)
         gameMap.setAttackRange(unit)
@@ -355,13 +363,17 @@ private fun applyArrivalEffects(
     gameMap: GameMap,
     unit: GameUnit,
     toHex: Hex,
+    triggerOwnerAtArrival: Int,
     result: MovementResults,
 ): Boolean {
     val withdrew =
         GameHolder.instance?.scenario?.let { ExtendedVictory.withdraw(it, unit, toHex) } == true
     result.withdrew = withdrew
     if (withdrew) return true
-    TriggerHexes.fire(gameMap, unit, toHex)?.let { result.triggerMessage = it }
-    result.firedTrigger = toHex.triggerFired && toHex.trigger != 0
+    TriggerHexes.fire(gameMap, unit, toHex, triggerOwnerAtArrival)?.let { outcome ->
+        result.firedTrigger = true
+        result.triggerMessage = outcome.message
+        result.triggerPrestige = outcome.prestigeAwarded
+    }
     return false
 }

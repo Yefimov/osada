@@ -90,7 +90,9 @@ internal object MoveRangeCalculation {
         // began, with NO rule behind it -- `grep LeaderType.SUPERIOR_MANEUVER src/jsMain/.../rules`
         // found nothing. It bypasses the ZOC rule outright, not a cost discount: OG's manual states
         // the unit ignores enemy ZOC, and here ZOC is the only thing the flag may touch.
-        val ignoresZoc = Leaders.unitHasLeader(unit, LeaderType.SUPERIOR_MANEUVER)
+        val ignoresZoc =
+            Leaders.unitHasLeader(unit, LeaderType.SUPERIOR_MANEUVER) ||
+                UnitCapabilities.ignoresZoneOfControl(unitData)
 
         // OG's Alpine Training: "When moving the unit treats forest and mountain hexes as clear
         // terrain." Advertised since the port began with no rule behind it -- the same defect class

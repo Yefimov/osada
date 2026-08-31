@@ -2,6 +2,7 @@ package org.osada.ui.briefing
 
 import org.osada.campaign.CampaignCondition
 import org.osada.campaign.CampaignEffect
+import org.osada.scenario.ExtendedObjectiveProgress
 
 internal enum class BriefingStage {
     DIALOGUE,
@@ -19,6 +20,8 @@ internal data class ScenarioFacts(
     val dateLabel: String,
     val sidesLabel: String,
     val ordersText: String,
+    /** Engine-authored scenario conditions shown even when the prose briefing omitted them. */
+    val extendedObjectives: List<ExtendedObjectiveProgress> = emptyList(),
 )
 
 internal data class BriefingChoice(

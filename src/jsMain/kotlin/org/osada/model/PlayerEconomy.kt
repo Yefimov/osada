@@ -6,6 +6,7 @@ import org.osada.hero.HeroCampaign
 import org.osada.rules.Attachments
 import org.osada.rules.CostCalculator
 import org.osada.rules.GameRules
+import org.osada.rules.ScenarioPurchaseList
 import org.osada.rules.calculateUnitCosts
 import org.osada.rules.calculateUnitSellCost
 import org.osada.rules.calculateUpgradeCosts
@@ -53,7 +54,12 @@ fun Player.buyUnit(
 ): Boolean {
     val offered =
         Equipment.isPurchasable(eqid) &&
-            (transportEqid <= 0 || Equipment.isPurchasable(transportEqid))
+            (transportEqid <= 0 || Equipment.isPurchasable(transportEqid)) &&
+            // OG's Fronts/Factions, as the scenario's own `.buy4` list (`rules/ScenarioPurchaseList`).
+            // Enforced here for the same reason `Can't Buy` is: this is the one function every
+            // purchase passes through, and the transport is checked for the same back-door reason.
+            ScenarioPurchaseList.allows(this, eqid) &&
+            (transportEqid <= 0 || ScenarioPurchaseList.allows(this, transportEqid))
     val cost = GameRules.calculateUnitCosts(eqid, transportEqid)
     val affordable = offered && cost <= prestige
     val acquired = affordable && acquireUnit(eqid, transportEqid)
@@ -107,13 +113,23 @@ private fun Player.applyPurchaseDefaults(unit: GameUnit) {
     if (defaultStrength > 0) unit.strength = defaultStrength
 }
 
+/**
+ * Re-equips [unit], charging the difference.
+ *
+ * **The scenario's purchase whitelist gates upgrades as well as purchases**, unlike `Can't Buy`:
+ * OpenSuite's own sentence for Fronts/Factions is *"available to the player to buy new units **or
+ * upgrade existing ones**"*, so both go through `rules/ScenarioPurchaseList`. `Can't Buy` stays
+ * purchase-only because its wording says only that (`docs/og-fidelity-plan.md` §Q.1).
+ */
 fun Player.upgradeUnit(
     unit: GameUnit,
     newEqid: Int,
     transportEqid: Int,
 ): Boolean {
+    val listed =
+        ScenarioPurchaseList.allows(this, newEqid) && ScenarioPurchaseList.allows(this, transportEqid)
     val cost = GameRules.calculateUpgradeCosts(unit, newEqid, transportEqid)
-    if (cost > prestige || !unit.upgrade(newEqid, transportEqid)) return false
+    if (!listed || cost > prestige || !unit.upgrade(newEqid, transportEqid)) return false
     prestige -= cost
     return true
 }

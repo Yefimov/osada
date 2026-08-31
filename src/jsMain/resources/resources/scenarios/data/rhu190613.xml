@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="rhu190613.xscn" name="1919/06/13 Defending &#201;rsek&#250;jv&#225;r (Nov&#233; Z&#225;mky)" turns="20, 20, 20" date="June 13, 1919" dayturns="0" ground="0" atmosferic="0" latitude="6" iconset="0" weatherchg="1" rows="43" cols="48" eqp="eqp-kaiser" image="resources/maps/images/map_rhu190613.png" eqpv="united1" holdvictory="5, 4, 3" holdvictory1="5, 4, 3" msuunits="1, 0" canblow="0" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="1" portsnonavaldeploy="0" prototypes="0" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="0">
+<map file="rhu190613.xscn" name="1919/06/13 Defending &#201;rsek&#250;jv&#225;r (Nov&#233; Z&#225;mky)" turns="20, 20, 20" date="June 13, 1919" dayturns="0" ground="0" atmosferic="0" latitude="6" iconset="0" weatherchg="1" rows="43" cols="48" eqp="eqp-kaiser" image="resources/maps/images/map_rhu190613.png" eqpv="united1" holdvictory="5, 4, 3" holdvictory1="5, 4, 3" msuunits="1, 0" canblow="0" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="1" portsnonavaldeploy="0" prototypes="0" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="0" ehmsuonly="0" paradropocean="1">
   <player id="0" country="187" side="0" airtrans="0" navaltrans="0" railtrans="5" defaultxp="195" defaultstr="10" support="188,0,0,0" turnprestige="20, 20, 20, 20, 24, 24, 24, 24, 28, 28, 28, 28, 32, 32, 32, 32, 28, 24, 20, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <player id="1" country="47" side="1" airtrans="0" navaltrans="0" railtrans="4" defaultxp="175" defaultstr="10" support="48,0,0,0" turnprestige="30, 30, 30, 30, 25, 25, 25, 25, 20, 20, 20, 20, 15, 15, 15, 15, 10, 10, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="5">
@@ -32,7 +32,7 @@
   </reinforce>
   <reinforce turn="8">
     <at row="32" col="2">
-      <unit id="33096" owner="1" flag="48" face="0" transport="33383" exp="253" ldr="1"/>
+      <unit id="33096" owner="1" flag="48" face="0" transport="33383" exp="253" ldr="1" ammo="4"/>
     </at>
     <at row="31" col="2">
       <unit id="33094" owner="1" flag="48" face="0" transport="33383" exp="5"/>
@@ -123,7 +123,7 @@
       <unit id="33120" owner="1" flag="48" face="0" transport="33321" exp="34"/>
     </at>
     <at row="21" col="4">
-      <unit id="33081" owner="1" flag="48" face="0" transport="33383" exp="4"/>
+      <unit id="33081" owner="1" flag="48" face="0" transport="33383" exp="4" ammo="5"/>
     </at>
     <at row="19" col="2">
       <unit id="33067" owner="1" flag="48" face="0" transport="33309" exp="30"/>
@@ -1313,7 +1313,7 @@
     <unit id="33120" owner="1" flag="48" face="0" exp="33"/>
   </hex>
   <hex row="23" col="5" road="17">
-    <unit id="33081" owner="1" flag="48" face="0" transport="33383" exp="16"/>
+    <unit id="33081" owner="1" flag="48" face="0" transport="33383" exp="16" ammo="5"/>
   </hex>
   <hex row="23" col="6">
     <unit id="33213" owner="1" flag="48" face="0"/>
@@ -1517,7 +1517,7 @@
     <unit id="33262" owner="1" flag="48" face="0" transport="33335" exp="31"/>
   </hex>
   <hex row="29" col="2" road="136">
-    <unit id="33081" owner="1" flag="48" face="0" transport="33383" exp="255"/>
+    <unit id="33081" owner="1" flag="48" face="0" transport="33383" exp="255" ammo="5"/>
   </hex>
   <hex row="29" col="3" terrain="10" road="136" name="V&#225;g"/>
   <hex row="29" col="5" road="17"/>
@@ -1616,7 +1616,7 @@
   <hex row="31" col="47" terrain="3"/>
   <hex row="32" col="1" terrain="10" name="Csall&#243;k&#246;zi Kis-Duna"/>
   <hex row="32" col="2">
-    <unit id="33096" owner="1" flag="48" face="0" transport="33383" exp="26"/>
+    <unit id="33096" owner="1" flag="48" face="0" transport="33383" exp="26" ammo="4"/>
   </hex>
   <hex row="32" col="3" terrain="10" name="V&#225;g"/>
   <hex row="32" col="5" terrain="2" road="17" owner="0" flag="187" station="1">

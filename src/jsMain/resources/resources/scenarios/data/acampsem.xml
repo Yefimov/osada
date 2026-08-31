@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="acampsem.xscn" name="Semenov" turns="9, 11, 17" date="February 10, 1920" dayturns="0" ground="1" atmosferic="0" latitude="3" iconset="1" weatherchg="1" rows="33" cols="43" eqp="eqp-kaiser" image="resources/maps/images/map_429.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1">
+<map file="acampsem.xscn" name="Semenov" turns="9, 11, 17" date="February 10, 1920" dayturns="0" ground="1" atmosferic="0" latitude="3" iconset="1" weatherchg="1" rows="33" cols="43" eqp="eqp-kaiser" image="resources/maps/images/map_429.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1" ehmsuonly="0" paradropocean="1">
   <player id="0" country="144" side="1" airtrans="0" navaltrans="0" railtrans="15" defaultxp="0" defaultstr="0" support="0,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <player id="1" country="191" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="192,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="2">
     <at row="15" col="33">
-      <unit id="46756" owner="1" flag="192" face="0" exp="68" str="5"/>
+      <unit id="46756" owner="1" flag="192" face="0" exp="68" str="5" ammo="4"/>
     </at>
     <at row="16" col="21">
       <unit id="747" owner="1" flag="192" face="0" exp="68" str="5"/>
@@ -16,49 +16,49 @@
       <unit id="747" owner="1" flag="192" face="0" exp="68" str="5"/>
     </at>
     <at row="15" col="34">
-      <unit id="46756" owner="1" flag="192" face="0" exp="82" str="4"/>
+      <unit id="46756" owner="1" flag="192" face="0" exp="82" str="4" ammo="4"/>
     </at>
     <at row="17" col="23">
-      <unit id="46756" owner="1" flag="192" face="0" exp="137" str="6" ldr="1"/>
+      <unit id="46756" owner="1" flag="192" face="0" exp="137" str="6" ldr="1" ammo="4"/>
     </at>
     <at row="18" col="24">
-      <unit id="46756" owner="1" flag="192" face="0" exp="188" str="5"/>
+      <unit id="46756" owner="1" flag="192" face="0" exp="188" str="5" ammo="4"/>
     </at>
     <at row="7" col="41">
-      <unit id="46756" owner="1" flag="192" face="0" exp="63" str="5"/>
+      <unit id="46756" owner="1" flag="192" face="0" exp="63" str="5" ammo="4"/>
     </at>
     <at row="15" col="35">
-      <unit id="46744" owner="1" flag="192" face="0" transport="46764" exp="140" str="5"/>
+      <unit id="46744" owner="1" flag="192" face="0" transport="46764" exp="140" str="5" ammo="5"/>
     </at>
   </reinforce>
   <reinforce turn="3">
     <at row="18" col="22">
-      <unit id="46756" owner="1" flag="192" face="0" exp="45" str="4"/>
+      <unit id="46756" owner="1" flag="192" face="0" exp="45" str="4" ammo="4"/>
     </at>
     <at row="14" col="16">
-      <unit id="46756" owner="1" flag="192" face="0" exp="108" str="4"/>
+      <unit id="46756" owner="1" flag="192" face="0" exp="108" str="4" ammo="4"/>
     </at>
     <at row="18" col="23">
       <unit id="46777" owner="1" flag="192" face="0" exp="14" str="4"/>
     </at>
     <at row="13" col="17">
-      <unit id="46744" owner="1" flag="192" face="0" transport="46764" exp="71" str="5"/>
+      <unit id="46744" owner="1" flag="192" face="0" transport="46764" exp="71" str="5" ammo="5"/>
     </at>
     <at row="19" col="24">
-      <unit id="46744" owner="1" flag="192" face="0" transport="46756" exp="203" str="6"/>
+      <unit id="46744" owner="1" flag="192" face="0" transport="46756" exp="203" str="6" ammo="5"/>
     </at>
   </reinforce>
   <reinforce turn="4">
     <at row="4" col="3">
-      <unit id="46756" owner="1" flag="192" face="0" exp="136" str="4"/>
+      <unit id="46756" owner="1" flag="192" face="0" exp="136" str="4" ammo="4"/>
     </at>
     <at row="3" col="3">
-      <unit id="46756" owner="1" flag="192" face="0" exp="208" str="5"/>
+      <unit id="46756" owner="1" flag="192" face="0" exp="208" str="5" ammo="4"/>
     </at>
   </reinforce>
   <reinforce turn="5">
     <at row="9" col="42">
-      <unit id="46744" owner="1" flag="192" face="0" transport="46756" exp="158" str="5"/>
+      <unit id="46744" owner="1" flag="192" face="0" transport="46756" exp="158" str="5" ammo="5"/>
     </at>
   </reinforce>
   <hex row="0" col="1" terrain="3"/>
@@ -324,7 +324,7 @@
   <hex row="7" col="5" terrain="15"/>
   <hex row="7" col="6" terrain="15"/>
   <hex row="7" col="7" road="10">
-    <unit id="46756" owner="1" flag="192" face="0" exp="32" str="5" bstr="3"/>
+    <unit id="46756" owner="1" flag="192" face="0" exp="32" str="5" bstr="3" ammo="4"/>
   </hex>
   <hex row="7" col="8" road="33"/>
   <hex row="7" col="10" terrain="10"/>
@@ -367,7 +367,7 @@
   <hex row="8" col="6" terrain="15"/>
   <hex row="8" col="7" terrain="15"/>
   <hex row="8" col="8" terrain="3" road="144">
-    <unit id="46756" owner="1" flag="192" face="0" exp="23" str="6" ldr="1" bstr="3"/>
+    <unit id="46756" owner="1" flag="192" face="0" exp="23" str="6" ldr="1" bstr="3" ammo="4"/>
   </hex>
   <hex row="8" col="9" terrain="3"/>
   <hex row="8" col="10" terrain="10"/>
@@ -400,7 +400,7 @@
   <hex row="8" col="39" terrain="3"/>
   <hex row="8" col="40" terrain="3"/>
   <hex row="8" col="41">
-    <unit id="46756" owner="1" flag="192" face="0" exp="188" str="5" bstr="2"/>
+    <unit id="46756" owner="1" flag="192" face="0" exp="188" str="5" bstr="2" ammo="4"/>
   </hex>
   <hex row="8" col="42" terrain="8"/>
   <hex row="9" col="0" terrain="3"/>
@@ -412,7 +412,7 @@
   <hex row="9" col="6" terrain="15"/>
   <hex row="9" col="7" terrain="10"/>
   <hex row="9" col="8" terrain="1" road="1" name="Village" owner="1" flag="191">
-    <unit id="46744" owner="1" flag="192" face="0" transport="46764" exp="239" str="5" bstr="2"/>
+    <unit id="46744" owner="1" flag="192" face="0" transport="46764" exp="239" str="5" bstr="2" ammo="5"/>
   </hex>
   <hex row="9" col="9" terrain="3"/>
   <hex row="9" col="10" terrain="10"/>
@@ -437,10 +437,10 @@
   <hex row="9" col="34" terrain="9" name="LAKE"/>
   <hex row="9" col="35" terrain="15"/>
   <hex row="9" col="36" terrain="1" name="Chita" owner="1" flag="191" victory="1">
-    <unit id="46744" owner="1" flag="192" face="0" transport="46764" exp="168" str="7" bstr="3"/>
+    <unit id="46744" owner="1" flag="192" face="0" transport="46764" exp="168" str="7" bstr="3" ammo="5"/>
   </hex>
   <hex row="9" col="37" terrain="1" name="Chita">
-    <unit id="46744" owner="1" flag="192" face="0" transport="46764" exp="168" str="7" bstr="3"/>
+    <unit id="46744" owner="1" flag="192" face="0" transport="46764" exp="168" str="7" bstr="3" ammo="5"/>
   </hex>
   <hex row="9" col="38" terrain="1" name="Chita"/>
   <hex row="9" col="39" name="RAILROAD"/>
@@ -561,7 +561,7 @@
   <hex row="12" col="29" name="RAILROAD"/>
   <hex row="12" col="30" terrain="15"/>
   <hex row="12" col="31" name="RAILROAD">
-    <unit id="42096" owner="1" flag="192" face="0" exp="254" str="5" bstr="3"/>
+    <unit id="42096" owner="1" flag="192" face="0" exp="254" str="5" bstr="3" fuel="50"/>
   </hex>
   <hex row="12" col="32" name="RAILROAD"/>
   <hex row="12" col="33" name="RAILROAD"/>
@@ -589,7 +589,7 @@
   <hex row="13" col="14" terrain="10"/>
   <hex row="13" col="15" terrain="10"/>
   <hex row="13" col="16" terrain="3">
-    <unit id="46756" owner="1" flag="192" face="0" exp="110" str="5" bstr="3"/>
+    <unit id="46756" owner="1" flag="192" face="0" exp="110" str="5" bstr="3" ammo="4"/>
   </hex>
   <hex row="13" col="17" terrain="3"/>
   <hex row="13" col="18" terrain="3"/>

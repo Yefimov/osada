@@ -109,7 +109,7 @@ export function compose(manifest, input, seed) {
     };
 
     put('background', pickList(seed, 'bg', idsIn(manifest, 'background')));
-    put('uniform_back', `back_${branch}`);
+    put('uniform_back', pool.uniformBack || `back_${branch}`);
 
     // Hair split, gender + headgear aware. Females always keep female hair (never bald): headgear
     // only hides the crown, so long back/side hair still frames the face and shows below a hat.
@@ -139,7 +139,7 @@ export function compose(manifest, input, seed) {
 
     put('uniform_front_collar', pool.collar || (branch === 'aviation' ? 'collar_aviation' : `collar_${branch}_${season}`));
     put('rank', `${pool.rankPrefix || 'rank_'}${rank}`);
-    put('branch', `branch_${branch}`);
+    put('branch', pool.branchLayer || `branch_${branch}`);
     if (headgear) put('headgear', headgear);
 
     const woundId = input.wound !== undefined

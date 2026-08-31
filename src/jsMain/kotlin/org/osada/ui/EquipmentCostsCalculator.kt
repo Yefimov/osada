@@ -10,6 +10,7 @@ import org.osada.model.isAvailableIn
 import org.osada.model.isPurchasable
 import org.osada.model.isPurchasableGroundTransport
 import org.osada.rules.GameRules
+import org.osada.rules.ScenarioPurchaseList
 import org.osada.rules.calculateUnitCosts
 import org.osada.rules.calculateUnitSellCost
 import org.osada.rules.calculateUpgradeCosts
@@ -69,6 +70,10 @@ internal class EquipmentCostsCalculator(
             // hiding cards, and this record may still be a legal UPGRADE target.
             !Equipment.isPurchasable(eqUnitId) -> I18n.t("equipment.buy_blocked.cant_buy")
             !Equipment.isPurchasableGroundTransport(eqUnitId) -> I18n.t("equipment.buy_blocked.not_purchasable")
+            // The scenario's own Fronts/Factions list. Named rather than left silent for exactly
+            // the reason the line above gives: a card the author closed off looks like a bug when
+            // its Buy button simply disappears.
+            !purchaseListAllows(eqUnitId, -1) -> I18n.t("equipment.buy_blocked.not_in_scenario_list")
             else -> campaignCountryRefusal(eqUnitId)
         }
 
@@ -134,7 +139,18 @@ internal class EquipmentCostsCalculator(
     ): Boolean =
         Equipment.isPurchasable(eqUnitId) &&
             (eqTransportId <= 0 || Equipment.isPurchasable(eqTransportId)) &&
-            Equipment.isPurchasableGroundTransport(eqUnitId)
+            Equipment.isPurchasableGroundTransport(eqUnitId) &&
+            purchaseListAllows(eqUnitId, eqTransportId)
+
+    /** OG's Fronts/Factions as the scenario's own `.buy4` list — `rules/ScenarioPurchaseList`. */
+    private fun purchaseListAllows(
+        eqUnitId: Int,
+        eqTransportId: Int,
+    ): Boolean {
+        val player = ui.game.scenario?.map?.currentPlayer
+        return ScenarioPurchaseList.allows(player, eqUnitId) &&
+            (eqTransportId <= 0 || ScenarioPurchaseList.allows(player, eqTransportId))
+    }
 
     private fun resolveBuyCost(
         eqUnitId: Int,

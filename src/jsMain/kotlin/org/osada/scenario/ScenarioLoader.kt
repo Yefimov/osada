@@ -176,6 +176,12 @@ object ScenarioLoader {
         scenario.capitalShipsAsFlak = flag("capitalflak")
         scenario.useBasicStrength = flag("basicstrength")
         scenario.typedVictoryHexes = flag("typedvh")
+        // OG's "EH for MSU only" (2026-08-31), deployed with its reader like everything above it:
+        // `rules/ExtendedVictory.canWithdrawThrough`. 15 deployed scenarios.
+        scenario.escapeHexesForMsuOnly = flag("ehmsuonly")
+        // OG's "avoid paratroop drops on ocean", deployed INVERTED as a permission like
+        // `prototypes` and `subsneedlof`: read by `rules/EmbarkRules`. 19 deployed scenarios.
+        scenario.paradropOnOceanAllowed = flag("paradropocean")
     }
 
     /** The scenario/operation name lives on the <map name="…"> attribute. Standalone scenarios

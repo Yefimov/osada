@@ -230,9 +230,35 @@ class Scenario(
     /**
      * OG's *"Allow Typed VH"* (`opt_specific_vh`, `@1010` bit 1) — manual §3.7.2's per-level
      * victory hexes. With it off every objective counts for every level, which is OSADA's
-     * long-standing behaviour and what [Hex.victoryTiers]' default of 7 already expresses.
+     * long-standing behaviour and what `Hex.victoryTiersForSide`'s default of 7 already expresses.
      */
     var typedVictoryHexes: Boolean? = null
+
+    /**
+     * OG's **"EH for MSU only"** (`opt_eh_for_msu_only`, `@1016` bit 6) — **15 deployed scenarios,
+     * 93 corpus-wide**, named from the Suite's own `ScenOptionsUsed_*.csv`.
+     *
+     * With it on, an escape hex accepts **only a Must-Survive Unit**: the exit is for the formation
+     * the author needs brought out, not for whatever happens to reach it. Both halves were already
+     * built — the exits in the extended-victory pass and [org.osada.model.GameUnit.mustSurvive]
+     * from unit `@43` bit 0 — so this is one condition joining two existing mechanics, read by
+     * [org.osada.rules.ExtendedVictory.canWithdrawThrough].
+     *
+     * Absent (null) means unrestricted, the direction that takes nothing from the player and the
+     * one 105 scenarios with unreadable sources depend on.
+     */
+    var escapeHexesForMsuOnly: Boolean? = null
+
+    /**
+     * OG's **"avoid paratroop drops on ocean"** (`opt_no_paradrop_ocean`, `@1009` bit 4) — **19
+     * deployed scenarios, 526 corpus-wide**, stored INVERTED as a permission so `1` always means
+     * "allowed" and an absent attribute needs no special case.
+     *
+     * The option exists because the drop is otherwise legal, and it was legal here too:
+     * `rules/EmbarkRules.getDisembarkPositions` filters candidate hexes with the TRANSPORT's
+     * movement table, and an aircraft's makes ocean passable. That object reads this.
+     */
+    var paradropOnOceanAllowed: Boolean? = null
 
     var unitsWithdrawn: MutableList<Int> = mutableListOf(0, 0)
 
@@ -432,6 +458,13 @@ class Scenario(
         reinforcementMessages.clear()
         reinforcementMessages.putAll(other.reinforcementMessages)
         victoryHoldCounts = other.victoryHoldCounts.toList()
+        victoryHoldCountsSide1 = other.victoryHoldCountsSide1.toList()
+        retreatUnitsPerSide = other.retreatUnitsPerSide.toList()
+        killUnitsPerSide = other.killUnitsPerSide.toList()
+        mustSurvivePerSide = other.mustSurvivePerSide.toList()
+        typedVictoryHexes = other.typedVictoryHexes
+        unitsWithdrawn = other.unitsWithdrawn.toMutableList()
+        unitsKilled = other.unitsKilled.toMutableList()
         reinforcements.clear()
         other.reinforcements.forEach { (turn, list) ->
             list.forEach { r ->

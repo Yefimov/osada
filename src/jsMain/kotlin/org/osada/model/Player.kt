@@ -76,6 +76,16 @@ class Player {
      * exactly as for [defaultExperience].
      */
     var defaultStrength: Int = 0
+
+    /**
+     * OG's per-scenario **purchase whitelist** for this player — the `.buy4` sidecar, deployed as
+     * the `buylist` attribute and read by `rules/ScenarioPurchaseList`.
+     *
+     * **Null means unrestricted**, and that is the case for 497 of the 502 deployed scenarios. A
+     * non-null set is the resolved output of OpenSuite's Fronts/Factions picker: exactly the
+     * equipment ids the author left this player able to buy or upgrade into.
+     */
+    var purchaseList: Set<Int>? = null
     var supportCountries: MutableList<Int> = mutableListOf()
     var prestigePerTurn: MutableList<Int> = mutableListOf()
 

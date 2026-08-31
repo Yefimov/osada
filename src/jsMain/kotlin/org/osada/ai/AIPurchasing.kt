@@ -10,6 +10,7 @@ import org.osada.model.getCountryEquipmentByClass
 import org.osada.model.isAiPurchasable
 import org.osada.model.isPurchasable
 import org.osada.rules.GameRules
+import org.osada.rules.ScenarioPurchaseList
 import org.osada.rules.calculateUnitCosts
 import kotlin.random.Random
 
@@ -47,7 +48,7 @@ internal object AIPurchasing {
                 if (exhausted) break
                 classIndex = 0
             }
-            val candidates = purchasableCandidates(classes[classIndex], country, remaining, year, month)
+            val candidates = purchasableCandidates(player, classes[classIndex], country, remaining, year, month)
             if (candidates.isNotEmpty()) {
                 val choice = candidates[Random.nextInt(0, candidates.size)]
                 remaining -= GameRules.calculateUnitCosts(choice, -1)
@@ -62,6 +63,7 @@ internal object AIPurchasing {
     }
 
     private fun purchasableCandidates(
+        player: Player,
         unitClass: UnitClass,
         country: Int,
         remaining: Int,
@@ -69,7 +71,10 @@ internal object AIPurchasing {
         month: Int,
     ): List<Int> =
         Equipment.getCountryEquipmentByClass(unitClass, country).filter { eqid ->
-            isPurchasable(eqid, remaining, year, month)
+            // The scenario's own Fronts/Factions list binds the AI exactly as it binds the player:
+            // OpenSuite writes one section per player, and 83 corpus files customise the AI's alone
+            // (`rules/ScenarioPurchaseList`).
+            ScenarioPurchaseList.allows(player, eqid) && isPurchasable(eqid, remaining, year, month)
         }
 
     /**

@@ -373,13 +373,19 @@ internal object HeroCampaign {
                 // Claimed last, so a leaderless or unknown formation never burns the turn's key.
                 ?.takeIf { reconContactsCredited.add("${currentScenarioLabel()}|${formationId.value}|$turn") }
                 ?: return false
-        roster.updateState(
+        val updated =
             hero.copy(
                 specializationEvidence =
                     EvidenceRules.accrue(
                         hero.specializationEvidence,
                         listOf(AchievementType.RECON_CONTACT),
                     ),
+            )
+        roster.updateState(
+            HeroMedals.award(
+                updated,
+                listOf(AchievementType.RECON_CONTACT),
+                currentScenarioLabel(),
             ),
         )
         return true

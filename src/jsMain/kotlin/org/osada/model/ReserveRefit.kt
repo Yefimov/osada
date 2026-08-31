@@ -1,7 +1,7 @@
 package org.osada.model
 
-import org.osada.rules.GameRules
-import org.osada.rules.calculateUnitCostPerStrength
+import org.osada.rules.CostCalculator
+import org.osada.rules.GreenReplacements
 
 /**
  * Refitting units in the reserve tray between battles — the paid replacement for the free
@@ -25,9 +25,21 @@ import org.osada.rules.calculateUnitCostPerStrength
  * unit gets less supply"). Units already on the map are untouched by this file and keep using the
  * existing per-hex resupply, penalties and all.
  *
- * Strength costs prestige at [GameRules.calculateUnitCostPerStrength], exactly as reinforcing does
- * in battle. Ammo and fuel are free, exactly as resupplying does in battle. One economy, two
- * places.
+ * Strength costs prestige at [CostCalculator.reinforceCostPerStrength], exactly as reinforcing does
+ * in battle -- OG's `elite_cost` included, because "one economy, two places" has to survive an
+ * efile that prices replacements at anything but 100%. Ammo and fuel are free, exactly as
+ * resupplying does in battle.
+ *
+ * ## `green_autorefit`, and why this file is where it lands
+ *
+ * > *"green_autorefit -- If automatic refit should use greens, thus reducing experience (0..1).
+ * >  default 0, autorefit use elite."* -- `OPENTXT_SAMPLE/equip.cfg`
+ *
+ * This tray pass IS OG's automatic refit, and its default has always been the elite one: full
+ * price, no experience lost. An efile that sets `green_autorefit` asks for the other kind, so the
+ * pass switches to [GreenReplacements]' price and its experience arithmetic together -- never one
+ * without the other, or the player would be charged the discount and keep the veterancy. `eqp-gce`
+ * is the only shipped efile that sets it.
  *
  * ## Why not `GameUnit.reinforce`
  *
@@ -60,12 +72,24 @@ internal object ReserveRefit {
     /** The units this file acts on: the player's own, still in the tray. */
     fun refittable(player: Player): List<GameUnit> = player.getCoreUnitList().filter { !it.isDeployed }
 
+    /**
+     * Prestige per restored point for this pass: green when the efile asks for a green autorefit,
+     * elite otherwise. One function, so the quote the player is shown and the charge they take can
+     * never disagree.
+     */
+    private fun costPerStrength(unit: GameUnit): Int =
+        if (GreenReplacements.autorefitUsesGreens()) {
+            GreenReplacements.costPerStrength(unit)
+        } else {
+            CostCalculator.reinforceCostPerStrength(unit, false)
+        }
+
     /** Full-rate quote for [unit]; [Quote.isNeeded] is false for a unit already at full readiness. */
     fun quote(unit: GameUnit): Quote {
         val missing = (FULL_STRENGTH - unit.strength).coerceAtLeast(0)
         return Quote(
             strengthPoints = missing,
-            strengthCost = missing * GameRules.calculateUnitCostPerStrength(unit),
+            strengthCost = missing * costPerStrength(unit),
             needsSupply = needsSupply(unit),
         )
     }
@@ -84,11 +108,16 @@ internal object ReserveRefit {
     ): Quote {
         val wanted = quote(unit)
         if (!wanted.isNeeded) return Quote(0, 0, false)
-        val perPoint = GameRules.calculateUnitCostPerStrength(unit)
+        val perPoint = costPerStrength(unit)
         val affordablePoints =
             if (perPoint <= 0) wanted.strengthPoints else minOf(wanted.strengthPoints, player.prestige / perPoint)
         val spent = affordablePoints * perPoint
         if (affordablePoints > 0) {
+            // Experience BEFORE the strength changes: the dilution is a weighted average of the
+            // veterans present now and the intake joining them.
+            if (GreenReplacements.autorefitUsesGreens()) {
+                unit.experience = GreenReplacements.experienceAfter(unit, affordablePoints)
+            }
             unit.strength += affordablePoints
             player.prestige -= spent
         }

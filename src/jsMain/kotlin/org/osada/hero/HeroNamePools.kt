@@ -9,9 +9,10 @@ import org.osada.model.countryNames
  *
  * §16 requires names to be nation-aware, date-aware and moddable; §30 makes a *full* historical
  * database for every nation an explicit non-goal, and §23 accepts fallback procedural content. So
- * this covers the major belligerents the shipped campaigns actually field and routes every other
- * country to a [GENERIC] pool, rather than pretending to know names for all sixty-odd
- * [countryNames] entries.
+ * this covers every player country used by the shipped campaigns and routes every other country
+ * to a [GENERIC] pool, rather than pretending to know names for all sixty-odd [countryNames]
+ * entries. East Asian pools preserve family-name-first ordering; the ancient rebel pool uses
+ * mononyms rather than forcing a modern surname convention onto it.
  *
  * The mapping is by country **id** (an index into [countryNames]), read once at generation time —
  * the point in the lifecycle where nation is finally known, which is exactly why §16's naming work
@@ -37,15 +38,28 @@ internal object HeroNamePools {
         val givenNamesFemale: List<String>,
         val surnames: List<String>,
         val femininizeSurname: ((String) -> String)? = null,
+        val familyNameFirst: Boolean = false,
+        val mononym: Boolean = false,
     )
 
     /** Builds a pool from space-delimited strings, so each list stays on one readable line. */
+    @Suppress("LongParameterList")
     private fun pool(
         given: String,
         givenFemale: String,
         surname: String,
         femininizeSurname: ((String) -> String)? = null,
-    ) = NamePool(given.split(" "), givenFemale.split(" "), surname.split(" "), femininizeSurname)
+        familyNameFirst: Boolean = false,
+        mononym: Boolean = false,
+    ) =
+        NamePool(
+            given.split(" "),
+            givenFemale.split(" "),
+            surname.split(" ").filter(String::isNotBlank),
+            femininizeSurname,
+            familyNameFirst,
+            mononym,
+        )
 
     /** Russian/Ukrainian-style masculine surname suffixes, each with its feminine counterpart. */
     private fun slavicOvFeminine(surname: String): String =
@@ -130,6 +144,67 @@ internal object HeroNamePools {
             "Virtanen Makinen Nieminen Laine Heikkinen Koskinen Jarvinen Salo Aalto",
         )
 
+    private val SOUTH_SLAVIC =
+        pool(
+            "Aleksandar Bogdan Branko Dragan Ivan Milan Nikola Petar Radovan Zoran",
+            "Ana Dara Jelena Katarina Mara Milena Nada Radmila Sofija Zora",
+            "Jovanovic Petrovic Nikolic Markovic Stojanovic Pavlovic Kovacevic Ilic Popovic Savic",
+        )
+
+    private val CZECHOSLOVAK =
+        pool(
+            "Antonin Bohumil Frantisek Jan Jaroslav Jiri Karel Ludvik Milan Vaclav",
+            "Alena Bozena Eva Hana Jana Ludmila Marie Milada Vera Zdenka",
+            "Novak Svoboda Dvorak Cerny Prochazka Kucera Vesely Horak Nemec Pokorny",
+        )
+
+    private val SPANISH =
+        pool(
+            "Antonio Carlos Diego Enrique Francisco Joaquin Jose Luis Manuel Ramon",
+            "Ana Carmen Dolores Elena Isabel Lucia Maria Pilar Rosa Teresa",
+            "Garcia Fernandez Gonzalez Lopez Martinez Navarro Ortega Ramirez Romero Sanchez",
+        )
+
+    private val GREEK =
+        pool(
+            "Alexandros Andreas Dimitrios Georgios Ioannis Konstantinos Leonidas Nikolaos Petros Spyridon",
+            "Alexandra Anna Despina Eleni Evangelia Katerina Maria Sofia Vasiliki Zoe",
+            "Alexiou Angelopoulos Dimitriou Georgiou Karalis Konstantinou Nikolaidis Papadopoulos Petrakis Vlahos",
+        )
+
+    private val CHINESE =
+        pool(
+            "An Bo Cheng Gang Guo Jun Ming Qiang Sheng Wei",
+            "Fang Hong Hua Lan Li Mei Qiao Xiu Yan Ying",
+            "Chen Huang Li Lin Liu Wang Wu Xu Yang Zhang",
+            familyNameFirst = true,
+        )
+
+    private val KOREAN =
+        pool(
+            "Chol Ho Il Min Nam Ryong Song Su Tae Yong",
+            "Chun Hwa Kyong Mi Ok Ran Sun Yong Yun",
+            "Choe Han Hong Jang Kang Kim Lee Pak Ri Sin",
+            familyNameFirst = true,
+        )
+
+    private val VIETNAMESE =
+        pool(
+            "Anh Bao Cuong Dung Hai Hung Minh Nam Phong Quang",
+            "Anh Hoa Huong Lan Linh Mai Ngoc Phuong Thao Trang",
+            "Bui Dang Do Hoang Le Ngo Nguyen Pham Tran Vu",
+            familyNameFirst = true,
+        )
+
+    /** The rebel army was multi-ethnic and ancient names do not fit a modern given/surname form. */
+    private val ANCIENT_REBEL =
+        pool(
+            "Athenion Castus Crixus Gannicus Oenomaus Spartacus Tigranes Brennus Diodoros Marcellus",
+            "Aelia Amara Berenice Cyra Damaris Eirene Gaia Nysa Rhodope Thaleia",
+            "",
+            mononym = true,
+        )
+
     /** Deliberately culture-neutral, so an unmapped nation reads as procedural rather than as wrong history. */
     private val GENERIC =
         pool(
@@ -155,6 +230,23 @@ internal object HeroNamePools {
             20 to POLISH, // Poland
             22 to BRITISH, // United Kingdom
             38 to FINNISH, // Finland
+            // Shipped campaign-side aliases and pools. These ids are the actual `campaignlist.js`
+            // flags, not the nearest base-equip nation with a similar display name.
+            21 to CHINESE, // Communist China
+            25 to KOREAN, // North Korea
+            39 to GREEK, // Greece
+            43 to SOUTH_SLAVIC, // Yugoslavia
+            61 to SOVIET, // USSR (basekorp/adlerkorps)
+            89 to SOVIET, // USSR (atomic/comww2)
+            100 to SOVIET, // White Russia
+            103 to SOVIET, // Red Russia
+            144 to CZECHOSLOVAK, // Czechoslovak Legion
+            187 to HUNGARIAN, // Red Hungary
+            188 to GERMAN, // Red Germany
+            196 to GERMAN, // German Revolutionaries
+            226 to SPANISH, // Ejercito Popular
+            276 to VIETNAMESE, // Viet Cong
+            310 to ANCIENT_REBEL, // Rebellious Slaves
         )
 
     fun poolFor(country: Int): NamePool = byCountry[country] ?: GENERIC
@@ -173,8 +265,9 @@ internal object HeroNamePools {
         val rng = SeededRandom(seed)
         val givenList = if (female) pool.givenNamesFemale else pool.givenNames
         val given = rng.pick(givenList) ?: givenList.first()
+        if (pool.mononym) return given
         val surname = rng.pick(pool.surnames) ?: pool.surnames.first()
         val finalSurname = if (female) pool.femininizeSurname?.invoke(surname) ?: surname else surname
-        return "$given $finalSurname"
+        return if (pool.familyNameFirst) "$finalSurname $given" else "$given $finalSurname"
     }
 }

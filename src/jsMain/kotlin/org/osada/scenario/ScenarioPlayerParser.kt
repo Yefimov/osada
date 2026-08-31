@@ -96,6 +96,17 @@ internal object ScenarioPlayerParser {
         // the importer, so 0 here means "not authored" and never "the author chose zero".
         player.defaultExperience = el.getAttribute("defaultxp")?.toIntOrNull() ?: 0
         player.defaultStrength = el.getAttribute("defaultstr")?.toIntOrNull() ?: 0
+        // OG's Fronts/Factions, as OpenSuite resolves them: the `.buy4` whitelist of everything
+        // this player may buy or upgrade into. ABSENT means unrestricted, never "may buy nothing" --
+        // `tools/og-import/add_purchase_lists.py` never writes an empty list, so a present-but-empty
+        // attribute cannot occur and an empty parse is treated as absent.
+        player.purchaseList =
+            el
+                .getAttribute("buylist")
+                ?.split(",")
+                ?.mapNotNull { it.trim().toIntOrNull() }
+                ?.toSet()
+                ?.takeIf { it.isNotEmpty() }
         player.prestigePerTurn = el
             .getAttribute("turnprestige")
             ?.split(", ")

@@ -1,8 +1,11 @@
 package org.osada.scenario
 
+import org.osada.model.GameUnit
 import org.osada.model.Player
+import org.osada.model.addUnit
 import org.osada.model.addPlayer
 import org.osada.model.allocMap
+import org.osada.model.getPlayer
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -186,5 +189,73 @@ class ObjectiveReportTest {
         val report = scenario.objectiveReport(side = 0, revealHidden = false)
 
         assertTrue(report.victory.single().held)
+    }
+
+    @Test
+    fun extendedConditionsReportLiveProgressForTheObservingSide() {
+        val scenario = scenario()
+        scenario.retreatUnitsPerSide = listOf(3, 7)
+        scenario.killUnitsPerSide = listOf(4, 8)
+        scenario.mustSurvivePerSide = listOf(2, 0)
+        scenario.unitsWithdrawn[0] = 1
+        scenario.unitsWithdrawn[1] = 6
+        scenario.unitsKilled[0] = 4
+        scenario.unitsKilled[1] = 1
+        repeat(2) { index ->
+            scenario.map.addUnit(
+                GameUnit(0).apply {
+                    player = scenario.map.getPlayer(0)
+                    mustSurvive = true
+                    destroyed = index == 1
+                },
+            )
+        }
+
+        val report = scenario.objectiveReport(side = 0, revealHidden = false)
+
+        assertEquals(
+            listOf(
+                ExtendedObjectiveKind.RETREAT to (1 to 3),
+                ExtendedObjectiveKind.KILL to (4 to 4),
+                ExtendedObjectiveKind.MUST_SURVIVE to (1 to 2),
+            ),
+            report.extended.map { it.kind to (it.current to it.required) },
+        )
+        assertFalse(report.extended[0].satisfied)
+        assertTrue(report.extended[1].satisfied)
+        assertTrue(report.extended[2].failed)
+    }
+
+    @Test
+    fun extendedConditionsDoNotMixTheTwoSidesQuotasOrCounters() {
+        val scenario = scenario()
+        scenario.retreatUnitsPerSide = listOf(3, 7)
+        scenario.killUnitsPerSide = listOf(4, 8)
+        scenario.mustSurvivePerSide = listOf(2, 0)
+        scenario.unitsWithdrawn[0] = 1
+        scenario.unitsWithdrawn[1] = 6
+        scenario.unitsKilled[0] = 4
+        scenario.unitsKilled[1] = 1
+
+        val report = scenario.objectiveReport(side = 1, revealHidden = false)
+
+        assertEquals(
+            listOf(
+                ExtendedObjectiveKind.RETREAT to (6 to 7),
+                ExtendedObjectiveKind.KILL to (1 to 8),
+            ),
+            report.extended.map { it.kind to (it.current to it.required) },
+        )
+    }
+
+    @Test
+    fun holdThresholdsComeFromTheObservingSide() {
+        val scenario = scenario()
+        scenario.victoryHoldCounts = listOf(10, 9, 8)
+        scenario.victoryHoldCountsSide1 = listOf(6, 5, 4)
+
+        val report = scenario.objectiveReport(side = 1, revealHidden = false)
+
+        assertEquals(listOf(6, 5, 4), report.holdThresholds.map { it.count })
     }
 }

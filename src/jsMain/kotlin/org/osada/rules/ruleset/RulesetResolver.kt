@@ -133,11 +133,6 @@ object RulesetResolver {
             RuleKey.BARRAGE,
             RuleKey.BUILD_AND_REPAIR,
             RuleKey.RAIL_TRANSPORT,
-            // A trigger hex IS the author's own content -- 311 of them across 86 shipped
-            // scenarios -- and there is no bit to defer to, only the hexes themselves. Resolving
-            // it on hands the decision to the map: a scenario with no trigger hexes is unaffected,
-            // exactly as the 382 scenarios with no rail pool are unaffected by RAIL_TRANSPORT.
-            RuleKey.TRIGGER_HEXES,
         )
 
     /**

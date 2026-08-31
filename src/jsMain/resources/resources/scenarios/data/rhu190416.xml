@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="rhu190416.xscn" name="1919/04/16 Escaping from Zilah (Zalau)" turns="12, 9, 6" date="April 16, 1919" dayturns="0" ground="0" atmosferic="0" latitude="6" iconset="0" weatherchg="1" rows="24" cols="31" eqp="eqp-kaiser" image="resources/maps/images/map_rhu190416.png" eqpv="united1" retreatunits="1, 0" msuunits="1, 0" canblow="0" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="1" portsnonavaldeploy="0" prototypes="0" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="0">
+<map file="rhu190416.xscn" name="1919/04/16 Escaping from Zilah (Zalau)" turns="12, 9, 6" date="April 16, 1919" dayturns="0" ground="0" atmosferic="0" latitude="6" iconset="0" weatherchg="1" rows="24" cols="31" eqp="eqp-kaiser" image="resources/maps/images/map_rhu190416.png" eqpv="united1" retreatunits="1, 0" msuunits="1, 0" canblow="0" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="1" portsnonavaldeploy="0" prototypes="0" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="0" ehmsuonly="1" paradropocean="1">
   <player id="0" country="187" side="0" airtrans="0" navaltrans="0" railtrans="3" defaultxp="90" defaultstr="8" support="188,0,0,0" turnprestige="16, 16, 16, 12, 12, 12, 8, 8, 8, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <player id="1" country="13" side="1" airtrans="0" navaltrans="0" railtrans="1" defaultxp="150" defaultstr="10" support="14,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="4">
@@ -7,7 +7,7 @@
       <unit id="18265" owner="1" flag="14" face="0" transport="18108" exp="150"/>
     </at>
     <at row="1" col="24">
-      <unit id="17738" owner="1" flag="14" face="0" exp="150"/>
+      <unit id="17738" owner="1" flag="14" face="0" exp="150" ammo="3"/>
     </at>
     <at row="2" col="24">
       <unit id="17851" owner="1" flag="14" face="0" transport="18108" exp="150"/>
@@ -121,7 +121,7 @@
   </hex>
   <hex row="4" col="26" terrain="13"/>
   <hex row="4" col="27" terrain="5">
-    <unit id="17772" owner="1" flag="14" face="0" exp="150"/>
+    <unit id="17772" owner="1" flag="14" face="0" exp="150" ammo="4"/>
   </hex>
   <hex row="4" col="28" terrain="5">
     <unit id="17955" owner="1" flag="14" face="0" exp="150"/>
@@ -580,7 +580,7 @@
     <unit id="17798" owner="1" flag="14" face="0" transport="18101" exp="150"/>
   </hex>
   <hex row="21" col="25" terrain="5">
-    <unit id="17772" owner="1" flag="14" face="0" exp="150"/>
+    <unit id="17772" owner="1" flag="14" face="0" exp="150" ammo="4"/>
   </hex>
   <hex row="21" col="26" terrain="5">
     <unit id="17892" owner="1" flag="14" face="0" transport="18104" exp="150"/>
@@ -601,7 +601,7 @@
     <unit id="17896" owner="1" flag="14" face="0" exp="150"/>
   </hex>
   <hex row="22" col="16" terrain="3" road="144">
-    <unit id="17772" owner="1" flag="14" face="0" exp="150"/>
+    <unit id="17772" owner="1" flag="14" face="0" exp="150" ammo="4"/>
   </hex>
   <hex row="22" col="17" terrain="3">
     <unit id="17955" owner="1" flag="14" face="0" exp="150"/>

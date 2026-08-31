@@ -14,6 +14,7 @@ import org.osada.rules.HexGeometry
 import org.osada.rules.Kamikaze
 import org.osada.rules.Sabotage
 import org.osada.rules.SupplyContextRules
+import org.osada.rules.TriggerHexes
 import org.osada.rules.UnitCapabilities
 import org.osada.rules.calculateAttackResults
 import org.osada.rules.getDirection
@@ -403,7 +404,15 @@ internal class CombatApplication(
             gameMap.undoState.oldFlag = hex.flag
             hex.flag = player.country
             if (hex.victorySide == -1) {
-                prestigeGain += (prestigeGains["flagCapture"] ?: 0) * multiplier
+                // OG's authored prestige trigger is the hex's reward. Keeping PM's inherited flat
+                // flag award as well made Kieler Hafen worth 40 + 50, and checking trigger
+                // ownership after this capture sometimes hid that conflict instead of solving it.
+                // Ignore `triggerFired`: if a ship discovered Kiel's +40 before infantry captures
+                // the port, the authored reward still replaces the inherited flat +50.
+                val hasAuthoredPrestige = hex.trigger == TriggerHexes.PRESTIGE
+                if (!hasAuthoredPrestige) {
+                    prestigeGain += (prestigeGains["flagCapture"] ?: 0) * multiplier
+                }
                 scoreGain += (scoreGains["flagCapture"] ?: 0) * multiplier
                 result["isCapture"] = true
             }

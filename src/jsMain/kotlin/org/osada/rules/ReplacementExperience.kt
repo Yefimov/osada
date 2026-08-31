@@ -21,10 +21,29 @@ import kotlin.math.roundToInt
  * a point and, in the process, revoke the precondition that allowed the purchase. There is therefore
  * still no way to heal a damaged veteran without diluting it; a separate costlier "elite
  * replacement" action is the obvious answer and is not built here.
+ *
+ * **That prediction came true on 2026-08-31, and not as a new action.** OG's own name for the
+ * ordinary replacement IS *elite*, priced by `elite_cost` and preserving experience; the cheap
+ * diluting one is [GreenReplacements]. So the "separate costlier action" was already in the efile
+ * and OSADA was simply charging the wrong percentage for it. See [EliteReplacements] for the
+ * arithmetic, the defect it closes, and why the dilution below stays for every efile that authors
+ * no green alternative.
  */
 internal object ReplacementExperience {
-    /** Whether the campaign's ruleset dilutes ordinary replacements at all. */
-    fun dilutes(): Boolean = ActiveRuleset.flag(RuleKey.REPLACEMENT_EXPERIENCE, efileDefault = true)
+    /**
+     * Whether the campaign's ruleset dilutes ordinary replacements at all.
+     *
+     * **Two switches, and the second is the efile's** ([EliteReplacements.preservesExperience]).
+     * The player's `replacement_experience` key is the first. The second exists because OG's
+     * `green` efiles ship a SECOND, cheaper replacement action whose whole selling point is that it
+     * costs veterancy: where that action exists, the ordinary one must be the one that preserves,
+     * or the discount comes with no downside and the expensive action has no purpose. 9 of the 10
+     * shipped efiles author no green action and are untouched by this clause. Owner's ruling,
+     * 2026-08-31; [EliteReplacements] carries it in full.
+     */
+    fun dilutes(): Boolean =
+        ActiveRuleset.flag(RuleKey.REPLACEMENT_EXPERIENCE, efileDefault = true) &&
+            !EliteReplacements.preservesExperience()
 
     /**
      * The experience [restored] fresh strength points leave a formation with.

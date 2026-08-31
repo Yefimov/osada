@@ -1,11 +1,14 @@
 package org.osada.rules
 
 import org.osada.GameHolder
+import org.osada.GameStateSerializer
+import org.osada.restoreVictoryMetadata
 import org.osada.MovMethod
 import org.osada.UnitClass
 import org.osada.model.Equipment
 import org.osada.model.EquipmentData
 import org.osada.model.GameMap
+import org.osada.model.restoreCoreUnitList
 import org.osada.scenario.Scenario
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
@@ -91,6 +94,40 @@ class ExtendedVictoryTest : OgRulesTestHarness() {
         assertFalse(ExtendedVictory.canWithdrawThrough(division, airExit), "a division cannot fly out")
         assertTrue(ExtendedVictory.canWithdrawThrough(wing, airExit))
         assertFalse(ExtendedVictory.canWithdrawThrough(wing, groundExit), "a wing cannot walk out")
+    }
+
+    /**
+     * OG's *"EH for MSU only"* (`opt_eh_for_msu_only`, 15 deployed scenarios): with it on the exit
+     * accepts only a formation the author designated Must-Survive.
+     */
+    @Test
+    fun withEhForMsuOnlyTheExitTakesOnlyMustSurviveUnits() {
+        val map = world()
+        val scenario =
+            scenarioWith(map) {
+                retreatUnitsPerSide = listOf(0, 2)
+                escapeHexesForMsuOnly = true
+            }
+        val hex = map.map!![4][4].apply { escapeGround = true }
+        val ordinary = place(map, infantryEqid, 4, 4, 1)
+        val designated = place(map, infantryEqid, 4, 5, 1).apply { mustSurvive = true }
+
+        assertFalse(ExtendedVictory.canWithdrawThrough(ordinary, hex, scenario), "a spare truck may not")
+        assertTrue(ExtendedVictory.canWithdrawThrough(designated, hex, scenario))
+        assertFalse(ExtendedVictory.withdraw(scenario, ordinary, hex), "and the mutation refuses it too")
+        assertEquals(0, scenario.unitsWithdrawn[1])
+    }
+
+    /** Absent means unrestricted -- the 105 scenarios with unreadable sources depend on it. */
+    @Test
+    fun withoutTheSwitchAnyFormationStillUsesTheExit() {
+        val map = world()
+        val scenario = scenarioWith(map) { retreatUnitsPerSide = listOf(0, 2) }
+        val hex = map.map!![4][4].apply { escapeGround = true }
+        val ordinary = place(map, infantryEqid, 4, 4, 1)
+
+        assertTrue(ExtendedVictory.canWithdrawThrough(ordinary, hex, scenario))
+        assertTrue(ExtendedVictory.withdraw(scenario, ordinary, hex))
     }
 
     /** A side with no authored quota cannot win this way, and its units do not leave. */
@@ -187,6 +224,75 @@ class ExtendedVictoryTest : OgRulesTestHarness() {
         }
         assertFalse(ExtendedVictory.mustSurviveObjectiveFailed(scenario, map, 0), "side 0 has no quota")
         assertTrue(ExtendedVictory.mustSurviveObjectiveFailed(scenario, map, 1), "side 1 has none alive")
+    }
+
+    /**
+     * Campaign MSUs live in the deployment tray between scenarios. They still count as alive, and
+     * their `msu` bit must survive the roster's separate save/restore path.
+     */
+    @Test
+    fun anUndeployedRestoredCoreMsuCountsAsAlive() {
+        val map = world()
+        val original =
+            place(map, infantryEqid, 2, 2, 0).apply {
+                mustSurvive = true
+                // The campaign transition saves tray formations as undeployed; the restore path
+                // deliberately ignores records still marked as deployed because those are rebuilt
+                // from the scenario map instead.
+                isDeployed = false
+            }
+        val saved = reparse(GameStateSerializer.serializeCoreUnit(original))
+        map.map!![2][2].delUnit(original)
+        map.units.remove(original)
+
+        map.restoreCoreUnitList(friendly, listOf(saved))
+        val restored = friendly.getCoreUnitList().single()
+        val scenario = scenarioWith(map) { mustSurvivePerSide = listOf(1, 0) }
+
+        assertTrue(restored.mustSurvive, "the campaign-core restore must retain the authored flag")
+        assertFalse(restored.isDeployed, "the formation is waiting in the deployment tray")
+        assertEquals(1, ExtendedVictory.mustSurviveUnitsAlive(map, 0))
+        assertFalse(ExtendedVictory.mustSurviveObjectiveFailed(scenario, map, 0))
+    }
+
+    /** A destroyed reserve formation is not made alive merely because it remains in the roster. */
+    @Test
+    fun aDestroyedCoreMsuDoesNotSatisfyTheQuota() {
+        val map = world()
+        val core = place(map, infantryEqid, 2, 2, 0).apply {
+            mustSurvive = true
+            destroyed = true
+        }
+        friendly.addCoreUnit(core)
+        val scenario = scenarioWith(map) { mustSurvivePerSide = listOf(1, 0) }
+
+        assertEquals(0, ExtendedVictory.mustSurviveUnitsAlive(map, 0))
+        assertTrue(ExtendedVictory.mustSurviveObjectiveFailed(scenario, map, 0))
+    }
+
+    /** Authored conditions and their live counters must not reset when a battle save is loaded. */
+    @Test
+    fun extendedConditionsRoundTripThroughScenarioSaveData() {
+        val source =
+            scenarioWith(world()) {
+                retreatUnitsPerSide = listOf(2, 0)
+                killUnitsPerSide = listOf(0, 3)
+                mustSurvivePerSide = listOf(1, 0)
+                typedVictoryHexes = true
+                unitsWithdrawn = mutableListOf(1, 0)
+                unitsKilled = mutableListOf(0, 2)
+            }
+        val payload = reparse(GameStateSerializer.serializeScenario(source))
+        val restored = Scenario(null)
+
+        restoreVictoryMetadata(restored, payload)
+
+        assertEquals(listOf(2, 0), restored.retreatUnitsPerSide)
+        assertEquals(listOf(0, 3), restored.killUnitsPerSide)
+        assertEquals(listOf(1, 0), restored.mustSurvivePerSide)
+        assertEquals(true, restored.typedVictoryHexes)
+        assertEquals(listOf(1, 0), restored.unitsWithdrawn)
+        assertEquals(listOf(0, 2), restored.unitsKilled)
     }
 
     // ---- The property that matters most ---------------------------------------------------------

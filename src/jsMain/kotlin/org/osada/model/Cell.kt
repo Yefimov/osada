@@ -51,6 +51,11 @@ class MovementResults {
      *  leaves this null. */
     var triggerMessage: String? = null
 
+    /** Prestige actually awarded by an OG prestige trigger on the destination hex. Kept separate
+     *  from [capturePrestige]: an authored trigger replaces the legacy flag-capture award, while a
+     *  victory objective may still carry its own capture award. */
+    var triggerPrestige: Int = 0
+
     /** Set when this move fired a trigger hex at all, message or not. Like [wasIntercepted] it
      *  must make the move final: every trigger action is a one-off GIFT, and undo would otherwise
      *  let the player keep the prestige, the leader or the free formation and take the move back. */

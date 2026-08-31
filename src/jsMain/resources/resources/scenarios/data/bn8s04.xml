@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="bn8s04.xscn" name="Rail Raid" turns="8, 10, 15" date="February 8, 1942" dayturns="0" ground="1" atmosferic="0" latitude="3" iconset="1" weatherchg="0" rows="20" cols="42" eqp="eqp-lxf" image="resources/maps/images/map_1016.png" eqpv="united1" retreatunits="1, 0" msuunits="3, 0" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1">
+<map file="bn8s04.xscn" name="Rail Raid" turns="8, 10, 15" date="February 8, 1942" dayturns="0" ground="1" atmosferic="0" latitude="3" iconset="1" weatherchg="0" rows="20" cols="42" eqp="eqp-lxf" image="resources/maps/images/map_1016.png" eqpv="united1" retreatunits="1, 0" msuunits="3, 0" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1" ehmsuonly="1" paradropocean="1">
   <player id="0" country="43" side="1" airtrans="0" navaltrans="0" railtrans="2" defaultxp="25" defaultstr="10" support="44,0,0,0" turnprestige="0, 100, 100, 100, 100, 100, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <player id="1" country="41" side="0" airtrans="1" navaltrans="0" railtrans="2" defaultxp="200" defaultstr="10" support="8,42,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="2">
     <at row="19" col="2">
-      <unit id="9161" owner="1" flag="8" face="0" exp="200" str="9" ldr="1"/>
+      <unit id="9161" owner="1" flag="8" face="0" exp="200" str="9" ldr="1" msu="1"/>
     </at>
     <at row="19" col="1">
-      <unit id="10179" owner="1" flag="8" face="0" exp="200" str="9"/>
+      <unit id="10179" owner="1" flag="8" face="0" exp="200" str="9" msu="1"/>
     </at>
   </reinforce>
   <reinforce turn="3">
@@ -17,10 +17,10 @@
   </reinforce>
   <reinforce turn="4">
     <at row="19" col="1">
-      <unit id="10179" owner="1" flag="8" face="0" exp="200" str="9"/>
+      <unit id="10179" owner="1" flag="8" face="0" exp="200" str="9" msu="1"/>
     </at>
     <at row="19" col="2">
-      <unit id="9161" owner="1" flag="8" face="0" exp="200" str="9"/>
+      <unit id="9161" owner="1" flag="8" face="0" exp="200" str="9" msu="1"/>
     </at>
     <at row="2" col="38">
       <unit id="9161" owner="1" flag="8" face="0" exp="200" str="9"/>

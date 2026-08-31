@@ -12,6 +12,7 @@ import org.osada.model.GameUnit
 import org.osada.model.getCountriesBySide
 import org.osada.model.getCountryName
 import org.osada.model.selectUnit
+import org.osada.scenario.objectiveReport
 import org.osada.ui.briefing.BriefingIntroTracker
 import org.osada.ui.briefing.ScenarioFacts
 import org.osada.ui.keyboard.CommandRouter
@@ -212,21 +213,31 @@ class UI(
     }
 
     /** Campaign scenarios always get the briefing ritual (dialogue if authored, briefing
-     *  always); the legacy small scenario-start popup is shown standalone only, byte-identical
-     *  to the pre-briefing behavior. */
+     *  always); standalone scenarios keep the legacy small popup, augmented only with any
+     *  engine-authored extended conditions the scenario description may have omitted. */
     private fun openScenarioCeremony(rawBriefing: dynamic) {
         val tutorial = game.scenario?.file == Game.defaultScenario
         val title =
             if (tutorial) I18n.t("tutorial.welcome.title") else game.scenario?.name ?: ""
         val intro =
             if (tutorial) I18n.t("tutorial.welcome.body") else game.scenario?.getDescription() ?: ""
+        val extendedObjectives =
+            game.scenario
+                ?.objectiveReport(game.spotSide, revealHidden = false)
+                ?.extended
+                .orEmpty()
         val finishOpening = { releaseToBattle() }
         val campaign = game.campaign
         if (campaign == null) {
-            // Standalone scenarios are byte-identical to legacy behavior: no dialogue,
-            // no briefing, ever.
+            // Standalone scenarios still get no dialogue or full briefing, but imported engine
+            // conditions must not remain invisible until the player happens to trigger one.
             UIBuilder.clearScenarioBriefing()
-            UIBuilder.message(title, intro, narrative = true, callback = finishOpening)
+            UIBuilder.message(
+                title,
+                extendedObjectiveOpeningHtml(intro, extendedObjectives),
+                narrative = true,
+                callback = finishOpening,
+            )
             return
         }
 
@@ -236,6 +247,7 @@ class UI(
                 dateLabel = game.scenario?.date?.toDateString() ?: "",
                 sidesLabel = sidesLabel(),
                 ordersText = intro,
+                extendedObjectives = extendedObjectives,
             )
         val campaignFile = campaign.file
         val scenarioFile = game.scenario?.file ?: ""

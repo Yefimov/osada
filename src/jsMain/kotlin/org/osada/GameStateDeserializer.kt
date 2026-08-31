@@ -3,6 +3,7 @@ package org.osada
 import org.osada.model.GameUnit
 import org.osada.model.Player
 import org.osada.model.Transport
+import org.osada.model.applySerializedScenarioProperties
 
 /**
  * Pure JSON → model deserialization of the individual entities in a save file
@@ -22,9 +23,15 @@ object GameStateDeserializer {
         applyUnitCombatStats(unit, data)
         applyUnitProgress(unit, data)
         applyUnitTransport(unit, data)
-        // A carrier's contained aircraft, restored as full units -- they are off the map, so
-        // nothing else would bring them back.
-        (data.hangar as? Array<dynamic>)?.forEach { unit.hangar.add(deserializeUnit(it)) }
+        // A container's passengers, restored as full units -- they are off the map, so nothing else
+        // would bring them back. `containedIn` is the derived back-reference and is rebuilt HERE
+        // rather than stored: the hangar list is the one stored form, and a second copy in the save
+        // could disagree with it (`rules/CarrierHangars`, `ground_carrier` bit 2 reads it).
+        (data.hangar as? Array<dynamic>)?.forEach {
+            val passenger = deserializeUnit(it)
+            passenger.containedIn = unit
+            unit.hangar.add(passenger)
+        }
         return unit
     }
 
@@ -81,7 +88,7 @@ object GameStateDeserializer {
         unit.leader = data.leader as? Int ?: -1
         unit.nodossier = data.nodossier as? Boolean ?: false
         unit.isTemporaryBorrowed = data.temporaryBorrowed as? Boolean ?: false
-        applyScenarioUnitProperties(unit, data)
+        unit.applySerializedScenarioProperties(data)
         unit.stalinRegimeBoosted = data.stalinRegimeBoosted as? Boolean ?: false
         unit.customName = data.customName as? String // optional key; absent in pre-rename saves
         unit.formationId = data.formationId as? String // optional key; absent in pre-hero saves
@@ -144,15 +151,4 @@ object GameStateDeserializer {
         }
         return result
     }
-}
-
-/** The counterpart of `serializeScenarioUnitProperties`, split out for the same budget reason. */
-private fun applyScenarioUnitProperties(
-    unit: GameUnit,
-    data: dynamic,
-) {
-    unit.isScenarioDepot = data.depot as? Boolean ?: false
-    unit.mustSurvive = data.msu as? Boolean ?: false
-    unit.basicStrength = data.basicStrength as? Int ?: GameUnit.DEFAULT_BASIC_STRENGTH
-    unit.landedTurn = data.landedTurn as? Int ?: -1
 }

@@ -160,7 +160,11 @@ object RulesetProfileStore {
             js("Object.keys")(raw).unsafeCast<Array<String>>().forEach { key ->
                 val rule = RuleKey.byKey(key)
                 val value = raw[key] as? Int
-                if (rule != null && value != null) overrides[rule] = rule.clampForEditor(value) else unknown += key
+                when {
+                    rule != null && value != null -> overrides[rule] = rule.clampForEditor(value)
+                    key in RETIRED_RULE_KEYS -> Unit
+                    else -> unknown += key
+                }
             }
         }
         return RulesetProfile(
