@@ -53,12 +53,97 @@ internal object ScenarioUnitParser {
         el.getAttribute("depot")?.toIntOrNull()?.let { unit.isScenarioDepot = it != 0 }
         applyBasicStrength(el, unit, scenario)
         applyAuthoredSupply(el, unit)
-        // OG's Must-Survive Unit (manual 3.7.1), `.xscn` unit @43 bit 0. Already gated on the
-        // scenario's AllowMSU switch by the importer, so a bare attribute means the author meant it.
+        applyAuthoredAiOrders(el, unit)
+        applyAuthoredRoles(el, unit)
+        applyAuthoredLeader(el, unit)
+    }
+
+    /**
+     * The two roles a scenario author may give a placed formation.
+     *
+     * * `msu` -- OG's Must-Survive Unit (manual 3.7.1, `.xscn` unit `@43` bit 0), already gated on
+     *   the scenario's AllowMSU switch by the importer, so a bare attribute means the author meant
+     *   it.
+     * * `core` -- OG's **Make Core** tick (`@44` bit 2), the author enrolling this formation in the
+     *   campaign core. Setting the flag is only half of it; `CoreUnitListOperations` owns the
+     *   enrollment that makes it survive the scenario transition.
+     */
+    private fun applyAuthoredRoles(
+        el: Element,
+        unit: GameUnit,
+    ) {
         el.getAttribute("msu")?.toIntOrNull()?.let { unit.mustSurvive = it != 0 }
+        el.getAttribute("core")?.toIntOrNull()?.let { unit.isCore = it != 0 }
+    }
+
+    private fun applyAuthoredLeader(
+        el: Element,
+        unit: GameUnit,
+    ) {
         if (el.hasAttribute("ldr")) {
-            unit.leader = Leaders.generateLeader(unit)
+            // OG's AUTHORED **individual** leader attribute (`.xscn` unit @36, the Suite's
+            // "According list of leaders" selector), remapped from OG's numbering to `LeaderType`
+            // by `tools/og-import/add_leader_traits.py`. Before this the attribute's presence alone
+            // was read and the ability was ROLLED, so every authored leader had the wrong one.
+            //
+            // It must be @36 and never @37. `HeroTraitResolver.legacyHasTrait` grants this field
+            // AND `Leaders.getUnitClassLeader(unit)` separately, and `generateLeader` rolls from
+            // index 1 up so it can never return the class attribute — so this field is the
+            // individual one. Putting @37 here would collapse the resolver's two disjuncts and cost
+            // the formation a trait, which is what happened for one day in 2026-09-01's first
+            // deployment.
+            //
+            // Absent or unmappable falls back to the roll, which is what OG's own "According list
+            // of leaders" default means anyway.
+            unit.leader =
+                el.getAttribute("ldrtrait")?.toIntOrNull()?.takeIf { it > 0 }
+                    ?: Leaders.generateLeader(unit)
+            // OG's CLASS attribute (`@37`, the Suite's "According unit's class"), the second half of
+            // the authored pair. It OVERRIDES `Leaders.getUnitClassLeader`'s derivation rather than
+            // adding a third trait — see `GameUnit.leaderClassTrait`. Zero is OG's own default
+            // ("derive it"), so only a positive value is stored.
+            unit.leaderClassTrait =
+                el.getAttribute("ldrclasstrait")?.toIntOrNull()?.takeIf { it > 0 } ?: -1
         }
+    }
+
+    /**
+     * OG's authored **AI orders** -- OpenSuite's "Unit settings" panel, `.xscn` unit `@45`, `@50`,
+     * `@56`, `@58`, `@59`, `@62`, `@64`.
+     *
+     * Placed content, read unconditionally: none of these bytes is gated on a scenario switch, and
+     * `tools/og-import/add_ai_orders.py` writes an attribute only where the byte says something.
+     * What the fields DO -- and the decision that they constrain OSADA's planner rather than replace
+     * it -- is `rules/AiOrders`.
+     *
+     * The objective hex is stored 0-based like every other coordinate in the deployed XML, so -1 is
+     * "no objective" and 0,0 is a legal hex. OG cannot tell those two apart (its own unset value IS
+     * 0,0); the importer resolves it there rather than here.
+     */
+    private fun applyAuthoredAiOrders(
+        el: Element,
+        unit: GameUnit,
+    ) {
+        el.getAttribute("anchored")?.toIntOrNull()?.let { unit.aiAnchored = it != 0 }
+        el.getAttribute("holduntil")?.toIntOrNull()?.let { unit.aiHoldUntilTurn = it }
+        el.getAttribute("fearless")?.toIntOrNull()?.let { unit.aiFearless = it != 0 }
+        el.getAttribute("objcol")?.toIntOrNull()?.let { unit.aiObjectiveCol = it }
+        el.getAttribute("objrow")?.toIntOrNull()?.let { unit.aiObjectiveRow = it }
+        el.getAttribute("freeoh")?.toIntOrNull()?.let { unit.aiFreeObjectiveDistance = it }
+        el.getAttribute("objfrom")?.toIntOrNull()?.let { unit.aiObjectiveFromOrdinal = it }
+        el.getAttribute("followpos")?.toIntOrNull()?.let { unit.aiFollowsObjectiveUnit = it != 0 }
+        el.getAttribute("ordinal")?.toIntOrNull()?.let { unit.aiOrdinal = it }
+        // OG's authored ATTACHMENTS (`@40`/`@41`) and the author's own veto on them (`@50` bit 3).
+        // The ids are per EFILE; `rules/Attachments` resolves them against the active `equip.cfg`
+        // and drops anything that efile does not define.
+        unit.authoredAttachmentIds =
+            el
+                .getAttribute("attach")
+                ?.split(",")
+                ?.mapNotNull { it.trim().toIntOrNull() }
+                ?.filter { it > 0 }
+                .orEmpty()
+        el.getAttribute("noattach")?.toIntOrNull()?.let { unit.attachmentsForbidden = it != 0 }
     }
 
     /**

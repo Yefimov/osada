@@ -8,6 +8,7 @@ import org.osada.model.getPlayers
 import org.osada.rules.GameRandomSource
 import org.osada.scenario.Campaign
 import org.osada.scenario.Scenario
+import org.osada.ui.ScenarioMusic
 import org.osada.ui.UI
 import org.osada.ui.UIBuilder
 import org.osada.ui.briefing.BriefingIntroTracker
@@ -236,6 +237,9 @@ class Game {
         // the time this runs. Re-seeding here on a restore would re-roll every outcome still ahead
         // of the save (`rules/GameRandomSource`).
         if (!fromRestore) GameRandomSource.start(Date.now().toLong())
+        // OG's custom music track for this battle. `ScenarioMusic` plays the licensed files listed
+        // by its manifest and stays silent for an absent source or unsupported format.
+        ScenarioMusic.play(scenario?.musicTrack)
         setupPlayers()
         humanSides = countHumanSides(scenario?.map?.getPlayers()?.toList() ?: emptyList())
         setCurrentSide()

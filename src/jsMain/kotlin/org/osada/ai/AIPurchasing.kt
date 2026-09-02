@@ -9,7 +9,9 @@ import org.osada.model.Player
 import org.osada.model.getCountryEquipmentByClass
 import org.osada.model.isAiPurchasable
 import org.osada.model.isPurchasable
+import org.osada.rules.FrontsAndFactions
 import org.osada.rules.GameRules
+import org.osada.rules.PurchaseCap
 import org.osada.rules.ScenarioPurchaseList
 import org.osada.rules.calculateUnitCosts
 import kotlin.random.Random
@@ -43,7 +45,11 @@ internal object AIPurchasing {
         var classIndex = 0
         var exhausted = false
 
-        while (remaining > 0) {
+        // OG's purchase cap binds the AI exactly as it binds the player: 24 player records across
+        // 12 deployed scenarios carry one, and half of them are the AI's. It is part of the loop
+        // CONDITION rather than a second `break` so the shopping list simply stops growing once the
+        // mutation layer would start refusing it (`rules/PurchaseCap`).
+        while (remaining > 0 && PurchaseCap.allowsAfter(player, result.size)) {
             if (classIndex > classes.lastIndex) {
                 if (exhausted) break
                 classIndex = 0
@@ -74,7 +80,12 @@ internal object AIPurchasing {
             // The scenario's own Fronts/Factions list binds the AI exactly as it binds the player:
             // OpenSuite writes one section per player, and 83 corpus files customise the AI's alone
             // (`rules/ScenarioPurchaseList`).
-            ScenarioPurchaseList.allows(player, eqid) && isPurchasable(eqid, remaining, year, month)
+            // The scenario's own Fronts/Factions bind the AI exactly as they bind the player --
+            // OpenSuite writes one section per player, and the masks are stored per player too.
+            ScenarioPurchaseList.allows(player, eqid) &&
+                FrontsAndFactions.admitsForPurchase(player, eqid) &&
+                FrontsAndFactions.poolClassPurchasable(player, eqid) &&
+                isPurchasable(eqid, remaining, year, month)
         }
 
     /**

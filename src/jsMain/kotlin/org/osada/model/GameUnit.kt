@@ -54,6 +54,84 @@ class GameUnit(
     var experience: Int = 0
     var hits: Int = 0
     var leader: Int = -1
+
+    /**
+     * OG's **class-attribute override** -- the Suite's *"According unit's class"* leader selector,
+     * `.xscn` unit `@37`, deployed as `ldrclasstrait`.
+     *
+     * OG gives a led formation TWO attributes and they are not interchangeable: `@36` is picked per
+     * formation and lands in [leader], while `@37` is the one an author fixes BY CLASS -- across the
+     * corpus it takes essentially one value per equipment class (weighted 92%, and 100% across all
+     * 79 artillery records) against `@36`'s 10-22 values per class.
+     *
+     * OSADA derives that second attribute rather than storing it: [org.osada.model.Leaders.getUnitClassLeader]
+     * returns the first entry of the unit's class list. This field is the author's override of that
+     * derivation, and **-1 means "no override", which is OG's own default** (`@37 == 0`, *"According
+     * unit's class"*) -- so every formation without one keeps the derived attribute exactly.
+     *
+     * Only meaningful while [leader] is set: OG's second attribute belongs to a leader, and
+     * `getUnitClassLeader` already refuses a formation with none.
+     */
+    var leaderClassTrait: Int = -1
+
+    /**
+     * The scenario author's AI ORDERS for this formation -- OpenSuite's "Unit settings" panel,
+     * cracked 2026-09-01 by a 27-save controlled series on `BN9S00`.
+     *
+     * They constrain `org/osada/ai`'s planner and nothing else. **A human commanding this side keeps
+     * every button**: an anchored formation under human control moves normally, and none of these
+     * fields reaches the combat resolver, the retreat rules or the supply pass. `rules/AiOrders` is
+     * the single reader and its KDoc carries the decision.
+     *
+     * * [aiAnchored] -- `@45` bit 5, *"unit is fixed in place"*. 19,259 records.
+     * * [aiHoldUntilTurn] -- `@56`, a turn number; 0 is "not held". 13,345 records.
+     * * [aiFearless] -- `@50` bit 0. **Not immunity to rout**: OG's own description is that the AI
+     *   discards this formation's expected OWN casualties when valuing an attack. 22,878 records.
+     * * [aiObjectiveCol]/[aiObjectiveRow] -- `@58`/`@59`, the hex this formation is ordered to take;
+     *   -1 for none. 13,067 records.
+     * * [aiFreeObjectiveDistance] -- `@64`, *"free OH when closer than N"*. 4,116 records.
+     * * [aiObjectiveFromOrdinal] -- `@62`, the per-player [aiOrdinal] of the formation whose
+     *   objective this one inherits; 0 for none. 799 records, with [aiFollowsObjectiveUnit]
+     *   (`@50` bit 5) as its companion on 534.
+     * * [aiOrdinal] -- `@46`, the per-player ordinal the two fields above address a formation by.
+     *
+     * Two decoded fields are deliberately absent. **AI stance** (`@57`) is blocked by
+     * `docs/og-fidelity-plan.md` §0, which forbids shipping stances before the P3 benchmark exists;
+     * **avoid auto hold** (`@50` bit 4) suppresses an automatic hold behaviour OSADA's planner does
+     * not have, so importing it would be a field with nothing to switch off.
+     */
+    var aiAnchored: Boolean = false
+    var aiHoldUntilTurn: Int = 0
+    var aiFearless: Boolean = false
+    var aiObjectiveCol: Int = -1
+    var aiObjectiveRow: Int = -1
+    var aiFreeObjectiveDistance: Int = 0
+    var aiObjectiveFromOrdinal: Int = 0
+    var aiFollowsObjectiveUnit: Boolean = false
+    var aiOrdinal: Int = 0
+
+    /**
+     * The attachments the SCENARIO AUTHOR fitted to this formation -- `.xscn` unit `@40` and `@41`,
+     * each an `attach_N` id from **that efile's** `equip.cfg`. 12,555 records carry one.
+     *
+     * Distinct from the purchased attachments in `CoreFormation.attachmentIds`, and stored here
+     * rather than there for a reason `rules/Attachments` sets out in full: an auxiliary or
+     * scenario-only formation has no `CoreFormation` at all, so an authored slot copied into one
+     * would have nowhere to live for most of the units that carry it.
+     *
+     * **Never priced.** An attachment the author fitted is part of the formation they wrote; it
+     * costs the player nothing and is not refundable.
+     */
+    var authoredAttachmentIds: List<Int> = emptyList()
+
+    /**
+     * OG's *"disable attachments"* (`.xscn` unit `@50` bit 3) -- the author forbidding this
+     * formation any attachment at all.
+     *
+     * **2 records corpus-wide.** Imported because it is one condition on a rule that already exists,
+     * and recorded as the curiosity it is so nobody mistakes it for live content.
+     */
+    var attachmentsForbidden: Boolean = false
     var tempSpotted: Boolean = false
     var nodossier: Boolean = false
 
@@ -383,6 +461,18 @@ class GameUnit(
         entrenchment = other.entrenchment
         entrenchTicks = other.entrenchTicks
         leader = other.leader
+        leaderClassTrait = other.leaderClassTrait
+        aiAnchored = other.aiAnchored
+        aiHoldUntilTurn = other.aiHoldUntilTurn
+        aiFearless = other.aiFearless
+        aiObjectiveCol = other.aiObjectiveCol
+        aiObjectiveRow = other.aiObjectiveRow
+        aiFreeObjectiveDistance = other.aiFreeObjectiveDistance
+        aiObjectiveFromOrdinal = other.aiObjectiveFromOrdinal
+        aiFollowsObjectiveUnit = other.aiFollowsObjectiveUnit
+        aiOrdinal = other.aiOrdinal
+        authoredAttachmentIds = other.authoredAttachmentIds
+        attachmentsForbidden = other.attachmentsForbidden
         nodossier = other.nodossier
         isScenarioDepot = other.isScenarioDepot
         basicStrength = other.basicStrength

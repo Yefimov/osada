@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="rhu190609.xscn" name="1919/06/09 B&#225;rtfa (Bardejov): Reaching The Polish Border" turns="16, 18, 20" date="June 9, 1919" dayturns="0" ground="0" atmosferic="0" latitude="6" iconset="0" weatherchg="1" rows="37" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_rhu190609.png" eqpv="united1" msuunits="1, 0" canblow="0" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="1" portsnonavaldeploy="0" prototypes="0" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="0" ehmsuonly="0" paradropocean="1">
-  <player id="0" country="187" side="0" airtrans="0" navaltrans="0" railtrans="5" defaultxp="190" defaultstr="10" support="188,0,0,0" turnprestige="24, 24, 24, 24, 24, 24, 20, 20, 20, 20, 20, 20, 16, 16, 16, 16, 12, 8, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
-  <player id="1" country="47" side="1" airtrans="0" navaltrans="0" railtrans="3" defaultxp="160" defaultstr="10" support="48,0,0,0" turnprestige="25, 25, 25, 25, 25, 30, 30, 30, 30, 30, 35, 35, 35, 35, 35, 25, 25, 25, 25, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+<map file="rhu190609.xscn" name="1919/06/09 B&#225;rtfa (Bardejov): Reaching The Polish Border" turns="16, 18, 20" date="June 9, 1919" dayturns="0" ground="0" atmosferic="0" latitude="6" iconset="0" weatherchg="1" rows="37" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_rhu190609.png" eqpv="united1" msuunits="1, 0" canblow="0" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="1" portsnonavaldeploy="0" prototypes="0" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="0" ehmsuonly="0" paradropocean="1" coresoffcap="1" music="amb_field.mp3">
+  <player id="0" country="187" side="0" airtrans="0" navaltrans="0" railtrans="5" defaultxp="190" defaultstr="10" support="188,0,0,0" turnprestige="24, 24, 24, 24, 24, 24, 20, 20, 20, 20, 20, 20, 16, 16, 16, 16, 12, 8, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" purchasecap="2"/>
+  <player id="1" country="47" side="1" airtrans="0" navaltrans="0" railtrans="3" defaultxp="160" defaultstr="10" support="48,0,0,0" turnprestige="25, 25, 25, 25, 25, 30, 30, 30, 30, 30, 35, 35, 35, 35, 35, 25, 25, 25, 25, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" purchasecap="0"/>
   <reinforce turn="4">
     <at row="35" col="33">
       <unit id="46693" owner="0" flag="188" face="0" exp="54"/>
@@ -9,28 +9,28 @@
   </reinforce>
   <reinforce turn="8">
     <at row="23" col="5">
-      <unit id="33352" owner="1" flag="48" face="0" exp="244" fuel="0" ammo="7"/>
+      <unit id="33352" owner="1" flag="48" face="0" exp="244" fuel="0" ammo="7" objcol="34" objrow="0"/>
     </at>
     <at row="22" col="6">
-      <unit id="33352" owner="1" flag="48" face="0" exp="220" fuel="0" ammo="7"/>
+      <unit id="33352" owner="1" flag="48" face="0" exp="220" fuel="0" ammo="7" objcol="34" objrow="0"/>
     </at>
     <at row="21" col="5">
-      <unit id="33062" owner="1" flag="48" face="0" exp="226" ldr="1"/>
+      <unit id="33062" owner="1" flag="48" face="0" exp="226" ldr="1" objcol="34" objrow="0"/>
     </at>
     <at row="24" col="5">
-      <unit id="33159" owner="1" flag="48" face="0" exp="245" ldr="1"/>
+      <unit id="33159" owner="1" flag="48" face="0" exp="245" ldr="1" objcol="34" objrow="0"/>
     </at>
     <at row="23" col="4">
-      <unit id="33208" owner="1" flag="48" face="0" exp="210"/>
+      <unit id="33208" owner="1" flag="48" face="0" exp="210" objcol="34" objrow="0"/>
     </at>
     <at row="22" col="4">
-      <unit id="33256" owner="1" flag="48" face="0" transport="33345" exp="205" ldr="1"/>
+      <unit id="33256" owner="1" flag="48" face="0" transport="33345" exp="205" ldr="1" objcol="34" objrow="0"/>
     </at>
     <at row="21" col="2">
-      <unit id="33291" owner="1" flag="48" face="0" exp="250"/>
+      <unit id="33291" owner="1" flag="48" face="0" exp="250" objcol="34" objrow="0"/>
     </at>
     <at row="21" col="3">
-      <unit id="33397" owner="1" flag="48" face="0" exp="227"/>
+      <unit id="33397" owner="1" flag="48" face="0" exp="227" objcol="34" objrow="0"/>
     </at>
   </reinforce>
   <hex row="0" col="1" terrain="6"/>
@@ -212,7 +212,7 @@
     <unit id="33094" owner="1" flag="48" face="0" transport="33335" exp="1"/>
   </hex>
   <hex row="3" col="35" terrain="5" road="9">
-    <unit id="33225" owner="1" flag="48" face="0" exp="222" ldr="1"/>
+    <unit id="33225" owner="1" flag="48" face="0" exp="222" ldr="1" attach="1,8"/>
   </hex>
   <hex row="3" col="36">
     <unit id="33509" owner="1" flag="48" face="0" transport="33383" exp="200" ldr="1"/>
@@ -1244,7 +1244,7 @@
   <hex row="26" col="17" terrain="5"/>
   <hex row="26" col="18" terrain="5"/>
   <hex row="26" col="19" terrain="5">
-    <unit id="33067" owner="1" flag="48" face="0" transport="33309" exp="236"/>
+    <unit id="33067" owner="1" flag="48" face="0" transport="33309" exp="236" attach="5"/>
   </hex>
   <hex row="26" col="20" terrain="5">
     <unit id="33408" owner="1" flag="48" face="0" transport="33383" exp="231"/>
@@ -1358,7 +1358,7 @@
   <hex row="28" col="27" terrain="5"/>
   <hex row="28" col="28" terrain="5" road="136"/>
   <hex row="28" col="29" terrain="5" road="136" deploy="0">
-    <unit id="46667" owner="0" flag="188" face="0" exp="190"/>
+    <unit id="46667" owner="0" flag="188" face="0" exp="190" attach="1"/>
   </hex>
   <hex row="28" col="30" terrain="5" road="1" deploy="0">
     <unit id="46672" owner="0" flag="188" face="0" exp="88" ldr="1"/>
@@ -1368,7 +1368,7 @@
   </hex>
   <hex row="28" col="32" terrain="10" name="Hern&#225;d"/>
   <hex row="28" col="33" terrain="5" deploy="0">
-    <unit id="46694" owner="0" flag="188" face="0" transport="46676" exp="205"/>
+    <unit id="46694" owner="0" flag="188" face="0" transport="46676" exp="205" attach="2"/>
   </hex>
   <hex row="28" col="34" terrain="3" road="144" deploy="0">
     <unit id="46691" owner="0" flag="188" face="0" transport="46677" exp="164"/>
@@ -1425,10 +1425,10 @@
     <unit id="46670" owner="0" flag="188" face="0" transport="46676" exp="79" ldr="1"/>
   </hex>
   <hex row="29" col="34" terrain="5" road="17" deploy="0">
-    <unit id="46662" owner="0" flag="188" face="0" transport="46675" exp="139" ldr="1"/>
+    <unit id="46662" owner="0" flag="188" face="0" transport="46675" exp="139" ldr="1" attach="5"/>
   </hex>
   <hex row="29" col="35" terrain="3" deploy="0">
-    <unit id="46667" owner="0" flag="188" face="0" exp="88"/>
+    <unit id="46667" owner="0" flag="188" face="0" exp="88" attach="1"/>
   </hex>
   <hex row="29" col="36" terrain="10" name="Tarca"/>
   <hex row="29" col="37" terrain="3"/>
@@ -1653,7 +1653,7 @@
     <unit id="46664" owner="0" flag="188" face="0" transport="46676" exp="24"/>
   </hex>
   <hex row="34" col="14" terrain="5">
-    <unit id="46686" owner="0" flag="188" face="0" transport="46674" exp="24"/>
+    <unit id="46686" owner="0" flag="188" face="0" transport="46674" exp="24" attach="5"/>
   </hex>
   <hex row="34" col="15" terrain="6">
     <unit id="46657" owner="0" flag="188" face="0" exp="54"/>
@@ -1727,7 +1727,7 @@
   </hex>
   <hex row="35" col="35" terrain="10" name="Hern&#225;d"/>
   <hex row="35" col="36" terrain="2" road="130" owner="0" flag="187" deploy="0" dirt="1">
-    <unit id="46700" owner="0" flag="188" face="0" exp="9"/>
+    <unit id="46700" owner="0" flag="188" face="0" exp="9" attach="2"/>
   </hex>
   <hex row="35" col="37" terrain="10" name="Tarca"/>
   <hex row="35" col="38" terrain="3"/>

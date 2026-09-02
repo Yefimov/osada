@@ -1,6 +1,5 @@
 package org.osada.hero
 
-import org.osada.hero.HeroMedals.award
 import org.osada.i18n.I18n
 
 /**

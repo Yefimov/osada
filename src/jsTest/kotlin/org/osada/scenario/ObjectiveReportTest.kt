@@ -2,8 +2,8 @@ package org.osada.scenario
 
 import org.osada.model.GameUnit
 import org.osada.model.Player
-import org.osada.model.addUnit
 import org.osada.model.addPlayer
+import org.osada.model.addUnit
 import org.osada.model.allocMap
 import org.osada.model.getPlayer
 import kotlin.test.Test

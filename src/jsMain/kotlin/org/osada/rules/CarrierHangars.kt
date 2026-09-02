@@ -75,16 +75,23 @@ import org.osada.rules.ruleset.RuleKey
  * the container's loss taking them with it, and the whole thing behind [RuleKey.CARRIER_HANGARS]
  * plus the efile key.
  *
+ * **`ff_mustmatch` is built since 2026-09-01** — *"force units to land in carrier to match F/F"* —
+ * and this paragraph used to say it could not be, on the grounds that Fronts and Factions were only
+ * ever resolved into a `.buy4` purchase list. That was wrong twice over: the scenario masks exist
+ * (`.xscn` 849..1008) and this rule does not want them anyway. Its own sentence continues *"Only use
+ * efile F/F settings for unit and carrrier/transport, **not scenario settings**"*, so it needs the
+ * EQUIPMENT masks at `equip.xeqp` `@48`/`@52` — which were available all along.
+ * `rules/FrontsAndFactions.cargoMatchesCarrier` is the check; it is off in every shipped efile.
+ *
  * **Not built, and stated so rather than guessed:**
- *  - **`ff_mustmatch`** — *"force units to land in carrier to match F/F"*. It reaches into Fronts
- *    and Factions, which `rules/ScenarioPurchaseList` records as resolved by OpenSuite into the
- *    per-scenario `.buy4` list rather than carried as masks, so there is nothing here to match on.
  *  - **campaign handoff.** `DEFERRED.md` records that OG unlinks passengers from containers between
  *    scenarios; OSADA's core roster carries units forward individually, so a contained formation
  *    simply arrives as its own. That matches OG's outcome without modelling the transfer.
+ *
+ * `TooManyFunctions` is suppressed deliberately: this is ONE mechanic, and splitting bit 2 off would
+ * separate `supportPosition` from `board` — exactly the drift this doc warns about.
  */
-@Suppress("TooManyFunctions") // one mechanic; splitting bit 2 off would separate `supportPosition`
-// from `board`, which is exactly the drift this file's KDoc warns about.
+@Suppress("TooManyFunctions")
 object CarrierHangars {
     /** *"1 enables to enter/launch"*. */
     private const val ENTER_LAUNCH = 1
@@ -134,7 +141,10 @@ object CarrierHangars {
             !container.destroyed &&
             passenger.player?.side == container.player?.side &&
             hasRoom(container) &&
-            boardingPermitted(passenger, container)
+            boardingPermitted(passenger, container) &&
+            // `equip.cfg`'s `ff_mustmatch`, on the EQUIPMENT masks of both sides. Inert until an
+            // efile sets the key, which none of the twelve OSADA deploys does.
+            FrontsAndFactions.cargoMatchesCarrier(passenger, container)
 
     /**
      * Bit 8 — *"allow land units to enter naval-class carriers out of port"*.

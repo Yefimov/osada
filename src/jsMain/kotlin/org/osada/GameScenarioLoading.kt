@@ -4,6 +4,7 @@ import org.osada.hero.HeroCampaign
 import org.osada.hero.LeaderMigration
 import org.osada.model.acquireUnit
 import org.osada.model.buildCoreUnitList
+import org.osada.model.enrollAuthoredCoreUnits
 import org.osada.model.ensureFormationIds
 import org.osada.model.getPlayers
 import org.osada.model.getUnits
@@ -70,6 +71,18 @@ internal fun Game.handleCampaignScenarioLoaded() {
                 .flatten()
                 .map { it.unit }
         scenario!!.map.ensureFormationIds(player, scriptedReinforcements)
+        // OG's Make Core, for EVERY scenario rather than only the first.
+        //
+        // `buildCoreUnitList` covers scenario 1 and `GameMap.addUnit` covers a formation that
+        // arrives mid-battle, but scenario 2+ reaches this handler with neither: its roster is
+        // carried over by `Player.copy` and nothing sweeps the newly loaded map. Without this line a
+        // Make Core unit authored into a later scenario would wear the marker, be skipped by
+        // `removeNonCampaignUnits` because it wears it, and still vanish at the NEXT transition
+        // because `setPlayerToHQ` only walks the roster.
+        //
+        // Idempotent, so running it on scenario 1 straight after `buildCoreUnitList` costs nothing.
+        // Placed after `ensureFormationIds` so every unit already carries the id it will keep.
+        scenario!!.map.enrollAuthoredCoreUnits(player)
     }
     if (removeNonCampaignUnitsFlag) {
         scenario!!.map.removeNonCampaignUnits(campaignPlayer!!)

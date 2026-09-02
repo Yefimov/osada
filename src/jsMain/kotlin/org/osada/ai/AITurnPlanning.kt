@@ -7,6 +7,7 @@ import org.osada.model.GameMap
 import org.osada.model.GameUnit
 import org.osada.model.Hex
 import org.osada.model.getAttackableUnit
+import org.osada.rules.AiOrders
 import org.osada.rules.GameRules
 import org.osada.rules.getUnitAttackCells
 import org.osada.rules.isAir
@@ -51,6 +52,7 @@ internal object AITurnPlanning {
         if (GameRules.isGround(unit)) {
             bestScore += AIPositionEvaluation.objectiveScore(currentPos, state.ownVictoryHexes).score
         }
+        bestScore += authoredObjectiveScore(unit, currentPos, state)
         bestScore += unit.entrenchment * ENTRENCHMENT_BONUS
         bestScore += AIAttackEvaluation.evaluateAttacksFromPosition(unit, currentPos, state)
 
@@ -65,6 +67,24 @@ internal object AITurnPlanning {
         return bestCell
     }
 
+    /**
+     * The scenario author's own **objective hex** for [unit] (`.xscn` `@58`/`@59`), scored exactly
+     * as OSADA scores its own objectives so the two are on one scale and the planner can still
+     * prefer a better position when one exists.
+     *
+     * Zero for the 469,632 formations that carry no order, so nothing changes for them. Order
+     * resolution -- inheritance from another formation, and release once the unit is within the
+     * authored distance -- is `rules/AiOrders`' job, not this file's.
+     */
+    private fun authoredObjectiveScore(
+        unit: GameUnit,
+        cell: Cell,
+        state: AIEvaluationState,
+    ): Int {
+        val target = AiOrders.objectiveOf(state.map, unit) ?: return 0
+        return AIPositionEvaluation.objectiveScore(cell, listOf(target)).score
+    }
+
     private fun scoreMoveCandidate(
         unit: GameUnit,
         cell: ExtendedCell,
@@ -73,6 +93,10 @@ internal object AITurnPlanning {
         var score = AIPositionEvaluation.objectiveScore(cell, state.ownVictoryHexes).score
         if (GameRules.isAir(unit)) score = (score * AIR_POSITION_SCORE_MULTIPLIER).toInt()
         if (GameRules.isSea(unit)) score = 0
+        // Added AFTER the per-class scaling above, and deliberately: that scaling exists to temper
+        // OSADA's own victory-hex heuristic for aircraft and ships, and the author's own order for
+        // this one formation is not a heuristic.
+        score += authoredObjectiveScore(unit, cell, state)
         score += AIPositionEvaluation.evaluatePosition(unit, cell, state)
         if (score <= BLOCKED_MOVE_SCORE_THRESHOLD) return null
         score += AIAttackEvaluation.evaluateAttacksFromPosition(unit, cell, state)

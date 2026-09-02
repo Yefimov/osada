@@ -14,6 +14,8 @@ import org.osada.model.getPlayer
 import org.osada.model.getPlayers
 import org.osada.model.setHex
 import org.osada.rules.Engineering
+import org.osada.scenario.AuthoredOptionsBackfill
+import org.osada.scenario.AuthoredScenarioOptions
 import org.osada.scenario.Campaign
 import org.osada.scenario.Scenario
 import org.osada.scenario.addReinforcement
@@ -145,6 +147,11 @@ class GameStateRestore(
             scenarioData.effectiveIconset as? Int ?: newScenario.effectiveIconset
         newScenario.eqp = scenarioData.eqp as? String ?: Equipment.DEFAULT_NAME
         restoreVictoryMetadata(newScenario, scenarioData)
+        // OG's authored per-scenario options. Absence-preserving: a key the save does not carry
+        // leaves the field alone, so a save written before the block existed reaches
+        // `AuthoredOptionsBackfill` with its 27 nulls intact and is completed from the scenario XML
+        // (`docs/og-import-rules-backlog.md` — this is the gap that entry recorded).
+        AuthoredScenarioOptions.restore(newScenario, scenarioData.options)
     }
 
     private fun restorePlayersAndFinish(
@@ -191,7 +198,13 @@ class GameStateRestore(
 
         console.log("[osada] restoreGame setting game.scenario")
         game.scenario = newScenario
-        restoreCampaign(campaignData, onReady)
+        // Saves written before the authored options were serialized carry none of them, and the
+        // scenario XML is still the author's own record -- so those are completed from it before
+        // the campaign (and then the game) is handed the scenario. Costs one request, and only for
+        // those saves; a modern save continues on this same tick.
+        AuthoredOptionsBackfill.completeIfAbsent(newScenario, scenarioData) {
+            restoreCampaign(campaignData, onReady)
+        }
     }
 
     private fun restoreScenarioArrays(
@@ -511,5 +524,12 @@ internal fun restoreVictoryMetadata(
     intList(scenarioData.retreatUnitsPerSide)?.let { newScenario.retreatUnitsPerSide = it }
     intList(scenarioData.killUnitsPerSide)?.let { newScenario.killUnitsPerSide = it }
     intList(scenarioData.mustSurvivePerSide)?.let { newScenario.mustSurvivePerSide = it }
-    newScenario.typedVictoryHexes = scenarioData.typedVictoryHexes as? Boolean
+    // `typedvh` travels in the authored-options block now, which can say "the author said
+    // nothing"; this top-level key cannot -- it was written as `== true` and folds unauthored into
+    // forbidden -- so it is read only by the saves that have nothing better. Those are then
+    // completed from the scenario XML by `AuthoredOptionsBackfill`, which overrides this.
+    val options = scenarioData.options
+    if (options == null || options == undefined) {
+        newScenario.typedVictoryHexes = scenarioData.typedVictoryHexes as? Boolean
+    }
 }

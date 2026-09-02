@@ -179,7 +179,47 @@ class EquipmentData {
     // as it did before month granularity existed.
     var monthavailable: Int = 1
     var monthexpired: Int = 12
+
+    /**
+     * OG's per-record **Fronts** and **Factions** masks, `equip.xeqp` `@48` and `@52`.
+     *
+     * 32 bits each, named per COUNTRY by that efile's `fronts.txt` -- in `eqp-lxf` the Fronts are
+     * climate variants and the Factions branch groupings. **Zero is OG's wildcard**, not an empty
+     * set: *"Any unit having front=zero is compatible with any other front, and same for faction"*.
+     * `rules/FrontsAndFactions` is the one place that reads them.
+     *
+     * Deployed SIGNED, so a mask with bit 31 set keeps its bit pattern inside an `Int` instead of
+     * arriving as a JS double whose `and` is undefined. 7,170 records carry a Fronts mask and 17,251
+     * a Factions mask; the 4,140 with no OG source ship [MASK_NO_DATA] and are normalised to the
+     * wildcard on the way in, because "no data" must never read as a refusal.
+     */
+    var fronts: Int = 0
+    var factions: Int = 0
+
+    /**
+     * OG's PER-EQUIPMENT sound ids — `equip.xeqp` `@70` (movement), `@68` (attacking), `@72` (being
+     * destroyed). Each names `SFX/<id>.mp3` in the OG install, indexed by `SFX/Open_SFX.txt`.
+     *
+     * OG picks a unit's sound per RECORD; OSADA's own set is per CLASS and inherited from Panzer
+     * Marshal, which is why a Roman legion and a 1943 rifle squad currently make the same noise.
+     * `ui/OgSoundLibrary` prefers these ids and falls back to the class sprite.
+     *
+     * The licensed files referenced by deployed equipment ship under `resources/sounds/og/` and
+     * are listed in its manifest. Nine malformed/missing source ids remain on the class fallback.
+     * 0 means "no sound assigned", which is also what a record with no OG source
+     * ([MASK_NO_DATA]) folds to.
+     */
+    var moveSoundId: Int = 0
+    var attackSoundId: Int = 0
+    var dieSoundId: Int = 0
 }
+
+/**
+ * [EquipmentData.fronts]/[EquipmentData.factions] for a record OG never spoke about. Normalised to
+ * the WILDCARD rather than kept, because unlike [RAIL_UNKNOWN] there is no rule here that would read
+ * the two apart: an unrestricted mask and an unknown one admit exactly the same equipment.
+ */
+const val MASK_NO_DATA: Int = -1
 
 /**
  * Returns an equipment view whose player-facing numeric capabilities are multiplied by [multiplier].
@@ -239,6 +279,11 @@ internal fun EquipmentData.withStatMultiplier(multiplier: Int): EquipmentData =
         result.hangarWeight = hangarWeight
         result.monthavailable = monthavailable
         result.monthexpired = monthexpired
+        result.fronts = fronts
+        result.factions = factions
+        result.moveSoundId = moveSoundId
+        result.attackSoundId = attackSoundId
+        result.dieSoundId = dieSoundId
     }
 
 /** Whether this equipment can be bought/found in [year]/[month] (1-based month, matching
@@ -256,15 +301,16 @@ fun EquipmentData.isAvailableIn(
 fun Json.toEquipmentData(parseHints: List<String>): EquipmentData {
     val data = EquipmentData()
     val values = this.unsafeCast<Array<dynamic>>()
-    // The field set is split across three helpers purely to keep each `when` under detekt's
-    // cyclomatic-complexity limit. Every hint matches at most one arm across all three, so
-    // calling all three per field is behaviour-identical to the original single `when`.
+    // The field set is split across five helpers purely to keep each `when` under detekt's
+    // cyclomatic-complexity limit. Every hint matches at most one arm across all five, so
+    // calling all five per field is behaviour-identical to the original single `when`.
     parseHints.forEachIndexed { index, hint ->
         val value = values[index]
         data.applyEquipmentFieldsA(hint, value)
         data.applyEquipmentFieldsB(hint, value)
         data.applyEquipmentFieldsC(hint, value)
         data.applyEquipmentFieldsD(hint, value)
+        data.applyEquipmentFieldsE(hint, value)
     }
     return data
 }
@@ -344,5 +390,28 @@ private fun EquipmentData.applyEquipmentFieldsD(
         "railweight" -> railWeight = value as Int
         "heloweight" -> heloWeight = value as Int
         "hangarweight" -> hangarWeight = value as Int
+    }
+}
+
+/**
+ * The fifth field group: OG's Fronts/Factions masks and its three per-equipment sound ids.
+ *
+ * A group of its own for the reason the class doc gives for the other four -- each `when` has to
+ * stay inside detekt's complexity budget, and every hint matches at most one arm across all five, so
+ * calling every group per field is behaviour-identical to one big `when`.
+ *
+ * All five share the `-1` sentinel: "this record has no OG source", folded to the neutral value here
+ * rather than carried, so no reader has to know the difference (`MASK_NO_DATA`).
+ */
+private fun EquipmentData.applyEquipmentFieldsE(
+    hint: String,
+    value: dynamic,
+) {
+    when (hint) {
+        "fronts" -> fronts = (value as Int).takeIf { it != MASK_NO_DATA } ?: 0
+        "factions" -> factions = (value as Int).takeIf { it != MASK_NO_DATA } ?: 0
+        "movsound" -> moveSoundId = (value as Int).takeIf { it != MASK_NO_DATA } ?: 0
+        "atksound" -> attackSoundId = (value as Int).takeIf { it != MASK_NO_DATA } ?: 0
+        "diesound" -> dieSoundId = (value as Int).takeIf { it != MASK_NO_DATA } ?: 0
     }
 }

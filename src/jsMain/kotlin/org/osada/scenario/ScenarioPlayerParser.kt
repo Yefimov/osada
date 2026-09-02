@@ -3,6 +3,7 @@ package org.osada.scenario
 import org.osada.GameHolder
 import org.osada.difficultyModifiers
 import org.osada.model.Equipment
+import org.osada.model.FrontFactionSlot
 import org.osada.model.Player
 import org.osada.model.addPlayer
 import org.osada.model.addPlayersEquipment
@@ -76,6 +77,74 @@ internal object ScenarioPlayerParser {
         return kotlin.math.round(campaign.startprestige * turnPrestigeRatio).toInt()
     }
 
+    /**
+     * OG's three non-organic transport POOLS, and whether the scenario authored them at all.
+     *
+     * The attribute is the pool SIZE -- OG's own wording, changelog 0.90.42.2 -- so it seeds the
+     * ceiling as well as the count that is free right now (`model/TransportPools`).
+     *
+     * [Player.transportPoolsAuthored] is PRESENCE, not value. An OG scenario writes all three
+     * attributes even when the pool is zero; a Panzer Marshal scenario writes none. Only the first
+     * of those means "air and naval transports come from the pool and are not for sale"
+     * (`rules/FrontsAndFactions`).
+     */
+    private fun applyTransportPools(
+        el: Element,
+        player: Player,
+    ) {
+        player.airTransports = el.getAttribute("airtrans")?.toIntOrNull() ?: 0
+        player.navalTransports = el.getAttribute("navaltrans")?.toIntOrNull() ?: 0
+        player.railTransports = el.getAttribute("railtrans")?.toIntOrNull() ?: 0
+        player.transportPoolsAuthored =
+            el.hasAttribute("airtrans") ||
+            el.hasAttribute("navaltrans") ||
+            el.hasAttribute("railtrans")
+        player.airTransportsMax = player.airTransports
+        player.navalTransportsMax = player.navalTransports
+        player.railTransportsMax = player.railTransports
+    }
+
+    /**
+     * The three authored limits on what this player may acquire, all read the same way: an ABSENT
+     * attribute is unrestricted.
+     *
+     * * `purchasecap` -- OG's cap on NET-NEW formations (`.xscn` player record `+35`), already gated
+     *   on `opt_purchase_cap` by the importer. **An attribute of "0" is not the absent case**: it is
+     *   the author forbidding growth while still allowing losses to be replaced
+     *   (`rules/PurchaseCap`).
+     * * `ff` -- Fronts and Factions as the scenario stores them, `country:fronts:factions` per OG
+     *   slot. `add_fronts_factions.py` writes nothing for a player whose every mask is zero, because
+     *   a zero mask is OG's own wildcard (`rules/FrontsAndFactions`).
+     * * `buylist` -- the same mechanic as OpenSuite RESOLVES it, a `.buy4` whitelist layered on top.
+     *   `add_purchase_lists.py` never writes an empty list, so a present-but-empty attribute cannot
+     *   occur and an empty parse is read as absent rather than as "may buy nothing".
+     *
+     * **Each field is filled only when the player still carries the unauthored value.** At scenario
+     * load that is every one of them, so this is exactly the old unconditional assignment; the
+     * guard exists for [AuthoredOptionsBackfill], which re-reads the XML for a save written before
+     * these were serialized and must never overwrite what the save itself carried.
+     */
+    internal fun applyAuthoredPurchaseLimits(
+        el: Element,
+        player: Player,
+    ) {
+        if (player.purchaseCap == null) {
+            player.purchaseCap = el.getAttribute("purchasecap")?.toIntOrNull()
+        }
+        if (player.frontFactionSlots.isEmpty()) {
+            player.frontFactionSlots = FrontFactionSlot.parse(el.getAttribute("ff"))
+        }
+        if (player.purchaseList == null) {
+            player.purchaseList =
+                el
+                    .getAttribute("buylist")
+                    ?.split(",")
+                    ?.mapNotNull { it.trim().toIntOrNull() }
+                    ?.toSet()
+                    ?.takeIf { it.isNotEmpty() }
+        }
+    }
+
     private fun parsePlayerElement(
         el: Element,
         minTurnPrestige: Int,
@@ -84,29 +153,12 @@ internal object ScenarioPlayerParser {
         player.id = el.getAttribute("id")?.toIntOrNull() ?: 0
         player.side = el.getAttribute("side")?.toIntOrNull() ?: 0
         player.country = el.getAttribute("country")?.toIntOrNull() ?: 0
-        // The authored attribute is the pool SIZE -- OG's own wording, changelog 0.90.42.2 -- so it
-        // seeds the ceiling as well as the count that is free right now (`model/TransportPools`).
-        player.airTransports = el.getAttribute("airtrans")?.toIntOrNull() ?: 0
-        player.navalTransports = el.getAttribute("navaltrans")?.toIntOrNull() ?: 0
-        player.railTransports = el.getAttribute("railtrans")?.toIntOrNull() ?: 0
-        player.airTransportsMax = player.airTransports
-        player.navalTransportsMax = player.navalTransports
-        player.railTransportsMax = player.railTransports
+        applyTransportPools(el, player)
         // Already gated on the scenario's own `opt_default_xp` / `opt_allow_default_str` switch by
         // the importer, so 0 here means "not authored" and never "the author chose zero".
         player.defaultExperience = el.getAttribute("defaultxp")?.toIntOrNull() ?: 0
         player.defaultStrength = el.getAttribute("defaultstr")?.toIntOrNull() ?: 0
-        // OG's Fronts/Factions, as OpenSuite resolves them: the `.buy4` whitelist of everything
-        // this player may buy or upgrade into. ABSENT means unrestricted, never "may buy nothing" --
-        // `tools/og-import/add_purchase_lists.py` never writes an empty list, so a present-but-empty
-        // attribute cannot occur and an empty parse is treated as absent.
-        player.purchaseList =
-            el
-                .getAttribute("buylist")
-                ?.split(",")
-                ?.mapNotNull { it.trim().toIntOrNull() }
-                ?.toSet()
-                ?.takeIf { it.isNotEmpty() }
+        applyAuthoredPurchaseLimits(el, player)
         player.prestigePerTurn = el
             .getAttribute("turnprestige")
             ?.split(", ")

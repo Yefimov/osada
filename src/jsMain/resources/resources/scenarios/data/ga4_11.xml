@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="ga4_11.xscn" name="Praga" turns="13, 15, 19" date="September 10, 1944" dayturns="0" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="39" cols="44" eqp="eqp-comww2" image="resources/maps/images/map_711.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="1" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="0" truespotting0="1" reinfwhenactive="1" capitalflak="0" ehmsuonly="0" paradropocean="0">
-  <player id="0" country="89" side="1" airtrans="1" navaltrans="0" railtrans="0" defaultxp="100" defaultstr="10" support="21,90,0,0" turnprestige="0, 50, 50, 50, 50, 100, 50, 25, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100"/>
-  <player id="1" country="7" side="0" airtrans="1" navaltrans="0" railtrans="0" defaultxp="100" defaultstr="6" support="304,8,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 660, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100"/>
+<map file="ga4_11.xscn" name="Praga" turns="13, 15, 19" date="September 10, 1944" dayturns="0" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="39" cols="44" eqp="eqp-comww2" image="resources/maps/images/map_711.png" eqpv="united1" prototimeframe="4" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="1" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="0" truespotting0="1" reinfwhenactive="1" capitalflak="0" ehmsuonly="0" paradropocean="0" coresoffcap="0">
+  <player id="0" country="89" side="1" airtrans="1" navaltrans="0" railtrans="0" defaultxp="100" defaultstr="10" support="21,90,0,0" turnprestige="0, 50, 50, 50, 50, 100, 50, 25, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100" ff="20:0:233429"/>
+  <player id="1" country="7" side="0" airtrans="1" navaltrans="0" railtrans="0" defaultxp="100" defaultstr="6" support="304,8,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 660, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100" ff="8:0:1032"/>
   <reinforce turn="2">
     <at row="11" col="29">
       <unit id="7726" owner="1" flag="8" face="0" exp="44" str="9"/>
@@ -594,7 +594,7 @@
   <hex row="10" col="24" terrain="16"/>
   <hex row="10" col="25" terrain="16"/>
   <hex row="10" col="26" terrain="1" road="17" name="Zabki" owner="1" flag="7" victory="1">
-    <unit id="7964" owner="1" flag="8" face="0" exp="44" str="8" bstr="5"/>
+    <unit id="7964" owner="1" flag="8" face="0" exp="44" str="8" bstr="5" anchored="1"/>
   </hex>
   <hex row="10" col="27" terrain="1" name="Zabki"/>
   <hex row="10" col="28" terrain="16"/>
@@ -755,7 +755,7 @@
   <hex row="13" col="31" terrain="16"/>
   <hex row="13" col="32" road="9"/>
   <hex row="13" col="33" road="144">
-    <unit id="7726" owner="1" flag="8" face="0" exp="44" bstr="4"/>
+    <unit id="7726" owner="1" flag="8" face="0" exp="44" bstr="4" anchored="1"/>
   </hex>
   <hex row="13" col="34" terrain="3"/>
   <hex row="13" col="35" terrain="16"/>
@@ -842,7 +842,7 @@
   <hex row="15" col="19" road="162"/>
   <hex row="15" col="20" road="40"/>
   <hex row="15" col="21" terrain="1" road="2" name="Stronghold" owner="1" flag="7" victory="1">
-    <unit id="9453" owner="1" flag="8" face="0" exp="200" str="7" bstr="1"/>
+    <unit id="9453" owner="1" flag="8" face="0" exp="200" str="7" bstr="1" anchored="1"/>
     <unit id="748" owner="1" flag="8" face="0" exp="44" str="8" bstr="1"/>
   </hex>
   <hex row="15" col="22" road="40"/>
@@ -857,7 +857,7 @@
   <hex row="15" col="31" terrain="3"/>
   <hex row="15" col="32" terrain="3"/>
   <hex row="15" col="33" terrain="1" road="1" name="Rembertow" owner="1" flag="7" victory="1">
-    <unit id="7726" owner="1" flag="8" face="0" exp="44" bstr="4"/>
+    <unit id="7726" owner="1" flag="8" face="0" exp="44" bstr="4" anchored="1"/>
   </hex>
   <hex row="15" col="34" terrain="16"/>
   <hex row="15" col="35" terrain="16">
@@ -920,7 +920,7 @@
   <hex row="17" col="0" terrain="14" name="Bialoleka"/>
   <hex row="17" col="1" terrain="1" name="Bialoleka"/>
   <hex row="17" col="2" terrain="1" name="Bialoleka" owner="1" flag="7">
-    <unit id="7964" owner="1" flag="8" face="0" exp="25" str="6" bstr="1"/>
+    <unit id="7964" owner="1" flag="8" face="0" exp="25" str="6" bstr="1" anchored="1"/>
   </hex>
   <hex row="17" col="3" terrain="1" name="Bialoleka"/>
   <hex row="17" col="4" terrain="1" name="Bialoleka"/>
@@ -1016,13 +1016,13 @@
   <hex row="19" col="0" terrain="14" name="Wisla River"/>
   <hex row="19" col="1" terrain="15" name="Wisla River"/>
   <hex row="19" col="2" terrain="1" name="Praga-Polnoc">
-    <unit id="9969" owner="1" flag="8" face="0" str="5" bstr="1"/>
+    <unit id="9969" owner="1" flag="8" face="0" str="5" bstr="1" anchored="1"/>
   </hex>
   <hex row="19" col="3" terrain="1" name="Praga-Polnoc"/>
   <hex row="19" col="4" terrain="1" name="Praga-Polnoc"/>
   <hex row="19" col="5" terrain="1" name="Praga-Polnoc"/>
   <hex row="19" col="6" terrain="1" name="Praga-Polnoc">
-    <unit id="9076" owner="1" flag="8" face="0" exp="200" str="6" bstr="1"/>
+    <unit id="9076" owner="1" flag="8" face="0" exp="200" str="6" bstr="1" anchored="1"/>
   </hex>
   <hex row="19" col="7" terrain="1" name="Praga-Polnoc"/>
   <hex row="19" col="8" terrain="1" name="Praga-Polnoc"/>
@@ -1077,7 +1077,7 @@
   <hex row="20" col="9" terrain="1" name="Praga-Polnoc"/>
   <hex row="20" col="10" terrain="1" name="Praga-Polnoc"/>
   <hex row="20" col="11" name="Railroad">
-    <unit id="7726" owner="1" flag="8" face="0" exp="175" str="8" bstr="5"/>
+    <unit id="7726" owner="1" flag="8" face="0" exp="175" str="8" bstr="5" anchored="1"/>
   </hex>
   <hex row="20" col="12" name="Railroad"/>
   <hex row="20" col="13" name="Railroad"/>
@@ -1185,7 +1185,7 @@
   </hex>
   <hex row="22" col="20" name="Railroad"/>
   <hex row="22" col="21" terrain="1" name="Praga-Poludny" owner="1" flag="7" victory="1">
-    <unit id="7726" owner="1" flag="8" face="0" exp="44" bstr="5"/>
+    <unit id="7726" owner="1" flag="8" face="0" exp="44" bstr="5" anchored="1"/>
   </hex>
   <hex row="22" col="22" terrain="1" name="Praga-Poludny"/>
   <hex row="22" col="23" terrain="1" road="8" name="Praga-Poludny"/>
@@ -1273,7 +1273,7 @@
   <hex row="24" col="15" terrain="16"/>
   <hex row="24" col="16" terrain="16"/>
   <hex row="24" col="17" road="17">
-    <unit id="7964" owner="1" flag="8" face="0" exp="100" str="8" bstr="6"/>
+    <unit id="7964" owner="1" flag="8" face="0" exp="100" str="8" bstr="6" anchored="1"/>
   </hex>
   <hex row="24" col="18" terrain="16"/>
   <hex row="24" col="19" terrain="3"/>
@@ -1596,7 +1596,7 @@
   <hex row="31" col="16" terrain="3"/>
   <hex row="31" col="17" terrain="16"/>
   <hex row="31" col="18" terrain="1" name="Regut" owner="1" flag="7">
-    <unit id="8151" owner="1" flag="8" face="0" exp="175" str="7" bstr="4"/>
+    <unit id="8151" owner="1" flag="8" face="0" exp="175" str="7" bstr="4" anchored="1"/>
   </hex>
   <hex row="31" col="19" road="130"/>
   <hex row="31" col="20" road="40"/>
@@ -1884,7 +1884,7 @@
   <hex row="37" col="18" terrain="16"/>
   <hex row="37" col="19" terrain="16"/>
   <hex row="37" col="20" terrain="2" name="Ponurzyca Airfield" owner="1" flag="7">
-    <unit id="9455" owner="1" flag="8" face="0" exp="67" str="6" bstr="1"/>
+    <unit id="9455" owner="1" flag="8" face="0" exp="67" str="6" bstr="1" anchored="1"/>
   </hex>
   <hex row="37" col="21" terrain="16"/>
   <hex row="37" col="22" terrain="16"/>

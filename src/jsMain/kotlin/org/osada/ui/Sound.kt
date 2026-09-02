@@ -268,6 +268,47 @@ object Sound {
             ambient?.volume = uiSettings.ambientVolume
         } catch (_: Throwable) {
         }
+        try {
+            music?.volume = uiSettings.ambientVolume
+        } catch (_: Throwable) {
+        }
+    }
+
+    /**
+     * OG's per-scenario music track (`ui/ScenarioMusic`).
+     *
+     * A SECOND looping element rather than a reuse of [ambient]: the weather ambience owns that one
+     * and restarts it whenever the weather changes, so sharing it would have rain silence the battle
+     * music and the music silence the rain. Both read the Ambient slider, which is the nearest
+     * existing control -- a soundtrack of its own would want its own slider, and that is a settings
+     * change rather than an import one.
+     */
+    private var music: dynamic = null
+
+    fun startMusic(url: String) {
+        stopMusic()
+        if (uiSettings.muteUnitSounds) return
+        try {
+            val a = js("new Audio()")
+            a.src = url
+            a.loop = true
+            a.volume = uiSettings.ambientVolume
+            // Autoplay is blocked until the first interaction; swallow the rejection so it is not an
+            // "Uncaught (in promise)", exactly as `startAmbient` does.
+            val p = a.play()
+            if (p != null && p != undefined) p.catch { }
+            music = a
+        } catch (_: Throwable) {
+            // Audio may be unavailable (headless/test) or autoplay-blocked; ignore.
+        }
+    }
+
+    fun stopMusic() {
+        try {
+            music?.pause()
+        } catch (_: Throwable) {
+        }
+        music = null
     }
 }
 
@@ -297,7 +338,10 @@ val moveSoundByMoveMethod =
  * use the tracked sound.
  */
 fun playMoveSound(unit: GameUnit) {
-    if (uiSettings.muteUnitSounds) return
+    // OG picks the movement sound per EQUIPMENT RECORD (`equip.xeqp` @70). `OgSoundLibrary` answers
+    // false in every shipped build -- its audio may not be redistributed and is not present -- and
+    // the class-based table below is then exactly what it always was.
+    if (uiSettings.muteUnitSounds || OgSoundLibrary.playMove(unit)) return
     val data = unit.unitData()
     val unmountedEngineerInfantry =
         !unit.isMounted &&

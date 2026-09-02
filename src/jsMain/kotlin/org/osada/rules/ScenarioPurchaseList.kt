@@ -11,23 +11,39 @@ import org.osada.model.Player
  * > *"You can now check the desired Factions that will be available to the player to **buy new
  * > units or upgrade existing ones**."* — `Manual_OSuite-Scenario.pdf` §3.5
  *
- * ### Why this is a list and not two bitmasks
+ * ### The masks, the resolved list, and which of the two this models
  *
  * `OPENTXT_SAMPLE/fronts.txt` defines up to 32 Fronts (`#`) and 32 Factions (`@`) **per country**,
  * and each equipment record carries a 32-bit mask of each (`equip.xeqp` `@48` and `@52`). In
  * `eqp-lxf` the Fronts are climate variants (`#CLIM Default/Snow/Desert/Jungle`) and the Factions
  * are branch groupings (`@ARMY + Mountain 30-55`, `@NAVY + Carriers + Aviation 43-55`).
  *
- * **The scenario stores neither mask.** The player record's only free run before its 40-entry
- * turn-prestige table, `+40..+48`, is zero on all 3,034 player records in the 5,848-scenario
- * corpus. What OpenSuite writes when the author ticks a Faction is the RESOLVED LIST — a `.buy4`
- * text sidecar naming every equipment code, with the Suite's own count in its header. So the
- * masks would be a badge with nothing to match against, and the list is the mechanic.
+ * **CORRECTION 2026-09-01 — this doc used to say the scenario stores neither mask. It stores both.**
+ * The measurement behind the old claim was right and the conclusion was not: the player record's
+ * only free run before its 40-entry turn-prestige table, `+40..+48`, really is zero on all 3,034
+ * player records, but the masks are not in the player record. They sit in a fixed header block that
+ * tiles `849..1008` exactly — `fronts` = 20 × u32 at 849, `factions` = 20 × u32 at 929, indexed
+ * `player * 5 + countrySlot`, where slot k is the player record's country byte `+7+k`. Every part
+ * of that index is measured by a controlled diff, not inferred. See
+ * `tools/og-import/SCENARIO_FORMAT_NOTES.md` for the diffs and the resolution rule.
  *
- * That is also why `equip.cfg`'s `ff_mustmatch` (*"force units to land in carrier to match F/F.
- * Only use efile F/F settings for unit and carrrier/transport, **not scenario settings**"*) stays
- * unbuilt and is named in `CarrierHangars`: it is the one rule that consults the masks rather than
- * the resolved list.
+ * What OpenSuite ALSO writes when the author ticks a Faction is the RESOLVED LIST — a `.buy4` text
+ * sidecar naming every equipment code, with the Suite's own count in its header. **That list is
+ * what this class models, and it stays the right thing to model here**: `.buy4` is hand-editable
+ * and is layered on top of the masks rather than being a dump of them (`bn9s16` excludes
+ * `SU-76 CS`, which the mask rule admits and which carries no `Can't Buy`).
+ *
+ * **The masks themselves are imported and read since 2026-09-01** — [FrontsAndFactions], on 208
+ * deployed scenarios against these five. They live in the runtime rather than in this list because
+ * F/F also gates transport, carrier and container boarding, not just purchasing, and because a
+ * static list cannot express a matcher. The two compose: `Player.buyUnit` asks both, so the author's
+ * hand edits still narrow what the masks admit.
+ *
+ * `equip.cfg`'s `ff_mustmatch` (*"force units to land in carrier to match F/F. Only use efile F/F
+ * settings for unit and carrrier/transport, **not scenario settings**"*) is built too, and NOT for
+ * the reason this doc used to give: its own wording excludes the scenario masks, so it wants the
+ * EQUIPMENT masks (`equip.xeqp` `@48`/`@52`), which were available all along
+ * ([FrontsAndFactions.cargoMatchesCarrier]).
  *
  * ### Shape
  *

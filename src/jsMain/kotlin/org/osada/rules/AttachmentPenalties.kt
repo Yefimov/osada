@@ -63,7 +63,7 @@ private fun Attachments.penaltySum(
     unit: GameUnit,
     penaltyType: Int,
 ): Int =
-    purchasedSlots(unit)
+    fittedSlots(unit)
         .filter { (number, slot) -> effectiveMalusType(number, slot.penaltyType) == penaltyType }
         .sumOf { (_, slot) -> slot.penalty }
 

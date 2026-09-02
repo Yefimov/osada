@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="bn5s06.xscn" name="RP Gypsy Baron" turns="16, 16, 16" date="June 15, 1943" dayturns="0" ground="0" atmosferic="0" latitude="3" iconset="3" weatherchg="0" rows="38" cols="43" eqp="eqp-lxf" image="resources/maps/images/map_508.png" eqpv="united1" holdvictory="6, 5, 5" holdvictory1="6, 4, 2" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1" ehmsuonly="0" paradropocean="1">
-  <player id="0" country="19" side="1" airtrans="1" navaltrans="0" railtrans="0" defaultxp="25" defaultstr="10" support="20,0,0,0" turnprestige="0, 25, 50, 25, 50, 25, 50, 25, 50, 25, 50, 50, 25, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25"/>
-  <player id="1" country="359" side="0" airtrans="1" navaltrans="0" railtrans="0" defaultxp="25" defaultstr="10" support="8,60,360,0" turnprestige="0, 50, 25, 50, 25, 50, 25, 50, 25, 50, 50, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25"/>
+<map file="bn5s06.xscn" name="RP Gypsy Baron" turns="16, 16, 16" date="June 15, 1943" dayturns="0" ground="0" atmosferic="0" latitude="3" iconset="3" weatherchg="0" rows="38" cols="43" eqp="eqp-lxf" image="resources/maps/images/map_508.png" eqpv="united1" holdvictory="6, 5, 5" holdvictory1="6, 4, 2" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1" ehmsuonly="0" paradropocean="1" coresoffcap="0">
+  <player id="0" country="19" side="1" airtrans="1" navaltrans="0" railtrans="0" defaultxp="25" defaultstr="10" support="20,0,0,0" turnprestige="0, 25, 50, 25, 50, 25, 50, 25, 50, 25, 50, 50, 25, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25" ff="20:1:262144"/>
+  <player id="1" country="359" side="0" airtrans="1" navaltrans="0" railtrans="0" defaultxp="25" defaultstr="10" support="8,60,360,0" turnprestige="0, 50, 25, 50, 25, 50, 25, 50, 25, 50, 50, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25" ff="62:1:67110272,8:2:67633408,60:1:66944"/>
   <reinforce turn="6">
     <at row="24" col="33">
       <unit id="7976" owner="1" flag="8" face="0" exp="100"/>
     </at>
     <at row="21" col="30">
-      <unit id="7976" owner="1" flag="8" face="0" exp="100"/>
+      <unit id="7976" owner="1" flag="8" face="0" exp="100" fearless="1"/>
     </at>
   </reinforce>
   <reinforce turn="7">
     <at row="20" col="30">
-      <unit id="7976" owner="1" flag="8" face="0" exp="100"/>
+      <unit id="7976" owner="1" flag="8" face="0" exp="100" fearless="1" ordinal="28"/>
     </at>
     <at row="20" col="31">
-      <unit id="9900" owner="1" flag="8" face="0" transport="9708" exp="100" str="8"/>
+      <unit id="9900" owner="1" flag="8" face="0" transport="9708" exp="100" str="8" objfrom="45"/>
     </at>
     <at row="24" col="32">
       <unit id="8088" owner="1" flag="8" face="0" transport="9668" exp="100"/>
     </at>
     <at row="23" col="33">
-      <unit id="9941" owner="1" flag="8" face="0" transport="9740" exp="200" str="8"/>
+      <unit id="9941" owner="1" flag="8" face="0" transport="9740" exp="200" str="8" objfrom="44" ordinal="44"/>
     </at>
   </reinforce>
   <reinforce turn="10">
@@ -29,7 +29,7 @@
       <unit id="7792" owner="1" flag="8" face="0" transport="9830" exp="200" str="8"/>
     </at>
     <at row="6" col="15">
-      <unit id="8563" owner="1" flag="8" face="0" exp="200" str="5"/>
+      <unit id="8563" owner="1" flag="8" face="0" exp="200" str="5" ordinal="32"/>
     </at>
     <at row="7" col="13">
       <unit id="8989" owner="1" flag="8" face="0" exp="200" str="8"/>
@@ -322,7 +322,7 @@
   <hex row="9" col="17" road="40"/>
   <hex row="9" col="18" terrain="3"/>
   <hex row="9" col="19" road="34">
-    <unit id="55775" owner="1" flag="360" face="0" transport="55766" exp="50" str="5" bstr="5"/>
+    <unit id="55775" owner="1" flag="360" face="0" transport="55766" exp="50" str="5" bstr="5" objfrom="24"/>
   </hex>
   <hex row="9" col="20" road="34"/>
   <hex row="9" col="21" terrain="3"/>
@@ -344,7 +344,7 @@
     <unit id="55733" owner="1" flag="360" face="0" exp="25" str="8" bstr="5"/>
   </hex>
   <hex row="10" col="4">
-    <unit id="55779" owner="1" flag="360" face="0" transport="55767" exp="50" str="5" bstr="5"/>
+    <unit id="55779" owner="1" flag="360" face="0" transport="55767" exp="50" str="5" bstr="5" objfrom="32"/>
   </hex>
   <hex row="10" col="7" road="9"/>
   <hex row="10" col="8" terrain="3"/>
@@ -446,7 +446,7 @@
     <unit id="55730" owner="1" flag="360" face="0" transport="55770" exp="200" str="8" bstr="5"/>
   </hex>
   <hex row="13" col="10" road="136">
-    <unit id="55777" owner="1" flag="360" face="0" transport="55767" exp="100" str="8" bstr="5"/>
+    <unit id="55777" owner="1" flag="360" face="0" transport="55767" exp="100" str="8" bstr="5" objfrom="28"/>
   </hex>
   <hex row="13" col="11" road="144">
     <unit id="55748" owner="1" flag="360" face="0" transport="55767" exp="200" str="8" bstr="5"/>
@@ -639,7 +639,7 @@
     <unit id="9394" owner="1" flag="60" face="0" transport="35571" exp="100" str="6" bstr="5"/>
   </hex>
   <hex row="19" col="21">
-    <unit id="10319" owner="1" flag="60" face="0" transport="35578" exp="100" str="6" bstr="5"/>
+    <unit id="10319" owner="1" flag="60" face="0" transport="35578" exp="100" str="6" bstr="5" ordinal="24"/>
   </hex>
   <hex row="19" col="23" terrain="8"/>
   <hex row="19" col="24" terrain="8"/>

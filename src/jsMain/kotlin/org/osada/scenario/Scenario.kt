@@ -86,6 +86,12 @@ class Scenario(
      * barrage 298, extended naval 203, TrueDLOF 131, Air ZOC 79, UnitsBlockDLOF 23, and air
      * missions **0** — the last of which is why building air missions would serve no shipped
      * battle at all.
+     *
+     * **These are serialized**, along with every option below them, in the save's `options` block —
+     * a restore never re-reads the scenario XML, so until they were, every reload came back
+     * unauthored. [AuthoredScenarioOptions] owns the attribute-to-field table that the loader, the
+     * save writer, the save reader and [copy] all share; [AuthoredOptionsBackfill] completes a save
+     * written before that existed from the XML.
      */
     var canBuild: Boolean? = null
     var canBlow: Boolean? = null
@@ -144,6 +150,33 @@ class Scenario(
      * as the other authored switches do (`docs/og-fidelity-plan.md` §AD).
      */
     var prototypesAllowed: Boolean? = null
+
+    /**
+     * OG's **prototype time frame** — how many months ahead the brilliant-victory award may reach.
+     * `.xscn` `@848`, gated on `opt_custom_time_frame` (`@1010` bit 0); **69 of the 397 deployed
+     * scenarios whose source parses set it**, 1,007 corpus-wide.
+     *
+     * Null means the author left OG's own window alone, and [getPrototypeUnitsAvailable] then keeps
+     * OSADA's long-standing next-calendar-year selection — see that function for why the month
+     * window is not applied to content that carries no month data.
+     *
+     * The importer substitutes nothing: it deploys OG's byte, and **zero means "switch on, value
+     * never configured"** (48 of those 69), which the loader turns into the manual's documented
+     * default of [PROTOTYPE_DEFAULT_MONTHS]. The current OG changelog raises the accepted range to
+     * 60 months while this install exercises only 1-12, so no upper bound is enforced.
+     */
+    var prototypeTimeFrameMonths: Int? = null
+
+    /**
+     * OG's **custom music track** for this battle — `.xscn` `@127`, a filename gated on
+     * `opt_custom_music` (`@1009` bit 6). **583 deployed scenarios author one**, over 62 distinct
+     * names corpus-wide.
+     *
+     * Null means the author left the ordinary soundtrack alone. `ui/ScenarioMusic` decides whether
+     * anything can actually be played from the licensed manifest; absent source files and formats
+     * browsers cannot decode fall back to silence without a network request.
+     */
+    var musicTrack: String? = null
 
     /**
      * OG's *"Subs no need DLOF"* — this scenario exempts submarines from the direct-line-of-fire
@@ -259,6 +292,21 @@ class Scenario(
      * movement table, and an aircraft's makes ocean passable. That object reads this.
      */
     var paradropOnOceanAllowed: Boolean? = null
+
+    /**
+     * OG's **"core units added by design do not count against the CAP"** (`opt_cores_off_cap`,
+     * `@1015` bit 5) — **89 deployed scenarios**, and the other half of `opt_purchase_cap`.
+     *
+     * The option only says anything because by DEFAULT such a formation does count: a unit the
+     * author enrols into the campaign core (OG's Make Core) is a net-new formation like a bought
+     * one. [org.osada.rules.PurchaseCap] owns both halves.
+     *
+     * **Inert on shipped content and deployed anyway**: no deployed scenario authors both a purchase
+     * cap and a Make Core unit, so nothing exercises the exemption today. It is here because the cap
+     * rule cannot otherwise represent what an author asked for, and because leaving the option
+     * unread would be a decoded bit with no rule — the exact state this backlog exists to close.
+     */
+    var coresExemptFromPurchaseCap: Boolean? = null
 
     var unitsWithdrawn: MutableList<Int> = mutableListOf(0, 0)
 
@@ -439,17 +487,10 @@ class Scenario(
         date = Date(other.date.getTime())
         atmosferic = other.atmosferic
         latitude = other.latitude
-        weatherCanChangeGround = other.weatherCanChangeGround
-        canBuild = other.canBuild
-        canBlow = other.canBlow
-        canRepair = other.canRepair
-        extendedLos = other.extendedLos
-        trueDirectLof = other.trueDirectLof
-        unitsBlockLof = other.unitsBlockLof
-        barrageAllowed = other.barrageAllowed
-        airZoc = other.airZoc
-        airMissions = other.airMissions
-        extendedNaval = other.extendedNaval
+        // Every authored option, from one table -- the ten that used to be listed here carried the
+        // same bug the save file did: the fourteen added after this function was written were
+        // silently dropped by it (`AuthoredScenarioOptions`).
+        AuthoredScenarioOptions.copy(this, other)
         iconset = other.iconset
         ground = other.ground
         lockedEffectiveIconset = other.effectiveIconset
@@ -462,7 +503,6 @@ class Scenario(
         retreatUnitsPerSide = other.retreatUnitsPerSide.toList()
         killUnitsPerSide = other.killUnitsPerSide.toList()
         mustSurvivePerSide = other.mustSurvivePerSide.toList()
-        typedVictoryHexes = other.typedVictoryHexes
         unitsWithdrawn = other.unitsWithdrawn.toMutableList()
         unitsKilled = other.unitsKilled.toMutableList()
         reinforcements.clear()

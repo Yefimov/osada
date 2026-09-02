@@ -53,3 +53,9 @@ scripts/deploy/target.local
 *.bak
 .osada-hotfix-backups/
 .osada-localization-backup/
+### Working tooling and notes, not yet committed (may be added deliberately later) ###
+# `git add tools/...` / `git add docs/...` kept sweeping these in by accident. Ignoring them makes
+# an accidental add fail instead of silently staging. Already-tracked files (tools/eqp-merge/
+# add_bomber_size.py) are unaffected; to add something here on purpose, use `git add -f <path>`.
+tools/
+docs/

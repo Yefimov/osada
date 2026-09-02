@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="bn9s03.xscn" name="Battle of Grodno" turns="10, 12, 16" date="September 20, 1939" dayturns="0" ground="0" atmosferic="0" latitude="6" iconset="0" weatherchg="1" rows="38" cols="44" eqp="eqp-lxf" image="resources/maps/images/map_738.png" eqpv="united1" retreatunits="3, 0" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="1" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1" ehmsuonly="0" paradropocean="1">
-  <player id="0" country="19" side="1" airtrans="1" navaltrans="0" railtrans="0" defaultxp="25" defaultstr="10" support="0,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
-  <player id="1" country="20" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="10" support="21,61,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+<map file="bn9s03.xscn" name="Battle of Grodno" turns="10, 12, 16" date="September 20, 1939" dayturns="0" ground="0" atmosferic="0" latitude="6" iconset="0" weatherchg="1" rows="38" cols="44" eqp="eqp-lxf" image="resources/maps/images/map_738.png" eqpv="united1" retreatunits="3, 0" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="1" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1" ehmsuonly="0" paradropocean="1" coresoffcap="0">
+  <player id="0" country="19" side="1" airtrans="1" navaltrans="0" railtrans="0" defaultxp="25" defaultstr="10" support="0,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="20:32769:70909864"/>
+  <player id="1" country="20" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="10" support="21,61,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="21:0:-2147483648"/>
   <hex row="0" col="5" road="17"/>
   <hex row="0" col="7" terrain="8"/>
   <hex row="0" col="9" terrain="8"/>
@@ -517,7 +517,7 @@
   <hex row="15" col="32" terrain="13"/>
   <hex row="15" col="33" terrain="2"/>
   <hex row="15" col="34" terrain="2" owner="1" flag="20" victory="1">
-    <unit id="21006" owner="1" flag="21" face="0" transport="21896" exp="114" str="5" bstr="5"/>
+    <unit id="21006" owner="1" flag="21" face="0" transport="21896" exp="114" str="5" bstr="5" holduntil="5"/>
   </hex>
   <hex row="15" col="36" terrain="13" name="Ditva river"/>
   <hex row="15" col="37" terrain="13" name="Ditva river"/>
@@ -640,7 +640,7 @@
   <hex row="19" col="12" road="33"/>
   <hex row="19" col="15" terrain="10" name="Neman river"/>
   <hex row="19" col="16" terrain="3" road="17">
-    <unit id="21578" owner="1" flag="21" face="0" exp="83" ldr="1" bstr="5"/>
+    <unit id="21578" owner="1" flag="21" face="0" exp="83" ldr="1" bstr="5" holduntil="5"/>
   </hex>
   <hex row="19" col="17" road="18">
     <unit id="1139" owner="1" flag="21" face="0" str="2" bstr="2"/>
@@ -672,13 +672,13 @@
   <hex row="20" col="13" terrain="3"/>
   <hex row="20" col="14" terrain="10" name="Neman river"/>
   <hex row="20" col="15" terrain="1" name="Grodno" owner="1" flag="20" victory="1">
-    <unit id="21219" owner="1" flag="21" face="0" bstr="5"/>
+    <unit id="21219" owner="1" flag="21" face="0" bstr="5" holduntil="5"/>
   </hex>
   <hex row="20" col="16" terrain="1" road="17" name="Grodno">
-    <unit id="21741" owner="1" flag="21" face="0" str="3" bstr="3"/>
+    <unit id="21741" owner="1" flag="21" face="0" str="3" bstr="3" anchored="1"/>
   </hex>
   <hex row="20" col="17" road="17">
-    <unit id="21024" owner="1" flag="21" face="0" bstr="5"/>
+    <unit id="21024" owner="1" flag="21" face="0" bstr="5" holduntil="5"/>
   </hex>
   <hex row="20" col="20" terrain="10" name="lake Beloe"/>
   <hex row="20" col="23" terrain="8" name="Kotra river"/>
@@ -708,16 +708,16 @@
   <hex row="21" col="14" terrain="10" name="Neman river"/>
   <hex row="21" col="15" terrain="10" road="34" name="Neman river"/>
   <hex row="21" col="16" terrain="1" road="41" name="Grodno">
-    <unit id="22047" owner="1" flag="21" face="0" transport="21876" str="5" bstr="5"/>
+    <unit id="22047" owner="1" flag="21" face="0" transport="21876" str="5" bstr="5" holduntil="5"/>
   </hex>
   <hex row="21" col="17" road="169">
-    <unit id="21097" owner="1" flag="21" face="0" bstr="5"/>
+    <unit id="21097" owner="1" flag="21" face="0" bstr="5" holduntil="5"/>
   </hex>
   <hex row="21" col="18">
     <unit id="1139" owner="1" flag="21" face="0" str="2" bstr="2"/>
   </hex>
   <hex row="21" col="19" terrain="2" owner="1" flag="20" victory="1">
-    <unit id="21006" owner="1" flag="21" face="0" transport="21896" exp="115" str="5" bstr="5"/>
+    <unit id="21006" owner="1" flag="21" face="0" transport="21896" exp="115" str="5" bstr="5" holduntil="5"/>
   </hex>
   <hex row="21" col="21" terrain="13"/>
   <hex row="21" col="23" terrain="13" name="Kotra river"/>
@@ -740,21 +740,21 @@
   <hex row="22" col="11" road="40"/>
   <hex row="22" col="12" terrain="10" name="Losos&#x27;na river"/>
   <hex row="22" col="13" road="40">
-    <unit id="21758" owner="1" flag="21" face="0" str="3" bstr="3"/>
+    <unit id="21758" owner="1" flag="21" face="0" str="3" bstr="3" holduntil="5"/>
   </hex>
   <hex row="22" col="14" terrain="1" road="138" name="Grodno" owner="1" flag="20" victory="1">
-    <unit id="21044" owner="1" flag="21" face="0" exp="81" str="5" bstr="5"/>
+    <unit id="21044" owner="1" flag="21" face="0" exp="81" str="5" bstr="5" holduntil="5"/>
   </hex>
   <hex row="22" col="15" terrain="1" road="162" name="Grodno">
-    <unit id="21741" owner="1" flag="21" face="0" str="3" ldr="1" bstr="3"/>
+    <unit id="21741" owner="1" flag="21" face="0" str="3" ldr="1" bstr="3" anchored="1"/>
   </hex>
   <hex row="22" col="16" terrain="10" road="34" name="Neman river"/>
   <hex row="22" col="17" terrain="10" name="Neman river"/>
   <hex row="22" col="18" road="136">
-    <unit id="21758" owner="1" flag="21" face="0" str="3" bstr="3"/>
+    <unit id="21758" owner="1" flag="21" face="0" str="3" bstr="3" holduntil="5"/>
   </hex>
   <hex row="22" col="19" road="136">
-    <unit id="21684" owner="1" flag="21" face="0" bstr="5"/>
+    <unit id="21684" owner="1" flag="21" face="0" bstr="5" holduntil="5"/>
   </hex>
   <hex row="22" col="20" terrain="1" name="Jitomlya"/>
   <hex row="22" col="21" terrain="13" name="Kotra river"/>
@@ -785,17 +785,17 @@
   <hex row="23" col="7" terrain="13" road="17"/>
   <hex row="23" col="8" terrain="13" road="130"/>
   <hex row="23" col="9" terrain="2" owner="1" flag="20" victory="1">
-    <unit id="21020" owner="1" flag="21" face="0" str="5" bstr="5"/>
+    <unit id="21020" owner="1" flag="21" face="0" str="5" bstr="5" holduntil="5"/>
   </hex>
   <hex row="23" col="10" terrain="3" road="130"/>
   <hex row="23" col="11" terrain="3"/>
   <hex row="23" col="12" terrain="10" road="130" name="Losos&#x27;na river"/>
   <hex row="23" col="13" terrain="13" name="Losos&#x27;na river"/>
   <hex row="23" col="14" road="146">
-    <unit id="21097" owner="1" flag="21" face="0" bstr="5"/>
+    <unit id="21097" owner="1" flag="21" face="0" bstr="5" holduntil="5"/>
   </hex>
   <hex row="23" col="15">
-    <unit id="21219" owner="1" flag="21" face="0" bstr="5"/>
+    <unit id="21219" owner="1" flag="21" face="0" bstr="5" holduntil="5"/>
   </hex>
   <hex row="23" col="16" terrain="3"/>
   <hex row="23" col="17" terrain="16"/>
@@ -984,7 +984,7 @@
   <hex row="29" col="4" terrain="3"/>
   <hex row="29" col="5" terrain="3"/>
   <hex row="29" col="7" terrain="3" road="18">
-    <unit id="21217" owner="1" flag="21" face="0" exp="105" str="8" bstr="5"/>
+    <unit id="21217" owner="1" flag="21" face="0" exp="105" str="8" bstr="5" holduntil="2" objcol="19" objrow="0" freeoh="3"/>
   </hex>
   <hex row="29" col="8" road="34"/>
   <hex row="29" col="10" road="136"/>
@@ -1020,7 +1020,7 @@
   <hex row="30" col="5" terrain="3"/>
   <hex row="30" col="6" terrain="3"/>
   <hex row="30" col="7" terrain="3" road="33">
-    <unit id="21217" owner="1" flag="21" face="0" exp="102" str="8" ldr="1" bstr="5"/>
+    <unit id="21217" owner="1" flag="21" face="0" exp="102" str="8" ldr="1" bstr="5" holduntil="2" objcol="19" objrow="0" freeoh="3"/>
   </hex>
   <hex row="30" col="8" terrain="3"/>
   <hex row="30" col="11" terrain="3"/>
@@ -1055,7 +1055,7 @@
   <hex row="31" col="4" terrain="3"/>
   <hex row="31" col="5" terrain="3"/>
   <hex row="31" col="6" terrain="1" road="18" name="Charna-Belostocka">
-    <unit id="21217" owner="1" flag="21" face="0" exp="104" str="8" bstr="5"/>
+    <unit id="21217" owner="1" flag="21" face="0" exp="104" str="8" bstr="5" holduntil="2" objcol="19" objrow="0" freeoh="3"/>
   </hex>
   <hex row="31" col="7" terrain="3"/>
   <hex row="31" col="8" terrain="3"/>
@@ -1193,7 +1193,7 @@
   <hex row="35" col="2" road="136"/>
   <hex row="35" col="3" terrain="1" road="136" name="Belostok"/>
   <hex row="35" col="4" terrain="1" name="Belostok" owner="1" flag="20" victory="1">
-    <unit id="21219" owner="1" flag="21" face="0" bstr="5"/>
+    <unit id="21219" owner="1" flag="21" face="0" bstr="5" anchored="1"/>
   </hex>
   <hex row="35" col="5" terrain="1" road="43" name="Belostok"/>
   <hex row="35" col="6" road="42"/>

@@ -1,5 +1,6 @@
 package org.osada
 
+import org.osada.model.FrontFactionSlot
 import org.osada.model.GameUnit
 import org.osada.model.Player
 import org.osada.model.Transport
@@ -120,7 +121,30 @@ object GameStateDeserializer {
         player.supportCountries = parseIntArray(data.supportCountries)
         player.prestigePerTurn = parseIntArray(data.prestigePerTurn)
         player.dossier = data.dossier
+        applyAuthoredPurchaseLimits(player, data)
         return player
+    }
+
+    /**
+     * The scenario's purchase cap and whitelist, and how much of the cap has been spent.
+     *
+     * A restore never re-reads the scenario XML, so these arrive from the save or not at all --
+     * see `GameStateSerializer.serializeAuthoredPurchaseLimits`. Every key is optional and absent
+     * means UNRESTRICTED, which is both what a pre-2026-09 save means and what 490 of the 502
+     * deployed scenarios actually author.
+     */
+    private fun applyAuthoredPurchaseLimits(
+        player: Player,
+        data: dynamic,
+    ) {
+        player.purchaseCap = data.purchaseCap as? Int
+        // An empty list can only mean "the key was absent", never "the author allowed nothing":
+        // `add_purchase_lists.py` never writes an empty list (`rules/ScenarioPurchaseList`).
+        player.purchaseList = parseIntArray(data.purchaseList).toSet().takeIf { it.isNotEmpty() }
+        player.purchaseGrowthSpent = data.purchaseGrowthSpent as? Int ?: 0
+        player.replacementCredits = data.replacementCredits as? Int ?: 0
+        player.frontFactionSlots = FrontFactionSlot.parse(data.frontFactionSlots as? String)
+        player.transportPoolsAuthored = data.transportPoolsAuthored as? Boolean ?: false
     }
 
     /** The three non-organic transport pools, each as a live count plus the SIZE that caps it.

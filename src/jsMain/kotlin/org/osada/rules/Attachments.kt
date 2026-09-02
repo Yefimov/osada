@@ -26,8 +26,41 @@ import org.osada.rules.ruleset.RuleKey
  * point of use, exactly like `Leaders.unitHasLeader` already does for leader traits.
  *
  * **Slot number is the mechanic, never the display name** — ATOMIC's slot 5 is "Ammunition",
- * LXF's/GCE's is "Support", but both are the same fixed maximum-ammunition attachment. Only core
- * formation units can have attachments (§3.2) — scenario/auxiliary units have no formation record.
+ * LXF's/GCE's is "Support", but both are the same fixed maximum-ammunition attachment.
+ *
+ * ## Two sources, one query — authored and purchased
+ *
+ * Attachments arrive from two places, and [fittedSlots] is the union every read site asks:
+ *
+ * * **PURCHASED**, in `CoreFormation.attachmentIds`. Only a core formation can buy one (§3.2).
+ * * **AUTHORED**, in [GameUnit.authoredAttachmentIds] — `.xscn` unit `@40`/`@41`, on **12,555
+ *   corpus records**. These are stored on the UNIT and not on the formation, because most of the
+ *   formations that carry one have no `CoreFormation`: an auxiliary or scenario-only unit never
+ *   joins the roster. Copying an authored slot into a persistent formation would also silently
+ *   decide the lifetime question below.
+ *
+ * **Authored slots are never priced.** An attachment the author fitted is part of the formation
+ * they wrote: `Player.purchaseAttachment` is the only path that spends prestige, and it only ever
+ * writes to the formation.
+ *
+ * ### Duplicates and the two-slot cap, stated rather than discovered
+ *
+ * [fittedSlots] is DISTINCT BY SLOT NUMBER and takes [MAX_PER_UNIT] entries with the AUTHORED ones
+ * first. So an authored slot that duplicates a purchased one counts once (a second Recon package is
+ * not two Recon packages), and a formation the author already filled cannot have a third bought
+ * onto it — [availableSlots] measures the cap against the union, not against the purchase list.
+ * Authored-first is the ordering that matters, because the author's fitting is not something the
+ * player chose and must not be the entry that falls off the end.
+ *
+ * ### The lifetime question, and what shipping this decides
+ *
+ * `docs/og-import-rules-backlog.md` §7 names it: does an authored attachment on a CORE formation
+ * survive the scenario it was authored in? Nothing published says. The instruction it gives is what
+ * is built — store the slots on the unit and serialize them — and the consequence follows from
+ * that: a core formation carries its authored slots into the next battle exactly as it carries its
+ * experience, because the roster carries the unit. An auxiliary formation does not, because it does
+ * not survive at all. If a source ever settles it the other way, the change is one line in
+ * `Player.setPlayerToHQ`, and this paragraph is what points at it.
  */
 internal object Attachments {
     const val MAX_PER_UNIT = 2
@@ -78,26 +111,29 @@ internal object Attachments {
             EfileConfig.attachments()
         }
 
-    /** This unit's currently-purchased attachment slots as `slotNumber to slot`, or empty for a
-     *  scenario-only unit (no formation record) or an efile with attachments off. The slot NUMBER
-     *  is carried because the malus-type default table is keyed on it (`AttachmentPenalties`). */
-    fun purchasedSlots(unit: GameUnit): List<Pair<Int, EfileConfig.AttachmentSlot>> {
-        val formation = HeroCampaign.formationFor(unit)
+    /**
+     * Every attachment [unit] actually has — the union of what the author fitted and what its
+     * formation bought, distinct by slot number, authored first, capped at [MAX_PER_UNIT].
+     *
+     * This is the query every read site asks; see the class doc for why the two sources exist and
+     * how the cap resolves between them.
+     */
+    fun fittedSlots(unit: GameUnit): List<Pair<Int, EfileConfig.AttachmentSlot>> {
         val config = attachmentConfig()
-        return if (formation == null || config == null) {
+        return if (unit.attachmentsForbidden || config == null) {
             emptyList()
         } else {
-            formation.attachmentIds.mapNotNull { id ->
-                id.toIntOrNull()?.let { number -> config.slots[number]?.let { number to it } }
-            }
+            (authoredSlots(unit, config) + purchasedSlots(unit, config))
+                .distinctBy { it.first }
+                .take(MAX_PER_UNIT)
         }
     }
 
-    /** Whether [unit]'s formation has purchased [slotNumber]. */
+    /** Whether [unit] has [slotNumber] fitted, from either source. */
     fun has(
         unit: GameUnit,
         slotNumber: Int,
-    ): Boolean = HeroCampaign.formationFor(unit)?.attachmentIds?.contains(slotNumber.toString()) == true
+    ): Boolean = fittedSlots(unit).any { it.first == slotNumber }
 
     /**
      * [slotNumber]'s bonus amount if [unit]'s formation has purchased it, else 0. The bonus's
@@ -195,18 +231,30 @@ internal object Attachments {
     fun availableSlots(unit: GameUnit): List<Pair<Int, EfileConfig.AttachmentSlot>> {
         val config = attachmentConfig()
         val formation = HeroCampaign.formationFor(unit)
-        return if (config == null || formation == null || formation.attachmentIds.size >= MAX_PER_UNIT) {
+        // The cap and the "already owned" test both measure against the UNION, so a formation the
+        // author already filled cannot have a third slot bought onto it and an authored slot is
+        // never offered for sale a second time.
+        val fitted = fittedSlots(unit).map { it.first }.toSet()
+        val closed = config == null || formation == null || fitted.size >= MAX_PER_UNIT
+        return if (closed || unit.attachmentsForbidden) {
             emptyList()
         } else {
             config.slots.entries
-                .filter { (number, slot) ->
-                    number in IMPLEMENTED_SLOTS &&
-                        !slot.disabled &&
-                        number.toString() !in formation.attachmentIds &&
-                        (number != SLOT_BRIDGING || isBridgingEligible(unit))
-                }.map { (number, slot) -> number to slot }
+                .filter { (number, slot) -> sellable(unit, number, slot, fitted) }
+                .map { (number, slot) -> number to slot }
                 .sortedBy { it.first }
         }
+    }
+
+    /** [availableSlots]' per-slot test, named so that function keeps one condition. */
+    private fun sellable(
+        unit: GameUnit,
+        number: Int,
+        slot: EfileConfig.AttachmentSlot,
+        fitted: Set<Int>,
+    ): Boolean {
+        val offered = number in IMPLEMENTED_SLOTS && !slot.disabled && number !in fitted
+        return offered && (number != SLOT_BRIDGING || isBridgingEligible(unit))
     }
 
     /**
@@ -252,3 +300,37 @@ internal object Attachments {
 
     private fun firstNonZero(vararg values: Int): Int = values.firstOrNull { it != 0 } ?: values.last()
 }
+
+/** The slots [unit]'s formation has BOUGHT, as `slotNumber to slot`; empty for a unit with no
+ *  formation record. The slot NUMBER is carried because the malus-type default table is keyed on it
+ *  (`AttachmentPenalties`). A private top-level function rather than a member, purely to keep
+ *  [Attachments] inside detekt's function budget. */
+private fun purchasedSlots(
+    unit: GameUnit,
+    config: EfileConfig.AttachmentConfig,
+): List<Pair<Int, EfileConfig.AttachmentSlot>> =
+    HeroCampaign
+        .formationFor(unit)
+        ?.attachmentIds
+        ?.mapNotNull { id ->
+            id.toIntOrNull()?.let { number -> config.slots[number]?.let { number to it } }
+        }.orEmpty()
+
+/**
+ * The slots the SCENARIO AUTHOR fitted ([GameUnit.authoredAttachmentIds]), resolved against the
+ * active efile's own `equip.cfg`.
+ *
+ * The ids are PER EFILE -- `attach_N` is -- so a slot the current efile does not define, has
+ * disabled, or that this engine does not implement is dropped rather than approximated. That is the
+ * same filter [Attachments.availableSlots] applies to a purchase, for the same reason: fitting a
+ * slot with no mechanic behind it would be an attachment that silently does nothing.
+ */
+private fun authoredSlots(
+    unit: GameUnit,
+    config: EfileConfig.AttachmentConfig,
+): List<Pair<Int, EfileConfig.AttachmentSlot>> =
+    unit.authoredAttachmentIds.mapNotNull { number ->
+        config.slots[number]
+            ?.takeIf { number in IMPLEMENTED_SLOTS && !it.disabled }
+            ?.let { number to it }
+    }

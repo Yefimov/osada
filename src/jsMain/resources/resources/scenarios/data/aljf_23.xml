@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="aljf_23.xscn" name="Close the Trap" turns="20, 24, 30" date="April 1, 1865" dayturns="0" ground="0" atmosferic="2" latitude="15" iconset="0" weatherchg="0" rows="60" cols="71" eqp="eqp-kaiser" image="resources/maps/images/map_1239.png" eqpv="united1" msuunits="0, 2" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="1" airintercept="0" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="0" typedvh="0" truerange0="0" truespotting0="0" reinfwhenactive="0" capitalflak="0" ehmsuonly="0" paradropocean="1">
+<map file="aljf_23.xscn" name="Close the Trap" turns="20, 24, 30" date="April 1, 1865" dayturns="0" ground="0" atmosferic="2" latitude="15" iconset="0" weatherchg="0" rows="60" cols="71" eqp="eqp-kaiser" image="resources/maps/images/map_1239.png" eqpv="united1" msuunits="0, 2" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="1" airintercept="0" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="0" typedvh="0" truerange0="0" truespotting0="0" reinfwhenactive="0" capitalflak="0" ehmsuonly="0" paradropocean="1" coresoffcap="0">
   <player id="0" country="162" side="1" airtrans="0" navaltrans="12" railtrans="24" defaultxp="99" defaultstr="0" support="163,0,0,0" turnprestige="20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <player id="1" country="150" side="0" airtrans="0" navaltrans="12" railtrans="24" defaultxp="99" defaultstr="0" support="151,0,0,0" turnprestige="340, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10"/>
   <hex row="0" col="2" terrain="3"/>
@@ -941,7 +941,7 @@
   <hex row="25" col="53" terrain="1" road="56" name="Petersburg"/>
   <hex row="25" col="54" terrain="15" name="Appomattox River"/>
   <hex row="25" col="55">
-    <unit id="44781" owner="1" flag="151" face="0" exp="128"/>
+    <unit id="44781" owner="1" flag="151" face="0" exp="128" fearless="1"/>
   </hex>
   <hex row="25" col="56">
     <unit id="44823" owner="1" flag="151" face="0" transport="44810" exp="154"/>
@@ -953,7 +953,7 @@
     <unit id="44781" owner="1" flag="151" face="0" exp="179"/>
   </hex>
   <hex row="25" col="59" road="33">
-    <unit id="44781" owner="1" flag="151" face="0" exp="222" str="11" bstr="11"/>
+    <unit id="44781" owner="1" flag="151" face="0" exp="222" str="11" bstr="11" fearless="1"/>
   </hex>
   <hex row="25" col="63">
     <unit id="45971" owner="0" flag="163" face="0" exp="201"/>
@@ -1010,13 +1010,13 @@
   <hex row="26" col="54" terrain="1" road="184" name="Petersburg"/>
   <hex row="26" col="55" terrain="1" road="176" name="Petersburg"/>
   <hex row="26" col="56">
-    <unit id="44781" owner="1" flag="151" face="0" exp="187"/>
+    <unit id="44781" owner="1" flag="151" face="0" exp="187" fearless="1"/>
   </hex>
   <hex row="26" col="57" road="34">
     <unit id="949" owner="1" flag="151" face="0" exp="222" str="12" bstr="12"/>
   </hex>
   <hex row="26" col="58" road="34">
-    <unit id="44783" owner="1" flag="151" face="0" transport="44814" exp="223" str="13" bstr="13"/>
+    <unit id="44783" owner="1" flag="151" face="0" transport="44814" exp="223" str="13" bstr="13" objcol="61" objrow="0" freeoh="1"/>
   </hex>
   <hex row="26" col="59" terrain="11" name="Petersburg Fortifications">
     <unit id="44787" owner="1" flag="151" face="0" exp="131"/>
@@ -1072,19 +1072,19 @@
   <hex row="27" col="54" terrain="1" road="187" name="Petersburg"/>
   <hex row="27" col="55" terrain="1" road="187" name="Petersburg"/>
   <hex row="27" col="56" road="34">
-    <unit id="44781" owner="1" flag="151" face="0" exp="181"/>
+    <unit id="44781" owner="1" flag="151" face="0" exp="181" fearless="1"/>
   </hex>
   <hex row="27" col="57">
-    <unit id="44781" owner="1" flag="151" face="0" exp="173"/>
+    <unit id="44781" owner="1" flag="151" face="0" exp="173" fearless="1"/>
   </hex>
   <hex row="27" col="58">
     <unit id="44826" owner="1" flag="151" face="0" transport="44814" exp="157"/>
   </hex>
   <hex row="27" col="59">
-    <unit id="44781" owner="1" flag="151" face="0" exp="141"/>
+    <unit id="44781" owner="1" flag="151" face="0" exp="141" fearless="1"/>
   </hex>
   <hex row="27" col="60">
-    <unit id="44781" owner="1" flag="151" face="0" exp="222"/>
+    <unit id="44781" owner="1" flag="151" face="0" exp="222" fearless="1"/>
   </hex>
   <hex row="27" col="62" terrain="3">
     <unit id="45971" owner="0" flag="163" face="0" exp="205"/>
@@ -1133,10 +1133,10 @@
     <unit id="44784" owner="1" flag="151" face="0" transport="44808" exp="75"/>
   </hex>
   <hex row="28" col="57">
-    <unit id="44781" owner="1" flag="151" face="0" exp="146"/>
+    <unit id="44781" owner="1" flag="151" face="0" exp="146" fearless="1"/>
   </hex>
   <hex row="28" col="58">
-    <unit id="44781" owner="1" flag="151" face="0" exp="174"/>
+    <unit id="44781" owner="1" flag="151" face="0" exp="174" fearless="1"/>
   </hex>
   <hex row="28" col="59" terrain="11" name="Petersburg Fortifications">
     <unit id="44787" owner="1" flag="151" face="0" exp="58"/>
@@ -1185,7 +1185,7 @@
   <hex row="29" col="55" terrain="1" road="163" name="Petersburg"/>
   <hex row="29" col="56" terrain="1" road="163" name="Petersburg"/>
   <hex row="29" col="57">
-    <unit id="44781" owner="1" flag="151" face="0" exp="169" str="12" bstr="12"/>
+    <unit id="44781" owner="1" flag="151" face="0" exp="169" str="12" bstr="12" fearless="1"/>
   </hex>
   <hex row="29" col="58">
     <unit id="44821" owner="1" flag="151" face="0" transport="44814" exp="103"/>
@@ -1229,7 +1229,7 @@
   <hex row="30" col="53" terrain="1" road="187" name="Petersburg"/>
   <hex row="30" col="54" terrain="1" road="179" name="Petersburg"/>
   <hex row="30" col="58">
-    <unit id="44781" owner="1" flag="151" face="0" exp="180"/>
+    <unit id="44781" owner="1" flag="151" face="0" exp="180" fearless="1"/>
   </hex>
   <hex row="30" col="59" terrain="14" name="the Crater"/>
   <hex row="30" col="63">
@@ -1329,7 +1329,7 @@
   <hex row="32" col="52" terrain="1" road="147" name="Petersburg"/>
   <hex row="32" col="53" road="9"/>
   <hex row="32" col="55">
-    <unit id="44781" owner="1" flag="151" face="0" exp="129"/>
+    <unit id="44781" owner="1" flag="151" face="0" exp="129" fearless="1"/>
   </hex>
   <hex row="32" col="57">
     <unit id="44825" owner="1" flag="151" face="0" transport="44814" exp="187"/>
@@ -1338,10 +1338,10 @@
     <unit id="44792" owner="1" flag="151" face="0" exp="167" str="14" bstr="14"/>
   </hex>
   <hex row="32" col="59" terrain="11" name="Petersburg Fortifications">
-    <unit id="44781" owner="1" flag="151" face="0" exp="171"/>
+    <unit id="44781" owner="1" flag="151" face="0" exp="171" fearless="1"/>
   </hex>
   <hex row="32" col="60" terrain="11" name="Petersburg Fortifications">
-    <unit id="44781" owner="1" flag="151" face="0" exp="145" str="13" bstr="13"/>
+    <unit id="44781" owner="1" flag="151" face="0" exp="145" str="13" bstr="13" fearless="1"/>
   </hex>
   <hex row="32" col="63" road="34">
     <unit id="45971" owner="0" flag="163" face="0" exp="172"/>
@@ -1380,11 +1380,11 @@
   <hex row="33" col="48" terrain="5"/>
   <hex row="33" col="49" terrain="5"/>
   <hex row="33" col="51" road="18">
-    <unit id="44781" owner="1" flag="151" face="0" exp="206"/>
+    <unit id="44781" owner="1" flag="151" face="0" exp="206" fearless="1"/>
   </hex>
   <hex row="33" col="52" road="33"/>
   <hex row="33" col="53">
-    <unit id="44781" owner="1" flag="151" face="0" exp="196"/>
+    <unit id="44781" owner="1" flag="151" face="0" exp="196" fearless="1"/>
   </hex>
   <hex row="33" col="54" road="136"/>
   <hex row="33" col="55" road="136">
@@ -1440,19 +1440,19 @@
     <unit id="44827" owner="1" flag="151" face="0" transport="44810" exp="109"/>
   </hex>
   <hex row="34" col="51" terrain="11" road="17" name="Petersburg Fortifications">
-    <unit id="44781" owner="1" flag="151" face="0" exp="166"/>
+    <unit id="44781" owner="1" flag="151" face="0" exp="166" fearless="1"/>
   </hex>
   <hex row="34" col="52">
-    <unit id="44781" owner="1" flag="151" face="0" exp="163"/>
+    <unit id="44781" owner="1" flag="151" face="0" exp="163" fearless="1"/>
   </hex>
   <hex row="34" col="53" terrain="11" name="Petersburg Fortifications">
-    <unit id="44781" owner="1" flag="151" face="0" exp="210"/>
+    <unit id="44781" owner="1" flag="151" face="0" exp="210" fearless="1"/>
   </hex>
   <hex row="34" col="54">
     <unit id="44779" owner="1" flag="151" face="0" exp="158" str="12" bstr="12"/>
   </hex>
   <hex row="34" col="55" terrain="11" name="Petersburg Fortifications">
-    <unit id="44781" owner="1" flag="151" face="0" exp="200"/>
+    <unit id="44781" owner="1" flag="151" face="0" exp="200" fearless="1"/>
   </hex>
   <hex row="34" col="56" terrain="11" road="130" name="Petersburg Fortifications">
     <unit id="44781" owner="1" flag="151" face="0" exp="175"/>
@@ -1470,13 +1470,13 @@
   <hex row="35" col="9" terrain="5"/>
   <hex row="35" col="17" road="17"/>
   <hex row="35" col="21" road="18">
-    <unit id="44797" owner="1" flag="151" face="0" exp="212"/>
+    <unit id="44797" owner="1" flag="151" face="0" exp="212" fearless="1"/>
   </hex>
   <hex row="35" col="22" road="34">
-    <unit id="44797" owner="1" flag="151" face="0" exp="241"/>
+    <unit id="44797" owner="1" flag="151" face="0" exp="241" fearless="1"/>
   </hex>
   <hex row="35" col="23">
-    <unit id="44801" owner="1" flag="151" face="0" exp="164"/>
+    <unit id="44801" owner="1" flag="151" face="0" exp="164" fearless="1"/>
   </hex>
   <hex row="35" col="26" terrain="3"/>
   <hex row="35" col="27" road="17"/>
@@ -1560,10 +1560,10 @@
     <unit id="44781" owner="1" flag="151" face="0" exp="155"/>
   </hex>
   <hex row="37" col="19" road="130">
-    <unit id="44797" owner="1" flag="151" face="0" exp="161"/>
+    <unit id="44797" owner="1" flag="151" face="0" exp="161" fearless="1"/>
   </hex>
   <hex row="37" col="20" road="34">
-    <unit id="44797" owner="1" flag="151" face="0" exp="138"/>
+    <unit id="44797" owner="1" flag="151" face="0" exp="138" fearless="1"/>
   </hex>
   <hex row="37" col="27" road="33"/>
   <hex row="37" col="31" terrain="3" deploy="0"/>
@@ -1620,10 +1620,10 @@
     <unit id="44781" owner="1" flag="151" face="0" exp="167"/>
   </hex>
   <hex row="38" col="19">
-    <unit id="44797" owner="1" flag="151" face="0" exp="193"/>
+    <unit id="44797" owner="1" flag="151" face="0" exp="193" fearless="1"/>
   </hex>
   <hex row="38" col="20">
-    <unit id="44801" owner="1" flag="151" face="0" exp="198"/>
+    <unit id="44801" owner="1" flag="151" face="0" exp="198" fearless="1"/>
   </hex>
   <hex row="38" col="26" road="18"/>
   <hex row="38" col="29" terrain="3" deploy="0"/>
@@ -1682,10 +1682,10 @@
   <hex row="39" col="17" road="17"/>
   <hex row="39" col="26" road="17"/>
   <hex row="39" col="27" terrain="5">
-    <unit id="45954" owner="0" flag="163" face="0" transport="45990" exp="131"/>
+    <unit id="45954" owner="0" flag="163" face="0" transport="45990" exp="131" core="1"/>
   </hex>
   <hex row="39" col="28" terrain="5">
-    <unit id="45976" owner="0" flag="163" face="0" exp="196"/>
+    <unit id="45976" owner="0" flag="163" face="0" exp="196" core="1"/>
   </hex>
   <hex row="39" col="29" terrain="3" deploy="0"/>
   <hex row="39" col="30" terrain="3" deploy="0"/>
@@ -1722,14 +1722,14 @@
   <hex row="40" col="12" terrain="5"/>
   <hex row="40" col="13" terrain="5"/>
   <hex row="40" col="17" road="9">
-    <unit id="44797" owner="1" flag="151" face="0" exp="158"/>
+    <unit id="44797" owner="1" flag="151" face="0" exp="158" fearless="1"/>
   </hex>
   <hex row="40" col="18">
-    <unit id="44796" owner="1" flag="151" face="0" exp="222"/>
+    <unit id="44796" owner="1" flag="151" face="0" exp="222" fearless="1"/>
   </hex>
   <hex row="40" col="25" road="18"/>
   <hex row="40" col="26" terrain="5" road="33">
-    <unit id="45954" owner="0" flag="163" face="0" transport="45990" exp="169"/>
+    <unit id="45954" owner="0" flag="163" face="0" transport="45990" exp="169" core="1"/>
   </hex>
   <hex row="40" col="27" terrain="5" deploy="0"/>
   <hex row="40" col="28" terrain="5" deploy="0"/>
@@ -1763,10 +1763,10 @@
     <unit id="44781" owner="1" flag="151" face="0" transport="44811" exp="161"/>
   </hex>
   <hex row="41" col="17">
-    <unit id="44796" owner="1" flag="151" face="0" exp="126"/>
+    <unit id="44796" owner="1" flag="151" face="0" exp="126" fearless="1"/>
   </hex>
   <hex row="41" col="18" road="144">
-    <unit id="44801" owner="1" flag="151" face="0" exp="141"/>
+    <unit id="44801" owner="1" flag="151" face="0" exp="141" fearless="1"/>
   </hex>
   <hex row="41" col="25" road="17"/>
   <hex row="41" col="26" deploy="0"/>
@@ -1860,7 +1860,7 @@
   <hex row="44" col="13" terrain="5"/>
   <hex row="44" col="14" terrain="5"/>
   <hex row="44" col="16">
-    <unit id="44827" owner="1" flag="151" face="0" transport="44810" exp="108"/>
+    <unit id="44827" owner="1" flag="151" face="0" transport="44810" exp="108" objcol="23" objrow="0" freeoh="1"/>
   </hex>
   <hex row="44" col="17">
     <unit id="44781" owner="1" flag="151" face="0" transport="44811" exp="156"/>
@@ -1909,7 +1909,7 @@
     <unit id="44781" owner="1" flag="151" face="0" transport="44811" exp="144"/>
   </hex>
   <hex row="45" col="19" road="9">
-    <unit id="44796" owner="1" flag="151" face="0" exp="174"/>
+    <unit id="44796" owner="1" flag="151" face="0" exp="174" fearless="1"/>
   </hex>
   <hex row="45" col="21" road="40"/>
   <hex row="45" col="23" terrain="5"/>
@@ -1927,7 +1927,7 @@
     <unit id="45973" owner="0" flag="163" face="0" exp="212"/>
   </hex>
   <hex row="45" col="33">
-    <unit id="45974" owner="0" flag="163" face="0" exp="235"/>
+    <unit id="45974" owner="0" flag="163" face="0" exp="235" core="1"/>
   </hex>
   <hex row="45" col="34" deploy="0"/>
   <hex row="45" col="35" deploy="0"/>
@@ -1949,16 +1949,16 @@
     <unit id="44792" owner="1" flag="151" face="0" transport="44811" exp="69" str="14" bstr="14"/>
   </hex>
   <hex row="46" col="17">
-    <unit id="44826" owner="1" flag="151" face="0" transport="44814" exp="150"/>
+    <unit id="44826" owner="1" flag="151" face="0" transport="44814" exp="150" objcol="24" objrow="0" freeoh="1"/>
   </hex>
   <hex row="46" col="18">
     <unit id="44781" owner="1" flag="151" face="0" transport="44811" exp="132"/>
   </hex>
   <hex row="46" col="19">
-    <unit id="44796" owner="1" flag="151" face="0" exp="151"/>
+    <unit id="44796" owner="1" flag="151" face="0" exp="151" fearless="1"/>
   </hex>
   <hex row="46" col="20" road="130">
-    <unit id="44801" owner="1" flag="151" face="0" exp="124"/>
+    <unit id="44801" owner="1" flag="151" face="0" exp="124" fearless="1"/>
   </hex>
   <hex row="46" col="22" road="136"/>
   <hex row="46" col="23" terrain="5" road="130"/>
@@ -1974,7 +1974,7 @@
     <unit id="45977" owner="0" flag="163" face="0" exp="187"/>
   </hex>
   <hex row="46" col="32">
-    <unit id="45958" owner="0" flag="163" face="0" transport="45987" exp="182" msu="1"/>
+    <unit id="45958" owner="0" flag="163" face="0" transport="45987" exp="182" msu="1" core="1"/>
   </hex>
   <hex row="46" col="33" deploy="0"/>
   <hex row="46" col="34" deploy="0"/>
@@ -2089,13 +2089,13 @@
   <hex row="49" col="48" terrain="3"/>
   <hex row="49" col="49" terrain="3"/>
   <hex row="50" col="13">
-    <unit id="44797" owner="1" flag="151" face="0" exp="176"/>
+    <unit id="44797" owner="1" flag="151" face="0" exp="176" fearless="1"/>
   </hex>
   <hex row="50" col="14">
-    <unit id="44796" owner="1" flag="151" face="0" exp="149"/>
+    <unit id="44796" owner="1" flag="151" face="0" exp="149" fearless="1"/>
   </hex>
   <hex row="50" col="15">
-    <unit id="44796" owner="1" flag="151" face="0" exp="194"/>
+    <unit id="44796" owner="1" flag="151" face="0" exp="194" fearless="1"/>
   </hex>
   <hex row="50" col="22" terrain="5"/>
   <hex row="50" col="25" road="33"/>
@@ -2116,16 +2116,16 @@
     <unit id="44819" owner="1" flag="151" face="0" exp="97"/>
   </hex>
   <hex row="51" col="14">
-    <unit id="44797" owner="1" flag="151" face="0" exp="147"/>
+    <unit id="44797" owner="1" flag="151" face="0" exp="147" fearless="1"/>
   </hex>
   <hex row="51" col="15">
     <unit id="44784" owner="1" flag="151" face="0" transport="44808" exp="198"/>
   </hex>
   <hex row="51" col="16">
-    <unit id="44797" owner="1" flag="151" face="0" exp="149"/>
+    <unit id="44797" owner="1" flag="151" face="0" exp="149" fearless="1"/>
   </hex>
   <hex row="51" col="17">
-    <unit id="44801" owner="1" flag="151" face="0" exp="127"/>
+    <unit id="44801" owner="1" flag="151" face="0" exp="127" fearless="1"/>
   </hex>
   <hex row="51" col="24" road="18"/>
   <hex row="51" col="29">
@@ -2138,16 +2138,16 @@
   <hex row="51" col="49" terrain="3"/>
   <hex row="51" col="62" terrain="3"/>
   <hex row="52" col="13">
-    <unit id="44797" owner="1" flag="151" face="0" exp="169"/>
+    <unit id="44797" owner="1" flag="151" face="0" exp="169" fearless="1"/>
   </hex>
   <hex row="52" col="14">
-    <unit id="44797" owner="1" flag="151" face="0" exp="221"/>
+    <unit id="44797" owner="1" flag="151" face="0" exp="221" fearless="1"/>
   </hex>
   <hex row="52" col="15">
-    <unit id="44796" owner="1" flag="151" face="0" exp="139"/>
+    <unit id="44796" owner="1" flag="151" face="0" exp="139" fearless="1"/>
   </hex>
   <hex row="52" col="16">
-    <unit id="44797" owner="1" flag="151" face="0" exp="162"/>
+    <unit id="44797" owner="1" flag="151" face="0" exp="162" fearless="1"/>
   </hex>
   <hex row="52" col="23" road="34"/>
   <hex row="52" col="24" road="33"/>
@@ -2164,7 +2164,7 @@
   <hex row="52" col="68" terrain="3"/>
   <hex row="52" col="69" terrain="3"/>
   <hex row="53" col="14">
-    <unit id="44796" owner="1" flag="151" face="0" exp="125"/>
+    <unit id="44796" owner="1" flag="151" face="0" exp="125" fearless="1"/>
   </hex>
   <hex row="53" col="21" road="34"/>
   <hex row="53" col="22" road="34"/>
@@ -2215,7 +2215,7 @@
   <hex row="55" col="46" terrain="3"/>
   <hex row="55" col="47" terrain="5"/>
   <hex row="56" col="13">
-    <unit id="44801" owner="1" flag="151" face="0" exp="125"/>
+    <unit id="44801" owner="1" flag="151" face="0" exp="125" fearless="1"/>
   </hex>
   <hex row="56" col="16" terrain="3"/>
   <hex row="56" col="18" road="17"/>

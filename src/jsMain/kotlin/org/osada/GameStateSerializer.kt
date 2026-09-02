@@ -3,6 +3,7 @@ package org.osada
 import org.osada.campaign.CampaignNarrative
 import org.osada.hero.HeroCampaign
 import org.osada.model.ALL_VICTORY_TIERS
+import org.osada.model.FrontFactionSlot
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
 import org.osada.model.Hex
@@ -13,6 +14,7 @@ import org.osada.rules.Engineering
 import org.osada.rules.GameRandomSource
 import org.osada.rules.ruleset.ActiveRuleset
 import org.osada.rules.ruleset.serializeRuleset
+import org.osada.scenario.AuthoredScenarioOptions
 import org.osada.scenario.Scenario
 import kotlin.js.Json
 import kotlin.js.json
@@ -98,7 +100,16 @@ object GameStateSerializer {
             Pair("retreatUnitsPerSide", scenario.retreatUnitsPerSide.toTypedArray()),
             Pair("killUnitsPerSide", scenario.killUnitsPerSide.toTypedArray()),
             Pair("mustSurvivePerSide", scenario.mustSurvivePerSide.toTypedArray()),
+            // Superseded by `options.typedvh` and kept only so a save stays loadable by the readers
+            // that already know this key. It cannot express the authored state -- `== true` folds
+            // "the author said nothing" into "the author said no" -- which is why the whole option
+            // family now travels in `options` and why the restore prefers that block.
             Pair("typedVictoryHexes", scenario.typedVictoryHexes == true),
+            // OG's authored per-scenario options, all 27 of them. See AuthoredScenarioOptions: an
+            // unauthored option writes no key, so the block distinguishes "the author said no" from
+            // "the author said nothing" and an absent block marks a save written before this
+            // existed (`AuthoredOptionsBackfill` completes those from the scenario XML).
+            Pair("options", AuthoredScenarioOptions.serialize(scenario)),
             // The running totals of OG's two counted victory conditions. Live game state: a reload
             // that forgot them would reset an evacuation the player had half completed.
             Pair("unitsWithdrawn", scenario.unitsWithdrawn.toTypedArray()),
@@ -248,28 +259,32 @@ object GameStateSerializer {
             Pair("id", r.id),
         )
 
-    fun serializePlayer(player: Player): dynamic =
-        json(
-            Pair("id", player.id),
-            Pair("side", player.side),
-            Pair("country", player.country),
-            Pair("prestige", player.prestige),
-            Pair("score", player.score),
-            Pair("playedTurn", player.playedTurn),
-            Pair("type", player.type.value),
-            Pair("airTransports", player.airTransports),
-            Pair("navalTransports", player.navalTransports),
-            Pair("railTransports", player.railTransports),
-            Pair("airTransportsMax", player.airTransportsMax),
-            Pair("navalTransportsMax", player.navalTransportsMax),
-            Pair("railTransportsMax", player.railTransportsMax),
-            Pair("defaultExperience", player.defaultExperience),
-            Pair("defaultStrength", player.defaultStrength),
-            Pair("supportCountries", player.supportCountries.toTypedArray()),
-            Pair("prestigePerTurn", player.prestigePerTurn.toTypedArray()),
-            Pair("coreUnits", player.getCoreUnitList().map { serializeUnit(it) }.toTypedArray()),
-            Pair("dossier", player.dossier),
-        )
+    fun serializePlayer(player: Player): dynamic {
+        val obj =
+            json(
+                Pair("id", player.id),
+                Pair("side", player.side),
+                Pair("country", player.country),
+                Pair("prestige", player.prestige),
+                Pair("score", player.score),
+                Pair("playedTurn", player.playedTurn),
+                Pair("type", player.type.value),
+                Pair("airTransports", player.airTransports),
+                Pair("navalTransports", player.navalTransports),
+                Pair("railTransports", player.railTransports),
+                Pair("airTransportsMax", player.airTransportsMax),
+                Pair("navalTransportsMax", player.navalTransportsMax),
+                Pair("railTransportsMax", player.railTransportsMax),
+                Pair("defaultExperience", player.defaultExperience),
+                Pair("defaultStrength", player.defaultStrength),
+                Pair("supportCountries", player.supportCountries.toTypedArray()),
+                Pair("prestigePerTurn", player.prestigePerTurn.toTypedArray()),
+                Pair("coreUnits", player.getCoreUnitList().map { serializeUnit(it) }.toTypedArray()),
+                Pair("dossier", player.dossier),
+            )
+        serializeAuthoredPurchaseLimits(obj, player)
+        return obj
+    }
 
     /** Campaign-specific save block (core unit roster), or null when not in a campaign. */
     fun buildCampaignData(game: Game): dynamic? {
@@ -398,6 +413,67 @@ private fun serializeHexEngineering(
 }
 
 /**
+ * The scenario author's AI orders (`rules/AiOrders`).
+ *
+ * Saved for the same reason the purchase cap is: a restore rebuilds the game from the save alone and
+ * never re-reads the scenario XML, so an order that was not written down would be gone on the first
+ * reload and the enemy's whole authored plan with it. Optional keys throughout -- 469,632 of the
+ * corpus's formations carry no order at all, and their saved shape is unchanged.
+ */
+private fun serializeAuthoredAiOrders(
+    obj: Json,
+    unit: GameUnit,
+) {
+    if (unit.aiAnchored) obj.asDynamic().aiAnchored = true
+    if (unit.aiHoldUntilTurn != 0) obj.asDynamic().aiHoldUntil = unit.aiHoldUntilTurn
+    if (unit.aiFearless) obj.asDynamic().aiFearless = true
+    if (unit.aiObjectiveCol >= 0) obj.asDynamic().aiObjCol = unit.aiObjectiveCol
+    if (unit.aiObjectiveRow >= 0) obj.asDynamic().aiObjRow = unit.aiObjectiveRow
+    if (unit.aiFreeObjectiveDistance != 0) obj.asDynamic().aiFreeOh = unit.aiFreeObjectiveDistance
+    if (unit.aiObjectiveFromOrdinal != 0) obj.asDynamic().aiObjFrom = unit.aiObjectiveFromOrdinal
+    if (unit.aiFollowsObjectiveUnit) obj.asDynamic().aiFollowPos = true
+    if (unit.aiOrdinal != 0) obj.asDynamic().aiOrdinal = unit.aiOrdinal
+    // The author's own attachments. Saved because a restore never re-reads the scenario XML, and
+    // because a core formation carries them forward with it (`rules/Attachments`).
+    if (unit.authoredAttachmentIds.isNotEmpty()) {
+        obj.asDynamic().authoredAttachments = unit.authoredAttachmentIds.toTypedArray()
+    }
+    if (unit.attachmentsForbidden) obj.asDynamic().noAttachments = true
+}
+
+/**
+ * The scenario's own purchase restrictions and how much of the cap this player has spent.
+ *
+ * **These have to be SAVED.** A restore rebuilds the game from the save alone -- `GameStateRestore`
+ * never re-reads the scenario XML -- so an unsaved `purchasecap` would come back as "uncapped" and
+ * an unsaved `buylist` as "unrestricted". The two counters are live game state for the same reason
+ * `unitsWithdrawn` is: without them a reload is a way to restore spent slots (`rules/PurchaseCap`).
+ *
+ * This is the per-player half of the authored scenario; the per-scenario half is the `options` block
+ * (`scenario/AuthoredScenarioOptions`), and a save written before either existed is completed from
+ * the scenario XML by `scenario/AuthoredOptionsBackfill`.
+ *
+ * Optional keys throughout, on this file's byte-stability rule: 490 of the 502 deployed scenarios
+ * author no cap, 497 author no list and 294 no Fronts/Factions mask, so their saves keep exactly the
+ * shape they had.
+ */
+private fun serializeAuthoredPurchaseLimits(
+    obj: Json,
+    player: Player,
+) {
+    player.purchaseCap?.let { obj.asDynamic().purchaseCap = it }
+    player.purchaseList?.let { obj.asDynamic().purchaseList = it.toTypedArray() }
+    // The Fronts/Factions slots, in the same `country:fronts:factions` text the scenario XML uses,
+    // so one parser serves both and a save stays readable by eye.
+    if (player.frontFactionSlots.isNotEmpty()) {
+        obj.asDynamic().frontFactionSlots = FrontFactionSlot.format(player.frontFactionSlots)
+    }
+    if (player.transportPoolsAuthored) obj.asDynamic().transportPoolsAuthored = true
+    if (player.purchaseGrowthSpent != 0) obj.asDynamic().purchaseGrowthSpent = player.purchaseGrowthSpent
+    if (player.replacementCredits != 0) obj.asDynamic().replacementCredits = player.replacementCredits
+}
+
+/**
  * The scenario-authored unit properties and the carrier hangar, split out of `serializeUnit` to
  * keep it inside detekt's complexity budget as the 2026-08-30 mechanics landed.
  *
@@ -411,10 +487,15 @@ private fun serializeScenarioUnitProperties(
 ) {
     if (unit.isScenarioDepot) obj.asDynamic().depot = true
     if (unit.mustSurvive) obj.asDynamic().msu = true
+    // OG's authored class-attribute override (`.xscn` unit @37). Optional key on the same
+    // byte-stability rule as the rest of this function: -1 is "derive it from the class", which is
+    // every formation that has no override and every save written before the field existed.
+    if (unit.leaderClassTrait > 0) obj.asDynamic().ldrclass = unit.leaderClassTrait
     if (unit.basicStrength != GameUnit.DEFAULT_BASIC_STRENGTH) {
         obj.asDynamic().basicStrength = unit.basicStrength
     }
     if (unit.landedTurn >= 0) obj.asDynamic().landedTurn = unit.landedTurn
+    serializeAuthoredAiOrders(obj, unit)
     if (unit.hangar.isNotEmpty()) {
         obj.asDynamic().hangar = unit.hangar.map { GameStateSerializer.serializeUnit(it) }.toTypedArray()
     }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="forward3.xscn" name="Defense of Kishinev" turns="11, 11, 11" date="July 2, 1941" dayturns="0" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="0" rows="38" cols="44" eqp="eqp-atomic" image="resources/maps/images/map_20.png" eqpv="united1" holdvictory="3, 3, 3" holdvictory1="3, 2, 1" canblow="0" canrepair="0" canbuild="0" extlos="0" truedlof="0" unitsblocklof="0" barrage="0" airzoc="1" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="0" typedvh="0" truerange0="0" truespotting0="0" reinfwhenactive="0" capitalflak="0" ehmsuonly="0" paradropocean="1">
+<map file="forward3.xscn" name="Defense of Kishinev" turns="11, 11, 11" date="July 2, 1941" dayturns="0" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="0" rows="38" cols="44" eqp="eqp-atomic" image="resources/maps/images/map_20.png" eqpv="united1" holdvictory="3, 3, 3" holdvictory1="3, 2, 1" canblow="0" canrepair="0" canbuild="0" extlos="0" truedlof="0" unitsblocklof="0" barrage="0" airzoc="1" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="0" typedvh="0" truerange0="0" truespotting0="0" reinfwhenactive="0" capitalflak="0" ehmsuonly="0" paradropocean="1" coresoffcap="0">
   <player id="0" country="89" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="0,0,0,0" turnprestige="130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130"/>
   <player id="1" country="7" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="8,14,0,0" turnprestige="50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50"/>
   <reinforce turn="4">
@@ -141,7 +141,7 @@
   <hex row="3" col="25" terrain="5"/>
   <hex row="3" col="26" terrain="5"/>
   <hex row="3" col="27" terrain="1" name="Raciula">
-    <unit id="10398" owner="1" flag="8" face="0" exp="144" ldr="1"/>
+    <unit id="10398" owner="1" flag="8" face="0" exp="144" ldr="1" ldrtrait="20" ldrclasstrait="1"/>
   </hex>
   <hex row="3" col="28">
     <unit id="10276" owner="1" flag="8" face="0" exp="41"/>
@@ -203,7 +203,7 @@
   <hex row="4" col="36" terrain="5"/>
   <hex row="4" col="37" terrain="5"/>
   <hex row="4" col="38" terrain="5">
-    <unit id="9410" owner="1" flag="8" face="0" exp="132" str="12" bstr="12"/>
+    <unit id="9410" owner="1" flag="8" face="0" exp="132" str="12" bstr="12" attach="5"/>
   </hex>
   <hex row="4" col="39" terrain="5"/>
   <hex row="4" col="40" terrain="5"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="spa17.xscn" name="AC 071 - Attack on the camp of the Celts" turns="14, 14, 14" date="May 1, 2002" dayturns="0" ground="0" atmosferic="0" latitude="1" iconset="0" weatherchg="0" rows="34" cols="37" eqp="eqp-ag" image="resources/maps/images/map_1181.png" eqpv="united1" holdvictory="3, 2, 1" holdvictory1="3, 2, 1" msuunits="0, 1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="0" ehmsuonly="0" paradropocean="1">
+<map file="spa17.xscn" name="AC 071 - Attack on the camp of the Celts" turns="14, 14, 14" date="May 1, 2002" dayturns="0" ground="0" atmosferic="0" latitude="1" iconset="0" weatherchg="0" rows="34" cols="37" eqp="eqp-ag" image="resources/maps/images/map_1181.png" eqpv="united1" holdvictory="3, 2, 1" holdvictory1="3, 2, 1" msuunits="0, 1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="0" ehmsuonly="0" paradropocean="1" coresoffcap="0">
   <player id="0" country="310" side="0" airtrans="0" navaltrans="13" railtrans="0" defaultxp="250" defaultstr="10" support="309,311,0,0" turnprestige="10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10"/>
   <player id="1" country="307" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="44" defaultstr="10" support="308,0,0,0" turnprestige="10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10"/>
   <hex row="0" col="1" terrain="5"/>
@@ -807,19 +807,19 @@
     <unit id="516" owner="0" flag="311" face="0" exp="250" str="8" bstr="8"/>
   </hex>
   <hex row="22" col="27" road="40">
-    <unit id="53784" owner="0" flag="309" face="0" exp="194"/>
+    <unit id="53784" owner="0" flag="309" face="0" exp="194" core="1"/>
   </hex>
   <hex row="22" col="28">
-    <unit id="53793" owner="0" flag="309" face="0" exp="194" str="8" bstr="8"/>
+    <unit id="53793" owner="0" flag="309" face="0" exp="194" str="8" bstr="8" core="1"/>
   </hex>
   <hex row="22" col="29" road="17">
-    <unit id="53785" owner="0" flag="309" face="0" exp="44"/>
+    <unit id="53785" owner="0" flag="309" face="0" exp="44" core="1"/>
   </hex>
   <hex row="22" col="30">
-    <unit id="53783" owner="0" flag="309" face="0" exp="94" ldr="1"/>
+    <unit id="53783" owner="0" flag="309" face="0" exp="94" ldr="1" core="1"/>
   </hex>
   <hex row="22" col="31">
-    <unit id="53785" owner="0" flag="309" face="0" exp="94"/>
+    <unit id="53785" owner="0" flag="309" face="0" exp="94" core="1"/>
   </hex>
   <hex row="22" col="32">
     <unit id="516" owner="0" flag="311" face="0" exp="250" str="8" bstr="8"/>
@@ -864,19 +864,19 @@
     <unit id="53796" owner="0" flag="309" face="0" exp="250" str="8" bstr="8"/>
   </hex>
   <hex row="23" col="27">
-    <unit id="53783" owner="0" flag="309" face="0" exp="94"/>
+    <unit id="53783" owner="0" flag="309" face="0" exp="94" core="1"/>
   </hex>
   <hex row="23" col="28" road="136">
-    <unit id="53793" owner="0" flag="309" face="0" exp="94" str="8" bstr="8"/>
+    <unit id="53793" owner="0" flag="309" face="0" exp="94" str="8" bstr="8" core="1"/>
   </hex>
   <hex row="23" col="29" road="145">
-    <unit id="53804" owner="0" flag="309" face="0" exp="194" ldr="1"/>
+    <unit id="53804" owner="0" flag="309" face="0" exp="194" ldr="1" core="1"/>
   </hex>
   <hex row="23" col="30">
-    <unit id="53804" owner="0" flag="309" face="0" exp="94"/>
+    <unit id="53804" owner="0" flag="309" face="0" exp="94" core="1"/>
   </hex>
   <hex row="23" col="31">
-    <unit id="53785" owner="0" flag="309" face="0" exp="194"/>
+    <unit id="53785" owner="0" flag="309" face="0" exp="194" core="1"/>
   </hex>
   <hex row="23" col="33" terrain="9"/>
   <hex row="23" col="34" terrain="9"/>
@@ -923,19 +923,19 @@
     <unit id="516" owner="0" flag="311" face="0" exp="250" str="8" bstr="8"/>
   </hex>
   <hex row="24" col="27">
-    <unit id="53785" owner="0" flag="309" face="0" exp="94"/>
+    <unit id="53785" owner="0" flag="309" face="0" exp="94" core="1"/>
   </hex>
   <hex row="24" col="28">
-    <unit id="53804" owner="0" flag="309" face="0" exp="94"/>
+    <unit id="53804" owner="0" flag="309" face="0" exp="94" core="1"/>
   </hex>
   <hex row="24" col="29" road="9">
-    <unit id="53784" owner="0" flag="309" face="0" exp="194"/>
+    <unit id="53784" owner="0" flag="309" face="0" exp="194" core="1"/>
   </hex>
   <hex row="24" col="30">
-    <unit id="53793" owner="0" flag="309" face="0" exp="194"/>
+    <unit id="53793" owner="0" flag="309" face="0" exp="194" core="1"/>
   </hex>
   <hex row="24" col="31">
-    <unit id="53786" owner="0" flag="309" face="0" exp="194" ldr="1"/>
+    <unit id="53786" owner="0" flag="309" face="0" exp="194" ldr="1" core="1"/>
   </hex>
   <hex row="24" col="33" terrain="9"/>
   <hex row="24" col="34" terrain="9"/>
@@ -974,13 +974,13 @@
     <unit id="53796" owner="0" flag="309" face="0" exp="250" str="8" bstr="8"/>
   </hex>
   <hex row="25" col="27">
-    <unit id="53793" owner="0" flag="309" face="0" exp="194" str="8" bstr="8"/>
+    <unit id="53793" owner="0" flag="309" face="0" exp="194" str="8" bstr="8" core="1"/>
   </hex>
   <hex row="25" col="28">
-    <unit id="53804" owner="0" flag="309" face="0" exp="94"/>
+    <unit id="53804" owner="0" flag="309" face="0" exp="94" core="1"/>
   </hex>
   <hex row="25" col="29" terrain="3">
-    <unit id="53785" owner="0" flag="309" face="0" exp="194"/>
+    <unit id="53785" owner="0" flag="309" face="0" exp="194" core="1"/>
   </hex>
   <hex row="25" col="30" terrain="1" road="152" name="Heraclea"/>
   <hex row="25" col="31" terrain="1" road="128" name="Heraclea" owner="0" flag="310" victory="0">
@@ -1027,13 +1027,13 @@
     <unit id="53796" owner="0" flag="309" face="0" exp="250" str="8" bstr="8"/>
   </hex>
   <hex row="26" col="28" terrain="3">
-    <unit id="53793" owner="0" flag="309" face="0" exp="194" str="8" ldr="1" bstr="8"/>
+    <unit id="53793" owner="0" flag="309" face="0" exp="194" str="8" ldr="1" bstr="8" core="1"/>
   </hex>
   <hex row="26" col="29">
-    <unit id="53783" owner="0" flag="309" face="0" exp="94"/>
+    <unit id="53783" owner="0" flag="309" face="0" exp="94" core="1"/>
   </hex>
   <hex row="26" col="30" road="19">
-    <unit id="53786" owner="0" flag="309" face="0" exp="194" ldr="1"/>
+    <unit id="53786" owner="0" flag="309" face="0" exp="194" ldr="1" core="1"/>
   </hex>
   <hex row="26" col="33" terrain="9"/>
   <hex row="26" col="34" terrain="9"/>
@@ -1065,7 +1065,7 @@
     <unit id="53796" owner="0" flag="309" face="0" exp="250" str="8" bstr="8"/>
   </hex>
   <hex row="27" col="30" road="33">
-    <unit id="53793" owner="0" flag="309" face="0" exp="194"/>
+    <unit id="53793" owner="0" flag="309" face="0" exp="194" core="1"/>
   </hex>
   <hex row="27" col="33" terrain="9"/>
   <hex row="27" col="34" terrain="9"/>

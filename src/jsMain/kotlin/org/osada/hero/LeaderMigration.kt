@@ -25,6 +25,20 @@ import org.osada.model.Player
  * So a migrated unit fights exactly as it did before the migration — verified by
  * `HeroMigrationTest` — while the second trait stops being invisible.
  *
+ * ## The authored class-attribute override
+ *
+ * A background is chosen by UNIT CLASS, so it cannot express OG's `@37` — the author overriding
+ * that class signature for one formation ([org.osada.model.GameUnit.leaderClassTrait]). A Make-Core
+ * formation carrying one would therefore lose it the moment it gained a hero, because
+ * [HeroTraitResolver] deliberately stops reading the legacy integers once a hero exists.
+ *
+ * **So an authored override is carried as a second LEARNED trait**, beside the individual one. That
+ * is the reading the authored data forces: the override is a property of the formation the author
+ * wrote, not of the class the officer trained in, and a learned trait is the only slot that holds a
+ * per-hero trait the background system cannot name. The hero keeps its class background as well —
+ * the two are the same trait in the ordinary case, and [HeroTraitResolver] answers a set membership,
+ * so naming one twice grants nothing twice.
+ *
  * ## Idempotence and determinism
  *
  * Safe to run repeatedly: a formation that already has a hero is skipped, so re-loading a save
@@ -110,8 +124,13 @@ internal object LeaderMigration {
             potential =
                 if (unit.experience >= PROMISING_EXPERIENCE) HeroPotential.PROMISING else HeroPotential.LINE_OFFICER,
             assignedFormationId = formationId,
-            // The rolled trait, carried verbatim. Null only if the save holds a trait integer this
-            // build no longer defines, in which case the hero keeps just its background.
-            learnedTraitIds = setOfNotNull(LegacyTraitMapping.toTraitId(unit.leader)),
+            // The rolled trait, carried verbatim, plus any authored class-attribute override (see
+            // the class doc). Either is null if the save holds a trait integer this build no longer
+            // defines, in which case the hero keeps just its background.
+            learnedTraitIds =
+                setOfNotNull(
+                    LegacyTraitMapping.toTraitId(unit.leader),
+                    unit.leaderClassTrait.takeIf { it > 0 }?.let(LegacyTraitMapping::toTraitId),
+                ),
         )
 }
