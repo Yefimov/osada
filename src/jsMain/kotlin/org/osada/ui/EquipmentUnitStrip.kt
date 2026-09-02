@@ -233,9 +233,9 @@ internal object EquipmentUnitStrip {
         container: HTMLElement,
         unit: org.osada.model.GameUnit,
     ) {
-        if (Attachments.availableSlots(unit).isEmpty() && Attachments.purchasedSlots(unit).isEmpty()) return
+        if (Attachments.availableSlots(unit).isEmpty() && Attachments.fittedSlots(unit).isEmpty()) return
         val player = unit.player ?: return
-        val fitted = Attachments.purchasedSlots(unit)
+        val fitted = Attachments.fittedSlots(unit)
         val button = addTag(container, "span")
         button.className = "osada-atp-btn" + if (fitted.isEmpty()) "" else " osada-atp-btn--fitted"
         // One star per slot, filled for each attachment fitted -- a bare count read as a

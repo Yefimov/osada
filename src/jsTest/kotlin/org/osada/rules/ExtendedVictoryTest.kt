@@ -2,13 +2,14 @@ package org.osada.rules
 
 import org.osada.GameHolder
 import org.osada.GameStateSerializer
-import org.osada.restoreVictoryMetadata
 import org.osada.MovMethod
 import org.osada.UnitClass
 import org.osada.model.Equipment
 import org.osada.model.EquipmentData
 import org.osada.model.GameMap
 import org.osada.model.restoreCoreUnitList
+import org.osada.restoreVictoryMetadata
+import org.osada.scenario.AuthoredScenarioOptions
 import org.osada.scenario.Scenario
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
@@ -259,10 +260,11 @@ class ExtendedVictoryTest : OgRulesTestHarness() {
     @Test
     fun aDestroyedCoreMsuDoesNotSatisfyTheQuota() {
         val map = world()
-        val core = place(map, infantryEqid, 2, 2, 0).apply {
-            mustSurvive = true
-            destroyed = true
-        }
+        val core =
+            place(map, infantryEqid, 2, 2, 0).apply {
+                mustSurvive = true
+                destroyed = true
+            }
         friendly.addCoreUnit(core)
         val scenario = scenarioWith(map) { mustSurvivePerSide = listOf(1, 0) }
 
@@ -286,6 +288,11 @@ class ExtendedVictoryTest : OgRulesTestHarness() {
         val restored = Scenario(null)
 
         restoreVictoryMetadata(restored, payload)
+        // `typedvh` is an AUTHORED option and travels in the save's `options` block since the
+        // whole family started being serialized; the lossy top-level key it used to arrive under
+        // cannot say "the author said nothing" (`AuthoredScenarioOptionsSaveTest`). A restore
+        // applies both, so this test does too.
+        AuthoredScenarioOptions.restore(restored, payload.options)
 
         assertEquals(listOf(2, 0), restored.retreatUnitsPerSide)
         assertEquals(listOf(0, 3), restored.killUnitsPerSide)

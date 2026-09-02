@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="bn9s00.xscn" name="Battle of Sesena" turns="8, 8, 8" holdvictory="4, 4, 4" date="October 29, 1936" dayturns="0" ground="0" atmosferic="0" latitude="1" iconset="0" weatherchg="1" rows="14" cols="43" eqp="eqp-lxf" image="resources/maps/images/map_636.png" eqpv="united1" holdvictory1="3, 2, 1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="1" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1" ehmsuonly="0" paradropocean="1">
-  <player id="0" country="19" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="10" support="27,0,0,0" turnprestige="0, 85, 85, 85, 85, 85, 85, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
-  <player id="1" country="28" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="10" support="29,0,0,0" turnprestige="0, 42, 42, 42, 42, 42, 42, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+<map file="bn9s00.xscn" name="Battle of Sesena" turns="8, 8, 8" holdvictory="4, 4, 4" date="October 29, 1936" dayturns="0" ground="0" atmosferic="0" latitude="1" iconset="0" weatherchg="1" rows="14" cols="43" eqp="eqp-lxf" image="resources/maps/images/map_636.png" eqpv="united1" holdvictory1="3, 2, 1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="1" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1" ehmsuonly="0" paradropocean="1" coresoffcap="0">
+  <player id="0" country="19" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="10" support="27,0,0,0" turnprestige="0, 85, 85, 85, 85, 85, 85, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="20:0:-2147483648"/>
+  <player id="1" country="28" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="10" support="29,0,0,0" turnprestige="0, 42, 42, 42, 42, 42, 42, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="29:0:-2147483648"/>
   <reinforce turn="1">
     <at row="7" col="41">
-      <unit id="26605" owner="1" flag="29" face="0"/>
+      <unit id="26605" owner="1" flag="29" face="0" fearless="1" objcol="32" objrow="0"/>
     </at>
     <at row="8" col="41">
-      <unit id="26605" owner="1" flag="29" face="0"/>
+      <unit id="26605" owner="1" flag="29" face="0" fearless="1" objcol="32" objrow="0"/>
     </at>
     <at row="9" col="41">
-      <unit id="26605" owner="1" flag="29" face="0"/>
+      <unit id="26605" owner="1" flag="29" face="0" fearless="1" objcol="32" objrow="0"/>
     </at>
   </reinforce>
   <reinforce turn="2">
@@ -20,7 +20,7 @@
   </reinforce>
   <reinforce turn="10">
     <at row="6" col="35">
-      <unit id="26698" owner="1" flag="29" face="0" transport="26755" exp="107" str="8" ldr="1"/>
+      <unit id="26698" owner="1" flag="29" face="0" transport="26755" exp="107" str="8" ldr="1" ldrtrait="15" ldrclasstrait="2" anchored="1"/>
     </at>
   </reinforce>
   <hex row="0" col="3" terrain="4"/>
@@ -104,7 +104,7 @@
   <hex row="3" col="9" terrain="15"/>
   <hex row="3" col="10" terrain="15"/>
   <hex row="3" col="13" terrain="1" road="43" name="Esquivias" owner="1" flag="28" victory="1">
-    <unit id="26605" owner="1" flag="29" face="0" exp="79" str="3" bstr="3"/>
+    <unit id="26605" owner="1" flag="29" face="0" exp="79" str="3" bstr="3" fearless="1"/>
   </hex>
   <hex row="3" col="14" terrain="1" road="178" name="Esquivias"/>
   <hex row="3" col="16" terrain="16"/>
@@ -116,7 +116,7 @@
   <hex row="3" col="25" terrain="10" road="40"/>
   <hex row="3" col="26" terrain="10"/>
   <hex row="3" col="27">
-    <unit id="20491" owner="0" flag="27" face="0" exp="50"/>
+    <unit id="20491" owner="0" flag="27" face="0" exp="50" core="1"/>
   </hex>
   <hex row="3" col="30" terrain="15"/>
   <hex row="3" col="31" terrain="1" road="11" name="Sesena"/>
@@ -130,7 +130,7 @@
   <hex row="3" col="41" terrain="15"/>
   <hex row="4" col="2" terrain="1" road="24" name="Illescas"/>
   <hex row="4" col="3" terrain="1" road="186" name="Illescas" owner="1" flag="28" victory="1">
-    <unit id="26605" owner="1" flag="29" face="0" exp="119" str="3" bstr="3"/>
+    <unit id="26605" owner="1" flag="29" face="0" exp="119" str="3" bstr="3" fearless="1"/>
   </hex>
   <hex row="4" col="4" road="34"/>
   <hex row="4" col="8" terrain="15"/>
@@ -143,12 +143,12 @@
   <hex row="4" col="20" road="34"/>
   <hex row="4" col="22" road="130"/>
   <hex row="4" col="24" terrain="1" road="130" name="Village" owner="1" flag="28">
-    <unit id="26672" owner="1" flag="29" face="0" str="5" bstr="5"/>
+    <unit id="26672" owner="1" flag="29" face="0" str="5" bstr="5" fearless="1" objcol="32" objrow="0"/>
   </hex>
   <hex row="4" col="25" terrain="1" name="Village"/>
   <hex row="4" col="26" road="136"/>
   <hex row="4" col="27" terrain="3" road="138">
-    <unit id="20529" owner="0" flag="27" face="0" exp="50"/>
+    <unit id="20529" owner="0" flag="27" face="0" exp="50" core="1"/>
   </hex>
   <hex row="4" col="28" road="56"/>
   <hex row="4" col="29" road="168"/>
@@ -168,10 +168,10 @@
   <hex row="5" col="4" road="168"/>
   <hex row="5" col="5" road="146"/>
   <hex row="5" col="6" road="40">
-    <unit id="26798" owner="1" flag="29" face="0" transport="26755" exp="76" str="5" bstr="5"/>
+    <unit id="26798" owner="1" flag="29" face="0" transport="26755" exp="76" str="5" bstr="5" objcol="32" objrow="0" freeoh="2"/>
   </hex>
   <hex row="5" col="7" road="136">
-    <unit id="26605" owner="1" flag="29" face="0" exp="100" str="5" bstr="5"/>
+    <unit id="26605" owner="1" flag="29" face="0" exp="100" str="5" bstr="5" fearless="1" objcol="32" objrow="0"/>
   </hex>
   <hex row="5" col="9" road="34"/>
   <hex row="5" col="10" road="34"/>
@@ -203,17 +203,17 @@
   <hex row="6" col="33" road="34"/>
   <hex row="6" col="34" road="176"/>
   <hex row="6" col="37" terrain="2">
-    <unit id="26605" owner="1" flag="29" face="0" exp="89" bstr="5"/>
+    <unit id="26605" owner="1" flag="29" face="0" exp="89" bstr="5" fearless="1" objcol="32" objrow="0"/>
   </hex>
   <hex row="7" col="1" road="18"/>
   <hex row="7" col="2" road="33"/>
   <hex row="7" col="4" road="138"/>
   <hex row="7" col="5" road="145"/>
   <hex row="7" col="15">
-    <unit id="26680" owner="1" flag="29" face="0" exp="91" str="5" bstr="5"/>
+    <unit id="26680" owner="1" flag="29" face="0" exp="91" str="5" bstr="5" fearless="1" objcol="32" objrow="0"/>
   </hex>
   <hex row="7" col="16" terrain="1" road="26" name="Borox" owner="1" flag="28">
-    <unit id="26615" owner="1" flag="29" face="0" exp="103" str="8" bstr="5"/>
+    <unit id="26615" owner="1" flag="29" face="0" exp="103" str="8" bstr="5" fearless="1" objcol="32" objrow="0"/>
   </hex>
   <hex row="7" col="17" terrain="13" road="161"/>
   <hex row="7" col="18" terrain="8"/>
@@ -228,10 +228,10 @@
   <hex row="7" col="34" road="9"/>
   <hex row="7" col="35" road="136"/>
   <hex row="7" col="36" terrain="2" owner="1" flag="28" victory="1">
-    <unit id="26605" owner="1" flag="29" face="0" exp="103" bstr="5"/>
+    <unit id="26605" owner="1" flag="29" face="0" exp="103" bstr="5" fearless="1" objcol="32" objrow="0"/>
   </hex>
   <hex row="7" col="37">
-    <unit id="26798" owner="1" flag="29" face="0" transport="26755" exp="110" str="5" bstr="5"/>
+    <unit id="26798" owner="1" flag="29" face="0" transport="26755" exp="110" str="5" bstr="5" objcol="32" objrow="0" freeoh="2"/>
   </hex>
   <hex row="8" col="1" road="33"/>
   <hex row="8" col="5" road="17"/>
@@ -246,7 +246,7 @@
   <hex row="8" col="31" road="136"/>
   <hex row="8" col="32" terrain="1" road="146" name="Village" owner="1" flag="28"/>
   <hex row="8" col="36" road="144">
-    <unit id="26605" owner="1" flag="29" face="0" exp="78" bstr="5"/>
+    <unit id="26605" owner="1" flag="29" face="0" exp="78" bstr="5" fearless="1" objcol="32" objrow="0"/>
   </hex>
   <hex row="8" col="41" road="34"/>
   <hex row="8" col="42" road="34"/>
@@ -278,7 +278,7 @@
   <hex row="10" col="32" road="9"/>
   <hex row="10" col="33" road="144"/>
   <hex row="10" col="38" road="138">
-    <unit id="26615" owner="1" flag="29" face="0" exp="121" str="8" bstr="5"/>
+    <unit id="26615" owner="1" flag="29" face="0" exp="121" str="8" bstr="5" fearless="1" objcol="32" objrow="0"/>
   </hex>
   <hex row="10" col="39" terrain="1" road="137" name="Village" owner="1" flag="28"/>
   <hex row="11" col="5" terrain="11" road="27" name="Yuncos" owner="1" flag="28">
@@ -317,7 +317,7 @@
   <hex row="12" col="26" road="18"/>
   <hex row="12" col="31" terrain="1" name="Village"/>
   <hex row="12" col="32" terrain="1" road="2" name="Village" owner="1" flag="28">
-    <unit id="26672" owner="1" flag="29" face="0" str="5" bstr="5"/>
+    <unit id="26672" owner="1" flag="29" face="0" str="5" bstr="5" fearless="1" objcol="32" objrow="0"/>
   </hex>
   <hex row="12" col="33" road="17"/>
   <hex row="12" col="34" road="136"/>

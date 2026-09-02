@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="bn9s13.xscn" name="Battle of Kursk" turns="10, 13, 20" date="July 11, 1943" dayturns="0" ground="0" atmosferic="0" latitude="3" iconset="3" weatherchg="1" rows="38" cols="44" eqp="eqp-lxf" image="resources/maps/images/map_0.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="1" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1" ehmsuonly="0" paradropocean="1">
-  <player id="0" country="19" side="1" airtrans="2" navaltrans="0" railtrans="4" defaultxp="70" defaultstr="10" support="20,0,0,0" turnprestige="0, 400, 400, 400, 400, 400, 400, 400, 400, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
-  <player id="1" country="7" side="0" airtrans="1" navaltrans="0" railtrans="3" defaultxp="100" defaultstr="10" support="8,0,0,0" turnprestige="0, 200, 200, 200, 200, 200, 200, 200, 200, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+<map file="bn9s13.xscn" name="Battle of Kursk" turns="10, 13, 20" date="July 11, 1943" dayturns="0" ground="0" atmosferic="0" latitude="3" iconset="3" weatherchg="1" rows="38" cols="44" eqp="eqp-lxf" image="resources/maps/images/map_0.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="1" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1" ehmsuonly="0" paradropocean="1" coresoffcap="0">
+  <player id="0" country="19" side="1" airtrans="2" navaltrans="0" railtrans="4" defaultxp="70" defaultstr="10" support="20,0,0,0" turnprestige="0, 400, 400, 400, 400, 400, 400, 400, 400, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="20:32801:70909864"/>
+  <player id="1" country="7" side="0" airtrans="1" navaltrans="0" railtrans="3" defaultxp="100" defaultstr="10" support="8,0,0,0" turnprestige="0, 200, 200, 200, 200, 200, 200, 200, 200, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="8:13346:67112864"/>
   <hex row="0" col="2" terrain="3"/>
   <hex row="0" col="3" terrain="3"/>
   <hex row="0" col="4" terrain="3"/>
@@ -224,13 +224,13 @@
     <unit id="20392" owner="0" flag="20" face="0" exp="48" str="12" bstr="5"/>
   </hex>
   <hex row="5" col="9">
-    <unit id="8598" owner="1" flag="8" face="0" exp="43" bstr="5"/>
+    <unit id="8598" owner="1" flag="8" face="0" exp="43" bstr="5" holduntil="1"/>
   </hex>
   <hex row="5" col="10">
-    <unit id="7792" owner="1" flag="8" face="0" transport="9769" exp="12" bstr="5"/>
+    <unit id="7792" owner="1" flag="8" face="0" transport="9769" exp="12" bstr="5" holduntil="1"/>
   </hex>
   <hex row="5" col="11">
-    <unit id="7791" owner="1" flag="8" face="0" transport="9830" exp="53" str="8" bstr="5"/>
+    <unit id="7791" owner="1" flag="8" face="0" transport="9830" exp="53" str="8" bstr="5" holduntil="1"/>
   </hex>
   <hex row="5" col="12" terrain="10" name="Psoyl River"/>
   <hex row="5" col="13" terrain="10" name="Psoyl River"/>
@@ -273,31 +273,31 @@
     <unit id="20392" owner="0" flag="20" face="0" exp="92" str="12" bstr="5"/>
   </hex>
   <hex row="6" col="7">
-    <unit id="7976" owner="1" flag="8" face="0" transport="9769" exp="129" bstr="5"/>
+    <unit id="7976" owner="1" flag="8" face="0" transport="9769" exp="129" bstr="5" holduntil="1"/>
   </hex>
   <hex row="6" col="8">
-    <unit id="7792" owner="1" flag="8" face="0" transport="9830" exp="89" bstr="5"/>
+    <unit id="7792" owner="1" flag="8" face="0" transport="9830" exp="89" bstr="5" holduntil="1"/>
   </hex>
   <hex row="6" col="9">
-    <unit id="9268" owner="1" flag="8" face="0" exp="17" str="8" bstr="5"/>
+    <unit id="9268" owner="1" flag="8" face="0" exp="17" str="8" bstr="5" holduntil="1"/>
   </hex>
   <hex row="6" col="10">
-    <unit id="8989" owner="1" flag="8" face="0" exp="53" str="7" bstr="5"/>
+    <unit id="8989" owner="1" flag="8" face="0" exp="53" str="7" bstr="5" holduntil="1"/>
   </hex>
   <hex row="6" col="11">
-    <unit id="8981" owner="1" flag="8" face="0" exp="75" str="7" bstr="5"/>
+    <unit id="8981" owner="1" flag="8" face="0" exp="75" str="7" bstr="5" holduntil="1"/>
   </hex>
   <hex row="6" col="13">
-    <unit id="7730" owner="1" flag="8" face="0" transport="9769" exp="114" str="8" bstr="5"/>
+    <unit id="7730" owner="1" flag="8" face="0" transport="9769" exp="114" str="8" bstr="5" holduntil="1"/>
   </hex>
   <hex row="6" col="14">
-    <unit id="8260" owner="1" flag="8" face="0" transport="9769" exp="139" str="11" ldr="1" bstr="5"/>
+    <unit id="8260" owner="1" flag="8" face="0" transport="9769" exp="139" str="11" ldr="1" bstr="5" holduntil="1"/>
   </hex>
   <hex row="6" col="15">
-    <unit id="9419" owner="1" flag="8" face="0" exp="146" str="8" bstr="5"/>
+    <unit id="9419" owner="1" flag="8" face="0" exp="146" str="8" bstr="5" holduntil="1"/>
   </hex>
   <hex row="6" col="17">
-    <unit id="8260" owner="1" flag="8" face="0" transport="9769" exp="101" str="11" bstr="5"/>
+    <unit id="8260" owner="1" flag="8" face="0" transport="9769" exp="101" str="11" bstr="5" holduntil="1"/>
   </hex>
   <hex row="6" col="20">
     <unit id="20392" owner="0" flag="20" face="0" exp="251" str="12" bstr="5"/>
@@ -322,29 +322,29 @@
   </hex>
   <hex row="7" col="3" road="17"/>
   <hex row="7" col="5">
-    <unit id="7976" owner="1" flag="8" face="0" transport="9769" exp="162" ldr="1" bstr="5"/>
+    <unit id="7976" owner="1" flag="8" face="0" transport="9769" exp="162" ldr="1" bstr="5" holduntil="1"/>
   </hex>
   <hex row="7" col="6">
-    <unit id="8598" owner="1" flag="8" face="0" exp="129" str="11" bstr="5"/>
+    <unit id="8598" owner="1" flag="8" face="0" exp="129" str="11" bstr="5" holduntil="1"/>
   </hex>
   <hex row="7" col="7">
-    <unit id="9268" owner="1" flag="8" face="0" exp="115" str="8" bstr="5"/>
+    <unit id="9268" owner="1" flag="8" face="0" exp="115" str="8" bstr="5" holduntil="1"/>
   </hex>
   <hex row="7" col="10">
-    <unit id="9900" owner="1" flag="8" face="0" transport="9824" exp="32" str="11" bstr="5"/>
+    <unit id="9900" owner="1" flag="8" face="0" transport="9824" exp="32" str="11" bstr="5" holduntil="1"/>
   </hex>
   <hex row="7" col="14">
-    <unit id="10015" owner="1" flag="8" face="0" transport="9842" exp="154" str="7" bstr="5"/>
+    <unit id="10015" owner="1" flag="8" face="0" transport="9842" exp="154" str="7" bstr="5" holduntil="1"/>
   </hex>
   <hex row="7" col="15" terrain="3"/>
   <hex row="7" col="16">
-    <unit id="9566" owner="1" flag="8" face="0" exp="125" str="7" ldr="1" bstr="5"/>
+    <unit id="9566" owner="1" flag="8" face="0" exp="125" str="7" ldr="1" bstr="5" holduntil="1"/>
   </hex>
   <hex row="7" col="17">
-    <unit id="9900" owner="1" flag="8" face="0" transport="9824" exp="103" str="12" bstr="5"/>
+    <unit id="9900" owner="1" flag="8" face="0" transport="9824" exp="103" str="12" bstr="5" holduntil="1"/>
   </hex>
   <hex row="7" col="18">
-    <unit id="8598" owner="1" flag="8" face="0" exp="133" str="9" bstr="5"/>
+    <unit id="8598" owner="1" flag="8" face="0" exp="133" str="9" bstr="5" holduntil="1"/>
   </hex>
   <hex row="7" col="22">
     <unit id="20392" owner="0" flag="20" face="0" exp="17" str="12" bstr="5"/>
@@ -371,13 +371,13 @@
   </hex>
   <hex row="8" col="3" road="9"/>
   <hex row="8" col="6">
-    <unit id="8995" owner="1" flag="8" face="0" exp="103" str="7" bstr="5"/>
+    <unit id="8995" owner="1" flag="8" face="0" exp="103" str="7" bstr="5" holduntil="1"/>
   </hex>
   <hex row="8" col="7">
-    <unit id="9900" owner="1" flag="8" face="0" transport="9824" exp="166" str="11" bstr="5"/>
+    <unit id="9900" owner="1" flag="8" face="0" transport="9824" exp="166" str="11" bstr="5" holduntil="1"/>
   </hex>
   <hex row="8" col="8">
-    <unit id="8981" owner="1" flag="8" face="0" exp="117" str="8" bstr="5"/>
+    <unit id="8981" owner="1" flag="8" face="0" exp="117" str="8" bstr="5" holduntil="1"/>
   </hex>
   <hex row="8" col="9" terrain="3"/>
   <hex row="8" col="10" terrain="3"/>
@@ -386,22 +386,22 @@
   <hex row="8" col="13" terrain="3"/>
   <hex row="8" col="14" terrain="3"/>
   <hex row="8" col="15">
-    <unit id="8981" owner="1" flag="8" face="0" exp="140" str="8" bstr="5"/>
+    <unit id="8981" owner="1" flag="8" face="0" exp="140" str="8" bstr="5" holduntil="1"/>
   </hex>
   <hex row="8" col="16" terrain="3">
-    <unit id="8989" owner="1" flag="8" face="0" exp="97" str="7" bstr="5"/>
+    <unit id="8989" owner="1" flag="8" face="0" exp="97" str="7" bstr="5" holduntil="1"/>
   </hex>
   <hex row="8" col="17" terrain="3">
-    <unit id="8260" owner="1" flag="8" face="0" transport="9769" exp="168" str="11" bstr="5"/>
+    <unit id="8260" owner="1" flag="8" face="0" transport="9769" exp="168" str="11" bstr="5" holduntil="1"/>
   </hex>
   <hex row="8" col="18">
-    <unit id="9266" owner="1" flag="8" face="0" exp="94" str="7" bstr="5"/>
+    <unit id="9266" owner="1" flag="8" face="0" exp="94" str="7" bstr="5" holduntil="1"/>
   </hex>
   <hex row="8" col="19">
-    <unit id="8980" owner="1" flag="8" face="0" exp="117" str="7" bstr="5"/>
+    <unit id="8980" owner="1" flag="8" face="0" exp="117" str="7" bstr="5" holduntil="1"/>
   </hex>
   <hex row="8" col="20">
-    <unit id="8260" owner="1" flag="8" face="0" transport="9769" exp="135" str="11" ldr="1" bstr="5"/>
+    <unit id="8260" owner="1" flag="8" face="0" transport="9769" exp="135" str="11" ldr="1" bstr="5" holduntil="1"/>
   </hex>
   <hex row="8" col="23" road="34"/>
   <hex row="8" col="24" road="34">
@@ -425,35 +425,35 @@
     <unit id="20392" owner="0" flag="20" face="0" transport="20646" exp="9" str="12" bstr="5"/>
   </hex>
   <hex row="9" col="3">
-    <unit id="8598" owner="1" flag="8" face="0" exp="142" str="9" bstr="5"/>
+    <unit id="8598" owner="1" flag="8" face="0" exp="142" str="9" bstr="5" holduntil="1"/>
   </hex>
   <hex row="9" col="4" road="136">
-    <unit id="7792" owner="1" flag="8" face="0" transport="9769" exp="90" str="9" bstr="5"/>
+    <unit id="7792" owner="1" flag="8" face="0" transport="9769" exp="90" str="9" bstr="5" holduntil="1"/>
   </hex>
   <hex row="9" col="5" terrain="1" road="144" name="Novoselovka" owner="1" flag="7" victory="1">
-    <unit id="7704" owner="1" flag="8" face="0" transport="9769" exp="41" str="8" bstr="5"/>
+    <unit id="7704" owner="1" flag="8" face="0" transport="9769" exp="41" str="8" bstr="5" holduntil="1"/>
   </hex>
   <hex row="9" col="6">
-    <unit id="7704" owner="1" flag="8" face="0" transport="9769" exp="165" str="8" bstr="5"/>
+    <unit id="7704" owner="1" flag="8" face="0" transport="9769" exp="165" str="8" bstr="5" holduntil="1"/>
   </hex>
   <hex row="9" col="9">
-    <unit id="8605" owner="1" flag="8" face="0" exp="28" str="7" bstr="5"/>
+    <unit id="8605" owner="1" flag="8" face="0" exp="28" str="7" bstr="5" holduntil="1"/>
   </hex>
   <hex row="9" col="10" terrain="3"/>
   <hex row="9" col="12" terrain="3"/>
   <hex row="9" col="14" terrain="3"/>
   <hex row="9" col="16" terrain="3"/>
   <hex row="9" col="19">
-    <unit id="10015" owner="1" flag="8" face="0" transport="9842" exp="150" str="8" bstr="5"/>
+    <unit id="10015" owner="1" flag="8" face="0" transport="9842" exp="150" str="8" bstr="5" holduntil="1"/>
   </hex>
   <hex row="9" col="20">
-    <unit id="8995" owner="1" flag="8" face="0" exp="101" str="8" bstr="5"/>
+    <unit id="8995" owner="1" flag="8" face="0" exp="101" str="8" bstr="5" holduntil="1"/>
   </hex>
   <hex row="9" col="21" road="34">
-    <unit id="9268" owner="1" flag="8" face="0" exp="120" str="7" bstr="5"/>
+    <unit id="9268" owner="1" flag="8" face="0" exp="120" str="7" bstr="5" holduntil="1"/>
   </hex>
   <hex row="9" col="22" road="34">
-    <unit id="8598" owner="1" flag="8" face="0" exp="95" bstr="5"/>
+    <unit id="8598" owner="1" flag="8" face="0" exp="95" bstr="5" holduntil="1"/>
   </hex>
   <hex row="9" col="25">
     <unit id="20366" owner="0" flag="20" face="0" exp="251" str="12" bstr="5"/>
@@ -464,30 +464,30 @@
     <unit id="20392" owner="0" flag="20" face="0" transport="20646" exp="6" str="11" bstr="5"/>
   </hex>
   <hex row="10" col="3">
-    <unit id="9257" owner="1" flag="8" face="0" exp="21" str="7" bstr="5"/>
+    <unit id="9257" owner="1" flag="8" face="0" exp="21" str="7" bstr="5" holduntil="1"/>
   </hex>
   <hex row="10" col="4" terrain="1" name="Novoselovka">
-    <unit id="8989" owner="1" flag="8" face="0" exp="6" str="7" bstr="5"/>
+    <unit id="8989" owner="1" flag="8" face="0" exp="6" str="7" bstr="5" holduntil="1"/>
   </hex>
   <hex row="10" col="5" terrain="1" road="9" name="Novoselovka">
-    <unit id="8981" owner="1" flag="8" face="0" exp="26" str="7" bstr="5"/>
+    <unit id="8981" owner="1" flag="8" face="0" exp="26" str="7" bstr="5" holduntil="1"/>
   </hex>
   <hex row="10" col="6" terrain="1" name="Novoselovka"/>
   <hex row="10" col="8">
-    <unit id="8605" owner="1" flag="8" face="0" exp="13" str="7" ldr="1" bstr="5"/>
+    <unit id="8605" owner="1" flag="8" face="0" exp="13" str="7" ldr="1" bstr="5" holduntil="1"/>
   </hex>
   <hex row="10" col="18">
-    <unit id="8614" owner="1" flag="8" face="0" exp="121" str="7" ldr="1" bstr="5"/>
+    <unit id="8614" owner="1" flag="8" face="0" exp="121" str="7" ldr="1" bstr="5" holduntil="1"/>
   </hex>
   <hex row="10" col="19" road="18"/>
   <hex row="10" col="20" road="34">
-    <unit id="9900" owner="1" flag="8" face="0" transport="9824" exp="167" str="12" bstr="5"/>
+    <unit id="9900" owner="1" flag="8" face="0" transport="9824" exp="167" str="12" bstr="5" holduntil="1"/>
   </hex>
   <hex row="10" col="21">
-    <unit id="9566" owner="1" flag="8" face="0" exp="167" str="7" bstr="5"/>
+    <unit id="9566" owner="1" flag="8" face="0" exp="167" str="7" bstr="5" holduntil="1"/>
   </hex>
   <hex row="10" col="22">
-    <unit id="8260" owner="1" flag="8" face="0" transport="9769" exp="166" str="12" bstr="5"/>
+    <unit id="8260" owner="1" flag="8" face="0" transport="9769" exp="166" str="12" bstr="5" holduntil="1"/>
   </hex>
   <hex row="10" col="27">
     <unit id="20469" owner="0" flag="20" face="0" exp="49" bstr="5"/>
@@ -507,21 +507,21 @@
   <hex row="10" col="43" terrain="3"/>
   <hex row="11" col="1" terrain="3"/>
   <hex row="11" col="2" terrain="3">
-    <unit id="7792" owner="1" flag="8" face="0" transport="9830" exp="75" str="9" ldr="1" bstr="5"/>
+    <unit id="7792" owner="1" flag="8" face="0" transport="9830" exp="75" str="9" ldr="1" bstr="5" holduntil="1"/>
   </hex>
   <hex row="11" col="3" terrain="3"/>
   <hex row="11" col="4">
-    <unit id="9900" owner="1" flag="8" face="0" transport="9824" exp="25" str="11" ldr="1" bstr="5"/>
+    <unit id="9900" owner="1" flag="8" face="0" transport="9824" exp="25" str="11" ldr="1" bstr="5" holduntil="1"/>
   </hex>
   <hex row="11" col="6" road="144"/>
   <hex row="11" col="19" terrain="1" road="33" name="Yasnaya Polyana" owner="1" flag="7" victory="1">
-    <unit id="7730" owner="1" flag="8" face="0" transport="9769" exp="148" str="8" bstr="5"/>
+    <unit id="7730" owner="1" flag="8" face="0" transport="9769" exp="148" str="8" bstr="5" holduntil="1"/>
   </hex>
   <hex row="11" col="20">
-    <unit id="10007" owner="1" flag="8" face="0" transport="9787" exp="255" str="11" bstr="5"/>
+    <unit id="10007" owner="1" flag="8" face="0" transport="9787" exp="255" str="11" bstr="5" holduntil="1"/>
   </hex>
   <hex row="11" col="21">
-    <unit id="9419" owner="1" flag="8" face="0" exp="124" str="7" ldr="1" bstr="5"/>
+    <unit id="9419" owner="1" flag="8" face="0" exp="124" str="7" ldr="1" bstr="5" holduntil="1"/>
   </hex>
   <hex row="11" col="25">
     <unit id="20372" owner="0" flag="20" face="0" exp="180" str="11" bstr="5"/>
@@ -558,19 +558,19 @@
   <hex row="12" col="4" terrain="3"/>
   <hex row="12" col="6" road="17"/>
   <hex row="12" col="7">
-    <unit id="9419" owner="1" flag="8" face="0" exp="31" str="8" ldr="1" bstr="5"/>
+    <unit id="9419" owner="1" flag="8" face="0" exp="31" str="8" ldr="1" bstr="5" holduntil="1"/>
   </hex>
   <hex row="12" col="17" road="34">
-    <unit id="10015" owner="1" flag="8" face="0" transport="9842" exp="163" str="8" bstr="5"/>
+    <unit id="10015" owner="1" flag="8" face="0" transport="9842" exp="163" str="8" bstr="5" holduntil="1"/>
   </hex>
   <hex row="12" col="18" terrain="1" road="34" name="Yasnaya Polyana">
-    <unit id="8995" owner="1" flag="8" face="0" exp="163" str="7" bstr="5"/>
+    <unit id="8995" owner="1" flag="8" face="0" exp="163" str="7" bstr="5" holduntil="1"/>
   </hex>
   <hex row="12" col="19" terrain="1" name="Yasnaya Polyana">
-    <unit id="8260" owner="1" flag="8" face="0" transport="9769" exp="139" str="12" bstr="5"/>
+    <unit id="8260" owner="1" flag="8" face="0" transport="9769" exp="139" str="12" bstr="5" holduntil="1"/>
   </hex>
   <hex row="12" col="20" terrain="1" name="Yasnaya Polyana">
-    <unit id="10007" owner="1" flag="8" face="0" transport="9787" exp="163" bstr="5"/>
+    <unit id="10007" owner="1" flag="8" face="0" transport="9787" exp="163" bstr="5" holduntil="1"/>
   </hex>
   <hex row="12" col="28">
     <unit id="20682" owner="0" flag="20" face="0" transport="20638" exp="210" bstr="5"/>
@@ -589,10 +589,10 @@
   <hex row="12" col="40" terrain="3"/>
   <hex row="12" col="42" terrain="3"/>
   <hex row="13" col="5">
-    <unit id="9566" owner="1" flag="8" face="0" exp="236" str="7" bstr="5"/>
+    <unit id="9566" owner="1" flag="8" face="0" exp="236" str="7" bstr="5" holduntil="1"/>
   </hex>
   <hex row="13" col="6" road="17">
-    <unit id="9897" owner="1" flag="8" face="0" transport="9729" exp="229" bstr="5"/>
+    <unit id="9897" owner="1" flag="8" face="0" transport="9729" exp="229" bstr="5" holduntil="1"/>
   </hex>
   <hex row="13" col="7">
     <unit id="9480" owner="1" flag="8" face="0" transport="9769" exp="243" bstr="5"/>
@@ -600,16 +600,16 @@
   <hex row="13" col="15" road="34"/>
   <hex row="13" col="16" road="34"/>
   <hex row="13" col="17">
-    <unit id="9566" owner="1" flag="8" face="0" exp="126" str="8" bstr="5"/>
+    <unit id="9566" owner="1" flag="8" face="0" exp="126" str="8" bstr="5" holduntil="1"/>
   </hex>
   <hex row="13" col="18">
-    <unit id="9900" owner="1" flag="8" face="0" transport="9824" exp="157" str="12" bstr="5"/>
+    <unit id="9900" owner="1" flag="8" face="0" transport="9824" exp="157" str="12" bstr="5" holduntil="1"/>
   </hex>
   <hex row="13" col="19">
-    <unit id="8598" owner="1" flag="8" face="0" exp="155" str="9" bstr="5"/>
+    <unit id="8598" owner="1" flag="8" face="0" exp="155" str="9" bstr="5" holduntil="1"/>
   </hex>
   <hex row="13" col="20">
-    <unit id="8260" owner="1" flag="8" face="0" transport="9769" exp="165" str="12" bstr="5"/>
+    <unit id="8260" owner="1" flag="8" face="0" transport="9769" exp="165" str="12" bstr="5" holduntil="1"/>
   </hex>
   <hex row="13" col="24">
     <unit id="20372" owner="0" flag="20" face="0" exp="169" str="11" bstr="5"/>
@@ -637,10 +637,10 @@
   <hex row="14" col="13" road="34"/>
   <hex row="14" col="14" road="34"/>
   <hex row="14" col="17">
-    <unit id="8981" owner="1" flag="8" face="0" exp="142" str="8" bstr="5"/>
+    <unit id="8981" owner="1" flag="8" face="0" exp="142" str="8" bstr="5" holduntil="1"/>
   </hex>
   <hex row="14" col="18">
-    <unit id="9266" owner="1" flag="8" face="0" exp="128" str="7" bstr="5"/>
+    <unit id="9266" owner="1" flag="8" face="0" exp="128" str="7" bstr="5" holduntil="1"/>
   </hex>
   <hex row="14" col="22">
     <unit id="20372" owner="0" flag="20" face="0" exp="248" str="12" bstr="5"/>
@@ -666,10 +666,10 @@
   <hex row="15" col="11" road="34"/>
   <hex row="15" col="12" road="34"/>
   <hex row="15" col="16">
-    <unit id="7730" owner="1" flag="8" face="0" transport="9769" exp="147" str="8" bstr="5"/>
+    <unit id="7730" owner="1" flag="8" face="0" transport="9769" exp="147" str="8" bstr="5" holduntil="1"/>
   </hex>
   <hex row="15" col="18">
-    <unit id="9419" owner="1" flag="8" face="0" exp="157" str="7" bstr="5"/>
+    <unit id="9419" owner="1" flag="8" face="0" exp="157" str="7" bstr="5" holduntil="1"/>
   </hex>
   <hex row="15" col="21">
     <unit id="20392" owner="0" flag="20" face="0" exp="3" str="12" bstr="5"/>
@@ -707,7 +707,7 @@
   <hex row="16" col="16" terrain="13"/>
   <hex row="16" col="17" terrain="13"/>
   <hex row="16" col="18">
-    <unit id="8260" owner="1" flag="8" face="0" transport="9769" exp="153" str="11" bstr="5"/>
+    <unit id="8260" owner="1" flag="8" face="0" transport="9769" exp="153" str="11" bstr="5" holduntil="1"/>
   </hex>
   <hex row="16" col="23">
     <unit id="20710" owner="0" flag="20" face="0" transport="20641" exp="30" str="12" bstr="5"/>
@@ -791,7 +791,7 @@
   <hex row="18" col="14" road="136"/>
   <hex row="18" col="15" road="136"/>
   <hex row="18" col="18">
-    <unit id="7976" owner="1" flag="8" face="0" exp="159" str="12" bstr="5"/>
+    <unit id="7976" owner="1" flag="8" face="0" exp="159" str="12" bstr="5" holduntil="5"/>
   </hex>
   <hex row="18" col="19" terrain="10"/>
   <hex row="18" col="20" terrain="10"/>
@@ -799,16 +799,16 @@
   <hex row="18" col="30" terrain="10" name="Severskii Donets River"/>
   <hex row="18" col="31" terrain="10" road="50" name="Severskii Donets River"/>
   <hex row="18" col="32" terrain="1" road="34" name="Rzhavets" owner="1" flag="7" victory="1">
-    <unit id="7792" owner="1" flag="8" face="0" transport="9830" exp="70" bstr="5"/>
+    <unit id="7792" owner="1" flag="8" face="0" transport="9830" exp="70" bstr="5" holduntil="1"/>
   </hex>
   <hex row="18" col="33" terrain="1" name="Rzhavets">
-    <unit id="7791" owner="1" flag="8" face="0" transport="9830" exp="16" str="7" bstr="5"/>
+    <unit id="7791" owner="1" flag="8" face="0" transport="9830" exp="16" str="7" bstr="5" holduntil="1"/>
   </hex>
   <hex row="18" col="34">
-    <unit id="8598" owner="1" flag="8" face="0" exp="255" bstr="5"/>
+    <unit id="8598" owner="1" flag="8" face="0" exp="255" bstr="5" holduntil="1"/>
   </hex>
   <hex row="18" col="35">
-    <unit id="9268" owner="1" flag="8" face="0" exp="39" str="8" bstr="5"/>
+    <unit id="9268" owner="1" flag="8" face="0" exp="39" str="8" bstr="5" holduntil="1"/>
   </hex>
   <hex row="18" col="40" terrain="3"/>
   <hex row="18" col="41">
@@ -848,16 +848,16 @@
   <hex row="19" col="32" terrain="10" name="Severskii Donets River"/>
   <hex row="19" col="33" terrain="10" name="Severskii Donets River"/>
   <hex row="19" col="34">
-    <unit id="8989" owner="1" flag="8" face="0" exp="31" str="7" bstr="5"/>
+    <unit id="8989" owner="1" flag="8" face="0" exp="31" str="7" bstr="5" holduntil="1"/>
   </hex>
   <hex row="19" col="35">
-    <unit id="9900" owner="1" flag="8" face="0" transport="9824" exp="91" str="11" bstr="5"/>
+    <unit id="9900" owner="1" flag="8" face="0" transport="9824" exp="91" str="11" bstr="5" holduntil="1"/>
   </hex>
   <hex row="19" col="36">
-    <unit id="7792" owner="1" flag="8" face="0" transport="9769" exp="81" str="9" bstr="5"/>
+    <unit id="7792" owner="1" flag="8" face="0" transport="9769" exp="81" str="9" bstr="5" holduntil="1"/>
   </hex>
   <hex row="19" col="37">
-    <unit id="8981" owner="1" flag="8" face="0" exp="63" str="8" bstr="5"/>
+    <unit id="8981" owner="1" flag="8" face="0" exp="63" str="8" bstr="5" holduntil="1"/>
   </hex>
   <hex row="19" col="40">
     <unit id="20372" owner="0" flag="20" face="0" exp="215" str="12" bstr="5"/>
@@ -879,10 +879,10 @@
   </hex>
   <hex row="20" col="18" road="144"/>
   <hex row="20" col="20" road="2">
-    <unit id="9115" owner="1" flag="8" face="0" transport="9842" exp="14" str="8" bstr="5"/>
+    <unit id="9115" owner="1" flag="8" face="0" transport="9842" exp="14" str="8" bstr="5" holduntil="5"/>
   </hex>
   <hex row="20" col="21" road="1">
-    <unit id="7976" owner="1" flag="8" face="0" exp="203" str="11" bstr="5"/>
+    <unit id="7976" owner="1" flag="8" face="0" exp="203" str="11" bstr="5" holduntil="5"/>
   </hex>
   <hex row="20" col="22" terrain="10"/>
   <hex row="20" col="24" terrain="10"/>
@@ -900,16 +900,16 @@
   <hex row="20" col="32" terrain="10" name="Severskii Donets River"/>
   <hex row="20" col="33" terrain="10" name="Severskii Donets River"/>
   <hex row="20" col="34">
-    <unit id="8598" owner="1" flag="8" face="0" exp="2" bstr="5"/>
+    <unit id="8598" owner="1" flag="8" face="0" exp="2" bstr="5" holduntil="1"/>
   </hex>
   <hex row="20" col="35">
-    <unit id="9478" owner="1" flag="8" face="0" exp="215" str="9" bstr="5"/>
+    <unit id="9478" owner="1" flag="8" face="0" exp="215" str="9" bstr="5" holduntil="1"/>
   </hex>
   <hex row="20" col="36">
-    <unit id="9113" owner="1" flag="8" face="0" transport="9729" exp="42" str="9" bstr="5"/>
+    <unit id="9113" owner="1" flag="8" face="0" transport="9729" exp="42" str="9" bstr="5" holduntil="1"/>
   </hex>
   <hex row="20" col="37">
-    <unit id="8598" owner="1" flag="8" face="0" exp="29" str="9" bstr="5"/>
+    <unit id="8598" owner="1" flag="8" face="0" exp="29" str="9" bstr="5" holduntil="1"/>
   </hex>
   <hex row="20" col="39" road="18"/>
   <hex row="20" col="40" road="34"/>
@@ -925,7 +925,7 @@
   </hex>
   <hex row="21" col="18" road="17"/>
   <hex row="21" col="20">
-    <unit id="9900" owner="1" flag="8" face="0" transport="9708" exp="191" str="12" bstr="5"/>
+    <unit id="9900" owner="1" flag="8" face="0" transport="9708" exp="191" str="12" bstr="5" holduntil="5"/>
   </hex>
   <hex row="21" col="23" terrain="10"/>
   <hex row="21" col="24" terrain="10"/>
@@ -936,19 +936,19 @@
   <hex row="21" col="31" terrain="10" name="Severskii Donets River"/>
   <hex row="21" col="32" terrain="10" name="Severskii Donets River"/>
   <hex row="21" col="33">
-    <unit id="7792" owner="1" flag="8" face="0" transport="9769" exp="29" bstr="5"/>
+    <unit id="7792" owner="1" flag="8" face="0" transport="9769" exp="29" bstr="5" holduntil="1"/>
   </hex>
   <hex row="21" col="34">
-    <unit id="9268" owner="1" flag="8" face="0" exp="89" str="8" bstr="5"/>
+    <unit id="9268" owner="1" flag="8" face="0" exp="89" str="8" bstr="5" holduntil="1"/>
   </hex>
   <hex row="21" col="35">
-    <unit id="9897" owner="1" flag="8" face="0" transport="9729" exp="195" ldr="1" bstr="5"/>
+    <unit id="9897" owner="1" flag="8" face="0" transport="9729" exp="195" ldr="1" bstr="5" holduntil="1"/>
   </hex>
   <hex row="21" col="36">
-    <unit id="8981" owner="1" flag="8" face="0" exp="28" str="8" bstr="5"/>
+    <unit id="8981" owner="1" flag="8" face="0" exp="28" str="8" bstr="5" holduntil="1"/>
   </hex>
   <hex row="21" col="37">
-    <unit id="9257" owner="1" flag="8" face="0" exp="6" str="8" bstr="5"/>
+    <unit id="9257" owner="1" flag="8" face="0" exp="6" str="8" bstr="5" holduntil="1"/>
   </hex>
   <hex row="21" col="39" road="17"/>
   <hex row="21" col="40" terrain="3">
@@ -969,7 +969,7 @@
   <hex row="22" col="17" road="18"/>
   <hex row="22" col="18" road="33"/>
   <hex row="22" col="23" road="34">
-    <unit id="7976" owner="1" flag="8" face="0" exp="170" str="11" bstr="5"/>
+    <unit id="7976" owner="1" flag="8" face="0" exp="170" str="11" bstr="5" holduntil="5"/>
   </hex>
   <hex row="22" col="24" terrain="10" road="50"/>
   <hex row="22" col="25" terrain="10"/>
@@ -981,22 +981,22 @@
   </hex>
   <hex row="22" col="30" terrain="10" name="Severskii Donets River"/>
   <hex row="22" col="32">
-    <unit id="7792" owner="1" flag="8" face="0" transport="9830" exp="22" str="9" bstr="5"/>
+    <unit id="7792" owner="1" flag="8" face="0" transport="9830" exp="22" str="9" bstr="5" holduntil="1"/>
   </hex>
   <hex row="22" col="33">
-    <unit id="9900" owner="1" flag="8" face="0" transport="9824" exp="75" str="12" bstr="5"/>
+    <unit id="9900" owner="1" flag="8" face="0" transport="9824" exp="75" str="12" bstr="5" holduntil="1"/>
   </hex>
   <hex row="22" col="34">
-    <unit id="8989" owner="1" flag="8" face="0" exp="73" str="7" bstr="5"/>
+    <unit id="8989" owner="1" flag="8" face="0" exp="73" str="7" bstr="5" holduntil="1"/>
   </hex>
   <hex row="22" col="35">
-    <unit id="8614" owner="1" flag="8" face="0" exp="60" str="7" ldr="1" bstr="5"/>
+    <unit id="8614" owner="1" flag="8" face="0" exp="60" str="7" ldr="1" bstr="5" holduntil="1"/>
   </hex>
   <hex row="22" col="36">
-    <unit id="8989" owner="1" flag="8" face="0" exp="93" str="7" bstr="5"/>
+    <unit id="8989" owner="1" flag="8" face="0" exp="93" str="7" bstr="5" holduntil="1"/>
   </hex>
   <hex row="22" col="37">
-    <unit id="9419" owner="1" flag="8" face="0" exp="17" str="7" bstr="5"/>
+    <unit id="9419" owner="1" flag="8" face="0" exp="17" str="7" bstr="5" holduntil="1"/>
   </hex>
   <hex row="22" col="39" road="33"/>
   <hex row="22" col="41" terrain="3"/>
@@ -1019,16 +1019,16 @@
   <hex row="23" col="29" terrain="10" name="Severskii Donets River"/>
   <hex row="23" col="30" terrain="10" name="Severskii Donets River"/>
   <hex row="23" col="32">
-    <unit id="7791" owner="1" flag="8" face="0" transport="9830" exp="39" str="8" bstr="5"/>
+    <unit id="7791" owner="1" flag="8" face="0" transport="9830" exp="39" str="8" bstr="5" holduntil="1"/>
   </hex>
   <hex row="23" col="34">
-    <unit id="8981" owner="1" flag="8" face="0" exp="50" str="8" bstr="5"/>
+    <unit id="8981" owner="1" flag="8" face="0" exp="50" str="8" bstr="5" holduntil="1"/>
   </hex>
   <hex row="23" col="36">
-    <unit id="9900" owner="1" flag="8" face="0" transport="9824" exp="43" str="12" bstr="5"/>
+    <unit id="9900" owner="1" flag="8" face="0" transport="9824" exp="43" str="12" bstr="5" holduntil="1"/>
   </hex>
   <hex row="23" col="37">
-    <unit id="7792" owner="1" flag="8" face="0" transport="9830" exp="35" str="9"/>
+    <unit id="7792" owner="1" flag="8" face="0" transport="9830" exp="35" str="9" holduntil="1"/>
   </hex>
   <hex row="23" col="38" road="18"/>
   <hex row="23" col="40" terrain="3">
@@ -1052,14 +1052,14 @@
     <unit id="11005" owner="1" flag="8" face="0" exp="20" ldr="1" bstr="5"/>
   </hex>
   <hex row="24" col="25">
-    <unit id="7976" owner="1" flag="8" face="0" exp="208" str="12" bstr="5"/>
+    <unit id="7976" owner="1" flag="8" face="0" exp="208" str="12" bstr="5" holduntil="5"/>
   </hex>
   <hex row="24" col="26" terrain="10" name="Severskii Donets River"/>
   <hex row="24" col="27" terrain="10" name="Severskii Donets River"/>
   <hex row="24" col="28" terrain="10" name="Severskii Donets River"/>
   <hex row="24" col="35" terrain="3"/>
   <hex row="24" col="37" terrain="3">
-    <unit id="7792" owner="1" flag="8" face="0" transport="9769" exp="241" str="9"/>
+    <unit id="7792" owner="1" flag="8" face="0" transport="9769" exp="241" str="9" holduntil="1"/>
   </hex>
   <hex row="24" col="38" road="17"/>
   <hex row="24" col="40" terrain="3"/>
@@ -1080,13 +1080,13 @@
   <hex row="25" col="25" terrain="10" name="Severskii Donets River"/>
   <hex row="25" col="26" terrain="10" name="Severskii Donets River"/>
   <hex row="25" col="28">
-    <unit id="7976" owner="1" flag="8" face="0" exp="248" str="12" bstr="5"/>
+    <unit id="7976" owner="1" flag="8" face="0" exp="248" str="12" bstr="5" holduntil="5"/>
   </hex>
   <hex row="25" col="29">
-    <unit id="9900" owner="1" flag="8" face="0" transport="9708" exp="195" str="11" bstr="5"/>
+    <unit id="9900" owner="1" flag="8" face="0" transport="9708" exp="195" str="11" bstr="5" holduntil="5"/>
   </hex>
   <hex row="25" col="30">
-    <unit id="7976" owner="1" flag="8" face="0" exp="250" str="11" bstr="5"/>
+    <unit id="7976" owner="1" flag="8" face="0" exp="250" str="11" bstr="5" holduntil="5"/>
   </hex>
   <hex row="25" col="31" road="40"/>
   <hex row="25" col="35" terrain="1" road="40" name="Melekhovo"/>
@@ -1111,7 +1111,7 @@
   <hex row="26" col="34" road="34"/>
   <hex row="26" col="35" terrain="1" name="Melekhovo"/>
   <hex row="26" col="36" terrain="1" road="130" name="Melekhovo" owner="1" flag="7" victory="1">
-    <unit id="7791" owner="1" flag="8" face="0" transport="9830" exp="252" str="8" bstr="5"/>
+    <unit id="7791" owner="1" flag="8" face="0" transport="9830" exp="252" str="8" bstr="5" holduntil="1"/>
   </hex>
   <hex row="26" col="37" terrain="10" name="Razum naya River"/>
   <hex row="26" col="38" terrain="10" name="Razum naya River"/>
@@ -1141,7 +1141,7 @@
   <hex row="27" col="27" road="34"/>
   <hex row="27" col="28" road="34"/>
   <hex row="27" col="33">
-    <unit id="7976" owner="1" flag="8" face="0" exp="180" str="11" bstr="5"/>
+    <unit id="7976" owner="1" flag="8" face="0" exp="180" str="11" bstr="5" holduntil="5"/>
   </hex>
   <hex row="27" col="34" terrain="3"/>
   <hex row="27" col="35" terrain="10" name="Razum naya River"/>
@@ -1185,17 +1185,17 @@
   <hex row="29" col="19" terrain="1" road="16" name="Belgorod"/>
   <hex row="29" col="20" terrain="1" road="136" name="Belgorod"/>
   <hex row="29" col="21" terrain="1" road="168" name="Belgorod" owner="1" flag="7" victory="1">
-    <unit id="7976" owner="1" flag="8" face="0" exp="238" str="12" bstr="5"/>
+    <unit id="7976" owner="1" flag="8" face="0" exp="238" str="12" bstr="5" holduntil="5"/>
   </hex>
   <hex row="29" col="22" terrain="3"/>
   <hex row="29" col="23" terrain="1" road="34" name="Belgorod">
-    <unit id="7976" owner="1" flag="8" face="0" exp="223" str="11" bstr="5"/>
+    <unit id="7976" owner="1" flag="8" face="0" exp="223" str="11" bstr="5" holduntil="5"/>
   </hex>
   <hex row="29" col="24" terrain="10" road="162" name="Severskii Donets River"/>
   <hex row="29" col="25" terrain="10" name="Severskii Donets River"/>
   <hex row="29" col="26" road="144"/>
   <hex row="29" col="31">
-    <unit id="9900" owner="1" flag="8" face="0" transport="9708" exp="250" str="12" bstr="5"/>
+    <unit id="9900" owner="1" flag="8" face="0" transport="9708" exp="250" str="12" bstr="5" holduntil="5"/>
   </hex>
   <hex row="29" col="34" terrain="10" name="Razum naya River"/>
   <hex row="29" col="39" terrain="3">
@@ -1215,19 +1215,19 @@
   <hex row="30" col="18" terrain="10" name="Donets River"/>
   <hex row="30" col="19" terrain="10" road="51" name="Donets River"/>
   <hex row="30" col="20" terrain="1" road="186" name="Belgorod" station="1">
-    <unit id="9480" owner="1" flag="8" face="0" transport="9769" exp="177" bstr="5"/>
+    <unit id="9480" owner="1" flag="8" face="0" transport="9769" exp="177" bstr="5" holduntil="5"/>
   </hex>
   <hex row="30" col="21" terrain="1" road="170" name="Belgorod">
-    <unit id="7976" owner="1" flag="8" face="0" exp="210" str="12" bstr="5"/>
+    <unit id="7976" owner="1" flag="8" face="0" exp="210" str="12" bstr="5" holduntil="5"/>
   </hex>
   <hex row="30" col="22" terrain="1" road="178" name="Belgorod">
-    <unit id="9899" owner="1" flag="8" face="0" transport="9708" exp="160" str="9" bstr="5"/>
+    <unit id="9899" owner="1" flag="8" face="0" transport="9708" exp="160" str="9" bstr="5" holduntil="5"/>
   </hex>
   <hex row="30" col="23" terrain="10" name="Severskii Donets River"/>
   <hex row="30" col="24" terrain="10" name="Severskii Donets River"/>
   <hex row="30" col="26" road="17"/>
   <hex row="30" col="32">
-    <unit id="7976" owner="1" flag="8" face="0" exp="153" str="11" bstr="5"/>
+    <unit id="7976" owner="1" flag="8" face="0" exp="153" str="11" bstr="5" holduntil="5"/>
   </hex>
   <hex row="30" col="33" terrain="10" name="Razum naya River"/>
   <hex row="30" col="34" terrain="10" name="Razum naya River"/>
@@ -1273,13 +1273,13 @@
   <hex row="32" col="24" road="128"/>
   <hex row="32" col="26" road="9"/>
   <hex row="32" col="27" road="136">
-    <unit id="9480" owner="1" flag="8" face="0" transport="9769" exp="185" str="9" bstr="5"/>
+    <unit id="9480" owner="1" flag="8" face="0" transport="9769" exp="185" str="9" bstr="5" holduntil="5"/>
   </hex>
   <hex row="32" col="28">
-    <unit id="9419" owner="1" flag="8" face="0" exp="40" str="8" bstr="5"/>
+    <unit id="9419" owner="1" flag="8" face="0" exp="40" str="8" bstr="5" holduntil="1"/>
   </hex>
   <hex row="32" col="30">
-    <unit id="7976" owner="1" flag="8" face="0" exp="163" str="12" bstr="5"/>
+    <unit id="7976" owner="1" flag="8" face="0" exp="163" str="12" bstr="5" holduntil="5"/>
   </hex>
   <hex row="32" col="31" terrain="10"/>
   <hex row="32" col="32" terrain="10" name="Razum naya River"/>
@@ -1304,13 +1304,13 @@
   <hex row="33" col="21" terrain="10" name="Donets River"/>
   <hex row="33" col="22" terrain="10" name="Donets River"/>
   <hex row="33" col="27">
-    <unit id="10007" owner="1" flag="8" face="0" transport="9787" exp="87" str="11" bstr="5"/>
+    <unit id="10007" owner="1" flag="8" face="0" transport="9787" exp="87" str="11" bstr="5" holduntil="5"/>
   </hex>
   <hex row="33" col="28" road="136">
-    <unit id="9900" owner="1" flag="8" face="0" transport="9708" exp="32" str="11" bstr="5"/>
+    <unit id="9900" owner="1" flag="8" face="0" transport="9708" exp="32" str="11" bstr="5" holduntil="5"/>
   </hex>
   <hex row="33" col="29" road="136">
-    <unit id="7976" owner="1" flag="8" face="0" exp="63" str="12" bstr="5"/>
+    <unit id="7976" owner="1" flag="8" face="0" exp="63" str="12" bstr="5" holduntil="5"/>
   </hex>
   <hex row="33" col="31" road="16"/>
   <hex row="33" col="32" terrain="10" name="Razum naya River"/>
@@ -1334,7 +1334,7 @@
   <hex row="34" col="21" terrain="10" name="Donets River"/>
   <hex row="34" col="23" terrain="10" name="Donets River"/>
   <hex row="34" col="28">
-    <unit id="9113" owner="1" flag="8" face="0" transport="9729" exp="61" str="9" bstr="5"/>
+    <unit id="9113" owner="1" flag="8" face="0" transport="9729" exp="61" str="9" bstr="5" holduntil="5"/>
   </hex>
   <hex row="34" col="29" road="8"/>
   <hex row="34" col="30" road="152"/>
@@ -1356,10 +1356,10 @@
   <hex row="35" col="22" terrain="10" name="Donets River"/>
   <hex row="35" col="23" terrain="10" name="Donets River"/>
   <hex row="35" col="24">
-    <unit id="7976" owner="1" flag="8" face="0" exp="6" str="11" bstr="5"/>
+    <unit id="7976" owner="1" flag="8" face="0" exp="6" str="11" bstr="5" holduntil="5"/>
   </hex>
   <hex row="35" col="26">
-    <unit id="7976" owner="1" flag="8" face="0" exp="23" str="11" bstr="5"/>
+    <unit id="7976" owner="1" flag="8" face="0" exp="23" str="11" bstr="5" holduntil="5"/>
   </hex>
   <hex row="35" col="27" terrain="10" name="Razum naya River"/>
   <hex row="35" col="28" terrain="10" name="Razum naya River"/>

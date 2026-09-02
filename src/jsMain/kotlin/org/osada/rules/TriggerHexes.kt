@@ -111,9 +111,6 @@ object TriggerHexes {
     /** *"Parameter: 0 for random (3-10), or up to 255 hexes."* */
     private val SPOT_RANDOM = 3..10
 
-    /** *"Parameter: time frame of the prototype, default 9."* */
-    private const val PROTOTYPE_DEFAULT_MONTHS = 9
-
     /** `trigger_ex = 0`, OG's stated default: the trigger is owned and only the other side fires it. */
     private const val OWNED_TRIGGERS = 0
 
@@ -198,7 +195,7 @@ object TriggerHexes {
             }
             EXPERIENCE -> gainExperience(unit, hex.triggerParam)
             LEADER -> raiseLeader(unit)
-            PROTOTYPE -> raisePrototype(player)
+            PROTOTYPE -> raisePrototype(player, hex.triggerParam)
             EXTRA_SPOT -> extraSpot(map, unit, hex.triggerParam)
             // 8 and 9 -- "Raise specific unit" / "Raise specific core", the equipment id from @22.
             //
@@ -257,17 +254,24 @@ object TriggerHexes {
     }
 
     /**
-     * 5 — *"the player receives a prototype"*.
+     * 5 — *"the player receives a prototype"*, with *"Parameter: time frame of the prototype,
+     * default 9"*.
      *
-     * The parameter is the prototype's month window and OSADA's own prototype picker
-     * (`Scenario.getRandomPrototype`) does not take one, so it is deliberately unread rather than
-     * approximated: OG's window widens the pool of candidate equipment, and inventing a widening
-     * would hand out records the author's window may exclude. [PROTOTYPE_DEFAULT_MONTHS] is
-     * recorded so the value is not lost.
+     * **The parameter is read since 2026-09-01**, when the prototype picker gained a window to
+     * take. It overrides the scenario's own [org.osada.scenario.Scenario.prototypeTimeFrameMonths]
+     * for this one award, which is what a per-trigger parameter beside a per-scenario setting means.
+     * A zero parameter is OG's "not configured": it falls through to the scenario's own window, and
+     * from there to the selection a scenario with no window uses.
+     *
+     * Until then it was deliberately unread — the picker only knew how to select next calendar
+     * year, and approximating a widening would have handed out records the author's window excludes.
      */
-    private fun raisePrototype(player: Player): Boolean {
+    private fun raisePrototype(
+        player: Player,
+        param: Int,
+    ): Boolean {
         val scenario = GameHolder.instance?.scenario?.takeIf { it.prototypesAllowed != false }
-        val eqid = scenario?.getRandomPrototype(player.country + 1) ?: 0
+        val eqid = scenario?.getRandomPrototype(player.country + 1, param.takeIf { it > 0 }) ?: 0
         return eqid > 0 && player.acquireUnit(eqid, 0)
     }
 

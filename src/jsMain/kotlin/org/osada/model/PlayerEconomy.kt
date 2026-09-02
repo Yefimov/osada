@@ -5,7 +5,9 @@ import org.osada.PlayerType
 import org.osada.hero.HeroCampaign
 import org.osada.rules.Attachments
 import org.osada.rules.CostCalculator
+import org.osada.rules.FrontsAndFactions
 import org.osada.rules.GameRules
+import org.osada.rules.PurchaseCap
 import org.osada.rules.ScenarioPurchaseList
 import org.osada.rules.calculateUnitCosts
 import org.osada.rules.calculateUnitSellCost
@@ -59,11 +61,30 @@ fun Player.buyUnit(
             // Enforced here for the same reason `Can't Buy` is: this is the one function every
             // purchase passes through, and the transport is checked for the same back-door reason.
             ScenarioPurchaseList.allows(this, eqid) &&
-            (transportEqid <= 0 || ScenarioPurchaseList.allows(this, transportEqid))
+            (transportEqid <= 0 || ScenarioPurchaseList.allows(this, transportEqid)) &&
+            // OG's Fronts/Factions as the scenario's own MASKS -- the wider of the two sources
+            // (208 deployed scenarios against 5 `.buy4` files), and a separate layer rather than a
+            // replacement (`rules/FrontsAndFactions`). The transport is checked for the same
+            // back-door reason the whitelist checks it.
+            FrontsAndFactions.admitsForPurchase(this, eqid) &&
+            (transportEqid <= 0 || FrontsAndFactions.admitsForPurchase(this, transportEqid)) &&
+            // OG's pool classes: an air or naval transport comes from the per-player pool, not the
+            // shop, wherever the scenario authored its pools at all.
+            FrontsAndFactions.poolClassPurchasable(this, eqid) &&
+            // OG's purchase cap. Checked here as well as by the equipment window and the AI, for
+            // the same reason `Can't Buy` is: this is the one function every purchase passes
+            // through, a replayed multiplayer order included (`rules/PurchaseCap`).
+            PurchaseCap.allows(this)
     val cost = GameRules.calculateUnitCosts(eqid, transportEqid)
     val affordable = offered && cost <= prestige
     val acquired = affordable && acquireUnit(eqid, transportEqid)
-    if (acquired) prestige -= cost
+    if (acquired) {
+        prestige -= cost
+        // Booked only on a purchase. `acquireUnit` is deliberately left alone: the prototype award
+        // and campaign carry-over hand out formations without buying them, and the cap counts what
+        // the player ADDS by purchase.
+        PurchaseCap.recordPurchase(this)
+    }
     return acquired
 }
 
@@ -127,7 +148,14 @@ fun Player.upgradeUnit(
     transportEqid: Int,
 ): Boolean {
     val listed =
-        ScenarioPurchaseList.allows(this, newEqid) && ScenarioPurchaseList.allows(this, transportEqid)
+        ScenarioPurchaseList.allows(this, newEqid) &&
+            ScenarioPurchaseList.allows(this, transportEqid) &&
+            // *"buy new units **or upgrade existing ones**"* -- the masks gate both halves of
+            // OpenSuite's own sentence, exactly as the resolved `.buy4` list does. The pool-class
+            // filter is deliberately NOT applied to an upgrade: it says where a transport comes
+            // from, not what a formation may become.
+            FrontsAndFactions.admitsForPurchase(this, newEqid) &&
+            FrontsAndFactions.admitsForPurchase(this, transportEqid)
     val cost = GameRules.calculateUpgradeCosts(unit, newEqid, transportEqid)
     if (!listed || cost > prestige || !unit.upgrade(newEqid, transportEqid)) return false
     prestige -= cost

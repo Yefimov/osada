@@ -54,6 +54,15 @@ object ScenarioLoader {
 
     private val loadedScenarios: MutableMap<String, Document> = mutableMapOf()
 
+    /**
+     * The parsed XML of a scenario already fetched in this session, or null.
+     *
+     * Exposed for [AuthoredOptionsBackfill], which needs the authored options of a save that never
+     * wrote them down. A battle started and then reloaded in the same session is already here, so
+     * the common back-fill costs no second request.
+     */
+    internal fun cachedDocument(file: String): Document? = loadedScenarios[file]
+
     fun loadScenario(scenario: Scenario) {
         val file = scenario.file ?: return onLoadError(scenario)
         val path = SCENARIO_PATH + file + if (noCache) "?_=" + Date().getTime() else ""
@@ -129,59 +138,14 @@ object ScenarioLoader {
         scenario.atmosferic = mapElement.getAttribute("atmosferic")?.toIntOrNull() ?: 0
         scenario.latitude = mapElement.getAttribute("latitude")?.toIntOrNull() ?: 0
         scenario.ground = mapElement.getAttribute("ground")?.toIntOrNull() ?: 0
-        scenario.weatherCanChangeGround = (mapElement.getAttribute("weatherchg")?.toIntOrNull() ?: 0) != 0
-        parseAuthoredOptions(scenario, mapElement)
+        // OG's per-scenario Game-Settings switches, and the weather/ground link beside them. The
+        // attribute-to-field table lives in `AuthoredScenarioOptions` because a save has to write
+        // and read exactly the same set -- see that object for why an ABSENT attribute stays null.
+        AuthoredScenarioOptions.parse(scenario, mapElement)
         scenario.iconset = mapElement.getAttribute("iconset")?.toIntOrNull() ?: 0
         scenario.lockedEffectiveIconset = scenario.effectiveIconset
         scenario.turnsPerDay = (mapElement.getAttribute("dayturns")?.toIntOrNull() ?: 1) * 2
         scenario.map.terrainImage = mapElement.getAttribute("image") ?: ""
-    }
-
-    /**
-     * OG's per-scenario Game-Settings switches (`Scenario.canBuild` and friends), imported
-     * 2026-08-26.
-     *
-     * An ABSENT attribute stays `null` rather than becoming `false`: 105 of the 502 deployed
-     * scenarios name a source this project could not read or find, and reading their silence as
-     * "the author forbade it" would switch a mechanic off for them alone.
-     */
-    private fun parseAuthoredOptions(
-        scenario: Scenario,
-        mapElement: Element,
-    ) {
-        fun flag(name: String): Boolean? = mapElement.getAttribute(name)?.toIntOrNull()?.let { it != 0 }
-        scenario.canBuild = flag("canbuild")
-        scenario.canBlow = flag("canblow")
-        scenario.canRepair = flag("canrepair")
-        scenario.extendedLos = flag("extlos")
-        scenario.trueDirectLof = flag("truedlof")
-        scenario.unitsBlockLof = flag("unitsblocklof")
-        scenario.barrageAllowed = flag("barrage")
-        scenario.airZoc = flag("airzoc")
-        scenario.airMissions = flag("airmissions")
-        scenario.extendedNaval = flag("extnaval")
-        // Three more of OG's own Game Settings, deployed 2026-08-28 once each had a rule to read it
-        // (`docs/og-fidelity-plan.md` §AD). `add_scenario_options.py`'s standing policy is that an
-        // attribute nothing reads is a promise nothing keeps, so these arrived with their readers.
-        scenario.airIntercept = flag("airintercept")
-        scenario.portsNoSupply = flag("portsnosupply")
-        scenario.portsNoNavalDeploy = flag("portsnonavaldeploy")
-        scenario.prototypesAllowed = flag("prototypes")
-        scenario.subsNeedLineOfFire = flag("subsneedlof")
-        // Four more, deployed 2026-08-30 under the same policy -- each arrived with its reader.
-        // They are the largest authored options that had none: 295 / 295 / 202 / 197 scenarios.
-        scenario.trueRangeZero = flag("truerange0")
-        scenario.trueSpottingZero = flag("truespotting0")
-        scenario.reinforcementsWhenActive = flag("reinfwhenactive")
-        scenario.capitalShipsAsFlak = flag("capitalflak")
-        scenario.useBasicStrength = flag("basicstrength")
-        scenario.typedVictoryHexes = flag("typedvh")
-        // OG's "EH for MSU only" (2026-08-31), deployed with its reader like everything above it:
-        // `rules/ExtendedVictory.canWithdrawThrough`. 15 deployed scenarios.
-        scenario.escapeHexesForMsuOnly = flag("ehmsuonly")
-        // OG's "avoid paratroop drops on ocean", deployed INVERTED as a permission like
-        // `prototypes` and `subsneedlof`: read by `rules/EmbarkRules`. 19 deployed scenarios.
-        scenario.paradropOnOceanAllowed = flag("paradropocean")
     }
 
     /** The scenario/operation name lives on the <map name="…"> attribute. Standalone scenarios

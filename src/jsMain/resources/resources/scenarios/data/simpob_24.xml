@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="ASCII"?>
 <map file="simpob_24.xscn" name="Crying souls: The Ice March (I)
 
-" turns="10, 14, 17" date="January 4, 1920" dayturns="0" ground="1" atmosferic="3" latitude="2" iconset="1" weatherchg="0" rows="22" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_1434.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="0" capitalflak="0" ehmsuonly="0" paradropocean="1">
-  <player id="0" country="100" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="99" defaultstr="0" support="0,0,0,0" turnprestige="0, 0, 40, 40, 40, 40, 40, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
-  <player id="1" country="189" side="0" airtrans="0" navaltrans="0" railtrans="5" defaultxp="244" defaultstr="0" support="104,190,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+" turns="10, 14, 17" date="January 4, 1920" dayturns="0" ground="1" atmosferic="3" latitude="2" iconset="1" weatherchg="0" rows="22" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_1434.png" eqpv="united1" prototimeframe="0" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="0" capitalflak="0" ehmsuonly="0" paradropocean="1" coresoffcap="1" music="campsimpob.mp3">
+  <player id="0" country="100" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="99" defaultstr="0" support="0,0,0,0" turnprestige="0, 0, 40, 40, 40, 40, 40, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="54:0:5"/>
+  <player id="1" country="189" side="0" airtrans="0" navaltrans="0" railtrans="5" defaultxp="244" defaultstr="0" support="104,190,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="75:0:7,20:0:0"/>
   <hex row="0" col="1" terrain="3"/>
   <hex row="0" col="2" terrain="3"/>
   <hex row="0" col="3" terrain="3"/>
@@ -76,10 +76,10 @@
   <hex row="2" col="26" terrain="3"/>
   <hex row="2" col="27" terrain="3"/>
   <hex row="2" col="28" terrain="3">
-    <unit id="42268" owner="1" flag="104" face="0" transport="42344" exp="244" ldr="1"/>
+    <unit id="42268" owner="1" flag="104" face="0" transport="42344" exp="244" ldr="1" fearless="1" objcol="18" objrow="0"/>
   </hex>
   <hex row="2" col="31">
-    <unit id="42268" owner="1" flag="104" face="0" transport="42344" exp="244" ldr="1"/>
+    <unit id="42268" owner="1" flag="104" face="0" transport="42344" exp="244" ldr="1" fearless="1" objcol="18" objrow="0"/>
   </hex>
   <hex row="2" col="33" terrain="10" name="Yenisei"/>
   <hex row="2" col="34" terrain="10" name="Yenisei"/>
@@ -116,13 +116,13 @@
   <hex row="3" col="43" terrain="3"/>
   <hex row="4" col="1" road="40"/>
   <hex row="4" col="3" road="40">
-    <unit id="42397" owner="1" flag="104" face="0" transport="42349" exp="44"/>
+    <unit id="42397" owner="1" flag="104" face="0" transport="42349" exp="44" objfrom="2" followpos="1"/>
   </hex>
   <hex row="4" col="4">
-    <unit id="42271" owner="1" flag="104" face="0" transport="42344" exp="184"/>
+    <unit id="42271" owner="1" flag="104" face="0" transport="42344" exp="184" fearless="1" objcol="11" objrow="0"/>
   </hex>
   <hex row="4" col="5" road="34">
-    <unit id="42305" owner="1" flag="104" face="0" exp="144"/>
+    <unit id="42305" owner="1" flag="104" face="0" exp="144" objcol="11" objrow="0"/>
   </hex>
   <hex row="4" col="6" terrain="3" road="40"/>
   <hex row="4" col="7" road="130"/>
@@ -133,7 +133,7 @@
   <hex row="4" col="12" terrain="3"/>
   <hex row="4" col="21" road="49"/>
   <hex row="4" col="27">
-    <unit id="42268" owner="1" flag="104" face="0" transport="42344" exp="244"/>
+    <unit id="42268" owner="1" flag="104" face="0" transport="42344" exp="244" fearless="1" objcol="18" objrow="0"/>
   </hex>
   <hex row="4" col="31" terrain="10" name="Yenisei"/>
   <hex row="4" col="32" terrain="10" name="Yenisei"/>
@@ -150,7 +150,7 @@
   <hex row="5" col="2" terrain="3" road="130"/>
   <hex row="5" col="3" terrain="3"/>
   <hex row="5" col="4" road="130">
-    <unit id="42271" owner="1" flag="104" face="0" transport="42344" exp="18" ldr="1"/>
+    <unit id="42271" owner="1" flag="104" face="0" transport="42344" exp="18" ldr="1" fearless="1" objcol="11" objrow="0" ordinal="2"/>
   </hex>
   <hex row="5" col="5" terrain="3"/>
   <hex row="5" col="6" terrain="3"/>
@@ -162,7 +162,7 @@
   <hex row="5" col="31" terrain="10" name="Yenisei"/>
   <hex row="5" col="33" rail="18"/>
   <hex row="5" col="34" rail="33">
-    <unit id="42269" owner="1" flag="104" face="0" transport="42344" exp="244" ldr="1"/>
+    <unit id="42269" owner="1" flag="104" face="0" transport="42344" exp="244" ldr="1" objcol="23" objrow="0"/>
   </hex>
   <hex row="5" col="36" terrain="3"/>
   <hex row="5" col="37" terrain="3"/>
@@ -189,7 +189,7 @@
   <hex row="6" col="29" terrain="10" name="Yenisei"/>
   <hex row="6" col="30" terrain="10" name="Yenisei"/>
   <hex row="6" col="33" rail="33">
-    <unit id="42268" owner="1" flag="104" face="0" transport="42344" exp="244"/>
+    <unit id="42268" owner="1" flag="104" face="0" transport="42344" exp="244" objcol="23" objrow="0"/>
   </hex>
   <hex row="6" col="35" terrain="3"/>
   <hex row="6" col="36" terrain="3"/>
@@ -203,7 +203,7 @@
   <hex row="7" col="1" terrain="3" rail="130"/>
   <hex row="7" col="2" terrain="3" rail="40"/>
   <hex row="7" col="3" rail="130">
-    <unit id="42271" owner="1" flag="104" face="0" transport="42344" exp="68" ldr="1"/>
+    <unit id="42271" owner="1" flag="104" face="0" transport="42344" exp="68" ldr="1" fearless="1" objcol="11" objrow="0"/>
   </hex>
   <hex row="7" col="4" terrain="3" rail="48"/>
   <hex row="7" col="6" terrain="3"/>
@@ -216,7 +216,7 @@
   <hex row="7" col="28" terrain="10" name="Yenisei"/>
   <hex row="7" col="29" terrain="10" name="Yenisei"/>
   <hex row="7" col="31" terrain="1" road="187" rail="34">
-    <unit id="42268" owner="1" flag="104" face="0" transport="42344" exp="244"/>
+    <unit id="42268" owner="1" flag="104" face="0" transport="42344" exp="244" fearless="1" objcol="23" objrow="0"/>
   </hex>
   <hex row="7" col="32" rail="34"/>
   <hex row="7" col="33" terrain="3"/>
@@ -230,7 +230,7 @@
   <hex row="8" col="0" terrain="3"/>
   <hex row="8" col="1" terrain="3"/>
   <hex row="8" col="3" terrain="3">
-    <unit id="42271" owner="1" flag="104" face="0" transport="42344" exp="154"/>
+    <unit id="42271" owner="1" flag="104" face="0" transport="42344" exp="154" objcol="11" objrow="0"/>
   </hex>
   <hex row="8" col="4" terrain="3" rail="9"/>
   <hex row="8" col="5" rail="136"/>
@@ -347,7 +347,7 @@
   <hex row="11" col="1" road="40"/>
   <hex row="11" col="2" terrain="3"/>
   <hex row="11" col="3" road="34">
-    <unit id="42271" owner="1" flag="104" face="0" transport="42344" exp="244" ldr="1"/>
+    <unit id="42271" owner="1" flag="104" face="0" transport="42344" exp="244" ldr="1" fearless="1" objcol="11" objrow="0" ordinal="3"/>
   </hex>
   <hex row="11" col="4" road="40"/>
   <hex row="11" col="5" road="130"/>
@@ -397,7 +397,7 @@
   <hex row="12" col="1" terrain="3"/>
   <hex row="12" col="2" terrain="3" road="130"/>
   <hex row="12" col="3" terrain="3">
-    <unit id="42326" owner="1" flag="104" face="0" transport="42344" exp="244"/>
+    <unit id="42326" owner="1" flag="104" face="0" transport="42344" exp="244" objcol="11" objrow="0"/>
   </hex>
   <hex row="12" col="4" terrain="3"/>
   <hex row="12" col="5" terrain="3"/>
@@ -441,10 +441,10 @@
   <hex row="12" col="43" terrain="3"/>
   <hex row="13" col="0" terrain="3"/>
   <hex row="13" col="2">
-    <unit id="42370" owner="1" flag="104" face="0" transport="42356" exp="44"/>
+    <unit id="42370" owner="1" flag="104" face="0" transport="42356" exp="44" objfrom="3" followpos="1"/>
   </hex>
   <hex row="13" col="3">
-    <unit id="42271" owner="1" flag="104" face="0" transport="42344" exp="144"/>
+    <unit id="42271" owner="1" flag="104" face="0" transport="42344" exp="144" fearless="1" objcol="11" objrow="0"/>
   </hex>
   <hex row="13" col="5" terrain="5"/>
   <hex row="13" col="7" terrain="3"/>
@@ -514,7 +514,7 @@
   <hex row="15" col="2" terrain="5"/>
   <hex row="15" col="3" terrain="10" name="Biryusa"/>
   <hex row="15" col="4" terrain="5">
-    <unit id="42268" owner="1" flag="104" face="0" transport="42344" exp="244" ldr="1"/>
+    <unit id="42268" owner="1" flag="104" face="0" transport="42344" exp="244" ldr="1" fearless="1" objcol="11" objrow="0"/>
   </hex>
   <hex row="15" col="5" terrain="5"/>
   <hex row="15" col="6" terrain="3"/>
@@ -627,7 +627,7 @@
   <hex row="18" col="6" terrain="10" name="Yenisei"/>
   <hex row="18" col="7" terrain="10" name="Yenisei"/>
   <hex row="18" col="8" terrain="5">
-    <unit id="42268" owner="1" flag="104" face="0" transport="42344" exp="244"/>
+    <unit id="42268" owner="1" flag="104" face="0" transport="42344" exp="244" objcol="11" objrow="0"/>
   </hex>
   <hex row="18" col="9" terrain="5"/>
   <hex row="18" col="10" terrain="5"/>
@@ -664,7 +664,7 @@
   <hex row="19" col="9" terrain="5"/>
   <hex row="19" col="10" terrain="5"/>
   <hex row="19" col="11" terrain="5">
-    <unit id="42268" owner="1" flag="104" face="0" transport="42344" exp="244"/>
+    <unit id="42268" owner="1" flag="104" face="0" transport="42344" exp="244" fearless="1" objcol="11" objrow="0"/>
   </hex>
   <hex row="19" col="12" terrain="5"/>
   <hex row="19" col="13" terrain="10" name="Mana"/>

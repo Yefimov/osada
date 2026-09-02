@@ -256,10 +256,26 @@ object Leaders {
         return if (chance > LEADER_CHANCE_THRESHOLD) generateLeader(unit) else -1
     }
 
+    /**
+     * The led formation's **class attribute** -- OG's second leader trait, the one fixed by unit
+     * class rather than picked per formation (`docs/leaders.md` §1).
+     *
+     * Derived from the class list by default, and **overridden by the scenario author when
+     * [GameUnit.leaderClassTrait] is set**: that is OG's `.xscn` unit `@37`, the Suite's *"According
+     * unit's class"* selector, whose zero means exactly this function's derivation and whose
+     * non-zero value is the author choosing a different signature for this one formation. 1,401
+     * formations across the corpus override it.
+     *
+     * The override is honoured even when the named trait is not in the unit's class pool: the
+     * author is overriding the class, so filtering by the class would make the field a no-op
+     * wherever it actually says something. It is still gated on the formation HAVING a leader,
+     * because OG's second attribute belongs to a leader and the derived case always was.
+     */
     fun getUnitClassLeader(unit: GameUnit?): Int {
         if (unit == null || unit.leader == -1) return -1
-        val leaders = unitClassLeaders[unit.unitData().uclass]
-        return leaders?.firstOrNull()?.value ?: -1
+        return unit.leaderClassTrait.takeIf { it > 0 }
+            ?: unitClassLeaders[unit.unitData().uclass]?.firstOrNull()?.value
+            ?: -1
     }
 
     fun getUnitLeaderDescriptions(unit: GameUnit?): List<Pair<String, String>> {

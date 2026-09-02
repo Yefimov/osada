@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="aljf_12.xscn" name="Take Fredericksburg" turns="16, 20, 24" date="December 13, 1862" dayturns="0" ground="0" atmosferic="0" latitude="15" iconset="0" weatherchg="0" rows="38" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_1422.png" eqpv="united1" msuunits="0, 1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="1" airintercept="0" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="0" typedvh="0" truerange0="0" truespotting0="0" reinfwhenactive="0" capitalflak="0" ehmsuonly="0" paradropocean="1">
+<map file="aljf_12.xscn" name="Take Fredericksburg" turns="16, 20, 24" date="December 13, 1862" dayturns="0" ground="0" atmosferic="0" latitude="15" iconset="0" weatherchg="0" rows="38" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_1422.png" eqpv="united1" msuunits="0, 1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="1" airintercept="0" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="0" typedvh="0" truerange0="0" truespotting0="0" reinfwhenactive="0" capitalflak="0" ehmsuonly="0" paradropocean="1" coresoffcap="0">
   <player id="0" country="162" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="163,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <player id="1" country="150" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="151,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <hex row="0" col="1" terrain="3"/>
@@ -757,10 +757,10 @@
   <hex row="21" col="30" terrain="16"/>
   <hex row="21" col="31" terrain="10" name="Rappahannock River"/>
   <hex row="21" col="32" terrain="5" road="9" name="Stafford Heights">
-    <unit id="45954" owner="0" flag="163" face="0" transport="45990" exp="103"/>
+    <unit id="45954" owner="0" flag="163" face="0" transport="45990" exp="103" core="1"/>
   </hex>
   <hex row="21" col="33" road="136">
-    <unit id="45954" owner="0" flag="163" face="0" transport="45990" exp="226" ldr="1"/>
+    <unit id="45954" owner="0" flag="163" face="0" transport="45990" exp="226" ldr="1" core="1"/>
   </hex>
   <hex row="21" col="34" terrain="5" name="Stafford Heights"/>
   <hex row="21" col="35" terrain="5" name="Stafford Heights"/>
@@ -796,7 +796,7 @@
   <hex row="22" col="33" terrain="3"/>
   <hex row="22" col="34" road="136" deploy="0"/>
   <hex row="22" col="35" terrain="5" road="144" name="Stafford Heights">
-    <unit id="45954" owner="0" flag="163" face="0" transport="45990" exp="128"/>
+    <unit id="45954" owner="0" flag="163" face="0" transport="45990" exp="128" core="1"/>
   </hex>
   <hex row="22" col="36" terrain="5" name="Stafford Heights"/>
   <hex row="22" col="38" terrain="3"/>
@@ -826,7 +826,7 @@
   <hex row="23" col="31" terrain="10" name="Rappahannock River"/>
   <hex row="23" col="32" terrain="16"/>
   <hex row="23" col="35" road="17">
-    <unit id="45954" owner="0" flag="163" face="0" transport="45990" exp="114"/>
+    <unit id="45954" owner="0" flag="163" face="0" transport="45990" exp="114" core="1"/>
   </hex>
   <hex row="23" col="36" terrain="5" name="Stafford Heights"/>
   <hex row="23" col="37" terrain="3"/>

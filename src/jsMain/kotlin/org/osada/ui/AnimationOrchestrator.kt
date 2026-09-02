@@ -192,7 +192,7 @@ internal class AnimationOrchestrator(
             GameRules.getDirection(supportPos.row, supportPos.col, attackerPos.row, attackerPos.col)
                 ?: support.facing
         supportAnimType?.let {
-            ui.render.addAnimation(supportPos.row, supportPos.col, it, supportDir)
+            ui.render.addAnimation(supportPos.row, supportPos.col, it, supportDir, support)
         }
     }
 
@@ -246,7 +246,7 @@ internal class AnimationOrchestrator(
                 CombatLog.addSurrender(defender, surrenderPos, captorSide, prestige)
             }
             surrenderPos?.let {
-                ui.render.addAnimation(it.row, it.col, "explosion", 0)
+                ui.render.addAnimation(it.row, it.col, "explosion", 0, defender)
                 ui.showAlert(it.row, it.col, "Surrendered", false)
                 // Named distinctly from an ordinary kill: the player needs to see that cutting off
                 // the retreat is what did it, not damage — and what it earned.
@@ -270,7 +270,7 @@ internal class AnimationOrchestrator(
                 GameRules.getDirection(attackerPos.row, attackerPos.col, defenderPos.row, defenderPos.col)
                     ?: attacker.facing
             attackerAnimType?.let {
-                ui.render.addAnimation(attackerPos.row, attackerPos.col, it, attackDir)
+                ui.render.addAnimation(attackerPos.row, attackerPos.col, it, attackDir, attacker)
             }
 
             if (!defender.destroyed && result.defcanfire) {
@@ -279,13 +279,17 @@ internal class AnimationOrchestrator(
                     GameRules.getDirection(defenderPos.row, defenderPos.col, attackerPos.row, attackerPos.col)
                         ?: defender.facing
                 defenderAnimType?.let {
-                    ui.render.addAnimation(defenderPos.row, defenderPos.col, it, defendDir)
+                    ui.render.addAnimation(defenderPos.row, defenderPos.col, it, defendDir, defender)
                 }
             }
         }
 
-        if (attacker.destroyed) ui.render.addAnimation(attackerPos.row, attackerPos.col, "explosion", 0)
-        if (defender.destroyed) ui.render.addAnimation(defenderPos.row, defenderPos.col, "explosion", 0)
+        if (attacker.destroyed) {
+            ui.render.addAnimation(attackerPos.row, attackerPos.col, "explosion", 0, attacker)
+        }
+        if (defender.destroyed) {
+            ui.render.addAnimation(defenderPos.row, defenderPos.col, "explosion", 0, defender)
+        }
     }
 
     private fun animationCallback(onComplete: () -> Unit): dynamic {

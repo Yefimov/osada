@@ -4,6 +4,7 @@ import org.osada.model.Cell
 import org.osada.model.GameUnit
 import org.osada.model.getAttackableUnit
 import org.osada.model.getUnits
+import org.osada.rules.AiOrders
 import org.osada.rules.GameRules
 import org.osada.rules.calculateCombatResults
 import org.osada.rules.canInitiateAttack
@@ -45,12 +46,22 @@ internal object AIAttackEvaluation {
     ): AttackResult {
         var score = if (enemyState?.isAttacked == true) ALREADY_ATTACKED_BONUS else 0
         val combat = GameRules.calculateCombatResults(attacker, defender, state.map.getUnits().toList(), true, true)
+        // OG's **Fearless** (`.xscn` unit @50 bit 0): the AI discards this formation's own expected
+        // casualties when valuing the attack. Applied at the two -- and only the two -- places the
+        // valuation consults them, so the attack is still resolved and the losses still taken
+        // (`rules/AiOrders`).
+        val expectedLosses = if (AiOrders.ignoresOwnLosses(attacker)) 0 else combat.losses
         score +=
-            combat.kills * killTable[defender.unitData().uclass] - combat.losses * lossTable[attacker.unitData().uclass]
+            combat.kills * killTable[defender.unitData().uclass] -
+            expectedLosses * lossTable[attacker.unitData().uclass]
         val kills = combat.kills
 
+        // Byte for byte the old expression with `combat.losses` substituted, so a formation that is
+        // not Fearless behaves exactly as before -- including the zero-loss case, where the division
+        // is Infinity and the veto correctly does not fire.
         val tooCostly =
-            combat.losses >= attacker.strength || attacker.strength.toDouble() / combat.losses < ATTACK_LOSS_RATIO_LIMIT
+            expectedLosses >= attacker.strength ||
+                attacker.strength.toDouble() / expectedLosses < ATTACK_LOSS_RATIO_LIMIT
         if (tooCostly) {
             return if (fullOnly) AttackResult(score, kills) else AttackResult(CANCELLED_ATTACK_SCORE, kills)
         }

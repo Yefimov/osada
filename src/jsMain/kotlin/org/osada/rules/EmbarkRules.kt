@@ -101,8 +101,7 @@ internal object EmbarkRules {
      * same inversion `prototypes` and `subsneedlof` use, so a scenario whose source could not be
      * read keeps exactly the behaviour it had.
      */
-    private fun oceanParadropForbidden(): Boolean =
-        GameHolder.instance?.scenario?.paradropOnOceanAllowed == false
+    private fun oceanParadropForbidden(): Boolean = GameHolder.instance?.scenario?.paradropOnOceanAllowed == false
 
     fun canEmbark(
         map: GameMap,

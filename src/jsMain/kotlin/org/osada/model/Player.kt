@@ -86,6 +86,68 @@ class Player {
      * equipment ids the author left this player able to buy or upgrade into.
      */
     var purchaseList: Set<Int>? = null
+
+    /**
+     * OG's **purchase cap** for this player — how many NET-NEW units the author lets them buy.
+     * Scenario attribute `purchasecap`, from `.xscn` player record `+35`, switched on by
+     * `opt_purchase_cap` (`@1016` bit 4) and imported only when that bit is set.
+     *
+     * **Null means uncapped**, which is 490 of the 502 deployed scenarios. **Zero is not null**:
+     * with the switch on it is the author forbidding growth, and `EFILE_KAISER/rhu190613` says so
+     * in prose — *"You can repurchase only the lost units."* So a cap of 0 still permits replacing
+     * a loss; the cap counts net-new formations, not purchases and not prestige. It is unrelated
+     * to the tutorial's army-value/Jensen prestige ceiling.
+     *
+     * **Enforced since 2026-09-01** by [org.osada.rules.PurchaseCap], which owns the two counters
+     * below and the reason they are counters rather than a live expression.
+     */
+    var purchaseCap: Int? = null
+
+    /**
+     * Growth slots this player has spent in THIS scenario -- purchases (and author-added core
+     * formations) that were not paid for out of a replacement credit.
+     *
+     * Per-player, per-scenario, and serialized: a counter that did not survive a save would make
+     * reloading a way to restore spent slots. Reset by [setPlayerToHQ] at the scenario transition,
+     * beside the other per-scenario authored values. Meaningless while [purchaseCap] is null, and
+     * left at zero there.
+     */
+    var purchaseGrowthSpent: Int = 0
+
+    /**
+     * Un-replaced losses this player may buy back WITHOUT spending a growth slot -- OG's *"you can
+     * repurchase only the lost units"*. Minted by the death sweep, spent by the next purchase.
+     *
+     * Same lifetime and same reasons as [purchaseGrowthSpent].
+     */
+    var replacementCredits: Int = 0
+
+    /**
+     * OG's five **Fronts / Factions** slots for this player, in OG's own slot order -- the scenario
+     * half of the mechanic `rules/FrontsAndFactions` resolves. Empty means unrestricted, which is
+     * every player of the 294 deployed scenarios that author no mask.
+     *
+     * A LIST rather than a map: OG permits the same country in more than one support slot. See
+     * [FrontFactionSlot].
+     *
+     * Not exported: [Player] is `@JsExport` and a list of a Kotlin data class is not an exportable
+     * type. No JS caller wants it either -- the masks are engine data with one reader.
+     */
+    @JsExport.Ignore
+    var frontFactionSlots: List<FrontFactionSlot> = emptyList()
+
+    /**
+     * Whether the SCENARIO authored this player's non-organic transport pools at all -- as opposed
+     * to authoring them as zero.
+     *
+     * Every OG-sourced scenario writes all three pool attributes, zero included, because
+     * `tools/og-import/add_transport_pools.py` deploys the bytes unconditionally. Panzer Marshal's
+     * own inherited campaigns write none. The two are indistinguishable once parsed
+     * ([airTransports] is 0 either way), and they must not be: under OG an air or naval transport
+     * comes from the pool and is never in the shop, while PM's campaigns have always bought them.
+     * `rules/FrontsAndFactions.poolClassPurchasable` is the one reader.
+     */
+    var transportPoolsAuthored: Boolean = false
     var supportCountries: MutableList<Int> = mutableListOf()
     var prestigePerTurn: MutableList<Int> = mutableListOf()
 
@@ -156,6 +218,11 @@ class Player {
         railTransportsMax = 0
         defaultExperience = 0
         defaultStrength = 0
+        // OG's purchase cap is per SCENARIO. Both counters reset here, beside the other authored
+        // per-scenario values, so a cap spent in one battle does not follow the army into the next.
+        purchaseCap = null
+        purchaseGrowthSpent = 0
+        replacementCredits = 0
         val iter = coreUnits.iterator()
         while (iter.hasNext()) {
             val unit = iter.next()
@@ -208,6 +275,12 @@ class Player {
             railTransportsMax = other.railTransportsMax
             defaultExperience = other.defaultExperience
             defaultStrength = other.defaultStrength
+            purchaseCap = other.purchaseCap
+            purchaseList = other.purchaseList
+            frontFactionSlots = other.frontFactionSlots
+            transportPoolsAuthored = other.transportPoolsAuthored
+            purchaseGrowthSpent = other.purchaseGrowthSpent
+            replacementCredits = other.replacementCredits
             supportCountries.clear()
             supportCountries.addAll(other.supportCountries)
             prestigePerTurn.clear()

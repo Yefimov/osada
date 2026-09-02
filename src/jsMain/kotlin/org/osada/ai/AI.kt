@@ -12,6 +12,7 @@ import org.osada.model.buyUnit
 import org.osada.model.deployPlayerUnit
 import org.osada.model.getDeployHexes
 import org.osada.model.getUnits
+import org.osada.rules.AiOrders
 import org.osada.rules.GameRules
 import org.osada.rules.canResupply
 import org.osada.rules.getMoveRange
@@ -150,8 +151,12 @@ class AI(
 
     private fun considerMove(aiUnit: AIUnit) {
         val unit = aiUnit.unit
+        // The scenario author's own orders: Anchored, and Hold-until-turn-N. They constrain THIS
+        // planner and nothing else -- a human commanding the same formation keeps the Move button
+        // (`rules/AiOrders`).
+        val orderedToStay = !AiOrders.mayMove(unit, map.turn)
         val moveRange =
-            if (aiUnit.didMove || aiUnit.didResupplyReinforce) {
+            if (aiUnit.didMove || aiUnit.didResupplyReinforce || orderedToStay) {
                 emptyArray<ExtendedCell>()
             } else {
                 GameRules.getMoveRange(map, unit)

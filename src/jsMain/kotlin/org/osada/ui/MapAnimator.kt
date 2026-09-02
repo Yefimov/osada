@@ -30,11 +30,20 @@ internal class MapAnimator(
         animationChain.start(callback)
     }
 
+    /**
+     * Queues one canvas animation at [row]/[col].
+     *
+     * [unit] is optional and exists for one reason: OG picks the attack and destruction sound per
+     * EQUIPMENT RECORD, so when the caller knows whose animation this is, the unit's own sound can
+     * replace the animation's class sound (`ui/OgSoundLibrary`). Passing null -- and the shipped
+     * state where no OG audio is present -- keeps exactly the class sound this always played.
+     */
     fun addAnimation(
         row: Int,
         col: Int,
         type: String,
         direction: Int,
+        unit: GameUnit? = null,
     ): Boolean {
         val factory = getAnimationSprite(type) ?: return false
         val sprite = factory()
@@ -48,6 +57,12 @@ internal class MapAnimator(
                 y,
                 sprite,
                 directionToRadians[direction],
+                soundOverride =
+                    if (type == "explosion") {
+                        OgSoundLibrary.deathSprite(unit)
+                    } else {
+                        OgSoundLibrary.attackSprite(unit)
+                    },
             )
         animationChain.add(anim)
         return true

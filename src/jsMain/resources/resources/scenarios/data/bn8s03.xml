@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="bn8s03.xscn" name="Retreat to Montenegro" turns="12, 14, 18" date="December 2, 1941" dayturns="0" ground="0" atmosferic="0" latitude="6" iconset="0" weatherchg="0" rows="27" cols="25" eqp="eqp-lxf" image="resources/maps/images/map_844.png" eqpv="united1" retreatunits="0, 3" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="1" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1" ehmsuonly="0" paradropocean="1">
-  <player id="0" country="43" side="1" airtrans="0" navaltrans="2" railtrans="0" defaultxp="25" defaultstr="10" support="0,0,0,0" turnprestige="0, 24, 48, 60, 84, 96, 96, 84, 60, 48, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
-  <player id="1" country="67" side="0" airtrans="1" navaltrans="2" railtrans="0" defaultxp="100" defaultstr="10" support="8,13,68,0" turnprestige="96, 96, 96, 48, 48, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+<map file="bn8s03.xscn" name="Retreat to Montenegro" turns="12, 14, 18" date="December 2, 1941" dayturns="0" ground="0" atmosferic="0" latitude="6" iconset="0" weatherchg="0" rows="27" cols="25" eqp="eqp-lxf" image="resources/maps/images/map_844.png" eqpv="united1" retreatunits="0, 3" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="1" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1" ehmsuonly="0" paradropocean="1" coresoffcap="0">
+  <player id="0" country="43" side="1" airtrans="0" navaltrans="2" railtrans="0" defaultxp="25" defaultstr="10" support="0,0,0,0" turnprestige="0, 24, 48, 60, 84, 96, 96, 84, 60, 48, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="44:0:67384224"/>
+  <player id="1" country="67" side="0" airtrans="1" navaltrans="2" railtrans="0" defaultxp="100" defaultstr="10" support="8,13,68,0" turnprestige="96, 96, 96, 48, 48, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="68:0:67380224"/>
   <reinforce turn="2">
     <at row="1" col="16">
-      <unit id="8222" owner="1" flag="8" face="0" exp="200" str="8"/>
+      <unit id="8222" owner="1" flag="8" face="0" exp="200" str="8" fearless="1"/>
     </at>
     <at row="1" col="17">
-      <unit id="8222" owner="1" flag="8" face="0" exp="200" str="8"/>
+      <unit id="8222" owner="1" flag="8" face="0" exp="200" str="8" fearless="1"/>
     </at>
     <at row="2" col="18">
-      <unit id="8222" owner="1" flag="8" face="0" exp="200" str="8"/>
+      <unit id="8222" owner="1" flag="8" face="0" exp="200" str="8" fearless="1"/>
     </at>
     <at row="2" col="22">
-      <unit id="8222" owner="1" flag="8" face="0" exp="200" str="8"/>
+      <unit id="8222" owner="1" flag="8" face="0" exp="200" str="8" fearless="1"/>
     </at>
     <at row="2" col="23">
-      <unit id="8222" owner="1" flag="8" face="0" exp="200" str="8"/>
+      <unit id="8222" owner="1" flag="8" face="0" exp="200" str="8" fearless="1"/>
     </at>
     <at row="2" col="24">
-      <unit id="8222" owner="1" flag="8" face="0" exp="200" str="8"/>
+      <unit id="8222" owner="1" flag="8" face="0" exp="200" str="8" fearless="1"/>
     </at>
     <at row="0" col="17">
-      <unit id="9900" owner="1" flag="8" face="0" transport="9708" exp="200" str="8"/>
+      <unit id="9900" owner="1" flag="8" face="0" transport="9708" exp="200" str="8" fearless="1" objcol="13" objrow="0"/>
     </at>
     <at row="1" col="23">
-      <unit id="9900" owner="1" flag="8" face="0" transport="9708" exp="200" str="8"/>
+      <unit id="9900" owner="1" flag="8" face="0" transport="9708" exp="200" str="8" fearless="1" objcol="13" objrow="0"/>
     </at>
   </reinforce>
   <reinforce turn="8">
     <at row="16" col="1">
-      <unit id="15895" owner="1" flag="13" face="0" transport="16821" exp="200" ldr="1"/>
+      <unit id="15895" owner="1" flag="13" face="0" transport="16821" exp="200" ldr="1" fearless="1"/>
     </at>
   </reinforce>
   <hex row="0" col="1" terrain="5"/>
@@ -42,8 +42,8 @@
   <hex row="0" col="7" terrain="5"/>
   <hex row="0" col="8" terrain="16"/>
   <hex row="0" col="9" terrain="16" road="17">
-    <unit id="8932" owner="1" flag="8" face="0" transport="9668" exp="200" str="9" ldr="1" bstr="5"/>
-    <unit id="9900" owner="1" flag="8" face="0" transport="9708" exp="200" str="8" bstr="5"/>
+    <unit id="8932" owner="1" flag="8" face="0" transport="9668" exp="200" str="9" ldr="1" bstr="5" fearless="1"/>
+    <unit id="9900" owner="1" flag="8" face="0" transport="9708" exp="200" str="8" bstr="5" fearless="1" objcol="13" objrow="0"/>
   </hex>
   <hex row="0" col="10" terrain="16"/>
   <hex row="0" col="11" terrain="16"/>
@@ -52,7 +52,7 @@
   <hex row="0" col="14" terrain="6"/>
   <hex row="0" col="15" terrain="6"/>
   <hex row="0" col="17" road="17">
-    <unit id="9036" owner="1" flag="8" face="0" transport="9787" exp="200" str="9" bstr="5"/>
+    <unit id="9036" owner="1" flag="8" face="0" transport="9787" exp="200" str="9" bstr="5" fearless="1"/>
   </hex>
   <hex row="0" col="18" road="8"/>
   <hex row="0" col="19" road="144"/>
@@ -69,13 +69,13 @@
   <hex row="1" col="6" terrain="5"/>
   <hex row="1" col="7" terrain="5"/>
   <hex row="1" col="8" terrain="16">
-    <unit id="8222" owner="1" flag="8" face="0" exp="200" str="8" bstr="5"/>
+    <unit id="8222" owner="1" flag="8" face="0" exp="200" str="8" bstr="5" fearless="1"/>
   </hex>
   <hex row="1" col="9" terrain="16" road="9">
-    <unit id="8222" owner="1" flag="8" face="0" exp="200" str="8" bstr="5"/>
+    <unit id="8222" owner="1" flag="8" face="0" exp="200" str="8" bstr="5" fearless="1"/>
   </hex>
   <hex row="1" col="10" terrain="16">
-    <unit id="8222" owner="1" flag="8" face="0" exp="200" str="8" bstr="5"/>
+    <unit id="8222" owner="1" flag="8" face="0" exp="200" str="8" bstr="5" fearless="1"/>
   </hex>
   <hex row="1" col="11" terrain="5"/>
   <hex row="1" col="12" terrain="5"/>
@@ -86,7 +86,7 @@
     <unit id="8152" owner="1" flag="8" face="0" transport="9760" exp="200" str="5" bstr="5"/>
   </hex>
   <hex row="1" col="18" terrain="2" owner="1" flag="67">
-    <unit id="9472" owner="1" flag="8" face="0" exp="100" str="5" bstr="5"/>
+    <unit id="9472" owner="1" flag="8" face="0" exp="100" str="5" bstr="5" anchored="1" fearless="1"/>
   </hex>
   <hex row="1" col="19" road="9"/>
   <hex row="1" col="21" terrain="15" name="Lim River"/>
@@ -311,7 +311,7 @@
   <hex row="12" col="10" terrain="6" road="34"/>
   <hex row="12" col="13" terrain="15" name="Lim River"/>
   <hex row="12" col="14" terrain="12" road="146" name="Gostun" owner="1" flag="67">
-    <unit id="37463" owner="1" flag="68" face="0" transport="37467" exp="100" str="5" ldr="1" bstr="5"/>
+    <unit id="37463" owner="1" flag="68" face="0" transport="37467" exp="100" str="5" ldr="1" bstr="5" holduntil="7" fearless="1"/>
   </hex>
   <hex row="12" col="16" road="136"/>
   <hex row="12" col="17" road="136"/>
@@ -461,7 +461,7 @@
   <hex row="19" col="3" terrain="5"/>
   <hex row="19" col="4" terrain="5"/>
   <hex row="19" col="5" terrain="6" road="9">
-    <unit id="662" owner="1" flag="13" face="0" exp="200" str="5" bstr="1"/>
+    <unit id="662" owner="1" flag="13" face="0" exp="200" str="5" bstr="1" fearless="1"/>
   </hex>
   <hex row="19" col="6" terrain="6" road="18"/>
   <hex row="19" col="7" terrain="5"/>
@@ -493,7 +493,7 @@
   <hex row="20" col="8" terrain="5"/>
   <hex row="20" col="9" terrain="15" name="Lim River"/>
   <hex row="20" col="11" terrain="5">
-    <unit id="662" owner="1" flag="13" face="0" exp="200" str="5" bstr="1"/>
+    <unit id="662" owner="1" flag="13" face="0" exp="200" str="5" bstr="1" fearless="1"/>
   </hex>
   <hex row="20" col="12" terrain="5"/>
   <hex row="20" col="13" terrain="6"/>
@@ -550,7 +550,7 @@
   <hex row="22" col="15" terrain="5" road="18"/>
   <hex row="22" col="16" terrain="5" road="33"/>
   <hex row="22" col="17" terrain="5">
-    <unit id="662" owner="1" flag="13" face="0" exp="200" str="5" bstr="1"/>
+    <unit id="662" owner="1" flag="13" face="0" exp="200" str="5" bstr="1" fearless="1"/>
   </hex>
   <hex row="22" col="18" terrain="5" road="129"/>
   <hex row="22" col="19" terrain="6"/>
@@ -638,7 +638,7 @@
   <hex row="26" col="5" terrain="15" name="Lim River"/>
   <hex row="26" col="6" terrain="15" name="Lim River"/>
   <hex row="26" col="10" terrain="2" owner="1" flag="67">
-    <unit id="16710" owner="1" flag="13" face="0" exp="100" str="5" bstr="5"/>
+    <unit id="16710" owner="1" flag="13" face="0" exp="100" str="5" bstr="5" anchored="1" fearless="1"/>
   </hex>
   <hex row="26" col="11" terrain="10"/>
   <hex row="26" col="12" terrain="10"/>

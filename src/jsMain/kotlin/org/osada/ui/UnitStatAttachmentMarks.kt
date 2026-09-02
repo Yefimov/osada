@@ -46,7 +46,7 @@ internal object UnitStatAttachmentMarks {
     /** Re-applies every mark for [unit]. Always clears first: these chips are reused for whichever
      *  unit is selected, and a stale tint would attribute one unit's attachment to another. */
     fun apply(unit: GameUnit) {
-        val fitted = Attachments.purchasedSlots(unit)
+        val fitted = Attachments.fittedSlots(unit)
         deltas(unit).forEach { (id, delta, statKey) ->
             val element = byId(id) ?: return@forEach
             clear(element)

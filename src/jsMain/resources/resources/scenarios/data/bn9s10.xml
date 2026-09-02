@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="bn9s10.xscn" name="Battle of Voronezh" turns="10, 10, 10" holdvictory="13, 12, 10" date="June 28, 1942" dayturns="0" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="38" cols="44" eqp="eqp-lxf" image="resources/maps/images/map_952.png" eqpv="united1" holdvictory1="8, 7, 5" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="1" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1" ehmsuonly="0" paradropocean="1">
-  <player id="0" country="19" side="1" airtrans="2" navaltrans="0" railtrans="3" defaultxp="50" defaultstr="10" support="20,0,0,0" turnprestige="0, 292, 292, 292, 292, 292, 292, 292, 292, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
-  <player id="1" country="7" side="0" airtrans="2" navaltrans="0" railtrans="4" defaultxp="200" defaultstr="10" support="5,8,42,0" turnprestige="0, 146, 146, 146, 146, 146, 146, 146, 146, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+<map file="bn9s10.xscn" name="Battle of Voronezh" turns="10, 10, 10" holdvictory="13, 12, 10" date="June 28, 1942" dayturns="0" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="38" cols="44" eqp="eqp-lxf" image="resources/maps/images/map_952.png" eqpv="united1" holdvictory1="8, 7, 5" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="1" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1" ehmsuonly="0" paradropocean="1" coresoffcap="0">
+  <player id="0" country="19" side="1" airtrans="2" navaltrans="0" railtrans="3" defaultxp="50" defaultstr="10" support="20,0,0,0" turnprestige="0, 292, 292, 292, 292, 292, 292, 292, 292, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="20:32801:70909864"/>
+  <player id="1" country="7" side="0" airtrans="2" navaltrans="0" railtrans="4" defaultxp="200" defaultstr="10" support="5,8,42,0" turnprestige="0, 146, 146, 146, 146, 146, 146, 146, 146, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="8:13314:67112448,5:0:-2147483648"/>
   <reinforce turn="4">
     <at row="5" col="3">
       <unit id="8561" owner="1" flag="8" face="0" exp="131" str="13"/>
@@ -543,7 +543,7 @@
   <hex row="11" col="27" road="146"/>
   <hex row="11" col="28" road="40"/>
   <hex row="11" col="29" terrain="11" road="130">
-    <unit id="717" owner="0" flag="20" face="0" exp="117" str="5" bstr="1"/>
+    <unit id="717" owner="0" flag="20" face="0" exp="117" str="5" bstr="1" fearless="1"/>
   </hex>
   <hex row="11" col="30" road="40"/>
   <hex row="11" col="31" road="136"/>
@@ -589,7 +589,7 @@
   <hex row="12" col="34" road="130"/>
   <hex row="12" col="35" road="19"/>
   <hex row="12" col="36" terrain="11" road="162" name="Chvoshtschevatka" owner="0" flag="19">
-    <unit id="704" owner="0" flag="20" face="0" exp="97" str="5" bstr="1"/>
+    <unit id="704" owner="0" flag="20" face="0" exp="97" str="5" bstr="1" fearless="1"/>
   </hex>
   <hex row="12" col="37" terrain="15" name="Don River"/>
   <hex row="12" col="38" road="130" owner="0" flag="19" victory="0">
@@ -660,7 +660,7 @@
   <hex row="14" col="22" road="33"/>
   <hex row="14" col="26" road="136"/>
   <hex row="14" col="27" terrain="11" road="138">
-    <unit id="717" owner="0" flag="20" face="0" exp="82" str="5" bstr="1"/>
+    <unit id="717" owner="0" flag="20" face="0" exp="82" str="5" bstr="1" fearless="1"/>
   </hex>
   <hex row="14" col="28" road="49"/>
   <hex row="14" col="32" road="130"/>
@@ -694,7 +694,7 @@
   <hex row="15" col="43" terrain="3"/>
   <hex row="16" col="2" terrain="1" name="Kastornoie"/>
   <hex row="16" col="4">
-    <unit id="3291" owner="1" flag="5" face="0" exp="203" str="11" bstr="5"/>
+    <unit id="3291" owner="1" flag="5" face="0" exp="203" str="11" bstr="5" holduntil="2"/>
   </hex>
   <hex row="16" col="5" terrain="16"/>
   <hex row="16" col="6" terrain="16"/>
@@ -716,7 +716,7 @@
   <hex row="16" col="40" road="17"/>
   <hex row="16" col="43" terrain="10" name="Voronesh River"/>
   <hex row="17" col="3">
-    <unit id="3610" owner="1" flag="5" face="0" transport="3552" exp="222" bstr="5"/>
+    <unit id="3610" owner="1" flag="5" face="0" transport="3552" exp="222" bstr="5" holduntil="2"/>
   </hex>
   <hex row="17" col="6" terrain="16"/>
   <hex row="17" col="7" terrain="16">
@@ -743,7 +743,7 @@
     <unit id="11012" owner="1" flag="8" face="0" exp="178" bstr="5"/>
   </hex>
   <hex row="18" col="4">
-    <unit id="3291" owner="1" flag="5" face="0" exp="217" str="11" bstr="5"/>
+    <unit id="3291" owner="1" flag="5" face="0" exp="217" str="11" bstr="5" holduntil="2"/>
   </hex>
   <hex row="18" col="9" terrain="1" road="18" name="Orehovo" owner="0" flag="19" victory="0">
     <unit id="20414" owner="0" flag="20" face="0" transport="20675" exp="96" bstr="5"/>
@@ -771,7 +771,7 @@
     <unit id="10965" owner="1" flag="8" face="0" exp="120" bstr="5"/>
   </hex>
   <hex row="19" col="3">
-    <unit id="3291" owner="1" flag="5" face="0" exp="186" str="11" bstr="5"/>
+    <unit id="3291" owner="1" flag="5" face="0" exp="186" str="11" bstr="5" holduntil="2"/>
   </hex>
   <hex row="19" col="7">
     <unit id="20364" owner="0" flag="20" face="0" exp="184" bstr="5"/>
@@ -790,7 +790,7 @@
   <hex row="19" col="26" terrain="10" name="Veduga River"/>
   <hex row="19" col="27" terrain="10" name="Veduga River"/>
   <hex row="19" col="31" terrain="11" road="35">
-    <unit id="717" owner="0" flag="20" face="0" exp="121" str="5" bstr="1"/>
+    <unit id="717" owner="0" flag="20" face="0" exp="121" str="5" bstr="1" fearless="1"/>
   </hex>
   <hex row="19" col="32" terrain="10" road="168" name="Veduga River"/>
   <hex row="19" col="33" terrain="1" road="152" name="Staryje Semiluki" owner="0" flag="19" victory="0">
@@ -798,14 +798,14 @@
   </hex>
   <hex row="19" col="34" terrain="15" name="Don River"/>
   <hex row="19" col="35" terrain="11">
-    <unit id="488" owner="0" flag="20" face="0" exp="76" str="5" bstr="1"/>
+    <unit id="488" owner="0" flag="20" face="0" exp="76" str="5" bstr="1" fearless="1"/>
   </hex>
   <hex row="19" col="38" terrain="1" name="Podgornoje" owner="0" flag="19"/>
   <hex row="19" col="39" road="145"/>
   <hex row="19" col="41" terrain="10" name="Voronesh River"/>
   <hex row="20" col="1" terrain="16"/>
   <hex row="20" col="2" terrain="16">
-    <unit id="3623" owner="1" flag="5" face="0" transport="3523" exp="183" bstr="5"/>
+    <unit id="3623" owner="1" flag="5" face="0" transport="3523" exp="183" bstr="5" holduntil="2"/>
   </hex>
   <hex row="20" col="3" terrain="16"/>
   <hex row="20" col="8" road="18"/>
@@ -838,10 +838,10 @@
   <hex row="20" col="41" terrain="10" name="Voronesh River"/>
   <hex row="21" col="1" terrain="16"/>
   <hex row="21" col="2" terrain="16">
-    <unit id="3610" owner="1" flag="5" face="0" transport="3552" exp="179" bstr="5"/>
+    <unit id="3610" owner="1" flag="5" face="0" transport="3552" exp="179" bstr="5" holduntil="2"/>
   </hex>
   <hex row="21" col="3" terrain="16">
-    <unit id="3291" owner="1" flag="5" face="0" exp="212" str="11" bstr="5"/>
+    <unit id="3291" owner="1" flag="5" face="0" exp="212" str="11" bstr="5" holduntil="2"/>
   </hex>
   <hex row="21" col="4" terrain="16"/>
   <hex row="21" col="6">
@@ -856,12 +856,12 @@
   </hex>
   <hex row="21" col="28" road="130"/>
   <hex row="21" col="31" terrain="11">
-    <unit id="704" owner="0" flag="20" face="0" exp="98" str="5" bstr="1"/>
+    <unit id="704" owner="0" flag="20" face="0" exp="98" str="5" bstr="1" fearless="1"/>
   </hex>
   <hex row="21" col="33" road="35"/>
   <hex row="21" col="34" terrain="15" road="170" name="Don River"/>
   <hex row="21" col="35" terrain="11" road="128">
-    <unit id="704" owner="0" flag="20" face="0" exp="114" str="5" bstr="1"/>
+    <unit id="704" owner="0" flag="20" face="0" exp="114" str="5" bstr="1" fearless="1"/>
   </hex>
   <hex row="21" col="36" road="136"/>
   <hex row="21" col="37" road="138"/>
@@ -893,7 +893,7 @@
     <unit id="20364" owner="0" flag="20" face="0" exp="185" str="11" bstr="5"/>
   </hex>
   <hex row="23" col="2">
-    <unit id="3291" owner="1" flag="5" face="0" exp="214" str="11" bstr="5"/>
+    <unit id="3291" owner="1" flag="5" face="0" exp="214" str="11" bstr="5" holduntil="2"/>
   </hex>
   <hex row="23" col="6">
     <unit id="20364" owner="0" flag="20" face="0" exp="186" bstr="5"/>
@@ -935,7 +935,7 @@
   </hex>
   <hex row="23" col="42" terrain="1" name="Voronesh" station="1"/>
   <hex row="24" col="1">
-    <unit id="3610" owner="1" flag="5" face="0" transport="3552" exp="221" bstr="5"/>
+    <unit id="3610" owner="1" flag="5" face="0" transport="3552" exp="221" bstr="5" holduntil="2"/>
   </hex>
   <hex row="24" col="5">
     <unit id="20364" owner="0" flag="20" face="0" exp="181" str="11" bstr="5"/>
@@ -952,7 +952,7 @@
   <hex row="24" col="29" terrain="1" name="Deviza"/>
   <hex row="24" col="30" terrain="1" road="137" name="Deviza" owner="0" flag="19"/>
   <hex row="24" col="31" terrain="11" road="144">
-    <unit id="717" owner="0" flag="20" face="0" exp="113" str="5" bstr="1"/>
+    <unit id="717" owner="0" flag="20" face="0" exp="113" str="5" bstr="1" fearless="1"/>
   </hex>
   <hex row="24" col="33" terrain="3"/>
   <hex row="24" col="35" terrain="15" name="Don River"/>
@@ -967,7 +967,7 @@
   <hex row="24" col="42" terrain="1" name="Voronesh"/>
   <hex row="25" col="1" road="40"/>
   <hex row="25" col="2">
-    <unit id="3291" owner="1" flag="5" face="0" exp="188" str="11" bstr="5"/>
+    <unit id="3291" owner="1" flag="5" face="0" exp="188" str="11" bstr="5" holduntil="2"/>
   </hex>
   <hex row="25" col="3" road="40"/>
   <hex row="25" col="5" road="40"/>
@@ -982,7 +982,7 @@
     <unit id="20380" owner="0" flag="20" face="0" transport="20675" exp="176" str="8" bstr="5"/>
   </hex>
   <hex row="25" col="18" terrain="11" road="43">
-    <unit id="717" owner="0" flag="20" face="0" exp="95" str="5" bstr="1"/>
+    <unit id="717" owner="0" flag="20" face="0" exp="95" str="5" bstr="1" fearless="1"/>
   </hex>
   <hex row="25" col="19" road="169"/>
   <hex row="25" col="27" terrain="10" name="Deviza River"/>
@@ -1071,7 +1071,7 @@
   <hex row="27" col="32" terrain="15" name="Don River"/>
   <hex row="27" col="33" terrain="15" name="Don River"/>
   <hex row="27" col="34" terrain="11">
-    <unit id="488" owner="0" flag="20" face="0" exp="96" str="5" bstr="1"/>
+    <unit id="488" owner="0" flag="20" face="0" exp="96" str="5" bstr="1" fearless="1"/>
   </hex>
   <hex row="27" col="35" terrain="1" road="33" name="Malyshevo" owner="0" flag="19" victory="0">
     <unit id="20364" owner="0" flag="20" face="0" exp="208" str="11" bstr="5"/>
@@ -1158,7 +1158,7 @@
   <hex row="30" col="18" terrain="10" name="Deviza River"/>
   <hex row="30" col="23" road="25"/>
   <hex row="30" col="24" terrain="11">
-    <unit id="717" owner="0" flag="20" face="0" exp="117" str="5" bstr="1"/>
+    <unit id="717" owner="0" flag="20" face="0" exp="117" str="5" bstr="1" fearless="1"/>
   </hex>
   <hex row="30" col="25" road="34"/>
   <hex row="30" col="26" road="34"/>

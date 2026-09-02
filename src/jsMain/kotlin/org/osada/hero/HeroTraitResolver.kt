@@ -71,6 +71,19 @@ internal object HeroTraitResolver {
     /**
      * The pre-hero behaviour, preserved exactly: a unit with any leader has both its rolled trait
      * and its class's signature trait (`docs/leaders.md` §1).
+     *
+     * ## The authored pair resolves here, and only here
+     *
+     * OG's Leader tab has two selectors and OSADA carries both:
+     * [GameUnit.leader] is the INDIVIDUAL attribute (`.xscn` `@36`, the Suite's *"According list of
+     * leaders"*) and [GameUnit.leaderClassTrait] is the CLASS attribute override (`@37`,
+     * *"According unit's class"*). The second is folded into [Leaders.getUnitClassLeader] rather
+     * than tested separately here, so the derived class attribute and the authored override reach
+     * the ~10 combat call sites through the same expression and cannot diverge.
+     *
+     * **The two disjuncts must stay disjuncts.** They were briefly collapsed when the importer
+     * deployed `@37` into [GameUnit.leader]: `||` meant the doubled value granted one trait instead
+     * of two, so 52 formations silently lost the individual attribute they had been rolling.
      */
     private fun legacyHasTrait(
         unit: GameUnit,

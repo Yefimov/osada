@@ -92,7 +92,7 @@ internal object AttachmentPickerPresenter {
         count.textContent =
             I18n.t(
                 "attachments.count",
-                mapOf("fitted" to Attachments.purchasedSlots(unit).size, "max" to Attachments.MAX_PER_UNIT),
+                mapOf("fitted" to Attachments.fittedSlots(unit).size, "max" to Attachments.MAX_PER_UNIT),
             )
         val closeButton = addTag(header, "span")
         closeButton.className = "osada-atp__close"
@@ -110,7 +110,7 @@ internal object AttachmentPickerPresenter {
     ) {
         val row = addTag(box, "div")
         row.className = "osada-atp__slots"
-        val fitted = Attachments.purchasedSlots(unit)
+        val fitted = Attachments.fittedSlots(unit)
         repeat(Attachments.MAX_PER_UNIT) { index ->
             val card = addTag(row, "div")
             val entry = fitted.getOrNull(index)

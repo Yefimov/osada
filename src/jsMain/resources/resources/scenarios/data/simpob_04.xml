@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="simpob_04.xscn" name="Breakthrough: the Spring Offensive" turns="17, 20, 23" date="March 1, 1919" dayturns="0" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="33" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_1404.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="0" capitalflak="0" ehmsuonly="0" paradropocean="1">
-  <player id="0" country="100" side="1" airtrans="0" navaltrans="0" railtrans="7" defaultxp="0" defaultstr="0" support="101,0,0,0" turnprestige="0, 0, 0, 60, 60, 60, 60, 60, 60, 60, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
-  <player id="1" country="103" side="0" airtrans="0" navaltrans="0" railtrans="5" defaultxp="160" defaultstr="0" support="104,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+<map file="simpob_04.xscn" name="Breakthrough: the Spring Offensive" turns="17, 20, 23" date="March 1, 1919" dayturns="0" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="33" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_1404.png" eqpv="united1" prototimeframe="0" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="0" capitalflak="0" ehmsuonly="0" paradropocean="1" coresoffcap="1" music="campsimpob.mp3">
+  <player id="0" country="100" side="1" airtrans="0" navaltrans="0" railtrans="7" defaultxp="0" defaultstr="0" support="101,0,0,0" turnprestige="0, 0, 0, 60, 60, 60, 60, 60, 60, 60, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="54:0:5"/>
+  <player id="1" country="103" side="0" airtrans="0" navaltrans="0" railtrans="5" defaultxp="160" defaultstr="0" support="104,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="20:0:7"/>
   <hex row="0" col="10" terrain="3"/>
   <hex row="0" col="11" terrain="3"/>
   <hex row="0" col="12" terrain="3"/>
@@ -117,13 +117,13 @@
   <hex row="4" col="12" terrain="3"/>
   <hex row="4" col="13" terrain="3"/>
   <hex row="4" col="14" terrain="3">
-    <unit id="42324" owner="1" flag="104" face="0" transport="42344" exp="140"/>
+    <unit id="42324" owner="1" flag="104" face="0" transport="42344" exp="140" fearless="1"/>
   </hex>
   <hex row="4" col="15" terrain="3">
     <unit id="42270" owner="1" flag="104" face="0" transport="42344" exp="14"/>
   </hex>
   <hex row="4" col="17">
-    <unit id="42270" owner="1" flag="104" face="0" transport="42344" exp="200"/>
+    <unit id="42270" owner="1" flag="104" face="0" transport="42344" exp="200" fearless="1"/>
   </hex>
   <hex row="4" col="23">
     <unit id="42060" owner="0" flag="101" face="0" transport="42121" exp="200"/>
@@ -162,7 +162,7 @@
   <hex row="5" col="12" terrain="3"/>
   <hex row="5" col="13" terrain="3"/>
   <hex row="5" col="14">
-    <unit id="42270" owner="1" flag="104" face="0" transport="42344" exp="200"/>
+    <unit id="42270" owner="1" flag="104" face="0" transport="42344" exp="200" fearless="1"/>
   </hex>
   <hex row="5" col="15" terrain="3"/>
   <hex row="5" col="16" terrain="3"/>
@@ -203,7 +203,7 @@
     <unit id="42331" owner="1" flag="104" face="0" exp="104"/>
   </hex>
   <hex row="6" col="16">
-    <unit id="42267" owner="1" flag="104" face="0" transport="42344" exp="200"/>
+    <unit id="42267" owner="1" flag="104" face="0" transport="42344" exp="200" fearless="1"/>
   </hex>
   <hex row="6" col="17" road="40"/>
   <hex row="6" col="19" road="40"/>
@@ -298,7 +298,7 @@
   <hex row="8" col="14" terrain="3"/>
   <hex row="8" col="15" terrain="3"/>
   <hex row="8" col="17">
-    <unit id="42270" owner="1" flag="104" face="0" exp="230"/>
+    <unit id="42270" owner="1" flag="104" face="0" exp="230" fearless="1"/>
   </hex>
   <hex row="8" col="21" road="18" rail="34"/>
   <hex row="8" col="22" road="160" rail="33" deploy="0"/>
@@ -368,7 +368,7 @@
     <unit id="42310" owner="1" flag="104" face="0" exp="4"/>
   </hex>
   <hex row="10" col="18">
-    <unit id="42270" owner="1" flag="104" face="0" transport="42344" exp="240"/>
+    <unit id="42270" owner="1" flag="104" face="0" transport="42344" exp="240" fearless="1"/>
   </hex>
   <hex row="10" col="19" rail="10"/>
   <hex row="10" col="20" road="18" rail="33"/>
@@ -408,7 +408,7 @@
   </hex>
   <hex row="11" col="19" rail="10"/>
   <hex row="11" col="20" road="17" rail="160">
-    <unit id="42267" owner="1" flag="104" face="0" exp="210"/>
+    <unit id="42267" owner="1" flag="104" face="0" exp="210" fearless="1"/>
   </hex>
   <hex row="11" col="24" terrain="10" name="Dema"/>
   <hex row="11" col="27" terrain="3"/>

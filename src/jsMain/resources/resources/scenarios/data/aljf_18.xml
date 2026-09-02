@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="aljf_18.xscn" name="The Cadets in New Market" turns="10, 14, 20" date="May 5, 1864" dayturns="0" ground="0" atmosferic="0" latitude="15" iconset="0" weatherchg="0" rows="32" cols="34" eqp="eqp-kaiser" image="resources/maps/images/map_1426.png" eqpv="united1" msuunits="0, 2" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="1" airintercept="0" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="0" typedvh="0" truerange0="0" truespotting0="0" reinfwhenactive="0" capitalflak="0" ehmsuonly="0" paradropocean="1">
+<map file="aljf_18.xscn" name="The Cadets in New Market" turns="10, 14, 20" date="May 5, 1864" dayturns="0" ground="0" atmosferic="0" latitude="15" iconset="0" weatherchg="0" rows="32" cols="34" eqp="eqp-kaiser" image="resources/maps/images/map_1426.png" eqpv="united1" msuunits="0, 2" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="1" airintercept="0" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="0" typedvh="0" truerange0="0" truespotting0="0" reinfwhenactive="0" capitalflak="0" ehmsuonly="0" paradropocean="1" coresoffcap="0">
   <player id="0" country="162" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="163,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <player id="1" country="150" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="151,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="6">
     <at row="27" col="9">
-      <unit id="44786" owner="1" flag="151" face="0" exp="34"/>
+      <unit id="44786" owner="1" flag="151" face="0" exp="34" objcol="12" objrow="0" freeoh="1"/>
     </at>
     <at row="27" col="11">
-      <unit id="44786" owner="1" flag="151" face="0" exp="24"/>
+      <unit id="44786" owner="1" flag="151" face="0" exp="24" objcol="14" objrow="0" freeoh="1"/>
     </at>
     <at row="28" col="10">
-      <unit id="44826" owner="1" flag="151" face="0" transport="44814"/>
+      <unit id="44826" owner="1" flag="151" face="0" transport="44814" objcol="13" objrow="0" freeoh="1"/>
     </at>
     <at row="27" col="10">
-      <unit id="44793" owner="1" flag="151" face="0" exp="43"/>
+      <unit id="44793" owner="1" flag="151" face="0" exp="43" objcol="13" objrow="0" freeoh="1"/>
     </at>
   </reinforce>
   <hex row="0" col="3" terrain="3"/>
@@ -514,13 +514,13 @@
   <hex row="24" col="9" terrain="3"/>
   <hex row="24" col="11" terrain="1" road="18" name="New Market"/>
   <hex row="24" col="12" terrain="1" road="34" name="New Market">
-    <unit id="44825" owner="1" flag="151" face="0" transport="44814" exp="234"/>
+    <unit id="44825" owner="1" flag="151" face="0" transport="44814" exp="234" objcol="12" objrow="0"/>
   </hex>
   <hex row="24" col="13">
     <unit id="44784" owner="1" flag="151" face="0" transport="44808" exp="32" ldr="1"/>
   </hex>
   <hex row="24" col="14" terrain="3">
-    <unit id="44818" owner="1" flag="151" face="0" transport="44814" exp="34"/>
+    <unit id="44818" owner="1" flag="151" face="0" transport="44814" exp="34" objcol="14" objrow="0"/>
   </hex>
   <hex row="24" col="16" road="136">
     <unit id="44781" owner="1" flag="151" face="0" transport="44811" exp="174"/>

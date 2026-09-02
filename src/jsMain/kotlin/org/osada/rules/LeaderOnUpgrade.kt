@@ -50,6 +50,9 @@ object LeaderOnUpgrade {
 
             REMOVE -> {
                 unit.leader = -1
+                // The authored class-attribute override belongs to the commander that just left,
+                // not to the equipment: leaving it set would hand the formation half an officer.
+                unit.leaderClassTrait = -1
                 unit.experience = unit.experience.coerceAtMost(UnitExperience.cap() - 1)
             }
 

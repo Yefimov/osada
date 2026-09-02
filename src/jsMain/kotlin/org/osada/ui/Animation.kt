@@ -154,6 +154,12 @@ class Animation(
     private val sprite: Sprite,
     private val rotate: Double = 0.0,
     private val clearByComposite: Boolean = false,
+    /**
+     * OG's per-equipment attack/destruction sound, when one is available for the unit this
+     * animation belongs to. Null -- the shipped state everywhere, since the audio may not be
+     * redistributed -- plays the animation's own class sound (`ui/OgSoundLibrary`).
+     */
+    private val soundOverride: SoundSprite? = null,
 ) {
     private var intervalId: Int = -1
     private var frame: Int = 0
@@ -162,7 +168,7 @@ class Animation(
     val duration: Int get() = delay * sprite.frames
 
     fun start() {
-        sprite.sound.play()
+        (soundOverride ?: sprite.sound).play()
         intervalId = window.setInterval({ step() }, delay)
     }
 

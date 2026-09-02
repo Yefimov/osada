@@ -5,6 +5,7 @@ import org.osada.PlayerSide
 import org.osada.getCampaignPlayer
 import org.osada.rules.CarrierHangars
 import org.osada.rules.GameRules
+import org.osada.rules.PurchaseCap
 import org.osada.rules.setSpotRange
 import org.osada.rules.setZOCRange
 
@@ -22,7 +23,20 @@ fun GameMap.addUnit(unit: GameUnit) {
     GameHolder.instance
         ?.getCampaignPlayer()
         ?.takeIf { it.id == unit.owner }
-        ?.let { ensureFormationIds(it, listOf(unit)) }
+        ?.let { player ->
+            ensureFormationIds(player, listOf(unit))
+            // OG's Make Core on a formation that arrives MID-BATTLE -- an authored reinforcement
+            // wave or a scenario event's spawn.
+            //
+            // The guard is MAP IDENTITY, not `scenario.isLoaded`. During a scenario load or a save
+            // restore this map is not yet the holder's, while `Game.campaignPlayer` still points at
+            // the PREVIOUS battle's player object -- so an `isLoaded` test would file the new
+            // battle's units into a roster about to be discarded, and charge OG's purchase cap for
+            // each. Placement at load time is swept once by
+            // `Game.handleCampaignScenarioLoaded`'s `enrollAuthoredCoreUnits`, after the right
+            // player exists.
+            if (GameHolder.instance?.scenario?.map === this) enrollIfAuthoredCore(player, unit)
+        }
     if (unit.flag == -1) unit.flag = getPlayer(unit.owner).country + 1
     GameRules.setZOCRange(this, unit, true)
     GameRules.setSpotRange(this, unit, true)
@@ -84,6 +98,10 @@ fun GameMap.updateUnitList() {
             // A carrier takes its hangar down with it -- an aircraft cannot outlive the ship it
             // was contained in (`rules/CarrierHangars`).
             CarrierHangars.sinkWith(unit)
+            // OG's purchase cap mints a REPLACEMENT CREDIT here, for the same reason `creditKill`
+            // counts here: this is the one sweep every loss passes through, whatever caused it
+            // (`rules/PurchaseCap`).
+            PurchaseCap.creditReplacement(unit)
             creditKill(unit)
             iter.remove()
         }

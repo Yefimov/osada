@@ -3,6 +3,7 @@ package org.osada.model
 import org.osada.hero.FormationIdentity
 import org.osada.hero.HeroCampaign
 import org.osada.rules.GameRules
+import org.osada.rules.PurchaseCap
 import org.osada.rules.setSpotRange
 import org.osada.rules.setZOCRange
 
@@ -17,11 +18,73 @@ internal class CoreUnitListOperations(
         private const val FULL_STRENGTH = 10
     }
 
+    /**
+     * Enrols [player]'s FIRST-scenario core: the units standing on their deployment hexes, plus
+     * every formation the scenario author marked Make Core.
+     *
+     * The deployment-hex sweep is the original rule and stays the primary one -- an OG campaign's
+     * opening force is placed on those hexes. [enrollAuthoredCoreUnits] adds the second source,
+     * which that sweep could never see: `core="1"` on a formation the author put somewhere else on
+     * the map entirely.
+     */
     fun buildCoreUnitList(player: Player) {
         gameMap.units
             .filter {
                 it.player?.id == player.id && it.getHex()?.isDeployment == player.id
             }.forEach { player.addCoreUnit(it) }
+        enrollAuthoredCoreUnits(player)
+    }
+
+    /**
+     * OG's **Make Core** (`.xscn` unit `@44` bit 2), enrolled rather than merely marked.
+     *
+     * [GameUnit.isCore] alone is enough for display and for the rule checks that read the flag, but
+     * campaign persistence is owned by [Player]'s private core roster: `Player.setPlayerToHQ` walks
+     * that roster and nothing else, so a unit wearing the marker without being enrolled would
+     * disappear at the scenario transition. This is the ONE enrollment operation the backlog asks
+     * for -- every loader path calls it rather than keeping its own copy.
+     *
+     * **Idempotent**, twice over: `Player.addCoreUnit` refuses a unit already in the roster by
+     * identity, and calling this on a scenario that authors no Make Core unit does nothing at all.
+     *
+     * [GameUnit.isTemporaryBorrowed] opts out -- a formation lent for one battle is the one thing
+     * that must never join the permanent roster, and `ensureFormationIds` excludes it for the same
+     * reason.
+     */
+    fun enrollAuthoredCoreUnits(player: Player) {
+        gameMap.units
+            .filter { it.owner == player.id && it.isCore && !it.isTemporaryBorrowed }
+            .forEach { enroll(player, it) }
+    }
+
+    /**
+     * The single-unit form of [enrollAuthoredCoreUnits], for a formation that arrives AFTER the
+     * load sweep -- an authored reinforcement wave, or a scenario event's spawn.
+     *
+     * Same three conditions, same idempotence. Kept beside the sweep rather than inlined at the
+     * call site so "what makes a unit core" is stated once.
+     */
+    fun enrollIfAuthoredCore(
+        player: Player,
+        unit: GameUnit,
+    ) {
+        if (unit.owner == player.id && unit.isCore && !unit.isTemporaryBorrowed) {
+            enroll(player, unit)
+        }
+    }
+
+    /**
+     * Adds an AUTHORED core formation to the roster and books it against OG's purchase cap.
+     *
+     * `addCoreUnit` returns false for a formation already enrolled, which is what keeps every
+     * enrollment path idempotent AND keeps a re-run from charging the cap twice. The charge itself
+     * is `opt_cores_off_cap`'s other half -- see `rules/PurchaseCap.recordDesignAddedCore`.
+     */
+    private fun enroll(
+        player: Player,
+        unit: GameUnit,
+    ) {
+        if (player.addCoreUnit(unit)) PurchaseCap.recordDesignAddedCore(player, unit)
     }
 
     /**
@@ -57,7 +120,7 @@ internal class CoreUnitListOperations(
      * Safe when there are no core units (e.g. no deploy hexes) — it simply does nothing.
      */
     fun undeployCoreUnits(player: Player) {
-        player.getCoreUnitList().toList().forEach { unit ->
+        player.getCoreUnitList().toList().filter(::liftsIntoTray).forEach { unit ->
             val pos = unit.getPos()
             if (pos != null) {
                 GameRules.setZOCRange(gameMap, unit, false)
@@ -73,11 +136,31 @@ internal class CoreUnitListOperations(
         gameMap.updateUnitList()
     }
 
+    /**
+     * Whether [undeployCoreUnits] may lift [unit] off the map into the buy/deploy tray.
+     *
+     * Only a formation standing on one of its owner's DEPLOYMENT hexes -- which is exactly the set
+     * [buildCoreUnitList]'s first sweep enrols, and therefore exactly the pre-Make-Core behaviour.
+     * An authored Make Core formation placed anywhere else is PLACED CONTENT: the author chose that
+     * hex, and lifting it into the tray would silently rewrite the opening position of the battle
+     * while adding it to the roster.
+     *
+     * A unit already off the map (no position) is left alone; it is in the tray already.
+     */
+    private fun liftsIntoTray(unit: GameUnit): Boolean = unit.getHex()?.let { it.isDeployment == unit.owner } ?: false
+
     fun restoreCoreUnitList(
         player: Player,
         saved: List<dynamic>,
     ) {
-        gameMap.units.filter { it.isCore && it.isDeployed }.forEach { player.addCoreUnit(it) }
+        // OWNERSHIP IS CHECKED, and it did not used to be. Before Make Core was imported, `isCore`
+        // could only be set by campaign machinery and therefore only ever on the campaign player's
+        // own units, so the filter was safe without it. A scenario author may now tick Make Core on
+        // ANY player's formation -- including the AI's -- and enrolling one of those into the human
+        // roster would hand the player an enemy unit at the next transition.
+        gameMap.units
+            .filter { it.owner == player.id && it.isCore && it.isDeployed }
+            .forEach { player.addCoreUnit(it) }
         saved.filter { !(it.isDeployed as? Boolean ?: false) }.forEach { savedUnit ->
             player.addCoreUnit(buildRestoredUnit(savedUnit, player))
         }

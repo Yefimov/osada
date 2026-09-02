@@ -51,15 +51,14 @@ internal object HeroNamePools {
         femininizeSurname: ((String) -> String)? = null,
         familyNameFirst: Boolean = false,
         mononym: Boolean = false,
-    ) =
-        NamePool(
-            given.split(" "),
-            givenFemale.split(" "),
-            surname.split(" ").filter(String::isNotBlank),
-            femininizeSurname,
-            familyNameFirst,
-            mononym,
-        )
+    ) = NamePool(
+        given.split(" "),
+        givenFemale.split(" "),
+        surname.split(" ").filter(String::isNotBlank),
+        femininizeSurname,
+        familyNameFirst,
+        mononym,
+    )
 
     /** Russian/Ukrainian-style masculine surname suffixes, each with its feminine counterpart. */
     private fun slavicOvFeminine(surname: String): String =

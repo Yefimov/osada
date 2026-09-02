@@ -9,7 +9,9 @@ import org.osada.model.hasPurchaseAnchor
 import org.osada.model.isAvailableIn
 import org.osada.model.isPurchasable
 import org.osada.model.isPurchasableGroundTransport
+import org.osada.rules.FrontsAndFactions
 import org.osada.rules.GameRules
+import org.osada.rules.PurchaseCap
 import org.osada.rules.ScenarioPurchaseList
 import org.osada.rules.calculateUnitCosts
 import org.osada.rules.calculateUnitSellCost
@@ -70,10 +72,18 @@ internal class EquipmentCostsCalculator(
             // hiding cards, and this record may still be a legal UPGRADE target.
             !Equipment.isPurchasable(eqUnitId) -> I18n.t("equipment.buy_blocked.cant_buy")
             !Equipment.isPurchasableGroundTransport(eqUnitId) -> I18n.t("equipment.buy_blocked.not_purchasable")
+            // OG's purchase cap. Named rather than left silent for the same reason as the rules
+            // around it: a Buy button that simply disappears reads as a bug (`rules/PurchaseCap`).
+            !purchaseCapAllows() -> I18n.t("equipment.buy_blocked.purchase_cap")
             // The scenario's own Fronts/Factions list. Named rather than left silent for exactly
             // the reason the line above gives: a card the author closed off looks like a bug when
             // its Buy button simply disappears.
             !purchaseListAllows(eqUnitId, -1) -> I18n.t("equipment.buy_blocked.not_in_scenario_list")
+            // The scenario's Fronts/Factions MASKS -- the same explanation, a different (and much
+            // wider) source. Named separately from the `.buy4` list so the copy can be honest about
+            // which of the two closed the card off.
+            !frontsFactionsAllow(eqUnitId, -1) -> I18n.t("equipment.buy_blocked.not_in_scenario_list")
+            !poolClassAllows(eqUnitId) -> I18n.t("equipment.buy_blocked.transport_pool")
             else -> campaignCountryRefusal(eqUnitId)
         }
 
@@ -140,14 +150,51 @@ internal class EquipmentCostsCalculator(
         Equipment.isPurchasable(eqUnitId) &&
             (eqTransportId <= 0 || Equipment.isPurchasable(eqTransportId)) &&
             Equipment.isPurchasableGroundTransport(eqUnitId) &&
-            purchaseListAllows(eqUnitId, eqTransportId)
+            purchaseListAllows(eqUnitId, eqTransportId) &&
+            frontsFactionsAllow(eqUnitId, eqTransportId) &&
+            poolClassAllows(eqUnitId) &&
+            purchaseCapAllows()
+
+    /** OG's Fronts/Factions as the scenario's own masks — `rules/FrontsAndFactions`. */
+    private fun frontsFactionsAllow(
+        eqUnitId: Int,
+        eqTransportId: Int,
+    ): Boolean {
+        val player =
+            ui.game.scenario
+                ?.map
+                ?.currentPlayer
+        return FrontsAndFactions.admitsForPurchase(player, eqUnitId) &&
+            (eqTransportId <= 0 || FrontsAndFactions.admitsForPurchase(player, eqTransportId))
+    }
+
+    /** OG's pool classes: air and naval transports come from the per-player pool, not the shop. */
+    private fun poolClassAllows(eqUnitId: Int): Boolean =
+        FrontsAndFactions.poolClassPurchasable(
+            ui.game.scenario
+                ?.map
+                ?.currentPlayer,
+            eqUnitId,
+        )
+
+    /** OG's per-player purchase cap — `rules/PurchaseCap`. Live, so replacing a loss re-opens the
+     *  Buy button the moment the loss is swept. */
+    private fun purchaseCapAllows(): Boolean =
+        PurchaseCap.allows(
+            ui.game.scenario
+                ?.map
+                ?.currentPlayer,
+        )
 
     /** OG's Fronts/Factions as the scenario's own `.buy4` list — `rules/ScenarioPurchaseList`. */
     private fun purchaseListAllows(
         eqUnitId: Int,
         eqTransportId: Int,
     ): Boolean {
-        val player = ui.game.scenario?.map?.currentPlayer
+        val player =
+            ui.game.scenario
+                ?.map
+                ?.currentPlayer
         return ScenarioPurchaseList.allows(player, eqUnitId) &&
             (eqTransportId <= 0 || ScenarioPurchaseList.allows(player, eqTransportId))
     }
