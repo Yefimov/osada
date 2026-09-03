@@ -227,7 +227,7 @@ internal class AnimationOrchestrator(
         defenderOldStrength: Int,
     ) {
         if (!GameRules.shouldDefenderRetreat(attacker, defender, defenderOldStrength)) return
-        val retreatPos = GameRules.getRetreatPosition(map.map, defender, map.rows, map.hasRailData())
+        val retreatPos = GameRules.getRetreatPosition(map.map, defender, map.rows)
         if (retreatPos != null) {
             map.retreatUnit(defender, retreatPos)
         } else if (GameRules.shouldDefenderSurrender(

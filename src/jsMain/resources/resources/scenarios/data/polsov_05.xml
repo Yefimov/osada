@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="polsov_05.xscn" name="Operation Kij&#243;w" turns="16, 21, 25" date="April 25, 1920" dayturns="3" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="36" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_835.png" eqpv="united1" prototimeframe="2" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="0" capitalflak="0" ehmsuonly="0" paradropocean="1" coresoffcap="0" daysperturn="0">
-<player id="0" country="103" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="99" defaultstr="0" support="104,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="16:0:2,5:0:5"/>
-<player id="1" country="20" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="21,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 200, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99" ff="20:0:5"/>
+<map file="polsov_05.xscn" name="Zhitomir: the Polish blow" turns="16, 21, 25" date="April 25, 1920" dayturns="3" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="36" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_835.png" eqpv="united1" prototimeframe="2" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="0" capitalflak="0" ehmsuonly="0" paradropocean="1" coresoffcap="0" daysperturn="0" holdvictory="5, 4, 3">
+<player id="0" country="103" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="99" defaultstr="0" support="104,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="16:0:2,5:0:5"/>
+<player id="1" country="20" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="21,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 200, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99" ff="20:0:5"/>
   <reinforce turn="9">
     <at row="4" col="11">
       <unit id="21134" owner="1" flag="21" face="0" exp="200"/>
@@ -236,7 +236,7 @@
   <hex row="8" col="26" terrain="8"/>
   <hex row="8" col="27" terrain="10" name="Irsha River"/>
   <hex row="8" col="33" terrain="10" name="Irsha River"/>
-  <hex row="8" col="34" terrain="1" road="17" name="Malin" owner="0" flag="103" victory="0">
+  <hex row="8" col="34" terrain="1" road="17" name="Malin" owner="0" flag="103" victory="0" deploy="0">
     <unit id="42272" owner="0" flag="104" face="0" exp="144"/>
   </hex>
   <hex row="8" col="37" road="18"/>
@@ -382,7 +382,7 @@
   <hex row="13" col="33" road="34">
     <unit id="42271" owner="0" flag="104" face="0" exp="200"/>
   </hex>
-  <hex row="13" col="34" terrain="1" road="33" name="Radomysl" owner="0" flag="103" victory="0">
+  <hex row="13" col="34" terrain="1" road="33" name="Radomysl" owner="0" flag="103" victory="0" deploy="0">
     <unit id="42271" owner="0" flag="104" face="0" exp="84"/>
   </hex>
   <hex row="13" col="35" terrain="10" name="Teterev River"/>
@@ -794,7 +794,7 @@
   <hex row="26" col="39" road="130"/>
   <hex row="26" col="40" road="34"/>
   <hex row="26" col="41" terrain="10" name="Kamenka River"/>
-  <hex row="26" col="42" terrain="1" name="Fast&#243;w" owner="0" flag="103" victory="0" station="1">
+  <hex row="26" col="42" terrain="1" name="Fast&#243;w" owner="0" flag="103" victory="0" station="1" deploy="0">
     <unit id="42335" owner="0" flag="104" face="0" exp="54"/>
   </hex>
   <hex row="26" col="43" terrain="10" name="Kamenka River"/>
@@ -840,7 +840,7 @@
   <hex row="28" col="16" terrain="8"/>
   <hex row="28" col="17" terrain="10" name="Gnilopyat River"/>
   <hex row="28" col="18" terrain="1" name="Berdycz&#243;w (Berdychiv)"/>
-  <hex row="28" col="19" terrain="1" road="9" name="Berdycz&#243;w (Berdychiv)" owner="0" flag="103">
+  <hex row="28" col="19" terrain="1" road="9" name="Berdycz&#243;w (Berdychiv)" owner="0" flag="103" deploy="0">
     <unit id="42335" owner="0" flag="104" face="0" exp="94"/>
   </hex>
   <hex row="28" col="22" terrain="8"/>
@@ -852,7 +852,7 @@
   <hex row="28" col="31" terrain="10" name="Kamenka River"/>
   <hex row="28" col="32" terrain="10" name="Kamenka River"/>
   <hex row="28" col="38" terrain="10" name="Kamenka River"/>
-  <hex row="28" col="39" terrain="2" owner="0" flag="103">
+  <hex row="28" col="39" terrain="2" owner="0" flag="103" deploy="0">
     <unit id="42412" owner="0" flag="104" face="0" transport="42344" exp="140" str="5" bstr="5"/>
     <unit id="42442" owner="0" flag="104" face="0" exp="210"/>
   </hex>
@@ -969,7 +969,7 @@
   <hex row="33" col="16" terrain="3"/>
   <hex row="33" col="17" terrain="3"/>
   <hex row="33" col="18" terrain="3"/>
-  <hex row="33" col="24" terrain="1" road="17" name="Koziatyn (Kazatin)" owner="0" flag="103" victory="0">
+  <hex row="33" col="24" terrain="1" road="17" name="Koziatyn (Kazatin)" owner="0" flag="103" victory="0" deploy="0">
     <unit id="42324" owner="0" flag="104" face="0" transport="42357" exp="240"/>
   </hex>
   <hex row="33" col="25" terrain="3"/>

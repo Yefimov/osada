@@ -18,7 +18,11 @@
       <unit id="46015" owner="0" flag="163" face="0" exp="84"/>
     </at>
   </reinforce>
-  <hex row="24" col="32" station="1"/>
+  <hex row="19" col="22" rail="16"/>
+  <hex row="23" col="18" rail="18"/>
+  <hex row="23" col="28" rail="130"/>
+  <hex row="23" col="30" rail="130"/>
+  <hex row="24" col="32" station="1" rail="9"/>
   <hex row="0" col="1" terrain="3"/>
   <hex row="0" col="2" terrain="8"/>
   <hex row="0" col="3" terrain="15" name="Yazoo River"/>
@@ -1027,10 +1031,10 @@
   <hex row="20" col="20" terrain="8">
     <unit id="44779" owner="1" flag="151" face="0" exp="207"/>
   </hex>
-  <hex row="20" col="21" terrain="1" road="42" name="DeSoto Rail Station and Ferry" owner="1" flag="150" victory="1" station="1">
+  <hex row="20" col="21" terrain="1" road="42" name="DeSoto Rail Station and Ferry" owner="1" flag="150" victory="1" station="1" rail="42">
     <unit id="44827" owner="1" flag="151" face="0" transport="44810" exp="39"/>
   </hex>
-  <hex row="20" col="22" terrain="1" road="48" name="DeSoto Rail Station and Ferry" station="1"/>
+  <hex row="20" col="22" terrain="1" road="48" name="DeSoto Rail Station and Ferry" station="1" rail="33"/>
   <hex row="20" col="23" terrain="15" name="Mississippi"/>
   <hex row="20" col="24" terrain="15" name="Mississippi"/>
   <hex row="20" col="25" terrain="12" road="18" name="Vicksburg Harbour" owner="1" flag="150" victory="1">
@@ -1084,18 +1088,18 @@
   <hex row="21" col="19" road="34">
     <unit id="44787" owner="1" flag="151" face="0" exp="77"/>
   </hex>
-  <hex row="21" col="20" terrain="3" road="34">
+  <hex row="21" col="20" terrain="3" road="34" rail="18">
     <unit id="44826" owner="1" flag="151" face="0" transport="44814" exp="130"/>
   </hex>
   <hex row="21" col="21">
     <unit id="44787" owner="1" flag="151" face="0" exp="153"/>
   </hex>
-  <hex row="21" col="22" terrain="12" road="129" name="Vicksburg Harbour" owner="1" flag="150" victory="1">
+  <hex row="21" col="22" terrain="12" road="129" name="Vicksburg Harbour" owner="1" flag="150" victory="1" rail="128">
     <unit id="44787" owner="1" flag="151" face="0" exp="96"/>
   </hex>
   <hex row="21" col="23" terrain="15" name="Mississippi"/>
   <hex row="21" col="24" terrain="15" name="Mississippi"/>
-  <hex row="21" col="25" terrain="12" road="9" name="Vicksburg Harbour" owner="1" flag="150" victory="1">
+  <hex row="21" col="25" terrain="12" road="9" name="Vicksburg Harbour" owner="1" flag="150" victory="1" rail="8">
     <unit id="44787" owner="1" flag="151" face="0" exp="64"/>
   </hex>
   <hex row="21" col="26" terrain="5">
@@ -1145,8 +1149,8 @@
   <hex row="22" col="16" terrain="15" name="Mississippi"/>
   <hex row="22" col="17" road="18"/>
   <hex row="22" col="18" terrain="3" road="34"/>
-  <hex row="22" col="19" terrain="8"/>
-  <hex row="22" col="20">
+  <hex row="22" col="19" terrain="8" rail="34"/>
+  <hex row="22" col="20" rail="33">
     <unit id="44787" owner="1" flag="151" face="0" exp="56"/>
   </hex>
   <hex row="22" col="21" terrain="15" name="Mississippi">
@@ -1158,20 +1162,20 @@
   <hex row="22" col="25" terrain="5">
     <unit id="44787" owner="1" flag="151" face="0" exp="36"/>
   </hex>
-  <hex row="22" col="26" terrain="1" road="154" name="Vicksburg">
+  <hex row="22" col="26" terrain="1" road="154" name="Vicksburg" rail="136">
     <unit id="44825" owner="1" flag="151" face="0" transport="44814" exp="102"/>
   </hex>
-  <hex row="22" col="27" terrain="1" road="163" name="Vicksburg" station="1">
+  <hex row="22" col="27" terrain="1" road="163" name="Vicksburg" station="1" rail="136">
     <unit id="44786" owner="1" flag="151" face="0" exp="208"/>
   </hex>
   <hex row="22" col="28" terrain="1" road="162" name="Vicksburg"/>
-  <hex row="22" col="29" terrain="1" name="Vicksburg">
+  <hex row="22" col="29" terrain="1" name="Vicksburg" rail="40">
     <unit id="44786" owner="1" flag="151" face="0" exp="229"/>
   </hex>
   <hex row="22" col="30" terrain="1" road="136" name="Vicksburg">
     <unit id="44786" owner="1" flag="151" face="0" exp="245"/>
   </hex>
-  <hex row="22" col="31" road="136"/>
+  <hex row="22" col="31" road="136" rail="40"/>
   <hex row="22" col="33" terrain="3"/>
   <hex row="22" col="35" terrain="3">
     <unit id="44827" owner="1" flag="151" face="0" transport="44810" exp="40"/>
@@ -1227,7 +1231,7 @@
   <hex row="23" col="26" road="19">
     <unit id="44823" owner="1" flag="151" face="0" exp="201" str="8" bstr="8"/>
   </hex>
-  <hex row="23" col="32" road="136"/>
+  <hex row="23" col="32" road="136" rail="144"/>
   <hex row="23" col="33" road="136">
     <unit id="44827" owner="1" flag="151" face="0" transport="44810" exp="51"/>
   </hex>
@@ -1272,8 +1276,8 @@
   <hex row="24" col="14" terrain="15" name="Mississippi"/>
   <hex row="24" col="15" terrain="16" road="18"/>
   <hex row="24" col="16" road="34"/>
-  <hex row="24" col="17" terrain="8"/>
-  <hex row="24" col="18" terrain="8"/>
+  <hex row="24" col="17" terrain="8" rail="34"/>
+  <hex row="24" col="18" terrain="8" rail="33"/>
   <hex row="24" col="19" terrain="8"/>
   <hex row="24" col="20" terrain="15" name="Mississippi"/>
   <hex row="24" col="21" terrain="15" name="Mississippi"/>
@@ -1288,7 +1292,7 @@
     <unit id="44824" owner="1" flag="151" face="0" transport="44810" exp="128"/>
   </hex>
   <hex row="24" col="26" road="17"/>
-  <hex row="24" col="33">
+  <hex row="24" col="33" rail="136">
     <unit id="44787" owner="1" flag="151" face="0" exp="63"/>
   </hex>
   <hex row="24" col="34" terrain="3" road="136">
@@ -1332,7 +1336,8 @@
   <hex row="25" col="12" terrain="15" name="Mississippi"/>
   <hex row="25" col="13" terrain="15" name="Mississippi"/>
   <hex row="25" col="14" terrain="14"/>
-  <hex row="25" col="15" road="33"/>
+  <hex row="25" col="15" road="33" rail="18"/>
+  <hex row="25" col="16" rail="34"/>
   <hex row="25" col="18" terrain="8"/>
   <hex row="25" col="19" terrain="15" name="Mississippi"/>
   <hex row="25" col="20" terrain="15" name="Mississippi"/>
@@ -1350,25 +1355,32 @@
   <hex row="25" col="33" terrain="11" name="Vicksburg Fortifications" owner="1" flag="150">
     <unit id="44787" owner="1" flag="151" face="0" exp="40"/>
   </hex>
-  <hex row="25" col="35" terrain="3"/>
-  <hex row="25" col="38" road="146"/>
-  <hex row="25" col="40" road="130"/>
-  <hex row="25" col="41">
+  <hex row="25" col="34" rail="136"/>
+  <hex row="25" col="35" terrain="3" rail="130"/>
+  <hex row="25" col="36" rail="40"/>
+  <hex row="25" col="37" rail="130"/>
+  <hex row="25" col="38" road="146" rail="40"/>
+  <hex row="25" col="39" rail="130"/>
+  <hex row="25" col="40" road="130" rail="40"/>
+  <hex row="25" col="41" rail="130">
     <unit id="45963" owner="0" flag="163" face="0" exp="87"/>
   </hex>
-  <hex row="25" col="42" road="130"/>
-  <hex row="25" col="44" terrain="3" road="130">
+  <hex row="25" col="42" road="130" rail="40"/>
+  <hex row="25" col="43" rail="130"/>
+  <hex row="25" col="44" terrain="3" road="130" rail="40">
     <unit id="45963" owner="0" flag="163" face="0" exp="196"/>
   </hex>
-  <hex row="25" col="45">
+  <hex row="25" col="45" rail="130">
     <unit id="45963" owner="0" flag="163" face="0" transport="45990" exp="34"/>
   </hex>
-  <hex row="25" col="46" road="130" station="1"/>
-  <hex row="25" col="47" terrain="3"/>
-  <hex row="25" col="48" road="130"/>
-  <hex row="25" col="50" road="130"/>
-  <hex row="25" col="52" terrain="1" road="130" name="Union HQ Vicksburg" owner="0" flag="162" deploy="0" station="1"/>
-  <hex row="25" col="53" terrain="3"/>
+  <hex row="25" col="46" road="130" station="1" rail="40"/>
+  <hex row="25" col="47" terrain="3" rail="130"/>
+  <hex row="25" col="48" road="130" rail="40"/>
+  <hex row="25" col="49" rail="130"/>
+  <hex row="25" col="50" road="130" rail="40"/>
+  <hex row="25" col="51" rail="130"/>
+  <hex row="25" col="52" terrain="1" road="130" name="Union HQ Vicksburg" owner="0" flag="162" deploy="0" station="1" rail="40"/>
+  <hex row="25" col="53" terrain="3" rail="130"/>
   <hex row="26" col="0" terrain="15" name="Mississippi"/>
   <hex row="26" col="1" terrain="15" name="Mississippi"/>
   <hex row="26" col="2" terrain="15" name="Mississippi"/>
@@ -1384,7 +1396,7 @@
   <hex row="26" col="12" terrain="15" name="Mississippi"/>
   <hex row="26" col="13" road="34"/>
   <hex row="26" col="14" road="34"/>
-  <hex row="26" col="15" terrain="8"/>
+  <hex row="26" col="15" terrain="8" rail="33"/>
   <hex row="26" col="16" terrain="8">
     <unit id="45984" owner="0" flag="163" face="0" exp="40" str="8" bstr="8"/>
   </hex>
@@ -1452,7 +1464,7 @@
   <hex row="27" col="13" terrain="3">
     <unit id="45959" owner="0" flag="163" face="0" exp="150"/>
   </hex>
-  <hex row="27" col="14" terrain="3">
+  <hex row="27" col="14" terrain="3" rail="18">
     <unit id="45959" owner="0" flag="163" face="0" exp="114"/>
   </hex>
   <hex row="27" col="16" terrain="8"/>
@@ -1512,7 +1524,7 @@
   <hex row="28" col="13" terrain="3">
     <unit id="45956" owner="0" flag="163" face="0" exp="19"/>
   </hex>
-  <hex row="28" col="14">
+  <hex row="28" col="14" rail="17">
     <unit id="45998" owner="0" flag="163" face="0" transport="45993" exp="106"/>
   </hex>
   <hex row="28" col="15" terrain="3">
@@ -1567,10 +1579,10 @@
   <hex row="29" col="10" terrain="3"/>
   <hex row="29" col="11" terrain="3"/>
   <hex row="29" col="12" terrain="3"/>
-  <hex row="29" col="13" terrain="3">
+  <hex row="29" col="13" terrain="3" rail="34">
     <unit id="45964" owner="0" flag="163" face="0" exp="49"/>
   </hex>
-  <hex row="29" col="14">
+  <hex row="29" col="14" rail="33">
     <unit id="45952" owner="0" flag="163" face="0" exp="150"/>
   </hex>
   <hex row="29" col="15" terrain="3">
@@ -1624,6 +1636,7 @@
   <hex row="30" col="9" deploy="0"/>
   <hex row="30" col="10" terrain="15" name="Union Canal at DeSoto Point"/>
   <hex row="30" col="11" terrain="15" name="Union Canal at DeSoto Point"/>
+  <hex row="30" col="12" rail="18"/>
   <hex row="30" col="13" terrain="8"/>
   <hex row="30" col="14" terrain="3"/>
   <hex row="30" col="15" terrain="8"/>
@@ -1664,12 +1677,15 @@
   <hex row="30" col="51" terrain="3"/>
   <hex row="30" col="52" terrain="3"/>
   <hex row="30" col="53" terrain="3"/>
+  <hex row="31" col="1" rail="40"/>
+  <hex row="31" col="3" rail="40"/>
+  <hex row="31" col="5" rail="40"/>
   <hex row="31" col="6" terrain="8"/>
-  <hex row="31" col="7" terrain="1" road="9" name="Rail Station and Depot" owner="0" flag="162" victory="0" deploy="0" station="1"/>
-  <hex row="31" col="9" deploy="0"/>
+  <hex row="31" col="7" terrain="1" road="9" name="Rail Station and Depot" owner="0" flag="162" victory="0" deploy="0" station="1" rail="40"/>
+  <hex row="31" col="9" deploy="0" rail="40"/>
   <hex row="31" col="10" terrain="3" deploy="0"/>
-  <hex row="31" col="11" deploy="0"/>
-  <hex row="31" col="12" terrain="15" name="Union Canal at DeSoto Point"/>
+  <hex row="31" col="11" deploy="0" rail="34"/>
+  <hex row="31" col="12" terrain="15" name="Union Canal at DeSoto Point" rail="33"/>
   <hex row="31" col="13" terrain="15" name="Union Canal at DeSoto Point"/>
   <hex row="31" col="14" terrain="8"/>
   <hex row="31" col="15" terrain="15" name="Mississippi"/>
@@ -1714,10 +1730,14 @@
   <hex row="31" col="50" terrain="3"/>
   <hex row="31" col="52" terrain="3"/>
   <hex row="31" col="53" terrain="3"/>
+  <hex row="32" col="0" rail="130"/>
+  <hex row="32" col="2" rail="130"/>
+  <hex row="32" col="4" rail="130"/>
   <hex row="32" col="5" terrain="3"/>
-  <hex row="32" col="8" road="136"/>
+  <hex row="32" col="6" rail="130"/>
+  <hex row="32" col="8" road="136" rail="130"/>
   <hex row="32" col="9" road="144"/>
-  <hex row="32" col="10" terrain="3" deploy="0"/>
+  <hex row="32" col="10" terrain="3" deploy="0" rail="130"/>
   <hex row="32" col="11" deploy="0"/>
   <hex row="32" col="12" terrain="8"/>
   <hex row="32" col="13" terrain="14"/>

@@ -18,10 +18,22 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
- * Guards the Perekop Bronevagon fix: a RAIL-movmethod unit must be confined to hex.rail once the
- * map actually carries rail data, but must fall back to its old (pre-fix, WHEELED-equivalent)
- * cross-country behaviour on any scenario not yet re-patched with rail= attributes (the
- * mapHasRail safety guard in MovementRules.getMoveRange / GameMap.hasRailData).
+ * **A train moves on rail or it does not move.**
+ *
+ * This class used to guard the opposite: a RAIL unit was confined to `hex.rail` only once the map
+ * carried rail data, and on any scenario not yet patched by `add_rails.py` it fell back to
+ * cross-country WHEELED movement. That escape hatch was a workaround for missing DATA and it
+ * produced the defect it was meant to prevent — an armoured train driving over open steppe, which
+ * is what a player reported. The data gap is now closed where a source exists, and the rule stands
+ * without the hatch.
+ *
+ * A formation left off the line is therefore immobile, and that is the intended outcome rather than
+ * a casualty of it: cut off from their track, armoured trains of the period were dug in at a
+ * terminus or a works siding and fought as fixed firing points.
+ *
+ * The two reinforcement cases below are the exception that must survive, and they are not the same
+ * question: a reinforcement that finds NO position is never added to the map at all, so refusing an
+ * off-rail arrival would delete the formation instead of immobilising it.
  */
 class MovementRulesRailTest {
     private val trainEqid = 100
@@ -97,19 +109,35 @@ class MovementRulesRailTest {
         }
     }
 
+    /** The behaviour the player reported, inverted: no rail anywhere means the train stays put. */
     @Test
-    fun trainFallsBackToCrossCountryWhenMapHasNoRailData() {
+    fun trainCannotMoveAtAllWhenTheMapHasNoRail() {
         val map = buildMap()
-        // No hex anywhere has rail > 0 -- GameMap.hasRailData() must report false.
         val unit = placeTrain(map, 2, 2)
         assertFalse(map.hasRailData())
 
-        val range = MovementRules.getMoveRange(map, unit)
-        val reached = range.map { it.row to it.col }.toSet()
+        val reached = MovementRules.getMoveRange(map, unit).map { it.row to it.col }.toSet()
 
-        // Same as a WHEELED unit on clear terrain: every adjacent hex is reachable.
         HexGeometry.getAdjacentCompat(2, 2).forEach { (r, c) ->
-            assertTrue((r to c) in reached, "unpatched map: train should move like WHEELED onto ($r,$c)")
+            assertFalse((r to c) in reached, "a railless map must not let a train onto ($r,$c)")
+        }
+    }
+
+    /** And the same on a map that HAS rail, for a train the author parked away from it. */
+    @Test
+    fun trainStandingOffTheLineIsAFixedFiringPoint() {
+        val map = buildMap()
+        map.map
+            ?.get(0)
+            ?.get(0)
+            ?.rail = RoadType.NORTH.value
+        val unit = placeTrain(map, 3, 3)
+
+        val reached = MovementRules.getMoveRange(map, unit).map { it.row to it.col }.toSet()
+
+        assertTrue(map.hasRailData(), "the map does carry rail, just not under this unit")
+        HexGeometry.getAdjacentCompat(3, 3).forEach { (r, c) ->
+            assertFalse((r to c) in reached, "an off-rail train must not reach ($r,$c)")
         }
     }
 

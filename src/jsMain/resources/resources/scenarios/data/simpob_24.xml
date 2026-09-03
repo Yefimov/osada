@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="ASCII"?>
 <map file="simpob_24.xscn" name="Crying souls: The Ice March (I)
 
-" turns="10, 14, 17" date="January 4, 1920" dayturns="5" ground="1" atmosferic="3" latitude="2" iconset="1" weatherchg="0" rows="22" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_1434.png" eqpv="united1" prototimeframe="0" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="1" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="0" capitalflak="0" ehmsuonly="0" paradropocean="1" coresoffcap="1" music="campsimpob.mp3" daysperturn="0">
-<player id="0" country="189" side="0" airtrans="0" navaltrans="0" railtrans="5" defaultxp="244" defaultstr="0" support="104,190,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="75:0:7,20:0:0"/>
+" turns="10, 14, 17" date="January 4, 1920" dayturns="5" ground="1" atmosferic="3" latitude="2" iconset="1" weatherchg="0" rows="22" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_1434.png" eqpv="united1" prototimeframe="0" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="1" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="0" capitalflak="0" ehmsuonly="0" paradropocean="1" coresoffcap="1" music="campsimpob.mp3" daysperturn="0" holdvictory="3, 2, 2">
+<player id="0" country="103" side="0" airtrans="0" navaltrans="0" railtrans="5" defaultxp="244" defaultstr="0" support="104,190,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="75:0:7,20:0:0"/>
 <player id="1" country="100" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="99" defaultstr="0" support="0,0,0,0" turnprestige="0, 0, 40, 40, 40, 40, 40, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="54:0:5"/>
   <hex row="0" col="1" terrain="3"/>
   <hex row="0" col="2" terrain="3"/>
@@ -181,7 +181,7 @@
   <hex row="6" col="6" terrain="3"/>
   <hex row="6" col="7" terrain="3"/>
   <hex row="6" col="14" road="136"/>
-  <hex row="6" col="15" terrain="1" road="187" name="Emelyanovo" owner="0" flag="189"/>
+  <hex row="6" col="15" terrain="1" road="187" name="Emelyanovo" owner="0" flag="189" deploy="0"/>
   <hex row="6" col="16" road="40"/>
   <hex row="6" col="17" road="130"/>
   <hex row="6" col="18" road="34"/>
@@ -208,9 +208,13 @@
   <hex row="7" col="4" terrain="3" rail="48"/>
   <hex row="7" col="6" terrain="3"/>
   <hex row="7" col="7" terrain="3"/>
-  <hex row="7" col="10" deploy="1"/>
-  <hex row="7" col="11" terrain="2" deploy="1"/>
-  <hex row="7" col="22" terrain="1" road="187" name="Shuvae" owner="0" flag="189"/>
+  <hex row="7" col="10" deploy="1">
+    <unit id="42032" owner="1" flag="101" face="0" exp="99" osada="rework" objrow="9" objcol="18"/>
+  </hex>
+  <hex row="7" col="11" terrain="2" deploy="1">
+    <unit id="42140" owner="1" flag="101" face="0" transport="42129" exp="99" osada="rework" objrow="9" objcol="18"/>
+  </hex>
+  <hex row="7" col="22" terrain="1" road="187" name="Shuvae" owner="0" flag="189" deploy="0"/>
   <hex row="7" col="23" road="136"/>
   <hex row="7" col="25" road="48"/>
   <hex row="7" col="28" terrain="10" name="Yenisei"/>
@@ -236,10 +240,18 @@
   <hex row="8" col="5" rail="136"/>
   <hex row="8" col="6" terrain="3"/>
   <hex row="8" col="7" terrain="3"/>
-  <hex row="8" col="8" terrain="3"/>
-  <hex row="8" col="10" terrain="2" owner="1" flag="100" deploy="1"/>
-  <hex row="8" col="11" terrain="1" road="187" name="Areyskoye" deploy="1"/>
-  <hex row="8" col="12" terrain="2" deploy="1"/>
+  <hex row="8" col="8" terrain="3">
+    <unit id="42108" owner="1" flag="101" face="0" exp="99" osada="rework" objrow="9" objcol="18"/>
+  </hex>
+  <hex row="8" col="10" terrain="2" owner="1" flag="100" deploy="1">
+    <unit id="42153" owner="1" flag="101" face="0" transport="42129" exp="99" osada="rework" objrow="9" objcol="18"/>
+  </hex>
+  <hex row="8" col="11" terrain="1" road="187" name="Areyskoye" deploy="1">
+    <unit id="42101" owner="1" flag="101" face="0" exp="99" osada="rework" objrow="9" objcol="18"/>
+  </hex>
+  <hex row="8" col="12" terrain="2" deploy="1">
+    <unit id="42037" owner="1" flag="101" face="0" exp="99" osada="rework" objrow="9" objcol="18"/>
+  </hex>
   <hex row="8" col="13" road="40"/>
   <hex row="8" col="16">
     <unit id="42333" owner="0" flag="190" face="0" exp="114"/>
@@ -268,11 +280,21 @@
   <hex row="9" col="5" terrain="3"/>
   <hex row="9" col="6" rail="136"/>
   <hex row="9" col="7" terrain="3" rail="130"/>
-  <hex row="9" col="8" rail="40"/>
-  <hex row="9" col="9" road="24" rail="130"/>
-  <hex row="9" col="10" rail="40" deploy="1"/>
-  <hex row="9" col="11" terrain="1" road="187" rail="130" name="Areyskoye" owner="1" flag="100" victory="1" deploy="1" station="1"/>
-  <hex row="9" col="12" terrain="1" road="187" rail="40" name="Areyskoye" deploy="1"/>
+  <hex row="9" col="8" rail="40">
+    <unit id="42139" owner="1" flag="101" face="0" transport="42129" exp="99" osada="rework" objrow="9" objcol="18"/>
+  </hex>
+  <hex row="9" col="9" road="24" rail="130">
+    <unit id="42172" owner="1" flag="101" face="0" exp="99" osada="rework" objrow="9" objcol="18"/>
+  </hex>
+  <hex row="9" col="10" rail="40" deploy="1">
+    <unit id="42101" owner="1" flag="101" face="0" exp="99" osada="rework" objrow="9" objcol="18"/>
+  </hex>
+  <hex row="9" col="11" terrain="1" road="187" rail="130" name="Areyskoye" owner="1" flag="100" victory="1" deploy="1" station="1">
+    <unit id="42098" owner="1" flag="101" face="0" transport="42129" exp="99" osada="rework" objrow="9" objcol="18"/>
+  </hex>
+  <hex row="9" col="12" terrain="1" road="187" rail="40" name="Areyskoye" deploy="1">
+    <unit id="42141" owner="1" flag="101" face="0" transport="42129" exp="99" osada="rework" objrow="9" objcol="18"/>
+  </hex>
   <hex row="9" col="13" terrain="3" rail="130"/>
   <hex row="9" col="14" road="136" rail="40"/>
   <hex row="9" col="15" road="130" rail="136"/>
@@ -280,7 +302,7 @@
   <hex row="9" col="17" road="138">
     <unit id="502" owner="0" flag="190" face="0" exp="244"/>
   </hex>
-  <hex row="9" col="18" terrain="1" road="187" name="Drokino" owner="0" flag="189" victory="0">
+  <hex row="9" col="18" terrain="1" road="187" name="Drokino" owner="0" flag="189" victory="0" deploy="0">
     <unit id="42051" owner="0" flag="190" face="0" exp="244"/>
   </hex>
   <hex row="9" col="21" terrain="1" road="187" name="Krasnoyarsk">
@@ -303,11 +325,21 @@
   <hex row="9" col="42" terrain="3"/>
   <hex row="9" col="43" terrain="3"/>
   <hex row="10" col="8" road="24"/>
-  <hex row="10" col="9" terrain="3" road="129"/>
-  <hex row="10" col="10" terrain="3" road="130" deploy="1"/>
-  <hex row="10" col="11" terrain="3" deploy="1"/>
-  <hex row="10" col="12" terrain="3" deploy="1"/>
-  <hex row="10" col="13" terrain="3"/>
+  <hex row="10" col="9" terrain="3" road="129">
+    <unit id="42057" owner="1" flag="101" face="0" exp="99" osada="rework" objrow="9" objcol="18"/>
+  </hex>
+  <hex row="10" col="10" terrain="3" road="130" deploy="1">
+    <unit id="42108" owner="1" flag="101" face="0" exp="99" osada="rework" objrow="9" objcol="18"/>
+  </hex>
+  <hex row="10" col="11" terrain="3" deploy="1">
+    <unit id="42152" owner="1" flag="101" face="0" transport="42129" exp="99" osada="rework" objrow="9" objcol="18"/>
+  </hex>
+  <hex row="10" col="12" terrain="3" deploy="1">
+    <unit id="42139" owner="1" flag="101" face="0" transport="42129" exp="99" osada="rework" objrow="9" objcol="18"/>
+  </hex>
+  <hex row="10" col="13" terrain="3">
+    <unit id="42040" owner="1" flag="101" face="0" exp="99" osada="rework" objrow="9" objcol="18"/>
+  </hex>
   <hex row="10" col="14" terrain="3"/>
   <hex row="10" col="15" terrain="3"/>
   <hex row="10" col="16" rail="136"/>
@@ -421,7 +453,7 @@
   <hex row="12" col="22" terrain="1" road="187" rail="136" name="Krasnoyarsk">
     <unit id="42165" owner="0" flag="190" face="0" transport="42121" exp="194"/>
   </hex>
-  <hex row="12" col="23" terrain="1" road="187" rail="136" name="Krasnoyarsk" owner="0" flag="189" victory="0" station="1">
+  <hex row="12" col="23" terrain="1" road="187" rail="136" name="Krasnoyarsk" owner="0" flag="189" victory="0" station="1" deploy="0">
     <unit id="46721" owner="0" flag="190" face="0" transport="46732" exp="44"/>
   </hex>
   <hex row="12" col="24" terrain="1" road="187" name="Krasnoyarsk"/>
@@ -533,7 +565,7 @@
   <hex row="15" col="19" terrain="5"/>
   <hex row="15" col="20" road="129"/>
   <hex row="15" col="21" terrain="5"/>
-  <hex row="15" col="24" terrain="2" owner="0" flag="189"/>
+  <hex row="15" col="24" terrain="2" owner="0" flag="189" deploy="0"/>
   <hex row="15" col="25" rail="9"/>
   <hex row="15" col="28" terrain="3"/>
   <hex row="15" col="32" terrain="3"/>

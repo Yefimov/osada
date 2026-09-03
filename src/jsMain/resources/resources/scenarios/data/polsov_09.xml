@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="polsov_09.xscn" name="Komar&#243;w, the last cavalry battle" turns="11, 14, 16" date="August 31, 1920" dayturns="16" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="28" cols="28" eqp="eqp-kaiser" image="resources/maps/images/map_474.png" eqpv="united1" prototimeframe="9" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="0" capitalflak="0" ehmsuonly="0" paradropocean="1" coresoffcap="0" daysperturn="0">
-<player id="0" country="103" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="99" defaultstr="0" support="104,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="16:0:2"/>
-<player id="1" country="20" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="21,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99" ff="20:0:5"/>
+<map file="polsov_09.xscn" name="Komarow: the Konarmia breaks out" turns="11, 14, 16" date="August 31, 1920" dayturns="16" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="28" cols="28" eqp="eqp-kaiser" image="resources/maps/images/map_474.png" eqpv="united1" prototimeframe="9" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="0" capitalflak="0" ehmsuonly="1" paradropocean="1" coresoffcap="0" daysperturn="0" retreatunits="4, 0" msuunits="3, 0" holdvictory="3, 2, 1">
+<player id="0" country="103" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="99" defaultstr="0" support="104,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="16:0:2"/>
+<player id="1" country="20" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="21,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99" ff="20:0:5"/>
   <reinforce turn="3">
     <at row="7" col="5">
       <unit id="42295" owner="0" flag="104" face="0" exp="8" ldr="1"/>
@@ -120,13 +120,13 @@
   <hex row="5" col="6" road="130"/>
   <hex row="5" col="8" road="136"/>
   <hex row="5" col="9" road="130">
-    <unit id="42395" owner="0" flag="104" face="0" exp="250"/>
+    <unit id="42395" owner="0" flag="104" face="0" exp="250" msu="1"/>
   </hex>
   <hex row="5" col="10" road="168"/>
   <hex row="5" col="11" road="136"/>
   <hex row="5" col="13" road="33"/>
   <hex row="5" col="14">
-    <unit id="42331" owner="0" flag="104" face="0" exp="94"/>
+    <unit id="42331" owner="0" flag="104" face="0" exp="94" msu="1"/>
   </hex>
   <hex row="5" col="19" terrain="3"/>
   <hex row="5" col="20" terrain="3"/>
@@ -136,12 +136,12 @@
   <hex row="6" col="2" road="17">
     <unit id="618" owner="0" flag="104" face="0" exp="44"/>
   </hex>
-  <hex row="6" col="12" terrain="1" road="154" name="Miaczyn" owner="0" flag="103" victory="0">
-    <unit id="42292" owner="0" flag="104" face="0" exp="244" ldr="1"/>
+  <hex row="6" col="12" terrain="1" road="154" name="Miaczyn" owner="0" flag="103" victory="0" deploy="0">
+    <unit id="42292" owner="0" flag="104" face="0" exp="244" ldr="1" msu="1"/>
   </hex>
   <hex row="6" col="13" road="136"/>
   <hex row="6" col="15" terrain="3">
-    <unit id="42292" owner="0" flag="104" face="0" exp="144" str="9" bstr="9"/>
+    <unit id="42292" owner="0" flag="104" face="0" exp="144" str="9" bstr="9" msu="1"/>
   </hex>
   <hex row="6" col="16" terrain="3"/>
   <hex row="6" col="17" terrain="3"/>
@@ -158,7 +158,7 @@
   <hex row="6" col="24" terrain="1" name="Niewirkow" owner="0" flag="103" victory="0">
     <unit id="42295" owner="0" flag="104" face="0" exp="144"/>
   </hex>
-  <hex row="6" col="25" terrain="2" owner="0" flag="103">
+  <hex row="6" col="25" terrain="2" owner="0" flag="103" deploy="0">
     <unit id="42434" owner="0" flag="104" face="0" exp="100" str="6" bstr="6"/>
   </hex>
   <hex row="6" col="26" terrain="2"/>
@@ -167,30 +167,30 @@
     <unit id="42295" owner="0" flag="104" face="0" exp="124"/>
   </hex>
   <hex row="7" col="10">
-    <unit id="42292" owner="0" flag="104" face="0" exp="184"/>
+    <unit id="42292" owner="0" flag="104" face="0" exp="184" msu="1"/>
   </hex>
   <hex row="7" col="11" road="18"/>
-  <hex row="7" col="12" terrain="5" road="33"/>
+  <hex row="7" col="12" terrain="5" road="33" deploy="0"/>
   <hex row="7" col="13" terrain="5"/>
   <hex row="7" col="14" road="144"/>
   <hex row="7" col="16" terrain="3"/>
   <hex row="7" col="17" terrain="3"/>
   <hex row="7" col="18" terrain="3">
-    <unit id="42292" owner="0" flag="104" face="0" exp="214"/>
+    <unit id="42292" owner="0" flag="104" face="0" exp="214" msu="1"/>
   </hex>
   <hex row="7" col="21" road="40"/>
   <hex row="7" col="23" road="34"/>
   <hex row="7" col="24" road="41">
-    <unit id="42292" owner="0" flag="104" face="0" exp="144" ldr="1"/>
+    <unit id="42292" owner="0" flag="104" face="0" exp="144" ldr="1" msu="1"/>
   </hex>
-  <hex row="7" col="25" road="144"/>
+  <hex row="7" col="25" road="144" deploy="0"/>
   <hex row="8" col="1" road="18"/>
   <hex row="8" col="2" road="33"/>
   <hex row="8" col="3" terrain="3"/>
   <hex row="8" col="11" road="41"/>
   <hex row="8" col="12" terrain="5"/>
   <hex row="8" col="13">
-    <unit id="42303" owner="0" flag="104" face="0" exp="190" str="9" bstr="9"/>
+    <unit id="42303" owner="0" flag="104" face="0" exp="190" str="9" bstr="9" msu="1"/>
   </hex>
   <hex row="8" col="14" road="17"/>
   <hex row="8" col="15" road="40"/>
@@ -220,7 +220,7 @@
   <hex row="10" col="0" road="2"/>
   <hex row="10" col="3" terrain="3"/>
   <hex row="10" col="4" terrain="3"/>
-  <hex row="10" col="5" terrain="1" road="34" name="Wolica Brzozowa" owner="0" flag="103" victory="0"/>
+  <hex row="10" col="5" terrain="1" road="34" name="Wolica Brzozowa" owner="0" flag="103" victory="0" deploy="0"/>
   <hex row="10" col="6" road="34"/>
   <hex row="10" col="7" terrain="3"/>
   <hex row="10" col="8" terrain="3" road="130"/>
@@ -259,7 +259,7 @@
   <hex row="12" col="22" road="136"/>
   <hex row="12" col="23" terrain="1" road="152" name="Sniatycze"/>
   <hex row="12" col="26" road="17"/>
-  <hex row="12" col="27" road="40"/>
+  <hex row="12" col="27" road="40" escapeground="1"/>
   <hex row="13" col="0" road="2"/>
   <hex row="13" col="9" road="18"/>
   <hex row="13" col="10" road="34"/>
@@ -311,7 +311,7 @@
   <hex row="17" col="24" road="136"/>
   <hex row="17" col="25" road="130"/>
   <hex row="17" col="26" road="40"/>
-  <hex row="17" col="27" road="136"/>
+  <hex row="17" col="27" road="136" escapeground="1"/>
   <hex row="18" col="4" road="130"/>
   <hex row="18" col="5" terrain="3"/>
   <hex row="18" col="6" road="130"/>
@@ -403,7 +403,7 @@
   <hex row="22" col="22" road="130"/>
   <hex row="22" col="24" road="136"/>
   <hex row="22" col="25" road="136"/>
-  <hex row="22" col="27" road="40"/>
+  <hex row="22" col="27" road="40" escapeground="1"/>
   <hex row="23" col="0" road="8"/>
   <hex row="23" col="1" road="144"/>
   <hex row="23" col="2" terrain="15"/>

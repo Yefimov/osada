@@ -69,6 +69,8 @@
   </reinforce>
   <hex row="0" col="2" road="8"/>
   <hex row="0" col="3" road="144"/>
+  <hex row="0" col="7" rail="42"/>
+  <hex row="0" col="8" rail="48"/>
   <hex row="0" col="9" terrain="1" name="Ukmerge" flag="7" owner="1"/>
   <hex row="0" col="12" terrain="3"/>
   <hex row="0" col="13" terrain="10" name="LAKE"/>
@@ -95,11 +97,11 @@
   <hex row="0" col="43" terrain="3"/>
   <hex row="1" col="1" road="24"/>
   <hex row="1" col="3" road="41"/>
-  <hex row="1" col="5" terrain="12" name="RAILROAD"/>
-  <hex row="1" col="6" terrain="12" name="RAILROAD"/>
+  <hex row="1" col="5" terrain="12" name="RAILROAD" rail="34"/>
+  <hex row="1" col="6" terrain="12" name="RAILROAD" rail="34"/>
   <hex row="1" col="7" terrain="12" name="RAILROAD"/>
-  <hex row="1" col="8" terrain="12" name="RAILROAD"/>
-  <hex row="1" col="9" terrain="12" name="RAILROAD"/>
+  <hex row="1" col="8" terrain="12" name="RAILROAD" rail="137"/>
+  <hex row="1" col="9" terrain="12" name="RAILROAD" rail="144"/>
   <hex row="1" col="10" terrain="1" name="Ukmerge"/>
   <hex row="1" col="12" terrain="3"/>
   <hex row="1" col="13" terrain="3"/>
@@ -139,11 +141,11 @@
   <hex row="1" col="42" terrain="3"/>
   <hex row="2" col="1" terrain="1" road="3" name="Jonava" flag="7" owner="1"/>
   <hex row="2" col="2" road="162"/>
-  <hex row="2" col="3" terrain="12" name="RAILROAD"/>
-  <hex row="2" col="4" terrain="12" name="RAILROAD"/>
+  <hex row="2" col="3" terrain="12" name="RAILROAD" rail="34"/>
+  <hex row="2" col="4" terrain="12" name="RAILROAD" rail="34"/>
   <hex row="2" col="6" road="130"/>
   <hex row="2" col="8" road="139"/>
-  <hex row="2" col="9" terrain="12" name="RAILROAD"/>
+  <hex row="2" col="9" terrain="12" name="RAILROAD" rail="17"/>
   <hex row="2" col="11" terrain="13"/>
   <hex row="2" col="12" terrain="3"/>
   <hex row="2" col="13">
@@ -194,10 +196,10 @@
   <hex row="2" col="40" terrain="3"/>
   <hex row="2" col="41" terrain="3"/>
   <hex row="2" col="42" terrain="3"/>
-  <hex row="2" col="43" terrain="12"/>
-  <hex row="3" col="1" terrain="12" name="RAILROAD"/>
-  <hex row="3" col="2" terrain="12" name="RAILROAD"/>
-  <hex row="3" col="9" terrain="12" name="RAILROAD"/>
+  <hex row="2" col="43" terrain="12" rail="32"/>
+  <hex row="3" col="1" terrain="12" name="RAILROAD" rail="34"/>
+  <hex row="3" col="2" terrain="12" name="RAILROAD" rail="34"/>
+  <hex row="3" col="9" terrain="12" name="RAILROAD" rail="9"/>
   <hex row="3" col="11" terrain="8"/>
   <hex row="3" col="13" terrain="10" name="LAKE"/>
   <hex row="3" col="14" road="25">
@@ -233,8 +235,8 @@
   <hex row="3" col="37" road="136"/>
   <hex row="3" col="38" terrain="3"/>
   <hex row="3" col="40" terrain="3"/>
-  <hex row="3" col="41" terrain="12" name="RAILROAD"/>
-  <hex row="3" col="42" terrain="12" name="RAILROAD"/>
+  <hex row="3" col="41" terrain="12" name="RAILROAD" rail="34"/>
+  <hex row="3" col="42" terrain="12" name="RAILROAD" rail="34"/>
   <hex row="3" col="43" road="32"/>
   <hex row="4" col="3" terrain="10" name="Wilna River"/>
   <hex row="4" col="5" terrain="10" name="Wilna River"/>
@@ -242,7 +244,7 @@
   <hex row="4" col="7" terrain="10" name="Wilna River"/>
   <hex row="4" col="8" terrain="3"/>
   <hex row="4" col="9" terrain="3"/>
-  <hex row="4" col="10" terrain="12" name="RAILROAD"/>
+  <hex row="4" col="10" terrain="12" name="RAILROAD" rail="144"/>
   <hex row="4" col="11" road="136"/>
   <hex row="4" col="12" terrain="10" name="LAKE"/>
   <hex row="4" col="13" terrain="10" name="LAKE"/>
@@ -271,8 +273,8 @@
   <hex row="4" col="36" road="17"/>
   <hex row="4" col="37" terrain="3"/>
   <hex row="4" col="38" road="136"/>
-  <hex row="4" col="39" terrain="12" name="RAILROAD"/>
-  <hex row="4" col="40" terrain="12" name="RAILROAD"/>
+  <hex row="4" col="39" terrain="12" name="RAILROAD" rail="34"/>
+  <hex row="4" col="40" terrain="12" name="RAILROAD" rail="34"/>
   <hex row="4" col="41" road="34"/>
   <hex row="4" col="42" road="34"/>
   <hex row="5" col="2" terrain="10" name="Wilna River"/>
@@ -282,8 +284,8 @@
   <hex row="5" col="7" terrain="3"/>
   <hex row="5" col="8" terrain="10" name="Wilna River"/>
   <hex row="5" col="9" terrain="3"/>
-  <hex row="5" col="10" terrain="12" name="RAILROAD"/>
-  <hex row="5" col="11" terrain="12" name="RAILROAD"/>
+  <hex row="5" col="10" terrain="12" name="RAILROAD" rail="9"/>
+  <hex row="5" col="11" terrain="12" name="RAILROAD" rail="144"/>
   <hex row="5" col="12" road="144"/>
   <hex row="5" col="13" terrain="10" road="34" name="LAKE"/>
   <hex row="5" col="14" road="33"/>
@@ -299,10 +301,10 @@
   <hex row="5" col="30" terrain="3" road="33"/>
   <hex row="5" col="32" terrain="15" name="LAKE"/>
   <hex row="5" col="33" terrain="15" name="LAKE"/>
-  <hex row="5" col="35" terrain="12" name="RAILROAD"/>
-  <hex row="5" col="36" terrain="12" name="RAILROAD"/>
-  <hex row="5" col="37" terrain="12" name="RAILROAD"/>
-  <hex row="5" col="38" terrain="12" name="RAILROAD"/>
+  <hex row="5" col="35" terrain="12" name="RAILROAD" rail="34"/>
+  <hex row="5" col="36" terrain="12" name="RAILROAD" rail="40"/>
+  <hex row="5" col="37" terrain="12" name="RAILROAD" rail="130"/>
+  <hex row="5" col="38" terrain="12" name="RAILROAD" rail="34"/>
   <hex row="5" col="40" road="138"/>
   <hex row="5" col="41" road="130"/>
   <hex row="5" col="42" terrain="1" road="56" name="Postavy"/>
@@ -313,7 +315,7 @@
   <hex row="6" col="5" terrain="3"/>
   <hex row="6" col="6" terrain="3"/>
   <hex row="6" col="8" terrain="10" name="Wilna River"/>
-  <hex row="6" col="11" terrain="12" name="RAILROAD"/>
+  <hex row="6" col="11" terrain="12" name="RAILROAD" rail="9"/>
   <hex row="6" col="12" road="19"/>
   <hex row="6" col="13" terrain="3" road="40"/>
   <hex row="6" col="14" terrain="10" name="LAKE"/>
@@ -329,8 +331,8 @@
   <hex row="6" col="28" terrain="8" road="34"/>
   <hex row="6" col="30" terrain="3"/>
   <hex row="6" col="32" terrain="15" name="LAKE"/>
-  <hex row="6" col="33" terrain="12" name="RAILROAD"/>
-  <hex row="6" col="34" terrain="12" name="RAILROAD"/>
+  <hex row="6" col="33" terrain="12" name="RAILROAD" rail="34"/>
+  <hex row="6" col="34" terrain="12" name="RAILROAD" rail="34"/>
   <hex row="6" col="35" road="49"/>
   <hex row="6" col="38" terrain="3"/>
   <hex row="6" col="39" terrain="3"/>
@@ -343,8 +345,8 @@
   <hex row="7" col="8" terrain="10" name="Wilna River"/>
   <hex row="7" col="9" terrain="10" name="Wilna River"/>
   <hex row="7" col="11" road="34"/>
-  <hex row="7" col="12" terrain="12" name="RAILROAD"/>
-  <hex row="7" col="13" terrain="12" name="RAILROAD"/>
+  <hex row="7" col="12" terrain="12" name="RAILROAD" rail="136"/>
+  <hex row="7" col="13" terrain="12" name="RAILROAD" rail="136"/>
   <hex row="7" col="14" road="136"/>
   <hex row="7" col="15" road="144"/>
   <hex row="7" col="18" terrain="10" name="Wilna River"/>
@@ -358,7 +360,7 @@
   <hex row="7" col="29" terrain="8"/>
   <hex row="7" col="30" terrain="15" name="LAKE"/>
   <hex row="7" col="31" terrain="15" name="LAKE"/>
-  <hex row="7" col="32" terrain="1" road="26" name="Lyntupy" flag="7" owner="1">
+  <hex row="7" col="32" terrain="1" road="26" name="Lyntupy" flag="7" owner="1" rail="18">
     <unit id="8030" owner="1" flag="8" face="12" exp="520"/>
   </hex>
   <hex row="7" col="33" terrain="12" name="RAILROAD"/>
@@ -378,8 +380,8 @@
   <hex row="8" col="9" road="50"/>
   <hex row="8" col="10" terrain="10" road="34" name="Wilna River"/>
   <hex row="8" col="11" terrain="10" name="Wilna River" deploy="1"/>
-  <hex row="8" col="14" terrain="12" name="RAILROAD"/>
-  <hex row="8" col="15" terrain="12" name="RAILROAD"/>
+  <hex row="8" col="14" terrain="12" name="RAILROAD" rail="136"/>
+  <hex row="8" col="15" terrain="12" name="RAILROAD" rail="136"/>
   <hex row="8" col="18" terrain="10" name="Wilna River"/>
   <hex row="8" col="19" terrain="3"/>
   <hex row="8" col="20" terrain="10" name="Wilna River"/>
@@ -392,8 +394,8 @@
   <hex row="8" col="28" terrain="8"/>
   <hex row="8" col="29" terrain="8"/>
   <hex row="8" col="30" terrain="8"/>
-  <hex row="8" col="31" terrain="12" name="RAILROAD"/>
-  <hex row="8" col="32" terrain="12" name="RAILROAD">
+  <hex row="8" col="31" terrain="12" name="RAILROAD" rail="34"/>
+  <hex row="8" col="32" terrain="12" name="RAILROAD" rail="33">
     <unit id="10265" owner="1" flag="8" face="14" exp="520"/>
   </hex>
   <hex row="8" col="33" terrain="8"/>
@@ -410,8 +412,8 @@
   <hex row="9" col="11" terrain="10" name="Wilna River" deploy="1"/>
   <hex row="9" col="14" road="18"/>
   <hex row="9" col="15" terrain="1" road="24" name="Vilnius (Wilna)"/>
-  <hex row="9" col="16" terrain="12" name="RAILROAD"/>
-  <hex row="9" col="17" terrain="12" name="RAILROAD"/>
+  <hex row="9" col="16" terrain="12" name="RAILROAD" rail="136"/>
+  <hex row="9" col="17" terrain="12" name="RAILROAD" rail="144"/>
   <hex row="9" col="18" terrain="8" name="Wilna River"/>
   <hex row="9" col="19" terrain="3"/>
   <hex row="9" col="20" terrain="10" name="Wilna River"/>
@@ -422,7 +424,7 @@
   <hex row="9" col="27" terrain="8"/>
   <hex row="9" col="28" terrain="8"/>
   <hex row="9" col="29" terrain="8"/>
-  <hex row="9" col="30" terrain="12" name="RAILROAD"/>
+  <hex row="9" col="30" terrain="12" name="RAILROAD" rail="18"/>
   <hex row="9" col="31" terrain="8" road="34"/>
   <hex row="9" col="32" road="33"/>
   <hex row="9" col="33" terrain="8"/>
@@ -443,11 +445,11 @@
   <hex row="10" col="16" terrain="1" road="176" name="Vilnius (Wilna)">
     <unit id="8076" owner="1" flag="8" face="3" exp="520" ent="8"/>
   </hex>
-  <hex row="10" col="17" terrain="12" name="RAILROAD">
+  <hex row="10" col="17" terrain="12" name="RAILROAD" rail="9">
     <unit id="8323" owner="1" flag="8" face="6" exp="320" ent="8"/>
   </hex>
   <hex row="10" col="18" terrain="8" name="Wilna River"/>
-  <hex row="10" col="19" terrain="12" name="RAILROAD"/>
+  <hex row="10" col="19" terrain="12" name="RAILROAD" rail="40"/>
   <hex row="10" col="20" terrain="3"/>
   <hex row="10" col="21" road="33"/>
   <hex row="10" col="22" terrain="10" name="Wilna River"/>
@@ -455,8 +457,8 @@
   <hex row="10" col="25" terrain="10" name="Wilna River"/>
   <hex row="10" col="27" terrain="10" name="Wilna River"/>
   <hex row="10" col="28" terrain="3"/>
-  <hex row="10" col="29" terrain="12" name="RAILROAD"/>
-  <hex row="10" col="30" terrain="12" name="RAILROAD"/>
+  <hex row="10" col="29" terrain="12" name="RAILROAD" rail="18"/>
+  <hex row="10" col="30" terrain="12" name="RAILROAD" rail="33"/>
   <hex row="10" col="31" terrain="8"/>
   <hex row="10" col="32" terrain="8"/>
   <hex row="10" col="34" terrain="3"/>
@@ -484,18 +486,18 @@
   <hex row="11" col="17" terrain="1" road="187" name="Vilnius (Wilna)" flag="7" owner="1" victory="1">
     <unit id="9892" owner="1" flag="8" face="4" transport="9786" exp="320" ent="8"/>
   </hex>
-  <hex row="11" col="18" terrain="12" name="RAILROAD">
+  <hex row="11" col="18" terrain="12" name="RAILROAD" rail="130">
     <unit id="9271" owner="1" flag="8" face="5" exp="320" ent="8"/>
   </hex>
   <hex row="11" col="19" terrain="8" road="34" name="Wilna River"/>
-  <hex row="11" col="20" terrain="12" name="RAILROAD"/>
-  <hex row="11" col="21" terrain="12" name="RAILROAD"/>
+  <hex row="11" col="20" terrain="12" name="RAILROAD" rail="136"/>
+  <hex row="11" col="21" terrain="12" name="RAILROAD" rail="144"/>
   <hex row="11" col="23" terrain="5"/>
   <hex row="11" col="24" terrain="10" name="Wilna River"/>
   <hex row="11" col="25" terrain="5"/>
   <hex row="11" col="26" terrain="10" name="Wilna River"/>
   <hex row="11" col="27" terrain="8" name="Wilna River"/>
-  <hex row="11" col="29" terrain="12" name="RAILROAD"/>
+  <hex row="11" col="29" terrain="12" name="RAILROAD" rail="33"/>
   <hex row="11" col="30" terrain="8" road="33"/>
   <hex row="11" col="31" terrain="8"/>
   <hex row="11" col="32" terrain="3"/>
@@ -528,14 +530,14 @@
     <unit id="8323" owner="1" flag="8" face="3" exp="320" ent="8"/>
   </hex>
   <hex row="12" col="19" terrain="10" name="Wilna River"/>
-  <hex row="12" col="21" terrain="12" name="RAILROAD"/>
+  <hex row="12" col="21" terrain="12" name="RAILROAD" rail="9"/>
   <hex row="12" col="22" road="136"/>
   <hex row="12" col="23" terrain="5" road="136"/>
   <hex row="12" col="24" terrain="5"/>
   <hex row="12" col="25" terrain="5"/>
   <hex row="12" col="26" terrain="5"/>
-  <hex row="12" col="27" terrain="12" name="RAILROAD"/>
-  <hex row="12" col="28" terrain="12" name="RAILROAD"/>
+  <hex row="12" col="27" terrain="12" name="RAILROAD" rail="34"/>
+  <hex row="12" col="28" terrain="12" name="RAILROAD" rail="34"/>
   <hex row="12" col="29" road="33"/>
   <hex row="12" col="31" terrain="3"/>
   <hex row="12" col="32" terrain="3"/>
@@ -563,12 +565,12 @@
   <hex row="13" col="21">
     <unit id="20984" owner="0" flag="21" face="12" exp="450"/>
   </hex>
-  <hex row="13" col="22" terrain="12" name="RAILROAD">
+  <hex row="13" col="22" terrain="12" name="RAILROAD" rail="144">
     <unit id="20984" owner="0" flag="21" face="11" exp="350"/>
   </hex>
   <hex row="13" col="24" terrain="5" road="152"/>
-  <hex row="13" col="25" terrain="12" name="RAILROAD"/>
-  <hex row="13" col="26" terrain="12" name="RAILROAD"/>
+  <hex row="13" col="25" terrain="12" name="RAILROAD" rail="34"/>
+  <hex row="13" col="26" terrain="12" name="RAILROAD" rail="34"/>
   <hex row="13" col="27" road="130"/>
   <hex row="13" col="28" terrain="8" road="34" name="Wilna River"/>
   <hex row="13" col="30" terrain="3"/>
@@ -601,11 +603,11 @@
   <hex row="14" col="21">
     <unit id="1071" owner="0" flag="21" face="11" transport="21949" exp="450"/>
   </hex>
-  <hex row="14" col="22" terrain="12" name="RAILROAD">
+  <hex row="14" col="22" terrain="12" name="RAILROAD" rail="9">
     <unit id="1194" owner="0" flag="21" face="11" transport="21874" exp="460"/>
   </hex>
-  <hex row="14" col="23" terrain="12" name="RAILROAD"/>
-  <hex row="14" col="24" terrain="12" name="RAILROAD"/>
+  <hex row="14" col="23" terrain="12" name="RAILROAD" rail="130"/>
+  <hex row="14" col="24" terrain="12" name="RAILROAD" rail="34"/>
   <hex row="14" col="25" road="136"/>
   <hex row="14" col="27" terrain="16"/>
   <hex row="14" col="28" terrain="10" name="Wilna River"/>

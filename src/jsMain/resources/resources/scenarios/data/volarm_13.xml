@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="volarm_13.xscn" name="Tula" turns="24, 27, 30" date="November 3, 1919" dayturns="2" ground="1" atmosferic="3" latitude="3" iconset="0" weatherchg="0" rows="39" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_690.png" eqpv="united1" prototimeframe="0" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="0" capitalflak="0" ehmsuonly="0" paradropocean="1" coresoffcap="1" daysperturn="0">
+<map file="volarm_13.xscn" name="Tula" turns="24, 27, 30" date="November 3, 1919" dayturns="2" ground="1" atmosferic="3" latitude="3" iconset="0" weatherchg="0" rows="39" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_690.png" eqpv="united1" prototimeframe="0" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="0" capitalflak="0" ehmsuonly="0" paradropocean="1" coresoffcap="1" daysperturn="0" holdvictory="4, 3, 2">
 <player id="0" country="103" side="0" airtrans="0" navaltrans="0" railtrans="6" defaultxp="80" defaultstr="0" support="104,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="54:0:1,78:0:1"/>
 <player id="1" country="100" side="1" airtrans="0" navaltrans="0" railtrans="6" defaultxp="84" defaultstr="0" support="101,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="20:1:15"/>
   <hex row="0" col="1" name="SNOW"/>
@@ -41,7 +41,7 @@
   <hex row="0" col="37" name="SNOW"/>
   <hex row="0" col="38" name="SNOW"/>
   <hex row="0" col="39" name="SNOW"/>
-  <hex row="0" col="40" name="SNOW"/>
+  <hex row="0" col="40" name="SNOW" rail="18"/>
   <hex row="0" col="41" name="SNOW"/>
   <hex row="0" col="42" name="SNOW"/>
   <hex row="0" col="43" name="SNOW"/>
@@ -67,7 +67,7 @@
   <hex row="1" col="19" name="SNOW"/>
   <hex row="1" col="20" name="SNOW"/>
   <hex row="1" col="21" name="SNOW"/>
-  <hex row="1" col="22" terrain="1" road="2" name="Torkovo" owner="0" flag="103"/>
+  <hex row="1" col="22" terrain="1" road="2" name="Torkovo" owner="0" flag="103" deploy="0"/>
   <hex row="1" col="23" name="SNOW"/>
   <hex row="1" col="24" road="146" name="SNOW"/>
   <hex row="1" col="25" name="SNOW"/>
@@ -85,7 +85,7 @@
   <hex row="1" col="37" name="SNOW"/>
   <hex row="1" col="38" name="SNOW"/>
   <hex row="1" col="39" name="SNOW"/>
-  <hex row="1" col="40" name="SNOW"/>
+  <hex row="1" col="40" name="SNOW" rail="17"/>
   <hex row="1" col="41" name="SNOW">
     <unit id="42333" owner="0" flag="104" face="0" exp="40"/>
   </hex>
@@ -130,8 +130,8 @@
   <hex row="2" col="36" road="33" name="SNOW"/>
   <hex row="2" col="37" name="SNOW"/>
   <hex row="2" col="38" name="SNOW"/>
-  <hex row="2" col="39" name="SNOW"/>
-  <hex row="2" col="40" name="SNOW"/>
+  <hex row="2" col="39" name="SNOW" rail="18"/>
+  <hex row="2" col="40" name="SNOW" rail="33"/>
   <hex row="2" col="41" terrain="3"/>
   <hex row="2" col="42" terrain="3"/>
   <hex row="2" col="43" terrain="3"/>
@@ -156,7 +156,7 @@
   <hex row="3" col="18" name="SNOW"/>
   <hex row="3" col="19" name="SNOW"/>
   <hex row="3" col="20" name="SNOW"/>
-  <hex row="3" col="21" terrain="1" road="18" name="Kryukovo" owner="0" flag="103"/>
+  <hex row="3" col="21" terrain="1" road="18" name="Kryukovo" owner="0" flag="103" deploy="0"/>
   <hex row="3" col="22" road="34" name="SNOW"/>
   <hex row="3" col="23" name="SNOW"/>
   <hex row="3" col="24" name="SNOW"/>
@@ -174,7 +174,7 @@
   <hex row="3" col="36" terrain="3"/>
   <hex row="3" col="37" name="SNOW"/>
   <hex row="3" col="38" name="SNOW"/>
-  <hex row="3" col="39" name="SNOW"/>
+  <hex row="3" col="39" name="SNOW" rail="33"/>
   <hex row="3" col="40" name="SNOW"/>
   <hex row="3" col="41" terrain="3"/>
   <hex row="3" col="42" terrain="3"/>
@@ -217,7 +217,7 @@
   <hex row="4" col="35" road="33" name="SNOW"/>
   <hex row="4" col="36" name="SNOW"/>
   <hex row="4" col="37" name="SNOW"/>
-  <hex row="4" col="38" name="SNOW"/>
+  <hex row="4" col="38" name="SNOW" rail="18"/>
   <hex row="4" col="39" name="SNOW"/>
   <hex row="4" col="40" name="SNOW"/>
   <hex row="4" col="41" terrain="3"/>
@@ -227,7 +227,7 @@
   <hex row="5" col="1" terrain="3"/>
   <hex row="5" col="2" terrain="3"/>
   <hex row="5" col="3" name="SNOW"/>
-  <hex row="5" col="4" terrain="1" road="16" name="Pron&#x27;no" owner="0" flag="103"/>
+  <hex row="5" col="4" terrain="1" road="16" name="Pron&#x27;no" owner="0" flag="103" deploy="0"/>
   <hex row="5" col="5" name="SNOW"/>
   <hex row="5" col="6" name="SNOW"/>
   <hex row="5" col="7" name="SNOW"/>
@@ -258,17 +258,17 @@
   <hex row="5" col="32" terrain="3"/>
   <hex row="5" col="33" terrain="3"/>
   <hex row="5" col="34" terrain="3" road="18"/>
-  <hex row="5" col="35" terrain="2" owner="0" flag="103"/>
+  <hex row="5" col="35" terrain="2" owner="0" flag="103" deploy="0"/>
   <hex row="5" col="36" terrain="2"/>
-  <hex row="5" col="37" name="SNOW"/>
-  <hex row="5" col="38" name="SNOW"/>
+  <hex row="5" col="37" name="SNOW" rail="18"/>
+  <hex row="5" col="38" name="SNOW" rail="33"/>
   <hex row="5" col="39" name="SNOW"/>
   <hex row="5" col="40" name="SNOW"/>
   <hex row="5" col="41" terrain="3"/>
   <hex row="5" col="42" terrain="3"/>
   <hex row="5" col="43" terrain="3"/>
-  <hex row="6" col="0" name="SNOW"/>
-  <hex row="6" col="1" name="SNOW"/>
+  <hex row="6" col="0" name="SNOW" rail="136"/>
+  <hex row="6" col="1" name="SNOW" rail="136"/>
   <hex row="6" col="2" name="SNOW"/>
   <hex row="6" col="3" name="SNOW"/>
   <hex row="6" col="4" road="17" name="SNOW"/>
@@ -290,7 +290,7 @@
   <hex row="6" col="20" terrain="3" road="33"/>
   <hex row="6" col="21" terrain="3"/>
   <hex row="6" col="22" terrain="3"/>
-  <hex row="6" col="23" terrain="1" name="Kolodeznaya" owner="0" flag="103"/>
+  <hex row="6" col="23" terrain="1" name="Kolodeznaya" owner="0" flag="103" deploy="0"/>
   <hex row="6" col="24" terrain="1" name="Kolodeznaya"/>
   <hex row="6" col="25" terrain="3"/>
   <hex row="6" col="26" terrain="3"/>
@@ -304,7 +304,7 @@
   <hex row="6" col="34" road="33" name="SNOW"/>
   <hex row="6" col="35" name="SNOW"/>
   <hex row="6" col="36" terrain="2"/>
-  <hex row="6" col="37" name="SNOW"/>
+  <hex row="6" col="37" name="SNOW" rail="33"/>
   <hex row="6" col="38" name="SNOW"/>
   <hex row="6" col="39" terrain="3"/>
   <hex row="6" col="40" name="SNOW"/>
@@ -313,8 +313,8 @@
   <hex row="6" col="43" name="SNOW"/>
   <hex row="7" col="0" name="SNOW"/>
   <hex row="7" col="1" road="40" name="SNOW"/>
-  <hex row="7" col="2" name="SNOW"/>
-  <hex row="7" col="3" name="SNOW"/>
+  <hex row="7" col="2" name="SNOW" rail="136"/>
+  <hex row="7" col="3" name="SNOW" rail="136"/>
   <hex row="7" col="4" road="9" name="SNOW"/>
   <hex row="7" col="5" terrain="1" road="160" name="Luvovitsy"/>
   <hex row="7" col="6" name="SNOW"/>
@@ -347,7 +347,7 @@
   <hex row="7" col="33" road="33" name="SNOW"/>
   <hex row="7" col="34" name="SNOW"/>
   <hex row="7" col="35" name="SNOW"/>
-  <hex row="7" col="36" name="SNOW"/>
+  <hex row="7" col="36" name="SNOW" rail="18"/>
   <hex row="7" col="37" name="SNOW"/>
   <hex row="7" col="38" name="SNOW"/>
   <hex row="7" col="39" terrain="3"/>
@@ -359,10 +359,10 @@
   <hex row="8" col="1" name="SNOW"/>
   <hex row="8" col="2" road="136" name="SNOW"/>
   <hex row="8" col="3" road="130" name="SNOW"/>
-  <hex row="8" col="4" terrain="1" road="58" name="Luvovitsy" owner="0" flag="103" station="1">
+  <hex row="8" col="4" terrain="1" road="58" name="Luvovitsy" owner="0" flag="103" station="1" rail="136">
     <unit id="42272" owner="0" flag="104" face="0" transport="42341" exp="84"/>
   </hex>
-  <hex row="8" col="5" road="130" name="SNOW"/>
+  <hex row="8" col="5" road="130" name="SNOW" rail="136"/>
   <hex row="8" col="6" terrain="3" road="40"/>
   <hex row="8" col="7" road="136" name="SNOW"/>
   <hex row="8" col="8" name="SNOW"/>
@@ -385,7 +385,7 @@
   <hex row="8" col="23" terrain="3" road="146"/>
   <hex row="8" col="24" terrain="3" road="40"/>
   <hex row="8" col="25" terrain="1" road="130" name="Dubki"/>
-  <hex row="8" col="26" terrain="1" road="40" name="Dubki" owner="0" flag="103">
+  <hex row="8" col="26" terrain="1" road="40" name="Dubki" owner="0" flag="103" deploy="0">
     <unit id="42272" owner="0" flag="104" face="0" transport="42341" exp="84"/>
   </hex>
   <hex row="8" col="27" terrain="3" road="136"/>
@@ -396,8 +396,8 @@
   <hex row="8" col="32" road="18" name="SNOW"/>
   <hex row="8" col="33" name="SNOW"/>
   <hex row="8" col="34" name="SNOW"/>
-  <hex row="8" col="35" name="SNOW"/>
-  <hex row="8" col="36" name="SNOW"/>
+  <hex row="8" col="35" name="SNOW" rail="34"/>
+  <hex row="8" col="36" name="SNOW" rail="33"/>
   <hex row="8" col="37" name="SNOW"/>
   <hex row="8" col="38" terrain="3"/>
   <hex row="8" col="39" terrain="3"/>
@@ -411,7 +411,7 @@
   <hex row="9" col="3" road="34" name="SNOW"/>
   <hex row="9" col="4" terrain="1" road="41" name="Ketri"/>
   <hex row="9" col="5" terrain="1" road="144" name="Ketri"/>
-  <hex row="9" col="6" name="SNOW"/>
+  <hex row="9" col="6" name="SNOW" rail="144"/>
   <hex row="9" col="7" name="SNOW"/>
   <hex row="9" col="8" road="130" name="SNOW"/>
   <hex row="9" col="9" name="SNOW"/>
@@ -438,8 +438,8 @@
   <hex row="9" col="30" name="SNOW"/>
   <hex row="9" col="31" road="34" name="SNOW"/>
   <hex row="9" col="32" road="161" name="SNOW"/>
-  <hex row="9" col="33" name="SNOW"/>
-  <hex row="9" col="34" name="SNOW"/>
+  <hex row="9" col="33" name="SNOW" rail="34"/>
+  <hex row="9" col="34" name="SNOW" rail="34"/>
   <hex row="9" col="35" name="SNOW"/>
   <hex row="9" col="36" name="SNOW"/>
   <hex row="9" col="37" name="SNOW"/>
@@ -455,8 +455,8 @@
   <hex row="10" col="3" name="SNOW"/>
   <hex row="10" col="4" terrain="1" name="Ketri"/>
   <hex row="10" col="5" road="9" name="SNOW"/>
-  <hex row="10" col="6" name="SNOW"/>
-  <hex row="10" col="7" name="SNOW"/>
+  <hex row="10" col="6" name="SNOW" rail="9"/>
+  <hex row="10" col="7" name="SNOW" rail="144"/>
   <hex row="10" col="8" name="SNOW"/>
   <hex row="10" col="9" name="SNOW"/>
   <hex row="10" col="10" name="SNOW"/>
@@ -478,12 +478,12 @@
   <hex row="10" col="26" name="SNOW"/>
   <hex row="10" col="27" name="SNOW"/>
   <hex row="10" col="28" name="SNOW"/>
-  <hex row="10" col="29" name="SNOW"/>
-  <hex row="10" col="30" terrain="1" road="26" name="Luznka" owner="0" flag="103" station="1">
+  <hex row="10" col="29" name="SNOW" rail="34"/>
+  <hex row="10" col="30" terrain="1" road="26" name="Luznka" owner="0" flag="103" station="1" rail="40">
     <unit id="42331" owner="0" flag="104" face="0" exp="184" ldr="1"/>
   </hex>
-  <hex row="10" col="31" road="136" name="SNOW"/>
-  <hex row="10" col="32" name="SNOW"/>
+  <hex row="10" col="31" road="136" name="SNOW" rail="130"/>
+  <hex row="10" col="32" name="SNOW" rail="34"/>
   <hex row="10" col="33" name="SNOW"/>
   <hex row="10" col="34" name="SNOW">
     <unit id="42281" owner="0" flag="104" face="0" transport="42341" exp="84"/>
@@ -504,7 +504,7 @@
   <hex row="11" col="4" name="SNOW"/>
   <hex row="11" col="5" name="SNOW"/>
   <hex row="11" col="6" road="136" name="SNOW"/>
-  <hex row="11" col="7" terrain="1" road="146" name="Storozhevaya" owner="0" flag="103" station="1">
+  <hex row="11" col="7" terrain="1" road="146" name="Storozhevaya" owner="0" flag="103" station="1" rail="9">
     <unit id="42310" owner="0" flag="104" face="0" exp="84"/>
   </hex>
   <hex row="11" col="8" terrain="1" road="40" name="Storozhevaya"/>
@@ -526,12 +526,12 @@
   <hex row="11" col="20" terrain="3"/>
   <hex row="11" col="21" name="SNOW"/>
   <hex row="11" col="22" name="SNOW"/>
-  <hex row="11" col="23" name="SNOW"/>
+  <hex row="11" col="23" name="SNOW" rail="40"/>
   <hex row="11" col="24" name="SNOW"/>
-  <hex row="11" col="25" name="SNOW"/>
-  <hex row="11" col="26" name="SNOW"/>
-  <hex row="11" col="27" name="SNOW"/>
-  <hex row="11" col="28" name="SNOW"/>
+  <hex row="11" col="25" name="SNOW" rail="34"/>
+  <hex row="11" col="26" name="SNOW" rail="40"/>
+  <hex row="11" col="27" name="SNOW" rail="130"/>
+  <hex row="11" col="28" name="SNOW" rail="34"/>
   <hex row="11" col="29" road="34" name="SNOW"/>
   <hex row="11" col="30" road="49" name="SNOW"/>
   <hex row="11" col="31" name="SNOW"/>
@@ -555,10 +555,10 @@
   <hex row="12" col="5" name="SNOW"/>
   <hex row="12" col="6" name="SNOW"/>
   <hex row="12" col="7" terrain="1" road="1" name="Sheplovo"/>
-  <hex row="12" col="8" terrain="3"/>
-  <hex row="12" col="9" name="SNOW"/>
+  <hex row="12" col="8" terrain="3" rail="136"/>
+  <hex row="12" col="9" name="SNOW" rail="136"/>
   <hex row="12" col="10" road="138" name="SNOW"/>
-  <hex row="12" col="11" road="136" name="SNOW"/>
+  <hex row="12" col="11" road="136" name="SNOW" rail="40"/>
   <hex row="12" col="12" name="SNOW">
     <unit id="42397" owner="0" flag="104" face="0" transport="42352" exp="84"/>
   </hex>
@@ -570,14 +570,14 @@
   <hex row="12" col="16" road="18" name="SNOW"/>
   <hex row="12" col="17" road="40" name="SNOW"/>
   <hex row="12" col="18" name="SNOW"/>
-  <hex row="12" col="19" road="34" name="SNOW"/>
+  <hex row="12" col="19" road="34" name="SNOW" rail="40"/>
   <hex row="12" col="20" road="40" name="SNOW"/>
-  <hex row="12" col="21" road="130" name="SNOW"/>
-  <hex row="12" col="22" terrain="1" road="57" name="Rozhdesvenka" owner="0" flag="103" station="1">
+  <hex row="12" col="21" road="130" name="SNOW" rail="34"/>
+  <hex row="12" col="22" terrain="1" road="57" name="Rozhdesvenka" owner="0" flag="103" station="1" rail="34">
     <unit id="42281" owner="0" flag="104" face="0" transport="42341" exp="184" ldr="1"/>
   </hex>
   <hex row="12" col="23" road="130" name="SNOW"/>
-  <hex row="12" col="24" road="40" name="SNOW"/>
+  <hex row="12" col="24" road="40" name="SNOW" rail="130"/>
   <hex row="12" col="25" road="130" name="SNOW"/>
   <hex row="12" col="26" road="40" name="SNOW"/>
   <hex row="12" col="27" terrain="1" road="130" name="Bronnokovo"/>
@@ -609,21 +609,21 @@
   <hex row="13" col="7" name="SNOW"/>
   <hex row="13" col="8" name="SNOW"/>
   <hex row="13" col="9" terrain="10" name="Upa"/>
-  <hex row="13" col="10" name="SNOW"/>
+  <hex row="13" col="10" name="SNOW" rail="130"/>
   <hex row="13" col="11" terrain="10" name="Upa"/>
-  <hex row="13" col="12" terrain="1" road="136" name="Tula" station="1"/>
-  <hex row="13" col="13" terrain="1" road="146" name="Tula" owner="0" flag="103" victory="0">
+  <hex row="13" col="12" terrain="1" road="136" name="Tula" station="1" rail="136"/>
+  <hex row="13" col="13" terrain="1" road="146" name="Tula" owner="0" flag="103" victory="0" rail="136">
     <unit id="42272" owner="0" flag="104" face="0" transport="42341" exp="204" ldr="1"/>
   </hex>
   <hex row="13" col="14" terrain="1" road="57" name="Tula"/>
-  <hex row="13" col="15" road="138" name="SNOW">
+  <hex row="13" col="15" road="138" name="SNOW" rail="34">
     <unit id="42324" owner="0" flag="104" face="0" transport="42352" exp="84"/>
   </hex>
-  <hex row="13" col="16" road="35" name="SNOW"/>
-  <hex row="13" col="17" name="SNOW"/>
-  <hex row="13" col="18" road="130" name="SNOW"/>
+  <hex row="13" col="16" road="35" name="SNOW" rail="40"/>
+  <hex row="13" col="17" name="SNOW" rail="130"/>
+  <hex row="13" col="18" road="130" name="SNOW" rail="34"/>
   <hex row="13" col="19" name="SNOW"/>
-  <hex row="13" col="20" name="SNOW"/>
+  <hex row="13" col="20" name="SNOW" rail="130"/>
   <hex row="13" col="21" road="34" name="SNOW"/>
   <hex row="13" col="22" road="33" name="SNOW"/>
   <hex row="13" col="23" name="SNOW"/>
@@ -662,8 +662,8 @@
   <hex row="14" col="10" terrain="10" name="Upa"/>
   <hex row="14" col="11" terrain="1" road="8" name="Tula"/>
   <hex row="14" col="12" terrain="10" name="Upa"/>
-  <hex row="14" col="13" terrain="10" road="17" name="Upa"/>
-  <hex row="14" col="14" terrain="1" road="1" name="Tula"/>
+  <hex row="14" col="13" terrain="10" road="17" name="Upa" rail="18"/>
+  <hex row="14" col="14" terrain="1" road="1" name="Tula" rail="162"/>
   <hex row="14" col="15" name="SNOW"/>
   <hex row="14" col="16" road="136" name="SNOW"/>
   <hex row="14" col="17" road="136" name="SNOW"/>
@@ -714,7 +714,7 @@
   <hex row="15" col="10" name="SNOW"/>
   <hex row="15" col="11" name="SNOW"/>
   <hex row="15" col="12" terrain="1" road="152" name="Tula"/>
-  <hex row="15" col="13" terrain="1" road="161" name="Tula"/>
+  <hex row="15" col="13" terrain="1" road="161" name="Tula" rail="16"/>
   <hex row="15" col="14" terrain="10" name="Upa"/>
   <hex row="15" col="15" terrain="10" name="Upa"/>
   <hex row="15" col="16" terrain="10" name="Shat"/>
@@ -766,7 +766,7 @@
   <hex row="16" col="12" road="19" name="SNOW">
     <unit id="42281" owner="0" flag="104" face="0" transport="42341" exp="84"/>
   </hex>
-  <hex row="16" col="13" name="SNOW"/>
+  <hex row="16" col="13" name="SNOW" rail="17"/>
   <hex row="16" col="14" name="SNOW"/>
   <hex row="16" col="15" terrain="10" name="Upa"/>
   <hex row="16" col="16" terrain="3"/>
@@ -822,7 +822,7 @@
   </hex>
   <hex row="17" col="11" name="SNOW"/>
   <hex row="17" col="12" terrain="3" road="17"/>
-  <hex row="17" col="13" name="SNOW"/>
+  <hex row="17" col="13" name="SNOW" rail="17"/>
   <hex row="17" col="14" name="SNOW"/>
   <hex row="17" col="15" name="SNOW"/>
   <hex row="17" col="16" terrain="10" name="Upa"/>
@@ -872,7 +872,7 @@
   </hex>
   <hex row="18" col="11" road="10" name="SNOW"/>
   <hex row="18" col="12" road="33" name="SNOW"/>
-  <hex row="18" col="13" name="SNOW"/>
+  <hex row="18" col="13" name="SNOW" rail="17"/>
   <hex row="18" col="14" name="SNOW">
     <unit id="42324" owner="0" flag="104" face="0" transport="42352" exp="84"/>
   </hex>
@@ -924,7 +924,7 @@
   <hex row="19" col="10" name="SNOW"/>
   <hex row="19" col="11" road="10" name="SNOW"/>
   <hex row="19" col="12" road="160" name="SNOW"/>
-  <hex row="19" col="13" name="SNOW"/>
+  <hex row="19" col="13" name="SNOW" rail="33"/>
   <hex row="19" col="14" name="SNOW">
     <unit id="42281" owner="0" flag="104" face="0" transport="42341" exp="84"/>
   </hex>
@@ -975,7 +975,7 @@
   <hex row="20" col="11" road="18" name="SNOW">
     <unit id="42312" owner="0" flag="104" face="0" exp="84"/>
   </hex>
-  <hex row="20" col="12" road="160" name="SNOW"/>
+  <hex row="20" col="12" road="160" name="SNOW" rail="18"/>
   <hex row="20" col="13" name="SNOW"/>
   <hex row="20" col="14" name="SNOW"/>
   <hex row="20" col="15" name="SNOW"/>
@@ -1023,7 +1023,7 @@
   <hex row="21" col="9" name="SNOW"/>
   <hex row="21" col="10" name="SNOW"/>
   <hex row="21" col="11" road="17" name="SNOW"/>
-  <hex row="21" col="12" name="SNOW"/>
+  <hex row="21" col="12" name="SNOW" rail="17"/>
   <hex row="21" col="13" road="40" name="SNOW"/>
   <hex row="21" col="14" name="SNOW"/>
   <hex row="21" col="15" road="34" name="SNOW"/>
@@ -1079,7 +1079,7 @@
   </hex>
   <hex row="22" col="10" name="SNOW"/>
   <hex row="22" col="11" road="19" name="SNOW"/>
-  <hex row="22" col="12" road="34" name="SNOW"/>
+  <hex row="22" col="12" road="34" name="SNOW" rail="17"/>
   <hex row="22" col="13" name="SNOW">
     <unit id="687" owner="0" flag="104" face="0" str="3" bstr="3"/>
   </hex>
@@ -1133,7 +1133,7 @@
     <unit id="502" owner="0" flag="104" face="0" exp="84" str="7" bstr="7"/>
   </hex>
   <hex row="23" col="11" road="33" name="SNOW"/>
-  <hex row="23" col="12" name="SNOW"/>
+  <hex row="23" col="12" name="SNOW" rail="17"/>
   <hex row="23" col="13" name="SNOW">
     <unit id="502" owner="0" flag="104" face="0" exp="84" str="7" bstr="7"/>
   </hex>
@@ -1188,8 +1188,8 @@
   <hex row="24" col="8" name="SNOW"/>
   <hex row="24" col="9" name="SNOW"/>
   <hex row="24" col="10" road="18" name="SNOW"/>
-  <hex row="24" col="11" name="SNOW"/>
-  <hex row="24" col="12" name="SNOW"/>
+  <hex row="24" col="11" name="SNOW" rail="18"/>
+  <hex row="24" col="12" name="SNOW" rail="33"/>
   <hex row="24" col="13" name="SNOW"/>
   <hex row="24" col="14" terrain="3"/>
   <hex row="24" col="15" terrain="3"/>
@@ -1238,7 +1238,7 @@
     <unit id="813" owner="0" flag="104" face="0" exp="140" str="5" bstr="5"/>
   </hex>
   <hex row="25" col="10" road="33" name="SNOW"/>
-  <hex row="25" col="11" name="SNOW"/>
+  <hex row="25" col="11" name="SNOW" rail="33"/>
   <hex row="25" col="12" name="SNOW">
     <unit id="813" owner="0" flag="104" face="0" exp="140" str="5" bstr="5"/>
   </hex>
@@ -1293,7 +1293,7 @@
   <hex row="26" col="9" road="17" name="SNOW">
     <unit id="502" owner="0" flag="104" face="0" exp="84" str="7" bstr="7"/>
   </hex>
-  <hex row="26" col="10" name="SNOW"/>
+  <hex row="26" col="10" name="SNOW" rail="18"/>
   <hex row="26" col="11" name="SNOW"/>
   <hex row="26" col="12" name="SNOW">
     <unit id="502" owner="0" flag="104" face="0" exp="84" str="7" bstr="7"/>
@@ -1338,8 +1338,8 @@
   <hex row="27" col="6" name="SNOW"/>
   <hex row="27" col="7" name="SNOW"/>
   <hex row="27" col="8" name="SNOW"/>
-  <hex row="27" col="9" road="25" name="SNOW"/>
-  <hex row="27" col="10" name="SNOW"/>
+  <hex row="27" col="9" road="25" name="SNOW" rail="18"/>
+  <hex row="27" col="10" name="SNOW" rail="33"/>
   <hex row="27" col="11" name="SNOW"/>
   <hex row="27" col="12" name="SNOW"/>
   <hex row="27" col="13" terrain="3"/>
@@ -1386,7 +1386,7 @@
   <hex row="28" col="6" name="SNOW"/>
   <hex row="28" col="7" name="SNOW"/>
   <hex row="28" col="8" terrain="3"/>
-  <hex row="28" col="9" road="33" name="SNOW"/>
+  <hex row="28" col="9" road="33" name="SNOW" rail="17"/>
   <hex row="28" col="10" road="144" name="SNOW"/>
   <hex row="28" col="11" name="SNOW"/>
   <hex row="28" col="12" name="SNOW"/>
@@ -1430,7 +1430,7 @@
   <hex row="29" col="6" name="SNOW"/>
   <hex row="29" col="7" name="SNOW"/>
   <hex row="29" col="8" road="18" name="SNOW"/>
-  <hex row="29" col="9" name="SNOW">
+  <hex row="29" col="9" name="SNOW" rail="33">
     <unit id="502" owner="0" flag="104" face="0" exp="84" str="7" bstr="7"/>
   </hex>
   <hex row="29" col="10" terrain="1" road="17" name="Sovetsk" owner="0" flag="103">
@@ -1477,7 +1477,7 @@
   <hex row="30" col="5" name="SNOW"/>
   <hex row="30" col="6" name="SNOW"/>
   <hex row="30" col="7" road="18" name="SNOW"/>
-  <hex row="30" col="8" road="33" name="SNOW"/>
+  <hex row="30" col="8" road="33" name="SNOW" rail="18"/>
   <hex row="30" col="9" name="SNOW"/>
   <hex row="30" col="10" terrain="3" road="9">
     <unit id="502" owner="0" flag="104" face="0" exp="84" str="7" bstr="7"/>
@@ -1526,8 +1526,8 @@
   <hex row="31" col="4" name="SNOW"/>
   <hex row="31" col="5" terrain="3"/>
   <hex row="31" col="6" name="SNOW"/>
-  <hex row="31" col="7" road="33" name="SNOW"/>
-  <hex row="31" col="8" name="SNOW"/>
+  <hex row="31" col="7" road="33" name="SNOW" rail="18"/>
+  <hex row="31" col="8" name="SNOW" rail="33"/>
   <hex row="31" col="9" name="SNOW"/>
   <hex row="31" col="10" name="SNOW"/>
   <hex row="31" col="11" name="SNOW"/>
@@ -1572,13 +1572,15 @@
   <hex row="32" col="4" name="SNOW"/>
   <hex row="32" col="5" name="SNOW"/>
   <hex row="32" col="6" road="18" name="SNOW"/>
-  <hex row="32" col="7" name="SNOW"/>
+  <hex row="32" col="7" name="SNOW" rail="33"/>
   <hex row="32" col="8" name="SNOW"/>
   <hex row="32" col="9" name="SNOW"/>
   <hex row="32" col="10" name="SNOW"/>
   <hex row="32" col="11" name="SNOW"/>
   <hex row="32" col="12" name="SNOW"/>
-  <hex row="32" col="13" name="SNOW"/>
+  <hex row="32" col="13" name="SNOW">
+    <unit id="42060" owner="1" flag="101" face="0" exp="84" osada="rework" objrow="34" objcol="30"/>
+  </hex>
   <hex row="32" col="14" road="130" name="SNOW"/>
   <hex row="32" col="15" name="SNOW"/>
   <hex row="32" col="16" road="130" name="SNOW"/>
@@ -1619,16 +1621,26 @@
   <hex row="33" col="3" terrain="2"/>
   <hex row="33" col="4" name="SNOW"/>
   <hex row="33" col="5" name="SNOW"/>
-  <hex row="33" col="6" road="17" name="SNOW"/>
+  <hex row="33" col="6" road="17" name="SNOW" rail="18"/>
   <hex row="33" col="7" name="SNOW"/>
   <hex row="33" col="8" name="SNOW"/>
   <hex row="33" col="9" name="SNOW"/>
   <hex row="33" col="10" name="SNOW"/>
-  <hex row="33" col="11" name="SNOW"/>
-  <hex row="33" col="12" name="SNOW"/>
-  <hex row="33" col="13" name="SNOW" deploy="1"/>
-  <hex row="33" col="14" name="SNOW"/>
-  <hex row="33" col="15" name="SNOW"/>
+  <hex row="33" col="11" name="SNOW">
+    <unit id="42032" owner="1" flag="101" face="0" exp="84" osada="rework" objrow="34" objcol="30"/>
+  </hex>
+  <hex row="33" col="12" name="SNOW">
+    <unit id="42081" owner="1" flag="101" face="0" exp="84" osada="rework" objrow="34" objcol="30"/>
+  </hex>
+  <hex row="33" col="13" name="SNOW" deploy="1">
+    <unit id="42034" owner="1" flag="101" face="0" exp="84" osada="rework" objrow="34" objcol="30"/>
+  </hex>
+  <hex row="33" col="14" name="SNOW">
+    <unit id="42148" owner="1" flag="101" face="0" transport="42129" exp="84" osada="rework" objrow="34" objcol="30"/>
+  </hex>
+  <hex row="33" col="15" name="SNOW">
+    <unit id="42072" owner="1" flag="101" face="0" exp="84" osada="rework" objrow="34" objcol="30"/>
+  </hex>
   <hex row="33" col="16" name="SNOW"/>
   <hex row="33" col="17" name="SNOW"/>
   <hex row="33" col="18" name="SNOW"/>
@@ -1669,7 +1681,7 @@
   <hex row="34" col="3" terrain="2"/>
   <hex row="34" col="4" name="SNOW"/>
   <hex row="34" col="5" road="18" name="SNOW"/>
-  <hex row="34" col="6" road="33" name="SNOW">
+  <hex row="34" col="6" road="33" name="SNOW" rail="17">
     <unit id="42161" owner="1" flag="101" face="0" exp="80"/>
   </hex>
   <hex row="34" col="7" name="SNOW"/>
@@ -1677,11 +1689,21 @@
   <hex row="34" col="9" name="SNOW"/>
   <hex row="34" col="10" name="SNOW"/>
   <hex row="34" col="11" name="SNOW"/>
-  <hex row="34" col="12" name="SNOW"/>
-  <hex row="34" col="13" name="SNOW" deploy="1"/>
-  <hex row="34" col="14" name="SNOW" deploy="1"/>
-  <hex row="34" col="15" name="SNOW" deploy="1"/>
-  <hex row="34" col="16" name="SNOW"/>
+  <hex row="34" col="12" name="SNOW">
+    <unit id="42165" owner="1" flag="101" face="0" transport="42129" exp="84" osada="rework" objrow="34" objcol="30"/>
+  </hex>
+  <hex row="34" col="13" name="SNOW" deploy="1">
+    <unit id="42101" owner="1" flag="101" face="0" exp="84" osada="rework" objrow="34" objcol="30"/>
+  </hex>
+  <hex row="34" col="14" name="SNOW" deploy="1">
+    <unit id="42035" owner="1" flag="101" face="0" exp="84" osada="rework" objrow="34" objcol="30"/>
+  </hex>
+  <hex row="34" col="15" name="SNOW" deploy="1">
+    <unit id="42092" owner="1" flag="101" face="0" exp="84" osada="rework" objrow="34" objcol="30"/>
+  </hex>
+  <hex row="34" col="16" name="SNOW">
+    <unit id="42108" owner="1" flag="101" face="0" exp="84" osada="rework" objrow="34" objcol="30"/>
+  </hex>
   <hex row="34" col="17" name="SNOW"/>
   <hex row="34" col="18" name="SNOW"/>
   <hex row="34" col="19" name="SNOW"/>
@@ -1722,18 +1744,38 @@
   <hex row="35" col="2" name="SNOW"/>
   <hex row="35" col="3" name="SNOW"/>
   <hex row="35" col="4" terrain="1" road="24" name="Plavsk"/>
-  <hex row="35" col="5" terrain="1" road="177" name="Plavsk" station="1"/>
-  <hex row="35" col="6" name="SNOW" deploy="1"/>
-  <hex row="35" col="7" name="SNOW" deploy="1"/>
-  <hex row="35" col="8" name="SNOW" deploy="1"/>
-  <hex row="35" col="9" name="SNOW" deploy="1"/>
-  <hex row="35" col="10" name="SNOW"/>
+  <hex row="35" col="5" terrain="1" road="177" name="Plavsk" station="1" rail="10">
+    <unit id="42077" owner="1" flag="101" face="0" exp="84" osada="rework" objrow="34" objcol="30"/>
+  </hex>
+  <hex row="35" col="6" name="SNOW" deploy="1" rail="41">
+    <unit id="42101" owner="1" flag="101" face="0" exp="84" osada="rework" objrow="34" objcol="30"/>
+  </hex>
+  <hex row="35" col="7" name="SNOW" deploy="1" rail="160">
+    <unit id="42080" owner="1" flag="101" face="0" exp="84" osada="rework" objrow="34" objcol="30"/>
+  </hex>
+  <hex row="35" col="8" name="SNOW" deploy="1">
+    <unit id="42107" owner="1" flag="101" face="0" exp="84" osada="rework" objrow="34" objcol="30"/>
+  </hex>
+  <hex row="35" col="9" name="SNOW" deploy="1">
+    <unit id="42089" owner="1" flag="101" face="0" exp="84" osada="rework" objrow="34" objcol="30"/>
+  </hex>
+  <hex row="35" col="10" name="SNOW">
+    <unit id="42083" owner="1" flag="101" face="0" exp="84" osada="rework" objrow="34" objcol="30"/>
+  </hex>
   <hex row="35" col="11" name="SNOW"/>
   <hex row="35" col="12" name="SNOW"/>
-  <hex row="35" col="13" terrain="3"/>
-  <hex row="35" col="14" name="SNOW" deploy="1"/>
-  <hex row="35" col="15" name="SNOW" deploy="1"/>
-  <hex row="35" col="16" name="SNOW" deploy="1"/>
+  <hex row="35" col="13" terrain="3">
+    <unit id="42089" owner="1" flag="101" face="0" exp="84" osada="rework" objrow="34" objcol="30"/>
+  </hex>
+  <hex row="35" col="14" name="SNOW" deploy="1">
+    <unit id="42102" owner="1" flag="101" face="0" exp="84" osada="rework" objrow="34" objcol="30"/>
+  </hex>
+  <hex row="35" col="15" name="SNOW" deploy="1">
+    <unit id="42107" owner="1" flag="101" face="0" exp="84" osada="rework" objrow="34" objcol="30"/>
+  </hex>
+  <hex row="35" col="16" name="SNOW" deploy="1">
+    <unit id="42074" owner="1" flag="101" face="0" exp="84" osada="rework" objrow="34" objcol="30"/>
+  </hex>
   <hex row="35" col="17" terrain="3"/>
   <hex row="35" col="18" name="SNOW"/>
   <hex row="35" col="19" terrain="10" name="Upa"/>
@@ -1770,18 +1812,32 @@
   <hex row="36" col="2" name="SNOW"/>
   <hex row="36" col="3" name="SNOW"/>
   <hex row="36" col="4" terrain="1" road="11" name="Plavsk" owner="1" flag="100" victory="1"/>
-  <hex row="36" col="5" road="145" name="SNOW"/>
-  <hex row="36" col="6" name="SNOW" deploy="1"/>
-  <hex row="36" col="7" name="SNOW" deploy="1"/>
-  <hex row="36" col="8" name="SNOW" deploy="1"/>
-  <hex row="36" col="9" name="SNOW"/>
+  <hex row="36" col="5" road="145" name="SNOW">
+    <unit id="42101" owner="1" flag="101" face="0" exp="84" osada="rework" objrow="34" objcol="30"/>
+  </hex>
+  <hex row="36" col="6" name="SNOW" deploy="1" rail="138">
+    <unit id="42070" owner="1" flag="101" face="0" exp="84" osada="rework" objrow="34" objcol="30"/>
+  </hex>
+  <hex row="36" col="7" name="SNOW" deploy="1" rail="144">
+    <unit id="42036" owner="1" flag="101" face="0" exp="84" osada="rework" objrow="34" objcol="30"/>
+  </hex>
+  <hex row="36" col="8" name="SNOW" deploy="1">
+    <unit id="42140" owner="1" flag="101" face="0" transport="42129" exp="84" osada="rework" objrow="34" objcol="30"/>
+  </hex>
+  <hex row="36" col="9" name="SNOW">
+    <unit id="42038" owner="1" flag="101" face="0" exp="84" osada="rework" objrow="34" objcol="30"/>
+  </hex>
   <hex row="36" col="10" name="SNOW"/>
   <hex row="36" col="11" name="SNOW"/>
   <hex row="36" col="12" terrain="3"/>
   <hex row="36" col="13" terrain="3"/>
   <hex row="36" col="14" terrain="3"/>
-  <hex row="36" col="15" terrain="3"/>
-  <hex row="36" col="16" terrain="3" deploy="1"/>
+  <hex row="36" col="15" terrain="3">
+    <unit id="42081" owner="1" flag="101" face="0" exp="84" osada="rework" objrow="34" objcol="30"/>
+  </hex>
+  <hex row="36" col="16" terrain="3" deploy="1">
+    <unit id="42149" owner="1" flag="101" face="0" transport="42129" exp="84" osada="rework" objrow="34" objcol="30"/>
+  </hex>
   <hex row="36" col="17" name="SNOW"/>
   <hex row="36" col="18" name="SNOW"/>
   <hex row="36" col="19" terrain="10" name="Upa"/>
@@ -1822,7 +1878,7 @@
   <hex row="37" col="4" name="SNOW"/>
   <hex row="37" col="5" road="33" name="SNOW"/>
   <hex row="37" col="6" name="SNOW"/>
-  <hex row="37" col="7" name="SNOW">
+  <hex row="37" col="7" name="SNOW" rail="17">
     <unit id="42131" owner="1" flag="101" face="0" exp="80"/>
   </hex>
   <hex row="37" col="8" name="SNOW"/>
@@ -1872,7 +1928,7 @@
   <hex row="38" col="4" road="34" name="SNOW"/>
   <hex row="38" col="5" name="SNOW"/>
   <hex row="38" col="6" name="SNOW"/>
-  <hex row="38" col="7" name="SNOW"/>
+  <hex row="38" col="7" name="SNOW" rail="17"/>
   <hex row="38" col="8" name="SNOW"/>
   <hex row="38" col="9" name="SNOW"/>
   <hex row="38" col="10" name="SNOW"/>

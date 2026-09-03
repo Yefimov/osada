@@ -188,7 +188,7 @@
   <hex row="0" col="1" terrain="6"/>
   <hex row="0" col="2" terrain="6"/>
   <hex row="0" col="3" terrain="6"/>
-  <hex row="0" col="4" terrain="5"/>
+  <hex row="0" col="4" terrain="5" rail="17"/>
   <hex row="0" col="5" terrain="5"/>
   <hex row="0" col="6" terrain="5"/>
   <hex row="0" col="7" terrain="5"/>
@@ -203,7 +203,7 @@
   <hex row="0" col="16" terrain="5"/>
   <hex row="0" col="17" terrain="5"/>
   <hex row="0" col="18" terrain="10" name="Nyitra"/>
-  <hex row="0" col="19" terrain="3" road="18"/>
+  <hex row="0" col="19" terrain="3" road="18" rail="17"/>
   <hex row="0" col="20" terrain="5" road="34"/>
   <hex row="0" col="21" terrain="5"/>
   <hex row="0" col="22" terrain="5"/>
@@ -219,8 +219,8 @@
   <hex row="0" col="32" terrain="6"/>
   <hex row="0" col="33" terrain="5"/>
   <hex row="0" col="34" terrain="5"/>
-  <hex row="0" col="35" terrain="3" road="17"/>
-  <hex row="0" col="36" terrain="5"/>
+  <hex row="0" col="35" terrain="3" road="17" rail="18"/>
+  <hex row="0" col="36" terrain="5" rail="34"/>
   <hex row="0" col="37" terrain="10" name="Garam"/>
   <hex row="0" col="38" terrain="5"/>
   <hex row="0" col="39" terrain="10" name="Garam"/>
@@ -236,7 +236,7 @@
   <hex row="1" col="1" terrain="6"/>
   <hex row="1" col="2" terrain="6"/>
   <hex row="1" col="3" terrain="5"/>
-  <hex row="1" col="4" terrain="5"/>
+  <hex row="1" col="4" terrain="5" rail="17"/>
   <hex row="1" col="5" terrain="13"/>
   <hex row="1" col="6" terrain="5"/>
   <hex row="1" col="7" terrain="3"/>
@@ -251,7 +251,7 @@
   <hex row="1" col="16" terrain="5"/>
   <hex row="1" col="17" terrain="10" name="Nyitra"/>
   <hex row="1" col="18" terrain="10" name="Nyitra"/>
-  <hex row="1" col="19" terrain="3" road="33"/>
+  <hex row="1" col="19" terrain="3" road="33" rail="17"/>
   <hex row="1" col="20" terrain="5"/>
   <hex row="1" col="21" terrain="5"/>
   <hex row="1" col="22" terrain="5"/>
@@ -267,7 +267,7 @@
   <hex row="1" col="32" terrain="6"/>
   <hex row="1" col="33" terrain="6"/>
   <hex row="1" col="34" terrain="5"/>
-  <hex row="1" col="35" terrain="1" road="33" name="Beszterceb&#225;nya" owner="1" flag="47" station="1">
+  <hex row="1" col="35" terrain="1" road="33" name="Beszterceb&#225;nya" owner="1" flag="47" station="1" rail="9">
     <unit id="33302" owner="1" flag="48" face="0"/>
   </hex>
   <hex row="1" col="36" terrain="10" name="Garam"/>
@@ -286,8 +286,8 @@
   <hex row="2" col="1" terrain="6"/>
   <hex row="2" col="2" terrain="6"/>
   <hex row="2" col="3" terrain="5"/>
-  <hex row="2" col="4" terrain="5"/>
-  <hex row="2" col="5" terrain="3"/>
+  <hex row="2" col="4" terrain="5" rail="9"/>
+  <hex row="2" col="5" terrain="3" rail="144"/>
   <hex row="2" col="6" terrain="13"/>
   <hex row="2" col="7" terrain="3"/>
   <hex row="2" col="8" terrain="3"/>
@@ -301,7 +301,7 @@
   <hex row="2" col="16" terrain="5"/>
   <hex row="2" col="17" terrain="10" name="Nyitra"/>
   <hex row="2" col="18" terrain="3" road="18"/>
-  <hex row="2" col="19" terrain="5"/>
+  <hex row="2" col="19" terrain="5" rail="33"/>
   <hex row="2" col="20" terrain="5"/>
   <hex row="2" col="21" terrain="5"/>
   <hex row="2" col="22" terrain="5"/>
@@ -318,7 +318,7 @@
   <hex row="2" col="33" terrain="6"/>
   <hex row="2" col="34" terrain="5" road="18"/>
   <hex row="2" col="35" terrain="10" name="Garam"/>
-  <hex row="2" col="36" terrain="10" name="Garam"/>
+  <hex row="2" col="36" terrain="10" name="Garam" rail="144"/>
   <hex row="2" col="37" terrain="3"/>
   <hex row="2" col="38" terrain="5"/>
   <hex row="2" col="39" terrain="5"/>
@@ -335,7 +335,7 @@
   <hex row="3" col="2" terrain="5"/>
   <hex row="3" col="3" terrain="5"/>
   <hex row="3" col="4" terrain="5"/>
-  <hex row="3" col="5" terrain="3"/>
+  <hex row="3" col="5" terrain="3" rail="9"/>
   <hex row="3" col="6" terrain="13"/>
   <hex row="3" col="7" terrain="13"/>
   <hex row="3" col="9" terrain="13"/>
@@ -347,7 +347,7 @@
   <hex row="3" col="15" terrain="5"/>
   <hex row="3" col="16" terrain="10" name="Nyitra"/>
   <hex row="3" col="17" road="18"/>
-  <hex row="3" col="18" terrain="3" road="33"/>
+  <hex row="3" col="18" terrain="3" road="33" rail="18"/>
   <hex row="3" col="19" terrain="5"/>
   <hex row="3" col="20" terrain="5"/>
   <hex row="3" col="21" terrain="6"/>
@@ -365,7 +365,7 @@
   <hex row="3" col="33" terrain="5"/>
   <hex row="3" col="34" terrain="5" road="9"/>
   <hex row="3" col="35" terrain="10" road="136" name="Garam"/>
-  <hex row="3" col="36" terrain="3"/>
+  <hex row="3" col="36" terrain="3" rail="17"/>
   <hex row="3" col="37" terrain="5"/>
   <hex row="3" col="38" terrain="5"/>
   <hex row="3" col="39" terrain="5"/>
@@ -383,9 +383,9 @@
   <hex row="4" col="3" terrain="5"/>
   <hex row="4" col="4" terrain="5"/>
   <hex row="4" col="5" terrain="3"/>
-  <hex row="4" col="6" terrain="3"/>
+  <hex row="4" col="6" terrain="3" rail="144"/>
   <hex row="4" col="8" terrain="13"/>
-  <hex row="4" col="11" terrain="2" road="40" owner="1" flag="47" station="1">
+  <hex row="4" col="11" terrain="2" road="40" owner="1" flag="47" station="1" rail="40">
     <unit id="33510" owner="1" flag="48" face="0" transport="33308" exp="9"/>
     <unit id="33591" owner="1" flag="48" face="0" exp="26"/>
   </hex>
@@ -394,8 +394,8 @@
   <hex row="4" col="14" terrain="3"/>
   <hex row="4" col="15" terrain="10" name="Nyitra"/>
   <hex row="4" col="16" terrain="10" name="Nyitra"/>
-  <hex row="4" col="17" terrain="3" road="33"/>
-  <hex row="4" col="18" terrain="3"/>
+  <hex row="4" col="17" terrain="3" road="33" rail="34"/>
+  <hex row="4" col="18" terrain="3" rail="33"/>
   <hex row="4" col="19" terrain="5"/>
   <hex row="4" col="20" terrain="5"/>
   <hex row="4" col="21" terrain="6"/>
@@ -413,7 +413,7 @@
   <hex row="4" col="33" terrain="5"/>
   <hex row="4" col="34" terrain="5"/>
   <hex row="4" col="35" terrain="10" name="Garam"/>
-  <hex row="4" col="36" terrain="3" road="144"/>
+  <hex row="4" col="36" terrain="3" road="144" rail="17"/>
   <hex row="4" col="37" terrain="5"/>
   <hex row="4" col="38" terrain="5"/>
   <hex row="4" col="39" terrain="5"/>
@@ -430,19 +430,19 @@
   <hex row="5" col="2" terrain="6"/>
   <hex row="5" col="3" terrain="5"/>
   <hex row="5" col="4" terrain="3"/>
-  <hex row="5" col="6" terrain="3"/>
+  <hex row="5" col="6" terrain="3" rail="17"/>
   <hex row="5" col="7" terrain="3"/>
   <hex row="5" col="8" terrain="13"/>
-  <hex row="5" col="9" road="34"/>
-  <hex row="5" col="10" road="34"/>
+  <hex row="5" col="9" road="34" rail="34"/>
+  <hex row="5" col="10" road="34" rail="34"/>
   <hex row="5" col="11" terrain="10" name="Nyitra"/>
-  <hex row="5" col="12" terrain="10" road="136" name="Nyitra"/>
-  <hex row="5" col="13" terrain="1" road="136" name="Simony" owner="1" flag="47" station="1">
+  <hex row="5" col="12" terrain="10" road="136" name="Nyitra" rail="136"/>
+  <hex row="5" col="13" terrain="1" road="136" name="Simony" owner="1" flag="47" station="1" rail="136">
     <unit id="33062" owner="1" flag="48" face="0" exp="4" ldr="1"/>
   </hex>
   <hex row="5" col="14" terrain="10" name="Nyitra"/>
-  <hex row="5" col="15" terrain="3" road="34"/>
-  <hex row="5" col="16" terrain="3" road="34"/>
+  <hex row="5" col="15" terrain="3" road="34" rail="34"/>
+  <hex row="5" col="16" terrain="3" road="34" rail="34"/>
   <hex row="5" col="17" terrain="5"/>
   <hex row="5" col="18" terrain="5"/>
   <hex row="5" col="19" terrain="6"/>
@@ -462,7 +462,7 @@
   <hex row="5" col="33" terrain="5"/>
   <hex row="5" col="34" terrain="3"/>
   <hex row="5" col="35" terrain="10" name="Garam"/>
-  <hex row="5" col="36" terrain="3" road="17">
+  <hex row="5" col="36" terrain="3" road="17" rail="17">
     <unit id="33224" owner="1" flag="48" face="0" exp="31"/>
   </hex>
   <hex row="5" col="37" terrain="5">
@@ -483,14 +483,15 @@
   <hex row="6" col="2" terrain="5"/>
   <hex row="6" col="3" terrain="3"/>
   <hex row="6" col="4" terrain="3"/>
-  <hex row="6" col="7" road="34"/>
-  <hex row="6" col="8" terrain="13" road="34"/>
+  <hex row="6" col="6" rail="17"/>
+  <hex row="6" col="7" road="34" rail="34"/>
+  <hex row="6" col="8" terrain="13" road="34" rail="34"/>
   <hex row="6" col="9" terrain="10" name="Nyitra"/>
   <hex row="6" col="10" terrain="10" name="Nyitra"/>
   <hex row="6" col="11" terrain="3"/>
   <hex row="6" col="12" terrain="3"/>
   <hex row="6" col="13" terrain="3"/>
-  <hex row="6" col="14" road="130"/>
+  <hex row="6" col="14" road="130" rail="130"/>
   <hex row="6" col="15" terrain="3"/>
   <hex row="6" col="16" terrain="5"/>
   <hex row="6" col="17" terrain="6"/>
@@ -505,18 +506,18 @@
   <hex row="6" col="26" terrain="3"/>
   <hex row="6" col="27" terrain="10" name="Garam"/>
   <hex row="6" col="28" terrain="3"/>
-  <hex row="6" col="29" terrain="10" road="18" name="Garam"/>
-  <hex row="6" col="30" terrain="3" road="32">
+  <hex row="6" col="29" terrain="10" road="18" name="Garam" rail="18"/>
+  <hex row="6" col="30" terrain="3" road="32" rail="40">
     <unit id="33094" owner="1" flag="48" face="0" transport="33383" exp="5"/>
   </hex>
-  <hex row="6" col="31" terrain="3"/>
-  <hex row="6" col="32" terrain="5"/>
-  <hex row="6" col="33" terrain="5"/>
+  <hex row="6" col="31" terrain="3" rail="130"/>
+  <hex row="6" col="32" terrain="5" rail="40"/>
+  <hex row="6" col="33" terrain="5" rail="136"/>
   <hex row="6" col="34" terrain="3">
     <unit id="33510" owner="1" flag="48" face="0" transport="33308" exp="38"/>
   </hex>
-  <hex row="6" col="35" terrain="10" road="40" name="Garam"/>
-  <hex row="6" col="36" terrain="3" road="17">
+  <hex row="6" col="35" terrain="10" road="40" name="Garam" rail="40"/>
+  <hex row="6" col="36" terrain="3" road="17" rail="17">
     <unit id="33414" owner="1" flag="48" face="0" transport="33383" exp="24"/>
   </hex>
   <hex row="6" col="37" terrain="5">
@@ -535,7 +536,7 @@
   <hex row="7" col="0" terrain="5"/>
   <hex row="7" col="1" terrain="3"/>
   <hex row="7" col="2" terrain="5"/>
-  <hex row="7" col="6" road="18"/>
+  <hex row="7" col="6" road="18" rail="19"/>
   <hex row="7" col="7" terrain="10" name="Nyitra"/>
   <hex row="7" col="8" terrain="10" name="Nyitra"/>
   <hex row="7" col="11" terrain="3"/>
@@ -556,33 +557,33 @@
   <hex row="7" col="24" terrain="3"/>
   <hex row="7" col="25" terrain="10" name="Garam"/>
   <hex row="7" col="26" terrain="10" name="Garam"/>
-  <hex row="7" col="27" terrain="3" road="40"/>
+  <hex row="7" col="27" terrain="3" road="40" rail="40"/>
   <hex row="7" col="28" terrain="10" name="Garam"/>
-  <hex row="7" col="29" terrain="3" road="41">
+  <hex row="7" col="29" terrain="3" road="41" rail="33">
     <unit id="33120" owner="1" flag="48" face="0" transport="33383" exp="14"/>
   </hex>
   <hex row="7" col="30" terrain="10" name="Garam"/>
   <hex row="7" col="31" terrain="10" name="Garam"/>
   <hex row="7" col="32" terrain="3"/>
   <hex row="7" col="33" terrain="10" name="Garam"/>
-  <hex row="7" col="34" terrain="3" road="2">
+  <hex row="7" col="34" terrain="3" road="2" rail="130">
     <unit id="33159" owner="1" flag="48" face="0" exp="3"/>
   </hex>
   <hex row="7" col="35" terrain="10" name="Garam"/>
-  <hex row="7" col="36" terrain="1" road="153" name="Z&#243;lyom" owner="1" flag="47" victory="1" trigger="2" trigparam="100" station="1">
+  <hex row="7" col="36" terrain="1" road="153" name="Z&#243;lyom" owner="1" flag="47" victory="1" trigger="2" trigparam="100" station="1" rail="137">
     <unit id="33302" owner="1" flag="48" face="0" exp="28"/>
   </hex>
-  <hex row="7" col="37" terrain="3" road="130">
+  <hex row="7" col="37" terrain="3" road="130" rail="130">
     <unit id="33062" owner="1" flag="48" face="0" exp="23"/>
   </hex>
-  <hex row="7" col="38" terrain="3" road="40">
+  <hex row="7" col="38" terrain="3" road="40" rail="40">
     <unit id="33120" owner="1" flag="48" face="0" transport="33321" exp="13" ldr="1"/>
   </hex>
-  <hex row="7" col="39" terrain="3" road="130"/>
-  <hex row="7" col="40" terrain="3" road="40" deploy="0">
+  <hex row="7" col="39" terrain="3" road="130" rail="130"/>
+  <hex row="7" col="40" terrain="3" road="40" deploy="0" rail="40">
     <unit id="46672" owner="0" flag="188" face="0" exp="53" ldr="1"/>
   </hex>
-  <hex row="7" col="41" terrain="3" road="136" deploy="0">
+  <hex row="7" col="41" terrain="3" road="136" deploy="0" rail="136">
     <unit id="46664" owner="0" flag="188" face="0" exp="99" ldr="1"/>
   </hex>
   <hex row="7" col="42" terrain="5"/>
@@ -595,8 +596,8 @@
   <hex row="8" col="1" terrain="3"/>
   <hex row="8" col="2" terrain="3"/>
   <hex row="8" col="3" terrain="13"/>
-  <hex row="8" col="5" road="18"/>
-  <hex row="8" col="6" terrain="1" road="33" name="Nagytapolcs&#225;ny" owner="1" flag="47" station="1">
+  <hex row="8" col="5" road="18" rail="34"/>
+  <hex row="8" col="6" terrain="1" road="33" name="Nagytapolcs&#225;ny" owner="1" flag="47" station="1" rail="33">
     <unit id="33302" owner="1" flag="48" face="0" exp="17"/>
   </hex>
   <hex row="8" col="7" terrain="10" name="Nyitra"/>
@@ -614,12 +615,12 @@
   <hex row="8" col="22" terrain="5"/>
   <hex row="8" col="23" terrain="10" name="Garam"/>
   <hex row="8" col="24" terrain="10" name="Garam"/>
-  <hex row="8" col="25" terrain="3" road="34"/>
-  <hex row="8" col="26" terrain="1" road="50" name="Garamszentkereszt" owner="1" flag="47" station="1">
+  <hex row="8" col="25" terrain="3" road="34" rail="34"/>
+  <hex row="8" col="26" terrain="1" road="50" name="Garamszentkereszt" owner="1" flag="47" station="1" rail="50">
     <unit id="33120" owner="1" flag="48" face="0" transport="33321" exp="30"/>
   </hex>
   <hex row="8" col="27" terrain="5"/>
-  <hex row="8" col="28" terrain="5" road="130"/>
+  <hex row="8" col="28" terrain="5" road="130" rail="130"/>
   <hex row="8" col="29" terrain="5"/>
   <hex row="8" col="30" terrain="3" road="136"/>
   <hex row="8" col="31" terrain="3" road="136"/>
@@ -635,10 +636,10 @@
   <hex row="8" col="39" terrain="13" name="Szalatna"/>
   <hex row="8" col="40" terrain="13" name="Szalatna"/>
   <hex row="8" col="41" terrain="13" name="Szalatna"/>
-  <hex row="8" col="42" terrain="3" road="136" deploy="0">
+  <hex row="8" col="42" terrain="3" road="136" deploy="0" rail="136">
     <unit id="46692" owner="0" flag="188" face="0" exp="88" ldr="1" msu="1"/>
   </hex>
-  <hex row="8" col="43" terrain="1" road="144" name="Gyetva" owner="0" flag="187" deploy="0" station="1">
+  <hex row="8" col="43" terrain="1" road="144" name="Gyetva" owner="0" flag="187" deploy="0" station="1" rail="144">
     <unit id="46683" owner="0" flag="188" face="0" exp="44" depot="1"/>
   </hex>
   <hex row="8" col="44" terrain="5"/>
@@ -648,6 +649,7 @@
   <hex row="9" col="0" terrain="3"/>
   <hex row="9" col="1" terrain="3"/>
   <hex row="9" col="3" terrain="13"/>
+  <hex row="9" col="4" rail="18"/>
   <hex row="9" col="5" road="33"/>
   <hex row="9" col="6" terrain="10" name="Nyitra"/>
   <hex row="9" col="9" terrain="5"/>
@@ -665,9 +667,9 @@
   <hex row="9" col="21" terrain="5"/>
   <hex row="9" col="22" terrain="5"/>
   <hex row="9" col="23" terrain="10" road="34" name="Garam"/>
-  <hex row="9" col="24" terrain="3" road="34"/>
+  <hex row="9" col="24" terrain="3" road="34" rail="18"/>
   <hex row="9" col="25" terrain="3"/>
-  <hex row="9" col="26" terrain="5" road="17"/>
+  <hex row="9" col="26" terrain="5" road="17" rail="17"/>
   <hex row="9" col="27" terrain="6"/>
   <hex row="9" col="28" terrain="6"/>
   <hex row="9" col="29" terrain="6"/>
@@ -684,14 +686,14 @@
   <hex row="9" col="40" terrain="3"/>
   <hex row="9" col="41" terrain="3"/>
   <hex row="9" col="42" terrain="13" name="Szalatna"/>
-  <hex row="9" col="43" terrain="13" road="9" name="Szalatna"/>
+  <hex row="9" col="43" terrain="13" road="9" name="Szalatna" rail="17"/>
   <hex row="9" col="44" terrain="13" name="Szalatna"/>
   <hex row="9" col="45" terrain="3"/>
   <hex row="9" col="46" terrain="5"/>
   <hex row="9" col="47" terrain="6"/>
   <hex row="10" col="0" terrain="3"/>
   <hex row="10" col="2" terrain="13"/>
-  <hex row="10" col="4" road="18"/>
+  <hex row="10" col="4" road="18" rail="17"/>
   <hex row="10" col="5" terrain="10" name="Nyitra"/>
   <hex row="10" col="6" terrain="10" name="Nyitra"/>
   <hex row="10" col="7" terrain="3"/>
@@ -711,10 +713,10 @@
   <hex row="10" col="21" terrain="3" road="34"/>
   <hex row="10" col="22" terrain="3" road="34"/>
   <hex row="10" col="23" terrain="10" name="Garam"/>
-  <hex row="10" col="24" terrain="3"/>
+  <hex row="10" col="24" terrain="3" rail="17"/>
   <hex row="10" col="25" terrain="5"/>
-  <hex row="10" col="26" terrain="5" road="9"/>
-  <hex row="10" col="27" terrain="5" road="144">
+  <hex row="10" col="26" terrain="5" road="9" rail="9"/>
+  <hex row="10" col="27" terrain="5" road="144" rail="144">
     <unit id="33225" owner="1" flag="48" face="0" exp="33" attach="8"/>
   </hex>
   <hex row="10" col="28" terrain="6"/>
@@ -732,7 +734,7 @@
   <hex row="10" col="40" terrain="5"/>
   <hex row="10" col="41" terrain="5"/>
   <hex row="10" col="42" terrain="5"/>
-  <hex row="10" col="43" terrain="5" deploy="0">
+  <hex row="10" col="43" terrain="5" deploy="0" rail="9">
     <unit id="46664" owner="0" flag="188" face="0" exp="149" ldr="1"/>
   </hex>
   <hex row="10" col="44" terrain="3" road="144" deploy="0">
@@ -742,7 +744,8 @@
   <hex row="10" col="46" terrain="6"/>
   <hex row="10" col="47" terrain="6"/>
   <hex row="11" col="2" terrain="13"/>
-  <hex row="11" col="4" road="9"/>
+  <hex row="11" col="3" rail="18"/>
+  <hex row="11" col="4" road="9" rail="33"/>
   <hex row="11" col="5" terrain="10" road="144" name="Nyitra"/>
   <hex row="11" col="7" terrain="5"/>
   <hex row="11" col="8" terrain="6"/>
@@ -760,11 +763,11 @@
   <hex row="11" col="20" terrain="5" road="34"/>
   <hex row="11" col="21" terrain="10" name="Garam"/>
   <hex row="11" col="22" terrain="10" name="Garam"/>
-  <hex row="11" col="23" terrain="3"/>
-  <hex row="11" col="24" terrain="5"/>
+  <hex row="11" col="23" terrain="3" rail="34"/>
+  <hex row="11" col="24" terrain="5" rail="33"/>
   <hex row="11" col="25" terrain="6"/>
   <hex row="11" col="26" terrain="6"/>
-  <hex row="11" col="27" terrain="5" road="9">
+  <hex row="11" col="27" terrain="5" road="9" rail="9">
     <unit id="33482" owner="1" flag="48" face="0" transport="33383" exp="26"/>
   </hex>
   <hex row="11" col="28" terrain="5">
@@ -785,11 +788,14 @@
   <hex row="11" col="41" terrain="5"/>
   <hex row="11" col="42" terrain="6"/>
   <hex row="11" col="43" terrain="6"/>
-  <hex row="11" col="44" terrain="5" road="9"/>
-  <hex row="11" col="45" terrain="5" road="144"/>
+  <hex row="11" col="44" terrain="5" road="9" rail="136"/>
+  <hex row="11" col="45" terrain="5" road="144" rail="136"/>
   <hex row="11" col="46" terrain="6"/>
   <hex row="11" col="47" terrain="6"/>
+  <hex row="12" col="0" rail="136"/>
+  <hex row="12" col="1" rail="136"/>
   <hex row="12" col="2" terrain="13"/>
+  <hex row="12" col="3" rail="17"/>
   <hex row="12" col="4" terrain="10" name="Nyitra"/>
   <hex row="12" col="5" road="17"/>
   <hex row="12" col="7" terrain="5"/>
@@ -807,7 +813,7 @@
   <hex row="12" col="19" terrain="5"/>
   <hex row="12" col="20" terrain="5"/>
   <hex row="12" col="21" terrain="10" name="Garam"/>
-  <hex row="12" col="22" terrain="3"/>
+  <hex row="12" col="22" terrain="3" rail="18"/>
   <hex row="12" col="23" terrain="5"/>
   <hex row="12" col="24" terrain="6"/>
   <hex row="12" col="25" terrain="6"/>
@@ -815,7 +821,7 @@
   <hex row="12" col="27" terrain="5">
     <unit id="33094" owner="1" flag="48" face="0" transport="33383" exp="2"/>
   </hex>
-  <hex row="12" col="28" terrain="1" road="144" name="Selmecb&#225;nya" owner="1" flag="47" victory="1" trigger="1" trigparam="0" station="1">
+  <hex row="12" col="28" terrain="1" road="144" name="Selmecb&#225;nya" owner="1" flag="47" victory="1" trigger="1" trigparam="0" station="1" rail="128">
     <unit id="33302" owner="1" flag="48" face="0" exp="10"/>
   </hex>
   <hex row="12" col="29" terrain="3"/>
@@ -835,11 +841,11 @@
   <hex row="12" col="43" terrain="6"/>
   <hex row="12" col="44" terrain="5"/>
   <hex row="12" col="45" terrain="5" road="17"/>
-  <hex row="12" col="46" terrain="5"/>
-  <hex row="12" col="47" terrain="3"/>
+  <hex row="12" col="46" terrain="5" rail="136"/>
+  <hex row="12" col="47" terrain="3" rail="136"/>
   <hex row="13" col="1" terrain="13"/>
-  <hex row="13" col="2" terrain="13"/>
-  <hex row="13" col="3" road="16"/>
+  <hex row="13" col="2" terrain="13" rail="136"/>
+  <hex row="13" col="3" road="16" rail="145"/>
   <hex row="13" col="4" terrain="10" name="Nyitra"/>
   <hex row="13" col="5" terrain="3" road="17"/>
   <hex row="13" col="6" terrain="3"/>
@@ -858,7 +864,7 @@
   <hex row="13" col="19" terrain="3"/>
   <hex row="13" col="20" terrain="3"/>
   <hex row="13" col="21" terrain="10" name="Garam"/>
-  <hex row="13" col="22" terrain="5"/>
+  <hex row="13" col="22" terrain="5" rail="17"/>
   <hex row="13" col="23" terrain="6"/>
   <hex row="13" col="24" terrain="5"/>
   <hex row="13" col="25" terrain="5"/>
@@ -887,7 +893,7 @@
   <hex row="13" col="46" terrain="3"/>
   <hex row="13" col="47" terrain="15"/>
   <hex row="14" col="1" terrain="13"/>
-  <hex row="14" col="3" terrain="10" road="17" name="Nyitra"/>
+  <hex row="14" col="3" terrain="10" road="17" name="Nyitra" rail="17"/>
   <hex row="14" col="4" terrain="10" name="Nyitra"/>
   <hex row="14" col="5" terrain="3" road="33"/>
   <hex row="14" col="6" terrain="5"/>
@@ -909,8 +915,8 @@
   <hex row="14" col="18" terrain="5"/>
   <hex row="14" col="19" terrain="10" name="Garam"/>
   <hex row="14" col="20" terrain="10" name="Garam"/>
-  <hex row="14" col="21" terrain="5"/>
-  <hex row="14" col="22" terrain="5"/>
+  <hex row="14" col="21" terrain="5" rail="34"/>
+  <hex row="14" col="22" terrain="5" rail="33"/>
   <hex row="14" col="23" terrain="6"/>
   <hex row="14" col="24" terrain="5"/>
   <hex row="14" col="25" terrain="6"/>
@@ -937,7 +943,7 @@
   <hex row="14" col="46" terrain="5" road="136"/>
   <hex row="14" col="47" terrain="5" road="136"/>
   <hex row="15" col="2" terrain="10" name="Nyitra"/>
-  <hex row="15" col="3" road="19">
+  <hex row="15" col="3" road="19" rail="17">
     <unit id="33208" owner="1" flag="48" face="0" exp="31"/>
   </hex>
   <hex row="15" col="4" road="34">
@@ -947,17 +953,18 @@
   <hex row="15" col="6" terrain="5"/>
   <hex row="15" col="7" terrain="5"/>
   <hex row="15" col="8" terrain="3"/>
-  <hex row="15" col="11" road="34"/>
-  <hex row="15" col="12" terrain="1" road="34" name="Aranyosmar&#243;t" owner="1" flag="47" station="1">
+  <hex row="15" col="11" road="34" rail="18"/>
+  <hex row="15" col="12" terrain="1" road="34" name="Aranyosmar&#243;t" owner="1" flag="47" station="1" rail="40">
     <unit id="33120" owner="1" flag="48" face="0" exp="27"/>
   </hex>
+  <hex row="15" col="13" rail="144"/>
   <hex row="15" col="14" terrain="3"/>
   <hex row="15" col="15" terrain="5"/>
   <hex row="15" col="16" terrain="6"/>
   <hex row="15" col="17" terrain="5"/>
   <hex row="15" col="18" terrain="5"/>
   <hex row="15" col="19" terrain="10" name="Garam"/>
-  <hex row="15" col="20" terrain="5"/>
+  <hex row="15" col="20" terrain="5" rail="18"/>
   <hex row="15" col="21" terrain="5"/>
   <hex row="15" col="22" terrain="5"/>
   <hex row="15" col="23" terrain="6"/>
@@ -988,7 +995,7 @@
   <hex row="15" col="46" terrain="5"/>
   <hex row="15" col="47" terrain="5"/>
   <hex row="16" col="2" terrain="10" name="Nyitra"/>
-  <hex row="16" col="3" terrain="3" road="17">
+  <hex row="16" col="3" terrain="3" road="17" rail="17">
     <unit id="33408" owner="1" flag="48" face="0" transport="33383" exp="7"/>
   </hex>
   <hex row="16" col="4" terrain="5">
@@ -1001,14 +1008,16 @@
   <hex row="16" col="7" terrain="3"/>
   <hex row="16" col="9" road="34"/>
   <hex row="16" col="10" road="34"/>
+  <hex row="16" col="11" rail="33"/>
   <hex row="16" col="12" terrain="13" name="Zsitva"/>
+  <hex row="16" col="13" rail="9"/>
   <hex row="16" col="14" terrain="3"/>
   <hex row="16" col="15" terrain="3"/>
   <hex row="16" col="16" terrain="3"/>
   <hex row="16" col="17" terrain="3"/>
   <hex row="16" col="18" terrain="10" name="Garam"/>
-  <hex row="16" col="19" terrain="3"/>
-  <hex row="16" col="20" terrain="5"/>
+  <hex row="16" col="19" terrain="3" rail="18"/>
+  <hex row="16" col="20" terrain="5" rail="33"/>
   <hex row="16" col="21" terrain="5"/>
   <hex row="16" col="22" terrain="5"/>
   <hex row="16" col="23" terrain="5"/>
@@ -1019,10 +1028,10 @@
   <hex row="16" col="28" terrain="5"/>
   <hex row="16" col="29" terrain="5" road="9"/>
   <hex row="16" col="30" terrain="5"/>
-  <hex row="16" col="31" terrain="3" road="18" deploy="0">
+  <hex row="16" col="31" terrain="3" road="18" deploy="0" rail="18">
     <unit id="46694" owner="0" flag="188" face="0" transport="46676" exp="205" attach="2"/>
   </hex>
-  <hex row="16" col="32" terrain="1" road="41" name="Korpona" owner="0" flag="187" deploy="0" station="1">
+  <hex row="16" col="32" terrain="1" road="41" name="Korpona" owner="0" flag="187" deploy="0" station="1" rail="32">
     <unit id="46691" owner="0" flag="188" face="0" transport="46677" exp="39"/>
   </hex>
   <hex row="16" col="33" terrain="3" road="136" deploy="0">
@@ -1043,7 +1052,7 @@
   <hex row="16" col="46" terrain="5"/>
   <hex row="16" col="47" terrain="5"/>
   <hex row="17" col="2" terrain="10" name="Nyitra"/>
-  <hex row="17" col="3" terrain="1" road="57" name="Nyitra" owner="1" flag="47" victory="1" trigger="1" trigparam="0" station="1">
+  <hex row="17" col="3" terrain="1" road="57" name="Nyitra" owner="1" flag="47" victory="1" trigger="1" trigparam="0" station="1" rail="17">
     <unit id="33302" owner="1" flag="48" face="0" exp="251"/>
   </hex>
   <hex row="17" col="4" terrain="5">
@@ -1055,13 +1064,15 @@
   <hex row="17" col="6" terrain="3"/>
   <hex row="17" col="7" road="34"/>
   <hex row="17" col="8" road="34"/>
+  <hex row="17" col="10" rail="18"/>
   <hex row="17" col="11" terrain="13" name="Zsitva"/>
   <hex row="17" col="12" terrain="13" name="Zsitva"/>
+  <hex row="17" col="14" rail="144"/>
   <hex row="17" col="15" terrain="3"/>
   <hex row="17" col="16" terrain="3"/>
   <hex row="17" col="17" terrain="10" name="Garam"/>
   <hex row="17" col="18" terrain="10" name="Garam"/>
-  <hex row="17" col="19" terrain="5"/>
+  <hex row="17" col="19" terrain="5" rail="33"/>
   <hex row="17" col="20" terrain="6"/>
   <hex row="17" col="21" terrain="5"/>
   <hex row="17" col="22" terrain="5"/>
@@ -1073,7 +1084,7 @@
   <hex row="17" col="28" terrain="5"/>
   <hex row="17" col="29" terrain="3"/>
   <hex row="17" col="30" terrain="5" road="136"/>
-  <hex row="17" col="31" terrain="5" road="145" deploy="0">
+  <hex row="17" col="31" terrain="5" road="145" deploy="0" rail="17">
     <unit id="46668" owner="0" flag="188" face="0" transport="46676" exp="189"/>
   </hex>
   <hex row="17" col="32" terrain="13" name="Korpona"/>
@@ -1095,16 +1106,20 @@
   <hex row="18" col="0" road="136"/>
   <hex row="18" col="1" road="138"/>
   <hex row="18" col="2" terrain="10" road="34" name="Nyitra"/>
-  <hex row="18" col="3" terrain="10" road="17" name="Nyitra"/>
+  <hex row="18" col="3" terrain="10" road="17" name="Nyitra" rail="17"/>
   <hex row="18" col="4" road="136">
     <unit id="33120" owner="1" flag="48" face="0" transport="33383" exp="4"/>
   </hex>
   <hex row="18" col="5" road="138"/>
   <hex row="18" col="6" road="34"/>
+  <hex row="18" col="9" rail="18"/>
+  <hex row="18" col="10" rail="33"/>
   <hex row="18" col="11" terrain="13" name="Zsitva"/>
-  <hex row="18" col="15" terrain="3"/>
-  <hex row="18" col="16" road="8"/>
-  <hex row="18" col="17" terrain="10" road="136" name="Garam"/>
+  <hex row="18" col="14" rail="9"/>
+  <hex row="18" col="15" terrain="3" rail="130"/>
+  <hex row="18" col="16" road="8" rail="40"/>
+  <hex row="18" col="17" terrain="10" road="136" name="Garam" rail="136"/>
+  <hex row="18" col="18" rail="18"/>
   <hex row="18" col="19" terrain="3"/>
   <hex row="18" col="20" terrain="5"/>
   <hex row="18" col="21" terrain="5"/>
@@ -1116,7 +1131,7 @@
   <hex row="18" col="28" terrain="5"/>
   <hex row="18" col="29" terrain="5"/>
   <hex row="18" col="30" terrain="3"/>
-  <hex row="18" col="31" terrain="5" road="17" deploy="0">
+  <hex row="18" col="31" terrain="5" road="17" deploy="0" rail="17">
     <unit id="46659" owner="0" flag="188" face="0" transport="46676" exp="139" ldr="1"/>
   </hex>
   <hex row="18" col="32" terrain="13" name="Korpona"/>
@@ -1138,17 +1153,17 @@
   <hex row="19" col="0" terrain="10" name="V&#225;g"/>
   <hex row="19" col="1" terrain="10" name="V&#225;g"/>
   <hex row="19" col="2" road="136"/>
-  <hex row="19" col="3" road="137"/>
+  <hex row="19" col="3" road="137" rail="9"/>
   <hex row="19" col="4" terrain="10" name="Nyitra"/>
   <hex row="19" col="5" terrain="10" name="Nyitra"/>
   <hex row="19" col="6" road="136"/>
   <hex row="19" col="7" road="136"/>
-  <hex row="19" col="9" road="40"/>
+  <hex row="19" col="9" road="40" rail="17"/>
   <hex row="19" col="10" terrain="13" name="Zsitva"/>
   <hex row="19" col="14" terrain="3"/>
   <hex row="19" col="15" terrain="3"/>
   <hex row="19" col="16" terrain="10" name="Garam"/>
-  <hex row="19" col="18" terrain="2" road="128" owner="0" flag="187" deploy="0" station="1">
+  <hex row="19" col="18" terrain="2" road="128" owner="0" flag="187" deploy="0" station="1" rail="145">
     <unit id="46670" owner="0" flag="188" face="0" transport="46676" exp="129" ldr="1"/>
     <unit id="46700" owner="0" flag="188" face="0" exp="89" attach="2"/>
   </hex>
@@ -1160,7 +1175,7 @@
   <hex row="19" col="28" terrain="5"/>
   <hex row="19" col="29" terrain="3"/>
   <hex row="19" col="30" terrain="3"/>
-  <hex row="19" col="31" road="33"/>
+  <hex row="19" col="31" road="33" rail="33"/>
   <hex row="19" col="32" terrain="13" name="Korpona"/>
   <hex row="19" col="33" terrain="3"/>
   <hex row="19" col="34" terrain="3"/>
@@ -1178,20 +1193,21 @@
   <hex row="19" col="46" terrain="13"/>
   <hex row="19" col="47" terrain="3"/>
   <hex row="20" col="2" terrain="10" name="V&#225;g"/>
-  <hex row="20" col="4" road="136">
+  <hex row="20" col="4" road="136" rail="136">
     <unit id="33159" owner="1" flag="48" face="0" exp="3" ldr="1"/>
   </hex>
-  <hex row="20" col="5" road="144">
+  <hex row="20" col="5" road="144" rail="144">
     <unit id="33094" owner="1" flag="48" face="0" exp="35" ldr="1"/>
   </hex>
   <hex row="20" col="6" terrain="10" name="Nyitra"/>
   <hex row="20" col="8" road="130"/>
+  <hex row="20" col="9" rail="33"/>
   <hex row="20" col="10" terrain="13" road="136" name="Zsitva"/>
   <hex row="20" col="11" road="136"/>
   <hex row="20" col="14" terrain="3"/>
   <hex row="20" col="16" terrain="10" name="Garam"/>
   <hex row="20" col="17" terrain="10" name="Garam"/>
-  <hex row="20" col="18" deploy="0">
+  <hex row="20" col="18" deploy="0" rail="17">
     <unit id="46664" owner="0" flag="188" face="0" exp="179" ldr="1"/>
   </hex>
   <hex row="20" col="19" deploy="0">
@@ -1203,8 +1219,8 @@
   <hex row="20" col="26" terrain="5"/>
   <hex row="20" col="27" terrain="3"/>
   <hex row="20" col="28" terrain="3"/>
-  <hex row="20" col="29" road="18"/>
-  <hex row="20" col="30" road="34"/>
+  <hex row="20" col="29" road="18" rail="18"/>
+  <hex row="20" col="30" road="34" rail="34"/>
   <hex row="20" col="31" terrain="13" name="Korpona"/>
   <hex row="20" col="32" terrain="13" name="Korpona"/>
   <hex row="20" col="33" terrain="3"/>
@@ -1225,10 +1241,11 @@
   <hex row="21" col="4">
     <unit id="33067" owner="1" flag="48" face="0" transport="33309" exp="252"/>
   </hex>
-  <hex row="21" col="5" road="17">
+  <hex row="21" col="5" road="17" rail="17">
     <unit id="33457" owner="1" flag="48" face="0" exp="4"/>
   </hex>
   <hex row="21" col="6" terrain="10" name="Nyitra"/>
+  <hex row="21" col="8" rail="18"/>
   <hex row="21" col="9" terrain="13" name="Zsitva"/>
   <hex row="21" col="10" terrain="13" name="Zsitva"/>
   <hex row="21" col="12" road="136"/>
@@ -1236,10 +1253,10 @@
   <hex row="21" col="15" road="34"/>
   <hex row="21" col="16" road="40"/>
   <hex row="21" col="17" terrain="10" road="136" name="Garam"/>
-  <hex row="21" col="18" deploy="0">
+  <hex row="21" col="18" deploy="0" rail="9">
     <unit id="46664" owner="0" flag="188" face="0" exp="149"/>
   </hex>
-  <hex row="21" col="19" terrain="1" road="50" name="L&#233;va" owner="0" flag="187" victory="0" deploy="0" trigger="6" trigparam="0" station="1">
+  <hex row="21" col="19" terrain="1" road="50" name="L&#233;va" owner="0" flag="187" victory="0" deploy="0" trigger="6" trigparam="0" station="1" rail="144">
     <unit id="46662" owner="0" flag="188" face="0" transport="46675" exp="199" ldr="1" attach="5"/>
   </hex>
   <hex row="21" col="20" road="40"/>
@@ -1250,7 +1267,7 @@
   <hex row="21" col="25" terrain="5"/>
   <hex row="21" col="26" terrain="3"/>
   <hex row="21" col="27" terrain="3"/>
-  <hex row="21" col="29" road="17"/>
+  <hex row="21" col="29" road="17" rail="17"/>
   <hex row="21" col="30" terrain="13" name="Korpona"/>
   <hex row="21" col="33" terrain="3"/>
   <hex row="21" col="34" terrain="3"/>
@@ -1263,25 +1280,26 @@
   <hex row="21" col="41" terrain="3"/>
   <hex row="21" col="42" terrain="3"/>
   <hex row="21" col="44" terrain="13" name="Tiszovnyik-patak"/>
-  <hex row="21" col="45" terrain="1" road="40" name="Als&#243;sztregova" owner="0" flag="187" station="1"/>
+  <hex row="21" col="45" terrain="1" road="40" name="Als&#243;sztregova" owner="0" flag="187" station="1" rail="8"/>
   <hex row="21" col="46" terrain="13"/>
   <hex row="21" col="47" road="34"/>
   <hex row="22" col="3" terrain="10" name="V&#225;g"/>
   <hex row="22" col="4">
     <unit id="33509" owner="1" flag="48" face="0" transport="33383" exp="253" ldr="1"/>
   </hex>
-  <hex row="22" col="5" road="17">
+  <hex row="22" col="5" road="17" rail="17">
     <unit id="33291" owner="1" flag="48" face="0" exp="251"/>
   </hex>
   <hex row="22" col="6" terrain="10" name="Nyitra"/>
   <hex row="22" col="7" terrain="10" name="Nyitra"/>
+  <hex row="22" col="8" rail="17"/>
   <hex row="22" col="9" terrain="13" name="Zsitva"/>
   <hex row="22" col="14" road="146"/>
   <hex row="22" col="16" terrain="10" name="Garam"/>
   <hex row="22" col="18" road="130" deploy="0">
     <unit id="46668" owner="0" flag="188" face="0" transport="46676" exp="19"/>
   </hex>
-  <hex row="22" col="19" road="33" deploy="0">
+  <hex row="22" col="19" road="33" deploy="0" rail="17">
     <unit id="46691" owner="0" flag="188" face="0" transport="46677" exp="154" ldr="1"/>
   </hex>
   <hex row="22" col="22" road="136"/>
@@ -1290,7 +1308,7 @@
   <hex row="22" col="25" road="40"/>
   <hex row="22" col="26" terrain="3"/>
   <hex row="22" col="27" road="40"/>
-  <hex row="22" col="29" road="33"/>
+  <hex row="22" col="29" road="33" rail="17"/>
   <hex row="22" col="30" terrain="13" name="Korpona"/>
   <hex row="22" col="31" terrain="3"/>
   <hex row="22" col="32" terrain="3"/>
@@ -1306,19 +1324,20 @@
   <hex row="22" col="43" terrain="3"/>
   <hex row="22" col="44" road="18"/>
   <hex row="22" col="45" terrain="13" name="Tiszovnyik-patak"/>
-  <hex row="22" col="46" road="138"/>
-  <hex row="22" col="47" terrain="10" road="144" name="Ipoly"/>
+  <hex row="22" col="46" road="138" rail="136"/>
+  <hex row="22" col="47" terrain="10" road="144" name="Ipoly" rail="144"/>
   <hex row="23" col="3" terrain="10" name="V&#225;g"/>
   <hex row="23" col="4">
     <unit id="33120" owner="1" flag="48" face="0" exp="33"/>
   </hex>
-  <hex row="23" col="5" road="17">
+  <hex row="23" col="5" road="17" rail="17">
     <unit id="33081" owner="1" flag="48" face="0" transport="33383" exp="16" ammo="5"/>
   </hex>
   <hex row="23" col="6">
     <unit id="33213" owner="1" flag="48" face="0"/>
   </hex>
   <hex row="23" col="7" terrain="10" name="Nyitra"/>
+  <hex row="23" col="8" rail="17"/>
   <hex row="23" col="9" terrain="13" name="Zsitva"/>
   <hex row="23" col="14" road="9"/>
   <hex row="23" col="15" road="144"/>
@@ -1327,12 +1346,13 @@
   <hex row="23" col="18" road="34" deploy="0">
     <unit id="46665" owner="0" flag="188" face="0" exp="249"/>
   </hex>
-  <hex row="23" col="19" deploy="0">
+  <hex row="23" col="19" deploy="0" rail="9">
     <unit id="46664" owner="0" flag="188" face="0" transport="46676" exp="8" ldr="1"/>
   </hex>
   <hex row="23" col="24" road="130"/>
   <hex row="23" col="26" road="130"/>
   <hex row="23" col="28" road="146"/>
+  <hex row="23" col="29" rail="17"/>
   <hex row="23" col="30" terrain="13" name="Korpona"/>
   <hex row="23" col="31" terrain="3"/>
   <hex row="23" col="32" terrain="3"/>
@@ -1351,25 +1371,26 @@
   <hex row="23" col="43" road="34"/>
   <hex row="23" col="44" road="33"/>
   <hex row="23" col="46" terrain="10" name="Ipoly"/>
-  <hex row="23" col="47" terrain="1" road="19" name="N&#243;gr&#225;dszak&#225;l" owner="0" flag="187" station="1"/>
+  <hex row="23" col="47" terrain="1" road="19" name="N&#243;gr&#225;dszak&#225;l" owner="0" flag="187" station="1" rail="19"/>
   <hex row="24" col="1" terrain="10" name="V&#225;g"/>
   <hex row="24" col="2" terrain="10" name="V&#225;g"/>
   <hex row="24" col="4">
     <unit id="33062" owner="1" flag="48" face="0" exp="20"/>
   </hex>
-  <hex row="24" col="5" road="9"/>
+  <hex row="24" col="5" road="9" rail="9"/>
   <hex row="24" col="7" terrain="10" name="Nyitra"/>
+  <hex row="24" col="8" rail="17"/>
   <hex row="24" col="9" terrain="13" name="Zsitva"/>
   <hex row="24" col="13" terrain="13"/>
   <hex row="24" col="15" road="43"/>
   <hex row="24" col="16" road="34"/>
   <hex row="24" col="18" terrain="10" name="Garam"/>
-  <hex row="24" col="20" deploy="0">
+  <hex row="24" col="20" deploy="0" rail="144">
     <unit id="46664" owner="0" flag="188" face="0" exp="214"/>
   </hex>
   <hex row="24" col="27" road="18"/>
   <hex row="24" col="28" road="33"/>
-  <hex row="24" col="29" terrain="13" name="Korpona"/>
+  <hex row="24" col="29" terrain="13" name="Korpona" rail="9"/>
   <hex row="24" col="30" terrain="13" name="Korpona"/>
   <hex row="24" col="32" terrain="3"/>
   <hex row="24" col="33" terrain="3"/>
@@ -1382,10 +1403,11 @@
   <hex row="24" col="42" road="130"/>
   <hex row="24" col="45" terrain="10" name="Ipoly"/>
   <hex row="24" col="46" terrain="10" name="Ipoly"/>
-  <hex row="24" col="47" terrain="3" road="33"/>
+  <hex row="24" col="47" terrain="3" road="33" rail="33"/>
   <hex row="25" col="1" terrain="10" name="V&#225;g"/>
-  <hex row="25" col="6" road="144"/>
+  <hex row="25" col="6" road="144" rail="144"/>
   <hex row="25" col="7" terrain="10" name="Nyitra"/>
+  <hex row="25" col="8" rail="17"/>
   <hex row="25" col="9" terrain="13" name="Zsitva"/>
   <hex row="25" col="13" terrain="13" road="34"/>
   <hex row="25" col="14" road="34"/>
@@ -1393,8 +1415,11 @@
   <hex row="25" col="17" road="144"/>
   <hex row="25" col="18" terrain="10" name="Garam"/>
   <hex row="25" col="19" terrain="10" name="Garam"/>
+  <hex row="25" col="20" rail="9"/>
+  <hex row="25" col="21" rail="144"/>
   <hex row="25" col="27" road="17"/>
   <hex row="25" col="29" terrain="13" name="Korpona"/>
+  <hex row="25" col="30" rail="144"/>
   <hex row="25" col="32" terrain="3"/>
   <hex row="25" col="33" terrain="3"/>
   <hex row="25" col="34" terrain="3"/>
@@ -1404,27 +1429,28 @@
   <hex row="25" col="39" road="17"/>
   <hex row="25" col="41" terrain="13" name="K&#252;rt&#246;s"/>
   <hex row="25" col="45" terrain="10" name="Ipoly"/>
-  <hex row="25" col="46" road="18"/>
+  <hex row="25" col="46" road="18" rail="18"/>
   <hex row="25" col="47" terrain="3"/>
   <hex row="26" col="1" terrain="10" name="V&#225;g"/>
   <hex row="26" col="5">
     <unit id="46668" owner="0" flag="188" face="0" transport="46676" exp="143"/>
   </hex>
-  <hex row="26" col="6" road="17">
+  <hex row="26" col="6" road="17" rail="17">
     <unit id="46664" owner="0" flag="188" face="0" exp="135"/>
   </hex>
-  <hex row="26" col="7" terrain="10" road="34" name="Nyitra"/>
-  <hex row="26" col="8" road="32"/>
+  <hex row="26" col="7" terrain="10" road="34" name="Nyitra" rail="34"/>
+  <hex row="26" col="8" road="32" rail="33"/>
   <hex row="26" col="9" terrain="13" name="Zsitva"/>
   <hex row="26" col="11" road="34"/>
   <hex row="26" col="12" road="34"/>
   <hex row="26" col="13" terrain="13"/>
   <hex row="26" col="17" road="9"/>
   <hex row="26" col="20" terrain="10" name="Garam"/>
-  <hex row="26" col="21" road="32"/>
+  <hex row="26" col="21" road="32" rail="33"/>
   <hex row="26" col="25" road="40"/>
   <hex row="26" col="27" road="41"/>
   <hex row="26" col="28" terrain="13" name="Korpona"/>
+  <hex row="26" col="30" rail="17"/>
   <hex row="26" col="31" road="40"/>
   <hex row="26" col="32" terrain="3"/>
   <hex row="26" col="33" road="34"/>
@@ -1435,14 +1461,14 @@
   <hex row="26" col="41" terrain="13" name="K&#252;rt&#246;s"/>
   <hex row="26" col="43" terrain="10" name="Ipoly"/>
   <hex row="26" col="45" terrain="10" name="Ipoly"/>
-  <hex row="26" col="46" road="17"/>
+  <hex row="26" col="46" road="17" rail="17"/>
   <hex row="27" col="0" road="8"/>
   <hex row="27" col="1" road="144"/>
   <hex row="27" col="2" terrain="10" name="V&#225;g"/>
-  <hex row="27" col="5">
+  <hex row="27" col="5" rail="18">
     <unit id="46664" owner="0" flag="188" face="0" exp="98"/>
   </hex>
-  <hex row="27" col="6" terrain="1" road="19" name="Nagysur&#225;ny" owner="0" flag="187" station="1">
+  <hex row="27" col="6" terrain="1" road="19" name="Nagysur&#225;ny" owner="0" flag="187" station="1" rail="35">
     <unit id="46694" owner="0" flag="188" face="0" transport="46676" exp="132"/>
   </hex>
   <hex row="27" col="7" terrain="10" name="Nyitra"/>
@@ -1453,36 +1479,38 @@
   <hex row="27" col="14" terrain="13"/>
   <hex row="27" col="18" road="136"/>
   <hex row="27" col="19" road="136"/>
-  <hex row="27" col="20" terrain="10" road="18" name="Garam"/>
+  <hex row="27" col="20" terrain="10" road="18" name="Garam" rail="18"/>
   <hex row="27" col="21" terrain="10" name="Garam"/>
   <hex row="27" col="23" road="34"/>
   <hex row="27" col="24" road="34"/>
   <hex row="27" col="26" road="130"/>
   <hex row="27" col="27" terrain="10" name="Ipoly"/>
   <hex row="27" col="28" terrain="13" road="136" name="Korpona"/>
-  <hex row="27" col="29" terrain="1" road="138" name="Ipolys&#225;g" owner="0" flag="187" station="1">
+  <hex row="27" col="29" terrain="1" road="138" name="Ipolys&#225;g" owner="0" flag="187" station="1" rail="42">
     <unit id="46673" owner="0" flag="188" face="0" exp="108"/>
   </hex>
-  <hex row="27" col="30" road="34"/>
+  <hex row="27" col="30" road="34" rail="33"/>
   <hex row="27" col="31" terrain="10" name="Ipoly"/>
   <hex row="27" col="32" road="130"/>
   <hex row="27" col="33" terrain="10" name="Ipoly"/>
   <hex row="27" col="35" terrain="10" name="Ipoly"/>
   <hex row="27" col="38" terrain="10" name="Ipoly"/>
-  <hex row="27" col="39" terrain="1" road="25" name="Balassagyarmat" owner="0" flag="187" station="1"/>
+  <hex row="27" col="39" terrain="1" road="25" name="Balassagyarmat" owner="0" flag="187" station="1" rail="24"/>
   <hex row="27" col="40" terrain="10" name="Ipoly"/>
   <hex row="27" col="41" terrain="10" name="Ipoly"/>
   <hex row="27" col="42" terrain="10" name="Ipoly"/>
+  <hex row="27" col="43" rail="40"/>
   <hex row="27" col="44" terrain="10" name="Ipoly"/>
-  <hex row="27" col="45" road="34"/>
-  <hex row="27" col="46" terrain="1" road="41" name="Sz&#233;ch&#233;ny" owner="0" flag="187" station="1">
+  <hex row="27" col="45" road="34" rail="34"/>
+  <hex row="27" col="46" terrain="1" road="41" name="Sz&#233;ch&#233;ny" owner="0" flag="187" station="1" rail="33">
     <unit id="46655" owner="0" flag="188" face="0" exp="73"/>
   </hex>
   <hex row="27" col="47" road="144"/>
-  <hex row="28" col="1" road="9"/>
+  <hex row="28" col="0" rail="136"/>
+  <hex row="28" col="1" road="9" rail="136"/>
   <hex row="28" col="2" terrain="10" name="V&#225;g"/>
   <hex row="28" col="3" terrain="10" name="V&#225;g"/>
-  <hex row="28" col="5" road="18">
+  <hex row="28" col="5" road="18" rail="17">
     <unit id="46663" owner="0" flag="188" face="0" transport="46676" exp="130"/>
   </hex>
   <hex row="28" col="6" road="33">
@@ -1493,34 +1521,36 @@
   <hex row="28" col="10" road="33"/>
   <hex row="28" col="12" terrain="3"/>
   <hex row="28" col="14" terrain="13"/>
-  <hex row="28" col="20" road="145"/>
+  <hex row="28" col="20" road="145" rail="17"/>
   <hex row="28" col="21" terrain="10" road="34" name="Garam"/>
   <hex row="28" col="22" road="34"/>
   <hex row="28" col="25" terrain="10" name="Ipoly"/>
   <hex row="28" col="26" terrain="10" name="Ipoly"/>
-  <hex row="28" col="28" terrain="10" name="Ipoly"/>
+  <hex row="28" col="27" rail="34"/>
+  <hex row="28" col="28" terrain="10" name="Ipoly" rail="34"/>
   <hex row="28" col="29" terrain="10" name="Ipoly"/>
-  <hex row="28" col="30" terrain="10" road="144" name="Ipoly"/>
+  <hex row="28" col="30" terrain="10" road="144" name="Ipoly" rail="144"/>
   <hex row="28" col="32" terrain="10" name="Ipoly"/>
   <hex row="28" col="34" terrain="10" name="Ipoly"/>
+  <hex row="28" col="35" rail="40"/>
   <hex row="28" col="36" terrain="10" name="Ipoly"/>
   <hex row="28" col="37" terrain="10" name="Ipoly"/>
   <hex row="28" col="38" terrain="10" name="Ipoly"/>
-  <hex row="28" col="39" terrain="13" road="33" name="Fekete-v&#237;z"/>
-  <hex row="28" col="40" road="136"/>
-  <hex row="28" col="41" road="146"/>
-  <hex row="28" col="42" road="40"/>
+  <hex row="28" col="39" terrain="13" road="33" name="Fekete-v&#237;z" rail="33"/>
+  <hex row="28" col="40" road="136" rail="136"/>
+  <hex row="28" col="41" road="146" rail="146"/>
+  <hex row="28" col="42" road="40" rail="34"/>
   <hex row="28" col="43" road="130"/>
-  <hex row="28" col="44" road="34"/>
+  <hex row="28" col="44" road="34" rail="130"/>
   <hex row="28" col="47" road="9"/>
   <hex row="29" col="1">
     <unit id="33262" owner="1" flag="48" face="0" transport="33335" exp="31"/>
   </hex>
-  <hex row="29" col="2" road="136">
+  <hex row="29" col="2" road="136" rail="136">
     <unit id="33081" owner="1" flag="48" face="0" transport="33383" exp="255" ammo="5"/>
   </hex>
-  <hex row="29" col="3" terrain="10" road="136" name="V&#225;g"/>
-  <hex row="29" col="5" road="17"/>
+  <hex row="29" col="3" terrain="10" road="136" name="V&#225;g" rail="136"/>
+  <hex row="29" col="5" road="17" rail="17"/>
   <hex row="29" col="6" terrain="10" name="Nyitra"/>
   <hex row="29" col="7" road="34">
     <unit id="46667" owner="0" flag="188" face="0" exp="120"/>
@@ -1530,23 +1560,28 @@
   <hex row="29" col="12" terrain="3"/>
   <hex row="29" col="14" terrain="13"/>
   <hex row="29" col="15" terrain="13"/>
-  <hex row="29" col="19" road="18"/>
-  <hex row="29" col="20" terrain="1" road="35" name="Zsel&#237;z" owner="0" flag="187" station="1">
+  <hex row="29" col="19" road="18" rail="18"/>
+  <hex row="29" col="20" terrain="1" road="35" name="Zsel&#237;z" owner="0" flag="187" station="1" rail="33">
     <unit id="46673" owner="0" flag="188" face="0" exp="125"/>
   </hex>
   <hex row="29" col="21" terrain="10" name="Garam"/>
-  <hex row="29" col="25" terrain="10" name="Ipoly"/>
+  <hex row="29" col="25" terrain="10" name="Ipoly" rail="34"/>
+  <hex row="29" col="26" rail="34"/>
   <hex row="29" col="27" road="34"/>
   <hex row="29" col="28" road="40"/>
   <hex row="29" col="29" terrain="3" road="130"/>
-  <hex row="29" col="30" terrain="1" road="41" name="Dr&#233;gelypal&#225;nk" owner="0" flag="187" station="1">
+  <hex row="29" col="30" terrain="1" road="41" name="Dr&#233;gelypal&#225;nk" owner="0" flag="187" station="1" rail="9">
     <unit id="46655" owner="0" flag="188" face="0" exp="138"/>
   </hex>
-  <hex row="29" col="31" road="136"/>
-  <hex row="29" col="37" road="34"/>
-  <hex row="29" col="38" road="34"/>
+  <hex row="29" col="31" road="136" rail="130"/>
+  <hex row="29" col="32" rail="40"/>
+  <hex row="29" col="33" rail="130"/>
+  <hex row="29" col="34" rail="34"/>
+  <hex row="29" col="36" rail="136"/>
+  <hex row="29" col="37" road="34" rail="130"/>
+  <hex row="29" col="38" road="34" rail="34"/>
   <hex row="29" col="39" terrain="13" name="Fekete-v&#237;z"/>
-  <hex row="29" col="41" road="17"/>
+  <hex row="29" col="41" road="17" rail="17"/>
   <hex row="30" col="1">
     <unit id="33409" owner="1" flag="48" face="0" exp="11"/>
   </hex>
@@ -1554,16 +1589,18 @@
     <unit id="33208" owner="1" flag="48" face="0" exp="254"/>
   </hex>
   <hex row="30" col="3" terrain="10" name="V&#225;g"/>
-  <hex row="30" col="4" road="136"/>
-  <hex row="30" col="5" terrain="1" road="147" name="&#201;rsek&#250;jv&#225;r" owner="0" flag="187" victory="0" trigger="8" trigparam="0" trigequip="4560" station="1">
+  <hex row="30" col="4" road="136" rail="136"/>
+  <hex row="30" col="5" terrain="1" road="147" name="&#201;rsek&#250;jv&#225;r" owner="0" flag="187" victory="0" trigger="8" trigparam="0" trigequip="4560" station="1" rail="145">
     <unit id="46673" owner="0" flag="188" face="0" exp="122"/>
   </hex>
   <hex row="30" col="6" terrain="10" road="34" name="Nyitra"/>
   <hex row="30" col="8" terrain="13" name="Zsitva"/>
   <hex row="30" col="10" terrain="13" name="P&#225;rizsi-csatorna"/>
   <hex row="30" col="16" terrain="13"/>
-  <hex row="30" col="19" road="17"/>
+  <hex row="30" col="19" road="17" rail="17"/>
   <hex row="30" col="20" terrain="10" name="Garam"/>
+  <hex row="30" col="23" rail="34"/>
+  <hex row="30" col="24" rail="34"/>
   <hex row="30" col="25" terrain="10" name="Ipoly"/>
   <hex row="30" col="26" road="18"/>
   <hex row="30" col="27" terrain="3"/>
@@ -1575,7 +1612,7 @@
   <hex row="30" col="33" road="144"/>
   <hex row="30" col="36" road="18"/>
   <hex row="30" col="40" terrain="13" name="Fekete-v&#237;z"/>
-  <hex row="30" col="41" road="9"/>
+  <hex row="30" col="41" road="9" rail="9"/>
   <hex row="31" col="0" terrain="10" name="Csall&#243;k&#246;zi Kis-Duna"/>
   <hex row="31" col="1" terrain="10" name="Csall&#243;k&#246;zi Kis-Duna"/>
   <hex row="31" col="2">
@@ -1583,15 +1620,16 @@
   </hex>
   <hex row="31" col="3" terrain="10" name="V&#225;g"/>
   <hex row="31" col="4" terrain="10" name="Nyitra"/>
-  <hex row="31" col="5" terrain="10" road="25" name="Nyitra"/>
+  <hex row="31" col="5" terrain="10" road="25" name="Nyitra" rail="25"/>
   <hex row="31" col="6" terrain="10" name="Nyitra"/>
   <hex row="31" col="8" terrain="13" name="Zsitva"/>
   <hex row="31" col="10" terrain="13" name="P&#225;rizsi-csatorna"/>
   <hex row="31" col="11" terrain="13" name="P&#225;rizsi-csatorna"/>
   <hex row="31" col="16" terrain="13"/>
   <hex row="31" col="17" terrain="13"/>
-  <hex row="31" col="19" road="17"/>
+  <hex row="31" col="19" road="17" rail="17"/>
   <hex row="31" col="20" terrain="10" name="Garam"/>
+  <hex row="31" col="22" rail="18"/>
   <hex row="31" col="23" terrain="10" name="Ipoly"/>
   <hex row="31" col="24" terrain="10" name="Ipoly"/>
   <hex row="31" col="25" road="34"/>
@@ -1608,8 +1646,8 @@
   <hex row="31" col="39" terrain="3"/>
   <hex row="31" col="40" terrain="13" name="Fekete-v&#237;z"/>
   <hex row="31" col="41" terrain="13" name="Fekete-v&#237;z"/>
-  <hex row="31" col="42" terrain="3"/>
-  <hex row="31" col="43" terrain="3"/>
+  <hex row="31" col="42" terrain="3" rail="136"/>
+  <hex row="31" col="43" terrain="3" rail="136"/>
   <hex row="31" col="44" terrain="3"/>
   <hex row="31" col="45" terrain="3"/>
   <hex row="31" col="46" terrain="3"/>
@@ -1619,16 +1657,18 @@
     <unit id="33096" owner="1" flag="48" face="0" transport="33383" exp="26" ammo="4"/>
   </hex>
   <hex row="32" col="3" terrain="10" name="V&#225;g"/>
-  <hex row="32" col="5" terrain="2" road="17" owner="0" flag="187" station="1">
+  <hex row="32" col="5" terrain="2" road="17" owner="0" flag="187" station="1" rail="17">
     <unit id="46663" owner="0" flag="188" face="0" transport="46676" exp="134"/>
   </hex>
-  <hex row="32" col="7" terrain="13" name="Zsitva"/>
+  <hex row="32" col="6" rail="136"/>
+  <hex row="32" col="7" terrain="13" name="Zsitva" rail="136"/>
   <hex row="32" col="8" terrain="13" name="Zsitva"/>
   <hex row="32" col="12" terrain="13" name="P&#225;rizsi-csatorna"/>
   <hex row="32" col="18" terrain="13"/>
-  <hex row="32" col="19" terrain="13" road="17"/>
+  <hex row="32" col="19" terrain="13" road="17" rail="17"/>
   <hex row="32" col="20" terrain="10" name="Garam"/>
-  <hex row="32" col="21" road="32"/>
+  <hex row="32" col="21" road="32" rail="34"/>
+  <hex row="32" col="22" rail="33"/>
   <hex row="32" col="23" terrain="10" name="Ipoly"/>
   <hex row="32" col="24" road="18"/>
   <hex row="32" col="25" terrain="3"/>
@@ -1646,8 +1686,8 @@
   <hex row="32" col="41" terrain="3"/>
   <hex row="32" col="42" terrain="13" name="Fekete-v&#237;z"/>
   <hex row="32" col="43" terrain="13" name="Fekete-v&#237;z"/>
-  <hex row="32" col="44" terrain="3"/>
-  <hex row="32" col="45" terrain="3"/>
+  <hex row="32" col="44" terrain="3" rail="136"/>
+  <hex row="32" col="45" terrain="3" rail="136"/>
   <hex row="32" col="46" terrain="5"/>
   <hex row="32" col="47" terrain="5"/>
   <hex row="33" col="1" terrain="10" name="Csall&#243;k&#246;zi Kis-Duna"/>
@@ -1655,15 +1695,17 @@
     <unit id="33288" owner="1" flag="48" face="0" transport="33335" exp="42"/>
   </hex>
   <hex row="33" col="4" terrain="10" name="V&#225;g"/>
-  <hex row="33" col="5" road="17"/>
+  <hex row="33" col="5" road="17" rail="17"/>
   <hex row="33" col="6" terrain="13" name="Zsitva"/>
+  <hex row="33" col="8" rail="136"/>
+  <hex row="33" col="9" rail="136"/>
   <hex row="33" col="12" terrain="13" name="P&#225;rizsi-csatorna"/>
   <hex row="33" col="14" terrain="3"/>
   <hex row="33" col="15" terrain="3"/>
-  <hex row="33" col="19" terrain="1" road="19" name="B&#233;ny" owner="0" flag="187" station="1">
+  <hex row="33" col="19" terrain="1" road="19" name="B&#233;ny" owner="0" flag="187" station="1" rail="19">
     <unit id="46686" owner="0" flag="188" face="0" transport="46674" exp="127" attach="5"/>
   </hex>
-  <hex row="33" col="20" terrain="10" road="34" name="Garam"/>
+  <hex row="33" col="20" terrain="10" road="34" name="Garam" rail="34"/>
   <hex row="33" col="23" terrain="10" name="Ipoly"/>
   <hex row="33" col="24" road="17"/>
   <hex row="33" col="25" terrain="3"/>
@@ -1682,18 +1724,20 @@
   <hex row="33" col="43" terrain="5"/>
   <hex row="33" col="44" terrain="13" name="Fekete-v&#237;z"/>
   <hex row="33" col="45" terrain="13" name="Fekete-v&#237;z"/>
-  <hex row="33" col="46" terrain="5"/>
+  <hex row="33" col="46" terrain="5" rail="144"/>
   <hex row="33" col="47" terrain="5"/>
   <hex row="34" col="1" terrain="10" name="Csall&#243;k&#246;zi Kis-Duna"/>
   <hex row="34" col="4" terrain="10" name="V&#225;g"/>
-  <hex row="34" col="5" road="9"/>
+  <hex row="34" col="5" road="9" rail="9"/>
   <hex row="34" col="6" terrain="13" name="Zsitva"/>
+  <hex row="34" col="10" rail="136"/>
+  <hex row="34" col="11" rail="136"/>
   <hex row="34" col="12" terrain="13" name="P&#225;rizsi-csatorna"/>
   <hex row="34" col="13" terrain="13" name="P&#225;rizsi-csatorna"/>
   <hex row="34" col="18">
     <unit id="46659" owner="0" flag="188" face="0" exp="107"/>
   </hex>
-  <hex row="34" col="19" road="17">
+  <hex row="34" col="19" road="17" rail="17">
     <unit id="46656" owner="0" flag="188" face="0" transport="46677" exp="87"/>
   </hex>
   <hex row="34" col="20" terrain="10" name="Garam"/>
@@ -1716,19 +1760,21 @@
   <hex row="34" col="43" terrain="6"/>
   <hex row="34" col="44" terrain="5"/>
   <hex row="34" col="45" terrain="13" name="Fekete-v&#237;z"/>
-  <hex row="34" col="46" terrain="3"/>
+  <hex row="34" col="46" terrain="3" rail="17"/>
   <hex row="34" col="47" terrain="3"/>
   <hex row="35" col="1" terrain="10" name="Csall&#243;k&#246;zi Kis-Duna"/>
   <hex row="35" col="4" terrain="10" name="V&#225;g"/>
-  <hex row="35" col="6" terrain="1" road="136" name="&#211;gyalla" owner="0" flag="187" station="1">
+  <hex row="35" col="6" terrain="1" road="136" name="&#211;gyalla" owner="0" flag="187" station="1" rail="136">
     <unit id="46663" owner="0" flag="188" face="0" transport="46676" exp="91"/>
   </hex>
-  <hex row="35" col="7" road="152"/>
+  <hex row="35" col="7" road="152" rail="144"/>
   <hex row="35" col="9" road="40"/>
   <hex row="35" col="11" road="40"/>
+  <hex row="35" col="12" rail="136"/>
+  <hex row="35" col="13" rail="136"/>
   <hex row="35" col="14" terrain="13" name="P&#225;rizsi-csatorna"/>
   <hex row="35" col="15" terrain="13" name="P&#225;rizsi-csatorna"/>
-  <hex row="35" col="19" road="17"/>
+  <hex row="35" col="19" road="17" rail="17"/>
   <hex row="35" col="20" terrain="10" name="Garam"/>
   <hex row="35" col="23" terrain="10" name="Ipoly"/>
   <hex row="35" col="24" road="9"/>
@@ -1752,26 +1798,28 @@
   <hex row="35" col="43" terrain="5"/>
   <hex row="35" col="44" terrain="5"/>
   <hex row="35" col="45" terrain="13" name="Fekete-v&#237;z"/>
-  <hex row="35" col="46" terrain="3"/>
+  <hex row="35" col="46" terrain="3" rail="17"/>
   <hex row="35" col="47" terrain="3"/>
   <hex row="36" col="1" terrain="10" name="Csall&#243;k&#246;zi Kis-Duna"/>
   <hex row="36" col="4" terrain="10" name="V&#225;g"/>
   <hex row="36" col="5" terrain="10" name="V&#225;g"/>
   <hex row="36" col="6" terrain="13" name="Zsitva"/>
-  <hex row="36" col="7" road="33"/>
+  <hex row="36" col="7" road="33" rail="33"/>
   <hex row="36" col="8" road="130"/>
   <hex row="36" col="10" road="130"/>
   <hex row="36" col="11" terrain="3"/>
   <hex row="36" col="12" road="136"/>
   <hex row="36" col="13" road="136"/>
+  <hex row="36" col="14" rail="136"/>
+  <hex row="36" col="15" rail="136"/>
   <hex row="36" col="16" terrain="13" name="P&#225;rizsi-csatorna"/>
   <hex row="36" col="17" terrain="13" name="P&#225;rizsi-csatorna"/>
   <hex row="36" col="18" terrain="13" name="P&#225;rizsi-csatorna"/>
-  <hex row="36" col="19" terrain="13" road="17" name="P&#225;rizsi-csatorna"/>
+  <hex row="36" col="19" terrain="13" road="17" name="P&#225;rizsi-csatorna" rail="17"/>
   <hex row="36" col="20" terrain="10" name="Garam"/>
   <hex row="36" col="21" road="18"/>
   <hex row="36" col="22" road="40"/>
-  <hex row="36" col="23" road="136"/>
+  <hex row="36" col="23" road="136" rail="40"/>
   <hex row="36" col="24" terrain="10" name="Ipoly"/>
   <hex row="36" col="25" terrain="10" name="Ipoly"/>
   <hex row="36" col="26" terrain="3" road="136"/>
@@ -1779,7 +1827,7 @@
   <hex row="36" col="28" terrain="5"/>
   <hex row="36" col="29" terrain="5"/>
   <hex row="36" col="30" terrain="5"/>
-  <hex row="36" col="31" road="40"/>
+  <hex row="36" col="31" road="40" rail="40"/>
   <hex row="36" col="32" terrain="3"/>
   <hex row="36" col="33" terrain="3" road="17"/>
   <hex row="36" col="34" terrain="5"/>
@@ -1794,28 +1842,32 @@
   <hex row="36" col="43" terrain="5"/>
   <hex row="36" col="44" terrain="5"/>
   <hex row="36" col="45" terrain="5"/>
-  <hex row="36" col="46" terrain="3"/>
+  <hex row="36" col="46" terrain="3" rail="9"/>
+  <hex row="36" col="47" rail="144"/>
   <hex row="37" col="1" terrain="10" name="Csall&#243;k&#246;zi Kis-Duna"/>
   <hex row="37" col="3" terrain="10" name="Csall&#243;k&#246;zi Kis-Duna"/>
   <hex row="37" col="5" terrain="10" name="V&#225;g"/>
-  <hex row="37" col="6" road="18"/>
+  <hex row="37" col="6" road="18" rail="18"/>
   <hex row="37" col="12" terrain="3"/>
   <hex row="37" col="14" road="136"/>
   <hex row="37" col="15" road="136"/>
-  <hex row="37" col="19" road="9"/>
+  <hex row="37" col="16" rail="136"/>
+  <hex row="37" col="17" rail="136"/>
+  <hex row="37" col="19" road="9" rail="17"/>
   <hex row="37" col="20" terrain="10" name="Garam"/>
-  <hex row="37" col="21" terrain="10" road="19" name="Garam"/>
+  <hex row="37" col="21" terrain="10" road="19" name="Garam" rail="18"/>
+  <hex row="37" col="22" rail="34"/>
   <hex row="37" col="23" terrain="15" name="Duna"/>
-  <hex row="37" col="24" road="136"/>
-  <hex row="37" col="25" road="130"/>
-  <hex row="37" col="26" terrain="10" road="40" name="Ipoly"/>
-  <hex row="37" col="27" terrain="3" road="137"/>
+  <hex row="37" col="24" road="136" rail="136"/>
+  <hex row="37" col="25" road="130" rail="130"/>
+  <hex row="37" col="26" terrain="10" road="40" name="Ipoly" rail="40"/>
+  <hex row="37" col="27" terrain="3" road="137" rail="136"/>
   <hex row="37" col="28" terrain="3"/>
-  <hex row="37" col="29" terrain="5" road="34"/>
-  <hex row="37" col="30" terrain="3" road="34"/>
+  <hex row="37" col="29" terrain="5" road="34" rail="34"/>
+  <hex row="37" col="30" terrain="3" road="34" rail="34"/>
   <hex row="37" col="31" terrain="15" name="Duna"/>
-  <hex row="37" col="32" road="136"/>
-  <hex row="37" col="33" terrain="3" road="137"/>
+  <hex row="37" col="32" road="136" rail="136"/>
+  <hex row="37" col="33" terrain="3" road="137" rail="136"/>
   <hex row="37" col="34" terrain="5"/>
   <hex row="37" col="35" terrain="6"/>
   <hex row="37" col="36" terrain="5"/>
@@ -1828,37 +1880,38 @@
   <hex row="37" col="43" terrain="3"/>
   <hex row="37" col="44" terrain="5"/>
   <hex row="37" col="45" terrain="3"/>
+  <hex row="37" col="47" rail="9"/>
   <hex row="38" col="0" road="136"/>
-  <hex row="38" col="1" road="136"/>
+  <hex row="38" col="1" road="136" rail="40"/>
   <hex row="38" col="2" terrain="10" name="Csall&#243;k&#246;zi Kis-Duna"/>
-  <hex row="38" col="3" terrain="11" road="40" name="Kom&#225;romi v&#225;r">
+  <hex row="38" col="3" terrain="11" road="40" name="Kom&#225;romi v&#225;r" rail="40">
     <unit id="33303" owner="1" flag="48" face="0" exp="250" str="20" bstr="15"/>
   </hex>
   <hex row="38" col="4" terrain="10" name="Csall&#243;k&#246;zi Kis-Duna" mines="2"/>
-  <hex row="38" col="5" terrain="10" road="34" name="V&#225;g-Duna" mines="2"/>
-  <hex row="38" col="6" road="33"/>
+  <hex row="38" col="5" terrain="10" road="34" name="V&#225;g-Duna" mines="2" rail="34"/>
+  <hex row="38" col="6" road="33" rail="33"/>
   <hex row="38" col="16" road="136"/>
   <hex row="38" col="17" road="130"/>
-  <hex row="38" col="18" road="40"/>
-  <hex row="38" col="19" road="130"/>
+  <hex row="38" col="18" road="40" rail="136"/>
+  <hex row="38" col="19" road="130" rail="137"/>
   <hex row="38" col="20" road="168"/>
-  <hex row="38" col="21" terrain="1" road="137" name="P&#225;rk&#225;ny" owner="0" flag="187" station="1">
+  <hex row="38" col="21" terrain="1" road="137" name="P&#225;rk&#225;ny" owner="0" flag="187" station="1" rail="33">
     <unit id="46673" owner="0" flag="188" face="0" exp="109"/>
   </hex>
   <hex row="38" col="22" terrain="15" name="Duna"/>
-  <hex row="38" col="23" terrain="1" road="16" name="Esztergom" owner="0" flag="187" station="1">
+  <hex row="38" col="23" terrain="1" road="16" name="Esztergom" owner="0" flag="187" station="1" rail="16">
     <unit id="46655" owner="0" flag="188" face="0" exp="120"/>
   </hex>
   <hex row="38" col="24" terrain="15" name="Duna"/>
   <hex row="38" col="25" terrain="15" name="Duna"/>
   <hex row="38" col="26" terrain="15" name="Duna"/>
   <hex row="38" col="27" terrain="15" name="Duna"/>
-  <hex row="38" col="28" terrain="3" road="130"/>
+  <hex row="38" col="28" terrain="3" road="130" rail="130"/>
   <hex row="38" col="29" terrain="15" name="Duna"/>
   <hex row="38" col="30" terrain="15" name="Duna"/>
   <hex row="38" col="32" terrain="15" name="Duna"/>
   <hex row="38" col="33" terrain="15" name="Duna"/>
-  <hex row="38" col="34" terrain="5" road="144"/>
+  <hex row="38" col="34" terrain="5" road="144" rail="144"/>
   <hex row="38" col="35" terrain="5"/>
   <hex row="38" col="36" terrain="5"/>
   <hex row="38" col="38" terrain="5"/>
@@ -1869,17 +1922,19 @@
   <hex row="38" col="43" terrain="3"/>
   <hex row="38" col="44" terrain="3"/>
   <hex row="38" col="45" terrain="3"/>
+  <hex row="39" col="0" rail="34"/>
   <hex row="39" col="1" terrain="15" name="Duna"/>
-  <hex row="39" col="2" road="130"/>
-  <hex row="39" col="3" terrain="15" road="18" name="Duna" mines="2"/>
-  <hex row="39" col="4" terrain="1" road="178" name="R&#233;vkom&#225;rom" owner="1" flag="47" station="1">
+  <hex row="39" col="2" road="130" rail="130"/>
+  <hex row="39" col="3" terrain="15" road="18" name="Duna" mines="2" rail="18"/>
+  <hex row="39" col="4" terrain="1" road="178" name="R&#233;vkom&#225;rom" owner="1" flag="47" station="1" rail="162">
     <unit id="33302" owner="1" flag="48" face="0" exp="250" str="20" bstr="15"/>
   </hex>
   <hex row="39" col="5" terrain="10" name="V&#225;g-Duna" mines="2"/>
   <hex row="39" col="17" terrain="15" name="Duna"/>
+  <hex row="39" col="20" rail="130"/>
   <hex row="39" col="21" terrain="15" name="Duna"/>
   <hex row="39" col="22" terrain="15" road="136" name="Duna"/>
-  <hex row="39" col="23" terrain="1" road="145" name="Esztergom"/>
+  <hex row="39" col="23" terrain="1" road="145" name="Esztergom" rail="17"/>
   <hex row="39" col="25" terrain="3"/>
   <hex row="39" col="26" terrain="3"/>
   <hex row="39" col="27" terrain="15" name="Duna"/>
@@ -1888,8 +1943,8 @@
   <hex row="39" col="30" terrain="10" name="Szentendrei Duna"/>
   <hex row="39" col="31" terrain="10" name="Szentendrei Duna"/>
   <hex row="39" col="33" terrain="15" name="Duna"/>
-  <hex row="39" col="34" terrain="1" road="9" name="V&#225;c" owner="0" flag="187" station="1"/>
-  <hex row="39" col="35" road="144"/>
+  <hex row="39" col="34" terrain="1" road="9" name="V&#225;c" owner="0" flag="187" station="1" rail="9"/>
+  <hex row="39" col="35" road="144" rail="144"/>
   <hex row="39" col="39" terrain="3"/>
   <hex row="39" col="40" terrain="3"/>
   <hex row="39" col="41" terrain="13"/>
@@ -1898,7 +1953,7 @@
   <hex row="40" col="0" terrain="15" name="Duna"/>
   <hex row="40" col="1" terrain="3"/>
   <hex row="40" col="2" terrain="15" name="Duna"/>
-  <hex row="40" col="3" terrain="1" road="41" name="Kom&#225;rom" owner="0" flag="187" station="1">
+  <hex row="40" col="3" terrain="1" road="41" name="Kom&#225;rom" owner="0" flag="187" station="1" rail="41">
     <unit id="46673" owner="0" flag="188" face="0" exp="144" str="20" bstr="15"/>
   </hex>
   <hex row="40" col="4" terrain="15" road="17" name="Duna" mines="2"/>
@@ -1912,11 +1967,11 @@
   <hex row="40" col="14" terrain="15" name="Duna"/>
   <hex row="40" col="15" terrain="15" name="Duna"/>
   <hex row="40" col="16" terrain="15" name="Duna"/>
-  <hex row="40" col="17" road="40"/>
+  <hex row="40" col="17" road="40" rail="40"/>
   <hex row="40" col="18" terrain="15" name="Duna"/>
   <hex row="40" col="19" terrain="15" name="Duna"/>
   <hex row="40" col="20" terrain="15" name="Duna"/>
-  <hex row="40" col="23" road="33"/>
+  <hex row="40" col="23" road="33" rail="33"/>
   <hex row="40" col="24" terrain="5"/>
   <hex row="40" col="25" terrain="6"/>
   <hex row="40" col="26" terrain="3"/>
@@ -1927,35 +1982,35 @@
   <hex row="40" col="31" terrain="5"/>
   <hex row="40" col="32" terrain="10" name="Szentendrei Duna"/>
   <hex row="40" col="34" terrain="15" name="Duna"/>
-  <hex row="40" col="35" road="17"/>
+  <hex row="40" col="35" road="17" rail="17"/>
   <hex row="40" col="39" terrain="3"/>
   <hex row="40" col="40" terrain="3"/>
   <hex row="40" col="41" terrain="13"/>
   <hex row="40" col="42" terrain="3"/>
   <hex row="40" col="43" terrain="3"/>
   <hex row="41" col="0" road="136"/>
-  <hex row="41" col="1" road="130"/>
-  <hex row="41" col="2" road="34"/>
-  <hex row="41" col="4" terrain="1" road="153" name="Kom&#225;rom">
+  <hex row="41" col="1" road="130" rail="34"/>
+  <hex row="41" col="2" road="34" rail="34"/>
+  <hex row="41" col="4" terrain="1" road="153" name="Kom&#225;rom" rail="136">
     <unit id="46673" owner="0" flag="188" face="0" exp="144" str="20" bstr="15"/>
   </hex>
-  <hex row="41" col="5" road="130"/>
-  <hex row="41" col="6" road="40"/>
-  <hex row="41" col="7" road="136"/>
+  <hex row="41" col="5" road="130" rail="130"/>
+  <hex row="41" col="6" road="40" rail="40"/>
+  <hex row="41" col="7" road="136" rail="136"/>
   <hex row="41" col="8" terrain="15" name="Duna"/>
-  <hex row="41" col="9" road="40"/>
+  <hex row="41" col="9" road="40" rail="40"/>
   <hex row="41" col="10" terrain="15" name="Duna"/>
-  <hex row="41" col="11" road="34"/>
-  <hex row="41" col="12" road="40"/>
-  <hex row="41" col="13" terrain="3" road="130"/>
-  <hex row="41" col="14" terrain="3" road="40"/>
-  <hex row="41" col="15" terrain="5" road="130"/>
-  <hex row="41" col="16" road="34"/>
-  <hex row="41" col="18" road="136"/>
-  <hex row="41" col="19" road="130"/>
-  <hex row="41" col="20" road="40"/>
-  <hex row="41" col="21" terrain="1" road="146" name="Dorog" owner="0" flag="187" station="1"/>
-  <hex row="41" col="22" road="34"/>
+  <hex row="41" col="11" road="34" rail="34"/>
+  <hex row="41" col="12" road="40" rail="40"/>
+  <hex row="41" col="13" terrain="3" road="130" rail="130"/>
+  <hex row="41" col="14" terrain="3" road="40" rail="40"/>
+  <hex row="41" col="15" terrain="5" road="130" rail="130"/>
+  <hex row="41" col="16" road="34" rail="34"/>
+  <hex row="41" col="18" road="136" rail="136"/>
+  <hex row="41" col="19" road="130" rail="130"/>
+  <hex row="41" col="20" road="40" rail="40"/>
+  <hex row="41" col="21" terrain="1" road="146" name="Dorog" owner="0" flag="187" station="1" rail="138"/>
+  <hex row="41" col="22" road="34" rail="34"/>
   <hex row="41" col="23" terrain="3"/>
   <hex row="41" col="24" terrain="3"/>
   <hex row="41" col="25" terrain="6"/>
@@ -1968,21 +2023,24 @@
   <hex row="41" col="32" terrain="10" name="Szentendrei Duna"/>
   <hex row="41" col="33" terrain="10" name="Szentendrei Duna"/>
   <hex row="41" col="34" terrain="15" name="Duna"/>
-  <hex row="41" col="35" road="17"/>
+  <hex row="41" col="35" road="17" rail="17"/>
   <hex row="41" col="40" terrain="3"/>
   <hex row="41" col="41" terrain="13"/>
   <hex row="41" col="43" terrain="5"/>
   <hex row="41" col="44" terrain="3"/>
+  <hex row="42" col="0" rail="34"/>
   <hex row="42" col="4" road="9"/>
   <hex row="42" col="5" road="144"/>
-  <hex row="42" col="8" road="130"/>
-  <hex row="42" col="10" road="130"/>
+  <hex row="42" col="8" road="130" rail="138"/>
+  <hex row="42" col="9" rail="144"/>
+  <hex row="42" col="10" road="130" rail="130"/>
   <hex row="42" col="13" terrain="3"/>
   <hex row="42" col="14" terrain="5"/>
   <hex row="42" col="15" terrain="5"/>
   <hex row="42" col="16" terrain="3"/>
   <hex row="42" col="17" terrain="3"/>
   <hex row="42" col="21" road="17"/>
+  <hex row="42" col="22" rail="144"/>
   <hex row="42" col="24" terrain="5"/>
   <hex row="42" col="25" terrain="5"/>
   <hex row="42" col="26" terrain="5"/>
@@ -1994,7 +2052,7 @@
   <hex row="42" col="32" terrain="5"/>
   <hex row="42" col="33" terrain="10" name="Szentendrei Duna"/>
   <hex row="42" col="34" terrain="15" name="Duna"/>
-  <hex row="42" col="35" road="17"/>
+  <hex row="42" col="35" road="17" rail="17"/>
   <hex row="42" col="41" terrain="13"/>
   <hex row="42" col="43" terrain="3"/>
   <hex row="42" col="44" terrain="3"/>

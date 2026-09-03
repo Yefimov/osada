@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="polsov_03.xscn" name="Liberating Bialorus" turns="14, 18, 22" date="August 4, 1919" dayturns="3" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="39" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_683.png" eqpv="united1" prototimeframe="6" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="0" capitalflak="0" ehmsuonly="0" paradropocean="1" coresoffcap="0" daysperturn="0">
-<player id="0" country="103" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="104,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="16:0:2,81:0:0"/>
-<player id="1" country="20" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="21,194,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 75, 100, 0, 0, 75, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="20:0:5"/>
+<map file="polsov_03.xscn" name="Minsk and the Berezina" turns="14, 18, 22" date="August 4, 1919" dayturns="3" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="39" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_683.png" eqpv="united1" prototimeframe="6" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="0" capitalflak="0" ehmsuonly="0" paradropocean="1" coresoffcap="0" daysperturn="0" holdvictory="4, 3, 2">
+<player id="0" country="103" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="104,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="16:0:2,81:0:0"/>
+<player id="1" country="20" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="21,194,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 75, 100, 0, 0, 75, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="20:0:5"/>
   <reinforce turn="6">
     <at row="2" col="40">
       <unit id="42432" owner="0" flag="104" face="0" exp="150" str="7" bstr="6"/>
@@ -32,7 +32,41 @@
       <unit id="42425" owner="0" flag="104" face="0" str="6" bstr="6"/>
     </at>
   </reinforce>
-  <hex row="13" col="6" station="1"/>
+  <hex row="0" col="19" rail="187"/>
+  <hex row="0" col="32" rail="187"/>
+  <hex row="0" col="33" rail="187"/>
+  <hex row="0" col="42" rail="187"/>
+  <hex row="2" col="19" rail="187"/>
+  <hex row="2" col="36" rail="187"/>
+  <hex row="2" col="37" rail="187"/>
+  <hex row="3" col="39" rail="187"/>
+  <hex row="3" col="41" rail="187"/>
+  <hex row="4" col="20" rail="187"/>
+  <hex row="4" col="42" rail="187"/>
+  <hex row="4" col="43" rail="187"/>
+  <hex row="5" col="0" rail="187"/>
+  <hex row="5" col="1" rail="187"/>
+  <hex row="5" col="20" rail="187"/>
+  <hex row="6" col="1" rail="187"/>
+  <hex row="6" col="20" rail="187"/>
+  <hex row="7" col="2" rail="187"/>
+  <hex row="8" col="2" rail="187"/>
+  <hex row="8" col="3" rail="187"/>
+  <hex row="9" col="3" rail="187"/>
+  <hex row="9" col="38" rail="187"/>
+  <hex row="10" col="4" rail="187"/>
+  <hex row="11" col="4" rail="187"/>
+  <hex row="11" col="5" rail="187"/>
+  <hex row="11" col="11" rail="187"/>
+  <hex row="11" col="13" rail="187"/>
+  <hex row="11" col="14" rail="187"/>
+  <hex row="11" col="16" rail="187"/>
+  <hex row="11" col="38" rail="187"/>
+  <hex row="12" col="5" rail="187"/>
+  <hex row="12" col="9" rail="187"/>
+  <hex row="12" col="10" rail="187"/>
+  <hex row="12" col="12" rail="187"/>
+  <hex row="13" col="6" station="1" rail="187"/>
   <hex row="0" col="21" terrain="16"/>
   <hex row="0" col="23" terrain="8"/>
   <hex row="0" col="24" terrain="8"/>
@@ -44,7 +78,7 @@
   <hex row="0" col="39" terrain="3"/>
   <hex row="1" col="6" road="33"/>
   <hex row="1" col="11" terrain="16"/>
-  <hex row="1" col="19" road="17"/>
+  <hex row="1" col="19" road="17" rail="187"/>
   <hex row="1" col="20" terrain="16"/>
   <hex row="1" col="28" terrain="3"/>
   <hex row="1" col="29" terrain="3"/>
@@ -60,12 +94,12 @@
   <hex row="1" col="33" deploy="1">
     <unit id="21568" owner="1" flag="21" face="0" exp="100"/>
   </hex>
-  <hex row="1" col="34" deploy="1">
+  <hex row="1" col="34" deploy="1" rail="187">
     <unit id="21211" owner="1" flag="21" face="0" exp="40"/>
   </hex>
-  <hex row="1" col="35" deploy="1"/>
+  <hex row="1" col="35" deploy="1" rail="187"/>
   <hex row="1" col="36" terrain="16"/>
-  <hex row="1" col="42">
+  <hex row="1" col="42" rail="187">
     <unit id="42394" owner="0" flag="104" face="0" transport="42344" exp="100" str="6" bstr="6"/>
   </hex>
   <hex row="2" col="4" road="34"/>
@@ -92,10 +126,10 @@
   <hex row="2" col="40" terrain="2">
     <unit id="42321" owner="0" flag="104" face="0" transport="42349" exp="100" str="6" bstr="6"/>
   </hex>
-  <hex row="2" col="41">
+  <hex row="2" col="41" rail="187">
     <unit id="42295" owner="0" flag="104" face="0" exp="100" str="6" bstr="6"/>
   </hex>
-  <hex row="2" col="42">
+  <hex row="2" col="42" rail="187">
     <unit id="42271" owner="0" flag="104" face="0" exp="100" str="6" bstr="6"/>
   </hex>
   <hex row="3" col="1" terrain="1" road="170" name="Grodno">
@@ -105,7 +139,7 @@
   <hex row="3" col="19" road="19">
     <unit id="896" owner="1" flag="21" face="0"/>
   </hex>
-  <hex row="3" col="20" terrain="1" road="32" name="Lida" owner="1" flag="20" victory="1" station="1">
+  <hex row="3" col="20" terrain="1" road="32" name="Lida" owner="1" flag="20" victory="1" station="1" rail="187">
     <unit id="21405" owner="1" flag="21" face="0" exp="130"/>
   </hex>
   <hex row="3" col="32">
@@ -113,10 +147,10 @@
   </hex>
   <hex row="3" col="35" terrain="8"/>
   <hex row="3" col="37" terrain="9"/>
-  <hex row="3" col="38">
+  <hex row="3" col="38" rail="187">
     <unit id="42308" owner="0" flag="104" face="0" ldr="1"/>
   </hex>
-  <hex row="3" col="40" terrain="1" road="145" name="Smaljavysk" station="1">
+  <hex row="3" col="40" terrain="1" road="145" name="Smaljavysk" station="1" rail="187">
     <unit id="42252" owner="0" flag="104" face="0" exp="100" str="6" bstr="6"/>
   </hex>
   <hex row="4" col="0" terrain="1" name="Grodno"/>
@@ -133,7 +167,7 @@
   <hex row="4" col="35" terrain="10" name="Niemen River"/>
   <hex row="4" col="36" terrain="9"/>
   <hex row="4" col="39" terrain="1" road="24" name="Minsk"/>
-  <hex row="4" col="40" road="17"/>
+  <hex row="4" col="40" road="17" rail="187"/>
   <hex row="5" col="4" road="136"/>
   <hex row="5" col="15" terrain="16"/>
   <hex row="5" col="16" terrain="10"/>
@@ -147,10 +181,10 @@
   <hex row="5" col="31" terrain="10" name="Niemen River"/>
   <hex row="5" col="32" terrain="10" name="Niemen River"/>
   <hex row="5" col="35" terrain="16"/>
-  <hex row="5" col="39" terrain="1" road="59" name="Minsk" owner="0" flag="103" station="1">
+  <hex row="5" col="39" terrain="1" road="59" name="Minsk" owner="0" flag="103" station="1" rail="187">
     <unit id="728" owner="0" flag="104" face="0" exp="60"/>
   </hex>
-  <hex row="5" col="40" terrain="1" road="185" name="Minsk">
+  <hex row="5" col="40" terrain="1" road="185" name="Minsk" rail="187">
     <unit id="42272" owner="0" flag="104" face="0" bstr="6"/>
   </hex>
   <hex row="5" col="41" terrain="1" road="184" name="Minsk" owner="0" flag="103" victory="0">
@@ -173,7 +207,7 @@
   <hex row="6" col="38" terrain="1" road="10" name="Minsk">
     <unit id="42271" owner="0" flag="104" face="0" exp="100" str="9" bstr="9"/>
   </hex>
-  <hex row="6" col="39" terrain="1" road="139" name="Minsk">
+  <hex row="6" col="39" terrain="1" road="139" name="Minsk" rail="187">
     <unit id="42295" owner="0" flag="104" face="0"/>
   </hex>
   <hex row="6" col="40" terrain="1" road="187" name="Minsk">
@@ -191,11 +225,11 @@
   <hex row="7" col="17" terrain="8"/>
   <hex row="7" col="18" terrain="16"/>
   <hex row="7" col="19" terrain="10" name="Niemen River"/>
-  <hex row="7" col="20" road="144"/>
+  <hex row="7" col="20" road="144" rail="187"/>
   <hex row="7" col="23" terrain="10" name="Niemen River"/>
   <hex row="7" col="25" terrain="10" name="Niemen River"/>
   <hex row="7" col="26" terrain="10" name="Niemen River"/>
-  <hex row="7" col="39" road="34">
+  <hex row="7" col="39" road="34" rail="187">
     <unit id="728" owner="0" flag="104" face="0" exp="160" str="8" bstr="8"/>
   </hex>
   <hex row="7" col="40" road="163">
@@ -208,7 +242,7 @@
   <hex row="8" col="16" terrain="8"/>
   <hex row="8" col="17" terrain="10" name="Niemen River"/>
   <hex row="8" col="18" terrain="10" name="Niemen River"/>
-  <hex row="8" col="20" terrain="10" name="Niemen River"/>
+  <hex row="8" col="20" terrain="10" name="Niemen River" rail="187"/>
   <hex row="8" col="21" terrain="10" name="Niemen River"/>
   <hex row="8" col="22" terrain="10" name="Niemen River"/>
   <hex row="8" col="24" terrain="10" name="Niemen River"/>
@@ -220,7 +254,7 @@
   <hex row="8" col="38" road="34">
     <unit id="42271" owner="0" flag="104" face="0" exp="50" str="9" bstr="6"/>
   </hex>
-  <hex row="8" col="39" road="34"/>
+  <hex row="8" col="39" road="34" rail="187"/>
   <hex row="8" col="41" terrain="3"/>
   <hex row="8" col="42" terrain="3"/>
   <hex row="8" col="43" terrain="3"/>
@@ -234,10 +268,10 @@
   <hex row="9" col="18">
     <unit id="623" owner="1" flag="21" face="0"/>
   </hex>
-  <hex row="9" col="19">
+  <hex row="9" col="19" rail="187">
     <unit id="21177" owner="1" flag="21" face="0" exp="170"/>
   </hex>
-  <hex row="9" col="20" road="33"/>
+  <hex row="9" col="20" road="33" rail="187"/>
   <hex row="9" col="22" terrain="3"/>
   <hex row="9" col="23" terrain="3"/>
   <hex row="9" col="32" terrain="16"/>
@@ -255,12 +289,12 @@
   <hex row="10" col="3" terrain="16"/>
   <hex row="10" col="11" road="34"/>
   <hex row="10" col="13" road="130"/>
-  <hex row="10" col="15" terrain="10" name="Niemen River"/>
+  <hex row="10" col="15" terrain="10" name="Niemen River" rail="187"/>
   <hex row="10" col="16" road="40"/>
-  <hex row="10" col="17" terrain="1" road="139" name="Nowogr&#243;dek">
+  <hex row="10" col="17" terrain="1" road="139" name="Nowogr&#243;dek" rail="187">
     <unit id="21970" owner="1" flag="21" face="0" transport="21857" exp="160"/>
   </hex>
-  <hex row="10" col="18" terrain="1" road="178" name="Nowogr&#243;dek">
+  <hex row="10" col="18" terrain="1" road="178" name="Nowogr&#243;dek" rail="187">
     <unit id="21177" owner="1" flag="21" face="0" exp="160"/>
   </hex>
   <hex row="10" col="23" terrain="8"/>
@@ -272,7 +306,7 @@
     <unit id="42295" owner="0" flag="104" face="0"/>
   </hex>
   <hex row="10" col="35" terrain="16"/>
-  <hex row="10" col="38" terrain="1" road="18" name="Werkuly" owner="0" flag="103" station="1">
+  <hex row="10" col="38" terrain="1" road="18" name="Werkuly" owner="0" flag="103" station="1" rail="187">
     <unit id="728" owner="0" flag="104" face="0" exp="60" str="8" bstr="8"/>
   </hex>
   <hex row="10" col="39" terrain="16"/>
@@ -295,7 +329,7 @@
   <hex row="11" col="34" terrain="16"/>
   <hex row="11" col="35" terrain="16"/>
   <hex row="11" col="36" terrain="16"/>
-  <hex row="11" col="37" terrain="16"/>
+  <hex row="11" col="37" terrain="16" rail="187"/>
   <hex row="11" col="39" terrain="16"/>
   <hex row="11" col="40" terrain="5"/>
   <hex row="11" col="41" terrain="5"/>
@@ -322,10 +356,10 @@
   <hex row="12" col="29" road="34">
     <unit id="42314" owner="0" flag="104" face="0" ldr="1"/>
   </hex>
-  <hex row="12" col="30" terrain="1" road="34" name="Stolpce" owner="0" flag="103" victory="0">
+  <hex row="12" col="30" terrain="1" road="34" name="Stolpce" owner="0" flag="103" victory="0" deploy="0">
     <unit id="42272" owner="0" flag="104" face="0" exp="100"/>
   </hex>
-  <hex row="12" col="37" terrain="1" road="17" name="Sluck"/>
+  <hex row="12" col="37" terrain="1" road="17" name="Sluck" rail="187"/>
   <hex row="12" col="38" terrain="16"/>
   <hex row="12" col="39" terrain="5"/>
   <hex row="12" col="40" terrain="5"/>
@@ -336,10 +370,10 @@
   <hex row="13" col="3" terrain="3"/>
   <hex row="13" col="4" terrain="1" road="24" name="Mosty" owner="1" flag="20"/>
   <hex row="13" col="5" terrain="1" road="160" name="Mosty"/>
-  <hex row="13" col="7" terrain="2" owner="1" flag="20">
+  <hex row="13" col="7" terrain="2" owner="1" flag="20" rail="187">
     <unit id="22137" owner="1" flag="21" face="0" transport="21927" exp="20" str="5" bstr="5"/>
   </hex>
-  <hex row="13" col="8" terrain="2">
+  <hex row="13" col="8" terrain="2" rail="187">
     <unit id="22177" owner="1" flag="21" face="0" exp="40" str="8" bstr="8"/>
     <unit id="663" owner="1" flag="21" face="0"/>
   </hex>
@@ -359,7 +393,9 @@
   </hex>
   <hex row="13" col="31" terrain="16"/>
   <hex row="13" col="34" terrain="16"/>
-  <hex row="13" col="37" terrain="1" road="17" name="Sluck" owner="0" flag="103" station="1">
+  <hex row="13" col="35" rail="187"/>
+  <hex row="13" col="36" rail="187"/>
+  <hex row="13" col="37" terrain="1" road="17" name="Sluck" owner="0" flag="103" station="1" rail="187" deploy="0">
     <unit id="521" owner="0" flag="104" face="0"/>
   </hex>
   <hex row="13" col="40" terrain="5"/>
@@ -389,7 +425,10 @@
   <hex row="14" col="28" road="33">
     <unit id="42271" owner="0" flag="104" face="0"/>
   </hex>
-  <hex row="14" col="32" terrain="16"/>
+  <hex row="14" col="31" rail="187"/>
+  <hex row="14" col="32" terrain="16" rail="187"/>
+  <hex row="14" col="33" rail="187"/>
+  <hex row="14" col="34" rail="187"/>
   <hex row="14" col="35" terrain="3"/>
   <hex row="14" col="37" terrain="1" road="9" name="Sluck"/>
   <hex row="14" col="39" terrain="16"/>
@@ -407,13 +446,22 @@
   <hex row="15" col="7" terrain="10" name="Niemen River"/>
   <hex row="15" col="8" terrain="3"/>
   <hex row="15" col="9" terrain="10" name="Niemen River"/>
+  <hex row="15" col="15" rail="187"/>
+  <hex row="15" col="17" rail="187"/>
+  <hex row="15" col="19" rail="187"/>
   <hex row="15" col="20" road="34"/>
-  <hex row="15" col="25" road="34">
+  <hex row="15" col="21" rail="187"/>
+  <hex row="15" col="23" rail="187"/>
+  <hex row="15" col="25" road="34" rail="187">
     <unit id="42271" owner="0" flag="104" face="0" exp="100"/>
   </hex>
   <hex row="15" col="26" road="34">
     <unit id="42271" owner="0" flag="104" face="0" exp="50"/>
   </hex>
+  <hex row="15" col="27" rail="187"/>
+  <hex row="15" col="28" rail="187"/>
+  <hex row="15" col="29" rail="187"/>
+  <hex row="15" col="30" rail="187"/>
   <hex row="15" col="32" terrain="3"/>
   <hex row="15" col="35" terrain="3"/>
   <hex row="15" col="36" terrain="3"/>
@@ -433,16 +481,19 @@
   <hex row="16" col="7" terrain="3"/>
   <hex row="16" col="8" terrain="10" name="Niemen River"/>
   <hex row="16" col="10" terrain="10" name="Niemen River"/>
-  <hex row="16" col="11" road="32"/>
-  <hex row="16" col="14" terrain="1" road="34" name="Mozyr" owner="1" flag="20" station="1">
+  <hex row="16" col="11" road="32" rail="187"/>
+  <hex row="16" col="13" rail="187"/>
+  <hex row="16" col="14" terrain="1" road="34" name="Mozyr" owner="1" flag="20" station="1" rail="187">
     <unit id="21177" owner="1" flag="21" face="0" exp="150"/>
   </hex>
-  <hex row="16" col="16" road="130"/>
-  <hex row="16" col="18" road="130"/>
+  <hex row="16" col="16" road="130" rail="187"/>
+  <hex row="16" col="18" road="130" rail="187"/>
+  <hex row="16" col="20" rail="187"/>
+  <hex row="16" col="22" rail="187"/>
   <hex row="16" col="23" road="34"/>
-  <hex row="16" col="24" road="34"/>
+  <hex row="16" col="24" road="34" rail="187"/>
   <hex row="16" col="25" terrain="10"/>
-  <hex row="16" col="26">
+  <hex row="16" col="26" rail="187">
     <unit id="42395" owner="0" flag="104" face="0"/>
   </hex>
   <hex row="16" col="27" road="17"/>
@@ -463,9 +514,9 @@
   <hex row="17" col="0" terrain="3"/>
   <hex row="17" col="3" terrain="1" road="32" name="Wolkowysk"/>
   <hex row="17" col="4" terrain="3"/>
-  <hex row="17" col="9" terrain="1" road="34" name="Zelwa" station="1"/>
-  <hex row="17" col="10" terrain="10" name="Niemen River"/>
-  <hex row="17" col="12" terrain="3" road="130"/>
+  <hex row="17" col="9" terrain="1" road="34" name="Zelwa" station="1" rail="187"/>
+  <hex row="17" col="10" terrain="10" name="Niemen River" rail="187"/>
+  <hex row="17" col="12" terrain="3" road="130" rail="187"/>
   <hex row="17" col="13">
     <unit id="22073" owner="1" flag="21" face="0" transport="21857" exp="150"/>
   </hex>
@@ -497,9 +548,12 @@
   <hex row="18" col="0" terrain="1" name="Wolkowysk"/>
   <hex row="18" col="1" terrain="1" road="26" name="Wolkowysk" owner="1" flag="20"/>
   <hex row="18" col="2" terrain="1" road="50" name="Wolkowysk"/>
-  <hex row="18" col="6" road="40"/>
-  <hex row="18" col="8" road="34"/>
-  <hex row="18" col="10" terrain="10" name="Niemen River"/>
+  <hex row="18" col="3" rail="187"/>
+  <hex row="18" col="5" rail="187"/>
+  <hex row="18" col="6" road="40" rail="187"/>
+  <hex row="18" col="7" rail="187"/>
+  <hex row="18" col="8" road="34" rail="187"/>
+  <hex row="18" col="10" terrain="10" name="Niemen River" rail="187"/>
   <hex row="18" col="11" terrain="10" name="Niemen River"/>
   <hex row="18" col="14">
     <unit id="21190" owner="1" flag="21" face="0" transport="21948" exp="170" str="4" bstr="4"/>
@@ -518,7 +572,7 @@
   <hex row="18" col="27" terrain="1" road="130" name="Nieswiez">
     <unit id="42262" owner="0" flag="104" face="0"/>
   </hex>
-  <hex row="18" col="28" terrain="1" road="163" name="Nieswiez" owner="0" flag="103">
+  <hex row="18" col="28" terrain="1" road="163" name="Nieswiez" owner="0" flag="103" deploy="0">
     <unit id="42272" owner="0" flag="104" face="0" exp="100"/>
   </hex>
   <hex row="18" col="35" terrain="3"/>
@@ -528,9 +582,9 @@
   <hex row="18" col="39" road="160"/>
   <hex row="18" col="40" terrain="3"/>
   <hex row="19" col="0" terrain="1" name="Wolkowysk"/>
-  <hex row="19" col="1" terrain="1" road="3" name="Wolkowysk"/>
-  <hex row="19" col="2" terrain="1" road="161" name="Wolkowysk" station="1"/>
-  <hex row="19" col="4" road="146"/>
+  <hex row="19" col="1" terrain="1" road="3" name="Wolkowysk" rail="187"/>
+  <hex row="19" col="2" terrain="1" road="161" name="Wolkowysk" station="1" rail="187"/>
+  <hex row="19" col="4" road="146" rail="187"/>
   <hex row="19" col="8" terrain="16"/>
   <hex row="19" col="9" terrain="16"/>
   <hex row="19" col="12" terrain="10" name="Niemen River"/>
@@ -567,6 +621,7 @@
   </hex>
   <hex row="19" col="42" terrain="3"/>
   <hex row="19" col="43" terrain="3"/>
+  <hex row="20" col="0" rail="187"/>
   <hex row="20" col="11" terrain="16"/>
   <hex row="20" col="14" terrain="10" name="Niemen River"/>
   <hex row="20" col="15" terrain="10" name="Niemen River"/>
@@ -589,7 +644,7 @@
   <hex row="20" col="39">
     <unit id="42295" owner="0" flag="104" face="0"/>
   </hex>
-  <hex row="20" col="40" terrain="2" owner="0" flag="103" victory="0">
+  <hex row="20" col="40" terrain="2" owner="0" flag="103" victory="0" deploy="0">
     <unit id="42271" owner="0" flag="104" face="0"/>
   </hex>
   <hex row="20" col="41" terrain="2"/>
@@ -961,7 +1016,7 @@
   <hex row="33" col="25" name="Prypec Marshes"/>
   <hex row="33" col="26" road="160" name="Prypec Marshes"/>
   <hex row="33" col="27" name="Prypec Marshes"/>
-  <hex row="33" col="28" terrain="1" road="168" name="Luniniec" owner="0" flag="103">
+  <hex row="33" col="28" terrain="1" road="168" name="Luniniec" owner="0" flag="103" deploy="0">
     <unit id="42285" owner="0" flag="104" face="0" exp="80"/>
   </hex>
   <hex row="33" col="29" terrain="1" road="136" name="Luniniec"/>
@@ -977,7 +1032,7 @@
   <hex row="33" col="39" terrain="3"/>
   <hex row="33" col="40" terrain="3"/>
   <hex row="33" col="41" terrain="3"/>
-  <hex row="33" col="42" terrain="1" road="144" name="Zhitkovich" owner="0" flag="103"/>
+  <hex row="33" col="42" terrain="1" road="144" name="Zhitkovich" owner="0" flag="103" deploy="0"/>
   <hex row="34" col="1" terrain="1" road="40" name="Kobryn"/>
   <hex row="34" col="3" road="34"/>
   <hex row="34" col="4" terrain="8" road="34"/>

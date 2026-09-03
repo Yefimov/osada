@@ -8543,18 +8543,25 @@ hr {
 
 /* Author/Authors metadata row on the campaign and scenario selection dossiers
  * (docs/player-comfort-roadmap.md, "Authorship metadata contract"). Its own row, above the
- * synopsis, so the label can be translated while the names never are. */
+ * synopsis, so the label can be translated while the names never are.
+ *
+ * It is rendered ONLY into #smCampDesc / #smScenDesc, which are the .smDesc PAPER panel — the same
+ * light surface whose own ink is --osada-paper-ink and whose bold headings are --osada-red-dark.
+ * It shipped with the dark-panel pair instead (--osada-text-dim names, --osada-brass label), which
+ * on #d9cba8 paper is 1.7:1 and 2.4:1: the byline was there but could not be read (user report,
+ * "Автор Urica" on the campaign screen). The names now take the panel's own ink, muted rather than
+ * lightened so muting cannot cost contrast, and the label is left to inherit `.smDesc b`'s deep
+ * red — the treatment every other bold word on this paper already gets. */
 .osadaAuthorRow {
     margin: 0 0 8px;
     padding-bottom: 6px;
-    border-bottom: 1px solid rgba(180, 138, 60, .25);
-    color: var(--osada-text-dim);
+    border-bottom: 1px solid rgba(43, 35, 23, .22);
+    color: rgba(43, 35, 23, .82);
     font-size: 13px;
     font-weight: normal;
 }
 
 .osadaAuthorRow b {
-    color: var(--osada-brass);
     font-weight: bold;
     margin-right: 4px;
 }

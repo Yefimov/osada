@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="simpob_02.xscn" name="Harvest of sorrow: the end of the Komuch " turns="16, 20, 23" date="September 18, 1918" dayturns="1" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="37" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_1403.png" eqpv="united1" retreatunits="0, 7" msuunits="0, 7" prototimeframe="0" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="1" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="1" truerange0="1" truespotting0="1" reinfwhenactive="0" capitalflak="0" ehmsuonly="1" paradropocean="1" coresoffcap="1" music="campsimpob.mp3" daysperturn="0">
+<map file="simpob_02.xscn" name="Harvest of sorrow: the end of the Komuch " turns="16, 20, 23" date="September 18, 1918" dayturns="1" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="37" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_1403.png" eqpv="united1" retreatunits="0, 7" msuunits="0, 3" prototimeframe="0" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="1" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="1" truerange0="1" truespotting0="1" reinfwhenactive="0" capitalflak="0" ehmsuonly="1" paradropocean="1" coresoffcap="1" music="campsimpob.mp3" daysperturn="0">
 <player id="0" country="103" side="0" airtrans="0" navaltrans="0" railtrans="4" defaultxp="0" defaultstr="0" support="104,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="20:0:7"/>
 <player id="1" country="100" side="1" airtrans="0" navaltrans="0" railtrans="10" defaultxp="0" defaultstr="0" support="145,101,190,0" turnprestige="80, 80, 40, 40, 80, 80, 80, 40, 40, 40, 40, 80, 0, 0, 0, 0, 60, 60, 0, 0, 60, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="54:0:5"/>
   <reinforce turn="6">
@@ -210,7 +210,7 @@
   <hex row="3" col="23" terrain="3"/>
   <hex row="3" col="24" terrain="3"/>
   <hex row="3" col="26" terrain="1" road="25" name="Borovka"/>
-  <hex row="3" col="27" terrain="1" road="160" name="Borovka" owner="0" flag="103">
+  <hex row="3" col="27" terrain="1" road="160" name="Borovka" owner="0" flag="103" deploy="0">
     <unit id="42262" owner="0" flag="104" face="0" objcol="21" objrow="0"/>
   </hex>
   <hex row="3" col="28">
@@ -233,7 +233,7 @@
   <hex row="4" col="5" terrain="2">
     <unit id="42434" owner="0" flag="104" face="0" str="6" bstr="6"/>
   </hex>
-  <hex row="4" col="6" terrain="2" owner="0" flag="103">
+  <hex row="4" col="6" terrain="2" owner="0" flag="103" deploy="0">
     <unit id="42274" owner="0" flag="104" face="0" transport="42344"/>
   </hex>
   <hex row="4" col="7" road="10" rail="17"/>
@@ -243,7 +243,9 @@
   <hex row="4" col="10" terrain="9" name="Volga"/>
   <hex row="4" col="11" terrain="9" name="Volga"/>
   <hex row="4" col="12" terrain="9" name="Volga"/>
-  <hex row="4" col="13" deploy="1"/>
+  <hex row="4" col="13" deploy="1">
+    <unit id="42055" owner="1" flag="101" face="0" exp="100" osada="rework" objrow="6" objcol="8"/>
+  </hex>
   <hex row="4" col="15" road="34"/>
   <hex row="4" col="16" road="33">
     <unit id="81" owner="1" flag="190" face="0" msu="1"/>
@@ -282,7 +284,9 @@
   <hex row="5" col="10" terrain="9" name="Volga"/>
   <hex row="5" col="11" terrain="9" name="Volga"/>
   <hex row="5" col="12" terrain="9" name="Volga"/>
-  <hex row="5" col="13" road="34" deploy="1"/>
+  <hex row="5" col="13" road="34" deploy="1">
+    <unit id="42102" owner="1" flag="101" face="0" exp="100" osada="rework" objrow="6" objcol="8"/>
+  </hex>
   <hex row="5" col="14" road="42"/>
   <hex row="5" col="15" terrain="1" road="136" name="Cherdakly"/>
   <hex row="5" col="22" terrain="3"/>
@@ -292,7 +296,7 @@
   <hex row="5" col="27" terrain="10" name="Cheremshan"/>
   <hex row="5" col="28" terrain="10" road="144" name="Cheremshan"/>
   <hex row="5" col="29" terrain="10" name="Cheremshan"/>
-  <hex row="5" col="34" terrain="1" road="24" name="Nurlat" owner="0" flag="103"/>
+  <hex row="5" col="34" terrain="1" road="24" name="Nurlat" owner="0" flag="103" deploy="0"/>
   <hex row="5" col="35" terrain="1" road="128" name="Nurlat"/>
   <hex row="5" col="38" terrain="3"/>
   <hex row="5" col="39" terrain="3"/>
@@ -307,16 +311,22 @@
   <hex row="6" col="7" terrain="1" road="187" rail="17" name="Simbirsk">
     <unit id="42397" owner="0" flag="104" face="0" transport="42349"/>
   </hex>
-  <hex row="6" col="8" terrain="1" road="187" rail="136" name="Simbirsk" owner="0" flag="103" victory="0" victiers0="0">
+  <hex row="6" col="8" terrain="1" road="187" rail="136" name="Simbirsk" owner="0" flag="103" victory="0" victiers0="0" deploy="0">
     <unit id="44254" owner="0" flag="104" face="0" transport="44319" exp="100"/>
   </hex>
   <hex row="6" col="9" terrain="10" rail="136" name="Volga"/>
   <hex row="6" col="10" terrain="10" road="136" name="Volga"/>
   <hex row="6" col="11" road="130" deploy="1"/>
-  <hex row="6" col="12" road="34" deploy="1"/>
-  <hex row="6" col="13" deploy="1"/>
+  <hex row="6" col="12" road="34" deploy="1">
+    <unit id="42054" owner="1" flag="101" face="0" exp="100" osada="rework" objrow="6" objcol="8"/>
+  </hex>
+  <hex row="6" col="13" deploy="1">
+    <unit id="42038" owner="1" flag="101" face="0" exp="100" osada="rework" objrow="6" objcol="8"/>
+  </hex>
   <hex row="6" col="16" terrain="1" road="144" name="Cherdakly" owner="1" flag="100"/>
-  <hex row="6" col="18" deploy="1"/>
+  <hex row="6" col="18" deploy="1">
+    <unit id="42089" owner="1" flag="101" face="0" exp="100" osada="rework" objrow="6" objcol="8"/>
+  </hex>
   <hex row="6" col="21" terrain="3"/>
   <hex row="6" col="22" terrain="3"/>
   <hex row="6" col="25" terrain="10" name="Cheremshan"/>
@@ -816,7 +826,7 @@
   <hex row="24" col="2">
     <unit id="42401" owner="0" flag="104" face="0" transport="42349"/>
   </hex>
-  <hex row="24" col="3" terrain="1" road="34" rail="34" name="Novopasskoye" owner="0" flag="103" station="1">
+  <hex row="24" col="3" terrain="1" road="34" rail="34" name="Novopasskoye" owner="0" flag="103" station="1" deploy="0">
     <unit id="42270" owner="0" flag="104" face="0" transport="42344" fearless="1" objcol="8" objrow="0"/>
   </hex>
   <hex row="24" col="4" road="40" rail="34"/>
@@ -1130,7 +1140,7 @@
   <hex row="34" col="34" terrain="10" name="Chapayevka"/>
   <hex row="34" col="35" terrain="10" name="Chapayevka"/>
   <hex row="35" col="3" rail="33"/>
-  <hex row="35" col="4" terrain="1" road="17" rail="128" name="Khvalynsk" owner="0" flag="103" station="1">
+  <hex row="35" col="4" terrain="1" road="17" rail="128" name="Khvalynsk" owner="0" flag="103" station="1" deploy="0">
     <unit id="42274" owner="0" flag="104" face="0" transport="42344" objcol="8" objrow="0"/>
   </hex>
   <hex row="35" col="5" terrain="9" name="Volga"/>

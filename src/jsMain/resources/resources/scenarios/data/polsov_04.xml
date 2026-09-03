@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="polsov_04.xscn" name="Battle of Dyneburg" turns="16, 19, 23" date="January 3, 1920" dayturns="3" ground="1" atmosferic="0" latitude="2" iconset="1" weatherchg="1" rows="38" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_67.png" eqpv="united1" prototimeframe="4" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="0" capitalflak="0" ehmsuonly="0" paradropocean="1" coresoffcap="0" daysperturn="0">
-<player id="0" country="103" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="50" defaultstr="0" support="61,104,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="16:0:2,2:0:5"/>
-<player id="1" country="20" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="60,21,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50, 0, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50" ff="20:0:5,12:0:5"/>
+<map file="polsov_04.xscn" name="Dyneburg: the Latgale winter" turns="16, 19, 23" date="January 3, 1920" dayturns="3" ground="1" atmosferic="0" latitude="2" iconset="1" weatherchg="1" rows="38" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_67.png" eqpv="united1" prototimeframe="4" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="0" capitalflak="0" ehmsuonly="0" paradropocean="1" coresoffcap="0" daysperturn="0" holdvictory="4, 3, 2">
+<player id="0" country="103" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="50" defaultstr="0" support="61,104,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="16:0:2,2:0:5"/>
+<player id="1" country="20" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="60,21,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50, 0, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50" ff="20:0:5,12:0:5"/>
   <hex row="0" col="1" terrain="1" road="136" name="Tilti"/>
   <hex row="0" col="3" name="Jakub&#243;w-Dyneburg RR"/>
   <hex row="0" col="5" terrain="2" name="Tilti Aerodrome"/>
@@ -119,11 +119,11 @@
   <hex row="4" col="22" road="136"/>
   <hex row="4" col="23" terrain="1" road="144" name="Zalumi"/>
   <hex row="4" col="24" name="Zalumi Depot"/>
-  <hex row="4" col="25" terrain="1" name="Zalumi" owner="0" flag="103"/>
+  <hex row="4" col="25" terrain="1" name="Zalumi" owner="0" flag="103" deploy="0"/>
   <hex row="4" col="35" terrain="3" road="33"/>
   <hex row="4" col="36" terrain="3"/>
   <hex row="4" col="37" terrain="1" name="Bikernieki"/>
-  <hex row="4" col="38" terrain="1" name="Bikernieki" owner="0" flag="103">
+  <hex row="4" col="38" terrain="1" name="Bikernieki" owner="0" flag="103" deploy="0">
     <unit id="42271" owner="0" flag="104" face="0" exp="85"/>
   </hex>
   <hex row="4" col="39" terrain="1" name="Bikernieki"/>
@@ -147,7 +147,7 @@
   <hex row="6" col="23" road="17"/>
   <hex row="6" col="24" name="Rzezyca-Dyneburg RR"/>
   <hex row="6" col="32" road="18"/>
-  <hex row="6" col="33" terrain="2" owner="0" flag="103">
+  <hex row="6" col="33" terrain="2" owner="0" flag="103" deploy="0">
     <unit id="42409" owner="0" flag="104" face="0" exp="10" str="7" bstr="7"/>
   </hex>
   <hex row="6" col="34" terrain="2"/>
@@ -184,14 +184,14 @@
   <hex row="8" col="31" terrain="10" road="17"/>
   <hex row="8" col="33" terrain="1" road="32" name="Laci"/>
   <hex row="8" col="34" terrain="1" name="Laci"/>
-  <hex row="8" col="35" owner="0" flag="103"/>
+  <hex row="8" col="35" owner="0" flag="103" deploy="0"/>
   <hex row="8" col="42" road="17"/>
   <hex row="9" col="12" name="Jakub&#243;w-Dyneburg RR"/>
   <hex row="9" col="13" name="Jakub&#243;w-Dyneburg RR"/>
   <hex row="9" col="14" terrain="11" name="Vizbuli Fort"/>
   <hex row="9" col="17" road="9"/>
   <hex row="9" col="19" terrain="11" name="Jauna Fort"/>
-  <hex row="9" col="20" terrain="1" name="Jauna" owner="0" flag="103">
+  <hex row="9" col="20" terrain="1" name="Jauna" owner="0" flag="103" deploy="0">
     <unit id="42295" owner="0" flag="104" face="0" exp="80" str="8" bstr="8"/>
   </hex>
   <hex row="9" col="21" terrain="11" name="Jauna Fort"/>
@@ -200,7 +200,7 @@
   <hex row="9" col="24" name="Rzezyca-Dyneburg RR"/>
   <hex row="9" col="29" terrain="10" road="40"/>
   <hex row="9" col="30" terrain="15"/>
-  <hex row="9" col="31" terrain="1" road="59" name="Laci" owner="0" flag="103" victory="0">
+  <hex row="9" col="31" terrain="1" road="59" name="Laci" owner="0" flag="103" victory="0" deploy="0">
     <unit id="728" owner="0" flag="104" face="0" exp="100" str="8" bstr="8"/>
   </hex>
   <hex row="9" col="32" terrain="10" road="34"/>

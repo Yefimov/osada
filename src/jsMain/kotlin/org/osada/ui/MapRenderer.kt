@@ -9,6 +9,8 @@ import org.osada.model.Hex
 import org.osada.rules.GameRules
 import org.osada.rules.isAir
 import org.osada.uiSettings
+import kotlin.math.max
+import kotlin.math.min
 
 /**
  * Top-level map painter: clears and redraws hexes, grid, deploy/move/attack overlays,
@@ -50,9 +52,19 @@ internal class MapRenderer(
     ) {
         val q = rc.map ?: return
         val gameMap = q.map ?: return
-        val frame = buildRenderFrame(q, gameMap, centerRow, centerCol, radius)
+        // Hexes the model has just switched an overlay off on, which the requested square may not
+        // contain ([GameMap.pendingRepaint]). Taken before the frame is built and consumed here:
+        // this is the one place that can honour it, and honouring it twice would repaint a region
+        // nothing is stale in any more.
+        val stale = q.pendingRepaint
+        q.pendingRepaint = null
+        val frame = buildRenderFrame(q, gameMap, centerRow, centerCol, radius, stale)
 
-        val clearBounds = rc.getBounds(centerRow, centerCol, radius + 1, frame.rows, frame.cols)
+        val clearBounds =
+            uniteRepaintRegion(
+                rc.getBounds(centerRow, centerCol, radius + 1, frame.rows, frame.cols),
+                stale, 1, radius, frame.rows, frame.cols,
+            )
         if (frame.hexGrid != rc.hexGridEnabled) {
             rc.hexGridEnabled = frame.hexGrid
             rc.mapCtx.clearRect(0.0, 0.0, rc.mapWidth, rc.mapHeight + EXTRA_CANVAS_HEIGHT)
@@ -78,6 +90,7 @@ internal class MapRenderer(
         centerRow: Int,
         centerCol: Int,
         radius: Int,
+        stale: GameMap.RepaintBox?,
     ): RenderFrame {
         val rows = q.rows
         val cols = q.cols
@@ -110,7 +123,11 @@ internal class MapRenderer(
             rows = rows,
             cols = cols,
             radius = radius,
-            drawBounds = rc.getBounds(centerRow, centerCol, radius + 2, rows, cols),
+            drawBounds =
+                uniteRepaintRegion(
+                    rc.getBounds(centerRow, centerCol, radius + 2, rows, cols),
+                    stale, 2, radius, rows, cols,
+                ),
             currentPos = q.currentUnit?.getPos(),
             airMode = uiSettings.airMode,
             markInactiveLayer = !uiSettings.reducedEffects,
@@ -158,6 +175,32 @@ internal class MapRenderer(
 // every RenderFrame is a fresh per-frame parameter bundle, never compared or copied.
 
 /** Per-frame context shared by [MapRenderer], [FogOfWarRenderer] and [HexCellRenderer]. */
+/**
+ * [base] grown to also contain [stale], the region [GameMap.pendingRepaint] named, with the same
+ * [margin] of extra hexes the caller already allowed itself.
+ *
+ * A null [stale] and a full redraw (negative [radius], already the whole map) both return [base]
+ * unchanged. At file level rather than inside [MapRenderer] because it is pure arithmetic with a
+ * regression test of its own ([org.osada.MapRepaintRegionTest]) and because that class is at its
+ * function budget.
+ */
+internal fun uniteRepaintRegion(
+    base: RenderContext.Bounds,
+    stale: GameMap.RepaintBox?,
+    margin: Int,
+    radius: Int,
+    rows: Int,
+    cols: Int,
+): RenderContext.Bounds {
+    if (stale == null || radius < 0) return base
+    return RenderContext.Bounds(
+        max(0, min(base.srow, stale.srow - margin)),
+        max(0, min(base.scol, stale.scol - margin)),
+        min(rows, max(base.erow, stale.erow + margin)),
+        min(cols, max(base.ecol, stale.ecol + margin)),
+    )
+}
+
 internal class RenderFrame(
     val q: GameMap,
     val gameMap: Array<Array<Hex>>,

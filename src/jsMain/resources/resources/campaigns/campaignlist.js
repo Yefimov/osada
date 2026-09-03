@@ -92,7 +92,7 @@ var campaignlist =
   "title": "The November Revolution (1918)"
  },
  {
-  "desc": "Stand between Anton Denikin’s Volunteer Army and the road to Moscow. This long southern campaign begins amid the White movement’s Ice March and rise in the Kuban, passes through the battles for Tsaritsyn and the Don, and reaches its decisive crisis at Orel, where the Red Southern Front finally seizes the strategic initiative. Counterattack through Kursk, Kharkov, the Donbas, Rostov, and the North Caucasus as White armies, Cossack cavalry, tanks, and armoured trains retreat toward the Black Sea. The campaign ends at Novorossiysk, where Denikin’s defeated forces scramble to evacuate. Recover from early reverses, concentrate reserves, and turn defence into relentless pursuit.",
+  "desc": "You are a former Imperial officer who has taken the Soviet oath, and for two years you will be outgunned by your own class. Denikin has British rifles, British shells, British tanks and two Entente squadrons in the Black Sea. You have militia who must first be taught to dig, a railway that keeps getting cut, and orders that usually amount to holding something for four more days.<br><br>Nineteen operations from the Don to the Crimea. Close the Don behind the Ice March. Hold Ekaterinodar while Kornilov throws his cadets at it. Walk the Taman columns out along the coast road with the sea on one flank and the mountains on the other. Give ground across the Kuban, the Terek and the Manych as the Moscow Directive rolls north — and note what these missions are actually scored on: the task you are given is the task you are judged on, and a front that bends somewhere else is never called your defeat.<br><br>Then Orel, where the Latvian riflemen and Primakov’s Chervonny Cossacks go in at Kromy against an army that has outrun its own supply and requisitioned away its own recruiting ground — and the arrows on the map finally turn south. Kharkov. The Donbass. A quay at Novorossiysk where an army finds out how many ships the Entente actually sent. And a year later, the Sivash mud at four in the morning, under a wall that could not be taken.<br><br>Lose at Orel and the campaign does not end — it gets harder. Tula, Moscow, Petrograd: each one a last line that hands you straight back to the pursuit if you hold it.",
   "eqp": "eqp-kaiser",
   "file": "volarm.json",
   "flag": 103,
@@ -102,24 +102,24 @@ var campaignlist =
   "title": "The Defeat of Denikin (1918-1920)"
  },
  {
-  "desc": "Begin at Zborov, where Czechoslovak volunteers fight Austria-Hungary for the promise of national independence, and then embark on one of the strangest military odysseys of the twentieth century. After the Russian Revolution and Brest-Litovsk, the Legion’s route home runs not west but thousands of kilometres east along the Trans-Siberian Railway. Command legionnaires, captured artillery, and famous armoured trains through Chelyabinsk, the Volga, Siberian stations, Lake Baikal, and the long withdrawal to Vladivostok. Surrounded by civil war and shifting alliances, you must control the rails, preserve the force, and keep moving until an army trapped inside Russia can finally reach the sea.",
+  "desc": "You are a staff captain of the old army, seconded in 1917 to the Czechoslovak brigade because you speak enough Czech to be useful. At Zborov you watch seven thousand volunteers take three lines of trenches while a Russian division beside them votes on whether to leave its own — and you work out, standing between the two, which side of your country you are on.<br><br>Eleven operations and nine thousand versts of railway. Hold the Kiev bridges beside the legionnaires while the Germans come up the Dnieper. Keep the junction at Bachmach open for their echelons and yours on the same timetable. Then Chelyabinsk, where a thrown stove leg, a lynching and a telegram ordering a corps disarmed turn allies into enemies in a single afternoon — and from there the war is yours: Samara, the gold vaults at Kazan, and a month later the same city taken back by an army that was rebuilt while it retreated.<br><br>The Omsk rising, where the task is to get people out and not to win. Ufa, where Kolchak's front collapses less from the fighting than from what he restored behind it. Chita and the ataman's armoured trains. And a quay at Vladivostok in 1920 where the regiment that held the Kiev bridges with you is waiting for a ship home, and there is too much between you to shake hands.<br><br>One hero, one core, and an allegiance that changes exactly once — in a trench in Galicia, before a shot is fired in the civil war.",
   "eqp": "eqp-kaiser",
   "file": "acampdf2.json",
-  "flag": 144,
+  "flag": 103,
   "deployphase": false,
   "prestige": 350,
   "scenarios": 11,
-  "title": "Czech Legion - Siberian Anabasis (1917-1920)"
+  "title": "The Legion and the Revolution (1917-1920)"
  },
  {
-  "desc": "The road west appears open. After the Polish advance on Kiev, the Red Army counterattacks under Mikhail Tukhachevsky, drives through Belarus, and approaches Warsaw with the promise of carrying revolution into Europe. To the south, Budyonny’s First Cavalry Army battles toward Lwów while the front stretches and supplies fall behind. History ends with the “Miracle on the Vistula,” a Polish counterstroke that shatters the Soviet offensive—but this campaign places the decision in your hands. Balance speed against logistics, coordinate distant fronts, break fortified river lines, and decide whether the red advance will collapse outside Warsaw or change the political future of the continent.",
+  "desc": "Twenty months on the Western Front, and only four of them going forward. You begin in April 1919 with a screen instead of an army — a half-strength brigade and four towns on a railway — because every division the Republic owns is committed against Denikin and Kolchak, and the orders from Moscow begin with the word nevertheless.<br><br>Eleven operations from the Lithuanian forests to a frontier post outside Minsk. Delay the advance on Wilno and get the city's Soviet out. Hold the Berezina junctions long enough for the 16th Army to arrive on the river as an army. Sit out January in the fortified line at Dyneburg at minus twenty-five. Then the blow towards Kiev, the crossings held while the 12th Army goes over the Dnieper, and — in June — the Konarmia into the seam at Samhorodok and a Polish front that comes apart because of what it restored behind itself.<br><br>Then Warsaw, where the task is explicitly not to take the city: two offensives on divergent axes with one army's supply had already settled that in July. Bring the divisional cores out east of the Bug. Break the Konarmia out of the pocket at Komarow. Hold the Niemen while a peace conference draws its line on the map your battalions are standing on.<br><br>Note how these missions are scored: the task you are given is the task you are judged on, and a front that gives ground for reasons on somebody else's sector is never called your defeat.",
   "eqp": "eqp-kaiser",
   "file": "polsov.json",
   "flag": 103,
   "deployphase": false,
   "prestige": 300,
   "scenarios": 11,
-  "title": "The Polish-Soviet War: The Red Advance (1919-1920)"
+  "title": "The Polish-Soviet War (1919-1920)"
  },
  {
   "desc": "Defend the Spanish Republic in the first great anti-fascist war of Europe. Forge scattered militias into the Ejército Popular, hold Madrid against siege, fight beside the International Brigades at Jarama and Guadalajara, and commit your best formations to the desperate battles of Teruel and the Ebro. German and Italian intervention gives Franco’s armies modern aircraft, armour, and experienced troops; the Republic must survive with limited foreign aid, fierce internal disagreements, and volunteers drawn from across the world. Commanders such as José Miaja, Juan Modesto, and Enrique Líster turned improvised columns into a field army. Your task is harder still: preserve that army long enough to win.",
@@ -220,10 +220,10 @@ var campaignlist =
   "title": "Forward, Comrade! (1939-1945)"
  },
  {
-  "desc": "The Russian Civil War in the East, from the Volga to Vladivostok, from the Kaiser efile (simpob) — flipped to play the Red side against the anti-Bolshevik forces.",
+  "desc": "Command on the Eastern Front, from the Volga to Lake Baikal. The Czechoslovak revolt and the Komuch have taken Samara and Kazan; Kolchak follows them, and behind him stand British rifles, the Siberian Cossacks and the whole Trans-Siberian Railway. Hold the Volga towns through the summer of 1918, survive Kolchak’s spring offensive in the Urals, and then turn the war around at Belebei and Ufa — across the passes, over the Tobol, into Siberia, and on to Irkutsk. Every early episode is a defence measured in time bought and formations kept intact, not ground held; when the initiative changes hands, so do the objectives. A bad result at Chistopol opens an emergency line of battles back towards Moscow, and any success on it returns you at once to the counteroffensive. The title is the enemy’s own motto, taken off his banner.",
   "eqp": "eqp-kaiser",
   "file": "simpob.json",
-  "flag": 100,
+  "flag": 103,
   "deployphase": false,
   "prestige": 300,
   "scenarios": 25,

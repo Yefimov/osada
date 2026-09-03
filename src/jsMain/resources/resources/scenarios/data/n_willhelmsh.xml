@@ -35,7 +35,23 @@
       <unit id="43090" owner="1" flag="118" face="0" transport="43090" exp="85" str="9" ammo="5" bstr="9"/>
     </at>
   </reinforce>
-  <hex row="30" col="38" station="1"/>
+  <hex row="15" col="31" rail="17"/>
+  <hex row="16" col="31" rail="9"/>
+  <hex row="18" col="32" rail="17"/>
+  <hex row="19" col="32" rail="17"/>
+  <hex row="20" col="32" rail="17"/>
+  <hex row="21" col="32" rail="9"/>
+  <hex row="21" col="33" rail="144"/>
+  <hex row="22" col="33" rail="17"/>
+  <hex row="23" col="33" rail="17"/>
+  <hex row="24" col="33" rail="9"/>
+  <hex row="25" col="34" rail="136"/>
+  <hex row="25" col="35" rail="144"/>
+  <hex row="26" col="35" rail="17"/>
+  <hex row="27" col="35" rail="9"/>
+  <hex row="28" col="36" rail="136"/>
+  <hex row="29" col="38" rail="144"/>
+  <hex row="30" col="38" station="1" rail="17"/>
   <hex row="0" col="2" terrain="9"/>
   <hex row="0" col="3" terrain="9"/>
   <hex row="0" col="4" terrain="9"/>
@@ -400,7 +416,7 @@
   <hex row="11" col="27" terrain="1" name="Jever" owner="1" flag="117" trigger="2" trigparam="15"/>
   <hex row="11" col="28" terrain="10" road="168"/>
   <hex row="11" col="29" road="136"/>
-  <hex row="11" col="33" terrain="2" owner="0" flag="188" deploy="0">
+  <hex row="11" col="33" terrain="2" owner="0" flag="188" deploy="0" rail="40">
     <unit id="46706" owner="0" flag="189" face="0" transport="46712" exp="145"/>
   </hex>
   <hex row="11" col="34" deploy="0">
@@ -426,17 +442,17 @@
   <hex row="12" col="25" terrain="10"/>
   <hex row="12" col="26" terrain="10"/>
   <hex row="12" col="30" road="136"/>
-  <hex row="12" col="31" terrain="1" road="154" name="Schortens" owner="1" flag="117" trigger="2" trigparam="15"/>
-  <hex row="12" col="32" road="56" deploy="0">
+  <hex row="12" col="31" terrain="1" road="154" name="Schortens" owner="1" flag="117" trigger="2" trigparam="15" rail="18"/>
+  <hex row="12" col="32" road="56" deploy="0" rail="34">
     <unit id="46708" owner="0" flag="189" face="0" exp="45"/>
   </hex>
   <hex row="12" col="33" terrain="1" road="186" name="Wilhelmshaven" deploy="0">
     <unit id="46706" owner="0" flag="189" face="0" transport="46712" exp="145"/>
   </hex>
-  <hex row="12" col="34" terrain="1" road="56" name="Wilhelmshaven" deploy="0">
+  <hex row="12" col="34" terrain="1" road="56" name="Wilhelmshaven" deploy="0" rail="136">
     <unit id="46718" owner="0" flag="189" face="0" transport="46712" exp="45"/>
   </hex>
-  <hex row="12" col="35" terrain="1" road="176" name="Wilhelmshaven" deploy="0" station="1">
+  <hex row="12" col="35" terrain="1" road="176" name="Wilhelmshaven" deploy="0" station="1" rail="128">
     <unit id="46705" owner="0" flag="189" face="0" transport="46712" exp="145"/>
   </hex>
   <hex row="12" col="36" terrain="9"/>
@@ -453,7 +469,7 @@
   <hex row="13" col="17" road="18"/>
   <hex row="13" col="18" road="33"/>
   <hex row="13" col="25" terrain="10"/>
-  <hex row="13" col="31" road="19"/>
+  <hex row="13" col="31" road="19" rail="17"/>
   <hex row="13" col="32" road="171" deploy="0">
     <unit id="46705" owner="0" flag="189" face="0" transport="46712" exp="145"/>
   </hex>
@@ -477,7 +493,7 @@
   <hex row="14" col="27" terrain="10"/>
   <hex row="14" col="29" terrain="10"/>
   <hex row="14" col="30" terrain="10"/>
-  <hex row="14" col="31" road="9"/>
+  <hex row="14" col="31" road="9" rail="17"/>
   <hex row="14" col="32" terrain="10" deploy="0">
     <unit id="46705" owner="0" flag="189" face="0" transport="46712" exp="145"/>
   </hex>
@@ -536,7 +552,7 @@
   <hex row="17" col="16" road="11"/>
   <hex row="17" col="17" road="137"/>
   <hex row="17" col="25" terrain="3"/>
-  <hex row="17" col="32" road="9"/>
+  <hex row="17" col="32" road="9" rail="144"/>
   <hex row="17" col="33" road="152"/>
   <hex row="17" col="36" terrain="9" name="Jadebusen"/>
   <hex row="17" col="37" terrain="9" name="Jadebusen"/>
@@ -761,7 +777,7 @@
   <hex row="28" col="35">
     <unit id="42990" owner="1" flag="118" face="0" transport="43083" exp="45" str="9" bstr="9"/>
   </hex>
-  <hex row="28" col="37" road="17"/>
+  <hex row="28" col="37" road="17" rail="136"/>
   <hex row="28" col="39" terrain="3"/>
   <hex row="28" col="40" terrain="3"/>
   <hex row="29" col="2" terrain="1" road="136" name="Winschofen" owner="1" flag="117" trigger="2" trigparam="15"/>
@@ -847,6 +863,6 @@
   <hex row="31" col="28" terrain="3"/>
   <hex row="31" col="33" terrain="3"/>
   <hex row="31" col="36" road="131"/>
-  <hex row="31" col="38" terrain="1" road="128"/>
+  <hex row="31" col="38" terrain="1" road="128" rail="1"/>
   <hex row="31" col="40" terrain="3"/>
 </map>

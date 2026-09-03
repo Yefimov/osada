@@ -79,6 +79,34 @@ class GameMap {
     internal val unitDeployOperations: UnitDeployOperations by lazy { UnitDeployOperations(this) }
     internal val coreUnitListOperations: CoreUnitListOperations by lazy { CoreUnitListOperations(this) }
 
+    /**
+     * Hexes whose OVERLAY flags were switched off and which therefore still show stale pixels.
+     *
+     * `MapRenderer.render(centerRow, centerCol, radius)` repaints a SQUARE around one hex
+     * (`RenderContext.getBounds`), and every caller sizes that square from the acting unit's own
+     * reach. That reach is measured in movement POINTS, and a movement point is not a hex: on a
+     * road, on rails, or across clear steppe it buys several. So the highlighted move range
+     * routinely extends past the square, and after the unit moved away the hexes outside the
+     * square kept their highlight -- reported 2026-09-03, *"a square is cut out around it and the
+     * rest of the hexes outside that square are still there"*.
+     *
+     * Sizing every call site correctly is not the fix, because the same mismatch exists on every
+     * path that clears an overlay (selecting another formation, leaving Barrage or rail mode,
+     * ending the turn). Instead the model records WHICH hexes it just turned off, in
+     * [GameMapSelection]'s clear functions, and the next render unions that rectangle into the
+     * region it was going to repaint anyway. Reset by the renderer once it has been honoured, and
+     * ignored outright by a full redraw, which repaints everything regardless.
+     */
+    internal var pendingRepaint: RepaintBox? = null
+
+    /** The bounding rectangle of [GameMap.pendingRepaint], in map row/column space, inclusive. */
+    internal class RepaintBox(
+        var srow: Int,
+        var scol: Int,
+        var erow: Int,
+        var ecol: Int,
+    )
+
     internal var hasRailDataCache: Boolean? = null
     internal var hasWaterAccessCache: Boolean? = null
     internal var hasOpenWaterAccessCache: Boolean? = null

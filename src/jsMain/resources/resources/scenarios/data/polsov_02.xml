@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="polsov_02.xscn" name="Assault on Wilno " turns="12, 15, 18" date="April 18, 1919" dayturns="3" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="32" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_764.png" eqpv="united1" prototimeframe="6" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="0" capitalflak="0" ehmsuonly="0" paradropocean="1" coresoffcap="0" daysperturn="0">
-<player id="0" country="103" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="104,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="16:0:2"/>
-<player id="1" country="20" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="21,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 100, 100, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="20:0:5"/>
+<map file="polsov_02.xscn" name="Assault on Wilno " turns="12, 15, 18" date="April 18, 1919" dayturns="3" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="32" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_764.png" eqpv="united1" prototimeframe="6" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="0" capitalflak="0" ehmsuonly="0" paradropocean="1" coresoffcap="0" daysperturn="0" holdvictory="3, 2, 1">
+<player id="0" country="103" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="104,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="16:0:2"/>
+<player id="1" country="20" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="21,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 100, 100, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="20:0:5"/>
   <reinforce turn="4">
     <at row="14" col="27">
       <unit id="42421" owner="0" flag="104" face="0" str="8" ldr="1" bstr="6"/>
@@ -46,7 +46,7 @@
   <hex row="0" col="9" road="144"/>
   <hex row="0" col="11" road="18"/>
   <hex row="0" col="12" road="32"/>
-  <hex row="0" col="17" road="58" station="1"/>
+  <hex row="0" col="17" road="58" station="1" rail="187"/>
   <hex row="0" col="18" terrain="1" name="Wilkomierz (Ukmerge)"/>
   <hex row="0" col="21" terrain="10"/>
   <hex row="0" col="23" road="16"/>
@@ -66,10 +66,10 @@
   <hex row="1" col="9" road="25"/>
   <hex row="1" col="11" road="41"/>
   <hex row="1" col="13" road="40"/>
-  <hex row="1" col="15" road="42"/>
-  <hex row="1" col="16" road="58"/>
-  <hex row="1" col="17" road="179" station="1"/>
-  <hex row="1" col="18" terrain="1" name="Wilkomierz (Ukmerge)" owner="0" flag="103"/>
+  <hex row="1" col="15" road="42" rail="187"/>
+  <hex row="1" col="16" road="58" rail="187"/>
+  <hex row="1" col="17" road="179" station="1" rail="187"/>
+  <hex row="1" col="18" terrain="1" name="Wilkomierz (Ukmerge)" owner="0" flag="103" deploy="0"/>
   <hex row="1" col="20" terrain="3"/>
   <hex row="1" col="21" terrain="3"/>
   <hex row="1" col="22" terrain="10"/>
@@ -91,9 +91,11 @@
   <hex row="2" col="9" road="35"/>
   <hex row="2" col="10" terrain="1" road="162" name="Jonava"/>
   <hex row="2" col="12" road="130"/>
-  <hex row="2" col="14" road="130"/>
+  <hex row="2" col="13" rail="187"/>
+  <hex row="2" col="14" road="130" rail="187"/>
   <hex row="2" col="16" road="139"/>
   <hex row="2" col="17" road="137"/>
+  <hex row="2" col="18" rail="187"/>
   <hex row="2" col="20" terrain="10"/>
   <hex row="2" col="21" terrain="3"/>
   <hex row="2" col="23" road="25"/>
@@ -118,13 +120,15 @@
   <hex row="3" col="5" road="136"/>
   <hex row="3" col="7" road="34"/>
   <hex row="3" col="8" road="34"/>
+  <hex row="3" col="11" rail="187"/>
+  <hex row="3" col="12" rail="187"/>
   <hex row="3" col="15" terrain="10" name="Wilia River"/>
-  <hex row="3" col="18" road="144"/>
+  <hex row="3" col="18" road="144" rail="187"/>
   <hex row="3" col="19">
     <unit id="896" owner="0" flag="104" face="0"/>
   </hex>
   <hex row="3" col="23" road="27"/>
-  <hex row="3" col="24" terrain="1" road="186" name="Malaty (Moletai)" owner="0" flag="103" victory="0">
+  <hex row="3" col="24" terrain="1" road="186" name="Malaty (Moletai)" owner="0" flag="103" victory="0" deploy="0">
     <unit id="42271" owner="0" flag="104" face="0" exp="100" str="9" bstr="6"/>
   </hex>
   <hex row="3" col="25" road="169">
@@ -145,14 +149,16 @@
   <hex row="4" col="1" terrain="10" name="Niemen River"/>
   <hex row="4" col="3" terrain="10" name="Niemen River"/>
   <hex row="4" col="6" road="146"/>
+  <hex row="4" col="9" rail="187"/>
+  <hex row="4" col="10" rail="187"/>
   <hex row="4" col="11" terrain="10" name="Wilia River"/>
   <hex row="4" col="13" terrain="10" name="Wilia River"/>
   <hex row="4" col="14" terrain="10" name="Wilia River"/>
   <hex row="4" col="15" terrain="10" name="Wilia River"/>
   <hex row="4" col="16" terrain="3"/>
   <hex row="4" col="17" terrain="3"/>
-  <hex row="4" col="18" road="9"/>
-  <hex row="4" col="19" road="152"/>
+  <hex row="4" col="18" road="9" rail="187"/>
+  <hex row="4" col="19" road="152" rail="187"/>
   <hex row="4" col="20" terrain="8"/>
   <hex row="4" col="22" terrain="10"/>
   <hex row="4" col="23" road="35"/>
@@ -168,11 +174,13 @@
   <hex row="4" col="34" road="130"/>
   <hex row="4" col="36" road="136"/>
   <hex row="4" col="37" road="138"/>
-  <hex row="4" col="38" terrain="1" road="50" name="Bajorai" owner="0" flag="103"/>
+  <hex row="4" col="38" terrain="1" road="50" name="Bajorai" owner="0" flag="103" deploy="0"/>
   <hex row="4" col="40" terrain="10"/>
   <hex row="5" col="2" terrain="10" name="Niemen River"/>
   <hex row="5" col="4" terrain="10" name="Niemen River"/>
   <hex row="5" col="6" road="17"/>
+  <hex row="5" col="7" rail="187"/>
+  <hex row="5" col="8" rail="187"/>
   <hex row="5" col="10" terrain="10" name="Wilia River"/>
   <hex row="5" col="11" terrain="10" name="Wilia River"/>
   <hex row="5" col="12" terrain="10" name="Wilia River"/>
@@ -184,7 +192,7 @@
   <hex row="5" col="18" terrain="3">
     <unit id="896" owner="0" flag="104" face="0"/>
   </hex>
-  <hex row="5" col="19" road="11"/>
+  <hex row="5" col="19" road="11" rail="187"/>
   <hex row="5" col="20" road="184"/>
   <hex row="5" col="21" road="178"/>
   <hex row="5" col="22" terrain="10" road="34"/>
@@ -198,10 +206,11 @@
   <hex row="5" col="38" road="145"/>
   <hex row="5" col="39" terrain="3"/>
   <hex row="5" col="41" terrain="10"/>
+  <hex row="5" col="43" rail="187"/>
   <hex row="6" col="3" terrain="1" road="24" name="Kowno (Kaunas)"/>
   <hex row="6" col="4" terrain="10" name="Niemen River"/>
-  <hex row="6" col="5" terrain="10" road="58" name="Niemen River"/>
-  <hex row="6" col="6" terrain="1" road="57" name="Kowno (Kaunas)" station="1"/>
+  <hex row="6" col="5" terrain="10" road="58" name="Niemen River" rail="187"/>
+  <hex row="6" col="6" terrain="1" road="57" name="Kowno (Kaunas)" station="1" rail="187"/>
   <hex row="6" col="7" terrain="1" road="168" name="Kowno (Kaunas)"/>
   <hex row="6" col="10" terrain="10" name="Wilia River"/>
   <hex row="6" col="13" terrain="3"/>
@@ -212,8 +221,8 @@
   <hex row="6" col="19">
     <unit id="42308" owner="0" flag="104" face="0" ldr="1"/>
   </hex>
-  <hex row="6" col="20" road="155"/>
-  <hex row="6" col="21" road="169"/>
+  <hex row="6" col="20" road="155" rail="187"/>
+  <hex row="6" col="21" road="169" rail="187"/>
   <hex row="6" col="23" road="40"/>
   <hex row="6" col="24" terrain="3"/>
   <hex row="6" col="25" terrain="3"/>
@@ -225,15 +234,15 @@
   <hex row="6" col="36" terrain="8"/>
   <hex row="6" col="37" terrain="8" road="34"/>
   <hex row="6" col="38" road="33"/>
-  <hex row="6" col="41" terrain="1" road="56" name="Swieciany (Svencionys)" owner="0" flag="103" victory="0" station="1">
+  <hex row="6" col="41" terrain="1" road="56" name="Swieciany (Svencionys)" owner="0" flag="103" victory="0" station="1" rail="187" deploy="0">
     <unit id="42271" owner="0" flag="104" face="0"/>
   </hex>
-  <hex row="6" col="42">
+  <hex row="6" col="42" rail="187">
     <unit id="42394" owner="0" flag="104" face="0" transport="42357"/>
   </hex>
   <hex row="6" col="43" road="32"/>
-  <hex row="7" col="3" road="43"/>
-  <hex row="7" col="4" terrain="1" road="186" name="Kowno (Kaunas)" station="1"/>
+  <hex row="7" col="3" road="43" rail="187"/>
+  <hex row="7" col="4" terrain="1" road="186" name="Kowno (Kaunas)" station="1" rail="187"/>
   <hex row="7" col="5" terrain="1" road="187" name="Kowno (Kaunas)"/>
   <hex row="7" col="6" terrain="10" road="179" name="Niemen River"/>
   <hex row="7" col="7" terrain="10" name="Niemen River"/>
@@ -252,7 +261,8 @@
   <hex row="7" col="21">
     <unit id="42294" owner="0" flag="104" face="0" exp="100"/>
   </hex>
-  <hex row="7" col="22" road="130"/>
+  <hex row="7" col="22" road="130" rail="187"/>
+  <hex row="7" col="23" rail="187"/>
   <hex row="7" col="24" road="144"/>
   <hex row="7" col="27" terrain="10" name="Wilia River"/>
   <hex row="7" col="28" terrain="10" name="Wilia River"/>
@@ -262,12 +272,14 @@
   <hex row="7" col="37" terrain="8"/>
   <hex row="7" col="39" terrain="10"/>
   <hex row="7" col="40" terrain="1" name="Swieciany (Svencionys)"/>
-  <hex row="7" col="41" terrain="1" road="147" name="Swieciany (Svencionys)">
+  <hex row="7" col="41" terrain="1" road="147" name="Swieciany (Svencionys)" rail="187">
     <unit id="42271" owner="0" flag="104" face="0"/>
   </hex>
   <hex row="7" col="42" road="162">
     <unit id="42294" owner="0" flag="104" face="0"/>
   </hex>
+  <hex row="8" col="1" rail="187"/>
+  <hex row="8" col="2" rail="187"/>
   <hex row="8" col="4" terrain="1" road="139" name="Kowno (Kaunas)"/>
   <hex row="8" col="5" terrain="1" road="155"/>
   <hex row="8" col="6" terrain="1" road="177" name="Kowno (Kaunas)"/>
@@ -283,10 +295,10 @@
   <hex row="8" col="18" road="50"/>
   <hex row="8" col="20" terrain="10" name="Wilia River"/>
   <hex row="8" col="23" road="18"/>
-  <hex row="8" col="24" road="41">
+  <hex row="8" col="24" road="41" rail="187">
     <unit id="838" owner="0" flag="104" face="0"/>
   </hex>
-  <hex row="8" col="25" road="144"/>
+  <hex row="8" col="25" road="144" rail="187"/>
   <hex row="8" col="27" terrain="10" name="Wilia River"/>
   <hex row="8" col="28" terrain="10" name="Wilia River"/>
   <hex row="8" col="29" terrain="10" name="Wilia River"/>
@@ -296,11 +308,12 @@
   <hex row="8" col="36" terrain="8"/>
   <hex row="8" col="37" terrain="8"/>
   <hex row="8" col="38" terrain="8"/>
-  <hex row="8" col="40" terrain="10"/>
+  <hex row="8" col="40" terrain="10" rail="187"/>
   <hex row="8" col="41" road="33"/>
   <hex row="8" col="42">
     <unit id="42308" owner="0" flag="104" face="0" ldr="1"/>
   </hex>
+  <hex row="9" col="0" rail="187"/>
   <hex row="9" col="5" road="35"/>
   <hex row="9" col="6" terrain="1" road="161"/>
   <hex row="9" col="11" terrain="10" name="Niemen River"/>
@@ -312,7 +325,7 @@
   <hex row="9" col="20" terrain="10" name="Wilia River"/>
   <hex row="9" col="21" terrain="10" name="Wilia River"/>
   <hex row="9" col="23" terrain="1" road="25" name="Wilno (Vilnius)"/>
-  <hex row="9" col="25" road="57"/>
+  <hex row="9" col="25" road="57" rail="187"/>
   <hex row="9" col="27" terrain="10" name="Wilia River"/>
   <hex row="9" col="28" terrain="3"/>
   <hex row="9" col="30" terrain="10" road="18" name="Wilia River">
@@ -320,8 +333,8 @@
   </hex>
   <hex row="9" col="31" terrain="10" name="Wilia River"/>
   <hex row="9" col="38" terrain="8"/>
-  <hex row="9" col="39" road="34"/>
-  <hex row="9" col="40" road="34"/>
+  <hex row="9" col="39" road="34" rail="187"/>
+  <hex row="9" col="40" road="34" rail="187"/>
   <hex row="9" col="41" terrain="8"/>
   <hex row="9" col="42" terrain="8"/>
   <hex row="10" col="1" terrain="3"/>
@@ -342,8 +355,10 @@
   <hex row="10" col="25" terrain="1" road="187" name="Wilno (Vilnius)">
     <unit id="42401" owner="0" flag="104" face="0" transport="42349"/>
   </hex>
-  <hex row="10" col="26" road="184"/>
-  <hex row="10" col="27" terrain="10" road="184" name="Wilia River"/>
+  <hex row="10" col="26" road="184" rail="187">
+    <unit id="42391" owner="0" flag="104" face="0" exp="100" str="1" bstr="1"/>
+  </hex>
+  <hex row="10" col="27" terrain="10" road="184" name="Wilia River" rail="187"/>
   <hex row="10" col="28" terrain="3"/>
   <hex row="10" col="29" terrain="3" road="50"/>
   <hex row="10" col="30" road="33"/>
@@ -352,7 +367,7 @@
   <hex row="10" col="34" terrain="10" name="Wilia River"/>
   <hex row="10" col="35" terrain="10" name="Wilia River"/>
   <hex row="10" col="36" terrain="3"/>
-  <hex row="10" col="38" road="18"/>
+  <hex row="10" col="38" road="18" rail="187"/>
   <hex row="10" col="39" terrain="8"/>
   <hex row="10" col="40" terrain="8"/>
   <hex row="10" col="41" terrain="8"/>
@@ -377,12 +392,13 @@
     <unit id="42324" owner="0" flag="104" face="0" transport="42344"/>
   </hex>
   <hex row="11" col="27" terrain="10" road="163" name="Wilia River"/>
-  <hex row="11" col="28" road="170"/>
-  <hex row="11" col="29" road="137"/>
+  <hex row="11" col="28" road="170" rail="187"/>
+  <hex row="11" col="29" road="137" rail="187"/>
   <hex row="11" col="33" terrain="5"/>
   <hex row="11" col="34" terrain="5"/>
   <hex row="11" col="36" terrain="10" name="Wilia River"/>
-  <hex row="11" col="38" road="17"/>
+  <hex row="11" col="37" rail="187"/>
+  <hex row="11" col="38" road="17" rail="187"/>
   <hex row="11" col="39" terrain="8"/>
   <hex row="11" col="40" terrain="8"/>
   <hex row="11" col="41" terrain="3"/>
@@ -405,13 +421,13 @@
   </hex>
   <hex row="12" col="27" terrain="10" name="Wilia River"/>
   <hex row="12" col="28" terrain="10" name="Wilia River"/>
-  <hex row="12" col="30" road="136"/>
+  <hex row="12" col="30" road="136" rail="187"/>
   <hex row="12" col="31" road="136"/>
   <hex row="12" col="32" terrain="5"/>
   <hex row="12" col="33" terrain="5"/>
   <hex row="12" col="34" terrain="5"/>
-  <hex row="12" col="35" road="40"/>
-  <hex row="12" col="36" terrain="10" name="Wilia River"/>
+  <hex row="12" col="35" road="40" rail="187"/>
+  <hex row="12" col="36" terrain="10" name="Wilia River" rail="187"/>
   <hex row="12" col="37" road="34"/>
   <hex row="12" col="38" road="33"/>
   <hex row="12" col="40" terrain="8"/>
@@ -440,17 +456,19 @@
   <hex row="13" col="28">
     <unit id="663" owner="0" flag="104" face="0"/>
   </hex>
+  <hex row="13" col="30" rail="187"/>
+  <hex row="13" col="31" rail="187"/>
   <hex row="13" col="32" road="136"/>
-  <hex row="13" col="33" road="146"/>
-  <hex row="13" col="34" road="34"/>
+  <hex row="13" col="33" road="146" rail="187"/>
+  <hex row="13" col="34" road="34" rail="187"/>
   <hex row="13" col="36" terrain="10" road="130" name="Wilia River"/>
   <hex row="13" col="37" terrain="10" name="Wilia River"/>
   <hex row="13" col="39" terrain="3"/>
   <hex row="13" col="40" terrain="3"/>
   <hex row="13" col="41" terrain="3"/>
   <hex row="13" col="43" terrain="10"/>
-  <hex row="14" col="0" road="8"/>
-  <hex row="14" col="1" road="136"/>
+  <hex row="14" col="0" road="8" rail="187"/>
+  <hex row="14" col="1" road="136" rail="187"/>
   <hex row="14" col="4" road="136"/>
   <hex row="14" col="5" terrain="3" road="136"/>
   <hex row="14" col="6" terrain="3"/>
@@ -470,13 +488,14 @@
     <unit id="42333" owner="0" flag="104" face="0" str="5" bstr="5"/>
   </hex>
   <hex row="14" col="28" terrain="2"/>
+  <hex row="14" col="32" rail="187"/>
   <hex row="14" col="33" road="9"/>
   <hex row="14" col="37" terrain="10" name="Wilia River"/>
   <hex row="14" col="39" terrain="3"/>
   <hex row="14" col="40" terrain="3"/>
   <hex row="14" col="41" terrain="3"/>
   <hex row="14" col="42" terrain="3"/>
-  <hex row="15" col="2" road="152"/>
+  <hex row="15" col="2" road="152" rail="187"/>
   <hex row="15" col="3" terrain="1" road="168" name="Simnas"/>
   <hex row="15" col="6" terrain="3" road="136"/>
   <hex row="15" col="7" road="144"/>
@@ -495,7 +514,7 @@
   <hex row="15" col="40" terrain="3"/>
   <hex row="15" col="41" terrain="3"/>
   <hex row="15" col="42" terrain="3"/>
-  <hex row="16" col="2" road="19"/>
+  <hex row="16" col="2" road="19" rail="187"/>
   <hex row="16" col="3" terrain="3"/>
   <hex row="16" col="4" terrain="1" road="128" name="Simnas"/>
   <hex row="16" col="7" road="9"/>
@@ -521,7 +540,7 @@
   <hex row="16" col="41" terrain="10"/>
   <hex row="16" col="42" terrain="3"/>
   <hex row="16" col="43" terrain="10"/>
-  <hex row="17" col="2" road="17"/>
+  <hex row="17" col="2" road="17" rail="187"/>
   <hex row="17" col="5" terrain="3"/>
   <hex row="17" col="8" road="136"/>
   <hex row="17" col="9" terrain="10" road="152" name="Niemen River"/>
@@ -542,8 +561,8 @@
   <hex row="17" col="40" terrain="10" name="Wilia River"/>
   <hex row="17" col="41" terrain="1" name="Smorgonie (Smorgon)"/>
   <hex row="17" col="42" terrain="10"/>
-  <hex row="18" col="1" road="18"/>
-  <hex row="18" col="2" road="33"/>
+  <hex row="18" col="1" road="18" rail="187"/>
+  <hex row="18" col="2" road="33" rail="187"/>
   <hex row="18" col="5" terrain="13"/>
   <hex row="18" col="6" terrain="13"/>
   <hex row="18" col="7" terrain="13"/>
@@ -574,6 +593,7 @@
   <hex row="18" col="40" terrain="10" name="Wilia River"/>
   <hex row="18" col="41" terrain="10" name="Wilia River"/>
   <hex row="18" col="42" terrain="3"/>
+  <hex row="19" col="0" rail="187"/>
   <hex row="19" col="1" terrain="1" road="17" name="Lozdzieje (Lazdijai)"/>
   <hex row="19" col="5" terrain="13"/>
   <hex row="19" col="8" terrain="10" name="Niemen River"/>
@@ -780,19 +800,18 @@
   <hex row="26" col="23">
     <unit id="21211" owner="1" flag="21" face="0" exp="100" str="9" bstr="9"/>
   </hex>
-  <hex row="26" col="24">
-    <unit id="42391" owner="0" flag="104" face="0" exp="100" str="1" bstr="1"/>
-  </hex>
+  <hex row="26" col="24"/>
   <hex row="26" col="27" terrain="1" road="10" name="Lipniszki" owner="0" flag="103"/>
   <hex row="26" col="28" road="50"/>
   <hex row="26" col="34" terrain="3"/>
   <hex row="26" col="35" terrain="3"/>
   <hex row="26" col="36" terrain="3"/>
   <hex row="26" col="37" terrain="3"/>
-  <hex row="26" col="38" terrain="1" road="17" name="Biala" owner="0" flag="103"/>
+  <hex row="26" col="38" terrain="1" road="17" name="Biala" owner="0" flag="103" deploy="0"/>
   <hex row="26" col="39" terrain="10"/>
   <hex row="26" col="40" terrain="3"/>
-  <hex row="27" col="1" terrain="3" road="19"/>
+  <hex row="27" col="0" rail="187"/>
+  <hex row="27" col="1" terrain="3" road="19" rail="187"/>
   <hex row="27" col="2" terrain="3" road="168"/>
   <hex row="27" col="3" terrain="3" road="136"/>
   <hex row="27" col="4" terrain="3"/>
@@ -828,8 +847,8 @@
   <hex row="27" col="39" terrain="10"/>
   <hex row="27" col="40" terrain="3"/>
   <hex row="28" col="1" terrain="1" road="1" name="Sejny"/>
-  <hex row="28" col="2" terrain="3"/>
-  <hex row="28" col="3" terrain="3"/>
+  <hex row="28" col="2" terrain="3" rail="187"/>
+  <hex row="28" col="3" terrain="3" rail="187"/>
   <hex row="28" col="4" terrain="3" road="136"/>
   <hex row="28" col="5" terrain="3" road="152"/>
   <hex row="28" col="6" terrain="3"/>
@@ -852,11 +871,12 @@
   <hex row="28" col="36" road="42"/>
   <hex row="28" col="37" terrain="10" road="145"/>
   <hex row="28" col="38" terrain="10"/>
-  <hex row="28" col="41" terrain="1" name="Wolozyn" owner="0" flag="103"/>
+  <hex row="28" col="41" terrain="1" name="Wolozyn" owner="0" flag="103" deploy="0"/>
   <hex row="28" col="43" road="32"/>
   <hex row="29" col="1" terrain="2"/>
   <hex row="29" col="3" terrain="3"/>
-  <hex row="29" col="5" terrain="3" road="35"/>
+  <hex row="29" col="4" rail="187"/>
+  <hex row="29" col="5" terrain="3" road="35" rail="187"/>
   <hex row="29" col="6" terrain="3" road="170"/>
   <hex row="29" col="7" terrain="3" road="137"/>
   <hex row="29" col="8" terrain="3"/>
@@ -892,8 +912,8 @@
   <hex row="30" col="3" road="34"/>
   <hex row="30" col="4" terrain="3" road="34"/>
   <hex row="30" col="5" terrain="10"/>
-  <hex row="30" col="6" terrain="3"/>
-  <hex row="30" col="7" terrain="3"/>
+  <hex row="30" col="6" terrain="3" rail="187"/>
+  <hex row="30" col="7" terrain="3" rail="187"/>
   <hex row="30" col="8" terrain="3" road="144"/>
   <hex row="30" col="9" terrain="3">
     <unit id="21545" owner="1" flag="21" face="0" str="3" bstr="3"/>
@@ -924,7 +944,7 @@
   <hex row="31" col="4" terrain="10"/>
   <hex row="31" col="5" terrain="8"/>
   <hex row="31" col="6" terrain="10"/>
-  <hex row="31" col="8" terrain="3" road="9"/>
+  <hex row="31" col="8" terrain="3" road="9" rail="187"/>
   <hex row="31" col="9" road="130"/>
   <hex row="31" col="10" terrain="3" road="34"/>
   <hex row="31" col="11" terrain="3"/>

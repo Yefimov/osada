@@ -3,7 +3,7 @@
   "id": 0,
   "scenario": "polsov_01.xml",
   "startprestige": 0,
-  "intro": "Approach to Wilno<br><br>April 15th, 1919<br><br>Good morning, Colonel. After the Great War, Poland became an independent republic again. But rebuilding of the state was halted by the Soviet attack last winter. Instead of the roads and towns that needed to be built, the army had to be sent in to stop the Bolsheviks. A few weeks ago the Russians crushed Polish positions near Wilno and took the city. Then they occupied other Polish territories. Now it's time to stop the bolsheviks and take Wilno back. <br><br>Victory conditions: Take all VHs.<br><br>Intelligence report: We know there are a few weak Red Army units in the vicinity. Some of these units consist of Poles so you either can expect a tough resistance or maybe even desertions. They are our compatriots after all.  Don't expect further reinforcements! And if you delay your attack too much, you may have to fight off more bolsheviks! <br>Our western flank is secured by neutral, and the not especially friendly states of Germany and Lithuania. Do not tresspass their borders! <br><br>Good Luck!<br><br>Special thanks to Blitzstoper for the concept and for redesigning this scenario.",
+  "intro": "Approach to Wilno<br><br>April 15th, 1919<br><br>There is no front here in the sense the staff manuals mean. There is a railway, there are four towns on it, and between them there is nobody at all - the divisions that should be holding this ground are in the Ukraine and on the Don, because that is where the war is being decided. What Lithuania and Byelorussia have is a screen: my detachment, a half-strength brigade of the Western Division, and a great deal of empty country.<br><br>Pilsudski is coming for Wilno with cavalry moving off the roads and infantry following on the rails. He is not trying to break us; he is trying to get behind us, and against a screen that works. Moscow's instruction is plain and I will not pretend it is generous: the Wilno group is not to be encircled, and the road south is to stay open until the Soviet institutions and the rolling stock are out of the city.<br><br>So this is a delaying action, and it is scored as one. Hold the towns on the withdrawal road until the clock runs out. If their forward assembly area is thinner than it looks, take it and the whole advance loses a week.<br><br>Victory conditions:<br>- Hold Olita (9,18), Orany (16,20) and Lida (23,27) at the last turn - three for a brilliant victory, two for a victory, one for a tactical victory.<br>- Or take their assembly area at (15,27).",
   "outcome": {
    "briliant": {
     "goto": 1,
@@ -12,7 +12,7 @@
      0
     ],
     "prestige": 240,
-    "text": "Now we have an excellent position to assault Wilno. You will fight in the city so artillery and infantry will be handy. <br><br>There are rumours that the Polish Army from France is on the way to Poland. They will help us to defend the country.  <br><br>But now you have to liberate Wilno!"
+    "text": "The road south is open and the towns on it are still ours at the last hour, which is what I was told to deliver.<br><br>I will not dress it up beyond that. Wilno itself will not be held - their cavalry is already north of us and the city has one battalion and a printing press in it. But the Western Division comes out as a division, the Soviet workers of the city have had four days to leave, and the trains went south loaded instead of being taken on the sidings.<br><br>The Polish papers will call this the liberation of a Polish city. Two thirds of the countryside around it speaks Byelorussian and will find out this summer what liberation means when the estates come back with the army."
    },
    "victory": {
     "goto": 1,
@@ -21,7 +21,7 @@
      0
     ],
     "prestige": 180,
-    "text": "Now we have an excellent position to assault Wilno. You will fight in the city so artillery and infantry will be handy. <br><br>There are rumours that the Polish Army from France is on the way to Poland. They will help us to defend the country.  <br><br>But now you have to liberate Wilno!"
+    "text": "The road south is open and the towns on it are still ours at the last hour, which is what I was told to deliver.<br><br>I will not dress it up beyond that. Wilno itself will not be held - their cavalry is already north of us and the city has one battalion and a printing press in it. But the Western Division comes out as a division, the Soviet workers of the city have had four days to leave, and the trains went south loaded instead of being taken on the sidings.<br><br>The Polish papers will call this the liberation of a Polish city. Two thirds of the countryside around it speaks Byelorussian and will find out this summer what liberation means when the estates come back with the army."
    },
    "tactical": {
     "goto": 1,
@@ -30,7 +30,7 @@
      0
     ],
     "prestige": 145,
-    "text": "Now we have an excellent position to assault Wilno. You will fight in the city so artillery and infantry will be handy. <br><br>There are rumours that the Polish Army from France is on the way to Poland. They will help us to defend the country.  <br><br>But now you have to liberate Wilno!"
+    "text": "The road south is open and the towns on it are still ours at the last hour, which is what I was told to deliver.<br><br>I will not dress it up beyond that. Wilno itself will not be held - their cavalry is already north of us and the city has one battalion and a printing press in it. But the Western Division comes out as a division, the Soviet workers of the city have had four days to leave, and the trains went south loaded instead of being taken on the sidings.<br><br>The Polish papers will call this the liberation of a Polish city. Two thirds of the countryside around it speaks Byelorussian and will find out this summer what liberation means when the estates come back with the army."
    },
    "lose": {
     "goto": 1,
@@ -39,7 +39,7 @@
      0
     ],
     "prestige": 0,
-    "text": "You haven't been able to defeat the Red Army and now the Soviet counterattacks will force us to retreat. We'll have to agree to peace negotiations and we'll lose a great portion of the territory that was once part of Poland. You should accept your responsibility and resign inmediately."
+    "text": "They were across the road before the rearguard reached it. The detachment came out in pieces, on foot, by whatever tracks it could find, and left the depot at Lida burning because there was no time to load it.<br><br>The Wilno group has effectively ceased to exist as a formation. What is left of it will be reorganised at Molodeczno, and the units that took Wilno now have an open road to the east for as long as it takes us to build another line."
    }
   },
   "briefing": {
@@ -50,7 +50,7 @@
   "id": 1,
   "scenario": "polsov_02.xml",
   "startprestige": 0,
-  "intro": "Assault on Wilno<br><br>April 18th, 1919<br><br>Good morning, Colonel. <br>We have just secured the position for the assault. Easter arrives soon so try to liberate the city before the coming holidays. I think the citizens will help you and I hope there will not be  too many casualties. Our young army proved its worth and so did the Red Army. Take Wilno back. <br><br>Victory conditions: Liberate Wilno and secure the roads heading north and east from the town - take all VHs.<br><br>Intelligence report: There are more enemy regiments in the area. There is not only the Western Division, allegedly Polish, but also a division from Pskow. Wilno is heavilly garrisoned and remnants of the previously beaten enemy can also be found outside of the town. There is the possibility that the Polish citizens of Wilno will stand against the Communists. Do not expect further reinforcements.<br><br>Good Luck!",
+  "intro": "Assault on Wilno<br><br>April 18th, 1919<br><br>They came into the city at first light along the railway - an armoured train and a cavalry group that rode through the gap between us and Lida in the dark, dismounted at the station and were in the streets before the garrison knew the line was cut.<br><br>The city is going. That was decided at Olita three days ago and nothing I do here changes it. What is not decided is what happens to the twelve thousand men and the four hospital trains north and east of it, and to the Soviet of the city, whose people are being hunted through the Jewish quarter as I write this. The order from the Western Front is to hold the northern and eastern roads open until they are through.<br><br>Malaty and Swieciany are the northern gate; the city hexes are the eastern one. Hold them to the last turn. Lida behind them is their forward supply head, and if it can be taken the pursuit stops for a fortnight.<br><br>Victory conditions:<br>- Hold Malaty (24,3), Swieciany (41,6) and Wilno (24,11) at the last turn - three for a brilliant victory, two for a victory, one for a tactical victory.<br>- Or take Lida (23,27).",
   "outcome": {
    "briliant": {
     "goto": 2,
@@ -59,7 +59,7 @@
      0
     ],
     "prestige": 200,
-    "text": "Now that we have taken Wilno, our left flank will be secure. Of course, there will be Soviet counterattacks. But our new positions are strong and we'll be able to handle them.<br>We must keep on advancing before winter comes. Your next objective will be the city of Minsk."
+    "text": "The roads stayed open and the column is through. Rearguard, hospital trains, the Soviet's people and about nine hundred railwaymen who would not have lasted a week in the city.<br><br>Wilno is theirs. In the three days after they took it their soldiery went through the Jewish quarter and killed something over sixty people, and their own commission will later put the number lower and call the rest bandits. Remember the number.<br><br>We are ordered back to the Berezina line. This is not the end of the business - it is the beginning of a year in which we shall be doing this on ground of their choosing."
    },
    "victory": {
     "goto": 2,
@@ -68,7 +68,7 @@
      0
     ],
     "prestige": 150,
-    "text": "Now that we have taken Wilno, our left flank will be secure. Of course, there will be Soviet counterattacks. But our new positions are strong and we'll be able to handle them.<br>We must keep on advancing before winter comes. Your next objective will be the city of Minsk."
+    "text": "The roads stayed open and the column is through. Rearguard, hospital trains, the Soviet's people and about nine hundred railwaymen who would not have lasted a week in the city.<br><br>Wilno is theirs. In the three days after they took it their soldiery went through the Jewish quarter and killed something over sixty people, and their own commission will later put the number lower and call the rest bandits. Remember the number.<br><br>We are ordered back to the Berezina line. This is not the end of the business - it is the beginning of a year in which we shall be doing this on ground of their choosing."
    },
    "tactical": {
     "goto": 2,
@@ -77,7 +77,7 @@
      0
     ],
     "prestige": 100,
-    "text": "Now that we have taken Wilno, our left flank will be secure. Of course, there will be Soviet counterattacks. But our new positions are strong and we'll be able to handle them.<br>We must keep on advancing before winter comes. Your next objective will be the city of Minsk."
+    "text": "The roads stayed open and the column is through. Rearguard, hospital trains, the Soviet's people and about nine hundred railwaymen who would not have lasted a week in the city.<br><br>Wilno is theirs. In the three days after they took it their soldiery went through the Jewish quarter and killed something over sixty people, and their own commission will later put the number lower and call the rest bandits. Remember the number.<br><br>We are ordered back to the Berezina line. This is not the end of the business - it is the beginning of a year in which we shall be doing this on ground of their choosing."
    },
    "lose": {
     "goto": 255,
@@ -86,7 +86,7 @@
      0
     ],
     "prestige": 0,
-    "text": "You haven't been able to defeat the Red Army and now the Soviet counterattacks will force us to retreat. We'll have to agree to peace negotiations and we'll lose a great portion of the territory that was once part of Poland. You should accept your responsibility and resign inmediately."
+    "text": "The northern road was cut at Swieciany and the eastern one an hour later. What was in the city stayed in the city.<br><br>I have no complete return of losses and I will not have one; the men who could get out did so in small parties across country. The Western Front has no reserve to give me and the campaign, as an operation of ours, is over."
    }
   },
   "briefing": {
@@ -97,7 +97,7 @@
   "id": 2,
   "scenario": "polsov_03.xml",
   "startprestige": 0,
-  "intro": "Liberating Bialorus<br><br>August 4th, 1919<br><br>Good Morning General!<br> As you know, after taking Wilno, Polish authorities issued a Proclamation to the inhabitants of the former Grand Duchy of Lithuania. Poles hoped that liberating Wilno from the hands of the Russians would give them a chance to recreate the historical state.<br><br>The next step is to liberate Bialorus and create there another independent state that would serve as an ally separating Poland from Russia.<br><br>Our next target will be the city of Minsk Litewski which is the capital of Bialorus. You will lead forces striking south and cutting off the Red Army units. These units should be destroyed by our forces from Wielkopolska and our Bialorussian allies from 1st Dywizja Litewsko-Bialoruska.<br><br>Victory conditions: Liberate Minsk, cut off the roads of retreat, and take all VHs.<br><br>Intelligence report: The roads here have been devastated by the battles of the Great War and Soviet occupation. You can expect fortifications here so prepare your forces for difficult warfare. Don't expect further reinforcements. White Armies started to attack in the south so the Red Army should not be reinforced in our area. <br><br>Good Luck!<br><br>Note: You can buy Central Lithuanian units in this scenario.",
+  "intro": "Minsk and the Berezina<br><br>August 4th, 1919<br><br>The summer has been a lesson in arithmetic. Denikin is at Kharkov and Kolchak has only just been pushed off the Urals, and everything the Republic owns that can march is committed to one or the other. The Western Front has sixteen thousand bayonets on a line four hundred versts long, and orders that begin with the word nevertheless.<br><br>Pilsudski is about to take Minsk. Two of his divisions are already past Molodeczno and the Lithuanian-Byelorussian division is coming up the Nieman. He is doing it now, and not in September, because Denikin has told Paris that a Polish state is a temporary administrative inconvenience and will not be recognised by a restored Russia - so Warsaw has a short season in which our defeat is not yet their defeat, and they know it.<br><br>The city cannot be held with what I have. The Berezina line behind it can. My task is the railway junctions and the crossings that let the 16th Army get onto that line as an army and not as a crowd, and to keep Minsk itself until the last echelon has cleared it.<br><br>Victory conditions:<br>- Hold Minsk (41,5), Stolpce (30,12) and the crossings at (39,2) and (40,20) at the last turn - four for a brilliant victory, three for a victory, two for a tactical victory.<br>- Or take Lida (20,3), Grodno (2,4) and Baranowicze (22,19).",
   "outcome": {
    "briliant": {
     "goto": 3,
@@ -106,7 +106,7 @@
      0
     ],
     "prestige": 300,
-    "text": "A notable victory indeed! With the Soviet Western Army in disarray, we'll advance further east to stronger positions. This winter we'll be safe from enemy attacks. There are chances that an independent Bialorus will rise!"
+    "text": "The junctions held long enough and the 16th Army is on the Berezina with its guns, its wounded and its staff. Minsk was given up on order, in daylight, with the last train out before the demolition party fired the water tower.<br><br>The front now runs where it will run all winter. That is not a victory and I have not written it up as one; it is the difference between a defeated army and a destroyed one, and this autumn there is nothing behind us to replace a destroyed one with.<br><br>Their proclamation to the inhabitants of the former Grand Duchy is already posted in Minsk. It promises self-determination. The estates it does not mention are being handed back this week."
    },
    "victory": {
     "goto": 3,
@@ -115,7 +115,7 @@
      0
     ],
     "prestige": 200,
-    "text": "A notable victory indeed! With the Soviet Western Army in disarray, we'll advance further east to stronger positions. This winter we'll be safe from enemy attacks. There are chances that an independent Bialorus will rise!"
+    "text": "The junctions held long enough and the 16th Army is on the Berezina with its guns, its wounded and its staff. Minsk was given up on order, in daylight, with the last train out before the demolition party fired the water tower.<br><br>The front now runs where it will run all winter. That is not a victory and I have not written it up as one; it is the difference between a defeated army and a destroyed one, and this autumn there is nothing behind us to replace a destroyed one with.<br><br>Their proclamation to the inhabitants of the former Grand Duchy is already posted in Minsk. It promises self-determination. The estates it does not mention are being handed back this week."
    },
    "tactical": {
     "goto": 3,
@@ -124,7 +124,7 @@
      0
     ],
     "prestige": 100,
-    "text": "A notable victory indeed! With the Soviet Western Army in disarray, we'll advance further east to stronger positions. This winter we'll be safe from enemy attacks. There are chances that an independent Bialorus will rise!"
+    "text": "The junctions held long enough and the 16th Army is on the Berezina with its guns, its wounded and its staff. Minsk was given up on order, in daylight, with the last train out before the demolition party fired the water tower.<br><br>The front now runs where it will run all winter. That is not a victory and I have not written it up as one; it is the difference between a defeated army and a destroyed one, and this autumn there is nothing behind us to replace a destroyed one with.<br><br>Their proclamation to the inhabitants of the former Grand Duchy is already posted in Minsk. It promises self-determination. The estates it does not mention are being handed back this week."
    },
    "lose": {
     "goto": 255,
@@ -133,7 +133,7 @@
      0
     ],
     "prestige": 0,
-    "text": "You have been too slow! Now when winter comes to our defensive positions, it will be very weak and we won't be able to resist the Soviet counterattack. We'll be forced to peace negotiations and surely we'll have to cede much of the territory we had taken from the Soviets.<br>I'll see to it that you assume full responsibility and be expelled from the Army."
+    "text": "The Stolpce crossing went first and the whole line unhinged from it. The 16th Army is across the Berezina in the sense that its men are on the eastern bank; its artillery is not, and neither is a third of its transport.<br><br>Byelorussia is lost as far as the river and there is no formation west of it that answers to us any more."
    }
   },
   "briefing": {
@@ -144,7 +144,7 @@
   "id": 3,
   "scenario": "polsov_04.xml",
   "startprestige": 0,
-  "intro": "Battle of Dyneburg<br><br>January 3rd, 1920<br><br>Good Morning General! The liberation of Bialorus was the last Polish operation against the Reds in 1919. The second half of the year was all quiet. Meanwhile, the new Soviet Russians of Lenin fought against the White Russians of Denikin. But General Denikin not only refused to recognize the Polish state, but he also asked France (former Russian ally and current Polish ally) to stop supporting the Poles as well! Because of this, Polish authorities decided not to support Denikins forces and stopped all aggressive operations against the Red Army. This allowed the Bolsheviks to concentrate all available forces against the Whites and they were able to repel them.<br><br>By the end of 1919, General Smigly-Rydz decided to conduct a limited operation in the most distant northeastern front against the Red Army which occupied Dyneburg, the town that the Latvians called Daugavpils. Their goals were to link with the Latvians, secure their young independence, and to break the communication between the Bolsheviks and the Lithunian government in Kowno.  <br><br>Victory conditions: Together with our Latvian allies liberate Dyneburg - take all VHs.<br><br>Intelligence report: The weather is terrible: temperatures of -25 ºC (-13 ºF) and thick snow makes any air-support nearly impossible. The Soviet 15th Army is rather weak but hidden in strong fortifications. Be prepared because they use a lot of mines! If you move your infantry cautiously onto the minefield they will be able to possibly remove the mines!<br><br>Good luck!<br><br>Note: You can buy Latian units in this scenario.",
+  "intro": "Dyneburg: the Latgale winter<br><br>January 3rd, 1920<br><br>Minus twenty-five degrees, snow to the waist off the roads, and not a machine on either side that will start without a fire under it. The 15th Army holds Dyneburg with fortified positions, minefields and men who have been in them since November.<br><br>The attack is a Polish one with the Latvian army coming up from the north-west, and its purpose is political before it is military: to put Latgale into Riga's hands and cut the wire between us and Kaunas. Smigly-Rydz has the 1st and 3rd Legion divisions and the weather with him, because we are the ones who must sit still in it.<br><br>The town will be given up if it must be. What may not be given up is the corps, and what must be kept to the hour is the crossing and the two positions covering it, so that the guns and the field hospitals go out on the ice road instead of being left in the snow. Their own aerodrome and railhead lie behind the attack, and a raid on them would end the operation before it starts.<br><br>Victory conditions:<br>- Hold Laci (31,9), Cietoksnis (15,13), Gajoks Castle (24,20) and Dyneburg (20,26) at the last turn - four for a brilliant victory, three for a victory, two for a tactical victory.<br>- Or take Tilti Aerodrome (5,1), Rubeniski (20,1) and the Dyneburg-Wilno railway (19,35).",
   "outcome": {
    "briliant": {
     "goto": 4,
@@ -153,7 +153,7 @@
      0
     ],
     "prestige": 100,
-    "text": "It has been a difficult battle but in the end the Soviet army has been destroyed and we have forged an alliance with Latvia that will be very important in the future.<br>During the rest of the winter we won't participate in any large scale military actions. But in spring we'll launch an offensive in Ukraine. If we help Symon Petliura's nationalists to create an anti-Bolshevist Ukrainian republic allied with Poland our eastern frontier will be much safer."
+    "text": "The positions held to the last hour and the corps came out along the ice road with everything that could be pulled.<br><br>Dyneburg is Latvian now, which was the point of the whole affair; Warsaw handed the town to Riga within the month and got a treaty for it. Our men walked out of a fortified line in January without breaking, which is a harder thing than it reads.<br><br>The Latvians will make peace with us in the spring - they have what they wanted and no appetite for Pilsudski's larger idea. That leaves one enemy on this front instead of two, and it is the only good news in the report."
    },
    "victory": {
     "goto": 4,
@@ -162,7 +162,7 @@
      0
     ],
     "prestige": 50,
-    "text": "It has been a difficult battle but in the end the Soviet army has been destroyed and we have forged an alliance with Latvia that will be very important in the future.<br>During the rest of the winter we won't participate in any large scale military actions. But in spring we'll launch an offensive in Ukraine. If we help Symon Petliura's nationalists to create an anti-Bolshevist Ukrainian republic allied with Poland our eastern frontier will be much safer."
+    "text": "The positions held to the last hour and the corps came out along the ice road with everything that could be pulled.<br><br>Dyneburg is Latvian now, which was the point of the whole affair; Warsaw handed the town to Riga within the month and got a treaty for it. Our men walked out of a fortified line in January without breaking, which is a harder thing than it reads.<br><br>The Latvians will make peace with us in the spring - they have what they wanted and no appetite for Pilsudski's larger idea. That leaves one enemy on this front instead of two, and it is the only good news in the report."
    },
    "tactical": {
     "goto": 4,
@@ -171,7 +171,7 @@
      0
     ],
     "prestige": 0,
-    "text": "It has been a difficult battle but in the end the Soviet army has been destroyed and we have forged an alliance with Latvia that will be very important in the future.<br>During the rest of the winter we won't participate in any large scale military actions. But in spring we'll launch an offensive in Ukraine. If we help Symon Petliura's nationalists to create an anti-Bolshevist Ukrainian republic allied with Poland our eastern frontier will be much safer."
+    "text": "The positions held to the last hour and the corps came out along the ice road with everything that could be pulled.<br><br>Dyneburg is Latvian now, which was the point of the whole affair; Warsaw handed the town to Riga within the month and got a treaty for it. Our men walked out of a fortified line in January without breaking, which is a harder thing than it reads.<br><br>The Latvians will make peace with us in the spring - they have what they wanted and no appetite for Pilsudski's larger idea. That leaves one enemy on this front instead of two, and it is the only good news in the report."
    },
    "lose": {
     "goto": 255,
@@ -180,7 +180,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Our troops couldn't overcome the cold and the enemy. We still have a Soviet army menacing our left flank so we'll have to cancel our plans for a spring offensive.The Reds will have enough time to recover from their early defeats so maybe we'll have to agree to peace negotiations.<br>None of this would have happened if you had led your army better, General. It's time for you to ask for your retirement."
+    "text": "The line broke at Gajoks in the dark and the crossing was under fire before the hospitals were clear. We left the heavy batteries; there was no moving them once the horses went.<br><br>The 15th Army has lost the best part of two divisions to cold and capture, and the north-eastern flank of the front is open all the way to Polotsk."
    }
   },
   "briefing": {
@@ -191,7 +191,7 @@
   "id": 4,
   "scenario": "polsov_05.xml",
   "startprestige": 0,
-  "intro": "Operation Kijów<br><br>April 25th, 1920<br><br>Well, it's time to assault Kijów and hopefully inflict a decisive blow against the Red Russians. You must break the enemy line near Zytomierz and advance as fast as you can towards the east. If we can occupy Kijów within a week, the Reds might be too shocked to recover. And the Ukainians would be likely to join the forces of the Ukrainian People's Republic commanded by our ally Symon Petliura.<br> <br>Victory conditions: Take all VHs.<br><br>Intelligence report: In the north and south, your forces will be flanked by our cavalry units. Our 4th and 13th infantry divisions are also on their way to reinforce your flanks but it will still take some time for them to join the battle.<br><br>Be vigilant for the Russian air force! While not particularly strong, they could weaken your units if you don't support them properly.<br><br>Good luck!<br><br>Recommended core: You should have a fighter unit. It can be useful in future scenarios, after it gets some experience.<br><br>Note: You can buy Ukrainian units in this scenario.",
+  "intro": "Zhitomir: the Polish blow<br><br>April 25th, 1920<br><br>It has begun, and it has begun where the front was thinnest. Three Polish armies and Petliura's two divisions came through the 12th and 14th Armies this morning on a hundred-verst frontage, and the 12th Army is not so much retreating as coming apart into detachments.<br><br>The purpose is not Kiev. The purpose is a Ukrainian state under Petliura that will hold the Dnieper for Warsaw, and the price agreed for it in Warsaw last week was eastern Galicia and western Volhynia - which is to say Petliura sold four million Ukrainians to buy an army, and the villages here know it. That is the whole weakness of the enterprise, and in six weeks it will be the whole reason it fails.<br><br>For now they have the initiative, the railways and the better cavalry. I am to slow them on the Korosten-Zhitomir-Kazatin triangle so that the 12th and 14th can be got behind the Dnieper and the reserves coming from the Caucasus can be unloaded east of it. Six towns. Hold as many as I can to the last turn.<br><br>Victory conditions:<br>- Hold Korosten (23,2), Malin (34,8), Radomysl (34,13), Zhitomir (20,19), Fastov (42,26) and Kazatin (24,33) at the last turn - five for a brilliant victory, four for a victory, three for a tactical victory.<br>- Or take their forward positions at (3,6) and Polonne (2,21).",
   "outcome": {
    "briliant": {
     "goto": 5,
@@ -200,7 +200,7 @@
      0
     ],
     "prestige": 500,
-    "text": "Once again we have routed the Soviet Army and now the way to Kijów is clear! My congratulations, General!"
+    "text": "Five of the six were still ours when the relief came up, and the 12th Army is behind the river instead of in their bag.<br><br>They will have Kiev inside a fortnight; that was settled by the frontage, not by this battle. What was settled here is that they will have it with our field armies intact in front of them and a rail net they have to repair before they can use it.<br><br>The First Cavalry Army is on the march from the Caucasus. Fourteen thousand sabres, and they are coming the whole way on their own horses."
    },
    "victory": {
     "goto": 5,
@@ -209,7 +209,7 @@
      0
     ],
     "prestige": 400,
-    "text": "Once again we have routed the Soviet Army and now the way to Kijów is clear! My congratulations, General!"
+    "text": "Five of the six were still ours when the relief came up, and the 12th Army is behind the river instead of in their bag.<br><br>They will have Kiev inside a fortnight; that was settled by the frontage, not by this battle. What was settled here is that they will have it with our field armies intact in front of them and a rail net they have to repair before they can use it.<br><br>The First Cavalry Army is on the march from the Caucasus. Fourteen thousand sabres, and they are coming the whole way on their own horses."
    },
    "tactical": {
     "goto": 5,
@@ -218,7 +218,7 @@
      0
     ],
     "prestige": 300,
-    "text": "Once again we have routed the Soviet Army and now the way to Kijów is clear! My congratulations, General!"
+    "text": "Five of the six were still ours when the relief came up, and the 12th Army is behind the river instead of in their bag.<br><br>They will have Kiev inside a fortnight; that was settled by the frontage, not by this battle. What was settled here is that they will have it with our field armies intact in front of them and a rail net they have to repair before they can use it.<br><br>The First Cavalry Army is on the march from the Caucasus. Fourteen thousand sabres, and they are coming the whole way on their own horses."
    },
    "lose": {
     "goto": 255,
@@ -227,7 +227,7 @@
      0
     ],
     "prestige": 0,
-    "text": "You have showed a worrying lack of skill in your advance on the Ukrainian plains. Although you did manage to destroy some Soviet divisions, it took you too long to do so and now the Reds have gathered an incredible amount of reinforcement troops. We'll have to retreat from Ukraine and build a safer defence line towards the west. Anyway, we'll choose another commander for that mission. Consider yourself relieved from duty, General."
+    "text": "The triangle went in three days. Korosten first, and after Korosten there was no lateral railway left and the two armies were fighting separate wars a hundred versts apart.<br><br>The 12th Army has lost its artillery park and most of a rifle division taken whole. There is no organised force between here and the Dnieper crossings."
    }
   },
   "briefing": {
@@ -238,7 +238,7 @@
   "id": 5,
   "scenario": "polsov_06.xml",
   "startprestige": 0,
-  "intro": "Race to Kijów<br><br>May 5th, 1920<br><br>The good news is that Symon Petliura will be able to establish a Ukrainian government in Kijów. The bad news is that our ambush didn't work and the Red Army is fleeing. It seems that they decided not to defend Kijów and instead retreated to the eastern bank of the Dniepr river.   <br><br>If we can occupy Kijów fast enough, we can prevent the Russians from stealing many Ukrainian goods, food and documents. The Ukrainian Army will attack south of you. If you secure the bridgeheads before they arrive, we will have a better hand in further political talks. <br>But don't expect any cooperation. In the summer of 1919, they invited Denikin's troops to the town and the White Russians betrayed their trust and made a bloodbath there. Now they don't trust foreigners at all.<br><br>Victory conditions: Take the VH at (22,12). Be quicker than the Ukrainians. You must achieve your objectives before them.<br><br>Intelligence report: The Bolsheviks are fleeing. A few units will try to slow you down. You can also expect some blockroads but HQ is sure that there will be no counterattacks. The 6th Ukrainian Division will attack south of you but don't expect any cooperation from them.<br><br>Good luck!<br><br>Recommended core: Use only cavalry or motorised units.<br><br>Note: You can only deploy 4 units in this scenario.<br><br>Special thanks to Blitzstoper for the concept and for redesigning this scenario.",
+  "intro": "The Dnieper crossings<br><br>May 5th, 1920<br><br>The order is to give up Kiev without fighting for it, and I have read it three times.<br><br>It is the right order. The city is a salient with one river at its back and their cavalry already north of it at Chernobyl; a garrison left in it would be a garrison lost, and the 12th Army is worth more to the Republic than the honour of the streets. So the army goes over to the eastern bank and the bridgeheads are held open behind it until the last battery is across.<br><br>My detachment is the rearguard. We have the demolition parties, the mined roads, the wire and the blockhouses, and almost nothing that moves - the cavalry went east three days ago. Their advance guard is racing us for the crossings and the Ukrainian division is coming up on the southern road to be first into the city for the politics of it.<br><br>Hold the crossings until the clock runs out. If their leading squadrons over-run themselves, the crossing they are riding for can be taken from them instead.<br><br>Victory conditions:<br>- Hold the crossings at (22,12) and (29,13) at the last turn - both for a brilliant victory, one for a victory or a tactical victory.<br>- Or take their crossing at (24,16).",
   "outcome": {
    "briliant": {
     "goto": 6,
@@ -247,7 +247,7 @@
      0
     ],
     "prestige": 150,
-    "text": "We have entered Kijów without any serious trouble. Very well done!<br>But, confidentially, I must tell you that the situation is far worse than we expected. Although Symon Petliura thought that there would be a Ukrainian patriotic uprising against the Russians, most of the population is indifferent at best. We won't have any strong support from the locals.<br><br>And even worse than this, our intelligence reports warn us of a huge Red counteroffensive that will start in the next few weeks or possibly in a few days! We are very far from our bases and the Soviet reinforcements will be composed mainly of veteran troops so we could be in serious trouble."
+    "text": "The army is over. Guns, trains, the wounded, the Kiev arsenal's machine tools on flatcars, and the last of the bridge guard on the last span before it went into the river.<br><br>They entered the city on the seventh and found the administration gone, the bridges down and no enemy to defeat. Petliura's people expected a rising in their favour; what they got was a population that has seen four armies in three years and has stopped coming out to meet any of them.<br><br>Their front is now four hundred versts from its railheads, holding a river line with cavalry it does not have. Ours is on the far bank with the Konarmia marching towards it."
    },
    "victory": {
     "goto": 6,
@@ -256,7 +256,7 @@
      0
     ],
     "prestige": 150,
-    "text": "We have entered Kijów without any serious trouble. Very well done!<br>But, confidentially, I must tell you that the situation is far worse than we expected. Although Symon Petliura thought that there would be a Ukrainian patriotic uprising against the Russians, most of the population is indifferent at best. We won't have any strong support from the locals.<br><br>And even worse than this, our intelligence reports warn us of a huge Red counteroffensive that will start in the next few weeks or possibly in a few days! We are very far from our bases and the Soviet reinforcements will be composed mainly of veteran troops so we could be in serious trouble."
+    "text": "The army is over. Guns, trains, the wounded, the Kiev arsenal's machine tools on flatcars, and the last of the bridge guard on the last span before it went into the river.<br><br>They entered the city on the seventh and found the administration gone, the bridges down and no enemy to defeat. Petliura's people expected a rising in their favour; what they got was a population that has seen four armies in three years and has stopped coming out to meet any of them.<br><br>Their front is now four hundred versts from its railheads, holding a river line with cavalry it does not have. Ours is on the far bank with the Konarmia marching towards it."
    },
    "tactical": {
     "goto": 6,
@@ -265,7 +265,7 @@
      0
     ],
     "prestige": 150,
-    "text": "We have entered Kijów without any serious trouble. Very well done!<br>But, confidentially, I must tell you that the situation is far worse than we expected. Although Symon Petliura thought that there would be a Ukrainian patriotic uprising against the Russians, most of the population is indifferent at best. We won't have any strong support from the locals.<br><br>And even worse than this, our intelligence reports warn us of a huge Red counteroffensive that will start in the next few weeks or possibly in a few days! We are very far from our bases and the Soviet reinforcements will be composed mainly of veteran troops so we could be in serious trouble."
+    "text": "The army is over. Guns, trains, the wounded, the Kiev arsenal's machine tools on flatcars, and the last of the bridge guard on the last span before it went into the river.<br><br>They entered the city on the seventh and found the administration gone, the bridges down and no enemy to defeat. Petliura's people expected a rising in their favour; what they got was a population that has seen four armies in three years and has stopped coming out to meet any of them.<br><br>Their front is now four hundred versts from its railheads, holding a river line with cavalry it does not have. Ours is on the far bank with the Konarmia marching towards it."
    },
    "lose": {
     "goto": 255,
@@ -274,7 +274,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Your delay leaves us in a difficult diplomatic situation with Ukraine. The Ministry of Foreign Affairs wants you removed from your command and I'm afraid that the Army won't be able to coverup this scandal. For the sake of us all, you'd better resign."
+    "text": "They were on the crossing before the tail of the column. The pontoons went with the engineers still on them and what was left on the western bank had to break up and go north through the marshes in small parties.<br><br>The 12th Army has lost its bridging train, its heavy artillery and any claim to be a formation. There will be no counteroffensive from this front for a long time."
    }
   },
   "briefing": {
@@ -285,7 +285,7 @@
   "id": 6,
   "scenario": "polsov_07.xml",
   "startprestige": 0,
-  "intro": "Surviving the red tide<br><br>June 4th, 1920<br><br>The Russian counterattack is a nightmare that has come true. They are trying to surround and crush our 3rd Army and we won't be able to resist their pressure until reinforcements arrive. We'll have to evacuate Kijów but we need some time to organize our troops and retreat in an orderly fashion towards our rear defence lines. You must resist the enemy attacks for as long as you can so that the rest of our troops have the time they need to retreat safely. <br><br>Victory conditions: After 18 turns you must hold 7 VHs for a BV, 5 VHs for a V, or 3 VHs for a TV.<br><br>Intelligence report: Most of the Soviet units are believed to be gathering near the Rastavitsa River and the forests by the eastern shore of the Teterev. You should build solid lines of defence as fast as possible using the terrain features wisely. Your engineer troops can be very useful in delaying the Russian advance.<br><br>Good luck!<br><br>Note: You can buy Ukrainian units in this scenario.",
+  "intro": "The Red tide<br><br>June 4th, 1920<br><br>The Konarmia is up. Fourteen thousand sabres that walked from the Kuban to the Dnieper in fifty-three days, and tomorrow morning they go into the seam between their 3rd and 6th Armies at Samhorodok.<br><br>The whole Polish position rests on a front too long for the troops holding it, supplied through a rail net we tore up in May, in a country where the requisition parties have already turned the villages against them. Break the crust anywhere and there is nothing behind it but staffs and depots. That is the theory. It is also, this once, the fact.<br><br>My task is the railway line behind the breach. Not their field army - it will not stand to be fought - but the junctions and stations it must have to withdraw in order: Zhitomir and Berdichev first, then Korosten, Fastov and Kazatin. Take them all and their two armies have to come out across country on their feet.<br><br>Victory conditions:<br>- Take Korosten (23,2), Malin (34,8), Zwiahel (4,10), Zhitomir (20,18), Fastov (41,25), Kazatin (24,33) and the junction at (40,7).",
   "outcome": {
    "briliant": {
     "goto": 7,
@@ -294,7 +294,7 @@
      0
     ],
     "prestige": 350,
-    "text": "The battle was tough but your masterful defence strategy was successful. You have inflicted heavy losses on the Reds and now, with a bit of luck, we'll be able to stop their counteroffensive at our winter headquarters near Zwiahel."
+    "text": "Every junction on the list is ours and their 3rd Army came out of Kiev on the roads with our cavalry on both sides of it.<br><br>At Zhitomir the corps depot went up, five thousand of our people came out of the gaol, and the telegraph office was taken with the operators still at the keys - which is why their army group commander spent two days issuing orders to units that no longer had a line to hear them on.<br><br>Kiev is ours again on the twelfth. From here the Southwestern Front goes for Lvov and the Western Front for Warsaw, and there begins the argument that will cost us the campaign."
    },
    "victory": {
     "goto": 7,
@@ -303,7 +303,7 @@
      0
     ],
     "prestige": 350,
-    "text": "The battle was tough but your masterful defence strategy was successful. You have inflicted heavy losses on the Reds and now, with a bit of luck, we'll be able to stop their counteroffensive at our winter headquarters near Zwiahel."
+    "text": "Every junction on the list is ours and their 3rd Army came out of Kiev on the roads with our cavalry on both sides of it.<br><br>At Zhitomir the corps depot went up, five thousand of our people came out of the gaol, and the telegraph office was taken with the operators still at the keys - which is why their army group commander spent two days issuing orders to units that no longer had a line to hear them on.<br><br>Kiev is ours again on the twelfth. From here the Southwestern Front goes for Lvov and the Western Front for Warsaw, and there begins the argument that will cost us the campaign."
    },
    "tactical": {
     "goto": 7,
@@ -312,7 +312,7 @@
      0
     ],
     "prestige": 350,
-    "text": "The battle was tough but your masterful defence strategy was successful. You have inflicted heavy losses on the Reds and now, with a bit of luck, we'll be able to stop their counteroffensive at our winter headquarters near Zwiahel."
+    "text": "Every junction on the list is ours and their 3rd Army came out of Kiev on the roads with our cavalry on both sides of it.<br><br>At Zhitomir the corps depot went up, five thousand of our people came out of the gaol, and the telegraph office was taken with the operators still at the keys - which is why their army group commander spent two days issuing orders to units that no longer had a line to hear them on.<br><br>Kiev is ours again on the twelfth. From here the Southwestern Front goes for Lvov and the Western Front for Warsaw, and there begins the argument that will cost us the campaign."
    },
    "lose": {
     "goto": 255,
@@ -321,7 +321,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Yes, that's right, Sir. The General is reported to be dead but in the midst of our retreat we couldn't recover his body. The Russian advance has been so quick that thousands of our soldiers are still missing and we fear the worst."
+    "text": "The breakthrough was made and then not exploited. They got their rearguards onto the junctions ahead of us, ran their trains out, and pulled back to the Sluch in order.<br><br>We hold the ground and they keep their army, which is the wrong way round. This front will not get another chance like the fifth of June."
    }
   },
   "briefing": {
@@ -332,7 +332,7 @@
   "id": 7,
   "scenario": "polsov_08.xml",
   "startprestige": 0,
-  "intro": "Battle of Warszawa: Poland's last chance<br><br>August 13th, 1920<br><br>The Soviet offensive has been too strong. Again and again we have been forced to retreat and now the Russian Red Army is ready for its final assault on Warszawa. As the Russian troops cross the Wkra River and advance towards Modlin Fortress, our defeat seems inminent. In a few days Poland could cease to exist as an independent state.<br><br>The Russians want to break our defences north of Warszawa so they would be able to strike from behind the city. Our last hope is the counterattack that commander Józef Pilsudski is preparing from the south. But in the meantime you and your troops, as well all the rest of the Polish 5th Army under General Wladyslaw Sikorski, will have to defend the northern area near the Modlin Fortress from an enemy that has superior numbers. <br><br>Victory conditions: Take all VHs.<br><br>Intelligence report: On turn 3 you will receive reinforcements coming from the west.<br><br>Good luck!",
+  "intro": "Before Warsaw: the Wkra<br><br>August 13th, 1920<br><br>Read the orders in the order they were written and you can see the disaster coming.<br><br>The 4th Army and Gai's cavalry corps are to swing north-west around Warsaw. The 1st Cavalry Army is to go for Lvov, four hundred versts away, and has been told twice to come north and has not come. Between the two halves of our own front there is a gap of a hundred and fifty versts held by nothing, our men have marched six hundred versts from their railheads on what they could take from the villages, and the Polish workers who were supposed to rise have instead volunteered by the hundred thousand, because an army coming over the Vistula does not look like a revolution from underneath - it looks like Russia.<br><br>I am on the Wkra with the 15th Army's left. Sikorski's 5th Army is attacking into our flank from Modlin and there is a counterstroke forming south of the city that will be behind us by the sixteenth. My task is not the capital. My task is that this army group does not end up in the bag: hold the northern towns while the trains and the wounded go east, and get the divisional cores out through the crossings behind us.<br><br>Four of the designated formations out through the eastern exits and three of them still alive - only the designated formations may use an exit. Take Modlin and Legionowo instead if their line north of the city can be broken.<br><br>Victory conditions:<br>- Bring 4 of the designated formations off the map at (43,18), (43,24), (43,26) or (43,28), keeping at least 3 of them alive.<br>- Or hold Ciechanow (15,2), Szczytno (3,4), Plonsk (5,10), Siennica (21,10), Rozan (39,10), Pultusk (27,13), Nasielsk (16,18) and Radzymin (31,23) at the last turn - six for a brilliant victory, five for a victory, four for a tactical victory.<br>- Or take Szczypiorno (6,22), Stary Modlin (11,25) and Legionowo (19,27).",
   "outcome": {
    "briliant": {
     "goto": 8,
@@ -341,7 +341,7 @@
      0
     ],
     "prestige": 150,
-    "text": "Amazing! This counterattack will be remembered as one of the finest military feats in Poland's history! The Red Army has been crushed and now its surviving units are fleeing to avoid being surrounded and destroyed by our troops!<br><br>We must take advantage of this situation, General! It is most important to advance quickly to the east and recover our lost territories before the Russians have time to recover or the League of Nations forces us to sign an armistice..."
+    "text": "The task set me is done. The cores are out east of the Bug with their staffs and their colours, the trains went before them, and the line north of the city held long enough that nothing of mine was cut off in it.<br><br>The operation as a whole has failed and I will not write it up otherwise. The counterblow from the Wieprz went in on the sixteenth into a hundred and fifty versts of nothing and rolled up the whole southern half of the front; four divisions of the 4th Army, out of touch with everyone including each other, crossed into East Prussia and were interned. That was decided in July, by the decision to run two offensives on divergent axes with one army's worth of supply, and it was not decided here.<br><br>What was decided here is how many of us came back. We are to cover the withdrawal to the Niemen."
    },
    "victory": {
     "goto": 8,
@@ -350,7 +350,7 @@
      0
     ],
     "prestige": 80,
-    "text": "Amazing! This counterattack will be remembered as one of the finest military feats in Poland's history! The Red Army has been crushed and now its surviving units are fleeing to avoid being surrounded and destroyed by our troops!<br><br>We must take advantage of this situation, General! It is most important to advance quickly to the east and recover our lost territories before the Russians have time to recover or the League of Nations forces us to sign an armistice..."
+    "text": "The task set me is done. The cores are out east of the Bug with their staffs and their colours, the trains went before them, and the line north of the city held long enough that nothing of mine was cut off in it.<br><br>The operation as a whole has failed and I will not write it up otherwise. The counterblow from the Wieprz went in on the sixteenth into a hundred and fifty versts of nothing and rolled up the whole southern half of the front; four divisions of the 4th Army, out of touch with everyone including each other, crossed into East Prussia and were interned. That was decided in July, by the decision to run two offensives on divergent axes with one army's worth of supply, and it was not decided here.<br><br>What was decided here is how many of us came back. We are to cover the withdrawal to the Niemen."
    },
    "tactical": {
     "goto": 8,
@@ -359,7 +359,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Amazing! This counterattack will be remembered as one of the finest military feats in Poland's history! The Red Army has been crushed and now its surviving units are fleeing to avoid being surrounded and destroyed by our troops!<br><br>We must take advantage of this situation, General! It is most important to advance quickly to the east and recover our lost territories before the Russians have time to recover or the League of Nations forces us to sign an armistice..."
+    "text": "The task set me is done. The cores are out east of the Bug with their staffs and their colours, the trains went before them, and the line north of the city held long enough that nothing of mine was cut off in it.<br><br>The operation as a whole has failed and I will not write it up otherwise. The counterblow from the Wieprz went in on the sixteenth into a hundred and fifty versts of nothing and rolled up the whole southern half of the front; four divisions of the 4th Army, out of touch with everyone including each other, crossed into East Prussia and were interned. That was decided in July, by the decision to run two offensives on divergent axes with one army's worth of supply, and it was not decided here.<br><br>What was decided here is how many of us came back. We are to cover the withdrawal to the Niemen."
    },
    "lose": {
     "goto": 255,
@@ -368,7 +368,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Everything is lost. Our army has been destroyed and the Russians have conquered our beloved capital. We can offer no further resistance and we have no other option but surrender. Poland will become a dominion of Soviet Russia. Or at best, if we are lucky and the League of Nations puts pressure on Russia, we'll be allowed to keep a tiny Polish state around Kraków.<br><br>In any case, going into exile would be the best thing for you to do General. After this defeat you will be better off in Paris or London than in Poland."
+    "text": "The Wkra line went and with it the eastern road. What could not get out is in the encirclement between Nasielsk and the river, and I have no returns from it and expect none.<br><br>There is no army group on this front any more, only its remnants, and Warsaw is dictating terms to a front that cannot refuse them. My command is at an end."
    }
   },
   "briefing": {
@@ -379,7 +379,7 @@
   "id": 8,
   "scenario": "polsov_09.xml",
   "startprestige": 0,
-  "intro": "Komarów, the last cavalry battle<br><br>August 31st, 1920<br><br>Our pursuit of the retreating Bolshevik army has been quite successful so far. Now we have an opportunity to encircle and destroy the Russian's 1st cavalry Army, one of the best units in the Red Army.<br><br>The Cavalry Army, led by Semyon Budionny, is now near the town of Zamosc. But since it's heavily defended by our infantry units, he has decided to move to Komarów, some 12 miles to the east. If we attack there with our cavalry units, we could trap the Soviets between Zamosc and Niewirków. We count on you for this mission, General.<br><br>Victory conditions: Take all VHs.<br><br>Intelligence report: On turn 7 you will receive reinforcements coming from the west. But beware of Russian reinforcements.<br><br>Good luck!<br><br>Recommended core: For the sake of historical accuracy, you should only deploy cavalry and mounted artillery units in this scenario.",
+  "intro": "Komarow: the Konarmia breaks out<br><br>August 31st, 1920<br><br>The Konarmia was ordered north on the eleventh, argued for four days, and turned north on the twentieth with Warsaw already lost. It has spent the last week riding into a pocket that closed behind it, and this morning the Polish 1st Cavalry Division is astride the eastern road at Komarow with the 13th Infantry coming up behind it.<br><br>So the last great cavalry battle of this war is being fought over a road junction, because everything else has already been decided. Twelve regiments of ours against six of theirs, in fog, on ploughed fields, at the sabre - and the arithmetic does not help us, because they are between us and the east and we have to go through them and they only have to stand.<br><br>Budyonny's order is to break out to the east and keep the army. Mine is the same, written smaller: hold the northern road while the transport and the wounded clear it, and take the designated divisions out through the eastern edge. Only those formations may use an exit. If Komarow itself can be taken the road opens for everybody.<br><br>Victory conditions:<br>- Bring 4 of the designated formations off the map at (27,12), (27,17) or (27,22), keeping at least 3 of them alive.<br>- Or hold Miaczyn (12,6), Niewirkow (24,6) and Wolica Brzozowa (5,10) at the last turn - three for a brilliant victory, two for a victory, one for a tactical victory.<br>- Or take Wolica Sniatycka (13,12) and Komarow (11,19).",
   "outcome": {
    "briliant": {
     "goto": 9,
@@ -388,7 +388,7 @@
      0
     ],
     "prestige": 550,
-    "text": "This will be remembered as one of the largest cavalry battles in modern history and it has been a great victory for Poland! Although Budionny and part of his army were finally able to breakthrough our lines and retreat to the east, their losses were very high and I don't think they'll be a threat to us anymore.<br><br>But we can't stop now! We must continue our counteroffensive and recover all of the territories lost to the Russians in the last months. Your next destination will be the Niemen River."
+    "text": "We are through. The divisions are east of Komarow, the transport went out ahead of them, and the army that was supposed to be destroyed here is on the Bug in the morning.<br><br>It cost us the horses. Whole squadrons came out leading them and a cavalry army without remounts is a rifle division that eats more; the Konarmia will not fight another action like this one, and by October it will be marching south against Wrangel instead, which is where it should have gone in June.<br><br>The Poles are calling Komarow their victory and by the ground they are right. But the First Cavalry Army came out of the pocket, and pockets are supposed to keep what goes into them."
    },
    "victory": {
     "goto": 9,
@@ -397,7 +397,7 @@
      0
     ],
     "prestige": 550,
-    "text": "This will be remembered as one of the largest cavalry battles in modern history and it has been a great victory for Poland! Although Budionny and part of his army were finally able to breakthrough our lines and retreat to the east, their losses were very high and I don't think they'll be a threat to us anymore.<br><br>But we can't stop now! We must continue our counteroffensive and recover all of the territories lost to the Russians in the last months. Your next destination will be the Niemen River."
+    "text": "We are through. The divisions are east of Komarow, the transport went out ahead of them, and the army that was supposed to be destroyed here is on the Bug in the morning.<br><br>It cost us the horses. Whole squadrons came out leading them and a cavalry army without remounts is a rifle division that eats more; the Konarmia will not fight another action like this one, and by October it will be marching south against Wrangel instead, which is where it should have gone in June.<br><br>The Poles are calling Komarow their victory and by the ground they are right. But the First Cavalry Army came out of the pocket, and pockets are supposed to keep what goes into them."
    },
    "tactical": {
     "goto": 9,
@@ -406,7 +406,7 @@
      0
     ],
     "prestige": 550,
-    "text": "This will be remembered as one of the largest cavalry battles in modern history and it has been a great victory for Poland! Although Budionny and part of his army were finally able to breakthrough our lines and retreat to the east, their losses were very high and I don't think they'll be a threat to us anymore.<br><br>But we can't stop now! We must continue our counteroffensive and recover all of the territories lost to the Russians in the last months. Your next destination will be the Niemen River."
+    "text": "We are through. The divisions are east of Komarow, the transport went out ahead of them, and the army that was supposed to be destroyed here is on the Bug in the morning.<br><br>It cost us the horses. Whole squadrons came out leading them and a cavalry army without remounts is a rifle division that eats more; the Konarmia will not fight another action like this one, and by October it will be marching south against Wrangel instead, which is where it should have gone in June.<br><br>The Poles are calling Komarow their victory and by the ground they are right. But the First Cavalry Army came out of the pocket, and pockets are supposed to keep what goes into them."
    },
    "lose": {
     "goto": 255,
@@ -415,7 +415,7 @@
      0
     ],
     "prestige": 0,
-    "text": "You have missed our best chance to crush Budionny's troops. He has managed to retreat to the east with minor losses and his army will still be a challenge for us in the future. We'll still be able to continue with our counteroffensive but I think that you should resign your command. You performed well in the past, but now you seem exhausted and for the good of our nation you must take a rest."
+    "text": "The eastern road stayed shut. What did not get out at Komarow got out in squadrons and half-squadrons over the next four days, without guns, without transport, and without any of the four field hospitals.<br><br>The First Cavalry Army has been destroyed as an operational formation. There is nothing left on the southern face of this front to cover the withdrawal with."
    }
   },
   "briefing": {
@@ -426,7 +426,7 @@
   "id": 9,
   "scenario": "polsov_10.xml",
   "startprestige": 0,
-  "intro": "Riding across the Niemen River<br><br>September 20th, 1920<br><br>After nearly a month of withdrawal, the Red Army is trying to build a solid defensive line by the river Niemen, near the town of Grodno. We must break that line quickly so that we can continue our offensive before the Russian defenses are completed. Besides, the League of Nations is increasing the pressure to force a cease fire so we have only a few weeks to continue our offensive before they impose an armistice on us.<br><br>Regarding this, the High Command has made a very delicate decision. While the bulk of our army attacks Grodno and Wolkowysk, some of your best troops will advance through Sejny and Druskieniki in order to take Lida as soon as possible and thus cutting the Russian lines of retreat. You will have to cross lands that have been occupied by Lithuania, which at least in theory is a neutral country. We know that will cause a diplomatic scandal, but we are determined to take the risk since that action will allow us to advance more rapidly. Apart from that Lithuania is, in fact, a reluctant Russian ally and it claims territories that we consider to be part of Poland. <br><br>Victory conditions: Take all VHs.<br><br>Good luck!<br><br>Note: You can buy Central Lithuanian units in this scenario.",
+  "intro": "The Niemen<br><br>September 20th, 1920<br><br>Six weeks ago this army was at the gates of Warsaw. It is now digging on the Niemen with eight thousand rifles where it had thirty, and the peace conference has already opened at Riga.<br><br>That last fact is the whole shape of this battle. Both governments know the line where the war stops will be roughly the line the armies stand on when it stops, so every verst held into October is a verst at the table, and Warsaw is attacking now precisely because the Entente is about to impose an armistice on them.<br><br>They are coming at Grodno frontally and sending a group north through Lithuanian territory - a neutral country whose border they have decided not to notice - to come out at Lida behind us. My task is the line itself: the crossings, the two railway towns and the junctions south of them, held to the last turn. If their northern group can be cut off against the Augustow canal, better still.<br><br>Victory conditions:<br>- Hold Orany (27,6), Werenow (40,8), Druskieniki (17,12), Lida (40,15), Wasiliszki (32,18), Grodno (15,20), Mosty (27,26) and Wolkowysk (26,35) at the last turn - six for a brilliant victory, five for a victory, four for a tactical victory.<br>- Or take Augustow (1,17), Brzostowica Wielka (19,33), Bialystok (4,35) and the crossing at (8,24).",
   "outcome": {
    "briliant": {
     "goto": 10,
@@ -435,7 +435,7 @@
      0
     ],
     "prestige": 350,
-    "text": "It has been a tremendous battle but finally the Soviets have been defeated and they have taken heavy losses. The Bolshevik government has sent us a peace offer that we are considering right now. <br><br>The end of the war is near but until that moment comes our troops will have to go on advancing."
+    "text": "The line is where it was on the twentieth. They came through Lithuania as expected, arrived at Lida a day late and found a division waiting on the ground they meant to arrive behind.<br><br>Riga has the news within the day and it is worth more there than here. The delegation reports that the map on the table stopped moving this week.<br><br>The Lithuanians have protested the violation of their territory to the League and will be answered with a mutiny that nobody in Warsaw will admit ordering. Their turn comes in three weeks."
    },
    "victory": {
     "goto": 10,
@@ -444,7 +444,7 @@
      0
     ],
     "prestige": 350,
-    "text": "It has been a tremendous battle but finally the Soviets have been defeated and they have taken heavy losses. The Bolshevik government has sent us a peace offer that we are considering right now. <br><br>The end of the war is near but until that moment comes our troops will have to go on advancing."
+    "text": "The line is where it was on the twentieth. They came through Lithuania as expected, arrived at Lida a day late and found a division waiting on the ground they meant to arrive behind.<br><br>Riga has the news within the day and it is worth more there than here. The delegation reports that the map on the table stopped moving this week.<br><br>The Lithuanians have protested the violation of their territory to the League and will be answered with a mutiny that nobody in Warsaw will admit ordering. Their turn comes in three weeks."
    },
    "tactical": {
     "goto": 10,
@@ -453,7 +453,7 @@
      0
     ],
     "prestige": 350,
-    "text": "It has been a tremendous battle but finally the Soviets have been defeated and they have taken heavy losses. The Bolshevik government has sent us a peace offer that we are considering right now. <br><br>The end of the war is near but until that moment comes our troops will have to go on advancing."
+    "text": "The line is where it was on the twentieth. They came through Lithuania as expected, arrived at Lida a day late and found a division waiting on the ground they meant to arrive behind.<br><br>Riga has the news within the day and it is worth more there than here. The delegation reports that the map on the table stopped moving this week.<br><br>The Lithuanians have protested the violation of their territory to the League and will be answered with a mutiny that nobody in Warsaw will admit ordering. Their turn comes in three weeks."
    },
    "lose": {
     "goto": 255,
@@ -462,7 +462,7 @@
      0
     ],
     "prestige": 0,
-    "text": "It has been a tremendous battle but our troops were exhausted and we couldn't take our objectives in time. The Red Army has taken heavy losses too so the Bolshevik government has sent us a peace offer that we are considering right now.<br>I'm afraid that we'll finally have to accept the Curzon Line as the boundary between Poland and Red Russia. But after your poor performance at the battle of the Niemen River it's the best we can get."
+    "text": "Grodno was turned from the north and the whole line came off the river with it. We are back on the Molodeczno road and the delegation at Riga has been told to expect worse terms than it was offered a week ago.<br><br>The army I brought out of Poland has been used up covering the ground I was told to hold."
    }
   },
   "briefing": {
@@ -473,7 +473,7 @@
   "id": 10,
   "scenario": "polsov_11.xml",
   "startprestige": 0,
-  "intro": "Back to Minsk<br><br>October 9th, 1920<br><br>As a consequence of the peace talks that are taking place in Riga, it seems that a ceasefire is imminent. In a few days Poland and Soviet Russia will sign an armistice and the military operations will end. <br><br>I know that your troops are exhausted, but you must make the most of the time that we have left. Continue your march to the east, towards the city of Minsk. Your objective isn't the city itself, but the roads, the railway lines, and the strategic towns surrounding Minsk. That will help us to get more concessions from the Reds at the negotiation table.<br><br>Victory conditions: Take all VHs.<br><br>Intelligence report: After their defeat at the Niemen River, the Russians have few units left. Most of them are regrouping in the main towns, where they hope to offer a fierce resistance until the ceasefire comes.<br>Gen. Bulak-Balachowicz's unit of White Russians sided with Poland some months ago. They are resupplying near your HQ so you could use some of their troops if you need their help.<br><br>Good luck!<br><br>Note: You can buy White Russian units in this scenario.",
+  "intro": "Back to Minsk<br><br>October 9th, 1920<br><br>The preliminary peace was signed at Riga three days ago and the guns stop on the eighteenth. Nine days.<br><br>This morning General Zeligowski's division mutinied, on orders nobody in Warsaw will ever put in writing, and took Wilno from the Lithuanians as a private enterprise. That is the kind of week this is. On our sector both sides are doing the same arithmetic: whatever is held on the eighteenth is what the commission will draw a line around next spring.<br><br>So we go forward one last time, not for Minsk - the city is already behind our line - but for the road and rail junctions west of it that the frontier commission will otherwise hand across. Hold what we have and take what we can reach in nine days. Then it is over, and this front becomes a border.<br><br>Victory conditions:<br>- Hold Molodeczno (13,2), Radoszkowicze (26,10), Zaslaw (27,18) and Kojdanow (23,35) at the last turn - four for a brilliant victory, three for a victory, two for a tactical victory.<br>- Or take Wolozyn (2,14) and the junction at (0,27).",
   "outcome": {
    "briliant": {
     "goto": 254,
@@ -482,7 +482,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Well done! After all of your stunning victories against the Soviets, it's time for our diplomats to exploit your successes. I just hope they are as competent as you!<br><br>You must feel proud of yourself, General! You will be remembered as one of our best military commanders. Poland will be forever in debt to you. <br><br>I'll be glad to go with you to Wilno to offer our victory to Our Lady of Gate of Dawn. May our Lord give you a long and prosperous life.<br><br>The campaign is over. I hope you have liked it and thanks for playing!<br><br>Urica 2011"
+    "text": "The junctions are ours and the guns stopped with our people standing on them.<br><br>The treaty that follows in March gives Poland western Byelorussia and western Volhynia, and gives us the rest of Byelorussia, the Ukraine and six years without a war in the west. It is not a good peace. It is a peace the Republic could not have got in August, when it was being offered the Curzon line and turned it down because it thought it was about to take Warsaw.<br><br>Petliura's people are interned. Balakhovich's are still in the marshes and will be cleared out by December. The Konarmia went south a month ago and Wrangel is finished in the Crimea by November.<br><br>That is the end of it. Twenty months, from a screen in the Lithuanian forests to a frontier post outside Minsk, and the frontier post is the victory - not because we wanted this line, but because the Republic is still standing behind it. The campaign is over."
    },
    "victory": {
     "goto": 254,
@@ -491,7 +491,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Well done! After all of your stunning victories against the Soviets, it's time for our diplomats to exploit your successes. I just hope they are as competent as you!<br><br>You must feel proud of yourself, General! You will be remembered as one of our best military commanders. Poland will be forever in debt to you. <br><br>I'll be glad to go with you to Wilno to offer our victory to Our Lady of Gate of Dawn. May our Lord give you a long and prosperous life.<br><br>The campaign is over. I hope you have liked it and thanks for playing!<br><br>Urica 2011"
+    "text": "The junctions are ours and the guns stopped with our people standing on them.<br><br>The treaty that follows in March gives Poland western Byelorussia and western Volhynia, and gives us the rest of Byelorussia, the Ukraine and six years without a war in the west. It is not a good peace. It is a peace the Republic could not have got in August, when it was being offered the Curzon line and turned it down because it thought it was about to take Warsaw.<br><br>Petliura's people are interned. Balakhovich's are still in the marshes and will be cleared out by December. The Konarmia went south a month ago and Wrangel is finished in the Crimea by November.<br><br>That is the end of it. Twenty months, from a screen in the Lithuanian forests to a frontier post outside Minsk, and the frontier post is the victory - not because we wanted this line, but because the Republic is still standing behind it. The campaign is over."
    },
    "tactical": {
     "goto": 254,
@@ -500,7 +500,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Well done! After all of your stunning victories against the Soviets, it's time for our diplomats to exploit your successes. I just hope they are as competent as you!<br><br>You must feel proud of yourself, General! You will be remembered as one of our best military commanders. Poland will be forever in debt to you. <br><br>I'll be glad to go with you to Wilno to offer our victory to Our Lady of Gate of Dawn. May our Lord give you a long and prosperous life.<br><br>The campaign is over. I hope you have liked it and thanks for playing!<br><br>Urica 2011"
+    "text": "The junctions are ours and the guns stopped with our people standing on them.<br><br>The treaty that follows in March gives Poland western Byelorussia and western Volhynia, and gives us the rest of Byelorussia, the Ukraine and six years without a war in the west. It is not a good peace. It is a peace the Republic could not have got in August, when it was being offered the Curzon line and turned it down because it thought it was about to take Warsaw.<br><br>Petliura's people are interned. Balakhovich's are still in the marshes and will be cleared out by December. The Konarmia went south a month ago and Wrangel is finished in the Crimea by November.<br><br>That is the end of it. Twenty months, from a screen in the Lithuanian forests to a frontier post outside Minsk, and the frontier post is the victory - not because we wanted this line, but because the Republic is still standing behind it. The campaign is over."
    },
    "lose": {
     "goto": 255,
@@ -509,7 +509,7 @@
      0
     ],
     "prestige": 0,
-    "text": "This has certainly been a bittersweet ending. Your failure at the gates of Minsk will make it much harder for our diplomats to get concessions from the Russians. It's a pity that you couldn't finish what you had started.<br><br>The campaign is over. I hope you have liked it and thanks for playing.<br><br>Urica 2011"
+    "text": "We could not get onto the junctions before the ceasefire hour and the commission will draw its line accordingly - west of Molodeczno instead of east of Wolozyn, with a hundred thousand people on the wrong side of it.<br><br>The war is over and the Republic has survived it, which is more than seemed likely in August. I would have liked to hand the delegation a better map. The campaign is over."
    }
   },
   "briefing": {

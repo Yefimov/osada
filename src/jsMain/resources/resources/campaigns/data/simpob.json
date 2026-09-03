@@ -3,7 +3,7 @@
   "id": 0,
   "scenario": "simpob_00.xml",
   "startprestige": 0,
-  "intro": "Until you find somebody: the Komuch offensive (I)<br><br>June 8th, 1918<br><br>Without any doubt, 1917 was the worst year of my life. The Tsar was dethroned and, some time later, taken prisoner. My beloved Russia lost the Great War against Germany. And, on top of all that, the Bolsheviks took power in most of the country. My motherland seemed to be withering, and so did my soul. Wishing to die, and being certain that my end was near, in the first weeks of 1918 I returned to my hometown near Samara, where at least I'd spend my last days with my parents and sisters.<br><br>But it all changed when the Czech Legion, intending to leave Russia, revolted against the Bolsheviks, who had denied the Legion safe passage along the Trans-Siberian Railway  towards Vladivostok.<br><br>The Czechs soon took several towns along the railway, and during the first days of June they occupied Samara. Almost immediately, the anti-Bolshevik leaders in the town formed a provisional government, the Komuch, contolled by members of the Socialist-Revolutionary Party, and called for the mobilization of a People's Army.<br><br>The mobilization didn't succeed. The Komuch had many supporters among the peasants and the factory workers, but they were tired after four years of war, and most of them, showing a short-sighted attitude that could lead them to death, refused to fight. For their part, the monarchists and the conservatives considered that the Komuch was scum, almost as bad as the Bolsheviks, so the majority of the right-wingers just stayed at home, denying the Komuch any help.<br><br>Instead, I decided to volunteer. I hated the idea of serving a socialist government and fighting under a red flag, but it was better than waiting at home for the Bolsheviks to shoot me. At least I'd have a last chance to die with my boots on.<br><br>The same evening, the officers who were at that time in Samara and had decided to join the Komuch Army discussed who could unite us and lead us. Nobody wanted to take that responsibility. People hesitated, and we were embarrased and silent. One captain even suggested drawing lots. Then, lieutenant colonel Vladimir Kappel, one of the youngest officers, stood up and said \"if nobody wants to lead then, until you find somebody with higher rank, let me lead the military units against the Bolsheviks\".<br><br>And that's how it began. A strange mixture of unreliable Czech veterans, a few hundreds of socialist volunteers and a handful of army officers joined in Samara and decided to fight the Bolsheviks. We'd start taking strategically important towns located along the railways, or on the shores of the Volga.<br><br>Victory conditions:<br>- Take all the VHs.",
+  "intro": "By this sign: the Komuch offensive<br><br>June 8th, 1918<br><br>The men coming down the Volga have a banner with the old words on it - By this sign shalt thou conquer - and underneath the banner is a Committee of ex-deputies, a Czechoslovak corps that was supposed to be going home through Vladivostok, and the officers' druzhinas of every town between here and Chelyabinsk. They are going to write those words over everything they take. We shall see what they are worth by the autumn.<br><br>Samara fell this morning. The Czechoslovak battalions took the bridge over the Volga before the demolition party got to it, and the Committee of Members of the Constituent Assembly has declared itself the government of Russia in a building the garrison was holding at breakfast.<br><br>I command a detachment of the 1st Army. Between Samara and Kazan there is one railway, four towns on it, and nothing else. Hold them, and take the bridgehead back if it can be done.<br><br>Victory conditions:<br>- Hold Simbirsk (7,5), Melekess (21,7), Stavropol (20,19) and Syzran (8,26).<br>- Take Samara (30,23).",
   "outcome": {
    "briliant": {
     "goto": 1,
@@ -12,7 +12,7 @@
      0
     ],
     "prestige": 480,
-    "text": "Kappel was an extremely competent officer, and after six weeks of fighting we had defeated all the communist forces between Simbirsk and Khvalynsk. Besides, in the east the Czech Legion had conquered all the important outposts along the Trans-Siberian Railway, from Samara to Irkutsk. Sadly, they didn't reach Ekaterinburg in time to save the Tsar and his family, who were cruelly murdered by the Bolsheviks a few days before the Czechs could control the area.<br><br>After these initial victories, from its headquartes in Samara the Komuch decided that our next step should be to capture Saratov, in the south. If Saratov and Tsaritsyn fell in our hands, we'd have a chance to link with the Don cossacks and the Volunteer Army, who were fighting the Bolsheviks in Southern Russia. However, Kappel believed that Kazan, in the north, was a more important target, where we could get decent equipment, ammunition, and new volunteers.<br><br>In the end, Kappel convinced the Komuch, and during the summer we headed to Kazan."
+    "text": "The four towns are held and the line between them is ours. We did not get Samara back - the bridgehead was reinforced across the river faster than we could close it, and a frontal attack over that bridge with the troops available would have cost the detachment and bought nothing.<br><br>The Eastern Front is being organised properly at last: Vatsetis is forming it into armies with staffs and a supply service instead of detachments that answer to whoever raised them. What we have given him is a front that still exists to be organised."
    },
    "victory": {
     "goto": 1,
@@ -21,7 +21,7 @@
      0
     ],
     "prestige": 480,
-    "text": "Kappel was an extremely competent officer, and after six weeks of fighting we had defeated all the communist forces between Simbirsk and Khvalynsk. Besides, in the east the Czech Legion had conquered all the important outposts along the Trans-Siberian Railway, from Samara to Irkutsk. Sadly, they didn't reach Ekaterinburg in time to save the Tsar and his family, who were cruelly murdered by the Bolsheviks a few days before the Czechs could control the area.<br><br>After these initial victories, from its headquartes in Samara the Komuch decided that our next step should be to capture Saratov, in the south. If Saratov and Tsaritsyn fell in our hands, we'd have a chance to link with the Don cossacks and the Volunteer Army, who were fighting the Bolsheviks in Southern Russia. However, Kappel believed that Kazan, in the north, was a more important target, where we could get decent equipment, ammunition, and new volunteers.<br><br>In the end, Kappel convinced the Komuch, and during the summer we headed to Kazan."
+    "text": "The four towns are held and the line between them is ours. We did not get Samara back - the bridgehead was reinforced across the river faster than we could close it, and a frontal attack over that bridge with the troops available would have cost the detachment and bought nothing.<br><br>The Eastern Front is being organised properly at last: Vatsetis is forming it into armies with staffs and a supply service instead of detachments that answer to whoever raised them. What we have given him is a front that still exists to be organised."
    },
    "tactical": {
     "goto": 1,
@@ -30,16 +30,16 @@
      0
     ],
     "prestige": 480,
-    "text": "Kappel was an extremely competent officer, and after six weeks of fighting we had defeated all the communist forces between Simbirsk and Khvalynsk. Besides, in the east the Czech Legion had conquered all the important outposts along the Trans-Siberian Railway, from Samara to Irkutsk. Sadly, they didn't reach Ekaterinburg in time to save the Tsar and his family, who were cruelly murdered by the Bolsheviks a few days before the Czechs could control the area.<br><br>After these initial victories, from its headquartes in Samara the Komuch decided that our next step should be to capture Saratov, in the south. If Saratov and Tsaritsyn fell in our hands, we'd have a chance to link with the Don cossacks and the Volunteer Army, who were fighting the Bolsheviks in Southern Russia. However, Kappel believed that Kazan, in the north, was a more important target, where we could get decent equipment, ammunition, and new volunteers.<br><br>In the end, Kappel convinced the Komuch, and during the summer we headed to Kazan."
+    "text": "The four towns are held and the line between them is ours. We did not get Samara back - the bridgehead was reinforced across the river faster than we could close it, and a frontal attack over that bridge with the troops available would have cost the detachment and bought nothing.<br><br>The Eastern Front is being organised properly at last: Vatsetis is forming it into armies with staffs and a supply service instead of detachments that answer to whoever raised them. What we have given him is a front that still exists to be organised."
    },
    "lose": {
-    "goto": 3,
+    "goto": 1,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 480,
-    "text": "Kappel was an extremely competent officer, but the Red Army was too powerful for us at that time. After six weeks of fighting we had been defeated, the Komuch was disbanded, and we were forced to leave Samara. To make things even worse, the Tsar and his family were cruelly murdered by the Bolsheviks in the month of July.<br><br>Fortunately, in the east the Czech Legion had conquered all the important outposts along the Trans-Siberian Railway, from Samara to Irkutsk. So we joined them on their evacuation, and before the end of the summer we had arrived safely in Ufa."
+    "text": "The railway line has gone with the towns on it. The detachments that were holding it are coming north as best they can, most of them without their guns.<br><br>The Volga from Syzran to Melekess is theirs, and Kazan is now the front line."
    }
   }
  },
@@ -47,7 +47,7 @@
   "id": 1,
   "scenario": "simpob_01.xml",
   "startprestige": 0,
-  "intro": "Uncountable trophies: the Komuch offensive (II)<br><br>August 4th, 1918<br><br>As soon as we took Simbirsk, Kappel started to plan an offensive to capture Kazan, against the orders of the Komuch, that still wanted an attack on Saratov.<br><br>According to Kappel's plan, the People's Army and the Czechs would advance along both shores of the Volga and would attack the Bolsheviks from several directions, trapping them in the town or forcing them to flee. The communists outnumbered us three to one, so the greater mobility of our troops would be decisive. We'd use all the river boats that we had been able to find in order to advance along the Volga faster.<br><br>Besides, we knew that among the best Soviet units there were some foreign fighters, especially Serbians, that were discontent with their communist masters and would rebel against them if they had the chance. Not all the non-Russians would do the same. Most of the Latvians, the Tatars and the Hungarians seemed to be loyal to the Bolsheviks, and they were all veteran soldiers. We knew that the battle would be tough, but we were confident after our past victories in Samara and Simbirsk.<br><br>Victory conditions:<br>- Take all the VHs.<br><br>Special note:<br>- When you take the VHs at Kazan, new units will join your core.",
+  "intro": "Uncountable trophies: Kazan<br><br>August 4th, 1918<br><br>Kazan holds the gold.<br><br>Six hundred million roubles of the Imperial reserve were evacuated here for safety in 1915 and they are still in the bank vaults, and every man in Kappel's column knows it. That is why the attack is coming here and not somewhere sensible, and it is also why we cannot simply trade the city for space.<br><br>Kappel has perhaps three thousand men and the Serbian battalion and two gunboats. We have the 5th Army, which is three days old and has a staff that has never worked together. Hold the Kremlin, the academy and the river crossings. Bogorodskoye downstream is where their flotilla is basing.<br><br>Victory conditions:<br>- Hold the Kazan Kremlin (27,3), the Military Academy (26,2), Vasilyevo (22,3), Verkhniy Uslan (23,4) and Karaishevo (33,17).<br>- Take Bogorodskoye (30,25).",
   "outcome": {
    "briliant": {
     "goto": 2,
@@ -56,7 +56,7 @@
      0
     ],
     "prestige": 520,
-    "text": "Until we finally entered Kazan, I didn't fully understand the brilliance of Kappel's strategy. With just a handful of soldiers, we had inflicted the Bolsheviks thousands of casualties, mostly prisoners. But that was only a minimal part of the uncountable effects of our victory: To begin with, all the staff and the cadets od the Kazan Military Academy joined our side. The workers of the factories at Izhevsk and Votkinsk raised against the Reds, too, although they foolishly refused to join us, and were finally crushed. We also found huge warehouses full with weapons, ammunition and medicines, and the most incredible of all, we seized most of the Imperial gold reserves of Russia: 650 million rubles in gold coins and 100 million rubles in gold bars, platinum and other valuables. We could survive for many months thanks to all those resources.<br><br>For a few days the Bolsheviks were in shock, unable to react. Kappel tried to convince the Komuch that, if we took advantage of the situation and advanced to Moscow through Nizhny Novgorod, the war would be over before the end of the summer. And maybe he was right. But the Komuch was afraid of leaving Samara, Simbirsk and Kazan undefended, and the Czechs didn't really wish to fight a Russian war, so they didn't agree with Kappel. Maybe if he had been older, with a higher rank, they would have listened to him. But they didn't. We went on the defensive, and we let our enemies retake the initiative.<br><br>And that was the end of the Komuch. The Red Army regrouped and received reinforces, while all our attempts to mobilize a bigger army failed. The passivity of the Socialist-Revolutionaries led them to disaster. The Bolsheviks were a buch of fanatics, criminals and murderers, but their determination was simply enviable. They would stop at nothing in order to obtain power, and that gave them an advantage over all of us. Just one month after we occupied Kazan, a massive Soviet counterattack forced us to retreat down the Volga, towards Samara, with our enemies on our heels."
+    "text": "Kazan is held, the vaults are intact, and the flotilla base downstream has been burned out from the land side.<br><br>Trotsky's train is at Sviyazhsk and the Fifth Army has been given a spine in a week: field courts, commissars in every regiment, and reinforcements coming up the line from Moscow. The gold stays where it is until it can be moved under guard.<br><br>The Committee's people are calling this their high-water mark in the newspapers. They are about to be right."
    },
    "victory": {
     "goto": 2,
@@ -65,7 +65,7 @@
      0
     ],
     "prestige": 520,
-    "text": "Until we finally entered Kazan, I didn't fully understand the brilliance of Kappel's strategy. With just a handful of soldiers, we had inflicted the Bolsheviks thousands of casualties, mostly prisoners. But that was only a minimal part of the uncountable effects of our victory: To begin with, all the staff and the cadets od the Kazan Military Academy joined our side. The workers of the factories at Izhevsk and Votkinsk raised against the Reds, too, although they foolishly refused to join us, and were finally crushed. We also found huge warehouses full with weapons, ammunition and medicines, and the most incredible of all, we seized most of the Imperial gold reserves of Russia: 650 million rubles in gold coins and 100 million rubles in gold bars, platinum and other valuables. We could survive for many months thanks to all those resources.<br><br>For a few days the Bolsheviks were in shock, unable to react. Kappel tried to convince the Komuch that, if we took advantage of the situation and advanced to Moscow through Nizhny Novgorod, the war would be over before the end of the summer. And maybe he was right. But the Komuch was afraid of leaving Samara, Simbirsk and Kazan undefended, and the Czechs didn't really wish to fight a Russian war, so they didn't agree with Kappel. Maybe if he had been older, with a higher rank, they would have listened to him. But they didn't. We went on the defensive, and we let our enemies retake the initiative.<br><br>And that was the end of the Komuch. The Red Army regrouped and received reinforces, while all our attempts to mobilize a bigger army failed. The passivity of the Socialist-Revolutionaries led them to disaster. The Bolsheviks were a buch of fanatics, criminals and murderers, but their determination was simply enviable. They would stop at nothing in order to obtain power, and that gave them an advantage over all of us. Just one month after we occupied Kazan, a massive Soviet counterattack forced us to retreat down the Volga, towards Samara, with our enemies on our heels."
+    "text": "Kazan is held, the vaults are intact, and the flotilla base downstream has been burned out from the land side.<br><br>Trotsky's train is at Sviyazhsk and the Fifth Army has been given a spine in a week: field courts, commissars in every regiment, and reinforcements coming up the line from Moscow. The gold stays where it is until it can be moved under guard.<br><br>The Committee's people are calling this their high-water mark in the newspapers. They are about to be right."
    },
    "tactical": {
     "goto": 2,
@@ -74,7 +74,7 @@
      0
     ],
     "prestige": 520,
-    "text": "Until we finally entered Kazan, I didn't fully understand the brilliance of Kappel's strategy. With just a handful of soldiers, we had inflicted the Bolsheviks thousands of casualties, mostly prisoners. But that was only a minimal part of the uncountable effects of our victory: To begin with, all the staff and the cadets od the Kazan Military Academy joined our side. The workers of the factories at Izhevsk and Votkinsk raised against the Reds, too, although they foolishly refused to join us, and were finally crushed. We also found huge warehouses full with weapons, ammunition and medicines, and the most incredible of all, we seized most of the Imperial gold reserves of Russia: 650 million rubles in gold coins and 100 million rubles in gold bars, platinum and other valuables. We could survive for many months thanks to all those resources.<br><br>For a few days the Bolsheviks were in shock, unable to react. Kappel tried to convince the Komuch that, if we took advantage of the situation and advanced to Moscow through Nizhny Novgorod, the war would be over before the end of the summer. And maybe he was right. But the Komuch was afraid of leaving Samara, Simbirsk and Kazan undefended, and the Czechs didn't really wish to fight a Russian war, so they didn't agree with Kappel. Maybe if he had been older, with a higher rank, they would have listened to him. But they didn't. We went on the defensive, and we let our enemies retake the initiative.<br><br>And that was the end of the Komuch. The Red Army regrouped and received reinforces, while all our attempts to mobilize a bigger army failed. The passivity of the Socialist-Revolutionaries led them to disaster. The Bolsheviks were a buch of fanatics, criminals and murderers, but their determination was simply enviable. They would stop at nothing in order to obtain power, and that gave them an advantage over all of us. Just one month after we occupied Kazan, a massive Soviet counterattack forced us to retreat down the Volga, towards Samara, with our enemies on our heels."
+    "text": "Kazan is held, the vaults are intact, and the flotilla base downstream has been burned out from the land side.<br><br>Trotsky's train is at Sviyazhsk and the Fifth Army has been given a spine in a week: field courts, commissars in every regiment, and reinforcements coming up the line from Moscow. The gold stays where it is until it can be moved under guard.<br><br>The Committee's people are calling this their high-water mark in the newspapers. They are about to be right."
    },
    "lose": {
     "goto": 2,
@@ -83,7 +83,7 @@
      0
     ],
     "prestige": 520,
-    "text": "All our efforts were in vain. The Bolsheviks were too strong and numerous, and nothing seemed to work against them.<br><br>That was the end of the Komuch. The Bolsheviks were a buch of fanatics, criminals and murderers, but their determination was simply enviable. They would stop at nothing in order to obtain power, and that gave them an advantage over all of us. Just a few days later, a massive Soviet counterattack forced us to retreat down the Volga, towards Samara, with our enemies on our heels."
+    "text": "The Kremlin was taken with the vaults under it. The gold reserve of the Russian Republic went east on their trains within the week and it will pay for the whole of their war.<br><br>Our army has fallen back on Sviyazhsk. Trotsky's train arrived there this morning and the first thing off it was a field tribunal."
    }
   }
  },
@@ -91,7 +91,7 @@
   "id": 2,
   "scenario": "simpob_02.xml",
   "startprestige": 0,
-  "intro": "Harvest of sorrow: the end of the Komuch<br><br>September 18th, 1918<br><br>Trotsky coordinated the Soviet counterattack so well that, even before our evacuation of Kazan was complete, the Bolsheviks had taken Simbirsk, and Syzran and Samara were already in danger.<br><br>Three Red Armies were participating in the offensive. The Fifth Army, commanded by the Latvian Slavens, which had followed us from Kazan, was in the north, ready to cut the railroad at Melekess and encircle us. Tukhachevsky's First Army was in the west, controlled Simbirsk, and was going to attack Syzran and Samara from the north. Finally, Chwiesin's Fourth army was in the south, on both shores of the Volga, and would attack Syzran and Samara coordinated with the First Army.<br><br>We were so badly outnumbered that we knew that defeating the Bolsheviks was impossible. The only thing that we could do was to resist for a few weeks, avoiding to be trapped by the Soviet pincers, and giving the civilians enough time to be evacuated to Siberia, where we could continue the resistance.<br><br>Meanwhile, the Komuch delegates were meeting in Ufa with representatives of other anti-Bolshevik governments, organisations and political parties. The most important one was the Provisional Siberian Government (PSG), created in Omsk at the end of June. Just like the Komuch, the majority of the PSG were members of the Socialist-Revolutionary Party, but thanks to the British influence, the Tsarists, the conservatives and the military officers still retained much power.<br><br>The goal of the Ufa Conference was to unite the different anti-Bolshevik organisations of eastern Russia and approve a coordinated strategy to defeat the Soviet plague. If they came to an agreement, our efforts on the battlefield wouldn't be in vain.<br><br>Victory conditions:<br>- You must evacuate 7 civilian units through the EH at (41,23). All of them are MSUs.<br><br>- If, during the BV and the V turns, the Soviets manage to control the VHs of Simbirsk (8,6) and Syzran (8,26) at the same time, you will lose.<br><br>Special note: <br>- The railroads will be very important for evacuating the civilians. Be careful, and try not to blow them with artillery fire.",
+  "intro": "Harvest of sorrow: the end of the Komuch<br><br>September 18th, 1918<br><br>The tide has turned and the Committee knows it before we do.<br><br>Kazan was retaken on the tenth, Simbirsk on the twelfth - Tukhachevsky's 1st Army took it in two days and sent Lenin a telegram about it while he was still in bed with a bullet in him. The People's Army is coming apart: the mobilised peasants will not fight for the Committee, and the Czechoslovaks have decided they are going home after all and would rather not die on the Volga first.<br><br>Samara and Syzran are the last of it. The Committee's staff and its treasury are already loading at Krotovka to go east to Ufa, and every column that gets out will be in the line against us again in the spring under Kolchak.<br><br>Victory conditions:<br>- Take Samara (30,23) and Syzran (8,26).<br>- Hold Simbirsk (8,6).<br>- The enemy escapes instead if seven of his columns get out through Krotovka (41,23).",
   "outcome": {
    "briliant": {
     "goto": 3,
@@ -100,7 +100,7 @@
      0
     ],
     "prestige": 600,
-    "text": "The last stand of the People's Army was one of the most impressive feats of the war. The civilians, our equipment and our soldiers retreated to Siberia, leaving behind a badly shattered Red Army. They would quickly recover, but for the moment we were safe.<br><br>The Conference of Ufa had a bittersweet outcome. After many debates and discussions, on September 23rd the majority of the delegates agreed to establish a five-man Directory as the basis of a new government for all Russia. But the Mensheviks and some Socialist-Revolutionaries rejected the agreement, and left the conference.<br><br>Day after day, the situation became worse. The Directory didn't arrive in Omsk, the provisional capital, until October 9th. When they did, they found that they didn't have any real power. Until it officially dissolved on November 9th, the Siberian Government refused to comply with the orders of the Directory. The British attachés acted as the real rulers of the land, and the peasants and workers didn't show any real support.<br><br>On October 28th, with the Great War about to finish, the new state of Czechoslovakia was created. Naturally, the Czech Legion made clear that they didn't wish to be a part of our civil war, and that they would only follow the Directory as long as it served their own interests, that is, they'd be with us as long as they could return to their country as soon as possible. So our largest, and more experienced, military unit finally became a group of unpredictable mercenaries who, depending on the circumstances, could fight on our side or sell their own mothers for a train passage to Vladivostok. <br><br>Lacking any kind of support, the days of the Directory were numbered. On November 17th a group of cossacks staged a coup d'etat. The next day the Directory was dissolved and the Minister of War, Admiral Alexandr Kolchak, became the Supreme Governor of All-Russia. Of course, I liked Kolchak's rule much better than the socialist governments that had tried to oppose the Bolsheviks until now, but I had learnt that, if we wanted to win the war, we were going to need allies. And that meant that we'd have to make concessions to the left-wing parties. <br><br>Instead, Kolchak didn't want to make a deal with the socialists, and that's how most of the soldiers of the Komuch People's Army deserted, or even joined our enemies. As 1918 ended, where would we find the strength, the volunteers, and the supplies to overcome the terrible Red Army? Only time would tell."
+    "text": "Samara and Syzran are ours. The Committee of Members of the Constituent Assembly ceased to govern anything at about two o'clock this afternoon.<br><br>Much of their staff got away east - the trains at Krotovka were loaded and moving before our cavalry reached the yard, and a railway is a hard thing to catch. What did not get away was the People's Army, which has stopped existing as a formation. The Volga is Soviet from Nizhny to Astrakhan.<br><br>In Omsk, meanwhile, they have decided that committees were the problem. There is talk of a Supreme Ruler."
    },
    "victory": {
     "goto": 3,
@@ -109,7 +109,7 @@
      0
     ],
     "prestige": 600,
-    "text": "The last stand of the People's Army was one of the most impressive feats of the war. The civilians, our equipment and our soldiers retreated to Siberia, leaving behind a badly shattered Red Army. They would quickly recover, but for the moment we were safe.<br><br>The Conference of Ufa had a bittersweet outcome. After many debates and discussions, on September 23rd the majority of the delegates agreed to establish a five-man Directory as the basis of a new government for all Russia. But the Mensheviks and some Socialist-Revolutionaries rejected the agreement, and left the conference.<br><br>Day after day, the situation became worse. The Directory didn't arrive in Omsk, the provisional capital, until October 9th. When they did, they found that they didn't have any real power. Until it officially dissolved on November 9th, the Siberian Government refused to comply with the orders of the Directory. The British attachés acted as the real rulers of the land, and the peasants and workers didn't show any real support.<br><br>On October 28th, with the Great War about to finish, the new state of Czechoslovakia was created. Naturally, the Czech Legion made clear that they didn't wish to be a part of our civil war, and that they would only follow the Directory as long as it served their own interests, that is, they'd be with us as long as they could return to their country as soon as possible. So our largest, and more experienced, military unit finally became a group of unpredictable mercenaries who, depending on the circumstances, could fight on our side or sell their own mothers for a train passage to Vladivostok. <br><br>Lacking any kind of support, the days of the Directory were numbered. On November 17th a group of cossacks staged a coup d'etat. The next day the Directory was dissolved and the Minister of War, Admiral Alexandr Kolchak, became the Supreme Governor of All-Russia. Of course, I liked Kolchak's rule much better than the socialist governments that had tried to oppose the Bolsheviks until now, but I had learnt that, if we wanted to win the war, we were going to need allies. And that meant that we'd have to make concessions to the left-wing parties. <br><br>Instead, Kolchak didn't want to make a deal with the socialists, and that's how most of the soldiers of the Komuch People's Army deserted, or even joined our enemies. As 1918 ended, where would we find the strength, the volunteers, and the supplies to overcome the terrible Red Army? Only time would tell."
+    "text": "Samara and Syzran are ours. The Committee of Members of the Constituent Assembly ceased to govern anything at about two o'clock this afternoon.<br><br>Much of their staff got away east - the trains at Krotovka were loaded and moving before our cavalry reached the yard, and a railway is a hard thing to catch. What did not get away was the People's Army, which has stopped existing as a formation. The Volga is Soviet from Nizhny to Astrakhan.<br><br>In Omsk, meanwhile, they have decided that committees were the problem. There is talk of a Supreme Ruler."
    },
    "tactical": {
     "goto": 3,
@@ -118,7 +118,7 @@
      0
     ],
     "prestige": 480,
-    "text": "The last stand of the People's Army was one of the most impressive feats of the war. The civilians, our equipment and our soldiers retreated to Siberia, leaving behind a badly shattered Red Army. They would quickly recover, but for the moment we were safe.<br><br>The Conference of Ufa had a bittersweet outcome. After many debates and discussions, on September 23rd the majority of the delegates agreed to establish a five-man Directory as the basis of a new government for all Russia. But the Mensheviks and some Socialist-Revolutionaries rejected the agreement, and left the conference.<br><br>Day after day, the situation became worse. The Directory didn't arrive in Omsk, the provisional capital, until October 9th. When they did, they found that they didn't have any real power. Until it officially dissolved on November 9th, the Siberian Government refused to comply with the orders of the Directory. The British attachés acted as the real rulers of the land, and the peasants and workers didn't show any real support.<br><br>On October 28th, with the Great War about to finish, the new state of Czechoslovakia was created. Naturally, the Czech Legion made clear that they didn't wish to be a part of our civil war, and that they would only follow the Directory as long as it served their own interests, that is, they'd be with us as long as they could return to their country as soon as possible. So our largest, and more experienced, military unit finally became a group of unpredictable mercenaries who, depending on the circumstances, could fight on our side or sell their own mothers for a train passage to Vladivostok. <br><br>Lacking any kind of support, the days of the Directory were numbered. On November 17th a group of cossacks staged a coup d'etat. The next day the Directory was dissolved and the Minister of War, Admiral Alexandr Kolchak, became the Supreme Governor of All-Russia. Of course, I liked Kolchak's rule much better than the socialist governments that had tried to oppose the Bolsheviks until now, but I had learnt that, if we wanted to win the war, we were going to need allies. And that meant that we'd have to make concessions to the left-wing parties. <br><br>Instead, Kolchak didn't want to make a deal with the socialists, and that's how most of the soldiers of the Komuch People's Army deserted, or even joined our enemies. As 1918 ended, where would we find the strength, the volunteers, and the supplies to overcome the terrible Red Army? Only time would tell."
+    "text": "Samara and Syzran are ours. The Committee of Members of the Constituent Assembly ceased to govern anything at about two o'clock this afternoon.<br><br>Much of their staff got away east - the trains at Krotovka were loaded and moving before our cavalry reached the yard, and a railway is a hard thing to catch. What did not get away was the People's Army, which has stopped existing as a formation. The Volga is Soviet from Nizhny to Astrakhan.<br><br>In Omsk, meanwhile, they have decided that committees were the problem. There is talk of a Supreme Ruler."
    },
    "lose": {
     "goto": 3,
@@ -127,7 +127,7 @@
      0
     ],
     "prestige": 360,
-    "text": "We tried again and again, but this time the Bolsheviks were too powerful. Many civilians and soldiers died or were captured by the Red Army, and the rest of us could barely escape to fight another day.<br><br>The Conference of Ufa had a bittersweet outcome, too. After many debates and discussions, on September 23rd the majority of the delegates agreed to establish a five-man Directory as the basis of a new government for all Russia. But the Mensheviks and some Socialist-Revolutionaries rejected the agreement, and left the conference.<br><br>Day after day, the situation became worse. The Directory didn't arrive in Omsk, the provisional capital, until October 9th. When they did, they found that they didn't have any real power. Until it officially dissolved on November 9th, the Siberian Government refused to comply with the orders of the Directory. The British attachés acted as the real rulers of the land, and the peasants and workers didn't show any real support.<br><br>On October 28th, with the Great War about to finish, the new state of Czechoslovakia was created. Naturally, the Czech Legion made clear that they didn't wish to be a part of our civil war, and that they would only follow the Directory as long as it served their own interests, that is, they'd be with us as long as they could return to their country as soon as possible. So our largest, and more experienced, military unit finally became a group of unpredictable mercenaries who, depending on the circumstances, could fight on our side or sell their own mothers for a train passage to Vladivostok. <br><br>Lacking any kind of support, the days of the Directory were numbered. On November 17th a group of cossacks staged a coup d'etat. The next day the Directory was dissolved and the Minister of War, Admiral Alexandr Kolchak, became the Supreme Governor of All-Russia. Of course, I liked Kolchak's rule much better than the socialist governments that had tried to oppose the Bolsheviks until now, but I had learnt that, if we wanted to win the war, we were going to need allies. And that meant that we'd have to make concessions to the left-wing parties. <br><br>Instead, Kolchak didn't want to make a deal with the socialists, and that's how most of the soldiers of the Komuch People's Army deserted, or even joined our enemies. As 1918 ended, where would we find the strength, the volunteers, and the supplies to overcome the terrible Red Army? Only time would tell."
+    "text": "The evacuation went off complete: staff, treasury, printing presses and the greater part of the People's Army, east along the Ufa line.<br><br>We hold Simbirsk and the middle Volga, which is the campaign's object and not much comfort tonight. Everything that left Krotovka this week will be in front of us at Ufa."
    }
   }
  },
@@ -135,7 +135,7 @@
   "id": 3,
   "scenario": "simpob_03.xml",
   "startprestige": 0,
-  "intro": "At the gates of Europe: Ufa<br><br>January 6th, 1919<br><br>The end of 1918 was very hard to us. At least,  Admiral Kolchak was our new Supreme Governor, and he was doing his best to win the war, but problems arose everywhere. We couldn't trust he Czechs, so most of them were retired from the front, and they were ordered to guard the Trans-Siberian Railway. It was the best possible decision, but it had a great flaw: thousands of armed foreigners were controlling our only supply line. Not surprisingly, they soon started to use the trains to secure their own evacuation, while our men in the front lacked proper equipment and reinforcements.<br><br>Most of the soldiers that sympathized with the Socialist Revolutionary Party had already deserted, or even changed sides. And, on top of all, the Bolsheviks kept on attacking us, taking one village after another.<br><br>Everything seemed to change at the end of December, when our troops defeated the Red Army in Perm. Pepelyayev and his Siberians recovered the city on December 24th, after routing the communist 3rd Army. That victory gave us hope.<br><br>But, south of Perm, the 5th Army continued its advance, and on December 31st we had to evacuate Ufa. Knowing the strategical importance of that city, a few days later Kolchak ordered us to counterattack.<br><br>Victory conditions:<br>- Take all the VHs.<br><br>Intelligence report:<br>- Some Bolshevik units have been seen trying to cross the mountains. Don't forget to protect your rear.<br><br>Special note: <br>- This is a mostly fictional scenario. Actually, the White counterattack was very weak, and there never was a chance to recover Ufa until the spring.",
+  "intro": "At the gates of Europe: Ufa<br><br>January 6th, 1919<br><br>There is a Supreme Ruler now.<br><br>Admiral Kolchak took power in Omsk in November by arresting the last of the Committee's ministers, and the Entente has recognised what he did by continuing to unload rifles at Vladivostok. He has a real staff, a real mobilisation and the whole of Siberia's railway.<br><br>His first stroke has come at Ufa in a Urals winter, against the 5th Army, which is holding a hundred and fifty versts with nine thousand men and no reserve worth the name. It is thirty degrees below and the ground cannot be dug.<br><br>Hold the city and the approaches. Iglino on the Chelyabinsk line is where their assault groups form.<br><br>Victory conditions:<br>- Hold Ufa (3,17), Cherkassy (11,2), Kumlekul (6,4) and Alatorka (21,18).<br>- Take Iglino (37,21).",
   "outcome": {
    "briliant": {
     "goto": 4,
@@ -144,7 +144,7 @@
      0
     ],
     "prestige": 600,
-    "text": "Under the extreme cold weather, we prevailed, and Ufa finally fell in our hands. Our troops in the south weren't so lucky, and before the end of January we lost the town of Orenburg. But, at least, the Soviet attacks stopped, and with Perm and Ufa firmly under our control, we had two excellent bases to start a counteroffensive as soon as the spring came."
+    "text": "Ufa is held and the forming-up area at Iglino was broken up before their main body could use it.<br><br>The front will still be shortened. Not because of this sector: the Perm direction has gone - the 3rd Army lost eighteen thousand men and the city on Christmas Eve - and a line that holds in the centre while its right is walked round is a line that gets encircled. We go back on the Ufa river in good order and with the army intact.<br><br>A commission from Moscow is on its way to find out what happened at Perm. Stalin and Dzerzhinsky, they say."
    },
    "victory": {
     "goto": 4,
@@ -153,25 +153,25 @@
      0
     ],
     "prestige": 600,
-    "text": "Under the extreme cold weather, we prevailed, and Ufa finally fell in our hands. Our troops in the south weren't so lucky, and before the end of January we lost the town of Orenburg. But, at least, the Soviet attacks stopped, and with Perm and Ufa firmly under our control, we had two excellent bases to start a counteroffensive as soon as the spring came."
+    "text": "Ufa is held and the forming-up area at Iglino was broken up before their main body could use it.<br><br>The front will still be shortened. Not because of this sector: the Perm direction has gone - the 3rd Army lost eighteen thousand men and the city on Christmas Eve - and a line that holds in the centre while its right is walked round is a line that gets encircled. We go back on the Ufa river in good order and with the army intact.<br><br>A commission from Moscow is on its way to find out what happened at Perm. Stalin and Dzerzhinsky, they say."
    },
    "tactical": {
-    "goto": 5,
+    "goto": 4,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 420,
-    "text": "Under the extreme cold weather, we couldn't accomplish our mission, and Ufa remained under the control of the Bolsheviks. Our troops in the south weren't lucky, either, and before the end of January we lost the town of Orenburg, too. But, at least, the Soviet attacks stopped. Our enemies were exhausted after so many months of combats.<br><br>We decided to start a counteroffensive when the spring came, but we knew that it was going to be a difficult task. The Soviets had established solid defence lines at the foot of the Urals, and breaking them wouldn't be easy."
+    "text": "Ufa is held and the forming-up area at Iglino was broken up before their main body could use it.<br><br>The front will still be shortened. Not because of this sector: the Perm direction has gone - the 3rd Army lost eighteen thousand men and the city on Christmas Eve - and a line that holds in the centre while its right is walked round is a line that gets encircled. We go back on the Ufa river in good order and with the army intact.<br><br>A commission from Moscow is on its way to find out what happened at Perm. Stalin and Dzerzhinsky, they say."
    },
    "lose": {
-    "goto": 5,
+    "goto": 4,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 420,
-    "text": "Under the extreme cold weather, we couldn't accomplish our mission, and Ufa remained under the control of the Bolsheviks. Our troops in the south weren't lucky, either, and before the end of January we lost the town of Orenburg, too. But, at least, the Soviet attacks stopped. Our enemies were exhausted after so many months of combats.<br><br>We decided to start a counteroffensive when the spring came, but we knew that it was going to be a difficult task. The Soviets had established solid defence lines at the foot of the Urals, and breaking them wouldn't be easy."
+    "text": "The city has gone, and the Ufa river with it. The 5th Army is falling back on Sterlitamak in weather that is killing more of the wounded than the fighting did.<br><br>Perm went a fortnight ago. The whole Urals front is now a line drawn on a map in Moscow and not much else."
    }
   }
  },
@@ -179,43 +179,43 @@
   "id": 4,
   "scenario": "simpob_04.xml",
   "startprestige": 0,
-  "intro": "Breakthrough: the Spring Offensive<br><br>March 1st, 1919<br><br>After recovering Ufa, Kolchak's staff started to plan our Spring Offensive. For better or worse, it would start in March. Our supply lines were still a mess, and many of our soldiers didn't have a decent training, but we couldn't wait any longer. <br>In the north, our Siberian units would advance from Perm to Vyatka and Vologda, trying to connect with Yudenich and the British near Petrograd. In the south, Dutov's cossacks would attack Orenburg. In the centre, our final mission was to liberate Kazan, Simbirsk and Samara. But first we'd have to defeat the five Red divisions that were deployed east of Belebei.<br><br>Victory conditions:<br>- Take all the VHs.<br><br>Special note: <br>- This is a semi-fictional scenario. The Whites didn't control Ufa when the Spring offensive began.",
+  "intro": "Breakthrough: the spring offensive<br><br>March 1st, 1919<br><br>This is the one they have been building all winter.<br><br>Khanzhin's Western Army has come out of the thaw straight at the junction of our 5th and 1st Armies with a three-to-one superiority on the axis of attack, and behind it Gaida is driving on Vyatka to join hands with the interventionists at Archangel. If those two ever shake hands the northern half of the Republic is cut off.<br><br>We have five towns on the railway and not enough of anything. Hold them. Ufa, behind their front, is their railhead and their whole supply rests on it.<br><br>Victory conditions:<br>- Hold Belebei (12,16), Tuymazy (8,7), Abdulino (8,22), Sterlitamak (32,22) and Meleuz (32,28).<br>- Take Ufa (33,4).",
   "outcome": {
    "briliant": {
-    "goto": 6,
+    "goto": 5,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 600,
-    "text": "When we finally stopped to rest and regroup, the First and the Fith Soviet Armies had been virtually destroyed. In the north, the Siberians had met moderate success, too. We had reasons to be optimistic.<br><br>However, in the south, the cossacks, outnumbered, without adequate equipment, and isolated from the rest of our army, hadn't been able to take Orenburg. If the Reds kept that city they would threaten our left flank, and it would be very dangerous to continue our race to the Volga, so Kolchak ordered us to go south and help the cossacks to occupy Orenburg at all costs."
+    "text": "The five towns are still ours and their timetable is a fortnight behind.<br><br>That fortnight is the whole value of what was done here. The Central Committee has declared the Eastern Front the decisive front; Frunze is forming a southern group at Buzuluk out of everything the Republic can scrape together, and every day their offensive spends grinding against these towns is a day that group gets stronger and their own flank gets longer."
    },
    "victory": {
-    "goto": 6,
+    "goto": 5,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 600,
-    "text": "When we finally stopped to rest and regroup, the First and the Fith Soviet Armies had been virtually destroyed. In the north, the Siberians had met moderate success, too. We had reasons to be optimistic.<br><br>However, in the south, the cossacks, outnumbered, without adequate equipment, and isolated from the rest of our army, hadn't been able to take Orenburg. If the Reds kept that city they would threaten our left flank, and it would be very dangerous to continue our race to the Volga, so Kolchak ordered us to go south and help the cossacks to occupy Orenburg at all costs."
+    "text": "The five towns are still ours and their timetable is a fortnight behind.<br><br>That fortnight is the whole value of what was done here. The Central Committee has declared the Eastern Front the decisive front; Frunze is forming a southern group at Buzuluk out of everything the Republic can scrape together, and every day their offensive spends grinding against these towns is a day that group gets stronger and their own flank gets longer."
    },
    "tactical": {
-    "goto": 6,
+    "goto": 5,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 600,
-    "text": "When we finally stopped to rest and regroup, the First and the Fith Soviet Armies had been virtually destroyed. In the north, the Siberians had met moderate success, too. We had reasons to be optimistic.<br><br>However, in the south, the cossacks, outnumbered, without adequate equipment, and isolated from the rest of our army, hadn't been able to take Orenburg. If the Reds kept that city they would threaten our left flank, and it would be very dangerous to continue our race to the Volga, so Kolchak ordered us to go south and help the cossacks to occupy Orenburg at all costs."
+    "text": "The five towns are still ours and their timetable is a fortnight behind.<br><br>That fortnight is the whole value of what was done here. The Central Committee has declared the Eastern Front the decisive front; Frunze is forming a southern group at Buzuluk out of everything the Republic can scrape together, and every day their offensive spends grinding against these towns is a day that group gets stronger and their own flank gets longer."
    },
    "lose": {
-    "goto": 7,
+    "goto": 5,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 420,
-    "text": "When we finally stopped to rest and regroup, the First and the Fith Soviet Armies had been virtually destroyed. In the north, the Siberians had met moderate success, too. However, we were exhausted, and the heavy rains had turned the roads into streams of mud. We couldn't  continue our race to the Volga. <br><br>Besides, in the south, the cossacks, outnumbered, without adequate equipment, and isolated from the rest of our army, hadn't been able to take Orenburg. From that stronghold the Soviets now threatened our left flank. Unable to advance, we realized that our enemies would counterattack very soon. We knew that we'd have to resist, or we'd be forced to retreat to Siberia, this time permanently."
+    "text": "The junction was broken open and the towns went one after another. Their cavalry is between our two armies and there is no continuous front left on this sector.<br><br>Frunze's group at Buzuluk will have to be committed early, into a battle it did not choose."
    }
   }
  },
@@ -223,7 +223,7 @@
   "id": 5,
   "scenario": "simpob_05.xml",
   "startprestige": 0,
-  "intro": "Rush: the Spring Offensive<br><br>March 14th, 1919<br><br>As soon as we cancelled our unfortunate winter operation against Ufa, Kolchak's staff started to plan our Spring Offensive. For better or worse, it would start in March. Our supply lines were still a mess, and many of our soldiers didn't have a decent training, but we couldn't wait any longer. <br>In the north, our Siberian units would advance from Perm to Vyatka and Vologda, trying to connect with Yudenich and the British near Petrograd. In the south, Dutov's cossacks would attack Orenburg. In the centre, our final mission was to liberate Kazan, Simbirsk and Samara. But first we'd have to defeat the five Red divisions that were deployed between Belebei and Ufa. The good news was that, a few days before they ordered me to attack Ufa, some of our units had crossed the Belaya and had taken positions west of that city, so we had a great opportunity to outflank the Reds and storm their rear.<br><br>Victory conditions:<br>- Take all the VHs.",
+  "intro": "Rush: the spring offensive<br><br>March 14th, 1919<br><br>They have not stopped, and now there is nothing behind us to stop them with.<br><br>Khanzhin is driving for the Volga and Samara and he is doing it with everything at once, on a front too wide for his own supply, because he has been told the Volga must be reached before the Southern Front's own offensive begins. Our task is to make him pay for every verst and to still be holding these towns when his momentum runs out.<br><br>There is no counterattack in these orders. There is a clock, and a line of towns, and the requirement that both still be ours when the clock stops.<br><br>Victory conditions:<br>- When the time runs out, hold six objectives for a brilliant victory, five for a victory, four for a tactical victory.<br>- The objectives are Ufa (33,4), Tuymazy (8,7), Belebei (12,16), Abdulino (8,22), Sterlitamak (32,22) and Meleuz (32,28).",
   "outcome": {
    "briliant": {
     "goto": 6,
@@ -232,34 +232,34 @@
      0
     ],
     "prestige": 600,
-    "text": "When we finally stopped to rest and regroup, the First and the Fith Soviet Armies had been virtually destroyed. In the north, the Siberians had met moderate success, too. We had reasons to be optimistic.<br><br>However, in the south, the cossacks, outnumbered, without adequate equipment, and isolated from the rest of our army, hadn't been able to take Orenburg. If the Reds kept that city they would threaten our left flank, and it would be very dangerous to continue our race to the Volga, so Kolchak ordered us to go south and help the cossacks to occupy Orenburg at all costs."
+    "text": "The line is still on the map and the towns named in my orders are still ours. Their leading regiments have outrun their own trains and are living off the villages, which in this province is the fastest way to lose a village.<br><br>Frunze's group is complete at Buzuluk. The southern group attacks in April."
    },
    "victory": {
-    "goto": 7,
+    "goto": 6,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 600,
-    "text": "When we finally stopped to rest and regroup, the First and the Fith Soviet Armies had been virtually destroyed. In the north, the Siberians had met moderate success, too. However, we were exhausted, and the heavy rains had turned the roads into streams of mud. We couldn't  continue our race to the Volga. <br><br>Besides, in the south, the cossacks, outnumbered, without adequate equipment, and isolated from the rest of our army, hadn't been able to take Orenburg. From that stronghold the Soviets now threatened our left flank. Unable to advance, we realized that our enemies would counterattack very soon. We knew that we'd have to resist, or we'd be forced to retreat to Siberia, this time permanently."
+    "text": "The line is still on the map and the towns named in my orders are still ours. Their leading regiments have outrun their own trains and are living off the villages, which in this province is the fastest way to lose a village.<br><br>Frunze's group is complete at Buzuluk. The southern group attacks in April."
    },
    "tactical": {
-    "goto": 7,
+    "goto": 6,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 420,
-    "text": "When we finally stopped to rest and regroup, the First and the Fith Soviet Armies had been virtually destroyed. In the north, the Siberians had met moderate success, too. However, we were exhausted, and the heavy rains had turned the roads into streams of mud. We couldn't  continue our race to the Volga. <br><br>Besides, in the south, the cossacks, outnumbered, without adequate equipment, and isolated from the rest of our army, hadn't been able to take Orenburg. From that stronghold the Soviets now threatened our left flank. Unable to advance, we realized that our enemies would counterattack very soon. We knew that we'd have to resist, or we'd be forced to retreat to Siberia, this time permanently."
+    "text": "The line is still on the map and the towns named in my orders are still ours. Their leading regiments have outrun their own trains and are living off the villages, which in this province is the fastest way to lose a village.<br><br>Frunze's group is complete at Buzuluk. The southern group attacks in April."
    },
    "lose": {
-    "goto": 7,
+    "goto": 6,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 420,
-    "text": "When we finally stopped to rest and regroup, the First and the Fith Soviet Armies had been virtually destroyed. In the north, the Siberians had met moderate success, too. However, we were exhausted, and the heavy rains had turned the roads into streams of mud. We couldn't  continue our race to the Volga. <br><br>Besides, in the south, the cossacks, outnumbered, without adequate equipment, and isolated from the rest of our army, hadn't been able to take Orenburg. From that stronghold the Soviets now threatened our left flank. Unable to advance, we relized that our enemies would counterattack very soon. We knew that we'd have to resist, or we'd be forced to retreat to Siberia, this time permanently."
+    "text": "They are through. The towns are gone and the leading Cossack patrols were within a hundred versts of the Volga before the thaw stopped them rather than we did.<br><br>Everything now depends on Frunze's group being ready before they are."
    }
   }
  },
@@ -267,25 +267,25 @@
   "id": 6,
   "scenario": "simpob_06.xml",
   "startprestige": 0,
-  "intro": "Song of the Cossacks: Orenburg<br><br>April 17th, 1919<br><br>By the middle of April, our offensive was progressing very well. After recovering Sterlitamak, Meleuz and Belebei, Bugulma and Buguruslan were the next important towns that were taken on our way to the Volga. But our advance had some vulnerable points, and Orenburg, on our left flank, was the most critical one.<br><br>The steppe cossacks were anxious to liberate their capital, which they had lost in January. Unfortunately, Hetman Dutov's Separate Orenburg Army did not have sufficient artillery, or even infantry troops, to assault a fortified city like Orenburg with any chances of success, so Kolchak decided that part of our Western Army would reinforce Dutov. He knew that the Soviets had two veteran divisions in the area, as well as several units of communist militias, and he didn't want to take any risks. <br><br>Besides, he decided that we'd make the main attack, from the northeast, at the confluence of the Salmysh and Sakmara rivers. The cossacks would support us from the east and southeast, but our staff believed that sending the cossack light cavalry against the Soviet trenches and machine gun nests was suicidal. Thus, the responsibility for taking Orenburg would be ours. <br><br>Victory conditions:<br>- Take all the VHs.<br><br>Special notes:<br>- You can buy equipment from the Cossack Hosts in this scenario.<br>- From now on, your new units will start the game with 99 exp.",
+  "intro": "Song of the Cossacks: Orenburg<br><br>April 17th, 1919<br><br>Orenburg has been under siege, on and off, for most of a year.<br><br>Dutov's Orenburg Cossacks want it because without it their Host has no capital and no junction; we hold it because it is the only rail link to Turkestan and to the Soviet republics beyond it. Cut that and Central Asia is on its own.<br><br>The garrison is the town: railwaymen, the Kirghiz and Tatar detachments, a workers' regiment, and the 1st Army's left flank. The relieving force is going to Buzuluk instead, because Frunze is about to attack, and I would rather he did.<br><br>Hold the ring. There is one gap in their line, north of the river, and it may be worth closing.<br><br>Victory conditions:<br>- When the time runs out, hold five objectives for a brilliant victory, four for a victory, three for a tactical victory.<br>- The objectives are Orenburg (8,30), Sakmara (16,19), Seitovsky Posad (10,21), Nizhnie Chebenki (24,18) and Verkhnie Chebenki (29,18).<br>- Or take their crossing at (24,4).",
   "outcome": {
    "briliant": {
-    "goto": 8,
+    "goto": 7,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 600,
-    "text": "I felt great happiness when the Reds surrendered and the cossacks entered Orenburg. With the liberation of the city we could finally control the railways that we needed to communicate all our battle front from north to south, so as long as the Czechs did their jobs we could send supplies and reinforcements very quickly to any sector that could need it.<br><br>The Soviets knew that their situation was desperate, so when May started they launched a massive counteroffensive. It was their last chance to prevent us from reaching the Volga, but they didn't have time to plan their attacks thoroughly and in most places it was easy to repel them. However, they succeeded in retaking Chistopol, on the left shore of the Kama. If the communists consolidated that position our chances to recover Kazan would be gone. Since we had already dealt with a similar situation in Orenburg, Kolchak sent us to liberate Chistopol."
+    "text": "The ring held. The road to Turkestan is open and the trains are running again, which means grain and cotton for the Republic and ammunition for Frunze.<br><br>Dutov has been drawing regiments off Kolchak's own flank to sit outside this town for a year. Long may he continue."
    },
    "victory": {
-    "goto": 8,
+    "goto": 7,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 600,
-    "text": "I felt great happiness when the Reds surrendered and the cossacks entered Orenburg. With the liberation of the city we could finally control the railways that we needed to communicate all our battle front from north to south, so as long as the Czechs did their jobs we could send supplies and reinforcements very quickly to any sector that could need it.<br><br>The Soviets knew that their situation was desperate, so when May started they launched a massive counteroffensive. It was their last chance to prevent us from reaching the Volga, but they didn't have time to plan their attacks thoroughly and in most places it was easy to repel them. However, they succeeded in retaking Chistopol, on the left shore of the Kama. If the communists consolidated that position our chances to recover Kazan would be gone. Since we had already dealt with a similar situation in Orenburg, Kolchak sent us to liberate Chistopol."
+    "text": "The ring held. The road to Turkestan is open and the trains are running again, which means grain and cotton for the Republic and ammunition for Frunze.<br><br>Dutov has been drawing regiments off Kolchak's own flank to sit outside this town for a year. Long may he continue."
    },
    "tactical": {
     "goto": 7,
@@ -294,7 +294,7 @@
      0
     ],
     "prestige": 480,
-    "text": "I felt great happiness when the Reds surrendered and the cossacks entered Orenburg. With the liberation of the city we could finally control the railways that we needed to communicate all our battle front from north to south, so as long as the Czechs did their jobs we could send supplies and reinforcements very quickly to any sector that could need it.<br><br>The Soviets knew that their situation was desperate, so when May started they launched a massive counteroffensive. It was their last chance to prevent us from reaching the Volga, but they didn't have time to plan their attacks thoroughly and in most places it was easy to repel them. However, they succeeded in retaking Chistopol, on the left shore of the Kama. If the communists consolidated that position our chances to recover Kazan would be gone. Since we had already dealt with a similar situation in Orenburg, Kolchak sent us to liberate Chistopol."
+    "text": "The ring held. The road to Turkestan is open and the trains are running again, which means grain and cotton for the Republic and ammunition for Frunze.<br><br>Dutov has been drawing regiments off Kolchak's own flank to sit outside this town for a year. Long may he continue."
    },
    "lose": {
     "goto": 7,
@@ -303,7 +303,7 @@
      0
     ],
     "prestige": 360,
-    "text": "The Reds resisted all our assaults. We tried everything, to no avail, and in the end we had to retire. The offensive against Orenburg was cancelled. <br><br>We had failed. The Bolsheviks were in an excellent position to launch a massive counteroffensive once they gathered enough troops. I believed that it would happen in May. We'd have to do our best to prepare ourselves and defend Belebei and the other towns that we had taken at the start of the spring. Maybe there was still one last chance to stop our enemies."
+    "text": "The Cossacks are in the outskirts and the railway to Turkestan is cut. The garrison is holding the station quarter and the river bank and nothing else.<br><br>Central Asia is on its own until somebody can come back for it."
    }
   }
  },
@@ -311,7 +311,7 @@
   "id": 7,
   "scenario": "simpob_07.xml",
   "startprestige": 0,
-  "intro": "Clutching at straws: defense of Belebei<br><br>May 15th, 1919<br><br>I wish you never experience that ominous state of mind of perpetual sadness, when all your efforts seem pointless, and everything that you love and cherish seems about to die. That terrible disease of the soul during which even breathing causes an immense pain, until you end up envying the stray dogs on the streets, hungry and full of ticks, but free of worries.<br><br>That's how I was feeling when the failure of our Spring Offensive became clear. I really believed that we could destroy the Bolshevik revolution and win the war, and just two months later all that I could do was to wait impotently until the Reds, fully reinforced and resupplied, decided to recover their lost ground. I could hardly cope with that. I felt sick and weak, and finding the strength to carry on was harder every passing day.<br><br>But even then I believed that not everything was lost. If, somehow, we managed to stop the communist swarm, a counterattack would be possible. I had to cling to that last hope.<br><br>Victory conditions:<br>- After 10 turns, you must hold 5 VHs for a BV, 3 VHs for a V, and 2 VHs for a TacV.<br><br>Special notes:<br>- In this scenario, the option \"skip first player turn\" is activated.<br>- From now on, your new units will start the game with 99 exp.",
+  "intro": "Clutching at straws: Belebei<br><br>May 15th, 1919<br><br>Now we attack, and we attack quickly, because the whole point of this is that they should not have time to think.<br><br>Frunze's southern group has already broken the Western Army at Buguruslan and Bugulma. Khanzhin is trying to reform on the Belebei position with his Volga Corps, which is the old People's Army under a new name and is being asked to do the work of two corps.<br><br>The 25th Rifle Division under Chapayev goes in first. There is very little time: everything here depends on hitting the position before it becomes one.<br><br>Victory conditions:<br>- Take Belebei (12,16), Tuymazy (8,7), Buzdyak (16,7) and Shafranovo (19,14) - four turns for a brilliant victory, seven for a victory, ten at the outside.<br>- Hold Abdulino (8,22).",
   "outcome": {
    "briliant": {
     "goto": 8,
@@ -320,34 +320,34 @@
      0
     ],
     "prestige": 480,
-    "text": "The miracle of Belebei. I still call it that way. I truly believe that God helped us in that terrible battle. Because not only did we defeat the Bolsheviks. Our victory was so complete, so fast, that a huge gap opened in the enemy lines, and our units quickly marched through it, outflanking and destroying all the communist regiments that they could find. We could even allow ourselves to send reinforces to other areas where our army desperately needed them. <br><br>Before the end of May, we had crushed the Soviet counterattack and we had a new chance to reach the Volga. But then we learnt thar our enemies were regrouping near Chistopol, on the left shore of the Kama. If the communists consolidated that position our chances to recover Kazan would be gone. Since we had already dealt with a similar situation in Belebei, Kolchak sent us to liberate Chistopol."
+    "text": "All four in the time allowed. The Volga Corps has been broken up as a formation and its trains are ours, and the road to Ufa is open.<br><br>Their spring offensive is finished. From here the Eastern Front does not defend."
    },
    "victory": {
-    "goto": 17,
+    "goto": 8,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 480,
-    "text": "We did our best, and we actually defeated he Bolsheviks in Belebei. But it wasn't enough. North and south of our positions, the Reds kept on advancing, so if we stayed we'd eventually be outflanked and encircled. With tears in our eyes, we had to retreat to Ufa and build a new line of defence there."
+    "text": "All four in the time allowed. The Volga Corps has been broken up as a formation and its trains are ours, and the road to Ufa is open.<br><br>Their spring offensive is finished. From here the Eastern Front does not defend."
    },
    "tactical": {
-    "goto": 17,
+    "goto": 8,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 480,
-    "text": "We did our best, and we actually defeated he Bolsheviks in Belebei. But it wasn't enough. North and south of our positions, the Reds kept on advancing, so if we stayed we'd eventually be outflanked and encircled. With tears in our eyes, we had to retreat to Ufa and build a new line of defence there."
+    "text": "All four in the time allowed. The Volga Corps has been broken up as a formation and its trains are ours, and the road to Ufa is open.<br><br>Their spring offensive is finished. From here the Eastern Front does not defend."
    },
    "lose": {
-    "goto": 17,
+    "goto": 8,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 480,
-    "text": "The Bolsheviks were unstoppable. After just five days of fighting, we had to leave Belebei, retreat to Ufa and build a new line of defence there."
+    "text": "We took the ground and took too long doing it. Their corps got back across the Belaya with its artillery and will be waiting for us on the far bank.<br><br>The offensive continues, but the cheap part of it is over."
    }
   }
  },
@@ -355,7 +355,7 @@
   "id": 8,
   "scenario": "simpob_08.xml",
   "startprestige": 0,
-  "intro": "The tide turns: Chistopol<br><br>May 26th, 1919<br><br>The spring wasn't over yet, and it seemed that we were about to repel the last counterattacks made by the Bolsheviks. Reaching the Volga wasn't a long term plan anymore. Victory was so close that I could almost grasp it. <br><br>But there was a last effort that we had to do. Most of the Second Red Army had gathered in Chistopol, and it had launched a new, desperate counteroffensive against us. I trusted my men, but I knew that the attack of our enemies was dangerous. If we didn't stop the communists Bugulma would fall, Ufa would be in danger, and all our front could fall apart. That could not happen. Not then. Not when the Volga was so near. We had to prevail.<br><br>Victory conditions:<br>- After 19 turns, you must hold 5 VHs for a BV, 4 VHs for a V, and 3 VHs for a TacV.",
+  "intro": "The tide turns: Chistopol<br><br>May 26th, 1919<br><br>This is the point on which the whole summer turns, and I would rather it were somewhere with better roads.<br><br>North of us Gaida's Siberian Army is still pushing on Vyatka and has not yet understood that the army on its left has collapsed. If we take Bugulma and the Azanakayevo junction now, that whole northern group is fighting with a hole where its flank used to be and the Urals are open to us.<br><br>If we do not - if this attack fails and their reserves come south in time - then it is their offensive again, and it will be aimed at the Volga crossings, and I shall be fighting it in front of Kazan.<br><br>Victory conditions:<br>- Take Bugulma (25,20) and Azanakayevo (28,17).<br>- Hold Chistopol (6,9), Naberezhnye Chelny (23,4) and Menzelinsk (28,4).",
   "outcome": {
    "briliant": {
     "goto": 17,
@@ -364,7 +364,7 @@
      0
     ],
     "prestige": 400,
-    "text": "When we finally liberated Chistopol I felt a great relief. At last we had brought the war back to the Volga. If we kept a cool head, the Soviets would never retake the initiative and we would eventually win this terrible civil war. The nightmarish revolution would be over, and Russia would be saved."
+    "text": "Bugulma and the junction are ours. Gaida's flank is open and he has finally been told to stop.<br><br>The front headquarters has confirmed the next objective and it is the one everybody has been waiting for: across the Belaya, and Ufa."
    },
    "victory": {
     "goto": 17,
@@ -373,7 +373,7 @@
      0
     ],
     "prestige": 400,
-    "text": "When we finally liberated Chistopol I felt a great relief. At last we had brought the war back to the Volga. If we kept a cool head, the Soviets would never retake the initiative and we would eventually win this terrible civil war. The nightmarish revolution would be over, and Russia would be saved."
+    "text": "Bugulma and the junction are ours. Gaida's flank is open and he has finally been told to stop.<br><br>The front headquarters has confirmed the next objective and it is the one everybody has been waiting for: across the Belaya, and Ufa."
    },
    "tactical": {
     "goto": 17,
@@ -382,64 +382,17 @@
      0
     ],
     "prestige": 300,
-    "text": "When we finally liberated Chistopol I felt a great relief. At last we had brought the war back to the Volga. If we kept a cool head, the Soviets would never retake the initiative and we would eventually win this terrible civil war. The nightmarish revolution would be over, and Russia would be saved."
+    "text": "Bugulma and the junction are ours. Gaida's flank is open and he has finally been told to stop.<br><br>The front headquarters has confirmed the next objective and it is the one everybody has been waiting for: across the Belaya, and Ufa."
    },
    "lose": {
-    "goto": 17,
+    "goto": 10,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 300,
-    "text": "The Bolsheviks were unstoppable. After some days of fighting we had to leave Bugulma, retreat to Ufa and build a new line of defence there."
+    "text": "The attack was held and then thrown back, and their reserves are coming south by rail faster than we can reform.<br><br>The initiative has gone with them. Kazan is being put into a state of defence and I am ordered there tonight."
    }
-  },
-  "briefing": {
-   "dialogue": [
-    {
-     "id": "simpob_09-choice",
-     "speaker": "General Staff",
-     "role": "Path selection",
-     "side": "right",
-     "text": "The campaign divides here. Choose the path you will follow.",
-     "choices": [
-      {
-       "id": "simpob_09-choice.0",
-       "text": "Retreat path",
-       "effects": [
-        {
-         "id": "simpob_09-choice.0.route",
-         "type": "route",
-         "scenarioIndex": 17
-        },
-        {
-         "id": "simpob_09-choice.0.flag",
-         "type": "setFlag",
-         "flag": "simpob_simpob_09_choice_0"
-        }
-       ],
-       "hint": "You've chosen to play Kolchak's retreat into Siberia."
-      },
-      {
-       "id": "simpob_09-choice.1",
-       "text": "Victory path.",
-       "effects": [
-        {
-         "id": "simpob_09-choice.1.route",
-         "type": "route",
-         "scenarioIndex": 10
-        },
-        {
-         "id": "simpob_09-choice.1.flag",
-         "type": "setFlag",
-         "flag": "simpob_simpob_09_choice_1"
-        }
-       ],
-       "hint": "You've chosen to play the victory path."
-      }
-     ]
-    }
-   ]
   }
  },
  {
@@ -490,34 +443,34 @@
   "id": 10,
   "scenario": "simpob_10.xml",
   "startprestige": 0,
-  "intro": "We'll never leave again: Kazan<br><br>June 10th, 1919<br><br>After taking Chistopol we spent a few days resting and resupplying, but we continued our offensive as soon as we could. We were anxious to reach the shores of the Volga before the Red Army could recover. It would be our best chance to recover Kazan and its neighbouring area  once and for all.<br><br>Victory conditions:<br>- Take all the VHs.",
+  "intro": "We'll never leave again: Kazan<br><br>June 10th, 1919<br><br>Twice in one year is more than any city should be asked for.<br><br>Our attack in May was held and the counterstroke that followed it has carried them back onto the Volga. Kazan is again the front line: the Kremlin, the academy, the crossings, and behind them the road to Nizhny.<br><br>The front is being rebuilt around this city while we hold it. Every division that comes up the line arrives because we were still here when it started loading.<br><br>Victory conditions:<br>- When the time runs out, hold six objectives for a brilliant victory, five for a victory, four for a tactical victory.<br>- The objectives are the Kazan Kremlin (27,3), the Military Academy (26,2), Vasilyevo (22,3), Zelenodolsk (14,1), Teteyevo (28,18), Bogorodskoye (30,25) and the crossing at (9,26).<br>- Or take Bolshiye Kabany (32,9) and Pelevo (36,13).",
   "outcome": {
    "briliant": {
-    "goto": 11,
+    "goto": 17,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 400,
-    "text": "As we paraded in front of the Kazan Kremlin, I realised that the spring of 1919 would probably be the happiest of my life. We were recovering our homeland step by step. Siberia and the Urals were safe, and now it was time to consolidate our positions on the Volga.<br><br>A few days later we received excellent news from southern Russia. Denikin's forces had finally been able to advance into the lower Volga, and had taken Tsaritsyn. That meant that our two armies were separated by less than 150 Russian miles. If we managed to liberate Samara and Saratov, the two main clusters of anti-Bolshevik resistance would finally be united. Kolchak knew the importance of that goal, so he ordered us to plan a summer offensive against Samara."
+    "text": "Kazan is held and their thrust has broken on it. Their army has spent the reserves it brought south and has nothing behind them.<br><br>The crisis is over. The front headquarters is putting the offensive back together on the old axis, and my orders send me east again - to the Belaya and Ufa, where this should have gone a month ago."
    },
    "victory": {
-    "goto": 11,
+    "goto": 17,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 400,
-    "text": "As we paraded in front of the Kazan Kremlin, I realised that the spring of 1919 would probably be the happiest of my life. We were recovering our homeland step by step. Siberia and the Urals were safe, and now it was time to consolidate our positions on the Volga.<br><br>A few days later we received excellent news from southern Russia. Denikin's forces had finally been able to advance into the lower Volga, and had taken Tsaritsyn. That meant that our two armies were separated by less than 150 Russian miles. If we managed to liberate Samara and Saratov, the two main clusters of anti-Bolshevik resistance would finally be united. Kolchak knew the importance of that goal, so he ordered us to plan a summer offensive against Samara."
+    "text": "Kazan is held and their thrust has broken on it. Their army has spent the reserves it brought south and has nothing behind them.<br><br>The crisis is over. The front headquarters is putting the offensive back together on the old axis, and my orders send me east again - to the Belaya and Ufa, where this should have gone a month ago."
    },
    "tactical": {
-    "goto": 11,
+    "goto": 17,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 300,
-    "text": "As we paraded in front of the Kazan Kremlin, I realised that the spring of 1919 would probably be the happiest of my life. We were recovering our homeland step by step. Siberia and the Urals were safe, and now it was time to consolidate our positions on the Volga.<br><br>A few days later we received excellent news from southern Russia. Denikin's forces had finally been able to advance into the lower Volga, and had taken Tsaritsyn. That meant that our two armies were separated by less than 150 Russian miles. If we managed to liberate Samara and Saratov, the two main clusters of anti-Bolshevik resistance would finally be united. Kolchak knew the importance of that goal, so he ordered us to plan a summer offensive against Samara."
+    "text": "Kazan is held and their thrust has broken on it. Their army has spent the reserves it brought south and has nothing behind them.<br><br>The crisis is over. The front headquarters is putting the offensive back together on the old axis, and my orders send me east again - to the Belaya and Ufa, where this should have gone a month ago."
    },
    "lose": {
     "goto": 11,
@@ -526,7 +479,7 @@
      0
     ],
     "prestige": 240,
-    "text": "My troops were too tired to advance fast enough, so when July came we didn't have taken all our objectives. The High Command had to send its reserves, and thanks to them the area of Kazan finally fell under our control.<br><br>I was extremely happy. We were recovering our homeland step by step. Siberia and the Urals were safe, and now it was time to consolidate our positions on the Volga.<br><br>We had received excellent news from southern Russia, too. Denikin's forces had finally been able to advance into the lower Volga, and had taken Tsaritsyn. That meant that our two armies were separated by less than 150 Russian miles. If we managed to liberate Samara and Saratov, the two main clusters of anti-Bolshevik resistance would finally be united. Kolchak knew the importance of that goal, so he ordered us to plan a summer offensive against Samara."
+    "text": "The Kremlin quarter was lost and the crossings with it. We are going back down the Volga line towards Samara, and the army is going with us.<br><br>Samara is the next place with a bridge."
    }
   }
  },
@@ -534,34 +487,34 @@
   "id": 11,
   "scenario": "simpob_11.xml",
   "startprestige": 0,
-  "intro": "Where it all began: Samara<br><br>July 14th, 1919<br><br>After securing Kazan, Simbirsk and Samara were our next obvious steps. I was confident that both cities would fall with relative ease. Unlike Kazan, their defenders had not built strong fortifications that could stop our assaults. We also knew that many Bolshevik regiments had fled to Saratov, and Kolchak had sent one cossack division to reinforce us. So I believed that nothing could stop our men.<br><br>Of course, I had heard the rumours about a surge of the partisan activity along the railroads, but to be honest, I had not paid much attention to them. After one year of war against the Red Army, the idea of worrying for a bunch of peasants with forks seemed hilarious to me.<br><br>Victory conditions:<br>- Take all the VHs.<br><br>Special notes:<br>- You can buy equipment from the Cossack Hosts in this scenario.<br>- Be careful with the possible partisan activity on your rear.",
+  "intro": "Where it all began: Samara<br><br>July 14th, 1919<br><br>A year and a month since the Czechoslovaks took this bridge, and here we are arguing over it again.<br><br>Their advance down the Volga has not been stopped so much as slowed, and the front headquarters is moving its staffs between three threatened directions by rail, which is what happens when a front has more axes than reserves. My group has been sent here.<br><br>Hold the crossings. Melekess and Krotovka, upstream and east, are their staging points; either would be worth taking off them.<br><br>Victory conditions:<br>- When the time runs out, hold three objectives for a brilliant victory, two for a victory or a tactical victory.<br>- The objectives are Samara (30,23), Simbirsk (7,5) and Syzran (8,26).<br>- Or take Melekess (21,7) and Krotovka (41,23).",
   "outcome": {
    "briliant": {
-    "goto": 12,
+    "goto": 17,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 400,
-    "text": "Ninety miles. That was all the distance between our divisions and Denikin's army. With minimal effort, our forces could have joined before the end of August.<br><br>But at that time the Anti-Bolshevik resistance lacked an unified command, and our plans weren't always properly coordinated. Denikin believed that he had a good opportunity to take Moscow, so he ordered most of his units to leave the Volga region, go to the north and take Kursk and Orel. His reserve went even further, to Ukraine, to protect his left flank from the attacks of Makhno's anarchists. As usual, we were on our own.<br><br>It was frustrating, and Kolchak was furious, but there was nothing that we could do. Denikin had refused to acknowledge Kolchak as the supreme leader of the anti-Bolsheviks, and he didn't accept his orders.<br><br>Sadly, we had even bigger problems. In the north, our Siberian Army had liberated Glazov, but it seemed unable to follow its advance and take Vyatka. And the partisans had become a real problem They attacked the railroads everywhere, so our supply lines were in danger. In fact, we had to cancel our plans for new operations, and my men had to spend the rest of the summer pursuing bands of partisans between Samara and Belebei. After so many victories, wasting more than two months in minor operations was disheartening. It meant that the war would last until the next winter, at the very least."
+    "text": "The crossings are ours and their staging areas have been cleared. The Volga line holds.<br><br>The offensive can be restarted on the proper axis. I am ordered east to rejoin the drive on Ufa."
    },
    "victory": {
-    "goto": 12,
+    "goto": 17,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 400,
-    "text": "Ninety miles. That was all the distance between our divisions and Denikin's army. With minimal effort, our forces could have joined before the end of August.<br><br>But at that time the Anti-Bolshevik resistance lacked an unified command, and our plans weren't always properly coordinated. Denikin believed that he had a good opportunity to take Moscow, so he ordered most of his units to leave the Volga region, go to the north and take Kursk and Orel. His reserve went even further, to Ukraine, to protect his left flank from the attacks of Makhno's anarchists. As usual, we were on our own.<br><br>It was frustrating, and Kolchak was furious, but there was nothing that we could do. Denikin had refused to acknowledge Kolchak as the supreme leader of the anti-Bolsheviks, and he didn't accept his orders.<br><br>Sadly, we had even bigger problems. In the north, our Siberian Army had liberated Glazov, but it seemed unable to follow its advance and take Vyatka. And the partisans had become a real problem They attacked the railroads everywhere, so our supply lines were in danger. In fact, we had to cancel our plans for new operations, and my men had to spend the rest of the summer pursuing bands of partisans between Samara and Belebei. After so many victories, wasting more than two months in minor operations was disheartening. It meant that the war would last until the next winter, at the very least."
+    "text": "The crossings are ours and their staging areas have been cleared. The Volga line holds.<br><br>The offensive can be restarted on the proper axis. I am ordered east to rejoin the drive on Ufa."
    },
    "tactical": {
-    "goto": 12,
+    "goto": 17,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 300,
-    "text": "Ninety miles. That was all the distance between our divisions and Denikin's army. With minimal effort, our forces could have joined before the end of August.<br><br>But at that time the Anti-Bolshevik resistance lacked an unified command, and our plans weren't always properly coordinated. Denikin believed that he had a good opportunity to take Moscow, so he ordered most of his units to leave the Volga region, go to the north and take Kursk and Orel. His reserve went even further, to Ukraine, to protect his left flank from the attacks of Makhno's anarchists. As usual, we were on our own.<br><br>It was frustrating, and Kolchak was furious, but there was nothing that we could do. Denikin had refused to acknowledge Kolchak as the supreme leader of the anti-Bolsheviks, and he didn't accept his orders.<br><br>Sadly, we had even bigger problems. In the north, our Siberian Army had liberated Glazov, but it seemed unable to follow its advance and take Vyatka. And the partisans had become a real problem They attacked the railroads everywhere, so our supply lines were in danger. In fact, we had to cancel our plans for new operations, and my men had to spend the rest of the summer pursuing bands of partisans between Samara and Belebei. After so many victories, wasting more than two months in minor operations was disheartening. It meant that the war would last until the next winter, at the very least."
+    "text": "The crossings are ours and their staging areas have been cleared. The Volga line holds.<br><br>The offensive can be restarted on the proper axis. I am ordered east to rejoin the drive on Ufa."
    },
    "lose": {
     "goto": 12,
@@ -570,7 +523,7 @@
      0
     ],
     "prestige": 300,
-    "text": "Without the cossacks, I would have suffered an embarrasing defeat at Samara. Thank God that they came to our rescue. In the end, Simbirsk, Samara and Syzran were taken. <br><br>Ninety miles. That was all the distance between our divisions and Denikin's army. With minimal effort, our forces could have joined before the end of August.<br><br>But at that time the Anti-Bolshevik resistance lacked an unified command, and our plans weren't always properly coordinated. Denikin believed that he had a good opportunity to take Moscow, so he ordered most of his units to leave the Volga region, go to the north and take Kursk and Orel. His reserve went even further, to Ukraine, to protect his left flank from the attacks of Makhno's anarchists. As usual, we were on our own.<br><br>It was frustrating, and Kolchak was furious, but there was nothing that we could do. Denikin had refused to acknowledge Kolchak as the supreme leader of the anti-Bolsheviks, and he didn't accept his orders.<br><br>Sadly, we had even bigger problems. In the north, our Siberian Army had liberated Glazov, but it seemed unable to follow its advance and take Vyatka. And the partisans had become a real problem They attacked the railroads everywhere, so our supply lines were in danger. In fact, we had to cancel our plans for new operations, and my men had to spend the rest of the summer pursuing bands of partisans between Samara and Belebei. Wasting more than two months in minor operations was disheartening. It meant that the war would last until the next winter, at the very least."
+    "text": "Samara has gone. The bridge was blown behind the last of our columns, which is the one thing on my list that got done properly.<br><br>The staff is being moved north to Vyatka. So am I."
    }
   }
  },
@@ -578,34 +531,34 @@
   "id": 12,
   "scenario": "simpob_12.xml",
   "startprestige": 0,
-  "intro": "No mercy: Vyatka<br><br>October 20th, 1919<br><br>I don't like to remember the weeks that we spent repairing our railroads and fighting against the partisans. There was nothing noble in that. Only ruthless, bloody skirmishes. That summer war showed us its ugliest face.<br><br>I envied Denikin and his men. At least they were battling against real armies. They had crushed the Makhnovists in Ukraine and the Bolsheviks in Oboyan, and had kept advancing towards Orel. Meanwhile, we had been chasing murderous ghosts.<br><br>However, in the end we succeeded. By mid October all our supply lines were safe, from Vladivostok to the Volga, and we finally started to plan our new offensives. Then, just a few days later, the first snows came, at the worst possible moment. That forced Kolchak to study our different options carefully.<br><br>This time Kappel suggested to attack Saratov and join with Denikin once and for all. Kolchak considered it, before finally postponing that operation. Other generals convinced him that taking Vyatka was prioritary. During the summer the Siberian Army had assaulted the city three times, and the Bolsheviks had always rejected them. The liberation of Vyatka had thus become a matter of honour, and it was decided that it would be our next objective. Since the Siberians were exhausted after their failed offensives, Kolchak ordered us to launch the final attack.<br><br>Victory conditions:<br>- Take all the VHs.",
+  "intro": "No mercy: Vyatka<br><br>October 20th, 1919<br><br>Gaida is gone - Kolchak dismissed him in the summer and he has since tried to overthrow his own government in Vladivostok - but the Siberian Army's northern drive has been picked up by someone else, and it still wants what it always wanted: Vyatka, and a junction with the interventionists coming down from Archangel.<br><br>If they meet, the Republic is cut in half along the Northern Dvina and everything north of Moscow is on the wrong side of the line.<br><br>Hold the three city sectors and Karavayevy. Vakhrushi is their forward railhead.<br><br>Victory conditions:<br>- When the time runs out, hold four objectives for a brilliant victory, three for a victory, two for a tactical victory.<br>- The objectives are the three Vyatka sectors (27,10), (24,16), (22,18) and Karavayevy (11,18).<br>- Or take Vakhrushi (40,8).",
   "outcome": {
    "briliant": {
-    "goto": 13,
+    "goto": 17,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 320,
-    "text": "We didn't have much time to enjoy this new victory. We rested for less than one day, and then we had to board several trains that took us to the south. Denikin's staff had contacted Kolchak's, asking for a joint operation against Saratov. Kolchak had accepted, and had assigned that mission to us. We had to return to the Volga as soon as we could.<br><br>We left knowing that, without Vyatka, the Bolsheviks would not be able to defend Nizhni Novgorod and the roads that led to Arkhangelsk, which was occupied by our British allies. The distances that the Siberians would have to cover to get there were really long, so the marches would be very hard, especially in winter. However, I was sure that sooner or later they'd do it."
+    "text": "Vyatka holds and the two halves of their northern plan are still two hundred versts apart. The British at Archangel are loading their own transports; they will not be coming south for anybody.<br><br>The front can be restored on the main axis. East, to Ufa."
    },
    "victory": {
-    "goto": 13,
+    "goto": 17,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 320,
-    "text": "We didn't have much time to enjoy this new victory. We rested for less than one day, and then we had to board several trains that took us to the south. Denikin's staff had contacted Kolchak's, asking for a joint operation against Saratov. Kolchak had accepted, and had assigned that mission to us. We had to return to the Volga as soon as we could.<br><br>We left knowing that, without Vyatka, the Bolsheviks would not be able to defend Nizhni Novgorod and the roads that led to Arkhangelsk, which was occupied by our British allies. The distances that the Siberians would have to cover to get there were really long, so the marches would be very hard, especially in winter. However, I was sure that sooner or later they'd do it."
+    "text": "Vyatka holds and the two halves of their northern plan are still two hundred versts apart. The British at Archangel are loading their own transports; they will not be coming south for anybody.<br><br>The front can be restored on the main axis. East, to Ufa."
    },
    "tactical": {
-    "goto": 13,
+    "goto": 17,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 240,
-    "text": "We didn't have much time to enjoy this new victory. We rested for less than one day, and then we had to board several trains that took us to the south. Denikin's staff had contacted Kolchak's, asking for a joint operation against Saratov. Kolchak had accepted, and had assigned that mission to us. We had to return to the Volga as soon as we could.<br><br>We left knowing that, without Vyatka, the Bolsheviks would not be able to defend Nizhni Novgorod and the roads that led to Arkhangelsk, which was occupied by our British allies. The distances that the Siberians would have to cover to get there were really long, so the marches would be very hard, especially in winter. However, I was sure that sooner or later they'd do it."
+    "text": "Vyatka holds and the two halves of their northern plan are still two hundred versts apart. The British at Archangel are loading their own transports; they will not be coming south for anybody.<br><br>The front can be restored on the main axis. East, to Ufa."
    },
    "lose": {
     "goto": 13,
@@ -614,7 +567,7 @@
      0
     ],
     "prestige": 240,
-    "text": "When it seemed that the fourth assault against Vyatka would fail, too, the Siberians came to reinforce us. Together we overcame the last clusters of enemy resistance.<br><br>We didn't have much time to enjoy this new victory. We rested for less than one day, and then we had to board several trains that took us to the south. Denikin's staff had contacted Kolchak's, asking for a joint operation against Saratov. Kolchak had accepted, and had assigned that mission to us. We had to return to the Volga as soon as we could.<br><br>We left knowing that, without Vyatka, the Bolsheviks would not be able to defend Nizhni Novgorod and the roads that led to Arkhangelsk, which was occupied by our British allies. The distances that the Siberians would have to cover to get there were really long, so the marches would be very hard, especially in winter. However, I was sure that sooner or later they'd do it."
+    "text": "The city sectors were lost one by one over four days. What is left of the group is going south-west on the Kotelnich road.<br><br>The next place they can be stopped is Saratov, which tells you how far this has gone."
    }
   }
  },
@@ -622,43 +575,43 @@
   "id": 13,
   "scenario": "simpob_13.xml",
   "startprestige": 0,
-  "intro": "The Black Baron: Saratov<br><br>November 13th, 1919<br><br>The battle for Saratov was finally coming. The Bolsheviks had fortified the city, knowing that its defences were all that stood between Denikin's Armed Forces of Southern Russia and us. However, they had been forced to retire many units from the Volga, in order to defend Moscow. In October, Denikin's generals had finally crushed the Red Army in Orel, and they were approaching Tula. Lenin and his henchmen had motives to reinforce the capital of Russia.<br><br>Our plan consisted in attacking Saratov from three sides. We would come from the north, a small group of cossacks from the east, and part of Denikin's forces from the south. They were commanded by Baron Piotr Wrangel, one of the best generals of the AFSR. It was unlikely that the Soviets could stop us.<br><br>Victory conditions:<br>- Take all the VHs.<br><br>Special notes:<br>- From now on, you may buy equipment from the Cossack Hosts in every scenario.<br>- Be careful with the Soviet attacks against your starting position.",
+  "intro": "The Black Baron: Saratov<br><br>November 13th, 1919<br><br>The Eastern Front now has a southern neighbour, and the neighbour has arrived.<br><br>Wrangel's Caucasus Army has come up the Volga from Tsaritsyn to shake hands with Kolchak's people, which is the one thing both White commands have wanted all year and have never managed to arrange. Our task is to see that they do not manage it here either.<br><br>Saratov is two sectors and a river frontage, with Atkarsk covering the railway west. Volsk upstream is where their two forces are trying to link.<br><br>Victory conditions:<br>- When the time runs out, hold three objectives for a brilliant victory or a victory, two for a tactical victory.<br>- The objectives are the two Saratov sectors (16,12), (19,13) and Atkarsk (3,3).<br>- Or take Volsk (37,1).",
   "outcome": {
    "briliant": {
-    "goto": 14,
+    "goto": 17,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 360,
-    "text": "I guess that most of you have seen copies of that historical photograph of Kappel and Wrangel shaking their hands when they finally met in Saratov. In my living room I have a framed one, signed by both of them. Having contributed to the union of the two main anti-Bolshevik forces is one of the greatest things that I've ever done. I'm proud of having fought in Saratov.<br><br>Almost at the same time, the Siberian Army took Nizhni Novgorod and the AFSR defeated the Soviet Army in Tula. The war was almost won, so we started to think about what would come next. In a conference that took place in Tsarytsin, it was decided that a Military Directory would govern Russia until the revolution was completeley defeated. Naturally, Admiral Kolchak was chosen as its President. The first decision of the Directory was to order a final, coordinated assault on Moscow."
+    "text": "They have not linked up. Saratov is ours, the railway west is open, and the two White armies remain what they have been all year: two armies.<br><br>Front headquarters is turning the offensive back east. Ufa next, and this time properly."
    },
    "victory": {
-    "goto": 14,
+    "goto": 17,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 360,
-    "text": "I guess that most of you have seen copies of that historical photograph of Kappel and Wrangel shaking their hands when they finally met in Saratov. In my living room I have a framed one, signed by both of them. Having contributed to the union of the two main anti-Bolshevik forces is one of the greatest things that I've ever done. I'm proud of having fought in Saratov.<br><br>Almost at the same time, the Siberian Army took Nizhni Novgorod and the AFSR defeated the Soviet Army in Tula. The war was almost won, so we started to think about what would come next. In a conference that took place in Tsarytsin, it was decided that a Military Directory would govern Russia until the revolution was completeley defeated. Naturally, Admiral Kolchak was chosen as its President. The first decision of the Directory was to order a final, coordinated assault on Moscow."
+    "text": "They have not linked up. Saratov is ours, the railway west is open, and the two White armies remain what they have been all year: two armies.<br><br>Front headquarters is turning the offensive back east. Ufa next, and this time properly."
    },
    "tactical": {
-    "goto": 14,
+    "goto": 17,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 280,
-    "text": "I guess that most of you have seen copies of that historical photograph of Kappel and Wrangel shaking their hands when they finally met in Saratov. In my living room I have a framed one, signed by both of them. Having contributed to the union of the two main anti-Bolshevik forces is one of the greatest things that I've ever done. I'm proud of having fought in Saratov.<br><br>Almost at the same time, the Siberian Army took Nizhni Novgorod and the AFSR defeated the Soviet Army in Tula. The war was almost won, so we started to think about what would come next. In a conference that took place in Tsarytsin, it was decided that a Military Directory would govern Russia until the revolution was completeley defeated. Naturally, Admiral Kolchak was chosen as its President. The first decision of the Directory was to order a final, coordinated assault on Moscow."
+    "text": "They have not linked up. Saratov is ours, the railway west is open, and the two White armies remain what they have been all year: two armies.<br><br>Front headquarters is turning the offensive back east. Ufa next, and this time properly."
    },
    "lose": {
-    "goto": 255,
+    "goto": 14,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 0,
-    "text": "The Bolsheviks opposed a fierce resistance against our attacks. And here is where my story ends. During one of the assaults, I was badly wounded by an enemy grenade. The doctors could save my life, but I lost my left eye and part of my left leg. When I could leave the hospital, the war had already ended. The revolution was over and Russia had a new, bright future. But many people, including myself, had paid a terrible price for it.<br><br>I don't regret what I did, though. The Bolshevik menace is over. We have recovered our country. I have a home. Certainly, my life is hard, I can't do certain jobs, and my wounds hurt occasionally. But when the spring comes and I can go strolling on the shores of the Volga in Samara, I realise how lucky I am for being able to live in my beloved Russia, and I thank God for that. Our sacrifice has been worthwhile."
+    "text": "Saratov has gone. The link-up they wanted has been made and there is a continuous White front from the Volga to the Urals for the first time in this war.<br><br>I am ordered to Ryazan with what I can bring out."
    }
   }
  },
@@ -666,43 +619,43 @@
   "id": 14,
   "scenario": "simpob_14.xml",
   "startprestige": 0,
-  "intro": "Mousetrap: Ryazan<br><br>December 12th, 1919<br><br>The Military Directory decided that Denikin's elite troops would lead the frontal attack against Moscow, while Wrangel and Diterikhs flanked them. Other units, including mine, would attack other points of the Bolshevik defensive perimeter, in order to weaken our enemies, prevent them from reinforcing the capital, and blocking as many Red escape routes as possible.<br><br>Specifically, our new mission would be the taking of Ryazan and Kolomna, southeast of Moscow.  I was determined to succeed, no matter the cost.<br><br>Victory conditions:<br>- Take all the VHs.",
+  "intro": "Mousetrap: Ryazan<br><br>December 12th, 1919<br><br>Ryazan is not a front-line town. It is where the roads from the south and the east meet before Moscow, and that is why I am standing in it in December with a group made of other people's spare regiments.<br><br>Five objectives, a river, and a railway junction. If this line goes there is one more behind it and then there is Moscow.<br><br>Venev, on the Tula road, is where their forward group has come up. It is worth a great deal to us and probably not much to them yet.<br><br>Victory conditions:<br>- When the time runs out, hold five objectives for a brilliant victory, four for a victory, three for a tactical victory.<br>- The objectives are Ryazan (34,5), Kolomna (4,4), Turlatovo (41,11), Plakhino (35,19) and Kashira (2,24).<br>- Or take Venev (6,36).",
   "outcome": {
    "briliant": {
-    "goto": 15,
+    "goto": 17,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 320,
-    "text": "Attacked fom no less than four different points at the same time, the Soviets finally retreated from Moscow. Victory was ours! Sadly, we didn't have been able to encircle the city completely, so many enemies escaped to the northwest. The Directory ordered us to pursue them and destroy them before they could reach Petrograd."
+    "text": "The junction is held and their forward group has been pushed off the Tula road. The reserves that were forming behind us have not had to be spent covering a retreat, which means they can be used for something.<br><br>The front is going over to the offensive again on the eastern axis. My group entrains tomorrow."
    },
    "victory": {
-    "goto": 15,
+    "goto": 17,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 320,
-    "text": "Attacked fom no less than four different points at the same time, the Soviets finally retreated from Moscow. Victory was ours! Sadly, we didn't have been able to encircle the city completely, so many enemies escaped to the northwest. The Directory ordered us to pursue them and destroy them before they could reach Petrograd."
+    "text": "The junction is held and their forward group has been pushed off the Tula road. The reserves that were forming behind us have not had to be spent covering a retreat, which means they can be used for something.<br><br>The front is going over to the offensive again on the eastern axis. My group entrains tomorrow."
    },
    "tactical": {
-    "goto": 15,
+    "goto": 17,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 240,
-    "text": "Attacked fom no less than four different points at the same time, the Soviets finally retreated from Moscow. Victory was ours! Sadly, we didn't have been able to encircle the city completely, so many enemies escaped to the northwest. The Directory ordered us to pursue them and destroy them before they could reach Petrograd."
+    "text": "The junction is held and their forward group has been pushed off the Tula road. The reserves that were forming behind us have not had to be spent covering a retreat, which means they can be used for something.<br><br>The front is going over to the offensive again on the eastern axis. My group entrains tomorrow."
    },
    "lose": {
-    "goto": 255,
+    "goto": 15,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 0,
-    "text": "After so many battles, fatigue had affected my mind and my body. I suffered a breakdown at the worst possible time, and I had to be relieved from command. Victory was finally ours, but to this day I still regret not having been able to participate in this heroic deed until te end. My family always tries to cheer me up when they see that I'm in a sad mood, but I can't help thinking that, somehow, at the moment of truth Glory avoided me and I failed my country."
+    "text": "The junction is theirs. We are going north-west along the last railway we still hold.<br><br>Klin is the next station with anything to hold on to."
    }
   }
  },
@@ -710,34 +663,34 @@
   "id": 15,
   "scenario": "simpob_15.xml",
   "startprestige": 0,
-  "intro": "As though nothing could fall: Klin<br><br>December 30th, 1919<br><br>The Bolsheviks had decided to make a last stand near Moscow, hoping to delay our advance. That way, they would gain enough time to finish a strong defensive line in Petrograd. <br><br>We were not going to tolerate that. The final victory against the communists was too close for that. We travelled as fast as we could and we deployed our forces south of Klin. We were eager to win a last battle against the hateful Soviets.<br><br>Victory conditions:<br>- Take all the VHs.",
+  "intro": "As though nothing could fall: Klin<br><br>December 30th, 1919<br><br>There is nothing behind this one.<br><br>Klin is on the Petrograd railway sixty versts from Moscow. Everything the Republic has been able to scrape together in a fortnight is in the line here: the courses cadets, two workers' regiments from the Moscow factories, the internationalist battalion, and the regiments that have been retreating since Saratov and are being asked to stop today.<br><br>Five towns. Hold them until the clock runs out. Their forward staging area is south of us and if it can be taken, take it.<br><br>Victory conditions:<br>- When the time runs out, hold five objectives for a brilliant victory, four for a victory, three for a tactical victory.<br>- The objectives are Klin (11,6), Woronino (19,3), Rogatschewo (29,7), Fedoroloka (27,16) and Solnogorsk (16,18).<br>- Or take their staging area at (19,28).",
   "outcome": {
    "briliant": {
-    "goto": 254,
+    "goto": 17,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 400,
-    "text": "The Red Army was virtually destroyed after Klin. Tukhachevsky led some surviving regiments to Petrograd, where they defended themselves for a couple of weeks until our army defeated them for good. In the end, all the Bolshevik leaders were killed or taken prisoner, or they had to flee to foreign lands.<br><br>We had finally taken our country back. Our losses had been huge, including our Tzar and His family, but Old Mother Russia wasn't lost. We'd do our best to heal her.<br><br>Yes, Russia and the Turkestan were safe at last, but what about the other possessions of the empire? Sadly, we had to accept the loss of many territories. In February, Kolchak signed the Treaty of Tiflis, acknowledging the independence of the republics of Georgia and Armenia, which became Russian allies. We quickly sent them arms, ammunition and advisors that they could use in their wars against Turkey and Azerbaijan.<br><br>Besides, the League of Nations let us know that they wouldn't tolerate any Russian action against the sovereignty of Finland, Poland or the Baltic republics. We had no choice but to accept those demands.<br><br>However, they didn't say anything about Belarus or Ukraine, and we were determined to keep those lands under Russian control."
+    "text": "It held. Their attack has stopped in front of Klin and this morning their forward units were reported moving back.<br><br>They cannot stay where they are: a front that long, in winter, at the end of a single railway with partisans on it, does not hold together once it stops moving forward. The reserves that were built up behind this line are intact and they are going east.<br><br>Back to the proper war. Ufa is in my orders and I have been waiting a long time to read that word again."
    },
    "victory": {
-    "goto": 254,
+    "goto": 17,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 400,
-    "text": "The Red Army was virtually destroyed after Klin. Tukhachevsky led some surviving regiments to Petrograd, where they defended themselves for a couple of weeks until our army defeated them for good. In the end, all the Bolshevik leaders were killed or taken prisoner, or they had to flee to foreign lands.<br><br>We had finally taken our country back. Our losses had been huge, including our Tzar and His family, but Old Mother Russia wasn't lost. We'd do our best to heal her.<br><br>Yes, Russia and the Turkestan were safe at last, but what about the other possessions of the empire? Sadly, we had to accept the loss of many territories. In February, Kolchak signed the Treaty of Tiflis, acknowledging the independence of the republics of Georgia and Armenia, which became Russian allies. We quickly sent them arms, ammunition and advisors that they could use in their wars against Turkey and Azerbaijan.<br><br>Besides, the League of Nations let us know that they wouldn't tolerate any Russian action against the sovereignty of Finland, Poland or the Baltic republics. We had no choice but to accept those demands.<br><br>However, they didn't say anything about Belarus or Ukraine, and we were determined to keep those lands under Russian control."
+    "text": "It held. Their attack has stopped in front of Klin and this morning their forward units were reported moving back.<br><br>They cannot stay where they are: a front that long, in winter, at the end of a single railway with partisans on it, does not hold together once it stops moving forward. The reserves that were built up behind this line are intact and they are going east.<br><br>Back to the proper war. Ufa is in my orders and I have been waiting a long time to read that word again."
    },
    "tactical": {
-    "goto": 254,
+    "goto": 17,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 280,
-    "text": "The Red Army was virtually destroyed after Klin. Tukhachevsky led some surviving regiments to Petrograd, where they defended themselves for a couple of weeks until our army defeated them for good. In the end, all the Bolshevik leaders were killed or taken prisoner, or they had to flee to foreign lands.<br><br>We had finally taken our country back. Our losses had been huge, including our Tzar and His family, but Old Mother Russia wasn't lost. We'd do our best to heal her.<br><br>Yes, Russia and the Turkestan were safe at last, but what about the other possessions of the empire? Sadly, we had to accept the loss of many territories. In February, Kolchak signed the Treaty of Tiflis, acknowledging the independence of the republics of Georgia and Armenia, which became Russian allies. We quickly sent them arms, ammunition and advisors that they could use in their wars against Turkey and Azerbaijan.<br><br>Besides, the League of Nations let us know that they wouldn't tolerate any Russian action against the sovereignty of Finland, Poland or the Baltic republics. We had no choice but to accept those demands.<br><br>However, they didn't say anything about Belarus or Ukraine, and we were determined to keep those lands under Russian control."
+    "text": "It held. Their attack has stopped in front of Klin and this morning their forward units were reported moving back.<br><br>They cannot stay where they are: a front that long, in winter, at the end of a single railway with partisans on it, does not hold together once it stops moving forward. The reserves that were built up behind this line are intact and they are going east.<br><br>Back to the proper war. Ufa is in my orders and I have been waiting a long time to read that word again."
    },
    "lose": {
     "goto": 255,
@@ -746,7 +699,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Those were the last lines that my beloved uncle wrote before engaging in battle, one last time, with the Red Army. As you already know, he was killed in that action, so he didn't live to see the Bolshevik Revolution defeated and Russia freed.<br><br>However, his sacrifice hasn't been forgotten, and today his relatives have joined here, in Samara, to pay tribute to this true Russian hero. Uncle, you have made our lives possible. We owe you everything, and we want you to be sure that we'll remember you until the day we die. Za pobedu, hura!!!"
+    "text": "The line is broken and there is no other. I am writing this from a train that is not going to stop anywhere useful.<br><br>Whatever is decided now will be decided by people other than us."
    }
   }
  },
@@ -798,7 +751,7 @@
   "id": 17,
   "scenario": "simpob_17.xml",
   "startprestige": 0,
-  "intro": "You've got to know when to walk away: farewell to Ufa<br><br>May 29th, 1919<br><br>The situation was chaotic. The Red Army was approaching from three different sides and nothing seemed to be able to stop them. Rumours indicated that part of the Turkestan Army had crossed the river Belaya north of Ufa. If that was true, the Bolsheviks could cut our only retreat line in just a few days.<br><br>The civilians, and many of our soldiers, were on the verge of panic. Nobody thought about the Spring Offensive any more. The defeat of the Red Army, the liberation of Moscow... all of those ideas appeared like distant dreams, like something unreal that we had imagined decades ago. The present was completely different, far worse than anything that we could have imagined. Having thought about victory seemed foolish. There and then, survival was the only thing that mattered.<br><br>And, despite all our problems and all our fears, we had to persist. We had to delay the Bolsheviks for as long as we could. If they wasted enough time, we could evacuate the civilians, the wounded, our equipment, and most of our troops. We could make an orderly retreat and, beyond the Urals, we would have more chances to stop the red wave.<br><br>Victory conditions:<br>- Take all the VHs.",
+  "intro": "Farewell to Ufa<br><br>May 29th, 1919<br><br>Across the Belaya, then.<br><br>The Western Army is broken and the town it has been supplying itself from all spring is on the far bank of a wide river with one bridge. Chapayev's 25th Division goes across on rafts and pontoons north of the city; the rest of the group goes for the Chishmy junction to cut the line out.<br><br>There is no reserve and no second attempt. Twelve turns is what the front headquarters has given us, and it has given the same twelve turns to their rearguard.<br><br>Victory conditions:<br>- Take Ufa (33,4) and Chishmy (22,7) within twelve turns.<br>- Hold Buzdyak (16,7) and Sterlitamak (32,22).",
   "outcome": {
    "briliant": {
     "goto": 18,
@@ -807,7 +760,7 @@
      0
     ],
     "prestige": 400,
-    "text": "The Soviets paid a heavy price for the conquest of Ufa. Thousands of communist troops lost their lives at the shores of the Belaya, trying in vain to stop our evacuation. When they finally entered the city, it had been a long time since we had left. We had survived to fight another day, and that made us feel happy."
+    "text": "Ufa is ours and the Chishmy junction with it. Their army went east along the Zlatoust line at night with what it could carry.<br><br>The Urals are open. Chapayev was gassed from the air over the crossing and refused to be taken off the field; he is in the line today.<br><br>Next is the passes, and after the passes, Siberia."
    },
    "victory": {
     "goto": 18,
@@ -816,7 +769,7 @@
      0
     ],
     "prestige": 400,
-    "text": "The Soviets paid a heavy price for the conquest of Ufa. Thousands of communist troops lost their lives at the shores of the Belaya, trying in vain to stop our evacuation. When they finally entered the city, it had been a long time since we had left. We had survived to fight another day, and that made us feel happy."
+    "text": "Ufa is ours and the Chishmy junction with it. Their army went east along the Zlatoust line at night with what it could carry.<br><br>The Urals are open. Chapayev was gassed from the air over the crossing and refused to be taken off the field; he is in the line today.<br><br>Next is the passes, and after the passes, Siberia."
    },
    "tactical": {
     "goto": 18,
@@ -825,7 +778,7 @@
      0
     ],
     "prestige": 400,
-    "text": "The Soviets paid a heavy price for the conquest of Ufa. Thousands of communist troops lost their lives at the shores of the Belaya, trying in vain to stop our evacuation. When they finally entered the city, it had been a long time since we had left. We had survived to fight another day, and that made us feel happy."
+    "text": "Ufa is ours and the Chishmy junction with it. Their army went east along the Zlatoust line at night with what it could carry.<br><br>The Urals are open. Chapayev was gassed from the air over the crossing and refused to be taken off the field; he is in the line today.<br><br>Next is the passes, and after the passes, Siberia."
    },
    "lose": {
     "goto": 18,
@@ -834,7 +787,7 @@
      0
     ],
     "prestige": 260,
-    "text": "Our defence strategy didn't work. I guess that, no matter what we had tried, it wouldn't have been enough to delay the Soviets, much less to stop them. We were lucky to save our lives and to avoid capture, but we had to leave tons of equipment and ammunition behind. The victorious Bolsheviks found a great treasure in Ufa. Much more that they had expected."
+    "text": "The crossing was forced but the junction held, and their rearguard used the time to get the trains out to Zlatoust.<br><br>The city is ours. Their army is not."
    }
   }
  },
@@ -842,7 +795,7 @@
   "id": 18,
   "scenario": "simpob_18.xml",
   "startprestige": 0,
-  "intro": "Cry for the Romanovs: Ekaterinburg<br><br>July 12th, 1919<br><br>Our defensive actions at Ufa could not stop the Red Army for a long time, and when they received fresh units from the west they resumed their counteroffensive. Their next objectives were Perm and Ekaterinburg, where they had murdered the Tzar and his family in 1918. This time the High Command ordered us to stay there, acting as reserve troops.<br><br>Perm fell rather easily, and on July 5 the operations against Ekaterinburg began. Initially, the  offensive of the Red Second Army was stopped by our shock regiments, but then the 28th Soviet Infantry Division outflanked their positions and attacked from the rear, surrounding and defeating our Siberian Army. <br><br>The Bolshevik advance was too fast for us to intervene. Knowing that the city was lost, we decided to organize the evacuation of Ekaterinburg. While we kept the railroads open, we would have to defend the positions that we didn't have lost yet.<br><br>Victory conditions:<br>- You must evacuate 6 units through the EH at (36,9). All of them must be MSUs.<br>- Don't lose your VH.<br><br>Special note: <br>- The railroads will be very important for the evacuation. Be careful, and try not to blow them with artillery fire.",
+  "intro": "Ekaterinburg<br><br>July 12th, 1919<br><br>A year and a week since the house on Voznesensky Lane, and we shall be the ones who have to find out what happened in it.<br><br>The 2nd and 3rd Armies have come over the northern Urals and Ekaterinburg is the prize: the junction of everything, the Verkh-Isetsk works, and the last real city before Siberia proper.<br><br>Their evacuation began before our guns were in range. Six marked columns of staff, treasury and archives are trying to get out on the Tyumen line, and what is in them will decide what anyone is able to prove about this year afterwards.<br><br>Victory conditions:<br>- Take Ekaterinburg (15,3).<br>- Hold Severskiy (6,19) and Davydova (34,21).<br>- The enemy escapes instead if six of his columns get out at (36,9).",
   "outcome": {
    "briliant": {
     "goto": 19,
@@ -851,7 +804,7 @@
      0
     ],
     "prestige": 300,
-    "text": "We finished the evacuation of Ekaterinburg with only minor incidents, retreating in order to the line Yalutorovsk - Tobolsk. From there, our troops were sent to Chelyabinsk, where they were badly needed.<br><br>Although, once again, our army was saved, the main result of the Bolshevik military operations against Ekaterinburg was the occupation of the main cities and factories of the Urals, the most important industrial region of Russia. If the Red Army kept on sending its reserves against us, we'd soon be facing a bleak future."
+    "text": "Ekaterinburg is taken. The works are intact - they had the demolition charges laid and no time to fire them.<br><br>Sokolov's investigation papers, or what our people could stop of them, are with the tribunal. I have read enough of the summary to be glad the rest is somebody else's work.<br><br>The road east is the Trans-Siberian and there is very little on it now that can stop an army."
    },
    "victory": {
     "goto": 19,
@@ -860,7 +813,7 @@
      0
     ],
     "prestige": 300,
-    "text": "We finished the evacuation of Ekaterinburg with only minor incidents, retreating in order to the line Yalutorovsk - Tobolsk. From there, our troops were sent to Chelyabinsk, where they were badly needed.<br><br>Although, once again, our army was saved, the main result of the Bolshevik military operations against Ekaterinburg was the occupation of the main cities and factories of the Urals, the most important industrial region of Russia. If the Red Army kept on sending its reserves against us, we'd soon be facing a bleak future."
+    "text": "Ekaterinburg is taken. The works are intact - they had the demolition charges laid and no time to fire them.<br><br>Sokolov's investigation papers, or what our people could stop of them, are with the tribunal. I have read enough of the summary to be glad the rest is somebody else's work.<br><br>The road east is the Trans-Siberian and there is very little on it now that can stop an army."
    },
    "tactical": {
     "goto": 19,
@@ -869,7 +822,7 @@
      0
     ],
     "prestige": 240,
-    "text": "We finished the evacuation of Ekaterinburg with only minor incidents, retreating in order to the line Yalutorovsk - Tobolsk. From there, our troops were sent to Chelyabinsk, where they were badly needed.<br><br>Although, once again, our army was saved, the main result of the Bolshevik military operations against Ekaterinburg was the occupation of the main cities and factories of the Urals, the most important industrial region of Russia. If the Red Army kept on sending its reserves against us, we'd soon be facing a bleak future."
+    "text": "Ekaterinburg is taken. The works are intact - they had the demolition charges laid and no time to fire them.<br><br>Sokolov's investigation papers, or what our people could stop of them, are with the tribunal. I have read enough of the summary to be glad the rest is somebody else's work.<br><br>The road east is the Trans-Siberian and there is very little on it now that can stop an army."
    },
    "lose": {
     "goto": 255,
@@ -878,7 +831,7 @@
      0
     ],
     "prestige": 0,
-    "text": "I still have nightmares when I remember Ekaterinburg. The Soviets struck from our rear, cutting our retreat lines. Many soldiers, civilians and equipment were trapped in the city, and despite all our efforts we couldn't evacuate them. Others died or were captured when they were trying to reach Tobolsk.<br><br>You could say that I was lucky, because I could return to our own lines. But that was the last time that I was engaged in battle. I was relieved from command due to my failure, and Kolchak sent me to maintain order in Chita, near the border with China and Mongolia. That meant that, when our army was finally defeated a few months later, it was easy to gather as many sympathizers as I could find and lead them safely to China, where the Bolsheviks couldn't harm them. After Ekaterinburg, I had a chance to redeem myself.<br><br>From China I traveled to many different countries, until in 1922 I established myself in New Zealand, where I still live. I can't complain about the life that I've lived in these last 30 years, but the truth is that I miss Russia very much. I wish that I could have done more, and that we could have won the war. I know that I should have gotten rid of all these feelings of failure and shame, but I've never been able to do that. It's true, I did my best, but now that the Soviet Union seems more powerful than ever, despair and grief take hold of my mind. I guess that it's the penance I have to pay for my sins, and I must accept it."
+    "text": "The city is ours and the trains are gone - every one of the marked columns out on the Tyumen line while we were still fighting for the station approaches.<br><br>The 3rd Army has been badly cut about doing it and the pursuit will have to wait for it to be made up. The front headquarters has asked me some sharp questions and they are fair ones."
    }
   }
  },
@@ -886,7 +839,7 @@
   "id": 19,
   "scenario": "simpob_19.xml",
   "startprestige": 0,
-  "intro": "The bear against the red wolves: Chelyabinsk<br><br>July 25th, 1919<br><br>While we were successfully evacuating Ekaterinburg, we received worrisome news from our left flank. The Soviet 5th Army was attacking our Chebarkul-Irtyash line. Our High Command believed that our men couldn't resist for a long time there, so very soon the city of Chelyabinsk would be in danger, too.<br><br>The High Command reacted quickly. All ou army was reorganized, our units went to the Chelyabinsk area as a reinforcement, and as a part of our newly created 3rd Army we were told to deploy southeast of Chelyabinsk. The plan was to lure the Red units into the city, and then encircle them and defeat them.<br><br>On July 24th the Reds entered Chelyabinsk. Our couteroffensive would start the next day. The northern group (under the command of the Czech Sergej Vojcechovsky) would cut the railway Chelyabinsk - Ekaterinburg and advance into the rear of the 5th Army. In the meantime, our southern group, commanded by Kappel, would destroy the Soviet 26th Division, closing the trap.<br><br>Victory conditions:<br>- Take all the VHs.",
+  "intro": "Chelyabinsk<br><br>July 25th, 1919<br><br>We took this city four days ago and now we have to keep it, which the enemy has evidently decided is a different question.<br><br>The 5th Army came through the passes and into Chelyabinsk on the twenty-fourth. Kolchak's staff has been planning exactly this: let the Reds into the town, close on both flanks from Miasskoye and the north, and destroy an army in a street it thinks it owns.<br><br>So they will come, and they will come at both shoulders at once. The city rose to help us take it - the railway workshops turned out three regiments in a week - and those men are in the line now.<br><br>Victory conditions:<br>- When the time runs out, hold six objectives for a brilliant victory, five for a victory, four for a tactical victory.<br>- The objectives are Chelyabinsk (25,11), Argayash (14,4), Dolgoderevenskoye (22,6), Poletaevo (20,16), Chebarkul (7,17) and Yemanzhelinsk (23,22).<br>- Or take Miasskoye (32,7).",
   "outcome": {
    "briliant": {
     "goto": 20,
@@ -895,7 +848,7 @@
      0
     ],
     "prestige": 240,
-    "text": "The Red Army didn't expect our reaction, and all its attempts to defend itself failed. When August came the 5th Army was nearly destroyed, and only the skills of their leader Tukhachevsky prevented the Bolshevik divisions from a complete destruction. The surviving communists retreated to the Miass river, where they waited until Lenin and Trotsky sent them more reinforcements.<br><br>Our enemies were still too strong, so we couldn't fully exploit our victory. We waited in Chelyabinsk until the Soviets came again, and then we withdrew our troops deeper into Siberia. We knew that they were suffering much more than us and that, if we kept on winning defensive battles and strategic counterattacks, sooner or later we'd have a chance for a decisive victory."
+    "text": "Both pincers were broken and the city is ours. Their counterstroke was their last army reserve in the Urals and it has been spent.<br><br>There is no natural line between here and the Tobol. The pursuit goes on into Siberia."
    },
    "victory": {
     "goto": 20,
@@ -904,7 +857,7 @@
      0
     ],
     "prestige": 240,
-    "text": "The Red Army didn't expect our reaction, and all its attempts to defend itself failed. When August came the 5th Army was nearly destroyed, and only the skills of their leader Tukhachevsky prevented the Bolshevik divisions from a complete destruction. The surviving communists retreated to the Miass river, where they waited until Lenin and Trotsky sent them more reinforcements.<br><br>Our enemies were still too strong, so we couldn't fully exploit our victory. We waited in Chelyabinsk until the Soviets came again, and then we withdrew our troops deeper into Siberia. We knew that they were suffering much more than us and that, if we kept on winning defensive battles and strategic counterattacks, sooner or later we'd have a chance for a decisive victory."
+    "text": "Both pincers were broken and the city is ours. Their counterstroke was their last army reserve in the Urals and it has been spent.<br><br>There is no natural line between here and the Tobol. The pursuit goes on into Siberia."
    },
    "tactical": {
     "goto": 20,
@@ -913,7 +866,7 @@
      0
     ],
     "prestige": 160,
-    "text": "The Red Army didn't expect our reaction, and all its attempts to defend itself failed. When August came the 5th Army was nearly destroyed, and only the skills of their leader Tukhachevsky prevented the Bolshevik divisions from a complete destruction. The surviving communists retreated to the Miass river, where they waited until Lenin and Trotsky sent them more reinforcements.<br><br>Our enemies were still too strong, so we couldn't fully exploit our victory. We waited in Chelyabinsk until the Soviets came again, and then we withdrew our troops deeper into Siberia. We knew that they were suffering much more than us and that, if we kept on winning defensive battles and strategic counterattacks, sooner or later we'd have a chance for a decisive victory."
+    "text": "Both pincers were broken and the city is ours. Their counterstroke was their last army reserve in the Urals and it has been spent.<br><br>There is no natural line between here and the Tobol. The pursuit goes on into Siberia."
    },
    "lose": {
     "goto": 255,
@@ -922,7 +875,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Although our plan was good, it was poorly executed. The Soviets resisted and we couldn't encircle them. In the end we were forced to retire. The troops of the Red Army finally occupied the whole of the Urals and were given the opportunity to attack Siberia and Turkestan.<br><br>That was the last time that I was engaged in battle. I was relieved from command due to my failure, and Kolchak sent me to maintain order in Chita, near the border with China and Mongolia. That meant that, when our army was finally defeated a few months later, it was easy to gather as many sympathizers as I could find and lead them safely to China, where the Bolsheviks couldn't harm them. After Chelyabinsk, I had a chance to redeem myself.<br><br>From China I traveled to many different countries, until in 1922 I established myself in Argentina, where I still live. I can't complain about the life that I've lived in these last 30 years, but the truth is that I miss Russia very much. I wish that I could have done more, and that we could have won the war. I know that I should have gotten rid of all these feelings of failure and shame, but I've never been able to do that. It's true, I did my best, but now that the Soviet Union seems more powerful than ever, despair and grief take hold of my mind. I guess that it's the penance I have to pay for my sins, and I must accept it."
+    "text": "The pincers closed north of the city and the army had to fight its way west out of a town it had taken. The workshop regiments covered the withdrawal and most of them did not come out.<br><br>The Urals will have to be done again."
    }
   }
  },
@@ -930,91 +883,44 @@
   "id": 20,
   "scenario": "simpob_20.xml",
   "startprestige": 0,
-  "intro": "Not dead yet: The Tobol offensive (I)<br><br>September 1st, 1919<br><br>All our efforts during the summer of 1919 had allowed us to retreat in order to the relative protection of the river Ishim. However, we knew that if we didn't launch a counteroffensive, the Red Army would destroy us completely before the next year. In fact, the Soviets acted as if they had already defeated us. Having learnt nothing from their setbacks at Ekaterinburg and Chelyabinsk, their quick advances in Siberia had convinced them that we were a bunch of corrupt incompetents, and they even had started to retire some units from the front, in order to send them against Denikin's Armed Forces of Southern Russia, or even further to the west, against the Polish Army.<br><br>The arrogance of the Bolsheviks gave us a chance to surprise them. As I've already written before, in July Kolchak had ordered the reorganization of the front and the unification of the Siberian Army and Western Army. General Diterikhs had been appointed as Commander in Chief of the Eastern Front. New armies and independent groups were created, mainly the 1st, the 2nd and the 3rd Armies. When the Tobol offensive began, I was serving in the latter.<br><br>Once the reorganization was complete, Diterikhs prepared our armies for the counteroffensive, which would begin in September. All our units would participate, but the 3rd Army, along with the Separate Siberian Cossack Corps, would inflict the main blow along the Omsk-Petropavlovsk-Kurgan railroad line, on our left flank. While our other units pinned the enemy down near the Ishim, the Cossacks and the 3rd Army would penetrate deeply into the rear of the 5th Red Army, allowing the encirclement and destruction of the Bolshevik divisions that were deployed further to the north.<br><br>It was a daring plan, and it needed to be perfectly executed if we were to have any chances of success. As the beginning of the offensive came close, I was overwhelmed by anxiety. I knew that this would be our last chance. If we let the Soviets live to fight another day, they would attack again soon, stronger that ever. And if that moment came, we'd have nothing left to defend ourselves.<br><br>Victory conditions:<br>- Take all the VHs.<br><br>Special note:<br>- You can buy equipment from the Cossack Hosts in this scenario.",
+  "intro": "Not dead yet: the Tobol (I)<br><br>September 1st, 1919<br><br>They are not finished, and the men who told the front headquarters they were finished should come and look at this.<br><br>Kolchak's armies have been reorganised behind the Tobol - Dieterichs has combed out the rear areas, the Siberian Cossacks have been mobilised wholesale, and they have counted correctly that our own divisions are down to half strength and six hundred versts from their railhead.<br><br>The blow has fallen on our left, where the Cossack cavalry has the open steppe. Hold the line of villages. Petropavlovsk behind their front is the objective everything else here is a step towards.<br><br>Victory conditions:<br>- When the time runs out, hold four objectives for a brilliant victory, three for a victory, two for a tactical victory.<br>- The objectives are Makushino (4,4), Petukhovo (15,7), Mamlyutka (27,9) and Presnovka (4,18).<br>- Or take Petropavlovsk (38,12).",
   "outcome": {
    "briliant": {
-    "goto": 23,
+    "goto": 22,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 240,
-    "text": "The first phase of the Tobol offensive was a stunning victory for us. The 5th Army was routed and the survivors rushed to the river Tobol as fast as they could. <br><br>We finally had the opportunity that we had been waiting for so long. We could keep on moving, cross the Tobol, encircle the Red Armies of the East, and destroy them. All we needed was an order."
+    "text": "The line held through the whole of their effort. They have put in their last mobilised reserves against these villages and they have not moved us off them.<br><br>Our own reinforcements are coming up the line at last. The counterstroke on the Tobol is being prepared and it will not have to start from behind a river."
    },
    "victory": {
-    "goto": 23,
+    "goto": 22,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 240,
-    "text": "We were so close... Our offensive ended on the right bank of the Tobol river, after having forced the Red Army to retreat more than 25 Russian miles. It was a great victory. However,  it wasn't good enough. Our enemies were beaten, but too many of them had survived. We had thrown everything that we had at them, and they were still capable of fighting back. They would recover themselves, and they would eventually crush us.<br><br>My last hopes were gone. We were doomed. Soon we'd have to choose between death, a life under the Bolshevik yoke, or leaving Russia forever.<br><br>It hasn't passed one single day that I haven't thought that, if we had advanced a little faster, or if the Cossacks had been more disciplined, we could have actually encircled the Soviet Army. But we failed at the worst possible time. We were facing a bleak future, and things would get much worse before the war was over."
+    "text": "The line held through the whole of their effort. They have put in their last mobilised reserves against these villages and they have not moved us off them.<br><br>Our own reinforcements are coming up the line at last. The counterstroke on the Tobol is being prepared and it will not have to start from behind a river."
    },
    "tactical": {
-    "goto": 23,
+    "goto": 22,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 160,
-    "text": "We were so close... Our offensive ended on the right bank of the Tobol river, after having forced the Red Army to retreat more than 25 Russian miles. It was a great victory. However,  it wasn't good enough. Our enemies were beaten, but too many of them had survived. We had thrown everything that we had at them, and they were still capable of fighting back. They would recover themselves, and they would eventually crush us.<br><br>My last hopes were gone. We were doomed. Soon we'd have to choose between death, a life under the Bolshevik yoke, or leaving Russia forever.<br><br>It hasn't passed one single day that I haven't thought that, if we had advanced a little faster, or if the Cossacks had been more disciplined, we could have actually encircled the Soviet Army. But we failed at the worst possible time. We were facing a bleak future, and things would get much worse before the war was over."
+    "text": "The line held through the whole of their effort. They have put in their last mobilised reserves against these villages and they have not moved us off them.<br><br>Our own reinforcements are coming up the line at last. The counterstroke on the Tobol is being prepared and it will not have to start from behind a river."
    },
    "lose": {
-    "goto": 23,
+    "goto": 22,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 100,
-    "text": "I can't understand what happened to us. We tried everything, but nothing worked. The Reds resisted. We threw everything that we had at them, and they were still capable of fighting back. Our offensive was a complete failure.<br><br>My last hopes were gone. We were doomed. Soon we'd have to choose between death, a life under the Bolshevik yoke, or leaving Russia forever.<br><br>It hasn't passed one single day that I haven't thought that, if we had advanced faster, or if the Cossacks had been more disciplined, we could have actually encircled the Soviet Army. But we failed at the worst possible time. We were facing a bleak future, and things would get much worse before the war was over."
+    "text": "We were pushed back off the villages and over the Tobol. Their cavalry is loose on the steppe behind our left.<br><br>The line will have to be restored on the river, and restoring it is the next task."
    }
-  },
-  "briefing": {
-   "dialogue": [
-    {
-     "id": "simpob_21-choice",
-     "speaker": "General Staff",
-     "role": "Path selection",
-     "side": "right",
-     "text": "The campaign divides here. Choose the path you will follow.",
-     "choices": [
-      {
-       "id": "simpob_21-choice.0",
-       "text": "Retreat path",
-       "effects": [
-        {
-         "id": "simpob_21-choice.0.route",
-         "type": "route",
-         "scenarioIndex": 23
-        },
-        {
-         "id": "simpob_21-choice.0.flag",
-         "type": "setFlag",
-         "flag": "simpob_simpob_21_choice_0"
-        }
-       ],
-       "hint": "You've chosen to play Kappel's retreat into Siberia."
-      },
-      {
-       "id": "simpob_21-choice.1",
-       "text": "Treaty path.",
-       "effects": [
-        {
-         "id": "simpob_21-choice.1.route",
-         "type": "route",
-         "scenarioIndex": 22
-        },
-        {
-         "id": "simpob_21-choice.1.flag",
-         "type": "setFlag",
-         "flag": "simpob_simpob_21_choice_1"
-        }
-       ],
-       "hint": "You've chosen to play the treaty path."
-      }
-     ]
-    }
-   ]
   }
  },
  {
@@ -1065,43 +971,43 @@
   "id": 22,
   "scenario": "simpob_22.xml",
   "startprestige": 0,
-  "intro": "Better to burn out: The Tobol offensive (II)<br><br>September 25th, 1919<br><br>The day that we were expecting finally arrived. We were told to follow our advance along the railroad, eliminating the Bolshevik resistance until we reached the river Tobol.<br><br>Then our orders were to cross the river, take Kurgan and go to the north, completing the encirclement of the 2nd and the 3rd Red Armies. If we suceeded, Lenin's minions would be trapped, and nothing could stop us from liberating all of Siberia.<br><br>Victory conditions:<br>- Take all the VHs.<br><br>Special note:<br>- You can buy equipment from the Cossack Hosts in this scenario.",
+  "intro": "Better to burn out: the Tobol (II)<br><br>September 25th, 1919<br><br>Their offensive is a month old and it is running on nothing.<br><br>Every mobilised recruit they put into the line this month has been taken from a village that is now sending its sons to the partisans instead. Their supply comes down one railway with the Siberian partisan detachments sitting on it. They have gained ground and lost the army that gained it.<br><br>We hold the Kurgan crossings and the Tobol bank. Their two forward groups east of the river are what is left of their striking power, and both are within our reach.<br><br>Victory conditions:<br>- When the time runs out, hold four objectives for a brilliant victory, three for a victory, two for a tactical victory.<br>- The objectives are Kurgan (13,14), Chashinskiy (4,7), Vargashi (25,17) and the Tobol crossing (9,24).<br>- Or take both of their forward positions at (39,22) and (27,29).",
   "outcome": {
    "briliant": {
-    "goto": 254,
+    "goto": 23,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 0,
-    "text": "And that was how the Red Army was crushed by Diterikhs and his Tobol offensive. Thousands of Bolshevik soldiers died or were captured, along with tons of equipment. In the following weeks we retook Siberia almost without a fight: Tobolsk, Tiumen, Chelyabinsk, Ekaterinburg and many other cities and towns fell very easily. The communist panicked every time that they heard that we were approaching, and ran to the west as fast as they could.<br><br>Nothing stopped us until we reached the Urals. Winter was coming, and we knew that Lenin would send fresh Soviet divisions to the east very soon, so Kolchak ordered us to stop and dig in.<br><br>The next spring both sides planned different strategies, but there were very few real changes on the front line. We weren't strong enough to reach the Volga, and much less Moscow. On the other hand, the Bolsheviks could never overcome our defenses on the Urals. Besides, the United Kingdom, France, the United States and Japan were pressing Kolchak in order to end the war. They even threatened to retire their support if we didn't make a deal with the communists.<br><br>So, in the end, we had to accept the conditions that the British presented at the Armistice of Helsinki. The partition of Russia came into effect: the Bolsheviks would rule in the west, and Kolchak in the new State of Trans-Ural Russia. Of course, Denikin and Wrangel obtained the recognition of their tiny Free Crimean State, too.<br><br>After the civil war finished, I left the Army and I established myself in Ekaterinburg. I started to work as a teacher, I married and I raised a family. We've been working hard, trying to improve our country and make it thrive. I'm optimistic, and I'm sure that Trans-Ural has a bright future. May God help us to make that dream come true.<br><br>The campaign is over. I hope you've liked it and thanks for playing.<br><br>Urica, 2018"
+    "text": "The Tobol line is ours and their forward groups have been broken up on the near bank. That is the end of the last offensive Kolchak's armies will ever mount.<br><br>From here it is pursuit, and the only questions are how fast we can move and how much of Siberia rises in front of us. Omsk is four hundred versts away and their government is already loading its trains."
    },
    "victory": {
-    "goto": 254,
+    "goto": 23,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 0,
-    "text": "And that was how the Red Army was crushed by Diterikhs and his Tobol offensive. Thousands of Bolshevik soldiers died or were captured, along with tons of equipment. In the following weeks we retook Siberia almost without a fight: Tobolsk, Tiumen, Chelyabinsk, Ekaterinburg and many other cities and towns fell very easily. The communist panicked every time that they heard that we were approaching, and ran to the west as fast as they could.<br><br>Nothing stopped us until we reached the Urals. Winter was coming, and we knew that Lenin would send fresh Soviet divisions to the east very soon, so Kolchak ordered us to stop and dig in.<br><br>The next spring both sides planned different strategies, but there were very few real changes on the front line. We weren't strong enough to reach the Volga, and much less Moscow. On the other hand, the Bolsheviks could never overcome our defenses on the Urals. Besides, the United Kingdom, France, the United States and Japan were pressing Kolchak in order to end the war. They even threatened to retire their support if we didn't make a deal with the communists.<br><br>So, in the end, we had to accept the conditions that the British presented at the Armistice of Helsinki. The partition of Russia came into effect: the Bolsheviks would rule in the west, and Kolchak in the new State of Trans-Ural Russia. Of course, Denikin and Wrangel obtained the recognition of their tiny Free Crimean State, too.<br><br>After the civil war finished, I left the Army and I established myself in Ekaterinburg. I started to work as a teacher, I married and I raised a family. We've been working hard, trying to improve our country and make it thrive. I'm optimistic, and I'm sure that Trans-Ural has a bright future. May God help us to make that dream come true.<br><br>The campaign is over. I hope you've liked it and thanks for playing.<br><br>Urica, 2018"
+    "text": "The Tobol line is ours and their forward groups have been broken up on the near bank. That is the end of the last offensive Kolchak's armies will ever mount.<br><br>From here it is pursuit, and the only questions are how fast we can move and how much of Siberia rises in front of us. Omsk is four hundred versts away and their government is already loading its trains."
    },
    "tactical": {
-    "goto": 254,
+    "goto": 23,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 0,
-    "text": "And that was how the Red Army was crushed by Diterikhs and his Tobol offensive. Thousands of Bolshevik soldiers died or were captured, along with tons of equipment. In the following weeks we retook Siberia almost without a fight: Tobolsk, Tiumen, Chelyabinsk, Ekaterinburg and many other cities and towns fell very easily. The communist panicked every time that they heard that we were approaching, and ran to the west as fast as they could.<br><br>Nothing stopped us until we reached the Urals. Winter was coming, and we knew that Lenin would send fresh Soviet divisions to the east very soon, so Kolchak ordered us to stop and dig in.<br><br>The next spring both sides planned different strategies, but there were very few real changes on the front line. We weren't strong enough to reach the Volga, and much less Moscow. On the other hand, the Bolsheviks could never overcome our defenses on the Urals. Besides, the United Kingdom, France, the United States and Japan were pressing Kolchak in order to end the war. They even threatened to retire their support if we didn't make a deal with the communists.<br><br>So, in the end, we had to accept the conditions that the British presented at the Armistice of Helsinki. The partition of Russia came into effect: the Bolsheviks would rule in the west, and Kolchak in the new State of Trans-Ural Russia. Of course, Denikin and Wrangel obtained the recognition of their tiny Free Crimean State, too.<br><br>After the civil war finished, I left the Army and I established myself in Ekaterinburg. I started to work as a teacher, I married and I raised a family. We've been working hard, trying to improve our country and make it thrive. I'm optimistic, and I'm sure that Trans-Ural has a bright future. May God help us to make that dream come true.<br><br>The campaign is over. I hope you've liked it and thanks for playing.<br><br>Urica, 2018"
+    "text": "The Tobol line is ours and their forward groups have been broken up on the near bank. That is the end of the last offensive Kolchak's armies will ever mount.<br><br>From here it is pursuit, and the only questions are how fast we can move and how much of Siberia rises in front of us. Omsk is four hundred versts away and their government is already loading its trains."
    },
    "lose": {
-    "goto": 255,
+    "goto": 23,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 0,
-    "text": "The Bolsheviks defended themselves like true heroes, not hesitating to sacrifice their lives if they could delay us for a few hours. They did that again and again, so when we finally reached the Tobol it was too late. The surviving communists had already crossed the river, had built strong defensive positions, and they simply had to wait until their reinforcements came. We had touched victory with the tips of our fingers, but we had let it go. Now it was all over.<br><br>Two weeks later the Soviets counterattacked. Most of our army retreated to Petropavlosk, but I was captured in one of the first skirmishes. Surprisingly, they didn't kill me on the spot, and they brought me to this camp instead. That's how I ended here.<br><br>I know that I won't live for much longer. The guards will kill me if disease doesn't do it first. I've told you everything that I remember about these months of war, hoping that, someday, one of you will be able to leave this country. When that moment comes, tell the world what really happened. Please, I beg you, don't let all of this be forgotten."
+    "text": "We are back over the Tobol and holding the far bank. Their groups east of the river are intact.<br><br>It has cost them more than it has cost us, which is true and is no consolation while the line is where it is."
    }
   }
  },
@@ -1109,7 +1015,7 @@
   "id": 23,
   "scenario": "simpob_23.xml",
   "startprestige": 0,
-  "intro": "Darkness falling: Novonikolayevsk<br><br>December 7th, 1919<br><br>With a great effort, we reached the Tobol river. That's true. However, it didn't become our first step towards victory. It was just our swan song, and the Bolsheviks knew it. They simply waited on the western shore of the river until they were ready. And then, on October 14th, they advanced again. We could do nothing to stop them.<br><br>At the beginning of November they had already routed us. We had lost nearly half of our men, most of our best equipment, and desertions were common. Petropavlovsk fell with little resistance, as well as Omsk, the capital of our government. The United Kingdom and all the other friendly countries were discreetly retiring their support, and were \"recommending\" us to accept our defeat and leave Russia forever. <br><br>Leaving! Ha! Like we could! The railroads were controlled by the Czech Legion, and they were using them for their own purposes. It was just a matter of time before they betrayed us and left us to die of cold. All the foreign fighters wanted to return to their countries, and they had no qualms about stealing our trains in order to secure their own evacuation. <br><br>Actually, I couldn't blame them. Even the local Siberian politicians, most of them Socialist- Revolutionaries, were eager to get rid of us and make a deal with their new Bolshevik masters. The fools believed that Lenin and his minions would have mercy on them.<br><br>Our remaining units were withdrawn to the Obi, and our armies were reorganized. Our next mission would be de defense of Novonikolayevsk, along with a couple of Siberian regiments and the 5th Polish Division, which was still loyal. <br><br>On November 20th the Soviets started their offensive. They quickly took Tatarsk and Semipalatinsk, and then marched against Barnaul, Kolyvan and Novonikolayevsk, where we were waiting for them.<br><br>And then, on December 7th, at the worst possible moment, there was an uprising of our 2nd Barabinsk Regiment in the city. Under the influence of the Socialist-Revolutionaries, those traitors wanted to expel us from Novonikolayevsk and hand it over to the communists. We couldn't let it happen, we had to resist and stop the Bolsheviks at the Obi.<br><br>Victory conditions:<br>- Take all the VHs.<br><br>Special notes:<br>- You can deploy only 18 ground units.<br>- This will be the last scenario with upgrading, auto-refit, auto-supply and train transports.",
+  "intro": "Darkness falling: Novonikolayevsk<br><br>December 7th, 1919<br><br>Omsk fell without a fight three weeks ago. Their government left it by train and their army left it on foot, and the two have not been in the same place since.<br><br>What is in front of us now is the Great Siberian Ice March: half a million people - the remains of three armies, their families, the typhus - moving east along one railway in December, with the Czechoslovak Legion holding the line for its own trains and letting nothing else past.<br><br>Novonikolayevsk is the bridge over the Ob. Take it and the whole column east of here is cut off from the whole column west of here.<br><br>Victory conditions:<br>- Take the two Novonikolayevsk sectors (29,20) and (28,23).<br>- Hold Kolyvan (21,3), Lokti (38,5), Pavino (19,24) and the Novonikolayevsk approach (32,24).",
   "outcome": {
    "briliant": {
     "goto": 24,
@@ -1118,7 +1024,7 @@
      0
     ],
     "prestige": 400,
-    "text": "We managed to stop the Red Army at the Obi for five days. It doesn't seem much, but it gave us enough time to evacuate our wounded and many civilians in our last trains. Thanks to our resistance, they could travel safely to the east and leave Russia.<br><br>That was the last time that we acted as a coordinated army. After a bitter argument with Kolchak, Diterikhs resigned and emigrated to Harbin, in Manchuria. Kappel was appointed as the new Commander-in-Chief of the Eastern Front, but there was very little that he could actually do. Without most of our equipment, and without any means of transportation, planning coordinated actions between our remaining units was nearly impossible. Besides, we suffered a constant harassment by bands of partisans, and the foreign soldiers, especially the Czechs, were becoming increasingly hostile. All of us knew that the end was near."
+    "text": "The bridge is taken. Thirty thousand prisoners and more typhus cases than anyone can count; the town's hospitals were full before we arrived and the retreating command left them as they were.<br><br>The Fifth Army is ordered to go on to Krasnoyarsk. There is a rising there already - the garrison has arrested its own officers - and the partisan armies of the Yenisei are on the railway ahead of us."
    },
    "victory": {
     "goto": 24,
@@ -1127,7 +1033,7 @@
      0
     ],
     "prestige": 400,
-    "text": "We managed to stop the Red Army at the Obi for five days. It doesn't seem much, but it gave us enough time to evacuate our wounded and many civilians in our last trains. Thanks to our resistance, they could travel safely to the east and leave Russia.<br><br>That was the last time that we acted as a coordinated army. After a bitter argument with Kolchak, Diterikhs resigned and emigrated to Harbin, in Manchuria. Kappel was appointed as the new Commander-in-Chief of the Eastern Front, but there was very little that he could actually do. Without most of our equipment, and without any means of transportation, planning coordinated actions between our remaining units was nearly impossible. Besides, we suffered a constant harassment by bands of partisans, and the foreign soldiers, especially the Czechs, were becoming increasingly hostile. All of us knew that the end was near."
+    "text": "The bridge is taken. Thirty thousand prisoners and more typhus cases than anyone can count; the town's hospitals were full before we arrived and the retreating command left them as they were.<br><br>The Fifth Army is ordered to go on to Krasnoyarsk. There is a rising there already - the garrison has arrested its own officers - and the partisan armies of the Yenisei are on the railway ahead of us."
    },
    "tactical": {
     "goto": 24,
@@ -1136,7 +1042,7 @@
      0
     ],
     "prestige": 280,
-    "text": "We managed to stop the Red Army at the Obi for five days. It doesn't seem much, but it gave us enough time to evacuate our wounded and many civilians in our last trains. Thanks to our resistance, they could travel safely to the east and leave Russia.<br><br>That was the last time that we acted as a coordinated army. After a bitter argument with Kolchak, Diterikhs resigned and emigrated to Harbin, in Manchuria. Kappel was appointed as the new Commander-in-Chief of the Eastern Front, but there was very little that he could actually do. Without most of our equipment, and without any means of transportation, planning coordinated actions between our remaining units was nearly impossible. Besides, we suffered a constant harassment by bands of partisans, and the foreign soldiers, especially the Czechs, were becoming increasingly hostile. All of us knew that the end was near."
+    "text": "The bridge is taken. Thirty thousand prisoners and more typhus cases than anyone can count; the town's hospitals were full before we arrived and the retreating command left them as they were.<br><br>The Fifth Army is ordered to go on to Krasnoyarsk. There is a rising there already - the garrison has arrested its own officers - and the partisan armies of the Yenisei are on the railway ahead of us."
    },
    "lose": {
     "goto": 24,
@@ -1145,7 +1051,7 @@
      0
     ],
     "prestige": 200,
-    "text": "Our resistance was heroic, but useless. Nothing coud stop the Red Army, and we had to retreat further into the east.<br><br>That was the last time that we acted as a coordinated army. After a bitter argument with Kolchak, Diterikhs resigned and emigrated to Harbin, in Manchuria. Kappel was appointed as the new Commander-in-Chief of the Eastern Front, but there was very little that he could actually do. Without most of our equipment, and without any means of transportation, planning coordinated actions between our remaining units was nearly impossible. Besides, we suffered a constant harassment by bands of partisans, and the foreign soldiers, especially the Czechs, were becoming increasingly hostile. All of us knew that the end was near."
+    "text": "The bridge was blown and the column east of the Ob got clear. We hold the west bank and the typhus wards.<br><br>They will be caught somewhere further east, by us or by the winter."
    }
   }
  },
@@ -1153,7 +1059,7 @@
   "id": 24,
   "scenario": "simpob_24.xml",
   "startprestige": 0,
-  "intro": "Crying souls: The Ice March (I)<br><br>January 4th, 1920<br><br>Our problems grew with each passing day. Behind us, the Red Army was approaching. In front of us we had to deal with continuous mutinies, desertions and attacks from the partisans. We had lost our communications with the remnants of our First and Third armies. Tomsk and other towns had been lost. In fact, we only controlled the ground that we stepped on.<br><br>Kappel allowed everyone who wished to go home, or to surrender, to do so. Thus, we kept only the most reliable fighters. Then he planned to go to the Baikal, hoping that we could continue our resistance there. But first we'd have to reach Krasnoyarsk. We wouldn't find any friends there. A few days before the commander of our garrison in that town, General Zinevich, and the governor of the Yenisei province, had betrayed us and had started to negotiate an armistice with the Bolsheviks. One of our own generals! Can you imagine that?<br><br>Zinevich tried to persuade Kappel to negotiate with the communists, too. Naturally, Kappel refused, and decided to attack Krasnoyarsk. Zinevich would pay for what he had done, and we'd get supplies that we desperately needed.<br><br>Victory conditions:<br>- Take and/ or defend all the VHs.<br><br>Special note:<br>- You can deploy only 11 ground units.",
+  "intro": "Crying souls: Krasnoyarsk<br><br>January 4th, 1920<br><br>Krasnoyarsk has taken itself.<br><br>The garrison arrested its own commander on the last day of December and the town is held by a revolutionary committee, the railway workers and Shchetinkin's partisan army out of the Yenisei taiga. Our own leading divisions are still four days behind.<br><br>Kappel's column is coming down the line towards it - what is left of three armies, on foot, in forty degrees of frost, and they have to get through this town or round it. They have nothing to lose, which makes them dangerous in a way that a supplied army is not.<br><br>Hold the city and the approaches with what is here. The partisans know this country and we do not; they are allies and they are to be treated as allies.<br><br>Victory conditions:<br>- When the time runs out, hold three objectives for a brilliant victory, two for a victory or a tactical victory.<br>- The objectives are the two Krasnoyarsk sectors (20,11), (23,12) and Drokino (18,9).<br>- Or take Areyskoye (11,9).",
   "outcome": {
    "briliant": {
     "goto": 25,
@@ -1162,7 +1068,7 @@
      0
     ],
     "prestige": 400,
-    "text": "At Krasnoyarsk we found some wagons and other vehicles that we used to advance faster without having to split our forces. We wanted to reach Irkutsk, where Kolchak was supposedly waiting for us. Then we could cross the Baikal and build a new line of defense.<br><br>But then, when we were very close to our destination, we learnt that there had been another Socialist-Revolutionary uprising in Irkutsk. The Czechs, pretending to be looking for a peaceful solution, had captured Kolchak and they were determined to hand him over to anyone who could grant them a safe passage to Vladivostok. Our garrisons and the cossack volunteers had been defeated by the Socialists or had switched sides. We were Kolchak's last and only hope. Kappel ordered us to go faster. We had to arrive in Irkutsk before it was too late."
+    "text": "The city is held. Sixty thousand men laid down their arms in and around it over three days - most of them conscripts who had been waiting for somewhere to stop.<br><br>Part of the column went round us to the north, over the Yenisei ice and into the taiga, and is heading for Irkutsk along the river. Kappel is with them. In this weather, on that route, the frost will do most of what we would have had to do.<br><br>The Fifth Army goes on east. So do I."
    },
    "victory": {
     "goto": 25,
@@ -1171,7 +1077,7 @@
      0
     ],
     "prestige": 400,
-    "text": "At Krasnoyarsk we found some wagons and other vehicles that we used to advance faster without having to split our forces. We wanted to reach Irkutsk, where Kolchak was supposedly waiting for us. Then we could cross the Baikal and build a new line of defense.<br><br>But then, when we were very close to our destination, we learnt that there had been another Socialist-Revolutionary uprising in Irkutsk. The Czechs, pretending to be looking for a peaceful solution, had captured Kolchak and they were determined to hand him over to anyone who could grant them a safe passage to Vladivostok. Our garrisons and the cossack volunteers had been defeated by the Socialists or had switched sides. We were Kolchak's last and only hope. Kappel ordered us to go faster. We had to arrive in Irkutsk before it was too late."
+    "text": "The city is held. Sixty thousand men laid down their arms in and around it over three days - most of them conscripts who had been waiting for somewhere to stop.<br><br>Part of the column went round us to the north, over the Yenisei ice and into the taiga, and is heading for Irkutsk along the river. Kappel is with them. In this weather, on that route, the frost will do most of what we would have had to do.<br><br>The Fifth Army goes on east. So do I."
    },
    "tactical": {
     "goto": 25,
@@ -1180,7 +1086,7 @@
      0
     ],
     "prestige": 280,
-    "text": "At Krasnoyarsk we found some wagons and other vehicles that we used to advance faster without having to split our forces. We wanted to reach Irkutsk, where Kolchak was supposedly waiting for us. Then we could cross the Baikal and build a new line of defense.<br><br>But then, when we were very close to our destination, we learnt that there had been another Socialist-Revolutionary uprising in Irkutsk. The Czechs, pretending to be looking for a peaceful solution, had captured Kolchak and they were determined to hand him over to anyone who could grant them a safe passage to Vladivostok. Our garrisons and the cossack volunteers had been defeated by the Socialists or had switched sides. We were Kolchak's last and only hope. Kappel ordered us to go faster. We had to arrive in Irkutsk before it was too late."
+    "text": "The city is held. Sixty thousand men laid down their arms in and around it over three days - most of them conscripts who had been waiting for somewhere to stop.<br><br>Part of the column went round us to the north, over the Yenisei ice and into the taiga, and is heading for Irkutsk along the river. Kappel is with them. In this weather, on that route, the frost will do most of what we would have had to do.<br><br>The Fifth Army goes on east. So do I."
    },
    "lose": {
     "goto": 255,
@@ -1189,7 +1095,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Our assaults were unsuccessful. We had to bypass Krasnoyarsk and split our forces. There were several paths and railroads that crossed the taiga, but they weren't wide enough to allow us to march together. We made different groups, and all of them would have to reach Kansk, where we could regroup again.<br><br>Naturally, many people couldn't make it. Some of them surrendered to the Bolsheviks. Others were captured or died in combat. Many others froze to death in the woods, or trying to cross the rivers that we found.<br><br>And this is where my story ends. On January 10th, when our column had almost reached Kansk, a partisan sniper shot me in the chest. A few hours later Kappel fell in a frozen river. They took us to a village where they could take care of our wounds, but they were too serious. There was nothing that the doctors could do for us.  Lord Jesus Christ, Son of God, have mercy on me, a sinner.<br><br>As I'm writing these memoirs, I'm hearing Kappel in the other room. He's had his legs amputated, but the infection hasn't stopped. He'll die in a few days, but he's still giving instructions. He's saying something about assaulting Irkutsk and freeing Kolchak. I don't know what he means. I'm feeling very sick, and I know that I only have a few hours left. All I want is to finish this story before the end comes. People must know what happened. I won't be able to tell anyone, but at least there will be a way to read it."
+    "text": "They came through the town. The committee's detachments and the partisans fought in the streets for two days and the column went east over their dead.<br><br>It is not finished. There is one more place on this railway where it can be finished, and it is Irkutsk."
    }
   }
  },
@@ -1197,7 +1103,7 @@
   "id": 25,
   "scenario": "simpob_25.xml",
   "startprestige": 0,
-  "intro": "Once we were here: The Ice March (II)<br><br>January 27th, 1920<br><br>There was no time to lose. Although the Allied representatives in Siberia had told the Czechs to safely escort Kolchak to Vladivostok, when they ascertained that the Bolsheviks would oppose resistance, they quickly turned Kolchak over to the Political Centre. That's how the Socialist- Revolutionaries in Irkutsk called themselves. Of course, we all knew that the Czechs would do that.<br><br>As you can imagine, the Centre was as useless and weak as the old Komuch. After just a few days they surrendered to the Bolsheviks, who were the ones who had Kolchak at the end of January. They would kill them if we couldn't rescue him first. Then we'd have to flee to the Baikal. If we managed to cross it, we'd be relatively safe.<br><br>We didn't know what to expect in Irkutsk. There were Bolshevik troops and Socialist militias. Both of them would be hostile to us. As for the Czech units that were roaming along the railroads, I wasn't sure if they'd be willing to attack us, but we didn't trust them. Finally, the Siberian cossacks were opportunistic scum, but I doubted that they'd dare to fight against us.<br><br>Victory conditions:<br>- Go to Irkutsk, free Kolchak and take him to the EH at Bolshoye Goloustnoye (40,19).<br><br>Special notes:<br>- You can deploy only 11 ground units.<br>- This is a fictional scenario. Historically, Kappel died before reaching Irkutsk, and Kolchak was killed a few days later. When they received the news, the Kappelites decided to bypass the town. They crossed the frozen lake Baikal, where many of them died. Finally, the survivors reached Chita, where they could be evacuated to China.",
+  "intro": "Once we were here: Irkutsk<br><br>January 27th, 1920<br><br>The last of it, and it is being decided in a town that changed sides by itself.<br><br>The Political Centre rose in Irkutsk at the end of December and handed the city, and the Supreme Ruler, to the Revolutionary Committee three weeks later; the Czechoslovaks gave him up at the station in exchange for a clear road to Vladivostok for their own trains. Kolchak is in the prison here. So is the gold, or what is left of it.<br><br>Coming at us out of the taiga is what survived the march: Kappel died of frostbite and pneumonia on the road and Voitsekhovsky has the column now, and he has demanded the city, the prisoner and a contribution. Semyonov's Cossacks are east of the lake. The Baikal ice is the only way past us.<br><br>Hold Irkutsk and Listvennichnoye. Take Khomutovo, where their column is forming.<br><br>Victory conditions:<br>- When the time runs out, hold three objectives for a brilliant victory, two for a victory, one for a tactical victory.<br>- The objectives are the two Irkutsk sectors (17,8), (20,10) and Listvennichnoye (29,23).<br>- Or take Khomutovo (18,3).<br>- The enemy escapes instead if one of his columns reaches the ice road at Bolshoye Goloustnoye (40,19).",
   "outcome": {
    "briliant": {
     "goto": 254,
@@ -1206,7 +1112,7 @@
      0
     ],
     "prestige": 0,
-    "text": "It was incredible. We could rescue Kolchak and most of us crossed the Baikal and arrived safely in Chita. Unfortunately, not everyone did it. Thousands of people, including women and children, died along the way. We didn't have time, strength or resources to bury them, so we left them in the places where they fell. Actually, sometimes they didn't fall. They froze to death while they were standing, and they remained there, as ice statues on the snow, until the spring came and the waters of the lake swallowed them. <br><br>A part of me can't help but pity the Socialist- Revolutionaries that stayed in Irkutsk. Their destiny was terrible. They didn't like us, but they soon learnt that the Bolsheviks were much worse than us.<br><br>As I've said, in the end we arrived in Chita. Kolchak and Kappel thought about continue the fighting in Trans- Baikal, but it was obvious that we didn't have an army anymore. We could convince them that the war was lost, and our only option was to cross the Chinese border and go into exile. The cossacks helped us to do it, and in April we finished the evacuation.<br><br>Once in China, all of us went different ways. Most émigrés went to Eastern Europe, but we actually ended up all around the world: France, the United Kingdom, America, Asia.  All the countries in the world had its share of exiled Russians. <br><br>Problems didn't end when we left our country. Many prominent émigrés were murdered by Soviet agents. Many others went through very difficult times until they could adapt to their new lives. I was one of those. I knew that the war had ended, but somehow it still raged in my mind. I couldn't find peace. I couldn't rest, or sleep. I couldn't keep any job. I was desperate, and I wished that I had died in Russia.<br><br>It wasn't just because we had lost the civil war. It was more than that. I had lost everything that I held dear: my country, my loved ones, my sovereign. In one word, my identity. I had lost my purpose in life. <br><br>So, when they told me that the Spanish Army was looking for foreign volunteers to fight in Morocco in their Legion, I didn't think it twice. I didn't want to be alive, so joining an elite unit whose nickname is \"the grooms of death\" seemed a perfect opportunity to leave this world doing what I was good at.<br><br>And I am still here. After all these years, death hasn't come for me yet. I can't say that I've been truly happy, but at least I've got used to my new life in the Legion and, although I don't know what the future holds for me, I am hopeful that things will get better.<br><br>The campaign is over. I hope you've liked it and thanks for playing.<br><br>Urica, 2018"
+    "text": "Irkutsk is held. The column went round the city in the end - over the Baikal ice, in February, in a wind that took more of them than we did - and what reached Transbaikalia reached it as a crowd and not as an army.<br><br>Kolchak was shot on the seventh of February by order of the Revolutionary Committee, with Voitsekhovsky's guns within a day's march. They put him and Pepelyaev through the ice of the Ushakovka.<br><br>The Eastern Front is finished. Two years ago I was a commander of a detachment on a railway with four towns on it and no orders; tonight I am writing a report in Irkutsk and the line behind me runs unbroken to Moscow. The Far East is not ours yet and there is a buffer republic being argued about in the newspapers, but that is politics and somebody else's work.<br><br>I am going home by train. It will take eleven days and I intend to sleep for all of them."
    },
    "victory": {
     "goto": 254,
@@ -1215,7 +1121,7 @@
      0
     ],
     "prestige": 0,
-    "text": "It was incredible. We could rescue Kolchak and most of us crossed the Baikal and arrived safely in Chita. Unfortunately, not everyone did it. Thousands of people, including women and children, died along the way. We didn't have time, strength or resources to bury them, so we left them in the places where they fell. Actually, sometimes they didn't fall. They froze to death while they were standing, and they remained there, as ice statues on the snow, until the spring came and the waters of the lake swallowed them. <br><br>A part of me can't help but pity the Socialist- Revolutionaries that stayed in Irkutsk. Their destiny was terrible. They didn't like us, but they soon learnt that the Bolsheviks were much worse than us.<br><br>As I've said, in the end we arrived in Chita. Kolchak and Kappel thought about continue the fighting in Trans- Baikal, but it was obvious that we didn't have an army anymore. We could convince them that the war was lost, and our only option was to cross the Chinese border and go into exile. The cossacks helped us to do it, and in April we finished the evacuation.<br><br>Once in China, all of us went different ways. Most émigrés went to Eastern Europe, but we actually ended up all around the world: France, the United Kingdom, America, Asia.  All the countries in the world had its share of exiled Russians. <br><br>Problems didn't end when we left our country. Many prominent émigrés were murdered by Soviet agents. Many others went through very difficult times until they could adapt to their new lives. I was one of those. I knew that the war had ended, but somehow it still raged in my mind. I couldn't find peace. I couldn't rest, or sleep. I couldn't keep any job. I was desperate, and I wished that I had died in Russia.<br><br>It wasn't just because we had lost the civil war. It was more than that. I had lost everything that I held dear: my country, my loved ones, my sovereign. In one word, my identity. I had lost my purpose in life. <br><br>So, when they told me that the Spanish Army was looking for foreign volunteers to fight in Morocco in their Legion, I didn't think it twice. I didn't want to be alive, so joining an elite unit whose nickname is \"the grooms of death\" seemed a perfect opportunity to leave this world doing what I was good at.<br><br>And I am still here. After all these years, death hasn't come for me yet. I can't say that I've been truly happy, but at least I've got used to my new life in the Legion and, although I don't know what the future holds for me, I am hopeful that things will get better.<br><br>The campaign is over. I hope you've liked it and thanks for playing.<br><br>Urica, 2018"
+    "text": "Irkutsk is held. The column went round the city in the end - over the Baikal ice, in February, in a wind that took more of them than we did - and what reached Transbaikalia reached it as a crowd and not as an army.<br><br>Kolchak was shot on the seventh of February by order of the Revolutionary Committee, with Voitsekhovsky's guns within a day's march. They put him and Pepelyaev through the ice of the Ushakovka.<br><br>The Eastern Front is finished. Two years ago I was a commander of a detachment on a railway with four towns on it and no orders; tonight I am writing a report in Irkutsk and the line behind me runs unbroken to Moscow. The Far East is not ours yet and there is a buffer republic being argued about in the newspapers, but that is politics and somebody else's work.<br><br>I am going home by train. It will take eleven days and I intend to sleep for all of them."
    },
    "tactical": {
     "goto": 254,
@@ -1224,7 +1130,7 @@
      0
     ],
     "prestige": 0,
-    "text": "It was incredible. We could rescue Kolchak and most of us crossed the Baikal and arrived safely in Chita. Unfortunately, not everyone did it. Thousands of people, including women and children, died along the way. We didn't have time, strength or resources to bury them, so we left them in the places where they fell. Actually, sometimes they didn't fall. They froze to death while they were standing, and they remained there, as ice statues on the snow, until the spring came and the waters of the lake swallowed them. <br><br>A part of me can't help but pity the Socialist- Revolutionaries that stayed in Irkutsk. Their destiny was terrible. They didn't like us, but they soon learnt that the Bolsheviks were much worse than us.<br><br>As I've said, in the end we arrived in Chita. Kolchak and Kappel thought about continue the fighting in Trans- Baikal, but it was obvious that we didn't have an army anymore. We could convince them that the war was lost, and our only option was to cross the Chinese border and go into exile. The cossacks helped us to do it, and in April we finished the evacuation.<br><br>Once in China, all of us went different ways. Most émigrés went to Eastern Europe, but we actually ended up all around the world: France, the United Kingdom, America, Asia.  All the countries in the world had its share of exiled Russians. <br><br>Problems didn't end when we left our country. Many prominent émigrés were murdered by Soviet agents. Many others went through very difficult times until they could adapt to their new lives. I was one of those. I knew that the war had ended, but somehow it still raged in my mind. I couldn't find peace. I couldn't rest, or sleep. I couldn't keep any job. I was desperate, and I wished that I had died in Russia.<br><br>It wasn't just because we had lost the civil war. It was more than that. I had lost everything that I held dear: my country, my loved ones, my sovereign. In one word, my identity. I had lost my purpose in life. <br><br>So, when they told me that the Spanish Army was looking for foreign volunteers to fight in Morocco in their Legion, I didn't think it twice. I didn't want to be alive, so joining an elite unit whose nickname is \"the grooms of death\" seemed a perfect opportunity to leave this world doing what I was good at.<br><br>And I am still here. After all these years, death hasn't come for me yet. I can't say that I've been truly happy, but at least I've got used to my new life in the Legion and, although I don't know what the future holds for me, I am hopeful that things will get better.<br><br>The campaign is over. I hope you've liked it and thanks for playing.<br><br>Urica, 2018"
+    "text": "Irkutsk is held. The column went round the city in the end - over the Baikal ice, in February, in a wind that took more of them than we did - and what reached Transbaikalia reached it as a crowd and not as an army.<br><br>Kolchak was shot on the seventh of February by order of the Revolutionary Committee, with Voitsekhovsky's guns within a day's march. They put him and Pepelyaev through the ice of the Ushakovka.<br><br>The Eastern Front is finished. Two years ago I was a commander of a detachment on a railway with four towns on it and no orders; tonight I am writing a report in Irkutsk and the line behind me runs unbroken to Moscow. The Far East is not ours yet and there is a buffer republic being argued about in the newspapers, but that is politics and somebody else's work.<br><br>I am going home by train. It will take eleven days and I intend to sleep for all of them."
    },
    "lose": {
     "goto": 255,
@@ -1233,7 +1139,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Everything was in vain. Kolchak was killed and we were forced to cross the frozen Baikal. I won't make it. I was wounded during the combats, and blood loss and cold will kill me very soon. Sadly, I won't be the only one. Thousands of people, including women and children, are dying as I write these last notes. We haven't got time, strength or resources to bury them, so we leave them where they fall. Actually, sometimes they don't fall. They freeze to death while they're standing, and they'll remain there, as ice statues on the snow, until the spring comes and the waters of the lake swallow them. <br><br>I'll join them very soon. I'll give my notebook to one of my friends, and I hope that some day he'll be able to publish it. People need to know what happened. That will be my legacy when I'm gone. Lord Jesus Christ, Son of God, have mercy on me, a sinner."
+    "text": "The column got past the city and onto the ice road, and it took the eastern bank of the lake with it.<br><br>The Revolutionary Committee's people are still holding the prison quarter. Whatever happens next in this town will not be decided by the army, because the army is out here on the shore, and it did not do its job."
    }
   }
  }

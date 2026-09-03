@@ -22,17 +22,26 @@ internal object StartMenuCampaignData {
     // These Kaiser-efile campaigns were imported "flipped to the Red side" (the player commands
     // the Bolshevik forces), but the underlying scenario TEXT/outcomes were authored for the
     // opposite (White/anti-Bolshevik) campaign path and were not rewritten — so a player winning
-    // early missions can still be handed later briefings written for the historical losing side
-    // (e.g. "White Army marches forward" after a Red victory). Hiding from Campaign Selection
-    // only (user request) until the path is actually reworked; the individual scenarios remain
-    // playable, and honestly presented, from Scenario Selection (scenariolist.js is untouched).
-    val hiddenCampaignFiles =
-        setOf(
-            "volarm.json", // The Defeat of Denikin
-            "simpob.json", // Sim Pobedishi! - The Red East
-            "acampdf2.json", // Czech Legion - Siberian Anabasis
-            "polsov.json", // The Polish-Soviet War: The Red Advance
-        )
+    // early missions could still be handed later briefings written for the historical losing side
+    // (e.g. "White Army marches forward" after a Red victory). Hidden from Campaign Selection
+    // only; the individual scenarios stayed playable from Scenario Selection throughout.
+    //
+    // `volarm` and `simpob` LEFT this list on 2026-09-03, when that rework was actually done
+    // (`docs/design/progressive-side-campaign-rework.md`, `tools/og-import/rework_red_campaigns.py`
+    // and `rework_red_campaign_text.py`): simpob's XMLs were re-flipped, both campaigns got the
+    // enemy force, deployment zone and victory conditions the flip had left them without, both
+    // branching graphs were rebuilt so a successful defence returns to the Red line, and every
+    // intro and outcome was rewritten to the task the engine actually checks. A campaign only
+    // comes off this list when all four of those are true of it.
+    //
+    // `polsov` and `acampdf2` followed on the same day and the list is now empty. polsov had been
+    // renumbered at import but never converted: no human deployment zone on any of its eleven maps,
+    // no hold-to-time anywhere, and Polish briefings under a Red player. acampdf2 needed the six
+    // scenarios OG wrote with the human fighting the Red Army flipped outright, and its core moved
+    // to Red Russia for the whole campaign — the engine carries one nation across a campaign, so
+    // the hero is the Russian officer the design doc describes rather than a legionary who changes
+    // sides. Keep the property: it is the switch to reach for if a campaign ever needs hiding again.
+    val hiddenCampaignFiles = emptySet<String>()
 
     /** Derived from the SAME [difficultyModifiers] the campaign actually applies (Campaign.kt /
      *  ScenarioLoader.kt / Player.kt) — never hand-copied numbers that could drift from the rules. */

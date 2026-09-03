@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="polsov_07.xscn" name="Surviving the red tide" turns="12, 15, 18" date="June 4, 1920" dayturns="2" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="36" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_835.png" eqpv="united1" prototimeframe="9" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="0" capitalflak="0" ehmsuonly="0" paradropocean="1" coresoffcap="0" daysperturn="0">
-<player id="0" country="103" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="99" defaultstr="0" support="104,0,0,0" turnprestige="0, 0, 0, 50, 50, 0, 50, 50, 50, 50, 50, 50, 50, 50, 0, 50, 50, 0, 50, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200" ff="16:0:2,5:0:5"/>
-<player id="1" country="20" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="200" defaultstr="0" support="65,21,0,0" turnprestige="24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99" ff="20:0:5"/>
+<map file="polsov_07.xscn" name="The Red tide" turns="12, 15, 18" date="June 4, 1920" dayturns="2" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="36" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_835.png" eqpv="united1" prototimeframe="9" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="0" capitalflak="0" ehmsuonly="0" paradropocean="1" coresoffcap="0" daysperturn="0">
+<player id="0" country="103" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="99" defaultstr="0" support="104,0,0,0" turnprestige="0, 0, 0, 50, 50, 0, 50, 50, 50, 50, 50, 50, 50, 50, 0, 50, 50, 0, 50, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200" ff="16:0:2,5:0:5"/>
+<player id="1" country="20" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="200" defaultstr="0" support="65,21,0,0" turnprestige="24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99" ff="20:0:5"/>
   <reinforce turn="4">
     <at row="7" col="37">
       <unit id="42283" owner="0" flag="104" face="0" exp="84"/>
@@ -877,7 +877,7 @@
     <unit id="42310" owner="0" flag="104" face="0" exp="144"/>
   </hex>
   <hex row="28" col="38" terrain="10" name="Kamenka River"/>
-  <hex row="28" col="39" terrain="2" owner="0" flag="103">
+  <hex row="28" col="39" terrain="2" owner="0" flag="103" deploy="0">
     <unit id="42310" owner="0" flag="104" face="0" exp="94"/>
   </hex>
   <hex row="28" col="40" terrain="2"/>
@@ -1039,7 +1039,7 @@
   <hex row="32" col="34">
     <unit id="42295" owner="0" flag="104" face="0" exp="54" str="12"/>
   </hex>
-  <hex row="32" col="35" terrain="3"/>
+  <hex row="32" col="35" terrain="3" deploy="0"/>
   <hex row="32" col="37">
     <unit id="42295" owner="0" flag="104" face="0" exp="4" str="11"/>
   </hex>
@@ -1082,7 +1082,7 @@
   <hex row="33" col="35" terrain="3">
     <unit id="42396" owner="0" flag="104" face="0" exp="24" str="7" bstr="7"/>
   </hex>
-  <hex row="33" col="37" terrain="3" owner="0" flag="103" victory="0">
+  <hex row="33" col="37" terrain="3" owner="0" flag="103" victory="0" deploy="0">
     <unit id="42251" owner="0" flag="104" face="0" transport="42349" exp="200" str="6" bstr="6"/>
   </hex>
   <hex row="33" col="42" terrain="10" name="Rastavitsa River"/>
@@ -1123,9 +1123,9 @@
   </hex>
   <hex row="34" col="34" terrain="3"/>
   <hex row="34" col="36" terrain="3"/>
-  <hex row="34" col="37" terrain="3"/>
+  <hex row="34" col="37" terrain="3" deploy="0"/>
   <hex row="34" col="38" terrain="3"/>
-  <hex row="34" col="39" terrain="3"/>
+  <hex row="34" col="39" terrain="3" deploy="0"/>
   <hex row="34" col="41" terrain="3"/>
   <hex row="35" col="0" terrain="3"/>
   <hex row="35" col="2" terrain="3"/>

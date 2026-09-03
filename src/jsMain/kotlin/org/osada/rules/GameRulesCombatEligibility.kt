@@ -8,8 +8,7 @@ fun GameRules.getRetreatPosition(
     map: Array<Array<Hex>>?,
     unit: GameUnit,
     rows: Int,
-    hasRailData: Boolean = false,
-): Cell? = CombatPositioning.getRetreatPosition(map, unit, rows, hasRailData)
+): Cell? = CombatPositioning.getRetreatPosition(map, unit, rows)
 
 fun GameRules.isRuggedDefense(
     attacker: GameUnit,
