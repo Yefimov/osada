@@ -80,15 +80,24 @@ internal object CombatPositioning {
         }
     }
 
-    /** First passable, empty hex [unit] can retreat into, preferring its rear facing.
-     *  [hasRailData] mirrors MovementRules.getMoveRange's guard: a train may only retreat onto
-     *  rail once the map actually carries rail data (tools/og-import/add_rails.py) — on any
-     *  scenario not yet re-patched it falls back to the pre-existing (unrestricted) check. */
+    /**
+     * First passable, empty hex [unit] can retreat into, preferring its rear facing, or null when
+     * it has nowhere to go.
+     *
+     * **A train retreats along the track or not at all** — the same rule
+     * `MoveRangeCalculation` applies to a chosen move, and for the same reason: a forced retreat
+     * over open ground is still an armoured train leaving its rails. The plain-terrain fallback
+     * that used to run for trains is gone.
+     *
+     * Returning null here does NOT destroy the unit. `CombatResolver.shouldDefenderSurrender`
+     * exempts trains explicitly, so one that cannot pull back simply stays where it is and keeps
+     * firing — see that function for why "no retreat" and "encircled" are different questions for
+     * a formation whose retreat set is bounded by track rather than by the enemy.
+     */
     fun getRetreatPosition(
         map: Array<Array<Hex>>?,
         unit: GameUnit,
         rows: Int,
-        hasRailData: Boolean = false,
     ): Cell? {
         val data = unit.unitData()
         val pos = if (data.movpoints == 0) null else unit.getPos()
@@ -96,19 +105,12 @@ internal object CombatPositioning {
 
         val ordered = retreatCellsByFacing(unit, pos)
         val isTrain = UnitPredicates.isTrain(unit)
-        val enforceRail = isTrain && hasRailData
         // movTable[RAIL.value] is intentionally all-255 (Constants.kt) -- a real train must
-        // resolve through WHEELED for any plain-terrain retreat check, same reasoning as
-        // MovementRules.getReinforcementDeployPositions.
+        // resolve through WHEELED for the terrain half of the check, same reasoning as
+        // MovementRules.getReinforcementDeployPositions. The rail requirement is layered on top.
         val movementTable = movTable[if (isTrain) MovMethod.WHEELED.value else data.movmethod]
 
-        val railRetreat =
-            if (enforceRail) {
-                firstPassableRetreatCell(map, ordered, rows, movementTable, requireRail = true)
-            } else {
-                null
-            }
-        return railRetreat ?: firstPassableRetreatCell(map, ordered, rows, movementTable, requireRail = false)
+        return firstPassableRetreatCell(map, ordered, rows, movementTable, requireRail = isTrain)
     }
 
     /**

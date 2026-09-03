@@ -24,6 +24,7 @@ internal fun GameMap.openBarrageTargeting(unit: GameUnit): Int {
 internal fun GameMap.clearBarrageTargeting() {
     currentBarrageTargets.forEach { cell ->
         map?.getOrNull(cell.row)?.getOrNull(cell.col)?.isBarrageSel = false
+        markRepaint(cell)
     }
     currentBarrageTargets.clear()
 }

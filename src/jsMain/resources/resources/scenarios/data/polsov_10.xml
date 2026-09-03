@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="polsov_10.xscn" name="Riding across the Niemen River" turns="17, 21, 25" date="September 20, 1920" dayturns="2" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="38" cols="43" eqp="eqp-kaiser" image="resources/maps/images/map_738.png" eqpv="united1" prototimeframe="9" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="0" capitalflak="0" ehmsuonly="0" paradropocean="1" coresoffcap="0" daysperturn="0">
-<player id="0" country="103" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="99" defaultstr="0" support="61,104,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="16:0:2,81:0:5"/>
-<player id="1" country="20" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="21,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20, 0, 0, 0, 30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99" ff="20:0:5,12:0:5"/>
+<map file="polsov_10.xscn" name="The Niemen" turns="17, 21, 25" date="September 20, 1920" dayturns="2" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="38" cols="43" eqp="eqp-kaiser" image="resources/maps/images/map_738.png" eqpv="united1" prototimeframe="9" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="0" capitalflak="0" ehmsuonly="0" paradropocean="1" coresoffcap="0" daysperturn="0" holdvictory="6, 5, 4">
+<player id="0" country="103" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="99" defaultstr="0" support="61,104,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="16:0:2,81:0:5"/>
+<player id="1" country="20" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="21,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20, 0, 0, 0, 30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99" ff="20:0:5,12:0:5"/>
   <reinforce turn="5">
     <at row="36" col="40">
       <unit id="42271" owner="0" flag="104" face="0" exp="24"/>
@@ -130,7 +130,7 @@
   <hex row="3" col="37" terrain="3"/>
   <hex row="3" col="38" terrain="13"/>
   <hex row="3" col="39" terrain="3"/>
-  <hex row="3" col="41" terrain="1" road="18" name="Soleczniki" owner="0" flag="103"/>
+  <hex row="3" col="41" terrain="1" road="18" name="Soleczniki" owner="0" flag="103" deploy="0"/>
   <hex row="3" col="42" road="33"/>
   <hex row="4" col="2" road="18"/>
   <hex row="4" col="4" terrain="3"/>
@@ -1229,7 +1229,7 @@
   <hex row="30" col="37" terrain="10" name="Szczara river"/>
   <hex row="30" col="38" terrain="3"/>
   <hex row="30" col="40" terrain="3"/>
-  <hex row="30" col="41" terrain="1" road="17" name="Kozlowsz" owner="0" flag="103">
+  <hex row="30" col="41" terrain="1" road="17" name="Kozlowsz" owner="0" flag="103" deploy="0">
     <unit id="42283" owner="0" flag="104" face="0" exp="250"/>
   </hex>
   <hex row="30" col="42" terrain="3"/>
@@ -1427,14 +1427,14 @@
   <hex row="35" col="23" terrain="16"/>
   <hex row="35" col="24" terrain="16"/>
   <hex row="35" col="25" terrain="10" road="34" name="Ros river"/>
-  <hex row="35" col="26" terrain="1" road="187" name="Wolkowysk" owner="0" flag="103" victory="0">
+  <hex row="35" col="26" terrain="1" road="187" name="Wolkowysk" owner="0" flag="103" victory="0" deploy="0">
     <unit id="42271" owner="0" flag="104" face="0" transport="42344" exp="180"/>
   </hex>
   <hex row="35" col="27" terrain="3" road="136"/>
   <hex row="35" col="28" terrain="16" road="130"/>
   <hex row="35" col="29" terrain="16"/>
   <hex row="35" col="30" road="130"/>
-  <hex row="35" col="32" terrain="1" road="136" name="Zelwa" owner="0" flag="103">
+  <hex row="35" col="32" terrain="1" road="136" name="Zelwa" owner="0" flag="103" deploy="0">
     <unit id="42325" owner="0" flag="104" face="0" transport="42357" exp="170" str="8" bstr="8"/>
   </hex>
   <hex row="35" col="33" terrain="16" road="136"/>
@@ -1485,7 +1485,7 @@
   <hex row="36" col="37" terrain="16" road="130"/>
   <hex row="36" col="38" terrain="16" road="40"/>
   <hex row="36" col="39" terrain="16" road="130"/>
-  <hex row="36" col="40" terrain="1" road="34" name="Slonim" owner="0" flag="103"/>
+  <hex row="36" col="40" terrain="1" road="34" name="Slonim" owner="0" flag="103" deploy="0"/>
   <hex row="36" col="41" terrain="10" name="Szczara river"/>
   <hex row="36" col="42" terrain="1" road="137" name="Slonim"/>
   <hex row="37" col="2" road="18"/>

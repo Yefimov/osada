@@ -562,6 +562,8 @@
   <hex row="17" col="33" terrain="15" name="Lake Doritsine"/>
   <hex row="17" col="34" terrain="15" name="Lake Doritsine"/>
   <hex row="17" col="35" terrain="15"/>
+  <hex row="18" col="0" rail="136"/>
+  <hex row="18" col="1" rail="136"/>
   <hex row="18" col="2" terrain="15" name="Lake Chokchi"/>
   <hex row="18" col="3" terrain="15" name="Lake Chokchi"/>
   <hex row="18" col="4" terrain="15" name="Lake Chokchi"/>
@@ -596,6 +598,8 @@
   <hex row="18" col="35" terrain="15"/>
   <hex row="19" col="0" road="8"/>
   <hex row="19" col="1" road="136"/>
+  <hex row="19" col="2" rail="136"/>
+  <hex row="19" col="3" rail="136"/>
   <hex row="19" col="4" terrain="15" name="Lake Chokchi"/>
   <hex row="19" col="5" terrain="15" name="Lake Chokchi"/>
   <hex row="19" col="6" terrain="15" name="Lake Chokchi"/>
@@ -632,6 +636,7 @@
   <hex row="20" col="1" terrain="6"/>
   <hex row="20" col="2" road="136"/>
   <hex row="20" col="3" terrain="1" road="136" name="Chokchidon" owner="1" flag="5"/>
+  <hex row="20" col="4" rail="144"/>
   <hex row="20" col="7" road="33"/>
   <hex row="20" col="9" terrain="15" name="Tumen-Ula River"/>
   <hex row="20" col="11" terrain="10" name="Tumen-Ula River"/>
@@ -661,8 +666,8 @@
   <hex row="20" col="35" terrain="15"/>
   <hex row="21" col="1" terrain="6"/>
   <hex row="21" col="2" terrain="6"/>
-  <hex row="21" col="4" road="136"/>
-  <hex row="21" col="5" road="138" owner="1" flag="5" station="1">
+  <hex row="21" col="4" road="136" rail="9"/>
+  <hex row="21" col="5" road="138" owner="1" flag="5" station="1" rail="144">
     <unit id="1199" owner="1" flag="6" face="0" bstr="5"/>
   </hex>
   <hex row="21" col="6" road="50"/>
@@ -697,6 +702,7 @@
   <hex row="22" col="1" terrain="6"/>
   <hex row="22" col="2" terrain="6"/>
   <hex row="22" col="4" terrain="4" name="Light Forest"/>
+  <hex row="22" col="5" rail="17"/>
   <hex row="22" col="6" terrain="4" road="145" name="Light Forest"/>
   <hex row="22" col="8" terrain="4" name="Light Forest"/>
   <hex row="22" col="9" terrain="15" name="Tumen-Ula River"/>
@@ -731,7 +737,7 @@
   <hex row="23" col="0" terrain="6"/>
   <hex row="23" col="1" terrain="6"/>
   <hex row="23" col="2" terrain="6"/>
-  <hex row="23" col="5" terrain="13"/>
+  <hex row="23" col="5" terrain="13" rail="17"/>
   <hex row="23" col="6" road="17"/>
   <hex row="23" col="9" terrain="15" name="Tumen-Ula River"/>
   <hex row="23" col="10" terrain="15" name="Tumen-Ula River"/>
@@ -758,7 +764,7 @@
   <hex row="24" col="1" terrain="6"/>
   <hex row="24" col="2" terrain="6"/>
   <hex row="24" col="4" terrain="4" name="Light Forest"/>
-  <hex row="24" col="5" terrain="10"/>
+  <hex row="24" col="5" terrain="10" rail="17"/>
   <hex row="24" col="6" road="17"/>
   <hex row="24" col="9" terrain="15" name="Tumen-Ula River"/>
   <hex row="24" col="10" terrain="15" name="Tumen-Ula River"/>
@@ -792,6 +798,7 @@
   <hex row="24" col="32" road="17"/>
   <hex row="25" col="1" terrain="6"/>
   <hex row="25" col="2" terrain="6"/>
+  <hex row="25" col="5" rail="17"/>
   <hex row="25" col="6" terrain="10" road="17"/>
   <hex row="25" col="7" terrain="5"/>
   <hex row="25" col="8" terrain="5"/>
@@ -825,7 +832,7 @@
   <hex row="25" col="34" terrain="15" name="LAKE"/>
   <hex row="26" col="1" terrain="6"/>
   <hex row="26" col="2" terrain="6"/>
-  <hex row="26" col="5" terrain="1" name="Nasanpfo" owner="1" flag="5"/>
+  <hex row="26" col="5" terrain="1" name="Nasanpfo" owner="1" flag="5" rail="17"/>
   <hex row="26" col="6" terrain="10" road="17"/>
   <hex row="26" col="7" terrain="10"/>
   <hex row="26" col="8" terrain="5"/>
@@ -856,7 +863,7 @@
   <hex row="26" col="33" road="144"/>
   <hex row="26" col="34" terrain="15" name="LAKE"/>
   <hex row="27" col="3" terrain="5"/>
-  <hex row="27" col="5" road="18"/>
+  <hex row="27" col="5" road="18" rail="17"/>
   <hex row="27" col="6" road="33"/>
   <hex row="27" col="7" terrain="5"/>
   <hex row="27" col="8" terrain="10"/>
@@ -893,7 +900,7 @@
   <hex row="28" col="2" terrain="5"/>
   <hex row="28" col="3" terrain="5"/>
   <hex row="28" col="4" terrain="5"/>
-  <hex row="28" col="5" road="25"/>
+  <hex row="28" col="5" road="25" rail="17"/>
   <hex row="28" col="6" terrain="5"/>
   <hex row="28" col="7" terrain="5"/>
   <hex row="28" col="8" terrain="10"/>
@@ -926,7 +933,7 @@
   </hex>
   <hex row="29" col="1" terrain="6"/>
   <hex row="29" col="2" terrain="6"/>
-  <hex row="29" col="5" terrain="1" road="11" name="Naoseosando Station" owner="1" flag="5" station="1"/>
+  <hex row="29" col="5" terrain="1" road="11" name="Naoseosando Station" owner="1" flag="5" station="1" rail="17"/>
   <hex row="29" col="6" road="184"/>
   <hex row="29" col="7" terrain="13" road="168"/>
   <hex row="29" col="8" terrain="10"/>
@@ -959,6 +966,7 @@
   <hex row="30" col="1" terrain="6"/>
   <hex row="30" col="2" terrain="6"/>
   <hex row="30" col="3" terrain="6"/>
+  <hex row="30" col="5" rail="17"/>
   <hex row="30" col="6" road="147"/>
   <hex row="30" col="7" terrain="5"/>
   <hex row="30" col="8" road="136"/>
@@ -987,7 +995,7 @@
   <hex row="31" col="1" terrain="6"/>
   <hex row="31" col="2" terrain="6"/>
   <hex row="31" col="3" terrain="6"/>
-  <hex row="31" col="5" terrain="4" name="Light Forest"/>
+  <hex row="31" col="5" terrain="4" name="Light Forest" rail="17"/>
   <hex row="31" col="6" terrain="5" road="17"/>
   <hex row="31" col="7" terrain="5"/>
   <hex row="31" col="8" terrain="5"/>
@@ -1015,7 +1023,7 @@
   <hex row="32" col="2" terrain="6"/>
   <hex row="32" col="3" terrain="6"/>
   <hex row="32" col="4" terrain="6"/>
-  <hex row="32" col="5" road="2"/>
+  <hex row="32" col="5" road="2" rail="17"/>
   <hex row="32" col="6" road="33"/>
   <hex row="32" col="7" terrain="15" name="LAKE"/>
   <hex row="32" col="8" terrain="15" name="LAKE"/>

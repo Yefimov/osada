@@ -23,6 +23,7 @@ internal fun GameMap.openRailDestinations(unit: GameUnit): Int {
 internal fun GameMap.clearRailTargeting() {
     currentRailTargets.forEach { cell ->
         map?.getOrNull(cell.row)?.getOrNull(cell.col)?.isRailSel = false
+        markRepaint(cell)
     }
     currentRailTargets.clear()
 }

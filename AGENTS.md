@@ -67,6 +67,21 @@ Topic-specific docs live alongside the code they describe:
   (`efile-config.md`, `aa-interception.md`, `terrain-supply-and-initiative.md`, `attachments.md`,
   `hero-presentation.md`, `scenario-events.md`); others are live proposals linked from the player-comfort roadmap. Check
   each design's status and `DEFERRED.md` before treating it as pending work.
+- **`docs/design/progressive-side-campaign-rework.md`** — the Russian Civil War campaigns played
+  from the Red side. **All four are BUILT as of 2026-09-03** — §11 records `volarm`/`simpob`, §12
+  `polsov`/`acampdf2` — and `StartMenuCampaignData.hiddenCampaignFiles` is now empty. Read §11.2
+  before running `flip_sides.py` on any campaign: a flip on its own leaves the AI with no army, the
+  human with no deployment zone (and therefore no way to buy), and the victory conditions written
+  for the other side. §12.1 is the other half of that warning — `flip_sides.py` keeps `side` glued
+  to the COUNTRY, and `side` is what indexes every extended victory condition (`holdvictory` vs
+  `holdvictory1`, and the per-side pairs `retreatunits`/`killunits`/`msuunits`), so a flipped
+  campaign can end up reading the enemy's objective numbers. §12.3 records the constraint that
+  shapes any campaign whose hero changes allegiance: `Player.copy` carries the core's COUNTRY from
+  the first scenario into every later one, so a campaign has exactly one human nation for its whole
+  length. The two patchers `tools/og-import/rework_red_campaigns.py` and
+  `rework_red_campaign_text.py` are what close all of this (both idempotent, both carrying a
+  per-scenario decision table), and `scripts/verify/red-campaigns-probe.mjs` is what checks the
+  result — 65 assertions across the four campaigns, in a real browser.
 - **`FUTURE_IDEAS.md`** — historical product ideation with a current disposition table. Many old
   “future” items are now built. Use it to understand intent and separate product projects; use
   `docs/player-comfort-roadmap.md` and `DEFERRED.md` for actionable work.

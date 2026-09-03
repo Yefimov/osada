@@ -74,7 +74,7 @@ class HeroLegendaryTest {
                 Triple("ccampdfc.json", 103, 1918),
                 Triple("volarm.json", 103, 1918),
                 Triple("polsov.json", 103, 1919),
-                Triple("simpob.json", 100, 1918),
+                Triple("simpob.json", 103, 1918),
                 Triple("camp6bn8.json", 43, 1941),
                 Triple("ncampdfn.json", 25, 1950),
                 Triple("aljf.json", 196, 1848),

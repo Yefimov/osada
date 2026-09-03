@@ -3,7 +3,7 @@
   "id": 0,
   "scenario": "volarm_00.xml",
   "startprestige": 0,
-  "intro": "The Ice March<br><br>Feb 23rd, 1918<br><br>My God, how did I end like this?<br><br>Less than four years ago life had granted me everything that I had wished. I was a well-respected officer in the Imperial Army, with a nice family. I couldn't dream on anything else.<br><br>Then the war started. We could handle the Austrians and the Ottomans, but the German Army was too powerful. Defeats led to desperation. Many people lost their hope in a brighter future. And once hope left, madness was all that was left behind. Revolutionary madness that spread like an infectious disease. And the Bolsheviks were the worst of all. Many people believed their lies. Men that once had been honest and hard working became no better that rabid dogs. Chaos swallowed everything that I believed sacred.<br><br>Once I swore to defend the Tsar and my country. Now the Tsar is a prisoner and I can hardly recognize my country. Sometimes I wonder if I'm still obliged by my oath. Katya is safe in Sweden with the girls and Yuri. Maybe Anatoly and I should leave the fight and join them.<br><br>But I know I won't do it. My oath still binds me, and it will always do. When we learnt that generals Alekseyev and Kornilov had gathered some men ready to fight the Bolsheviks, Anatoly and I were among the first members of the Volunteer Army. Alas, the revolutionary madness is very powerful and we are too few. We could hardly arrive in Rostov, and now we know that the Red Army is coming. We must retreat further South, through the open field and the snow, far from the railway lines. If we manage to survive the Reds, the cold and the ice and get to the Kuban we could have a chance to perform a counterattack.<br><br>My God, how did I end like this?<br><br>Victory conditions:<br>- Evacuate 4 civilian units through the EH at (38,32).<br>- At least 4 out of 6 civilian units must survive.",
+  "intro": "The Ice March<br><br>February 23rd, 1918<br><br>Rostov is ours as of this morning: empty barracks, a burning quartermaster's store, and a city that had hung out red cloth before our patrols were through the outskirts. The Volunteer Army walked out of it in the dark and took every pair of felt boots in the town with it.<br><br>Four years ago I was an officer of the Imperial Army, and a good many of the men I once messed with are in the column now crawling south across the frozen steppe. Alekseyev and Kornilov have taken everything that will march - their staffs, their cadets, their wounded, their families - and they have gone off the railway on purpose, into open country where our armoured trains cannot follow.<br><br>The Military Revolutionary Committee has not ordered me to chase them into the snow. Whatever that column becomes, it becomes it somewhere else. My orders are to close the Don behind it - the crossings and the stanitsas it is using - so that nothing of theirs can turn back on Rostov or reach Novocherkassk from the south.<br><br>Victory conditions:<br>- Take Rostov (19,17), Aksaiskaya (26,16) and Ol'ginskaya (29,20).<br>- The Volunteer column wins instead if four of its formations reach Kraskynova (38,32).",
   "outcome": {
    "briliant": {
     "goto": 1,
@@ -12,7 +12,7 @@
      0
     ],
     "prestige": 280,
-    "text": "After weeks of fierce fighting and ruthless weather we've crossed the white hell and reached the Kuban, just to see that Ekaterinodar has also fallen into the hands of the Bolsheviks. Despite all our efforts, our fate seems to be sealed."
+    "text": "Rostov, Aksaiskaya and Ol'ginskaya are in Soviet hands and the lower Don is shut. The task the Committee set me has been carried out.<br><br>The column itself is gone into the Kuban. I will not pretend otherwise, and I will not write in my report that we destroyed it: we had neither the cavalry nor the fodder to hold open steppe in February, and no one who has seen that country in a thaw would promise it. What we have done is take away its base. Kornilov marches now with what he carries, and every stanitsa behind him belongs to the Soviets.<br><br>They will be back. Whatever they gather in the Kuban, they will have to come back through these same crossings, and we shall be standing on them."
    },
    "victory": {
     "goto": 1,
@@ -21,7 +21,7 @@
      0
     ],
     "prestige": 280,
-    "text": "After weeks of fierce fighting and ruthless weather we've crossed the white hell and reached the Kuban, just to see that Ekaterinodar has also fallen into the hands of the Bolsheviks. Despite all our efforts, our fate seems to be sealed."
+    "text": "Rostov, Aksaiskaya and Ol'ginskaya are in Soviet hands and the lower Don is shut. The task the Committee set me has been carried out.<br><br>The column itself is gone into the Kuban. I will not pretend otherwise, and I will not write in my report that we destroyed it: we had neither the cavalry nor the fodder to hold open steppe in February, and no one who has seen that country in a thaw would promise it. What we have done is take away its base. Kornilov marches now with what he carries, and every stanitsa behind him belongs to the Soviets.<br><br>They will be back. Whatever they gather in the Kuban, they will have to come back through these same crossings, and we shall be standing on them."
    },
    "tactical": {
     "goto": 1,
@@ -30,7 +30,7 @@
      0
     ],
     "prestige": 240,
-    "text": "After weeks of fierce fighting and ruthless weather we've crossed the white hell and reached the Kuban, just to see that Ekaterinodar has also fallen into the hands of the Bolsheviks. Despite all our efforts, our fate seems to be sealed."
+    "text": "Rostov, Aksaiskaya and Ol'ginskaya are in Soviet hands and the lower Don is shut. The task the Committee set me has been carried out.<br><br>The column itself is gone into the Kuban. I will not pretend otherwise, and I will not write in my report that we destroyed it: we had neither the cavalry nor the fodder to hold open steppe in February, and no one who has seen that country in a thaw would promise it. What we have done is take away its base. Kornilov marches now with what he carries, and every stanitsa behind him belongs to the Soviets.<br><br>They will be back. Whatever they gather in the Kuban, they will have to come back through these same crossings, and we shall be standing on them."
    },
    "lose": {
     "goto": 1,
@@ -39,7 +39,7 @@
      0
     ],
     "prestige": 200,
-    "text": "After weeks of fierce fighting and ruthless weather, and after losing  many brave soldiers and  civilians that counted on our protection, we've crossed the white hell and reached the Kuban, just to see that Ekaterinodar has also fallen into the hands of the Bolsheviks. Despite all our efforts, our fate seems to be sealed."
+    "text": "The column got clear with its trains intact and the stanitsas behind it still flying the tricolour, and we have nothing to show the Committee but casualty lists.<br><br>That is the whole of it. The Kuban will now have to fight the battle we should have finished on the Don."
    }
   }
  },
@@ -47,7 +47,7 @@
   "id": 1,
   "scenario": "volarm_01.xml",
   "startprestige": 0,
-  "intro": "Tragedy at Ekaterinodar<br><br>Apr 9th, 1918<br><br>Our explorers confirm our worst fears. The defences of Ekaterinodar are strong and the communists outnumber us at least three to one. However, Kornilov is determined to attack. The Bolsheviks are growing stronger every day and if we leave they'll eventually find us and crush us. The general knows that a frontal attack would be suicidal, so he has ordered a flanking maneuver on Elizabetinskaya. That could surprise the Reds and, with the help of a handful of Cossacks that have joined us, might give us a chance.<br><br>Victory conditions: Take all the VHs.<br><br>Special notes:<br>- The unit that takes Elizabetinskaya will obtain a leader.<br>- From now on you'll be able to buy Cossack equipment.",
+  "intro": "Tragedy at Ekaterinodar<br><br>April 9th, 1918<br><br>Kornilov has perhaps six thousand men. There are three times that in and around Ekaterinodar, and he is going to attack anyway, because our detachments hold every railway in the Kuban and the Rada's own ministers are sitting in our jails. He can attack or he can starve on the steppe.<br><br>He will not try the front of the city. Our scouts have found a crossing being prepared to the west, at Elizabetinskaya - a flanking march in the old style, with Cossack guides who know the fords. Which means the city has to be held on two faces at once, and the village of Takhtamukay across the river, where his column forms up, has to be taken away from him.<br><br>Victory conditions:<br>- Hold Ekaterinodar (17,7) and Elizabetinskaya (5,10).<br>- Take Takhtamukay (20,19).",
   "outcome": {
    "briliant": {
     "goto": 2,
@@ -56,7 +56,7 @@
      0
     ],
     "prestige": 300,
-    "text": "Kornilov's death has been a terrible blow for us. Without his leadership many veteran warriors look lost now, like orphaned children without their father. The morale of our army has sunk. Alekseyev and Denikin have taken command and, knowing that it will take some time for our troops to recover, they have ordered us back to the Don River region. <br>Another great problem is that Alekseyev is very ill. He's been trying to hide it, but we know he's suffering from cancer and heart disease. I wonder how long he'll be able to endure the unhealthy conditions we're living in.<br><br>At least the Bolsheviks have taken many losses, so they won't pursue us. And in the north, since the Don Cossacks have risen against the Reds and the German Army is getting close to Rostov, the power of the communists has been severely weakened. They won't be able to bother us, so we'll rest for some weeks and start a new offensive as soon as we can."
+    "text": "Ekaterinodar has held. On the fourth morning of the assault a shell came through the wall of the farmhouse at Elizabetinskaya where Kornilov had his headquarters, and killed him where he stood. Denikin took over what was left and broke off the attack that night.<br><br>They buried him somewhere on the road and ploughed the ground over the grave so we would not find it. We found it.<br><br>Their army is not destroyed - it is going back to the Don, where Krasnov's Cossacks have risen and the German divisions in Ukraine will sell them anything they can pay for. But the Kuban is Soviet, and the man they called the soul of the whole affair is dead."
    },
    "victory": {
     "goto": 2,
@@ -65,7 +65,7 @@
      0
     ],
     "prestige": 300,
-    "text": "Kornilov's death has been a terrible blow for us. Without his leadership many veteran warriors look lost now, like orphaned children without their father. The morale of our army has sunk. Alekseyev and Denikin have taken command and, knowing that it will take some time for our troops to recover, they have ordered us back to the Don River region. <br>Another great problem is that Alekseyev is very ill. He's been trying to hide it, but we know he's suffering from cancer and heart disease. I wonder how long he'll be able to endure the unhealthy conditions we're living in.<br><br>At least the Bolsheviks have taken many losses, so they won't pursue us. And in the north, since the Don Cossacks have risen against the Reds and the German Army is getting close to Rostov, the power of the communists has been severely weakened. They won't be able to bother us, so we'll rest for some weeks and start a new offensive as soon as we can."
+    "text": "Ekaterinodar has held. On the fourth morning of the assault a shell came through the wall of the farmhouse at Elizabetinskaya where Kornilov had his headquarters, and killed him where he stood. Denikin took over what was left and broke off the attack that night.<br><br>They buried him somewhere on the road and ploughed the ground over the grave so we would not find it. We found it.<br><br>Their army is not destroyed - it is going back to the Don, where Krasnov's Cossacks have risen and the German divisions in Ukraine will sell them anything they can pay for. But the Kuban is Soviet, and the man they called the soul of the whole affair is dead."
    },
    "tactical": {
     "goto": 2,
@@ -74,7 +74,7 @@
      0
     ],
     "prestige": 300,
-    "text": "Kornilov's death has been a terrible blow for us. Without his leadership many veteran warriors look lost now, like orphaned children without their father. The morale of our army has sunk. Alekseyev and Denikin have taken command and, knowing that it will take some time for our troops to recover, they have ordered us back to the Don River region. <br>Another great problem is that Alekseyev is very ill. He's been trying to hide it, but we know he's suffering from cancer and heart disease. I wonder how long he'll be able to endure the unhealthy conditions we're living in.<br><br>At least the Bolsheviks have taken many losses, so they won't pursue us. And in the north, since the Don Cossacks have risen against the Reds and the German Army is getting close to Rostov, the power of the communists has been severely weakened. They won't be able to bother us, so we'll rest for some weeks and start a new offensive as soon as we can."
+    "text": "Ekaterinodar has held. On the fourth morning of the assault a shell came through the wall of the farmhouse at Elizabetinskaya where Kornilov had his headquarters, and killed him where he stood. Denikin took over what was left and broke off the attack that night.<br><br>They buried him somewhere on the road and ploughed the ground over the grave so we would not find it. We found it.<br><br>Their army is not destroyed - it is going back to the Don, where Krasnov's Cossacks have risen and the German divisions in Ukraine will sell them anything they can pay for. But the Kuban is Soviet, and the man they called the soul of the whole affair is dead."
    },
    "lose": {
     "goto": 2,
@@ -83,7 +83,7 @@
      0
     ],
     "prestige": 260,
-    "text": "Kornilov's death has been a terrible blow for us. Without his leadership many veteran warriors look lost now, like orphaned children without their father. The morale of our army has sunk. Alekseyev and Denikin have taken command and, knowing that it will take some time for our troops to recover, they have ordered us back to the Don River region. <br>Another great problem is that Alekseyev is very ill. He's been trying to hide it, but we know he's suffering from cancer and heart disease. I wonder how long he'll be able to endure the unhealthy conditions we're living in.<br><br>At least the Bolsheviks have taken many losses, so they won't pursue us. And in the north, since the Don Cossacks have risen against the Reds and the German Army is getting close to Rostov, the power of the communists has been severely weakened. They won't be able to bother us, so we'll rest for some weeks and start a new offensive as soon as we can."
+    "text": "We were pushed off Elizabetinskaya and the city was fought for street by street before the assault finally burned itself out. Kornilov is dead - a shell found his headquarters - and Denikin has taken the survivors back towards the Don.<br><br>The city stands, but it stands on a garrison that has lost a third of its strength for ground we should never have given up. I have written that plainly in the report."
    }
   }
  },
@@ -91,7 +91,7 @@
   "id": 2,
   "scenario": "volarm_02.xml",
   "startprestige": 0,
-  "intro": "Belaya Glina<br><br>June 28th, 1918<br><br>In the north the Communists are very busy dealing with the German menace and with the uprising of Krasnov's Don cossacks, so the Red Army of the Northern Caucasus is receiving very little support from their comrades. That has allowed us to retake the initiative.<br>Some weeks ago the High Command considered the idea of joining Krasnov at Tsaritsyn, but it finally decided that it would be unwise to march to the north leaving a fully equipped enemy army, far greater than ours, on our rear. Before helping Krasnov we must neutralize the Red Army of the Northern Caucasus, that outnumbers us.<br><br>Our offensive started on June 23rd. After some heavy fighting our troops took Torgovaya, on the Tsaritsyn-Ekaterinodar railroad, cutting the enemy's communications with Northern Russia. Alas, we had to pay a heavy price for that victory. Many brave soldiers were injured or died, among them the General Markov. The survivors are exhausted and need a relief.<br>So now it's my turn. While some of our units cover our flanks and rear, my men will continue the main offensive along the railroad. Our objectives are the towns of Belaya Glina and Novopokrovskaya. Once they fall the taking of Tikhoretskaya will be easy, and soon we'll be at the gates of Ekaterinodar once again.<br><br>Victory conditions: Take all the VHs.<br><br>Special note:<br>- The unit that takes Belaya Glina will obtain +100 exp.",
+  "intro": "Belaya Glina<br><br>June 28th, 1918<br><br>Denikin has come back into the Kuban, and this time his people are not refugees: nine thousand men, German rifles bought through Krasnov's Don government, and the whole of the Don behind him.<br><br>We are the Red Army of the North Caucasus and we are on our own. Moscow has the Germans on the Ukrainian line and the Czechoslovak revolt on the Volga; nothing is coming from the north. Five days ago they took Torgovaya and cut the railway to Tsaritsyn, and an army larger than theirs on paper is now an army with no telegraph, no supply and no orders except the ones we write ourselves.<br><br>My sector is the line itself. Belaya Glina, Novopokrovskaya and Peschanokopskoye are junctions: while we sit on them this army still has a spine. Their forward depot has halted north of us, and I intend to take it off them.<br><br>Victory conditions:<br>- Hold Belaya Glina (14,6), Novopokrovskaya (4,7) and Peschanokopskoye (21,7).<br>- Take their supply line at (24,1).",
   "outcome": {
    "briliant": {
     "goto": 3,
@@ -100,7 +100,7 @@
      0
     ],
     "prestige": 240,
-    "text": "Although badly outnumbered, my troops have behaved at the battlefield much better than the Bolsheviks. Now the railroad is clear of enemies, we have taken lots of supplies, and many prisoners have joined our ranks. Tikhoretskaya will fall pretty soon, and then the way to Ekaterinodar will be open."
+    "text": "The three junctions are still ours and their forward depot is a field of burnt tarpaulins. General Markov was killed by one of our shells at Shablievka a few days back, and the Officers' Regiment that carries his name went into our wire twice today and came out thinner both times.<br><br>The task was to keep the line open, and the line is open. Further south, though, Tikhoretskaya is being turned, and an army that cannot be told what to do by wire cannot hold a front three hundred versts wide. We are going to have to shorten it."
    },
    "victory": {
     "goto": 3,
@@ -109,7 +109,7 @@
      0
     ],
     "prestige": 240,
-    "text": "Although badly outnumbered, my troops have behaved at the battlefield much better than the Bolsheviks. Now the railroad is clear of enemies, we have taken lots of supplies, and many prisoners have joined our ranks. Tikhoretskaya will fall pretty soon, and then the way to Ekaterinodar will be open."
+    "text": "The three junctions are still ours and their forward depot is a field of burnt tarpaulins. General Markov was killed by one of our shells at Shablievka a few days back, and the Officers' Regiment that carries his name went into our wire twice today and came out thinner both times.<br><br>The task was to keep the line open, and the line is open. Further south, though, Tikhoretskaya is being turned, and an army that cannot be told what to do by wire cannot hold a front three hundred versts wide. We are going to have to shorten it."
    },
    "tactical": {
     "goto": 3,
@@ -118,7 +118,7 @@
      0
     ],
     "prestige": 200,
-    "text": "Although badly outnumbered, my troops have behaved at the battlefield much better than the Bolsheviks. Now the railroad is clear of enemies, we have taken lots of supplies, and many prisoners have joined our ranks. Tikhoretskaya will fall pretty soon, and then the way to Ekaterinodar will be open."
+    "text": "The three junctions are still ours and their forward depot is a field of burnt tarpaulins. General Markov was killed by one of our shells at Shablievka a few days back, and the Officers' Regiment that carries his name went into our wire twice today and came out thinner both times.<br><br>The task was to keep the line open, and the line is open. Further south, though, Tikhoretskaya is being turned, and an army that cannot be told what to do by wire cannot hold a front three hundred versts wide. We are going to have to shorten it."
    },
    "lose": {
     "goto": 3,
@@ -127,7 +127,7 @@
      0
     ],
     "prestige": 200,
-    "text": "Although my troops did their best, only with the arrival of our cossack reserves could we overcome the Bolsheviks. At least the railroad is clear of enemies now, we have taken lots of supplies, and many prisoners have joined our ranks. Tikhoretskaya will fall pretty soon, and then the way to Ekaterinodar will be open."
+    "text": "They are across the railway. Belaya Glina went in the night and with it the last through line to Tikhoretskaya.<br><br>The army is not beaten, but it is now several armies that cannot speak to each other, which in this country amounts to the same thing."
    }
   }
  },
@@ -135,7 +135,7 @@
   "id": 3,
   "scenario": "volarm_03.xml",
   "startprestige": 0,
-  "intro": "The liberation of Ekaterinodar<br><br>Aug 13th, 1918<br><br>My dearest Katya,<br><br>After the murder of the Royal Family our determination to destroy the Bolshevik scum is stronger than ever. Despite all our suffering and all our losses, Providence is guiding us. Just four months ago we had to retire from the Kuban, defeated, without a leader and virtually without hope. Now, in a matter of days, we'll liberate all this region.<br><br>Anatoly has become a full-grown man. He's been promoted to captain, and his audacity, cunning and bravery is starting to be acknowledged and feared by our enemies. Looking at him now I can't help but remember that frail baby who gave us so many worries. I'm amazed at how much he has changed. I'm so proud of him...and I know you'll be proud when you see him, too.<br><br>Your plans to move to the countryside, where life will be cheaper, seem like a great idea. It tears my heart to be unable to help you in the present situation, but you know that there is very little money that I can send you these days. Your cousins have been the most generous and I will have an eternal debt to them, but it wouldn't be fair to ask for their help once again. When this nightmare is over I hope that Russia will reward all our efforts. But right now we'll have to live in poverty. Just like when we married. Do you remember? Those were very happy days, even though dreams were the only thing we had plenty of (...)<br><br>Victory conditions: Take all the VHs.<br><br>Special notes:<br>- The unit that takes Elizabetinskaya will obtain a leader.<br>- The unit that takes Ekaterinodar (20,13) will obtain +120 exp.",
+  "intro": "The battle for Ekaterinodar<br><br>August 13th, 1918<br><br>My dear Katya,<br><br>You will read in the papers that the Kuban is holding. It is holding here, in front of me, on a line I could walk before breakfast.<br><br>Tikhoretskaya has gone, Armavir is threatened, and Denikin has brought up everything he has for the capital of the Kuban. His army has grown - half the stanitsas have gone over to him - and I can tell you exactly how far ahead of him the news travels, because I have been reading the reports out of the districts he has already taken. The land goes back to the man who owned it in 1916. The ataman comes back with him. Then the punitive detachment comes to explain the arrangement to the village. Every one of those villages is recruiting for us now, and he has not worked out why.<br><br>My orders are the city and the western crossing, and to clear Plastunovskaya on the north road where his staff has installed itself. Anatoly is with the machine-gun company. He is twenty-two and he thinks that is very old.<br><br>Victory conditions:<br>- Hold Ekaterinodar (19,9), Ekaterinodar (20,13) and Elizabetinskaya (5,10).<br>- Take Plastunovskaya (25,1).",
   "outcome": {
    "briliant": {
     "goto": 4,
@@ -144,7 +144,7 @@
      0
     ],
     "prestige": 400,
-    "text": "(...) And step by step, working hard, we made most of those dreams come true. We did it once, and now we'll do it again. This revolution won't defeat us. We may be a little older, but by no means weaker than when we started our story.<br><br>Our victory in the Kuban is almost complete. Ekaterinodar is ours at last, and our army is growing. It won't be long until we can meet again. Hopefully, just a few months. I miss all of you very much, but I must still  be patient. Don't forget to tell Yuri and the girls that his father thinks about them every day. Tell them how we're fighting for our country, and for their future.<br><br>Goodbye dearest Katya, my first and only love...Believe me ever to be your devoted and loving husband,<br><br>Sergey"
+    "text": "The line held and Plastunovskaya is ours, with a staff car, a printing press and four sacks of their correspondence in the bargain.<br><br>It changes less than it should. Novorossiysk and the coast road are already lost, the railway to the north is cut in three places, and an army supplied by nothing but peasant carts cannot sit in a city with sixty thousand mouths in it. The Army Council has decided to go to Armavir and fight for the Terek instead. We leave in good order, on our own feet, with our guns - which after this summer is not nothing.<br><br>I have burned nothing and shot no one on the way out. Let them find the city as they find it, and let the people of Ekaterinodar compare."
    },
    "victory": {
     "goto": 4,
@@ -153,7 +153,7 @@
      0
     ],
     "prestige": 400,
-    "text": "(...) And step by step, working hard, we made most of those dreams come true. We did it once, and now we'll do it again. This revolution won't defeat us. We may be a little older, but by no means weaker than when we started our story.<br><br>Our victory in the Kuban is almost complete. Ekaterinodar is ours at last, and our army is growing. It won't be long until we can meet again. Hopefully, just a few months. I miss all of you very much, but I must still  be patient. Don't forget to tell Yuri and the girls that his father thinks about them every day. Tell them how we're fighting for our country, and for their future.<br><br>Goodbye dearest Katya, my first and only love...Believe me ever to be your devoted and loving husband,<br><br>Sergey"
+    "text": "The line held and Plastunovskaya is ours, with a staff car, a printing press and four sacks of their correspondence in the bargain.<br><br>It changes less than it should. Novorossiysk and the coast road are already lost, the railway to the north is cut in three places, and an army supplied by nothing but peasant carts cannot sit in a city with sixty thousand mouths in it. The Army Council has decided to go to Armavir and fight for the Terek instead. We leave in good order, on our own feet, with our guns - which after this summer is not nothing.<br><br>I have burned nothing and shot no one on the way out. Let them find the city as they find it, and let the people of Ekaterinodar compare."
    },
    "tactical": {
     "goto": 4,
@@ -162,7 +162,7 @@
      0
     ],
     "prestige": 320,
-    "text": "(...) And step by step, working hard, we made most of those dreams come true. We did it once, and now we'll do it again. This revolution won't defeat us. We may be a little older, but by no means weaker than when we started our story.<br><br>Our victory in the Kuban is almost complete. Ekaterinodar is ours at last, and our army is growing. It won't be long until we can meet again. Hopefully, just a few months. I miss all of you very much, but I must still  be patient. Don't forget to tell Yuri and the girls that his father thinks about them every day. Tell them how we're fighting for our country, and for their future.<br><br>Goodbye dearest Katya, my first and only love...Believe me ever to be your devoted and loving husband,<br><br>Sergey"
+    "text": "The line held and Plastunovskaya is ours, with a staff car, a printing press and four sacks of their correspondence in the bargain.<br><br>It changes less than it should. Novorossiysk and the coast road are already lost, the railway to the north is cut in three places, and an army supplied by nothing but peasant carts cannot sit in a city with sixty thousand mouths in it. The Army Council has decided to go to Armavir and fight for the Terek instead. We leave in good order, on our own feet, with our guns - which after this summer is not nothing.<br><br>I have burned nothing and shot no one on the way out. Let them find the city as they find it, and let the people of Ekaterinodar compare."
    },
    "lose": {
     "goto": 4,
@@ -171,7 +171,7 @@
      0
     ],
     "prestige": 320,
-    "text": "(...) And step by step, working hard, we made most of those dreams come true. We did it once, and now we'll do it again. This revolution won't defeat us. We may be a little older, but by no means weaker than when we started our story.<br><br>Our victory in the Kuban is almost complete. Ekaterinodar is ours at last, and our army is growing. I was wounded in the battle and I couldn't lead the main operations, but don't fear. It's nothing too serious, and in a couple of months I'll be fully recovered.<br><br>It won't be long until we can meet again. Hopefully, just a few months. I miss all of you very much, but I must still  be patient. Don't forget to tell Yuri and the girls that his father thinks about them every day. Tell them how we're fighting for our country, and for their future.<br><br>Goodbye, dearest Katya, my first and only love...Believe me ever to be your devoted and loving husband,<br><br>Sergey"
+    "text": "The crossing at Elizabetinskaya was forced and the city had to be given up in a hurry, which is the worst way to give up anything. We lost two batteries on the pontoons.<br><br>We are going to Armavir. Fewer of us than should be."
    }
   }
  },
@@ -179,7 +179,7 @@
   "id": 4,
   "scenario": "volarm_04.xml",
   "startprestige": 0,
-  "intro": "Novorossiysk<br><br>Aug 23rd, 1918<br><br>I'm not feeling well since we took Ekaterinodar. The pain is terrible, but that won't stop me. My next mission is too important to care for my health.<br>Novorossiysk is one of the most important ports in the Black Sea. If we take it, most of our supply problems will be solved. The Entente powers will be able to send us whatever we need, as long as they're willing to. But it's even more important than that. In Novorossiysk we'll be able to settle, at last, the capital of our provisional government. The rebirth of our nation will start. So failure is not an option.<br><br>However, it won't be easy. This area is being defended by the Taman Army Group, one of the best units of the Red Army of the Northern Caucasus. They'll try to stop our advance or, at the very least, retreat unharmed to the south, where they'd reinforce Sorokin's units. But I'm here to stop them. The victory will be mine.<br><br>Victory conditions: <br>- Take all the VHs or destroy all the enemy MSUs (there are 10 in total).<br>- If the Reds evacuate their 10 MSUs you will lose.<br><br>Special note:<br>- When you take the airfield at (21,7) a recon bomber unit will be added to your core.",
+  "intro": "The Taman Army<br><br>August 23rd, 1918<br><br>The Taman Group is cut off from the rest of the army by two hundred versts of White cavalry, with the sea on one side and the mountains on the other. There are thirty thousand people on the Novorossiysk road with it and perhaps a third of them carry a rifle; the rest are the families of the ones who do, and they know precisely what the punitive detachments do in the coastal stanitsas, because that is why they are on the road.<br><br>Kovtyukh has exactly one route - the coast road east through Gelendzhik - and there are German warships off the port to make sure he does not use the harbour instead.<br><br>His order to me is four words long: get the columns out. Not the ground. Not the town. Not the guns, if it comes to that.<br><br>Victory conditions:<br>- Bring eight of the ten marked Taman columns out through Gelendzhik (39,37).<br>- Or take the village at (41,3).<br>- You lose if not one marked column survives.",
   "outcome": {
    "briliant": {
     "goto": 5,
@@ -188,7 +188,7 @@
      0
     ],
     "prestige": 400,
-    "text": "Novorossiysk is ours. Soon the first ships with supplies and reinforcement troops will arrive. I've been told that General Wrangel will be among them.<br>This town will be a good place for our families. Katya has decided that she'll travel here in January, so the family will be together again. Those news are almost better than my victory over the Reds.<br><br>The Reds. They've got good reasons to be worried. Most of the Taman Army Group has been destroyed or is trapped between the hills and the sea. In the next weeks we'll clean this area. The Bolsheviks will face surrender or extermination. It'll be a great blow for the Red Army of the Northern Caucasus. But not the last one. Denikin has informed me that the remaining Communist soldiers are heading south, to Armavir and Stavropol."
+    "text": "Eight columns are through Gelendzhik and on the coast road, and the rearguard came out in order behind them with its machine guns still mounted.<br><br>The town is lost. It was lost before we started; a port under naval guns with no fleet of our own was never going to be held, and I said so at the council. What was in our hands was whether the Taman Army came out as an army or as a crowd on a road, and it has come out as an army.<br><br>They have five hundred versts of mountain track ahead of them to reach Armavir, and they will do it on foot, in August, eating what the stanitsas give them. When the history of this war is written that march will be in it."
    },
    "victory": {
     "goto": 5,
@@ -197,7 +197,7 @@
      0
     ],
     "prestige": 400,
-    "text": "Novorossiysk is ours. Soon the first ships with supplies and reinforcement troops will arrive. I've been told that General Wrangel will be among them.<br>This town will be a good place for our families. Katya has decided that she'll travel here in January, so the family will be together again. Those news are almost better than my victory over the Reds.<br><br>The Reds. They've got good reasons to be worried. Most of the Taman Army Group has been destroyed or is trapped between the hills and the sea. In the next weeks we'll clean this area. The Bolsheviks will face surrender or extermination. It'll be a great blow for the Red Army of the Northern Caucasus. But not the last one. Denikin has informed me that the remaining Communist soldiers are heading south, to Armavir and Stavropol."
+    "text": "Eight columns are through Gelendzhik and on the coast road, and the rearguard came out in order behind them with its machine guns still mounted.<br><br>The town is lost. It was lost before we started; a port under naval guns with no fleet of our own was never going to be held, and I said so at the council. What was in our hands was whether the Taman Army came out as an army or as a crowd on a road, and it has come out as an army.<br><br>They have five hundred versts of mountain track ahead of them to reach Armavir, and they will do it on foot, in August, eating what the stanitsas give them. When the history of this war is written that march will be in it."
    },
    "tactical": {
     "goto": 5,
@@ -206,7 +206,7 @@
      0
     ],
     "prestige": 320,
-    "text": "Novorossiysk is ours. Soon the first ships with supplies and reinforcement troops will arrive. I've been told that General Wrangel will be among them.<br>This town will be a good place for our families. Katya has decided that she'll travel here in January, so the family will be together again. Those news are almost better than my victory over the Reds.<br><br>The Reds. They've got good reasons to be worried. Most of the Taman Army Group has been destroyed or is trapped between the hills and the sea. In the next weeks we'll clean this area. The Bolsheviks will face surrender or extermination. It'll be a great blow for the Red Army of the Northern Caucasus. But not the last one. Denikin has informed me that the remaining Communist soldiers are heading south, to Armavir and Stavropol."
+    "text": "Eight columns are through Gelendzhik and on the coast road, and the rearguard came out in order behind them with its machine guns still mounted.<br><br>The town is lost. It was lost before we started; a port under naval guns with no fleet of our own was never going to be held, and I said so at the council. What was in our hands was whether the Taman Army came out as an army or as a crowd on a road, and it has come out as an army.<br><br>They have five hundred versts of mountain track ahead of them to reach Armavir, and they will do it on foot, in August, eating what the stanitsas give them. When the history of this war is written that march will be in it."
    },
    "lose": {
     "goto": 5,
@@ -215,7 +215,7 @@
      0
     ],
     "prestige": 320,
-    "text": "Novorossiysk is ours. Soon the first ships with supplies and reinforcement troops will arrive. I've been told that General Wrangel will be among them.<br>This town will be a good place for our families. Katya has decided that she'll travel here in January, so the family will be together again. Those are great news.<br><br>However, most of the Taman Army Group has managed to escape and has joined the Red Army of the Northern Caucasus. Now they are heading south, to Armavir and Stavropol."
+    "text": "The coast road was cut before the tail of the column reached it. What got through got through in pieces.<br><br>There is nothing to add to that except the numbers, and I have sent those separately."
    }
   }
  },
@@ -223,7 +223,7 @@
   "id": 5,
   "scenario": "volarm_05.xml",
   "startprestige": 0,
-  "intro": "Stavropol<br><br>Nov 10th, 1918<br><br>Our campaign in the Kuban against the Red Army of the Northern Caucasus, now renamed 11th Army, still goes on. We hardly got time to mourn the death of General Alekseyev, who finally succumbed to his illness in September, before putting into practice the last step of our strategy.<br>The plan consists in surrounding the Bolsheviks from east, west and north, and push them against the Caucasus. However, the enemy's numerical superiority is so great that our encirclement has been merely theoretical. If the Soviet hordes actually behaved like a true army they could break our lines at any place and march wherever they pleased. We're lucky that they've spent much time quarrelling and killing each other. Even their leader Sorokin has been shot.<br><br>That doesn't mean that the Bolsheviks are harmless madmen. A most bloody battle is taking place near Stavropol. Twice did we take this town, only to lose it again shortly afterwards under the pressure of fierce enemy counterattacks. Our casualties are really heavy, including General Drozdovsky, who was badly injured and might not survive.<br><br>General Denikin, who after Alekseyev's passing has become our sole leader, has ordered me to attempt a third, and hopefully final, assault on Stavropol, while Wrangel's men storm Armavir, in the west. Fortunately my health problems seem to be over, so I can employ all my energies in destroying the 11th Army.<br><br>Victory conditions: <br>- Take all the VHs.<br><br>Intelligence report:<br>- It seems that the Soviets are preparing a counterattack in the north, where the 2nd Division is staying.",
+  "intro": "Stavropol<br><br>November 10th, 1918<br><br>Denikin has drawn a ring round this army from the east, the west and the north, and is pressing it back against the mountains. Stavropol has already changed hands twice, and both times the change was paid for in whole regiments.<br><br>We are the 11th Army now, on paper, which has improved nothing. Sorokin, who commanded it, shot four members of the regional Party committee in October and was shot himself a fortnight later. The typhus is taking more of us than the shelling.<br><br>We hold the town and the villages that cover the road out of it. Wrangel is coming from the west, Drozdovsky from the north, and two batteries are ranging on us from ground I can see from the church tower. Hold the town, hold the road, and take those two villages away.<br><br>Victory conditions:<br>- Hold Stavropol (12,10), Novomaryevskaya (4,6), Tatarka (12,12) and Nadezhda (18,13).<br>- Take Dubovka (21,0) and Temnolesskaya (18,24).",
   "outcome": {
    "briliant": {
     "goto": 6,
@@ -232,7 +232,7 @@
      0
     ],
     "prestige": 320,
-    "text": "Finally, after so many months of endless fighting, we've expelled the Communists from the Kuban. The remnants of the 11th Army have escaped to the Terek, but their defeat has been so absolute that I doubt they'll recover from it. Surely they'll merge with the 12th Army, that is currently dealing with a cossack rebellion against the Reds. Soon they'll have to deal with us, too. The Terek is our next objective."
+    "text": "Stavropol is held, both battery positions are taken, and Drozdovsky was carried off the field with a wound that the doctors say he will not survive.<br><br>The 11th Army is still an army. That was the whole of my task and it is done.<br><br>It does not lift the ring. The Terek is being rolled up behind us and the typhus is taking more men than the Volunteers are; a front cannot be held by a garrison that cannot stand up. What we have bought is time and an intact road eastward, and both will be needed."
    },
    "victory": {
     "goto": 6,
@@ -241,7 +241,7 @@
      0
     ],
     "prestige": 320,
-    "text": "Finally, after so many months of endless fighting, we've expelled the Communists from the Kuban. The remnants of the 11th Army have escaped to the Terek, but their defeat has been so absolute that I doubt they'll recover from it. Surely they'll merge with the 12th Army, that is currently dealing with a cossack rebellion against the Reds. Soon they'll have to deal with us, too. The Terek is our next objective."
+    "text": "Stavropol is held, both battery positions are taken, and Drozdovsky was carried off the field with a wound that the doctors say he will not survive.<br><br>The 11th Army is still an army. That was the whole of my task and it is done.<br><br>It does not lift the ring. The Terek is being rolled up behind us and the typhus is taking more men than the Volunteers are; a front cannot be held by a garrison that cannot stand up. What we have bought is time and an intact road eastward, and both will be needed."
    },
    "tactical": {
     "goto": 6,
@@ -250,7 +250,7 @@
      0
     ],
     "prestige": 260,
-    "text": "Finally, after so many months of endless fighting, we've expelled the Communists from the Kuban. The remnants of the 11th Army have escaped to the Terek, but their defeat has been so absolute that I doubt they'll recover from it. Surely they'll merge with the 12th Army, that is currently dealing with a cossack rebellion against the Reds. Soon they'll have to deal with us, too. The Terek is our next objective."
+    "text": "Stavropol is held, both battery positions are taken, and Drozdovsky was carried off the field with a wound that the doctors say he will not survive.<br><br>The 11th Army is still an army. That was the whole of my task and it is done.<br><br>It does not lift the ring. The Terek is being rolled up behind us and the typhus is taking more men than the Volunteers are; a front cannot be held by a garrison that cannot stand up. What we have bought is time and an intact road eastward, and both will be needed."
    },
    "lose": {
     "goto": 6,
@@ -259,7 +259,7 @@
      0
     ],
     "prestige": 260,
-    "text": "Finally, after so many months of endless fighting, we've expelled the Communists from the Kuban. Although I must confess that I wouldn't have been able to take Stavropol without Wrangel's timely help.<br><br>The remnants of the 11th Army have escaped to the Terek, but their defeat has been so absolute that I doubt they'll recover from it. Surely they'll merge with the 12th Army, that is currently dealing with a cossack rebellion against the Reds. Soon they'll have to deal with us, too. The Terek is our next objective."
+    "text": "Stavropol has gone for the third time and this time we will not be taking it back. The road east is under fire along its whole length.<br><br>The 11th Army is coming apart into detachments. I have kept mine together and that is all I can report with any pride."
    }
   }
  },
@@ -267,7 +267,7 @@
   "id": 6,
   "scenario": "volarm_06.xml",
   "startprestige": 0,
-  "intro": "Grozny<br><br>Feb 1st, 1919<br><br>The arrival of my family in Novorossiysk was one of the happiest moments in my life. Finally, we're together again. I could spend just three days with them before returning to the battle front, but now I know that I'll return to them soon.<br><br>The Terek is the last redoubt of the Soviets in Southern Russia. Once we pacify this area our rearguard will be safe. There is no time to lose, because now that the Great War has finished and the Germans have retreated from Ukraine, the Red Army will be able to send reinforcements to the Donbass and Tsaritsyn. If we don't finish the Terek campaign soon we might find ourselves fighting in two fronts, something we can't afford.<br><br>While General Wrangel fights in Vladikavkaz I must take Grozny and cut the Bolsheviks' escape route. The town is being defended by the 12th Red Army and some Chechen volunteers. It's surprising that these muslim warriors have allied themselves with an army of atheists, but I guess that their hatred against the Terek cossacks is stronger than their theological coherence.<br><br>Victory conditions: <br>- Take all the VHs.",
+  "intro": "Grozny<br><br>February 1st, 1919<br><br>The Terek is the last thing we hold south of the Don and it is being taken away from us a stanitsa at a time. Grozny itself held for a hundred days last year - oilfield workers, Chechen and Ingush volunteers, a scratch garrison and no reserves at all - and the wells have been burning ever since. You can see them from thirty versts out; by now everyone here navigates by them.<br><br>What has changed is not on this map. The Great War ended in November, the Germans are gone from Ukraine, and the Entente has begun unloading at Novorossiysk for Denikin: British rifles, British shells, British instructors. Wrangel is already at Vladikavkaz.<br><br>The 12th Army holds Grozny, Shali and Samashki, and behind them there is nothing but the mountain passes. Hold the three towns. Take Novoshchendrinskaya, which is where their cavalry waters.<br><br>Victory conditions:<br>- Hold Grozny (21,23), Shali (33,27) and Samashki (7,31).<br>- Take Novoshchendrinskaya (31,5).",
   "outcome": {
    "briliant": {
     "goto": 7,
@@ -276,7 +276,7 @@
      0
     ],
     "prestige": 400,
-    "text": "The Terek is in our hands. Some Soviet units have fled to the steppes of Astrakhan, where they'll hardly get any supplies, so they won't be able to bother us there.<br>Some Chechen and Ingush guerrillas still roam the mountains of the Caucasus, but they aren't very powerful. The local cossack garrisons will handle them. I wish there was a way to convince them to join our army, but I think it's unlikely to happen. Anyway, that isn't too important. Now I just have to think about reinforcing our Northern front.<br><br>My troops must go there as soon as possible. We'll rest a couple of days in Novorossiysk and then we'll march to the Manych. The Soviets have launched a very dangerous counterattack there, that might split our forces in two."
+    "text": "The three towns are ours and their cavalry has been pushed off the river.<br><br>The 12th Army will still have to go over the passes. That was decided in Moscow and by the typhus, not here: with Vladikavkaz gone there is no front left to anchor on, and men who hold a town in an army that no longer exists are simply prisoners who have not been taken yet. We come out with our formations intact and our wounded with us.<br><br>The oil wells are burning again. We did not fire them; the retreating administration did, in 1918, and the Volunteers will say it was us. Let them."
    },
    "victory": {
     "goto": 7,
@@ -285,7 +285,7 @@
      0
     ],
     "prestige": 400,
-    "text": "The Terek is in our hands. Some Soviet units have fled to the steppes of Astrakhan, where they'll hardly get any supplies, so they won't be able to bother us there.<br>Some Chechen and Ingush guerrillas still roam the mountains of the Caucasus, but they aren't very powerful. The local cossack garrisons will handle them. I wish there was a way to convince them to join our army, but I think it's unlikely to happen. Anyway, that isn't too important. Now I just have to think about reinforcing our Northern front.<br><br>My troops must go there as soon as possible. We'll rest a couple of days in Novorossiysk and then we'll march to the Manych. The Soviets have launched a very dangerous counterattack there, that might split our forces in two."
+    "text": "The three towns are ours and their cavalry has been pushed off the river.<br><br>The 12th Army will still have to go over the passes. That was decided in Moscow and by the typhus, not here: with Vladikavkaz gone there is no front left to anchor on, and men who hold a town in an army that no longer exists are simply prisoners who have not been taken yet. We come out with our formations intact and our wounded with us.<br><br>The oil wells are burning again. We did not fire them; the retreating administration did, in 1918, and the Volunteers will say it was us. Let them."
    },
    "tactical": {
     "goto": 7,
@@ -294,7 +294,7 @@
      0
     ],
     "prestige": 320,
-    "text": "The Terek is in our hands. Some Soviet units have fled to the steppes of Astrakhan, where they'll hardly get any supplies, so they won't be able to bother us there.<br>Some Chechen and Ingush guerrillas still roam the mountains of the Caucasus, but they aren't very powerful. The local cossack garrisons will handle them. I wish there was a way to convince them to join our army, but I think it's unlikely to happen. Anyway, that isn't too important. Now I just have to think about reinforcing our Northern front.<br><br>My troops must go there as soon as possible. We'll rest a couple of days in Novorossiysk and then we'll march to the Manych. The Soviets have launched a very dangerous counterattack there, that might split our forces in two."
+    "text": "The three towns are ours and their cavalry has been pushed off the river.<br><br>The 12th Army will still have to go over the passes. That was decided in Moscow and by the typhus, not here: with Vladikavkaz gone there is no front left to anchor on, and men who hold a town in an army that no longer exists are simply prisoners who have not been taken yet. We come out with our formations intact and our wounded with us.<br><br>The oil wells are burning again. We did not fire them; the retreating administration did, in 1918, and the Volunteers will say it was us. Let them."
    },
    "lose": {
     "goto": 7,
@@ -303,7 +303,7 @@
      0
     ],
     "prestige": 320,
-    "text": "I've needed the help of our fresh troops, but the Terek is in our hands. Some Soviet units have fled to the steppes of Astrakhan, where they'll hardly get any supplies, so they won't be able to bother us there.<br>Some Chechen and Ingush guerrillas still roam the mountains of the Caucasus, but they aren't very powerful. The local cossack garrisons will handle them. I wish there was a way to convince them to join our army, but I think it's unlikely to happen. Anyway, that isn't too important. Now I just have to think about reinforcing our Northern front.<br><br>My troops must go there as soon as possible. We'll rest a couple of days in Novorossiysk and then we'll march to the Manych. The Soviets have launched a very dangerous counterattack there, that might split our forces in two."
+    "text": "Grozny was taken from the north while we were still fighting for Samashki. Whole detachments went into the mountains without orders.<br><br>The Terek is finished. What comes out of it will come out as refugees."
    }
   }
  },
@@ -311,7 +311,7 @@
   "id": 7,
   "scenario": "volarm_07.xml",
   "startprestige": 0,
-  "intro": "Operation Manych<br><br>May 1st, 1919<br><br>The attack of the 10th Army on the Manych was a very serious threat to us. When they took Torgovaya they could split our lines in two, and even Ekaterinodar was at risk. Thank God that our campaign in the Terek ended soon, so we could send reinforcements just in time. Now the Bolshevik offensive has lost its initial momentum, and the initiative is ours again. We must send them back to the other side of the river, thus securing our right flank.<br><br>I hope that Anatoly is ready for this battle. He's a major now, so his responsabilities are greater. But now that Katya has told him that we approve it, it seems that his mind is only set on his engagement with that nurse of the Kornilov regiment. He shouldn't forget that this is a war, and that any distraction can have a terrible cost. I have confidence in his sense of duty, but maybe I should have a conversation with him about the matter.<br><br>Victory conditions: <br>- Take all the VHs.",
+  "intro": "The Manych<br><br>May 1st, 1919<br><br>The 10th Army came down off the Tsaritsyn line in the winter, took Torgovaya and put itself across the Manych, and for a few weeks it looked as though the southern front might be split in two. It has not happened. Wrangel has brought his Caucasus corps up by rail with British armour on the flat cars, and this steppe is flat, dry and belongs to whoever has the most horses - which is not us.<br><br>So it comes down to the crossings, and for once we are standing on ground we chose ourselves. Velikoknyazheskaya, Uyutnyy and Ekaterinovka cover the fords. Torgovaya, which we took in the winter, has been taken back, and I want it again.<br><br>Victory conditions:<br>- Hold Velikoknyazheskaya (40,13), Uyutnyy (34,14) and Ekaterinovka (23,23).<br>- Take Torgovaya (21,37).",
   "outcome": {
    "briliant": {
     "goto": 8,
@@ -320,7 +320,7 @@
      0
     ],
     "prestige": 160,
-    "text": "The 10th Army has been completely routed. Our right flank is secured, and now we can finally help the Don cossacks at Tsaritsyn."
+    "text": "The fords are held and Torgovaya is ours again, with their forward dumps in it.<br><br>The 10th Army will nonetheless be pulling back over the Manych within the month. Not because of anything that happened on this ground: the Don Cossacks have risen behind our left at Veshenskaya, the 9th Army's flank has gone, and a bridgehead is only as good as the army standing behind it. We go back over the river as a formation, in our own time, with the crossings still in our hands - which is the difference between a withdrawal and a rout."
    },
    "victory": {
     "goto": 8,
@@ -329,7 +329,7 @@
      0
     ],
     "prestige": 160,
-    "text": "The 10th Army has been completely routed. Our right flank is secured, and now we can finally help the Don cossacks at Tsaritsyn."
+    "text": "The fords are held and Torgovaya is ours again, with their forward dumps in it.<br><br>The 10th Army will nonetheless be pulling back over the Manych within the month. Not because of anything that happened on this ground: the Don Cossacks have risen behind our left at Veshenskaya, the 9th Army's flank has gone, and a bridgehead is only as good as the army standing behind it. We go back over the river as a formation, in our own time, with the crossings still in our hands - which is the difference between a withdrawal and a rout."
    },
    "tactical": {
     "goto": 8,
@@ -338,7 +338,7 @@
      0
     ],
     "prestige": 120,
-    "text": "The 10th Army has been completely routed. Our right flank is secured, and now we can finally help the Don cossacks at Tsaritsyn."
+    "text": "The fords are held and Torgovaya is ours again, with their forward dumps in it.<br><br>The 10th Army will nonetheless be pulling back over the Manych within the month. Not because of anything that happened on this ground: the Don Cossacks have risen behind our left at Veshenskaya, the 9th Army's flank has gone, and a bridgehead is only as good as the army standing behind it. We go back over the river as a formation, in our own time, with the crossings still in our hands - which is the difference between a withdrawal and a rout."
    },
    "lose": {
     "goto": 8,
@@ -347,7 +347,7 @@
      0
     ],
     "prestige": 120,
-    "text": "I couldn't retake Velikoknyazheskaya, but at least the offensive of the 10th Army has stopped. The Bolsheviks have understood that staying on this bank of the Manych is becoming dangerous for them, so they have retreated. Now our right flank is secured and we can finally help the Don cossacks at Tsaritsyn."
+    "text": "They forced the Manych between Uyutnyy and Ekaterinovka and got cavalry into our rear before the fords could be blown. The 10th Army is going back over the river under fire and it is losing guns doing it."
    }
   }
  },
@@ -355,7 +355,7 @@
   "id": 8,
   "scenario": "volarm_08.xml",
   "startprestige": 0,
-  "intro": "Tsaritsyn<br><br>Jun 14th, 1919<br><br>Here we are, at the gates of the Red fortress of Tsaritsyn. The cossacks tried to take it three times in the last months, and every time they had to retire with heavy losses. The Soviets have many of their best units in this town on the shores of the Volga, including infantry, trench defences, armoured trains, heavy artillery and even some war boats.<br>Really impressive, indeed, but defeat is something that we can't afford. Now that the Kuban and the Terek are pacified, and we're planning a more ambitious strategy in the long term, it is essential that Tsaritsyn is in our hands. If it doesn't fall, our right flank will be vulnerable and under the constant threat of an enemy attack.<br><br>Victory conditions: Take all the VHs.<br><br>Special note:<br>- The unit that takes the VH at (26,17) will obtain a leader.",
+  "intro": "Tsaritsyn<br><br>June 14th, 1919<br><br>The Cossacks have come at this town three times since last summer and gone back three times with nothing, which is why the newspapers have started calling it the Red Verdun. What held it was not a miracle: the workers' regiments out of the French Factory, the armoured trains, the gunboats on the Volga, and a position that was dug and wired properly before anybody needed it. All of that is still here.<br><br>What is different is Wrangel, and the tanks the British landed for him at Novorossiysk, and the fact that our own front north of here has been coming apart since the Veshenskaya rising.<br><br>Hold the city, its approaches and the river crossing. Their heavy batteries have come into position at Gorodistsje; clear them off it.<br><br>Victory conditions:<br>- Hold the three Tsaritsyn sectors (22,13), (26,17), (14,21) and Wolzskij (37,10).<br>- Take Gorodistsje (4,12).",
   "outcome": {
    "briliant": {
     "goto": 9,
@@ -364,7 +364,7 @@
      0
     ],
     "prestige": 320,
-    "text": "Everything has gone as planned. We're marching along the streets of Tsaritsyn while many peope cheer us. I wonder if they cheered the Bolsheviks before, too. <br>In the west, in Ukraine, we've also taken Kharkov. We've found tons of weapons, guns and ammunition, and the number of our soldiers is greater than ever. Now we're truly the Armed Forces of Southern Russia.<br><br>Now it's time for thinking on our next move. Against Wranglel's objections, Denikin has decided that we won't try to join Kolchak's forces. Instead, he has ordered an offensive on Moscow. I don't fully agree with him. It's true that if we go in search of Kolchak we could lose the Donbass, the Kuban and the other cossack territories that we control right now. But united we would be stronger. We could defeat the Bolsheviks more easily, and even inflict them a definitive blow. Later, we could always recover the regions that we had to leave behind. <br>I fear that if we're divided the Reds will have an advantage on us. We'll have to take more risks and, if anything goes wrong, we could pay a very high price.<br><br>Well, there is nothing that I can do. Denikin is in my commander in chief and the decision is made. He's told me that he'll send me to the west in a couple of weeks, but first I must talk to the popes. Anatoly and Olga want to marry in Tsaritsyn in a few days, and I must make some arrangements."
+    "text": "The city is held, the crossing is open, and the battery position at Gorodistsje has been overrun with its guns still limbered.<br><br>The town will not stay ours for long, and everyone in this headquarters knows it. Denikin has issued what he is pleased to call the Moscow Directive; the whole southern front is moving, and Tsaritsyn is one anchor on a line that has already been turned in three other places. When we go, we will go with the army intact, the shops emptied and the barges upriver, and the men who held here will be needed at Orel.<br><br>There is a phrase going round the staff about the defence of last autumn - about the commissar from Moscow who requisitioned everything on the Volga and shot the specialists who argued. I have no orders to repeat it and no wish to. What held Tsaritsyn was the trenches and the men in them."
    },
    "victory": {
     "goto": 9,
@@ -373,7 +373,7 @@
      0
     ],
     "prestige": 320,
-    "text": "Everything has gone as planned. We're marching along the streets of Tsaritsyn while many peope cheer us. I wonder if they cheered the Bolsheviks before, too. <br>In the west, in Ukraine, we've also taken Kharkov. We've found tons of weapons, guns and ammunition, and the number of our soldiers is greater than ever. Now we're truly the Armed Forces of Southern Russia.<br><br>Now it's time for thinking on our next move. Against Wranglel's objections, Denikin has decided that we won't try to join Kolchak's forces. Instead, he has ordered an offensive on Moscow. I don't fully agree with him. It's true that if we go in search of Kolchak we could lose the Donbass, the Kuban and the other cossack territories that we control right now. But united we would be stronger. We could defeat the Bolsheviks more easily, and even inflict them a definitive blow. Later, we could always recover the regions that we had to leave behind. <br>I fear that if we're divided the Reds will have an advantage on us. We'll have to take more risks and, if anything goes wrong, we could pay a very high price.<br><br>Well, there is nothing that I can do. Denikin is in my commander in chief and the decision is made. He's told me that he'll send me to the west in a couple of weeks, but first I must talk to the popes. Anatoly and Olga want to marry in Tsaritsyn in a few days, and I must make some arrangements."
+    "text": "The city is held, the crossing is open, and the battery position at Gorodistsje has been overrun with its guns still limbered.<br><br>The town will not stay ours for long, and everyone in this headquarters knows it. Denikin has issued what he is pleased to call the Moscow Directive; the whole southern front is moving, and Tsaritsyn is one anchor on a line that has already been turned in three other places. When we go, we will go with the army intact, the shops emptied and the barges upriver, and the men who held here will be needed at Orel.<br><br>There is a phrase going round the staff about the defence of last autumn - about the commissar from Moscow who requisitioned everything on the Volga and shot the specialists who argued. I have no orders to repeat it and no wish to. What held Tsaritsyn was the trenches and the men in them."
    },
    "tactical": {
     "goto": 9,
@@ -382,7 +382,7 @@
      0
     ],
     "prestige": 240,
-    "text": "Everything has gone as planned. We're marching along the streets of Tsaritsyn while many peope cheer us. I wonder if they cheered the Bolsheviks before, too. <br>In the west, in Ukraine, we've also taken Kharkov. We've found tons of weapons, guns and ammunition, and the number of our soldiers is greater than ever. Now we're truly the Armed Forces of Southern Russia.<br><br>Now it's time for thinking on our next move. Against Wranglel's objections, Denikin has decided that we won't try to join Kolchak's forces. Instead, he has ordered an offensive on Moscow. I don't fully agree with him. It's true that if we go in search of Kolchak we could lose the Donbass, the Kuban and the other cossack territories that we control right now. But united we would be stronger. We could defeat the Bolsheviks more easily, and even inflict them a definitive blow. Later, we could always recover the regions that we had to leave behind. <br>I fear that if we're divided the Reds will have an advantage on us. We'll have to take more risks and, if anything goes wrong, we could pay a very high price.<br><br>Well, there is nothing that I can do. Denikin is in my commander in chief and the decision is made. He's told me that he'll send me to the west in a couple of weeks, but first I must talk to the popes. Anatoly and Olga want to marry in Tsaritsyn in a few days, and I must make some arrangements."
+    "text": "The city is held, the crossing is open, and the battery position at Gorodistsje has been overrun with its guns still limbered.<br><br>The town will not stay ours for long, and everyone in this headquarters knows it. Denikin has issued what he is pleased to call the Moscow Directive; the whole southern front is moving, and Tsaritsyn is one anchor on a line that has already been turned in three other places. When we go, we will go with the army intact, the shops emptied and the barges upriver, and the men who held here will be needed at Orel.<br><br>There is a phrase going round the staff about the defence of last autumn - about the commissar from Moscow who requisitioned everything on the Volga and shot the specialists who argued. I have no orders to repeat it and no wish to. What held Tsaritsyn was the trenches and the men in them."
    },
    "lose": {
     "goto": 9,
@@ -391,7 +391,7 @@
      0
     ],
     "prestige": 240,
-    "text": "My strategy failed. Tsaritsyn would have held, were it not for Wrangel, who took command and managed to conquer the town. Now we're marching along its streets while many peope cheer us. I wonder if they cheered the Bolsheviks before, too. <br>In the west, in Ukraine, we've also taken Kharkov. We've found tons of weapons, guns and ammunition, and the number of our soldiers is greater than ever. Now we're truly the Armed Forces of Southern Russia.<br><br>Now it's time for thinking on our next move. Against Wranglel's objections, Denikin has decided that we won't try to join Kolchak's forces. Instead, he has ordered an offensive on Moscow. I don't fully agree with him. It's true that if we go in search of Kolchak we could lose the Donbass, the Kuban and the other cossack territories that we control right now. But united we would be stronger. We could defeat the Bolsheviks more easily, and even inflict them a definitive blow. Later, we could always recover the regions that we had to leave behind. <br>I fear that if we're divided the Reds will have an advantage on us. We'll have to take more risks and, if anything goes wrong, we could pay a very high price.<br><br>Well, there is nothing that I can do. Denikin is in my commander in chief and the decision is made. He's told me that he'll send me to the west in a couple of weeks, but first I must talk to the popes. Anatoly and Olga want to marry in Tsaritsyn in a few days, and I must make some arrangements."
+    "text": "Wrangel's tanks came through north of the city and the crossing was under his guns within the day. We are out, but we are out having left the heavy batteries and most of the depot.<br><br>The Volga is open to them as far as Kamyshin."
    }
   }
  },
@@ -399,7 +399,7 @@
   "id": 9,
   "scenario": "volarm_09.xml",
   "startprestige": 0,
-  "intro": "Oboyan<br><br>Aug 12th, 1919<br><br>At first I couldn't understand the reasons why Denikin sent me here, to the left flank of our battle front, in order to help May-Mayevsky, who had recently asked for reinforcements, because he knows that I dislike that man. I consider him a competent general, but a disgusting kind of person. Even worse, he's allowed his soldiers to behave almost as common criminals, bandits and looters, not very different from the Bolsheviks that are destroying Russia.<br>But the point is that Denikin is well aware of May-Mayevsky's behaviour and thinks that things can't go on like that, so he decided to send an officer who would demand the highest standards of discipline. And he chose me.<br><br>As part of our general offensive I have to reach Kursk and then march on Moscow. The first step will be to crush the enemy defences at Oboyan. Once I have succeeded the road to Kursk will be open and Moscow will be much closer.<br><br>Victory conditions: Take all the VHs.<br><br>Intelligence report:<br>- Some Soviet partisan units have been spotted on your rear guard. Watch out!<br><br>Special note:<br>- At the start of the next scenario auto-refit will be disabled, so be careful with your casualties.",
+  "intro": "Oboyan<br><br>August 12th, 1919<br><br>Denikin signed his Moscow Directive last month in Tsaritsyn: three armies, three axes, one capital. May-Mayevsky's corps is coming up the Kharkov railway to deliver the middle of it, and Mamontov's cavalry is already somewhere behind us doing as it pleases in our rear areas - which is the part of the Directive that actually works.<br><br>The 13th Army has been ordered to hold the Oboyan-Pristen line long enough for the reserves forming at Orel and Tula to be worth something. That is a screen, and everyone from the army commander down has been careful to call it something else. There is no more to my task than that, and no less.<br><br>Break their forward group at Yakovlevo and buy the Republic three weeks.<br><br>Victory conditions:<br>- Hold Oboyan (22,7), Pristen (39,7), Trubezh (11,9) and the crossing at (9,1).<br>- Take Yakovlevo (26,27).<br><br>Intelligence: enemy cavalry has been reported in our rear areas. Expect to be raided.",
   "outcome": {
    "briliant": {
     "goto": 10,
@@ -408,7 +408,7 @@
      0
     ],
     "prestige": 360,
-    "text": "The Bolsheviks have been routed and are fleeing in panic. In a few days Kursk will be ours.<br>The news from other sectors of the front are good, too. In Tsaritsyn our men have repelled an enemy offensive that tried to recover the town. And in Ukraine our troops have taken Kiev and Odessa.<br><br>But, although it's somewhat annoying, I won't be able to enjoy my victory. Not all the news from Ukraine are good. Nestor Makhno and his army of anarchist peasants want to help the Reds now, and they have invaded Western Ukraine. We just have a handful of soldiers in that area, and our supply lines are too long and very vulnerable, so Makhno could make us a lot of damage, even threatening our offensive on Moscow. I must go to Uman and put an end to this menace."
+    "text": "The line held for the whole of the allotted time and Yakovlevo was cleared on the last day. The reserves at Orel have their three weeks.<br><br>Kursk will still have to be given up. That is the army's decision and it is the right one: a screen that stays in place until it is surrounded has stopped being a screen. We go back on the Oboyan road in our own order, and the divisions that come out of here will be in the line at Orel when it matters.<br><br>One warning from the army: replacements will not be reaching us for some weeks. Count your losses before you take them."
    },
    "victory": {
     "goto": 10,
@@ -417,7 +417,7 @@
      0
     ],
     "prestige": 360,
-    "text": "The Bolsheviks have been routed and are fleeing in panic. In a few days Kursk will be ours.<br>The news from other sectors of the front are good, too. In Tsaritsyn our men have repelled an enemy offensive that tried to recover the town. And in Ukraine our troops have taken Kiev and Odessa.<br><br>But, although it's somewhat annoying, I won't be able to enjoy my victory. Not all the news from Ukraine are good. Nestor Makhno and his army of anarchist peasants want to help the Reds now, and they have invaded Western Ukraine. We just have a handful of soldiers in that area, and our supply lines are too long and very vulnerable, so Makhno could make us a lot of damage, even threatening our offensive on Moscow. I must go to Uman and put an end to this menace."
+    "text": "The line held for the whole of the allotted time and Yakovlevo was cleared on the last day. The reserves at Orel have their three weeks.<br><br>Kursk will still have to be given up. That is the army's decision and it is the right one: a screen that stays in place until it is surrounded has stopped being a screen. We go back on the Oboyan road in our own order, and the divisions that come out of here will be in the line at Orel when it matters.<br><br>One warning from the army: replacements will not be reaching us for some weeks. Count your losses before you take them."
    },
    "tactical": {
     "goto": 10,
@@ -426,7 +426,7 @@
      0
     ],
     "prestige": 300,
-    "text": "The Bolsheviks have been routed and are fleeing in panic. In a few days Kursk will be ours.<br>The news from other sectors of the front are good, too. In Tsaritsyn our men have repelled an enemy offensive that tried to recover the town. And in Ukraine our troops have taken Kiev and Odessa.<br><br>But, although it's somewhat annoying, I won't be able to enjoy my victory. Not all the news from Ukraine are good. Nestor Makhno and his army of anarchist peasants want to help the Reds now, and they have invaded Western Ukraine. We just have a handful of soldiers in that area, and our supply lines are too long and very vulnerable, so Makhno could make us a lot of damage, even threatening our offensive on Moscow. I must go to Uman and put an end to this menace."
+    "text": "The line held for the whole of the allotted time and Yakovlevo was cleared on the last day. The reserves at Orel have their three weeks.<br><br>Kursk will still have to be given up. That is the army's decision and it is the right one: a screen that stays in place until it is surrounded has stopped being a screen. We go back on the Oboyan road in our own order, and the divisions that come out of here will be in the line at Orel when it matters.<br><br>One warning from the army: replacements will not be reaching us for some weeks. Count your losses before you take them."
    },
    "lose": {
     "goto": 10,
@@ -435,7 +435,7 @@
      0
     ],
     "prestige": 260,
-    "text": "The Reds have defended themselves really well. I haven't been able to take Oboyan, but at least they're very weakened now. May-Mayevsky will relieve me and in a few days Kursk will be ours.<br>The news from other sectors of the front are good, too. In Tsaritsyn our men have repelled an enemy offensive that tried to recover the town. And in Ukraine our troops have taken Kiev and Odessa.<br><br>I will have a chance to redeem myself for my failure at Oboyan. Not all the news from Ukraine are good. Nestor Makhno and his army of anarchist peasants want to help the Reds now, and they have invaded Western Ukraine. We just have a handful of soldiers in that area, and our supply lines are too long and very vulnerable, so Makhno could make us a lot of damage, even threatening our offensive on Moscow. I must go to Uman and put an end to this menace."
+    "text": "The line broke at Trubezh on the fourth day and the cavalry in our rear did the rest. What reaches Kursk will not be fit to be called a division for a month.<br><br>The reserves at Orel will have to form up with the enemy already in front of them."
    }
   }
  },
@@ -443,7 +443,7 @@
   "id": 10,
   "scenario": "volarm_10.xml",
   "startprestige": 0,
-  "intro": "Peregonovka<br><br>Sep 26th, 1919<br><br>The Revolutionary Insurrectionary Army of Ukraine is not to be underestimated. They may lack a formal military formation, but they've showed great initiative and knowledge of the terrain. They appear out of nowhere, wipe out some of our garrisons, destroy or steal our supplies, disappear on the plains, regroup and attack some days later in a completely different location. They don't really want to hold the towns they take, their intention is to cause us as much damage as posssible, and they're good at it.<br><br>If I want to suceed I'll have to annihilate them in a single action. It's difficult, but I have a plan. I know that the Makhnovist army is near the villlage of Peregonovka. I'll retire the garrisons and place some of my elite units there. They'll have to resist the anarchists' assault until my other units come to their aid, closing the trap.<br><br>Victory conditions: <br>- Kill 42 enemy units<br>- Don't lose your VH.",
+  "intro": "Peregonovka<br><br>September 26th, 1919<br><br>Makhno's people have been retreating west across half of Ukraine for a month with Slashchev's regiments driving them. This morning they stopped retreating: the whole Insurgent Army turned round in the dark near Peregonovka and went at the pursuit column head-on, and the tachanka squadrons are swinging wide to come in behind it.<br><br>I am attached to them as a liaison officer, which is a polite word for several things at once, and every one of them is somebody's problem for later. There is a great deal between us politically and there will be a reckoning over it.<br><br>Tonight none of that is the point. The group in front of us is Denikin's, it is sitting astride the railway to his rear at the exact moment his front line is reaching for Orel, and it can be destroyed. My formations remain the Red Army's, and so do I.<br><br>Victory conditions:<br>- Take Peregonovka (20,13).<br>- Or destroy 22 enemy formations.",
   "outcome": {
    "briliant": {
     "goto": 11,
@@ -452,7 +452,7 @@
      0
     ],
     "prestige": 320,
-    "text": "Makhno's adventure has ended in a massacre. The Revolutionary Insurrectionary Army of Ukraine has ceased to exist, and only a few of their partisans have avoided death or capture.They'll never suppose a threat to our supply lines again. Now I must return to the north, whrere our offensive on Moscow is losing momentum."
+    "text": "The pursuit group has been broken and ridden down. The tachankas came in across the stubble at first light and there was nowhere for the column to form square.<br><br>What follows matters more than the field. Denikin's rear in Ukraine is open, his supply trains from Berdyansk and Mariupol have to be found from somewhere else, and every regiment he sends back to deal with the insurgents is a regiment not marching on Moscow.<br><br>I have written up the action honestly, including who did the riding. There will be people at the front headquarters who will not want to read it that way."
    },
    "victory": {
     "goto": 11,
@@ -461,7 +461,7 @@
      0
     ],
     "prestige": 320,
-    "text": "Makhno's adventure has ended in a massacre. The Revolutionary Insurrectionary Army of Ukraine has ceased to exist, and only a few of their partisans have avoided death or capture.They'll never suppose a threat to our supply lines again. Now I must return to the north, whrere our offensive on Moscow is losing momentum."
+    "text": "The pursuit group has been broken and ridden down. The tachankas came in across the stubble at first light and there was nowhere for the column to form square.<br><br>What follows matters more than the field. Denikin's rear in Ukraine is open, his supply trains from Berdyansk and Mariupol have to be found from somewhere else, and every regiment he sends back to deal with the insurgents is a regiment not marching on Moscow.<br><br>I have written up the action honestly, including who did the riding. There will be people at the front headquarters who will not want to read it that way."
    },
    "tactical": {
     "goto": 11,
@@ -470,16 +470,16 @@
      0
     ],
     "prestige": 320,
-    "text": "Makhno's adventure has ended in a massacre. The Revolutionary Insurrectionary Army of Ukraine has ceased to exist, and only a few of their partisans have avoided death or capture.They'll never suppose a threat to our supply lines again. Now I must return to the north, whrere our offensive on Moscow is losing momentum."
+    "text": "The pursuit group has been broken and ridden down. The tachankas came in across the stubble at first light and there was nowhere for the column to form square.<br><br>What follows matters more than the field. Denikin's rear in Ukraine is open, his supply trains from Berdyansk and Mariupol have to be found from somewhere else, and every regiment he sends back to deal with the insurgents is a regiment not marching on Moscow.<br><br>I have written up the action honestly, including who did the riding. There will be people at the front headquarters who will not want to read it that way."
    },
    "lose": {
-    "goto": 16,
+    "goto": 11,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 320,
-    "text": "I can't believe that I've been defeated by an army of farmers and peasants. The Makhnovists roam freely in Ukraine, destroying our garrisons and disrupting our supply lines. I haven't been able to stop them, and now I'm afraid that our offensive on Moscow will fail."
+    "text": "The counterstroke failed. The Insurgent Army is off westward again and the railway to Denikin's rear is still his.<br><br>I am to rejoin the Southern Front. Nothing has been taken off the enemy's back and the whole weight of it is now coming north."
    }
   }
  },
@@ -487,7 +487,7 @@
   "id": 11,
   "scenario": "volarm_11.xml",
   "startprestige": 0,
-  "intro": "Orel: White avalanche<br><br>Oct 11th, 1919<br><br>You already know me. And you're familiar to me, too. We've made a long journey together. Some of you were already under my command during the Ice March, when we earned the medals with the crown of thorns and saw Lavr Kornilov die before our eyes. Others joined in the campaigns of the Kuban and the Caucasus. There are those who, for a while, believed the Bolshevik lies and belonged to the barbaric Red Army, but were clever enough to change sides.<br>The journey hasn't been easy. We've fought and bled together, and we've lost many good friends. But with God's help we've overcome all adversity. Every challenge has become a victory, and every victory has made us stronger. All who have tried to stop us have been crushed.<br>Our enemies know this, and that's the reason why five veteran enemy divisions stand on our way to Moscow here, in Orel. Fear not. It's because they're afraid of us. They know that if they sent into battle their militias we'd be in Tula before the end of the week, and in Moscow before the end of the month. The Reds are on the verge of panic, so they've decided to throw their best units into us. This battle, and the next that will come, are going to be hard, but don't forget this: They're playing their last cards. Soon they'll be exhausted, and victory will be ours.<br><br>Fear not, because victory will be ours. Fear not, because God is on our side. Fear not, because we've become invincible. My sons, my brothers, are you ready for the avalanche?<br><br>Victory conditions: <br>- Take all the VHs.",
+  "intro": "Orel: the avalanche<br><br>October 11th, 1919<br><br>Kutepov is coming up the Moscow highway with the Kornilov, Markov, Drozdovsky and Alekseyev regiments in his first line - four regiments of officers with nothing left to go home to, the best infantry the Whites have, and nobody has stopped them this summer. In front of them is the 13th Army, which has been retreating since August, and me.<br><br>We are not asked to stop them here. We are asked to hold Orel and the road towns long enough for the shock group forming behind Kromy - the Latvian Rifle Division, the Estonians, Primakov's Chervonny Cossacks - to come into line with its strength unspent. Eleven thousand bayonets that have not yet been in this battle, and every day this sector holds is a day they are still eleven thousand.<br><br>Victory conditions:<br>- When the time runs out, hold four of the objectives for a brilliant victory, three for a victory, two for a tactical victory.<br>- Or take their forward depot at (41,27).<br>- The objectives are Orel (31,20), Mtsensk (33,9), Kromy (24,23) and Dmitrovsk (19,28).",
   "outcome": {
    "briliant": {
     "goto": 12,
@@ -496,7 +496,7 @@
      0
     ],
     "prestige": 320,
-    "text": "My men, I'm proud of you. The Soviet 13th Army has been virtually destroyed, Orel is in our hands and the road to Tula is open. But we must be cautious. The Reds have sent reinforcements from the Baltic, and they're about to attack our flank. We'll have to hold our positions and deal with this new threat before advancing any further."
+    "text": "We held the line to the hour we were given, and the shock group at Kromy has come up complete: eleven thousand bayonets that have not yet been in this battle.<br><br>The high command has decided not to fight for the city itself with the troops already worn out on this ground. Orel may be given up for a few days if the shock group is thereby put in on the flank instead of being fed into the front. That is not a defeat of ours; it is what the last week was bought for.<br><br>Latyshi are already moving into position west of Kromy. The counterstroke goes in this week."
    },
    "victory": {
     "goto": 12,
@@ -505,7 +505,7 @@
      0
     ],
     "prestige": 320,
-    "text": "My men, I'm proud of you. The Soviet 13th Army has been virtually destroyed, Orel is in our hands and the road to Tula is open. But we must be cautious. The Reds have sent reinforcements from the Baltic, and they're about to attack our flank. We'll have to hold our positions and deal with this new threat before advancing any further."
+    "text": "We held the line to the hour we were given, and the shock group at Kromy has come up complete: eleven thousand bayonets that have not yet been in this battle.<br><br>The high command has decided not to fight for the city itself with the troops already worn out on this ground. Orel may be given up for a few days if the shock group is thereby put in on the flank instead of being fed into the front. That is not a defeat of ours; it is what the last week was bought for.<br><br>Latyshi are already moving into position west of Kromy. The counterstroke goes in this week."
    },
    "tactical": {
     "goto": 12,
@@ -514,16 +514,16 @@
      0
     ],
     "prestige": 260,
-    "text": "My men, I'm proud of you. The Soviet 13th Army has been virtually destroyed, Orel is in our hands and the road to Tula is open. But we must be cautious. The Reds have sent reinforcements from the Baltic, and they're about to attack our flank. We'll have to hold our positions and deal with this new threat before advancing any further."
+    "text": "We held the line to the hour we were given, and the shock group at Kromy has come up complete: eleven thousand bayonets that have not yet been in this battle.<br><br>The high command has decided not to fight for the city itself with the troops already worn out on this ground. Orel may be given up for a few days if the shock group is thereby put in on the flank instead of being fed into the front. That is not a defeat of ours; it is what the last week was bought for.<br><br>Latyshi are already moving into position west of Kromy. The counterstroke goes in this week."
    },
    "lose": {
-    "goto": 16,
+    "goto": 13,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 260,
-    "text": "You've fought valiantly, but the defences at Orel were too strong. Besides, the Reds have sent reinforcements from the Baltic, and they're about to attack our flank. Our offensive simply can't continue. We'll have to defend ourselves in order to avoid being encircled and destroyed."
+    "text": "The line went in the middle and the road towns with it. The shock group has had to be committed early and piecemeal to cover the retreat, which is exactly what it was assembled not to do.<br><br>Kutepov is on the Tula road. What is left of this army is going back with him behind it."
    }
   }
  },
@@ -531,43 +531,43 @@
   "id": 12,
   "scenario": "volarm_12.xml",
   "startprestige": 0,
-  "intro": "Orel: Red storm<br><br>Oct 16th, 1919<br><br>Five days ago I assured you that the Reds were on the verge of panic. You could see with your own eyes how the survivors of their 13th Army ran for their lives when we took Orel. They know that their time is running out, but they also know that they won't find mercy in us. They'll be forced to fight until their bitter end.<br><br>Out of desperation the Bolsheviks have raised a Shock Group composed mainly of Latvians and Estonians. They want to outflank us, forcing us to retreat or to risk encirclement. It's amusing how they still underestimate you. Hold the line, my brothers, and show them that all their efforts are useless!<br><br>Victory conditions: <br>- Take all the VHs.",
+  "intro": "Orel: the storm<br><br>October 16th, 1919<br><br>Comrades of the shock group.<br><br>Five days ago their newspapers in Kharkov printed the distance from Orel to Moscow. They were right about the distance and wrong about everything else.<br><br>That corps has been marching and fighting for eleven weeks without a reserve, on a front that gets wider with every verst it advances. Makhno is across its supply line. Its regiments are officers, and officers cannot be replaced out of the villages it has just requisitioned - those villages are recruiting for us. It is a spear thrown a very long way by an arm that is now behind it.<br><br>You are the Latvian Rifle Division, the Estonian division and the Chervonny Cossacks, and you are going in on the flank at Kromy, where the corps is thinnest and where its line of retreat runs. Take Orel back. Take Kromy and Dmitrovsk. Do not let them straighten the front.<br><br>Victory conditions:<br>- Take Orel (31,20), Kromy (24,23) and Dmitrovsk (19,28).<br>- Hold Mtsensk (33,9) and Karachev (19,13).",
   "outcome": {
    "briliant": {
-    "goto": 13,
-    "gotoplayed": [
-     0,
-     0
-    ],
-    "prestige": 160,
-    "text": "The enemy's plan has failed. The Bolshevik divisions are routed and we've opened a large gap in their lines. Our only problem right now is that we can't advance too fast, because our own lines would be overstretched. That might give the Reds time to regroup."
-   },
-   "victory": {
-    "goto": 13,
-    "gotoplayed": [
-     0,
-     0
-    ],
-    "prestige": 160,
-    "text": "The enemy's plan has failed. The Bolshevik divisions are routed and we've opened a large gap in their lines. Our only problem right now is that we can't advance too fast, because our own lines would be overstretched. That might give the Reds time to regroup."
-   },
-   "tactical": {
-    "goto": 13,
-    "gotoplayed": [
-     0,
-     0
-    ],
-    "prestige": 160,
-    "text": "The enemy's plan has failed. The Bolshevik divisions are routed and we've opened a large gap in their lines. Our only problem right now is that we can't advance too fast, because our own lines would be overstretched. That might give the Reds time to regroup."
-   },
-   "lose": {
     "goto": 16,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 160,
-    "text": "You've fought valiantly, but our flank couldn't hold. Our offensive simply can't continue. We'll have to retreat in order to avoid being encircled and destroyed."
+    "text": "Orel is ours. Kromy is ours. The Kornilov regiment left its wounded in the school at Dmitrovsk and went south in the dark.<br><br>This is the turn of the whole war and it should be written down as such while the ground is still warm. From here the Southern Front does not defend; it advances. Kursk, then Kharkov, then the Donbass, and then the sea.<br><br>The Latvian regiments lost heavily in the wood north of Kromy. Their commander asked that the divisional order should name the companies rather than the division. It will."
+   },
+   "victory": {
+    "goto": 16,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 160,
+    "text": "Orel is ours. Kromy is ours. The Kornilov regiment left its wounded in the school at Dmitrovsk and went south in the dark.<br><br>This is the turn of the whole war and it should be written down as such while the ground is still warm. From here the Southern Front does not defend; it advances. Kursk, then Kharkov, then the Donbass, and then the sea.<br><br>The Latvian regiments lost heavily in the wood north of Kromy. Their commander asked that the divisional order should name the companies rather than the division. It will."
+   },
+   "tactical": {
+    "goto": 16,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 160,
+    "text": "Orel is ours. Kromy is ours. The Kornilov regiment left its wounded in the school at Dmitrovsk and went south in the dark.<br><br>This is the turn of the whole war and it should be written down as such while the ground is still warm. From here the Southern Front does not defend; it advances. Kursk, then Kharkov, then the Donbass, and then the sea.<br><br>The Latvian regiments lost heavily in the wood north of Kromy. Their commander asked that the divisional order should name the companies rather than the division. It will."
+   },
+   "lose": {
+    "goto": 13,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 160,
+    "text": "The flank attack went in and was held. Kromy changed hands four times and is theirs tonight; the shock group has lost a third of its strength and Orel is still not ours.<br><br>The road to Tula is open and the reserves that were to have won this battle have been spent fighting it."
    }
   }
  },
@@ -575,43 +575,43 @@
   "id": 13,
   "scenario": "volarm_13.xml",
   "startprestige": 0,
-  "intro": "Tula<br><br>Nov 3rd, 1919<br><br>After my victory at Orel it was easy to reach Plavsk, 20 miles from Moscow. But the Bolsheviks have shown a remarkable ability for military logistics. Somehow they have managed to build a defence line south of Tula, and they have sent six fresh divisions from the Voronezh and Tsaritsyn fronts. I'll need all my skill in order to defeat the Reds and continue my march on Moscow. <br>The good news are that, trying to stop me, the Bolsheviks have weakened their left flank. Wrangel could take advantage of that and start an advance up the Volga. Then he could finally link with Kolchak's Siberian forces. So the Soviet's obsession with me could lead them to disaster, as long as I can take Tula.<br><br>Victory conditions: <br>- Take all the VHs.",
+  "intro": "Tula<br><br>November 3rd, 1919<br><br>Tula makes the rifles. That sentence is the whole of the situation, and it is why I am here and not anywhere else.<br><br>Their advanced parties are at Plavsk, thirty versts down the road. Against them: the workers' regiments of the arms works, a fortified belt that the townspeople dug themselves through October, and six divisions brought in from the Voronezh and Tsaritsyn sectors - which the enemy has kindly made possible by concentrating everything against this one town and leaving his own left flank standing in the air.<br><br>Hold the belt. And if the chance offers, take Plavsk off them and their staging point with it.<br><br>Victory conditions:<br>- When the time runs out, hold four of the objectives for a brilliant victory, three for a victory, two for a tactical victory.<br>- Or take Plavsk (4,36).<br>- The objectives are Tula (13,13), Bronnokovo (28,12), Novomoskovsk (31,22) and Bogoroditsk (30,34).",
   "outcome": {
    "briliant": {
-    "goto": 14,
+    "goto": 16,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 320,
-    "text": "Tula is ours, and in the east the news are even better: our forces have started a counteroffensive and have taken Saratov. In a few days the Armed Forces of Southern Russia will link with Kolchak. At last we'll be united! <br>I'm completely sure that, very soon, Moscow will fall. Denikin has chosen me for leading the final assault."
+    "text": "The belt held and the arms works never stopped. Sixty thousand rifles went out of this town while the fighting was inside artillery range of it.<br><br>That is the end of their northern effort. Their left has been stripped bare to make this attack and Budyonny's cavalry is already through the gap at Kastornoye. We are going back onto the Kharkov line - forward, at last, and on our own initiative."
    },
    "victory": {
-    "goto": 14,
+    "goto": 16,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 320,
-    "text": "Tula is ours, and in the east the news are even better: our forces have started a counteroffensive and have taken Saratov. In a few days the Armed Forces of Southern Russia will link with Kolchak. At last we'll be united! <br>I'm completely sure that, very soon, Moscow will fall. Denikin has chosen me for leading the final assault."
+    "text": "The belt held and the arms works never stopped. Sixty thousand rifles went out of this town while the fighting was inside artillery range of it.<br><br>That is the end of their northern effort. Their left has been stripped bare to make this attack and Budyonny's cavalry is already through the gap at Kastornoye. We are going back onto the Kharkov line - forward, at last, and on our own initiative."
    },
    "tactical": {
-    "goto": 14,
-    "gotoplayed": [
-     0,
-     0
-    ],
-    "prestige": 260,
-    "text": "Tula is ours, and in the east the news are even better: our forces have started a counteroffensive and have taken Saratov. In a few days the Armed Forces of Southern Russia will link with Kolchak. At last we'll be united! <br>I'm completely sure that, very soon, Moscow will fall. Denikin has chosen me for leading the final assault."
-   },
-   "lose": {
     "goto": 16,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 260,
-    "text": "My men fought valiantly, but they're exhausted and couldn't resist any longer. Our offensive simply can't continue. We'll have to retreat in order to avoid being encircled and destroyed."
+    "text": "The belt held and the arms works never stopped. Sixty thousand rifles went out of this town while the fighting was inside artillery range of it.<br><br>That is the end of their northern effort. Their left has been stripped bare to make this attack and Budyonny's cavalry is already through the gap at Kastornoye. We are going back onto the Kharkov line - forward, at last, and on our own initiative."
+   },
+   "lose": {
+    "goto": 14,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 260,
+    "text": "The belt was forced south-east of the town. The works are being evacuated by rail under fire and the machinery that cannot be moved is being broken up.<br><br>The road north is open. There is one line left in front of Moscow and we are it."
    }
   }
  },
@@ -619,34 +619,34 @@
   "id": 14,
   "scenario": "volarm_14.xml",
   "startprestige": 0,
-  "intro": "Moscow<br><br>Dec 12th, 1919<br><br>I thought I'd never say this, but I'm almost glad to be back on the battle. I know that it may sound strange coming from a member of the Military Directory that will govern Russia until the revolution is completeley defeated, but I simply can't get used to political affairs. In my opinion, those pointless discussions were mostly responsible for the fall of the Tsar and the coming of the Bolsheviks.<br><br>So I actually prefer to be here, where I can serve my country by taking Moscow. The old capital that has been transformed into the Beast's lair. The horrific place where the Red godless demons lurk. Never before have I been so eager to fulfill my duty. This city must be saved from the communists. <br><br>The flanks are secured, thanks to the efforts of May-Mayevsky and Sidorin on my left, and Wrangel and Diterikhs on my right. The enemy's defences are strong. In fact, Moscow resembles a fortress now. But I won' let that stop me. Moscow will be free, even if it costs me my life.<br><br>Victory conditions: <br>- Take all the VHs.",
+  "intro": "Moscow<br><br>December 12th, 1919<br><br>I did not expect to write this heading.<br><br>Their cavalry is in the outer suburbs. The Council of Defence has not left. The Kremlin garrison is in the line like everybody else, and the barricades on the southern approaches were thrown up by people who came out of the factories carrying their own tools.<br><br>We hold the three southern sectors and the centre. Volkhonka, on the Kaluga road, is where their staff and their heavy batteries have come up; take it and the whole attack loses its hinge. There is no line behind this one, which simplifies the orders considerably.<br><br>Victory conditions:<br>- When the time runs out, hold four of the objectives for a brilliant victory, three for a victory, two for a tactical victory.<br>- Or take Volkhonka (24,35).<br>- The objectives are the three Moscow sectors (18,14), (36,17), (12,19) and Red Square (24,20).",
   "outcome": {
    "briliant": {
-    "goto": 15,
+    "goto": 16,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 360,
-    "text": "Tomorrow there will be a great parade at the Red Square. Our army will march along the main streets of Moscow, that has finally awaken from this nightmare that has lasted two years. <br>Some prominent bolsheviks have died during the battle, but most of them have managed to escape, or have simply disappeared. Most of the communist survivors that we have located have fled to Petrograd, their last bastion. Once we take it, the revolution will be finally defeated and the war will be won. We'll recover our country.<br><br>To make this day even better, Katya has told me that Anatoly and Olga are expecting their first baby. Our first grandchild will be born in a free Russia."
+    "text": "The city is held. The attack has stopped at the barricades and gone no further, and this morning their forward regiments were seen going back down the Kaluga road with their guns.<br><br>They cannot stay where they are. Their army is four hundred versts from a railhead it still holds, in December, with the Don rising behind it and the Ukrainian rear in insurgent hands. What broke here was not just an assault but the whole idea of the march on Moscow.<br><br>The front headquarters wants me back in the south for the pursuit. I am to go by the first train."
    },
    "victory": {
-    "goto": 15,
+    "goto": 16,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 360,
-    "text": "Tomorrow there will be a great parade at the Red Square. Our army will march along the main streets of Moscow, that has finally awaken from this nightmare that has lasted two years. <br>Some prominent bolsheviks have died during the battle, but most of them have managed to escape, or have simply disappeared. Most of the communist survivors that we have located have fled to Petrograd, their last bastion. Once we take it, the revolution will be finally defeated and the war will be won. We'll recover our country.<br><br>To make this day even better, Katya has told me that Anatoly and Olga are expecting their first baby. Our first grandchild will be born in a free Russia."
+    "text": "The city is held. The attack has stopped at the barricades and gone no further, and this morning their forward regiments were seen going back down the Kaluga road with their guns.<br><br>They cannot stay where they are. Their army is four hundred versts from a railhead it still holds, in December, with the Don rising behind it and the Ukrainian rear in insurgent hands. What broke here was not just an assault but the whole idea of the march on Moscow.<br><br>The front headquarters wants me back in the south for the pursuit. I am to go by the first train."
    },
    "tactical": {
-    "goto": 15,
+    "goto": 16,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 360,
-    "text": "Tomorrow there will be a great parade at the Red Square. Our army will march along the main streets of Moscow, that has finally awaken from this nightmare that has lasted two years. <br>Some prominent bolsheviks have died during the battle, but most of them have managed to escape, or have simply disappeared. Most of the communist survivors that we have located have fled to Petrograd, their last bastion. Once we take it, the revolution will be finally defeated and the war will be won. We'll recover our country.<br><br>To make this day even better, Katya has told me that Anatoly and Olga are expecting their first baby. Our first grandchild will be born in a free Russia."
+    "text": "The city is held. The attack has stopped at the barricades and gone no further, and this morning their forward regiments were seen going back down the Kaluga road with their guns.<br><br>They cannot stay where they are. Their army is four hundred versts from a railhead it still holds, in December, with the Don rising behind it and the Ukrainian rear in insurgent hands. What broke here was not just an assault but the whole idea of the march on Moscow.<br><br>The front headquarters wants me back in the south for the pursuit. I am to go by the first train."
    },
    "lose": {
     "goto": 15,
@@ -655,7 +655,7 @@
      0
     ],
     "prestige": 360,
-    "text": "Diterikhs had to come to my rescue. Moscow is in our hands, but not due to my merits. I have a personal sense of defeat.<br><br>Anywat, tomorrow there will be a great parade at the Red Square. Our army will march along the main streets of Moscow, that has finally awaken from this nightmare that has lasted two years. <br>Some prominent bolsheviks have died during the battle, but most of them have managed to escape, or have simply disappeared. Most of the communist survivors that we have located have fled to Petrograd, their last bastion. Once we take it, the revolution will be finally defeated and the war will be won. We'll recover our country.<br><br>To make this day better, Katya has told me that Anatoly and Olga are expecting their first baby. Our first grandchild will be born in a free Russia."
+    "text": "The southern sectors were lost house by house and the centre is under direct fire. The Council of Defence has moved. The fighting goes on in the streets and will go on in them.<br><br>I am ordered north tonight, to Petrograd, where the last formed reserve of the Republic is. I do not want to go and I am going."
    }
   }
  },
@@ -663,166 +663,34 @@
   "id": 15,
   "scenario": "volarm_15.xml",
   "startprestige": 0,
-  "intro": "Petrograd<br><br>Jan 26th, 1920<br><br>One last effort. That's all we need. When Petograd falls, all the Bolshevik power will have disappeared. Lenin, Trotsky, Stalin and most of their leaders have hidden here, waiting for a general mutiny among our forces, something that will never take place, or for the arrival of any ship that evacuates them to any country willing to accept them. And although I was reluctant to believe it, that might actually happen. The British and the French are so tired of war that they could allow them to stay in their countries. Well, if they want to hatch the eggs of vipers, I'm almost tempted to let them do so.<br>But I've learnt that revolution is like a hydra. No matter if we cut its heads, if we don't destroy them, soon many more will grow. So I must hurry and take Petrograd before they have time to  react. The fewer that can escape, the better.<br><br>Victory conditions: <br>- Take all the VHs.",
+  "intro": "Petrograd<br><br>January 26th, 1920<br><br>I am detached from the Southern Front and placed under the 7th Army. My opponent is no longer Denikin but Yudenich - the North-Western Army, fed and armed out of Reval, with British tanks and British naval guns off Kronstadt, making one more winter push at the city while there is still enough of it left to push at.<br><br>Petrograd has been stripped for every other front for two years. What is here is the workers' regiments, the sailors, the courses cadets and whatever the districts can still put in the line. We hold the four city sectors and the airfield. Their road in - and their road out - runs through the Moscow highway junction.<br><br>Victory conditions:<br>- When the time runs out, hold five of the objectives for a brilliant victory, four for a victory, three for a tactical victory.<br>- Or take the Moscow Road junction (34,33).<br>- The objectives are the four Petrograd sectors (16,12), (22,12), (14,15), (18,15) and the airfield (24,20).",
   "outcome": {
    "briliant": {
-    "goto": 254,
+    "goto": 16,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 0,
-    "text": "The Bolshevik revolution has ended. They've been completely defeated and most of their leaders, including Lenin and Trotsky, have died or have been taken prisoners. Only Stalin and a handful of others have managed to flee to Finland, but they're too weak to be a problem anymore.<br><br>I'm exultant. These past two years have been the hardest in my life, but in the end the Dragon was destroyed. My family and I will be free. Thank God!<br><br>That doesn't mean that all of Russia's problems are over. First of all, we have to dedide what kind of country we'll live in. The most obvious option is the return of the monarchy, but most of the Royal Family was murdered by the Reds, so it might be difficult to find an optimal candidate. I think that Grand Duke Cyril is the legitimate heir, but in the past he has behaved as a person unworthy of the title of Tsar.<br>Second, it's obvious that Russia needs important reforms. Not the revolutionary madness, but the ones that had already started under poor Tsar Nikolay's reign. And third, peace won't come easy. The Bolsheviks aren't a threat now, but in the rural areas there are still peasant uprisings. And we must decide what to do with Finland, Poland and all the other territories of the Empire that have declared their independence. I doubt that we'll be strong enough to subdue all of them, so I'm afraid that we'll have to come to some kind of compromise. Not to mention the interests that Japan, Germany and other countries might have in  Russia.<br><br>But if we have overcome the Reds, all the other difficulties can be overcome, too. The sky is still grey, but the storm is passing over. And I am confident that soon the sun will shine over my beloved Russia.<br><br>The campaign is over. I hope you've liked it, and thanks for playing.<br><br>Urica 2015."
+    "text": "The city is held and the North-Western Army has come apart in front of it. Their formations are going back over the Estonian border to be disarmed and interned by the government they were fighting for.<br><br>It is over on this front, and it ended the way this whole war seems to end things: not with a surrender but with an army walking off the map. Peace talks with Estonia begin at Tartu within days.<br><br>I am recalled to the Southern Front. Kharkov is the next name in my orders."
    },
    "victory": {
-    "goto": 254,
+    "goto": 16,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 0,
-    "text": "The Bolshevik revolution has ended. They've been completely defeated and most of their leaders, including Lenin and Trotsky, have died or have been taken prisoners. Only Stalin and a handful of others have managed to flee to Finland, but they're too weak to be a problem anymore.<br><br>I'm exultant. These past two years have been the hardest in my life, but in the end the Dragon was destroyed. My family and I will be free. Thank God!<br><br>That doesn't mean that all of Russia's problems are over. First of all, we have to dedide what kind of country we'll live in. The most obvious option is the return of the monarchy, but most of the Royal Family was murdered by the Reds, so it might be difficult to find an optimal candidate. I think that Grand Duke Cyril is the legitimate heir, but in the past he has behaved as a person unworthy of the title of Tsar.<br>Second, it's obvious that Russia needs important reforms. Not the revolutionary madness, but the ones that had already started under poor Tsar Nikolay's reign. And third, peace won't come easy. The Bolsheviks aren't a threat now, but in the rural areas there are still peasant uprisings. And we must decide what to do with Finland, Poland and all the other territories of the Empire that have declared their independence. I doubt that we'll be strong enough to subdue all of them, so I'm afraid that we'll have to come to some kind of compromise. Not to mention the interests that Japan, Germany and other countries might have in  Russia.<br><br>But if we have overcome the Reds, all the other difficulties can be overcome, too. The sky is still grey, but the storm is passing over. And I am confident that soon the sun will shine over my beloved Russia.<br><br>The campaign is over. I hope you've liked it, and thanks for playing.<br><br>Urica 2015."
+    "text": "The city is held and the North-Western Army has come apart in front of it. Their formations are going back over the Estonian border to be disarmed and interned by the government they were fighting for.<br><br>It is over on this front, and it ended the way this whole war seems to end things: not with a surrender but with an army walking off the map. Peace talks with Estonia begin at Tartu within days.<br><br>I am recalled to the Southern Front. Kharkov is the next name in my orders."
    },
    "tactical": {
-    "goto": 254,
+    "goto": 16,
     "gotoplayed": [
      0,
      0
     ],
     "prestige": 0,
-    "text": "The Bolshevik revolution has ended. They've been completely defeated and most of their leaders, including Lenin and Trotsky, have died or have been taken prisoners. Only Stalin and a handful of others have managed to flee to Finland, but they're too weak to be a problem anymore.<br><br>I'm exultant. These past two years have been the hardest in my life, but in the end the Dragon was destroyed. My family and I will be free. Thank God!<br><br>That doesn't mean that all of Russia's problems are over. First of all, we have to dedide what kind of country we'll live in. The most obvious option is the return of the monarchy, but most of the Royal Family was murdered by the Reds, so it might be difficult to find an optimal candidate. I think that Grand Duke Cyril is the legitimate heir, but in the past he has behaved as a person unworthy of the title of Tsar.<br>Second, it's obvious that Russia needs important reforms. Not the revolutionary madness, but the ones that had already started under poor Tsar Nikolay's reign. And third, peace won't come easy. The Bolsheviks aren't a threat now, but in the rural areas there are still peasant uprisings. And we must decide what to do with Finland, Poland and all the other territories of the Empire that have declared their independence. I doubt that we'll be strong enough to subdue all of them, so I'm afraid that we'll have to come to some kind of compromise. Not to mention the interests that Japan, Germany and other countries might have in  Russia.<br><br>But if we have overcome the Reds, all the other difficulties can be overcome, too. The sky is still grey, but the storm is passing over. And I am confident that soon the sun will shine over my beloved Russia.<br><br>The campaign is over. I hope you've liked it, and thanks for playing.<br><br>Urica 2015."
-   },
-   "lose": {
-    "goto": 254,
-    "gotoplayed": [
-     0,
-     0
-    ],
-    "prestige": 0,
-    "text": "The Bolshevik revolution has ended, but most of their leaders, including Lenin, managed to flee to Finland. From the exile they'll still be a powerful threat.<br><br>And the Bolsheviks aren't the only threat to Russia. First of all, we have to dedide what kind of country we'll live in. The most obvious option is the return of the monarchy, but most of the Royal Family was murdered by the Reds, so it might be difficult to find an optimal candidate. I think that Grand Duke Cyril is the legitimate heir, but in the past he has behaved as a person unworthy of the title of Tsar.<br>Second, it's obvious that Russia needs important reforms. Not the revolutionary madness, but the ones that had already started under poor Tsar Nikolay's reign. And third, peace won't come easy. The Bolsheviks aren't a threat now, but in the rural areas there are still peasant uprisings. And we must decide what to do with Finland, Poland and all the other territories of the Empire that have declared their independence. I doubt that we'll be strong enough to subdue all of them, so I'm afraid that we'll have to come to some kind of compromise. Not to mention the interests that Japan, Germany and other countries might have in  Russia.<br><br>But if we have overcome the Reds, all the other difficulties can be overcome, too. The sky is still grey, but the storm is passing over. And I am confident that soon the sun will shine over my beloved Russia.<br><br>The campaign is over. I hope you've liked it, and thanks for playing.<br><br>Urica 2015."
-   }
-  }
- },
- {
-  "id": 16,
-  "scenario": "volarm_16.xml",
-  "startprestige": 0,
-  "intro": "Kharkov<br><br>Dec 4th, 1919<br><br>Due to my past defeat, in the following weeks Denikin only assigned secondary tasks to me. I can't blame him for that. My failure has prevented us from taking Moscow and, possibly, has cost us the war. Our army has been unable to stop the Soviet counterattacks, and it has been forced to retreat from most of the towns that it had taken during the summer. In fact, many of our divisions are on the verge of destruction.<br>The situation is so desperate that Denikin has had no choice but to employ all of his available officers, including myself. Three days ago he gave me the command of the area of Kharkov, in Ukraine. He's ordered me to stop the initial Soviet assault and hold the city as long as I can, thus giving the rest of our army the opportunity to regroup and retreat in order to the Donbass and the Kuban.<br><br>Victory conditions: <br>- After 12 turns you must hold 5 VHs for a BV, 4 VHs for a V or 3 VHs for a TacV.",
-  "outcome": {
-   "briliant": {
-    "goto": 17,
-    "gotoplayed": [
-     0,
-     0
-    ],
-    "prestige": 160,
-    "text": "The mission has been accomplished, and somehow I've managed to redeem myself. The Reds have been badly beaten and won't be able to follow us. Our army will retreat, unmolested and with very few casualties, to safer positions."
-   },
-   "victory": {
-    "goto": 17,
-    "gotoplayed": [
-     0,
-     0
-    ],
-    "prestige": 160,
-    "text": "The mission has been accomplished, and somehow I've managed to redeem myself. The Reds have been badly beaten and won't be able to follow us. Our army will retreat, unmolested and with very few casualties, to safer positions."
-   },
-   "tactical": {
-    "goto": 17,
-    "gotoplayed": [
-     0,
-     0
-    ],
-    "prestige": 160,
-    "text": "The mission has been accomplished, and somehow I've managed to redeem myself. The Reds have been badly beaten and won't be able to follow us. Our army will retreat, unmolested and with very few casualties, to safer positions."
-   },
-   "lose": {
-    "goto": 17,
-    "gotoplayed": [
-     0,
-     0
-    ],
-    "prestige": 160,
-    "text": "The swarm of Bolshevik soldiers was too much for my exhausted troops. Kharkov has fallen and we'll have to run to safer positions. Thank God that, due to the cold winter, the Reds won't chase us fast enough to encircle us."
-   }
-  }
- },
- {
-  "id": 17,
-  "scenario": "volarm_17.xml",
-  "startprestige": 0,
-  "intro": "Last days in Novorossiysk<br><br>Mar 12th, 1920<br><br>My defence of Kharkov could have given us a chance to recover, but France and the United Kingdom simply betrayed us. They've stopped their support to our cause and are preparing themselves to live in a world with communist governments. In the other fronts the news are equally bad. Kolchak and Yudenich have been defeated, so now the Bolsheviks can send all of their units against us. Believing that our end is imminent, many of our soldiers have deserted.<br>The Bolsheviks have taken advantage from all of this, and in these past months they've driven us out from most of Ukraine, the Don region, and the Kuban. Even Ekaterinodar fell some days ago. At least thay've been forced to pay a very heavy price, with tens of thousands of dead and wounded.<br>Now all of our past mistakes are more evident. And not only the military ones, the political ones too. We refused to make a deal with the Polish and Ukrainian independentists, and thus we lost some potential allies who could have been decisive. Denikin tried to develop a serious agrarian reform, but we didn't listen to him. We were very busy with the military issues, and thus we lost the support of the peasants. The Bolsheviks only offer them false promises, but even that is better than the lootings and harsh treatment that they've received from us. Soon they'll learn that the Reds are even worse masters, but for now they dream of their arrival.<br><br>Our last bastion remains in Crimea. Denikin has decided to evacuate as many people as possible there, in order to make a last stand. We've got enough ships, so the evacuation isn't a problem, but someone will have to defend the mountain passes, fighting the Bolsheviks and giving the others enough time to travel safely to Crimea. And that's what Denikin has ordered me to do.<br><br>Victory conditions: <br>- Destroy 45 enemy units.<br>- Don't lose any of your 6 MSUs. You can embark them, if you wish.",
-  "outcome": {
-   "briliant": {
-    "goto": 18,
-    "gotoplayed": [
-     0,
-     0
-    ],
-    "prestige": 320,
-    "text": "My victory has been so absolute that the Bolsheviks have retreated from much of the Kuban and Denikin has changed his mind. We'll still retreat most of the civilians and some soldiers to Crimea, but we'll leave enough troops to defend the Taman and Novorossiysk. We'll build strong lines of trenches, fortifications, tunnels and bunkers, so when the communists decide to attack us again they'll be incapable of passing through them. This area will be safe for a long time.<br><br>However, we still have a weak point at the Perekop Isthmus. Should it fall, all of Crimea would be in danger. Denikin has ordered me to go there and command its defence, and I'll arrive as soon as possible. It's more that just my duty: my family's safety depends on it. Katya, the children and Olga, Anatoly's wife, who is expecting her first child, have been evacuated to Simferopol, so I must do my best in order to prevent the Reds from taking Crimea."
-   },
-   "victory": {
-    "goto": 18,
-    "gotoplayed": [
-     0,
-     0
-    ],
-    "prestige": 320,
-    "text": "Everything has gone as planned. Most of out civilian sympathizers and our soldiers have been evacuated to Crimea. The Reds have suffered many casualties and won't be able to harass us.<br><br>However, Denikin won't come with us. He believes that his staff has lost confidence in him, so he has resigned from his position. He'll go into exile, and Wrangel will be our new commander.<br><br>We still have a weak point at the Perekop Isthmus. Should it fall, all of Crimea would be in danger. Wrangel has ordered me to go there and command its defence, and I'll go there as soon as possible. It's more that just my duty: my family's safety depends on it. Katya, the children and Olga, Anatoly's wife, who is expecting her first child, have been evacuated to Simferopol, so I must do my best in order to prevent the Reds from taking Crimea."
-   },
-   "tactical": {
-    "goto": 18,
-    "gotoplayed": [
-     0,
-     0
-    ],
-    "prestige": 260,
-    "text": "Everything has gone as planned. Most of out civilian sympathizers and our soldiers have been evacuated to Crimea. The Reds have suffered many casualties and won't be able to harass us.<br><br>However, Denikin won't come with us. He believes that his staff has lost confidence in him, so he has resigned from his position. He'll go into exile, and Wrangel will be our new commander.<br><br>We still have a weak point at the Perekop Isthmus. Should it fall, all of Crimea would be in danger. Wrangel has ordered me to go there and command its defence, and I'll go there as soon as possible. It's more that just my duty: my family's safety depends on it. Katya, the children and Olga, Anatoly's wife, who is expecting her first child, have been evacuated to Simferopol, so I must do my best in order to prevent the Reds from taking Crimea."
-   },
-   "lose": {
-    "goto": 18,
-    "gotoplayed": [
-     0,
-     0
-    ],
-    "prestige": 260,
-    "text": "Nothing has gone as planned. Most of out civilian sympathizers have been evacuated to Crimea, but only part of our military forces made it. The Reds have harassed us so much that now our army is weaker than ever.<br><br>Denikin won't come with us. He believes that his staff has lost confidence in him, so he has resigned from his position. He'll go into exile, and Wrangel will be our new commander.<br><br>We still have a weak point at the Perekop Isthmus. Should it fall, all of Crimea would be in danger. Wrangel has ordered me to go there and command its defence, and I'll go there as soon as possible. It's more that just my duty: my family's safety depends on it. Katya, the children and Olga, Anatoly's wife, who is expecting her first child, have been evacuated to Simferopol, so I must do my best in order to prevent the Reds from taking Crimea."
-   }
-  }
- },
- {
-  "id": 18,
-  "scenario": "volarm_18.xml",
-  "startprestige": 0,
-  "intro": "Perekop<br><br>Nov 7th, 1920<br><br>The Bolsheviks and their anarchist henchmen are detemined to throw us out of Crimea. It took them some months to find courage, but now it seems that the moment of truth has come.<br>We've prepared ourselves. In Sevastopol we have enough ships ready to embark our soldiers and our families, if necessary, and take them to a safe place. I just have to hold the Reds and the Blacks long enough, so that they won't be able to invade Crimea too fast. I've done it before, and I know that I can do it again. I haven't been able to save Russia, but at least I'll save the people who counted on us. I won't fail them this time.<br><br>Victory conditions: <br>- Take all the VHs.",
-  "outcome": {
-   "briliant": {
-    "goto": 254,
-    "gotoplayed": [
-     0,
-     0
-    ],
-    "prestige": 0,
-    "text": "The loss of their Sixth Army has been too much for the Reds who, under British pressure, have offered us an armistice. They say that they'll retire from Crimea and Taman, where the United Kingdom will support the creation of a Free Crimean State under our control.<br><br>Although some of my fellow officers are ecstatic with those news, I'm skeptical about them. In a few years' time the Red Army will have grown stronger, so the Bolsheviks will probably attack us again. Then the British, who have already betrayed us once, will surely forsake us one more time.<br><br>However, I admit that, for now, living in a free Crimea is better that going into exile. And if we choose the right policies, our new country could thrive. Then we could afford a modern Army, capable of deterring our enemies. At the moment that's just a castle in the air but if we all work hard in the same direction, who knows? Maybe we could make it real.<br><br>The campaign is over. I hope you've liked it, and thanks for playing.<br><br>Urica 2015."
-   },
-   "victory": {
-    "goto": 254,
-    "gotoplayed": [
-     0,
-     0
-    ],
-    "prestige": 0,
-    "text": "The Bolsheviks, after their defeat, didn't dare to go after us. We could embark calmly in Sevastopol and here we are now, sailing the Black Sea on our way to the exile. Only a handful of our former soldiers decided to stay and try their luck living in a Red Russia.<br><br>I did my best to recover my country, but in the end we were defeated. Now I suppose that I'll settle in Sweden with my family. Except for Anatoly, of course. His wife, his newborn baby and himself will go to Spain, where he hopes to join its colonial army. The idea of a new adventure sounds tempting, but I think that I'm too old for that. I wish my son the best, but for me the military life has finished.<br><br>The campaign is over. I hope you've liked it, and thanks for playing.<br><br>Urica 2015."
-   },
-   "tactical": {
-    "goto": 254,
-    "gotoplayed": [
-     0,
-     0
-    ],
-    "prestige": 0,
-    "text": "The Bolsheviks, after their defeat, didn't dare to go after us. We could embark calmly in Sevastopol and here we are now, sailing the Black Sea on our way to the exile. Only a handful of our former soldiers decided to stay and try their luck living in a Red Russia.<br><br>I did my best to recover my country, but in the end we were defeated. Now I suppose that I'll settle in Sweden with my family. Except for Anatoly, of course. His wife, his newborn baby and himself will go to Spain, where he hopes to join its colonial army. The idea of a new adventure sounds tempting, but I think that I'm too old for that. I wish my son the best, but for me the military life has finished.<br><br>The campaign is over. I hope you've liked it, and thanks for playing.<br><br>Urica 2015."
+    "text": "The city is held and the North-Western Army has come apart in front of it. Their formations are going back over the Estonian border to be disarmed and interned by the government they were fighting for.<br><br>It is over on this front, and it ended the way this whole war seems to end things: not with a surrender but with an army walking off the map. Peace talks with Estonia begin at Tartu within days.<br><br>I am recalled to the Southern Front. Kharkov is the next name in my orders."
    },
    "lose": {
     "goto": 255,
@@ -831,7 +699,139 @@
      0
     ],
     "prestige": 0,
-    "text": "Anatoly! What are you doing? Go away and save your men if you can...the Reds will be here in a matter of minutes, you have no time to lose!<br><br>No...leave me. It's too late for me. My injury is too serious. There's nothing that you can do to save me. Even if you managed to take me to a hospital, I'd be dead before the end of the week. Leave me here...I'll try to delay our enemies for a while.<br><br>Please...take care of your mother, your sisters and your brother. Tell them that I loved them. Tell them to pray for my soul...and now go, my son. I'm very proud of you. Go, quickly!"
+    "text": "They are in the outskirts and the fighting is in the Petrograd streets. There is nothing further back to send and nothing further back to go to.<br><br>This is the end of it. Whatever is written afterwards, it was not for want of men who stood where they were told to stand."
+   }
+  }
+ },
+ {
+  "id": 16,
+  "scenario": "volarm_16.xml",
+  "startprestige": 0,
+  "intro": "Kharkov<br><br>December 4th, 1919<br><br>Since Orel this front has not stopped. Kursk went in the middle of November. Budyonny's cavalry is cutting the Donets railway in three places at once. The Volunteer Army that was going to be in Moscow by Christmas is trying to hold a line it does not have the men for, and it is finding out what its own rear is worth: the districts it requisitioned all summer are not sending it a single recruit. We are the ones advancing now, and it has taken some getting used to.<br><br>Kharkov is the hinge. Take the three city sectors and the whole Donbass position goes with them; leave it and their army has somewhere to reform. There is not much time - their rearguard is fighting for days, not for ground.<br><br>Victory conditions:<br>- Take the three Kharkov sectors (21,16), (14,18) and (15,21) - fast. Six turns for a brilliant victory, nine for a victory, twelve at the outside.<br>- Hold Lyubotyn (3,14) and the crossing at (24,8).",
+  "outcome": {
+   "briliant": {
+    "goto": 17,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 160,
+    "text": "Kharkov is ours with its workshops, its rolling stock and eleven locomotives that were still under steam. Their rearguard did not have the time it wanted.<br><br>Their army is splitting in two: one part towards Rostov and the Kuban, the other towards the Crimea. Once that has happened it cannot be undone, and neither half can support the other. The pursuit goes on to the sea."
+   },
+   "victory": {
+    "goto": 17,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 160,
+    "text": "Kharkov is ours with its workshops, its rolling stock and eleven locomotives that were still under steam. Their rearguard did not have the time it wanted.<br><br>Their army is splitting in two: one part towards Rostov and the Kuban, the other towards the Crimea. Once that has happened it cannot be undone, and neither half can support the other. The pursuit goes on to the sea."
+   },
+   "tactical": {
+    "goto": 17,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 160,
+    "text": "Kharkov is ours with its workshops, its rolling stock and eleven locomotives that were still under steam. Their rearguard did not have the time it wanted.<br><br>Their army is splitting in two: one part towards Rostov and the Kuban, the other towards the Crimea. Once that has happened it cannot be undone, and neither half can support the other. The pursuit goes on to the sea."
+   },
+   "lose": {
+    "goto": 17,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 160,
+    "text": "We took the city, but slowly, and slow was the one thing that mattered here. Their rearguard held the crossings the extra four days it needed and their staff and depots are out along the Rostov line.<br><br>They will be able to reform on the Don. We shall have to fight for that too."
+   }
+  }
+ },
+ {
+  "id": 17,
+  "scenario": "volarm_17.xml",
+  "startprestige": 0,
+  "intro": "Novorossiysk<br><br>March 12th, 1920<br><br>The Kuban has gone. Rostov has gone. Ekaterinodar went last week. Everything left of them in the south is trying to get into the last port they hold on this coast, and the roads down to the harbour are one continuous column of transport.<br><br>In the roadstead there are British and French warships and nothing like enough transports. Their command has drawn up a list of who is taken off and who is not, and the men who are not have begun to work that out for themselves. Two years of Entente supply comes down to the tonnage in that bay this week.<br><br>Our task is the harbour and the loading. Take the port and the evacuation stops; break up the columns at the moles and it stops anyway. Six marked columns are what the whole affair now turns on.<br><br>Victory conditions:<br>- Take the Novorossiysk port (16,14).<br>- Or destroy 18 enemy formations.<br>- The enemy also loses if four of his six marked evacuation columns are destroyed.",
+  "outcome": {
+   "briliant": {
+    "goto": 18,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 320,
+    "text": "The port is ours. What was still on the quays when our cavalry came down the hill went into captivity where it stood - twenty-two thousand men, the horses, the guns, and the stores the ships had no room for.<br><br>Part of the army got away to the Crimea. That was decided in the roadstead by the tonnage available and not on this ground. What did not get away was the Armed Forces of South Russia as a field army; Denikin resigned command within the fortnight.<br><br>Wrangel has taken over what reached Sevastopol. There is one more campaign in this."
+   },
+   "victory": {
+    "goto": 18,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 320,
+    "text": "The port is ours. What was still on the quays when our cavalry came down the hill went into captivity where it stood - twenty-two thousand men, the horses, the guns, and the stores the ships had no room for.<br><br>Part of the army got away to the Crimea. That was decided in the roadstead by the tonnage available and not on this ground. What did not get away was the Armed Forces of South Russia as a field army; Denikin resigned command within the fortnight.<br><br>Wrangel has taken over what reached Sevastopol. There is one more campaign in this."
+   },
+   "tactical": {
+    "goto": 18,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 260,
+    "text": "The port is ours. What was still on the quays when our cavalry came down the hill went into captivity where it stood - twenty-two thousand men, the horses, the guns, and the stores the ships had no room for.<br><br>Part of the army got away to the Crimea. That was decided in the roadstead by the tonnage available and not on this ground. What did not get away was the Armed Forces of South Russia as a field army; Denikin resigned command within the fortnight.<br><br>Wrangel has taken over what reached Sevastopol. There is one more campaign in this."
+   },
+   "lose": {
+    "goto": 18,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 260,
+    "text": "The embarkation went on to the end and the transports sailed full. We came down to a quay of abandoned horses and burning stores.<br><br>Everything that got onto those ships will be facing us again in the Crimea, and it will have British guns when it does."
+   }
+  }
+ },
+ {
+  "id": 18,
+  "scenario": "volarm_18.xml",
+  "startprestige": 0,
+  "intro": "Perekop<br><br>November 7th, 1920<br><br>Wrangel has spent a summer turning the isthmus into a fortress: the Turkish Wall across the neck at Perekop, the Yushun positions behind it, eight belts of wire, concrete emplacements and every gun the French landed at Sevastopol. He has said publicly that it cannot be taken. Several of our own specialists have said the same thing rather more quietly.<br><br>So we are not going to take it the way he has built it to be taken. The front attacks frontally at Perekop and, on the same night, crosses the Sivash - which is shallow, freezing, and with this wind fordable. The 15th and 52nd divisions and the Latvian riflemen go across the mud in the dark; Blyukher's 51st goes at the Wall.<br><br>Take Armyansk and the wall positions, then Krasnoperekopsk and Zalivnaye behind them. Three years to the day since the Revolution, and the last of them is behind this wall.<br><br>Victory conditions:<br>- Take Krasnoperekopsk (40,34) and Zalivnaye (27,36).<br>- Hold Armyansk (21,12) and the two flanking positions (28,7) and (4,18).",
+  "outcome": {
+   "briliant": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "The Wall is taken and the Yushun positions behind it are taken. The columns that went across the Sivash came out of the mud on the far shore at four in the morning, into the flank of the whole position, and after that the fortress that could not be taken was a line of concrete with nobody behind it.<br><br>Wrangel is embarking at Sevastopol, Yalta and Feodosiya. He is doing it well - better than Novorossiysk, and there are ships for everyone who reaches the quays. A hundred and fifty thousand people are leaving Russia and most of them will not come back.<br><br>The war in the south is over. I am forty-one years old, I have served two Russias, and I am going to write to Katya that she can come home."
+   },
+   "victory": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "The Wall is taken and the Yushun positions behind it are taken. The columns that went across the Sivash came out of the mud on the far shore at four in the morning, into the flank of the whole position, and after that the fortress that could not be taken was a line of concrete with nobody behind it.<br><br>Wrangel is embarking at Sevastopol, Yalta and Feodosiya. He is doing it well - better than Novorossiysk, and there are ships for everyone who reaches the quays. A hundred and fifty thousand people are leaving Russia and most of them will not come back.<br><br>The war in the south is over. I am forty-one years old, I have served two Russias, and I am going to write to Katya that she can come home."
+   },
+   "tactical": {
+    "goto": 254,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "The Wall is taken and the Yushun positions behind it are taken. The columns that went across the Sivash came out of the mud on the far shore at four in the morning, into the flank of the whole position, and after that the fortress that could not be taken was a line of concrete with nobody behind it.<br><br>Wrangel is embarking at Sevastopol, Yalta and Feodosiya. He is doing it well - better than Novorossiysk, and there are ships for everyone who reaches the quays. A hundred and fifty thousand people are leaving Russia and most of them will not come back.<br><br>The war in the south is over. I am forty-one years old, I have served two Russias, and I am going to write to Katya that she can come home."
+   },
+   "lose": {
+    "goto": 255,
+    "gotoplayed": [
+     0,
+     0
+    ],
+    "prestige": 0,
+    "text": "The Sivash columns were caught on the mud when the wind turned and the water came back over the fords. The frontal attack went into the wire and stayed there.<br><br>The isthmus is still his. The Crimea will have to be taken in the spring, by someone else, and the bill for it has been made a great deal longer today."
    }
   }
  }

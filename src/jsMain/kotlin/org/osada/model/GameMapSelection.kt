@@ -27,6 +27,23 @@ fun GameMap.delCurrentUnit() {
     clearRailTargeting()
 }
 
+/**
+ * Records that [cell] no longer draws what it drew a moment ago, so the next render repaints it
+ * even if it falls outside the square that render was asked for. See [GameMap.pendingRepaint] for
+ * why a per-call radius cannot be trusted to cover a move range.
+ */
+internal fun GameMap.markRepaint(cell: Cell) {
+    val box = pendingRepaint
+    if (box == null) {
+        pendingRepaint = GameMap.RepaintBox(cell.row, cell.col, cell.row, cell.col)
+        return
+    }
+    if (cell.row < box.srow) box.srow = cell.row
+    if (cell.col < box.scol) box.scol = cell.col
+    if (cell.row > box.erow) box.erow = cell.row
+    if (cell.col > box.ecol) box.ecol = cell.col
+}
+
 fun GameMap.delMoveSel() {
     currentMoveRange.forEach { cell ->
         map?.getOrNull(cell.row)?.getOrNull(cell.col)?.apply {
@@ -34,6 +51,7 @@ fun GameMap.delMoveSel() {
             isAaThreat = false
             needsTransport = false
         }
+        markRepaint(cell)
     }
     currentMoveRange.clear()
 }
@@ -41,6 +59,7 @@ fun GameMap.delMoveSel() {
 fun GameMap.delAttackSel() {
     currentAttackRange.forEach { cell ->
         map?.getOrNull(cell.row)?.getOrNull(cell.col)?.isAttackSel = false
+        markRepaint(cell)
     }
     currentAttackRange.clear()
 }
@@ -67,6 +86,9 @@ fun GameMap.setMoveRange(unit: GameUnit) {
         if ((cell.row to cell.col) in threatened) {
             hex?.isAaThreat = true
         }
+        // The same rectangle covers what was just DRAWN, not only what was cleared: a range that
+        // reaches past the caller's square would otherwise not be painted in the first place.
+        markRepaint(cell)
     }
     addTransportReach(unit)
 }
@@ -87,6 +109,7 @@ private fun GameMap.addTransportReach(unit: GameUnit) {
             isMoveSel = true
             needsTransport = true
         }
+        markRepaint(cell)
     }
 }
 
@@ -98,6 +121,7 @@ fun GameMap.setAttackRange(unit: GameUnit) {
     cells.forEach { cell ->
         currentAttackRange.add(cell)
         map?.getOrNull(cell.row)?.getOrNull(cell.col)?.isAttackSel = true
+        markRepaint(cell)
     }
 }
 

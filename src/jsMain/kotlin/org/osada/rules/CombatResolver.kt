@@ -413,6 +413,14 @@ object CombatResolver {
     ): Boolean =
         SURRENDER_ON_FAILED_RETREAT &&
             !blockedByOwnUnitsOnly &&
+            // A TRAIN is exempt for the same reason the `No Surrender` fortifications above are:
+            // its legal retreat set is bounded by TRACK, not by the enemy, so "could not retreat"
+            // is not evidence of encirclement. `CombatPositioning.getRetreatPosition` requires rail
+            // of a train, which means one standing off the line — or on a stretch whose neighbours
+            // are occupied — can never pay a forced retreat, and without this it would be destroyed
+            // by the first attack that owed one. It stays on its hex and keeps firing instead,
+            // which is what a train cut off from its track was actually used for.
+            !UnitPredicates.isTrain(defender) &&
             !Equipment.hasNoSurrender(defender.getEqid(true)) &&
             !Leaders.unitHasLeader(defender, LeaderType.FEROCIOUS_DEFENSE)
 

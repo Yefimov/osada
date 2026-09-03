@@ -7,7 +7,6 @@ import org.osada.model.Equipment
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
 import org.osada.model.Hex
-import org.osada.model.hasRailData
 import org.osada.movTable
 
 /**
@@ -28,7 +27,12 @@ internal object ReinforcementDeployment {
     ): Cell? {
         val eqData = Equipment.equipment[unit.eqid] ?: return null
         val isTrain = UnitPredicates.isTrain(unit)
-        val enforceRail = isTrain && map.hasRailData()
+        // Prefer rail unconditionally, matching `MoveRangeCalculation`. The terrain fallback
+        // below is deliberately KEPT: a reinforcement that finds no position is never added to the
+        // map at all, so refusing an off-rail hex here would delete the formation rather than
+        // immobilise it. An arrival that lands off the line is a stationary firing point, which is
+        // a legal outcome; a vanished one is not.
+        val enforceRail = isTrain
         // Terrain-based fallback table: movTable[RAIL.value] is intentionally all-255 (see
         // Constants.kt) -- a real train must resolve through WHEELED for any plain-terrain check,
         // whether because the map has no rail data at all, OR because its author-declared

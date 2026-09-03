@@ -7,7 +7,20 @@
       <unit id="1017" owner="0" flag="163" face="0" transport="45993" exp="218" bstr="2"/>
     </at>
   </reinforce>
-  <hex row="20" col="40" station="1"/>
+  <hex row="2" col="43" rail="34"/>
+  <hex row="5" col="40" rail="18"/>
+  <hex row="7" col="37" rail="18"/>
+  <hex row="9" col="36" rail="18"/>
+  <hex row="10" col="36" rail="17"/>
+  <hex row="11" col="36" rail="17"/>
+  <hex row="12" col="36" rail="17"/>
+  <hex row="13" col="36" rail="17"/>
+  <hex row="14" col="36" rail="17"/>
+  <hex row="15" col="36" rail="17"/>
+  <hex row="16" col="36" rail="17"/>
+  <hex row="17" col="36" rail="17"/>
+  <hex row="18" col="38" rail="40"/>
+  <hex row="20" col="40" station="1" rail="136"/>
   <hex row="0" col="3" terrain="3"/>
   <hex row="0" col="22" terrain="16" road="17"/>
   <hex row="0" col="23" terrain="10" name="Potomac River"/>
@@ -85,7 +98,7 @@
   <hex row="3" col="36" terrain="5" name="Blue Ridge"/>
   <hex row="3" col="37" terrain="3"/>
   <hex row="3" col="38" terrain="5" name="Blue Ridge"/>
-  <hex row="3" col="42" terrain="3"/>
+  <hex row="3" col="42" terrain="3" rail="18"/>
   <hex row="3" col="43" road="34"/>
   <hex row="4" col="17" road="17"/>
   <hex row="4" col="19" terrain="10" name="Potomac River"/>
@@ -103,8 +116,8 @@
   <hex row="4" col="36" terrain="3"/>
   <hex row="4" col="37" terrain="3"/>
   <hex row="4" col="38" terrain="3"/>
-  <hex row="4" col="41" terrain="1" road="18" name="Brownsville" owner="0" flag="162" station="1"/>
-  <hex row="4" col="42" terrain="1" road="34" name="Brownsville"/>
+  <hex row="4" col="41" terrain="1" road="18" name="Brownsville" owner="0" flag="162" station="1" rail="34"/>
+  <hex row="4" col="42" terrain="1" road="34" name="Brownsville" rail="33"/>
   <hex row="4" col="43" terrain="5" name="South Mountain"/>
   <hex row="5" col="11" terrain="3"/>
   <hex row="5" col="15" terrain="3"/>
@@ -149,8 +162,8 @@
   <hex row="6" col="35" terrain="3"/>
   <hex row="6" col="36" terrain="3"/>
   <hex row="6" col="38" terrain="3"/>
-  <hex row="6" col="39" road="34"/>
-  <hex row="6" col="40" road="34"/>
+  <hex row="6" col="39" road="34" rail="34"/>
+  <hex row="6" col="40" road="34" rail="33"/>
   <hex row="6" col="41" terrain="3"/>
   <hex row="6" col="42" terrain="5" name="South Mountain"/>
   <hex row="6" col="43" terrain="5" name="South Mountain"/>
@@ -175,7 +188,7 @@
   <hex row="7" col="34" terrain="3"/>
   <hex row="7" col="35" terrain="3"/>
   <hex row="7" col="36" terrain="3"/>
-  <hex row="7" col="38" road="18"/>
+  <hex row="7" col="38" road="18" rail="34"/>
   <hex row="7" col="39" terrain="5" name="South Mountain"/>
   <hex row="7" col="40" terrain="5" name="South Mountain"/>
   <hex row="7" col="41" terrain="5" name="South Mountain"/>
@@ -196,15 +209,15 @@
   <hex row="8" col="34" terrain="3"/>
   <hex row="8" col="35" terrain="3"/>
   <hex row="8" col="36" terrain="3"/>
-  <hex row="8" col="37" road="18"/>
+  <hex row="8" col="37" road="18" rail="33"/>
   <hex row="8" col="38" road="33"/>
   <hex row="8" col="39" terrain="5" name="South Mountain"/>
   <hex row="8" col="40" terrain="5" name="South Mountain"/>
   <hex row="8" col="41" terrain="5" name="South Mountain"/>
   <hex row="8" col="42" terrain="5" name="South Mountain"/>
   <hex row="8" col="43" terrain="5" name="South Mountain"/>
-  <hex row="9" col="0" road="136"/>
-  <hex row="9" col="1" road="136"/>
+  <hex row="9" col="0" road="136" rail="136"/>
+  <hex row="9" col="1" road="136" rail="136"/>
   <hex row="9" col="13" terrain="3"/>
   <hex row="9" col="14" terrain="3"/>
   <hex row="9" col="19" road="17"/>
@@ -229,8 +242,8 @@
   <hex row="9" col="42" terrain="5" name="South Mountain"/>
   <hex row="9" col="43" terrain="5" name="South Mountain"/>
   <hex row="10" col="0" terrain="3"/>
-  <hex row="10" col="2" road="136"/>
-  <hex row="10" col="3" road="136">
+  <hex row="10" col="2" road="136" rail="136"/>
+  <hex row="10" col="3" road="136" rail="136">
     <unit id="44821" owner="1" flag="151" face="0" transport="44814" exp="46" holduntil="4"/>
   </hex>
   <hex row="10" col="4">
@@ -262,10 +275,10 @@
   <hex row="10" col="41" terrain="5" name="South Mountain"/>
   <hex row="10" col="42" terrain="5" name="South Mountain"/>
   <hex row="10" col="43" terrain="5" name="South Mountain"/>
-  <hex row="11" col="4" terrain="1" road="136" name="Duffield" owner="1" flag="150" station="1">
+  <hex row="11" col="4" terrain="1" road="136" name="Duffield" owner="1" flag="150" station="1" rail="136">
     <unit id="44805" owner="1" flag="151" face="0" exp="50" bstr="2"/>
   </hex>
-  <hex row="11" col="5" road="136"/>
+  <hex row="11" col="5" road="136" rail="136"/>
   <hex row="11" col="6" terrain="3"/>
   <hex row="11" col="19" terrain="3" road="33"/>
   <hex row="11" col="20" terrain="16"/>
@@ -291,8 +304,8 @@
   <hex row="12" col="4">
     <unit id="44791" owner="1" flag="151" face="0" exp="180" holduntil="5"/>
   </hex>
-  <hex row="12" col="6" road="136"/>
-  <hex row="12" col="7" road="136"/>
+  <hex row="12" col="6" road="136" rail="136"/>
+  <hex row="12" col="7" road="136" rail="136"/>
   <hex row="12" col="12" terrain="3"/>
   <hex row="12" col="13" terrain="3"/>
   <hex row="12" col="14" terrain="3"/>
@@ -321,8 +334,8 @@
   <hex row="12" col="43" terrain="5" name="South Mountain"/>
   <hex row="13" col="2" terrain="3"/>
   <hex row="13" col="3" terrain="3"/>
-  <hex row="13" col="8" road="136"/>
-  <hex row="13" col="9" road="136"/>
+  <hex row="13" col="8" road="136" rail="136"/>
+  <hex row="13" col="9" road="136" rail="136"/>
   <hex row="13" col="17" road="34"/>
   <hex row="13" col="18" road="33">
     <unit id="44781" owner="1" flag="151" face="0" exp="185"/>
@@ -353,8 +366,8 @@
   <hex row="14" col="4" terrain="5"/>
   <hex row="14" col="6" terrain="3"/>
   <hex row="14" col="7" terrain="3"/>
-  <hex row="14" col="10" road="136"/>
-  <hex row="14" col="11" road="136">
+  <hex row="14" col="10" road="136" rail="136"/>
+  <hex row="14" col="11" road="136" rail="136">
     <unit id="44800" owner="1" flag="151" face="0" exp="90"/>
   </hex>
   <hex row="14" col="12" terrain="1" road="24" name="Keller">
@@ -389,10 +402,10 @@
   <hex row="14" col="43" terrain="5" name="South Mountain"/>
   <hex row="15" col="4" terrain="5"/>
   <hex row="15" col="11" road="34"/>
-  <hex row="15" col="12" road="171" owner="1" flag="150" station="1">
+  <hex row="15" col="12" road="171" owner="1" flag="150" station="1" rail="136">
     <unit id="44826" owner="1" flag="151" face="0" transport="44814" exp="190" anchored="1"/>
   </hex>
-  <hex row="15" col="13" road="136"/>
+  <hex row="15" col="13" road="136" rail="136"/>
   <hex row="15" col="14" road="130"/>
   <hex row="15" col="15" terrain="3"/>
   <hex row="15" col="16" terrain="3"/>
@@ -424,8 +437,8 @@
   <hex row="16" col="9" road="18"/>
   <hex row="16" col="10" road="34"/>
   <hex row="16" col="13" terrain="3"/>
-  <hex row="16" col="14" road="136"/>
-  <hex row="16" col="15" road="136"/>
+  <hex row="16" col="14" road="136" rail="136"/>
+  <hex row="16" col="15" road="136" rail="136"/>
   <hex row="16" col="16" terrain="3"/>
   <hex row="16" col="17" terrain="10" name="Potomac River"/>
   <hex row="16" col="18" terrain="10" name="Potomac River"/>
@@ -461,8 +474,8 @@
   <hex row="17" col="10" terrain="3"/>
   <hex row="17" col="11" terrain="3"/>
   <hex row="17" col="15" terrain="3"/>
-  <hex row="17" col="16" terrain="3" road="136"/>
-  <hex row="17" col="17" road="136">
+  <hex row="17" col="16" terrain="3" road="136" rail="136"/>
+  <hex row="17" col="17" road="136" rail="136">
     <unit id="44787" owner="1" flag="151" face="0" exp="2" anchored="1"/>
   </hex>
   <hex row="17" col="18" terrain="10" name="Potomac River"/>
@@ -496,10 +509,10 @@
   <hex row="18" col="17" terrain="5" name="Bolivar Heights" owner="1" flag="150" victory="1">
     <unit id="44827" owner="1" flag="151" face="0" exp="78" bstr="6"/>
   </hex>
-  <hex row="18" col="18" road="136">
+  <hex row="18" col="18" road="136" rail="136">
     <unit id="44781" owner="1" flag="151" face="0" exp="39"/>
   </hex>
-  <hex row="18" col="19" terrain="1" road="144" name="Harpers Ferry"/>
+  <hex row="18" col="19" terrain="1" road="144" name="Harpers Ferry" rail="136"/>
   <hex row="18" col="20" terrain="10" name="Potomac River"/>
   <hex row="18" col="21" terrain="10" name="Potomac River"/>
   <hex row="18" col="22" terrain="10" name="Potomac River"/>
@@ -516,10 +529,10 @@
   <hex row="18" col="31" terrain="3"/>
   <hex row="18" col="33" terrain="3"/>
   <hex row="18" col="34" terrain="3"/>
-  <hex row="18" col="35" road="40" deploy="0"/>
-  <hex row="18" col="36" deploy="0"/>
-  <hex row="18" col="37" terrain="1" road="41" name="Weverton" station="1"/>
-  <hex row="18" col="39" terrain="3" road="40"/>
+  <hex row="18" col="35" road="40" deploy="0" rail="34"/>
+  <hex row="18" col="36" deploy="0" rail="41"/>
+  <hex row="18" col="37" terrain="1" road="41" name="Weverton" station="1" rail="130"/>
+  <hex row="18" col="39" terrain="3" road="40" rail="144"/>
   <hex row="18" col="40" terrain="3"/>
   <hex row="18" col="42" terrain="3"/>
   <hex row="18" col="43" terrain="3"/>
@@ -533,28 +546,28 @@
   <hex row="19" col="17" terrain="5" name="Bolivar Heights"/>
   <hex row="19" col="18" terrain="5" name="Bolivar Heights"/>
   <hex row="19" col="19" terrain="1" road="25" name="Harpers Ferry"/>
-  <hex row="19" col="20" terrain="1" name="Harpers Ferry">
+  <hex row="19" col="20" terrain="1" name="Harpers Ferry" rail="136">
     <unit id="44798" owner="1" flag="151" face="0" exp="255" ldr="1"/>
   </hex>
-  <hex row="19" col="21" terrain="1" road="40" name="Harpers Ferry"/>
+  <hex row="19" col="21" terrain="1" road="40" name="Harpers Ferry" rail="136"/>
   <hex row="19" col="22" terrain="10" name="Potomac River"/>
   <hex row="19" col="23" terrain="10" name="Potomac River"/>
   <hex row="19" col="24" road="9"/>
-  <hex row="19" col="25" road="162"/>
-  <hex row="19" col="26" terrain="3" road="40"/>
-  <hex row="19" col="27" terrain="3" road="130"/>
-  <hex row="19" col="28" terrain="3" road="40"/>
-  <hex row="19" col="29" terrain="3" road="130"/>
-  <hex row="19" col="30" road="40"/>
-  <hex row="19" col="31" road="136"/>
-  <hex row="19" col="32" deploy="0"/>
-  <hex row="19" col="33" road="34" deploy="0"/>
-  <hex row="19" col="34" road="34" deploy="0"/>
+  <hex row="19" col="25" road="162" rail="34"/>
+  <hex row="19" col="26" terrain="3" road="40" rail="40"/>
+  <hex row="19" col="27" terrain="3" road="130" rail="130"/>
+  <hex row="19" col="28" terrain="3" road="40" rail="40"/>
+  <hex row="19" col="29" terrain="3" road="130" rail="130"/>
+  <hex row="19" col="30" road="40" rail="40"/>
+  <hex row="19" col="31" road="136" rail="130"/>
+  <hex row="19" col="32" deploy="0" rail="40"/>
+  <hex row="19" col="33" road="34" deploy="0" rail="130"/>
+  <hex row="19" col="34" road="34" deploy="0" rail="34"/>
   <hex row="19" col="35" terrain="10" name="Potomac River"/>
   <hex row="19" col="36" terrain="16" road="130"/>
   <hex row="19" col="37" terrain="10" name="Potomac River"/>
   <hex row="19" col="38" terrain="16" road="130"/>
-  <hex row="19" col="39" terrain="16"/>
+  <hex row="19" col="39" terrain="16" rail="9"/>
   <hex row="19" col="40" terrain="3" road="136"/>
   <hex row="19" col="41" terrain="1" road="130" name="Knoxville" owner="0" flag="162"/>
   <hex row="19" col="42" terrain="1" road="40" name="Knoxville"/>
@@ -576,14 +589,14 @@
   <hex row="20" col="20" terrain="1" road="170" name="Harpers Ferry" owner="1" flag="150" victory="1">
     <unit id="44827" owner="1" flag="151" face="0" exp="165" ldr="1" bstr="6"/>
   </hex>
-  <hex row="20" col="21" terrain="1" road="130" name="Harpers Ferry">
+  <hex row="20" col="21" terrain="1" road="130" name="Harpers Ferry" rail="34">
     <unit id="44781" owner="1" flag="151" face="0" exp="191"/>
   </hex>
-  <hex row="20" col="22" terrain="1" road="168" name="Harpers Ferry" station="1">
+  <hex row="20" col="22" terrain="1" road="168" name="Harpers Ferry" station="1" rail="168">
     <unit id="44793" owner="1" flag="151" face="0" exp="100" str="14"/>
   </hex>
-  <hex row="20" col="23" road="130"/>
-  <hex row="20" col="24" terrain="10" road="34" name="Potomac River"/>
+  <hex row="20" col="23" road="130" rail="130"/>
+  <hex row="20" col="24" terrain="10" road="34" name="Potomac River" rail="34"/>
   <hex row="20" col="25" terrain="10" name="Potomac River"/>
   <hex row="20" col="26" terrain="16"/>
   <hex row="20" col="27" terrain="10" name="Potomac River"/>
@@ -599,6 +612,7 @@
   <hex row="20" col="37" terrain="16"/>
   <hex row="20" col="38" terrain="10" name="Potomac River"/>
   <hex row="20" col="39" terrain="10" name="Potomac River"/>
+  <hex row="20" col="41" rail="136"/>
   <hex row="20" col="42" terrain="1" name="Knoxville"/>
   <hex row="21" col="3" terrain="3"/>
   <hex row="21" col="4" terrain="3"/>
@@ -614,8 +628,8 @@
     <unit id="44827" owner="1" flag="151" face="0" exp="150" bstr="6"/>
   </hex>
   <hex row="21" col="18" terrain="5" name="Bolivar Heights"/>
-  <hex row="21" col="19" terrain="1" road="33" name="Harpers Ferry"/>
-  <hex row="21" col="20" terrain="1" name="Harpers Ferry"/>
+  <hex row="21" col="19" terrain="1" road="33" name="Harpers Ferry" rail="34"/>
+  <hex row="21" col="20" terrain="1" name="Harpers Ferry" rail="34"/>
   <hex row="21" col="21" terrain="10" name="Shenandoah River"/>
   <hex row="21" col="22" terrain="10" name="Shenandoah River"/>
   <hex row="21" col="23" terrain="10" name="Shenandoah River"/>
@@ -637,7 +651,11 @@
   <hex row="21" col="39" terrain="10" name="Potomac River"/>
   <hex row="21" col="40" terrain="10" name="Potomac River"/>
   <hex row="21" col="41" terrain="3"/>
+  <hex row="21" col="42" rail="144"/>
+  <hex row="22" col="1" rail="40"/>
+  <hex row="22" col="3" rail="40"/>
   <hex row="22" col="4" terrain="3"/>
+  <hex row="22" col="5" rail="40"/>
   <hex row="22" col="7" road="17">
     <unit id="44787" owner="1" flag="151" face="0" exp="89"/>
   </hex>
@@ -653,7 +671,7 @@
   <hex row="22" col="17" terrain="3" road="34">
     <unit id="44781" owner="1" flag="151" face="0" exp="47"/>
   </hex>
-  <hex row="22" col="18" road="34">
+  <hex row="22" col="18" road="34" rail="18">
     <unit id="44781" owner="1" flag="151" face="0" exp="156"/>
   </hex>
   <hex row="22" col="19" terrain="10" name="Shenandoah River"/>
@@ -679,18 +697,18 @@
   <hex row="22" col="39" terrain="16" road="136"/>
   <hex row="22" col="40" terrain="10" name="Potomac River"/>
   <hex row="22" col="41" terrain="10" name="Potomac River"/>
-  <hex row="22" col="42" terrain="16"/>
-  <hex row="22" col="43" terrain="16"/>
-  <hex row="23" col="0" road="40"/>
+  <hex row="22" col="42" terrain="16" rail="9"/>
+  <hex row="22" col="43" terrain="16" rail="136"/>
+  <hex row="23" col="0" road="40" rail="130"/>
   <hex row="23" col="1" road="130"/>
-  <hex row="23" col="2" road="40"/>
+  <hex row="23" col="2" road="40" rail="130"/>
   <hex row="23" col="3" road="130"/>
-  <hex row="23" col="4" terrain="3" road="40"/>
+  <hex row="23" col="4" terrain="3" road="40" rail="130"/>
   <hex row="23" col="5" terrain="3" road="130"/>
-  <hex row="23" col="6" terrain="1" road="56" name="Halltown">
+  <hex row="23" col="6" terrain="1" road="56" name="Halltown" rail="136">
     <unit id="44796" owner="1" flag="151" face="0" exp="157"/>
   </hex>
-  <hex row="23" col="7" terrain="1" road="163" name="Halltown" owner="1" flag="150" station="1">
+  <hex row="23" col="7" terrain="1" road="163" name="Halltown" owner="1" flag="150" station="1" rail="144">
     <unit id="44795" owner="1" flag="151" face="0" exp="39" str="12" ldr="1"/>
   </hex>
   <hex row="23" col="8" road="34"/>
@@ -699,7 +717,8 @@
   <hex row="23" col="14" terrain="3" road="136"/>
   <hex row="23" col="15" terrain="3" road="130"/>
   <hex row="23" col="16" terrain="5" road="34" name="Bolivar Heights"/>
-  <hex row="23" col="18" terrain="16"/>
+  <hex row="23" col="17" rail="34"/>
+  <hex row="23" col="18" terrain="16" rail="33"/>
   <hex row="23" col="19" terrain="10" name="Shenandoah River"/>
   <hex row="23" col="20" terrain="16"/>
   <hex row="23" col="21" road="34"/>
@@ -726,11 +745,12 @@
   <hex row="23" col="43" terrain="10" name="Potomac River"/>
   <hex row="24" col="5" terrain="3"/>
   <hex row="24" col="6" road="19"/>
+  <hex row="24" col="7" rail="17"/>
   <hex row="24" col="12" terrain="3"/>
   <hex row="24" col="13" terrain="3"/>
   <hex row="24" col="14" terrain="3"/>
   <hex row="24" col="15" terrain="3"/>
-  <hex row="24" col="16" terrain="3"/>
+  <hex row="24" col="16" terrain="3" rail="18"/>
   <hex row="24" col="17" terrain="16"/>
   <hex row="24" col="18" terrain="10" name="Shenandoah River"/>
   <hex row="24" col="19" terrain="16" road="18"/>
@@ -759,9 +779,12 @@
   <hex row="25" col="3" terrain="3"/>
   <hex row="25" col="5" terrain="3"/>
   <hex row="25" col="6" terrain="3" road="17"/>
+  <hex row="25" col="7" rail="17"/>
   <hex row="25" col="12" terrain="3"/>
   <hex row="25" col="13" terrain="3"/>
   <hex row="25" col="14" terrain="3"/>
+  <hex row="25" col="15" rail="34"/>
+  <hex row="25" col="16" rail="33"/>
   <hex row="25" col="17" terrain="10" name="Shenandoah River"/>
   <hex row="25" col="18" terrain="10" name="Shenandoah River"/>
   <hex row="25" col="19" road="17"/>
@@ -789,10 +812,12 @@
   <hex row="25" col="41" terrain="3"/>
   <hex row="25" col="42" terrain="3"/>
   <hex row="26" col="6" road="9"/>
-  <hex row="26" col="7" road="144"/>
+  <hex row="26" col="7" road="144" rail="9"/>
   <hex row="26" col="10" terrain="3"/>
   <hex row="26" col="11" terrain="3"/>
   <hex row="26" col="12" terrain="3"/>
+  <hex row="26" col="13" rail="18"/>
+  <hex row="26" col="14" rail="34"/>
   <hex row="26" col="15" terrain="10" name="Shenandoah River"/>
   <hex row="26" col="16" terrain="10" name="Shenandoah River"/>
   <hex row="26" col="17" terrain="10" name="Shenandoah River"/>
@@ -820,7 +845,9 @@
   <hex row="26" col="40" terrain="3"/>
   <hex row="26" col="43" terrain="3"/>
   <hex row="27" col="7" road="9"/>
+  <hex row="27" col="8" rail="144"/>
   <hex row="27" col="11" terrain="3"/>
+  <hex row="27" col="13" rail="33"/>
   <hex row="27" col="14" terrain="16"/>
   <hex row="27" col="15" terrain="10" name="Shenandoah River"/>
   <hex row="27" col="17" road="34"/>
@@ -844,13 +871,15 @@
   <hex row="28" col="2" terrain="13"/>
   <hex row="28" col="3" terrain="13"/>
   <hex row="28" col="4" terrain="3"/>
-  <hex row="28" col="8" road="136"/>
-  <hex row="28" col="9" road="136">
+  <hex row="28" col="8" road="136" rail="9"/>
+  <hex row="28" col="9" road="136" rail="136">
     <unit id="44821" owner="1" flag="151" face="0" transport="44814" exp="186" holduntil="4"/>
   </hex>
   <hex row="28" col="10">
     <unit id="44792" owner="1" flag="151" face="0" exp="85"/>
   </hex>
+  <hex row="28" col="11" rail="34"/>
+  <hex row="28" col="12" rail="34"/>
   <hex row="28" col="13" terrain="10" name="Shenandoah River"/>
   <hex row="28" col="14" terrain="10" name="Shenandoah River"/>
   <hex row="28" col="15" road="34"/>
@@ -878,7 +907,7 @@
   <hex row="29" col="9" road="18">
     <unit id="44800" owner="1" flag="151" face="0" exp="170"/>
   </hex>
-  <hex row="29" col="10" terrain="1" road="160" name="Millvill" owner="1" flag="150" station="1">
+  <hex row="29" col="10" terrain="1" road="160" name="Millvill" owner="1" flag="150" station="1" rail="130">
     <unit id="44787" owner="1" flag="151" face="0" exp="170" anchored="1"/>
   </hex>
   <hex row="29" col="11" terrain="10" name="Shenandoah River"/>

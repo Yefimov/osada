@@ -164,7 +164,7 @@ internal class CombatApplication(
         combatResult: CombatResults,
     ) {
         val retreat =
-            CombatPositioning.getRetreatPosition(gameMap.map, defender, gameMap.rows, gameMap.hasRailData())
+            CombatPositioning.getRetreatPosition(gameMap.map, defender, gameMap.rows)
         val distance = HexGeometry.distance(from.row, from.col, to.row, to.col)
         val adjacentEnemies = SupplyContextRules.countAdjacentEnemies(gameMap, defender, to)
         val surprisedOrRugged = attacker.isSurprised || combatResult.isRugged

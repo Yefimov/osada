@@ -373,9 +373,74 @@ class SurrenderTest {
         assertEquals(1, captor.dossier.units.captured[key] as? Int ?: 0, "and is also counted as captured")
     }
 
+    /**
+     * A train retreats along its track or not at all, and "not at all" must not kill it.
+     *
+     * Both halves matter and they are separate rules. `getRetreatPosition` requires rail of a
+     * train, so one standing on open ground can never pay a forced retreat — and if surrender
+     * followed from that, the first attack owing one would destroy it. It is exempt for the same
+     * reason a bunker is: its retreat set is bounded by TRACK, not by the enemy, so failing to
+     * retreat is not evidence of encirclement. It holds its hex and keeps firing.
+     */
+    @Test
+    fun aTrainOffTheLineCannotRetreatAndMustNotSurrenderForIt() {
+        Equipment.putEquipment(
+            trainEqid,
+            EquipmentData().apply {
+                uclass = UnitClass.ARTILLERY.value
+                movmethod = MovMethod.RAIL.value
+                movpoints = 6
+                target = UnitType.HARD.value
+                ammo = 10
+                attr = 0
+            },
+        )
+        // Open, perfectly passable ground on every side -- and no rail anywhere.
+        val (map, _, defender) = buildMap(TerrainType.CLEAR.value)
+        defender.eqid = trainEqid
+
+        assertNull(
+            CombatPositioning.getRetreatPosition(map.map, defender, map.rows),
+            "clear ground is not track: a train must not retreat across it",
+        )
+        assertFalse(
+            CombatResolver.shouldDefenderSurrender(defender),
+            "a train that cannot reach rail is a fixed firing point, not an encircled one",
+        )
+    }
+
+    /** Control for the above: give it rail to pull back onto and it does retreat. */
+    @Test
+    fun aTrainOnTheLineRetreatsAlongIt() {
+        Equipment.putEquipment(
+            trainEqid,
+            EquipmentData().apply {
+                uclass = UnitClass.ARTILLERY.value
+                movmethod = MovMethod.RAIL.value
+                movpoints = 6
+                target = UnitType.HARD.value
+                ammo = 10
+                attr = 0
+            },
+        )
+        val (map, _, defender) = buildMap(TerrainType.CLEAR.value)
+        defender.eqid = trainEqid
+        map.map
+            ?.get(0)
+            ?.get(1)
+            ?.rail = RoadType.NORTH.value
+
+        assertNotNull(
+            CombatPositioning.getRetreatPosition(map.map, defender, map.rows),
+            "an adjacent free rail hex is a legal retreat for a train",
+        )
+    }
+
     private companion object {
         /** `Equipment.attr` bit 23 — OG's `No Surrender`. Mirrors the private mask in
          *  `EquipmentCombatEligibility`; identified from BASEKORP's `Fort` (`E 335`). */
         const val NO_SURRENDER_ATTR = 8388608
+
+        const val trainEqid = 77
     }
 }

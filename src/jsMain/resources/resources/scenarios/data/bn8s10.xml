@@ -23,6 +23,7 @@
   </hex>
   <hex row="0" col="18" terrain="16"/>
   <hex row="0" col="19" terrain="16" deploy="0"/>
+  <hex row="0" col="20" rail="17"/>
   <hex row="0" col="21" road="17" deploy="0"/>
   <hex row="0" col="22" terrain="10"/>
   <hex row="0" col="26" terrain="15" name="Vrbas River"/>
@@ -45,7 +46,7 @@
   <hex row="1" col="15" road="136" deploy="0"/>
   <hex row="1" col="16" terrain="16" deploy="0"/>
   <hex row="1" col="18" terrain="16"/>
-  <hex row="1" col="20" deploy="0"/>
+  <hex row="1" col="20" deploy="0" rail="17"/>
   <hex row="1" col="21" road="33"/>
   <hex row="1" col="22" terrain="10"/>
   <hex row="1" col="23" terrain="2"/>
@@ -70,8 +71,8 @@
   <hex row="2" col="16" road="136"/>
   <hex row="2" col="17" road="130"/>
   <hex row="2" col="18" road="40"/>
-  <hex row="2" col="19" road="154"/>
-  <hex row="2" col="20" road="50"/>
+  <hex row="2" col="19" road="154" rail="34"/>
+  <hex row="2" col="20" road="50" rail="33"/>
   <hex row="2" col="21" terrain="10"/>
   <hex row="2" col="22" terrain="10"/>
   <hex row="2" col="24" terrain="11">
@@ -92,6 +93,8 @@
   <hex row="3" col="14" terrain="3"/>
   <hex row="3" col="15" terrain="16"/>
   <hex row="3" col="16" terrain="16"/>
+  <hex row="3" col="17" rail="34"/>
+  <hex row="3" col="18" rail="34"/>
   <hex row="3" col="19" road="35"/>
   <hex row="3" col="20" terrain="1" road="161" name="Village" owner="1" flag="41">
     <unit id="31406" owner="1" flag="42" face="0" exp="200" str="8" bstr="5"/>
@@ -111,6 +114,7 @@
   <hex row="4" col="8" terrain="3"/>
   <hex row="4" col="9" road="17"/>
   <hex row="4" col="14" terrain="3"/>
+  <hex row="4" col="16" rail="18"/>
   <hex row="4" col="17" terrain="16" road="50"/>
   <hex row="4" col="18" terrain="16" road="34"/>
   <hex row="4" col="19" terrain="16"/>
@@ -131,7 +135,7 @@
   <hex row="5" col="11" road="40"/>
   <hex row="5" col="13" road="40"/>
   <hex row="5" col="15" road="40"/>
-  <hex row="5" col="16" terrain="1" road="10" name="Maglajani" owner="1" flag="41" victory="1" trigger="1" trigparam="0" station="1">
+  <hex row="5" col="16" terrain="1" road="10" name="Maglajani" owner="1" flag="41" victory="1" trigger="1" trigparam="0" station="1" rail="17">
     <unit id="31406" owner="1" flag="42" face="0" exp="44" str="8" bstr="5"/>
   </hex>
   <hex row="5" col="17" terrain="1" road="177" name="Maglajani">
@@ -158,10 +162,10 @@
   <hex row="6" col="10" road="162"/>
   <hex row="6" col="12" road="130"/>
   <hex row="6" col="14" road="130"/>
-  <hex row="6" col="15" terrain="11">
+  <hex row="6" col="15" terrain="11" rail="18">
     <unit id="717" owner="1" flag="42" face="0" exp="44" str="5" bstr="1"/>
   </hex>
-  <hex row="6" col="16" road="130"/>
+  <hex row="6" col="16" road="130" rail="33"/>
   <hex row="6" col="17" road="33"/>
   <hex row="6" col="20" terrain="10"/>
   <hex row="6" col="23" terrain="15" name="Vrbas River"/>
@@ -178,6 +182,7 @@
   <hex row="7" col="6" terrain="3" road="130"/>
   <hex row="7" col="8" road="130"/>
   <hex row="7" col="11" terrain="3"/>
+  <hex row="7" col="15" rail="17"/>
   <hex row="7" col="16" road="18"/>
   <hex row="7" col="19" terrain="10"/>
   <hex row="7" col="20" terrain="10"/>
@@ -193,6 +198,7 @@
   <hex row="8" col="3" terrain="6"/>
   <hex row="8" col="4" terrain="3"/>
   <hex row="8" col="5" terrain="3"/>
+  <hex row="8" col="15" rail="17"/>
   <hex row="8" col="16" road="17"/>
   <hex row="8" col="17">
     <unit id="31548" owner="1" flag="42" face="0" transport="31505" exp="44" str="5" bstr="5"/>
@@ -212,6 +218,7 @@
   <hex row="9" col="5" terrain="3"/>
   <hex row="9" col="6" terrain="3"/>
   <hex row="9" col="9" terrain="16"/>
+  <hex row="9" col="15" rail="17"/>
   <hex row="9" col="16" road="17"/>
   <hex row="9" col="18" terrain="10"/>
   <hex row="9" col="21" terrain="15" name="Vrbas River"/>
@@ -228,7 +235,7 @@
   <hex row="10" col="4" terrain="5"/>
   <hex row="10" col="5" terrain="3"/>
   <hex row="10" col="6" terrain="3"/>
-  <hex row="10" col="15" road="18"/>
+  <hex row="10" col="15" road="18" rail="33"/>
   <hex row="10" col="16" terrain="16" road="33"/>
   <hex row="10" col="18" terrain="10"/>
   <hex row="10" col="21" terrain="15" name="Vrbas River"/>
@@ -248,6 +255,7 @@
   <hex row="11" col="10" road="40"/>
   <hex row="11" col="11" road="136"/>
   <hex row="11" col="13" road="40"/>
+  <hex row="11" col="14" rail="18"/>
   <hex row="11" col="15" terrain="1" road="49" name="Laktasi"/>
   <hex row="11" col="17" terrain="10"/>
   <hex row="11" col="18" terrain="10"/>
@@ -271,7 +279,8 @@
   <hex row="12" col="6" terrain="3" road="130"/>
   <hex row="12" col="8" road="130"/>
   <hex row="12" col="12" road="130"/>
-  <hex row="12" col="14" terrain="1" road="154" name="Laktasi" owner="1" flag="41" victory="1" trigger="1" trigparam="0" station="1">
+  <hex row="12" col="13" rail="18"/>
+  <hex row="12" col="14" terrain="1" road="154" name="Laktasi" owner="1" flag="41" victory="1" trigger="1" trigparam="0" station="1" rail="33">
     <unit id="31384" owner="1" flag="42" face="0" exp="44" str="8" bstr="5"/>
   </hex>
   <hex row="12" col="15" terrain="1" road="137" name="Laktasi">
@@ -299,6 +308,7 @@
   <hex row="13" col="12">
     <unit id="31384" owner="1" flag="42" face="0" exp="44" str="8" bstr="5"/>
   </hex>
+  <hex row="13" col="13" rail="17"/>
   <hex row="13" col="14" road="17"/>
   <hex row="13" col="16" terrain="10" road="130"/>
   <hex row="13" col="19" terrain="15" name="Vrbas River"/>
@@ -315,7 +325,7 @@
   <hex row="14" col="6" terrain="3"/>
   <hex row="14" col="11" terrain="16"/>
   <hex row="14" col="12" terrain="16"/>
-  <hex row="14" col="13" road="18"/>
+  <hex row="14" col="13" road="18" rail="33"/>
   <hex row="14" col="14" road="33"/>
   <hex row="14" col="15" terrain="10"/>
   <hex row="14" col="16" terrain="10"/>
@@ -332,7 +342,8 @@
   <hex row="15" col="5" terrain="3"/>
   <hex row="15" col="7" terrain="16"/>
   <hex row="15" col="10" terrain="16"/>
-  <hex row="15" col="11" terrain="16"/>
+  <hex row="15" col="11" terrain="16" rail="18"/>
+  <hex row="15" col="12" rail="34"/>
   <hex row="15" col="13" road="33"/>
   <hex row="15" col="14">
     <unit id="31563" owner="1" flag="42" face="0" transport="31518" exp="44" str="5" ldr="1" bstr="5"/>
@@ -356,6 +367,7 @@
   <hex row="16" col="7" terrain="16"/>
   <hex row="16" col="8" terrain="16"/>
   <hex row="16" col="10" terrain="16"/>
+  <hex row="16" col="11" rail="17"/>
   <hex row="16" col="12" road="18"/>
   <hex row="16" col="15" terrain="10"/>
   <hex row="16" col="16" terrain="15" name="Vrbas River"/>
@@ -373,7 +385,7 @@
   <hex row="17" col="5" terrain="3"/>
   <hex row="17" col="6" terrain="3"/>
   <hex row="17" col="7" terrain="16"/>
-  <hex row="17" col="11" road="18"/>
+  <hex row="17" col="11" road="18" rail="33"/>
   <hex row="17" col="12" road="33"/>
   <hex row="17" col="15" terrain="10"/>
   <hex row="17" col="16" terrain="15" name="Vrbas River"/>
@@ -396,7 +408,8 @@
     <unit id="704" owner="1" flag="42" face="0" exp="44" str="5" bstr="1"/>
   </hex>
   <hex row="18" col="8" terrain="16"/>
-  <hex row="18" col="9" terrain="16"/>
+  <hex row="18" col="9" terrain="16" rail="18"/>
+  <hex row="18" col="10" rail="34"/>
   <hex row="18" col="11" road="33"/>
   <hex row="18" col="15" terrain="10"/>
   <hex row="18" col="17" terrain="15" name="Vrbas River"/>
@@ -423,6 +436,7 @@
   <hex row="19" col="8" terrain="2">
     <unit id="31632" owner="1" flag="42" face="0" exp="44" str="2" bstr="2" attach="1"/>
   </hex>
+  <hex row="19" col="9" rail="17"/>
   <hex row="19" col="10" road="18"/>
   <hex row="19" col="13" terrain="10"/>
   <hex row="19" col="14" terrain="10"/>
@@ -451,7 +465,7 @@
     <unit id="31558" owner="1" flag="42" face="0" transport="31534" exp="44" str="5" ldr="1" bstr="5"/>
   </hex>
   <hex row="20" col="8" road="40"/>
-  <hex row="20" col="9" terrain="1" road="138" name="Banja Luka" owner="1" flag="41" victory="1" trigger="1" trigparam="0" station="1">
+  <hex row="20" col="9" terrain="1" road="138" name="Banja Luka" owner="1" flag="41" victory="1" trigger="1" trigparam="0" station="1" rail="9">
     <unit id="31406" owner="1" flag="42" face="0" exp="44" str="8" bstr="5"/>
   </hex>
   <hex row="20" col="10" terrain="11" road="49" name="Banja Luka">
@@ -483,7 +497,7 @@
     <unit id="31465" owner="1" flag="42" face="0" exp="44" str="8" bstr="5"/>
   </hex>
   <hex row="21" col="9" terrain="10"/>
-  <hex row="21" col="10" terrain="10" road="137"/>
+  <hex row="21" col="10" terrain="10" road="137" rail="144"/>
   <hex row="21" col="11" terrain="1" road="152" name="Banja Luka">
     <unit id="31406" owner="1" flag="42" face="0" exp="44" str="8" bstr="5"/>
   </hex>
@@ -513,6 +527,7 @@
     <unit id="31443" owner="1" flag="42" face="0" exp="44" str="8" ldr="1" bstr="5"/>
   </hex>
   <hex row="22" col="9" terrain="10"/>
+  <hex row="22" col="10" rail="17"/>
   <hex row="22" col="11" road="11"/>
   <hex row="22" col="12" road="162"/>
   <hex row="22" col="14" terrain="11" road="130">
@@ -542,7 +557,7 @@
   <hex row="23" col="6" terrain="3"/>
   <hex row="23" col="7" terrain="3"/>
   <hex row="23" col="9" terrain="10"/>
-  <hex row="23" col="10">
+  <hex row="23" col="10" rail="17">
     <unit id="10179" owner="1" flag="8" face="0" exp="44" str="9" bstr="5"/>
   </hex>
   <hex row="23" col="12" road="144">
@@ -571,7 +586,7 @@
   <hex row="24" col="6" terrain="3"/>
   <hex row="24" col="7" terrain="3"/>
   <hex row="24" col="8" terrain="10"/>
-  <hex row="24" col="10">
+  <hex row="24" col="10" rail="17">
     <unit id="9161" owner="1" flag="8" face="0" exp="44" str="9" bstr="5"/>
   </hex>
   <hex row="24" col="12" road="25"/>
@@ -599,7 +614,8 @@
     <unit id="31406" owner="1" flag="42" face="0" exp="200" str="8" bstr="5"/>
   </hex>
   <hex row="25" col="8" terrain="10"/>
-  <hex row="25" col="10">
+  <hex row="25" col="9" rail="18"/>
+  <hex row="25" col="10" rail="33">
     <unit id="8770" owner="1" flag="8" face="0" exp="44" str="9" bstr="5"/>
   </hex>
   <hex row="25" col="12" road="19"/>
@@ -624,7 +640,7 @@
   <hex row="26" col="6" terrain="1" road="2" name="Village"/>
   <hex row="26" col="7" terrain="10"/>
   <hex row="26" col="8" terrain="10" road="136"/>
-  <hex row="26" col="9" road="130"/>
+  <hex row="26" col="9" road="130" rail="33"/>
   <hex row="26" col="10" road="40"/>
   <hex row="26" col="11" road="138"/>
   <hex row="26" col="12" road="49"/>
@@ -644,6 +660,7 @@
   <hex row="27" col="5" terrain="6"/>
   <hex row="27" col="6" terrain="3"/>
   <hex row="27" col="7" terrain="10"/>
+  <hex row="27" col="8" rail="18"/>
   <hex row="27" col="12" road="145"/>
   <hex row="27" col="15" terrain="10"/>
   <hex row="27" col="18" terrain="15" name="Vrbas River"/>
@@ -658,7 +675,8 @@
   <hex row="28" col="4" terrain="6"/>
   <hex row="28" col="5" terrain="6"/>
   <hex row="28" col="6" terrain="3"/>
-  <hex row="28" col="7" terrain="10"/>
+  <hex row="28" col="7" terrain="10" rail="34"/>
+  <hex row="28" col="8" rail="33"/>
   <hex row="28" col="12" road="17"/>
   <hex row="28" col="15" terrain="10"/>
   <hex row="28" col="19" terrain="15" name="Vrbas River"/>
@@ -669,7 +687,7 @@
   <hex row="29" col="3" terrain="6"/>
   <hex row="29" col="4" terrain="6"/>
   <hex row="29" col="5" terrain="10"/>
-  <hex row="29" col="6" terrain="10"/>
+  <hex row="29" col="6" terrain="10" rail="18"/>
   <hex row="29" col="9" terrain="3"/>
   <hex row="29" col="12" road="17"/>
   <hex row="29" col="14" terrain="10"/>
@@ -686,6 +704,7 @@
   <hex row="30" col="3" terrain="13"/>
   <hex row="30" col="4" terrain="6"/>
   <hex row="30" col="5" terrain="10"/>
+  <hex row="30" col="6" rail="17"/>
   <hex row="30" col="12" road="17"/>
   <hex row="30" col="13" terrain="10"/>
   <hex row="30" col="14" terrain="10"/>
@@ -704,6 +723,7 @@
   <hex row="31" col="2" terrain="13"/>
   <hex row="31" col="3" terrain="13"/>
   <hex row="31" col="4" terrain="13"/>
+  <hex row="31" col="6" rail="17"/>
   <hex row="31" col="8" terrain="16"/>
   <hex row="31" col="11" road="18"/>
   <hex row="31" col="12" road="33"/>
@@ -720,6 +740,7 @@
   <hex row="32" col="1" terrain="3"/>
   <hex row="32" col="2" terrain="3"/>
   <hex row="32" col="3" terrain="3"/>
+  <hex row="32" col="6" rail="17"/>
   <hex row="32" col="9" terrain="3"/>
   <hex row="32" col="11" road="33"/>
   <hex row="32" col="13" terrain="10"/>
@@ -732,6 +753,7 @@
   <hex row="33" col="0" terrain="3"/>
   <hex row="33" col="1" terrain="3"/>
   <hex row="33" col="2" terrain="3"/>
+  <hex row="33" col="6" rail="17"/>
   <hex row="33" col="8" terrain="3"/>
   <hex row="33" col="9" terrain="1" road="26" name="Village" owner="1" flag="41">
     <unit id="31406" owner="1" flag="42" face="0" exp="200" str="8" bstr="5"/>
@@ -748,6 +770,7 @@
   <hex row="33" col="27" terrain="3"/>
   <hex row="34" col="3" terrain="15"/>
   <hex row="34" col="4" terrain="15"/>
+  <hex row="34" col="6" rail="17"/>
   <hex row="34" col="9" terrain="1" road="19" name="Village"/>
   <hex row="34" col="10" terrain="1" road="161" name="Village"/>
   <hex row="34" col="12" terrain="10"/>
@@ -764,6 +787,7 @@
     <unit id="31384" owner="1" flag="42" face="0" exp="44" str="8" bstr="5"/>
   </hex>
   <hex row="35" col="4" terrain="1" road="48" name="Village"/>
+  <hex row="35" col="6" rail="17"/>
   <hex row="35" col="9" road="17"/>
   <hex row="35" col="11" terrain="10"/>
   <hex row="35" col="12" terrain="10"/>
@@ -785,6 +809,7 @@
   <hex row="36" col="5" terrain="11">
     <unit id="717" owner="1" flag="42" face="0" exp="44" str="5" bstr="1"/>
   </hex>
+  <hex row="36" col="6" rail="17"/>
   <hex row="36" col="7" terrain="16"/>
   <hex row="36" col="9" road="17"/>
   <hex row="36" col="11" terrain="10"/>
@@ -808,7 +833,8 @@
   <hex row="37" col="5" road="136">
     <unit id="31563" owner="1" flag="42" face="0" transport="31518" exp="44" str="5" bstr="5"/>
   </hex>
-  <hex row="37" col="7" terrain="1" road="40" name="Krupa na Vrbasu" owner="1" flag="41" victory="1" trigger="1" trigparam="0" station="1">
+  <hex row="37" col="6" rail="9"/>
+  <hex row="37" col="7" terrain="1" road="40" name="Krupa na Vrbasu" owner="1" flag="41" victory="1" trigger="1" trigparam="0" station="1" rail="144">
     <unit id="31384" owner="1" flag="42" face="0" exp="44" str="8" bstr="5"/>
   </hex>
   <hex row="37" col="9" terrain="1" road="33" name="Krupa na Vrbasu">

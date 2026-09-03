@@ -5,7 +5,9 @@
   <hex row="0" col="3">
     <unit id="42333" owner="0" flag="104" face="0" exp="84"/>
   </hex>
-  <hex row="0" col="17">
+  <hex row="0" col="9" rail="17"/>
+  <hex row="0" col="16" rail="136"/>
+  <hex row="0" col="17" rail="136">
     <unit id="42390" owner="0" flag="104" face="0" exp="70"/>
   </hex>
   <hex row="0" col="18" terrain="10" name="Lopan"/>
@@ -17,11 +19,12 @@
   <hex row="1" col="3" terrain="3"/>
   <hex row="1" col="5" terrain="3"/>
   <hex row="1" col="7" road="17"/>
+  <hex row="1" col="9" rail="17"/>
   <hex row="1" col="17" terrain="10" name="Lopan"/>
-  <hex row="1" col="18" terrain="10" name="Lopan">
+  <hex row="1" col="18" terrain="10" name="Lopan" rail="136">
     <unit id="42329" owner="0" flag="104" face="0" exp="70"/>
   </hex>
-  <hex row="1" col="19">
+  <hex row="1" col="19" rail="144">
     <unit id="42260" owner="0" flag="104" face="0" transport="42341" exp="64"/>
   </hex>
   <hex row="1" col="26" terrain="3"/>
@@ -33,7 +36,9 @@
   <hex row="2" col="4" terrain="3"/>
   <hex row="2" col="5" terrain="3"/>
   <hex row="2" col="7" road="17"/>
+  <hex row="2" col="9" rail="17"/>
   <hex row="2" col="17" terrain="10" name="Lopan"/>
+  <hex row="2" col="19" rail="9"/>
   <hex row="2" col="22" terrain="3"/>
   <hex row="2" col="23" terrain="3">
     <unit id="42281" owner="0" flag="104" face="0" transport="42344" exp="74"/>
@@ -50,12 +55,13 @@
   <hex row="3" col="4" terrain="3"/>
   <hex row="3" col="5" terrain="3"/>
   <hex row="3" col="7" road="17"/>
+  <hex row="3" col="9" rail="17"/>
   <hex row="3" col="15" terrain="10" name="Lopan"/>
   <hex row="3" col="16" terrain="10" name="Lopan"/>
   <hex row="3" col="18">
     <unit id="42260" owner="0" flag="104" face="0" transport="42341" exp="164" ldr="1"/>
   </hex>
-  <hex row="3" col="20">
+  <hex row="3" col="20" rail="144">
     <unit id="42260" owner="0" flag="104" face="0" transport="42341" exp="8" ldr="1"/>
   </hex>
   <hex row="3" col="26">
@@ -67,11 +73,12 @@
   <hex row="3" col="34" terrain="10" name="Seversky Donets"/>
   <hex row="3" col="35" terrain="10" name="Seversky Donets"/>
   <hex row="4" col="7" road="33"/>
-  <hex row="4" col="9" terrain="3"/>
+  <hex row="4" col="9" terrain="3" rail="33"/>
   <hex row="4" col="14" terrain="10" name="Lopan"/>
   <hex row="4" col="17">
     <unit id="42360" owner="0" flag="104" face="0" transport="42341" exp="20"/>
   </hex>
+  <hex row="4" col="20" rail="17"/>
   <hex row="4" col="24">
     <unit id="42281" owner="0" flag="104" face="0" transport="42344" exp="14"/>
   </hex>
@@ -84,11 +91,13 @@
   <hex row="4" col="37" terrain="10" name="Seversky Donets"/>
   <hex row="5" col="3" terrain="2"/>
   <hex row="5" col="6" road="18"/>
+  <hex row="5" col="8" rail="18"/>
   <hex row="5" col="13" terrain="10" name="Lopan"/>
   <hex row="5" col="14" terrain="10" name="Lopan"/>
   <hex row="5" col="16">
     <unit id="42260" owner="0" flag="104" face="0" transport="42341" exp="64"/>
   </hex>
+  <hex row="5" col="20" rail="17"/>
   <hex row="5" col="25">
     <unit id="42281" owner="0" flag="104" face="0" transport="42344" exp="244"/>
   </hex>
@@ -98,23 +107,26 @@
   <hex row="5" col="33" road="136"/>
   <hex row="5" col="37" terrain="10" name="Seversky Donets"/>
   <hex row="6" col="1" terrain="3"/>
-  <hex row="6" col="2" terrain="2" owner="0" flag="103">
+  <hex row="6" col="2" terrain="2" owner="0" flag="103" deploy="0">
     <unit id="42335" owner="0" flag="104" face="0" exp="14"/>
   </hex>
   <hex row="6" col="5" road="18"/>
   <hex row="6" col="6" road="33"/>
+  <hex row="6" col="7" rail="10"/>
+  <hex row="6" col="8" rail="33"/>
   <hex row="6" col="9" terrain="1" name="Derhachi"/>
   <hex row="6" col="11" terrain="10" name="Lopan"/>
   <hex row="6" col="12" terrain="10" name="Lopan"/>
   <hex row="6" col="13">
     <unit id="42260" owner="0" flag="104" face="0" transport="42341" exp="164" ldr="1"/>
   </hex>
-  <hex row="6" col="15" terrain="1" name="Cherkaska Lozova" owner="0" flag="103">
+  <hex row="6" col="15" terrain="1" name="Cherkaska Lozova" owner="0" flag="103" deploy="0">
     <unit id="42335" owner="0" flag="104" face="0" exp="14"/>
   </hex>
   <hex row="6" col="18">
     <unit id="42324" owner="0" flag="104" face="0" transport="42341" exp="64"/>
   </hex>
+  <hex row="6" col="20" rail="17"/>
   <hex row="6" col="22">
     <unit id="42255" owner="0" flag="104" face="0" transport="42350" exp="58" str="8" ldr="1" bstr="8"/>
   </hex>
@@ -129,7 +141,8 @@
   <hex row="7" col="5" road="33">
     <unit id="42272" owner="0" flag="104" face="0" transport="42344" exp="114"/>
   </hex>
-  <hex row="7" col="8" terrain="1" name="Derhachi" station="1">
+  <hex row="7" col="7" rail="18"/>
+  <hex row="7" col="8" terrain="1" name="Derhachi" station="1" rail="160">
     <unit id="42335" owner="0" flag="104" face="0" exp="14"/>
   </hex>
   <hex row="7" col="9">
@@ -143,6 +156,7 @@
   <hex row="7" col="16">
     <unit id="502" owner="0" flag="104" face="0" exp="14"/>
   </hex>
+  <hex row="7" col="20" rail="17"/>
   <hex row="7" col="22">
     <unit id="42401" owner="0" flag="104" face="0" transport="42349" exp="214" ldr="1"/>
   </hex>
@@ -162,6 +176,7 @@
   <hex row="8" col="4" road="18">
     <unit id="42281" owner="0" flag="104" face="0" transport="42344" exp="114"/>
   </hex>
+  <hex row="8" col="7" rail="17"/>
   <hex row="8" col="8">
     <unit id="502" owner="0" flag="104" face="0" exp="14"/>
   </hex>
@@ -171,8 +186,9 @@
   </hex>
   <hex row="8" col="18" terrain="3"/>
   <hex row="8" col="19" terrain="3"/>
+  <hex row="8" col="20" rail="17"/>
   <hex row="8" col="23" terrain="2"/>
-  <hex row="8" col="24" terrain="2" owner="0" flag="103" victory="0">
+  <hex row="8" col="24" terrain="2" owner="0" flag="103" victory="0" deploy="0">
     <unit id="42281" owner="0" flag="104" face="0" transport="42344" exp="114"/>
   </hex>
   <hex row="8" col="35" road="17"/>
@@ -182,7 +198,9 @@
   <hex row="9" col="4" road="33">
     <unit id="42281" owner="0" flag="104" face="0" transport="42344" exp="164" ldr="1"/>
   </hex>
+  <hex row="9" col="7" rail="33"/>
   <hex row="9" col="10" terrain="10" name="Lopan"/>
+  <hex row="9" col="20" rail="17"/>
   <hex row="9" col="26">
     <unit id="42252" owner="0" flag="104" face="0" transport="42342" exp="114"/>
   </hex>
@@ -196,13 +214,14 @@
   <hex row="10" col="4">
     <unit id="42397" owner="0" flag="104" face="0" transport="42349" exp="14"/>
   </hex>
+  <hex row="10" col="6" rail="18"/>
   <hex row="10" col="9" terrain="10" name="Lopan"/>
   <hex row="10" col="10" terrain="10" name="Lopan"/>
   <hex row="10" col="18" terrain="3"/>
-  <hex row="10" col="20" terrain="1" name="Lisne" owner="0" flag="103" station="1">
+  <hex row="10" col="20" terrain="1" name="Lisne" owner="0" flag="103" station="1" rail="9">
     <unit id="42306" owner="0" flag="104" face="0" exp="158" ldr="1"/>
   </hex>
-  <hex row="10" col="21" terrain="1" name="Lisne"/>
+  <hex row="10" col="21" terrain="1" name="Lisne" rail="144"/>
   <hex row="10" col="31" terrain="3"/>
   <hex row="10" col="32" terrain="3"/>
   <hex row="10" col="36" road="136"/>
@@ -213,7 +232,10 @@
   <hex row="11" col="2" road="18">
     <unit id="42397" owner="0" flag="104" face="0" transport="42349" exp="14"/>
   </hex>
+  <hex row="11" col="5" rail="18"/>
+  <hex row="11" col="6" rail="33"/>
   <hex row="11" col="9" terrain="10" name="Lopan"/>
+  <hex row="11" col="21" rail="17"/>
   <hex row="11" col="37" road="25"/>
   <hex row="11" col="39" terrain="10" name="Seversky Donets"/>
   <hex row="11" col="41" road="17"/>
@@ -221,10 +243,11 @@
   <hex row="12" col="2" road="17">
     <unit id="42252" owner="0" flag="104" face="0" transport="42342" exp="114"/>
   </hex>
+  <hex row="12" col="5" rail="33"/>
   <hex row="12" col="8" terrain="10" name="Lopan"/>
   <hex row="12" col="11" terrain="3"/>
   <hex row="12" col="12" terrain="3"/>
-  <hex row="12" col="21" terrain="1" name="Kharkov"/>
+  <hex row="12" col="21" terrain="1" name="Kharkov" rail="17"/>
   <hex row="12" col="37" road="17"/>
   <hex row="12" col="38" road="136"/>
   <hex row="12" col="39" terrain="1" name="Staryi Saltiv" owner="1" flag="100"/>
@@ -237,6 +260,7 @@
   <hex row="13" col="3" terrain="1" name="Lyubotyn">
     <unit id="42324" owner="0" flag="104" face="0" transport="42357" exp="114"/>
   </hex>
+  <hex row="13" col="4" rail="18"/>
   <hex row="13" col="5">
     <unit id="42335" owner="0" flag="104" face="0" exp="14"/>
   </hex>
@@ -248,7 +272,7 @@
   <hex row="13" col="12" terrain="3"/>
   <hex row="13" col="13" terrain="3"/>
   <hex row="13" col="19" terrain="1" name="Kharkov"/>
-  <hex row="13" col="21" terrain="1" name="Kharkov"/>
+  <hex row="13" col="21" terrain="1" name="Kharkov" rail="17"/>
   <hex row="13" col="22" terrain="1" name="Kharkov"/>
   <hex row="13" col="23" terrain="1" name="Kharkov"/>
   <hex row="13" col="27" terrain="3"/>
@@ -259,9 +283,10 @@
   <hex row="14" col="2" terrain="1" road="153" name="Lyubotyn">
     <unit id="42397" owner="0" flag="104" face="0" transport="42349" exp="114"/>
   </hex>
-  <hex row="14" col="3" terrain="1" road="144" name="Lyubotyn" owner="0" flag="103" victory="0" station="1">
+  <hex row="14" col="3" terrain="1" road="144" name="Lyubotyn" owner="0" flag="103" victory="0" station="1" rail="42">
     <unit id="42335" owner="0" flag="104" face="0" exp="214"/>
   </hex>
+  <hex row="14" col="4" rail="33"/>
   <hex row="14" col="5" terrain="10" name="Lopan"/>
   <hex row="14" col="6" terrain="10" name="Lopan"/>
   <hex row="14" col="9" terrain="3"/>
@@ -273,7 +298,7 @@
   <hex row="14" col="17" terrain="1" name="Kharkov"/>
   <hex row="14" col="18" terrain="1" name="Kharkov"/>
   <hex row="14" col="19" terrain="1" name="Kharkov"/>
-  <hex row="14" col="21" terrain="1" name="Kharkov"/>
+  <hex row="14" col="21" terrain="1" name="Kharkov" rail="17"/>
   <hex row="14" col="22" terrain="1" name="Kharkov"/>
   <hex row="14" col="23" terrain="1" name="Kharkov"/>
   <hex row="14" col="24" terrain="1" name="Kharkov"/>
@@ -285,14 +310,15 @@
   <hex row="14" col="37" road="17"/>
   <hex row="14" col="40" terrain="10" name="Seversky Donets"/>
   <hex row="14" col="41" road="17"/>
-  <hex row="15" col="2" terrain="1" name="Lyubotyn"/>
+  <hex row="15" col="1" rail="34"/>
+  <hex row="15" col="2" terrain="1" name="Lyubotyn" rail="34"/>
   <hex row="15" col="3" road="17">
     <unit id="502" owner="0" flag="104" face="0" exp="14"/>
   </hex>
-  <hex row="15" col="4">
+  <hex row="15" col="4" rail="136">
     <unit id="502" owner="0" flag="104" face="0" exp="14"/>
   </hex>
-  <hex row="15" col="5" terrain="10" name="Lopan"/>
+  <hex row="15" col="5" terrain="10" name="Lopan" rail="136"/>
   <hex row="15" col="6" terrain="10" name="Lopan"/>
   <hex row="15" col="10" terrain="3"/>
   <hex row="15" col="13" terrain="1" name="Kharkov"/>
@@ -302,7 +328,9 @@
   <hex row="15" col="18" terrain="1" name="Kharkov"/>
   <hex row="15" col="19" terrain="1" name="Kharkov"/>
   <hex row="15" col="20" terrain="1" name="Kharkov"/>
-  <hex row="15" col="21" terrain="1" name="Kharkov" deploy="1"/>
+  <hex row="15" col="21" terrain="1" name="Kharkov" deploy="1" rail="17">
+    <unit id="42162" owner="1" flag="101" face="0" exp="64" osada="rework" objrow="8" objcol="24"/>
+  </hex>
   <hex row="15" col="22" terrain="1" name="Kharkov"/>
   <hex row="15" col="23" terrain="1" name="Kharkov"/>
   <hex row="15" col="24" terrain="1" name="Kharkov"/>
@@ -310,23 +338,38 @@
   <hex row="15" col="37" road="17"/>
   <hex row="15" col="40" terrain="10" name="Seversky Donets"/>
   <hex row="15" col="41" terrain="1" road="17" name="Martove" owner="1" flag="100"/>
+  <hex row="16" col="0" rail="130"/>
   <hex row="16" col="3" terrain="10" road="17" name="Lopan"/>
   <hex row="16" col="4" terrain="10" name="Lopan"/>
   <hex row="16" col="5" terrain="10" name="Lopan"/>
+  <hex row="16" col="6" rail="136"/>
+  <hex row="16" col="7" rail="136"/>
   <hex row="16" col="9" terrain="1" name="Kharkov"/>
   <hex row="16" col="10" terrain="1" name="Kharkov"/>
   <hex row="16" col="11" terrain="1" name="Kharkov"/>
   <hex row="16" col="13" terrain="1" name="Kharkov"/>
   <hex row="16" col="14" terrain="1" name="Kharkov"/>
-  <hex row="16" col="15" terrain="1" name="Kharkov" deploy="1"/>
+  <hex row="16" col="15" terrain="1" name="Kharkov" deploy="1">
+    <unit id="42097" owner="1" flag="101" face="0" transport="42129" exp="64" osada="rework" objrow="14" objcol="3"/>
+  </hex>
   <hex row="16" col="16" terrain="1" name="Kharkov"/>
   <hex row="16" col="17" terrain="1" name="Kharkov"/>
   <hex row="16" col="18" terrain="1" name="Kharkov"/>
-  <hex row="16" col="19" terrain="1" name="Kharkov" deploy="1"/>
-  <hex row="16" col="20" terrain="1" name="Kharkov" deploy="1"/>
-  <hex row="16" col="21" terrain="1" name="Kharkov" owner="1" flag="100" victory="1" deploy="1" station="1"/>
-  <hex row="16" col="22" terrain="1" name="Kharkov" deploy="1"/>
-  <hex row="16" col="23" terrain="1" name="Kharkov" deploy="1"/>
+  <hex row="16" col="19" terrain="1" name="Kharkov" deploy="1">
+    <unit id="42033" owner="1" flag="101" face="0" exp="64" osada="rework" objrow="14" objcol="3"/>
+  </hex>
+  <hex row="16" col="20" terrain="1" name="Kharkov" deploy="1">
+    <unit id="42099" owner="1" flag="101" face="0" transport="42129" exp="64" osada="rework" objrow="8" objcol="24"/>
+  </hex>
+  <hex row="16" col="21" terrain="1" name="Kharkov" owner="1" flag="100" victory="1" deploy="1" station="1" rail="33">
+    <unit id="42107" owner="1" flag="101" face="0" exp="64" osada="rework" objrow="8" objcol="24"/>
+  </hex>
+  <hex row="16" col="22" terrain="1" name="Kharkov" deploy="1">
+    <unit id="42062" owner="1" flag="101" face="0" exp="64" osada="rework" objrow="8" objcol="24"/>
+  </hex>
+  <hex row="16" col="23" terrain="1" name="Kharkov" deploy="1">
+    <unit id="42058" owner="1" flag="101" face="0" exp="64" osada="rework" objrow="8" objcol="24"/>
+  </hex>
   <hex row="16" col="24" terrain="1" name="Kharkov"/>
   <hex row="16" col="37" road="17"/>
   <hex row="16" col="40" terrain="10" name="Seversky Donets"/>
@@ -338,21 +381,36 @@
   <hex row="17" col="4" terrain="10" name="Lopan"/>
   <hex row="17" col="6" terrain="10" name="Lopan"/>
   <hex row="17" col="7" terrain="10" name="Lopan"/>
-  <hex row="17" col="9" terrain="1" name="Kharkov"/>
+  <hex row="17" col="8" rail="136"/>
+  <hex row="17" col="9" terrain="1" name="Kharkov" rail="136"/>
   <hex row="17" col="10" terrain="1" name="Kharkov"/>
   <hex row="17" col="11" terrain="1" name="Kharkov"/>
   <hex row="17" col="12" terrain="1" name="Kharkov"/>
-  <hex row="17" col="13" terrain="1" name="Kharkov" deploy="1"/>
-  <hex row="17" col="14" terrain="1" name="Kharkov" deploy="1"/>
-  <hex row="17" col="15" terrain="1" name="Kharkov" deploy="1"/>
+  <hex row="17" col="13" terrain="1" name="Kharkov" deploy="1">
+    <unit id="42056" owner="1" flag="101" face="0" exp="64" osada="rework" objrow="14" objcol="3"/>
+  </hex>
+  <hex row="17" col="14" terrain="1" name="Kharkov" deploy="1">
+    <unit id="42070" owner="1" flag="101" face="0" exp="64" osada="rework" objrow="14" objcol="3"/>
+  </hex>
+  <hex row="17" col="15" terrain="1" name="Kharkov" deploy="1">
+    <unit id="42153" owner="1" flag="101" face="0" transport="42129" exp="64" osada="rework" objrow="14" objcol="3"/>
+  </hex>
   <hex row="17" col="16" terrain="1" name="Kharkov"/>
   <hex row="17" col="17" terrain="1" name="Kharkov"/>
   <hex row="17" col="18" terrain="1" name="Kharkov"/>
-  <hex row="17" col="19" name="Kharkov" deploy="1"/>
-  <hex row="17" col="20" terrain="1" name="Kharkov" deploy="1"/>
+  <hex row="17" col="19" name="Kharkov" deploy="1" rail="50">
+    <unit id="42089" owner="1" flag="101" face="0" exp="64" osada="rework" objrow="14" objcol="3"/>
+  </hex>
+  <hex row="17" col="20" terrain="1" name="Kharkov" deploy="1" rail="34">
+    <unit id="42041" owner="1" flag="101" face="0" exp="64" osada="rework" objrow="14" objcol="3"/>
+  </hex>
   <hex row="17" col="21" terrain="10" name="Lopan"/>
-  <hex row="17" col="22" terrain="1" name="Kharkov" deploy="1"/>
-  <hex row="17" col="23" terrain="1" name="Kharkov" deploy="1"/>
+  <hex row="17" col="22" terrain="1" name="Kharkov" deploy="1">
+    <unit id="42098" owner="1" flag="101" face="0" transport="42129" exp="64" osada="rework" objrow="8" objcol="24"/>
+  </hex>
+  <hex row="17" col="23" terrain="1" name="Kharkov" deploy="1">
+    <unit id="42083" owner="1" flag="101" face="0" exp="64" osada="rework" objrow="8" objcol="24"/>
+  </hex>
   <hex row="17" col="24" terrain="1" name="Kharkov"/>
   <hex row="17" col="25" terrain="1" name="Kharkov"/>
   <hex row="17" col="37" road="17"/>
@@ -367,16 +425,22 @@
   <hex row="18" col="6" terrain="2" name="Kharkov"/>
   <hex row="18" col="8" terrain="10" name="Lopan"/>
   <hex row="18" col="9" terrain="1" name="Kharkov"/>
-  <hex row="18" col="10" terrain="1" name="Kharkov"/>
-  <hex row="18" col="11" terrain="1" name="Kharkov"/>
+  <hex row="18" col="10" terrain="1" name="Kharkov" rail="136"/>
+  <hex row="18" col="11" terrain="1" name="Kharkov" rail="136"/>
   <hex row="18" col="12" terrain="1" name="Kharkov"/>
-  <hex row="18" col="13" terrain="1" name="Kharkov" deploy="1"/>
-  <hex row="18" col="14" terrain="1" name="Kharkov" owner="1" flag="100" victory="1" deploy="1"/>
-  <hex row="18" col="15" terrain="1" name="Kharkov" deploy="1"/>
+  <hex row="18" col="13" terrain="1" name="Kharkov" deploy="1">
+    <unit id="42061" owner="1" flag="101" face="0" exp="64" osada="rework" objrow="14" objcol="3"/>
+  </hex>
+  <hex row="18" col="14" terrain="1" name="Kharkov" owner="1" flag="100" victory="1" deploy="1">
+    <unit id="42052" owner="1" flag="101" face="0" exp="64" osada="rework" objrow="14" objcol="3"/>
+  </hex>
+  <hex row="18" col="15" terrain="1" name="Kharkov" deploy="1">
+    <unit id="42033" owner="1" flag="101" face="0" exp="64" osada="rework" objrow="14" objcol="3"/>
+  </hex>
   <hex row="18" col="16" terrain="1" name="Kharkov"/>
-  <hex row="18" col="17" terrain="1" name="Kharkov"/>
-  <hex row="18" col="18" terrain="1" name="Kharkov"/>
-  <hex row="18" col="19" terrain="10" name="Lopan"/>
+  <hex row="18" col="17" terrain="1" name="Kharkov" rail="34"/>
+  <hex row="18" col="18" terrain="1" name="Kharkov" rail="34"/>
+  <hex row="18" col="19" terrain="10" name="Lopan" rail="17"/>
   <hex row="18" col="20" terrain="10" name="Lopan"/>
   <hex row="18" col="21" terrain="1" name="Kharkov"/>
   <hex row="18" col="22" terrain="10" name="Lopan"/>
@@ -397,14 +461,20 @@
   <hex row="19" col="9" terrain="10" name="Lopan"/>
   <hex row="19" col="10" terrain="10" name="Lopan"/>
   <hex row="19" col="11" terrain="10" name="Lopan"/>
-  <hex row="19" col="12" terrain="1" name="Kharkov"/>
-  <hex row="19" col="13" terrain="1" name="Kharkov" deploy="1"/>
-  <hex row="19" col="14" terrain="1" name="Kharkov" deploy="1"/>
-  <hex row="19" col="15" terrain="1" name="Lopan" deploy="1"/>
-  <hex row="19" col="16" terrain="1" name="Kharkov"/>
+  <hex row="19" col="12" terrain="1" name="Kharkov" rail="136"/>
+  <hex row="19" col="13" terrain="1" name="Kharkov" deploy="1" rail="130">
+    <unit id="42061" owner="1" flag="101" face="0" exp="64" osada="rework" objrow="14" objcol="3"/>
+  </hex>
+  <hex row="19" col="14" terrain="1" name="Kharkov" deploy="1" rail="40">
+    <unit id="42055" owner="1" flag="101" face="0" exp="64" osada="rework" objrow="14" objcol="3"/>
+  </hex>
+  <hex row="19" col="15" terrain="1" name="Lopan" deploy="1" rail="130">
+    <unit id="42058" owner="1" flag="101" face="0" exp="64" osada="rework" objrow="14" objcol="3"/>
+  </hex>
+  <hex row="19" col="16" terrain="1" name="Kharkov" rail="34"/>
   <hex row="19" col="17" terrain="10" name="Lopan"/>
   <hex row="19" col="18" terrain="10" name="Lopan"/>
-  <hex row="19" col="19" terrain="1" name="Kharkov"/>
+  <hex row="19" col="19" terrain="1" name="Kharkov" rail="17"/>
   <hex row="19" col="20" terrain="1" name="Kharkov"/>
   <hex row="19" col="21" terrain="1" name="Kharkov"/>
   <hex row="19" col="22" terrain="10" name="Lopan"/>
@@ -426,9 +496,11 @@
   <hex row="20" col="14" terrain="10" name="Lopan"/>
   <hex row="20" col="15" terrain="10" name="Lopan"/>
   <hex row="20" col="16" terrain="10" name="Lopan"/>
-  <hex row="20" col="17" terrain="1" name="Kharkov" deploy="1"/>
+  <hex row="20" col="17" terrain="1" name="Kharkov" deploy="1">
+    <unit id="42132" owner="1" flag="101" face="0" transport="42129" exp="64" osada="rework" objrow="14" objcol="3"/>
+  </hex>
   <hex row="20" col="18" terrain="1" name="Kharkov"/>
-  <hex row="20" col="19" terrain="1" name="Kharkov"/>
+  <hex row="20" col="19" terrain="1" name="Kharkov" rail="17"/>
   <hex row="20" col="20" terrain="1" name="Kharkov"/>
   <hex row="20" col="21" terrain="1" name="Kharkov"/>
   <hex row="20" col="22" terrain="10" name="Lopan"/>
@@ -458,7 +530,7 @@
   <hex row="21" col="16" terrain="1" name="Kharkov" deploy="1"/>
   <hex row="21" col="17" terrain="1" name="Kharkov" deploy="1"/>
   <hex row="21" col="18" terrain="1" name="Kharkov"/>
-  <hex row="21" col="19" terrain="1" name="Kharkov"/>
+  <hex row="21" col="19" terrain="1" name="Kharkov" rail="17"/>
   <hex row="21" col="20" terrain="1" name="Kharkov"/>
   <hex row="21" col="21" terrain="1" name="Kharkov"/>
   <hex row="21" col="22" terrain="1" road="144" name="Kharkov"/>
@@ -472,7 +544,7 @@
   <hex row="21" col="40" terrain="1" name="Pechenihy" owner="1" flag="100"/>
   <hex row="21" col="41" terrain="10" name="Seversky Donets"/>
   <hex row="21" col="42" terrain="10" road="17"/>
-  <hex row="22" col="1" terrain="1" road="130" name="Budy" owner="0" flag="103">
+  <hex row="22" col="1" terrain="1" road="130" name="Budy" owner="0" flag="103" deploy="0">
     <unit id="42397" owner="0" flag="104" face="0" transport="42349" exp="14"/>
   </hex>
   <hex row="22" col="2" road="34"/>
@@ -486,7 +558,7 @@
   <hex row="22" col="15" road="17"/>
   <hex row="22" col="16" terrain="1" name="Kharkov" deploy="1"/>
   <hex row="22" col="18" terrain="1" name="Kharkov"/>
-  <hex row="22" col="19" terrain="1" name="Kharkov"/>
+  <hex row="22" col="19" terrain="1" name="Kharkov" rail="17"/>
   <hex row="22" col="20" terrain="1" name="Kharkov"/>
   <hex row="22" col="21" terrain="1" name="Kharkov"/>
   <hex row="22" col="22" road="9"/>
@@ -510,7 +582,7 @@
   <hex row="23" col="12" road="34"/>
   <hex row="23" col="15" road="33"/>
   <hex row="23" col="18" terrain="1" name="Kharkov"/>
-  <hex row="23" col="19" terrain="1" name="Kharkov"/>
+  <hex row="23" col="19" terrain="1" name="Kharkov" rail="49"/>
   <hex row="23" col="24" road="144"/>
   <hex row="23" col="25" terrain="10" name="Lopan"/>
   <hex row="23" col="26" terrain="10" name="Lopan"/>
@@ -524,7 +596,7 @@
   <hex row="23" col="41" terrain="10" name="Seversky Donets"/>
   <hex row="23" col="42" terrain="10" road="17"/>
   <hex row="23" col="43" terrain="10"/>
-  <hex row="24" col="3" terrain="1" name="Bidryahy" owner="0" flag="103">
+  <hex row="24" col="3" terrain="1" name="Bidryahy" owner="0" flag="103" deploy="0">
     <unit id="42310" owner="0" flag="104" face="0" exp="214"/>
   </hex>
   <hex row="24" col="5" road="34"/>
@@ -533,6 +605,11 @@
   <hex row="24" col="12" terrain="1" name="Vysokyi"/>
   <hex row="24" col="13" terrain="1" name="Vysokyi" owner="1" flag="100"/>
   <hex row="24" col="14" road="18"/>
+  <hex row="24" col="15" rail="34"/>
+  <hex row="24" col="16" rail="40"/>
+  <hex row="24" col="17" rail="130"/>
+  <hex row="24" col="18" rail="50"/>
+  <hex row="24" col="19" rail="9"/>
   <hex row="24" col="24" road="17"/>
   <hex row="24" col="26" terrain="10" name="Lopan"/>
   <hex row="24" col="27" terrain="10" name="Lopan"/>
@@ -551,11 +628,13 @@
     <unit id="42310" owner="0" flag="104" face="0" exp="114"/>
   </hex>
   <hex row="25" col="8" terrain="10" name="Udy"/>
-  <hex row="25" col="14" road="19"/>
+  <hex row="25" col="14" road="19" rail="18"/>
   <hex row="25" col="15" terrain="3"/>
   <hex row="25" col="16" terrain="3"/>
   <hex row="25" col="17" terrain="3"/>
-  <hex row="25" col="18" terrain="1" name="Khorosheve" owner="1" flag="100" station="1"/>
+  <hex row="25" col="18" terrain="1" name="Khorosheve" owner="1" flag="100" station="1" rail="1"/>
+  <hex row="25" col="20" rail="136"/>
+  <hex row="25" col="21" rail="136"/>
   <hex row="25" col="24" road="9"/>
   <hex row="25" col="25" road="136"/>
   <hex row="25" col="27" terrain="10" name="Lopan"/>
@@ -569,11 +648,13 @@
   <hex row="26" col="1" road="34"/>
   <hex row="26" col="2" road="34"/>
   <hex row="26" col="8" terrain="10" name="Udy"/>
-  <hex row="26" col="13" road="18"/>
-  <hex row="26" col="14" road="33"/>
+  <hex row="26" col="13" road="18" rail="18"/>
+  <hex row="26" col="14" road="33" rail="33"/>
   <hex row="26" col="16" terrain="3"/>
   <hex row="26" col="17" terrain="3"/>
   <hex row="26" col="18" terrain="3"/>
+  <hex row="26" col="22" rail="136"/>
+  <hex row="26" col="23" rail="136"/>
   <hex row="26" col="26" road="144"/>
   <hex row="26" col="28" terrain="10" name="Lopan"/>
   <hex row="26" col="29" terrain="10" name="Lopan"/>
@@ -583,9 +664,11 @@
   <hex row="26" col="37" road="144"/>
   <hex row="26" col="41" terrain="10" name="Seversky Donets"/>
   <hex row="27" col="8" terrain="10" name="Udy"/>
-  <hex row="27" col="13" road="33"/>
+  <hex row="27" col="13" road="33" rail="17"/>
   <hex row="27" col="21" terrain="3"/>
   <hex row="27" col="23" terrain="1" name="Zmiiv" owner="1" flag="100"/>
+  <hex row="27" col="24" rail="136"/>
+  <hex row="27" col="25" rail="136"/>
   <hex row="27" col="26" road="9"/>
   <hex row="27" col="27" road="136"/>
   <hex row="27" col="30" terrain="10" name="Lopan"/>
@@ -598,10 +681,12 @@
   <hex row="28" col="8" terrain="10" name="Udy"/>
   <hex row="28" col="9" terrain="10" name="Udy"/>
   <hex row="28" col="12" road="18"/>
+  <hex row="28" col="13" rail="33"/>
   <hex row="28" col="14" terrain="3"/>
   <hex row="28" col="19" terrain="3"/>
   <hex row="28" col="20" terrain="3"/>
   <hex row="28" col="21" terrain="3"/>
+  <hex row="28" col="26" rail="144"/>
   <hex row="28" col="28" road="144"/>
   <hex row="28" col="33" terrain="10" name="Lopan"/>
   <hex row="28" col="37" road="9"/>
@@ -609,7 +694,7 @@
   <hex row="29" col="2" terrain="3"/>
   <hex row="29" col="10" terrain="10" name="Udy"/>
   <hex row="29" col="11" terrain="10" road="18" name="Udy"/>
-  <hex row="29" col="12" road="33"/>
+  <hex row="29" col="12" road="33" rail="18"/>
   <hex row="29" col="13" terrain="10" name="Udy"/>
   <hex row="29" col="15" terrain="3"/>
   <hex row="29" col="16" terrain="3"/>
@@ -618,7 +703,8 @@
   <hex row="29" col="19" terrain="3"/>
   <hex row="29" col="20" terrain="3"/>
   <hex row="29" col="21" terrain="3"/>
-  <hex row="29" col="26" terrain="3"/>
+  <hex row="29" col="26" terrain="3" rail="9"/>
+  <hex row="29" col="27" rail="144"/>
   <hex row="29" col="28" road="17"/>
   <hex row="29" col="33" terrain="10" name="Lopan"/>
   <hex row="29" col="35" terrain="3"/>
@@ -629,15 +715,15 @@
   <hex row="30" col="3" terrain="10" name="Berestovaya"/>
   <hex row="30" col="8" terrain="3"/>
   <hex row="30" col="9" terrain="3"/>
-  <hex row="30" col="11" road="33"/>
-  <hex row="30" col="12" terrain="10" name="Udy"/>
+  <hex row="30" col="11" road="33" rail="18"/>
+  <hex row="30" col="12" terrain="10" name="Udy" rail="33"/>
   <hex row="30" col="13" terrain="10" name="Udy"/>
   <hex row="30" col="14" terrain="3"/>
   <hex row="30" col="16" terrain="3"/>
   <hex row="30" col="17" terrain="3"/>
   <hex row="30" col="18" terrain="3"/>
   <hex row="30" col="20" terrain="3"/>
-  <hex row="30" col="27" road="18"/>
+  <hex row="30" col="27" road="18" rail="9"/>
   <hex row="30" col="28" terrain="1" road="33" name="Chuhuiv" owner="1" flag="100"/>
   <hex row="30" col="33" terrain="10" name="Lopan"/>
   <hex row="30" col="35" terrain="10" name="Seversky Donets"/>
@@ -649,8 +735,10 @@
   <hex row="31" col="4" terrain="3"/>
   <hex row="31" col="8" terrain="3"/>
   <hex row="31" col="10" road="18"/>
+  <hex row="31" col="11" rail="33"/>
   <hex row="31" col="13" terrain="10" name="Udy"/>
   <hex row="31" col="27" road="17"/>
+  <hex row="31" col="28" rail="144"/>
   <hex row="31" col="31" terrain="10" name="Seversky Donets"/>
   <hex row="31" col="33" terrain="10" name="Seversky Donets"/>
   <hex row="31" col="34" terrain="10" name="Seversky Donets"/>
@@ -658,11 +746,13 @@
   <hex row="32" col="3" terrain="10" name="Berestovaya"/>
   <hex row="32" col="7" terrain="3"/>
   <hex row="32" col="9" road="18"/>
-  <hex row="32" col="10" road="49"/>
+  <hex row="32" col="10" road="49" rail="18"/>
   <hex row="32" col="13" terrain="10" name="Udy"/>
   <hex row="32" col="20" terrain="1" name="Shubine" owner="1" flag="100"/>
   <hex row="32" col="23" terrain="10" name="Udy"/>
   <hex row="32" col="27" road="17"/>
+  <hex row="32" col="28" rail="9"/>
+  <hex row="32" col="29" rail="136"/>
   <hex row="32" col="31" terrain="10" name="Seversky Donets"/>
   <hex row="32" col="32" terrain="10" name="Seversky Donets"/>
   <hex row="32" col="33" terrain="3"/>
@@ -673,6 +763,7 @@
   <hex row="33" col="7" terrain="1" name="Birky" owner="1" flag="100"/>
   <hex row="33" col="8" terrain="3"/>
   <hex row="33" col="9" road="33"/>
+  <hex row="33" col="10" rail="17"/>
   <hex row="33" col="13" terrain="10" name="Udy"/>
   <hex row="33" col="15" terrain="10" name="Udy"/>
   <hex row="33" col="17" terrain="10" name="Udy"/>
@@ -685,7 +776,8 @@
   <hex row="33" col="26" terrain="10" name="Udy"/>
   <hex row="33" col="27" terrain="10" road="33" name="Udy"/>
   <hex row="33" col="29" terrain="10" name="Seversky Donets"/>
-  <hex row="33" col="30" terrain="10" name="Seversky Donets"/>
+  <hex row="33" col="30" terrain="10" name="Seversky Donets" rail="136"/>
+  <hex row="33" col="31" rail="136"/>
   <hex row="33" col="32" terrain="3"/>
   <hex row="33" col="34" terrain="3"/>
   <hex row="33" col="38" road="17"/>
@@ -694,6 +786,7 @@
   <hex row="34" col="5" terrain="3"/>
   <hex row="34" col="7" road="18"/>
   <hex row="34" col="8" road="34"/>
+  <hex row="34" col="10" rail="17"/>
   <hex row="34" col="14" terrain="10" name="Udy"/>
   <hex row="34" col="16" terrain="10" name="Udy"/>
   <hex row="34" col="18" terrain="10" name="Udy"/>
@@ -701,30 +794,43 @@
   <hex row="34" col="22" terrain="1" name="Krasna Polyana" owner="1" flag="100"/>
   <hex row="34" col="26" road="18"/>
   <hex row="34" col="28" terrain="10" name="Seversky Donets"/>
+  <hex row="34" col="32" rail="136"/>
+  <hex row="34" col="33" rail="136"/>
   <hex row="34" col="38" road="17"/>
   <hex row="35" col="2" terrain="10" name="Berestovaya"/>
   <hex row="35" col="3" terrain="3"/>
   <hex row="35" col="7" road="17"/>
+  <hex row="35" col="10" rail="25"/>
+  <hex row="35" col="11" rail="144"/>
   <hex row="35" col="13" terrain="3"/>
   <hex row="35" col="26" road="17"/>
   <hex row="35" col="28" terrain="10" name="Seversky Donets"/>
+  <hex row="35" col="34" rail="136"/>
+  <hex row="35" col="35" rail="136"/>
   <hex row="35" col="37" road="18"/>
   <hex row="35" col="38" road="33"/>
   <hex row="36" col="1" terrain="10" name="Berestovaya"/>
   <hex row="36" col="2" terrain="10" name="Berestovaya"/>
   <hex row="36" col="5" terrain="3"/>
   <hex row="36" col="7" road="17"/>
+  <hex row="36" col="9" rail="18"/>
+  <hex row="36" col="10" rail="33"/>
+  <hex row="36" col="11" rail="9"/>
   <hex row="36" col="19" terrain="3"/>
   <hex row="36" col="26" terrain="1" road="17" name="Zadonetske" owner="1" flag="100"/>
   <hex row="36" col="27" terrain="10" name="Seversky Donets"/>
   <hex row="36" col="28" terrain="10" name="Seversky Donets"/>
   <hex row="36" col="33" terrain="3"/>
+  <hex row="36" col="36" rail="144"/>
   <hex row="36" col="37" road="9"/>
   <hex row="36" col="39" terrain="1" name="Svatove"/>
   <hex row="36" col="40" terrain="3"/>
   <hex row="36" col="41" terrain="3"/>
   <hex row="37" col="0" terrain="10" name="Berestovaya"/>
   <hex row="37" col="7" road="17"/>
+  <hex row="37" col="9" rail="17"/>
+  <hex row="37" col="12" rail="136"/>
+  <hex row="37" col="13" rail="136"/>
   <hex row="37" col="19" terrain="1" name="Levkivka" owner="1" flag="100"/>
   <hex row="37" col="20" terrain="3"/>
   <hex row="37" col="26" road="9"/>
@@ -733,14 +839,20 @@
   <hex row="37" col="29" terrain="10" name="Seversky Donets"/>
   <hex row="37" col="32" terrain="3"/>
   <hex row="37" col="35" terrain="1" name="Borova"/>
-  <hex row="37" col="36" terrain="1" name="Borova" owner="1" flag="100"/>
+  <hex row="37" col="36" terrain="1" name="Borova" owner="1" flag="100" rail="9"/>
+  <hex row="37" col="37" rail="136"/>
   <hex row="37" col="38" road="136"/>
   <hex row="37" col="39" terrain="1" road="136" name="Svatove" owner="1" flag="100"/>
   <hex row="38" col="7" road="17"/>
+  <hex row="38" col="9" rail="17"/>
+  <hex row="38" col="14" rail="136"/>
+  <hex row="38" col="15" rail="136"/>
   <hex row="38" col="28" road="136"/>
   <hex row="38" col="29" road="136"/>
   <hex row="38" col="30" terrain="10" name="Seversky Donets"/>
   <hex row="38" col="31" terrain="10" name="Seversky Donets"/>
+  <hex row="38" col="38" rail="136"/>
+  <hex row="38" col="39" rail="136"/>
   <hex row="38" col="40" road="136"/>
   <hex row="38" col="41" road="136"/>
 </map>

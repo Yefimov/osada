@@ -63,21 +63,24 @@ internal object MoveRangeCalculation {
 
         val maxRange = MovementRules.getUnitMoveRange(unit)
         val isTrain = UnitPredicates.isTrain(unit)
-        // Strict "trains only move on rail" only applies once the MAP actually carries rail data
-        // (tools/og-import/add_rails.py) -- most scenarios haven't been re-patched yet. Only
-        // RAIL(12)-flagged units need the WHEELED fallback below to reproduce their pre-fix
-        // behaviour (fix_rail_units.py switched them from WHEELED to RAIL): the rarer legacy
-        // "repurpose DEEP_NAVAL for trains" convention (e.g. eqp-adlerkorps's Armoured Train) was
-        // already completely immobile on land before this fix and is left exactly as it was
-        // unless the map has rail data to actually move it on.
-        val enforceRail = isTrain && map.hasRailData()
+        // **A train moves on rail or it does not move.** No map-level escape hatch: this used to be
+        // gated on `map.hasRailData()`, so on a scenario never patched by `add_rails.py` a train
+        // fell back to WHEELED and drove cross-country. That was a workaround for missing DATA, and
+        // it produced the visible defect it was meant to avoid -- an armoured train crossing open
+        // steppe. The rule now stands on its own, and a formation the author parked off the line is
+        // an immobile one: the Great Patriotic War used armoured trains exactly so once they were
+        // cut off from their track, dug in at a terminus or a works siding and fought as fixed
+        // firing points. `rcampode`'s own Odessa unit is named for it.
+        //
+        // The purchase list already assumed this shape: `EquipmentWindowState` hides RAIL equipment
+        // outright on a map with no rail, so nobody can buy a train that would only ever be a
+        // pillbox. What is gone is the pretence that one already on the map could drive.
+        val enforceRail = isTrain
         val unitData = unit.unitData()
-        val method =
-            if (unitData.movmethod == MovMethod.RAIL.value && !enforceRail) {
-                MovMethod.WHEELED.value
-            } else {
-                unitData.movmethod
-            }
+        // movTable[RAIL.value] is intentionally all-255 (Constants.kt) -- a placeholder that is
+        // never meant to be read. `baseTerrainCost` short-circuits on `enforceRail` before the
+        // table is consulted, but the substitution stays so no other reader can resolve that row.
+        val method = if (isTrain) MovMethod.WHEELED.value else unitData.movmethod
         val movementTable = movTable[method]
         val ring =
             HexGeometry

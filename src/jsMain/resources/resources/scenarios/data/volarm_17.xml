@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="volarm_17.xscn" name="Last days in Novorossiysk" turns="15, 18, 22" date="March 12, 1920" dayturns="2" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="39" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_390.png" eqpv="united1" killunits="45, 0" msuunits="0, 6" prototimeframe="0" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="0" capitalflak="0" ehmsuonly="0" paradropocean="1" coresoffcap="1" daysperturn="0">
+<map file="volarm_17.xscn" name="Last days in Novorossiysk" turns="15, 18, 22" date="March 12, 1920" dayturns="2" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="39" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_390.png" eqpv="united1" killunits="18, 0" msuunits="0, 3" prototimeframe="0" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="0" capitalflak="0" ehmsuonly="0" paradropocean="1" coresoffcap="1" daysperturn="0">
 <player id="0" country="103" side="0" airtrans="0" navaltrans="6" railtrans="0" defaultxp="80" defaultstr="0" support="104,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="54:0:1,78:0:1"/>
 <player id="1" country="100" side="1" airtrans="0" navaltrans="0" railtrans="4" defaultxp="154" defaultstr="0" support="101,0,0,0" turnprestige="0, 60, 60, 60, 60, 80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="20:1:15"/>
   <hex row="0" col="1" terrain="6">
@@ -189,9 +189,9 @@
   <hex row="3" col="36" terrain="6"/>
   <hex row="3" col="37" terrain="6"/>
   <hex row="3" col="38" terrain="6"/>
-  <hex row="3" col="39" terrain="6"/>
+  <hex row="3" col="39" terrain="6" deploy="0"/>
   <hex row="3" col="40" terrain="6"/>
-  <hex row="3" col="41" terrain="1" road="17" name="Village" owner="0" flag="103">
+  <hex row="3" col="41" terrain="1" road="17" name="Village" owner="0" flag="103" deploy="0">
     <unit id="42281" owner="0" flag="104" face="0" transport="42341" exp="154"/>
   </hex>
   <hex row="3" col="42" terrain="6"/>
@@ -354,8 +354,12 @@
   <hex row="7" col="16" terrain="16"/>
   <hex row="7" col="17" terrain="6"/>
   <hex row="7" col="18" terrain="6"/>
-  <hex row="7" col="20" road="17" deploy="1"/>
-  <hex row="7" col="21" terrain="2" owner="1" flag="100" deploy="1"/>
+  <hex row="7" col="20" road="17" deploy="1">
+    <unit id="42044" owner="1" flag="101" face="0" exp="154" osada="rework" objrow="2" objcol="20"/>
+  </hex>
+  <hex row="7" col="21" terrain="2" owner="1" flag="100" deploy="1">
+    <unit id="42101" owner="1" flag="101" face="0" exp="154" osada="rework" objrow="7" objcol="30"/>
+  </hex>
   <hex row="7" col="22" terrain="2">
     <unit id="272" owner="1" flag="101" face="0" transport="42122" exp="80" str="4" bstr="4" msu="1"/>
   </hex>
@@ -394,10 +398,18 @@
   <hex row="8" col="15" terrain="16"/>
   <hex row="8" col="16" terrain="16"/>
   <hex row="8" col="17" terrain="6"/>
-  <hex row="8" col="18" terrain="6"/>
-  <hex row="8" col="19" road="18" deploy="1"/>
-  <hex row="8" col="20" road="33" deploy="1"/>
-  <hex row="8" col="21" deploy="1"/>
+  <hex row="8" col="18" terrain="6">
+    <unit id="42071" owner="1" flag="101" face="0" exp="154" osada="rework" objrow="2" objcol="20"/>
+  </hex>
+  <hex row="8" col="19" road="18" deploy="1">
+    <unit id="42090" owner="1" flag="101" face="0" exp="154" osada="rework" objrow="7" objcol="30"/>
+  </hex>
+  <hex row="8" col="20" road="33" deploy="1">
+    <unit id="42108" owner="1" flag="101" face="0" exp="154" osada="rework" objrow="7" objcol="30"/>
+  </hex>
+  <hex row="8" col="21" deploy="1">
+    <unit id="42148" owner="1" flag="101" face="0" transport="42129" exp="154" osada="rework" objrow="7" objcol="30"/>
+  </hex>
   <hex row="8" col="23" terrain="16"/>
   <hex row="8" col="24" terrain="16"/>
   <hex row="8" col="25" terrain="6"/>
@@ -494,7 +506,7 @@
   <hex row="10" col="34" terrain="1" road="26" name="Town">
     <unit id="42272" owner="0" flag="104" face="0" transport="42341" exp="154"/>
   </hex>
-  <hex row="10" col="35" terrain="1" road="171" name="Town" owner="0" flag="103">
+  <hex row="10" col="35" terrain="1" road="171" name="Town" owner="0" flag="103" deploy="0">
     <unit id="42281" owner="0" flag="104" face="0" transport="42341" exp="154" ldr="1"/>
   </hex>
   <hex row="10" col="36" terrain="1" road="177" name="Town"/>
@@ -571,10 +583,18 @@
   <hex row="12" col="20" road="136"/>
   <hex row="12" col="21" terrain="16" road="130"/>
   <hex row="12" col="22" terrain="16" road="40"/>
-  <hex row="12" col="23" terrain="16" road="136"/>
-  <hex row="12" col="24" terrain="16" deploy="1"/>
-  <hex row="12" col="25" terrain="16" road="40" deploy="1"/>
-  <hex row="12" col="26" terrain="6"/>
+  <hex row="12" col="23" terrain="16" road="136">
+    <unit id="42043" owner="1" flag="101" face="0" exp="154" osada="rework" objrow="11" objcol="34"/>
+  </hex>
+  <hex row="12" col="24" terrain="16" deploy="1">
+    <unit id="42162" owner="1" flag="101" face="0" exp="154" osada="rework" objrow="11" objcol="34"/>
+  </hex>
+  <hex row="12" col="25" terrain="16" road="40" deploy="1">
+    <unit id="42088" owner="1" flag="101" face="0" exp="154" osada="rework" objrow="11" objcol="34"/>
+  </hex>
+  <hex row="12" col="26" terrain="6">
+    <unit id="42041" owner="1" flag="101" face="0" exp="154" osada="rework" objrow="11" objcol="34"/>
+  </hex>
   <hex row="12" col="27" terrain="6" road="40"/>
   <hex row="12" col="28" terrain="16"/>
   <hex row="12" col="29" terrain="16" road="40"/>
@@ -612,9 +632,15 @@
   <hex row="13" col="21" terrain="16"/>
   <hex row="13" col="22" terrain="16"/>
   <hex row="13" col="23" terrain="16"/>
-  <hex row="13" col="24" terrain="16" road="130" deploy="1"/>
-  <hex row="13" col="25" terrain="16" deploy="1"/>
-  <hex row="13" col="26" terrain="16" road="130" deploy="1"/>
+  <hex row="13" col="24" terrain="16" road="130" deploy="1">
+    <unit id="42144" owner="1" flag="101" face="0" transport="42129" exp="154" osada="rework" objrow="11" objcol="34"/>
+  </hex>
+  <hex row="13" col="25" terrain="16" deploy="1">
+    <unit id="42080" owner="1" flag="101" face="0" exp="154" osada="rework" objrow="11" objcol="34"/>
+  </hex>
+  <hex row="13" col="26" terrain="16" road="130" deploy="1">
+    <unit id="42101" owner="1" flag="101" face="0" exp="154" osada="rework" objrow="11" objcol="34"/>
+  </hex>
   <hex row="13" col="27" terrain="16"/>
   <hex row="13" col="28" terrain="6" road="130"/>
   <hex row="13" col="29" terrain="16"/>
@@ -655,7 +681,9 @@
   <hex row="14" col="23" terrain="6"/>
   <hex row="14" col="24" terrain="16"/>
   <hex row="14" col="25" terrain="16"/>
-  <hex row="14" col="26" terrain="16" deploy="1"/>
+  <hex row="14" col="26" terrain="16" deploy="1">
+    <unit id="42038" owner="1" flag="101" face="0" exp="154" osada="rework" objrow="15" objcol="35"/>
+  </hex>
   <hex row="14" col="27" terrain="16"/>
   <hex row="14" col="28" terrain="6"/>
   <hex row="14" col="29" terrain="16"/>
@@ -821,7 +849,9 @@
   <hex row="18" col="24" terrain="9"/>
   <hex row="18" col="25" terrain="16" road="9"/>
   <hex row="18" col="26" terrain="16"/>
-  <hex row="18" col="27" terrain="16" deploy="1"/>
+  <hex row="18" col="27" terrain="16" deploy="1">
+    <unit id="42047" owner="1" flag="101" face="0" exp="154" osada="rework" objrow="18" objcol="35"/>
+  </hex>
   <hex row="18" col="28" terrain="16"/>
   <hex row="18" col="29" terrain="16"/>
   <hex row="18" col="30" terrain="16"/>
@@ -866,8 +896,12 @@
   <hex row="19" col="23" terrain="9"/>
   <hex row="19" col="24" terrain="9"/>
   <hex row="19" col="25" terrain="9"/>
-  <hex row="19" col="26" terrain="16" road="144" deploy="1"/>
-  <hex row="19" col="27" terrain="16" deploy="1"/>
+  <hex row="19" col="26" terrain="16" road="144" deploy="1">
+    <unit id="42060" owner="1" flag="101" face="0" exp="154" osada="rework" objrow="22" objcol="32"/>
+  </hex>
+  <hex row="19" col="27" terrain="16" deploy="1">
+    <unit id="42075" owner="1" flag="101" face="0" exp="154" osada="rework" objrow="22" objcol="32"/>
+  </hex>
   <hex row="19" col="28" terrain="16"/>
   <hex row="19" col="29" terrain="6"/>
   <hex row="19" col="30" terrain="16"/>
@@ -910,8 +944,12 @@
   <hex row="20" col="23" terrain="9"/>
   <hex row="20" col="24" terrain="9"/>
   <hex row="20" col="25" terrain="9"/>
-  <hex row="20" col="26" terrain="16" road="17" deploy="1"/>
-  <hex row="20" col="27" terrain="16" deploy="1"/>
+  <hex row="20" col="26" terrain="16" road="17" deploy="1">
+    <unit id="42056" owner="1" flag="101" face="0" exp="154" osada="rework" objrow="22" objcol="32"/>
+  </hex>
+  <hex row="20" col="27" terrain="16" deploy="1">
+    <unit id="42058" owner="1" flag="101" face="0" exp="154" osada="rework" objrow="22" objcol="32"/>
+  </hex>
   <hex row="20" col="28" terrain="16"/>
   <hex row="20" col="29" terrain="6"/>
   <hex row="20" col="30" terrain="6"/>
@@ -955,7 +993,9 @@
   <hex row="21" col="23" terrain="9"/>
   <hex row="21" col="24" terrain="9"/>
   <hex row="21" col="25" terrain="9"/>
-  <hex row="21" col="26" terrain="16" road="9" deploy="1"/>
+  <hex row="21" col="26" terrain="16" road="9" deploy="1">
+    <unit id="42141" owner="1" flag="101" face="0" transport="42129" exp="154" osada="rework" objrow="22" objcol="32"/>
+  </hex>
   <hex row="21" col="27" terrain="16" road="144"/>
   <hex row="21" col="28" terrain="16"/>
   <hex row="21" col="29" terrain="16"/>
@@ -1092,7 +1132,7 @@
   <hex row="24" col="32">
     <unit id="42310" owner="0" flag="104" face="0" exp="154"/>
   </hex>
-  <hex row="24" col="35" terrain="1" road="49" name="Kabardinka" owner="0" flag="103">
+  <hex row="24" col="35" terrain="1" road="49" name="Kabardinka" owner="0" flag="103" deploy="0">
     <unit id="42295" owner="0" flag="104" face="0" exp="154"/>
   </hex>
   <hex row="24" col="36" terrain="16"/>
@@ -1558,7 +1598,7 @@
   <hex row="34" col="35" road="138">
     <unit id="42281" owner="0" flag="104" face="0" transport="42341" exp="154"/>
   </hex>
-  <hex row="34" col="36" terrain="2" road="50" owner="0" flag="103"/>
+  <hex row="34" col="36" terrain="2" road="50" owner="0" flag="103" deploy="0"/>
   <hex row="34" col="37" terrain="2">
     <unit id="42331" owner="0" flag="104" face="0" exp="154"/>
   </hex>
