@@ -63,8 +63,28 @@ internal object ScenarioHexParser {
         el.getAttribute("owner")?.toIntOrNull()?.let { hex.owner = it }
         el.getAttribute("victory")?.toIntOrNull()?.let { hex.victorySide = it }
         applyTypedVictoryAttributes(el, hex, scenario)
-        el.getAttribute("deploy")?.toIntOrNull()?.let { hex.isDeployment = it }
-        el.getAttribute("supply")?.toIntOrNull()?.let { hex.isDeployment = it }
+        applyDeploymentOwner(el, hex)
+    }
+
+    /**
+     * The hex's deployment owner, from whichever of the two spellings the file uses.
+     *
+     * `deploy` is what the OG importer writes (10,500 hexes); `supply` is the Panzer Marshal
+     * original's name for the same field and survives only on the 64 PM-authored scenarios (97
+     * hexes). **`deploy` wins when both are present**, which used to be the other way round purely
+     * because the two lines ran in that order: `supply` overwrote it unconditionally, so a file
+     * carrying both would have taken the legacy value. 15 hexes carry both today and agree on 0,
+     * so nothing shipped ever depended on the old order -- this closes the trap rather than
+     * changing a behaviour.
+     */
+    private fun applyDeploymentOwner(
+        el: Element,
+        hex: Hex,
+    ) {
+        val authored =
+            el.getAttribute("deploy")?.toIntOrNull()
+                ?: el.getAttribute("supply")?.toIntOrNull()
+        authored?.let { hex.isDeployment = it }
     }
 
     /**

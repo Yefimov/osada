@@ -26,6 +26,7 @@ import org.osada.rules.ruleset.RulesetDefaults
 import org.osada.rules.ruleset.RulesetResolver
 import org.osada.rules.ruleset.RulesetSource
 import org.osada.scenario.Scenario
+import org.osada.uiSettings
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -208,6 +209,30 @@ class OgRuleKeysTest {
         map.map!![3][3].terrain = TerrainType.FOREST.value
         plain.tempSpotted = true
         assertFalse(UnitConcealment.isConcealed(plain, 0))
+    }
+
+    /**
+     * Observer Mode's "Disable fog of war" lifts the HEX counters, and the concealment layer sits
+     * on top of them. Until 2026-09-02 it knew nothing about the setting, so on `n_kiel` -- a city
+     * map with Extended LOS on -- the veil came off and no enemy appeared under it. Written against
+     * Forest Camouflage rather than Extended LOS because it needs no ruleset key to reproduce: both
+     * halves of concealment go through the same one guard.
+     */
+    @Test
+    fun disablingFogOfWarAlsoLiftsUnitConcealment() {
+        val map = world()
+        val hidden = place(map, infantryEqid, 3, 3, LeaderType.FOREST_CAMOUFLAGE, side = 1)
+        map.map!![3][3].terrain = TerrainType.FOREST.value
+        hidden.tempSpotted = true
+        assertTrue(UnitConcealment.isConcealed(hidden, 0), "concealed while the fog is on")
+
+        uiSettings.noFOW = true
+        try {
+            assertFalse(UnitConcealment.isConcealed(hidden, 0))
+            assertTrue(UnitConcealment.isVisibleTo(hidden, 0), "Observer Mode shows every enemy")
+        } finally {
+            uiSettings.noFOW = false
+        }
     }
 
     // ---- harness -----------------------------------------------------------------------------------

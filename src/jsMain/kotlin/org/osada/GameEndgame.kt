@@ -15,6 +15,7 @@ import org.osada.model.ensureFormationIds
 import org.osada.model.getPlayer
 import org.osada.save.SaveStatus
 import org.osada.save.SaveStatusBus
+import org.osada.scenario.ScenarioTextLocalization
 import org.osada.scenario.getReinforcements
 import org.osada.scenario.removeReinforcement
 import org.osada.ui.HudLog
@@ -227,8 +228,11 @@ fun Game.deployReinforcements(
     // Authored announcement for this wave (`<reinforce message="...">`), OG-style. Only for the
     // side the player is watching — the enemy's reinforcements are not theirs to be told about.
     if (deployed && spotSide == side) {
-        scenario?.reinforcementMessages?.get(turn)?.let {
-            UIBuilder.message(I18n.t("game.reinforcement.title"), it)
+        scenario?.reinforcementMessages?.get(turn)?.let { authored ->
+            UIBuilder.message(
+                I18n.t("game.reinforcement.title"),
+                ScenarioTextLocalization.reinforcementMessage(scenario?.file, turn, authored),
+            )
         }
     }
     if (deployed) {
@@ -246,6 +250,12 @@ fun Game.cleanup() {
         .stop()
     org.osada.ui.WeatherModel
         .stop()
+    // `WeatherRenderer.stop()` already silences the weather loop; the scenario score is the other
+    // audio channel and nothing was stopping it, so a battle with a track kept playing it through
+    // the teardown -- into the menu, into the next scenario's briefing, and underneath a next
+    // battle that has no track of its own. Same class of leak as the two below.
+    org.osada.ui.Sound
+        .stopMusic()
     // Nothing about the battle just finished may follow the player into the next one. Both of these
     // outlived the transition: HeroCampaign's queues are on a long-lived object cleared only by
     // reset() (a NEW RUN, not a new scenario), and MessageDialogs' boxes are plain DOM nodes under

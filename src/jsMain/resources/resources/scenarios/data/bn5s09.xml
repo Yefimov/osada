@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="bn5s09.xscn" name="RP Sink the Tirpitz" turns="8, 10, 16" date="October 5, 1941" dayturns="0" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="0" rows="38" cols="43" eqp="eqp-lxf" image="resources/maps/images/map_783.png" eqpv="united1" msuunits="1, 0" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="1" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1" ehmsuonly="0" paradropocean="1" coresoffcap="0">
+<map file="bn5s09.xscn" name="RP Sink the Tirpitz" turns="8, 10, 16" date="October 5, 1941" dayturns="16" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="0" rows="38" cols="43" eqp="eqp-lxf" image="resources/maps/images/map_783.png" eqpv="united1" msuunits="1, 0" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="1" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1" ehmsuonly="0" paradropocean="1" coresoffcap="0" daysperturn="0">
   <player id="0" country="19" side="1" airtrans="1" navaltrans="1" railtrans="2" defaultxp="10" defaultstr="10" support="20,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10" ff="20:1:262144"/>
   <player id="1" country="7" side="0" airtrans="2" navaltrans="6" railtrans="4" defaultxp="50" defaultstr="10" support="8,59,0,0" turnprestige="500, 0, 500, 0, 500, 0, 500, 0, 500, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50" ff="8:2:65544,59:1:65536"/>
   <reinforce turn="3">
     <at row="2" col="23">
-      <unit id="20896" owner="0" flag="20" face="0" exp="44" str="6" ldr="1"/>
+      <unit id="20896" owner="0" flag="20" face="0" exp="44" str="6" ldr="1" bstr="1"/>
     </at>
     <at row="1" col="25">
       <unit id="20880" owner="0" flag="20" face="0" exp="100"/>
     </at>
     <at row="9" col="1">
-      <unit id="7963" owner="1" flag="8" face="0" transport="9828" exp="44" str="8" objcol="21" objrow="0"/>
+      <unit id="7963" owner="1" flag="8" face="0" transport="9828" exp="44" str="8" objcol="21" objrow="0" bstr="3"/>
     </at>
     <at row="11" col="2">
-      <unit id="8830" owner="1" flag="8" face="0" exp="44" str="5" objcol="21" objrow="0"/>
+      <unit id="8830" owner="1" flag="8" face="0" exp="44" str="5" objcol="21" objrow="0" bstr="3"/>
     </at>
     <at row="10" col="1">
-      <unit id="10117" owner="1" flag="8" face="0" transport="9715" exp="44" str="5" objcol="21" objrow="0"/>
+      <unit id="10117" owner="1" flag="8" face="0" transport="9715" exp="44" str="5" objcol="21" objrow="0" bstr="3"/>
     </at>
   </reinforce>
   <reinforce turn="5">
     <at row="3" col="24">
-      <unit id="20896" owner="0" flag="20" face="0" exp="44" str="6"/>
+      <unit id="20896" owner="0" flag="20" face="0" exp="44" str="6" bstr="1"/>
     </at>
   </reinforce>
   <reinforce turn="8">
     <at row="19" col="21">
-      <unit id="10585" owner="1" flag="8" face="0" exp="200"/>
-      <unit id="10585" owner="1" flag="8" face="0" exp="200"/>
+      <unit id="10585" owner="1" flag="8" face="0" exp="200" bstr="5"/>
+      <unit id="10585" owner="1" flag="8" face="0" exp="200" bstr="5"/>
     </at>
   </reinforce>
   <hex row="0" col="2" terrain="9"/>

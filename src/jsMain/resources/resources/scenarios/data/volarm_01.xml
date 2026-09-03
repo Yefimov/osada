@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="volarm_01.xscn" name="Tragedy at Ekaterinodar" turns="13, 16, 19" date="April 9, 1918" dayturns="0" ground="0" atmosferic="1" latitude="3" iconset="0" weatherchg="1" rows="20" cols="28" eqp="eqp-kaiser" image="resources/maps/images/map_650.png" eqpv="united1" prototimeframe="0" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="0" capitalflak="0" ehmsuonly="0" paradropocean="1" coresoffcap="1">
+<map file="volarm_01.xscn" name="Tragedy at Ekaterinodar" turns="13, 16, 19" date="April 9, 1918" dayturns="5" ground="0" atmosferic="1" latitude="3" iconset="0" weatherchg="1" rows="20" cols="28" eqp="eqp-kaiser" image="resources/maps/images/map_650.png" eqpv="united1" prototimeframe="0" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="0" capitalflak="0" ehmsuonly="0" paradropocean="1" coresoffcap="1" daysperturn="0">
 <player id="0" country="103" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="104,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="54:0:1,78:0:1"/>
 <player id="1" country="100" side="1" airtrans="0" navaltrans="0" railtrans="4" defaultxp="40" defaultstr="0" support="101,192,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="20:1:15"/>
   <hex row="0" col="19" road="17"/>
@@ -150,7 +150,7 @@
   </hex>
   <hex row="10" col="20" terrain="10" name="Kuban"/>
   <hex row="10" col="21" terrain="1" name="Ekaterinodar" owner="0" flag="103">
-    <unit id="42267" owner="0" flag="104" face="0" exp="40"/>
+    <unit id="42267" owner="0" flag="104" face="0" exp="40" objcol="20" objrow="0"/>
   </hex>
   <hex row="10" col="22" terrain="10" name="Kuban"/>
   <hex row="10" col="23" terrain="1" road="11" name="Ekaterinodar" station="1"/>
@@ -179,7 +179,7 @@
   <hex row="11" col="22" terrain="10" name="Kuban"/>
   <hex row="11" col="24" road="136"/>
   <hex row="11" col="25" terrain="1" road="136" name="Plodorodny" owner="0" flag="103" station="1">
-    <unit id="42330" owner="0" flag="104" face="0" exp="40"/>
+    <unit id="42330" owner="0" flag="104" face="0" exp="40" objcol="19" objrow="0"/>
   </hex>
   <hex row="11" col="27" road="40"/>
   <hex row="12" col="0" terrain="3"/>
@@ -205,11 +205,11 @@
   <hex row="12" col="17" terrain="10" name="Kuban"/>
   <hex row="12" col="18" terrain="10" name="Kuban"/>
   <hex row="12" col="19">
-    <unit id="42267" owner="0" flag="104" face="0" exp="40"/>
+    <unit id="42267" owner="0" flag="104" face="0" exp="40" objcol="20" objrow="0"/>
   </hex>
   <hex row="12" col="20" terrain="1" road="24" name="Ekaterinodar"/>
   <hex row="12" col="21" terrain="1" road="184" name="Ekaterinodar">
-    <unit id="42267" owner="0" flag="104" face="0" exp="40"/>
+    <unit id="42267" owner="0" flag="104" face="0" exp="40" objcol="20" objrow="0"/>
   </hex>
   <hex row="12" col="22" terrain="10" name="Kuban"/>
   <hex row="12" col="23" terrain="10" name="Kuban"/>
@@ -245,7 +245,7 @@
   <hex row="13" col="21" road="179"/>
   <hex row="13" col="22" terrain="1" road="168" name="Ekaterinodar"/>
   <hex row="13" col="23" road="144">
-    <unit id="42308" owner="0" flag="104" face="0" exp="40"/>
+    <unit id="42308" owner="0" flag="104" face="0" exp="40" objcol="20" objrow="0"/>
   </hex>
   <hex row="13" col="24" terrain="10" name="Kuban"/>
   <hex row="13" col="25" terrain="3"/>

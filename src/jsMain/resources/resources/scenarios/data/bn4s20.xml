@@ -1,0 +1,570 @@
+<?xml version="1.0" encoding="ASCII"?>
+<map file="bn4s20.xscn" name="Punish the Traitors!" turns="11, 14, 19" date="October 10, 1943" dayturns="3" ground="0" atmosferic="0" latitude="1" iconset="0" weatherchg="1" rows="16" cols="44" eqp="eqp-lxf" image="resources/maps/images/map_1094.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="1" portsnonavaldeploy="1" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1" ehmsuonly="0" paradropocean="1" coresoffcap="0" daysperturn="0">
+  <player id="0" country="82" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="43" defaultstr="10" support="83,0,0,0" turnprestige="0, 25, 25, 25, 25, 25, 25, 25, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="83:1:291200"/>
+  <player id="1" country="39" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="200" defaultstr="10" support="8,40,0,0" turnprestige="0, 25, 25, 25, 25, 25, 25, 25, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="40:0:-2147483648"/>
+  <reinforce turn="2">
+    <at row="4" col="41">
+      <unit id="10884" owner="1" flag="8" face="0" exp="44" str="2" attach="1" bstr="2"/>
+    </at>
+    <at row="3" col="41">
+      <unit id="10822" owner="1" flag="8" face="0" exp="44" str="5" ldr="1" bstr="5"/>
+    </at>
+  </reinforce>
+  <reinforce turn="3">
+    <at row="13" col="27">
+      <unit id="30345" owner="1" flag="40" face="0" exp="44" bstr="5"/>
+    </at>
+    <at row="14" col="26">
+      <unit id="30345" owner="1" flag="40" face="0" exp="44" bstr="5"/>
+    </at>
+    <at row="14" col="28">
+      <unit id="30345" owner="1" flag="40" face="0" exp="44" ldr="1" bstr="5"/>
+    </at>
+  </reinforce>
+  <reinforce turn="4">
+    <at row="11" col="42">
+      <unit id="30345" owner="1" flag="40" face="0" exp="44" ldr="1" bstr="5"/>
+    </at>
+    <at row="10" col="42">
+      <unit id="30345" owner="1" flag="40" face="0" exp="44" bstr="5"/>
+    </at>
+    <at row="12" col="42">
+      <unit id="30345" owner="1" flag="40" face="0" exp="44" bstr="5"/>
+    </at>
+    <at row="11" col="40">
+      <unit id="30512" owner="1" flag="40" face="0" exp="44" bstr="5"/>
+    </at>
+  </reinforce>
+  <hex row="0" col="1" terrain="6"/>
+  <hex row="0" col="2" terrain="6"/>
+  <hex row="0" col="3" terrain="6"/>
+  <hex row="0" col="4" terrain="5"/>
+  <hex row="0" col="5" terrain="5"/>
+  <hex row="0" col="11" deploy="0">
+    <unit id="38964" owner="0" flag="83" face="0" exp="43" core="1"/>
+  </hex>
+  <hex row="0" col="12" terrain="10" name="Pinios River"/>
+  <hex row="0" col="13" road="34">
+    <unit id="30345" owner="1" flag="40" face="0" exp="44" ldr="1" bstr="5"/>
+  </hex>
+  <hex row="0" col="14" road="40"/>
+  <hex row="0" col="15" road="145"/>
+  <hex row="0" col="19" terrain="5"/>
+  <hex row="0" col="20" terrain="5"/>
+  <hex row="0" col="21" terrain="2" dirt="1"/>
+  <hex row="0" col="22" terrain="6"/>
+  <hex row="0" col="23" terrain="6"/>
+  <hex row="0" col="24" terrain="6"/>
+  <hex row="0" col="25" terrain="6"/>
+  <hex row="0" col="26" terrain="6"/>
+  <hex row="0" col="27" terrain="6"/>
+  <hex row="0" col="28" terrain="6"/>
+  <hex row="0" col="29" terrain="6"/>
+  <hex row="0" col="30" terrain="6"/>
+  <hex row="0" col="31" terrain="6"/>
+  <hex row="0" col="32" terrain="6"/>
+  <hex row="0" col="33" terrain="6"/>
+  <hex row="0" col="34" terrain="6"/>
+  <hex row="0" col="35" terrain="6"/>
+  <hex row="0" col="36" terrain="6"/>
+  <hex row="0" col="37" terrain="6"/>
+  <hex row="0" col="38" terrain="6"/>
+  <hex row="0" col="39" terrain="6"/>
+  <hex row="0" col="40" terrain="6"/>
+  <hex row="0" col="41" terrain="6"/>
+  <hex row="0" col="42" terrain="6"/>
+  <hex row="0" col="43" terrain="6"/>
+  <hex row="1" col="0" terrain="6"/>
+  <hex row="1" col="1" terrain="6"/>
+  <hex row="1" col="2" terrain="6"/>
+  <hex row="1" col="3" terrain="6"/>
+  <hex row="1" col="4" terrain="6"/>
+  <hex row="1" col="5" terrain="6"/>
+  <hex row="1" col="6" terrain="5"/>
+  <hex row="1" col="11" terrain="1" road="58" name="Kastraki" owner="0" flag="82" victory="0" deploy="0">
+    <unit id="38964" owner="0" flag="83" face="0" exp="43" core="1"/>
+  </hex>
+  <hex row="1" col="12" terrain="10" road="50" name="Pinios River"/>
+  <hex row="1" col="13" terrain="10" name="Pinios River"/>
+  <hex row="1" col="14">
+    <unit id="30543" owner="1" flag="40" face="0" exp="44" bstr="5"/>
+  </hex>
+  <hex row="1" col="15" road="17"/>
+  <hex row="1" col="19" terrain="5"/>
+  <hex row="1" col="20" terrain="5"/>
+  <hex row="1" col="21" terrain="5"/>
+  <hex row="1" col="22" terrain="5"/>
+  <hex row="1" col="23" terrain="6"/>
+  <hex row="1" col="24" terrain="6"/>
+  <hex row="1" col="25" terrain="6"/>
+  <hex row="1" col="26" terrain="6"/>
+  <hex row="1" col="27" terrain="6"/>
+  <hex row="1" col="28" terrain="6"/>
+  <hex row="1" col="29" terrain="6"/>
+  <hex row="1" col="30" terrain="6"/>
+  <hex row="1" col="31" terrain="6"/>
+  <hex row="1" col="32" terrain="6"/>
+  <hex row="1" col="33" terrain="6"/>
+  <hex row="1" col="34" terrain="6"/>
+  <hex row="1" col="35" terrain="2" owner="1" flag="39"/>
+  <hex row="1" col="36" terrain="6"/>
+  <hex row="1" col="37" terrain="6"/>
+  <hex row="1" col="38" terrain="6"/>
+  <hex row="1" col="39" terrain="6"/>
+  <hex row="1" col="40" terrain="6"/>
+  <hex row="1" col="41" terrain="6"/>
+  <hex row="1" col="42" terrain="6">
+    <unit id="662" owner="1" flag="40" face="0" exp="200" str="5" bstr="1"/>
+  </hex>
+  <hex row="1" col="43" terrain="6"/>
+  <hex row="2" col="0" terrain="6"/>
+  <hex row="2" col="1" terrain="6"/>
+  <hex row="2" col="2" terrain="6"/>
+  <hex row="2" col="3" terrain="6"/>
+  <hex row="2" col="4" terrain="6"/>
+  <hex row="2" col="5" terrain="5"/>
+  <hex row="2" col="6" terrain="5"/>
+  <hex row="2" col="10" terrain="1" road="10" name="Kastraki" deploy="0">
+    <unit id="38972" owner="0" flag="83" face="0" transport="38983" exp="43" core="1"/>
+  </hex>
+  <hex row="2" col="11" terrain="1" road="163" name="Kastraki" deploy="0">
+    <unit id="38987" owner="0" flag="83" face="0" transport="38983" exp="43" core="1"/>
+  </hex>
+  <hex row="2" col="12" terrain="1" road="161" name="Kastraki" deploy="0">
+    <unit id="38964" owner="0" flag="83" face="0" exp="43" core="1"/>
+  </hex>
+  <hex row="2" col="14" terrain="10" name="Pinios River"/>
+  <hex row="2" col="15" road="9"/>
+  <hex row="2" col="17" terrain="5"/>
+  <hex row="2" col="18" terrain="5"/>
+  <hex row="2" col="19" terrain="5"/>
+  <hex row="2" col="20" terrain="5"/>
+  <hex row="2" col="21" terrain="5"/>
+  <hex row="2" col="22" terrain="5"/>
+  <hex row="2" col="23" terrain="5"/>
+  <hex row="2" col="24" terrain="5"/>
+  <hex row="2" col="25" terrain="5"/>
+  <hex row="2" col="26" terrain="6"/>
+  <hex row="2" col="27" terrain="6"/>
+  <hex row="2" col="28" terrain="6"/>
+  <hex row="2" col="29" terrain="6"/>
+  <hex row="2" col="30" terrain="6"/>
+  <hex row="2" col="31" terrain="6"/>
+  <hex row="2" col="32" terrain="6"/>
+  <hex row="2" col="33" terrain="6"/>
+  <hex row="2" col="34" terrain="6"/>
+  <hex row="2" col="35" terrain="6"/>
+  <hex row="2" col="36" terrain="6"/>
+  <hex row="2" col="37" terrain="6"/>
+  <hex row="2" col="38" terrain="6"/>
+  <hex row="2" col="39" terrain="6"/>
+  <hex row="2" col="40" terrain="6"/>
+  <hex row="2" col="41" terrain="6"/>
+  <hex row="2" col="42" terrain="6"/>
+  <hex row="2" col="43" terrain="6"/>
+  <hex row="3" col="0" terrain="6"/>
+  <hex row="3" col="1" terrain="6"/>
+  <hex row="3" col="2" terrain="6"/>
+  <hex row="3" col="3" terrain="6"/>
+  <hex row="3" col="4" terrain="6"/>
+  <hex row="3" col="5" terrain="5"/>
+  <hex row="3" col="10" road="18" deploy="0">
+    <unit id="38965" owner="0" flag="83" face="0" exp="43" core="1"/>
+  </hex>
+  <hex row="3" col="14" terrain="10" name="Pinios River"/>
+  <hex row="3" col="16" terrain="1" road="144" name="Village" owner="1" flag="39">
+    <unit id="30345" owner="1" flag="40" face="0" exp="44" bstr="5"/>
+  </hex>
+  <hex row="3" col="17" terrain="5"/>
+  <hex row="3" col="18" terrain="5"/>
+  <hex row="3" col="19" terrain="5"/>
+  <hex row="3" col="20" terrain="5"/>
+  <hex row="3" col="21" terrain="5"/>
+  <hex row="3" col="22" terrain="5"/>
+  <hex row="3" col="23" terrain="5"/>
+  <hex row="3" col="24" terrain="5"/>
+  <hex row="3" col="25" terrain="5"/>
+  <hex row="3" col="26" terrain="6"/>
+  <hex row="3" col="27" terrain="5"/>
+  <hex row="3" col="28" terrain="6"/>
+  <hex row="3" col="29" terrain="5"/>
+  <hex row="3" col="30" terrain="6"/>
+  <hex row="3" col="31" terrain="6"/>
+  <hex row="3" col="32" terrain="6"/>
+  <hex row="3" col="33" terrain="6"/>
+  <hex row="3" col="34" terrain="6"/>
+  <hex row="3" col="35" terrain="6"/>
+  <hex row="3" col="36" terrain="6"/>
+  <hex row="3" col="37" terrain="6"/>
+  <hex row="3" col="38" terrain="6"/>
+  <hex row="3" col="39" terrain="6"/>
+  <hex row="3" col="40" terrain="6"/>
+  <hex row="3" col="41" terrain="6"/>
+  <hex row="3" col="42" terrain="6"/>
+  <hex row="3" col="43" terrain="6"/>
+  <hex row="4" col="0" terrain="6"/>
+  <hex row="4" col="1" terrain="6"/>
+  <hex row="4" col="2" terrain="6"/>
+  <hex row="4" col="3" terrain="6"/>
+  <hex row="4" col="4" terrain="6"/>
+  <hex row="4" col="5" terrain="5"/>
+  <hex row="4" col="9" road="18"/>
+  <hex row="4" col="10" road="33"/>
+  <hex row="4" col="14" terrain="10" name="Pinios River"/>
+  <hex row="4" col="15" terrain="10" name="Pinios River"/>
+  <hex row="4" col="16" road="9"/>
+  <hex row="4" col="17" terrain="1" road="152" name="Kalabaka" owner="1" flag="39" victory="1">
+    <unit id="30345" owner="1" flag="40" face="0" exp="44" bstr="5"/>
+  </hex>
+  <hex row="4" col="18" terrain="5"/>
+  <hex row="4" col="19" terrain="5"/>
+  <hex row="4" col="20" terrain="5"/>
+  <hex row="4" col="21" terrain="5"/>
+  <hex row="4" col="22" terrain="5"/>
+  <hex row="4" col="23" terrain="5"/>
+  <hex row="4" col="24" terrain="5"/>
+  <hex row="4" col="25" terrain="5"/>
+  <hex row="4" col="26" terrain="5"/>
+  <hex row="4" col="27" terrain="5"/>
+  <hex row="4" col="28" terrain="5"/>
+  <hex row="4" col="29" terrain="5"/>
+  <hex row="4" col="30" terrain="5"/>
+  <hex row="4" col="31" terrain="5"/>
+  <hex row="4" col="32" terrain="6"/>
+  <hex row="4" col="33" terrain="5"/>
+  <hex row="4" col="34" terrain="6"/>
+  <hex row="4" col="35" terrain="6"/>
+  <hex row="4" col="36" terrain="6"/>
+  <hex row="4" col="37" terrain="6"/>
+  <hex row="4" col="38" terrain="6"/>
+  <hex row="4" col="39" terrain="6"/>
+  <hex row="4" col="40" terrain="6"/>
+  <hex row="4" col="41" terrain="6"/>
+  <hex row="4" col="42" terrain="6"/>
+  <hex row="4" col="43" terrain="6"/>
+  <hex row="5" col="0" terrain="6"/>
+  <hex row="5" col="1" terrain="6"/>
+  <hex row="5" col="2" terrain="6"/>
+  <hex row="5" col="3" terrain="6"/>
+  <hex row="5" col="4" terrain="6"/>
+  <hex row="5" col="5" terrain="5"/>
+  <hex row="5" col="9" road="17"/>
+  <hex row="5" col="16" terrain="10" name="Pinios River"/>
+  <hex row="5" col="17" terrain="1" road="11" name="Kalabaka"/>
+  <hex row="5" col="18" terrain="1" road="160" name="Kalabaka"/>
+  <hex row="5" col="19" terrain="5"/>
+  <hex row="5" col="20" terrain="5"/>
+  <hex row="5" col="21" terrain="5"/>
+  <hex row="5" col="22" terrain="5"/>
+  <hex row="5" col="23" terrain="5"/>
+  <hex row="5" col="24" terrain="5"/>
+  <hex row="5" col="25" terrain="5"/>
+  <hex row="5" col="26" terrain="5"/>
+  <hex row="5" col="27" terrain="5"/>
+  <hex row="5" col="28" terrain="5"/>
+  <hex row="5" col="29" terrain="5"/>
+  <hex row="5" col="30" terrain="5"/>
+  <hex row="5" col="31" terrain="5"/>
+  <hex row="5" col="32" terrain="5"/>
+  <hex row="5" col="33" terrain="5"/>
+  <hex row="5" col="34" terrain="5"/>
+  <hex row="5" col="35" terrain="5"/>
+  <hex row="5" col="36" terrain="6"/>
+  <hex row="5" col="37" terrain="6"/>
+  <hex row="5" col="38" terrain="6"/>
+  <hex row="5" col="39" terrain="6"/>
+  <hex row="5" col="40" terrain="6"/>
+  <hex row="5" col="41" terrain="6"/>
+  <hex row="5" col="42" terrain="6"/>
+  <hex row="5" col="43" terrain="6"/>
+  <hex row="6" col="0" terrain="6"/>
+  <hex row="6" col="1" terrain="6"/>
+  <hex row="6" col="2" terrain="6"/>
+  <hex row="6" col="3" terrain="6"/>
+  <hex row="6" col="4" terrain="6"/>
+  <hex row="6" col="5" terrain="5"/>
+  <hex row="6" col="9" road="17"/>
+  <hex row="6" col="16" terrain="10" name="Pinios River"/>
+  <hex row="6" col="17" terrain="10" name="Pinios River"/>
+  <hex row="6" col="18" road="144"/>
+  <hex row="6" col="19" terrain="5"/>
+  <hex row="6" col="20" terrain="5"/>
+  <hex row="6" col="21" terrain="5"/>
+  <hex row="6" col="22" terrain="5"/>
+  <hex row="6" col="23" terrain="5"/>
+  <hex row="6" col="24" terrain="5"/>
+  <hex row="6" col="25" terrain="5"/>
+  <hex row="6" col="26" terrain="5"/>
+  <hex row="6" col="27" terrain="5"/>
+  <hex row="6" col="28" terrain="5"/>
+  <hex row="6" col="29" terrain="5"/>
+  <hex row="6" col="30" terrain="5"/>
+  <hex row="6" col="31" terrain="5"/>
+  <hex row="6" col="32" terrain="5"/>
+  <hex row="6" col="33" terrain="5"/>
+  <hex row="6" col="34" terrain="5"/>
+  <hex row="6" col="35" terrain="5"/>
+  <hex row="6" col="36" terrain="5"/>
+  <hex row="6" col="37" terrain="6"/>
+  <hex row="6" col="38" terrain="6"/>
+  <hex row="6" col="39" terrain="5"/>
+  <hex row="6" col="40" terrain="6"/>
+  <hex row="6" col="41" terrain="6"/>
+  <hex row="6" col="42" terrain="6"/>
+  <hex row="6" col="43" terrain="6"/>
+  <hex row="7" col="0" terrain="6"/>
+  <hex row="7" col="1" terrain="6"/>
+  <hex row="7" col="2" terrain="6"/>
+  <hex row="7" col="3" terrain="6"/>
+  <hex row="7" col="4" terrain="6"/>
+  <hex row="7" col="5" terrain="5"/>
+  <hex row="7" col="9" road="17"/>
+  <hex row="7" col="17" terrain="10" name="Pinios River"/>
+  <hex row="7" col="18" road="9">
+    <unit id="30345" owner="1" flag="40" face="0" exp="44" bstr="5"/>
+  </hex>
+  <hex row="7" col="19" road="160"/>
+  <hex row="7" col="20" terrain="5"/>
+  <hex row="7" col="21" terrain="5"/>
+  <hex row="7" col="22" terrain="5"/>
+  <hex row="7" col="23" terrain="5"/>
+  <hex row="7" col="24" terrain="5"/>
+  <hex row="7" col="25" terrain="5"/>
+  <hex row="7" col="26" terrain="5"/>
+  <hex row="7" col="27" terrain="5"/>
+  <hex row="7" col="28" terrain="5"/>
+  <hex row="7" col="29" terrain="3"/>
+  <hex row="7" col="30" terrain="5"/>
+  <hex row="7" col="31" terrain="5"/>
+  <hex row="7" col="32" terrain="5"/>
+  <hex row="7" col="33" terrain="5"/>
+  <hex row="7" col="34" terrain="5"/>
+  <hex row="7" col="35" terrain="5"/>
+  <hex row="7" col="36" terrain="5"/>
+  <hex row="7" col="37" terrain="5"/>
+  <hex row="7" col="38" terrain="5"/>
+  <hex row="7" col="39" terrain="5"/>
+  <hex row="7" col="40" terrain="3"/>
+  <hex row="7" col="41" terrain="3"/>
+  <hex row="7" col="42" terrain="5"/>
+  <hex row="7" col="43" terrain="5"/>
+  <hex row="8" col="0" terrain="6"/>
+  <hex row="8" col="1" terrain="6"/>
+  <hex row="8" col="2" terrain="6"/>
+  <hex row="8" col="3" terrain="6"/>
+  <hex row="8" col="4" terrain="5"/>
+  <hex row="8" col="5" terrain="5"/>
+  <hex row="8" col="6" terrain="5"/>
+  <hex row="8" col="7" terrain="5"/>
+  <hex row="8" col="9" road="17"/>
+  <hex row="8" col="17" terrain="10" name="Pinios River"/>
+  <hex row="8" col="18" road="18"/>
+  <hex row="8" col="20" terrain="5"/>
+  <hex row="8" col="22" terrain="5"/>
+  <hex row="8" col="23" terrain="5"/>
+  <hex row="8" col="24" terrain="5"/>
+  <hex row="8" col="25" terrain="5"/>
+  <hex row="8" col="26" terrain="5"/>
+  <hex row="8" col="27" terrain="3"/>
+  <hex row="8" col="28" terrain="3"/>
+  <hex row="8" col="29" terrain="3"/>
+  <hex row="8" col="30" terrain="3"/>
+  <hex row="8" col="31" terrain="3"/>
+  <hex row="8" col="32" terrain="5"/>
+  <hex row="8" col="33" terrain="5"/>
+  <hex row="8" col="34" terrain="5"/>
+  <hex row="8" col="35" terrain="5"/>
+  <hex row="8" col="36" terrain="5"/>
+  <hex row="8" col="37" terrain="5"/>
+  <hex row="8" col="38" terrain="5"/>
+  <hex row="8" col="40" terrain="3"/>
+  <hex row="8" col="41" terrain="3"/>
+  <hex row="8" col="42" terrain="3"/>
+  <hex row="8" col="43" terrain="3"/>
+  <hex row="9" col="0" terrain="6"/>
+  <hex row="9" col="1" terrain="6"/>
+  <hex row="9" col="2" terrain="6"/>
+  <hex row="9" col="3" terrain="6"/>
+  <hex row="9" col="4" terrain="6"/>
+  <hex row="9" col="5" terrain="5"/>
+  <hex row="9" col="6" terrain="5"/>
+  <hex row="9" col="7" terrain="5"/>
+  <hex row="9" col="9" road="33"/>
+  <hex row="9" col="17" terrain="10" name="Pinios River"/>
+  <hex row="9" col="18" road="9">
+    <unit id="30345" owner="1" flag="40" face="0" exp="44" bstr="5"/>
+  </hex>
+  <hex row="9" col="19" road="152"/>
+  <hex row="9" col="28" terrain="3"/>
+  <hex row="9" col="29" terrain="3"/>
+  <hex row="9" col="30" terrain="3"/>
+  <hex row="9" col="31" terrain="5"/>
+  <hex row="9" col="32" terrain="5"/>
+  <hex row="9" col="33" terrain="5"/>
+  <hex row="9" col="34" terrain="5"/>
+  <hex row="9" col="35" terrain="5"/>
+  <hex row="10" col="0" terrain="6"/>
+  <hex row="10" col="1" terrain="6"/>
+  <hex row="10" col="2" terrain="6"/>
+  <hex row="10" col="3" terrain="6"/>
+  <hex row="10" col="4" terrain="6"/>
+  <hex row="10" col="5" terrain="6" road="24"/>
+  <hex row="10" col="6" terrain="5"/>
+  <hex row="10" col="7" terrain="1" road="56" name="Diava"/>
+  <hex row="10" col="8" road="18"/>
+  <hex row="10" col="17" terrain="10" name="Pinios River"/>
+  <hex row="10" col="19" road="19"/>
+  <hex row="10" col="20" road="168"/>
+  <hex row="10" col="21" road="130"/>
+  <hex row="10" col="22" road="40"/>
+  <hex row="10" col="23" road="136"/>
+  <hex row="10" col="25" road="40"/>
+  <hex row="10" col="27" road="40"/>
+  <hex row="10" col="30" terrain="3"/>
+  <hex row="10" col="31" terrain="5"/>
+  <hex row="10" col="32" terrain="5"/>
+  <hex row="10" col="33" terrain="5"/>
+  <hex row="10" col="34" terrain="5"/>
+  <hex row="10" col="35" terrain="5"/>
+  <hex row="10" col="43" road="34"/>
+  <hex row="11" col="0" terrain="6"/>
+  <hex row="11" col="1" terrain="6"/>
+  <hex row="11" col="2" terrain="6"/>
+  <hex row="11" col="3" terrain="6"/>
+  <hex row="11" col="4" terrain="6"/>
+  <hex row="11" col="5" terrain="6" road="33"/>
+  <hex row="11" col="6" terrain="5" road="138"/>
+  <hex row="11" col="7" terrain="1" road="131" name="Diava"/>
+  <hex row="11" col="8" terrain="1" road="161" name="Diava" owner="0" flag="82" victory="0" deploy="0">
+    <unit id="38964" owner="0" flag="83" face="0" exp="43" core="1"/>
+  </hex>
+  <hex row="11" col="16" deploy="0">
+    <unit id="38964" owner="0" flag="83" face="0" exp="43" core="1"/>
+  </hex>
+  <hex row="11" col="17" terrain="10" name="Pinios River"/>
+  <hex row="11" col="19" terrain="1" road="33" name="Theopetra" owner="1" flag="39" victory="1">
+    <unit id="30345" owner="1" flag="40" face="0" exp="44" bstr="5"/>
+  </hex>
+  <hex row="11" col="24" road="130"/>
+  <hex row="11" col="26" road="130"/>
+  <hex row="11" col="28" road="136"/>
+  <hex row="11" col="29" terrain="1" road="130" name="Spathades" owner="1" flag="39" victory="1" trigger="4" trigparam="0">
+    <unit id="30345" owner="1" flag="40" face="0" exp="44" bstr="5"/>
+  </hex>
+  <hex row="11" col="30" terrain="1" road="40" name="Spathades"/>
+  <hex row="11" col="31" road="136"/>
+  <hex row="11" col="32" terrain="5"/>
+  <hex row="11" col="33" road="48"/>
+  <hex row="11" col="34" terrain="5"/>
+  <hex row="11" col="37" road="24"/>
+  <hex row="11" col="39" road="34"/>
+  <hex row="11" col="40" road="40"/>
+  <hex row="11" col="41" road="130"/>
+  <hex row="11" col="42" road="34"/>
+  <hex row="12" col="0" terrain="6"/>
+  <hex row="12" col="1" terrain="6"/>
+  <hex row="12" col="2" terrain="6"/>
+  <hex row="12" col="3" terrain="6" road="10"/>
+  <hex row="12" col="4" terrain="6" road="34"/>
+  <hex row="12" col="5" terrain="6"/>
+  <hex row="12" col="6" terrain="5"/>
+  <hex row="12" col="7" terrain="5"/>
+  <hex row="12" col="9" terrain="3"/>
+  <hex row="12" col="15" deploy="0">
+    <unit id="37083" owner="0" flag="83" face="0" exp="43" core="1"/>
+  </hex>
+  <hex row="12" col="16" deploy="0">
+    <unit id="38971" owner="0" flag="83" face="0" transport="38983" exp="43" core="1"/>
+  </hex>
+  <hex row="12" col="17" terrain="10" road="34" name="Pinios River"/>
+  <hex row="12" col="18" road="34">
+    <unit id="30345" owner="1" flag="40" face="0" exp="44" ldr="1" bstr="5"/>
+  </hex>
+  <hex row="12" col="19">
+    <unit id="30543" owner="1" flag="40" face="0" exp="44" bstr="5"/>
+  </hex>
+  <hex row="12" col="25" terrain="5"/>
+  <hex row="12" col="26" terrain="5"/>
+  <hex row="12" col="27" terrain="5"/>
+  <hex row="12" col="32" road="130">
+    <unit id="30512" owner="1" flag="40" face="0" exp="44" bstr="5"/>
+  </hex>
+  <hex row="12" col="33" road="9"/>
+  <hex row="12" col="34" terrain="3"/>
+  <hex row="12" col="35" terrain="1" road="40" name="Koniskos"/>
+  <hex row="12" col="37" road="33"/>
+  <hex row="12" col="38" road="130"/>
+  <hex row="13" col="0" terrain="6"/>
+  <hex row="13" col="1" terrain="6"/>
+  <hex row="13" col="2" terrain="6"/>
+  <hex row="13" col="3" terrain="6"/>
+  <hex row="13" col="4" terrain="6" road="144"/>
+  <hex row="13" col="5" terrain="6"/>
+  <hex row="13" col="6" terrain="6"/>
+  <hex row="13" col="7" terrain="5"/>
+  <hex row="13" col="8" terrain="3"/>
+  <hex row="13" col="9" terrain="3"/>
+  <hex row="13" col="10" terrain="3"/>
+  <hex row="13" col="11" terrain="3"/>
+  <hex row="13" col="15" deploy="0">
+    <unit id="38962" owner="0" flag="83" face="0" exp="43" core="1"/>
+  </hex>
+  <hex row="13" col="16" road="18" deploy="0">
+    <unit id="38990" owner="0" flag="83" face="0" exp="43" core="1"/>
+  </hex>
+  <hex row="13" col="18" terrain="10" name="Pinios River"/>
+  <hex row="13" col="23" terrain="5"/>
+  <hex row="13" col="24" terrain="5"/>
+  <hex row="13" col="25" terrain="5"/>
+  <hex row="13" col="26" terrain="5"/>
+  <hex row="13" col="27" terrain="5"/>
+  <hex row="13" col="28" terrain="5"/>
+  <hex row="13" col="29" terrain="5"/>
+  <hex row="13" col="34" road="130"/>
+  <hex row="13" col="36" terrain="1" road="138" name="Koniskos" owner="1" flag="39">
+    <unit id="30345" owner="1" flag="40" face="0" exp="44" bstr="5"/>
+  </hex>
+  <hex row="13" col="37" road="144"/>
+  <hex row="14" col="2" terrain="6"/>
+  <hex row="14" col="3" terrain="6" road="34"/>
+  <hex row="14" col="4" terrain="6" road="33"/>
+  <hex row="14" col="5" terrain="6"/>
+  <hex row="14" col="6" terrain="6"/>
+  <hex row="14" col="7" terrain="6"/>
+  <hex row="14" col="8" terrain="5"/>
+  <hex row="14" col="9" terrain="5"/>
+  <hex row="14" col="10" terrain="3"/>
+  <hex row="14" col="16" road="17" deploy="0">
+    <unit id="38964" owner="0" flag="83" face="0" exp="43" core="1"/>
+  </hex>
+  <hex row="14" col="18" terrain="10" name="Pinios River"/>
+  <hex row="14" col="21" terrain="5"/>
+  <hex row="14" col="22" terrain="5"/>
+  <hex row="14" col="23" terrain="5"/>
+  <hex row="14" col="24" terrain="5"/>
+  <hex row="14" col="25" terrain="5"/>
+  <hex row="14" col="26" terrain="5"/>
+  <hex row="14" col="27" terrain="5"/>
+  <hex row="14" col="28" terrain="5"/>
+  <hex row="14" col="29" terrain="5"/>
+  <hex row="14" col="30" terrain="5"/>
+  <hex row="14" col="32" terrain="3"/>
+  <hex row="14" col="33" terrain="3"/>
+  <hex row="14" col="37" road="9"/>
+  <hex row="15" col="2" road="34"/>
+  <hex row="15" col="4" terrain="6"/>
+  <hex row="15" col="6" terrain="6"/>
+  <hex row="15" col="8" terrain="6"/>
+  <hex row="15" col="9" terrain="5"/>
+  <hex row="15" col="10" terrain="3"/>
+  <hex row="15" col="16" road="9"/>
+  <hex row="15" col="18" terrain="10" name="Pinios River"/>
+  <hex row="15" col="19" terrain="10" name="Pinios River"/>
+  <hex row="15" col="21" terrain="5"/>
+  <hex row="15" col="22" terrain="5"/>
+  <hex row="15" col="24" terrain="5"/>
+  <hex row="15" col="26" terrain="5"/>
+  <hex row="15" col="28" terrain="5"/>
+  <hex row="15" col="30" terrain="5"/>
+  <hex row="15" col="38" road="144"/>
+</map>

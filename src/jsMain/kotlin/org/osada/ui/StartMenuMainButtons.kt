@@ -28,14 +28,16 @@ internal object StartMenuMainButtons {
             )
         val menuIcons =
             mapOf(
-                "continuegame" to "star",
-                "restartmission" to "supply",
-                "newcampaign" to "map",
-                "newscenario" to "attack",
-                "multiplayer" to "map",
-                "saveload" to "supply",
-                "settings" to "settings",
-                "tutorial" to "info",
+                // Continue and Restart are conditional actions, not members of the permanent
+                // eight-icon main-menu sheet; keep their established shared-HUD glyphs.
+                "continuegame" to "osada-ico osada-ico--star",
+                "restartmission" to "osada-ico osada-ico--supply",
+                "newcampaign" to "osada-menu-ico osada-menu-ico--campaign",
+                "newscenario" to "osada-menu-ico osada-menu-ico--scenario",
+                "multiplayer" to "osada-menu-ico osada-menu-ico--multiplayer",
+                "saveload" to "osada-menu-ico osada-menu-ico--load",
+                "settings" to "osada-menu-ico osada-menu-ico--settings",
+                "tutorial" to "osada-menu-ico osada-menu-ico--tutorial",
             )
         mainButtons.forEach { (id, keyPrefix, variant) ->
             val title = I18n.t("$keyPrefix.label")
@@ -51,7 +53,7 @@ internal object StartMenuMainButtons {
                     else -> ""
                 }
             val ico = addTag(button, "span")
-            ico.className = "osada-menu-btn__ico osada-ico osada-ico--${menuIcons[id] ?: "star"}"
+            ico.className = "osada-menu-btn__ico ${menuIcons[id] ?: "osada-ico osada-ico--star"}"
             val text = addTag(button, "span")
             text.className = "osada-menu-btn__text"
             val label = addTag(text, "span")
@@ -94,7 +96,7 @@ internal object StartMenuMainButtons {
         desk.className = "smMainButton osada-menu-btn osada-menu-btn--muted"
         desk.title = I18n.t("menu.main.hero_desk.help")
         val ico = addTag(desk, "span")
-        ico.className = "osada-menu-btn__ico osada-ico osada-ico--star"
+        ico.className = "osada-menu-btn__ico osada-menu-ico osada-menu-ico--hero"
         val text = addTag(desk, "span")
         text.className = "osada-menu-btn__text"
         val label = addTag(text, "span")
@@ -119,7 +121,7 @@ internal object StartMenuMainButtons {
         manual.className = "smMainButton osada-menu-btn osada-menu-btn--muted"
         manual.title = I18n.t("menu.main.manual.help")
         val ico = addTag(manual, "span")
-        ico.className = "osada-menu-btn__ico osada-ico osada-ico--info"
+        ico.className = "osada-menu-btn__ico osada-menu-ico osada-menu-ico--manual"
         val text = addTag(manual, "span")
         text.className = "osada-menu-btn__text"
         val label = addTag(text, "span")

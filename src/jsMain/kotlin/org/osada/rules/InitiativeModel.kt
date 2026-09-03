@@ -12,10 +12,13 @@ import org.osada.rules.ruleset.RuleKey
  * adjusted by a random value, to simulate combat uncertainty."* OSADA reads equipment initiative,
  * the attachment penalty and `TerrainEx.initiativeCap`, and stops there.
  *
- * **Default `equipment_terrain`, and that is a balance decision, not caution.** Adding experience
+ * **Default `og_full` since 2026-09-02, by owner decision, reversing the original default.** The
+ * balance consequences that kept it off are unchanged and worth restating: adding experience
  * re-tunes every imported campaign in the veteran's favour, which is the `DEFERRED.md` §5.10 hazard
  * this whole workstream is governed by, and it changes what `First Strike` is worth because that
- * trait re-signs the initiative difference rather than adding to it.
+ * trait re-signs the initiative difference rather than adding to it. The owner weighed those
+ * against having OG's uncertainty in the default game and chose the uncertainty; a profile setting
+ * this back to `equipment_terrain` restores the deterministic, exactly-forecast combat.
  *
  * ### The random half, and the two things that had to exist before it could ship
  *
@@ -36,10 +39,10 @@ import org.osada.rules.ruleset.RuleKey
  * the caller says the exchange is being committed. `CombatResolver.calculateAttackResults` carries
  * that as `committed`, default `false`, and exactly three call sites pass `true`.
  *
- * **The visible consequence, stated rather than hidden:** with this key on, the combat forecast
- * stops being an exact figure. It shows the deterministic part and the swing lands when the attack
- * is made. With the key off — which is the default and every shipped scenario — nothing draws at
- * all and the forecast is exact, as it always was.
+ * **The visible consequence, stated rather than hidden:** with this key on — which is now the
+ * default — the combat forecast stops being an exact figure. It shows the deterministic part, and
+ * the swing lands when the attack is made. With the key off nothing draws at all and the forecast
+ * is exact, as it was before this became the default.
  */
 internal object InitiativeModel {
     /** Experience points per initiative point, matching the one-point-per-completed-bar shape the
@@ -59,8 +62,10 @@ internal object InitiativeModel {
 
     private const val RANDOM_STEPS = 2 * RANDOM_SWING + 1
 
-    /** Whether OG's model is in force. */
-    fun ogFull(): Boolean = ActiveRuleset.flag(RuleKey.INITIATIVE_MODEL, false)
+    /** Whether OG's model is in force. The call-site default matches
+     *  [org.osada.rules.ruleset.RulesetDefaults]: on, so a read taken before any ruleset is
+     *  resolved answers the same as one taken after. */
+    fun ogFull(): Boolean = ActiveRuleset.flag(RuleKey.INITIATIVE_MODEL, true)
 
     /**
      * OG's *"random value, to simulate combat uncertainty"*, in initiative points.

@@ -56,7 +56,7 @@
      "speaker": "Karl Artelt",
      "role": "Sailor, First Torpedo Division",
      "side": "left",
-     "text": "Do not fold that order. Let every stoker see the Admiralty seal. Berlin asks for an armistice; the admirals answer with one last battle against Britain. They call it honour. Below decks we call it choosing our own grave.",
+     "text": "Keep that order open. Let every stoker see the Admiralty seal. Berlin is asking for an armistice, and the admirals still mean to spend us in one last battle with Britain. They call it honour. Below decks we call it choosing our own grave.",
      "next": "artelt-opening",
      "portrait": "resources/campaigns/portraits/karl-artelt.png"
     },
@@ -65,16 +65,25 @@
      "speaker": "Karl Artelt",
      "role": "Sailor, First Torpedo Division",
      "side": "left",
-     "text": "Thüringen refused steam. Helgoland followed. The officers answered by taking forty-seven men from Markgraf; I have their names here. Two hundred and fifty sailors packed the union hall last night, and Souchon would not receive even two of us.",
-     "next": "popp-socialists",
+     "text": "Thüringen and Helgoland showed them the fleet would not sail. The admirals broke up the squadrons; on the canal back to Kiel, they seized forty-seven men—most from Markgraf. I have the prison list here. Two hundred and fifty sailors met at the Union House for them last night; Souchon still would not receive the delegation.",
+     "next": "garbe-union-house",
      "portrait": "resources/campaigns/portraits/karl-artelt.png"
+    },
+    {
+     "id": "garbe-union-house",
+     "speaker": "Gustav Garbe",
+     "role": "Trade-Union Leader and Workers' Representative",
+     "side": "right",
+     "text": "Nor will he receive another. The police have chained the doors of the Union House. Five hundred sailors are gathering outside; the meeting has moved to the Großer Exerzierplatz, and the presses are running for tomorrow. The words passing through the yards are peace and bread.",
+     "next": "popp-socialists",
+     "portrait": "resources/campaigns/portraits/gustav-garbe.png"
     },
     {
      "id": "popp-socialists",
      "speaker": "Lothar Popp",
      "role": "USPD Organiser and Shipyard Worker",
      "side": "right",
-     "text": "Then stop carrying petitions to men who answer with prison lists. The unions can fill the streets and put runners on every road. But they will not rise merely to applaud one crew's refusal.",
+     "text": "Good. A locked door has done what our petitions could not: every shipyard now knows this is larger than forty-seven arrests. Give me the station and telegraph, and by dawn Souchon will face a citywide movement—not an isolated mutiny he can bury.",
      "next": "artelt-confronts-popp",
      "portrait": "resources/campaigns/portraits/lothar-popp.png"
     },
@@ -83,21 +92,30 @@
      "speaker": "Karl Artelt",
      "role": "Sailor, First Torpedo Division",
      "side": "left",
-     "text": "Forty-seven comrades can hear the guards working the bolts, Lothar. I stood in that hall tonight. March past their cells for a switchboard, and every stoker in Kiel learns what our promises are worth.",
-     "next": "popp-coordination",
+     "text": "Call it larger if that makes the printers work faster. Those forty-seven are the reason the crews trusted us. Leave them behind while we seize a switchboard, and every stoker in Kiel learns that a movement values its message more than its men.",
+     "next": "garbe-steinhaeuser",
      "portrait": "resources/campaigns/portraits/karl-artelt.png"
+    },
+    {
+     "id": "garbe-steinhaeuser",
+     "speaker": "Gustav Garbe",
+     "role": "Trade-Union Leader and Workers' Representative",
+     "side": "right",
+     "text": "Another runner from Feldstraße. Lieutenant Steinhäuser has formed thirty recruits across the road to the prison. Rifles loaded. He says the march stops there.",
+     "next": "popp-coordination",
+     "portrait": "resources/campaigns/portraits/gustav-garbe.png"
     },
     {
      "id": "popp-coordination",
      "speaker": "Lothar Popp",
      "role": "USPD Organiser and Shipyard Worker",
      "side": "right",
-     "text": "If Souchon keeps the station and telegraph, he cuts the ships off and calls us an isolated mutiny. His patrols already have live ammunition. Your column cannot be in two places, Delegate: the prison or the wires?",
+     "text": "The men at the hall chose you to coordinate the armed columns because Karl must hold the torpedo crews and I must bring out the yards. That gives you men, Delegate—not time. We can force the service gate before Steinhäuser closes it, or secure the station, telegraph and armouries before Souchon cuts Kiel off. Which moves first?",
      "choices": [
       {
        "id": "free-prisoners-first",
-       "text": "The prison first. We take out whom we can through the service gate before the alarm—and we do not pretend that everyone will come out with us.",
-       "next": "garbe-prisoners",
+       "text": "The prison. Take a small party through the service gate now; the main column follows before Steinhäuser can turn the road into a firing line.",
+       "next": "popp-prisoners-objection",
        "effects": [
         {
          "id": "n_kiel.choice.prisoners.flag",
@@ -122,12 +140,12 @@
          "amount": 50
         }
        ],
-       "hint": "Gain an experienced half-strength sailor detachment from the first escape, but leave the remainder exposed in the yard and forgo the arsenals' prestige and army-wide drill."
+       "hint": "Gain an experienced half-strength sailor detachment and +50 prestige; the remaining escapees appear exposed inside the compound and must be reached before the guards break them up."
       },
       {
        "id": "secure-communications-first",
-       "text": "The station, telegraph and armouries first. Keep a rescue column ready; opening the cells means nothing if the governor seals the whole city by morning.",
-       "next": "garbe-communications",
+       "text": "Coordinate the city first. Put runners on the station, telegraph and armouries, then hold the rescue column ready for the prison.",
+       "next": "artelt-communications-objection",
        "effects": [
         {
          "id": "n_kiel.choice.comms.flag",
@@ -150,9 +168,18 @@
          "amount": 15
         }
        ],
-       "hint": "Secure the arsenals' prestige and drill every formation, but leave the prisoners behind the wall until your column reaches them; the guards will open fire as soon as you approach."
+       "hint": "Gain +140 prestige and +15 experience for every core formation; no prisoners appear at setup, but approaching the compound starts the rescue crisis and gives you one turn to break through."
       }
      ],
+     "portrait": "resources/campaigns/portraits/lothar-popp.png"
+    },
+    {
+     "id": "popp-prisoners-objection",
+     "speaker": "Lothar Popp",
+     "role": "USPD Organiser and Shipyard Worker",
+     "side": "right",
+     "text": "Then I will keep the presses moving with whoever is left. But if Souchon cuts the wires, we may free one prison and leave every barracks in Kiel believing his version of tonight.",
+     "next": "garbe-prisoners",
      "portrait": "resources/campaigns/portraits/lothar-popp.png"
     },
     {
@@ -160,16 +187,25 @@
      "speaker": "Gustav Garbe",
      "role": "Trade-Union Leader and Workers' Representative",
      "side": "right",
-     "text": "The service gate is open—the first men are out and asking for rifles. The rest are still crossing the inner yard, and the alarm is already hammering through the base. If you want them alive, your column has to reach that compound now.",
+     "text": "The service gate is open—the first men are out and asking for rifles. The rest are caught in the inner yard; the alarm is hammering through the base. Steinhäuser's men are turning towards them. Reach the compound before the guards break the escape apart.",
      "next": "souchon-warning",
      "portrait": "resources/campaigns/portraits/gustav-garbe.png"
+    },
+    {
+     "id": "artelt-communications-objection",
+     "speaker": "Karl Artelt",
+     "role": "Sailor, First Torpedo Division",
+     "side": "left",
+     "text": "Then my rescue column waits—but it does not vanish into somebody's timetable. The moment those runners return, we march on Feldstraße. If the guards fire, remember whose minutes we spent.",
+     "next": "garbe-communications",
+     "portrait": "resources/campaigns/portraits/karl-artelt.png"
     },
     {
      "id": "garbe-communications",
      "speaker": "Gustav Garbe",
      "role": "Trade-Union Leader and Workers' Representative",
      "side": "right",
-     "text": "The telegraph keys are ours, and runners are carrying your order to the armouries. The forty-seven are still behind Souchon's wall. The guards will fire as soon as they see your rescue column, so reach the compound before the crowd at the gate is scattered.",
+     "text": "Orders are moving through the yards. The columns will muster by district, with rifles accounted for and every section knowing its road. The forty-seven remain behind Souchon's wall. When your rescue column nears the compound, the crowd will move with it—and Steinhäuser will open fire.",
      "next": "souchon-warning",
      "portrait": "resources/campaigns/portraits/gustav-garbe.png"
     },
@@ -178,7 +214,7 @@
      "speaker": "Governor Souchon's Headquarters",
      "role": "Intercepted Loyalist Order",
      "side": "right",
-     "text": "Order from the Governor's headquarters: all unauthorised assemblies are to disperse. Naval patrols will secure the detention compound, railway station, telegraph office and military depots. Ringleaders are to be arrested before the morning watch.",
+     "text": "Order from Naval Governor Souchon: the Union House is closed. Disperse all unauthorised assemblies. Lieutenant Steinhäuser's patrol will block the march to the Feldstraße detention compound. Loyal detachments are to secure the station, telegraph and military depots. Ringleaders will be arrested before the morning watch.",
      "next": "artelt-final",
      "portrait": "resources/campaigns/portraits/governor-souchon-s-headquarters.png"
     },
@@ -187,7 +223,7 @@
      "speaker": "Karl Artelt",
      "role": "Sailor, First Torpedo Division",
      "side": "left",
-     "text": "Then the morning watch will find something the admirals never planned for: sailors, soldiers and workers acting together. Disarm those who resist, accept those who join us, and keep the ships in harbour. No one is sailing out to die for an empire that has already lost its war.",
+     "text": "There's his answer. No petitions, no delegation—only loaded rifles between us and our comrades. Sailors, soldiers and workers move together. Disarm those who resist, take in those who join, and keep the ships in harbour. No one sails to die for an empire that has already lost its war.",
      "portrait": "resources/campaigns/portraits/karl-artelt.png"
     }
    ],

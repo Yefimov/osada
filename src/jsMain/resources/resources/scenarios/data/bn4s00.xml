@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="ASCII"?>
+<map file="bn4s00.xscn" name="Battle of Pindus" turns="12, 15, 20" date="November 3, 1940" dayturns="5" ground="2" atmosferic="3" latitude="6" iconset="0" weatherchg="0" rows="20" cols="26" eqp="eqp-lxf" image="resources/maps/images/map_568.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1" ehmsuonly="0" paradropocean="1" coresoffcap="0" daysperturn="0">
+  <player id="0" country="39" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="10" support="40,0,0,0" turnprestige="0, 55, 55, 105, 55, 55, 105, 55, 55, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="40:57346:67204512"/>
+  <player id="1" country="12" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="5" support="13,53,0,0" turnprestige="0, 25, 25, 25, 25, 25, 25, 25, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="13:1:262144"/>
+  <hex row="0" col="2" terrain="6"/>
+  <hex row="0" col="3" terrain="6"/>
+  <hex row="0" col="5" terrain="6"/>
+  <hex row="0" col="7" terrain="6"/>
+  <hex row="0" col="9" terrain="6"/>
+  <hex row="0" col="11" road="33">
+    <unit id="16978" owner="1" flag="13" face="0" transport="16863" str="8" bstr="5"/>
+  </hex>
+  <hex row="0" col="12" terrain="10" name="Aoos River"/>
+  <hex row="0" col="15" terrain="6"/>
+  <hex row="0" col="16" terrain="6"/>
+  <hex row="0" col="17" terrain="6"/>
+  <hex row="0" col="19" terrain="6"/>
+  <hex row="0" col="21" terrain="6"/>
+  <hex row="0" col="22" terrain="6"/>
+  <hex row="0" col="23" terrain="6"/>
+  <hex row="0" col="25" terrain="6">
+    <unit id="662" owner="1" flag="13" face="0" str="5" bstr="1"/>
+  </hex>
+  <hex row="1" col="1" terrain="6"/>
+  <hex row="1" col="2" terrain="6"/>
+  <hex row="1" col="3" terrain="6"/>
+  <hex row="1" col="4" terrain="6"/>
+  <hex row="1" col="5" terrain="6"/>
+  <hex row="1" col="6" terrain="6"/>
+  <hex row="1" col="7" terrain="6"/>
+  <hex row="1" col="8" terrain="6"/>
+  <hex row="1" col="9" terrain="6"/>
+  <hex row="1" col="10" terrain="6" road="18" owner="1" flag="12" victory="1">
+    <unit id="15842" owner="1" flag="13" face="0" str="5" bstr="5"/>
+  </hex>
+  <hex row="1" col="11" terrain="10" name="Aoos River"/>
+  <hex row="1" col="12" terrain="10" name="Aoos River"/>
+  <hex row="1" col="13" terrain="3"/>
+  <hex row="1" col="14" terrain="6"/>
+  <hex row="1" col="15" terrain="6"/>
+  <hex row="1" col="16" terrain="6"/>
+  <hex row="1" col="17" terrain="6"/>
+  <hex row="1" col="18" terrain="6"/>
+  <hex row="1" col="19" terrain="6"/>
+  <hex row="1" col="20" terrain="6"/>
+  <hex row="1" col="21" terrain="6"/>
+  <hex row="1" col="22" terrain="6"/>
+  <hex row="1" col="23" terrain="6"/>
+  <hex row="1" col="24" terrain="6"/>
+  <hex row="1" col="25" terrain="6"/>
+  <hex row="2" col="0" terrain="6"/>
+  <hex row="2" col="1" terrain="6"/>
+  <hex row="2" col="2" terrain="6"/>
+  <hex row="2" col="3" terrain="6"/>
+  <hex row="2" col="4" terrain="6"/>
+  <hex row="2" col="5" terrain="6"/>
+  <hex row="2" col="6" terrain="6"/>
+  <hex row="2" col="7" terrain="6"/>
+  <hex row="2" col="8" terrain="6"/>
+  <hex row="2" col="9" road="18">
+    <unit id="15996" owner="1" flag="53" face="0" str="8" bstr="5"/>
+  </hex>
+  <hex row="2" col="10" road="33"/>
+  <hex row="2" col="11" terrain="10" name="Aoos River"/>
+  <hex row="2" col="12" terrain="3"/>
+  <hex row="2" col="13" terrain="6"/>
+  <hex row="2" col="14" terrain="6"/>
+  <hex row="2" col="15" terrain="6"/>
+  <hex row="2" col="16" terrain="6"/>
+  <hex row="2" col="17" terrain="6"/>
+  <hex row="2" col="18" terrain="6"/>
+  <hex row="2" col="19" terrain="6"/>
+  <hex row="2" col="20" terrain="6"/>
+  <hex row="2" col="21" terrain="6"/>
+  <hex row="2" col="22" terrain="6"/>
+  <hex row="2" col="23" terrain="6"/>
+  <hex row="2" col="24" terrain="6"/>
+  <hex row="2" col="25" terrain="6"/>
+  <hex row="3" col="0" terrain="6"/>
+  <hex row="3" col="1" terrain="6"/>
+  <hex row="3" col="2" terrain="6"/>
+  <hex row="3" col="3" terrain="6"/>
+  <hex row="3" col="4" terrain="6"/>
+  <hex row="3" col="5" terrain="6"/>
+  <hex row="3" col="6" terrain="6"/>
+  <hex row="3" col="7" terrain="6"/>
+  <hex row="3" col="8" terrain="6"/>
+  <hex row="3" col="9" road="9"/>
+  <hex row="3" col="10" terrain="10" name="Aoos River"/>
+  <hex row="3" col="11" terrain="10" name="Aoos River"/>
+  <hex row="3" col="12" terrain="6"/>
+  <hex row="3" col="13" terrain="6"/>
+  <hex row="3" col="14" terrain="6"/>
+  <hex row="3" col="15" terrain="6"/>
+  <hex row="3" col="16" terrain="6"/>
+  <hex row="3" col="17" terrain="6"/>
+  <hex row="3" col="18" terrain="6"/>
+  <hex row="3" col="19" terrain="6"/>
+  <hex row="3" col="20" terrain="6"/>
+  <hex row="3" col="21" terrain="6"/>
+  <hex row="3" col="22" terrain="6"/>
+  <hex row="3" col="23" terrain="6"/>
+  <hex row="3" col="24" terrain="6"/>
+  <hex row="3" col="25" terrain="6"/>
+  <hex row="4" col="0" terrain="6"/>
+  <hex row="4" col="1" terrain="6"/>
+  <hex row="4" col="2" terrain="6"/>
+  <hex row="4" col="3" terrain="6"/>
+  <hex row="4" col="4" terrain="6"/>
+  <hex row="4" col="5" terrain="6"/>
+  <hex row="4" col="6" terrain="6"/>
+  <hex row="4" col="7" terrain="6"/>
+  <hex row="4" col="8" terrain="6"/>
+  <hex row="4" col="9" terrain="6"/>
+  <hex row="4" col="10" road="144">
+    <unit id="16281" owner="1" flag="13" face="0" str="5" bstr="5"/>
+  </hex>
+  <hex row="4" col="11" terrain="10" name="Aoos River"/>
+  <hex row="4" col="13" terrain="6"/>
+  <hex row="4" col="14" terrain="6"/>
+  <hex row="4" col="15" terrain="6"/>
+  <hex row="4" col="16" terrain="6"/>
+  <hex row="4" col="17" terrain="6"/>
+  <hex row="4" col="18" terrain="6"/>
+  <hex row="4" col="19" terrain="6"/>
+  <hex row="4" col="20" terrain="6"/>
+  <hex row="4" col="21" terrain="6"/>
+  <hex row="4" col="22" terrain="6"/>
+  <hex row="4" col="23" terrain="6"/>
+  <hex row="4" col="24" terrain="6"/>
+  <hex row="4" col="25" terrain="6"/>
+  <hex row="5" col="0" terrain="6"/>
+  <hex row="5" col="1" terrain="6"/>
+  <hex row="5" col="2" terrain="6"/>
+  <hex row="5" col="3" terrain="6"/>
+  <hex row="5" col="4" terrain="6"/>
+  <hex row="5" col="5" terrain="6"/>
+  <hex row="5" col="6" terrain="6"/>
+  <hex row="5" col="7" terrain="6"/>
+  <hex row="5" col="8" terrain="6"/>
+  <hex row="5" col="9" terrain="6"/>
+  <hex row="5" col="10" road="17"/>
+  <hex row="5" col="12" terrain="10" name="Aoos River"/>
+  <hex row="5" col="13" terrain="6"/>
+  <hex row="5" col="14" terrain="6"/>
+  <hex row="5" col="15" terrain="6"/>
+  <hex row="5" col="16" terrain="6"/>
+  <hex row="5" col="17" terrain="6"/>
+  <hex row="5" col="18" terrain="6"/>
+  <hex row="5" col="19" terrain="6"/>
+  <hex row="5" col="20" terrain="6"/>
+  <hex row="5" col="21" terrain="6"/>
+  <hex row="5" col="22" terrain="6"/>
+  <hex row="5" col="23" terrain="6"/>
+  <hex row="5" col="24" terrain="6"/>
+  <hex row="5" col="25" terrain="6"/>
+  <hex row="6" col="0" terrain="6"/>
+  <hex row="6" col="1" terrain="6"/>
+  <hex row="6" col="2" terrain="6"/>
+  <hex row="6" col="3" terrain="6"/>
+  <hex row="6" col="4" terrain="6"/>
+  <hex row="6" col="5" terrain="6"/>
+  <hex row="6" col="6" terrain="6"/>
+  <hex row="6" col="7" terrain="6"/>
+  <hex row="6" col="8" terrain="6"/>
+  <hex row="6" col="9" terrain="6"/>
+  <hex row="6" col="10" road="9">
+    <unit id="15908" owner="1" flag="13" face="0" str="8" bstr="5"/>
+  </hex>
+  <hex row="6" col="11" road="144"/>
+  <hex row="6" col="12" terrain="10" name="Aoos River"/>
+  <hex row="6" col="13" terrain="6"/>
+  <hex row="6" col="14" terrain="6"/>
+  <hex row="6" col="15" terrain="6"/>
+  <hex row="6" col="16" terrain="6"/>
+  <hex row="6" col="17" terrain="6"/>
+  <hex row="6" col="18" terrain="6"/>
+  <hex row="6" col="19" terrain="6"/>
+  <hex row="6" col="20" terrain="6"/>
+  <hex row="6" col="21" terrain="6"/>
+  <hex row="6" col="22" terrain="6"/>
+  <hex row="6" col="23" terrain="6"/>
+  <hex row="6" col="24" terrain="6"/>
+  <hex row="6" col="25" terrain="6"/>
+  <hex row="7" col="0" terrain="6"/>
+  <hex row="7" col="1" terrain="6"/>
+  <hex row="7" col="2" terrain="6"/>
+  <hex row="7" col="3" terrain="6"/>
+  <hex row="7" col="4" terrain="6"/>
+  <hex row="7" col="5" terrain="6"/>
+  <hex row="7" col="6" terrain="6"/>
+  <hex row="7" col="7" terrain="6"/>
+  <hex row="7" col="8" terrain="6"/>
+  <hex row="7" col="9" terrain="6"/>
+  <hex row="7" col="11" road="33">
+    <unit id="15909" owner="1" flag="13" face="0" str="8" bstr="5"/>
+  </hex>
+  <hex row="7" col="12" terrain="10" name="Aoos River"/>
+  <hex row="7" col="16" terrain="6"/>
+  <hex row="7" col="17" terrain="6"/>
+  <hex row="7" col="18" terrain="6"/>
+  <hex row="7" col="19" terrain="6"/>
+  <hex row="7" col="20" terrain="6"/>
+  <hex row="7" col="21" terrain="6"/>
+  <hex row="7" col="22" terrain="6"/>
+  <hex row="7" col="23" terrain="6"/>
+  <hex row="7" col="24" terrain="6"/>
+  <hex row="7" col="25" terrain="6"/>
+  <hex row="8" col="0" terrain="6"/>
+  <hex row="8" col="1" terrain="6"/>
+  <hex row="8" col="2" terrain="6"/>
+  <hex row="8" col="3" terrain="6"/>
+  <hex row="8" col="4" terrain="6"/>
+  <hex row="8" col="5" terrain="6"/>
+  <hex row="8" col="6" terrain="6"/>
+  <hex row="8" col="7" terrain="6"/>
+  <hex row="8" col="8" terrain="6"/>
+  <hex row="8" col="10" road="18">
+    <unit id="16978" owner="1" flag="13" face="0" transport="16863" str="8" bstr="5"/>
+  </hex>
+  <hex row="8" col="12" terrain="10" name="Aoos River"/>
+  <hex row="8" col="15" terrain="6"/>
+  <hex row="8" col="20" terrain="6"/>
+  <hex row="8" col="21" terrain="6"/>
+  <hex row="8" col="22" terrain="6"/>
+  <hex row="8" col="23" terrain="6"/>
+  <hex row="8" col="24" terrain="6"/>
+  <hex row="8" col="25" terrain="6"/>
+  <hex row="9" col="0" terrain="6"/>
+  <hex row="9" col="1" terrain="6"/>
+  <hex row="9" col="2" terrain="6"/>
+  <hex row="9" col="3" terrain="6"/>
+  <hex row="9" col="4" terrain="6"/>
+  <hex row="9" col="5" terrain="6"/>
+  <hex row="9" col="6" terrain="6"/>
+  <hex row="9" col="7" terrain="6"/>
+  <hex row="9" col="8" terrain="6"/>
+  <hex row="9" col="9">
+    <unit id="15909" owner="1" flag="13" face="0" str="8" bstr="5"/>
+  </hex>
+  <hex row="9" col="10" road="9"/>
+  <hex row="9" col="11" terrain="10" name="Aoos River"/>
+  <hex row="9" col="12" terrain="10" name="Aoos River"/>
+  <hex row="9" col="13" terrain="6"/>
+  <hex row="9" col="14" terrain="6"/>
+  <hex row="9" col="15" terrain="6"/>
+  <hex row="9" col="16" terrain="6"/>
+  <hex row="9" col="17" terrain="6"/>
+  <hex row="9" col="19" terrain="6"/>
+  <hex row="9" col="21" terrain="6"/>
+  <hex row="9" col="22" terrain="6"/>
+  <hex row="9" col="23" terrain="6"/>
+  <hex row="9" col="24" terrain="6"/>
+  <hex row="9" col="25" terrain="6"/>
+  <hex row="10" col="0" terrain="6"/>
+  <hex row="10" col="1" terrain="6"/>
+  <hex row="10" col="2" terrain="6"/>
+  <hex row="10" col="3" terrain="6"/>
+  <hex row="10" col="4" terrain="6"/>
+  <hex row="10" col="5" terrain="6"/>
+  <hex row="10" col="6" terrain="6"/>
+  <hex row="10" col="7" terrain="3"/>
+  <hex row="10" col="8" terrain="6"/>
+  <hex row="10" col="9" terrain="10" name="Aoos River"/>
+  <hex row="10" col="10" terrain="10" name="Aoos River"/>
+  <hex row="10" col="11">
+    <unit id="16978" owner="1" flag="13" face="0" transport="16863" str="8" bstr="5"/>
+  </hex>
+  <hex row="10" col="12" road="144"/>
+  <hex row="10" col="13" terrain="6"/>
+  <hex row="10" col="14" terrain="6"/>
+  <hex row="10" col="15" terrain="6"/>
+  <hex row="10" col="16" terrain="6"/>
+  <hex row="10" col="17" terrain="6"/>
+  <hex row="10" col="18" terrain="6"/>
+  <hex row="10" col="19" terrain="6"/>
+  <hex row="10" col="20">
+    <unit id="30448" owner="0" flag="40" face="0" bstr="5"/>
+  </hex>
+  <hex row="10" col="21" terrain="6"/>
+  <hex row="10" col="22" terrain="6"/>
+  <hex row="10" col="23" terrain="6"/>
+  <hex row="10" col="24" terrain="6"/>
+  <hex row="10" col="25" terrain="6"/>
+  <hex row="11" col="0" terrain="6"/>
+  <hex row="11" col="1" terrain="6"/>
+  <hex row="11" col="2" terrain="6"/>
+  <hex row="11" col="3" terrain="6"/>
+  <hex row="11" col="4" terrain="6"/>
+  <hex row="11" col="5" terrain="6"/>
+  <hex row="11" col="6" terrain="3"/>
+  <hex row="11" col="7" terrain="3"/>
+  <hex row="11" col="8" terrain="3"/>
+  <hex row="11" col="9" terrain="10" name="Aoos River"/>
+  <hex row="11" col="10" terrain="1" name="Vovousa">
+    <unit id="15909" owner="1" flag="13" face="0" str="8" bstr="5"/>
+  </hex>
+  <hex row="11" col="11" terrain="1" road="18" name="Vovousa" owner="1" flag="12" victory="1" trigger="4" trigparam="0">
+    <unit id="15909" owner="1" flag="13" face="0" str="8" bstr="5"/>
+  </hex>
+  <hex row="11" col="12" terrain="6" road="33">
+    <unit id="15909" owner="1" flag="13" face="0" str="8" bstr="5"/>
+  </hex>
+  <hex row="11" col="13" terrain="6"/>
+  <hex row="11" col="14" terrain="6"/>
+  <hex row="11" col="15" terrain="6"/>
+  <hex row="11" col="16" terrain="6"/>
+  <hex row="11" col="17" terrain="6"/>
+  <hex row="11" col="18" terrain="6"/>
+  <hex row="11" col="19" terrain="6"/>
+  <hex row="11" col="20">
+    <unit id="30448" owner="0" flag="40" face="0" bstr="5"/>
+  </hex>
+  <hex row="11" col="21" terrain="6"/>
+  <hex row="11" col="23" terrain="6"/>
+  <hex row="11" col="24" terrain="6"/>
+  <hex row="11" col="25" terrain="6"/>
+  <hex row="12" col="0" terrain="6"/>
+  <hex row="12" col="1" terrain="6"/>
+  <hex row="12" col="2" terrain="6"/>
+  <hex row="12" col="3" terrain="6"/>
+  <hex row="12" col="4" terrain="6"/>
+  <hex row="12" col="5" terrain="6"/>
+  <hex row="12" col="6" terrain="3"/>
+  <hex row="12" col="7" terrain="3"/>
+  <hex row="12" col="8" terrain="3"/>
+  <hex row="12" col="9" terrain="10" name="Aoos River"/>
+  <hex row="12" col="10" terrain="1" name="Vovousa">
+    <unit id="15909" owner="1" flag="13" face="0" str="8" bstr="5"/>
+  </hex>
+  <hex row="12" col="11" terrain="1" road="9" name="Vovousa"/>
+  <hex row="12" col="12" terrain="6"/>
+  <hex row="12" col="13" terrain="6"/>
+  <hex row="12" col="14" terrain="6"/>
+  <hex row="12" col="15" terrain="6"/>
+  <hex row="12" col="16" terrain="6"/>
+  <hex row="12" col="17" terrain="6"/>
+  <hex row="12" col="18" terrain="6"/>
+  <hex row="12" col="19" terrain="6"/>
+  <hex row="12" col="20">
+    <unit id="30693" owner="0" flag="40" face="0" transport="30619" bstr="5"/>
+  </hex>
+  <hex row="12" col="21" terrain="6"/>
+  <hex row="12" col="23" terrain="6"/>
+  <hex row="12" col="24" terrain="6"/>
+  <hex row="12" col="25" terrain="6"/>
+  <hex row="13" col="0" terrain="6"/>
+  <hex row="13" col="1" terrain="6"/>
+  <hex row="13" col="2" terrain="6"/>
+  <hex row="13" col="3" terrain="6"/>
+  <hex row="13" col="4" terrain="6"/>
+  <hex row="13" col="5" terrain="6"/>
+  <hex row="13" col="6" terrain="6"/>
+  <hex row="13" col="7" terrain="6"/>
+  <hex row="13" col="8" terrain="6"/>
+  <hex row="13" col="10" terrain="10" name="Aoos River"/>
+  <hex row="13" col="11" terrain="10" name="Aoos River"/>
+  <hex row="13" col="12" road="136"/>
+  <hex row="13" col="13" terrain="6" road="144"/>
+  <hex row="13" col="14" terrain="6"/>
+  <hex row="13" col="15" terrain="6"/>
+  <hex row="13" col="16" terrain="6"/>
+  <hex row="13" col="17" terrain="6"/>
+  <hex row="13" col="18" terrain="6"/>
+  <hex row="13" col="19" terrain="6"/>
+  <hex row="13" col="20">
+    <unit id="30543" owner="0" flag="40" face="0" transport="30619" bstr="5"/>
+  </hex>
+  <hex row="13" col="21" terrain="6"/>
+  <hex row="13" col="23" terrain="6"/>
+  <hex row="13" col="24" terrain="6"/>
+  <hex row="13" col="25" terrain="6"/>
+  <hex row="14" col="1" terrain="6"/>
+  <hex row="14" col="2" terrain="6"/>
+  <hex row="14" col="3" terrain="6"/>
+  <hex row="14" col="4" terrain="6"/>
+  <hex row="14" col="5" terrain="6"/>
+  <hex row="14" col="6" terrain="6"/>
+  <hex row="14" col="7" terrain="6"/>
+  <hex row="14" col="8" terrain="6"/>
+  <hex row="14" col="11" terrain="10" name="Aoos River"/>
+  <hex row="14" col="13" terrain="6" road="17"/>
+  <hex row="14" col="14" terrain="6"/>
+  <hex row="14" col="15" terrain="6"/>
+  <hex row="14" col="16" terrain="6"/>
+  <hex row="14" col="17" terrain="6"/>
+  <hex row="14" col="18" terrain="6"/>
+  <hex row="14" col="19" terrain="6"/>
+  <hex row="14" col="20">
+    <unit id="30449" owner="0" flag="40" face="0" bstr="5"/>
+  </hex>
+  <hex row="14" col="21" terrain="3"/>
+  <hex row="14" col="22" terrain="6"/>
+  <hex row="14" col="23" terrain="6"/>
+  <hex row="14" col="24" terrain="6"/>
+  <hex row="14" col="25" terrain="6"/>
+  <hex row="15" col="1" terrain="6"/>
+  <hex row="15" col="2" terrain="6"/>
+  <hex row="15" col="3" terrain="6"/>
+  <hex row="15" col="4" terrain="6"/>
+  <hex row="15" col="5" terrain="6"/>
+  <hex row="15" col="6" terrain="6"/>
+  <hex row="15" col="7" terrain="6"/>
+  <hex row="15" col="8" terrain="6"/>
+  <hex row="15" col="10" terrain="10" name="Aoos River"/>
+  <hex row="15" col="13" terrain="6" road="33"/>
+  <hex row="15" col="14" terrain="3"/>
+  <hex row="15" col="15" terrain="3"/>
+  <hex row="15" col="16" terrain="6"/>
+  <hex row="15" col="17" terrain="6"/>
+  <hex row="15" col="18" terrain="6"/>
+  <hex row="15" col="19" terrain="6"/>
+  <hex row="15" col="20" terrain="6"/>
+  <hex row="15" col="21" terrain="3"/>
+  <hex row="15" col="22" terrain="3"/>
+  <hex row="15" col="23" terrain="6"/>
+  <hex row="15" col="24" terrain="6"/>
+  <hex row="15" col="25" terrain="6"/>
+  <hex row="16" col="1" terrain="6"/>
+  <hex row="16" col="2" terrain="6"/>
+  <hex row="16" col="3" terrain="6"/>
+  <hex row="16" col="4" terrain="6"/>
+  <hex row="16" col="5" terrain="6"/>
+  <hex row="16" col="6" terrain="6"/>
+  <hex row="16" col="7" terrain="6"/>
+  <hex row="16" col="8" terrain="6"/>
+  <hex row="16" col="10" terrain="10" name="Aoos River"/>
+  <hex row="16" col="11">
+    <unit id="30449" owner="0" flag="40" face="0" core="1"/>
+  </hex>
+  <hex row="16" col="12" road="18"/>
+  <hex row="16" col="13" terrain="6"/>
+  <hex row="16" col="14" terrain="3"/>
+  <hex row="16" col="15" terrain="6"/>
+  <hex row="16" col="16" terrain="6"/>
+  <hex row="16" col="17" terrain="6"/>
+  <hex row="16" col="18" terrain="6"/>
+  <hex row="16" col="19" terrain="6"/>
+  <hex row="16" col="20" terrain="6"/>
+  <hex row="16" col="21" terrain="6"/>
+  <hex row="16" col="22" terrain="3"/>
+  <hex row="16" col="23" terrain="6"/>
+  <hex row="16" col="24" terrain="6"/>
+  <hex row="16" col="25" terrain="6"/>
+  <hex row="17" col="1" terrain="3"/>
+  <hex row="17" col="2" terrain="6"/>
+  <hex row="17" col="3" terrain="6"/>
+  <hex row="17" col="4" terrain="6"/>
+  <hex row="17" col="5" terrain="6"/>
+  <hex row="17" col="6" terrain="6"/>
+  <hex row="17" col="7" terrain="6"/>
+  <hex row="17" col="8" terrain="6"/>
+  <hex row="17" col="9">
+    <unit id="30449" owner="0" flag="40" face="0" core="1"/>
+  </hex>
+  <hex row="17" col="10" terrain="10" name="Aoos River"/>
+  <hex row="17" col="11" terrain="10" name="Aoos River"/>
+  <hex row="17" col="12" road="17">
+    <unit id="30449" owner="0" flag="40" face="0" core="1"/>
+  </hex>
+  <hex row="17" col="13">
+    <unit id="30651" owner="0" flag="40" face="0" transport="30620" str="7" core="1"/>
+  </hex>
+  <hex row="17" col="14" terrain="6"/>
+  <hex row="17" col="15" terrain="6"/>
+  <hex row="17" col="16" terrain="6"/>
+  <hex row="17" col="17" terrain="6"/>
+  <hex row="17" col="18" terrain="6"/>
+  <hex row="17" col="21" terrain="6"/>
+  <hex row="17" col="23" terrain="6"/>
+  <hex row="17" col="24" terrain="6"/>
+  <hex row="17" col="25" terrain="6"/>
+  <hex row="18" col="1" terrain="3"/>
+  <hex row="18" col="2" terrain="3"/>
+  <hex row="18" col="3" terrain="6"/>
+  <hex row="18" col="4" terrain="6"/>
+  <hex row="18" col="5" terrain="6"/>
+  <hex row="18" col="6" terrain="6"/>
+  <hex row="18" col="7" terrain="6"/>
+  <hex row="18" col="8" terrain="6"/>
+  <hex row="18" col="9">
+    <unit id="30693" owner="0" flag="40" face="0" transport="30620" str="7" core="1"/>
+  </hex>
+  <hex row="18" col="10">
+    <unit id="30512" owner="0" flag="40" face="0" str="7" core="1"/>
+  </hex>
+  <hex row="18" col="11" terrain="10" name="Aoos River"/>
+  <hex row="18" col="12" road="9">
+    <unit id="30370" owner="0" flag="40" face="0" str="7" core="1"/>
+  </hex>
+  <hex row="18" col="13" road="144" owner="0" flag="39" victory="0">
+    <unit id="30549" owner="0" flag="40" face="0" transport="30587" str="7" core="1"/>
+  </hex>
+  <hex row="18" col="15" terrain="6"/>
+  <hex row="18" col="16" terrain="6"/>
+  <hex row="18" col="21" terrain="6"/>
+  <hex row="18" col="22" terrain="6"/>
+  <hex row="18" col="23" terrain="6"/>
+  <hex row="18" col="24" terrain="6"/>
+  <hex row="18" col="25" terrain="6"/>
+  <hex row="19" col="0" terrain="6"/>
+  <hex row="19" col="1" terrain="3"/>
+  <hex row="19" col="2" terrain="3"/>
+  <hex row="19" col="3" terrain="3"/>
+  <hex row="19" col="4" terrain="6"/>
+  <hex row="19" col="5" terrain="6"/>
+  <hex row="19" col="6" terrain="6"/>
+  <hex row="19" col="7" terrain="6"/>
+  <hex row="19" col="8" terrain="6"/>
+  <hex row="19" col="9" terrain="6"/>
+  <hex row="19" col="11" terrain="10" name="Aoos River"/>
+  <hex row="19" col="13" road="17"/>
+  <hex row="19" col="16" terrain="6"/>
+  <hex row="19" col="17" terrain="6"/>
+  <hex row="19" col="18" terrain="6"/>
+  <hex row="19" col="19" terrain="6"/>
+  <hex row="19" col="20" terrain="6"/>
+  <hex row="19" col="21" terrain="6"/>
+  <hex row="19" col="22" terrain="6"/>
+  <hex row="19" col="23" terrain="6"/>
+  <hex row="19" col="24" terrain="6"/>
+  <hex row="19" col="25" terrain="6"/>
+</map>

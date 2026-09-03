@@ -268,8 +268,13 @@ object Sound {
             ambient?.volume = uiSettings.ambientVolume
         } catch (_: Throwable) {
         }
+    }
+
+    /** The same, for the scenario score, which starts once per battle and would otherwise not hear
+     *  the slider until the next scenario. */
+    fun refreshMusicVolume() {
         try {
-            music?.volume = uiSettings.ambientVolume
+            music?.volume = uiSettings.musicVolume
         } catch (_: Throwable) {
         }
     }
@@ -279,9 +284,9 @@ object Sound {
      *
      * A SECOND looping element rather than a reuse of [ambient]: the weather ambience owns that one
      * and restarts it whenever the weather changes, so sharing it would have rain silence the battle
-     * music and the music silence the rain. Both read the Ambient slider, which is the nearest
-     * existing control -- a soundtrack of its own would want its own slider, and that is a settings
-     * change rather than an import one.
+     * music and the music silence the rain. It reads its OWN level ([UiSettings.musicVolume]) --
+     * it borrowed the Ambient slider when the track first shipped, which meant a player who wanted
+     * the rain but not the score, or the score but not the rain, had no way to say so.
      */
     private var music: dynamic = null
 
@@ -292,7 +297,7 @@ object Sound {
             val a = js("new Audio()")
             a.src = url
             a.loop = true
-            a.volume = uiSettings.ambientVolume
+            a.volume = uiSettings.musicVolume
             // Autoplay is blocked until the first interaction; swallow the rejection so it is not an
             // "Uncaught (in promise)", exactly as `startAmbient` does.
             val p = a.play()

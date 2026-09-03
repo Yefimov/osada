@@ -4,6 +4,7 @@ private const val DEFAULT_UI_SIZE = 840
 private const val DEFAULT_UI_SMALL_SIZE = 470
 private const val DEFAULT_SOUND_VOLUME = 0.5
 private const val DEFAULT_AMBIENT_VOLUME = 0.4
+private const val DEFAULT_MUSIC_VOLUME = 0.3
 
 /** [GameStateRestore.applySettings] sub-steps, split out to keep the file's function count in bounds. */
 internal fun applyDisplaySettings(data: dynamic) {
@@ -31,6 +32,10 @@ private fun applySoundSettings(data: dynamic) {
     uiSettings.muteUnitSounds = data.muteUnitSounds as? Boolean ?: false
     uiSettings.soundVolume = (data.soundVolume as? Number)?.toDouble() ?: DEFAULT_SOUND_VOLUME
     uiSettings.ambientVolume = (data.ambientVolume as? Number)?.toDouble() ?: DEFAULT_AMBIENT_VOLUME
+    // A settings blob written before music had its own level carries no key; it falls back to the
+    // field default rather than to `ambientVolume`, which is what the two sliders being separate
+    // means -- inheriting the old shared value would silently re-couple them on the first load.
+    uiSettings.musicVolume = (data.musicVolume as? Number)?.toDouble() ?: DEFAULT_MUSIC_VOLUME
 }
 
 internal fun applyMarkerSettings(data: dynamic) {

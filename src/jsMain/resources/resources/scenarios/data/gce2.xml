@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="gce2.xscn" name="Valle del Jarama" turns="20, 22, 21" date="February 16, 1937" dayturns="0" ground="0" atmosferic="0" latitude="1" iconset="0" weatherchg="1" rows="39" cols="44" eqp="eqp-gce" image="resources/maps/images/map_803.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="0" subsneedlof="1" basicstrength="0" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="0" capitalflak="1" ehmsuonly="0" paradropocean="1" coresoffcap="0">
+<map file="gce2.xscn" name="Valle del Jarama" turns="20, 22, 21" date="February 16, 1937" dayturns="3" ground="0" atmosferic="0" latitude="1" iconset="0" weatherchg="1" rows="39" cols="44" eqp="eqp-gce" image="resources/maps/images/map_803.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="0" subsneedlof="1" basicstrength="0" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="0" capitalflak="1" ehmsuonly="0" paradropocean="1" coresoffcap="0" daysperturn="0">
   <player id="0" country="226" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="207,227,0,0" turnprestige="8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 12, 8, 12, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8"/>
   <player id="1" country="225" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="208,209,210,215" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="4">
     <at row="5" col="5">
-      <unit id="47622" owner="0" flag="227" face="0" str="8"/>
+      <unit id="47622" owner="0" flag="227" face="0" str="8" bstr="8"/>
     </at>
     <at row="5" col="6">
-      <unit id="47622" owner="0" flag="227" face="0" str="8"/>
+      <unit id="47622" owner="0" flag="227" face="0" str="8" bstr="8"/>
     </at>
     <at row="4" col="5">
-      <unit id="47632" owner="0" flag="227" face="0" str="5" ldr="1"/>
+      <unit id="47632" owner="0" flag="227" face="0" str="5" ldr="1" bstr="5"/>
     </at>
   </reinforce>
   <reinforce turn="8">
     <at row="22" col="14">
-      <unit id="47327" owner="1" flag="210" face="0" exp="100" str="5"/>
+      <unit id="47327" owner="1" flag="210" face="0" exp="100" str="5" bstr="5"/>
     </at>
   </reinforce>
   <hex row="0" col="2" terrain="1"/>

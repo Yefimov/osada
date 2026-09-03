@@ -1006,7 +1006,7 @@
         <!-- 2. THE TURN                                                   -->
         <!-- ============================================================ -->
         <section class="chapter" id="turn" data-title="The turn"
-                 data-keywords="turn end turn sleep wake initiative order entrench resupply automatic turn report date">
+                 data-keywords="turn end turn sleep wake initiative order entrench resupply automatic turn report date calendar turns per day days per turn round">
             <p class="eyebrow" data-mkey="turn.eyebrow">Chapter 2</p>
             <h2 tabindex="-1" data-mkey="turn.h">The turn</h2>
             <p class="lede" data-mkey="turn.lede">A battle lasts a fixed number of turns. Everything you can do
@@ -1049,12 +1049,27 @@
                     only in a city hex, and never with an enemy adjacent.</li>
                 <li data-mkey="turn.end.3"><strong>The weather is rolled and the ground may shift.</strong> Rain and
                     snow do not change the ground immediately; see <a href="#weather">Weather &amp; terrain</a>.</li>
-                <li data-mkey="turn.end.4"><strong>The date advances</strong> once the scenario's turns-per-day count
-                    is reached, which is what makes equipment become available or obsolete mid-campaign.</li>
+                <li data-mkey="turn.end.4"><strong>The date may advance</strong> — see <em>The calendar</em>
+                    below. This is what makes equipment become available or obsolete mid-campaign, and it is what
+                    moves the battle from one month's weather table to the next.</li>
                 <li data-mkey="turn.end.5"><strong>Losses outside combat are reported.</strong> Anything that
                     disappeared between turns gets a line in the Turn Report (<kbd>T</kbd>) rather than vanishing
                     silently.</li>
             </ol>
+
+            <h3 data-mkey="turn.calendar.h">The calendar</h3>
+            <p data-mkey="turn.calendar.p1">The date moves on <strong>complete rounds</strong>, never on individual
+                player phases: both sides move, and only then does the calendar look at itself. A scenario's author
+                sets the rate in one of two mutually exclusive ways —</p>
+            <ul>
+                <li data-mkey="turn.calendar.1"><strong>turns per day</strong>: a stated number of complete rounds
+                    passes before the date moves by one day. Three turns per day means three rounds — six player
+                    phases on a two-sided battle — for each day of the war;</li>
+                <li data-mkey="turn.calendar.2"><strong>days per turn</strong>: the reverse, where one complete round
+                    advances the date by several days. Operational-scale scenarios use this.</li>
+            </ul>
+            <p data-mkey="turn.calendar.p2">A scenario that sets neither gets one round per day, which is the
+                historical default. The current date is shown in the top bar, and the Turn Report records it.</p>
 
             <h3 data-mkey="turn.victory.h">Winning and losing</h3>
             <p data-mkey="turn.victory.p1">Battles are won by taking or holding <strong>victory objectives</strong> —
@@ -1082,7 +1097,7 @@
         <!-- 3. READING THE BATTLEFIELD                                    -->
         <!-- ============================================================ -->
         <section class="chapter" id="battlefield" data-title="Reading the battlefield"
-                 data-keywords="hex spotting fog of war zone of control zoc air mode layer objectives capture flag strategic map labels">
+                 data-keywords="hex spotting fog of war zone of control zoc air zoc line of sight extended los cut los air mode layer objectives capture flag strategic map labels victory hexes typed hold escape hex withdraw must survive trigger hex prototype">
             <p class="eyebrow" data-mkey="field.eyebrow">Chapter 3</p>
             <h2 tabindex="-1" data-mkey="field.h">Reading the battlefield</h2>
             <p class="lede" data-mkey="field.lede">Two layers, six neighbours per hex, and only as much of the enemy
@@ -1111,6 +1126,17 @@
                     (<span class="key">installation_spotting</span>) lets a city, port or airfield you own see its own
                     hex and its neighbours with no garrison at all. Both are <strong>off</strong> by default.</p>
             </div>
+            <div class="switch">
+                <span class="callout-title" data-mkey="field.los.switch.title">Ruleset-dependent</span>
+                <p data-mkey="field.los.switch.p"><strong>Extended line of sight</strong>
+                    (<code>extended_los</code>) is what makes terrain matter to sight, and it is a scenario option
+                    that Author's Vision leaves to the author. With it in force: mountains, hills, forest and city
+                    hexes cut the line of sight to whatever lies directly beyond them; a formation in forest is not
+                    spotted by ground formations unless they are adjacent; and a formation in forest or city is not
+                    spotted by aircraft more than two hexes away. Equipment carrying <em>Cut LOS</em> blocks sight
+                    through its own hex — <strong>for both sides</strong>, so a screen can mask your own observers as
+                    well as the enemy's.</p>
+            </div>
 
             <h3 data-mkey="field.zoc.h">Zone of control</h3>
             <p data-mkey="field.zoc.p1">A formation exerts a zone of control over the six hexes around it. Ground
@@ -1120,6 +1146,14 @@
             <p data-mkey="field.zoc.p2">Two things get past it. Reconnaissance, and anything with the
                 Reconnaissance Movement trait, moves in stages and can therefore keep going after being stopped once.
                 A commander with <strong>Superior Maneuver</strong> ignores enemy zones of control outright.</p>
+            <div class="switch">
+                <span class="callout-title" data-mkey="field.zoc.switch.title">Ruleset-dependent</span>
+                <p data-mkey="field.zoc.switch.p">An <strong>aircraft projects no zone of control at all</strong>
+                    unless the scenario asks for one. <strong>Air zone of control</strong> (<code>air_zoc</code>) is
+                    that request, honoured by Author's Vision: with it on, a fighter over a road stops the column
+                    beneath it exactly as a ground formation beside it would. Individual equipment may also carry
+                    <em>No ZOC</em> and project none whatever the setting.</p>
+            </div>
             <p data-mkey="field.zoc.p3">An enemy you have <em>not</em> spotted projects no zone of control, because
                 you cannot plan around what you cannot see. Instead, a move that runs into a hidden formation is a
                 <strong>surprise</strong>: the move ends there, combat resolves with the penalties described under
@@ -1133,6 +1167,42 @@
                 a battle you thought you had won.</p>
             <p data-mkey="field.obj.p2"><kbd>L</kbd> toggles the name labels on optional capture points. Victory
                 objectives stay labelled either way, because those are the ones you were ordered to take.</p>
+
+            <h3 data-mkey="field.win.h">Objectives that are not hexes</h3>
+            <p data-mkey="field.win.p1">Taking the victory hexes inside the turn limit is the usual way to win, but a
+                scenario's author has four other conditions available. You need to meet <strong>one</strong> of them,
+                not all — every one of these is an alternative route, never an extra hurdle. The briefing states which
+                are in play, and the objectives rail tracks them.</p>
+            <dl class="glossary">
+                <dt data-mkey="field.win.hold.dt">Hold a number of objectives</dt>
+                <dd data-mkey="field.win.hold.dd">Instead of taking every victory hex, hold a stated number of them
+                    once the turn limit for that victory level has passed. The two sides usually have different
+                    numbers.</dd>
+                <dt data-mkey="field.win.typed.dt">Typed victory hexes</dt>
+                <dd data-mkey="field.win.typed.dd">An objective can count towards some victory levels and not others.
+                    A hex may be required for a brilliant victory alone, so that letting the deadline for one pass
+                    genuinely changes what you have to take next.</dd>
+                <dt data-mkey="field.win.escape.dt">Get formations off the map</dt>
+                <dd data-mkey="field.win.escape.dd">The author marks <strong>escape hexes</strong> and a number of
+                    formations to get out through them. A formation that ends its move on one is
+                    <em>withdrawn</em> — taken off the map and counted. Withdrawal is not destruction: it is not a
+                    casualty, the enemy is not credited with it, and in a campaign the formation stays on your core
+                    roster. Exits are typed, so an aircraft cannot leave through a ground exit and a division cannot
+                    leave through an air one, and some scenarios accept only designated formations.</dd>
+                <dt data-mkey="field.win.kill.dt">Destroy a number of enemy formations</dt>
+                <dd data-mkey="field.win.kill.dd">A straight count of kills, tracked per side.</dd>
+                <dt data-mkey="field.win.msu.dt">Must-survive formations</dt>
+                <dd data-mkey="field.win.msu.dd">The mirror image of the others: the author names formations that must
+                    still be alive at the end. Losing one loses the battle however well the rest of it went. These are
+                    marked on the counter and named in the briefing.</dd>
+            </dl>
+
+            <h3 data-mkey="field.trigger.h">Trigger hexes</h3>
+            <p data-mkey="field.trigger.p">A hex can carry something the author left there for whoever reaches it
+                first. A formation that <em>ends its move</em> on one may find replacements, experience, prestige, a
+                commander, a prototype vehicle or a wider view of the ground. It fires once, for whoever gets there,
+                and the log records what was found. Most triggers in the imported campaigns are silent about
+                themselves; where the author wrote a line of their own, that is what you are shown.</p>
 
             <h3 data-mkey="field.tools.h">Tools for looking</h3>
             <dl class="glossary">
@@ -1165,7 +1235,7 @@
         <!-- 4. MOVEMENT                                                   -->
         <!-- ============================================================ -->
         <section class="chapter" id="movement" data-title="Movement"
-                 data-keywords="movement points fuel roads rivers bridging mount dismount embark disembark transport undo phased recon paratroopers minefield">
+                 data-keywords="movement points fuel roads rivers bridging mount dismount embark disembark transport weight undo phased recon paratroopers minefield rail railway station entrain auto mount organic transport">
             <p class="eyebrow" data-mkey="move.eyebrow">Chapter 4</p>
             <h2 tabindex="-1" data-mkey="move.h">Movement</h2>
             <p class="lede" data-mkey="move.lede">Movement points, spent per hex according to terrain, weather and
@@ -1215,6 +1285,31 @@
                     unload into. Paratroopers are the exception that can drop anywhere.</dd>
             </dl>
 
+            <p data-mkey="move.transport.weights.p"><strong>Not every transport takes every passenger.</strong>
+                Air, naval, rail and container transport each carry a weight class, and a formation too heavy for a
+                given lift is refused rather than silently squeezed aboard. This is why a scenario can give you naval
+                transport and still not let your heavy armour board it.</p>
+
+            <h3 data-mkey="move.automount.h">Riding to get there</h3>
+            <p data-mkey="move.automount.p">Ordering a formation that owns organic transport to a hex its legs cannot
+                reach does not refuse the order: it climbs aboard and drives. Those hexes are marked in the reachable
+                set, so you can see before you commit which part of the range is on foot and which is on wheels.
+                Mounting is free and costs no part of the move — but the formation arrives mounted, with a mounted
+                formation's vulnerability, and it cannot fire that turn if it moved.</p>
+
+            <h3 data-mkey="move.rail.h">Rail transport</h3>
+            <p data-mkey="move.rail.p1">Where the author granted a rail pool, a formation that has not yet acted can
+                entrain and be carried across the rail network for one point of that pool. A <strong>station is
+                needed at both ends</strong> unless the equipment carries <em>No Need Station</em>, which lifts the
+                requirement at both. The pool is per player and per scenario; when it is spent, the railway is closed
+                for the rest of the battle.</p>
+            <div class="switch">
+                <span class="callout-title" data-mkey="move.rail.switch.title">Ruleset-dependent</span>
+                <p data-mkey="move.rail.switch.p"><strong>Rail transport</strong> (<code>rail_transport</code>) is
+                    honoured by Author's Vision and off under OSADA Default. It changes nothing in a scenario whose
+                    author granted no pool, which is most of them.</p>
+            </div>
+
             <h3 data-mkey="move.rivers.h">Rivers</h3>
             <p data-mkey="move.rivers.p">Entering a river hex ends a ground formation's movement, and it may leave
                 normally the following turn — unless the river is <strong>frozen</strong>, which removes the penalty
@@ -1256,31 +1351,40 @@
         <!-- 5. COMBAT                                                     -->
         <!-- ============================================================ -->
         <section class="chapter" id="combat" data-title="Combat"
-                 data-keywords="attack forecast losses close combat entrenchment rugged defense surprise support fire overrun retreat surrender initiative ammunition experience interception air">
+                 data-keywords="attack forecast losses close combat entrenchment rugged defense surprise support fire overrun retreat surrender initiative ammunition experience interception air barrage bombard crater counterbattery sabotage saboteur evade evasion kamikaze naval critical hit submarine rubble">
             <p class="eyebrow" data-mkey="combat.eyebrow">Chapter 5</p>
             <h2 tabindex="-1" data-mkey="combat.h">Combat</h2>
-            <p class="lede" data-mkey="combat.lede">Hover an enemy in range and the forecast tells you what will
-                happen. By default it is not an estimate.</p>
+            <p class="lede" data-mkey="combat.lede">Hover an enemy in range and the forecast tells you what to
+                expect. Most of it is settled before you commit; a little of it is not.</p>
             <hr class="rule"/>
 
-            <h3 data-mkey="combat.forecast.h">The forecast is exact</h3>
+            <h3 data-mkey="combat.forecast.h">The forecast, and what it can and cannot promise</h3>
             <p data-mkey="combat.forecast.p1">Passing the pointer over an enemy inside your selected formation's
                 firing range raises the attack reticule and the forecast: your projected casualties under your flag,
                 the enemy's under theirs. On touch devices it appears automatically for every formation in
                 range.</p>
-            <p data-mkey="combat.forecast.p2"><strong>Under the default rules nothing about combat is random.</strong>
-                Initiative is decided by equipment, its attachments and the terrain the defender stands in, and the
-                damage is an expected value rather than a die roll — so the same attack from the same position always
-                produces the same result, and the number in the forecast is the number you will get. This is also
-                what allows multiplayer to replay combat on both clients instead of transmitting the outcome.</p>
+            <p data-mkey="combat.forecast.p2"><strong>Almost all of combat is settled arithmetic.</strong> Damage
+                is an expected value rather than a die roll, so attack and defence values, attachments, terrain,
+                weather, entrenchment, experience and supporting fire all resolve to a fixed number before you
+                commit. The forecast shows you that number.</p>
+            <p data-mkey="combat.forecast.p3">What it cannot show you is <strong>initiative</strong>. Open General
+                decides who reacts first from equipment, terrain <em>and</em> the crews' experience — one point per
+                completed experience bar — plus a small random swing for the uncertainty of battle, and that swing is
+                rolled only when the attack is actually made. So the forecast is an <em>estimate</em>: a close one,
+                and usually exact, but an exchange can turn on who fired first. This is the default.</p>
+            <p data-mkey="combat.forecast.p4">The roll is drawn from the battle's own seeded sequence, which travels
+                in the save. That is what lets multiplayer replay combat on both clients instead of transmitting the
+                outcome, and it means the swing cannot be re-rolled by saving and reloading. Nothing is drawn by
+                hovering, by previewing or by the computer thinking — only by the attack you actually order.</p>
             <div class="switch">
                 <span class="callout-title" data-mkey="combat.forecast.switch.title">Ruleset-dependent</span>
                 <p data-mkey="combat.forecast.switch.p"><strong>Combat initiative</strong>
-                    (<span class="key">initiative_model</span>) can be set to Open General's full model, which adds
-                    the crews' experience — one point per completed experience bar — and a small random swing for the
-                    uncertainty of battle. With it on, the forecast shows the deterministic part and the swing lands
-                    when the attack is made. It is <strong>off</strong> by default, and it is the only setting in the
-                    game that makes combat stochastic.</p>
+                    (<code>initiative_model</code>) is <strong>Open General's full model by default</strong>:
+                    equipment, terrain, experience and chance. Set it to <em>Equipment and terrain</em> in a profile
+                    and combat becomes wholly deterministic — no experience in the initiative comparison, no swing,
+                    and a forecast that is the exact result. It is the only setting in the game that decides whether
+                    combat is stochastic at all, and it also changes what a <strong>First Strike</strong> commander
+                    is worth, because that trait re-signs the initiative difference rather than adding to it.</p>
             </div>
 
             <h3 data-mkey="combat.values.h">What decides the result</h3>
@@ -1402,6 +1506,83 @@
                 Hexes covered by <em>spotted</em> anti-aircraft guns that can actually intercept are drawn on the map
                 before you commit a route. An interception makes the move final.</p>
 
+            <h3 data-mkey="combat.barrage.h">Barrage — shelling a hex nobody can see</h3>
+            <p data-mkey="combat.barrage.p1">An ordinary attack needs a target you can see. A <strong>barrage</strong>
+                does not: a formation carrying the bombard ability can shell any hex inside its firing range, spotted
+                or not, and the pointer becomes a crosshair over the hexes it may hit. It costs one ammunition point
+                and the formation's turn, and it is a shot in the dark — it can miss entirely.</p>
+            <p data-mkey="combat.barrage.p2">A barrage that lands has three possible effects, depending on what was
+                actually there:</p>
+            <ul>
+                <li data-mkey="combat.barrage.1">a formation in the hex loses strength, ammunition and fuel, and some
+                    of its entrenchment — and a hidden formation that is hit <em>stays hidden</em>. You are told the
+                    shells found something, not what;</li>
+                <li data-mkey="combat.barrage.2">a city, airfield, bridge or port is reduced to rubble and stops
+                    working until somebody repairs it;</li>
+                <li data-mkey="combat.barrage.3">open ground is churned, which costs the next formation across it an
+                    extra movement point.</li>
+            </ul>
+            <div class="switch">
+                <span class="callout-title" data-mkey="combat.barrage.switch.title">Ruleset-dependent</span>
+                <p data-mkey="combat.barrage.switch.p"><strong>Barrage</strong> (<code>barrage</code>) is a scenario
+                    option: the author decides whether their battle allows it, and under Author's Vision that decision
+                    stands. OSADA Default keeps it off everywhere. Either way a formation also needs the ability,
+                    which is a property of its equipment.</p>
+            </div>
+            <div class="switch">
+                <span class="callout-title" data-mkey="combat.craters.switch.title">Ruleset-dependent</span>
+                <p data-mkey="combat.craters.switch.p"><strong>Shell craters</strong> (<code>craters</code>, off by
+                    default) is OSADA's own rule rather than an Open General one. With it on, a barrage on open ground
+                    leaves a crater: it costs a movement point to cross, and it gives whoever holds it one level of
+                    entrenchment they did not have to dig for. It is a <em>floor</em>, never a bonus — it can never
+                    beat a turn spent entrenching, so shelling your own front line is not a way to fortify it.</p>
+            </div>
+
+            <h3 data-mkey="combat.counterbattery.h">Counterbattery fire</h3>
+            <p data-mkey="combat.counterbattery.p">Artillery that shells your formations can be answered by your own
+                guns without you ordering it. A gun with the counterbattery ability, in range of an enemy artillery
+                piece that has just fired on a friendly formation, fires back — <strong>once per turn</strong>, and
+                only at artillery. The reply is reported on the map and in the log, pinned to the gun that answered:
+                a formation that comes back from a successful bombardment two points weaker with nothing on screen to
+                explain it reads as a bug rather than as a rule.</p>
+            <div class="switch">
+                <span class="callout-title" data-mkey="combat.counterbattery.switch.title">Ruleset-dependent</span>
+                <p data-mkey="combat.counterbattery.switch.p"><strong>Counterbattery</strong>
+                    (<code>counterbattery</code>) is <strong>off</strong> under both built-in profiles. No scenario
+                    asks for it, so there is nobody for Author's Vision to defer to.</p>
+            </div>
+
+            <h3 data-mkey="combat.order.h">Sabotage, and getting out of the way</h3>
+            <p data-mkey="combat.order.p1">Two rare abilities resolve before the main exchange. The full order is
+                interception, supporting fire, <strong>sabotage</strong>, <strong>evasion</strong>, then the attack
+                itself.</p>
+            <p data-mkey="combat.order.p2">A <strong>saboteur</strong> spends one ammunition point on an attempt to
+                disable the defender outright before a shot is fired, and a formation that has been sabotaged cannot
+                evade. Very few formations in the shipped campaigns carry the ability.</p>
+            <p data-mkey="combat.order.p3"><strong>Evasion</strong> is the defender slipping the attack entirely.
+                Submarines evade by default; the equipment file may grant it to other classes, or to individual
+                records, and it sets the probability.</p>
+
+            <h3 data-mkey="combat.naval.h">At sea</h3>
+            <p data-mkey="combat.naval.p1">A naval attacker firing on a land target rolls against a higher threshold
+                than a land attacker does — which is why ships are poorer at shore bombardment than their raw attack
+                values suggest. Artillery, level bombers and fortifications fire against that same higher
+                threshold.</p>
+            <div class="switch">
+                <span class="callout-title" data-mkey="combat.naval.switch.title">Ruleset-dependent</span>
+                <p data-mkey="combat.naval.switch.p"><strong>Extended naval rules</strong>
+                    (<code>extended_naval</code>) is a scenario option, honoured by Author's Vision: ships return fire
+                    against artillery and forts, ships engage submarines only at range 1, destroyers escort naval
+                    transports, and submarines need a line of fire. <strong>Naval critical hits</strong>
+                    (<code>naval_critical_hits</code>, off by default) adds Open General's sinking roll — a naval shot
+                    that beats the odds destroys its target outright, whatever its remaining strength. Submarines get
+                    a bonus to it, firing or fired upon.</p>
+            </div>
+            <p data-mkey="combat.naval.p2"><strong>Kamikaze</strong> formations do not come back. Depending on the
+                equipment file, such a formation is lost either once it has fought or spent its last ammunition, or
+                once its fuel runs out — and in the second model it may not resupply at all. The unit card says which
+                before you commit it.</p>
+
             <div class="chapter-nav" data-nav></div>
         </section>
 
@@ -1409,7 +1590,7 @@
         <!-- 6. SUPPLY, STRENGTH & PRESTIGE                                -->
         <!-- ============================================================ -->
         <section class="chapter" id="supply" data-title="Supply, strength &amp; prestige"
-                 data-keywords="resupply reinforce overstrength prestige buy upgrade sell reserves core auxiliary replacement experience dilution supply efficiency">
+                 data-keywords="resupply reinforce overstrength prestige buy upgrade sell reserves core auxiliary replacement experience dilution supply efficiency green elite replacements purchase cap purchase list fronts factions depot build repair demolish bridge fortification">
             <p class="eyebrow" data-mkey="supply.eyebrow">Chapter 6</p>
             <h2 tabindex="-1" data-mkey="supply.h">Supply, strength &amp; prestige</h2>
             <p class="lede" data-mkey="supply.lede">Ammunition and fuel are free. Bodies are not.</p>
@@ -1440,14 +1621,14 @@
                     </tr>
                     <tr>
                         <th scope="row" data-mkey="supply.actions.reinforce">Reinforce <kbd>R</kbd></th>
-                        <td data-mkey="supply.actions.reinforce.does">Strength back up to 10, and resupplies at the
-                            same time</td>
+                        <td data-mkey="supply.actions.reinforce.does">Strength back up to the formation's basic
+                            strength, and resupplies at the same time</td>
                         <td data-mkey="supply.actions.reinforce.cost">Charged per strength point</td>
                         <td data-mkey="supply.actions.reinforce.req">Below full strength</td>
                     </tr>
                     <tr>
                         <th scope="row" data-mkey="supply.actions.over">Overstrength <kbd>O</kbd></th>
-                        <td data-mkey="supply.actions.over.does">Strength <em>above</em> 10</td>
+                        <td data-mkey="supply.actions.over.does">Strength <em>above</em> basic strength</td>
                         <td data-mkey="supply.actions.over.cost">Charged per point, at a premium</td>
                         <td data-mkey="supply.actions.over.req">Already at full strength, at least 100 experience,
                             and not used before</td>
@@ -1477,11 +1658,19 @@
                 works wherever the formation stands. Under either setting an adjacent enemy blocks it, because a
                 formation being shot at is not idle.</p>
 
+            <h3 data-mkey="supply.basic.h">Basic strength is not always ten</h3>
+            <p data-mkey="supply.basic.p">A formation's <strong>basic strength</strong> is the ceiling ordinary
+                reinforcement restores it to, and it is ten only where the scenario's author did not say otherwise.
+                Most shipped scenarios do say otherwise — a formation authored at basic strength 5 reinforces back to
+                5, not to 10, however much prestige you spend. It is the number the unit card shows beside current
+                strength, and it is what the reinforcement preview is quoting.</p>
+
             <h3 data-mkey="supply.over.h">Overstrength</h3>
             <p data-mkey="supply.over.p">Every <strong>completed</strong> experience bar buys one strength point
-                above the normal maximum of 10; a partial bar buys nothing. With the experience cap at 500 the
-                ceiling is <strong>15</strong>. Overstrength is used once per formation, is priced at a premium, and
-                is the one restoring action that does <em>not</em> dilute experience.</p>
+                above the formation's basic strength; a partial bar buys nothing. With the experience cap at 500,
+                a formation of basic strength 10 tops out at <strong>15</strong>. Overstrength is used once per
+                formation, is priced at a premium, and is the one restoring action that does <em>not</em> dilute
+                experience.</p>
 
             <h3 data-mkey="supply.dilute.h">Replacements dilute experience</h3>
             <p data-mkey="supply.dilute.p1">Ordinary replacements arrive untrained. A formation's experience becomes
@@ -1496,6 +1685,17 @@
                 <p data-mkey="supply.dilute.switch.p"><strong>Replacements dilute experience</strong>
                     (<span class="key">replacement_experience</span>) can be set to <em>Preserved</em>, which is how
                     OSADA behaved before August 2026. Default is <em>Diluted</em>.</p>
+            </div>
+            <div class="switch">
+                <span class="callout-title" data-mkey="supply.green.switch.title">Ruleset-dependent</span>
+                <p data-mkey="supply.green.switch.p"><strong>Green replacements</strong>
+                    (<code>green_replacements</code>, off by default) adds Open General's second, cheaper intake
+                    beside the normal one. Greens cost a fraction of the standard price — a quarter of it where the
+                    equipment file does not say otherwise — and they arrive with no training at all, so they dilute
+                    experience harder than ordinary replacements do. Ordinary replacements are what Open General calls
+                    <em>elite</em>: the equipment file prices those too, and a campaign may make them dearer or
+                    cheaper than the base cost. The rule needs the campaign's equipment file to price greens at all,
+                    so switching it on does nothing for content that never defined them.</p>
             </div>
 
             <h3 data-mkey="supply.prestige.h">Prestige</h3>
@@ -1517,6 +1717,42 @@
                 deployed on the current map. The Equipment window (<kbd>B</kbd>) is where buying, upgrading and
                 selling happen. What you can buy is limited by the campaign's own equipment list and by the current
                 date — equipment becomes available and becomes obsolete as the campaign's calendar advances.</p>
+
+            <h3 data-mkey="supply.allowed.h">What you are allowed to buy</h3>
+            <p data-mkey="supply.allowed.p1">The equipment list is not the only limit. A scenario's author has two
+                further ways to constrain your purse, and both are stated in the briefing:</p>
+            <ul>
+                <li data-mkey="supply.allowed.1"><strong>A purchase list.</strong> The author can whitelist exactly
+                    what a given player may buy or upgrade into, drawn from the equipment file's own fronts and
+                    factions. Anything outside the list is not offered, however much prestige you have.</li>
+                <li data-mkey="supply.allowed.2"><strong>A purchase cap.</strong> The author can limit how many
+                    formations you may <em>add</em> to your force. The cap counts growth, not spending: replacing a
+                    formation you lost does not consume any of it, so a cap of zero still means "you may rebuild what
+                    you had, and nothing more". Some scenarios exempt core formations from the count.</li>
+            </ul>
+
+            <h3 data-mkey="supply.build.h">Building, repairing and blowing things up</h3>
+            <p data-mkey="supply.build.p1">Engineers can change the map. Where the scenario allows it, a formation
+                with the build or repair ability can raise a bridge, a fortification, an airfield or a port, or put a
+                bombed one back into service; a formation with the demolition ability can take one away, which is how
+                you deny a crossing to an army you cannot beat to it. Each is a whole turn's work.</p>
+            <div class="switch">
+                <span class="callout-title" data-mkey="supply.build.switch.title">Ruleset-dependent</span>
+                <p data-mkey="supply.build.switch.p"><strong>Build, repair and demolition</strong>
+                    (<code>build_and_repair</code>) is a scenario option, and the author states it in three separate
+                    switches — build, repair and demolish are permitted independently. Author's Vision honours all
+                    three; OSADA Default keeps them off. The abilities themselves belong to the equipment, and are
+                    shown on the unit card.</p>
+            </div>
+            <div class="switch">
+                <span class="callout-title" data-mkey="supply.depot.switch.title">Ruleset-dependent</span>
+                <p data-mkey="supply.depot.switch.p"><strong>Depot supply</strong> (<code>depot_supply</code>, off by
+                    default) replaces resupply-anywhere with Open General's depot model: formations resupply only
+                    beside a supply unit or in a city or port, and a depot supplying others may have to spend
+                    ammunition to do it. <strong>No shipped campaign uses it</strong> — no equipment file asks for the
+                    model and no equipment record is marked as a depot — so the switch is inert on the content that
+                    comes with the game. It is here for content that defines them.</p>
+            </div>
 
             <h3 data-mkey="supply.attach.h">Attachments</h3>
             <p data-mkey="supply.attach.p">Where the campaign's equipment file defines them, a core formation may be
@@ -1736,7 +1972,7 @@
         <!-- 8. WEATHER & TERRAIN                                          -->
         <!-- ============================================================ -->
         <section class="chapter" id="weather" data-title="Weather &amp; terrain"
-                 data-keywords="weather fair overcast rain snow mud frozen dry ground condition terrain entrenchment initiative cap movement cost table">
+                 data-keywords="weather fair overcast rain snow mud frozen dry ground condition terrain entrenchment initiative cap movement cost table climate zone month season spell">
             <p class="eyebrow" data-mkey="wx.eyebrow">Chapter 8</p>
             <h2 tabindex="-1" data-mkey="wx.h">Weather &amp; terrain</h2>
             <p class="lede" data-mkey="wx.lede">The sky changes what everyone can do. The ground changes how far they
@@ -1786,6 +2022,19 @@
             </ul>
             <p data-mkey="wx.sky.p2">A commander with <strong>All Weather Combat</strong> is exempt from all
                 four.</p>
+
+            <h3 data-mkey="wx.where.h">Where the weather comes from</h3>
+            <p data-mkey="wx.where.p1">The sky is simulated rather than scripted. Each scenario sits in a
+                <strong>climate zone</strong>, and each zone has a table per month of the year giving the average
+                length of a clear spell, the average length of an overcast one, and the chances that an overcast
+                spell brings precipitation and that the precipitation is snow rather than rain. The battle alternates
+                clear and overcast spells of random length drawn against that table.</p>
+            <p data-mkey="wx.where.p2">Two consequences are worth knowing. A long campaign battle that crosses from
+                one month into the next <strong>changes tables as it goes</strong>, so a September scenario running
+                into October gets October's weather from October onwards. And the spell you are in has a length: the
+                current sky says nothing about how many more turns of it are coming, which is why a downpour can end
+                on the turn you had planned around it, and why saving and reloading will not reroll it — the running
+                spell is stored in the save.</p>
 
             <h3 data-mkey="wx.ground.h">The ground</h3>
             <ul class="weather-grid">
@@ -1911,21 +2160,22 @@
                 exist:</p>
             <ul class="cards">
                 <li>
-                    <h4 data-mkey="rs.av.h">Author's Vision</h4>
-                    <p data-mkey="rs.av.p">Follows the configuration this content actually ships with. What the
-                        campaign's designer intended.</p>
+                    <h4 data-mkey="rs.av.h">Author's Vision — selected by default</h4>
+                    <p data-mkey="rs.av.p">Follows the configuration this content actually ships with, and defers to
+                        each scenario's own authored switches for the rules that have one. What the campaign's
+                        designer intended, and what you get if you never open the window.</p>
                 </li>
                 <li>
                     <h4 data-mkey="rs.od.h">OSADA Default</h4>
                     <p data-mkey="rs.od.p">OSADA's documented baseline, identical for every campaign and scenario.
                         This is what the rest of this manual describes.</p>
                 </li>
-                <li>
-                    <h4 data-mkey="rs.og.h">Open General Fidelity</h4>
-                    <p data-mkey="rs.og.p">Every Open General rule OSADA has built, switched on together. Rules the
-                        content's equipment file decides for itself are left to it.</p>
-                </li>
             </ul>
+            <p data-mkey="rs.p1b">The difference between the two is narrower than it sounds, and it is concentrated
+                in six rules: extended line of sight, air zone of control, the extended naval rules, barrage,
+                build&#8202;/&#8202;repair&#8202;/&#8202;demolition and rail transport. Author's Vision hands each of
+                those to the scenario's own switch; OSADA Default keeps them off for everyone. Every other rule
+                resolves identically under both.</p>
             <p data-mkey="rs.p2">You can also save your own profiles. A profile that names nothing for a rule leaves
                 that rule following the content, which is what makes one profile meaningful across campaigns built on
                 different equipment files. The ruleset window states, per rule, where the value in force came
@@ -1935,16 +2185,18 @@
                 <span class="callout-title" data-mkey="rs.limits.title">What a profile cannot do</span>
                 <p data-mkey="rs.limits.p">A profile can only steer branches the engine already runs. It cannot
                     invent a mechanic the content never defined — turning attachments "on" for a campaign whose
-                    equipment file has no attachment slots does nothing — and no profile changes how the AI plays.
-                    Air missions, carrier hangars, rail transport and the extended naval rules are Open General
-                    systems OSADA does not reproduce at all.</p>
+                    equipment file has no attachment slots does nothing, and the window says <em>unavailable</em>
+                    rather than reporting it as your own choice — and no profile changes how the AI plays.
+                    <strong>Air missions</strong> are the one Open General system OSADA does not reproduce at all;
+                    no shipped scenario asks for them.</p>
             </div>
 
             <h3 data-mkey="rs.table.h">The switchable rules</h3>
             <div class="table-scroll">
                 <table>
-                    <caption data-mkey="rs.table.caption">Every ruleset key, with the value OSADA runs when nothing
-                        overrides it.</caption>
+                    <caption data-mkey="rs.table.caption">Every ruleset key, with the value in force when nothing
+                        overrides it. <em>As each scenario decides</em> means Author's Vision reads the scenario's own
+                        authored switch and OSADA Default keeps the rule off.</caption>
                     <thead>
                     <tr>
                         <th scope="col" data-mkey="rs.th.rule">Rule</th>
@@ -1971,17 +2223,43 @@
                     <tr><th scope="row">Empty units fight worse</th><td><code>dry_unit_penalties</code></td><td data-mkey="rs.k.dup">Off</td></tr>
                     <tr><th scope="row">Minefields</th><td><code>minefields</code></td><td data-mkey="rs.k.mf">Off</td></tr>
                     <tr><th scope="row">Aircraft fuel model</th><td><code>air_fuel</code></td><td data-mkey="rs.k.af">Off — dry aircraft are grounded, not lost</td></tr>
-                    <tr><th scope="row">Combat initiative</th><td><code>initiative_model</code></td><td data-mkey="rs.k.im">Equipment and terrain only</td></tr>
+                    <tr><th scope="row">Combat initiative</th><td><code>initiative_model</code></td><td data-mkey="rs.k.im"><strong>Equipment, terrain, experience and chance</strong></td></tr>
                     <tr><th scope="row">Spotted hexes stay spotted</th><td><code>spotting_memory</code></td><td data-mkey="rs.k.sm">Off — visibility follows your units</td></tr>
                     <tr><th scope="row">Cities and airfields watch</th><td><code>installation_spotting</code></td><td data-mkey="rs.k.is">Off</td></tr>
                     <tr><th scope="row">Idle ground units resupply anywhere</th><td><code>ground_auto_supply</code></td><td data-mkey="rs.k.gas">Off — only in a city</td></tr>
+<tr><th scope="row">Counterbattery fire</th><td><code>counterbattery</code></td><td data-mkey="rs.k.cb">Off</td></tr>
+<tr><th scope="row">Extended line of sight</th><td><code>extended_los</code></td><td data-mkey="rs.k.elos">As each scenario decides</td></tr>
+<tr><th scope="row">Air zone of control</th><td><code>air_zoc</code></td><td data-mkey="rs.k.azoc">As each scenario decides</td></tr>
+<tr><th scope="row">Barrage</th><td><code>barrage</code></td><td data-mkey="rs.k.bar">As each scenario decides</td></tr>
+<tr><th scope="row">Build, repair and demolition</th><td><code>build_and_repair</code></td><td data-mkey="rs.k.bnr">As each scenario decides</td></tr>
+<tr><th scope="row">Extended naval rules</th><td><code>extended_naval</code></td><td data-mkey="rs.k.en">As each scenario decides</td></tr>
+<tr><th scope="row">Rail transport</th><td><code>rail_transport</code></td><td data-mkey="rs.k.rail">As each scenario decides — and only where the author granted a rail pool</td></tr>
+<tr><th scope="row">Naval critical hits</th><td><code>naval_critical_hits</code></td><td data-mkey="rs.k.nch">Off</td></tr>
+<tr><th scope="row">Shell craters</th><td><code>craters</code></td><td data-mkey="rs.k.cr">Off</td></tr>
+<tr><th scope="row">Green replacements</th><td><code>green_replacements</code></td><td data-mkey="rs.k.gr">Off, and only where the equipment file prices them</td></tr>
+<tr><th scope="row">Carrier deployment</th><td><code>carrier_deploy</code></td><td data-mkey="rs.k.cd">Off</td></tr>
+<tr><th scope="row">Carrier hangars</th><td><code>carrier_hangars</code></td><td data-mkey="rs.k.ch">Off</td></tr>
+<tr><th scope="row">Depot supply</th><td><code>depot_supply</code></td><td data-mkey="rs.k.ds">Off — and inert in every shipped campaign</td></tr>
+<tr><th scope="row">Equipment toggles</th><td><code>equipment_toggles</code></td><td data-mkey="rs.k.et">Off</td></tr>
                     </tbody>
                 </table>
             </div>
-            <p data-mkey="rs.p3">Selecting Open General Fidelity turns on every rule in the lower half of that table
-                at once. It is the most opinionated of the three profiles, and it makes the game harder in several
-                directions simultaneously — guns must unlimber, snow burns fuel, aircraft can be lost outright,
-                combat stops being predictable, and empty formations are punished as well as prohibited.</p>
+            <p data-mkey="rs.p3">Most of that table is off under both built-in profiles, which is deliberate: each
+                of those rules makes the game harder in its own direction, and switching them on together is a
+                decision rather than a default. To play Open General's rules, copy either profile in the ruleset
+                window, turn on what you want and save it under a name; the copy is then offered like any other
+                profile. Turning the lower half on at once means guns must unlimber before firing, snow burns fuel,
+                aircraft can be lost outright, and empty formations are punished as well as prohibited.</p>
+            <div class="note">
+                <span class="callout-title" data-mkey="rs.locked.title">A ruleset is locked at launch</span>
+                <p data-mkey="rs.locked.p">The profile is resolved once, when you press start, and the result travels
+                    in the save. Editing, renaming or deleting a profile afterwards affects future starts only, and a
+                    campaign run keeps the rules it began with through every mission and every save. <strong>Restart
+                    mission replays the rules the battle was launched with</strong> — it does not re-read the ruleset
+                    window or the settings screen. To change the rules of a battle you have already started, launch
+                    the scenario again from the menu; to change them for a campaign already under way, the campaign
+                    has to be started over.</p>
+            </div>
 
             <div class="chapter-nav" data-nav></div>
         </section>
@@ -1990,7 +2268,7 @@
         <!-- 10. KEYBOARD & INTERFACE                                      -->
         <!-- ============================================================ -->
         <section class="chapter" id="keyboard" data-title="Keyboard &amp; interface"
-                 data-keywords="keyboard shortcuts keys hotkeys controls f1 esc pause cyrillic layout">
+                 data-keywords="keyboard shortcuts keys hotkeys controls f1 esc pause cyrillic layout settings sound volume music ambient effects mute">
             <p class="eyebrow" data-mkey="kb.eyebrow">Chapter 10</p>
             <h2 tabindex="-1" data-mkey="kb.h">Keyboard &amp; interface</h2>
             <p class="lede" data-mkey="kb.lede">Press <kbd>F1</kbd> or <kbd>?</kbd> in game for this same list on a
@@ -2055,6 +2333,14 @@
             <p data-mkey="kb.general.p"><kbd>Esc</kbd> closes the topmost open window; with nothing open it toggles
                 the pause menu. There is deliberately no key bound to disband, sale, restarting a turn or loading a
                 save.</p>
+
+            <h3 data-mkey="kb.sound.h">Sound</h3>
+            <p data-mkey="kb.sound.p">Settings carries three independent volume levels, because the three kinds of
+                audio are wanted in different amounts: <strong>Effects</strong> for the discrete cues — fire,
+                movement, capture; <strong>Ambient</strong> for the continuous weather loop, rain and wind; and
+                <strong>Music</strong> for the scenario's own score, where its author wrote one and the track ships
+                with the game. Each slider takes effect immediately, including on audio already playing. Muting unit
+                sounds silences all three.</p>
 
             <div class="chapter-nav" data-nav></div>
         </section>

@@ -63,6 +63,13 @@ internal class HexCellRenderer(
             // Normal zoom (fog veil is applied as a pre-pass before the cell loop)
             drawNormalZoomCell(frame, hex, x, y)
         }
+        // Drawn here rather than with the move/attack overlays: those return early unless the
+        // current player is the observing side, and "show me this objective" is a question the
+        // player may ask while the AI is taking its turn. Also drawn in strategic zoom, which is
+        // exactly where a jump across the map most needs a landmark.
+        if (ObjectiveFocus.isFocused(hex)) {
+            rc.drawHex(rc.hexesCtx, x, y, hexStyles["objectivefocus"])
+        }
     }
 
     /**

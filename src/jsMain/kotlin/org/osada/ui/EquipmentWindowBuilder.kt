@@ -29,8 +29,15 @@ internal fun equipmentDescriptionOrNull(eq: EquipmentData): String? = UnitDescri
  * the panel never explained. All five lead now, in the same order [EquipmentMarkings] draws them
  * (HQ, RCN, OVR, SUP, AA), and [org.osada.model.abilityCatalogKeys] appends the rest — so badge row
  * and prose are the same list, and neither can silently drop an ability the other shows.
+ *
+ * **A LIST rather than a paragraph**, one entry per mechanic, in the order the detail bay prints
+ * them. Reported of a unit carrying several abilities: *"all the mechanics run together in one
+ * block, not even separate paragraphs"*. Each of these is an independent rule the player has to be
+ * able to find again, and eight of them concatenated with spaces is a wall nobody reads. The
+ * surfaces decide how to separate them: the detail bay gives each its own block, a `title` tooltip
+ * its own line.
  */
-internal fun equipmentMechanicsNote(eq: EquipmentData): String? =
+internal fun equipmentMechanicsNotes(eq: EquipmentData): List<String> =
     buildList {
         val capabilities = org.osada.rules.UnitCapabilities
         if (capabilities.grantsCombatSupport(eq)) add(I18n.t("equipment.mechanics.headquarters"))
@@ -40,7 +47,12 @@ internal fun equipmentMechanicsNote(eq: EquipmentData): String? =
         if (capabilities.hasAirDefenceFire(eq)) add(I18n.t("equipment.mechanics.anti_air"))
         if (eq.embark == EmbarkType.AIRBORNE.value) add(I18n.t("equipment.mechanics.airborne"))
         eq.abilityCatalogKeys().forEach { add(I18n.t(it)) }
-    }.takeIf { it.isNotEmpty() }?.joinToString(" ")
+    }
+
+/** [equipmentMechanicsNotes] as plain text for a `title` tooltip: one mechanic per line, since a
+ *  tooltip has no block layout to give them. */
+internal fun equipmentMechanicsNote(eq: EquipmentData): String? =
+    equipmentMechanicsNotes(eq).takeIf { it.isNotEmpty() }?.joinToString("\n")
 
 /** "Available from Mon YYYY" — shared so the equipment window's detail bay and the unit-card
  *  tooltip always read the same month name for the same eq.monthavailable (1-based; monthNamesShort

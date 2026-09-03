@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="bn8s02.xscn" name="Betrayal" turns="16, 20, 28" date="November 1, 1941" dayturns="0" ground="0" atmosferic="0" latitude="6" iconset="0" weatherchg="0" rows="19" cols="32" eqp="eqp-lxf" image="resources/maps/images/map_635.png" eqpv="united1" msuunits="0, 1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="1" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1" ehmsuonly="0" paradropocean="1" coresoffcap="0">
+<map file="bn8s02.xscn" name="Betrayal" turns="16, 20, 28" date="November 1, 1941" dayturns="4" ground="0" atmosferic="0" latitude="6" iconset="0" weatherchg="0" rows="19" cols="32" eqp="eqp-lxf" image="resources/maps/images/map_635.png" eqpv="united1" msuunits="0, 1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="1" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1" ehmsuonly="0" paradropocean="1" coresoffcap="0" daysperturn="0">
   <player id="0" country="43" side="1" airtrans="0" navaltrans="2" railtrans="0" defaultxp="0" defaultstr="10" support="44,0,0,0" turnprestige="0, 24, 24, 36, 36, 60, 60, 60, 36, 36, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="44:0:8192"/>
   <player id="1" country="66" side="0" airtrans="0" navaltrans="2" railtrans="0" defaultxp="100" defaultstr="10" support="67,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="67:0:-2147483648"/>
   <reinforce turn="19">
     <at row="17" col="2">
-      <unit id="32038" owner="0" flag="44" face="0" exp="200" str="11" attach="7"/>
+      <unit id="32038" owner="0" flag="44" face="0" exp="200" str="11" attach="7" bstr="5"/>
     </at>
     <at row="16" col="3">
-      <unit id="32038" owner="0" flag="44" face="0" exp="200" str="11" attach="7"/>
+      <unit id="32038" owner="0" flag="44" face="0" exp="200" str="11" attach="7" bstr="5"/>
     </at>
     <at row="18" col="4">
-      <unit id="32038" owner="0" flag="44" face="0" exp="200" str="11" attach="7"/>
+      <unit id="32038" owner="0" flag="44" face="0" exp="200" str="11" attach="7" bstr="5"/>
     </at>
     <at row="17" col="3">
-      <unit id="32300" owner="0" flag="44" face="0" transport="32209" exp="200" str="6" attach="7"/>
+      <unit id="32300" owner="0" flag="44" face="0" transport="32209" exp="200" str="6" attach="7" bstr="5"/>
     </at>
     <at row="17" col="4">
-      <unit id="32151" owner="0" flag="44" face="0" transport="32209" exp="200" str="6" attach="7"/>
+      <unit id="32151" owner="0" flag="44" face="0" transport="32209" exp="200" str="6" attach="7" bstr="5"/>
     </at>
     <at row="18" col="2">
-      <unit id="32108" owner="0" flag="44" face="0" exp="200" str="6" attach="1,7"/>
+      <unit id="32108" owner="0" flag="44" face="0" exp="200" str="6" attach="1,7" bstr="5"/>
     </at>
   </reinforce>
   <hex row="0" col="0">

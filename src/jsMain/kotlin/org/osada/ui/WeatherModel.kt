@@ -41,19 +41,68 @@ object WeatherModel {
     private var lastTurn = -1
     private var active = false
 
+    /**
+     * The half of this model's state that a save has to carry, because it cannot be re-derived
+     * from the scenario: which kind of spell is running and how much of it is left.
+     *
+     * `atmosferic` says what the sky IS; it says nothing about how many more turns of it are
+     * coming. Without this, every load re-rolled a fresh full-length spell from the current sky,
+     * so a save taken on the last turn of a downpour resumed into a brand-new downpour, and a
+     * player could reroll the weather by saving and loading. The ground runs
+     * ([GroundConditionModel]) are here for the same reason: a save two turns into a three-turn
+     * rain run came back with the run reset to zero and the mud never arrived.
+     */
+    data class Snapshot(
+        val clearPhase: Boolean,
+        val counter: Int,
+        val rainRun: Int,
+        val snowRun: Int,
+        val dryRun: Int,
+    )
+
+    /** Parked by the restore and consumed by the next [init], which is the only point at which the
+     *  scenario this belongs to actually exists. Cleared on use, so a later NEW battle cannot
+     *  inherit a restored battle's spell. */
+    private var pendingRestore: Snapshot? = null
+
+    fun snapshot(): Snapshot? =
+        if (!active) {
+            null
+        } else {
+            GroundConditionModel.runs().let { (rain, snow, dry) -> Snapshot(clearPhase, counter, rain, snow, dry) }
+        }
+
+    fun restoreSnapshot(snapshot: Snapshot?) {
+        pendingRestore = snapshot
+    }
+
     fun init(s: Scenario?) {
         if (s == null || weatherZones.isEmpty()) {
             active = false
+            pendingRestore = null
             return
         }
         zone = s.latitude.coerceIn(0, weatherZones.size - 1)
-        month = (s.date.getMonth() + 1).coerceIn(1, MONTHS_IN_YEAR) // JS Date.getMonth() is 0-based
-        clearPhase = s.atmosferic == FAIR
-        counter = phaseLen(if (clearPhase) 0 else 1)
+        month = monthOf(s)
+        val restored = pendingRestore
+        pendingRestore = null
+        if (restored != null) {
+            clearPhase = restored.clearPhase
+            counter = restored.counter
+            GroundConditionModel.restoreRuns(restored.rainRun, restored.snowRun, restored.dryRun)
+        } else {
+            clearPhase = s.atmosferic == FAIR
+            counter = phaseLen(if (clearPhase) 0 else 1)
+            GroundConditionModel.reset()
+        }
         lastTurn = s.map.turn
-        GroundConditionModel.reset()
         active = true
     }
+
+    /** JS `Date.getMonth()` is 0-based. Read on every advance, never cached across turns: a battle
+     *  that runs from January into February must roll February's table from February onwards, and
+     *  the month captured at load stopped being true the moment the calendar crossed over. */
+    private fun monthOf(s: Scenario): Int = (s.date.getMonth() + 1).coerceIn(1, MONTHS_IN_YEAR)
 
     fun stop() {
         active = false
@@ -62,6 +111,7 @@ object WeatherModel {
     fun advance(s: Scenario?) {
         if (!active || s == null || s.map.turn == lastTurn) return // fire once per game turn
         lastTurn = s.map.turn
+        month = monthOf(s)
         rollIfSpellEnded(s)
         // Every turn, including the ones the sky spent unchanged -- that is where a run completes.
         advanceGround(s)

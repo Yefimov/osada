@@ -14,6 +14,7 @@ import org.osada.scenario.ScenarioEvent
 import org.osada.scenario.ScenarioEventGate
 import org.osada.scenario.ScenarioEventTrigger
 import org.osada.scenario.ScenarioEventTriggerKind
+import org.osada.scenario.ScenarioTextLocalization
 import org.osada.scenario.eventById
 import org.osada.ui.HudLog
 import org.osada.ui.showGameToolTip
@@ -180,6 +181,8 @@ private fun Game.announce(
     event: ScenarioEvent,
 ) {
     if (event.message.isBlank()) return
+    // The authored English is the fallback, so an untranslated scenario reads exactly as before.
+    val message = ScenarioTextLocalization.eventMessage(current.file, event.id, event.message)
     val row = event.trigger.row
     val col = event.trigger.col
     if (event.trigger.kind == ScenarioEventTriggerKind.START) {
@@ -188,6 +191,6 @@ private fun Game.announce(
             ?.getOrNull(col)
             ?.let { ui?.uiSetCellOnViewPort(Cell(row, col)) }
     }
-    ui?.showGameToolTip(event.message, row, col)
-    HudLog.addAt(row, col, event.message)
+    ui?.showGameToolTip(message, row, col)
+    HudLog.addAt(row, col, message)
 }

@@ -23,7 +23,7 @@ import kotlin.test.assertTrue
  * `docs/design/hero-presentation.md` §3 that was blocked on art.
  *
  * The invariants that matter are not "the picture is pretty" but: every authored hero that requests
- * painted art names an existing, correctly dated asset; layered authored heroes may omit it; an
+ * painted art names an existing, correctly dated asset; every shipped authored hero has one; an
  * unknown art id degrades to the procedural layer stack rather than to an empty frame (§3.4); and
  * prose gender follows the painting, not the seed roll (§4.11).
  */
@@ -44,6 +44,26 @@ class HeroPortraitArtTest {
         // Two officers wearing the same face in one campaign reads as a bug, not as a pool.
         val used = LegendaryHeroPool.ALL.mapNotNull { it.portraitArtId }
         assertEquals(used.size, used.toSet().size, "a painted portrait is shared by two heroes: $used")
+    }
+
+    @Test
+    fun everyShippedAuthoredLegendHasItsOwnPaintedPortrait() {
+        val missing = LegendaryHeroPool.ALL.filter { it.portraitArtId == null }.map { it.id }
+        assertTrue(missing.isEmpty(), "authored legends still using procedural portraits: $missing")
+    }
+
+    @Test
+    fun revolutionaryCampaignLegendsHaveTheirOwnPaintedPortraits() {
+        val expected =
+            mapOf(
+                "red_german_council_guard" to "revolution_1918_otto_reimers",
+                "red_hungarian_mobile" to "revolution_1919_laszlo_farkas",
+            )
+        expected.forEach { (heroId, artId) ->
+            val hero = assertNotNull(LegendaryHeroPool.ALL.firstOrNull { it.id == heroId })
+            assertEquals(artId, hero.portraitArtId)
+            assertNotNull(HeroPortraitArt.byId(artId))
+        }
     }
 
     @Test

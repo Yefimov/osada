@@ -168,16 +168,25 @@ internal object BottomZoneBuilder {
             "ico_stat_fuel.png",
         )
 
-        val actions = addTag(inner, "div")
-        actions.id = "uc-actions"
+        // Right-hand column of the card. "All stats" sits ON TOP of the action strip rather than
+        // beside it: as a sibling of #uc-actions it was competing with up to seven action chips
+        // for the same row, and the chips (which wrap to two rows) always won -- the expander
+        // ended up squeezed against the card's right edge, at a different height depending on how
+        // many actions the selected formation happened to have. Stacked, it has a fixed place.
+        val side = addTag(inner, "div")
+        side.id = "uc-side"
 
-        val expandBtn = addTag(inner, "div")
+        val expandBtn = addTag(side, "div")
         expandBtn.id = "uc-expand"
         expandBtn.textContent = I18n.t("unit_info.all_stats.label")
         expandBtn.title = I18n.t("unit_info.all_stats.help")
         expandBtn.onclick = { _: org.w3c.dom.events.MouseEvent ->
             root.classList.toggle("uc--expanded")
         }
+
+        // After the expander, so it renders below it. `build()` reparents #unit-context in here.
+        val actions = addTag(side, "div")
+        actions.id = "uc-actions"
 
         // #statsRowContainer (the full ~19-stat chip grid) becomes the "All stats" expander:
         // repositioned as an overlay ABOVE the compact card, shown only while uc--expanded.

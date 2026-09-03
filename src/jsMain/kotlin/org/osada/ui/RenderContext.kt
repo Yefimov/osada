@@ -68,6 +68,18 @@ internal val hexStyles =
                 "lineWidth" to 2,
                 "lineJoin" to "miter",
             ),
+        // The objective the player just clicked in the rail (`ObjectiveFocus`). Green, because it
+        // is the only overlay in this table that is neither an order nor a threat -- it answers
+        // "which one did I just ask about?" and nothing else, so it must not be confusable with
+        // the red attack ring or the orange AA warning. Outline-only and thick, so it reads over
+        // whatever fill, flag and unit sprite the hex already carries.
+        "objectivefocus" to
+            json(
+                "fillColor" to "rgba(80, 190, 110, 0.22)",
+                "lineColor" to "rgba(120, 230, 150, 0.95)",
+                "lineWidth" to 3,
+                "lineJoin" to "miter",
+            ),
         // Reachable only by mounting the formation's own transport first (`rules/AutoMount`).
         // Outline-only, so it composites over the move fill the same hex already carries, and
         // DASHED for the reason "aathreat" is: the mark is conditional. Walking is what the player

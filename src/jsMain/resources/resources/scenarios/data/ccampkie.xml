@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="ccampkie.xscn" name="Kiev Counteroffensive" turns="10, 15, 25" date="June 9, 1920" dayturns="0" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="31" cols="43" eqp="eqp-kaiser" image="resources/maps/images/map_229.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1" ehmsuonly="0" paradropocean="1" coresoffcap="0">
+<map file="ccampkie.xscn" name="Kiev Counteroffensive" turns="10, 15, 25" date="June 9, 1920" dayturns="1" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="31" cols="43" eqp="eqp-kaiser" image="resources/maps/images/map_229.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1" ehmsuonly="0" paradropocean="1" coresoffcap="0" daysperturn="0">
   <player id="0" country="103" side="0" airtrans="0" navaltrans="0" railtrans="3" defaultxp="0" defaultstr="0" support="104,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="20:0:5"/>
   <player id="1" country="20" side="1" airtrans="0" navaltrans="0" railtrans="3" defaultxp="0" defaultstr="0" support="65,21,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="16:0:22,5:0:5"/>
   <reinforce turn="2">
     <at row="20" col="40">
-      <unit id="42343" owner="0" flag="104" face="0" exp="122" str="8" ammo="7"/>
+      <unit id="42343" owner="0" flag="104" face="0" exp="122" str="8" ammo="7" bstr="5"/>
     </at>
     <at row="19" col="39">
-      <unit id="42343" owner="0" flag="104" face="0" exp="157" str="8" ammo="7"/>
+      <unit id="42343" owner="0" flag="104" face="0" exp="157" str="8" ammo="7" bstr="5"/>
     </at>
   </reinforce>
   <reinforce turn="3">
     <at row="7" col="38">
-      <unit id="42343" owner="0" flag="104" face="0" exp="88" str="9" ammo="7"/>
+      <unit id="42343" owner="0" flag="104" face="0" exp="88" str="9" ammo="7" bstr="5"/>
     </at>
     <at row="6" col="39">
-      <unit id="42343" owner="0" flag="104" face="0" exp="155" str="7" ammo="7"/>
+      <unit id="42343" owner="0" flag="104" face="0" exp="155" str="7" ammo="7" bstr="4"/>
     </at>
   </reinforce>
   <hex row="0" col="8" terrain="10"/>

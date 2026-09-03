@@ -64,6 +64,10 @@ internal class UnitStatCard(
         fillUnitCarrierSlot(unit)
         fillUnitTransportSlot(unit)
         fillUnitLeaderSlot(unit)
+        // Before the formation record, because it is about the equipment rather than the unit's
+        // service history, and because appending in this order is what puts it above it in
+        // #statsRowContainer -- both writers of #osadaFormationDetail only ever append.
+        fillCapabilityList(data)
         fillFormationDetail(unit)
         fillUnitStatBars(unit, data)
         fillUnitBadges(unit)
@@ -104,7 +108,11 @@ internal class UnitStatCard(
         val cardTooltip = equipmentCardTooltip(unit, data, tooltipName)
         byId("uImage")?.title = cardTooltip
         byId("uName")?.title = cardTooltip
-        EquipmentMarkings.render(byId("osadaUcMarkings"), data, unit, extended = true)
+        // Primary badges only. The extended row put up to nine more chips on one line of a card
+        // that is 420px wide at its floor, and the nameline stretched until the card pushed the
+        // forecast strip off its own grid track. The full list is in All Stats below, and in the
+        // purchase window's detail bay.
+        EquipmentMarkings.render(byId("osadaUcMarkings"), data, unit)
 
         // Rename affordance (Stage 3.5, Task 2): own units only — never enemies, never
         // browsed equipment entries (showEquipmentInfo hides it).
@@ -398,6 +406,37 @@ internal class UnitStatCard(
         private const val PERCENT_SCALE = 100.0
         private const val MAX_EXPERIENCE_STARS = 5
         private const val RECOGNITION_STAGES = 3
+    }
+}
+
+/**
+ * Every ability the equipment carries, in full, inside the All Stats sheet.
+ *
+ * The compact card shows the primary badges only, and the extended badges are a purchase-window
+ * affair -- which leaves nowhere for a player looking at a formation ALREADY IN THE FIELD to find
+ * out what its dozen specials actually do. This is that place: badge plus the ability's own
+ * sentence, one per row, no `+N` fold, sourced from the same `abilityCatalog()` the badges are.
+ */
+private fun fillCapabilityList(data: EquipmentData) {
+    delTag(byId("osadaUcAbilities"))
+    val container = byId("statsRowContainer") ?: return
+    val abilities = EquipmentMarkings.capabilityList(data)
+    if (abilities.isEmpty()) return
+    val box = addTag(container, "div")
+    box.id = "osadaUcAbilities"
+    box.className = "osada-uc-abilities"
+    val headline = addTag(box, "div")
+    headline.className = "osada-uc-abilities__headline"
+    headline.textContent = I18n.t("unit_info.abilities.title", mapOf("count" to abilities.size))
+    abilities.forEach { (badge, description) ->
+        val row = addTag(box, "div")
+        row.className = "osada-uc-abilities__row"
+        val chip = addTag(row, "span")
+        chip.className = "osada-capability-mark osada-capability-mark--ability"
+        chip.textContent = badge
+        val text = addTag(row, "span")
+        text.className = "osada-uc-abilities__text"
+        text.textContent = description
     }
 }
 

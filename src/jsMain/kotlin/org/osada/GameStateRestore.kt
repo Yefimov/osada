@@ -13,12 +13,13 @@ import org.osada.model.allocMap
 import org.osada.model.getPlayer
 import org.osada.model.getPlayers
 import org.osada.model.setHex
-import org.osada.rules.Engineering
 import org.osada.scenario.AuthoredOptionsBackfill
 import org.osada.scenario.AuthoredScenarioOptions
 import org.osada.scenario.Campaign
 import org.osada.scenario.Scenario
 import org.osada.scenario.addReinforcement
+import org.osada.scenario.configureCalendarForPlayerCount
+import org.osada.ui.WeatherModel
 import kotlin.js.Date
 
 /**
@@ -138,8 +139,20 @@ class GameStateRestore(
         newScenario.maxTurns = scenarioData.maxTurns as? Int ?: newScenario.maxTurns
         newScenario.date = Date((scenarioData.date as? Double) ?: Date().getTime())
         newScenario.dayTurn = scenarioData.dayTurn as? Int ?: 0
-        newScenario.turnsPerDay = scenarioData.turnsPerDay as? Int ?: 1
+        // A ZERO is not a rate, it is the un-migrated value, and it must not survive the restore.
+        // OpenSuite writes `Turns/Day`/`Days/Turn` as two bytes where zero means "this radio mode
+        // is off", so every scenario using neither stored `0/0`; the Kotlin port kept that zero
+        // until `ScenarioCalendar` restored Panzer Marshal's `|| 1`, and `advanceCalendar` then
+        // stepped the date after EVERY player phase. Saves written before that fix carry the zero
+        // in their own payload, so reading it back literally reproduces the bug on a restore, for
+        // as long as the save lives. `<= 0` is repaired here rather than at the call site: the
+        // counter is compared with `>=`, so any non-positive value means "every phase".
+        // Rounds are resolved into phases once the player list is known
+        // ([restorePlayersAndFinish]), which is the same road a freshly parsed scenario takes.
+        newScenario.turnsPerDay = (scenarioData.turnsPerDay as? Int)?.takeIf { it > 0 } ?: 0
+        newScenario.daysPerTurn = (scenarioData.daysPerTurn as? Int)?.takeIf { it > 0 } ?: 1
         newScenario.atmosferic = scenarioData.atmosferic as? Int ?: 0
+        restoreWeather(scenarioData.weather)
         newScenario.latitude = scenarioData.latitude as? Int ?: 0
         newScenario.ground = scenarioData.ground as? Int ?: 0
         newScenario.iconset = scenarioData.iconset as? Int ?: 0
@@ -167,6 +180,15 @@ class GameStateRestore(
             newScenario.map.addPlayer(it)
         }
         console.log("[osada] restoreGame players after add", newScenario.map.getPlayers().size)
+        // Completes the migration [applyScenarioMetadata] started: a save whose `turnsPerDay` was
+        // absent or non-positive gets the default ONE COMPLETE ROUND per date step, which is
+        // `playerCount` phases -- two on a two-sided battle, not one. Resolving it here rather than
+        // to a flat 1 is the whole point: a flat 1 is precisely the "date moves after every side"
+        // bug the save is carrying.
+        if (newScenario.turnsPerDay <= 0) {
+            newScenario.calendarRoundsPerDateStep = 1
+            newScenario.configureCalendarForPlayerCount(newScenario.map.getPlayers().size)
+        }
 
         newScenario.isLoaded = true
         console.log("[osada] restoreGame restoreMap start")
@@ -409,13 +431,19 @@ private fun applyHexUnitIfPresent(
     }
 }
 
-private fun restoreReinforcementsFromArray(
+internal fun restoreReinforcementsFromArray(
     scenario: Scenario,
     data: dynamic,
 ) {
     for (i in 0 until data.length) {
         val entry = data[i]
         val turn = entry.turn as? Int ?: continue
+        // The author's announcement for this wave. Absent in a save written before 2026-09-02 and
+        // in the legacy map-shaped block below, which has nowhere to carry one; both then behave
+        // as they always did, with no box.
+        (entry.message as? String)?.takeIf { it.isNotBlank() }?.let {
+            scenario.reinforcementMessages[turn] = it
+        }
         val units = entry.units
         for (j in 0 until units.length) {
             val r = units[j]
@@ -453,54 +481,6 @@ internal data class PendingCoreUnitRestore(
     val campaignFile: String,
 )
 
-/** OG 9.3's per-hex engineering state. Split out of `buildHex` purely for its complexity
- *  budget; every field is an optional save key that defaults to "nothing here".
- *
- *  `internal` rather than private so `OgOptionalRulesTest` can round-trip a job through
- *  `serializeHex` and back: the pair is the thing worth locking, and asserting on the emitted
- *  JSON alone would not catch a reader that stopped reading a key the writer still writes. */
-internal fun restoreEngineering(
-    hex: Hex,
-    hexData: dynamic,
-) {
-    // Written as a name since 2026-08-25 (see the serializer). An unknown name -- a job this
-    // build does not have -- restores as "nothing in progress" rather than as job zero, which is
-    // the whole reason the format is a name.
-    hex.construction = Engineering.workOrdinal(hexData.construction as? String)
-    hex.constructionTurns = hexData.constructionTurns as? Int ?: 0
-    hex.constructionSide = hexData.constructionSide as? Int ?: -1
-    // Absent in saves written before 2026-08-26; -1 is "builder unknown", which is what
-    // `Engineering.advanceTurn` falls back to `constructionSide` for.
-    hex.constructionPlayer = hexData.constructionPlayer as? Int ?: -1
-    hex.constructionCountry = hexData.constructionCountry as? Int ?: -1
-    hex.razedTerrain = hexData.razedTerrain as? Int ?: -1
-    hex.blownRoad = hexData.blownRoad as? Int ?: 0
-    hex.sapperBuilt = (hexData.sapperBuilt as? Int ?: 0) != 0
-    hex.station = (hexData.station as? Int ?: 0) != 0
-    hex.dirt = (hexData.dirt as? Int ?: 0) != 0
-    restoreHexTrigger(hex, hexData)
-    hex.rubble = (hexData.rubble as? Int ?: 0) != 0
-    hex.crater = (hexData.crater as? Int ?: 0) != 0
-}
-
-/**
- * An OG trigger hex's four authored fields plus its live fired flag, split from
- * [restoreEngineering] to keep that function inside detekt's complexity budget.
- *
- * The authored half travels so a save does not disarm the hex; `triggerFired` travels so a reload
- * does not re-arm one the player already spent (`rules/TriggerHexes`).
- */
-private fun restoreHexTrigger(
-    hex: Hex,
-    hexData: dynamic,
-) {
-    hex.trigger = hexData.trigger as? Int ?: 0
-    hex.triggerParam = hexData.triggerParam as? Int ?: 0
-    hex.triggerEquip = hexData.triggerEquip as? Int ?: 0
-    hex.triggerMessage = hexData.triggerMessage as? String ?: ""
-    hex.triggerFired = (hexData.triggerFired as? Int ?: 0) != 0
-}
-
 /** A serialized `Int` array as a list, or null when the key was absent from the save. */
 private fun intList(raw: dynamic): List<Int>? =
     if (raw == null) null else (0 until (raw.length as Int)).mapNotNull { i -> raw[i] as? Int }
@@ -532,4 +512,28 @@ internal fun restoreVictoryMetadata(
     if (options == null || options == undefined) {
         newScenario.typedVictoryHexes = scenarioData.typedVictoryHexes as? Boolean
     }
+}
+
+/**
+ * Parks the save's running weather spell for the [org.osada.ui.WeatherModel.init] that the UI
+ * runs once the scenario is on screen -- the model has no scenario to attach to before then.
+ *
+ * A save with no `weather` block (every save written before the key existed, and any battle
+ * whose weather model was idle) clears the park instead, so the next battle rolls its own
+ * spell rather than inheriting the previous one's.
+ */
+private fun restoreWeather(data: dynamic) {
+    val snapshot =
+        if (data == null || data == undefined) {
+            null
+        } else {
+            WeatherModel.Snapshot(
+                clearPhase = data.clearPhase as? Boolean ?: true,
+                counter = (data.counter as? Int)?.coerceAtLeast(0) ?: 0,
+                rainRun = (data.rainRun as? Int)?.coerceAtLeast(0) ?: 0,
+                snowRun = (data.snowRun as? Int)?.coerceAtLeast(0) ?: 0,
+                dryRun = (data.dryRun as? Int)?.coerceAtLeast(0) ?: 0,
+            )
+        }
+    WeatherModel.restoreSnapshot(snapshot)
 }

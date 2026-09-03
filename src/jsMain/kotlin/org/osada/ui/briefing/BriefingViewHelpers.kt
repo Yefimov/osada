@@ -135,3 +135,33 @@ internal fun addListSection(
         child(row, "span", "osada-briefing__objective-text").textContent = plainText(item)
     }
 }
+
+/**
+ * Makes the two-column orders grid come out even.
+ *
+ * Sections are rendered only when their field is non-blank, so how many NARROW ones a given
+ * scenario produces is data, not layout: `n_kiel` yields three and the grid leaves a visible hole
+ * beside the last one, while a scenario that authors every field yields five and leaves the same
+ * hole one row lower. Hardcoding "notes is always wide" fixes the first case and breaks the second.
+ *
+ * So the pass runs over the finished sheet instead: within each unbroken RUN of narrow sections,
+ * an odd one out is widened to span both columns. Runs, not the whole sheet -- a wide section
+ * (objectives, ORDERS) starts a new row, so narrow sections on either side of one never pair up
+ * with each other and counting them together would widen the wrong card.
+ */
+internal fun balanceOrderSections(content: HTMLElement) {
+    val kids = content.children
+    val children = (0 until kids.length).mapNotNull { kids.item(it) as? HTMLElement }
+    var run = mutableListOf<HTMLElement>()
+
+    fun flush() {
+        if (run.size % 2 == 1) run.last().classList.add(WIDE_SECTION)
+        run = mutableListOf()
+    }
+    children.forEach { child ->
+        if (child.classList.contains(WIDE_SECTION)) flush() else run += child
+    }
+    flush()
+}
+
+private const val WIDE_SECTION = "osada-briefing__order-section--wide"

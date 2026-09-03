@@ -1,0 +1,13 @@
+{
+  "name": "openpanzer-smoke-test",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "verify": "node verify.mjs"
+  },
+  "dependencies": {
+    "chrome-launcher": "^1.1.2",
+    "puppeteer-core": "^23.0.0"
+  }
+}

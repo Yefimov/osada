@@ -1,18 +1,12 @@
 package org.osada.ui
 
 import org.osada.Game
-import org.osada.buildScenarioEndState
-import org.osada.campaign.ScenarioActionEvaluator
-import org.osada.campaign.ScenarioActionParser
-import org.osada.campaign.ScenarioActionRule
+import org.osada.GameHolder
 import org.osada.i18n.I18n
 import org.osada.model.Cell
 import org.osada.scenario.ObjectiveKind
 import org.osada.scenario.ObjectiveReport
 import org.osada.scenario.ObjectiveRow
-import org.osada.scenario.VictoryDeadline
-import org.osada.scenario.VictoryTier
-import org.osada.scenario.getCurrentScenarioActions
 import org.osada.scenario.objectiveReport
 import org.osada.uiSettings
 import org.w3c.dom.HTMLElement
@@ -22,18 +16,36 @@ import org.w3c.dom.events.MouseEvent
  * The sidebar OBJECTIVES panel
  * (`docs/design/action-affordances-and-objectives.md` §§8, 9).
  *
- * Five sections, each of which exists only when the scenario actually has that thing:
+ * Four sections, each of which exists only when the scenario actually has that thing:
  *  1. required victory objectives, with a `held / visible` summary;
  *  2. authored evacuation, kill and Must-Survive conditions, with live progress;
- *  3. optional capture points, labelled as optional and never counted toward the summary;
- *  4. the victory-tier strip -- turn deadlines, or the authored hold thresholds when the scenario
- *     is graded by how many objectives survive the turn limit instead;
- *  5. for a campaign scenario, its authored `scenario.actions` as a SECOND objective phase, marked
- *     "currently satisfied - checked at mission end" rather than complete.
+ *  3. optional capture points -- COLLAPSED behind a count, see [renderOptional];
+ *  4. hidden victory objectives, and only under Observer Mode.
  *
- * The top-left `Turn n/max` field is untouched; this panel never repeats it.
+ * Two sections were removed on 2026-09-02, and both left the rail for a surface that suits them
+ * better rather than being deleted:
+ *
+ *  - the **victory-tier strip** (turn deadlines / authored hold thresholds) is now the hover panel
+ *    on the top bar's `Turn n/max` field ([VictoryDeadlineTooltip]). It is fixed scenario data
+ *    that never changes during play, it is only ever consulted about the clock, and three
+ *    permanent rows of it were pushing the live objectives out of a narrow column.
+ *  - the **campaign end-state conditions** (`scenario.actions`, checked once at mission end) were
+ *    dropped from the UI entirely. In the rail they read as a second, contradictory list of
+ *    objectives -- full sentences wrapping over three lines each, directly under a checklist of
+ *    one-line hex names. They were briefly moved to the briefing's orders sheet instead, and that
+ *    was rejected too ("не нужен"). [ScenarioObjectiveText] still renders one of these rules and
+ *    is still tested; it currently has no caller, and is kept because the rules themselves are a
+ *    live authored campaign feature that the engine still evaluates at scenario end.
+ *
+ * The top-left `Turn n/max` field is otherwise untouched; this panel never repeats the count.
  */
 internal object ObjectivesRail {
+    /** At most this many optional capture points open without asking; see [renderOptional]. */
+    private const val OPTIONAL_AUTO_EXPAND = 4
+
+    /** null = follow [OPTIONAL_AUTO_EXPAND]; set once the player has folded or unfolded by hand. */
+    private var optionalExpanded: Boolean? = null
+
     fun render(
         container: HTMLElement,
         game: Game,
@@ -54,8 +66,6 @@ internal object ObjectivesRail {
             renderOptional(container, report, game)
             renderHidden(container, report, game)
         }
-        renderTiers(container, report)
-        renderEndStateObjectives(container, game)
         byId("osadaRailObjCounter")?.textContent = "${report.victoryHeld}/${report.victoryTotal}"
     }
 
@@ -76,14 +86,49 @@ internal object ObjectivesRail {
         report.victory.forEach { row -> objectiveRow(container, row, game) }
     }
 
+    /**
+     * Optional capture points, folded behind their own count.
+     *
+     * These are NOT the hidden victory hexes Observer Mode reveals -- an optional capture point is
+     * `flag != -1 && victorySide == -1`, i.e. an ordinary named town flag the player can already
+     * see on the map, worth prestige and score and required by nothing. Measured across the 502
+     * shipped scenarios: **7283 of them in 491 scenarios**, and `bn9s18` alone authors 103. Listing
+     * every one of them turned a 3-objective checklist into a hundred-row scroll in which the
+     * objectives that decide the scenario were off-screen -- reported as simply not understanding
+     * what the section was.
+     *
+     * So the heading carries the held/total count and the rows fold away under it. Up to
+     * [OPTIONAL_AUTO_EXPAND] of them still open by default: for a scenario with two, a click to see
+     * two names is friction with nothing behind it. A click on the heading overrides that either
+     * way and the choice sticks for the session, because this rail re-renders on every status
+     * update and a fold that reopened itself would be worse than no fold at all.
+     */
     private fun renderOptional(
         container: HTMLElement,
         report: ObjectiveReport,
         game: Game,
     ) {
-        if (report.optional.isEmpty()) return
-        section(container, I18n.t("hud.objective.optional.title"), I18n.t("hud.objective.optional.help"))
-        report.optional.forEach { row -> objectiveRow(container, row, game) }
+        val optional = report.optional
+        if (optional.isEmpty()) return
+        val held = optional.count { it.held }
+        val expanded = optionalExpanded ?: (optional.size <= OPTIONAL_AUTO_EXPAND)
+        val heading =
+            section(
+                container,
+                I18n.t(
+                    "hud.objective.optional.title_count",
+                    mapOf("title" to I18n.t("hud.objective.optional.title"), "held" to held, "total" to optional.size),
+                ),
+                I18n.t("hud.objective.optional.help"),
+            )
+        heading.classList.add("osada-obj-section--fold")
+        heading.classList.toggle("osada-obj-section--open", expanded)
+        heading.onclick = { _: MouseEvent ->
+            optionalExpanded = !expanded
+            GameHolder.instance?.let { render(container, it) }
+        }
+        if (!expanded) return
+        optional.forEach { row -> objectiveRow(container, row, game) }
     }
 
     private fun renderHidden(
@@ -96,108 +141,6 @@ internal object ObjectivesRail {
         report.hidden.forEach { row -> objectiveRow(container, row, game) }
     }
 
-    /**
-     * Deadlines are scenario-level data and may always be shown. Which strip appears follows the
-     * evaluator that will actually decide this scenario: `checkTimedOutcome` when the scenario
-     * authored hold counts, `checkVictory`'s turn tiers otherwise. Saying `capture all by turn n`
-     * for a hold-count scenario would be a straight falsehood.
-     */
-    private fun renderTiers(
-        container: HTMLElement,
-        report: ObjectiveReport,
-    ) {
-        if (report.gradedByHoldCount) {
-            section(container, I18n.t("hud.objective.tiers.hold.title"), I18n.t("hud.objective.tiers.hold.help"))
-            report.holdThresholds.forEach { threshold ->
-                val row = tierRow(container, threshold.tier)
-                row.lastElementChild?.textContent =
-                    I18n.plural("hud.objective.tier.hold", threshold.count, mapOf("count" to threshold.count))
-            }
-            return
-        }
-        if (report.deadlines.isEmpty()) return
-        section(container, I18n.t("hud.objective.tiers.title"), I18n.t("hud.objective.tiers.help"))
-        report.deadlines.forEach { deadline -> deadlineRow(container, report, deadline) }
-    }
-
-    private fun deadlineRow(
-        container: HTMLElement,
-        report: ObjectiveReport,
-        deadline: VictoryDeadline,
-    ) {
-        val row = tierRow(container, deadline.tier)
-        if (report.missed(deadline)) row.classList.add("osada-obj-tier--missed")
-        row.lastElementChild?.textContent =
-            I18n.t(
-                if (report.missed(deadline)) "hud.objective.tier.missed" else "hud.objective.tier.by_turn",
-                mapOf("turn" to deadline.byTurn),
-            )
-    }
-
-    private fun tierRow(
-        container: HTMLElement,
-        tier: VictoryTier,
-    ): HTMLElement {
-        val row = addTag(container, "div")
-        row.className = "osada-obj-tier"
-        val name = addTag(row, "span")
-        name.className = "osada-obj-tier__name"
-        name.textContent = I18n.t("hud.objective.tier.${tier.name.lowercase()}")
-        val value = addTag(row, "span")
-        value.className = "osada-obj-tier__value"
-        return row
-    }
-
-    /**
-     * The second objective phase. These are the campaign's authored `scenario.actions`, which the
-     * engine evaluates exactly ONCE, at scenario end. The preview reuses the same predicates through
-     * `ScenarioActionEvaluator.evaluate`, which records nothing -- opening this panel must never
-     * write campaign state.
-     */
-    private fun renderEndStateObjectives(
-        container: HTMLElement,
-        game: Game,
-    ) {
-        val campaign = game.campaign ?: return
-        val rules = ScenarioActionParser.parseList(campaign.getCurrentScenarioActions())
-        val state = game.buildScenarioEndState()
-        if (rules.isEmpty() || state == null) return
-        val satisfied = ScenarioActionEvaluator.evaluate(rules, state)
-        section(container, I18n.t("hud.objective.end_state.title"), I18n.t("hud.objective.end_state.help"))
-        rules.forEach { rule -> endStateRow(container, rule, rule.id in satisfied, state.turn) }
-    }
-
-    private fun endStateRow(
-        container: HTMLElement,
-        rule: ScenarioActionRule,
-        satisfied: Boolean,
-        turn: Int,
-    ) {
-        val missedDeadline = rule is ScenarioActionRule.FinishedByTurn && turn > rule.turn
-        val row = addTag(container, "div")
-        row.className =
-            "osada-obj-end" +
-            when {
-                missedDeadline -> " osada-obj-end--missed"
-                satisfied -> " osada-obj-end--ok"
-                else -> ""
-            }
-        val name = addTag(row, "span")
-        name.className = "osada-obj-end__name"
-        name.textContent = rule.label ?: ScenarioObjectiveText.describe(rule)
-        val state = addTag(row, "span")
-        state.className = "osada-obj-end__state"
-        state.textContent =
-            I18n.t(
-                when {
-                    missedDeadline -> "hud.objective.end_state.missed"
-                    satisfied -> "hud.objective.end_state.satisfied"
-                    else -> "hud.objective.end_state.pending"
-                },
-            )
-        row.title = state.textContent + " — " + name.textContent
-    }
-
     private fun objectiveRow(
         container: HTMLElement,
         entry: ObjectiveRow,
@@ -207,6 +150,8 @@ internal object ObjectivesRail {
         val row = addTag(container, "div")
         row.className = "osada-obj" + if (entry.held) " osada-obj--held" else ""
         if (entry.kind == ObjectiveKind.HIDDEN_VICTORY) row.classList.add("osada-obj--hidden")
+        val focused = ObjectiveFocus.current
+        if (focused?.row == entry.row && focused.col == entry.col) row.classList.add("osada-obj--focused")
         row.title =
             I18n.t(
                 if (entry.held) "hud.objective.held.help" else "hud.objective.enemy.help",
@@ -224,17 +169,26 @@ internal object ObjectivesRail {
         val stateLabel = addTag(state, "span")
         stateLabel.textContent =
             I18n.t(if (entry.held) "hud.objective.held.label" else "hud.objective.enemy.label")
-        row.onclick = { _: MouseEvent -> game.ui?.uiSetCellOnViewPort(Cell(entry.row, entry.col)) }
+        // Centre the camera AND mark the hex: on a dense map the jump alone does not say which of
+        // the flags now on screen was the one asked for. Clicking the same row again clears it.
+        row.onclick = { _: MouseEvent ->
+            val cell = Cell(entry.row, entry.col)
+            ObjectiveFocus.toggle(cell)
+            game.ui?.uiSetCellOnViewPort(cell)
+            game.ui?.render?.render()
+            render(container, game)
+        }
     }
 
     private fun section(
         container: HTMLElement,
         title: String,
         help: String,
-    ) {
+    ): HTMLElement {
         val heading = addTag(container, "div")
         heading.className = "osada-obj-section"
         heading.textContent = title
         heading.title = help
+        return heading
     }
 }

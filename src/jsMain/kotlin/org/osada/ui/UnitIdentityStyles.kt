@@ -31,8 +31,13 @@ internal object UnitIdentityStyles {
    hugging inside a track that stays 840px wide. With minmax, a 670px card in an 840px track left
    170px of dead grid between it and the forecast -- reported as *"on a wide screen there is too
    much room to the left of #osadaForecast and to the right of #uc-inner"*. 840px is still the
-   ceiling; the floor moved onto the card as `min-width`, since fit-content() takes no minimum. */
-#osada-bottomzone { height: 112px; grid-template-columns: fit-content(840px) 150px minmax(340px, 460px); }
+   ceiling; the floor moved onto the card as `min-width`, since fit-content() takes no minimum.
+
+   The band grew 112 -> 136px when "All stats" moved from BESIDE the action strip to ABOVE it
+   (BottomZoneBuilder): the right-hand column is now expander + up to two rows of 40px chips, and
+   at 112px the second chip row was cut off by the band's own edge -- the same failure the
+   #unit-context width note below describes, one axis over. */
+#osada-bottomzone { height: 136px; grid-template-columns: fit-content(840px) 150px minmax(340px, 460px); }
 /* The card fills its (now content-sized) track. `min-width` is what stops a one-word unit name
    from shrinking the whole card to a stub, and it is also the track's automatic minimum. */
 #unit-info { padding: 7px 10px; width: auto; min-width: 420px; max-width: 100%; }
@@ -94,7 +99,8 @@ internal object UnitIdentityStyles {
 .uc-chip--support { color: #e5c979; border-color: rgba(217,178,90,.65); background: rgba(217,178,90,.10); }
 .uc-chip--warning { color: #d98b79; border-color: rgba(201,70,61,.5); }
 #uc-bars { gap: 2px; }
-#uc-actions { align-self: center; }
+/* The whole right-hand column centres as one block; its two rows must not drift apart. */
+#uc-side { align-self: center; }
 .osada-action:focus { outline: 1px solid var(--osada-brass); outline-offset: 1px; }
 .osada-formation-detail__summary { padding: 2px 0; color: var(--osada-text-dim); font-size: 11px; }
 .osada-service-record-button {
