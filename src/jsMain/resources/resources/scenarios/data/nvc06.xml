@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="nvc06.xscn" name="Attack on Khe Sanh" turns="16, 18, 20" date="January 15, 1968" dayturns="0" ground="0" atmosferic="1" latitude="4" iconset="0" weatherchg="0" rows="30" cols="40" eqp="eqp-olgcw" image="resources/maps/images/map_766.png" eqpv="united1" canblow="0" canrepair="0" canbuild="0" extlos="0" truedlof="0" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="0" airintercept="0" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="0" truespotting0="0" reinfwhenactive="0" capitalflak="0" ehmsuonly="0" paradropocean="1" coresoffcap="0" music="china1.MUS">
+<map file="nvc06.xscn" name="Attack on Khe Sanh" turns="16, 18, 20" date="January 15, 1968" dayturns="3" ground="0" atmosferic="1" latitude="4" iconset="0" weatherchg="0" rows="30" cols="40" eqp="eqp-olgcw" image="resources/maps/images/map_766.png" eqpv="united1" canblow="0" canrepair="0" canbuild="0" extlos="0" truedlof="0" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="0" airintercept="0" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="0" truespotting0="0" reinfwhenactive="0" capitalflak="0" ehmsuonly="0" paradropocean="1" coresoffcap="0" music="china1.MUS" daysperturn="0">
   <player id="0" country="246" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="247,0,0,0" turnprestige="4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4"/>
   <player id="1" country="9" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="10,254,0,0" turnprestige="10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10"/>
   <reinforce turn="7">
@@ -13,58 +13,58 @@
       <unit id="49263" owner="0" flag="247" face="0" exp="134"/>
     </at>
     <at row="27" col="1">
-      <unit id="49262" owner="0" flag="247" face="0" transport="49327" exp="71" str="5"/>
+      <unit id="49262" owner="0" flag="247" face="0" transport="49327" exp="71" str="5" bstr="5"/>
     </at>
     <at row="10" col="37">
-      <unit id="49283" owner="0" flag="247" face="0" exp="205" str="6"/>
+      <unit id="49283" owner="0" flag="247" face="0" exp="205" str="6" bstr="6"/>
     </at>
     <at row="25" col="36">
-      <unit id="13754" owner="1" flag="10" face="0" exp="250" str="4"/>
+      <unit id="13754" owner="1" flag="10" face="0" exp="250" str="4" bstr="4"/>
     </at>
     <at row="27" col="31">
-      <unit id="14042" owner="1" flag="10" face="0" exp="250" str="3"/>
+      <unit id="14042" owner="1" flag="10" face="0" exp="250" str="3" bstr="3"/>
     </at>
   </reinforce>
   <reinforce turn="8">
     <at row="25" col="1">
-      <unit id="49356" owner="0" flag="247" face="0" transport="49330" exp="20" str="7"/>
+      <unit id="49356" owner="0" flag="247" face="0" transport="49330" exp="20" str="7" bstr="7"/>
     </at>
     <at row="19" col="31">
-      <unit id="13166" owner="1" flag="10" face="0" transport="13109" exp="197" str="8"/>
+      <unit id="13166" owner="1" flag="10" face="0" transport="13109" exp="197" str="8" bstr="8"/>
     </at>
   </reinforce>
   <reinforce turn="9">
     <at row="20" col="28">
-      <unit id="12850" owner="1" flag="10" face="0" exp="173" str="4" ldr="1"/>
+      <unit id="12850" owner="1" flag="10" face="0" exp="173" str="4" ldr="1" bstr="4"/>
     </at>
   </reinforce>
   <reinforce turn="10">
     <at row="1" col="10">
-      <unit id="49273" owner="0" flag="247" face="0" transport="49327" exp="235" str="8"/>
+      <unit id="49273" owner="0" flag="247" face="0" transport="49327" exp="235" str="8" bstr="8"/>
     </at>
     <at row="28" col="2">
-      <unit id="49362" owner="0" flag="247" face="0" transport="49330" exp="86" str="4"/>
+      <unit id="49362" owner="0" flag="247" face="0" transport="49330" exp="86" str="4" bstr="4"/>
     </at>
   </reinforce>
   <reinforce turn="11">
     <at row="17" col="32">
-      <unit id="12597" owner="1" flag="10" face="0" exp="189" str="3" ldr="1"/>
+      <unit id="12597" owner="1" flag="10" face="0" exp="189" str="3" ldr="1" bstr="3"/>
     </at>
   </reinforce>
   <reinforce turn="12">
     <at row="21" col="27">
-      <unit id="12025" owner="1" flag="10" face="0" exp="246" str="8"/>
+      <unit id="12025" owner="1" flag="10" face="0" exp="246" str="8" bstr="8"/>
     </at>
     <at row="17" col="33">
-      <unit id="12035" owner="1" flag="10" face="0" transport="13073" exp="108" str="4"/>
+      <unit id="12035" owner="1" flag="10" face="0" transport="13073" exp="108" str="4" bstr="4"/>
     </at>
     <at row="17" col="38">
-      <unit id="822" owner="1" flag="10" face="0" transport="13109" exp="197" str="3"/>
+      <unit id="822" owner="1" flag="10" face="0" transport="13109" exp="197" str="3" bstr="3"/>
     </at>
   </reinforce>
   <reinforce turn="14">
     <at row="17" col="25">
-      <unit id="49978" owner="1" flag="254" face="0" exp="94" str="8" ldr="1"/>
+      <unit id="49978" owner="1" flag="254" face="0" exp="94" str="8" ldr="1" bstr="8"/>
     </at>
   </reinforce>
   <hex row="0" col="1" terrain="5"/>
@@ -273,7 +273,7 @@
     <unit id="49262" owner="0" flag="247" face="0" transport="49327" exp="61" str="4" bstr="4"/>
   </hex>
   <hex row="6" col="10" terrain="5" deploy="0">
-    <unit id="49361" owner="0" flag="247" face="0" transport="49338" exp="112" str="5"/>
+    <unit id="49361" owner="0" flag="247" face="0" transport="49338" exp="112" str="5" bstr="5"/>
   </hex>
   <hex row="6" col="11" terrain="5" deploy="0"/>
   <hex row="6" col="12" terrain="5"/>
@@ -287,7 +287,7 @@
   <hex row="6" col="24" terrain="6"/>
   <hex row="6" col="25" terrain="6"/>
   <hex row="6" col="26" terrain="6" name="Hill 950" owner="1" flag="9">
-    <unit id="12036" owner="1" flag="10" face="0" exp="38" str="2"/>
+    <unit id="12036" owner="1" flag="10" face="0" exp="38" str="2" bstr="2"/>
   </hex>
   <hex row="6" col="27" terrain="6"/>
   <hex row="6" col="28" terrain="6"/>
@@ -320,7 +320,7 @@
   <hex row="7" col="14" terrain="5"/>
   <hex row="7" col="15" terrain="6"/>
   <hex row="7" col="16" terrain="5" road="136">
-    <unit id="839" owner="1" flag="10" face="0" exp="10" str="6"/>
+    <unit id="839" owner="1" flag="10" face="0" exp="10" str="6" bstr="1"/>
   </hex>
   <hex row="7" col="17" terrain="5" road="144"/>
   <hex row="7" col="22" terrain="10" name="Song Quang Tri River"/>
@@ -332,7 +332,7 @@
   <hex row="7" col="29" terrain="6"/>
   <hex row="7" col="30" terrain="6"/>
   <hex row="7" col="31" terrain="6">
-    <unit id="49263" owner="0" flag="247" face="0" exp="74" str="8"/>
+    <unit id="49263" owner="0" flag="247" face="0" exp="74" str="8" bstr="8"/>
   </hex>
   <hex row="7" col="32" terrain="6"/>
   <hex row="7" col="33" terrain="6"/>
@@ -355,10 +355,10 @@
   <hex row="8" col="11" terrain="6" deploy="0"/>
   <hex row="8" col="12" terrain="5" deploy="0"/>
   <hex row="8" col="13" terrain="5" deploy="0">
-    <unit id="49263" owner="0" flag="247" face="0" exp="70" str="9"/>
+    <unit id="49263" owner="0" flag="247" face="0" exp="70" str="9" bstr="9"/>
   </hex>
   <hex row="8" col="14" terrain="5" deploy="0">
-    <unit id="49302" owner="0" flag="247" face="0" transport="49330" exp="64" str="5"/>
+    <unit id="49302" owner="0" flag="247" face="0" transport="49330" exp="64" str="5" bstr="5"/>
   </hex>
   <hex row="8" col="15" terrain="6"/>
   <hex row="8" col="16" terrain="6"/>
@@ -402,10 +402,10 @@
   <hex row="9" col="16" terrain="6"/>
   <hex row="9" col="17" terrain="5"/>
   <hex row="9" col="18" terrain="5" road="152">
-    <unit id="502" owner="1" flag="10" face="0" exp="63" str="9"/>
+    <unit id="502" owner="1" flag="10" face="0" exp="63" str="9" bstr="1"/>
   </hex>
   <hex row="9" col="19" terrain="5" road="176">
-    <unit id="715" owner="1" flag="10" face="0" exp="239" str="7"/>
+    <unit id="715" owner="1" flag="10" face="0" exp="239" str="7" bstr="1"/>
   </hex>
   <hex row="9" col="20">
     <unit id="749" owner="1" flag="10" face="0" exp="219" str="5" bstr="1"/>
@@ -421,7 +421,7 @@
   <hex row="9" col="33" terrain="6"/>
   <hex row="9" col="34" terrain="6"/>
   <hex row="9" col="35" terrain="6">
-    <unit id="49342" owner="0" flag="247" face="0" transport="49271" exp="209" str="5"/>
+    <unit id="49342" owner="0" flag="247" face="0" transport="49271" exp="209" str="5" bstr="5"/>
   </hex>
   <hex row="9" col="36" terrain="6"/>
   <hex row="9" col="37" terrain="6"/>
@@ -476,7 +476,7 @@
   <hex row="11" col="11" terrain="6"/>
   <hex row="11" col="12" terrain="6" name="Hill 861A" owner="1" flag="9" victory="1">
     <unit id="12036" owner="1" flag="10" face="0" exp="67" str="3" bstr="3"/>
-    <unit id="528" owner="1" flag="10" face="0" exp="58" str="5"/>
+    <unit id="528" owner="1" flag="10" face="0" exp="58" str="5" bstr="1"/>
   </hex>
   <hex row="11" col="13" terrain="6"/>
   <hex row="11" col="14" terrain="6"/>
@@ -498,8 +498,8 @@
   <hex row="12" col="6" terrain="5"/>
   <hex row="12" col="7" terrain="6"/>
   <hex row="12" col="8" terrain="6" name="Hill 881S" owner="1" flag="9">
-    <unit id="12036" owner="1" flag="10" face="0" exp="242" str="4"/>
-    <unit id="528" owner="1" flag="10" face="0" exp="58" str="5"/>
+    <unit id="12036" owner="1" flag="10" face="0" exp="242" str="4" bstr="4"/>
+    <unit id="528" owner="1" flag="10" face="0" exp="58" str="5" bstr="1"/>
   </hex>
   <hex row="12" col="9" terrain="6"/>
   <hex row="12" col="10" terrain="6"/>
@@ -537,11 +537,11 @@
   <hex row="13" col="12" terrain="6"/>
   <hex row="13" col="13" terrain="6"/>
   <hex row="13" col="14" terrain="6" road="18">
-    <unit id="12036" owner="1" flag="10" face="0" transport="13069" exp="233" str="6"/>
+    <unit id="12036" owner="1" flag="10" face="0" transport="13069" exp="233" str="6" bstr="6"/>
   </hex>
   <hex row="13" col="15" terrain="6"/>
   <hex row="13" col="16" terrain="6" name="Hill 558" owner="1" flag="9" victory="1">
-    <unit id="12036" owner="1" flag="10" face="0" exp="253" str="4"/>
+    <unit id="12036" owner="1" flag="10" face="0" exp="253" str="4" bstr="4"/>
     <unit id="528" owner="1" flag="10" face="0" exp="58" str="5" bstr="1"/>
   </hex>
   <hex row="13" col="17" terrain="6"/>
@@ -646,10 +646,10 @@
     <unit id="502" owner="1" flag="10" face="0" exp="231" str="7" bstr="1"/>
   </hex>
   <hex row="16" col="24">
-    <unit id="749" owner="1" flag="10" face="0" exp="134" str="5"/>
+    <unit id="749" owner="1" flag="10" face="0" exp="134" str="5" bstr="1"/>
   </hex>
   <hex row="16" col="25" name="KS Combat Base/Airstrip" owner="1" flag="9" victory="1">
-    <unit id="502" owner="1" flag="10" face="0" exp="212" str="14"/>
+    <unit id="502" owner="1" flag="10" face="0" exp="212" str="14" bstr="1"/>
   </hex>
   <hex row="16" col="26" road="136"/>
   <hex row="16" col="27" road="136"/>
@@ -677,7 +677,7 @@
   <hex row="17" col="16" terrain="6"/>
   <hex row="17" col="23" terrain="11" name="Old French Fort [FORT]"/>
   <hex row="17" col="24" terrain="2" road="144" name="KS Combat Base/Airstrip" owner="1" flag="9" victory="1">
-    <unit id="528" owner="1" flag="10" face="0" exp="211" str="5"/>
+    <unit id="528" owner="1" flag="10" face="0" exp="211" str="5" bstr="1"/>
   </hex>
   <hex row="17" col="25" terrain="2" name="KS Combat Base/Airstrip" owner="1" flag="9" victory="1"/>
   <hex row="17" col="28" road="152"/>
@@ -757,7 +757,7 @@
   <hex row="20" col="22" road="187"/>
   <hex row="20" col="23" road="171"/>
   <hex row="20" col="24" terrain="1" road="187" name="Khe Sanh" owner="1" flag="9">
-    <unit id="12036" owner="1" flag="10" face="0" exp="143" str="4"/>
+    <unit id="12036" owner="1" flag="10" face="0" exp="143" str="4" bstr="4"/>
   </hex>
   <hex row="20" col="25" road="169"/>
   <hex row="20" col="31" terrain="6"/>
@@ -907,7 +907,7 @@
     <unit id="839" owner="1" flag="254" face="0" str="8" bstr="1"/>
   </hex>
   <hex row="26" col="4" terrain="1" road="34" name="Lang Vei" owner="1" flag="9" victory="1">
-    <unit id="49971" owner="1" flag="254" face="0" transport="50001" exp="100" str="8"/>
+    <unit id="49971" owner="1" flag="254" face="0" transport="50001" exp="100" str="8" bstr="8"/>
   </hex>
   <hex row="26" col="5">
     <unit id="715" owner="1" flag="254" face="0" exp="87" str="6" bstr="1"/>

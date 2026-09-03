@@ -173,10 +173,15 @@ internal object GameplayLocalization {
             )
         byId("statusmsg")?.innerHTML =
             "<span class=\"osada-tb-op\" title=\"${scenario.name}\">${scenario.name}</span>" +
-            "<span class=\"osada-tb-field\"><b>${I18n.t("hud.turn.label")}</b>" +
+            "<span class=\"osada-tb-field osada-tb-turn\" id=\"osadaTurnField\">" +
+            "<b>${I18n.t("hud.turn.label")}</b>" +
             "${I18n.formatNumber(map.turn)}/${I18n.formatNumber(map.maxTurns)}</span>" +
             "<span class=\"osada-tb-field osada-tb-date\">$dateText</span>" +
             phaseChip
+        // The line above replaced the whole innerHTML, so the previous field (and its handlers)
+        // no longer exist: the hover panel has to be re-attached on every status refresh.
+        VictoryDeadlineTooltip.hide()
+        byId("osadaTurnField")?.let(VictoryDeadlineTooltip::attach)
     }
 
     private fun refreshWeather() {

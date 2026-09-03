@@ -140,6 +140,7 @@ internal object StartMenuSettingsBuilder {
             "mapscale" to "settings.slider.map_scale.label",
             "soundvolume" to "settings.slider.effects_volume.label",
             "ambientvolume" to "settings.slider.ambient_volume.label",
+            "musicvolume" to "settings.slider.music_volume.label",
         )
 
     internal val sliderHelpKeys =
@@ -149,6 +150,7 @@ internal object StartMenuSettingsBuilder {
             "mapscale" to "settings.slider.map_scale.help",
             "soundvolume" to "settings.slider.effects_volume.help",
             "ambientvolume" to "settings.slider.ambient_volume.help",
+            "musicvolume" to "settings.slider.music_volume.help",
         )
 
     fun buildSettingsScreen() {
@@ -161,6 +163,7 @@ internal object StartMenuSettingsBuilder {
         settingSections.forEach { buildSettingSection(it) }
         wireSettingsOkHandler()
         ObserverModeLock.refresh()
+        StalinRegimePendingNote.refresh()
     }
 
     // Slider rows need the same row scaffold as the checkbox rows below (and as PM): a
@@ -302,6 +305,9 @@ internal object StartMenuSettingsBuilder {
         valueDiv.classList.toggle("checked", !current)
         if (id == "stalinRegime") {
             GameHolder.instance?.synchronizeStalinRegimeUnits()
+            // ...which is a no-op while the running operation has the rule locked the other way, so
+            // the row has to say so rather than leave the tick looking ignored.
+            StalinRegimePendingNote.refresh()
         }
         if (id == "useRetina") applyRetinaScaleAdjustment()
         // Observer badge (Task 5): the settings dialog covers the top bar anyway, so
@@ -369,6 +375,22 @@ internal object StartMenuSettingsBuilder {
                 (byId("ambientvolume")?.asDynamic()?.value as? String)?.toDoubleOrNull()
                     ?: uiSettings.ambientVolume
             Sound.refreshAmbientVolume() // hear it while adjusting, not on next weather change
+        }
+        // The scenario score's own level. Separate from Ambient since 2026-09-02 (user request):
+        // both are continuous loops, but the weather is part of the battle and the score runs
+        // under it, and sharing one slider meant silencing either one silenced the other.
+        sliderSetting(
+            "musicvolume",
+            "settings.slider.music_volume.label",
+            uiSettings.musicVolume,
+            step = 0.05,
+            min = 0.0,
+            max = 1.0,
+        ) {
+            uiSettings.musicVolume =
+                (byId("musicvolume")?.asDynamic()?.value as? String)?.toDoubleOrNull()
+                    ?: uiSettings.musicVolume
+            Sound.refreshMusicVolume() // a track starts once per battle; without this it waits
         }
     }
 

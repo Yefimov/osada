@@ -170,6 +170,13 @@ internal class MapInputController(
         handled: Boolean,
         cell: Cell,
     ) {
+        // Acting on the map answers the question the objective mark was asking, so the mark goes.
+        // Left where the rail put it, it would sit on the map for the rest of the scenario. The
+        // redraw is paid for only on the one click that actually clears a mark, not on every click.
+        if (ObjectiveFocus.clear()) {
+            byId("osadaObjectives")?.let { ObjectivesRail.render(it, ui.game) }
+            ui.render.render()
+        }
         val currentUnit = map.currentUnit
         val isAir = currentUnit?.let { GameRules.isAir(it) } ?: false
         uiSettings.airMode = isAir

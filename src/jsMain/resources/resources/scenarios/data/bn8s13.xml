@@ -1,174 +1,174 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="bn8s13.xscn" name="Belgrade Offensive" turns="9, 11, 15" date="October 12, 1944" dayturns="0" ground="0" atmosferic="0" latitude="6" iconset="3" weatherchg="0" rows="34" cols="44" eqp="eqp-lxf" image="resources/maps/images/map_208.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="1" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1" ehmsuonly="0" paradropocean="1" coresoffcap="0">
+<map file="bn8s13.xscn" name="Belgrade Offensive" turns="9, 11, 15" date="October 12, 1944" dayturns="1" ground="0" atmosferic="0" latitude="6" iconset="3" weatherchg="0" rows="34" cols="44" eqp="eqp-lxf" image="resources/maps/images/map_208.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="1" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1" ehmsuonly="0" paradropocean="1" coresoffcap="0" daysperturn="0">
   <player id="0" country="43" side="1" airtrans="2" navaltrans="4" railtrans="4" defaultxp="99" defaultstr="10" support="20,44,0,0" turnprestige="0, 25, 50, 50, 50, 50, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="44:0:67384224"/>
   <player id="1" country="67" side="0" airtrans="2" navaltrans="4" railtrans="4" defaultxp="200" defaultstr="10" support="8,68,0,0" turnprestige="0, 50, 75, 50, 75, 50, 75, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="68:0:-2147483648,8:0:-2147483648"/>
   <reinforce turn="2">
     <at row="13" col="42">
-      <unit id="20803" owner="0" flag="20" face="0" exp="144"/>
+      <unit id="20803" owner="0" flag="20" face="0" exp="144" bstr="5"/>
     </at>
     <at row="2" col="26">
-      <unit id="20392" owner="0" flag="20" face="0" transport="20675" exp="144" str="9"/>
+      <unit id="20392" owner="0" flag="20" face="0" transport="20675" exp="144" str="9" bstr="5"/>
     </at>
     <at row="1" col="27">
-      <unit id="20392" owner="0" flag="20" face="0" transport="20675" exp="144" str="9"/>
+      <unit id="20392" owner="0" flag="20" face="0" transport="20675" exp="144" str="9" bstr="5"/>
     </at>
     <at row="1" col="28">
-      <unit id="20392" owner="0" flag="20" face="0" transport="20675" exp="144" str="9"/>
+      <unit id="20392" owner="0" flag="20" face="0" transport="20675" exp="144" str="9" bstr="5"/>
     </at>
     <at row="1" col="26">
-      <unit id="20682" owner="0" flag="20" face="0" transport="20638" exp="144" str="8"/>
+      <unit id="20682" owner="0" flag="20" face="0" transport="20638" exp="144" str="8" bstr="5"/>
     </at>
     <at row="0" col="27">
-      <unit id="20710" owner="0" flag="20" face="0" transport="20675" exp="144" str="8"/>
+      <unit id="20710" owner="0" flag="20" face="0" transport="20675" exp="144" str="8" bstr="5"/>
     </at>
     <at row="1" col="25">
-      <unit id="20537" owner="0" flag="20" face="0" exp="144" str="5"/>
+      <unit id="20537" owner="0" flag="20" face="0" exp="144" str="5" bstr="5"/>
     </at>
     <at row="10" col="41">
-      <unit id="20836" owner="0" flag="20" face="0" exp="44" str="2" attach="1"/>
+      <unit id="20836" owner="0" flag="20" face="0" exp="44" str="2" attach="1" bstr="2"/>
     </at>
   </reinforce>
   <reinforce turn="3">
     <at row="11" col="41">
-      <unit id="20853" owner="0" flag="20" face="0" exp="44"/>
+      <unit id="20853" owner="0" flag="20" face="0" exp="44" bstr="5"/>
     </at>
     <at row="13" col="41">
-      <unit id="20849" owner="0" flag="20" face="0" exp="44"/>
+      <unit id="20849" owner="0" flag="20" face="0" exp="44" bstr="5"/>
     </at>
     <at row="0" col="33">
-      <unit id="20392" owner="0" flag="20" face="0" exp="144" str="9"/>
+      <unit id="20392" owner="0" flag="20" face="0" exp="144" str="9" bstr="5"/>
     </at>
     <at row="1" col="33">
-      <unit id="20392" owner="0" flag="20" face="0" exp="144" str="9"/>
+      <unit id="20392" owner="0" flag="20" face="0" exp="144" str="9" bstr="5"/>
     </at>
     <at row="1" col="35">
-      <unit id="20392" owner="0" flag="20" face="0" exp="144" str="9"/>
+      <unit id="20392" owner="0" flag="20" face="0" exp="144" str="9" bstr="5"/>
     </at>
     <at row="1" col="41">
-      <unit id="20362" owner="0" flag="20" face="0" transport="20636" exp="144" str="5"/>
+      <unit id="20362" owner="0" flag="20" face="0" transport="20636" exp="144" str="5" bstr="5"/>
     </at>
     <at row="1" col="34">
-      <unit id="20687" owner="0" flag="20" face="0" transport="20674" exp="144" str="8"/>
+      <unit id="20687" owner="0" flag="20" face="0" transport="20674" exp="144" str="8" bstr="5"/>
     </at>
     <at row="1" col="40">
-      <unit id="20570" owner="0" flag="20" face="0" transport="20674" exp="144" str="8"/>
+      <unit id="20570" owner="0" flag="20" face="0" transport="20674" exp="144" str="8" bstr="5"/>
     </at>
     <at row="2" col="19">
       <unit id="20884" owner="0" flag="20" face="0" exp="44"/>
     </at>
     <at row="1" col="17">
-      <unit id="1514" owner="0" flag="20" face="0" exp="144"/>
+      <unit id="1514" owner="0" flag="20" face="0" exp="144" bstr="5"/>
     </at>
     <at row="2" col="18">
-      <unit id="1514" owner="0" flag="20" face="0" exp="144"/>
+      <unit id="1514" owner="0" flag="20" face="0" exp="144" bstr="5"/>
     </at>
     <at row="0" col="17">
-      <unit id="1514" owner="0" flag="20" face="0" exp="144"/>
+      <unit id="1514" owner="0" flag="20" face="0" exp="144" bstr="5"/>
     </at>
     <at row="32" col="21">
-      <unit id="31934" owner="0" flag="44" face="0" exp="44" str="11"/>
+      <unit id="31934" owner="0" flag="44" face="0" exp="44" str="11" bstr="5"/>
     </at>
     <at row="32" col="22">
-      <unit id="31934" owner="0" flag="44" face="0" exp="44" str="11"/>
+      <unit id="31934" owner="0" flag="44" face="0" exp="44" str="11" bstr="5"/>
     </at>
     <at row="32" col="23">
-      <unit id="31934" owner="0" flag="44" face="0" exp="44" str="11"/>
+      <unit id="31934" owner="0" flag="44" face="0" exp="44" str="11" bstr="5"/>
     </at>
     <at row="33" col="22">
-      <unit id="32006" owner="0" flag="44" face="0" exp="44" str="5"/>
+      <unit id="32006" owner="0" flag="44" face="0" exp="44" str="5" bstr="5"/>
     </at>
     <at row="33" col="21">
-      <unit id="31996" owner="0" flag="44" face="0" exp="44" str="8"/>
+      <unit id="31996" owner="0" flag="44" face="0" exp="44" str="8" bstr="5"/>
     </at>
     <at row="33" col="23">
-      <unit id="32283" owner="0" flag="44" face="0" transport="32209" exp="44" str="8"/>
+      <unit id="32283" owner="0" flag="44" face="0" transport="32209" exp="44" str="8" bstr="5"/>
     </at>
     <at row="30" col="22">
-      <unit id="32108" owner="0" flag="44" face="0" exp="44" str="8"/>
+      <unit id="32108" owner="0" flag="44" face="0" exp="44" str="8" bstr="5"/>
     </at>
   </reinforce>
   <reinforce turn="4">
     <at row="32" col="39">
-      <unit id="20511" owner="0" flag="20" face="0" exp="144" str="8"/>
+      <unit id="20511" owner="0" flag="20" face="0" exp="144" str="8" bstr="5"/>
     </at>
     <at row="32" col="40">
-      <unit id="20511" owner="0" flag="20" face="0" exp="144" str="8"/>
+      <unit id="20511" owner="0" flag="20" face="0" exp="144" str="8" bstr="5"/>
     </at>
     <at row="33" col="39">
-      <unit id="20392" owner="0" flag="20" face="0" transport="20646" exp="144" str="9"/>
+      <unit id="20392" owner="0" flag="20" face="0" transport="20646" exp="144" str="9" bstr="5"/>
     </at>
     <at row="32" col="42">
-      <unit id="20392" owner="0" flag="20" face="0" transport="20675" exp="144" str="9"/>
+      <unit id="20392" owner="0" flag="20" face="0" transport="20675" exp="144" str="9" bstr="5"/>
     </at>
     <at row="31" col="41">
-      <unit id="20392" owner="0" flag="20" face="0" transport="20675" exp="144" str="9"/>
+      <unit id="20392" owner="0" flag="20" face="0" transport="20675" exp="144" str="9" bstr="5"/>
     </at>
     <at row="27" col="41">
-      <unit id="20537" owner="0" flag="20" face="0" exp="44" str="8"/>
+      <unit id="20537" owner="0" flag="20" face="0" exp="44" str="8" bstr="5"/>
     </at>
     <at row="33" col="40">
-      <unit id="20682" owner="0" flag="20" face="0" transport="20638" exp="44" str="8"/>
+      <unit id="20682" owner="0" flag="20" face="0" transport="20638" exp="44" str="8" bstr="5"/>
     </at>
     <at row="32" col="41">
-      <unit id="20710" owner="0" flag="20" face="0" transport="20675" exp="44" str="8"/>
+      <unit id="20710" owner="0" flag="20" face="0" transport="20675" exp="44" str="8" bstr="5"/>
     </at>
     <at row="15" col="42">
-      <unit id="20803" owner="0" flag="20" face="0" exp="144"/>
+      <unit id="20803" owner="0" flag="20" face="0" exp="144" bstr="5"/>
     </at>
     <at row="15" col="41">
-      <unit id="20825" owner="0" flag="20" face="0" exp="144"/>
+      <unit id="20825" owner="0" flag="20" face="0" exp="144" bstr="5"/>
     </at>
   </reinforce>
   <reinforce turn="5">
     <at row="27" col="40">
-      <unit id="20511" owner="0" flag="20" face="0" exp="144" str="8"/>
+      <unit id="20511" owner="0" flag="20" face="0" exp="144" str="8" bstr="5"/>
     </at>
     <at row="26" col="41">
-      <unit id="20511" owner="0" flag="20" face="0" exp="144" str="8"/>
+      <unit id="20511" owner="0" flag="20" face="0" exp="144" str="8" bstr="5"/>
     </at>
     <at row="28" col="41">
-      <unit id="20392" owner="0" flag="20" face="0" transport="20646" exp="144" str="9"/>
+      <unit id="20392" owner="0" flag="20" face="0" transport="20646" exp="144" str="9" bstr="5"/>
     </at>
     <at row="28" col="40">
-      <unit id="20392" owner="0" flag="20" face="0" transport="20675" exp="144" str="9"/>
+      <unit id="20392" owner="0" flag="20" face="0" transport="20675" exp="144" str="9" bstr="5"/>
     </at>
     <at row="26" col="42">
-      <unit id="20392" owner="0" flag="20" face="0" transport="20675" exp="144" str="9"/>
+      <unit id="20392" owner="0" flag="20" face="0" transport="20675" exp="144" str="9" bstr="5"/>
     </at>
     <at row="27" col="41">
-      <unit id="20682" owner="0" flag="20" face="0" transport="20638" exp="44" str="8"/>
+      <unit id="20682" owner="0" flag="20" face="0" transport="20638" exp="44" str="8" bstr="5"/>
     </at>
     <at row="28" col="42">
-      <unit id="20710" owner="0" flag="20" face="0" transport="20675" exp="44" str="8"/>
+      <unit id="20710" owner="0" flag="20" face="0" transport="20675" exp="44" str="8" bstr="5"/>
     </at>
     <at row="0" col="33">
-      <unit id="20719" owner="0" flag="20" face="0" exp="44" str="9"/>
+      <unit id="20719" owner="0" flag="20" face="0" exp="44" str="9" bstr="5"/>
     </at>
     <at row="1" col="32">
-      <unit id="20575" owner="0" flag="20" face="0" exp="44" str="9"/>
+      <unit id="20575" owner="0" flag="20" face="0" exp="44" str="9" bstr="5"/>
     </at>
   </reinforce>
   <reinforce turn="6">
     <at row="32" col="40">
-      <unit id="20511" owner="0" flag="20" face="0" exp="144" str="8"/>
+      <unit id="20511" owner="0" flag="20" face="0" exp="144" str="8" bstr="5"/>
     </at>
     <at row="32" col="39">
-      <unit id="20511" owner="0" flag="20" face="0" exp="144" str="8"/>
+      <unit id="20511" owner="0" flag="20" face="0" exp="144" str="8" bstr="5"/>
     </at>
     <at row="32" col="42">
-      <unit id="20392" owner="0" flag="20" face="0" transport="20646" exp="144" str="9"/>
+      <unit id="20392" owner="0" flag="20" face="0" transport="20646" exp="144" str="9" bstr="5"/>
     </at>
     <at row="31" col="41">
-      <unit id="20392" owner="0" flag="20" face="0" transport="20675" exp="144" str="9"/>
+      <unit id="20392" owner="0" flag="20" face="0" transport="20675" exp="144" str="9" bstr="5"/>
     </at>
     <at row="33" col="39">
-      <unit id="20392" owner="0" flag="20" face="0" transport="20675" exp="144" str="9"/>
+      <unit id="20392" owner="0" flag="20" face="0" transport="20675" exp="144" str="9" bstr="5"/>
     </at>
     <at row="32" col="41">
-      <unit id="20710" owner="0" flag="20" face="0" transport="20675" exp="44" str="8"/>
+      <unit id="20710" owner="0" flag="20" face="0" transport="20675" exp="44" str="8" bstr="5"/>
     </at>
     <at row="33" col="40">
-      <unit id="20682" owner="0" flag="20" face="0" transport="20638" exp="44" str="8"/>
+      <unit id="20682" owner="0" flag="20" face="0" transport="20638" exp="44" str="8" bstr="5"/>
     </at>
     <at row="21" col="42">
       <unit id="20884" owner="0" flag="20" face="0" exp="44"/>
@@ -176,19 +176,19 @@
   </reinforce>
   <reinforce turn="7">
     <at row="27" col="42">
-      <unit id="20720" owner="0" flag="20" face="0" exp="144"/>
+      <unit id="20720" owner="0" flag="20" face="0" exp="144" bstr="5"/>
     </at>
     <at row="26" col="42">
-      <unit id="20368" owner="0" flag="20" face="0" transport="20646" exp="44" str="9"/>
+      <unit id="20368" owner="0" flag="20" face="0" transport="20646" exp="44" str="9" bstr="5"/>
     </at>
     <at row="26" col="41">
-      <unit id="20605" owner="0" flag="20" face="0" exp="144"/>
+      <unit id="20605" owner="0" flag="20" face="0" exp="144" bstr="5"/>
     </at>
     <at row="27" col="40">
-      <unit id="20601" owner="0" flag="20" face="0" exp="144"/>
+      <unit id="20601" owner="0" flag="20" face="0" exp="144" bstr="5"/>
     </at>
     <at row="33" col="28">
-      <unit id="11012" owner="1" flag="8" face="0" exp="44" attach="4"/>
+      <unit id="11012" owner="1" flag="8" face="0" exp="44" attach="4" bstr="5"/>
     </at>
   </reinforce>
   <hex row="0" col="5" terrain="1" name="Bacza Palanka"/>

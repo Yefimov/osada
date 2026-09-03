@@ -254,16 +254,31 @@ internal object ScenarioBriefingBuilder {
         facts: ScenarioFacts?,
     ) {
         view.ordersEyebrow.textContent = facts?.sidesLabel?.uppercase()?.takeIf { it.isNotBlank() }
-            ?: "OPERATIONAL SUMMARY"
+            ?: I18n.t("briefing.orders.eyebrow")
         clear(view.ordersContent)
-        addTextSection(view.ordersContent, "SITUATION", orders.situation)
-        addTextSection(view.ordersContent, "MISSION", orders.mission)
+        // Every heading on this sheet goes through I18n. Seven of them were English string
+        // literals while three were already translated, which nobody noticed until a fourth
+        // translated one (CAMPAIGN CONDITIONS) landed in the middle of the run of literals and a
+        // Russian player got SITUATION / MISSION / УСЛОВИЯ КАМПАНИИ / PRIMARY OBJECTIVES down the
+        // page. The section ORDER is unchanged.
+        addTextSection(view.ordersContent, I18n.t("briefing.orders.situation"), orders.situation)
+        addTextSection(view.ordersContent, I18n.t("briefing.orders.mission"), orders.mission)
         addExtendedObjectiveSection(view.ordersContent, facts?.extendedObjectives.orEmpty())
-        addListSection(view.ordersContent, "PRIMARY OBJECTIVES", orders.primaryObjectives, primary = true)
-        addListSection(view.ordersContent, "SECONDARY OBJECTIVES", orders.secondaryObjectives, primary = false)
-        addTextSection(view.ordersContent, "ENEMY INTELLIGENCE", orders.enemyIntelligence)
-        addTextSection(view.ordersContent, "AVAILABLE SUPPORT", orders.availableSupport)
-        addTextSection(view.ordersContent, "ADDITIONAL NOTES", orders.notes)
+        addListSection(
+            view.ordersContent,
+            I18n.t("briefing.orders.primary_objectives"),
+            orders.primaryObjectives,
+            primary = true,
+        )
+        addListSection(
+            view.ordersContent,
+            I18n.t("briefing.orders.secondary_objectives"),
+            orders.secondaryObjectives,
+            primary = false,
+        )
+        addTextSection(view.ordersContent, I18n.t("briefing.orders.enemy_intelligence"), orders.enemyIntelligence)
+        addTextSection(view.ordersContent, I18n.t("briefing.orders.available_support"), orders.availableSupport)
+        addTextSection(view.ordersContent, I18n.t("briefing.orders.notes"), orders.notes)
 
         // ORDERS is ALWAYS last and always present: it is the legacy scenario-start message's
         // text, single-sourced from scenario.getDescription() via ScenarioFacts — a visually
@@ -275,6 +290,9 @@ internal object ScenarioBriefingBuilder {
         child(section, "h2", "osada-briefing__order-heading").textContent = I18n.t("briefing.orders.title")
         child(section, "p", "osada-briefing__order-text").textContent =
             ordersText.ifBlank { "No further orders at this time." }
+
+        // Last, because it reads the sheet that the calls above have just produced.
+        balanceOrderSections(view.ordersContent)
     }
 
     fun showStage(

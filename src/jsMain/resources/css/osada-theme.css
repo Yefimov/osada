@@ -744,6 +744,28 @@ input[type=text], input[type=search] {
     user-select: text;
 }
 
+/* Same rule, same reason, for the two other places OSADA puts real prose on screen: the equipment
+ * detail bay's narrative + mechanics paragraphs, and the briefing's operational orders sheet.
+ * Both are read, quoted and pasted (into notes, into a bug report, into a translation); the global
+ * `user-select: none` in base.css exists to stop a drag on the MAP selecting HUD chrome, and a
+ * paragraph of text is not chrome. Selection here costs the map nothing — neither element is a
+ * drag surface. */
+.osada-eqd-desc,
+.osada-eqd-desc *,
+.osada-briefing__orders,
+.osada-briefing__orders * {
+    -webkit-user-select: text;
+    user-select: text;
+}
+
+/* Only the running prose gets the I-beam; the sheet's own frame, headings and buttons keep the
+ * cursor they had, so nothing that is not a paragraph starts advertising itself as editable. */
+.osada-eqd-desc,
+.osada-briefing__order-text,
+.osada-briefing__objective-text {
+    cursor: text;
+}
+
 /* --- collapsible campaign path (victory/defeat tree) --- */
 .osadaCollapse {
     flex: 0 0 auto;
@@ -2019,10 +2041,44 @@ input[type=text], input[type=search] {
     margin-bottom: 8px;
 }
 
+/* Section head inside the panel (VictoryDeadlineTooltip: which grading rule this scenario runs). */
+.osada-wtip__subtitle {
+    margin-top: 2px;
+    color: var(--osada-brass);
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(180, 138, 60, .25);
+    padding-bottom: 2px;
+}
+
+.osada-wtip__note {
+    margin: 5px 0 6px;
+    color: var(--osada-text-dim);
+    font-size: 11px;
+    line-height: 1.4;
+}
+
 .osada-wtip__line {
     padding-left: 14px;
     position: relative;
     margin-top: 3px;
+}
+
+/* A grade and its deadline are two facts, not one sentence: the name reads down the left edge and
+ * the turn number down the right, so three tiers can be compared at a glance instead of parsed. */
+.osada-wtip__line--split {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.osada-wtip__line--split .osada-wtip__line-value {
+    flex: 0 0 auto;
+    font-variant-numeric: tabular-nums;
+    opacity: .85;
 }
 
 .osada-wtip__line::before {
@@ -2295,6 +2351,47 @@ hr {
 }
 
 .osada-ico--close {
+    background-position: 100% 100%;
+}
+
+/* Main-menu-only sprite: eight semantic badges on a uniform 4x2 grid. Keep this separate from
+ * `.osada-ico`: hud_icons_grid.png is shared by the in-game HUD and other controls, while
+ * main_menu_icons_grid.png is deliberately scoped to the eight permanent start-menu entries. */
+.osada-menu-ico {
+    background-image: url('../resources/main_menu_icons_grid.png');
+    background-repeat: no-repeat;
+    background-size: 400% 200%;
+}
+
+.osada-menu-ico--campaign {
+    background-position: 0% 0%;
+}
+
+.osada-menu-ico--scenario {
+    background-position: 33.33% 0%;
+}
+
+.osada-menu-ico--multiplayer {
+    background-position: 66.66% 0%;
+}
+
+.osada-menu-ico--load {
+    background-position: 100% 0%;
+}
+
+.osada-menu-ico--settings {
+    background-position: 0% 100%;
+}
+
+.osada-menu-ico--tutorial {
+    background-position: 33.33% 100%;
+}
+
+.osada-menu-ico--hero {
+    background-position: 66.66% 100%;
+}
+
+.osada-menu-ico--manual {
     background-position: 100% 100%;
 }
 
@@ -2676,6 +2773,23 @@ hr {
 .osada-checkbox--locked {
     cursor: not-allowed;
     pointer-events: none;
+}
+
+/* A setting that IS switched on but is not in force yet, because the operation under way locked
+ * its rules at launch (`StalinRegimePendingNote`). Not the `--locked` treatment: the row is fully
+ * usable and the choice was accepted — only its arrival is deferred, so it gets a note rather than
+ * being dimmed out. */
+.osada-setting-pending:empty {
+    display: none;
+}
+
+.osada-setting-pending {
+    flex: 1 0 100%;
+    margin-top: 3px;
+    font-size: 11px;
+    line-height: 1.4;
+    color: var(--osada-brass);
+    white-space: normal;
 }
 
 /* ============================================================================
@@ -3109,10 +3223,23 @@ hr {
 
 /* "All stats ▸" expander: compact grid ABOVE the card (spec), reusing the existing granular
  * stat chips (#statsRowContainer/#statsRow) untouched in content — only repositioned. */
+/* The card's right-hand column: "All stats" on top, the action strip under it. */
+#uc-side {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    gap: 4px;
+    min-width: 0;
+    margin-left: auto;
+}
+
 #uc-expand {
     flex: 0 0 auto;
-    align-self: flex-start;
-    margin-top: 2px;
+    align-self: stretch;
+    text-align: center;
+    border: 1px solid transparent;
     font-size: 10px;
     font-weight: bold;
     letter-spacing: .04em;
@@ -3126,6 +3253,14 @@ hr {
 #uc-expand:hover {
     color: var(--osada-brass);
     background: rgba(217, 178, 90, .08);
+    border-color: rgba(217, 178, 90, .35);
+}
+
+/* While the sheet is open the expander is the thing holding it open, and it says so. */
+#unit-info.uc--expanded #uc-expand {
+    color: var(--osada-brass);
+    background: rgba(217, 178, 90, .12);
+    border-color: rgba(217, 178, 90, .5);
 }
 
 #statsRowContainer {
@@ -3146,6 +3281,44 @@ hr {
 
 #unit-info.uc--expanded #statsRowContainer {
     display: block;
+}
+
+/* Full ability reference inside the All Stats sheet (UnitStatCard.fillCapabilityList). The badge
+ * column is fixed so the sentences line up as a readable paragraph edge rather than stair-stepping
+ * behind chips of different widths. */
+.osada-uc-abilities {
+    clear: both;
+    margin: 7px 2px 2px;
+    padding: 6px 8px;
+    border: 1px solid rgba(221, 174, 68, .28);
+    background: rgba(0, 0, 0, .22);
+}
+
+.osada-uc-abilities__headline {
+    margin-bottom: 5px;
+    color: var(--osada-brass);
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.osada-uc-abilities__row {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: 7px;
+    align-items: baseline;
+    padding: 2px 0;
+}
+
+.osada-uc-abilities__row .osada-capability-mark {
+    justify-self: start;
+}
+
+.osada-uc-abilities__text {
+    color: var(--osada-text-dim);
+    font-size: 11px;
+    line-height: 1.35;
 }
 
 .osada-formation-detail {
@@ -4286,11 +4459,19 @@ hr {
 }
 
 /* The badge row is its own centred, wrapping line under the name — inside the name it shoved a
- * record like `41 Parashutisti` off centre as soon as it carried more than a badge or two. */
-.osada-eqd-marks {
+ * record like `41 Parashutisti` off centre as soon as it carried more than a badge or two.
+ *
+ * TWO classes, and the element carries both: `.osada-capability-marks` is declared LATER in this
+ * sheet and is `display: inline-flex; margin-left: 4px` — same specificity, so it won the
+ * `display` and the badge row shrank to fit its own content and sat wherever the inline flow put
+ * it. `justify-content: center` centres content INSIDE the box, and the box was no wider than the
+ * badges, so it did nothing at all. Hence the compound selector: it must out-specify the
+ * capability-marks base regardless of which is written first. */
+.osada-capability-marks.osada-eqd-marks {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
     gap: 3px;
     margin: 4px 0 0;
 }
@@ -4366,6 +4547,19 @@ hr {
     background: rgba(0, 0, 0, .18);
     border-left: 2px solid var(--osada-brass);
     border-radius: 3px;
+}
+
+/* One plate PER MECHANIC, printed after the narrative bay. Each is an independent rule the player
+ * has to be able to find again, so they are separate blocks rather than one run-on paragraph, and
+ * they drop the narrative bay's italic — a rule is not prose. Consecutive plates sit closer to
+ * each other than to the description above them, so they read as one group. */
+.osada-eqd-mechanics {
+    font-style: normal;
+    color: var(--osada-text);
+}
+
+.osada-eqd-mechanics + .osada-eqd-mechanics {
+    margin-top: 5px;
 }
 
 #eqDetailActions {
@@ -4754,6 +4948,13 @@ hr {
 .osada-obj__mark {
     font-size: 12px;
     color: var(--osada-brass);
+}
+
+/* The objective the player last clicked, and whose hex now carries the green ring on the map.
+ * Same green as `hexStyles["objectivefocus"]` so the row and the map read as one answer. */
+.osada-obj--focused {
+    border-color: rgba(120, 230, 150, .75);
+    background: rgba(80, 190, 110, .14);
 }
 
 .osada-obj--held .osada-obj__state {
@@ -5268,6 +5469,24 @@ hr {
 
 .osada-tb-date {
     color: var(--osada-text-dim);
+}
+
+/* The turn counter is the scenario clock, and hovering it opens the victory-deadline panel
+ * (VictoryDeadlineTooltip) that used to occupy two sections of the objectives rail. It has to
+ * LOOK askable, or the panel is a secret: help cursor, and a dotted underline that firms up on
+ * hover, the same affordance the weather field next to it carries. */
+.osada-tb-turn {
+    cursor: help;
+    padding: 1px 4px;
+    margin: -1px -4px;
+    border-radius: 3px;
+    border-bottom: 1px dotted rgba(180, 138, 60, .5);
+}
+
+.osada-tb-turn:hover {
+    color: var(--osada-brass);
+    background: rgba(217, 178, 90, .1);
+    border-bottom-color: var(--osada-brass);
 }
 
 .osada-tb-field--phase {
@@ -6581,13 +6800,23 @@ hr {
     box-sizing: border-box;
 }
 
-/* Extended ability badges (2026-08-23): one per ability the record carries, past the primary
-   ones. TWO tiers, one meaning — brass = the rules apply it, muted grey = the record carries it
-   but no rule reads it yet. There used to be a third, blue tier splitting "primary five" from
-   "other applied", which is an internal distinction with nothing in it for the player, and it
-   made the colour code unreadable (asked outright: *"what does it mean when some abilities are
-   blue and some gold?"*). `--ability` now inherits the brass base and only exists as a hook.
+/* Extended ability badges (2026-08-23, re-tiered 2026-09-02): one per ability the record carries,
+   past the primary ones.
+
+   The colour now separates PRIMARY from EXTENDED, which is the distinction a player actually has
+   to make. It used to separate "a rule applies it" from "decoded but inert" — an internal fact,
+   and an empty one since the last three abilities were wired: every badged ability is executed by
+   a rule, so the muted tier rendered for nothing and every extended badge came out brass. A dozen
+   brass chips beside five brass chips is not a hierarchy, and on the bottom-zone unit card it was
+   stretching the card sideways.
+
+   (There was a third, blue tier before that, splitting "primary five" from "other applied" —
+   removed for the same reason, after: *"what does it mean when some abilities are blue and some
+   gold?"*. `--ability-descriptive` is kept as an alias of this tier so the catalogue's own
+   two-tier vocabulary still resolves if it is ever re-populated.)
+
    `--ability-more` is the `+N` overflow chip; its tooltip lists what it folded away. */
+.osada-capability-mark--ability,
 .osada-capability-mark--ability-descriptive {
     border-color: rgba(120, 120, 120, 0.45);
     border-style: dashed;
@@ -6623,9 +6852,11 @@ hr {
     flex: 0 1 auto;
 }
 
+/* `margin-left: auto` used to live here, pushing the strip to the card's right edge; the strip is
+ * now inside #uc-side, which carries it instead — otherwise the two rows of the column would each
+ * float independently and stop lining up with each other. */
 #uc-actions {
     min-width: 0;
-    margin-left: auto;
     justify-content: flex-end;
 }
 
@@ -8141,6 +8372,29 @@ hr {
 
 .osada-obj-section:first-child {
     margin-top: 0;
+}
+
+/* A section heading that folds its own rows away (optional capture points, of which a scenario can
+ * author a hundred). The marker is on the heading, so the count stays readable when it is shut. */
+.osada-obj-section--fold {
+    cursor: pointer;
+    padding-left: 12px;
+    position: relative;
+}
+
+.osada-obj-section--fold:hover {
+    color: var(--osada-brass);
+}
+
+.osada-obj-section--fold::before {
+    content: "\25B8"; /* triangular bullet */
+    position: absolute;
+    left: 0;
+    transition: transform .12s ease-out;
+}
+
+.osada-obj-section--fold.osada-obj-section--open::before {
+    transform: rotate(90deg);
 }
 
 /* A hidden victory objective is only ever listed under Observer Mode; the dashed edge keeps it

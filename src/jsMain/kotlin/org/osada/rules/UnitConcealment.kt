@@ -5,6 +5,7 @@ import org.osada.LeaderType
 import org.osada.TerrainType
 import org.osada.model.GameUnit
 import org.osada.model.Leaders
+import org.osada.uiSettings
 
 /**
  * Whether a unit standing in a spotted hex is nevertheless not visible.
@@ -40,7 +41,18 @@ internal object UnitConcealment {
         unit: GameUnit,
         observerSide: Int,
     ): Boolean {
-        if (unit.player?.side == observerSide) return false
+        // The second half of the guard is Observer Mode's "Disable fog of war". It promises *all
+        // enemy formations shown* and kept that promise only for the hex counters: `Hex.isSpotted`
+        // returns true for every hex, but THIS layer sits on top of them and knew nothing about
+        // the setting at all. On an urban map with Extended LOS on -- `n_kiel` (Kieler
+        // Matrosenaufstand) is one, `extlos="1"` and the whole battle fought inside a city --
+        // every enemy in a CITY hex stayed concealed, so the grey veil lifted and no enemy
+        // appeared under it. Reported exactly that way.
+        //
+        // It belongs here rather than at the renderer: concealment is one answer read by the
+        // renderer AND by targeting (`model/HexQueries`), and a reveal that showed a formation the
+        // player still could not click would be a second bug wearing the first one's clothes.
+        if (unit.player?.side == observerSide || uiSettings.noFOW) return false
         return concealedByCommander(unit, observerSide) ||
             ExtendedLos.isConcealedByTerrain(unit, observerSide)
     }

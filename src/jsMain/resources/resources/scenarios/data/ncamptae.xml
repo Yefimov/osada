@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="ncamptae.xscn" name="Taejon" turns="8, 10, 13" date="July 16, 1950" dayturns="0" ground="0" atmosferic="0" latitude="3" iconset="3" weatherchg="0" rows="27" cols="36" eqp="eqp-lxf" image="resources/maps/images/map_78.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="0" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1" ehmsuonly="0" paradropocean="1" coresoffcap="0">
+<map file="ncamptae.xscn" name="Taejon" turns="8, 10, 13" date="July 16, 1950" dayturns="2" ground="0" atmosferic="0" latitude="3" iconset="3" weatherchg="0" rows="27" cols="36" eqp="eqp-lxf" image="resources/maps/images/map_78.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="0" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1" ehmsuonly="0" paradropocean="1" coresoffcap="0" daysperturn="0">
   <player id="0" country="25" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="10" support="26,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="26:0:67184296"/>
   <player id="1" country="9" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="5" support="10,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="10:2:2080"/>
   <reinforce turn="2">
     <at row="1" col="31">
-      <unit id="25969" owner="0" flag="26" face="0" exp="177" str="7"/>
+      <unit id="25969" owner="0" flag="26" face="0" exp="177" str="7" bstr="5"/>
     </at>
     <at row="1" col="29">
-      <unit id="25969" owner="0" flag="26" face="0" exp="134" str="7"/>
+      <unit id="25969" owner="0" flag="26" face="0" exp="134" str="7" bstr="4"/>
     </at>
     <at row="14" col="17">
-      <unit id="12725" owner="1" flag="10" face="0" exp="191" str="6"/>
+      <unit id="12725" owner="1" flag="10" face="0" exp="191" str="6" bstr="3"/>
     </at>
     <at row="24" col="35">
-      <unit id="13684" owner="1" flag="10" face="0" exp="123" str="5"/>
+      <unit id="13684" owner="1" flag="10" face="0" exp="123" str="5" bstr="3"/>
     </at>
   </reinforce>
   <reinforce turn="5">
     <at row="13" col="35">
-      <unit id="12725" owner="1" flag="10" face="0" exp="122" str="5"/>
+      <unit id="12725" owner="1" flag="10" face="0" exp="122" str="5" bstr="2"/>
     </at>
     <at row="14" col="35">
-      <unit id="12795" owner="1" flag="10" face="0" exp="32" str="7"/>
+      <unit id="12795" owner="1" flag="10" face="0" exp="32" str="7" bstr="5"/>
     </at>
   </reinforce>
   <hex row="0" col="1" terrain="9"/>

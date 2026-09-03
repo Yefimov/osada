@@ -8,6 +8,7 @@ import org.osada.model.getPlayers
 import org.osada.rules.GameRandomSource
 import org.osada.scenario.Campaign
 import org.osada.scenario.Scenario
+import org.osada.scenario.ScenarioTextLocalization
 import org.osada.ui.ScenarioMusic
 import org.osada.ui.UI
 import org.osada.ui.UIBuilder
@@ -120,12 +121,20 @@ class Game {
                 gameEnded = true
             }
         } else {
-            state?.save()
-            campaign?.let { state?.saveCampaign() }
             setCurrentSide()
             org.osada.ui.WeatherModel
                 .advance(scenario)
             deployArrivingReinforcements()
+            // AFTER the new turn is fully set up, not before it. The autosave used to be taken
+            // here first, which wrote a snapshot of a turn that had already been handed over --
+            // `map.turn` incremented -- but had not yet had its weather rolled or its
+            // reinforcements placed. Neither step is replayed on load (`WeatherModel.init` seeds
+            // `lastTurn` from the save's own turn, so `advance` refuses to fire for it, and
+            // reinforcements are only deployed from this method), so resuming that save skipped
+            // the turn's weather transition outright and left its arrivals waiting a further
+            // round. Saving last means the save is the state the player actually resumes into.
+            state?.save()
+            campaign?.let { state?.saveCampaign() }
             // Show the "Computer turn in progress" banner the moment the AI turn begins (was only
             // shown via the delayed end-turn-info path, so it never appeared while the AI was thinking).
             val nextType = scenario?.map?.currentPlayer?.type
@@ -169,6 +178,9 @@ class Game {
     fun setupGameState() {
         console.log("[OSADA] setupGameState")
         savedCampaignPlayer = null
+        // The restore path's copy of the scenario-text load: this completion never runs
+        // `onScenarioLoadFinished`, and a restored battle still fires events.
+        ScenarioTextLocalization.ensure(scenario?.file)
         setupPlayers()
         // Claims a campaign restore's parked reserve/roster now that `campaignPlayer` exists
         // (`GameScenarioLoading.applyPendingCoreUnitRestore`'s own doc comment). This completion
@@ -181,6 +193,12 @@ class Game {
         setCurrentSide()
         gameStarted = true
         gameEnded = false
+        // The restore path's copy of the same call [onScenarioLoadFinished] makes -- this completion
+        // never runs that one. It repairs a save written while the autosave was still taken BEFORE
+        // the new turn's arrivals were placed, and is a no-op for every save written since, because
+        // a wave that has landed is no longer in the pending map. `gameStarted` first: the deploy
+        // announces itself through the HUD.
+        deployArrivingReinforcements()
         campaign?.let { state?.saveCampaign() }
         state?.save()
         // setupGameState() is the disk/import restore path. A battle already in progress must
@@ -240,9 +258,23 @@ class Game {
         // OG's custom music track for this battle. `ScenarioMusic` plays the licensed files listed
         // by its manifest and stays silent for an absent source or unsupported format.
         ScenarioMusic.play(scenario?.musicTrack)
+        // The battle's own translated prose (`<event message>`, `<reinforce message>`). Started
+        // here so the bundle is in place long before the first event can fire -- the earliest
+        // evaluation happens after the UI's image cache completes, which is far slower than a
+        // small JSON fetch. An untranslated scenario asks for nothing.
+        ScenarioTextLocalization.ensure(scenario?.file)
         setupPlayers()
         humanSides = countHumanSides(scenario?.map?.getPlayers()?.toList() ?: emptyList())
         setCurrentSide()
+        // Turn 1's own wave. `deployArrivingReinforcements` used to be reachable only from
+        // [endTurn], so a `<reinforce turn="1">` -- 8 shipped scenarios author one, 10 formations
+        // between `ga4_2`, `ga4_7`, `ga4_9` and `rcampfa1` -- was not placed until the end of turn
+        // 1 handed the turn over, i.e. a full round after the author asked for it. Safe on a
+        // restore too, and deliberately not skipped there: `removeReinforcement` consumes each
+        // wave as it lands and the save carries only what is still pending, so this is a no-op for
+        // a save that already placed its arrivals and the repair for one written before the
+        // autosave was moved after this step.
+        deployArrivingReinforcements()
         waitUIAnimation = false
         gameStarted = true
         gameEnded = false

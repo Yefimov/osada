@@ -144,7 +144,16 @@ object ScenarioLoader {
         AuthoredScenarioOptions.parse(scenario, mapElement)
         scenario.iconset = mapElement.getAttribute("iconset")?.toIntOrNull() ?: 0
         scenario.lockedEffectiveIconset = scenario.effectiveIconset
-        scenario.turnsPerDay = (mapElement.getAttribute("dayturns")?.toIntOrNull() ?: 1) * 2
+        val calendarRate =
+            parseCalendarRate(
+                authoredTurnsPerDay = mapElement.getAttribute("dayturns"),
+                authoredDaysPerTurn = mapElement.getAttribute("daysperturn"),
+            )
+        scenario.calendarRoundsPerDateStep = calendarRate.completeRoundsPerDateStep
+        // ScenarioPlayerParser replaces this two-player-compatible provisional value as soon as it
+        // knows how many player activations make one complete round.
+        scenario.turnsPerDay = calendarRate.completeRoundsPerDateStep * 2
+        scenario.daysPerTurn = calendarRate.daysPerDateStep
         scenario.map.terrainImage = mapElement.getAttribute("image") ?: ""
     }
 

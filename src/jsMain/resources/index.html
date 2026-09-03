@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Osada</title>
+    <!-- Standard viewport: no maximum-scale, no DPR-derived scale, no per-device branch.
+         `viewport-fit=cover` is what makes env(safe-area-inset-*) report real values, which
+         every safe-area rule in mobile.css depends on. Canvas sharpness is a backing-store
+         concern and is deliberately kept out of the page viewport (see ViewportConfig.kt). -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+    <meta name="author" content="OSADA project"/>
+    <meta name="description" content="Turn Based World War 2 Strategy Game"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="mobile-web-app-capable" content="yes"/>
+    <link rel="icon" href="resources/ui/page/icon/icon.png" type="image/png"/>
+    <link rel="apple-touch-icon" href="resources/ui/page/icon/icon-57x57.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="resources/ui/page/icon/icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="resources/ui/page/icon/icon-114x114.png"/>
+    <link rel="apple-touch-icon" sizes="144x144" href="resources/ui/page/icon/icon-144x144.png"/>
+    <link rel="apple-touch-startup-image" href="resources/ui/splash/splash-android-1x.png">
+
+    <script src="resources/scenarios/scenariolist.js"></script>
+    <script src="resources/campaigns/campaignlist.js"></script>
+    <script src="resources/campaigns/wallpapers.js"></script>
+    <script src="resources/units/seasonal-unit-icons.js"></script>
+    <script src="osada.js"></script>
+    <link href="css/base.css" rel="stylesheet" type="text/css">
+    <link href="css/osada-theme.css" rel="stylesheet" type="text/css">
+    <!-- Loads last so it can override desktop geometry without an ! important arms race. -->
+    <link href="css/mobile.css" rel="stylesheet" type="text/css">
+</head>
+<body id="mainbody">
+<div id="ui-message" class="uiMessageBox"> <!-- Message popup -->
+    <div id="title" class="uiMessageBoxTitle">Osada</div>
+    <div id="message" class="uiMessageBoxBody">Turn-based strategy of great battles, based on the open-source OpenPanzer
+        engine.
+    </div>
+    <div class="smallButton uiMessageBoxButton" id="uiokbut">1</div>
+</div>
+<div id="uiToolTip" class="toolTip"> <!-- Tooltip popup that scrolls with UI surface-->
+    <div id="uiToolTipMessage"></div>
+</div>
+<div id="startmenu"> <!-- The main menu -->
+    <!-- The animated backgrounds -->
+    <ul class="animatedBackground" style="list-style: none;">
+        <li><span></span></li>
+        <li><span></span></li>
+        <li><span></span></li>
+        <li><span></span></li>
+        <li><span></span></li>
+        <li><span></span></li>
+    </ul>
+    <div id="smMain">
+        <div id="smLogo">
+            <div id="smLogoText"></div>
+            <div id="smMiscButs">
+                <a class="osada-linkbtn" id="smGithub" href="https://github.com/Yefimov/osada" target="_blank"
+                   title="Project author on GitHub">GitHub</a>
+                <a class="osada-linkbtn" id="smMarxists" href="https://www.marxists.org/index.htm" target="_blank"
+                   title="Marxists Internet Archive">Marxists.org</a>
+            </div>
+        </div>
+        <div id="smNewGame" class="mainPanelInner">
+            <div id="smNewGameContent" style="margin:0 auto; height: 90%;" class="flexcenterrow"></div>
+            <hr>
+        </div>
+        <div class="smBottomCenter">
+            <div id="smButtons" class="smCenter"></div>
+        </div>
+        <div id="smCredits"></div>
+    </div>
+    <div id="smCamp" class="mainPanel">
+        <div id="smCampSel" class="smSelect"></div>
+        <div id="smCampDesc" class="smDesc"></div>
+        <div id="smCampInfo">
+            <div id="smCampCountry" class="smCampDetails"></div>
+            <div class="smCampDetails">
+                <b id="smCampDifficultyLabel">Difficulty</b>
+                <span class="smallButton" id="smCampDifHelp">^</span><br>
+                <div id="smCampDif" class="smSelect" style="border: none"></div>
+            </div>
+            <div id="smCampScenarios" class="smCampDetails"></div>
+            <div id="smCampPrestige" class="smCampDetails"></div>
+        </div>
+        <div id="smCampButtons">
+            <div class="smallButton" id="smCPlayBut">1</div>
+            <div class="smallButton" id="smCBackBut">0</div>
+            <div class="smallButton" id="smCFlowBut">m</div>
+            <!-- Campaign debug buttons -->
+            <!--
+            <div style="float: left" id="smCVB">[Briliant Victory]</div>
+            <div style="float: left" id="smCV">[Normal Victory]</div>
+            <div style="float: left" id="smCVT">[Tactical Victory]</div>
+            <div style="float: left" id="smCL">[Lose]</div>
+            -->
+        </div>
+    </div>
+    <div id="smScen" class="mainPanel">
+        <div id="smScenSel" class="smSelect"></div>
+        <div id="smScenDesc" class="smDesc"></div>
+        <div id="smScenPlayers">
+            <div id="smSide0"></div>
+            <div id="smVS"></div>
+            <div id="smSide1"></div>
+        </div>
+        <div id="smScenButtons">
+            <div class="smallButton" id="smSPlayBut">1</div>
+            <div class="smallButton" id="smSBackBut">0</div>
+        </div>
+    </div>
+    <div id="smState" class="mainPanel">
+        <div class="smallButton" id="smStOkBut">1</div>
+    </div>
+</div>
+
+<div id="smSettings" class="mainPanel">
+    <div id="smSettingsContainer" style="overflow-y: scroll; height: 95%;"></div>
+    <div class="smallButton" id="smSetOkBut">1</div>
+</div>
+
+<div id="statusbar"> <!-- Status bar where messages/infos are shown -->
+    <div id="weathermsg"></div>
+    <div id="statusmsg" class="message"></div>
+    <div id="locmsg" class="message"></div>
+</div>
+
+<div id="statusbar-extension"></div> <!-- Extension below status bar for long duration actions -->
+<div id="combatLog"></div> <!-- Combat log window -->
+<div id="combatLogButton">l</div> <!-- The button that open/closes combatLog window -->
+<div id="statusBarButton">
+    <div class="smallButton smallButtonAlert">G</div>
+</div> <!-- The button that open/closes deploy window -->
+<div id="unitsBarButton">
+    <div class="smallButton smallButtonAlert">w</div>
+</div> <!-- The button that open/closes equipment/upgrade window -->
+
+<div id="menu"> <!-- Where the in game right menu is being built -->
+    <div id="slidemenu"></div>
+</div>
+
+<div id="osada-sidebar"> <!-- OSADA operational sidebar (Task 2): toggles / minimap / objectives / log -->
+    <div class="osada-sb-toggles">
+        <div id="hex" class="osada-sb-toggle" title="Toggle hex grid overlay (H)">Grid</div>
+        <div id="air" class="osada-sb-toggle"
+             title="Toggle air-unit mode — changes which units clicks select and move (P)">Air
+        </div>
+        <div class="osada-sb-toggles-spacer"></div>
+        <div id="osadaSideToggle" class="osada-sb-collapse" title="Collapse sidebar">&#8250;</div>
+    </div>
+    <div id="osadaSideBody">
+        <div id="osadaMinimapPanel" class="osada-sb-panel osada-sb-panel--minimap">
+            <div id="osadaMinimapTitle" class="osada-sb-panel__title">Minimap</div>
+            <div id="osadaMinimapFrame" class="osada-minimap-frame">
+                <div class="osada-side-empty">Minimap coming soon</div>
+            </div>
+        </div>
+        <div class="osada-sb-panel osada-sb-panel--objectives">
+            <div id="osadaObjectivesTitle" class="osada-sb-panel__title">Objectives</div>
+            <div id="osadaObjectives" class="osada-side-section"></div>
+        </div>
+        <div class="osada-sb-panel osada-sb-panel--log">
+            <div id="osadaLogTitle" class="osada-sb-panel__title">Log</div>
+            <div id="osadaLog" class="osada-side-section"></div>
+        </div>
+    </div>
+    <div id="osadaSideRail" class="osada-sb-rail">
+        <div id="osadaRailExpand" class="osada-sb-rail__expand" title="Expand sidebar">&#8249;</div>
+        <div id="osadaRailObjCounter" class="osada-sb-rail__counter" title="Objectives held / total">0/0</div>
+        <div id="osadaRailLogDot" class="osada-sb-rail__dot" title="New log events since collapse"></div>
+    </div>
+</div>
+
+<div id="unit-context"></div>
+<!-- Where the buttons for unit contextual actions appear (reparented into the bottom-zone player card by BottomZoneBuilder) -->
+
+<!-- OSADA Task 3: bottom zone (player card / forecast strip / enemy card). #unit-info
+     keeps its id and existing children (UnitInfoPanel fills them unchanged); it is
+     reparented here at build time so it sits in the card slot of this grid. -->
+<div id="osada-bottomzone">
+    <div id="unit-info">  <!-- Unit info dialog -->
+        <div class="nameRow" id="statsRowTop">
+            <span class="uSpacer"></span>
+            <span id="uSmallFlag" class="uSmallFlag"></span>
+            <span id="uName">Select unit to see stats</span>
+            <div class="statsRow">
+                <div class="hscroll-container" id="statsRowContainer">
+                    <div class="hscroll" id="statsRow">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div id="osadaForecast"></div>
+    <div id="osadaEnemyCard"></div>
+</div>
+
+<div id="container-unitlist"> <!-- Current player units -->
+    <div class="hscroll-container" id="hscroll-unitlist">
+        <div class="hscroll" id="unitlist"></div>
+    </div>
+</div>
+<div id="equipment"> <!-- Equipment Window -->
+    <div id="eqSortButtonsContainer">
+        <div class="smallButton" id="eqSortOrderBut">a</div>
+        <div class="smallButton" id="eqSortOptionsBut">f</div>
+    </div>
+    <div id="eqInfoText">Equipment upgrades and new units</div>
+    <div id="eqSelClass"></div>
+    <div id="eqHeaderSpacer"></div>
+    <div class="hscroll-container" id="hscroll-eqUnitList">
+        <div class="hscroll" id="eqUnitList"></div>
+    </div>
+    <div class="hscroll-container" id="hscroll-eqTransportList">
+        <div class="hscroll" id="eqTransportList"></div>
+    </div>
+    <div id="eqActionsContainer">
+        <div id="eqButtonsContainer">
+            <div id="currentPrestige"></div>
+            <div id="currentPrestigeAmount"></div>
+            <div class="smallButton" id="eqCloseBut">0</div>
+            <div class="smallButton" id="eqSelCountryButton">
+                <div id="eqSelCountry"></div>
+            </div>
+            <div class="smallButton" id="eqUpgradeBut">.</div>
+            <div class="eqCostText" style="color: white" id="eqUpgradeCost"></div>
+            <div class="eqCostText" id="eqUpgradeText"></div>
+            <div class="smallButton" id="eqNewBut">,</div>
+            <div class="eqCostText" style="color: white" id="eqNewCost"></div>
+            <div class="eqCostText" id="eqNewText"></div>
+            <div class="smallButton" id="eqSellBut">B</div>
+            <div class="eqCostText" style="color: white" id="eqSellCost"></div>
+            <div class="eqCostText" id="eqSellText"></div>
+        </div>
+        <div id="eqSortOptions">
+            <div id="eqSortInfo"></div>
+            <div id="eqSortOptionsContainer"></div>
+            <div class="smallButton" id="eqSortCloseBut">0</div>
+        </div>
+    </div>
+    <div id="eqUserSel"></div> <!-- keeps track of user selections -->
+</div>
+
+<div id="dossier" class="dossier"></div>
+
+<div id="game"> <!-- Where the canvases are added -->
+    <div id="gameToolTip" class="toolTip"> <!-- In Game Tooltip popup that scrolls with game surface-->
+        <div id="gameToolTipMessage"></div>
+        <div class="smallButton" id="gameToolTipOk">1</div>
+    </div>
+</div>
+<!-- reference custom fonts so they get loaded before the canvas rendering -->
+<span style="font-family: unitInfo; visibility: hidden">Preloading unitInfo font</span>
+<span style="font-family: coreUnitFont; visibility: hidden">Preloading coreUnitFont</span>
+<span style="font-family: osada-menu; visibility: hidden">Preloading Osada Menu Font</span>
+<span style="font-family: osada; visibility: hidden">Preloading Osada Terrain Font</span>
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by net.rubygrapefruit.platform.internal.NativeLibraryLoader in an unnamed module (file:/C:/dev/GradleHome/wrapper/dists/gradle-9.3.0-bin/79n14ral3mx1ozqr3csh2u872/gradle-9.3.0/lib/native-platform-0.22-milestone-29.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+asset osada.js 9.65 MiB [emitted] (name: main)
+runtime modules 27.9 KiB 12 modules
+cacheable modules 4.43 MiB
+  modules by path ../../node_modules/ 114 KiB
+    modules by path ../../node_modules/webpack-dev-server/client/ 90.2 KiB 8 modules
+    modules by path ../../node_modules/webpack/hot/*.js 5.17 KiB
+      ../../node_modules/webpack/hot/dev-server.js 1.94 KiB [built] [code generated]
+      ../../node_modules/webpack/hot/emitter.js 75 bytes [built] [code generated]
+      + 2 modules
+    ../../node_modules/events/events.js 14.5 KiB [built] [code generated]
+    ../../node_modules/ansi-html-community/index.js 4.16 KiB [built] [code generated]
+  modules with warnings 4.32 MiB [true warnings]
+    ./kotlin/osada.js 3.46 MiB [built] [code generated] [43 warnings]
+    ./kotlin/kotlin-kotlin-stdlib.js 877 KiB [built] [code generated] [201 warnings]
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':jsBrowserDevelopmentRun'.
+> asset osada.js 9.65 MiB [emitted] (name: main)
+  runtime modules 27.9 KiB 12 modules
+  cacheable modules 4.43 MiB
+    modules by path ../../node_modules/ 114 KiB
+      modules by path ../../node_modules/webpack-dev-server/client/ 90.2 KiB 8 modules
+      modules by path ../../node_modules/webpack/hot/*.js 5.17 KiB
+        ../../node_modules/webpack/hot/dev-server.js 1.94 KiB [built] [code generated]
+        ../../node_modules/webpack/hot/emitter.js 75 bytes [built] [code generated]
+        + 2 modules
+      ../../node_modules/events/events.js 14.5 KiB [built] [code generated]
+      ../../node_modules/ansi-html-community/index.js 4.16 KiB [built] [code generated]
+    modules with warnings 4.32 MiB [true warnings]
+      ./kotlin/osada.js 3.46 MiB [built] [code generated] [43 warnings]
+      ./kotlin/kotlin-kotlin-stdlib.js 877 KiB [built] [code generated] [201 warnings]
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 1m 51s

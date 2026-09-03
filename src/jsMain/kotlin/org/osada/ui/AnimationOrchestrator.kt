@@ -474,8 +474,26 @@ private fun reportTrigger(
 ) {
     if (!result.firedTrigger) return
     if (result.isCapture && result.triggerMessage == null && result.triggerPrestige > 0) return
-    val text = result.triggerMessage ?: I18n.t("trigger.fired", mapOf("unit" to unit.unitData(true).name))
-    val reward = if (result.triggerPrestige > 0) " (+${result.triggerPrestige} prestige)" else ""
+    // The reward is stated, not hinted at. Reported of the old wording -- *"Discovery! Frigate
+    // found something here (+40 prestige)"* -- that it reads like a treasure chest in a war game;
+    // the generic line now names the gain itself, and the prestige suffix is localized rather than
+    // an English literal appended to a translated sentence.
+    val name = unit.unitData(true).name
+    val prestige = result.triggerPrestige
+    val text =
+        when {
+            result.triggerMessage != null -> result.triggerMessage!!
+            prestige > 0 -> I18n.t("trigger.fired.prestige", mapOf("unit" to name, "amount" to prestige))
+            else -> I18n.t("trigger.fired", mapOf("unit" to name))
+        }
+    // Only appended to an AUTHORED message: the generic prestige line above already says the number,
+    // and repeating it would print the amount twice.
+    val reward =
+        if (prestige > 0 && result.triggerMessage != null) {
+            I18n.t("trigger.reward.prestige", mapOf("amount" to prestige))
+        } else {
+            ""
+        }
     ui.showAlert(pos.row, pos.col, I18n.t("trigger.alert"), true)
     HudLog.addAt(pos.row, pos.col, "$text$reward")
     ui.showUnitInfo(unit)

@@ -1,0 +1,30 @@
+> Task :kmpPartiallyResolvedDependenciesChecker
+> Task :checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :compileKotlinJs UP-TO-DATE
+> Task :jsProcessResources
+> Task :jsMainClasses
+> Task :compileDevelopmentExecutableKotlinJs UP-TO-DATE
+> Task :jsDevelopmentExecutableCompileSync UP-TO-DATE
+> Task :kotlinKotlinNpmCachesSetup
+> Task :kotlinNodeJsSetup UP-TO-DATE
+> Task :kotlinRestoreYarnLock UP-TO-DATE
+> Task :kotlinYarnSetup UP-TO-DATE
+> Task :jsPackageJson UP-TO-DATE
+> Task :jsTestPackageJson UP-TO-DATE
+> Task :jsPublicPackageJson UP-TO-DATE
+> Task :jsTestPublicPackageJson UP-TO-DATE
+> Task :kotlinPackageJsonUmbrella UP-TO-DATE
+> Task :rootPackageJson UP-TO-DATE
+> Task :kotlinNpmInstall UP-TO-DATE
+> Task :kotlinStoreYarnLock UP-TO-DATE
+
+> Task :jsBrowserDevelopmentRun
+<i> [webpack-dev-server] Project is running at:
+<i> [webpack-dev-server] Loopback: http://localhost:8080/, http://[::1]:8080/
+<i> [webpack-dev-server] On Your Network (IPv4): http://172.18.0.1:8080/
+<i> [webpack-dev-server] Content not from webpack is served from 'C:\dev\osada\build\js\packages\osada\kotlin, C:\dev\osada\build\processedResources\js\main, C:\dev\osada' directory
+<i> [webpack-dev-middleware] wait until bundle finished: /
+webpack 5.101.3 compiled successfully in 1197 ms
+
+> Task :jsBrowserDevelopmentRun FAILED
+17 actionable tasks: 4 executed, 13 up-to-date

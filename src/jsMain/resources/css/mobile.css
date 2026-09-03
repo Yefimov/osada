@@ -331,6 +331,14 @@ body.osada-layout-phone #uc-portrait {
     height: 48px;
 }
 
+/* Desktop stacks "All stats" above the action strip inside #uc-side. On a phone that column is
+ * wrong in both orientations -- landscape wants the two side by side in the #uc-inner flex row,
+ * portrait places each in its own named grid area -- so the wrapper is dissolved and its children
+ * go on being direct children of #uc-inner, exactly as they were before it existed. */
+body.osada-layout-phone #uc-side {
+    display: contents;
+}
+
 /* Action chips scroll horizontally with a partial next chip visible, so the
  * strip reads as scrollable without a scrollbar (spec §16.3). */
 body.osada-layout-phone #uc-actions {

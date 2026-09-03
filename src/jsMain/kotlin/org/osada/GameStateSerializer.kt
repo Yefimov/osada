@@ -86,9 +86,15 @@ object GameStateSerializer {
             Pair("date", scenario.date.getTime()),
             Pair("dayTurn", scenario.dayTurn),
             Pair("turnsPerDay", scenario.turnsPerDay),
+            Pair("daysPerTurn", scenario.daysPerTurn),
             Pair("atmosferic", scenario.atmosferic),
             Pair("latitude", scenario.latitude),
             Pair("ground", scenario.ground),
+            // The running weather SPELL, not just the sky it produced (`ui/WeatherModel.Snapshot`).
+            // Absent for a battle whose weather model never started, and absent from every save
+            // written before this key existed -- both restore as "roll a fresh spell", which is
+            // what those saves did anyway.
+            Pair("weather", serializeWeather()),
             Pair("iconset", scenario.iconset),
             Pair("effectiveIconset", scenario.effectiveIconset),
             Pair("eqp", scenario.eqp),
@@ -117,7 +123,10 @@ object GameStateSerializer {
             Pair("currentPlayerId", scenario.map.currentPlayer?.id ?: 0),
             Pair("turn", scenario.map.turn),
             Pair("map", serializeMap(scenario.map)),
-            Pair("reinforcements", serializeReinforcements(scenario.reinforcements)),
+            Pair(
+                "reinforcements",
+                serializeReinforcements(scenario.reinforcements, scenario.reinforcementMessages),
+            ),
             // Authored scenario events, definitions AND progress — see GameStateEventSerialization.
             Pair("events", serializeScenarioEvents(scenario.events)),
         )
@@ -240,12 +249,26 @@ object GameStateSerializer {
             Pair("fuel", transport.fuel),
         )
 
-    fun serializeReinforcements(reinforcements: Map<Int, List<Scenario.Reinforcement>>): dynamic {
+    /**
+     * The waves, and the author's announcement for each one.
+     *
+     * The message travels with its wave because a restore rebuilds the battle from the save alone
+     * and never re-reads the scenario XML: without it, the box `<reinforce message="...">` promises
+     * stops appearing for the rest of the battle the moment the player reloads. Optional key on
+     * this file's byte-stability rule -- one deployed scenario authors one, so every other save
+     * keeps exactly the shape it had.
+     */
+    fun serializeReinforcements(
+        reinforcements: Map<Int, List<Scenario.Reinforcement>>,
+        messages: Map<Int, String> = emptyMap(),
+    ): dynamic {
         val arr = js("[]")
         reinforcements.forEach { (turn, list) ->
             val turnArr = js("[]")
             list.forEach { turnArr.push(serializeReinforcement(it)) }
-            arr.push(json(Pair("turn", turn), Pair("units", turnArr)))
+            val wave = json(Pair("turn", turn), Pair("units", turnArr))
+            messages[turn]?.let { wave["message"] = it }
+            arr.push(wave)
         }
         return arr
     }
@@ -400,6 +423,7 @@ private fun serializeHexEngineering(
     // during play -- but the save restores the map from JSON rather than re-reading the scenario
     // XML, so dropping it here would turn every authored dirt field into a permanent one on load.
     if (hex.dirt) obj.asDynamic().dirt = 1
+    serializeHexExits(obj, hex)
     // A trigger is authored map data whose FIRED half is live game state, so both travel. The
     // action, parameter, equipment and message are restored so a save does not disarm the hex;
     // `triggerFired` is restored so a reload does not re-arm one the player already spent.
@@ -410,6 +434,25 @@ private fun serializeHexEngineering(
         if (hex.triggerMessage.isNotEmpty()) obj.asDynamic().triggerMessage = hex.triggerMessage
         if (hex.triggerFired) obj.asDynamic().triggerFired = 1
     }
+}
+
+/**
+ * The two escape-hex flags: authored map data on exactly the same footing as the `dirt` strip and
+ * the station beside it, and the one kind the engineering block forgot.
+ *
+ * `rules/ExtendedVictory.canWithdrawThrough` is the only reader and nothing in play can set them,
+ * so a save that dropped them reloaded with every exit gone -- and the scenario's own "retreat N
+ * units" objective permanently unwinnable, because the quota survives and nothing can satisfy it.
+ * 50 of the 502 deployed scenarios author one (94 ground exits, 7 air). Optional keys on this
+ * file's byte-stability rule; split out of [serializeHexEngineering] to keep it inside detekt's
+ * complexity budget.
+ */
+private fun serializeHexExits(
+    obj: Json,
+    hex: Hex,
+) {
+    if (hex.escapeGround) obj.asDynamic().escapeGround = 1
+    if (hex.escapeAir) obj.asDynamic().escapeAir = 1
 }
 
 /**
@@ -500,3 +543,22 @@ private fun serializeScenarioUnitProperties(
         obj.asDynamic().hangar = unit.hangar.map { GameStateSerializer.serializeUnit(it) }.toTypedArray()
     }
 }
+
+/**
+ * [org.osada.ui.WeatherModel.Snapshot] as a plain object, or `null` when the model is idle.
+ *
+ * Top-level rather than a [GameStateSerializer] member only to keep that object inside detekt's
+ * function budget; nothing else calls it.
+ */
+private fun serializeWeather(): dynamic =
+    org.osada.ui.WeatherModel
+        .snapshot()
+        ?.let {
+            json(
+                Pair("clearPhase", it.clearPhase),
+                Pair("counter", it.counter),
+                Pair("rainRun", it.rainRun),
+                Pair("snowRun", it.snowRun),
+                Pair("dryRun", it.dryRun),
+            )
+        }

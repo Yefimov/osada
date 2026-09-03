@@ -556,6 +556,13 @@ class UiSettings {
     // Continuous background loops (weather ambience) get their own level, separate from the
     // discrete unit/fire cues — replaces the old hardcoded soundVolume*0.8 coupling.
     var ambientVolume: Double = 0.4
+
+    // The scenario's own music track ([org.osada.ui.ScenarioMusic]) is a THIRD level, not a second
+    // user of the ambient one. It used to share `ambientVolume`, so turning the rain down turned
+    // the score down with it and there was no way to keep one without the other — two continuous
+    // loops that happen to both be continuous are not the same thing to a player. Default lower
+    // than the ambience: a score runs under the battle, the weather is part of it.
+    var musicVolume: Double = 0.3
     var deployMode: Boolean = false
 
     /** Whether the selected formation is choosing a hex to shell (OG 9.2, `rules/Barrage`).

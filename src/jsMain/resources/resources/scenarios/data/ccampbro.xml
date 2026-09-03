@@ -1,53 +1,53 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="ccampbro.xscn" name="Battle of Brody" turns="9, 12, 16" date="July 29, 1920" dayturns="0" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="28" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_458.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1" ehmsuonly="0" paradropocean="1" coresoffcap="0">
+<map file="ccampbro.xscn" name="Battle of Brody" turns="9, 12, 16" date="July 29, 1920" dayturns="2" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="1" rows="28" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_458.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1" ehmsuonly="0" paradropocean="1" coresoffcap="0" daysperturn="0">
   <player id="0" country="103" side="0" airtrans="0" navaltrans="0" railtrans="3" defaultxp="0" defaultstr="0" support="0,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="20:0:5"/>
   <player id="1" country="20" side="1" airtrans="0" navaltrans="0" railtrans="3" defaultxp="0" defaultstr="0" support="21,192,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="16:0:22"/>
   <reinforce turn="2">
     <at row="23" col="1">
-      <unit id="22329" owner="1" flag="21" face="0" exp="154" str="4" ldr="1" ammo="4"/>
+      <unit id="22329" owner="1" flag="21" face="0" exp="154" str="4" ldr="1" ammo="4" bstr="2"/>
     </at>
     <at row="1" col="17">
-      <unit id="21342" owner="1" flag="21" face="0" exp="98" str="6"/>
+      <unit id="21342" owner="1" flag="21" face="0" exp="98" str="6" bstr="2"/>
     </at>
   </reinforce>
   <reinforce turn="3">
     <at row="7" col="25">
-      <unit id="21134" owner="1" flag="21" face="0" exp="198" str="8"/>
+      <unit id="21134" owner="1" flag="21" face="0" exp="198" str="8" bstr="5"/>
     </at>
     <at row="8" col="24">
-      <unit id="21134" owner="1" flag="21" face="0" exp="198" str="7"/>
+      <unit id="21134" owner="1" flag="21" face="0" exp="198" str="7" bstr="5"/>
     </at>
     <at row="3" col="26">
-      <unit id="21134" owner="1" flag="21" face="0" exp="199" str="5"/>
+      <unit id="21134" owner="1" flag="21" face="0" exp="199" str="5" bstr="3"/>
     </at>
     <at row="4" col="23">
-      <unit id="46753" owner="1" flag="192" face="0" exp="198" str="7"/>
+      <unit id="46753" owner="1" flag="192" face="0" exp="198" str="7" bstr="2"/>
     </at>
     <at row="6" col="23">
-      <unit id="46753" owner="1" flag="192" face="0" exp="198" str="7" ldr="1"/>
+      <unit id="46753" owner="1" flag="192" face="0" exp="198" str="7" ldr="1" bstr="3"/>
     </at>
     <at row="6" col="22">
-      <unit id="46753" owner="1" flag="192" face="0" exp="199" str="7"/>
+      <unit id="46753" owner="1" flag="192" face="0" exp="199" str="7" bstr="2"/>
     </at>
     <at row="7" col="22">
-      <unit id="46754" owner="1" flag="192" face="0" exp="101" str="7"/>
+      <unit id="46754" owner="1" flag="192" face="0" exp="101" str="7" bstr="5"/>
     </at>
     <at row="4" col="31">
-      <unit id="21545" owner="1" flag="21" face="0" exp="101" str="8"/>
+      <unit id="21545" owner="1" flag="21" face="0" exp="101" str="8" bstr="5"/>
     </at>
   </reinforce>
   <reinforce turn="4">
     <at row="6" col="30">
-      <unit id="21134" owner="1" flag="21" face="0" exp="98" str="9"/>
+      <unit id="21134" owner="1" flag="21" face="0" exp="98" str="9" bstr="5"/>
     </at>
     <at row="7" col="30">
-      <unit id="21025" owner="1" flag="21" face="0" exp="198" str="7"/>
+      <unit id="21025" owner="1" flag="21" face="0" exp="198" str="7" bstr="4"/>
     </at>
     <at row="7" col="29">
-      <unit id="21025" owner="1" flag="21" face="0" exp="199" str="8"/>
+      <unit id="21025" owner="1" flag="21" face="0" exp="199" str="8" bstr="3"/>
     </at>
     <at row="6" col="29">
-      <unit id="22053" owner="1" flag="21" face="0" transport="21891" exp="98" str="7"/>
+      <unit id="22053" owner="1" flag="21" face="0" transport="21891" exp="98" str="7" bstr="5"/>
     </at>
   </reinforce>
   <hex row="0" col="1" terrain="10"/>

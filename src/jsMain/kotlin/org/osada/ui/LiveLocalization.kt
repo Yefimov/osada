@@ -48,11 +48,18 @@ internal object LiveLocalization {
         }
 
         byId("smLogoText")?.textContent = I18n.t("menu.main.tagline")
-        byId("heroDesk")?.apply {
-            title = I18n.t("menu.main.hero_desk.help")
-            setAttribute("aria-label", I18n.t("menu.main.hero_desk.label"))
-            querySelector(".osada-menu-btn__label")?.textContent = I18n.t("menu.main.hero_desk.label")
-            querySelector(".osada-menu-btn__sub")?.textContent = I18n.t("menu.main.hero_desk.subtitle")
+        // The two entries [StartMenuMainButtons] wires DIRECTLY instead of through the
+        // `startMenuButton` action router. They are not in `buttonKeys` above and each needs its
+        // `aria-label` rewritten as well, because that is what `asButton` set from the label.
+        // Omitting `manual` here is what left the Field Manual plate reading "Руководство" for a
+        // player who switched to English after the menu was built.
+        listOf("heroDesk" to "menu.main.hero_desk", "manual" to "menu.main.manual").forEach { (id, prefix) ->
+            byId(id)?.apply {
+                title = I18n.t("$prefix.help")
+                setAttribute("aria-label", I18n.t("$prefix.label"))
+                querySelector(".osada-menu-btn__label")?.textContent = I18n.t("$prefix.label")
+                querySelector(".osada-menu-btn__sub")?.textContent = I18n.t("$prefix.subtitle")
+            }
         }
         StartMenuBuilder.refreshRandomQuote()
     }
@@ -102,6 +109,7 @@ internal object LiveLocalization {
         // Re-written after the rows above: while a multiplayer match is running the Observer Mode
         // rows carry the lock explanation, not their own help text.
         ObserverModeLock.refresh()
+        StalinRegimePendingNote.refresh()
         byId("smSetOkBut")?.apply {
             title = I18n.t("settings.done.help")
             setAttribute("data-label", I18n.t("common.done.label"))

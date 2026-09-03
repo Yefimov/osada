@@ -22,7 +22,10 @@ internal fun EquipmentWindowBuilder.renderEquipmentDetail(eq: EquipmentData?) {
     buildEqDetailHeader(body, eq)
     buildEqDetailStats(body, eq)
     buildEqDetailDescription(body, eq)
-    equipmentMechanicsNote(eq)?.let { note ->
+    // One block per mechanic, after the narrative description (which `buildEqDetailDescription`
+    // has already emitted, when the unit has one). Previously every mechanic was concatenated into
+    // a single paragraph, so a unit with several abilities presented them as one unbroken wall.
+    equipmentMechanicsNotes(eq).forEach { note ->
         val mechanics = addTag(body, "div")
         mechanics.className = "osada-eqd-desc osada-eqd-mechanics"
         mechanics.textContent = note

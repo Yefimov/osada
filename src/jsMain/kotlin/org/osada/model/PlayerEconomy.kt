@@ -12,11 +12,26 @@ import org.osada.rules.ScenarioPurchaseList
 import org.osada.rules.calculateUnitCosts
 import org.osada.rules.calculateUnitSellCost
 import org.osada.rules.calculateUpgradeCosts
+import org.osada.rules.ruleset.ActiveRuleset
+import org.osada.rules.ruleset.RuleKey
 import org.osada.scenario.getSideUnitsAvgExp
 import org.osada.scoreGains
 import org.osada.uiSettings
 
-internal fun Player.usesStalinRegime(): Boolean = uiSettings.stalinRegime && type == PlayerType.HUMAN_LOCAL
+/**
+ * THE gate for Stalin Regime, for every consumer -- unit stats, purchases, spawns and prestige
+ * income alike.
+ *
+ * It has to read through [ActiveRuleset] like [org.osada.synchronizeStalinRegimeUnits] already did,
+ * and not the raw checkbox. When a battle locks its ruleset (`RulesetResolver.ownedRule` seeds this
+ * rule from the checkbox at launch and freezes it for the operation), the two used to disagree: the
+ * units already on the map followed the locked ruleset while everything that went through here --
+ * a purchased unit, an event spawn, a reinforcement, and every prestige award -- followed the live
+ * checkbox. Turning the mode on mid-battle then produced exactly the reported symptom: the standing
+ * formations were untouched, and units arriving afterwards came in at x10.
+ */
+internal fun Player.usesStalinRegime(): Boolean =
+    ActiveRuleset.flag(RuleKey.STALIN_REGIME, uiSettings.stalinRegime) && type == PlayerType.HUMAN_LOCAL
 
 /**
  * Adds prestige and returns the amount actually applied. Only positive income is multiplied;

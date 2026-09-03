@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="mao5_2.xscn" name="100 Regiments Offensive" turns="13, 15, 19" date="November 1, 1940" dayturns="0" ground="0" atmosferic="0" latitude="1" iconset="0" weatherchg="0" rows="33" cols="32" eqp="eqp-olgww2" image="resources/maps/images/map_912.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="1" airzoc="1" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="0" subsneedlof="1" basicstrength="0" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1" ehmsuonly="0" paradropocean="1" coresoffcap="0" music="china1.MUS">
+<map file="mao5_2.xscn" name="100 Regiments Offensive" turns="13, 15, 19" date="November 1, 1940" dayturns="3" ground="0" atmosferic="0" latitude="1" iconset="0" weatherchg="0" rows="33" cols="32" eqp="eqp-olgww2" image="resources/maps/images/map_912.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="1" airzoc="1" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="0" subsneedlof="1" basicstrength="0" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1" ehmsuonly="0" paradropocean="1" coresoffcap="0" music="china1.MUS" daysperturn="0">
   <player id="0" country="21" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="22,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <player id="1" country="5" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="6,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="4">
     <at row="6" col="7">
-      <unit id="4095" owner="1" flag="6" face="0" exp="199" str="8" ldr="1"/>
+      <unit id="4095" owner="1" flag="6" face="0" exp="199" str="8" ldr="1" bstr="8"/>
     </at>
     <at row="6" col="6">
-      <unit id="3958" owner="1" flag="6" face="0" transport="4544" exp="214" str="7"/>
+      <unit id="3958" owner="1" flag="6" face="0" transport="4544" exp="214" str="7" bstr="7"/>
     </at>
     <at row="7" col="8">
-      <unit id="4341" owner="1" flag="6" face="0" exp="200" str="6"/>
+      <unit id="4341" owner="1" flag="6" face="0" exp="200" str="6" bstr="6"/>
     </at>
     <at row="25" col="2">
-      <unit id="4922" owner="1" flag="6" face="0" exp="90" str="4"/>
+      <unit id="4922" owner="1" flag="6" face="0" exp="90" str="4" bstr="4"/>
     </at>
     <at row="25" col="3">
-      <unit id="5079" owner="1" flag="6" face="0" exp="90" str="4"/>
+      <unit id="5079" owner="1" flag="6" face="0" exp="90" str="4" bstr="4"/>
     </at>
   </reinforce>
   <reinforce turn="7">
     <at row="11" col="8">
-      <unit id="3958" owner="1" flag="6" face="0" exp="200" str="7"/>
+      <unit id="3958" owner="1" flag="6" face="0" exp="200" str="7" bstr="7"/>
     </at>
     <at row="11" col="7">
-      <unit id="3958" owner="1" flag="6" face="0" transport="4544" exp="124" str="8"/>
+      <unit id="3958" owner="1" flag="6" face="0" transport="4544" exp="124" str="8" bstr="8"/>
     </at>
     <at row="11" col="6">
-      <unit id="4754" owner="1" flag="6" face="0" transport="4544" exp="100" str="9" ldr="1"/>
+      <unit id="4754" owner="1" flag="6" face="0" transport="4544" exp="100" str="9" ldr="1" bstr="9"/>
     </at>
     <at row="10" col="5">
-      <unit id="4248" owner="1" flag="6" face="0" exp="255" str="8"/>
+      <unit id="4248" owner="1" flag="6" face="0" exp="255" str="8" bstr="8"/>
     </at>
     <at row="11" col="5">
-      <unit id="4414" owner="1" flag="6" face="0" transport="4544" exp="167" str="7"/>
+      <unit id="4414" owner="1" flag="6" face="0" transport="4544" exp="167" str="7" bstr="7"/>
     </at>
   </reinforce>
   <hex row="0" col="2" terrain="6"/>
@@ -200,7 +200,7 @@
   <hex row="6" col="14" terrain="3"/>
   <hex row="6" col="15" terrain="3"/>
   <hex row="6" col="17">
-    <unit id="22611" owner="0" flag="22" face="0" str="9"/>
+    <unit id="22611" owner="0" flag="22" face="0" str="9" bstr="9"/>
   </hex>
   <hex row="6" col="25" road="34"/>
   <hex row="6" col="26" road="33"/>
@@ -211,11 +211,11 @@
   <hex row="7" col="5" terrain="3"/>
   <hex row="7" col="7" terrain="3"/>
   <hex row="7" col="12" terrain="3">
-    <unit id="22615" owner="0" flag="22" face="0" str="8"/>
+    <unit id="22615" owner="0" flag="22" face="0" str="8" bstr="8"/>
   </hex>
   <hex row="7" col="14" terrain="3"/>
   <hex row="7" col="22" deploy="0">
-    <unit id="22611" owner="0" flag="22" face="0" str="6"/>
+    <unit id="22611" owner="0" flag="22" face="0" str="6" bstr="6"/>
   </hex>
   <hex row="7" col="23" road="42" deploy="0">
     <unit id="22611" owner="0" flag="22" face="0" str="7" bstr="7"/>
@@ -237,10 +237,10 @@
   <hex row="8" col="19" road="40"/>
   <hex row="8" col="21" terrain="1" road="34" name="Zhenggao" owner="1" flag="5"/>
   <hex row="8" col="22" road="34" deploy="0">
-    <unit id="22583" owner="0" flag="22" face="0" str="6"/>
+    <unit id="22583" owner="0" flag="22" face="0" str="6" bstr="6"/>
   </hex>
   <hex row="8" col="23" deploy="0">
-    <unit id="48001" owner="0" flag="22" face="0" transport="47967" str="6"/>
+    <unit id="48001" owner="0" flag="22" face="0" transport="47967" str="6" bstr="6"/>
   </hex>
   <hex row="8" col="24" road="136"/>
   <hex row="8" col="25" road="136"/>
@@ -281,7 +281,7 @@
     <unit id="4003" owner="1" flag="6" face="0" transport="4610" str="5" bstr="5"/>
   </hex>
   <hex row="10" col="17" terrain="1" road="130" name="Datong" owner="0" flag="21" victory="0" deploy="0">
-    <unit id="22611" owner="0" flag="22" face="0" str="5"/>
+    <unit id="22611" owner="0" flag="22" face="0" str="5" bstr="5"/>
   </hex>
   <hex row="10" col="18" road="33" deploy="0">
     <unit id="48001" owner="0" flag="22" face="0" transport="47967" str="4" bstr="4"/>
@@ -289,7 +289,7 @@
   <hex row="10" col="21" terrain="4"/>
   <hex row="10" col="22" terrain="4"/>
   <hex row="10" col="23" terrain="4">
-    <unit id="22611" owner="0" flag="22" face="0" str="9"/>
+    <unit id="22611" owner="0" flag="22" face="0" str="9" bstr="9"/>
   </hex>
   <hex row="10" col="28" road="130"/>
   <hex row="10" col="30" road="130"/>
@@ -314,7 +314,7 @@
   <hex row="12" col="1" terrain="3"/>
   <hex row="12" col="2" terrain="3"/>
   <hex row="12" col="3" terrain="3">
-    <unit id="22611" owner="0" flag="22" face="0" str="8"/>
+    <unit id="22611" owner="0" flag="22" face="0" str="8" bstr="8"/>
   </hex>
   <hex row="12" col="4" terrain="3"/>
   <hex row="12" col="5" terrain="3"/>
@@ -444,16 +444,16 @@
   <hex row="18" col="6" terrain="4"/>
   <hex row="18" col="8" terrain="4"/>
   <hex row="18" col="9" terrain="2" owner="1" flag="5" victory="1">
-    <unit id="3932" owner="1" flag="6" face="0" str="8"/>
+    <unit id="3932" owner="1" flag="6" face="0" str="8" bstr="8"/>
   </hex>
   <hex row="18" col="10" terrain="3"/>
   <hex row="18" col="11" terrain="3" road="40"/>
   <hex row="18" col="13" road="34"/>
   <hex row="18" col="14" terrain="1" road="34" name="Ying Xian" owner="1" flag="5">
-    <unit id="4003" owner="1" flag="6" face="0" str="3"/>
+    <unit id="4003" owner="1" flag="6" face="0" str="3" bstr="3"/>
   </hex>
   <hex row="18" col="17">
-    <unit id="22611" owner="0" flag="22" face="0" str="5"/>
+    <unit id="22611" owner="0" flag="22" face="0" str="5" bstr="5"/>
   </hex>
   <hex row="18" col="21" terrain="10"/>
   <hex row="18" col="22" road="130"/>
@@ -501,7 +501,7 @@
   <hex row="21" col="6" terrain="11" name="Chinese Great Wall"/>
   <hex row="21" col="8" terrain="1" name="Shuozhou"/>
   <hex row="21" col="9" terrain="1" road="17" name="Shuozhou">
-    <unit id="4248" owner="1" flag="6" face="0" str="4"/>
+    <unit id="4248" owner="1" flag="6" face="0" str="4" bstr="4"/>
   </hex>
   <hex row="21" col="11" terrain="8"/>
   <hex row="21" col="12" terrain="8"/>
@@ -526,7 +526,7 @@
     <unit id="4003" owner="1" flag="6" face="0" str="2" bstr="2"/>
   </hex>
   <hex row="22" col="9" terrain="1" road="17" name="Shuozhou" owner="1" flag="5" victory="1">
-    <unit id="3932" owner="1" flag="6" face="0" str="3"/>
+    <unit id="3932" owner="1" flag="6" face="0" str="3" bstr="3"/>
   </hex>
   <hex row="22" col="11" terrain="10"/>
   <hex row="22" col="12" terrain="10"/>
@@ -535,7 +535,7 @@
   <hex row="22" col="15" terrain="10"/>
   <hex row="22" col="16" terrain="10"/>
   <hex row="22" col="20" deploy="0">
-    <unit id="22611" owner="0" flag="22" face="0" str="6"/>
+    <unit id="22611" owner="0" flag="22" face="0" str="6" bstr="6"/>
   </hex>
   <hex row="22" col="23" terrain="10"/>
   <hex row="22" col="24" terrain="10"/>
@@ -549,7 +549,7 @@
   <hex row="23" col="10" terrain="10"/>
   <hex row="23" col="11" terrain="3"/>
   <hex row="23" col="17" terrain="1" name="Fanshi" owner="1" flag="5" victory="1">
-    <unit id="3932" owner="1" flag="6" face="0" str="4"/>
+    <unit id="3932" owner="1" flag="6" face="0" str="4" bstr="4"/>
   </hex>
   <hex row="23" col="19" terrain="10"/>
   <hex row="23" col="20" terrain="10"/>
@@ -677,7 +677,7 @@
   <hex row="29" col="5" terrain="6"/>
   <hex row="29" col="6" road="130"/>
   <hex row="29" col="8" road="130" deploy="0">
-    <unit id="22615" owner="0" flag="22" face="0" str="4" ldr="1"/>
+    <unit id="22615" owner="0" flag="22" face="0" str="4" ldr="1" bstr="4"/>
   </hex>
   <hex row="29" col="9" road="33"/>
   <hex row="29" col="11" terrain="10"/>
@@ -704,7 +704,7 @@
   <hex row="30" col="6" terrain="6"/>
   <hex row="30" col="7" terrain="6"/>
   <hex row="30" col="8" road="18" deploy="0">
-    <unit id="48001" owner="0" flag="22" face="0" exp="200" str="7" ldr="1"/>
+    <unit id="48001" owner="0" flag="22" face="0" exp="200" str="7" ldr="1" bstr="7"/>
   </hex>
   <hex row="30" col="10" terrain="10"/>
   <hex row="30" col="16" road="18"/>

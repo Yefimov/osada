@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="nvc01.xscn" name="Escape from Vung Tau" turns="15, 15, 15" date="December 29, 1964" dayturns="0" ground="0" atmosferic="0" latitude="4" iconset="0" weatherchg="0" rows="26" cols="38" eqp="eqp-olgcw" image="resources/maps/images/map_768.png" eqpv="united1" holdvictory="2, 0, 0" retreatunits="5, 0" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="1" barrage="1" airzoc="1" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="0" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="0" ehmsuonly="0" paradropocean="1" coresoffcap="0" music="china1.MUS">
+<map file="nvc01.xscn" name="Escape from Vung Tau" turns="15, 15, 15" date="December 29, 1964" dayturns="20" ground="0" atmosferic="0" latitude="4" iconset="0" weatherchg="0" rows="26" cols="38" eqp="eqp-olgcw" image="resources/maps/images/map_768.png" eqpv="united1" holdvictory="2, 0, 0" retreatunits="5, 0" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="1" barrage="1" airzoc="1" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="0" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="0" ehmsuonly="0" paradropocean="1" coresoffcap="0" music="china1.MUS" daysperturn="0">
   <player id="0" country="276" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="247,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <player id="1" country="253" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="254,0,0,0" turnprestige="5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5"/>
   <reinforce turn="2">
     <at row="1" col="11">
-      <unit id="49978" owner="1" flag="254" face="0" transport="50002" exp="166" str="7"/>
+      <unit id="49978" owner="1" flag="254" face="0" transport="50002" exp="166" str="7" bstr="7"/>
     </at>
     <at row="15" col="14">
-      <unit id="49974" owner="1" flag="254" face="0" exp="100" str="7"/>
-      <unit id="50005" owner="1" flag="254" face="0" str="4"/>
+      <unit id="49974" owner="1" flag="254" face="0" exp="100" str="7" bstr="7"/>
+      <unit id="50005" owner="1" flag="254" face="0" str="4" bstr="4"/>
     </at>
   </reinforce>
   <reinforce turn="3">
     <at row="2" col="9">
-      <unit id="49978" owner="1" flag="254" face="0" transport="50002" exp="176" str="7"/>
+      <unit id="49978" owner="1" flag="254" face="0" transport="50002" exp="176" str="7" bstr="7"/>
     </at>
   </reinforce>
   <reinforce turn="4">
     <at row="6" col="10">
-      <unit id="49971" owner="1" flag="254" face="0" str="8"/>
+      <unit id="49971" owner="1" flag="254" face="0" str="8" bstr="8"/>
     </at>
     <at row="5" col="9">
-      <unit id="49978" owner="1" flag="254" face="0" exp="166" str="8"/>
+      <unit id="49978" owner="1" flag="254" face="0" exp="166" str="8" bstr="8"/>
     </at>
   </reinforce>
   <hex row="0" col="1" terrain="9"/>
@@ -337,7 +337,7 @@
   <hex row="11" col="28" terrain="4" road="40"/>
   <hex row="11" col="29" terrain="4" road="136"/>
   <hex row="11" col="33" terrain="1" road="50" name="Phuoc-Hai" owner="1" flag="253">
-    <unit id="49971" owner="1" flag="254" face="0" str="5"/>
+    <unit id="49971" owner="1" flag="254" face="0" str="5" bstr="5"/>
   </hex>
   <hex row="11" col="34" road="34"/>
   <hex row="11" col="35" terrain="9"/>
@@ -350,7 +350,7 @@
   <hex row="12" col="4" terrain="7"/>
   <hex row="12" col="5" terrain="7"/>
   <hex row="12" col="6" terrain="1" road="3" name="Lin Sonh">
-    <unit id="749" owner="1" flag="254" face="0" str="4"/>
+    <unit id="749" owner="1" flag="254" face="0" str="4" bstr="4"/>
   </hex>
   <hex row="12" col="7" terrain="9"/>
   <hex row="12" col="8" terrain="9"/>
@@ -523,7 +523,7 @@
   <hex row="18" col="0" terrain="9"/>
   <hex row="18" col="1" terrain="9"/>
   <hex row="18" col="5" terrain="2" owner="1" flag="253">
-    <unit id="822" owner="1" flag="254" face="0" str="4"/>
+    <unit id="822" owner="1" flag="254" face="0" str="4" bstr="4"/>
   </hex>
   <hex row="18" col="6" terrain="4">
     <unit id="749" owner="1" flag="254" face="0" str="4" bstr="4"/>
@@ -598,7 +598,7 @@
   <hex row="20" col="2" terrain="9"/>
   <hex row="20" col="3" terrain="1" road="11" name="Vung Tau"/>
   <hex row="20" col="4" terrain="1" road="187" name="Vung Tau" owner="1" flag="253">
-    <unit id="49976" owner="1" flag="254" face="0" str="4"/>
+    <unit id="49976" owner="1" flag="254" face="0" str="4" bstr="4"/>
   </hex>
   <hex row="20" col="5" terrain="1" road="163" name="Vung Tau" owner="0" flag="276" deploy="0"/>
   <hex row="20" col="6" terrain="1" road="162" name="Vung Tau" deploy="0"/>

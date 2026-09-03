@@ -21,7 +21,6 @@ class Scenario(
     val file: String?,
 ) {
     companion object {
-        private const val MILLIS_PER_DAY = 86400000
         private const val HOLD_OUTCOME_TIERS = 3
         private const val BRILLIANT_TIER = 0
         private const val VICTORY_TIER = 1
@@ -312,7 +311,14 @@ class Scenario(
 
     var unitsKilled: MutableList<Int> = mutableListOf(0, 0)
 
+    /** Individual player phases before the calendar advances (two phases = one complete round). */
     var turnsPerDay: Int = 1
+
+    /** Loader-only authored round count, resolved to [turnsPerDay] once all players are known. */
+    internal var calendarRoundsPerDateStep: Int = 1
+
+    /** Calendar days added at that point; greater than one represents OpenSuite's Days/Turn mode. */
+    var daysPerTurn: Int = 1
     var dayTurn: Int = 0
     var reinforcements: MutableMap<Int, MutableList<Reinforcement>> = mutableMapOf()
 
@@ -452,11 +458,7 @@ class Scenario(
     }
 
     fun endTurn() {
-        dayTurn++
-        if (dayTurn >= turnsPerDay) {
-            dayTurn = 0
-            date = Date(date.getTime() + MILLIS_PER_DAY)
-        }
+        advanceCalendar()
         map.endTurn()
     }
 
@@ -495,6 +497,8 @@ class Scenario(
         ground = other.ground
         lockedEffectiveIconset = other.effectiveIconset
         turnsPerDay = other.turnsPerDay
+        calendarRoundsPerDateStep = other.calendarRoundsPerDateStep
+        daysPerTurn = other.daysPerTurn
         eqp = other.eqp
         reinforcementMessages.clear()
         reinforcementMessages.putAll(other.reinforcementMessages)

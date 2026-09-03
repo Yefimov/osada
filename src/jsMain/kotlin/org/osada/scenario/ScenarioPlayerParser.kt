@@ -27,6 +27,7 @@ internal object ScenarioPlayerParser {
             val el = playerElements.item(i) ?: continue
             players.add(parsePlayerElement(el, minTurnPrestige))
         }
+        scenario.configureCalendarForPlayerCount(players.size)
 
         addCarryOverEquipmentCountries(players)
         Equipment.addPlayersEquipment(players) {

@@ -133,6 +133,30 @@ class UIBuilderStartMenuTest {
     }
 
     @Test
+    fun permanentMainMenuEntriesUseTheirDedicatedSprite() {
+        UIBuilder.buildStartMenu()
+        mapOf(
+            "newcampaign" to "campaign",
+            "newscenario" to "scenario",
+            "multiplayer" to "multiplayer",
+            "saveload" to "load",
+            "settings" to "settings",
+            "tutorial" to "tutorial",
+            "heroDesk" to "hero",
+            "manual" to "manual",
+        ).forEach { (id, icon) ->
+            val className = byId(id)?.firstElementChild?.getAttribute("class") ?: ""
+            assertTrue(className.contains("osada-menu-ico--$icon"), "$id uses $className")
+        }
+
+        listOf("continuegame", "restartmission").forEach { id ->
+            val className = byId(id)?.firstElementChild?.getAttribute("class") ?: ""
+            assertTrue(className.contains("osada-ico--"), "$id lost its shared HUD icon")
+            assertTrue(!className.contains("osada-menu-ico--"), "$id should not use the permanent menu sheet")
+        }
+    }
+
+    @Test
     fun buildStartMenuSetsTaglineAndCredits() {
         // OSADA: the logo subtitle is the game's tagline (the old "1941 - 1945" era line was
         // misleading — the campaigns span 1936-1954), and #smCredits is the display version only.

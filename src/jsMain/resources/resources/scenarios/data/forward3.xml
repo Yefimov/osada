@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="forward3.xscn" name="Defense of Kishinev" turns="11, 11, 11" date="July 2, 1941" dayturns="0" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="0" rows="38" cols="44" eqp="eqp-atomic" image="resources/maps/images/map_20.png" eqpv="united1" holdvictory="3, 3, 3" holdvictory1="3, 2, 1" canblow="0" canrepair="0" canbuild="0" extlos="0" truedlof="0" unitsblocklof="0" barrage="0" airzoc="1" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="0" typedvh="0" truerange0="0" truespotting0="0" reinfwhenactive="0" capitalflak="0" ehmsuonly="0" paradropocean="1" coresoffcap="0">
+<map file="forward3.xscn" name="Defense of Kishinev" turns="11, 11, 11" date="July 2, 1941" dayturns="1" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="0" rows="38" cols="44" eqp="eqp-atomic" image="resources/maps/images/map_20.png" eqpv="united1" holdvictory="3, 3, 3" holdvictory1="3, 2, 1" canblow="0" canrepair="0" canbuild="0" extlos="0" truedlof="0" unitsblocklof="0" barrage="0" airzoc="1" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="0" typedvh="0" truerange0="0" truespotting0="0" reinfwhenactive="0" capitalflak="0" ehmsuonly="0" paradropocean="1" coresoffcap="0" daysperturn="0">
   <player id="0" country="89" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="0,0,0,0" turnprestige="130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130"/>
   <player id="1" country="7" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="8,14,0,0" turnprestige="50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50"/>
   <reinforce turn="4">
     <at row="13" col="2">
-      <unit id="11023" owner="1" flag="8" face="0" exp="146" str="12"/>
+      <unit id="11023" owner="1" flag="8" face="0" exp="146" str="12" bstr="12"/>
     </at>
     <at row="1" col="4">
-      <unit id="8667" owner="1" flag="8" face="0" exp="192" str="13"/>
+      <unit id="8667" owner="1" flag="8" face="0" exp="192" str="13" bstr="13"/>
     </at>
     <at row="26" col="7">
-      <unit id="18189" owner="1" flag="14" face="0" exp="85" str="7"/>
+      <unit id="18189" owner="1" flag="14" face="0" exp="85" str="7" bstr="7"/>
     </at>
     <at row="14" col="2">
       <unit id="10870" owner="1" flag="8" face="0" exp="217"/>
     </at>
     <at row="13" col="3">
-      <unit id="18354" owner="1" flag="14" face="0" exp="19" str="8"/>
+      <unit id="18354" owner="1" flag="14" face="0" exp="19" str="8" bstr="8"/>
     </at>
     <at row="1" col="3">
       <unit id="10027" owner="1" flag="8" face="0" exp="170"/>

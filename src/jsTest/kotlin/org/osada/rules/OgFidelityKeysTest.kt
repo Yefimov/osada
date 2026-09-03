@@ -37,9 +37,14 @@ import kotlin.test.assertTrue
  * the scope of automatic ground resupply
  * (`docs/og-fidelity-plan.md` B.3, B.6, B.4, B.5 and A.3 item 2).
  *
- * Every test asserts the OFF case as well as the ON one. That is the substance of the promise these
+ * Every test asserts the OFF case as well as the ON one. That was the substance of the promise these
  * keys were admitted on: none of the 502 shipped scenarios changes arithmetic until somebody selects
  * a profile that asks for it. [OgRuleKeysTest] makes the same promise for schema 4.
+ *
+ * **`initiative_model` is the one key that no longer keeps that promise**, by owner decision on
+ * 2026-09-02: it defaults to ON, so the shipped game runs OG's initiative model unless a profile
+ * turns it off. Its OFF tests therefore set the key explicitly instead of inheriting the default —
+ * they still test the same half of the same key, they just have to ask for it now.
  */
 @Suppress("LargeClass")
 class OgFidelityKeysTest {
@@ -226,6 +231,8 @@ class OgFidelityKeysTest {
 
     @Test
     fun experienceDoesNotTouchInitiativeWithTheKeyOff() {
+        // Explicit since the default flipped to on (2026-09-02): this is the off half of the key.
+        ruleset(RuleKey.INITIATIVE_MODEL to 0)
         val veteran = unit(tankEqid).apply { experience = 400 }
         assertEquals(0, InitiativeModel.experienceBonus(veteran))
     }

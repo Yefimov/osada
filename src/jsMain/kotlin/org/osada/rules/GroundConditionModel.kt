@@ -69,6 +69,23 @@ internal object GroundConditionModel {
         dryRun = 0
     }
 
+    /** The three run counters, for [org.osada.ui.WeatherModel.snapshot]. They are the only part of
+     *  this state machine a save has to carry: everything else is re-derived from the scenario. */
+    fun runs(): Triple<Int, Int, Int> = Triple(rainRun, snowRun, dryRun)
+
+    /** Puts the counters back where a save left them. Negative values from a hand-edited or
+     *  truncated save are clamped rather than rejected -- a broken run counter must not stop the
+     *  battle from loading, and zero is simply "the run starts now". */
+    fun restoreRuns(
+        rain: Int,
+        snow: Int,
+        dry: Int,
+    ) {
+        rainRun = rain.coerceAtLeast(0)
+        snowRun = snow.coerceAtLeast(0)
+        dryRun = dry.coerceAtLeast(0)
+    }
+
     /**
      * Advances one turn of [atmospheric] and returns the ground that should now be in force,
      * which is [currentGround] on every turn that does not complete a run.

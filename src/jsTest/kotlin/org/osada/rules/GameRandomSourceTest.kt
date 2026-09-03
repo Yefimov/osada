@@ -175,6 +175,9 @@ class GameRandomSourceTest {
 
     @Test
     fun withTheKeyOffACommittedExchangeDrawsNothingAtAll() {
+        // Set EXPLICITLY: `initiative_model` defaults to ON since 2026-09-02, so a test that wants
+        // the deterministic half has to ask for it rather than inherit it.
+        ruleset(RuleKey.INITIATIVE_MODEL to 0)
         val map = world()
         val attacker = place(map, 3, 3, side = 0)
         val defender = place(map, 3, 4, side = 1)
@@ -191,7 +194,7 @@ class GameRandomSourceTest {
         assertEquals(
             0L,
             GameRandomSource.cursor(),
-            "every shipped scenario runs with this key off; it must not even touch the stream",
+            "a profile that turns this key off must not touch the stream at all",
         )
     }
 

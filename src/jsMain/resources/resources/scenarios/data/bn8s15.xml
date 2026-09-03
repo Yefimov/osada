@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="ASCII"?>
-<map file="bn8s15.xscn" name="Liberation of Mostar" turns="13, 16, 22" date="February 6, 1945" dayturns="0" ground="1" atmosferic="0" latitude="3" iconset="1" weatherchg="0" rows="32" cols="44" eqp="eqp-lxf" image="resources/maps/images/map_354.png" eqpv="united1" retreatunits="4, 0" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1" ehmsuonly="0" paradropocean="1" coresoffcap="0">
+<map file="bn8s15.xscn" name="Liberation of Mostar" turns="13, 16, 22" date="February 6, 1945" dayturns="2" ground="1" atmosferic="0" latitude="3" iconset="1" weatherchg="0" rows="32" cols="44" eqp="eqp-lxf" image="resources/maps/images/map_354.png" eqpv="united1" retreatunits="4, 0" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1" ehmsuonly="0" paradropocean="1" coresoffcap="0" daysperturn="0">
   <player id="0" country="43" side="1" airtrans="2" navaltrans="2" railtrans="0" defaultxp="99" defaultstr="10" support="23,44,0,0" turnprestige="0, 125, 150, 150, 150, 150, 150, 150, 150, 150, 125, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="44:0:67117728"/>
   <player id="1" country="41" side="0" airtrans="1" navaltrans="2" railtrans="0" defaultxp="200" defaultstr="10" support="8,35,42,67" turnprestige="0, 25, 25, 25, 25, 25, 25, 25, 25, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="42:0:-2147483648,8:0:-2147483648,67:0:-2147483648,35:0:-2147483648"/>
   <reinforce turn="3">
     <at row="5" col="7">
-      <unit id="31934" owner="0" flag="44" face="0" exp="44" str="8"/>
+      <unit id="31934" owner="0" flag="44" face="0" exp="44" str="8" bstr="5"/>
     </at>
     <at row="6" col="6">
-      <unit id="31934" owner="0" flag="44" face="0" exp="44" str="8"/>
+      <unit id="31934" owner="0" flag="44" face="0" exp="44" str="8" bstr="5"/>
     </at>
     <at row="4" col="5">
-      <unit id="32006" owner="0" flag="44" face="0" transport="32190" exp="44" str="5"/>
+      <unit id="32006" owner="0" flag="44" face="0" transport="32190" exp="44" str="5" bstr="5"/>
     </at>
     <at row="5" col="6">
-      <unit id="32300" owner="0" flag="44" face="0" transport="32209" exp="44" str="8"/>
+      <unit id="32300" owner="0" flag="44" face="0" transport="32209" exp="44" str="8" bstr="5"/>
     </at>
     <at row="4" col="4">
-      <unit id="32095" owner="0" flag="44" face="0" exp="44" str="8"/>
+      <unit id="32095" owner="0" flag="44" face="0" exp="44" str="8" bstr="5"/>
     </at>
   </reinforce>
   <reinforce turn="4">
     <at row="5" col="7">
-      <unit id="31934" owner="0" flag="44" face="0" exp="44" str="8"/>
+      <unit id="31934" owner="0" flag="44" face="0" exp="44" str="8" bstr="5"/>
     </at>
     <at row="6" col="6">
-      <unit id="31934" owner="0" flag="44" face="0" exp="44" str="8"/>
+      <unit id="31934" owner="0" flag="44" face="0" exp="44" str="8" bstr="5"/>
     </at>
     <at row="6" col="7">
-      <unit id="31934" owner="0" flag="44" face="0" exp="44" str="8"/>
+      <unit id="31934" owner="0" flag="44" face="0" exp="44" str="8" bstr="5"/>
     </at>
     <at row="5" col="6">
-      <unit id="32300" owner="0" flag="44" face="0" transport="32209" exp="44" str="8"/>
+      <unit id="32300" owner="0" flag="44" face="0" transport="32209" exp="44" str="8" bstr="5"/>
     </at>
   </reinforce>
   <hex row="0" col="0">

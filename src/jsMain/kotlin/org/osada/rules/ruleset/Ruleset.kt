@@ -263,9 +263,19 @@ enum class RuleKey(
      * repaint or AI evaluation can move the cursor. With the key on the combat forecast stops being
      * an exact figure; with it off nothing draws and the forecast is exact, as it always was.
      *
-     * Default `equipment_terrain`, and the reason is the `DEFERRED.md` §5.10 hazard rather than
-     * caution: experience re-tunes every imported campaign in the veteran's favour, and both halves
-     * change what `First Strike` is worth, since that trait re-signs the initiative difference.
+     * **Default `og_full` since 2026-09-02, by owner decision.** It was `equipment_terrain` on the
+     * `DEFERRED.md` §5.10 grounds -- experience re-tunes every imported campaign in the veteran's
+     * favour, and both halves change what `First Strike` is worth, since that trait re-signs the
+     * initiative difference rather than adding to it. Those consequences are real and unchanged;
+     * what changed is which of them is preferred. The owner wants combat to carry OG's uncertainty,
+     * so the forecast is now an estimate by default and the swing lands when the attack is made.
+     *
+     * The determinism this costs is only the PLAYER-FACING kind. Multiplayer still replays combat
+     * on both peers rather than transmitting it, because the swing is drawn from the shared seeded
+     * stream and only on the committed exchange -- see [org.osada.rules.InitiativeModel] for the
+     * whole contract. Setting this back to `equipment_terrain` in a profile restores the exact
+     * forecast for anyone who wants it.
+     *
      * Call site: `rules/AttackCalculation.applyInitiativeBonus`.
      */
     INITIATIVE_MODEL("initiative_model", null, 0, 1),
@@ -718,9 +728,14 @@ object RulesetDefaults {
             RuleKey.SUPPORT_FIRE_FALLOFF to 0,
             RuleKey.DRY_UNIT_PENALTIES to 0,
             RuleKey.MINEFIELDS to 0,
-            // The five schema-5 keys, on the same terms: each is what OSADA already did.
+            // The five schema-5 keys, on the same terms: each is what OSADA already did --
+            // except `initiative_model`, which is the one entry in this table that is NOT a
+            // description of the old behaviour. It is on by owner decision (2026-09-02): OG's
+            // uncertainty is wanted in the default game, so combat is stochastic unless a profile
+            // says otherwise. Both built-in profiles read this value, since the rule has no efile
+            // key and no scenario switch for Author's Vision to defer to.
             RuleKey.AIR_FUEL to 0,
-            RuleKey.INITIATIVE_MODEL to 0,
+            RuleKey.INITIATIVE_MODEL to 1,
             RuleKey.SPOTTING_MEMORY to 0,
             RuleKey.INSTALLATION_SPOTTING to 0,
             RuleKey.GROUND_AUTO_SUPPLY to 0,
