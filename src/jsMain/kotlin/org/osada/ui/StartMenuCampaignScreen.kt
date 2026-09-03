@@ -99,35 +99,40 @@ internal object StartMenuCampaignScreen {
         campSelect.asDynamic().onchange = { onCampSelectChange(campSelect) }
         buildCampaignScreen(campSelect)
 
-        byId("smCBackBut")?.title = I18n.t("campaign.back.help")
-        byId("smCBackBut")?.setAttribute("data-label", I18n.t("common.back.label"))
-        byId("smCBackBut")?.onclick = { _: org.w3c.dom.events.MouseEvent ->
-            makeHidden("smCamp")
-            makeVisible("smMain")
+        byId("smCBackBut")?.apply {
+            title = I18n.t("campaign.back.help")
+            setAttribute("data-label", I18n.t("common.back.label"))
+            asButton(I18n.t("common.back.label")) {
+                makeHidden("smCamp")
+                makeVisible("smMain")
+            }
         }
 
-        byId("smCPlayBut")?.title = I18n.t("campaign.start.help")
-        byId("smCPlayBut")?.setAttribute("data-label", I18n.t("campaign.start.label"))
-        byId("smCPlayBut")?.onclick = { _: org.w3c.dom.events.MouseEvent ->
-            val selectedCampaign = byId("smCamp")?.asDynamic()?.selectedCampaign as? Int
-            val difficulty =
-                byId("smCamp")?.asDynamic()?.selectedDifficulty as? Int ?: StartMenuCampaignData.DIFFICULTY_HISTORICAL
-            val campaign = selectedCampaign?.let { StartMenuBuilder.campaignList().getOrNull(it) }
-            val file = campaign?.file as? String
-            val existingRun = file?.let { StartMenuCampaignData.campaignRunsByFile()[it] }
-            when {
-                selectedCampaign == null -> Unit
-                // Pressing Play/Start on an already-started campaign resumes it, never silently
-                // replaces it (save-recovery.md sec 2). Starting over is a separate, guarded
-                // action -- see the row's "Start over" link, built in renderCampaignRow.
-                existingRun != null -> StartMenuBuilder.resumeCampaignRun(existingRun.campaignRunId)
-                // No live run, but a career from a completed or cleared run may still be archived
-                // — and starting over replaces it (`hero-desk-and-profile-archive.md` §4). That
-                // needs the same one explicit confirmation the live-run path already gives.
-                else ->
-                    confirmArchiveReplacement(file, campaign?.title as? String) {
-                        StartMenuBuilder.startNewCampaign(selectedCampaign, difficulty)
-                    }
+        byId("smCPlayBut")?.apply {
+            title = I18n.t("campaign.start.help")
+            setAttribute("data-label", I18n.t("campaign.start.label"))
+            asButton(I18n.t("campaign.start.label")) {
+                val selectedCampaign = byId("smCamp")?.asDynamic()?.selectedCampaign as? Int
+                val difficulty =
+                    byId("smCamp")?.asDynamic()?.selectedDifficulty as? Int
+                        ?: StartMenuCampaignData.DIFFICULTY_HISTORICAL
+                val campaign = selectedCampaign?.let { StartMenuBuilder.campaignList().getOrNull(it) }
+                val file = campaign?.file as? String
+                val existingRun = file?.let { StartMenuCampaignData.campaignRunsByFile()[it] }
+                when {
+                    selectedCampaign == null -> Unit
+                    // Pressing Play/Start on an already-started campaign resumes it, never silently
+                    // replaces it (save-recovery.md sec 2). Starting over is a separate, guarded
+                    // action -- see the row's "Start over" link, built in renderCampaignRow.
+                    existingRun != null -> StartMenuBuilder.resumeCampaignRun(existingRun.campaignRunId)
+                    // No live run, but a career from a completed or cleared run may still be archived
+                    // — and starting over replaces it (`hero-desk-and-profile-archive.md` §4). That
+                    // needs the same one explicit confirmation the live-run path already gives.
+                    else ->
+                        confirmArchiveReplacement(file, campaign?.title as? String) {
+                            StartMenuBuilder.startNewCampaign(selectedCampaign, difficulty)
+                        }
+                }
             }
         }
 

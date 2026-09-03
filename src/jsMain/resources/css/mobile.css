@@ -262,6 +262,59 @@ body.osada-layout-phone #statusmsg {
     text-overflow: ellipsis;
 }
 
+/* A phone cannot afford a scenario title that collapses to a meaningless first
+ * letter. The nearby briefing chevron is the operation-title/details entry
+ * point; turn and date remain visible in this strip. */
+body.osada-layout-phone .osada-tb-op,
+body.osada-layout-phone .osadaSaveStatus {
+    display: none !important;
+}
+
+#osadaBriefingBtn {
+    display: none;
+}
+
+body.osada-layout-phone #osadaBriefingBtn {
+    display: inline-flex;
+    flex: 0 0 var(--osada-touch-target-min);
+    width: var(--osada-touch-target-min);
+    height: var(--osada-touch-target-min);
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    color: var(--osada-brass, #d9b25a);
+    background: rgba(28, 31, 37, .76);
+    border: 1px solid rgba(217, 178, 90, .45);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+body.osada-layout-phone .osada-tb-briefing__glyph {
+    font-family: var(--osada-font-ui, sans-serif);
+    font-size: 22px;
+    line-height: .8;
+    transform: translateY(-1px);
+}
+
+/* The supply sprite contains the same framed artwork as the neighbouring HUD
+ * icons. Let it occupy the plate instead of leaving a tiny 22px picture in the
+ * middle of a 48px touch target. */
+body.osada-layout-phone .osada-tb-reserves {
+    width: var(--osada-touch-target-min);
+    min-width: var(--osada-touch-target-min);
+    padding: 2px;
+}
+
+body.osada-layout-phone .osada-tb-reserves__label {
+    display: none;
+}
+
+body.osada-layout-phone .osada-tb-reserves__ico {
+    display: block;
+    width: 40px;
+    height: 40px;
+}
+
 body.osada-layout-phone .osada-tb-spacer {
     display: none;
 }
@@ -331,30 +384,21 @@ body.osada-layout-phone #uc-portrait {
     height: 48px;
 }
 
-/* Desktop stacks "All stats" above the action strip inside #uc-side. On a phone that column is
- * wrong in both orientations -- landscape wants the two side by side in the #uc-inner flex row,
- * portrait places each in its own named grid area -- so the wrapper is dissolved and its children
- * go on being direct children of #uc-inner, exactly as they were before it existed. */
+/* The wrapper is dissolved so phone layouts can place the expander and actions
+ * in explicit grid areas without changing the desktop DOM. */
 body.osada-layout-phone #uc-side {
     display: contents;
 }
 
-/* Action chips scroll horizontally with a partial next chip visible, so the
- * strip reads as scrollable without a scrollbar (spec §16.3). */
+/* Actions wrap inside the card. A hidden horizontal tail made Sleep look as if
+ * it escaped the panel and forced a precision swipe before a common command. */
 body.osada-layout-phone #uc-actions {
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     gap: var(--osada-touch-gap);
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-snap-type: x proximity;
-    touch-action: pan-x;
-    overscroll-behavior-x: contain;
-    scrollbar-width: none;
-}
-
-body.osada-layout-phone #uc-actions::-webkit-scrollbar {
-    display: none;
+    min-width: 0;
+    overflow: visible;
+    touch-action: manipulation;
 }
 
 /* The desktop chip is a fixed 52px box with an 8px label, which clips any word
@@ -390,17 +434,16 @@ body.osada-layout-phone .osada-action__label {
  * element's display is toggled inline by makeVisible/makeHidden, and an inline
  * style always wins — the chips are inline-flex and lay themselves out anyway. */
 body.osada-layout-phone #unit-context {
-    width: auto;
-    /* `min-width: max-content` is the load-bearing part: as a flex item inside
-     * the scrolling #uc-actions it would otherwise shrink below its content and
-     * wrap the chips again, whatever `white-space` says. */
-    min-width: max-content;
-    flex: 0 0 auto;
-    white-space: nowrap;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    flex: 1 1 auto;
+    white-space: normal;
 }
 
-body.osada-layout-phone .osada-action {
-    margin-right: var(--osada-touch-gap);
+body.osada-layout-phone .osada-actions {
+    justify-content: flex-start;
+    gap: var(--osada-touch-gap);
 }
 
 /* The dock is subtracted from the map, so every pixel it does not need is a row
@@ -411,7 +454,7 @@ body.osada-layout-phone .osada-action {
  * would overflow a 390px screen outright. Higher specificity, so stylesheet order does not matter. */
 body.osada-layout-phone #unit-info {
     padding: 6px 8px;
-    width: auto;
+    width: 100%;
     min-width: 0;
 }
 
@@ -439,7 +482,7 @@ body.osada-layout-phone #unit-info.uc--expanded #statsRowContainer {
     position: fixed;
     left: var(--osada-safe-left);
     right: var(--osada-safe-right);
-    bottom: calc(var(--osada-mobile-bottom-h) + var(--osada-safe-bottom));
+    bottom: calc(var(--osada-dock-h, var(--osada-mobile-bottom-h)) + var(--osada-safe-bottom));
     max-height: 45dvh;
     overflow-y: auto;
     touch-action: pan-y;
@@ -591,7 +634,7 @@ body.osada-layout-phone #osada-sidebar.osada-sidebar--collapsed {
 body.osada-layout-phone #osadaSideBody {
     flex: 1 1 auto;
     min-height: 0;
-    overflow-y: auto;
+    overflow: hidden;
     touch-action: pan-y;
     overscroll-behavior-y: contain;
 }
@@ -604,15 +647,15 @@ body.osada-layout-phone .osada-drawer-close {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex: 0 0 auto;
-    min-height: var(--osada-touch-target);
-    margin: 8px 10px calc(8px + var(--osada-safe-bottom));
+    flex: 0 0 var(--osada-touch-target-min);
+    width: var(--osada-touch-target-min);
+    height: var(--osada-touch-target-min);
+    min-height: var(--osada-touch-target-min);
+    margin: 0 0 0 10px;
     border: 1px solid var(--osada-metal-600, #3a3d45);
     border-radius: 4px;
     color: var(--osada-text, #e7e2d4);
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: .06em;
+    background-size: 400% 300%;
     cursor: pointer;
 }
 
@@ -632,8 +675,31 @@ body.osada-layout-phone.osada-drawer-open .osada-drawer-scrim {
  * controls take full touch targets. */
 body.osada-layout-phone #osada-minimap {
     width: 100%;
+    height: 100%;
+    min-height: 0;
+}
+
+body.osada-layout-phone .osada-sb-panel--minimap {
+    flex: 0 1 42%;
+    min-height: 96px;
+}
+
+body.osada-layout-phone .osada-minimap-frame {
+    flex: 1 1 auto;
     height: auto;
-    min-height: 144px;
+    min-height: 96px;
+}
+
+body.osada-layout-phone .osada-sb-panel--objectives {
+    flex: 0 1 24%;
+    max-height: 24%;
+}
+
+body.osada-layout-phone .osada-sb-panel--log {
+    flex: 1 1 120px;
+    /* Includes the 21px panel heading; leaves roughly two full log rows plus
+     * scrolling room even at the 375px landscape acceptance height. */
+    min-height: 112px;
 }
 
 body.osada-layout-phone .osada-zoom-btn,
@@ -914,6 +980,20 @@ body.osada-layout-phone.osada-orientation-portrait .osada-briefing__date {
     display: none;
 }
 
+/* In portrait the sticky gradient sat over the last lines of the paper order
+ * and made the red Begin plate look detached from its panel. The panel is the
+ * scroll owner, so a normal footer remains reachable without covering text. */
+body.osada-layout-phone.osada-orientation-portrait .osada-briefing__footer {
+    position: static;
+    margin-top: 14px;
+    padding: 14px 0 calc(4px + var(--osada-safe-bottom));
+    background: transparent;
+}
+
+body.osada-layout-phone.osada-orientation-portrait .osada-briefing__button--primary {
+    width: 100%;
+}
+
 body.osada-layout-phone.osada-orientation-portrait .osada-dialogue-stage {
     padding: 6px;
 }
@@ -1143,19 +1223,72 @@ body.osada-layout-phone.osada-orientation-portrait .osadaDossierHead {
 body.osada-layout-phone.osada-orientation-portrait #smCampButtons,
 body.osada-layout-phone.osada-orientation-portrait #smScenButtons {
     display: flex;
-    gap: 8px;
+    flex-wrap: nowrap;
+    gap: 5px;
 }
 
 body.osada-layout-phone.osada-orientation-portrait #smCBackBut,
 body.osada-layout-phone.osada-orientation-portrait #smSBackBut {
-    flex: 0 1 36%;
-    width: auto;
+    flex: 0 0 var(--osada-touch-target-min);
+    width: var(--osada-touch-target-min);
+    padding: 0;
+}
+
+body.osada-layout-phone.osada-orientation-portrait #smCBackBut::after,
+body.osada-layout-phone.osada-orientation-portrait #smSBackBut::after {
+    content: "←";
+    font-size: 22px;
+    letter-spacing: 0;
 }
 
 body.osada-layout-phone.osada-orientation-portrait #smCPlayBut,
 body.osada-layout-phone.osada-orientation-portrait #smSPlayBut {
     flex: 1 1 auto;
     width: auto;
+    min-width: 76px;
+    padding: 0 7px;
+}
+
+body.osada-layout-phone.osada-orientation-portrait .osadaCampBackupButton {
+    flex: 0 0 var(--osada-touch-target-min);
+    width: var(--osada-touch-target-min);
+    min-width: var(--osada-touch-target-min);
+    padding: 0;
+    font-size: 0;
+    line-height: var(--osada-touch-target-min);
+}
+
+body.osada-layout-phone.osada-orientation-portrait .osadaRulesButton {
+    min-height: var(--osada-touch-target-min);
+}
+
+body.osada-layout-phone.osada-orientation-portrait .osadaCampBackupButton::after {
+    color: var(--osada-brass, #d9b25a);
+    font-family: var(--osada-font-ui, sans-serif);
+    font-size: 22px;
+    line-height: 1;
+}
+
+body.osada-layout-phone.osada-orientation-portrait .osadaCampBackupButton--export::after {
+    content: "↓";
+}
+
+body.osada-layout-phone.osada-orientation-portrait .osadaCampBackupButton--import::after {
+    content: "↑";
+}
+
+body.osada-layout-phone.osada-orientation-portrait .osadaCampBackupStatus {
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + 4px);
+    left: 0;
+    min-height: 0;
+    padding: 4px 8px;
+    background: rgba(12, 13, 16, .96);
+}
+
+body.osada-layout-phone.osada-orientation-portrait .osadaCampBackupStatus:empty {
+    display: none;
 }
 
 /* Phone map scrollbars consume visible map pixels and look like controls.
@@ -1219,15 +1352,35 @@ body.osada-layout-phone.osada-orientation-portrait .uiMessageBox--hero .heroEmer
     margin: 0 auto 12px;
 }
 
-/* In the normal landscape dock, do not stretch the unit summary until its
- * action chips are stranded at the opposite edge of the screen. */
+/* Landscape phone dock: identity stays in its own column, while All Stats is
+ * above the wrapped action rows. Nothing can cover the name or escape the card. */
 body.osada-layout-phone.osada-orientation-landscape #unit-info {
-    max-width: 700px;
-    justify-self: start;
+    max-width: none;
+    justify-self: stretch;
 }
 
-body.osada-layout-phone.osada-orientation-landscape #uc-main {
-    flex: 0 1 380px;
+body.osada-layout-phone.osada-orientation-landscape #uc-inner {
+    display: grid;
+    grid-template-columns: 48px minmax(180px, 34%) minmax(0, 1fr);
+    grid-template-areas:
+        "portrait main expand"
+        "portrait main actions";
+    align-items: center;
+    gap: 5px 10px;
+}
+
+body.osada-layout-phone.osada-orientation-landscape #uc-portrait { grid-area: portrait; }
+body.osada-layout-phone.osada-orientation-landscape #uc-main { grid-area: main; }
+body.osada-layout-phone.osada-orientation-landscape #uc-expand {
+    grid-area: expand;
+    justify-self: start;
+    min-height: 28px;
+    padding: 5px 8px;
+}
+body.osada-layout-phone.osada-orientation-landscape #uc-actions { grid-area: actions; }
+
+body.osada-layout-phone.osada-orientation-landscape .osada-action {
+    min-height: var(--osada-touch-target-min);
 }
 
 /* Portrait combat is a vertical workspace, not three desktop cards squeezed
@@ -1247,7 +1400,7 @@ body.osada-layout-phone.osada-orientation-portrait #uc-inner {
     grid-template-columns: 48px minmax(0, 1fr) auto;
     grid-template-areas:
         "portrait main expand"
-        "portrait actions actions";
+        "actions actions actions";
     align-items: center;
     gap: 6px 8px;
 }
@@ -1256,6 +1409,38 @@ body.osada-layout-phone.osada-orientation-portrait #uc-portrait { grid-area: por
 body.osada-layout-phone.osada-orientation-portrait #uc-main { grid-area: main; }
 body.osada-layout-phone.osada-orientation-portrait #uc-actions { grid-area: actions; }
 body.osada-layout-phone.osada-orientation-portrait #uc-expand { grid-area: expand; }
+
+/* Portrait keeps the semantic labels for assistive technology but uses the
+ * existing action glyphs visually, fitting common actions on one reachable row. */
+body.osada-layout-phone.osada-orientation-portrait .osada-action {
+    width: var(--osada-touch-target-min);
+    min-width: var(--osada-touch-target-min);
+    padding: 0;
+}
+
+body.osada-layout-phone.osada-orientation-portrait .osada-action__glyph {
+    font-size: 18px;
+}
+
+body.osada-layout-phone.osada-orientation-portrait .osada-action__label {
+    display: none;
+}
+
+body.osada-layout-phone.osada-orientation-portrait #uc-expand {
+    width: var(--osada-touch-target-min);
+    min-width: var(--osada-touch-target-min);
+    height: var(--osada-touch-target-min);
+    padding: 0;
+    font-size: 0;
+}
+
+body.osada-layout-phone.osada-orientation-portrait #uc-expand::after {
+    content: "i";
+    font-family: Georgia, serif;
+    font-size: 20px;
+    font-weight: 700;
+    text-transform: none;
+}
 
 /* Keep End Turn reachable in portrait. Secondary tools stay available from
  * the drawer/settings surfaces instead of pushing the critical action away. */

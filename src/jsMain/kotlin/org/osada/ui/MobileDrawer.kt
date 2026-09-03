@@ -30,12 +30,16 @@ internal object MobileDrawer {
         scrim.setAttribute("aria-hidden", "true")
         scrim.onclick = { _: MouseEvent -> close() }
 
-        val sidebar = byId("osada-sidebar") ?: return
+        val sidebar = byId("osada-sidebar")
+        val toggles = sidebar?.querySelector(".osada-sb-toggles") as? org.w3c.dom.HTMLElement
+        if (sidebar == null || toggles == null) return
         sidebar.setAttribute("role", "region")
-        val closeBtn = addTag(sidebar, "div")
+        val closeBtn = addTag(toggles, "div")
         closeBtn.id = "osadaDrawerClose"
-        closeBtn.className = "osada-drawer-close"
-        closeBtn.textContent = I18n.t("mobile.drawer.close.label")
+        closeBtn.className = "osada-drawer-close osada-ico osada-ico--close"
+        closeBtn.title = I18n.t("mobile.drawer.close.label")
+        // Keep X immediately to the right of Air; the flexible desktop spacer remains after it.
+        toggles.querySelector(".osada-sb-toggles-spacer")?.let { toggles.insertBefore(closeBtn, it) }
         closeBtn.asButton(I18n.t("mobile.drawer.close.label")) { close() }
     }
 

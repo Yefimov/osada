@@ -21,6 +21,7 @@ internal object MainMenuBuilder {
 
         buildBrandAndObserver(statusbar)
         buildDrawerButton(statusbar)
+        MobileBriefingButton.install(statusbar)
 
         // Reparent the existing status elements (ids kept — StatusBarController fills them).
         // --- scenario / turn / date (center-left) ---

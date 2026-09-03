@@ -10,6 +10,10 @@
  *   - the layout controller classifies the device as a phone shell;
  *   - #game is the rectangle between the top bar and the bottom dock, not a window-sized box;
  *   - the sidebar is off-screen until the drawer is opened, and opening it does not move the map;
+ *   - the phone HUD uses full-size briefing/reserves controls instead of clipped status text;
+ *   - campaign utility controls fit, retain accessible labels and meet the 44px minimum;
+ *   - unit actions stay inside the card and the stats popover dismisses outside itself;
+ *   - the drawer's X and log remain usable at the minimum landscape height;
  *   - a synthesised pan scrolls the map and produces NO map click;
  *   - a synthesised pinch changes the zoom level and leaves it inside the 50-200% limits;
  *   - primary controls meet the 44px product minimum;
@@ -167,11 +171,19 @@ try {
     const footerEl = document.getElementById('smCampButtons');
     const root = rootEl.getBoundingClientRect();
     const footer = footerEl.getBoundingClientRect();
+    const controls = ['osadaRulesButton-campaign', 'campaignRunExport', 'campaignRunImport', 'smCBackBut', 'smCPlayBut']
+      .map((id) => {
+        const el = document.getElementById(id);
+        const r = el.getBoundingClientRect();
+        return { id, left: Math.round(r.left), right: Math.round(r.right), width: Math.round(r.width),
+          height: Math.round(r.height), label: el.getAttribute('aria-label') || el.textContent.trim() };
+      });
     return {
       root: { left: Math.round(root.left), top: Math.round(root.top), right: Math.round(root.right), bottom: Math.round(root.bottom) },
       footer: { left: Math.round(footer.left), top: Math.round(footer.top), right: Math.round(footer.right), bottom: Math.round(footer.bottom) },
       bodyOverflow: body.scrollWidth - body.clientWidth,
       rootOverflow: rootEl.scrollWidth - rootEl.clientWidth,
+      controls,
       viewport: { width: window.innerWidth, height: window.innerHeight },
     };
   });
@@ -183,6 +195,11 @@ try {
       campaignPortrait.footer.right <= campaignPortrait.root.right + 1 &&
       campaignPortrait.footer.bottom <= campaignPortrait.root.bottom + 1,
     JSON.stringify(campaignPortrait));
+  ok('portrait campaign footer controls are compact, labelled, and touch sized',
+    campaignPortrait.controls.every((c) => c.width >= 44 && c.height >= 44 && c.label.length > 0) &&
+      [...campaignPortrait.controls].sort((a, b) => a.left - b.left)
+        .every((c, i, all) => i === 0 || c.left >= all[i - 1].right - 1),
+    JSON.stringify(campaignPortrait.controls));
   await page.evaluate(() => document.getElementById('smCBackBut').click());
 
   // The story stylesheet is lazy-loaded by ScenarioBriefingController. Load it explicitly and
@@ -206,6 +223,37 @@ try {
       parent.appendChild(el);
       return el;
     };
+    const ordersRoot = node('div', 'osada-briefing', document.body);
+    ordersRoot.style.visibility = 'hidden';
+    const ordersShade = node('div', 'osada-briefing__shade', ordersRoot);
+    const ordersShell = node('div', 'osada-briefing__shell', ordersShade);
+    const ordersHeader = node('header', 'osada-briefing__header', ordersShell);
+    node('h1', 'osada-briefing__title', ordersHeader, 'RP Guerrilla Hunter');
+    const ordersStage = node('section', 'osada-briefing__orders', ordersShell);
+    const ordersPanel = node('div', 'osada-briefing__orders-panel', ordersStage);
+    node('div', 'osada-briefing__orders-eyebrow', ordersPanel, 'ЭСТОНИЯ ПРОТИВ СОВЕТСКИЙ СОЮЗ');
+    const ordersContent = node('div', 'osada-briefing__orders-content', ordersPanel);
+    for (let i = 0; i < 4; i++) {
+      const section = node('section', 'osada-briefing__order-section', ordersContent);
+      node('h2', 'osada-briefing__order-heading', section, 'БОЕВАЯ ЗАДАЧА');
+      node('p', 'osada-briefing__order-text', section,
+        'Hold the approaches, preserve the marked formation and keep the road open until the operation can begin.');
+    }
+    const ordersFooter = node('footer', 'osada-briefing__footer', ordersPanel);
+    const begin = node('button', 'osada-briefing__button osada-briefing__button--primary', ordersFooter, 'НАЧАТЬ ОПЕРАЦИЮ');
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    const footerStyle = getComputedStyle(ordersFooter);
+    const footerRect = ordersFooter.getBoundingClientRect();
+    const beginRect = begin.getBoundingClientRect();
+    const ordersFooterLayout = {
+      position: footerStyle.position,
+      backgroundImage: footerStyle.backgroundImage,
+      backgroundColor: footerStyle.backgroundColor,
+      footerWidth: Math.round(footerRect.width),
+      beginWidth: Math.round(beginRect.width),
+    };
+    ordersRoot.remove();
+
     const root = node('div', 'osada-briefing osada-briefing--dialogue', document.body);
     root.id = 'mobile-story-fixture';
     root.style.visibility = 'hidden';
@@ -250,6 +298,7 @@ try {
       outside,
       controlsScrollable: controls.scrollHeight > controls.clientHeight,
       controlsOverflowY: getComputedStyle(controls).overflowY,
+      ordersFooterLayout,
     };
     root.remove();
     return result;
@@ -260,6 +309,12 @@ try {
   ok('long portrait story decisions have a vertical scroll owner',
     storyPortrait.controlsOverflowY === 'auto',
     JSON.stringify(storyPortrait));
+  ok('portrait operational briefing footer stays in flow without a dark overlay',
+    storyPortrait.ordersFooterLayout.position === 'static' &&
+      storyPortrait.ordersFooterLayout.backgroundImage === 'none' &&
+      storyPortrait.ordersFooterLayout.backgroundColor === 'rgba(0, 0, 0, 0)' &&
+      storyPortrait.ordersFooterLayout.beginWidth >= storyPortrait.ordersFooterLayout.footerWidth - 1,
+    JSON.stringify(storyPortrait.ordersFooterLayout));
 
   await page.setViewport({ width: 667, height: 375, isMobile: true, hasTouch: true, deviceScaleFactor: 2 });
   await sleep(250);
@@ -299,6 +354,52 @@ try {
   ok('map spans the full usable width', layout.game.width >= layout.innerWidth - 2, `game.width=${layout.game.width}`);
   ok('sidebar is off-screen until the drawer opens', layout.sidebarLeft >= layout.innerWidth - 2, `sidebar.left=${layout.sidebarLeft}`);
 
+  const phoneHud = await page.evaluate(() => {
+    const metric = (selector) => {
+      const el = document.querySelector(selector);
+      const r = el.getBoundingClientRect();
+      return { display: getComputedStyle(el).display, width: Math.round(r.width), height: Math.round(r.height) };
+    };
+    const card = document.getElementById('unit-info').getBoundingClientRect();
+    const name = document.getElementById('uName').getBoundingClientRect();
+    const expand = document.getElementById('uc-expand').getBoundingClientRect();
+    const actionRects = [...document.querySelectorAll('#unit-context .osada-action')]
+      .map((el) => el.getBoundingClientRect());
+    return {
+      title: metric('.osada-tb-op'),
+      saved: metric('.osadaSaveStatus'),
+      briefing: metric('#osadaBriefingBtn'),
+      reserves: metric('.osada-tb-reserves'),
+      reserveIcon: metric('.osada-tb-reserves__ico'),
+      nameVisible: name.width > 0 && name.height > 0,
+      statsAboveActions: actionRects.length > 0 && expand.bottom <= Math.min(...actionRects.map((r) => r.top)) + 1,
+      actionsInsideCard: actionRects.every((r) => r.left >= card.left - 1 && r.right <= card.right + 1),
+    };
+  });
+  ok('phone HUD replaces the clipped title and save text with a 44px briefing control',
+    phoneHud.title.display === 'none' && phoneHud.saved.display === 'none' &&
+      phoneHud.briefing.width >= 44 && phoneHud.briefing.height >= 44,
+    JSON.stringify(phoneHud));
+  ok('phone reserves artwork fills its touch plate',
+    phoneHud.reserves.width >= 44 && phoneHud.reserves.height >= 44 && phoneHud.reserveIcon.width >= 40,
+    JSON.stringify(phoneHud));
+  ok('landscape unit identity remains visible and actions stay inside the card below All Stats',
+    phoneHud.nameVisible && phoneHud.statsAboveActions && phoneHud.actionsInsideCard,
+    JSON.stringify(phoneHud));
+
+  const statsDismiss = await page.evaluate(async () => {
+    const button = document.getElementById('uc-expand');
+    const root = document.getElementById('unit-info');
+    button.click();
+    const opened = root.classList.contains('uc--expanded') && button.getAttribute('aria-expanded') === 'true';
+    document.getElementById('game').dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, pointerType: 'touch' }));
+    await new Promise((r) => requestAnimationFrame(r));
+    return { opened, closed: !root.classList.contains('uc--expanded'), aria: button.getAttribute('aria-expanded') };
+  });
+  ok('All Stats dismisses on a pointer press outside the sheet',
+    statsDismiss.opened && statsDismiss.closed && statsDismiss.aria === 'false',
+    JSON.stringify(statsDismiss));
+
   // ---- drawer opens, and does NOT move the map ----
   const drawer = await page.evaluate(async () => {
     const game = document.getElementById('game');
@@ -312,10 +413,17 @@ try {
     minimap.scrollIntoView({ block: 'center' });
     await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
     const mr = minimap.getBoundingClientRect();
+    const close = document.getElementById('osadaDrawerClose').getBoundingClientRect();
+    const air = document.getElementById('air').getBoundingClientRect();
+    const logEl = document.getElementById('osadaLog');
+    const log = logEl.getBoundingClientRect();
     return {
       sidebarLeft: Math.round(sidebar.left), before, after, expanded,
       minimapX: mr.left + mr.width / 2, minimapY: mr.top + mr.height / 2,
       minimapWidth: Math.round(mr.width), minimapHeight: Math.round(mr.height),
+      close: { left: Math.round(close.left), top: Math.round(close.top), width: Math.round(close.width), height: Math.round(close.height) },
+      airRight: Math.round(air.right),
+      log: { top: Math.round(log.top), bottom: Math.round(log.bottom), height: Math.round(log.height), overflowY: getComputedStyle(logEl).overflowY },
     };
   });
   await page.touchscreen.tap(drawer.minimapX, drawer.minimapY);
@@ -342,6 +450,12 @@ try {
   drawer.open = await page.evaluate(() => document.body.classList.contains('osada-drawer-open'));
   ok('drawer button opens the drawer', drawer.sidebarLeft < 667, `sidebar.left=${drawer.sidebarLeft}`);
   ok('drawer sets aria-expanded', drawer.expanded === 'true');
+  ok('drawer close control is a touch-sized X beside Air',
+    drawer.close.width >= 44 && drawer.close.height >= 44 && drawer.close.left >= drawer.airRight,
+    JSON.stringify(drawer.close));
+  ok('landscape drawer keeps a visible, independently scrollable log',
+    drawer.log.height >= 88 && drawer.log.bottom <= 375 && drawer.log.overflowY === 'auto',
+    JSON.stringify(drawer.log));
   ok('drawer does not shift the map', drawer.before.l === drawer.after.l && drawer.before.t === drawer.after.t);
   ok('rendered minimap centre maps to the map centre',
     drawer.minimapCentre.leftError <= 3 && drawer.minimapCentre.topError <= 3,

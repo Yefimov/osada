@@ -107,8 +107,10 @@ internal object StartMenuCampaignData {
     private fun updatePlayButtonLabel(file: String?) {
         val playBut = byId("smCPlayBut") ?: return
         val hasRun = file != null && campaignRunsByFile().containsKey(file)
+        val label = I18n.t(if (hasRun) "campaign.resume.label" else "campaign.start.label")
         playBut.title = I18n.t(if (hasRun) "campaign.resume.help" else "campaign.start.help")
-        playBut.setAttribute("data-label", I18n.t(if (hasRun) "campaign.resume.label" else "campaign.start.label"))
+        playBut.setAttribute("data-label", label)
+        playBut.setAttribute("aria-label", label)
     }
 
     /** Every campaign run currently in the browser repository, keyed by campaign file --
