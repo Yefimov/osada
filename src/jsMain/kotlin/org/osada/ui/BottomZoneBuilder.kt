@@ -2,6 +2,7 @@
 
 package org.osada.ui
 
+import kotlinx.browser.document
 import kotlinx.browser.window
 import org.osada.GameHolder
 import org.osada.MovMethod
@@ -38,6 +39,7 @@ internal object BottomZoneBuilder {
     private const val PERCENT_SCALE = 100.0
 
     private var hoverPersistTimer: Int = 0
+    private var outsideDismissInstalled = false
 
     fun build() {
         restructurePlayerCard()
@@ -45,6 +47,7 @@ internal object BottomZoneBuilder {
         buildEnemyCardSkeleton()
         // #unit-context keeps its id/handlers; only reparented into the card's action-row slot.
         byId("uc-actions")?.let { slot -> byId("unit-context")?.let { slot.appendChild(it) } }
+        installExpandedSheetDismissal()
         setState("hidden")
     }
 
@@ -180,8 +183,11 @@ internal object BottomZoneBuilder {
         expandBtn.id = "uc-expand"
         expandBtn.textContent = I18n.t("unit_info.all_stats.label")
         expandBtn.title = I18n.t("unit_info.all_stats.help")
-        expandBtn.onclick = { _: org.w3c.dom.events.MouseEvent ->
-            root.classList.toggle("uc--expanded")
+        expandBtn.setAttribute("aria-controls", "statsRowContainer")
+        expandBtn.setAttribute("aria-expanded", "false")
+        expandBtn.asButton(I18n.t("unit_info.all_stats.label")) {
+            val expanded = root.classList.toggle("uc--expanded")
+            expandBtn.setAttribute("aria-expanded", expanded.toString())
         }
 
         // After the expander, so it renders below it. `build()` reparents #unit-context in here.
@@ -372,8 +378,11 @@ internal object BottomZoneBuilder {
         expandBtn.id = "ec-expand"
         expandBtn.textContent = I18n.t("combat.enemy.all_stats.label")
         expandBtn.title = I18n.t("combat.enemy.all_stats.help")
-        expandBtn.onclick = { _: org.w3c.dom.events.MouseEvent ->
-            root.classList.toggle("ec--expanded")
+        expandBtn.setAttribute("aria-controls", "ecStatsContainer")
+        expandBtn.setAttribute("aria-expanded", "false")
+        expandBtn.asButton(I18n.t("combat.enemy.all_stats.label")) {
+            val expanded = root.classList.toggle("ec--expanded")
+            expandBtn.setAttribute("aria-expanded", expanded.toString())
         }
 
         // A SEPARATE stats grid from the player card's #statsRowContainer — that element belongs
@@ -399,6 +408,37 @@ internal object BottomZoneBuilder {
                 valueDiv.id = id
                 valueDiv.className = "statsText"
             }
+        }
+    }
+
+    /** An expanded stat sheet behaves like a transient popover: interacting with the sheet or
+     * its toggle keeps it open; any other pointer press dismisses it. This is especially important
+     * on touch, where requiring a second precise press on the small toggle made the sheet feel
+     * modal even though it is not one. */
+    private fun installExpandedSheetDismissal() {
+        if (outsideDismissInstalled) return
+        outsideDismissInstalled = true
+        document.addEventListener("pointerdown", { event ->
+            dismissExpandedSheet("unit-info", "uc-expand", "statsRowContainer", event.target)
+            dismissExpandedSheet("osadaEnemyCard", "ec-expand", "ecStatsContainer", event.target)
+        })
+    }
+
+    private fun dismissExpandedSheet(
+        rootId: String,
+        toggleId: String,
+        sheetId: String,
+        target: dynamic,
+    ) {
+        val root = byId(rootId)
+        val toggle = byId(toggleId)
+        val sheet = byId(sheetId)
+        if (root == null || toggle == null || sheet == null) return
+        val insideToggle = target != null && (toggle.asDynamic().contains(target) as? Boolean ?: false)
+        val insideSheet = target != null && (sheet.asDynamic().contains(target) as? Boolean ?: false)
+        if (!insideToggle && !insideSheet) {
+            root.classList.remove(if (rootId == "unit-info") "uc--expanded" else "ec--expanded")
+            toggle.setAttribute("aria-expanded", "false")
         }
     }
 

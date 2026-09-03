@@ -93,11 +93,15 @@ internal object GameplayLocalization {
     private fun refreshBottomZoneChrome() {
         byId("ucRename")?.title = I18n.t("unit_info.rename.help")
         byId("uc-expand")?.apply {
-            textContent = I18n.t("unit_info.all_stats.label")
+            val label = I18n.t("unit_info.all_stats.label")
+            textContent = label
+            setAttribute("aria-label", label)
             title = I18n.t("unit_info.all_stats.help")
         }
         byId("ec-expand")?.apply {
-            textContent = I18n.t("combat.enemy.all_stats.label")
+            val label = I18n.t("combat.enemy.all_stats.label")
+            textContent = label
+            setAttribute("aria-label", label)
             title = I18n.t("combat.enemy.all_stats.help")
         }
         listOf(
@@ -136,6 +140,11 @@ internal object GameplayLocalization {
             title = I18n.t("hud.observer.help")
         }
         byId("combatLogButton")?.title = I18n.t("hud.turn_report.help")
+        byId("osadaBriefingBtn")?.apply {
+            val label = I18n.t("turn_report.briefing.help")
+            title = label
+            setAttribute("aria-label", label)
+        }
         byId("osadaPrestige")?.title = I18n.t("hud.prestige.help")
         byId("buy")?.apply {
             title = I18n.t("hud.reserves.help")

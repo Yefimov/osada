@@ -31,12 +31,12 @@ internal object CampaignBackupButtons {
 
         val export = addTag(parent, "div")
         export.id = EXPORT_ID
-        export.className = "osada-button osadaCampBackupButton"
+        export.className = "osada-button osadaCampBackupButton osadaCampBackupButton--export"
         export.asButton(onActivate = { onExport() })
 
         val importBut = addTag(parent, "div")
         importBut.id = IMPORT_ID
-        importBut.className = "osada-button osadaCampBackupButton"
+        importBut.className = "osada-button osadaCampBackupButton osadaCampBackupButton--import"
 
         // A real file input, kept out of the layout and opened by the button, so the control stays
         // keyboard-activatable through `asButton` instead of relying on a click landing on a
@@ -66,13 +66,17 @@ internal object CampaignBackupButtons {
     fun refresh() {
         val exportable = selectedCampaignFile()?.let { it in StartMenuCampaignData.campaignRunsByFile() } == true
         byId(EXPORT_ID)?.apply {
-            textContent = I18n.t("campaign.run_export.label")
+            val label = I18n.t("campaign.run_export.label")
+            textContent = label
+            setAttribute("aria-label", label)
             title = I18n.t(if (exportable) "campaign.run_export.help" else "campaign.run_export.unavailable")
             classList.toggle("osadaCampBackupButton--disabled", !exportable)
             setAttribute("aria-disabled", (!exportable).toString())
         }
         byId(IMPORT_ID)?.apply {
-            textContent = I18n.t("campaign.run_import.label")
+            val label = I18n.t("campaign.run_import.label")
+            textContent = label
+            setAttribute("aria-label", label)
             title = I18n.t("campaign.run_import.help")
         }
         status(null)

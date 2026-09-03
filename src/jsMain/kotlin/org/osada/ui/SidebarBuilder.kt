@@ -48,6 +48,11 @@ internal object SidebarBuilder {
             title = I18n.t("hud.sidebar.air.help")
         }
         byId("osadaSideToggle")?.title = I18n.t("hud.sidebar.collapse.help")
+        byId("osadaDrawerClose")?.apply {
+            val label = I18n.t("mobile.drawer.close.label")
+            title = label
+            setAttribute("aria-label", label)
+        }
         byId("osadaRailExpand")?.title = I18n.t("hud.sidebar.expand.help")
         byId("osadaRailObjCounter")?.title = I18n.t("hud.sidebar.objective_counter.help")
         byId("osadaRailLogDot")?.title = I18n.t("hud.sidebar.new_events.help")
