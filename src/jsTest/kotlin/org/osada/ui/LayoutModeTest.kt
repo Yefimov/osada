@@ -53,6 +53,14 @@ class LayoutModeTest {
     }
 
     @Test
+    fun phoneSizedDeviceEmulationUsesPhoneShellWithFinePointer() {
+        // Codex/Chromium device panels constrain the viewport but may retain the host mouse as the
+        // primary pointer. Layout follows the available canvas; input modality remains independent.
+        assertEquals(LayoutMode.PHONE_PORTRAIT, mode(393.0, 852.0, coarse = false))
+        assertEquals(LayoutMode.PHONE_LANDSCAPE, mode(852.0, 393.0, coarse = false))
+    }
+
+    @Test
     fun touchscreenLaptopIsNotAutomaticallyAPhone() {
         // Coarse primary pointer reported on a large landscape viewport: a convertible/kiosk, not
         // a phone. It gets touch-sized targets through the tablet shell, never the phone drawer.

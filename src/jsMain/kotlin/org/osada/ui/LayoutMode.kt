@@ -42,9 +42,10 @@ private const val TABLET_MIN_PORTRAIT_WIDTH = 600.0
  * Pure layout-mode decision, extracted so every required viewport in the spec's matrix can be
  * asserted without a browser.
  *
- * [coarsePointer] is `matchMedia("(pointer: coarse)")` — the *primary* pointer, which is why a
- * touchscreen laptop (fine primary pointer, touch as a secondary capability) stays on the desktop
- * layout instead of collapsing into a phone shell the moment someone taps the screen.
+ * [coarsePointer] is `matchMedia("(pointer: coarse)")` — the *primary* pointer. It distinguishes
+ * touch-first tablets and large convertible displays, but an unmistakably phone-sized viewport is
+ * enough on its own. Desktop device emulators commonly keep reporting a fine mouse pointer while
+ * constraining the page to 393x852; treating that as desktop produces an unusable clipped shell.
  */
 @Suppress("ReturnCount")
 internal fun resolveLayoutMode(
@@ -54,10 +55,17 @@ internal fun resolveLayoutMode(
     override: String,
 ): LayoutMode {
     if (override == MobileUiOverride.OFF) return LayoutMode.DESKTOP
-    val touchFirst = coarsePointer || override == MobileUiOverride.ON
-    if (!touchFirst) return LayoutMode.DESKTOP
+    val portrait = height > width
+    val phoneSizedViewport =
+        if (portrait) {
+            width < TABLET_MIN_PORTRAIT_WIDTH
+        } else {
+            height <= PHONE_MAX_HEIGHT && width <= PHONE_MAX_WIDTH
+        }
+    val mobileLayout = coarsePointer || override == MobileUiOverride.ON || phoneSizedViewport
+    if (!mobileLayout) return LayoutMode.DESKTOP
 
-    if (height > width) {
+    if (portrait) {
         // Portrait: a tablet has room to render the tablet layout upright; a phone does not and
         // gets the rotation gate instead.
         return if (width >= TABLET_MIN_PORTRAIT_WIDTH) LayoutMode.TABLET else LayoutMode.PHONE_PORTRAIT
