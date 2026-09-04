@@ -46,6 +46,34 @@ internal object RulesText {
             RuleKey.GROUND_AUTO_SUPPLY,
         )
 
+    /**
+     * Whether the editor must offer this rule as a NAMED choice rather than a tickbox.
+     *
+     * Only where there are more than two values to pick from -- the interception bitmask's four
+     * modes, the ground's three. **A two-value rule stays a tickbox on purpose** (owner decision,
+     * 2026-09-04): a dropdown of two named states is a heavier control for no more information,
+     * and the information belongs in the help text, which states what leaving the box clear does
+     * and what ticking it does. The summary in the Rules window still shows the NAMED value rather
+     * than On/Off, which is what makes the pair readable at a glance.
+     */
+    fun isNamedChoice(rule: RuleKey): Boolean =
+        (rule == RuleKey.AA_INTERCEPT_MODE || rule in NAMED_VALUE_RULES) && rule.editorMax - rule.editorMin > 1
+
+    /**
+     * Why [rule] cannot do anything as the other rules currently stand, or `null` when it can.
+     *
+     * Reads the values through [effective] rather than a [ResolvedRuleset] so the Rules window can
+     * ask about the resolved ruleset and the editor about its unsaved draft, and both get the same
+     * sentence. The dependencies themselves are `RULE_REQUIRES`.
+     */
+    fun inertNote(
+        rule: RuleKey,
+        effective: (RuleKey) -> Int,
+    ): String? =
+        rule.requires
+            ?.takeIf { required -> effective(required) == 0 }
+            ?.let { required -> I18n.t("rules.value.requires", mapOf("rule" to ruleLabel(required))) }
+
     /** The effective value in plain language. OG's interception bitmask is never shown as a bare
      *  number: each mode gets a sentence naming what actually fires. */
     fun value(

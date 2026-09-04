@@ -440,6 +440,11 @@ Consequences worth knowing before editing UI code:
   `#equipment`) — that fight is unwinnable in both directions.
 - **Kotlin publishes `--osada-dock-h` / `--osada-vv-h`** from `ViewportMetricsService` because CSS
   cannot measure them; the map's bottom edge tracks the real dock height.
+- **The mobile top bar is `--osada-mobile-topbar-row` + `--osada-mobile-topbar-rule`**, declared on
+  `body` (not `:root`) so the density/layout classes can feed it. The row is the interactive strip,
+  the rule is the brass hairline that is the HUD's bottom edge; `--osada-mobile-topbar-h` is the
+  OUTER total that `#game` and the sidebar offset themselves by. Never set the row and the bar to
+  the same number — that is what put the End Turn and drawer plates through the hairline.
 - **Pinch runs preview → commit** (`MapZoomPreview` → `MapZoom.applyLevel`). Preview only rescales
   the wrapper and corrects scroll; the single heavy refresh happens once, at commit.
 - **Touch combat is preview-then-confirm** (`TargetPreviewController`): the first tap on an enemy

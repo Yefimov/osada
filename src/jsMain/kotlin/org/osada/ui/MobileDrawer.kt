@@ -38,8 +38,9 @@ internal object MobileDrawer {
         closeBtn.id = "osadaDrawerClose"
         closeBtn.className = "osada-drawer-close osada-ico osada-ico--close"
         closeBtn.title = I18n.t("mobile.drawer.close.label")
-        // Keep X immediately to the right of Air; the flexible desktop spacer remains after it.
-        toggles.querySelector(".osada-sb-toggles-spacer")?.let { toggles.insertBefore(closeBtn, it) }
+        // Appended AFTER the flexible `.osada-sb-toggles-spacer`, so X sits on the drawer's right
+        // edge rather than crowding the Air toggle it used to butt against (2026-09-04 report).
+        // The desktop collapse chevron that normally ends this row is `display:none` on phones.
         closeBtn.asButton(I18n.t("mobile.drawer.close.label")) { close() }
     }
 

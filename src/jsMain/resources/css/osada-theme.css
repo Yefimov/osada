@@ -2356,9 +2356,16 @@ hr {
 
 /* Main-menu-only sprite: eight semantic badges on a uniform 4x2 grid. Keep this separate from
  * `.osada-ico`: hud_icons_grid.png is shared by the in-game HUD and other controls, while
- * main_menu_icons_grid.png is deliberately scoped to the eight permanent start-menu entries. */
+ * main_menu_icons_grid.png is deliberately scoped to the eight permanent start-menu entries.
+ *
+ * Two sizes of the SAME sheet, chosen by layout mode rather than by DPR. The 1448x724 original
+ * shrunk to a 42px plate on a large desktop monitor shimmered (2026-09-04 user report): the
+ * downscale ratio is ~8.6x and no browser filter survives that on fine detail. `_mini` is the
+ * hand-reduced 209x103 sheet, which lands near 1:1 at the desktop plate size. Mobile keeps the
+ * original because its plates are rendered on 2-3x DPR screens, where the mini sheet would be
+ * the one that looks soft — see css/mobile.css. */
 .osada-menu-ico {
-    background-image: url('../resources/main_menu_icons_grid.png');
+    background-image: url('../resources/main_menu_icons_grid_mini.png');
     background-repeat: no-repeat;
     background-size: 400% 200%;
 }
@@ -2454,11 +2461,29 @@ hr {
 }
 
 .osada-menu-btn__ico {
+    /* One owner for the plate's icon size: the short-screen variant below and the two
+     * compensated hud-sheet badges further down both track this number instead of repeating it. */
+    --osada-menu-ico-size: 42px;
     flex: 0 0 auto;
-    width: 42px;
-    height: 42px;
+    width: var(--osada-menu-ico-size);
+    height: var(--osada-menu-ico-size);
     filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .6));
     transition: filter .12s;
+}
+
+/* Continue and Restart are conditional entries and so draw from the shared hud_icons_grid sheet
+ * rather than the eight-cell main-menu sheet (see StartMenuMainButtons.menuIcons). The two sheets
+ * frame their badges differently — hud art fills ~69% of its 362px cell, the menu art ~85% — so
+ * identical 42px boxes rendered these two visibly smaller than the six below them (2026-09-04 user
+ * report). Grow the box by exactly that ratio and take the growth straight back out of the
+ * margins: the icon column and the label beside it do not move, and the extra pixels paint over
+ * the plate's own padding. Nothing is cropped — the hud cell has 15% of blank margin to spare. */
+#continuegame .osada-menu-btn__ico,
+#restartmission .osada-menu-btn__ico {
+    --osada-menu-ico-fill: 1.232;
+    width: calc(var(--osada-menu-ico-size) * var(--osada-menu-ico-fill));
+    height: calc(var(--osada-menu-ico-size) * var(--osada-menu-ico-fill));
+    margin: calc(var(--osada-menu-ico-size) * (1 - var(--osada-menu-ico-fill)) / 2);
 }
 
 .osada-menu-btn:hover .osada-menu-btn__ico {
@@ -2562,8 +2587,7 @@ hr {
     }
 
     .osada-menu-btn__ico {
-        width: 36px;
-        height: 36px;
+        --osada-menu-ico-size: 36px;
     }
 
     .osada-menu-btn__label {
@@ -2773,23 +2797,6 @@ hr {
 .osada-checkbox--locked {
     cursor: not-allowed;
     pointer-events: none;
-}
-
-/* A setting that IS switched on but is not in force yet, because the operation under way locked
- * its rules at launch (`StalinRegimePendingNote`). Not the `--locked` treatment: the row is fully
- * usable and the choice was accepted — only its arrival is deferred, so it gets a note rather than
- * being dimmed out. */
-.osada-setting-pending:empty {
-    display: none;
-}
-
-.osada-setting-pending {
-    flex: 1 0 100%;
-    margin-top: 3px;
-    font-size: 11px;
-    line-height: 1.4;
-    color: var(--osada-brass);
-    white-space: normal;
 }
 
 /* ============================================================================
@@ -5678,9 +5685,17 @@ hr {
 /* combatLogButton (Turn Report toggle): reparented from a legacy position:fixed floating glyph
  * — that independent fixed positioning used to sit directly over the Turn Report's own title once
  * open — into this flex row (MainMenuBuilder). Resets base.css's fixed/top/left/margin/size/
- * background so it lays out as a normal .osada-tb-icon sibling; keeps its own osada-menu
- * glyph font ("l") rather than switching to the .osada-ico sprite sheet (no matching glyph there). */
+ * background so it lays out as a normal .osada-tb-icon sibling.
+ *
+ * Its glyph is a CHILD SPAN carrying the .osada-ico sprite, not text on the button itself — the
+ * old osada-menu "l" character was replaced on 2026-09-04. base.css sizes #combatLogButton as the
+ * legacy 40x13 fixed tab and an id beats a class, so both the button and that span need explicit
+ * boxes here or the sprite renders at 0x0 and the control disappears entirely (desktop, reported
+ * 2026-09-04). mobile.css re-sizes both for the phone bar afterwards. */
 .osada-tb-combatlog {
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
     /* Absolutely centered in the bar (not flex-centered between spacers): the left and right
      * bar clusters have different widths, so flex centering drifted the button off the true
      * viewport centerline while the Turn Report window below opens exactly ON it (user report:
@@ -5700,6 +5715,12 @@ hr {
     font-size: 20px !important;
     line-height: 1 !important;
     color: var(--osada-brass) !important;
+}
+
+.osada-tb-combatlog__ico {
+    display: block;
+    width: 34px;
+    height: 34px;
 }
 
 .osada-tb-combatlog:hover {
@@ -8758,6 +8779,25 @@ hr {
 .osadaRulesSummary__row--unavailable .osadaRulesSummary__value {
     color: #e0a072;
     font-style: italic;
+}
+
+/* A rule that is set but cannot act, because the rule it needs is off (shell craters with barrage
+ * fire switched off). Dimmed whole-row rather than recoloured like --unavailable: the value is
+ * still the player's own and still stored; it is the whole row that is asleep. The editor dims and
+ * disables its control the same way. */
+.osadaRulesSummary__row--inert,
+.osadaRulesRow--inert {
+    opacity: 0.55;
+}
+
+.osadaRulesSummary__row--inert .osadaRulesSummary__value,
+.osadaRulesRow--inert .osadaRulesRow__label {
+    font-style: italic;
+}
+
+.osadaRulesRow--inert input,
+.osadaRulesRow--inert .osadaRulesSelect {
+    cursor: not-allowed;
 }
 
 .osadaRulesActions {

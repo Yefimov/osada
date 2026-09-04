@@ -163,7 +163,6 @@ internal object StartMenuSettingsBuilder {
         settingSections.forEach { buildSettingSection(it) }
         wireSettingsOkHandler()
         ObserverModeLock.refresh()
-        StalinRegimePendingNote.refresh()
     }
 
     // Slider rows need the same row scaffold as the checkbox rows below (and as PM): a
@@ -303,12 +302,9 @@ internal object StartMenuSettingsBuilder {
         val current = uiSettings.getFlag(id)
         uiSettings.setFlag(id, !current)
         valueDiv.classList.toggle("checked", !current)
-        if (id == "stalinRegime") {
-            GameHolder.instance?.synchronizeStalinRegimeUnits()
-            // ...which is a no-op while the running operation has the rule locked the other way, so
-            // the row has to say so rather than leave the tick looking ignored.
-            StalinRegimePendingNote.refresh()
-        }
+        // Applies to the battle in progress immediately: the mode is a setting, not a rule the
+        // operation froze at launch (`RULESET_SCHEMA_VERSION` 16 retired that arrangement).
+        if (id == "stalinRegime") GameHolder.instance?.synchronizeStalinRegimeUnits()
         if (id == "useRetina") applyRetinaScaleAdjustment()
         // Observer badge (Task 5): the settings dialog covers the top bar anyway, so
         // updating it live vs. on close is invisible to the player either way — but

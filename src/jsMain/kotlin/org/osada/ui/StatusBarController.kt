@@ -215,10 +215,9 @@ internal class StatusBarController(
      *  exactly that reason, so leaving it out of the badge would have been the one balance switch
      *  with no persistent reminder. */
     private fun updateObserverBadge() {
-        // Stalin Regime is read through [StalinRegimePendingNote.inForce], not off the checkbox: a
-        // battle that locked its ruleset before the box was ticked is not running the mode, and a
-        // badge announcing an advantage the player does not have is a lie in the other direction.
-        val on = uiSettings.noFOW || uiSettings.showHiddenVictoryHexes || StalinRegimePendingNote.inForce()
+        // The checkbox is the whole answer: the mode applies the moment it is ticked, so the badge
+        // and the setting can no longer disagree the way they did while a battle froze the rule.
+        val on = uiSettings.noFOW || uiSettings.showHiddenVictoryHexes || uiSettings.stalinRegime
         byId("osadaObserverBadge")?.style?.display = if (on) "flex" else "none"
     }
 

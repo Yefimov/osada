@@ -109,7 +109,6 @@ internal object LiveLocalization {
         // Re-written after the rows above: while a multiplayer match is running the Observer Mode
         // rows carry the lock explanation, not their own help text.
         ObserverModeLock.refresh()
-        StalinRegimePendingNote.refresh()
         byId("smSetOkBut")?.apply {
             title = I18n.t("settings.done.help")
             setAttribute("data-label", I18n.t("common.done.label"))

@@ -106,6 +106,55 @@ class RulesWindowTest {
         assertEquals(I18n.t("rules.value.unavailable"), (row.lastElementChild as? HTMLElement)?.textContent)
     }
 
+    /**
+     * A rule whose prerequisite is off is greyed and says which rule it is waiting for.
+     *
+     * Shell craters are dug by a barrage and by nothing else, so with barrage fire off the row was
+     * offering a live-looking choice the engine could never act on.
+     */
+    @Test
+    fun aRuleWhosePrerequisiteIsOffIsGreyedAndNamesIt() {
+        RulesetProfileStore.save(
+            RulesetProfile(
+                "custom-1",
+                "Mine",
+                overrides = mapOf(RuleKey.CRATERS to 1, RuleKey.BARRAGE to 0),
+            ),
+        )
+        RulesetSelection.select(RulesetSelection.Surface.SCENARIO, "custom-1")
+
+        RulesWindow.open(RulesetSelection.Surface.SCENARIO)
+        val row = document.querySelector(".osadaRulesSummary__row[data-rule=\"craters\"]") as? HTMLElement
+        val barrageRow = document.querySelector(".osadaRulesSummary__row[data-rule=\"barrage\"]") as? HTMLElement
+
+        assertNotNull(row)
+        assertTrue(row.className.contains("osadaRulesSummary__row--inert"), row.className)
+        assertEquals(
+            I18n.t("rules.value.requires", mapOf("rule" to RulesText.ruleLabel(RuleKey.BARRAGE))),
+            (row.lastElementChild as? HTMLElement)?.title,
+        )
+        assertFalse(barrageRow?.className?.contains("--inert") ?: true, "barrage itself needs nothing")
+    }
+
+    /** The same rule stops being greyed once its prerequisite is on. */
+    @Test
+    fun aRuleWhosePrerequisiteIsOnIsNotGreyed() {
+        RulesetProfileStore.save(
+            RulesetProfile(
+                "custom-1",
+                "Mine",
+                overrides = mapOf(RuleKey.CRATERS to 1, RuleKey.BARRAGE to 1),
+            ),
+        )
+        RulesetSelection.select(RulesetSelection.Surface.SCENARIO, "custom-1")
+
+        RulesWindow.open(RulesetSelection.Surface.SCENARIO)
+        val row = document.querySelector(".osadaRulesSummary__row[data-rule=\"craters\"]") as? HTMLElement
+
+        assertNotNull(row)
+        assertFalse(row.className.contains("--inert"), row.className)
+    }
+
     @Test
     fun anUnsupportedProfileIsOfferedDisabledAndCannotBeSelected() {
         RulesetProfileStore.replaceAll(
@@ -158,6 +207,73 @@ class RulesWindowTest {
             "every rule gets a control",
         )
         assertTrue(RulesetProfileStore.custom().isEmpty(), "nothing is stored until Save")
+    }
+
+    /**
+     * Each control matches the shape of its rule: a labelled choice only where there are more than
+     * two values, a tickbox for a two-value rule (owner decision, 2026-09-04).
+     */
+    @Test
+    fun ruleControlsMatchTheShapeOfTheRule() {
+        RulesWindow.open(RulesetSelection.Surface.SCENARIO)
+        RulesEditorWindow.openCopyOf(RulesetSelection.Surface.SCENARIO)
+        // Scoped to the editor: the Rules window's own summary rows carry `data-rule` too.
+        val editor = byId(RulesEditorWindow.WINDOW_ID)
+        val intercept = editor?.querySelector("[data-rule=\"aa_intercept_mode\"] select") as? HTMLSelectElement
+        val airFuel = editor?.querySelector("[data-rule=\"air_fuel\"] input") as? HTMLInputElement
+
+        assertNotNull(intercept, "four interception modes need naming")
+        assertEquals(4, intercept.querySelectorAll("option").length)
+        assertNotNull(airFuel, "a two-value rule stays a tickbox")
+        assertEquals("checkbox", airFuel.type)
+    }
+
+    /**
+     * A tickbox whose two states have NAMES has to say in its help what each state is.
+     *
+     * The label alone cannot: "Aircraft fuel model" names neither model, which is what made the
+     * air-fuel rule read as offering no choice at all. The window shows the named value; the help
+     * is where the pair is spelled out.
+     */
+    @Test
+    fun aTickboxWithNamedStatesSaysWhatBothStatesAre() {
+        RuleKey.entries
+            .filter { rule ->
+                !RulesText.isNamedChoice(rule) &&
+                    rule.editorMin == 0 &&
+                    rule.editorMax == 1 &&
+                    RulesText.value(rule, 0) != I18n.t("rules.value.off")
+            }.forEach { rule ->
+                val help = I18n.t("rules.${rule.key}.help")
+                assertTrue(Regex("\\bOff\\b").containsMatchIn(help), "${rule.key} help never says what Off is")
+                assertTrue(Regex("\\bOn\\b").containsMatchIn(help), "${rule.key} help never says what On is")
+            }
+    }
+
+    /** Ticking the prerequisite hands the dependent rule back without a save and reopen. */
+    @Test
+    fun theEditorDisablesADependentRuleUntilItsPrerequisiteIsTicked() {
+        RulesetProfileStore.save(
+            RulesetProfile("custom-1", "Mine", overrides = mapOf(RuleKey.BARRAGE to 0, RuleKey.CRATERS to 1)),
+        )
+        RulesetSelection.select(RulesetSelection.Surface.SCENARIO, "custom-1")
+        RulesEditorWindow.openCopyOf(RulesetSelection.Surface.SCENARIO)
+        val editor = byId(RulesEditorWindow.WINDOW_ID)
+        val craters = editor?.querySelector("[data-rule=\"craters\"] input") as? HTMLInputElement
+        val barrage = editor?.querySelector("[data-rule=\"barrage\"] input") as? HTMLInputElement
+
+        assertNotNull(craters)
+        assertNotNull(barrage)
+        assertEquals(true, craters.disabled)
+
+        barrage.checked = true
+        barrage.dispatchEvent(
+            org.w3c.dom.events
+                .Event("change"),
+        )
+
+        assertEquals(false, craters.disabled)
+        assertEquals(true, craters.checked, "the value the player set is never rewritten")
     }
 
     @Test

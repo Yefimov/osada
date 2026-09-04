@@ -27,6 +27,14 @@ internal object MobileContextDock {
         location.className = "osada-mobile-context__location"
         location.title = I18n.t("hud.status.location.help")
 
+        // Second rail line: the scenario's in-game date and name. The phone top bar hides
+        // `.osada-tb-op` because a title truncated to one letter is worse than no title, so this
+        // is the only place the operation identifies itself during play.
+        val scenario = addTag(dock, "div")
+        scenario.id = "osadaMobileScenario"
+        scenario.className = "osada-mobile-context__scenario"
+        scenario.title = I18n.t("hud.status.scenario.help")
+
         val heroes = addTag(dock, "div")
         heroes.id = "osadaMobileHeroes"
         heroes.className = "osada-mobile-context__heroes osada-ico osada-ico--star"
@@ -55,5 +63,23 @@ internal object MobileContextDock {
 
     fun updateLocation(html: String) {
         byId("osadaMobileLocation")?.innerHTML = html
+    }
+
+    /**
+     * [dateText] is the already-localized in-game date and [name] the scenario title, both taken
+     * from the same refresh that fills the desktop status line so the two can never disagree.
+     */
+    fun updateScenario(
+        dateText: String,
+        name: String,
+    ) {
+        val element = byId("osadaMobileScenario") ?: return
+        clearTag(element)
+        val date = addTag(element, "span")
+        date.className = "osada-mobile-context__date"
+        date.textContent = dateText
+        addTag(element, "span").textContent = " · $name"
+        element.title = "$dateText · $name"
+        element.setAttribute("aria-label", "$dateText · $name")
     }
 }

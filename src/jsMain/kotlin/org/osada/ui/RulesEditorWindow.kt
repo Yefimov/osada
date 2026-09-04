@@ -2,6 +2,7 @@ package org.osada.ui
 
 import kotlinx.browser.document
 import org.osada.i18n.I18n
+import org.osada.rules.ruleset.RULE_REQUIRES
 import org.osada.rules.ruleset.ResolvedRuleset
 import org.osada.rules.ruleset.RuleKey
 import org.osada.rules.ruleset.RulesetProfile
@@ -93,7 +94,10 @@ internal object RulesEditorWindow {
         title.textContent = I18n.t(if (rename) "rules.editor.title.rename" else "rules.editor.title")
 
         buildNameField(window, profile)
-        if (!rename) RuleKey.entries.forEach { rule -> buildControl(window, rule) }
+        if (!rename) {
+            RuleKey.entries.forEach { rule -> buildControl(window, rule) }
+            refreshDependencies()
+        }
         buildFooter(window)
         validate()
     }
@@ -118,8 +122,8 @@ internal object RulesEditorWindow {
         }
     }
 
-    /** One control per rule, shaped by what the rule IS: labelled choices for the interception
-     *  bitmask, a bounded stepper for range, a switch for a boolean. */
+    /** One control per rule, shaped by what the rule IS: labelled choices wherever the values
+     *  have names of their own, a bounded stepper for range, a switch for a genuine boolean. */
     private fun buildControl(
         window: HTMLElement,
         rule: RuleKey,
@@ -131,10 +135,30 @@ internal object RulesEditorWindow {
         label.className = "osadaRulesRow__label"
         label.textContent = RulesText.ruleLabel(rule)
         label.title = RulesText.ruleHelp(rule)
-        when (rule) {
-            RuleKey.AA_INTERCEPT_MODE, RuleKey.GROUND_FOLLOWS_WEATHER -> choiceControl(row, rule)
-            RuleKey.FLAK_RANGE, RuleKey.GROUND_CHANGE_TURNS -> stepperControl(row, rule)
+        when {
+            RulesText.isNamedChoice(rule) -> choiceControl(row, rule)
+            rule == RuleKey.FLAK_RANGE || rule == RuleKey.GROUND_CHANGE_TURNS -> stepperControl(row, rule)
             else -> switchControl(row, rule)
+        }
+    }
+
+    /**
+     * Disables the rules that can do nothing while their prerequisite is off, and says which one.
+     *
+     * Re-run after every switch and choice, because the prerequisite is itself an editable rule:
+     * ticking Barrage fire has to hand Shell craters back in the same window, without a save and
+     * reopen. The draft VALUE is never touched -- a rule the player set stays set, and simply
+     * starts working again when its prerequisite does.
+     */
+    private fun refreshDependencies() {
+        val window = byId(WINDOW_ID) ?: return
+        RULE_REQUIRES.keys.forEach { rule ->
+            val row = window.querySelector("[data-rule=\"${rule.key}\"]") as? HTMLElement ?: return@forEach
+            val note = RulesText.inertNote(rule) { other -> current(other) }
+            row.classList.toggle("osadaRulesRow--inert", note != null)
+            val control = row.querySelector("input, select") as? HTMLElement ?: return@forEach
+            control.asDynamic().disabled = note != null
+            control.title = note.orEmpty()
         }
     }
 
@@ -160,6 +184,7 @@ internal object RulesEditorWindow {
             val mode = (select.asDynamic().value as? String)?.toIntOrNull() ?: current(rule)
             draft[rule] = mode
             select.title = RulesText.value(rule, mode)
+            refreshDependencies()
             Unit
         }
     }
@@ -192,6 +217,7 @@ internal object RulesEditorWindow {
         input.setAttribute("aria-label", RulesText.ruleLabel(rule))
         input.onchange = {
             draft[rule] = if (input.checked) 1 else 0
+            refreshDependencies()
             Unit
         }
     }
