@@ -3,7 +3,7 @@
   "id": 0,
   "scenario": "simpob_00.xml",
   "startprestige": 0,
-  "intro": "By this sign: the Komuch offensive<br><br>June 8th, 1918<br><br>The men coming down the Volga have a banner with the old words on it - By this sign shalt thou conquer - and underneath the banner is a Committee of ex-deputies, a Czechoslovak corps that was supposed to be going home through Vladivostok, and the officers' druzhinas of every town between here and Chelyabinsk. They are going to write those words over everything they take. We shall see what they are worth by the autumn.<br><br>Samara fell this morning. The Czechoslovak battalions took the bridge over the Volga before the demolition party got to it, and the Committee of Members of the Constituent Assembly has declared itself the government of Russia in a building the garrison was holding at breakfast.<br><br>I command a detachment of the 1st Army. Between Samara and Kazan there is one railway, four towns on it, and nothing else. Hold them, and take the bridgehead back if it can be done.<br><br>Victory conditions:<br>- Hold Simbirsk (7,5), Melekess (21,7), Stavropol (20,19) and Syzran (8,26).<br>- Take Samara (30,23).",
+  "intro": "By this sign: the Komuch offensive<br><br>June 8th, 1918<br><br>Samara fell this morning. Czechoslovak battalions took the Volga bridge before the demolition party reached it, and a Committee of Constituent Assembly deputies has declared itself the government of Russia.<br><br>It has five deputies, a press and no soldiers of its own; by November Kolchak's officers will make that plain to it. Until then it has the railway, and the railway is the front. Hold Simbirsk, Melekess, Stavropol and Syzran, and take Samara back if it can be done.",
   "outcome": {
    "briliant": {
     "goto": 1,
@@ -47,7 +47,7 @@
   "id": 1,
   "scenario": "simpob_01.xml",
   "startprestige": 0,
-  "intro": "Uncountable trophies: Kazan<br><br>August 4th, 1918<br><br>Kazan holds the gold.<br><br>Six hundred million roubles of the Imperial reserve were evacuated here for safety in 1915 and they are still in the bank vaults, and every man in Kappel's column knows it. That is why the attack is coming here and not somewhere sensible, and it is also why we cannot simply trade the city for space.<br><br>Kappel has perhaps three thousand men and the Serbian battalion and two gunboats. We have the 5th Army, which is three days old and has a staff that has never worked together. Hold the Kremlin, the academy and the river crossings. Bogorodskoye downstream is where their flotilla is basing.<br><br>Victory conditions:<br>- Hold the Kazan Kremlin (27,3), the Military Academy (26,2), Vasilyevo (22,3), Verkhniy Uslan (23,4) and Karaishevo (33,17).<br>- Take Bogorodskoye (30,25).",
+  "intro": "The gold in the vaults: Kazan<br><br>August 4th, 1918<br><br>Six hundred million roubles of the Imperial reserve lie in the vaults under this city. That, and not the map, is why Kappel's column is coming here.<br><br>Whoever walks out with them pays for a year of war, so Kazan cannot be traded for space. Kappel has three thousand men and two gunboats; the 5th Army is three days old. Hold the Kremlin, the academy and the river crossings.",
   "outcome": {
    "briliant": {
     "goto": 2,
@@ -91,7 +91,7 @@
   "id": 2,
   "scenario": "simpob_02.xml",
   "startprestige": 0,
-  "intro": "Harvest of sorrow: the end of the Komuch<br><br>September 18th, 1918<br><br>The tide has turned and the Committee knows it before we do.<br><br>Kazan was retaken on the tenth, Simbirsk on the twelfth - Tukhachevsky's 1st Army took it in two days and sent Lenin a telegram about it while he was still in bed with a bullet in him. The People's Army is coming apart: the mobilised peasants will not fight for the Committee, and the Czechoslovaks have decided they are going home after all and would rather not die on the Volga first.<br><br>Samara and Syzran are the last of it. The Committee's staff and its treasury are already loading at Krotovka to go east to Ufa, and every column that gets out will be in the line against us again in the spring under Kolchak.<br><br>Victory conditions:<br>- Take Samara (30,23) and Syzran (8,26).<br>- Hold Simbirsk (8,6).<br>- The enemy escapes instead if seven of his columns get out through Krotovka (41,23).",
+  "intro": "The Committee comes apart: Samara and Syzran<br><br>September 18th, 1918<br><br>Kazan was retaken on the tenth and Simbirsk on the twelfth. The mobilised peasants will not fight for the Committee, and the Czechoslovaks have decided they are going home.<br><br>Samara and Syzran are the last of it. The Committee's staff and treasury are loading at Krotovka for Ufa, and every column that gets out will be back in the line in the spring under Kolchak. Take both towns and hold Simbirsk behind them.",
   "outcome": {
    "briliant": {
     "goto": 3,
@@ -135,7 +135,7 @@
   "id": 3,
   "scenario": "simpob_03.xml",
   "startprestige": 0,
-  "intro": "At the gates of Europe: Ufa<br><br>January 6th, 1919<br><br>There is a Supreme Ruler now.<br><br>Admiral Kolchak took power in Omsk in November by arresting the last of the Committee's ministers, and the Entente has recognised what he did by continuing to unload rifles at Vladivostok. He has a real staff, a real mobilisation and the whole of Siberia's railway.<br><br>His first stroke has come at Ufa in a Urals winter, against the 5th Army, which is holding a hundred and fifty versts with nine thousand men and no reserve worth the name. It is thirty degrees below and the ground cannot be dug.<br><br>Hold the city and the approaches. Iglino on the Chelyabinsk line is where their assault groups form.<br><br>Victory conditions:<br>- Hold Ufa (3,17), Cherkassy (11,2), Kumlekul (6,4) and Alatorka (21,18).<br>- Take Iglino (37,21).",
+  "intro": "Thirty below: the winter blow at Ufa<br><br>January 6th, 1919<br><br>There is a Supreme Ruler now, by his own proclamation: Kolchak took Omsk in November by arresting the Committee's ministers, and the Entente recognised it by going on unloading rifles for him.<br><br>Behind his front the atamans are already hanging people along the railway, which will cost him an army - but not this winter. His first stroke is at Ufa, where the 5th Army holds a hundred and fifty versts with nine thousand men at thirty below. Hold Ufa and the approaches.",
   "outcome": {
    "briliant": {
     "goto": 4,
@@ -179,7 +179,7 @@
   "id": 4,
   "scenario": "simpob_04.xml",
   "startprestige": 0,
-  "intro": "Breakthrough: the spring offensive<br><br>March 1st, 1919<br><br>This is the one they have been building all winter.<br><br>Khanzhin's Western Army has come out of the thaw straight at the junction of our 5th and 1st Armies with a three-to-one superiority on the axis of attack, and behind it Gaida is driving on Vyatka to join hands with the interventionists at Archangel. If those two ever shake hands the northern half of the Republic is cut off.<br><br>We have five towns on the railway and not enough of anything. Hold them. Ufa, behind their front, is their railhead and their whole supply rests on it.<br><br>Victory conditions:<br>- Hold Belebei (12,16), Tuymazy (8,7), Abdulino (8,22), Sterlitamak (32,22) and Meleuz (32,28).<br>- Take Ufa (33,4).",
+  "intro": "Khanzhin's breakthrough: the spring offensive<br><br>March 1st, 1919<br><br>Khanzhin's Western Army came out of the thaw at the junction of the 5th and 1st Armies with three to one on the axis of attack. Behind it Gaida is driving on Vyatka.<br><br>If Gaida joins hands with the interventionists at Archangel, the northern half of the Republic is cut off from Moscow. Hold Belebei, Tuymazy, Abdulino, Sterlitamak and Meleuz; Ufa behind their front is their railhead.",
   "outcome": {
    "briliant": {
     "goto": 5,
@@ -223,7 +223,7 @@
   "id": 5,
   "scenario": "simpob_05.xml",
   "startprestige": 0,
-  "intro": "Rush: the spring offensive<br><br>March 14th, 1919<br><br>They have not stopped, and now there is nothing behind us to stop them with.<br><br>Khanzhin is driving for the Volga and Samara and he is doing it with everything at once, on a front too wide for his own supply, because he has been told the Volga must be reached before the Southern Front's own offensive begins. Our task is to make him pay for every verst and to still be holding these towns when his momentum runs out.<br><br>There is no counterattack in these orders. There is a clock, and a line of towns, and the requirement that both still be ours when the clock stops.<br><br>Victory conditions:<br>- When the time runs out, hold six objectives for a brilliant victory, five for a victory, four for a tactical victory.<br>- The objectives are Ufa (33,4), Tuymazy (8,7), Belebei (12,16), Abdulino (8,22), Sterlitamak (32,22) and Meleuz (32,28).",
+  "intro": "The drive for the Volga: the spring offensive<br><br>March 14th, 1919<br><br>They have not stopped, and there is nothing behind this sector to stop them with. Khanzhin is driving for the Volga on a front too wide for his own supply.<br><br>He has been told the river must be reached before the Southern Front opens, and an army in that much of a hurry pays for every verst. There is no counterattack in these orders: a clock, and the line of towns from Belebei to Sterlitamak still ours when it stops.",
   "outcome": {
    "briliant": {
     "goto": 6,
@@ -267,7 +267,7 @@
   "id": 6,
   "scenario": "simpob_06.xml",
   "startprestige": 0,
-  "intro": "Song of the Cossacks: Orenburg<br><br>April 17th, 1919<br><br>Orenburg has been under siege, on and off, for most of a year.<br><br>Dutov's Orenburg Cossacks want it because without it their Host has no capital and no junction; we hold it because it is the only rail link to Turkestan and to the Soviet republics beyond it. Cut that and Central Asia is on its own.<br><br>The garrison is the town: railwaymen, the Kirghiz and Tatar detachments, a workers' regiment, and the 1st Army's left flank. The relieving force is going to Buzuluk instead, because Frunze is about to attack, and I would rather he did.<br><br>Hold the ring. There is one gap in their line, north of the river, and it may be worth closing.<br><br>Victory conditions:<br>- When the time runs out, hold five objectives for a brilliant victory, four for a victory, three for a tactical victory.<br>- The objectives are Orenburg (8,30), Sakmara (16,19), Seitovsky Posad (10,21), Nizhnie Chebenki (24,18) and Verkhnie Chebenki (29,18).<br>- Or take their crossing at (24,4).",
+  "intro": "The ring at Orenburg<br><br>April 17th, 1919<br><br>Dutov's Cossacks have besieged Orenburg on and off for a year. Without it their Host has no capital and no junction.<br><br>We hold it because it is the only rail link to Turkestan - cut it and Central Asia is on its own for the rest of the war. The garrison is the town: railwaymen, the Kirghiz and Tatar detachments, a workers' regiment. There will be no relief; the relieving force has gone to Buzuluk, because Frunze is about to attack. Hold the ring.",
   "outcome": {
    "briliant": {
     "goto": 7,
@@ -311,7 +311,7 @@
   "id": 7,
   "scenario": "simpob_07.xml",
   "startprestige": 0,
-  "intro": "Clutching at straws: Belebei<br><br>May 15th, 1919<br><br>Now we attack, and we attack quickly, because the whole point of this is that they should not have time to think.<br><br>Frunze's southern group has already broken the Western Army at Buguruslan and Bugulma. Khanzhin is trying to reform on the Belebei position with his Volga Corps, which is the old People's Army under a new name and is being asked to do the work of two corps.<br><br>The 25th Rifle Division under Chapayev goes in first. There is very little time: everything here depends on hitting the position before it becomes one.<br><br>Victory conditions:<br>- Take Belebei (12,16), Tuymazy (8,7), Buzdyak (16,7) and Shafranovo (19,14) - four turns for a brilliant victory, seven for a victory, ten at the outside.<br>- Hold Abdulino (8,22).",
+  "intro": "Frunze attacks: Belebei<br><br>May 15th, 1919<br><br>Frunze's southern group has broken the Western Army at Buguruslan and Bugulma. The initiative on this front has changed hands for the first time since January.<br><br>Khanzhin is trying to reform on the Belebei position with the old People's Army under a new name. Everything depends on hitting that position before it becomes one: Chapayev's 25th Division goes in first, and four turns is what makes this a rout instead of a battle.",
   "outcome": {
    "briliant": {
     "goto": 8,
@@ -355,7 +355,7 @@
   "id": 8,
   "scenario": "simpob_08.xml",
   "startprestige": 0,
-  "intro": "The tide turns: Chistopol<br><br>May 26th, 1919<br><br>This is the point on which the whole summer turns, and I would rather it were somewhere with better roads.<br><br>North of us Gaida's Siberian Army is still pushing on Vyatka and has not yet understood that the army on its left has collapsed. If we take Bugulma and the Azanakayevo junction now, that whole northern group is fighting with a hole where its flank used to be and the Urals are open to us.<br><br>If we do not - if this attack fails and their reserves come south in time - then it is their offensive again, and it will be aimed at the Volga crossings, and I shall be fighting it in front of Kazan.<br><br>Victory conditions:<br>- Take Bugulma (25,20) and Azanakayevo (28,17).<br>- Hold Chistopol (6,9), Naberezhnye Chelny (23,4) and Menzelinsk (28,4).",
+  "intro": "The tide turns: Chistopol<br><br>May 26th, 1919<br><br>North of this sector Gaida's Siberian Army is still pushing on Vyatka and has not understood that the army on its left has collapsed.<br><br>Take Bugulma and the Azanakayevo junction now and that whole northern group is fighting with a hole where its flank used to be. Fail, and their reserves come south and it is their offensive again - aimed at the Volga crossings, and fought for in front of Kazan.",
   "outcome": {
    "briliant": {
     "goto": 17,
@@ -443,7 +443,7 @@
   "id": 10,
   "scenario": "simpob_10.xml",
   "startprestige": 0,
-  "intro": "We'll never leave again: Kazan<br><br>June 10th, 1919<br><br>Twice in one year is more than any city should be asked for.<br><br>Our attack in May was held and the counterstroke that followed it has carried them back onto the Volga. Kazan is again the front line: the Kremlin, the academy, the crossings, and behind them the road to Nizhny.<br><br>The front is being rebuilt around this city while we hold it. Every division that comes up the line arrives because we were still here when it started loading.<br><br>Victory conditions:<br>- When the time runs out, hold six objectives for a brilliant victory, five for a victory, four for a tactical victory.<br>- The objectives are the Kazan Kremlin (27,3), the Military Academy (26,2), Vasilyevo (22,3), Zelenodolsk (14,1), Teteyevo (28,18), Bogorodskoye (30,25) and the crossing at (9,26).<br>- Or take Bolshiye Kabany (32,9) and Pelevo (36,13).",
+  "intro": "Twice in one year: Kazan<br><br>June 10th, 1919<br><br>The May attack was held, and the counterstroke has carried them back onto the Volga. Kazan is the front line again.<br><br>The front is being rebuilt around this city while it is held: every division that comes up the line arrives because Kazan was still ours when it started loading. Hold the Kremlin, the academy and the crossings to the last turn.",
   "outcome": {
    "briliant": {
     "goto": 17,
@@ -487,7 +487,7 @@
   "id": 11,
   "scenario": "simpob_11.xml",
   "startprestige": 0,
-  "intro": "Where it all began: Samara<br><br>July 14th, 1919<br><br>A year and a month since the Czechoslovaks took this bridge, and here we are arguing over it again.<br><br>Their advance down the Volga has not been stopped so much as slowed, and the front headquarters is moving its staffs between three threatened directions by rail, which is what happens when a front has more axes than reserves. My group has been sent here.<br><br>Hold the crossings. Melekess and Krotovka, upstream and east, are their staging points; either would be worth taking off them.<br><br>Victory conditions:<br>- When the time runs out, hold three objectives for a brilliant victory, two for a victory or a tactical victory.<br>- The objectives are Samara (30,23), Simbirsk (7,5) and Syzran (8,26).<br>- Or take Melekess (21,7) and Krotovka (41,23).",
+  "intro": "Where it all began: Samara<br><br>July 14th, 1919<br><br>A year and a month since the Czechoslovaks took this bridge, and it is being argued over again. Their advance down the Volga has been slowed, not stopped.<br><br>Front headquarters is shuttling staffs between three threatened directions by rail, which is what happens when a front has more axes than reserves. This group will not be reinforced. Hold Samara, Simbirsk and Syzran; Melekess and Krotovka are their staging points.",
   "outcome": {
    "briliant": {
     "goto": 17,
@@ -531,7 +531,7 @@
   "id": 12,
   "scenario": "simpob_12.xml",
   "startprestige": 0,
-  "intro": "No mercy: Vyatka<br><br>October 20th, 1919<br><br>Gaida is gone - Kolchak dismissed him in the summer and he has since tried to overthrow his own government in Vladivostok - but the Siberian Army's northern drive has been picked up by someone else, and it still wants what it always wanted: Vyatka, and a junction with the interventionists coming down from Archangel.<br><br>If they meet, the Republic is cut in half along the Northern Dvina and everything north of Moscow is on the wrong side of the line.<br><br>Hold the three city sectors and Karavayevy. Vakhrushi is their forward railhead.<br><br>Victory conditions:<br>- When the time runs out, hold four objectives for a brilliant victory, three for a victory, two for a tactical victory.<br>- The objectives are the three Vyatka sectors (27,10), (24,16), (22,18) and Karavayevy (11,18).<br>- Or take Vakhrushi (40,8).",
+  "intro": "Cutting the Republic in two: Vyatka<br><br>October 20th, 1919<br><br>Gaida is gone - dismissed in the summer, and since then he has tried to overthrow his own government in Vladivostok - but the Siberian Army's northern drive has been picked up by someone else.<br><br>It still wants Vyatka and a junction with the interventionists from Archangel. If they meet, the Republic is cut in half along the Northern Dvina. Hold the Vyatka sectors and Karavayevy; Vakhrushi is their forward railhead.",
   "outcome": {
    "briliant": {
     "goto": 17,
@@ -575,7 +575,7 @@
   "id": 13,
   "scenario": "simpob_13.xml",
   "startprestige": 0,
-  "intro": "The Black Baron: Saratov<br><br>November 13th, 1919<br><br>The Eastern Front now has a southern neighbour, and the neighbour has arrived.<br><br>Wrangel's Caucasus Army has come up the Volga from Tsaritsyn to shake hands with Kolchak's people, which is the one thing both White commands have wanted all year and have never managed to arrange. Our task is to see that they do not manage it here either.<br><br>Saratov is two sectors and a river frontage, with Atkarsk covering the railway west. Volsk upstream is where their two forces are trying to link.<br><br>Victory conditions:<br>- When the time runs out, hold three objectives for a brilliant victory or a victory, two for a tactical victory.<br>- The objectives are the two Saratov sectors (16,12), (19,13) and Atkarsk (3,3).<br>- Or take Volsk (37,1).",
+  "intro": "The Black Baron: Saratov<br><br>November 13th, 1919<br><br>Wrangel's Caucasus Army has come up the Volga from Tsaritsyn to shake hands with Kolchak's people.<br><br>A junction of the two White fronts on the middle Volga is the one thing both commands have wanted all year and never arranged, largely because neither will serve under the other. They are not to arrange it here. Hold the Saratov sectors and Atkarsk; Volsk is where the link is being tried.",
   "outcome": {
    "briliant": {
     "goto": 17,
@@ -619,7 +619,7 @@
   "id": 14,
   "scenario": "simpob_14.xml",
   "startprestige": 0,
-  "intro": "Mousetrap: Ryazan<br><br>December 12th, 1919<br><br>Ryazan is not a front-line town. It is where the roads from the south and the east meet before Moscow, and that is why I am standing in it in December with a group made of other people's spare regiments.<br><br>Five objectives, a river, and a railway junction. If this line goes there is one more behind it and then there is Moscow.<br><br>Venev, on the Tula road, is where their forward group has come up. It is worth a great deal to us and probably not much to them yet.<br><br>Victory conditions:<br>- When the time runs out, hold five objectives for a brilliant victory, four for a victory, three for a tactical victory.<br>- The objectives are Ryazan (34,5), Kolomna (4,4), Turlatovo (41,11), Plakhino (35,19) and Kashira (2,24).<br>- Or take Venev (6,36).",
+  "intro": "The junction before Moscow: Ryazan<br><br>December 12th, 1919<br><br>Ryazan is not a front-line town. It is where the roads from the south and the east meet before Moscow, which is why a group made of other people's spare regiments is standing in it in December.<br><br>If this line goes there is one more behind it, and then there is Moscow. Hold Ryazan, Kolomna and Kashira. Their forward group has come up at Venev on the Tula road, and it is worth more to us than to them yet.",
   "outcome": {
    "briliant": {
     "goto": 17,
@@ -663,7 +663,7 @@
   "id": 15,
   "scenario": "simpob_15.xml",
   "startprestige": 0,
-  "intro": "As though nothing could fall: Klin<br><br>December 30th, 1919<br><br>There is nothing behind this one.<br><br>Klin is on the Petrograd railway sixty versts from Moscow. Everything the Republic has been able to scrape together in a fortnight is in the line here: the courses cadets, two workers' regiments from the Moscow factories, the internationalist battalion, and the regiments that have been retreating since Saratov and are being asked to stop today.<br><br>Five towns. Hold them until the clock runs out. Their forward staging area is south of us and if it can be taken, take it.<br><br>Victory conditions:<br>- When the time runs out, hold five objectives for a brilliant victory, four for a victory, three for a tactical victory.<br>- The objectives are Klin (11,6), Woronino (19,3), Rogatschewo (29,7), Fedoroloka (27,16) and Solnogorsk (16,18).<br>- Or take their staging area at (19,28).",
+  "intro": "Sixty versts from Moscow: Klin<br><br>December 30th, 1919<br><br>Klin is on the Petrograd railway sixty versts from Moscow. There is nothing behind this one.<br><br>Everything the Republic could scrape together in a fortnight is here: the courses cadets, two workers' regiments from the Moscow factories, the internationalist battalion, and regiments retreating since Saratov that are being asked to stop today. Hold Klin and the four villages until the clock runs out.",
   "outcome": {
    "briliant": {
     "goto": 17,
@@ -707,7 +707,7 @@
   "id": 16,
   "scenario": "simpob_16.xml",
   "startprestige": 0,
-  "intro": "Peace through strength: Zhitomir<br><br>May 19th, 1920<br><br>During 1919 Poland was a formidable foe for the Red Army, that tried in vain to expand to the west only to be defeated by the brave Poles. I am convinced that, were it not for Poland, the Bolsheviks would have reached the borders of Germany, Hungary and other countries, where they would have instigated successful communist revolutions. Most people in Europe don't realise how much they owe to Poland, that acted as a barrier to the Soviet expansion. Personally, I respect and appreciate what the Poles did.<br><br>However, the respect that we had for the Polish army, and the fact that the Bolsheviks were our common enemies for many months, couldn't hide the mutual enmity that existed between us. We knew that, once the Red Army was finally destroyed, Poland would become our new main enemy, at least in the short term.<br><br>But I must be clear about this: in 1920 we didn't want a war with Poland. Kolchak was resigned to accept the demands of the League of Nations and to leave the Poles alone. It was them who, blinded by their victories against the Bolsheviks, believed that they could force us to leave Belarus and Ukraine, where they would support the establishment of independent republics that (of course!) would be allies of Poland and enemies of Russia.<br><br>And that was how, in April 1920, Poland invaded Ukraine. Naturally, that act of aggression against us was condemned by the League of Nations, whose delegates made us know that if Russia used an armed force against the Polish Army, only for defensive purposes, the League would support us. That was all that Kolchak wanted, and he immediately sent an army to Volinia, in western Ukraine, in order to stop the Polish invasion.<br><br>Victory conditions:<br>- Take all the VHs.",
+  "intro": "The May counterattack: Zhitomir<br><br>May 19th, 1920<br><br>The Polish armies took Kiev on the seventh. The 12th and 14th Armies were pushed back over the Dnieper and are being put together again behind it.<br><br>Warsaw's object here is a client state under Petliura, bought last month with eastern Galicia and western Volhynia. Attack now: the Western Front opened in Belorussia on the fourteenth, and every Polish division kept here this fortnight is one that does not entrain north. Take Korosten, Zwiahel, Zhitomir and Kazatin; hold Malin and Fastov.",
   "outcome": {
    "briliant": {
     "goto": 254,
@@ -716,7 +716,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Our victory was complete. The Polish were routed, and they retreated so fast that I think we could have reached Warsaw in a few weeks if we had wanted to. Instead, we contented ourselves with the liberation of most of Belarus and Ukraine and with reasonable war reparations. The Poles agreed to our conditions, and both sides signed a peace treaty in Minsk in June 1920.<br><br>Russia had nearlly collapsed during those chaotic years, but in the end we managed to salvage most of our country. Since then we have worked hard to improve Russia and its people, rejecting all marxist ideas. There is still a lot left to do, and many unsolved problems, but at least we have hope in the future. May God help Russia and her rulers, so our country can thrive and we never engage again in nightmarish civil wars.<br><br>The campaign is over. I hope you've liked it and thanks for playing.<br><br>Urica, 2018"
+    "text": "Korosten, Zwiahel, Zhitomir and Kazatin are ours and the junctions between them are working. Malin and Fastov were never seriously threatened.<br><br>What this buys is not territory. It is the four Polish divisions that spent this fortnight in Volhynia instead of going north against the Western Front, and a rail net that the 1st Cavalry Army will detrain onto when it finishes its march from the Kuban.<br><br>The decision on this front will not be taken here. It will be taken in the first week of June, in the seam at Samhorodok, by an army that is still on the road today. Our part was to see that the seam is still there when it arrives."
    },
    "victory": {
     "goto": 254,
@@ -725,7 +725,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Our victory was complete. The Polish were routed, and they retreated so fast that I think we could have reached Warsaw in a few weeks if we had wanted to. Instead, we contented ourselves with the liberation of most of Belarus and Ukraine and with reasonable war reparations. The Poles agreed to our conditions, and both sides signed a peace treaty in Minsk in June 1920.<br><br>Russia had nearlly collapsed during those chaotic years, but in the end we managed to salvage most of our country. Since then we have worked hard to improve Russia and its people, rejecting all marxist ideas. There is still a lot left to do, and many unsolved problems, but at least we have hope in the future. May God help Russia and her rulers, so our country can thrive and we never engage again in nightmarish civil wars.<br><br>The campaign is over. I hope you've liked it and thanks for playing.<br><br>Urica, 2018"
+    "text": "Korosten, Zwiahel, Zhitomir and Kazatin are ours and the junctions between them are working. Malin and Fastov were never seriously threatened.<br><br>What this buys is not territory. It is the four Polish divisions that spent this fortnight in Volhynia instead of going north against the Western Front, and a rail net that the 1st Cavalry Army will detrain onto when it finishes its march from the Kuban.<br><br>The decision on this front will not be taken here. It will be taken in the first week of June, in the seam at Samhorodok, by an army that is still on the road today. Our part was to see that the seam is still there when it arrives."
    },
    "tactical": {
     "goto": 254,
@@ -734,7 +734,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Our victory was complete. The Polish were routed, and they retreated so fast that I think we could have reached Warsaw in a few weeks if we had wanted to. Instead, we contented ourselves with the liberation of most of Belarus and Ukraine and with reasonable war reparations. The Poles agreed to our conditions, and both sides signed a peace treaty in Minsk in June 1920.<br><br>Russia had nearlly collapsed during those chaotic years, but in the end we managed to salvage most of our country. Since then we have worked hard to improve Russia and its people, rejecting all marxist ideas. There is still a lot left to do, and many unsolved problems, but at least we have hope in the future. May God help Russia and her rulers, so our country can thrive and we never engage again in nightmarish civil wars.<br><br>The campaign is over. I hope you've liked it and thanks for playing.<br><br>Urica, 2018"
+    "text": "Korosten, Zwiahel, Zhitomir and Kazatin are ours and the junctions between them are working. Malin and Fastov were never seriously threatened.<br><br>What this buys is not territory. It is the four Polish divisions that spent this fortnight in Volhynia instead of going north against the Western Front, and a rail net that the 1st Cavalry Army will detrain onto when it finishes its march from the Kuban.<br><br>The decision on this front will not be taken here. It will be taken in the first week of June, in the seam at Samhorodok, by an army that is still on the road today. Our part was to see that the seam is still there when it arrives."
    },
    "lose": {
     "goto": 255,
@@ -743,7 +743,7 @@
      0
     ],
     "prestige": 0,
-    "text": "The Poles surprised us and defeated us, reaching Kiev a couple of weeks later. The risk of a new Bolshevik uprising was high, so we had to accept humiliating peace conditions, which included the acknowledgement of the independence of Poland, Belarus and Ukraine.<br><br>Ashamed for my failure, I left the army and went back to Samara, where I found a job as a teacher. Luckily, people soon forgot about me. After all, I'm not the first Russian officer who fails at a very critical moment. At least I can proudly say that we defeated the Bolsheviks and that, although the empire has been lost, Russia still has a future thanks to people like me. I did my best to serve my country. I wish I had done it better, but I couldn't. Over time, I have learnt to live with that."
+    "text": "The attack was held in front of Zhitomir and the junctions stay theirs.<br><br>The consequence is not on this sector. It is that the divisions we were sent to hold in Volhynia are now free to entrain for the north, and the Western Front will meet them instead of us."
    }
   }
  },
@@ -751,7 +751,7 @@
   "id": 17,
   "scenario": "simpob_17.xml",
   "startprestige": 0,
-  "intro": "Farewell to Ufa<br><br>May 29th, 1919<br><br>Across the Belaya, then.<br><br>The Western Army is broken and the town it has been supplying itself from all spring is on the far bank of a wide river with one bridge. Chapayev's 25th Division goes across on rafts and pontoons north of the city; the rest of the group goes for the Chishmy junction to cut the line out.<br><br>There is no reserve and no second attempt. Twelve turns is what the front headquarters has given us, and it has given the same twelve turns to their rearguard.<br><br>Victory conditions:<br>- Take Ufa (33,4) and Chishmy (22,7) within twelve turns.<br>- Hold Buzdyak (16,7) and Sterlitamak (32,22).",
+  "intro": "Across the Belaya: Ufa<br><br>May 29th, 1919<br><br>The Western Army is broken, and the town it has supplied itself from all spring is on the far bank of a wide river with one bridge.<br><br>Chapayev's 25th Division crosses on rafts north of the city; the rest of the group goes for the Chishmy junction to cut the line out from under the garrison. No reserve and no second attempt - twelve turns to take Ufa, and their rearguard has been allowed the same twelve.",
   "outcome": {
    "briliant": {
     "goto": 18,
@@ -795,7 +795,7 @@
   "id": 18,
   "scenario": "simpob_18.xml",
   "startprestige": 0,
-  "intro": "Ekaterinburg<br><br>July 12th, 1919<br><br>A year and a week since the house on Voznesensky Lane, and we shall be the ones who have to find out what happened in it.<br><br>The 2nd and 3rd Armies have come over the northern Urals and Ekaterinburg is the prize: the junction of everything, the Verkh-Isetsk works, and the last real city before Siberia proper.<br><br>Their evacuation began before our guns were in range. Six marked columns of staff, treasury and archives are trying to get out on the Tyumen line, and what is in them will decide what anyone is able to prove about this year afterwards.<br><br>Victory conditions:<br>- Take Ekaterinburg (15,3).<br>- Hold Severskiy (6,19) and Davydova (34,21).<br>- The enemy escapes instead if six of his columns get out at (36,9).",
+  "intro": "The house on Voznesensky Lane: Ekaterinburg<br><br>July 12th, 1919<br><br>The 2nd and 3rd Armies are over the northern Urals. Ekaterinburg is the junction of everything on this front and the last real city before Siberia.<br><br>Their evacuation began before our guns were in range: six columns of staff, treasury and archives on the Tyumen line, and what is in them decides what anyone can prove afterwards about the house on Voznesensky Lane. Take the city and let nothing reach the eastern exit.",
   "outcome": {
    "briliant": {
     "goto": 19,
@@ -839,7 +839,7 @@
   "id": 19,
   "scenario": "simpob_19.xml",
   "startprestige": 0,
-  "intro": "Chelyabinsk<br><br>July 25th, 1919<br><br>We took this city four days ago and now we have to keep it, which the enemy has evidently decided is a different question.<br><br>The 5th Army came through the passes and into Chelyabinsk on the twenty-fourth. Kolchak's staff has been planning exactly this: let the Reds into the town, close on both flanks from Miasskoye and the north, and destroy an army in a street it thinks it owns.<br><br>So they will come, and they will come at both shoulders at once. The city rose to help us take it - the railway workshops turned out three regiments in a week - and those men are in the line now.<br><br>Victory conditions:<br>- When the time runs out, hold six objectives for a brilliant victory, five for a victory, four for a tactical victory.<br>- The objectives are Chelyabinsk (25,11), Argayash (14,4), Dolgoderevenskoye (22,6), Poletaevo (20,16), Chebarkul (7,17) and Yemanzhelinsk (23,22).<br>- Or take Miasskoye (32,7).",
+  "intro": "Both shoulders at once: Chelyabinsk<br><br>July 25th, 1919<br><br>The 5th Army came through the passes into Chelyabinsk yesterday. Keeping it is evidently a different question from taking it.<br><br>Kolchak's staff planned exactly this: let the Reds in, close from Miasskoye and from the north, and destroy an army in a street it thinks it owns. The city rose to help take it - the railway workshops turned out three regiments in a week. Hold the town and its approaches to the last turn.",
   "outcome": {
    "briliant": {
     "goto": 20,
@@ -883,7 +883,7 @@
   "id": 20,
   "scenario": "simpob_20.xml",
   "startprestige": 0,
-  "intro": "Not dead yet: the Tobol (I)<br><br>September 1st, 1919<br><br>They are not finished, and the men who told the front headquarters they were finished should come and look at this.<br><br>Kolchak's armies have been reorganised behind the Tobol - Dieterichs has combed out the rear areas, the Siberian Cossacks have been mobilised wholesale, and they have counted correctly that our own divisions are down to half strength and six hundred versts from their railhead.<br><br>The blow has fallen on our left, where the Cossack cavalry has the open steppe. Hold the line of villages. Petropavlovsk behind their front is the objective everything else here is a step towards.<br><br>Victory conditions:<br>- When the time runs out, hold four objectives for a brilliant victory, three for a victory, two for a tactical victory.<br>- The objectives are Makushino (4,4), Petukhovo (15,7), Mamlyutka (27,9) and Presnovka (4,18).<br>- Or take Petropavlovsk (38,12).",
+  "intro": "They are not finished: the Tobol (I)<br><br>September 1st, 1919<br><br>Kolchak's armies have been reorganised behind the Tobol. Dieterichs combed out the rear areas, the Siberian Cossacks are mobilised wholesale, and their staff counted correctly: our divisions are at half strength, six hundred versts from railhead.<br><br>The reports that said this enemy was finished were wrong, and this is the bill for them. The blow has fallen on the left, where the Cossack cavalry has open steppe. Hold the line of villages; Petropavlovsk is what all of it is a step towards.",
   "outcome": {
    "briliant": {
     "goto": 22,
@@ -971,7 +971,7 @@
   "id": 22,
   "scenario": "simpob_22.xml",
   "startprestige": 0,
-  "intro": "Better to burn out: the Tobol (II)<br><br>September 25th, 1919<br><br>Their offensive is a month old and it is running on nothing.<br><br>Every mobilised recruit they put into the line this month has been taken from a village that is now sending its sons to the partisans instead. Their supply comes down one railway with the Siberian partisan detachments sitting on it. They have gained ground and lost the army that gained it.<br><br>We hold the Kurgan crossings and the Tobol bank. Their two forward groups east of the river are what is left of their striking power, and both are within our reach.<br><br>Victory conditions:<br>- When the time runs out, hold four objectives for a brilliant victory, three for a victory, two for a tactical victory.<br>- The objectives are Kurgan (13,14), Chashinskiy (4,7), Vargashi (25,17) and the Tobol crossing (9,24).<br>- Or take both of their forward positions at (39,22) and (27,29).",
+  "intro": "An offensive running on nothing: the Tobol (II)<br><br>September 25th, 1919<br><br>Their offensive is a month old and running on nothing.<br><br>Every recruit put into the line this month came from a village that is now sending its sons to the partisans instead, and their supply comes down one railway with the Siberian detachments sitting on it. They have gained ground and lost the army that gained it. Hold Kurgan, Chashinskiy, Vargashi and the Tobol crossing.",
   "outcome": {
    "briliant": {
     "goto": 23,
@@ -1015,7 +1015,7 @@
   "id": 23,
   "scenario": "simpob_23.xml",
   "startprestige": 0,
-  "intro": "Darkness falling: Novonikolayevsk<br><br>December 7th, 1919<br><br>Omsk fell without a fight three weeks ago. Their government left it by train and their army left it on foot, and the two have not been in the same place since.<br><br>What is in front of us now is the Great Siberian Ice March: half a million people - the remains of three armies, their families, the typhus - moving east along one railway in December, with the Czechoslovak Legion holding the line for its own trains and letting nothing else past.<br><br>Novonikolayevsk is the bridge over the Ob. Take it and the whole column east of here is cut off from the whole column west of here.<br><br>Victory conditions:<br>- Take the two Novonikolayevsk sectors (29,20) and (28,23).<br>- Hold Kolyvan (21,3), Lokti (38,5), Pavino (19,24) and the Novonikolayevsk approach (32,24).",
+  "intro": "The bridge over the Ob: Novonikolayevsk<br><br>December 7th, 1919<br><br>Omsk fell without a fight three weeks ago. Their government left by train and their army left on foot, and the two have not been in the same place since.<br><br>In front of us is the Great Siberian Ice March: half a million people, the remains of three armies, their families and the typhus, moving east down one railway in December. Novonikolayevsk is the bridge over the Ob - take it and the column east is cut off from the column west.",
   "outcome": {
    "briliant": {
     "goto": 24,
@@ -1059,7 +1059,7 @@
   "id": 24,
   "scenario": "simpob_24.xml",
   "startprestige": 0,
-  "intro": "Crying souls: Krasnoyarsk<br><br>January 4th, 1920<br><br>Krasnoyarsk has taken itself.<br><br>The garrison arrested its own commander on the last day of December and the town is held by a revolutionary committee, the railway workers and Shchetinkin's partisan army out of the Yenisei taiga. Our own leading divisions are still four days behind.<br><br>Kappel's column is coming down the line towards it - what is left of three armies, on foot, in forty degrees of frost, and they have to get through this town or round it. They have nothing to lose, which makes them dangerous in a way that a supplied army is not.<br><br>Hold the city and the approaches with what is here. The partisans know this country and we do not; they are allies and they are to be treated as allies.<br><br>Victory conditions:<br>- When the time runs out, hold three objectives for a brilliant victory, two for a victory or a tactical victory.<br>- The objectives are the two Krasnoyarsk sectors (20,11), (23,12) and Drokino (18,9).<br>- Or take Areyskoye (11,9).",
+  "intro": "The town took itself: Krasnoyarsk<br><br>January 4th, 1920<br><br>Krasnoyarsk has taken itself: the garrison arrested its own commander on the last day of December, and the town is held by a revolutionary committee, the railway workers and Shchetinkin's partisans.<br><br>Our leading divisions are four days behind. Kappel's column is coming down the line - what is left of three armies, on foot, in forty degrees of frost, with nothing to lose. Hold the city and Drokino with what is here. The partisans know this country as we do not; they are allies.",
   "outcome": {
    "briliant": {
     "goto": 25,
@@ -1103,7 +1103,7 @@
   "id": 25,
   "scenario": "simpob_25.xml",
   "startprestige": 0,
-  "intro": "Once we were here: Irkutsk<br><br>January 27th, 1920<br><br>The last of it, and it is being decided in a town that changed sides by itself.<br><br>The Political Centre rose in Irkutsk at the end of December and handed the city, and the Supreme Ruler, to the Revolutionary Committee three weeks later; the Czechoslovaks gave him up at the station in exchange for a clear road to Vladivostok for their own trains. Kolchak is in the prison here. So is the gold, or what is left of it.<br><br>Coming at us out of the taiga is what survived the march: Kappel died of frostbite and pneumonia on the road and Voitsekhovsky has the column now, and he has demanded the city, the prisoner and a contribution. Semyonov's Cossacks are east of the lake. The Baikal ice is the only way past us.<br><br>Hold Irkutsk and Listvennichnoye. Take Khomutovo, where their column is forming.<br><br>Victory conditions:<br>- When the time runs out, hold three objectives for a brilliant victory, two for a victory, one for a tactical victory.<br>- The objectives are the two Irkutsk sectors (17,8), (20,10) and Listvennichnoye (29,23).<br>- Or take Khomutovo (18,3).<br>- The enemy escapes instead if one of his columns reaches the ice road at Bolshoye Goloustnoye (40,19).",
+  "intro": "The last of it: Irkutsk<br><br>January 27th, 1920<br><br>The Political Centre rose here at the end of December and handed the city, and the Supreme Ruler, to the Revolutionary Committee. Kolchak is in the prison, and so is what is left of the gold.<br><br>Out of the taiga comes what survived the march: Kappel died on the road, and Voitsekhovsky has demanded the city, the prisoner and a contribution. Semyonov is east of the lake, and the Baikal ice is the only way past. Hold Irkutsk and Listvennichnoye.",
   "outcome": {
    "briliant": {
     "goto": 254,

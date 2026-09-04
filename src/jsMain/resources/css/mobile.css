@@ -1122,9 +1122,10 @@ body.osada-layout-phone #smButtons > * {
     min-height: var(--osada-touch-target);
 }
 
-/* The decorative quotation is valuable on desktop but competes with the menu
- * itself on every phone aspect ratio. */
-body.osada-layout-phone .osada-quote,
+/* A quote cannot share the short landscape command rail. Portrait keeps it as a
+ * normal-flow footer below every action, where it adds atmosphere without ever
+ * becoming an overlay. */
+body.osada-layout-phone.osada-orientation-landscape .osada-quote,
 body.osada-layout-compact #smCredits {
     display: none;
 }
@@ -1179,7 +1180,7 @@ body.osada-layout-phone.osada-orientation-portrait .smBottomCenter {
     bottom: auto;
     left: auto;
     width: auto;
-    margin: 286px 16px 100px;
+    margin: 286px 16px 0;
 }
 
 body.osada-layout-phone.osada-orientation-portrait .smMainButton.osada-menu-btn {
@@ -1187,13 +1188,30 @@ body.osada-layout-phone.osada-orientation-portrait .smMainButton.osada-menu-btn 
 }
 
 body.osada-layout-phone.osada-orientation-portrait #smMiscButs {
-    position: fixed;
-    top: 8px;
-    left: 16px;
+    position: absolute;
+    top: -104px;
+    left: 0;
     right: auto;
     bottom: auto;
     justify-content: flex-start;
     margin: 0;
+}
+
+body.osada-layout-phone.osada-orientation-portrait .osada-quote {
+    position: relative;
+    inset: auto;
+    transform: none;
+    width: auto;
+    max-width: calc(100% - 48px);
+    margin: 26px auto 64px;
+    padding-bottom: var(--osada-safe-bottom);
+}
+
+/* The menu is its own scroll surface. A local background follows that scrollable
+ * canvas so the desk never ends in a bare browser-coloured strip below the quote. */
+body.osada-layout-phone.osada-orientation-portrait #smMain {
+    background-attachment: local;
+    background-color: #0a0b0d;
 }
 
 body.osada-layout-phone.osada-orientation-portrait .osada-language-switch {
