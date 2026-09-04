@@ -21,7 +21,6 @@ internal object MainMenuBuilder {
 
         buildBrandAndObserver(statusbar)
         buildDrawerButton(statusbar)
-        MobileBriefingButton.install(statusbar)
 
         // Reparent the existing status elements (ids kept — StatusBarController fills them).
         // --- scenario / turn / date (center-left) ---
@@ -122,6 +121,10 @@ internal object MainMenuBuilder {
             statusbar.appendChild(btn)
             btn.classList.add("osada-tb-icon", "osada-tb-combatlog")
             btn.title = I18n.t("hud.turn_report.help")
+            clearTag(btn)
+            val icon = addTag(btn, "span")
+            icon.className = "osada-tb-combatlog__ico osada-ico osada-ico--map"
+            icon.setAttribute("aria-hidden", "true")
         }
         val spacer2 = addTag(statusbar, "div")
         spacer2.className = "osada-tb-spacer"
@@ -239,6 +242,7 @@ internal object MainMenuBuilder {
         val etLabel = addTag(endTurn, "span")
         etLabel.className = "osada-et__label"
         etLabel.textContent = I18n.t("hud.end_turn.label")
+        etLabel.setAttribute("data-mobile-label", I18n.t("hud.end_turn.short_label"))
         endTurn.onclick = { event: org.w3c.dom.events.MouseEvent ->
             event.stopPropagation()
             GameHolder.instance?.ui?.onEndTurnClick()
@@ -251,7 +255,9 @@ internal object MainMenuBuilder {
         // (repositioned/hidden by CSS, not reparented — they only show during deploy phase).
         val combatLogButton = byId("combatLogButton")
         combatLogButton?.asDynamic()?.hasSelectedGlyph = true
-        combatLogButton?.onclick = { _: org.w3c.dom.events.MouseEvent -> UICombatLog.toggleCombatLog(false, true) }
+        combatLogButton?.asButton(I18n.t("hud.turn_report.help")) {
+            UICombatLog.toggleCombatLog(false, true)
+        }
 
         val sideToggle = byId("osadaSideToggle")
         sideToggle?.onclick = { _: org.w3c.dom.events.MouseEvent ->

@@ -42,6 +42,7 @@ internal object BottomZoneBuilder {
     private var outsideDismissInstalled = false
 
     fun build() {
+        MobileContextDock.install()
         restructurePlayerCard()
         buildForecastSkeleton()
         buildEnemyCardSkeleton()

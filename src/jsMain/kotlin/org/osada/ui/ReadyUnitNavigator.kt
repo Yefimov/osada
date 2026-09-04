@@ -104,6 +104,7 @@ internal class ReadyUnitNavigator(
         clearTag(btn)
         val label = addTag(btn, "span")
         label.className = "osada-et__label"
+        label.setAttribute("data-mobile-label", I18n.t("hud.end_turn.short_label"))
         label.textContent =
             if (n > 0) {
                 I18n.t("hud.end_turn.with_ready", mapOf("count" to n))

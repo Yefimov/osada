@@ -140,11 +140,7 @@ internal object GameplayLocalization {
             title = I18n.t("hud.observer.help")
         }
         byId("combatLogButton")?.title = I18n.t("hud.turn_report.help")
-        byId("osadaBriefingBtn")?.apply {
-            val label = I18n.t("turn_report.briefing.help")
-            title = label
-            setAttribute("aria-label", label)
-        }
+        byId("combatLogButton")?.setAttribute("aria-label", I18n.t("hud.turn_report.help"))
         byId("osadaPrestige")?.title = I18n.t("hud.prestige.help")
         byId("buy")?.apply {
             title = I18n.t("hud.reserves.help")
@@ -159,7 +155,10 @@ internal object GameplayLocalization {
         byId("osadaNavNext")?.title = I18n.t("hud.ready_units.next.help")
         byId("osadaEndTurn")?.apply {
             title = I18n.t("hud.end_turn.help")
-            querySelector(".osada-et__label")?.textContent = I18n.t("hud.end_turn.label")
+            querySelector(".osada-et__label")?.apply {
+                textContent = I18n.t("hud.end_turn.label")
+                setAttribute("data-mobile-label", I18n.t("hud.end_turn.short_label"))
+            }
         }
         byId("statusBarButton")?.title = I18n.t("hud.deploy_strip.close.help")
         byId("unitsBarButton")?.title = I18n.t("hud.deploy_strip.open.help")
@@ -187,6 +186,7 @@ internal object GameplayLocalization {
             "${I18n.formatNumber(map.turn)}/${I18n.formatNumber(map.maxTurns)}</span>" +
             "<span class=\"osada-tb-field osada-tb-date\">$dateText</span>" +
             phaseChip
+        MobileContextDock.updateTurn(map.turn, map.maxTurns)
         // The line above replaced the whole innerHTML, so the previous field (and its handlers)
         // no longer exist: the hover panel has to be re-attached on every status refresh.
         VictoryDeadlineTooltip.hide()
@@ -206,6 +206,10 @@ internal object GameplayLocalization {
             element.title = ""
             element.onmouseenter = { _: MouseEvent -> showWeatherTooltip(element) }
             element.onmouseleave = { _: MouseEvent -> byId("osadaWeatherTip")?.style?.display = "none" }
+            MobileContextDock.updateWeather(
+                element.innerHTML,
+                "${GameText.weatherShort(atmos)} · ${GameText.ground(ground)}",
+            )
         }
     }
 
