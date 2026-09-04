@@ -8,8 +8,9 @@ package org.osada.rules.ruleset
  * be a lie about the state of the match.
  */
 object RulesetCompatibility {
-    /** Schema 15 made authored trigger hexes unconditional; older peers can suppress them. */
-    private const val MIN_MULTIPLAYER_SCHEMA = 15
+    /** Schema 16 retired `stalin_regime`; an older peer's room block can still name it switched
+     *  on, which is a x10 economy this build would not be running. */
+    private const val MIN_MULTIPLAYER_SCHEMA = 16
 
     /** Why a join was refused. */
     enum class Refusal {

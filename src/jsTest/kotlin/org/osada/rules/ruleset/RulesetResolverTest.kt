@@ -8,6 +8,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNotEquals
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 /**
@@ -76,15 +77,21 @@ class RulesetResolverTest {
         assertEquals(4, authorsVision().effective(RuleKey.FLAK_RANGE))
     }
 
+    /**
+     * Schema 16: the STALIN REGIME checkbox is a setting again and resolution ignores it entirely.
+     *
+     * The retired key must also stay OUT of the profile catalogue, or the Rules window would keep
+     * offering a duplicate of a settings row -- which is what a player asked about ("why is this in
+     * the ruleset?") and what the retirement answers.
+     */
     @Test
-    fun stalinRegimeIsSeededFromTheLegacyPreferenceAndThenLocked() {
-        uiSettings.stalinRegime = true
-        val resolved = authorsVision()
-        assertEquals(1, resolved.effective(RuleKey.STALIN_REGIME))
+    fun stalinRegimeIsNoLongerARuleAndCannotMoveTheHash() {
+        val before = authorsVision().deterministicHash
 
-        // Once resolved, the old checkbox cannot mutate it: the resolution is the immutable record.
-        uiSettings.stalinRegime = false
-        assertEquals(1, resolved.effective(RuleKey.STALIN_REGIME))
+        uiSettings.stalinRegime = true
+
+        assertNull(RuleKey.byKey("stalin_regime"))
+        assertEquals(before, authorsVision().deterministicHash)
     }
 
     // ---- availability -------------------------------------------------------------------------

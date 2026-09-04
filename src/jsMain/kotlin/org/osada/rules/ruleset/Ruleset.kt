@@ -89,11 +89,20 @@ package org.osada.rules.ruleset
  * may still contain the retired stable key; readers ignore it rather than misclassifying it as an
  * unknown future rule. Multiplayer requires schema 15 so an older client that can suppress the
  * same trigger cannot join while claiming equivalent rules.
+ *
+ * 16 (2026-09-04) retired `stalin_regime` on the same terms, and for the reason a player gave when
+ * they found it here: *"why is this in the ruleset? it belongs in settings"*. It always did -- the
+ * key never had a value of its own, it was seeded from the **STALIN REGIME** checkbox at launch and
+ * then frozen, which is what made ticking that box mid-battle look broken and needed a whole
+ * explanatory note beside it to excuse. A cheat toggle is not a rule of the game, so it is the
+ * setting alone again ([org.osada.model.usesStalinRegime]) and takes effect the moment it is
+ * ticked, exactly as the units-and-prestige synchronisation it already calls always allowed.
+ * Stored schema-<=15 profiles and saves may still carry the key; readers ignore it.
  */
-const val RULESET_SCHEMA_VERSION = 15
+const val RULESET_SCHEMA_VERSION = 16
 
 /** Serialized keys understood historically but no longer configurable or gameplay-relevant. */
-internal val RETIRED_RULE_KEYS: Set<String> = setOf("trigger_hexes")
+internal val RETIRED_RULE_KEYS: Set<String> = setOf("trigger_hexes", "stalin_regime")
 
 /**
  * One configurable rule.
@@ -125,9 +134,6 @@ enum class RuleKey(
     /** 1 = each efile's own per-terrain supply factors, 0 = the flat off-city rule OSADA already
      *  runs for the five efiles that ship no terrain data. */
     SUPPLY_MODEL("supply_model", null, 0, 1),
-
-    /** OSADA's own Stalin-regime rewrite of the player's formations. */
-    STALIN_REGIME("stalin_regime", null, 0, 1),
 
     // ---- weather (schema 2) ---------------------------------------------------------------
     // Four switches rather than one, because they are four separate branches with four separate
@@ -572,10 +578,28 @@ enum class RuleKey(
     /** Editor-only bounds. Never applied to a value that came from content (§2). */
     fun clampForEditor(value: Int): Int = value.coerceIn(editorMin, editorMax)
 
+    /** The rule this one is inert without, or `null` when it stands on its own. See [RULE_REQUIRES]. */
+    val requires: RuleKey? get() = RULE_REQUIRES[this]
+
     companion object {
         fun byKey(key: String): RuleKey? = entries.firstOrNull { it.key == key }
     }
 }
+
+/**
+ * Rules that cannot do anything while another rule is off, and the rule each one needs.
+ *
+ * Only [RuleKey.CRATERS] so far: a crater is dug by `Barrage`'s own miss path and by nothing else
+ * (`rules/Craters.dig` has exactly one caller), so with barrage fire off the switch is a promise
+ * the engine will never keep -- reported by a player who found it offered as a live choice beside
+ * a barrage rule that was switched off.
+ *
+ * This is a PRESENTATION fact, deliberately not an availability reduction: the effective value is
+ * still what the profile asked for, so it stays in the hash, a save reproduces it exactly, and
+ * turning barrage back on needs no second visit to this window. The Rules window greys the row and
+ * the editor disables the control ([org.osada.ui.RulesText.inert]).
+ */
+internal val RULE_REQUIRES: Map<RuleKey, RuleKey> = mapOf(RuleKey.CRATERS to RuleKey.BARRAGE)
 
 /**
  * Where an effective value came from. Lets the window explain a rule truthfully without teaching
@@ -588,7 +612,7 @@ enum class RuleProvenance {
     /** The content has no opinion, so the documented call-site default stands. */
     EFILE_DEFAULT,
 
-    /** OSADA's own baseline, including the legacy preference `stalin_regime` is seeded from. */
+    /** OSADA's own documented baseline. */
     OSADA_DEFAULT,
 
     /** Author's Vision defers to the SCENARIO's own authored switch for this rule, so the master
@@ -706,7 +730,6 @@ object RulesetDefaults {
             // TerrainEx already prefers the efile's own factors and falls back per terrain id to
             // PM's flat formula, so "efile factors" is what OSADA runs today.
             RuleKey.SUPPLY_MODEL to 1,
-            RuleKey.STALIN_REGIME to 0,
             // Every weather rule ships on: these are Open General's own rules
             // (`tools/og-import/DEFERRED.md` §7.45), and each is already a no-op in Fair weather.
             RuleKey.WEATHER_GROUNDS_AIRCRAFT to 1,

@@ -12,8 +12,6 @@ import org.osada.rules.ScenarioPurchaseList
 import org.osada.rules.calculateUnitCosts
 import org.osada.rules.calculateUnitSellCost
 import org.osada.rules.calculateUpgradeCosts
-import org.osada.rules.ruleset.ActiveRuleset
-import org.osada.rules.ruleset.RuleKey
 import org.osada.scenario.getSideUnitsAvgExp
 import org.osada.scoreGains
 import org.osada.uiSettings
@@ -22,16 +20,18 @@ import org.osada.uiSettings
  * THE gate for Stalin Regime, for every consumer -- unit stats, purchases, spawns and prestige
  * income alike.
  *
- * It has to read through [ActiveRuleset] like [org.osada.synchronizeStalinRegimeUnits] already did,
- * and not the raw checkbox. When a battle locks its ruleset (`RulesetResolver.ownedRule` seeds this
- * rule from the checkbox at launch and freezes it for the operation), the two used to disagree: the
- * units already on the map followed the locked ruleset while everything that went through here --
- * a purchased unit, an event spawn, a reinforcement, and every prestige award -- followed the live
- * checkbox. Turning the mode on mid-battle then produced exactly the reported symptom: the standing
- * formations were untouched, and units arriving afterwards came in at x10.
+ * One source, the checkbox, so that the formations standing on the map and everything arriving
+ * later -- a purchased unit, an event spawn, a reinforcement, every prestige award -- can never
+ * disagree about whether the mode is on. They did disagree while this read the ruleset: a battle
+ * froze the rule at launch, so ticking the box mid-battle left the standing formations untouched
+ * and brought later arrivals in at x10.
+ *
+ * The mode is a cheat toggle rather than a rule of the game, which is why schema 16 took it out of
+ * the ruleset entirely (see [org.osada.rules.ruleset.RULESET_SCHEMA_VERSION]). Ticking it now
+ * applies at once, through the synchronisation the settings screen already ran on the change
+ * ([org.osada.synchronizeStalinRegimeUnits]).
  */
-internal fun Player.usesStalinRegime(): Boolean =
-    ActiveRuleset.flag(RuleKey.STALIN_REGIME, uiSettings.stalinRegime) && type == PlayerType.HUMAN_LOCAL
+internal fun Player.usesStalinRegime(): Boolean = uiSettings.stalinRegime && type == PlayerType.HUMAN_LOCAL
 
 /**
  * Adds prestige and returns the amount actually applied. Only positive income is multiplied;

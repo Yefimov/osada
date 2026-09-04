@@ -49,7 +49,6 @@
     --osada-touch-target: 48px;
     --osada-touch-gap: 8px;
 
-    --osada-mobile-topbar-h: 48px;
     --osada-mobile-bottom-h: 78px;
     --osada-dock-h: var(--osada-mobile-bottom-h);
     --osada-mobile-drawer-w: min(84vw, 360px);
@@ -65,14 +64,27 @@
 
 body.osada-density-compact {
     --osada-touch-target: 44px;
-    --osada-mobile-topbar-h: 44px;
     --osada-mobile-bottom-h: 68px;
 }
 
 body.osada-density-large {
     --osada-touch-target: 56px;
-    --osada-mobile-topbar-h: 56px;
     --osada-mobile-bottom-h: 92px;
+}
+
+/* The top bar is `row + rule`, not a flat number: the row is the interactive strip the plates
+ * live in, the rule is the brass hairline that is the HUD's bottom edge. Before 2026-09-04 the
+ * token WAS the flat outer height, so a touch-sized plate in a same-sized bar had nowhere to go
+ * but through that hairline (reported as "Завершить"/"Штаб" crossing the yellow border).
+ *
+ * Declared on BODY, not :root, and that is load-bearing. A custom property's `var()` is
+ * substituted on the element that DECLARES it, so a `--osada-mobile-topbar-row` living on :root
+ * would read :root's --osada-touch-target and never see the density/layout classes below — which
+ * is exactly why every one of those blocks used to repeat a hardcoded bar height. */
+body {
+    --osada-mobile-topbar-rule: 2px;
+    --osada-mobile-topbar-row: var(--osada-touch-target);
+    --osada-mobile-topbar-h: calc(var(--osada-mobile-topbar-row) + var(--osada-mobile-topbar-rule));
 }
 
 /* ==========================================================================
@@ -228,8 +240,12 @@ body.osada-input-coarse .smallButton:active {
  * 5. PHONE LANDSCAPE SHELL
  * ========================================================================== */
 
-/* ---- Top bar: ~48px of interactive row plus the top safe area ---- */
-body.osada-layout-phone #statusbar {
+/* ---- Top bar: one interactive row, the brass rule, and the top safe area ----
+ * Tablet shares this box. The tablet sidebar/map rules below already offset themselves by
+ * --osada-mobile-topbar-h, so leaving the tablet bar at its 40px desktop height left an 8px gap
+ * under it AND squeezed the same touch-sized plates the phone bar holds. */
+body.osada-layout-phone #statusbar,
+body.osada-layout-tablet #statusbar {
     height: calc(var(--osada-mobile-topbar-h) + var(--osada-safe-top)) !important;
     max-height: calc(var(--osada-mobile-topbar-h) + var(--osada-safe-top)) !important;
     padding-top: var(--osada-safe-top);
@@ -391,8 +407,14 @@ body.osada-layout-phone .osada-mobile-context {
     grid-area: card;
     display: grid;
     grid-template-columns: auto auto minmax(0, 1fr) var(--osada-touch-target-min);
+    /* Two rows: the live turn/weather/terrain line, and under it the scenario's own identity —
+     * its in-game date and name. The phone top bar drops `.osada-tb-op` (a scenario title that
+     * collapses to one letter is worth nothing), so this rail is where that context lives. */
+    grid-template-areas:
+        "turn weather location heroes"
+        "sub  sub     sub      heroes";
     align-items: center;
-    gap: 8px;
+    gap: 2px 8px;
     min-height: 52px;
     padding: 4px 6px;
     box-sizing: border-box;
@@ -404,11 +426,35 @@ body.osada-layout-phone .osada-mobile-context {
 }
 
 .osada-mobile-context__turn {
+    grid-area: turn;
     color: var(--osada-brass, #d9b25a);
     white-space: nowrap;
 }
 
+/* One quiet line, ellipsized rather than wrapped: an operation name can be arbitrarily long and
+ * the rail must keep a predictable height (ViewportMetricsService publishes it as --osada-dock-h
+ * and the map's bottom edge tracks that number). */
+.osada-mobile-context__scenario {
+    grid-area: sub;
+    min-width: 0;
+    overflow: hidden;
+    color: var(--osada-text-dim, #a9a494);
+    font-weight: normal;
+    font-size: 11px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.osada-mobile-context__scenario:empty {
+    display: none;
+}
+
+.osada-mobile-context__scenario .osada-mobile-context__date {
+    color: var(--osada-text, #e7e2d4);
+}
+
 .osada-mobile-context__weather {
+    grid-area: weather;
     display: inline-flex;
     align-items: center;
     white-space: nowrap;
@@ -424,6 +470,7 @@ body.osada-layout-phone .osada-mobile-context {
 }
 
 .osada-mobile-context__location {
+    grid-area: location;
     min-width: 0;
     overflow: hidden;
     color: var(--osada-text-dim, #a9a494);
@@ -432,6 +479,8 @@ body.osada-layout-phone .osada-mobile-context {
 }
 
 .osada-mobile-context__heroes {
+    grid-area: heroes;
+    align-self: center;
     width: var(--osada-touch-target-min);
     height: var(--osada-touch-target-min);
     cursor: pointer;
@@ -619,8 +668,12 @@ body.osada-layout-phone #unit-info.uc--expanded #statsRowContainer {
 /* ==========================================================================
  * 6. COMPACT-HEIGHT AND TABLET
  * ========================================================================== */
+/* A 375px-tall landscape phone cannot spend 58px on a bar. Compact takes the 44px product
+ * MINIMUM as its target rather than shrinking the bar under the plates it holds — the row and the
+ * bar are one number now, so lowering only the bar would put the plates back through the rule.
+ * Deliberately after the density blocks so it also wins over an explicit "large" density. */
 body.osada-layout-compact {
-    --osada-mobile-topbar-h: 44px;
+    --osada-touch-target: var(--osada-touch-target-min);
     --osada-mobile-bottom-h: 66px;
 }
 
@@ -721,7 +774,9 @@ body.osada-layout-phone .osada-drawer-close {
     width: var(--osada-touch-target-min);
     height: var(--osada-touch-target-min);
     min-height: var(--osada-touch-target-min);
-    margin: 0 0 0 10px;
+    /* The flexible `.osada-sb-toggles-spacer` before it does the pushing — X sits on the drawer's
+     * right edge, inside the toggle row's own 10px padding, rather than butting against Air. */
+    margin: 0;
     border: 1px solid var(--osada-metal-600, #3a3d45);
     border-radius: 4px;
     color: var(--osada-text, #e7e2d4);
@@ -1120,6 +1175,16 @@ body.osada-layout-phone #smButtons {
 body.osada-layout-phone #smButtons > * {
     width: 100%;
     min-height: var(--osada-touch-target);
+}
+
+/* Mobile keeps the FULL-SIZE main-menu sprite. osada-theme.css switched the desktop default to
+ * the hand-reduced `_mini` sheet because an 8.6x downscale shimmered on a large monitor; here the
+ * plate is painted on a 2-3x DPR screen, so the device asks for ~126 physical pixels of a 52px
+ * source and the mini sheet is the one that would look soft. Same grid, same cell offsets — only
+ * the source resolution differs, so nothing else in the sprite geometry changes. */
+body.osada-layout-phone .osada-menu-ico,
+body.osada-layout-tablet .osada-menu-ico {
+    background-image: url('../resources/main_menu_icons_grid.png');
 }
 
 /* A quote cannot share the short landscape command rail. Portrait keeps it as a
@@ -1574,6 +1639,21 @@ body.osada-layout-phone.osada-orientation-portrait #osadaEndTurn {
     margin-left: auto;
 }
 
+/* At 390px the bar's two LABELLED plates plus five 44px targets came to ~418px, so "Завершить"
+ * ran off the right edge of the screen. Both labels stay — an unlabelled ≡ and a mystery red
+ * plate are worse than tight ones — and the ~30px comes out of padding and tracking instead.
+ * Landscape has the width and keeps the roomier plates. */
+body.osada-layout-phone.osada-orientation-portrait #osadaEndTurn {
+    min-width: 0;
+    padding: 0 8px;
+    letter-spacing: .01em;
+}
+
+body.osada-layout-phone.osada-orientation-portrait #osadaDrawerBtn {
+    gap: 4px;
+    padding: 0 6px;
+}
+
 body.osada-layout-phone .smSelect > * {
     min-height: var(--osada-touch-target-min);
 }
@@ -1736,8 +1816,10 @@ body.osada-map-zooming #game > div:not(#game-zoom-wrap) {
 }
 
 @media (hover: none) and (pointer: coarse) and (orientation: landscape) and (max-height: 600px) {
+    /* 44px row + the 2px brass rule, matching what the compact body class resolves to once
+     * MobileLayoutController has classified the device. */
     #statusbar {
-        height: calc(48px + env(safe-area-inset-top, 0px)) !important;
-        max-height: calc(48px + env(safe-area-inset-top, 0px)) !important;
+        height: calc(46px + env(safe-area-inset-top, 0px)) !important;
+        max-height: calc(46px + env(safe-area-inset-top, 0px)) !important;
     }
 }

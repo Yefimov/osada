@@ -2,7 +2,6 @@ package org.osada.rules.ruleset
 
 import org.osada.model.EfileConfig
 import org.osada.multiplayer.sync.Sha256
-import org.osada.uiSettings
 
 /**
  * Turns a chosen profile into the complete, immutable set of values the engine executes
@@ -138,20 +137,19 @@ object RulesetResolver {
     /**
      * A rule OSADA owns outright.
      *
-     * `stalin_regime` is seeded from the existing legacy preference at resolution time and locked
-     * from then on: changing that old checkbox later must not mutate a campaign already under way
-     * (§2). Everything in [SCENARIO_AUTHORED] defers to the scenario. The rest gets OSADA's
-     * documented baseline.
+     * Everything in [SCENARIO_AUTHORED] defers to the scenario; the rest gets OSADA's documented
+     * baseline.
+     *
+     * Nothing here reads a UI preference any more. `stalin_regime` used to: it was seeded from the
+     * old checkbox and then frozen for the operation, which is the arrangement schema 16 retired
+     * (see [RULESET_SCHEMA_VERSION]). A settings toggle is not content, and resolution reads
+     * content.
      */
     private fun ownedRule(rule: RuleKey): ResolvedRule =
-        when {
-            rule == RuleKey.STALIN_REGIME ->
-                (if (uiSettings.stalinRegime) 1 else 0).let { ResolvedRule(it, it, RuleProvenance.OSADA_DEFAULT) }
-
-            rule in SCENARIO_AUTHORED -> ResolvedRule(1, 1, RuleProvenance.SCENARIO_AUTHORED)
-
-            else ->
-                RulesetDefaults.OSADA.getValue(rule).let { ResolvedRule(it, it, RuleProvenance.OSADA_DEFAULT) }
+        if (rule in SCENARIO_AUTHORED) {
+            ResolvedRule(1, 1, RuleProvenance.SCENARIO_AUTHORED)
+        } else {
+            RulesetDefaults.OSADA.getValue(rule).let { ResolvedRule(it, it, RuleProvenance.OSADA_DEFAULT) }
         }
 
     /**

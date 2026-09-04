@@ -204,7 +204,13 @@ internal object RulesWindow {
         val entry = resolved.rule(rule)
         val row = addTag(summary, "div")
         val unavailable = if (entry.unavailable) " osadaRulesSummary__row--unavailable" else ""
-        row.className = "osadaRulesSummary__row$unavailable"
+        // Greyed rather than hidden or silently left looking live: a rule whose prerequisite is off
+        // still HAS the value the profile gave it, and it starts working again the moment that
+        // prerequisite comes back. Shell craters beside a switched-off barrage were what made the
+        // difference between "set" and "doing something" worth showing at all.
+        val inert = RulesText.inertNote(rule) { other -> resolved.effective(other) }
+        val dimmed = if (inert != null) " osadaRulesSummary__row--inert" else ""
+        row.className = "osadaRulesSummary__row$unavailable$dimmed"
         row.setAttribute("data-rule", rule.key)
         val name = addTag(row, "span")
         name.className = "osadaRulesSummary__name"
@@ -213,7 +219,7 @@ internal object RulesWindow {
         val value = addTag(row, "span")
         value.className = "osadaRulesSummary__value"
         value.textContent = RulesText.summary(rule, entry)
-        value.title = RulesText.provenance(entry)
+        value.title = inert ?: RulesText.provenance(entry)
     }
 
     /**
