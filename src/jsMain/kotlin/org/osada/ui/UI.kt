@@ -265,8 +265,8 @@ class UI(
     }
 
     /** Reopen the latest campaign briefing without changing scenario or campaign state.
-     *  [MobileBriefingButton] calls it directly while CombatLogHeader reaches it dynamically;
-     *  the latter is why it must stay a real public member of this @JsExport class. */
+     *  CombatLogHeader reaches it dynamically, which is why it must stay a real public member of
+     *  this @JsExport class. */
     @Suppress("unused")
     fun reopenScenarioBriefing(): Boolean {
         game.uiMessageClicked = false

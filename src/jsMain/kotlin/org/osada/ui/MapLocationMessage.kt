@@ -44,7 +44,11 @@ internal fun updateMapLocationMessage(
     // riding", but neither says what it costs you — arriving mounted (`rules/AutoMount`).
     if (hex.needsTransport) sb.append(" — ").append(I18n.t("hud.status.location.needs_transport"))
     byId("locmsg")?.innerHTML = sb.toString()
-    // On a phone the top bar has no room for a permanent terrain line, so the same text also goes
-    // to a transient strip above the bottom dock (spec §18) — one source of truth, two surfaces.
-    MobileStatusStrip.show(sb.toString())
+    MobileContextDock.updateLocation(sb.toString())
+    // When a unit card replaces the passive context rail, keep the old transient strip as the
+    // fallback. With no card open the persistent rail already shows this text, so duplicating it
+    // in a toast would only cover more map.
+    if (byId("osada-bottomzone")?.classList?.contains("bz--visible") == true) {
+        MobileStatusStrip.show(sb.toString())
+    }
 }

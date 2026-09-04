@@ -10,7 +10,8 @@
  *   - the layout controller classifies the device as a phone shell;
  *   - #game is the rectangle between the top bar and the bottom dock, not a window-sized box;
  *   - the sidebar is off-screen until the drawer is opened, and opening it does not move the map;
- *   - the phone HUD uses full-size briefing/reserves controls instead of clipped status text;
+ *   - the phone HUD uses full-size report/reserves controls instead of clipped status text;
+ *   - the passive lower rail yields to the unit card and keeps turn/weather/hex context;
  *   - campaign utility controls fit, retain accessible labels and meet the 44px minimum;
  *   - unit actions stay inside the card and the stats popover dismisses outside itself;
  *   - the drawer's X and log remain usable at the minimum landscape height;
@@ -103,17 +104,25 @@ try {
   // ---- start menu + campaign browser reachability in both phone orientations ----
   const menuLandscape = await page.evaluate(() => {
     const scroller = document.getElementById('smButtons');
+    scroller.scrollTop = 0;
+    const taglineRect = document.getElementById('smLogoText').getBoundingClientRect();
+    const firstVisible = [...scroller.children].find((el) => getComputedStyle(el).display !== 'none');
+    const firstRect = firstVisible.getBoundingClientRect();
     const last = scroller.lastElementChild;
     scroller.scrollTop = scroller.scrollHeight;
     const r = last.getBoundingClientRect();
     return {
       overflowY: getComputedStyle(scroller).overflowY,
       canScroll: scroller.scrollHeight > scroller.clientHeight,
+      taglineBottom: Math.round(taglineRect.bottom), firstTop: Math.round(firstRect.top),
       lastTop: Math.round(r.top), lastBottom: Math.round(r.bottom), viewport: window.innerHeight,
     };
   });
   ok('landscape main menu keeps its final command reachable',
     menuLandscape.lastTop >= 0 && menuLandscape.lastBottom <= menuLandscape.viewport + 1,
+    JSON.stringify(menuLandscape));
+  ok('landscape main-menu commands start below the tagline',
+    menuLandscape.firstTop >= menuLandscape.taglineBottom,
     JSON.stringify(menuLandscape));
 
   await page.evaluate(() => document.getElementById('newcampaign').click());
@@ -144,6 +153,15 @@ try {
   const portraitMain = await page.evaluate(() => {
     const buttons = [...document.querySelectorAll('#smButtons > *')];
     const root = document.getElementById('smMain');
+    root.scrollTop = 0;
+    document.getElementById('smButtons').scrollTop = 0;
+    const tagline = document.getElementById('smLogoText').getBoundingClientRect();
+    const firstVisible = buttons.find((el) => getComputedStyle(el).display !== 'none');
+    const firstBeforeScroll = firstVisible.getBoundingClientRect();
+    const links = document.getElementById('smMiscButs').getBoundingClientRect();
+    const language = document.querySelector('.osada-language-switch').getBoundingClientRect();
+    const overlaps = (a, b) => a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
+    const headerOverlap = overlaps(links, language);
     root.scrollTop = root.scrollHeight;
     const outside = buttons.map((el) => {
       const r = el.getBoundingClientRect();
@@ -153,6 +171,7 @@ try {
     return {
       cls: document.body.className,
       outside,
+      taglineBottom: Math.round(tagline.bottom), firstTop: Math.round(firstBeforeScroll.top), headerOverlap,
       lastTop: Math.round(last.top), lastBottom: Math.round(last.bottom), viewport: window.innerHeight,
     };
   });
@@ -161,6 +180,9 @@ try {
     JSON.stringify(portraitMain));
   ok('portrait main menu keeps its final command reachable',
     portraitMain.lastTop >= 0 && portraitMain.lastBottom <= portraitMain.viewport + 1,
+    JSON.stringify(portraitMain));
+  ok('portrait start-menu header and tagline do not collide with controls',
+    portraitMain.firstTop >= portraitMain.taglineBottom && !portraitMain.headerOverlap,
     JSON.stringify(portraitMain));
 
   await page.evaluate(() => document.getElementById('newcampaign').click());
@@ -316,6 +338,34 @@ try {
       storyPortrait.ordersFooterLayout.beginWidth >= storyPortrait.ordersFooterLayout.footerWidth - 1,
     JSON.stringify(storyPortrait.ordersFooterLayout));
 
+  const legacyNarrative = await page.evaluate(async () => {
+    const root = document.getElementById('ui-message');
+    const title = root.querySelector('.uiMessageBoxTitle');
+    const body = root.querySelector('.uiMessageBoxBody');
+    const button = root.querySelector('.uiMessageBoxButton');
+    const previous = { rootClass: root.className, display: root.style.display, title: title.innerHTML, body: body.innerHTML };
+    root.classList.add('uiMessageBox--narrative');
+    root.style.display = 'block';
+    title.textContent = 'OPERATION HOOPER — CUITO CUANAVALE (1987)';
+    body.innerHTML = Array.from({ length: 20 }, (_, i) => `<p>Long briefing paragraph ${i + 1}. Orders and historical context remain readable.</p>`).join('');
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    const rr = root.getBoundingClientRect();
+    const br = button.getBoundingClientRect();
+    const result = {
+      bodyScrollable: body.scrollHeight > body.clientHeight && getComputedStyle(body).overflowY === 'auto',
+      buttonInsideDialog: br.top >= rr.top && br.bottom <= rr.bottom + 1,
+      buttonInsideViewport: br.top >= 0 && br.bottom <= window.innerHeight + 1,
+    };
+    root.className = previous.rootClass;
+    root.style.display = previous.display;
+    title.innerHTML = previous.title;
+    body.innerHTML = previous.body;
+    return result;
+  });
+  ok('long legacy briefing scrolls while its close control stays reachable',
+    legacyNarrative.bodyScrollable && legacyNarrative.buttonInsideDialog && legacyNarrative.buttonInsideViewport,
+    JSON.stringify(legacyNarrative));
+
   await page.setViewport({ width: 667, height: 375, isMobile: true, hasTouch: true, deviceScaleFactor: 2 });
   await sleep(250);
 
@@ -368,21 +418,64 @@ try {
     return {
       title: metric('.osada-tb-op'),
       saved: metric('.osadaSaveStatus'),
-      briefing: metric('#osadaBriefingBtn'),
+      report: metric('#combatLogButton'),
       reserves: metric('.osada-tb-reserves'),
       reserveIcon: metric('.osada-tb-reserves__ico'),
+      reserveBadgeInside: (() => {
+        const button = document.querySelector('.osada-tb-reserves').getBoundingClientRect();
+        const badgeEl = document.getElementById('osadaReservesBadge');
+        if (getComputedStyle(badgeEl).display === 'none') return true;
+        const badge = badgeEl.getBoundingClientRect();
+        return badge.left >= button.left - 5 && badge.right <= button.right + 5;
+      })(),
       nameVisible: name.width > 0 && name.height > 0,
       statsAboveActions: actionRects.length > 0 && expand.bottom <= Math.min(...actionRects.map((r) => r.top)) + 1,
       actionsInsideCard: actionRects.every((r) => r.left >= card.left - 1 && r.right <= card.right + 1),
     };
   });
-  ok('phone HUD replaces the clipped title and save text with a 44px briefing control',
+  ok('phone HUD replaces clipped title/save text with the existing 44px Turn Report control',
     phoneHud.title.display === 'none' && phoneHud.saved.display === 'none' &&
-      phoneHud.briefing.width >= 44 && phoneHud.briefing.height >= 44,
+      phoneHud.report.width >= 44 && phoneHud.report.height >= 44,
     JSON.stringify(phoneHud));
   ok('phone reserves artwork fills its touch plate',
-    phoneHud.reserves.width >= 44 && phoneHud.reserves.height >= 44 && phoneHud.reserveIcon.width >= 40,
+    phoneHud.reserves.width >= 44 && phoneHud.reserves.height >= 44 &&
+      phoneHud.reserveIcon.width >= 38 && phoneHud.reserveBadgeInside,
     JSON.stringify(phoneHud));
+
+  const mobileContext = await page.evaluate(async () => {
+    const bottom = document.getElementById('osada-bottomzone');
+    const savedClass = bottom.className;
+    bottom.classList.remove('bz--visible', 'bz--hover', 'bz--enemy-only');
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    const dock = document.getElementById('osadaMobileContextDock');
+    const visible = getComputedStyle(dock).display !== 'none';
+    const result = {
+      visible,
+      turn: document.getElementById('osadaMobileTurn').textContent.trim(),
+      weatherWidth: Math.round(document.getElementById('osadaMobileWeather').getBoundingClientRect().width),
+      heroesWidth: Math.round(document.getElementById('osadaMobileHeroes').getBoundingClientRect().width),
+    };
+    bottom.className = savedClass;
+    return result;
+  });
+  ok('passive lower rail shows turn/weather/heroes and yields to the unit card',
+    mobileContext.visible && mobileContext.turn.length > 0 &&
+      mobileContext.weatherWidth > 0 && mobileContext.heroesWidth >= 44,
+    JSON.stringify(mobileContext));
+
+  const reportEntry = await page.evaluate(async () => {
+    document.getElementById('combatLogButton').click();
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    const log = document.getElementById('combatLog');
+    const result = {
+      open: getComputedStyle(log).display !== 'none',
+      hasBriefingAction: !!log.querySelector('.osada-tr-briefing-btn'),
+    };
+    document.getElementById('combatLogButton').click();
+    return result;
+  });
+  ok('mobile report icon opens the full combat log surface with its briefing action',
+    reportEntry.open && reportEntry.hasBriefingAction, JSON.stringify(reportEntry));
   ok('landscape unit identity remains visible and actions stay inside the card below All Stats',
     phoneHud.nameVisible && phoneHud.statsAboveActions && phoneHud.actionsInsideCard,
     JSON.stringify(phoneHud));

@@ -247,59 +247,47 @@ body.osada-layout-phone #statusbar::before,
 body.osada-layout-phone #statusbar::after,
 body.osada-layout-phone #osadaBrand,
 body.osada-layout-phone #weathermsg,
-body.osada-layout-phone #locmsg {
+body.osada-layout-phone #locmsg,
+body.osada-layout-phone #statusmsg,
+body.osada-layout-phone #osadaHqBtn {
     display: none !important;
 }
 
-body.osada-layout-phone #statusmsg {
-    flex: 1 1 auto;
-    min-width: 0;
-    height: auto;
-    line-height: 1.2;
-    font-size: 11px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
 /* A phone cannot afford a scenario title that collapses to a meaningless first
- * letter. The nearby briefing chevron is the operation-title/details entry
- * point; turn and date remain visible in this strip. */
+ * letter. Turn, weather and terrain live in the contextual lower rail instead. */
 body.osada-layout-phone .osada-tb-op,
 body.osada-layout-phone .osadaSaveStatus {
     display: none !important;
 }
 
-#osadaBriefingBtn {
-    display: none;
-}
-
-body.osada-layout-phone #osadaBriefingBtn {
+/* The existing combat-log trigger is the single mobile entry point for reports,
+ * objectives and the briefing. Keep it in normal flex flow instead of at the
+ * legacy fixed screen centre. */
+body.osada-layout-phone #combatLogButton.osada-tb-combatlog {
     display: inline-flex;
+    position: static !important;
+    inset: auto !important;
+    margin: 0 !important;
+    transform: none !important;
     flex: 0 0 var(--osada-touch-target-min);
     width: var(--osada-touch-target-min);
     height: var(--osada-touch-target-min);
     align-items: center;
     justify-content: center;
-    box-sizing: border-box;
-    color: var(--osada-brass, #d9b25a);
-    background: rgba(28, 31, 37, .76);
-    border: 1px solid rgba(217, 178, 90, .45);
-    border-radius: 4px;
-    cursor: pointer;
+    line-height: normal;
 }
 
-body.osada-layout-phone .osada-tb-briefing__glyph {
-    font-family: var(--osada-font-ui, sans-serif);
-    font-size: 22px;
-    line-height: .8;
-    transform: translateY(-1px);
+body.osada-layout-phone .osada-tb-combatlog__ico {
+    display: block;
+    width: 40px;
+    height: 40px;
 }
 
 /* The supply sprite contains the same framed artwork as the neighbouring HUD
  * icons. Let it occupy the plate instead of leaving a tiny 22px picture in the
  * middle of a 48px touch target. */
 body.osada-layout-phone .osada-tb-reserves {
+    position: relative;
     width: var(--osada-touch-target-min);
     min-width: var(--osada-touch-target-min);
     padding: 2px;
@@ -311,8 +299,19 @@ body.osada-layout-phone .osada-tb-reserves__label {
 
 body.osada-layout-phone .osada-tb-reserves__ico {
     display: block;
-    width: 40px;
-    height: 40px;
+    width: 38px;
+    height: 38px;
+}
+
+body.osada-layout-phone .osada-tb-reserves__badge {
+    position: absolute;
+    z-index: 1;
+    top: -4px;
+    right: -4px;
+    min-width: 18px;
+    height: 18px;
+    margin: 0;
+    padding: 0 4px;
 }
 
 body.osada-layout-phone .osada-tb-spacer {
@@ -322,14 +321,19 @@ body.osada-layout-phone .osada-tb-spacer {
 body.osada-layout-phone #osadaEndTurn {
     flex: 0 0 auto;
     min-height: var(--osada-touch-target);
-    min-width: 88px;
+    min-width: 82px;
     /* Separated from Options so a mis-tap cannot end the turn (spec §14.3). */
     margin-left: var(--osada-touch-gap);
 }
 
 body.osada-layout-phone .osada-et__label {
     display: inline;
-    font-size: 13px;
+    font-size: 0;
+}
+
+body.osada-layout-phone .osada-et__label::after {
+    content: attr(data-mobile-label);
+    font-size: 12px;
 }
 
 /* ---- Map viewport ----
@@ -356,6 +360,7 @@ body.osada-layout-tablet #game {
 
 /* ---- Bottom action dock ---- */
 body.osada-layout-phone #osada-bottomzone {
+    display: grid;
     right: var(--osada-safe-right);
     left: var(--osada-safe-left);
     height: auto;
@@ -365,6 +370,71 @@ body.osada-layout-phone #osada-bottomzone {
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas: "card";
     gap: 6px;
+}
+
+/* With no selected unit the same measured bottom zone becomes a calm context
+ * rail. Opening a unit/forecast card replaces it rather than stacking another
+ * permanent toolbar above it. */
+body.osada-layout-phone #osada-bottomzone:not(.bz--visible) > :not(#osadaMobileContextDock) {
+    display: none !important;
+}
+
+body.osada-layout-phone #osada-bottomzone.bz--visible #osadaMobileContextDock {
+    display: none;
+}
+
+.osada-mobile-context {
+    display: none;
+}
+
+body.osada-layout-phone .osada-mobile-context {
+    grid-area: card;
+    display: grid;
+    grid-template-columns: auto auto minmax(0, 1fr) var(--osada-touch-target-min);
+    align-items: center;
+    gap: 8px;
+    min-height: 52px;
+    padding: 4px 6px;
+    box-sizing: border-box;
+    border: 1px solid rgba(217, 178, 90, .38);
+    border-radius: 5px;
+    background: linear-gradient(180deg, rgba(32, 35, 42, .96), rgba(16, 18, 22, .97));
+    color: var(--osada-text, #e7e2d4);
+    font: 600 12px/1.2 var(--osada-font-ui, sans-serif);
+}
+
+.osada-mobile-context__turn {
+    color: var(--osada-brass, #d9b25a);
+    white-space: nowrap;
+}
+
+.osada-mobile-context__weather {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.osada-mobile-context__weather .osada-tb-weather-img {
+    width: 20px;
+    height: 20px;
+}
+
+.osada-mobile-context__weather .osada-tb-weather-txt {
+    display: none;
+}
+
+.osada-mobile-context__location {
+    min-width: 0;
+    overflow: hidden;
+    color: var(--osada-text-dim, #a9a494);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.osada-mobile-context__heroes {
+    width: var(--osada-touch-target-min);
+    height: var(--osada-touch-target-min);
+    cursor: pointer;
 }
 
 /* Target preview and hover forecast both need attacker, forecast and defender
@@ -1069,7 +1139,7 @@ body.osada-layout-phone.osada-orientation-landscape #smLogo {
 }
 
 body.osada-layout-phone.osada-orientation-landscape .smBottomCenter {
-    top: 122px;
+    top: 138px;
     bottom: calc(var(--osada-safe-bottom) + 34px);
     left: calc(var(--osada-safe-left) + 16px);
     width: min(360px, calc(48vw - var(--osada-safe-left) - 24px));
@@ -1086,10 +1156,17 @@ body.osada-layout-phone.osada-orientation-landscape .smMainButton.osada-menu-btn
     width: 100%;
 }
 
+body.osada-layout-phone.osada-orientation-landscape #smLogoText {
+    max-width: 100%;
+    font-size: 10px;
+    letter-spacing: .08em;
+    white-space: nowrap;
+}
+
 /* Portrait phone: put the command column back into normal flow so it gives the
  * scroller a real height. Absolute children do not contribute to scrollHeight. */
 body.osada-layout-phone.osada-orientation-portrait #smLogo {
-    top: 72px;
+    top: 112px;
     left: 16px;
     width: calc(100% - 32px);
     height: 126px;
@@ -1102,7 +1179,7 @@ body.osada-layout-phone.osada-orientation-portrait .smBottomCenter {
     bottom: auto;
     left: auto;
     width: auto;
-    margin: 230px 16px 100px;
+    margin: 286px 16px 100px;
 }
 
 body.osada-layout-phone.osada-orientation-portrait .smMainButton.osada-menu-btn {
@@ -1110,11 +1187,18 @@ body.osada-layout-phone.osada-orientation-portrait .smMainButton.osada-menu-btn 
 }
 
 body.osada-layout-phone.osada-orientation-portrait #smMiscButs {
-    position: relative;
+    position: fixed;
+    top: 8px;
+    left: 16px;
     right: auto;
     bottom: auto;
-    justify-content: center;
-    margin: -78px 16px 22px;
+    justify-content: flex-start;
+    margin: 0;
+}
+
+body.osada-layout-phone.osada-orientation-portrait .osada-language-switch {
+    top: 58px;
+    right: 16px;
 }
 
 body.osada-layout-phone.osada-orientation-portrait #smCredits {
@@ -1321,10 +1405,21 @@ body.osada-layout-phone .uiMessageBox::after {
 }
 
 body.osada-layout-phone .uiMessageBoxBody {
-    max-height: calc(var(--osada-vv-h, 100dvh) - var(--osada-safe-top) - var(--osada-safe-bottom) - 116px);
+    /* Reserve space for a wrapped two-line title and the close/continue control.
+     * The former 116px subtraction let a long narrative body consume the whole
+     * dialog and clip the only way out below the viewport. */
+    max-height: calc(var(--osada-vv-h, 100dvh) - var(--osada-safe-top) - var(--osada-safe-bottom) - 190px);
     overflow-y: auto;
     touch-action: pan-y;
     overscroll-behavior-y: contain;
+}
+
+body.osada-layout-phone .uiMessageBoxTitle {
+    display: -webkit-box;
+    max-height: 3em;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
 }
 
 body.osada-layout-phone.osada-orientation-landscape .uiMessageBox--hero .uiMessageBoxBody {
@@ -1444,10 +1539,7 @@ body.osada-layout-phone.osada-orientation-portrait #uc-expand::after {
 
 /* Keep End Turn reachable in portrait. Secondary tools stay available from
  * the drawer/settings surfaces instead of pushing the critical action away. */
-body.osada-layout-phone.osada-orientation-portrait #statusmsg,
-body.osada-layout-phone.osada-orientation-portrait #combatLogButton,
 body.osada-layout-phone.osada-orientation-portrait #zoom,
-body.osada-layout-phone.osada-orientation-portrait #osadaHqBtn,
 body.osada-layout-phone.osada-orientation-portrait #osadaNav {
     display: none;
 }
