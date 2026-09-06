@@ -6031,8 +6031,9 @@ hr {
 
 /* ============================================================================
  * TASK 6 — ATTACK-RANGE ENEMY RINGS (DOM overlay, zero canvas changes).
- * #osada-attack-rings sits inside #game at the same (0,0) offset as the map canvases, so it
- * scrolls with the map for free. Each ring is a single outline-only hexagon built with ONE
+ * #osada-attack-rings sits inside #game-zoom-wrap — the map canvases' own parent — at the same
+ * (0,0) origin, so it scrolls with the map AND inherits the wrapper's CSS `zoom` for free. It must
+ * NOT be parented to #game: there it would be laid out in unzoomed pixels over a zoomed map. Each ring is a single outline-only hexagon built with ONE
  * `clip-path: path(evenodd, "...")` — an SVG compound path with an OUTER hexagon and a slightly
  * SMALLER INNER hexagon; the `evenodd` fill rule clips out everything except the ~2-3px band
  * between them, leaving a true ring with no fill in the middle. (An earlier attempt used
@@ -6045,7 +6046,9 @@ hr {
     position: absolute;
     left: 0;
     top: 0;
-    z-index: 2;
+    /* Above #cursor (2) and #unitbackbuffer (3), the wrapper's other absolutely-positioned
+       children, so a ring is never hidden behind the unit it outlines. */
+    z-index: 4;
     pointer-events: none;
 }
 
@@ -9046,4 +9049,85 @@ hr {
 @keyframes osada-loadcurtain-pulse {
     0%, 100% { opacity: .55; }
     50% { opacity: 1; }
+}
+
+/* ============================================================================
+ * Unit-card collapse (2026-09-06). The card sits over the map's bottom-left and
+ * can hide the hexes a move is being aimed at, so it folds away — from a chevron
+ * on the card, from a chip that replaces it in that corner, and (on a phone) from
+ * the bottom dock beside Heroes. See `ui/UnitCardCollapse`.
+ * ============================================================================ */
+/* The card's top-left corner, above the portrait. Absolute against #unit-info (already
+   position: relative) so it joins no flex row: inline in the name line it read as a stray
+   character inside the unit's title, and in the portrait column it pushed the portrait down. */
+.osada-uc-collapse {
+    position: absolute;
+    left: 8px;
+    top: 6px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 16px;
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, .04);
+    border: 1px solid var(--osada-metal-600);
+    border-radius: 3px;
+    color: var(--osada-text-dim, #9aa3ad);
+    font-size: 13px;
+    line-height: 1;
+    cursor: pointer;
+    user-select: none;
+}
+
+.osada-uc-collapse:hover,
+.osada-uc-collapse:focus-visible {
+    background: rgba(255, 255, 255, .10);
+    border-color: var(--osada-accent, #c9a227);
+    color: var(--osada-text, #e6e9ee);
+    outline: none;
+}
+
+/* Fixed to the VIEWPORT's bottom-left, the corner the card itself occupies. Not absolute inside
+   #game: that is the map's scroll container, so the chip would scroll away with the terrain and
+   sit at the map's bottom edge rather than the screen's. `display` is driven from script
+   (none / flex) — the default is hidden, since the card starts open. */
+.osada-uc-restore {
+    position: fixed;
+    left: 10px;
+    bottom: 10px;
+    z-index: 40;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    background: rgba(21, 23, 28, .92);
+    border: 1px solid var(--osada-metal-600);
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .45);
+    color: var(--osada-text, #e6e9ee);
+    font-size: 15px;
+    line-height: 1;
+    cursor: pointer;
+    user-select: none;
+}
+
+.osada-uc-restore:hover,
+.osada-uc-restore:focus-visible {
+    border-color: var(--osada-accent, #c9a227);
+    outline: none;
+}
+
+/* Phone: the dock twin sits beside Heroes and is sized to the same 44px touch target the mobile
+   audit requires of every primary control. The floating chip is hidden there — the bottom dock
+   already owns that corner, and two controls for one state in one thumb reach is one too many. */
+body.osada-layout-phone .osada-mobile-context__card-toggle {
+    min-width: 44px;
+    min-height: 44px;
+}
+
+body.osada-layout-phone .osada-uc-restore {
+    display: none !important;
 }

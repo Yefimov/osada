@@ -44,6 +44,7 @@ internal object BottomZoneBuilder {
     fun build() {
         MobileContextDock.install()
         restructurePlayerCard()
+        UnitCardCollapse.installRestoreChip()
         buildForecastSkeleton()
         buildEnemyCardSkeleton()
         // #unit-context keeps its id/handlers; only reparented into the card's action-row slot.
@@ -57,6 +58,10 @@ internal object BottomZoneBuilder {
     @Suppress("LongMethod")
     private fun restructurePlayerCard() {
         val root = byId("unit-info") ?: return
+
+        // Minimise button, first so it leads the card in tab order. It positions itself into the
+        // card's top-left corner and takes part in no flex row (`UnitCardCollapse`).
+        UnitCardCollapse.installCardButton(root)
 
         fun move(
             id: String,

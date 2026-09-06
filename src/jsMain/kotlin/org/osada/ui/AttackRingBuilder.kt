@@ -16,10 +16,19 @@ import org.osada.uiSettings
 
 /**
  * Task 6: red hex-contour rings on enemy units attackable by the currently selected own unit.
- * Pure DOM overlay — zero canvas code touched. A container div lives inside `#game` (the map's
- * own scroll container) at the same (0,0) offset as the map canvases, so it scrolls with the map
- * for free; each ring is positioned with the SAME hex→pixel conversion the canvases themselves
- * use ([Render.cellToScreen], already `internal`/same-package — reused, not reimplemented).
+ * Pure DOM overlay — zero canvas code touched. A container div lives inside `#game-zoom-wrap`,
+ * the SAME parent as the four map canvases, at the same (0,0) origin — so it scrolls with the map
+ * AND inherits the wrapper's CSS `zoom` for free; each ring is positioned with the SAME hex→pixel
+ * conversion the canvases themselves use ([Render.cellToScreen], already `internal`/same-package —
+ * reused, not reimplemented), in that wrapper's own unzoomed pixel space.
+ *
+ * The wrapper, not `#game`, is what makes the rings track the map. Parented to `#game` they were
+ * laid out in UNZOOMED pixels over a zoomed map: at 160% a ring sat 513px left and 135px above its
+ * hex and stayed 60px wide against a 96px hex, so rings drifted off their targets entirely and, near
+ * an edge, landed outside the map — read as "there's an enemy off the map" (reported 2026-09-06).
+ * Every other `#game` child positions itself with `cellToScreen(absolute = true)` and is HUD-sized
+ * on purpose (tooltips must not grow with the map); a hex outline is map furniture and must scale
+ * with the hex, which is what living in the wrapper gives it.
  *
  * Hex geometry constants (S/Y/v) mirror [RenderContext]'s literal values (30/15/25) — replicated
  * locally per the spec's own fallback, since RenderContext itself is private inside [Render] and
@@ -46,10 +55,13 @@ internal object AttackRingBuilder {
     private var cacheOwnerUnitId: Int = -1
 
     fun build() {
-        val game = byId("game") ?: return
+        // The zoom wrapper is created by `RenderContext.initCanvases`, which runs before the HUD is
+        // built; `#game` is only a fallback for the (test//first-paint) case where it does not exist
+        // yet, and costs nothing when it does — at zoom 1.0 the two spaces coincide.
+        val host = byId("game-zoom-wrap") ?: byId("game") ?: return
         val div = document.createElement("div").asDynamic()
         div.id = "osada-attack-rings"
-        game.appendChild(div)
+        host.appendChild(div)
         container = div
     }
 

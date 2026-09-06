@@ -14,8 +14,8 @@ import kotlin.js.Date
 
 /**
  * Fetches and parses a scenario's XML file: map dimensions/turns/atmosphere, then (once the
- * terrain image loads, so map row/col counts can be corrected from it) players, reinforcements
- * and hexes. Player parsing lives in [ScenarioPlayerParser], reinforcements in
+ * terrain image loads, so the grid is allocated at a size the art can actually carry) players,
+ * reinforcements and hexes. Player parsing lives in [ScenarioPlayerParser], reinforcements in
  * [ScenarioReinforcementParser], hexes in [ScenarioHexParser], and the shared `<unit>` element
  * parser in [ScenarioUnitParser].
  */
@@ -23,8 +23,12 @@ object ScenarioLoader {
     const val SCENARIO_PATH = "resources/scenarios/data/"
     var noCache: Boolean = true
 
-    private const val HEX_COLUMN_WIDTH = 30
-    private const val HEX_COLUMN_WIDTH_PAIR = 60
+    // Hex geometry, mirroring `ui/RenderContext` exactly (hexTopWidth 30, hexSlantWidth 15,
+    // v 25): column `c`'s own top edge runs x = 45c-30 .. 45c, row `r`'s own band runs
+    // y = 50r-25 .. 50r+25 on EVEN columns and 50r .. 50r+50 on odd ones.
+    private const val HEX_COLUMN_STEP = 45
+    private const val HEX_SLANT_WIDTH = 15
+    private const val HEX_ROW_HEIGHT = 50
     private const val HOLD_THRESHOLD_COUNT = 3
 
     /** An authored "N for side 0, N for side 1" pair, or empty when the scenario has none. */
@@ -173,6 +177,22 @@ object ScenarioLoader {
         }
     }
 
+    /**
+     * Sizes the grid once the terrain image is known, then parses everything that needs a grid.
+     *
+     * The AUTHORED `rows`/`cols` are the playable grid — they come straight from the `.xscn`
+     * map sub-header (`tools/og-import/SCENARIO_FORMAT_NOTES.md`) and OG plays every hex of it.
+     * The image only CAPS them, because a handful of PM-legacy scenarios declare a placeholder
+     * 45x40 they never fill and whose art covers far less.
+     *
+     * This used to derive both from the image alone, which silently deleted the last column and
+     * the last row of most maps: an OG crop stops mid-hex, so the old pixel loop counted one
+     * column short. On Seseña (`bn9s00`, 43x14, art 1896x684) that dropped column 42 — a river,
+     * a road and three authored hexes — and row 13's road chain, and `screenToCell`'s clamp then
+     * reported col 41 for every click on the missing column. Across the 502 shipped scenarios the
+     * old rule cost 413 of them a column and 273 a row, stranding 152 authored unit placements on
+     * a last column and 172 on a last row (reported 2026-09-06).
+     */
     private fun loadTerrainImage(
         scenario: Scenario,
         doc: Document,
@@ -180,23 +200,17 @@ object ScenarioLoader {
         val image: HTMLImageElement = org.w3c.dom.Image()
         image.src = scenario.map.terrainImage
         image.asDynamic().onload = {
-            val imgHeight = image.height
-            val imgWidth = image.width
-            var cols = 1
-            var width = imgWidth
-            while (width >= HEX_COLUMN_WIDTH) {
-                width = if (cols % 2 == 0) width - HEX_COLUMN_WIDTH_PAIR else width - HEX_COLUMN_WIDTH
-                cols++
-            }
-            val isLastColPartial = width < 0
-            val heightRatio = imgHeight / 50.0
-            val rows = kotlin.math.floor(heightRatio).toInt()
-            val isLastRowPartial = (heightRatio - rows) in 0.39..0.8
-            scenario.map.cols = cols - 1
-            scenario.map.rows =
-                if (rows > 0 && (rows < scenario.map.rows || scenario.map.rows == 0)) rows else scenario.map.rows
-            scenario.map.isLastColPartial = isLastColPartial
-            scenario.map.isLastRowPartial = isLastRowPartial
+            // What the art can carry, on one rule in both axes: a column/row counts while at least
+            // HALF of its own band is painted -- the column's top edge x = 45c-30 .. 45c, the row's
+            // even-column band y = 50r-25 .. 50r+25. The canvas is the art, so whatever of that
+            // last hex falls past the picture is clipped -- it stays selectable all the same
+            // (`RenderContext.canvasWidth`, `screenToCell`).
+            val coveredCols = (image.width + HEX_SLANT_WIDTH) / HEX_COLUMN_STEP + 1
+            val coveredRows = image.height / HEX_ROW_HEIGHT + 1
+            val authoredCols = scenario.map.cols
+            val authoredRows = scenario.map.rows
+            scenario.map.cols = if (authoredCols > 0) minOf(authoredCols, coveredCols) else coveredCols
+            scenario.map.rows = if (authoredRows > 0) minOf(authoredRows, coveredRows) else coveredRows
             scenario.map.allocMap()
             ScenarioPlayerParser.parse(scenario, doc)
         }

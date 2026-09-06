@@ -33,8 +33,6 @@ import org.osada.rules.getResupplyValue
 class GameMap {
     var rows: Int = 0
     var cols: Int = 0
-    var isLastRowPartial: Boolean = false
-    var isLastColPartial: Boolean = false
     var name: String = ""
     var terrainImage: String = ""
     var map: Array<Array<Hex>>? = null

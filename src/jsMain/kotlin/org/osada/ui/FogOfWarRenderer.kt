@@ -13,10 +13,6 @@ import org.osada.model.ScreenPos
 internal class FogOfWarRenderer(
     private val rc: RenderContext,
 ) {
-    companion object {
-        private const val EXTRA_CANVAS_HEIGHT = 65.0
-    }
-
     fun apply(
         frame: RenderFrame,
         c1: ScreenPos,
@@ -30,7 +26,7 @@ internal class FogOfWarRenderer(
         // library map image overruns the logical grid; on a partial render fog only the cleared
         // box so the translucent layer can't stack outside it.
         if (frame.radius < 0) {
-            ctx.fillRect(0.0, 0.0, rc.mapWidth, rc.mapHeight + EXTRA_CANVAS_HEIGHT)
+            ctx.fillRect(0.0, 0.0, rc.canvasWidth, rc.canvasHeight)
         } else {
             ctx.fillRect(c1.x, c1.y, c2.x - c1.x, c2.y - c1.y)
         }

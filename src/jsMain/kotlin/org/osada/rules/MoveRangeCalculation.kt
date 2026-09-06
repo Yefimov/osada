@@ -85,7 +85,7 @@ internal object MoveRangeCalculation {
             HexGeometry
                 .getRing(pos.row, pos.col, maxRange, map.rows, map.cols, true)
                 .map { it as ExtendedCell }
-        val cells = ring.filter { cell -> isValidEdgeCell(cell, map) }.toMutableList()
+        val cells = ring.filter { cell -> isValidEdgeCell(cell) }.toMutableList()
 
         // OG's Superior Maneuver: "The unit may bypass enemy zones of control." The leader has
         // existed (and been offered to the player, with that exact description) since the port
@@ -121,15 +121,18 @@ internal object MoveRangeCalculation {
         )
     }
 
-    private fun isValidEdgeCell(
-        cell: ExtendedCell,
-        map: GameMap,
-    ): Boolean {
-        val isTopEdgeGap = cell.row == 0 && cell.col % 2 == 0
-        val isPartialLastCol = map.isLastColPartial && cell.col == map.cols - 1
-        val isPartialLastRow = map.isLastRowPartial && cell.row == map.rows - 1 && cell.col % 2 == 1
-        return !isTopEdgeGap && !isPartialLastCol && !isPartialLastRow
-    }
+    /**
+     * The only hex an offset grid genuinely does not have: an EVEN column's row 0 sits half a hex
+     * above the map (y = -25), so OG never puts anything there — one authored unit placement in
+     * all 502 shipped scenarios, against 152 on a last column and 172 on a last row.
+     *
+     * The last column and the last row used to be excluded here too, via `isLastColPartial` /
+     * `isLastRowPartial`. Those flags described the ART, not the grid: an OG library crop stops
+     * mid-hex, so the outermost column and row are painted short while still being fully played
+     * (Seseña's column 42 carries a river and a road). `ScenarioLoader` now sizes the grid from
+     * the authored `rows`/`cols` and the flags are gone with them.
+     */
+    private fun isValidEdgeCell(cell: ExtendedCell): Boolean = !(cell.row == 0 && cell.col % 2 == 0)
 
     private fun airMoveRange(context: MoveContext): List<ExtendedCell> {
         val result = mutableListOf<ExtendedCell>()
@@ -145,27 +148,61 @@ internal object MoveRangeCalculation {
         return result
     }
 
+    /**
+     * The reachable set, as a cost-ordered flood fill (Dijkstra) out from the unit's own hex.
+     *
+     * Cost order, NOT hex-distance order. The port's original sweep walked the ring in layers of
+     * hex distance from the origin and would only relax a neighbour whose distance was `>=` the
+     * layer being expanded, so a path was forced to move away from the start at every step. Any
+     * hex reachable only by going around an obstacle — out and then back TOWARDS the origin — was
+     * therefore reported unreachable, however much movement the unit had left.
+     *
+     * Seseña is the reported case (2026-09-06): an impassable river runs across row 4 east of
+     * column 33, and its only gap, (33,4), sits one step back towards the unit from (32,4). A unit
+     * at (40,3) could pour 29 hexes WEST along the open rows and still not take that one step
+     * EAST, so the whole south-east of the map was unreachable. Ordinary move allowances are small
+     * enough that the detour rarely fits anyway, which is why this survived: it takes a long
+     * allowance, or a tight obstacle, to see it.
+     *
+     * Per-hex costing is unchanged — [expandNeighbor] and its helpers still own terrain, roads,
+     * rail, rubble, ZOC and minefields — and a hex whose cost is the [ZOC_MOVE_COST] sentinel still
+     * ends the move: its `cout` puts every onward neighbour out of range on its own.
+     *
+     * Two behaviour changes fall out of expanding in cost order, both corrections, measured over
+     * Seseña, Der Aufstand, Forward 27 and bn4s19: a range GROWS where a route has to round an
+     * obstacle (the bug above), and it SHRINKS where the old sweep expanded onward from a hex the
+     * unit could only just afford to enter. Entering such a hex spends everything the unit has
+     * left — `markPassableAndVisible`'s own `cin <= maxRange` clause is what allows that last step
+     * — so continuing past it was never legal. Most units on most maps are unaffected: the ranges
+     * on Seseña and bn4s19 are identical hex for hex before and after.
+     */
     private fun groundMoveRange(
         context: MoveContext,
         unit: GameUnit,
     ): List<ExtendedCell> {
-        val result = mutableListOf<ExtendedCell>()
         val cells = context.cells
-        cells.add(ExtendedCell(context.pos.row, context.pos.col))
+        val origin = ExtendedCell(context.pos.row, context.pos.col)
+        cells.add(origin)
         val enemySide = 1 - context.unitSide
-        var k = 0
-        while (k <= context.maxRange) {
-            cells.filter { it.range == k }.forEach { current ->
-                cells
-                    .filter { neighbor ->
-                        HexGeometry.isAdjacent(current.row, current.col, neighbor.row, neighbor.col) &&
-                            neighbor.range >= k
-                    }.forEach { neighbor -> expandNeighbor(neighbor, current, context, unit, enemySide) }
+        // Adjacency by lookup rather than by scanning every cell for every cell: the old sweep was
+        // O(maxRange x n^2) over the ring, which a x10 allowance turns into millions of tests.
+        val byKey = HashMap<Int, ExtendedCell>()
+        cells.forEach { byKey[cellKey(it.row, it.col)] = it }
+
+        val settled = HashSet<Int>()
+        val frontier = mutableListOf(origin)
+        while (frontier.isNotEmpty()) {
+            val current = frontier.removeCheapest()
+            // Popped in cost order, so `current.cout` is final here; past the allowance nothing
+            // beyond it can be afforded either.
+            val expandable = current === origin || current.cout <= context.maxRange
+            if (settled.add(cellKey(current.row, current.col)) && expandable) {
+                val reached = neighborsOf(current, byKey, settled)
+                reached.forEach { expandNeighbor(it, current, context, unit, enemySide) }
+                frontier.addAll(reached.filter { it !in frontier })
             }
-            k++
         }
-        cells.filter { it.canPass || it.canMove }.forEach { result.add(it) }
-        return result
+        return cells.filter { it.canPass || it.canMove }
     }
 
     /** Resolves [neighbor]'s move cost from [current], applies the enemy-ZOC cost floor, then
@@ -314,6 +351,33 @@ internal object MoveRangeCalculation {
             neighbor.canMove = true
         }
     }
+}
+
+/** Packs a cell into one Int for the flood fill's maps. Map columns never approach the stride. */
+private fun cellKey(
+    row: Int,
+    col: Int,
+): Int = row * MOVE_FILL_KEY_STRIDE + col
+
+/** Row stride for [cellKey]; larger than any map's column count by a wide margin. */
+private const val MOVE_FILL_KEY_STRIDE = 1000
+
+/** The not-yet-settled ring cells adjacent to [current]. */
+private fun neighborsOf(
+    current: ExtendedCell,
+    byKey: Map<Int, ExtendedCell>,
+    settled: Set<Int>,
+): List<ExtendedCell> =
+    HexGeometry
+        .getAdjacent(current.row, current.col)
+        .mapNotNull { byKey[cellKey(it.row, it.col)] }
+        .filter { cellKey(it.row, it.col) !in settled }
+
+/** Removes and returns the queued cell with the lowest accumulated cost. */
+private fun MutableList<ExtendedCell>.removeCheapest(): ExtendedCell {
+    var best = 0
+    for (i in 1 until size) if (this[i].cout < this[best].cout) best = i
+    return removeAt(best)
 }
 
 /**

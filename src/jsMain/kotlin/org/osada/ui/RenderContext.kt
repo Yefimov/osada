@@ -9,6 +9,7 @@ import org.osada.model.ScreenPos
 import org.osada.model.getUnitImagesList
 import kotlin.js.json
 import kotlin.math.PI
+import kotlin.math.floor
 import kotlin.math.max
 import kotlin.math.min
 
@@ -308,8 +309,6 @@ internal class RenderContext(
         private const val CURSOR_BACKBUFFER_SIZE = 54
         private const val UNIT_BACKBUFFER_SIZE = 120
 
-        // The terrain image is 65px shorter than the canvases, which get +65 for the last hex row.
-        internal const val LAST_HEX_ROW_HEIGHT = 65.0
         private const val Z_INDEX_UNIT_BACKBUFFER = 3
 
         // Fallback only, for the moment before the HUD exists (start menu, first paint). The real
@@ -367,7 +366,27 @@ internal class RenderContext(
     var ba: Double = -(hexTopWidth + hexSlantWidth)
     var ca: Double = -v
     val hexColumnStep: Double = hexTopWidth + hexSlantWidth
-    val hexColumnEpsilon: Double = hexTopWidth / 100.0
+
+    /** The upright part of a hex, between its two slants — [screenToCell]'s "core" band. */
+    private val hexCoreWidth: Double = hexTopWidth
+
+    /**
+     * The canvases' size: EXACTLY the terrain art, so the map ends where the picture ends.
+     *
+     * The art and the grid are two different rectangles — the grid wants `45*cols-30` x `50*rows`,
+     * an OG library crop stops wherever it stops — and the canvas follows the art. An outermost hex
+     * whose slant or lower half falls past the art is simply clipped by the bitmap edge, exactly as
+     * OG's own crops cut them; it stays selectable, because `screenToCell` clamps to the grid.
+     *
+     * Two rejected alternatives, both tried and reverted on 2026-09-06: a flat `+65` on the height
+     * (the grey band under every map — empty canvas with nothing to draw in it), and sizing to the
+     * grid while stretching the art's edge pixels to fill the difference (a smeared border, and
+     * baking the same padding into the map files smeared them permanently).
+     */
+    val canvasWidth: Double get() = mapWidth
+
+    /** Companion of [canvasWidth] for the vertical axis. */
+    val canvasHeight: Double get() = mapHeight
 
     private val hexDrawer: HexDrawer by lazy { HexDrawer(this) }
 
@@ -449,9 +468,11 @@ internal class RenderContext(
         // zoom) size — what #game's fit/scroll decisions must react to.
         val zw = (z.width as? Number)?.toDouble() ?: 0.0
         val zh = (z.height as? Number)?.toDouble() ?: 0.0
+        val boxW = canvasWidth
+        val boxH = canvasHeight
         val zoom = MapZoom.level
-        val scaledW = zw * zoom
-        val scaledH = zh * zoom
+        val scaledW = boxW * zoom
+        val scaledH = boxH * zoom
         var left = window.innerWidth / 2.0 - scaledW / 2.0
         if (left < 0) left = 0.0
 
@@ -476,17 +497,13 @@ internal class RenderContext(
         unitBackBuffer.style.top = "0px"
         unitBackBuffer.style.display = "none"
 
-        mapCanvas.style.backgroundColor = "none"
-        mapCanvas.style.backgroundImage = "url('${z.src}')"
-        mapCanvas.style.backgroundSize = "${zw.toInt()}px ${zh.toInt()}px"
-        mapCanvas.style.backgroundRepeat = "no-repeat"
-        mapCanvas.style.backgroundAttachment = "scroll"
+        applyTerrainBackground(z, zw, zh)
 
         // Wrapper is sized to the canvases' natural pixel box (matches their own inline
         // width/height); `zoom` inflates/shrinks its RENDERED box from there, same technique
         // strategic zoom already uses on #game itself (proven in this codebase).
-        wrap?.style?.width = "${zw.toInt()}px"
-        wrap?.style?.height = "${(zh + LAST_HEX_ROW_HEIGHT).toInt()}px"
+        wrap?.style?.width = "${boxW.toInt()}px"
+        wrap?.style?.height = "${boxH.toInt()}px"
         wrap?.style?.zoom = zoom.toString()
 
         if (MobileLayoutController.cssOwnsMapViewport) {
@@ -590,31 +607,53 @@ internal class RenderContext(
         return ScreenPos(x, y)
     }
 
+    /**
+     * The hex under a point, in the canvases' own (unzoomed) pixel space.
+     *
+     * x/y arrive ALREADY compensated for zoom (both continuous map zoom and strategic zoom) by the
+     * caller — `MapInputController.cellAt` uses `canvas.getBoundingClientRect()`, which reflects the
+     * FULL cumulative CSS zoom of every ancestor automatically, and divides once by that.
+     * Compensating again here would double it.
+     *
+     * EXACT point-in-hexagon, not the 45x50 rectangle the legacy `round()` arithmetic used. That
+     * arithmetic resolved a hex's own CENTRE LINE to the row ABOVE on every odd row: at a centre,
+     * `rowRaw` is exactly `2r+1`, so the expression rounded exactly `r - 0.5`, and Kotlin/JS
+     * `kotlin.math.round` breaks ties TOWARDS EVEN where PM's `Math.round` breaks them upwards —
+     * a faithful-looking port with the opposite behaviour on the one input that always occurs.
+     * Aiming at the middle of a hex is exactly what a player does, so a click there selected the
+     * neighbour above and "did nothing"; whether the physical pixel aimed at truncated onto that
+     * bad canvas row depended on the zoom level, which is why the same click worked at 160% and
+     * not at 100% (reported 2026-09-06). It also mis-assigned the slanted corners, being a
+     * rectangle where the hex is not.
+     *
+     * Geometry (mirrors [cellToScreen] and `HexDrawer`): column `c`'s upright core spans
+     * x = 45c-30 .. 45c and its right slant runs on to the tip at 45c+15; row `r` spans
+     * y = 50r-25 .. 50r+25 on EVEN columns and 50r .. 50r+50 on odd ones. So x falls in one 45-wide
+     * band per column — the core, plus the slant strip it shares diagonally with the next column —
+     * and only in that strip is a diagonal test needed.
+     */
     fun screenToCell(
         x: Int,
         y: Int,
     ): Cell {
-        // x/y arrive ALREADY compensated for zoom (both continuous map zoom and strategic zoom)
-        // by the caller — MapInputController.getClickPos uses canvas.getBoundingClientRect(),
-        // which reflects the FULL cumulative CSS zoom of every ancestor automatically, and
-        // divides once by that. Compensating again here would double it. (Previously this method
-        // tried to compensate itself via a `uiSettings.mapZoom` flag that nothing ever set, so it
-        // was silently a no-op — removed rather than left as dead, misleading code.)
+        val q = map ?: return Cell(0, 0)
         val sx = x.toDouble()
         val sy = y.toDouble()
 
-        val colRaw = (sx - ba) / hexColumnStep + hexColumnEpsilon
-        var col = kotlin.math.round(colRaw).toInt() - 1
-
-        val rowRaw = (sy - ca * (1.0 - (col and 1).toDouble())) / v
-        var row = kotlin.math.round(rowRaw / 2.0 - (rowRaw.toInt() and 1).toDouble()).toInt()
-
-        val q = map ?: return Cell(0, 0)
-        if (row < 0) row = 0
-        if (row > q.rows - 1) row = q.rows - 1
-        if (col < 0) col = 0
-        if (col > q.cols - 1) col = q.cols - 1
-        return Cell(row, col)
+        val band = floor((sx + hexCoreWidth) / hexColumnStep).toInt()
+        val dx = sx - (band * hexColumnStep - hexCoreWidth)
+        var col = band
+        if (dx > hexCoreWidth) {
+            // In the slant strip: inside column `band`'s hex the vertical extent shrinks from the
+            // full 2v at the core edge to nothing at the tip. Outside it, the point belongs to the
+            // next column, whose own left slant tiles the rest of the strip.
+            val u = (dx - hexCoreWidth) / hexSlantWidth
+            val bandTop = rowOf(sy, band) * (2.0 * v) + (if (band and 1 == 1) 0.0 else -v)
+            val localY = sy - bandTop
+            if (localY < v * u || localY > 2.0 * v - v * u) col = band + 1
+        }
+        val row = rowOf(sy, col)
+        return Cell(row.coerceIn(0, q.rows - 1), col.coerceIn(0, q.cols - 1))
     }
 
     // ------------------------------------------------------------------
@@ -657,27 +696,48 @@ internal class RenderContext(
     }
 }
 
+/** The terrain art itself, painted as the map canvas's background at its OWN pixel size — never
+ *  the canvas size, which may be larger where the grid runs past the art. */
+private fun RenderContext.applyTerrainBackground(
+    image: dynamic,
+    imageWidth: Double,
+    imageHeight: Double,
+) {
+    mapCanvas.style.backgroundColor = "none"
+    mapCanvas.style.backgroundImage = "url('${image.src}')"
+    mapCanvas.style.backgroundSize = "${imageWidth.toInt()}px ${imageHeight.toInt()}px"
+    mapCanvas.style.backgroundRepeat = "no-repeat"
+    mapCanvas.style.backgroundAttachment = "scroll"
+}
+
+/**
+ * The top of the row band containing [sy] in column [col] — odd columns sit half a hex (`v`) lower,
+ * the same brick offset [RenderContext.cellToScreen] applies.
+ *
+ * Pure `floor`, so no rounding tie ever arises and a boundary pixel belongs to the lower row
+ * consistently. Multiply back by `2v` and re-add the offset to recover the band's own top edge.
+ */
+private fun RenderContext.rowOf(
+    sy: Double,
+    col: Int,
+): Int = floor((sy - (if (col and 1 == 1) 0.0 else -v)) / (2.0 * v)).toInt()
+
 /** Reads a DOM numeric layout property that Kotlin only sees as `dynamic`, defaulting to 0. */
 private fun doubleOf(value: dynamic): Double = (value as? Number)?.toDouble() ?: 0.0
 
 private fun RenderContext.applyTerrainImageSize(img: dynamic) {
-    val lastHexRowHeight = RenderContext.LAST_HEX_ROW_HEIGHT
     mapWidth = (img.width as? Number)?.toDouble() ?: 0.0
     mapHeight = (img.height as? Number)?.toDouble() ?: 0.0
 
-    mapCanvas.width = mapWidth.toInt()
-    mapCanvas.height = (mapHeight + lastHexRowHeight).toInt()
-    hexesCanvas.width = mapWidth.toInt()
-    hexesCanvas.height = (mapHeight + lastHexRowHeight).toInt()
-    cursorCanvas.width = mapWidth.toInt()
-    cursorCanvas.height = (mapHeight + lastHexRowHeight).toInt()
-
-    mapCanvas.style.width = "${mapWidth.toInt()}px"
-    mapCanvas.style.height = "${(mapHeight + lastHexRowHeight).toInt()}px"
-    hexesCanvas.style.width = "${mapWidth.toInt()}px"
-    hexesCanvas.style.height = "${(mapHeight + lastHexRowHeight).toInt()}px"
-    cursorCanvas.style.width = "${mapWidth.toInt()}px"
-    cursorCanvas.style.height = "${(mapHeight + lastHexRowHeight).toInt()}px"
+    // Exactly the art -- see `RenderContext.canvasWidth`.
+    val w = canvasWidth.toInt()
+    val h = canvasHeight.toInt()
+    for (canvas in listOf(mapCanvas, hexesCanvas, cursorCanvas)) {
+        canvas.width = w
+        canvas.height = h
+        canvas.style.width = "${w}px"
+        canvas.style.height = "${h}px"
+    }
 
     mapCtx.imageSmoothingEnabled = false
     hexesCtx.imageSmoothingEnabled = false
