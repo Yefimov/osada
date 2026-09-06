@@ -160,11 +160,20 @@ class UI(
         // Standalone scenarios keep the legacy timing: their small popup still waits for the map,
         // because it is a message ABOUT a map the player is looking at.
         val campaignCeremony = showBriefing && game.campaign != null
-        if (campaignCeremony) openScenarioCeremony(rawBriefing)
+        if (campaignCeremony) {
+            openScenarioCeremony(rawBriefing)
+            // The ceremony is its own full-screen backdrop and outranks the curtain, so the curtain
+            // has nothing left to hide and would only sit between the briefing and the map it is
+            // deliberately covering for.
+            ScenarioLoadingCurtain.hide()
+        }
         console.log("[OSADA] UI.setNewScenario starting image cache")
         render.cacheImages {
             console.log("[OSADA] UI.setNewScenario cacheImages callback")
             render.render()
+            // The new battle is now painted; this is the earliest moment the curtain can come down
+            // without exposing a half-drawn map.
+            ScenarioLoadingCurtain.hide()
             // Build hex name/objective tooltips AFTER positionLayers has run inside cacheImages —
             // doing it before (stale/zero game geometry) placed labels off the map (e.g. "Sirki",
             // "Objective" floating beyond the edge until a scenario restart).
@@ -244,7 +253,13 @@ class UI(
         val facts =
             ScenarioFacts(
                 title = title,
-                dateLabel = game.scenario?.date?.toDateString() ?: "",
+                // Not `toDateString()`: its expanded-year form for a BC date is implementation
+                // defined, and it is not localized either.
+                dateLabel =
+                    game.scenario
+                        ?.date
+                        ?.let(GameplayLocalization::scenarioDateLabel)
+                        .orEmpty(),
                 sidesLabel = sidesLabel(),
                 ordersText = intro,
                 extendedObjectives = extendedObjectives,

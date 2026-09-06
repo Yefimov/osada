@@ -2114,6 +2114,22 @@ input[type=text], input[type=search] {
 
 /* › */
 
+/* Settings slider row (StartMenuSettingsBuilder.sliderSetting): "−  [====|====] 1.0  +" on ONE
+ * line. A flex row, not the three floated blocks it used to be — floats wrap as soon as the row
+ * is narrower than their sum, which put the steppers above and below the slider on every phone. */
+.settingSlider {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: 0 1 auto;
+    min-width: 0;
+}
+
+.settingSlider .osada-slider__step {
+    margin: 0;
+    flex: 0 0 auto;
+}
+
 /* Settings sliders (UILayout.createSlider): range input + numeric readout between the +/- steppers. */
 .osada-slider {
     display: inline-flex;
@@ -2121,15 +2137,30 @@ input[type=text], input[type=search] {
     gap: 8px;
     margin-top: 5px;
     padding: 0 6px;
+    min-width: 0;
+}
+
+.settingSlider .osada-slider {
+    margin-top: 0;
+    padding: 0;
+    flex: 1 1 auto;
 }
 
 .osada-slider input[type="range"] {
     width: 130px;
+    min-width: 0;
     accent-color: var(--osada-brass);
     cursor: pointer;
 }
 
+/* Inside a settings row the track takes whatever the steppers and the readout leave. */
+.settingSlider .osada-slider input[type="range"] {
+    width: auto;
+    flex: 1 1 130px;
+}
+
 .osada-slider__value {
+    flex: 0 0 auto;
     min-width: 34px;
     text-align: right;
     color: var(--osada-brass);
@@ -2681,8 +2712,13 @@ hr {
     padding: 20px 26px 30px;
 }
 
+/* The scrolling section list. `height` is plain (it used to be `auto !important`, to beat an
+ * inline `height: 95%` that index.html no longer carries) precisely so the mobile shell can
+ * hand it a real height: an `!important` here made `body.osada-layout-phone`'s `height: 100%`
+ * lose, the list grew to its content instead, and the whole settings screen stopped scrolling
+ * on every phone — with the Done button pushed off the bottom of the panel with it. */
 #smSettingsContainer {
-    height: auto !important;
+    height: auto;
     max-height: 68vh;
     overflow-y: auto;
     padding-bottom: 44px;
@@ -5717,8 +5753,32 @@ hr {
     color: var(--osada-brass) !important;
 }
 
-.osada-tb-combatlog__ico {
+/* Desktop wears the arrow; the phone bar wears the sprite (mobile.css swaps them). The arrow is
+ * the control this button has had since the beginning — a yellow osada-menu glyph pointing down
+ * when the Turn Report is shut and up when it is open. It was replaced outright by the sprite on
+ * 2026-09-04; restored here as the desktop face on 2026-09-05 at the user's request. */
+.osada-tb-combatlog__glyph {
     display: block;
+    font-family: osada-menu;
+    font-size: 22px;
+    line-height: 1;
+    /* The legacy yellow from base.css's #combatLogButton, not --osada-brass: this control was
+     * always brighter than the bar's other icons and that is how the player finds it. */
+    color: rgb(248, 224, 100);
+}
+
+.osada-tb-combatlog__glyph::before {
+    content: "l";
+}
+
+/* Flipped from the `selected` attribute `toggleButton` already sets, so nothing has to rewrite the
+ * button's markup to change the arrow -- see MainMenuBuilder for what that used to cost. */
+.osada-tb-combatlog[selected] .osada-tb-combatlog__glyph::before {
+    content: "L";
+}
+
+.osada-tb-combatlog__ico {
+    display: none;
     width: 34px;
     height: 34px;
 }
@@ -6017,6 +6077,14 @@ hr {
 #smState.mainPanel {
     padding: 0;
     width: min(480px, 92vw);
+    /* Content-sized and vertically centred, so on a short viewport (a phone in landscape is
+     * 375px tall) the box hung off BOTH ends with nothing to scroll — the Close button and the
+     * bottom half of the file rows were simply unreachable. The panel itself takes the scroll;
+     * it is a handful of rows, not a screen that needs a pinned header. `display` is deliberately
+     * untouched: makeVisible/makeHidden own it inline. */
+    max-height: 92vh;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
 }
 
 #smSettings.mainPanel {
@@ -6709,6 +6777,11 @@ hr {
 .osada-hero-rosterrow {
     display: block;
     width: 100%;
+    /* There is no global `* { box-sizing: border-box }` in this sheet, so `width: 100%` plus this
+       padding and border made the card 26px wider than the list that holds it. It overhung on the
+       right, and "Найти" -- pushed there by `margin-left: auto` -- ended up flush against the panel
+       edge while the portrait kept its 12px on the left. */
+    box-sizing: border-box;
     text-align: left;
     cursor: pointer;
     margin-bottom: 8px;
@@ -6787,7 +6860,13 @@ hr {
    `cover` with the focus high in the frame: the assets are 3:4 head-and-shoulders busts and every
    container they render into (54x54 dossier header, 46x58 roster row, 132x176 emergence) is a
    different aspect, so anchoring to the top keeps the face, not the tunic, in the crop. */
-.osada-portrait-photo {
+/* Doubled class on purpose. A container's own `background:` SHORTHAND resets background-size and
+   background-position to their defaults, so a container rule that happens to sit further down the
+   file silently un-covers the portrait: `.osada-hero-rosterrow-portrait` (below) did exactly that
+   and the roster row showed the top-left corner of the bust at natural size, while the dossier
+   header -- whose rule sits above this one -- was fine. Specificity 0,2,0 makes source order stop
+   mattering for every container, present and future. */
+.osada-portrait-photo.osada-portrait-photo {
     background-repeat: no-repeat;
     background-position: center 12%;
     background-size: cover;
@@ -8934,4 +9013,37 @@ hr {
         flex: 1 0 100%;
         margin-top: 6px;
     }
+}
+
+/* Scenario loading curtain (org.osada.ui.ScenarioLoadingCurtain).
+   The main menu's own backdrop, reused: leaving a battle for the menu and starting another one used
+   to leave the previous map on screen for the whole fetch. Above the map and HUD, below the
+   campaign briefing (z-index 1200), which is raised before the image cache finishes on purpose. */
+.osada-loadcurtain {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, rgba(8, 9, 11, .72), rgba(8, 9, 11, .84)),
+    url('../resources/campaign_screen_background.png') center / cover no-repeat,
+    #0a0b0d;
+}
+
+.osada-loadcurtain__text {
+    padding: 10px 22px;
+    font-family: var(--osada-font-ui);
+    font-size: 19px;
+    letter-spacing: .06em;
+    color: var(--osada-brass);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, .9);
+    /* No spinner: the curtain can be up for a fraction of a second on a warm cache, and a control
+       that flashes in and out reads worse than a line that simply says what is happening. */
+    animation: osada-loadcurtain-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes osada-loadcurtain-pulse {
+    0%, 100% { opacity: .55; }
+    50% { opacity: 1; }
 }

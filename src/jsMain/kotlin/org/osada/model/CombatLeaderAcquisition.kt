@@ -45,7 +45,11 @@ internal object CombatLeaderAcquisition {
             return false
         }
         val contribution = contributionFor(unit, enemy, combatResult, isAttacker, expGained)
-        val emerged = HeroCampaign.recordCombat(unit, contribution, turn)
+        // Support fire is fired in support of the DEFENDER, so only a defender's emergence has a
+        // provable participant to be endorsed by (biography design §6.3). The attacker's list is
+        // deliberately empty rather than "whoever else was nearby".
+        val supporters = if (isAttacker) emptyList() else combatResult.supportingFormationIds
+        val emerged = HeroCampaign.recordCombat(unit, contribution, turn, supporters)
         if (emerged) log(unit, "HERO", turn)
         return emerged
     }

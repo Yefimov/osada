@@ -6,6 +6,7 @@ import org.osada.TerrainType
 import org.osada.UNIT_RETREAT_THRESHOLD
 import org.osada.UnitClass
 import org.osada.entrenchRateFor
+import org.osada.hero.FormationIdentity
 import org.osada.model.Cell
 import org.osada.model.CombatResults
 import org.osada.model.Equipment
@@ -221,6 +222,9 @@ object CombatResolver {
         var visibleLosses = 0
 
         val defenderPos = defender.getPos()
+        // §6.3 of the biography design: an endorsement may only name a formation the engine can
+        // PROVE took part, and this list is that proof. Recorded before the loop consumes it.
+        result.supportingFormationIds = supportUnits.mapNotNull { FormationIdentity.of(it) }.map { it.value }
         supportUnits.forEach { support ->
             val supportHex = support.getHex() ?: return@forEach
             val supportResult =

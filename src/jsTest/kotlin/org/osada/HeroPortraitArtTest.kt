@@ -1,5 +1,7 @@
 package org.osada
 
+import org.osada.hero.EmergenceEvent
+import org.osada.hero.FormationId
 import org.osada.hero.HeroBiographyFacts
 import org.osada.hero.HeroBiographyNarrator
 import org.osada.hero.HeroDefinition
@@ -9,9 +11,12 @@ import org.osada.hero.HeroPortraitArt
 import org.osada.hero.HeroRoster
 import org.osada.hero.HeroSerializer
 import org.osada.hero.HeroState
+import org.osada.hero.LEGENDS_AWAITING_PORTRAIT_ART
 import org.osada.hero.LegendaryHeroPool
 import org.osada.hero.PortraitComposerV2
 import org.osada.hero.PortraitComposition
+import org.osada.hero.ProceduralHeroGenerator
+import org.osada.i18n.installEnglishUiBundleForTests
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -47,9 +52,45 @@ class HeroPortraitArtTest {
     }
 
     @Test
-    fun everyShippedAuthoredLegendHasItsOwnPaintedPortrait() {
-        val missing = LegendaryHeroPool.ALL.filter { it.portraitArtId == null }.map { it.id }
-        assertTrue(missing.isEmpty(), "authored legends still using procedural portraits: $missing")
+    fun theHeroesAwaitingPaintedArtAreExactlyTheOnesDeclaredAsAwaitingIt() {
+        // Asserted in BOTH directions on purpose. "Has no painting yet" is a legitimate shipped
+        // state since the 2026-09-04 expansion, but it has to be a DECLARED one: a new hero cannot
+        // quietly join the art-less set, and a hero who gets a painting cannot be left behind in it.
+        val missing =
+            LegendaryHeroPool.ALL
+                .filter { it.portraitArtId == null }
+                .map { it.id }
+                .toSet()
+        assertEquals(
+            LEGENDS_AWAITING_PORTRAIT_ART,
+            missing,
+            "LEGENDS_AWAITING_PORTRAIT_ART disagrees with the roster's art-less heroes",
+        )
+    }
+
+    @Test
+    fun anAuthoredWomanKeepsAFemaleProceduralFallbackBehindHerPainting() {
+        // Every legendary now has a painting, but the stored layer stack is still the soft fallback
+        // for a missing asset. It must agree with the authored gender instead of the seed's usual roll.
+        val heroine = assertNotNull(LegendaryHeroPool.ALL.firstOrNull { it.female })
+        val request =
+            ProceduralHeroGenerator.Request(
+                heroId = HeroId("H-GENDER"),
+                seed = 1,
+                country = 103,
+                unitClass = UnitClass.INFANTRY.value,
+                unitExperience = 120,
+                event = EmergenceEvent.DISTINGUISHED_SERVICE,
+                formationId = FormationId("F-GENDER"),
+                serviceYear = heroine.yearRange.first,
+            )
+        val (definition, _) = LegendaryHeroPool.build(heroine, request)
+        assertEquals(true, definition.portrait.female)
+        assertEquals(
+            "female",
+            PortraitComposerV2.genderFor(definition.portrait.seed),
+            "${heroine.id}'s procedural fallback must agree with her authored painting",
+        )
     }
 
     @Test
@@ -146,6 +187,7 @@ class HeroPortraitArtTest {
 
     @Test
     fun theBiographyFollowsTheAuthoredGenderNotTheSeedRoll() {
+        installEnglishUiBundleForTests()
         // Find a seed whose roll disagrees with a female authored hero, and prove the prose obeys
         // the painting -- the §4.11 defect, arriving by a different route.
         val maleSeed = (1..500).first { PortraitComposerV2.genderFor(it) == "male" }
@@ -155,7 +197,7 @@ class HeroPortraitArtTest {
             HeroBiographyFacts(
                 birthYear = 1899,
                 militaryEducationId = "military_academy",
-                priorServiceId = "border_skirmishes",
+                priorServiceIds = listOf("border_skirmishes"),
                 emergenceEventId = "destroyed_stronger_enemy",
             )
 

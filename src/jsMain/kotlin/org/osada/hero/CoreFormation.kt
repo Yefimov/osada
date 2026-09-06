@@ -45,11 +45,22 @@ data class FormationMedal(
     val scenarioId: String,
 )
 
-/** A structured formation-history entry (§9.2, §19). Reserved for a later phase. */
+/**
+ * A structured formation-history entry (§9.2, §19).
+ *
+ * [heroId] is the commander the entry is ABOUT and [relatedHeroId] the other officer in an
+ * exchange — the formation-side half of §5.3's rule that lineage is carried by ids rather than
+ * reconstructed from names. Together they let the Formations tab print a reliable succession
+ * ("appointed after X departed") instead of guessing it from the order of undated lines.
+ *
+ * Both default to null so every event already in a save stays valid (§15).
+ */
 data class FormationEvent(
     val eventId: String,
     val scenarioId: String,
     val turn: Int,
     val date: String? = null,
     val location: String? = null,
+    val heroId: HeroId? = null,
+    val relatedHeroId: HeroId? = null,
 )

@@ -50,6 +50,16 @@ data class HeroBalance(
      */
     val transferSettlingTurns: Int = 3,
     /**
+     * Turns a commander spends re-settling into a formation they have COMMANDED BEFORE
+     * (biography design §5.1). The organization is familiar even when some of the people are not,
+     * so a return is not the same act as arriving at a brigade for the first time.
+     *
+     * Deliberately not zero: a return still costs a turn, so a player cannot ferry one officer
+     * between two formations for free. [HeroFamiliarity] decides which of the two applies, from the
+     * appointment history rather than from a stored affinity score.
+     */
+    val returnSettlingTurns: Int = 1,
+    /**
      * Cumulative leader XP at which the next promotion milestone fires (§8.5). Exactly three
      * entries: [HeroNaming]'s rank ladder has four rungs, so a hero can be promoted three times.
      */

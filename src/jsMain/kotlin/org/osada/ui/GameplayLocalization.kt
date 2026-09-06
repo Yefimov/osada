@@ -18,6 +18,8 @@ import org.osada.GroundCondition
 import org.osada.UNIT_MAX_EXPERIENCE
 import org.osada.WeatherCondition
 import org.osada.hero.HeroCampaign
+import org.osada.hero.HeroHonours
+import org.osada.i18n.CalendarText
 import org.osada.i18n.GameText
 import org.osada.i18n.I18n
 import org.osada.model.Equipment
@@ -37,6 +39,7 @@ import org.osada.rules.isAir
 import org.osada.ui.GameplayLocalization.refreshUnitIdentity
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.MouseEvent
+import kotlin.js.Date
 
 /**
  * Explicit refreshers for already-rendered gameplay surfaces.
@@ -164,21 +167,29 @@ internal object GameplayLocalization {
         byId("unitsBarButton")?.title = I18n.t("hud.deploy_strip.open.help")
     }
 
+    /**
+     * The scenario's date as the HUD and the briefing header both print it — one formatter, so the
+     * two cannot disagree about a BC year or about month naming in the current locale.
+     */
+    fun scenarioDateLabel(date: Date): String =
+        I18n.t(
+            "hud.date",
+            mapOf(
+                "day" to date.getDate(),
+                "month" to GameText.monthShort(date.getMonth()),
+                "year" to CalendarText.year(date.getFullYear()),
+            ),
+        )
+
     private fun refreshStatusLine() {
         val scenario = GameHolder.instance?.scenario ?: return
         val map = scenario.map
         val currentPlayer = map.currentPlayer ?: return
         val phaseChip = deploymentPhaseChip(map, currentPlayer)
-        val dateText =
-            I18n.t(
-                "hud.date",
-                mapOf(
-                    "day" to scenario.date.getDate(),
-                    "month" to GameText.monthShort(scenario.date.getMonth()),
-                    // A calendar year must never pick up a locale thousands-separator.
-                    "year" to scenario.date.getFullYear().toString(),
-                ),
-            )
+        // A calendar year must never pick up a locale thousands-separator, and a year before 1 must
+        // read as "73 BC" rather than as "-73" -- Spartacus is a shipped campaign, so that is a real
+        // case rather than a hypothetical one.
+        val dateText = scenarioDateLabel(scenario.date)
         byId("statusmsg")?.innerHTML =
             "<span class=\"osada-tb-op\" title=\"${scenario.name}\">${scenario.name}</span>" +
             "<span class=\"osada-tb-field osada-tb-turn\" id=\"osadaTurnField\">" +
@@ -214,7 +225,8 @@ internal object GameplayLocalization {
         }
     }
 
-    private fun showWeatherTooltip(anchor: HTMLElement) {
+    /** Not private: [StatusBarController] rebuilds the weather element and rebinds this. */
+    internal fun showWeatherTooltip(anchor: HTMLElement) {
         if (GameHolder.instance?.scenario == null) return
         val tip =
             byId("osadaWeatherTip") ?: addTag("mainbody", "div").also {
@@ -777,7 +789,11 @@ internal object GameplayLocalization {
                     it.eventId.contains("objective", true)
             }
         val commander = HeroCampaign.dossier(unit)?.let { "${it.rank} ${it.name}" } ?: I18n.t("common.none")
-        val honours = formation.battleHonors.takeIf { it.isNotEmpty() }?.joinToString() ?: I18n.t("common.none")
+        val honours =
+            formation.battleHonors
+                .takeIf { it.isNotEmpty() }
+                ?.let { HeroHonours.display(it).joinToString() }
+                ?: I18n.t("common.none")
         val values = listOf(formation.recognition, scenarios, victories, objectives, commander, honours)
         val keys = listOf("recognition", "scenarios", "destroyed", "objectives", "commander", "honours")
         for (index in 0 until minOf(rows.length, keys.size)) {

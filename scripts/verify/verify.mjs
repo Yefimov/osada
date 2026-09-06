@@ -159,12 +159,19 @@ async function main() {
         gameStarted: game ? game.gameStarted : null,
         gameEnded: game ? game.gameEnded : null,
         scenarioLoaded: game && game.scenario ? game.scenario.isLoaded : null,
+        // The dark-mode-extension opt-out (see index.html). Asserted here rather than left to a
+        // reader's good intentions: it is two invisible <meta> tags that nothing else references,
+        // so a future head edit can drop them without any visible symptom -- until the next player
+        // running Dark Reader reports the unit icons missing, which is how this was found.
+        darkReaderLock: !!document.querySelector('meta[name="darkreader-lock"]'),
+        colorSchemeDark: getComputedStyle(document.documentElement).colorScheme === 'dark',
       };
     });
 
     log('info', `Page state: ${JSON.stringify(state)}`);
 
-    const success = state.startmenuExists && state.smMainExists && errors.length === 0;
+    const success = state.startmenuExists && state.smMainExists &&
+      state.darkReaderLock && state.colorSchemeDark && errors.length === 0;
 
     console.log('\n=== Smoke test result ===');
     console.log(`Start menu built: ${state.startmenuExists}`);
@@ -172,6 +179,7 @@ async function main() {
     console.log(`smButtons children: ${state.smButtonsChildren}`);
     console.log(`Game object exists: ${state.gameExists}`);
     console.log(`Scenario loaded: ${state.scenarioLoaded}`);
+    console.log(`Dark-mode opt-out (darkreader-lock + color-scheme): ${state.darkReaderLock && state.colorSchemeDark}`);
     console.log(`Runtime JS errors: ${errors.length}`);
     if (errors.length) console.log(errors.join('\n'));
     console.log(`Failed requests: ${failedRequests.length}`);

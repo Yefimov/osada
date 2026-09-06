@@ -101,10 +101,40 @@ class UIBuilderMainMenuTest {
     }
 
     @Test
-    fun combatLogButtonHasSelectedGlyph() {
+    fun combatLogButtonCarriesBothFacesAndNoInnerHtmlRewriting() {
+        // Replaces `combatLogButtonHasSelectedGlyph`, which pinned the mechanism rather than the
+        // behaviour. `hasSelectedGlyph` made `toggleButton` uppercase the button's whole innerHTML
+        // to flip its arrow: fine while the button was the bare text node "l", destructive once it
+        // held spans, because HTML tag names survive uppercasing but CLASS VALUES do not. The arrow
+        // now flips in CSS off the `selected` attribute, and the markup is never rewritten.
         UIBuilder.buildMainMenu()
-        val combatLogButton = byId("combatLogButton")
-        assertNotNull(combatLogButton)
-        assertTrue(combatLogButton.asDynamic().hasSelectedGlyph as? Boolean ?: false)
+        val combatLogButton = assertNotNull(byId("combatLogButton"))
+
+        assertTrue(
+            combatLogButton.asDynamic().hasSelectedGlyph as? Boolean != true,
+            "the innerHTML-rewriting flag must stay off this button",
+        )
+        assertNotNull(
+            combatLogButton.querySelector(".osada-tb-combatlog__glyph"),
+            "the desktop arrow",
+        )
+        assertNotNull(
+            combatLogButton.querySelector(".osada-tb-combatlog__ico"),
+            "the phone sprite",
+        )
+    }
+
+    @Test
+    fun togglingTheCombatLogButtonLeavesItsMarkupIntact() {
+        UIBuilder.buildMainMenu()
+        val combatLogButton = assertNotNull(byId("combatLogButton"))
+        val before = combatLogButton.innerHTML
+
+        toggleButton(combatLogButton, true)
+        val whileOpen = combatLogButton.innerHTML
+        toggleButton(combatLogButton, false)
+
+        assertEquals(before, whileOpen, "opening the report must not rewrite the button's markup")
+        assertEquals(before, combatLogButton.innerHTML)
     }
 }

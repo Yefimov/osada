@@ -8,6 +8,7 @@ import org.osada.hero.HeroCampaign.reset
 import org.osada.hero.HeroCampaign.restore
 import org.osada.hero.HeroCampaign.setContext
 import org.osada.hero.HeroCampaign.snapshot
+import org.osada.i18n.CalendarText
 import org.osada.model.EfileConfig
 import org.osada.model.Equipment
 import org.osada.model.GameUnit
@@ -271,6 +272,7 @@ internal object HeroCampaign {
                 formation,
                 experience,
                 HeroTransferService.settlingTurnsLeft(state),
+                directory(),
             )
         } else {
             null
@@ -289,11 +291,25 @@ internal object HeroCampaign {
                 formation,
                 null,
                 HeroTransferService.settlingTurnsLeft(state),
+                directory(),
             )
         } else {
             null
         }
     }
+
+    /**
+     * Names for every hero and formation currently in the roster, so a dossier can render the ids
+     * its events reference (biography design §13.3/§13.4).
+     *
+     * Built per call rather than cached: the roster is a few dozen entries at most, and a cache
+     * would be one more thing that can go stale the first time a formation is renamed.
+     */
+    private fun directory(): HeroDirectory =
+        HeroDirectory(
+            heroNames = roster.allDefinitions().associate { it.id.value to it.displayName },
+            formationNames = roster.allFormations().associate { it.id.value to it.displayName },
+        )
 
     /** Every commander in the campaign, for the Headquarters roster (§14.3). */
     fun commanders(): List<CommanderRow> =
@@ -322,6 +338,7 @@ internal object HeroCampaign {
         unit: GameUnit,
         contribution: RecognitionService.Contribution,
         turn: Int = 0,
+        supportingFormationIds: List<String> = emptyList(),
     ): Boolean {
         val formationId = FormationIdentity.of(unit) ?: return false
         val formation = ensureFormation(unit, formationId)
@@ -340,7 +357,7 @@ internal object HeroCampaign {
                 false
             }
 
-            else -> attemptEmergence(unit, formation, contribution, turn)
+            else -> attemptEmergence(unit, formation, contribution, turn, supportingFormationIds)
         }
     }
 
@@ -403,74 +420,21 @@ internal object HeroCampaign {
                 ?.let { ensureFormation(unit, it) }
                 ?.let { formation -> formation.assignedHeroId?.let { formation to it } }
         return if (casualty != null) {
-            applyCasualty(unit, casualty.first, casualty.second, turn)
+            HeroCasualtyRecorder
+                .apply(
+                    roster = roster,
+                    unit = unit,
+                    formation = casualty.first,
+                    heroId = casualty.second,
+                    turn = turn,
+                    scenarioId = currentScenarioLabel(),
+                    date = currentDate(),
+                    location = currentLocation(unit),
+                )?.let { pendingCasualties += it }
             true
         } else {
             false
         }
-    }
-
-    /**
-     * Resolves the fate of [formation]'s commander after its unit was destroyed (§11): sets the new
-     * status, records any wound, detaches the leader, leaves a restrained memorial tradition on death
-     * (§11.2), and queues the event for the UI.
-     *
-     * The detach is unconditional because this only runs on a destroyed unit, and a destroyed unit is
-     * not campaign-persistent — the formation itself does not reach the next scenario. Keeping a
-     * lightly wounded commander "with his formation" therefore stranded him: still `ACTIVE`, still
-     * pointing at a formation no unit would ever carry again, and unreachable by any reassignment
-     * (transfers are still deferred, see `docs/hero-leader-implementation-phases.md` Phase 4).
-     */
-    private fun applyCasualty(
-        unit: GameUnit,
-        formation: CoreFormation,
-        heroId: HeroId,
-        turn: Int,
-    ) {
-        val hero = roster.state(heroId) ?: return
-        val definition = roster.definition(heroId) ?: return
-        val scenarioId = currentScenarioLabel()
-        val casualtyContext =
-            HeroCasualtyService.Context(
-                surrendered = unit.surrendered,
-                safeSupply = !unit.surrendered,
-                seed = SeededRandom.seedFrom(heroId.value, scenarioId, turn.toString()),
-            )
-        val outcome = HeroCasualtyService.resolve(casualtyContext, scenarioId)
-        val event =
-            HeroEvent(
-                outcome.disposition.name.lowercase(),
-                scenarioId,
-                turn,
-                currentDate(),
-                currentLocation(unit),
-            )
-        roster.updateState(
-            hero.copy(
-                status = outcome.disposition.status,
-                injuries = hero.injuries + listOfNotNull(outcome.injury),
-                serviceEvents = hero.serviceEvents + event,
-                assignedFormationId = null,
-            ),
-        )
-        val killed = outcome.disposition == HeroCasualtyService.Disposition.KILLED
-        val memorial = if (killed) "Tradition of ${definition.displayName}" else null
-        val updatedFormation =
-            formation.copy(
-                assignedHeroId = null,
-                battleHonors = if (memorial != null) formation.battleHonors + memorial else formation.battleHonors,
-                history =
-                    formation.history +
-                        FormationEvent(
-                            "commander_${outcome.disposition.name.lowercase()}",
-                            scenarioId,
-                            turn,
-                            currentDate(),
-                            currentLocation(unit),
-                        ),
-            )
-        roster.putFormation(updatedFormation)
-        pendingCasualties += HeroCasualtyAnnouncement.from(outcome, updatedFormation, definition, hero.rankId, memorial)
     }
 
     /**
@@ -484,6 +448,7 @@ internal object HeroCampaign {
         formation: CoreFormation,
         contribution: RecognitionService.Contribution,
         turn: Int,
+        supportingFormationIds: List<String> = emptyList(),
     ): Boolean {
         // OG's `Cannot get a leader` (`attrEx` bit 0), wired 2026-08-26: equipment that never
         // produces a commander does not emerge one here either. Blocked BEFORE the recognition
@@ -502,7 +467,8 @@ internal object HeroCampaign {
                 recognition = recorded.recognition + assessment.points,
                 emergenceChecks = recorded.emergenceChecks + 1,
             )
-        return runCheck(unit, checked, assessment, turn) is LeaderAcquisitionService.EmergenceResult.Emerged
+        return runCheck(unit, checked, assessment, turn, supportingFormationIds) is
+            LeaderAcquisitionService.EmergenceResult.Emerged
     }
 
     /** Runs Phase 3 progression for a formation that already has a commander. */
@@ -528,10 +494,21 @@ internal object HeroCampaign {
                 eventDate = currentDate(),
                 eventLocation = currentLocation(unit),
             )
-        roster.updateState(result.hero)
+        val decorated =
+            HeroCommendations.conferDistinction(
+                hero = result.hero,
+                achievements = result.achievements,
+                country = unit.player?.country ?: ctx?.country,
+                serviceYear = ctx?.serviceYear,
+                scenarioId = currentScenarioLabel(),
+                turn = turn,
+                date = currentDate(),
+                location = currentLocation(unit),
+            )
+        roster.updateState(decorated)
         roster.putFormation(result.formation)
         result.promotion?.let {
-            pendingPromotions += HeroPromotionAnnouncement.from(it, result.formation, definition, result.hero)
+            pendingPromotions += HeroPromotionAnnouncement.from(it, result.formation, definition, decorated)
         }
     }
 
@@ -593,6 +570,7 @@ internal object HeroCampaign {
         checked: CoreFormation,
         assessment: RecognitionService.Assessment,
         turn: Int,
+        supportingFormationIds: List<String> = emptyList(),
     ): LeaderAcquisitionService.EmergenceResult {
         val ctx = context
         val reserved =
@@ -628,7 +606,7 @@ internal object HeroCampaign {
                 earlyLegendaryQualifyingCombats = earlyLegendaryQualifyingCombats,
             )
         val result = LeaderAcquisitionService.tryGenerate(emergenceContext)
-        applyResult(unit, checked, result, assessment, turn)
+        applyResult(unit, checked, result, assessment, turn, supportingFormationIds)
         return result
     }
 
@@ -638,6 +616,7 @@ internal object HeroCampaign {
         result: LeaderAcquisitionService.EmergenceResult,
         assessment: RecognitionService.Assessment,
         turn: Int,
+        supportingFormationIds: List<String> = emptyList(),
     ) {
         when (result) {
             is LeaderAcquisitionService.EmergenceResult.Emerged -> {
@@ -648,9 +627,28 @@ internal object HeroCampaign {
                 val state =
                     result.state.copy(
                         serviceEvents =
-                            result.state.serviceEvents + HeroEvent(eventId, scenarioId, turn, date, location),
+                            result.state.serviceEvents +
+                                HeroEvent(eventId, scenarioId, turn, date, location, formationId = checked.id) +
+                                // The originating appointment, recorded as its own event so
+                                // [HeroFamiliarity] can tell "has commanded this formation" from
+                                // "was decorated while commanding it" (biography design §5.3). It is
+                                // what makes a later RETURN to this formation detectable at all.
+                                HeroEvent("emerged", scenarioId, turn, date, location, formationId = checked.id),
                     )
-                val formation = checked.copy(assignedHeroId = result.definition.id)
+                val formation =
+                    checked.copy(
+                        assignedHeroId = result.definition.id,
+                        history =
+                            checked.history +
+                                FormationEvent(
+                                    "commander_appointed",
+                                    scenarioId,
+                                    turn,
+                                    date,
+                                    location,
+                                    heroId = result.definition.id,
+                                ),
+                    )
                 roster.putHero(result.definition, state)
                 roster.putFormation(formation)
                 roster.drought = 0
@@ -658,6 +656,15 @@ internal object HeroCampaign {
                     roster.reservedLegendary = null
                     roster.legendarySpawned = true
                 }
+                HeroCommendations.recordEndorsement(
+                    roster,
+                    result.definition.id,
+                    supportingFormationIds,
+                    eventId,
+                    scenarioId,
+                    date,
+                    location,
+                )
                 pendingAnnouncements += HeroEmergenceAnnouncement.from(result, formation)
             }
 
@@ -687,9 +694,10 @@ internal object HeroCampaign {
     @Suppress("MagicNumber")
     fun currentDate(): String? {
         val date = GameHolder.instance?.scenario?.date ?: return null
-        val month = (date.getMonth() + 1).toString().padStart(2, '0')
-        val day = date.getDate().toString().padStart(2, '0')
-        return "${date.getFullYear()}-$month-$day"
+        // Through [CalendarText] rather than string-built: a BC year produced "-73-08-01", which
+        // splits on '-' into four parts, and every reader of this string silently fell through to
+        // its raw-text fallback.
+        return CalendarText.isoDate(date.getFullYear(), date.getMonth() + 1, date.getDate())
     }
 
     private fun currentLocation(unit: GameUnit): String? = unit.getHex()?.name?.takeIf { it.isNotBlank() }

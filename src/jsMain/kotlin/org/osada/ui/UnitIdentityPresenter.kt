@@ -4,6 +4,7 @@ package org.osada.ui
 
 import org.osada.hero.HeroCampaign
 import org.osada.hero.HeroEventDisplay
+import org.osada.hero.HeroHonours
 import org.osada.i18n.GameText
 import org.osada.i18n.I18n
 import org.osada.model.GameUnit
@@ -301,7 +302,11 @@ internal object UnitIdentityPresenter {
                 it.eventId.contains("capture", true) || it.eventId.contains("objective", true)
             }
         val commander = HeroCampaign.dossier(unit)?.let { "${it.rank} ${it.name}" } ?: I18n.t("common.none")
-        val honors = formation.battleHonors.takeIf { it.isNotEmpty() }?.joinToString() ?: I18n.t("common.none")
+        val honors =
+            formation.battleHonors
+                .takeIf { it.isNotEmpty() }
+                ?.let { HeroHonours.display(it).joinToString() }
+                ?: I18n.t("common.none")
         listOf(
             I18n.t("unit_info.formation.recognition.label") to formation.recognition.toString(),
             I18n.t("unit_info.formation.scenarios.label") to scenarios.toString(),

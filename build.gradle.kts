@@ -283,6 +283,55 @@ tasks.register<Exec>("verifyScenarioRegression") {
 }
 
 /*
+ * Turn Report toggle probe (2026-09-05).
+ *
+ * Added because "the yellow arrow is gone and the button looks off-centre" is a question about
+ * rendered geometry, and reading CSS cannot answer it: `#combatLogButton` is absolutely positioned
+ * inside `#statusbar` while the window it opens is pinned to the VIEWPORT centre, so whether the
+ * two agree depends on what padding and width the bar ends up with. This measures both, in both
+ * layouts, and checks that the desktop arrow and the phone sprite are never shown together.
+ *
+ * Kept out of `check` for the same reason the smoke tests are: it needs a built distribution and a
+ * real Chrome.
+ */
+tasks.register<Exec>("verifyCombatLogButton") {
+    group = "verification"
+    description = "Measures the Turn Report toggle's face and centring in headless Chrome"
+
+    dependsOn(
+        "jsBrowserDistribution",
+        "verifyProductionSmokeTestNpmInstall",
+    )
+
+    workingDir = file("scripts/verify")
+    commandLine("node", "combatlog-button-probe.mjs")
+}
+
+/*
+ * Headquarters roster geometry, and the scenario loading curtain.
+ *
+ * Two of the four faults in the 2026-09-05 roster screenshot were pure cascade accidents that no
+ * unit test can see: this sheet has no global `border-box`, and `.osada-hero-rosterrow-portrait`'s
+ * `background:` shorthand sits below `.osada-portrait-photo` and reset its `background-size`. Both
+ * only exist once a browser has cascaded the real stylesheet, so they are measured in one.
+ *
+ * The curtain is here too because its whole job is a timing question -- it must be up before the
+ * outgoing map is torn down and gone once the new one is painted.
+ */
+tasks.register<Exec>("verifyHeroRoster") {
+    group = "verification"
+    description = "Measures roster row geometry and the scenario loading curtain in headless Chrome"
+
+    dependsOn(
+        "jsBrowserDistribution",
+        "verifyProductionSmokeTestNpmInstall",
+    )
+
+    workingDir = file("scripts/verify")
+    commandLine("node", "hero-roster-probe.mjs")
+}
+
+/*
  * Mobile viewport smoke test.
  *
  * Kept separate from verifyProductionSmokeTest on purpose: that task is the desktop-regression

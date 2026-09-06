@@ -139,6 +139,20 @@ class CombatResults {
     var isEvaded: Boolean = false
 
     /**
+     * Formation ids of the core units that fired in SUPPORT of the defender in this exchange.
+     *
+     * Carried on the result because the biography design's §6.3 refuses to invent an endorsement
+     * from proximity: an officer may only be endorsed by one whose formation is recorded as having
+     * "enabled the attack or relief", and the only place that fact exists is the support-fire list
+     * [org.osada.rules.CombatResolver] built while resolving the shot. Extending this payload is
+     * what §6.3 explicitly asks for in preference to searching the roster for a plausible name.
+     *
+     * Empty for every exchange with no support fire, and for a forecast rather than a committed
+     * result — nothing downstream may treat emptiness as anything but "nobody helped".
+     */
+    var supportingFormationIds: List<String> = emptyList()
+
+    /**
      * The attacker kept its movement after clearing the hex — OG's `Exploit Success`
      * (`CombatApplication.applyExploitSuccess`, 2026-08-27).
      *

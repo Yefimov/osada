@@ -56,8 +56,34 @@ data class HeroBiographyFacts(
     val socialBackgroundId: String? = null,
     val prewarProfessionId: String? = null,
     val militaryEducationId: String? = null,
-    val priorServiceId: String? = null,
     val emergenceEventId: String,
+    /**
+     * Which [BiographyPack] generated this hero, stored so a later build that re-tables a country
+     * cannot re-render an existing officer against someone else's pools. It is also the flag that
+     * separates the two narration paths: a hero written before the life-path generator has none,
+     * and [HeroBiographyNarrator] keeps rendering them exactly as they always rendered rather than
+     * enriching a character the player already knows (§15's "preserve" policy).
+     *
+     * Not a nationality and never displayed — §2.2 forbids a player-facing nationality field, and
+     * §7.1 names this an internal content-selection id for that reason.
+     */
+    val biographyPackId: String? = null,
+    /** Civilian schooling, which is a separate fact from [militaryEducationId] (§8.2). */
+    val civilianEducationId: String? = null,
+    /** How the officer entered military service, as distinct from entering this war (§8.4). */
+    val serviceEntryId: String? = null,
+    val serviceStartYear: Int? = null,
+    /** How the officer reached the CURRENT war. Null where the pack does not distinguish them. */
+    val warEntryId: String? = null,
+    /** Optional biography flavour, never a moral alignment or a bonus (§2.5, §8.5). */
+    val politicalStatusId: String? = null,
+    val politicalMembershipYear: Int? = null,
+    /**
+     * Zero to two rare prior conflicts (§8.6), replacing the single `priorServiceId` this model
+     * shipped with. A save written against the old field is read into the first element, so an
+     * existing hero keeps the one fact they had rather than losing it.
+     */
+    val priorServiceIds: List<String> = emptyList(),
 )
 
 /**
@@ -119,13 +145,27 @@ data class HeroInjury(
     val permanent: Boolean,
 )
 
-/** A structured service-record entry (§10, §19). Reserved for a later phase. */
+/**
+ * A structured service-record entry (§10, §19).
+ *
+ * [formationId] and [relatedHeroId] are the biography design's §5.3: "Every appointment and
+ * departure event must carry the formation id and, where applicable, the other commander id. Never
+ * reconstruct lineage from display names." Two formations can legitimately share a display name
+ * across a long campaign, and a hero can be renamed by a nickname; only the ids are stable enough
+ * to answer "has this officer commanded this brigade before?", which is what the shortened return
+ * settling period is decided on.
+ *
+ * Both default to null and are written as optional save keys, so every event already in a save
+ * stays valid and simply carries no reference (§15).
+ */
 data class HeroEvent(
     val eventId: String,
     val scenarioId: String,
     val turn: Int,
     val date: String? = null,
     val location: String? = null,
+    val formationId: FormationId? = null,
+    val relatedHeroId: HeroId? = null,
 )
 
 /**
@@ -162,6 +202,20 @@ data class HeroState(
     val injuries: List<HeroInjury> = emptyList(),
     val nicknameId: String? = null,
     val serviceEvents: List<HeroEvent> = emptyList(),
+    /**
+     * Formal, event-grounded links to at most two other officers (biography design §6).
+     *
+     * Empty is the normal state and specifically must stay so for a run's first commander (§6.1):
+     * there is nobody for them to have been endorsed by, and inventing one would be exactly the
+     * fabricated history the design forbids. [HeroAssociations] is the only writer.
+     */
+    val associations: List<HeroAssociation> = emptyList(),
+    /**
+     * Highest distinctions conferred on this officer (biography design §12), kept apart from
+     * [medals] because a title with a date, a citation and a repeat sequence is not the same object
+     * as a one-time badge. Empty for almost everyone; [HeroDistinctions] is the only writer.
+     */
+    val distinctions: List<HeroDistinction> = emptyList(),
     val promotionsAwarded: Int = 0,
     val settlingScenarioId: String? = null,
     val settlingUntilTurn: Int = 0,

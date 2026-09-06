@@ -45,11 +45,33 @@ function weightedPick(seed, salt, weights) {
 const idsIn = (manifest, category) => manifest.layers[category].map((l) => l.id);
 
 // Female profiles avoid the heavy-jaw archetypes so the lower face never reads masculine.
-const FEMALE_ARCHETYPES = ['round_young', 'broad_calm', 'narrow_stern', 'long_mature'];
+и const FEMALE_ARCHETYPES = ['female_oval', 'female_heart', 'female_broad', 'female_square', 'female_long'];
+const FEMALE_HAIR_STYLES = ['bob', 'braid', 'bun', 'waves'];
+
+const femaleHairBack = (style) => ({
+    bob: 'hair_back_female_bob',
+    braid: 'hair_back_female_braid',
+    bun: 'hair_back_female_bun',
+    waves: 'hair_back_female'
+})[style];
+
+const femaleHairFront = (style) => ({
+    bob: 'hair_front_female_a',
+    braid: 'hair_front_female_braided',
+    bun: 'hair_front_female_bun',
+    waves: 'hair_front_female_b'
+})[style];
+
+const femaleUnderHair = (style) => ({
+    bob: 'under_hair_female_bob',
+    braid: 'under_hair_female_braid',
+    bun: 'under_hair_female_bun',
+    waves: 'under_hair_female'
+})[style];
 
 function archetypeWeights(W, age, gender) {
     const base = W.ageArchetype[age];
-    if (gender !== 'female') return base;
+    if (gender !== 'female') return Object.fromEntries(Object.entries(base).filter(([k]) => !FEMALE_ARCHETYPES.includes(k)));
     const soft = {};
     for (const k of FEMALE_ARCHETYPES) if (base[k]) soft[k] = base[k];
     return Object.keys(soft).length ? soft : {round_young: 1};
@@ -67,6 +89,35 @@ const hairModeOf = (manifest, headgearId) => {
     const layer = manifest.layers.headgear.find((l) => l.id === headgearId);
     return (layer && layer.tags && layer.tags.hairMode) || 'FULL_HAIR';
 };
+
+const headgearLayer = (manifest, headgearId) => manifest.layers.headgear.find((l) => l.id === headgearId);
+
+const underHairFor = (manifest, headgearId, seed) => {
+    const layer = headgearLayer(manifest, headgearId);
+    const compatible = layer && layer.tags && layer.tags.underHair;
+    return pickList(seed, 'underhair', compatible || ['under_hair_temples']);
+};
+
+const underHairFemaleFor = (manifest, headgearId, style, seed) => {
+    const layer = headgearLayer(manifest, headgearId);
+    return layer?.tags?.underHairFemale
+        ? pickList(seed, 'underhairfemale', layer.tags.underHairFemale)
+        : femaleUnderHair(style);
+};
+
+const allowsHairBack = (manifest, headgearId) => headgearLayer(manifest, headgearId)?.tags?.hairBack !== false;
+
+const jawFitFor = (manifest, archetype) => {
+    const layer = manifest.layers.face.find((l) => l.id === `face_${archetype}`);
+    return (layer && layer.tags && layer.tags.jawFit) || 'medium';
+};
+
+const shortHairBackFor = (manifest, archetype) => `hair_back_short_${jawFitFor(manifest, archetype)}`;
+
+function fittedFacialHair(manifest, archetype, selected) {
+    if (selected !== 'facial_beard' && selected !== 'facial_stubble') return selected;
+    return `${selected}_${jawFitFor(manifest, archetype)}`;
+}
 
 /** id -> "v2/layers/<dir>/<id>.svg" (relative to the resources root). */
 export function layerPath(manifest, id) {
@@ -102,6 +153,9 @@ export function compose(manifest, input, seed) {
     const headgearKey = input.headgear !== undefined ? input.headgear : weightedPick(seed, 'headgear', headgearWeights[branch][season]);
     const headgear = headgearKey === 'none' ? null : headgearKey;
     const hairMode = headgear ? hairModeOf(manifest, headgear) : 'FULL_HAIR';
+    const woundId = input.wound !== undefined
+        ? woundIdFor(manifest, input.wound)
+        : (chance(seed, 'woundOn', W.woundChance) ? pickList(seed, 'wound', idsIn(manifest, 'wound')) : null);
 
     const chosen = {};
     const put = (cat, id) => {
@@ -109,24 +163,27 @@ export function compose(manifest, input, seed) {
     };
 
     put('background', pickList(seed, 'bg', idsIn(manifest, 'background')));
-    put('uniform_back', pool.uniformBack || `back_${branch}`);
+    const uniformBack = pool.uniformBack || `back_${branch}`;
+    put('uniform_back', gender === 'female' ? `${uniformBack}_female` : uniformBack);
 
     // Hair split, gender + headgear aware. Females always keep female hair (never bald): headgear
     // only hides the crown, so long back/side hair still frames the face and shows below a hat.
     if (gender === 'female') {
-        put('hair_back', 'hair_back_female');
-        if (hairMode === 'FULL_HAIR') put('hair_front', pickList(seed, 'hairfront', ['hair_front_female_a', 'hair_front_female_b']));
-        else if (hairMode === 'UNDER_CAP') put('under_headgear_hair', 'under_hair_female');
+        const style = pickList(seed, 'hairstyle', FEMALE_HAIR_STYLES);
+        if (!headgear || allowsHairBack(manifest, headgear)) put('hair_back', femaleHairBack(style));
+        if (hairMode === 'FULL_HAIR') put('hair_front', femaleHairFront(style));
+        else if (hairMode === 'UNDER_CAP') put('under_headgear_hair', underHairFemaleFor(manifest, headgear, style, seed));
         // UNDER_FUR_HAT / UNDER_FLIGHT_HELMET: hair_back_female still shows at the sides and nape.
     } else if (hairMode === 'FULL_HAIR') {
-        put('hair_back', chance(seed, 'hairvol', 0.35) ? 'hair_back_full' : 'hair_back_short');
+        put('hair_back', chance(seed, 'hairvol', 0.35) ? 'hair_back_full' : shortHairBackFor(manifest, archetype));
         put('hair_front', pickList(seed, 'hairfront', manifest.hairFront.FULL_HAIR));
     } else if (hairMode === 'UNDER_CAP') {
-        put('hair_back', 'hair_back_short');
-        put('under_headgear_hair', 'under_hair_temples');
+        if (allowsHairBack(manifest, headgear)) put('hair_back', shortHairBackFor(manifest, archetype));
+        put('under_headgear_hair', underHairFor(manifest, headgear, seed));
     } // male UNDER_FUR_HAT / UNDER_FLIGHT_HELMET / NONE -> no hair
 
     put('face', `face_${archetype}`);
+    if (input.expression) put('expression', `expression_${input.expression}`);
     if (age === 'middle') put('age_face', 'age_face_light');
     else if (age === 'old') put('age_face', 'age_face_heavy');
 
@@ -135,16 +192,26 @@ export function compose(manifest, input, seed) {
 
     // HARD INVARIANT (not a weight): female profiles may only ever use facial_clean. Any facial-hair
     // roll is confined to the male branch, so no seed, override or fallback can put a beard on a woman.
-    put('facial_hair', gender === 'female' ? 'facial_clean' : weightedPick(seed, 'facial', W.facialByAge[age]));
+    const facialHair = gender === 'female' ? 'facial_clean' : weightedPick(seed, 'facial', W.facialByAge[age]);
+    put('facial_hair', fittedFacialHair(manifest, archetype, facialHair));
 
-    put('uniform_front_collar', pool.collar || (branch === 'aviation' ? 'collar_aviation' : `collar_${branch}_${season}`));
+    put('uniform_front_collar', pool.collarBySeason?.[season] || pool.collar || (branch === 'aviation' ? 'collar_aviation' : `collar_${branch}_${season}`));
     put('rank', `${pool.rankPrefix || 'rank_'}${rank}`);
     put('branch', pool.branchLayer || `branch_${branch}`);
+    const accessories = poolId === 'ancient_rebel'
+        ? []
+        : (['soviet_interwar', 'revolution_1919', 'spanish_republic_1936', 'white_army_1919'].includes(poolId)
+            ? ['accessory_round_spectacles', 'accessory_pince_nez']
+            : ['accessory_round_spectacles', 'accessory_wire_spectacles']);
+    const accessory = poolId === 'ancient_rebel'
+        ? null
+        : (input.accessory !== undefined
+            ? input.accessory
+            : (chance(seed, 'accessory', W.accessoryChance) ? pickList(seed, 'accessory-type', accessories) : null));
+    if (woundId !== 'wound_eye_patch' && accessory !== 'none') {
+        put('accessory', accessory);
+    }
     if (headgear) put('headgear', headgear);
-
-    const woundId = input.wound !== undefined
-        ? woundIdFor(manifest, input.wound)
-        : (chance(seed, 'woundOn', W.woundChance) ? pickList(seed, 'wound', idsIn(manifest, 'wound')) : null);
     if (woundId) put('wound', woundId);
 
     const layerIds = manifest.order.map((c) => chosen[c]).filter(Boolean);

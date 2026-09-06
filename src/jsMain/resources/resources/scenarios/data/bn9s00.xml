@@ -146,11 +146,12 @@
     <unit id="26672" owner="1" flag="29" face="0" str="5" bstr="5" fearless="1" objcol="32" objrow="0"/>
   </hex>
   <hex row="4" col="25" terrain="1" name="Village"/>
-  <hex row="4" col="26" road="136"/>
+  <hex row="4" col="26" road="136" deploy="0"/>
+  <hex row="3" col="28" deploy="0"/>
   <hex row="4" col="27" terrain="3" road="138">
     <unit id="20529" owner="0" flag="27" face="0" exp="50" core="1"/>
   </hex>
-  <hex row="4" col="28" road="56"/>
+  <hex row="4" col="28" road="56" deploy="0"/>
   <hex row="4" col="29" road="168"/>
   <hex row="4" col="31" road="40"/>
   <hex row="4" col="32" road="137"/>
@@ -184,7 +185,7 @@
   <hex row="5" col="25" terrain="3"/>
   <hex row="5" col="26" terrain="3"/>
   <hex row="5" col="27" terrain="3"/>
-  <hex row="5" col="28" road="147"/>
+  <hex row="5" col="28" road="147" deploy="0"/>
   <hex row="5" col="30" road="130"/>
   <hex row="5" col="32" road="138"/>
   <hex row="5" col="33" road="137"/>

@@ -33,6 +33,13 @@ internal object HeroNicknames {
 
     private val byId: Map<String, String> = pool.values.flatten().associate { it.id to it.text }
 
+    /**
+     * The nickname as the player reads it.
+     *
+     * Deliberately NOT localized, and the same decision as the officer's name beside it: a hero is
+     * "Sergeant Yakov Belov the Hammer" in every locale. Nicknames and names are character
+     * identity, not interface text — user's call, 2026-09-05.
+     */
     fun displayText(id: String): String? = byId[id]
 
     fun evaluate(hero: HeroState): HeroState {

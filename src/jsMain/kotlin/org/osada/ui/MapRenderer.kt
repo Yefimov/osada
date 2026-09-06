@@ -63,7 +63,11 @@ internal class MapRenderer(
         val clearBounds =
             uniteRepaintRegion(
                 rc.getBounds(centerRow, centerCol, radius + 1, frame.rows, frame.cols),
-                stale, 1, radius, frame.rows, frame.cols,
+                stale,
+                1,
+                radius,
+                frame.rows,
+                frame.cols,
             )
         if (frame.hexGrid != rc.hexGridEnabled) {
             rc.hexGridEnabled = frame.hexGrid
@@ -126,7 +130,11 @@ internal class MapRenderer(
             drawBounds =
                 uniteRepaintRegion(
                     rc.getBounds(centerRow, centerCol, radius + 2, rows, cols),
-                    stale, 2, radius, rows, cols,
+                    stale,
+                    2,
+                    radius,
+                    rows,
+                    cols,
                 ),
             currentPos = q.currentUnit?.getPos(),
             airMode = uiSettings.airMode,
@@ -170,11 +178,6 @@ internal class MapRenderer(
     }
 }
 
-// Plain class (not data class): gameMap's Array property would give a structural equals()/
-// hashCode() built on reference identity for that field, which is misleading and unused —
-// every RenderFrame is a fresh per-frame parameter bundle, never compared or copied.
-
-/** Per-frame context shared by [MapRenderer], [FogOfWarRenderer] and [HexCellRenderer]. */
 /**
  * [base] grown to also contain [stale], the region [GameMap.pendingRepaint] named, with the same
  * [margin] of extra hexes the caller already allowed itself.
@@ -201,6 +204,11 @@ internal fun uniteRepaintRegion(
     )
 }
 
+// Plain class (not data class): gameMap's Array property would give a structural equals()/
+// hashCode() built on reference identity for that field, which is misleading and unused —
+// every RenderFrame is a fresh per-frame parameter bundle, never compared or copied.
+
+/** Per-frame context shared by [MapRenderer], [FogOfWarRenderer] and [HexCellRenderer]. */
 internal class RenderFrame(
     val q: GameMap,
     val gameMap: Array<Array<Hex>>,

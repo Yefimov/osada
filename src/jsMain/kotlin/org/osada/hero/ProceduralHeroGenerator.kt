@@ -51,9 +51,6 @@ internal object ProceduralHeroGenerator {
             LeaderType.FIRST_STRIKE,
         )
 
-    private const val MIN_AGE = 24
-    private const val AGE_SPREAD = 18
-
     fun generate(request: Request): Pair<HeroDefinition, HeroState> {
         val background = HeroBackgrounds.forUnitClass(request.unitClass)
         val personalTrait = resolvePersonalTrait(request, background?.grantedTrait)
@@ -71,16 +68,12 @@ internal object ProceduralHeroGenerator {
             origin = HeroOrigin.PROCEDURAL,
             displayName = HeroNaming.nameFor(request.seed, request.country),
             backgroundId = background?.id.orEmpty(),
-            biographyFacts =
-                HeroBiographyFacts(
-                    birthYear = birthYear(request),
-                    birthplaceId = HeroBiographyPools.birthplaceId(request.seed),
-                    socialBackgroundId = HeroBiographyPools.socialBackgroundId(request.seed),
-                    prewarProfessionId = background?.id,
-                    militaryEducationId = HeroBiographyPools.militaryEducationId(request.seed, rankId),
-                    priorServiceId = HeroBiographyPools.priorServiceId(request.seed, rankId),
-                    emergenceEventId = request.event.eventId,
-                ),
+            // The life path REPLACES the four independent draws this generator used to make, and
+            // with them the defect that `prewarProfessionId` was the military `backgroundId`
+            // copied across -- a hero whose "pre-war occupation" was their officer training
+            // (design 3.2's first listed gap). Occupation now comes from a civilian pool that the
+            // hero's civilian schooling has already narrowed.
+            biographyFacts = HeroLifePath.generate(lifePathContext(request, rankId)),
             // §15.3: store the composed layer ids and seed, not a bitmap — the portrait re-renders
             // deterministically wherever it is shown. Uses the v2 head-centric composer so
             // the stored layers match the approved redesign the game renders.
@@ -89,7 +82,7 @@ internal object ProceduralHeroGenerator {
                     seed = request.seed,
                     unitClass = request.unitClass,
                     rankId = rankId,
-                    birthYear = birthYear(request),
+                    birthYear = HeroLifePath.birthYear(lifePathContext(request, rankId)),
                     serviceYear = request.serviceYear,
                     country = request.country,
                 ),
@@ -139,10 +132,17 @@ internal object ProceduralHeroGenerator {
         return UNIVERSAL_FALLBACKS.firstOrNull { it != backgroundTrait } ?: chosen
     }
 
-    /** A plausible birth year: campaign year minus a seeded age. Null when the campaign year is unknown. */
-    private fun birthYear(request: Request): Int? {
-        val year = request.serviceYear ?: return null
-        val age = MIN_AGE + SeededRandom(request.seed).nextInt(AGE_SPREAD)
-        return year - age
-    }
+    /** The generation context [HeroLifePath] walks; a pure projection of the request plus the rank. */
+    private fun lifePathContext(
+        request: Request,
+        rankId: String,
+    ): HeroLifePath.Context =
+        HeroLifePath.Context(
+            seed = request.seed,
+            country = request.country,
+            serviceYear = request.serviceYear,
+            unitClass = request.unitClass,
+            rankId = rankId,
+            emergenceEventId = request.event.eventId,
+        )
 }
