@@ -56,6 +56,10 @@ internal object MobileContextDock {
         heroes.className = "osada-mobile-context__heroes osada-ico osada-ico--star"
         heroes.title = I18n.t("hud.headquarters.help")
         heroes.asButton(I18n.t("hud.headquarters.help")) { CommanderRosterPresenter.open() }
+
+        // Beside Heroes, per the request: on a phone the unit card covers proportionally far more
+        // map than on a desktop, so the way to fold it away belongs in the same thumb reach.
+        UnitCardCollapse.installDockButton(dock)
     }
 
     fun updateTurn(

@@ -49,6 +49,19 @@ await page.goto(`http://localhost:${PORT}/`, { waitUntil: 'networkidle2' }); awa
 // map/scenario pipeline is broken.
 const SCENARIOS = ['bn4s19.xml', 'bn9s00.xml', 'forward0.xml', 'forward27.xml'];
 
+// The grid the loader must end up with, per scenario: the AUTHORED <map rows= cols=>, because the
+// image is only a ceiling now (`ScenarioLoader.loadTerrainImage`). Before 2026-09-06 the grid was
+// derived from the image alone and every one of these came out a column and/or a row short --
+// bn9s00 at 42x13 instead of 43x14, which deleted column 42's river and row 13's road chain and
+// made `screenToCell` answer "col 41" for every click on the missing column. The move range has to
+// reach that last column too, which is what the reachability check below asserts.
+const AUTHORED_GRID = {
+  'bn4s19.xml': { rows: 38, cols: 44 },
+  'bn9s00.xml': { rows: 14, cols: 43 },
+  'forward0.xml': { rows: 38, cols: 44 },
+  'forward27.xml': { rows: 60, cols: 71 },
+};
+
 for (const scn of SCENARIOS) {
   await page.evaluate((s) => { window.game.campaign = null; window.game.newScenario(s, 'x'); }, scn);
   await sleep(3500);
@@ -84,6 +97,25 @@ for (const scn of SCENARIOS) {
   check(state.units > 0, `${scn}: no units placed`, `units=${state.units}`);
   check(state.own > 0, `${scn}: no units for the current player`);
   check(state.terrains > 1, `${scn}: map has one terrain -- grid probably not resolved`, `terrains=${state.terrains}`);
+
+  const want = AUTHORED_GRID[scn];
+  if (want) {
+    check(state.rows === want.rows && state.cols === want.cols,
+      `${scn}: grid is not the authored one`, `got ${state.rows}x${state.cols}, authored ${want.rows}x${want.cols}`);
+  }
+
+  // The last column and the last row are ordinary playable hexes, not decoration -- they must be
+  // allocated for their whole length, which is what the old image-derived sizing took away.
+  const edge = await page.evaluate(() => {
+    const g = window.game, map = g.scenario.map, grid = map.map;
+    const lastCol = map.cols - 1, lastRow = map.rows - 1;
+    const out = { colHexes: 0, rowHexes: 0 };
+    for (let r = 0; r < map.rows; r++) if (grid[r][lastCol]) out.colHexes++;
+    for (let c = 0; c < map.cols; c++) if (grid[lastRow][c]) out.rowHexes++;
+    return out;
+  });
+  check(edge.colHexes === state.rows, `${scn}: last column is not allocated`, JSON.stringify(edge));
+  check(edge.rowHexes === state.cols, `${scn}: last row is not allocated`, JSON.stringify(edge));
 
   // End a turn: exercises `unitEndTurn` (experience cap, `exp_bar_factor`), reinforcement arrival
   // (`ReinforcementArrival`) and the spotting rebuild (`rebuildSpottingForSightBlocker`).

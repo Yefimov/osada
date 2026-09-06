@@ -42,12 +42,14 @@ internal class MapClickHandler(
             return
         }
         if (unit.player?.id == map.currentPlayer?.id) {
-            if (!isVisible("unit-info")) {
+            // Honour a folded-away card instead of forcing it back (`UnitCardCollapse`): this
+            // used to set the flag to true on every inspect, so collapsing it never survived the
+            // next click on one's own unit -- which is every click a player makes.
+            if (uiSettings.unitInfoVisibility && !isVisible("unit-info")) {
                 makeVisible("unit-info")
-                uiSettings.unitInfoVisibility = true
                 byId("inspectunit")?.let { toggleButton(it, true) }
             }
-            ui.showUnitInfo(unit)
+            if (uiSettings.unitInfoVisibility) ui.showUnitInfo(unit)
         } else {
             // Foreign unit inspected: the enemy card, not the player card (Task 3).
             ui.showEnemyCard(unit)

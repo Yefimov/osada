@@ -6,6 +6,7 @@ import org.osada.model.Cell
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
 import org.osada.model.Hex
+import org.osada.model.ScreenPos
 import org.osada.rules.GameRules
 import org.osada.rules.isAir
 import org.osada.uiSettings
@@ -29,10 +30,6 @@ internal class MapRenderer(
 ) {
     companion object {
         private const val FULL_REDRAW_RADIUS = -3
-
-        // The terrain image is 65px shorter than the canvases (matches RenderContext's own
-        // LAST_HEX_ROW_HEIGHT).
-        private const val EXTRA_CANVAS_HEIGHT = 65.0
     }
 
     private val fogOfWarRenderer = FogOfWarRenderer(rc)
@@ -71,15 +68,22 @@ internal class MapRenderer(
             )
         if (frame.hexGrid != rc.hexGridEnabled) {
             rc.hexGridEnabled = frame.hexGrid
-            rc.mapCtx.clearRect(0.0, 0.0, rc.mapWidth, rc.mapHeight + EXTRA_CANVAS_HEIGHT)
+            rc.mapCtx.clearRect(0.0, 0.0, rc.canvasWidth, rc.canvasHeight)
         }
 
-        val c1 = rc.cellToScreen(clearBounds.srow, clearBounds.scol, false)
-        val c2 = rc.cellToScreen(clearBounds.erow, clearBounds.ecol, false)
+        // cellToScreen returns a hex's top-left ANCHOR, but the hex itself overhangs it: 15px to
+        // the left (its slant) and, because odd columns sit half a hex lower, 25px above and below
+        // the anchor of a cell in the OTHER column parity. The raw anchor box therefore does not
+        // cover every pixel of the cells it nominally spans. Padding it closes that gap; the pad
+        // stays well inside `drawBounds`, a whole cell ring wider, so everything cleared is
+        // repainted in the same pass. (Defensive: a select/deselect sweep measures no residue
+        // either way today, because `pendingRepaint` unions the vacated cells in as well.)
+        val c1 = padTopLeft(rc.cellToScreen(clearBounds.srow, clearBounds.scol, false))
+        val c2 = padBottomRight(rc.cellToScreen(clearBounds.erow, clearBounds.ecol, false))
         if (radius < 0) {
             // Clear exactly the full region FogOfWarRenderer fills. Otherwise the extra bottom
             // strip receives another translucent veil on every Air/Grid/full redraw.
-            rc.hexesCtx.clearRect(0.0, 0.0, rc.mapWidth, rc.mapHeight + EXTRA_CANVAS_HEIGHT)
+            rc.hexesCtx.clearRect(0.0, 0.0, rc.canvasWidth, rc.canvasHeight)
         } else {
             rc.hexesCtx.clearRect(c1.x, c1.y, c2.x - c1.x, c2.y - c1.y)
         }
@@ -87,6 +91,14 @@ internal class MapRenderer(
         fogOfWarRenderer.apply(frame, c1, c2)
         drawCells(frame)
     }
+
+    /** [render]'s clear/fog box, grown to cover the hex overhang above and left of the anchor. */
+    private fun padTopLeft(pos: ScreenPos): ScreenPos = ScreenPos(pos.x - rc.hexSlantWidth, pos.y - rc.v)
+
+    /** The same for the far corner: the last row's hexes in the other column parity end [v] lower
+     *  than that corner's own anchor. The right edge needs no pad — the anchor of column `ecol`
+     *  already sits exactly on the right tip of column `ecol - 1`. */
+    private fun padBottomRight(pos: ScreenPos): ScreenPos = ScreenPos(pos.x, pos.y + rc.v)
 
     private fun buildRenderFrame(
         q: GameMap,

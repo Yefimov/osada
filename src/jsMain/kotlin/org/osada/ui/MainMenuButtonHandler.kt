@@ -28,7 +28,7 @@ internal class MainMenuButtonHandler(
                 ui.render.render()
             }
 
-            "inspectunit" -> onInspectUnitButton(map)
+            "inspectunit" -> onInspectUnitButton()
             "buy" -> onBuyButton(map)
             "endturn" -> ui.onEndTurnClick()
             "mainmenu" -> onMainMenuToggleButton()
@@ -55,19 +55,11 @@ internal class MainMenuButtonHandler(
         ui.render.render()
     }
 
-    private fun onInspectUnitButton(map: GameMap) {
+    /** The toolbar's Inspect Unit glyph — one of three ways into the same state, so it delegates
+     *  to [UnitCardCollapse] rather than keeping a second copy of the show/hide logic. */
+    private fun onInspectUnitButton() {
         byId("unit-info") ?: return
-        if (isVisible("unit-info")) {
-            makeHidden("unit-info")
-            uiSettings.unitInfoVisibility = false
-            // Update the toolbar glyph to reflect the toggled-off state (PM's L()).
-            byId("inspectunit")?.let { toggleButton(it, false) }
-        } else {
-            makeVisible("unit-info")
-            uiSettings.unitInfoVisibility = true
-            byId("inspectunit")?.let { toggleButton(it, true) }
-            map.currentUnit?.let { ui.showUnitInfo(it) }
-        }
+        UnitCardCollapse.setCollapsed(isVisible("unit-info"))
     }
 
     private fun onBuyButton(map: GameMap) {
