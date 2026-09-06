@@ -39,6 +39,15 @@ internal object VictoryDeadlineTooltip {
         field.onmouseleave = { _: MouseEvent -> hide() }
     }
 
+    /**
+     * The phone's turn readout is [MobileContextDock]'s own element, not this one — the top bar's
+     * `#statusmsg` is hidden on a phone — and it has no hover to open the panel with. Same panel,
+     * opened by a tap instead. Attached once, since the dock element outlives every refresh.
+     */
+    fun attachTap(field: HTMLElement) {
+        TapTip.attach(field, TIP_ID, ::show)
+    }
+
     fun hide() {
         byId(TIP_ID)?.style?.display = "none"
     }

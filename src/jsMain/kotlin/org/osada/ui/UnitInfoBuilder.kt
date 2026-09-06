@@ -25,6 +25,10 @@ internal object UnitInfoBuilder {
                 div.title = stat.title
                 div.className = "statsGlyph"
                 div.textContent = glyph
+                // A chip is a bare glyph: without its tooltip it says nothing at all, and on a
+                // phone `title` never appears. No heading -- the stat strings already open with
+                // the stat's own name ("Air attack: attack power against aircraft.").
+                TapTip.fromTitle(div)
                 div = addTag(div, "div")
             }
             div.id = stat.id
@@ -48,6 +52,7 @@ internal object UnitInfoBuilder {
                     "Defence" -> "Defensive values used for different attacks and ranges; higher is better."
                     else -> "Movement, firing range, initiative and battlefield detection."
                 }
+            TapTip.fromTitle(label) { label.textContent.orEmpty() }
             val grid = addTag(section, "div")
             grid.className = "osada-stat-group__grid"
             stats.forEach { stat -> buildStatDiv(grid, stat) }

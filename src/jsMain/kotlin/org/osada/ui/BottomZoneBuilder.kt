@@ -107,7 +107,10 @@ internal object BottomZoneBuilder {
         weather.className = "uc-weather"
         // Hero slot: non-clickable per spec ("future hook") — tooltip only, no onclick here;
         // UnitInfoPanel.showUnitInfo sets the title/filled-state, never an onclick, going forward.
+        // Tooltip-only is exactly the case a tap panel exists for: on a phone that spec left the
+        // slot with no way to say anything at all.
         move("uLeader", nameLine)
+        byId("uLeader")?.let { TapTip.fromTitle(it) }
         move("uTransport", nameLine)
         move("uCarrier", nameLine)
 
@@ -129,6 +132,7 @@ internal object BottomZoneBuilder {
             row.id = "${id}Row"
             row.className = "osada-bar osada-bar--$modifier"
             row.title = tooltip
+            TapTip.fromTitle(row) { label }
             if (iconFile != null) {
                 val icon = addTag(row, "img")
                 icon.setAttribute("src", "resources/ui/osada/$iconFile")
@@ -360,6 +364,10 @@ internal object BottomZoneBuilder {
         val name = addTag(main, "div")
         name.id = "ecName"
         name.className = "osada-ec-name"
+        // Both carry the same identity tooltip, written per unit by `refreshEnemyCard`; attaching
+        // here rather than there keeps one handler per element instead of one per selection.
+        TapTip.fromTitle(portrait)
+        TapTip.fromTitle(name) { name.textContent.orEmpty() }
         val sub = addTag(main, "div")
         sub.id = "ecSub"
         sub.className = "osada-ec-sub"
@@ -398,6 +406,7 @@ internal object BottomZoneBuilder {
             label.className = "osada-stat-group__label"
             label.textContent = I18n.t("unit_info.group.$groupKey.label")
             label.title = I18n.t("unit_info.group.$groupKey.help")
+            TapTip.fromTitle(label) { label.textContent.orEmpty() }
             val grid = addTag(section, "div")
             grid.className = "osada-stat-group__grid"
             entries.forEach { (id, glyph, helpId) ->
@@ -405,6 +414,7 @@ internal object BottomZoneBuilder {
                 chip.className = "statsGlyph"
                 chip.title = GameText.unitStatHelp(helpId)
                 chip.textContent = glyph
+                TapTip.fromTitle(chip)
                 val valueDiv = addTag(chip, "div")
                 valueDiv.id = id
                 valueDiv.className = "statsText"

@@ -70,6 +70,25 @@ internal object AnchoredTip {
         return body.toString()
     }
 
+    /**
+     * A plain explanation panel: an optional heading over one run of prose. This is what a native
+     * `title=` becomes when it has to work on a touch screen ([TapTip]), so it stays deliberately
+     * plainer than [html] — a `title` carries no status and no rule lines, and inventing either
+     * here would put words in the attribute's mouth.
+     */
+    fun helpHtml(
+        title: String,
+        body: String,
+    ): String {
+        val heading =
+            if (title.isBlank()) {
+                ""
+            } else {
+                "<div class=\"osada-wtip__title\">${escape(title)}</div>"
+            }
+        return heading + "<div class=\"osada-wtip__story\">${escape(body)}</div>"
+    }
+
     private fun ensureNode(id: String): HTMLElement =
         byId(id) ?: run {
             val node = addTag("mainbody", "div")

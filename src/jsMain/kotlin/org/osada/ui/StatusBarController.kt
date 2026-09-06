@@ -61,7 +61,7 @@ internal class StatusBarController(
             // build of it. This object used to carry a second, English-only copy and bind it
             // to the same element, so whichever ran last decided what the player read.
             w.onmouseenter = { _: MouseEvent -> GameplayLocalization.showWeatherTooltip(w) }
-            w.onmouseleave = { _: MouseEvent -> byId("osadaWeatherTip")?.style?.display = "none" }
+            w.onmouseleave = { _: MouseEvent -> AnchoredTip.hide(GameplayLocalization.WEATHER_TIP_ID) }
         }
 
         updatePrestigeDisplay(currentPlayer, map)
