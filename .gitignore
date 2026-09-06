@@ -59,3 +59,34 @@ scripts/deploy/target.local
 # add_bomber_size.py) are unaffected; to add something here on purpose, use `git add -f <path>`.
 tools/
 docs/
+# Coding-agent briefing. Local working notes, untracked 2026-09-06 -- it is a scratchpad for the
+# assistant's own context, not project documentation, and the file stays on disk.
+AGENTS.md
+
+# Build/verification tooling. The ad-hoc probes and the vendored scripts/verify/node_modules are
+# local scratch and stay untracked, but everything build.gradle.kts actually invokes is listed back
+# in below -- otherwise `check`, verifyProductionSmokeTest and verifyMobileSmokeTest pass here (the
+# files are on disk) and fail on a fresh clone. If you wire a new script into a Gradle task, add it
+# to this list in the same commit. node_modules is rebuilt by verifyProductionSmokeTestNpmInstall.
+scripts/*
+!scripts/check_author_credits.py
+!scripts/check_campaign_dialogue.py
+!scripts/check_keyboard_manual.py
+!scripts/check_kotlin_js_consistency.py
+!scripts/check_objective_visibility.py
+!scripts/check_ruleset_keys.py
+!scripts/check_scenario_events.py
+!scripts/check_tracked_sources.py
+!scripts/check_translations.py
+!scripts/check_unit_descriptions.py
+# imported by check_translations.py
+!scripts/extract_story_dialogue_i18n.py
+!scripts/verify/
+scripts/verify/*
+!scripts/verify/combatlog-button-probe.mjs
+!scripts/verify/hero-roster-probe.mjs
+!scripts/verify/mobile-smoke.mjs
+!scripts/verify/og-fidelity-regression-probe.mjs
+!scripts/verify/verify.mjs
+!scripts/verify/package.json
+!scripts/verify/package-lock.json
