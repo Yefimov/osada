@@ -8,6 +8,21 @@
          every safe-area rule in mobile.css depends on. Canvas sharpness is a backing-store
          concern and is deliberately kept out of the page viewport (see ViewportConfig.kt). -->
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+    <!-- HANDS OFF, DARK MODE EXTENSIONS. OSADA is already a dark UI; anything that "helps" by
+         re-colouring it destroys the artwork. Reported 2026-09-05: with Dark Reader running, the
+         unit icons vanished entirely ("виджет съел иконки"), and disabling the extension restored
+         them. Nothing was failing to load — every icon is a region of a sprite sheet placed by
+         background-position/clip, and Dark Reader's dynamic mode rewrites and drops exactly those
+         background-image declarations. Two independent signals, because they reach different
+         consumers:
+           - `darkreader-lock` is Dark Reader's own documented opt-out (no content attribute; it
+             makes the extension bypass this page entirely). Honoured since 2022; older builds
+             ignore it, and the maintainers' fallback for those is a domain allowlist request.
+           - `color-scheme: dark` is the standard signal, and it is what stops Chrome's Auto Dark
+             Mode for Web Contents (Android) from applying its own inversion. It is declared here
+             AND on :root in base.css so it is known before the stylesheets land. -->
+    <meta name="darkreader-lock"/>
+    <meta name="color-scheme" content="dark"/>
     <meta name="author" content="OSADA project"/>
     <meta name="description" content="Turn Based World War 2 Strategy Game"/>
     <meta name="apple-mobile-web-app-capable" content="yes"/>
@@ -114,7 +129,7 @@
 </div>
 
 <div id="smSettings" class="mainPanel">
-    <div id="smSettingsContainer" style="overflow-y: scroll; height: 95%;"></div>
+    <div id="smSettingsContainer"></div>
     <div class="smallButton" id="smSetOkBut">1</div>
 </div>
 

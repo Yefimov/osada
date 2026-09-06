@@ -20,6 +20,7 @@ import org.osada.i18n.installEnglishUiBundleForTests
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
@@ -123,10 +124,17 @@ class HeroDossierTest {
         assertEquals("Ivan Petrov", row.name)
         assertEquals("Major", row.rank)
         assertEquals(HeroStatus.WOUNDED, row.status)
-        assertEquals("Wounded", HeroDisplay.rosterTab(HeroStatus.WOUNDED))
-        assertEquals("Fallen", HeroDisplay.rosterTab(HeroStatus.KILLED))
-        assertEquals("Reserve", HeroDisplay.rosterTab(HeroStatus.RETIRED))
-        assertEquals("Missing", HeroDisplay.rosterTab(HeroStatus.CAPTURED))
+        // Ids, not labels. A label here would be a bug: the presenter groups rows by this value,
+        // and the Russian roster printed `hero.roster.tab.в строю` while it returned translated text.
+        assertEquals("wounded", HeroDisplay.rosterTab(HeroStatus.WOUNDED))
+        assertEquals("fallen", HeroDisplay.rosterTab(HeroStatus.KILLED))
+        assertEquals("reserve", HeroDisplay.rosterTab(HeroStatus.RETIRED))
+        assertEquals("missing", HeroDisplay.rosterTab(HeroStatus.CAPTURED))
+        assertEquals(HeroDisplay.ROSTER_TABS.toSet(), HeroStatus.entries.map { HeroDisplay.rosterTab(it) }.toSet())
+        HeroDisplay.ROSTER_TABS.forEach { tab ->
+            assertTrue(HeroDisplay.rosterTabLabel(tab).isNotEmpty(), tab)
+            assertFalse(HeroDisplay.rosterTabLabel(tab).startsWith("hero.roster.tab."), tab)
+        }
     }
 
     /** DEFERRED.md §6.6 item 6a / `docs/design/hero-presentation.md` §1: every renown tier maps to

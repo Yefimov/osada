@@ -119,6 +119,8 @@ internal class MainMenuButtonHandler(
             makeHidden("smSettings")
             makeHidden("smState")
             makeHidden("startmenu")
+            // Back to the battle: whatever the menu was holding back gets its turn now.
+            MessageDialogs.resumeDynamicMessages()
             byId("options")?.let { toggleButton(it, false) }
         } else {
             // An open message box (e.g. the scenario-intro briefing left unread) sits on
@@ -126,6 +128,10 @@ internal class MainMenuButtonHandler(
             // menu. Dismiss it through its own OK path so any pending
             // callback/uiMessageClicked flag runs exactly as if the player clicked OK.
             if (isVisible("ui-message")) byId("uiokbut")?.click()
+            // The QUEUED boxes (hero emergence, casualties, prototype awards) are the same layer
+            // and were the other half of that report — they have no callback to run, so they are
+            // held rather than dismissed and come back when the player continues.
+            MessageDialogs.suspendDynamicMessages()
             makeVisible("startmenu")
             makeVisible("smMain")
             // Re-check Continue: a save created during this session must surface it.
@@ -155,6 +161,9 @@ internal class MainMenuButtonHandler(
     fun handleGlobalEscape() {
         when {
             isVisible("ui-message") -> byId("uiokbut")?.click()
+            // Same `--z-msg` tier as `ui-message`, and previously unregistered here: Escape fell
+            // through to the pause menu and opened it UNDER the popup that was still on screen.
+            MessageDialogs.isDynamicMessageOpen() -> MessageDialogs.dismissDynamicMessage()
             HeroPromotionPresenter.isOpen() -> Unit // modal by design — see the doc comment
             CommanderRosterPresenter.isTransferPickerOpen() -> CommanderRosterPresenter.closeTransferPicker()
             AttachmentPickerPresenter.isOpen() -> AttachmentPickerPresenter.close()

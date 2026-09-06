@@ -3,15 +3,16 @@
   "viewBox": "0 0 300 400",
   "artStyle": "flat_dossier_v2",
   "order": [
-    "background", "uniform_back", "hair_back", "face", "age_face", "scar",
+    "background", "uniform_back", "hair_back", "face", "expression", "age_face", "scar",
     "facial_hair", "hair_front", "under_headgear_hair", "uniform_front_collar",
-    "rank", "branch", "headgear", "wound"
+    "rank", "branch", "accessory", "headgear", "wound"
   ],
   "categoryDir": {
     "background": "background",
     "uniform_back": "uniform_back",
     "hair_back": "hair_back",
     "face": "face",
+    "expression": "expression",
     "age_face": "age_face",
     "scar": "scar",
     "facial_hair": "facial_hair",
@@ -20,6 +21,7 @@
     "uniform_front_collar": "uniform_front_collar",
     "rank": "rank",
     "branch": "branch",
+    "accessory": "accessory",
     "headgear": "headgear",
     "wound": "wound"
   },
@@ -33,7 +35,12 @@
       { "id": "back_armor", "tags": { "branch": ["armor"] } },
       { "id": "back_artillery", "tags": { "branch": ["artillery"] } },
       { "id": "back_aviation", "tags": { "branch": ["aviation"] } },
-      { "id": "back_ancient_tunic", "tags": { "nation": "ANCIENT_REBEL" } }
+      { "id": "back_ancient_tunic", "tags": { "nation": "ANCIENT_REBEL" } },
+      { "id": "back_infantry_female", "tags": { "branch": ["infantry"], "gender": "female" } },
+      { "id": "back_armor_female", "tags": { "branch": ["armor"], "gender": "female" } },
+      { "id": "back_artillery_female", "tags": { "branch": ["artillery"], "gender": "female" } },
+      { "id": "back_aviation_female", "tags": { "branch": ["aviation"], "gender": "female" } },
+      { "id": "back_ancient_tunic_female", "tags": { "nation": "ANCIENT_REBEL", "gender": "female" } }
     ],
     "uniform_front_collar": [
       { "id": "collar_infantry_summer", "tags": { "nation": "USSR", "branch": ["infantry"], "season": "summer" } },
@@ -43,6 +50,8 @@
       { "id": "collar_infantry_winter", "tags": { "nation": "USSR", "branch": ["infantry"], "season": "winter" } },
       { "id": "collar_armor_winter", "tags": { "nation": "USSR", "branch": ["armor"], "season": "winter" } },
       { "id": "collar_artillery_winter", "tags": { "nation": "USSR", "branch": ["artillery"], "season": "winter" } },
+      { "id": "collar_ussr_1943_summer", "tags": { "nation": "USSR_1943", "season": "summer" } },
+      { "id": "collar_ussr_1943_winter", "tags": { "nation": "USSR_1943", "season": "winter" } },
       { "id": "collar_rev1919_field", "tags": { "nation": "REVOLUTIONARY_1919", "season": "any" } },
       { "id": "collar_spanish_republic", "tags": { "nation": "SPANISH_REPUBLIC", "season": "any" } },
       { "id": "collar_yugoslav_partisan", "tags": { "nation": "YUGOSLAV_PARTISAN", "season": "any" } },
@@ -53,16 +62,38 @@
     ],
     "hair_back": [
       { "id": "hair_back_short" },
+      { "id": "hair_back_short_narrow", "tags": { "headFit": "narrow" } },
+      { "id": "hair_back_short_medium", "tags": { "headFit": "medium" } },
+      { "id": "hair_back_short_wide", "tags": { "headFit": "wide" } },
       { "id": "hair_back_full" },
-      { "id": "hair_back_female", "tags": { "gender": "female" } }
+      { "id": "hair_back_female", "tags": { "gender": "female", "style": "waves" } },
+      { "id": "hair_back_female_bob", "tags": { "gender": "female", "style": "bob" } },
+      { "id": "hair_back_female_braid", "tags": { "gender": "female", "style": "braid" } },
+      { "id": "hair_back_female_bun", "tags": { "gender": "female", "style": "bun" } }
     ],
     "face": [
-      { "id": "face_narrow_stern", "tags": { "archetype": "narrow_stern" } },
-      { "id": "face_broad_calm", "tags": { "archetype": "broad_calm" } },
-      { "id": "face_round_young", "tags": { "archetype": "round_young" } },
-      { "id": "face_angular_tired", "tags": { "archetype": "angular_tired" } },
-      { "id": "face_long_mature", "tags": { "archetype": "long_mature" } },
-      { "id": "face_square_veteran", "tags": { "archetype": "square_veteran" } }
+      { "id": "face_narrow_stern", "tags": { "archetype": "narrow_stern", "jawFit": "narrow" } },
+      { "id": "face_broad_calm", "tags": { "archetype": "broad_calm", "jawFit": "wide" } },
+      { "id": "face_round_young", "tags": { "archetype": "round_young", "jawFit": "medium" } },
+      { "id": "face_angular_tired", "tags": { "archetype": "angular_tired", "jawFit": "narrow" } },
+      { "id": "face_long_mature", "tags": { "archetype": "long_mature", "jawFit": "narrow" } },
+      { "id": "face_square_veteran", "tags": { "archetype": "square_veteran", "jawFit": "wide" } },
+      { "id": "face_oval_reserved", "tags": { "archetype": "oval_reserved", "jawFit": "medium" } },
+      { "id": "face_compact_alert", "tags": { "archetype": "compact_alert", "jawFit": "medium" } },
+      { "id": "face_high_cheekbones", "tags": { "archetype": "high_cheekbones", "jawFit": "narrow" } },
+      { "id": "face_heavy_jaw", "tags": { "archetype": "heavy_jaw", "jawFit": "wide" } },
+      { "id": "face_lean_focused", "tags": { "archetype": "lean_focused", "jawFit": "narrow" } },
+      { "id": "face_rectangular_calm", "tags": { "archetype": "rectangular_calm", "jawFit": "wide" } },
+      { "id": "face_female_oval", "tags": { "archetype": "female_oval", "jawFit": "narrow", "gender": "female" } },
+      { "id": "face_female_heart", "tags": { "archetype": "female_heart", "jawFit": "narrow", "gender": "female" } },
+      { "id": "face_female_broad", "tags": { "archetype": "female_broad", "jawFit": "medium", "gender": "female" } },
+      { "id": "face_female_square", "tags": { "archetype": "female_square", "jawFit": "medium", "gender": "female" } },
+      { "id": "face_female_long", "tags": { "archetype": "female_long", "jawFit": "narrow", "gender": "female" } }
+    ],
+    "expression": [
+      { "id": "expression_aggressive", "tags": { "character": "aggressive" } },
+      { "id": "expression_determined", "tags": { "character": "determined" } },
+      { "id": "expression_calm", "tags": { "character": "calm" } }
     ],
     "age_face": [
       { "id": "age_face_light", "tags": { "age": "middle" } },
@@ -77,26 +108,46 @@
       { "id": "facial_clean" },
       { "id": "facial_stubble" },
       { "id": "facial_mustache" },
-      { "id": "facial_beard" }
+      { "id": "facial_beard" },
+      { "id": "facial_stubble_narrow", "tags": { "jawFit": "narrow" } },
+      { "id": "facial_stubble_medium", "tags": { "jawFit": "medium" } },
+      { "id": "facial_stubble_wide", "tags": { "jawFit": "wide" } },
+      { "id": "facial_beard_narrow", "tags": { "jawFit": "narrow" } },
+      { "id": "facial_beard_medium", "tags": { "jawFit": "medium" } },
+      { "id": "facial_beard_wide", "tags": { "jawFit": "wide" } }
     ],
     "hair_front": [
       { "id": "hair_front_crop" },
       { "id": "hair_front_side" },
       { "id": "hair_front_receding" },
       { "id": "hair_front_swept" },
-      { "id": "hair_front_female_a", "tags": { "gender": "female" } },
-      { "id": "hair_front_female_b", "tags": { "gender": "female" } }
+      { "id": "hair_front_female_a", "tags": { "gender": "female", "style": "bob" } },
+      { "id": "hair_front_female_b", "tags": { "gender": "female", "style": "waves" } },
+      { "id": "hair_front_female_braided", "tags": { "gender": "female", "style": "braid" } },
+      { "id": "hair_front_female_bun", "tags": { "gender": "female", "style": "bun" } }
     ],
     "under_headgear_hair": [
       { "id": "under_hair_temples" },
+      { "id": "under_hair_short_fringe" },
+      { "id": "under_hair_side_part" },
+      { "id": "under_hair_curls" },
       { "id": "under_hair_none" },
-      { "id": "under_hair_female", "tags": { "gender": "female" } }
+      { "id": "under_hair_female", "tags": { "gender": "female" } },
+      { "id": "under_hair_female_fur", "tags": { "gender": "female" } },
+      { "id": "under_hair_female_close", "tags": { "gender": "female" } },
+      { "id": "under_hair_female_bob", "tags": { "gender": "female", "style": "bob" } },
+      { "id": "under_hair_female_braid", "tags": { "gender": "female", "style": "braid" } },
+      { "id": "under_hair_female_bun", "tags": { "gender": "female", "style": "bun" } }
     ],
     "rank": [
       { "id": "rank_lieutenant", "tags": { "nation": "USSR", "rank": "lieutenant" } },
       { "id": "rank_captain", "tags": { "nation": "USSR", "rank": "captain" } },
       { "id": "rank_major", "tags": { "nation": "USSR", "rank": "major" } },
       { "id": "rank_colonel", "tags": { "nation": "USSR", "rank": "colonel" } },
+      { "id": "rank_pre1943_lieutenant", "tags": { "nation": "USSR_PRE_1943", "rank": "lieutenant" } },
+      { "id": "rank_pre1943_captain", "tags": { "nation": "USSR_PRE_1943", "rank": "captain" } },
+      { "id": "rank_pre1943_major", "tags": { "nation": "USSR_PRE_1943", "rank": "major" } },
+      { "id": "rank_pre1943_colonel", "tags": { "nation": "USSR_PRE_1943", "rank": "colonel" } },
       { "id": "rank_rev1919_lieutenant", "tags": { "nation": "REVOLUTIONARY_1919", "rank": "lieutenant" } },
       { "id": "rank_rev1919_captain", "tags": { "nation": "REVOLUTIONARY_1919", "rank": "captain" } },
       { "id": "rank_rev1919_major", "tags": { "nation": "REVOLUTIONARY_1919", "rank": "major" } },
@@ -133,25 +184,34 @@
       { "id": "branch_aviation", "tags": { "branch": ["aviation"] } },
       { "id": "branch_ancient_rebel", "tags": { "nation": "ANCIENT_REBEL" } }
     ],
+    "accessory": [
+      { "id": "accessory_round_spectacles", "tags": { "era": "modern" } },
+      { "id": "accessory_wire_spectacles", "tags": { "era": "modern" } },
+      { "id": "accessory_pince_nez", "tags": { "era": "early_twentieth_century" } }
+    ],
     "headgear": [
-      { "id": "headgear_officer_cap", "tags": { "nation": "USSR", "hairMode": "UNDER_CAP", "branch": ["infantry", "armor", "artillery", "aviation"] } },
+      { "id": "headgear_officer_cap", "tags": { "nation": "USSR", "hairMode": "UNDER_CAP", "underHair": ["under_hair_temples", "under_hair_side_part"], "branch": ["infantry", "armor", "artillery", "aviation"] } },
       { "id": "headgear_ushanka", "tags": { "nation": "USSR", "hairMode": "UNDER_FUR_HAT", "branch": ["infantry", "armor", "artillery"], "season": "winter" } },
-      { "id": "headgear_pilotka", "tags": { "nation": "USSR", "hairMode": "UNDER_CAP", "branch": ["infantry", "artillery"] } },
+      { "id": "headgear_pilotka", "tags": { "nation": "USSR", "hairMode": "UNDER_CAP", "underHair": ["under_hair_short_fringe", "under_hair_side_part"], "branch": ["infantry", "artillery"] } },
+      { "id": "headgear_ssh40", "tags": { "nation": "USSR", "hairMode": "UNDER_CAP", "underHair": ["under_hair_short_fringe", "under_hair_temples"], "branch": ["infantry", "artillery"] } },
       { "id": "headgear_flight_helmet", "tags": { "nation": "*", "hairMode": "UNDER_FLIGHT_HELMET", "branch": ["aviation"] } },
-      { "id": "headgear_rev1919_field_cap", "tags": { "nation": "REVOLUTIONARY_1919", "hairMode": "UNDER_CAP" } },
-      { "id": "headgear_rev1919_service_cap", "tags": { "nation": "REVOLUTIONARY_1919", "hairMode": "UNDER_CAP" } },
-      { "id": "headgear_spanish_side_cap", "tags": { "nation": "SPANISH_REPUBLIC", "hairMode": "UNDER_CAP" } },
-      { "id": "headgear_spanish_beret", "tags": { "nation": "SPANISH_REPUBLIC", "hairMode": "UNDER_CAP" } },
-      { "id": "headgear_yugoslav_titovka", "tags": { "nation": "YUGOSLAV_PARTISAN", "hairMode": "UNDER_CAP" } },
-      { "id": "headgear_yugoslav_partisan_cap", "tags": { "nation": "YUGOSLAV_PARTISAN", "hairMode": "UNDER_CAP" } },
-      { "id": "headgear_east_asian_field_cap", "tags": { "nation": "EAST_ASIAN_REVOLUTIONARY", "hairMode": "UNDER_CAP" } },
-      { "id": "headgear_east_asian_boonie", "tags": { "nation": "EAST_ASIAN_REVOLUTIONARY", "hairMode": "UNDER_CAP" } },
-      { "id": "headgear_greek_side_cap", "tags": { "nation": "GREEK_1940", "hairMode": "UNDER_CAP" } },
-      { "id": "headgear_greek_field_cap", "tags": { "nation": "GREEK_1940", "hairMode": "UNDER_CAP" } },
-      { "id": "headgear_white_army_cap", "tags": { "nation": "WHITE_ARMY_1919", "hairMode": "UNDER_CAP" } },
-      { "id": "headgear_white_army_papakha", "tags": { "nation": "WHITE_ARMY_1919", "hairMode": "UNDER_FUR_HAT" } },
-      { "id": "headgear_ancient_pilos", "tags": { "nation": "ANCIENT_REBEL", "hairMode": "UNDER_CAP" } },
-      { "id": "headgear_ancient_phrygian", "tags": { "nation": "ANCIENT_REBEL", "hairMode": "UNDER_CAP" } }
+      { "id": "headgear_rev1919_field_cap", "tags": { "nation": "REVOLUTIONARY_1919", "hairMode": "UNDER_CAP", "underHair": ["under_hair_short_fringe", "under_hair_side_part"] } },
+      { "id": "headgear_rev1919_service_cap", "tags": { "nation": "REVOLUTIONARY_1919", "hairMode": "UNDER_CAP", "underHair": ["under_hair_temples", "under_hair_side_part"] } },
+      { "id": "headgear_budenovka", "tags": { "nation": "SOVIET_INTERWAR", "hairMode": "UNDER_CAP", "underHair": ["under_hair_short_fringe", "under_hair_temples"] } },
+      { "id": "headgear_spanish_side_cap", "tags": { "nation": "SPANISH_REPUBLIC", "hairMode": "UNDER_CAP", "underHair": ["under_hair_short_fringe", "under_hair_side_part"] } },
+      { "id": "headgear_spanish_beret", "tags": { "nation": "SPANISH_REPUBLIC", "hairMode": "UNDER_CAP", "underHair": ["under_hair_curls", "under_hair_side_part"] } },
+      { "id": "headgear_spanish_adrian", "tags": { "nation": "SPANISH_REPUBLIC", "hairMode": "UNDER_CAP", "underHair": ["under_hair_short_fringe", "under_hair_temples"] } },
+      { "id": "headgear_yugoslav_titovka", "tags": { "nation": "YUGOSLAV_PARTISAN", "hairMode": "UNDER_CAP", "underHair": ["under_hair_short_fringe", "under_hair_side_part"] } },
+      { "id": "headgear_yugoslav_partisan_cap", "tags": { "nation": "YUGOSLAV_PARTISAN", "hairMode": "UNDER_CAP", "underHair": ["under_hair_short_fringe", "under_hair_temples"] } },
+      { "id": "headgear_east_asian_field_cap", "tags": { "nation": "EAST_ASIAN_REVOLUTIONARY", "hairMode": "UNDER_CAP", "underHair": ["under_hair_short_fringe", "under_hair_side_part"] } },
+      { "id": "headgear_east_asian_boonie", "tags": { "nation": "EAST_ASIAN_REVOLUTIONARY", "hairMode": "UNDER_CAP", "underHair": ["under_hair_temples", "under_hair_side_part"] } },
+      { "id": "headgear_greek_side_cap", "tags": { "nation": "GREEK_1940", "hairMode": "UNDER_CAP", "underHair": ["under_hair_short_fringe", "under_hair_side_part"] } },
+      { "id": "headgear_greek_field_cap", "tags": { "nation": "GREEK_1940", "hairMode": "UNDER_CAP", "underHair": ["under_hair_temples", "under_hair_side_part"] } },
+      { "id": "headgear_greek_m1936", "tags": { "nation": "GREEK_1940", "hairMode": "UNDER_CAP", "underHair": ["under_hair_short_fringe", "under_hair_temples"] } },
+      { "id": "headgear_white_army_cap", "tags": { "nation": "WHITE_ARMY_1919", "hairMode": "UNDER_CAP", "underHair": ["under_hair_temples", "under_hair_side_part"] } },
+      { "id": "headgear_white_army_papakha", "tags": { "nation": "WHITE_ARMY_1919", "hairMode": "UNDER_CAP", "underHair": ["under_hair_curls"], "underHairFemale": ["under_hair_female_fur"] } },
+      { "id": "headgear_ancient_pilos", "tags": { "nation": "ANCIENT_REBEL", "hairMode": "UNDER_CAP", "underHair": ["under_hair_curls", "under_hair_short_fringe"], "underHairFemale": ["under_hair_female_close"], "hairBack": false } },
+      { "id": "headgear_ancient_phrygian", "tags": { "nation": "ANCIENT_REBEL", "hairMode": "UNDER_CAP", "underHair": ["under_hair_curls", "under_hair_side_part"], "underHairFemale": ["under_hair_female_close"], "hairBack": false } }
     ],
     "wound": [
       { "id": "wound_eye_patch", "tags": { "wound": "eye" } },
@@ -161,7 +221,7 @@
   },
   "hairFront": {
     "FULL_HAIR": ["hair_front_crop", "hair_front_side", "hair_front_receding", "hair_front_swept"],
-    "UNDER_CAP": ["under_hair_temples"],
+    "UNDER_CAP": ["under_hair_temples", "under_hair_short_fringe", "under_hair_side_part", "under_hair_curls"],
     "UNDER_FUR_HAT": [],
     "UNDER_FLIGHT_HELMET": [],
     "NONE": []
@@ -170,6 +230,7 @@
     "seasonWinter": 0.6,
     "scarChance": 0.18,
     "woundChance": 0.06,
+    "accessoryChance": 0.16,
     "grayHairFromAge": "old",
     "rankAge": {
       "lieutenant": { "young": 0.7, "middle": 0.3 },
@@ -178,9 +239,9 @@
       "colonel": { "young": 0.05, "middle": 0.35, "old": 0.6 }
     },
     "ageArchetype": {
-      "young": { "round_young": 0.4, "narrow_stern": 0.2, "broad_calm": 0.2, "long_mature": 0.1, "angular_tired": 0.05, "square_veteran": 0.05 },
-      "middle": { "broad_calm": 0.25, "narrow_stern": 0.2, "long_mature": 0.2, "square_veteran": 0.15, "angular_tired": 0.1, "round_young": 0.1 },
-      "old": { "square_veteran": 0.3, "long_mature": 0.25, "angular_tired": 0.25, "narrow_stern": 0.1, "broad_calm": 0.1 }
+      "young": { "round_young": 0.16, "narrow_stern": 0.12, "broad_calm": 0.08, "long_mature": 0.04, "angular_tired": 0.02, "square_veteran": 0.02, "oval_reserved": 0.18, "compact_alert": 0.2, "high_cheekbones": 0.16, "heavy_jaw": 0.02, "lean_focused": 0.16, "rectangular_calm": 0.04, "female_oval": 0.24, "female_heart": 0.3, "female_broad": 0.12, "female_square": 0.16, "female_long": 0.18 },
+      "middle": { "broad_calm": 0.11, "narrow_stern": 0.1, "long_mature": 0.11, "square_veteran": 0.08, "angular_tired": 0.06, "round_young": 0.04, "oval_reserved": 0.14, "compact_alert": 0.11, "high_cheekbones": 0.13, "heavy_jaw": 0.12, "lean_focused": 0.13, "rectangular_calm": 0.11, "female_oval": 0.25, "female_heart": 0.15, "female_broad": 0.2, "female_square": 0.22, "female_long": 0.18 },
+      "old": { "square_veteran": 0.16, "long_mature": 0.14, "angular_tired": 0.12, "narrow_stern": 0.05, "broad_calm": 0.06, "oval_reserved": 0.08, "compact_alert": 0.06, "high_cheekbones": 0.14, "heavy_jaw": 0.19, "lean_focused": 0.09, "rectangular_calm": 0.17, "female_oval": 0.18, "female_heart": 0.1, "female_broad": 0.27, "female_square": 0.27, "female_long": 0.18 }
     },
     "facialByAge": {
       "young": { "facial_clean": 0.55, "facial_stubble": 0.3, "facial_mustache": 0.12, "facial_beard": 0.03 },
@@ -189,12 +250,12 @@
     },
     "headgear": {
       "infantry": {
-        "summer": { "headgear_officer_cap": 0.4, "headgear_pilotka": 0.3, "none": 0.3 },
-        "winter": { "headgear_ushanka": 0.7, "headgear_officer_cap": 0.2, "none": 0.1 }
+        "summer": { "headgear_officer_cap": 0.3, "headgear_pilotka": 0.25, "headgear_ssh40": 0.25, "none": 0.2 },
+        "winter": { "headgear_ushanka": 0.55, "headgear_ssh40": 0.2, "headgear_officer_cap": 0.15, "none": 0.1 }
       },
       "artillery": {
-        "summer": { "headgear_officer_cap": 0.4, "headgear_pilotka": 0.3, "none": 0.3 },
-        "winter": { "headgear_ushanka": 0.7, "headgear_officer_cap": 0.2, "none": 0.1 }
+        "summer": { "headgear_officer_cap": 0.3, "headgear_pilotka": 0.25, "headgear_ssh40": 0.25, "none": 0.2 },
+        "winter": { "headgear_ushanka": 0.55, "headgear_ssh40": 0.2, "headgear_officer_cap": 0.15, "none": 0.1 }
       },
       "armor": {
         "summer": { "headgear_officer_cap": 0.5, "none": 0.3, "headgear_pilotka": 0.2 },
@@ -215,7 +276,19 @@
       "yearTo": 1943,
       "theater": "eastern_front",
       "defaultSeason": "winter",
-      "branches": ["infantry", "armor", "artillery", "aviation"]
+      "branches": ["infantry", "armor", "artillery", "aviation"],
+      "rankPrefix": "rank_pre1943_"
+    },
+    "ussr_1943": {
+      "label": "USSR — shoulder-board uniform, 1943-1945",
+      "nation": "USSR",
+      "countries": [19, 61, 89],
+      "yearFrom": 1943,
+      "yearTo": 1945,
+      "theater": "eastern_front",
+      "defaultSeason": "summer",
+      "branches": ["infantry", "armor", "artillery", "aviation"],
+      "collarBySeason": { "summer": "collar_ussr_1943_summer", "winter": "collar_ussr_1943_winter" }
     },
     "soviet_interwar": {
       "label": "Soviet interwar forces, 1936-1940",
@@ -226,11 +299,11 @@
       "defaultSeason": "summer",
       "branches": ["infantry", "armor", "artillery", "aviation"],
       "collar": "collar_rev1919_field",
-      "rankPrefix": "rank_rev1919_",
+      "rankPrefix": "rank_pre1943_",
       "headgear": {
-        "infantry": { "summer": { "headgear_rev1919_field_cap": 0.55, "headgear_rev1919_service_cap": 0.25, "none": 0.2 }, "winter": { "headgear_rev1919_field_cap": 0.55, "headgear_rev1919_service_cap": 0.25, "none": 0.2 } },
-        "armor": { "summer": { "headgear_rev1919_field_cap": 0.55, "headgear_rev1919_service_cap": 0.25, "none": 0.2 }, "winter": { "headgear_rev1919_field_cap": 0.55, "headgear_rev1919_service_cap": 0.25, "none": 0.2 } },
-        "artillery": { "summer": { "headgear_rev1919_field_cap": 0.55, "headgear_rev1919_service_cap": 0.25, "none": 0.2 }, "winter": { "headgear_rev1919_field_cap": 0.55, "headgear_rev1919_service_cap": 0.25, "none": 0.2 } },
+        "infantry": { "summer": { "headgear_rev1919_field_cap": 0.45, "headgear_rev1919_service_cap": 0.2, "headgear_budenovka": 0.15, "none": 0.2 }, "winter": { "headgear_rev1919_field_cap": 0.45, "headgear_rev1919_service_cap": 0.2, "headgear_budenovka": 0.15, "none": 0.2 } },
+        "armor": { "summer": { "headgear_rev1919_field_cap": 0.45, "headgear_rev1919_service_cap": 0.2, "headgear_budenovka": 0.15, "none": 0.2 }, "winter": { "headgear_rev1919_field_cap": 0.45, "headgear_rev1919_service_cap": 0.2, "headgear_budenovka": 0.15, "none": 0.2 } },
+        "artillery": { "summer": { "headgear_rev1919_field_cap": 0.45, "headgear_rev1919_service_cap": 0.2, "headgear_budenovka": 0.15, "none": 0.2 }, "winter": { "headgear_rev1919_field_cap": 0.45, "headgear_rev1919_service_cap": 0.2, "headgear_budenovka": 0.15, "none": 0.2 } },
         "aviation": { "summer": { "headgear_flight_helmet": 0.55, "headgear_rev1919_service_cap": 0.25, "none": 0.2 }, "winter": { "headgear_flight_helmet": 0.55, "headgear_rev1919_service_cap": 0.25, "none": 0.2 } }
       }
     },
@@ -262,9 +335,9 @@
       "collar": "collar_spanish_republic",
       "rankPrefix": "rank_spanish_",
       "headgear": {
-        "infantry": { "summer": { "headgear_spanish_side_cap": 0.55, "headgear_spanish_beret": 0.25, "none": 0.2 }, "winter": { "headgear_spanish_side_cap": 0.55, "headgear_spanish_beret": 0.25, "none": 0.2 } },
-        "armor": { "summer": { "headgear_spanish_side_cap": 0.55, "headgear_spanish_beret": 0.25, "none": 0.2 }, "winter": { "headgear_spanish_side_cap": 0.55, "headgear_spanish_beret": 0.25, "none": 0.2 } },
-        "artillery": { "summer": { "headgear_spanish_side_cap": 0.55, "headgear_spanish_beret": 0.25, "none": 0.2 }, "winter": { "headgear_spanish_side_cap": 0.55, "headgear_spanish_beret": 0.25, "none": 0.2 } },
+        "infantry": { "summer": { "headgear_spanish_side_cap": 0.45, "headgear_spanish_beret": 0.2, "headgear_spanish_adrian": 0.15, "none": 0.2 }, "winter": { "headgear_spanish_side_cap": 0.45, "headgear_spanish_beret": 0.2, "headgear_spanish_adrian": 0.15, "none": 0.2 } },
+        "armor": { "summer": { "headgear_spanish_side_cap": 0.45, "headgear_spanish_beret": 0.2, "headgear_spanish_adrian": 0.15, "none": 0.2 }, "winter": { "headgear_spanish_side_cap": 0.45, "headgear_spanish_beret": 0.2, "headgear_spanish_adrian": 0.15, "none": 0.2 } },
+        "artillery": { "summer": { "headgear_spanish_side_cap": 0.45, "headgear_spanish_beret": 0.2, "headgear_spanish_adrian": 0.15, "none": 0.2 }, "winter": { "headgear_spanish_side_cap": 0.45, "headgear_spanish_beret": 0.2, "headgear_spanish_adrian": 0.15, "none": 0.2 } },
         "aviation": { "summer": { "headgear_flight_helmet": 0.55, "headgear_spanish_side_cap": 0.25, "none": 0.2 }, "winter": { "headgear_flight_helmet": 0.55, "headgear_spanish_side_cap": 0.25, "none": 0.2 } }
       }
     },
@@ -313,9 +386,9 @@
       "collar": "collar_greek_1940",
       "rankPrefix": "rank_greek_",
       "headgear": {
-        "infantry": { "summer": { "headgear_greek_side_cap": 0.55, "headgear_greek_field_cap": 0.25, "none": 0.2 }, "winter": { "headgear_greek_field_cap": 0.55, "headgear_greek_side_cap": 0.25, "none": 0.2 } },
-        "armor": { "summer": { "headgear_greek_side_cap": 0.55, "headgear_greek_field_cap": 0.25, "none": 0.2 }, "winter": { "headgear_greek_field_cap": 0.55, "headgear_greek_side_cap": 0.25, "none": 0.2 } },
-        "artillery": { "summer": { "headgear_greek_side_cap": 0.55, "headgear_greek_field_cap": 0.25, "none": 0.2 }, "winter": { "headgear_greek_field_cap": 0.55, "headgear_greek_side_cap": 0.25, "none": 0.2 } },
+        "infantry": { "summer": { "headgear_greek_side_cap": 0.4, "headgear_greek_field_cap": 0.15, "headgear_greek_m1936": 0.25, "none": 0.2 }, "winter": { "headgear_greek_field_cap": 0.4, "headgear_greek_side_cap": 0.15, "headgear_greek_m1936": 0.25, "none": 0.2 } },
+        "armor": { "summer": { "headgear_greek_side_cap": 0.4, "headgear_greek_field_cap": 0.15, "headgear_greek_m1936": 0.25, "none": 0.2 }, "winter": { "headgear_greek_field_cap": 0.4, "headgear_greek_side_cap": 0.15, "headgear_greek_m1936": 0.25, "none": 0.2 } },
+        "artillery": { "summer": { "headgear_greek_side_cap": 0.4, "headgear_greek_field_cap": 0.15, "headgear_greek_m1936": 0.25, "none": 0.2 }, "winter": { "headgear_greek_field_cap": 0.4, "headgear_greek_side_cap": 0.15, "headgear_greek_m1936": 0.25, "none": 0.2 } },
         "aviation": { "summer": { "headgear_flight_helmet": 0.55, "headgear_greek_side_cap": 0.25, "none": 0.2 }, "winter": { "headgear_flight_helmet": 0.55, "headgear_greek_side_cap": 0.25, "none": 0.2 } }
       }
     },

@@ -14,7 +14,6 @@ import org.osada.model.GameUnit
 import org.osada.model.MovementResults
 import org.osada.model.attackUnit
 import org.osada.model.getUnits
-import org.osada.model.hasRailData
 import org.osada.model.moveUnit
 import org.osada.model.retreatUnit
 import org.osada.model.surrenderUnit

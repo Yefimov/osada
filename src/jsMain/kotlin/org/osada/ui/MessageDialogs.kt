@@ -3,6 +3,7 @@ package org.osada.ui
 import org.osada.i18n.I18n
 import org.osada.model.Equipment
 import org.osada.unitClassNames
+import org.w3c.dom.HTMLElement
 
 /**
  * Modal and transient message popups: the main OK dialog, dynamic message boxes, the
@@ -85,6 +86,11 @@ internal object MessageDialogs {
     private val pendingDynamicMessages = mutableListOf<DynamicMessage>()
     private var dynamicMessageShowing = false
 
+    /** The box currently on screen, so [suspendDynamicMessages] can put it back in the queue
+     *  rather than throw the player's unread announcement away. */
+    private var onScreenDynamicMessage: DynamicMessage? = null
+    private var dynamicMessagesSuspended = false
+
     fun messageDynamic(
         title: String,
         body: String,
@@ -100,6 +106,51 @@ internal object MessageDialogs {
     fun clearDynamicMessages() {
         pendingDynamicMessages.clear()
         dynamicMessageShowing = false
+        onScreenDynamicMessage = null
+        dynamicMessagesSuspended = false
+        removeDynamicBox()
+    }
+
+    /**
+     * Holds the queue back while the pause/main menu owns the screen.
+     *
+     * These boxes sit on `--z-msg` (1000) and `#startmenu` on 300, so a hero-emergence
+     * announcement (or any other queued popup) that was still up when the player opened the menu
+     * floated OVER the menu and stayed there — the symptom reported on 2026-09-05. The visible box
+     * goes back to the HEAD of the queue rather than being dismissed: the announcement is not lost,
+     * it is shown again by [resumeDynamicMessages] when the player returns to the battle.
+     *
+     * `ui-message` needs no equivalent — its opener dismisses it through its own OK path, which is
+     * what runs the callback it may be holding. These boxes carry no such flow.
+     */
+    fun suspendDynamicMessages() {
+        if (dynamicMessagesSuspended) return
+        dynamicMessagesSuspended = true
+        onScreenDynamicMessage?.let { pendingDynamicMessages.add(0, it) }
+        onScreenDynamicMessage = null
+        dynamicMessageShowing = false
+        removeDynamicBox()
+    }
+
+    /** Whether a queued box is on screen right now — the Escape router's z-order test. */
+    fun isDynamicMessageOpen(): Boolean = dynamicMessageShowing && byId("uiMessageBoxDynamic") != null
+
+    /** Dismisses the on-screen box through its own OK button, so the queue advances exactly as
+     *  it does on a click. */
+    fun dismissDynamicMessage() {
+        byId("uiMessageBoxDynamic")?.let { box ->
+            (box.querySelector(".uiMessageBoxButton") as? HTMLElement)?.click()
+        }
+    }
+
+    /** Reopens whatever [suspendDynamicMessages] put back. A no-op if nothing was suspended. */
+    fun resumeDynamicMessages() {
+        if (!dynamicMessagesSuspended) return
+        dynamicMessagesSuspended = false
+        showNextDynamicMessage()
+    }
+
+    private fun removeDynamicBox() {
         byId("uiMessageBoxDynamic")?.let { box ->
             clearTag(box)
             delTag(box)
@@ -107,10 +158,11 @@ internal object MessageDialogs {
     }
 
     private fun showNextDynamicMessage() {
-        if (dynamicMessageShowing || pendingDynamicMessages.isEmpty()) return
+        if (dynamicMessagesSuspended || dynamicMessageShowing || pendingDynamicMessages.isEmpty()) return
         val mainBody = byId("mainbody") ?: return
         val message = pendingDynamicMessages.removeAt(0)
         dynamicMessageShowing = true
+        onScreenDynamicMessage = message
         val box = addTag(mainBody, "div")
         box.className = listOf("uiMessageBox", message.dialogClass).filter { it.isNotBlank() }.joinToString(" ")
         box.id = "uiMessageBoxDynamic"
@@ -132,6 +184,7 @@ internal object MessageDialogs {
             clearTag(box)
             delTag(box)
             dynamicMessageShowing = false
+            onScreenDynamicMessage = null
             showNextDynamicMessage()
         }
     }

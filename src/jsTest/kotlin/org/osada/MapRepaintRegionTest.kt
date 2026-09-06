@@ -106,7 +106,10 @@ class MapRepaintRegionTest {
             uniteRepaintRegion(
                 RenderContext.Bounds(5, 5, 15, 15),
                 GameMap.RepaintBox(0, 0, 39, 43),
-                2, 4, 40, 44,
+                2,
+                4,
+                40,
+                44,
             )
         assertEquals(0, united.srow)
         assertEquals(0, united.scol)

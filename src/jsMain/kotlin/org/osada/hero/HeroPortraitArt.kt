@@ -79,8 +79,12 @@ internal object HeroPortraitArt {
         listOf(
             // --- Third Servile War ------------------------------------------------------------
             Art("ancient_castus", Era.ANTIQUITY, female = false),
+            Art("ancient_gladiatrix", Era.ANTIQUITY, female = true),
+            Art("ancient_thracian_horse", Era.ANTIQUITY, female = false),
             // --- Forty-Eighters ---------------------------------------------------------------
             Art("fortyeighter_friedrich_adler", Era.FORTY_EIGHTER, female = false),
+            Art("fortyeighter_dispatch_rider", Era.FORTY_EIGHTER, female = true),
+            Art("fortyeighter_gunner", Era.FORTY_EIGHTER, female = false),
             // --- Russian Civil War -------------------------------------------------------------
             Art("rcw_papakha_cavalry", Era.RUSSIAN_CIVIL_WAR, female = false),
             Art("rcw_sailor", Era.RUSSIAN_CIVIL_WAR, female = false),
@@ -92,18 +96,35 @@ internal object HeroPortraitArt {
             Art("rcw_medic_f", Era.RUSSIAN_CIVIL_WAR, female = true),
             Art("rcw_pool_budenovka_f", Era.RUSSIAN_CIVIL_WAR, female = true),
             Art("rcw_pool_pilotka_f", Era.RUSSIAN_CIVIL_WAR, female = true),
+            Art("rcw_machine_gunner", Era.RUSSIAN_CIVIL_WAR, female = true),
+            Art("rcw_sniper", Era.RUSSIAN_CIVIL_WAR, female = true),
+            Art("rcw_armoured_train", Era.RUSSIAN_CIVIL_WAR, female = true),
+            Art("rcw_naval_commissar", Era.RUSSIAN_CIVIL_WAR, female = true),
+            Art("rcw_cavalry_commissar", Era.RUSSIAN_CIVIL_WAR, female = true),
+            Art("rcw_signals", Era.RUSSIAN_CIVIL_WAR, female = true),
+            Art("rcw_latvian_rifles", Era.RUSSIAN_CIVIL_WAR, female = false),
             Art("white_russia_nikolai_orlov", Era.RUSSIAN_CIVIL_WAR, female = false),
             // --- Czechoslovak Legion ----------------------------------------------------------
             Art("czechoslovak_1917_jan_novak", Era.CZECHOSLOVAK_LEGION, female = false),
             // --- Central European revolutions ------------------------------------------------
             Art("revolution_1918_otto_reimers", Era.REVOLUTIONARY_EUROPE, female = false),
             Art("revolution_1919_laszlo_farkas", Era.REVOLUTIONARY_EUROPE, female = false),
+            Art("hungarian_red_commissar", Era.REVOLUTIONARY_EUROPE, female = true),
+            Art("hungarian_river_defence", Era.REVOLUTIONARY_EUROPE, female = false),
+            Art("german_council_agitator", Era.REVOLUTIONARY_EUROPE, female = true),
+            Art("german_naval_division", Era.REVOLUTIONARY_EUROPE, female = false),
             // --- Chinese Revolution -----------------------------------------------------------
             Art("china_wang_ming", Era.CHINESE_REVOLUTION, female = false),
+            Art("chinese_womens_regiment", Era.CHINESE_REVOLUTION, female = true),
+            Art("chinese_mortar_support", Era.CHINESE_REVOLUTION, female = false),
             // --- Spanish Civil War ------------------------------------------------------------
             Art("spain_1936_isabel_navarro", Era.SPANISH_CIVIL_WAR, female = true),
+            Art("spanish_dinamitera", Era.SPANISH_CIVIL_WAR, female = true),
+            Art("spanish_column_officer", Era.SPANISH_CIVIL_WAR, female = false),
             // --- Soviet internationalists ----------------------------------------------------
             Art("interwar_1936_alexei_serebryakov", Era.SOVIET_INTERWAR, female = false),
+            Art("soviet_spain_interpreter", Era.SOVIET_INTERWAR, female = true),
+            Art("soviet_spain_tanker", Era.SOVIET_INTERWAR, female = false),
             // --- Great Patriotic War -----------------------------------------------------------
             Art("ussr_ww2_voroshin", Era.SOVIET_WW2, female = false),
             Art("ussr_ww2_belov", Era.SOVIET_WW2, female = false),
@@ -118,14 +139,28 @@ internal object HeroPortraitArt {
             Art("ussr_ww2_pool_pilotka_f2", Era.SOVIET_WW2, female = true),
             Art("ussr_ww2_pool_pilotka_f3", Era.SOVIET_WW2, female = true),
             Art("ussr_ww2_pool_braid_f", Era.SOVIET_WW2, female = true),
+            Art("ussr_tank_donor", Era.SOVIET_WW2, female = true),
+            Art("ussr_naval_infantry", Era.SOVIET_WW2, female = true),
+            Art("ussr_black_sea_beachhead", Era.SOVIET_WW2, female = false),
+            Art("ussr_field_surgeon", Era.SOVIET_WW2, female = true),
+            Art("ussr_khalkhin_scout", Era.SOVIET_WW2, female = false),
+            Art("ussr_sapper", Era.SOVIET_WW2, female = true),
             // --- Greek campaigns --------------------------------------------------------------
             Art("greece_dimitrios_karalis", Era.GREEK_WARTIME, female = false),
+            Art("greek_pindus_women", Era.GREEK_WARTIME, female = true),
+            Art("greek_line_holder", Era.GREEK_WARTIME, female = false),
             // --- Yugoslav Partisans -----------------------------------------------------------
             Art("yugoslav_1941_milan_vukovic", Era.YUGOSLAV_PARTISANS, female = false),
+            Art("yugoslav_bomber_woman", Era.YUGOSLAV_PARTISANS, female = true),
+            Art("yugoslav_courier", Era.YUGOSLAV_PARTISANS, female = false),
             // --- Korean War -------------------------------------------------------------------
             Art("korean_1950_kang_chol", Era.KOREAN_WAR, female = false),
+            Art("korean_aa_gunner", Era.KOREAN_WAR, female = true),
+            Art("korean_night_infiltrator", Era.KOREAN_WAR, female = false),
             // --- Vietnam War ------------------------------------------------------------------
             Art("vietnam_tran_minh", Era.VIETNAM_WAR, female = false),
+            Art("viet_long_haired_army", Era.VIETNAM_WAR, female = true),
+            Art("viet_sapper", Era.VIETNAM_WAR, female = false),
         )
 
     private val byId: Map<String, Art> = ALL.associateBy { it.id }

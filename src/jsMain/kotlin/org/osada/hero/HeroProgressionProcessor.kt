@@ -16,6 +16,15 @@ internal object HeroProgressionProcessor {
         val hero: HeroState,
         val formation: CoreFormation,
         val promotion: HeroPromotionService.Promotion?,
+        /**
+         * The achievements this combat actually produced, handed back so the caller can put them
+         * through [HeroDistinctions] (biography design §12.3: the highest distinction needs "an
+         * exceptional recorded deed, not only an accumulated XP threshold").
+         *
+         * Returned rather than evaluated here because the conferral also needs the campaign's
+         * COUNTRY and calendar date, which this processor is deliberately not given.
+         */
+        val achievements: List<AchievementType> = emptyList(),
     )
 
     fun process(
@@ -48,7 +57,7 @@ internal object HeroProgressionProcessor {
             updatedFormation =
                 appendPromotionHistory(updatedFormation, promotion, scenarioId, turn, eventDate, eventLocation)
         }
-        return Result(state, updatedFormation, promotion)
+        return Result(state, updatedFormation, promotion, achievements)
     }
 
     private fun progressExperience(

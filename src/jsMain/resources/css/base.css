@@ -54,6 +54,13 @@
     left: 220px;
 }
 
+/* The stylesheet half of index.html's dark-mode-extension opt-out: this page is dark on purpose,
+ * so native controls, scrollbars and any UA-level auto-darkening should treat it as already dark
+ * rather than inverting it (and its sprite sheets) a second time. */
+:root {
+    color-scheme: dark;
+}
+
 body, html {
     margin: 0px;
     padding: 0px;

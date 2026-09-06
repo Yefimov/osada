@@ -25,6 +25,8 @@ internal object HeroEventCodec {
             Pair("turn", event.turn),
             Pair("date", event.date.orEmpty()),
             Pair("location", event.location.orEmpty()),
+            Pair("formation", event.formationId?.value.orEmpty()),
+            Pair("related", event.relatedHeroId?.value.orEmpty()),
         )
 
     fun readHeroEvent(item: dynamic): HeroEvent? {
@@ -35,6 +37,11 @@ internal object HeroEventCodec {
             BriefingDynamic.int(item?.turn) ?: 0,
             BriefingDynamic.str(item?.date)?.takeIf { it.isNotBlank() },
             BriefingDynamic.str(item?.location)?.takeIf { it.isNotBlank() },
+            // Absent in every save written before §5.3, which is exactly the "old events remain
+            // valid without entity references" case §15 asks for: the event still renders, it just
+            // contributes nothing to lineage.
+            nonBlank(item?.formation)?.let(::FormationId),
+            nonBlank(item?.related)?.let(::HeroId),
         )
     }
 
@@ -59,6 +66,8 @@ internal object HeroEventCodec {
             Pair("turn", event.turn),
             Pair("date", event.date.orEmpty()),
             Pair("location", event.location.orEmpty()),
+            Pair("hero", event.heroId?.value.orEmpty()),
+            Pair("related", event.relatedHeroId?.value.orEmpty()),
         )
 
     fun readFormationEvent(item: dynamic): FormationEvent? {
@@ -69,6 +78,10 @@ internal object HeroEventCodec {
             BriefingDynamic.int(item?.turn) ?: 0,
             BriefingDynamic.str(item?.date)?.takeIf { it.isNotBlank() },
             BriefingDynamic.str(item?.location)?.takeIf { it.isNotBlank() },
+            nonBlank(item?.hero)?.let(::HeroId),
+            nonBlank(item?.related)?.let(::HeroId),
         )
     }
+
+    private fun nonBlank(value: dynamic): String? = BriefingDynamic.str(value)?.takeIf { it.isNotBlank() }
 }

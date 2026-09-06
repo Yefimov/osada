@@ -121,10 +121,13 @@ internal object UILayout {
             callback?.invoke()
         }
 
+        // Row layout is CSS's (`.settingSlider`, a flex row), NOT inline floats. The floats this
+        // used to write could not stay on one line once the row got narrow, so on every phone the
+        // steppers wrapped ABOVE and BELOW the slider instead of flanking it (user report).
+        // Inline styles would have beaten any stylesheet fix, so they are gone rather than
+        // overridden.
         val minus = addTag(container, "div")
-        minus.className = "smallButton"
-        minus.style.cssFloat = "left"
-        minus.style.marginBottom = "5px"
+        minus.className = "smallButton osada-slider__step"
         minus.innerHTML = "-"
         minus.title = I18n.t("settings.slider.decrease.help", mapOf("step" to step))
         minus.onclick = { _: org.w3c.dom.events.MouseEvent -> adjust(-step) }
@@ -133,7 +136,6 @@ internal object UILayout {
         // for single-step precision. Callers keep reading #<id>.value as a string, same as the
         // legacy free-text box this replaces.
         val inputContainer = addTag(container, "div")
-        inputContainer.style.cssFloat = "left"
         inputContainer.className = "osada-slider"
         inputContainer.innerHTML =
             "<input type='range' id='$id' min='$min' max='$max' step='$step' value='$value'>" +
@@ -145,8 +147,7 @@ internal object UILayout {
         }
 
         val plus = addTag(container, "div")
-        plus.className = "smallButton"
-        plus.style.cssFloat = "left"
+        plus.className = "smallButton osada-slider__step"
         plus.innerHTML = "+"
         plus.title = I18n.t("settings.slider.increase.help", mapOf("step" to step))
         plus.onclick = { _: org.w3c.dom.events.MouseEvent -> adjust(step) }

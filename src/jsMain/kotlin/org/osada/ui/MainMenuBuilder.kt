@@ -122,6 +122,16 @@ internal object MainMenuBuilder {
             btn.classList.add("osada-tb-icon", "osada-tb-combatlog")
             btn.title = I18n.t("hud.turn_report.help")
             clearTag(btn)
+            // BOTH faces of the control, one shown per layout by CSS rather than by rebuilding:
+            // the arrow this button has always had on desktop, and the sprite the phone bar wants
+            // at its 40px touch target. `MobileLayoutController` toggles `osada-layout-phone` live
+            // on resize, so a rebuild-on-mode-change would be a second thing to keep in sync.
+            //
+            // The arrow's character lives in CSS `content`, not here: it flips between its closed
+            // and open forms off the `[selected]` attribute the toggle already sets.
+            val glyph = addTag(btn, "span")
+            glyph.className = "osada-tb-combatlog__glyph"
+            glyph.setAttribute("aria-hidden", "true")
             val icon = addTag(btn, "span")
             icon.className = "osada-tb-combatlog__ico osada-ico osada-ico--map"
             icon.setAttribute("aria-hidden", "true")
@@ -254,7 +264,11 @@ internal object MainMenuBuilder {
         // Deploy-strip legacy buttons (statusBarButton/unitsBarButton below) keep working
         // (repositioned/hidden by CSS, not reparented — they only show during deploy phase).
         val combatLogButton = byId("combatLogButton")
-        combatLogButton?.asDynamic()?.hasSelectedGlyph = true
+        // NOT `hasSelectedGlyph`. That flag makes `toggleButton` uppercase the button's whole
+        // innerHTML to flip the arrow, which worked while the button was a bare "l" text node and
+        // breaks now that it holds spans: HTML tag names survive uppercasing but CLASS VALUES do
+        // not, so opening the report turned `osada-ico--map` into `OSADA-ICO--MAP` and the control
+        // went blank. The arrow now flips in CSS off the `[selected]` attribute instead.
         combatLogButton?.asButton(I18n.t("hud.turn_report.help")) {
             UICombatLog.toggleCombatLog(false, true)
         }

@@ -78,6 +78,11 @@ internal object HeroEmergencePresenter {
                     "</div>",
             )
         }
+        // §13.5: one unusual fact, not the personnel record. Every part of it comes from the
+        // localization bundle keyed by a stored id, so nothing player-supplied reaches this markup.
+        a.biographyHighlight?.let {
+            sb.append("<div class='heroEmergenceBiography'>$it</div>")
+        }
         if (a.effects.isNotEmpty()) {
             sb.append("<div class='heroEmergenceEffects'>")
             a.effects.forEach { (title, desc) -> sb.append("<div><b>$title</b> — $desc</div>") }

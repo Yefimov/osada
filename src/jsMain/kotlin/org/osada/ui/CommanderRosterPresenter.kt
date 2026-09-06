@@ -153,19 +153,20 @@ internal object CommanderRosterPresenter {
         card.onclick = { _: MouseEvent -> LeaderDossierPresenter.openForHero(HeroId(row.heroId)) }
     }
 
-    /** [tabId] is the untranslated [HeroDisplay.ROSTER_TABS] entry — the grouping key, not display
-     *  text. Both the label and its tooltip are looked up from it, so neither can end up half
-     *  translated (§4.15). */
+    /** [tabId] is a [HeroDisplay.ROSTER_TABS] ID — the grouping key, never display text. Both the
+     *  label and its tooltip are looked up from it, so neither can end up half translated (§4.15).
+     *  `.lowercase()` is gone with the round trip that needed it: an id is already lower case, and
+     *  lowercasing a TRANSLATED label was how `hero.roster.tab.в строю` came about. */
     private fun tabButton(
         bar: HTMLElement,
         tabId: String,
         count: Int,
     ): HTMLElement {
         val b = addTag(bar, "div")
-        val status = I18n.t("hero.roster.tab.${tabId.lowercase()}")
+        val status = HeroDisplay.rosterTabLabel(tabId)
         b.className = "osada-hero-tab"
         b.textContent = I18n.t("hero.roster.tab.label", mapOf("status" to status, "count" to count))
-        b.title = I18n.t("hero.roster.tab.help", mapOf("status" to status.lowercase()))
+        b.title = I18n.t("hero.roster.tab.help", mapOf("status" to status))
         return b
     }
 

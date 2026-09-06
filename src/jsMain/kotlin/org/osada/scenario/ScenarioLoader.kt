@@ -2,6 +2,7 @@ package org.osada.scenario
 
 import org.osada.GameHolder
 import org.osada.difficultyModifiers
+import org.osada.i18n.CalendarText
 import org.osada.model.Equipment
 import org.osada.model.allocMap
 import org.w3c.dom.Document
@@ -128,7 +129,7 @@ object ScenarioLoader {
         scenario.retreatUnitsPerSide = perSideCounts(mapElement, "retreatunits")
         scenario.killUnitsPerSide = perSideCounts(mapElement, "killunits")
         scenario.mustSurvivePerSide = perSideCounts(mapElement, "msuunits")
-        scenario.date = Date(Date.parse(mapElement.getAttribute("date") ?: ""))
+        scenario.date = CalendarText.parseAuthoredDate(mapElement.getAttribute("date") ?: "")
     }
 
     private fun parseMapAtmosphereAndDisplay(

@@ -1,5 +1,6 @@
 package org.osada.hero
 
+import org.osada.i18n.CalendarText
 import org.osada.i18n.GameText
 import org.osada.i18n.I18n
 
@@ -29,6 +30,12 @@ internal object HeroEventDisplay {
             "ground_attack_kill",
             "maneuver_kill",
             "distinguished_service",
+            // Appointment events (biography design §5.3). `emerged` is the originating command and
+            // `returned` a posting back to a formation this officer has held before; both carry a
+            // formation id, which is what [HeroFamiliarity] reads.
+            "emerged",
+            "returned",
+            "transferred",
         )
 
     fun title(eventId: String): String =
@@ -83,14 +90,12 @@ internal object HeroEventDisplay {
         return "$place${if (timing.isNotBlank()) " — $timing" else ""}"
     }
 
-    @Suppress("ComplexCondition")
+    @Suppress("ReturnCount") // an unparseable date and an impossible month both fall back to the raw text
     private fun formatIsoDate(date: String?): String? {
-        val parts = date?.split('-')
-        val monthIndex = parts?.getOrNull(1)?.toIntOrNull()?.minus(1)
-        return if (parts != null && parts.size == ISO_PARTS && monthIndex != null && monthIndex in MONTH_RANGE) {
-            "${parts[2].toIntOrNull() ?: parts[2]} ${GameText.monthShort(monthIndex)} ${parts[0]}"
-        } else {
-            date
-        }
+        val parsed = CalendarText.parseIso(date) ?: return date
+        val (year, month, day) = parsed
+        val monthIndex = month - 1
+        if (monthIndex !in MONTH_RANGE) return date
+        return "$day ${GameText.monthShort(monthIndex)} ${CalendarText.year(year)}"
     }
 }

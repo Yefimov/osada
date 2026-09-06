@@ -293,6 +293,12 @@ body.osada-layout-phone #combatLogButton.osada-tb-combatlog {
     line-height: normal;
 }
 
+/* The phone bar wears the sprite instead of the desktop arrow: it has a 40px touch target to
+ * fill, and a 22px glyph in the middle of it reads as a mistake. */
+body.osada-layout-phone .osada-tb-combatlog__glyph {
+    display: none;
+}
+
 body.osada-layout-phone .osada-tb-combatlog__ico {
     display: block;
     width: 40px;
@@ -1141,12 +1147,47 @@ body.osada-layout-phone .osada-dialogue__skip {
     min-height: var(--osada-touch-target-min);
 }
 
+/* The settings list fills the full-screen panel MINUS the "Done" footer button, which flows
+ * after it (`#smSetOkBut`: 38px tall + 12px of margin). Without the reservation the list took
+ * the whole panel and pushed Done out through the panel's `overflow: hidden` edge. */
 body.osada-layout-phone #smSettingsContainer {
+    box-sizing: border-box;
     max-height: none;
-    height: 100%;
+    height: calc(100% - 52px);
+    padding-bottom: 8px;
     overflow-y: auto;
     touch-action: pan-y;
     overscroll-behavior-y: contain;
+}
+
+/* Slider rows at phone width: the label takes its own line and the stepper/slider/stepper
+ * triple takes a full-width one under it. Keeping the label beside them left ~80px of track
+ * between two 44px touch targets, and the desktop arrangement the player asked for (steppers
+ * flanking the slider, not stacked above and below it) only fits when the row is the full width
+ * of the panel. Checkbox rows are untouched — they still read label-left / control-right. */
+body.osada-layout-phone #smSettingsContainer .settingContainer--slider {
+    flex-wrap: wrap;
+    row-gap: 2px;
+    padding-bottom: 8px;
+}
+
+body.osada-layout-phone #smSettingsContainer .settingContainer--slider .settingText {
+    flex: 1 0 100%;
+}
+
+body.osada-layout-phone .settingSlider {
+    width: 100%;
+    flex: 1 0 100%;
+    gap: 10px;
+}
+
+/* Steppers keep a real touch target but drop the desktop disc's 26px+6px border bulk. */
+body.osada-layout-phone .settingSlider .osada-slider__step {
+    min-width: 40px;
+    min-height: 40px;
+    width: 40px;
+    height: 40px;
+    border-width: 2px;
 }
 
 /* Start menu: it owns its scrolling instead of letting absolutely positioned

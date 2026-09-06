@@ -385,7 +385,7 @@ class SurrenderTest {
     @Test
     fun aTrainOffTheLineCannotRetreatAndMustNotSurrenderForIt() {
         Equipment.putEquipment(
-            trainEqid,
+            TRAIN_EQID,
             EquipmentData().apply {
                 uclass = UnitClass.ARTILLERY.value
                 movmethod = MovMethod.RAIL.value
@@ -397,7 +397,7 @@ class SurrenderTest {
         )
         // Open, perfectly passable ground on every side -- and no rail anywhere.
         val (map, _, defender) = buildMap(TerrainType.CLEAR.value)
-        defender.eqid = trainEqid
+        defender.eqid = TRAIN_EQID
 
         assertNull(
             CombatPositioning.getRetreatPosition(map.map, defender, map.rows),
@@ -413,7 +413,7 @@ class SurrenderTest {
     @Test
     fun aTrainOnTheLineRetreatsAlongIt() {
         Equipment.putEquipment(
-            trainEqid,
+            TRAIN_EQID,
             EquipmentData().apply {
                 uclass = UnitClass.ARTILLERY.value
                 movmethod = MovMethod.RAIL.value
@@ -424,7 +424,7 @@ class SurrenderTest {
             },
         )
         val (map, _, defender) = buildMap(TerrainType.CLEAR.value)
-        defender.eqid = trainEqid
+        defender.eqid = TRAIN_EQID
         map.map
             ?.get(0)
             ?.get(1)
@@ -441,6 +441,6 @@ class SurrenderTest {
          *  `EquipmentCombatEligibility`; identified from BASEKORP's `Fort` (`E 335`). */
         const val NO_SURRENDER_ATTR = 8388608
 
-        const val trainEqid = 77
+        const val TRAIN_EQID = 77
     }
 }

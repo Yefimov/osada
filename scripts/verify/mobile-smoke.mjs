@@ -223,6 +223,74 @@ try {
         .every((c, i, all) => i === 0 || c.left >= all[i - 1].right - 1),
     JSON.stringify(campaignPortrait.controls));
   await page.evaluate(() => document.getElementById('smCBackBut').click());
+  await sleep(150);
+
+  // ---- settings screen (2026-09-05 report) ----
+  // The section list is longer than any phone in both orientations, so "it scrolls, and Done is
+  // still on screen" is the whole contract. It was broken by a single `height: auto !important`
+  // that the phone override could not beat; nothing was watching, because no smoke assertion had
+  // ever opened this screen.
+  await page.evaluate(() => document.getElementById('settings').click());
+  await sleep(400);
+  const readSettings = () => page.evaluate(() => {
+    const list = document.getElementById('smSettingsContainer');
+    list.scrollTop = 0;
+    const done = document.getElementById('smSetOkBut').getBoundingClientRect();
+    const range = document.getElementById('uiscale');
+    const wrap = range.closest('.settingSlider');
+    const [minus, slider, plus] = [...wrap.children].map((el) => el.getBoundingClientRect());
+    const mid = (r) => r.top + r.height / 2;
+    list.scrollTop = list.scrollHeight;
+    return {
+      scrollable: list.scrollHeight > list.clientHeight + 1,
+      reachedEnd: list.scrollTop > 0,
+      done: { top: Math.round(done.top), bottom: Math.round(done.bottom) },
+      steppersOnOneLine: Math.abs(mid(minus) - mid(slider)) < 6 && Math.abs(mid(plus) - mid(slider)) < 6,
+      steppersFlankTheSlider: minus.right <= slider.left + 1 && plus.left >= slider.right - 1,
+      touchSized: Math.min(minus.width, minus.height, plus.width, plus.height) >= 40,
+      viewport: window.innerHeight,
+    };
+  });
+  for (const [orientation, w, h] of [['portrait', 390, 844], ['landscape', 667, 375]]) {
+    await page.setViewport({ width: w, height: h, isMobile: true, hasTouch: true, deviceScaleFactor: 2 });
+    await sleep(300);
+    const settings = await readSettings();
+    ok(`${orientation} settings list scrolls to its end`,
+      settings.scrollable && settings.reachedEnd, JSON.stringify(settings));
+    ok(`${orientation} settings Done button stays on screen`,
+      settings.done.top >= 0 && settings.done.bottom <= settings.viewport + 1, JSON.stringify(settings.done));
+    ok(`${orientation} slider steppers flank the slider on one line`,
+      settings.steppersOnOneLine && settings.steppersFlankTheSlider && settings.touchSized,
+      JSON.stringify(settings));
+  }
+  await page.evaluate(() => document.getElementById('smSetOkBut').click());
+  await sleep(200);
+
+  // Save/Load is content-sized and centred; at 375px tall it used to hang off both ends of the
+  // screen with nothing to scroll, taking its Close button with it.
+  await page.setViewport({ width: 667, height: 375, isMobile: true, hasTouch: true, deviceScaleFactor: 2 });
+  await sleep(250);
+  await page.evaluate(() => document.getElementById('saveload').click());
+  await sleep(300);
+  const saveLoad = await page.evaluate(() => {
+    const panel = document.getElementById('smState');
+    panel.scrollTop = panel.scrollHeight;
+    const r = panel.getBoundingClientRect();
+    const close = document.getElementById('smStOkBut').getBoundingClientRect();
+    return {
+      top: Math.round(r.top), bottom: Math.round(r.bottom),
+      closeTop: Math.round(close.top), closeBottom: Math.round(close.bottom),
+      viewport: window.innerHeight,
+    };
+  });
+  ok('landscape save/load panel and its Close button stay on screen',
+    saveLoad.top >= -1 && saveLoad.bottom <= saveLoad.viewport + 1 &&
+      saveLoad.closeTop >= -1 && saveLoad.closeBottom <= saveLoad.viewport + 1,
+    JSON.stringify(saveLoad));
+  await page.evaluate(() => document.getElementById('smStOkBut').click());
+  await sleep(150);
+  await page.setViewport({ width: 390, height: 844, isMobile: true, hasTouch: true, deviceScaleFactor: 2 });
+  await sleep(250);
 
   // The story stylesheet is lazy-loaded by ScenarioBriefingController. Load it explicitly and
   // exercise the same DOM contract here so portrait overflow cannot regress unnoticed.

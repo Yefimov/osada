@@ -9,6 +9,7 @@ import org.osada.rules.GameRandomSource
 import org.osada.scenario.Campaign
 import org.osada.scenario.Scenario
 import org.osada.scenario.ScenarioTextLocalization
+import org.osada.ui.ScenarioLoadingCurtain
 import org.osada.ui.ScenarioMusic
 import org.osada.ui.UI
 import org.osada.ui.UIBuilder
@@ -223,6 +224,9 @@ class Game {
         // A checkpoint belongs to exactly one operation. Clear it before loading another one;
         // restoreFromString does not pass through here, so restarting keeps its immutable source.
         missionRestartCheckpoint.clear()
+        // Up BEFORE cleanup, so the battle being torn down is never on screen. UI.setNewScenario
+        // drops it once the new map is drawn (or once a campaign briefing covers it).
+        ScenarioLoadingCurtain.show()
         cleanup()
         scenario = Scenario(file)
         scenario?.load {
@@ -237,6 +241,7 @@ class Game {
     ) {
         console.log("[OSADA] onScenarioLoadFinished fromRestore:", fromRestore, "isLoaded:", scenario?.isLoaded)
         if (scenario?.isLoaded != true) {
+            ScenarioLoadingCurtain.hide()
             UIBuilder.messageDynamic(
                 I18n.t("game.error.title"),
                 I18n.t("game.error.loading_scenario", mapOf("file" to (scenario?.file ?: "—"))),

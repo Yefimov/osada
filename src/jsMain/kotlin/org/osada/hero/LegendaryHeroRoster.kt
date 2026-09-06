@@ -20,10 +20,19 @@ import org.osada.hero.LegendaryHeroPool.LegendaryHero
  */
 
 private val URANUS = setOf("062d.json", "camp6.json")
+
 private val BLACK_SEA = setOf("rcampdfr.json")
+
 private val RED_ARMY_19 = setOf("camp6bn9.json", "camp6bn5.json", "reddestiny.json")
+
 private val RED_ARMY_89 = setOf("forward.json", "ga4.json")
-private val CIVIL_WAR = setOf("ccampdfc.json", "volarm.json", "simpob.json", "polsov.json")
+
+// `acampdf2` belongs here even though its opening scenario (Zborov, July 1917) predates every
+// hero below: the 2026-09-03 red rework moved its core to Red Russia for the whole campaign
+// (progressive-side-campaign-rework.md 12.3), so the pool is the right safety net from 1918 on,
+// while 1917 itself is covered by the one hero authored for it -- [rcw_echelon_liaison].
+private val CIVIL_WAR =
+    setOf("ccampdfc.json", "volarm.json", "simpob.json", "polsov.json", "acampdf2.json")
 
 private const val NATION_USSR_61 = 61
 private const val NATION_SOVIET_UNION_19 = 19
@@ -44,7 +53,7 @@ private val SOVIET_WW2: List<LegendaryHero> =
     listOf(
         LegendaryHero(
             id = "ussr_breakthrough",
-            name = "Major Dmitri Voroshin",
+            name = "Dmitri Voroshin",
             campaignIds = URANUS,
             nationIds = setOf(NATION_USSR_61),
             yearRange = 1941..1943,
@@ -58,7 +67,7 @@ private val SOVIET_WW2: List<LegendaryHero> =
         ),
         LegendaryHero(
             id = "ussr_stalingrad",
-            name = "Sergeant Yakov Belov",
+            name = "Yakov Belov",
             campaignIds = URANUS,
             nationIds = setOf(NATION_USSR_61),
             yearRange = 1942..1943,
@@ -72,7 +81,7 @@ private val SOVIET_WW2: List<LegendaryHero> =
         ),
         LegendaryHero(
             id = "ussr_ace",
-            name = "Lieutenant Nadya Sokolova",
+            name = "Nadya Sokolova",
             campaignIds = URANUS,
             nationIds = setOf(NATION_USSR_61),
             yearRange = 1942..1944,
@@ -87,7 +96,7 @@ private val SOVIET_WW2: List<LegendaryHero> =
         ),
         LegendaryHero(
             id = "ussr_coastal_gunner",
-            name = "Lieutenant Zinaida Grebnyova",
+            name = "Zinaida Grebnyova",
             campaignIds = URANUS + BLACK_SEA,
             nationIds = setOf(NATION_USSR_61),
             yearRange = 1941..1945,
@@ -102,13 +111,13 @@ private val SOVIET_WW2: List<LegendaryHero> =
         ),
         LegendaryHero(
             id = "ussr_tank_star",
-            name = "Captain Arkady Rudenko",
+            name = "Arkady Rudenko",
             campaignIds = RED_ARMY_19 + RED_ARMY_89,
             nationIds = setOf(NATION_SOVIET_UNION_19, NATION_USSR_89),
             yearRange = 1941..1945,
             compatibleUnitClasses = setOf(UnitClass.TANK.value),
             backgroundId = "armored_academy_graduate",
-            signatureTrait = LeaderType.AGGRESSIVE_TANK_MANEUVER,
+            signatureTrait = LeaderType.SUPERIOR_MANEUVER,
             signatureTitle = "Deep Battle",
             signatureDescription = "Turns a torn seam into an operation — exploits before the enemy can seal it.",
             startingRankId = "captain",
@@ -116,7 +125,7 @@ private val SOVIET_WW2: List<LegendaryHero> =
         ),
         LegendaryHero(
             id = "ussr_flyer",
-            name = "Major Semyon Rogachyov",
+            name = "Semyon Rogachyov",
             campaignIds = RED_ARMY_19 + RED_ARMY_89,
             nationIds = setOf(NATION_SOVIET_UNION_19, NATION_USSR_89),
             yearRange = 1939..1945,
@@ -135,7 +144,7 @@ private val SOVIET_WW2: List<LegendaryHero> =
         ),
         LegendaryHero(
             id = "ussr_winter_armor",
-            name = "Captain Pavel Zimin",
+            name = "Pavel Zimin",
             campaignIds = RED_ARMY_19 + RED_ARMY_89,
             nationIds = setOf(NATION_SOVIET_UNION_19, NATION_USSR_89),
             yearRange = 1941..1954,
@@ -153,7 +162,7 @@ private val SOVIET_WW2: List<LegendaryHero> =
         ),
         LegendaryHero(
             id = "ussr_young_lion",
-            name = "Lieutenant Kostya Nechayev",
+            name = "Kostya Nechayev",
             campaignIds = RED_ARMY_19 + RED_ARMY_89,
             nationIds = setOf(NATION_SOVIET_UNION_19, NATION_USSR_89),
             yearRange = 1939..1945,
@@ -167,7 +176,7 @@ private val SOVIET_WW2: List<LegendaryHero> =
         ),
         LegendaryHero(
             id = "ussr_partisan_scout",
-            name = "Lieutenant Vera Trushina",
+            name = "Vera Trushina",
             campaignIds = RED_ARMY_19,
             nationIds = setOf(NATION_SOVIET_UNION_19),
             yearRange = 1941..1945,
@@ -182,7 +191,7 @@ private val SOVIET_WW2: List<LegendaryHero> =
         ),
         LegendaryHero(
             id = "ussr_sniper",
-            name = "Sergeant Praskovya Lisitsyna",
+            name = "Praskovya Lisitsyna",
             campaignIds = RED_ARMY_19,
             nationIds = setOf(NATION_SOVIET_UNION_19),
             yearRange = 1941..1945,
@@ -197,7 +206,7 @@ private val SOVIET_WW2: List<LegendaryHero> =
         ),
         LegendaryHero(
             id = "ussr_gunner",
-            name = "Lieutenant Klavdiya Yermolina",
+            name = "Klavdiya Yermolina",
             campaignIds = RED_ARMY_19 + RED_ARMY_89,
             nationIds = setOf(NATION_SOVIET_UNION_19, NATION_USSR_89),
             yearRange = 1941..1945,
@@ -212,7 +221,7 @@ private val SOVIET_WW2: List<LegendaryHero> =
         ),
         LegendaryHero(
             id = "ussr_flak",
-            name = "Lieutenant Rimma Zhurbina",
+            name = "Rimma Zhurbina",
             campaignIds = RED_ARMY_89,
             nationIds = setOf(NATION_USSR_89),
             yearRange = 1941..1945,
@@ -227,7 +236,7 @@ private val SOVIET_WW2: List<LegendaryHero> =
         ),
         LegendaryHero(
             id = "ussr_postwar_rifles",
-            name = "Captain Lidiya Panfyorova",
+            name = "Lidiya Panfyorova",
             campaignIds = RED_ARMY_19,
             nationIds = setOf(NATION_SOVIET_UNION_19),
             yearRange = 1943..1954,
@@ -240,6 +249,104 @@ private val SOVIET_WW2: List<LegendaryHero> =
             portraitArtId = "ussr_ww2_pool_pilotka_f3",
             female = true,
         ),
+        // A woman who sold everything she owned to buy the tank and then demanded to crew it
+        // herself -- an attested wartime pattern, not an invention.
+        LegendaryHero(
+            id = "ussr_tank_donor",
+            name = "Yefrosinya Bardina",
+            campaignIds = URANUS,
+            nationIds = setOf(NATION_USSR_61),
+            yearRange = 1942..1944,
+            compatibleUnitClasses = setOf(UnitClass.TANK.value),
+            backgroundId = "armored_academy_graduate",
+            signatureTrait = LeaderType.MECHANIZED_VETERAN,
+            signatureTitle = "Paid For By Her Own Hand",
+            signatureDescription =
+                "Bought the tank she drives, and treats every hour of its engine life as her own money.",
+            startingRankId = "lieutenant",
+            portraitArtId = "ussr_tank_donor",
+            female = true,
+        ),
+        // The Black Sea landings had a woman commanding a naval-infantry platoon; the role is hers.
+        LegendaryHero(
+            id = "ussr_naval_infantry",
+            name = "Taisiya Cherednichenko",
+            campaignIds = BLACK_SEA,
+            nationIds = setOf(NATION_USSR_61),
+            yearRange = 1941..1945,
+            compatibleUnitClasses = setOf(UnitClass.INFANTRY.value, UnitClass.RECON.value),
+            backgroundId = "infantry_school_instructor",
+            signatureTrait = LeaderType.SHOCK_TACTICS,
+            signatureTitle = "Black Death Landing",
+            signatureDescription =
+                "Takes a beach the way the naval infantry does: at a run, at night, and all at once.",
+            startingRankId = "lieutenant",
+            portraitArtId = "ussr_naval_infantry",
+            female = true,
+        ),
+        LegendaryHero(
+            id = "ussr_black_sea_beachhead",
+            name = "Rodion Kaverin",
+            campaignIds = BLACK_SEA,
+            nationIds = setOf(NATION_USSR_61),
+            yearRange = 1941..1945,
+            compatibleUnitClasses = setOf(UnitClass.INFANTRY.value, UnitClass.GROUND_TRANSPORT.value),
+            backgroundId = "transport_column_officer",
+            signatureTrait = LeaderType.AGGRESSIVE_ATTACK,
+            signatureTitle = "Second Wave",
+            signatureDescription = "Lands the follow-on echelon into a beachhead that is still being argued over.",
+            startingRankId = "captain",
+            portraitArtId = "ussr_black_sea_beachhead",
+        ),
+        // Covers 1939 deliberately: `forward` and `ga4` open before the war and had no woman
+        // candidate at all until this entry.
+        LegendaryHero(
+            id = "ussr_field_surgeon",
+            name = "Anfisa Kolotova",
+            campaignIds = RED_ARMY_19 + RED_ARMY_89,
+            nationIds = setOf(NATION_SOVIET_UNION_19, NATION_USSR_89),
+            yearRange = 1939..1945,
+            compatibleUnitClasses = setOf(UnitClass.INFANTRY.value),
+            backgroundId = "infantry_school_instructor",
+            signatureTrait = LeaderType.RESILIENCE,
+            signatureTitle = "Forward Aid Post",
+            signatureDescription =
+                "Keeps the aid post inside the position, so the position is what the wounded return to.",
+            startingRankId = "lieutenant",
+            portraitArtId = "ussr_field_surgeon",
+            female = true,
+        ),
+        LegendaryHero(
+            id = "ussr_khalkhin_scout",
+            name = "Gleb Yartsev",
+            campaignIds = RED_ARMY_19 + RED_ARMY_89,
+            nationIds = setOf(NATION_SOVIET_UNION_19, NATION_USSR_89),
+            yearRange = 1939..1945,
+            compatibleUnitClasses = setOf(UnitClass.RECON.value),
+            backgroundId = "veteran_reconnaissance_officer",
+            signatureTrait = LeaderType.BATTLEFIELD_INTELLIGENCE,
+            signatureTitle = "Steppe Eye",
+            signatureDescription =
+                "Reads a horizon of nothing but grass and comes back with the enemy order of battle.",
+            startingRankId = "lieutenant",
+            portraitArtId = "ussr_khalkhin_scout",
+        ),
+        LegendaryHero(
+            id = "ussr_sapper",
+            name = "Yevdokiya Shanina",
+            campaignIds = RED_ARMY_19 + RED_ARMY_89,
+            nationIds = setOf(NATION_SOVIET_UNION_19, NATION_USSR_89),
+            yearRange = 1941..1954,
+            compatibleUnitClasses = setOf(UnitClass.INFANTRY.value, UnitClass.GROUND_TRANSPORT.value),
+            backgroundId = "garrison_engineer",
+            signatureTrait = LeaderType.BRIDGING,
+            signatureTitle = "Crossing Party",
+            signatureDescription =
+                "Puts a crossing over the water in the dark and has it carrying weight by first light.",
+            startingRankId = "captain",
+            portraitArtId = "ussr_sapper",
+            female = true,
+        ),
     )
 
 /** Russian Civil War, 1917–1922 — budenovka and papakha, and emphatically no shoulder boards. */
@@ -247,7 +354,7 @@ private val RUSSIAN_CIVIL_WAR: List<LegendaryHero> =
     listOf(
         LegendaryHero(
             id = "rcw_cavalry",
-            name = "Komdiv Semyon Karetnik",
+            name = "Semyon Karetnik",
             campaignIds = CIVIL_WAR,
             nationIds = setOf(NATION_RED_RUSSIA_103),
             yearRange = 1918..1922,
@@ -261,7 +368,7 @@ private val RUSSIAN_CIVIL_WAR: List<LegendaryHero> =
         ),
         LegendaryHero(
             id = "rcw_sailor",
-            name = "Commissar Fyodor Zhelnin",
+            name = "Fyodor Zhelnin",
             campaignIds = CIVIL_WAR,
             nationIds = setOf(NATION_RED_RUSSIA_103),
             yearRange = 1918..1922,
@@ -275,7 +382,7 @@ private val RUSSIAN_CIVIL_WAR: List<LegendaryHero> =
         ),
         LegendaryHero(
             id = "rcw_kombrig",
-            name = "Kombrig Ilya Nesterov",
+            name = "Ilya Nesterov",
             campaignIds = CIVIL_WAR,
             nationIds = setOf(NATION_RED_RUSSIA_103),
             yearRange = 1918..1922,
@@ -289,7 +396,7 @@ private val RUSSIAN_CIVIL_WAR: List<LegendaryHero> =
         ),
         LegendaryHero(
             id = "rcw_partisan",
-            name = "Commander Grigory Voloshin",
+            name = "Grigory Voloshin",
             campaignIds = CIVIL_WAR,
             nationIds = setOf(NATION_RED_RUSSIA_103),
             yearRange = 1918..1922,
@@ -303,7 +410,7 @@ private val RUSSIAN_CIVIL_WAR: List<LegendaryHero> =
         ),
         LegendaryHero(
             id = "rcw_voenspets",
-            name = "Voenspets Nikolai Arkhangelsky",
+            name = "Nikolai Arkhangelsky",
             campaignIds = CIVIL_WAR,
             nationIds = setOf(NATION_RED_RUSSIA_103),
             yearRange = 1918..1922,
@@ -317,7 +424,7 @@ private val RUSSIAN_CIVIL_WAR: List<LegendaryHero> =
         ),
         LegendaryHero(
             id = "rcw_armoured_car",
-            name = "Commander Anton Reshetov",
+            name = "Anton Reshetov",
             campaignIds = CIVIL_WAR,
             nationIds = setOf(NATION_RED_RUSSIA_103),
             yearRange = 1918..1922,
@@ -331,7 +438,7 @@ private val RUSSIAN_CIVIL_WAR: List<LegendaryHero> =
         ),
         LegendaryHero(
             id = "rcw_line_officer",
-            name = "Commander Timofei Lagunov",
+            name = "Timofei Lagunov",
             campaignIds = CIVIL_WAR,
             nationIds = setOf(NATION_RED_RUSSIA_103),
             yearRange = 1918..1922,
@@ -345,7 +452,7 @@ private val RUSSIAN_CIVIL_WAR: List<LegendaryHero> =
         ),
         LegendaryHero(
             id = "rcw_medic",
-            name = "Commander Zoya Rakhmanova",
+            name = "Zoya Rakhmanova",
             campaignIds = CIVIL_WAR,
             nationIds = setOf(NATION_RED_RUSSIA_103),
             yearRange = 1918..1922,
@@ -360,7 +467,7 @@ private val RUSSIAN_CIVIL_WAR: List<LegendaryHero> =
         ),
         LegendaryHero(
             id = "rcw_scout",
-            name = "Commander Marfa Belozerova",
+            name = "Marfa Belozerova",
             campaignIds = CIVIL_WAR,
             nationIds = setOf(NATION_RED_RUSSIA_103),
             yearRange = 1918..1922,
@@ -375,7 +482,7 @@ private val RUSSIAN_CIVIL_WAR: List<LegendaryHero> =
         ),
         LegendaryHero(
             id = "rcw_battery",
-            name = "Commander Yevgenia Sotnikova",
+            name = "Yevgenia Sotnikova",
             campaignIds = CIVIL_WAR,
             nationIds = setOf(NATION_RED_RUSSIA_103),
             yearRange = 1918..1922,
@@ -388,6 +495,159 @@ private val RUSSIAN_CIVIL_WAR: List<LegendaryHero> =
             portraitArtId = "rcw_pool_pilotka_f",
             female = true,
         ),
+        // The machine-gunner. Anka of `Chapaev` is the face everyone knows; the woman behind her
+        // was a nurse in the 25th Division who took over a Maxim, and the pattern was common
+        // enough to be ordinary. Neither name is reused -- the trade is what is authored here.
+        LegendaryHero(
+            id = "rcw_machine_gunner",
+            name = "Nastasya Guryeva",
+            campaignIds = CIVIL_WAR,
+            nationIds = setOf(NATION_RED_RUSSIA_103),
+            yearRange = 1918..1922,
+            compatibleUnitClasses = setOf(UnitClass.INFANTRY.value, UnitClass.RECON.value),
+            backgroundId = "infantry_school_instructor",
+            signatureTrait = LeaderType.OVERWATCH,
+            signatureTitle = "The Belt Does Not Run Out",
+            signatureDescription = "Sites the Maxim where the attack has to come, and the attack does not get past it.",
+            startingRankId = "lieutenant",
+            portraitArtId = "rcw_machine_gunner",
+            female = true,
+        ),
+        // Maryutka of `The Forty-First` -- a Red Army markswoman who keeps her own tally.
+        LegendaryHero(
+            id = "rcw_sniper",
+            name = "Ustinya Redkina",
+            campaignIds = CIVIL_WAR,
+            nationIds = setOf(NATION_RED_RUSSIA_103),
+            yearRange = 1918..1922,
+            compatibleUnitClasses = setOf(UnitClass.INFANTRY.value, UnitClass.RECON.value),
+            backgroundId = "veteran_reconnaissance_officer",
+            signatureTrait = LeaderType.MARKSMAN,
+            signatureTitle = "Notches On The Stock",
+            signatureDescription = "Counts what she hits, and the count is what the company steadies itself on.",
+            startingRankId = "lieutenant",
+            portraitArtId = "rcw_sniper",
+            female = true,
+        ),
+        // The civil war really did have a woman commanding an armoured train, and she was killed
+        // on it in 1919. The command is the thing worth authoring; the name is not hers.
+        LegendaryHero(
+            id = "rcw_armoured_train",
+            name = "Aglaya Dobrynina",
+            campaignIds = CIVIL_WAR,
+            nationIds = setOf(NATION_RED_RUSSIA_103),
+            yearRange = 1918..1922,
+            compatibleUnitClasses =
+                setOf(
+                    UnitClass.TANK.value,
+                    UnitClass.ARTILLERY.value,
+                    UnitClass.GROUND_TRANSPORT.value,
+                ),
+            backgroundId = "transport_column_officer",
+            signatureTrait = LeaderType.DEVASTATING_FIRE,
+            signatureTitle = "Armoured Train",
+            signatureDescription = "Brings a moving battery to the place on the line that was about to give way.",
+            startingRankId = "captain",
+            portraitArtId = "rcw_armoured_train",
+            female = true,
+        ),
+        // The woman commissar sent to a sailors` regiment -- `An Optimistic Tragedy` on stage and
+        // screen, and a Volga flotilla commissar in fact.
+        LegendaryHero(
+            id = "rcw_naval_commissar",
+            name = "Agrippina Sudakova",
+            campaignIds = CIVIL_WAR,
+            nationIds = setOf(NATION_RED_RUSSIA_103),
+            yearRange = 1918..1922,
+            compatibleUnitClasses = setOf(UnitClass.INFANTRY.value, UnitClass.GROUND_TRANSPORT.value),
+            backgroundId = "infantry_school_instructor",
+            signatureTrait = LeaderType.INFLUENCE,
+            signatureTitle = "The Sailors Listen",
+            signatureDescription = "Talks an anarchic detachment into being a unit, and it stays one under fire.",
+            startingRankId = "captain",
+            portraitArtId = "rcw_naval_commissar",
+            female = true,
+        ),
+        // `The Commissar` (1967): the commissar of a cavalry squadron, who is a woman and does not
+        // stop being one.
+        LegendaryHero(
+            id = "rcw_cavalry_commissar",
+            name = "Fedosya Ryabinina",
+            campaignIds = CIVIL_WAR,
+            nationIds = setOf(NATION_RED_RUSSIA_103),
+            yearRange = 1918..1922,
+            compatibleUnitClasses = setOf(UnitClass.RECON.value, UnitClass.INFANTRY.value),
+            backgroundId = "veteran_reconnaissance_officer",
+            signatureTrait = LeaderType.AGGRESSIVE_MANEUVER,
+            signatureTitle = "Squadron Commissar",
+            signatureDescription =
+                "Rides with the squadron rather than behind it, and turns it before the enemy expects it.",
+            startingRankId = "captain",
+            portraitArtId = "rcw_cavalry_commissar",
+            female = true,
+        ),
+        // 1917, so she can reach Zborov -- see [rcw_echelon_liaison]. Women telegraphists held the
+        // railway signal posts the whole echelon war was fought over.
+        LegendaryHero(
+            id = "rcw_signals",
+            name = "Yelizaveta Sytina",
+            campaignIds = setOf("acampdf2.json"),
+            nationIds = setOf(NATION_RED_RUSSIA_103),
+            yearRange = 1917..1920,
+            compatibleUnitClasses =
+                setOf(
+                    UnitClass.INFANTRY.value,
+                    UnitClass.GROUND_TRANSPORT.value,
+                    UnitClass.RECON.value,
+                ),
+            backgroundId = "transport_column_officer",
+            signatureTrait = LeaderType.SKILLED_RECONNAISSANCE,
+            signatureTitle = "The Wire Still Works",
+            signatureDescription = "Holds the telegraph key on a line everyone else has already given up as cut.",
+            startingRankId = "lieutenant",
+            portraitArtId = "rcw_signals",
+            female = true,
+        ),
+        // The Latvian riflemen were the formation the Red command moved to whichever front was
+        // about to collapse -- Kazan among them, which is this campaign.
+        LegendaryHero(
+            id = "rcw_latvian_rifles",
+            name = "Janis Ozolins",
+            campaignIds = setOf("acampdf2.json"),
+            nationIds = setOf(NATION_RED_RUSSIA_103),
+            yearRange = 1917..1920,
+            compatibleUnitClasses = setOf(UnitClass.INFANTRY.value, UnitClass.ANTI_TANK.value),
+            backgroundId = "infantry_school_instructor",
+            signatureTrait = LeaderType.FEROCIOUS_DEFENSE,
+            signatureTitle = "Riflemen Do Not Break",
+            signatureDescription = "Holds the hinge of the position with the unit everyone else is measured against.",
+            startingRankId = "captain",
+            portraitArtId = "rcw_latvian_rifles",
+        ),
+        // The one hero who can reach `acampdf2`'s opening scenario. Zborov is July 1917 -- before
+        // every year range above -- and the campaign's player country is 103 from that scenario
+        // onwards, because `Player.copy` carries one nation across a whole campaign
+        // (progressive-side-campaign-rework.md 12.3). So the officer section 8 of that document asks for
+        // is a RUSSIAN one attached to the Czechoslovak brigade, not a legionary who changes flag
+        // halfway; he was authored as `czechoslovak_rail_guard` at nation 144 before the rework and
+        // was left unreachable by it, which sent the whole campaign to the procedural fallback.
+        // The painting is kept (and so is its id, so a pre-rework save still resolves it): a side
+        // cap, a greatcoat and an armoured train read as this man exactly as well.
+        LegendaryHero(
+            id = "rcw_echelon_liaison",
+            name = "Andrei Malyshev",
+            campaignIds = setOf("acampdf2.json"),
+            nationIds = setOf(NATION_RED_RUSSIA_103),
+            yearRange = 1917..1920,
+            compatibleUnitClasses = COMMON_LAND_CLASSES,
+            backgroundId = "transport_column_officer",
+            signatureTrait = LeaderType.RESILIENCE,
+            signatureTitle = "Echelon Command",
+            signatureDescription =
+                "Holds a column together over a thousand kilometres of single track, and detrains it fighting.",
+            startingRankId = "captain",
+            portraitArtId = "czechoslovak_1917_jan_novak",
+        ),
     )
 
 /** One authored-fictional composite for every remaining player side in the shipped campaigns. */
@@ -395,7 +655,7 @@ private val OTHER_CAMPAIGN_SIDES: List<LegendaryHero> =
     listOf(
         LegendaryHero(
             id = "red_army_internationalist",
-            name = "Captain Alexei Serebryakov",
+            name = "Alexei Serebryakov",
             campaignIds = setOf("camp6bn9.json"),
             nationIds = setOf(19),
             yearRange = 1936..1940,
@@ -409,7 +669,7 @@ private val OTHER_CAMPAIGN_SIDES: List<LegendaryHero> =
         ),
         LegendaryHero(
             id = "yugoslav_woodland",
-            name = "Captain Milan Vukovic",
+            name = "Milan Vukovic",
             campaignIds = setOf("camp6bn8.json"),
             nationIds = setOf(43),
             yearRange = 1941..1945,
@@ -424,7 +684,7 @@ private val OTHER_CAMPAIGN_SIDES: List<LegendaryHero> =
         ),
         LegendaryHero(
             id = "north_korean_vanguard",
-            name = "Captain Kang Chol",
+            name = "Kang Chol",
             campaignIds = setOf("ncampdfn.json"),
             nationIds = setOf(25),
             yearRange = 1950..1953,
@@ -438,7 +698,7 @@ private val OTHER_CAMPAIGN_SIDES: List<LegendaryHero> =
         ),
         LegendaryHero(
             id = "german_fortyeighter",
-            name = "Captain Friedrich Adler",
+            name = "Friedrich Adler",
             campaignIds = setOf("aljf.json"),
             nationIds = setOf(196),
             yearRange = 1848..1865,
@@ -452,7 +712,7 @@ private val OTHER_CAMPAIGN_SIDES: List<LegendaryHero> =
         ),
         LegendaryHero(
             id = "red_hungarian_mobile",
-            name = "Captain Laszlo Farkas",
+            name = "Laszlo Farkas",
             campaignIds = setOf("rhu.json"),
             nationIds = setOf(187),
             yearRange = 1919..1919,
@@ -466,7 +726,7 @@ private val OTHER_CAMPAIGN_SIDES: List<LegendaryHero> =
         ),
         LegendaryHero(
             id = "red_german_council_guard",
-            name = "Captain Otto Reimers",
+            name = "Otto Reimers",
             campaignIds = setOf("novemberrevolution.json"),
             nationIds = setOf(188),
             yearRange = 1918..1919,
@@ -479,23 +739,8 @@ private val OTHER_CAMPAIGN_SIDES: List<LegendaryHero> =
             portraitArtId = "revolution_1918_otto_reimers",
         ),
         LegendaryHero(
-            id = "czechoslovak_rail_guard",
-            name = "Captain Jan Novak",
-            campaignIds = setOf("acampdf2.json"),
-            nationIds = setOf(144),
-            yearRange = 1917..1920,
-            compatibleUnitClasses = COMMON_LAND_CLASSES,
-            backgroundId = "transport_column_officer",
-            signatureTrait = LeaderType.RESILIENCE,
-            signatureTitle = "Railway Legion",
-            signatureDescription =
-                "Keeps men and machines together through another thousand kilometres of retreat.",
-            startingRankId = "captain",
-            portraitArtId = "czechoslovak_1917_jan_novak",
-        ),
-        LegendaryHero(
             id = "spanish_popular_army",
-            name = "Captain Isabel Navarro",
+            name = "Isabel Navarro",
             campaignIds = setOf("gce.json"),
             nationIds = setOf(226),
             yearRange = 1936..1939,
@@ -552,7 +797,7 @@ private val OTHER_CAMPAIGN_SIDES: List<LegendaryHero> =
         ),
         LegendaryHero(
             id = "greek_mountain_officer",
-            name = "Captain Dimitrios Karalis",
+            name = "Dimitrios Karalis",
             campaignIds = setOf("camp6bn4.json"),
             nationIds = setOf(39),
             yearRange = 1940..1949,
@@ -564,9 +809,15 @@ private val OTHER_CAMPAIGN_SIDES: List<LegendaryHero> =
             startingRankId = "captain",
             portraitArtId = "greece_dimitrios_karalis",
         ),
+        // UNREACHABLE on shipped content since the 2026-09-03 red rework, and deliberately kept.
+        // `simpob` was the only campaign that ever authored country 100 for player 0; every one of
+        // its scenarios now authors 103, so nothing can satisfy this hero's `nationIds` and the
+        // reservation simply never offers him. He (and the `white_army_1919` procedural portrait
+        // pool that matches him) is what a restored White-side campaign would draw on -- deleting
+        // him would cost the painting and buy nothing, since an unmatched candidate is inert.
         LegendaryHero(
             id = "white_russian_rearguard",
-            name = "Captain Nikolai Orlov",
+            name = "Nikolai Orlov",
             campaignIds = setOf("simpob.json"),
             nationIds = setOf(100),
             yearRange = 1918..1920,
@@ -578,8 +829,381 @@ private val OTHER_CAMPAIGN_SIDES: List<LegendaryHero> =
             startingRankId = "captain",
             portraitArtId = "white_russia_nikolai_orlov",
         ),
+        // Soviet women went to Spain as interpreters attached to the advisers, and more than one of
+        // them finished the war doing intelligence work. The posting is the character.
+        LegendaryHero(
+            id = "soviet_spain_interpreter",
+            name = "Antonina Vishnyakova",
+            campaignIds = setOf("camp6bn9.json"),
+            nationIds = setOf(19),
+            yearRange = 1936..1940,
+            compatibleUnitClasses = setOf(UnitClass.INFANTRY.value, UnitClass.RECON.value),
+            backgroundId = "veteran_reconnaissance_officer",
+            signatureTrait = LeaderType.BATTLEFIELD_INTELLIGENCE,
+            signatureTitle = "Adviser and Interpreter",
+            signatureDescription =
+                "Hears the front in two languages, so the staff learns what is happening while it still matters.",
+            startingRankId = "lieutenant",
+            portraitArtId = "soviet_spain_interpreter",
+            female = true,
+        ),
+        LegendaryHero(
+            id = "soviet_spain_tanker",
+            name = "Voldemar Sipols",
+            campaignIds = setOf("camp6bn9.json"),
+            nationIds = setOf(19),
+            yearRange = 1936..1940,
+            compatibleUnitClasses = setOf(UnitClass.TANK.value),
+            backgroundId = "armored_academy_graduate",
+            signatureTrait = LeaderType.BATTLEFIELD_INTELLIGENCE,
+            signatureTitle = "Volunteer Crews",
+            signatureDescription =
+                "Runs light tanks further ahead of the infantry than doctrine allows, and brings them back.",
+            startingRankId = "captain",
+            portraitArtId = "soviet_spain_tanker",
+        ),
+        // The first woman made a National Hero of Yugoslavia was a detachment bomber, killed
+        // assaulting a strongpoint. Around a hundred thousand women served in those units.
+        LegendaryHero(
+            id = "yugoslav_bomber_woman",
+            name = "Danica Kovac",
+            campaignIds = setOf("camp6bn8.json"),
+            nationIds = setOf(43),
+            yearRange = 1941..1945,
+            compatibleUnitClasses = setOf(UnitClass.INFANTRY.value, UnitClass.ANTI_TANK.value),
+            backgroundId = "infantry_school_instructor",
+            signatureTrait = LeaderType.SHOCK_TACTICS,
+            signatureTitle = "Bomber of the Detachment",
+            signatureDescription =
+                "Goes at the bunker with what she can carry, and the detachment walks in behind her.",
+            startingRankId = "captain",
+            portraitArtId = "yugoslav_bomber_woman",
+            female = true,
+        ),
+        LegendaryHero(
+            id = "yugoslav_courier",
+            name = "Rade Milic",
+            campaignIds = setOf("camp6bn8.json"),
+            nationIds = setOf(43),
+            yearRange = 1941..1945,
+            compatibleUnitClasses = COMMON_LAND_CLASSES,
+            backgroundId = "veteran_reconnaissance_officer",
+            signatureTrait = LeaderType.ALPINE_TRAINING,
+            signatureTitle = "Mountain Courier",
+            signatureDescription =
+                "Knows which ridge is passable in which month, and moves the column over it at night.",
+            startingRankId = "captain",
+            portraitArtId = "yugoslav_courier",
+        ),
+        // Korean anti-aircraft batteries were substantially womanned, and the road passes they
+        // covered were where that war was actually decided.
+        LegendaryHero(
+            id = "korean_aa_gunner",
+            name = "Ri Sun-hui",
+            campaignIds = setOf("ncampdfn.json"),
+            nationIds = setOf(25),
+            yearRange = 1950..1953,
+            compatibleUnitClasses = setOf(UnitClass.AIR_DEFENCE.value, UnitClass.FLAK.value, UnitClass.ARTILLERY.value),
+            backgroundId = "mechanized_air_defence_officer",
+            signatureTrait = LeaderType.FIRE_DISCIPLINE,
+            signatureTitle = "Guns Above the Pass",
+            signatureDescription =
+                "Holds fire until the aircraft has committed, and then the whole battery fires at once.",
+            startingRankId = "lieutenant",
+            portraitArtId = "korean_aa_gunner",
+            female = true,
+        ),
+        LegendaryHero(
+            id = "korean_night_infiltrator",
+            name = "Pak Yong-gi",
+            campaignIds = setOf("ncampdfn.json"),
+            nationIds = setOf(25),
+            yearRange = 1950..1953,
+            compatibleUnitClasses = COMMON_LAND_CLASSES,
+            backgroundId = "infantry_school_instructor",
+            signatureTrait = LeaderType.INFILTRATION_TACTICS,
+            signatureTitle = "Night Movement",
+            signatureDescription = "Moves a battalion in darkness and is behind the position by the time it is light.",
+            startingRankId = "captain",
+            portraitArtId = "korean_night_infiltrator",
+        ),
+        // A woman rode as an orderly with the Baden insurgent army and wrote about it afterwards.
+        // The dispatch rider is the role, and it is a documented one.
+        LegendaryHero(
+            id = "fortyeighter_dispatch_rider",
+            name = "Wilhelmine Barthold",
+            campaignIds = setOf("aljf.json"),
+            nationIds = setOf(196),
+            yearRange = 1848..1865,
+            compatibleUnitClasses = setOf(UnitClass.RECON.value, UnitClass.INFANTRY.value),
+            backgroundId = "veteran_reconnaissance_officer",
+            signatureTrait = LeaderType.RECON_MOVEMENT,
+            signatureTitle = "Rides With The Column",
+            signatureDescription =
+                "Carries the order to the far wing herself, because nobody else will find it in time.",
+            startingRankId = "lieutenant",
+            portraitArtId = "fortyeighter_dispatch_rider",
+            female = true,
+        ),
+        LegendaryHero(
+            id = "fortyeighter_gunner",
+            name = "Gustav Rennert",
+            campaignIds = setOf("aljf.json"),
+            nationIds = setOf(196),
+            yearRange = 1848..1865,
+            compatibleUnitClasses = setOf(UnitClass.ARTILLERY.value, UnitClass.ANTI_TANK.value),
+            backgroundId = "regimental_artillery_officer",
+            signatureTrait = LeaderType.COMBAT_SUPPORT,
+            signatureTitle = "The Freischar Battery",
+            signatureDescription = "Gets the volunteers few guns into action beside the infantry instead of behind it.",
+            startingRankId = "captain",
+            portraitArtId = "fortyeighter_gunner",
+        ),
+        LegendaryHero(
+            id = "hungarian_red_commissar",
+            name = "Terez Szanto",
+            campaignIds = setOf("rhu.json"),
+            nationIds = setOf(187),
+            yearRange = 1919..1919,
+            compatibleUnitClasses = COMMON_LAND_CLASSES,
+            backgroundId = "infantry_school_instructor",
+            signatureTrait = LeaderType.INFLUENCE,
+            signatureTitle = "The Factory Battalions",
+            signatureDescription =
+                "Turns a works district into battalions, and keeps them together when the news is bad.",
+            startingRankId = "captain",
+            portraitArtId = "hungarian_red_commissar",
+            female = true,
+        ),
+        LegendaryHero(
+            id = "hungarian_river_defence",
+            name = "Bela Nemeth",
+            campaignIds = setOf("rhu.json"),
+            nationIds = setOf(187),
+            yearRange = 1919..1919,
+            compatibleUnitClasses = COMMON_LAND_CLASSES,
+            backgroundId = "garrison_engineer",
+            signatureTrait = LeaderType.TENACIOUS_DEFENSE,
+            signatureTitle = "The Tisza Line",
+            signatureDescription = "Holds a river line with fewer men than the frontage is supposed to need.",
+            startingRankId = "captain",
+            portraitArtId = "hungarian_river_defence",
+        ),
+        LegendaryHero(
+            id = "german_council_agitator",
+            name = "Hedwig Brandt",
+            campaignIds = setOf("novemberrevolution.json"),
+            nationIds = setOf(188),
+            yearRange = 1918..1919,
+            compatibleUnitClasses = setOf(UnitClass.INFANTRY.value, UnitClass.RECON.value),
+            backgroundId = "infantry_school_instructor",
+            signatureTrait = LeaderType.STREET_FIGHTER,
+            signatureTitle = "Quarter By Quarter",
+            signatureDescription =
+                "Fights a city the way it is actually built: by the block, and with that block helping.",
+            startingRankId = "captain",
+            portraitArtId = "german_council_agitator",
+            female = true,
+        ),
+        LegendaryHero(
+            id = "german_naval_division",
+            name = "Kurt Hillmann",
+            campaignIds = setOf("novemberrevolution.json"),
+            nationIds = setOf(188),
+            yearRange = 1918..1919,
+            compatibleUnitClasses = COMMON_LAND_CLASSES,
+            backgroundId = "infantry_school_instructor",
+            signatureTrait = LeaderType.RESILIENCE,
+            signatureTitle = "People's Naval Division",
+            signatureDescription =
+                "Sailors who have already refused one order will not be moved off this position either.",
+            startingRankId = "captain",
+            portraitArtId = "german_naval_division",
+        ),
+        // The militiawomen who took on armour at close range in the Madrid streets. Dinamitera is
+        // the word Spain itself used, and there is a famous poem written to one of them.
+        LegendaryHero(
+            id = "spanish_dinamitera",
+            name = "Pilar Otxoa",
+            campaignIds = setOf("gce.json"),
+            nationIds = setOf(226),
+            yearRange = 1936..1939,
+            compatibleUnitClasses = setOf(UnitClass.ANTI_TANK.value, UnitClass.INFANTRY.value),
+            backgroundId = "antitank_gunnery_instructor",
+            signatureTrait = LeaderType.STREET_FIGHTER,
+            signatureTitle = "Dinamitera",
+            signatureDescription = "Lets the armour come into the street and stops it there with what she is carrying.",
+            startingRankId = "lieutenant",
+            portraitArtId = "spanish_dinamitera",
+            female = true,
+        ),
+        LegendaryHero(
+            id = "spanish_column_officer",
+            name = "Ramon Escobar",
+            campaignIds = setOf("gce.json"),
+            nationIds = setOf(226),
+            yearRange = 1936..1939,
+            compatibleUnitClasses = COMMON_LAND_CLASSES,
+            backgroundId = "infantry_school_instructor",
+            signatureTrait = LeaderType.SHOCK_TACTICS,
+            signatureTitle = "Column Assault",
+            signatureDescription = "Concentrates a militia column onto one narrow objective instead of a whole front.",
+            startingRankId = "captain",
+            portraitArtId = "spanish_column_officer",
+        ),
+        // Women did fight in the arena -- the Halicarnassus relief names two of them. A woman who
+        // walked out of a training school with the rest is the least invented person in this file.
+        LegendaryHero(
+            id = "ancient_gladiatrix",
+            name = "Kotyra",
+            campaignIds = setOf("spa.json"),
+            nationIds = setOf(310),
+            yearRange = -73..-71,
+            compatibleUnitClasses = setOf(UnitClass.INFANTRY.value, UnitClass.RECON.value),
+            backgroundId = "infantry_school_instructor",
+            signatureTrait = LeaderType.SKILLED_ASSAULT,
+            signatureTitle = "Trained In The Same Yard",
+            signatureDescription =
+                "Fought for the crowd for years; fights for herself now, and is markedly better at it.",
+            startingRankId = "lieutenant",
+            portraitArtId = "ancient_gladiatrix",
+            female = true,
+        ),
+        LegendaryHero(
+            id = "ancient_thracian_horse",
+            name = "Granicus",
+            campaignIds = setOf("spa.json"),
+            nationIds = setOf(310),
+            yearRange = -73..-71,
+            compatibleUnitClasses = setOf(UnitClass.RECON.value, UnitClass.INFANTRY.value),
+            backgroundId = "veteran_reconnaissance_officer",
+            signatureTrait = LeaderType.SUPERIOR_MANEUVER,
+            signatureTitle = "Thracian Horse",
+            signatureDescription = "Screens the march with horsemen who were raised on horses rather than issued them.",
+            startingRankId = "captain",
+            portraitArtId = "ancient_thracian_horse",
+        ),
+        // The long-haired army is not a metaphor: a woman rose to deputy commander-in-chief of the
+        // southern armed forces out of exactly that organising work.
+        LegendaryHero(
+            id = "viet_long_haired_army",
+            name = "Le Thi Hoa",
+            campaignIds = setOf("nvc.json"),
+            nationIds = setOf(276),
+            yearRange = 1964..1975,
+            compatibleUnitClasses = COMMON_LAND_CLASSES,
+            backgroundId = "infantry_school_instructor",
+            signatureTrait = LeaderType.INFLUENCE,
+            signatureTitle = "The Long-Haired Army",
+            signatureDescription = "Raises a district local force out of people the enemy had counted as civilians.",
+            startingRankId = "captain",
+            portraitArtId = "viet_long_haired_army",
+            female = true,
+        ),
+        LegendaryHero(
+            id = "viet_sapper",
+            name = "Pham Van Cuong",
+            campaignIds = setOf("nvc.json"),
+            nationIds = setOf(276),
+            yearRange = 1964..1975,
+            compatibleUnitClasses = setOf(UnitClass.ANTI_TANK.value, UnitClass.INFANTRY.value, UnitClass.RECON.value),
+            backgroundId = "antitank_gunnery_instructor",
+            signatureTrait = LeaderType.INFILTRATION_TACTICS,
+            signatureTitle = "Sapper Team",
+            signatureDescription =
+                "Gets inside the perimeter with a satchel and leaves the armour where it was parked.",
+            startingRankId = "captain",
+            portraitArtId = "viet_sapper",
+        ),
+        // The Fourth Front Army fielded a women independent regiment, and it did the marching and
+        // the fighting both.
+        LegendaryHero(
+            id = "chinese_womens_regiment",
+            name = "Zhao Lanying",
+            campaignIds = setOf("rsoc.json"),
+            nationIds = setOf(21),
+            yearRange = 1927..1949,
+            compatibleUnitClasses = COMMON_LAND_CLASSES,
+            backgroundId = "infantry_school_instructor",
+            signatureTrait = LeaderType.RESILIENCE,
+            signatureTitle = "Women's Independent Regiment",
+            signatureDescription =
+                "Marches a regiment further than it can be supplied and still has a regiment at the end.",
+            startingRankId = "captain",
+            portraitArtId = "chinese_womens_regiment",
+            female = true,
+        ),
+        LegendaryHero(
+            id = "chinese_mortar_support",
+            name = "Liu Boqing",
+            campaignIds = setOf("rsoc.json"),
+            nationIds = setOf(21),
+            yearRange = 1927..1949,
+            compatibleUnitClasses = setOf(UnitClass.ARTILLERY.value, UnitClass.ANTI_TANK.value),
+            backgroundId = "regimental_artillery_officer",
+            signatureTrait = LeaderType.COMBAT_SUPPORT,
+            signatureTitle = "Carried Guns",
+            signatureDescription = "Brings the few tubes the base area owns to whichever attack has to succeed today.",
+            startingRankId = "captain",
+            portraitArtId = "chinese_mortar_support",
+        ),
+        // The women who carried ammunition over the Pindus to the front in 1940 are a national
+        // memory in Greece, not a footnote to one.
+        LegendaryHero(
+            id = "greek_pindus_women",
+            name = "Evanthia Stamou",
+            campaignIds = setOf("camp6bn4.json"),
+            nationIds = setOf(39),
+            yearRange = 1940..1949,
+            compatibleUnitClasses =
+                setOf(
+                    UnitClass.INFANTRY.value,
+                    UnitClass.GROUND_TRANSPORT.value,
+                    UnitClass.ARTILLERY.value,
+                ),
+            backgroundId = "transport_column_officer",
+            signatureTrait = LeaderType.COMBAT_SUPPORT,
+            signatureTitle = "The Women of Pindus",
+            signatureDescription = "Gets shells and bread up a mountain that has no road, and the guns keep firing.",
+            startingRankId = "lieutenant",
+            portraitArtId = "greek_pindus_women",
+            female = true,
+        ),
+        LegendaryHero(
+            id = "greek_line_holder",
+            name = "Petros Vlachos",
+            campaignIds = setOf("camp6bn4.json"),
+            nationIds = setOf(39),
+            yearRange = 1940..1949,
+            compatibleUnitClasses = COMMON_LAND_CLASSES,
+            backgroundId = "infantry_school_instructor",
+            signatureTrait = LeaderType.ALPINE_TRAINING,
+            signatureTitle = "The Held Ridge",
+            signatureDescription = "Picks the one ridge that cannot be turned and makes the whole battle happen there.",
+            startingRankId = "captain",
+            portraitArtId = "greek_line_holder",
+        ),
     )
 
 /** Every authored legendary, in the order the three groups are written above. */
 internal val LEGENDARY_ROSTER: List<LegendaryHero> =
     SOVIET_WW2 + RUSSIAN_CIVIL_WAR + OTHER_CAMPAIGN_SIDES
+
+/**
+ * Authored legendaries whose painting has not been made yet, and which therefore ship with a
+ * composed portrait instead of one.
+ *
+ * This exists so "no painting" stays a **declared** state rather than a silent one. The pool's own
+ * rule is still that a legendary gets a face of their own. The 2026-09-04 expansion added 35 of
+ * them at once; their paintings were completed on 2026-09-05, so this set is intentionally empty.
+ * It remains as a tripwire for future roster additions.
+ *
+ * `HeroPortraitArtTest` asserts this set EQUALS the set of art-less heroes, in both directions: a
+ * new hero cannot quietly join it, and a hero who gets a painting must leave it. Adding art is
+ * therefore exactly two edits -- an [HeroPortraitArt.Art] entry plus a `portraitArtId` -- and the
+ * test tells you the third one you forgot.
+ *
+ * Until then the fallback is a real face, not an empty frame: [LegendaryHeroPool.build] composes
+ * the layer stack and, since 2026-09-04, composes it at the hero's AUTHORED gender.
+ */
+internal val LEGENDS_AWAITING_PORTRAIT_ART: Set<String> = emptySet()

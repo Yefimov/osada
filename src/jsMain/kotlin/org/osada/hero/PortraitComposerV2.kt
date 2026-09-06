@@ -15,12 +15,13 @@ import org.osada.hero.PortraitComposerV2.deriveFacts
  * weight tables mirror the manifest's `weights` block; keeping them here (rather than parsing JSON)
  * matches how [HeroBalance] keeps acquisition tuning in code.
  */
-@Suppress("TooManyFunctions")
+@Suppress("TooManyFunctions", "LargeClass")
 object PortraitComposerV2 {
     enum class Pool(
         val id: String,
     ) {
         USSR_1942("ussr_1942"),
+        USSR_1943("ussr_1943"),
         SOVIET_INTERWAR("soviet_interwar"),
         REVOLUTION_1919("revolution_1919"),
         SPANISH_REPUBLIC_1936("spanish_republic_1936"),
@@ -38,6 +39,7 @@ object PortraitComposerV2 {
             "uniform_back",
             "hair_back",
             "face",
+            "expression",
             "age_face",
             "scar",
             "facial_hair",
@@ -46,6 +48,7 @@ object PortraitComposerV2 {
             "uniform_front_collar",
             "rank",
             "branch",
+            "accessory",
             "headgear",
             "wound",
         )
@@ -56,6 +59,7 @@ object PortraitComposerV2 {
             "uniform_back" to "uniform_back",
             "hair_back" to "hair_back",
             "face" to "face",
+            "expression" to "expression",
             "age_face" to "age_face",
             "scar" to "scar",
             "facial_hair" to "facial_hair",
@@ -64,14 +68,17 @@ object PortraitComposerV2 {
             "uniform_front_collar" to "uniform_front_collar",
             "rank" to "rank",
             "branch" to "branch",
+            "accessory" to "accessory",
             "headgear" to "headgear",
             "wound" to "wound",
         )
 
     private val BACKGROUNDS = listOf("bg_dossier_slate", "bg_dossier_stone")
-    private val FEMALE_FACES = listOf("round_young", "broad_calm", "narrow_stern", "long_mature")
+    private val FEMALE_FACES = listOf("female_oval", "female_heart", "female_broad", "female_square", "female_long")
     private val MALE_FRONT = listOf("hair_front_crop", "hair_front_side", "hair_front_receding", "hair_front_swept")
-    private val FEMALE_FRONT = listOf("hair_front_female_a", "hair_front_female_b")
+    private val FEMALE_HAIR_STYLES = listOf("bob", "braid", "bun", "waves")
+    private val MODERN_ACCESSORIES = listOf("accessory_round_spectacles", "accessory_wire_spectacles")
+    private val EARLY_ACCESSORIES = listOf("accessory_round_spectacles", "accessory_pince_nez")
     private val WOUNDS = listOf("wound_brow_bandage", "wound_cheek_dressing", "wound_eye_patch")
     private val SCARS = listOf("scar_cheek", "scar_brow", "scar_lip")
 
@@ -86,29 +93,62 @@ object PortraitComposerV2 {
         mapOf(
             "young" to
                 mapOf(
-                    "round_young" to 0.4,
-                    "narrow_stern" to 0.2,
-                    "broad_calm" to 0.2,
-                    "long_mature" to 0.1,
-                    "angular_tired" to 0.05,
-                    "square_veteran" to 0.05,
+                    "round_young" to 0.16,
+                    "narrow_stern" to 0.12,
+                    "broad_calm" to 0.08,
+                    "long_mature" to 0.04,
+                    "angular_tired" to 0.02,
+                    "square_veteran" to 0.02,
+                    "oval_reserved" to 0.18,
+                    "compact_alert" to 0.2,
+                    "high_cheekbones" to 0.16,
+                    "heavy_jaw" to 0.02,
+                    "lean_focused" to 0.16,
+                    "rectangular_calm" to 0.04,
+                    "female_oval" to 0.24,
+                    "female_heart" to 0.3,
+                    "female_broad" to 0.12,
+                    "female_square" to 0.16,
+                    "female_long" to 0.18,
                 ),
             "middle" to
                 mapOf(
-                    "broad_calm" to 0.25,
-                    "narrow_stern" to 0.2,
-                    "long_mature" to 0.2,
-                    "square_veteran" to 0.15,
-                    "angular_tired" to 0.1,
-                    "round_young" to 0.1,
+                    "broad_calm" to 0.11,
+                    "narrow_stern" to 0.1,
+                    "long_mature" to 0.11,
+                    "square_veteran" to 0.08,
+                    "angular_tired" to 0.06,
+                    "round_young" to 0.04,
+                    "oval_reserved" to 0.14,
+                    "compact_alert" to 0.11,
+                    "high_cheekbones" to 0.13,
+                    "heavy_jaw" to 0.12,
+                    "lean_focused" to 0.13,
+                    "rectangular_calm" to 0.11,
+                    "female_oval" to 0.25,
+                    "female_heart" to 0.15,
+                    "female_broad" to 0.2,
+                    "female_square" to 0.22,
+                    "female_long" to 0.18,
                 ),
             "old" to
                 mapOf(
-                    "square_veteran" to 0.3,
-                    "long_mature" to 0.25,
-                    "angular_tired" to 0.25,
-                    "narrow_stern" to 0.1,
-                    "broad_calm" to 0.1,
+                    "square_veteran" to 0.16,
+                    "long_mature" to 0.14,
+                    "angular_tired" to 0.12,
+                    "narrow_stern" to 0.05,
+                    "broad_calm" to 0.06,
+                    "oval_reserved" to 0.08,
+                    "compact_alert" to 0.06,
+                    "high_cheekbones" to 0.14,
+                    "heavy_jaw" to 0.19,
+                    "lean_focused" to 0.09,
+                    "rectangular_calm" to 0.17,
+                    "female_oval" to 0.18,
+                    "female_heart" to 0.1,
+                    "female_broad" to 0.27,
+                    "female_square" to 0.27,
+                    "female_long" to 0.18,
                 ),
         )
     private val FACIAL_BY_AGE =
@@ -134,13 +174,37 @@ object PortraitComposerV2 {
         mapOf(
             "infantry" to
                 mapOf(
-                    "summer" to mapOf("headgear_officer_cap" to 0.4, "headgear_pilotka" to 0.3, "none" to 0.3),
-                    "winter" to mapOf("headgear_ushanka" to 0.7, "headgear_officer_cap" to 0.2, "none" to 0.1),
+                    "summer" to
+                        mapOf(
+                            "headgear_officer_cap" to 0.3,
+                            "headgear_pilotka" to 0.25,
+                            "headgear_ssh40" to 0.25,
+                            "none" to 0.2,
+                        ),
+                    "winter" to
+                        mapOf(
+                            "headgear_ushanka" to 0.55,
+                            "headgear_ssh40" to 0.2,
+                            "headgear_officer_cap" to 0.15,
+                            "none" to 0.1,
+                        ),
                 ),
             "artillery" to
                 mapOf(
-                    "summer" to mapOf("headgear_officer_cap" to 0.4, "headgear_pilotka" to 0.3, "none" to 0.3),
-                    "winter" to mapOf("headgear_ushanka" to 0.7, "headgear_officer_cap" to 0.2, "none" to 0.1),
+                    "summer" to
+                        mapOf(
+                            "headgear_officer_cap" to 0.3,
+                            "headgear_pilotka" to 0.25,
+                            "headgear_ssh40" to 0.25,
+                            "none" to 0.2,
+                        ),
+                    "winter" to
+                        mapOf(
+                            "headgear_ushanka" to 0.55,
+                            "headgear_ssh40" to 0.2,
+                            "headgear_officer_cap" to 0.15,
+                            "none" to 0.1,
+                        ),
                 ),
             "armor" to
                 mapOf(
@@ -158,10 +222,17 @@ object PortraitComposerV2 {
             groundPrimary = "headgear_rev1919_field_cap",
             groundSecondary = "headgear_rev1919_service_cap",
         )
+    private val SOVIET_INTERWAR_HEADGEAR =
+        threeWayFieldHeadgear(
+            groundPrimary = "headgear_rev1919_field_cap",
+            groundSecondary = "headgear_rev1919_service_cap",
+            groundTertiary = "headgear_budenovka",
+        )
     private val SPANISH_HEADGEAR =
-        fieldHeadgear(
+        threeWayFieldHeadgear(
             groundPrimary = "headgear_spanish_side_cap",
             groundSecondary = "headgear_spanish_beret",
+            groundTertiary = "headgear_spanish_adrian",
         )
     private val YUGOSLAV_HEADGEAR =
         fieldHeadgear(
@@ -174,9 +245,10 @@ object PortraitComposerV2 {
             groundSecondary = "headgear_east_asian_boonie",
         )
     private val GREEK_HEADGEAR =
-        seasonalFieldHeadgear(
+        seasonalThreeWayHeadgear(
             groundPrimary = "headgear_greek_side_cap",
             groundSecondary = "headgear_greek_field_cap",
+            groundTertiary = "headgear_greek_m1936",
         )
     private val WHITE_ARMY_HEADGEAR =
         seasonalFieldHeadgear(
@@ -194,22 +266,76 @@ object PortraitComposerV2 {
         mapOf(
             "headgear_officer_cap" to "UNDER_CAP",
             "headgear_pilotka" to "UNDER_CAP",
+            "headgear_ssh40" to "UNDER_CAP",
             "headgear_ushanka" to "UNDER_FUR_HAT",
             "headgear_flight_helmet" to "UNDER_FLIGHT_HELMET",
             "headgear_rev1919_field_cap" to "UNDER_CAP",
             "headgear_rev1919_service_cap" to "UNDER_CAP",
+            "headgear_budenovka" to "UNDER_CAP",
             "headgear_spanish_side_cap" to "UNDER_CAP",
             "headgear_spanish_beret" to "UNDER_CAP",
+            "headgear_spanish_adrian" to "UNDER_CAP",
             "headgear_yugoslav_titovka" to "UNDER_CAP",
             "headgear_yugoslav_partisan_cap" to "UNDER_CAP",
             "headgear_east_asian_field_cap" to "UNDER_CAP",
             "headgear_east_asian_boonie" to "UNDER_CAP",
             "headgear_greek_side_cap" to "UNDER_CAP",
             "headgear_greek_field_cap" to "UNDER_CAP",
+            "headgear_greek_m1936" to "UNDER_CAP",
             "headgear_white_army_cap" to "UNDER_CAP",
-            "headgear_white_army_papakha" to "UNDER_FUR_HAT",
+            "headgear_white_army_papakha" to "UNDER_CAP",
             "headgear_ancient_pilos" to "UNDER_CAP",
             "headgear_ancient_phrygian" to "UNDER_CAP",
+        )
+    private val UNDER_HAIR =
+        mapOf(
+            "headgear_officer_cap" to listOf("under_hair_temples", "under_hair_side_part"),
+            "headgear_pilotka" to listOf("under_hair_short_fringe", "under_hair_side_part"),
+            "headgear_ssh40" to listOf("under_hair_short_fringe", "under_hair_temples"),
+            "headgear_rev1919_field_cap" to listOf("under_hair_short_fringe", "under_hair_side_part"),
+            "headgear_rev1919_service_cap" to listOf("under_hair_temples", "under_hair_side_part"),
+            "headgear_budenovka" to listOf("under_hair_short_fringe", "under_hair_temples"),
+            "headgear_spanish_side_cap" to listOf("under_hair_short_fringe", "under_hair_side_part"),
+            "headgear_spanish_beret" to listOf("under_hair_curls", "under_hair_side_part"),
+            "headgear_spanish_adrian" to listOf("under_hair_short_fringe", "under_hair_temples"),
+            "headgear_yugoslav_titovka" to listOf("under_hair_short_fringe", "under_hair_side_part"),
+            "headgear_yugoslav_partisan_cap" to listOf("under_hair_short_fringe", "under_hair_temples"),
+            "headgear_east_asian_field_cap" to listOf("under_hair_short_fringe", "under_hair_side_part"),
+            "headgear_east_asian_boonie" to listOf("under_hair_temples", "under_hair_side_part"),
+            "headgear_greek_side_cap" to listOf("under_hair_short_fringe", "under_hair_side_part"),
+            "headgear_greek_field_cap" to listOf("under_hair_temples", "under_hair_side_part"),
+            "headgear_greek_m1936" to listOf("under_hair_short_fringe", "under_hair_temples"),
+            "headgear_white_army_cap" to listOf("under_hair_temples", "under_hair_side_part"),
+            "headgear_white_army_papakha" to listOf("under_hair_curls"),
+            "headgear_ancient_pilos" to listOf("under_hair_curls", "under_hair_short_fringe"),
+            "headgear_ancient_phrygian" to listOf("under_hair_curls", "under_hair_side_part"),
+        )
+    private val UNDER_HAIR_FEMALE =
+        mapOf(
+            "headgear_white_army_papakha" to listOf("under_hair_female_fur"),
+            "headgear_ancient_pilos" to listOf("under_hair_female_close"),
+            "headgear_ancient_phrygian" to listOf("under_hair_female_close"),
+        )
+    private val SUPPRESS_HAIR_BACK = setOf("headgear_ancient_pilos", "headgear_ancient_phrygian")
+    private val FACE_JAW_FIT =
+        mapOf(
+            "narrow_stern" to "narrow",
+            "angular_tired" to "narrow",
+            "long_mature" to "narrow",
+            "high_cheekbones" to "narrow",
+            "lean_focused" to "narrow",
+            "round_young" to "medium",
+            "oval_reserved" to "medium",
+            "compact_alert" to "medium",
+            "broad_calm" to "wide",
+            "square_veteran" to "wide",
+            "heavy_jaw" to "wide",
+            "rectangular_calm" to "wide",
+            "female_oval" to "narrow",
+            "female_heart" to "narrow",
+            "female_broad" to "medium",
+            "female_square" to "medium",
+            "female_long" to "narrow",
         )
 
     data class Facts(
@@ -258,16 +384,22 @@ object PortraitComposerV2 {
         val chosen = LinkedHashMap<String, String>()
         val headgear = pickHeadgear(facts, seed)
         val hairMode = if (headgear == null) "FULL_HAIR" else HAIR_MODE.getValue(headgear)
+        val archetype = facts.archetype(seed)
         chosen["background"] = pick(BACKGROUNDS, seed, "bg")
-        chosen["uniform_back"] = if (facts.pool == Pool.ANCIENT_REBEL) "back_ancient_tunic" else "back_${facts.branch}"
-        putHair(chosen, facts, seed, hairMode)
-        chosen["face"] = "face_${facts.archetype(seed)}"
+        val uniformBack = if (facts.pool == Pool.ANCIENT_REBEL) "back_ancient_tunic" else "back_${facts.branch}"
+        chosen["uniform_back"] = if (facts.gender == "female") "${uniformBack}_female" else uniformBack
+        putHair(chosen, facts, seed, hairMode, headgear, archetype)
+        chosen["face"] = "face_$archetype"
         ageLayer(facts.age)?.let { chosen["age_face"] = it }
         if (facts.scar) chosen["scar"] = pick(SCARS, seed, "scar")
-        chosen["facial_hair"] = facialHair(facts, seed)
+        chosen["facial_hair"] = facialHair(facts, seed, archetype)
         chosen["uniform_front_collar"] = collarFor(facts)
         chosen["rank"] = rankFor(facts)
         chosen["branch"] = if (facts.pool == Pool.ANCIENT_REBEL) "branch_ancient_rebel" else "branch_${facts.branch}"
+        val canWearAccessory = facts.pool != Pool.ANCIENT_REBEL && facts.wound != "wound_eye_patch"
+        if (canWearAccessory && chance(seed, "accessory", ACCESSORY_CHANCE)) {
+            chosen["accessory"] = pick(accessoriesFor(facts.pool), seed, "accessory-type")
+        }
         headgear?.let { chosen["headgear"] = it }
         facts.wound?.let { chosen["wound"] = it }
         return ORDER.mapNotNull { chosen[it] }
@@ -289,9 +421,10 @@ object PortraitComposerV2 {
         country: Int? = null,
     ): List<String> {
         val stored = definition.portrait.layerIds
+        val female = definition.portrait.female ?: (genderFor(definition.portrait.seed) == "female")
         val base =
             if (stored.any { it.startsWith("face_") }) {
-                stored
+                repairLegacyLayerFits(stored, definition.portrait.seed, female, definition.portrait.poolId)
             } else {
                 composeFor(
                     definition.portrait.seed,
@@ -303,7 +436,8 @@ object PortraitComposerV2 {
                     poolOverride = poolById(definition.portrait.poolId),
                 ).layerIds
             }
-        val withCondition = applyCondition(base, state, definition.portrait.seed)
+        val withExpression = applyCharacterExpression(base, definition, state)
+        val withCondition = applyCondition(withExpression, state, definition.portrait.seed)
         return pathsFor(withCondition)
     }
 
@@ -316,7 +450,46 @@ object PortraitComposerV2 {
         if (state.injuries.any { it.permanent } && out.none { it.startsWith("scar_") }) out += pick(SCARS, seed, "scar")
         val wounded = state.status == HeroStatus.WOUNDED || state.status == HeroStatus.SERIOUSLY_WOUNDED
         if (wounded && out.none { it.startsWith("wound_") }) out += pick(WOUNDS, seed, "wound")
+        if (out.any { it == "wound_eye_patch" }) out.removeAll { it.startsWith("accessory_") }
         return out.distinct().sortedBy { ORDER.indexOf(categoryOf(it)) }
+    }
+
+    /** A hero's expression follows their strongest character-defining trait, never a fresh roll. */
+    private fun applyCharacterExpression(
+        base: List<String>,
+        definition: HeroDefinition,
+        state: HeroState,
+    ): List<String> {
+        // Pool.NONE is a persisted decision to render the monogram fallback. Adding even an
+        // expression layer here would turn that saved no-portrait verdict back into a face fragment.
+        if (base.isEmpty()) return emptyList()
+        val traits = state.learnedTraitIds + listOfNotNull(definition.signatureTraitId)
+        val expression =
+            when {
+                traits.any(::isAggressiveTrait) -> "expression_aggressive"
+                traits.any(::isDeterminedTrait) -> "expression_determined"
+                else -> "expression_calm"
+            }
+        return (base.filterNot { it.startsWith("expression_") } + expression)
+            .distinct()
+            .sortedBy { ORDER.indexOf(categoryOf(it)) }
+    }
+
+    private fun isAggressiveTrait(id: String): Boolean {
+        val normalized = id.uppercase()
+        return normalized.contains("AGGRESSIVE") ||
+            normalized.contains("OVERWHELMING") ||
+            normalized.contains("FLUID_MANEUVER") ||
+            normalized.contains("OPEN_GROUND_INITIATIVE")
+    }
+
+    private fun isDeterminedTrait(id: String): Boolean {
+        val normalized = id.uppercase()
+        return normalized.contains("DETERMINED") ||
+            normalized.contains("HARDENED") ||
+            normalized.contains("RESILIENCE") ||
+            normalized.contains("FEROCIOUS") ||
+            normalized.contains("DUG_IN")
     }
 
     fun layerPath(id: String): String? =
@@ -332,7 +505,7 @@ object PortraitComposerV2 {
             ) {
                 base.filterKeys { it in FEMALE_FACES }.ifEmpty { mapOf("round_young" to 1.0) }
             } else {
-                base
+                base.filterKeys { it !in FEMALE_FACES }
             }
         return weightedPick(weights, seed, "arch")
     }
@@ -342,40 +515,152 @@ object PortraitComposerV2 {
         facts: Facts,
         seed: Int,
         hairMode: String,
+        headgear: String?,
+        archetype: String,
     ) {
         if (facts.gender == "female") {
-            chosen["hair_back"] = "hair_back_female"
+            val style = femaleHairStyle(seed)
+            if (headgear !in SUPPRESS_HAIR_BACK) chosen["hair_back"] = femaleHairBack(style)
             when (hairMode) {
-                "FULL_HAIR" -> chosen["hair_front"] = pick(FEMALE_FRONT, seed, "hairfront")
-                "UNDER_CAP" -> chosen["under_headgear_hair"] = "under_hair_female"
+                "FULL_HAIR" -> chosen["hair_front"] = femaleHairFront(style)
+                "UNDER_CAP" -> {
+                    val headgearHair = headgear?.let(UNDER_HAIR_FEMALE::get)
+                    chosen["under_headgear_hair"] =
+                        if (headgearHair != null) {
+                            pick(headgearHair, seed, "underhairfemale")
+                        } else {
+                            femaleUnderHair(style)
+                        }
+                }
             }
         } else {
             when (hairMode) {
                 "FULL_HAIR" -> {
                     chosen["hair_back"] =
-                        if (chance(seed, "hairvol", HAIR_VOLUME_CHANCE)) "hair_back_full" else "hair_back_short"
+                        if (chance(seed, "hairvol", HAIR_VOLUME_CHANCE)) {
+                            "hair_back_full"
+                        } else {
+                            shortHairBack(archetype)
+                        }
                     chosen["hair_front"] = pick(MALE_FRONT, seed, "hairfront")
                 }
 
                 "UNDER_CAP" -> {
-                    chosen["hair_back"] = "hair_back_short"
-                    chosen["under_headgear_hair"] = "under_hair_temples"
+                    if (headgear !in SUPPRESS_HAIR_BACK) chosen["hair_back"] = shortHairBack(archetype)
+                    chosen["under_headgear_hair"] =
+                        pick(headgear?.let(UNDER_HAIR::get) ?: listOf("under_hair_temples"), seed, "underhair")
                 }
             }
         }
     }
 
+    private fun femaleHairStyle(seed: Int): String = pick(FEMALE_HAIR_STYLES, seed, "hairstyle")
+
+    private fun femaleHairBack(style: String): String =
+        when (style) {
+            "bob" -> "hair_back_female_bob"
+            "braid" -> "hair_back_female_braid"
+            "bun" -> "hair_back_female_bun"
+            else -> "hair_back_female"
+        }
+
+    private fun femaleHairFront(style: String): String =
+        when (style) {
+            "bob" -> "hair_front_female_a"
+            "braid" -> "hair_front_female_braided"
+            "bun" -> "hair_front_female_bun"
+            else -> "hair_front_female_b"
+        }
+
+    private fun femaleUnderHair(style: String): String =
+        when (style) {
+            "bob" -> "under_hair_female_bob"
+            "braid" -> "under_hair_female_braid"
+            "bun" -> "under_hair_female_bun"
+            else -> "under_hair_female"
+        }
+
+    private fun shortHairBack(archetype: String): String = "hair_back_short_${FACE_JAW_FIT[archetype] ?: "medium"}"
+
     private fun facialHair(
         facts: Facts,
         seed: Int,
+        archetype: String,
+    ): String {
+        if (facts.gender == "female") return "facial_clean"
+        return fitFacialHair(weightedPick(FACIAL_BY_AGE.getValue(facts.age), seed, "facial"), archetype)
+    }
+
+    private fun fitFacialHair(
+        facialHair: String,
+        archetype: String,
     ): String =
-        if (facts.gender ==
-            "female"
-        ) {
-            "facial_clean"
-        } else {
-            weightedPick(FACIAL_BY_AGE.getValue(facts.age), seed, "facial")
+        when (facialHair) {
+            "facial_beard", "facial_stubble" -> "${facialHair}_${FACE_JAW_FIT[archetype] ?: "medium"}"
+            else -> facialHair
         }
+
+    private fun accessoriesFor(pool: Pool): List<String> =
+        when (pool) {
+            Pool.SOVIET_INTERWAR,
+            Pool.REVOLUTION_1919,
+            Pool.SPANISH_REPUBLIC_1936,
+            Pool.WHITE_ARMY_1919,
+            -> EARLY_ACCESSORIES
+
+            else -> MODERN_ACCESSORIES
+        }
+
+    /** Correct geometry-only defects in old stored recipes without changing the hero's identity. */
+    @Suppress("CyclomaticComplexMethod", "ReturnCount")
+    private fun repairLegacyLayerFits(
+        stored: List<String>,
+        seed: Int,
+        female: Boolean,
+        poolId: String?,
+    ): List<String> {
+        val legacyArchetype = stored.firstOrNull { it.startsWith("face_") }?.removePrefix("face_") ?: return stored
+        val archetype =
+            if (female && legacyArchetype !in FEMALE_FACES) {
+                pick(FEMALE_FACES, seed, "arch-female-repair")
+            } else {
+                legacyArchetype
+            }
+        val headgear = stored.firstOrNull { it.startsWith("headgear_") }
+        val compatibleUnderHair = headgear?.let(UNDER_HAIR::get)
+        val repaired =
+            stored.mapNotNull { id ->
+                when {
+                    id.startsWith("face_") -> "face_$archetype"
+                    female && id.startsWith("back_") && !id.endsWith("_female") -> "${id}_female"
+                    headgear in SUPPRESS_HAIR_BACK && id.startsWith("hair_back_") -> null
+                    !female && id == "hair_back_short" -> shortHairBack(archetype)
+                    female && id.startsWith("facial_") -> "facial_clean"
+                    poolId == Pool.USSR_1942.id && id.matches(POST_1943_RANK_ID) ->
+                        id.replace("rank_", "rank_pre1943_")
+                    poolId == Pool.SOVIET_INTERWAR.id && id.startsWith("rank_rev1919_") ->
+                        id.replace("rank_rev1919_", "rank_pre1943_")
+                    id == "facial_beard" || id == "facial_stubble" -> fitFacialHair(id, archetype)
+                    id.startsWith("under_hair_") && headgear in SUPPRESS_HAIR_BACK && female ->
+                        pick(UNDER_HAIR_FEMALE.getValue(checkNotNull(headgear)), seed, "underhairfemale")
+                    id == "under_hair_temples" && compatibleUnderHair != null && id !in compatibleUnderHair ->
+                        pick(compatibleUnderHair, seed, "underhair")
+                    else -> id
+                }
+            }
+        if (headgear != "headgear_white_army_papakha") return repaired
+
+        val withPapakhaHair = repaired.toMutableList()
+        if (female) {
+            if (withPapakhaHair.none { it == "hair_back_female" }) withPapakhaHair += "hair_back_female"
+            withPapakhaHair.removeAll { it.startsWith("under_hair_") }
+            withPapakhaHair += "under_hair_female_fur"
+        } else {
+            if (withPapakhaHair.none { it.startsWith("hair_back_") }) withPapakhaHair += shortHairBack(archetype)
+            if (withPapakhaHair.none { it.startsWith("under_hair_") }) withPapakhaHair += "under_hair_curls"
+        }
+        return withPapakhaHair
+    }
 
     private fun pickHeadgear(
         facts: Facts,
@@ -383,8 +668,8 @@ object PortraitComposerV2 {
     ): String? {
         val catalog =
             when (facts.pool) {
-                Pool.USSR_1942 -> HEADGEAR_BY_BRANCH_SEASON
-                Pool.SOVIET_INTERWAR -> REVOLUTION_HEADGEAR
+                Pool.USSR_1942, Pool.USSR_1943 -> HEADGEAR_BY_BRANCH_SEASON
+                Pool.SOVIET_INTERWAR -> SOVIET_INTERWAR_HEADGEAR
                 Pool.REVOLUTION_1919 -> REVOLUTION_HEADGEAR
                 Pool.SPANISH_REPUBLIC_1936 -> SPANISH_HEADGEAR
                 Pool.YUGOSLAV_PARTISAN_1941 -> YUGOSLAV_HEADGEAR
@@ -403,6 +688,7 @@ object PortraitComposerV2 {
         when (facts.pool) {
             Pool.USSR_1942 ->
                 if (facts.branch == "aviation") "collar_aviation" else "collar_${facts.branch}_${facts.season}"
+            Pool.USSR_1943 -> "collar_ussr_1943_${facts.season}"
 
             Pool.SOVIET_INTERWAR -> "collar_rev1919_field"
             Pool.REVOLUTION_1919 -> "collar_rev1919_field"
@@ -417,8 +703,8 @@ object PortraitComposerV2 {
 
     private fun rankFor(facts: Facts): String =
         when (facts.pool) {
-            Pool.USSR_1942 -> "rank_${facts.rank}"
-            Pool.SOVIET_INTERWAR -> "rank_rev1919_${facts.rank}"
+            Pool.USSR_1942, Pool.SOVIET_INTERWAR -> "rank_pre1943_${facts.rank}"
+            Pool.USSR_1943 -> "rank_${facts.rank}"
             Pool.REVOLUTION_1919 -> "rank_rev1919_${facts.rank}"
             Pool.SPANISH_REPUBLIC_1936 -> "rank_spanish_${facts.rank}"
             Pool.YUGOSLAV_PARTISAN_1941 -> "rank_yugoslav_${facts.rank}"
@@ -477,14 +763,20 @@ object PortraitComposerV2 {
      * insignia; `null` keeps the historical default for old/internal callers that predate country
      * threading.
      */
-    @Suppress("MagicNumber") // Stable equipment-country ids, not arithmetic constants.
+    @Suppress("CyclomaticComplexMethod", "MagicNumber") // Stable equipment-country ids form a lookup table.
     fun poolFor(
         country: Int?,
         serviceYear: Int? = null,
     ): Pool =
         when (country) {
-            19 -> if (serviceYear != null && serviceYear < 1941) Pool.SOVIET_INTERWAR else Pool.USSR_1942
-            null, 61, 89 -> Pool.USSR_1942
+            19 ->
+                when {
+                    serviceYear != null && serviceYear < 1941 -> Pool.SOVIET_INTERWAR
+                    serviceYear != null && serviceYear >= 1943 -> Pool.USSR_1943
+                    else -> Pool.USSR_1942
+                }
+            61, 89 -> if (serviceYear != null && serviceYear >= 1943) Pool.USSR_1943 else Pool.USSR_1942
+            null -> Pool.USSR_1942
             103, 144, 187, 188, 196 -> Pool.REVOLUTION_1919
             226 -> Pool.SPANISH_REPUBLIC_1936
             43 -> Pool.YUGOSLAV_PARTISAN_1941
@@ -589,6 +881,32 @@ object PortraitComposerV2 {
         )
     }
 
+    /** Three historically compatible field choices plus a bareheaded minority. */
+    private fun threeWayFieldHeadgear(
+        groundPrimary: String,
+        groundSecondary: String,
+        groundTertiary: String,
+    ): Map<String, Map<String, Map<String, Double>>> {
+        val ground =
+            mapOf(
+                "summer" to
+                    mapOf(groundPrimary to 0.45, groundSecondary to 0.2, groundTertiary to 0.15, "none" to 0.2),
+                "winter" to
+                    mapOf(groundPrimary to 0.45, groundSecondary to 0.2, groundTertiary to 0.15, "none" to 0.2),
+            )
+        val aviation =
+            mapOf(
+                "summer" to mapOf("headgear_flight_helmet" to 0.55, groundPrimary to 0.25, "none" to 0.2),
+                "winter" to mapOf("headgear_flight_helmet" to 0.55, groundPrimary to 0.25, "none" to 0.2),
+            )
+        return mapOf(
+            "infantry" to ground,
+            "armor" to ground,
+            "artillery" to ground,
+            "aviation" to aviation,
+        )
+    }
+
     /** A field cap in summer, its cold-weather alternative in winter; aviation keeps its helmet. */
     private fun seasonalFieldHeadgear(
         groundPrimary: String,
@@ -598,6 +916,32 @@ object PortraitComposerV2 {
             mapOf(
                 "summer" to mapOf(groundPrimary to 0.55, groundSecondary to 0.25, "none" to 0.2),
                 "winter" to mapOf(groundSecondary to 0.55, groundPrimary to 0.25, "none" to 0.2),
+            )
+        val aviation =
+            mapOf(
+                "summer" to mapOf("headgear_flight_helmet" to 0.55, groundPrimary to 0.25, "none" to 0.2),
+                "winter" to mapOf("headgear_flight_helmet" to 0.55, groundPrimary to 0.25, "none" to 0.2),
+            )
+        return mapOf(
+            "infantry" to ground,
+            "armor" to ground,
+            "artillery" to ground,
+            "aviation" to aviation,
+        )
+    }
+
+    /** Seasonal soft caps plus a steel helmet; aviation keeps its flight helmet. */
+    private fun seasonalThreeWayHeadgear(
+        groundPrimary: String,
+        groundSecondary: String,
+        groundTertiary: String,
+    ): Map<String, Map<String, Map<String, Double>>> {
+        val ground =
+            mapOf(
+                "summer" to
+                    mapOf(groundPrimary to 0.4, groundSecondary to 0.15, groundTertiary to 0.25, "none" to 0.2),
+                "winter" to
+                    mapOf(groundSecondary to 0.4, groundPrimary to 0.15, groundTertiary to 0.25, "none" to 0.2),
             )
         val aviation =
             mapOf(
@@ -640,6 +984,7 @@ object PortraitComposerV2 {
             "back_" to "uniform_back",
             "collar_" to "uniform_front_collar",
             "face_" to "face",
+            "expression_" to "expression",
             "age_" to "age_face",
             "scar_" to "scar",
             "facial_" to "facial_hair",
@@ -648,6 +993,7 @@ object PortraitComposerV2 {
             "under_hair_" to "under_headgear_hair",
             "rank_" to "rank",
             "branch_" to "branch",
+            "accessory_" to "accessory",
             "headgear_" to "headgear",
             "wound_" to "wound",
         )
@@ -655,6 +1001,8 @@ object PortraitComposerV2 {
     private const val FEMALE_CHANCE = 0.12
     private const val SEASON_WINTER_CHANCE = 0.6
     private const val HAIR_VOLUME_CHANCE = 0.35
+    private const val ACCESSORY_CHANCE = 0.16
     private const val MIDDLE_AGE = 34
     private const val OLD_AGE = 48
+    private val POST_1943_RANK_ID = Regex("rank_(lieutenant|captain|major|colonel)")
 }

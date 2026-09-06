@@ -1,8 +1,10 @@
 package org.osada
 
+import org.osada.hero.HeroBackgrounds
 import org.osada.hero.HeroBiographyFacts
 import org.osada.hero.HeroBiographyNarrator
-import org.osada.hero.HeroBiographyPools
+import org.osada.hero.HeroChronology
+import org.osada.hero.HeroLifePath
 import org.osada.hero.PortraitComposerV2
 import org.osada.i18n.installEnglishUiBundleForTests
 import kotlin.test.BeforeTest
@@ -65,7 +67,7 @@ class HeroBiographyNarratorTest {
                 birthplaceId = "provincial_town",
                 socialBackgroundId = "worker",
                 militaryEducationId = "military_academy",
-                priorServiceId = "border_skirmishes",
+                priorServiceIds = listOf("border_skirmishes"),
                 emergenceEventId = "destroyed_stronger_enemy",
             )
 
@@ -73,7 +75,12 @@ class HeroBiographyNarratorTest {
         val second = HeroBiographyNarrator.narrate(facts, "colonel", maleSeed)
 
         assertEquals(first, second)
-        assertEquals("Born 1911 near a provincial town, to a working-class family.", first[0])
+        // "to a worker's family", not "to a working-class family": the social-origin clauses were
+        // rewritten to the Soviet encyclopedia's own formula -- SIE prints `в семье рабочего`,
+        // `в семье дехканина`, `в семье мелкого торговца`. Unlike `hero.bio.education.*`, which is
+        // worded to OPEN the legacy commission sentence and therefore could not be touched, this
+        // clause sits in the same slot in both narration paths, so one wording serves both.
+        assertEquals("Born 1911 near a provincial town, to a worker's family.", first[0])
         assertEquals(
             "A graduate of the military academy, he served in the border skirmishes before rising to Colonel.",
             first[1],
@@ -89,7 +96,7 @@ class HeroBiographyNarratorTest {
             HeroBiographyFacts(
                 birthYear = 1911,
                 militaryEducationId = "military_academy",
-                priorServiceId = "border_skirmishes",
+                priorServiceIds = listOf("border_skirmishes"),
                 emergenceEventId = "destroyed_stronger_enemy",
             )
 
@@ -103,34 +110,81 @@ class HeroBiographyNarratorTest {
     }
 
     @Test
-    fun biographyPoolsAreSeededDeterministically() {
-        val seed = 4242
-        val first =
-            HeroBiographyFacts(
-                birthplaceId = HeroBiographyPools.birthplaceId(seed),
-                socialBackgroundId = HeroBiographyPools.socialBackgroundId(seed),
-                militaryEducationId = HeroBiographyPools.militaryEducationId(seed, "major"),
-                priorServiceId = HeroBiographyPools.priorServiceId(seed, "major"),
-                emergenceEventId = "x",
-            )
-        val second =
-            HeroBiographyFacts(
-                birthplaceId = HeroBiographyPools.birthplaceId(seed),
-                socialBackgroundId = HeroBiographyPools.socialBackgroundId(seed),
-                militaryEducationId = HeroBiographyPools.militaryEducationId(seed, "major"),
-                priorServiceId = HeroBiographyPools.priorServiceId(seed, "major"),
-                emergenceEventId = "x",
+    fun aLifePathHeroIsNarratedAsAPersonalRecordRatherThanTheLegacyTwoLines() {
+        // The design's own worked example (13.1): origin, schooling, entry into service, and the
+        // optional closing line. A hero with a pack id takes this path; one without keeps the two
+        // sentences above, which is what the preceding tests are pinning.
+        val facts =
+            HeroLifePath.generate(
+                HeroLifePath.Context(
+                    seed = 4242,
+                    country = SOVIET_COUNTRY,
+                    serviceYear = 1942,
+                    unitClass = UnitClass.INFANTRY.value,
+                    rankId = "major",
+                    emergenceEventId = "destroyed_stronger_enemy",
+                ),
             )
 
-        assertEquals(first, second, "the same seed and rank must reproduce the same facts across reloads")
+        val lines = HeroBiographyNarrator.narrate(facts, "major", maleSeed)
+
+        assertTrue(lines.size >= 3, "a life path renders more than the legacy two lines: $lines")
+        assertTrue(lines.size <= 4, "13.3 caps the Overview at four sentences: $lines")
+        assertTrue(lines[0].startsWith("Born "), lines[0])
+        assertFalse(lines.any { it.contains("null", ignoreCase = true) }, lines.toString())
+        assertFalse(lines.any { it.contains("unknown", ignoreCase = true) }, lines.toString())
+        assertFalse(lines.any { it.contains("{") }, "every slot must be filled: $lines")
     }
 
     @Test
-    fun militaryEducationIsWeightedByRank() {
-        val seniorPool = (0 until 50).map { HeroBiographyPools.militaryEducationId(it, "colonel") }.toSet()
-        val juniorPool = (0 until 50).map { HeroBiographyPools.militaryEducationId(it, "lieutenant") }.toSet()
+    fun theLifePathIsDeterministicAndItsFactsAreInternallyCompatible() {
+        val context =
+            HeroLifePath.Context(
+                seed = 99,
+                country = SOVIET_COUNTRY,
+                serviceYear = 1943,
+                unitClass = UnitClass.TANK.value,
+                rankId = "captain",
+                emergenceEventId = "x",
+            )
 
-        assertTrue(seniorPool.all { it == "military_academy" || it == "staff_college" })
-        assertTrue(juniorPool.all { it == "commissioned_from_the_ranks" || it == "reserve_officer_course" })
+        val first = HeroLifePath.generate(context)
+        val second = HeroLifePath.generate(context)
+
+        assertEquals(first, second, "the same seed and context must reproduce the same life path")
+        assertEquals(emptyList(), HeroChronology.validate(first, 1943), "the path must pass its own checker")
+        assertEquals(
+            "soviet_1930_1945",
+            first.biographyPackId,
+            "a 1943 Soviet officer draws from the Soviet pack",
+        )
+    }
+
+    @Test
+    fun theCivilianOccupationIsNoLongerTheMilitaryBackground() {
+        // 3.2's first listed gap: `prewarProfessionId` used to be `backgroundId` copied across, so
+        // every officer's "pre-war occupation" was their officer training.
+        val facts =
+            HeroLifePath.generate(
+                HeroLifePath.Context(
+                    seed = 7,
+                    country = SOVIET_COUNTRY,
+                    serviceYear = 1942,
+                    unitClass = UnitClass.TANK.value,
+                    rankId = "captain",
+                    emergenceEventId = "x",
+                ),
+            )
+
+        assertTrue(
+            HeroBackgrounds.byId(facts.prewarProfessionId.orEmpty()) == null,
+            "the occupation is civilian, not a military background: ${facts.prewarProfessionId}",
+        )
+        assertTrue(facts.civilianEducationId != null, "and civilian schooling is its own fact")
+    }
+
+    private companion object {
+        /** USSR (basekorp/adlerkorps) — the id the shipped Soviet campaigns author for player 0. */
+        const val SOVIET_COUNTRY = 61
     }
 }

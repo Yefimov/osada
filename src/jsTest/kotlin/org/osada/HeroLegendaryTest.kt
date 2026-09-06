@@ -5,12 +5,15 @@ import org.osada.hero.EmergenceEvent
 import org.osada.hero.FormationId
 import org.osada.hero.HeroBackgrounds
 import org.osada.hero.HeroBalance
+import org.osada.hero.HeroEmergenceAnnouncement
+import org.osada.hero.HeroId
 import org.osada.hero.HeroPotential
 import org.osada.hero.HeroRoster
 import org.osada.hero.HeroSerializer
 import org.osada.hero.LeaderAcquisitionService
 import org.osada.hero.LegacyTraitMapping
 import org.osada.hero.LegendaryHeroPool
+import org.osada.hero.ProceduralHeroGenerator
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
@@ -80,7 +83,9 @@ class HeroLegendaryTest {
                 Triple("aljf.json", 196, 1848),
                 Triple("rhu.json", 187, 1919),
                 Triple("novemberrevolution.json", 188, 1918),
-                Triple("acampdf2.json", 144, 1917),
+                // 103, not the pre-rework 144: the campaign carries a Red Russian core from Zborov
+                // onwards, and 1917 is the year its FIRST scenario reserves in.
+                Triple("acampdf2.json", 103, 1917),
                 Triple("gce.json", 226, 1936),
                 Triple("spa.json", 310, -72),
                 Triple("nvc.json", 276, 1964),
@@ -148,6 +153,69 @@ class HeroLegendaryTest {
 
         assertEquals(LeaderType.FEROCIOUS_DEFENSE, hero.signatureTrait)
         assertTrue(hero.signatureTrait != background.grantedTrait)
+    }
+
+    /**
+     * The rule above, for the WHOLE roster rather than the one hero it was first found on.
+     *
+     * A legendary carries two effective traits: their background's, and their signature. When the
+     * two are the same enum the officer silently gets ONE, and the emergence box announced it
+     * twice -- "Tank Killer" and, under it, "Tank Killer" (Pham Van Cuong, Raid at Binh Gia, user
+     * report 2026-09-05; eight of the 71 authored heroes had the collision). [ProceduralHeroGenerator]
+     * has always resolved this for generated heroes; nothing was checking the authored ones.
+     */
+    @Test
+    fun noAuthoredLegendaryRepeatsItsOwnBackgroundTraitAsItsSignature() {
+        val collisions =
+            LegendaryHeroPool.ALL.filter { hero ->
+                HeroBackgrounds.byId(hero.backgroundId)?.grantedTrait == hero.signatureTrait
+            }
+        assertEquals(
+            emptyList(),
+            collisions.map { "${it.id} (${it.signatureTrait})" },
+            "a legendary whose signature equals their background's trait has one trait, not two",
+        )
+    }
+
+    /**
+     * The other half of the "Tank Killer, and also Tank Killer" report: the box itself listed the
+     * background trait and then every learned trait, unfiltered, so any future collision (or a
+     * hero who LEARNS their background's trait through progression) would print it twice again.
+     */
+    @Test
+    fun theEmergenceBoxNeverListsTheSameTraitTwice() {
+        val formation = formation(UnitClass.ANTI_TANK.value)
+        val background = assertNotNull(HeroBackgrounds.forUnitClass(UnitClass.ANTI_TANK.value))
+        val (definition, state) =
+            ProceduralHeroGenerator.generate(
+                ProceduralHeroGenerator.Request(
+                    heroId = HeroId("H-DUP"),
+                    seed = 7,
+                    country = 1,
+                    unitClass = UnitClass.ANTI_TANK.value,
+                    unitExperience = 120,
+                    event = EmergenceEvent.DISTINGUISHED_SERVICE,
+                    formationId = formation.id,
+                    serviceYear = 1942,
+                ),
+            )
+        // Reproduces the shipped collision exactly: the officer's only learned trait IS the one
+        // their background already grants.
+        val collided =
+            state.copy(learnedTraitIds = setOf(LegacyTraitMapping.toTraitId(background.grantedTrait)))
+        val announcement =
+            HeroEmergenceAnnouncement.from(
+                LeaderAcquisitionService.EmergenceResult.Emerged(
+                    definition = definition,
+                    state = collided,
+                    event = EmergenceEvent.DISTINGUISHED_SERVICE,
+                    guaranteed = false,
+                ),
+                formation,
+            )
+
+        val titles = announcement.effects.map { it.first }
+        assertEquals(titles.distinct(), titles, "the emergence box repeated a trait: $titles")
     }
 
     @Test

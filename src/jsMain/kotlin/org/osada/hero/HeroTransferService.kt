@@ -136,7 +136,7 @@ internal object HeroTransferService {
         console.log(
             "[OSADA] commander transfer: ${heroId.value} -> ${formationId.value}" +
                 (incumbent?.let { " (exchange with ${it.heroId.value})" } ?: "") +
-                "; both settle in for ${HeroBalance.DEFAULT.transferSettlingTurns} turns",
+                "; settling ${HeroFamiliarity.settlingTurnsFor(hero, formationId)} turn(s)",
         )
         return true
     }
@@ -173,6 +173,9 @@ internal object HeroTransferService {
                             HeroCampaign.currentTurn(),
                             HeroCampaign.currentDate(),
                             null,
+                            // §5.3: the departing officer by id, so the Formations tab can print a
+                            // succession rather than an anonymous "commander departed".
+                            heroId = formation.assignedHeroId,
                         ),
             ),
         )
@@ -188,21 +191,61 @@ internal object HeroTransferService {
         val scenarioId = HeroCampaign.currentScenarioLabel()
         val turn = HeroCampaign.currentTurn()
         val date = HeroCampaign.currentDate()
+        // Read BEFORE the event is appended: the new appointment would otherwise be in the history
+        // this reads, and every transfer would look like a return.
+        val returning = HeroFamiliarity.hasCommandedBefore(hero, formation.id)
+        val settlingTurns = HeroFamiliarity.settlingTurnsFor(hero, formation.id)
+        val predecessor = formation.assignedHeroId?.takeIf { it != hero.heroId }
         roster.updateState(
             hero.copy(
                 status = HeroStatus.ACTIVE,
                 assignedFormationId = formation.id,
-                serviceEvents = hero.serviceEvents + HeroEvent("transferred", scenarioId, turn, date, null),
+                serviceEvents =
+                    hero.serviceEvents +
+                        HeroEvent(
+                            if (returning) "returned" else "transferred",
+                            scenarioId,
+                            turn,
+                            date,
+                            null,
+                            formationId = formation.id,
+                            relatedHeroId = predecessor,
+                        ),
                 settlingScenarioId = scenarioId,
-                settlingUntilTurn = turn + HeroBalance.DEFAULT.transferSettlingTurns,
+                settlingUntilTurn = turn + settlingTurns,
             ),
         )
         roster.putFormation(
             formation.copy(
                 assignedHeroId = hero.heroId,
                 history =
-                    formation.history + FormationEvent("commander_transferred", scenarioId, turn, date, null),
+                    formation.history +
+                        FormationEvent(
+                            if (returning) "commander_returned" else "commander_transferred",
+                            scenarioId,
+                            turn,
+                            date,
+                            null,
+                            heroId = hero.heroId,
+                            relatedHeroId = predecessor,
+                        ),
             ),
         )
+        // §6.4: predecessor/successor exists only for a LEGAL TRANSFER on a formation that survives
+        // and keeps its id. It is deliberately not created when a commander dies with their
+        // formation -- the runtime has no reconstitution mechanic, so there is no continuous unit
+        // for a successor to succeed to, and inventing one is the fabricated lineage §6.4 forbids.
+        predecessor?.let { previous ->
+            HeroAssociations.link(
+                roster = roster,
+                hero = hero.heroId,
+                other = previous,
+                type = HeroAssociation.Type.PREDECESSOR,
+                sourceEventId = "commander_transferred",
+                scenarioId = scenarioId,
+                date = date,
+                formationId = formation.id,
+            )
+        }
     }
 }

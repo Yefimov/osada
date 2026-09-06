@@ -96,12 +96,19 @@ internal object HeroSerializer {
 
     // ------------------------------------------------------------------ heroes
 
-    /** Identity and career are emitted into one object; they are only split in memory. */
+    /**
+     * Identity and career are emitted into one object; they are only split in memory.
+     *
+     * A missing [state] is defaulted ONCE into an empty career rather than field by field. The
+     * per-field form needed an elvis operator per key and grew one with every field the career
+     * gained, until the method's branch count was mostly punctuation.
+     */
     private fun serializeHero(
         definition: HeroDefinition,
         state: HeroState?,
-    ): dynamic =
-        json(
+    ): dynamic {
+        val career = state ?: HeroState(heroId = definition.id, rankId = "")
+        return json(
             Pair("id", definition.id.value),
             Pair("origin", definition.origin.name),
             Pair("name", definition.displayName),
@@ -113,28 +120,37 @@ internal object HeroSerializer {
             Pair("portraitFemale", authoredGender(definition.portrait.female)),
             Pair("portraitPool", definition.portrait.poolId.orEmpty()),
             Pair("bio", HeroValueCodec.serializeBiography(definition.biographyFacts)),
-            Pair("rank", state?.rankId.orEmpty()),
-            Pair("status", (state?.status ?: HeroStatus.ACTIVE).name),
-            Pair("potential", (state?.potential ?: HeroPotential.LINE_OFFICER).name),
-            Pair("renown", (state?.renown ?: HeroRenown.UNKNOWN).name),
-            Pair("xp", state?.experience ?: 0),
-            Pair("formation", state?.assignedFormationId?.value ?: ""),
-            Pair("traits", (state?.learnedTraitIds ?: emptySet()).toTypedArray()),
-            Pair("attributes", HeroValueCodec.serializeAttributes(state?.attributes ?: CommandAttributes.BASELINE)),
-            Pair("evidence", HeroValueCodec.serializeEvidence(state?.specializationEvidence ?: emptyMap())),
-            Pair("promotions", state?.promotionsAwarded ?: 0),
-            Pair("settling", serializeSettling(state)),
-            Pair("nickname", state?.nicknameId.orEmpty()),
-            Pair("medals", (state?.medals ?: emptyList()).map(HeroEventCodec::serializeHeroMedal).toTypedArray()),
+            Pair("rank", career.rankId),
+            Pair("status", career.status.name),
+            Pair("potential", career.potential.name),
+            Pair("renown", career.renown.name),
+            Pair("xp", career.experience),
+            Pair("formation", career.assignedFormationId?.value.orEmpty()),
+            Pair("traits", career.learnedTraitIds.toTypedArray()),
+            Pair("attributes", HeroValueCodec.serializeAttributes(career.attributes)),
+            Pair("evidence", HeroValueCodec.serializeEvidence(career.specializationEvidence)),
+            Pair("promotions", career.promotionsAwarded),
+            Pair("settling", serializeSettling(career)),
+            Pair("nickname", career.nicknameId.orEmpty()),
+            Pair("medals", career.medals.map(HeroEventCodec::serializeHeroMedal).toTypedArray()),
             Pair(
                 "injuries",
-                (state?.injuries ?: emptyList()).map(HeroEventCodec::serializeHeroInjury).toTypedArray(),
+                career.injuries.map(HeroEventCodec::serializeHeroInjury).toTypedArray(),
             ),
             Pair(
                 "events",
-                (state?.serviceEvents ?: emptyList()).map(HeroEventCodec::serializeHeroEvent).toTypedArray(),
+                career.serviceEvents.map(HeroEventCodec::serializeHeroEvent).toTypedArray(),
+            ),
+            Pair(
+                "associations",
+                career.associations.map(HeroRecordCodec::serializeAssociation).toTypedArray(),
+            ),
+            Pair(
+                "distinctions",
+                career.distinctions.map(HeroRecordCodec::serializeDistinction).toTypedArray(),
             ),
         )
+    }
 
     /**
      * Settling-in after a commander transfer (§1.10), as its own object.
@@ -144,10 +160,10 @@ internal object HeroSerializer {
      * penalty in the next scenario. A save written before transfers existed has no `settling` key
      * at all, which [readSettling] reads as "settled" — which every commander in such a save is.
      */
-    private fun serializeSettling(state: HeroState?): dynamic =
+    private fun serializeSettling(state: HeroState): dynamic =
         json(
-            Pair("scenario", state?.settlingScenarioId.orEmpty()),
-            Pair("untilTurn", state?.settlingUntilTurn ?: 0),
+            Pair("scenario", state.settlingScenarioId.orEmpty()),
+            Pair("untilTurn", state.settlingUntilTurn),
         )
 
     /** [serializeSettling]'s inverse: (scenario id or null, first turn the traits count again). */
@@ -239,6 +255,8 @@ internal object HeroSerializer {
             medals = BriefingDynamic.mapArray(item?.medals, HeroEventCodec::readHeroMedal),
             injuries = BriefingDynamic.mapArray(item?.injuries, HeroEventCodec::readHeroInjury),
             serviceEvents = BriefingDynamic.mapArray(item?.events, HeroEventCodec::readHeroEvent),
+            associations = BriefingDynamic.mapArray(item?.associations, HeroRecordCodec::readAssociation),
+            distinctions = BriefingDynamic.mapArray(item?.distinctions, HeroRecordCodec::readDistinction),
         )
     }
 }

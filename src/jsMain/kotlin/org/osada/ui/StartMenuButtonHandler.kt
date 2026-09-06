@@ -24,6 +24,8 @@ internal class StartMenuButtonHandler(
             "tutorial" -> onTutorialButton()
             "continuegame" -> {
                 makeHidden("startmenu")
+                // The other way out of the pause menu; see MainMenuButtonHandler.onOptionsButton.
+                MessageDialogs.resumeDynamicMessages()
                 byId("options")?.let { toggleButton(it, false) }
             }
 

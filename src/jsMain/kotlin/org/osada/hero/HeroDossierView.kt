@@ -49,7 +49,38 @@ data class LeaderDossierView(
     val medals: List<Pair<String, String>>,
     val injuries: List<String>,
     val inMemoriam: Boolean,
+    /**
+     * The compact `Personal record` block of the biography design's §13.1 — origin, schooling,
+     * entry into service, and the optional political/prior-service line.
+     *
+     * Split OUT of [serviceRecord], which used to open with these sentences. They are different
+     * things and the design separates them: this is who the officer was before the campaign and
+     * never changes, while [serviceRecord] is what happened during it and grows every battle.
+     * Mixing them meant a long campaign buried the biography under forty dated events.
+     */
+    val personalRecord: List<String>,
     val serviceRecord: List<String>,
+    /**
+     * §5.2's restrained tenure state for the formation this officer holds now — `Newly appointed`,
+     * `Established commander`, `Long-serving commander`, `Returned to the formation`.
+     *
+     * A presentation state, not a rarity tier and not a trait: §5.1 deliberately grants no combat
+     * bonus for long tenure, so a player can still afford to move a favourite commander.
+     */
+    val tenureLabel: String?,
+    /** §13.3: formations this officer has commanded before, most recent first. */
+    val previousFormations: List<String>,
+    /**
+     * §13.4's `Service associations` — at most two lines, each naming the other officer and the
+     * event that created the link. Empty for most commanders, and that is the designed state
+     * rather than missing data (§6.1).
+     */
+    val associations: List<String>,
+    /**
+     * §12.4's presentation of the highest distinction: the title, the components that are
+     * period-correct for its date, and §12.5's citation. Empty for almost every officer.
+     */
+    val distinctions: List<HeroDistinctionLine>,
     val formation: FormationView?,
     /** Set while a transferred commander is still learning this formation and grants it none of
      *  their traits (§1.10). §26 forbids hidden modifiers, so a suppressed bonus has to say so. */
@@ -109,28 +140,44 @@ object HeroDisplay {
 
     fun status(s: HeroStatus): String = I18n.t("hero.status.${s.name.lowercase()}")
 
-    /** The roster tab a status belongs under (§14.3). */
+    /**
+     * The roster tab a status belongs under (§14.3), as an **ID** — never display text.
+     *
+     * It used to return `I18n.t(...)`, and [CommanderRosterPresenter] then built
+     * `"hero.roster.tab." + label.lowercase()` from it to look the label up again. In English that
+     * round trip happened to close ("Active" -> `active`), so the bug was invisible; in Russian it
+     * produced `hero.roster.tab.в строю`, which is no key at all, and the raw key was printed on
+     * every tab of the Headquarters roster.
+     *
+     * Returning the id makes the round trip impossible: there is nothing to translate back.
+     */
     fun rosterTab(s: HeroStatus): String =
-        I18n.t(
-            when (s) {
-                HeroStatus.ACTIVE -> "hero.roster.tab.active"
-                HeroStatus.RESERVE, HeroStatus.RETIRED -> "hero.roster.tab.reserve"
-                HeroStatus.WOUNDED, HeroStatus.SERIOUSLY_WOUNDED -> "hero.roster.tab.wounded"
-                HeroStatus.MISSING, HeroStatus.CAPTURED -> "hero.roster.tab.missing"
-                HeroStatus.KILLED -> "hero.roster.tab.fallen"
-            },
+        when (s) {
+            HeroStatus.ACTIVE -> ROSTER_TAB_ACTIVE
+            HeroStatus.RESERVE, HeroStatus.RETIRED -> ROSTER_TAB_RESERVE
+            HeroStatus.WOUNDED, HeroStatus.SERIOUSLY_WOUNDED -> ROSTER_TAB_WOUNDED
+            HeroStatus.MISSING, HeroStatus.CAPTURED -> ROSTER_TAB_MISSING
+            HeroStatus.KILLED -> ROSTER_TAB_FALLEN
+        }
+
+    /** One tab's label in the current locale. The only place a tab id becomes text. */
+    fun rosterTabLabel(tabId: String): String = I18n.t("hero.roster.tab.$tabId")
+
+    /** The tab order the roster renders (§14.3). Ids, in display order. */
+    val ROSTER_TABS =
+        listOf(
+            ROSTER_TAB_ACTIVE,
+            ROSTER_TAB_RESERVE,
+            ROSTER_TAB_WOUNDED,
+            ROSTER_TAB_MISSING,
+            ROSTER_TAB_FALLEN,
         )
 
-    /** The tab order the roster renders (§14.3). */
-    val ROSTER_TABS: List<String>
-        get() =
-            listOf(
-                I18n.t("hero.roster.tab.active"),
-                I18n.t("hero.roster.tab.reserve"),
-                I18n.t("hero.roster.tab.wounded"),
-                I18n.t("hero.roster.tab.missing"),
-                I18n.t("hero.roster.tab.fallen"),
-            )
+    private const val ROSTER_TAB_ACTIVE = "active"
+    private const val ROSTER_TAB_RESERVE = "reserve"
+    private const val ROSTER_TAB_WOUNDED = "wounded"
+    private const val ROSTER_TAB_MISSING = "missing"
+    private const val ROSTER_TAB_FALLEN = "fallen"
 
     fun disposition(d: HeroCasualtyService.Disposition): String = I18n.t("hero.disposition.${d.name.lowercase()}")
 
@@ -192,6 +239,7 @@ object HeroDossierAssembler {
         formation: CoreFormation?,
         unitExperience: Int?,
         settlingTurns: Int = 0,
+        directory: HeroDirectory = HeroDirectory.EMPTY,
     ): LeaderDossierView {
         val background = HeroBackgrounds.byId(definition.backgroundId)
         val backgroundTrait = background?.grantedTrait
@@ -240,8 +288,17 @@ object HeroDossierAssembler {
                     )
                 },
             inMemoriam = state.status == HeroStatus.KILLED,
-            serviceRecord = serviceLines(state, definition),
-            formation = formation?.let { formationView(it, unitExperience) },
+            personalRecord = HeroDossierLines.personalRecord(definition, state),
+            serviceRecord = HeroDossierLines.serviceRecord(state, directory, state.promotionsAwarded),
+            tenureLabel = formation?.let { HeroDossierLines.tenure(state) },
+            previousFormations =
+                HeroFamiliarity
+                    .previousFormations(state)
+                    .reversed()
+                    .mapNotNull(directory::formation),
+            associations = HeroDossierLines.associations(state, directory),
+            distinctions = state.distinctions.map(HeroDossierLines::distinction),
+            formation = formation?.let { formationView(it, unitExperience, directory) },
             settlingNote = settlingNote(settlingTurns),
             portrait =
                 PortraitComposerV2.forHero(
@@ -283,30 +340,31 @@ object HeroDossierAssembler {
             status = state.status,
             statusLabel = HeroDisplay.status(state.status),
             formationName = formationName,
+            // §12.6's first listed effect: the highest distinction qualifies an officer for the
+            // Hall of Fame immediately, without also waiting on a renown tier. It is the only
+            // effect the title has outside presentation -- no combat modifier of any kind.
             notable =
                 state.renown == HeroRenown.HERO ||
                     state.renown == HeroRenown.LEGEND ||
                     state.potential == HeroPotential.AUTHORED_LEGENDARY ||
-                    state.status == HeroStatus.KILLED,
+                    state.status == HeroStatus.KILLED ||
+                    state.distinctions.isNotEmpty(),
             settlingLabel = settlingLabel(settlingTurns),
         )
 
     private fun formationView(
         formation: CoreFormation,
         unitExperience: Int?,
+        directory: HeroDirectory,
     ): FormationView =
         FormationView(
             name = formation.displayName,
             recognitionStatus =
                 RecognitionService.coarseStatus(formation) ?: I18n.t("hero.recognition.status.commander_assigned"),
             unitExperience = unitExperience,
-            battleHonors = formation.battleHonors,
+            battleHonors = HeroHonours.display(formation.battleHonors),
             medals = formation.medals.map { it.medalId },
-            history =
-                formation.history.map {
-                    HeroEventDisplay.title(it.eventId) +
-                        HeroEventDisplay.context(it.scenarioId, it.turn, it.date, it.location)
-                },
+            history = HeroDossierLines.formationHistory(formation, directory),
             attachments = formation.attachmentIds,
         )
 
@@ -326,33 +384,4 @@ object HeroDossierAssembler {
                     I18n.t("hero.evidence.${it.name.lowercase()}") to e.value
                 }
             }.sortedByDescending { it.second }
-
-    private fun serviceLines(
-        state: HeroState,
-        definition: HeroDefinition,
-    ): List<String> =
-        buildList {
-            addAll(
-                HeroBiographyNarrator.narrate(
-                    definition.biographyFacts,
-                    state.rankId,
-                    definition.portrait.seed,
-                    definition.portrait.female,
-                ),
-            )
-            state.serviceEvents.forEach {
-                add(
-                    HeroEventDisplay.title(it.eventId) +
-                        HeroEventDisplay.context(it.scenarioId, it.turn, it.date, it.location) + ".",
-                )
-            }
-            if (state.promotionsAwarded > 0) {
-                add(
-                    I18n.t(
-                        "hero.service.promotions",
-                        mapOf("count" to state.promotionsAwarded),
-                    ),
-                )
-            }
-        }
 }

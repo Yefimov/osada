@@ -31,6 +31,14 @@ internal object LegendaryHeroPool {
 
     data class LegendaryHero(
         val id: String,
+        /**
+         * The officer's NAME, with no rank or title in it.
+         *
+         * Every surface composes `"${rank} ${name}"` from [HeroState.rankId] — nine of them — so a
+         * title baked into this field was printed twice: the Headquarters roster read
+         * "Капитан Captain Alexei Serebryakov". It was also frozen, and stopped agreeing with the
+         * officer the moment they were promoted.
+         */
         val name: String,
         val campaignIds: Set<String>,
         val nationIds: Set<Int>,
@@ -129,25 +137,28 @@ internal object LegendaryHeroPool {
         request: ProceduralHeroGenerator.Request,
     ): Pair<HeroDefinition, HeroState> {
         val signatureId = LegacyTraitMapping.toTraitId(hero.signatureTrait)
+        val portraitSeed = portraitSeedFor(request.seed, hero.female)
         val definition =
             HeroDefinition(
                 id = request.heroId,
                 origin = HeroOrigin.AUTHORED_FICTIONAL,
                 displayName = hero.name,
                 backgroundId = hero.backgroundId,
-                biographyFacts =
-                    HeroBiographyFacts(
-                        birthYear = request.serviceYear?.let { it - LEGENDARY_AGE },
-                        prewarProfessionId = hero.backgroundId,
-                        emergenceEventId = request.event.eventId,
-                    ),
+                // An authored legendary gets a generated life path like anyone else, with their
+                // AUTHORED facts kept: the age is fixed at [LEGENDARY_AGE] rather than rolled, and
+                // the pack fills only the civilian half nobody hand-wrote. Before this, the whole
+                // dossier of the most memorable officer in a campaign said nothing but a birth year
+                // and their own military background copied into the "pre-war occupation" field.
+                // The result still passes [HeroChronology] -- that is the design's rule for an
+                // authored biography, and `HeroBiographyPropertyTest` asserts it for every one.
+                biographyFacts = authoredBiography(hero, request),
                 // The composed layer stack is kept even though a painting exists: it is the fallback
                 // if the asset is ever missing (see HeroPortraitArt), so the dossier degrades to a
                 // procedural face rather than to an empty frame.
                 portrait =
                     PortraitComposerV2
                         .composeFor(
-                            seed = request.seed,
+                            seed = portraitSeed,
                             unitClass = request.unitClass,
                             rankId = hero.startingRankId,
                             birthYear = request.serviceYear?.let { it - LEGENDARY_AGE },
@@ -168,5 +179,57 @@ internal object LegendaryHeroPool {
         return definition to state
     }
 
+    /**
+     * The authored hero's life path: [HeroLifePath] over their own campaign context, with the
+     * authored birth year substituted back in so the age stays the one the roster states.
+     */
+    private fun authoredBiography(
+        hero: LegendaryHero,
+        request: ProceduralHeroGenerator.Request,
+    ): HeroBiographyFacts {
+        val birthYear = request.serviceYear?.let { it - LEGENDARY_AGE }
+        val generated =
+            HeroLifePath.generate(
+                HeroLifePath.Context(
+                    seed = request.seed,
+                    country = request.country,
+                    serviceYear = request.serviceYear,
+                    unitClass = request.unitClass,
+                    rankId = hero.startingRankId,
+                    emergenceEventId = request.event.eventId,
+                ),
+            )
+        return generated.copy(birthYear = birthYear)
+    }
+
+    /**
+     * A portrait seed whose ROLLED gender agrees with the hero's authored one.
+     *
+     * [PortraitComposerV2] takes gender from the seed alone, at a 12% female chance. That was
+     * harmless while every authored legendary had a painting — the composed stack was only a
+     * never-seen fallback. It stopped being harmless when the 2026-09-04 expansion shipped heroes
+     * whose painting does not exist yet: an authored woman would then be *drawn* as a man while her
+     * name, her pronouns and [PortraitComposition.female] all said otherwise. That is §4.11's defect
+     * arriving through the layer stack instead of through the prose.
+     *
+     * Nudging the seed rather than adding a gender parameter keeps the fix inside the authored path:
+     * procedural heroes must go on rolling their own gender, and the composer is left alone. The
+     * walk is deterministic (same request, same seed) and short — a female seed is ~8 steps away on
+     * average — and the cap only bounds a search that has never needed more than a few dozen steps.
+     */
+    private fun portraitSeedFor(
+        seed: Int,
+        female: Boolean,
+    ): Int {
+        val wanted = if (female) "female" else "male"
+        var candidate = seed
+        repeat(PORTRAIT_SEED_SEARCH_LIMIT) {
+            if (PortraitComposerV2.genderFor(candidate) == wanted) return candidate
+            candidate += 1
+        }
+        return seed
+    }
+
     private const val LEGENDARY_AGE = 30
+    private const val PORTRAIT_SEED_SEARCH_LIMIT = 512
 }

@@ -168,6 +168,13 @@ internal object LeaderDossierPresenter {
         parent: HTMLElement,
         view: LeaderDossierView,
     ) {
+        if (view.personalRecord.isNotEmpty()) {
+            // §13.1: the biography leads the Overview, above the training and traits, because it is
+            // what tells the player who this officer is before it tells them what he is good at.
+            section(parent, I18n.t("hero.dossier.section.personal_record")) { s ->
+                view.personalRecord.forEach { line -> addText(s, "osada-hero-line", line) }
+            }
+        }
         view.background?.let { (title, desc) ->
             section(parent, I18n.t("hero.dossier.section.background")) { s -> keyValue(s, title, desc) }
         }
@@ -226,10 +233,31 @@ internal object LeaderDossierPresenter {
         }
     }
 
+    /**
+     * §12.4: the highest distinction leads the Medals tab, above the badge list, because it is a
+     * title rather than another badge. The Gold Star count is repeated conferral of the SAME
+     * distinction, never a stack of bonuses.
+     */
+    private fun distinctions(
+        parent: HTMLElement,
+        view: LeaderDossierView,
+    ) {
+        if (view.distinctions.isEmpty()) return
+        section(parent, I18n.t("hero.dossier.section.distinction")) { s ->
+            view.distinctions.forEach { distinction ->
+                val stars = "★".repeat(distinction.goldStars)
+                addText(s, "osada-hero-distinction-title", (distinction.title + " " + stars).trim())
+                distinction.components?.let { addText(s, "osada-hero-line", it) }
+                addText(s, "osada-hero-line", distinction.citation)
+            }
+        }
+    }
+
     private fun medals(
         parent: HTMLElement,
         view: LeaderDossierView,
     ) {
+        distinctions(parent, view)
         section(parent, I18n.t("hero.dossier.section.medals")) { s ->
             if (view.medals.isEmpty()) empty(s, I18n.t("hero.dossier.medals.empty"))
             view.medals.forEach { (title, scenario) ->
@@ -250,6 +278,9 @@ internal object LeaderDossierPresenter {
             return
         }
         section(parent, formation.name) { s ->
+            // §5.2: a presentation state, printed beside recognition rather than as its own tier
+            // badge -- it is how long this officer has held THIS formation, not how good they are.
+            view.tenureLabel?.let { keyValue(s, I18n.t("hero.dossier.tenure.label"), it) }
             keyValue(s, I18n.t("hero.dossier.recognition.label"), formation.recognitionStatus)
             formation.unitExperience?.let {
                 keyValue(s, I18n.t("hero.dossier.unit_experience.label"), it.toString())
@@ -259,6 +290,20 @@ internal object LeaderDossierPresenter {
             }
             if (formation.attachments.isNotEmpty()) {
                 keyValue(s, I18n.t("hero.dossier.attachments.label"), formation.attachments.joinToString(", "))
+            }
+        }
+        if (view.associations.isNotEmpty()) {
+            // §13.4: a short section, not a social-network screen. Names use textContent, so a hero
+            // name can never carry markup into the dossier.
+            section(parent, I18n.t("hero.dossier.section.associations")) { s ->
+                view.associations.forEach { line -> addText(s, "osada-hero-line", line) }
+            }
+        }
+        if (view.previousFormations.isNotEmpty()) {
+            // §13.3: where this officer served before. Named from stored ids, so a brigade that
+            // shares a display name with another cannot be confused for it.
+            section(parent, I18n.t("hero.dossier.section.previous_formations")) { s ->
+                view.previousFormations.forEach { name -> addText(s, "osada-hero-line", name) }
             }
         }
         if (formation.history.isNotEmpty()) {

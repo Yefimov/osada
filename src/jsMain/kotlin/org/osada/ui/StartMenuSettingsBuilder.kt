@@ -178,7 +178,10 @@ internal object StartMenuSettingsBuilder {
         onInput: () -> Unit,
     ): HTMLElement {
         val container = addTag("smSettingsContainer", "div")
-        container.className = "settingContainer left"
+        // The `--slider` modifier is what lets the phone stylesheet give these rows (and only
+        // these) a full-width control line under the label; a checkbox row still fits beside its
+        // label at 390px, a stepper/slider/stepper triple does not.
+        container.className = "settingContainer settingContainer--slider left"
         val textDiv = addTag(container, "div")
         textDiv.className = "settingText left"
         val label = I18n.t(labelKey)
@@ -187,7 +190,7 @@ internal object StartMenuSettingsBuilder {
         container.title = help
         textDiv.title = help
         val sliderWrap = addTag(container, "div")
-        sliderWrap.style.cssFloat = "right"
+        sliderWrap.className = "settingSlider"
         sliderWrap.title = help
         UILayout.createSlider(sliderWrap, id, value, step, min, max, onInput)
         return container
@@ -410,6 +413,9 @@ internal object StartMenuSettingsBuilder {
             if (GameHolder.instance?.gameStarted == true) {
                 makeHidden("smMain")
                 makeHidden("startmenu")
+                // Third way back into the battle; see MainMenuButtonHandler.onOptionsButton for
+                // why the queued popups are held while any of the menu surfaces is up.
+                MessageDialogs.resumeDynamicMessages()
                 byId("options")?.let { toggleButton(it, false) }
             } else {
                 makeVisible("startmenu")
