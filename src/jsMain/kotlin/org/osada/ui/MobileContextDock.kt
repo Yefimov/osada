@@ -14,18 +14,25 @@ internal object MobileContextDock {
         dock.id = "osadaMobileContextDock"
         dock.className = "osada-mobile-context"
 
+        // Every readout below is bound to a tap panel because it is the ONLY copy a phone has: the
+        // top bar's originals are `display: none` here, and with them went the hover handlers that
+        // explained them. Rebinding is unnecessary -- these elements are created once and only
+        // their contents are rewritten, so the handlers outlive every refresh.
         val turn = addTag(dock, "div")
         turn.id = "osadaMobileTurn"
         turn.className = "osada-mobile-context__turn"
+        VictoryDeadlineTooltip.attachTap(turn)
 
         val weather = addTag(dock, "div")
         weather.id = "osadaMobileWeather"
         weather.className = "osada-mobile-context__weather"
+        TapTip.attach(weather, GameplayLocalization.WEATHER_TIP_ID, GameplayLocalization::showWeatherTooltip)
 
         val location = addTag(dock, "div")
         location.id = "osadaMobileLocation"
         location.className = "osada-mobile-context__location"
         location.title = I18n.t("hud.status.location.help")
+        TapTip.fromTitle(location)
 
         // Second rail line: the scenario's in-game date and name. The phone top bar hides
         // `.osada-tb-op` because a title truncated to one letter is worse than no title, so this
@@ -34,6 +41,15 @@ internal object MobileContextDock {
         scenario.id = "osadaMobileScenario"
         scenario.className = "osada-mobile-context__scenario"
         scenario.title = I18n.t("hud.status.scenario.help")
+        // Not `fromTitle`: `updateScenario` overwrites this element's `title` every refresh with
+        // the date and operation name so the truncated line stays readable in full, which would
+        // leave the panel echoing the text the reader just tapped. Heading from that line, body
+        // from the help string it displaced.
+        TapTip.attachHelp(
+            scenario,
+            heading = { scenario.textContent.orEmpty() },
+            body = { I18n.t("hud.status.scenario.help") },
+        )
 
         val heroes = addTag(dock, "div")
         heroes.id = "osadaMobileHeroes"

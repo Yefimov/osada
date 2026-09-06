@@ -48,6 +48,9 @@ import kotlin.js.Date
  * supported surface is refreshed by stable element ids/classes after its normal renderer runs.
  */
 internal object GameplayLocalization {
+    /** Shared with [StatusBarController] and [MobileContextDock], which open and close the same
+     *  singleton panel from their own elements. */
+    internal const val WEATHER_TIP_ID = "osadaWeatherTip"
     private const val WEATHER_TOOLTIP_FALLBACK_TOP = 40.0
     private const val WEATHER_TOOLTIP_GAP_PX = 6
 
@@ -217,7 +220,7 @@ internal object GameplayLocalization {
                 "${GameText.ground(ground)}</span>"
             element.title = ""
             element.onmouseenter = { _: MouseEvent -> showWeatherTooltip(element) }
-            element.onmouseleave = { _: MouseEvent -> byId("osadaWeatherTip")?.style?.display = "none" }
+            element.onmouseleave = { _: MouseEvent -> AnchoredTip.hide(WEATHER_TIP_ID) }
             MobileContextDock.updateWeather(
                 element.innerHTML,
                 "${GameText.weatherShort(atmos)} · ${GameText.ground(ground)}",
@@ -229,8 +232,8 @@ internal object GameplayLocalization {
     internal fun showWeatherTooltip(anchor: HTMLElement) {
         if (GameHolder.instance?.scenario == null) return
         val tip =
-            byId("osadaWeatherTip") ?: addTag("mainbody", "div").also {
-                it.id = "osadaWeatherTip"
+            byId(WEATHER_TIP_ID) ?: addTag("mainbody", "div").also {
+                it.id = WEATHER_TIP_ID
                 it.className = "osada-wtip"
             }
         tip.innerHTML = weatherTooltipHtml()
