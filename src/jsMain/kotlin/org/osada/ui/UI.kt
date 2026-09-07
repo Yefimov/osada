@@ -145,6 +145,9 @@ class UI(
         CombatLog.reset()
         HudLog.reset()
         TurnSleep.reset()
+        // Unit ids restart with each battle, so the folded card's memory of the last unit it
+        // showed would resolve to an unrelated formation of the new one.
+        UnitCardCollapse.forget()
         UICombatLog.forceClose()
         makeHidden("statusbar-extension")
         UIBuilder.closeDossier()

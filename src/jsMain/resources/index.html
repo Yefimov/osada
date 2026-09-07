@@ -45,6 +45,34 @@
     <link href="css/mobile.css" rel="stylesheet" type="text/css">
 </head>
 <body id="mainbody">
+<!-- Boot curtain. Static markup, because the whole point is to be on screen before anything the
+     bundle does: `Main.kt` only starts on `window.load`, which waits for every image, font and
+     data script on this page, and only then are the i18n bundle, the equipment tables and the
+     image cache fetched. Until all of that finished the page showed its raw chrome -- an empty
+     `#statusbar` with the Turn Report button on it and grey underneath (reported 2026-09-07).
+     `Game.init` takes it down on both of its outcomes, restored battle and start menu. -->
+<div id="osadaBootCurtain" class="osada-loadcurtain osada-bootcurtain">
+    <div id="osadaBootText" class="osada-loadcurtain__text">Loading the application…</div>
+</div>
+<script>
+    // This line has to exist BEFORE the i18n bundle is fetched -- that fetch is part of what the
+    // curtain covers -- so it cannot come from ui.json and is the one string in the game kept
+    // here instead. It reads the same `osada-language` key `I18n` writes, then the browser's own
+    // languages; anything else keeps the English already in the markup.
+    (function () {
+        var lines = { ru: 'Идёт загрузка приложения…' };
+        var stored = null;
+        try { stored = localStorage.getItem('osada-language'); } catch (ignored) { stored = null; }
+        var tags = [stored].concat(Array.prototype.slice.call(navigator.languages || [navigator.language]));
+        for (var i = 0; i < tags.length; i++) {
+            var line = tags[i] && lines[String(tags[i]).slice(0, 2).toLowerCase()];
+            if (line) {
+                document.getElementById('osadaBootText').textContent = line;
+                break;
+            }
+        }
+    })();
+</script>
 <div id="ui-message" class="uiMessageBox"> <!-- Message popup -->
     <div id="title" class="uiMessageBoxTitle">Osada</div>
     <div id="message" class="uiMessageBoxBody">Turn-based strategy of great battles, based on the open-source OpenPanzer

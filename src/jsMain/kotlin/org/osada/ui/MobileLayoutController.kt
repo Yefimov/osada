@@ -39,6 +39,15 @@ internal object MobileLayoutController {
     /** Coarse primary pointer, i.e. finger-first interaction — drives target sizes and confirmations. */
     val isCoarsePointer: Boolean get() = matches(MEDIA_COARSE)
 
+    /** Taller than it is wide. The definition behind the `osada-orientation-portrait` body class,
+     *  read directly by the rare caller that must branch in Kotlin rather than in CSS. */
+    val isPortrait: Boolean
+        get() = ViewportMetricsService.current.let { it.width < it.height }
+
+    /** A phone held upright: the narrowest layout the game supports, and the only one with no room
+     *  for a sentence in the top bar (see `EndTurnFlow.onEndTurnClick`). */
+    val isPhonePortrait: Boolean get() = mode.isPhone && isPortrait
+
     fun install() {
         if (installed) return
         installed = true
@@ -85,7 +94,15 @@ internal object MobileLayoutController {
         lastWidth = metrics.width
         lastHeight = metrics.height
         lastDockHeight = metrics.bottomDockHeight
-        if (changed) relayoutMap()
+        if (changed) {
+            relayoutMap()
+            // The top bar's End Turn plate keeps its label only while the label still fits on
+            // screen (`ReadyUnitNavigator.updateEndTurnButton`), and that is a decision about the
+            // width the bar has just been given. Without this, a phone rotated into portrait kept
+            // the landscape label -- "Завершить · 24" hanging 13px off the right edge at 390px --
+            // and one rotated back kept the cut-down one for the rest of the turn.
+            GameHolder.instance?.ui?.updateTurnControls()
+        }
     }
 
     /** Called when the user changes the Mobile-interface preference; re-evaluates immediately. */
@@ -96,7 +113,7 @@ internal object MobileLayoutController {
 
     private fun applyBodyClasses() {
         val body = document.body ?: return
-        val landscape = ViewportMetricsService.current.width >= ViewportMetricsService.current.height
+        val landscape = !isPortrait
         val classes = body.classList
         classes.toggle("osada-layout-desktop", mode == LayoutMode.DESKTOP)
         classes.toggle("osada-layout-tablet", mode == LayoutMode.TABLET)

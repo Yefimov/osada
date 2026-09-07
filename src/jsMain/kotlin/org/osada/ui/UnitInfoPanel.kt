@@ -33,6 +33,11 @@ internal class UnitInfoPanel(
     }
 
     fun showUnitInfo(unit: GameUnit?) {
+        // Every path that fills the player card comes through here, so this is where the card's
+        // own fold/unfold learns what it was last showing (`UnitCardCollapse.subject`). A null
+        // clears the card without clearing that memory -- losing the unit is exactly the state
+        // the memory exists to survive.
+        UnitCardCollapse.remember(unit)
         statCard.showUnitInfo(unit)
         UnitIdentityPresenter.present(ui, unit)
         GameplayLocalization.refreshUnitInfo(unit)

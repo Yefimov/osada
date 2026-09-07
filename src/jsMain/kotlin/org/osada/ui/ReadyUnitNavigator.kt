@@ -1,11 +1,13 @@
 package org.osada.ui
 
+import kotlinx.browser.window
 import org.osada.PlayerType
 import org.osada.i18n.I18n
 import org.osada.model.GameUnit
 import org.osada.model.getUnits
 import org.osada.rules.GameRules
 import org.osada.rules.getUnitAttackCells
+import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.MouseEvent
 
 /**
@@ -16,6 +18,10 @@ import org.w3c.dom.events.MouseEvent
 internal class ReadyUnitNavigator(
     private val ui: UI,
 ) {
+    /** How close to the screen's right edge the End Turn plate may come before its phone label is
+     *  cut back to the countless one. Two pixels: this is a "did it overflow" test, not a margin. */
+    private val topBarEdgeMarginPx = 2.0
+
     /** Own units that have done NOTHING at all yet this turn — the End Turn badge/confirm-nag
      *  definition. Deliberately narrower than [actionableUnits] below: a unit that already moved
      *  but can still fire is not "fully ready" for this count, even though it can still act. */
@@ -104,7 +110,19 @@ internal class ReadyUnitNavigator(
         clearTag(btn)
         val label = addTag(btn, "span")
         label.className = "osada-et__label"
-        label.setAttribute("data-mobile-label", I18n.t("hud.end_turn.short_label"))
+        // The phone renders `data-mobile-label` in place of the text (`mobile.css`
+        // `.osada-et__label::after`), so the count has to be carried by BOTH or the phone button
+        // says only "Завершить" while the desktop one says "Завершить ход · 10". On a portrait
+        // phone this label is the ONLY warning there is -- `EndTurnFlow.onEndTurnClick` ends the
+        // turn on the first tap there, because the inline confirm's sentence does not fit.
+        label.setAttribute(
+            "data-mobile-label",
+            if (n > 0) {
+                I18n.t("hud.end_turn.short_label_with_ready", mapOf("count" to n))
+            } else {
+                I18n.t("hud.end_turn.short_label")
+            },
+        )
         label.textContent =
             if (n > 0) {
                 I18n.t("hud.end_turn.with_ready", mapOf("count" to n))
@@ -120,6 +138,32 @@ internal class ReadyUnitNavigator(
         btn.onclick = { e: MouseEvent ->
             e.stopPropagation()
             ui.onEndTurnClick()
+        }
+        if (n > 0) dropCountIfItOverflows(btn, label)
+    }
+
+    /**
+     * Keeps the count on the phone button only while the button still fits on screen.
+     *
+     * The plate is `flex: 0 0 auto` behind a `margin-left: auto`, so the count first eats the free
+     * space to its left and then simply hangs off the right edge of the screen -- the same failure
+     * the portrait padding rules in `mobile.css` were written for, and the reason the label is set
+     * optimistically above and cut back here instead of being guessed from a width threshold. The
+     * button's own right edge is the honest test: it is the thing that goes off screen.
+     *
+     * Landscape passes this every time at any supported width, which is why there is no
+     * orientation branch -- the measurement answers the question for both.
+     */
+    private fun dropCountIfItOverflows(
+        btn: HTMLElement,
+        label: HTMLElement,
+    ) {
+        if (!MobileLayoutController.mode.isPhone) return
+        // A rect that cannot be read is not evidence of an overflow, so it keeps the count: 0.0
+        // fails the test below, which is the same answer as "it fits".
+        val right = (btn.asDynamic().getBoundingClientRect().right as? Number)?.toDouble() ?: 0.0
+        if (right > window.innerWidth.toDouble() - topBarEdgeMarginPx) {
+            label.setAttribute("data-mobile-label", I18n.t("hud.end_turn.short_label"))
         }
     }
 

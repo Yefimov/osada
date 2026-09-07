@@ -9064,6 +9064,15 @@ hr {
     50% { opacity: 1; }
 }
 
+/* The BOOT curtain (`index.html`), the same panel raised by static markup instead of by Kotlin, so
+   it is painted with the page rather than after the bundle has run. Visible from the first paint —
+   `Game.init` removes the node once it knows whether it is opening a restored battle or the start
+   menu — and above `#startmenu` (300) so the menu's own backdrop cannot show through underneath. */
+.osada-bootcurtain {
+    display: flex;
+    z-index: 600;
+}
+
 /* ============================================================================
  * Unit-card collapse (2026-09-06). The card sits over the map's bottom-left and
  * can hide the hexes a move is being aimed at, so it folds away — from a chevron

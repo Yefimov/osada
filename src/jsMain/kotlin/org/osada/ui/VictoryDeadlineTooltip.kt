@@ -1,6 +1,5 @@
 package org.osada.ui
 
-import kotlinx.browser.window
 import org.osada.GameHolder
 import org.osada.i18n.I18n
 import org.osada.scenario.ObjectiveReport
@@ -27,10 +26,6 @@ import org.w3c.dom.events.MouseEvent
  */
 internal object VictoryDeadlineTooltip {
     private const val TIP_ID = "osadaVictoryTip"
-    private const val FALLBACK_TOP = 40.0
-    private const val GAP_PX = 6
-    private const val MAX_LEFT_INSET = 360.0
-    private const val MIN_LEFT_INSET = 6.0
 
     /** Re-attached after every `#statusmsg` innerHTML rewrite, which destroys the old field. */
     fun attach(field: HTMLElement) {
@@ -49,27 +44,20 @@ internal object VictoryDeadlineTooltip {
     }
 
     fun hide() {
-        byId(TIP_ID)?.style?.display = "none"
+        AnchoredTip.hide(TIP_ID)
     }
 
+    /**
+     * Placed by [AnchoredTip], which flips the panel ABOVE its anchor when there is no room below.
+     * This used to pin itself under the anchor unconditionally — right for the desktop top bar,
+     * wrong for the phone's turn readout, which lives at the BOTTOM of the screen in
+     * [MobileContextDock]: every tap opened the panel off the bottom edge (reported 2026-09-07).
+     */
     private fun show(anchor: HTMLElement) {
         val game = GameHolder.instance ?: return
         val scenario = game.scenario ?: return
         val report = scenario.objectiveReport(game.spotSide, revealHidden = false)
-        val tip =
-            byId(TIP_ID) ?: addTag("mainbody", "div").also {
-                it.id = TIP_ID
-                it.className = "osada-wtip"
-            }
-        tip.innerHTML = tooltipHtml(report)
-        tip.style.display = "block"
-        val rect = anchor.asDynamic().getBoundingClientRect()
-        val left =
-            ((rect.left as? Number)?.toDouble() ?: 0.0)
-                .coerceAtMost(window.innerWidth.toDouble() - MAX_LEFT_INSET)
-                .coerceAtLeast(MIN_LEFT_INSET)
-        tip.style.left = "${left.toInt()}px"
-        tip.style.top = "${((rect.bottom as? Number)?.toDouble() ?: FALLBACK_TOP).toInt() + GAP_PX}px"
+        AnchoredTip.show(TIP_ID, anchor, tooltipHtml(report))
     }
 
     private fun tooltipHtml(report: ObjectiveReport): String {

@@ -9,6 +9,7 @@ import org.osada.rules.GameRandomSource
 import org.osada.scenario.Campaign
 import org.osada.scenario.Scenario
 import org.osada.scenario.ScenarioTextLocalization
+import org.osada.ui.BootCurtain
 import org.osada.ui.ScenarioLoadingCurtain
 import org.osada.ui.ScenarioMusic
 import org.osada.ui.UI
@@ -79,16 +80,21 @@ class Game {
         console.log("[OSADA] Game.init start")
         state = GameState(this)
         console.log("[OSADA] Game.init calling state.restore")
+        // Both outcomes take the boot curtain down, and nothing before them does: the restore is
+        // the last thing the player is waiting through, and until it answers there is nothing on
+        // this page worth showing them.
         state?.restore(
             onSuccess = {
                 console.log("[OSADA] Game.init restore onSuccess")
                 onScenarioLoadFinished(null, true)
+                BootCurtain.hide()
             },
             onFail = {
                 console.log("[OSADA] Game.init restore onFail -> creating UI and showing start menu")
                 ui = UI(this)
                 makeVisible("startmenu")
                 makeVisible("smMain")
+                BootCurtain.hide()
             },
         )
         console.log("[OSADA] Game.init state.restore dispatched")
