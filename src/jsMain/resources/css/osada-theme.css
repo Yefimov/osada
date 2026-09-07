@@ -2958,6 +2958,19 @@ hr {
      * row of action chips sat right on the edge. */
     padding: 0 10px 14px;
     font-family: var(--osada-font-ui);
+    /* The zone is a full-width GRID CONTAINER but only its first track is ever filled, so the
+     * empty two thirds of the band lay over the map as an invisible click shield: every map click
+     * in the bottom ~150px was swallowed by this element instead of reaching the cursor canvas.
+     * The map cannot be scrolled clear of it either (its own bottom rows are already at the end of
+     * the scroll), so the last hex rows were simply unreachable while a unit was selected --
+     * reported 2026-09-07 as "I click the hex and the unit does not move", and the reason the same
+     * click worked at 160%, where zoom puts the hex somewhere else on screen. Only the cards
+     * themselves take pointer input; the band around them is see-through. */
+    pointer-events: none;
+}
+
+#osada-bottomzone > * {
+    pointer-events: auto;
 }
 
 #osada-bottomzone.bz--visible {
