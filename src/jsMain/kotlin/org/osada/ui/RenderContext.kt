@@ -7,6 +7,7 @@ import org.osada.model.Equipment
 import org.osada.model.GameMap
 import org.osada.model.ScreenPos
 import org.osada.model.getUnitImagesList
+import org.osada.uiSettings
 import kotlin.js.json
 import kotlin.math.PI
 import kotlin.math.floor
@@ -519,12 +520,16 @@ internal class RenderContext(
         val k = if (fitH) 0.0 else 30.0
 
         game.style.width = if (fitW) "${(scaledW + k).toInt()}px" else "${window.innerWidth}px"
-        game.style.height =
-            if (fitH) {
-                "${(scaledH + topBar + g).toInt()}px"
-            } else {
-                "${(window.innerHeight - topBar).toInt()}px"
-            }
+        // `#game` carries a CSS bottom padding (`UnitIdentityStyles`) as pure SCROLL room, so the
+        // map's last hex row can be scrolled clear of the fixed unit card. The box is content-box,
+        // so that padding is ADDED to whatever is set here -- subtracting it is what keeps the
+        // reserved room inside the window. Without the subtraction the box simply grew past the
+        // bottom of the viewport by exactly the padding, the spacer landed off-screen, and the
+        // map's final rows sat under the card at the very end of the scroll, unreachable by any
+        // scroll or click (reported 2026-09-07).
+        val contentHeight = if (fitH) scaledH + topBar + g else window.innerHeight - topBar
+        val spacer = if (uiSettings.strategicZoom) 0.0 else UnitIdentityStyles.MAP_BOTTOM_SPACER.toDouble()
+        game.style.height = "${(contentHeight - spacer).coerceAtLeast(0.0).toInt()}px"
         game.style.position = "absolute"
         game.style.left = "${left.toInt()}px"
         game.style.top = "${topBar.toInt()}px"

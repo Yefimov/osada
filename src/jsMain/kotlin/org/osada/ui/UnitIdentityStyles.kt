@@ -9,6 +9,16 @@ import kotlinx.browser.document
 internal object UnitIdentityStyles {
     private const val STYLE_ID = "osada-unit-identity-styles"
 
+    /**
+     * Scroll room reserved UNDER the map for this band, in CSS pixels — the zone's own 136px of
+     * content plus its 14px bottom padding, i.e. exactly what the fixed unit card covers.
+     *
+     * A constant rather than a measurement because [RenderContext.positionLayers] needs it on the
+     * very first paint, before this stylesheet is installed; a `getComputedStyle` read there
+     * returned 0 and silently reserved nothing.
+     */
+    internal const val MAP_BOTTOM_SPACER = 150
+
     // LongMethod false-positive: the function body is 4 statements: check style tag doesn't exist,
     // set its content to a CSS literal (most of the "length"), append. Splitting the CSS text into
     // several string constants would not change what the function does, only how detekt counts it.
@@ -153,8 +163,13 @@ internal object UnitIdentityStyles {
 .osada-ec-stat { cursor: help; }
 
 /* Reserve enough scrollable room below the map for the fixed identity card. The spacer is outside
- * the terrain/canvas content, so the final hex row can move above the HUD instead of being veiled. */
-#mainbody:not(.osada-strategic) #game { padding-bottom: 112px; background-clip: content-box; }
+ * the terrain/canvas content, so the final hex row can move above the HUD instead of being veiled.
+ * 150px, not the original 112px, because that is what the card's band actually measures (136px of
+ * content plus its own 14px bottom padding): at 112px the last hex row still ended up under the
+ * card once the map was scrolled to its end, which is exactly where it cannot be scrolled any
+ * further. `RenderContext.positionLayers` subtracts this padding from the height it sets, or the
+ * spacer grows the box past the bottom of the window and reserves nothing at all. */
+#mainbody:not(.osada-strategic) #game { padding-bottom: ${MAP_BOTTOM_SPACER}px; background-clip: content-box; }
 
 @media (max-width: 1120px) {
     #osada-bottomzone { right: 40px; grid-template-columns: minmax(360px, 1fr) 120px minmax(300px, .8fr); }
