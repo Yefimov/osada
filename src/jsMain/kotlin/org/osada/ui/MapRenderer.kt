@@ -173,8 +173,9 @@ internal class MapRenderer(
                 val outOfBounds = r < 0 || c < 0 || r >= frame.rows || c >= frame.cols
                 if (outOfBounds) continue
                 val hex = frame.gameMap[r][c]
-                val y = if (c % 2 == 1) 2.0 * r * rc.v + rc.v + rc.ca else 2.0 * r * rc.v + rc.ca
-                val x = c * (rc.hexTopWidth + rc.hexSlantWidth) + rc.hexSlantWidth + rc.ba
+                // `+ originY/originX`: mirrors [RenderContext.cellToScreen]'s art offset.
+                val y = (if (c % 2 == 1) 2.0 * r * rc.v + rc.v + rc.ca else 2.0 * r * rc.v + rc.ca) + rc.originY
+                val x = c * (rc.hexTopWidth + rc.hexSlantWidth) + rc.hexSlantWidth + rc.ba + rc.originX
                 val isCurrentHex = frame.currentPos != null && frame.currentPos.row == r && frame.currentPos.col == c
                 hexCellRenderer.drawCell(frame, hex, x, y, isCurrentHex)
             }
