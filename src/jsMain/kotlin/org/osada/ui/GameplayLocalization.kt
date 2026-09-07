@@ -12,7 +12,6 @@
 
 package org.osada.ui
 
-import kotlinx.browser.window
 import org.osada.GameHolder
 import org.osada.GroundCondition
 import org.osada.UNIT_MAX_EXPERIENCE
@@ -51,8 +50,6 @@ internal object GameplayLocalization {
     /** Shared with [StatusBarController] and [MobileContextDock], which open and close the same
      *  singleton panel from their own elements. */
     internal const val WEATHER_TIP_ID = "osadaWeatherTip"
-    private const val WEATHER_TOOLTIP_FALLBACK_TOP = 40.0
-    private const val WEATHER_TOOLTIP_GAP_PX = 6
 
     private var currentUnit: GameUnit? = null
 
@@ -228,24 +225,18 @@ internal object GameplayLocalization {
         }
     }
 
-    /** Not private: [StatusBarController] rebuilds the weather element and rebinds this. */
+    /**
+     * Not private: [StatusBarController] rebuilds the weather element and rebinds this.
+     *
+     * Placed by [AnchoredTip], which flips the panel ABOVE its anchor when there is no room below.
+     * This used to pin itself under the anchor unconditionally, which is right for the desktop top
+     * bar and wrong for the only anchor a phone has: [MobileContextDock]'s weather readout sits at
+     * the BOTTOM of the screen, so every tap opened the panel off the bottom edge (reported
+     * 2026-09-07).
+     */
     internal fun showWeatherTooltip(anchor: HTMLElement) {
         if (GameHolder.instance?.scenario == null) return
-        val tip =
-            byId(WEATHER_TIP_ID) ?: addTag("mainbody", "div").also {
-                it.id = WEATHER_TIP_ID
-                it.className = "osada-wtip"
-            }
-        tip.innerHTML = weatherTooltipHtml()
-        tip.style.display = "block"
-        val rect = anchor.asDynamic().getBoundingClientRect()
-        val left =
-            ((rect.left as? Number)?.toDouble() ?: 0.0)
-                .coerceAtMost(window.innerWidth.toDouble() - 360.0)
-                .coerceAtLeast(6.0)
-        tip.style.left = "${left.toInt()}px"
-        tip.style.top =
-            "${((rect.bottom as? Number)?.toDouble() ?: WEATHER_TOOLTIP_FALLBACK_TOP).toInt() + WEATHER_TOOLTIP_GAP_PX}px"
+        AnchoredTip.show(WEATHER_TIP_ID, anchor, weatherTooltipHtml())
     }
 
     private fun weatherTooltipHtml(): String {

@@ -523,6 +523,19 @@ try {
       weatherWidth: Math.round(document.getElementById('osadaMobileWeather').getBoundingClientRect().width),
       heroesWidth: Math.round(document.getElementById('osadaMobileHeroes').getBoundingClientRect().width),
     };
+    // The card toggle belongs in the rail's own right-hand corner, level with Heroes and outboard
+    // of it. Without a grid area of its own it auto-placed into an implicit THIRD row under the
+    // scenario line, which both hid it below the fold and grew the rail (reported 2026-09-07).
+    const heroes = document.getElementById('osadaMobileHeroes').getBoundingClientRect();
+    const toggle = document.getElementById('osadaMobileUnitCard').getBoundingClientRect();
+    const rail = dock.getBoundingClientRect();
+    result.toggle = {
+      width: Math.round(toggle.width),
+      height: Math.round(toggle.height),
+      outboardOfHeroes: toggle.left >= heroes.right - 1,
+      levelWithHeroes: Math.abs((toggle.top + toggle.bottom) / 2 - (heroes.top + heroes.bottom) / 2) <= 1,
+      insideRail: toggle.right <= rail.right + 1,
+    };
     bottom.className = savedClass;
     return result;
   });
@@ -530,6 +543,45 @@ try {
     mobileContext.visible && mobileContext.turn.length > 0 &&
       mobileContext.weatherWidth > 0 && mobileContext.heroesWidth >= 44,
     JSON.stringify(mobileContext));
+  ok('unit card toggle sits in the rail corner, level with Heroes and outboard of it',
+    mobileContext.toggle.width >= 44 && mobileContext.toggle.height >= 44 &&
+      mobileContext.toggle.outboardOfHeroes && mobileContext.toggle.levelWithHeroes &&
+      mobileContext.toggle.insideRail,
+    JSON.stringify(mobileContext.toggle));
+
+  // Folding the card and then tapping a hex deselects, so an unfold that only read `currentUnit`
+  // opened onto nothing (reported 2026-09-07). The dock toggle must fall back to the last unit the
+  // card held. Selection is cleared directly here rather than by a synthetic hex tap: which hex is
+  // empty depends on the scenario, while the state the fix is about -- folded card, no selection --
+  // is exactly this one.
+  const restoreLastUnit = await page.evaluate(async () => {
+    const map = window.game.scenario.map;
+    const card = document.getElementById('unit-info');
+    const name = () => document.getElementById('uName').textContent.trim();
+    const wasSelected = map.currentUnit;
+    const before = name();
+    document.getElementById('ucCollapse').click();
+    const folded = getComputedStyle(card).display === 'none';
+    map.currentUnit = null;
+    await new Promise((r) => requestAnimationFrame(r));
+    document.getElementById('osadaMobileUnitCard').click();
+    await new Promise((r) => requestAnimationFrame(r));
+    const result = {
+      before,
+      folded,
+      restored: getComputedStyle(card).display !== 'none',
+      after: name(),
+      stillDeselected: map.currentUnit === null,
+    };
+    map.currentUnit = wasSelected;
+    return result;
+  });
+  ok('the dock toggle unfolds onto the last unit the card held, with nothing selected',
+    restoreLastUnit.folded && restoreLastUnit.restored && restoreLastUnit.before.length > 0 &&
+      restoreLastUnit.after === restoreLastUnit.before,
+    JSON.stringify(restoreLastUnit));
+  ok('unfolding shows that unit without reselecting it',
+    restoreLastUnit.stillDeselected, JSON.stringify(restoreLastUnit));
 
   const reportEntry = await page.evaluate(async () => {
     document.getElementById('combatLogButton').click();
@@ -734,6 +786,56 @@ try {
     JSON.stringify(equipmentFlow.returned));
 
   ok('no runtime JS errors', errors.length === 0, errors.join(' | '));
+
+  // ---- End Turn, last because the portrait leg actually ends the turn ----
+  // Two different contracts on one button (`EndTurnFlow.onEndTurnClick`): landscape has the width
+  // for the inline confirm and keeps it; portrait does not, and is told the count in the button's
+  // own label instead. Both were reported on 2026-09-07 as the same symptom -- text off screen.
+  await page.setViewport({ width: 667, height: 375, isMobile: true, hasTouch: true, deviceScaleFactor: 2 });
+  await sleep(400);
+  const landscapeConfirm = await page.evaluate(async () => {
+    const btn = document.getElementById('osadaEndTurn');
+    const label = document.querySelector('#osadaEndTurn .osada-et__label');
+    const before = {
+      mobileLabel: (label?.getAttribute('data-mobile-label') || ''),
+      desktopLabel: (label?.textContent || '').trim(),
+      right: Math.round(btn.getBoundingClientRect().right),
+      viewport: window.innerWidth,
+    };
+    btn.click();
+    await new Promise((r) => requestAnimationFrame(r));
+    const confirming = btn.getAttribute('confirming') === 'on';
+    document.querySelector('#osadaEndTurn .osada-et__no')?.click();
+    await new Promise((r) => requestAnimationFrame(r));
+    return { ...before, confirming, cancelled: btn.getAttribute('confirming') !== 'on' };
+  });
+  ok('landscape keeps the inline End Turn confirm',
+    landscapeConfirm.confirming && landscapeConfirm.cancelled, JSON.stringify(landscapeConfirm));
+  // The count is in the desktop label whenever units are still ready; landscape has the width, so
+  // the phone label must carry the same number rather than the bare verb.
+  const landscapeCount = (landscapeConfirm.desktopLabel.match(/(\d+)\s*$/) || [])[1];
+  ok('landscape carries the ready count in the phone label',
+    !landscapeCount || landscapeConfirm.mobileLabel.includes(landscapeCount),
+    JSON.stringify({ ...landscapeConfirm, landscapeCount }));
+
+  await page.setViewport({ width: 390, height: 844, isMobile: true, hasTouch: true, deviceScaleFactor: 2 });
+  await sleep(600);
+  const portraitEndTurn = await page.evaluate(async () => {
+    const btn = document.getElementById('osadaEndTurn');
+    const label = document.querySelector('#osadaEndTurn .osada-et__label');
+    const mobileLabel = label?.getAttribute('data-mobile-label') || '';
+    const rect = btn.getBoundingClientRect();
+    const shown = { mobileLabel, right: Math.round(rect.right), viewport: window.innerWidth };
+    btn.click();
+    await new Promise((r) => requestAnimationFrame(r));
+    return { ...shown, confirming: btn.getAttribute('confirming') === 'on' };
+  });
+  ok('the portrait End Turn plate stays on screen',
+    portraitEndTurn.right <= portraitEndTurn.viewport + 1, JSON.stringify(portraitEndTurn));
+  ok('the portrait End Turn plate is labelled, with the count when it fits',
+    portraitEndTurn.mobileLabel.trim().length > 0, JSON.stringify(portraitEndTurn));
+  ok('a portrait tap ends the turn without the inline confirm',
+    !portraitEndTurn.confirming, JSON.stringify(portraitEndTurn));
 } finally {
   await browser.close();
   server.close();

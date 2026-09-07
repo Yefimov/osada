@@ -2,6 +2,8 @@ package org.osada.ui
 
 import org.osada.GameHolder
 import org.osada.i18n.I18n
+import org.osada.model.GameUnit
+import org.osada.model.getUnitById
 import org.osada.uiSettings
 
 /**
@@ -19,10 +21,26 @@ import org.osada.uiSettings
  * restores it as on, because older builds cleared it as a deselect side effect and persisted a
  * permanently invisible card. Keeping that restore means a reload always brings the card back,
  * while the chip means the choice is still undoable at any moment within the session.
+ *
+ * Restoring falls back to the LAST unit the card held, because the selection is the first thing a
+ * folded card loses: fold it, tap a hex to look under it, and the tap has already deselected --
+ * so an unfold that only ever read `currentUnit` opened onto nothing and read as a dead button
+ * (reported 2026-09-07). The fallback only DISPLAYS that unit; it does not reselect it, so no
+ * move range, ZOC overlay or order context comes back with it -- the card is an information
+ * surface, and a tap on a small control must not hand the player a unit under orders they did
+ * not ask for.
  */
 internal object UnitCardCollapse {
     private const val COLLAPSE_GLYPH = "−" // − minus, the classic minimise bar
     private const val RESTORE_GLYPH = "☰" // ☰
+
+    /**
+     * The last unit the card displayed, by id rather than by reference: an id cannot keep a
+     * finished battle's object graph alive, and [subject] re-resolves it against the live map,
+     * so a unit destroyed or disbanded while the card was folded simply is not there any more.
+     * Ids restart with each scenario, which is what [forget] is for.
+     */
+    private var lastShownUnitId: Int? = null
 
     /**
      * Builds the card's minimise button: a framed `−` in the card's own top-left corner, above the
@@ -76,26 +94,52 @@ internal object UnitCardCollapse {
     /**
      * Applies [collapsed] to the flag, the card and every affordance.
      *
-     * Re-showing repaints the card from the live selection rather than trusting whatever it last
-     * held: the selection can have changed, or ended, while it was hidden.
+     * Re-showing repaints the card from [subject] rather than trusting whatever the DOM last
+     * held: the selection can have changed, or ended, while the card was hidden.
      */
     fun setCollapsed(collapsed: Boolean) {
         uiSettings.unitInfoVisibility = !collapsed
         if (collapsed) {
             makeHidden("unit-info")
         } else {
-            val unit =
-                GameHolder.instance
-                    ?.scenario
-                    ?.map
-                    ?.currentUnit
+            val unit = subject()
             if (unit != null) {
                 makeVisible("unit-info")
+                // Repaints the whole card, and `UnitStatCard` puts the phone's bottom zone back
+                // into its "own unit" state from there -- which is what swaps the context dock out
+                // for the card on a phone.
                 GameHolder.instance?.ui?.showUnitInfo(unit)
             }
         }
         byId("inspectunit")?.let { toggleButton(it, !collapsed) }
         refresh()
+    }
+
+    /** Notes the unit the card is being filled with. Called by [UnitInfoPanel.showUnitInfo]. */
+    fun remember(unit: GameUnit?) {
+        if (unit != null) lastShownUnitId = unit.id
+    }
+
+    /** Drops the memory when a new battle loads -- unit ids restart with it. */
+    fun forget() {
+        lastShownUnitId = null
+    }
+
+    /**
+     * What an unfold should open onto: the live selection, or the last unit the card held while
+     * it still had one. The remembered unit has to be found on THIS map, undestroyed and the
+     * current player's own -- the last because the card being restored is the player card, and
+     * `UnitStatCard` will not give the bottom zone its "own unit" state for anyone else's unit.
+     */
+    private fun subject(): GameUnit? {
+        val map =
+            GameHolder.instance
+                ?.scenario
+                ?.map ?: return null
+        return map.currentUnit
+            ?: lastShownUnitId
+                ?.let { map.getUnitById(it) }
+                ?.takeIf { !it.destroyed && it.player?.id == map.currentPlayer?.id }
     }
 
     /** Syncs the chip and the dock button with the flag; safe to call whenever the flag moves. */

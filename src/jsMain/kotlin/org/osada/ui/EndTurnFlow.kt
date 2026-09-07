@@ -22,12 +22,27 @@ internal class EndTurnFlow(
     private val endTurnConfirmTimeoutMs = 3000
     private var endTurnConfirmTimer: Int = 0
 
+    /**
+     * A phone held UPRIGHT ends the turn on the first tap, and is told the count before it rather
+     * than after.
+     *
+     * The inline confirm rewrites the button into a whole sentence plus two glyphs
+     * ([showEndTurnConfirm]). Desktop and landscape both have a bar wide enough to hold it. A
+     * portrait phone does not: at 390px the top bar already spends its last ~30px of padding and
+     * tracking on making the word *"Завершить"* fit (`mobile.css`, portrait `#osadaEndTurn`), so
+     * *"10 units haven't acted. End turn?"* ran straight off the screen (reported 2026-09-07).
+     *
+     * The warning is moved, not dropped: [ReadyUnitNavigator.updateEndTurnButton] prints the count
+     * in the button's own label there ("Завершить · 10"), where it stands for the whole turn
+     * instead of for the three seconds after a tap. Every other layout — desktop, tablet and a
+     * phone turned sideways — keeps the confirm and the `confirmEndTurn` preference untouched.
+     */
     fun onEndTurnClick() {
         val map = ui.game.scenario?.map
         if (map == null || map.currentPlayer?.type != PlayerType.HUMAN_LOCAL) return
         if (ui.game.waitUIAnimation || ui.game.gameEnded) return
         val n = readyUnitNavigator.fullyReadyCount()
-        if (n == 0 || !uiSettings.confirmEndTurn) {
+        if (n == 0 || !uiSettings.confirmEndTurn || MobileLayoutController.isPhonePortrait) {
             performEndTurn()
         } else {
             showEndTurnConfirm(n)

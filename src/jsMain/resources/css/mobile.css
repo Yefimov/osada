@@ -412,13 +412,19 @@ body.osada-layout-phone #osada-bottomzone.bz--visible #osadaMobileContextDock {
 body.osada-layout-phone .osada-mobile-context {
     grid-area: card;
     display: grid;
-    grid-template-columns: auto auto minmax(0, 1fr) var(--osada-touch-target-min);
+    grid-template-columns: auto auto minmax(0, 1fr) var(--osada-touch-target-min) var(--osada-touch-target-min);
     /* Two rows: the live turn/weather/terrain line, and under it the scenario's own identity —
      * its in-game date and name. The phone top bar drops `.osada-tb-op` (a scenario title that
-     * collapses to one letter is worth nothing), so this rail is where that context lives. */
+     * collapses to one letter is worth nothing), so this rail is where that context lives.
+     *
+     * Both buttons stand in their own full-height columns on the right, the card toggle outermost
+     * and Heroes beside it: the toggle is the control a player reaches for mid-move, so it takes
+     * the thumb's own corner. They cost the rail two touch targets of width, which the scenario
+     * line pays for — it is the one element here that may lose its tail (it fades out below, and
+     * its tap panel still reads the whole title). */
     grid-template-areas:
-        "turn weather location heroes"
-        "sub  sub     sub      heroes";
+        "turn weather location heroes card"
+        "sub  sub     sub      heroes card";
     align-items: center;
     gap: 2px 8px;
     min-height: 52px;
@@ -437,9 +443,9 @@ body.osada-layout-phone .osada-mobile-context {
     white-space: nowrap;
 }
 
-/* One quiet line, ellipsized rather than wrapped: an operation name can be arbitrarily long and
- * the rail must keep a predictable height (ViewportMetricsService publishes it as --osada-dock-h
- * and the map's bottom edge tracks that number). */
+/* One quiet line, cut rather than wrapped: an operation name can be arbitrarily long and the rail
+ * must keep a predictable height (ViewportMetricsService publishes it as --osada-dock-h and the
+ * map's bottom edge tracks that number). */
 .osada-mobile-context__scenario {
     grid-area: sub;
     min-width: 0;
@@ -447,8 +453,13 @@ body.osada-layout-phone .osada-mobile-context {
     color: var(--osada-text-dim, #a9a494);
     font-weight: normal;
     font-size: 11px;
-    text-overflow: ellipsis;
     white-space: nowrap;
+    /* Fades into the rail instead of ending on an ellipsis. The dots read as a word the line is
+     * still trying to say; a fade reads as a line that simply runs on, which is what an operation
+     * name does — and the tap panel spells the whole of it. `text-overflow` is left at its `clip`
+     * default so no glyph is replaced under the gradient. */
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
 }
 
 .osada-mobile-context__scenario:empty {
@@ -486,6 +497,17 @@ body.osada-layout-phone .osada-mobile-context {
 
 .osada-mobile-context__heroes {
     grid-area: heroes;
+    align-self: center;
+    width: var(--osada-touch-target-min);
+    height: var(--osada-touch-target-min);
+    cursor: pointer;
+}
+
+/* The unit card's fold-away twin, in the rail's outer corner. Sized and placed exactly as Heroes
+ * so the pair reads as one control group; `osada-theme.css` keeps the 44px floor the mobile audit
+ * requires of it. */
+.osada-mobile-context__card-toggle {
+    grid-area: card;
     align-self: center;
     width: var(--osada-touch-target-min);
     height: var(--osada-touch-target-min);
