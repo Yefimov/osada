@@ -372,22 +372,34 @@ internal class RenderContext(
     private val hexCoreWidth: Double = hexTopWidth
 
     /**
-     * The canvases' size: EXACTLY the terrain art, so the map ends where the picture ends.
+     * Where the terrain art sits inside the canvases — and equally, how far the GRID overhangs it.
      *
-     * The art and the grid are two different rectangles — the grid wants `45*cols-30` x `50*rows`,
-     * an OG library crop stops wherever it stops — and the canvas follows the art. An outermost hex
-     * whose slant or lower half falls past the art is simply clipped by the bitmap edge, exactly as
-     * OG's own crops cut them; it stays selectable, because `screenToCell` clamps to the grid.
+     * The art and the grid are two different rectangles and the grid is the bigger one: column 0's
+     * hex runs from `ba` (-45) and row 0's from `ca` (-25), while an OG library crop starts at
+     * (0,0). Sizing the canvas to the art alone therefore cut those hexes off at the bitmap edge —
+     * and with them anything standing on one. Measured on `The Dnieper crossings`, whose author
+     * puts three formations on column 0: of an 80x50 sprite frame only 25px survived (`drawX` is
+     * `x - frameW/2 + 15` = -55), and the strength box at `x + 7.5` never appeared at all. The last
+     * row on odd columns lost its lower half the same way.
      *
-     * Two rejected alternatives, both tried and reverted on 2026-09-06: a flat `+65` on the height
-     * (the grey band under every map — empty canvas with nothing to draw in it), and sizing to the
-     * grid while stretching the art's edge pixels to fill the difference (a smeared border, and
-     * baking the same padding into the map files smeared them permanently).
+     * So the canvas covers the UNION of the two and the art is drawn at this offset inside it. The
+     * uncovered margin is not stretched art — that was tried and reverted on 2026-09-06 as a
+     * smeared border — it is a flat edge tone ([applyTerrainBackground]), which is what an OG crop
+     * ending mid-hex honestly looks like.
      */
-    val canvasWidth: Double get() = mapWidth
+    val originX: Double get() = -ba
 
-    /** Companion of [canvasWidth] for the vertical axis. */
-    val canvasHeight: Double get() = mapHeight
+    /** Companion of [originX] for the vertical axis. */
+    val originY: Double get() = -ca
+
+    /** The canvases' size: the terrain art at [originX], or the grid's own far edge, whichever
+     *  reaches further. Column `cols-1`'s right tip lands at `45*cols + 15` once shifted. */
+    val canvasWidth: Double get() =
+        max(originX + mapWidth, (map?.cols ?: 0) * hexColumnStep + hexSlantWidth)
+
+    /** Companion of [canvasWidth]: the last row on ODD columns ends `2v` below its own anchor. */
+    val canvasHeight: Double get() =
+        max(originY + mapHeight, (map?.rows ?: 0) * 2.0 * v + v)
 
     private val hexDrawer: HexDrawer by lazy { HexDrawer(this) }
 
@@ -589,8 +601,8 @@ internal class RenderContext(
         col: Int,
         absolute: Boolean,
     ): ScreenPos {
-        var y = if (col % 2 == 1) 2.0 * row * v + v + ca else 2.0 * row * v + ca
-        var x = col * (hexTopWidth + hexSlantWidth) + hexSlantWidth + ba
+        var y = (if (col % 2 == 1) 2.0 * row * v + v + ca else 2.0 * row * v + ca) + originY
+        var x = col * (hexTopWidth + hexSlantWidth) + hexSlantWidth + ba + originX
 
         if (absolute) {
             val zoom = MapZoom.level
@@ -642,18 +654,25 @@ internal class RenderContext(
         y: Int,
     ): Cell {
         val q = map ?: return Cell(0, 0)
-        val sx = x.toDouble()
-        val sy = y.toDouble()
+        // Back out the art offset first, so the rest of this works in the grid's own space --
+        // the one `ba`/`ca` define and `cellToScreen` starts from ([originX]).
+        val sx = x.toDouble() - originX
+        val sy = y.toDouble() - originY
 
-        val band = floor((sx + hexCoreWidth) / hexColumnStep).toInt()
-        val dx = sx - (band * hexColumnStep - hexCoreWidth)
+        // Column `c`'s upright core starts at its own anchor, `c * step + hexSlantWidth + ba`.
+        // Taken from `ba` rather than assuming it is -45: the two used to agree only by
+        // coincidence (`-ba` happened to equal `hexCoreWidth`), so moving the origin silently
+        // shifted the hit test by a column.
+        val coreLeft = hexSlantWidth + ba
+        val band = floor((sx - coreLeft) / hexColumnStep).toInt()
+        val dx = sx - (band * hexColumnStep + coreLeft)
         var col = band
         if (dx > hexCoreWidth) {
             // In the slant strip: inside column `band`'s hex the vertical extent shrinks from the
             // full 2v at the core edge to nothing at the tip. Outside it, the point belongs to the
             // next column, whose own left slant tiles the rest of the strip.
             val u = (dx - hexCoreWidth) / hexSlantWidth
-            val bandTop = rowOf(sy, band) * (2.0 * v) + (if (band and 1 == 1) 0.0 else -v)
+            val bandTop = rowOf(sy, band) * (2.0 * v) + ca + (if (band and 1 == 1) v else 0.0)
             val localY = sy - bandTop
             if (localY < v * u || localY > 2.0 * v - v * u) col = band + 1
         }
@@ -708,12 +727,19 @@ private fun RenderContext.applyTerrainBackground(
     imageWidth: Double,
     imageHeight: Double,
 ) {
-    mapCanvas.style.backgroundColor = "none"
+    // A real colour, not the old `none` (not a colour at all, so it parsed to transparent): it is
+    // what shows through the margin the art does not cover, and a map edge has to look deliberate.
+    mapCanvas.style.backgroundColor = MAP_EDGE_TONE
     mapCanvas.style.backgroundImage = "url('${image.src}')"
     mapCanvas.style.backgroundSize = "${imageWidth.toInt()}px ${imageHeight.toInt()}px"
+    mapCanvas.style.backgroundPosition = "${originX.toInt()}px ${originY.toInt()}px"
     mapCanvas.style.backgroundRepeat = "no-repeat"
     mapCanvas.style.backgroundAttachment = "scroll"
 }
+
+/** The ground under the margin between the terrain art and the grid ([RenderContext.originX]).
+ *  Deliberately darker than any terrain so a clipped outermost hex reads as the edge of the map. */
+private const val MAP_EDGE_TONE = "#14161a"
 
 /**
  * The top of the row band containing [sy] in column [col] — odd columns sit half a hex (`v`) lower,
@@ -725,7 +751,7 @@ private fun RenderContext.applyTerrainBackground(
 private fun RenderContext.rowOf(
     sy: Double,
     col: Int,
-): Int = floor((sy - (if (col and 1 == 1) 0.0 else -v)) / (2.0 * v)).toInt()
+): Int = floor((sy - ca - (if (col and 1 == 1) v else 0.0)) / (2.0 * v)).toInt()
 
 /** Reads a DOM numeric layout property that Kotlin only sees as `dynamic`, defaulting to 0. */
 private fun doubleOf(value: dynamic): Double = (value as? Number)?.toDouble() ?: 0.0

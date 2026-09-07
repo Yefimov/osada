@@ -55,8 +55,10 @@ internal class FogOfWarRenderer(
         r: Int,
         c: Int,
     ) {
-        val fy = if (c % 2 == 1) 2.0 * r * rc.v + rc.v + rc.ca else 2.0 * r * rc.v + rc.ca
-        val fx = c * (rc.hexTopWidth + rc.hexSlantWidth) + rc.hexSlantWidth + rc.ba
+        // `+ originY/originX`: the same art offset [RenderContext.cellToScreen] applies, so the
+        // veil's holes stay on their hexes now that the canvas is wider than the picture.
+        val fy = (if (c % 2 == 1) 2.0 * r * rc.v + rc.v + rc.ca else 2.0 * r * rc.v + rc.ca) + rc.originY
+        val fx = c * (rc.hexTopWidth + rc.hexSlantWidth) + rc.hexSlantWidth + rc.ba + rc.originX
         ctx.beginPath()
         ctx.moveTo(fx, fy)
         ctx.lineTo(fx + rc.hexTopWidth, fy)
