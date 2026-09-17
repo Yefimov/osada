@@ -5,10 +5,7 @@ build/
 !**/src/test/**/build/
 
 ### IntelliJ IDEA ###
-.idea/modules.xml
-.idea/jarRepositories.xml
-.idea/compiler.xml
-.idea/libraries/
+.idea/
 *.iws
 *.iml
 *.ipr
@@ -44,6 +41,22 @@ bin/
 ### Mac OS ###
 .DS_Store
 
+### Python ###
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
+### Local scratch, internal data and art sources (never published) ###
+/tmp/
+/tmp_*
+/vh.txt
+/campaigns.csv
+/campaign_paths.csv
+/campaign_scenarios.csv
+/art-src/
+FUTURE_IDEAS.md
+
 ### Deployment target ###
 # This repository is public. The address and login of the VPS live here, outside git, so that the
 # deploy scripts stay useful without advertising "root@<ip>" to anyone reading the project.
@@ -56,7 +69,7 @@ scripts/deploy/target.local
 ### Working tooling and notes, not yet committed (may be added deliberately later) ###
 # `git add tools/...` / `git add docs/...` kept sweeping these in by accident. Ignoring them makes
 # an accidental add fail instead of silently staging. Already-tracked files (tools/eqp-merge/
-# add_bomber_size.py) are unaffected; to add something here on purpose, use `git add -f <path>`.
+# add_bomber_size.py, untracked 2026-09-17) are unaffected; to add something on purpose, `git add -f`.
 tools/
 docs/
 # Coding-agent briefing. Local working notes, untracked 2026-09-06 -- it is a scratchpad for the

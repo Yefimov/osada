@@ -6,7 +6,7 @@
 
 No installation needed. The tutorial is available inside the game.
 
-![Operation Uranus: winter combat with infantry, armour, artillery, and aircraft](screenshots/screenshot_winter_battle.jpg)
+![Operation Uranus: winter combat with infantry, armour, artillery, and aircraft](.github/screenshots/screenshot_winter_battle.jpg)
 
 *Operation Uranus — coordinate your forces across a frozen battlefield, manage supplies, and capture objectives before time runs out.*
 
@@ -29,25 +29,25 @@ OSADA carries the hex-based strategy of Panzer General 2 into a browser game wit
 
 Browse scenarios, read the briefing, choose a side, and adjust the rules before taking command.
 
-![Scenario selection showing the Siege of Perekop briefing and side selection](screenshots/screenshot_scenario_selection.jpg)
+![Scenario selection showing the Siege of Perekop briefing and side selection](.github/screenshots/screenshot_scenario_selection.jpg)
 
 ### Meet your commanders
 
 A distinguished formation can gain a hero. Portraits, biographies, abilities, and service records give your army a history that lasts beyond a single battle.
 
-![A legendary commander emerges during the battle of Voronezh](screenshots/screenshot_with_commander.jpg)
+![A legendary commander emerges during the battle of Voronezh](.github/screenshots/screenshot_with_commander.jpg)
 
 ### Make decisions before the first shot
 
 Story campaigns connect conversations to the battle ahead. A decision can change the troops at your disposal, the resources you receive, or the situation you must resolve on the map.
 
-![Story dialogue during the Kiel uprising, with two choices and their gameplay consequences](screenshots/screenshot_story_mode_dialogue.jpg)
+![Story dialogue during the Kiel uprising, with two choices and their gameplay consequences](.github/screenshots/screenshot_story_mode_dialogue.jpg)
 
 ### Build your force
 
 Spend prestige on new units, upgrade existing formations, and manage reserves. Available equipment depends on the date, nation, and scenario's purchase rules.
 
-![Equipment purchase screen with Soviet units and the selected T-34/41's statistics](screenshots/screenshot_units_to_buy.jpg)
+![Equipment purchase screen with Soviet units and the selected T-34/41's statistics](.github/screenshots/screenshot_units_to_buy.jpg)
 
 ## Getting started
 
