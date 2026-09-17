@@ -82,9 +82,10 @@ private fun EquipmentWindowBuilder.buildEqDetailStats(
         label: String,
         value: Any,
         help: String,
+        wrap: Boolean = false,
     ) {
         val row = addTag(grid, "div")
-        row.className = "osada-eqd-stat"
+        row.className = if (wrap) "osada-eqd-stat osada-eqd-stat--wrap" else "osada-eqd-stat"
         row.title = help
         row.innerHTML = "<b>$label</b><span>$value</span>"
     }
@@ -121,6 +122,7 @@ private fun EquipmentWindowBuilder.buildEqDetailStats(
         movMethodNames.getOrNull(eq.movmethod) ?: "Unknown",
         "How this unit moves — determines terrain cost, and whether it needs a road or (for Rail) " +
             "is confined to the rail network.",
+        wrap = true,
     )
     stat("Spotting", eq.spotrange, "How many hexes away this unit reveals hidden enemies.")
     stat("Range", if (eq.gunrange == 0) 1 else eq.gunrange, "Firing range in hexes (1 = must be adjacent).")

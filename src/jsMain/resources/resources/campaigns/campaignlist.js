@@ -2,7 +2,7 @@
 var campaignlist =
 [
  {
-  "desc": "Your first tanks enter battle outside Madrid. Nine years later, your veterans will be crossing Manchuria. Between those moments lie the frozen roads of Finland, the encirclements of 1941, Moscow, Kursk and the road to Vienna. Lead a Soviet force through theatres where yesterday's winning tactics can become tomorrow's trap.\n\nBuild a core that can weather retreat and exploit a breakthrough. In Story Mode, four recurring staff officers accompany your commander's long career: the argument around the map continues from one campaign season to the next, while the men who survive carry your decisions into battle.",
+  "desc": "Seseña, October 1936: Soviet tanks go into action for the first time, on the dusty approaches to Madrid. Nine years and twenty-one battles later, the same career ends on the Manchurian frontier. In between lie Lake Khasan and Khalkhin Gol, the ice of the Raate Road, the catastrophe at Białystok–Minsk, the winter counterblow before Moscow, the Tatsinskaya raid, Kursk, Belgrade, Balaton and the road to Vienna.\n\nThis is the Red Army's decade of apprenticeship, and every new war punishes the habits the last one taught. In Story Mode, a staff of recurring officers argues over the map before each operation, and the briefings end in hard bargains: push the timetable for prestige and hardened troops, or spend it on fuel, shells and a reserve against the counterstroke.",
   "eqp": "eqp-lxf",
   "file": "camp6bn9.json",
   "flag": 19,
@@ -12,7 +12,7 @@ var campaignlist =
   "title": "Red Army Campaign (1936-1945)"
  },
  {
-  "desc": "The front has swept past you. Your war is only beginning. Take a Soviet detachment from the chaos of the Baltic retreat into raids behind enemy lines, where a small force must achieve what a whole army cannot reach. A rescue, a sudden strike, a clean escape: here, surviving the mission can be the hardest part of winning it.\n\nChoose where to concentrate your scarce strength and when to break contact. From the forests of occupied Europe to the final fighting in the Far East, keep your veterans alive through a campaign of dangerous assignments and battles fought far from the comfort of a continuous front.",
+  "desc": "No front line. No relief column. No second chance. Your orders read like a thriller: strike the battleship Tirpitz at anchor with a commando raid. Get a stranded American politician through a captured port to a British submarine waiting offshore. Knock out two Luftwaffe airfields so that a hidden German railway gun called Bruno can finally be hunted down.\n\nTen missions take a Soviet partisan command from the rearguard fighting of 1941 through the forests of the Baltic and Belarus to the Narva breakthrough, and finally into Manchuria in August 1945. You will almost never have the numbers. Strike where the enemy feels safe, split your force when the plan demands it, and vanish before the punitive columns arrive. The title is not a slogan. It is the brief.",
   "eqp": "eqp-lxf",
   "file": "camp6bn5.json",
   "flag": 19,
@@ -22,7 +22,7 @@ var campaignlist =
   "title": "Stay Alive - Red Partisans (1941-1945)"
  },
  {
-  "desc": "A few rifles, mountain tracks and an uprising that the occupiers expect to crush. Lead the Yugoslav Partisans from the first battles in Serbia through raids, betrayals and great encirclements to the liberation of Belgrade. Your army must learn to survive before it can learn to conquer.\n\nBreak out when the ring closes, strike isolated garrisons and keep enough experienced fighters for the next battle. As resistance grows into a field army, the scale of your command changes with it: the road that began in the hills leads through Mostar and Sarajevo towards Trieste.",
+  "desc": "Summer 1941. The kingdom has fallen in eleven days, and in the Mačva a few hundred fighters decide the occupation will not be a quiet one. Take the Partisans from the uprising at Bela Crkva and the betrayal at Užice into the great offensives meant to annihilate them: Case White on the Neretva, Case Black on the Sutjeska, and German paratroopers dropping on Tito's headquarters at Drvar.\n\nNineteen battles turn a guerrilla band into an army corps. Rail raids and hit-and-run strikes give way to Belgrade, Knin, Mostar, Sarajevo and the race for Trieste, and even after Germany surrenders, one last Axis column in Slovenia refuses to lay down its arms. The mountains made this army. Now it must come down from them and win.",
   "eqp": "eqp-lxf",
   "file": "camp6bn8.json",
   "flag": 43,
@@ -32,7 +32,7 @@ var campaignlist =
   "title": "Yugoslav Front (1941-1945)"
  },
  {
-  "desc": "Peace never came. In this alternate post-war world, you command Soviet forces in a conflict that leaps from a divided Europe to the Mediterranean and the borders of Asia. Berlin is a battlefield again; beyond it wait the Ardennes, Gibraltar and the beaches of Britain. Even the rear can erupt behind an advancing army.\n\nCarry a veteran force through armoured offensives, desperate evacuations and contested landings. Each new theatre demands a different army, but it is your surviving core that must fight the next war. How far can you advance before the victories themselves become too expensive?",
+  "desc": "Comrade General, the Party regrets to inform you that the war is not over. In this alternate history, you crush a Polish rising at Białystok, storm the Seelow Heights and find British volunteers waiting in the ruins of Berlin. The road west is open, and Moscow intends to follow it to the sea and beyond.\n\nYour own performance decides where the Party sends you next. Take Berlin brilliantly and you are rushed to the Chinese frontier; win it cleanly and you are offered a \"tour\" of Italy; scrape through and it is Greece and Crete. Every path meets again in the Low Countries, the Ardennes and at Dunkirk, where you are judged once more: a masterstroke opens the Channel at once, anything less means years of chasing the Allies through France to Gibraltar and back to a Ukraine in revolt. At the end of both roads, London is waiting.",
   "eqp": "eqp-lxf",
   "file": "reddestiny.json",
   "flag": 19,
@@ -42,7 +42,7 @@ var campaignlist =
   "title": "Red Destiny (1946-1954)"
  },
  {
-  "desc": "Seoul lies ahead, and speed seems to promise everything. Lead the Korean People's Army south through Suwon and Taejon towards the Pusan perimeter, where a swift campaign becomes a struggle to break an enemy who has finally found room to stand. Then the front reverses, and the army that pursued must learn to retreat.\n\nFight through Wonsan, frozen mountain roads and the counteroffensives of 1951. Concentrate your armour where it can still decide a battle, protect the troops that must hold the passes, and seize the brief moments when an exhausted opponent leaves an opening.",
+  "desc": "Dawn, 25 June 1950. Soviet-built tanks cross the 38th parallel, Seoul falls in days, and within weeks the Korean People's Army is hammering at the Pusan perimeter. One more push and the whole peninsula is yours. Then the enemy lands behind you, and the pursuer becomes the hunted.\n\nFourteen battles follow the war through every violent reversal: a last stand short of the Yalu, a flight behind enemy lines to lead cut-off partisans at Majon-ni, the Chinese intervention, the deep raid on Wonju and the great spring offensives of 1951. The enemy owns the sky. Every road in daylight is a gamble, and every hill is a place to hide an army.",
   "eqp": "eqp-lxf",
   "file": "ncampdfn.json",
   "flag": 25,
@@ -52,7 +52,7 @@ var campaignlist =
   "title": "North Korea (1950-1953)"
  },
  {
-  "desc": "The barricades fall. The cause survives. Begin among the German revolutionaries of 1848, fight through the last battles of the uprising, then cross the Atlantic to take up arms for the Union. In America, the struggle against slavery gives the exiles a new battlefield and their defeated hopes a second life.\n\nFrom Missouri to Gettysburg and the approaches to Richmond, learn to command an army of rifles, cavalry and cannon. Two continents, two revolutions and a generation of war separate your first volunteers from your final assault. Keep their experience alive long enough to make the journey count.",
+  "desc": "\"Lieber Freund, not much time to write...\" So begins a correspondence that will span two continents and seventeen years. Its author takes up a rifle for the German revolution of 1848, marches with Hecker's volunteers and the Palatinate insurgents, and watches the Prussian army crush every hope at Waghäusel.\n\nExile is not the end of the story. In America, the Forty-Eighters take up arms again, this time for the Union and against slavery. Seize the St. Louis Arsenal, win Missouri, then follow the letters through Pea Ridge, Fredericksburg, Vicksburg and Gettysburg, down to Mobile Bay and on to a final assault on Richmond. Twenty-six battles, one lifelong cause: the revolution lost in Baden may yet be won in Virginia.",
   "eqp": "eqp-kaiser",
   "file": "aljf.json",
   "flag": 196,
@@ -62,7 +62,7 @@ var campaignlist =
   "title": "A Long Journey to Freedom (1848-1865)"
  },
  {
-  "desc": "Budapest has proclaimed a Soviet republic. Its enemies are already marching. Take command of the Hungarian Red Army in a campaign where a bridgehead held today may be the only route of retreat tomorrow. Escape the disaster at Zilah, rally at Szolnok and carry the counteroffensive north towards Kassa.\n\nAround your map, military necessity collides with revolutionary ambition. Your staff and political leaders argue over what to risk and whom to save; your decisions shape the force that reaches the next battle. The republic's time is running out. Can you give it room to breathe?",
+  "desc": "Spring 1919. Budapest has proclaimed a Soviet republic, and the armies of its neighbours are already on the march. You are the commissar sent to the front: first to break out of the trap at Zilah, then to hold the Tisza bridgehead at Szolnok while the capital holds its breath.\n\nThen the Hungarian Red Army does the impossible. Tens of thousands of factory workers march north, Miskolc and Kassa fall, and the offensive reaches the Polish border at Bártfa. But every triumph is borrowed time, and in July the republic stakes everything on a last throw across the Tisza. Between battles, commanders and people's commissars clash over what the revolution can afford, and your decisions shape the army that fights for its survival.",
   "eqp": "eqp-kaiser",
   "file": "rhu.json",
   "flag": 187,
@@ -72,7 +72,7 @@ var campaignlist =
   "title": "Hungarian Soviet Republic (1919)"
  },
  {
-  "desc": "At Voronezh, the horsemen are ready. Lead the Red cavalry through Rostov, Ukraine and the race towards Lwów, then bring it back for the struggle over Crimea. Speed opens opportunities that infantry alone could never reach; an ill-timed charge can throw them all away.\n\nUse reconnaissance, supporting fire and flanking movement to turn a breakthrough into a pursuit. At Komarow you must fight your way out; at Perekop you face a defended barrier that cannot simply be ridden around. Build a cavalry force that knows when to gallop, when to dismount and when to wait for the guns.",
+  "desc": "\"Comrade Commander! Come quickly, we must act swiftly.\" Your political commissar has arrived at Voronezh with orders from Moscow, and the Red cavalry mounts up. Ahead lies a year in the saddle: the drive on Rostov, the long ride to the Polish front, the breakthrough at Brody and the gallop towards Lwów.\n\nThen the horsemen are caught. At Komarów, in the last great cavalry battle, the trap closes around you; at Kakhovka and Perekop, the war against Wrangel becomes a war of wire and trenches that no charge can leap. Thirteen battles from Voronezh to Sevastopol ask one question: can you tell the moment for sabres from the moment for machine-gun carts, horse artillery and armoured trains?",
   "eqp": "eqp-kaiser",
   "file": "ccampdfc.json",
   "flag": 103,
@@ -82,7 +82,7 @@ var campaignlist =
   "title": "Bolshevik Cavalry (1918-1920)"
  },
  {
-  "desc": "The fleet is ordered into one final battle. The sailors of Kiel refuse. You are their elected delegate, entrusted with an armed column as mutiny spreads into revolution. From the naval ports through Frankfurt to Berlin, the empire is losing its grip faster than anyone can agree on what should replace it.\n\nFree prisoners or seize communications? Strengthen the councils or push on before the old authorities recover? Your fictional commander's journey links four uprisings, with political allies who will argue over every priority. Turn refusal into power before the revolution's enemies regain the initiative.",
+  "desc": "November 1918. The admirals order the High Seas Fleet out for one last death ride. In Kiel, the sailors refuse and elect you to lead them. Four battles carry the uprising from the naval base to Wilhelmshaven, Frankfurt and finally Berlin, where the Kaiser has ordered a Jäger regiment into a burning capital.\n\nThis is a revolution run by committee, and the committee never stops arguing. Free the prisoners or seize the telegraph? Take the town hall or the barracks? Spread the uprising or secure what you already hold? Every decision changes the forces the councils lend you. A monarchy can fall in a week, if you are the one who makes it fall.",
   "eqp": "eqp-kaiser",
   "file": "novemberrevolution.json",
   "flag": 188,
@@ -92,7 +92,7 @@ var campaignlist =
   "title": "The November Revolution (1918)"
  },
  {
-  "desc": "You were an Imperial officer. Now you serve the Reds, facing men who once wore the same uniform. Denikin's army is moving north, and your orders are to hold a town, save a crossing, buy another day. From the Don and the Kuban to the Taman coast, make a fighting force out of troops who have barely learned to dig in.\n\nAt Orel, the chance to turn the war finally comes. Drive south towards Novorossiysk and the mud of Perekop, or fight a desperate succession of defensive battles if the front breaks. A lost battle need not end your command. Keeping an army together is what makes the counteroffensive possible.",
+  "desc": "You are a former Imperial officer who has taken the Soviet oath, and for two years you will be outgunned by your own class. Denikin has British rifles, British shells, British tanks and Entente squadrons in the Black Sea. You have militia who must first be taught to dig, a railway that keeps getting cut, and orders that usually amount to holding something for four more days.\n\nNineteen operations from the Don to the Crimea. Shut the Don crossings behind the Ice March. Hold Ekaterinodar while Kornilov throws his cadets at it. Walk the Taman columns out along the coast road with the sea on one flank and the mountains on the other. Give ground across the Kuban, the Terek and the Manych as the Moscow Directive rolls north, and remember that you are judged on the task you were given, not on a front that bends somewhere else.\n\nThen Orel, where the Latvian riflemen and Primakov's Chervonny Cossacks go in at Kromy and the arrows on the map finally turn south. Kharkov. A quay at Novorossiysk, where a beaten army learns how many ships the Entente actually sent. And a year later, the Sivash mud in the dark, under a wall that was never supposed to fall.\n\nLose at Orel and the campaign does not end: it gets harder. Tula, Moscow, even Petrograd against Yudenich: each one a last line, and holding any of them hands you straight back to the pursuit.",
   "eqp": "eqp-kaiser",
   "file": "volarm.json",
   "flag": 103,
@@ -102,7 +102,7 @@ var campaignlist =
   "title": "The Defeat of Denikin (1918-1920)"
  },
  {
-  "desc": "At Zborov you fight beside the Czechoslovak volunteers. In Siberia, you will face former allies across the barricades. Begin as a Russian officer attached to the legion, then follow your commitment to the revolution into a civil war fought along thousands of miles of railway.\n\nHold the bridges at Kiev and the junction at Bachmach. Fight for Samara and Kazan, get people out of Omsk, and carry the Red advance east towards Vladivostok. Every station brings you closer to the end of the line, and further from the men with whom the journey began.",
+  "desc": "July 1917. You are a staff captain of the old army, attached to the Czechoslovak brigade because you speak enough Czech to be useful. At Zborov you watch volunteers storm three lines of trenches while a Russian division beside them votes on whether to leave its own, and somewhere between the two, you choose your side.\n\nEleven operations and nine thousand versts of railway follow. Hold the Kiev bridges beside the legionnaires and keep Bakhmach open for their trains, then watch a thrown stove leg at Chelyabinsk turn allies into enemies in a single afternoon. Fight for Samara and the gold of Kazan, get people out of Omsk alive, and push east against Kolchak and the ataman's armoured trains. On a quay at Vladivostok in 1920, the men who once held the bridges with you are waiting for a ship home, and there is too much between you to shake hands.",
   "eqp": "eqp-kaiser",
   "file": "acampdf2.json",
   "flag": 103,
@@ -112,7 +112,7 @@ var campaignlist =
   "title": "The Legion and the Revolution (1917-1920)"
  },
  {
-  "desc": "Four towns on a railway, a thin screen of troops and orders to hold. Your war on the Soviet Western Front begins with too little of everything. Delay the Polish advance through Wilno and the Berezina, survive the winter at Dyneburg, and keep a force together until the Red counteroffensive can begin.\n\nThen comes the rush west, and the reckoning before Warsaw. Bring your formations back through the collapsing front, break the cavalry out at Komarow and hold the Niemen crossings. This is a commander's campaign of advances and withdrawals, where saving the army can matter more than keeping the ground.",
+  "desc": "April 1919. Every division the Republic owns is fighting Denikin and Kolchak, so the Western Front gets a half-strength brigade, four towns on a railway and orders that begin with the word \"nevertheless\". Your war against Poland starts with too little of everything, and for most of its long months it goes backwards.\n\nDelay the advance on Wilno, hold the Berezina, sit out the Latgale winter at minus twenty-five. Then the Konarmia tears open the Polish front, and the whole army surges west towards Warsaw, straight into disaster. Bring the divisions back across the Bug, break the cavalry out of the pocket at Komarów, and dig in on the Niemen while diplomats at Riga draw a border across the ground your battalions are standing on.",
   "eqp": "eqp-kaiser",
   "file": "polsov.json",
   "flag": 103,
@@ -122,7 +122,7 @@ var campaignlist =
   "title": "The Polish-Soviet War (1919-1920)"
  },
  {
-  "desc": "Madrid must hold. Take command of the Republic's forces as improvised columns become the Ejército Popular, fighting an enemy backed by German and Italian arms. From the Jarama valley and Guadalajara to the frozen streets of Teruel, every offensive asks you to risk the veterans you can least afford to lose.\n\nCross the Ebro, defend the bridgeheads and find a way forward as the war tightens around the Republic. The campaign reaches beyond the familiar historical outcome into battles for Zaragoza and Ceuta. Can you keep an army alive long enough to give Spain a different ending?",
+  "desc": "November 1936. Franco's columns are in the suburbs, German and Italian aircraft rule the sky, and Madrid is defended by militias who have never fought as an army. Hold the capital, then forge improvised battalions into the Ejército Popular at the Jarama, Guadalajara, Brunete, Aragon and the frozen ruins of Teruel.\n\nIn July 1938 the Republic stakes everything on a night crossing of the Ebro. Win decisively and history breaks open: the offensive rolls on to Zaragoza and then across the Strait to Ceuta, back to the African shore where the rebellion began. Settle for less, and you must weather the fascist counteroffensive and a last stand on the Segre. Twelve battles, and one chance to write a different ending for Spain.",
   "eqp": "eqp-gce",
   "file": "gce.json",
   "flag": 226,
@@ -132,7 +132,7 @@ var campaignlist =
   "title": "Ejercito Popular (1936-1939)"
  },
  {
-  "desc": "Khalkhin Gol is your proving ground. Under the banner of Zhukov's campaigns, learn to mass a blow that breaks an enemy front, then take that experience into the battles that decide the Soviet war: Yelnya, the approaches to Moscow, Rzhev and the relief of Leningrad.\n\nChoose a route through Operation Bagration and drive towards the Seelow Heights. This is a campaign for commanders who enjoy preparing the decisive attack: find the weak point, bring up the guns and commit the reserves when the opening appears. A powerful army still needs someone who knows where to strike.",
+  "desc": "Khalkhin Gol, 1939. A little-known Soviet commander gathers tanks, guns and aircraft into a single blow and destroys a Japanese army on the Mongolian steppe. His name is Georgy Zhukov, and the next six years will make it a legend. Follow his war through Moscow, Rzhev, the breaking of the Leningrad blockade, Kursk and the Korsun pocket.\n\nIn the summer of 1944, Stavka lets the Marshal choose his front for Operation Bagration: the 1st Belorussian, through Bobruisk to the Vistula, or the 2nd, through Mogilev, Minsk and Grodno. Both roads lead to Pomerania and the final storm of Berlin. Seventeen operations reward the Zhukov method: meticulous preparation, crushing concentration and the nerve to commit the reserve at exactly the right hour.",
   "eqp": "eqp-comww2",
   "file": "ga4.json",
   "flag": 89,
@@ -142,7 +142,7 @@ var campaignlist =
   "title": "Zhukov: Red God of War (1939-1945)"
  },
  {
-  "desc": "Two hundred gladiators are ready to run. Beyond the walls of Capua lies Italy, and a republic that considers your people property. Lead the escaped slaves from their first desperate clashes to victories over Roman armies, gathering the strength to challenge masters who never imagined you could fight back.\n\nWill you follow Spartacus or Crixus? The revolt's paths divide, the legions close in, and every captured town buys only a little more time. From Vesuvius to the final struggle in southern Italy, turn freedom won in a single escape into something an army can defend.",
+  "desc": "Capua, 73 BC. A handful of gladiators break out of their school with kitchen knives and nothing to lose. Within a year they are an army: they rout Rome's troops on the slopes of Vesuvius, sack Nola and Nuceria, and send praetor after praetor fleeing.\n\nThen, in 72 BC, the revolt splits, and you must choose. March with Crixus and the Celts to strike at Rome in its own heartland, or follow Spartacus north towards the Alps and freedom. Both roads end with Crassus and his legions walling the rebels into the south of Italy. Nineteen battles ask whether slaves can outfight the legions long enough to overturn the verdict of history.",
   "eqp": "eqp-ag",
   "file": "spa.json",
   "flag": 310,
@@ -152,7 +152,7 @@ var campaignlist =
   "title": "Spartacus: The Slave Revolt (73-71 BC)"
  },
  {
-  "desc": "The enemy can bring overwhelming firepower. You must make him fight where it is least useful. Lead Viet Cong forces from the raid at Binh Gia through the battles of Ia Drang, Khe Sanh and Tet, balancing the lure of a bold attack against the need to preserve your men.\n\nJungle approaches give way to fortified camps and contested cities as the war grows in scale. Survive the counterblows, gather strength for the next offensive and carry the campaign through Laos and Kontum towards Saigon. The force that wins the final battle must first endure all the others.",
+  "desc": "December 1964. Your fighters strike at Binh Gia, and by first light the enemy is hunting them. This is a war in which the other side owns the sky, the artillery and the roads. You own the night, the jungle and time.\n\nTwelve operations span eleven years: the siege of Plei Me and the valley of Ia Drang, clashes with South Korean troops on the coast, Khe Sanh, the Tet Offensive in Hue and Da Nang, the 1971 fight for the supply lines in Laos and the battle for Kontum. Strike, vanish, strike again, until April 1975 and the final advance on Saigon.",
   "eqp": "eqp-olgcw",
   "file": "nvc.json",
   "flag": 276,
@@ -162,7 +162,7 @@ var campaignlist =
   "title": "Viet Cong (1964-1975)"
  },
  {
-  "desc": "Your first orders are to cross the Prut. Soon you will be fighting for the ports, mountain passes and narrow strips of coast on which the southern front depends. Lead Soviet troops from Bessarabia through Odessa and Crimea, where the struggle on land is bound to the fate of the Black Sea.\n\nFight for the landings at Kerch and Feodosiya, hold on through the battles for the Caucasus, then return west through the Taman peninsula. From Sevastopol to Romania and Bulgaria, carry an army through a war of bridgeheads and reversals until the coast that once offered only escape becomes the road of your advance.",
+  "desc": "22 June 1941, on the river Prut. The first shots of the southern front are fired here, and it will be three years before Soviet troops stand on this riverbank again. In between lies the fight for the Black Sea coast: Odessa under siege, Perekop, the winter landings in Crimea, Sevastopol, and the Caucasus passes where the German drive for the oil finally breaks.\n\nTwenty-seven operations turn a retreat into the long road back. Choose where the Crimean counteroffensive of 1941 goes ashore: Kerch or Feodosiya. Hold Sukhumi and Ordzhonikidze, retake Maikop, Rostov and Novorossiysk, clear the Taman peninsula, return to Odessa and Sevastopol as liberators, and carry the offensive back across the Prut to Bucharest and Sofia.",
   "eqp": "eqp-basekorp",
   "file": "rcampdfr.json",
   "flag": 61,
@@ -172,7 +172,7 @@ var campaignlist =
   "title": "Soviet Black Sea Fleet (1941-1944)"
  },
  {
-  "desc": "An uprising, a mountain refuge, a bridge on the Long March: your army begins with survival. Lead the Chinese Red forces from Nanchang through the war against Japan and the renewed struggle with the Nationalists. Small formations become field armies, but every new offensive still rests on the veterans you bring to it.\n\nThis campaign does not stop at the Chinese civil war. It continues into Korea, then into alternate-history crises around Taiwan and the Soviet border. From the fight for a revolutionary foothold to confrontations between states, discover how much harder victory becomes when your army's world keeps growing.",
+  "desc": "August 1927. In Nanchang, Nationalist regiments turn their guns on their own commanders, and the Chinese Red Army is born fighting for its life. Survive the Autumn Harvest Uprising and the encirclement campaigns in the Jinggang Mountains, seize Luding Bridge on the Long March, ambush the Japanese at Pingxingguan and launch the Hundred Regiments Offensive.\n\nThe civil war is only the midpoint. Cross into Korea, where only a decisive result at Seoul reopens the road to Pusan. Then history gives way: an invasion of Taiwan under the shadow of nuclear crisis, a Soviet army across the Amur and, in Beijing in 1955, a KGB offer to overthrow Mao himself. From a mutiny to a coup, how far will your loyalty to the revolution go?",
   "eqp": "eqp-olgww2",
   "file": "rsoc.json",
   "flag": 21,
@@ -182,7 +182,7 @@ var campaignlist =
   "title": "Red Star Over China (1927-1949)"
  },
  {
-  "desc": "The ring is closing around Stalingrad. Take a Soviet tank force from Operation Uranus to the streets of Berlin, forging a veteran corps through Kursk, the Dnieper crossings and the great offensives of 1944. Your armour can open the road; infantry, engineers and artillery must keep it open.\n\nBuild the combined-arms force you want to command, then prove it across twenty operations. Break through, keep the columns moving and decide when to spend your strength for speed. From the first winter offensive to the last battle, the corps you bring home is the corps you will lead tomorrow.",
+  "desc": "November 1942. On the Chir, west of Stalingrad, Operation Uranus has torn open the Axis front, and a Soviet Guards tank corps is ordered through the gap. Its war will not stop until Berlin.\n\nTwenty operations test everything deep battle demands: meeting the panzers at Prokhorovka, racing for Kiev and Zhitomir, encircling armies in Belorussia and fighting district by district into the capital of the Reich. Prestige flows freely enough to build the formidable combined-arms corps of history: T-34s, motorised infantry, self-propelled guns, engineers and Guards. Fuel, losses and timing decide whether it reaches the finish.",
   "eqp": "eqp-adlerkorps",
   "file": "062d.json",
   "flag": 61,
@@ -191,7 +191,7 @@ var campaignlist =
   "title": "The Great Patriotic War USSR Campaign (1942-1945)"
  },
  {
-  "desc": "Stalingrad is the turning point. Take command of a Soviet counteroffensive that drives through Rostov, Ukraine and the approaches to Berlin, forcing you to absorb counterattacks and rebuild your striking force between battles. The Reichstag is the great prize, but it is not the end of this campaign.\n\nAn alternate-history continuation turns former allies into enemies and carries the fighting through Western Europe, across the Channel and eventually to American shores. Lead the same army from the struggle to reclaim your own country into a war without a familiar ending.",
+  "desc": "You are Zhukov, and the German Sixth Army has just walked into your trap at Stalingrad. Close the ring, smash the Axis front on the Don, and roll south to Rostov, Sevastopol and Odessa, then back through Kharkov and Kiev to the Oder and the last fortress of the Reich: the Reichstag.\n\nThis is where history stops and this campaign keeps going. Weeks after the victory, the Western Allies open fire in Berlin, and Moscow answers with the unthinkable: a new Pact of Steel with its German and Italian enemies. Drive the Allies into the sea at Dunkirk, cross the Channel, take Windsor and London, then carry the war over the Atlantic to Florida, Savannah and, at last, Washington. Twenty-seven operations from the Volga to the Potomac.",
   "eqp": "eqp-adlerkorps",
   "file": "camp6.json",
   "flag": 61,
@@ -200,7 +200,7 @@ var campaignlist =
   "title": "Soviet Counter-Offensive Campaign (1942-1946)"
  },
  {
-  "desc": "In the mountains of Greece, an invasion becomes a retreat, and retreat becomes resistance. Lead your troops from the battles against Italy through the German onslaught, Crete and exile. The men beside you share an enemy; they do not all share a vision of the country they hope to recover.\n\nAfter El Alamein, choose the government army or EAM-ELAS and follow that commitment into the struggle for Greece's future. Recurring companions remember your decisions as occupation gives way to civil war. Victory on the map may hold a position. Keeping the trust of those who follow you is another battle.",
+  "desc": "October 1940. Mussolini expects Greece to fall in a fortnight. Instead, your troops throw the Italians back across the Pindus and deep into Albania. Then the Wehrmacht arrives. Choose whether to face the German onslaught with the Central or the Western Macedonia Army, make a last stand at Thermopylae, and meet the paratroopers falling on Crete. Beat them there, and there will be no evacuation.\n\nAfter El Alamein comes the decision that splits the campaign, and the country, in two. Serve the Greek government from the Alexandria mutiny to the Gothic Line in Italy, or break out of a military prison in Alexandria to join ELAS in the mountains, trading your old core for new fighters of equal experience. Both roads lead to Athens in December 1944 and into the civil war, where the same battles are fought from opposite sides of the line. Companions who share your story remember what you chose.",
   "eqp": "eqp-lxf",
   "file": "camp6bn4.json",
   "flag": 39,
@@ -210,7 +210,7 @@ var campaignlist =
   "title": "Greece: Resistance and Civil War (1940-1949)"
  },
  {
-  "desc": "The order is always the same: forward. The war will teach you how much it can cost. Begin at Khalkhin Gol, endure Finland and the great encirclements of 1941, then rebuild your Soviet army for Stalingrad and Kursk. A force assembled for yesterday's battle must survive the one nobody expected.\n\nBeyond Kursk, choose your front: fight towards Leningrad and Manchuria, through the centre to Berlin, or south towards Prague. Some routes carry victory into an imagined war with the Western Allies. This sprawling campaign gives your veterans more than one road to the end of the war.",
+  "desc": "Forward: the only order that never changes. Forty-four scenarios carry your Soviet army from Khalkhin Gol and the Finnish winter into the disaster of 1941: the pockets at Minsk, Kiev and Bryansk, and the last line before Moscow.\n\nThen the war begins to branch. A brilliant victory at Tula can trap Army Group Centre and end the war in 1942; a weak one throws you into street fighting in Moscow itself. After Kharkov, choose which German army group to hunt to the end: north to Leningrad, Riga and Courland; south through the Kuban, Romania and Hungary to Prague; or through the centre to the Oder, where the result at Küstrin decides between Berlin and a new war against the Western Allies, with German divisions fighting beside you or against you. Two of the three roads end in Manchuria.",
   "eqp": "eqp-atomic",
   "file": "forward.json",
   "flag": 89,
@@ -220,7 +220,7 @@ var campaignlist =
   "title": "Forward, Comrade! (1939-1945)"
  },
  {
-  "desc": "The Volga bridges are lost, Kazan's gold is threatened and Kolchak's armies are coming out of Siberia. You command the Reds on an Eastern Front held together by railways and hurriedly assembled units. Survive the first retreats and the winter at Ufa until there is an army ready to strike back.\n\nThen turn east with the counteroffensive: across the Belaya, through the Urals and along the railway towards Irkutsk. A setback can send you into emergency defensive battles closer to Moscow; holding there gives you another chance to return to the advance. Keep the front alive long enough to reverse its direction.",
+  "desc": "You are a Red commander on the Eastern Front, and for the first year of it you will be defending things you have been told cannot be held. The Czechoslovak corps has taken the Volga bridge on its way home, a committee of Constituent Assembly deputies is governing Russia out of Samara, and behind them come Kolchak, the Siberian Cossacks and six thousand versts of railway.\n\nTwenty-three operations from the Volga to Irkutsk. Hold Kazan with six hundred million roubles of Imperial gold in the vaults beneath it and a Fifth Army that has barely been formed. Survive a Urals winter at thirty below at Ufa, Khanzhin's spring offensive coming out of the thaw, and Dutov's Cossacks around Orenburg.\n\nThen Frunze turns the front around, and for a year the arrows on the map run east. Chapayev's division crosses the Belaya on rafts at Ufa. Ekaterinburg, and the house on Voznesensky Lane. Chelyabinsk, held at both shoulders at once. The Tobol, where the enemy's last offensive runs out of everything. And after Omsk, the Great Siberian Ice March coming down a single railway, until it ends at Irkutsk, with the Supreme Ruler in a prison cell and the remains of the gold reserve in the same town.\n\nA bad result at Chistopol does not end the campaign. It opens an emergency line of defences back towards Moscow: Kazan, Samara, Vyatka, Saratov, Ryazan, Klin. Hold any one of them and you return at once to the counteroffensive. The title is the enemy's own motto, taken from his banner.",
   "eqp": "eqp-kaiser",
   "file": "simpob.json",
   "flag": 103,

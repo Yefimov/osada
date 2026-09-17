@@ -246,11 +246,11 @@ internal class AnimationOrchestrator(
             }
             surrenderPos?.let {
                 ui.render.addAnimation(it.row, it.col, "explosion", 0, defender)
-                ui.showAlert(it.row, it.col, "Surrendered", false)
+                ui.showAlert(it.row, it.col, I18n.t("combat.alert.surrendered"), false)
                 // Named distinctly from an ordinary kill: the player needs to see that cutting off
                 // the retreat is what did it, not damage — and what it earned.
-                val reward = if (prestige > 0) " (+$prestige prestige)" else ""
-                HudLog.addAt(it.row, it.col, "$name surrendered — encircled, no retreat$reward")
+                val reward = if (prestige > 0) I18n.t("trigger.reward.prestige", mapOf("amount" to prestige)) else ""
+                HudLog.addAt(it.row, it.col, I18n.t("hud.log.surrendered", mapOf("unit" to name)) + reward)
             }
         }
     }
@@ -312,14 +312,14 @@ internal class AnimationOrchestrator(
         ui.render.render(pos.row, pos.col, radius)
 
         result.surpriseCell.firstOrNull()?.let { cell ->
-            ui.showAlert(cell.row, cell.col, "Surprised", true)
+            ui.showAlert(cell.row, cell.col, I18n.t("combat.alert.surprised"), true)
             unit.isSurprised = false
         }
         reportInterceptions(ui, unit, result, pos)
         reportMinefield(ui, unit, result, pos)
         reportTrigger(ui, unit, result, pos)
         if (result.isCapture) {
-            ui.showAlert(pos.row, pos.col, "Captured", true)
+            ui.showAlert(pos.row, pos.col, I18n.t("combat.alert.captured"), true)
             val hexName =
                 ui.game.scenario
                     ?.map
@@ -336,8 +336,10 @@ internal class AnimationOrchestrator(
             // not a second unrelated discovery. Fold it into this one line; an authored trigger
             // message is still reported separately by reportTrigger.
             val totalPrestige = result.capturePrestige + result.triggerPrestige
-            val reward = if (totalPrestige > 0) " (+$totalPrestige prestige)" else ""
-            HudLog.addAt(pos.row, pos.col, "${unit.unitData(true).name} captured $place$reward")
+            val reward =
+                if (totalPrestige > 0) I18n.t("trigger.reward.prestige", mapOf("amount" to totalPrestige)) else ""
+            val line = I18n.t("hud.log.captured", mapOf("unit" to unit.unitData(true).name, "place" to place))
+            HudLog.addAt(pos.row, pos.col, line + reward)
         }
         if (result.isVictorySide >= 0) {
             ui.game.handleMoveVictory(result.isVictorySide)

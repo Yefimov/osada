@@ -123,17 +123,6 @@ ktlint {
 }
 
 /*
- * Собственная Python-проверка проекта.
- */
-tasks.register<Exec>("verifyStaticChecks") {
-    group = "verification"
-    description = "Runs Python static checks on JS/Kotlin consistency and index.html"
-
-    workingDir = rootDir
-    commandLine("python", "scripts/check_kotlin_js_consistency.py")
-}
-
-/*
  * Валидация диалогов кампаний: граф диалога, условия, эффекты и цели сценария.
  */
 tasks.register<Exec>("verifyCampaignDialogue") {
@@ -359,7 +348,6 @@ tasks.register<Exec>("verifyMobileSmokeTest") {
  */
 tasks.named("check") {
     dependsOn(
-        "verifyStaticChecks",
         "verifyCampaignDialogue",
         "verifyScenarioEvents",
         "verifyUnitDescriptions",

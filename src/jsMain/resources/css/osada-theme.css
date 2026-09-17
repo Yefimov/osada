@@ -4592,18 +4592,24 @@ hr {
 .osada-eqd-stats {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 4px 8px;
+    gap: 4px 6px;
 }
 
 .osada-eqd-stat {
     display: flex;
     justify-content: space-between;
-    gap: 6px;
+    gap: 0 6px;
     font-size: 12px;
-    padding: 4px 7px;
+    padding: 4px 5px;
     background: rgba(255, 255, 255, .04);
     border-radius: 3px;
     cursor: help;
+}
+
+/* Movement type is the one stat whose value is a word: a long one (Russian "Железнодорожный")
+ * drops under its label instead of widening the column and scrolling the detail panel sideways. */
+.osada-eqd-stat--wrap {
+    flex-wrap: wrap;
 }
 
 .osada-eqd-stat:hover {
@@ -4617,6 +4623,7 @@ hr {
 }
 
 .osada-eqd-stat span {
+    margin-left: auto;
     color: var(--osada-text);
     font-weight: bold;
 }

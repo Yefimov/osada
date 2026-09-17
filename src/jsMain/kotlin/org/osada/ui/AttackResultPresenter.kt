@@ -63,13 +63,13 @@ internal class AttackResultPresenter(
         if (result.isOverrun) {
             attackerPos?.let {
                 val pos = ui.render.cellToScreen(it.row, it.col, true)
-                bounceText(pos.x, pos.y, "Overrun", true)
+                bounceText(pos.x, pos.y, I18n.t("combat.alert.overrun"), true)
             }
         }
         if (result.isRugged && !result.isOverrun) {
             attackerPos?.let {
                 val pos = ui.render.cellToScreen(it.row, it.col, true)
-                bounceText(pos.x, pos.y, "Rugged Defense", false)
+                bounceText(pos.x, pos.y, I18n.t("combat.alert.rugged_defense"), false)
             }
         }
         if (result.losses > 0 && attackerPos != null) {
@@ -105,22 +105,32 @@ internal class AttackResultPresenter(
         // Raw "(col,row)" dropped from the visible text (it was clutter, spec) — the row is
         // clickable instead (jumps to the defender's hex) with the coordinates only in its
         // tooltip, same treatment as the Turn Report's rows.
-        val segments = mutableListOf(HudLog.Segment("$atkName attacked $defName:"))
+        val segments =
+            mutableListOf(
+                HudLog.Segment(I18n.t("hud.log.combat.attacked", mapOf("attacker" to atkName, "defender" to defName))),
+            )
 
-        val inflicted = StringBuilder("inflicted $defenderLosses")
-        if (defender.destroyed) inflicted.append(" — $defName destroyed")
+        val inflicted =
+            if (defender.destroyed) {
+                I18n.t("hud.log.combat.inflicted_destroyed", mapOf("losses" to defenderLosses, "defender" to defName))
+            } else {
+                I18n.t("hud.log.combat.inflicted", mapOf("losses" to defenderLosses))
+            }
         segments.add(HudLog.Segment("$inflicted,", defenderIsOwn && defenderLosses > 0))
 
-        val taken = StringBuilder("lost $attackerLosses")
-        if (attacker.destroyed) {
-            taken.append(" — unit destroyed")
-        } else {
-            taken.append(" (${attacker.strength} remain)")
-        }
-        segments.add(HudLog.Segment(taken.toString(), attackerIsOwn && attackerLosses > 0))
+        val taken =
+            if (attacker.destroyed) {
+                I18n.t("hud.log.combat.lost_destroyed", mapOf("losses" to attackerLosses))
+            } else {
+                I18n.t(
+                    "hud.log.combat.lost_remaining",
+                    mapOf("losses" to attackerLosses, "remaining" to attacker.strength),
+                )
+            }
+        segments.add(HudLog.Segment(taken, attackerIsOwn && attackerLosses > 0))
 
         if (result.atkExpGained > 0 && !attacker.destroyed) {
-            segments.add(HudLog.Segment("· +${result.atkExpGained} XP"))
+            segments.add(HudLog.Segment(I18n.t("hud.log.combat.experience", mapOf("value" to result.atkExpGained))))
         }
 
         if (defenderPos != null) {
