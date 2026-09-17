@@ -51,6 +51,11 @@ internal class StrategicZoomController(
             // map * zoomLevel * percent — which fits the viewport by construction of `percent`.
             gameDiv.style.width = "${(mapWidth * uiSettings.zoomLevel).toInt()}px"
             gameDiv.style.height = "${(mapHeight * uiSettings.zoomLevel).toInt()}px"
+            // Drop the sidebar's scroll-room padding: this box is sized to the map exactly and is
+            // `overflow:hidden`, so the padding would only widen the rect `centerStrategicMap`
+            // measures and throw the centring off by half the panel. `positionLayers` puts it back
+            // when the view reverts.
+            gameDiv.style.paddingRight = "0px"
             uiSettings.strategicZoom = true
             uiSettings.strategicZoomLevel = strategicZoomPercentBase / percent
             byId("mainbody")?.classList?.add("osada-strategic")

@@ -2959,13 +2959,13 @@ hr {
     padding: 0 10px 14px;
     font-family: var(--osada-font-ui);
     /* The zone is a full-width GRID CONTAINER but only its first track is ever filled, so the
-     * empty two thirds of the band lay over the map as an invisible click shield: every map click
-     * in the bottom ~150px was swallowed by this element instead of reaching the cursor canvas.
-     * The map cannot be scrolled clear of it either (its own bottom rows are already at the end of
-     * the scroll), so the last hex rows were simply unreachable while a unit was selected --
-     * reported 2026-09-07 as "I click the hex and the unit does not move", and the reason the same
-     * click worked at 160%, where zoom puts the hex somewhere else on screen. Only the cards
-     * themselves take pointer input; the band around them is see-through. */
+     * empty two thirds of the band were an invisible click shield: every map click in the bottom
+     * ~150px was swallowed by this element instead of reaching the cursor canvas -- reported
+     * 2026-09-07 as "I click the hex and the unit does not move", and the reason the same click
+     * worked at 160%, where zoom puts the hex somewhere else on screen. Only the cards themselves
+     * take pointer input; the band around them is see-through. The map no longer reaches under
+     * this band at all (`RenderContext.positionLayers` ends `#game` at its top edge), but the rule
+     * stays: it is what keeps the empty tracks from shielding anything that is under them. */
     pointer-events: none;
 }
 
@@ -3375,6 +3375,35 @@ hr {
     color: var(--osada-text-dim);
     font-size: 11px;
     line-height: 1.35;
+}
+
+/* Commander traits (UnitStatCard.fillCommanderTraits) reuse the block above, with two changes.
+ * Its "badge" is the trait's full NAME ("Battlefield Intelligence"), not a two-glyph mark, so the
+ * fixed 34px badge column would clip it: the name takes a line of its own and its sentence sits
+ * under it. And this block is INSERTED ABOVE the stat-chip strip rather than appended below it,
+ * so the vertical margin is mirrored. */
+.osada-uc-abilities--commander {
+    margin: 2px 2px 7px;
+    border-color: rgba(221, 174, 68, .45);
+}
+
+.osada-uc-abilities--commander .osada-uc-abilities__row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1px;
+    padding: 3px 0;
+}
+
+.osada-uc-abilities--commander .osada-capability-mark {
+    justify-self: start;
+    height: auto;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    color: var(--osada-brass);
+    font: 700 11px/1.3 Arial, sans-serif;
+    letter-spacing: .02em;
 }
 
 .osada-formation-detail {

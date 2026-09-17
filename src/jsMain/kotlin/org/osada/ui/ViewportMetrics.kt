@@ -18,13 +18,15 @@ internal data class ViewportMetrics(
     val offsetTop: Double,
     val topBarHeight: Double,
     val bottomDockHeight: Double,
+    val sideRailWidth: Double,
     val safeTop: Double,
     val safeRight: Double,
     val safeBottom: Double,
     val safeLeft: Double,
 ) {
-    /** Width left for the map once device cutouts are excluded. */
-    val usableWidth: Double get() = (width - safeLeft - safeRight).coerceAtLeast(0.0)
+    /** Width left for the map once device cutouts and the right sidebar are excluded. */
+    val usableWidth: Double
+        get() = (width - safeLeft - safeRight - sideRailWidth).coerceAtLeast(0.0)
 
     /** Height left for the map once cutouts, the top bar and the bottom dock are excluded. */
     val usableHeight: Double
@@ -64,6 +66,7 @@ internal object ViewportMetricsService {
             // adds them separately when positioning the map.
             topBarHeight = heightExcludingSafeArea(rectHeight("statusbar"), insets[0]),
             bottomDockHeight = heightExcludingSafeArea(rectHeight("osada-bottomzone"), insets[2]),
+            sideRailWidth = rightEdgeCoverage("osada-sidebar", fallbackWidth, insets[1]),
             safeTop = insets[0],
             safeRight = insets[1],
             safeBottom = insets[2],
@@ -94,6 +97,31 @@ internal object ViewportMetricsService {
         root.style.setProperty("--osada-vv-w", "${metrics.width}px")
         root.style.setProperty("--osada-dock-h", "${metrics.bottomDockHeight}px")
         root.style.setProperty("--osada-topbar-h", "${metrics.topBarHeight}px")
+    }
+
+    /**
+     * How much of the viewport's RIGHT edge a fixed HUD column actually covers.
+     *
+     * Not simply the element's width: the same `#osada-sidebar` is 270px expanded, 40px as the
+     * collapse rail, and on a phone it is a drawer parked off-canvas with `translateX(105%)` --
+     * there its width is a lie about what it hides. Measuring inward from the viewport's own right
+     * edge answers the only question the map cares about, and reports 0 for a panel that is absent,
+     * hidden, or slid off the side. A panel that does not reach the edge is not an inset at all, so
+     * it reports 0 too rather than pretending the map should stop short of it.
+     */
+    private fun rightEdgeCoverage(
+        id: String,
+        viewportWidth: Double,
+        safeRight: Double,
+    ): Double {
+        val rect = byId(id)?.asDynamic()?.getBoundingClientRect()
+        val height = (rect?.height as? Number)?.toDouble() ?: 0.0
+        val rightEdge = (rect?.right as? Number)?.toDouble() ?: 0.0
+        val leftEdge = (rect?.left as? Number)?.toDouble() ?: 0.0
+        val flush = height > 0.0 && rightEdge >= viewportWidth - EDGE_TOUCH_TOLERANCE
+        // Same convention as [heightExcludingSafeArea]: the cutout is a separate term in the
+        // viewport model, so it must not be counted twice through the panel's own padding.
+        return if (flush) (viewportWidth - leftEdge - safeRight).coerceIn(0.0, viewportWidth) else 0.0
     }
 
     /** Rendered height of a HUD region, or 0 when it is absent/hidden — never a hardcoded guess. */
@@ -139,6 +167,9 @@ internal object ViewportMetricsService {
     }
 
     private const val SAFE_AREA_SIDES = 4
+
+    /** Sub-pixel slack when asking whether a fixed panel is flush with the viewport edge. */
+    private const val EDGE_TOUCH_TOLERANCE = 1.0
 }
 
 internal fun heightExcludingSafeArea(

@@ -25,6 +25,7 @@ internal object MobileLayoutController {
     private var lastWidth = -1.0
     private var lastHeight = -1.0
     private var lastDockHeight = -1.0
+    private var lastRailWidth = -1.0
 
     var mode: LayoutMode = LayoutMode.DESKTOP
         private set
@@ -84,17 +85,22 @@ internal object MobileLayoutController {
         // `visualViewport.scroll` fires continuously while a mobile address bar animates, and a
         // relayout is a canvas re-position plus a full minimap composite — far too expensive to do
         // per event. Only an actual change of usable area (or of shell) can move the map.
-        // The dock counts too: it is subtracted from the map viewport, so a taller unit card with
-        // more action chips shrinks the map exactly as a smaller window would.
-        val changed =
+        // The dock and the sidebar are subtracted from the map's box, but neither may MOVE the
+        // map: the dock changes on every selection, and the sidebar opens and closes under the
+        // player's hand. Both therefore take the anchored path, which resizes the box and leaves
+        // the scroll offset alone. Only a real change of usable area (window, orientation, shell)
+        // earns the re-centring relayout.
+        val areaChanged =
             previous != mode ||
                 metrics.width != lastWidth ||
-                metrics.height != lastHeight ||
-                metrics.bottomDockHeight != lastDockHeight
+                metrics.height != lastHeight
+        val hudChanged =
+            metrics.bottomDockHeight != lastDockHeight || metrics.sideRailWidth != lastRailWidth
         lastWidth = metrics.width
         lastHeight = metrics.height
         lastDockHeight = metrics.bottomDockHeight
-        if (changed) {
+        lastRailWidth = metrics.sideRailWidth
+        if (areaChanged) {
             relayoutMap()
             // The top bar's End Turn plate keeps its label only while the label still fits on
             // screen (`ReadyUnitNavigator.updateEndTurnButton`), and that is a decision about the
@@ -102,6 +108,8 @@ internal object MobileLayoutController {
             // the landscape label -- "Завершить · 24" hanging 13px off the right edge at 390px --
             // and one rotated back kept the cut-down one for the rest of the turn.
             GameHolder.instance?.ui?.updateTurnControls()
+        } else if (hudChanged) {
+            resizeMapViewport()
         }
     }
 
@@ -143,7 +151,24 @@ internal object MobileLayoutController {
         MinimapBuilder.refresh()
     }
 
-    /** The top bar and bottom dock change height with content (long scenario names, action chips). */
+    /**
+     * A HUD panel changed size: re-size the map viewport but leave the map itself exactly where it
+     * is. [relayoutMap]'s centre-preserving restore is right for a window resize, where the frame
+     * moves anyway; here it would slide the map by half the panel every single time a unit is
+     * selected or the sidebar is collapsed. Letting the scroll offset stand keeps the map
+     * anchored, so a panel reads as sliding OVER the terrain instead of shoving it.
+     */
+    private fun resizeMapViewport() {
+        val ui = GameHolder.instance?.ui ?: return
+        ui.render.positionLayers()
+        MinimapBuilder.refresh()
+    }
+
+    /**
+     * The top bar and bottom dock change height with content (long scenario names, action chips),
+     * and the right sidebar changes width when it collapses to its rail. All three are subtracted
+     * from the map's own box, so the map has to be re-laid-out when any of them moves.
+     */
     private fun observeHudRegions() {
         val ctor = window.asDynamic().ResizeObserver
         if (ctor == null || ctor == undefined) return
@@ -151,7 +176,8 @@ internal object MobileLayoutController {
         // factory that takes both the class and the callback as ordinary arguments.
         val construct = js("(function(C, cb) { return new C(cb); })")
         val observer = construct(ctor, { schedule() })
-        listOf("statusbar", "osada-bottomzone").forEach { id -> byId(id)?.let { observer.observe(it) } }
+        listOf("statusbar", "osada-bottomzone", "osada-sidebar")
+            .forEach { id -> byId(id)?.let { observer.observe(it) } }
     }
 
     private fun listenMedia(query: String) {

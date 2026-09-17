@@ -12,12 +12,14 @@ import org.w3c.xhr.XMLHttpRequest
  * ## Licensed subset and manifest gate
  *
  * `README/read_me_first.html` in the OG install forbids redistributing sounds without the owner's
- * written permission. That permission was confirmed by the repository owner on 2026-09-01. Three
- * referenced MP3s present in the installed distribution now ship with a manifest at [MANIFEST_URL]
- * and cover 47 scenarios — 45 of them from their own efile, plus the two `eqp-olgcw` scenarios that
+ * written permission. That permission was confirmed by the repository owner on 2026-09-01. Two
+ * referenced MP3s now ship with a manifest at [MANIFEST_URL] and cover 23 scenarios — 21 from
+ * their own efile, plus the two `eqp-olgcw` scenarios that
  * name `AFRICA2.mp3`, which is a recorded substitution rather than their author's file (see
  * `sounds/music/NOTICE.md`). Five referenced names have no source file in that install; they remain
- * silent, and the manifest prevents any request or 404 for them.
+ * silent, and the manifest prevents any request or 404 for them. `campsimpob.mp3` is deliberately
+ * excluded, leaving its 24 authored scenario references inert but available as configuration
+ * examples (see `sounds/music/NOTICE.md`).
  *
  * ## Two normalisations, and why they are here rather than in the importer
  *
@@ -79,7 +81,7 @@ object ScenarioMusic {
      * Starts [track], or silences the music channel when this battle has none it can play.
      *
      * **The stop is the point of the `else`.** This used to `return` on an absent or unplayable
-     * track, which left the PREVIOUS battle's score running underneath the new one: only 47 of the
+     * track, which left the PREVIOUS battle's score running underneath the new one: only 23 of the
      * 502 deployed scenarios have a playable track, so the common transition is exactly the one
      * that took the early exit. `Sound.startMusic` stops what is playing before it starts anything,
      * so a battle that HAS a track was never affected -- which is why the leak was invisible on the

@@ -64,6 +64,7 @@ internal class UnitStatCard(
         fillUnitCarrierSlot(unit)
         fillUnitTransportSlot(unit)
         fillUnitLeaderSlot(unit)
+        fillCommanderTraits(unit)
         // Before the formation record, because it is about the equipment rather than the unit's
         // service history, and because appending in this order is what puts it above it in
         // #statsRowContainer -- both writers of #osadaFormationDetail only ever append.
@@ -408,6 +409,57 @@ internal class UnitStatCard(
         private const val RECOGNITION_STAGES = 3
     }
 }
+
+/**
+ * The commander's own traits, spelled out, as the FIRST block of the All Stats sheet.
+ *
+ * The card's commander line only has room for the trait's NAME ("Experienced Leader: Battlefield
+ * Intelligence"), and what each trait actually does lived solely in that line's `title` tooltip --
+ * which is unreachable on a touch screen and, on a two-trait leader, hid the second one entirely
+ * behind a hover. The sheet is where the rest of the unit already explains itself, so the traits
+ * explain themselves there too, in the same badge-plus-sentence shape [fillCapabilityList] uses.
+ *
+ * `insertBefore(firstChild)` rather than [addTag]'s append: this belongs ABOVE the stat-chip strip,
+ * while the equipment abilities and the formation record belong below it.
+ */
+private fun fillCommanderTraits(unit: GameUnit) {
+    delTag(byId(COMMANDER_TRAITS_ID))
+    val container = byId("statsRowContainer") ?: return
+    val dossier = HeroCampaign.dossier(unit)
+    val traits =
+        if (dossier != null) {
+            // A hero's line already carries both halves of what §26 forbids hiding: what the trait
+            // does, and when it applies. Join them into the one sentence this block shows.
+            dossier.traits.map { line ->
+                line.title to
+                    listOf(line.effect, line.activation)
+                        .filter(String::isNotBlank)
+                        .joinToString(" — ")
+            }
+        } else {
+            Leaders.getUnitLeaderDescriptions(unit)
+        }
+    if (traits.isEmpty()) return
+    val box = addTag(container, "div")
+    box.id = COMMANDER_TRAITS_ID
+    box.className = "osada-uc-abilities osada-uc-abilities--commander"
+    container.insertBefore(box, container.firstChild)
+    val headline = addTag(box, "div")
+    headline.className = "osada-uc-abilities__headline"
+    headline.textContent = I18n.t("unit_info.commander_traits.title", mapOf("count" to traits.size))
+    traits.forEach { (title, description) ->
+        val row = addTag(box, "div")
+        row.className = "osada-uc-abilities__row"
+        val chip = addTag(row, "span")
+        chip.className = "osada-capability-mark osada-capability-mark--ability"
+        chip.textContent = title
+        val text = addTag(row, "span")
+        text.className = "osada-uc-abilities__text"
+        text.textContent = description
+    }
+}
+
+private const val COMMANDER_TRAITS_ID = "osadaUcCommanderTraits"
 
 /**
  * Every ability the equipment carries, in full, inside the All Stats sheet.

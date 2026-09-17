@@ -486,8 +486,6 @@ internal class RenderContext(
         val zoom = MapZoom.level
         val scaledW = boxW * zoom
         val scaledH = boxH * zoom
-        var left = window.innerWidth / 2.0 - scaledW / 2.0
-        if (left < 0) left = 0.0
 
         mapCanvas.style.zIndex = 0
         mapCanvas.style.position = "absolute"
@@ -526,21 +524,50 @@ internal class RenderContext(
 
         wrap?.style?.marginLeft = "0px"
         val topBar = topBarHeight()
-        val fitW = window.innerWidth >= scaledW
+        val metrics = ViewportMetricsService.refresh()
+        // The right sidebar OVERLAYS the map; it does not push it. Cutting the panel's width off
+        // the box instead made the whole map jump sideways every time the panel opened or
+        // collapsed, which is worse than what it fixed. What the map gets instead is SCROLL ROOM:
+        // `padding-right` the width of the panel, so the last hex column can be scrolled out from
+        // under it.
+        //
+        // The room is taken OUT OF the content width, not added on top of it, and that is the
+        // whole trick. `#game` is content-box, so `width + padding` is the visible box: keep that
+        // sum at the window's edge and the rendered box is pixel-identical to before, while
+        // `scrollWidth` grows by exactly the panel's width. Add the padding on top instead and the
+        // box overhangs the window, the reserved room lands off-screen, and it reserves nothing --
+        // the exact mistake the unit card's first fix made (see the height comment below).
+        val rail = if (uiSettings.strategicZoom) 0.0 else metrics.sideRailWidth
+        // `left` deliberately ignores `rail`. It is the one number that would move the map, and
+        // holding it still is the point.
+        val left = ((window.innerWidth - scaledW) / 2.0).coerceAtLeast(0.0)
+        val viewportW = (window.innerWidth - left).coerceAtLeast(0.0)
         val fitH = window.innerHeight >= scaledH + topBar
-        val g = if (fitW) 0.0 else 10.0
         val k = if (fitH) 0.0 else 30.0
+        // Never wider than the map plus the vertical scrollbar's allowance: `clientWidth` is what
+        // the minimap's viewport rectangle and `MapFocusPreserver` read as "how much map is on
+        // screen", so a box stretched past the map would lie to both.
+        val contentW = (viewportW - rail).coerceAtMost(scaledW + k).coerceAtLeast(0.0)
+        val fitW = scaledW <= contentW
+        val g = if (fitW) 0.0 else 10.0
 
-        game.style.width = if (fitW) "${(scaledW + k).toInt()}px" else "${window.innerWidth}px"
-        // `#game` carries a CSS bottom padding (`UnitIdentityStyles`) as pure SCROLL room, so the
-        // map's last hex row can be scrolled clear of the fixed unit card. The box is content-box,
-        // so that padding is ADDED to whatever is set here -- subtracting it is what keeps the
-        // reserved room inside the window. Without the subtraction the box simply grew past the
-        // bottom of the viewport by exactly the padding, the spacer landed off-screen, and the
-        // map's final rows sat under the card at the very end of the scroll, unreachable by any
-        // scroll or click (reported 2026-09-07).
+        game.style.width = "${contentW.toInt()}px"
+        game.style.paddingRight = "${rail.toInt()}px"
+        // The map viewport ENDS where the fixed bottom card begins -- the band is cut off `#game`'s
+        // own box instead of being reserved as inner padding. Padding only bought scroll room: the
+        // map still rendered behind the card until it was scrolled all the way down, and those
+        // rows were visible but not clickable, since the card (not the cursor canvas) is the
+        // topmost element there. Reported 2026-09-07, second round: after the click-shield fix the
+        // dead area had shrunk to exactly the cards' own footprint. Same rule the mobile shell
+        // already follows via `--osada-dock-h` (see `mobile.css`, `body.osada-layout-phone #game`).
+        //
+        // MEASURED, not a constant: the band is `display:none` until a unit is selected, and its
+        // height follows the card's content (a wrapped second row of action chips, the expanded
+        // "All stats" panel). A guess low leaves dead hexes, a guess high wastes live ones.
+        // Strategic zoom is exempt -- there `#game` is `overflow:hidden` and sized to the map
+        // exactly, so any subtraction would only knock the centring off.
         val contentHeight = if (fitH) scaledH + topBar + g else window.innerHeight - topBar
-        val spacer = if (uiSettings.strategicZoom) 0.0 else UnitIdentityStyles.MAP_BOTTOM_SPACER.toDouble()
+        val spacer = if (uiSettings.strategicZoom) 0.0 else metrics.bottomDockHeight
         game.style.height = "${(contentHeight - spacer).coerceAtLeast(0.0).toInt()}px"
         game.style.position = "absolute"
         game.style.left = "${left.toInt()}px"
@@ -564,6 +591,7 @@ internal class RenderContext(
     ) {
         game.style.width = ""
         game.style.height = ""
+        game.style.paddingRight = ""
         game.style.left = ""
         game.style.top = ""
         game.style.position = ""

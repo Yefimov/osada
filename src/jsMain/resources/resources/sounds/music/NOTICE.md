@@ -4,6 +4,19 @@ These MP3 files are scenario music referenced by Open General scenarios imported
 were copied byte-for-byte from the installed Open General efile `SOUND/` directories; filenames were
 normalized to lowercase for a case-sensitive web server, but the audio content was not modified.
 
+`campsimpob.mp3` is deliberately not shipped or listed in `manifest.json`: its political character
+is uncertain and the repository owner disabled it on 2026-09-17. The `music="campsimpob.mp3"`
+attributes remain in the scenario XML as inert examples of the mechanism.
+
+## Adding replacement music
+
+Use a new, unambiguous filename rather than reusing an excluded source track. Put a browser-playable
+`.mp3`, `.ogg`, `.m4a` or `.wav` file in this directory, set the scenario `<map music="...">`
+attribute to that filename, and add the lower-case filename to `manifest.json`. The manifest is the
+runtime allow-list: a file not listed there is never requested or played. For an imported OG track,
+`python tools/og-import/deploy_sounds.py --write --include-music` performs the copying and manifest
+generation; `EXCLUDED_BUNDLED_MUSIC` records tracks that command must leave disabled.
+
 Open General's `README/read_me_first.html` states that media files belong to their respective
 designers and require the particular owners' written permission for redistribution. On 2026-09-01,
 the OSADA repository owner confirmed holding or having obtained the required permission to
