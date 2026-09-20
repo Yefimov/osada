@@ -195,6 +195,81 @@ class OgEngineeringRulesTest : OgRulesTestHarness() {
     }
 
     /**
+     * OSADA's own tenth job: cutting a railway line, and relaying it.
+     *
+     * The line is cut by clearing `rail` rather than by a flag beside it, so every rule that asks
+     * whether a train may be here is cut with it -- see [org.osada.model.Hex.blownRail]. The
+     * station goes down with the rails and does NOT come back with them: Build Station raises
+     * those again.
+     */
+    @Test
+    fun cuttingARailwayLineStopsTrainsUntilItIsRelaid() {
+        ruleset(RuleKey.BUILD_AND_REPAIR to 1)
+        val map = world(prestige = 100)
+        GameHolder.instance = holderFor(map)
+        val hex = map.map!![2][2]
+        hex.rail = PARTIAL_ROAD_MASK
+        hex.station = true
+        val sapper = place(map, sapperEqid, 2, 2, side = 0)
+
+        assertTrue(EngineeringWork.BLOW_RAIL in Engineering.availableWork(sapper), "there is track to cut")
+        map.beginEngineering(sapper, EngineeringWork.BLOW_RAIL)
+        assertEquals(RoadType.NONE.value, hex.rail, "the line is cut, so nothing reads track here")
+        assertEquals(PARTIAL_ROAD_MASK, hex.blownRail, "and what it was is remembered")
+        assertFalse(hex.station, "the depot goes with the rails")
+
+        sapper.hasMoved = false
+        sapper.hasFired = false
+        assertTrue(EngineeringWork.REPAIR in Engineering.availableWork(sapper))
+        map.beginEngineering(sapper, EngineeringWork.REPAIR)
+        repeat(EngineeringWork.REPAIR.turns) { Engineering.advanceTurn(map.map, 0, builderOwner()) }
+        assertEquals(PARTIAL_ROAD_MASK, hex.rail, "the original mask is relaid, not an invented full one")
+        assertEquals(0, hex.blownRail, "and the record of the loss is spent")
+        assertFalse(hex.station, "but Repair relays track, not buildings")
+    }
+
+    /** A crossing that carries both is ONE bridge: leaving the rails would let an armoured train
+     *  roll over a river the charge had just dropped. */
+    @Test
+    fun blowingARailBridgeTakesTheRailsWithIt() {
+        ruleset(RuleKey.BUILD_AND_REPAIR to 1)
+        val map = world(prestige = 100)
+        GameHolder.instance = holderFor(map)
+        val hex = map.map!![2][2]
+        hex.terrain = TerrainType.RIVER.value
+        hex.road = PARTIAL_ROAD_MASK
+        hex.rail = PARTIAL_ROAD_MASK
+        val sapper = place(map, sapperEqid, 2, 2, side = 0)
+
+        map.beginEngineering(sapper, EngineeringWork.BLOW_BRIDGE)
+        assertEquals(RoadType.NONE.value, hex.road)
+        assertEquals(RoadType.NONE.value, hex.rail, "the rails on the span go down with the bridge")
+
+        sapper.hasMoved = false
+        sapper.hasFired = false
+        map.beginEngineering(sapper, EngineeringWork.REPAIR)
+        repeat(EngineeringWork.REPAIR.turns) { Engineering.advanceTurn(map.map, 0, builderOwner()) }
+        assertEquals(PARTIAL_ROAD_MASK, hex.road, "one repair rebuilds the one bridge")
+        assertEquals(PARTIAL_ROAD_MASK, hex.rail, "rails included")
+    }
+
+    /** Craters were a permanent movement tax no engineer could lift until Repair cleared them. */
+    @Test
+    fun repairLevelsShellCraters() {
+        ruleset(RuleKey.BUILD_AND_REPAIR to 1)
+        val map = world(prestige = 100)
+        GameHolder.instance = holderFor(map)
+        val hex = map.map!![2][2]
+        hex.crater = true
+        val sapper = place(map, sapperEqid, 2, 2, side = 0)
+
+        assertTrue(EngineeringWork.REPAIR in Engineering.availableWork(sapper), "shell holes are repairable")
+        map.beginEngineering(sapper, EngineeringWork.REPAIR)
+        repeat(EngineeringWork.REPAIR.turns) { Engineering.advanceTurn(map.map, 0, builderOwner()) }
+        assertFalse(hex.crater, "and levelling them is the repair")
+    }
+
+    /**
      * A built airfield has to actually be an airfield — driven through `GameMap.endTurn`.
      *
      * `MovementRules.hasAirfield` compares `hex.flag` against the unit's country, so a field

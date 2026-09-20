@@ -1268,6 +1268,29 @@ input[type=text], input[type=search] {
     border-color: transparent var(--osada-brass);
 }
 
+/* Non-interactive picture of an action button inside tutorial prose ("press the truck button: [").
+ * Replaces the real `.smallButtonSubMenu` the strings used to embed, which dragged a control's
+ * float, margins, 26px minimum and — on touch — the global 44px target into running text. Sized
+ * to the line box; kept out of every button selector so touch-target rules never reach it. */
+.osada-inline-glyph {
+    display: inline-block;
+    box-sizing: border-box;
+    min-width: 1.6em;
+    height: 1.6em;
+    padding: 0 0.2em;
+    margin: 0 0.15em;
+    font-family: osada-menu;
+    font-size: 15px;
+    font-weight: normal;
+    line-height: 1.6em;
+    text-align: center;
+    vertical-align: middle;
+    color: var(--osada-text);
+    background: url('../resources/btn_round_brass_normal.png') center / 100% 100% no-repeat;
+    pointer-events: none;
+    user-select: none;
+}
+
 .smallToolTip, .smallToolTip[shape="pin"] {
     color: var(--osada-steel);
     background: rgba(16, 18, 21, .85);

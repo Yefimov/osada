@@ -63,6 +63,7 @@ object UnitActionAvailability {
             engineering(context, UnitActionId.BUILD_STATION),
             engineering(context, UnitActionId.REPAIR),
             engineering(context, UnitActionId.DEMOLISH),
+            engineering(context, UnitActionId.BLOW_RAIL),
             sleep(context),
         )
 
@@ -87,6 +88,7 @@ object UnitActionAvailability {
             UnitActionId.BUILD_STATION,
             UnitActionId.REPAIR,
             UnitActionId.DEMOLISH,
+            UnitActionId.BLOW_RAIL,
             -> engineering(context, action)
 
             UnitActionId.UNDO -> undo(context)
@@ -545,10 +547,14 @@ object UnitActionAvailability {
 
     // ---- Build and repair (OG 9.3) -----------------------------------------------------------
 
-    /** Which engineering job each of the six chips orders. [UnitActionId.DEMOLISH] is deliberately
-     *  absent: it stands for whichever of the two demolitions the hex allows, resolved per hex in
-     *  [engineeringWorkFor], because a river hex offers a bridge to blow and a city offers its
-     *  terrain and no hex ever offers both. */
+    /** Which engineering job each of the named chips orders. [UnitActionId.DEMOLISH] is
+     *  deliberately absent: it stands for whichever of OG's two demolitions the hex allows, resolved
+     *  per hex in [engineeringWorkFor], because a river hex offers a bridge to blow and a city
+     *  offers its terrain and no hex ever offers both.
+     *
+     *  Cutting rail is NOT one of those two and is named here instead. Track runs through cities and
+     *  over bridges, so that chip and this one really can be offered together, and a single chip
+     *  would have to guess which the player meant. */
     private val ENGINEERING_ACTIONS: Map<UnitActionId, EngineeringWork> =
         mapOf(
             UnitActionId.BUILD_BRIDGE to EngineeringWork.BRIDGE,
@@ -557,6 +563,7 @@ object UnitActionAvailability {
             UnitActionId.BUILD_PORT to EngineeringWork.PORT,
             UnitActionId.BUILD_STATION to EngineeringWork.STATION,
             UnitActionId.REPAIR to EngineeringWork.REPAIR,
+            UnitActionId.BLOW_RAIL to EngineeringWork.BLOW_RAIL,
         )
 
     private fun engineeringWorkFor(
@@ -564,7 +571,9 @@ object UnitActionAvailability {
         available: List<EngineeringWork>,
     ): EngineeringWork? =
         if (action == UnitActionId.DEMOLISH) {
-            available.firstOrNull { it.demolition }
+            // BLOW_RAIL is excluded because it has its own chip: without this, the Demolish chip on
+            // a railway city would race it and blow whichever the enum happened to list first.
+            available.firstOrNull { it.demolition && it != EngineeringWork.BLOW_RAIL }
         } else {
             ENGINEERING_ACTIONS[action]?.takeIf { it in available }
         }

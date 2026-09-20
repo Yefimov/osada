@@ -96,6 +96,28 @@ internal enum class EngineeringWork(
 
     /** §9.3.7 — razes the hex's terrain feature to clear ground. Instant, for the same reason. */
     RAZE(cost = 0, turns = 0, demolition = true),
+
+    /**
+     * Cuts the railway line under the unit — **OSADA's own job, and the one demolition OG's §9.3
+     * does not list.**
+     *
+     * OG has nine engineering jobs and none of them touches track: its rail hexes are authored map
+     * data that nothing in play can change, which is why `hex.rail` was written by the importer and
+     * by nothing else until this existed. So this is an `INFERENCE` in the sense
+     * `OG_ABILITY_AUDIT.md` §1 means, and it is admitted on two grounds rather than one.
+     *
+     * The first is that OG already gives the ability its meaning: `Can Blow` *"applies to bridges,
+     * ports, airfields && cities"* — the works that carry an army — and a demolition charge on a
+     * rail line is the same act against the same kind of target. The second is the history the
+     * player expects: the rail war of 1943 on the Eastern Front, the SOE and maquis lines before
+     * Normandy, and Italy in 1944 were all fought by putting charges under track, and a game that
+     * fields armoured trains and rail transport but cannot cut a line is missing the counter to
+     * both.
+     *
+     * Instant and free, like the two demolitions beside it, and repairable: [Hex.blownRail] keeps
+     * the mask so Repair relays exactly the track that was there.
+     */
+    BLOW_RAIL(cost = 0, turns = 0, demolition = true),
     ;
 
     /**
@@ -134,6 +156,9 @@ internal enum class EngineeringWork(
             // blown state instead -- and it is still something a sapper can put right.
             REPAIR -> repairableNow(hex)
             BLOW_BRIDGE -> Engineering.isWaterCrossing(hex) && hex.road > 0
+            // Track to cut. Nothing else is asked: a station, a city or a bridge on the same hex
+            // changes what ELSE could be blown here, not whether these rails can be.
+            BLOW_RAIL -> hex.rail > 0
             // Only a feature can be razed: clear ground is already clear, and water is not
             // terrain a demolition charge removes. WHICH features is the efile's decision, not
             // ours -- see [razeableTerrain].
@@ -162,7 +187,7 @@ internal enum class EngineeringWork(
                 PORT -> 2
                 FORTIFICATION -> 3
                 STATION -> 4
-                REPAIR, BLOW_BRIDGE, RAZE -> null
+                REPAIR, BLOW_BRIDGE, RAZE, BLOW_RAIL -> null
             }
 
     /**
@@ -237,7 +262,11 @@ internal enum class EngineeringWork(
                 FORTIFICATION -> 8
                 STATION -> 16
                 RAZE -> 32
-                REPAIR -> null
+                // OG masks the five facilities it can build and the four it can blow, and track is
+                // in neither list because OG cannot touch track at all. An efile therefore has
+                // no bit to withhold this with, and inventing one would let a key that means
+                // nothing today silently forbid it tomorrow.
+                REPAIR, BLOW_RAIL -> null
             }
 
     /**
@@ -264,9 +293,10 @@ internal enum class EngineeringWork(
         private const val REPAIR_FORT_COLUMN = 3
         private const val REPAIR_BRIDGE_COLUMN = 0
 
-        /** Whether Repair has anything to put back: a razed feature, a blown crossing, or ground
-         *  a demolition left blown. */
-        fun repairableNow(hex: Hex): Boolean = hex.razedTerrain >= 0 || hex.blownRoad != 0 || hex.rubble
+        /** Whether Repair has anything to put back: a razed feature, a blown crossing, a cut rail
+         *  line, or ground a barrage or a demolition left churned. */
+        fun repairableNow(hex: Hex): Boolean =
+            hex.razedTerrain >= 0 || hex.blownRoad != 0 || hex.blownRail != 0 || hex.rubble || hex.crater
 
         /** Whether a demolition has anything to do here: a feature to remove, or open ground that
          *  is not already blown ([Engineering.razeFeature]). */

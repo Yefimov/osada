@@ -52,8 +52,12 @@ object UIBuilder {
             "build_fortification" to "F",
             "build_airfield" to "A",
             "build_port" to "P",
+            "build_station" to "S",
             "repair" to "R",
             "demolish" to "D",
+            // The rail demolition wears the same D as the other one: the chip label is what says
+            // which, exactly as the five construction chips share the builder mark.
+            "blow_rail" to "D",
             "undo" to "_",
             "sleep" to "t",
         )

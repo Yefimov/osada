@@ -62,6 +62,12 @@ enum class UnitActionId(
     BUILD_STATION("build_station"),
     REPAIR("repair"),
     DEMOLISH("demolish"),
+
+    /** Cutting the railway line under the formation — OSADA's own demolition, which is why it has a
+     *  chip of its own instead of sharing [DEMOLISH]: a rail hex can also be a city, a port or a
+     *  bridge, so the two demolitions really can be offered on the same hex and one chip could not
+     *  say which it would do (`rules/EngineeringWork.BLOW_RAIL`). */
+    BLOW_RAIL("blow_rail"),
     UNDO("undo"),
     SLEEP("sleep"),
 }

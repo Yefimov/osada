@@ -6,6 +6,7 @@ from __future__ import annotations
 import json
 import re
 import sys
+from collections import Counter
 from pathlib import Path
 from typing import Any
 
@@ -16,6 +17,8 @@ I18N_ROOT = ROOT / "src" / "jsMain" / "resources" / "i18n"
 KOTLIN_ROOT = ROOT / "src" / "jsMain" / "kotlin"
 PLURAL_CATEGORIES = {"zero", "one", "two", "few", "many", "other"}
 PLACEHOLDER_RE = re.compile(r"\{([A-Za-z][A-Za-z0-9_]*)\}")
+NUMBER_RE = re.compile(r"\d+(?:[ \u00a0,.]\d{3})*")
+HTML_TAG_RE = re.compile(r"</?[A-Za-z][^>]*>")
 CALL_RE = re.compile(r'I18n\.(?:t|plural|select)\(\s*(?:key\s*=\s*)?"([a-z0-9_.-]+)"')
 # Keys that never appear beside an I18n call: EquipmentAbilityCatalog stores each ability's key as
 # a plain string in a table and resolves it much later (`I18n.t(it)` over `abilityCatalogKeys()`),
@@ -53,8 +56,60 @@ def load_json(path: Path, errors: list[str]) -> dict[str, Any]:
     return value
 
 
-def placeholders(text: str) -> set[str]:
-    return set(PLACEHOLDER_RE.findall(text))
+def placeholders(text: str) -> Counter[str]:
+    return Counter(PLACEHOLDER_RE.findall(text))
+
+
+def numbers(text: str) -> Counter[str]:
+    return Counter(re.sub(r"[ \u00a0,.]", "", match.group()) for match in NUMBER_RE.finditer(text))
+
+
+def number_is_present(number: str, translated: Counter[str], translated_text: str) -> bool:
+    if translated[number] > 0:
+        translated[number] -= 1
+        return True
+    # Authored year ranges sometimes abbreviate their second year (1943-44), while Russian spells
+    # it out (1943–1944). This changes formatting, not the quantity.
+    if len(number) == 2:
+        expanded = f"19{number}"
+        if translated[expanded] > 0:
+            translated[expanded] -= 1
+            return True
+    # The November Revolution source names the Council of 21 with digits; the established Russian
+    # rendering writes the same number as words.
+    if number == "21" and re.search(r"\bдвадцат(?:и|ь)\s+одн", translated_text.lower()):
+        return True
+    return False
+
+
+def is_authored_content(path: Path, key: str) -> bool:
+    relative = path.relative_to(I18N_ROOT)
+    return (
+        any(part in {"briefings", "campaigns", "scenarios"} for part in relative.parts)
+        or key.startswith("campaign.")
+    )
+
+
+def validate_content_fidelity(path: Path, key: str, english: str, translated: str, errors: list[str]) -> None:
+    if not is_authored_content(path, key) or translated == "":
+        return
+    label = f"{path.relative_to(ROOT)}:{key}"
+    translated_numbers = numbers(translated)
+    missing_numbers = [
+        number
+        for number, count in numbers(english).items()
+        for _ in range(count)
+        if not number_is_present(number, translated_numbers, translated)
+    ]
+    if missing_numbers:
+        errors.append(f"{label}: source numeric values are missing: {missing_numbers}")
+    if Counter(HTML_TAG_RE.findall(english)) != Counter(HTML_TAG_RE.findall(translated)):
+        errors.append(f"{label}: HTML tag multiplicity differs from English")
+    if english.count("\n") != translated.count("\n"):
+        errors.append(
+            f"{label}: parsed newline count differs; English={english.count(chr(10))}, "
+            f"translation={translated.count(chr(10))}"
+        )
 
 
 def leaf_for_branch(value: Any, branch: str) -> str | None:
@@ -76,9 +131,10 @@ def validate_value(path: Path, key: str, english: Any, translated: Any, errors: 
             return
         if placeholders(english) != placeholders(translated):
             errors.append(
-                f"{label}: placeholders differ; English={sorted(placeholders(english))}, "
-                f"translation={sorted(placeholders(translated))}"
+                f"{label}: placeholder multiplicity differs; English={dict(placeholders(english))}, "
+                f"translation={dict(placeholders(translated))}"
             )
+        validate_content_fidelity(path, key, english, translated, errors)
         return
 
     if not isinstance(english, dict) or not isinstance(translated, dict):
@@ -103,9 +159,11 @@ def validate_value(path: Path, key: str, english: Any, translated: Any, errors: 
             continue
         if placeholders(english_text) != placeholders(translated_text):
             errors.append(
-                f"{label}.{branch}: placeholders differ; English={sorted(placeholders(english_text))}, "
-                f"translation={sorted(placeholders(translated_text))}"
+                f"{label}.{branch}: placeholder multiplicity differs; "
+                f"English={dict(placeholders(english_text))}, "
+                f"translation={dict(placeholders(translated_text))}"
             )
+        validate_content_fidelity(path, f"{key}.{branch}", english_text, translated_text, errors)
 
 
 def check_gendered_branches(path: Path, key: str, value: Any, errors: list[str]) -> None:

@@ -8,6 +8,8 @@ import org.osada.model.Hex
 import org.osada.model.clearBarrageTargeting
 import org.osada.model.fireBarrage
 import org.osada.model.openBarrageTargeting
+import org.osada.rules.GameRules
+import org.osada.rules.getDirection
 import org.osada.uiSettings
 
 /**
@@ -37,9 +39,26 @@ internal fun MapClickHandler.resolveBarrageClick(
             // logged: a shot into a hex nobody can see is exactly what a player asks about later.
             console.log("[OSADA] barrage ${unit.id} -> ${cell.row},${cell.col}: $result")
         }
+        if (result != null) playBarrageFire(unit, cell)
         ui.render.render(cell.row, cell.col, getUnitRenderRadius(unit))
     }
     return result != null
+}
+
+/**
+ * The firing animation and its sound, the same ones an ordinary attack by [unit] plays: a barrage
+ * is the gun (or the bomber) firing, and a shot the player ordered without hearing it reads as if
+ * nothing happened. Plays whether or not the roll landed, since the shells were fired either way.
+ */
+private fun MapClickHandler.playBarrageFire(
+    unit: GameUnit,
+    target: Cell,
+) {
+    val pos = unit.getPos() ?: return
+    val type = attackAnimationByClass.getOrNull(unit.unitData(true).uclass) ?: return
+    val direction = GameRules.getDirection(pos.row, pos.col, target.row, target.col) ?: unit.facing
+    ui.render.addAnimation(pos.row, pos.col, type, direction, unit)
+    ui.render.runAnimation(null)
 }
 
 /** Which sentence the banner shows — OG's three outcomes, plus a miss and a refusal. */
@@ -48,6 +67,7 @@ private fun barrageMessageKey(result: org.osada.rules.Barrage.BarrageResult?): S
         result == null -> "unit_info.action.barrage.blocked"
         !result.hit -> "unit_info.action.barrage.done.miss"
         result.blewBridge -> "unit_info.action.barrage.done.bridge"
+        result.cutRail -> "unit_info.action.barrage.done.rail"
         result.wreckedTerrain -> "unit_info.action.barrage.done.wrecked"
         result.leftRubble -> "unit_info.action.barrage.done.rubble"
         result.leftCrater -> "unit_info.action.barrage.done.crater"

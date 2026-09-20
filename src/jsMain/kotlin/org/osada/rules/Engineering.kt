@@ -40,14 +40,16 @@ import org.osada.rules.ruleset.RuleKey
  *
  * | OG | Here |
  * |---|---|
- * | 9.3.1 Bridge destruction | [EngineeringWork.BLOW_BRIDGE] — clears the road mask off a river/stream hex |
+ * | 9.3.1 Bridge destruction | [EngineeringWork.BLOW_BRIDGE] — clears the road mask, rails on the
+ * same span included, off a river/stream hex |
  * | 9.3.2 Bridge construction | [EngineeringWork.BRIDGE] |
  * | 9.3.3 Fortification construction | [EngineeringWork.FORTIFICATION] |
  * | 9.3.4 Airfield construction | [EngineeringWork.AIRFIELD] |
  * | 9.3.5 Port construction | [EngineeringWork.PORT] |
  * | 9.3.6 Railroad station construction | **not built** — see below |
  * | 9.3.7 Terrain destruction | [EngineeringWork.RAZE] |
- * | 9.3.8 Repair | [EngineeringWork.REPAIR] |
+ * | 9.3.8 Repair | [EngineeringWork.REPAIR] — and relays cut track, and levels craters |
+ * | *(no OG job)* | [EngineeringWork.BLOW_RAIL] — cuts the railway line, OSADA's own tenth job |
  *
  * **Railroad stations are deliberately absent, and this is the place that records why.** OSADA has
  * no station concept for one to be built into: rail is an equipment MOVEMENT METHOD here, not OG's
@@ -362,12 +364,32 @@ internal object Engineering {
                 // actually had rather than inventing a full one.
                 hex.blownRoad = hex.road
                 hex.road = RoadType.NONE.value
+                // The rails on the same span go with it. A crossing carrying both is ONE bridge,
+                // and leaving the rail mask behind let an armoured train roll over a river the
+                // charge had just dropped -- the whole reason this hex is worth blowing.
+                cutRail(hex)
             }
+
+            EngineeringWork.BLOW_RAIL -> cutRail(hex)
 
             EngineeringWork.RAZE -> razeFeature(hex)
 
             EngineeringWork.REPAIR -> repair(hex, owner)
         }
+    }
+
+    /**
+     * Cuts the railway under [hex], recording the mask so Repair can relay exactly that track.
+     *
+     * The station goes with the rails and is NOT recorded: Repair puts track back, and the depot
+     * buildings are what Build Station raises. A hex with no track is left untouched, so blowing a
+     * road bridge over an unrailed river records nothing.
+     */
+    private fun cutRail(hex: Hex) {
+        if (hex.rail <= RoadType.NONE.value) return
+        hex.blownRail = hex.rail
+        hex.rail = RoadType.NONE.value
+        hex.station = false
     }
 
     /**
@@ -444,8 +466,13 @@ internal object Engineering {
     }
 
     /**
-     * Restores whichever of the two destructible things this hex is missing: its razed terrain
-     * first, then a blown bridge. Terrain first because it is the larger loss.
+     * Restores what was destroyed here: the razed terrain first, else a blown bridge — terrain
+     * first because it is the larger loss — and, alongside either, any cut rail line plus the
+     * churned ground left by wreckage or shelling.
+     *
+     * Rails, rubble and craters are NOT a third exclusive branch. A barrage that cuts a line also
+     * churns the hex it lands on, and a demolished river crossing takes the rails on the same span
+     * with it, so one Repair is one job of work for the player: relay the track, clear the holes.
      *
      * A blown bridge is restored to **the mask it had**, from [Hex.blownRoad], and only when that
      * field says a bridge was really taken away. The earlier version tested `road == 0` on a
@@ -456,19 +483,27 @@ internal object Engineering {
         hex: Hex,
         owner: FacilityOwner,
     ) {
+        // The rails come back with whatever else this repair puts right, rather than needing a
+        // second Repair of their own: a blown crossing that carried track is one bridge to rebuild,
+        // and a shelled hex that lost its rails and gained craters is one stretch of line to relay.
+        if (hex.blownRail != 0) {
+            hex.rail = hex.blownRail
+            hex.blownRail = 0
+        }
         if (hex.razedTerrain >= 0) {
             hex.terrain = hex.razedTerrain
             hex.razedTerrain = -1
-            hex.rubble = false
             claim(hex, owner)
         } else if (hex.blownRoad != 0) {
             hex.road = hex.blownRoad
             hex.blownRoad = 0
-            hex.rubble = false
-        } else {
-            // Blown ground with nothing to put back: clearing the rubble IS the repair.
-            hex.rubble = false
         }
+        // Whatever the repair put back, the churned ground is levelled with it -- wreckage a
+        // demolition left behind, and the shell holes a barrage dug (`rules/Craters`). Craters
+        // were unrepairable until this line existed, which made a cratered hex a permanent
+        // movement tax no engineer could lift.
+        hex.rubble = false
+        hex.crater = false
     }
 
     /** True when [hex] is a river or stream — the two terrains a bridge spans. */

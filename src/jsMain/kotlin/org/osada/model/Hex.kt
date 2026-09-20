@@ -106,6 +106,27 @@ class Hex(
     var blownRoad: Int = 0
 
     /**
+     * The rail mask a demolition or a barrage took off this hex, or `0` — [blownRoad]'s twin for
+     * [rail], and what makes a cut line repairable rather than gone forever.
+     *
+     * **A cut line is [rail] set to nothing, not a flag beside it.** Every rule that asks whether a
+     * train may be here already reads [rail] — the rail-only movement cost in
+     * `MoveRangeCalculation`, `RailTransport`'s connectivity walk, `ReinforcementDeployment`'s
+     * entrainment hexes — so clearing the mask cuts the line for all of them at once, and nothing
+     * has to learn a second field. This one exists for the same reason [blownRoad] does: `rail == 0`
+     * cannot tell "blown" from "never had track", and Repair has to restore the mask the hex
+     * actually carried.
+     *
+     * **A station goes with the track and does not come back with it.** Blowing the line clears
+     * [station], and Repair puts the rails back but not the buildings: OSADA's Build Station is
+     * what raises those, exactly as it would on any other stretch of track.
+     *
+     * OSADA's own rule, not one of OG's nine engineering jobs — `rules/EngineeringWork.BLOW_RAIL`
+     * has the sourcing. Inert and serializes to nothing until something cuts a line.
+     */
+    var blownRail: Int = 0
+
+    /**
      * Whether the airfield on this hex was BUILT here rather than being part of the map
      * (OG manual §7.2, `Cannot use dirt airfields`: *"unit can't refuel nor deploy in airfields
      * defined as dirt or built by sappers during the scenario"*).
@@ -403,6 +424,7 @@ class Hex(
         constructionCountry = other.constructionCountry
         razedTerrain = other.razedTerrain
         blownRoad = other.blownRoad
+        blownRail = other.blownRail
         mines = other.mines
         minesDetected = other.minesDetected
         spotMemory = other.spotMemory

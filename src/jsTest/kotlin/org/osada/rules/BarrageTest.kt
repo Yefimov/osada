@@ -35,6 +35,7 @@ import kotlin.test.assertTrue
 class BarrageTest : OgRulesTestHarness() {
     private val howitzerEqid = 970
     private val infantryHiddenEqid = 971
+    private val bomberEqid = 972
 
     @BeforeTest
     fun setup() {
@@ -68,7 +69,25 @@ class BarrageTest : OgRulesTestHarness() {
                 spotrange = 1
             },
         )
+        putBomber()
     }
+
+    private fun putBomber() =
+        Equipment.putEquipment(
+            bomberEqid,
+            EquipmentData().apply {
+                name = "Strategic Bomber"
+                uclass = UnitClass.LEVEL_BOMBER.value
+                target = UnitType.AIR.value
+                movmethod = MovMethod.AIR.value
+                movpoints = 8
+                gunrange = 0
+                ammo = 4
+                fuel = 40
+                spotrange = 1
+                bombsize = 500
+            },
+        )
 
     @AfterTest
     fun teardown() = clearTestWorld()
@@ -98,16 +117,31 @@ class BarrageTest : OgRulesTestHarness() {
     }
 
     @Test
-    fun aSpottedHexIsNotABarrageTarget() {
+    fun aSpottedHexIsATargetOnlyWhileNoGroundUnitHoldsIt() {
         val map = barrageWorld()
         val gun = place(map, howitzerEqid, 2, 2, side = 0)
         map.map!![2][4].setSpotted(0, true)
+        map.map!![3][4].setSpotted(0, true)
+        place(map, infantryHiddenEqid, 3, 4, side = 1)
 
+        assertTrue(Barrage.canTarget(map, gun, Cell(2, 4)), "empty visible ground may be shelled for craters")
         assertFalse(
-            Barrage.canTarget(map, gun, Cell(2, 4)),
-            "a hex the firer can see is one it can attack properly",
+            Barrage.canTarget(map, gun, Cell(3, 4)),
+            "a visible enemy is a target for aimed fire, not a barrage",
         )
         assertTrue(Barrage.canTarget(map, gun, Cell(2, 5)), "an unspotted hex in range is the mechanic")
+        assertFalse(Barrage.canTarget(map, gun, Cell(2, 2)), "a gun does not shell its own hex")
+    }
+
+    @Test
+    fun aBomberBarragesTheHexBeneathIt() {
+        val map = barrageWorld()
+        val bomber = place(map, bomberEqid, 2, 2, side = 0)
+        map.map!![2][2].setSpotted(0, true)
+
+        assertTrue(Barrage.canTarget(map, bomber, Cell(2, 2)), "aircraft bomb the hex they fly over")
+        assertFalse(Barrage.canTarget(map, bomber, Cell(2, 3)), "and nothing else, whatever its gun range")
+        assertEquals(listOf(2 to 2), Barrage.targets(map, bomber).map { it.row to it.col })
     }
 
     @Test
@@ -166,6 +200,42 @@ class BarrageTest : OgRulesTestHarness() {
         assertTrue(result.blewBridge)
         assertEquals(RoadType.NONE.value, map.map!![2][5].road)
         assertEquals(PARTIAL_ROAD_MASK, map.map!![2][5].blownRoad, "Repair puts back the mask that fell")
+    }
+
+    /** The outcome OG's own barrage does not have: shelling interdicts a railway
+     *  (`rules/EngineeringWork.BLOW_RAIL` carries the sourcing). */
+    @Test
+    fun aSuccessfulBarrageCutsARailwayLine() {
+        val map = barrageWorld()
+        val gun = place(map, howitzerEqid, 2, 2, side = 0)
+        map.map!![2][5].rail = PARTIAL_ROAD_MASK
+        map.map!![2][5].station = true
+
+        val result = fireUntilItLands(map, gun, Cell(2, 5))
+
+        assertTrue(result.cutRail)
+        assertEquals(RoadType.NONE.value, map.map!![2][5].rail, "no train and no rail route through it")
+        assertEquals(PARTIAL_ROAD_MASK, map.map!![2][5].blownRail, "Repair relays the track that fell")
+        assertFalse(map.map!![2][5].station, "the depot goes with the rails")
+    }
+
+    /** Track first, terrain second: the city is still there for the next barrage, and the more
+     *  useful thing goes first. */
+    @Test
+    fun aRailwayThroughACityLosesItsTrackBeforeTheCity() {
+        val map = barrageWorld()
+        val gun = place(map, howitzerEqid, 2, 2, side = 0)
+        map.map!![2][5].terrain = TerrainType.CITY.value
+        map.map!![2][5].rail = PARTIAL_ROAD_MASK
+
+        val first = fireUntilItLands(map, gun, Cell(2, 5))
+
+        assertTrue(first.cutRail)
+        assertEquals(TerrainType.CITY.value, map.map!![2][5].terrain, "the city stands until the next shot")
+
+        val second = fireUntilItLands(map, gun, Cell(2, 5))
+
+        assertTrue(second.wreckedTerrain, "and with the rails down, the shells reach it")
     }
 
     @Test

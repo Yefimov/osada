@@ -297,9 +297,11 @@ class UnitActionAvailabilityTest {
                 // not-applicable for a tank, which has no Bomber Size (added 2026-08-26).
                 UnitActionId.BARRAGE,
                 UnitActionId.CLEAR_MINES,
-                // OG 9.3's six engineering commands, added 2026-08-25, on exactly the same terms:
-                // always resolved, and all six not-applicable here because a tank is neither a
+                // OG 9.3's engineering commands, added 2026-08-25, on exactly the same terms:
+                // always resolved, and every one not-applicable here because a tank is neither a
                 // sapper nor a demolition unit and `build_and_repair` is off in this harness.
+                // Cutting rail closes the group -- OSADA's own demolition, which has a chip of its
+                // own because track runs through the hexes Demolish already speaks for.
                 UnitActionId.BUILD_BRIDGE,
                 UnitActionId.BUILD_FORTIFICATION,
                 UnitActionId.BUILD_AIRFIELD,
@@ -307,6 +309,7 @@ class UnitActionAvailabilityTest {
                 UnitActionId.BUILD_STATION,
                 UnitActionId.REPAIR,
                 UnitActionId.DEMOLISH,
+                UnitActionId.BLOW_RAIL,
                 UnitActionId.SLEEP,
             ),
             UnitActionAvailability.all(context(world, unit)).map { it.action },

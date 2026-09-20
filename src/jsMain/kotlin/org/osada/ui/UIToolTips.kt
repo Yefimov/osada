@@ -32,8 +32,17 @@ fun UI.showGameToolTip(
     row: Int,
     col: Int,
 ) {
-    val pos = render.cellToScreen(row, col, true)
-    UIBuilder.gameToolTip(message, pos.x.toInt(), pos.y.toInt())
+    UIBuilder.gameToolTip(message) {
+        // cellToScreen gives the hex's top-edge start; the centre is half a top edge right and
+        // one v down. Re-read on every placement: map zoom and centring margins move it.
+        val pos = render.cellToScreen(row, col, true)
+        val zoom = MapZoom.level
+        GameToolTipAnchor(
+            x = pos.x + render.ctx.hexTopWidth / 2 * zoom,
+            y = pos.y + render.ctx.v * zoom,
+            halfWidth = (render.ctx.hexTopWidth / 2 + render.ctx.hexSlantWidth) * zoom,
+        )
+    }
 }
 
 @Suppress("UnusedReceiverParameter")

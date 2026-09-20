@@ -7,12 +7,15 @@ private const val JAPANESE_TUTORIAL_SIDE = 0
 private const val SOVIET_OWNER = 0
 private const val JAPANESE_OWNER = 1
 
-private const val SOVIET_MG_INFANTRY = 16625
-private const val SOVIET_BA_10 = 16601
-private const val SOVIET_ARTILLERY = 16726
-private const val SOVIET_BT_5 = 16558
-private const val JAPANESE_RECON_INFANTRY = 3556
-private const val JAPANESE_FORWARD_INFANTRY = 3371
+// eqp-united ids of the units placed in scenarios/data/tutorial.xml. They must follow any
+// renumbering of that file: a stale id finds no unit and its action is silently dropped (the
+// 2026-08-15 renumbering left the demo showing hints but never moving or firing).
+private const val SOVIET_MG_INFANTRY = 20557
+private const val SOVIET_BA_10 = 20525
+private const val SOVIET_ARTILLERY = 20708
+private const val SOVIET_BT_5 = 20451
+private const val JAPANESE_RECON_INFANTRY = 4313
+private const val JAPANESE_FORWARD_INFANTRY = 4077
 
 internal fun AIScripted.buildKhalkhinGolTurn1() {
     when (player.side) {

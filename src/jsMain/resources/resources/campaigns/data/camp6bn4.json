@@ -309,7 +309,7 @@
      "role": "Senior Sergeant",
      "side": "left",
      "portrait": "resources/campaigns/portraits/petros-manesis.png",
-     "text": "The Italians were stopped in the Pindus, but the battalions arrived at the next assembly area by different roads and with different numbers. We won the pass; now we count its price.",
+     "text": "The Pindus battalions are coming in by different roads. Some are well short of the numbers they set out with. Before you send them up another mountain, let me find out who's still on the way.",
      "conditions": {
       "previousOutcome": [
        "victory",
@@ -324,7 +324,7 @@
      "role": "Staff Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/dimitris-laskaris.png",
-     "text": "I argued for a reserve in the Pindus. Your continuous line held. I have stopped calling a gap harmless simply because a battalion waits behind it.",
+     "text": "I wanted a reserve in the Pindus. Your line held without it. I'll ask the company commanders how they managed the gaps before I recommend the same thing here.",
      "conditions": {
       "allFlags": [
        "greece_pindus_hold_the_ridge_line"
@@ -338,7 +338,7 @@
      "role": "Senior Sergeant",
      "side": "left",
      "portrait": "resources/campaigns/portraits/petros-manesis.png",
-     "text": "The reserve at Pindus arrived where the map had failed. Since then the men have trusted a moving company more than a perfect line drawn at headquarters.",
+     "text": "The reserve reached the Pindus gap in time. The men keep asking where you've put it on this map. I'll have to tell them if there isn't one.",
      "conditions": {
       "allFlags": [
        "greece_pindus_keep_a_mobile_reserve"
@@ -427,7 +427,7 @@
      "role": "Staff Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/dimitris-laskaris.png",
-     "text": "Strike the troop from the return. Its riders go to the battalions as guides, and Karras reports to the route office. He will hate the desk.",
+     "text": "The riders go to the battalions as guides. Karras reports to the route office. He will hate the desk; let me tell him before he hears it from a clerk.",
      "conditions": {
       "allFlags": [
        "greece_korytsa_spread_pindus_practice"
@@ -687,7 +687,7 @@
      "role": "Commander-in-Chief",
      "side": "left",
      "portrait": "resources/campaigns/portraits/alexandros-papagos.png",
-     "text": "Korytsa fell before the Italian command could organise a second line. The advance has become a national triumph, which means the next order will assume triumph is repeatable.",
+     "text": "Korytsa fell before the Italians could form another line. Athens expects the next advance to be just as quick. Tell me what you need before I give them a date.",
      "conditions": {
       "previousOutcome": [
        "briliant"
@@ -701,7 +701,7 @@
      "role": "Staff Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/dimitris-laskaris.png",
-     "text": "Korytsa is ours, though the road behind it is crowded with damaged vehicles and newly assigned guards. The city raised morale; it did not shorten the mountains.",
+     "text": "Korytsa is ours. Recovery is still clearing damaged vehicles from the approach road, and I've had to leave guards at the junctions. Allow for that when you count the available companies.",
      "conditions": {
       "previousOutcome": [
        "victory",
@@ -716,7 +716,7 @@
      "role": "Staff Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/dimitris-laskaris.png",
-     "text": "You reached Korytsa before my road reports did. Headquarters has remembered the speed and quietly forgotten how exposed the lead battalion was.",
+     "text": "Headquarters keeps citing your speed at Korytsa. I've sent the road reports with its next request. I want them to see how far the lead battalion was from help.",
      "conditions": {
       "allFlags": [
        "greece_korytsa_drive_on_korytsa"
@@ -758,7 +758,7 @@
      "role": "Staff Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/dimitris-laskaris.png",
-     "text": "The Pindus screen was dissolved, but its route tables travelled farther than the horses would have.",
+     "text": "The Pindus riders are guiding separate battalions now. Their route tables have reached units the troop itself could never have covered.",
      "conditions": {
       "allFlags": [
        "greece_korytsa_spread_pindus_practice"
@@ -1027,7 +1027,7 @@
      "role": "Senior Sergeant",
      "side": "left",
      "portrait": "resources/campaigns/portraits/petros-manesis.png",
-     "text": "The pass is open, but some heights changed hands more than once and the supply columns learned every crater by name. We hold Klisura; spring will test whether we hold a system.",
+     "text": "The supply drivers can get through Klisura now. Ask them which heights we still need to guard; they know where the fire kept stopping the convoys.",
      "conditions": {
       "previousOutcome": [
        "victory",
@@ -1042,7 +1042,7 @@
      "role": "Staff Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/dimitris-laskaris.png",
-     "text": "The artillery officers saw Klisura open under one concentration. Now each of them finds a single decisive lock on every map. You may have taught that lesson too well.",
+     "text": "Every artillery officer now points to Klisura when he asks to mass his guns. Some of these positions are nothing like it. I'll want their reconnaissance before approving a concentration.",
      "conditions": {
       "allFlags": [
        "greece_klisura_break_the_pass"
@@ -1056,7 +1056,7 @@
      "role": "Senior Sergeant",
      "side": "left",
      "portrait": "resources/campaigns/portraits/petros-manesis.png",
-     "text": "The men from Ballaban still trust you. They noticed that the famous pass did not receive all the guns while their road received all the wounded.",
+     "text": "The Ballaban men remember that you sent guns to their road while the main attack went for the pass. They've been asking where you want them next.",
      "conditions": {
       "allFlags": [
        "greece_klisura_open_the_side_roads"
@@ -1212,7 +1212,7 @@
      "role": "Senior Sergeant",
      "side": "left",
      "portrait": "resources/campaigns/portraits/petros-manesis.png",
-     "text": "The western battalions will hear that the port mattered more. Some of them will be right to hate us for it.",
+     "text": "I'll tell the western battalions we're going to the port. Don't expect them to be pleased. They still need someone to get them out of those roads.",
      "conditions": {
       "allFlags": [
        "camp6bn4_bn4c01_choice_1"
@@ -1406,7 +1406,7 @@
      "role": "Commander-in-Chief",
      "side": "left",
      "portrait": "resources/campaigns/portraits/alexandros-papagos.png",
-     "text": "All ten positions held through the Italian effort. The front has survived its last purely Italian battle; German columns are already crossing the Balkan map.",
+     "text": "All ten positions held against the Italians. Now the German columns are moving through the Balkans. Send me the transport returns; we may have to move headquarters before the next attack.",
      "conditions": {
       "previousOutcome": [
        "briliant"
@@ -1420,7 +1420,7 @@
      "role": "Staff Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/dimitris-laskaris.png",
-     "text": "The spring offensive failed, though parts of the line were recovered only at the final hour. Headquarters calls it stability while ordering armies to prepare for movement north.",
+     "text": "We recovered the last positions and stopped the spring offensive. Headquarters is already asking which formations can move north. I haven't had time to rest them.",
      "conditions": {
       "previousOutcome": [
        "victory",
@@ -1435,7 +1435,7 @@
      "role": "Senior Sergeant",
      "side": "left",
      "portrait": "resources/campaigns/portraits/petros-manesis.png",
-     "text": "The Kastoria battalions know why our wireless truck came west. The men outside Thessaloniki know as well. Neither group needs a staff explanation.",
+     "text": "The Kastoria battalions heard that we took the wireless truck west. They've asked when we can reach them. The Thessaloniki officers are asking who they should call instead.",
      "conditions": {
       "allFlags": [
        "camp6bn4_bn4c01_choice_0"
@@ -1449,7 +1449,7 @@
      "role": "Staff Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/dimitris-laskaris.png",
-     "text": "Thessaloniki kept us tied to the fleet and left the western corps to colder arithmetic. I defended your choice in headquarters. I did not ask the western officers to forgive it.",
+     "text": "I defended going to Thessaloniki because we need the fleet. The western officers asked what transport we'd left them. I had to admit how little there was.",
      "conditions": {
       "allFlags": [
        "camp6bn4_bn4c01_choice_1"
@@ -1539,7 +1539,7 @@
      "role": "Staff Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/dimitris-laskaris.png",
-     "text": "Remove the battalion card. Its ammunition and veterans fill the empty companies before the column moves. Nobody gets a parade for being redistributed.",
+     "text": "Send the ammunition and veterans to the weakened companies before we load. Tell the reserve major where his men are going; he deserves more than a crossed-out battalion card.",
      "conditions": {
       "allFlags": [
        "greece_thessaloniki_retreat_return_the_reserve"
@@ -1674,7 +1674,7 @@
      "role": "Senior Sergeant",
      "side": "left",
      "portrait": "resources/campaigns/portraits/petros-manesis.png",
-     "text": "The rear guard goes light while the guns ride. That will look sensible from the port and rather different from the final village.",
+     "text": "I'll send the rear guard on foot while the guns ride. Tell the port staff how long those men will need. They won't be arriving with the trucks.",
      "conditions": {
       "allFlags": [
        "greece_thessaloniki_retreat_move_the_columns"
@@ -1814,7 +1814,7 @@
      "role": "Senior Sergeant",
      "side": "left",
      "portrait": "resources/campaigns/portraits/petros-manesis.png",
-     "text": "Enough of the road remained open to keep the retreat moving. Some rear guards arrived at the port without their guns; some guns arrived without crews.",
+     "text": "The columns are reaching the port. Some crews came without guns, some guns without crews. I'll try to put them back together before anyone makes the loading list.",
      "conditions": {
       "previousOutcome": [
        "victory",
@@ -1871,7 +1871,7 @@
      "role": "Staff Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/dimitris-laskaris.png",
-     "text": "The reserve was dissolved into the formation, leaving no famous battalion and fewer hollow companies.",
+     "text": "The reserve veterans have filled some very thin companies. Keep their former officers in touch with them; the new assignments were made in a hurry.",
      "conditions": {
       "allFlags": [
        "greece_thessaloniki_retreat_return_the_reserve"
@@ -1978,7 +1978,7 @@
      "role": "Senior Sergeant",
      "side": "left",
      "portrait": "resources/campaigns/portraits/petros-manesis.png",
-     "text": "The veterans get the first ship because they can survive waiting for the second. That is a soldier's joke, Commander, and I advise you not to repeat it on the quay.",
+     "text": "The veterans could wait for the second ship. We're putting them on the first because they can fight again. Tell the hospital that plainly; don't make me explain it on the quay.",
      "conditions": {
       "allFlags": [
        "greece_thessaloniki_evacuation_embark_the_veterans"
@@ -2126,7 +2126,7 @@
      "role": "Commander-in-Chief",
      "side": "left",
      "portrait": "resources/campaigns/portraits/alexandros-papagos.png",
-     "text": "All ten positions held through the Italian effort. The front has survived its last purely Italian battle; German columns are already crossing the Balkan map.",
+     "text": "All ten positions held against the Italians. Now the German columns are moving through the Balkans. Send me the transport returns; we may have to move headquarters before the next attack.",
      "conditions": {
       "previousOutcome": [
        "briliant"
@@ -2140,7 +2140,7 @@
      "role": "Staff Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/dimitris-laskaris.png",
-     "text": "The spring offensive failed, though parts of the line were recovered only at the final hour. Headquarters calls it stability while ordering armies to prepare for movement north.",
+     "text": "We recovered the last positions and stopped the spring offensive. Headquarters is already asking which formations can move north. I haven't had time to rest them.",
      "conditions": {
       "previousOutcome": [
        "victory",
@@ -2155,7 +2155,7 @@
      "role": "Senior Sergeant",
      "side": "left",
      "portrait": "resources/campaigns/portraits/petros-manesis.png",
-     "text": "The Kastoria battalions know why our wireless truck came west. The men outside Thessaloniki know as well. Neither group needs a staff explanation.",
+     "text": "The Kastoria battalions heard that we took the wireless truck west. They've asked when we can reach them. The Thessaloniki officers are asking who they should call instead.",
      "conditions": {
       "allFlags": [
        "camp6bn4_bn4c01_choice_0"
@@ -2169,7 +2169,7 @@
      "role": "Staff Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/dimitris-laskaris.png",
-     "text": "Thessaloniki kept us tied to the fleet and left the western corps to colder arithmetic. I defended your choice in headquarters. I did not ask the western officers to forgive it.",
+     "text": "I defended going to Thessaloniki because we need the fleet. The western officers asked what transport we'd left them. I had to admit how little there was.",
      "conditions": {
       "allFlags": [
        "camp6bn4_bn4c01_choice_1"
@@ -2259,7 +2259,7 @@
      "role": "Staff Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/dimitris-laskaris.png",
-     "text": "Send his veterans to the weakest battalions before dawn. The reserve name ends here; its experience does not.",
+     "text": "Send his veterans to the weakest battalions before dawn. Give their major the assignments; he can help the receiving officers settle them in.",
      "conditions": {
       "allFlags": [
        "greece_lake_kastoria_fill_the_western_columns"
@@ -2372,7 +2372,7 @@
      "role": "Commander-in-Chief",
      "side": "left",
      "portrait": "resources/campaigns/portraits/alexandros-papagos.png",
-     "text": "Write it on every order. Dendrochori holds until then and not a minute for honour. The western armies need the road more than another monument.",
+     "text": "Write the hour on every order. Dendrochori is to be evacuated then, even if a captain thinks he can hold longer. The western columns still need that road.",
      "conditions": {
       "allFlags": [
        "greece_lake_kastoria_hold_dendrochori"
@@ -2399,7 +2399,7 @@
      "role": "Senior Sergeant",
      "side": "left",
      "portrait": "resources/campaigns/portraits/petros-manesis.png",
-     "text": "Then let the accusation travel on foot. The exposed companies move before dawn; the last trucks lift the roadblocks behind them.",
+     "text": "They can accuse us when we get out. The exposed companies move before dawn. I'll leave the last trucks to lift the roadblocks.",
      "conditions": {
       "allFlags": [
        "greece_lake_kastoria_shorten_the_position"
@@ -2516,7 +2516,7 @@
      "role": "Senior Sergeant",
      "side": "left",
      "portrait": "resources/campaigns/portraits/petros-manesis.png",
-     "text": "The required units came through, though the rear guard crossed in fragments. Metsovo will receive the survivors and the arguments about who stayed too long.",
+     "text": "Enough units came through, but the rear guard has arrived in pieces. Let me find their officers before we give them another position at Metsovo.",
      "conditions": {
       "previousOutcome": [
        "victory",
@@ -2573,7 +2573,7 @@
      "role": "Staff Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/dimitris-laskaris.png",
-     "text": "No separate reserve survived the reorganisation, but fewer western battalions arrived at Metsovo as names without strength.",
+     "text": "The reserve veterans are with the western battalions now. Some companies arriving at Metsovo would be badly short without them.",
      "conditions": {
       "allFlags": [
        "greece_lake_kastoria_fill_the_western_columns"
@@ -2717,7 +2717,7 @@
      "role": "Senior Sergeant",
      "side": "left",
      "portrait": "resources/campaigns/portraits/petros-manesis.png",
-     "text": "Then give them mortars, wire cutters, and permission to leave any hill that is not a road. They are opening the pass, not conquering the clouds.",
+     "text": "Give them mortars, wire cutters and permission to leave any hill that isn't a road. They need to know which intersections to take, not how much mountain to occupy.",
      "conditions": {
       "allFlags": [
        "greece_metsovo_turn_the_intersections"
@@ -2829,7 +2829,7 @@
      "role": "British Liaison Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/edward-hale.png",
-     "text": "The required formations embarked before the harbour became untenable. The Royal Navy reports an orderly lift; the city behind the last ship reports something less tidy.",
+     "text": "The required formations embarked. The Navy reports an orderly lift. I still need the last rear-guard returns before I agree with that description.",
      "conditions": {
       "previousOutcome": [
        "briliant"
@@ -2846,7 +2846,7 @@
      "role": "Staff Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/dimitris-laskaris.png",
-     "text": "Enough troops came out of Thessaloniki to form another line. Equipment and men remain behind in proportions no communiqué will explain.",
+     "text": "We have enough troops from Thessaloniki for another line. I haven't reconciled the men and equipment left behind. Don't issue a final strength until the ships are all checked.",
      "conditions": {
       "previousOutcome": [
        "victory",
@@ -2899,7 +2899,7 @@
      "role": "British Liaison Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/edward-hale.png",
-     "text": "The battalions from the first tide are formed and ready. The hospital has also arrived. Its missing beds are a rather exact comment on our loading order.",
+     "text": "The first-tide battalions are ready. The hospital has arrived too, with patients missing from its list. I've asked the commandant to come and see me about them.",
      "conditions": {
       "allFlags": [
        "greece_thessaloniki_evacuation_embark_the_veterans"
@@ -2927,7 +2927,7 @@
      "role": "Staff Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/dimitris-laskaris.png",
-     "text": "The heavy group left a clear pass and a remarkable pile of broken vehicles. Recovery still curses the method; operations has already copied it.",
+     "text": "The heavy group cleared the pass. Recovery is still dealing with the vehicles it broke doing so. Allow time for that before we use the method again.",
      "conditions": {
       "allFlags": [
        "greece_metsovo_break_the_roadblocks"
@@ -2941,7 +2941,7 @@
      "role": "Senior Sergeant",
      "side": "left",
      "portrait": "resources/campaigns/portraits/petros-manesis.png",
-     "text": "Those light groups found a route no staff map admitted existed. Since then every staff map has acquired an imaginary mountain path. I keep asking who is meant to find it.",
+     "text": "Since those light groups crossed the ridges, every staff officer thinks there must be another path somewhere. I'll take a local guide's word before a pencil mark.",
      "conditions": {
       "allFlags": [
        "greece_metsovo_turn_the_intersections"
@@ -2955,7 +2955,7 @@
      "role": "Senior Sergeant",
      "side": "left",
      "portrait": "resources/campaigns/portraits/petros-manesis.png",
-     "text": "We went west for the battalions most likely to be cut off. The Thessaloniki columns have joined us now. Their empty places are the part of your order nobody put in the signal.",
+     "text": "We went west for the battalions in danger of being cut off. Now the Thessaloniki men have joined us. Some are asking why their officers couldn't get our headquarters on the line. You'll have to speak to them.",
      "conditions": {
       "allFlags": [
        "camp6bn4_bn4c01_choice_0"
@@ -2969,7 +2969,7 @@
      "role": "Staff Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/dimitris-laskaris.png",
-     "text": "The port kept this formation connected to the fleet. Western officers have joined us at Thermopylae and speak to me only about ammunition. I am grateful for their discipline and not fooled by it.",
+     "text": "The port kept us connected to the fleet. The western officers have joined us here and discuss only ammunition with me. They have questions about my recommendation; I wish they'd ask them.",
      "conditions": {
       "allFlags": [
        "camp6bn4_bn4c01_choice_1"
@@ -2983,7 +2983,7 @@
      "role": "British Liaison Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/edward-hale.png",
-     "text": "These times belong to ships at Rafina and trains south of Thebes. We do not know the passengers, but every hour we lose here arrives late for them.",
+     "text": "These are the sailing times at Rafina and the trains south of Thebes. We have to hold long enough for both. Tell me now if one of your sectors cannot last until its assigned hour.",
      "next": "scene-1"
     },
     {
@@ -3247,7 +3247,7 @@
      "role": "Senior Sergeant",
      "side": "left",
      "portrait": "resources/campaigns/portraits/petros-manesis.png",
-     "text": "The Thermopylae line broke before the timetable was complete. Crete is not a reward for survival; it is simply the next place where the remaining units can still stand.",
+     "text": "Thermopylae broke before everyone could get away. The units we've got left are coming to Crete. I'll count them when they land; don't promise the island a full formation yet.",
      "conditions": {
       "previousOutcome": [
        "lose"
@@ -3261,7 +3261,7 @@
      "role": "British Liaison Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/edward-hale.png",
-     "text": "The broad line made the Germans deploy again and again. It bought the fleet its hours. I have the village casualty returns beside the sailing table if anyone wants the complete calculation.",
+     "text": "The broad line kept forcing the Germans to deploy. The fleet got the time it needed. I also have the village casualty returns, if you can spare a moment before we discuss Crete.",
      "conditions": {
       "allFlags": [
        "greece_thermopylae_defend_the_broad_line"
@@ -3359,7 +3359,7 @@
      "role": "Staff Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/dimitris-laskaris.png",
-     "text": "Distribute the belts and post the gunners as instructors. There will be no section on the chart, only fewer men looking upward for the first time.",
+     "text": "Distribute the ammunition belts and put the gunners with the battalions as instructors. The men need to recognise an approaching transport before the landings begin.",
      "conditions": {
       "allFlags": [
        "greece_crete_invasion_distribute_the_gunners"
@@ -3373,7 +3373,7 @@
      "role": "Medic and Resistance Organiser",
      "side": "right",
      "portrait": "resources/campaigns/portraits/eleni-markou.png",
-     "text": "The first parachutes looked like scraps of cloud. Now the schoolyard is a dressing station, and the same villagers carry ammunition uphill and wounded men down.",
+     "text": "The villagers are carrying ammunition up and wounded men down the same path. We've turned the schoolyard into a dressing station. If you send more men toward the landings, keep that path clear for us.",
      "next": "scene-1"
     },
     {
@@ -3481,7 +3481,7 @@
      "role": "British Liaison Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/edward-hale.png",
-     "text": "The reserve moves at once. Hill 107 is not another summit; it decides whether the enemy can turn an airborne raid into an airfield.",
+     "text": "The reserve goes to Hill 107 at once. If the Germans hold the height and Maleme, they'll fly reinforcements onto the runway. We have to stop that now.",
      "conditions": {
       "allFlags": [
        "greece_crete_invasion_hold_hill_107"
@@ -3816,7 +3816,7 @@
      "role": "Medic and Resistance Organiser",
      "side": "right",
      "portrait": "resources/campaigns/portraits/eleni-markou.png",
-     "text": "Give me the names of the rear guard before you give Hale the loading numbers. I will not let the missing become 'stragglers' in the first report.",
+     "text": "Let me have the rear-guard names before you send the loading numbers. If those men don't reach the beach, I want someone looking for their units.",
      "conditions": {
       "allFlags": [
        "greece_crete_evacuation_follow_the_naval_clock"
@@ -3997,7 +3997,7 @@
      "role": "Senior Sergeant",
      "side": "left",
      "portrait": "resources/campaigns/portraits/petros-manesis.png",
-     "text": "The Thermopylae line broke before the timetable was complete. Crete is not a reward for survival; it is simply the next place where the remaining units can still stand.",
+     "text": "Thermopylae broke before everyone could get away. The units we've got left are coming to Crete. I'll count them when they land; don't promise the island a full formation yet.",
      "conditions": {
       "previousOutcome": [
        "lose"
@@ -4014,7 +4014,7 @@
      "role": "British Liaison Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/edward-hale.png",
-     "text": "The required formations reached the exits on the first schedule. The fleet carried away a fighting body rather than disconnected survivors.",
+     "text": "The units reached the exits on the first schedule. We embarked them under their officers. I can give the rebuilding staff assignments for those units, rather than lists of men still to be sorted.",
      "conditions": {
       "previousOutcome": [
        "briliant"
@@ -4049,7 +4049,7 @@
      "role": "Senior Sergeant",
      "side": "left",
      "portrait": "resources/campaigns/portraits/petros-manesis.png",
-     "text": "Too few formations reached the exits. The survivors in Egypt will be called a reconstituted army because no government can afford the honest word fragments.",
+     "text": "We didn't get enough formations to the exits. In Egypt I'll have to rebuild companies from the survivors. Give me their old unit names; some men are still looking for comrades.",
      "conditions": {
       "previousOutcome": [
        "lose"
@@ -4066,7 +4066,7 @@
      "role": "British Liaison Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/edward-hale.png",
-     "text": "The broad line made the Germans deploy again and again. It bought the fleet its hours. I have the village casualty returns beside the sailing table if anyone wants the complete calculation.",
+     "text": "The broad line kept forcing the Germans to deploy. The fleet got the time it needed. I also have the village casualty returns, if you can spare a moment before we discuss Crete.",
      "conditions": {
       "allFlags": [
        "greece_thermopylae_defend_the_broad_line"
@@ -4094,7 +4094,7 @@
      "role": "British Liaison Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/edward-hale.png",
-     "text": "The units with loading numbers are formed in Egypt. Those beyond the final number heard the screws turn offshore. I signed both lists.",
+     "text": "The units we gave loading numbers to are formed here. I've also received enquiries from men who reached the shore after the ships left. I signed the schedule; I'll answer them.",
      "conditions": {
       "allFlags": [
        "greece_crete_evacuation_follow_the_naval_clock"
@@ -4321,7 +4321,7 @@
      "role": "Senior Sergeant",
      "side": "left",
      "portrait": "resources/campaigns/portraits/petros-manesis.png",
-     "text": "Then tell the men exactly that. No speeches about unity. We are preserving an army and inheriting its creditors.",
+     "text": "Then tell the brigade what we've agreed. The men know where the guns and lorries come from. They'll want to know how much say that gives the people supplying them.",
      "conditions": {
       "allFlags": [
        "camp6bn4_bn4c02_choice_0"
@@ -4362,7 +4362,7 @@
      "role": "Medic and Resistance Organiser",
      "side": "right",
      "portrait": "resources/campaigns/portraits/eleni-markou.png",
-     "text": "The couriers sail as soon as we reach the coast. ELAS will welcome trained officers and watch them closely. We go home without pretending we arrive innocent of exile politics.",
+     "text": "I'll contact the couriers when we reach the coast. ELAS wants trained officers, but they'll question us about Cairo. Let them. We're going to have to work with those people.",
      "conditions": {
       "allFlags": [
        "camp6bn4_bn4c02_choice_1"
@@ -4514,7 +4514,7 @@
      "role": "British Liaison Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/edward-hale.png",
-     "text": "Ruweisat and Deir el Mreir fell before the Axis line could adjust to the main offensive. The Greek contingent has earned the dangerous privilege of being useful to every political plan for liberation.",
+     "text": "Ruweisat and Deir el Mreir fell before the Axis could adjust. Every office planning the liberation is now asking for your formation. Please refer them to me before agreeing to a move.",
      "conditions": {
       "previousOutcome": [
        "briliant"
@@ -4528,7 +4528,7 @@
      "role": "Staff Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/dimitris-laskaris.png",
-     "text": "The assigned objectives were taken and the Axis position is withdrawing. The formation has proved it can fight again; now every claimant to Greece asks whom that force obeys.",
+     "text": "The objectives are taken and the Axis troops are withdrawing. Now the ministries want to know whom this formation obeys. We need to answer before they start approaching the officers separately.",
      "conditions": {
       "previousOutcome": [
        "victory",
@@ -4543,7 +4543,7 @@
      "role": "Staff Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/dimitris-laskaris.png",
-     "text": "You kept the formation under government command when leaving might have felt cleaner. I defended that as duty. The wire around these Greek barracks is where the defence becomes difficult.",
+     "text": "I defended staying under government command. Now there is wire around Greek barracks. I still believe we needed the formation, but I need to see the surrender terms before I defend this order too.",
      "conditions": {
       "allFlags": [
        "camp6bn4_bn4c02_choice_0"
@@ -4571,7 +4571,7 @@
      "role": "British Liaison Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/edward-hale.png",
-     "text": "The Crete carriers remained together and became the formation's unofficial proof that retreat could still preserve skill.",
+     "text": "The Crete carrier crews are still together. When the rebuilding staff asks whether an intact section matters, I send them to those drivers.",
      "conditions": {
       "allFlags": [
        "greece_el_alamein_keep_the_crete_carriers"
@@ -4585,7 +4585,7 @@
      "role": "Senior Sergeant",
      "side": "left",
      "portrait": "resources/campaigns/portraits/petros-manesis.png",
-     "text": "The Crete transport pool vanished into the core. Its veterans are everywhere and therefore receive credit nowhere.",
+     "text": "The Crete drivers are with different battalions now. Nobody calls them a section, but I keep finding them sorting out another unit's transport.",
      "conditions": {
       "allFlags": [
        "greece_el_alamein_share_the_evacuation_pool"
@@ -4626,7 +4626,7 @@
      "role": "Senior Sergeant",
      "side": "left",
      "portrait": "resources/campaigns/portraits/petros-manesis.png",
-     "text": "Some followed a committee. Some followed their company because that was where breakfast was. Arrest the first group as if it were the second and by morning there will be only one group.",
+     "text": "Some followed the committee. Some stayed because their company was there and the cookhouse was serving. If we arrest them all alike, we'll make the committee's argument for it.",
      "next": "decision"
     },
     {
@@ -4859,7 +4859,7 @@
      "role": "Staff Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/dimitris-laskaris.png",
-     "text": "The mutiny has been suppressed, but surrender, arrest, and political reprisal are already being written as the same event by different offices.",
+     "text": "The mutiny is suppressed. Different offices have sent me different lists for surrender, arrest and transfer. I won't sign until we know which men each one means.",
      "conditions": {
       "previousOutcome": [
        "victory",
@@ -4874,7 +4874,7 @@
      "role": "British Liaison Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/edward-hale.png",
-     "text": "The harbour seizure now circulates through Allied staffs as a model operation. The report takes six pages. The prisoner compound appears in one sentence.",
+     "text": "The harbour operation has reached the Allied staffs. Six pages about the seizure, one sentence about the prisoner compound. I've asked who is responsible for following up that sentence.",
      "conditions": {
       "allFlags": [
        "greece_middle_east_mutiny_seize_the_command_nodes"
@@ -4920,7 +4920,7 @@
      "role": "Staff Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/dimitris-laskaris.png",
-     "text": "The brigade has spent months being described as loyal. By tomorrow it may finally be described as useful.",
+     "text": "The men have spent months being examined for loyalty. I'd like to get them into this operation before someone starts the process again.",
      "next": "decision"
     },
     {
@@ -5150,7 +5150,7 @@
      "role": "British Liaison Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/edward-hale.png",
-     "text": "The required ground was secured, though several ridge positions held until the final phase. Canadian headquarters now knows the brigade can be relied upon—and directed.",
+     "text": "The ground is secured, though some ridge positions held late. Canadian headquarters is asking for the brigade's next assignment. I'll get the supply arrangements before replying.",
      "conditions": {
       "previousOutcome": [
        "victory",
@@ -5179,7 +5179,7 @@
      "role": "British Liaison Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/edward-hale.png",
-     "text": "Supply never lost the brigade on the Foglia. Since then Allied headquarters has assumed Greek timetables will fit British priorities. Reliability collects its own debts.",
+     "text": "Our supply columns kept contact throughout Foglia. Allied headquarters now assumes it can fit the brigade into any timetable. I'll remind them what transport that required.",
      "conditions": {
       "allFlags": [
        "greece_foglia_support_the_allied_flank"
@@ -5437,7 +5437,7 @@
      "role": "Hellenic Army Commander",
      "side": "left",
      "portrait": "resources/campaigns/portraits/thrasyvoulos-tsakalotos.png",
-     "text": "Rimini surrendered to Greek troops before the defence could withdraw in order. The brigade has a victory, a new name, and political weight none of its battalions requested.",
+     "text": "The brigade took Rimini before the defenders could withdraw in order. Now it has a new name and politicians requesting its services. Send those requests to me. The battalions need to refit first.",
      "conditions": {
       "previousOutcome": [
        "briliant"
@@ -5451,7 +5451,7 @@
      "role": "British Liaison Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/edward-hale.png",
-     "text": "Rimini is in Allied hands and the Greek brigade carried its share of the assault. The fighting lasted long enough to leave the city less intact than the ceremony will suggest.",
+     "text": "Rimini is taken. The ceremony is being arranged, but the fighting left considerable damage. I'll make sure the situation report reaches the officials before the photographs do.",
      "conditions": {
       "previousOutcome": [
        "victory",
@@ -5466,7 +5466,7 @@
      "role": "Hellenic Army Commander",
      "side": "left",
      "portrait": "resources/campaigns/portraits/thrasyvoulos-tsakalotos.png",
-     "text": "The airfield turn worked. The brigade remembers making it; the politicians remember only the flag in Rimini. I suspect both memories will be useful to different men.",
+     "text": "The brigade remembers the airfield turn. At the ceremony they spoke only about the flag in Rimini. Let the engineers give their account before the next briefing; the new officers should hear it.",
      "conditions": {
       "allFlags": [
        "greece_rimini_turn_through_the_airfield"
@@ -5480,7 +5480,7 @@
      "role": "British Liaison Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/edward-hale.png",
-     "text": "The coastal plan brought every battery into Rimini on schedule. It also taught Allied headquarters how easily a Greek operation could be folded into a larger one.",
+     "text": "The coastal batteries reached Rimini on time. Allied headquarters would like to use the same arrangements again. I need to see where that puts the brigade before I agree.",
      "conditions": {
       "allFlags": [
        "greece_rimini_advance_on_the_coast"
@@ -5599,7 +5599,7 @@
      "role": "Staff Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/dimitris-laskaris.png",
-     "text": "Break up the return. Every battalion receives engineers and stores. No single unit becomes the government's favourite symbol from Rimini.",
+     "text": "Send the engineers and stores to the battalions that need them. Tell the men where they've gone; we don't need another rumour about why a Rimini company was broken up.",
      "conditions": {
       "allFlags": [
        "greece_athens_government_spread_rimini_veterans"
@@ -5640,7 +5640,7 @@
      "role": "Staff Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/dimitris-laskaris.png",
-     "text": "No. It is the part of the plan which tells us what victory will look like from the pavement.",
+     "text": "It tells us where the hospitals are and why people won't trust a white flag. We need that information if we're going to get anyone to surrender, General.",
      "next": "decision"
     },
     {
@@ -5762,7 +5762,7 @@
      "role": "Staff Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/dimitris-laskaris.png",
-     "text": "It is. Publish the corridors to both sides and put them on every gun map. We may lose time. We will not lose the record of where we chose not to fire.",
+     "text": "I'll take responsibility. Put the corridors on every gun map and send them to both sides. If a battery cannot confirm it has the markings, it waits.",
      "conditions": {
       "allFlags": [
        "greece_athens_government_protect_civilian_corridors"
@@ -5856,7 +5856,7 @@
      "role": "Hellenic Army Commander",
      "side": "left",
      "portrait": "resources/campaigns/portraits/thrasyvoulos-tsakalotos.png",
-     "text": "Athens and Piraeus were secured before the urban front could harden further. The government survives, British troops dominate the settlement, and Greek prisoners fill Greek compounds.",
+     "text": "Athens and Piraeus are secured. The government remains, with British troops deciding much of the settlement. I've also been asked to account for the Greeks in our compounds. That will take longer than the victory report.",
      "conditions": {
       "previousOutcome": [
        "briliant"
@@ -5870,7 +5870,7 @@
      "role": "Staff Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/dimitris-laskaris.png",
-     "text": "The government has recovered the capital, but the battle ended through exhaustion and British weight as much as consent. Varkiza will now ask paper to contain what the streets could not.",
+     "text": "The government has the capital back. British strength and exhaustion brought us here; many districts still won't trust us. I need to read the Varkiza terms before I tell the men what peace requires of them.",
      "conditions": {
       "previousOutcome": [
        "victory",
@@ -5913,7 +5913,7 @@
      "role": "Hellenic Army Commander",
      "side": "left",
      "portrait": "resources/campaigns/portraits/thrasyvoulos-tsakalotos.png",
-     "text": "The Rimini engineers remained together. Their foreign battle honour followed them into Greek streets where honour offered less protection.",
+     "text": "The Rimini engineers stayed together. Some Athenians knew the company name when they met it at the barricades. That didn't make them welcome it.",
      "conditions": {
       "allFlags": [
        "greece_athens_government_keep_rimini_engineers"
@@ -5927,7 +5927,7 @@
      "role": "Staff Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/dimitris-laskaris.png",
-     "text": "Rimini's engineers were distributed through the brigade. Their experience remained military even when the government tried to turn the victory into a factional credential.",
+     "text": "Rimini's engineers are still working in the battalions. I've asked that they be left out of the political ceremonies. They have military jobs to finish.",
      "conditions": {
       "allFlags": [
        "greece_athens_government_spread_rimini_veterans"
@@ -5977,7 +5977,7 @@
      "role": "Hellenic Army Commander",
      "side": "left",
      "portrait": "resources/campaigns/portraits/thrasyvoulos-tsakalotos.png",
-     "text": "If we abandon the streets, we may abandon the town. If we fill them with guns, the baker gets his answer.",
+     "text": "If I pull the guns out of the streets, I may lose the town. If I leave them there, his house is in the position. Can we at least get the family out before it is attacked?",
      "next": "decision"
     },
     {
@@ -6207,7 +6207,7 @@
      "role": "Hellenic Army Commander",
      "side": "left",
      "portrait": "resources/campaigns/portraits/thrasyvoulos-tsakalotos.png",
-     "text": "Konitsa held and the DSE assault broke before a rival capital could be proclaimed there. The government has won a political fact through a military defence.",
+     "text": "Konitsa held. The DSE will not proclaim its capital there. The garrison needs replacements now; I don't want that request lost under the congratulations.",
      "conditions": {
       "previousOutcome": [
        "briliant"
@@ -6236,7 +6236,7 @@
      "role": "Hellenic Army Commander",
      "side": "left",
      "portrait": "resources/campaigns/portraits/thrasyvoulos-tsakalotos.png",
-     "text": "Konitsa held from its streets. Headquarters now draws an anchor symbol over every threatened town. The civilians who lived under our batteries use a less elegant mark.",
+     "text": "Konitsa held from inside the town. Headquarters wants to use that defence elsewhere. Before it does, I want an account of what happened to the civilians around the batteries.",
      "conditions": {
       "allFlags": [
        "greece_konitsa_government_fortify_konitsa"
@@ -6250,7 +6250,7 @@
      "role": "Senior Sergeant",
      "side": "left",
      "portrait": "resources/campaigns/portraits/petros-manesis.png",
-     "text": "The mobile belt kept most of the fighting outside Konitsa. Staff college has copied the arrows and omitted the refugee columns. I kept the original map.",
+     "text": "We kept much of the Konitsa fighting outside the town. Staff college asked for the map. I sent the evacuation routes with it; someone had left them off the copy.",
      "conditions": {
       "allFlags": [
        "greece_konitsa_government_build_the_outer_belt"
@@ -6339,7 +6339,7 @@
      "role": "Staff Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/dimitris-laskaris.png",
-     "text": "Dissolve it. Guides to battalion staffs, vehicles to the worn companies, fuel to the main column. The map keeps no special colour for sentiment.",
+     "text": "Send the guides to battalion staffs, the vehicles to the worn companies and the fuel to the main column. Have the troop commander make the assignments with them.",
      "conditions": {
       "allFlags": [
        "greece_vitsi_government_return_konitsa_patrols"
@@ -6362,7 +6362,7 @@
      "role": "Hellenic Army Commander",
      "side": "left",
      "portrait": "resources/campaigns/portraits/thrasyvoulos-tsakalotos.png",
-     "text": "Four towns give us objectives the government can name. The paths between them give the DSE everything it needs to leave before those names change hands.",
+     "text": "The government wants the four towns. The DSE can leave them by these paths while we bring the guns up. We need to decide whether we're after the garrisons or the squares.",
      "next": "scene-2"
     },
     {
@@ -6603,7 +6603,7 @@
      "role": "Hellenic Army Commander",
      "side": "left",
      "portrait": "resources/campaigns/portraits/thrasyvoulos-tsakalotos.png",
-     "text": "The Vitsi objectives fell before the DSE could transfer its main body. The government now speaks of a final campaign as if one successful sector had already designed it.",
+     "text": "The Vitsi objectives fell before the DSE could transfer its main force. Headquarters is planning the final operation. I've asked it to wait for our ammunition and casualty returns before setting the date.",
      "conditions": {
       "previousOutcome": [
        "briliant"
@@ -6617,7 +6617,7 @@
      "role": "Senior Sergeant",
      "side": "left",
      "portrait": "resources/campaigns/portraits/petros-manesis.png",
-     "text": "The zone was broken, but detachments escaped toward the higher massifs. We hold the towns; the final operation will be fought against what left them.",
+     "text": "We took the towns, but detachments got away into the high massifs. Ask the patrols where they went. We'll be meeting them again in the next operation.",
      "conditions": {
       "previousOutcome": [
        "victory",
@@ -6632,7 +6632,7 @@
      "role": "Hellenic Army Commander",
      "side": "left",
      "portrait": "resources/campaigns/portraits/thrasyvoulos-tsakalotos.png",
-     "text": "The communiqué named the Vitsi towns before the dust settled. DSE detachments kept moving beyond them without waiting to be named. We have both reports this time.",
+     "text": "The communiqué named the captured towns. Our patrol reports also show where the DSE detachments went afterward. Make sure both reach the planning staff.",
      "conditions": {
       "allFlags": [
        "greece_vitsi_government_take_the_towns_first"
@@ -6646,7 +6646,7 @@
      "role": "Senior Sergeant",
      "side": "left",
      "portrait": "resources/campaigns/portraits/petros-manesis.png",
-     "text": "Closing the Vitsi routes trapped more detachments and brought more night searches. The villages remember which achievement arrived at their doors.",
+     "text": "Closing the routes trapped more DSE men. It also brought search parties into the villages at night. Some of the complaints are about our units. I'll take them to the officers concerned.",
      "conditions": {
       "allFlags": [
        "greece_vitsi_government_close_the_mountain_routes"
@@ -6660,7 +6660,7 @@
      "role": "Hellenic Army Commander",
      "side": "left",
      "portrait": "resources/campaigns/portraits/thrasyvoulos-tsakalotos.png",
-     "text": "The Konitsa scouts remained a formation and entered Vitsi already knowing which tracks a conventional map ignores.",
+     "text": "The Konitsa scouts knew the tracks when they reached Vitsi. Keep their guides with them for this operation; I don't want the battalions borrowing men without asking.",
      "conditions": {
       "allFlags": [
        "greece_vitsi_government_keep_konitsa_scouts"
@@ -6674,7 +6674,7 @@
      "role": "Staff Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/dimitris-laskaris.png",
-     "text": "The Konitsa patrols disappeared into the line units. Their knowledge spread, though no separate troop remained to challenge a bad headquarters map.",
+     "text": "The Konitsa guides are serving separate units now. Ask those units for their route reports. There isn't a troop headquarters to collect them for us anymore.",
      "conditions": {
       "allFlags": [
        "greece_vitsi_government_return_konitsa_patrols"
@@ -6688,7 +6688,7 @@
      "role": "Staff Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/dimitris-laskaris.png",
-     "text": "Hale wrote last month. British matériel has become American matériel, and every crate still arrives with a policy attached. He called that continuity. I think he meant it as an apology.",
+     "text": "Hale wrote last month. We're using American matériel where we once relied on British supplies. He says the requests attached to the crates sound familiar. I haven't decided how to answer him.",
      "conditions": {
       "allFlags": [
        "greece_athens_government_accept_scobies_control"
@@ -6752,7 +6752,7 @@
      "role": "Staff Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/dimitris-laskaris.png",
-     "text": "Commander, this is the last plan we write together. Which order can your formations carry without becoming something else?",
+     "text": "Commander, do we close every exit, or assign troops to protect surrender corridors? Once the assault begins, the local officers must know which order applies.",
      "choices": [
       {
        "id": "close-the-ring",
@@ -6967,7 +6967,7 @@
     "role": "Staff Officer",
     "side": "right",
     "portrait": "resources/campaigns/portraits/dimitris-laskaris.png",
-    "text": "The operations room is empty except for the surrender map and two locked cabinets of names. Papagos has announced the end of organised resistance. We did not fight Britain in Athens, and the larger war we feared never came. That does not open the prisons or bring the exiles home. I can defend why we obeyed. I can no longer pretend obedience settled the account.",
+    "text": "Papagos has announced that organised resistance is over. I still have the surrender map here and two cabinets of names to check. In Athens I argued that we could not fight Britain without ruining the army and risking a wider war. I stand by that. But when the prisoners' families come, it won't answer what they ask me.",
     "conditions": {
      "allFlags": [
       "greece_athens_government_accept_scobies_control",
@@ -6986,7 +6986,7 @@
     "role": "Medic and Resistance Organiser",
     "side": "right",
     "portrait": "resources/campaigns/portraits/eleni-markou.png",
-    "text": "I found three families from the Athens corridors in a village below Grammos. They remembered your maps. One of their sons was in the prison column we passed an hour later. The army survived, Britain was never made our enemy, and the civil war is ending. If the government calls everything that follows security, those saved families will know exactly what the word conceals.",
+    "text": "Three families below Grammos remembered the Athens corridors. One asked me to look for a son; we passed him in a prison column an hour later. Your army has won. You kept it out of a war with Britain. Now I need your help finding out where that column was sent.",
     "conditions": {
      "allFlags": [
       "greece_athens_government_protect_civilian_corridors",
@@ -7005,7 +7005,7 @@
     "role": "Hellenic Army Commander",
     "side": "left",
     "portrait": "resources/campaigns/portraits/thrasyvoulos-tsakalotos.png",
-    "text": "The last corridor delivered fighters without rifles, wounded men on doors, and two officers still arguing over rank. That is a better return than a ravine full of bodies. In Athens we accepted British command because the alternative looked like military ruin and perhaps a war far beyond Greece. We escaped that danger. The guards closing the camp gate remind us that escaping one danger does not make every later order honourable.",
+    "text": "The corridor brought in fighters without rifles and wounded men on doors. I'm glad we kept it open. We stayed under British command in Athens because I feared we'd lose the army and draw Greece into a wider war. We got through that. I've signed the prisoner register here; I want to know who takes responsibility for these men after us.",
     "conditions": {
      "allFlags": [
       "greece_athens_government_accept_scobies_control",
@@ -7024,7 +7024,7 @@
     "role": "Senior Sergeant",
     "side": "left",
     "portrait": "resources/campaigns/portraits/petros-manesis.png",
-    "text": "The sergeants from the surrender posts have brought me their registers. No blanks, no men handed over without a name. We kept corridors in Athens and opened them again here. That saved lives. It did not decide what the police will do with those lives tomorrow. You kept faith with the soldiers under your order, Commander. The country will now test whether that was enough.",
+    "text": "The surrender-post sergeants have brought their registers. Every man is named; no unrecorded handovers. We kept the Athens corridors and opened these too. I'll keep the copies, Commander. The police will be asking for prisoners tomorrow, and I want the receiving officer's signature for each one.",
     "conditions": {
      "allFlags": [
       "greece_athens_government_protect_civilian_corridors",
@@ -7041,7 +7041,7 @@
     "role": "Staff Officer",
     "side": "right",
     "portrait": "resources/campaigns/portraits/dimitris-laskaris.png",
-    "text": "There is a red pencil gap on every copy of the encirclement map. Formations escaped through it, and the casualty telephone has not stopped. We once accepted British command because we feared defeat, isolation, and a wider war no Greek cabinet could control. We did avoid that war. We did not avoid this one, and obedience has offered no refuge from the result.",
+    "text": "Formations escaped through the gaps and our casualty reports are still coming in. We failed to close the ring. I used to argue that staying with British command would preserve an army for decisions of our own. We had that army here. These orders were ours. I will sign the account of what went wrong.",
     "conditions": {
      "allFlags": [
       "greece_athens_government_accept_scobies_control",
@@ -7058,7 +7058,7 @@
     "role": "Medic and Resistance Organiser",
     "side": "right",
     "portrait": "resources/campaigns/portraits/eleni-markou.png",
-    "text": "The ring opened under attack and the villages are filling with search parties. I still meet people who lived because your Athens corridors stayed on the gun maps. They ask whether the same army has forgotten how to distinguish a road from a trap. I have no answer for them. The war continues, and restraint remembered is not restraint practised.",
+    "text": "We lost the encirclement, and search parties are entering the villages. People who used the Athens corridors have asked me whether you will protect them here too. I told them I'd bring their names to you. The war is continuing; they need an answer before the next patrol arrives.",
     "conditions": {
      "allFlags": [
       "greece_athens_government_protect_civilian_corridors",
@@ -7075,7 +7075,7 @@
     "role": "Hellenic Army Commander",
     "side": "left",
     "portrait": "resources/campaigns/portraits/thrasyvoulos-tsakalotos.png",
-    "text": "The surrender loudspeakers are still on the trucks. Few heard them before the attack failed. We preserved this army under British command and told ourselves preservation would keep later choices in Greek hands. Today Greek headquarters chose, Greek battalions paid, and the decision still escaped us. The lesser danger was real. So is everything it failed to prevent.",
+    "text": "The surrender loudspeakers are back on the trucks. Few men heard them before our attack failed. We preserved the brigade in exile and under British command; I wanted it available for a Greek decision. This was one. I approved the plan, and I need to hear from the battalions it cost us.",
     "conditions": {
      "allFlags": [
       "greece_athens_government_accept_scobies_control",
@@ -7160,7 +7160,7 @@
      "role": "British Liaison Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/edward-hale.png",
-     "text": "Ruweisat and Deir el Mreir fell before the Axis line could adjust to the main offensive. The Greek contingent has earned the dangerous privilege of being useful to every political plan for liberation.",
+     "text": "Ruweisat and Deir el Mreir fell before the Axis could adjust. Every office planning the liberation is now asking for your formation. Please refer them to me before agreeing to a move.",
      "conditions": {
       "previousOutcome": [
        "briliant"
@@ -7174,7 +7174,7 @@
      "role": "Staff Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/dimitris-laskaris.png",
-     "text": "The assigned objectives were taken and the Axis position is withdrawing. The formation has proved it can fight again; now every claimant to Greece asks whom that force obeys.",
+     "text": "The objectives are taken and the Axis troops are withdrawing. Now the ministries want to know whom this formation obeys. We need to answer before they start approaching the officers separately.",
      "conditions": {
       "previousOutcome": [
        "victory",
@@ -7189,7 +7189,7 @@
      "role": "Staff Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/dimitris-laskaris.png",
-     "text": "You kept the formation under government command when leaving might have felt cleaner. I defended that as duty. The wire around these Greek barracks is where the defence becomes difficult.",
+     "text": "I defended staying under government command. Now there is wire around Greek barracks. I still believe we needed the formation, but I need to see the surrender terms before I defend this order too.",
      "conditions": {
       "allFlags": [
        "camp6bn4_bn4c02_choice_0"
@@ -7217,7 +7217,7 @@
      "role": "British Liaison Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/edward-hale.png",
-     "text": "The Crete carriers remained together and became the formation's unofficial proof that retreat could still preserve skill.",
+     "text": "The Crete carrier crews are still together. When the rebuilding staff asks whether an intact section matters, I send them to those drivers.",
      "conditions": {
       "allFlags": [
        "greece_el_alamein_keep_the_crete_carriers"
@@ -7231,7 +7231,7 @@
      "role": "Senior Sergeant",
      "side": "left",
      "portrait": "resources/campaigns/portraits/petros-manesis.png",
-     "text": "The Crete transport pool vanished into the core. Its veterans are everywhere and therefore receive credit nowhere.",
+     "text": "The Crete drivers are with different battalions now. Nobody calls them a section, but I keep finding them sorting out another unit's transport.",
      "conditions": {
       "allFlags": [
        "greece_el_alamein_share_the_evacuation_pool"
@@ -7384,7 +7384,7 @@
      "role": "Staff Officer",
      "side": "right",
      "portrait": "resources/campaigns/portraits/dimitris-laskaris.png",
-     "text": "Hospital stores, personal weapons, papers. Everything else remains on the inventory. Discipline must carry what the lorries do not.",
+     "text": "Hospital stores, personal weapons and papers. Leave the rest on the inventory. Make the parties check their loads before we reach the sentries.",
      "conditions": {
       "allFlags": [
        "greece_escape_egypt_leave_without_bloodshed"
@@ -7479,7 +7479,7 @@
      "role": "Medic and Resistance Organiser",
      "side": "right",
      "portrait": "resources/campaigns/portraits/eleni-markou.png",
-     "text": "The detachment cleared the exits before the cordon closed. It will reach Greece with trained cadres and a story every side will retell differently.",
+     "text": "The detachment got through before the cordon closed. I'll tell ELAS which trained men are coming. They'll also want to hear how we left Egypt; we should agree who gives that account.",
      "conditions": {
       "previousOutcome": [
        "briliant"
@@ -7508,7 +7508,7 @@
      "role": "Medic and Resistance Organiser",
      "side": "right",
      "portrait": "resources/campaigns/portraits/eleni-markou.png",
-     "text": "The rifles from Egypt made us a detachment before ELAS had decided whether to trust us. The Greek guards we passed tell the story differently. Both versions have followed you into these mountains.",
+     "text": "The Egyptian rifles helped us organise before ELAS trusted us. The guards we passed have sent their own account. Expect to be questioned about it when we reach the next headquarters.",
      "conditions": {
       "allFlags": [
        "greece_escape_egypt_take_the_arms"
@@ -7597,7 +7597,7 @@
      "role": "Senior Sergeant",
      "side": "left",
      "portrait": "resources/campaigns/portraits/petros-manesis.png",
-     "text": "Keep them together. They crossed enough frontiers to deserve one commander who knows all their names.",
+     "text": "Keep their officers with them. The riders know one another after that journey. I can send the troop out sooner than I could reorganise it among new units.",
      "conditions": {
       "allFlags": [
        "greece_kalabaka_keep_elas_cavalry"
@@ -7727,7 +7727,7 @@
      "role": "Military Chief of ELAS",
      "side": "left",
      "portrait": "resources/campaigns/portraits/stefanos-sarafis.png",
-     "text": "Complete disarmament will not remain a tidy operation. Name holding areas now, and forbid the word 'traitor' in arrest lists unless someone can attach an act to it.",
+     "text": "Name the holding areas before we start. And make the officers record a specific accusation if they put 'traitor' beside a prisoner's name. Being in EDES is not an explanation of what he did.",
      "conditions": {
       "allFlags": [
        "greece_kalabaka_disarm_edes"
@@ -7889,7 +7889,7 @@
      "role": "Military Chief of ELAS",
      "side": "left",
      "portrait": "resources/campaigns/portraits/stefanos-sarafis.png",
-     "text": "The objectives are under ELAS control, though armed groups escaped the cordon. The military result is clear; its place inside the resistance is not.",
+     "text": "The positions are ours. Armed groups escaped the cordon, and I don't yet know which intend to fight us again. I'll contact the local units before we move on.",
      "conditions": {
       "previousOutcome": [
        "victory",
@@ -7918,7 +7918,7 @@
      "role": "Military Chief of ELAS",
      "side": "left",
      "portrait": "resources/campaigns/portraits/stefanos-sarafis.png",
-     "text": "Some EDES men used the Kalabaka terms to go home. Others preserved their network for the next quarrel. You knew that risk and signed anyway; I have not forgotten either part.",
+     "text": "Some EDES men went home under our terms. Others kept their network. I'll report both. The officers asking why you signed the amnesty should remember what alternatives we had.",
      "conditions": {
       "allFlags": [
        "greece_kalabaka_offer_rank_and_file_amnesty"
@@ -8100,7 +8100,7 @@
      "role": "Military Chief of ELAS",
      "side": "left",
      "portrait": "resources/campaigns/portraits/stefanos-sarafis.png",
-     "text": "Kanalos and Lefki close after the civilians pass. Then the column has roads on the map and none under its wheels.",
+     "text": "Close Kanalos and Lefki after the civilians have passed. Confirm both roadblocks before we start the main attack; I don't want the column driving through a gap we thought was held.",
      "conditions": {
       "allFlags": [
        "greece_agorelitsa_close_the_roads"
@@ -8237,7 +8237,7 @@
      "role": "ELAS Kapetanios",
      "side": "left",
      "portrait": "resources/campaigns/portraits/aris-velouchiotis.png",
-     "text": "The Agorelitsa guns now belong to ELAS. They frighten the occupier and reassure every Greek who suspected we were preparing for a larger fight. The same barrel can do both.",
+     "text": "We have the Agorelitsa guns. The Germans have noticed. So have Greeks who think we're preparing to fight them next. I'd rather have the guns when they ask me about it.",
      "conditions": {
       "allFlags": [
        "greece_agorelitsa_raid_the_batteries"
@@ -8265,7 +8265,7 @@
      "role": "ELAS Kapetanios",
      "side": "left",
      "portrait": "resources/campaigns/portraits/aris-velouchiotis.png",
-     "text": "You took the rifles from EDES before Britain could make more use of them. Britain has brought its own troops now. There is no pass narrow enough for this argument.",
+     "text": "We took the EDES rifles. Now the British have brought troops of their own. We can't settle this by closing a few mountain passes. Show me where their reinforcements can land.",
      "conditions": {
       "allFlags": [
        "greece_kalabaka_disarm_edes"
@@ -8329,7 +8329,7 @@
      "role": "Medic and Resistance Organiser",
      "side": "right",
      "portrait": "resources/campaigns/portraits/eleni-markou.png",
-     "text": "The western districts are already cutting windows into basement walls so families can pass without crossing the streets. Whatever plan we choose will arrive after the civilians have understood the battle.",
+     "text": "The western districts are cutting openings between basements so families can move without entering the streets. Give me your sector boundaries; I need to know which of those passages stay behind our lines.",
      "next": "decision"
     },
     {
@@ -8573,7 +8573,7 @@
      "role": "Secretary-General of the KKE",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikos-zachariadis.png",
-     "text": "The December assault broke the government positions before the British bridgehead was ready. Britain reversed the result and the foreign ministries ignored it. We have spent three years arguing over which fact mattered more.",
+     "text": "We took the government positions before the British bridgehead was ready. Britain reversed that result, and the foreign ministries did nothing for us. For three years we've argued about whether the assault was worth it. I still want an answer that accounts for both facts.",
      "conditions": {
       "previousOutcome": [
        "briliant"
@@ -8644,7 +8644,7 @@
      "role": "Medic and Resistance Organiser",
      "side": "right",
      "portrait": "resources/campaigns/portraits/eleni-markou.png",
-     "text": "Two men reached us from Thessaly. One boycotted the March election; the other voted. The same gendarmerie truck took both. Only one escaped before the ship sailed for the islands.",
+     "text": "A man reached us from Thessaly. He boycotted the March election; the prisoner beside him had voted. The same gendarmerie truck took both. He escaped before the ship sailed for the islands. The other man didn't.",
      "next": "scene-1"
     },
     {
@@ -8653,7 +8653,7 @@
      "role": "Secretary-General of the KKE",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikos-zachariadis.png",
-     "text": "A seat in that parliament would have made the terror legal, not made the Left safe.",
+     "text": "Would a seat in that parliament have protected either of them? They would have used our presence to claim the elections had settled everything.",
      "next": "scene-2"
     },
     {
@@ -8662,7 +8662,7 @@
      "role": "Commander of the DSE",
      "side": "left",
      "portrait": "resources/campaigns/portraits/markos-vafiadis.png",
-     "text": "An empty seat spoke too. It told every organiser in Athens that the mountains were now our only argument.",
+     "text": "It might have kept some of our organisers in the cities. We left them with no instruction except to look to the mountains. That had a cost too.",
      "next": "scene-3"
     },
     {
@@ -8671,7 +8671,7 @@
      "role": "Secretary-General of the KKE",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikos-zachariadis.png",
-     "text": "The greater mistake was waiting while the factories, unions, and army still held our people. We cannot recover 1946. A government in Konitsa would at least give this struggle offices, a population, and Greek soil.",
+     "text": "We waited while we still had people in the factories, unions and army. We cannot recover that chance now. Konitsa could give the Democratic Government a town to govern. Foreign governments must see that we hold Greek territory.",
      "next": "scene-4"
     },
     {
@@ -8680,7 +8680,7 @@
      "role": "Commander of the DSE",
      "side": "left",
      "portrait": "resources/campaigns/portraits/markos-vafiadis.png",
-     "text": "A missed uprising is not repaired by ordering a mountain army to behave like a city. Konitsa gives the National Army walls, relief roads, and coordinates for every gun it owns.",
+     "text": "Then look at what it takes to hold it. The National Army has walls, relief roads and guns ranged on the approaches. We don't have the force you wish we'd raised in the cities.",
      "next": "scene-5"
     },
     {
@@ -8689,7 +8689,7 @@
      "role": "Medic and Resistance Organiser",
      "side": "right",
      "portrait": "resources/campaigns/portraits/eleni-markou.png",
-     "text": "The inhabitants are digging beside the garrison. If we call Konitsa a capital before we enter it, we have already stopped asking what they want.",
+     "text": "The inhabitants are digging with the garrison. What will we tell them when we enter? They haven't asked us to make their town a capital.",
      "next": "decision"
     },
     {
@@ -8923,7 +8923,7 @@
      "role": "Secretary-General of the KKE",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikos-zachariadis.png",
-     "text": "Konitsa has fallen to the DSE. The Provisional Government has the city it sought, but recognition and durable supply do not arrive with the same flag.",
+     "text": "Konitsa is ours. I can announce that the Provisional Government holds its town. Recognition has still not come, and we need a supply route before the National Army returns.",
      "conditions": {
       "previousOutcome": [
        "briliant"
@@ -8952,7 +8952,7 @@
      "role": "Medic and Resistance Organiser",
      "side": "right",
      "portrait": "resources/campaigns/portraits/eleni-markou.png",
-     "text": "Konitsa held against the DSE and the attempt at a provisional capital failed. The political need for territory remains, now joined by the military evidence of its cost.",
+     "text": "We couldn't take Konitsa. The men are coming back from the approaches. Ask them what happened before issuing another order to find a capital.",
      "conditions": {
       "previousOutcome": [
        "lose"
@@ -8966,7 +8966,7 @@
      "role": "Secretary-General of the KKE",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikos-zachariadis.png",
-     "text": "Konitsa taught the Party to look for territory whenever it asks whether the army has succeeded. The foreign recognition never came, but the measure remained.",
+     "text": "The Party is asking which territory we can govern after Konitsa. I know recognition hasn't followed. I still need something more to put before foreign governments than another account of our marches.",
      "conditions": {
       "allFlags": [
        "greece_konitsa_dse_storm_the_city"
@@ -8980,7 +8980,7 @@
      "role": "Commander of the DSE",
      "side": "left",
      "portrait": "resources/campaigns/portraits/markos-vafiadis.png",
-     "text": "The formations saved outside Konitsa are still here. So is the Party's anger at the proclamation it never issued. You now know which result each headquarters counts first.",
+     "text": "The formations we kept outside Konitsa are available here. Party headquarters is still asking why we didn't take the town. I'll answer again if it keeps these units free to move.",
      "conditions": {
       "allFlags": [
        "greece_konitsa_dse_isolate_the_garrison"
@@ -9055,7 +9055,7 @@
      "role": "Commander of the DSE",
      "side": "left",
      "portrait": "resources/campaigns/portraits/markos-vafiadis.png",
-     "text": "Keep the battery. Men who carried firing tables through that retreat have earned the right to use them together.",
+     "text": "Keep the battery. Its observers and crews brought their equipment out together. I want them working with the same people when we register the Grammos positions.",
      "conditions": {
       "allFlags": [
        "greece_first_grammos_keep_konitsa_mortars"
@@ -9069,7 +9069,7 @@
      "role": "Medic and Resistance Organiser",
      "side": "right",
      "portrait": "resources/campaigns/portraits/eleni-markou.png",
-     "text": "Break it up. The rifle battalions receive observers and bombs tonight. The battery name will not keep an empty tube firing.",
+     "text": "Send the crews and ammunition to the rifle battalions. Tell the battery commander where his observers go; they can still coordinate their work from different units.",
      "conditions": {
       "allFlags": [
        "greece_first_grammos_spread_konitsa_stores"
@@ -9083,7 +9083,7 @@
      "role": "Medic and Resistance Organiser",
      "side": "right",
      "portrait": "resources/campaigns/portraits/eleni-markou.png",
-     "text": "The army is emptying villages below Nestorio and putting families behind wire. Government staff crosses out houses; our battalions lose guides, flour, messengers, and the next recruits.",
+     "text": "Families below Nestorio are being taken out of their villages and held behind wire. Our messengers can't find their contacts. We are losing food, guides and recruits along with those homes.",
      "next": "scene-1"
     },
     {
@@ -9092,7 +9092,7 @@
      "role": "Commander of the DSE",
      "side": "left",
      "portrait": "resources/campaigns/portraits/markos-vafiadis.png",
-     "text": "They are not clearing ground behind us. They are removing the country a partisan army moves through. Fix us on these ridges and the pilots need only learn target numbers.",
+     "text": "Without the villages, where do you expect us to get food and information? Keep us on the ridges and the aircraft can work over the same positions every day.",
      "next": "scene-2"
     },
     {
@@ -9186,7 +9186,7 @@
      "role": "Commander of the DSE",
      "side": "left",
      "portrait": "resources/campaigns/portraits/markos-vafiadis.png",
-     "text": "Then I want local authority to withdraw a company before it disappears. A front is not strengthened by headquarters learning about a lost ridge at supper.",
+     "text": "Then give the local commanders authority to pull a company off a lost ridge. If every request has to reach headquarters first, some won't arrive until the men are gone.",
      "conditions": {
       "allFlags": [
        "greece_first_grammos_hold_the_grammos_front"
@@ -9241,7 +9241,7 @@
      "role": "Commander of the DSE",
      "side": "left",
      "portrait": "resources/campaigns/portraits/markos-vafiadis.png",
-     "text": "Then tell them the truth before the last battalion leaves. Three routes, caches beyond each exit, closing times, and no gun defended after its crews can still move it.",
+     "text": "Tell the villages before the last battalion leaves. Three routes, caches and closing hours. Withdraw the guns while their crews can still move them; don't wait until we have to abandon both.",
      "conditions": {
       "allFlags": [
        "greece_first_grammos_prepare_the_corridors"
@@ -9374,7 +9374,7 @@
      "role": "Secretary-General of the KKE",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikos-zachariadis.png",
-     "text": "The Grammos position broke without the required force escaping in order. The survivors at Vitsi will be rebuilt under directives that call the defeat proof of insufficient resolve.",
+     "text": "Too few formations got out of Grammos in order. Headquarters is demanding that the survivors be rebuilt at Vitsi. I want the unit accounts before anyone attributes every loss to insufficient resolve.",
      "conditions": {
       "previousOutcome": [
        "lose"
@@ -9388,7 +9388,7 @@
      "role": "Secretary-General of the KKE",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikos-zachariadis.png",
-     "text": "Grammos proved the DSE could defend a front. It also gave the National Army a fixed address for every new aircraft and gun. We cannot keep only the first lesson.",
+     "text": "We held a front at Grammos. It also let the National Army concentrate its aircraft and guns against known positions. I need that dealt with before we hold another massif the same way.",
      "conditions": {
       "allFlags": [
        "greece_first_grammos_hold_the_grammos_front"
@@ -9402,7 +9402,7 @@
      "role": "Commander of the DSE",
      "side": "left",
      "portrait": "resources/campaigns/portraits/markos-vafiadis.png",
-     "text": "The Grammos corridors delivered an army instead of a martyr's list. Headquarters still speaks of abandoned ground when it means my command. You bought the formations time, not forgiveness.",
+     "text": "Your corridors got the formations out. Headquarters still blames my command for leaving the ground. I'll take that argument again; at least I have units to command here.",
      "conditions": {
       "allFlags": [
        "greece_first_grammos_prepare_the_corridors"
@@ -9430,7 +9430,7 @@
      "role": "Medic and Resistance Organiser",
      "side": "right",
      "portrait": "resources/campaigns/portraits/eleni-markou.png",
-     "text": "Konitsa's mortar group was divided among the core. It left no famous battery, but more companies at Grammos possessed useful fire.",
+     "text": "The Konitsa mortar men are working with separate rifle units. Some companies got useful fire at Grammos because of them. Keep their observers in contact where you can.",
      "conditions": {
       "allFlags": [
        "greece_first_grammos_spread_konitsa_stores"
@@ -9504,7 +9504,7 @@
      "role": "Commander of the DSE",
      "side": "left",
      "portrait": "resources/campaigns/portraits/markos-vafiadis.png",
-     "text": "Keep the detachment. It knows how to leave a closing road without losing the people who make the road useful.",
+     "text": "Keep the rear guard together. Its couriers still report to the same officers. We'll need those connections on the next withdrawal route.",
      "conditions": {
       "allFlags": [
        "greece_vitsi_dse_keep_grammos_rearguard"
@@ -9518,7 +9518,7 @@
      "role": "Medic and Resistance Organiser",
      "side": "right",
      "portrait": "resources/campaigns/portraits/eleni-markou.png",
-     "text": "Distribute it. The caches go to the weak battalions; the couriers keep their routes. Survival does not require a separate flag.",
+     "text": "Distribute the stores to the weak battalions. The couriers keep their routes. Tell their new officers not to reassign them without speaking to me.",
      "conditions": {
       "allFlags": [
        "greece_vitsi_dse_rebuild_after_grammos"
@@ -9532,7 +9532,7 @@
      "role": "Medic and Resistance Organiser",
      "side": "right",
      "portrait": "resources/campaigns/portraits/eleni-markou.png",
-     "text": "The Prespa replacements include women who voted in the Free Greece elections before Athens gave women a national ballot. The roster calls three of them auxiliaries. They commanded sections at Grammos.",
+     "text": "These Prespa replacements include women who voted in the Free Greece elections. Three are listed as auxiliaries here, but they commanded sections at Grammos. Who made this roster?",
      "next": "scene-1"
     },
     {
@@ -9550,7 +9550,7 @@
      "role": "Secretary-General of the KKE",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikos-zachariadis.png",
-     "text": "Our comrades abroad fear that Greece could open a war none of them can contain. They praise the DSE and inspect every crate as though it carried the first shot. We must show them an army capable of a result.",
+     "text": "Our comrades abroad are afraid that helping us will start a wider war. They praise the DSE, then hold up the supplies. A successful operation would strengthen our case. What can we attempt with what's arrived?",
      "next": "scene-3"
     },
     {
@@ -9559,7 +9559,7 @@
      "role": "Commander of the DSE",
      "side": "left",
      "portrait": "resources/campaigns/portraits/markos-vafiadis.png",
-     "text": "Then I plan with the crates that crossed the border, not the resolutions that did. Give me food routes, guides, and two nights without aircraft; then the towns become vulnerable.",
+     "text": "Let me see the crates that actually crossed. Then I need food routes, guides and time to bring the detachments together. We can't begin by assuming the rest of the supplies will follow.",
      "next": "decision"
     },
     {
@@ -9641,7 +9641,7 @@
      "role": "Senior Sergeant",
      "side": "left",
      "portrait": "resources/campaigns/portraits/petros-manesis.png",
-     "text": "I'll find the twenty-five pairs. I cannot find another battalion if the guns fail to move after it.",
+     "text": "I'll find boots for those replacements. But the guns must be able to move after the infantry. We haven't another battalion to send if this one gets stranded.",
      "conditions": {
       "allFlags": [
        "greece_vitsi_dse_counterattack_the_towns"
@@ -9798,7 +9798,7 @@
      "role": "Commander of the DSE",
      "side": "left",
      "portrait": "resources/campaigns/portraits/markos-vafiadis.png",
-     "text": "The Vitsi objectives were recovered before government forces could consolidate. The DSE has regained a district and not the strategic balance beyond it.",
+     "text": "We recovered the Vitsi objectives before the government troops consolidated. We've bought a useful interval. Check the food and ammunition before anyone assigns these battalions another town.",
      "conditions": {
       "previousOutcome": [
        "briliant"
@@ -9827,7 +9827,7 @@
      "role": "Secretary-General of the KKE",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikos-zachariadis.png",
-     "text": "The counterstroke failed to restore Vitsi. The next directive will demand a result at Aridaea as if urgency could replace the formations missing here.",
+     "text": "The counterattack didn't recover Vitsi. I've been asked to produce a result at Aridaea next. Bring me the surviving strengths; I won't get another battalion simply by requesting an earlier attack.",
      "conditions": {
       "previousOutcome": [
        "lose"
@@ -9841,7 +9841,7 @@
      "role": "Secretary-General of the KKE",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikos-zachariadis.png",
-     "text": "The Vitsi counterattack put flags back in the towns. It also revived the belief that one more fixed battle can alter the political balance. That belief now has your victory behind it.",
+     "text": "Party headquarters is citing Vitsi as a reason to take and hold another town. I support the aim, but I want your estimate of the force it will require. Your last success is being used in that argument.",
      "conditions": {
       "allFlags": [
        "greece_vitsi_dse_counterattack_the_towns"
@@ -9855,7 +9855,7 @@
      "role": "Commander of the DSE",
      "side": "left",
      "portrait": "resources/campaigns/portraits/markos-vafiadis.png",
-     "text": "The rebuilt Vitsi routes are carrying food and couriers again. Party reports count the days without a visible victory; the battalions count meals. I know which ledger you chose.",
+     "text": "Food and couriers are using the routes you rebuilt. The battalions are eating. Headquarters asks why that took so long; I'll send it the supply returns.",
      "conditions": {
       "allFlags": [
        "greece_vitsi_dse_rebuild_the_network"
@@ -9883,7 +9883,7 @@
      "role": "Medic and Resistance Organiser",
      "side": "right",
      "portrait": "resources/campaigns/portraits/eleni-markou.png",
-     "text": "The men and caches from the Grammos exits are scattered through the core now. No unit inherited the honour. Several units inherited enough strength to answer roll call.",
+     "text": "The Grammos men and stores are with several units now. I'll check their returns before we assemble the Aridaea force. Some companies would be badly short without them.",
      "conditions": {
       "allFlags": [
        "greece_vitsi_dse_rebuild_after_grammos"
@@ -9897,7 +9897,7 @@
      "role": "Commander of the DSE",
      "side": "left",
      "portrait": "resources/campaigns/portraits/markos-vafiadis.png",
-     "text": "I warned that a fixed Grammos would become a target number. It did. You held it long enough to save something, and long enough for the pilots to learn every path we used.",
+     "text": "I warned about keeping the Grammos positions fixed. We held long enough to get some men out, but the pilots learned our routes. Show me how this plan avoids giving them the same opportunity.",
      "conditions": {
       "allFlags": [
        "greece_first_grammos_hold_the_grammos_front"
@@ -9911,7 +9911,7 @@
      "role": "Secretary-General of the KKE",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikos-zachariadis.png",
-     "text": "The formations came out of Grammos. The villages and the claim to territory did not. You saved the instrument, Commander. I am still waiting to see what political result it can produce.",
+     "text": "The army came out of Grammos. We lost the villages and the territory we claimed to govern. Tell me where those saved formations can establish authority now, Commander.",
      "conditions": {
       "allFlags": [
        "greece_first_grammos_prepare_the_corridors"
@@ -9993,7 +9993,7 @@
      "role": "Secretary-General of the KKE",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikos-zachariadis.png",
-     "text": "Keep the group concentrated. A success needs a point sharp enough to enter the town before doubt does.",
+     "text": "Keep the assault group together and give it the ammunition. I want it ready to enter Aridaea before the garrison can reinforce the streets.",
      "conditions": {
       "allFlags": [
        "greece_aridaea_strengthen_aridaea_assault"
@@ -10066,7 +10066,7 @@
      "role": "Medic and Resistance Organiser",
      "side": "right",
      "portrait": "resources/campaigns/portraits/eleni-markou.png",
-     "text": "The local committee has prepared offices and a prison list. The withdrawal officer has prepared fuel dumps and departure times. Both are waiting outside, and neither will look at the other.",
+     "text": "The local committee is outside with office assignments and a prison list. The withdrawal officer is waiting with departure times. Which one do I bring in? They're expecting different answers.",
      "next": "decision"
     },
     {
@@ -10156,7 +10156,7 @@
      "role": "Secretary-General of the KKE",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikos-zachariadis.png",
-     "text": "The town is taken, organised, and defended. Authority enters behind the assault; it does not arrive later to explain why the army left.",
+     "text": "Then the committee follows the assault and takes responsibility for the town. Give its people the army's positions before they start issuing instructions.",
      "conditions": {
       "allFlags": [
        "greece_aridaea_hold_aridaea"
@@ -10211,7 +10211,7 @@
      "role": "Senior Sergeant",
      "side": "left",
      "portrait": "resources/campaigns/portraits/petros-manesis.png",
-     "text": "Good. A soldier can complete an hour. He cannot complete a promise that keeps moving farther into 1949.",
+     "text": "I'll give the men their departure times before we go in. Please leave those times alone once the town falls. They'll be checking whether we mean them.",
      "conditions": {
       "allFlags": [
        "greece_aridaea_raid_and_withdraw"
@@ -10280,7 +10280,7 @@
     "role": "Secretary-General of the KKE",
     "side": "right",
     "portrait": "resources/campaigns/portraits/nikos-zachariadis.png",
-    "text": "The first proclamation came off the Aridaea press while the antitank crews were still digging. For a few weeks the town answered those who said the Democratic Army could only hide. It did not reopen the Yugoslav frontier or replace the battalions already gone. In 1949 the fixed fronts broke. The proclamation travelled into exile folded inside a uniform, proof of a state announced and never secured.",
+    "text": "The Aridaea proclamation was printed while the antitank crews were digging. For a few weeks we had a town that answered our orders. We still lacked recognition, replacements and a secure frontier. When the fixed fronts broke in 1949, the proclamation went into exile with us. I kept a copy. The men who carried it ask why we couldn't hold what it announced.",
     "conditions": {
      "allFlags": [
       "greece_aridaea_hold_aridaea"
@@ -10298,7 +10298,7 @@
     "role": "Commander of the DSE",
     "side": "left",
     "portrait": "resources/campaigns/portraits/markos-vafiadis.png",
-    "text": "The last Aridaea lorry cleared the road before dawn. We took stores, prisoners, and most of the assault force home. Headquarters called the empty town another failure of nerve. In 1949 the Yugoslav frontier closed and aircraft found the roads manoeuvre could no longer replace. More of the army survived because you left. It survived long enough to lose elsewhere.",
+    "text": "The last lorry left Aridaea before dawn. We brought back stores, prisoners and most of the assault force. Headquarters accused us of losing our nerve again. In 1949 the Yugoslav frontier closed and aircraft watched the remaining roads. More men survived because we left Aridaea; I couldn't promise them a safe place afterward.",
     "conditions": {
      "allFlags": [
       "greece_aridaea_raid_and_withdraw"
@@ -10314,7 +10314,7 @@
     "role": "Medic and Resistance Organiser",
     "side": "right",
     "portrait": "resources/campaigns/portraits/eleni-markou.png",
-    "text": "The committee's prison list never left its envelope. We carried the wounded out past offices prepared for a government that did not arrive. Children had crossed north before the last formations; some learned to write home in another alphabet before their parents knew where exile would take them. The frontier closed in 1949, and the survivors went to camps, prisons, exile, or back to villages where questions were dangerous. During the occupation we built authority from almost nothing. In the civil war, we learned how quickly authority can begin demanding everything.",
+    "text": "I carried the committee's prison list out unopened, beside the wounded. The offices were ready; we never occupied them. Children had already gone north, some learning another alphabet before their parents knew where they would follow. After the frontier closed in 1949, I tried to trace families through camps, prisons and exile. Some went home and stopped writing. I still keep the unanswered letters.",
     "conditions": {
      "allFlags": [
       "greece_aridaea_hold_aridaea"

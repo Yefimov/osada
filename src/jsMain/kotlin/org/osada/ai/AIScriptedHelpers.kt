@@ -18,9 +18,9 @@ internal fun AIScripted.unitByEqid(
     eqid: Int,
     owner: Int,
 ): GameUnit? =
-    map.units.firstOrNull { unit ->
-        unit.eqid == eqid && unit.owner == owner && !unit.destroyed
-    }
+    map.units
+        .firstOrNull { unit -> unit.eqid == eqid && unit.owner == owner && !unit.destroyed }
+        .also { if (it == null) console.warn("[OSADA] tutorial script: no live unit eqid=$eqid owner=$owner") }
 
 internal fun AIScripted.addAction(
     type: ActionType,

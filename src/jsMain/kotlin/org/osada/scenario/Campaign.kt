@@ -1,6 +1,7 @@
 package org.osada.scenario
 
 import org.osada.difficultyModifiers
+import org.osada.ui.CampaignContentLocalization
 import org.w3c.xhr.XMLHttpRequest
 
 @JsExport
@@ -50,7 +51,7 @@ class Campaign(
             ) {
                 scenarios = JSON.parse(request.responseText)
                 isLoaded = true
-                onLoad()
+                CampaignContentLocalization.ensure(file, onLoad)
             } else {
                 onLoad()
             }
@@ -95,8 +96,11 @@ class Campaign(
 
     fun getOutcomePrestige(outcome: String): Int = scenarios[currentScenarioIndex].outcome[outcome].prestige as Int
 
-    fun getOutcomeText(outcome: String): String =
-        scenarios[currentScenarioIndex].outcome[outcome].text as? String ?: "Continue to the next phase."
+    fun getOutcomeText(outcome: String): String {
+        val current = scenarios[currentScenarioIndex]
+        val authored = current.outcome[outcome].text as? String ?: "Continue to the next phase."
+        return CampaignContentLocalization.outcome(file, current.scenario as? String, outcome, authored)
+    }
 
     fun getCampaignFlow(): String {
         val sb = StringBuilder()

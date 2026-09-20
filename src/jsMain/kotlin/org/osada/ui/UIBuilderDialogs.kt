@@ -49,9 +49,8 @@ fun UIBuilder.showAIStatus(active: Boolean) = MessageDialogs.showAIStatus(active
 // --- Map-anchored tooltips (TooltipBuilder) ---
 fun UIBuilder.gameToolTip(
     text: String,
-    x: Int,
-    y: Int,
-) = TooltipBuilder.gameToolTip(text, x, y)
+    anchor: () -> GameToolTipAnchor?,
+) = TooltipBuilder.gameToolTip(text, anchor)
 
 fun UIBuilder.gameSmallToolTip(
     text: String,

@@ -32,8 +32,7 @@ internal fun restoreEngineering(
     // `Engineering.advanceTurn` falls back to `constructionSide` for.
     hex.constructionPlayer = hexData.constructionPlayer as? Int ?: -1
     hex.constructionCountry = hexData.constructionCountry as? Int ?: -1
-    hex.razedTerrain = hexData.razedTerrain as? Int ?: -1
-    hex.blownRoad = hexData.blownRoad as? Int ?: 0
+    restoreHexDamage(hex, hexData)
     hex.sapperBuilt = (hexData.sapperBuilt as? Int ?: 0) != 0
     hex.station = (hexData.station as? Int ?: 0) != 0
     hex.dirt = (hexData.dirt as? Int ?: 0) != 0
@@ -42,6 +41,24 @@ internal fun restoreEngineering(
     hex.escapeGround = (hexData.escapeGround as? Int ?: 0) != 0
     hex.escapeAir = (hexData.escapeAir as? Int ?: 0) != 0
     restoreHexTrigger(hex, hexData)
+}
+
+/**
+ * What was destroyed or churned here, split out of [restoreEngineering] to keep that function
+ * inside detekt's complexity budget.
+ *
+ * Every one of these outlives the job that caused it, because each is the only record of what
+ * Repair would put back (`Hex.razedTerrain`, `Hex.blownRoad`, `Hex.blownRail`). A save written
+ * before any of them existed has none of the keys, and the defaults below are the state such a
+ * save really was in -- nothing destroyed, nothing churned.
+ */
+private fun restoreHexDamage(
+    hex: Hex,
+    hexData: dynamic,
+) {
+    hex.razedTerrain = hexData.razedTerrain as? Int ?: -1
+    hex.blownRoad = hexData.blownRoad as? Int ?: 0
+    hex.blownRail = hexData.blownRail as? Int ?: 0
     hex.rubble = (hexData.rubble as? Int ?: 0) != 0
     hex.crater = (hexData.crater as? Int ?: 0) != 0
 }

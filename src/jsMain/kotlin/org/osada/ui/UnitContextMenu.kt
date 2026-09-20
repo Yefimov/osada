@@ -21,6 +21,7 @@ import org.osada.model.resupplyUnit
 import org.osada.model.undoLastMove
 import org.osada.model.unmountUnit
 import org.osada.rules.Engineering
+import org.osada.rules.EngineeringWork
 import org.osada.rules.GreenReplacements
 import org.osada.rules.LeaderDismissal
 import org.osada.rules.SupplyContextRules
@@ -37,10 +38,23 @@ internal class UnitContextMenu(
     internal val ui: UI,
 ) {
     private companion object {
-        /** The six Build-and-Repair chip ids, matching `UnitActionId`'s own strings. Kept as a set
-         *  so the `when` above stays one branch rather than six identical ones. */
+        /** The Build-and-Repair chip ids, matching `UnitActionId`'s own strings. Kept as a set
+         *  so the `when` above stays one branch rather than one per chip.
+         *
+         *  `build_station` was missing from this set until 2026-09-20, which made that chip dead:
+         *  the strip offered it, `performAction`'s `when` matched nothing, and the click did
+         *  nothing at all. */
         val ENGINEERING_ACTION_IDS =
-            setOf("build_bridge", "build_fortification", "build_airfield", "build_port", "repair", "demolish")
+            setOf(
+                "build_bridge",
+                "build_fortification",
+                "build_airfield",
+                "build_port",
+                "build_station",
+                "repair",
+                "demolish",
+                "blow_rail",
+            )
     }
 
     private val contextButtons = UnitContextButtons(ui) { action, unit -> executeUnitContext(action, unit) }
@@ -205,10 +219,15 @@ internal class UnitContextMenu(
     ) {
         val available = Engineering.availableWork(unit)
         val work =
-            if (action == "demolish") {
-                available.firstOrNull { it.demolition }
-            } else {
-                available.firstOrNull { !it.demolition && it.name.lowercase() == action.removePrefix("build_") }
+            when (action) {
+                // Whichever of OG's two demolitions this hex allows -- cutting rail is a chip of
+                // its own, for the reason `UnitActionAvailability.ENGINEERING_ACTIONS` gives.
+                "demolish" -> available.firstOrNull { it.demolition && it != EngineeringWork.BLOW_RAIL }
+                "blow_rail" -> available.firstOrNull { it == EngineeringWork.BLOW_RAIL }
+                else ->
+                    available.firstOrNull {
+                        !it.demolition && it.name.lowercase() == action.removePrefix("build_")
+                    }
             }
         if (work == null) {
             ui.showAlert(pos.row, pos.col, I18n.t("unit_info.action.engineering.blocked"), true)

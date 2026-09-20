@@ -412,6 +412,9 @@ private fun serializeHexEngineering(
     }
     if (hex.razedTerrain >= 0) obj.asDynamic().razedTerrain = hex.razedTerrain
     if (hex.blownRoad != 0) obj.asDynamic().blownRoad = hex.blownRoad
+    // The cut rail line, on the same rule: it is the only record of the track Repair would
+    // relay, and it outlives the demolition or the barrage that cut it (`Hex.blownRail`).
+    if (hex.blownRail != 0) obj.asDynamic().blownRail = hex.blownRail
     // The airfield's ORIGIN, for OG's `Cannot use dirt airfields`. Stored on the same optional-
     // key rule as the two records above, and for the same reason: it outlives the job that set
     // it, so a reload must not turn a sapper's strip back into a permanent field.

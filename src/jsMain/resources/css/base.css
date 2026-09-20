@@ -48,10 +48,13 @@
     overflow: hidden auto;
 }
 
-#gameToolTipOk {
-    position: absolute;
-    top: 105px;
-    left: 220px;
+/* Dismiss control of the map tooltip: a footer row of its own (see .toolTip[type="game"]), so
+ * the message can never render underneath it whatever size the button grows to (44px on touch). */
+#gameToolTipOk.gameToolTipDismiss {
+    position: static;
+    flex: 0 0 auto;
+    align-self: flex-end;
+    margin: 6px 0 0;
 }
 
 /* The stylesheet half of index.html's dark-mode-extension opt-out: this page is dark on purpose,
@@ -777,13 +780,30 @@ input[type="text"], input[type="search"] {
     z-index: 9;
 }
 
+/* Content-sized: the text decides the height, GameToolTipPlacement caps width/height to the
+ * visible #game area (inline max-width/max-height) and scrolls the MESSAGE, not the panel —
+ * overflow on the panel itself would clip the arrow pseudo-elements. The percentage caps are
+ * the no-JS fallback (an absolute child of #game resolves them against #game's client box). */
 .toolTip[type="game"] {
-    width: 250px;
-    height: 120px;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: 420px;
+    max-width: calc(100% - 16px);
+    height: auto;
+    max-height: calc(100% - 16px);
     border: 3px solid rgb(248, 224, 100);
     border-radius: 10px;
-    padding: 10px;
+    padding: 10px 12px;
+    line-height: 1.4;
     background: rgba(0, 0, 0, 0.7);
+}
+
+#gameToolTipMessage {
+    flex: 0 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-wrap: break-word;
+    overscroll-behavior: contain;
 }
 
 .toolTip[type="ui"] {
@@ -806,6 +826,7 @@ input[type="text"], input[type="search"] {
 }
 
 .toolTip[type="game"]::after {
+    top: var(--osada-gtt-arrow-y, 50%);
     margin-top: -15px;
 }
 
@@ -845,7 +866,14 @@ input[type="text"], input[type="search"] {
 }
 
 .toolTip[type="game"]::before {
+    top: var(--osada-gtt-arrow-y, 50%);
     margin-top: -17px;
+}
+
+/* Clamped over its own hex (no room on either side) or the hex scrolled past the panel's end. */
+.toolTip[type="game"][orientation="none"]::before,
+.toolTip[type="game"][orientation="none"]::after {
+    display: none;
 }
 
 .toolTip[type="ui"]::before {

@@ -7,6 +7,7 @@ import org.w3c.dom.HTMLElement
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
@@ -37,16 +38,37 @@ class UIBuilderMiscTest {
         }
     }
 
+    // OSADA: the tooltip is no longer placed at a fixed (x - 55, y + 55); it takes an ANCHOR
+    // PROVIDER re-evaluated on every placement pass (see GameToolTipPlacement), so the position
+    // depends on the measured panel and on #game's visible box. This test asserts the contract
+    // that survives without a stylesheet — shown, filled, anchored, dismissible — not pixels.
     @Test
-    fun gameToolTipShowsTooltip() {
-        UIBuilder.gameToolTip("Hint", 100, 200)
+    fun gameToolTipShowsTooltipAndConsultsItsAnchor() {
+        var anchorCalls = 0
+        UIBuilder.gameToolTip("Hint") {
+            anchorCalls++
+            GameToolTipAnchor(x = 100.0, y = 200.0, halfWidth = 20.0)
+        }
         assertTrue(isVisible("gameToolTip"))
-        assertEquals("Hint", byId("gameToolTipMessage")?.innerHTML)
-        assertTrue(byId("gameToolTipOk")?.title?.contains("Dismiss") == true)
         val tooltip = byId("gameToolTip")
         assertNotNull(tooltip)
-        assertEquals("${200 - 55}px", tooltip.style.top)
-        assertEquals("${100 + 55}px", tooltip.style.left)
+        assertEquals("game", tooltip.getAttribute("type"))
+        // flex, not makeVisible()'s "inline": the message/footer column layout depends on it.
+        assertEquals("flex", tooltip.style.display)
+        assertEquals("Hint", byId("gameToolTipMessage")?.innerHTML)
+        assertTrue(byId("gameToolTipOk")?.title?.isNotEmpty() == true)
+        assertTrue(anchorCalls > 0, "placement must read the anchor provider")
+        assertTrue(tooltip.style.left.endsWith("px"))
+        assertTrue(tooltip.style.top.endsWith("px"))
+        assertNotNull(tooltip.getAttribute("orientation"))
+    }
+
+    @Test
+    fun gameToolTipOkHidesTooltip() {
+        UIBuilder.gameToolTip("Hint") { GameToolTipAnchor(x = 10.0, y = 10.0, halfWidth = 5.0) }
+        assertTrue(isVisible("gameToolTip"))
+        byId("gameToolTipOk")?.click()
+        assertFalse(isVisible("gameToolTip"))
     }
 
     @Test

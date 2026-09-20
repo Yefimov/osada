@@ -11,27 +11,33 @@ import org.w3c.dom.Element
  * Extracted from the former `UIBuilder` god-object.
  */
 internal object TooltipBuilder {
-    private const val GAME_TOOLTIP_OFFSET = 55
     private const val TOOLTIP_Y_OFFSET = 15
     private const val PIN_TOOLTIP_X_OFFSET = 8
     private const val TEXT_TOOLTIP_X_OFFSET = 38
     private const val TOOLTIP_ELEMENT_GAP = 5
 
+    /**
+     * Shows the map-anchored info tooltip. [anchor] is re-evaluated whenever the panel is
+     * re-placed (viewport/orientation change), so it must compute the hex position afresh.
+     */
     fun gameToolTip(
         text: String,
-        x: Int,
-        y: Int,
+        anchor: () -> GameToolTipAnchor?,
     ) {
         val tooltip = byId("gameToolTip") ?: return
         tooltip.setAttribute("type", "game")
-        tooltip.style.top = "${y - GAME_TOOLTIP_OFFSET}px"
-        tooltip.style.left = "${x + GAME_TOOLTIP_OFFSET}px"
-        byId("gameToolTipMessage")?.innerHTML = text
-        tooltip.setAttribute("orientation", "left")
-        makeVisible("gameToolTip")
+        byId("gameToolTipMessage")?.let {
+            it.innerHTML = text
+            it.scrollTop = 0.0
+        }
+        // flex, not makeVisible()'s "inline": the message/footer column layout depends on it.
+        tooltip.style.display = "flex"
+        byId("game")?.focus()
+        GameToolTipPlacement.show(anchor)
         byId("gameToolTipOk")?.title = I18n.t("hud.tooltip.dismiss.help")
         byId("gameToolTipOk")?.onclick = { _: org.w3c.dom.events.MouseEvent ->
             makeHidden("gameToolTip")
+            GameToolTipPlacement.hide()
             js("if (typeof game !== 'undefined') game.waitUIAnimation = false")
         }
     }

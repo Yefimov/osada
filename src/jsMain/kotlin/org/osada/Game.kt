@@ -10,6 +10,7 @@ import org.osada.scenario.Campaign
 import org.osada.scenario.Scenario
 import org.osada.scenario.ScenarioTextLocalization
 import org.osada.ui.BootCurtain
+import org.osada.ui.CampaignContentLocalization
 import org.osada.ui.ScenarioLoadingCurtain
 import org.osada.ui.ScenarioMusic
 import org.osada.ui.UI
@@ -234,10 +235,11 @@ class Game {
         // drops it once the new map is drawn (or once a campaign briefing covers it).
         ScenarioLoadingCurtain.show()
         cleanup()
+        val localizedIntro = CampaignContentLocalization.intro(campaign?.file, file, intro)
         scenario = Scenario(file)
         scenario?.load {
             console.log("[OSADA] Scenario.load callback for", file)
-            onScenarioLoadFinished(intro, false)
+            onScenarioLoadFinished(localizedIntro, false)
         }
     }
 

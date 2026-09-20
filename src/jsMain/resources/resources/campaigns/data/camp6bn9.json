@@ -57,7 +57,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "The tank crews have painted over every marking, but the unfamiliar silhouettes of our T-26s still mark them as something Franco's men have never faced before. Spanish infantrymen watch the engines turn over and ask the interpreters whether armour can really decide the day before nightfall.",
+     "text": "The crews have painted out the markings. They needn't have bothered; the Spanish infantry are gathering round the T-26s as if they've never seen a tank. Shall I start the engines?",
      "next": "scene-1"
     },
     {
@@ -66,7 +66,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "The Republican captain beside the lead company has seen the tanks only in newspapers. He has put his best infantry on their running boards because nobody told him how quickly armour can leave men behind.",
+     "text": "Wait. Their captain has put his best men on the running boards. He's never worked with tanks, Pavel. Who tells him where to get off?",
      "next": "decision"
     },
     {
@@ -75,7 +75,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "This is our first live test of a force built around tanks, aircraft, and radio. We can drive hard for the western towns, or keep the arms close enough that a local success does not leave Seseña exposed. Which lesson do we intend to learn?",
+     "text": "We haven't settled that. A fast thrust could take the western towns before they recover, but the infantry may still be back at Seseña. Commander, do we risk the separation?",
      "choices": [
       {
        "id": "armoured-spearhead",
@@ -136,7 +136,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "Then speed is the protection. The leading companies will bypass resistance that cannot threaten the road and leave marked targets for the aircraft.",
+     "text": "I'll give the crews the Illescas road. They bypass anything that can't stop the column; aircraft deal with the marked positions behind us.",
      "next": "choice-a-1"
     },
     {
@@ -154,7 +154,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "Give him one: the Seseña road remains open until the infantry is through. Speed may choose our direction; it does not cancel our rear.",
+     "text": "Tell him we keep the Seseña road open until his men are through. Pavel, you're responsible for getting that order to the crews.",
      "next": "post-0"
     },
     {
@@ -163,7 +163,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "Then no arm outruns the others. The tanks will take the towns, but every captured road must remain usable by the infantry and guns behind them.",
+     "text": "Each tank company waits for its infantry and guns before the next bound. I want someone checking the road behind them, too.",
      "next": "choice-b-1"
     },
     {
@@ -172,7 +172,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "You have tied the tanks to marching pace on their first day. If the infantry stops at the first gun, I will remind you that this caution was chosen, not imposed.",
+     "text": "Marching pace. On their first day. All right, but if the infantry stops at the first gun, let me bring a tank forward to deal with it.",
      "next": "post-0"
     },
     {
@@ -181,7 +181,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "The interpreter is waiting by the lead tank. I will give him the road order; the Spanish captain can decide whether it sounds like an answer."
+     "text": "The interpreter is still waiting. I'll take him the order. Pavel, come with me; the captain needs to hear it from you."
     }
    ],
    "orders": {
@@ -266,7 +266,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "Illescas fell before the Spanish infantry expected to leave Seseña. The photographs reached Moscow first; the reports about scattered companies arrived later.",
+     "text": "Illescas fell quickly. Moscow wants the photographs; Volkov wants to know how the companies got so far apart. I've sent both.",
      "conditions": {
       "previousOutcome": [
        "briliant"
@@ -294,7 +294,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "Spain gave us no clean demonstration—only damaged tanks, exhausted infantry, and enough success for every theorist to blame the other arm.",
+     "text": "We lost tanks in Spain and wore the infantry out keeping up with them. I've been asked which arm let the other down. I'd rather speak to the crews first.",
      "conditions": {
       "previousOutcome": [
        "tactical"
@@ -308,7 +308,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "Illescas made speed look like an argument no staff college could answer. The tank officers have quoted your order ever since; today they expect another road to open for them.",
+     "text": "The tank officers keep quoting your Illescas order at me. They expect to go straight through again. Have they seen the ground here?",
      "conditions": {
       "allFlags": [
        "rac_sesena_armoured_spearhead"
@@ -322,7 +322,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "In Spain you kept the tanks tied to guns and infantry. Antonov still calls it a missed demonstration. The men who reached the final objective together call it something else.",
+     "text": "I'm keeping the Spain march tables. We did get the guns and infantry to the same place, whatever Pavel says about the time it took.",
      "conditions": {
       "allFlags": [
        "rac_sesena_balanced_advance"
@@ -345,7 +345,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "Put it away, Anna. This headquarters has orders, a border, and a list of names it is permitted to use.",
+     "text": "Put it away, Anna. Not here. We've been told which names may go into the reports.",
      "next": "scene-2"
     },
     {
@@ -354,7 +354,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "Survey stakes disappear into the mud as quickly as the engineers plant them. From the observation post the hills look close; every approach between here and their slopes is wet, exposed, and already registered by enemy guns.",
+     "text": "The engineers' stakes are sinking. I can't recommend an approach until they've walked it again, and the Japanese guns can see most of the marsh.",
      "next": "decision"
     },
     {
@@ -363,7 +363,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "The border must be restored, but a map line does not tell us how to reach it. We can mass everything against the heights, or spend precious hours preparing lanes through the marsh and coordinating the batteries.",
+     "text": "We have orders to recover the border heights. Do we attack both now, or give the engineers and batteries time to prepare? They can improve the approaches; they can't conceal the preparations.",
      "choices": [
       {
        "id": "mass-the-assault",
@@ -428,7 +428,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "The attack will not stop to reorganise on the lower slopes. Reserves follow the first success before the defenders can shift between the hills.",
+     "text": "I'll send the reserves toward whichever slope makes progress. They'll have to follow before we can sort out every report.",
      "next": "choice-a-1"
     },
     {
@@ -437,7 +437,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "Then the casualty clerks get the true unit rolls before the first wave. I will not let missing names become another neat absence in a file.",
+     "text": "Give the casualty clerks the rolls before the attack. All the names, Anna. They must be able to find a missing man afterward.",
      "next": "post-0"
     },
     {
@@ -446,7 +446,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "The first wave waits for marked lanes and observed fire. We lose surprise in minutes, but not battalions in unmarked marsh.",
+     "text": "Then the infantry waits. Tell the batteries why; I don't want a gunner mistaking movement in those lanes for the first wave.",
      "next": "choice-b-1"
     },
     {
@@ -455,7 +455,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "I will put the engineers' reports above the timetable. If a patrol finds a false lane, the battalion stops there—even if headquarters has already announced that it moved.",
+     "text": "And if a patrol finds a lane unusable, the battalion stops. Will you back me when headquarters asks why it hasn't moved?",
      "next": "post-0"
     },
     {
@@ -464,7 +464,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "The photograph goes back in the transport file. The engineers' reports and the unit rolls stay on top."
+     "text": "I'll keep the photograph in the transport file. Now, I need the engineers' latest report. Has anyone brought it in?"
     }
    ],
    "orders": {
@@ -564,7 +564,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "Both Khasan heights were retaken before the Japanese staff could reinforce the saddle. The speed impressed Moscow; the roads required to hold them did not appear in the communiqué.",
+     "text": "Both heights were retaken before the Japanese could reinforce the saddle. The engineers still need transport to keep the approaches open. Please leave that request in the report.",
      "conditions": {
       "previousOutcome": [
        "briliant"
@@ -578,7 +578,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "The border posts stand again at Khasan. So do the recovery tractors, because holding a height and reaching it remain separate problems.",
+     "text": "The Khasan posts are occupied again. Recovery tractors are still working below them; some of the approach roads won't carry the supplies we need.",
      "conditions": {
       "previousOutcome": [
        "victory"
@@ -592,7 +592,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "Khasan ended with our flag on the heights and too many battalions below them. The official map is tidy. The transport returns are not.",
+     "text": "We have the Khasan heights, but the battalions are badly reduced. I need the transport returns before I can tell you which ones are ready to move.",
      "conditions": {
       "previousOutcome": [
        "tactical"
@@ -606,7 +606,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "At Khasan you kept the assault moving until both heights were under pressure. The report praised resolve and buried the transport losses in an appendix. I did not.",
+     "text": "The Khasan report praises the assault and puts the transport losses in an appendix. I have asked for both to be read before they request the same attack here.",
      "conditions": {
       "allFlags": [
        "rac_khasan_mass_the_assault"
@@ -620,7 +620,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "The engineers owned the timetable at Khasan and brought the guns through the mud. On this steppe their lanes are hundreds of kilometres long, but the principle has supporters now.",
+     "text": "Your engineers got the guns through at Khasan. I used to complain about waiting for them. I'd like their advice on these steppe tracks before we move.",
      "conditions": {
       "allFlags": [
        "rac_khasan_prepare_the_ground"
@@ -694,7 +694,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "They keep their tractors, bridging stores, and company organisation. Give them a road and they will tell us whether the map has lied about it.",
+     "text": "I'll speak to their company commanders. They should inspect our routes while they still have their tractors and bridging stores together.",
      "conditions": {
       "completedActions": [
        "bn9s01.xml.both_heights_held"
@@ -708,7 +708,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "No new box appears on the strength return. The value is that every division now plans its road before it announces its arrival time.",
+     "text": "Then each division gets men who know how to prepare a road. Send their assignments out before the next movement order.",
      "conditions": {
       "completedActions": [
        "bn9s01.xml.both_heights_held"
@@ -722,7 +722,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "A windstorm lifts the steppe into the command tent. On the map the river is a blue pencil stroke; outside, fuel trucks, Mongolian cavalry, tank columns, and field kitchens are all trying to use the same tracks.",
+     "text": "Hold that corner down, will you? The dust gets under everything. Our fuel trucks are sharing these tracks with cavalry, kitchens and the tank columns. I need a clear route to the river.",
      "next": "scene-1"
     },
     {
@@ -731,7 +731,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "After Khasan, Moscow asked why courage had arrived before shells and ambulances. If we go deep here, the answer had better travel in the same column as the tanks.",
+     "text": "After Khasan, Moscow asked me why the shells and ambulances were late. What do I tell them this time, Pavel?",
      "next": "decision"
     },
     {
@@ -740,7 +740,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "A local counterattack can throw them off Baintsagan. A deeper blow can also cut the crossing and trap the force west of the river—but only if our columns keep moving after the first contact.",
+     "text": "First we have to choose how far we're going. We can drive past Baintsagan and cut the crossings, or clear the bridgehead and secure the river. The deeper attack will need those fuel trucks.",
      "choices": [
       {
        "id": "deep-counterstroke",
@@ -816,7 +816,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "Cut the crossings, but write the fuel limit beside the arrow. I will stop the exploitation myself if the tankers begin reporting hope instead of kilometres.",
+     "text": "How much fuel, Pavel? Put a limit on the advance before you leave. If the tankers can't reach you, I need to know where you'll stop.",
      "next": "post-0"
     },
     {
@@ -834,7 +834,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "You are making success halt at the river. Give me a release condition now, or every cautious headquarters will discover one more height that must be secured first.",
+     "text": "I'll wait while you bring the guns up. But tell me what releases the mobile group. I don't want to ask every headquarters separately.",
      "next": "post-0"
     },
     {
@@ -843,7 +843,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "Fuel limits, crossing times, and the release condition go on one sheet. If Antonov loses it in the dust, he stops."
+     "text": "Pavel, bring your route sheet here before you go. The supply officers need to agree the crossing times with you."
     }
    ],
    "orders": {
@@ -928,7 +928,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "The Baintsagan bridgehead collapsed before its two thrusts could support one another. Moscow calls it proof of a modern operation, which guarantees that somebody will copy only the arrows.",
+     "text": "The Baintsagan attack broke before the Japanese thrusts could support each other. Moscow wants the operation circulated as an example. I've asked that the supply arrangements go with it.",
      "conditions": {
       "previousOutcome": [
        "briliant"
@@ -942,7 +942,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "Khalkhin Gol restored the river line and left the Japanese attack broken. It also left us a report thick enough to conceal every disagreement that produced the result.",
+     "text": "The river line is secure and the Japanese attack is broken. The staff report isn't finished; the officers still disagree about why it worked.",
      "conditions": {
       "previousOutcome": [
        "victory"
@@ -956,7 +956,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "We held the Mongolian line, but the steppe consumed enough vehicles to make the victory look smaller from the repair park than from headquarters.",
+     "text": "We held the line. There are more damaged vehicles in the repair park than I expected, though. That needs to be settled before another move.",
      "conditions": {
       "previousOutcome": [
        "tactical"
@@ -970,7 +970,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "At Baintsagan you sent the mobile force beyond the visible objective. The staff now treats deep exploitation as your signature; every ambitious lieutenant wants to imitate the part that appears on the map.",
+     "text": "The young officers keep asking about your drive beyond Baintsagan. I show them the return route as well. They usually stop asking then.",
      "conditions": {
       "allFlags": [
        "rac_khalkhin_gol_deep_counterstroke"
@@ -984,7 +984,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "You rebuilt the river line before pursuing at Khalkhin Gol. It was less dramatic than the arrows Antonov proposed, and it left us a force still answering orders at the end.",
+     "text": "I'm using your Khalkhin Gol order for the river positions: bring up the guns and supply before moving on. Pavel knows it already.",
      "conditions": {
       "allFlags": [
        "rac_khalkhin_gol_secure_the_river"
@@ -998,7 +998,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "The printed order calls this a march to secure the frontier. The road says otherwise: Polish soldiers, local militias, refugees, and Soviet columns are all moving through the same villages under different assumptions about who has authority.",
+     "text": "This order calls it a frontier march. Our columns are meeting Polish soldiers, militias and refugees in the same villages. Before they move again, they need to know whose instructions apply there.",
      "next": "scene-1"
     },
     {
@@ -1007,7 +1007,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "The German liaison map ends at the same northern line as ours. I folded that overlay before the refugees entered. The line is easier to share than the road beneath it.",
+     "text": "I've folded the German liaison overlay underneath ours. It gives the same northern limit, but it tells us nothing about the refugees on the approach roads.",
      "next": "decision"
     },
     {
@@ -1096,7 +1096,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "I can assign roads, exits, and halting lines. I cannot mark every armed man in a refugee column from this table. Detached groups will make those decisions without us.",
+     "text": "I'll give the detached groups roads and halting points. But once they're among the refugee columns, they will be making decisions we can't supervise. Are we ready for that?",
      "next": "post-0"
     },
     {
@@ -1114,7 +1114,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "Confirmed orders will restrain detached battalions. They will not make this march innocent. I want the arrests, shootings, and released prisoners recorded under the units that ordered them.",
+     "text": "Have the arrests and shootings recorded under the unit that ordered them. Released prisoners as well. I want to be able to find the officer responsible.",
      "next": "post-0"
     },
     {
@@ -1123,7 +1123,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "Record what the map cannot: civilians on the roads, prisoners taken, and every order that prevented avoidable bloodshed."
+     "text": "Send those reporting instructions to every detachment, including the ones already on the road. I don't want to hear later that nobody received them."
     }
    ],
    "orders": {
@@ -1208,7 +1208,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "Grodno and the northern roads were occupied before organised columns could escape. The speed shortened the fighting and multiplied the questions nobody wanted asked on the road.",
+     "text": "The northern roads closed before organised columns could escape. Now I have complaints from the villages and units already being transferred away. I need their accounts before they leave.",
      "conditions": {
       "previousOutcome": [
        "briliant"
@@ -1222,7 +1222,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "The advance through Grodno reached the frontier. It did not make soldiers, militias, and refugees fit into the categories printed in our orders.",
+     "text": "We've reached the frontier. The reports still don't distinguish reliably between soldiers, militia and refugees. I can't close the enquiries on that basis.",
      "conditions": {
       "previousOutcome": [
        "victory"
@@ -1236,7 +1236,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "We took Grodno by the narrow margin headquarters required. The border is closed; the arguments about what happened before it closed are not.",
+     "text": "Grodno took nearly all the time we had. The roads are closed now. There are still disputes about the fighting that I need the unit commanders to answer.",
      "conditions": {
       "previousOutcome": [
        "tactical"
@@ -1264,7 +1264,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "The detached group that sealed Lithuania proved you will accept distance from headquarters. In these forests distance becomes silence after the first bend.",
+     "text": "At Grodno you let the detached group go beyond direct control. Here we may lose contact after the first bend. They'll need instructions for when the radio fails.",
      "conditions": {
       "allFlags": [
        "rac_grodno_seal_the_border"
@@ -1278,7 +1278,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "At Grodno you kept the advance on confirmed orders. Here confirmation arrives slowly enough to freeze, so control will have to travel with the column.",
+     "text": "You required confirmed orders at Grodno. We can't always get confirmation through these forests. Put an officer with the column who can decide when contact goes.",
      "conditions": {
       "allFlags": [
        "rac_grodno_control_the_advance"
@@ -1292,7 +1292,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "Engines freeze faster than the mechanics can warm them. The road is a narrow white corridor through trees; abandoned lorries already mark where a column stopped long enough for the forest to close around it.",
+     "text": "We can't keep the engines warm during these halts. Look at the lorries already abandoned on the road. Send the mechanics forward, or the relief column will need rescuing too.",
      "next": "scene-1"
     },
     {
@@ -1301,7 +1301,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "The 163rd no longer calls as a division. One battalion asks for bread, another for antitank shells, a third only repeats its map square. Every hour turns an organised formation into separate voices.",
+     "text": "Listen to the 163rd's calls. One battalion wants bread, another antitank shells. This one just keeps repeating its map square. I can't get divisional headquarters to answer for them.",
      "next": "decision"
     },
     {
@@ -1395,7 +1395,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "Each group receives a compass bearing, a rendezvous, and authority to turn back before isolation becomes heroism. The road moves only after its flanks are reported clear.",
+     "text": "Give each group a bearing and a rendezvous. If it can't reach the meeting point, it comes back. Make sure the officers understand they may turn back.",
      "next": "choice-b-1"
     },
     {
@@ -1404,7 +1404,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "I will walk the first rendezvous with them. If the groups miss it, nobody at this table will call their absence freedom of movement.",
+     "text": "I'll walk the first rendezvous with them. Someone ought to know whether it can actually be found in this weather.",
      "next": "post-0"
     },
     {
@@ -1413,7 +1413,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "Move the wireless post to the first heated dugout. A frozen operator will turn any plan back into those separate voices."
+     "text": "Can we put the wireless post in a heated dugout? The operator can barely work his hands. I need him listening for those missing battalions."
     }
    ],
    "orders": {
@@ -1513,7 +1513,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "Five formations reached the far end of the Raate road. The wrecks between them explain why nobody uses the word relief without qualification.",
+     "text": "Five formations reached the far end of the Raate road. Start with them when you make the new strength return; recovery is still checking the wrecks behind the column.",
      "conditions": {
       "previousOutcome": [
        "victory"
@@ -1527,7 +1527,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "Enough of the column survived Raate to satisfy the order. The men who counted frozen vehicles instead of units use a harsher measure.",
+     "text": "Enough of the column came through to meet the order. Several units need vehicles before we can use them again. I've sent their returns to supply.",
      "conditions": {
       "previousOutcome": [
        "tactical"
@@ -1555,7 +1555,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "You drove one concentrated column on the Raate road. The surviving guns are here because weight broke roadblocks; the empty places are here because the enemy always knew where that weight was.",
+     "text": "We kept the guns together at Raate, and they broke the roadblocks. They also drew fire at every halt. I'd like to hear from the surviving battery commanders before we repeat it.",
      "conditions": {
       "allFlags": [
        "rac_raate_road_drive_the_column"
@@ -1643,7 +1643,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "They know what cold does before a thermometer reports it. I will keep them away from any officer who thinks skis make infantry weightless.",
+     "text": "I'll take the mountain battalion. Let their officers inspect our winter equipment; we've had enough of finding out what's wrong after we set off.",
      "conditions": {
       "completedActions": [
        "bn9s04.xml.core_intact"
@@ -1657,7 +1657,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "The battalion disappears into the replacement columns. Its habits will be harder to list and more widely useful.",
+     "text": "Assign the veterans to the replacement companies. Give them time to instruct the men before those companies move.",
      "conditions": {
       "completedActions": [
        "bn9s04.xml.core_intact"
@@ -1671,7 +1671,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "A telephone clerk writes two times on the same message: the hour the guns must open and the hour diplomats may make further firing unnecessary. Neither staff will wait for the other.",
+     "text": "These messages give different deadlines. The batteries have an opening hour; the diplomats may stop the fighting. Which change do I pass to the gun crews first?",
      "next": "scene-1"
     },
     {
@@ -1680,7 +1680,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "Yesterday we blamed the forest for dividing the column. Here the ice gives us every direction at once, and the clock is what can divide us.",
+     "text": "Both. Don't make the battery commanders guess. And find out which crossing can be ready by the attack hour.",
      "next": "decision"
     },
     {
@@ -1763,7 +1763,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "Then put the ceasefire hour in every battery order. A final kilometre is not permission for a commander to invent a final war.",
+     "text": "I accept the attack. I want confirmation from every battery that it can receive a ceasefire order while firing.",
      "next": "post-0"
     },
     {
@@ -1772,7 +1772,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "No unit crosses without fire support and a return route. If diplomacy ends the battle first, we will at least possess a force fit for the peace that follows.",
+     "text": "Then no unit crosses without support and a way back. If the ceasefire comes while we're preparing, we stop there. I'll answer for the delay.",
      "next": "choice-b-1"
     },
     {
@@ -1781,7 +1781,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "The diplomats may stop the battle while our first wave still waits. I will mark that cost beside every lane the engineers save us.",
+     "text": "It may come before the first wave moves. Tell headquarters that now, while there's still time for them to object.",
      "next": "post-0"
     },
     {
@@ -1790,7 +1790,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "The ceasefire hour goes into every battery order. If it changes, the telephone clerks wake us before the guns."
+     "text": "The telephone clerks must wake us if the deadline changes. Keep someone by the batteries' line throughout the crossing."
     }
    ],
    "orders": {
@@ -1875,7 +1875,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "The Vyborg objectives were secured while the ceasefire messages were still being recopied. For once the military and political clocks struck in our favour.",
+     "text": "The objectives were secured before the ceasefire. Some batteries were still receiving copies when their forward observers reported the last positions taken.",
      "conditions": {
       "previousOutcome": [
        "briliant"
@@ -1903,7 +1903,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "The ceasefire found our bridgeheads barely established. The map changed in time; many units were still moving when the reason to move vanished.",
+     "text": "The ceasefire caught the bridgeheads barely established. Units were still crossing after it arrived; it took time to get the halt to all of them.",
      "conditions": {
       "previousOutcome": [
        "tactical"
@@ -1917,7 +1917,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "At Vyborg you chose ground before the diplomats could stop the guns. The deadline rewarded you. This morning there is no negotiator waiting to make a lost road irrelevant.",
+     "text": "You chose to attack before the Vyborg ceasefire, and we made the deadline. I can't offer you a deadline for this retreat. We have to decide with the reports we have.",
      "conditions": {
       "allFlags": [
        "rac_vyborg_bay_press_the_deadline"
@@ -1931,7 +1931,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "You made every Vyborg crossing report guns and a return route before moving. That discipline preserved the force. Here the routes disappear faster than we can certify them.",
+     "text": "At Vyborg you made the crossings report a return route. Ask them again here, but keep checking. A road reported open this morning may already be gone.",
      "conditions": {
       "allFlags": [
        "rac_vyborg_bay_prepare_the_crossing"
@@ -1945,7 +1945,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "The wireless net is a wall of callsigns speaking over one another. Some headquarters no longer answer. Others issue orders from positions the enemy passed yesterday. Only the roads east still provide a fact everyone can verify.",
+     "text": "Please, one set at a time. I'm getting orders from headquarters whose positions were overrun yesterday. These roads east are the only routes I've been able to confirm.",
      "next": "scene-1"
     },
     {
@@ -2063,7 +2063,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "The corridor gets a closing hour now, before sympathy turns it into a last stand. We leave with whoever reaches it in time and we do not move that hour twice.",
+     "text": "Set a closing hour for the corridor. Tell the rear guard now. I don't want to change it while they're under attack and the last stragglers are still coming.",
      "next": "choice-b-1"
     },
     {
@@ -2081,7 +2081,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "Survival is the mission. There will be time later to decide who failed; today we save the means to fight again."
+     "text": "I'll take the movement order to the rear guard. Anna, keep trying those headquarters. We need to know who can still reach the road."
     }
    ],
    "orders": {
@@ -2166,7 +2166,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "The core escaped east of Minsk as an army, not a procession of fugitives. That distinction now amounts to most of the combat power in this camp.",
+     "text": "The core got out of Minsk still under its officers. I can assign those formations work today; the others need time to find their men.",
      "conditions": {
       "previousOutcome": [
        "briliant"
@@ -2180,7 +2180,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "Enough formations crossed the Minsk roads before they closed. Every headquarters stamp says withdrawal; every face in the column says defeat.",
+     "text": "Enough formations reached the eastern roads before they closed. The staff has listed the move as a withdrawal. Don't expect the men to use that word yet.",
      "conditions": {
       "previousOutcome": [
        "victory"
@@ -2222,7 +2222,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "You ordered the core east before Minsk closed. Some call that why this command still exists. Others remember the units that reached our abandoned corridor ten minutes late.",
+     "text": "We still have a command because you sent the core east. I'm also receiving enquiries from units that arrived after our corridor closed. I haven't answered them all.",
      "conditions": {
       "allFlags": [
        "rac_minsk_pocket_save_the_core"
@@ -2250,7 +2250,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "Replacement tanks arrive with factory paint still tacky. Beside them stand crews who escaped Minsk without their machines. Neither group has trained together, but the attack timetable treats them as a division.",
+     "text": "The paint on these tanks is still tacky. I've put the crews who escaped Minsk beside them, but they haven't trained together. Does the attack order allow any time for that?",
      "next": "scene-1"
     },
     {
@@ -2338,7 +2338,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "The new crews will believe the breakthrough proves they are veterans. Put the survivors at the head of every route conference and nowhere near the speeches afterward.",
+     "text": "Let the survivors lead the route briefings. The new crews need to hear what happened at Minsk from men who were there.",
      "next": "post-0"
     },
     {
@@ -2356,7 +2356,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "Rotation keeps the formation neat and lets the salient empty by schedule. Give me one mobile group released the moment the first German road opens.",
+     "text": "I'll rotate the crews. But give me a mobile group for the moment a German withdrawal road opens, or we'll spend the day relieving each other.",
      "next": "post-0"
     },
     {
@@ -2365,7 +2365,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "Put a Minsk survivor at every route table. The new crews have machines; let the men who lost theirs tell them where a road ends."
+     "text": "Have the crews been introduced to their officers? Do that before the route briefing. Some of them still don't know which company they're in."
     }
    ],
    "orders": {
@@ -2478,7 +2478,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "The salient is gone, but much of its garrison escaped. We have a victory for the newspapers and a warning for the next headquarters.",
+     "text": "The salient is gone, but much of the German garrison got away. Tell the men we took Yelnya. Don't tell them we destroyed everyone who held it.",
      "conditions": {
       "previousOutcome": [
        "tactical"
@@ -2506,7 +2506,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "At Yelnya you drove through the rupture before the salient emptied. The new crews came out believing audacity had rebuilt the army. They have not yet learned how rare a clean opening is.",
+     "text": "The new crews talk about the Yelnya breakthrough as if we can always do it that way. I'll speak to them before they start chasing a retreat in this weather.",
      "conditions": {
       "allFlags": [
        "rac_yelnya_break_the_salient"
@@ -2520,7 +2520,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "The rotation at Yelnya kept the rebuilt battalions intact. Moscow now asks those same men to pursue in winter; preservation has purchased us a force, not an exemption from risk.",
+     "text": "The rotation at Yelnya kept battalions available for this attack. They still need rest. I can't promise them any before the pursuit.",
      "conditions": {
       "allFlags": [
        "rac_yelnya_rotate_the_echelons"
@@ -2534,7 +2534,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "Fresh ski tracks cross the map table where the paper was carried in from outside. Intelligence reports enemy exhaustion, then lists intact guns at every road junction. Both statements are true.",
+     "text": "I've brought the patrol reports. The Germans are exhausted, yes, but their guns are still covering the junctions. Which of those reports has headquarters been reading?",
      "next": "scene-1"
     },
     {
@@ -2543,7 +2543,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "At Yelnya the new crews learned that the Germans can retreat. That lesson is useful. Believing every retreat has become a rout would be fatal.",
+     "text": "Both, I hope. The crews saw Germans retreat at Yelnya. Some now think they'll keep retreating if we drive at them. I'll deal with that before we move.",
      "next": "decision"
     },
     {
@@ -2642,7 +2642,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "The railway becomes our supply line, not merely a line crossed on the map. Guns and fuel move first enough that Klin is attacked by an army, not scattered pursuers.",
+     "text": "Clear the railway approaches, then bring up fuel and guns. Klin waits until they can reach the assault units.",
      "next": "choice-b-1"
     },
     {
@@ -2651,7 +2651,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "The Germans are already moving. If our perfect supply line reaches an empty Klin, I want that delay entered under command—not weather.",
+     "text": "And if Klin is empty when we arrive? I'll obey, but put the delay in our order. The weather won't be the only reason we were late.",
      "next": "post-0"
     },
     {
@@ -2660,7 +2660,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "Fuel reports every two hours. If a detachment misses one, the guns stop at the railway, whatever Klin looks like."
+     "text": "Send the order to the railway detachments. I need their commanders on the line before they leave."
     }
    ],
    "orders": {
@@ -2745,7 +2745,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "Klin fell before the German retreat settled behind the railway. Success has made offensive arrows respectable again at headquarters.",
+     "text": "Klin fell before the Germans could settle behind the railway. Headquarters wants a more ambitious offensive now. I've asked for its reserve estimates.",
      "conditions": {
       "previousOutcome": [
        "briliant"
@@ -2773,7 +2773,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "We crossed the railway and took Klin at the limit of the force. Headquarters sees momentum; the quartermasters see what it cost to keep moving.",
+     "text": "We took Klin with very little left in the columns. The quartermasters need to replace that fuel and ammunition before headquarters counts us ready again.",
      "conditions": {
       "previousOutcome": [
        "tactical"
@@ -2787,7 +2787,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "You crossed the railway before the German retreat settled at Moscow. The forward detachments still trust your instinct for the unfinished moment.",
+     "text": "The forward detachments remember crossing the railway on your order. They'll follow you into another opening. I'd prefer to know what's behind this one first.",
      "conditions": {
       "allFlags": [
        "rac_moscow_pursue_across_the_railway"
@@ -2801,7 +2801,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "You turned the railway into a supply line before entering Klin. That patience kept the guns with us. Headquarters has now drawn a plan that assumes patience belongs only to the enemy.",
+     "text": "The railway supply kept our guns up at Klin. This plan leaves less time for them. I'll ask for the movement table before I agree to it.",
      "conditions": {
       "allFlags": [
        "rac_moscow_secure_the_flanks"
@@ -2815,7 +2815,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "The situation map shows arrows meeting west of Kharkov. The intelligence annex shows German reserves whose locations are uncertain and road capacity that is not. The arrows are drawn in thicker ink.",
+     "text": "Please look at the annex before you approve those arrows. We haven't located all the German reserves. We do know the roads won't carry everything the timetable sends down them.",
      "next": "scene-1"
     },
     {
@@ -2913,7 +2913,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "The timetable stands. Headquarters will not accept a smaller operation because its intelligence makes us uncomfortable.",
+     "text": "Then I will confirm that we're advancing on schedule. Anna, keep the reconnaissance reports coming even if they contradict the progress report I've just sent.",
      "next": "choice-a-1"
     },
     {
@@ -2949,7 +2949,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "I will send the reserve estimate a fourth time. This copy carries both your signatures."
+     "text": "I'm sending the estimate again. Please initial the copy you're using. I need a record of who has actually read it."
     }
    ],
    "orders": {
@@ -3035,7 +3035,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "The northern pincer met every assigned target at Kharkov. The southern disaster still swallowed the operation, proving that a flawless part cannot rescue a false whole.",
+     "text": "We met the northern pincer targets. The southern pincer still collapsed. I need the withdrawal reports before I can tell you which of our formations are available.",
      "conditions": {
       "previousOutcome": [
        "briliant"
@@ -3049,7 +3049,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "Our formations fought out of the Kharkov operation in order. The map arrows did not meet; the German reserves did.",
+     "text": "Our formations came out in order. The pincers never met, and the German reserves cut across the routes between them. Their movements match the warnings we sent.",
      "conditions": {
       "previousOutcome": [
        "victory"
@@ -3077,7 +3077,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "The Kharkov offensive collapsed before our group completed its assigned losses. The enemy reserves from my annex are now moving toward Voronezh, and the formations sent to stop them are still escaping the last map.",
+     "text": "Our group failed to complete its attack before the Kharkov offensive collapsed. German reserves are now moving toward Voronezh. Some of the units ordered to stop them are still trying to get out.",
      "conditions": {
       "previousOutcome": [
        "lose"
@@ -3091,7 +3091,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "At Kharkov you accepted the timetable after I placed the reserve estimates on your desk. I have brought no new warning today—only the unit numbers that survived our disbelief.",
+     "text": "I put those reserve estimates on your desk before you approved the Kharkov timetable. Here are the surviving unit numbers. I need you to read this list too.",
      "conditions": {
       "allFlags": [
        "rac_kharkov_1942_commit_to_the_pincer"
@@ -3105,7 +3105,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "The reserve you held at Kharkov could not rescue the whole offensive, but it brought organised formations out of the salient. Some of the men digging outside are alive because you believed an uncertain report.",
+     "text": "The Kharkov reserve brought formations out with their officers still in command. Thank you for backing the report. I wasn't certain of every position in it.",
      "conditions": {
       "allFlags": [
        "rac_kharkov_1942_hold_a_mobile_reserve"
@@ -3205,7 +3205,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "No ceremonial new unit, then. The experienced drivers go where replacement tables currently show only a number.",
+     "text": "I'll put the experienced drivers into the mobile companies. They can show the replacements how to get a damaged vehicle off the road.",
      "conditions": {
       "allFlags": [
        "rac_kharkov_1942_hold_a_mobile_reserve"
@@ -3222,7 +3222,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "Men from Kharkov dig beside units that have never heard a shot. The trenches are shallow because the order to hold this line arrived after the enemy columns were already moving.",
+     "text": "The Kharkov men are digging beside replacements who haven't heard a shot. We gave them this line after the German columns started moving. How long before they reach it, Anna?",
      "next": "scene-1"
     },
     {
@@ -3231,7 +3231,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "The formations reported north of Kharkov did not vanish when our offensive did. Their columns are on these roads now. Intelligence has changed from a warning into the enemy's order of march.",
+     "text": "The reserves from my Kharkov annex are on these roads. I can give you their last reported positions; I can't promise how long your men have to dig.",
      "next": "decision"
     },
     {
@@ -3325,7 +3325,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "Every strongpoint stores ammunition before the battle and marks a fallback route before it is needed. Holding does not mean being surprised in place.",
+     "text": "Ammunition into the strongpoints first. Mark a fallback road for each before we finish the defences.",
      "next": "choice-b-1"
     },
     {
@@ -3334,7 +3334,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "Then my tanks become concrete that can still burn. Mark the fallback roads now; I will not dig crews into positions their machines cannot leave.",
+     "text": "If we're digging the tanks in, leave room to get them out. I'll inspect those fallback roads myself.",
      "next": "post-0"
     },
     {
@@ -3343,7 +3343,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "Mark the reserve conditions and the fallback roads in the same ink. I want neither invented after the first penetration."
+     "text": "Bring the sector commanders in. They need to agree who releases the reserve and which roads stay clear."
     }
    ],
    "orders": {
@@ -3442,7 +3442,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "The line at Voronezh bent until the reserves arrived. The ground lost is marked in pencil; the time gained is what kept the front intact.",
+     "text": "We held long enough for the Voronezh reserves to arrive. The crews are asking which lost positions we're expected to recover. I've told them to refit first.",
      "conditions": {
       "previousOutcome": [
        "victory"
@@ -3456,7 +3456,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "We bought the ten turns at Voronezh with nearly every reserve we possessed. The men now assigned to raid Tatsinskaya are the part we did not spend.",
+     "text": "We used nearly every reserve keeping the Voronezh line in action. These are the formations left for Tatsinskaya. I'd like their vehicle returns before I promise a raid.",
      "conditions": {
       "previousOutcome": [
        "tactical"
@@ -3470,7 +3470,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "The Voronezh line broke before the reserves were ready. Headquarters is answering a failed defence with a raid deep into the enemy rear; nobody has called that contradiction by its name.",
+     "text": "The Voronezh line broke before the reserves were ready. Now we're being sent deep into the German rear. I need to know which crews and vehicles we can actually take.",
      "conditions": {
       "previousOutcome": [
        "lose"
@@ -3484,7 +3484,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "The mobile reserve at Voronezh taught the crews to strike a spearhead without being swallowed by it. They believe the same reflex can bring them home from an airfield far behind the front.",
+     "text": "The Voronezh crews have practised hitting a spearhead and pulling away. They're asking whether that means they're ready for Tatsinskaya. I told them to look at the distance back.",
      "conditions": {
       "allFlags": [
        "rac_voronezh_mobile_defence"
@@ -3498,7 +3498,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "The strongpoints at Voronezh bought every required hour, but none had to move after the battle began. Tatsinskaya offers no position that can be held until relief arrives.",
+     "text": "Our strongpoints at Voronezh could wait for help. The raiders won't be able to. Every unit needs a return route before it goes in.",
      "conditions": {
       "allFlags": [
        "rac_voronezh_anchor_the_line"
@@ -3512,7 +3512,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "Captured road signs are stacked beside the map. None points back toward friendly lines. The airfield photographs show rows of transport aircraft; the latest report shows enemy armour turning toward the same roads we need for withdrawal.",
+     "text": "Here are the airfield photographs. The transport rows are still full. Now look at the latest armour report: they're turning toward the roads we'd have to use coming back.",
      "next": "scene-1"
     },
     {
@@ -3521,7 +3521,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "A breakthrough joins an army behind it. A raid cuts that thread by design. Every kilometre toward the aircraft is also a kilometre the corps may have to fight twice.",
+     "text": "Who holds those roads while the raiders are at the airfield? We won't have an army following them through the gap.",
      "next": "decision"
     },
     {
@@ -3530,7 +3530,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "We can devote every mobile group to destroying the airlift, or assign a rear guard and open the return route before the airfield is fully wrecked. A raid succeeds only if its effect outlives its raiders.",
+     "text": "I can send every mobile group against the aircraft, or detach a rear guard to keep the return route open. With fewer men on the airfield, some transports may get away. Which do you want?",
      "choices": [
       {
        "id": "wreck-the-airlift",
@@ -3596,7 +3596,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "The airfield is the centre of gravity. Demolition groups receive priority, and the column turns only after the transport rows are burning.",
+     "text": "Then the demolition groups go first. I'll keep reporting the transport rows so you can judge when to turn the column.",
      "next": "choice-a-1"
     },
     {
@@ -3605,7 +3605,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "Write the turning hour before Antonov reaches the first transport. If the demolition teams miss it, the rear guard leaves without waiting for his pride.",
+     "text": "Pavel, agree a turning hour before you leave. I need it in the orders, including what happens if the demolition parties are late.",
      "next": "post-0"
     },
     {
@@ -3623,7 +3623,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "The road may save the corps and leave aircraft flying into Stalingrad. I want the surviving transport rows counted, not hidden inside the word successful.",
+     "text": "I'll count the aircraft still leaving. You may have to bring the corps home knowing some of those transports are flying into Stalingrad.",
      "next": "post-0"
     },
     {
@@ -3632,7 +3632,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "The turning hour goes in Antonov's map case before the engines start. If he opens it only at the airfield, we have already lost the argument."
+     "text": "Bring me the rear-guard order before the engines start. I want to check that its commander has received the same times as Pavel."
     }
    ],
    "orders": {
@@ -3746,7 +3746,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "Eight formations escaped Tatsinskaya. Everything behind the eighth became the price of teaching the airlift that its rear was not safe.",
+     "text": "Eight formations got out. Recovery is checking what can still be brought back from behind them. Don't assign those vehicles to the next operation yet.",
      "conditions": {
       "previousOutcome": [
        "tactical"
@@ -3760,7 +3760,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "At Tatsinskaya you ordered the aircraft destroyed before the column turned. The crews proved what a raid can accomplish; the survivors also know exactly how late that order sent them home.",
+     "text": "We finished the transport rows before turning, as you ordered. Ask the returning crews how late we left it. They won't all give you the answer I would.",
      "conditions": {
       "allFlags": [
        "rac_tatsinskaya_wreck_the_airlift"
@@ -3774,7 +3774,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "The road you guarded at Tatsinskaya saved the raiding force as an organisation. Some aircraft escaped while we secured it, and Antonov has counted every one in arguments since.",
+     "text": "The guarded road brought the corps back together. Pavel is still asking how many aircraft escaped while we held it. Anna has the figures if you want them.",
      "conditions": {
       "allFlags": [
        "rac_tatsinskaya_guard_the_return"
@@ -3854,7 +3854,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "The title will carry expectations as well as honour. They know what it means to attack beyond help and still return under their own colours.",
+     "text": "I'll put the Guards designation through. Let their own officers tell them before headquarters sends anyone to make a speech.",
      "conditions": {
       "completedActions": [
        "bn9s11.xml.core_losses_light"
@@ -3868,7 +3868,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "The raid will survive as trained crews rather than a badge. Every mobile regiment receives men who have already found a road home from an encirclement.",
+     "text": "Send the crews to the mobile regiments. Keep their accounts of the raid with the training papers; the replacement officers need to read them.",
      "conditions": {
       "completedActions": [
        "bn9s11.xml.core_losses_light"
@@ -3882,7 +3882,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "The staff table still carries the red arrows of last month's advance. Sokolova places blue counters across them one by one until the map tells a different story: exposed columns, tired infantry, and an enemy concentrating faster than expected.",
+     "text": "Anna, leave those counters where you've put them. We planned this advance before the enemy started concentrating there. Pavel, how many of the leading units can still withdraw under their own power?",
      "next": "scene-1"
     },
     {
@@ -3891,7 +3891,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "Tatsinskaya taught the crews to live at the end of a fuel column. The winter advance taught too many headquarters to pretend there was no end at all.",
+     "text": "They've been driving since the winter advance began. I can get you fuel figures, but some crews haven't seen a bowser for too long. Give them a road out while we still have one.",
      "next": "decision"
     },
     {
@@ -3980,7 +3980,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "The crews hear Kharkov and remember the road out last May. Give them a withdrawal hour now, before resolve becomes another order nobody can complete.",
+     "text": "The crews remember the way out last May. They'll ask when they may withdraw. I'd like to give them an answer before they're under fire.",
      "next": "post-0"
     },
     {
@@ -3989,7 +3989,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "Fallback lines are issued in writing, with times and road priorities. We withdraw formations, not survivors.",
+     "text": "Put the fallback times in writing. I will keep copies. Nobody should face an accusation of retreating without orders because a telephone record has gone missing.",
      "next": "choice-b-1"
     },
     {
@@ -4007,7 +4007,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "Kharkov has become a symbol twice over. Symbols do not protect flanks; staffs must."
+     "text": "I'll send the new positions to reconnaissance. Tell me as soon as a formation moves; I can't keep patrols on a flank that has already withdrawn."
     }
    ],
    "orders": {
@@ -4120,7 +4120,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "We escaped a second encirclement at Kharkov by the width of a road. The reserve at Prokhorovka contains men who know exactly what that width means.",
+     "text": "We got out through a very narrow corridor at Kharkov. Some of those formations are now in the Prokhorovka reserve. They want to see the withdrawal routes before the attack.",
      "conditions": {
       "previousOutcome": [
        "tactical"
@@ -4148,7 +4148,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "You held the Kharkov approaches until the order had meaning only on the casualty list. The men do not question your resolve. They question whether headquarters knows when resolve has completed its task.",
+     "text": "The Kharkov men know you meant to hold the approaches. They want to know what would have made you stop. I'd rather you answered than left it to me.",
      "conditions": {
       "allFlags": [
        "rac_kharkov_1943_hold_the_approaches"
@@ -4162,7 +4162,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "Your withdrawal from Kharkov preserved formations some called defeated. Those formations now wait in the reserve, where survival has become operational weight.",
+     "text": "The formations you withdrew from Kharkov are in reserve here. Some officers called them beaten. I can still give them an order and expect a response.",
      "conditions": {
       "allFlags": [
        "rac_kharkov_1943_elastic_defence"
@@ -4176,7 +4176,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "The reserve's tanks wait in assembly areas already churned into dust. Crews can hear the battle but see only runners bringing revised map references. Every hour promises better coordination and a narrower defensive margin.",
+     "text": "The crews can hear the fighting from the assembly areas. Runners keep changing their start positions. If we're waiting for something, tell them what it is.",
      "next": "scene-1"
     },
     {
@@ -4185,7 +4185,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "We have fought for Kharkov three times and paid each time for confusing possession with control. This reserve must restore the defence, not merely add another arrow to the map.",
+     "text": "A usable axis. We've paid enough around Kharkov for sending tanks where we couldn't support them. Anna, how much can you confirm before they have to go?",
      "next": "decision"
     },
     {
@@ -4275,7 +4275,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "The first radio report may be wrong. The second echelon changes axis only on two confirmations, even if Antonov can already hear the guns.",
+     "text": "Get a second confirmation before you change axis, Pavel. A wrong first report could turn the whole second echelon onto a blocked road.",
      "next": "post-0"
     },
     {
@@ -4293,7 +4293,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "While the axes agree, the men in the belt spend the time for us. I accept the start hour. I do not accept calling those hours preparation without their names beside it.",
+     "text": "I'll wait until that hour. Keep the defensive belt on the radio, though. If the men there can't hold, I want to hear it while we can still help.",
      "next": "post-0"
     },
     {
@@ -4302,7 +4302,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "Two confirmations for a changed axis, one fixed start hour, and the defensive belt's reports copied to both. Now wake the reserve."
+     "text": "Send the agreed start positions to the reserve. Have the runners wait for the commanders to read them this time."
     }
    ],
    "orders": {
@@ -4398,7 +4398,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "The final belt at Kursk held and the counterattack recovered the objectives. For the first time in this war, the next great offensive will be ours to choose.",
+     "text": "The final Kursk belt held and the counterattack recovered the positions. Headquarters is preparing for an offensive now. I can finally take that news to the reserve.",
      "conditions": {
       "previousOutcome": [
        "briliant"
@@ -4426,7 +4426,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "The Kursk position survived by committing almost everything prepared behind it. We kept the initiative, but it arrived carrying a long casualty list.",
+     "text": "We held at Kursk, but nearly every reserve had to go in. Give me the casualty returns before I address the units. They will expect me to have read them.",
      "conditions": {
       "previousOutcome": [
        "tactical"
@@ -4440,7 +4440,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "At Prokhorovka you committed on the map we had. The reserve stopped being neat the moment it moved, but it moved while there was still a defensive belt to restore.",
+     "text": "You sent us in before we had all the reports at Prokhorovka. We got moving in time. I still owe the second echelon an explanation of the changes we made on the way.",
      "conditions": {
       "allFlags": [
        "rac_kursk_counterattack_now"
@@ -4454,7 +4454,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "You waited at Prokhorovka for axes and artillery to agree. The blow arrived as one operation; every hour of coordination was paid for by the men already in the belt.",
+     "text": "Waiting gave us a coordinated attack at Prokhorovka. The troops already defending paid for the delay. I'm including their reports with ours.",
      "conditions": {
       "allFlags": [
        "rac_kursk_coordinate_the_blow"
@@ -4535,7 +4535,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "It joins as a formation with its own officers and memory of the defensive belt. Do not spend that cohesion merely because the title looks impressive on an attack order.",
+     "text": "Keep its officers with it. I can assign a formed detachment work that a replacement draft isn't ready for.",
      "conditions": {
       "completedActions": [
        "bn9s13.xml.prokhorovka_held",
@@ -4550,7 +4550,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "Their formation number disappears, but their gunnery routines do not. The next attack will contain them in more places than one battalion could reach.",
+     "text": "Put the Guards cadres with the gunnery instructors. I want the crews to practise with them before the next attack.",
      "conditions": {
       "completedActions": [
        "bn9s13.xml.prokhorovka_held",
@@ -4565,7 +4565,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "Civilian reports arrive before reconnaissance patrols: which bridges still stand, which roads are mined, which villages contain German rear guards. For the first time the map is filling with names the staff recognises as home.",
+     "text": "These villagers reached us before our patrols: bridges still standing, mined roads, rear guards. Some staff officers recognise the names. Please don't mark a route confirmed just because it leads home.",
      "next": "scene-1"
     },
     {
@@ -4583,7 +4583,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "The map offers its usual clean choice: one rupture toward Berdychiv, or a broad advance that reaches more villages together. To the people under those arrows, 'later' is not a staff word.",
+     "text": "We could break through toward Berdychiv, or advance on a broader front and reach more villages together. Anna, I want the quick route. I also want to know who we'll leave waiting beside it.",
      "choices": [
       {
        "id": "rupture-and-exploit",
@@ -4670,7 +4670,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "Civilian guides open the corridor. Give them receipts, escorts, and a road home; they are not another reconnaissance asset to be spent without a name.",
+     "text": "Give the civilian guides escorts and a way home. Record their names and what we requisition. They should know where to come if we fail to return it.",
      "next": "post-0"
     },
     {
@@ -4679,7 +4679,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "A broad front protects the liberated districts and gives the enemy more roads for withdrawal. I will report both results, not only the villages on tomorrow's map.",
+     "text": "I'll report the villages cleared and the German columns withdrawing between them. A broad advance will let more of those columns get away.",
      "next": "choice-b-1"
     },
     {
@@ -4688,7 +4688,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "And I will stop the first headquarters that paints a town red before its patrol reaches the square. My sister can wait one more day for an honest map.",
+     "text": "And don't mark a town liberated before a patrol has reached it. My sister can wait one more day for news I can trust.",
      "next": "post-0"
     },
     {
@@ -4697,7 +4697,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "Sokolova, leave my sister's row unmarked. Send the same receipts, escorts, and patrol reports down every road."
+     "text": "Leave my sister's house off the map, Anna. You have enough routes to check. If there's news, bring it to me afterward."
     }
    ],
    "orders": {
@@ -4810,7 +4810,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "The objectives around Zhytomyr were taken, but the breakthrough narrowed before it became a pursuit. We liberated ground faster than we restored its roads.",
+     "text": "The Zhytomyr objectives are taken, but the breakthrough didn't develop into a pursuit. Several roads need work before we can bring the following columns through.",
      "conditions": {
       "previousOutcome": [
        "tactical"
@@ -4824,7 +4824,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "The narrow rupture at Berdychiv carried the mobile group farther than the broad-front advocates thought support could follow. The coastal plan assumes we can repeat that reach beside the sea.",
+     "text": "The Berdychiv group went farther than the staff expected. The coastal plan asks us to do it again. I'd like to see its supply route before I agree.",
      "conditions": {
       "allFlags": [
        "rac_zhitomir_rupture_and_exploit"
@@ -4838,7 +4838,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "The broad advance beyond Zhytomyr left no liberated district hanging from one road. Here the evacuation clock may punish the same care.",
+     "text": "The broad advance kept the Zhytomyr districts connected. Here that will take time the evacuation may not leave us. We need the harbour reports.",
      "conditions": {
       "allFlags": [
        "rac_zhitomir_advance_on_a_broad_front"
@@ -4852,7 +4852,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "Through binoculars the harbour is a forest of masts, smoke, and demolition fires. The road to Sevastopol is defended; the roads away from it are crowded. Every hour changes which target matters most.",
+     "text": "Have a look through the glasses. Smoke along the harbour, masts behind it. There are more vehicles on the roads out than the roads in. If we're going round the city, we should move soon.",
      "next": "scene-1"
     },
     {
@@ -4942,7 +4942,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "The coastal groups receive the fastest vehicles and no permission to become involved in the city fight. Their objectives are roads, piers, and time.",
+     "text": "Give the coastal groups the fast vehicles. I'll keep them out of the city fighting; their task is the roads and piers.",
      "next": "choice-a-1"
     },
     {
@@ -4951,7 +4951,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "The city will hear that mobile groups passed its outskirts while the occupation continued. Seal the coast quickly, Commander. Political explanations do not shorten a night under shellfire.",
+     "text": "People in the city will see our tanks pass while German troops are still there. How soon can the assault follow? I need an answer I can pass on.",
      "next": "post-0"
     },
     {
@@ -4960,7 +4960,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "The city defence is the hinge. Break it with every gun available, then turn the released formations toward the coast before evacuation becomes escape.",
+     "text": "Then all available guns go against the city defences. Have the mobile formations ready to turn for the coast when the assault releases them.",
      "next": "choice-b-1"
     },
     {
@@ -4969,7 +4969,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "Then I will keep the embarkation reports on this table while the city guns fire. Every ship that leaves is part of the price, not an intelligence footnote.",
+     "text": "I'll keep reporting the ships leaving while the city attack goes in. We need to know what gets away, even if there's nothing we can spare to stop it.",
      "next": "post-0"
     },
     {
@@ -4978,7 +4978,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "Give the harbour reports to the city staff and the city reports to the coastal groups. No one gets to say the other road was invisible."
+     "text": "Have the city and coastal staffs exchange their reports. If one needs help, I want the other to know before it is too late to change anything."
     }
    ],
    "orders": {
@@ -5097,7 +5097,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "The city is ours, but the Black Sea accepted more enemy columns than the order allowed us to ignore. Victory and escape shared the same harbour.",
+     "text": "Sevastopol is ours. More enemy troops got out by sea than we intended. I need the embarkation reports before I can say which formations escaped.",
      "conditions": {
       "previousOutcome": [
        "tactical"
@@ -5125,7 +5125,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "The coastal groups you sent around Sevastopol reached roads the defenders thought were still behind them. The staff now expects every encirclement to close with the same precision.",
+     "text": "Your coastal groups got behind the Sevastopol defenders. Headquarters expects us to close another ring here. I still need confirmation of the neighbouring armies' positions.",
      "conditions": {
       "allFlags": [
        "rac_crimea_seal_the_coast"
@@ -5139,7 +5139,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "You broke Sevastopol before dividing the force. The city was liberated, but ships left while the final batteries were still firing. Today headquarters wants the army, not only its cities.",
+     "text": "We took Sevastopol before splitting the force. Ships left during the assault. Headquarters wants the troops trapped this time; it has asked me what we'll do differently.",
      "conditions": {
       "allFlags": [
        "rac_crimea_take_sevastopol_first"
@@ -5212,7 +5212,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "The workshops go to the columns. They will not appear in the order of battle, but the next breakthrough will know whether they arrived.",
+     "text": "Allocate the recovered transport to the supply columns. I'll check which vehicles the workshops can make serviceable before the attack.",
      "conditions": {
       "completedActions": [
        "bn9s15.xml.sevastopol_taken_early"
@@ -5226,7 +5226,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "They keep the Sevastopol name and their own officers. In Romania it will remind everyone that fortified cities can become points of departure.",
+     "text": "Keep their officers with them. They can take the Sevastopol name into the new assignment; I'll explain to the replacements why it matters to the men.",
      "conditions": {
       "completedActions": [
        "bn9s15.xml.sevastopol_taken_early"
@@ -5240,7 +5240,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "The deception maps still show quiet sectors and routine traffic. The real table is almost empty: breakthrough artillery has been hidden until the last hours, and mobile formations wait beyond sight of enemy reconnaissance.",
+     "text": "Use this map, not the deception copy. The breakthrough batteries are concealed and the mobile formations are still out of sight. Keep that disposition sheet in this room.",
      "next": "scene-1"
     },
     {
@@ -5249,7 +5249,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "They have given the rebuilt formation the name Sixth Army. Names survive defeats more easily than men. If the ring closes, that name will carry Stalingrad into every communiqué.",
+     "text": "It's the Sixth Army again. Rebuilt under the same name. If we trap it, headquarters will want Stalingrad mentioned. Let's wait until the roads are actually closed.",
      "next": "decision"
     },
     {
@@ -5345,7 +5345,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "Then another army owns the western crossings. Put liaison officers on that road now; a ring closed on our map can still open at somebody else's seam.",
+     "text": "Then we depend on another army for the western crossings. Send liaison officers there now. I need their commander to confirm what he can hold.",
      "next": "post-0"
     },
     {
@@ -5354,7 +5354,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "The crossings are tomorrow's encirclement wall. We leave the pocket to the following armies and make retreat beyond it impossible.",
+     "text": "The mobile group takes the western crossings. Tell the following armies which exits we're closing; they'll have to compress the pocket without us.",
      "next": "choice-b-1"
     },
     {
@@ -5363,7 +5363,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "The crossings secure next week. This week the Sixth Army is still inside the pocket. I will keep its western columns on the board until somebody reports prisoners, not intentions.",
+     "text": "I'll keep tracking the columns inside the pocket. Taking the crossings won't tell us how many troops have slipped between the armies before they get there.",
      "next": "post-0"
     },
     {
@@ -5372,7 +5372,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "Liaison officers take both maps to the western road. Nobody closes a pocket with a pencil line alone."
+     "text": "The liaison officers need to leave now. Give them both dispositions and keep a set on their frequency."
     }
    ],
    "orders": {
@@ -5457,7 +5457,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "The ring at Iași closed before the Sixth Army understood which roads had become walls. Romania's political position changed almost as quickly as the front.",
+     "text": "The ring closed at Iași before the Sixth Army could get clear. We also need fresh instructions for Romania; the political reports are changing as quickly as the military ones.",
      "conditions": {
       "previousOutcome": [
        "briliant"
@@ -5485,7 +5485,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "The pocket closed, though its western seams leaked men and vehicles. The military result is decisive; the political consequences are moving faster still.",
+     "text": "The main force is trapped, but men and vehicles escaped through the western gaps. I'm waiting for the liaison accounts before I report the size of the pocket.",
      "conditions": {
       "previousOutcome": [
        "tactical"
@@ -5499,7 +5499,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "At Iași you turned inward and helped close the ring. The result made coordination look inevitable after the fact; three armies remember how many liaison calls it actually required.",
+     "text": "Closing the Iași ring took repeated calls to the neighbouring armies. Keep those liaison officers with us. I don't want to start teaching a new team here.",
      "conditions": {
       "allFlags": [
        "rac_jassy_kishinev_close_the_pocket"
@@ -5513,7 +5513,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "The crossings seized beyond Iași kept the pursuit moving after the pocket closed behind us. Some infantry commanders still say the mobile group left them to finish another man's battle.",
+     "text": "The crossings we took beyond Iași kept the pursuit moving. The infantry officers still complain we left them the pocket. I suppose we did. They'll want help next time.",
      "conditions": {
       "allFlags": [
        "rac_jassy_kishinev_seize_the_crossings"
@@ -5527,7 +5527,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "Three liaison teams stand around one map and use three sets of place names. The Partisan officer knows tracks absent from every printed sheet; the Bulgarian staff knows when its artillery can move; our timetable knows only the hour.",
+     "text": "Before we use this map, agree the place names. The Partisan officer has tracks our sheets don't show, and the Bulgarians have their own artillery timings. Let them finish before we set an hour.",
      "next": "scene-1"
     },
     {
@@ -5536,7 +5536,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "One command would simplify my fire plan. It would also ask men who fought here for three years to follow roads chosen by officers who arrived this week.",
+     "text": "I would rather have one fire plan. But I can't choose the Partisans' roads from this sheet. Ask their officer to show me the approach he'd use.",
      "next": "decision"
     },
     {
@@ -5643,7 +5643,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "A single axis is easier for us and asks our allies to become flank guards in their own capital. I will carry the order. I will not call their resentment confusion.",
+     "text": "I'll carry the order. But the Partisans will ask why they're guarding our flanks in their own capital. Don't leave me to pretend they misunderstood it.",
      "next": "post-0"
     },
     {
@@ -5652,7 +5652,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "Belgrade is a capital and a living city, not a coloured objective. Coordination must reduce both delay and destruction."
+     "text": "Bring the Partisan and Bulgarian liaison officers in before the orders go out. They need to question the plan here, while we can still answer."
     }
    ],
    "orders": {
@@ -5751,7 +5751,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "The allied sectors joined inside Belgrade and the German corridor collapsed. Coordination survived accents, rival maps, and headquarters pride.",
+     "text": "The sectors joined inside Belgrade and the German corridor is broken. Ask the liaison teams which arrangements worked; we'll need those again.",
      "conditions": {
       "previousOutcome": [
        "victory"
@@ -5765,7 +5765,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "Belgrade is free, but gaps between the allied sectors let part of the enemy escape. Nobody disputes the victory; everyone disputes the gap.",
+     "text": "Belgrade is free, but part of the German force escaped between our sectors. The three commands disagree about which gap mattered. Get their reports together before we move on.",
      "conditions": {
       "previousOutcome": [
        "tactical"
@@ -5779,7 +5779,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "In Belgrade you trusted allied sectors and local roads. The city remembers who entered each district; the operations map remembers only that the lines met.",
+     "text": "The Partisan officers remember that you let them choose their own routes into Belgrade. Speak to them before they leave; they've been willing to tell us what our maps missed.",
      "conditions": {
       "allFlags": [
        "rac_belgrade_shared_sector_plan"
@@ -5793,7 +5793,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "The single axis into Belgrade made the artillery controllable and the traffic intolerable. It succeeded, but our allies noticed whose timetable displaced theirs.",
+     "text": "One axis made the Belgrade fire plan manageable. The traffic was another matter. Our allies waited on roads we'd allocated to ourselves. I need to hear their complaints too.",
      "conditions": {
       "allFlags": [
        "rac_belgrade_single_command_axis"
@@ -5807,7 +5807,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "Recovery crews tow damaged tanks in both directions. Some are ours from the defence, some German machines abandoned in mud, and all of them block the roads the counterattack needs at dawn.",
+     "text": "There are recovery crews towing tanks both ways on the attack road. Ours and captured German ones. Can I clear a lane, or does every workshop get to stop the counterattack?",
      "next": "scene-1"
     },
     {
@@ -5816,7 +5816,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "At Seseña I counted kilometres. Today I know which recovery tractor belongs to which crew, and three of those crews are still asleep under their tanks.",
+     "text": "I know which tractors belong to the crews sleeping under those tanks. Give them a little warning before you wake them. In Spain I wouldn't have thought to ask.",
      "next": "scene-2"
     },
     {
@@ -5825,7 +5825,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "Prisoners insist this was the offensive that would restore the situation in Hungary. Their fuel bowsers are empty and their recovery units are still east of the lake. Disorder is real, but it has an expiry time.",
+     "text": "The prisoners say they were supposed to recover the Hungarian position. Their bowsers are empty and the recovery units are still east of the lake. They'll start getting out as soon as they can tow.",
      "next": "decision"
     },
     {
@@ -5921,7 +5921,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "The disorder expires at dawn. So does the fuel in some of our leading vehicles. I will mark both times and let no communiqué erase the second.",
+     "text": "I'll report which German units are recovering. Pavel, give me our fuel limits as well. I need to know how long the leading vehicles can keep contact.",
      "next": "post-0"
     },
     {
@@ -5948,7 +5948,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "The recovery tractors take the centre lane; fuel returns come at dusk and before the start. Whatever hour we choose, no communiqué moves it afterward."
+     "text": "Clear the lane for recovery and bring me fuel returns at dusk. Pavel, tell the crew commanders when they can expect the bowsers."
     }
    ],
    "orders": {
@@ -6067,7 +6067,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "We won at Balaton after the enemy had begun disengaging. The battlefield is ours; much of the armour that matters is already on the roads west.",
+     "text": "We won at Balaton after much of the German armour had disengaged. Reconnaissance is finding it on the roads toward Vienna. The next line may be stronger than we'd hoped.",
      "conditions": {
       "previousOutcome": [
        "tactical"
@@ -6183,7 +6183,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "Then the train carries replacements instead of a new unit. The strength return will look less exciting and the army behind it more complete.",
+     "text": "Use the train for replacements and stores. Send me the revised strengths before the formations start for Vienna.",
      "conditions": {
       "completedActions": [
        "bn9s18.xml.counterattack_finished_early"
@@ -6197,7 +6197,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "Interrogation reports agree on one fact: every road west is crowded. They disagree on which columns are combat units, refugees, forced labourers, or headquarters. Air reconnaissance sees movement but not intent.",
+     "text": "The interrogation reports agree the western roads are crowded. They don't agree who is on them. Air reconnaissance can see the columns but can't reliably separate troops from refugees or forced labourers.",
      "next": "decision"
     },
     {
@@ -6293,7 +6293,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "Leave marked lanes before the first tank closes a road. Refugees and forced labourers do not become military traffic because our timetable cannot distinguish them.",
+     "text": "Then mark the civilian lanes before the tanks close the roads. Give the crews time to identify a column. They'll be under pressure to keep moving.",
      "next": "post-0"
     },
     {
@@ -6311,7 +6311,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "Then some German columns will escape among the traffic. I will keep their last known positions on the board, so an orderly road does not become an orderly report of victory.",
+     "text": "Some German columns will escape while we clear the junctions. I'll keep their positions on the board; the units following us may still have to fight them.",
      "next": "post-0"
     },
     {
@@ -6320,7 +6320,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "Put the traffic categories on cards large enough for a turret crew to read. If we cannot tell them apart from here, we do not leave the decision to a trigger finger."
+     "text": "Brief the road guards on those different columns. If they can't identify one, they must call for an officer before opening fire."
     }
    ],
    "orders": {
@@ -6405,7 +6405,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "The roads east of Vienna were closed before the retreat formed another belt. Ten days later the city fell, and Europe finally stopped supplying new place names for our maps.",
+     "text": "The Vienna approaches closed before the Germans could form another belt. The city fell ten days later. The men thought that meant they were nearly home. We need to tell them about the eastward orders.",
      "conditions": {
       "previousOutcome": [
        "briliant"
@@ -6447,7 +6447,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "The pursuit failed to prevent a new defence before Vienna. Other armies finished the city battle; this group crossed the continent carrying the knowledge that Europe did not end with its victory.",
+     "text": "Our pursuit failed to stop a new defence before Vienna. Other armies finished the city battle. The group is going east now; I'd like the men to hear the reassignment from you.",
      "conditions": {
       "previousOutcome": [
        "lose"
@@ -6461,7 +6461,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "Before Vienna you closed the western exits but ordered lanes left for civilians. Officers who thought restraint would slow the pursuit now cite your traffic plan as if it were theirs.",
+     "text": "Officers who objected to your civilian lanes before Vienna are now using the traffic plan themselves. I haven't asked them to explain the change. Let them keep using it.",
      "conditions": {
       "allFlags": [
        "rac_vienna_cut_the_retreat"
@@ -6475,7 +6475,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "You secured the roads toward Vienna junction by junction. The guns arrived, the city fell ten days later, and Antonov has spent those ten days calculating how much farther the first tanks might have gone.",
+     "text": "The guns reached Vienna on the roads you cleared. Pavel still thinks the tanks could have gone farther ahead. He's had the whole railway journey to explain it to me.",
      "conditions": {
       "allFlags": [
        "rac_vienna_secure_the_road"
@@ -6489,7 +6489,7 @@
      "role": "Intelligence Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-     "text": "European place names have been erased from the board and replaced by rivers, railways, and distances most of the staff last studied before 1941. Veteran formations recognise the procedure; none recognises the country ahead.",
+     "text": "I've replaced the European sheets. Check the scale before you use these river distances. Some of us haven't worked with this ground since before 1941.",
      "next": "scene-1"
     },
     {
@@ -6498,7 +6498,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "The tanks came from Europe by rail, followed by workshops, pontoons, and men who thought Prague was the last station of their war. Now the bridges must carry all of it across rivers absent from their old maps.",
+     "text": "The tanks are off the trains; workshops and pontoons are following. Some crews thought Prague was their last stop. I need bridge capacities before I ask them to drive any farther.",
      "next": "scene-2"
     },
     {
@@ -6507,7 +6507,7 @@
      "role": "Political Officer — Fictional Composite",
      "side": "right",
      "portrait": "resources/campaigns/portraits/nikolai-orlov.png",
-     "text": "Volkov has put the Seseña report beside the river map. The paper is yellow, the argument is not. Even Antonov has stopped pretending he remembers only the tanks.",
+     "text": "Sergei, why have you brought the Seseña report? Pavel has been asking about bridge capacities all morning. Let him have some credit.",
      "next": "decision"
     },
     {
@@ -6603,7 +6603,7 @@
      "role": "Armoured Forces Officer — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-     "text": "This is the wager I wanted in Spain. Now I want fuel reports, bridge classes, and a turning hour with it. Nine years have made speed more demanding, not less.",
+     "text": "I'd have taken this order without a question in Spain. Now I want the bridge classes and fuel returns before I go. Can the following columns keep up?",
      "next": "choice-a-2"
     },
     {
@@ -6621,7 +6621,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "The bridgeheads are the operation's foundation. The pursuit begins when roads, guns, and ambulances can cross the same river as the tanks.",
+     "text": "Then we prepare the bridgeheads first. Report when roads, guns and ambulances can cross. That's what releases the pursuit.",
      "next": "choice-b-1"
     },
     {
@@ -6639,7 +6639,7 @@
      "role": "Chief of Operations — Fictional Composite",
      "side": "left",
      "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-     "text": "From Madrid to Khabarovsk, the recurring question has never been speed or strength alone. It has been whether command can turn either one into an operation that survives its first success."
+     "text": "Pavel, take the crossing order to the crews. Anna, check the first reports with me. Nikolai, we'll talk about the Spain file when they are across."
     }
    ],
    "orders": {
@@ -6677,7 +6677,7 @@
     "role": "Intelligence Officer — Fictional Composite",
     "side": "right",
     "portrait": "resources/campaigns/portraits/anna-sokolova.png",
-    "text": "The river line broke before the Kwantung Army could make a front of it. When Japan capitulated, our leading columns were still moving west. You chose the wager Antonov first offered in Spain—and this time the roads, radios, bridges, and guns all kept pace with the tanks.",
+    "text": "The leading columns were still moving west when the capitulation came. This time I could reach them by radio and tell you where the guns and fuel were. I've put those reports with the Spain file. Pavel may complain that I've spoiled his best tank story.",
     "conditions": {
      "allFlags": [
       "rac_manchuria_race_beyond_the_rivers"
@@ -6695,7 +6695,7 @@
     "role": "Armoured Forces Officer — Fictional Composite",
     "side": "left",
     "portrait": "resources/campaigns/portraits/pavel-antonov.png",
-    "text": "The bridgeheads carried guns, fuel, and ambulances before they carried the pursuit. When Japan capitulated, every column beyond the rivers still belonged to the same operation. Volkov will say he taught you that. I will say it took him nine years to make caution move this fast.",
+    "text": "The last guns and ambulances crossed before we began the pursuit. I kept expecting Sergei to find a reason to hold us longer. He didn't. When the capitulation came, I could still call every column. I'll concede that much to him.",
     "conditions": {
      "allFlags": [
       "rac_manchuria_build_the_bridgeheads"
@@ -6711,7 +6711,7 @@
     "role": "Chief of Operations — Fictional Composite",
     "side": "left",
     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-    "text": "The leading columns crossed, ran beyond their guns, and stopped as separate detachments. Japan's capitulation ended the wider war, but not our accounting. After nine years, the first lesson returned unchanged: distance gained is not yet an operation.",
+    "text": "The leading columns got beyond their guns and stopped. Japan has capitulated, so they won't have to renew the attack. We still have to bring the detachments back together. Pavel and I approved those movement times; put both names on the report.",
     "conditions": {
      "allFlags": [
       "rac_manchuria_race_beyond_the_rivers"
@@ -6727,7 +6727,7 @@
     "role": "Chief of Operations — Fictional Composite",
     "side": "left",
     "portrait": "resources/campaigns/portraits/sergei-volkov.png",
-    "text": "The crossings were orderly and the force remained intact, but the border defence did not break before the war ended. We preserved the instrument and failed to make it decisive. Caution can prevent a defeat; it cannot, by itself, produce a victory.",
+    "text": "The crossings were prepared and the force is intact. We didn't break the border defence before the war ended. I kept asking for one more confirmation. Commander, I need to account for how much time that cost us.",
     "conditions": {
      "allFlags": [
       "rac_manchuria_build_the_bridgeheads"

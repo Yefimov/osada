@@ -17,7 +17,18 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 CAMPAIGN_ROOT = ROOT / "src" / "jsMain" / "resources" / "resources" / "campaigns" / "data"
 I18N_ROOT = ROOT / "src" / "jsMain" / "resources" / "i18n"
-STORY_CAMPAIGNS = ("novemberrevolution.json", "rhu.json", "camp6bn4.json")
+# Every campaign whose authored dialogue is routed through BriefingLocalization.  Keep the
+# operation-text flag explicit: camp6bn4/camp6bn9 catalogs also own the translated scenario title
+# and campaign order, while the older story campaigns and Forward choice scenes do not.
+STORY_CAMPAIGNS = {
+    "novemberrevolution.json": None,
+    "rhu.json": None,
+    "camp6bn4.json": "scenario",
+    # This imported campaign deliberately displays the dated heading from the authored order,
+    # not the shorter XML map name.
+    "camp6bn9.json": "intro",
+    "forward.json": None,
+}
 SCENARIO_ROOT = ROOT / "src" / "jsMain" / "resources" / "resources" / "scenarios" / "data"
 
 
@@ -25,7 +36,10 @@ def _text(value: Any) -> str:
     return value.strip() if isinstance(value, str) else ""
 
 
-def extract_scenario(entry: dict[str, Any], include_operation_text: bool = False) -> OrderedDict[str, str]:
+def extract_scenario(
+    entry: dict[str, Any],
+    operation_title_source: str | None = None,
+) -> OrderedDict[str, str]:
     """Return the translatable dialogue surface, keyed only by stable authored identities."""
     result: OrderedDict[str, str] = OrderedDict()
     def add(key: str, value: Any) -> None:
@@ -35,12 +49,16 @@ def extract_scenario(entry: dict[str, Any], include_operation_text: bool = False
                 raise ValueError(f"duplicate extracted key {key}")
             result[key] = text
 
-    if include_operation_text:
+    if operation_title_source:
         scenario = _text(entry.get("scenario"))
-        scenario_path = SCENARIO_ROOT / scenario
-        if scenario_path.is_file():
-            add("scenario.title", ET.parse(scenario_path).getroot().get("name"))
-        add("intro.text", entry.get("intro"))
+        intro = _text(entry.get("intro"))
+        if operation_title_source == "intro":
+            add("scenario.title", intro.split("<br>", 1)[0])
+        else:
+            scenario_path = SCENARIO_ROOT / scenario
+            if scenario_path.is_file():
+                add("scenario.title", ET.parse(scenario_path).getroot().get("name"))
+        add("intro.text", intro)
 
     briefing = entry.get("briefing")
     if not isinstance(briefing, dict):
@@ -88,12 +106,12 @@ def extract_scenario(entry: dict[str, Any], include_operation_text: bool = False
 
 def expected_catalogs() -> dict[Path, OrderedDict[str, str]]:
     catalogs: dict[Path, OrderedDict[str, str]] = {}
-    for campaign_file in STORY_CAMPAIGNS:
+    for campaign_file, operation_title_source in STORY_CAMPAIGNS.items():
         campaign_stem = Path(campaign_file).stem
         entries = json.loads((CAMPAIGN_ROOT / campaign_file).read_text(encoding="utf-8"))
         for entry in entries:
             scenario = _text(entry.get("scenario"))
-            catalog = extract_scenario(entry, include_operation_text=campaign_file == "camp6bn4.json")
+            catalog = extract_scenario(entry, operation_title_source=operation_title_source)
             if not scenario or not catalog:
                 continue
             relative = Path("briefings") / campaign_stem / f"{Path(scenario).stem}.json"

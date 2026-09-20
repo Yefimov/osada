@@ -21,7 +21,7 @@ internal fun interface BriefingTextResolver {
 }
 
 internal object BriefingLocalization {
-    private val localizedCampaigns = setOf("novemberrevolution", "rhu", "camp6bn4", "camp6bn9")
+    private val localizedCampaigns = setOf("novemberrevolution", "rhu", "camp6bn4", "camp6bn9", "forward")
     private val sourceText = BriefingTextResolver { _, fallback -> fallback }
 
     fun sourceTextResolver(): BriefingTextResolver = sourceText
