@@ -204,7 +204,7 @@ class OgEngineeringRulesTest : OgRulesTestHarness() {
      */
     @Test
     fun cuttingARailwayLineStopsTrainsUntilItIsRelaid() {
-        ruleset(RuleKey.BUILD_AND_REPAIR to 1)
+        ruleset(RuleKey.BUILD_AND_REPAIR to 1, RuleKey.RAIL_DEMOLITION to 1)
         val map = world(prestige = 100)
         GameHolder.instance = holderFor(map)
         val hex = map.map!![2][2]
@@ -213,6 +213,7 @@ class OgEngineeringRulesTest : OgRulesTestHarness() {
         val sapper = place(map, sapperEqid, 2, 2, side = 0)
 
         assertTrue(EngineeringWork.BLOW_RAIL in Engineering.availableWork(sapper), "there is track to cut")
+        assertFalse(hex.blownRail != 0, "and nothing has been cut yet")
         map.beginEngineering(sapper, EngineeringWork.BLOW_RAIL)
         assertEquals(RoadType.NONE.value, hex.rail, "the line is cut, so nothing reads track here")
         assertEquals(PARTIAL_ROAD_MASK, hex.blownRail, "and what it was is remembered")
@@ -228,11 +229,31 @@ class OgEngineeringRulesTest : OgRulesTestHarness() {
         assertFalse(hex.station, "but Repair relays track, not buildings")
     }
 
+    /** The rail job is OSADA's own rule, so with it off the chip is not offered at all and a
+     *  demolished bridge leaves its rails standing — Open General's behaviour. */
+    @Test
+    fun withTheRailRuleOffTrackCannotBeTouched() {
+        ruleset(RuleKey.BUILD_AND_REPAIR to 1)
+        val map = world(prestige = 100)
+        GameHolder.instance = holderFor(map)
+        val hex = map.map!![2][2]
+        hex.terrain = TerrainType.RIVER.value
+        hex.road = PARTIAL_ROAD_MASK
+        hex.rail = PARTIAL_ROAD_MASK
+        val sapper = place(map, sapperEqid, 2, 2, side = 0)
+
+        assertFalse(EngineeringWork.BLOW_RAIL in Engineering.availableWork(sapper))
+
+        map.beginEngineering(sapper, EngineeringWork.BLOW_BRIDGE)
+        assertEquals(RoadType.NONE.value, hex.road, "the bridge still falls")
+        assertEquals(PARTIAL_ROAD_MASK, hex.rail, "but the rails on it are map data")
+    }
+
     /** A crossing that carries both is ONE bridge: leaving the rails would let an armoured train
      *  roll over a river the charge had just dropped. */
     @Test
     fun blowingARailBridgeTakesTheRailsWithIt() {
-        ruleset(RuleKey.BUILD_AND_REPAIR to 1)
+        ruleset(RuleKey.BUILD_AND_REPAIR to 1, RuleKey.RAIL_DEMOLITION to 1)
         val map = world(prestige = 100)
         GameHolder.instance = holderFor(map)
         val hex = map.map!![2][2]

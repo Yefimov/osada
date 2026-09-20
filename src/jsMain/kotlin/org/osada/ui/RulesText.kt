@@ -44,6 +44,9 @@ internal object RulesText {
             RuleKey.INITIATIVE_MODEL,
             RuleKey.SPOTTING_MEMORY,
             RuleKey.GROUND_AUTO_SUPPLY,
+            // Three values, and "off"/"on" could not name the middle one: the difference between
+            // OG's blind fire and aimed interdiction is the whole point of the third value.
+            RuleKey.BARRAGE,
         )
 
     /**

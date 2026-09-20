@@ -36,25 +36,38 @@ internal object CommandExecutor {
         return runNonUnit(id, ui)
     }
 
+    /**
+     * Commands that ARE an on-screen HUD button, keyed by that button's element id. Held as a table
+     * rather than as one `when` branch each so the dispatch stays one line per control -- the list
+     * only grows (Artillery range was the entry that pushed the `when` past detekt's complexity
+     * budget), and every entry goes through the same `mainMenuButton` call the click path uses.
+     */
+    private val buttonCommands =
+        mapOf(
+            CommandCatalog.AIR_MODE to "air",
+            CommandCatalog.HEX_GRID to "hex",
+            CommandCatalog.ARTILLERY_RANGE to "arty",
+            CommandCatalog.STRATEGIC_MAP to "zoom",
+            CommandCatalog.EQUIPMENT to "buy",
+            CommandCatalog.INSPECTOR to "inspectunit",
+        )
+
     private fun runNonUnit(
         id: String,
         ui: UI,
-    ): Boolean =
-        when (id) {
+    ): Boolean {
+        buttonCommands[id]?.let { button -> return consume { ui.mainMenuButton(button) } }
+        return when (id) {
             CommandCatalog.NEXT_UNIT -> consume { ui.cycleReadyUnit(1) }
             CommandCatalog.PREV_UNIT -> consume { ui.cycleReadyUnit(-1) }
-            CommandCatalog.AIR_MODE -> consume { ui.mainMenuButton("air") }
-            CommandCatalog.HEX_GRID -> consume { ui.mainMenuButton("hex") }
-            CommandCatalog.STRATEGIC_MAP -> consume { ui.mainMenuButton("zoom") }
             CommandCatalog.MAP_LABELS -> consume { toggleMapLabels(ui) }
             CommandCatalog.ZOOM_IN -> consume { MapZoom.stepIn() }
             CommandCatalog.ZOOM_OUT -> consume { MapZoom.stepOut() }
-            CommandCatalog.EQUIPMENT -> consume { ui.mainMenuButton("buy") }
-            CommandCatalog.INSPECTOR -> consume { ui.mainMenuButton("inspectunit") }
             CommandCatalog.RESERVES -> consume { toggleReserves(ui) }
             CommandCatalog.TURN_REPORT -> consume { UICombatLog.toggleCombatLog(fromStatusBar = true) }
             else -> pan(id)
         }
+    }
 
     private fun pan(id: String): Boolean {
         val game = byId("game")?.asDynamic() ?: return false

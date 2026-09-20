@@ -367,29 +367,15 @@ internal object Engineering {
                 // The rails on the same span go with it. A crossing carrying both is ONE bridge,
                 // and leaving the rail mask behind let an armoured train roll over a river the
                 // charge had just dropped -- the whole reason this hex is worth blowing.
-                cutRail(hex)
+                RailDemolition.cut(hex)
             }
 
-            EngineeringWork.BLOW_RAIL -> cutRail(hex)
+            EngineeringWork.BLOW_RAIL -> RailDemolition.cut(hex)
 
             EngineeringWork.RAZE -> razeFeature(hex)
 
             EngineeringWork.REPAIR -> repair(hex, owner)
         }
-    }
-
-    /**
-     * Cuts the railway under [hex], recording the mask so Repair can relay exactly that track.
-     *
-     * The station goes with the rails and is NOT recorded: Repair puts track back, and the depot
-     * buildings are what Build Station raises. A hex with no track is left untouched, so blowing a
-     * road bridge over an unrailed river records nothing.
-     */
-    private fun cutRail(hex: Hex) {
-        if (hex.rail <= RoadType.NONE.value) return
-        hex.blownRail = hex.rail
-        hex.rail = RoadType.NONE.value
-        hex.station = false
     }
 
     /**
@@ -486,10 +472,7 @@ internal object Engineering {
         // The rails come back with whatever else this repair puts right, rather than needing a
         // second Repair of their own: a blown crossing that carried track is one bridge to rebuild,
         // and a shelled hex that lost its rails and gained craters is one stretch of line to relay.
-        if (hex.blownRail != 0) {
-            hex.rail = hex.blownRail
-            hex.blownRail = 0
-        }
+        RailDemolition.relay(hex)
         if (hex.razedTerrain >= 0) {
             hex.terrain = hex.razedTerrain
             hex.razedTerrain = -1

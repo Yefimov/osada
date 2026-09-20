@@ -10,7 +10,7 @@ import org.osada.rules.isAir
 import org.osada.uiSettings
 
 /**
- * In-game top-bar button actions (air mode, hex grid, strategic zoom dispatch, unit inspector,
+ * In-game top-bar button actions (air mode, hex grid, artillery range, strategic zoom dispatch, unit inspector,
  * buy/deploy window, main menu slide-out, options/pause) plus the global Escape router and the
  * undeployed-units prompt. Split from the former `MenuController` god-class to stay within the
  * project's function-count/class-size limits.
@@ -23,6 +23,7 @@ internal class MainMenuButtonHandler(
         when (id) {
             "air" -> onAirButton(map)
             "hex" -> onHexButton()
+            "arty" -> onArtilleryButton()
             "zoom" -> {
                 ui.toggleStrategicZoom()
                 ui.render.render()
@@ -44,6 +45,17 @@ internal class MainMenuButtonHandler(
         byId("air")?.let { toggleButton(it, uiSettings.airMode) }
         // The player has found the control; the discoverability hint has nothing left to teach.
         AirModeHint.markAirModeUsed()
+        ui.render.render()
+    }
+
+    /**
+     * The sidebar's Artillery toggle (`ui/ArtilleryRangeOverlay`). A pure view switch: it selects
+     * nothing, cancels nothing and owns no map state, so unlike Air Mode it has no current-unit
+     * bookkeeping to do -- it flips the flag and asks for a full repaint.
+     */
+    private fun onArtilleryButton() {
+        uiSettings.artilleryRange = !uiSettings.artilleryRange
+        byId("arty")?.let { toggleButton(it, uiSettings.artilleryRange) }
         ui.render.render()
     }
 

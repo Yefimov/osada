@@ -546,6 +546,13 @@ class UiSettings {
     var uiSize: Int = 840
     var uiSmallSize: Int = 470
     var hexGrid: Boolean = false
+
+    /**
+     * The sidebar's Artillery toggle: hatch every hex our own guns reach in red and every hex a
+     * VISIBLE enemy battery reaches in black (`ui/ArtilleryRangeOverlay`). A view toggle like
+     * [hexGrid], so it is persisted with the rest of the settings and survives a reload.
+     */
+    var artilleryRange: Boolean = false
     var showGridTerrain: Boolean = false
     var muteUnitSounds: Boolean = false
 
@@ -690,6 +697,7 @@ class UiSettings {
         o.uiSize = uiSize
         o.uiSmallSize = uiSmallSize
         o.hexGrid = hexGrid
+        o.artilleryRange = artilleryRange
         o.showGridTerrain = showGridTerrain
         o.muteUnitSounds = muteUnitSounds
         o.deployMode = deployMode

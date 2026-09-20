@@ -33,6 +33,7 @@ internal class MapRenderer(
     }
 
     private val fogOfWarRenderer = FogOfWarRenderer(rc)
+    private val artilleryRangeRenderer = ArtilleryRangeRenderer(rc)
     private val hexCellRenderer = HexCellRenderer(rc, unitRenderer, overlayRenderer, cursorRenderer)
 
     /** Полный redraw всей карты (используется при старте, ресайзе и т.д.) */
@@ -164,6 +165,14 @@ internal class MapRenderer(
             hasTouch = uiSettings.hasTouch,
             airDeploySelected = airDeploySelected,
             deployUnit = deployUnit,
+            // Computed only while the toggle is on: it is a sweep over every unit on the map, and
+            // an animation frame pays for it as many times as it repaints.
+            artilleryCoverage =
+                if (uiSettings.artilleryRange) {
+                    ArtilleryRangeOverlay.compute(q, GameHolder.instance?.spotSide ?: 0)
+                } else {
+                    null
+                },
         )
     }
 
@@ -177,6 +186,9 @@ internal class MapRenderer(
                 val y = (if (c % 2 == 1) 2.0 * r * rc.v + rc.v + rc.ca else 2.0 * r * rc.v + rc.ca) + rc.originY
                 val x = c * (rc.hexTopWidth + rc.hexSlantWidth) + rc.hexSlantWidth + rc.ba + rc.originX
                 val isCurrentHex = frame.currentPos != null && frame.currentPos.row == r && frame.currentPos.col == c
+                // Before the cell itself: the hatch is a planning aid and belongs UNDER the unit
+                // sprites and every selection overlay `drawCell` is about to paint.
+                artilleryRangeRenderer.drawCell(frame, r, c, x, y)
                 hexCellRenderer.drawCell(frame, hex, x, y, isCurrentHex)
             }
         }
@@ -248,4 +260,6 @@ internal class RenderFrame(
     val airDeploySelected: Boolean,
     /** Reserve unit awaiting placement, or null when none is picked yet. */
     val deployUnit: GameUnit? = null,
+    /** Artillery envelopes for the sidebar's Artillery toggle, or null while it is off. */
+    val artilleryCoverage: ArtilleryRangeOverlay.Coverage? = null,
 )

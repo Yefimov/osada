@@ -74,6 +74,7 @@ object CommandCatalog {
 
     const val AIR_MODE = "air_mode"
     const val HEX_GRID = "hex_grid"
+    const val ARTILLERY_RANGE = "artillery_range"
     const val MAP_LABELS = "map_labels"
     const val STRATEGIC_MAP = "strategic_map"
     const val ZOOM_IN = "zoom_in"
@@ -113,6 +114,7 @@ object CommandCatalog {
         listOf(
             GameCommand(AIR_MODE, CommandGroup.MAP, listOf(ShortcutBinding("A", code = "KeyA"))),
             GameCommand(HEX_GRID, CommandGroup.MAP, listOf(ShortcutBinding("H", code = "KeyH"))),
+            GameCommand(ARTILLERY_RANGE, CommandGroup.MAP, listOf(ShortcutBinding("F", code = "KeyF"))),
             GameCommand(MAP_LABELS, CommandGroup.MAP, listOf(ShortcutBinding("L", code = "KeyL"))),
             GameCommand(STRATEGIC_MAP, CommandGroup.MAP, listOf(ShortcutBinding("Z", code = "KeyZ"))),
             GameCommand(

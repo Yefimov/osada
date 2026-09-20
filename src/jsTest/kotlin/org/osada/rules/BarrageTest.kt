@@ -117,20 +117,35 @@ class BarrageTest : OgRulesTestHarness() {
     }
 
     @Test
-    fun aSpottedHexIsATargetOnlyWhileNoGroundUnitHoldsIt() {
+    fun atOgsOwnGradeOnlyAnUnseenHexIsATarget() {
         val map = barrageWorld()
+        val gun = place(map, howitzerEqid, 2, 2, side = 0)
+        map.map!![2][4].setSpotted(0, true)
+
+        assertFalse(
+            Barrage.canTarget(map, gun, Cell(2, 4)),
+            "OG: a hex the firer can see is one it can attack properly",
+        )
+        assertTrue(Barrage.canTarget(map, gun, Cell(2, 5)), "an unspotted hex in range is the mechanic")
+        assertFalse(Barrage.canTarget(map, gun, Cell(2, 2)), "a gun does not shell its own hex")
+    }
+
+    /** Grade 2 of the same rule: the crosshair also opens over visible ground nobody is standing on,
+     *  which is what deliberate cratering and line-cutting need. */
+    @Test
+    fun aimedFireAddsVisibleEmptyHexesAndNothingElse() {
+        val map = barrageWorld(RuleKey.BARRAGE to 2)
         val gun = place(map, howitzerEqid, 2, 2, side = 0)
         map.map!![2][4].setSpotted(0, true)
         map.map!![3][4].setSpotted(0, true)
         place(map, infantryHiddenEqid, 3, 4, side = 1)
 
-        assertTrue(Barrage.canTarget(map, gun, Cell(2, 4)), "empty visible ground may be shelled for craters")
+        assertTrue(Barrage.canTarget(map, gun, Cell(2, 4)), "empty visible ground may be shelled on purpose")
         assertFalse(
             Barrage.canTarget(map, gun, Cell(3, 4)),
             "a visible enemy is a target for aimed fire, not a barrage",
         )
-        assertTrue(Barrage.canTarget(map, gun, Cell(2, 5)), "an unspotted hex in range is the mechanic")
-        assertFalse(Barrage.canTarget(map, gun, Cell(2, 2)), "a gun does not shell its own hex")
+        assertFalse(Barrage.canTarget(map, gun, Cell(2, 2)), "and a gun still does not shell its own hex")
     }
 
     @Test
@@ -206,7 +221,7 @@ class BarrageTest : OgRulesTestHarness() {
      *  (`rules/EngineeringWork.BLOW_RAIL` carries the sourcing). */
     @Test
     fun aSuccessfulBarrageCutsARailwayLine() {
-        val map = barrageWorld()
+        val map = barrageWorld(RuleKey.RAIL_DEMOLITION to 1)
         val gun = place(map, howitzerEqid, 2, 2, side = 0)
         map.map!![2][5].rail = PARTIAL_ROAD_MASK
         map.map!![2][5].station = true
@@ -219,11 +234,26 @@ class BarrageTest : OgRulesTestHarness() {
         assertFalse(map.map!![2][5].station, "the depot goes with the rails")
     }
 
+    /** With OSADA's own rail rule off, a shelled railway is untouched — which is OG's behaviour and
+     *  what Open General Fidelity must keep. */
+    @Test
+    fun aRailwayIsUntouchedWhileTheRailRuleIsOff() {
+        val map = barrageWorld()
+        val gun = place(map, howitzerEqid, 2, 2, side = 0)
+        map.map!![2][5].rail = PARTIAL_ROAD_MASK
+
+        val result = fireUntilItLands(map, gun, Cell(2, 5))
+
+        assertFalse(result.cutRail)
+        assertEquals(PARTIAL_ROAD_MASK, map.map!![2][5].rail, "the line is map data again")
+        assertEquals(0, map.map!![2][5].blownRail)
+    }
+
     /** Track first, terrain second: the city is still there for the next barrage, and the more
      *  useful thing goes first. */
     @Test
     fun aRailwayThroughACityLosesItsTrackBeforeTheCity() {
-        val map = barrageWorld()
+        val map = barrageWorld(RuleKey.RAIL_DEMOLITION to 1)
         val gun = place(map, howitzerEqid, 2, 2, side = 0)
         map.map!![2][5].terrain = TerrainType.CITY.value
         map.map!![2][5].rail = PARTIAL_ROAD_MASK
@@ -310,9 +340,10 @@ class BarrageTest : OgRulesTestHarness() {
         assertFalse(Barrage.ready(gun))
     }
 
-    /** The rule plus a map with nothing spotted: the state a barrage is actually ordered from. */
-    private fun barrageWorld(): GameMap {
-        ruleset(RuleKey.BARRAGE to 1)
+    /** The rule at OG's own grade plus a map with nothing spotted: the state a barrage is actually
+     *  ordered from. [overrides] adds the graded or OSADA-owned keys a test is about. */
+    private fun barrageWorld(vararg overrides: Pair<RuleKey, Int>): GameMap {
+        ruleset(RuleKey.BARRAGE to 1, *overrides)
         val map = world()
         GameHolder.instance = holderFor(map)
         return map

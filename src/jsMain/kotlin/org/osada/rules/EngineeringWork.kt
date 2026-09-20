@@ -158,7 +158,7 @@ internal enum class EngineeringWork(
             BLOW_BRIDGE -> Engineering.isWaterCrossing(hex) && hex.road > 0
             // Track to cut. Nothing else is asked: a station, a city or a bridge on the same hex
             // changes what ELSE could be blown here, not whether these rails can be.
-            BLOW_RAIL -> hex.rail > 0
+            BLOW_RAIL -> railCuttableNow(hex)
             // Only a feature can be razed: clear ground is already clear, and water is not
             // terrain a demolition charge removes. WHICH features is the efile's decision, not
             // ours -- see [razeableTerrain].
@@ -297,6 +297,10 @@ internal enum class EngineeringWork(
          *  line, or ground a barrage or a demolition left churned. */
         fun repairableNow(hex: Hex): Boolean =
             hex.razedTerrain >= 0 || hex.blownRoad != 0 || hex.blownRail != 0 || hex.rubble || hex.crater
+
+        /** Whether there is a line to cut here and OSADA's own rail rule allows cutting it
+         *  (`rules/RailDemolition`). */
+        fun railCuttableNow(hex: Hex): Boolean = RailDemolition.enabled() && hex.rail > 0
 
         /** Whether a demolition has anything to do here: a feature to remove, or open ground that
          *  is not already blown ([Engineering.razeFeature]). */

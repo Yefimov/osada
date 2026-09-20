@@ -11,6 +11,7 @@ internal fun applyDisplaySettings(data: dynamic) {
     applyZoomSettings(data)
     applySoundSettings(data)
     uiSettings.hexGrid = data.hexGrid as? Boolean ?: false
+    uiSettings.artilleryRange = data.artilleryRange as? Boolean ?: false
     uiSettings.showGridTerrain = data.showGridTerrain as? Boolean ?: false
     // Restored straight, not through `setDeployMode`: this is rebuilding saved state, not a
     // transition the player made, and it runs before there is a scenario to name a side from.

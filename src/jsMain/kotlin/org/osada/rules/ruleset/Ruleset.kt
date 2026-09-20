@@ -98,8 +98,16 @@ package org.osada.rules.ruleset
  * setting alone again ([org.osada.model.usesStalinRegime]) and takes effect the moment it is
  * ticked, exactly as the units-and-prestige synchronisation it already calls always allowed.
  * Stored schema-<=15 profiles and saves may still carry the key; readers ignore it.
+ *
+ * 17 (2026-09-20) added [RuleKey.RAIL_DEMOLITION] -- OSADA's second non-OG rule, on the same terms
+ * as [RuleKey.CRATERS] -- and gave [RuleKey.BARRAGE] a THIRD value instead of giving its new
+ * behaviour a key of its own. Aiming a barrage at an empty hex you can see is not a separate rule:
+ * it is the same guns doing the same thing with the crosshair unlocked, so it is grade 2 of the
+ * rule that already owns them. Both default to what OSADA ran before, so a schema-<=16 profile is
+ * byte-identical in play -- except that `barrage = 1` now means OG's blind fire explicitly rather
+ * than by having no alternative.
  */
-const val RULESET_SCHEMA_VERSION = 16
+const val RULESET_SCHEMA_VERSION = 17
 
 /** Serialized keys understood historically but no longer configurable or gameplay-relevant. */
 internal val RETIRED_RULE_KEYS: Set<String> = setOf("trigger_hexes", "stalin_regime")
@@ -369,7 +377,28 @@ enum class RuleKey(
 
     /**
      * OG 9.2: a unit with Bomber Size above zero shells a hex it cannot see. 0 = off (OSADA
-     * today), 1 = `og`. **Schema 7**, and the fourth of section 9's optional rules to be built.
+     * today), 1 = `og`, 2 = `aimed`. **Schema 7**, and the fourth of section 9's optional rules to
+     * be built; the third value is schema 17.
+     *
+     * ### Why the third value is a grade of this rule and not a rule of its own
+     *
+     * At 1 the crosshair only opens over hexes the firer cannot see, which is OG's own condition
+     * and a real one: a hex you can see is a hex you can attack properly, with aimed fire that does
+     * more. At 2 it also opens over any hex in reach that holds no ground unit — visible ground
+     * nobody is standing on. Nothing else changes: same guns, same ammunition, same shot, same
+     * three outcomes. It is the crosshair's condition and nothing more, which is exactly what a
+     * grade is for and what a second key would have hidden.
+     *
+     * **What 2 is for** is deliberate ground-shaping, which OG cannot express at all: cratering the
+     * open field an attack will have to cross, or cutting the railway a visible line runs along
+     * ([RAIL_DEMOLITION], [CRATERS]). With both of those off, 2 buys a player almost nothing, and
+     * that is the honest arithmetic of it rather than a flaw.
+     *
+     * **A bomber's own hex is admitted at 1 as well, and that is a fix rather than a grade.** An
+     * aircraft bombs the hex it is flying over — that hex is always spotted, and a level bomber's
+     * gun range is 0 — so the unspotted-only test meant every `'='` Strategic Bomber in the shipped
+     * data had no legal target and the chip offered a shot it could never take (reported
+     * 2026-09-20). OG marks those records barrage-capable; refusing them was never OG's rule.
      *
      * Held back from schema 6 for one reason only, which no longer holds: §L.6 filed Barrage as
      * blocked because the `Can bombard/barrage` ability was *"not among the decoded 52"* special
@@ -381,7 +410,7 @@ enum class RuleKey(
      * scenarios whose source is readable do (`Scenario.barrageAllowed`, imported with the rest of
      * the option bitfield). Call site: `rules/Barrage`.
      */
-    BARRAGE("barrage", null, 0, 1),
+    BARRAGE("barrage", null, 0, 2),
 
     /**
      * OG's `critical_hit`: a naval shot that sinks its target outright. **Schema 11.**
@@ -546,6 +575,27 @@ enum class RuleKey(
      * to dig and worthless where you have. Call site: `rules/Craters`.
      */
     CRATERS("craters", null, 0, 1),
+
+    /**
+     * **Cutting railway lines — OSADA's rule, not an Open General one.** 0 = off, 1 = on. Schema 17.
+     *
+     * A demolition unit standing on track can tear up the line, and a barrage that lands on one
+     * cuts it. A cut line stops an armoured train and breaks any rail-transport route through the
+     * hex; a station on it is destroyed with the rails and has to be rebuilt; sappers relay the
+     * track with Repair (9.3.8), which also levels the shell holes and wreckage around it.
+     *
+     * **Off in Open General Fidelity, deliberately, for the reason [CRATERS] gives.** OG's rail
+     * hexes are map data that nothing in play can touch — neither its engineering jobs nor its
+     * barrage — so a profile whose whole claim is "these are OG's rules" must not carry this one.
+     * It is reachable from OSADA Default and from custom rulesets, where an OSADA invention belongs.
+     *
+     * **Not in [RULE_REQUIRES], although it is inert with both of its paths off.** That table maps
+     * a rule to ONE prerequisite, and this one has two independent ones: a sapper's charge needs
+     * [BUILD_AND_REPAIR] (and the scenario's own Blow switch), a shelled line needs [BARRAGE].
+     * Naming either would tell the player the wrong half. Call site: `rules/RailDemolition`, through
+     * `rules/Barrage` and `rules/EngineeringWork.BLOW_RAIL`.
+     */
+    RAIL_DEMOLITION("rail_demolition", null, 0, 1),
 
     /**
      * Whether OG's per-record ability TOGGLES decide phased movement and overrun, or the unit's
@@ -784,6 +834,9 @@ object RulesetDefaults {
             RuleKey.NAVAL_CRITICAL_HITS to 0,
             // OSADA's own rule (schema 8), off until a player asks for it.
             RuleKey.CRATERS to 0,
+            // The second one (schema 17), on the same terms: OSADA could not cut track at all
+            // before it, so off is a description of the shipped game rather than a choice.
+            RuleKey.RAIL_DEMOLITION to 0,
             // Schema 9. Off on the section-9 terms, and additionally because two of its four
             // bullets refuse shots the shipped scenarios currently allow.
             RuleKey.EXTENDED_NAVAL to 0,

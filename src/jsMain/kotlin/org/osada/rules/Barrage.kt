@@ -90,6 +90,15 @@ internal object Barrage {
         ActiveRuleset.flag(RuleKey.BARRAGE, false) &&
             (GameHolder.instance?.scenario?.barrageAllowed ?: true)
 
+    /** The [RuleKey.BARRAGE] value at which the crosshair also opens over hexes the firer CAN see,
+     *  provided no ground unit holds them — the rule's own third grade, not a second rule. */
+    private const val AIMED_LEVEL = 2
+
+    /** Whether aimed interdiction is allowed: shelling visible empty ground on purpose, to crater it
+     *  or to cut the line running through it. Grade 2 of the same rule, so the scenario's switch
+     *  still has to allow barrage at all. */
+    private fun aimedFire(): Boolean = enabled() && ActiveRuleset.intKey(RuleKey.BARRAGE, 0) >= AIMED_LEVEL
+
     /** Whether [unit]'s equipment carries OG's `Can bombard/barrage` — Bomber Size above zero, the
      *  `'='` mark. Reads the REAL record: the ability belongs to the gun, not to a transport. */
     fun canBarrage(unit: GameUnit): Boolean = enabled() && unit.unitData(true).bombsize > 0
@@ -108,9 +117,10 @@ internal object Barrage {
      * "cannot barrage anywhere"). That hex is always spotted, which is why a spotted hex has to be
      * admissible at all.
      *
-     * A spotted hex is admitted only when it holds no ground unit: shelling empty visible ground is
-     * how a player digs craters or wrecks a bridge on purpose, while a VISIBLE enemy there is a
-     * target for aimed fire, which does more, and a friendly one is not a target at all.
+     * A spotted hex is admitted only when it holds no ground unit, and only under the rule's second
+     * grade ([aimedFire]) or beneath an aircraft: shelling empty visible ground is how a player digs
+     * craters or cuts a line on purpose, while a VISIBLE enemy there is a target for aimed fire,
+     * which does more, and a friendly one is not a target at all.
      */
     fun canTarget(
         map: GameMap,
@@ -121,9 +131,11 @@ internal object Barrage {
         val from = unit.getPos()
         val hex = map.map?.getOrNull(cell.row)?.getOrNull(cell.col)
         if (side == null || from == null || hex == null) return false
-        // A hex the firer can see is admissible only while no ground unit holds it.
-        val unseenOrEmpty = !hex.isSpotted(side) || hex.unit == null
-        return ready(unit) && withinReach(unit, from, cell) && unseenOrEmpty
+        // An aircraft's own hex is always spotted, so admitting a visible hex is the only way a
+        // level bomber can fire at all -- that part is not the graded one.
+        val ownHexBombing = UnitPredicates.isAir(unit) && from.row == cell.row && from.col == cell.col
+        val visibleTarget = hex.unit == null && (aimedFire() || ownHexBombing)
+        return ready(unit) && withinReach(unit, from, cell) && (!hex.isSpotted(side) || visibleTarget)
     }
 
     /** Whether [cell] is where [unit] can put shells: the hex underneath an aircraft, or 1..gunrange
@@ -186,7 +198,14 @@ internal object Barrage {
             // port on the same hex is still there to be wrecked by the next barrage, once the
             // rails are down -- so a hex with both takes two shots and loses the more useful
             // thing first.
-            hex.rail > RoadType.NONE.value -> wreckRail(hex)
+            // `cut` is false when the rule is off or there is no track, so the hex falls through to
+            // its terrain exactly as it did before that rule existed.
+            RailDemolition.cut(hex) -> {
+                // Torn-up track and shell holes are the same ground, so the hex is left churned
+                // exactly as a wrecked facility is.
+                hex.rubble = true
+                BarrageResult(hit = true, cutRail = true, leftRubble = true)
+            }
             hex.terrain in EngineeringWork.razeableTerrain() -> wreckTerrain(hex)
             // Nothing OG would destroy: facilities and roads are its whole list, widened only by
             // an efile's `blow_any_terrain` (the same set `Can Blow` reads). Open ground then takes
@@ -226,31 +245,9 @@ internal object Barrage {
     private fun wreckBridge(hex: Hex): BarrageResult {
         hex.blownRoad = hex.road
         hex.road = RoadType.NONE.value
-        val rails = wreckRail(hex)
-        return BarrageResult(hit = true, blewBridge = true, leftRubble = true, cutRail = rails.cutRail)
-    }
-
-    /**
-     * Cuts the railway line — **the outcome OG's own barrage does not have**, because OG's rail
-     * hexes are map data nothing in play can change (`rules/EngineeringWork.BLOW_RAIL` carries the
-     * sourcing for adding it at all).
-     *
-     * A cut line stops an armoured train and breaks the rail transport route through the hex, and
-     * sappers relay it with Repair. The hex is left churned as well, exactly as a wrecked facility
-     * is: torn-up track and shell holes are the same ground.
-     */
-    private fun wreckRail(hex: Hex): BarrageResult {
-        // The mask is recorded for Repair to relay; the station goes with the rails and does not
-        // come back with them (`Hex.blownRail`). A hex with no track only takes the churning, which
-        // is what makes this callable from [wreckBridge] over an unrailed river.
-        val hadRail = hex.rail > RoadType.NONE.value
-        if (hadRail) {
-            hex.blownRail = hex.rail
-            hex.rail = RoadType.NONE.value
-            hex.station = false
-        }
         hex.rubble = true
-        return BarrageResult(hit = true, cutRail = hadRail, leftRubble = true)
+        val rails = RailDemolition.cut(hex)
+        return BarrageResult(hit = true, blewBridge = true, leftRubble = true, cutRail = rails)
     }
 
     /** Extra movement points a rubbled hex costs on entry. OG's own rubble terrain is roughly twice

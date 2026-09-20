@@ -8,7 +8,7 @@ import org.osada.i18n.I18n
 import org.osada.uiSettings
 
 /**
- * Builds the right operational sidebar (Task 2): the Grid/Air view toggles, the minimap
+ * Builds the right operational sidebar (Task 2): the Grid/Air/Artillery view toggles, the minimap
  * placeholder (Task 4 fills in the canvas), and the whole-sidebar collapse rail. Objectives
  * and Log panel CONTENT are filled by [StatusBarController.updateStatusBar] / [HudLog] respectively —
  * this object only wires the static chrome once at startup.
@@ -24,6 +24,10 @@ internal object SidebarBuilder {
         val air = byId("air")
         air?.let { toggleButton(it, uiSettings.airMode) }
         air?.onclick = { _: org.w3c.dom.events.MouseEvent -> GameHolder.instance?.ui?.mainMenuButton("air") }
+
+        val arty = byId("arty")
+        arty?.let { toggleButton(it, uiSettings.artilleryRange) }
+        arty?.onclick = { _: org.w3c.dom.events.MouseEvent -> GameHolder.instance?.ui?.mainMenuButton("arty") }
 
         refreshLocalization()
 
@@ -46,6 +50,10 @@ internal object SidebarBuilder {
         byId("air")?.apply {
             textContent = I18n.t("hud.sidebar.air.label")
             title = I18n.t("hud.sidebar.air.help")
+        }
+        byId("arty")?.apply {
+            textContent = I18n.t("hud.sidebar.artillery.label")
+            title = I18n.t("hud.sidebar.artillery.help")
         }
         byId("osadaSideToggle")?.title = I18n.t("hud.sidebar.collapse.help")
         byId("osadaDrawerClose")?.apply {

@@ -4867,6 +4867,15 @@ hr {
     color: #f4e3c6;
 }
 
+/* Artillery range is the other toggle that repaints the whole map, so it gets the same filled
+ * ON state as Air -- but in the overlay's own red rather than brass, so the chip and the
+ * hatching it switches on read as the same control. */
+#arty.osada-sb-toggle[selected] {
+    background: rgba(214, 64, 52, .24);
+    border-color: rgba(214, 64, 52, .85);
+    color: #f6d6cf;
+}
+
 .osada-sb-toggles-spacer {
     flex: 1 1 auto;
 }
