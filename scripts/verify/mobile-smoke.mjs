@@ -497,7 +497,14 @@ try {
         return badge.left >= button.left - 5 && badge.right <= button.right + 5;
       })(),
       nameVisible: name.width > 0 && name.height > 0,
-      statsAboveActions: actionRects.length > 0 && expand.bottom <= Math.min(...actionRects.map((r) => r.top)) + 1,
+      // The expander used to be asserted as sitting on its own row ABOVE the chips, which was the
+      // only place a 154px Russian "ALL STATS" sentence could go. It is an icon now and closes
+      // the action row instead, so what still has to hold is the reason that row was chosen: it
+      // must not land on top of a chip, and it must not leave the card.
+      statsClearOfActions: actionRects.length > 0 && actionRects.every((r) =>
+        expand.right <= r.left + 1 || expand.left >= r.right - 1 ||
+        expand.bottom <= r.top + 1 || expand.top >= r.bottom - 1),
+      statsInsideCard: expand.left >= card.left - 1 && expand.right <= card.right + 1,
       actionsInsideCard: actionRects.every((r) => r.left >= card.left - 1 && r.right <= card.right + 1),
     };
   });
@@ -596,9 +603,59 @@ try {
   });
   ok('mobile report icon opens the full combat log surface with its briefing action',
     reportEntry.open && reportEntry.hasBriefingAction, JSON.stringify(reportEntry));
-  ok('landscape unit identity remains visible and actions stay inside the card below All Stats',
-    phoneHud.nameVisible && phoneHud.statsAboveActions && phoneHud.actionsInsideCard,
+  ok('landscape unit identity stays visible and All Stats shares the action row without covering it',
+    phoneHud.nameVisible && phoneHud.statsClearOfActions && phoneHud.statsInsideCard &&
+      phoneHud.actionsInsideCard,
     JSON.stringify(phoneHud));
+
+  // Touch combat's three-card row (attacker | forecast | defender), reported 2026-09-21 as
+  // unreadable in Russian: the defender's "All stats" label is a 148px sentence, which left its
+  // identity column 20px wide, wrapped every line one character per row, and grew the card until
+  // the dock hit its 65dvh ceiling and the map was down to 84px of a 400px screen.
+  //
+  // The state is FORCED rather than played into: reaching it for real needs a spotted, attackable
+  // enemy under the finger, and what is under test here is the layout, not the tap that gets to it.
+  const combatRow = await page.evaluate(async () => {
+    const zone = document.getElementById('osada-bottomzone');
+    const savedClass = zone.className;
+    const set = (id, text) => { const el = document.getElementById(id); if (el) el.textContent = text; };
+    set('ecName', '8th Mineclearing Bn Пехота');
+    set('ecSub', 'ПЕХОТА · РУМЫНИЯ · ЧИСТОЕ ПОЛЕ');
+    set('ecStat', 'СИЛ 6/10 · ОПЫТ 79 · УКР 0');
+    zone.classList.add('bz--visible', 'bz--hover');
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    const box = (el) => { const r = el.getBoundingClientRect(); return { left: Math.round(r.left), right: Math.round(r.right), w: Math.round(r.width), h: Math.round(r.height) }; };
+    const card = box(document.getElementById('osadaEnemyCard'));
+    const main = box(document.getElementById('ecMain'));
+    const lineHeights = ['ecName', 'ecSub', 'ecStat']
+      .map((id) => document.getElementById(id))
+      .filter((el) => el && getComputedStyle(el).display !== 'none')
+      .map((el) => Math.round(el.getBoundingClientRect().height));
+    const result = {
+      card,
+      main,
+      lineHeights,
+      dockHeight: Math.round(document.getElementById('osada-bottomzone').getBoundingClientRect().height),
+      mapHeight: Math.round(document.getElementById('game').getBoundingClientRect().height),
+      innerHeight: window.innerHeight,
+      actionsHidden: getComputedStyle(document.getElementById('uc-actions')).display === 'none',
+    };
+    zone.className = savedClass;
+    return result;
+  });
+  ok('combat row leaves the defender a readable identity column',
+    combatRow.main.w >= 90 && combatRow.main.right <= combatRow.card.right,
+    JSON.stringify(combatRow));
+  // One line each. Two would mean the column went back to wrapping, which is what made the card
+  // tall enough to swallow the map.
+  ok('defender identity lines are cut, not wrapped',
+    combatRow.lineHeights.length > 0 && combatRow.lineHeights.every((h) => h <= 22),
+    JSON.stringify(combatRow));
+  ok('combat row leaves the map more room than the dock',
+    combatRow.mapHeight > combatRow.dockHeight && combatRow.dockHeight <= combatRow.innerHeight * 0.5,
+    JSON.stringify(combatRow));
+  ok('the attacker card folds its action chips away while a forecast is up',
+    combatRow.actionsHidden, JSON.stringify(combatRow));
 
   const statsDismiss = await page.evaluate(async () => {
     const button = document.getElementById('uc-expand');
@@ -802,15 +859,45 @@ try {
       right: Math.round(btn.getBoundingClientRect().right),
       viewport: window.innerWidth,
     };
+    // Worst case on purpose: Observer mode also forces its badge into this bar. It is hidden on a
+    // phone now, and this is the state that proves the confirm no longer depends on that width.
+    const badge = document.getElementById('osadaObserverBadge');
+    if (badge) badge.style.display = 'flex';
     btn.click();
     await new Promise((r) => requestAnimationFrame(r));
     const confirming = btn.getAttribute('confirming') === 'on';
+    const box = (el) => {
+      if (!el) return null;
+      const r = el.getBoundingClientRect();
+      return { left: Math.round(r.left), right: Math.round(r.right), w: Math.round(r.width), h: Math.round(r.height) };
+    };
+    const confirmed = {
+      badgeDisplay: badge ? getComputedStyle(badge).display : 'absent',
+      plate: box(btn),
+      yes: box(document.querySelector('#osadaEndTurn .osada-et__yes')),
+      no: box(document.querySelector('#osadaEndTurn .osada-et__no')),
+    };
     document.querySelector('#osadaEndTurn .osada-et__no')?.click();
     await new Promise((r) => requestAnimationFrame(r));
-    return { ...before, confirming, cancelled: btn.getAttribute('confirming') !== 'on' };
+    if (badge) badge.style.display = 'none';
+    return { ...before, confirming, confirmed, cancelled: btn.getAttribute('confirming') !== 'on' };
   });
   ok('landscape keeps the inline End Turn confirm',
     landscapeConfirm.confirming && landscapeConfirm.cancelled, JSON.stringify(landscapeConfirm));
+  // Reported 2026-09-21: with Observer mode on, the confirm ran off the right edge and took both
+  // answers with it, so a turn with unmoved units could not be ended at all.
+  ok('the phone bar carries no Observer badge',
+    landscapeConfirm.confirmed.badgeDisplay === 'none',
+    JSON.stringify(landscapeConfirm.confirmed));
+  ok('the confirmed End Turn plate and both of its answers stay on screen',
+    landscapeConfirm.confirmed.plate.right <= landscapeConfirm.viewport + 1 &&
+      landscapeConfirm.confirmed.yes.right <= landscapeConfirm.viewport + 1 &&
+      landscapeConfirm.confirmed.no.right <= landscapeConfirm.viewport + 1,
+    JSON.stringify(landscapeConfirm.confirmed));
+  ok('both End Turn answers are real touch targets',
+    landscapeConfirm.confirmed.yes.w >= 44 && landscapeConfirm.confirmed.yes.h >= 44 &&
+      landscapeConfirm.confirmed.no.w >= 44 && landscapeConfirm.confirmed.no.h >= 44,
+    JSON.stringify(landscapeConfirm.confirmed));
   // The count is in the desktop label whenever units are still ready; landscape has the width, so
   // the phone label must carry the same number rather than the bare verb.
   const landscapeCount = (landscapeConfirm.desktopLabel.match(/(\d+)\s*$/) || [])[1];

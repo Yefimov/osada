@@ -269,6 +269,17 @@ body.osada-layout-phone #osadaHqBtn {
     display: none !important;
 }
 
+/* Two standing REMINDERS, not controls: the Observer-mode badge and the deployment-phase chip.
+ * Both say something the player already chose and can re-read in Settings / the reserve window,
+ * and on a phone bar they are paid for in the width End Turn's inline confirm needs — the
+ * badge alone measured 117px of 869 at landscape. `!important` because Kotlin writes the badge's
+ * `display` inline ([StatusBarController.updateObserverBadge]), so a plain rule never wins.
+ * Nothing about the modes themselves changes; only the phone bar stops carrying the placards. */
+body.osada-layout-phone .osada-tb-observer,
+body.osada-layout-phone .osada-tb-field--phase {
+    display: none !important;
+}
+
 /* A phone cannot afford a scenario title that collapses to a meaningless first
  * letter. Turn, weather and terrain live in the contextual lower rail instead. */
 body.osada-layout-phone .osada-tb-op,
@@ -356,6 +367,35 @@ body.osada-layout-phone .osada-et__label {
 body.osada-layout-phone .osada-et__label::after {
     content: attr(data-mobile-label);
     font-size: 12px;
+}
+
+/* The inline confirm ([EndTurnFlow.showEndTurnConfirm]) rewrites this plate into a whole sentence
+ * plus a ✓ and a ✗. It is the one top-bar plate allowed to SHRINK: at 869x400 it measured 365px
+ * wide in a bar that had 302px left, so it ran 63px off the right edge and took both decisions
+ * with it — the turn could not be confirmed at all while any unit was still unmoved (reported
+ * 2026-09-21, with the Observer badge above stealing the last of the width).
+ *
+ * The sentence yields first and clips; the two answers never do, and they take a real touch
+ * target here rather than the desktop 26x24 — this is the control the report says was unhittable. */
+body.osada-layout-phone #osadaEndTurn.osada-et--confirm {
+    flex: 1 1 auto;
+    min-width: 0;
+    gap: 6px;
+    padding: 0 8px;
+}
+
+body.osada-layout-phone .osada-et__msg {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+body.osada-layout-phone .osada-et__yes,
+body.osada-layout-phone .osada-et__no {
+    flex: 0 0 auto;
+    width: var(--osada-touch-target-min);
+    height: var(--osada-touch-target-min);
+    font-size: 18px;
 }
 
 /* ---- Map viewport ----
@@ -521,6 +561,14 @@ body.osada-layout-phone #osada-bottomzone.bz--hover {
     grid-template-areas: "card forecast enemy";
 }
 
+/* Landscape splits the row the other way round: with its action chips folded away for the
+ * duration of the forecast (see `bz--hover` above) the attacker's card needs only its identity,
+ * while the defender's card is the one carrying a name, a class/country/terrain line, live-state
+ * chips and a strength summary. Narrower attacker, wider defender. */
+body.osada-layout-phone.osada-orientation-landscape #osada-bottomzone.bz--hover {
+    grid-template-columns: minmax(0, 1fr) minmax(110px, auto) minmax(0, 1.3fr);
+}
+
 body.osada-layout-phone #osada-bottomzone.bz--enemy-only {
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas: "enemy";
@@ -607,6 +655,76 @@ body.osada-layout-phone #unit-info {
 
 body.osada-layout-phone #osadaEnemyCard {
     width: auto;
+}
+
+/* ---- Enemy card on a phone ----
+ * The card is a flex row of portrait (80px, fixed by the sprite's frame spacing) + #ecMain +
+ * the "All stats" toggle. In Russian that toggle is a 148px sentence, so inside a 292px column
+ * #ecMain was left with TWENTY pixels and every line in it — name, class/country/terrain, the
+ * live-state chips, the strength summary — wrapped one character per row. That is the reported
+ * 2026-09-21 landscape mess: a 267px-tall enemy card dragged the whole dock to its 65dvh ceiling
+ * and left the map 84px of a 400px screen.
+ *
+ * Two rules together fix it: the toggle becomes an icon (below, shared with the player card) and
+ * every line here is cut rather than wrapped. The full text is one tap away in the card's own tap
+ * panel, which is where a phone was always meant to read it. */
+body.osada-layout-phone #ecMain {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+body.osada-layout-phone .osada-ec-name {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+body.osada-layout-phone .osada-ec-sub,
+body.osada-layout-phone .osada-ec-stat {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* "All stats" on BOTH cards: an icon, not a sentence. The player card's own expander already
+ * reads as an "i" in portrait for the same reason; landscape needs it just as badly, where the
+ * Russian label measured 154px and overflowed its own grid column outright. */
+body.osada-layout-phone #uc-expand,
+body.osada-layout-phone #ec-expand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    /* Border-box, so the 44px IS the track the grid reserved for it — content-box turned it into
+     * 46px and pushed it back out over the forecast it had just been moved off. */
+    box-sizing: border-box;
+    width: var(--osada-touch-target-min);
+    min-width: var(--osada-touch-target-min);
+    height: var(--osada-touch-target-min);
+    min-height: var(--osada-touch-target-min);
+    margin-top: 0;
+    padding: 0;
+    font-size: 0;
+}
+
+body.osada-layout-phone #uc-expand::after,
+body.osada-layout-phone #ec-expand::after {
+    content: "i";
+    font-family: Georgia, serif;
+    font-size: 20px;
+    font-weight: 700;
+    text-transform: none;
+}
+
+/* While a combat forecast is up, the player card is the ATTACKER'S IDENTITY and nothing else.
+ * Its action chips belong to the unit's turn, not to this decision — the only two actions that
+ * matter now are the forecast's own Attack and Cancel — and on a phone they are what turns a
+ * three-card row into a stack of wrapped chips two hundred pixels tall. Cancelling the preview
+ * brings them straight back. `!important`: makeVisible writes #unit-context's display inline. */
+body.osada-layout-phone #osada-bottomzone.bz--hover #uc-actions,
+body.osada-layout-phone #osada-bottomzone.bz--hover #unit-context {
+    display: none !important;
 }
 
 body.osada-layout-compact #uc-inner {
@@ -1593,30 +1711,42 @@ body.osada-layout-phone.osada-orientation-portrait .uiMessageBox--hero .heroEmer
     margin: 0 auto 12px;
 }
 
-/* Landscape phone dock: identity stays in its own column, while All Stats is
- * above the wrapped action rows. Nothing can cover the name or escape the card. */
+/* Landscape phone dock: identity stays in its own column, the action chips take the middle and
+ * All Stats closes the row. Nothing can cover the name or escape the card. */
 body.osada-layout-phone.osada-orientation-landscape #unit-info {
     max-width: none;
     justify-self: stretch;
 }
 
+/* One row, not two. The expander used to own a row of its own because it was a 154px sentence
+ * that had nowhere else to go; now that it is a 44px icon it sits at the end of the action strip
+ * instead, and the card stops spending a whole touch-target's height on a label. On a 400px-tall
+ * screen that height is map. */
 body.osada-layout-phone.osada-orientation-landscape #uc-inner {
     display: grid;
-    grid-template-columns: 48px minmax(180px, 34%) minmax(0, 1fr);
-    grid-template-areas:
-        "portrait main expand"
-        "portrait main actions";
+    grid-template-columns: 48px minmax(180px, 34%) minmax(0, 1fr) var(--osada-touch-target-min);
+    grid-template-areas: "portrait main actions expand";
     align-items: center;
     gap: 5px 10px;
 }
 
+/* Sharing the row with a forecast and a defender leaves this card ~260px, which the four-track
+ * strip above cannot fit: its 180px identity floor plus portrait plus expander overflowed, and
+ * the expander landed on top of the forecast. With the chips folded away there is nothing to put
+ * in a third track anyway, so combat collapses the card to identity + expander and lets the
+ * identity have every pixel that is left. */
+body.osada-layout-phone.osada-orientation-landscape #osada-bottomzone.bz--hover #uc-inner {
+    grid-template-columns: 48px minmax(0, 1fr) var(--osada-touch-target-min);
+    grid-template-areas: "portrait main expand";
+}
+
 body.osada-layout-phone.osada-orientation-landscape #uc-portrait { grid-area: portrait; }
-body.osada-layout-phone.osada-orientation-landscape #uc-main { grid-area: main; }
+/* `min-width: 0`: the identity column has to be allowed to give, or a long unit name sets a
+   min-content floor that pushes the expander out of the card again. */
+body.osada-layout-phone.osada-orientation-landscape #uc-main { grid-area: main; min-width: 0; }
 body.osada-layout-phone.osada-orientation-landscape #uc-expand {
     grid-area: expand;
     justify-self: start;
-    min-height: 28px;
-    padding: 5px 8px;
 }
 body.osada-layout-phone.osada-orientation-landscape #uc-actions { grid-area: actions; }
 
@@ -1665,22 +1795,6 @@ body.osada-layout-phone.osada-orientation-portrait .osada-action__glyph {
 
 body.osada-layout-phone.osada-orientation-portrait .osada-action__label {
     display: none;
-}
-
-body.osada-layout-phone.osada-orientation-portrait #uc-expand {
-    width: var(--osada-touch-target-min);
-    min-width: var(--osada-touch-target-min);
-    height: var(--osada-touch-target-min);
-    padding: 0;
-    font-size: 0;
-}
-
-body.osada-layout-phone.osada-orientation-portrait #uc-expand::after {
-    content: "i";
-    font-family: Georgia, serif;
-    font-size: 20px;
-    font-weight: 700;
-    text-transform: none;
 }
 
 /* Keep End Turn reachable in portrait. Secondary tools stay available from
