@@ -56,6 +56,10 @@ __pycache__/
 /campaign_scenarios.csv
 /art-src/
 FUTURE_IDEAS.md
+# Art sources parked under the served resource tree. Moved to /art-src/ on 2026-09-21 (70 PNG,
+# 72 MB): nothing in the game referenced them, and living under src/jsMain/resources/ meant
+# jsProcessResources shipped them in every build. This pattern keeps them from coming back.
+src/jsMain/resources/resources/_unused_assets/
 
 ### Deployment target ###
 # This repository is public. The address and login of the VPS live here, outside git, so that the

@@ -30,8 +30,11 @@ SCENARIOS = ROOT / "src/jsMain/resources/resources/scenarios/data"
 HEX_RE = re.compile(r"<hex[^>]*")
 
 # The 2026-08-15 audit recorded in docs/design/action-affordances-and-objectives.md §8.
-EXPECTED_HIDDEN_HEXES = 52
-EXPECTED_HIDDEN_FILES = 30
+# Lowered from 52/30 on 2026-09-21: the unreferenced dr*/ocamp*/fw* scenarios were deleted, and
+# four of them carried five flag-less victory hexes between them -- drlila18 (2), drmagi05 (1),
+# drvien30 (1), ocampaac (1). The audit's finding is unchanged; only its population shrank.
+EXPECTED_HIDDEN_HEXES = 47
+EXPECTED_HIDDEN_FILES = 26
 
 # Operation Uranus is the design's worked example: three victory hexes, all flagged, none hidden.
 LOCKED = {"rcampx01.xml": {"visible": 3, "hidden": 0}}

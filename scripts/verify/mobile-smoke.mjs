@@ -36,7 +36,7 @@ const DIST_DIR = process.env.OSADA_DIST_DIR
   ? path.resolve(process.env.OSADA_DIST_DIR)
   : path.resolve(ROOT_DIR, 'build', 'dist', 'js', 'productionExecutable');
 const PORT = parseInt(process.env.OSADA_MOBILE_PORT || '8766', 10);
-const SCENARIO = process.env.OSADA_MOBILE_SCENARIO || 'drpzop01.xml';
+const SCENARIO = process.env.OSADA_MOBILE_SCENARIO || 'bn9s00.xml';
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',

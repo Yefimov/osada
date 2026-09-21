@@ -31,7 +31,7 @@ const DIST_DIR = process.env.OSADA_DIST_DIR
   ? path.resolve(process.env.OSADA_DIST_DIR)
   : path.resolve(ROOT_DIR, 'build', 'dist', 'js', 'productionExecutable');
 const PORT = parseInt(process.env.OSADA_PROBE_PORT || '8773', 10);
-const SCENARIO = process.env.OSADA_PROBE_SCENARIO || 'drpzop01.xml';
+const SCENARIO = process.env.OSADA_PROBE_SCENARIO || 'bn9s00.xml';
 
 const MIME = {
   '.html': 'text/html; charset=utf-8', '.js': 'application/javascript; charset=utf-8',
