@@ -10,22 +10,53 @@ fun Equipment.resetEquipment() {
     equipmentToLoad = 0
 }
 
+/**
+ * Loads every merged country file this scenario needs, then runs [onComplete].
+ *
+ * Two independent sources decide which files those are, and both are required:
+ *
+ * * **The player list** -- each player's own `country` plus its declared `support` nations. This
+ *   is what the game may BUY and UPGRADE, so it has to be loaded whether or not anything from
+ *   those nations is on the map.
+ * * **[requiredEqids]** -- the equipment ids the scenario (or the save, or the campaign core)
+ *   actually references, resolved through [EquipmentCountryIndex]. A placed formation's `flag` is
+ *   its nationality and does **not** have to be the country its equipment record was merged under,
+ *   so the player list alone silently misses records: 820 references across 131 deployed scenarios,
+ *   of which Falciu 2's invisible Tiganca garrison was the reported one.
+ *
+ * The second source is deliberately kept out of [Player.supportCountries]: that list is what the
+ * purchase catalogue and the side's country banner read, so widening it to satisfy a fetch would
+ * change what the player may buy and how the side is labelled. Nothing here changes a unit's
+ * nationality either -- only which files are fetched.
+ *
+ * With no index available (a build without the sidecar, or a Karma run with no served resources)
+ * [requiredEqids] resolves to nothing and this is exactly the player-list-only loader it replaced.
+ */
 fun Equipment.addPlayersEquipment(
     players: List<Player>,
+    requiredEqids: Set<Int> = emptySet(),
     onComplete: () -> Unit,
 ) {
     resetEquipment()
     loadCallback = onComplete
-    equipmentToLoadSet.add(-1)
+    val fromPlayers = mutableSetOf(-1)
     players.forEach { player ->
-        equipmentToLoadSet.add(player.country)
+        fromPlayers.add(player.country)
         player.supportCountries.forEach { sc ->
-            if (sc > 0) equipmentToLoadSet.add(sc - 1)
+            if (sc > 0) fromPlayers.add(sc - 1)
         }
     }
-    equipmentToLoad = equipmentToLoadSet.size
-    equipmentToLoadSet.forEach { country ->
-        addCountryEquipment(country) { checkComplete() }
+    // The index is a one-off fetch cached for the session, so this is synchronous after the first
+    // scenario; the callback shape is what keeps the very first load correct.
+    EquipmentCountryIndex.ensureLoaded {
+        // `countryFilesFor` answers in FILE numbers and `addCountryEquipment` takes the 0-based
+        // country id it derives them from, hence the -1. See [Equipment.EQUIPMENT_PATH].
+        EquipmentCountryIndex.countryFilesFor(requiredEqids).forEach { fromPlayers.add(it - 1) }
+        equipmentToLoadSet.addAll(fromPlayers)
+        equipmentToLoad = equipmentToLoadSet.size
+        equipmentToLoadSet.toList().forEach { country ->
+            addCountryEquipment(country) { checkComplete() }
+        }
     }
 }
 

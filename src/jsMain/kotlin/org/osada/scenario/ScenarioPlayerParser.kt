@@ -30,7 +30,12 @@ internal object ScenarioPlayerParser {
         scenario.configureCalendarForPlayerCount(players.size)
 
         addCarryOverEquipmentCountries(players)
-        Equipment.addPlayersEquipment(players) {
+        // Which country FILES to fetch is decided by the ids the document actually references, not
+        // by the player list -- see [org.osada.model.EquipmentCountryIndex]. Scanned here, before
+        // `addPlayersEquipment` resets the equipment map, because [ScenarioEquipmentScan] also
+        // reads the carried campaign core out of the previous scenario's state.
+        val requiredEqids = ScenarioEquipmentScan.collect(doc)
+        Equipment.addPlayersEquipment(players, requiredEqids) {
             players.forEach { scenario.map.addPlayer(it) }
             ScenarioReinforcementParser.parse(scenario, doc)
             ScenarioEventParser.parse(scenario, doc)
@@ -41,13 +46,21 @@ internal object ScenarioPlayerParser {
     }
 
     /**
-     * Equipment is stored in country-split JSON files. A campaign may move a persistent formation
-     * between theatres whose scenario player lists no longer mention that formation's equipment
-     * country (for example Republican Spanish infantry carried into a Soviet scenario).
+     * Declares the nationalities a carried campaign core brings with it as SUPPORT COUNTRIES of the
+     * player it belongs to. A campaign may move a persistent formation between theatres whose
+     * scenario player lists no longer mention that formation's nation (for example Republican
+     * Spanish infantry carried into a Soviet scenario), and the purchase/upgrade catalogue
+     * ([org.osada.ui.EquipmentCatalogStrip]) is built from this list -- so without it a carried
+     * foreign formation has no models to upgrade into.
      *
-     * This runs before [Equipment.addPlayersEquipment] clears the previous scenario's equipment
-     * map, so the stable carried eqids can still tell us which country files the next scenario must
-     * keep loaded. The unit flag is also retained as a tolerant fallback for older saves.
+     * **It is no longer how that formation's equipment gets LOADED.** That is now
+     * [ScenarioEquipmentScan] plus [org.osada.model.EquipmentCountryIndex], which resolve the
+     * carried ids to their real country files instead of guessing from nationality; this function
+     * happened to fix the fetch as a side effect only when record and flag agreed, which is exactly
+     * the assumption Falciu 2's Tiganca garrison broke.
+     *
+     * Still runs before [Equipment.addPlayersEquipment] clears the previous scenario's equipment
+     * map, because the carried eqids are resolved against it here.
      */
     private fun addCarryOverEquipmentCountries(players: List<Player>) {
         val carriedPlayer = GameHolder.instance?.savedCampaignPlayer ?: return

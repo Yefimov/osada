@@ -50,16 +50,28 @@ class GameStateRestore(
         val typedPlayers = rawPlayers.map { GameStateDeserializer.deserializePlayer(it) }.toTypedArray()
         addCampaignCoreEquipmentCountries(typedPlayers, campaignData)
         addSavedUnitEquipmentCountries(typedPlayers, scenarioData)
-        Equipment.addPlayersEquipment(typedPlayers.toList()) {
+        // Which country FILES this save needs, resolved from the equipment ids it actually carries
+        // rather than from anyone's nationality -- see [org.osada.model.EquipmentCountryIndex].
+        // The two calls above stay: they restore the saved players' SUPPORT COUNTRY lists, which is
+        // what the purchase/upgrade catalogue reads, and are no longer load-bearing for the fetch.
+        val requiredEqids = SavedEquipmentScan.collect(scenarioData, playersData, campaignData)
+        Equipment.addPlayersEquipment(typedPlayers.toList(), requiredEqids) {
             restorePlayersAndFinish(newScenario, scenarioData, typedPlayers, campaignData, onReady)
         }
     }
 
     /**
-     * Campaign core units are restored only after equipment loading, so their country files must be
-     * added to the player load set directly from save metadata first. `flag` is a migration fallback
-     * for fmt=2 saves written before `equipmentCountry` was introduced. `continue` per
-     * missing/unmatched field reads more plainly than nesting these as an `if`.
+     * Declares a campaign core unit's nationality as a SUPPORT COUNTRY of its owner, so the
+     * purchase/upgrade catalogue lists the models a carried foreign formation can upgrade into.
+     *
+     * **No longer how that unit's equipment is FETCHED** -- [SavedEquipmentScan] resolves the saved
+     * `eqid`s through [org.osada.model.EquipmentCountryIndex] instead, which is the only thing that
+     * gets it right when a record's merged country and a unit's flag disagree.
+     *
+     * `equipmentCountry` / `transportEquipmentCountry` / `carrierEquipmentCountry` are read
+     * defensively and are in fact written by no serializer version, so `flag` is what this has
+     * always actually used. `continue` per missing/unmatched field reads more plainly than nesting
+     * these as an `if`.
      */
     @Suppress("LoopWithTooManyJumpStatements")
     private fun addCampaignCoreEquipmentCountries(
@@ -99,6 +111,10 @@ class GameStateRestore(
      * simply re-adds ids that are already present. Deliberately map-wide rather than
      * campaign-core-only: the broken units are ordinary scenario units, which
      * [addCampaignCoreEquipmentCountries] never sees.
+     *
+     * **Kept for the catalogue, not for the fetch.** A flag is a nationality and need not name the
+     * merged country file a record lives in, so as an equipment-loading mechanism this was always a
+     * guess; [SavedEquipmentScan] now does that part by id.
      */
     private fun addSavedUnitEquipmentCountries(
         players: Array<Player>,

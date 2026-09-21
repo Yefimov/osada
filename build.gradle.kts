@@ -272,6 +272,34 @@ tasks.register<Exec>("verifyScenarioRegression") {
 }
 
 /*
+ * Equipment country-index probe (2026-09-21).
+ *
+ * Added with the fix for Falciu 2's invisible Tiganca garrison: the merged equipment DB is split by
+ * country and the loader used to guess which files a battle needs from its player list, which is a
+ * guess a unit's nationality does not have to agree with. 820 references across 131 deployed
+ * scenarios pointed at a country file nobody would have fetched, and each one came up as an empty
+ * record -- a formation with no class, no icon, no stats, and (because
+ * `canInitiateAttackOnUnitType` needs BOTH records) no way to attack it off its victory hex.
+ *
+ * Two things need measuring against the DATA rather than asserted from a KDoc: that
+ * `equipment-index.json` still agrees with the country files record for record, and that a real
+ * scenario in a real browser now resolves every placed formation. Kept out of `check` for the same
+ * reason the other probes are -- it needs a built distribution and a real Chrome.
+ */
+tasks.register<Exec>("verifyEquipmentCountryIndex") {
+    group = "verification"
+    description = "Checks the eqid country index against the equipment DB and five real scenarios"
+
+    dependsOn(
+        "jsBrowserDevelopmentExecutableDistribution",
+        "verifyProductionSmokeTestNpmInstall",
+    )
+
+    workingDir = file("scripts/verify")
+    commandLine("node", "equipment-country-index-probe.mjs")
+}
+
+/*
  * Turn Report toggle probe (2026-09-05).
  *
  * Added because "the yellow arrow is gone and the button looks off-centre" is a question about
