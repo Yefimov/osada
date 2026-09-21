@@ -4,7 +4,7 @@ import org.osada.GameHolder
 import org.osada.model.GameUnit
 import org.osada.model.Hex
 import org.osada.model.canDeployOnTerrain
-import org.osada.model.getActiveLayerTarget
+import org.osada.model.getAttackableUnit
 import org.osada.model.isInDeployZone
 import org.osada.model.isOutOfZoneDeployTarget
 import org.osada.rules.Craters
@@ -367,7 +367,7 @@ internal class HexCellRenderer(
     ) {
         val currentUnit = frame.q.currentUnit
         if (!frame.hasTouch || !hex.isAttackSel || currentUnit == null) return
-        val target = hex.getActiveLayerTarget(currentUnit, frame.airMode) ?: return
+        val target = hex.getAttackableUnit(currentUnit, frame.airMode) ?: return
         val cursor = cursorRenderer.generateAttackCursor(currentUnit, target)
         rc.hexesCtx.drawImage(cursor, x - rc.hexTopWidth / 2.0, y)
     }

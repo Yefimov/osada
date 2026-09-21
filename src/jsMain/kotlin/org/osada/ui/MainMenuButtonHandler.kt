@@ -43,8 +43,6 @@ internal class MainMenuButtonHandler(
         }
         uiSettings.airMode = !uiSettings.airMode
         byId("air")?.let { toggleButton(it, uiSettings.airMode) }
-        // The player has found the control; the discoverability hint has nothing left to teach.
-        AirModeHint.markAirModeUsed()
         ui.render.render()
     }
 

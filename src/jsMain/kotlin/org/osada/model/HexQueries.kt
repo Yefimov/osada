@@ -21,11 +21,17 @@ private fun isAttackable(
 /**
  * Any target on this hex [attacker] could legally engage, on EITHER occupancy layer.
  *
- * This is the range/eligibility question — "is there anything here to shoot at?" — and it is the
- * one the AI and [org.osada.rules.CombatPositioning.getUnitAttackCells] ask. It deliberately does
- * not care which layer the human player is looking at.
+ * This is the only targeting question the game asks -- the AI, the attack-range pass
+ * ([org.osada.rules.CombatPositioning.getUnitAttackCells]) and the player's own click all resolve
+ * through it, so none of them can disagree about what is shootable.
  *
- * A player's click asks a different question; see [getActiveLayerTarget].
+ * [airMode] is a PREFERENCE, not a filter. On a hex holding both a ground/naval occupant and an
+ * aircraft it decides which of the two an otherwise-ambiguous attack hits: regular mode takes the
+ * ground occupant, Air Mode takes the aircraft. When the preferred layer holds nothing this
+ * attacker can engage -- an aircraft over an enemy ground unit, which is the ordinary way a bomber
+ * attacks -- the other layer is used. Air Mode is a SELECTION layer (it is re-derived from the
+ * selected unit after every click, `MapInputController.finishClick`), so letting it veto a legal
+ * attack made every ground attack by an aircraft impossible.
  */
 fun Hex.getAttackableUnit(
     attacker: GameUnit,
@@ -42,49 +48,6 @@ fun Hex.getAttackableUnit(
         isSecondaryDistinct && isAttackable(attacker, secondary, spotted) -> secondary
         else -> null
     }
-}
-
-/**
- * The target a PLAYER click on this hex resolves to: the ACTIVE layer only
- * (`docs/design/action-affordances-and-objectives.md` §7).
- *
- * On a hex holding one ground/naval unit and one aircraft, regular mode engages the ground/naval
- * occupant and Air Mode engages the aircraft — attack intent stays deterministic instead of
- * depending on which of the two happened to be eligible. On an unstacked hex `getUnit` returns the
- * sole occupant for either mode, so nothing changes there.
- *
- * The other layer is not silently attacked and the mode is never silently toggled; use
- * [inactiveLayerEnemy] to offer inspection and the mode-switch hint instead.
- */
-fun Hex.getActiveLayerTarget(
-    attacker: GameUnit,
-    airMode: Boolean,
-): GameUnit? {
-    val attackerSide = attacker.player?.side ?: return null
-    val target = getUnit(airMode)
-    return if (isAttackable(attacker, target, isSpotted(attackerSide))) target else null
-}
-
-/**
- * A visible enemy sitting on the layer the player is NOT currently commanding, when the active
- * layer offers no target of its own. This is what turns "my click did nothing" into an explanation.
- *
- * Returns null on an unstacked hex: there is no other layer to point at.
- */
-fun Hex.inactiveLayerEnemy(
-    attacker: GameUnit,
-    airMode: Boolean,
-): GameUnit? {
-    val attackerSide = attacker.player?.side ?: return null
-    val active = getUnit(airMode)
-    val other = getUnit(!airMode)
-    val distinctEnemy =
-        other != null &&
-            other.id != (active?.id ?: -1) &&
-            other.player?.side != attackerSide &&
-            (isSpotted(attackerSide) || other.tempSpotted) &&
-            !UnitConcealment.isConcealed(other, attackerSide)
-    return if (distinctEnemy) other else null
 }
 
 /**

@@ -124,8 +124,8 @@ internal object AttackEligibility {
      * **§6.18's line of fire is asked HERE as of 2026-08-27, and that is a fix rather than a
      * tidy-up.** §T built the rule in [isInAttackRange], which the AI's own order path
      * (`GameTurnFlow`) and the "why can't I attack this?" diagnostic reach — and nothing else does.
-     * The human player's click resolves through `Hex.getActiveLayerTarget` and the attack overlay
-     * through `Hex.getAttackableUnit`, and BOTH of those funnel through this function, so under
+     * The human player's click and the attack overlay both resolve through
+     * `Hex.getAttackableUnit`, which funnels through this function, so under
      * `extended_los` a player could paint and take a shot through a mountain that the same rule
      * refused the AI. `isInAttackRange` still asks it too; the two now give the same answer, which
      * is the point.

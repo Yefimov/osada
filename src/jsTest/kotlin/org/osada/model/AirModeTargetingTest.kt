@@ -13,9 +13,10 @@ import kotlin.test.assertSame
  * Air Mode targeting on a stacked hex
  * (`docs/design/action-affordances-and-objectives.md` §7).
  *
- * The settled rule: regular mode engages the ground/naval occupant, Air Mode engages the aircraft,
- * and neither silently reaches across to the other layer. The layer-agnostic question the AI and
- * the attack-range pass ask stays on [getAttackableUnit]; only the player's click narrowed.
+ * The settled rule: Air Mode is a PREFERENCE that breaks the tie on a stacked hex, never a filter
+ * that vetoes a legal attack. One query -- [getAttackableUnit] -- answers for the player's click,
+ * the attack overlay and the AI alike, so an aircraft can shoot the ground unit under it exactly
+ * as it does in the reference build.
  */
 class AirModeTargetingTest {
     private val infantryEqid = 1
@@ -99,7 +100,7 @@ class AirModeTargetingTest {
         val attacker = unit(infantryEqid, friendly, id = 1)
         val (hex, ground, _) = stackedHex()
 
-        assertSame(ground, hex.getActiveLayerTarget(attacker, airMode = false))
+        assertSame(ground, hex.getAttackableUnit(attacker, airMode = false))
     }
 
     @Test
@@ -107,26 +108,42 @@ class AirModeTargetingTest {
         val attacker = unit(fighterEqid, friendly, id = 1)
         val (hex, _, air) = stackedHex()
 
-        assertSame(air, hex.getActiveLayerTarget(attacker, airMode = true))
+        assertSame(air, hex.getAttackableUnit(attacker, airMode = true))
     }
 
     @Test
-    fun theActiveLayerNeverReachesAcrossToTheOtherOne() {
-        // Infantry cannot engage an air target at all. In Air Mode over a stacked hex that means
-        // "no target", NOT "fall through and shoot the ground unit instead" -- which is exactly what
-        // the old shared query did, and what made a click's outcome depend on eligibility rather
-        // than on the mode the player had declared.
+    fun theModePreferenceYieldsWhenItsOwnLayerHoldsNoLegalTarget() {
+        // Infantry cannot engage an air target at all, so in Air Mode over a stacked hex the
+        // preference has nothing to express and the ground unit is engaged. The opposite reading --
+        // "no target" -- is what silently disarmed the player: Air Mode is re-derived from the
+        // SELECTED unit after every click, so a selected aircraft forces it on, and a filter there
+        // made every ground attack by an aircraft impossible.
         val groundAttacker = unit(infantryEqid, friendly, id = 1)
         val (hex, ground, _) = stackedHex()
 
-        assertNull(hex.getActiveLayerTarget(groundAttacker, airMode = true))
-        assertSame(ground, hex.getActiveLayerTarget(groundAttacker, airMode = false))
+        assertSame(ground, hex.getAttackableUnit(groundAttacker, airMode = true))
+        assertSame(ground, hex.getAttackableUnit(groundAttacker, airMode = false))
+    }
+
+    @Test
+    fun anAircraftEngagesTheEnemyGroundUnitBeneathIt() {
+        // The reported case: the player's own aircraft occupies the air layer of the hex it is
+        // attacking from, which pins Air Mode on. The enemy infantry below must still be a target.
+        val bomber = unit(fighterEqid, friendly, id = 1)
+        val infantry = unit(infantryEqid, enemy, id = 10)
+        val hex =
+            Hex(3, 3).apply {
+                unit = infantry
+                airunit = bomber
+                setSpotted(0, true)
+            }
+
+        assertSame(infantry, hex.getAttackableUnit(bomber, airMode = true))
     }
 
     @Test
     fun anUnstackedHexIsTargetableInEitherMode() {
-        // The narrowing applies to the ambiguous case only. A lone occupant is still attackable
-        // without first matching the mode to its layer, exactly as before.
+        // A lone occupant is attackable without first matching the mode to its layer.
         val infantryAttacker = unit(infantryEqid, friendly, id = 1)
         val loneGround = unit(infantryEqid, enemy, id = 10)
         val groundHex =
@@ -135,8 +152,8 @@ class AirModeTargetingTest {
                 setSpotted(0, true)
             }
 
-        assertSame(loneGround, groundHex.getActiveLayerTarget(infantryAttacker, airMode = false))
-        assertSame(loneGround, groundHex.getActiveLayerTarget(infantryAttacker, airMode = true))
+        assertSame(loneGround, groundHex.getAttackableUnit(infantryAttacker, airMode = false))
+        assertSame(loneGround, groundHex.getAttackableUnit(infantryAttacker, airMode = true))
 
         val fighterAttacker = unit(fighterEqid, friendly, id = 2)
         val loneAir = unit(fighterEqid, enemy, id = 11)
@@ -146,70 +163,32 @@ class AirModeTargetingTest {
                 setSpotted(0, true)
             }
 
-        assertSame(loneAir, airHex.getActiveLayerTarget(fighterAttacker, airMode = false))
-        assertSame(loneAir, airHex.getActiveLayerTarget(fighterAttacker, airMode = true))
+        assertSame(loneAir, airHex.getAttackableUnit(fighterAttacker, airMode = false))
+        assertSame(loneAir, airHex.getAttackableUnit(fighterAttacker, airMode = true))
     }
 
     @Test
-    fun theLayerAgnosticQueryTheAiUsesIsUnchanged() {
-        // The AI and the attack-range sweep must still see the whole hex, so the attack ring keeps
-        // appearing over a stack that holds something engageable. Only the player's click narrowed:
-        // the same hex, the same attacker, the same mode -- one query still finds the ground unit,
-        // the other refuses to reach across to it.
-        val groundAttacker = unit(infantryEqid, friendly, id = 1)
-        val (hex, ground, _) = stackedHex()
-
-        assertSame(ground, hex.getAttackableUnit(groundAttacker, airMode = true))
-        assertNull(
-            hex.getActiveLayerTarget(groundAttacker, airMode = true),
-            "the player's own click stays on the layer they declared",
-        )
-    }
-
-    @Test
-    fun theInactiveLayerEnemyIsWhatTheHintPointsAt() {
-        val attacker = unit(infantryEqid, friendly, id = 1)
-        val (hex, ground, air) = stackedHex()
-
-        assertSame(air, hex.inactiveLayerEnemy(attacker, airMode = false))
-        assertSame(ground, hex.inactiveLayerEnemy(attacker, airMode = true))
-    }
-
-    @Test
-    fun anUnstackedHexOffersNoOtherLayer() {
+    fun anOwnUnitOnTheOtherLayerIsNeverATarget() {
         val attacker = unit(infantryEqid, friendly, id = 1)
         val hex =
             Hex(3, 3).apply {
-                unit = unit(infantryEqid, enemy, id = 10)
-                setSpotted(0, true)
-            }
-
-        assertNull(hex.inactiveLayerEnemy(attacker, airMode = false))
-        assertNull(hex.inactiveLayerEnemy(attacker, airMode = true))
-    }
-
-    @Test
-    fun anOwnUnitOnTheOtherLayerIsNotAnEnemyHint() {
-        val attacker = unit(infantryEqid, friendly, id = 1)
-        val hex =
-            Hex(3, 3).apply {
-                unit = unit(infantryEqid, enemy, id = 10)
                 airunit = unit(fighterEqid, friendly, id = 11)
                 setSpotted(0, true)
             }
 
-        assertNull(hex.inactiveLayerEnemy(attacker, airMode = false), "own aircraft is not a target hint")
+        assertNull(hex.getAttackableUnit(attacker, airMode = false), "own aircraft is not a target")
+        assertNull(hex.getAttackableUnit(attacker, airMode = true), "own aircraft is not a target")
     }
 
     @Test
-    fun anUnspottedOtherLayerEnemyIsNeverRevealedByTheHint() {
+    fun anUnspottedEnemyIsNeverReachedByTheFallback() {
         val attacker = unit(infantryEqid, friendly, id = 1)
         val (hex, _, _) = stackedHex()
         hex.setSpotted(0, false)
 
         assertNull(
-            hex.inactiveLayerEnemy(attacker, airMode = false),
-            "a hint that named an unspotted unit would leak it",
+            hex.getAttackableUnit(attacker, airMode = false),
+            "an unspotted stack offers nothing to shoot at",
         )
     }
 }

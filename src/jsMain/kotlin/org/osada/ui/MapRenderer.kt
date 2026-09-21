@@ -245,7 +245,7 @@ internal class RenderFrame(
     val airMode: Boolean,
     /** Whether to recess the unit on the layer Air Mode is not commanding, and mark the hexes where
      *  that ambiguity exists at all. Polish, so it follows the reduced-effects setting; the
-     *  targeting rule itself is `Hex.getActiveLayerTarget` and does not depend on it. */
+     *  targeting rule itself is `Hex.getAttackableUnit` and does not depend on it. */
     val markInactiveLayer: Boolean,
     val hexGrid: Boolean,
     val deployMode: Boolean,
