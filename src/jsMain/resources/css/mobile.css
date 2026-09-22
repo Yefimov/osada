@@ -140,10 +140,23 @@ button,
 #eqSelClass,
 #eqClassTabs,
 #eqModeTabs,
-.hscroll-container {
+#statsRowContainer {
     touch-action: pan-x;
     overscroll-behavior-x: contain;
     -webkit-overflow-scrolling: touch;
+}
+
+/* The equipment lists still carry .hscroll-container from the original layout, but the OSADA theme
+ * gives them `overflow: visible` and wraps their cards, so the real scroller is the pane around
+ * them (#eqListPane) and it scrolls VERTICALLY. Matching them with the rule above therefore put
+ * `touch-action: pan-x` on the very element a finger lands on, and the browser intersects
+ * touch-action down the whole ancestor chain: pan-x on the list and pan-y on the pane cancelled
+ * out to `none`, so the catalogue could not be scrolled by touch in either direction. */
+#hscroll-unitlist,
+#hscroll-eqUnitList,
+#hscroll-eqTransportList {
+    touch-action: pan-y;
+    overscroll-behavior-y: contain;
 }
 
 .osada-side-section,
@@ -1083,6 +1096,47 @@ body.osada-layout-phone #eqClassTabs {
 body.osada-layout-phone .eqUnitBox {
     min-width: 96px;
     min-height: 72px;
+}
+
+/* Sort control, short mode. "Sorted by: Close defence" spelled out in full is wider than the row
+ * it shares with the class tabs and the reverse-order button, so the chip says only "Sort." and
+ * the <select> lies transparent on top of it: the tap opens the native picker, where the full
+ * option names are readable and the current one is shown as checked. */
+body.osada-layout-phone #osadaEqSortShort,
+body.osada-layout-compact #osadaEqSortShort {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    height: 34px;
+    padding: 0 8px;
+    box-sizing: border-box;
+    font-size: 12px;
+    color: var(--osada-text);
+    background: #15171c;
+    border: 1px solid #3a3d45;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+body.osada-layout-phone #osadaEqSortShort::after,
+body.osada-layout-compact #osadaEqSortShort::after {
+    content: "\25BE";
+    color: var(--osada-text-dim);
+}
+
+body.osada-layout-phone #osadaEqSortWrap > #osadaEqSort,
+body.osada-layout-compact #osadaEqSortWrap > #osadaEqSort {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    opacity: 0;
+    -webkit-appearance: none;
+    appearance: none;
 }
 
 /* Briefings and campaign dialogue: the overlay already fills the viewport, so

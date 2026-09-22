@@ -4346,6 +4346,20 @@ hr {
     border-radius: 4px;
 }
 
+/* The sort control is a <select> plus a short stand-in chip, and exactly one of them is visible:
+ * here, on desktop, the select's own "Sort: Cost". css/mobile.css swaps them for phone/compact
+ * layouts, where the full text does not fit the class-tab row. */
+#osadaEqSortWrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+}
+
+#osadaEqSortShort {
+    display: none;
+}
+
 #eqSortOrderBut {
     float: none !important;
     margin: 0 !important;

@@ -417,6 +417,7 @@ internal object GameplayLocalization {
                 countryOptions[0].text = I18n.t("equipment.all_countries")
             }
         }
+        byId("osadaEqSortShort")?.textContent = I18n.t("equipment.sort.short")
         val options = byId("osadaEqSort")?.asDynamic()?.options ?: return
         val length = options.length as? Int ?: 0
         for (index in 0 until length) {

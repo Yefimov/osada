@@ -231,11 +231,25 @@ private fun buildCountrySelect(parent: HTMLElement) {
     }
 }
 
-/** Compact sort control in the class-tabs row — replaces the broken #eqSortOptions panel. */
+/** Compact sort control in the class-tabs row — replaces the broken #eqSortOptions panel.
+ *
+ * The chip beside the <select> is a short stand-in for its collapsed text: "Sort: Close defence"
+ * is wider than the whole class-tab row on a portrait phone, where the tabs and the reverse-order
+ * button have to share it. Phone/compact layouts show #osadaEqSortShort ("Sort.") and stretch the
+ * select transparently over it, so the tap still opens the native picker and the option names stay
+ * descriptive in the one place there is room for them — the opened list. Desktop shows the select
+ * itself, which is where the current sort is worth reading at a glance. */
 private fun buildSortSelect(parent: HTMLElement) {
-    val select = addTag(parent, "select")
+    val wrap = addTag(parent, "div")
+    wrap.id = "osadaEqSortWrap"
+    val short = addTag(wrap, "span")
+    short.id = "osadaEqSortShort"
+    short.setAttribute("aria-hidden", "true")
+    short.textContent = I18n.t("equipment.sort.short")
+    val select = addTag(wrap, "select")
     select.id = "osadaEqSort"
     select.title = I18n.t("equipment.sort.help")
+    select.setAttribute("aria-label", I18n.t("equipment.sort.prompt"))
     addSelectOption(select, "Sort: Cost", "cost", true)
     UIBuilder.unitStats.forEach { stat ->
         val property = stat.property ?: return@forEach
