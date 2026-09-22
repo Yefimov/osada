@@ -164,7 +164,7 @@ class UIBuilderStartMenuTest {
         UIBuilder.buildStartMenu()
         assertTrue((byId("smLogoText")?.innerHTML ?: "").contains("Turn-based strategy"))
         val credits = byId("smCredits")?.innerHTML ?: ""
-        assertTrue(credits.contains("v0.5"))
+        assertTrue(credits.contains("v0.6"))
         assertTrue(!credits.contains("Nicu Pavel"))
     }
 

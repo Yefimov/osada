@@ -73,7 +73,7 @@ internal object StartMenuMainButtons {
         byId("smLogoText")?.textContent = I18n.t("menu.main.tagline")
         // Display version only — decoupled from the engine VERSION constant, which is baked
         // into the localStorage save keys and must not change (it would orphan existing saves).
-        byId("smCredits")?.innerHTML = "v0.5"
+        byId("smCredits")?.innerHTML = "v0.6"
     }
 
     private fun buildLanguageSwitch() {
