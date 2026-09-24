@@ -101,6 +101,9 @@ internal object UnitCardCollapse {
         uiSettings.unitInfoVisibility = !collapsed
         if (collapsed) {
             makeHidden("unit-info")
+            // The card's band in the bottom zone goes with it; otherwise the zone keeps the space
+            // and shows nothing, and the map's box stops at the top of that empty strip.
+            BottomZoneBuilder.onPlayerCardHidden()
         } else {
             val unit = subject()
             if (unit != null) {

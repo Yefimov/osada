@@ -19,6 +19,7 @@ import org.osada.rules.calculateCombatResults
 import org.osada.rules.isAir
 import org.osada.ui.BottomZoneBuilder.renderEnemyCard
 import org.osada.ui.BottomZoneBuilder.renderForecast
+import org.osada.uiSettings
 import org.w3c.dom.HTMLElement
 
 /**
@@ -543,10 +544,30 @@ internal object BottomZoneBuilder {
 
     // ---- State machine ----
 
+    /**
+     * The player card has left the screen — folded by [UnitCardCollapse], or dropped when the turn
+     * ended. It owns no slot any more, so the zone falls back to its no-card state (on a phone,
+     * the context rail). A forecast or an enemy card holds the slot in its own right and keeps it.
+     */
+    fun onPlayerCardHidden() {
+        val bz = byId("osada-bottomzone") ?: return
+        if (bz.classList.contains("bz--hover") || bz.classList.contains("bz--enemy-only")) return
+        setState("hidden")
+    }
+
     fun setState(mode: String) {
         val bz = byId("osada-bottomzone") ?: return
+        // A FOLDED player card owns no slot either. With `bz--visible` set and #unit-info at
+        // display:none the zone kept the card's whole reserved band and drew nothing in it — a
+        // dead grey strip along the bottom of the screen — and because the map's box ends where
+        // the zone begins (`--osada-dock-h` on a phone, `positionLayers`' spacer on the desktop),
+        // folding the card handed back no map at all. Reported 2026-09-22 on a landscape phone as
+        // "the map under the unit info box stays grey". Guarding it HERE rather than only at the
+        // fold is what keeps it fixed: every later selection re-enters "own", so a fold-time-only
+        // fix would have let the strip return on the next unit the player tapped.
+        val effective = if (mode == "own" && !uiSettings.unitInfoVisibility) "hidden" else mode
         bz.classList.remove("bz--visible", "bz--hover", "bz--enemy-only")
-        when (mode) {
+        when (effective) {
             "hidden" -> { // leave all state classes off; CSS hides when none are present
             }
 

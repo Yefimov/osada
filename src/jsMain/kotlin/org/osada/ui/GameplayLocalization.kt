@@ -409,6 +409,7 @@ internal object GameplayLocalization {
     }
 
     private fun localizeEquipmentSelects() {
+        byId("osadaEqCountryShort")?.textContent = I18n.t("equipment.country.short")
         val countrySelect = byId("osadaEqCountry")
         if (countrySelect != null) {
             val countryOptions = countrySelect.asDynamic().options

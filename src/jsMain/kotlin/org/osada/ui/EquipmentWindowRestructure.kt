@@ -2,8 +2,6 @@
 
 package org.osada.ui
 
-import org.osada.GameHolder
-import org.osada.UnitClass
 import org.osada.i18n.I18n
 import org.w3c.dom.HTMLElement
 
@@ -203,65 +201,4 @@ private fun buildEqFooter(eq: HTMLElement) {
     moveInto("eqSellBut", footer)
     moveInto("eqSellCost", footer)
     moveInto("eqSellText", footer)
-}
-
-/** Country selector for sides with support countries (e.g. Germany + Romania). Populated by
- *  EquipmentWindowController.syncCountrySelect; hidden when the side has a single country. */
-private fun buildCountrySelect(parent: HTMLElement) {
-    val select = addTag(parent, "select")
-    select.id = "osadaEqCountry"
-    select.title =
-        "Filter the catalogue by equipment country. Campaign purchases may be restricted to the campaign nation."
-    select.style.display = "none"
-    select.asDynamic().onchange = {
-        // The option's own VALUE (-1 = "All Countries", 0..N-1 = country), not .selectedIndex
-        // (a DOM position — "All" sits at position 0 ahead of the real countries, so position
-        // and value only agree for "All"; everything else is off by one against it).
-        val idx = (select.asDynamic().value as? String)?.toIntOrNull() ?: -1
-        // Same state changes as the legacy "changecountry" action, minus the blind cycling.
-        byId("eqSelCountry")?.asDynamic()?.country = idx
-        val userSel = byId("eqUserSel")?.asDynamic()
-        userSel?.userunit = -1
-        userSel?.equnit = -1
-        // Was left stale here (only userunit/equnit reset) — a transport picked for a unit in
-        // the PREVIOUS country stayed selected after switching country/to "All Countries",
-        // which could resurface as an unfiltered transport list on the next render.
-        userSel?.eqtransport = -1
-        GameHolder.instance?.ui?.updateEquipmentWindow(userSel?.eqclass as? Int ?: UnitClass.TANK.value)
-    }
-}
-
-/** Compact sort control in the class-tabs row — replaces the broken #eqSortOptions panel.
- *
- * The chip beside the <select> is a short stand-in for its collapsed text: "Sort: Close defence"
- * is wider than the whole class-tab row on a portrait phone, where the tabs and the reverse-order
- * button have to share it. Phone/compact layouts show #osadaEqSortShort ("Sort.") and stretch the
- * select transparently over it, so the tap still opens the native picker and the option names stay
- * descriptive in the one place there is room for them — the opened list. Desktop shows the select
- * itself, which is where the current sort is worth reading at a glance. */
-private fun buildSortSelect(parent: HTMLElement) {
-    val wrap = addTag(parent, "div")
-    wrap.id = "osadaEqSortWrap"
-    val short = addTag(wrap, "span")
-    short.id = "osadaEqSortShort"
-    short.setAttribute("aria-hidden", "true")
-    short.textContent = I18n.t("equipment.sort.short")
-    val select = addTag(wrap, "select")
-    select.id = "osadaEqSort"
-    select.title = I18n.t("equipment.sort.help")
-    select.setAttribute("aria-label", I18n.t("equipment.sort.prompt"))
-    addSelectOption(select, "Sort: Cost", "cost", true)
-    UIBuilder.unitStats.forEach { stat ->
-        val property = stat.property ?: return@forEach
-        if (!stat.isSortable) return@forEach
-        addSelectOption(select, "Sort: ${stat.title}", property, false)
-    }
-    select.asDynamic().onchange = {
-        val userSel = byId("eqUserSel")?.asDynamic()
-        val next = select.asDynamic().value as? String ?: "cost"
-        if (next != (userSel?.sortproperty as? String ?: "cost")) {
-            userSel?.sortproperty = next
-            GameHolder.instance?.ui?.updateEquipmentWindow(userSel?.eqclass as? Int ?: UnitClass.TANK.value)
-        }
-    }
 }

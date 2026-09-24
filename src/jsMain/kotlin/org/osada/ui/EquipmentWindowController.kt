@@ -270,16 +270,20 @@ internal class EquipmentWindowController(
      *  entry (value -1); hidden for single-country sides (nothing to union there). */
     private fun syncCountrySelect(selectedIndex: Int) {
         val select = byId("osadaEqCountry") ?: return
+        // The chip wrapper is what carries the control's visibility: on a phone the select itself
+        // is a transparent overlay and the visible part is its label chip beside it, so hiding the
+        // select alone would leave a dead "Country" chip in the row (buildChipSelect).
+        val holder = byId("osadaEqCountryWrap") ?: select
         val countries = ui.countriesOnSpotSide
         // Marker class for the window: the country dropdown widens the tools cluster past what
         // the default window width leaves the 8 labeled class tabs (their row overflow:hidden
         // just clips the text) — CSS widens the window / compacts the tabs off this class.
         if (countries.size <= 1) {
-            select.style.display = "none"
+            holder.style.display = "none"
             byId("equipment")?.classList?.remove("osada-eq--countries")
             return
         }
-        select.style.display = ""
+        holder.style.display = ""
         byId("equipment")?.classList?.add("osada-eq--countries")
         val signature = countries.joinToString(",")
         if (select.asDynamic().sig != signature) {

@@ -110,6 +110,8 @@ internal class EndTurnFlow(
         DeploymentSelection.reset()
         byId("buy")?.let { toggleButton(it, false) }
         if (isVisible("unit-info")) makeHidden("unit-info")
+        // Same reason as the fold: a hidden card must not leave its band behind in the zone.
+        BottomZoneBuilder.onPlayerCardHidden()
         UICombatLog.forceClose()
         makeHidden("uiToolTip")
         if (map.currentPlayer?.type == PlayerType.HUMAN_LOCAL) {

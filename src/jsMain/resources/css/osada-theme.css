@@ -4346,17 +4346,17 @@ hr {
     border-radius: 4px;
 }
 
-/* The sort control is a <select> plus a short stand-in chip, and exactly one of them is visible:
- * here, on desktop, the select's own "Sort: Cost". css/mobile.css swaps them for phone/compact
- * layouts, where the full text does not fit the class-tab row. */
-#osadaEqSortWrap {
+/* The sort and country controls are each a <select> plus a short stand-in chip, and exactly one of
+ * them is visible: here, on desktop, the select's own text ("Sort: Cost", "All Countries").
+ * css/mobile.css swaps them for phone/compact layouts, where neither fits the class-tab row. */
+.osada-eq-chipselect {
     position: relative;
     display: inline-flex;
     align-items: center;
     flex: 0 0 auto;
 }
 
-#osadaEqSortShort {
+.osada-eq-chipselect__short {
     display: none;
 }
 

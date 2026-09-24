@@ -1098,12 +1098,17 @@ body.osada-layout-phone .eqUnitBox {
     min-height: 72px;
 }
 
-/* Sort control, short mode. "Sorted by: Close defence" spelled out in full is wider than the row
- * it shares with the class tabs and the reverse-order button, so the chip says only "Sort." and
- * the <select> lies transparent on top of it: the tap opens the native picker, where the full
- * option names are readable and the current one is shown as checked. */
-body.osada-layout-phone #osadaEqSortShort,
-body.osada-layout-compact #osadaEqSortShort {
+/* Sort and country controls, short mode. "Sorted by: Close defence" and "All Countries" spelled
+ * out in full are each wider than the row they share with the class tabs and the reverse-order
+ * button, so the chips say only "Sort." and "Country" and the <select> lies transparent on top of
+ * each: the tap opens the native picker, where the full option names are readable and the current
+ * one is shown as checked. The window heading still names the active class and country.
+ *
+ * The overlay rule is written with the ids, not the .osada-eq-chipselect class, because it has to
+ * outrank the theme's own `#osadaEqSort, #osadaEqCountry` box (height, padding, border, max-width)
+ * — a class selector would lose to it however deeply it is nested. */
+body.osada-layout-phone .osada-eq-chipselect__short,
+body.osada-layout-compact .osada-eq-chipselect__short {
     display: inline-flex;
     align-items: center;
     gap: 5px;
@@ -1118,14 +1123,16 @@ body.osada-layout-compact #osadaEqSortShort {
     white-space: nowrap;
 }
 
-body.osada-layout-phone #osadaEqSortShort::after,
-body.osada-layout-compact #osadaEqSortShort::after {
+body.osada-layout-phone .osada-eq-chipselect__short::after,
+body.osada-layout-compact .osada-eq-chipselect__short::after {
     content: "\25BE";
     color: var(--osada-text-dim);
 }
 
-body.osada-layout-phone #osadaEqSortWrap > #osadaEqSort,
-body.osada-layout-compact #osadaEqSortWrap > #osadaEqSort {
+body.osada-layout-phone #osadaEqSort,
+body.osada-layout-phone #osadaEqCountry,
+body.osada-layout-compact #osadaEqSort,
+body.osada-layout-compact #osadaEqCountry {
     position: absolute;
     inset: 0;
     width: 100%;
