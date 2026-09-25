@@ -10,6 +10,9 @@ import org.osada.model.GameUnit
 import org.osada.model.Player
 import org.osada.model.UndoInvalidation
 import org.osada.model.canUndoMove
+import org.osada.model.isInDeployZone
+import org.osada.model.isInitialDeploymentWindow
+import org.osada.model.isOutOfZoneDeployTarget
 import org.osada.model.undoInvalidationFor
 
 /**
@@ -47,6 +50,9 @@ object UnitActionAvailability {
      *  it here. */
     fun all(context: UnitActionContext): List<ActionAvailability> =
         listOf(
+            // First, because while it is applicable at all it is the one thing a just-placed
+            // formation is most likely being clicked for.
+            withdraw(context),
             mount(context),
             embark(context),
             resupply(context),
@@ -258,6 +264,7 @@ object UnitActionAvailability {
         when (action) {
             UnitActionId.GREEN_REINFORCE -> greenReinforce(context)
             UnitActionId.DISMISS_LEADER -> dismissLeader(context)
+            UnitActionId.WITHDRAW -> withdraw(context)
             else -> ActionAvailability.notApplicable(action)
         }
 
@@ -409,6 +416,57 @@ object UnitActionAvailability {
             reasons,
             listOf(ActionEffect(ActionEffectKind.UNDO_RESTORE)),
         )
+    }
+
+    // ---- Withdraw to the reserve tray ----------------------------------------------------------
+
+    /**
+     * Take a formation placed during the opening deployment back into the reserve tray.
+     *
+     * Applicable only while [isInitialDeploymentWindow] is open -- turn 1, before any of the
+     * player's formations has moved or fired -- so the chip disappears for good the moment the
+     * battle actually starts. Three narrowings keep it from doing damage:
+     *  - only a CORE formation on the player's own roster: the tray IS the roster's undeployed
+     *    half, so lifting anything else would make it vanish rather than wait there;
+     *  - only one standing where it could be put back ([canRedeployHere]): an author-placed
+     *    formation outside the deploy zone is placed content, and withdrawing it would change the
+     *    battle's opening position with no way to restore it (the same rule
+     *    `CoreUnitListOperations.liftsIntoTray` applies);
+     *  - only a formation that has done nothing itself, which the window already implies.
+     */
+    private fun withdraw(context: UnitActionContext): ActionAvailability {
+        val unit = context.unit
+        val map = context.map
+        val player = context.currentPlayer
+        val applicable =
+            player.type == PlayerType.HUMAN_LOCAL &&
+                unit.owner == player.id &&
+                unit.isCore &&
+                unit.isDeployed &&
+                player.getCoreUnitList().any { it === unit } &&
+                map.isInitialDeploymentWindow(player) &&
+                canRedeployHere(map, unit)
+        if (!applicable) return ActionAvailability.notApplicable(UnitActionId.WITHDRAW)
+        val reasons = mutableListOf<ActionBlock>()
+        addTurnBlock(context, reasons)
+        return ActionAvailability(
+            UnitActionId.WITHDRAW,
+            true,
+            reasons.isEmpty(),
+            reasons,
+            listOf(ActionEffect(ActionEffectKind.WITHDRAW_TO_TRAY)),
+        )
+    }
+
+    private fun canRedeployHere(
+        map: GameMap,
+        unit: GameUnit,
+    ): Boolean {
+        val pos = unit.getPos()
+        val side = unit.player?.side
+        return pos != null &&
+            side != null &&
+            (map.isInDeployZone(side, pos.row, pos.col) || map.isOutOfZoneDeployTarget(unit, pos.row, pos.col))
     }
 
     private fun undoReason(invalidation: UndoInvalidation?): ActionBlockReason =

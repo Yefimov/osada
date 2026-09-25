@@ -54,7 +54,7 @@ object HexStyles {
 
     val ownunit =
         HexStyle(
-            fillColor = "rgba(30,144,255,0.3)",
+            fillColor = "rgba(70,170,70,0.32)",
             lineColor = "rgba(0,0,0,0.4)",
             lineWidth = 0.0,
             lineJoin = "miter",

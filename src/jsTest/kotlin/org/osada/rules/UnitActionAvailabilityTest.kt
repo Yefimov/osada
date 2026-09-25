@@ -280,6 +280,9 @@ class UnitActionAvailabilityTest {
 
         assertEquals(
             listOf(
+                // Withdraw leads the strip, but is only ever applicable during the opening
+                // deployment -- a formation off the tray list resolves as not-applicable here.
+                UnitActionId.WITHDRAW,
                 UnitActionId.MOUNT,
                 UnitActionId.EMBARK,
                 UnitActionId.RESUPPLY,
@@ -322,6 +325,36 @@ class UnitActionAvailabilityTest {
                 .filter { it.action == UnitActionId.LAY_MINES || it.action == UnitActionId.CLEAR_MINES }
                 .none { it.applicable },
         )
+    }
+
+    // ---- withdraw ----------------------------------------------------------------------------
+
+    /** A core formation placed on its own deploy hex may go back to the tray while the opening
+     *  deployment lasts -- and the chip vanishes (not greys out) the moment it closes. */
+    @Test
+    fun withdrawIsOfferedOnlyDuringTheOpeningDeployment() {
+        val world = world()
+        world.map.map!![1][1].isDeployment = world.friendly.id
+        val unit = world.place(infantryEqid, 1, 1)
+        world.friendly.addCoreUnit(unit)
+
+        val open = availability(world, unit, UnitActionId.WITHDRAW)
+        assertTrue(open.applicable)
+        assertTrue(open.enabled)
+
+        val other = world.place(tankEqid, 3, 3)
+        other.hasMoved = true
+        assertFalse(availability(world, unit, UnitActionId.WITHDRAW).applicable)
+    }
+
+    /** Placed content -- a core formation the author put outside the deploy zone -- stays put. */
+    @Test
+    fun withdrawIsNotOfferedOutsideTheDeployZone() {
+        val world = world()
+        val unit = world.place(infantryEqid, 1, 1)
+        world.friendly.addCoreUnit(unit)
+
+        assertFalse(availability(world, unit, UnitActionId.WITHDRAW).applicable)
     }
 
     // ---- harness ------------------------------------------------------------------------------

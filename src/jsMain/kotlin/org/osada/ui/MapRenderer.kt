@@ -157,6 +157,7 @@ internal class MapRenderer(
             strategicZoom = uiSettings.strategicZoom,
             showHiddenVictoryHexes = uiSettings.showHiddenVictoryHexes,
             markOwnUnits = uiSettings.markOwnUnits,
+            markEnemyHexes = uiSettings.markEnemyHexes,
             enhancedSideMarkers = uiSettings.enhancedSideMarkers,
             // Allegiance is read from the SPOTTING side, not `currentPlayer`: during an AI turn and
             // in observer mode the current player is not the person looking at the map, and a badge
@@ -252,6 +253,7 @@ internal class RenderFrame(
     val strategicZoom: Boolean,
     val showHiddenVictoryHexes: Boolean,
     val markOwnUnits: Boolean,
+    val markEnemyHexes: Boolean,
     /** Opt-in star/skull allegiance badges on strategic unit flags (accessibility, off by default). */
     val enhancedSideMarkers: Boolean,
     /** The side whose point of view the map is drawn from -- `game.spotSide`, not the current player. */

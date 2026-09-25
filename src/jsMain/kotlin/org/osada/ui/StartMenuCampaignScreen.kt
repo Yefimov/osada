@@ -339,6 +339,24 @@ internal object StartMenuCampaignScreen {
         refreshRegisterRows(campSelect, list)
     }
 
+    /**
+     * Everything on this screen that depends on whether the SELECTED campaign has a stored run,
+     * refreshed after an import put one there (or replaced it).
+     *
+     * The import used to refresh only the existing rows' note text, and that refresh returns early
+     * on a row with no note element -- which is every row whose campaign had no run when the list
+     * was built, i.e. exactly the campaign a first import adds. So nothing appeared: no "In
+     * progress · operation 1/44", no Start over link, and Play still read "Start" (2026-09-25 user
+     * report). Rebuilding the register and re-running the Play label and Rules lock, as Start over
+     * does after clearing a run, covers all three.
+     */
+    fun refreshAfterRunImport() {
+        refreshRegister()
+        val selected = byId("smCamp")?.asDynamic()?.selectedCampaign as? Int
+        refreshRulesLockForSelection(selected?.let { StartMenuBuilder.campaignList().getOrNull(it)?.file as? String })
+        StartMenuCampaignData.updateCampaignPrestigeDisplay()
+    }
+
     private fun buildCampaignDossierHead(dossier: HTMLElement) {
         val head = addTag(dossier, "div")
         head.id = "smCampDossierHead"

@@ -69,6 +69,11 @@ enum class UnitActionId(
      *  say which it would do (`rules/EngineeringWork.BLOW_RAIL`). */
     BLOW_RAIL("blow_rail"),
     UNDO("undo"),
+
+    /** Lift a formation placed during the opening deployment back into the reserve tray
+     *  (`UnitActionAvailability.withdraw`). Absent from the strip -- not merely disabled -- once the window closes,
+     *  so it takes no room for the rest of the battle (2026-09-25 user request). */
+    WITHDRAW("withdraw"),
     SLEEP("sleep"),
 }
 
@@ -246,6 +251,9 @@ enum class ActionEffectKind {
 
     /** Restores the pre-move position, fuel and movement state. */
     UNDO_RESTORE,
+
+    /** Returns the formation to the reserve tray, to be placed again; no prestige changes hands. */
+    WITHDRAW_TO_TRAY,
 
     /** Skips the unit in ready-unit navigation, still counted by the end-turn warning. */
     SLEEP_SKIP,

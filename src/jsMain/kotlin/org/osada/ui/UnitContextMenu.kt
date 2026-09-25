@@ -11,6 +11,7 @@ import org.osada.model.UndoInvalidation
 import org.osada.model.beginEngineering
 import org.osada.model.clearMinefield
 import org.osada.model.delAttackSel
+import org.osada.model.delCurrentUnit
 import org.osada.model.delMoveSel
 import org.osada.model.disembarkUnit
 import org.osada.model.embarkUnit
@@ -18,6 +19,7 @@ import org.osada.model.layMinefield
 import org.osada.model.mountUnit
 import org.osada.model.reinforceUnit
 import org.osada.model.resupplyUnit
+import org.osada.model.undeployUnit
 import org.osada.model.undoLastMove
 import org.osada.model.unmountUnit
 import org.osada.rules.Engineering
@@ -91,6 +93,10 @@ internal class UnitContextMenu(
         val map = ui.game.scenario?.map
         val pos = unit.getPos()
         if (map == null || pos == null) return
+        if (action == "withdraw") {
+            ui.withdrawToTray(map, unit, pos)
+            return
+        }
         val radius = getUnitRenderRadius(unit)
         performAction(action, map, unit, pos)
         buildUnitContext(unit)
@@ -322,4 +328,29 @@ private fun UnitContextMenu.performSupplyAction(
             }
         else -> performReinforce(map, unit, pos, action == "overstrength")
     }
+}
+
+/**
+ * Lifts a formation placed during the opening deployment back into the reserve tray
+ * (`UnitActionAvailability.withdraw` decides when that is offered).
+ *
+ * Handled apart from [UnitContextMenu]'s ordinary actions because the formation leaves the map:
+ * there is no unit left to rebuild the strip or the info card for, so it finishes the way
+ * `DeploymentSelection.deploySelected` does -- nothing selected, the tray recounted, and the
+ * position saved, so a refresh does not put the formation back on the hex.
+ */
+internal fun UI.withdrawToTray(
+    map: GameMap,
+    unit: GameUnit,
+    pos: Cell,
+) {
+    if (!map.undeployUnit(unit)) return
+    map.delMoveSel()
+    map.delAttackSel()
+    map.delCurrentUnit()
+    buildUnitContext(null)
+    render.render(pos.row, pos.col, getUnitRenderRadius(unit))
+    updateEquipmentWindow(unit.unitData(true).uclass)
+    updateStatusBar()
+    game.state?.save()
 }

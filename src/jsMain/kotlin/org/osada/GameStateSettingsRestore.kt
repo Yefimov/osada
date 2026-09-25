@@ -43,6 +43,7 @@ internal fun applyMarkerSettings(data: dynamic) {
     uiSettings.markCombatUnits = data.markCombatUnits as? Boolean ?: true
     uiSettings.markOwnUnits = data.markOwnUnits as? Boolean ?: false
     uiSettings.markEnemyUnits = data.markEnemyUnits as? Boolean ?: false
+    uiSettings.markEnemyHexes = data.markEnemyHexes as? Boolean ?: false
     uiSettings.markFOW = data.markFOW as? Boolean ?: false
     // Accessibility opt-in, default off: a settings blob written before this existed must not turn
     // the badges on for a player who never asked for them.

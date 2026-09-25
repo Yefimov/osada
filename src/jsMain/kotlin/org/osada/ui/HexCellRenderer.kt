@@ -231,9 +231,8 @@ internal class HexCellRenderer(
         // Primary unit (!airMode) – sprite only, and recessed when it is the layer not in command
         val primary = hex.getUnit(!frame.airMode)
         if (primary != null && isUnitVisible(hex, primary)) {
-            if (frame.markOwnUnits && primary.player?.id == frame.q.currentPlayer?.id) {
-                rc.drawHex(rc.hexesCtx, x, y, hexStyles["ownunit"])
-            }
+            val mark = sideMarkStyle(frame, primary)
+            if (mark != null) rc.drawHex(rc.hexesCtx, x, y, mark)
             unitRenderer.drawUnit(rc.hexesCtx, x, y, primary, false, dimmed = recess)
         }
 
@@ -389,3 +388,23 @@ internal class HexCellRenderer(
  * conventions in one function and drew every strategic-zoom unit flag one country to the right.
  */
 internal fun strategicUnitFlag(unit: GameUnit): Int = (unit.flag - 1).coerceAtLeast(0)
+
+/**
+ * The optional own/enemy hex fill under a unit's sprite, or null for none. Own is decided by
+ * player, enemy by SIDE against the viewing side (`spotSide`, as the red strength badge does), so an
+ * allied formation is neither and the human's own units are not shaded during the AI's turn. Only
+ * asked about a unit already visible to that side, so shading never reveals anything the fog hides.
+ *
+ * At file level because [HexCellRenderer] is at its function budget.
+ */
+private fun sideMarkStyle(
+    frame: RenderFrame,
+    unit: GameUnit,
+): dynamic {
+    val viewingSide = GameHolder.instance?.spotSide
+    return when {
+        frame.markOwnUnits && unit.player?.id == frame.q.currentPlayer?.id -> hexStyles["ownunit"]
+        frame.markEnemyHexes && viewingSide != null && unit.player?.side != viewingSide -> hexStyles["enemyunit"]
+        else -> null
+    }
+}

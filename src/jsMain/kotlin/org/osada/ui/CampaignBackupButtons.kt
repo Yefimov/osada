@@ -103,9 +103,9 @@ internal object CampaignBackupButtons {
         CampaignRunBackup.importFromFile(
             files[0],
             onSuccess = { name ->
-                // The imported campaign's row still shows the operation/turn of the run that was
-                // just replaced, so re-render the register's notes from the new state.
-                LiveLocalization.refreshCampaignRows()
+                // The imported campaign's row still shows the run that was just replaced -- or, for
+                // a campaign never played here, nothing at all -- so rebuild from the new state.
+                StartMenuCampaignScreen.refreshAfterRunImport()
                 // Before the message, not after: [refresh] resets the status line, so reporting the
                 // import first would immediately wipe what it reported.
                 refresh()

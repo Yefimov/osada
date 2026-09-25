@@ -75,6 +75,11 @@ internal class AnimationOrchestrator(
 
         if (animated) {
             playMoveSound(unit)
+            // Hidden from the map BEFORE this render. `moveUnit` has already put the unit on its
+            // destination hex, and `moveAnimation` only raised the flag itself, after this render
+            // had drawn it there -- so a unit (most visibly an enemy coming out of the fog) popped
+            // up at its destination first and only then flew in from its start.
+            unit.hasAnimation = true
             ui.render.render(startPos.row, startPos.col, radius)
             val params =
                 jsObject {
@@ -303,6 +308,8 @@ internal class AnimationOrchestrator(
         result: MovementResults,
         radius: Int,
     ) {
+        // `uiUnitMove` raises it before the animation starts; make sure no path leaves it up.
+        unit.hasAnimation = false
         val pos =
             unit.getPos() ?: run {
                 ui.game.waitUIAnimation = false

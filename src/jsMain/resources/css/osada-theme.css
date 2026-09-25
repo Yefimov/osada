@@ -3255,7 +3255,9 @@ hr {
 .osada-bar__track {
     position: relative;
     flex: 1 1 auto;
-    height: 6px;
+    /* Tall enough for the 9px current/max value that sits ON the bar (`overflow: hidden` would
+     * otherwise clip its glyphs top and bottom). */
+    height: 11px;
     background: rgba(0, 0, 0, .4);
     border-radius: 3px;
     overflow: hidden;
@@ -8575,6 +8577,26 @@ hr {
     color: var(--osada-red-bright);
     border-left: 2px solid var(--osada-red);
     cursor: help;
+}
+
+/* With a hover-capable pointer the ⚠ beside each threatened row carries this warning in its
+ * tooltip, so the permanent red line is dropped. Phones and touch screens keep it. */
+body:not(.osada-layout-phone):not(.osada-input-coarse) .osada-obj-threat--marked {
+    display: none;
+}
+
+.osada-obj__threat {
+    flex: 0 0 auto;
+    margin: 0 4px;
+    font-size: 12px;
+    line-height: 1;
+    color: var(--osada-red-bright);
+    cursor: help;
+}
+
+body.osada-layout-phone .osada-obj__threat,
+body.osada-input-coarse .osada-obj__threat {
+    display: none;
 }
 
 .osada-obj-section:first-child {

@@ -59,6 +59,8 @@ object UIBuilder {
             // which, exactly as the five construction chips share the builder mark.
             "blow_rail" to "D",
             "undo" to "_",
+            // Same back-arrow as Undo: both put the formation back where it was a moment ago.
+            "withdraw" to "_",
             "sleep" to "t",
         )
 

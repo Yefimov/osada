@@ -46,6 +46,12 @@ internal object ObjectivesRail {
     /** null = follow [OPTIONAL_AUTO_EXPAND]; set once the player has folded or unfolded by hand. */
     private var optionalExpanded: Boolean? = null
 
+    /** The rows [renderThreat] warns about, and the text of that warning, for the current render:
+     *  [objectiveRow] marks each of them with a small ⚠ whose tooltip carries the warning. */
+    private var threatCells: Set<Pair<Int, Int>> = emptySet()
+    private var threatTip: String = ""
+    private var threatMarked = false
+
     fun render(
         container: HTMLElement,
         game: Game,
@@ -61,6 +67,7 @@ internal object ObjectivesRail {
             empty.className = "osada-side-empty"
             empty.textContent = I18n.t("hud.objective.none_visible")
         } else {
+            prepareThreat(report)
             renderVictory(container, report, game)
             renderThreat(container, report)
             ExtendedObjectivesRail.render(container, report)
@@ -92,24 +99,42 @@ internal object ObjectivesRail {
      * airfield -- and counted otherwise. Skipped when any of them is a hidden victory hex, because
      * a count or a name would reveal what the author concealed.
      */
+    private fun threatText(report: ObjectiveReport): String? {
+        val needs = report.enemyNeeds
+        if (needs.isEmpty() || needs.any { it.kind == ObjectiveKind.HIDDEN_VICTORY }) return null
+        return if (needs.size == 1) {
+            val only = needs.single()
+            I18n.t(
+                "hud.objective.threat.single",
+                mapOf("name" to only.name.ifEmpty { "(${only.col},${only.row})" }),
+            )
+        } else {
+            I18n.t("hud.objective.threat.all", mapOf("count" to needs.size))
+        }
+    }
+
+    private fun prepareThreat(report: ObjectiveReport) {
+        val text = threatText(report)
+        threatCells = if (text == null) emptySet() else report.enemyNeeds.map { it.row to it.col }.toSet()
+        threatTip = if (text == null) "" else text + "\n" + I18n.t("hud.objective.threat.help")
+        threatMarked = false
+    }
+
+    /**
+     * The same warning as a full red line. Where a pointer can hover, the ⚠ beside each threatened
+     * row already says it, and a line that stayed red for the whole battle was noise (2026-09-25
+     * user report) -- so `osada-obj-threat--marked` hides it there. Phones and touch screens keep
+     * the line, having no hover to read the marker's tooltip with. A threatened hex the rail lists
+     * no row for leaves the line unmarked, and therefore shown everywhere.
+     */
     private fun renderThreat(
         container: HTMLElement,
         report: ObjectiveReport,
     ) {
-        val needs = report.enemyNeeds
-        if (needs.isEmpty() || needs.any { it.kind == ObjectiveKind.HIDDEN_VICTORY }) return
+        val text = threatText(report) ?: return
         val line = addTag(container, "div")
-        line.className = "osada-obj-threat"
-        line.textContent =
-            if (needs.size == 1) {
-                val only = needs.single()
-                I18n.t(
-                    "hud.objective.threat.single",
-                    mapOf("name" to only.name.ifEmpty { "(${only.col},${only.row})" }),
-                )
-            } else {
-                I18n.t("hud.objective.threat.all", mapOf("count" to needs.size))
-            }
+        line.className = "osada-obj-threat" + if (threatMarked) " osada-obj-threat--marked" else ""
+        line.textContent = text
         line.title = I18n.t("hud.objective.threat.help")
     }
 
@@ -188,6 +213,14 @@ internal object ObjectivesRail {
         name.className = "osada-obj__name"
         name.textContent = label
         name.title = label
+        if ((entry.row to entry.col) in threatCells) {
+            val warn = addTag(row, "span")
+            warn.className = "osada-obj__threat"
+            warn.textContent = "⚠"
+            warn.title = threatTip
+            warn.setAttribute("aria-label", threatTip)
+            threatMarked = true
+        }
         val state = addTag(row, "span")
         state.className = "osada-obj__state"
         val mark = addTag(state, "span")

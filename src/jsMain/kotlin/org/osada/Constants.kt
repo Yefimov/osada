@@ -583,6 +583,10 @@ class UiSettings {
     var markCombatUnits: Boolean = true
     var markOwnUnits: Boolean = false
     var markEnemyUnits: Boolean = false
+
+    /** Shade the hexes of spotted enemy formations -- the counterpart of [markOwnUnits]'s fill.
+     *  A separate switch from [markEnemyUnits], which only recolours the strength badge. */
+    var markEnemyHexes: Boolean = false
     var markFOW: Boolean = false
 
     /**
@@ -648,6 +652,7 @@ class UiSettings {
             "useRetina" -> useRetina
             "markOwnUnits" -> markOwnUnits
             "markEnemyUnits" -> markEnemyUnits
+            "markEnemyHexes" -> markEnemyHexes
             "enhancedSideMarkers" -> enhancedSideMarkers
             "quickAnimation" -> quickAnimation
             "showDetailInfoToolTips" -> showDetailInfoToolTips
@@ -671,6 +676,7 @@ class UiSettings {
             "useRetina" -> useRetina = value
             "markOwnUnits" -> markOwnUnits = value
             "markEnemyUnits" -> markEnemyUnits = value
+            "markEnemyHexes" -> markEnemyHexes = value
             "enhancedSideMarkers" -> enhancedSideMarkers = value
             "quickAnimation" -> quickAnimation = value
             "showDetailInfoToolTips" -> showDetailInfoToolTips = value
@@ -704,6 +710,7 @@ class UiSettings {
         o.markCombatUnits = markCombatUnits
         o.markOwnUnits = markOwnUnits
         o.markEnemyUnits = markEnemyUnits
+        o.markEnemyHexes = markEnemyHexes
         o.markFOW = markFOW
         o.enhancedSideMarkers = enhancedSideMarkers
         o.noFOW = noFOW

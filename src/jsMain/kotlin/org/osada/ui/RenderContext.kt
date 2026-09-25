@@ -152,9 +152,20 @@ internal val hexStyles =
                 "lineWidth" to 1,
                 "lineJoin" to "miter",
             ),
+        // Green, not the inherited blue: that blue is also "airunit"'s fill, so in Air Mode an own
+        // aircraft and an own ground unit were marked identically (2026-09-25 user report).
         "ownunit" to
             json(
-                "fillColor" to "rgba(30,144,255,0.3)",
+                "fillColor" to "rgba(70,170,70,0.32)",
+                "lineColor" to "rgba(0,0,0,0.4)",
+                "lineWidth" to 0,
+                "lineJoin" to "miter",
+            ),
+        // Dark and translucent, so the enemy sprite on top stays readable; the counterpart of
+        // "ownunit" for the `markEnemyHexes` setting.
+        "enemyunit" to
+            json(
+                "fillColor" to "rgba(0,0,0,0.35)",
                 "lineColor" to "rgba(0,0,0,0.4)",
                 "lineWidth" to 0,
                 "lineJoin" to "miter",
