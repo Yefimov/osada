@@ -16,6 +16,7 @@ import org.osada.model.getPlayer
 import org.osada.save.SaveStatus
 import org.osada.save.SaveStatusBus
 import org.osada.scenario.ScenarioTextLocalization
+import org.osada.scenario.TimedDefeatReason
 import org.osada.scenario.getReinforcements
 import org.osada.scenario.removeReinforcement
 import org.osada.ui.HudLog
@@ -60,6 +61,26 @@ fun Game.handleMoveVictory(winningSide: Int) {
             ui?.mainMenuButton("options")
         }
     }
+}
+
+/**
+ * The end of a standalone battle whose turns ran out.
+ *
+ * This used to be an unconditional DEFEAT banner, so a scenario with hold counts -- `forward2`
+ * standalone, where the Soviet side wins by still holding 3/2/1 of its four cities -- told a player
+ * who had won that they had lost. The result is `checkTimedOutcome`'s, and a defeat now says which
+ * requirement was missed ([TimedDefeatReason]).
+ */
+internal fun Game.showStandaloneTimedOutcome() {
+    val (outcome, side) = standaloneTimedOutcome ?: ("lose" to (scenario?.map?.currentPlayer?.side ?: 0))
+    standaloneTimedOutcome = null
+    val body =
+        if (outcome == "lose") {
+            scenario?.let { TimedDefeatReason.text(it, side) } ?: I18n.t("game.loss_reason.turns")
+        } else {
+            I18n.t("game.scenario.victory.body")
+        }
+    UIBuilder.message(localizedOutcomeName(outcome), body) { ui?.mainMenuButton("options") }
 }
 
 fun Game.continueCampaign(
@@ -114,7 +135,7 @@ fun Game.continueCampaign(
     nextScenarioData = campaign!!.loadNextScenario(outcome, routeOverride)
     continueCampaignFlag = true
     if (nextScenarioData == null) {
-        val finalText = if (outcome == "lose") localizedLossReason(reason) + text else text
+        val finalText = if (outcome == "lose") lossReason(reason) + text else text
         UIBuilder.showCampaignEnd(outcome, finalText) { ui?.mainMenuButton("options") }
         gameEnded = true
         gameStarted = false
@@ -131,7 +152,10 @@ fun Game.continueCampaign(
             OSGlue.reportAchievement(campaign!!.file)
         }
     } else {
-        UIBuilder.message(localizedOutcomeName(outcome), text, narrative = true)
+        // A defeat the campaign survives still gets its reason: the author's text alone can
+        // describe a different defeat from the one the player just had (`TimedDefeatReason`).
+        val shown = if (outcome == "lose") lossReason(reason) + text else text
+        UIBuilder.message(localizedOutcomeName(outcome), shown, narrative = true)
         if (outcome == "briliant") awardPrototype = true
     }
 }
@@ -277,9 +301,12 @@ private fun localizedOutcomeName(outcome: String): String =
         else -> outcome
     }
 
-private fun localizedLossReason(reason: EndGameType): String =
+private fun Game.lossReason(reason: EndGameType): String =
     when (reason) {
         EndGameType.MOVE_CAPTURE -> I18n.t("game.loss_reason.objectives")
-        EndGameType.NO_TURNS_LEFT -> I18n.t("game.loss_reason.turns")
+        EndGameType.NO_TURNS_LEFT ->
+            scenario
+                ?.let { TimedDefeatReason.text(it, campaignPlayer?.side ?: 0) }
+                ?: I18n.t("game.loss_reason.turns")
         EndGameType.NO_ENEMY_LEFT -> I18n.t("game.loss_reason.units")
     }

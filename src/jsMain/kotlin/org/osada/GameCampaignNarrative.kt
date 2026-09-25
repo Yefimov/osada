@@ -4,10 +4,12 @@ import org.osada.campaign.CampaignEffectParser
 import org.osada.campaign.CampaignNarrative
 import org.osada.campaign.ScenarioActionParser
 import org.osada.campaign.ScenarioEndState
+import org.osada.rules.CampaignAutoRefit
 import org.osada.scenario.firedEventIds
 import org.osada.scenario.getCurrentScenarioActions
 import org.osada.scenario.getOutcomeEffects
 import org.osada.scenario.peekNextScenarioFile
+import org.osada.scenario.peekNextScenarioRecord
 
 /*
  * Bridges the running game to the campaign narrative system. Everything here is a no-op outside a
@@ -49,6 +51,19 @@ internal fun Game.recordCampaignOutcome(
             targetScenario = nextScenario,
             effects = CampaignEffectParser.parseList(activeCampaign.getOutcomeEffects(outcome)),
         )
+    }
+    // OG's between-battle refit rides the same queue, so it inherits exactly-once application and
+    // survives a save made inside the next battle (`rules/CampaignAutoRefit`). Deliberately OUTSIDE
+    // the `recorded` guard: that guard is per scenario FILE for the whole run, so a mission replayed
+    // after a defeat that loops back to it (`rcampdfr`'s `rcampper`) would reach its next battle
+    // with no refit. `CampaignAutoRefit.nextEffect` is what stops a duplicate completion instead.
+    if (nextScenario != null &&
+        CampaignAutoRefit.enabled() &&
+        CampaignAutoRefit.authoredFor(activeCampaign.peekNextScenarioRecord(outcome, routeOverride))
+    ) {
+        CampaignAutoRefit.nextEffect(CampaignNarrative.state.effects, scenarioFile, nextScenario)?.let {
+            CampaignNarrative.queueForNextScenario(targetScenario = nextScenario, effects = listOf(it))
+        }
     }
 }
 

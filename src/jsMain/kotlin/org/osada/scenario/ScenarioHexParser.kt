@@ -1,5 +1,6 @@
 package org.osada.scenario
 
+import org.osada.model.GameMap
 import org.osada.model.Hex
 import org.osada.model.getPlayers
 import org.osada.model.setHex
@@ -21,6 +22,7 @@ internal object ScenarioHexParser {
             val el = hexElements.item(i) ?: continue
             parseHexElement(el, scenario)
         }
+        scenario.map.recordCaptureGoalSides()
     }
 
     private fun parseHexElement(
@@ -150,4 +152,12 @@ internal object ScenarioHexParser {
             ScenarioUnitParser.parse(unitNode, scenario)?.let { hex.setUnit(it) }
         }
     }
+}
+
+/**
+ * Fixes [GameMap.captureGoalSides] from the freshly loaded objectives: every side that starts with
+ * something still to take. Called once, after the last `<hex>` of a scenario has been registered.
+ */
+internal fun GameMap.recordCaptureGoalSides() {
+    captureGoalSides = sidesVictoryHexes.indices.filter { sidesVictoryHexes[it].isNotEmpty() }
 }

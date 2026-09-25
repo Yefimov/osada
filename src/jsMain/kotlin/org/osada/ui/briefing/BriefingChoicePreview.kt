@@ -33,6 +33,8 @@ internal object BriefingChoicePreview {
             // Narrative state — never previewed, regardless of whether it is applied. See the
             // class doc: naming the campaign branch a choice routes to would spoil the story.
             is CampaignEffect.SetFlag, is CampaignEffect.ClearFlag, is CampaignEffect.Route -> null
+            // Engine-queued at a transition, never offered as a choice.
+            is CampaignEffect.AutoRefit -> null
             // Parsed, clamped and persisted, but `CampaignEffectApplier` still no-ops them (see
             // the effect catalogue in docs/campaign-dialogue-and-consequences.md §7). Previewing
             // them would promise the player something that does not happen — worse than silence.

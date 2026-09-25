@@ -123,6 +123,12 @@ object RulesetResolver {
      * It meets this set's condition exactly: `RailTransport.canEntrain` already ANDs the key with
      * the player's pool, so resolving it to 1 hands the decision to the scenario rather than
      * switching a rule on. A scenario with no pool is unaffected, which is 382 of the 502.
+     *
+     * ### `CAMPAIGN_AUTO_REFIT` joined on 2026-09-24
+     *
+     * Its gate is the CAMPAIGN's per-scenario record rather than the scenario XML: OG stores
+     * "no auto-refit" in the `.xcam`, and `CampaignAutoRefit.authoredFor` ANDs the key with it. A
+     * standalone battle has no campaign and is unaffected either way.
      */
     private val SCENARIO_AUTHORED =
         setOf(
@@ -132,6 +138,7 @@ object RulesetResolver {
             RuleKey.BARRAGE,
             RuleKey.BUILD_AND_REPAIR,
             RuleKey.RAIL_TRANSPORT,
+            RuleKey.CAMPAIGN_AUTO_REFIT,
         )
 
     /**
@@ -146,11 +153,21 @@ object RulesetResolver {
      * content.
      */
     private fun ownedRule(rule: RuleKey): ResolvedRule =
-        if (rule in SCENARIO_AUTHORED) {
-            ResolvedRule(1, 1, RuleProvenance.SCENARIO_AUTHORED)
-        } else {
-            RulesetDefaults.OSADA.getValue(rule).let { ResolvedRule(it, it, RuleProvenance.OSADA_DEFAULT) }
+        when (rule) {
+            in SCENARIO_AUTHORED -> ResolvedRule(1, 1, RuleProvenance.SCENARIO_AUTHORED)
+            in OSADA_ONLY -> ResolvedRule(0, 0, RuleProvenance.NOT_OPEN_GENERAL)
+            else -> RulesetDefaults.OSADA.getValue(rule).let { ResolvedRule(it, it, RuleProvenance.OSADA_DEFAULT) }
         }
+
+    /**
+     * OSADA inventions that OSADA Default runs and Author's Vision must not.
+     *
+     * `craters` and `rail_demolition` never needed this: their OSADA default is already off, so
+     * Author's Vision inherits the right answer. `combat_support_min_bar` is the first one that is
+     * ON by default, and inheriting that would put a non-OG rule into the profile that promises
+     * the content's own rules.
+     */
+    private val OSADA_ONLY = setOf(RuleKey.COMBAT_SUPPORT_MIN_BAR)
 
     /**
      * "On" means "allow the slots this efile defines" and can never invent definitions the content

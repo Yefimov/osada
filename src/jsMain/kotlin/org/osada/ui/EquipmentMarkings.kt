@@ -8,7 +8,6 @@ import org.osada.model.EquipmentData
 import org.osada.model.GameUnit
 import org.osada.model.abilityCatalog
 import org.osada.rules.UnitCapabilities
-import org.osada.rules.UnitExperience
 import org.w3c.dom.HTMLElement
 
 /**
@@ -59,7 +58,9 @@ internal object EquipmentMarkings {
                 ?.let { UnitCapabilities.hasCombatSupport(it) }
                 ?: UnitCapabilities.grantsCombatSupport(data)
         if (hasCombatSupport) {
-            addHeadquartersMark(parent, unit?.experience?.div(UnitExperience.EXPERIENCE_PER_BAR))
+            // The same count combat applies -- clamped to five and floored by
+            // `combat_support_min_bar` -- not a private `experience / 100` that disagreed with both.
+            addHeadquartersMark(parent, unit?.let(UnitCapabilities::lentBars))
         }
         if (UnitCapabilities.hasPhasedMovement(data)) {
             addMark(parent, "RCN", I18n.t("equipment.mechanics.recon_movement"))

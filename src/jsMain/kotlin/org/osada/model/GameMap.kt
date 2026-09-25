@@ -43,6 +43,20 @@ class GameMap {
     var sidesVictoryHexes: MutableList<MutableList<Cell>> = mutableListOf(mutableListOf(), mutableListOf())
     var currentPlayer: Player? = null
 
+    /**
+     * The sides this scenario gave something to CAPTURE, fixed when it was loaded.
+     *
+     * [sidesVictoryHexes] is live state — a hex moves to the other side's list every time it
+     * changes hands — so an empty list cannot tell "took everything it was sent for" from "was
+     * never sent for anything". A pure defender starts with an empty list, and retaking the one
+     * flag the enemy had taken from it emptied that list again and was scored as a capture win
+     * (`updateVictorySides`). Only a side named here can win by capture.
+     *
+     * `null` means unknown: a map built directly in a test, or a save written before this existed
+     * whose scenario XML could not be read. Unknown keeps PM's inherited any-empty-list rule.
+     */
+    internal var captureGoalSides: List<Int>? = null
+
     internal val units: MutableList<GameUnit> = mutableListOf()
     internal val players: MutableList<Player> = mutableListOf()
     internal var nextUnitId: Int = 0
@@ -243,6 +257,7 @@ class GameMap {
         other.sidesVictoryHexes[0].forEach { sidesVictoryHexes[0].add(Cell(it.row, it.col)) }
         other.sidesVictoryHexes[1].forEach { sidesVictoryHexes[1].add(Cell(it.row, it.col)) }
         other.victoryTurns.forEach { victoryTurns.add(it) }
+        captureGoalSides = other.captureGoalSides?.toList()
     }
 
     fun cleanup() {

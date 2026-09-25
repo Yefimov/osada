@@ -133,6 +133,10 @@ fun GameMap.setHex(
 // sides were previously swapped, which fabricated victories and never fired the "you lost your
 // last objective -> defeat" case (an enemy capture of the player's final hex is this same call
 // with side = enemy).
+//
+// An empty list is a win only for a side the scenario sent to capture something
+// ([GameMap.captureGoalSides]). A defender's list is empty from turn 1, so without that check
+// retaking the only flag it had lost was an instant victory.
 fun GameMap.updateVictorySides(
     side: Int,
     pos: Cell,
@@ -144,7 +148,8 @@ fun GameMap.updateVictorySides(
         if (sidesVictoryHexes.size <= enemySide) sidesVictoryHexes.add(mutableListOf())
         sidesVictoryHexes[enemySide].add(pos)
     }
-    return sidesVictoryHexes.getOrNull(side)?.isEmpty() ?: false
+    val hasCaptureGoal = captureGoalSides?.contains(side) ?: true
+    return hasCaptureGoal && sidesVictoryHexes.getOrNull(side)?.isEmpty() ?: false
 }
 
 /**

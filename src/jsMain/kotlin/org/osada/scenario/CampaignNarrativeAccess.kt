@@ -27,13 +27,19 @@ package org.osada.scenario
 fun Campaign.peekNextScenarioFile(
     outcome: String,
     routeOverride: Int? = null,
-): String? {
+): String? = peekNextScenarioRecord(outcome, routeOverride)?.scenario as? String
+
+/** The whole campaign record [peekNextScenarioFile] reads its file name from, or null at the end. */
+fun Campaign.peekNextScenarioRecord(
+    outcome: String,
+    routeOverride: Int? = null,
+): dynamic {
     val scenarios = getCampaignData()
     // Bracket access, not `?.get(outcome)`: the outcome map is a plain JS object parsed from the
     // campaign JSON, so a `.get(...)` method call throws "get is not a function" at runtime.
     val outcomes: dynamic = scenarios.getOrNull(currentScenarioIndex)?.outcome
     val goto = routeOverride ?: (if (outcomes == null) null else outcomes[outcome]?.goto as? Int)
-    return goto?.let { scenarios.getOrNull(it)?.scenario as? String }
+    return goto?.let { scenarios.getOrNull(it) }
 }
 
 /** Raw optional `actions` array (end-of-scenario objective rules) for the current scenario. */

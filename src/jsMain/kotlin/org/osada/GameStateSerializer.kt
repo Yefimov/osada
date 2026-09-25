@@ -101,6 +101,10 @@ object GameStateSerializer {
             Pair("expPerSide", scenario.expPerSide.toTypedArray()),
             Pair("unitsCostPerSide", scenario.unitsCostPerSide.toTypedArray()),
             Pair("victoryTurns", scenario.map.victoryTurns.toTypedArray()),
+            // Which sides may win by capture (`GameMap.captureGoalSides`). It cannot be rebuilt from
+            // the hexes a save carries, because captures rewrite them; `null` marks it unknown and
+            // the restore then recovers it from the scenario XML.
+            Pair("captureGoalSides", scenario.map.captureGoalSides?.toTypedArray()),
             Pair("victoryHoldCounts", scenario.victoryHoldCounts.toTypedArray()),
             Pair("victoryHoldCountsSide1", scenario.victoryHoldCountsSide1.toTypedArray()),
             Pair("retreatUnitsPerSide", scenario.retreatUnitsPerSide.toTypedArray()),

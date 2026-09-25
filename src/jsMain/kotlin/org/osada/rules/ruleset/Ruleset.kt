@@ -106,8 +106,15 @@ package org.osada.rules.ruleset
  * rule that already owns them. Both default to what OSADA ran before, so a schema-<=16 profile is
  * byte-identical in play -- except that `barrage = 1` now means OG's blind fire explicitly rather
  * than by having no alternative.
+ *
+ * 18 (2026-09-24) added [RuleKey.CAMPAIGN_AUTO_REFIT]: Open General's free refit of the core army
+ * between campaign battles, which OSADA had made a paid tray action on 2026-08-01. It defaults to
+ * that paid behaviour, so a schema-<=17 profile is byte-identical in play; Author's Vision resolves
+ * it on and hands the decision to each campaign's own per-scenario setting. The same schema added
+ * [RuleKey.COMBAT_SUPPORT_MIN_BAR], OSADA's third non-OG rule and the first that is ON in OSADA
+ * Default; Author's Vision resolves it off ([RuleProvenance.NOT_OPEN_GENERAL]).
  */
-const val RULESET_SCHEMA_VERSION = 17
+const val RULESET_SCHEMA_VERSION = 18
 
 /** Serialized keys understood historically but no longer configurable or gameplay-relevant. */
 internal val RETIRED_RULE_KEYS: Set<String> = setOf("trigger_hexes", "stalin_regime")
@@ -598,6 +605,51 @@ enum class RuleKey(
     RAIL_DEMOLITION("rail_demolition", null, 0, 1),
 
     /**
+     * **Open General's campaign auto-refit.** 0 = off (OSADA since 2026-08-01), 1 = as the campaign
+     * authors it. Schema 18.
+     *
+     * At 1, a core army entering the next battle of a campaign is brought back to full strength
+     * with full ammo and fuel, free of charge -- unless that campaign's `.xcam` marks the scenario
+     * "no auto-refit" (`@540` bit `0x02`, imported as the scenario record's `autorefit: false`).
+     * A Story Mode briefing that offers a `resupply` CHOICE keeps the refit paid before that battle,
+     * so the choice is not voided on arrival (`novemberrevolution`'s `n_willhelmsh` and `n_berlin`).
+     * An efile that sets `green_autorefit` gets the refit as green intake, diluting experience,
+     * exactly as the paid tray pass does (`model/ReserveRefit`).
+     *
+     * **Why it is a key and not a restoration.** OSADA removed the free refit deliberately: it made
+     * losses almost costless and voided the `resupply` rewards of authored dialogue choices. Both
+     * objections still hold while this is on, and the rule's help text says so. But OG's campaigns
+     * were balanced WITH it -- `forward`'s author tells the player to save prestige for the five
+     * scenarios that switch it off, and `forward2` gives the Soviet side no prestige at all -- so
+     * Author's Vision, which follows the content, resolves it on.
+     *
+     * With 0 the paid tray refit is the only way back to strength, as before. Call site:
+     * `rules/CampaignAutoRefit`, queued at the campaign transition by `Game.recordCampaignOutcome`.
+     */
+    CAMPAIGN_AUTO_REFIT("campaign_auto_refit", null, 0, 1),
+
+    /**
+     * **A Combat Support unit lends at least one bar — OSADA's rule, not Open General's.** 0 = off
+     * (OG), 1 = on. Schema 18.
+     *
+     * OG's Combat Support lends the supporter's own experience BARS: *"a CS unit with 99 experience
+     * points would give nothing"* (the author's efile-specials page). Experience only comes from
+     * casualties, and a unit with no attack earns it only by being shot, at 2 per strength point
+     * lost, so a purchased `Gaz-AAA Radio Truck` (attack 0, E 39903) could never reach one bar: 50
+     * points of losses on a 10-point unit. Buying one was prestige spent on nothing, and the card
+     * did not say so (2026-09-24 player report).
+     *
+     * **The floor is on the LENDING, not on the unit.** Its own experience is untouched, so its own
+     * combat, hero emergence and leader rolls are exactly what they were; a veteran that has earned
+     * more bars lends those. Help from several supporters still stacks, as OG's does.
+     *
+     * **On in OSADA Default, off in Author's Vision** — the first OSADA rule with that split, and
+     * the reason [RuleProvenance.NOT_OPEN_GENERAL] exists. Call site:
+     * `UnitCapabilities.combatSupportBars`.
+     */
+    COMBAT_SUPPORT_MIN_BAR("combat_support_min_bar", null, 0, 1),
+
+    /**
      * Whether OG's per-record ability TOGGLES decide phased movement and overrun, or the unit's
      * class alone does. 0 = `class` (OSADA today), 1 = `og_record`.
      *
@@ -676,6 +728,11 @@ enum class RuleProvenance {
 
     /** The mechanic does not exist for this content, so the request could not be honoured. */
     CONTENT_UNAVAILABLE,
+
+    /** Author's Vision leaves an OSADA invention OFF although OSADA Default runs it: Open General
+     *  has no such rule, so following the content means not having it
+     *  (`RulesetResolver.OSADA_ONLY`). */
+    NOT_OPEN_GENERAL,
 }
 
 enum class RuleAvailability {
@@ -837,6 +894,12 @@ object RulesetDefaults {
             // The second one (schema 17), on the same terms: OSADA could not cut track at all
             // before it, so off is a description of the shipped game rather than a choice.
             RuleKey.RAIL_DEMOLITION to 0,
+            // Schema 18. Off is a description of the game since 2026-08-01, when the free refit
+            // between battles became the paid tray pass (`model/ReserveRefit`).
+            RuleKey.CAMPAIGN_AUTO_REFIT to 0,
+            // Schema 18, on by owner decision (2026-09-25): a Combat Support unit that cannot earn a
+            // bar is otherwise a purchase that does nothing. Author's Vision resolves it off.
+            RuleKey.COMBAT_SUPPORT_MIN_BAR to 1,
             // Schema 9. Off on the section-9 terms, and additionally because two of its four
             // bullets refuse shots the shipped scenarios currently allow.
             RuleKey.EXTENDED_NAVAL to 0,

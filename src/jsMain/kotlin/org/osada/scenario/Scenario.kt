@@ -538,7 +538,7 @@ class Scenario(
  * once the hold thresholds became per-side, and kept at FILE level rather than as a method because
  * [Scenario] is already at its function budget too.
  */
-private fun objectivesHeldBy(
+internal fun objectivesHeldBy(
     map: GameMap,
     side: Int,
 ): Int {

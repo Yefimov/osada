@@ -6,6 +6,7 @@ import org.osada.model.Equipment
 import org.osada.model.Player
 import org.osada.model.acquireUnit
 import org.osada.model.awardPrestige
+import org.osada.rules.CampaignAutoRefit
 
 /**
  * Applies typed campaign effects to real game objects.
@@ -55,6 +56,7 @@ internal object CampaignEffectApplier {
                 is CampaignEffect.GrantExperience -> applyExperience(effect, player)
                 is CampaignEffect.Resupply -> applyResupply(effect, player)
                 is CampaignEffect.Route -> state.route.set(effect.scenarioIndex)
+                is CampaignEffect.AutoRefit -> player?.let { CampaignAutoRefit.apply(it) }
                 // Setup effects consumed by the scenario loader rather than the player object.
                 is CampaignEffect.ShiftReinforcements,
                 is CampaignEffect.UnlockEquipment,

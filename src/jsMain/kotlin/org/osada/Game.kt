@@ -47,6 +47,10 @@ class Game {
     var uiMessageClicked: Boolean = false
 
     internal var humanSides: Int = -1
+
+    /** A standalone battle's result when its turns ran out, and the side it was scored for; read
+     *  once by the end-turn flow to show it (`showStandaloneTimedOutcome`). */
+    internal var standaloneTimedOutcome: Pair<String, Int>? = null
     internal var campaignPlayer: Player? = null
     internal var savedCampaignPlayer: Player? = null
     internal var continueCampaignFlag: Boolean = false
@@ -127,6 +131,7 @@ class Game {
                 continueCampaign(timedOutcome, EndGameType.NO_TURNS_LEFT)
             } else {
                 gameEnded = true
+                standaloneTimedOutcome = timedOutcome to side
             }
         } else {
             setCurrentSide()

@@ -241,7 +241,9 @@ class GameStateRestore(
         // the campaign (and then the game) is handed the scenario. Costs one request, and only for
         // those saves; a modern save continues on this same tick.
         AuthoredOptionsBackfill.completeIfAbsent(newScenario, scenarioData) {
-            restoreCampaign(campaignData, onReady)
+            AuthoredOptionsBackfill.completeCaptureGoalsIfAbsent(newScenario) {
+                restoreCampaign(campaignData, onReady)
+            }
         }
     }
 
@@ -255,6 +257,11 @@ class GameStateRestore(
             for (i in 0 until savedVictoryTurns.length) {
                 newScenario.map.victoryTurns.add(savedVictoryTurns[i] as Int)
             }
+        }
+        val savedCaptureGoals = scenarioData.captureGoalSides
+        if (savedCaptureGoals != null && savedCaptureGoals != undefined) {
+            newScenario.map.captureGoalSides =
+                (0 until savedCaptureGoals.length as Int).map { i -> savedCaptureGoals[i].toString().toInt() }
         }
         val savedExp = scenarioData.expPerSide
         if (savedExp != null) {

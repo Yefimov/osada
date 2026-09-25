@@ -6,6 +6,7 @@ import org.osada.model.addPlayer
 import org.osada.model.addUnit
 import org.osada.model.allocMap
 import org.osada.model.getPlayer
+import org.osada.model.setHex
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -257,5 +258,36 @@ class ObjectiveReportTest {
         val report = scenario.objectiveReport(side = 1, revealHidden = false)
 
         assertEquals(listOf(6, 5, 4), report.holdThresholds.map { it.count })
+    }
+
+    /**
+     * `forward0`: the player (side 1) holds one objective, the airfield, and the Japanese (side 0)
+     * were sent to take it. Losing it ends the battle, and the rail now says so.
+     */
+    @Test
+    fun theObjectiveWhoseLossEndsTheBattleIsReported() {
+        val scenario = scenario()
+        hex(scenario, 2, 2, name = "Airfield", flag = 89, owner = 1, victorySide = 0)
+        hex(scenario, 4, 4, name = "Nomonhan", flag = 5, owner = 0, victorySide = 1)
+        scenario.map.setHex(2, 2)
+        scenario.map.setHex(4, 4)
+        scenario.map.recordCaptureGoalSides()
+
+        val report = scenario.objectiveReport(side = 1, revealHidden = false)
+
+        assertEquals(listOf("Airfield"), report.enemyNeeds.map { it.name })
+    }
+
+    /** `forward2`: the Germans are sent for Minsk; the Soviet side was sent for nothing, so the
+     *  German view carries no threat line at all. */
+    @Test
+    fun aSideTheEnemyCannotBeatByCaptureGetsNoThreat() {
+        val scenario = scenario()
+        hex(scenario, 2, 2, name = "Minsk", flag = 89, owner = 1, victorySide = 0)
+        scenario.map.setHex(2, 2)
+        scenario.map.recordCaptureGoalSides()
+
+        assertTrue(scenario.objectiveReport(side = 0, revealHidden = false).enemyNeeds.isEmpty())
+        assertEquals(1, scenario.objectiveReport(side = 1, revealHidden = false).enemyNeeds.size)
     }
 }

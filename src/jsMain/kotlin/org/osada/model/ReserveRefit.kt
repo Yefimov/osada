@@ -35,8 +35,10 @@ import org.osada.rules.GreenReplacements
  * > *"green_autorefit -- If automatic refit should use greens, thus reducing experience (0..1).
  * >  default 0, autorefit use elite."* -- `OPENTXT_SAMPLE/equip.cfg`
  *
- * This tray pass IS OG's automatic refit, and its default has always been the elite one: full
- * price, no experience lost. An efile that sets `green_autorefit` asks for the other kind, so the
+ * This tray pass is the PAID stand-in for OG's automatic refit, and its default has always been
+ * the elite one: full price, no experience lost. OG's own free refit exists again behind
+ * `campaign_auto_refit` (`rules/CampaignAutoRefit`, 2026-09-24), which uses the same green
+ * arithmetic. An efile that sets `green_autorefit` asks for the other kind, so the
  * pass switches to [GreenReplacements]' price and its experience arithmetic together -- never one
  * without the other, or the player would be charged the discount and keep the veterancy. `eqp-gce`
  * is the only shipped efile that sets it.

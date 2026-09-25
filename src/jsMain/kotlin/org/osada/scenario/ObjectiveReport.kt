@@ -82,6 +82,11 @@ data class ObjectiveReport(
     val deadlines: List<VictoryDeadline>,
     val holdThresholds: List<HoldThreshold>,
     val extended: List<ExtendedObjectiveProgress>,
+    /**
+     * The objectives the OPPONENT still has to take for its own capture victory -- the ones that
+     * lose this battle on the spot. Empty when the opponent was given nothing to capture.
+     */
+    val enemyNeeds: List<ObjectiveRow> = emptyList(),
 ) {
     val victory: List<ObjectiveRow> get() = rows.filter { it.kind == ObjectiveKind.VICTORY }
     val optional: List<ObjectiveRow> get() = rows.filter { it.kind == ObjectiveKind.OPTIONAL_CAPTURE }
@@ -145,7 +150,27 @@ fun Scenario.objectiveReport(
                 VictoryTier.entries.map { tier -> HoldThreshold(tier, sideHoldCounts[tier.ordinal]) }
             },
         extended = extendedObjectiveProgress(side),
+        enemyNeeds = enemyCaptureGoal(side),
     )
+}
+
+/**
+ * What the opponent of [side] still needs for its capture win: its live `sidesVictoryHexes` list,
+ * provided the scenario sent it to capture anything (`GameMap.captureGoalSides`).
+ *
+ * The rail used to say nothing about this, so `forward0`'s single Soviet objective -- the airfield
+ * the Japanese cavalry rides for -- ended the battle with no warning that it could (2026-09-24
+ * report). The rule is OG's and stays; the warning is what was missing.
+ */
+private fun Scenario.enemyCaptureGoal(side: Int): List<ObjectiveRow> {
+    val enemy = 1 - side
+    val goals = map.captureGoalSides
+    if (side !in 0..1 || (goals != null && enemy !in goals)) return emptyList()
+    return map.sidesVictoryHexes.getOrNull(enemy).orEmpty().mapNotNull { cell ->
+        map.map?.getOrNull(cell.row)?.getOrNull(cell.col)?.let { hex ->
+            ObjectiveRow(kindOf(hex) ?: ObjectiveKind.HIDDEN_VICTORY, hex.name, cell.row, cell.col, held = true)
+        }
+    }
 }
 
 private fun Scenario.extendedObjectiveProgress(side: Int): List<ExtendedObjectiveProgress> =

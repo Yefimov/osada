@@ -184,6 +184,7 @@ internal object CampaignEffectSerializer {
             is CampaignEffect.UnlockEquipment -> obj.eqid = effect.eqid
             is CampaignEffect.DeploymentSlots -> obj.delta = effect.delta
             is CampaignEffect.Route -> obj.scenarioIndex = effect.scenarioIndex
+            is CampaignEffect.AutoRefit -> Unit
         }
         return obj
     }
@@ -207,5 +208,6 @@ internal object CampaignEffectSerializer {
             is CampaignEffect.UnlockEquipment -> "unlockEquipment"
             is CampaignEffect.DeploymentSlots -> "deploymentSlots"
             is CampaignEffect.Route -> "route"
+            is CampaignEffect.AutoRefit -> "autoRefit"
         }
 }

@@ -7,6 +7,7 @@ import org.osada.UnitClass
 import org.osada.i18n.I18n
 import org.osada.model.getCountriesBySide
 import org.osada.model.getUnits
+import org.osada.showStandaloneTimedOutcome
 import org.osada.uiSettings
 import org.w3c.dom.events.MouseEvent
 
@@ -117,10 +118,7 @@ internal class EndTurnFlow(
         if (map.currentPlayer?.type == PlayerType.HUMAN_LOCAL) {
             ui.game.endTurn()
             if (ui.game.gameEnded && ui.game.gameStarted) {
-                UIBuilder.message(
-                    I18n.t("hud.defeat.title"),
-                    I18n.t("hud.defeat.objectives_in_time"),
-                )
+                ui.game.showStandaloneTimedOutcome()
             } else {
                 ui.countriesOnSpotSide = map.getCountriesBySide(ui.game.spotSide)
                 UIBuilder.setDefaultUserSelections()

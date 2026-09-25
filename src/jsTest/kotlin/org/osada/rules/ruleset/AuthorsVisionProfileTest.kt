@@ -62,6 +62,8 @@ class AuthorsVisionProfileTest {
             // Joined 2026-08-29: its gate is the `railtrans` POOL, which 120 deployed scenarios
             // now grant. Before the pools were imported this entry would have been meaningless.
             RuleKey.RAIL_TRANSPORT,
+            // Joined 2026-09-24: its gate is the campaign record's `autorefit`, from `.xcam` @540.
+            RuleKey.CAMPAIGN_AUTO_REFIT,
         )
 
     @Test
@@ -140,5 +142,14 @@ class AuthorsVisionProfileTest {
             assertTrue(vision.effective(rule) >= 0, "${rule.key} unresolved under Author's Vision")
             assertTrue(osada.effective(rule) >= 0, "${rule.key} unresolved under OSADA Default")
         }
+    }
+
+    /** The first OSADA invention that is ON in OSADA Default must stay OFF here. */
+    @Test
+    fun combatSupportFloorIsOsadaOnly() {
+        assertEquals(1, osadaDefault().effective(RuleKey.COMBAT_SUPPORT_MIN_BAR))
+        val authors = authorsVision().rule(RuleKey.COMBAT_SUPPORT_MIN_BAR)
+        assertEquals(0, authors.effective)
+        assertEquals(RuleProvenance.NOT_OPEN_GENERAL, authors.provenance)
     }
 }

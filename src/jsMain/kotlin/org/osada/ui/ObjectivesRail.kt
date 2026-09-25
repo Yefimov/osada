@@ -62,6 +62,7 @@ internal object ObjectivesRail {
             empty.textContent = I18n.t("hud.objective.none_visible")
         } else {
             renderVictory(container, report, game)
+            renderThreat(container, report)
             ExtendedObjectivesRail.render(container, report)
             renderOptional(container, report, game)
             renderHidden(container, report, game)
@@ -84,6 +85,32 @@ internal object ObjectivesRail {
             I18n.t("hud.objective.summary.help"),
         )
         report.victory.forEach { row -> objectiveRow(container, row, game) }
+    }
+
+    /**
+     * The objectives whose loss ends the battle at once. Named when there is one -- `forward0`'s
+     * airfield -- and counted otherwise. Skipped when any of them is a hidden victory hex, because
+     * a count or a name would reveal what the author concealed.
+     */
+    private fun renderThreat(
+        container: HTMLElement,
+        report: ObjectiveReport,
+    ) {
+        val needs = report.enemyNeeds
+        if (needs.isEmpty() || needs.any { it.kind == ObjectiveKind.HIDDEN_VICTORY }) return
+        val line = addTag(container, "div")
+        line.className = "osada-obj-threat"
+        line.textContent =
+            if (needs.size == 1) {
+                val only = needs.single()
+                I18n.t(
+                    "hud.objective.threat.single",
+                    mapOf("name" to only.name.ifEmpty { "(${only.col},${only.row})" }),
+                )
+            } else {
+                I18n.t("hud.objective.threat.all", mapOf("count" to needs.size))
+            }
+        line.title = I18n.t("hud.objective.threat.help")
     }
 
     /**

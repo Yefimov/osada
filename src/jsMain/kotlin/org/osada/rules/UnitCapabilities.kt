@@ -380,8 +380,18 @@ object UnitCapabilities {
                     UnitPredicates.isAir(supporter) == recipientIsAir &&
                     HexGeometry.distance(pos.row, pos.col, supporterPos.row, supporterPos.col) == 1 &&
                     hasCombatSupport(supporter)
-            if (eligible) UnitExperience.bars(supporter) else 0
+            if (eligible) lentBars(supporter) else 0
         }
+    }
+
+    /**
+     * The bars one supporter lends: its own, floored at one when [RuleKey.COMBAT_SUPPORT_MIN_BAR]
+     * is on. The floor applies to the lending only, never to the unit's own experience. Also what
+     * the unit card's HQ badge states, so the card and the combat roll cannot disagree.
+     */
+    fun lentBars(supporter: GameUnit): Int {
+        val own = UnitExperience.bars(supporter)
+        return if (ActiveRuleset.flag(RuleKey.COMBAT_SUPPORT_MIN_BAR, true)) maxOf(own, 1) else own
     }
 
     /**

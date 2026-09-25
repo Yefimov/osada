@@ -8568,6 +8568,15 @@ hr {
     cursor: help;
 }
 
+.osada-obj-threat {
+    margin: 4px 0 2px;
+    padding: 3px 6px;
+    font-size: 11px;
+    color: var(--osada-red-bright);
+    border-left: 2px solid var(--osada-red);
+    cursor: help;
+}
+
 .osada-obj-section:first-child {
     margin-top: 0;
 }

@@ -46,6 +46,57 @@ internal object AuthoredOptionsBackfill {
         backfill(scenario, onDone)
     }
 
+    /**
+     * Recovers `GameMap.captureGoalSides` for a save written before it was serialized, then calls
+     * [onDone]. The save's own hexes cannot answer it — every capture rewrites `victorySide` and
+     * the owner — so the scenario XML's STARTING objectives are read instead, with the same
+     * side rule `GameMap.setHex` applies to them on a fresh load.
+     *
+     * A failed fetch leaves it `null`, which keeps the pre-fix rule rather than stalling the load.
+     */
+    fun completeCaptureGoalsIfAbsent(
+        scenario: Scenario,
+        onDone: () -> Unit,
+    ) {
+        val file = scenario.file?.takeIf { it.isNotBlank() }
+        if (scenario.map.captureGoalSides != null || file == null) {
+            onDone()
+            return
+        }
+        val cached = ScenarioLoader.cachedDocument(file)
+        if (cached != null) {
+            scenario.map.captureGoalSides = captureGoalSides(scenario, cached)
+            onDone()
+            return
+        }
+        fetchDocument(file) { doc ->
+            doc?.let { scenario.map.captureGoalSides = captureGoalSides(scenario, it) }
+            onDone()
+        }
+    }
+
+    /** Internal so the XML-to-sides rule is testable without a request, like [applyDocument]. */
+    internal fun captureGoalSides(
+        scenario: Scenario,
+        doc: Document,
+    ): List<Int> {
+        val hexes = doc.getElementsByTagName("hex")
+        return (0 until hexes.length)
+            .mapNotNull { i -> hexes.item(i) }
+            .mapNotNull { el ->
+                el.getAttribute("victory")?.toIntOrNull()?.takeIf { it != -1 }?.let { victory ->
+                    val ownerId = el.getAttribute("owner")?.toIntOrNull() ?: -1
+                    val ownerSide =
+                        scenario.map
+                            .getPlayers()
+                            .firstOrNull { it.id == ownerId }
+                            ?.side
+                    if (ownerSide != null) 1 - ownerSide else victory
+                }
+            }.distinct()
+            .sorted()
+    }
+
     private fun backfill(
         scenario: Scenario,
         onDone: () -> Unit,

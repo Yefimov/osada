@@ -71,6 +71,16 @@ internal sealed class CampaignEffect {
         val rearm: Boolean,
     ) : CampaignEffect()
 
+    /**
+     * Open General's free refit of the core going into the next battle
+     * (`rules/CampaignAutoRefit`). Queued by the engine at a campaign transition when
+     * `campaign_auto_refit` is on, rather than authored; the parser reads it back only so a queued
+     * one survives a save.
+     */
+    data class AutoRefit(
+        override val id: String,
+    ) : CampaignEffect()
+
     /** Shifts scripted reinforcement arrival. Negative = earlier. */
     data class ShiftReinforcements(
         override val id: String,
@@ -194,6 +204,7 @@ internal object CampaignEffectParser {
                 )
 
             "deploymentSlots" -> CampaignEffect.DeploymentSlots(id, clampInt(item.delta, EffectLimits.MAX_SLOT_DELTA))
+            "autoRefit" -> CampaignEffect.AutoRefit(id)
             else -> null
         }
 
