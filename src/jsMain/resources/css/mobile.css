@@ -567,6 +567,15 @@ body.osada-layout-phone .osada-mobile-context {
     cursor: pointer;
 }
 
+/* Both carry a hold-to-explain panel (`TapTip.attachHold`); without these a long press would
+ * also raise the browser's own selection/callout menu over it. */
+.osada-mobile-context__heroes,
+.osada-mobile-context__card-toggle {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
 /* Target preview and hover forecast both need attacker, forecast and defender
  * side by side; the columns flex so this still fits at 667px. */
 body.osada-layout-phone #osada-bottomzone.bz--hover {

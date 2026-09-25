@@ -52,7 +52,9 @@ class EquipmentMarkingsTest {
 
         EquipmentMarkings.render(parent, EquipmentData().apply { uclass = UnitClass.TANK.value })
         assertEquals("OVR", parent.firstElementChild?.textContent)
-        assertTrue(parent.firstElementChild?.getAttribute("title")?.contains("restores 1 movement point") == true)
+        // The +1 goes onto whatever movement REMAINED; a tank that had none left only fires again.
+        val overrunHelp = parent.firstElementChild?.getAttribute("title").orEmpty()
+        assertTrue(overrunHelp.contains("1 extra point added to what remained"))
     }
 
     /**

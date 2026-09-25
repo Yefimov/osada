@@ -1,6 +1,7 @@
 package org.osada.ui
 
 import kotlinx.browser.document
+import kotlinx.browser.window
 import org.w3c.dom.HTMLElement
 
 /**
@@ -24,6 +25,9 @@ import org.w3c.dom.HTMLElement
  * one document-level listener shared by every panel opened here.
  */
 internal object TapTip {
+    /** Matches `MapPointerController`'s and [UnitActionTooltip]'s long-press threshold. */
+    private const val HOLD_MS = 400
+
     /** Every plain title+prose panel reuses one node: only one can be open at a time anyway, and a
      *  shared id keeps the dozens of call sites from each leaking a singleton div into `mainbody`. */
     const val HELP_TIP_ID = "osadaHelpTip"
@@ -96,6 +100,55 @@ internal object TapTip {
         attach(anchor, HELP_TIP_ID) { element ->
             AnchoredTip.show(HELP_TIP_ID, element, AnchoredTip.helpHtml(heading(), body()))
         }
+    }
+
+    /**
+     * A long-press panel for a BUTTON -- the case the class comment sets aside, where a short tap
+     * must stay the button's own action. Holding for [HOLD_MS] opens the panel; releasing leaves it
+     * open to be read, and the next tap anywhere closes it. The click that ends a hold is swallowed,
+     * so reading a button's explanation never also presses it.
+     *
+     * Added for the phone dock's Heroes and unit-card buttons (2026-09-25 user request): icon-only
+     * buttons whose `title` a mobile browser never shows. Mouse pointers are ignored; the desktop
+     * keeps its native tooltip.
+     */
+    fun attachHold(
+        anchor: HTMLElement,
+        heading: () -> String = { "" },
+        body: () -> String,
+    ) {
+        installDismissal()
+        var timer = 0
+        var held = false
+        val cancel = {
+            if (timer != 0) window.clearTimeout(timer)
+            timer = 0
+        }
+        anchor.addEventListener("pointerdown", { event ->
+            held = false
+            if (event.asDynamic().pointerType != "mouse") {
+                cancel()
+                timer =
+                    window.setTimeout({
+                        timer = 0
+                        held = true
+                        close()
+                        AnchoredTip.show(HELP_TIP_ID, anchor, AnchoredTip.helpHtml(heading(), body()))
+                        openTipId = HELP_TIP_ID
+                        openAnchor = anchor
+                    }, HOLD_MS)
+            }
+        })
+        anchor.addEventListener("pointerup", { cancel() })
+        anchor.addEventListener("pointercancel", { cancel() })
+        // Capture phase, so it runs before the button's own `onclick` on the same element.
+        anchor.addEventListener("click", { event ->
+            if (held) {
+                held = false
+                event.stopImmediatePropagation()
+                event.preventDefault()
+            }
+        }, true)
     }
 
     /** Closes whatever panel is open. Also called when a screen that owns tap tips is torn down. */

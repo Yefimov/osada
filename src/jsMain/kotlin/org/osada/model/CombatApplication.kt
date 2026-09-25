@@ -75,13 +75,23 @@ internal class CombatApplication(
         val logId = CombatLog.addCombatStart(attacker, defender, gameMap.turn)
         applyCombatFacing(attacker, defender, from, to)
         unmountDefenderIfNeeded(defender)
-        if (isOverrun) applyOverrun(attacker, defender, combatResult)
-        applyCombatDamage(attacker, defender, combatResult, supportFire, isOverrun)
-        applyExploitSuccess(attacker, defender, combatResult, supportFire, isOverrun)
+        // Overrun is decided by the caller from the FORECAST, and only that decision is applied --
+        // so it is also the only thing allowed to report one. The committed calculation above sets
+        // its own `isOverrun` whenever its roll happens to reach a kill, and that flag used to
+        // survive into the result: the map announced "Прорыв" for an attack that was never treated
+        // as one (no movement back, no shot back), and even for a defender that had EVADED out of
+        // the hex (2026-09-25 user report). A defender that evaded or was sabotaged away is not
+        // overrun either; without this guard `applyOverrun` would also have written the full
+        // strength as kills onto a unit that had already left.
+        combatResult.isOverrun = false
+        val overrun = isOverrun && !sabotaged && !combatResult.isEvaded
+        if (overrun) applyOverrun(attacker, defender, combatResult)
+        applyCombatDamage(attacker, defender, combatResult, supportFire, overrun)
+        applyExploitSuccess(attacker, defender, combatResult, supportFire, overrun)
         // OG's `Kamikaze`, default model: "dies after... engaged in combat". Applied once the
         // damage has landed, so the attack it died making still counts (`rules/Kamikaze`).
         if (!supportFire && Kamikaze.expendedAfterCombat(attacker)) attacker.destroyed = true
-        resolveCounterBattery(attacker, defender, supportFire, isOverrun)
+        resolveCounterBattery(attacker, defender, supportFire, overrun)
         updateCombatScores(attacker, defender, combatResult)
         generateCombatLeaders(attacker, defender, combatResult)
         CombatLog.addCombatEnd(attacker, defender, logId, supportFire)

@@ -11,6 +11,7 @@ import org.osada.model.Cell
 import org.osada.model.CombatResults
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
+import org.osada.model.InterceptionEvent
 import org.osada.model.MovementResults
 import org.osada.model.attackUnit
 import org.osada.model.getUnits
@@ -570,6 +571,7 @@ private fun reportInterceptions(
     if (result.interceptions.isEmpty()) return
     val observerSide = ui.game.spotSide
     InterceptionBanner.show(ui, result.interceptions, observerSide)
+    InterceptionAnimation.play(ui, result.interceptions, observerSide, pos)
     result.interceptions
         .filter { it.plane.player?.side == observerSide || it.interceptor.player?.side == observerSide }
         .forEach { event ->
@@ -591,4 +593,45 @@ private fun reportInterceptions(
         }
     // The aircraft's own state changed under the player; refresh what shows it.
     ui.showUnitInfo(unit)
+}
+
+/**
+ * Plays the fire a MOVE drew -- AA interception and its sibling reactions -- as the ordinary attack
+ * animation and sound, instead of only reporting the result.
+ *
+ * Until 2026-09-25 an interception produced a banner and a log line and nothing on the map: the
+ * aircraft simply arrived weaker, or vanished, with no shot fired and no sound (user report). The
+ * attack path already knows how to show a gun firing (`attackAnimationByClass`, whose sprite carries
+ * the class sound, with the equipment's own OG sound laid over it by `MapAnimator.addAnimation`), so
+ * this queues the same animation on the gun's hex, turned toward the aircraft, plus the explosion
+ * when the aircraft goes down.
+ *
+ * **Only a gun the observer can see is drawn.** A hidden battery must never be placed on the map by
+ * the UI (`DEFERRED.md` §1.1). Firing already reveals a gun for the turn (`tempSpotted`), so in
+ * practice the shooter is drawn -- but that is the rules' decision, read here, not re-made.
+ */
+internal object InterceptionAnimation {
+    fun play(
+        ui: UI,
+        events: List<InterceptionEvent>,
+        observerSide: Int,
+        planePos: Cell,
+    ) {
+        var queued = false
+        events.forEach { event ->
+            val gun = event.interceptor
+            val gunPos = gun.getPos()
+            val gunVisible = gun.tempSpotted || gun.getHex()?.isSpotted(observerSide) == true
+            val animType = attackAnimationByClass.getOrNull(gun.unitData(true).uclass)
+            if (gunPos != null && gunVisible && animType != null) {
+                val dir =
+                    GameRules.getDirection(gunPos.row, gunPos.col, planePos.row, planePos.col) ?: gun.facing
+                queued = ui.render.addAnimation(gunPos.row, gunPos.col, animType, dir, gun) || queued
+            }
+            if (event.planeDestroyed) {
+                queued = ui.render.addAnimation(planePos.row, planePos.col, "explosion", 0, event.plane) || queued
+            }
+        }
+        if (queued) ui.render.runAnimation(null)
+    }
 }

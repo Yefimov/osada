@@ -89,6 +89,10 @@ internal object UnitCardCollapse {
         btn.id = "osadaMobileUnitCard"
         btn.className = "osada-mobile-context__card-toggle osada-ico osada-ico--recon"
         btn.asButton(I18n.t("unit_info.collapse.help")) { setCollapsed(uiSettings.unitInfoVisibility) }
+        // Read at hold time: the same button folds the card away or brings it back.
+        TapTip.attachHold(btn) {
+            I18n.t(if (uiSettings.unitInfoVisibility) "unit_info.collapse.help" else "unit_info.expand.help")
+        }
     }
 
     /**

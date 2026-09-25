@@ -296,6 +296,26 @@ class EvadeTest : OgRulesTestHarness() {
         assertEquals(attackerStrength, attacker.strength)
     }
 
+    /** The forecast can promise an overrun the dice then deny: a defender that evades got away,
+     *  so the attack is neither reported as "Прорыв" nor allowed to write the defender's full
+     *  strength off as kills on the hex it has already left (2026-09-25 user report). */
+    @Test
+    fun anEvadedDefenderIsNotOverrun() {
+        val map = evadeWorld()
+        EfileConfig.setForTest(rawKeyMap = mapOf("class_evade" to "!100"))
+        val defender = place(map, dodgerEqid, 2, 2, side = 0)
+        val attacker = place(map, stolidEqid, 2, 3, side = 1)
+        val defenderStrength = defender.strength
+
+        val result = map.attackUnit(attacker, defender, false, true)
+
+        assertTrue(result.isEvaded)
+        assertFalse(result.isOverrun)
+        assertEquals(0, result.kills)
+        assertEquals(defenderStrength, defender.strength)
+        assertFalse(defender.destroyed)
+    }
+
     @Test
     fun theAttackersShotIsStillSpent() {
         val map = evadeWorld()
