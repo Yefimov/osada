@@ -4,6 +4,7 @@ import org.osada.GameHolder
 import org.osada.PlayerType
 import org.osada.hero.HeroCampaign
 import org.osada.rules.Attachments
+import org.osada.rules.CampaignSwitches
 import org.osada.rules.CostCalculator
 import org.osada.rules.FrontsAndFactions
 import org.osada.rules.GameRules
@@ -89,10 +90,10 @@ fun Player.buyUnit(
             // OG's purchase cap. Checked here as well as by the equipment window and the AI, for
             // the same reason `Can't Buy` is: this is the one function every purchase passes
             // through, a replayed multiplayer order included (`rules/PurchaseCap`).
-            PurchaseCap.allows(this)
+            CampaignSwitches.purchaseLimitsAllow(this)
     val cost = GameRules.calculateUnitCosts(eqid, transportEqid)
     val affordable = offered && cost <= prestige
-    val acquired = affordable && acquireUnit(eqid, transportEqid)
+    val acquired = affordable && acquireUnit(eqid, transportEqid, purchased = true)
     if (acquired) {
         prestige -= cost
         // Booked only on a purchase. `acquireUnit` is deliberately left alone: the prototype award
@@ -106,8 +107,10 @@ fun Player.buyUnit(
 fun Player.acquireUnit(
     eqid: Int,
     transportEqid: Int,
+    purchased: Boolean = false,
 ): Boolean {
     val unit = GameUnit(eqid)
+    unit.isPurchased = purchased
     if (transportEqid > 0) {
         unit.setTransport(transportEqid)
     }
@@ -163,7 +166,9 @@ fun Player.upgradeUnit(
     transportEqid: Int,
 ): Boolean {
     val listed =
-        ScenarioPurchaseList.allows(this, newEqid) &&
+        // The campaign's own *"Disable Upgrade"* (`rules/CampaignSwitches`).
+        !CampaignSwitches.upgradeForbidden(unit) &&
+            ScenarioPurchaseList.allows(this, newEqid) &&
             ScenarioPurchaseList.allows(this, transportEqid) &&
             // *"buy new units **or upgrade existing ones**"* -- the masks gate both halves of
             // OpenSuite's own sentence, exactly as the resolved `.buy4` list does. The pool-class

@@ -3,6 +3,8 @@
   "id": 0,
   "scenario": "bn9s00.xml",
   "startprestige": 0,
+  "aiprestige": 0,
+  "autorefit": false,
   "intro": "BATTLE OF SESENA - 29 OCT 1936<br><br>South of Madrid, Spain<br><br>Comrade, here is your order - Move west with your armored forces and occupy the towns of Esquivias and Illescas! Support this move with your air force. Your infantry occupied Sesena and defend the town against enemy attacks. Good luck!<br><br>ORDERS<br>After 8 turns control 3/2/1 VH for a BV/V/TV.",
   "outcome": {
    "briliant": {
@@ -206,13 +208,16 @@
     "type": "coreLossesAtMost",
     "maxLosses": 2
    }
-  ],
-  "autorefit": false
+  ]
  },
  {
   "id": 1,
   "scenario": "bn9s01.xml",
   "startprestige": 0,
+  "aiprestige": 0,
+  "prestigecap": 3100,
+  "autorefit": false,
+  "coremaincountry": true,
   "intro": "BATTLE OF LAKE KHASAN - 2 AUG 1938<br><br>Lake Khasan, Far East of Soviet Union<br><br>The sneaky Japanese attacked and beaten our border troops on the Bezymyannaya and Zaozyornaya hills. Attack the Japanese with superior power and recapture the territories we deserve!<br><br>ORDERS<br>After 9 turns control 7/6/5 VH for a BV/V/TV.<br><br>CORE (recommended)<br>2x Tank (+1)<br>2x Infantry (+2)<br>1x Reconnaissance<br>1x Artillery (+1)",
   "outcome": {
    "briliant": {
@@ -505,13 +510,15 @@
     "type": "coreLossesAtMost",
     "maxLosses": 2
    }
-  ],
-  "autorefit": false
+  ]
  },
  {
   "id": 2,
   "scenario": "bn9s02.xml",
   "startprestige": 0,
+  "aiprestige": 0,
+  "prestigecap": 3600,
+  "autorefit": false,
   "intro": "KHALKHIN GOL - 3 JUL 1939<br><br>Khalkhin Gol River, Mongolian People's Republic<br><br>The Japanese crossed the Khalkhin Gol river in the north, occupied the Baintsagan hills and tried to surround our troops with a two-pronged assault. Carry out a vigorous counterattack, thwart the enemy intentions and occupy the Japanese positions west and east of the river!<br><br>ORDERS<br>Capture all VH!<br><br>CORE (recommended)<br>2x Tank<br>3x Infantry (+1)<br>1x Reconnaissance<br>1x Artillery<br>1x Fighter Aircraft (+1)",
   "outcome": {
    "briliant": {
@@ -870,13 +877,15 @@
     "type": "coreLossesAtMost",
     "maxLosses": 2
    }
-  ],
-  "autorefit": false
+  ]
  },
  {
   "id": 3,
   "scenario": "bn9s03.xml",
   "startprestige": 0,
+  "aiprestige": 0,
+  "prestigecap": 6600,
+  "autorefit": false,
   "intro": "BATTLE OF GRODNO - 20 SEP 1939<br><br>Southeast of Grodno, East Poland<br><br>Move your units across the city of Grodno to the Lithuanian border. Occupy the city and vicinity and break any resistance!<br><br>ORDERS<br>a. Capture all VH!<br>b. Prevent that more than 2 enemy ground units cross the Polish-Lithuanian border (Exit Points).<br><br>CORE (recommended)<br>2x Tank<br>4x Infantry (+1)<br>2x Reconnaissance (+1)<br>2x Artillery (+1)<br>1x Fighter Aircraft<br>1x Tactical Bomber (+1)",
   "outcome": {
    "briliant": {
@@ -1151,13 +1160,15 @@
     "type": "coreLossesAtMost",
     "maxLosses": 2
    }
-  ],
-  "autorefit": false
+  ]
  },
  {
   "id": 4,
   "scenario": "bn9s04.xml",
   "startprestige": 0,
+  "aiprestige": 0,
+  "prestigecap": 5900,
+  "autorefit": false,
   "intro": "RAATE ROAD - 2 JAN 1940<br><br>Raate-Suomussalmi Road, Eastern Finland<br><br>Our comrades from the 163rd division in Suomussalmi are cut off and need help. Break through the enemy encirclement and restore the supply route!<br><br>ORDERS<br>a. Reach the Exit Point (Road to Suomussalmi) with at least 5 of your ground units.<br>b. Prevent that the enemy destroy more than 4 of your units.<br><br>NOTES<br>a. The Finns will try to surprise you. Be aware!<br>b. Attention - winter conditions! If possible, equip your troops with tracked movement. Check if you can switch between wheeled and tracked movement for free.<br><br>CORE (recommended)<br>2x Tank<br>4x Infantry<br>2x Reconnaissance<br>2x Artillery<br>2x Fighter Aircraft (+1)<br>1x Tactical Bomber",
   "outcome": {
    "briliant": {
@@ -1443,13 +1454,15 @@
     "type": "coreLossesAtMost",
     "maxLosses": 2
    }
-  ],
-  "autorefit": false
+  ]
  },
  {
   "id": 5,
   "scenario": "bn9s05.xml",
   "startprestige": 0,
+  "aiprestige": 0,
+  "prestigecap": 6800,
+  "autorefit": false,
   "intro": "VYBORG BAY - 5 MAR 1940<br><br>Karelian Isthmus, Finland<br><br>The Finns asked for a ceasefire because their front is collapsing. But before peace comes, we have to capture the west bank of Vyborg Bay and the city itself! <br><br>ORDERS<br>After 10 turns control 10/8/6 VH for a BV/V/TV.<br><br>CORE (recommended)<br>2x Tank<br>4x Infantry<br>1x Anti-Tank (+1)<br>2x Reconnaissance<br>3x Artillery (+1)<br>2x Fighter Aircraft<br>1x Tactical Bomber",
   "outcome": {
    "briliant": {
@@ -1820,13 +1833,15 @@
     "type": "coreLossesAtMost",
     "maxLosses": 2
    }
-  ],
-  "autorefit": false
+  ]
  },
  {
   "id": 6,
   "scenario": "bn9s06.xml",
   "startprestige": 0,
+  "aiprestige": 0,
+  "prestigecap": 7400,
+  "autorefit": false,
   "intro": "BATTLE OF BIALYSTOK-MINSK - 27 JUN 1941<br><br>West of Minsk, Belarus<br><br>The treacherous Germans have launched a general attack on our homeland. The western front has collapsed and most of our troops are threatened to be encircled west of Minsk. Escape before the pocket closes! Make your way through the mess to the east!<br><br>ORDERS<br>Reach the Exit Points in time with at least 10 of your ground units before the enemy capture all VH!<br><br>NOTES<br>a. You can't deploy your air force.<br>b. All friendly auxiliary troops are controlled by the AI - you only command your core units.<br>c. Save your core units! Reach the Exit Points as soon as possible - don't get into a fight you can't win. There should also be useful attachments to make your units faster!<br>d. Attention - summer conditions! Don't forget to switch back to wheeled movement.<br><br>CORE (recommended)<br>2x Tank<br>4x Infantry<br>1x Anti-Tank<br>2x Reconnaissance<br>3x Artillery<br>2x Fighter Aircraft<br>1x Tactical Bomber",
   "outcome": {
    "briliant": {
@@ -2112,13 +2127,15 @@
     "type": "coreLossesAtMost",
     "maxLosses": 2
    }
-  ],
-  "autorefit": false
+  ]
  },
  {
   "id": 7,
   "scenario": "bn9s07.xml",
   "startprestige": 0,
+  "aiprestige": 0,
+  "prestigecap": 11900,
+  "autorefit": false,
   "intro": "YELNYA OFFENSIVE - 2 SEP 1941<br><br>Yelnya, Southeast of Smolensk<br><br>You'll lead the attack against the semi-circular Yelnya salient which the Germans had extended 50 kilometres south-east of Smolensk, forming a staging area for an offensive towards Vyazma and eventually Moscow. Eliminate the threat and win the much-needed victory for us, Comrade!<br><br>ORDERS<br>a. Capture all VH!<br>b. Prevent that more than 9 enemy ground units reach the Exit Points.<br><br>CORE (recommended)<br>3x Tank (+1)<br>4x Infantry<br>1x Anti-Tank<br>2x Reconnaissance<br>1x Flak (+1)<br>3x Artillery<br>2x Fighter Aircraft<br>2x Tactical Bomber (+1)",
   "outcome": {
    "briliant": {
@@ -2397,13 +2414,15 @@
     "type": "coreLossesAtMost",
     "maxLosses": 2
    }
-  ],
-  "autorefit": false
+  ]
  },
  {
   "id": 8,
   "scenario": "bn9s08.xml",
   "startprestige": 0,
+  "aiprestige": 0,
+  "prestigecap": 11200,
+  "autorefit": false,
   "intro": "BATTLE OF MOSCOW - 9 DEC 1941<br><br>Dmitrow, North of Moscow<br><br>The German offensives against our capital were halted and our strategic counter-offensive started. Your goal is to cross the Moscow-Leningrad railway line and to liberate the city of Klin.<br><br>ORDERS<br>Capture all VH!<br><br>NOTES<br>Attention - winter conditions! If possible, equip your troops with tracked movement. Check if you can switch between wheeled and tracked movement for free.<br><br>CORE (recommended)<br>3x Tank<br>4x Infantry<br>1x Anti-Tank<br>2x Reconnaissance<br>1x Flak<br>4x Artillery (+1)<br>2x Fighter Aircraft<br>2x Tactical Bomber",
   "outcome": {
    "briliant": {
@@ -2693,13 +2712,15 @@
     "type": "coreLossesAtMost",
     "maxLosses": 2
    }
-  ],
-  "autorefit": false
+  ]
  },
  {
   "id": 9,
   "scenario": "bn9s09.xml",
   "startprestige": 0,
+  "aiprestige": 0,
+  "prestigecap": 12800,
+  "autorefit": false,
   "intro": "SECOND BATTLE OF KHARKOV - 12 MAY 1942<br><br>Volchansk, Northeast of Kharkov<br><br>We'll start an offensive to liberate Kharkov. With a dual pincer movement from the Volchansk and Barvenkovo salients, we'll surround and free the city. The main attack takes place in the south, your job is to lead the northern attack.<br><br>ORDERS<br>Kill 64 enemy units and prevent that the enemy destroy more than 15 of your units.<br><br>NOTES<br>Attention summer conditions! Don't forget to switch back to wheeled movement, if wanted.<br><br>CORE (recommended) <br>4x Tank (+1)<br>5x Infantry (+1)<br>2x Anti-Tank (+1)<br>2x Reconnaissance<br>1x Flak<br>4x Artillery<br>2x Fighter Aircraft<br>2x Tactical Bomber",
   "outcome": {
    "briliant": {
@@ -2984,13 +3005,15 @@
     "type": "coreLossesAtMost",
     "maxLosses": 2
    }
-  ],
-  "autorefit": false
+  ]
  },
  {
   "id": 10,
   "scenario": "bn9s10.xml",
   "startprestige": 0,
+  "aiprestige": 0,
+  "prestigecap": 14100,
+  "autorefit": false,
   "intro": "BATTLE OF VORONEZH - 28 JUN 1942<br><br>Volovo, Northwest of Voronezh<br><br>The Germans launch an offensive towards Voronezh. Strong forces are trying to break through our defensive positions. Delay the advance of the fascists until we bring up reserves to defense the city!<br><br>ORDERS<br>After 10 turns control 8/7/5 VH for a BV/V/TV.<br><br>CORE (recommended)<br>4x Tank<br>5x Infantry<br>2x Anti-Tank<br>2x Reconnaissance<br>2x Flak (+1)<br>4x Artillery<br>3x Fighter Aircraft (+1)<br>2x Tactical Bomber",
   "outcome": {
    "briliant": {
@@ -3378,13 +3401,15 @@
     "type": "coreLossesAtMost",
     "maxLosses": 2
    }
-  ],
-  "autorefit": false
+  ]
  },
  {
   "id": 11,
   "scenario": "bn9s11.xml",
   "startprestige": 0,
+  "aiprestige": 0,
+  "prestigecap": 14900,
+  "autorefit": false,
   "intro": "TATSINSKAYA RAID - 22 DEC 1942<br><br>Bol'shinka, 200km west of Stalingrad<br><br>You'll lead a raid deep into the German rear - the target is the enemy airfield at Tatsinskaya, the primary operating base for the German airlift efforts to Stalingrad. Inflict significant losses on enemy Air Force by destroying as many planes as possible and force the Germans to divert forces attempting to relieve their forces encircled in Stalingrad!<br><br>ORDERS<br>Reach the Exit Point with at least 8 of your ground units.<br><br>NOTES<br>a. You don't have to control all VH! You just have to ensure that you keep at least one VH occupied so that the enemy can't win.<br>b. Attention - winter conditions! If possible, equip your troops with tracked movement. Check if you can switch between wheeled and tracked movement for free.<br><br>CORE (recommended)<br>4x Tank<br>5x Infantry<br>2x Anti-Tank<br>3x Reconnaissance (+1)<br>2x Flak<br>4x Artillery<br>3x Fighter Aircraft<br>2x Tactical Bomber",
   "outcome": {
    "briliant": {
@@ -3669,13 +3694,15 @@
     "type": "coreLossesAtMost",
     "maxLosses": 2
    }
-  ],
-  "autorefit": false
+  ]
  },
  {
   "id": 12,
   "scenario": "bn9s12.xml",
   "startprestige": 0,
+  "aiprestige": 0,
+  "prestigecap": 15900,
+  "autorefit": false,
   "intro": "THIRD BATTLE OF KHARKOV - 7 MAR 1943<br><br>South of Kharkov, Ukraine<br><br>We expect a German attack on Kharkov again. Stop the attack and inflict maximum losses on the enemy!<br><br>ORDERS<br>After 10 turns control 6/4/3 VH for a BV/V/TV.<br><br>CORE (recommended)<br>4x Tank<br>5x Infantry<br>2x Anti-Tank<br>3x Reconnaissance<br>2x Flak<br>4x Artillery<br>3x Fighter Aircraft<br>3x Tactical Bomber (+1)",
   "outcome": {
    "briliant": {
@@ -4044,13 +4071,15 @@
     "type": "coreLossesAtMost",
     "maxLosses": 2
    }
-  ],
-  "autorefit": false
+  ]
  },
  {
   "id": 13,
   "scenario": "bn9s13.xml",
   "startprestige": 0,
+  "aiprestige": 0,
+  "prestigecap": 21600,
+  "autorefit": false,
   "intro": "BATTLE OF KURSK - 11 JUL 1943<br><br>South of Kursk, Russia<br><br>Despite our prepared defensive positions the Germans continue their advance on Kursk. You will counterattack at Prokhorovka and throw back the Germans before they break through the last lines of defense towards Kursk.<br><br>ORDERS<br>Capture all VH!<br><br>NOTES<br>Attention summer conditions! Don't forget to switch back to wheeled movement, if wanted.<br><br>CORE (recommended)<br>4x Tank<br>5x Infantry<br>3x Anti-Tank (+1)<br>3x Reconnaissance<br>2x Flak<br>4x Artillery<br>4x Fighter Aircraft (+1)<br>4x Tactical Bomber (+1)",
   "outcome": {
    "briliant": {
@@ -4351,13 +4380,15 @@
     "type": "coreLossesAtMost",
     "maxLosses": 2
    }
-  ],
-  "autorefit": false
+  ]
  },
  {
   "id": 14,
   "scenario": "bn9s14.xml",
   "startprestige": 0,
+  "aiprestige": 0,
+  "prestigecap": 22000,
+  "autorefit": false,
   "intro": "ZHITOMIR-BERDICHEV OFFENSIVE - 27 DEC 1943<br><br>East of Zhitomir, Ukraine<br><br>You task is to defeat the opposing German 4th Panzer Army of Army Group South and the liberation of the Zhytomyr Oblast region, including the cities of Zhitomir and Berdichev.<br><br>ORDERS<br>Capture all VH!<br><br>NOTES<br>Attention - winter conditions! If possible, equip your troops with tracked movement. Check if you can switch between wheeled and tracked movement for free.<br><br>CORE (recommended - Core build phase completed)<br>5x Tank (+1)<br>6x Infantry (+1)<br>3x Anti-Tank<br>3x Reconnaissance<br>2x Flak<br>5x Artillery (+1)<br>4x Fighter Aircraft <br>4x Tactical Bomber",
   "outcome": {
    "briliant": {
@@ -4736,13 +4767,15 @@
     "type": "coreLossesAtMost",
     "maxLosses": 2
    }
-  ],
-  "autorefit": false
+  ]
  },
  {
   "id": 15,
   "scenario": "bn9s15.xml",
   "startprestige": 0,
+  "aiprestige": 0,
+  "prestigecap": 22700,
+  "autorefit": false,
   "intro": "CRIMEAN OFFENSIVE - 7 MAY 1944<br><br>East of Sevastopol, Crimea peninsula<br><br>You're honored to liberate our beloved Sevastopol. The Germans and Romanians have already started evacuation by sea. Don't let a single man escape across the sea!<br><br>ORDERS<br>a. Capture all VH!<br>b. Prevent that more than 4 enemy ground (naval) units reach the Exit Points.<br><br>NOTES<br>Attention summer conditions! Don't forget to switch back to wheeled movement, if wanted.",
   "outcome": {
    "briliant": {
@@ -5024,13 +5057,15 @@
     "type": "coreLossesAtMost",
     "maxLosses": 2
    }
-  ],
-  "autorefit": false
+  ]
  },
  {
   "id": 16,
   "scenario": "bn9s16.xml",
   "startprestige": 0,
+  "aiprestige": 0,
+  "prestigecap": 23700,
+  "autorefit": false,
   "intro": "JASSY-KISHINEV OFFENSIVE - 20 AUG 1944<br><br>North of Jassy, Eastern Romania<br><br>In our major offensive on Romania you and your troops will be deployed on the right wing of the attack front. The goal is to encircle and destroy the enemy's 6th Army.<br><br>ORDERS<br>Capture all VH!",
   "outcome": {
    "briliant": {
@@ -5413,13 +5448,15 @@
     "type": "coreLossesAtMost",
     "maxLosses": 2
    }
-  ],
-  "autorefit": false
+  ]
  },
  {
   "id": 17,
   "scenario": "bn9s17.xml",
   "startprestige": 0,
+  "aiprestige": 0,
+  "prestigecap": 25600,
+  "autorefit": false,
   "intro": "BELGRADE OFFENSIVE - 12 OCT 1944<br><br>West of Belgrade, Serbia<br><br>The time has come to liberate the Serbian capital from the fascist bondage! With the support of the  Yugoslav Partisans and the Bulgarian Army, it should not be difficult to drive out the Germans and their collaborators.<br><br>ORDERS<br>Capture all VH!",
   "outcome": {
    "briliant": {
@@ -5694,13 +5731,15 @@
     "type": "coreLossesAtMost",
     "maxLosses": 2
    }
-  ],
-  "autorefit": false
+  ]
  },
  {
   "id": 18,
   "scenario": "bn9s18.xml",
   "startprestige": 0,
+  "aiprestige": 0,
+  "prestigecap": 25700,
+  "autorefit": false,
   "intro": "LAKE BALATON COUNTERATTACK - 16 MAR 1945<br><br>East of Lake Balaton, Hungary<br><br>The German offensive flagged - the enemy isn't be able to break through to the Danube. Time for us to attack. Advance to Lake Balaton and crush the enemy formations!<br><br>ORDERS<br>Capture all VH!<br><br>NOTES<br>Attention - winter conditions! If possible, equip your troops with tracked movement. Check if you can switch between wheeled and tracked movement for free.",
   "outcome": {
    "briliant": {
@@ -5997,13 +6036,15 @@
     "type": "coreLossesAtMost",
     "maxLosses": 2
    }
-  ],
-  "autorefit": false
+  ]
  },
  {
   "id": 19,
   "scenario": "bn9s19.xml",
   "startprestige": 0,
+  "aiprestige": 0,
+  "prestigecap": 25600,
+  "autorefit": false,
   "intro": "ROAD TO VIENNA - 3 APR 1945<br><br>East of Vienna, Austria<br><br>The Germans are on the run - withdrawing towards Vienna. Chase the enemy and destroy as many units as possible so that the enemy cannot establish an effective line of defense in front of Vienna!<br><br>ORDERS<br>a. Capture all VH!<br>b. Prevent that more than 44 enemy ground units reach the Exit Points.<br><br>NOTES<br>Attention summer conditions! Don't forget to switch back to wheeled movement, if wanted.",
   "outcome": {
    "briliant": {
@@ -6364,13 +6405,15 @@
     "type": "coreLossesAtMost",
     "maxLosses": 2
    }
-  ],
-  "autorefit": false
+  ]
  },
  {
   "id": 20,
   "scenario": "bn9s20.xml",
   "startprestige": 0,
+  "aiprestige": 0,
+  "prestigecap": 25000,
+  "autorefit": false,
   "intro": "MANCHURIAN OFFENSIVE - 9 AUG 1945<br><br>Khabarovsk, Far Eastern Russia<br><br>At the Tehran and Yalta Conference, the Soviet Union has promised to enter the Pacific Theater within three months after the end of the war in Europe. So we are going to smash the Japanese puppet state of Manchukuo with a powerful operation. Your task is to overcome the border rivers near Khabarovsk and quickly advance westward into the interior!<br><br>ORDERS<br>Capture all VH!",
   "outcome": {
    "briliant": {
@@ -6754,7 +6797,6 @@
      ]
     }
    }
-  ],
-  "autorefit": false
+  ]
  }
 ]

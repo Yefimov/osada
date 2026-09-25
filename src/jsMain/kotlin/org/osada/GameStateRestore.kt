@@ -17,6 +17,7 @@ import org.osada.scenario.AuthoredOptionsBackfill
 import org.osada.scenario.AuthoredScenarioOptions
 import org.osada.scenario.Campaign
 import org.osada.scenario.Scenario
+import org.osada.scenario.ScenarioTurnMessages
 import org.osada.scenario.addReinforcement
 import org.osada.scenario.configureCalendarForPlayerCount
 import org.osada.ui.WeatherModel
@@ -242,7 +243,9 @@ class GameStateRestore(
         // those saves; a modern save continues on this same tick.
         AuthoredOptionsBackfill.completeIfAbsent(newScenario, scenarioData) {
             AuthoredOptionsBackfill.completeCaptureGoalsIfAbsent(newScenario) {
-                restoreCampaign(campaignData, onReady)
+                ScenarioTurnMessages.completeIfAbsent(newScenario) {
+                    restoreCampaign(campaignData, onReady)
+                }
             }
         }
     }

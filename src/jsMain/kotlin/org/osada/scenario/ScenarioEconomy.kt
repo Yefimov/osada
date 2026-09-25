@@ -89,6 +89,20 @@ private fun Scenario.nextYearCandidates(country: Int): List<Int> {
     return Equipment.getCountryEquipmentByYearRange(year, year, country)
 }
 
+/**
+ * The brilliant-victory award: from the author's list for this scenario when it has one that
+ * names anything of [country]'s, otherwise by date ([getRandomPrototype]).
+ *
+ * The author's list is taken as written -- no class, cost or `No Prototype` filter, because the
+ * Suite already resolved it and an author may add an entry by hand. Only the COUNTRY is checked:
+ * `volarm` was flipped to the Red side after import and its lists are the Whites' tanks.
+ */
+fun Scenario.getAwardPrototype(country: Int): Int {
+    val authored = authoredPrototypes.filter { Equipment.equipment[it]?.country == country }
+    if (authored.isEmpty()) return getRandomPrototype(country)
+    return authored[(Random.nextDouble() * authored.size).toInt()]
+}
+
 fun Scenario.getRandomPrototype(
     country: Int,
     months: Int? = null,

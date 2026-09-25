@@ -1,5 +1,6 @@
 package org.osada.campaign
 
+import org.osada.GameHolder
 import org.osada.UNIT_MAX_EXPERIENCE
 import org.osada.campaign.CampaignEffectApplier.apply
 import org.osada.model.Equipment
@@ -56,7 +57,9 @@ internal object CampaignEffectApplier {
                 is CampaignEffect.GrantExperience -> applyExperience(effect, player)
                 is CampaignEffect.Resupply -> applyResupply(effect, player)
                 is CampaignEffect.Route -> state.route.set(effect.scenarioIndex)
-                is CampaignEffect.AutoRefit -> player?.let { CampaignAutoRefit.apply(it) }
+                // Applied once the target battle has loaded, so its own record says which halves.
+                is CampaignEffect.AutoRefit ->
+                    player?.let { CampaignAutoRefit.apply(it, GameHolder.instance?.campaign?.getCurrentScenario()) }
                 // Setup effects consumed by the scenario loader rather than the player object.
                 is CampaignEffect.ShiftReinforcements,
                 is CampaignEffect.UnlockEquipment,

@@ -57,6 +57,10 @@ class Game {
     internal var removeNonCampaignUnitsFlag: Boolean = false
     internal var buildCoreUnitsFlag: Boolean = false
 
+    /** Set by `applyCoreSwitches` when the battle being entered restarts the core: its own placed
+     *  units become the roster, as on a campaign's first battle but keeping the carried prestige. */
+    internal var restartCoreFlag: Boolean = false
+
     /** A restored save's core roster, parked until [setupPlayers] has assigned [campaignPlayer].
      *  Consumed exactly once, by `handleCampaignScenarioLoaded`. */
     internal var pendingCoreUnitRestore: PendingCoreUnitRestore? = null
@@ -138,6 +142,7 @@ class Game {
             org.osada.ui.WeatherModel
                 .advance(scenario)
             deployArrivingReinforcements()
+            announceTurnMessage()
             // AFTER the new turn is fully set up, not before it. The autosave used to be taken
             // here first, which wrote a snapshot of a turn that had already been handed over --
             // `map.turn` incremented -- but had not yet had its weather rolled or its
@@ -204,6 +209,8 @@ class Game {
         humanSides = countHumanSides(scenario?.map?.getPlayers()?.toList() ?: emptyList())
         if (DEBUG_AI_MOVES) humanSides = 2
         setCurrentSide()
+        // A resumed turn's message was read when the turn began (`announceTurnMessage`).
+        scenario?.let { it.turnMessageShownThrough = it.map.turn }
         gameStarted = true
         gameEnded = false
         // The restore path's copy of the same call [onScenarioLoadFinished] makes -- this completion
@@ -273,6 +280,7 @@ class Game {
         // the time this runs. Re-seeding here on a restore would re-roll every outcome still ahead
         // of the save (`rules/GameRandomSource`).
         if (!fromRestore) GameRandomSource.start(Date.now().toLong())
+        if (fromRestore) scenario?.let { it.turnMessageShownThrough = it.map.turn }
         // OG's custom music track for this battle. `ScenarioMusic` plays the licensed files listed
         // by its manifest and stays silent for an absent source or unsupported format.
         ScenarioMusic.play(scenario?.musicTrack)
@@ -302,7 +310,7 @@ class Game {
         pendingScenarioBriefingEnabled = !fromRestore
 
         if (campaign != null) {
-            handleCampaignScenarioLoaded()
+            handleCampaignScenarioLoaded(fromRestore)
         } else {
             handleStandaloneScenarioLoaded(fromRestore)
         }

@@ -8,6 +8,7 @@ import org.osada.model.getUnits
 import org.osada.model.recomputeSpotting
 import org.osada.model.synchronizeStalinRegime
 import org.osada.model.usesStalinRegime
+import org.osada.rules.CampaignSwitches
 
 internal fun Game.setupPlayers() {
     val players = scenario?.map?.getPlayers() ?: return
@@ -38,12 +39,45 @@ private fun Game.assignCampaignPlayerType(player: Player) {
     if (savedCampaignPlayer == null) {
         savedCampaignPlayer = Player().apply { copy(player) }
     } else {
+        val scenarioCountry = player.country
         player.copy(savedCampaignPlayer!!, true)
+        applyCoreSwitches(player, scenarioCountry)
     }
     // After any core carry-over (copy overwrites country with the saved core's),
     // sync campaign.country to the actual human nation so unit-purchase filtering
     // (EquipmentWindowController) and the dossier image follow the right country.
     campaign!!.country = player.country
+}
+
+/**
+ * The two `.xcam` switches that decide what a carried core IS in the battle being entered
+ * (`rules/CampaignSwitches`). Without either, `Player.copy` keeps the first battle's country for
+ * the whole campaign -- the constraint `docs/design/progressive-side-campaign-rework.md` §12.3
+ * records -- and these two switches are exactly where an OG author lifted it:
+ *
+ * * *"Restart (lose) Core units"* -- the carried army is gone and this battle's own placed units
+ *   become the core, under this battle's nation (`bn4s19`, where the hero starts over in a
+ *   military prison and `camp6bn4` turns from the Greek government army to ELAS, country 39 -> 82).
+ * * *"Set core units to same player's main country"* -- the army carries on under this battle's
+ *   nation (`aljf_4`, 196 -> 162).
+ */
+private fun Game.applyCoreSwitches(
+    player: Player,
+    scenarioCountry: Int,
+) {
+    val record = campaign?.getCurrentScenario()
+    when {
+        CampaignSwitches.restartsCore(record) -> {
+            player.setCoreUnitList(emptyList())
+            player.country = scenarioCountry
+            removeNonCampaignUnitsFlag = false
+            restartCoreFlag = true
+        }
+        CampaignSwitches.adoptsMainCountry(record) -> {
+            player.country = scenarioCountry
+            player.getCoreUnitList().forEach { it.flag = scenarioCountry + 1 }
+        }
+    }
 }
 
 private fun Game.assignScenarioPlayerType(player: Player) {

@@ -50,6 +50,13 @@ internal object ScenarioTextLocalization {
         authored: String,
     ): String = resolve(scenarioFile, "reinforce.$turn.message", authored)
 
+    /** The authored `.tmsg` line for [turn] ([ScenarioTurnMessages]), translated where one exists. */
+    fun turnMessage(
+        scenarioFile: String?,
+        turn: Int,
+        authored: String,
+    ): String = resolve(scenarioFile, "turn.$turn.message", authored)
+
     private fun resolve(
         scenarioFile: String?,
         key: String,

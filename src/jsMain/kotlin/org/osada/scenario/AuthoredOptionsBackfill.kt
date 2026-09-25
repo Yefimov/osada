@@ -180,7 +180,7 @@ internal object AuthoredOptionsBackfill {
     }
 
     /** [ScenarioLoader.loadScenario]'s own request, without the parse that rebuilds the battle. */
-    private fun fetchDocument(
+    internal fun fetchDocument(
         file: String,
         onLoaded: (Document?) -> Unit,
     ) {

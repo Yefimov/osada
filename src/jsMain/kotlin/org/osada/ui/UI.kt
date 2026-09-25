@@ -3,6 +3,7 @@ package org.osada.ui
 import org.osada.CombatLog
 import org.osada.Game
 import org.osada.UnitClass
+import org.osada.announceTurnMessage
 import org.osada.evaluateScenarioEvents
 import org.osada.i18n.GameText
 import org.osada.i18n.I18n
@@ -219,6 +220,8 @@ class UI(
             game.evaluateScenarioEvents()
             game.missionRestartCheckpoint.capture()
             game.uiMessageClicked = true
+            // Turn 1's `.tmsg` line, after the briefing rather than underneath it.
+            game.announceTurnMessage()
             game.processTurn()
         }
         if (mapReady) start() else pendingBriefingFinish = start

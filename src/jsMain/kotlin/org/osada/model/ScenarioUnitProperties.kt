@@ -11,6 +11,8 @@ internal fun GameUnit.applySerializedScenarioProperties(data: dynamic) {
     leaderClassTrait = data.ldrclass as? Int ?: -1
     basicStrength = data.basicStrength as? Int ?: GameUnit.DEFAULT_BASIC_STRENGTH
     landedTurn = data.landedTurn as? Int ?: -1
+    // Not a scenario property, but read on both restore paths for the same reason (`rules/CampaignPrestigeCap`).
+    isPurchased = data.purchased as? Boolean ?: false
     applySerializedAiOrders(data)
 }
 

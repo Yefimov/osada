@@ -9,6 +9,7 @@ import org.osada.model.hasPurchaseAnchor
 import org.osada.model.isAvailableIn
 import org.osada.model.isPurchasable
 import org.osada.model.isPurchasableGroundTransport
+import org.osada.rules.CampaignSwitches
 import org.osada.rules.FrontsAndFactions
 import org.osada.rules.GameRules
 import org.osada.rules.PurchaseCap
@@ -66,6 +67,12 @@ internal class EquipmentCostsCalculator(
     private fun resolveBuyBlockedReason(eqUnitId: Int): String? =
         when {
             eqUnitId <= 0 -> null
+            // The campaign author's *"Disable Purchase"* for this battle (`rules/CampaignSwitches`).
+            CampaignSwitches.purchaseForbidden(
+                ui.game.scenario
+                    ?.map
+                    ?.currentPlayer,
+            ) -> I18n.t("equipment.buy_blocked.campaign_no_purchase")
             !hasPurchaseAnchor() -> I18n.t("equipment.buy_blocked.no_anchor")
             // OG's `Can't Buy` (`attr` bit 7), wired 2026-08-27. The card is deliberately still
             // listed -- the catalogue shows the whole side and explains refusals here rather than
@@ -126,7 +133,8 @@ internal class EquipmentCostsCalculator(
             val newEq = Equipment.getEquipment(eqUnitId)
             val newClass = newEq?.uclass?.let { EquipmentWindowState.normalizeUnitClass(it) } ?: -1
             val newCountry = (newEq?.country ?: 0) - 1
-            if (unitClass == newClass && unitCountry == newCountry) {
+            val sameLine = unitClass == newClass && unitCountry == newCountry
+            if (sameLine && !CampaignSwitches.upgradeForbidden(selectedUnit)) {
                 upgradeCost = GameRules.calculateUpgradeCosts(selectedUnit, eqUnitId, eqTransportId)
             }
         }
@@ -153,7 +161,12 @@ internal class EquipmentCostsCalculator(
             purchaseListAllows(eqUnitId, eqTransportId) &&
             frontsFactionsAllow(eqUnitId, eqTransportId) &&
             poolClassAllows(eqUnitId) &&
-            purchaseCapAllows()
+            purchaseCapAllows() &&
+            !CampaignSwitches.purchaseForbidden(
+                ui.game.scenario
+                    ?.map
+                    ?.currentPlayer,
+            )
 
     /** OG's Fronts/Factions as the scenario's own masks — `rules/FrontsAndFactions`. */
     private fun frontsFactionsAllow(

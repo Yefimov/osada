@@ -49,7 +49,18 @@ internal object CampaignAutoRefit {
      * question, the story's answer stands.
      */
     fun authoredFor(scenarioRecord: dynamic): Boolean =
-        (scenarioRecord?.autorefit as? Boolean) != false && !offersResupplyChoice(scenarioRecord)
+        (refitsStrength(scenarioRecord) || resupplies(scenarioRecord)) && !offersResupplyChoice(scenarioRecord)
+
+    /**
+     * OG keeps the two halves apart: *"Disable auto-refit"* (`@540` `0x02`, `autorefit: false`) and
+     * *"Disable auto-supply"* (`@540` `0x20`, `autosupply: false`) are separate checkboxes, told
+     * apart by the owner's controlled diff of 2026-09-25. Refit is strength; supply is ammo and
+     * fuel. `rhu` switches the refit off for all ten battles and the supply off for one, so nine of
+     * them still arrive with full tanks and magazines.
+     */
+    private fun refitsStrength(scenarioRecord: dynamic): Boolean = (scenarioRecord?.autorefit as? Boolean) != false
+
+    private fun resupplies(scenarioRecord: dynamic): Boolean = (scenarioRecord?.autosupply as? Boolean) != false
 
     /** True when any dialogue choice in [scenarioRecord]'s briefing carries a `resupply` effect. */
     private fun offersResupplyChoice(scenarioRecord: dynamic): Boolean {
@@ -91,15 +102,26 @@ internal object CampaignAutoRefit {
 
     private const val ID_PREFIX = "og-autorefit:"
 
-    /** Refits every surviving core formation of [player]; returns how many it changed. */
-    fun apply(player: Player): Int =
-        player
+    /** Refits every surviving core formation of [player] as [scenarioRecord] -- the battle being
+     *  entered -- allows; returns how many it changed. No record means both halves, OG's default. */
+    fun apply(
+        player: Player,
+        scenarioRecord: dynamic = null,
+    ): Int {
+        val strength = refitsStrength(scenarioRecord)
+        val supply = resupplies(scenarioRecord)
+        return player
             .getCoreUnitList()
             .filterNot { it.destroyed }
-            .count { refit(it) }
+            .count { refit(it, strength, supply) }
+    }
 
-    private fun refit(unit: GameUnit): Boolean {
-        val missing = (FULL_STRENGTH - unit.strength).coerceAtLeast(0)
+    private fun refit(
+        unit: GameUnit,
+        strength: Boolean,
+        resupply: Boolean,
+    ): Boolean {
+        val missing = if (strength) (FULL_STRENGTH - unit.strength).coerceAtLeast(0) else 0
         val supply = unit.ammo to unit.fuel
         if (missing > 0) {
             // Experience BEFORE strength: the dilution averages the veterans present now with the
@@ -109,7 +131,7 @@ internal object CampaignAutoRefit {
             }
             unit.strength += missing
         }
-        unit.refillAmmoFuel()
+        if (resupply) unit.refillAmmoFuel()
         return missing > 0 || supply != (unit.ammo to unit.fuel)
     }
 }

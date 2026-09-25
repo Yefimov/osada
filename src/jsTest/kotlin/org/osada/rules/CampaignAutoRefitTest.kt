@@ -62,7 +62,11 @@ class CampaignAutoRefitTest {
     @Test
     fun theCampaignRecordCanSwitchItOffAndSaysNothingByDefault() {
         assertTrue(CampaignAutoRefit.authoredFor(js("({scenario: 'forward2.xml'})")))
-        assertFalse(CampaignAutoRefit.authoredFor(js("({scenario: 'forward26.xml', autorefit: false})")))
+        assertTrue(
+            CampaignAutoRefit.authoredFor(js("({scenario: 'forward26.xml', autorefit: false})")),
+            "the supply half still runs: OG's auto-supply is a separate switch",
+        )
+        assertFalse(CampaignAutoRefit.authoredFor(js("({autorefit: false, autosupply: false})")))
         assertTrue(CampaignAutoRefit.authoredFor(null), "no record is OG's default, not a refusal")
     }
 
@@ -97,6 +101,22 @@ class CampaignAutoRefitTest {
         assertEquals(4, battered.fuel)
         assertEquals(12, overstrength.strength, "an overstrength formation keeps its extra points")
         assertEquals(1000, owner.prestige, "OG's auto-refit is free")
+    }
+
+    /** `rhu`: the refit is off for every battle and the supply for one -- the halves are separate. */
+    @Test
+    fun theRecordSwitchesStrengthAndSupplySeparately() {
+        val owner = player(prestige = 0)
+        val noRefit = unit(owner, strength = 3, ammo = 0, fuel = 1)
+        CampaignAutoRefit.apply(owner, js("({autorefit: false})"))
+        assertEquals(3, noRefit.strength)
+        assertEquals(6, noRefit.ammo)
+
+        val noSupply = unit(owner, strength = 3, ammo = 0, fuel = 1)
+        CampaignAutoRefit.apply(owner, js("({autosupply: false})"))
+        assertEquals(10, noSupply.strength)
+        assertEquals(0, noSupply.ammo)
+        assertEquals(1, noSupply.fuel)
     }
 
     @Test

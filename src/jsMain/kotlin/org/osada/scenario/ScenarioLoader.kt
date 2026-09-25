@@ -105,6 +105,7 @@ object ScenarioLoader {
         parseMapTurnsAndDates(scenario, mapElement)
         parseMapAtmosphereAndDisplay(scenario, mapElement)
         parseMapName(scenario, mapElement)
+        ScenarioTurnMessages.parse(scenario, doc)
         loadTerrainImage(scenario, doc)
     }
 
@@ -147,6 +148,12 @@ object ScenarioLoader {
         // attribute-to-field table lives in `AuthoredScenarioOptions` because a save has to write
         // and read exactly the same set -- see that object for why an ABSENT attribute stays null.
         AuthoredScenarioOptions.parse(scenario, mapElement)
+        scenario.authoredPrototypes =
+            mapElement
+                .getAttribute("protolist")
+                ?.split(',')
+                ?.mapNotNull { it.trim().toIntOrNull() }
+                .orEmpty()
         scenario.iconset = mapElement.getAttribute("iconset")?.toIntOrNull() ?: 0
         scenario.lockedEffectiveIconset = scenario.effectiveIconset
         val calendarRate =

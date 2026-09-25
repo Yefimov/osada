@@ -338,6 +338,14 @@ class GameUnit(
      */
     var isTemporaryBorrowed: Boolean = false
 
+    /**
+     * Bought with prestige ([buyUnit]) rather than handed out -- a campaign's original core, a
+     * prototype, a trigger or a story reward. Only these count toward OG's campaign prestige cap
+     * (`rules/CampaignPrestigeCap`). Saved only when true; a save from before it existed reads
+     * false, so its army counts as nothing and the cap is lenient rather than wrongly harsh.
+     */
+    var isPurchased: Boolean = false
+
     /** Player-given unit name (Stage 3.5, Task 2), or null to display the equipment name.
      *  Serialized into saves only when set — unrenamed units keep the exact pre-rename
      *  save layout (see GameStateSerializer's byte-stability doc). */
@@ -480,6 +488,7 @@ class GameUnit(
         landedTurn = other.landedTurn
         stalinRegimeBoosted = other.stalinRegimeBoosted
         isTemporaryBorrowed = other.isTemporaryBorrowed
+        isPurchased = other.isPurchased
         formationId = other.formationId
         player = Player().apply { copy(other.player ?: return@apply) }
         if (other.transport != null) {

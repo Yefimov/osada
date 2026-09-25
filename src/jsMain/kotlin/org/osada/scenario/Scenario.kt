@@ -151,6 +151,15 @@ class Scenario(
     var prototypesAllowed: Boolean? = null
 
     /**
+     * The author's own prototype list for an award made at the start of THIS scenario (`.xproto`
+     * / `.proto`, `<map protolist>`, `tools/og-import/add_prototype_lists.py`). 24 deployed
+     * scenarios. Empty means none was authored and [getRandomPrototype] draws by date.
+     *
+     * Read only at load, where the award is made, so it is not carried in saves.
+     */
+    internal var authoredPrototypes: List<Int> = emptyList()
+
+    /**
      * OG's **prototype time frame** — how many months ahead the brilliant-victory award may reach.
      * `.xscn` `@848`, gated on `opt_custom_time_frame` (`@1010` bit 0); **69 of the 397 deployed
      * scenarios whose source parses set it**, 1,007 corpus-wide.
@@ -325,6 +334,14 @@ class Scenario(
     /** Optional authored message box per reinforcement turn (`<reinforce turn="2" message="...">`),
      *  shown when that wave actually deploys. Empty for scenarios that do not author one. */
     var reinforcementMessages: MutableMap<Int, String> = mutableMapOf()
+
+    /** OG's per-turn messages (`.tmsg`, [ScenarioTurnMessages]), keyed by turn. Null until read:
+     *  a restored battle fills it from the scenario XML rather than from the save. */
+    internal var turnMessages: Map<Int, String>? = null
+
+    /** The last turn whose message has been announced. Presentation state, never saved; a
+     *  restored battle starts it at its own turn so a reload does not repeat what was read. */
+    internal var turnMessageShownThrough: Int = 0
 
     /**
      * Optional authored `<events>` (see [ScenarioEvent]): declarative, once-only reactions to the
@@ -502,6 +519,7 @@ class Scenario(
         eqp = other.eqp
         reinforcementMessages.clear()
         reinforcementMessages.putAll(other.reinforcementMessages)
+        turnMessages = other.turnMessages
         victoryHoldCounts = other.victoryHoldCounts.toList()
         victoryHoldCountsSide1 = other.victoryHoldCountsSide1.toList()
         retreatUnitsPerSide = other.retreatUnitsPerSide.toList()

@@ -113,8 +113,12 @@ package org.osada.rules.ruleset
  * it on and hands the decision to each campaign's own per-scenario setting. The same schema added
  * [RuleKey.COMBAT_SUPPORT_MIN_BAR], OSADA's third non-OG rule and the first that is ON in OSADA
  * Default; Author's Vision resolves it off ([RuleProvenance.NOT_OPEN_GENERAL]).
+ *
+ * 19 (2026-09-25) added [RuleKey.CAMPAIGN_START_PRESTIGE] and [RuleKey.CAMPAIGN_PRESTIGE_CAP], the two
+ * `.xcam` prestige rules OSADA had never read. Both default off, so a schema-<=18 profile is
+ * byte-identical in play; Author's Vision resolves both on and hands them to each campaign's record.
  */
-const val RULESET_SCHEMA_VERSION = 18
+const val RULESET_SCHEMA_VERSION = 19
 
 /** Serialized keys understood historically but no longer configurable or gameplay-relevant. */
 internal val RETIRED_RULE_KEYS: Set<String> = setOf("trigger_hexes", "stalin_regime")
@@ -629,6 +633,29 @@ enum class RuleKey(
     CAMPAIGN_AUTO_REFIT("campaign_auto_refit", null, 0, 1),
 
     /**
+     * **Open General's per-scenario starting prestige in a campaign.** 0 = off, 1 = as the
+     * campaign authors it. Schema 19.
+     *
+     * At 1, a battle of the campaign starts with the two `.xcam` budgets OpenSuite calls *"Start AI
+     * Prestige"* (`aiprestige`, to every player opposing the human, on top of its turn-1 income --
+     * `Manual_OSuite-Basic.pdf` pp.15-16's *"the AI starts with 150 prestige points"*) and *"Start
+     * Player Prestige"* (`playerprestige`, to the human, on top of what the core carried in). With
+     * 0 neither is paid, as OSADA always did. A record without them -- a hand-written campaign, a
+     * Panzer Marshal one, or one of the side-flipped reworks -- is unaffected either way.
+     * Call site: `rules/CampaignStartPrestige`.
+     */
+    CAMPAIGN_START_PRESTIGE("campaign_start_prestige", null, 0, 1),
+
+    /**
+     * **Open General's campaign prestige CAP.** 0 = off, 1 = as the campaign authors it. Schema 19.
+     *
+     * At 1 the end-of-scenario award is cut to what fits under the scenario's cap once the value
+     * of the player's purchased army and the prestige in hand are counted -- the author's rule on
+     * `luis-tools.open-general.com/OpenGen_Campaigns.html`. Call site: `rules/CampaignPrestigeCap`.
+     */
+    CAMPAIGN_PRESTIGE_CAP("campaign_prestige_cap", null, 0, 1),
+
+    /**
      * **A Combat Support unit lends at least one bar — OSADA's rule, not Open General's.** 0 = off
      * (OG), 1 = on. Schema 18.
      *
@@ -897,6 +924,10 @@ object RulesetDefaults {
             // Schema 18. Off is a description of the game since 2026-08-01, when the free refit
             // between battles became the paid tray pass (`model/ReserveRefit`).
             RuleKey.CAMPAIGN_AUTO_REFIT to 0,
+            // Schema 19. Off is a description of the game before 2026-09-25: OSADA read neither
+            // `.xcam` prestige field.
+            RuleKey.CAMPAIGN_START_PRESTIGE to 0,
+            RuleKey.CAMPAIGN_PRESTIGE_CAP to 0,
             // Schema 18, on by owner decision (2026-09-25): a Combat Support unit that cannot earn a
             // bar is otherwise a purchase that does nothing. Author's Vision resolves it off.
             RuleKey.COMBAT_SUPPORT_MIN_BAR to 1,

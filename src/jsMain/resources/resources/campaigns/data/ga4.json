@@ -3,6 +3,8 @@
   "id": 0,
   "scenario": "ga4_0.xml",
   "startprestige": 0,
+  "aiprestige": 100,
+  "upgradeinsh": true,
   "intro": "Good morning comrade Lieutenant-General. STAVKA has decided it is time for you to break the stalemate at Khalkin Gol. The Japanese have been pouring reinforcements into the area, but, as you know, so have we, and we continue to do so. Therefore you will expel the invaders and push them back to where they came from!",
   "outcome": {
    "briliant": {
@@ -50,6 +52,9 @@
   "id": 1,
   "scenario": "ga4_1.xml",
   "startprestige": 0,
+  "aiprestige": 0,
+  "prestigecap": 500,
+  "upgradeinsh": true,
   "intro": "Comrade General, as you are now commander of the Kiev Special Military District, we have a special assignment for you to organize! As you know, the Romanians have consented to give us back the territory taken from us during the civil war, but, in disregard of the agreement, they are also attempting to take with them railroad rolling stock, factory equipment, and other supplies as they evacuate the area! To help halt this blatant violation of the agreement, you must secure the Chisinau vicinity by occupying as many cities as possible and by cutting off their routes of exit over the Prut river. We are still trying to determine exactly where they plan on crossing the Prut river, but as soon as we know, you will know...",
   "outcome": {
    "briliant": {
@@ -97,6 +102,9 @@
   "id": 2,
   "scenario": "ga4_2.xml",
   "startprestige": 0,
+  "aiprestige": 0,
+  "prestigecap": 1150,
+  "upgradeinsh": true,
   "intro": "Comrade General, STAVKA applauds your decision in rejecting a  defensive posture in favor of a more active stance. As a result, the German offensive has been brought to a halt here in the Yelnya sector. Stalin now requests that You and General Rokossovsky turn the tables on the Germans by retaking Yelnya and securing the remainder of the area....",
   "outcome": {
    "briliant": {
@@ -144,6 +152,9 @@
   "id": 3,
   "scenario": "ga4_3.xml",
   "startprestige": 0,
+  "aiprestige": 0,
+  "prestigecap": 1800,
+  "upgradeinsh": true,
   "intro": "Comrade General, the lead German forces now stand less than 30 kilometers away from the Kremlin! Stalin has finally approved the counter offensive proposed by You and General Vasilevsky. You will commence it immediately!",
   "outcome": {
    "briliant": {
@@ -191,6 +202,8 @@
   "id": 4,
   "scenario": "ga4_4.xml",
   "startprestige": 0,
+  "aiprestige": 0,
+  "prestigecap": 1800,
   "intro": "Comrade Zhukov, the desired effect of compelling the Germans to bring up four additional panzer divisions and one motorized division to deal with your attack, (thus effectively depriving their Stalingrad sector of the reinforcements they needed to deal with the Uranus operation), appears to have been accomplished. Therefore, Stalin has now authorized  your order for  the remnants of the 6th Tank Corps and three Cavalry divisions to break the encirclement...<br><br>VICTORY CONDITIONS:<br><br>Exit 6 Ground units...",
   "outcome": {
    "briliant": {
@@ -238,6 +251,9 @@
   "id": 5,
   "scenario": "ga4_5.xml",
   "startprestige": 0,
+  "aiprestige": 0,
+  "prestigecap": 3000,
+  "upgradeinsh": true,
   "intro": "Comrade Zhukov, I am sure that Stalin has already briefed you on the importance of this operation to our starving people trapped in Leningrad. They are depending for their lives on your leadership of the Leningrad and Volkov fronts!",
   "outcome": {
    "briliant": {
@@ -285,6 +301,9 @@
   "id": 6,
   "scenario": "ga4_6.xml",
   "startprestige": 0,
+  "aiprestige": 0,
+  "prestigecap": 3700,
+  "upgradeinsh": true,
   "intro": "Comrade Zhukov, your prediction made back in April has come to pass! The Germans have launched a massive attack towards Kursk. But as you have also foreseen, the German onslaught has more or less stalled in front of our defensive preparations. As per your orders, General Popov's Bryansk front, and General Sokolovsky's Western front,  have a few days ago initiated their attacks in the direction of Orel. As STAVKA  advisor to General Rokossovsky's Central front, Stalin has given the OK for you to now order the Central front to stage a counter-attack in the general direction of the Orel sector, thus unfolding a powerful three-front offensive on the Orel region...",
   "outcome": {
    "briliant": {
@@ -332,6 +351,9 @@
   "id": 7,
   "scenario": "ga4_7.xml",
   "startprestige": 0,
+  "aiprestige": 0,
+  "prestigecap": 4500,
+  "upgradeinsh": true,
   "intro": "Comrade Marshal, the joint attack by your 1st Ukrainian Front and Marshal Konev's 2nd Ukrainian Front has been approved by Stalin! The 2nd Ukrainian Front will move against Uman tommorrow, and then with any luck, we will end up encircling  the 1st Panzer Armee in the Kamenets-Podolsk region...",
   "outcome": {
    "briliant": {
@@ -379,6 +401,9 @@
   "id": 8,
   "scenario": "ga4_8.xml",
   "startprestige": 0,
+  "aiprestige": 0,
+  "prestigecap": 5000,
+  "noscore": true,
   "intro": "Good Morning Comrade Marshal. Since you are now Stavka coordinator for both the 1st and 2nd Belorussian fronts, and we know how you like to be close to the front lines with your troops, Stalin has given you the option to decide at which front you would like to be...<br><br>Note: To choose the 1st Belorussian path, go to Staging Area 1. To choose the 2nd Belorussian path, go to Staging Area 2...",
   "outcome": {
    "briliant": {
@@ -426,6 +451,9 @@
   "id": 9,
   "scenario": "ga4_9.xml",
   "startprestige": 0,
+  "aiprestige": 0,
+  "prestigecap": 5000,
+  "upgradeinsh": true,
   "intro": "Comrade Marshal, latest intelligence and recon reports show that the Germans have made extensive defensive preparations around Bobruisk, and have declared it a fortified area, nonetheless, we will proceed as planned. As you already know, the goal of this operation is twofold: breakthrough the defensive positions and take Bobruisk, and exploit any gaps that are opened, with the objective of forcing open a southern route towards Minsk...",
   "outcome": {
    "briliant": {
@@ -473,6 +501,9 @@
   "id": 10,
   "scenario": "ga4_10.xml",
   "startprestige": 0,
+  "aiprestige": 0,
+  "prestigecap": 5500,
+  "upgradeinsh": true,
   "intro": "Comrade Marshal, due to the staggering success of the Belorussian operations thus far, Stalin has decided to implement the plan for the expansion of the offensive to the Northern and Southern flanks. You will now \"suggest\" to Rokossovsky that he deploy the left wing of the 1st Belorussian front to the south of the Pripet  Marshes. From there, see to it that  Brest-Litovsk is taken...",
   "outcome": {
    "briliant": {
@@ -520,6 +551,9 @@
   "id": 11,
   "scenario": "ga4_11.xml",
   "startprestige": 0,
+  "aiprestige": 0,
+  "prestigecap": 5500,
+  "upgradeinsh": true,
   "intro": "Comrade Marshal, as you know, two bridgeheads over the Vistula have already been secured in preparation for the drive into Warsaw, and now that You and  Rokossovsky are finished preparing, Stalin has given the go ahead for the last remaining key German bridgehead on the east bank to be taken, thus eliminating a dangerous bulge in the Vistula Front, which Stalin would like to have straightened out before starting any large scale operations. But, just between You and Me comrade, I think Stalin also sees this operation as an opportunity to appear to the world as finally addressing the situation in Warsaw...",
   "outcome": {
    "briliant": {
@@ -567,6 +601,9 @@
   "id": 12,
   "scenario": "ga4_12.xml",
   "startprestige": 0,
+  "aiprestige": 0,
+  "prestigecap": 5000,
+  "upgradeinsh": true,
   "intro": "STAVKA agrees with you Comrade Marshal; the drive to capture Mogilev will be critical to the overall success of the Bagration operation. The German forces holding the Mogilev sector have a high proportion of very good units which cannot be allowed to reinforce either of the sectors to the north or south. Your's and general Zakarov's primary objectives are: capture Mogilev, thus taking control of the network of roads running from Mogilev to Minsk, and also to pin down the bulk of the German 4th Armee while the parallel offensives are taking place around Vitebsk and Bobruisk...",
   "outcome": {
    "briliant": {
@@ -614,6 +651,9 @@
   "id": 13,
   "scenario": "ga4_13.xml",
   "startprestige": 0,
+  "aiprestige": 0,
+  "prestigecap": 5500,
+  "upgradeinsh": true,
   "intro": "Comrade Marshal, now that the trapped German 4th Armee has, for the most part, been reduced in the pocket east of Minsk, STAVKA has issued  new objectives for You and general Zakharov; secure the Novogrudok area, capture the key points of enemy resistance, especially Grodno and Volkovysk, and advance in the direction of Bialystok. To aid you in this task, STAVKA has subordinated the 3rd army from the 1st Belorussian front to be under your command, and has ordered elements of the 3rd Belorussian front to provide support for the duration of this operation...",
   "outcome": {
    "briliant": {
@@ -661,6 +701,9 @@
   "id": 14,
   "scenario": "ga4_14.xml",
   "startprestige": 0,
+  "aiprestige": 0,
+  "prestigecap": 5500,
+  "upgradeinsh": true,
   "intro": "August 6 1944<br><br>Comrade Marshal, now that you have successfully taken Grodno and Bialystok, STAVKA has issued new objectives for the 2nd Belorussian front; capture the fortress of Osowiec whilst securing the area and moving in the direction of Lomza, enlarging the bridgeheads in preparation for a further advance into East Prussia...",
   "outcome": {
    "briliant": {
@@ -708,6 +751,9 @@
   "id": 15,
   "scenario": "ga4_15.xml",
   "startprestige": 0,
+  "aiprestige": 0,
+  "prestigecap": 5500,
+  "upgradeinsh": true,
   "intro": "Comrade Marshal, seeing as the German counter attack has been blunted here in the Arnswalde sector with the result that the Germans are slowly falling back to their staging areas, Stalin suggests that you take the initiative and drive as far west as you can! This will assist Rossokovsky and the 2nd Belorussian front in clearing the enemy from all of Eastern Pomerania between Danzig and Stettin...",
   "outcome": {
    "briliant": {
@@ -755,6 +801,9 @@
   "id": 16,
   "scenario": "ga4_16.xml",
   "startprestige": 0,
+  "aiprestige": 0,
+  "prestigecap": 6000,
+  "upgradeinsh": true,
   "intro": "Comrade Marshal, in view of the existing military and political situation, STAVKA has decided that the Berlin operation should be launched no later than April 16th, so here we are! Reviewing the plan once more: The main thrust toward Berlin and the capture of the city are entrusted to You and the 1st Belorussian front. Marshal Konev's 1st Ukrainian front is to strike from the Neisse river against enemy forces south of Berlin and cut off the main force of Army Group Center, thus securing your operations from the south. Konev should then be in a position to strike at Berlin from the south if necessary. Since Rossokovsky's 2nd Belorussian front will not be able to cross the Oder river before April 20th, you will have to advance with an uncovered right flank for the first crucial days of the operation, but, we have faith in your abilities!",
   "outcome": {
    "briliant": {

@@ -8,11 +8,13 @@ import org.osada.hero.HeroCampaign
 import org.osada.i18n.I18n
 import org.osada.model.Player
 import org.osada.model.addOutcomeToDossier
-import org.osada.model.awardPrestige
 import org.osada.model.collectPersistentCampaignUnits
 import org.osada.model.deployReinforcement
+import org.osada.model.effectivePrestigeIncome
 import org.osada.model.ensureFormationIds
 import org.osada.model.getPlayer
+import org.osada.rules.CampaignPrestigeCap
+import org.osada.rules.CampaignSwitches
 import org.osada.save.SaveStatus
 import org.osada.save.SaveStatusBus
 import org.osada.scenario.ScenarioTextLocalization
@@ -97,7 +99,15 @@ fun Game.continueCampaign(
     // to record the REAL outcome. recordScenarioCompletion is idempotent per scenario: the
     // move-capture and end-turn completion paths can both reach here for the same battle.
     recordCampaignOutcome(outcome, routeOverride)
-    player.awardPrestige(campaign!!.getOutcomePrestige(outcome))
+    val capNote = awardOutcomePrestige(player, outcome)
+    // OpenSuite's *"Don't score"* (`rules/CampaignSwitches`): this battle leaves the campaign score
+    // where it found it. The carried player IS the score at the start of the battle, since the
+    // battle's own player starts at 0 and adds it (`Player.copy(accumulateScore = true)`). A battle
+    // resumed from a save re-seeds that copy from the save, so it keeps what it had scored before
+    // the save was made -- the lenient direction.
+    if (CampaignSwitches.skipsScore(campaign!!.getCurrentScenario())) {
+        savedCampaignPlayer?.let { player.score = it.score }
+    }
     player.addOutcomeToDossier(outcome, scenario!!.name)
     OSGlue.reportScore(player.score)
     val carryOver = scenario!!.map.collectPersistentCampaignUnits(player)
@@ -154,10 +164,32 @@ fun Game.continueCampaign(
     } else {
         // A defeat the campaign survives still gets its reason: the author's text alone can
         // describe a different defeat from the one the player just had (`TimedDefeatReason`).
-        val shown = if (outcome == "lose") lossReason(reason) + text else text
+        val shown = (if (outcome == "lose") lossReason(reason) + text else text) + capNote
         UIBuilder.message(localizedOutcomeName(outcome), shown, narrative = true)
         if (outcome == "briliant") awardPrototype = true
     }
+}
+
+/**
+ * The campaign's end-of-scenario award, cut to OG's prestige cap where the rule and the campaign
+ * record call for it (`rules/CampaignPrestigeCap`). Returns a paragraph telling the player what the
+ * cap withheld, or "" when it withheld nothing. The cap is measured BEFORE the award, against the
+ * army still standing at the end of the battle.
+ */
+private fun Game.awardOutcomePrestige(
+    player: Player,
+    outcome: String,
+): String {
+    val full = player.effectivePrestigeIncome(campaign!!.getOutcomePrestige(outcome))
+    val cap = campaign!!.getCurrentScenario()?.prestigecap as? Int
+    val granted = CampaignPrestigeCap.cappedAward(full, cap, player)
+    player.prestige = (player.prestige + granted).coerceAtLeast(0)
+    if (granted >= full) return ""
+    return "<p>" +
+        I18n.t(
+            "game.campaign.prestige_cap",
+            mapOf("cap" to (cap ?: 0), "granted" to granted, "full" to full),
+        ) + "</p>"
 }
 
 /**

@@ -239,6 +239,7 @@ object GameStateSerializer {
         if (unit.halfShotPending) obj.asDynamic().halfShotPending = true
         if (unit.lastingHits != 0) obj.asDynamic().lastingHits = unit.lastingHits
         if (unit.isTemporaryBorrowed) obj.asDynamic().temporaryBorrowed = true
+        if (unit.isPurchased) obj.asDynamic().purchased = true
         if (unit.stalinRegimeBoosted) obj.asDynamic().stalinRegimeBoosted = true
         // The scenario Depot designation. Optional key on the byte-stability rule: 8 of 502
         // scenarios author one, so every other save is unchanged.
@@ -365,6 +366,7 @@ object GameStateSerializer {
         unit.customName?.let { obj.asDynamic().customName = it }
         unit.formationId?.let { obj.asDynamic().formationId = it }
         if (unit.isTemporaryBorrowed) obj.asDynamic().temporaryBorrowed = true
+        if (unit.isPurchased) obj.asDynamic().purchased = true
         if (unit.stalinRegimeBoosted) obj.asDynamic().stalinRegimeBoosted = true
         // The scenario Depot designation. Optional key on the byte-stability rule: 8 of 502
         // scenarios author one, so every other save is unchanged.

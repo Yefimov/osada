@@ -129,6 +129,11 @@ object RulesetResolver {
      * Its gate is the CAMPAIGN's per-scenario record rather than the scenario XML: OG stores
      * "no auto-refit" in the `.xcam`, and `CampaignAutoRefit.authoredFor` ANDs the key with it. A
      * standalone battle has no campaign and is unaffected either way.
+     *
+     * ### `CAMPAIGN_START_PRESTIGE` and `CAMPAIGN_PRESTIGE_CAP` joined on 2026-09-25
+     *
+     * On the same terms: both read the campaign record (`aiprestige`, `prestigecap`) and do nothing
+     * where it carries none.
      */
     private val SCENARIO_AUTHORED =
         setOf(
@@ -139,6 +144,8 @@ object RulesetResolver {
             RuleKey.BUILD_AND_REPAIR,
             RuleKey.RAIL_TRANSPORT,
             RuleKey.CAMPAIGN_AUTO_REFIT,
+            RuleKey.CAMPAIGN_START_PRESTIGE,
+            RuleKey.CAMPAIGN_PRESTIGE_CAP,
         )
 
     /**

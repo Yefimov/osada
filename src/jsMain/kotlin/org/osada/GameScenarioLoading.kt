@@ -12,8 +12,9 @@ import org.osada.model.initDossier
 import org.osada.model.removeNonCampaignUnits
 import org.osada.model.restoreCoreUnitList
 import org.osada.model.undeployCoreUnits
+import org.osada.rules.CampaignStartPrestige
+import org.osada.scenario.getAwardPrototype
 import org.osada.scenario.getBalancedPrestige
-import org.osada.scenario.getRandomPrototype
 import org.osada.ui.UI
 import org.osada.ui.UIBuilder
 import org.osada.ui.briefing.CampaignBriefingCatalog
@@ -46,7 +47,7 @@ internal fun Game.applyPendingCoreUnitRestore() {
     LeaderMigration.migrate(player, pending.campaignFile)
 }
 
-internal fun Game.handleCampaignScenarioLoaded() {
+internal fun Game.handleCampaignScenarioLoaded(fromRestore: Boolean = false) {
     console.log("[OSADA] onScenarioLoadFinished campaign branch")
     if (buildCoreUnitsFlag) {
         campaignPlayer?.prestige = campaign!!.startprestige
@@ -60,6 +61,7 @@ internal fun Game.handleCampaignScenarioLoaded() {
             campaignPlayer?.let { scenario!!.map.undeployCoreUnits(it) }
         }
     }
+    rebuildRestartedCore()
     applyPendingCoreUnitRestore()
     // The player's whole force is their army and thus hero-eligible (§9.1) — not just the units on
     // deployment hexes. Mint a formation id for every remaining on-map unit so a pre-placed campaign
@@ -117,10 +119,11 @@ internal fun Game.handleCampaignScenarioLoaded() {
     // Consume next-scenario effects queued by the previous transition, after the core roster
     // exists and before the player receives control.
     applyPendingCampaignEffects()
+    if (!fromRestore) creditCampaignStartPrestige()
     // OG's `no prototypes`: a scenario may refuse the award outright. Null (source unreadable)
     // means permitted, the same direction every other authored switch reads (§AD).
     if (awardPrototype && scenario?.prototypesAllowed != false) {
-        val prototype = scenario!!.getRandomPrototype(campaignPlayer!!.country + 1)
+        val prototype = scenario!!.getAwardPrototype(campaignPlayer!!.country + 1)
         if (prototype > 0) {
             campaignPlayer?.acquireUnit(prototype, 0)
             awardPrototype = false
@@ -128,6 +131,23 @@ internal fun Game.handleCampaignScenarioLoaded() {
         }
     }
     state?.saveCampaign()
+}
+
+/** OpenSuite's *"Restart (lose) Core units"* (`Game.applyCoreSwitches`): this battle's own placed
+ *  units become the roster, as on a campaign's first battle, but the carried prestige is kept. */
+private fun Game.rebuildRestartedCore() {
+    if (!restartCoreFlag) return
+    restartCoreFlag = false
+    campaignPlayer?.let { scenario!!.map.buildCoreUnitList(it) }
+}
+
+/**
+ * OG's per-scenario starting budgets (`rules/CampaignStartPrestige`). A fresh battle only: a restored
+ * one carries every player's prestige in its save, and crediting it again would pay it twice.
+ */
+private fun Game.creditCampaignStartPrestige() {
+    val human = campaignPlayer ?: return
+    CampaignStartPrestige.apply(campaign?.getCurrentScenario(), human, scenario!!.map.getPlayers().toList())
 }
 
 internal fun Game.handleStandaloneScenarioLoaded(fromRestore: Boolean) {
