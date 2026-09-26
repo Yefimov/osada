@@ -57,6 +57,22 @@ internal object ScenarioTextLocalization {
         authored: String,
     ): String = resolve(scenarioFile, "turn.$turn.message", authored)
 
+    /**
+     * The scenario register's name for [scenarioFile] (`scenariolist.js` column 1), translated
+     * where one exists. Unlike the in-battle prose these live in the always-loaded `ui` bundle as
+     * `scenario.<stem>.title`, because the start menu renders them synchronously.
+     */
+    fun listTitle(
+        scenarioFile: String?,
+        authored: String,
+    ): String = stem(scenarioFile)?.let { I18n.tOrNull("scenario.$it.title") } ?: authored
+
+    /** The register's synopsis (`scenariolist.js` column 2, HTML), as [listTitle]. */
+    fun listDescription(
+        scenarioFile: String?,
+        authored: String,
+    ): String = stem(scenarioFile)?.let { I18n.tOrNull("scenario.$it.description") } ?: authored
+
     private fun resolve(
         scenarioFile: String?,
         key: String,

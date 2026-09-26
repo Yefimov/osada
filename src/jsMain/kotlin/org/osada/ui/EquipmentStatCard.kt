@@ -92,7 +92,7 @@ internal object EquipmentStatCard {
         byId("uStrBarFillValue")?.textContent = "10/10"
         byId("uAmmoBarFill")?.style?.width = "100%"
         byId("uAmmoBarFillValue")?.textContent = "${data.ammo}/${data.ammo}"
-        byId("uFuelBarFillRow")?.style?.display = if (data.fuel > 0) "flex" else "none"
+        byId("uFuelBarFillRow")?.style?.display = if (data.fuel > 0) "grid" else "none"
         if (data.fuel > 0) {
             byId("uFuelBarFill")?.style?.width = "100%"
             byId("uFuelBarFillValue")?.textContent = "${data.fuel}/${data.fuel}"

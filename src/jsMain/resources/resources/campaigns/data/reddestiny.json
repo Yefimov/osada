@@ -4,7 +4,7 @@
   "scenario": "rd01.xml",
   "startprestige": 0,
   "aiprestige": 82,
-  "intro": "Ah, welcome comrade General!  Allow me to brief you on the tactical situation, and the reasons for which you were called here:<br><br>The citizens of Bialystok are agitating for the return of Polish independence.  Unfortunately, it seems that some units of the former Polish Army were able to evade our men during our brief campaign through Poland, and these units have quickly seized the area from our local garrision.<br><br>This rebellion forces us to divert your forces from the front in Germany, comrade General.  You must crush the insurrection quickly and with force.  Paratroopers will be arriving shortly to assist your men.<br><br>Show no mercy, Comrade.   Stalin himself has ordered that the villages be razed to the ground.",
+  "intro": "Białystok<br><br>21 March 1946<br><br>Comrade General, you know how this war began. Two weeks ago, while their newspapers were still talking about peace, the British and their partners struck our forces in Germany without warning. Their plan has a name - their own staff called it Unthinkable - and in its first line are German divisions they kept under arms after the surrender and have now given back their guns.<br><br>The front in Germany has held and is already pushing them back. But the enemy prepared a second blow behind it. Armed bands of the old Home Army, supplied by air from the West, have come out of the forests around Białystok and driven our garrison out of the town and the roads around it. Every train to the front passes through here.<br><br>Take the area back quickly. Paratroopers will land to help you. The insurgent units are your target; the townspeople are not, and I want them to see the difference.",
   "outcome": {
    "briliant": {
     "goto": 1,
@@ -13,7 +13,7 @@
      0
     ],
     "prestige": 685,
-    "text": "You have done well, comrade, da? The rebels have been quieted for good.  You have taught the Poles that it is dangerous to interfere with the war effort."
+    "text": "The Białystok rising is over. Its units have been broken up, their arms dumps and radio sets are in our hands, and the trains are moving to the front again. The people of the town saw who kept order and who brought the war to their doorstep."
    },
    "victory": {
     "goto": 1,
@@ -22,7 +22,7 @@
      0
     ],
     "prestige": 411,
-    "text": "Good job, comrade General. The Poles shall not be incited to riot against us again."
+    "text": "Białystok is ours again and the railway is open. The last insurgents have gone back into the forest without their weapons."
    },
    "tactical": {
     "goto": 1,
@@ -31,7 +31,7 @@
      0
     ],
     "prestige": 411,
-    "text": "Comrade General, though you accomplished your objectives, it is apparent you only did so at great cost.  The Russian conscript is plentiful, but let be known he is not to be squandered, da?"
+    "text": "Białystok is ours, but it cost us far more than it should have. Remember that every man lost here is a man the front in Germany did not get."
    },
    "lose": {
     "goto": 1,
@@ -40,7 +40,7 @@
      0
     ],
     "prestige": 959,
-    "text": "Comrade General, I am most displeased with your performance.  If we did not need qualified commanders so badly, you would be removed.  Consider yourself lucky, comrade."
+    "text": "The insurgents still hold part of the area, and the trains are being stopped. There is nobody to replace you, so you will go on to Germany with what you have. Do better there."
    }
   },
   "briefing": {
@@ -52,7 +52,7 @@
   "scenario": "rd02.xml",
   "startprestige": 0,
   "aiprestige": 95,
-  "intro": "Comrade General, the final approach to Berlin has begun.  The foolish Germans have left the approach through the Seelow Heights minimally guarded by their lightest units.  This is an excellent opportunity for you to further become experienced in mobile warfare, comrade General.  Drive to the eastern edge of Berlin, and crush all those who would oppose the wave of Soviet revolution.",
+  "intro": "The Road to Berlin<br><br>16 February 1947<br><br>Comrade General, the enemy's offensive is spent. Last spring they reached the Oder; this winter they are falling back, and the Stavka has ordered the counteroffensive that will take Berlin back from them. They seized the city in the first days of the war and have ringed it with defences since.<br><br>The approach through the Seelow Heights is held only by their lighter units. That is your chance. Break through, drive to the eastern edge of Berlin, and give your army its first taste of deep mobile operations.",
   "outcome": {
    "briliant": {
     "goto": 2,
@@ -61,7 +61,7 @@
      0
     ],
     "prestige": 959,
-    "text": "Comrade General, you have done very well.  Berlin lies open to us, and soon we will take the decadent German Reich out of the war."
+    "text": "Berlin lies open. The enemy's outer ring has broken, and their German divisions are falling back into the city in disorder."
    },
    "victory": {
     "goto": 2,
@@ -70,7 +70,7 @@
      0
     ],
     "prestige": 822,
-    "text": "Comrade General, you have done well.  Soon we will invade Berlin itself."
+    "text": "You have reached the eastern edge of Berlin. The assault on the city itself can begin."
    },
    "tactical": {
     "goto": 2,
@@ -79,7 +79,7 @@
      0
     ],
     "prestige": 822,
-    "text": "Comrade General, although you accomplished your objectives, you have done so at great cost.  Do not disappoint me again."
+    "text": "You reached Berlin, but only just, and at a heavy price. The city itself will not be easier."
    },
    "lose": {
     "goto": 255,
@@ -88,7 +88,7 @@
      0
     ],
     "prestige": 0,
-    "text": "You have wasted the Russian conscript, and for what? We have not even penetrated the Allied ring of defenses around Berlin.<br><br>You disgust me.  It is clear that you will need to be \"re-educated\" for some time. Goodbye, Comrade General."
+    "text": "We have not even broken through the outer ring around Berlin, and the losses are terrible. You are relieved of command."
    }
   },
   "briefing": {
@@ -100,7 +100,7 @@
   "scenario": "rd03.xml",
   "startprestige": 0,
   "aiprestige": 165,
-  "intro": "Comrade General, here lies the German capital of Berlin.  You have been selected by party officials to lead the attack.  <br><br>A British volunteer corps has arrived to assist the defenders of the city, and we suspect that the Germans are well-entrenched. The 5th Division will assist your forces.  Make mother Russia proud, comrade.",
+  "intro": "The Siege of Berlin<br><br>28 March 1947<br><br>Comrade General, Berlin is in front of you, and you have been chosen to lead the assault.<br><br>The German divisions of the coalition are well dug in, and a British corps has been sent into the city to stiffen them. Our 5th Division will attack alongside you. Take Berlin, and the coalition loses the one prize it gained in this war.",
   "outcome": {
    "briliant": {
     "goto": 3,
@@ -109,7 +109,7 @@
      0
     ],
     "prestige": 685,
-    "text": "Spectacular performance, Comrade General!  The quick surrender of the Reich indicates to us all that it is evident you have what it takes to win this war."
+    "text": "Berlin is ours, and quickly. The German divisions that held it have laid down their arms. Moscow is already calling you east: the same powers that planned the attack in Europe have armed Chiang Kai-shek, and his troops have crossed our border in Siberia."
    },
    "victory": {
     "goto": 5,
@@ -118,7 +118,7 @@
      0
     ],
     "prestige": 411,
-    "text": "Comrade General, you have done mother Russia a great service.  The Germans have been eliminated from the war, and the road is open to western Europe."
+    "text": "Berlin is ours, and the German corps that held it has been destroyed. The road west is open, but first the enemy's southern flank must be dealt with. The British are using the ports of southern Italy as bases, and your army is going there."
    },
    "tactical": {
     "goto": 7,
@@ -127,7 +127,7 @@
      0
     ],
     "prestige": 411,
-    "text": "Comrade General, your performance shames the Red Army. Nevertheless, you have accomplished your objectives."
+    "text": "Berlin is ours, but slowly, and at a price the whole army is talking about. You will go south, to Greece, where the British are moving north against Bulgaria."
    },
    "lose": {
     "goto": 255,
@@ -136,7 +136,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Comrade, what is this?! You have failed the motherland.  You will be shipped to the mining camps in the Urals.  I hope for your sake you do better at hard labor than you do at commanding an army."
+    "text": "The assault on Berlin has failed. The coalition holds the city, and the war will go on for years longer because of it. You are relieved of command."
    }
   },
   "briefing": {
@@ -148,7 +148,7 @@
   "scenario": "rd04a.xml",
   "startprestige": 0,
   "aiprestige": 41,
-  "intro": "Comrade General, due to your exceptional performance in Berlin, the Party has asked you take a transfer to the Far East.  Here, China has been ravaged by an internal war for well over a decade.  Comrade Stalin is indignant at how far north their troops have been able to travel  Now is the time to strike.  Your forces must push over the border demarcation at Ulan-Ude, and retake as much land as possible from the invaders.  However, comrade General, do not underestimate the Chinese Army.  Although they are in a weakened state, they use some of the same purchased American equipment as the European Allies.  They may attempt to counter-attack.  Good luck, comrade General.",
+  "intro": "Border Clash at Ulan-Ude<br><br>19 November 1947<br><br>Comrade General, you are needed in the East. Chiang Kai-shek has joined the war on the side of the coalition, and his armies have crossed our border and pushed deep into the Buryat Republic. They are now outside Ulan-Ude.<br><br>Throw them back across the frontier and retake every town they hold.<br><br>Do not underestimate them. They are weakened by twenty years of war at home, but they carry the same American equipment as the armies in Europe, and they may counterattack.",
   "outcome": {
    "briliant": {
     "goto": 4,
@@ -157,7 +157,7 @@
      0
     ],
     "prestige": 411,
-    "text": "Comrade General, you have done exceptionally well despite the circumstances.  Your work is not done, though, and we must continue to perservere against the Chinese dogs."
+    "text": "The invaders have been thrown back across the frontier with heavy losses. The Chinese command is moving its reserves to the Kazakh front, and that is where you will meet them next."
    },
    "victory": {
     "goto": 4,
@@ -166,7 +166,7 @@
      0
     ],
     "prestige": 137,
-    "text": "Good work, comrade General.  You have reclaimed a significant portion of historically Russian land from the invaders."
+    "text": "Ulan-Ude is safe, and the enemy has been driven off our soil in Buryatia."
    },
    "tactical": {
     "goto": 4,
@@ -175,7 +175,7 @@
      0
     ],
     "prestige": 274,
-    "text": "Comrade General, though you accomplished your mission, the Chinese nearly stopped you in your tracks. Do not ever let yourself fail a task of such magnitude."
+    "text": "The enemy is back across the frontier, but he very nearly stopped you. The next front will not give you so much time."
    },
    "lose": {
     "goto": 255,
@@ -184,7 +184,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Comrade General, the Chinese have poured over the border into Siberia.  They have been able to draw on their enormous population, which now stands united against us.  Report to the train station, comrade. I believe your role here is over."
+    "text": "The Chinese armies are across the border in strength and moving deeper into Siberia. You are relieved of command."
    }
   },
   "briefing": {
@@ -196,7 +196,7 @@
   "scenario": "rd05a.xml",
   "startprestige": 0,
   "aiprestige": 54,
-  "intro": "There has been a perpetual state of warfare along the Kazakh front for the past five months.  The decadent Chinese recently launched an attack on the city of Almaty and took it from our brave conscripts.  You are to take your corps, positioned north of Almaty, and liberate the area.  The more quickly you can drive the Chinese out of the area, the better.",
+  "intro": "The Liberation of Alma-Ata<br><br>7 May 1948<br><br>The fighting on the Kazakh front has gone on for five months. Last week the Chinese Nationalists took Alma-Ata from our garrison.<br><br>Your corps is north of the city. Liberate it and drive the enemy out of the area, and the faster you do it, the better.",
   "outcome": {
    "briliant": {
     "goto": 9,
@@ -205,7 +205,7 @@
      0
     ],
     "prestige": 411,
-    "text": "Comrade General, that was spectacular, to say the least.  Your display of Soviet military might has forced the cowardly pigs leading the Chinese government to plead for a cessation of hostilities.  For this, Comrade Stalin has agreed to sign off on a paper giving you a dacha in Leningrad.  You should be proud, Comrade."
+    "text": "Alma-Ata is free and the Chinese armies are routed. Chiang's government has asked for an armistice, and the People's Liberation Army is marching on Nanking. You have earned a rest - but not for long. The enemy is still in the Low Countries."
    },
    "victory": {
     "goto": 9,
@@ -214,7 +214,7 @@
      0
     ],
     "prestige": 137,
-    "text": "Great job, comrade!  The Chinese government has resigned, and their armies are demoralized, retreating on every front.  It may be some months, but soon we will install a proper communist government in Peking, da?"
+    "text": "Alma-Ata is free and the Nationalist armies are retreating on every front. The People's Liberation Army is advancing, and Chiang's war against us is over. You are needed in the west."
    },
    "tactical": {
     "goto": 9,
@@ -223,7 +223,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Comrade General, though your victory was costly, you are to be applauded.  Your action in Almaty has forced the Chinese armies back and secured an important propaganda victory."
+    "text": "Alma-Ata is free, though at a high price. The Nationalists have been pushed back, and you are being sent west."
    },
    "lose": {
     "goto": 255,
@@ -232,7 +232,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Comrade General, you have failed the people and the state.  Come with me.  I'd like to talk to you for a while..."
+    "text": "Alma-Ata is still in enemy hands. You are relieved of command."
    }
   },
   "briefing": {
@@ -244,7 +244,7 @@
   "scenario": "rd04b.xml",
   "startprestige": 0,
   "aiprestige": 61,
-  "intro": "Comrade General, have you ever been to Italy? Nyet? Well, you will soon be taking a, how shall we say, tour of the country, da?  The Party has selected you to begin the attack on Italy due to your performance in the battle for Berlin.  The initial strike will be here, at Taranto.  Your forces will be landing against fierce Allied resistance, since the cowardly Italians have pleaded for Allied help against our unstoppable onslaught.  Allied ships pose a major threat to the invasion, so we have sent you a small fleet of our mighty Soviet submarines to sink the badly made Allied tin cans.  Good luck, comrade General.",
+  "intro": "Beachhead at Taranto<br><br>4 August 1947<br><br>Comrade General, the coalition is using the ports of southern Italy as its base on our southern flank: its bombers fly from there, and its convoys unload there. The Italian government allowed it. The landing will be at Taranto.<br><br>Your forces will land against strong British resistance. Their ships are the greatest danger to the invasion fleet, so a flotilla of our submarines has been placed under your command to deal with them.",
   "outcome": {
    "briliant": {
     "goto": 6,
@@ -253,7 +253,7 @@
      0
     ],
     "prestige": 685,
-    "text": "Splendid job, comrade General!  The Allies have learned just how deadly a properly planned amphibious assault can be, especially when commanded by mother Russia's finest."
+    "text": "The Taranto beachhead is secure, and the British have learned what a well-planned landing looks like. The port is ours."
    },
    "victory": {
     "goto": 6,
@@ -262,7 +262,7 @@
      0
     ],
     "prestige": 411,
-    "text": "Good work, comrade General.  Your success at Taranto has the Allied dogs running in fear of the Red Army."
+    "text": "Taranto is ours, and the British are falling back up the coast."
    },
    "tactical": {
     "goto": 6,
@@ -271,7 +271,7 @@
      0
     ],
     "prestige": 548,
-    "text": "The Allies nearly pushed you back into the water, comrade General.  The party will not be pleased if the next victory comes at such a cost."
+    "text": "The British nearly pushed you back into the sea. We hold the beachhead, but the next battle must not cost as much."
    },
    "lose": {
     "goto": 255,
@@ -280,7 +280,7 @@
      0
     ],
     "prestige": 0,
-    "text": "It has come to my attention that you have failed the motherland in the battle for Taranto, Comrade General.  Do you know what we do to generals who fail?  I am sure you do.  Nevertheless, you will be shown first-hand."
+    "text": "The landing at Taranto has failed, and what is left of your troops has been taken off by sea. You are relieved of command."
    }
   },
   "briefing": {
@@ -292,7 +292,7 @@
   "scenario": "rd05b.xml",
   "startprestige": 0,
   "aiprestige": 68,
-  "intro": "The fight for Italy still continues, comrade General.  However, the party believes the Italian government is on the verge of surrender.  They do not wish to see their beautiful countryside pockmarked by the craters of war, da?  You must bring the conflict to an end, comrade General.  Finish off the last major vestige of Allied power in Italy, at Salerno.  More of our fine submarines are on their way to assist you, should more Allied surface ships be encountered.",
+  "intro": "Advance on Salerno<br><br>25 April 1948<br><br>The fighting in Italy goes on, but the Italian government is close to leaving the war. It has no wish to see its country become a battlefield for the British.<br><br>End it. Destroy the last large British, French and German force in southern Italy, at Salerno. More of our submarines are on their way in case their surface ships return.",
   "outcome": {
    "briliant": {
     "goto": 9,
@@ -301,7 +301,7 @@
      0
     ],
     "prestige": 548,
-    "text": "Very well done, comrade General. The Italian government has surrendered to the glorious Soviet Union, and in doing so has forcibly expelled all Allied troops from Italian territory.  The Allies, bound by the chains of international diplomacy, have chosen to obey the Italian government's request.  Luckily, the Soviet Union does not abide by this imperialist dogma."
+    "text": "Italy has left the war, and its new government has ordered every coalition soldier off Italian soil. The Mediterranean flank is closed, and your army is going north, to the Low Countries."
    },
    "victory": {
     "goto": 9,
@@ -310,7 +310,7 @@
      0
     ],
     "prestige": 274,
-    "text": "Good work, comrade General. The Italian government has surrendered to the glorious Soviet Union, and in doing so has forcibly expelled all Allied troops from Italian territory.  The Allies, bound by the chains of international diplomacy, have chosen to obey the Italian government's request.  Luckily, the Soviet Union does not abide by this imperialist dogma."
+    "text": "Italy has left the war and demanded that the coalition withdraw its troops. The southern flank is safe."
    },
    "tactical": {
     "goto": 9,
@@ -319,7 +319,7 @@
      0
     ],
     "prestige": 411,
-    "text": "Comrade General, though the Italians have indeed surrendered, they were not intimidated enough by your victory at Salerno to expel the majority of Allied troops.  The narrow victory here at Salerno has shown the Allies that even mighty mother Russia is not completely invincible.  Do not disappoint the party again."
+    "text": "Italy has left the war, but the victory at Salerno was too narrow to make the British leave: they are still in the north of the country. Your army is needed in the Low Countries."
    },
    "lose": {
     "goto": 255,
@@ -328,7 +328,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Comrade General, you were given a chance to bring the war in Italy to a successful close. But you have failed miserably in this task.  You will need to report to the train station, Comrade. I have booked a one-way ticket for you."
+    "text": "The British still hold Salerno, and Italy is still in the war. You are relieved of command."
    }
   },
   "briefing": {
@@ -340,7 +340,7 @@
   "scenario": "rd04c.xml",
   "startprestige": 0,
   "aiprestige": 41,
-  "intro": "Comrade General, the Party has selected you for tactical operations in the invasion of Greece due to your performance in Berlin.  The Allied dogs have holed up in the area of Thermopylae.  I'm sure you know already that the Western nations believe they can hold us off until they can evacuate the country, da?  They think they can do what the Spartans did to the Persians here, in times long ago.  <br><br>Comrade General, you must show them that it is foolish to resist the tides of revolution.  Wipe out the Allied forces and take the area for mother Russia.  Intelligence reports the annoying Allied Navy may try to shell you if you go along the coast, comrade, so beware.",
+  "intro": "Thermopylae<br><br>13 October 1947<br><br>Comrade General, you are going to Greece. In the spring a British expeditionary corps, Greek royalist troops and a Turkish corps moved north against Bulgaria. They have been stopped, and now they are falling back on Thermopylae to hold the pass while their ships take them off.<br><br>They think they can do here what the Spartans once did against the Persians. Destroy them and take the pass. Watch the coast: our intelligence expects their navy to shell the coast road.",
   "outcome": {
    "briliant": {
     "goto": 8,
@@ -349,7 +349,7 @@
      0
     ],
     "prestige": 685,
-    "text": "Fantastic work, comrade General.  The Allied pigs have been completely eradicated.  Turkey refuses to help the Allies any longer.  The only Allied bastion in Greece that remains is the island of Crete."
+    "text": "The coalition force at Thermopylae has been destroyed. Turkey has withdrawn its troops and refuses to fight on, and the only British foothold left in Greece is Crete."
    },
    "victory": {
     "goto": 8,
@@ -358,7 +358,7 @@
      0
     ],
     "prestige": 411,
-    "text": "Great job, comrade General.  You may redeem yourself in the eyes of the Communist Party yet."
+    "text": "The pass is ours, and the British are evacuating to Crete."
    },
    "tactical": {
     "goto": 8,
@@ -367,7 +367,7 @@
      0
     ],
     "prestige": 548,
-    "text": "You have done an adequate job, comrade General.  You will be called upon again once you are needed."
+    "text": "The pass is ours, but too many of them got onto the ships. They will be waiting on Crete."
    },
    "lose": {
     "goto": 255,
@@ -376,7 +376,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Such a shame, Comrade General.  The Party had high hopes for you to redeem yourself and to show yourself as a New Soviet Man.  Unfortunately, that did not happen, and so you must be removed from your command."
+    "text": "The coalition has held the pass and got its troops away. You are relieved of command."
    }
   },
   "briefing": {
@@ -388,7 +388,7 @@
   "scenario": "rd05c.xml",
   "startprestige": 0,
   "aiprestige": 48,
-  "intro": "Comrade General, the Allies are using the Greek island of Crete as a last bastion.  With the Greek government officially out of the picture, this island is the last obstacle to our rightful rule of the Aegean Sea.  Your forces will land at a predesignated point on the island, in the area of the city of Maleme.  Paratroopers have landed to the west of your landing zone.  <br><br>You will not be pleased to know that the Royal Navy has positioned a significant flotilla here. Our superior submarines, crafted by the loyal workers, will be dispatched to your command to remove the Allied naval threat.  Good luck, comrade General.",
+  "intro": "Landing at Maleme<br><br>30 January 1948<br><br>Comrade General, Crete is the last coalition stronghold in the Aegean. From its airfields their bombers reach our shipping all the way to the Dardanelles. Your forces will land near Maleme; paratroopers have already come down west of your landing zone.<br><br>The Royal Navy has a strong squadron here. Our submarines have been placed under your command to deal with it.",
   "outcome": {
    "briliant": {
     "goto": 9,
@@ -397,7 +397,7 @@
      0
     ],
     "prestige": 274,
-    "text": "You have done extraordinarily well, comrade General.  Crete is secure, and the Royal Navy lies at the bottom of the sea. Good job."
+    "text": "Crete is ours, and much of the Royal Navy's squadron is at the bottom of the sea. The Aegean is closed to the coalition."
    },
    "victory": {
     "goto": 9,
@@ -406,7 +406,7 @@
      0
     ],
     "prestige": 137,
-    "text": "Good work, comrade General.  The Royal Navy is in shambles, and the island of Crete has been united under the hammer and sickle."
+    "text": "Crete is ours, and the British squadron has been driven off. Our shipping can move again."
    },
    "tactical": {
     "goto": 9,
@@ -415,7 +415,7 @@
      0
     ],
     "prestige": 205,
-    "text": "Comrade General, though you have accomplished the tasks set before you, the party feels you did so at great cost to the Russian people.  Do not disappoint the party again."
+    "text": "Crete is ours, but the cost in men and ships was heavy."
    },
    "lose": {
     "goto": 255,
@@ -424,7 +424,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Comrade General, you have failed miserably at your tasks.  Crete remains in Allied hands, and will be a major nuisance to our convoys through the Black Sea.  You will need to report to the detention center, comrade."
+    "text": "Crete remains in British hands, and their bombers will go on striking our shipping. You are relieved of command."
    }
   },
   "briefing": {
@@ -436,7 +436,7 @@
   "scenario": "rd06.xml",
   "startprestige": 0,
   "aiprestige": 55,
-  "intro": "Our glorious Red Army of workers and peasants has begun the invasion of the Low Countries.  Holland fell quickly to our armored forces, but I am most displeased to inform you that the Allied pigs have managed to set up significant defenses around the Belgian port of Antwerp. Your veteran army, having served mother Russia well in the past, has been tasked with securing this vital and important city.  Crush the Allied dogs, comrade General.  The party will not be kind if you fail here.",
+  "intro": "Drive on Antwerp<br><br>7 September 1948<br><br>Comrade General, our offensive has reached the Low Countries. Holland fell quickly, but the enemy has built strong defences around Antwerp: it is the port through which Britain supplies its armies on the continent.<br><br>Your veteran army has been given the task of taking it. Take the city and its port, and the coalition's supply line across the sea is cut.",
   "outcome": {
    "briliant": {
     "goto": 10,
@@ -445,7 +445,7 @@
      0
     ],
     "prestige": 411,
-    "text": "Fantastic job, comrade General! The city of Antwerp now lies under our rightfulcontrol, and Belgium will soon fall to our superior armed forces.  The party is very pleased with your success."
+    "text": "Antwerp is ours. Without its port, the coalition armies in Belgium are on short rations."
    },
    "victory": {
     "goto": 10,
@@ -454,7 +454,7 @@
      0
     ],
     "prestige": 137,
-    "text": "Great job, comrade! The city lies under our control now, and the inferior Allied forces can not continue to hold on to Belgium much longer."
+    "text": "Antwerp is ours, and Belgium cannot be held against us much longer."
    },
    "tactical": {
     "goto": 10,
@@ -463,7 +463,7 @@
      0
     ],
     "prestige": 274,
-    "text": "I am most unhappy with your performance comrade General.  Though it is apparent you have accomplished your objectives, you have done so at great cost to mother Russia and the people."
+    "text": "Antwerp is ours, but at a price the Front can ill afford."
    },
    "lose": {
     "goto": 255,
@@ -472,7 +472,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Comrade General, from your catastrophic failure in Antwerp, it is obvious you are unfit for command.  Report to the train station at once."
+    "text": "The assault on Antwerp has failed. You are relieved of command."
    }
   },
   "briefing": {
@@ -484,7 +484,7 @@
   "scenario": "rd07.xml",
   "startprestige": 0,
   "aiprestige": 69,
-  "intro": "The Allies have laid a trap in the Ardennes, and Russia's brave soldiers are now bogged down in a hellish forest.  Your job, comrade General, is to lead them out of this pocket into the beautiful French countryside.  Drive the Allies back with everything you have at your disposal.  Do not let your fate become the same as the general who came before you.",
+  "intro": "Frostbite in the Ardennes<br><br>11 February 1949<br><br>The enemy has laid a trap in the Ardennes, and our troops are stuck in the forest. The general who led them in did not bring them out.<br><br>Your task is to do what he could not: break out of the forest into the open country of France, and drive the enemy back with everything you have.",
   "outcome": {
    "briliant": {
     "goto": 11,
@@ -493,7 +493,7 @@
      0
     ],
     "prestige": 548,
-    "text": "Spectacular show, comrade General!  Your wise command has led our troops to victory here at the scene of so much slaughter.  You have been selected to lead the drive to the English Channel."
+    "text": "Our troops are out of the forest, and the enemy has lost the army that set the trap. The road to the Channel is open, and you have been chosen to lead the drive."
    },
    "victory": {
     "goto": 11,
@@ -502,7 +502,7 @@
      0
     ],
     "prestige": 274,
-    "text": "Good show, Comrade General!  We have taken the remnants of the Allied forces into camps, and our forces drive inward into France tself.  Due to this display of your abilities, Comrade Stalin himself has chosen you to lead the drive to the English Channel."
+    "text": "The trap has been broken, and our armies are pouring into France. The drive to the Channel is yours."
    },
    "tactical": {
     "goto": 11,
@@ -511,7 +511,7 @@
      0
     ],
     "prestige": 411,
-    "text": "I understand the conditions were harsh, comrade General, but you have done better in the past.  This was a disappointment to the party."
+    "text": "We are out of the forest, though the frost and the enemy's guns made it a hard road."
    },
    "lose": {
     "goto": 255,
@@ -520,7 +520,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Comrade General, this failure is unacceptable.  The Allies now drive us back into Belgium, and they will retake Germany within a year, at the most optimistic estimate.  <br><br>Go.  A train to Siberia awaits."
+    "text": "The breakout has failed, and the enemy is pushing us back into Belgium. You are relieved of command."
    }
   },
   "briefing": {
@@ -532,7 +532,7 @@
   "scenario": "rd08.xml",
   "startprestige": 0,
   "aiprestige": 69,
-  "intro": "The Allied cowards think they can escape socialist justice.  The pathetic remnants of the French army are attempting to escape at Dunkirk, with assistance from German and British troops.  You must show them the futility of their situation, comrade.  <br><br>Comrade Stalin has placed his trust in you and expects you to complete this operation as quickly as possible.  Do not disappoint him, Comrade General...",
+  "intro": "Push to Dunkirk<br><br>7 June 1949<br><br>The coalition armies in France are finished, and they know it. What is left of the French army, with British and German units, is trying to get away by sea at Dunkirk.<br><br>Do not let them. Every division that escapes will be waiting for us across the Channel. Complete the operation as fast as you can.",
   "outcome": {
    "briliant": {
     "goto": 12,
@@ -541,7 +541,7 @@
      0
     ],
     "prestige": 137,
-    "text": "I am speechless, comrade General.  You have demonstrated that you are the best commander mother Russia has in her entire army!   With the speed with which you crushed the enemy, we may be able to shorten the war by years."
+    "text": "You have destroyed them before the ships could take them off. The Stavka is already planning the crossing of the Channel, and with the speed you have shown, the war may end years sooner."
    },
    "victory": {
     "goto": 14,
@@ -550,7 +550,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Congratulations, comrade General! The French Army is finally and totally defeated, and our forces control the country.  Comrade Stalin is very pleased with your success."
+    "text": "The French army has been destroyed, and France is out of the war. But the remnants have fled south, into Spain, and Franco has opened his frontier to them."
    },
    "tactical": {
     "goto": 14,
@@ -559,7 +559,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Comrade General, though the French are defeated, the British were able to withdraw the majority of their forces and inflict serious casualties during the defence of Dunkirk.  You edge dangerously over the line of Comrade Stalin's tolerance for failure."
+    "text": "France is out of the war, but the British got most of their troops away. The French remnants have fled into Spain, where Franco has given them shelter."
    },
    "lose": {
     "goto": 255,
@@ -568,7 +568,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Comrade General, it is a shame you have failed here, at one of the most opportune places to show off the Red Army's superiority over the Allied dogs.  Report to the airfield, Comrade General. Comrade Stalin has asked to speak with you personally."
+    "text": "The coalition got its armies away by sea, and they will be waiting for us in England. You are relieved of command."
    }
   },
   "briefing": {
@@ -581,7 +581,7 @@
   "startprestige": 400,
   "aiprestige": 41,
   "playerprestige": 400,
-  "intro": "Comrade General, the time has finally come.  Over a year has passed since the Allies fled Europe from the city of Dunkirk, and now our carefully made plans are going into action.  <br><br>Your decorated forces have been specially chosen by comrade Stalin himself to land on the British mainland and secure the beaches at Dover. While the British troops outnumber us almost two-to-one, the majority of them are inexperienced recruits.  The Free French and German troops we expect you to encounter are more experienced but far fewer in number.  <br><br>Submarines have been sent to neutralize the British ships in the area, an assigment of which I am sure they shall have no trouble with. <br><br>Task Force Bear is landing to the west of your position, in order to secure one of the airfields located along the shore. <br><br>There is a rumor that an experienced British force is being sent to reinforce the area within several days.  It would be in your best interest to secure the coast of Dover as quickly as possible.  Good luck, comrade General.",
+  "intro": "Storming Dover<br><br>13 December 1951<br><br>Comrade General, the time has come. Two years have passed since the coalition's armies fled the continent, and in all that time London has refused every offer of peace. The war that Britain started will end in Britain.<br><br>Your army has been chosen to land on the English coast and take the beaches at Dover. The British outnumber us almost two to one, but most of their troops are new recruits; the French and German units with them are more experienced but far fewer.<br><br>Our submarines will deal with the British ships in the area. Task Force Bear is landing west of you to take one of the coastal airfields.<br><br>A veteran British force is said to be on its way to the coast. Secure Dover before it arrives.",
   "outcome": {
    "briliant": {
     "goto": 13,
@@ -590,7 +590,7 @@
      0
     ],
     "prestige": 274,
-    "text": "Absolutely spectacular, comrade!  The Dover coast is secured, and our troops come ashore by the thousands.  The British cower, as we have passed the only thing that has protected their country in ages past: the English Channel."
+    "text": "The Dover coast is ours, and our troops are coming ashore by the thousand. For the first time in centuries the Channel has not protected England."
    },
    "victory": {
     "goto": 13,
@@ -599,7 +599,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Comrade Stalin is very happy with the results of this attack, Comrade General.  The Soviet Union has finally made a foothold in the last refuge of the European Allies, and our men stream ashore like a colony of ants."
+    "text": "We have a firm foothold in England, and our men are streaming ashore."
    },
    "tactical": {
     "goto": 13,
@@ -608,7 +608,7 @@
      0
     ],
     "prestige": 137,
-    "text": "Comrade General, this came very close to being a debacle.  Many brave Soviet soldiers were lost to secure the Dover coast. <br><br>Do not disappoint us in your next battle Comrade General.  It is the most important battle you will ever fight, and Comrade Stalin will be watching.  This, I can assure you."
+    "text": "We hold the Dover coast, but it came close to disaster and we lost many men. The next battle will decide the war."
    },
    "lose": {
     "goto": 255,
@@ -617,7 +617,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Comrade General, you have broken the Red Army's image of near-invincibility.  The British and their European Allies have driven us from the coast of England, and we may never have a chance like that again.  Comrade Stalin is thinking of using nuclear weapons to finish off the troublesome British.  Of course, you will not be around to see any of this.  You, Comrade, are scheduled to report to the barracks in twenty minutes, and after that I imagine the gallows."
+    "text": "The landing has been thrown back into the sea, and a chance like this may not come again. You are relieved of command."
    }
   },
   "briefing": {
@@ -630,7 +630,7 @@
   "startprestige": 400,
   "aiprestige": 27,
   "playerprestige": 400,
-  "intro": "Are you not excited? This is the last battle, comrade General! The British capital of London lies before our glorious Red Army of workers and peasants.  <br><br>However, as I am sure you know, this is not going to be an easy task, da? The pitiful Allied dogs have rallied what remains of their armies inside of London.  Though the British troops would be some threat to us alone, our intelligence reports that veteran Free German and French troops are supplementing the Allied defense force.  No matter.  With you in command, comrade General, the Allies do not stand a chance.  Go, forward! Destroy the Allies! For comrade Stalin, and mother Russia!",
+  "intro": "London<br><br>12 March 1952<br><br>Comrade General, this is the last battle. London is in front of you.<br><br>It will not be easy. The coalition has pulled what is left of its armies into the city, and our intelligence reports veteran German and French units among the British defenders.<br><br>Take London, and the war the coalition began in 1946 is over.",
   "outcome": {
    "briliant": {
     "goto": 254,
@@ -639,7 +639,7 @@
      0
     ],
     "prestige": 0,
-    "text": "The Second Great War<br>A summary of the conflict from 1946-1952<br><br>(The following excerpt has been taken from The Second Great War, a definitive summary of the conflict that engulfed the world from 1946-1952.  We are most grateful that the author has allowed us to take an excerpt from his book.)<br><br>The Red Army, after more than five years of total war, had finally accomplished Josef Stalin's dream of \"manifest destiny\" in Europe.  From Moscow to Madrid, the entire continent of Europe would soon unite under an iron curtain of oppression.  <br><br>The general responsible for the final blow to the Allies, the capture of London, was soon swept in as the Premier of the USSR after Stalin was mysteriously assassinated. Puppet governments were quickly established in the deposed Allied powers, as had been done in a formerly democratic China some time earlier.  <br><br>Aside from the United States, which had remained neutral throughout the conflict, the world was essentially under Soviet control for the next four decades.  Luckily for the peoples of Europe, the Union of Soviet Socialist Republics would collapse in the 1990's under mysterious circumstances, though it is commonly believed that the end of Soviet rule was the result of internal power politics and regional terrorism draining the nation's resources. It cannot be disputed that had the Soviets failed to conquer London in that last dramatic battle of the Second World War, the world today would be a much different place."
+    "text": "The Second Great War<br><br>(From The Second Great War, 1946-1952, a history of the conflict.)<br><br>The war began in March 1946 with the Western coalition's attack on the Soviet forces in Germany, and it ended in London six years later. The Red Army that had been meant to collapse in a matter of weeks stopped the attack on the Oder, retook Berlin, beat back Chiang Kai-shek's invasion in the East, and carried the war to the Channel and across it.<br><br>The peace signed in London dissolved the coalition. Across the continent, governments that had joined the attack gave way to new ones that would not; the United States, which had stayed out of the war, recognised the settlement within a year.<br><br>The general who took London was called to Moscow, and after Stalin's death he became the head of the Soviet government."
    },
    "victory": {
     "goto": 254,
@@ -648,7 +648,7 @@
      0
     ],
     "prestige": 0,
-    "text": "The Second Great War<br>A summary of the conflict from 1946-1952<br><br>(The following excerpt has been taken from The Second Great War, a definitive summary of the conflict that engulfed the world from 1946-1952.  We are most grateful that the author has allowed us to take an excerpt from his book.)<br><br>The Red Army, after more than five years of total war, had finally accomplished Josef Stalin's dream of \"manifest destiny\" in Europe.  From Moscow to Madrid, the entire continent of Europe would soon unite under an iron curtain of oppression.  <br><br>The general responsible for the final blow to the Allies, the capture of London, soon retired to a quiet life in the countryside after Stalin was mysteriously assassinated. Puppet governments were quickly established in the deposed Allied powers, as had been done in a formerly democratic China some time earlier.  <br><br>Aside from the United States, which had remained neutral throughout the conflict, the world was essentially under Soviet control for the next four decades.  Luckily for the peoples of Europe, the Union of Soviet Socialist Republics would collapse in the 1990's under mysterious circumstances, though it is commonly believed that the end of Soviet rule was the result of internal power politics and regional terrorism draining the nation's resources. It cannot be disputed that had the Soviets failed to conquer London in that last dramatic battle of the Second World War, the world today would be a much different place."
+    "text": "The Second Great War<br><br>(From The Second Great War, 1946-1952, a history of the conflict.)<br><br>The war began in March 1946 with the Western coalition's attack on the Soviet forces in Germany, and it ended in London six years later. The Red Army that had been meant to collapse in a matter of weeks stopped the attack on the Oder, retook Berlin, beat back Chiang Kai-shek's invasion in the East, and carried the war to the Channel and across it.<br><br>The peace signed in London dissolved the coalition. Across the continent, governments that had joined the attack gave way to new ones that would not; the United States, which had stayed out of the war, recognised the settlement within a year.<br><br>The general who took London retired soon afterwards to a quiet life in the countryside, and never spoke of the war in public."
    },
    "tactical": {
     "goto": 255,
@@ -657,7 +657,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Comrade General, you have done us a terrible disservice.  Our spies had informed us we would be greeted as liberators when we entered London.  Instead, your bungling command caused huge amounts of carnage to the city itself, and the surrounding countryside. In addition, some Allied units were able to withdraw to the north, in Scotland, and now there is the possibility of the United States entering the war, after witnessing our weakness in London.  You are to report to the train station, Comrade General.  Your services are no longer needed here."
+    "text": "London is ours, but the fighting has wrecked the city, and part of the British army has got away to Scotland. There is talk in Washington of entering the war. This is not the ending Moscow needed. You are relieved of command."
    },
    "lose": {
     "goto": 255,
@@ -666,7 +666,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Agh! Comrade General, you have failed miserably in your attempt to finally defeat the Allies once and for all.  Comrade Stalin has ordered you to report to him directly.  I do not envy your reception there."
+    "text": "London has held, and the coalition has been given the time it needed. The war will drag on. You are relieved of command."
    }
   },
   "briefing": {
@@ -679,7 +679,7 @@
   "startprestige": 200,
   "aiprestige": 41,
   "playerprestige": 200,
-  "intro": "Comrade General, we have finally rid France of the Allied scum.  Unfortunately, the French armies to the south were able to retreat into the mountains of Spain and Andorra, supported by a weak pro-Allied Spanish government.<br><br>Stalin has personally chosen you for the honor of leading the assault on Madrid.  This road is the fastest route to the Spanish capital, comrade General.  Intelligence reports indicate that you can expect heavy Allied resistance and attacks from several directions on this road.  End the resistance of the feeble Spanish government, comrade General.",
+  "intro": "Passage to Madrid<br><br>14 February 1950<br><br>Comrade General, France is clear of the coalition. But the French armies of the south escaped over the Pyrenees, and Franco has taken them in: Spain has joined the war against us.<br><br>You have been chosen to lead the attack on Madrid. This road is the fastest way to the capital, and intelligence expects heavy resistance and attacks from several directions along it. End Franco's war.",
   "outcome": {
    "briliant": {
     "goto": 15,
@@ -688,7 +688,7 @@
      0
     ],
     "prestige": 137,
-    "text": "Spectacular work, comrade General! The Spanish government has collapsed with the seizure of Madrid, and so their monetary support to the Allies has given way as well.  The Allied forces have fled to Gibraltar in the hopes of sanctuary from your unstoppable might."
+    "text": "Madrid has fallen and Franco's regime has collapsed with it. The coalition troops in Spain have fled to Gibraltar."
    },
    "victory": {
     "goto": 15,
@@ -697,7 +697,7 @@
      0
     ],
     "prestige": 68,
-    "text": "Great work, comrade General. The Spanish government has been dismantled and a proper socialist republic will be installed shortly.  The Spanish countryside has fallen into our grasp, minus the port of Gibraltar where the Allied pig dogs have holed up in a last stand."
+    "text": "Madrid is free. The Republicans are coming home from exile, and the coalition has made its last stand at Gibraltar."
    },
    "tactical": {
     "goto": 15,
@@ -706,7 +706,7 @@
      0
     ],
     "prestige": 103,
-    "text": "Comrade General, I am most displeased with your performance.  Do not fail us on a task of this magnitude again."
+    "text": "Madrid is ours, but the advance was slow, and the enemy had time to fortify Gibraltar."
    },
    "lose": {
     "goto": 255,
@@ -715,7 +715,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Comrade General, I cannot believe you have failed! This task was to be much simpler than the bogged-down mess it became under your leadership.  This has bought the Spanish time to regroup and recover."
+    "text": "The road to Madrid is blocked, and Franco has time to regroup. You are relieved of command."
    }
   },
   "briefing": {
@@ -728,7 +728,7 @@
   "startprestige": 100,
   "aiprestige": 14,
   "playerprestige": 100,
-  "intro": "Here at the port of Gibraltar, the Allied dogs have made their final stand in continental Europe. It is up to you, comrade General, to expel them from their hiding spot.  <br><br>The Allies have sent their best troops to hold their fortress, and are heavily dug in. Additionally, the Royal Navy is patrolling the narrow waters around Gibraltar.<br><br>Intelligence has intercepted an Allied radio transmission; it is possible the Allies may try to send troops from their North African colonies in desperation, in an effort to reinforce their garrison on Gibraltar.  <br><br>The party is relying on a victory from you here comrade; show the Allies why it is futile to resist Soviet supremacy!",
+  "intro": "Fortress Gibraltar<br><br>25 October 1950<br><br>At Gibraltar the coalition is making its last stand on the continent. Drive them out.<br><br>They have sent their best troops to hold the fortress and are deeply dug in, and the Royal Navy patrols the strait. We have intercepted a radio message: they may try to bring reinforcements across from North Africa.",
   "outcome": {
    "briliant": {
     "goto": 16,
@@ -737,7 +737,7 @@
      0
     ],
     "prestige": 548,
-    "text": "Terrific work, comrade! Finally, the Allied presence has been removed from Europe!  And, with the control of the Strait of Gibraltar, we now dominate shipping in the Mediterranean!  Stalin himself is very pleased with your actions."
+    "text": "Gibraltar is ours. The coalition has been driven off the continent, and we control the gate of the Mediterranean."
    },
    "victory": {
     "goto": 16,
@@ -746,7 +746,7 @@
      0
     ],
     "prestige": 411,
-    "text": "Excellent work, comrade General! The Allied presence from continental Europe has been removed once and for all. In addition, you have dealt a crippling blow to the Royal Navy. The party is pleased with your success."
+    "text": "Gibraltar has fallen, the last coalition troops have left the continent, and the Royal Navy has taken a heavy blow."
    },
    "tactical": {
     "goto": 16,
@@ -755,7 +755,7 @@
      0
     ],
     "prestige": 474,
-    "text": "Comrade General, though you took Gibraltar and removed the last Allied bastion in continental Europe, you have done so at great cost in lives and material, causing humiliation for the Soviet Union.  You have done your task however; and for this you shall continue to serve us."
+    "text": "Gibraltar is ours, but the losses were very heavy."
    },
    "lose": {
     "goto": 255,
@@ -764,7 +764,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Comrade General, your attack on Gibraltar was a resounding failure. I hope you realize the consequences of this; if not, you soon will be made aware of them, da? Report to the train station comrade; I wish you good luck in your meeting with Stalin."
+    "text": "Gibraltar still holds. You are relieved of command."
    }
   },
   "briefing": {
@@ -777,7 +777,7 @@
   "startprestige": 100,
   "aiprestige": 14,
   "playerprestige": 100,
-  "intro": "Comrade General, I have grave news. Despite our recent successes in driving the Allies out of Europe, the Ukrainian people have risen against us out of sheer war weariness. There is only one response to such treachery.  <br><br>You must take your troops and kill the traitors, the majority of whom have taken up positions near Kharkov.  I must warn you Comrade General: Though the mutinous Ukrainian troops are nowhere near as experienced as your men, they are using the same combat equipment you have been using against the Allies for several years.  You must be prepared for anything.",
+  "intro": "The Kharkov Rising<br><br>28 June 1951<br><br>Comrade General, I have grave news. For three years Western intelligence has been dropping weapons, money and instructors to the nationalist bands in the Ukraine. Now they have made their move: armed formations, joined by deserters, have seized the country around Kharkov.<br><br>Defeat them. They are far less experienced than your men, but they have the same weapons as you, stolen from our depots, so be prepared for anything. The people of Kharkov are not the enemy; the armed formations are.",
   "outcome": {
    "briliant": {
     "goto": 17,
@@ -786,7 +786,7 @@
      0
     ],
     "prestige": 616,
-    "text": "Spectacular show, Comrade General.  With the traitorous Ukrainian troops taken care of, the rebels have capitulated and we have the republic back under the control of a friendly communist government.  Now our forces can resume preparing for the grand finale: the amphibious invasion of England."
+    "text": "The armed formations around Kharkov have been destroyed and the rest have surrendered. Order has been restored, and the preparations for the landing in England can go on."
    },
    "victory": {
     "goto": 17,
@@ -795,7 +795,7 @@
      0
     ],
     "prestige": 411,
-    "text": "With the elimination of any Ukrainian forces significant enough to pose a threat, the rest of the country will fall under the Red Army's control shortly.  And, now we can return to our preparations for a huge event: The amphibious invasion of England."
+    "text": "The rising is over. The last armed groups are being rounded up, and we can return to our preparations for the invasion of England."
    },
    "tactical": {
     "goto": 17,
@@ -804,7 +804,7 @@
      0
     ],
     "prestige": 685,
-    "text": "Though you have eliminated the bulk of Ukrainian forces around Kharkov, some were allowed to retreat, forming organized resistance in the surrounding countryside. It will be some time before we can fully subdue them.  You will be alerted when we have something useful for you to do."
+    "text": "The main force of the rising has been beaten, but some of it got away into the countryside, and it will be some time before the area is quiet. We will call you when you are needed."
    },
    "lose": {
     "goto": 255,
@@ -813,7 +813,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Because of your failure here, we are forced to prolong the pacification effort. Though the Ukrainians pose no significant threat to us, this morbid spectacle humiliates Comrade Stalin greatly.  He has put in a request for a talk with you at the Kremlin; I do not envy your reception there."
+    "text": "The rising still holds Kharkov, and the invasion of England has been put off. You are relieved of command."
    }
   },
   "briefing": {
@@ -826,7 +826,7 @@
   "startprestige": 400,
   "aiprestige": 27,
   "playerprestige": 400,
-  "intro": "Comrade General, the time has finally come.  Over three years have passed since the Allies fled Europe from the city of Dunkirk, and now our carefully made plans are going into action.  <br><br>Your decorated forces have been specially chosen by comrade Stalin himself to land on the British mainland and secure the beaches at Dover. While the British troops outnumber us almost two-to-one, the majority of them are inexperienced recruits.  The Free French and German troops we expect you to encounter are more experienced but far fewer in number.  <br><br>Submarines have been sent to neutralize the British ships in the area, an assigment of which I am sure they shall have no trouble with. <br><br>Task Force Bear is landing to the west of your position, in order to secure one of the airfields located along the shore. <br><br>There is a rumor that an experienced British force is being sent to reinforce the area within several days.  It would be in your best interest to secure the coast of Dover as quickly as possible.  Good luck, comrade General.",
+  "intro": "Storming Dover<br><br>13 December 1953<br><br>Comrade General, the time has come. More than three years have passed since the coalition's armies fled the continent, and in all that time London has refused every offer of peace. The war that Britain started will end in Britain.<br><br>Your army has been chosen to land on the English coast and take the beaches at Dover. The British outnumber us almost two to one, but most of their troops are new recruits; the French and German units with them are more experienced but far fewer.<br><br>Our submarines will deal with the British ships in the area. Task Force Bear is landing west of you to take one of the coastal airfields.<br><br>A veteran British force is said to be on its way to the coast. Secure Dover before it arrives.",
   "outcome": {
    "briliant": {
     "goto": 18,
@@ -835,7 +835,7 @@
      0
     ],
     "prestige": 685,
-    "text": "Absolutely spectacular, comrade!  The Dover coast is secured, and our troops come ashore by the thousands.  The British cower, as we have passed the only thing that has protected their country in ages past: the English Channel."
+    "text": "The Dover coast is ours, and our troops are coming ashore by the thousand. For the first time in centuries the Channel has not protected England."
    },
    "victory": {
     "goto": 18,
@@ -844,7 +844,7 @@
      0
     ],
     "prestige": 617,
-    "text": "Comrade Stalin is very happy with the results of this attack, Comrade General.  The Soviet Union has finally made a foothold in the last refuge of the European Allies, and our men stream ashore like a colony of ants."
+    "text": "We have a firm foothold in England, and our men are streaming ashore."
    },
    "tactical": {
     "goto": 18,
@@ -853,7 +853,7 @@
      0
     ],
     "prestige": 651,
-    "text": "Comrade General, this came very close to being a debacle.  Many brave Soviet soldiers were lost to secure the Dover coast. <br><br>Do not disappoint us in your next battle Comrade General.  It is the most important battle you will ever fight, and Comrade Stalin will be watching.  This, I can assure you."
+    "text": "We hold the Dover coast, but it came close to disaster and we lost many men. The next battle will decide the war."
    },
    "lose": {
     "goto": 255,
@@ -862,7 +862,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Comrade General, you have broken the Red Army's image of near-invincibility.  The British and their European Allies have driven us from the coast of England, and we may never have a chance like that again.  Comrade Stalin is thinking of using nuclear weapons to finish off the troublesome British.  Of course, you will not be around to see any of this.  You, Comrade, are scheduled to report to the barracks in twenty minutes, and after that I imagine the gallows."
+    "text": "The landing has been thrown back into the sea, and a chance like this may not come again. You are relieved of command."
    }
   },
   "briefing": {
@@ -875,7 +875,7 @@
   "startprestige": 400,
   "aiprestige": 27,
   "playerprestige": 400,
-  "intro": "Are you not excited? This is the last battle, comrade General! The British capital of London lies before our glorious Red Army of workers and peasants.  <br><br>However, as I am sure you know, this is not going to be an easy task, da? The pitiful Allied dogs have rallied what remains of their armies inside of London.  Though the British troops would be some threat to us alone, our intelligence reports that veteran Free German and French troops are supplementing the Allied defense force.  No matter.  With you in command, comrade General, the Allies do not stand a chance.  Go, forward! Destroy the Allies! For comrade Stalin, and mother Russia!",
+  "intro": "London<br><br>12 March 1954<br><br>Comrade General, this is the last battle. London is in front of you.<br><br>It will not be easy. The coalition has pulled what is left of its armies into the city, and our intelligence reports veteran German and French units among the British defenders.<br><br>Take London, and the war the coalition began in 1946 is over.",
   "outcome": {
    "briliant": {
     "goto": 254,
@@ -884,7 +884,7 @@
      0
     ],
     "prestige": 0,
-    "text": "The Second Great War<br>A summary of the conflict from 1946-1954<br><br>(The following excerpt has been taken from The Second Great War, a definitive summary of the conflict that engulfed the world from 1946-1954.  We are most grateful that the author has allowed us to take an excerpt from his book.)<br><br>The Red Army, after more than seven years of total war, had finally accomplished Josef Stalin's dream of \"manifest destiny\" in Europe.  From Moscow to Madrid, the entire continent of Europe would soon unite under an iron curtain of oppression.  <br><br>The general responsible for the final blow to the Allies, the capture of London, was soon swept in as the Premier of the USSR after Stalin was mysteriously assassinated. Puppet governments were quickly established in the deposed Allied powers, as had been done in a formerly democratic China some time earlier.  <br><br>Aside from the United States, which had remained neutral throughout the conflict, the world was essentially under Soviet control for the next four decades.  Luckily for the peoples of Europe, the Union of Soviet Socialist Republics would collapse in the 1990's under mysterious circumstances, though it is commonly believed that the end of Soviet rule was the result of internal power politics and regional terrorism draining the nation's resources. It cannot be disputed that had the Soviets failed to conquer London in that last dramatic battle of the Second World War, the world today would be a much different place."
+    "text": "The Second Great War<br><br>(From The Second Great War, 1946-1954, a history of the conflict.)<br><br>The war began in March 1946 with the Western coalition's attack on the Soviet forces in Germany, and it ended in London eight years later. The Red Army that had been meant to collapse in a matter of weeks stopped the attack on the Oder, retook Berlin, beat back Chiang Kai-shek's invasion in the East, and carried the war to the Channel and across it.<br><br>The peace signed in London dissolved the coalition. Across the continent, governments that had joined the attack gave way to new ones that would not; the United States, which had stayed out of the war, recognised the settlement within a year.<br><br>The general who took London was called to Moscow and soon afterwards became the head of the Soviet government."
    },
    "victory": {
     "goto": 254,
@@ -893,7 +893,7 @@
      0
     ],
     "prestige": 0,
-    "text": "The Second Great War<br>A summary of the conflict from 1946-1954<br><br>(The following excerpt has been taken from The Second Great War, a definitive summary of the conflict that engulfed the world from 1946-1954.  We are most grateful that the author has allowed us to take an excerpt from his book.)<br><br>The Red Army, after more than seven years of total war, had finally accomplished Josef Stalin's dream of \"manifest destiny\" in Europe.  From Moscow to Madrid, the entire continent of Europe would soon unite under an iron curtain of oppression.  <br><br>The general responsible for the final blow to the Allies, the capture of London, soon retired to a quiet life in the countryside after Stalin was mysteriously assassinated. Puppet governments were quickly established in the deposed Allied powers, as had been done in a formerly democratic China some time earlier.  <br><br>Aside from the United States, which had remained neutral throughout the conflict, the world was essentially under Soviet control for the next four decades.  Luckily for the peoples of Europe, the Union of Soviet Socialist Republics would collapse in the 1990's under mysterious circumstances, though it is commonly believed that the end of Soviet rule was the result of internal power politics and regional terrorism draining the nation's resources. It cannot be disputed that had the Soviets failed to conquer London in that last dramatic battle of the Second World War, the world today would be a much different place."
+    "text": "The Second Great War<br><br>(From The Second Great War, 1946-1954, a history of the conflict.)<br><br>The war began in March 1946 with the Western coalition's attack on the Soviet forces in Germany, and it ended in London eight years later. The Red Army that had been meant to collapse in a matter of weeks stopped the attack on the Oder, retook Berlin, beat back Chiang Kai-shek's invasion in the East, and carried the war to the Channel and across it.<br><br>The peace signed in London dissolved the coalition. Across the continent, governments that had joined the attack gave way to new ones that would not; the United States, which had stayed out of the war, recognised the settlement within a year.<br><br>The general who took London retired soon afterwards to a quiet life in the countryside, and never spoke of the war in public."
    },
    "tactical": {
     "goto": 255,
@@ -902,7 +902,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Comrade General, you have done us a terrible disservice.  Our spies had informed us we would be greeted as liberators when we entered London.  Instead, your bungling command caused huge amounts of carnage to the city itself, and the surrounding countryside. In addition, some Allied units were able to withdraw to the north, in Scotland, and now there is the possibility of the United States entering the war, after witnessing our weakness in London.  You are to report to the train station, Comrade General.  Your services are no longer needed here."
+    "text": "London is ours, but the fighting has wrecked the city, and part of the British army has got away to Scotland. There is talk in Washington of entering the war. This is not the ending Moscow needed. You are relieved of command."
    },
    "lose": {
     "goto": 255,
@@ -911,7 +911,7 @@
      0
     ],
     "prestige": 0,
-    "text": "Agh! Comrade General, you have failed miserably in your attempt to finally defeat the Allies once and for all.  Comrade Stalin has ordered you to report to him directly.  I do not envy your reception there."
+    "text": "London has held, and the coalition has been given the time it needed. The war will drag on. You are relieved of command."
    }
   },
   "briefing": {

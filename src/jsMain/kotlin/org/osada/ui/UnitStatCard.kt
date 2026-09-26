@@ -293,7 +293,7 @@ internal class UnitStatCard(
         byId("uAmmoBarFill")?.style?.width = "$ammoPct%"
         byId("uAmmoBarFillValue")?.textContent = "$ammo/${data.ammo}"
         val usesFuel = GameRules.unitUsesFuel(unit)
-        byId("uFuelBarFillRow")?.style?.display = if (usesFuel) "flex" else "none"
+        byId("uFuelBarFillRow")?.style?.display = if (usesFuel) "grid" else "none"
         if (usesFuel) {
             val fuelPct = if (data.fuel > 0) (unit.getFuel() / data.fuel.toDouble() * 100).coerceIn(0.0, 100.0) else 0.0
             byId("uFuelBarFill")?.style?.width = "$fuelPct%"

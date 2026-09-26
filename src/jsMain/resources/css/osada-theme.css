@@ -3222,10 +3222,21 @@ hr {
     background: rgba(217, 178, 90, .14);
 }
 
+/* One grid for all three bars, each row a subgrid of it: the label column is as wide as the
+ * WIDEST label, so every track starts at the same x. A per-row flex label (`flex: 0 0 30px`)
+ * grew past its basis for "AMMO" and every Russian label, and each track then started wherever
+ * its own label happened to end. */
 #uc-bars {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
+    display: grid;
+    grid-template-columns: auto max-content minmax(60px, 1fr);
+    row-gap: 3px;
+    column-gap: 6px;
+}
+
+#uc-bars > .osada-bar {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: subgrid;
 }
 
 .osada-bar {

@@ -5,6 +5,7 @@ import org.osada.i18n.I18n
 import org.osada.model.Equipment
 import org.osada.model.getCountryName
 import org.osada.model.getCountryNameByEqp
+import org.osada.scenario.ScenarioTextLocalization
 import org.osada.ui.StartMenuScenarioScreen.humanCountryOf
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLOptionElement
@@ -45,7 +46,7 @@ internal object StartMenuScenarioScreen {
                 option.textContent = "» " + (scenario[0] as? String ?: "")
             } else {
                 option.asDynamic().value = index.toString()
-                option.textContent = "    " + (scenario[1] as? String ?: "")
+                option.textContent = "    " + scenarioTitle(scenario)
             }
         }
         return scenSelect
@@ -71,10 +72,18 @@ internal object StartMenuScenarioScreen {
             val selectedScenario = byId("smScen")?.asDynamic()?.selectedScenario as? Int
             val scenario = selectedScenario?.let { StartMenuBuilder.scenarioList().getOrNull(it) }
             if (scenario != null) {
-                StartMenuBuilder.startNewScenario(scenario[0] as? String ?: "", scenario[2] as? String ?: "")
+                StartMenuBuilder.startNewScenario(scenario[0] as? String ?: "", scenarioDescription(scenario))
             }
         }
     }
+
+    /** Register name / synopsis of a `scenariolist.js` row, translated where the `ui` bundle has
+     *  one ([ScenarioTextLocalization.listTitle]). */
+    fun scenarioTitle(scenario: dynamic): String =
+        ScenarioTextLocalization.listTitle(scenario[0] as? String, scenario[1] as? String ?: "")
+
+    fun scenarioDescription(scenario: dynamic): String =
+        ScenarioTextLocalization.listDescription(scenario[0] as? String, scenario[2] as? String ?: "")
 
     private fun onScenSelectChange(scenSelect: HTMLElement) {
         val selectedIndex = scenSelect.asDynamic().selectedIndex as? Int ?: -1
@@ -84,15 +93,16 @@ internal object StartMenuScenarioScreen {
         if (scenarioIndex == null || scenario == null) return
         // Structured credits ride in their own row, never inside the synopsis.
         byId("smScenDesc")?.innerHTML =
-            AuthorRow.html(scenario[0] as? String) + (scenario[2] as? String ?: "")
+            AuthorRow.html(scenario[0] as? String) + scenarioDescription(scenario)
         UIBuilder.setEquipmentFlags(scenario[SCENARIO_EQP_INDEX] as? String)
         // Reset to the scenario's own default: whichever side player id 0 belongs to is
         // human, everyone else is AI — same default the old per-player toggles used, now
         // driven through the side picker (selectScenarioSide) instead of a second state.
         StartMenuSidePicker.selectScenarioSide(scenario, StartMenuSidePicker.defaultHumanSide(scenario))
         byId("smScen")?.asDynamic()?.selectedScenario = scenarioIndex
-        byId("smScenTitle")?.innerHTML = scenario[1] as? String ?: ""
-        // Extract date from scenario description and show in subtitle
+        byId("smScenTitle")?.innerHTML = scenarioTitle(scenario)
+        // Extract date from the AUTHORED description and show in subtitle: the year patterns
+        // extractYears knows are English ones, and the years themselves do not change in translation.
         val scenDesc = scenario[2] as? String ?: ""
         val scenDate =
             StartMenuListToolbar.extractYears(scenDesc).ifBlank {
@@ -275,11 +285,13 @@ internal object StartMenuScenarioScreen {
                         StartMenuListToolbar.countryGroupLabel(it),
                     )
                 }.distinct()
+        // The authored English name stays searchable under a translated title.
+        val authoredTitle = authoredTitleOf(scenario)
         StartMenuListToolbar.tagRow(
             row,
             index,
             title,
-            "$title $group ${allCountryNames.joinToString(" ")}",
+            "$title $authoredTitle $group ${allCountryNames.joinToString(" ")}",
             sides = allCountries.mapNotNull { StartMenuListToolbar.countryGroupLabel(it) }.distinct(),
             groupKey = group,
             groupRank = groupRank,
@@ -347,6 +359,9 @@ internal object StartMenuScenarioScreen {
         localStorage.setItem(PLAYED_SCENARIOS_KEY, JSON.stringify(updated.toTypedArray()))
     }
 }
+
+/** A register row's authored (English) name, whatever language the list is showing. */
+private fun authoredTitleOf(scenario: dynamic): String = (if (scenario != null) scenario[1] else null) as? String ?: ""
 
 /**
  * Where a scenario group sits in the register's default view. `scenariolist.js` ends with the

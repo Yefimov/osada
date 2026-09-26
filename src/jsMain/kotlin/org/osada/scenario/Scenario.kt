@@ -389,8 +389,8 @@ class Scenario(
         if (file != null) {
             val data = ScenarioLoader.getScenarioDataByFileName(file)
             if (data != null) {
-                name = data[1] as String
-                description = data[2] as String
+                name = ScenarioTextLocalization.listTitle(file, data[1] as String)
+                description = ScenarioTextLocalization.listDescription(file, data[2] as String)
             }
         }
     }

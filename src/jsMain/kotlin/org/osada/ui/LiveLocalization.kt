@@ -311,6 +311,14 @@ internal object LiveLocalization {
         row: org.w3c.dom.HTMLElement,
         option: dynamic,
     ) {
+        // Translated scenario names (`scenario.<stem>.title`) follow the language, like the chrome.
+        val scenario = (option.value as? String)?.toIntOrNull()?.let { StartMenuBuilder.scenarioList().getOrNull(it) }
+        if (scenario != null) {
+            val name = StartMenuScenarioScreen.scenarioTitle(scenario)
+            option.text = "    $name"
+            row.querySelector(".osadaListRowName")?.textContent = name
+            row.asDynamic().sortName = name.lowercase()
+        }
         row.title =
             I18n.t(
                 "list.select_dossier.help",
@@ -332,6 +340,9 @@ internal object LiveLocalization {
         val scenario = StartMenuBuilder.scenarioList().getOrNull(selectedScenario) ?: return
         val selectedSide = if (byId("smSide1")?.getAttribute("aria-checked") == "true") 1 else 0
         StartMenuSidePicker.selectScenarioSide(scenario, selectedSide)
+        byId("smScenTitle")?.innerHTML = StartMenuScenarioScreen.scenarioTitle(scenario)
+        byId("smScenDesc")?.innerHTML =
+            AuthorRow.html(scenario[0] as? String) + StartMenuScenarioScreen.scenarioDescription(scenario)
     }
 
     private fun refreshListToolbar(

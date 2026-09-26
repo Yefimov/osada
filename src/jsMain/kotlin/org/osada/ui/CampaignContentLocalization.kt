@@ -10,7 +10,9 @@ internal object CampaignContentLocalization {
             "camp6bn4",
             "camp6bn5",
             "camp6bn9",
+            "forward",
             "novemberrevolution",
+            "reddestiny",
             "rhu",
         )
 
