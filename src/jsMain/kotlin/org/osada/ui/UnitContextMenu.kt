@@ -22,6 +22,20 @@ import org.osada.model.resupplyUnit
 import org.osada.model.undeployUnit
 import org.osada.model.undoLastMove
 import org.osada.model.unmountUnit
+import org.osada.multiplayer.client.OsadaMultiplayer
+import org.osada.multiplayer.command.BeginEngineering
+import org.osada.multiplayer.command.ClearMines
+import org.osada.multiplayer.command.DisembarkUnit
+import org.osada.multiplayer.command.DismissLeader
+import org.osada.multiplayer.command.EmbarkUnit
+import org.osada.multiplayer.command.GameCommand
+import org.osada.multiplayer.command.GreenReinforceUnit
+import org.osada.multiplayer.command.LayMines
+import org.osada.multiplayer.command.MountUnit
+import org.osada.multiplayer.command.ReinforceUnit
+import org.osada.multiplayer.command.ResupplyUnit
+import org.osada.multiplayer.command.UndeployUnit
+import org.osada.multiplayer.command.UnmountUnit
 import org.osada.rules.Engineering
 import org.osada.rules.EngineeringWork
 import org.osada.rules.GreenReplacements
@@ -39,7 +53,7 @@ internal class UnitContextMenu(
     // Internal, not private: `MapClickBarrage.kt` opens the targeting mode from here.
     internal val ui: UI,
 ) {
-    private companion object {
+    internal companion object {
         /** The Build-and-Repair chip ids, matching `UnitActionId`'s own strings. Kept as a set
          *  so the `when` above stays one branch rather than one per chip.
          *
@@ -93,10 +107,9 @@ internal class UnitContextMenu(
         val map = ui.game.scenario?.map
         val pos = unit.getPos()
         if (map == null || pos == null) return
-        if (action == "withdraw") {
-            ui.withdrawToTray(map, unit, pos)
-            return
-        }
+        val sentToHost = OsadaMultiplayer.active && routeToHost(action, unit, pos)
+        if (!sentToHost && action == "withdraw") ui.withdrawToTray(map, unit, pos)
+        if (sentToHost || action == "withdraw") return
         val radius = getUnitRenderRadius(unit)
         performAction(action, map, unit, pos)
         buildUnitContext(unit)
@@ -223,18 +236,7 @@ internal class UnitContextMenu(
         unit: GameUnit,
         pos: Cell,
     ) {
-        val available = Engineering.availableWork(unit)
-        val work =
-            when (action) {
-                // Whichever of OG's two demolitions this hex allows -- cutting rail is a chip of
-                // its own, for the reason `UnitActionAvailability.ENGINEERING_ACTIONS` gives.
-                "demolish" -> available.firstOrNull { it.demolition && it != EngineeringWork.BLOW_RAIL }
-                "blow_rail" -> available.firstOrNull { it == EngineeringWork.BLOW_RAIL }
-                else ->
-                    available.firstOrNull {
-                        !it.demolition && it.name.lowercase() == action.removePrefix("build_")
-                    }
-            }
+        val work = engineeringWorkFor(action, unit)
         if (work == null) {
             ui.showAlert(pos.row, pos.col, I18n.t("unit_info.action.engineering.blocked"), true)
             return
@@ -353,4 +355,75 @@ internal fun UI.withdrawToTray(
     updateEquipmentWindow(unit.unitData(true).uclass)
     updateStatusBar()
     game.state?.save()
+}
+
+/**
+ * The job an engineering chip names, resolved exactly as `UnitActionAvailability.engineering` offers
+ * it -- shared by the local action and the order sent to a room's host.
+ */
+private fun engineeringWorkFor(
+    action: String,
+    unit: GameUnit,
+): EngineeringWork? {
+    val available = Engineering.availableWork(unit)
+    return when (action) {
+        // Whichever of OG's two demolitions this hex allows -- cutting rail is a chip of
+        // its own, for the reason `UnitActionAvailability.ENGINEERING_ACTIONS` gives.
+        "demolish" -> available.firstOrNull { it.demolition && it != EngineeringWork.BLOW_RAIL }
+        "blow_rail" -> available.firstOrNull { it == EngineeringWork.BLOW_RAIL }
+        else ->
+            available.firstOrNull {
+                !it.demolition && it.name.lowercase() == action.removePrefix("build_")
+            }
+    }
+}
+
+/**
+ * In a room, a unit action is an ORDER for the host (`OsadaMultiplayer.submitOrder`), which applies
+ * it and publishes the result; changing this client's copy instead was overwritten by the next
+ * snapshot. Returns false for the chips that only open a local targeting mode (barrage, railway)
+ * or change nothing shared (sleep): those continue locally, and their CLICK becomes the order.
+ *
+ * Undo is refused in a room: the host keeps no per-client undo record, and a move another
+ * participant has already seen cannot be taken back quietly.
+ */
+private fun UnitContextMenu.routeToHost(
+    action: String,
+    unit: GameUnit,
+    pos: Cell,
+): Boolean {
+    val order = unitActionOrder(action, unit)
+    when {
+        action == "undo" -> ui.showAlert(pos.row, pos.col, I18n.t("unit_info.action.undo.multiplayer"), true)
+        order != null -> OsadaMultiplayer.submitOrder(order)
+    }
+    return action == "undo" || order != null
+}
+
+/** The command a unit-action chip stands for, or null when the chip is local-only. */
+@Suppress("CyclomaticComplexMethod") // one arm per chip; a table would only hide the mapping
+private fun unitActionOrder(
+    action: String,
+    unit: GameUnit,
+): GameCommand? {
+    val id = unit.id
+    val actor = unit.owner
+    return when (action) {
+        "mount" -> if (unit.isMounted) UnmountUnit(id, actor) else MountUnit(id, null, actor)
+        "embark" -> if (unit.carrier > 0) DisembarkUnit(id, actor) else EmbarkUnit(id, actor)
+        "resupply" -> ResupplyUnit(id, actor)
+        "reinforce" -> ReinforceUnit(id, null, actor)
+        // The applier reads a non-null strength as "over strength", which is all this carries.
+        "overstrength" -> ReinforceUnit(id, 1, actor)
+        "green_reinforce" -> GreenReinforceUnit(id, actor)
+        "dismiss_leader" -> DismissLeader(id, actor)
+        "lay_mines" -> LayMines(id, actor)
+        "clear_mines" -> ClearMines(id, actor)
+        "withdraw" -> UndeployUnit(id, actor)
+        in UnitContextMenu.ENGINEERING_ACTION_IDS ->
+            engineeringWorkFor(action, unit)?.let {
+                BeginEngineering(id, it.name, actor)
+            }
+        else -> null
+    }
 }

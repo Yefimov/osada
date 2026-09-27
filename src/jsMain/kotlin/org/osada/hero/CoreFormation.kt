@@ -37,6 +37,13 @@ data class CoreFormation(
     val medals: List<FormationMedal> = emptyList(),
     val battleHonors: List<String> = emptyList(),
     val history: List<FormationEvent> = emptyList(),
+    /**
+     * A record that is kept but takes no part in the hero system ([CampaignHeroScope]): an enemy
+     * formation a purchase once enrolled by mistake. Its history survives; it cannot emerge a hero,
+     * lend traits, receive a transfer or appear among serving commanders. Absent in saves that
+     * predate it, which read as active and are then swept by [HeroCampaign.restore].
+     */
+    val inactive: Boolean = false,
 )
 
 /** A formation decoration (§9.2). Reserved for a later phase. */

@@ -34,9 +34,6 @@ enum class MoveReactionKind {
     /** Anti-aircraft fire on a moving aircraft (`rules/AAInterception`). */
     AA_INTERCEPTION,
 
-    /** Opportunity fire by an `Overwatch` commander (`rules/OverwatchFire`). */
-    OVERWATCH,
-
     /**
      * A battery answering enemy artillery that fired on a friendly unit (`rules/CounterBatteryFire`,
      * OG manual 9.4).

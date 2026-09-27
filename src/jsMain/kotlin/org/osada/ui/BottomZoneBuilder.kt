@@ -551,9 +551,27 @@ internal object BottomZoneBuilder {
      */
     fun onPlayerCardHidden() {
         val bz = byId("osada-bottomzone") ?: return
-        if (bz.classList.contains("bz--hover") || bz.classList.contains("bz--enemy-only")) return
+        if (!foldHidesTargetCards() &&
+            (bz.classList.contains("bz--hover") || bz.classList.contains("bz--enemy-only"))
+        ) {
+            return
+        }
         setState("hidden")
     }
+
+    /**
+     * Whether folding the player card (`#ucCollapse`) folds the forecast and the enemy card with it.
+     *
+     * On the desktop it does: the same forecast is already drawn at the cursor, so with the card
+     * folded the bottom strip only covers map the player asked to see (owner's request,
+     * 2026-09-26). Not where those cards are the ONLY forecast -- a touch shell has no hover, and
+     * wherever attacks need confirming the forecast carries the Attack button itself
+     * ([TargetPreviewController]); hiding it there would leave an attack that cannot be confirmed.
+     */
+    private fun foldHidesTargetCards(): Boolean =
+        !uiSettings.unitInfoVisibility &&
+            !MobileLayoutController.cssOwnsMapViewport &&
+            !TargetPreviewController.isConfirmRequired()
 
     fun setState(mode: String) {
         val bz = byId("osada-bottomzone") ?: return
@@ -565,7 +583,12 @@ internal object BottomZoneBuilder {
         // "the map under the unit info box stays grey". Guarding it HERE rather than only at the
         // fold is what keeps it fixed: every later selection re-enters "own", so a fold-time-only
         // fix would have let the strip return on the next unit the player tapped.
-        val effective = if (mode == "own" && !uiSettings.unitInfoVisibility) "hidden" else mode
+        val effective =
+            when {
+                mode == "own" && !uiSettings.unitInfoVisibility -> "hidden"
+                (mode == "hover" || mode == "enemyAlone") && foldHidesTargetCards() -> "hidden"
+                else -> mode
+            }
         bz.classList.remove("bz--visible", "bz--hover", "bz--enemy-only")
         when (effective) {
             "hidden" -> { // leave all state classes off; CSS hides when none are present

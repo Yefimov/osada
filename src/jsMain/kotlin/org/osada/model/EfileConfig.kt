@@ -33,6 +33,11 @@ object EfileConfig {
         private set
     private var attachmentConfig: AttachmentConfig? = null
 
+    /** The efile's own climate table (`weather.txt`, merged over OG's default zone by zone at
+     *  import), or null when the efile ships none. Read through [weatherZones]. */
+    internal var efileWeather: Array<Array<IntArray>>? = null
+        private set
+
     data class AttachmentSlot(
         val name: String,
         val disabled: Boolean,
@@ -100,6 +105,7 @@ object EfileConfig {
         intKeys = text?.let(::parseIntKeys) ?: emptyMap()
         rawKeys = text?.let { parseRawKeys(it) } ?: emptyMap()
         attachmentConfig = text?.let(::parseAttachments)
+        efileWeather = text?.let(::parseWeatherTable)
     }
 
     private fun fetch(efile: String): String? {
@@ -164,10 +170,12 @@ object EfileConfig {
         attachmentConfigValue: AttachmentConfig? = null,
         efile: String = Equipment.name,
         rawKeyMap: Map<String, String> = emptyMap(),
+        weatherTable: Array<Array<IntArray>>? = null,
     ) {
         intKeys = intKeyMap
         rawKeys = rawKeyMap
         attachmentConfig = attachmentConfigValue
+        efileWeather = weatherTable
         loadedForEfile = efile
     }
 
@@ -175,6 +183,7 @@ object EfileConfig {
         intKeys = emptyMap()
         rawKeys = emptyMap()
         attachmentConfig = null
+        efileWeather = null
         loadedForEfile = null
     }
 
@@ -217,3 +226,26 @@ fun EfileConfig.listKey(name: String): List<Int> {
     val parts = text.split(",").map { it.trim().toIntOrNull() }
     return if (parts.any { it == null }) emptyList() else parts.filterNotNull()
 }
+
+/**
+ * The climate table the active efile's weather runs on: its own `weather.txt` when it ships one,
+ * otherwise OG's default ([org.osada.weatherZones]). Until 2026-09-27 every efile ran on LXF's.
+ */
+fun EfileConfig.weatherZones(): Array<Array<IntArray>> {
+    loadIfNeeded()
+    return efileWeather ?: org.osada.weatherZones
+}
+
+/** The `weather` block of an efile-cfg JSON: 22 zones x 12 months x 4 values, or null when absent
+ *  or malformed (a malformed table is ignored whole rather than half read). */
+internal fun parseWeatherTable(text: String): Array<Array<IntArray>>? {
+    val raw = JSON.parse<Json>(text).asDynamic().weather ?: return null
+    val zones = raw.unsafeCast<Array<Array<Array<Int>>>>()
+    val wellFormed =
+        zones.size == org.osada.weatherZones.size &&
+            zones.all { zone -> zone.size == MONTHS && zone.all { it.size == WEATHER_FIELDS } }
+    return if (wellFormed) zones.map { zone -> zone.map { it.toIntArray() }.toTypedArray() }.toTypedArray() else null
+}
+
+private const val MONTHS = 12
+private const val WEATHER_FIELDS = 4

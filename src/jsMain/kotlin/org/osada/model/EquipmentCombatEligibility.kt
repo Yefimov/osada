@@ -208,7 +208,7 @@ internal const val ATTR_EX_MASK_JET_STEALTH = 524288
  * The manual's *"cannot be surprised"* is a simplification of the same thing: what actually happens
  * is that the formation is not halted on entering a zone of control, so the ambush that a halt sets
  * up never arises. 720 records carry it and 680 are Infantry, which is what a partisan roster looks
- * like. See [org.osada.rules.UnitCapabilities.ignoresZoneOfControl].
+ * like. See [org.osada.rules.UnitCapabilities.notStoppedByAdjacentEnemies].
  */
 internal const val ATTR_EX_MASK_PARTIZAN = 1024
 

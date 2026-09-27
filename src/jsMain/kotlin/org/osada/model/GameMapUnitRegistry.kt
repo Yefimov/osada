@@ -3,6 +3,7 @@ package org.osada.model
 import org.osada.GameHolder
 import org.osada.PlayerSide
 import org.osada.getCampaignPlayer
+import org.osada.hero.HeroCampaign
 import org.osada.rules.CarrierHangars
 import org.osada.rules.GameRules
 import org.osada.rules.PurchaseCap
@@ -95,6 +96,14 @@ fun GameMap.updateUnitList() {
             if (recordsInCampaignDossier(GameHolder.instance?.campaign != null, unit.nodossier)) {
                 GameHolder.instance?.getCampaignPlayer()?.addDestroyedUnitToDossier(unit)
             }
+            // The commander's fate, for every loss this sweep sees -- not only the ones a combat
+            // exchange processed while the unit was still alive (`HeroCampaign.recordCombat`). A
+            // minefield, an AA gun, counterbattery fire or a forced retreat onto mines used to leave
+            // the commander ACTIVE on a formation that no longer existed. Idempotent: a casualty
+            // already resolved has detached its commander, so a second call finds nobody.
+            // `nodossier` removals are not losses -- a disbanded unit, a scenario event's conversion,
+            // a non-campaign unit cleared off a deployment hex -- and never roll a casualty.
+            if (!unit.nodossier) HeroCampaign.recordCasualty(unit, turn)
             // A carrier takes its hangar down with it -- an aircraft cannot outlive the ship it
             // was contained in (`rules/CarrierHangars`).
             CarrierHangars.sinkWith(unit)

@@ -1,18 +1,25 @@
 package org.osada.model
 
-/** Combat/movement delegation for [GameMap] (to [CombatApplication]/[MoveExecutor]), split out
- *  to keep its function count in bounds. */
+// Combat/movement delegation for [GameMap] (to [CombatApplication]/[MoveExecutor]), split out
+// to keep its function count in bounds.
+
+/**
+ * ONE exchange, applied -- not an attack order. An order (support fire, "Attack Stopped", overrun,
+ * retreat, surrender) is [executeAttack]; this is the step it is built from, kept for support shots
+ * and for tests that pin a single exchange.
+ */
 fun GameMap.attackUnit(
     attacker: GameUnit,
     defender: GameUnit,
     supportFire: Boolean,
     isOverrun: Boolean = false,
-): CombatResults = combatApplication.attackUnit(attacker, defender, supportFire, isOverrun)
+    supportHalfStrength: Boolean = false,
+): CombatResults = combatApplication.attackUnit(attacker, defender, supportFire, isOverrun, supportHalfStrength)
 
-fun GameMap.retreatUnit(
+internal fun GameMap.retreatUnit(
     unit: GameUnit,
     to: Cell,
-): MovementResults = combatApplication.retreatUnit(unit, to)
+): ForcedMove? = combatApplication.retreatUnit(unit, to)
 
 fun GameMap.captureHex(
     hex: Hex,

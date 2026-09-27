@@ -1455,18 +1455,19 @@
                 supporting fire from its neighbours.</p>
 
             <h3 data-mkey="combat.support.h">Supporting fire</h3>
-            <p data-mkey="combat.support.p1">When an attacker moves <strong>adjacent</strong> to the formation it is
-                attacking, friendly formations near the defender fire back on the defender's behalf, at no ammunition
-                or action cost to the defender:</p>
+            <p data-mkey="combat.support.p1">When a formation is attacked, eligible friendly formations can fire
+                on the attacker first. The defender spends no ammunition or action; each supporter spends its own
+                ammunition:</p>
             <ul>
                 <li data-mkey="combat.support.ground"><strong>Artillery</strong> fires in support against a ground
                     attacker, out to its own gun range.</li>
                 <li data-mkey="combat.support.air"><strong>Flak, air defence and fighters</strong> fire in support
                     against an air attacker, out to the anti-aircraft reach the ruleset sets.</li>
             </ul>
-            <p data-mkey="combat.support.p2">Supporting fire is one of the strongest tools in the game and it is the
-                reason a gun line placed behind the front is worth its prestige. It does not happen at all when the
-                attack is made from a distance, or when the attacker is surprised.</p>
+            <p data-mkey="combat.support.p2">Artillery can support against a ranged ground attack when it can reach
+                the attacker. An ordinary battery may answer multiple attacks while it has ammunition; the
+                Single Fire Support ability limits its support to once per turn. A surprised attacker draws no
+                supporting fire.</p>
             <div class="switch">
                 <span class="callout-title" data-mkey="combat.support.switch.title">Ruleset-dependent</span>
                 <p data-mkey="combat.support.switch.p"><strong>Distant supporting fire is halved</strong>
@@ -2391,8 +2392,9 @@
                 </li>
                 <li>
                     <h4 data-mkey="ref.arty.h">Artillery</h4>
-                    <p data-mkey="ref.arty.p">Fires in support of any adjacent friendly formation that is attacked,
-                        at no cost to that formation. Fires at range without being fired back at. Good at breaking
+                    <p data-mkey="ref.arty.p">Fires in support when it can reach a ground attacker striking a friendly
+                        ground formation, including from a distance. Each support shot spends the gun's ammunition.
+                        Fires at range without being fired back at. Good at breaking
                         entrenchments. Never retreats — and never captures a hex.</p>
                 </li>
                 <li>

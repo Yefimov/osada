@@ -73,7 +73,11 @@ internal object HeroSerializer {
             Pair("attachments", formation.attachmentIds.toTypedArray()),
             Pair("honors", formation.battleHonors.toTypedArray()),
             Pair("history", formation.history.map(HeroEventCodec::serializeFormationEvent).toTypedArray()),
-        )
+        ).also { item ->
+            // Written only when set, so every active record -- the whole of every older save --
+            // keeps its exact shape.
+            if (formation.inactive) item["inactive"] = 1
+        }
 
     /** A formation without an id is unusable as a key, so it is dropped rather than defaulted. */
     private fun readFormation(item: dynamic): CoreFormation? {
@@ -91,6 +95,7 @@ internal object HeroSerializer {
             attachmentIds = BriefingDynamic.strList(item?.attachments),
             battleHonors = BriefingDynamic.strList(item?.honors),
             history = BriefingDynamic.mapArray(item?.history, HeroEventCodec::readFormationEvent),
+            inactive = (BriefingDynamic.int(item?.inactive) ?: 0) == 1,
         )
     }
 

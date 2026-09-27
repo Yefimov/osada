@@ -5,6 +5,9 @@ import org.osada.model.GameUnit
 import org.osada.model.Player
 import org.osada.model.delCurrentUnit
 import org.osada.model.deployPlayerUnit
+import org.osada.multiplayer.client.OsadaMultiplayer
+import org.osada.multiplayer.command.DeployUnit
+import org.osada.multiplayer.command.HexCoordinate
 
 /**
  * Stable reserve-unit selection plus the optional deployment hex chosen before the unit card.
@@ -102,6 +105,12 @@ internal object DeploymentSelection {
         val player = map.currentPlayer ?: return false
         val eqUserSel = byId("eqUserSel")?.asDynamic() ?: return false
         val unit = selectedUnit(ui) ?: return false
+        // In a room the placement is an order for the host, which publishes where the unit went.
+        if (OsadaMultiplayer.active) {
+            clearSelected(eqUserSel)
+            clearPending(eqUserSel)
+            return OsadaMultiplayer.submitOrder(DeployUnit(unit.id, HexCoordinate(col, row), player.id))
+        }
         if (!map.deployPlayerUnit(player, unit, row, col)) return false
 
         val unitClass = unit.unitData(true).uclass

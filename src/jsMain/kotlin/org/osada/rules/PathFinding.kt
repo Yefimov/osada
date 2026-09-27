@@ -59,9 +59,17 @@ internal object PathFinding {
         val result = mutableListOf<Cell>()
         var node: PathCell? = current
         while (node != null) {
-            result.add(0, Cell(node.row, node.col))
-            if (node === startNode) return result
-            node = node.prev
+            // Each step carries the cost the move range charged for entering it, and the start costs
+            // nothing. Plain `Cell`s used to come back here, and `MoveExecutor` charges a plain cell
+            // 1 -- so every move spent one point per hex whatever the terrain, plus one for the hex
+            // it started on, in both fuel and a phased unit's remaining movement.
+            val step = node
+            result.add(
+                0,
+                ExtendedCell(step.row, step.col).apply { cost = if (step === startNode) 0 else step.cost },
+            )
+            if (step === startNode) return result
+            node = step.prev
         }
         return result
     }

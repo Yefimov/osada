@@ -155,6 +155,49 @@ data class ChooseCampaignDialogueOption(
     override val actorPlayerId: Int,
 ) : GameCommand
 
+/** The unit orders added for multiplayer rooms on 2026-09-27, grouped so the codec and the
+ *  validator can handle them in one branch each. */
+sealed interface UnitOrder : GameCommand
+
+/** Boarding a naval, air or rail transport from the transport pool (`GameMap.embarkUnit`). */
+data class EmbarkUnit(
+    val unitId: Int,
+    override val actorPlayerId: Int,
+) : UnitOrder
+
+/** Stepping off a pooled transport (`GameMap.disembarkUnit`). */
+data class DisembarkUnit(
+    val unitId: Int,
+    override val actorPlayerId: Int,
+) : UnitOrder
+
+/** OG's railway movement to an offered station hex (`GameMap.moveByRail`). */
+data class RailMove(
+    val unitId: Int,
+    val destination: HexCoordinate,
+    override val actorPlayerId: Int,
+) : UnitOrder
+
+/** Buying attachment slots for a formation (`Player.purchaseAttachment`), all of the picker's
+ *  pending choices in one order -- a room accepts one outstanding command at a time. */
+data class PurchaseAttachment(
+    val unitId: Int,
+    val slots: List<Int>,
+    override val actorPlayerId: Int,
+) : UnitOrder
+
+/** OG's cheap replacement: strength for experience (`rules/GreenReplacements`). */
+data class GreenReinforceUnit(
+    val unitId: Int,
+    override val actorPlayerId: Int,
+) : UnitOrder
+
+/** Sending a commander away (`rules/LeaderDismissal`, the efile's `rem_leader`). */
+data class DismissLeader(
+    val unitId: Int,
+    override val actorPlayerId: Int,
+) : UnitOrder
+
 data class ContinueCampaign(
     val outcome: String,
     override val actorPlayerId: Int,
@@ -201,10 +244,7 @@ fun GameCommand.toPayloadJson(): String {
         is BarrageHex -> writeBarrage(payload)
         is ClearMines -> payload["unitId"] = unitId
         is BeginEngineering -> putEngineering(payload, unitId, work)
-        is DeployUnit -> {
-            payload["unitId"] = unitId
-            payload["destination"] = destination.toJson()
-        }
+        is DeployUnit -> putDestination(payload, unitId, destination)
 
         is UndeployUnit -> payload["unitId"] = unitId
         is PurchaseUnit -> {
@@ -237,6 +277,7 @@ fun GameCommand.toPayloadJson(): String {
         }
 
         is ContinueCampaign -> payload["outcome"] = outcome
+        is UnitOrder -> writeUnitOrder(payload)
     }
     return JSON.stringify(payload)
 }
@@ -252,4 +293,36 @@ private fun putEngineering(
 ) {
     payload["unitId"] = unitId
     payload["work"] = work
+}
+
+/** The unit orders added for rooms on 2026-09-27, written apart for `toPayloadJson`'s length budget. */
+private fun UnitOrder.writeUnitOrder(payload: dynamic) {
+    when (this) {
+        is EmbarkUnit -> payload["unitId"] = unitId
+        is DisembarkUnit -> payload["unitId"] = unitId
+        is RailMove -> putDestination(payload, unitId, destination)
+        is PurchaseAttachment -> putAttachment(payload, unitId, slots)
+        is GreenReinforceUnit -> payload["unitId"] = unitId
+        is DismissLeader -> payload["unitId"] = unitId
+    }
+}
+
+/** A unit and a destination hex -- [RailMove]'s and [DeployUnit]'s fields, which share one shape. */
+private fun putDestination(
+    payload: dynamic,
+    unitId: Int,
+    destination: HexCoordinate,
+) {
+    payload["unitId"] = unitId
+    payload["destination"] = destination.toJson()
+}
+
+/** [PurchaseAttachment]'s two fields, out of `toPayloadJson` for its length budget. */
+private fun putAttachment(
+    payload: dynamic,
+    unitId: Int,
+    slots: List<Int>,
+) {
+    payload["unitId"] = unitId
+    payload["slots"] = slots.toTypedArray()
 }

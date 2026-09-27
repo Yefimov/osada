@@ -36,17 +36,19 @@ class HeroTransferTest {
     private val emptyFormationId = FormationId("F-T1")
     private val ledFormationId = FormationId("F-T2")
     private lateinit var map: GameMap
+    private lateinit var player: Player
 
     @BeforeTest
     fun openInitialDeploymentWindow() {
         val game = Game()
         val scenario = Scenario(null)
-        val player = Player().apply { id = 0 }
+        player = Player().apply { id = 0 }
         map = scenario.map
         map.addPlayer(player)
         map.currentPlayer = player
         game.scenario = scenario
         game.campaignPlayer = player
+        enterCampaignForTests(player)
     }
 
     private fun definition() =
@@ -69,22 +71,40 @@ class HeroTransferTest {
         assignedFormationId = formationId,
     )
 
+    /**
+     * A roster record for [id] AND, unless [inArmy] is false, the campaign player's reserve unit that
+     * carries it: a transfer target must be a formation actually in the army (§3.3 of the
+     * combat/heroes audit), and a reserve unit that is not on the map counts.
+     */
     private fun formation(
         id: FormationId,
         assignedHeroId: HeroId? = null,
-    ) = CoreFormation(
-        id = id,
-        ownerId = 0,
-        country = 19,
-        displayName = "Test Formation ${id.value}",
-        currentEquipmentId = 900,
-        unitClass = UnitClass.TANK.value,
-        assignedHeroId = assignedHeroId,
-    )
+        inArmy: Boolean = true,
+        ownerId: Int = 0,
+    ): CoreFormation {
+        if (inArmy) {
+            val reserveUnit =
+                GameUnit(900).apply {
+                    owner = ownerId
+                    formationId = id.value
+                }
+            player.setCoreUnitList(player.getCoreUnitList() + reserveUnit)
+        }
+        return CoreFormation(
+            id = id,
+            ownerId = ownerId,
+            country = 19,
+            displayName = "Test Formation ${id.value}",
+            currentEquipmentId = 900,
+            unitClass = UnitClass.TANK.value,
+            assignedHeroId = assignedHeroId,
+        )
+    }
 
     @AfterTest
     fun cleanup() {
         HeroCampaign.reset()
+        leaveCampaignForTests()
         GameHolder.instance = null
     }
 
@@ -272,5 +292,46 @@ class HeroTransferTest {
         map.turn = 2
 
         assertFalse(HeroTransferService.transferCommander(heroId, emptyFormationId))
+    }
+
+    /** A formation destroyed in an earlier battle keeps its record, but nobody can be posted to it. */
+    @Test
+    fun aDestroyedFormationIsNotATransferTarget() {
+        HeroCampaign.roster().putFormation(formation(emptyFormationId, inArmy = false))
+        HeroCampaign.roster().putHero(
+            definition(),
+            HeroState(heroId = heroId, rankId = "major", status = HeroStatus.RESERVE),
+        )
+
+        assertEquals(emptyList(), HeroTransferService.transferableFormations(heroId))
+        assertFalse(HeroTransferService.transferCommander(heroId, emptyFormationId))
+        assertNotNull(HeroCampaign.roster().formation(emptyFormationId), "the record itself is kept")
+    }
+
+    /** An enemy formation an AI purchase once enrolled is never a target, even if its unit is present. */
+    @Test
+    fun anEnemyFormationIsNotATransferTarget() {
+        HeroCampaign.roster().putFormation(formation(emptyFormationId, ownerId = 1))
+        HeroCampaign.roster().putHero(
+            definition(),
+            HeroState(heroId = heroId, rankId = "major", status = HeroStatus.RESERVE),
+        )
+
+        assertEquals(emptyList(), HeroTransferService.transferableFormations(heroId))
+        assertFalse(HeroTransferService.transferCommander(heroId, emptyFormationId))
+    }
+
+    /** An officer whose own formation is gone has no seat to hand an incumbent, so an exchange is
+     *  refused rather than posting the incumbent into a formation that no longer exists. */
+    @Test
+    fun anExchangeNeedsTheOfferedSeatToStillExist() {
+        val otherHeroId = HeroId("H-T2")
+        HeroCampaign.roster().putFormation(formation(emptyFormationId, assignedHeroId = heroId, inArmy = false))
+        HeroCampaign.roster().putFormation(formation(ledFormationId, assignedHeroId = otherHeroId))
+        HeroCampaign.roster().putHero(definition(), activeState(emptyFormationId))
+        HeroCampaign.roster().putHero(definition().copy(id = otherHeroId), activeState(ledFormationId, otherHeroId))
+
+        assertFalse(HeroTransferService.transferCommander(heroId, ledFormationId))
+        assertEquals(ledFormationId, assertNotNull(HeroCampaign.roster().state(otherHeroId)).assignedFormationId)
     }
 }

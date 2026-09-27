@@ -82,14 +82,36 @@ internal object UnitIdentityStyles {
 #osadaUcClass { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: block; }
 .uc-commander-line {
     position: static; flex: 1 1 auto; min-width: 0; height: auto; width: auto;
-    display: block; padding: 1px 0; border: 0; border-radius: 0; background: none;
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 1px 0; border: 0; border-radius: 0; background: none;
     color: var(--osada-text-dim); font-size: 11px; line-height: 1.2; cursor: pointer;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    white-space: nowrap; overflow: hidden;
 }
 .uc-commander-line:hover, .uc-commander-line:focus { color: var(--osada-brass); outline: none; }
+/* The commander mark (UnitIdentityPresenter.presentCommander). A peaked-cap silhouette rather than
+   a star -- the experience rating two rows down is already five stars, and a sixth would read as
+   "one more star of experience" -- and rather than a faction emblem, because the same mark stands
+   on Spartacus's rebels, the Spanish Republic and the Red Army alike. FILLED = a commander is
+   present; HOLLOW = the slot is empty. Shape, not colour alone, carries the state. Drawn through a
+   mask so the glyph takes `currentColor` and every state is one colour rule. */
+.uc-commander-icon {
+    flex: 0 0 auto; width: 13px; height: 13px; background-color: currentColor;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.9 1.2h6.2l-.8 2.7H5.7z'/%3E%3Cpath d='M3.8 3.9h8.4v1H3.8z'/%3E%3Ccircle cx='8' cy='5.6' r='2.7'/%3E%3Cpath d='M1.6 15.4c0-3.5 2.9-5.5 6.4-5.5s6.4 2 6.4 5.5z'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.9 1.2h6.2l-.8 2.7H5.7z'/%3E%3Cpath d='M3.8 3.9h8.4v1H3.8z'/%3E%3Ccircle cx='8' cy='5.6' r='2.7'/%3E%3Cpath d='M1.6 15.4c0-3.5 2.9-5.5 6.4-5.5s6.4 2 6.4 5.5z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.uc-commander-line--candidate .uc-commander-icon, .uc-commander-line--disabled .uc-commander-icon {
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000' stroke-width='1.3' stroke-linejoin='round'%3E%3Cpath d='M5.1 1.4h5.8l-.7 2.5H5.8z'/%3E%3Cpath d='M3.8 4.4h8.4'/%3E%3Cpath d='M5.4 4.9a2.7 2.7 0 1 0 5.2 0'/%3E%3Cpath d='M2.2 15c0-3.2 2.6-5 5.8-5s5.8 1.8 5.8 5z'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000' stroke-width='1.3' stroke-linejoin='round'%3E%3Cpath d='M5.1 1.4h5.8l-.7 2.5H5.8z'/%3E%3Cpath d='M3.8 4.4h8.4'/%3E%3Cpath d='M5.4 4.9a2.7 2.7 0 1 0 5.2 0'/%3E%3Cpath d='M2.2 15c0-3.2 2.6-5 5.8-5s5.8 1.8 5.8 5z'/%3E%3C/svg%3E");
+}
+.uc-commander-text { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 .uc-commander-line--hero { color: #e5c979; font-weight: bold; }
-.uc-commander-line--candidate { color: #b9ad8c; font-style: italic; }
-.uc-commander-line--disabled { color: #777; cursor: default; }
+.uc-commander-line--legacy { color: var(--osada-text); }
+.uc-commander-line--legacy .uc-commander-icon { color: #c9b27a; }
+/* Hollow brass: a hero can still emerge here. Hollow grey: nothing can -- quiet on purpose, since
+   it is the normal state of every standalone-scenario unit and must not read as a fault. */
+.uc-commander-line--candidate { color: rgba(217, 178, 90, .8); }
+.uc-commander-line--disabled { color: #6f6f6f; cursor: help; }
+.uc-commander-line--disabled:hover { color: #8d8d8d; }
 #uc-statusline { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 3px; min-height: 18px; }
 .uc-chip, .osada-ec-chip {
     display: inline-flex; align-items: center; min-height: 16px; padding: 0 5px; box-sizing: border-box;

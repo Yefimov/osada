@@ -67,12 +67,13 @@ class AuthorsVisionProfileTest {
         )
 
     @Test
-    fun thereAreExactlyTwoBuiltInProfiles() {
+    fun theBuiltInProfilesAreTheTwoBaselinesThenTheOptInTrial() {
         val builtIns = RulesetProfileStore.builtIns()
 
-        assertEquals(2, builtIns.size, "Author's Vision and OSADA Default; the OG preset was retired")
+        // The OG preset was retired; the aviation trial (2026-09-27) is an opt-in overlay listed
+        // last, never a default.
         assertEquals(
-            listOf(RulesetSource.AUTHORS_VISION, RulesetSource.OSADA_DEFAULT),
+            listOf(RulesetSource.AUTHORS_VISION, RulesetSource.OSADA_DEFAULT, RulesetSource.AVIATION_TRIAL),
             builtIns.map { it.source },
         )
     }

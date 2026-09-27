@@ -22,7 +22,8 @@ internal fun GameRules.attackValue(
  * safe direction: a preview that forgets to say so is merely deterministic, while a commit that
  * forgets would leave two multiplayer peers at different stream positions
  * (`rules/GameRandomSource`). Exactly three call sites pass `true` -- `CombatApplication`,
- * `AAInterception` and `OverwatchFire`.
+ * `AAInterception` and `CounterBatteryFire`. (`OverwatchFire` was one until 2026-09-26; an ambush is
+ * now an ordinary combat through `CombatApplication`.)
  */
 fun GameRules.calculateAttackResults(
     attacker: GameUnit,

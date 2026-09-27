@@ -53,6 +53,7 @@ class HeroMigrationTest {
 
     @BeforeTest
     fun setup() {
+        enterCampaignForTests()
         js("if (typeof window.scenariolist === 'undefined') { window.scenariolist = []; }")
         Equipment.resetEquipment()
         Equipment.putEquipment(
@@ -67,6 +68,7 @@ class HeroMigrationTest {
 
     @AfterTest
     fun tearDown() {
+        leaveCampaignForTests()
         // The roster is campaign-global; leaking it would change other tests' trait resolution.
         HeroCampaign.reset()
     }

@@ -14,6 +14,7 @@ import org.osada.rules.ruleset.RuleKey
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -228,6 +229,27 @@ class IndependentAbilitiesTest : OgRulesTestHarness() {
         assertTrue(
             CombatResolver.getSupportFireUnits(map.getUnits().toList(), attacker, defender).contains(battery),
         )
+    }
+
+    @Test
+    fun ordinaryBatteryAnswersRangedAttacksUntilItsAmmoRunsOut() {
+        val map = supportWorld()
+        val battery = place(map, ordinaryBatteryEqid, 2, 2, side = 0)
+        val defender = place(map, infantryEqid, 2, 3, side = 0)
+        val attacker = place(map, plainAttackerEqid, 2, 5, side = 1)
+        attacker.strength = 100
+        battery.hasFired = true // Its own attack does not spend defensive support.
+
+        repeat(2) {
+            assertTrue(
+                CombatResolver.getSupportFireUnits(map.getUnits().toList(), attacker, defender).contains(battery),
+                "a ranged attack on a nearby ally draws support when the gun reaches the attacker",
+            )
+            map.attackUnit(battery, attacker, true)
+        }
+        assertEquals(6, battery.ammo)
+        battery.ammo = 0
+        assertFalse(CombatResolver.getSupportFireUnits(map.getUnits().toList(), attacker, defender).contains(battery))
     }
 
     @Test

@@ -20,6 +20,8 @@ import org.osada.model.EquipmentData
 import org.osada.model.GameUnit
 import org.osada.model.Player
 import org.osada.model.resetEquipment
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -32,6 +34,16 @@ import kotlin.test.assertTrue
  * injury persistence through the save, and the fallen commander surfacing as In Memoriam.
  */
 class HeroCasualtyTest {
+    @BeforeTest
+    fun enterCampaign() {
+        enterCampaignForTests()
+    }
+
+    @AfterTest
+    fun leaveCampaign() {
+        leaveCampaignForTests()
+    }
+
     private companion object {
         const val CASUALTY_EQID = 911
     }

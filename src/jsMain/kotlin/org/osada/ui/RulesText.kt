@@ -118,6 +118,7 @@ internal object RulesText {
             RulesetSource.AUTHORS_VISION -> I18n.t("rules.profile.authors_vision")
             RulesetSource.OSADA_DEFAULT -> I18n.t("rules.profile.osada_default")
             RulesetSource.CUSTOM -> profile.name.ifBlank { profile.id }
+            RulesetSource.AVIATION_TRIAL -> I18n.t("rules.profile.aviation_trial")
         }
 
     /** Why a profile cannot be selected, or `null` when it can. */
@@ -136,5 +137,6 @@ internal object RulesText {
             RulesetSource.AUTHORS_VISION -> I18n.t("rules.source.authors_vision")
             RulesetSource.OSADA_DEFAULT -> I18n.t("rules.source.osada_default")
             RulesetSource.CUSTOM -> I18n.t("rules.source.custom")
+            RulesetSource.AVIATION_TRIAL -> I18n.t("rules.source.aviation_trial")
         }
 }

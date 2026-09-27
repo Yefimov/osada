@@ -89,33 +89,7 @@ internal fun Game.handleCampaignScenarioLoaded(fromRestore: Boolean = false) {
     if (removeNonCampaignUnitsFlag) {
         scenario!!.map.removeNonCampaignUnits(campaignPlayer!!)
     }
-    // Tell the hero system which campaign/scenario/year it is now in, so an emergence check deep in
-    // combat can seed deterministically and date a new officer's biography. Runs on both a fresh
-    // start and a restore (both reach this handler), and after the scenario date is set.
-    HeroCampaign.setContext(
-        campaignId = campaign!!.file,
-        scenarioIndex = campaign!!.currentScenarioIndex,
-        serviceYear = scenario!!.date.getFullYear(),
-        country = campaignPlayer?.country,
-        availableUnitClasses =
-            buildSet {
-                campaignPlayer
-                    ?.getCoreUnitList()
-                    ?.filterNot { it.isTemporaryBorrowed }
-                    ?.mapTo(this) { it.unitData().uclass }
-                scenario!!
-                    .map
-                    .getUnits()
-                    .filter { it.owner == campaignPlayer?.id && !it.isTemporaryBorrowed }
-                    .mapTo(this) { it.unitData().uclass }
-                scenario!!
-                    .reinforcements.values
-                    .flatten()
-                    .map { it.unit }
-                    .filter { it.owner == campaignPlayer?.id && !it.isTemporaryBorrowed }
-                    .mapTo(this) { it.unitData().uclass }
-            },
-    )
+    refreshHeroCampaignContext()
     // Consume next-scenario effects queued by the previous transition, after the core roster
     // exists and before the player receives control.
     applyPendingCampaignEffects()
@@ -214,4 +188,37 @@ internal fun Game.resolveScenarioBriefing(
         resolved != null && resolved != undefined,
     )
     return resolved
+}
+
+/**
+ * Tells the hero system which campaign/scenario/year it is now in, so an emergence check deep in
+ * combat can seed deterministically and date a new officer's biography. Runs after the scenario
+ * date is set, on a fresh campaign battle ([handleCampaignScenarioLoaded]) and on a restored one
+ * (`Game.setupGameState`).
+ */
+internal fun Game.refreshHeroCampaignContext() {
+    HeroCampaign.setContext(
+        campaignId = campaign!!.file,
+        scenarioIndex = campaign!!.currentScenarioIndex,
+        serviceYear = scenario!!.date.getFullYear(),
+        country = campaignPlayer?.country,
+        availableUnitClasses =
+            buildSet {
+                campaignPlayer
+                    ?.getCoreUnitList()
+                    ?.filterNot { it.isTemporaryBorrowed }
+                    ?.mapTo(this) { it.unitData().uclass }
+                scenario!!
+                    .map
+                    .getUnits()
+                    .filter { it.owner == campaignPlayer?.id && !it.isTemporaryBorrowed }
+                    .mapTo(this) { it.unitData().uclass }
+                scenario!!
+                    .reinforcements.values
+                    .flatten()
+                    .map { it.unit }
+                    .filter { it.owner == campaignPlayer?.id && !it.isTemporaryBorrowed }
+                    .mapTo(this) { it.unitData().uclass }
+            },
+    )
 }

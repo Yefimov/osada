@@ -168,11 +168,13 @@ internal class MapRenderer(
             deployUnit = deployUnit,
             // Computed only while the toggle is on: it is a sweep over every unit on the map, and
             // an animation frame pays for it as many times as it repaints.
+            // Air mode draws the air-defence envelope, the Artillery toggle the gun envelope. The
+            // two are exclusive (`setMapLayerMode`), so at most one branch is ever live.
             artilleryCoverage =
-                if (uiSettings.artilleryRange) {
-                    ArtilleryRangeOverlay.compute(q, GameHolder.instance?.spotSide ?: 0)
-                } else {
-                    null
+                when {
+                    uiSettings.airMode -> ArtilleryRangeOverlay.computeAirDefence(q, GameHolder.instance?.spotSide ?: 0)
+                    uiSettings.artilleryRange -> ArtilleryRangeOverlay.compute(q, GameHolder.instance?.spotSide ?: 0)
+                    else -> null
                 },
         )
     }

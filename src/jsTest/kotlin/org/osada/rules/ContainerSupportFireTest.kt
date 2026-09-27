@@ -84,7 +84,10 @@ class ContainerSupportFireTest : OgRulesTestHarness() {
                 uclass = UnitClass.AIR_DEFENCE.value
                 movmethod = MovMethod.TOWED.value
                 target = UnitType.SOFT.value
-                gunrange = 1
+                // Two, because an AD battery answers at its OWN range of fire (OG's Air Defense
+                // procedure, `rules/AirDefenceSupport`) and the bomber below is two hexes from the
+                // bunker. Until 2026-09-26 `flak_range` stood in for every air defender's reach.
+                gunrange = 2
                 ammo = 8
                 airatk = 10
                 hardatk = 8
@@ -268,7 +271,9 @@ class ContainerSupportFireTest : OgRulesTestHarness() {
         containersOn(flakRange = 2)
         val map = world()
         val ship = place(map, shipEqid, 3, 3, 0)
-        val fighter = place(map, fighterEqid, 5, 5, 0)
+        // Beside the neighbour: a fighter covers the unit it stands next to (OG's Air-Interception
+        // procedure), so this is where it must be to prove anything on the map.
+        val fighter = place(map, fighterEqid, 4, 4, 0)
         val neighbour = place(map, marinesEqid, 3, 4, 0)
         val bomber = place(map, bomberEqid, 3, 5, 1)
 

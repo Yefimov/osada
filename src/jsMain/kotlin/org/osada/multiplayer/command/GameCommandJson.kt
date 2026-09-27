@@ -100,6 +100,16 @@ object GameCommandJson {
             ContinueCampaign::class.simpleName ->
                 ContinueCampaign(requiredString(value.outcome, "outcome"), actor)
 
+            EmbarkUnit::class.simpleName -> EmbarkUnit(requiredInt(value.unitId, "unitId"), actor)
+            DisembarkUnit::class.simpleName -> DisembarkUnit(requiredInt(value.unitId, "unitId"), actor)
+            RailMove::class.simpleName ->
+                RailMove(requiredInt(value.unitId, "unitId"), coordinate(value.destination), actor)
+
+            GreenReinforceUnit::class.simpleName -> GreenReinforceUnit(requiredInt(value.unitId, "unitId"), actor)
+            DismissLeader::class.simpleName -> DismissLeader(requiredInt(value.unitId, "unitId"), actor)
+            PurchaseAttachment::class.simpleName ->
+                PurchaseAttachment(requiredInt(value.unitId, "unitId"), intList(value.slots), actor)
+
             else -> error("Unknown game command kind")
         }
     }
@@ -107,6 +117,11 @@ object GameCommandJson {
     private fun coordinates(value: dynamic): List<HexCoordinate> {
         require(js("Array.isArray(value)") as Boolean)
         return (0 until (value.length as Number).toInt()).map { coordinate(value[it]) }
+    }
+
+    private fun intList(value: dynamic): List<Int> {
+        require(js("Array.isArray(value)") as Boolean)
+        return (0 until (value.length as Number).toInt()).map { requiredInt(value[it], "slots") }
     }
 
     private fun coordinate(value: dynamic): HexCoordinate =

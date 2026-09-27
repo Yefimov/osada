@@ -8,6 +8,7 @@ import org.osada.PlayerType
 import org.osada.i18n.I18n
 import org.osada.model.GameUnit
 import org.osada.model.getPlayers
+import org.osada.multiplayer.command.AttackUnit
 import org.osada.multiplayer.command.CommandValidation
 import org.osada.multiplayer.command.GameCommand
 import org.osada.multiplayer.command.GameCommandJson
@@ -41,6 +42,7 @@ import org.osada.rules.ruleset.ActiveRuleset
 import org.osada.rules.ruleset.RulesetCompatibility
 import org.osada.ui.ObserverModeLock
 import org.osada.ui.StartMenuBuilder
+import org.osada.ui.presentPendingHeroEvents
 import org.osada.uiSettings
 import kotlin.js.Date
 import kotlin.js.json
@@ -123,6 +125,40 @@ object OsadaMultiplayer : RoomLinkListener {
                 path = listOf(HexCoordinate(position.col, position.row), HexCoordinate(col, row)),
                 actorPlayerId = unit.owner,
             )
+        return submit(command)
+    }
+
+    /**
+     * An attack ORDER, sent to the host like a move (`docs/OSADA_MULTIPLAYER_TECH_SPEC.md` lists
+     * `AttackUnit` among the commands). Until 2026-09-27 an attack in a room ran only on the clicking
+     * client: a peer's attack was overwritten by the host's next snapshot, and the host's own attack
+     * reached the peers only with whatever command came after it. The host resolves the complete
+     * order (`model/executeAttack`) and publishes the result.
+     */
+    fun submitAttack(
+        attacker: GameUnit,
+        defender: GameUnit,
+    ): Boolean {
+        if (!active || paused || pendingCommandId != null) return false
+        return submit(AttackUnit(attacker.id, defender.id, attacker.owner))
+    }
+
+    /**
+     * Any other player order in a room -- a unit action, a purchase, a deployment, the end of a
+     * turn. The host validates and applies it and publishes the resulting state, which is the only
+     * way a change reaches the other participant; a client that changed its own copy instead was
+     * simply overwritten by the next snapshot.
+     */
+    fun submitOrder(command: GameCommand): Boolean {
+        if (!active || paused || pendingCommandId != null) return false
+        return submit(command)
+    }
+
+    /** Whether this client is the room's game authority. Only the host runs the AI players: a
+     *  peer that ran them too sent every AI order a second time. */
+    fun isAuthority(): Boolean = !active || isHost
+
+    private fun submit(command: GameCommand): Boolean {
         val commandId = newCommandId()
         pendingCommandId = commandId
         MultiplayerScreen.setStatus(I18n.t("multiplayer.status.order_pending"))
@@ -419,6 +455,9 @@ object OsadaMultiplayer : RoomLinkListener {
         when (val result = requireNotNull(validator).validate(command, null)) {
             CommandValidation.Accepted -> {
                 requireNotNull(applier).apply(command)
+                // The host resolves orders without their animations; an AI turn waiting on one
+                // (`GameTurnFlow` raises the flag before each order) would otherwise never resume.
+                game?.waitUIAnimation = false
                 processedCommandIds += commandId
                 revision++
                 pendingCommandId = null
@@ -427,6 +466,9 @@ object OsadaMultiplayer : RoomLinkListener {
                     JSON.parse(MultiplayerSnapshotJson.encode(createSnapshot(revision))),
                 )
                 game?.ui?.render?.render()
+                // The host resolves orders without their animations, so the hero events the model
+                // queued (an emergence, a promotion choice, a casualty) are shown here.
+                if (game?.ui != null) presentPendingHeroEvents()
                 renderOnlineStatus()
             }
 

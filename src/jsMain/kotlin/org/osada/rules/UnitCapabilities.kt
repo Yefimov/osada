@@ -456,8 +456,8 @@ object UnitCapabilities {
      * that `MovementRules.setZOCRange` hands every non-air unit a full ZOC with no opt-out. That
      * was true of the code as it then stood and is not any more: `setZOCRange` is a single choke
      * point that adds and removes one reference count, so declining to enter the loop is the whole
-     * implementation, and both readers of the result (`MoveRangeCalculation`'s movement floor and
-     * `MoveExecutorHelpers.stoppedByUnseenZoc`) go through `Hex.isZOC`. 609 shipped records carry
+     * implementation, and the reader of the result (`MoveRangeCalculation`'s movement floor) goes
+     * through `Hex.isZOC`. 609 shipped records carry
      * the bit.
      *
      * **Read on the unit's REAL equipment on purpose.** `setZOCRange` is called once to add and
@@ -541,15 +541,40 @@ object UnitCapabilities {
     fun hasJetStealth(data: EquipmentData): Boolean = data.attrEx and ATTR_EX_MASK_JET_STEALTH != 0
 
     /**
-     * OG's `Partizan` (`attrEx` bit 10) — the formation is not halted by an enemy zone of control.
-     * Wired 2026-08-27; 720 records, 680 of them Infantry.
+     * OG's `Partizan` (`attrEx` bit 10). Wired 2026-08-27; 720 records, 680 of them Infantry.
      *
-     * **This is the same behaviour as the `Superior Maneuver` commander**, which OSADA already
-     * runs, so the ability joins that predicate rather than adding a second way to ignore a ZOC.
-     * The manual's *"cannot be surprised"* is a simplification of it: a formation that is never
-     * halted never walks into the ambush a halt sets up.
+     * The author's efile-specials page: *"Unit is not stopped by adjacent enemies. Same than
+     * "Battlefield Intelligence" leader"*, and the manual says of both *"cannot be surprised"*. So
+     * it is BOTH halves, [notStoppedByAdjacentEnemies] and [cannotBeSurprised]. Until 2026-09-26
+     * only the first half was built, on the reasoning that a formation never halted never walks
+     * into an ambush -- which is backwards: a formation nothing halts is exactly the one that walks
+     * on into a hidden enemy's hex. Partisan bicycle companies were the only units in `forward`'s
+     * Suomussalmi being surprised at all (owner's report).
      */
-    fun ignoresZoneOfControl(data: EquipmentData): Boolean = data.attrEx and ATTR_EX_MASK_PARTIZAN != 0
+    fun isPartizan(data: EquipmentData): Boolean = data.attrEx and ATTR_EX_MASK_PARTIZAN != 0
+
+    /**
+     * Whether [unit] moves on past an enemy zone of control: the `Superior Maneuver` commander
+     * (*"the unit ignores enemy's ZOC"*), `Partizan`, and -- because OG says Partizan is the *"same
+     * than Battlefield Intelligence"* -- that commander too. One answer for the move range
+     * (`MoveRangeCalculation`). Read on the REAL record: the
+     * ability is the formation's, not its trucks'.
+     */
+    fun notStoppedByAdjacentEnemies(unit: GameUnit): Boolean =
+        Leaders.unitHasLeader(unit, LeaderType.SUPERIOR_MANEUVER) ||
+            Leaders.unitHasLeader(unit, LeaderType.BATTLEFIELD_INTELLIGENCE) ||
+            isPartizan(unit.unitData(true))
+
+    /**
+     * OG's *"cannot be surprised"*: `Battlefield Intelligence`, `Partizan`, and `Skilled Assault`
+     * for an aircraft (*"not affected by Out of the sun"*). Such a formation is never forced into
+     * a surprise combat -- not by walking into a hidden unit, not by an Overwatch or Camouflage
+     * Expert ambush (`rules/MoveAmbush`).
+     */
+    fun cannotBeSurprised(unit: GameUnit): Boolean =
+        Leaders.unitHasLeader(unit, LeaderType.BATTLEFIELD_INTELLIGENCE) ||
+            isPartizan(unit.unitData(true)) ||
+            (UnitPredicates.isAir(unit) && Leaders.unitHasLeader(unit, LeaderType.SKILLED_ASSAULT))
 
     /**
      * OG's `Exploit Success` (`attrEx` bit 11) — after an ordinary attack that kills the defender

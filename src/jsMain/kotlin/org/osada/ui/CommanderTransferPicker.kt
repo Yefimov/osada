@@ -6,6 +6,7 @@ import org.osada.hero.HeroCampaign
 import org.osada.hero.HeroId
 import org.osada.hero.HeroTransferService
 import org.osada.i18n.I18n
+import org.w3c.dom.events.MouseEvent
 
 /**
  * The "post this officer somewhere else" dialog behind the roster's Transfer action
@@ -30,10 +31,14 @@ import org.osada.i18n.I18n
  */
 internal object CommanderTransferPicker {
     private const val BOX_ID = "uiHeroTransferBox"
+    private const val BACKDROP_ID = "uiHeroTransferBackdrop"
 
     fun isOpen(): Boolean = byId(BOX_ID) != null
 
-    fun close() = delTag(byId(BOX_ID))
+    fun close() {
+        delTag(byId(BOX_ID))
+        delTag(byId(BACKDROP_ID))
+    }
 
     /** [onTransferred] re-renders the caller's list; it runs only when a move actually happened. */
     fun open(
@@ -45,13 +50,32 @@ internal object CommanderTransferPicker {
         close()
         val choices = HeroTransferService.transferableFormations(heroId)
 
+        // Click-outside dismissal goes through a backdrop rather than a document listener: the
+        // backdrop CONSUMES the dismissing click, so it cannot fall through and fire whatever
+        // roster button happened to be under the pointer, and there is no listener to leak.
+        val backdrop = addTag(mainBody, "div")
+        backdrop.id = BACKDROP_ID
+        backdrop.className = "osada-hpp-backdrop"
+        backdrop.onclick = { event: MouseEvent ->
+            event.stopPropagation()
+            close()
+        }
+
         val box = addTag(mainBody, "div")
         box.id = BOX_ID
         box.className = "osada-hpp"
 
-        val titleEl = addTag(box, "div")
+        // The list can outgrow the dialog's 88vh and scroll Cancel out of sight, so the dialog
+        // also carries the same close icon as the roster it sits on.
+        val header = addTag(box, "div")
+        header.className = "osada-hpp__header"
+        val titleEl = addTag(header, "div")
         titleEl.className = "osada-hpp__title"
         titleEl.textContent = I18n.t("hero.roster.transfer.title", mapOf("name" to heroName))
+        val closeIcon = addTag(header, "span")
+        closeIcon.className = "osada-ico osada-ico--close osada-hero-close"
+        closeIcon.title = I18n.t("common.close.label")
+        closeIcon.asButton(ariaLabel = I18n.t("common.close.label")) { close() }
 
         val bodyEl = addTag(box, "div")
         bodyEl.className = "osada-hpp__body"

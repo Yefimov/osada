@@ -1,36 +1,29 @@
 package org.osada.ui
 
-import org.osada.CombatLog
 import org.osada.PlayerType
-import org.osada.addSurrender
 import org.osada.evaluateScenarioEvents
 import org.osada.handleMoveVictory
 import org.osada.hero.HeroCampaign
 import org.osada.i18n.I18n
+import org.osada.model.AttackOutcome
 import org.osada.model.Cell
 import org.osada.model.CombatResults
+import org.osada.model.ExtendedCell
+import org.osada.model.ForcedMove
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
 import org.osada.model.InterceptionEvent
 import org.osada.model.MovementResults
-import org.osada.model.attackUnit
-import org.osada.model.getUnits
+import org.osada.model.Surrender
+import org.osada.model.executeAttack
 import org.osada.model.moveUnit
-import org.osada.model.retreatUnit
-import org.osada.model.surrenderUnit
+import org.osada.model.surpriseTarget
 import org.osada.multiplayer.client.OsadaMultiplayer
 import org.osada.rules.ExtendedVictory
 import org.osada.rules.GameRules
-import org.osada.rules.calculateAttackResults
 import org.osada.rules.getDirection
-import org.osada.rules.getRetreatPosition
-import org.osada.rules.getSupportFireUnits
 import org.osada.rules.getUnitAttackRange
 import org.osada.rules.getUnitMoveRange
-import org.osada.rules.isLossOverRetreatThreshold
-import org.osada.rules.isRetreatBlockedByOwnUnitsOnly
-import org.osada.rules.shouldDefenderRetreat
-import org.osada.rules.shouldDefenderSurrender
 import org.osada.uiAnimationFinished
 
 /** Max of move range, attack range and spot range — the render radius needed to redraw after any unit action. */
@@ -62,7 +55,9 @@ internal class AnimationOrchestrator(
         val startPos = unit.getPos()
         if (map == null || startPos == null) return false
         if (OsadaMultiplayer.active) {
-            return OsadaMultiplayer.submitMove(unit, row, col)
+            // A refused order (paused, or one still pending) must not leave the AI's turn waiting
+            // on an animation that will never run; an accepted one is released by the host.
+            return OsadaMultiplayer.submitMove(unit, row, col).also { if (!it) ui.game.waitUIAnimation = false }
         }
         val radius = getUnitRenderRadius(unit)
 
@@ -119,6 +114,19 @@ internal class AnimationOrchestrator(
         attacker: GameUnit,
         defender: GameUnit,
     ): Boolean {
+        // In a room the order goes to the host, which resolves it and publishes the result -- the
+        // same road a move takes (`uiUnitMove`).
+        return if (OsadaMultiplayer.active) {
+            OsadaMultiplayer.submitAttack(attacker, defender).also { if (!it) ui.game.waitUIAnimation = false }
+        } else {
+            resolveAndAnimateAttack(attacker, defender)
+        }
+    }
+
+    private fun resolveAndAnimateAttack(
+        attacker: GameUnit,
+        defender: GameUnit,
+    ): Boolean {
         val map = ui.game.scenario?.map
         val attackerPos = attacker.getPos()
         val defenderPos = defender.getPos()
@@ -128,30 +136,66 @@ internal class AnimationOrchestrator(
 
         ui.game.waitUIAnimation = true
         UIBuilder.showAttackInfo(attacker, defender)
-        val preview = GameRules.calculateAttackResults(attacker, defender, true, map.getUnits().toList())
-        val attackerOldStrength = attacker.strength
-
-        resolveSupportFire(map, attacker, defender, attackerPos, preview)
-
-        val attackStopped =
-            attacker.destroyed || GameRules.isLossOverRetreatThreshold(attacker.strength, attackerOldStrength)
-        val defenderOldStrength = defender.strength
-        val result = resolveAttackResult(map, attacker, defender, preview, attackStopped)
+        // The whole order -- support fire, "Attack Stopped", overrun, the exchange, retreat or
+        // surrender -- is resolved by the model, exactly as a multiplayer command resolves it. This
+        // function only shows what happened.
+        val outcome = map.executeAttack(attacker, defender)
+        queueSupportAnimations(outcome, attackerPos)
         reportCounterBattery(ui, map, attackerPos)
-
-        if (!attackStopped && !defender.destroyed) {
-            applyDefenderRetreat(map, attacker, defender, defenderOldStrength)
-        }
-
-        dispatchAttackAnimations(attacker, defender, attackerPos, defenderPos, attackStopped, result)
+        outcome.surrender?.let(::presentSurrender)
+        dispatchAttackAnimations(attacker, defender, attackerPos, defenderPos, outcome.attackStopped, outcome.result)
 
         ui.render.runAnimation(
             animationCallback {
-                attackResultPresenter.present(attacker, defender, result, radius)
+                animateRetreat(outcome.retreat) {
+                    attackResultPresenter.present(attacker, defender, outcome, radius)
+                }
             },
         )
 
         return true
+    }
+
+    /**
+     * Plays a combat retreat as a one-hex move once the exchange has been shown, then continues with
+     * [then]. The model already put the unit on its new hex; this only lets the player SEE it go
+     * there, the way Panzer Marshal animated a retreat. Skipped for a move the viewing side cannot
+     * see at either end, which must not be drawn at all.
+     */
+    private fun animateRetreat(
+        move: ForcedMove?,
+        then: () -> Unit,
+    ) {
+        val side = ui.game.spotSide
+        val grid =
+            ui.game.scenario
+                ?.map
+                ?.map
+        val visible =
+            move != null &&
+                (
+                    move.unit.player?.side == side ||
+                        grid?.getOrNull(move.from.row)?.getOrNull(move.from.col)?.isSpotted(side) == true ||
+                        grid?.getOrNull(move.to.row)?.getOrNull(move.to.col)?.isSpotted(side) == true
+                )
+        if (move == null || !visible || move.unit.destroyed) {
+            then()
+            return
+        }
+        val path =
+            MovementResults().apply {
+                isVisible = true
+                passedCells.add(ExtendedCell(move.from.row, move.from.col).apply { isVisible = true })
+                passedCells.add(ExtendedCell(move.to.row, move.to.col).apply { isVisible = true })
+            }
+        move.unit.hasAnimation = true
+        ui.render.moveAnimation(
+            jsObject {
+                this.unit = move.unit
+                this.moveResults = path
+                this.cbfunc = animationCallback { then() }
+            },
+        )
     }
 
     private fun logAttackStart(
@@ -167,98 +211,36 @@ internal class AnimationOrchestrator(
         )
     }
 
-    // Resolve support fire from adjacent artillery / flak / fighters.
-    private fun resolveSupportFire(
-        map: GameMap,
-        attacker: GameUnit,
-        defender: GameUnit,
+    /** The defender's supporting units firing, each turned toward the attacker's hex. */
+    private fun queueSupportAnimations(
+        outcome: AttackOutcome,
         attackerPos: Cell,
-        preview: CombatResults,
     ) {
-        if (attacker.isSurprised || preview.isOverrun) return
-        val supportUnits = GameRules.getSupportFireUnits(map.getUnits().toList(), attacker, defender)
-        for (support in supportUnits) {
-            if (attacker.destroyed) break
-            applySupportFire(map, support, attacker, attackerPos)
+        outcome.supportShots.forEach { shot ->
+            val support = shot.supporter
+            val animType = attackAnimationByClass.getOrNull(support.unitData(true).uclass) ?: return@forEach
+            val dir =
+                GameRules.getDirection(shot.supporterPos.row, shot.supporterPos.col, attackerPos.row, attackerPos.col)
+                    ?: support.facing
+            ui.render.addAnimation(shot.supporterPos.row, shot.supporterPos.col, animType, dir, support)
         }
     }
 
-    private fun applySupportFire(
-        map: GameMap,
-        support: GameUnit,
-        attacker: GameUnit,
-        attackerPos: Cell,
-    ) {
-        val supportPos = support.getPos() ?: return
-        map.attackUnit(support, attacker, true)
-        val supportClass = support.unitData(true).uclass
-        val supportAnimType = attackAnimationByClass.getOrNull(supportClass)
-        val supportDir =
-            GameRules.getDirection(supportPos.row, supportPos.col, attackerPos.row, attackerPos.col)
-                ?: support.facing
-        supportAnimType?.let {
-            ui.render.addAnimation(supportPos.row, supportPos.col, it, supportDir, support)
-        }
-    }
-
-    private fun resolveAttackResult(
-        map: GameMap,
-        attacker: GameUnit,
-        defender: GameUnit,
-        preview: CombatResults,
-        attackStopped: Boolean,
-    ): CombatResults =
-        if (!attackStopped) {
-            map.attackUnit(attacker, defender, false, preview.isOverrun)
-        } else {
-            attacker.hasFired = true
-            preview
-        }
-
-    // Defender retreat for ground-vs-ground combat when losses exceed the threshold.
-    //
-    // ORDERING IS THE RULE, not an implementation detail: the guard below means surrender is
-    // reachable ONLY after a retreat has genuinely been triggered by the normal combat rules
-    // (shouldDefenderRetreat: ground-vs-ground, not artillery/bomber/fortification, losses past
-    // UNIT_RETREAT_THRESHOLD). A unit that merely happens to have no legal adjacent hex — sitting
-    // in a corner, ringed by water, boxed in by friendlies — never surrenders while it is not
-    // being forced to retreat. Only once the retreat is owed and cannot be paid does the unit
-    // surrender. This is COMBAT encirclement, not operational encirclement: see
-    // SURRENDER_ON_FAILED_RETREAT.
-    private fun applyDefenderRetreat(
-        map: GameMap,
-        attacker: GameUnit,
-        defender: GameUnit,
-        defenderOldStrength: Int,
-    ) {
-        if (!GameRules.shouldDefenderRetreat(attacker, defender, defenderOldStrength)) return
-        val retreatPos = GameRules.getRetreatPosition(map.map, defender, map.rows)
-        if (retreatPos != null) {
-            map.retreatUnit(defender, retreatPos)
-        } else if (GameRules.shouldDefenderSurrender(
-                defender,
-                GameRules.isRetreatBlockedByOwnUnitsOnly(map.map, defender, map.rows),
-            )
-        ) {
-            val surrenderPos = defender.getPos()
-            val name = defender.unitData(true).name
-            val prestige = map.surrenderUnit(defender, attacker)
-            // Combat-side hero processing ran while the defender was still alive. Failed-retreat
-            // surrender destroys it afterwards, so resolve the commander's fate now.
-            HeroCampaign.recordCasualty(defender, map.turn)
-            val captorSide = attacker.player?.side
-            if (surrenderPos != null && captorSide != null) {
-                CombatLog.addSurrender(defender, surrenderPos, captorSide, prestige)
+    /**
+     * A defender that owed a retreat and had nowhere to go. Named distinctly from an ordinary kill:
+     * the player needs to see that cutting off the retreat is what did it, and what it earned.
+     */
+    private fun presentSurrender(surrender: Surrender) {
+        val pos = surrender.pos
+        ui.render.addAnimation(pos.row, pos.col, "explosion", 0, surrender.unit)
+        ui.showAlert(pos.row, pos.col, I18n.t("combat.alert.surrendered"), false)
+        val reward =
+            if (surrender.prestige > 0) {
+                I18n.t("trigger.reward.prestige", mapOf("amount" to surrender.prestige))
+            } else {
+                ""
             }
-            surrenderPos?.let {
-                ui.render.addAnimation(it.row, it.col, "explosion", 0, defender)
-                ui.showAlert(it.row, it.col, I18n.t("combat.alert.surrendered"), false)
-                // Named distinctly from an ordinary kill: the player needs to see that cutting off
-                // the retreat is what did it, not damage — and what it earned.
-                val reward = if (prestige > 0) I18n.t("trigger.reward.prestige", mapOf("amount" to prestige)) else ""
-                HudLog.addAt(it.row, it.col, I18n.t("hud.log.surrendered", mapOf("unit" to name)) + reward)
-            }
-        }
+        HudLog.addAt(pos.row, pos.col, I18n.t("hud.log.surrendered", mapOf("unit" to surrender.name)) + reward)
     }
 
     private fun dispatchAttackAnimations(
@@ -311,6 +293,9 @@ internal class AnimationOrchestrator(
     ) {
         // `uiUnitMove` raises it before the animation starts; make sure no path leaves it up.
         unit.hasAnimation = false
+        // A commander lost on the move itself (a minefield, an AA gun) is announced now, as a
+        // combat casualty is announced after its combat.
+        HeroCasualtyPresenter.present(HeroCampaign.drainCasualties())
         val pos =
             unit.getPos() ?: run {
                 ui.game.waitUIAnimation = false
@@ -319,36 +304,23 @@ internal class AnimationOrchestrator(
             }
         ui.render.render(pos.row, pos.col, radius)
 
-        result.surpriseCell.firstOrNull()?.let { cell ->
-            ui.showAlert(cell.row, cell.col, I18n.t("combat.alert.surprised"), true)
-            unit.isSurprised = false
-        }
-        reportInterceptions(ui, unit, result, pos)
-        reportMinefield(ui, unit, result, pos)
-        reportTrigger(ui, unit, result, pos)
-        if (result.isCapture) {
-            ui.showAlert(pos.row, pos.col, I18n.t("combat.alert.captured"), true)
-            val hexName =
+        // Looked up while the flag is still up: it is what makes the forced combat below a
+        // SURPRISED one (`GameMap.surpriseTarget`).
+        // Walking into a hidden unit is announced on the hex it refused; an ambush
+        // (`rules/MoveAmbush`) over the unit it stopped.
+        val surprisedAt = result.surpriseCell.firstOrNull() ?: pos.takeIf { result.ambusher != null }
+        val ambusher =
+            surprisedAt?.let { cell ->
+                ui.showAlert(cell.row, cell.col, I18n.t("combat.alert.surprised"), true)
                 ui.game.scenario
                     ?.map
-                    ?.map
-                    ?.getOrNull(pos.row)
-                    ?.getOrNull(pos.col)
-                    ?.name
-            // Coordinates only as a last-resort label when the hex has no name (nothing else
-            // would identify it) — clickable either way, same as the combat log lines.
-            val place = if (!hexName.isNullOrEmpty()) hexName else "(${pos.col},${pos.row})"
-            // OG reports the reward on capture ("You gain 40 prestige"); the amount was computed
-            // in applyHexCapture but never surfaced, so a capture read as worth nothing.
-            // A silent prestige trigger on a captured flag (Kieler Hafen) is the capture reward,
-            // not a second unrelated discovery. Fold it into this one line; an authored trigger
-            // message is still reported separately by reportTrigger.
-            val totalPrestige = result.capturePrestige + result.triggerPrestige
-            val reward =
-                if (totalPrestige > 0) I18n.t("trigger.reward.prestige", mapOf("amount" to totalPrestige)) else ""
-            val line = I18n.t("hud.log.captured", mapOf("unit" to unit.unitData(true).name, "place" to place))
-            HudLog.addAt(pos.row, pos.col, line + reward)
-        }
+                    ?.surpriseTarget(unit, result)
+            }
+        reportInterceptions(ui, unit, result, pos)
+        reportMinefield(ui, unit, result, pos)
+        reportContact(ui, unit, result, pos)
+        reportTrigger(ui, unit, result, pos)
+        reportCapture(ui, unit, result, pos)
         if (result.isVictorySide >= 0) {
             ui.game.handleMoveVictory(result.isVictorySide)
         }
@@ -392,9 +364,51 @@ internal class AnimationOrchestrator(
         // because THIS arrival brought someone into its radius, and its own anchored callout must
         // not be scrolled out from under itself.
         ui.game.evaluateScenarioEvents()
+        // The forced combat runs last, as PM ran it: everything the move itself caused has been
+        // reported by now. `uiUnitAttack` applies the result synchronously, so the flag can drop
+        // straight after it, and its presenter is what releases `waitUIAnimation` once the combat
+        // animation ends -- releasing it here as well would let the AI act mid-animation.
+        if (ambusher != null && !ui.game.gameEnded) {
+            uiUnitAttack(unit, ambusher)
+            unit.isSurprised = false
+            return
+        }
+        unit.isSurprised = false
         ui.game.waitUIAnimation = false
         ui.game.uiAnimationFinished()
     }
+}
+
+/** This move took a flag: the alert on the hex and the clickable HUD-log line with its reward.
+ *  Top-level for the same reason as [reportInterceptions]: [AnimationOrchestrator]'s function budget. */
+private fun reportCapture(
+    ui: UI,
+    unit: GameUnit,
+    result: MovementResults,
+    pos: Cell,
+) {
+    if (!result.isCapture) return
+    ui.showAlert(pos.row, pos.col, I18n.t("combat.alert.captured"), true)
+    val hexName =
+        ui.game.scenario
+            ?.map
+            ?.map
+            ?.getOrNull(pos.row)
+            ?.getOrNull(pos.col)
+            ?.name
+    // Coordinates only as a last-resort label when the hex has no name (nothing else
+    // would identify it) — clickable either way, same as the combat log lines.
+    val place = if (!hexName.isNullOrEmpty()) hexName else "(${pos.col},${pos.row})"
+    // OG reports the reward on capture ("You gain 40 prestige"); the amount was computed
+    // in applyHexCapture but never surfaced, so a capture read as worth nothing.
+    // A silent prestige trigger on a captured flag (Kieler Hafen) is the capture reward,
+    // not a second unrelated discovery. Fold it into this one line; an authored trigger
+    // message is still reported separately by reportTrigger.
+    val totalPrestige = result.capturePrestige + result.triggerPrestige
+    val reward =
+        if (totalPrestige > 0) I18n.t("trigger.reward.prestige", mapOf("amount" to totalPrestige)) else ""
+    val line = I18n.t("hud.log.captured", mapOf("unit" to unit.unitData(true).name, "place" to place))
+    HudLog.addAt(pos.row, pos.col, line + reward)
 }
 
 /**
@@ -430,6 +444,24 @@ private fun reportMinefield(
     ui.showAlert(pos.row, pos.col, I18n.t("combat.minefield.alert"), true)
     HudLog.addAt(pos.row, pos.col, HudLog.Segment(text, ownLoss = result.minefieldLosses > 0))
     ui.showUnitInfo(unit)
+}
+
+/**
+ * The move stopped short on meeting an enemy the side had not seen (`rules/ZoneOfControlContact`).
+ * No combat happened, but the player ordered a longer move, so the stop is named rather than left to
+ * look like a pathfinding fault. Shown only to the side that can see the mover.
+ */
+private fun reportContact(
+    ui: UI,
+    unit: GameUnit,
+    result: MovementResults,
+    pos: Cell,
+) {
+    val side = ui.game.spotSide
+    val visible = unit.player?.side == side || unit.getHex()?.isSpotted(side) == true
+    if (!result.stoppedByContact || !visible) return
+    ui.showAlert(pos.row, pos.col, I18n.t("combat.alert.contact"), true)
+    HudLog.addAt(pos.row, pos.col, I18n.t("hud.log.contact", mapOf("unit" to unit.unitData(true).name)))
 }
 
 /**

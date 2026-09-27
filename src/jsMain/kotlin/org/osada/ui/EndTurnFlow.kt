@@ -7,6 +7,8 @@ import org.osada.UnitClass
 import org.osada.i18n.I18n
 import org.osada.model.getCountriesBySide
 import org.osada.model.getUnits
+import org.osada.multiplayer.client.OsadaMultiplayer
+import org.osada.multiplayer.command.EndPlayerTurn
 import org.osada.showStandaloneTimedOutcome
 import org.osada.uiSettings
 import org.w3c.dom.events.MouseEvent
@@ -115,8 +117,11 @@ internal class EndTurnFlow(
         BottomZoneBuilder.onPlayerCardHidden()
         UICombatLog.forceClose()
         makeHidden("uiToolTip")
-        if (map.currentPlayer?.type == PlayerType.HUMAN_LOCAL) {
-            ui.game.endTurn()
+        val current = map.currentPlayer
+        // In a room the turn ends on the host, which publishes the next player's state; ending it
+        // on this copy alone let the two participants' games run apart.
+        val turnEnded = current?.type == PlayerType.HUMAN_LOCAL && endTurnHere(current)
+        if (turnEnded) {
             if (ui.game.gameEnded && ui.game.gameStarted) {
                 ui.game.showStandaloneTimedOutcome()
             } else {
@@ -143,6 +148,23 @@ internal class EndTurnFlow(
             }
         }
     }
+
+    /**
+     * Ends [current]'s turn and says whether it ended ON THIS CLIENT. In a room the turn ends on the
+     * host, which publishes the next player's state -- ending it on this copy alone let the two
+     * participants' games run apart. On a peer the host's snapshot then rebuilds the whole screen,
+     * so nothing is refreshed here; on the host the turn has already changed.
+     */
+    private fun endTurnHere(current: org.osada.model.Player): Boolean =
+        if (OsadaMultiplayer.active) {
+            OsadaMultiplayer.submitOrder(EndPlayerTurn(current.id))
+            ui.game.scenario
+                ?.map
+                ?.currentPlayer !== current
+        } else {
+            ui.game.endTurn()
+            true
+        }
 
     private fun uiUnitSelectNext() {
         val map = ui.game.scenario?.map

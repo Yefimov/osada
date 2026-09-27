@@ -27,8 +27,13 @@ import org.osada.rules.ruleset.RuleKey
  * never drift apart (the §4.6 mistake).
  */
 internal object AAInterception {
-    // equip.cfg's own comment: "Default all flak-type actions are limited to range 1."
-    private const val DEFAULT_FLAK_RANGE = 1
+    /**
+     * Interception is ALWAYS range 1. `flak_range` widens Flak's COMBAT with aircraft only -- the
+     * author's configuration table says of it, verbatim, *"interception remains limited to range 1"*
+     * (`luis-guzman.com/OpenGen_ConfigFiles.html`). Until 2026-09-27 this read `flak_range`, so an
+     * efile that set it (LXF: 4) intercepted from four hexes away.
+     */
+    private const val INTERCEPTION_RANGE = 1
     private const val MODE_NO_AIR_DEFENSE_AFTER_INTERCEPT = 1
     private const val MODE_SPOTTED_INTERCEPTS_AT_DESTINATION = 2
 
@@ -45,12 +50,13 @@ internal object AAInterception {
         // read by nothing until 2026-08-28 (`docs/og-fidelity-plan.md` §AD). A scenario whose
         // source could not be read is `null` and stays permitted, as every authored switch is.
         val authorAllows = GameHolder.instance?.scenario?.airIntercept != false
-        val planeSide = if (authorAllows) plane.player?.side else null
+        // OG: *"Interception cannot happen if: Plane has Skilled Assault leader"*.
+        val immune = Leaders.unitHasLeader(plane, LeaderType.SKILLED_ASSAULT)
+        val planeSide = if (authorAllows && !immune) plane.player?.side else null
         if (planeSide == null) return emptyList()
         val mode = ActiveRuleset.intKey(RuleKey.AA_INTERCEPT_MODE, 0)
-        val range = ActiveRuleset.intKey(RuleKey.FLAK_RANGE, DEFAULT_FLAK_RANGE)
         return map.getUnits().filter { aa ->
-            isEligibleInterceptor(aa, plane, planeSide, cell, range) && fires(aa, planeSide, mode, isDestination)
+            isEligibleInterceptor(aa, plane, planeSide, cell) && fires(aa, planeSide, mode, isDestination)
         }
     }
 
@@ -73,7 +79,7 @@ internal object AAInterception {
     ): Set<Pair<Int, Int>> {
         val mode = ActiveRuleset.intKey(RuleKey.AA_INTERCEPT_MODE, 0)
         if ((mode and MODE_SPOTTED_INTERCEPTS_AT_DESTINATION) == 0) return emptySet()
-        val range = ActiveRuleset.intKey(RuleKey.FLAK_RANGE, DEFAULT_FLAK_RANGE)
+        val range = INTERCEPTION_RANGE
         val threatened = mutableSetOf<Pair<Int, Int>>()
         val rows = map.rows
         val cols = map.cols
@@ -81,7 +87,7 @@ internal object AAInterception {
             val aaHex = aa.getHex()
             val aaPos = aa.getPos()
             if (aa.player?.side == side || aaHex == null || aaPos == null) return@forEach
-            if (!aaHex.isSpotted(side)) return@forEach
+            if (!UnitConcealment.isVisibleTo(aa, side)) return@forEach
             if (!UnitCapabilities.hasAirDefenceFire(aa.unitData())) return@forEach
             // OG's `No Intercept Air`: disables the INTERCEPTION path specifically for AD/FlaK/
             // Fighter, while leaving ordinary defensive AA fire untouched -- see
@@ -117,6 +123,7 @@ internal object AAInterception {
             val result = GameRules.calculateAttackResults(aa, plane, true, units, committed = true)
             plane.hit(result.kills)
             aa.fire(false)
+            aa.hasInterceptedMovingAirThisTurn = true
             // OG's `Skilled Interceptor` ("can intercept multiple enemy fighters in the defensive
             // phase"): the gun keeps its defensive fire after intercepting, so the one flag that
             // spends it is never set. `hasInterceptedThisTurn` is read in exactly one place
@@ -140,10 +147,9 @@ internal object AAInterception {
         plane: GameUnit,
         planeSide: Int,
         cell: Cell,
-        range: Int,
     ): Boolean {
         val aaPos = aa.getPos() ?: return false
-        val inRange = HexGeometry.distance(aaPos.row, aaPos.col, cell.row, cell.col) <= range
+        val inRange = HexGeometry.distance(aaPos.row, aaPos.col, cell.row, cell.col) <= INTERCEPTION_RANGE
         // OG's `Jet (Stealth)`: a jet is interceptable from the ground only by an interceptor that
         // is itself jet-capable. It does NOT stop a fighter -- this is the ground-to-air path only,
         // which is the whole of what the author's specials reference claims for it.
@@ -151,6 +157,7 @@ internal object AAInterception {
             !UnitCapabilities.hasJetStealth(plane.unitData(true)) ||
                 UnitCapabilities.hasJetStealth(aa.unitData(true))
         return aa.player?.side != planeSide &&
+            !aa.hasInterceptedMovingAirThisTurn &&
             UnitCapabilities.hasAirDefenceFire(aa.unitData()) &&
             !UnitCapabilities.hasNoInterceptAir(aa) &&
             jetMatched &&
@@ -164,7 +171,9 @@ internal object AAInterception {
         mode: Int,
         isDestination: Boolean,
     ): Boolean {
-        val hidden = aa.getHex()?.isSpotted(planeSide) != true && !aa.tempSpotted
+        // The game's one visibility answer (`UnitConcealment.isVisibleTo`): spotted hex or fired this
+        // turn, and not concealed -- a camouflaged gun in a spotted city is still hidden.
+        val hidden = !UnitConcealment.isVisibleTo(aa, planeSide)
         return hidden || (isDestination && (mode and MODE_SPOTTED_INTERCEPTS_AT_DESTINATION) != 0)
     }
 }

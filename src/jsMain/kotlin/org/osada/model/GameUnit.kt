@@ -263,6 +263,20 @@ class GameUnit(
     var hasInterceptedThisTurn: Boolean = false
 
     /**
+     * Set when this AA unit has intercepted a MOVING aircraft this turn. OG: *"AD/Flaks units that
+     * have already intercepted in the turn cannot intercept again"* -- a budget of its own, unlike
+     * [hasInterceptedThisTurn], which is only `g2a_intercept_mode`'s air-defence restriction and is
+     * not set at all under the default mode. Reset every round in [unitEndTurn]; turn-scoped and not
+     * serialized, like its neighbours. (OG's FlaK Support leader, which lifts it, has no OSADA slot.)
+     */
+    var hasInterceptedMovingAirThisTurn: Boolean = false
+
+    /** Set when this formation's `Overwatch` or Camouflage Expert commander has sprung its ambush
+     *  this turn -- *"the first enemy unit"* (`rules/MoveAmbush`). Turn-scoped and not serialized,
+     *  like [hasInterceptedThisTurn]. */
+    var hasAmbushedThisTurn: Boolean = false
+
+    /**
      * Whether this formation has already fired in SUPPORT of a neighbour this turn.
      *
      * Read only for a record carrying OG's `SingleFireSup.` (`attrEx` bit 15) — see

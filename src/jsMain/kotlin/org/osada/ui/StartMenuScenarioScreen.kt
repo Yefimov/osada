@@ -111,13 +111,20 @@ internal object StartMenuScenarioScreen {
                 )
             }
         byId("smScenDossierSub")?.innerHTML = scenDate
-        // The dossier banner shows the same chapter wallpaper the operation's own briefing opens
-        // on, so the register preview and the battle agree. Scenarios with no wallpaper (whole
-        // campaigns still awaiting art, plus every standalone scenario) keep the placeholder map.
+        // Standalone historical battles have individual selection art. Campaign scenarios reuse
+        // their chapter wallpaper; a missing asset still falls back to the placeholder map.
+        val scenarioFile = scenario[0] as? String
+        val wallpaper = StartMenuListToolbar.scenarioWallpaper(scenarioFile)
+        val standaloneArt =
+            if (scenarioGroupName(scenarioIndex) == "Standalone Historical Battles") {
+                scenarioFile?.removeSuffix(".xml")?.let { "resources/ui/theater/standalone/$it.jpg" }
+            } else {
+                null
+            }
         StartMenuListToolbar.applyTheaterArt(
             byId("smScenDossierHead"),
-            StartMenuListToolbar.scenarioWallpaper(scenario[0] as? String),
-            StartMenuListToolbar.THEATER_CENTERED,
+            standaloneArt ?: wallpaper,
+            if (standaloneArt != null) StartMenuListToolbar.THEATER_TOP else StartMenuListToolbar.THEATER_CENTERED,
         )
         byId("osadaScenList")?.let { StartMenuListToolbar.syncListHighlight(scenSelect, it) }
     }
@@ -362,6 +369,16 @@ internal object StartMenuScenarioScreen {
 
 /** A register row's authored (English) name, whatever language the list is showing. */
 private fun authoredTitleOf(scenario: dynamic): String = (if (scenario != null) scenario[1] else null) as? String ?: ""
+
+/** The nearest group header before a scenario in the authored register. */
+private fun scenarioGroupName(index: Int): String {
+    val scenarios = StartMenuBuilder.scenarioList()
+    for (i in index downTo 0) {
+        val row = scenarios[i]
+        if ((row.length as? Int) == 1) return row[0] as? String ?: ""
+    }
+    return ""
+}
 
 /**
  * Where a scenario group sits in the register's default view. `scenariolist.js` ends with the

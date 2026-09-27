@@ -567,7 +567,7 @@ internal object GameplayLocalization {
             val serviceKey =
                 when {
                     unit.isTemporaryBorrowed || unit.nodossier -> "auxiliary"
-                    unit.formationId != null -> "core"
+                    HeroCampaign.isHeroEligible(unit) -> "core"
                     else -> "scenario"
                 }
             textContent =
@@ -634,82 +634,9 @@ internal object GameplayLocalization {
         }
     }
 
+    /** One renderer for the commander mark: the language switch re-runs the presenter's own branches. */
     private fun refreshUnitLeader(unit: GameUnit) {
-        val leader = byId("uLeader") ?: return
-        val dossier = HeroCampaign.dossier(unit)
-        when {
-            dossier != null -> {
-                val label =
-                    I18n.t(
-                        "unit_info.leader.led_by",
-                        mapOf("rank" to dossier.rank, "name" to dossier.name),
-                    )
-                leader.textContent = label
-                leader.title = "$label\n${I18n.t("unit_info.leader.open_dossier.help")}"
-                leader.setAttribute("aria-label", I18n.t("unit_info.leader.open_dossier.aria", mapOf("label" to label)))
-            }
-
-            unit.leader >= 0 -> {
-                val descriptions =
-                    org.osada.model.Leaders
-                        .getUnitLeaderDescriptions(unit)
-                val trait = descriptions.firstOrNull()?.first ?: I18n.t("unit_info.leader.authored_commander")
-                val label = I18n.t("unit_info.leader.legacy", mapOf("trait" to trait))
-                leader.textContent = label
-                if (descriptions.isEmpty()) leader.title = label
-                leader.setAttribute("aria-label", label)
-            }
-
-            unit.isTemporaryBorrowed || unit.nodossier -> {
-                leader.textContent = I18n.t("unit_info.leader.temporary.label")
-                leader.title = I18n.t("unit_info.leader.temporary.help")
-                leader.setAttribute("aria-label", leader.title)
-            }
-
-            unit.formationId == null -> {
-                leader.textContent = I18n.t("unit_info.leader.scenario_only.label")
-                leader.title = I18n.t("unit_info.leader.scenario_only.help")
-                leader.setAttribute("aria-label", leader.title)
-            }
-
-            else -> {
-                val progress = HeroCampaign.recognitionProgress(unit)
-                val label = I18n.t("unit_info.leader.candidate.label")
-                leader.textContent = label
-                leader.title =
-                    if (progress == null) {
-                        I18n.t("unit_info.leader.candidate.no_record")
-                    } else {
-                        val chance =
-                            when {
-                                progress.recognition < progress.target ->
-                                    I18n.t(
-                                        "unit_info.leader.checks_unlock",
-                                        mapOf("target" to progress.target),
-                                    )
-
-                                progress.drought >= progress.guaranteedAfterFailures ->
-                                    I18n.t("unit_info.leader.guaranteed")
-
-                                else ->
-                                    I18n.t(
-                                        "unit_info.leader.chance",
-                                        mapOf("chance" to progress.chancePercent),
-                                    )
-                            }
-                        I18n.t(
-                            "unit_info.leader.candidate.help",
-                            mapOf(
-                                "recognition" to progress.recognition,
-                                "chanceLine" to chance,
-                                "drought" to progress.drought,
-                                "guaranteedAfter" to progress.guaranteedAfterFailures,
-                            ),
-                        )
-                    }
-                leader.setAttribute("aria-label", "$label. ${leader.title}")
-            }
-        }
+        UnitIdentityPresenter.presentCommander(unit)
     }
 
     @Suppress("LoopWithTooManyJumpStatements")

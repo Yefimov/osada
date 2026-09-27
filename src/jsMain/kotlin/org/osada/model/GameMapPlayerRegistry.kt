@@ -6,17 +6,18 @@ import org.osada.UnitClass
 fun GameMap.addPlayer(player: Player) {
     players.add(player)
     if (currentPlayer == null) currentPlayer = player
-    if (player.airTransports > 0) {
+    // Embark picks the first WEIGHT-COMPATIBLE carrier, which need not be the first record in
+    // the country's class index. Cache every candidate before the battle starts: otherwise a
+    // newly embarked formation can have no sprite until the next save reload.
+    if (player.airTransports > 0 || player.airTransportsMax > 0) {
         Equipment
             .getCountryEquipmentByClass(UnitClass.AIR_TRANSPORT, player.country + 1)
-            .firstOrNull()
-            ?.let { unitImages.add(it) }
+            .forEach { unitImages.add(it) }
     }
-    if (player.navalTransports > 0) {
+    if (player.navalTransports > 0 || player.navalTransportsMax > 0) {
         Equipment
             .getCountryEquipmentByClass(UnitClass.NAVAL_TRANSPORT, player.country + 1)
-            .firstOrNull()
-            ?.let { unitImages.add(it) }
+            .forEach { unitImages.add(it) }
     }
 }
 

@@ -89,12 +89,48 @@ internal object HeroTransferService {
         val roster = HeroCampaign.roster()
         val hero = roster.state(heroId)
         if (hero == null || !isTransferEligible(hero.status) || !isWindowOpen()) return emptyList()
+        val available = availableFormationIds()
+        // The seat an exchange hands back must itself still exist: an officer whose own formation
+        // is gone has nothing to offer an incumbent, so for them only unled targets remain.
+        val hasSeatToOffer = hero.assignedFormationId?.let { it.value in available } == true
         return roster.allFormations().filter { candidate ->
             candidate.id != hero.assignedFormationId &&
+                CampaignHeroScope.formationActive(candidate) &&
+                candidate.id.value in available &&
                 // A led formation is only a target for an officer who has a seat to offer in
                 // return; see the class doc on the move that does not exist.
-                (candidate.assignedHeroId == null || hero.assignedFormationId != null)
+                (candidate.assignedHeroId == null || hasSeatToOffer)
         }
+    }
+
+    /**
+     * Formation ids that are actually in the campaign player's army right now (§3.3): on the map,
+     * in the reserve tray (the core list, deployed or not), riding inside a container, or due as a
+     * scripted reinforcement. A roster record outside this set -- a formation destroyed in an
+     * earlier battle, or one that never belonged to the player -- keeps its history but can no
+     * longer receive a commander.
+     *
+     * Read from the live army rather than inferred from names or id prefixes, so a unit that is
+     * merely not on the map yet is never mistaken for a lost one.
+     */
+    private fun availableFormationIds(): Set<String> {
+        val game = GameHolder.instance
+        val player = game?.campaignPlayer ?: return emptySet()
+        val map = game.scenario?.map
+        val onMap = map?.units.orEmpty().filter { it.owner == player.id }
+        val arriving =
+            game.scenario
+                ?.reinforcements
+                ?.values
+                ?.flatten()
+                ?.map { it.unit }
+                .orEmpty()
+                .filter { it.owner == player.id }
+        val army = player.getCoreUnitList() + onMap + arriving
+        return (army + army.flatMap { it.hangar })
+            .filterNot { it.destroyed }
+            .mapNotNull { it.formationId?.takeIf(String::isNotEmpty) }
+            .toSet()
     }
 
     /**

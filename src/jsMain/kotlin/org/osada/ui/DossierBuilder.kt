@@ -179,7 +179,7 @@ internal object DossierBuilder {
             card.title = classTitle
             val icon = addTag(card, "div")
             icon.className = "osada-dsr-cas-icon"
-            icon.textContent = glyph
+            if (!ClassGlyph.render(icon, uclass)) icon.textContent = glyph
             val stats = addTag(card, "div")
             stats.className = "osada-dsr-cas-stats"
 

@@ -564,22 +564,26 @@ internal class RenderContext(
 
         game.style.width = "${contentW.toInt()}px"
         game.style.paddingRight = "${rail.toInt()}px"
-        // The map viewport ENDS where the fixed bottom card begins -- the band is cut off `#game`'s
-        // own box instead of being reserved as inner padding. Padding only bought scroll room: the
-        // map still rendered behind the card until it was scrolled all the way down, and those
-        // rows were visible but not clickable, since the card (not the cursor canvas) is the
-        // topmost element there. Reported 2026-09-07, second round: after the click-shield fix the
-        // dead area had shrunk to exactly the cards' own footprint. Same rule the mobile shell
-        // already follows via `--osada-dock-h` (see `mobile.css`, `body.osada-layout-phone #game`).
+        // The bottom card FLOATS over the map, and the map gets SCROLL ROOM under it -- the rail's
+        // trick again, on the other axis: `padding-bottom` the height of the band, taken out of the
+        // content height so the visible box still reaches the window's bottom edge.
+        //
+        // History, so this is not undone by accident: until 2026-09-26 the band was cut off
+        // `#game`'s box instead (the map ended where the card began). The card only ever spans the
+        // left part of the band, so everything right of it was dead page background -- a grey
+        // strip that cut the map for no reason (owner's report, 2026-09-26). The owner's call is
+        // that the card may cover the map: it can be folded (`#ucCollapse`), and the padding means
+        // the rows under it can always be scrolled out into the open. The earlier objection --
+        // rows behind the card are visible but not clickable -- is what that scroll room answers.
         //
         // MEASURED, not a constant: the band is `display:none` until a unit is selected, and its
         // height follows the card's content (a wrapped second row of action chips, the expanded
-        // "All stats" panel). A guess low leaves dead hexes, a guess high wastes live ones.
-        // Strategic zoom is exempt -- there `#game` is `overflow:hidden` and sized to the map
-        // exactly, so any subtraction would only knock the centring off.
+        // "All stats" panel). Strategic zoom is exempt -- there `#game` is `overflow:hidden` and
+        // sized to the map exactly, so any padding would only knock the centring off.
         val contentHeight = if (fitH) scaledH + topBar + g else window.innerHeight - topBar
         val spacer = if (uiSettings.strategicZoom) 0.0 else metrics.bottomDockHeight
         game.style.height = "${(contentHeight - spacer).coerceAtLeast(0.0).toInt()}px"
+        game.style.paddingBottom = "${spacer.toInt()}px"
         game.style.position = "absolute"
         game.style.left = "${left.toInt()}px"
         game.style.top = "${topBar.toInt()}px"
@@ -603,6 +607,7 @@ internal class RenderContext(
         game.style.width = ""
         game.style.height = ""
         game.style.paddingRight = ""
+        game.style.paddingBottom = ""
         game.style.left = ""
         game.style.top = ""
         game.style.position = ""

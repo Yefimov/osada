@@ -296,24 +296,35 @@ class EvadeTest : OgRulesTestHarness() {
         assertEquals(attackerStrength, attacker.strength)
     }
 
-    /** The forecast can promise an overrun the dice then deny: a defender that evades got away,
-     *  so the attack is neither reported as "Прорыв" nor allowed to write the defender's full
-     *  strength off as kills on the hex it has already left (2026-09-25 user report). */
+    /** OG checks an overrun FIRST -- *"then Defender is killed and combat finishes"* -- so a
+     *  decided overrun is never undone by an evade roll, however good the defender's odds. */
     @Test
-    fun anEvadedDefenderIsNotOverrun() {
+    fun anOverrunIsDecidedBeforeAnyEvadeRoll() {
         val map = evadeWorld()
         EfileConfig.setForTest(rawKeyMap = mapOf("class_evade" to "!100"))
         val defender = place(map, dodgerEqid, 2, 2, side = 0)
         val attacker = place(map, stolidEqid, 2, 3, side = 1)
-        val defenderStrength = defender.strength
 
         val result = map.attackUnit(attacker, defender, false, true)
 
-        assertTrue(result.isEvaded)
-        assertFalse(result.isOverrun)
-        assertEquals(0, result.kills)
-        assertEquals(defenderStrength, defender.strength)
-        assertFalse(defender.destroyed)
+        assertFalse(result.isEvaded, "the evade step is never reached")
+        assertTrue(result.isOverrun)
+        assertTrue(defender.destroyed)
+    }
+
+    /** Evasion belongs to the main exchange: the unit a supporting battery fires on does not dodge
+     *  out of the middle of its own attack. */
+    @Test
+    fun supportFireIsNeverEvaded() {
+        val map = evadeWorld()
+        EfileConfig.setForTest(rawKeyMap = mapOf("class_evade" to "!100"))
+        val target = place(map, dodgerEqid, 2, 2, side = 0)
+        val battery = place(map, stolidEqid, 2, 3, side = 1)
+
+        val result = map.attackUnit(battery, target, supportFire = true)
+
+        assertFalse(result.isEvaded)
+        assertEquals(2 to 2, target.getPos()!!.let { it.row to it.col }, "still on its hex")
     }
 
     @Test

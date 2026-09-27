@@ -29,6 +29,7 @@ import org.osada.model.recordsInCampaignDossier
 import org.osada.scenario.Scenario
 import org.osada.ui.attackPreviewAllowsCell
 import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -37,8 +38,16 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class HeroSystemFixesTest {
+    @BeforeTest
+    fun enterCampaign() {
+        enterCampaignForTests()
+    }
+
     @AfterTest
-    fun resetHeroes() = HeroCampaign.reset()
+    fun resetHeroes() {
+        HeroCampaign.reset()
+        leaveCampaignForTests()
+    }
 
     @Test
     fun everyControlledUnitPathIsEnrolledExceptExplicitBorrowedUnits() {

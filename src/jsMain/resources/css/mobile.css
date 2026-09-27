@@ -866,6 +866,13 @@ body.osada-layout-tablet #osada-sidebar {
 
 body.osada-layout-tablet #game {
     right: calc(var(--osada-safe-right) + 270px);
+    /* The tablet keeps the desktop's bottom band -- a card on the left, nothing to its right -- so
+     * it follows the desktop rule (`RenderContext.positionLayers`): the card floats over the map
+     * and the band's height becomes scroll room under it, instead of cutting the map short and
+     * leaving a dead strip beside the card. The phone's dock spans the full width and keeps the
+     * shared rule above. */
+    bottom: var(--osada-safe-bottom);
+    padding-bottom: var(--osada-dock-h, 0px);
 }
 
 /* ==========================================================================

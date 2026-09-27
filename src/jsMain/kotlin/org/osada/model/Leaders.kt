@@ -3,16 +3,19 @@
 package org.osada.model
 
 import org.osada.LeaderType
-import org.osada.UNIT_MAX_EXPERIENCE
 import org.osada.UnitClass
 import org.osada.hero.HeroTraitResolver
 import org.osada.model.Leaders.getUnitClassLeader
 import org.osada.rules.AuxiliaryLeaders
 import org.osada.rules.GameRandomSource
 import org.osada.rules.UnitCapabilities
+import org.osada.rules.UnitExperience
 
 object Leaders {
     const val LEADER_CHANCE_THRESHOLD = 8
+
+    /** Top of PM's inclusive roll interval, `[bars, 10]`. */
+    private const val LEADER_CHANCE_CEILING = 10
 
     val unitClassLeaders: MutableMap<Int, List<LeaderType>> = mutableMapOf()
     val description: MutableMap<LeaderType, Pair<String, String>> = mutableMapOf()
@@ -147,7 +150,7 @@ object Leaders {
         description[LeaderType.ALPINE_TRAINING] =
             Pair("Alpine Training", "When moving the unit treats forest and mountain hexes as clear terrain.")
         description[LeaderType.BATTLEFIELD_INTELLIGENCE] =
-            Pair("Battlefield Intelligence", "The unit cannot be surprised.")
+            Pair("Battlefield Intelligence", "The unit is not stopped by adjacent enemies and cannot be surprised.")
         description[LeaderType.BRIDGING] =
             Pair("Bridging", "When moving the unit treats passable river hexes as rough terrain.")
         description[LeaderType.COMBAT_SUPPORT] =
@@ -164,7 +167,11 @@ object Leaders {
             Pair("Fire Discipline", "The unit will expend only one-half of an ammunition point each time it attacks.")
         description[LeaderType.FIRST_STRIKE] = Pair("First Strike", "The unit will fire first if it wins initiative.")
         description[LeaderType.FOREST_CAMOUFLAGE] =
-            Pair("Forest Camouflage", "In a forest hex the unit cannot be spotted unless enemy moves adjacent.")
+            Pair(
+                "Camouflage Expert",
+                "In forest, city, desert, bocage or mountain the unit can only be spotted by adjacent units, " +
+                    "and it ambushes the first enemy unit that enters its zone of control.",
+            )
         description[LeaderType.INFILTRATION_TACTICS] =
             Pair("Infiltration Tactics", "The unit ignores enemy unit entrenchment when calculating combat results.")
         description[LeaderType.INFLUENCE] =
@@ -172,7 +179,7 @@ object Leaders {
         description[LeaderType.LIBERATOR] =
             Pair("Liberator", "You receive double prestige for objectives captured by the unit.")
         description[LeaderType.OVERWATCH] =
-            Pair("Overwatch", "The unit will fire at any enemy unit that moves within range.")
+            Pair("Overwatch", "Each turn the unit ambushes the first enemy unit that moves within its range.")
         description[LeaderType.OVERWHELMING_ATTACK] =
             Pair("Overwhelming Attack", "When attacking suppression points are converted to kills.")
         description[LeaderType.RECON_MOVEMENT] = Pair("Recon Movement", "The unit is permitted phased movement.")
@@ -234,13 +241,30 @@ object Leaders {
         }
     }
 
+    /**
+     * The legacy (Panzer Marshal) acquisition roll, for a unit outside the campaign hero system.
+     *
+     * Restored to PM's rule on 2026-09-27 (`openpanzer.js` `generateLeaderWithChance`;
+     * `docs/leaders.md` §5 recorded the divergence): a leader is a **bar-up event**. Only a combat
+     * whose experience carried the unit across a bar rolls at all, and the roll is uniform over the
+     * inclusive interval from the NEW bar count through [LEADER_CHANCE_CEILING], succeeding above
+     * [LEADER_CHANCE_THRESHOLD] -- 20%, 2/9, 25%, 2/7 for the first four bars, rising with
+     * experience. The port had inverted the gate (any unit already at bar 1+ rolled every combat)
+     * and shrunk the interval from both ends, so bars 2-4 could never produce a leader.
+     *
+     * Bars are counted by [UnitExperience], the engine's one bar scale. PM's separate guarantee --
+     * a unit at maximum experience always gains a leader -- maps onto [UnitExperience.cap].
+     *
+     * These are PM's odds. OG publishes that leaders come with experience bars but not a formula,
+     * so nothing here should be labelled OG's.
+     */
     fun generateLeaderWithChance(
         unit: GameUnit?,
         expGained: Int,
     ): Int {
         if (unit == null || unit.leader != -1) return -1
         return when {
-            unit.experience >= UNIT_MAX_EXPERIENCE -> generateLeader(unit)
+            unit.experience >= UnitExperience.cap() -> generateLeader(unit)
             else -> rollLeaderChance(unit, expGained)
         }
     }
@@ -249,10 +273,10 @@ object Leaders {
         unit: GameUnit,
         expGained: Int,
     ): Int {
-        val level = unit.experience / 100
-        val levelAfter = (unit.experience - expGained) / 100
-        if (levelAfter <= 0) return -1
-        val chance = GameRandomSource.nextInRange(level, 10 - level)
+        val barsNow = UnitExperience.barsFor(unit.experience)
+        val barsBefore = UnitExperience.barsFor(unit.experience - expGained)
+        if (barsNow <= barsBefore) return -1
+        val chance = GameRandomSource.nextInRange(barsNow, LEADER_CHANCE_CEILING)
         return if (chance > LEADER_CHANCE_THRESHOLD) generateLeader(unit) else -1
     }
 

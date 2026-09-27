@@ -1211,6 +1211,28 @@ input[type=text], input[type=search] {
     background-position: 37.5% 50%;
 }
 
+/* The class-tab icon in a reserve card's bottom-right corner (EquipmentUnitStrip.addClassMark).
+ * The status row (.eqUnitBoxIcons) is centred on the same line and the hero pip holds the
+ * bottom-left, so the corner is free. */
+.eqUnitBox > .osada-unitbox-class {
+    position: absolute;
+    right: 3px;
+    bottom: 2px;
+    font-family: osada-menu, sans-serif;
+    font-size: 15px;
+    line-height: 1;
+    color: var(--osada-steel);
+    pointer-events: auto;
+}
+
+/* The fortification tab's inline SVG tower (ClassGlyph): one glyph-sized box in the glyph's colour. */
+.osada-class-svg {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.125em;
+}
+
 .eqUnitBox[selectedunit] {
     background-color: rgba(165, 30, 34, .28);
     border-color: var(--osada-red);
@@ -2986,9 +3008,10 @@ hr {
      * ~150px was swallowed by this element instead of reaching the cursor canvas -- reported
      * 2026-09-07 as "I click the hex and the unit does not move", and the reason the same click
      * worked at 160%, where zoom puts the hex somewhere else on screen. Only the cards themselves
-     * take pointer input; the band around them is see-through. The map no longer reaches under
-     * this band at all (`RenderContext.positionLayers` ends `#game` at its top edge), but the rule
-     * stays: it is what keeps the empty tracks from shielding anything that is under them. */
+     * take pointer input; the band around them is see-through. The map runs under this band
+     * again (2026-09-26: the cards float over it, and `RenderContext.positionLayers` gives the map
+     * the band's height as scroll room), so this rule is what keeps the hexes beside the cards
+     * clickable. */
     pointer-events: none;
 }
 
@@ -7326,6 +7349,18 @@ hr {
     border-color: #4a515d;
 }
 
+/* A choice made on this visit and not yet paid for (AttachmentPickerPresenter): dashed like an
+ * empty slot, but filled -- and clickable, to take it back out before the dialog is left. */
+.osada-atp__slot--pending {
+    border-style: dashed;
+    border-color: var(--osada-brass, #d9b25a);
+    cursor: pointer;
+}
+
+.osada-atp__slot--pending:hover {
+    background: rgba(217, 178, 90, .08);
+}
+
 .osada-atp__slotlabel {
     font-size: 9px;
     letter-spacing: .12em;
@@ -7621,6 +7656,27 @@ hr {
     box-shadow: 0 10px 34px rgba(0, 0, 0, .66);
     font-family: var(--osada-font-ui);
     color: var(--osada-text);
+}
+
+/* The transfer picker's click-outside target (ui/CommanderTransferPicker). One step below the
+ * dialog, above the roster it was opened from; the light dim says "modal" without hiding the
+ * roster the player is deciding about. */
+.osada-hpp-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: calc(var(--z-msg, 1000) - 1);
+    background: rgba(4, 5, 7, .35);
+}
+
+.osada-hpp__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.osada-hpp__header .osada-hero-close {
+    margin: -4px -6px 0 0;
 }
 
 .osada-hpp__title {

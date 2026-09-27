@@ -5,6 +5,8 @@ import org.osada.model.EfileConfig
 import org.osada.model.GameUnit
 import org.osada.model.Player
 import org.osada.model.purchaseAttachment
+import org.osada.multiplayer.client.OsadaMultiplayer
+import org.osada.multiplayer.command.PurchaseAttachment
 import org.osada.rules.Attachments
 import org.w3c.dom.HTMLElement
 
@@ -27,14 +29,35 @@ import org.w3c.dom.HTMLElement
  * `HeroPromotionPresenter`'s DOM shape and rendered every label as gibberish. Styling is
  * `.osada-atp-*`, defined in `osada-theme.css`.
  *
- * **Fitted attachments are informational.** Removing one is a real OG operation, but the refund
- * rate is not documented anywhere located so far, and inventing an economic rule is worse than
- * offering no button (DEFERRED.md §1.18).
+ * **A choice is provisional until the dialog is left** (2026-09-26, owner's request). Clicking a
+ * tile puts the attachment in the next free slot WITHOUT charging for it; clicking that slot takes it
+ * back out; the footer shows what the choices will cost, from 0 up. Leaving the dialog by any path -- Done,
+ * the close cross, Escape, or the equipment window closing under it -- buys what is in the slots.
+ * That is why [close] commits rather than discards: a teardown path that silently dropped a
+ * player's choices would be worse than one that honours them.
+ *
+ * **Attachments bought on an earlier visit are informational.** Removing one is a real OG
+ * operation, but the refund rate is not documented anywhere located so far, and inventing an
+ * economic rule is worse than offering no button (DEFERRED.md §1.18).
  */
 internal object AttachmentPickerPresenter {
     private const val BOX_ID = "uiAttachmentBox"
 
-    /** Opens the picker for [unit]. [onChanged] runs after a successful purchase so the caller can
+    /** What the open dialog is editing: the unit, who pays, and the choices not yet bought. */
+    private class Session(
+        val unit: GameUnit,
+        val player: Player,
+        val onChanged: () -> Unit,
+        val pending: MutableList<Pair<Int, EfileConfig.AttachmentSlot>> = mutableListOf(),
+    ) {
+        fun pendingCost(): Int = pending.sumOf { (number, _) -> Attachments.cost(unit, number) ?: 0 }
+
+        fun prestigeLeft(): Int = player.prestige - pendingCost()
+    }
+
+    private var session: Session? = null
+
+    /** Opens the picker for [unit]. [onChanged] runs after anything is bought so the caller can
      *  refresh whatever it is showing (the equipment window re-renders its unit strip). */
     fun open(
         unit: GameUnit,
@@ -50,38 +73,51 @@ internal object AttachmentPickerPresenter {
         // not apply to a non-replaced inline element -- the `translate(-50%, -50%)` centring and
         // the width were both being discarded, so the dialog rendered mispositioned. A freshly
         // created div is already visible; it needs no help.
-        render(box, unit, player, onChanged)
+        session = Session(unit, player, onChanged)
+        rerender()
     }
 
-    /** Fills [box] from scratch. Re-run in place after a purchase so the dialog survives it — a
-     *  unit has two slots, and closing after the first made filling the second a second trip. */
-    private fun render(
-        box: HTMLElement,
-        unit: GameUnit,
-        player: Player,
-        onChanged: () -> Unit,
-    ) {
+    /** Fills the dialog from scratch after every change -- a unit has two slots, and the slot
+     *  cards, the remaining choices, their affordability and the prestige line all move together. */
+    private fun rerender() {
+        val box = byId(BOX_ID) ?: return
+        val current = session ?: return
         clearTag(box)
-        buildHeader(box, unit)
-        buildSlotRow(box, unit)
-        buildChoices(box, unit, player, onChanged)
-        buildFooter(box, player, onChanged)
+        buildHeader(box, current)
+        buildSlotRow(box, current)
+        buildChoices(box, current)
+        buildFooter(box, current)
     }
 
+    /** Leaves the dialog, BUYING whatever is in the slots -- see the class comment for why every
+     *  way out commits. Safe to call when nothing is open. */
     fun close() {
+        val current = session
+        session = null
         delTag(byId(BOX_ID))
+        if (current == null || current.pending.isEmpty()) return
+        if (OsadaMultiplayer.active) {
+            // One order for every pending slot: a room accepts one outstanding command at a time.
+            OsadaMultiplayer.submitOrder(
+                PurchaseAttachment(current.unit.id, current.pending.map { it.first }, current.player.id),
+            )
+        } else {
+            current.pending.forEach { (number, _) -> current.player.purchaseAttachment(current.unit, number) }
+        }
+        current.onChanged()
     }
 
     /** Whether the picker is currently on screen. Read by [MainMenuButtonHandler.handleGlobalEscape],
-     *  which has to close THIS before `#equipment` underneath it — see DEFERRED.md §4.13. Presence
+     *  which has to close THIS before `#equipment` underneath it -- see DEFERRED.md §4.13. Presence
      *  in the DOM is the whole state: this dialog is created on open and removed on close, never
      *  hidden. */
     fun isOpen(): Boolean = byId(BOX_ID) != null
 
     private fun buildHeader(
         box: HTMLElement,
-        unit: GameUnit,
+        current: Session,
     ) {
+        val unit = current.unit
         val header = addTag(box, "div")
         header.className = "osada-atp__header"
         val title = addTag(header, "div")
@@ -92,7 +128,10 @@ internal object AttachmentPickerPresenter {
         count.textContent =
             I18n.t(
                 "attachments.count",
-                mapOf("fitted" to Attachments.fittedSlots(unit).size, "max" to Attachments.MAX_PER_UNIT),
+                mapOf(
+                    "fitted" to Attachments.fittedSlots(unit).size + current.pending.size,
+                    "max" to Attachments.MAX_PER_UNIT,
+                ),
             )
         val closeButton = addTag(header, "span")
         closeButton.className = "osada-atp__close"
@@ -103,32 +142,59 @@ internal object AttachmentPickerPresenter {
         closeButton.asButton(ariaLabel = I18n.t("attachments.close.help")) { close() }
     }
 
-    /** One card per slot, `MAX_PER_UNIT` of them, filled left to right. */
+    /** One card per slot, `MAX_PER_UNIT` of them, filled left to right: what the unit already
+     *  owns first, then this visit's choices, which can be clicked back out. */
     private fun buildSlotRow(
         box: HTMLElement,
-        unit: GameUnit,
+        current: Session,
     ) {
         val row = addTag(box, "div")
         row.className = "osada-atp__slots"
-        val fitted = Attachments.fittedSlots(unit)
+        val owned = Attachments.fittedSlots(current.unit)
+        val shown = owned + current.pending
         repeat(Attachments.MAX_PER_UNIT) { index ->
-            val card = addTag(row, "div")
-            val entry = fitted.getOrNull(index)
-            card.className = "osada-atp__slot" + if (entry == null) " osada-atp__slot--empty" else ""
-            val label = addTag(card, "div")
-            label.className = "osada-atp__slotlabel"
-            label.textContent = I18n.t("attachments.slot.label", mapOf("n" to index + 1))
-            if (entry == null) {
-                val hint = addTag(card, "div")
-                hint.className = "osada-atp__slothint"
-                hint.textContent = I18n.t("attachments.slot.empty")
-            } else {
-                val (number, slot) = entry
-                val name = addTag(card, "div")
-                name.className = "osada-atp__slotname"
-                name.textContent = slot.name
-                addEffectLines(card, unit, number, slot)
+            val entry = shown.getOrNull(index)
+            addSlotCard(row, current, index, entry, isPending = entry != null && index >= owned.size)
+        }
+    }
+
+    private fun addSlotCard(
+        row: HTMLElement,
+        current: Session,
+        index: Int,
+        entry: Pair<Int, EfileConfig.AttachmentSlot>?,
+        isPending: Boolean,
+    ) {
+        val card = addTag(row, "div")
+        card.className =
+            "osada-atp__slot" +
+            when {
+                entry == null -> " osada-atp__slot--empty"
+                isPending -> " osada-atp__slot--pending"
+                else -> ""
             }
+        val label = addTag(card, "div")
+        label.className = "osada-atp__slotlabel"
+        label.textContent = I18n.t("attachments.slot.label", mapOf("n" to index + 1))
+        val addHint = { text: String ->
+            val hint = addTag(card, "div")
+            hint.className = "osada-atp__slothint"
+            hint.textContent = text
+        }
+        if (entry == null) {
+            addHint(I18n.t("attachments.slot.empty"))
+            return
+        }
+        val (number, slot) = entry
+        val name = addTag(card, "div")
+        name.className = "osada-atp__slotname"
+        name.textContent = slot.name
+        addEffectLines(card, current.unit, number, slot)
+        if (!isPending) return
+        addHint(I18n.t("attachments.slot.pending"))
+        card.asButton(I18n.t("attachments.slot.pending")) {
+            current.pending.removeAll { it.first == number }
+            rerender()
         }
     }
 
@@ -160,11 +226,12 @@ internal object AttachmentPickerPresenter {
 
     private fun buildChoices(
         box: HTMLElement,
-        unit: GameUnit,
-        player: Player,
-        onChanged: () -> Unit,
+        current: Session,
     ) {
-        val options = Attachments.availableSlots(unit)
+        val chosen = current.pending.map { it.first }.toSet()
+        val room = Attachments.fittedSlots(current.unit).size + current.pending.size < Attachments.MAX_PER_UNIT
+        val options =
+            if (room) Attachments.availableSlots(current.unit).filter { it.first !in chosen } else emptyList()
         val heading = addTag(box, "div")
         heading.className = "osada-atp__heading"
         heading.textContent = I18n.t("attachments.available")
@@ -176,25 +243,25 @@ internal object AttachmentPickerPresenter {
         }
         val grid = addTag(box, "div")
         grid.className = "osada-atp__grid"
-        options.forEach { (number, slot) -> addChoiceTile(grid, unit, player, number, slot, onChanged) }
+        options.forEach { (number, slot) -> addChoiceTile(grid, current, number, slot) }
     }
 
     private fun addChoiceTile(
         grid: HTMLElement,
-        unit: GameUnit,
-        player: Player,
+        current: Session,
         slotNumber: Int,
         slot: EfileConfig.AttachmentSlot,
-        onChanged: () -> Unit,
     ) {
-        val cost = Attachments.cost(unit, slotNumber)
-        val affordable = cost != null && player.prestige >= cost
+        val cost = Attachments.cost(current.unit, slotNumber)
+        // Against what will be LEFT once this visit's choices are paid for, so two choices can
+        // never add up to more than the player has.
+        val affordable = cost != null && current.prestigeLeft() >= cost
         val tile = addTag(grid, "div")
         tile.className = "osada-atp__tile" + if (affordable) "" else " osada-atp__tile--locked"
         val name = addTag(tile, "div")
         name.className = "osada-atp__tilename"
         name.textContent = slot.name
-        addEffectLines(tile, unit, slotNumber, slot)
+        addEffectLines(tile, current.unit, slotNumber, slot)
         val price = addTag(tile, "div")
         price.className = "osada-atp__cost"
         // A null cost means the slot could not be priced at all -- never render that as "0",
@@ -210,32 +277,25 @@ internal object AttachmentPickerPresenter {
             return
         }
         tile.asButton {
-            if (player.purchaseAttachment(unit, slotNumber)) {
-                // Stay open and re-render: the slot cards, the remaining choices, their costs and
-                // the prestige line all just changed, and the unit may still have a second slot.
-                // onChanged refreshes the strip BEHIND the dialog, which is a different element.
-                byId(BOX_ID)?.let { render(it, unit, player, onChanged) }
-                onChanged()
-            }
+            current.pending.add(slotNumber to slot)
+            rerender()
         }
     }
 
     private fun buildFooter(
         box: HTMLElement,
-        player: Player,
-        onChanged: () -> Unit,
+        current: Session,
     ) {
         val footer = addTag(box, "div")
         footer.className = "osada-atp__footer"
-        val prestige = addTag(footer, "span")
-        prestige.className = "osada-atp__prestige"
-        prestige.textContent = I18n.t("attachments.prestige", mapOf("prestige" to player.prestige))
+        // What this visit's choices will cost, starting at 0 and growing with each one -- the
+        // number the player is agreeing to when the dialog is left (owner's request, 2026-09-26).
+        val total = addTag(footer, "span")
+        total.className = "osada-atp__prestige"
+        total.textContent = I18n.t("attachments.total_cost", mapOf("cost" to current.pendingCost()))
         val done = addTag(footer, "span")
         done.className = "osada-atp__done"
         done.textContent = I18n.t("attachments.done")
-        done.asButton {
-            close()
-            onChanged()
-        }
+        done.asButton { close() }
     }
 }

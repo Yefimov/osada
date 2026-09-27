@@ -1,12 +1,8 @@
 package org.osada.rules
 
-import org.osada.LeaderType
 import org.osada.hero.HeroCampaign
 import org.osada.model.EfileConfig
-import org.osada.model.Equipment
 import org.osada.model.GameUnit
-import org.osada.model.Leaders
-import org.osada.model.isBridge
 import org.osada.rules.Attachments.IMPLEMENTED_SLOTS
 import org.osada.rules.Attachments.MAX_PER_UNIT
 import org.osada.rules.Attachments.availableSlots
@@ -219,14 +215,9 @@ internal object Attachments {
      * why: the port's own build status is not game content (the rule DEFERRED.md §2.10 established).
      * Widen this set as each mechanic lands, and the slot appears on its own.
      *
-     * **Known simplification**: `equip.xeqa`'s per-equipment allow-list is not modelled -- its
-     * bitmask is indexed by the ORIGINAL per-efile equipment row order, and the runtime equipment
-     * database is the id-renumbered `eqp-united` merge, so a naive index lookup would silently
-     * attribute the wrong equipment's eligibility. OG's own pre-v6 fallback CLASS rule (C) --
-     * Fast Builder needs a Sapper/Build-Repair capability this engine does not model -- is not
-     * applied either, and cannot fire yet: [IMPLEMENTED_SLOTS] does not include slot 10. Rules (A)
-     * and (B) below are now applied, together with the Bridging slot they gate
-     * (`docs/design/attachments.md` §2.3, §4 Tier 2).
+     * **Class eligibility is one table for all content** ([AttachmentClassRules], 2026-09-26): the
+     * owner chose a common rule over importing each efile's `equip.xeqa` masks, and the table is the
+     * intersection of what the four efiles that ship masks allow.
      */
     fun availableSlots(unit: GameUnit): List<Pair<Int, EfileConfig.AttachmentSlot>> {
         val config = attachmentConfig()
@@ -254,24 +245,8 @@ internal object Attachments {
         fitted: Set<Int>,
     ): Boolean {
         val offered = number in IMPLEMENTED_SLOTS && !slot.disabled && number !in fitted
-        return offered && (number != SLOT_BRIDGING || isBridgingEligible(unit))
+        return offered && AttachmentClassRules.allows(unit, number)
     }
-
-    /**
-     * OG's pre-v6 fallback class rules (A) and (B), quoted verbatim from `EFILE_NOKORP/equip.cfg`
-     * (`docs/design/attachments.md` §2.3): Bridging is disabled for air and naval units, and for a
-     * unit that already carries the Bridge equipment special -- buying the attachment on a unit
-     * that is already a bridge would not stack a second one, it would just waste prestige. The
-     * Bridging LEADER is checked too, for the same reason -- `grep -rn LeaderType.BRIDGING
-     * src/jsMain/kotlin` finds only its display description, no rule site, so this check is
-     * currently a no-op in practice; it costs nothing to keep and stops this slot being the first
-     * caller to get it wrong if that leader is ever wired up.
-     */
-    private fun isBridgingEligible(unit: GameUnit): Boolean =
-        !UnitPredicates.isAir(unit) &&
-            !UnitPredicates.isSea(unit) &&
-            !Equipment.isBridge(unit.eqid) &&
-            !Leaders.unitHasLeader(unit, LeaderType.BRIDGING)
 
     /**
      * `cost = minCost + (unitCostPerStrengthPoint x unitBaseStrength x factorPct) / 100`

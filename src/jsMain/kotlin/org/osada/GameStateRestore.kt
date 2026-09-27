@@ -287,6 +287,11 @@ class GameStateRestore(
         onReady: () -> Unit,
     ) {
         if (campaignData == null) {
+            // A save with no campaign block is a standalone battle. Whatever campaign was running
+            // before this load must not survive into it: left set, `game.campaign` made the battle
+            // play as that campaign, and its hero roster lent traits to the loaded units.
+            game.campaign = null
+            HeroCampaign.reset()
             onReady()
             return
         }
@@ -559,6 +564,10 @@ private fun restoreWeather(data: dynamic) {
                 rainRun = (data.rainRun as? Int)?.coerceAtLeast(0) ?: 0,
                 snowRun = (data.snowRun as? Int)?.coerceAtLeast(0) ?: 0,
                 dryRun = (data.dryRun as? Int)?.coerceAtLeast(0) ?: 0,
+                // Absent in every save written before 2026-09-27: that battle keeps the legacy
+                // model until it ends (`WeatherModel.MODEL_LEGACY`).
+                model = (data.model as? Int) ?: WeatherModel.MODEL_LEGACY,
+                precipSnow = (data.precip as? String)?.let { it == "snow" },
             )
         }
     WeatherModel.restoreSnapshot(snapshot)

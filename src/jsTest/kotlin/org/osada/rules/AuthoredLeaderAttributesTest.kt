@@ -5,9 +5,11 @@ import org.osada.LeaderType
 import org.osada.MovMethod
 import org.osada.UnitClass
 import org.osada.UnitType
+import org.osada.enterCampaignForTests
 import org.osada.hero.HeroCampaign
 import org.osada.hero.LeaderMigration
 import org.osada.hero.LegacyTraitMapping
+import org.osada.leaveCampaignForTests
 import org.osada.model.Equipment
 import org.osada.model.EquipmentData
 import org.osada.model.GameUnit
@@ -40,6 +42,7 @@ class AuthoredLeaderAttributesTest : OgRulesTestHarness() {
 
     @BeforeTest
     fun setup() {
+        enterCampaignForTests()
         installTestWorld()
         HeroCampaign.reset()
         Equipment.putEquipment(
@@ -64,6 +67,7 @@ class AuthoredLeaderAttributesTest : OgRulesTestHarness() {
 
     @AfterTest
     fun teardown() {
+        leaveCampaignForTests()
         // The roster is campaign-global; leaking it would change other suites' trait resolution.
         HeroCampaign.reset()
         clearTestWorld()

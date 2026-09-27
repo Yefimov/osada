@@ -6,6 +6,7 @@ import org.osada.addObjectiveCapture
 import org.osada.hero.HeroCampaign
 import org.osada.prestigeGains
 import org.osada.rules.CombatPositioning
+import org.osada.rules.CombatResolver
 import org.osada.rules.CounterBatteryFire
 import org.osada.rules.CriticalHit
 import org.osada.rules.Evade
@@ -37,11 +38,17 @@ import kotlin.js.json
 internal class CombatApplication(
     private val gameMap: GameMap,
 ) {
+    /**
+     * One committed exchange. [supportHalfStrength] is the support-fire falloff decided by the
+     * caller for a support shot (`CombatResolver.supportFiresAtHalfStrength`), so the shot that is
+     * applied fires at the strength the forecast promised.
+     */
     fun attackUnit(
         attacker: GameUnit,
         defender: GameUnit,
         supportFire: Boolean,
         isOverrun: Boolean = false,
+        supportHalfStrength: Boolean = false,
     ): CombatResults {
         gameMap.undoState.invalidate(attacker, UndoInvalidation.COMBAT)
         // Cleared here rather than after reporting, so a combat that draws no counterbattery can
@@ -50,7 +57,7 @@ internal class CombatApplication(
         val from = attacker.getPos()
         val to = defender.getPos()
         return if (from != null && to != null) {
-            resolveCombat(attacker, defender, from, to, supportFire, isOverrun)
+            resolveCombat(attacker, defender, from, to, supportFire, isOverrun, supportHalfStrength)
         } else {
             CombatResults()
         }
@@ -63,15 +70,28 @@ internal class CombatApplication(
         to: Cell,
         supportFire: Boolean,
         isOverrun: Boolean,
+        supportHalfStrength: Boolean,
     ): CombatResults {
         // committed: this is the call whose result is applied to the map, so it is the one allowed
         // to draw from the shared random stream (`rules/GameRandomSource`).
         val combatResult =
-            GameRules.calculateAttackResults(attacker, defender, true, gameMap.getUnits().toList(), committed = true)
-        // OG's combat order puts sabotage at step 3 and evasion at step 4, so a sabotaged defender
-        // never gets to slip away -- one of the penalties OG names is that it cannot evade.
-        val sabotaged = applySabotage(attacker, defender, combatResult, supportFire)
-        if (!sabotaged) applyEvade(attacker, defender, from, to, combatResult)
+            CombatResolver.calculateAttackResults(
+                attacker,
+                defender,
+                true,
+                gameMap.getUnits().toList(),
+                attackerIsFiringSupport = supportFire,
+                halveStrength = supportFire && supportHalfStrength,
+                committed = true,
+            )
+        // OG's Normal Combat order: an OVERRUN is checked first and, when it happens, *"Defender is
+        // killed and combat finishes"* -- so neither sabotage nor evasion is ever reached by one.
+        // Then sabotage (step 3) before evasion (step 4): a sabotaged defender never gets to slip
+        // away, one of the penalties OG names. And evasion belongs to the MAIN exchange: a unit a
+        // supporting battery fires on does not dodge out of the middle of its own attack
+        // (2026-09-27; both had let a defender evade where OG's procedure never asks).
+        val sabotaged = !isOverrun && applySabotage(attacker, defender, combatResult, supportFire)
+        if (!isOverrun && !sabotaged && !supportFire) applyEvade(attacker, defender, from, to, combatResult)
         val logId = CombatLog.addCombatStart(attacker, defender, gameMap.turn)
         applyCombatFacing(attacker, defender, from, to)
         unmountDefenderIfNeeded(defender)
@@ -79,12 +99,10 @@ internal class CombatApplication(
         // so it is also the only thing allowed to report one. The committed calculation above sets
         // its own `isOverrun` whenever its roll happens to reach a kill, and that flag used to
         // survive into the result: the map announced "Прорыв" for an attack that was never treated
-        // as one (no movement back, no shot back), and even for a defender that had EVADED out of
-        // the hex (2026-09-25 user report). A defender that evaded or was sabotaged away is not
-        // overrun either; without this guard `applyOverrun` would also have written the full
-        // strength as kills onto a unit that had already left.
+        // as one (no movement back, no shot back) (2026-09-25 user report). A decided overrun
+        // skips sabotage and evasion above, so it always lands on a defender still in its hex.
         combatResult.isOverrun = false
-        val overrun = isOverrun && !sabotaged && !combatResult.isEvaded
+        val overrun = isOverrun
         if (overrun) applyOverrun(attacker, defender, combatResult)
         applyCombatDamage(attacker, defender, combatResult, supportFire, overrun)
         applyExploitSuccess(attacker, defender, combatResult, supportFire, overrun)
@@ -192,7 +210,7 @@ internal class CombatApplication(
         combatResult.kills = 0
         combatResult.losses = 0
         combatResult.defcanfire = false
-        retreatUnit(defender, retreat)
+        combatResult.evasion = gameMap.relocateForced(defender, retreat, ForcedMoveCause.EVASION)
     }
 
     /**
@@ -285,7 +303,12 @@ internal class CombatApplication(
     ) {
         attacker.experience = kotlin.math.round(attacker.experience + combatResult.atkExpGained.toDouble()).toInt()
         defender.experience = kotlin.math.round(defender.experience + combatResult.defExpGained.toDouble()).toInt()
-        if (supportFire || isOverrun) attacker.fire(false) else attacker.fire(true)
+        when {
+            // Nothing was fired, so no ammunition is spent -- only the turn's attack.
+            !combatResult.attackerFired -> if (supportFire) attacker.hasFired = true else attacker.spendAttack()
+            supportFire || isOverrun -> attacker.fire(false)
+            else -> attacker.fire(true)
+        }
         // OG's `SingleFireSup.` spends the supporting gun for the turn. Set on the COMMITTED shot
         // only -- this function runs from `attackUnit`, which is the call whose result is applied
         // to the map, so a forecast can never spend a battery that has not fired
@@ -309,7 +332,10 @@ internal class CombatApplication(
             // The defender's return fire can sink the attacker in exactly the same way -- OG's
             // "either attacking or defending" is why the formula is written from the FIRING unit's
             // side rather than the attacker's.
-            if (CriticalHit.sinks(defender, attacker)) combatResult.losses = attacker.strength
+            if (CriticalHit.sinks(defender, attacker)) {
+                combatResult.losses = attacker.strength
+                combatResult.isAttackerCriticalHit = true
+            }
             attacker.hit(combatResult.losses, UnitCapabilities.hasLastingSuppression(defender))
         }
         if (!supportFire) gameMap.delAttackSel()
@@ -348,28 +374,21 @@ internal class CombatApplication(
         defender: GameUnit,
         combatResult: CombatResults,
     ) {
-        combatResult.atkLeaderGain =
-            CombatLeaderAcquisition.acquire(attacker, defender, combatResult, isAttacker = true, turn = gameMap.turn)
-        combatResult.defLeaderGain =
-            CombatLeaderAcquisition.acquire(defender, attacker, combatResult, isAttacker = false, turn = gameMap.turn)
+        val turn = gameMap.turn
+        val atk = CombatLeaderAcquisition.acquire(attacker, defender, combatResult, isAttacker = true, turn = turn)
+        val def = CombatLeaderAcquisition.acquire(defender, attacker, combatResult, isAttacker = false, turn = turn)
+        combatResult.atkLeaderGain = atk == CombatLeaderAcquisition.Gain.HERO
+        combatResult.defLeaderGain = def == CombatLeaderAcquisition.Gain.HERO
+        combatResult.atkLegacyLeaderGain = atk == CombatLeaderAcquisition.Gain.LEGACY
+        combatResult.defLegacyLeaderGain = def == CombatLeaderAcquisition.Gain.LEGACY
     }
 
+    /** A combat retreat of [unit] to [to]: an atomic forced relocation (see [relocateForced]),
+     *  never an ordinary move. */
     fun retreatUnit(
         unit: GameUnit,
         to: Cell,
-    ): MovementResults {
-        gameMap.currentMoveRange.add(to)
-        val moveLeft = unit.moveLeft
-        val hasMoved = unit.hasMoved
-        val hasOverstrength = unit.hasOverstrength
-        val prevCurrent = gameMap.currentUnit
-        val result = gameMap.moveUnit(unit, to.row, to.col)
-        unit.moveLeft = moveLeft
-        unit.hasMoved = hasMoved
-        unit.hasOverstrength = hasOverstrength
-        prevCurrent?.let { gameMap.selectUnit(it) }
-        return result
-    }
+    ): ForcedMove? = gameMap.relocateForced(unit, to, ForcedMoveCause.COMBAT_RETREAT)
 
     fun captureHex(
         hex: Hex,

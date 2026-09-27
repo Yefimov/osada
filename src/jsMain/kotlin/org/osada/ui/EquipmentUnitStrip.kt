@@ -173,6 +173,7 @@ internal object EquipmentUnitStrip {
         }
         addAttachmentButton(ui, container, unit)
         addCommanderBadge(container, unit)
+        addClassMark(container, data.uclass)
         ReserveRefitPresenter.addCardButton(ui, container, unit)
         return container
     }
@@ -258,6 +259,26 @@ internal object EquipmentUnitStrip {
             AttachmentPickerPresenter.open(unit, player) {
                 ui.updateEquipmentWindow(unit.unitData(true).uclass)
             }
+        }
+    }
+
+    /** The unit's class, as the icon of the class tab it is listed under, in the card's
+     *  bottom-right corner (owner's request, 2026-09-26). A `span`, not a `div`: base.css pushes
+     *  every `.eqUnitBox div` 50px down for the name row. Classes with no tab draw nothing. */
+    private fun addClassMark(
+        container: HTMLElement,
+        uclass: Int,
+    ) {
+        val tab = ClassGlyph.tabFor(uclass) ?: return
+        val mark = addTag(container, "span")
+        mark.className = "osada-unitbox-class"
+        if (!ClassGlyph.render(mark, tab)) {
+            delTag(mark)
+            return
+        }
+        ClassGlyph.label(tab)?.let {
+            mark.title = it
+            mark.setAttribute("aria-label", it)
         }
     }
 

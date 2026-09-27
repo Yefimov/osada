@@ -569,5 +569,8 @@ private fun serializeWeather(): dynamic =
                 Pair("rainRun", it.rainRun),
                 Pair("snowRun", it.snowRun),
                 Pair("dryRun", it.dryRun),
+                // Saved explicitly, so a later save and load can never switch a battle's model.
+                Pair("model", it.model),
+                Pair("precip", if (it.precipSnow == true) "snow" else "rain"),
             )
         }

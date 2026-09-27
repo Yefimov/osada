@@ -41,6 +41,7 @@ class HeroAcquisitionTest {
 
     @BeforeTest
     fun setup() {
+        enterCampaignForTests()
         js("if (typeof window.scenariolist === 'undefined') { window.scenariolist = []; }")
         installEnglishUiBundleForTests()
         Equipment.resetEquipment()
@@ -66,6 +67,7 @@ class HeroAcquisitionTest {
 
     @AfterTest
     fun tearDown() {
+        leaveCampaignForTests()
         HeroCampaign.reset()
     }
 
@@ -74,7 +76,11 @@ class HeroAcquisitionTest {
         country: Int = 19,
         experience: Int = 0,
     ): GameUnit {
-        val unit = GameUnit(eqid).apply { this.experience = experience }
+        val unit =
+            GameUnit(eqid).apply {
+                this.experience = experience
+                owner = 0
+            }
         val player =
             Player().apply {
                 id = 0
@@ -179,6 +185,10 @@ class HeroAcquisitionTest {
     fun belowTheFloorNoCheckRunsAndDroughtDoesNotGrow() {
         val unit = coreUnit()
         HeroCampaign.roster().drought = 3
+        // The reserved opening legendary has its own seeded roll that ignores the floor; this test is
+        // about the ORDINARY floor, so it must not depend on how that roll lands for this seed (it
+        // flipped when test units stopped minting "F--1-1" ids for a missing owner).
+        HeroCampaign.roster().reservedLegendary = null
         // A single stronger kill (25) stays under the floor (30): eligible=false, no drought change.
         assertFalse(HeroCampaign.recordCombat(unit, kill(stronger = true)))
         assertEquals(3, HeroCampaign.roster().drought, "an ineligible formation must not feed the drought counter")

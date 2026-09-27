@@ -8,6 +8,9 @@ import org.osada.model.Hex
 import org.osada.model.clearBarrageTargeting
 import org.osada.model.fireBarrage
 import org.osada.model.openBarrageTargeting
+import org.osada.multiplayer.client.OsadaMultiplayer
+import org.osada.multiplayer.command.BarrageHex
+import org.osada.multiplayer.command.HexCoordinate
 import org.osada.rules.GameRules
 import org.osada.rules.getDirection
 import org.osada.uiSettings
@@ -30,6 +33,14 @@ internal fun MapClickHandler.resolveBarrageClick(
 ): Boolean {
     val unit = map.currentUnit
     uiSettings.barrageMode = false
+    // In a room the shot is an order for the host; the targeting mode closes here either way.
+    if (OsadaMultiplayer.active) {
+        if (unit != null && hex.isBarrageSel) {
+            OsadaMultiplayer.submitOrder(BarrageHex(unit.id, HexCoordinate(cell.col, cell.row), unit.owner))
+        }
+        map.clearBarrageTargeting()
+        return unit != null && hex.isBarrageSel
+    }
     val result = if (unit != null && hex.isBarrageSel) map.fireBarrage(unit, cell.row, cell.col) else null
     if (unit == null || !hex.isBarrageSel) map.clearBarrageTargeting()
     if (unit != null) {

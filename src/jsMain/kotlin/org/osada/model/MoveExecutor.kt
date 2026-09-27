@@ -115,20 +115,24 @@ internal class MoveExecutor(
     ): Int {
         val enemySide = 1 - setup.side
         var totalCost = 0
-        // Ids of `Overwatch` commanders that have already answered THIS move, so each fires once
-        // per moving formation rather than once per hex it walks.
-        val overwatchSpent = mutableSetOf<Int>()
         for (i in setup.path.indices) {
             val cell = setup.path[i]
             if (isCellVisible(unit, setup.map, cell, enemySide)) {
                 result.isVisible = true
                 if (cell is ExtendedCell) cell.isVisible = true
             }
+            // An occupied hex is never ENTERED -- the walk ends on the hex before it. Checked before
+            // the cell joins `passedCells`, because the last passed cell is where `applyMove` puts
+            // the unit: checked after (as it was until 2026-09-26), a move that bumped into a hidden
+            // enemy parked the mover ON the enemy's hex, two units on one. Panzer Marshal tests
+            // `canPassInto` and breaks before its push, which is the order restored here. The other
+            // reactions below all stop the unit IN the cell that triggered them, so they stay after.
+            if (i > 0 && stoppedByOccupant(unit, setup, cell, result)) break
             result.passedCells.add(cell)
             totalCost += if (cell is ExtendedCell) cell.cost else 1
-            if (i > 0 && reactionStoppingMove(unit, setup, cell, i, overwatchSpent, result)) break
+            if (i > 0 && reactionStoppingMove(unit, setup, cell, i, result)) break
         }
-        return totalCost
+        return totalCost - stepBackOffOccupiedHexes(unit, setup, result)
     }
 
     /** DEFERRED.md §1.12: whether `AI_SCRIPTED` bypassing fog here (animating in full through
@@ -223,9 +227,7 @@ internal class MoveExecutor(
                 newlySpotted,
                 unit,
                 result.wasIntercepted,
-                result.stoppedByUnseenEnemy,
-                result.wasFiredOnWhileMoving,
-                result.hitMinefield,
+                revealedIntelligence(result),
                 result.firedTrigger,
             )
         if (finality == null) {
@@ -264,8 +266,6 @@ internal class MoveExecutor(
         newlySpotted: Int,
         unit: GameUnit,
         wasIntercepted: Boolean,
-        stoppedByUnseenEnemy: Boolean,
-        wasFiredOnWhileMoving: Boolean,
         hitMinefield: Boolean,
         firedTrigger: Boolean,
     ): UndoInvalidation? =
@@ -276,18 +276,10 @@ internal class MoveExecutor(
             // stepping on it again yields nothing, so the reward could not even be re-earned
             // honestly. Final for the same reason interception is.
             firedTrigger -> UndoInvalidation.IRREVERSIBLE_ACTION
-            // Overwatch fire is combat that followed the move, and it must be as final as
-            // interception is -- see MovementResults.wasFiredOnWhileMoving.
-            wasFiredOnWhileMoving -> UndoInvalidation.COMBAT
             // Walking into a minefield revealed it. Undo would hand that intelligence back for free.
             hitMinefield -> UndoInvalidation.NEW_INTELLIGENCE
             unit.isSurprised -> UndoInvalidation.SURPRISED
             newlySpotted != 0 -> UndoInvalidation.NEW_INTELLIGENCE
-            // Same reasoning as an intercepted move: rewinding a move that a hidden enemy stopped
-            // would make probing for hidden units free (DEFERRED.md §7.32 item 4). In practice a
-            // stop usually reveals the enemy anyway, which `newlySpotted` already catches -- this
-            // covers the case where it stopped without spotting it.
-            stoppedByUnseenEnemy -> UndoInvalidation.STOPPED_BY_HIDDEN_ENEMY
             else -> null
         }
 
@@ -347,6 +339,12 @@ internal class MoveExecutor(
         val savedHex: Hex,
     )
 }
+
+/**
+ * Whether the move itself found something out that undo must not hand back: a minefield it walked
+ * into, or the zone of control of an enemy it had not seen -- a free probe of where the enemy stands.
+ */
+private fun revealedIntelligence(result: MovementResults): Boolean = result.hitMinefield || result.stoppedByContact
 
 /**
  * What the destination hex does to a formation that has just stopped on it.

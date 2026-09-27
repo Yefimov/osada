@@ -156,8 +156,8 @@ class OgAbilityMechanicsTest : OgRulesTestHarness() {
         val partisans = place(map, partisanEqid, 2, 2, side = 0)
         val militia = place(map, victimEqid, 2, 3, side = 0)
 
-        assertTrue(UnitCapabilities.ignoresZoneOfControl(partisans.unitData(true)))
-        assertFalse(UnitCapabilities.ignoresZoneOfControl(militia.unitData(true)))
+        assertTrue(UnitCapabilities.isPartizan(partisans.unitData(true)))
+        assertFalse(UnitCapabilities.isPartizan(militia.unitData(true)))
     }
 
     // ---- Exploit Success -----------------------------------------------------------------------

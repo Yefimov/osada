@@ -92,9 +92,9 @@ internal object MoveRangeCalculation {
         // began, with NO rule behind it -- `grep LeaderType.SUPERIOR_MANEUVER src/jsMain/.../rules`
         // found nothing. It bypasses the ZOC rule outright, not a cost discount: OG's manual states
         // the unit ignores enemy ZOC, and here ZOC is the only thing the flag may touch.
-        val ignoresZoc =
-            Leaders.unitHasLeader(unit, LeaderType.SUPERIOR_MANEUVER) ||
-                UnitCapabilities.ignoresZoneOfControl(unitData)
+        // Partizan and Battlefield Intelligence join it: OG calls all three "not stopped by
+        // adjacent enemies" (`UnitCapabilities.notStoppedByAdjacentEnemies`).
+        val ignoresZoc = UnitCapabilities.notStoppedByAdjacentEnemies(unit)
 
         // OG's Alpine Training: "When moving the unit treats forest and mountain hexes as clear
         // terrain." Advertised since the port began with no rule behind it -- the same defect class
@@ -183,7 +183,6 @@ internal object MoveRangeCalculation {
         val cells = context.cells
         val origin = ExtendedCell(context.pos.row, context.pos.col)
         cells.add(origin)
-        val enemySide = 1 - context.unitSide
         // Adjacency by lookup rather than by scanning every cell for every cell: the old sweep was
         // O(maxRange x n^2) over the ring, which a x10 allowance turns into millions of tests.
         val byKey = HashMap<Int, ExtendedCell>()
@@ -198,7 +197,7 @@ internal object MoveRangeCalculation {
             val expandable = current === origin || current.cout <= context.maxRange
             if (settled.add(cellKey(current.row, current.col)) && expandable) {
                 val reached = neighborsOf(current, byKey, settled)
-                reached.forEach { expandNeighbor(it, current, context, unit, enemySide) }
+                reached.forEach { expandNeighbor(it, current, context, unit) }
                 frontier.addAll(reached.filter { it !in frontier })
             }
         }
@@ -212,21 +211,19 @@ internal object MoveRangeCalculation {
         current: ExtendedCell,
         context: MoveContext,
         unit: GameUnit,
-        enemySide: Int,
     ) {
         val hex = context.gameMap[neighbor.row][neighbor.col]
-        resolveNeighborCost(neighbor, hex, context, enemySide)
+        resolveNeighborCost(neighbor, hex, context)
         updateReachDistance(neighbor, current)
         markPassableAndVisible(neighbor, hex, context, unit)
     }
 
     /** Sets [neighbor].cost from the movement table (or rail cost), floored to [ZOC_MOVE_COST]
-     *  when the hex is a spotted enemy zone of control. */
+     *  when the hex is in the zone of control of an enemy the mover's side can see. */
     private fun resolveNeighborCost(
         neighbor: ExtendedCell,
         hex: Hex,
         context: MoveContext,
-        enemySide: Int,
     ) {
         // The road column is a BONUS, so it may only ever be taken when this movement method can
         // actually use a road. PM applies it unconditionally (`openpanzer.js:2157`), and because
@@ -248,10 +245,12 @@ internal object MoveRangeCalculation {
                 terrainCost = context.movementTable[terrainColumn(hex.terrain, context)],
             )
         neighbor.cost = withRubbleSurcharge(base, hex)
+        // A zone of control the mover's side can SEE -- judged by the enemy unit's own visibility,
+        // not by whether this hex is spotted, so a hidden unit next to a spotted hex does not shorten
+        // the overlay and give itself away (`ZoneOfControlContact`). The walk stops on discovery.
         val inEnemyZoc =
             !context.ignoresZoc &&
-                (hex.isSpotted(context.unitSide) || hex.unit?.tempSpotted == true) &&
-                hex.isZOC(enemySide)
+                ZoneOfControlContact.knownZoc(context.gameMap, neighbor, context.unitSide)
         // A minefield this side has DETECTED gets the ZOC cost floor, which is exactly OG's rule --
         // "entering a detected minefield consumes all remaining movement". Reusing the sentinel
         // rather than inventing one means the overlay, the pathfinder and `GameUnit.move`'s /254

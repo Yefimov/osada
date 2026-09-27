@@ -9,6 +9,7 @@ import org.osada.model.disbandUnit
 import org.osada.model.getUnitById
 import org.osada.model.sellUnit
 import org.osada.model.upgradeUnit
+import org.osada.multiplayer.client.OsadaMultiplayer
 
 /**
  * [EquipmentWindowController]'s equipment-window button actions (change country / buy / upgrade
@@ -23,11 +24,14 @@ internal class EquipmentWindowButtons(
         val player = map?.currentPlayer
         val eqUserSel = byId("eqUserSel")?.asDynamic()
         if (map == null || player == null || eqUserSel == null) return
-        when (action) {
-            "changecountry" -> onChangeCountry(eqUserSel)
-            "buy" -> onBuy(player, eqUserSel)
-            "upgrade" -> onUpgrade(map, player, eqUserSel)
-            "sell" -> onSell(map, player, eqUserSel)
+        when {
+            action == "changecountry" -> onChangeCountry(eqUserSel)
+            // In a room every HQ decision is an order for the host, whose snapshot then refreshes
+            // this window; changing only this copy was overwritten by the next one.
+            OsadaMultiplayer.active -> HostHqOrders.send(action, map, player, eqUserSel)
+            action == "buy" -> onBuy(player, eqUserSel)
+            action == "upgrade" -> onUpgrade(map, player, eqUserSel)
+            action == "sell" -> onSell(map, player, eqUserSel)
         }
     }
 

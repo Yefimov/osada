@@ -101,6 +101,8 @@ fun GameUnit.unitEndTurn(spotSide: Int) {
     hasResupplied = false
     isSurprised = false
     hasInterceptedThisTurn = false
+    hasInterceptedMovingAirThisTurn = false
+    hasAmbushedThisTurn = false
     hasSupportedThisTurn = false
     // OG's `Saboteur` costs its victim the NEXT move and the NEXT attack, so the state is spent at
     // the turn boundary that would have restored them: the unit wakes up with neither and is no

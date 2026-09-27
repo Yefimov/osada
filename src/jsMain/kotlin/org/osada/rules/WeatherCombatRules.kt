@@ -106,8 +106,11 @@ internal object WeatherCombatRules {
     fun firingStrength(
         shooter: GameUnit,
         target: GameUnit,
+        strengthLost: Int = 0,
     ): Int {
-        val strength = shooter.strength
+        // Taken off BEFORE the halving: the halving applies to the strength points the unit
+        // actually brings, and a point lost earlier in the exchange is not among them.
+        val strength = (shooter.strength - strengthLost).coerceAtLeast(0)
         val crossesLayers = UnitPredicates.isAir(shooter) != UnitPredicates.isAir(target)
         val halved =
             ActiveRuleset.flag(RuleKey.WEATHER_HALVES_AIR_GROUND, true) &&

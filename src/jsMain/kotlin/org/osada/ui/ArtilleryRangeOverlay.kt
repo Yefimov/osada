@@ -2,13 +2,16 @@ package org.osada.ui
 
 import org.osada.UnitClass
 import org.osada.model.GameMap
+import org.osada.model.GameUnit
+import org.osada.rules.AirDefenceSupport
 import org.osada.rules.GameRules
 import org.osada.rules.HexGeometry
 import org.osada.rules.UnitConcealment
 import org.osada.rules.getUnitAttackRange
 
 /**
- * Which hexes each side's guns can reach, for the sidebar's Artillery toggle.
+ * Which hexes each side's guns can reach, for the sidebar's Artillery toggle -- and, in Air mode,
+ * which hexes each side's air defence covers ([computeAirDefence]).
  *
  * The overlay answers one question — *where do the guns reach?* — so its membership test is the
  * formation's EFFECTIVE record ([org.osada.model.GameUnit.unitData] with `useReal = false`) rather
@@ -49,19 +52,49 @@ internal object ArtilleryRangeOverlay {
     fun compute(
         map: GameMap,
         spotSide: Int,
+    ): Coverage =
+        envelopes(map, spotSide) { unit ->
+            if (unit.unitData().uclass != UnitClass.ARTILLERY.value) {
+                0
+            } else {
+                // Range 0 is a real authored value under OG's `True range 0` -- such a battery
+                // cannot fire at anything, so it gets no envelope rather than a single own-hex patch.
+                GameRules.getUnitAttackRange(unit)
+            }
+        }
+
+    /**
+     * [map]'s air-defence envelopes, for Air mode: the hexes from which an attacking aircraft would
+     * draw ground air-defence fire. The radius is [AirDefenceSupport.groundReach] -- the very
+     * function the combat rule fires from -- so an AD battery shows its own range of fire, a FlaK
+     * its `flak_range`, and the other air-defence grants one hex (OG's Air Defense procedure).
+     *
+     * Two things the rule does that a per-unit disc cannot show, and so are left out rather than
+     * over-promised: a fighter's cover (it protects the unit it stands beside, so it depends on the
+     * TARGET, not on where the plane is), and `flak_ex2` (a FlaK beside the defender also answers a
+     * plane beside the defender, which again depends on the target).
+     */
+    fun computeAirDefence(
+        map: GameMap,
+        spotSide: Int,
+    ): Coverage = envelopes(map, spotSide) { unit -> AirDefenceSupport.groundReach(unit) }
+
+    /** Every non-destroyed unit's envelope of radius [rangeOf] (0 = none), split by side; enemy
+     *  units only while [spotSide] can see them. */
+    private fun envelopes(
+        map: GameMap,
+        spotSide: Int,
+        rangeOf: (GameUnit) -> Int,
     ): Coverage {
         if (map.rows <= 0 || map.cols <= 0) return empty
         val own = mutableSetOf<Int>()
         val enemy = mutableSetOf<Int>()
         map.units.forEach { unit ->
             if (unit.destroyed) return@forEach
-            if (unit.unitData().uclass != UnitClass.ARTILLERY.value) return@forEach
             val pos = unit.getPos() ?: return@forEach
             val friendly = unit.player?.side == spotSide
             if (!friendly && !UnitConcealment.isVisibleTo(unit, spotSide)) return@forEach
-            // Range 0 is a real authored value under OG's `True range 0` -- such a battery cannot
-            // fire at anything, so it gets no envelope rather than a single own-hex patch.
-            val range = GameRules.getUnitAttackRange(unit)
+            val range = rangeOf(unit)
             if (range <= 0) return@forEach
             val target = if (friendly) own else enemy
             target.add(pos.row * map.cols + pos.col)

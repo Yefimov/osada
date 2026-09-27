@@ -186,8 +186,10 @@ class UI(
             eqWindowController.updateEquipmentWindow(UnitClass.TANK.value)
             statusBarController.updateStatusBar()
             mainMenuButtonHandler.checkUndeployedUnits()
-            WeatherRenderer.start(game.scenario?.atmosferic ?: 0)
+            // Normally a no-op: the game has already started the model (`WeatherModel.init` is
+            // idempotent per scenario). Kept for any load path that reaches the map first.
             WeatherModel.init(game.scenario)
+            WeatherRenderer.start(game.scenario?.atmosferic ?: 0)
             mapReady = true
             if (!showBriefing) {
                 UIBuilder.clearScenarioBriefing()

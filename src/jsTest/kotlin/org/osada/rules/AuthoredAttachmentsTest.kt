@@ -2,9 +2,11 @@ package org.osada.rules
 
 import org.osada.GameStateSerializer
 import org.osada.UnitClass
+import org.osada.enterCampaignForTests
 import org.osada.hero.CoreFormation
 import org.osada.hero.FormationId
 import org.osada.hero.HeroCampaign
+import org.osada.leaveCampaignForTests
 import org.osada.model.EfileConfig
 import org.osada.model.Equipment
 import org.osada.model.EquipmentData
@@ -38,6 +40,7 @@ class AuthoredAttachmentsTest {
 
     @BeforeTest
     fun setup() {
+        enterCampaignForTests()
         Equipment.resetEquipment()
         Equipment.putEquipment(
             EQID,
@@ -54,6 +57,7 @@ class AuthoredAttachmentsTest {
 
     @AfterTest
     fun cleanup() {
+        leaveCampaignForTests()
         HeroCampaign.reset()
         EfileConfig.resetForTest()
     }

@@ -474,7 +474,6 @@ object UnitActionAvailability {
             UndoInvalidation.NEW_INTELLIGENCE -> ActionBlockReason.UNDO_NEW_INTELLIGENCE
             UndoInvalidation.SURPRISED -> ActionBlockReason.UNDO_SURPRISED
             UndoInvalidation.INTERCEPTED -> ActionBlockReason.UNDO_INTERCEPTED
-            UndoInvalidation.STOPPED_BY_HIDDEN_ENEMY -> ActionBlockReason.UNDO_STOPPED_BY_HIDDEN_ENEMY
             UndoInvalidation.COMBAT -> ActionBlockReason.UNDO_COMBAT
             UndoInvalidation.IRREVERSIBLE_ACTION -> ActionBlockReason.UNDO_IRREVERSIBLE_ACTION
             null -> ActionBlockReason.UNDO_NOTHING_TO_UNDO

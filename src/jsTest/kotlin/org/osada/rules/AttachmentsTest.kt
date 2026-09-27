@@ -4,6 +4,7 @@ import org.osada.LeaderType
 import org.osada.MovMethod
 import org.osada.TerrainType
 import org.osada.UnitClass
+import org.osada.enterCampaignForTests
 import org.osada.hero.CoreFormation
 import org.osada.hero.FormationId
 import org.osada.hero.HeroBiographyFacts
@@ -14,6 +15,7 @@ import org.osada.hero.HeroOrigin
 import org.osada.hero.HeroState
 import org.osada.hero.LegacyTraitMapping
 import org.osada.hero.PortraitComposition
+import org.osada.leaveCampaignForTests
 import org.osada.model.EfileConfig
 import org.osada.model.Equipment
 import org.osada.model.EquipmentData
@@ -41,6 +43,7 @@ class AttachmentsTest {
 
     @BeforeTest
     fun setup() {
+        enterCampaignForTests()
         Equipment.resetEquipment()
         Equipment.putEquipment(
             eqid,
@@ -95,6 +98,7 @@ class AttachmentsTest {
 
     @AfterTest
     fun cleanup() {
+        leaveCampaignForTests()
         HeroCampaign.reset()
         EfileConfig.resetForTest()
     }
@@ -636,6 +640,27 @@ class AttachmentsTest {
         val offered = Attachments.availableSlots(unit).map { it.first }
 
         assertFalse(Attachments.SLOT_BRIDGING in offered, "OG's pre-v6 fallback rule (A) excludes air units")
+    }
+
+    /** Rule (A) covers Fast Entrench too, not only Bridging: an aircraft cannot dig in, and every
+     *  one of the four efiles that ship `equip.xeqa` forbids it to air units. */
+    @Test
+    fun fastEntrenchIsNotOfferedToAircraft() {
+        Equipment.putEquipment(
+            eqid,
+            EquipmentData().apply {
+                uclass = UnitClass.FIGHTER.value
+                movmethod = MovMethod.AIR.value
+            },
+        )
+        EfileConfig.setForTest(attachmentConfigValue = withTier2Slots(lxfShapedConfig()))
+        HeroCampaign.roster().putFormation(formation("F-A"))
+        val unit = coreUnit("F-A")
+
+        val offered = Attachments.availableSlots(unit).map { it.first }
+
+        assertFalse(Attachments.SLOT_FAST_ENTRENCH in offered)
+        assertTrue(Attachments.SLOT_BUNKER_BUSTER in offered, "all four efiles let aircraft carry Bunker Buster")
     }
 
     @Test

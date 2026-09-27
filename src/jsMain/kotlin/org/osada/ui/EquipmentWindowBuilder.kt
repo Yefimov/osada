@@ -163,11 +163,9 @@ internal object EquipmentWindowBuilder {
             // Glyph + text label (a bare osada glyph is unreadable as a class tab). Tabs with no
             // known glyph get no span at all rather than an empty one, so the flex gap doesn't
             // leave them visibly indented against their neighbours.
-            if (data.first.isNotEmpty()) {
-                val glyphSpan = addTag(div, "span")
-                glyphSpan.className = "osada-eqtab__glyph"
-                glyphSpan.innerHTML = data.first
-            }
+            val glyphSpan = addTag(div, "span")
+            glyphSpan.className = "osada-eqtab__glyph"
+            if (!ClassGlyph.render(glyphSpan, eqClass)) delTag(glyphSpan)
             val labelSpan = addTag(div, "span")
             labelSpan.className = "osada-eqtab__label"
             labelSpan.textContent = eqClassTabLabels[eqClass] ?: data.second

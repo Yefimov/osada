@@ -1,7 +1,9 @@
 package org.osada.rules
 
 import org.osada.GameHolder
+import org.osada.enterCampaignForTests
 import org.osada.hero.HeroCampaign
+import org.osada.leaveCampaignForTests
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
 import org.osada.model.Player
@@ -34,12 +36,14 @@ import kotlin.test.assertTrue
 class AuthoredMakeCoreTest : OgRulesTestHarness() {
     @BeforeTest
     fun setup() {
+        enterCampaignForTests()
         installTestWorld()
         HeroCampaign.reset()
     }
 
     @AfterTest
     fun teardown() {
+        leaveCampaignForTests()
         HeroCampaign.reset()
         clearTestWorld()
     }
@@ -131,6 +135,7 @@ class AuthoredMakeCoreTest : OgRulesTestHarness() {
         game.campaignPlayer = friendly
         game.scenario!!.isLoaded = true
         GameHolder.instance = game
+        enterCampaignForTests(friendly)
 
         val arriving = makeCore(GameUnit(infantryEqid).apply { owner = friendly.id })
         map.map!![4][4].setUnit(arriving)

@@ -36,6 +36,14 @@ object RulesetProfileStore {
                 name = "",
                 source = RulesetSource.OSADA_DEFAULT,
             ),
+            // Last and opt-in: an experiment, selected only by a player who asks for it. A save
+            // records the ruleset it ran under, so no existing battle changes.
+            RulesetProfile(
+                id = RulesetProfile.AVIATION_TRIAL_ID,
+                name = "",
+                source = RulesetSource.AVIATION_TRIAL,
+                overrides = mapOf(RuleKey.WEATHER_GROUNDS_AIRCRAFT to 0),
+            ),
         )
 
     /** Saved profiles, sorted by player-visible name (§1). A malformed library yields an empty list

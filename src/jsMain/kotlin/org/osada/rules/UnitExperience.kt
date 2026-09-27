@@ -33,5 +33,8 @@ object UnitExperience {
     fun cap(): Int = UNIT_MAX_EXPERIENCE
 
     /** [unit]'s experience bars, clamped to [MAX_BARS]. Every per-bar formula reads this. */
-    fun bars(unit: GameUnit): Int = (unit.experience / EXPERIENCE_PER_BAR).coerceIn(0, MAX_BARS)
+    fun bars(unit: GameUnit): Int = barsFor(unit.experience)
+
+    /** The bar count for a raw [experience] value -- for a unit's experience before a gain. */
+    fun barsFor(experience: Int): Int = (experience / EXPERIENCE_PER_BAR).coerceIn(0, MAX_BARS)
 }

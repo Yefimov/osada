@@ -57,6 +57,7 @@ class HeroProgressionTest {
 
     @BeforeTest
     fun setup() {
+        enterCampaignForTests()
         js("if (typeof window.scenariolist === 'undefined') { window.scenariolist = []; }")
         Equipment.resetEquipment()
         Equipment.putEquipment(
@@ -73,11 +74,12 @@ class HeroProgressionTest {
 
     @AfterTest
     fun tearDown() {
+        leaveCampaignForTests()
         HeroCampaign.reset()
     }
 
     private fun coreUnit(): GameUnit {
-        val unit = GameUnit(TANK_EQID)
+        val unit = GameUnit(TANK_EQID).apply { owner = 0 }
         val player =
             Player().apply {
                 id = 0

@@ -4,31 +4,47 @@ import org.osada.EndGameType
 import org.osada.Game
 import org.osada.GameHolder
 import org.osada.continueCampaign
+import org.osada.evaluateScenarioEvents
 import org.osada.handleMoveVictory
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
-import org.osada.model.attackUnit
+import org.osada.model.UndoInvalidation
 import org.osada.model.beginEngineering
 import org.osada.model.buyUnit
 import org.osada.model.clearMinefield
 import org.osada.model.deployPlayerUnit
 import org.osada.model.disbandUnit
+import org.osada.model.disembarkUnit
+import org.osada.model.embarkUnit
+import org.osada.model.executeAttack
 import org.osada.model.fireBarrage
+import org.osada.model.getAttackableUnit
+import org.osada.model.getEliminationWinner
 import org.osada.model.getPlayer
+import org.osada.model.getPlayers
 import org.osada.model.getUnitById
 import org.osada.model.layMinefield
 import org.osada.model.mountUnit
+import org.osada.model.moveByRail
 import org.osada.model.moveUnit
+import org.osada.model.openRailDestinations
+import org.osada.model.purchaseAttachment
 import org.osada.model.reinforceUnit
 import org.osada.model.resupplyUnit
+import org.osada.model.sellUnit
+import org.osada.model.surpriseTarget
 import org.osada.model.undeployUnit
 import org.osada.model.unmountUnit
+import org.osada.model.updateUnitList
 import org.osada.model.upgradeUnit
 import org.osada.multiplayer.model.MultiplayerSession
 import org.osada.multiplayer.protocol.MultiplayerErrorCode
 import org.osada.rules.Barrage
+import org.osada.rules.CombatPositioning
 import org.osada.rules.Engineering
 import org.osada.rules.EngineeringWork
+import org.osada.rules.GreenReplacements
+import org.osada.rules.LeaderDismissal
 import org.osada.rules.Minefields
 import org.osada.rules.SupplyRules
 import org.osada.rules.UnitPredicates
@@ -59,7 +75,7 @@ class OsadaGameCommandValidator(
         command: GameCommand,
         session: MultiplayerSession?,
     ): CommandValidation {
-        val unit = command.unitIdOrNull()?.let(map::getUnitById)
+        val unit = command.unitIdOrNull()?.let { map.findCommandUnit(it) }
         if (command.unitIdOrNull() != null && unit == null) {
             return rejected(MultiplayerErrorCode.INVALID_MESSAGE, "Unknown unit")
         }
@@ -84,7 +100,8 @@ class OsadaGameCommandValidator(
                         defender != null &&
                         !unit.hasFired &&
                         !unit.destroyed &&
-                        unit.player?.side != defender.player?.side
+                        unit.player?.side != defender.player?.side &&
+                        isOfferedTarget(map, unit, defender)
                 }
 
                 is ResupplyUnit -> unit != null && SupplyRules.canResupply(map, unit)
@@ -123,8 +140,53 @@ class OsadaGameCommandValidator(
                 is ReorderReserve -> command.destinationIndex >= 0
                 is SetUnitAssignment -> unit != null
                 is EndTurnReady, is EndPlayerTurn, is ChooseCampaignDialogueOption, is ContinueCampaign -> true
+                is UnitOrder -> unitOrderLegal(map, command, unit)
             }
         return if (legal) CommandValidation.Accepted else rejected(MultiplayerErrorCode.UNIT_ALREADY_ACTED)
+    }
+
+    /**
+     * The unit orders added for rooms on 2026-09-27. The model functions re-check their own
+     * preconditions and refuse without mutating anything, so these confirm the unit exists (and is
+     * not destroyed), the efile allows leader dismissal, and a rail destination is a real hex.
+     */
+    private fun unitOrderLegal(
+        map: GameMap,
+        command: UnitOrder,
+        unit: GameUnit?,
+    ): Boolean =
+        unit != null &&
+            !unit.destroyed &&
+            when (command) {
+                is DismissLeader -> LeaderDismissal.enabled()
+                is RailMove -> map.map?.getOrNull(command.destination.y)?.getOrNull(command.destination.x) != null
+                else -> true
+            }
+
+    /**
+     * The same answer the attacking player's own screen gives: [defender] stands on a hex of
+     * [attacker]'s attack overlay (`CombatPositioning.getUnitAttackCells` -- ammunition, weather,
+     * range, line of fire, the air-unit own-hex rule) and is the unit that hex offers as the target
+     * (`Hex.getAttackableUnit` -- visibility, concealment, target type). A command that the UI could
+     * never have produced -- out of range, at a hidden unit, a grounded aircraft -- is refused rather
+     * than resolved.
+     */
+    private fun isOfferedTarget(
+        map: GameMap,
+        attacker: GameUnit,
+        defender: GameUnit,
+    ): Boolean {
+        val pos = defender.getPos()
+        val inOverlay =
+            pos != null &&
+                CombatPositioning
+                    .getUnitAttackCells(map.map, attacker, map.rows, map.cols)
+                    .any { it.row == pos.row && it.col == pos.col }
+        val offered =
+            pos
+                ?.let { map.map?.getOrNull(it.row)?.getOrNull(it.col) }
+                ?.getAttackableUnit(attacker, UnitPredicates.isAir(defender))
+        return inOverlay && offered === defender
     }
 
     private fun rejected(
@@ -144,17 +206,10 @@ class OsadaGameCommandApplier(
         val game = requireNotNull(gameProvider()) { "No active game" }
         val map = requireNotNull(game.scenario?.map) { "No active scenario" }
         when (command) {
-            is MoveUnit -> {
-                val result = map.moveUnit(requireUnit(map, command.unitId), command.to.y, command.to.x)
-                if (result.isVictorySide >= 0) game.handleMoveVictory(result.isVictorySide)
-            }
+            is MoveUnit -> applyMove(game, map, command)
 
-            is AttackUnit ->
-                map.attackUnit(
-                    requireUnit(map, command.attackerUnitId),
-                    requireUnit(map, command.defenderUnitId),
-                    supportFire = false,
-                )
+            // The resulting state reaches every peer in the host's snapshot; no protocol change.
+            is AttackUnit -> applyAttack(game, map, command)
 
             is ResupplyUnit -> map.resupplyUnit(requireUnit(map, command.unitId))
             is ReinforceUnit -> map.reinforceUnit(requireUnit(map, command.unitId), command.strengthPoints != null)
@@ -185,16 +240,9 @@ class OsadaGameCommandApplier(
                     ),
                 )
 
-            is UpgradeUnit ->
-                check(
-                    map.upgradeUnit(
-                        command.unitId,
-                        command.equipmentId,
-                        command.transportEquipmentId ?: -1,
-                    ),
-                )
+            is UpgradeUnit -> check(upgrade(map, command))
 
-            is DisbandUnit -> check(map.disbandUnit(command.unitId))
+            is DisbandUnit -> check(disband(map, command))
             is ReorderReserve -> reorderReserve(map, command)
             is SetUnitAssignment -> assignmentHandler(command.unitId, command.assignedParticipantId)
             is EndTurnReady -> readinessHandler(command.actorPlayerId, command.ready)
@@ -205,6 +253,65 @@ class OsadaGameCommandApplier(
                 }
 
             is ContinueCampaign -> game.continueCampaign(command.outcome, EndGameType.MOVE_CAPTURE)
+            is EmbarkUnit -> map.embarkUnit(requireUnit(map, command.unitId))
+            is DisembarkUnit -> map.disembarkUnit(requireUnit(map, command.unitId))
+            is RailMove -> railMove(map, command)
+            is GreenReinforceUnit -> greenReinforce(map, command)
+            is DismissLeader -> LeaderDismissal.dismiss(requireUnit(map, command.unitId))
+            is PurchaseAttachment -> {
+                val unit = requireUnit(map, command.unitId)
+                command.slots.forEach { map.getPlayer(command.actorPlayerId).purchaseAttachment(unit, it) }
+            }
+        }
+    }
+
+    /**
+     * A move, and the surprise engagement the single-player path runs after its move animation
+     * (`AnimationOrchestrator.finishMoveAnimation`) -- here without the animation, because the host
+     * resolves the command and every peer receives the snapshot. The engagement is the same attack
+     * transaction (`model/executeAttack`), which clears the surprise once it has been fought.
+     */
+    private fun applyMove(
+        game: Game,
+        map: GameMap,
+        command: MoveUnit,
+    ) {
+        val unit = requireUnit(map, command.unitId)
+        val result = map.moveUnit(unit, command.to.y, command.to.x)
+        if (result.isVictorySide >= 0) game.handleMoveVictory(result.isVictorySide)
+        map.surpriseTarget(unit, result)?.let { target ->
+            if (!game.gameEnded) {
+                map.executeAttack(unit, target)
+                map.updateUnitList()
+                map.getEliminationWinner()?.let(game::handleMoveVictory)
+            }
+        }
+        unit.isSurprised = false
+        // Every arrival can satisfy an authored proximity condition. The local path evaluates them
+        // after each move (`AnimationOrchestrator.finishMoveAnimation`); a room used to reach them
+        // only at the end of the turn.
+        if (!game.gameEnded) game.evaluateScenarioEvents()
+    }
+
+    /**
+     * The complete attack order, exactly as a local click resolves it. The host then does what the
+     * local presenter does after the animation: ends the battle when a side has nothing left, and
+     * re-evaluates the scenario's authored conditions when a retreat or an evasion moved a unit.
+     */
+    private fun applyAttack(
+        game: Game,
+        map: GameMap,
+        command: AttackUnit,
+    ) {
+        val outcome =
+            map.executeAttack(
+                requireUnit(map, command.attackerUnitId),
+                requireUnit(map, command.defenderUnitId),
+            )
+        map.updateUnitList()
+        map.getEliminationWinner()?.let(game::handleMoveVictory)
+        if (!game.gameEnded && (outcome.retreat != null || outcome.result.evasion != null)) {
+            game.evaluateScenarioEvents()
         }
     }
 
@@ -224,7 +331,65 @@ class OsadaGameCommandApplier(
     private fun requireUnit(
         map: GameMap,
         unitId: Int,
-    ): GameUnit = requireNotNull(map.getUnitById(unitId)) { "Unknown unit $unitId" }
+    ): GameUnit = requireNotNull(map.findCommandUnit(unitId)) { "Unknown unit $unitId" }
+
+    /** A rail move to an offered station: the destinations are opened first, exactly as the
+     *  player's chip opens them, so `moveByRail` validates the hex against the same list. */
+    private fun railMove(
+        map: GameMap,
+        command: RailMove,
+    ) {
+        val unit = requireUnit(map, command.unitId)
+        map.openRailDestinations(unit)
+        map.moveByRail(unit, command.destination.y, command.destination.x)
+    }
+
+    /** OG's cheap replacement, exactly as the local chip applies it (`UnitContextMenu`). */
+    private fun greenReinforce(
+        map: GameMap,
+        command: GreenReinforceUnit,
+    ) {
+        val unit = requireUnit(map, command.unitId)
+        GreenReplacements.apply(unit, SupplyRules.getReinforceValue(map, unit, false))
+        map.undoState.invalidate(unit, UndoInvalidation.IRREVERSIBLE_ACTION)
+    }
+
+    /** An upgrade on the map or, for a formation still in the reserve tray, through its player --
+     *  the two branches `EquipmentWindowButtons.onUpgrade` takes. */
+    private fun upgrade(
+        map: GameMap,
+        command: UpgradeUnit,
+    ): Boolean {
+        val transport = command.transportEquipmentId ?: -1
+        val reserve = reserveUnit(map, command.actorPlayerId, command.unitId)
+        return if (reserve != null) {
+            map.getPlayer(command.actorPlayerId).upgradeUnit(reserve, command.equipmentId, transport)
+        } else {
+            map.upgradeUnit(command.unitId, command.equipmentId, transport)
+        }
+    }
+
+    /** Disbanding on the map, or SELLING a formation from the reserve tray, as
+     *  `EquipmentWindowButtons.onSell` does. */
+    private fun disband(
+        map: GameMap,
+        command: DisbandUnit,
+    ): Boolean {
+        val player = map.getPlayer(command.actorPlayerId)
+        val reserve = reserveUnit(map, command.actorPlayerId, command.unitId)
+        return if (reserve != null) {
+            val index = player.getCoreUnitList().indexOf(reserve)
+            player.sellUnit(reserve).also { sold -> if (sold) player.removeUndeployedCoreUnit(index) }
+        } else {
+            map.disbandUnit(command.unitId)
+        }
+    }
+
+    private fun reserveUnit(
+        map: GameMap,
+        playerId: Int,
+        unitId: Int,
+    ): GameUnit? = map.getPlayer(playerId).getCoreUnitList().firstOrNull { it.id == unitId && !it.isDeployed }
 }
 
 /**
@@ -255,5 +420,21 @@ private fun GameCommand.unitIdOrNull(): Int? =
         is DisbandUnit -> unitId
         is ReorderReserve -> unitId
         is SetUnitAssignment -> unitId
+        is EmbarkUnit -> unitId
+        is DisembarkUnit -> unitId
+        is RailMove -> unitId
+        is PurchaseAttachment -> unitId
+        is GreenReinforceUnit -> unitId
+        is DismissLeader -> unitId
         is PurchaseUnit, is EndTurnReady, is EndPlayerTurn, is ChooseCampaignDialogueOption, is ContinueCampaign -> null
+    }
+
+/**
+ * The unit a command names: on the map, or a formation in a player's reserve tray. Deploying,
+ * upgrading or selling a reserve formation names a unit that is not on the map, and a lookup that
+ * only searched the map refused every one of those commands as "Unknown unit".
+ */
+internal fun GameMap.findCommandUnit(unitId: Int): GameUnit? =
+    getUnitById(unitId) ?: getPlayers().firstNotNullOfOrNull { player ->
+        player.getCoreUnitList().firstOrNull { it.id == unitId }
     }

@@ -13,9 +13,6 @@ internal enum class UndoInvalidation {
     /** Anti-air fire intercepted the move. */
     INTERCEPTED,
 
-    /** A hidden enemy stopped the move. */
-    STOPPED_BY_HIDDEN_ENEMY,
-
     /** Combat followed the move. */
     COMBAT,
 

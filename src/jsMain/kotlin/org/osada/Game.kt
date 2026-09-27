@@ -62,7 +62,8 @@ class Game {
     internal var restartCoreFlag: Boolean = false
 
     /** A restored save's core roster, parked until [setupPlayers] has assigned [campaignPlayer].
-     *  Consumed exactly once, by `handleCampaignScenarioLoaded`. */
+     *  Consumed exactly once, by whichever of `setupGameState` / `handleCampaignScenarioLoaded`
+     *  runs first. */
     internal var pendingCoreUnitRestore: PendingCoreUnitRestore? = null
     internal var awardPrototype: Boolean = false
     internal var nextScenarioData: dynamic = null
@@ -206,6 +207,14 @@ class Game {
         // units -- the reserve tray -- came back empty on every "Continue", campaign-run resume and
         // mission restart, even though the save itself had them.
         applyPendingCoreUnitRestore()
+        // The restored period, parked by `GameStateRestore`, is attached here rather than when the UI
+        // eventually draws the map (see `onScenarioLoadFinished`).
+        org.osada.ui.WeatherModel
+            .init(scenario)
+        // A restored campaign battle never runs `handleCampaignScenarioLoaded`, which is where the
+        // hero system learns its campaign/scenario/year -- so a restore used to leave that context
+        // null, or holding whatever run had been loaded before it.
+        if (campaign != null) refreshHeroCampaignContext()
         humanSides = countHumanSides(scenario?.map?.getPlayers()?.toList() ?: emptyList())
         if (DEBUG_AI_MOVES) humanSides = 2
         setCurrentSide()
@@ -243,6 +252,10 @@ class Game {
         // A checkpoint belongs to exactly one operation. Clear it before loading another one;
         // restoreFromString does not pass through here, so restarting keeps its immutable source.
         missionRestartCheckpoint.clear()
+        // A standalone battle is outside every campaign run: no roster, context or queued hero event
+        // from a campaign played earlier in this session may reach it (`hero/CampaignHeroScope`).
+        // Between two scenarios of one campaign `campaign` is set and the run is kept.
+        if (campaign == null) HeroCampaign.reset()
         // Up BEFORE cleanup, so the battle being torn down is never on screen. UI.setNewScenario
         // drops it once the new map is drawn (or once a campaign briefing covers it).
         ScenarioLoadingCurtain.show()
@@ -280,6 +293,11 @@ class Game {
         // the time this runs. Re-seeding here on a restore would re-roll every outcome still ahead
         // of the save (`rules/GameRandomSource`).
         if (!fromRestore) GameRandomSource.start(Date.now().toLong())
+        // The weather model is started by the GAME as soon as the battle exists, not by the UI once
+        // the map is drawn: its draws come from the stream just seeded, in a fixed order, and a
+        // headless host must produce them too. `WeatherModel.init` is idempotent per scenario.
+        org.osada.ui.WeatherModel
+            .init(scenario)
         if (fromRestore) scenario?.let { it.turnMessageShownThrough = it.map.turn }
         // OG's custom music track for this battle. `ScenarioMusic` plays the licensed files listed
         // by its manifest and stays silent for an absent source or unsupported format.
@@ -289,6 +307,14 @@ class Game {
         // evaluation happens after the UI's image cache completes, which is far slower than a
         // small JSON fetch. An untranslated scenario asks for nothing.
         ScenarioTextLocalization.ensure(scenario?.file)
+        // A restored battle's players ARE the saved players: there is no carried campaign player to
+        // copy onto them. The page-load restore (`init`) reaches here after `setupGameState` has
+        // already run `setupPlayers` once, which left a snapshot of the campaign player taken BEFORE
+        // `applyPendingCoreUnitRestore` gave it its roster. Copying that snapshot back on this
+        // second pass emptied the reserve tray and doubled the campaign score on every page refresh
+        // (the undeployed core of `forward` scenario 2 vanished outright). Same reset as
+        // `setupGameState`'s own.
+        if (fromRestore) savedCampaignPlayer = null
         setupPlayers()
         humanSides = countHumanSides(scenario?.map?.getPlayers()?.toList() ?: emptyList())
         setCurrentSide()

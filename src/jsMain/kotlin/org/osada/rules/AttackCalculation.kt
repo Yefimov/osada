@@ -290,10 +290,12 @@ internal object AttackCalculation {
         defender: GameUnit,
         context: CombatContext,
         closeCombat: Boolean,
+        rugged: Boolean = false,
     ) {
         var attackerEntrenchment = 0
         var defenderEntrenchment = 0
-        if (context.attackerEntrenchmentIntact && !closeCombat) attackerEntrenchment = attacker.entrenchment
+        // OG: *"if A has not moved and not Rugged ... A.EffDef += A.entrench stat"*.
+        if (context.attackerEntrenchmentIntact && !closeCombat && !rugged) attackerEntrenchment = attacker.entrenchment
         if (context.entrenchmentIntact) defenderEntrenchment = defender.entrenchment
 
         if (Leaders.unitHasLeader(attacker, LeaderType.INFILTRATION_TACTICS) &&
@@ -444,22 +446,20 @@ internal object AttackCalculation {
         }
     }
 
-    /** Rugged-defense / surprise checks that zero the attacker's defense and halve its attack,
-     *  then whether the defender is in range and able to fire back at all. */
+    /** Records a raised rugged defence on the result (the map announces it), then whether the
+     *  defender is in range and able to fire back at all. The Rugged MODE itself -- what a rugged
+     *  defence or a surprise does to the numbers -- is [applyRuggedCombat]; until 2026-09-26 this
+     *  function applied Panzer Marshal's version instead (attacker defence 0, attack halved). */
     fun resolveRuggedSurpriseAndFireEligibility(
-        stats: CombatStats,
         attacker: GameUnit,
         defender: GameUnit,
         context: CombatContext,
         result: CombatResults,
+        ruggedDefence: Boolean,
     ) {
-        if (context.distance == 1 && context.entrenchmentIntact && CombatResolver.isRuggedDefense(attacker, defender)) {
-            result.isRugged = true
-        }
-        if (attacker.isSurprised || result.isRugged) {
-            stats.attackerDefense = 0
-            stats.attackerAttack /= 2
-        }
+        // `isRugged` means the rugged DEFENCE, which is what the map announces and what cancels a
+        // retreat and an evade. Close combat is Rugged too but is not announced -- it is ordinary.
+        if (ruggedDefence) result.isRugged = true
         val navalGunneryInRange =
             UnitPredicates.isSea(attacker) &&
                 UnitPredicates.isSea(defender) &&
@@ -470,7 +470,13 @@ internal object AttackCalculation {
         // fleet with complete impunity. See `ExtendedNaval.shipReturnsFireToShoreBattery`.
         val shoreBatteryAnswered =
             ExtendedNaval.shipReturnsFireToShoreBattery(attacker, defender, context.distance)
-        if (context.distance > 1 && !navalGunneryInRange && !shoreBatteryAnswered) {
+        // An ambush fought at range (an `Overwatch` gun, `rules/MoveAmbush`): the surprised mover is
+        // the attacker, but it is the ambusher that opens fire, at its own reach -- so a defender
+        // that can reach a surprised attacker fires back whatever the distance.
+        val ambushInReach =
+            attacker.isSurprised && context.distance <= AttackEligibility.getUnitAttackRange(defender)
+        val answersAtRange = navalGunneryInRange || shoreBatteryAnswered || ambushInReach
+        if (context.distance > 1 && !answersAtRange) {
             result.defcanfire = false
         }
         if (!AttackEligibility.canFire(defender, attacker)) {

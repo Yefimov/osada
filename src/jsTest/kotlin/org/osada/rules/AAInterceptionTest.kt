@@ -1,6 +1,8 @@
 package org.osada.rules
 
+import org.osada.LeaderType
 import org.osada.MovMethod
+import org.osada.TerrainType
 import org.osada.UnitClass
 import org.osada.UnitType
 import org.osada.model.Cell
@@ -206,17 +208,64 @@ class AAInterceptionTest {
         )
     }
 
+    /** `flak_range` widens Flak's COMBAT with aircraft, never interception: the author's config
+     *  table says *"interception remains limited to range 1"*. */
     @Test
-    fun interceptionUsesFlakRangeNotGunRange() {
-        // This AA's own gunrange is 1 (see setup), but flak_range=4 must still reach 4 hexes.
+    fun interceptionStaysAtRangeOneWhateverFlakRangeSays() {
         EfileConfig.setForTest(mapOf("g2a_intercept_mode" to 0, "flak_range" to 4))
         val plane = plane(5, 5)
         val aa = flak(5, 9, spotted = false)
-        val farCell = Cell(5, 9)
 
-        val interceptors = AAInterception.interceptorsFor(map, plane, farCell, isDestination = false)
+        assertFalse(
+            aa in AAInterception.interceptorsFor(map, plane, Cell(5, 6), isDestination = false),
+            "three hexes away: flak_range=4 does not stretch interception",
+        )
+        assertTrue(
+            aa in AAInterception.interceptorsFor(map, plane, Cell(5, 8), isDestination = false),
+            "adjacent: intercepted",
+        )
+    }
 
-        assertTrue(aa in interceptors, "flak_range=4 must reach an AA unit 4 hexes from the plane's cell")
+    /** OG: *"Interception cannot happen if: Plane has Skilled Assault leader"*. */
+    @Test
+    fun aSkilledAssaultPlaneIsNeverIntercepted() {
+        EfileConfig.setForTest(mapOf("g2a_intercept_mode" to 0))
+        val plane = plane(5, 5).apply { leader = LeaderType.SKILLED_ASSAULT.value }
+        flak(5, 6, spotted = false)
+
+        assertTrue(AAInterception.interceptorsFor(map, plane, Cell(5, 6), isDestination = false).isEmpty())
+    }
+
+    /** OG: *"AD/Flaks units that have already intercepted in the turn cannot intercept again"* --
+     *  under every mode, including mode 2 where a spotted gun could otherwise fire again. */
+    @Test
+    fun aGunInterceptsOnlyOncePerTurn() {
+        EfileConfig.setForTest(mapOf("g2a_intercept_mode" to 2))
+        val first = plane(5, 5)
+        val aa = flak(5, 6, spotted = false)
+        AAInterception.applyInterception(
+            map,
+            first,
+            AAInterception.interceptorsFor(map, first, Cell(5, 6), isDestination = true),
+        )
+        val second = plane(4, 5)
+
+        assertFalse(
+            aa in AAInterception.interceptorsFor(map, second, Cell(5, 6), isDestination = true),
+            "the same gun cannot intercept a second aircraft this turn",
+        )
+    }
+
+    /** Visibility is the game's single answer (`UnitConcealment.isVisibleTo`): a camouflaged gun on
+     *  a spotted city hex is still HIDDEN, so it intercepts a plane merely flying past. */
+    @Test
+    fun aConcealedGunOnASpottedHexCountsAsHidden() {
+        EfileConfig.setForTest(mapOf("g2a_intercept_mode" to 0))
+        val plane = plane(3, 3)
+        val aa = flak(5, 6, spotted = true).apply { leader = LeaderType.FOREST_CAMOUFLAGE.value }
+        map.map!![5][6].terrain = TerrainType.CITY.value
+
+        assertTrue(aa in AAInterception.interceptorsFor(map, plane, Cell(5, 5), isDestination = false))
     }
 
     // --- Threat overlay: visibleThreatHexes must NEVER leak hidden AA, and must never draw

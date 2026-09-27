@@ -8,6 +8,9 @@ import org.osada.model.Hex
 import org.osada.model.clearRailTargeting
 import org.osada.model.moveByRail
 import org.osada.model.openRailDestinations
+import org.osada.multiplayer.client.OsadaMultiplayer
+import org.osada.multiplayer.command.HexCoordinate
+import org.osada.multiplayer.command.RailMove
 import org.osada.uiSettings
 
 /**
@@ -28,6 +31,14 @@ internal fun MapClickHandler.resolveRailClick(
 ): Boolean {
     val unit = map.currentUnit
     uiSettings.railMode = false
+    // In a room the journey is an order for the host; the destination mode closes here either way.
+    if (OsadaMultiplayer.active) {
+        if (unit != null && hex.isRailSel) {
+            OsadaMultiplayer.submitOrder(RailMove(unit.id, HexCoordinate(cell.col, cell.row), unit.owner))
+        }
+        map.clearRailTargeting()
+        return unit != null && hex.isRailSel
+    }
     val moved = unit != null && hex.isRailSel && map.moveByRail(unit, cell.row, cell.col)
     if (unit == null || !hex.isRailSel) map.clearRailTargeting()
     if (unit != null) {

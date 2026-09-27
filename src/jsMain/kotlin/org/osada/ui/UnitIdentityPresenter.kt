@@ -84,7 +84,19 @@ internal object UnitIdentityPresenter {
         byId("uName")?.textContent = unit.customName ?: equipmentName
     }
 
-    private fun presentCommander(unit: GameUnit) {
+    /**
+     * The commander mark on the name row: a peaked-cap silhouette whose SHAPE carries the state and
+     * whose text carries only what differs between units. It used to be a sentence per state
+     * ("Heroic commander: Captain X", "No persistent hero") that competed with the unit name for the
+     * one row both share. Filled means a commander is present, hollow means the slot is empty --
+     * a hollow brass one can still fill, a hollow grey one cannot. Absence is deliberately quiet
+     * (no strike-through): it is the normal state of every standalone-scenario unit, not an error.
+     * The full sentence moves to the tooltip and the aria-label, so nothing is lost.
+     *
+     * Internal because [GameplayLocalization] re-runs it verbatim on a language switch rather than
+     * keeping a second copy of the same five branches.
+     */
+    internal fun presentCommander(unit: GameUnit) {
         val leader = byId("uLeader") ?: return
         leader.className = "uc-commander-line"
         leader.setAttribute("role", "button")
@@ -101,8 +113,11 @@ internal object UnitIdentityPresenter {
                         "unit_info.leader.led_by",
                         mapOf("rank" to dossier.rank, "name" to dossier.name),
                     )
-                leader.textContent = label
-                leader.classList.add("uc-commander-line--hero")
+                renderMark(
+                    leader,
+                    CommanderMark.HERO,
+                    I18n.t("unit_info.leader.hero.short", mapOf("rank" to dossier.rank, "name" to dossier.name)),
+                )
                 leader.title = "$label\n${I18n.t("unit_info.leader.open_dossier.help")}"
                 leader.setAttribute(
                     "aria-label",
@@ -119,8 +134,11 @@ internal object UnitIdentityPresenter {
                 val descriptions = Leaders.getUnitLeaderDescriptions(unit)
                 val trait = descriptions.firstOrNull()?.first ?: I18n.t("unit_info.leader.authored_commander")
                 val label = I18n.t("unit_info.leader.legacy", mapOf("trait" to trait))
-                leader.textContent = label
-                leader.title = descriptions.joinToString("\n") { "${it.first}: ${it.second}" }.ifBlank { label }
+                renderMark(leader, CommanderMark.LEGACY, trait)
+                leader.title =
+                    listOf(label)
+                        .plus(descriptions.map { "${it.first}: ${it.second}" })
+                        .joinToString("\n")
                 leader.setAttribute("aria-label", label)
                 leader.onclick = { event: MouseEvent ->
                     event.stopPropagation()
@@ -130,25 +148,26 @@ internal object UnitIdentityPresenter {
             }
 
             unit.isTemporaryBorrowed || unit.nodossier -> {
-                leader.textContent = I18n.t("unit_info.leader.temporary.label")
-                leader.classList.add("uc-commander-line--disabled")
-                leader.title = I18n.t("unit_info.leader.temporary.help")
+                renderMark(leader, CommanderMark.NONE, null)
+                val label = I18n.t("unit_info.leader.temporary.label")
+                leader.title = "$label\n${I18n.t("unit_info.leader.temporary.help")}"
                 disableInteraction(leader)
             }
 
-            unit.formationId == null -> {
-                leader.textContent = I18n.t("unit_info.leader.scenario_only.label")
-                leader.classList.add("uc-commander-line--disabled")
-                leader.title = I18n.t("unit_info.leader.scenario_only.help")
+            // The hero system's scope, not the bare id: a stale id from an old save (an enemy or a
+            // standalone purchase) is a scenario unit (`hero/CampaignHeroScope`).
+            !HeroCampaign.isHeroEligible(unit) -> {
+                renderMark(leader, CommanderMark.NONE, null)
+                val label = I18n.t("unit_info.leader.scenario_only.label")
+                leader.title = "$label\n${I18n.t("unit_info.leader.scenario_only.help")}"
                 disableInteraction(leader)
             }
 
             else -> {
                 val progress = HeroCampaign.recognitionProgress(unit)
                 val label = I18n.t("unit_info.leader.candidate.label")
-                leader.textContent = label
-                leader.classList.add("uc-commander-line--candidate")
-                leader.title =
+                renderMark(leader, CommanderMark.CANDIDATE, null)
+                val help =
                     if (progress == null) {
                         I18n.t("unit_info.leader.candidate.no_record")
                     } else {
@@ -176,12 +195,41 @@ internal object UnitIdentityPresenter {
                             ),
                         )
                     }
-                leader.setAttribute("aria-label", "$label. ${leader.title}")
+                leader.title = "$label\n$help"
+                leader.setAttribute("aria-label", "$label. $help")
                 leader.onclick = { event: MouseEvent ->
                     event.stopPropagation()
                     byId("unit-info")?.classList?.add("uc--expanded")
                 }
                 enableKeyboardActivation(leader)
+            }
+        }
+    }
+
+    private enum class CommanderMark(
+        val modifier: String,
+    ) {
+        HERO("uc-commander-line--hero"),
+        LEGACY("uc-commander-line--legacy"),
+        CANDIDATE("uc-commander-line--candidate"),
+        NONE("uc-commander-line--disabled"),
+    }
+
+    private fun renderMark(
+        leader: HTMLElement,
+        mark: CommanderMark,
+        text: String?,
+    ) {
+        leader.classList.add(mark.modifier)
+        leader.textContent = ""
+        addTag(leader, "span").also {
+            it.className = "uc-commander-icon"
+            it.setAttribute("aria-hidden", "true")
+        }
+        if (text != null) {
+            addTag(leader, "span").also {
+                it.className = "uc-commander-text"
+                it.textContent = text
             }
         }
     }
@@ -201,8 +249,9 @@ internal object UnitIdentityPresenter {
         element.onkeydown = null
         element.removeAttribute("role")
         element.removeAttribute("tabindex")
+        element.setAttribute("role", "img")
         element.setAttribute("aria-disabled", "true")
-        element.setAttribute("aria-label", element.title)
+        element.setAttribute("aria-label", element.title.replace("\n", ". "))
     }
 
     // TODO(detekt): CyclomaticComplexMethod (22) — tied with handleLeftClickWithUnit as the worst
@@ -219,7 +268,7 @@ internal object UnitIdentityPresenter {
             val serviceKey =
                 when {
                     unit.isTemporaryBorrowed || unit.nodossier -> "auxiliary"
-                    unit.formationId != null -> "core"
+                    HeroCampaign.isHeroEligible(unit) -> "core"
                     else -> "scenario"
                 }
             textContent =

@@ -97,7 +97,11 @@ internal object HeroCampaign {
 
     /** Restores from the save's `campaign.heroes` block; null (a pre-hero save) yields an empty roster. */
     fun restore(heroes: dynamic) {
+        // A restore REPLACES the run: nothing queued, credited or contextualised by whatever was
+        // loaded before it may survive into this one.
+        reset()
         roster = HeroSerializer.deserialize(heroes)
+        deactivateForeignFormations()
     }
 
     /** The live roster, for the migration and resolver collaborators. */
@@ -111,8 +115,35 @@ internal object HeroCampaign {
      * hero?" has exactly one answer everywhere.
      */
     fun heroFor(unit: GameUnit?): HeroState? {
-        val formationId = unit?.let { FormationIdentity.of(it) } ?: return null
+        val formationId = activeFormationId(unit) ?: return null
         return roster.assignedHero(formationId)
+    }
+
+    /**
+     * [unit]'s formation id when the unit is inside the hero system's scope ([CampaignHeroScope])
+     * and its roster record, if it has one yet, is active -- or null. Every per-unit entry point
+     * reads the id through this, never through [FormationIdentity] directly: an id on a unit is
+     * identity, not authorisation.
+     */
+    fun activeFormationId(unit: GameUnit?): FormationId? =
+        unit
+            ?.takeIf(CampaignHeroScope::unitEligible)
+            ?.let(FormationIdentity::of)
+            ?.takeIf { id -> roster.formation(id)?.let(CampaignHeroScope::formationActive) ?: true }
+
+    /** Whether combat involving [unit] feeds the hero system rather than the legacy leader path. */
+    fun isHeroEligible(unit: GameUnit?): Boolean = activeFormationId(unit) != null
+
+    /**
+     * Marks every roster record that is not the campaign player's as inactive (§3.1): the enemy
+     * formations an AI purchase used to enrol. Kept rather than deleted -- history and biography
+     * references survive -- and idempotent, so it can run on every restore.
+     */
+    private fun deactivateForeignFormations() {
+        roster
+            .allFormations()
+            .filter { !it.inactive && !CampaignHeroScope.belongsToCampaignPlayer(it) }
+            .forEach { roster.putFormation(it.copy(inactive = true)) }
     }
 
     /**
@@ -128,13 +159,13 @@ internal object HeroCampaign {
 
     /** The coarse recognition status for [unit]'s formation, or null when it has none/has a hero (§7.1). */
     fun recognitionStatus(unit: GameUnit?): String? {
-        val formation = unit?.let { FormationIdentity.of(it) }?.let { roster.formation(it) } ?: return null
+        val formation = activeFormationId(unit)?.let { roster.formation(it) } ?: return null
         return RecognitionService.coarseStatus(formation)
     }
 
     /** Visible recognition state for every leaderless formation, including one with no combat record yet. */
     fun recognitionProgress(unit: GameUnit?): RecognitionService.Progress? {
-        val formationId = unit?.let(FormationIdentity::of)
+        val formationId = activeFormationId(unit)
         val formation = formationId?.let(roster::formation)
         return if (formationId != null && formation?.assignedHeroId == null) {
             RecognitionService.progress(formation?.recognition ?: 0, roster.drought)
@@ -144,7 +175,7 @@ internal object HeroCampaign {
     }
 
     /** Persistent formation record for Unit Info's expanded recognition/history section. */
-    fun formationFor(unit: GameUnit?): CoreFormation? = unit?.let(FormationIdentity::of)?.let(roster::formation)
+    fun formationFor(unit: GameUnit?): CoreFormation? = activeFormationId(unit)?.let(roster::formation)
 
     /**
      * Ensures that every persistent player formation has a campaign record even before its first
@@ -152,7 +183,7 @@ internal object HeroCampaign {
      * or commander assignment. A changed equipment id is recorded once in the service history.
      */
     fun synchronizeFormation(unit: GameUnit): CoreFormation? {
-        val formationId = FormationIdentity.of(unit) ?: return null
+        val formationId = activeFormationId(unit) ?: return null
         val current = roster.formation(formationId)
         val history =
             if (current != null && current.currentEquipmentId != unit.eqid) {
@@ -200,7 +231,7 @@ internal object HeroCampaign {
         turn: Int = currentTurn(),
         location: String? = null,
     ): CoreFormation? {
-        val formationId = FormationIdentity.of(unit) ?: return null
+        val formationId = activeFormationId(unit) ?: return null
         val formation = ensureFormation(unit, formationId)
         val event =
             FormationEvent(
@@ -242,7 +273,7 @@ internal object HeroCampaign {
         unit: GameUnit,
         slotNumber: Int,
     ): Boolean {
-        val formation = FormationIdentity.of(unit)?.let(roster::formation)
+        val formation = activeFormationId(unit)?.let(roster::formation)
         val slot = EfileConfig.attachments()?.slots?.get(slotNumber)
         val slotId = slotNumber.toString()
         val legal =
@@ -261,7 +292,7 @@ internal object HeroCampaign {
     /** The dossier view for [unit]'s commander (§14.2/14.4), or null when the unit has no hero. */
     fun dossier(unit: GameUnit?): LeaderDossierView? {
         val experience = unit?.experience
-        val formation = unit?.let { FormationIdentity.of(it) }?.let { roster.formation(it) }
+        val formation = activeFormationId(unit)?.let { roster.formation(it) }
         val heroId = formation?.assignedHeroId
         val definition = heroId?.let { roster.definition(it) }
         val state = heroId?.let { roster.state(it) }
@@ -314,7 +345,7 @@ internal object HeroCampaign {
     /** Every commander in the campaign, for the Headquarters roster (§14.3). */
     fun commanders(): List<CommanderRow> =
         roster.allDefinitions().mapNotNull { definition ->
-            val state = roster.state(definition.id) ?: return@mapNotNull null
+            val state = roster.state(definition.id)?.takeUnless(::servedInactiveFormation) ?: return@mapNotNull null
             val formationName = state.assignedFormationId?.let { roster.formation(it)?.displayName }
             HeroDossierAssembler.commanderRow(
                 definition,
@@ -323,6 +354,18 @@ internal object HeroCampaign {
                 HeroTransferService.settlingTurnsLeft(state),
             )
         }
+
+    /**
+     * Whether [hero] belongs to a formation that is outside the hero system: commanding an inactive
+     * record now, or having emerged in one. Such an officer (an enemy commander a purchase used to
+     * enrol) keeps its record for history but never appears among serving commanders (§3.1).
+     */
+    private fun servedInactiveFormation(hero: HeroState): Boolean {
+        val origin = hero.serviceEvents.firstOrNull { it.eventId == "emerged" }?.formationId
+        return listOfNotNull(hero.assignedFormationId, origin)
+            .mapNotNull(roster::formation)
+            .any { !CampaignHeroScope.formationActive(it) }
+    }
 
     /**
      * Feeds one core unit's part in a resolved combat into the hero system and reports whether an
@@ -340,7 +383,7 @@ internal object HeroCampaign {
         turn: Int = 0,
         supportingFormationIds: List<String> = emptyList(),
     ): Boolean {
-        val formationId = FormationIdentity.of(unit) ?: return false
+        val formationId = activeFormationId(unit) ?: return false
         val formation = ensureFormation(unit, formationId)
         val heroId = formation.assignedHeroId
         return when {
@@ -381,7 +424,7 @@ internal object HeroCampaign {
         newlySpotted: Int,
         turn: Int = currentTurn(),
     ): Boolean {
-        val formationId = unit.takeIf { newlySpotted > 0 }?.let(FormationIdentity::of)
+        val formationId = unit.takeIf { newlySpotted > 0 }?.let(::activeFormationId)
         val hero =
             formationId
                 ?.let(roster::formation)
@@ -416,7 +459,7 @@ internal object HeroCampaign {
         val casualty =
             unit
                 .takeIf { it.destroyed }
-                ?.let(FormationIdentity::of)
+                ?.let(::activeFormationId)
                 ?.let { ensureFormation(unit, it) }
                 ?.let { formation -> formation.assignedHeroId?.let { formation to it } }
         return if (casualty != null) {
@@ -711,8 +754,10 @@ internal object HeroCampaign {
             id = formationId,
             ownerId = unit.owner,
             country = unit.player?.country ?: -1,
-            displayName = unit.customName ?: unit.unitData().name,
+            // The REAL record, as [synchronizeFormation] reads it: a formation first met riding its
+            // trucks is still an infantry formation, not a truck one (§3.4).
+            displayName = unit.customName ?: unit.unitData(true).name,
             currentEquipmentId = unit.eqid,
-            unitClass = unit.unitData().uclass,
+            unitClass = unit.unitData(true).uclass,
         ).also(roster::putFormation)
 }

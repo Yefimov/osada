@@ -110,7 +110,14 @@ internal object CombatPositioning {
         // MovementRules.getReinforcementDeployPositions. The rail requirement is layered on top.
         val movementTable = movTable[if (isTrain) MovMethod.WHEELED.value else data.movmethod]
 
-        return firstPassableRetreatCell(map, ordered, rows, movementTable, requireRail = isTrain)
+        return firstPassableRetreatCell(
+            map,
+            ordered,
+            rows,
+            movementTable,
+            requireRail = isTrain,
+            air = UnitPredicates.isAir(unit),
+        )
     }
 
     /**
@@ -182,6 +189,7 @@ internal object CombatPositioning {
         rows: Int,
         movementTable: List<Int>,
         requireRail: Boolean,
+        air: Boolean,
     ): Cell? {
         ordered.forEach { cell ->
             if (cell.row == 0 && cell.col % 2 == 0) return@forEach
@@ -194,7 +202,12 @@ internal object CombatPositioning {
                     movementTable[hex.terrain] <
                         IMPASSABLE_TERRAIN_COST
                 }
-            if (hex.unit == null && passable) return Cell(cell.row, cell.col)
+            // The slot on the unit's OWN layer must be free. An evading aircraft (NOKORP's
+            // `class_evade` gives fighters 65%) was tested against the ground slot, so it could land
+            // on another aircraft and overwrite it in the hex, and was refused any hex with a unit
+            // on the ground beneath.
+            val free = if (air) hex.airunit == null else hex.unit == null
+            if (free && passable) return Cell(cell.row, cell.col)
         }
         return null
     }

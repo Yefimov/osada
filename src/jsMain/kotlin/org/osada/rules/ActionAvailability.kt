@@ -143,9 +143,6 @@ enum class ActionBlockReason {
     /** The move became final because anti-air fire intercepted it. */
     UNDO_INTERCEPTED,
 
-    /** The move became final because a hidden enemy stopped it. */
-    UNDO_STOPPED_BY_HIDDEN_ENEMY,
-
     /** The move became final because combat followed it. */
     UNDO_COMBAT,
 

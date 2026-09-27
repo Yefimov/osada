@@ -40,6 +40,7 @@ class HeroPersistenceTest {
 
     @BeforeTest
     fun setup() {
+        enterCampaignForTests()
         js("if (typeof window.scenariolist === 'undefined') { window.scenariolist = []; }")
         Equipment.resetEquipment()
         listOf(TANK_EQID, BETTER_TANK_EQID).forEach { id ->
@@ -56,6 +57,7 @@ class HeroPersistenceTest {
 
     @AfterTest
     fun tearDown() {
+        leaveCampaignForTests()
         HeroCampaign.reset()
     }
 

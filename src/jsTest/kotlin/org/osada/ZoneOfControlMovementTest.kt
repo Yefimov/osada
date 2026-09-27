@@ -12,6 +12,7 @@ import org.osada.model.moveUnit
 import org.osada.model.resetEquipment
 import org.osada.model.setMoveRange
 import org.osada.rules.GameRules
+import org.osada.rules.HexGeometry
 import org.osada.rules.MovementRules
 import org.osada.rules.setZOCRange
 import kotlin.test.AfterTest
@@ -233,17 +234,52 @@ class ZoneOfControlMovementTest {
         assertFalse((1 to 5) in got, "Determined Defense has nothing to do with movement")
     }
 
-    // ---- DEFERRED.md §7.32 item 4: a HIDDEN enemy's ZOC ----
+    // ---- A HIDDEN enemy's ZOC ----
     //
-    // The move RANGE is deliberately blind to unseen ZOC: charging for it would draw a short reach
-    // around an enemy the player has not found, reading its position straight off the overlay. The
-    // stop therefore lives in the executor, so the overlay stays honest and the unit stops on
-    // contact. These three tests pin both halves plus the fog guarantee between them.
+    // The move RANGE is blind to unseen ZOC: charging for it would draw a short reach around an
+    // enemy the player has not found. The WALK is not: meeting the zone of an enemy the side had not
+    // seen ends the move there, with no combat (OG manual 6.13.1, restored 2026-09-27,
+    // `rules/ZoneOfControlContact`). "Unseen" is the enemy UNIT's visibility, not the terrain's.
 
-    /** The overlay must keep offering the whole corridor even though an unspotted enemy flanks it —
+    /** The overlay must keep offering the whole corridor even though an unseen enemy flanks it —
      *  if this ever fails, the move range has begun leaking hidden unit positions. */
     @Test
     fun theMoveRangeStaysOptimisticAboutAnUnseenEnemysZoc() {
+        val map = corridor()
+        withEnemyProjectingZocInto(map, 0, 4)
+        unspot(map, 0, 4)
+        val unit = place(map, 1, 2, 0)
+
+        val got = reach(map, unit)
+
+        assertTrue((1 to 5) in got, "an unseen enemy must not shorten the drawn range")
+        assertTrue((1 to 8) in got, "nor cost the allowance — that would betray its position")
+    }
+
+    /** ...but walking into its zone is a contact: the move stops on the first hex of it. */
+    @Test
+    fun aMoveIntoAnUnseenEnemysZocStopsOnContact() {
+        val map = corridor()
+        withEnemyProjectingZocInto(map, 0, 4)
+        unspot(map, 0, 4)
+        val unit = place(map, 1, 2, 0)
+
+        map.setMoveRange(unit)
+        val result = map.moveUnit(unit, 1, 8)
+
+        val stop = unit.getPos()!!.let { it.row to it.col }
+        assertTrue(stop != (1 to 8), "the move does not reach where it was sent")
+        assertTrue(result.stoppedByContact, "and the stop is reported as a contact")
+        assertTrue(
+            HexGeometry.getAdjacent(0, 4).any { it.row to it.col == stop },
+            "it stops on the first hex of the enemy's zone",
+        )
+        assertFalse(unit.isSurprised, "a contact is not a surprise: no combat follows")
+    }
+
+    /** An enemy the side CAN see already ended the route in the overlay; seeing it is not "contact". */
+    @Test
+    fun aVisibleEnemysZoneIsARouteTerminalNotAContact() {
         val map = corridor()
         withEnemyProjectingZocInto(map, 0, 4)
         unspot(map, 1, 4)
@@ -251,23 +287,7 @@ class ZoneOfControlMovementTest {
 
         val got = reach(map, unit)
 
-        assertTrue((1 to 5) in got, "an unspotted enemy must not shorten the drawn range")
-        assertTrue((1 to 8) in got, "nor cost the allowance — that would betray its position")
-    }
-
-    /** ...but walking it actually stops the unit on the hex where it became adjacent. */
-    @Test
-    fun aMoveThroughAnUnseenEnemysZocStopsOnContact() {
-        val map = corridor()
-        withEnemyProjectingZocInto(map, 0, 4)
-        unspot(map, 1, 4)
-        val unit = place(map, 1, 2, 0)
-
-        map.setMoveRange(unit)
-        val result = map.moveUnit(unit, 1, 8)
-
-        assertTrue(result.stoppedByUnseenEnemy, "the walk must report why it stopped short")
-        assertEquals(1 to 4, unit.getPos()!!.let { it.row to it.col }, "stops on the first ZOC hex entered")
+        assertFalse((1 to 8) in got, "a visible enemy's zone ends the route, whatever the terrain's spotting")
     }
 
     /** Control: with the same enemy spotted, the range itself already ends the move, so the
@@ -282,7 +302,6 @@ class ZoneOfControlMovementTest {
         map.setMoveRange(unit)
         val result = map.moveUnit(unit, 1, 4)
 
-        assertFalse(result.stoppedByUnseenEnemy, "a visible enemy's ZOC is priced into the range")
         assertEquals(1 to 4, unit.getPos()!!.let { it.row to it.col })
     }
 
@@ -315,7 +334,7 @@ class ZoneOfControlMovementTest {
         map.setMoveRange(plane)
         val result = map.moveUnit(plane, 1, 6)
 
-        assertFalse(result.stoppedByUnseenEnemy, "ground ZOC is nothing to an aircraft")
+        assertEquals(1 to 6, plane.getPos()!!.let { it.row to it.col }, "ground ZOC is nothing to an aircraft")
     }
 
     /** Hides the ZOC-covered corridor hex from side 0. The engine's gate is `isSpotted` on the hex
@@ -327,5 +346,58 @@ class ZoneOfControlMovementTest {
         col: Int,
     ) {
         map.map!![row][col].setSpotted(0, false)
+    }
+
+    /**
+     * A move is charged what its hexes cost, not one point per hex plus one for the hex it started
+     * on: the route used to come back from the pathfinder as plain cells, which the walk charges 1.
+     */
+    @Test
+    fun aMoveSpendsTheTerrainCostOfTheHexesEnteredAndNothingForTheStart() {
+        val tankEqid = 403
+        Equipment.putEquipment(
+            tankEqid,
+            EquipmentData().apply {
+                uclass = UnitClass.TANK.value
+                movmethod = MovMethod.TRACKED.value
+                movpoints = 6
+                fuel = 40
+            },
+        )
+        val map = corridor()
+        val tank =
+            GameUnit(tankEqid).apply {
+                owner = 0
+                player = map.getPlayer(0)
+                fuel = 20
+            }
+        map.map!![1][2].setUnit(tank)
+        val expected = (3..5).sumOf { col -> movTable[MovMethod.TRACKED.value][map.map!![1][col].terrain] }
+
+        map.setMoveRange(tank)
+        map.moveUnit(tank, 1, 5)
+
+        assertEquals(20 - expected, tank.fuel, "three clear hexes cost their table cost, the start is free")
+    }
+
+    /**
+     * A route may pass through a friendly formation's hex but never stop on it. A contact stop that
+     * falls on such a hex steps back to the last free one, instead of putting two units on one hex.
+     */
+    @Test
+    fun aContactStopNeverEndsOnAFriendlyHex() {
+        val map = corridor()
+        withEnemyProjectingZocInto(map, 0, 5)
+        unspot(map, 0, 5)
+        val firstZoneHex = (3..8).first { c -> HexGeometry.getAdjacent(0, 5).any { it.row == 1 && it.col == c } }
+        val friend = place(map, 1, firstZoneHex, 0)
+        val unit = place(map, 1, 2, 0)
+
+        map.setMoveRange(unit)
+        val result = map.moveUnit(unit, 1, 8)
+
+        assertTrue(result.stoppedByContact)
+        assertEquals(1 to firstZoneHex - 1, unit.getPos()!!.let { it.row to it.col }, "stepped back off the friend")
+        assertTrue(map.map!![1][firstZoneHex].unit === friend, "the friend keeps its hex")
     }
 }

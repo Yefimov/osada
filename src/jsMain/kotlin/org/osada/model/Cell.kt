@@ -78,12 +78,12 @@ class MovementResults {
     @JsExport.Ignore
     var interceptions: MutableList<InterceptionEvent> = mutableListOf()
 
-    /** Set when an `Overwatch` commander fired on this move (`rules/OverwatchFire`). Unlike
-     *  [wasIntercepted] it does NOT stop the walk -- overwatch is fire at something passing, not an
-     *  interception -- but it must block undo for the same reason: rewinding a move that drew fire
-     *  would make probing for overwatching guns free. The events themselves ride in
-     *  [interceptions], which is the one channel the banner and HUD log already read. */
-    var wasFiredOnWhileMoving: Boolean = false
+    /** The enemy `Overwatch` or Camouflage Expert commander that sprang an ambush on this move
+     *  (`rules/MoveAmbush`). The walk stopped there and the mover is surprised; the combat itself
+     *  is fought after the move, the same way walking into a hidden unit is
+     *  (`GameMap.surpriseTarget`). Undo is already refused for a surprised mover. */
+    @JsExport.Ignore
+    var ambusher: GameUnit? = null
 
     /** Set when this move walked into a minefield (`rules/Minefields`). Ends the move exactly as a
      *  detected field's movement cost already would, and blocks undo -- an undoable probe would turn
@@ -95,17 +95,13 @@ class MovementResults {
      *  never unexplained (`DEFERRED.md` §1.1). */
     var minefieldLosses: Int = 0
 
+    /** Set when the walk stopped short because it met the zone of control of an enemy its side
+     *  had NOT seen (`rules/ZoneOfControlContact`) -- a contact, reported as such, with no combat. */
+    var stoppedByContact: Boolean = false
+
     /** Set alongside [hitMinefield] when the field was previously undetected, so the HUD can say
      *  "you have walked into a minefield" rather than "you stopped at one you knew about". */
     var minefieldWasHidden: Boolean = false
-
-    /** Set when the walk terminated because the unit became adjacent to an enemy its own side had
-     *  not spotted (`MoveExecutor.stoppedByUnseenZoc`, DEFERRED.md §7.32 item 4). The move range is
-     *  deliberately optimistic about unseen ZOC so the overlay cannot betray a hidden unit's
-     *  position, which means this is the only signal that the unit stopped short of where the player
-     *  clicked. Like [wasIntercepted] it must block undo: undoing it would let a player sweep for
-     *  hidden enemies and take the probe back. */
-    var stoppedByUnseenEnemy: Boolean = false
 }
 
 /**
@@ -179,8 +175,44 @@ class CombatResults {
      * enough" and "this ship was sunk by a magazine hit" are different sentences to show a player.
      */
     var isCriticalHit: Boolean = false
+
+    /** The defender's RETURN fire sank the attacker outright -- the other half of `critical_hit`
+     *  (*"either attacking or defending"*), which [isCriticalHit] cannot say. */
+    var isAttackerCriticalHit: Boolean = false
+
+    /**
+     * Support fire hurt the attacker past the retreat threshold, so its own attack never went in --
+     * Panzer Marshal's "Attack Stopped". Set by the UI orchestrator, which is where that check runs.
+     * [kills] and [losses] are then zero: no exchange happened, and the loss the attacker did take
+     * is [supportFireLosses].
+     */
+    var isAttackStopped: Boolean = false
+
+    /**
+     * Strength the attacker lost to the defender's supporting units BEFORE the exchange. Not part of
+     * [losses], which is the main exchange alone; the UI adds the two for what the attacker lost in
+     * total, as Panzer Marshal's `oldstr - newstr` did.
+     */
+    var supportFireLosses: Int = 0
+
+    /** False when the attacker could not fire at this target at all, so it spends no shot
+     *  (`RuggedCombat.resolveExchange`) -- the surprised unarmed column. */
+    var attackerFired: Boolean = true
     var defLeaderGain: Boolean = false
     var atkLeaderGain: Boolean = false
+
+    /**
+     * A LEGACY leader (Panzer Marshal's bare trait on a unit outside the campaign hero system) was
+     * gained by the defender / attacker in this exchange. Kept apart from [defLeaderGain] and
+     * [atkLeaderGain], which mean "a hero emerged" and nothing else, so the map can say "New Leader"
+     * without ever claiming a hero (`CombatLeaderAcquisition`).
+     */
+    var defLegacyLeaderGain: Boolean = false
+    var atkLegacyLeaderGain: Boolean = false
+
+    /** Where an evading defender went ([isEvaded]), for the map notice and the log. */
+    @JsExport.Ignore
+    var evasion: ForcedMove? = null
 }
 
 @JsExport

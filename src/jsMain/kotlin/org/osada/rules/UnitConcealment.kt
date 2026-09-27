@@ -57,7 +57,19 @@ internal object UnitConcealment {
             ExtendedLos.isConcealedByTerrain(unit, observerSide)
     }
 
-    /** The `Forest Camouflage` half, unchanged since 2026-08-18. Split out when OG's Extended LOS
+    /**
+     * OG's Camouflage Expert ground -- *"in forest, city, desert, bocage or mountain, unit can only
+     * be spotted by adjacent units"*. Until 2026-09-26 this was forest alone, Panzer Marshal's
+     * Forest Camouflage; the leader slot is the same one. Shared with its ambush (`rules/MoveAmbush`).
+     */
+    fun isCamouflageTerrain(terrain: Int): Boolean =
+        terrain == TerrainType.FOREST.value ||
+            terrain == TerrainType.CITY.value ||
+            terrain == TerrainType.SAND.value ||
+            terrain == TerrainType.BOCAGE.value ||
+            terrain == TerrainType.MOUNTAIN.value
+
+    /** The Camouflage Expert half (forest only until 2026-09-26). Split out when OG's Extended LOS
      *  optional rule (9.5 bullets 2 and 3) became a second source of the same layer: two rules,
      *  two predicates, one answer, so neither surface can honour one and miss the other. */
     private fun concealedByCommander(
@@ -66,7 +78,7 @@ internal object UnitConcealment {
     ): Boolean {
         val hex = unit.getHex() ?: return false
         return !UnitPredicates.isAir(unit) &&
-            hex.terrain == TerrainType.FOREST.value &&
+            isCamouflageTerrain(hex.terrain) &&
             Leaders.unitHasLeader(unit, LeaderType.FOREST_CAMOUFLAGE) &&
             !hasAdjacentEnemy(unit, observerSide)
     }

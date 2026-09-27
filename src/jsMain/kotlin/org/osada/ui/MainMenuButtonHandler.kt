@@ -23,7 +23,7 @@ internal class MainMenuButtonHandler(
         when (id) {
             "air" -> onAirButton(map)
             "hex" -> onHexButton()
-            "arty" -> onArtilleryButton()
+            "arty" -> onArtilleryButton(map)
             "zoom" -> {
                 ui.toggleStrategicZoom()
                 ui.render.render()
@@ -41,19 +41,21 @@ internal class MainMenuButtonHandler(
         if (uiSettings.airMode && GameRules.isAir(map.currentUnit)) {
             map.delCurrentUnit()
         }
-        uiSettings.airMode = !uiSettings.airMode
-        byId("air")?.let { toggleButton(it, uiSettings.airMode) }
+        setMapLayerMode(air = !uiSettings.airMode, artillery = false)
         ui.render.render()
     }
 
     /**
-     * The sidebar's Artillery toggle (`ui/ArtilleryRangeOverlay`). A pure view switch: it selects
-     * nothing, cancels nothing and owns no map state, so unlike Air Mode it has no current-unit
-     * bookkeeping to do -- it flips the flag and asks for a full repaint.
+     * The sidebar's Artillery toggle (`ui/ArtilleryRangeOverlay`). A view switch that owns no map
+     * state of its own -- but it is exclusive with Air mode (see [setMapLayerMode]), so switching it
+     * on leaves Air mode, with the same current-unit bookkeeping [onAirButton] does on the way out.
      */
-    private fun onArtilleryButton() {
-        uiSettings.artilleryRange = !uiSettings.artilleryRange
-        byId("arty")?.let { toggleButton(it, uiSettings.artilleryRange) }
+    private fun onArtilleryButton(map: GameMap) {
+        val on = !uiSettings.artilleryRange
+        if (on && uiSettings.airMode && GameRules.isAir(map.currentUnit)) {
+            map.delCurrentUnit()
+        }
+        setMapLayerMode(air = if (on) false else uiSettings.airMode, artillery = on)
         ui.render.render()
     }
 
@@ -212,4 +214,20 @@ internal class MainMenuButtonHandler(
         }
         return null
     }
+}
+
+/**
+ * The ONE writer of the two map-layer toggles, which are mutually exclusive: Air mode shows the
+ * air-defence hatch and Artillery the gun hatch, drawn in the same two inks, so both at once would
+ * leave the player unable to tell which envelope a red hex belongs to. Switching one on switches
+ * the other off, and both sidebar buttons are resynchronised here so neither can show a stale state.
+ */
+internal fun setMapLayerMode(
+    air: Boolean,
+    artillery: Boolean,
+) {
+    uiSettings.airMode = air
+    uiSettings.artilleryRange = artillery && !air
+    byId("air")?.let { toggleButton(it, uiSettings.airMode) }
+    byId("arty")?.let { toggleButton(it, uiSettings.artilleryRange) }
 }

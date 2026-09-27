@@ -1,8 +1,10 @@
 package org.osada.rules
 
+import org.osada.LeaderType
 import org.osada.MovMethod
 import org.osada.UnitClass
 import org.osada.UnitType
+import org.osada.model.ATTR_MASK_CAN_AIR_ATK
 import org.osada.model.EfileConfig
 import org.osada.model.Equipment
 import org.osada.model.EquipmentData
@@ -17,47 +19,56 @@ import org.osada.model.resetEquipment
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
-import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
- * `flak_range` (`equip.cfg`) governs air-defense support fire flat, regardless of the AA unit's own
- * `gunrange` (DEFERRED.md §1.1, `docs/design/aa-interception.md` §1.1/§2). Ground support fire
- * (artillery) is untouched -- only covered here for the "no config present" baseline.
+ * Who answers an aircraft's attack, and from how far -- OG's Air-Interception and Air Defense
+ * procedures (`rules/AirDefenceSupport`, 2026-09-26). An AD battery answers at its own range of fire,
+ * a FlaK at `flak_range`, a fighter only for the unit it stands beside. Until that date every kind of
+ * air defence answered at one flat `flak_range`, which is what the first two tests of this file used
+ * to assert for an AD unit.
+ *
+ * Geometry: everything sits on row 5, where hex distance is the column difference. The plane attacks
+ * from (5,5) into the ground unit at (5,6).
  */
 class FlakRangeSupportFireTest {
+    private val fighterEqid = 1
+    private val adEqid = 2
+    private val infantryEqid = 3
+    private val flakEqid = 4
+    private val longAdEqid = 5
+
     private class Scene(
         val map: GameMap,
         val plane: GameUnit,
         val ground: GameUnit,
-        val aa: GameUnit,
     )
 
     @BeforeTest
     fun setup() {
         Equipment.resetEquipment()
         Equipment.putEquipment(
-            1,
+            fighterEqid,
             EquipmentData().apply {
                 uclass = UnitClass.FIGHTER.value
                 movmethod = MovMethod.AIR.value
                 target = UnitType.AIR.value
                 airatk = 4
                 grounddef = 4
-            },
-        )
-        Equipment.putEquipment(
-            2,
-            EquipmentData().apply {
-                uclass = UnitClass.AIR_DEFENCE.value
-                movmethod = MovMethod.WHEELED.value
-                airatk = 6
-                gunrange = 1
                 ammo = 10
             },
         )
+        Equipment.putEquipment(adEqid, airDefence(UnitClass.AIR_DEFENCE.value, gun = 1))
+        Equipment.putEquipment(longAdEqid, airDefence(UnitClass.AIR_DEFENCE.value, gun = 3))
+        // A real FlaK record engages aircraft through OG's `CAN Air Atk` bit, not by class
+        // (`EquipmentCombatEligibility.isDedicatedAntiAir` leaves the Flak class out).
         Equipment.putEquipment(
-            3,
+            flakEqid,
+            airDefence(UnitClass.FLAK.value, gun = 1).apply { attr = ATTR_MASK_CAN_AIR_ATK },
+        )
+        Equipment.putEquipment(
+            infantryEqid,
             EquipmentData().apply {
                 uclass = UnitClass.INFANTRY.value
                 movmethod = MovMethod.LEG.value
@@ -66,95 +77,150 @@ class FlakRangeSupportFireTest {
         )
     }
 
+    private fun airDefence(
+        cls: Int,
+        gun: Int,
+    ) = EquipmentData().apply {
+        uclass = cls
+        movmethod = MovMethod.WHEELED.value
+        airatk = 6
+        gunrange = gun
+        ammo = 10
+    }
+
     @AfterTest
     fun cleanup() {
         EfileConfig.resetForTest()
     }
 
     @Test
-    fun absentEquipCfgKeepsFlakSupportFireAtRangeOne() {
-        // KAISER-shaped case: no equip.cfg at all -- flak_range defaults to 1.
-        EfileConfig.setForTest()
-        val scene = sceneWithAaAtDistance(4)
+    fun aFlakAnswersAtFlakRange() {
+        EfileConfig.setForTest(mapOf("flak_range" to 4))
+        val scene = scene()
+        val flak = place(scene, flakEqid, 9, side = 1)
 
-        val supporters = CombatResolver.getSupportFireUnits(scene.map.getUnits().toList(), scene.plane, scene.ground)
-
-        assertEquals(emptyList(), supporters, "an AA unit 4 hexes away must not fire at the default range of 1")
+        assertTrue(flak in supporters(scene), "flak_range=4 carries a FlaK's air defence four hexes")
     }
 
     @Test
-    fun equipCfgFlakRangeExtendsAirDefenceSupportFireBeyondItsOwnGunrange() {
-        // LXF-shaped case: flak_range=4, while this AA's own gunrange is 1.
-        EfileConfig.setForTest(mapOf("flak_range" to 4))
-        val scene = sceneWithAaAtDistance(4)
+    fun withoutEquipCfgAFlakAnswersOnlyNextToThePlane() {
+        EfileConfig.setForTest()
+        val scene = scene()
+        val far = place(scene, flakEqid, 7, side = 1)
 
-        val supporters = CombatResolver.getSupportFireUnits(scene.map.getUnits().toList(), scene.plane, scene.ground)
-
-        assertTrue(scene.aa in supporters, "flak_range=4 must reach an AA unit 4 hexes from the attacker")
+        assertFalse(far in supporters(scene), "flak_range defaults to 1")
     }
 
-    /** Builds a plane attacking a ground unit (so [CombatResolver.getSupportFireUnits]'s own
-     *  adjacency gate passes), with a friendly AA unit [distance] hexes from the PLANE -- support
-     *  fire range is measured from the attacker's position, not the defender's. */
-    private fun sceneWithAaAtDistance(distance: Int): Scene {
+    /** The case the flat rule got wrong in the other direction: ATOMIC and BASEKORP set
+     *  `flak_range=1` and were cutting 3-6 hex AD batteries down to one. */
+    @Test
+    fun anAirDefenceBatteryAnswersAtItsOwnRangeOfFire() {
+        EfileConfig.setForTest(mapOf("flak_range" to 1))
+        val scene = scene()
+        val battery = place(scene, longAdEqid, 8, side = 1)
+
+        assertTrue(battery in supporters(scene), "gunrange 3 reaches the plane three hexes away")
+    }
+
+    /** ...and LXF's `flak_range=4` no longer lends a range-1 AD battery four hexes. */
+    @Test
+    fun flakRangeDoesNotStretchAnAirDefenceBattery() {
+        EfileConfig.setForTest(mapOf("flak_range" to 4))
+        val scene = scene()
+        val battery = place(scene, adEqid, 9, side = 1)
+
+        assertFalse(battery in supporters(scene), "an AD battery's reach is its own gunrange, not flak_range")
+    }
+
+    @Test
+    fun aFighterCoversOnlyTheUnitItStandsBeside() {
+        EfileConfig.setForTest(mapOf("flak_range" to 4))
+        val scene = scene()
+        val beside = place(scene, fighterEqid, 7, side = 1) // 1 from the defender, 2 from the plane
+        val farther = place(scene, fighterEqid, 8, side = 1) // 3 from the plane: inside the old disc
+
+        val answering = supporters(scene)
+
+        assertTrue(beside in answering)
+        assertFalse(farther in answering, "a fighter two hexes from the defender covers nothing here")
+    }
+
+    @Test
+    fun aFighterInterceptsOnceATurnUnlessSkilled() {
+        EfileConfig.setForTest()
+        val scene = scene()
+        val spent = place(scene, fighterEqid, 7, side = 1).apply { hasSupportedThisTurn = true }
+        assertFalse(spent in supporters(scene), "one interception per enemy turn")
+
+        spent.leader = LeaderType.SKILLED_INTERCEPTOR.value
+        assertTrue(spent in supporters(scene), "Skilled Interceptor may intercept again")
+    }
+
+    @Test
+    fun groundAirDefenceIgnoresAnAirToAirAttack() {
+        EfileConfig.setForTest(mapOf("flak_range" to 4))
+        val scene = scene(defenderEqid = fighterEqid)
+        val flak = place(scene, flakEqid, 7, side = 1)
+
+        assertFalse(flak in supporters(scene), "Air Defense answers attacks on GROUND units only")
+    }
+
+    /** `flak_ex2`: a FlaK beside the defender answers a plane beside the defender from any side --
+     *  here two hexes from the plane, outside a `flak_range` of 1. */
+    @Test
+    fun flakEx2LetsAFlakGuardItsNeighbour() {
+        EfileConfig.setForTest(mapOf("flak_range" to 1))
+        val scene = scene()
+        val flak = place(scene, flakEqid, 7, side = 1)
+        assertFalse(flak in supporters(scene), "without flak_ex2 the FlaK is out of reach")
+
+        EfileConfig.setForTest(mapOf("flak_range" to 1, "flak_ex2" to 1))
+        assertTrue(flak in supporters(scene), "flak_ex2 lets it answer for the neighbour it guards")
+    }
+
+    private fun supporters(scene: Scene): List<GameUnit> =
+        CombatResolver.getSupportFireUnits(scene.map.getUnits().toList(), scene.plane, scene.ground)
+
+    private fun scene(defenderEqid: Int = infantryEqid): Scene {
         val map =
             GameMap().apply {
                 rows = 10
                 cols = 10
                 allocMap()
             }
-        val attackerSidePlayer =
-            Player().apply {
-                id = 0
-                side = 0
-                country = 0
-            }
-        val defenderSidePlayer =
-            Player().apply {
-                id = 1
-                side = 1
-                country = 1
-            }
-        map.addPlayer(attackerSidePlayer)
-        map.addPlayer(defenderSidePlayer)
+        for (id in 0..1) {
+            map.addPlayer(
+                Player().apply {
+                    this.id = id
+                    side = id
+                    country = id
+                },
+            )
+        }
+        val scene = Scene(map, GameUnit(fighterEqid), GameUnit(defenderEqid))
+        put(scene, scene.plane, 5, side = 0)
+        put(scene, scene.ground, 6, side = 1)
+        return scene
+    }
 
-        val plane =
-            GameUnit(1).apply {
-                owner = attackerSidePlayer.id
-                player = attackerSidePlayer
-                strength = 10
-                ammo = 10
-            }
-        val ground =
-            GameUnit(3).apply {
-                owner = defenderSidePlayer.id
-                player = defenderSidePlayer
-                strength = 10
-                ammo = 10
-            }
-        val aa =
-            GameUnit(2).apply {
-                owner = defenderSidePlayer.id
-                player = defenderSidePlayer
-                strength = 10
-                ammo = 10
-            }
+    private fun place(
+        scene: Scene,
+        eqid: Int,
+        col: Int,
+        side: Int,
+    ): GameUnit = GameUnit(eqid).also { put(scene, it, col, side) }
 
-        map.map
-            ?.get(5)
-            ?.get(5)
-            ?.setUnit(plane)
-        map.map
-            ?.get(5)
-            ?.get(6)
-            ?.setUnit(ground)
-        map.map
-            ?.get(5)
-            ?.get(5 + distance)
-            ?.setUnit(aa)
-        map.addUnit(plane)
-        map.addUnit(ground)
-        map.addUnit(aa)
-        return Scene(map, plane, ground, aa)
+    private fun put(
+        scene: Scene,
+        unit: GameUnit,
+        col: Int,
+        side: Int,
+    ) {
+        unit.owner = side
+        unit.player = scene.map.players[side]
+        unit.strength = 10
+        unit.ammo = 10
+        scene.map.map!![5][col].setUnit(unit)
+        scene.map.addUnit(unit)
     }
 }

@@ -13,7 +13,6 @@ internal object MoveReactionText {
     fun titleKey(kind: MoveReactionKind): String =
         when (kind) {
             MoveReactionKind.AA_INTERCEPTION -> "combat.interception.title"
-            MoveReactionKind.OVERWATCH -> "combat.overwatch.title"
             MoveReactionKind.COUNTER_BATTERY -> "combat.counter_battery.title"
         }
 
@@ -24,9 +23,6 @@ internal object MoveReactionText {
         when (kind) {
             MoveReactionKind.AA_INTERCEPTION ->
                 if (destroyed) "combat.interception.destroyed" else "combat.interception.damaged"
-
-            MoveReactionKind.OVERWATCH ->
-                if (destroyed) "combat.overwatch.destroyed" else "combat.overwatch.damaged"
 
             MoveReactionKind.COUNTER_BATTERY ->
                 if (destroyed) "combat.counter_battery.destroyed" else "combat.counter_battery.damaged"

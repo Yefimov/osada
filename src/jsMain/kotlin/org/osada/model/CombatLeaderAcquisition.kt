@@ -1,7 +1,6 @@
 package org.osada.model
 
 import org.osada.CombatLog
-import org.osada.hero.FormationIdentity
 import org.osada.hero.HeroCampaign
 import org.osada.hero.RecognitionService
 import org.osada.rules.UnitPredicates
@@ -10,27 +9,31 @@ import org.osada.rules.UnitPredicates
  * Turns a resolved combat into leader acquisition for one combatant — extracted from
  * [CombatApplication] to keep that class's responsibilities (and function count) in bounds.
  *
- * Two worlds meet here. Campaign **core units** (those with a formation id) go through the Phase 2
- * hero system: recognition accumulates on the formation and a seeded emergence check may produce an
- * officer whose traits live in the hero roster, so `unit.leader` is deliberately left untouched.
- * **Scenario-only units**, which have no formation, keep the legacy integer path
- * (`docs/leaders.md` §5) unchanged — the open question of when to stop writing `unit.leader`
+ * Two worlds meet here. The campaign player's formations, inside a campaign run, go through the
+ * Phase 2 hero system: recognition accumulates on the formation and a seeded emergence check may
+ * produce an officer whose traits live in the hero roster, so `unit.leader` is deliberately left
+ * untouched. **Every other unit** -- standalone scenarios, the AI's forces, borrowed units -- keeps
+ * the legacy integer path (`docs/leaders.md` §5). The boundary is
+ * [org.osada.hero.CampaignHeroScope]; the open question of when to stop writing `unit.leader`
  * entirely is deferred until nothing reads it (it needs a save-format bump).
  */
 internal object CombatLeaderAcquisition {
     private const val EXPERIENCE_PER_LEVEL = 100
 
+    /** Which mechanic, if either, produced a commander in this exchange. */
+    enum class Gain { NONE, HERO, LEGACY }
+
     /**
-     * Resolves acquisition for [unit] and reports whether **a hero emerged** — which is what the
-     * caller turns into the "Hero Emerged" bounce text.
+     * Resolves acquisition for [unit] and reports which kind of commander it gained, if any.
      *
-     * The legacy path deliberately reports `false` even when it did hand out a leader. The two
-     * mechanics are not the same event: an emerged hero has a dossier, a roster entry, a portrait
-     * and a name, while a legacy leader is a bare integer on a scenario unit. Announcing both under
-     * one label meant an ENEMY unit — every enemy is formation-less, so every enemy takes the legacy
-     * path — could bounce "Hero Emerged" over its own hex during the player's attack. Reported
-     * 2026-08-01: "I see 'Hero emerges!' when I kill enemy units." The legacy gain is still recorded
-     * in the combat log by [acquireLegacyLeader], which is where it belongs.
+     * The two mechanics are distinct events and are reported apart: an emerged hero has a dossier,
+     * a roster entry, a portrait and a name, while a legacy leader is a bare trait on a unit. They
+     * used to share one flag, which is how an ENEMY unit could bounce "Hero Emerged" over its own hex
+     * (2026-08-01). The caller now shows "Hero Emerged" only for [Gain.HERO].
+     *
+     * **Routing is the campaign-hero scope ([org.osada.hero.CampaignHeroScope]), not the presence of
+     * a formation id.** A unit bought in a standalone scenario, an AI purchase in a campaign, or a
+     * unit carrying a stale id from an old save takes the legacy path and keeps its ordinary leader.
      */
     fun acquire(
         unit: GameUnit,
@@ -38,11 +41,10 @@ internal object CombatLeaderAcquisition {
         combatResult: CombatResults,
         isAttacker: Boolean,
         turn: Int = 0,
-    ): Boolean {
+    ): Gain {
         val expGained = if (isAttacker) combatResult.atkExpGained else combatResult.defExpGained
-        if (FormationIdentity.of(unit) == null) {
-            acquireLegacyLeader(unit, expGained, turn)
-            return false
+        if (!HeroCampaign.isHeroEligible(unit)) {
+            return if (acquireLegacyLeader(unit, expGained, turn)) Gain.LEGACY else Gain.NONE
         }
         val contribution = contributionFor(unit, enemy, combatResult, isAttacker, expGained)
         // Support fire is fired in support of the DEFENDER, so only a defender's emergence has a
@@ -51,7 +53,7 @@ internal object CombatLeaderAcquisition {
         val supporters = if (isAttacker) emptyList() else combatResult.supportingFormationIds
         val emerged = HeroCampaign.recordCombat(unit, contribution, turn, supporters)
         if (emerged) log(unit, "HERO", turn)
-        return emerged
+        return if (emerged) Gain.HERO else Gain.NONE
     }
 
     /**
@@ -147,12 +149,12 @@ internal object CombatLeaderAcquisition {
         unit: GameUnit,
         expGained: Int,
         turn: Int,
-    ) {
-        if (unit.destroyed) return
-        val leader = Leaders.generateLeaderWithChance(unit, expGained)
-        if (leader == -1) return
+    ): Boolean {
+        val leader = if (unit.destroyed) -1 else Leaders.generateLeaderWithChance(unit, expGained)
+        if (leader == -1) return false
         unit.leader = leader
         CombatLog.addLeader(unit)
         log(unit, "LEGACY", turn)
+        return true
     }
 }

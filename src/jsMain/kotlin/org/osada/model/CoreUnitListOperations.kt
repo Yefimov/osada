@@ -1,5 +1,6 @@
 package org.osada.model
 
+import org.osada.hero.CampaignHeroScope
 import org.osada.hero.FormationIdentity
 import org.osada.hero.HeroCampaign
 import org.osada.rules.GameRules
@@ -99,6 +100,9 @@ internal class CoreUnitListOperations(
         player: Player,
         additionalUnits: Iterable<GameUnit> = emptyList(),
     ) {
+        // The hero system's scope, stated once (`hero/CampaignHeroScope`): outside a campaign, or for
+        // any player but the campaign player, nothing is enrolled.
+        if (!CampaignHeroScope.ownerEligible(player.id)) return
         val candidates = gameMap.units + player.getCoreUnitList() + additionalUnits
         val existing =
             buildSet {

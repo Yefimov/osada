@@ -5,7 +5,6 @@ import org.osada.SURRENDER_ON_FAILED_RETREAT
 import org.osada.TerrainType
 import org.osada.UNIT_RETREAT_THRESHOLD
 import org.osada.UnitClass
-import org.osada.entrenchRateFor
 import org.osada.hero.FormationIdentity
 import org.osada.model.Cell
 import org.osada.model.CombatResults
@@ -64,17 +63,6 @@ object CombatResolver {
     internal const val FULL_STRENGTH = 10.0
     private const val FULL_STRENGTH_INT = 10
 
-    // isRuggedDefense's entrenchment-ratio trigger threshold and scale (both conceptually the
-    // same "50" from the JS reference, kept as separate typed constants since one side of the
-    // comparison is Int and the other Double).
-    private const val RUGGED_DEFENSE_THRESHOLD = 50
-    private const val RUGGED_DEFENSE_SCALE = 50.0
-    private const val RUGGED_DEFENSE_MULTIPLIER = 5.0
-
-    // equip.cfg's own comment: "Default all flak-type actions are limited to range 1." Absent for
-    // 5 of our 10 shipped efiles (including KAISER, 8 campaigns) -- see docs/design/aa-interception.md §1.1.
-    private const val DEFAULT_FLAK_RANGE = 1
-
     /**
      * Core damage roll. Mirrors the legacy `f(p, r, b, m, k)` combat function:
      * the attack power has the target's defense subtracted from it, the result is
@@ -89,6 +77,7 @@ object CombatResolver {
         defender: GameUnit,
         useRandom: Boolean,
         halveStrength: Boolean = false,
+        strengthLost: Int = 0,
     ): Int {
         val attackerClass = attacker.unitData().uclass
         // OG: bad weather halves the strength points an air<->ground exchange brings to bear.
@@ -99,7 +88,11 @@ object CombatResolver {
         // same reason: it too halves STRENGTH POINTS, not the attack value. Rounded up, matching
         // `WeatherCombatRules.firingStrength` -- a supporter reduced to firing zero points would be
         // a silent no-op, and the two halvings compound rather than either one winning.
-        val weatherStrength = WeatherCombatRules.firingStrength(attacker, defender)
+        //
+        // [strengthLost] is what already came off this unit earlier in the SAME exchange -- OG's
+        // DEFENDER-FIRST sequence ([resolveExchange]). A unit that has nothing left does not fire.
+        val weatherStrength = WeatherCombatRules.firingStrength(attacker, defender, strengthLost)
+        if (weatherStrength <= 0) return 0
         val firingStrength = if (halveStrength) (weatherStrength + 1) / 2 else weatherStrength
         var p = (attackPower - defense).toDouble()
         var target = DEFAULT_HIT_THRESHOLD
@@ -165,10 +158,17 @@ object CombatResolver {
         val stats = AttackCalculation.resolveCrossIndexedStats(context)
         AttackCalculation.applyAttachmentBonuses(stats, attacker, defender, context)
         val closeCombat = AttackCalculation.applyCloseCombat(stats, context)
+        // OG's Rugged mode (surprise, close combat or a raised rugged defence) is an INPUT to the
+        // modifiers below, not a penalty on their total -- see [RuggedCombat.isRuggedCombat]. The
+        // rugged-defence roll happens HERE and only here, once per committed combat.
+        val ruggedDefence = RuggedCombat.ruggedDefenceRaised(attacker, defender, context, committed)
+        val rugged = RuggedCombat.isRuggedCombat(attacker, closeCombat, ruggedDefence)
+        if (rugged) RuggedCombat.applyRuggedCombat(stats, context, closeCombat)
         AttackCalculation.applyLeaderBonuses(stats, attacker, defender, context)
         AttackCalculation.applyTerrainBonuses(stats, context)
-        WeatherCombatRules.applyDefenseBonus(stats)
-        AttackCalculation.applyEntrenchment(stats, attacker, defender, context, closeCombat)
+        // OG: *"If not Rugged and Bad weather ..."* -- the weather defence bonus is a Rugged casualty.
+        if (!rugged) WeatherCombatRules.applyDefenseBonus(stats)
+        AttackCalculation.applyEntrenchment(stats, attacker, defender, context, closeCombat, rugged)
         AttackCalculation.applyExperienceAndHitsPenalty(
             stats,
             attacker,
@@ -177,7 +177,9 @@ object CombatResolver {
             if (attackerIsFiringSupport) 0 else UnitCapabilities.combatSupportBars(units, attacker),
             UnitCapabilities.combatSupportBars(units, defender),
         )
-        AttackCalculation.applyRangeDefenseModifier(stats, attacker, defender, context, closeCombat)
+        // OG: the Range Defense Modifier *"applies when ... not Rugged combat"* -- the same waiver
+        // close combat already had.
+        AttackCalculation.applyRangeDefenseModifier(stats, attacker, defender, context, closeCombat || rugged)
         // Last of the defence modifiers, so it halves what the unit would actually have defended
         // with (OG 6.23, behind `dry_unit_penalties`; a no-op with the key off).
         UnitConditionPenalties.applyMinefieldPenalty(stats, attacker, defender)
@@ -188,14 +190,20 @@ object CombatResolver {
         // the result, and it is the only thing allowed to draw from the shared random stream --
         // a preview that drew would advance one peer's cursor and not the other's
         // (`rules/GameRandomSource`).
-        AttackCalculation.applyInitiativeBonus(stats, attacker, defender, context, committed)
-        AttackCalculation.resolveRuggedSurpriseAndFireEligibility(stats, attacker, defender, context, result)
-
-        result.kills =
-            attackValue(stats.attackerAttack, stats.defenderDefense, attacker, defender, useRandom, halveStrength)
-        if (result.defcanfire) {
-            result.losses = attackValue(stats.defenderAttack, stats.attackerDefense, defender, attacker, useRandom)
-        }
+        //
+        // A Rugged exchange skips it: OG's sequence routine RETURNS "DEFENDER-FIRST" for *"rugged
+        // combat"* before it ever computes the initiative difference that pays these bonuses.
+        if (!rugged) AttackCalculation.applyInitiativeBonus(stats, attacker, defender, context, committed)
+        AttackCalculation.resolveRuggedSurpriseAndFireEligibility(attacker, defender, context, result, ruggedDefence)
+        RuggedCombat.resolveExchange(
+            stats,
+            attacker,
+            defender,
+            useRandom,
+            halveStrength,
+            result,
+            defenderFirst = rugged,
+        )
 
         AttackCalculation.resolveOverrunAndExperienceGain(stats, attacker, defender, context, result)
         return result
@@ -264,7 +272,10 @@ object CombatResolver {
     }
 
     /**
-     * Adjacent friendly units that fire in support of [defender] against [attacker].
+     * Friendly units that fire in support of [defender] against [attacker]. OG's ground Fire
+     * Support procedure asks whether the gun can reach the attacker, even for a ranged attack on
+     * the defender. Distance to the defender determines full or half strength under the authored
+     * falloff rule; it is not a gate on whether the gun answers at all.
      *
      * **The candidate list is widened by OG's `ground_carrier` bit 2** — *"enables these options:
      * Combat Support, AirDefense and FireSupport"* — which lets a formation riding inside a
@@ -280,28 +291,27 @@ object CombatResolver {
         val aPos = attacker.getPos()
         val dPos = defender.getPos()
         val defenderSide = defender.player?.side
-        return if (aPos != null && dPos != null && defenderSide != null) {
-            if (HexGeometry.distance(aPos.row, aPos.col, dPos.row, dPos.col) <= 1) {
-                val candidates = units + CarrierHangars.supportingPassengers(units)
-                val eligible =
-                    candidates.filter { support ->
-                        isSupportFireEligible(support, attacker, defender, defenderSide, aPos)
-                    }
-                // OG 9.6's escort is ONE destroyer -- its procedure "selects the FIRST destroyer
-                // adjacent to the defender" -- so a convoy screened by four answers once, not four
-                // times. Ordinary support fire is untouched. List order is `map.units` order and
-                // therefore identical on every peer. Added 2026-08-27; the first build let them all
-                // fire (`ExtendedNaval.escortsNavalTransport`).
-                val firstEscort =
-                    eligible.firstOrNull { ExtendedNaval.escortsNavalTransport(it, attacker, defender) }
-                eligible.filter {
-                    it === firstEscort || !ExtendedNaval.escortsNavalTransport(it, attacker, defender)
-                }
-            } else {
-                emptyList()
+        val adjacentAttack =
+            aPos != null && dPos != null && HexGeometry.distance(aPos.row, aPos.col, dPos.row, dPos.col) <= 1
+        val groundAttack = UnitPredicates.isGround(attacker) && UnitPredicates.isGround(defender)
+        // Keep the existing proximity rule for air/naval support; OG's ground Fire Support is the
+        // case established by the author's combat procedure and fixed here.
+        val reachable = adjacentAttack || groundAttack
+        if (aPos == null || defenderSide == null || !reachable) return emptyList()
+        val candidates = units + CarrierHangars.supportingPassengers(units)
+        val eligible =
+            candidates.filter { support ->
+                isSupportFireEligible(support, attacker, defender, defenderSide, aPos)
             }
-        } else {
-            emptyList()
+        // OG 9.6's escort is ONE destroyer -- its procedure "selects the FIRST destroyer
+        // adjacent to the defender" -- so a convoy screened by four answers once, not four
+        // times. Ordinary support fire is untouched. List order is `map.units` order and
+        // therefore identical on every peer. Added 2026-08-27; the first build let them all
+        // fire (`ExtendedNaval.escortsNavalTransport`).
+        val firstEscort =
+            eligible.firstOrNull { ExtendedNaval.escortsNavalTransport(it, attacker, defender) }
+        return eligible.filter {
+            it === firstEscort || !ExtendedNaval.escortsNavalTransport(it, attacker, defender)
         }
     }
 
@@ -321,19 +331,17 @@ object CombatResolver {
         val sPos = CarrierHangars.supportPosition(support)
         if (!isFriendlyNotDefender || sPos == null) return false
         val sData = support.unitData()
-        // OG's `flak_range` governs ALL flak-type actions -- interception AND this air-defense
-        // support fire -- and applies flat, regardless of the unit's own gunrange (DEFERRED.md
-        // §1.1, docs/design/aa-interception.md §1.1/§2). Ground support fire (artillery) is
-        // unaffected and keeps using its own gunrange.
-        val range =
+        // Against an aircraft, who answers and from how far is OG's Air-Interception / Air Defense
+        // procedure, owned by [AirDefenceSupport] (2026-09-26 -- it used to be one flat `flak_range`
+        // disc for every kind of air defence, fighters included). Ground support fire (artillery)
+        // keeps using the supporter's own gunrange.
+        val reaches =
             if (UnitPredicates.isAir(attacker)) {
-                ActiveRuleset.intKey(RuleKey.FLAK_RANGE, DEFAULT_FLAK_RANGE)
-            } else if (sData.gunrange == 0) {
-                1
+                AirDefenceSupport.answers(support, defender, sPos, aPos)
             } else {
-                sData.gunrange
+                val range = if (sData.gunrange == 0) 1 else sData.gunrange
+                HexGeometry.distance(sPos.row, sPos.col, aPos.row, aPos.col) <= range
             }
-        val inRange = HexGeometry.distance(sPos.row, sPos.col, aPos.row, aPos.col) <= range
         // Class eligibility lives in UnitCapabilities so the rule and the unit card's SUP/AA
         // badges read the same predicate and cannot drift apart (the §4.6 mistake).
         // OG §9.6's third bullet -- "Destroyers can escort naval transports against submarine
@@ -341,13 +349,11 @@ object CombatResolver {
         // own, because OG defines it by an analogy ("just like fighters escort bombers") to
         // something this engine does not have. `ExtendedNaval.escortsNavalTransport` carries the
         // full reasoning; here it is simply one more kind of unit that may answer for a neighbour.
+        // Against an aircraft the class question is already part of [AirDefenceSupport.answers].
         val classEligible =
-            if (UnitPredicates.isAir(attacker)) {
-                UnitCapabilities.hasAirDefenceFire(sData)
-            } else {
+            UnitPredicates.isAir(attacker) ||
                 UnitCapabilities.hasSupportFire(sData) ||
-                    ExtendedNaval.escortsNavalTransport(support, attacker, defender)
-            }
+                ExtendedNaval.escortsNavalTransport(support, attacker, defender)
         // g2a_intercept_mode bit 1: an AA unit that has already intercepted a moving aircraft
         // this turn cannot also air-defend one (AAInterception.applyInterception sets the flag).
         val notSpentOnInterception = !UnitPredicates.isAir(attacker) || !support.hasInterceptedThisTurn
@@ -356,7 +362,7 @@ object CombatResolver {
         // it. See `UnitCapabilities.supportsOnlyOncePerTurn`.
         val notSpentOnSupport =
             !UnitCapabilities.supportsOnlyOncePerTurn(support.unitData(true)) || !support.hasSupportedThisTurn
-        return inRange &&
+        return reaches &&
             classEligible &&
             notSpentOnInterception &&
             notSpentOnSupport &&
@@ -379,12 +385,18 @@ object CombatResolver {
     ): Boolean {
         val bothGround = UnitPredicates.isGround(attacker) && UnitPredicates.isGround(defender)
         if (!bothGround) return false
-        val defenderClass = defender.unitData().uclass
-        val immuneToRetreat =
-            defenderClass == UnitClass.ARTILLERY.value ||
-                defenderClass == UnitClass.TACTICAL_BOMBER.value ||
-                defenderClass == UnitClass.FORTIFICATION.value
-        return !immuneToRetreat && isLossOverRetreatThreshold(defender.strength, originalStrength)
+        // The ATTACKER's class, as Panzer Marshal reads it (`shouldDefenderRetreat(g, b, k)` takes
+        // `g.unitData().uclass`, and `g` is the attacker): a bombardment does not push a unit out of
+        // its hex. The port read the defender's class until 2026-09-27, so artillery fire forced
+        // retreats and surrenders while an attacked artillery unit could never be pushed back.
+        // Deliberately still PM's list -- OG's retreat is a different, suppression-based procedure
+        // (it names AD rather than Tactical Bomber), and adopting it is a separate ruleset decision.
+        val attackerClass = attacker.unitData(true).uclass
+        val cannotForceRetreat =
+            attackerClass == UnitClass.ARTILLERY.value ||
+                attackerClass == UnitClass.TACTICAL_BOMBER.value ||
+                attackerClass == UnitClass.FORTIFICATION.value
+        return !cannotForceRetreat && isLossOverRetreatThreshold(defender.strength, originalStrength)
     }
 
     /**
@@ -428,24 +440,6 @@ object CombatResolver {
             !Equipment.hasNoSurrender(defender.getEqid(true)) &&
             !Leaders.unitHasLeader(defender, LeaderType.FEROCIOUS_DEFENSE)
 
-    /** Whether the defender's entrenchment is strong enough to trigger a rugged defense. */
-    fun isRuggedDefense(
-        attacker: GameUnit,
-        defender: GameUnit,
-    ): Boolean {
-        var aExp = attacker.experience / 100 + 2
-        var dExp = defender.experience / 100 + 2
-        if (Leaders.unitHasLeader(attacker, LeaderType.TENACIOUS_DEFENSE)) aExp += 2
-        if (Leaders.unitHasLeader(defender, LeaderType.TENACIOUS_DEFENSE)) dExp += 2
-        val aRate = entrenchRateFor(attacker.unitData().uclass) + 1
-        val dRate = entrenchRateFor(defender.unitData().uclass) + 1
-        // Floating-point throughout, as in the JS reference (integer division here
-        // would truncate intermediate results and change the trigger threshold).
-        return RUGGED_DEFENSE_THRESHOLD <
-            RUGGED_DEFENSE_MULTIPLIER * (RUGGED_DEFENSE_SCALE * dExp / aExp) * dRate * defender.entrenchment /
-            (RUGGED_DEFENSE_THRESHOLD * aRate)
-    }
-
     /** Whether [defender]'s entrenchment still applies against [attacker] in [terrain]. */
     fun isEntrenchmentIntact(
         attacker: GameUnit,
@@ -481,8 +475,11 @@ object CombatResolver {
  * Behind `support_fire_range_falloff`, off by default: OSADA fired every eligible supporter at
  * full strength before 2026-08-18, and turning that on universally would re-tune every shipped
  * scenario that fields artillery in depth.
+ *
+ * Shared by the forecast and by the shot that is applied (`model/AttackTransaction`), so the two
+ * cannot disagree -- until 2026-09-27 the applied shot always fired at full strength.
  */
-private fun supportFiresAtHalfStrength(
+internal fun supportFiresAtHalfStrength(
     support: GameUnit,
     defenderPos: Cell?,
 ): Boolean {

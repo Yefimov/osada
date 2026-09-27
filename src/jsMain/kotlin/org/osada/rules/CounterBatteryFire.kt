@@ -26,7 +26,7 @@ import org.osada.rules.ruleset.RuleKey
  * key. [RuleKey.COUNTERBATTERY] is that key; the mis-filing is corrected in the plan in the same
  * change.
  *
- * ### Shape: a reaction, modelled on [OverwatchFire], not on support fire
+ * ### Shape: a reaction, modelled on [AAInterception], not on support fire
  *
  * The two mechanics have the same player-facing problem — a formation loses strength in a combat
  * its owner did not order — so this follows every constraint `DEFERRED.md` §1.1 already imposed on
@@ -51,7 +51,7 @@ import org.osada.rules.ruleset.RuleKey
  *    the other's.
  * 2. **Damage is applied directly rather than through `GameMap.attackUnit`.** A counterbattery shot
  *    that went through the full combat path could itself draw counterbattery, and two guns carrying
- *    the bit within range of each other would recurse. Resolving it the way [OverwatchFire] does —
+ *    the bit within range of each other would recurse. Resolving it the way [AAInterception] does —
  *    compute, apply, log — makes that structurally impossible instead of guarding against it.
  * 3. **The answering unit does not have to be Artillery class.** OG's own data does not respect the
  *    class boundary here: of the 818 shipped records carrying the bit, the population spreads past
@@ -108,7 +108,7 @@ internal object CounterBatteryFire {
      * Applies one-sided fire from [responders] onto [attacker] and returns the events for the HUD.
      *
      * Fire stops as soon as the target is destroyed — the remaining batteries hold rather than
-     * shelling a wreck, the same courtesy [OverwatchFire] extends.
+     * shelling a wreck, the same courtesy [AAInterception] extends.
      */
     fun applyCounterBattery(
         map: GameMap,

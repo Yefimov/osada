@@ -11,12 +11,15 @@ import org.osada.model.addUnit
 import org.osada.model.allocMap
 import org.osada.model.move
 import org.osada.model.resetEquipment
+import org.osada.rules.AttackCalculation
 import org.osada.rules.CombatResolver
 import org.osada.rules.HexGeometry
+import org.osada.rules.RuggedCombat
 import org.osada.rules.SupplyRules
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
@@ -253,26 +256,29 @@ class CombatTest {
 
     /**
      * Same infantry(ini 5)-attacks-tank(ini 6) engagement as [infantryAttacksTankExactValues], but
-     * the defender's hex is MOUNTAIN (`Constants.terrainInitiative[6] == 1`) instead of clear.
-     * Mountain carries no other combat-relevant terrain bonus (unlike CITY's own +4 defense, or
-     * RIVER/STREAM's assault bonus -- see [org.osada.rules.AttackCalculation.applyTerrainBonuses]),
-     * so it isolates the initiative cap alone: both units clamp to initiative 1, erasing the tank's
-     * clear-terrain speed edge (DEFERRED.md §1.3/§7.16; `docs/design/terrain-supply-and-initiative.md`
-     * §4.2 recommends capping by the DEFENDER's hex). On clear terrain the tank's higher initiative
-     * wins it +4 defense and the infantry's counter-attack is dampened (kills=1, losses=2); once both
-     * are capped to 1 the swing goes to the attacker instead (kills=4, losses=1) -- exact values
-     * confirmed against this engagement's actual run rather than hand-derived, matching this file's
-     * own "exact-value" convention above.
+     * the defender's hex is SWAMP (`Constants.terrainInitiative[8] == 2`) instead of clear, which
+     * isolates the initiative cap (DEFERRED.md §1.3/§7.16; `docs/design/terrain-supply-and-initiative.md`
+     * §4.2 caps by the DEFENDER's hex).
+     *
+     * This used to be MOUNTAIN. Since 2026-09-26 infantry attacking into mountain is OG's close
+     * combat, which is Rugged and skips initiative altogether (`RuggedCombat`), so mountain no
+     * longer tests the cap. Swamp has a cap and no close combat.
+     *
+     * Hand-computed. Base (cross-indexed): attacker 2 hard attack / 6 ground defence, tank 4 soft
+     * attack / 8 ground defence; range defence at distance 1 adds half of each side's 4 -> 8 and 10.
+     * Clear: 5 vs 6 initiative, the tank wins by 1 -> its defence 14, attack 5; kills = EV(2-14) = 1,
+     * losses = EV(5-8) = q 3 -> 2. Swamp: both capped to 2, a tie goes to the attacker -> its defence
+     * 12, attack +0; kills = EV(2-10) = 1, losses = EV(4-12) = 1.
      */
     @Test
-    fun initiativeCapOnDefendersMountainTerrainFlipsTheInitiativeSwing() {
+    fun initiativeCapOnDefendersSwampTerrainFlipsTheInitiativeSwing() {
         val clear = attack(attackerEqid = 1, defenderEqid = 2)
-        val mountain = attack(attackerEqid = 1, defenderEqid = 2, defenderTerrain = TerrainType.MOUNTAIN.value)
+        val swamp = attack(attackerEqid = 1, defenderEqid = 2, defenderTerrain = TerrainType.SWAMP.value)
 
         assertEquals(1, clear.kills, "clear-terrain baseline: infantry->tank kills")
         assertEquals(2, clear.losses, "clear-terrain baseline: infantry->tank losses")
-        assertEquals(4, mountain.kills, "capped initiative gives the attacker the swing instead")
-        assertEquals(1, mountain.losses, "capped initiative removes the tank's uncapped counter-bonus")
+        assertEquals(1, swamp.kills, "the attacker's attack is at the floor either way")
+        assertEquals(1, swamp.losses, "capped initiative removes the tank's uncapped counter-bonus")
     }
 
     private fun makeMap(): Triple<GameMap, Player, Player> {
@@ -330,9 +336,12 @@ class CombatTest {
         }
 
     /**
-     * Infantry attacks infantry in a city (close-combat terrain). Both sides use
-     * their close-combat defence value (the attacker's was wrongly assigned to its
-     * *attack* before the fix). Expected: kills=1, losses=1.
+     * Infantry attacks infantry in a city: OG's close combat, and therefore Rugged
+     * (`RuggedCombat`, 2026-09-26). Hand-computed: both sides defend on close defence (10); the
+     * defender gets the Rugged +4/+4 and the city's +4 defence -> attack 12, defence 18; no range
+     * defence, no initiative. The defender fires FIRST: EV(12-10) = q 8 -> 4.5 -> 5 losses. The
+     * attacker answers with the 5 points it has left: EV(8-18) = q 1 -> 0.75 -> 1 kill. (Under Panzer
+     * Marshal's simultaneous exchange this was 1 and 1.)
      */
     @Test
     fun infantryVsInfantryCloseCombatUsesCloseDefense() {
@@ -342,9 +351,50 @@ class CombatTest {
         place(map, a, 1, 1, TerrainType.CLEAR.value)
         place(map, d, 1, 2, TerrainType.CITY.value)
         val r = CombatResolver.calculateAttackResults(a, d, true)
-        assertEquals(1, r.kills, "inf->inf(city) kills")
-        assertEquals(1, r.losses, "inf->inf(city) losses")
+        assertEquals(1, r.kills, "inf->inf(city) kills, fired with the 5 points left")
+        assertEquals(5, r.losses, "inf->inf(city) losses, taken first")
         assertEquals(true, r.defcanfire)
+    }
+
+    /** OG's chance: 5% per entrenchment level, doubled by a Tenacious defender, halved by a
+     *  Tenacious attacker -- the formula's TrenchRate cancels out. */
+    @Test
+    fun ruggedDefenceChanceIsFivePercentPerEntrenchmentLevel() {
+        val (_, atk, def) = makeMap()
+        val a = unit(1, atk)
+        val d = unit(1, def).apply { entrenchment = 4 }
+        assertEquals(20.0, RuggedCombat.ruggedDefenceChance(a, d))
+        d.leader = LeaderType.TENACIOUS_DEFENSE.value
+        assertEquals(40.0, RuggedCombat.ruggedDefenceChance(a, d))
+        a.leader = LeaderType.TENACIOUS_DEFENSE.value
+        assertEquals(20.0, RuggedCombat.ruggedDefenceChance(a, d))
+    }
+
+    /** OG raises a rugged defence only between two infantry formations, never on a forecast (the
+     *  roll draws from the shared stream), and never against an `Infiltration Tactics` attacker.
+     *  Entrenchment 20 makes the chance 100%, so a committed infantry-vs-infantry attack must raise it. */
+    @Test
+    fun ruggedDefenceIsRolledOnlyBetweenInfantryAndOnlyWhenCommitted() {
+        fun raised(
+            attackerEqid: Int,
+            committed: Boolean,
+            leader: Int = -1,
+        ): Boolean {
+            val (map, atk, def) = makeMap()
+            val a = unit(attackerEqid, atk).apply { this.leader = leader }
+            val d = unit(1, def).apply { entrenchment = 20 }
+            place(map, a, 1, 1, TerrainType.CLEAR.value)
+            place(map, d, 1, 2, TerrainType.CLEAR.value)
+            val context = AttackCalculation.resolveCombatContext(a, d)!!
+            return RuggedCombat.ruggedDefenceRaised(a, d, context, committed)
+        }
+        assertTrue(raised(attackerEqid = 1, committed = true), "infantry vs entrenched infantry, 100%")
+        assertFalse(raised(attackerEqid = 1, committed = false), "a forecast never rolls")
+        assertFalse(raised(attackerEqid = 2, committed = true), "a tank never meets a rugged defence")
+        assertFalse(
+            raised(attackerEqid = 1, committed = true, leader = LeaderType.INFILTRATION_TACTICS.value),
+            "Infiltration Tactics avoids it",
+        )
     }
 
     /** A defender beyond range 1 cannot fire back, so the attacker takes no losses. */
@@ -375,7 +425,8 @@ class CombatTest {
         assertTrue(kills(5) <= kills(0), "entrenched defender takes <= kills")
     }
 
-    /** A surprised attacker has zero defence and halved attack: fewer kills, more losses. */
+    /** A surprised attacker fights OG's Rugged combat -- the defender gets +4/+4 and fires first --
+     *  so it deals fewer kills and takes more losses than the same attack made in the open. */
     @Test
     fun surprisedAttackerTradesKillsForLosses() {
         fun result(surprised: Boolean): CombatResults {
@@ -391,6 +442,73 @@ class CombatTest {
         val surprised = result(true)
         assertTrue(surprised.kills <= normal.kills, "surprised attacker deals <= kills")
         assertTrue(surprised.losses >= normal.losses, "surprised attacker takes >= losses")
+    }
+
+    /**
+     * OG's Rugged rows, hand-computed from the author's combat page for infantry (eqid 1) attacking
+     * a tank (eqid 2) in the open. Base stats, cross-indexed: attacker 2 hard attack / 6 ground
+     * defence, defender 4 soft attack / 8 ground defence. Then: the attacker is infantry, so the
+     * tank defends on its close defence (6); the tank is not infantry, so the attacker gets +4
+     * attack; the defender gets its flat +4/+4. Expected attacker 6/6, defender 8/10. Panzer
+     * Marshal's rule, which this replaced, would have left the attacker at 1 attack and 0 defence.
+     */
+    @Test
+    fun ruggedCombatGivesTheDefenderTheEdgeWhenInfantryAttacksATank() {
+        val (map, atk, def) = makeMap()
+        val a = unit(1, atk)
+        val d = unit(2, def)
+        place(map, a, 1, 1, TerrainType.CLEAR.value)
+        place(map, d, 1, 2, TerrainType.CLEAR.value)
+        val context = AttackCalculation.resolveCombatContext(a, d)!!
+        val stats = AttackCalculation.resolveCrossIndexedStats(context)
+
+        RuggedCombat.applyRuggedCombat(stats, context, closeCombat = false)
+
+        assertEquals(6, stats.attackerAttack, "2 hard attack + 4 against a non-infantry target")
+        assertEquals(6, stats.attackerDefense, "the defender is not infantry: ground defence stands")
+        assertEquals(8, stats.defenderAttack, "4 soft attack + the flat Rugged 4")
+        assertEquals(10, stats.defenderDefense, "close defence 6 against infantry + the flat Rugged 4")
+    }
+
+    /**
+     * The mirror case: a tank attacking infantry. The attacker now defends on its close defence
+     * (6, against infantry); the defender gets +4 for facing a non-infantry attacker and the flat
+     * +4/+4 on top. Expected attacker 4/6, defender 10/10.
+     */
+    @Test
+    fun ruggedCombatWhenATankAttacksInfantry() {
+        val (map, atk, def) = makeMap()
+        val a = unit(2, atk)
+        val d = unit(1, def)
+        place(map, a, 1, 1, TerrainType.CLEAR.value)
+        place(map, d, 1, 2, TerrainType.CLEAR.value)
+        val context = AttackCalculation.resolveCombatContext(a, d)!!
+        val stats = AttackCalculation.resolveCrossIndexedStats(context)
+
+        RuggedCombat.applyRuggedCombat(stats, context, closeCombat = false)
+
+        assertEquals(4, stats.attackerAttack, "soft attack, no bonus against infantry")
+        assertEquals(6, stats.attackerDefense, "close defence against infantry")
+        assertEquals(10, stats.defenderAttack, "2 hard attack + 4 (non-infantry attacker) + 4")
+        assertEquals(10, stats.defenderDefense, "6 ground defence + 4")
+    }
+
+    /** OG's DEFENDER-FIRST sequence: the attacker answers only with the strength it has left, and
+     *  a formation with nothing left does not fire at all. */
+    @Test
+    fun strengthLostEarlierInTheExchangeIsNotFired() {
+        val (map, atk, def) = makeMap()
+        val a = unit(2, atk)
+        val d = unit(1, def)
+        place(map, a, 1, 1, TerrainType.CLEAR.value)
+        place(map, d, 1, 2, TerrainType.CLEAR.value)
+
+        val full = CombatResolver.attackValue(14, 6, a, d, true)
+        val halfLeft = CombatResolver.attackValue(14, 6, a, d, true, strengthLost = 5)
+        val nothingLeft = CombatResolver.attackValue(14, 6, a, d, true, strengthLost = 10)
+
+        assertTrue(halfLeft < full, "five strength points lost first means fewer kills")
+        assertEquals(0, nothingLeft, "a unit shot to pieces before it fires inflicts nothing")
     }
 
     /**

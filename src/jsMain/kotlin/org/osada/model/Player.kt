@@ -3,6 +3,7 @@ package org.osada.model
 import org.osada.GameHolder
 import org.osada.PlayerType
 import org.osada.difficultyModifiers
+import org.osada.hero.CampaignHeroScope
 import org.osada.hero.FormationIdentity
 import org.osada.hero.HeroCampaign
 import org.osada.i18n.GameText
@@ -166,7 +167,10 @@ class Player {
     fun addCoreUnit(unit: GameUnit?): Boolean {
         if (unit == null || coreUnits.any { it === unit }) return false
         unit.isCore = true
-        if (!unit.isTemporaryBorrowed) {
+        // Only the campaign player's formations, inside a campaign run, receive a formation id
+        // (`hero/CampaignHeroScope`). A standalone purchase and an AI purchase are core to their
+        // own battle but never enter the hero roster -- they keep the legacy leader path.
+        if (!unit.isTemporaryBorrowed && CampaignHeroScope.ownerEligible(id)) {
             FormationIdentity.ensure(unit, knownFormationIds(getCoreUnitList()))
             HeroCampaign.synchronizeFormation(unit)
         }

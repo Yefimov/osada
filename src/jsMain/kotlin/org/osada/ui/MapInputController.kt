@@ -179,8 +179,14 @@ internal class MapInputController(
         }
         val currentUnit = map.currentUnit
         val isAir = currentUnit?.let { GameRules.isAir(it) } ?: false
-        uiSettings.airMode = isAir
-        byId("air")?.let { toggleButton(it, isAir) }
+        // Selecting a plane enters Air mode, which switches the Artillery overlay off (exclusive).
+        val layersBefore = uiSettings.airMode to uiSettings.artilleryRange
+        setMapLayerMode(air = isAir, artillery = uiSettings.artilleryRange && !isAir)
+        // A layer switch changes what is drawn over the WHOLE map (the Air-mode AA hatch, the
+        // artillery envelopes), while a select/deselect only repaints around the unit -- so leaving
+        // Air mode by clicking empty ground left the hatch on screen until the Air button was
+        // toggled by hand (owner's report, 2026-09-26). The Air button itself repaints in full.
+        if (layersBefore != (uiSettings.airMode to uiSettings.artilleryRange)) ui.render.render()
         if (!TargetPreviewController.hasPending) {
             if (!handled && unit != null && unit.player?.id != map.currentPlayer?.id) {
                 ui.showEnemyCard(unit)

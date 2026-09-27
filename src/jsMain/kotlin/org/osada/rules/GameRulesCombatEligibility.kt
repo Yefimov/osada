@@ -10,11 +10,6 @@ fun GameRules.getRetreatPosition(
     rows: Int,
 ): Cell? = CombatPositioning.getRetreatPosition(map, unit, rows)
 
-fun GameRules.isRuggedDefense(
-    attacker: GameUnit,
-    defender: GameUnit,
-): Boolean = CombatResolver.isRuggedDefense(attacker, defender)
-
 fun GameRules.isEntrenchmentIntact(
     attacker: GameUnit,
     defender: GameUnit,

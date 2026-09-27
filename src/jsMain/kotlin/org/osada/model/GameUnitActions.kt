@@ -49,11 +49,26 @@ fun GameUnit.hit(
 fun GameUnit.fire(usedOverstrength: Boolean) {
     tempSpotted = true
     spendAmmoForShot()
-    shotsThisTurn++
     if (usedOverstrength) {
+        // Only the formation's OWN attack counts against its allowance. Return fire, support fire,
+        // an interception and an overrun (which OG excludes by name) spend ammunition but not an
+        // attack: counted, they let a unit of the SECOND player spend `Devastating Fire` while
+        // defending in the first player's turn, because the counter only resets once a round
+        // (2026-09-27, `docs/design/combat-movement-heroes-weather-audit.md` §4.4).
+        shotsThisTurn++
         hasOverstrength = true
         if (!owesAnotherShot()) hasFired = true
     }
+}
+
+/**
+ * Spends one of this formation's attacks for the turn WITHOUT a shot: an attack that support fire
+ * stopped before it went in, or a surprised column that could not fire back. Counted exactly as
+ * [fire] counts an attack, so `Devastating Fire` still leaves the second one.
+ */
+fun GameUnit.spendAttack() {
+    shotsThisTurn++
+    if (!owesAnotherShot()) hasFired = true
 }
 
 /** True while `Devastating Fire` still owes this formation an attack this turn. Read AFTER

@@ -805,6 +805,7 @@ data class RulesetProfile(
     companion object {
         const val AUTHORS_VISION_ID = "authors-vision"
         const val OSADA_DEFAULT_ID = "osada-default"
+        const val AVIATION_TRIAL_ID = "aviation-trial"
     }
 }
 
@@ -817,6 +818,14 @@ enum class RulesetSource {
 
     /** A named profile the player saved. */
     CUSTOM,
+
+    /**
+     * A built-in, EXPERIMENTAL overlay on the selected content: aircraft may start attacks in
+     * overcast, rain and snow, under the weather penalties that already exist (2026-09-27,
+     * `docs/design/combat-movement-heroes-weather-audit.md` §7.3). A balance trial, not a claim about
+     * Open General -- whose manual forbids bad-weather air attacks -- and never the default.
+     */
+    AVIATION_TRIAL,
 }
 
 /**
