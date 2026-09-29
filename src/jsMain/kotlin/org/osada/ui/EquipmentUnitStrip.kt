@@ -173,6 +173,7 @@ internal object EquipmentUnitStrip {
         }
         addAttachmentButton(ui, container, unit)
         addCommanderBadge(container, unit)
+        addAuxiliaryMark(container, unit)
         addClassMark(container, data.uclass)
         ReserveRefitPresenter.addCardButton(ui, container, unit)
         return container
@@ -260,6 +261,29 @@ internal object EquipmentUnitStrip {
                 ui.updateEquipmentWindow(unit.unitData(true).uclass)
             }
         }
+    }
+
+    /**
+     * Marks a unit lent for this battle only ([org.osada.model.GameUnit.isTemporaryBorrowed]) --
+     * OG's undeployed pool in a campaign battle after the first, or an auxiliary withdrawn from the
+     * map. The tray is where the player decides what to risk, so it says so HERE rather than only on
+     * the deployed unit's card (2026-09-29 owner request).
+     *
+     * A text tag, not a colour on `.eqUnitBoxIcons`: that row already carries the unit's status, red
+     * reads as damage there, and a hover title alone is invisible on touch. Bottom-left, the hero
+     * pip's corner -- an auxiliary never has a hero, so the two cannot meet.
+     */
+    private fun addAuxiliaryMark(
+        container: HTMLElement,
+        unit: org.osada.model.GameUnit,
+    ) {
+        if (!unit.isTemporaryBorrowed) return
+        val mark = addTag(container, "span")
+        mark.className = "osada-aux-tag"
+        mark.textContent = I18n.t("equipment.reserve.auxiliary.label")
+        val help = I18n.t("equipment.reserve.auxiliary.help")
+        mark.title = help
+        mark.setAttribute("aria-label", help)
     }
 
     /** The unit's class, as the icon of the class tab it is listed under, in the card's

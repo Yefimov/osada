@@ -16,14 +16,41 @@ import org.osada.model.EfileConfig
 object ActiveRuleset {
     private var current: ResolvedRuleset? = null
 
+    /** A profile chosen at launch, waiting for the battle's efile to be known ([resolvePending]). */
+    private var pending: RulesetProfile? = null
+
     fun currentOrNull(): ResolvedRuleset? = current
 
     fun set(ruleset: ResolvedRuleset?) {
+        pending = null
         current = ruleset
     }
 
     fun clear() {
+        pending = null
         current = null
+    }
+
+    /**
+     * Locks [profile] in for the operation being launched, but resolves it only once
+     * [resolvePending] is called with the launched battle's efile loaded.
+     *
+     * Resolving at the click read `EfileConfig` of whichever efile the PREVIOUS battle had loaded
+     * (or none, on a fresh page): Author's Vision then locked `attachments` off for a whole
+     * standalone Falciu (BASEKORP ships them) whenever the page had last held an efile without
+     * them, while the same scenario inside its campaign ran with them on (2026-09-29 owner report).
+     */
+    fun setPending(profile: RulesetProfile) {
+        current = null
+        pending = profile
+    }
+
+    /** Called by the scenario loader once `Equipment.name` is the new battle's efile. A no-op for
+     *  a later mission of a campaign run, whose rules were locked when the run began. */
+    fun resolvePending() {
+        val profile = pending ?: return
+        pending = null
+        current = RulesetResolver.resolve(profile)
     }
 
     /** Fingerprint for room state and diagnosis; empty when nothing has been resolved. */
@@ -56,6 +83,7 @@ object ActiveRuleset {
     ): Boolean = intKey(rule, if (efileDefault) 1 else 0) != 0
 
     internal fun resetForTest() {
+        pending = null
         current = null
     }
 }

@@ -11,7 +11,6 @@ import org.osada.model.getUnits
 import org.osada.model.initDossier
 import org.osada.model.keepScenarioUnitsAsAuxiliary
 import org.osada.model.restoreCoreUnitList
-import org.osada.model.undeployCoreUnits
 import org.osada.rules.CampaignStartPrestige
 import org.osada.scenario.getAwardPrototype
 import org.osada.scenario.getBalancedPrestige
@@ -53,13 +52,9 @@ internal fun Game.handleCampaignScenarioLoaded(fromRestore: Boolean = false) {
         campaignPlayer?.prestige = campaign!!.startprestige
         campaignPlayer?.initDossier()
         scenario!!.map.buildCoreUnitList(campaignPlayer!!)
-        // Only campaigns that OG starts with a buy/deploy phase (an undeployed reserve pool
-        // in scenario 1 — forward, rcampdfr) hand the core back to the player UNDEPLOYED to
-        // place; every other imported campaign has its first-scenario units PRE-PLACED, so we
-        // must NOT lift them into the tray. (Scenarios 2+ always get the tray via carry-over.)
-        if (campaign!!.deployPhase) {
-            campaignPlayer?.let { scenario!!.map.undeployCoreUnits(it) }
-        }
+        // No lift into the tray any more, `deployPhase` or not: OG's undeployed pool arrives in the
+        // tray by itself (`<reserve>`, [enlistAuthoredReserve]), and a formation the author PLACED
+        // on a deploy hex -- Falciu 1's Mineclearer -- stays where OG has it.
     }
     rebuildRestartedCore()
     applyPendingCoreUnitRestore()

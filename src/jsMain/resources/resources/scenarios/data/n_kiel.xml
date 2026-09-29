@@ -2,6 +2,9 @@
 <map file="n_kiel.xscn" name="1918 Kieler Matrosenaufstand" turns="12, 15, 18" date="November 1, 1918" dayturns="2" ground="0" atmosferic="1" latitude="2" iconset="0" weatherchg="0" rows="39" cols="44" eqp="eqp-kaiser" image="resources/maps/images/map_512.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="0" unitsblocklof="0" barrage="0" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="0" ehmsuonly="0" paradropocean="1" coresoffcap="1" daysperturn="0">
   <player id="0" country="188" side="1" airtrans="0" navaltrans="0" railtrans="10" defaultxp="30" defaultstr="10" support="189,0,0,0" turnprestige="30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30"/>
   <player id="1" country="117" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="30" defaultstr="10" support="118,0,0,0" turnprestige="30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30"/>
+  <reserve>
+    <unit id="43232" owner="1" flag="118" face="0" exp="100" str="6" bstr="6"/>
+  </reserve>
   <reinforce turn="2" message="The workers of Kiel stand with your uprising! Reinforcements have arrived.">
     <at row="15" col="24">
       <unit id="46703" owner="0" flag="189" face="0" transport="46714" exp="210"/>
@@ -109,9 +112,7 @@
       </spawn>
     </event>
   </events>
-  <hex row="0" col="0">
-    <unit id="43232" owner="1" flag="118" face="0" exp="100" str="6" bstr="6"/>
-  </hex>
+  <hex row="0" col="0"/>
   <hex row="0" col="7" terrain="3"/>
   <hex row="0" col="9" terrain="3"/>
   <hex row="0" col="11" terrain="10" name="Nord-Ostsee-Kanal"/>

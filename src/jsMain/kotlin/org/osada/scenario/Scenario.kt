@@ -331,6 +331,14 @@ class Scenario(
     var dayTurn: Int = 0
     var reinforcements: MutableMap<Int, MutableList<Reinforcement>> = mutableMapOf()
 
+    /**
+     * OG's undeployed pool (`<reserve>`, [ScenarioReserveParser]): units that start the battle in
+     * their owner's deployment tray rather than on the map. Loader output only -- handed to the
+     * players once by `Game.enlistAuthoredReserve` on a NEW battle and then emptied; a restored
+     * battle's tray comes from its save.
+     */
+    internal var authoredReserve: MutableList<GameUnit> = mutableListOf()
+
     /** Optional authored message box per reinforcement turn (`<reinforce turn="2" message="...">`),
      *  shown when that wave actually deploys. Empty for scenarios that do not author one. */
     var reinforcementMessages: MutableMap<Int, String> = mutableMapOf()

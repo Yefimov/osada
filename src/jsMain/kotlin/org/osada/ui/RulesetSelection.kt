@@ -47,9 +47,11 @@ internal object RulesetSelection {
      */
     fun resolve(surface: Surface): ResolvedRuleset = RulesetResolver.resolve(selectedProfile(surface))
 
-    /** Locks the resolution in for the operation about to start. */
+    /** Locks the selection in for the operation about to start. It is resolved when the first
+     *  battle's efile has loaded (`ActiveRuleset.resolvePending`), not here: at the click the
+     *  loaded efile is still the previous battle's. */
     fun apply(surface: Surface) {
-        ActiveRuleset.set(resolve(surface))
+        ActiveRuleset.setPending(selectedProfile(surface))
     }
 
     /** A deleted profile must not leave a surface pointing at nothing. */

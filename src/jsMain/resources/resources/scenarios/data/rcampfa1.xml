@@ -2,6 +2,15 @@
 <map file="rcampfa1.xscn" name="Falciu 1" turns="8, 16, 23" date="June 22, 1941" dayturns="14" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="0" rows="21" cols="31" eqp="eqp-basekorp" image="resources/maps/images/map_218.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="0" truedlof="0" unitsblocklof="0" barrage="1" airzoc="0" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="0" capitalflak="1" ehmsuonly="0" paradropocean="1" coresoffcap="1" daysperturn="0">
   <player id="0" country="61" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="62,0,0,0" turnprestige="0, 0, 0, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <player id="1" country="13" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="14,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <reserve>
+    <unit id="36000" owner="0" flag="62" face="0" transport="36461"/>
+    <unit id="36023" owner="0" flag="62" face="0" transport="36461"/>
+    <unit id="36599" owner="0" flag="62" face="0" transport="36511"/>
+    <unit id="36598" owner="0" flag="62" face="0" transport="36511"/>
+    <unit id="36322" owner="0" flag="62" face="0" transport="36511"/>
+    <unit id="36407" owner="0" flag="62" face="0" transport="36461"/>
+    <unit id="36755" owner="0" flag="62" face="0"/>
+  </reserve>
   <reinforce turn="1">
     <at row="1" col="30">
       <unit id="36904" owner="0" flag="62" face="0" attach="4,5"/>
@@ -104,9 +113,7 @@
   <hex row="1" col="27" terrain="5"/>
   <hex row="1" col="28" terrain="5"/>
   <hex row="1" col="29" terrain="5"/>
-  <hex row="1" col="30" terrain="6" deploy="0">
-    <unit id="36000" owner="0" flag="62" face="0" transport="36461"/>
-  </hex>
+  <hex row="1" col="30" terrain="6" deploy="0"/>
   <hex row="2" col="0" terrain="5" road="2"/>
   <hex row="2" col="1" terrain="5"/>
   <hex row="2" col="2" terrain="5" road="130"/>
@@ -438,9 +445,7 @@
   <hex row="16" col="16" terrain="5"/>
   <hex row="16" col="20" road="136"/>
   <hex row="16" col="21" road="136"/>
-  <hex row="16" col="23" terrain="1" road="17" name="Cantemir" deploy="0">
-    <unit id="36023" owner="0" flag="62" face="0" transport="36461"/>
-  </hex>
+  <hex row="16" col="23" terrain="1" road="17" name="Cantemir" deploy="0"/>
   <hex row="16" col="24" terrain="10"/>
   <hex row="17" col="0" terrain="5"/>
   <hex row="17" col="1" terrain="5" road="40"/>
@@ -452,15 +457,11 @@
   <hex row="17" col="16" terrain="3"/>
   <hex row="17" col="17" terrain="2"/>
   <hex row="17" col="18" terrain="2"/>
-  <hex row="17" col="22" terrain="1" road="136" name="Cantemir" deploy="0">
-    <unit id="36599" owner="0" flag="62" face="0" transport="36511"/>
-  </hex>
+  <hex row="17" col="22" terrain="1" road="136" name="Cantemir" deploy="0"/>
   <hex row="17" col="23" terrain="1" road="163" name="Cantemir" owner="0" flag="61" victory="0">
     <unit id="35983" owner="0" flag="62" face="0" exp="154" attach="4,7"/>
   </hex>
-  <hex row="17" col="24" terrain="10" road="40" deploy="0">
-    <unit id="36598" owner="0" flag="62" face="0" transport="36511"/>
-  </hex>
+  <hex row="17" col="24" terrain="10" road="40" deploy="0"/>
   <hex row="17" col="25" road="136"/>
   <hex row="18" col="0" road="2"/>
   <hex row="18" col="1" terrain="15" name="Prut River"/>
@@ -482,15 +483,9 @@
   <hex row="18" col="17" terrain="10"/>
   <hex row="18" col="18" terrain="2" owner="0" flag="61"/>
   <hex row="18" col="19" terrain="10"/>
-  <hex row="18" col="22" terrain="1" road="10" name="Cantemir" deploy="0">
-    <unit id="36322" owner="0" flag="62" face="0" transport="36511"/>
-  </hex>
-  <hex row="18" col="23" road="144" deploy="0">
-    <unit id="36407" owner="0" flag="62" face="0" transport="36461"/>
-  </hex>
-  <hex row="18" col="24" terrain="10" deploy="0">
-    <unit id="36755" owner="0" flag="62" face="0"/>
-  </hex>
+  <hex row="18" col="22" terrain="1" road="10" name="Cantemir" deploy="0"/>
+  <hex row="18" col="23" road="144" deploy="0"/>
+  <hex row="18" col="24" terrain="10" deploy="0"/>
   <hex row="18" col="25" road="10"/>
   <hex row="18" col="26" road="160"/>
   <hex row="19" col="0" terrain="15" name="Prut River"/>

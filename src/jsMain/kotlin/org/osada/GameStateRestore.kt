@@ -57,7 +57,7 @@ class GameStateRestore(
         // what the purchase/upgrade catalogue reads, and are no longer load-bearing for the fetch.
         val requiredEqids = SavedEquipmentScan.collect(scenarioData, playersData, campaignData)
         Equipment.addPlayersEquipment(typedPlayers.toList(), requiredEqids) {
-            restorePlayersAndFinish(newScenario, scenarioData, typedPlayers, campaignData, onReady)
+            restorePlayersAndFinish(newScenario, scenarioData, typedPlayers, rawPlayers, campaignData, onReady)
         }
     }
 
@@ -188,6 +188,7 @@ class GameStateRestore(
         newScenario: Scenario,
         scenarioData: dynamic,
         typedPlayers: Array<Player>,
+        rawPlayers: Array<dynamic>,
         campaignData: dynamic?,
         onReady: () -> Unit,
     ) {
@@ -210,6 +211,7 @@ class GameStateRestore(
         newScenario.isLoaded = true
         console.log("[osada] restoreGame restoreMap start")
         restoreMap(newScenario, scenarioData.map)
+        newScenario.map.restoreUndeployedTrays(rawPlayers, campaignData)
         console.log("[osada] restoreGame restoreReinforcements start")
         restoreReinforcements(newScenario, scenarioData.reinforcements)
         // Absent in saves written before scenario events existed -> empty list, no events to fire.

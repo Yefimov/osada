@@ -141,4 +141,35 @@ class AuthorsVisionProfileTest {
             assertTrue(osada.effective(rule) >= 0, "${rule.key} unresolved under OSADA Default")
         }
     }
+
+    /**
+     * A launch resolves against the LAUNCHED battle's efile, not the one the page held at the click
+     * (2026-09-29: standalone Falciu, BASEKORP, ran with attachments off after a battle on an efile
+     * without them, while its campaign ran them on).
+     */
+    @Test
+    fun aPendingLaunchResolvesAgainstTheEfileLoadedAfterIt() {
+        val profile = RulesetProfileStore.builtIns().first { it.source == RulesetSource.AUTHORS_VISION }
+        ActiveRuleset.setPending(profile)
+
+        EfileConfig.setForTest(
+            attachmentConfigValue = EfileConfig.AttachmentConfig(false, 0, 0, 25, 30, emptyMap()),
+        )
+        ActiveRuleset.resolvePending()
+
+        assertEquals(1, ActiveRuleset.currentOrNull()?.effective(RuleKey.ATTACHMENTS))
+    }
+
+    /** A later mission of a campaign run keeps the rules locked when the run began. */
+    @Test
+    fun resolvingWithNothingPendingKeepsTheLockedRuleset() {
+        val locked = authorsVision()
+        ActiveRuleset.set(locked)
+        EfileConfig.setForTest(
+            attachmentConfigValue = EfileConfig.AttachmentConfig(false, 0, 0, 25, 30, emptyMap()),
+        )
+        ActiveRuleset.resolvePending()
+
+        assertEquals(locked, ActiveRuleset.currentOrNull())
+    }
 }

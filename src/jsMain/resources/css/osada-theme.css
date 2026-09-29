@@ -7677,6 +7677,31 @@ hr {
     pointer-events: auto;
 }
 
+/* An auxiliary (lent for this battle only) on a reserve card: `EquipmentUnitStrip.addAuxiliaryMark`.
+ * Same corner and plate as the hero pip, which an auxiliary never carries; muted steel rather than
+ * brass or red, because it is a fact about the unit, not a warning or a bonus. */
+.osada-aux-tag {
+    position: absolute;
+    bottom: 2px;
+    left: 2px;
+    height: 14px;
+    padding: 0 3px;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #4a515d;
+    border-radius: 3px;
+    background: rgba(0, 0, 0, .55);
+    color: var(--osada-steel);
+    font-family: var(--osada-font-ui);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: .04em;
+    line-height: 1;
+    cursor: help;
+    pointer-events: auto;
+}
+
 /* Transferred and not yet settled: the traits are off, so the badge must not read as a live bonus. */
 .osada-hero-pip--settling {
     color: var(--osada-text-dim);

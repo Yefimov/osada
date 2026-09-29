@@ -323,6 +323,8 @@ class Game {
         // `setupGameState`'s own.
         if (fromRestore) savedCampaignPlayer = null
         setupPlayers()
+        // OG's undeployed pool into the trays, after any carried core has been copied in.
+        if (!fromRestore) enlistAuthoredReserve()
         humanSides = countHumanSides(scenario?.map?.getPlayers()?.toList() ?: emptyList())
         setCurrentSide()
         // Turn 1's own wave. `deployArrivingReinforcements` used to be reachable only from

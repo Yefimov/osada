@@ -5,6 +5,7 @@ import org.osada.difficultyModifiers
 import org.osada.i18n.CalendarText
 import org.osada.model.Equipment
 import org.osada.model.allocMap
+import org.osada.rules.ruleset.ActiveRuleset
 import org.w3c.dom.Document
 import org.w3c.dom.Element
 import org.w3c.dom.HTMLImageElement
@@ -124,6 +125,8 @@ object ScenarioLoader {
         scenario.map.cols = mapElement.getAttribute("cols")?.toIntOrNull() ?: 0
         scenario.eqp = mapElement.getAttribute("eqp") ?: Equipment.DEFAULT_NAME
         Equipment.name = scenario.eqp
+        // The launch's ruleset is resolved against THIS efile, before anything below reads a rule.
+        ActiveRuleset.resolvePending()
         val turns = mapElement.getAttribute("turns")?.split(", ")?.map { it.toIntOrNull() ?: 0 } ?: listOf(0, 0, 0)
         scenario.map.victoryTurns = turns.toMutableList()
         scenario.map.victoryTurns[2] = kotlin.math.round(turns[2] * difficultyMultiplier).toInt()

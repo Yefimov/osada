@@ -2,6 +2,11 @@
 <map file="mao17.xscn" name="Great Leap Forward" turns="17, 19, 22" date="December 1, 1955" dayturns="3" ground="0" atmosferic="1" latitude="3" iconset="0" weatherchg="0" rows="35" cols="42" eqp="eqp-olgww2" image="resources/maps/images/map_575.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="1" airzoc="1" airmissions="0" extnaval="0" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="0" subsneedlof="1" basicstrength="1" typedvh="0" truerange0="1" truespotting0="1" reinfwhenactive="1" capitalflak="1" ehmsuonly="0" paradropocean="0" coresoffcap="0" music="china1.MUS" daysperturn="0">
   <player id="0" country="233" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="234,90,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <player id="1" country="233" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="234,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
+  <reserve>
+    <unit id="48045" owner="0" flag="234" face="0" str="8"/>
+    <unit id="48038" owner="0" flag="234" face="0" str="7"/>
+    <unit id="48038" owner="0" flag="234" face="0" str="6" ldr="1"/>
+  </reserve>
   <hex row="0" col="1" terrain="1" road="186" name="Beijing"/>
   <hex row="0" col="2" terrain="1" road="56" name="Beijing"/>
   <hex row="0" col="3" terrain="1" road="186" name="Beijing">
@@ -21,9 +26,7 @@
   <hex row="0" col="17" terrain="8"/>
   <hex row="0" col="18" terrain="8"/>
   <hex row="0" col="23" road="18"/>
-  <hex row="0" col="24" road="32" deploy="0">
-    <unit id="48045" owner="0" flag="234" face="0" str="8"/>
-  </hex>
+  <hex row="0" col="24" road="32" deploy="0"/>
   <hex row="0" col="25" terrain="3">
     <unit id="47885" owner="0" flag="234" face="0" bstr="4"/>
   </hex>
@@ -57,9 +60,7 @@
   <hex row="1" col="20" terrain="8"/>
   <hex row="1" col="23" road="33" deploy="0"/>
   <hex row="1" col="24" terrain="3" deploy="0"/>
-  <hex row="1" col="25" terrain="3" deploy="0">
-    <unit id="48038" owner="0" flag="234" face="0" str="7"/>
-  </hex>
+  <hex row="1" col="25" terrain="3" deploy="0"/>
   <hex row="1" col="26" terrain="3" deploy="0"/>
   <hex row="1" col="27" terrain="3" deploy="0"/>
   <hex row="1" col="28" terrain="3"/>
@@ -910,9 +911,7 @@
   <hex row="23" col="34" terrain="10"/>
   <hex row="23" col="35" terrain="3"/>
   <hex row="23" col="36" terrain="3" deploy="0"/>
-  <hex row="23" col="37" terrain="3" road="27" deploy="0">
-    <unit id="48038" owner="0" flag="234" face="0" str="6" ldr="1"/>
-  </hex>
+  <hex row="23" col="37" terrain="3" road="27" deploy="0"/>
   <hex row="23" col="38" terrain="1" road="179" name="Hangu" owner="0" flag="233" victory="0">
     <unit id="47877" owner="0" flag="234" face="0" str="12" bstr="12"/>
   </hex>

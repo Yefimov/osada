@@ -2,6 +2,28 @@
 <map file="forward12.xscn" name="The Rzhev Meat Grinder" turns="15, 17, 19" date="July 30, 1942" dayturns="1" ground="0" atmosferic="0" latitude="3" iconset="0" weatherchg="0" rows="38" cols="44" eqp="eqp-atomic" image="resources/maps/images/map_1449.png" eqpv="united1" canblow="1" canrepair="1" canbuild="1" extlos="1" truedlof="1" unitsblocklof="0" barrage="1" airzoc="1" airmissions="0" extnaval="1" airintercept="1" portsnosupply="0" portsnonavaldeploy="0" prototypes="1" subsneedlof="1" basicstrength="0" typedvh="0" truerange0="0" truespotting0="0" reinfwhenactive="0" capitalflak="0" ehmsuonly="0" paradropocean="1" coresoffcap="0" daysperturn="0">
   <player id="0" country="89" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="175" defaultstr="0" support="90,0,0,0" turnprestige="100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100"/>
   <player id="1" country="7" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="8,0,0,0" turnprestige="50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50"/>
+  <reserve>
+    <unit id="40322" owner="0" flag="90" face="0" exp="190" str="11"/>
+    <unit id="40439" owner="0" flag="90" face="0" exp="240"/>
+    <unit id="40299" owner="0" flag="90" face="0" exp="43"/>
+    <unit id="40202" owner="0" flag="90" face="0" transport="40138" exp="181" str="11"/>
+    <unit id="39878" owner="0" flag="90" face="0" exp="201" str="11"/>
+    <unit id="39526" owner="0" flag="90" face="0" transport="40158" exp="243"/>
+    <unit id="39502" owner="0" flag="90" face="0" exp="18"/>
+    <unit id="40512" owner="0" flag="90" face="0" exp="70" str="11" ldr="1"/>
+    <unit id="40489" owner="0" flag="90" face="0" exp="181" str="11"/>
+    <unit id="40220" owner="0" flag="90" face="0" transport="40127" exp="200"/>
+    <unit id="40357" owner="0" flag="90" face="0" exp="226"/>
+    <unit id="39961" owner="0" flag="90" face="0" transport="40158" exp="11" str="11"/>
+    <unit id="39756" owner="0" flag="90" face="0" exp="69" str="13"/>
+    <unit id="39989" owner="0" flag="90" face="0" transport="40141" exp="184"/>
+    <unit id="40422" owner="0" flag="90" face="0" exp="209"/>
+    <unit id="40538" owner="0" flag="90" face="0" exp="235"/>
+    <unit id="39675" owner="0" flag="90" face="0" exp="41" str="12"/>
+    <unit id="39764" owner="0" flag="90" face="0" exp="181"/>
+    <unit id="40266" owner="0" flag="90" face="0" transport="40129" exp="195"/>
+    <unit id="465" owner="0" flag="90" face="0" exp="175"/>
+  </reserve>
   <hex row="7" col="15" mines="1"/>
   <hex row="14" col="12" mines="1"/>
   <hex row="21" col="11" mines="1"/>
@@ -39,33 +61,15 @@
   <hex row="1" col="14" terrain="3"/>
   <hex row="1" col="15" terrain="3"/>
   <hex row="1" col="16" terrain="3"/>
-  <hex row="1" col="17" deploy="0">
-    <unit id="40322" owner="0" flag="90" face="0" exp="190" str="11"/>
-  </hex>
-  <hex row="1" col="19" deploy="0">
-    <unit id="40439" owner="0" flag="90" face="0" exp="240"/>
-  </hex>
-  <hex row="1" col="20" deploy="0">
-    <unit id="40299" owner="0" flag="90" face="0" exp="43"/>
-  </hex>
-  <hex row="1" col="21" deploy="0">
-    <unit id="40202" owner="0" flag="90" face="0" transport="40138" exp="181" str="11"/>
-  </hex>
-  <hex row="1" col="22" deploy="0">
-    <unit id="39878" owner="0" flag="90" face="0" exp="201" str="11"/>
-  </hex>
-  <hex row="1" col="23" deploy="0">
-    <unit id="39526" owner="0" flag="90" face="0" transport="40158" exp="243"/>
-  </hex>
-  <hex row="1" col="24" deploy="0">
-    <unit id="39502" owner="0" flag="90" face="0" exp="18"/>
-  </hex>
-  <hex row="1" col="25" deploy="0">
-    <unit id="40512" owner="0" flag="90" face="0" exp="70" str="11" ldr="1"/>
-  </hex>
-  <hex row="1" col="27" rail="34" deploy="0">
-    <unit id="40489" owner="0" flag="90" face="0" exp="181" str="11"/>
-  </hex>
+  <hex row="1" col="17" deploy="0"/>
+  <hex row="1" col="19" deploy="0"/>
+  <hex row="1" col="20" deploy="0"/>
+  <hex row="1" col="21" deploy="0"/>
+  <hex row="1" col="22" deploy="0"/>
+  <hex row="1" col="23" deploy="0"/>
+  <hex row="1" col="24" deploy="0"/>
+  <hex row="1" col="25" deploy="0"/>
+  <hex row="1" col="27" rail="34" deploy="0"/>
   <hex row="1" col="28" rail="33"/>
   <hex row="1" col="29" road="34"/>
   <hex row="1" col="30" road="35"/>
@@ -87,39 +91,17 @@
   <hex row="2" col="8" road="136"/>
   <hex row="2" col="9" road="136"/>
   <hex row="2" col="15" terrain="3"/>
-  <hex row="2" col="16" terrain="3" deploy="0">
-    <unit id="40220" owner="0" flag="90" face="0" transport="40127" exp="200"/>
-  </hex>
-  <hex row="2" col="17" terrain="16" deploy="0">
-    <unit id="40357" owner="0" flag="90" face="0" exp="226"/>
-  </hex>
-  <hex row="2" col="18" deploy="0">
-    <unit id="39961" owner="0" flag="90" face="0" transport="40158" exp="11" str="11"/>
-  </hex>
-  <hex row="2" col="19" deploy="0">
-    <unit id="39756" owner="0" flag="90" face="0" exp="69" str="13"/>
-  </hex>
-  <hex row="2" col="20" deploy="0">
-    <unit id="39989" owner="0" flag="90" face="0" transport="40141" exp="184"/>
-  </hex>
-  <hex row="2" col="21" deploy="0">
-    <unit id="40422" owner="0" flag="90" face="0" exp="209"/>
-  </hex>
-  <hex row="2" col="22" deploy="0">
-    <unit id="40538" owner="0" flag="90" face="0" exp="235"/>
-  </hex>
-  <hex row="2" col="23" deploy="0">
-    <unit id="39675" owner="0" flag="90" face="0" exp="41" str="12"/>
-  </hex>
-  <hex row="2" col="24" deploy="0">
-    <unit id="39764" owner="0" flag="90" face="0" exp="181"/>
-  </hex>
-  <hex row="2" col="25" rail="34" deploy="0">
-    <unit id="40266" owner="0" flag="90" face="0" transport="40129" exp="195"/>
-  </hex>
-  <hex row="2" col="26" terrain="1" rail="34" name="Vlasovo" owner="0" flag="89" victory="0" deploy="0" station="1">
-    <unit id="465" owner="0" flag="90" face="0" exp="175"/>
-  </hex>
+  <hex row="2" col="16" terrain="3" deploy="0"/>
+  <hex row="2" col="17" terrain="16" deploy="0"/>
+  <hex row="2" col="18" deploy="0"/>
+  <hex row="2" col="19" deploy="0"/>
+  <hex row="2" col="20" deploy="0"/>
+  <hex row="2" col="21" deploy="0"/>
+  <hex row="2" col="22" deploy="0"/>
+  <hex row="2" col="23" deploy="0"/>
+  <hex row="2" col="24" deploy="0"/>
+  <hex row="2" col="25" rail="34" deploy="0"/>
+  <hex row="2" col="26" terrain="1" rail="34" name="Vlasovo" owner="0" flag="89" victory="0" deploy="0" station="1"/>
   <hex row="2" col="27" terrain="3" road="34" deploy="0"/>
   <hex row="2" col="28" road="34" deploy="0"/>
   <hex row="2" col="33" terrain="3"/>
