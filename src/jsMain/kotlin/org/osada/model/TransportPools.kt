@@ -34,22 +34,14 @@ import org.osada.UnitClass
  * point, and it is the only one: cancelling a pending disembarkation flips the sign back and is
  * correctly free under either reading.
  *
- * ### Rail: released at the owner's next turn, because OSADA's rail move has no duration
+ * ### Rail: the same lifetime, since 2026-09-28
  *
  * OG's railway is CONTAINMENT — *"Units embarked in RTP, will look for the closer free station to
- * disembark"* (0.92.0.0), the train is a real unit *"able to move on rails"* that can be caught by
- * minefields on the way, and a journey can span turns while holding its slot. `rules/RailTransport`
- * models the railway as an ATOMIC relocation instead, for the reason recorded in its own header:
- * OSADA folds OG's `RT` class into Ground Transport, so there is no train record to become.
- *
- * That leaves the slot with nothing to be held for. Releasing it on arrival would make the pool
- * count nothing at all — every journey would end in the same instant it began — so the compression
- * that preserves the mechanic is to hold the train for **the turn it was used in** and free it when
- * its owner plays again. `railtrans="1"` is then one railway move per turn, which is the nearest
- * thing an atomic model has to *"one train in use at any time"*.
- *
- * **This is the one number here that no source states**, because the source describes a mechanic
- * OSADA has not built. `docs/og-open-questions.md` §1 carries it as the open half.
+ * disembark"* (0.92.0.0) — and OSADA now builds it that way (`rules/RailTransport`): a slot is taken
+ * when a formation boards a train and returned when it steps off. Until then the railway was an
+ * atomic relocation, the slot was held for one turn and refreshed as its owner's turn opened; the
+ * turn-start pass is now a RECOUNT against the trains actually carrying something
+ * (`RailTransport.recountPool`), which also brings a save from that era back to the right number.
  */
 fun Player.takeTransportFromPool(uclass: Int) {
     when (uclass) {
@@ -70,14 +62,4 @@ fun Player.returnTransportToPool(uclass: Int) {
         UnitClass.AIR_TRANSPORT.value -> if (airTransports < airTransportsMax) airTransports++
         UnitClass.NAVAL_TRANSPORT.value -> if (navalTransports < navalTransportsMax) navalTransports++
     }
-}
-
-/**
- * Frees every rail slot the player used on their previous turn, called as their turn opens.
- *
- * A straight reset rather than a counted release: the trains are all idle again by definition, and
- * a reset cannot drift out of step with the spends the way a counter can.
- */
-fun Player.refreshRailPool() {
-    railTransports = railTransportsMax
 }

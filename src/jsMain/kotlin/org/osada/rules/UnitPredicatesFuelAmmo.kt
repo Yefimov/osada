@@ -6,7 +6,11 @@ import org.osada.model.GameUnit
 import org.osada.model.Transport
 
 /** Fuel / ammo consumption predicates, split out of [UnitPredicates] to keep its function count in bounds. */
-fun UnitPredicates.unitUsesFuel(unit: GameUnit): Boolean = unitUsesFuelData(unit.unitData())
+fun UnitPredicates.unitUsesFuel(unit: GameUnit): Boolean =
+    // A formation riding a pooled transport burns none of its own fuel -- `GameUnit.move` charges
+    // fuel only when `carrier == 0` -- so its range is not clamped by it either. A train record
+    // carries fuel 255 while the infantry aboard carries 0, which left a boarded train with no move.
+    unit.carrier == 0 && unitUsesFuelData(unit.unitData())
 
 fun UnitPredicates.unitUsesFuel(transport: Transport): Boolean = unitUsesFuelData(transport.unitData())
 

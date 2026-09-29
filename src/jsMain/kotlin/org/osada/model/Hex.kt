@@ -350,11 +350,6 @@ class Hex(
      *  shell (OG 9.2). Cleared with the rest of the selection overlay. */
     var isBarrageSel: Boolean = false
 
-    /** A railway destination currently offered to the selected formation (`rules/RailTransport`).
-     *  Painted and cleared exactly like [isBarrageSel] -- a transient selection overlay, never
-     *  saved. */
-    var isRailSel: Boolean = false
-
     private val zoc: IntArray = IntArray(2)
     private val spotted: IntArray = IntArray(2)
 

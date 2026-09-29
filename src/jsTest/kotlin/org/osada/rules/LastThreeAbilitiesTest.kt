@@ -9,6 +9,8 @@ import org.osada.model.EfileConfig
 import org.osada.model.Equipment
 import org.osada.model.EquipmentData
 import org.osada.model.abilityCatalog
+import org.osada.model.moveUnit
+import org.osada.model.selectUnit
 import org.osada.rules.ruleset.RuleKey
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
@@ -41,6 +43,7 @@ class LastThreeAbilitiesTest : OgRulesTestHarness() {
     private val carrierEqid = 1201
     private val hangarlessCarrierEqid = 1202
     private val depotEqid = 1203
+    private val trainEqid = 1204
 
     @BeforeTest
     fun setup() {
@@ -128,9 +131,11 @@ class LastThreeAbilitiesTest : OgRulesTestHarness() {
 
     @Test
     fun allThreeMechanicsAreOffUntilTheRulesetAsksForThem() {
+        putTrain()
         val map = world()
         GameHolder.instance = holderFor(map)
         friendly.railTransports = 4
+        friendly.railTransportsMax = 4
         railLine(map, row = 3, fromCol = 1, toCol = 6)
         map.map!![3][1].station = true
         map.map!![3][6].station = true
@@ -143,9 +148,10 @@ class LastThreeAbilitiesTest : OgRulesTestHarness() {
         val hungry = place(map, infantryEqid, 2, 3, 0)
 
         // Schema 12: each mechanic has a key of its own so a player can choose it. With the
-        // default ruleset all three are off, which is a description of the game before §AA.
+        // default ruleset both are off, which is a description of the game before §AA. The
+        // railway was the third until schema 20 retired its key: it runs wherever a pool exists.
         assertFalse(CarrierDeploy.permits(map, fighter, 4, 4))
-        assertFalse(RailTransport.canEntrain(marcher))
+        assertTrue(RailTransport.canEntrain(marcher), "no ruleset key gates the railway any more")
         assertFalse(DepotSupply.enabled())
         assertNull(DepotSupply.supplierFor(map, hungry))
     }
@@ -216,84 +222,165 @@ class LastThreeAbilitiesTest : OgRulesTestHarness() {
 
     // ---- No Need Station / rail ---------------------------------------------------------------
 
+    /** A rail transport as OG defines one: Ground Transport, RAIL movement, no weapon. */
+    private fun putTrain() {
+        Equipment.putEquipment(
+            trainEqid,
+            EquipmentData().apply {
+                name = "Train"
+                uclass = UnitClass.GROUND_TRANSPORT.value
+                movmethod = org.osada.MovMethod.RAIL.value
+                movpoints = 10
+                grounddef = 2
+                // As LXF's trains carry it. The infantry aboard has none, and a range clamped by
+                // the RIDER's fuel left the first real train in the browser with nowhere to go.
+                fuel = 255
+            },
+        )
+    }
+
+    private fun railWorld(pool: Int): org.osada.model.GameMap {
+        putTrain()
+        friendly.railTransports = pool
+        friendly.railTransportsMax = pool
+        val map = world()
+        GameHolder.instance = holderFor(map)
+        railLine(map, row = 3, fromCol = 1, toCol = 6)
+        map.map!![3][1].station = true
+        map.map!![3][6].station = true
+        return map
+    }
+
     @Test
     fun railIsInertUntilAScenarioGivesThePlayerAPool() {
-        val map = world()
-        railLine(map, row = 3, fromCol = 1, toCol = 6)
-        map.map!![3][1].station = true
-        map.map!![3][6].station = true
+        val map = railWorld(pool = 0)
         val unit = place(map, infantryEqid, 3, 1, 0)
 
-        // A scenario whose author granted no rail pool -- 382 of the 502 deployed, since the pools
-        // were imported on 2026-08-29. The content gate is what makes the mechanic inert there,
-        // and it has to survive Author's Vision resolving the KEY to on.
-        assertEquals(0, friendly.railTransports)
+        // A scenario whose author granted no rail pool -- 382 of the 502 deployed.
         assertFalse(RailTransport.canEntrain(unit))
-        assertTrue(RailTransport.destinations(map, unit).isEmpty())
+        assertFalse(RailTransport.entrain(map, unit))
+        assertEquals(0, unit.carrier)
     }
 
     @Test
-    fun withAPoolAFormationRailsBetweenStations() {
-        ruleset(RuleKey.RAIL_TRANSPORT to 1)
-        friendly.railTransports = 2
-        val map = world()
-        railLine(map, row = 3, fromCol = 1, toCol = 6)
-        map.map!![3][1].station = true
-        map.map!![3][6].station = true
+    fun boardingPutsTheFormationAboardARealTrain() {
+        val map = railWorld(pool = 2)
         val unit = place(map, infantryEqid, 3, 1, 0)
 
-        assertTrue(RailTransport.canEntrain(unit))
-        val destinations = RailTransport.destinations(map, unit)
-        assertEquals(listOf(6), destinations.map { it.col }, "only the other STATION is offered")
+        assertTrue(RailTransport.entrain(map, unit))
+        assertEquals(trainEqid, unit.carrier, "the formation rides the train record")
+        assertTrue(RailTransport.isEntrained(unit))
+        assertEquals(trainEqid, unit.getEqid(), "so it moves, defends and is drawn as the train")
+        assertEquals(1, friendly.railTransports, "one train taken from the pool")
+        assertFalse(unit.hasMoved, "and the train may leave on this same turn")
+    }
 
-        assertTrue(RailTransport.entrain(map, unit, 3, 6))
+    @Test
+    fun aTrainMovesAlongTheTrackAndNowhereElse() {
+        val map = railWorld(pool = 1)
+        val unit = place(map, infantryEqid, 3, 1, 0)
+        RailTransport.entrain(map, unit)
+
+        val range = GameRules.getMoveRange(map, unit)
+        assertTrue(range.isNotEmpty(), "the train can go somewhere")
+        assertTrue(range.all { map.map!![it.row][it.col].rail > 0 }, "only onto track: $range")
+        assertTrue(range.any { it.row == 3 && it.col == 6 }, "as far as the far station")
+    }
+
+    @Test
+    fun aJourneySpansTurnsUntilTheFormationStepsOffAtAStation() {
+        val map = railWorld(pool = 1)
+        val unit = place(map, infantryEqid, 3, 1, 0)
+        RailTransport.entrain(map, unit)
+        map.selectUnit(unit)
+        map.moveUnit(unit, 3, 4)
+        assertEquals(4, unit.getPos()?.col, "the train moved")
+
+        assertTrue(RailTransport.isEntrained(unit), "still aboard between stations")
+        assertFalse(RailTransport.canDetrain(unit), "and with no station here it cannot get off")
+
+        map.endTurn()
+        map.endTurn()
+        assertEquals(0, friendly.railTransports, "the train is still in use on the next turn")
+        map.selectUnit(unit)
+        map.moveUnit(unit, 3, 6)
         assertEquals(6, unit.getPos()?.col)
-        assertEquals(1, friendly.railTransports, "one train spent")
-        assertTrue(unit.hasMoved, "the journey is the formation's move")
-        assertFalse(unit.hasFired, "and leaves its shot alone")
+
+        assertTrue(RailTransport.detrain(map, unit))
+        assertEquals(0, unit.carrier)
+        assertEquals(1, friendly.railTransports, "given back when the formation is off")
+        assertEquals(0, unit.moveLeft, "leaving after the journey ends the move")
     }
 
     @Test
-    fun noNeedStationOffersEveryHexOnTheTrack() {
-        ruleset(RuleKey.RAIL_TRANSPORT to 1)
-        friendly.railTransports = 1
-        val map = world()
-        railLine(map, row = 3, fromCol = 1, toCol = 6)
-        map.map!![3][1].station = true
+    fun boardingAndSteppingStraightOffIsFree() {
+        val map = railWorld(pool = 1)
         val unit = place(map, infantryEqid, 3, 1, 0)
+        RailTransport.entrain(map, unit)
+
+        assertTrue(RailTransport.detrain(map, unit))
+        assertFalse(unit.hasMoved, "nothing happened, so nothing is spent")
+        assertEquals(1, friendly.railTransports)
+    }
+
+    @Test
+    fun noNeedStationBoardsAndLeavesAnywhereOnTheTrack() {
+        val map = railWorld(pool = 1)
+        val unit = place(map, infantryEqid, 3, 3, 0)
+        assertFalse(RailTransport.canEntrain(unit), "plain track, no station")
+
         unit.unitData(true).attrEx = attrExNoNeedStation
-
-        // 11,003 shipped records carry this bit. With no station at the far end, it is the only
-        // thing that makes the far end reachable at all.
-        assertEquals(listOf(2, 3, 4, 5, 6), RailTransport.destinations(map, unit).map { it.col }.sorted())
-    }
-
-    @Test
-    fun anEnemyOnTheLineCutsIt() {
-        ruleset(RuleKey.RAIL_TRANSPORT to 1)
-        friendly.railTransports = 1
-        val map = world()
-        railLine(map, row = 3, fromCol = 1, toCol = 6)
-        map.map!![3][1].station = true
-        map.map!![3][6].station = true
-        place(map, infantryEqid, 3, 4, 1)
-        val unit = place(map, infantryEqid, 3, 1, 0)
-
-        assertTrue(RailTransport.destinations(map, unit).isEmpty(), "the far station is behind the enemy")
+        // 11,003 shipped records carry this bit; bn9s20's Soviet infantry among them.
+        assertTrue(RailTransport.entrain(map, unit))
+        map.selectUnit(unit)
+        map.moveUnit(unit, 3, 5)
+        assertEquals(5, unit.getPos()?.col)
+        assertTrue(RailTransport.detrain(map, unit), "and it may step off between stations too")
     }
 
     @Test
     fun aFormationThatHasActedCannotBoard() {
-        ruleset(RuleKey.RAIL_TRANSPORT to 1)
-        friendly.railTransports = 1
-        val map = world()
-        railLine(map, row = 3, fromCol = 1, toCol = 6)
-        map.map!![3][1].station = true
-        map.map!![3][6].station = true
+        val map = railWorld(pool = 1)
         val unit = place(map, infantryEqid, 3, 1, 0)
 
         unit.hasMoved = true
         assertFalse(RailTransport.canEntrain(unit), "OG: the unit must not already have acted")
+    }
+
+    @Test
+    fun theTurnStartPoolCountsTrainsStillCarryingSomething() {
+        val map = railWorld(pool = 2)
+        val aboard = place(map, infantryEqid, 3, 1, 0)
+        RailTransport.entrain(map, aboard)
+        // A save from the atomic railway spent the pool and refreshed it each turn; whatever it
+        // stored, the recount gives the authored size less the trains in use.
+        friendly.railTransports = 0
+
+        RailTransport.recountPool(map, friendly)
+        assertEquals(1, friendly.railTransports)
+
+        aboard.destroyed = true
+        RailTransport.recountPool(map, friendly)
+        assertEquals(2, friendly.railTransports, "a destroyed train is no longer in use")
+    }
+
+    @Test
+    fun railMoveIsOnTheActionStripAsABoardAndLeaveToggle() {
+        val map = railWorld(pool = 4)
+        val unit = place(map, infantryEqid, 3, 1, 0)
+        val context = { UnitActionContext(map = map, unit = unit, currentPlayer = friendly) }
+
+        val board = UnitActionAvailability.all(context()).single { it.action == UnitActionId.RAIL_MOVE }
+        assertTrue(board.applicable && board.enabled, board.reasons.toString())
+        assertEquals(ActionEffectKind.BOARD_TRAIN, board.effects.single().kind)
+
+        RailTransport.entrain(map, unit)
+        val strip = UnitActionAvailability.all(context())
+        val leave = strip.single { it.action == UnitActionId.RAIL_MOVE }
+        assertTrue(leave.applicable && leave.enabled, leave.reasons.toString())
+        assertEquals(ActionEffectKind.LEAVE_TRAIN, leave.effects.single().kind)
+        assertFalse(strip.single { it.action == UnitActionId.EMBARK }.applicable, "a train is not a ship")
+        assertFalse(strip.single { it.action == UnitActionId.MOUNT }.applicable, "nor a lorry")
     }
 
     // ---- Supply Unit / supply_ex --------------------------------------------------------------

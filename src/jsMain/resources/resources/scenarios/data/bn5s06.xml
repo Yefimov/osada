@@ -44,7 +44,7 @@
   <hex row="0" col="12" terrain="9"/>
   <hex row="0" col="13" terrain="1" name="Town"/>
   <hex row="0" col="14" terrain="1" road="17" name="Town"/>
-  <hex row="0" col="15" terrain="1" name="Town"/>
+  <hex row="0" col="15" terrain="1" name="Town" rail="17"/>
   <hex row="0" col="16" terrain="9"/>
   <hex row="0" col="17" terrain="9"/>
   <hex row="0" col="18" road="17"/>
@@ -57,8 +57,8 @@
   <hex row="0" col="31" terrain="13"/>
   <hex row="0" col="32" terrain="13"/>
   <hex row="0" col="33" terrain="1" road="8" name="Village"/>
-  <hex row="0" col="35" terrain="10" road="34"/>
-  <hex row="0" col="36" road="32"/>
+  <hex row="0" col="35" terrain="10" road="34" rail="34"/>
+  <hex row="0" col="36" road="32" rail="34"/>
   <hex row="0" col="37" terrain="3"/>
   <hex row="0" col="38" terrain="3"/>
   <hex row="0" col="39" terrain="3"/>
@@ -73,7 +73,7 @@
   <hex row="1" col="5" terrain="3"/>
   <hex row="1" col="12" terrain="1" name="Village"/>
   <hex row="1" col="14" terrain="1" road="17" name="Town"/>
-  <hex row="1" col="15" terrain="2"/>
+  <hex row="1" col="15" terrain="2" rail="9"/>
   <hex row="1" col="16" terrain="1" name="Town"/>
   <hex row="1" col="17" terrain="9"/>
   <hex row="1" col="18" road="9"/>
@@ -86,12 +86,12 @@
   <hex row="1" col="25" road="146"/>
   <hex row="1" col="26" road="40"/>
   <hex row="1" col="27" road="136"/>
-  <hex row="1" col="29" road="34"/>
-  <hex row="1" col="30" road="40"/>
-  <hex row="1" col="31" road="130"/>
-  <hex row="1" col="32" road="40"/>
-  <hex row="1" col="33" road="130"/>
-  <hex row="1" col="34" road="170"/>
+  <hex row="1" col="29" road="34" rail="34"/>
+  <hex row="1" col="30" road="40" rail="40"/>
+  <hex row="1" col="31" road="130" rail="130"/>
+  <hex row="1" col="32" road="40" rail="40"/>
+  <hex row="1" col="33" road="130" rail="130"/>
+  <hex row="1" col="34" road="170" rail="34"/>
   <hex row="1" col="35" terrain="10" road="136"/>
   <hex row="1" col="37" terrain="3"/>
   <hex row="1" col="38" terrain="3"/>
@@ -107,16 +107,18 @@
   <hex row="2" col="12" terrain="3"/>
   <hex row="2" col="14" road="9"/>
   <hex row="2" col="15" terrain="1" road="160" name="Village"/>
-  <hex row="2" col="16" terrain="2" owner="1" flag="359"/>
+  <hex row="2" col="16" terrain="2" owner="1" flag="359" rail="152"/>
+  <hex row="2" col="17" rail="136"/>
   <hex row="2" col="18" terrain="9"/>
   <hex row="2" col="19" terrain="9"/>
   <hex row="2" col="20" terrain="5"/>
   <hex row="2" col="21" terrain="9"/>
   <hex row="2" col="22" road="18"/>
-  <hex row="2" col="23" terrain="10" road="34"/>
-  <hex row="2" col="24" road="32"/>
-  <hex row="2" col="25" terrain="1" road="9" name="Village" owner="1" flag="359" station="1"/>
-  <hex row="2" col="28" road="130"/>
+  <hex row="2" col="23" terrain="10" road="34" rail="34"/>
+  <hex row="2" col="24" road="32" rail="40"/>
+  <hex row="2" col="25" terrain="1" road="9" name="Village" owner="1" flag="359" station="1" rail="136"/>
+  <hex row="2" col="27" rail="42"/>
+  <hex row="2" col="28" road="130" rail="34"/>
   <hex row="2" col="29" terrain="3"/>
   <hex row="2" col="30" terrain="3"/>
   <hex row="2" col="32" terrain="3"/>
@@ -145,16 +147,20 @@
   <hex row="3" col="15">
     <unit id="674" owner="1" flag="360" face="0" bstr="1"/>
   </hex>
+  <hex row="3" col="16" rail="17"/>
   <hex row="3" col="17" terrain="11">
     <unit id="704" owner="1" flag="360" face="0" exp="100" str="5" bstr="1"/>
   </hex>
+  <hex row="3" col="18" rail="136"/>
+  <hex row="3" col="19" rail="136"/>
   <hex row="3" col="20" terrain="9"/>
-  <hex row="3" col="21" terrain="1" road="34" name="Village"/>
-  <hex row="3" col="22" road="43"/>
+  <hex row="3" col="21" terrain="1" road="34" name="Village" rail="34"/>
+  <hex row="3" col="22" road="43" rail="34"/>
   <hex row="3" col="23" road="136"/>
   <hex row="3" col="24" terrain="10"/>
-  <hex row="3" col="25" terrain="10" road="34"/>
-  <hex row="3" col="26" terrain="1" road="160" name="Village"/>
+  <hex row="3" col="25" terrain="10" road="34" rail="34"/>
+  <hex row="3" col="26" terrain="1" road="160" name="Village" rail="162"/>
+  <hex row="3" col="28" rail="144"/>
   <hex row="3" col="29" terrain="3"/>
   <hex row="3" col="30" terrain="3"/>
   <hex row="3" col="33" terrain="3"/>
@@ -177,14 +183,18 @@
   <hex row="4" col="13" terrain="3" road="130"/>
   <hex row="4" col="14" road="41"/>
   <hex row="4" col="15" road="136"/>
+  <hex row="4" col="16" rail="17"/>
   <hex row="4" col="17" road="34"/>
   <hex row="4" col="18" road="40"/>
   <hex row="4" col="19" road="130"/>
-  <hex row="4" col="20" terrain="10" road="34"/>
+  <hex row="4" col="20" terrain="10" road="34" rail="130"/>
   <hex row="4" col="21" terrain="3"/>
   <hex row="4" col="22" terrain="3"/>
-  <hex row="4" col="24" road="146"/>
+  <hex row="4" col="23" rail="34"/>
+  <hex row="4" col="24" road="146" rail="34"/>
   <hex row="4" col="26" terrain="10"/>
+  <hex row="4" col="28" rail="9"/>
+  <hex row="4" col="29" rail="136"/>
   <hex row="4" col="37" terrain="8"/>
   <hex row="4" col="38" terrain="8"/>
   <hex row="4" col="39" road="9"/>
@@ -201,16 +211,19 @@
   <hex row="5" col="9" terrain="1" name="Town"/>
   <hex row="5" col="13" terrain="3"/>
   <hex row="5" col="14" terrain="3"/>
-  <hex row="5" col="16" terrain="1" road="146" name="Village"/>
+  <hex row="5" col="15" rail="34"/>
+  <hex row="5" col="16" terrain="1" road="146" name="Village" rail="33"/>
   <hex row="5" col="19" terrain="10"/>
   <hex row="5" col="20" terrain="10"/>
   <hex row="5" col="21" terrain="5"/>
-  <hex row="5" col="22" terrain="5"/>
+  <hex row="5" col="22" terrain="5" rail="18"/>
   <hex row="5" col="23" terrain="5"/>
   <hex row="5" col="24" terrain="5" road="17"/>
   <hex row="5" col="26" terrain="10"/>
   <hex row="5" col="27" terrain="10"/>
   <hex row="5" col="29" terrain="5"/>
+  <hex row="5" col="30" rail="136"/>
+  <hex row="5" col="31" rail="144"/>
   <hex row="5" col="33" terrain="10"/>
   <hex row="5" col="36" terrain="3"/>
   <hex row="5" col="40" road="144"/>
@@ -223,34 +236,37 @@
   <hex row="6" col="6" road="18"/>
   <hex row="6" col="10" terrain="1" name="Town"/>
   <hex row="6" col="13" terrain="3"/>
+  <hex row="6" col="14" rail="18"/>
   <hex row="6" col="15" terrain="1" road="34" name="Village"/>
   <hex row="6" col="16" road="33"/>
   <hex row="6" col="19" terrain="10"/>
   <hex row="6" col="20" terrain="10"/>
-  <hex row="6" col="21" terrain="10" road="34"/>
-  <hex row="6" col="22" terrain="5" road="32"/>
+  <hex row="6" col="21" terrain="10" road="34" rail="34"/>
+  <hex row="6" col="22" terrain="5" road="32" rail="33"/>
   <hex row="6" col="24" road="17"/>
   <hex row="6" col="25" terrain="16"/>
   <hex row="6" col="26" terrain="16"/>
   <hex row="6" col="27" terrain="10"/>
   <hex row="6" col="29" terrain="5"/>
+  <hex row="6" col="31" rail="9"/>
   <hex row="6" col="34" terrain="10"/>
   <hex row="6" col="36" terrain="3"/>
   <hex row="6" col="37" terrain="8"/>
   <hex row="6" col="40" road="17"/>
-  <hex row="6" col="41" road="34"/>
-  <hex row="6" col="42" road="34"/>
+  <hex row="6" col="41" road="34" rail="34"/>
+  <hex row="6" col="42" road="34" rail="34"/>
   <hex row="7" col="2" terrain="3"/>
   <hex row="7" col="6" road="17"/>
   <hex row="7" col="10" terrain="1" name="Town"/>
   <hex row="7" col="11" terrain="1" road="40" name="Town"/>
-  <hex row="7" col="13" terrain="10" road="34"/>
-  <hex row="7" col="14" terrain="1" road="34" name="Village"/>
+  <hex row="7" col="13" terrain="10" road="34" rail="18"/>
+  <hex row="7" col="14" terrain="1" road="34" name="Village" rail="33"/>
   <hex row="7" col="15" terrain="10"/>
   <hex row="7" col="16" terrain="10"/>
   <hex row="7" col="17" terrain="10"/>
   <hex row="7" col="18" terrain="10"/>
-  <hex row="7" col="20" road="2"/>
+  <hex row="7" col="19" rail="34"/>
+  <hex row="7" col="20" road="2" rail="50"/>
   <hex row="7" col="22" terrain="10"/>
   <hex row="7" col="24" road="9"/>
   <hex row="7" col="25" terrain="1" road="144" name="Village"/>
@@ -259,13 +275,13 @@
   <hex row="7" col="28" terrain="10"/>
   <hex row="7" col="30" terrain="5"/>
   <hex row="7" col="31" terrain="5"/>
-  <hex row="7" col="32" road="8"/>
-  <hex row="7" col="33" terrain="10" road="136"/>
+  <hex row="7" col="32" road="8" rail="136"/>
+  <hex row="7" col="33" terrain="10" road="136" rail="136"/>
   <hex row="7" col="34" terrain="10"/>
   <hex row="7" col="35" terrain="3"/>
   <hex row="7" col="36" terrain="3"/>
   <hex row="7" col="37" terrain="8"/>
-  <hex row="7" col="40" road="19"/>
+  <hex row="7" col="40" road="19" rail="18"/>
   <hex row="7" col="42" terrain="10"/>
   <hex row="8" col="1" terrain="3"/>
   <hex row="8" col="5" road="34"/>
@@ -278,15 +294,18 @@
   <hex row="8" col="12" terrain="11" road="146" name="Town" owner="1" flag="359">
     <unit id="742" owner="1" flag="360" face="0" exp="100" str="8" bstr="1"/>
   </hex>
+  <hex row="8" col="13" rail="33"/>
   <hex row="8" col="14" terrain="10"/>
   <hex row="8" col="15" terrain="3"/>
+  <hex row="8" col="17" rail="34"/>
+  <hex row="8" col="18" rail="34"/>
   <hex row="8" col="19" terrain="3"/>
-  <hex row="8" col="20" terrain="11" road="8" name="Village" owner="1" flag="359">
+  <hex row="8" col="20" terrain="11" road="8" name="Village" owner="1" flag="359" rail="9">
     <unit id="890" owner="1" flag="360" face="0" exp="100" str="5" bstr="1"/>
   </hex>
-  <hex row="8" col="21" terrain="1" road="168" name="Village"/>
+  <hex row="8" col="21" terrain="1" road="168" name="Village" rail="168"/>
   <hex row="8" col="22" terrain="10"/>
-  <hex row="8" col="23" road="40"/>
+  <hex row="8" col="23" road="40" rail="40"/>
   <hex row="8" col="25" road="17"/>
   <hex row="8" col="26" terrain="16"/>
   <hex row="8" col="28" terrain="10"/>
@@ -295,10 +314,10 @@
   <hex row="8" col="31" terrain="10"/>
   <hex row="8" col="32" terrain="10"/>
   <hex row="8" col="33" terrain="3"/>
-  <hex row="8" col="34" road="128"/>
+  <hex row="8" col="34" road="128" rail="144"/>
   <hex row="8" col="37" terrain="8"/>
-  <hex row="8" col="39" road="18"/>
-  <hex row="8" col="40" road="33"/>
+  <hex row="8" col="39" road="18" rail="18"/>
+  <hex row="8" col="40" road="33" rail="33"/>
   <hex row="8" col="41" terrain="10"/>
   <hex row="8" col="42" terrain="10"/>
   <hex row="9" col="1" terrain="3" road="40"/>
@@ -311,31 +330,35 @@
   <hex row="9" col="8" terrain="1" name="Village"/>
   <hex row="9" col="9" terrain="3"/>
   <hex row="9" col="10" terrain="3"/>
-  <hex row="9" col="11">
+  <hex row="9" col="11" rail="42">
     <unit id="55727" owner="1" flag="360" face="0" transport="55769" exp="200" str="9" bstr="5"/>
   </hex>
-  <hex row="9" col="12" road="9"/>
-  <hex row="9" col="13" road="144">
+  <hex row="9" col="12" road="9" rail="34"/>
+  <hex row="9" col="13" road="144" rail="40">
     <unit id="55732" owner="1" flag="360" face="0" exp="150" str="11" ldr="1" bstr="7"/>
   </hex>
   <hex row="9" col="14" terrain="3"/>
-  <hex row="9" col="17" road="40"/>
+  <hex row="9" col="15" rail="58"/>
+  <hex row="9" col="16" rail="34"/>
+  <hex row="9" col="17" road="40" rail="40"/>
   <hex row="9" col="18" terrain="3"/>
-  <hex row="9" col="19" road="34">
+  <hex row="9" col="19" road="34" rail="34">
     <unit id="55775" owner="1" flag="360" face="0" transport="55766" exp="50" str="5" bstr="5" objfrom="24"/>
   </hex>
-  <hex row="9" col="20" road="34"/>
+  <hex row="9" col="20" road="34" rail="34"/>
   <hex row="9" col="21" terrain="3"/>
-  <hex row="9" col="22" terrain="10" road="130"/>
-  <hex row="9" col="24" road="136"/>
-  <hex row="9" col="25" road="145"/>
+  <hex row="9" col="22" terrain="10" road="130" rail="130"/>
+  <hex row="9" col="24" road="136" rail="136"/>
+  <hex row="9" col="25" road="145" rail="144"/>
   <hex row="9" col="26" terrain="3"/>
   <hex row="9" col="27" terrain="3"/>
   <hex row="9" col="30" terrain="10"/>
   <hex row="9" col="32" terrain="3"/>
   <hex row="9" col="33" terrain="3"/>
+  <hex row="9" col="34" rail="9"/>
+  <hex row="9" col="35" rail="136"/>
   <hex row="9" col="38" terrain="3"/>
-  <hex row="9" col="39" road="33"/>
+  <hex row="9" col="39" road="33" rail="33"/>
   <hex row="9" col="40" terrain="10"/>
   <hex row="9" col="41" terrain="3"/>
   <hex row="9" col="42" terrain="3"/>
@@ -348,18 +371,22 @@
   </hex>
   <hex row="10" col="7" road="9"/>
   <hex row="10" col="8" terrain="3"/>
+  <hex row="10" col="9" rail="34"/>
+  <hex row="10" col="10" rail="34"/>
   <hex row="10" col="11" terrain="3"/>
-  <hex row="10" col="12">
+  <hex row="10" col="12" rail="130">
     <unit id="55732" owner="1" flag="360" face="0" exp="125" str="11" bstr="7"/>
   </hex>
   <hex row="10" col="13" road="9"/>
-  <hex row="10" col="16" road="18"/>
-  <hex row="10" col="18" road="130"/>
+  <hex row="10" col="14" rail="130"/>
+  <hex row="10" col="15" rail="17"/>
+  <hex row="10" col="16" road="18" rail="130"/>
+  <hex row="10" col="18" road="130" rail="130"/>
   <hex row="10" col="19" terrain="3"/>
   <hex row="10" col="22" terrain="10"/>
   <hex row="10" col="23" terrain="10"/>
   <hex row="10" col="24" terrain="3"/>
-  <hex row="10" col="25" road="17"/>
+  <hex row="10" col="25" road="17" rail="17"/>
   <hex row="10" col="26" terrain="3"/>
   <hex row="10" col="27" terrain="3"/>
   <hex row="10" col="29" terrain="3"/>
@@ -368,20 +395,26 @@
   <hex row="10" col="33" terrain="3"/>
   <hex row="10" col="34" terrain="3"/>
   <hex row="10" col="35" terrain="3"/>
-  <hex row="10" col="38" road="18"/>
+  <hex row="10" col="36" rail="136"/>
+  <hex row="10" col="37" rail="136"/>
+  <hex row="10" col="38" road="18" rail="18"/>
   <hex row="10" col="39" terrain="10"/>
   <hex row="10" col="40" terrain="10"/>
-  <hex row="11" col="1" road="136"/>
-  <hex row="11" col="2" road="18"/>
-  <hex row="11" col="3" terrain="3"/>
-  <hex row="11" col="4">
+  <hex row="11" col="0" rail="8"/>
+  <hex row="11" col="1" road="136" rail="130"/>
+  <hex row="11" col="2" road="18" rail="40"/>
+  <hex row="11" col="3" terrain="3" rail="130"/>
+  <hex row="11" col="4" rail="40">
     <unit id="55733" owner="1" flag="360" face="0" exp="25" str="8" bstr="5"/>
   </hex>
-  <hex row="11" col="8" road="144"/>
+  <hex row="11" col="5" rail="130"/>
+  <hex row="11" col="6" rail="40"/>
+  <hex row="11" col="7" rail="130"/>
+  <hex row="11" col="8" road="144" rail="34"/>
   <hex row="11" col="10" terrain="3"/>
   <hex row="11" col="13" terrain="1" name="Village"/>
   <hex row="11" col="14" road="136"/>
-  <hex row="11" col="15" terrain="1" road="146" name="Village"/>
+  <hex row="11" col="15" terrain="1" road="146" name="Village" rail="17"/>
   <hex row="11" col="16" road="33">
     <unit id="55732" owner="1" flag="360" face="0" exp="75" str="11" bstr="7"/>
   </hex>
@@ -391,7 +424,7 @@
   <hex row="11" col="21" terrain="3"/>
   <hex row="11" col="23" terrain="10"/>
   <hex row="11" col="24" terrain="3"/>
-  <hex row="11" col="25" road="17"/>
+  <hex row="11" col="25" road="17" rail="17"/>
   <hex row="11" col="26" terrain="3"/>
   <hex row="11" col="28" terrain="3"/>
   <hex row="11" col="32" terrain="3"/>
@@ -399,8 +432,8 @@
   <hex row="11" col="34" terrain="3"/>
   <hex row="11" col="35" terrain="3"/>
   <hex row="11" col="36" terrain="3"/>
-  <hex row="11" col="37" road="26"/>
-  <hex row="11" col="38" terrain="10" road="33"/>
+  <hex row="11" col="37" road="26" rail="18"/>
+  <hex row="11" col="38" terrain="10" road="33" rail="161"/>
   <hex row="11" col="39" terrain="1" name="Village"/>
   <hex row="11" col="42" terrain="3"/>
   <hex row="12" col="1" terrain="1" name="Village"/>
@@ -415,7 +448,7 @@
   <hex row="12" col="14" terrain="1" name="Village" owner="0" flag="19" deploy="0">
     <unit id="20544" owner="0" flag="20" face="0" transport="20650" exp="200" bstr="7"/>
   </hex>
-  <hex row="12" col="15" terrain="1" road="17" name="Village"/>
+  <hex row="12" col="15" terrain="1" road="17" name="Village" rail="17"/>
   <hex row="12" col="16" terrain="1" name="Village"/>
   <hex row="12" col="17" terrain="3"/>
   <hex row="12" col="18" terrain="3"/>
@@ -423,11 +456,11 @@
   <hex row="12" col="20" terrain="3"/>
   <hex row="12" col="23" terrain="10"/>
   <hex row="12" col="24" terrain="16"/>
-  <hex row="12" col="25" road="9"/>
+  <hex row="12" col="25" road="9" rail="9"/>
   <hex row="12" col="29" terrain="10"/>
   <hex row="12" col="30" terrain="10"/>
   <hex row="12" col="32" terrain="3"/>
-  <hex row="12" col="37" road="49"/>
+  <hex row="12" col="37" road="49" rail="17"/>
   <hex row="12" col="38" terrain="10" road="136"/>
   <hex row="12" col="39" road="138"/>
   <hex row="12" col="40" terrain="1" road="32" name="Village" owner="1" flag="359"/>
@@ -454,21 +487,21 @@
   <hex row="13" col="12" terrain="3"/>
   <hex row="13" col="13" terrain="10"/>
   <hex row="13" col="14" terrain="10"/>
-  <hex row="13" col="15" terrain="10" road="33"/>
+  <hex row="13" col="15" terrain="10" road="33" rail="17"/>
   <hex row="13" col="17" terrain="3"/>
   <hex row="13" col="18" terrain="3"/>
   <hex row="13" col="21" terrain="10"/>
   <hex row="13" col="22" terrain="10"/>
   <hex row="13" col="23" terrain="5"/>
   <hex row="13" col="24" terrain="16"/>
-  <hex row="13" col="26" road="136"/>
-  <hex row="13" col="27" road="136"/>
+  <hex row="13" col="26" road="136" rail="136"/>
+  <hex row="13" col="27" road="136" rail="136"/>
   <hex row="13" col="29" terrain="10"/>
   <hex row="13" col="30" terrain="10"/>
   <hex row="13" col="33" terrain="8"/>
   <hex row="13" col="35" road="34"/>
   <hex row="13" col="36" terrain="8" road="34"/>
-  <hex row="13" col="37" terrain="10" road="33"/>
+  <hex row="13" col="37" terrain="10" road="33" rail="33"/>
   <hex row="13" col="38" terrain="10"/>
   <hex row="13" col="40" road="130"/>
   <hex row="13" col="41" terrain="3"/>
@@ -486,7 +519,7 @@
   <hex row="14" col="11" terrain="10" road="9"/>
   <hex row="14" col="12" terrain="10"/>
   <hex row="14" col="14" road="2"/>
-  <hex row="14" col="15" terrain="10"/>
+  <hex row="14" col="15" terrain="10" rail="17"/>
   <hex row="14" col="16" terrain="3"/>
   <hex row="14" col="18" terrain="3"/>
   <hex row="14" col="19" terrain="3"/>
@@ -494,14 +527,14 @@
   <hex row="14" col="22" terrain="5"/>
   <hex row="14" col="25" terrain="8"/>
   <hex row="14" col="26" terrain="8"/>
-  <hex row="14" col="28" terrain="1" road="136" name="Village" owner="1" flag="359"/>
-  <hex row="14" col="29" terrain="10" road="144"/>
+  <hex row="14" col="28" terrain="1" road="136" name="Village" owner="1" flag="359" rail="136"/>
+  <hex row="14" col="29" terrain="10" road="144" rail="144"/>
   <hex row="14" col="30" terrain="10"/>
   <hex row="14" col="31" terrain="10"/>
   <hex row="14" col="33" terrain="8"/>
   <hex row="14" col="34" terrain="8" road="18"/>
   <hex row="14" col="35" terrain="10"/>
-  <hex row="14" col="36" terrain="10" road="18"/>
+  <hex row="14" col="36" terrain="10" road="18" rail="18"/>
   <hex row="14" col="37" terrain="8"/>
   <hex row="14" col="38" terrain="8"/>
   <hex row="14" col="39" terrain="8"/>
@@ -518,19 +551,19 @@
     <unit id="20595" owner="0" flag="20" face="0" exp="100" bstr="5"/>
   </hex>
   <hex row="15" col="13" terrain="3"/>
-  <hex row="15" col="15" terrain="10"/>
+  <hex row="15" col="15" terrain="10" rail="17"/>
   <hex row="15" col="18" terrain="3"/>
   <hex row="15" col="21" terrain="10"/>
   <hex row="15" col="24" terrain="8"/>
   <hex row="15" col="25" terrain="8"/>
   <hex row="15" col="26" terrain="8"/>
   <hex row="15" col="28" terrain="10"/>
-  <hex row="15" col="29" road="9"/>
+  <hex row="15" col="29" road="9" rail="9"/>
   <hex row="15" col="32" terrain="10"/>
   <hex row="15" col="33" terrain="8"/>
   <hex row="15" col="34" terrain="8" road="17"/>
   <hex row="15" col="35" terrain="10"/>
-  <hex row="15" col="36" road="1"/>
+  <hex row="15" col="36" road="1" rail="17"/>
   <hex row="15" col="37" terrain="10"/>
   <hex row="15" col="38" terrain="10"/>
   <hex row="15" col="39" terrain="8"/>
@@ -550,6 +583,7 @@
   </hex>
   <hex row="16" col="13" terrain="3"/>
   <hex row="16" col="14" terrain="3"/>
+  <hex row="16" col="15" rail="17"/>
   <hex row="16" col="16" terrain="10"/>
   <hex row="16" col="18" terrain="3"/>
   <hex row="16" col="19" terrain="3"/>
@@ -561,11 +595,12 @@
   <hex row="16" col="26" terrain="8"/>
   <hex row="16" col="28" terrain="10"/>
   <hex row="16" col="29" terrain="3"/>
-  <hex row="16" col="30" road="144"/>
+  <hex row="16" col="30" road="144" rail="144"/>
   <hex row="16" col="32" terrain="10"/>
   <hex row="16" col="33" terrain="8"/>
   <hex row="16" col="34" road="17"/>
   <hex row="16" col="35" terrain="10"/>
+  <hex row="16" col="36" rail="17"/>
   <hex row="16" col="38" terrain="10"/>
   <hex row="16" col="39" terrain="8"/>
   <hex row="16" col="40" terrain="8"/>
@@ -579,6 +614,7 @@
   <hex row="17" col="9" road="17"/>
   <hex row="17" col="10" terrain="3"/>
   <hex row="17" col="13" terrain="3"/>
+  <hex row="17" col="15" rail="17"/>
   <hex row="17" col="16" terrain="10"/>
   <hex row="17" col="17" terrain="10"/>
   <hex row="17" col="18" terrain="3"/>
@@ -588,10 +624,11 @@
   <hex row="17" col="27" terrain="10"/>
   <hex row="17" col="28" terrain="10"/>
   <hex row="17" col="29" terrain="3"/>
-  <hex row="17" col="30" road="9"/>
-  <hex row="17" col="31" road="144"/>
+  <hex row="17" col="30" road="9" rail="9"/>
+  <hex row="17" col="31" road="144" rail="144"/>
   <hex row="17" col="34" terrain="10" road="9"/>
-  <hex row="17" col="35" road="144"/>
+  <hex row="17" col="35" road="144" rail="18"/>
+  <hex row="17" col="36" rail="33"/>
   <hex row="17" col="38" terrain="10"/>
   <hex row="17" col="39" terrain="8"/>
   <hex row="17" col="40" terrain="13"/>
@@ -604,7 +641,7 @@
   <hex row="18" col="11" road="40"/>
   <hex row="18" col="13" terrain="3"/>
   <hex row="18" col="14" terrain="3"/>
-  <hex row="18" col="15">
+  <hex row="18" col="15" rail="17">
     <unit id="2169" owner="0" flag="20" face="0" exp="200" str="5" bstr="5"/>
   </hex>
   <hex row="18" col="17" terrain="10"/>
@@ -617,10 +654,10 @@
   <hex row="18" col="28" terrain="3"/>
   <hex row="18" col="29" terrain="3"/>
   <hex row="18" col="30" terrain="3"/>
-  <hex row="18" col="31" road="9"/>
+  <hex row="18" col="31" road="9" rail="9"/>
   <hex row="18" col="32" terrain="3"/>
   <hex row="18" col="33" terrain="3"/>
-  <hex row="18" col="35" road="33"/>
+  <hex row="18" col="35" road="33" rail="17"/>
   <hex row="18" col="37" terrain="10"/>
   <hex row="18" col="38" terrain="10"/>
   <hex row="18" col="39" terrain="3"/>
@@ -633,6 +670,7 @@
   <hex row="19" col="12" terrain="3" road="136"/>
   <hex row="19" col="13" terrain="3" road="144"/>
   <hex row="19" col="14" terrain="3"/>
+  <hex row="19" col="15" rail="17"/>
   <hex row="19" col="16" terrain="3"/>
   <hex row="19" col="17" terrain="10"/>
   <hex row="19" col="20" terrain="3">
@@ -647,20 +685,24 @@
   <hex row="19" col="29" terrain="3"/>
   <hex row="19" col="30" terrain="3"/>
   <hex row="19" col="31" terrain="8"/>
-  <hex row="19" col="32" road="152"/>
-  <hex row="19" col="33" terrain="1" road="130" name="Village"/>
+  <hex row="19" col="32" road="152" rail="136"/>
+  <hex row="19" col="33" terrain="1" road="130" name="Village" rail="136"/>
   <hex row="19" col="34" road="50"/>
+  <hex row="19" col="35" rail="17"/>
   <hex row="19" col="36" terrain="10"/>
   <hex row="19" col="37" terrain="10"/>
   <hex row="19" col="38" terrain="3"/>
   <hex row="19" col="40" terrain="3"/>
   <hex row="19" col="42" terrain="13"/>
+  <hex row="20" col="0" rail="136"/>
+  <hex row="20" col="1" rail="136"/>
   <hex row="20" col="5" terrain="3"/>
   <hex row="20" col="7" terrain="3"/>
   <hex row="20" col="8" terrain="10"/>
   <hex row="20" col="9" terrain="10"/>
   <hex row="20" col="11" terrain="3"/>
   <hex row="20" col="13" road="9"/>
+  <hex row="20" col="15" rail="17"/>
   <hex row="20" col="16" terrain="3"/>
   <hex row="20" col="17" terrain="10"/>
   <hex row="20" col="18" terrain="3"/>
@@ -677,12 +719,14 @@
     <unit id="704" owner="1" flag="360" face="0" exp="100" str="5" bstr="1"/>
   </hex>
   <hex row="20" col="33" terrain="10"/>
-  <hex row="20" col="34" terrain="1" road="9" name="Village" owner="1" flag="359"/>
-  <hex row="20" col="35" terrain="3" road="144"/>
+  <hex row="20" col="34" terrain="1" road="9" name="Village" owner="1" flag="359" rail="136"/>
+  <hex row="20" col="35" terrain="3" road="144" rail="145"/>
   <hex row="20" col="36" terrain="10"/>
   <hex row="20" col="37" terrain="10"/>
   <hex row="20" col="40" terrain="3"/>
   <hex row="20" col="41" terrain="3"/>
+  <hex row="21" col="2" rail="136"/>
+  <hex row="21" col="3" rail="136"/>
   <hex row="21" col="4" terrain="3"/>
   <hex row="21" col="5" terrain="3"/>
   <hex row="21" col="6" terrain="3"/>
@@ -694,7 +738,7 @@
   <hex row="21" col="12" terrain="3"/>
   <hex row="21" col="13" terrain="3"/>
   <hex row="21" col="14" terrain="3" road="136"/>
-  <hex row="21" col="15" road="144"/>
+  <hex row="21" col="15" road="144" rail="17"/>
   <hex row="21" col="16" terrain="10"/>
   <hex row="21" col="18" terrain="3"/>
   <hex row="21" col="20" terrain="8"/>
@@ -706,7 +750,7 @@
   <hex row="21" col="30" road="34"/>
   <hex row="21" col="32" terrain="10"/>
   <hex row="21" col="34" terrain="10"/>
-  <hex row="21" col="35" terrain="10" road="27"/>
+  <hex row="21" col="35" terrain="10" road="27" rail="9"/>
   <hex row="21" col="36" terrain="1" road="32" name="Village" owner="1" flag="359"/>
   <hex row="21" col="37" terrain="10"/>
   <hex row="21" col="39" terrain="3"/>
@@ -715,6 +759,8 @@
   <hex row="22" col="1" terrain="10"/>
   <hex row="22" col="2" terrain="10"/>
   <hex row="22" col="3" terrain="10"/>
+  <hex row="22" col="4" rail="136"/>
+  <hex row="22" col="5" rail="136"/>
   <hex row="22" col="6" terrain="3"/>
   <hex row="22" col="7" terrain="3"/>
   <hex row="22" col="8" terrain="3"/>
@@ -724,7 +770,7 @@
   <hex row="22" col="12" terrain="10"/>
   <hex row="22" col="13" terrain="3"/>
   <hex row="22" col="14" terrain="3"/>
-  <hex row="22" col="15" terrain="3" road="17"/>
+  <hex row="22" col="15" terrain="3" road="17" rail="33"/>
   <hex row="22" col="16" terrain="10"/>
   <hex row="22" col="17" terrain="10"/>
   <hex row="22" col="20" terrain="8"/>
@@ -736,9 +782,9 @@
   <hex row="22" col="31" terrain="10"/>
   <hex row="22" col="32" terrain="10"/>
   <hex row="22" col="34" terrain="3"/>
-  <hex row="22" col="35" terrain="3" road="17"/>
-  <hex row="22" col="36" terrain="10" road="136"/>
-  <hex row="22" col="37" road="128"/>
+  <hex row="22" col="35" terrain="3" road="17" rail="18"/>
+  <hex row="22" col="36" terrain="10" road="136" rail="168"/>
+  <hex row="22" col="37" road="128" rail="144"/>
   <hex row="22" col="38" terrain="3"/>
   <hex row="22" col="39" terrain="3"/>
   <hex row="22" col="40" terrain="3"/>
@@ -749,6 +795,7 @@
   <hex row="23" col="3" terrain="10"/>
   <hex row="23" col="4" terrain="3"/>
   <hex row="23" col="5" terrain="3"/>
+  <hex row="23" col="6" rail="144"/>
   <hex row="23" col="7" terrain="1" name="Village" owner="0" flag="19" victory="0" deploy="0">
     <unit id="20371" owner="0" flag="20" face="0" exp="100" bstr="7"/>
   </hex>
@@ -758,7 +805,7 @@
   <hex row="23" col="11" terrain="3"/>
   <hex row="23" col="12" terrain="10"/>
   <hex row="23" col="13" terrain="10"/>
-  <hex row="23" col="14" terrain="3"/>
+  <hex row="23" col="14" terrain="3" rail="18"/>
   <hex row="23" col="15" terrain="1" road="33" name="Village" owner="0" flag="19" victory="0" deploy="0">
     <unit id="20371" owner="0" flag="20" face="0" exp="100" bstr="7"/>
   </hex>
@@ -777,9 +824,9 @@
   <hex row="23" col="30" terrain="10"/>
   <hex row="23" col="32" terrain="3"/>
   <hex row="23" col="34" terrain="3"/>
-  <hex row="23" col="35" terrain="3" road="33"/>
+  <hex row="23" col="35" terrain="3" road="33" rail="33"/>
   <hex row="23" col="36" terrain="10"/>
-  <hex row="23" col="37" terrain="11">
+  <hex row="23" col="37" terrain="11" rail="9">
     <unit id="890" owner="1" flag="360" face="0" exp="100" str="5" bstr="1"/>
   </hex>
   <hex row="23" col="38" terrain="3"/>
@@ -792,13 +839,15 @@
   <hex row="24" col="3" terrain="10"/>
   <hex row="24" col="4" terrain="3"/>
   <hex row="24" col="5" terrain="3"/>
+  <hex row="24" col="6" rail="9"/>
+  <hex row="24" col="7" rail="136"/>
   <hex row="24" col="8" terrain="3"/>
   <hex row="24" col="9" terrain="3"/>
   <hex row="24" col="10" terrain="10"/>
   <hex row="24" col="11" terrain="3"/>
   <hex row="24" col="12" terrain="10"/>
-  <hex row="24" col="13" road="18"/>
-  <hex row="24" col="14" terrain="3" road="34"/>
+  <hex row="24" col="13" road="18" rail="18"/>
+  <hex row="24" col="14" terrain="3" road="34" rail="33"/>
   <hex row="24" col="15" terrain="3"/>
   <hex row="24" col="17" terrain="10"/>
   <hex row="24" col="18" terrain="3"/>
@@ -812,9 +861,11 @@
   <hex row="24" col="27" terrain="3"/>
   <hex row="24" col="28" terrain="3"/>
   <hex row="24" col="29" terrain="10"/>
-  <hex row="24" col="34" road="18"/>
+  <hex row="24" col="33" rail="34"/>
+  <hex row="24" col="34" road="18" rail="34"/>
   <hex row="24" col="35" terrain="3"/>
   <hex row="24" col="36" terrain="10"/>
+  <hex row="24" col="38" rail="144"/>
   <hex row="24" col="39" terrain="3"/>
   <hex row="24" col="40" terrain="3"/>
   <hex row="24" col="41" terrain="3"/>
@@ -824,12 +875,12 @@
   <hex row="25" col="3" terrain="3"/>
   <hex row="25" col="4" terrain="10"/>
   <hex row="25" col="5" terrain="10"/>
-  <hex row="25" col="8" road="8"/>
-  <hex row="25" col="9" terrain="10" road="136"/>
+  <hex row="25" col="8" road="8" rail="136"/>
+  <hex row="25" col="9" terrain="10" road="136" rail="136"/>
   <hex row="25" col="10" terrain="10"/>
   <hex row="25" col="11" terrain="3"/>
   <hex row="25" col="12" terrain="10"/>
-  <hex row="25" col="13" road="17"/>
+  <hex row="25" col="13" road="17" rail="17"/>
   <hex row="25" col="14" terrain="3"/>
   <hex row="25" col="15" terrain="3"/>
   <hex row="25" col="17" terrain="10"/>
@@ -842,11 +893,14 @@
   </hex>
   <hex row="25" col="25" terrain="8"/>
   <hex row="25" col="29" terrain="10"/>
+  <hex row="25" col="31" rail="34"/>
+  <hex row="25" col="32" rail="34"/>
   <hex row="25" col="34" road="9"/>
   <hex row="25" col="35" road="144"/>
   <hex row="25" col="36" terrain="10"/>
   <hex row="25" col="37" terrain="3"/>
-  <hex row="25" col="39" terrain="1" name="Village"/>
+  <hex row="25" col="38" rail="9"/>
+  <hex row="25" col="39" terrain="1" name="Village" rail="136"/>
   <hex row="25" col="41" road="34"/>
   <hex row="25" col="42" road="40"/>
   <hex row="26" col="0" terrain="3"/>
@@ -859,10 +913,10 @@
   <hex row="26" col="7" terrain="10"/>
   <hex row="26" col="8" terrain="10"/>
   <hex row="26" col="9" terrain="3"/>
-  <hex row="26" col="10" road="128"/>
-  <hex row="26" col="11" road="8"/>
+  <hex row="26" col="10" road="128" rail="136"/>
+  <hex row="26" col="11" road="8" rail="136"/>
   <hex row="26" col="12" terrain="10"/>
-  <hex row="26" col="13" road="9"/>
+  <hex row="26" col="13" road="9" rail="17"/>
   <hex row="26" col="14" terrain="3"/>
   <hex row="26" col="15" terrain="3"/>
   <hex row="26" col="16" terrain="3">
@@ -879,11 +933,12 @@
   <hex row="26" col="29">
     <unit id="662" owner="1" flag="360" face="0" exp="100" str="5" bstr="1"/>
   </hex>
+  <hex row="26" col="30" rail="18"/>
   <hex row="26" col="32" terrain="3"/>
   <hex row="26" col="35" road="17"/>
   <hex row="26" col="36" terrain="10"/>
-  <hex row="26" col="40" terrain="1" road="10" name="Village" owner="1" flag="359"/>
-  <hex row="26" col="41" terrain="10" road="136"/>
+  <hex row="26" col="40" terrain="1" road="10" name="Village" owner="1" flag="359" rail="136"/>
+  <hex row="26" col="41" terrain="10" road="136" rail="136"/>
   <hex row="26" col="42" terrain="10"/>
   <hex row="27" col="0" terrain="3"/>
   <hex row="27" col="1" terrain="3"/>
@@ -897,8 +952,8 @@
   <hex row="27" col="9" terrain="3"/>
   <hex row="27" col="10" terrain="3"/>
   <hex row="27" col="11" terrain="10"/>
-  <hex row="27" col="12" terrain="10" road="136"/>
-  <hex row="27" col="13" road="144" station="1"/>
+  <hex row="27" col="12" terrain="10" road="136" rail="136"/>
+  <hex row="27" col="13" road="144" station="1" rail="145"/>
   <hex row="27" col="14" terrain="1" road="152" name="Village"/>
   <hex row="27" col="15" terrain="1" road="160" name="Village"/>
   <hex row="27" col="16" terrain="10"/>
@@ -913,6 +968,7 @@
   <hex row="27" col="24" terrain="8"/>
   <hex row="27" col="25" terrain="8"/>
   <hex row="27" col="28" terrain="10"/>
+  <hex row="27" col="30" rail="17"/>
   <hex row="27" col="32" terrain="3"/>
   <hex row="27" col="33" terrain="3"/>
   <hex row="27" col="35" road="33"/>
@@ -920,7 +976,7 @@
   <hex row="27" col="37" terrain="10"/>
   <hex row="27" col="39" terrain="3"/>
   <hex row="27" col="41" terrain="10"/>
-  <hex row="27" col="42" road="128"/>
+  <hex row="27" col="42" road="128" rail="136"/>
   <hex row="28" col="0" terrain="3"/>
   <hex row="28" col="1" terrain="3"/>
   <hex row="28" col="2" terrain="3"/>
@@ -934,7 +990,7 @@
   <hex row="28" col="10" terrain="10"/>
   <hex row="28" col="11" terrain="10"/>
   <hex row="28" col="12" terrain="3"/>
-  <hex row="28" col="13" terrain="10" road="17"/>
+  <hex row="28" col="13" terrain="10" road="17" rail="17"/>
   <hex row="28" col="14" terrain="10" road="19"/>
   <hex row="28" col="15" terrain="10"/>
   <hex row="28" col="16" terrain="10"/>
@@ -952,6 +1008,7 @@
   <hex row="28" col="27" terrain="10"/>
   <hex row="28" col="28" terrain="10"/>
   <hex row="28" col="29" terrain="3"/>
+  <hex row="28" col="30" rail="17"/>
   <hex row="28" col="32" terrain="3"/>
   <hex row="28" col="34" terrain="3" road="18"/>
   <hex row="28" col="35" terrain="10"/>
@@ -973,7 +1030,7 @@
   <hex row="29" col="10" terrain="10"/>
   <hex row="29" col="11" terrain="3" road="40"/>
   <hex row="29" col="12" terrain="10"/>
-  <hex row="29" col="13" road="1">
+  <hex row="29" col="13" road="1" rail="17">
     <unit id="20705" owner="0" flag="20" face="0" transport="20651" exp="100" str="8" bstr="5"/>
   </hex>
   <hex row="29" col="14" terrain="1" road="25" name="Village" owner="0" flag="19" victory="0" deploy="0">
@@ -990,6 +1047,7 @@
   <hex row="29" col="24" terrain="8"/>
   <hex row="29" col="26" terrain="10"/>
   <hex row="29" col="29" terrain="3"/>
+  <hex row="29" col="30" rail="17"/>
   <hex row="29" col="31" terrain="3"/>
   <hex row="29" col="32" terrain="3"/>
   <hex row="29" col="33" road="34"/>
@@ -1011,7 +1069,7 @@
   <hex row="30" col="10" terrain="3" road="34"/>
   <hex row="30" col="11" terrain="3"/>
   <hex row="30" col="12" terrain="3" road="136"/>
-  <hex row="30" col="13" road="130"/>
+  <hex row="30" col="13" road="130" rail="17"/>
   <hex row="30" col="14" terrain="1" road="43" name="Village"/>
   <hex row="30" col="15" terrain="3" road="145"/>
   <hex row="30" col="16" terrain="3"/>
@@ -1025,6 +1083,7 @@
   <hex row="30" col="24" terrain="3"/>
   <hex row="30" col="25" terrain="3"/>
   <hex row="30" col="26" terrain="10"/>
+  <hex row="30" col="30" rail="17"/>
   <hex row="30" col="31" road="34"/>
   <hex row="30" col="32" road="34"/>
   <hex row="30" col="33" terrain="10"/>
@@ -1048,6 +1107,7 @@
   <hex row="31" col="10" terrain="3"/>
   <hex row="31" col="11" terrain="3"/>
   <hex row="31" col="12" terrain="3"/>
+  <hex row="31" col="13" rail="17"/>
   <hex row="31" col="14" terrain="3"/>
   <hex row="31" col="15" terrain="3" road="17"/>
   <hex row="31" col="16" terrain="3"/>
@@ -1059,7 +1119,7 @@
   <hex row="31" col="22" terrain="3"/>
   <hex row="31" col="25" terrain="8"/>
   <hex row="31" col="27" terrain="3"/>
-  <hex row="31" col="30" road="18"/>
+  <hex row="31" col="30" road="18" rail="17"/>
   <hex row="31" col="32" terrain="10"/>
   <hex row="31" col="33" terrain="3"/>
   <hex row="31" col="38" terrain="10"/>
@@ -1073,11 +1133,13 @@
   <hex row="32" col="4" terrain="3"/>
   <hex row="32" col="5" road="34"/>
   <hex row="32" col="6" terrain="10" road="34"/>
-  <hex row="32" col="7" terrain="10" road="34"/>
-  <hex row="32" col="8" road="162"/>
+  <hex row="32" col="7" terrain="10" road="34" rail="34"/>
+  <hex row="32" col="8" road="162" rail="40"/>
+  <hex row="32" col="9" rail="136"/>
   <hex row="32" col="10" terrain="3"/>
   <hex row="32" col="11" terrain="3"/>
   <hex row="32" col="12" terrain="3"/>
+  <hex row="32" col="13" rail="17"/>
   <hex row="32" col="14" terrain="3"/>
   <hex row="32" col="15" terrain="3" road="9"/>
   <hex row="32" col="16" terrain="3"/>
@@ -1093,7 +1155,7 @@
   <hex row="32" col="27" terrain="3"/>
   <hex row="32" col="28" terrain="8"/>
   <hex row="32" col="29" terrain="8"/>
-  <hex row="32" col="30" road="17"/>
+  <hex row="32" col="30" road="17" rail="17"/>
   <hex row="32" col="31" terrain="3"/>
   <hex row="32" col="32" terrain="10"/>
   <hex row="32" col="37" terrain="10"/>
@@ -1106,11 +1168,15 @@
   </hex>
   <hex row="33" col="2" terrain="3" road="34"/>
   <hex row="33" col="4" terrain="3" road="130"/>
-  <hex row="33" col="6" road="2"/>
+  <hex row="33" col="5" rail="34"/>
+  <hex row="33" col="6" road="2" rail="34"/>
   <hex row="33" col="7" terrain="3"/>
   <hex row="33" col="8" terrain="10"/>
   <hex row="33" col="9" terrain="10"/>
+  <hex row="33" col="10" rail="136"/>
+  <hex row="33" col="11" rail="136"/>
   <hex row="33" col="12" terrain="3"/>
+  <hex row="33" col="13" rail="17"/>
   <hex row="33" col="14" terrain="3"/>
   <hex row="33" col="15" terrain="3"/>
   <hex row="33" col="16" terrain="3" road="136"/>
@@ -1126,7 +1192,7 @@
   <hex row="33" col="27" terrain="8"/>
   <hex row="33" col="28" terrain="8"/>
   <hex row="33" col="29" terrain="8"/>
-  <hex row="33" col="30" terrain="1" road="17" name="Village"/>
+  <hex row="33" col="30" terrain="1" road="17" name="Village" rail="17"/>
   <hex row="33" col="32" terrain="10"/>
   <hex row="33" col="33" terrain="8"/>
   <hex row="33" col="34" terrain="8"/>
@@ -1137,7 +1203,9 @@
   <hex row="33" col="39" terrain="1" road="129" name="Village"/>
   <hex row="34" col="0" terrain="3"/>
   <hex row="34" col="1" terrain="1" name="Village"/>
-  <hex row="34" col="3" terrain="3"/>
+  <hex row="34" col="2" rail="24"/>
+  <hex row="34" col="3" terrain="3" rail="130"/>
+  <hex row="34" col="4" rail="34"/>
   <hex row="34" col="5" terrain="3"/>
   <hex row="34" col="6" terrain="3"/>
   <hex row="34" col="7" terrain="15"/>
@@ -1145,14 +1213,14 @@
   <hex row="34" col="9" terrain="10"/>
   <hex row="34" col="10" terrain="3"/>
   <hex row="34" col="11" terrain="3" road="18"/>
-  <hex row="34" col="12" road="40"/>
-  <hex row="34" col="13" road="130"/>
-  <hex row="34" col="14" road="40"/>
-  <hex row="34" col="15" road="130"/>
-  <hex row="34" col="16" road="40"/>
-  <hex row="34" col="17" road="137"/>
-  <hex row="34" col="18" road="8"/>
-  <hex row="34" col="19" terrain="10" road="136"/>
+  <hex row="34" col="12" road="40" rail="136"/>
+  <hex row="34" col="13" road="130" rail="131"/>
+  <hex row="34" col="14" road="40" rail="40"/>
+  <hex row="34" col="15" road="130" rail="130"/>
+  <hex row="34" col="16" road="40" rail="40"/>
+  <hex row="34" col="17" road="137" rail="130"/>
+  <hex row="34" col="18" road="8" rail="40"/>
+  <hex row="34" col="19" terrain="10" road="136" rail="136"/>
   <hex row="34" col="20" terrain="10"/>
   <hex row="34" col="21" terrain="3"/>
   <hex row="34" col="22" terrain="3"/>
@@ -1162,7 +1230,7 @@
   <hex row="34" col="29" road="18">
     <unit id="55732" owner="1" flag="360" face="0" exp="75" str="11" bstr="7"/>
   </hex>
-  <hex row="34" col="30" road="33"/>
+  <hex row="34" col="30" road="33" rail="17"/>
   <hex row="34" col="31" terrain="10"/>
   <hex row="34" col="32" terrain="10"/>
   <hex row="34" col="34" terrain="8"/>
@@ -1173,7 +1241,8 @@
   <hex row="34" col="41" terrain="3"/>
   <hex row="34" col="42" terrain="3"/>
   <hex row="35" col="0" terrain="3"/>
-  <hex row="35" col="2" terrain="3"/>
+  <hex row="35" col="1" rail="34"/>
+  <hex row="35" col="2" terrain="3" rail="33"/>
   <hex row="35" col="3" terrain="3"/>
   <hex row="35" col="4" terrain="3"/>
   <hex row="35" col="5" terrain="15"/>
@@ -1193,7 +1262,8 @@
   <hex row="35" col="17" terrain="3"/>
   <hex row="35" col="18" terrain="3" road="136"/>
   <hex row="35" col="19" terrain="10" road="136"/>
-  <hex row="35" col="20" road="128"/>
+  <hex row="35" col="20" road="128" rail="136"/>
+  <hex row="35" col="21" rail="136"/>
   <hex row="35" col="22" terrain="3"/>
   <hex row="35" col="23" terrain="3"/>
   <hex row="35" col="26" terrain="3"/>
@@ -1201,10 +1271,10 @@
   <hex row="35" col="28">
     <unit id="55732" owner="1" flag="360" face="0" exp="25" str="11" bstr="7"/>
   </hex>
-  <hex row="35" col="29" road="33">
+  <hex row="35" col="29" road="33" rail="34">
     <unit id="55776" owner="1" flag="360" face="0" transport="55766" exp="50" str="5" bstr="5"/>
   </hex>
-  <hex row="35" col="30">
+  <hex row="35" col="30" rail="33">
     <unit id="55732" owner="1" flag="360" face="0" exp="125" str="11" bstr="7"/>
   </hex>
   <hex row="35" col="31" terrain="10"/>
@@ -1214,6 +1284,7 @@
   <hex row="35" col="35" terrain="3"/>
   <hex row="35" col="39" terrain="10"/>
   <hex row="35" col="41" terrain="10"/>
+  <hex row="36" col="0" rail="34"/>
   <hex row="36" col="1" terrain="3"/>
   <hex row="36" col="2" terrain="3"/>
   <hex row="36" col="3" terrain="3"/>
@@ -1237,11 +1308,11 @@
     <unit id="20371" owner="0" flag="20" face="0" exp="100" bstr="7"/>
   </hex>
   <hex row="36" col="21" terrain="1" road="162" name="Village"/>
-  <hex row="36" col="22" road="160"/>
-  <hex row="36" col="23" road="136"/>
+  <hex row="36" col="22" road="160" rail="136"/>
+  <hex row="36" col="23" road="136" rail="136"/>
   <hex row="36" col="26" terrain="3"/>
-  <hex row="36" col="27" road="18"/>
-  <hex row="36" col="28" road="34"/>
+  <hex row="36" col="27" road="18" rail="34"/>
+  <hex row="36" col="28" road="34" rail="34"/>
   <hex row="36" col="29" terrain="10"/>
   <hex row="36" col="30" terrain="10"/>
   <hex row="36" col="31" terrain="10"/>
@@ -1278,9 +1349,9 @@
   <hex row="37" col="20" terrain="1" road="3" name="Village"/>
   <hex row="37" col="21" terrain="3"/>
   <hex row="37" col="22" terrain="3"/>
-  <hex row="37" col="24" road="136"/>
-  <hex row="37" col="25" road="130"/>
-  <hex row="37" col="26" terrain="1" road="40" name="Village"/>
+  <hex row="37" col="24" road="136" rail="136"/>
+  <hex row="37" col="25" road="130" rail="136"/>
+  <hex row="37" col="26" terrain="1" road="40" name="Village" rail="18"/>
   <hex row="37" col="27" terrain="1" road="3" name="Village" owner="0" flag="19" victory="0" deploy="0">
     <unit id="20544" owner="0" flag="20" face="0" transport="20650" exp="200" bstr="7"/>
   </hex>

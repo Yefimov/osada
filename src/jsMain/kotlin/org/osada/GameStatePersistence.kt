@@ -381,6 +381,8 @@ class GameStatePersistence(
             val parsed = JSON.parse<dynamic>(data)
             if (isLoadableSave(parsed)) {
                 game.cleanup()
+                // A disk save carries its battle's opening state (`OSGlue.diskSavePayload`).
+                game.missionRestartCheckpoint.adopt(parsed[MissionRestartCheckpoint.EMBED_KEY])
                 // The rules this battle ran under are restored BEFORE the model is rebuilt: unit
                 // synchronisation and supply reads during restore must already see them.
                 ActiveRuleset.set(deserializeRuleset(parsed.ruleset))

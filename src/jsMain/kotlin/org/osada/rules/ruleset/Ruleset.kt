@@ -69,7 +69,7 @@ package org.osada.rules.ruleset
  * than universal for one reason: it SINKS ships outright, so honouring LXF's own value silently
  * would rewrite every naval battle in the campaigns built on it. Additive and defaulted off.
  *
- * 12 (2026-08-28) added [RuleKey.DEPOT_SUPPLY], [RuleKey.RAIL_TRANSPORT] and
+ * 12 (2026-08-28) added [RuleKey.DEPOT_SUPPLY], `rail_transport` (retired at 20) and
  * [RuleKey.CARRIER_DEPLOY] -- the three mechanics §AA built with no key at all, because each was
  * already gated by content that no shipped scenario carries. **That was the wrong reason to skip a
  * key**: the owner's rule is that anything the port can do belongs in the Rules window so a player
@@ -111,17 +111,30 @@ package org.osada.rules.ruleset
  * between campaign battles, which OSADA had made a paid tray action on 2026-08-01. It defaults to
  * that paid behaviour, so a schema-<=17 profile is byte-identical in play; Author's Vision resolves
  * it on and hands the decision to each campaign's own per-scenario setting. The same schema added
- * [RuleKey.COMBAT_SUPPORT_MIN_BAR], OSADA's third non-OG rule and the first that is ON in OSADA
- * Default; Author's Vision resolves it off ([RuleProvenance.NOT_OPEN_GENERAL]).
+ * `combat_support_min_bar` (retired at 21), OSADA's third non-OG rule and the first that is ON in
+ * OSADA Default; Author's Vision resolved it off ([RuleProvenance.NOT_OPEN_GENERAL]).
  *
  * 19 (2026-09-25) added [RuleKey.CAMPAIGN_START_PRESTIGE] and [RuleKey.CAMPAIGN_PRESTIGE_CAP], the two
  * `.xcam` prestige rules OSADA had never read. Both default off, so a schema-<=18 profile is
  * byte-identical in play; Author's Vision resolves both on and hands them to each campaign's record.
+ *
+ * 20 (2026-09-28) retired `rail_transport` at the owner's request: *"let trains be on by default and
+ * let there be no ruleset for it at all"*. The railway is scenario content -- a `railtrans` pool, track
+ * and stations -- and now always runs where the scenario grants a pool, exactly as trigger hexes did
+ * at schema 15. It was OFF in OSADA Default, so a schema-<=19 game on that profile gains the railway.
+ * Stored profiles and saves may still carry the key; readers ignore it.
+ *
+ * 21 (2026-09-29) retired `combat_support_min_bar` at the owner's request: *"let there not even be a
+ * ruleset for it -- otherwise these units are completely useless"*. A Combat Support unit now always
+ * lends at least one bar (`UnitCapabilities.lentBars`). It was off in Author's Vision, so a
+ * schema-<=20 game on that profile gains the floor. Stored profiles and saves may still carry the
+ * key; readers ignore it.
  */
-const val RULESET_SCHEMA_VERSION = 19
+const val RULESET_SCHEMA_VERSION = 21
 
 /** Serialized keys understood historically but no longer configurable or gameplay-relevant. */
-internal val RETIRED_RULE_KEYS: Set<String> = setOf("trigger_hexes", "stalin_regime")
+internal val RETIRED_RULE_KEYS: Set<String> =
+    setOf("trigger_hexes", "stalin_regime", "rail_transport", "combat_support_min_bar")
 
 /**
  * One configurable rule.
@@ -467,26 +480,6 @@ enum class RuleKey(
     DEPOT_SUPPLY("depot_supply", null, 0, 1),
 
     /**
-     * OG's railway transport, and with it the `No Need Station` equipment special. **Schema 12.**
-     *
-     * A ground formation standing on a boarding point may be railed along connected track to
-     * another one, spending a point of its player's `railtrans` pool. A station is needed at both
-     * ends unless the formation carries `No Need Station`, which 11,003 records do
-     * (`rules/RailTransport`).
-     *
-     * **The content gate survives this key**: a player whose scenario has no rail pool sees no
-     * chip, because there is no train to board. Turning it on cannot create one.
-     *
-     * **This is not full OG fidelity, and must not be described as such.** The pool SIZE is imported
-     * exactly from the scenario binary (player record `+21`, confirmed against OpenSuite's own
-     * reports). How long a slot stays occupied is an **OSADA compression**: OG entrains a unit in a
-     * real train that drives the map over as many turns as the journey takes, and OSADA relocates
-     * the formation atomically and holds the slot for the turn. `rules/RailTransport` and
-     * `model/TransportPools` carry the reasoning and the quotes that would change it.
-     */
-    RAIL_TRANSPORT("rail_transport", null, 0, 1),
-
-    /**
      * OG's `Carrier Deploy` — *"permits deployment on carriers and dirt airfields"*. **Schema 12.**
      *
      * An aircraft carrying the attribute may be placed onto a friendly carrier during deployment,
@@ -649,32 +642,11 @@ enum class RuleKey(
     /**
      * **Open General's campaign prestige CAP.** 0 = off, 1 = as the campaign authors it. Schema 19.
      *
-     * At 1 the end-of-scenario award is cut to what fits under the scenario's cap once the value
-     * of the player's purchased army and the prestige in hand are counted -- the author's rule on
-     * `luis-tools.open-general.com/OpenGen_Campaigns.html`. Call site: `rules/CampaignPrestigeCap`.
+     * At 1 the completed scenario's award is cut to what fits under the NEXT scenario's cap once the
+     * value of the player's purchased army and the prestige in hand are counted -- OG Basic Tutorial
+     * p.3 and `luis-tools.open-general.com/OpenGen_Campaigns.html`. Call site: `rules/CampaignPrestigeCap`.
      */
     CAMPAIGN_PRESTIGE_CAP("campaign_prestige_cap", null, 0, 1),
-
-    /**
-     * **A Combat Support unit lends at least one bar — OSADA's rule, not Open General's.** 0 = off
-     * (OG), 1 = on. Schema 18.
-     *
-     * OG's Combat Support lends the supporter's own experience BARS: *"a CS unit with 99 experience
-     * points would give nothing"* (the author's efile-specials page). Experience only comes from
-     * casualties, and a unit with no attack earns it only by being shot, at 2 per strength point
-     * lost, so a purchased `Gaz-AAA Radio Truck` (attack 0, E 39903) could never reach one bar: 50
-     * points of losses on a 10-point unit. Buying one was prestige spent on nothing, and the card
-     * did not say so (2026-09-24 player report).
-     *
-     * **The floor is on the LENDING, not on the unit.** Its own experience is untouched, so its own
-     * combat, hero emergence and leader rolls are exactly what they were; a veteran that has earned
-     * more bars lends those. Help from several supporters still stacks, as OG's does.
-     *
-     * **On in OSADA Default, off in Author's Vision** — the first OSADA rule with that split, and
-     * the reason [RuleProvenance.NOT_OPEN_GENERAL] exists. Call site:
-     * `UnitCapabilities.combatSupportBars`.
-     */
-    COMBAT_SUPPORT_MIN_BAR("combat_support_min_bar", null, 0, 1),
 
     /**
      * Whether OG's per-record ability TOGGLES decide phased movement and overrun, or the unit's
@@ -917,7 +889,6 @@ object RulesetDefaults {
             // supply, no railway and no carrier deployment. Each keeps its own content gate on top,
             // so ON is a permission rather than an injection.
             RuleKey.DEPOT_SUPPLY to 0,
-            RuleKey.RAIL_TRANSPORT to 0,
             RuleKey.CARRIER_DEPLOY to 0,
             RuleKey.GREEN_REPLACEMENTS to 0,
             RuleKey.CARRIER_HANGARS to 0,
@@ -937,9 +908,6 @@ object RulesetDefaults {
             // `.xcam` prestige field.
             RuleKey.CAMPAIGN_START_PRESTIGE to 0,
             RuleKey.CAMPAIGN_PRESTIGE_CAP to 0,
-            // Schema 18, on by owner decision (2026-09-25): a Combat Support unit that cannot earn a
-            // bar is otherwise a purchase that does nothing. Author's Vision resolves it off.
-            RuleKey.COMBAT_SUPPORT_MIN_BAR to 1,
             // Schema 9. Off on the section-9 terms, and additionally because two of its four
             // bullets refuse shots the shipped scenarios currently allow.
             RuleKey.EXTENDED_NAVAL to 0,

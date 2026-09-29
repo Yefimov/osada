@@ -1,8 +1,10 @@
 package org.osada.rules
 
+import org.osada.LeaderType
 import org.osada.model.EfileConfig
 import org.osada.model.GameUnit
 import org.osada.model.Leaders
+import org.osada.model.OgLeaderPools
 
 /**
  * OG's `upgrade_ldr` — what becomes of a commander when the formation under them re-equips.
@@ -41,7 +43,10 @@ object LeaderOnUpgrade {
      * it unconditionally after every upgrade.
      */
     fun afterUpgrade(unit: GameUnit) {
-        if (unit.leader == -1) return
+        // OG acts only when the upgrade *"makes random leader attribute useless"* -- until
+        // 2026-09-28 OSADA rerolled or removed the commander on EVERY upgrade under modes 1 and 2.
+        // "Useless" is the same test the legacy pools are built from ([OgLeaderPools.appliesTo]).
+        if (unit.leader == -1 || stillUseful(unit)) return
         when (EfileConfig.intKey("upgrade_ldr", KEEP)) {
             REROLL_LOSING_A_BAR -> {
                 unit.experience = (unit.experience - BAR).coerceAtLeast(0)
@@ -58,5 +63,11 @@ object LeaderOnUpgrade {
 
             else -> Unit
         }
+    }
+
+    /** Whether [unit]'s individual attribute still has a rule that can fire on its NEW equipment. */
+    private fun stillUseful(unit: GameUnit): Boolean {
+        val trait = LeaderType.entries.firstOrNull { it.value == unit.leader }
+        return trait != null && OgLeaderPools.appliesTo(trait, unit.unitData().uclass)
     }
 }

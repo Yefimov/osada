@@ -320,6 +320,7 @@ internal class AnimationOrchestrator(
         reportMinefield(ui, unit, result, pos)
         reportContact(ui, unit, result, pos)
         reportTrigger(ui, unit, result, pos)
+        if (result.startedBridge) PontoonBridgeAnnouncements.laying(ui, unit)
         reportCapture(ui, unit, result, pos)
         if (result.isVictorySide >= 0) {
             ui.game.handleMoveVictory(result.isVictorySide)

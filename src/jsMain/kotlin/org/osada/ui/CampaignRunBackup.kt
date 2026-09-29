@@ -1,6 +1,9 @@
 package org.osada.ui
 
 import org.osada.Game
+import org.osada.GameStateSerializer
+import org.osada.MissionRestartCheckpoint
+import org.osada.PlayerType
 import org.osada.current
 import org.osada.i18n.I18n
 import org.osada.save.CampaignRunBundle
@@ -37,16 +40,75 @@ internal object CampaignRunBackup {
     /** False when the campaign has no stored run to write, which the caller surfaces as a disabled
      *  button rather than a download that produces an empty file. */
     fun exportToFile(campaignRunId: String): Boolean {
-        val bundle = Game.current?.state?.exportCampaignRun(campaignRunId) ?: return false
+        val bundle =
+            Game.current
+                ?.state
+                ?.exportCampaignRun(campaignRunId)
+                ?.let(::withLiveBattle) ?: return false
         val payload =
             json(
                 Pair("kind", CampaignRunCodec.FILE_KIND),
                 Pair("exportedAt", Date().getTime()),
                 Pair("gameVersion", bundle.current.gameVersion),
                 Pair("run", CampaignRunCodec.runToJson(bundle)),
+                // The run's opening checkpoint, so the imported battle can still be restarted.
+                Pair(
+                    MissionRestartCheckpoint.EMBED_KEY,
+                    Game.current?.missionRestartCheckpoint?.exportFor(
+                        bundle.current.campaignFile,
+                        bundle.current.campaignScenario,
+                        bundle.current.scenarioFile,
+                    ),
+                ),
             )
         downloadJson(fileNameFor(bundle.metadata), payload)
         return true
+    }
+
+    /**
+     * The run as the player sees it: when [bundle]'s campaign is the battle on the map, its
+     * `current` generation is replaced -- IN THE FILE ONLY -- by that battle as it stands now.
+     *
+     * The run in storage holds the last AUTOSAVE, and autosaves stay at the turn boundary, after
+     * deployments and after purchases (`docs/design/save-recovery.md` §5), so an export made
+     * mid-turn used to carry the turn's opening position and importing it put every unit back
+     * where the turn began (2026-09-29 owner report). The owner's rule: *"let the autosave be
+     * written at the start of the turn, but a manual Export Campaign takes the units as they
+     * stand."* Nothing is written to storage here -- "Continue" still resumes at the turn start --
+     * and the autosave this replaces rides along as the file's `recovery` generation.
+     *
+     * Only on the human's own turn with no animation running, so a half-played AI action is never
+     * exported; otherwise the stored run is exported unchanged.
+     */
+    internal fun withLiveBattle(bundle: CampaignRunBundle): CampaignRunBundle {
+        val game = Game.current
+        val map = game?.scenario?.map
+        val live =
+            game != null &&
+                map != null &&
+                game.gameStarted &&
+                !game.gameEnded &&
+                !game.waitUIAnimation &&
+                game.campaign?.file == bundle.metadata.campaignRunId &&
+                game.campaign?.currentScenarioIndex == bundle.current.campaignScenario &&
+                game.scenario?.file == bundle.current.scenarioFile &&
+                map.currentPlayer?.type == PlayerType.HUMAN_LOCAL
+        if (!live) return bundle
+        val now = Date().getTime()
+        val turn = map!!.turn
+        val current =
+            bundle.current.copy(
+                id = "${now.toLong()}-export",
+                kind = "manual",
+                createdAt = now,
+                turn = turn,
+                payload = GameStateSerializer.exportGameState(game!!),
+            )
+        return bundle.copy(
+            metadata = bundle.metadata.copy(lastPlayedAt = now, turn = turn),
+            current = current,
+            recovery = bundle.current,
+        )
     }
 
     /**
@@ -66,7 +128,8 @@ internal object CampaignRunBackup {
                 val parsed = JSON.parse<dynamic>(reader.result as String)
                 val run = CampaignRunCodec.jsonToRun(parsed?.run)
                 when {
-                    run != null -> confirmThenApply(run, onSuccess, onError)
+                    run != null ->
+                        confirmThenApply(run, parsed[MissionRestartCheckpoint.EMBED_KEY], onSuccess, onError)
                     // A whole-profile backup is a valid file that belongs in the other importer.
                     parsed?.runs != null -> onError(ImportError.WHOLE_PROFILE_FILE)
                     else -> onError(ImportError.UNREADABLE)
@@ -81,6 +144,7 @@ internal object CampaignRunBackup {
 
     private fun confirmThenApply(
         run: CampaignRunBundle,
+        missionStart: Any?,
         onSuccess: (String) -> Unit,
         onError: (ImportError) -> Unit,
     ) {
@@ -102,7 +166,12 @@ internal object CampaignRunBackup {
             I18n.t("campaign.run_import.confirm.confirm_button"),
         ) {
             val result = Game.current?.state?.importCampaignRun(run)
-            if (result?.isSuccess == true) onSuccess(name) else onError(ImportError.WRITE_FAILED)
+            if (result?.isSuccess == true) {
+                Game.current?.missionRestartCheckpoint?.adopt(missionStart)
+                onSuccess(name)
+            } else {
+                onError(ImportError.WRITE_FAILED)
+            }
         }
     }
 

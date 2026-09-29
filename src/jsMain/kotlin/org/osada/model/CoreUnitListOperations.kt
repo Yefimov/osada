@@ -5,6 +5,7 @@ import org.osada.hero.FormationIdentity
 import org.osada.hero.HeroCampaign
 import org.osada.rules.GameRules
 import org.osada.rules.PurchaseCap
+import org.osada.rules.TrainRecords
 import org.osada.rules.setSpotRange
 import org.osada.rules.setZOCRange
 
@@ -181,13 +182,15 @@ internal class CoreUnitListOperations(
         unit.strength = savedUnit.strength as? Int ?: FULL_STRENGTH
         unit.experience = savedUnit.experience as? Int ?: 0
         unit.leader = savedUnit.leader as? Int ?: -1
-        unit.carrier = savedUnit.carrier as? Int ?: 0
+        // A train is never carried out of its battle (`TrainRecords.carrierAfterBattle`).
+        unit.carrier = TrainRecords.carrierAfterBattle(savedUnit.carrier as? Int ?: 0)
         unit.isMounted = savedUnit.isMounted as? Boolean ?: false
-        unit.isCore = true
+        unit.isTemporaryBorrowed = savedUnit.temporaryBorrowed as? Boolean ?: false
+        // An auxiliary withdrawn into the tray is saved with the roster but was never core.
+        unit.isCore = !unit.isTemporaryBorrowed
         unit.isDeployed = false
         unit.hasOverstrength = savedUnit.hasOverstrength as? Boolean ?: false
         unit.customName = savedUnit.customName as? String // optional key (rename feature)
-        unit.isTemporaryBorrowed = savedUnit.temporaryBorrowed as? Boolean ?: false
         unit.stalinRegimeBoosted = savedUnit.stalinRegimeBoosted as? Boolean ?: false
         // Core units bypass GameStateDeserializer because the campaign roster has a deliberately
         // smaller save shape. Restore the scenario-instance flags here too: in particular, an OG
@@ -228,17 +231,36 @@ internal class CoreUnitListOperations(
         unit.transport?.fuel = transport.fuel as? Int ?: 0
     }
 
-    fun removeNonCampaignUnits(player: Player) {
-        var removed = false
-        gameMap.units.filter { it.player?.id != player.id || !it.isCore }.forEach { unit ->
-            val hex = unit.getHex()
-            if (hex?.isDeployment == player.id) {
-                hex.delUnit(unit)
-                unit.destroyed = true
-                unit.nodossier = true
-                removed = true
+    /**
+     * The scenario's own units for [player] in a campaign battle after the first: they STAY on the
+     * map as auxiliaries -- fought with for this battle, never carried into the next
+     * ([GameUnit.isTemporaryBorrowed], the flag the carry-over, the hero system and the unit card's
+     * "auxiliary" chip already read).
+     *
+     * This used to DELETE every such unit standing on one of the player's deploy hexes, on PM's
+     * reading of those units as stand-ins for a core the campaign supplies. For OG content that
+     * reading is wrong: the importer puts OG's undeployed pool onto the deploy hexes
+     * (`scn_to_xml.py`), and that pool is the author's own force for the battle. `forward2` (the
+     * Minsk Pocket) lost all 35 of its Western Front units that way, and they never reached the
+     * reserve either -- the player had to rebuy an army from nothing (2026-09-29 owner report:
+     * *"these units are part of the author's design and balance -- do not remove them"*).
+     *
+     * Only the deploy-hex units change here, which is exactly the set the old removal took. An
+     * authored unit anywhere else keeps the behaviour it has always had, and a Make Core unit is
+     * core and untouched.
+     *
+     * The formation id is taken back as well. `GameMap.addUnit` mints one for every campaign-player
+     * unit the scenario XML places, before this sweep can say the unit is only lent -- so all 35 of
+     * `forward2`'s auxiliaries arrived wearing `F-0-14`.. although nothing downstream would ever
+     * register them. A unit placed by this battle's own XML has no history an id could carry, so
+     * clearing it loses nothing and keeps "an auxiliary is never minted one" true.
+     */
+    fun keepScenarioUnitsAsAuxiliary(player: Player) {
+        gameMap.units
+            .filter { it.owner == player.id && !it.isCore && it.getHex()?.isDeployment == player.id }
+            .forEach {
+                it.isTemporaryBorrowed = true
+                it.formationId = null
             }
-        }
-        if (removed) gameMap.updateUnitList()
     }
 }

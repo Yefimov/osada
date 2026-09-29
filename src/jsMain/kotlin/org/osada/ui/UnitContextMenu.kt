@@ -25,9 +25,11 @@ import org.osada.model.unmountUnit
 import org.osada.multiplayer.client.OsadaMultiplayer
 import org.osada.multiplayer.command.BeginEngineering
 import org.osada.multiplayer.command.ClearMines
+import org.osada.multiplayer.command.DetrainUnit
 import org.osada.multiplayer.command.DisembarkUnit
 import org.osada.multiplayer.command.DismissLeader
 import org.osada.multiplayer.command.EmbarkUnit
+import org.osada.multiplayer.command.EntrainUnit
 import org.osada.multiplayer.command.GameCommand
 import org.osada.multiplayer.command.GreenReinforceUnit
 import org.osada.multiplayer.command.LayMines
@@ -40,6 +42,7 @@ import org.osada.rules.Engineering
 import org.osada.rules.EngineeringWork
 import org.osada.rules.GreenReplacements
 import org.osada.rules.LeaderDismissal
+import org.osada.rules.RailTransport
 import org.osada.rules.SupplyContextRules
 import org.osada.rules.SupplyRules
 
@@ -132,7 +135,7 @@ internal class UnitContextMenu(
             in SUPPLY_ACTION_IDS -> performSupplyAction(action, map, unit, pos)
             "lay_mines" -> performMineAction(map.layMinefield(unit), map, unit, pos)
             "barrage" -> toggleBarrageTargeting(map, unit, pos)
-            "rail_move" -> toggleRailTargeting(map, unit, pos)
+            "rail_move" -> performRailAction(map, unit)
             "clear_mines" -> performMineAction(map.clearMinefield(unit), map, unit, pos)
             in ENGINEERING_ACTION_IDS -> performEngineering(action, map, unit, pos)
             "undo" -> map.undoLastMove()
@@ -241,14 +244,16 @@ internal class UnitContextMenu(
             ui.showAlert(pos.row, pos.col, I18n.t("unit_info.action.engineering.blocked"), true)
             return
         }
-        val result = map.beginEngineering(unit, work)
-        val key =
-            when (result) {
-                EngineeringActionResult.DEMOLISHED -> "unit_info.action.demolish.done"
-                EngineeringActionResult.STARTED -> "unit_info.action.build.started"
-                EngineeringActionResult.NOT_ALLOWED -> "unit_info.action.engineering.blocked"
+        // Read before the order: the active efile's duration, the same figure the chip promised
+        // (`work.turns` is only the fallback for an efile that names none).
+        val turns = work.turnsFor(unit.getHex())
+        val message =
+            when (map.beginEngineering(unit, work)) {
+                EngineeringActionResult.DEMOLISHED -> I18n.t("unit_info.action.demolish.done")
+                EngineeringActionResult.STARTED -> I18n.plural("unit_info.action.build.started", turns)
+                EngineeringActionResult.NOT_ALLOWED -> I18n.t("unit_info.action.engineering.blocked")
             }
-        ui.showAlert(pos.row, pos.col, I18n.t(key, mapOf("turns" to work.turns)), true)
+        ui.showAlert(pos.row, pos.col, message, true)
         // Terrain and roads are per-hex facts the neighbours are drawn against, so the surrounding
         // cells are repainted -- the caller only re-renders around the unit itself.
         map.map?.let { ui.render.render(pos.row, pos.col, getUnitRenderRadius(unit)) }
@@ -381,7 +386,7 @@ private fun engineeringWorkFor(
 /**
  * In a room, a unit action is an ORDER for the host (`OsadaMultiplayer.submitOrder`), which applies
  * it and publishes the result; changing this client's copy instead was overwritten by the next
- * snapshot. Returns false for the chips that only open a local targeting mode (barrage, railway)
+ * snapshot. Returns false for the chips that only open a local targeting mode (barrage)
  * or change nothing shared (sleep): those continue locally, and their CLICK becomes the order.
  *
  * Undo is refused in a room: the host keeps no per-client undo record, and a move another
@@ -411,6 +416,7 @@ private fun unitActionOrder(
     return when (action) {
         "mount" -> if (unit.isMounted) UnmountUnit(id, actor) else MountUnit(id, null, actor)
         "embark" -> if (unit.carrier > 0) DisembarkUnit(id, actor) else EmbarkUnit(id, actor)
+        "rail_move" -> if (RailTransport.isEntrained(unit)) DetrainUnit(id, actor) else EntrainUnit(id, actor)
         "resupply" -> ResupplyUnit(id, actor)
         "reinforce" -> ReinforceUnit(id, null, actor)
         // The applier reads a non-null strength as "over strength", which is all this carries.

@@ -101,8 +101,9 @@
   <hex row="2" col="32" road="34"/>
   <hex row="2" col="34" terrain="1" road="147" name="Centreville" owner="0" flag="162" victory="0" deploy="0"/>
   <hex row="2" col="36" road="130"/>
-  <hex row="2" col="37" name="Unfinished R.R."/>
+  <hex row="2" col="37" name="Unfinished R.R." rail="40"/>
   <hex row="2" col="38" road="130"/>
+  <hex row="2" col="39" rail="34"/>
   <hex row="3" col="3" terrain="10" name="Calharpin Creek River"/>
   <hex row="3" col="4" terrain="10" name="Calharpin Creek River"/>
   <hex row="3" col="6" terrain="6"/>
@@ -134,16 +135,16 @@
   <hex row="3" col="23" terrain="3" road="40"/>
   <hex row="3" col="25" road="34"/>
   <hex row="3" col="26" road="40"/>
-  <hex row="3" col="27" road="130" name="Unfinished R.R."/>
+  <hex row="3" col="27" road="130" name="Unfinished R.R." rail="40"/>
   <hex row="3" col="28" road="34"/>
-  <hex row="3" col="29" terrain="10" name="Cub Run River"/>
-  <hex row="3" col="31" name="Unfinished R.R."/>
-  <hex row="3" col="32" name="Unfinished R.R."/>
-  <hex row="3" col="33" name="Unfinished R.R."/>
-  <hex row="3" col="34" road="17" name="Unfinished R.R."/>
-  <hex row="3" col="35" name="Unfinished R.R."/>
-  <hex row="3" col="36" name="Unfinished R.R."/>
-  <hex row="3" col="38" name="Unfinished R.R."/>
+  <hex row="3" col="29" terrain="10" name="Cub Run River" rail="32"/>
+  <hex row="3" col="31" name="Unfinished R.R." rail="34"/>
+  <hex row="3" col="32" name="Unfinished R.R." rail="40"/>
+  <hex row="3" col="33" name="Unfinished R.R." rail="130"/>
+  <hex row="3" col="34" road="17" name="Unfinished R.R." rail="40"/>
+  <hex row="3" col="35" name="Unfinished R.R." rail="130"/>
+  <hex row="3" col="36" name="Unfinished R.R." rail="34"/>
+  <hex row="3" col="38" name="Unfinished R.R." rail="130"/>
   <hex row="4" col="3" terrain="10" name="Calharpin Creek River"/>
   <hex row="4" col="6" terrain="6"/>
   <hex row="4" col="7" terrain="6">
@@ -177,11 +178,11 @@
   <hex row="4" col="22" terrain="3" road="34" deploy="0"/>
   <hex row="4" col="23" terrain="3"/>
   <hex row="4" col="24" road="130"/>
-  <hex row="4" col="25" name="Unfinished R.R."/>
-  <hex row="4" col="26" name="Unfinished R.R."/>
-  <hex row="4" col="28" name="Unfinished R.R."/>
+  <hex row="4" col="25" name="Unfinished R.R." rail="34"/>
+  <hex row="4" col="26" name="Unfinished R.R." rail="34"/>
+  <hex row="4" col="28" name="Unfinished R.R." rail="130"/>
   <hex row="4" col="29" terrain="10" name="Cub Run River"/>
-  <hex row="4" col="30" name="Unfinished R.R."/>
+  <hex row="4" col="30" name="Unfinished R.R." rail="2"/>
   <hex row="4" col="34" road="17"/>
   <hex row="5" col="1" terrain="5"/>
   <hex row="5" col="2" terrain="5"/>
@@ -216,7 +217,7 @@
   <hex row="5" col="21" terrain="3" road="34" name="Unfinished R.R."/>
   <hex row="5" col="22" terrain="3" road="40" name="Unfinished R.R." deploy="0"/>
   <hex row="5" col="23" terrain="3" road="130" name="Unfinished R.R."/>
-  <hex row="5" col="24" road="32" name="Unfinished R.R."/>
+  <hex row="5" col="24" road="32" name="Unfinished R.R." rail="2"/>
   <hex row="5" col="29" terrain="10" name="Cub Run River"/>
   <hex row="5" col="33" road="18" deploy="0"/>
   <hex row="5" col="34" road="33"/>
@@ -242,7 +243,7 @@
     <unit id="45977" owner="0" flag="163" face="0" exp="90"/>
   </hex>
   <hex row="6" col="12" terrain="10" name="Bull Run River"/>
-  <hex row="6" col="13" terrain="10" road="34" name="Stone Bridge [RIVER]">
+  <hex row="6" col="13" terrain="10" road="34" name="Stone Bridge [RIVER]" rail="32">
     <unit id="45963" owner="0" flag="163" face="0" exp="94"/>
   </hex>
   <hex row="6" col="14" road="41" name="Unfinished R.R.">
@@ -280,7 +281,7 @@
   <hex row="7" col="11">
     <unit id="45963" owner="0" flag="163" face="0" exp="110"/>
   </hex>
-  <hex row="7" col="12" name="Unfinished R.R.">
+  <hex row="7" col="12" name="Unfinished R.R." rail="18">
     <unit id="45963" owner="0" flag="163" face="0" exp="91"/>
   </hex>
   <hex row="7" col="13" deploy="0"/>
@@ -318,10 +319,10 @@
   <hex row="8" col="10" terrain="5">
     <unit id="45963" owner="0" flag="163" face="0" exp="128"/>
   </hex>
-  <hex row="8" col="11" terrain="5" name="Unfinished R.R.">
+  <hex row="8" col="11" terrain="5" name="Unfinished R.R." rail="34">
     <unit id="45958" owner="0" flag="163" face="0" transport="45987" exp="20" ldr="1" msu="1"/>
   </hex>
-  <hex row="8" col="12" name="Unfinished R.R.">
+  <hex row="8" col="12" name="Unfinished R.R." rail="33">
     <unit id="46008" owner="0" flag="163" face="0" transport="45989" exp="110"/>
   </hex>
   <hex row="8" col="13" deploy="0"/>
@@ -662,7 +663,7 @@
   <hex row="18" col="4">
     <unit id="44791" owner="1" flag="151" face="0" exp="120"/>
   </hex>
-  <hex row="18" col="5" name="Unfinished R.R."/>
+  <hex row="18" col="5" name="Unfinished R.R." rail="33"/>
   <hex row="18" col="7">
     <unit id="45977" owner="0" flag="163" face="0" exp="113"/>
   </hex>
@@ -707,8 +708,8 @@
   <hex row="18" col="39" terrain="3" road="32"/>
   <hex row="19" col="1" terrain="1" road="10" name="Gainesville" owner="1" flag="150"/>
   <hex row="19" col="2" terrain="3" road="57"/>
-  <hex row="19" col="3" road="162" name="Unfinished R.R."/>
-  <hex row="19" col="4" road="40" name="Unfinished R.R.">
+  <hex row="19" col="3" road="162" name="Unfinished R.R." rail="34"/>
+  <hex row="19" col="4" road="40" name="Unfinished R.R." rail="34">
     <unit id="44787" owner="1" flag="151" face="0" exp="123"/>
   </hex>
   <hex row="19" col="5" road="130">
@@ -761,20 +762,20 @@
   <hex row="19" col="37" road="34"/>
   <hex row="19" col="38" terrain="10" road="34" name="Bull Run River"/>
   <hex row="19" col="39" terrain="3"/>
-  <hex row="20" col="1" name="Manasas Gap R.R."/>
-  <hex row="20" col="2" road="131" name="Manasas Gap R.R." owner="1" flag="150" deploy="1" station="1"/>
-  <hex row="20" col="3" terrain="3" name="Manasas Gap R.R."/>
+  <hex row="20" col="1" name="Manasas Gap R.R." rail="130"/>
+  <hex row="20" col="2" road="131" name="Manasas Gap R.R." owner="1" flag="150" deploy="1" station="1" rail="40"/>
+  <hex row="20" col="3" terrain="3" name="Manasas Gap R.R." rail="136"/>
   <hex row="20" col="4" terrain="3">
     <unit id="44826" owner="1" flag="151" face="0" transport="44814" exp="130"/>
   </hex>
-  <hex row="20" col="5" name="Manasas Gap R.R.">
+  <hex row="20" col="5" name="Manasas Gap R.R." rail="40">
     <unit id="44787" owner="1" flag="151" face="0" exp="109"/>
   </hex>
-  <hex row="20" col="7" terrain="5" name="Manasas Gap R.R."/>
+  <hex row="20" col="7" terrain="5" name="Manasas Gap R.R." rail="40"/>
   <hex row="20" col="8" terrain="5"/>
-  <hex row="20" col="9" name="Manasas Gap R.R."/>
+  <hex row="20" col="9" name="Manasas Gap R.R." rail="40"/>
   <hex row="20" col="10" road="136"/>
-  <hex row="20" col="11" road="130" name="Manasas Gap R.R."/>
+  <hex row="20" col="11" road="130" name="Manasas Gap R.R." rail="40"/>
   <hex row="20" col="12" road="34" deploy="0"/>
   <hex row="20" col="13" terrain="6">
     <unit id="45963" owner="0" flag="163" face="0" exp="92"/>
@@ -816,28 +817,28 @@
   <hex row="21" col="1" terrain="3"/>
   <hex row="21" col="2" terrain="3"/>
   <hex row="21" col="3" terrain="3"/>
-  <hex row="21" col="4" terrain="3" name="Manasas Gap R.R.">
+  <hex row="21" col="4" terrain="3" name="Manasas Gap R.R." rail="130">
     <unit id="44800" owner="1" flag="151" face="0" exp="96"/>
   </hex>
   <hex row="21" col="5" terrain="3">
     <unit id="44825" owner="1" flag="151" face="0" transport="44814" exp="98"/>
   </hex>
-  <hex row="21" col="6" name="Manasas Gap R.R.">
+  <hex row="21" col="6" name="Manasas Gap R.R." rail="130">
     <unit id="44787" owner="1" flag="151" face="0" exp="129"/>
   </hex>
   <hex row="21" col="7" terrain="6">
     <unit id="44787" owner="1" flag="151" face="0" exp="108"/>
   </hex>
-  <hex row="21" col="8" name="Manasas Gap R.R."/>
+  <hex row="21" col="8" name="Manasas Gap R.R." rail="130"/>
   <hex row="21" col="9" terrain="6">
     <unit id="44787" owner="1" flag="151" face="0" exp="94"/>
   </hex>
-  <hex row="21" col="10" name="Manasas Gap R.R."/>
+  <hex row="21" col="10" name="Manasas Gap R.R." rail="130"/>
   <hex row="21" col="11" terrain="6">
     <unit id="44787" owner="1" flag="151" face="0" exp="95"/>
   </hex>
-  <hex row="21" col="12" name="Manasas Gap R.R."/>
-  <hex row="21" col="13" name="Manasas Gap R.R."/>
+  <hex row="21" col="12" name="Manasas Gap R.R." rail="136"/>
+  <hex row="21" col="13" name="Manasas Gap R.R." rail="136"/>
   <hex row="21" col="14" terrain="13"/>
   <hex row="21" col="15" terrain="13"/>
   <hex row="21" col="17" terrain="13"/>
@@ -888,8 +889,8 @@
   <hex row="22" col="13" terrain="6">
     <unit id="44787" owner="1" flag="151" face="0" exp="119"/>
   </hex>
-  <hex row="22" col="14" name="Manasas Gap R.R."/>
-  <hex row="22" col="15" name="Manasas Gap R.R."/>
+  <hex row="22" col="14" name="Manasas Gap R.R." rail="136"/>
+  <hex row="22" col="15" name="Manasas Gap R.R." rail="136"/>
   <hex row="22" col="16" terrain="13"/>
   <hex row="22" col="18" terrain="13"/>
   <hex row="22" col="24" road="136"/>

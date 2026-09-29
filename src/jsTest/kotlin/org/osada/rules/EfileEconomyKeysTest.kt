@@ -51,7 +51,8 @@ class EfileEconomyKeysTest : OgRulesTestHarness() {
         EfileConfig.setForTest(intKeyMap = mapOf("upgrade_ldr" to 1))
         val map = world()
         val unit = place(map, infantryEqid, 2, 2, 0)
-        unit.leader = LeaderType.BRIDGING.value
+        // An air-only attribute on what is now an infantry formation: "useless".
+        unit.leader = LeaderType.ALL_WEATHER_COMBAT.value
         unit.experience = 300
 
         LeaderOnUpgrade.afterUpgrade(unit)
@@ -64,13 +65,30 @@ class EfileEconomyKeysTest : OgRulesTestHarness() {
         EfileConfig.setForTest(intKeyMap = mapOf("upgrade_ldr" to 2))
         val map = world()
         val unit = place(map, infantryEqid, 2, 2, 0)
-        unit.leader = LeaderType.BRIDGING.value
+        unit.leader = LeaderType.ALL_WEATHER_COMBAT.value
         unit.experience = 500
 
         LeaderOnUpgrade.afterUpgrade(unit)
 
         assertEquals(-1, unit.leader)
         assertNotEquals(500, unit.experience, "'reducing unit's exp ... to be able to get a new leader'")
+    }
+
+    /** OG acts only when the upgrade *"makes random leader attribute useless"*. */
+    @Test
+    fun aStillUsefulAttributeSurvivesEveryMode() {
+        listOf(1, 2).forEach { mode ->
+            EfileConfig.setForTest(intKeyMap = mapOf("upgrade_ldr" to mode))
+            val map = world()
+            val unit = place(map, infantryEqid, 2, 2, 0)
+            unit.leader = LeaderType.BRIDGING.value
+            unit.experience = 300
+
+            LeaderOnUpgrade.afterUpgrade(unit)
+
+            assertEquals(LeaderType.BRIDGING.value, unit.leader, "mode $mode")
+            assertEquals(300, unit.experience, "mode $mode")
+        }
     }
 
     @Test

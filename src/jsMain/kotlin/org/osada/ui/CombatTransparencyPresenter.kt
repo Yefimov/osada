@@ -3,7 +3,9 @@
 package org.osada.ui
 
 import org.osada.GameHolder
+import org.osada.LeaderType
 import org.osada.hero.HeroCampaign
+import org.osada.hero.HeroDisplay
 import org.osada.i18n.I18n
 import org.osada.model.Equipment
 import org.osada.model.GameUnit
@@ -11,7 +13,7 @@ import org.osada.model.Leaders
 import org.osada.model.TerrainEx
 import org.osada.model.getCountryName
 import org.osada.model.getUnits
-import org.osada.rules.CombatResolver
+import org.osada.rules.EntrenchmentDefence
 import org.osada.rules.InitiativeModel
 import org.osada.rules.UnitCapabilities
 import org.osada.terrainNames
@@ -73,15 +75,16 @@ internal object CombatTransparencyPresenter {
         val initiativeCapped = initiativeCap != null && initiativeBase > initiativeCap
         val entrenchmentBypassed = unit.entrenchment > 0 && isEntrenchmentBypassed(unit)
         val iniCapArgs = mapOf("cap" to initiativeCap, "base" to initiativeBase)
-        val entrenchmentHelp =
-            if (entrenchmentBypassed) {
-                "combat.enemy.chip.entrenchment.bypassed.help"
-            } else {
-                "combat.enemy.chip.entrenchment.help"
-            }
+        val selected = game?.scenario?.map?.currentUnit
 
         setChip(chips, "ecExperience", "EXP ${unit.experience}", true, I18n.t("combat.enemy.chip.experience.help"))
-        setChip(chips, "ecEntrenchment", "ENT ${unit.entrenchment}", unit.entrenchment > 0, I18n.t(entrenchmentHelp))
+        setChip(
+            chips,
+            "ecEntrenchment",
+            "ENT ${unit.entrenchment}",
+            EntrenchmentTooltip.visible(unit),
+            EntrenchmentTooltip.text(unit, selected),
+        )
         byId("ecEntrenchment")?.classList?.toggle("osada-ec-chip--struck", entrenchmentBypassed)
         setChip(
             chips,
@@ -99,7 +102,7 @@ internal object CombatTransparencyPresenter {
         )
         setChip(chips, "ecMounted", "MOUNTED", unit.isMounted, I18n.t("combat.enemy.chip.mounted.help"))
         setChip(chips, "ecSurprised", "SURPRISED", unit.isSurprised, I18n.t("combat.enemy.chip.surprised.help"))
-        setChip(chips, "ecCommander", "LEADER", commander != null, commander ?: "")
+        presentEnemyCommander(main, unit, dossier?.let { "${it.rank} ${it.name}" })
         setChip(
             chips,
             "ecIniCap",
@@ -164,10 +167,10 @@ internal object CombatTransparencyPresenter {
      * Whether the player's currently selected unit would ignore [defender]'s entrenchment
      * (DEFERRED.md §1.20).
      *
-     * **Asks the rule, it does not restate it.** `CombatResolver.isEntrenchmentIntact` is the single
-     * predicate combat itself uses, so the chip and the resolution cannot drift — that matters here
+     * **Asks the rule, it does not restate it.** `EntrenchmentDefence.forecast` is what combat itself adds,
+     * so the chip and the resolution cannot drift — that matters here
      * because there are three independent bypass sources (the "Ignore trench" `attr` bit, the
-     * Infiltration/Street-Fighter leaders on vulnerable terrain, and the Bunker Buster attachment),
+     * Infiltration/Street-Fighter leaders, and the Bunker Buster attachment),
      * and the defender's own Ferocious Defense leader overrides all of them.
      *
      * Null-safe by design: this card is also shown on plain hover with nothing of the player's
@@ -179,12 +182,71 @@ internal object CombatTransparencyPresenter {
                 ?.scenario
                 ?.map
                 ?.currentUnit
-        val terrain = defender.getHex()?.terrain
         val hostile = attacker != null && attacker.player?.side != defender.player?.side
         return attacker != null &&
-            terrain != null &&
             hostile &&
-            !CombatResolver.isEntrenchmentIntact(attacker, defender, terrain)
+            EntrenchmentDefence.forecast(attacker, defender)?.bypassed == true
+    }
+
+    /**
+     * The enemy's commander, drawn the way the player's own card draws one: the `.uc-commander-icon`
+     * peaked cap, then the traits by name, each trait's effect in the tooltip. Until 2026-09-28 the
+     * enemy card only carried a bare "LEADER" chip whose tooltip named the FIRST trait -- so the
+     * Camouflage Expert waiting at a crossroads, or the Overwatch battery covering it, was invisible
+     * even once spotted.
+     *
+     * The traits are asked of [Leaders.unitHasLeader], the rules' own entry point, rather than read
+     * off `GameUnit.leader`: that covers both of a legacy leader's attributes (individual and class,
+     * the second of which the old chip never showed) and a hero's, and a hero still settling into a
+     * transferred formation correctly shows none. Names and effects come from the same localized
+     * strings the commander dossier uses ([HeroDisplay.trait]).
+     *
+     * Hidden when the unit has no commander. The card is only ever shown for a unit the player can
+     * see, so this reveals nothing fog of war hides.
+     */
+    private fun presentEnemyCommander(
+        main: HTMLElement,
+        unit: GameUnit,
+        heroLabel: String?,
+    ) {
+        val line =
+            byId("ecCommanderLine") ?: addTag(main, "div").also { created ->
+                created.id = "ecCommanderLine"
+                TapTip.fromTitle(created)
+            }
+        // Directly under the class/country/terrain line, above the state chips and the strength bar.
+        byId("ecLiveState")?.let { chips -> if (chips.parentElement === main) main.insertBefore(line, chips) }
+        val traits =
+            if (unit.leader >= 0 || heroLabel != null) {
+                LeaderType.entries.filter { Leaders.unitHasLeader(unit, it) }
+            } else {
+                emptyList()
+            }
+        if (traits.isEmpty() && heroLabel == null) {
+            line.style.display = "none"
+            line.textContent = ""
+            line.title = ""
+            return
+        }
+        val lines = traits.map { HeroDisplay.trait(it, "") }
+        line.style.display = ""
+        line.className =
+            "uc-commander-line " + if (heroLabel != null) "uc-commander-line--hero" else "uc-commander-line--legacy"
+        line.style.cursor = "help"
+        line.textContent = ""
+        addTag(line, "span").also {
+            it.className = "uc-commander-icon"
+            it.setAttribute("aria-hidden", "true")
+        }
+        addTag(line, "span").also {
+            it.className = "uc-commander-text"
+            it.textContent = listOfNotNull(heroLabel).plus(lines.map { l -> l.title }).joinToString(" · ")
+        }
+        line.title =
+            listOfNotNull(heroLabel ?: I18n.t("combat.enemy.commander.fallback"))
+                .plus(lines.map { "${it.title}: ${it.effect}" })
+                .joinToString("\n")
+        line.setAttribute("aria-label", line.title.replace("\n", ". "))
     }
 
     private fun ensureChips(main: HTMLElement): HTMLElement =
@@ -203,9 +265,12 @@ internal object CombatTransparencyPresenter {
         title: String,
     ) {
         val chip =
-            (byId(id) ?: addTag(parent, "span")).also {
+            byId(id) ?: addTag(parent, "span").also {
                 it.id = id
                 it.className = "osada-ec-chip"
+                // Every chip explains itself in `title=`, which a phone never shows. Attached once,
+                // when the chip is created; the text is read at tap time, so it stays current.
+                TapTip.fromTitle(it)
             }
         chip.style.display = if (visible) "inline-flex" else "none"
         chip.textContent = if (visible) text else ""

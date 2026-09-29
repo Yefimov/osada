@@ -3,6 +3,7 @@ package org.osada.ui
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
 import org.osada.model.Player
+import org.osada.model.isInitialDeploymentWindow
 import org.osada.multiplayer.client.OsadaMultiplayer
 import org.osada.rules.ActionAvailability
 import org.osada.rules.UnitActionAvailability
@@ -19,7 +20,8 @@ import org.w3c.dom.events.MouseEvent
  * The strip renders exactly what [UnitActionAvailability] declares applicable, in its fixed order:
  * an action that can never apply to this formation is absent, and one that is merely blocked right
  * now stays visible and disabled so its reason can be read
- * (`docs/design/action-affordances-and-objectives.md` §§1, 3).
+ * (`docs/design/action-affordances-and-objectives.md` §§1, 3) -- except during the opening
+ * deployment, where a blocked chip is omitted so the strip fits (owner request 2026-09-29).
  */
 internal class UnitContextButtons(
     private val ui: UI,
@@ -33,7 +35,13 @@ internal class UnitContextButtons(
         val row = addTag("unit-context", "div")
         row.className = "osada-actions"
         val context = context(unit, map, currentPlayer)
-        val applicable = UnitActionAvailability.all(context).filter { it.applicable }
+        // The opening deployment adds Withdraw to a strip that only has room for six chips, and
+        // most of the rest are blocked there anyway (nothing has moved, nothing is spent): showing
+        // them disabled pushed usable ones off the end. Inside that window a blocked chip is left
+        // out; everywhere else it stays visible so its reason can be read (see the class doc).
+        val deploying = map.isInitialDeploymentWindow(currentPlayer)
+        val applicable =
+            UnitActionAvailability.all(context).filter { it.applicable && (!deploying || it.enabled) }
         applicable.forEach { availability -> addButton(row, availability, unit, map, context.asleep) }
         return applicable.size
     }

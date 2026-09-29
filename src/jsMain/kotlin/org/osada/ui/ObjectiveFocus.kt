@@ -10,7 +10,7 @@ import org.osada.model.Hex
  * of the feedback: on a dense city map the view jumps and nothing says WHICH of the flags now on
  * screen was the one asked for. This marks it, so the answer is visible rather than inferred.
  *
- * Deliberately NOT a `Hex` field like `isBarrageSel`/`isRailSel`, even though those are the
+ * Deliberately NOT a `Hex` field like `isBarrageSel`, even though that is the
  * established pattern for a transient overlay. Exactly one hex can be focused, so a single [Cell]
  * says that directly, needs no clearing pass over the map, and cannot leak into a save through
  * `GameStateSerializer` the way a new hex property would have to be argued not to.

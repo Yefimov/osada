@@ -599,7 +599,7 @@ internal object GameplayLocalization {
         }
         byId("osadaUcStars")?.title =
             I18n.t("unit_info.experience.value", mapOf("experience" to unit.experience, "max" to UNIT_MAX_EXPERIENCE))
-        byId("osadaUcEnt")?.title = I18n.t("unit_info.entrenchment.value", mapOf("value" to unit.entrenchment))
+        byId("osadaUcEnt")?.title = EntrenchmentTooltip.text(unit)
         val grounded = GameRules.isAir(unit) && GameRules.airGroundedByWeather(unit)
         byId("osadaUcWeather")?.title = if (grounded) I18n.t("unit_info.grounded.help") else ""
     }

@@ -465,6 +465,49 @@ class HeroProgressionTest {
         )
     }
 
+    /** OG's Camouflage Expert is earned in the forest, and only by a formation that can hide in one. */
+    @Test
+    fun forestEvidenceEarnsTheAmbushTraitForLandFormationsOnly() {
+        val hero =
+            HeroState(
+                heroId = HeroId("H-forest"),
+                rankId = "lieutenant",
+                specializationEvidence = mapOf(EvidenceCategory.FOREST_OPERATIONS.name to 60),
+            )
+
+        val infantry = HeroTraitCatalog.eligibleFor(hero, backgroundTrait = null, unitClass = UnitClass.INFANTRY.value)
+        val fighter = HeroTraitCatalog.eligibleFor(hero, backgroundTrait = null, unitClass = UnitClass.FIGHTER.value)
+
+        assertTrue(infantry.any { it.id == "forest_ambush" })
+        assertTrue(fighter.none { it.id == "forest_ambush" }, "an aircraft cannot hide in a forest")
+        assertTrue(
+            HeroTraitCatalog.choose(hero, backgroundTrait = null, unitClass = UnitClass.INFANTRY.value).any {
+                it.id ==
+                    "forest_ambush"
+            },
+        )
+    }
+
+    /** Every OG trait the catalogue now teaches is behind evidence an achievement actually feeds. */
+    @Test
+    fun theOgTraitEntriesAreAllGatedByEvidence() {
+        val og =
+            setOf(
+                LeaderType.FOREST_CAMOUFLAGE,
+                LeaderType.OVERWATCH,
+                LeaderType.BRIDGING,
+                LeaderType.ALPINE_TRAINING,
+                LeaderType.EXTENDED_FRONT,
+                LeaderType.FLAK_SUPPORT,
+                LeaderType.LIBERATOR,
+                LeaderType.SHOCK_TACTICS,
+                LeaderType.DEVASTATING_FIRE,
+            )
+        val entries = HeroTraitCatalog.ALL.filter { it.legacyTrait in og }
+        assertEquals(og, entries.map { it.legacyTrait }.toSet())
+        assertTrue(entries.all { it.requiredEvidence.isNotEmpty() })
+    }
+
     @Test
     fun theOnceUngatedTraitsAreOfferedOnMeritWhenTheirEvidenceExists() {
         val hero =

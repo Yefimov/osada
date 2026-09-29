@@ -293,7 +293,7 @@ class CampaignHeroScopeTest {
 
     // ------------------------------------------------------ legacy acquisition
 
-    /** PM's rule: no bar crossed, no roll -- however experienced the unit already is. */
+    /** OG's rule (and PM's): no bar crossed, no roll -- however experienced the unit already is. */
     @Test
     fun aLegacyLeaderNeedsABarToBeCrossed() {
         val veteran = unit(owner = 1).apply { experience = 350 }
@@ -302,15 +302,22 @@ class CampaignHeroScopeTest {
         }
     }
 
-    /** PM's interval `[bars, 10]` and threshold 8: 20% at the first bar, and the roll no longer dies
-     *  above bar 1 the way the port's shrinking interval made it. */
+    /** OG manual §6.12: *"When any unit gains an experience bar ... it has the opportunity of 20% of
+     *  generating a leader"* -- the same 20% at every bar, where PM's odds rose to 2/7. */
     @Test
-    fun aBarUpRollsPmsOdds() {
+    fun aBarUpRollsOgsFlatTwentyPercent() {
         val firstBar = successRate(experienceAfter = 120, gained = 40)
         val fourthBar = successRate(experienceAfter = 410, gained = 40)
 
-        assertTrue(firstBar in 0.12..0.28, "about 20% at the first bar, was $firstBar")
-        assertTrue(fourthBar in 0.19..0.38, "about 2/7 at the fourth bar, was $fourthBar")
+        assertTrue(firstBar in 0.13..0.27, "about 20% at the first bar, was $firstBar")
+        assertTrue(fourthBar in 0.13..0.27, "still about 20% at the fourth bar, was $fourthBar")
+    }
+
+    /** Each bar crossed is its own chance: a combat worth two bars rolls twice (36%). */
+    @Test
+    fun crossingTwoBarsRollsTwice() {
+        val twoBars = successRate(experienceAfter = 220, gained = 140)
+        assertTrue(twoBars in 0.27..0.45, "about 36% for two bars, was $twoBars")
     }
 
     @Test

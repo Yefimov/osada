@@ -235,6 +235,8 @@ object GameStateSerializer {
         // OG's `Saboteur` leaves a STATE rather than a turn flag, so it has to survive a reload or
         // the sabotaged unit gets its turn back (`GameUnit.sabotaged`). Optional key, same rule.
         if (unit.sabotaged) obj.asDynamic().sabotaged = true
+        // A pontoon still being laid opens next turn (`rules/PontoonBridges`); same optional-key rule.
+        if (unit.bridgeLaying) obj.asDynamic().bridgeLaying = true
         if (unit.shotsThisTurn != 0) obj.asDynamic().shotsThisTurn = unit.shotsThisTurn
         if (unit.halfShotPending) obj.asDynamic().halfShotPending = true
         if (unit.lastingHits != 0) obj.asDynamic().lastingHits = unit.lastingHits

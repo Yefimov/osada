@@ -144,7 +144,7 @@
   <hex row="0" col="32" terrain="14" name="Volgusha River "/>
   <hex row="0" col="34" terrain="14" name="SNOW"/>
   <hex row="0" col="36" terrain="14" name="CLEAR"/>
-  <hex row="0" col="37" name="Railroad"/>
+  <hex row="0" col="37" name="Railroad" rail="17"/>
   <hex row="0" col="38" terrain="14" name="Moskva-Volga-Canal"/>
   <hex row="0" col="40" terrain="14" name="FOREST"/>
   <hex row="0" col="42" terrain="14" name="SNOW"/>
@@ -168,7 +168,7 @@
   <hex row="1" col="30" road="144"/>
   <hex row="1" col="32" terrain="10" name="Volgusha River"/>
   <hex row="1" col="36" road="17"/>
-  <hex row="1" col="37" road="40" name="Railroad"/>
+  <hex row="1" col="37" road="40" name="Railroad" rail="17"/>
   <hex row="1" col="38" terrain="10" name="Moskva-Volga-Canal"/>
   <hex row="1" col="41" terrain="2" name="Ignatovo Airfield"/>
   <hex row="1" col="42" terrain="14" name="SNOW"/>
@@ -182,7 +182,7 @@
   <hex row="2" col="12" terrain="10" name="Istra River"/>
   <hex row="2" col="13" terrain="10" road="18" name="Istra River"/>
   <hex row="2" col="14" terrain="1" road="32" name="Solnechnogorsk"/>
-  <hex row="2" col="15" name="Railroad"/>
+  <hex row="2" col="15" name="Railroad" rail="144"/>
   <hex row="2" col="16" road="146"/>
   <hex row="2" col="20" terrain="3"/>
   <hex row="2" col="21" terrain="10" name="Kljazma River"/>
@@ -191,7 +191,7 @@
   <hex row="2" col="31" terrain="10" name="Volgusha River"/>
   <hex row="2" col="32" terrain="10" name="Volgusha River"/>
   <hex row="2" col="36" terrain="1" road="19" name="Iksha"/>
-  <hex row="2" col="37" name="Railroad"/>
+  <hex row="2" col="37" name="Railroad" rail="17"/>
   <hex row="2" col="38" terrain="10" road="136" name="Moskva-Volga-Canal"/>
   <hex row="2" col="39" terrain="1" road="136" name="Ignatovo"/>
   <hex row="2" col="40" terrain="2" name="Ignatovo Airfield"/>
@@ -205,7 +205,7 @@
   <hex row="3" col="12" terrain="3"/>
   <hex row="3" col="13" road="33"/>
   <hex row="3" col="14" terrain="10" name="Istra River"/>
-  <hex row="3" col="15" name="Railroad"/>
+  <hex row="3" col="15" name="Railroad" rail="17"/>
   <hex row="3" col="16" road="9"/>
   <hex row="3" col="17" road="144">
     <unit id="9892" owner="1" flag="8" face="0" exp="100" str="7" bstr="1"/>
@@ -218,7 +218,7 @@
     <unit id="39597" owner="0" flag="90" face="0" exp="100"/>
   </hex>
   <hex row="3" col="36" road="17"/>
-  <hex row="3" col="37" name="Railroad"/>
+  <hex row="3" col="37" name="Railroad" rail="17"/>
   <hex row="3" col="38" terrain="10" name="Moskva-Volga-Canal"/>
   <hex row="3" col="39" terrain="3"/>
   <hex row="3" col="42" terrain="14" name="CLEAR"/>
@@ -231,7 +231,7 @@
   <hex row="4" col="9" terrain="3"/>
   <hex row="4" col="12" road="18"/>
   <hex row="4" col="14" terrain="10" name="Istra River"/>
-  <hex row="4" col="15" name="Railroad"/>
+  <hex row="4" col="15" name="Railroad" rail="17"/>
   <hex row="4" col="16" terrain="3"/>
   <hex row="4" col="17" road="9"/>
   <hex row="4" col="21" terrain="10" name="Kljazma River"/>
@@ -247,7 +247,7 @@
     <unit id="39597" owner="0" flag="90" face="0" exp="200"/>
   </hex>
   <hex row="4" col="36" road="9"/>
-  <hex row="4" col="37" name="Railroad"/>
+  <hex row="4" col="37" name="Railroad" rail="17"/>
   <hex row="4" col="38" terrain="10" name="Moskva-Volga-Canal"/>
   <hex row="4" col="42" terrain="14" name="SNOW"/>
   <hex row="5" col="0" terrain="14" name="FOREST"/>
@@ -262,7 +262,7 @@
   <hex row="5" col="11" terrain="1" road="130" name="Krivzovo"/>
   <hex row="5" col="12" road="49"/>
   <hex row="5" col="14" terrain="10" name="Istra River"/>
-  <hex row="5" col="15" name="Railroad">
+  <hex row="5" col="15" name="Railroad" rail="17">
     <unit id="9088" owner="1" flag="8" face="0" str="5" bstr="1"/>
   </hex>
   <hex row="5" col="18" road="144"/>
@@ -286,7 +286,7 @@
   <hex row="5" col="36" road="40">
     <unit id="40244" owner="0" flag="90" face="0" transport="40166" exp="50" str="7" bstr="7"/>
   </hex>
-  <hex row="5" col="37" name="Railroad"/>
+  <hex row="5" col="37" name="Railroad" rail="17"/>
   <hex row="5" col="38" terrain="10" name="Iksha Reservoir"/>
   <hex row="5" col="39" terrain="10" name="Iksha Reservoir"/>
   <hex row="5" col="40" terrain="3"/>
@@ -305,7 +305,7 @@
   <hex row="6" col="12" road="9"/>
   <hex row="6" col="13" terrain="10" road="144" name="Istra River"/>
   <hex row="6" col="14" terrain="10" name="Istra River"/>
-  <hex row="6" col="15" name="Railroad"/>
+  <hex row="6" col="15" name="Railroad" rail="17"/>
   <hex row="6" col="18" road="11"/>
   <hex row="6" col="19" road="144"/>
   <hex row="6" col="20" road="136"/>
@@ -322,7 +322,7 @@
   <hex row="6" col="33" terrain="10" name="Volgusha River"/>
   <hex row="6" col="35" deploy="0"/>
   <hex row="6" col="36" terrain="3"/>
-  <hex row="6" col="37" name="Railroad"/>
+  <hex row="6" col="37" name="Railroad" rail="17"/>
   <hex row="6" col="38" terrain="1" road="144" name="Tschernaja"/>
   <hex row="6" col="39" terrain="3"/>
   <hex row="6" col="40" terrain="10" name="Iksha Reservoir"/>
@@ -337,7 +337,7 @@
   <hex row="7" col="11" terrain="9" name="Istra Reservoir"/>
   <hex row="7" col="12" terrain="10" name="Istra River"/>
   <hex row="7" col="13" road="17"/>
-  <hex row="7" col="15" name="Railroad"/>
+  <hex row="7" col="15" name="Railroad" rail="9"/>
   <hex row="7" col="18" terrain="3"/>
   <hex row="7" col="19" road="17"/>
   <hex row="7" col="21" terrain="10" name="Kljazma River"/>
@@ -352,7 +352,7 @@
   <hex row="7" col="35">
     <unit id="39713" owner="0" flag="90" face="0" exp="200"/>
   </hex>
-  <hex row="7" col="37" name="Railroad"/>
+  <hex row="7" col="37" name="Railroad" rail="17"/>
   <hex row="7" col="38" road="17"/>
   <hex row="7" col="40" terrain="3"/>
   <hex row="7" col="41" terrain="3"/>
@@ -369,7 +369,7 @@
   <hex row="8" col="10" terrain="9" name="Istra Reservoir"/>
   <hex row="8" col="12" terrain="10" name="Istra Reservoir"/>
   <hex row="8" col="13" road="17"/>
-  <hex row="8" col="16" name="Railroad"/>
+  <hex row="8" col="16" name="Railroad" rail="144"/>
   <hex row="8" col="17" terrain="3"/>
   <hex row="8" col="19" road="9"/>
   <hex row="8" col="21" terrain="3"/>
@@ -382,7 +382,7 @@
   <hex row="8" col="31" road="9"/>
   <hex row="8" col="35" terrain="3"/>
   <hex row="8" col="36" terrain="3"/>
-  <hex row="8" col="37" name="Railroad"/>
+  <hex row="8" col="37" name="Railroad" rail="9"/>
   <hex row="8" col="38" road="9" deploy="0"/>
   <hex row="8" col="39" terrain="3" road="144"/>
   <hex row="8" col="42" terrain="14" name="SNOW"/>
@@ -393,8 +393,8 @@
   <hex row="9" col="9" terrain="9" name="Istra Reservoir"/>
   <hex row="9" col="10" terrain="1" name="Pjatniza"/>
   <hex row="9" col="13" road="33"/>
-  <hex row="9" col="16" name="Railroad"/>
-  <hex row="9" col="17" name="Railroad"/>
+  <hex row="9" col="16" name="Railroad" rail="9"/>
+  <hex row="9" col="17" name="Railroad" rail="144"/>
   <hex row="9" col="20" road="144"/>
   <hex row="9" col="22" terrain="3"/>
   <hex row="9" col="24" terrain="10" name="Kljazma River"/>
@@ -407,7 +407,7 @@
   </hex>
   <hex row="9" col="34" terrain="3"/>
   <hex row="9" col="36" terrain="3"/>
-  <hex row="9" col="38" name="Railroad"/>
+  <hex row="9" col="38" name="Railroad" rail="144"/>
   <hex row="9" col="39" terrain="3" road="9">
     <unit id="39542" owner="0" flag="90" face="0" transport="40160" exp="200"/>
   </hex>
@@ -424,7 +424,7 @@
   <hex row="10" col="11" terrain="3"/>
   <hex row="10" col="12" road="18"/>
   <hex row="10" col="16" terrain="1" name="Povarovo"/>
-  <hex row="10" col="17" name="Railroad"/>
+  <hex row="10" col="17" name="Railroad" rail="9"/>
   <hex row="10" col="20" terrain="1" road="9" name="Radomlja"/>
   <hex row="10" col="21" road="144"/>
   <hex row="10" col="24" terrain="10" name="Kljazma River"/>
@@ -439,8 +439,8 @@
   </hex>
   <hex row="10" col="33" road="152"/>
   <hex row="10" col="35" terrain="3"/>
-  <hex row="10" col="37" name="Railroad"/>
-  <hex row="10" col="38" name="Railroad"/>
+  <hex row="10" col="37" name="Railroad" rail="18"/>
+  <hex row="10" col="38" name="Railroad" rail="33"/>
   <hex row="10" col="40" road="144"/>
   <hex row="10" col="41" terrain="1" name="Sholohovo"/>
   <hex row="10" col="42" terrain="14" name="SNOW"/>
@@ -456,7 +456,7 @@
   <hex row="11" col="11" terrain="10" name="Istra Reservoir"/>
   <hex row="11" col="12" terrain="3" road="17"/>
   <hex row="11" col="15" terrain="3"/>
-  <hex row="11" col="18" name="Railroad"/>
+  <hex row="11" col="18" name="Railroad" rail="144"/>
   <hex row="11" col="21" road="9"/>
   <hex row="11" col="22" terrain="16"/>
   <hex row="11" col="23" terrain="16"/>
@@ -467,7 +467,7 @@
   <hex row="11" col="33" road="17"/>
   <hex row="11" col="34" road="136"/>
   <hex row="11" col="35" road="144"/>
-  <hex row="11" col="37" name="Railroad" deploy="0"/>
+  <hex row="11" col="37" name="Railroad" deploy="0" rail="9"/>
   <hex row="11" col="38">
     <unit id="40223" owner="0" flag="90" face="0" transport="40164" exp="100" str="8" bstr="8"/>
   </hex>
@@ -490,8 +490,8 @@
   <hex row="12" col="14" terrain="3"/>
   <hex row="12" col="15" road="48"/>
   <hex row="12" col="17" terrain="3"/>
-  <hex row="12" col="18" name="Railroad"/>
-  <hex row="12" col="19" name="Railroad"/>
+  <hex row="12" col="18" name="Railroad" rail="9"/>
+  <hex row="12" col="19" name="Railroad" rail="144"/>
   <hex row="12" col="22" road="136"/>
   <hex row="12" col="23" terrain="1" road="136" name="Matushkino"/>
   <hex row="12" col="24" terrain="16"/>
@@ -505,7 +505,7 @@
   </hex>
   <hex row="12" col="35" road="9"/>
   <hex row="12" col="36" terrain="1" name="Gorki"/>
-  <hex row="12" col="38" name="Railroad">
+  <hex row="12" col="38" name="Railroad" rail="144">
     <unit id="39542" owner="0" flag="90" face="0" transport="40175" exp="100"/>
   </hex>
   <hex row="12" col="40" road="17"/>
@@ -525,7 +525,7 @@
   <hex row="13" col="14" road="130"/>
   <hex row="13" col="15" road="9"/>
   <hex row="13" col="18" terrain="3"/>
-  <hex row="13" col="19" name="Railroad"/>
+  <hex row="13" col="19" name="Railroad" rail="9"/>
   <hex row="13" col="24" road="136"/>
   <hex row="13" col="25" road="136"/>
   <hex row="13" col="29" road="17"/>
@@ -537,7 +537,7 @@
     <unit id="39702" owner="0" flag="90" face="0" transport="1049" exp="100"/>
   </hex>
   <hex row="13" col="37" terrain="1" road="136" name="Lobnja"/>
-  <hex row="13" col="38" name="Railroad"/>
+  <hex row="13" col="38" name="Railroad" rail="17"/>
   <hex row="13" col="40" road="17"/>
   <hex row="13" col="42" terrain="14" name="SNOW"/>
   <hex row="14" col="0" terrain="14" name="SNOW"/>
@@ -560,8 +560,8 @@
   <hex row="14" col="19" terrain="1" name="Krjukovo" owner="1" flag="7" victory="1">
     <unit id="1071" owner="1" flag="304" face="0" str="9" bstr="1"/>
   </hex>
-  <hex row="14" col="20" name="Railroad"/>
-  <hex row="14" col="21" name="Railroad">
+  <hex row="14" col="20" name="Railroad" rail="136"/>
+  <hex row="14" col="21" name="Railroad" rail="136">
     <unit id="52383" owner="1" flag="304" face="0" str="5" bstr="1"/>
   </hex>
   <hex row="14" col="22" terrain="3"/>
@@ -574,7 +574,7 @@
   <hex row="14" col="33" terrain="3"/>
   <hex row="14" col="34" road="9"/>
   <hex row="14" col="35" road="144"/>
-  <hex row="14" col="38" name="Railroad">
+  <hex row="14" col="38" name="Railroad" rail="17">
     <unit id="40256" owner="0" flag="90" face="0" transport="40176" exp="50" str="7" bstr="7"/>
   </hex>
   <hex row="14" col="39" road="146"/>
@@ -598,8 +598,8 @@
   <hex row="15" col="21" terrain="2" name="Krjukovo Airfield" owner="1" flag="7">
     <unit id="52434" owner="1" flag="304" face="0" exp="168" str="6" bstr="1" anchored="1"/>
   </hex>
-  <hex row="15" col="22" name="Railroad"/>
-  <hex row="15" col="23" name="Railroad"/>
+  <hex row="15" col="22" name="Railroad" rail="136"/>
+  <hex row="15" col="23" name="Railroad" rail="136"/>
   <hex row="15" col="26" terrain="3"/>
   <hex row="15" col="28" road="144"/>
   <hex row="15" col="29" road="17"/>
@@ -611,7 +611,7 @@
     <unit id="39819" owner="0" flag="90" face="0" exp="70" str="9" bstr="9"/>
   </hex>
   <hex row="15" col="37" terrain="3"/>
-  <hex row="15" col="38" name="Railroad"/>
+  <hex row="15" col="38" name="Railroad" rail="17"/>
   <hex row="15" col="39" road="17">
     <unit id="39542" owner="0" flag="90" face="0" transport="40192" exp="200"/>
   </hex>
@@ -649,8 +649,8 @@
   <hex row="16" col="21" terrain="2" name="Krjukovo Airfield">
     <unit id="10589" owner="1" flag="8" face="0" exp="25" str="6" bstr="4"/>
   </hex>
-  <hex row="16" col="24" name="Railroad"/>
-  <hex row="16" col="25" name="Railroad"/>
+  <hex row="16" col="24" name="Railroad" rail="136"/>
+  <hex row="16" col="25" name="Railroad" rail="136"/>
   <hex row="16" col="28" road="9"/>
   <hex row="16" col="29" road="145"/>
   <hex row="16" col="30" terrain="10" name="Kljazma River"/>
@@ -660,7 +660,7 @@
   <hex row="16" col="34" terrain="10" name="Kljazma River"/>
   <hex row="16" col="35" terrain="10" road="17" name="Kljazma River"/>
   <hex row="16" col="37" terrain="10" name="Kljazma Reservoir"/>
-  <hex row="16" col="38" name="Railroad"/>
+  <hex row="16" col="38" name="Railroad" rail="17"/>
   <hex row="16" col="39" terrain="10" road="17" name="Kljazma Reservoir"/>
   <hex row="16" col="40" terrain="9" name="Kljazma Reservoir"/>
   <hex row="16" col="41" terrain="9" name="Kljazma Reservoir"/>
@@ -685,8 +685,8 @@
   <hex row="17" col="20" road="136"/>
   <hex row="17" col="21" road="136"/>
   <hex row="17" col="22" terrain="3"/>
-  <hex row="17" col="26" name="Railroad"/>
-  <hex row="17" col="27" name="Railroad"/>
+  <hex row="17" col="26" name="Railroad" rail="136"/>
+  <hex row="17" col="27" name="Railroad" rail="136"/>
   <hex row="17" col="28" terrain="1" name="Shodnja" owner="1" flag="7">
     <unit id="52511" owner="1" flag="304" face="0" str="5" bstr="1"/>
   </hex>
@@ -696,7 +696,7 @@
   <hex row="17" col="35" road="17"/>
   <hex row="17" col="36" terrain="10" name="Kljazma Reservoir"/>
   <hex row="17" col="37" terrain="10" name="Moskva-Volga-Canal"/>
-  <hex row="17" col="38" terrain="10" name="Kljazma Reservoir"/>
+  <hex row="17" col="38" terrain="10" name="Kljazma Reservoir" rail="17"/>
   <hex row="17" col="39" road="17"/>
   <hex row="17" col="42" terrain="14" name="FOREST"/>
   <hex row="18" col="0" terrain="14" name="SNOW"/>
@@ -711,8 +711,8 @@
   <hex row="18" col="22" terrain="1" road="136" name="Brehovo"/>
   <hex row="18" col="23" terrain="3" road="136"/>
   <hex row="18" col="25" terrain="3"/>
-  <hex row="18" col="28" name="Railroad"/>
-  <hex row="18" col="29" name="Railroad"/>
+  <hex row="18" col="28" name="Railroad" rail="136"/>
+  <hex row="18" col="29" name="Railroad" rail="136"/>
   <hex row="18" col="30" road="136">
     <unit id="839" owner="1" flag="8" face="0" exp="200" str="9" bstr="1"/>
   </hex>
@@ -723,7 +723,7 @@
   <hex row="18" col="33" terrain="3"/>
   <hex row="18" col="35" road="17"/>
   <hex row="18" col="37" terrain="10" name="Moskva-Volga-Canal"/>
-  <hex row="18" col="38" terrain="1" name="Dolgoprudnyj"/>
+  <hex row="18" col="38" terrain="1" name="Dolgoprudnyj" rail="17"/>
   <hex row="18" col="39" road="17"/>
   <hex row="18" col="41" terrain="3"/>
   <hex row="18" col="42" terrain="14" name="FOREST"/>
@@ -746,13 +746,13 @@
   <hex row="19" col="23" terrain="3"/>
   <hex row="19" col="24" terrain="3" road="136"/>
   <hex row="19" col="25" road="136"/>
-  <hex row="19" col="30" name="Railroad"/>
-  <hex row="19" col="31" name="Railroad"/>
+  <hex row="19" col="30" name="Railroad" rail="136"/>
+  <hex row="19" col="31" name="Railroad" rail="136"/>
   <hex row="19" col="32" road="144"/>
   <hex row="19" col="35" road="17"/>
   <hex row="19" col="36" terrain="1" name="Terechovo"/>
   <hex row="19" col="37" terrain="10" name="Moskva-Volga-Canal"/>
-  <hex row="19" col="38" name="Railroad"/>
+  <hex row="19" col="38" name="Railroad" rail="17"/>
   <hex row="19" col="39" road="17"/>
   <hex row="19" col="41" terrain="3"/>
   <hex row="19" col="42" terrain="14" name="FOREST"/>
@@ -785,11 +785,12 @@
   <hex row="20" col="29">
     <unit id="52236" owner="1" flag="304" face="0" exp="200" str="7" bstr="4"/>
   </hex>
-  <hex row="20" col="32" name="Railroad"/>
-  <hex row="20" col="33" name="Railroad"/>
+  <hex row="20" col="32" name="Railroad" rail="136"/>
+  <hex row="20" col="33" name="Railroad" rail="136"/>
   <hex row="20" col="34" terrain="3"/>
   <hex row="20" col="35" road="1"/>
   <hex row="20" col="37" terrain="10" name="Moskva-Volga-Canal"/>
+  <hex row="20" col="38" rail="17"/>
   <hex row="20" col="39" road="17"/>
   <hex row="20" col="42" terrain="14" name="FOREST"/>
   <hex row="21" col="0" terrain="14" name="SNOW"/>
@@ -818,14 +819,14 @@
   <hex row="21" col="30" terrain="3"/>
   <hex row="21" col="31" terrain="3"/>
   <hex row="21" col="33" terrain="3"/>
-  <hex row="21" col="34" name="Railroad">
+  <hex row="21" col="34" name="Railroad" rail="136">
     <unit id="39702" owner="0" flag="90" face="0" exp="50"/>
   </hex>
-  <hex row="21" col="35" terrain="1" name="Khimki"/>
+  <hex row="21" col="35" terrain="1" name="Khimki" rail="136"/>
   <hex row="21" col="36" terrain="1" name="Khimki" owner="0" flag="89"/>
   <hex row="21" col="37" terrain="10" name="Moskva-Volga-Canal"/>
-  <hex row="21" col="38" name="Railroad"/>
-  <hex row="21" col="39" name="Railroad" deploy="0"/>
+  <hex row="21" col="38" name="Railroad" rail="9"/>
+  <hex row="21" col="39" name="Railroad" deploy="0" rail="144"/>
   <hex row="21" col="41" terrain="2" name="Khimki Airfield" owner="0" flag="89"/>
   <hex row="21" col="42" terrain="14" name="SNOW"/>
   <hex row="22" col="0" terrain="14" name="SNOW"/>
@@ -854,9 +855,9 @@
   <hex row="22" col="31" road="136"/>
   <hex row="22" col="32" terrain="3"/>
   <hex row="22" col="35" road="9"/>
-  <hex row="22" col="36" terrain="1" name="Khimki"/>
-  <hex row="22" col="37" terrain="10" name="Moskva-Volga-Canal"/>
-  <hex row="22" col="39" name="Railroad">
+  <hex row="22" col="36" terrain="1" name="Khimki" rail="136"/>
+  <hex row="22" col="37" terrain="10" name="Moskva-Volga-Canal" rail="136"/>
+  <hex row="22" col="39" name="Railroad" rail="9">
     <unit id="39713" owner="0" flag="90" face="0" exp="100"/>
   </hex>
   <hex row="22" col="40" terrain="2" name="Khimki Airfield"/>
@@ -893,9 +894,9 @@
   </hex>
   <hex row="23" col="36" terrain="10" road="136" name="Khimki Reservoir"/>
   <hex row="23" col="37" road="136"/>
-  <hex row="23" col="38" name="Railroad" deploy="0"/>
-  <hex row="23" col="39" name="Railroad"/>
-  <hex row="23" col="40" name="Railroad"/>
+  <hex row="23" col="38" name="Railroad" deploy="0" rail="136"/>
+  <hex row="23" col="39" name="Railroad" rail="136"/>
+  <hex row="23" col="40" name="Railroad" rail="144"/>
   <hex row="23" col="42" terrain="14" name="SNOW"/>
   <hex row="24" col="0" terrain="14" name="SNOW"/>
   <hex row="24" col="6" terrain="3"/>
@@ -917,10 +918,10 @@
   <hex row="24" col="37" terrain="10" name="Khimki Reservoir"/>
   <hex row="24" col="38" road="144"/>
   <hex row="24" col="39" terrain="3"/>
-  <hex row="24" col="40" name="Railroad">
+  <hex row="24" col="40" name="Railroad" rail="137">
     <unit id="39702" owner="0" flag="90" face="0" transport="1049" exp="200"/>
   </hex>
-  <hex row="24" col="41" name="Railroad"/>
+  <hex row="24" col="41" name="Railroad" rail="136"/>
   <hex row="24" col="42" terrain="14" name="SNOW"/>
   <hex row="25" col="0" terrain="14" name="SNOW"/>
   <hex row="25" col="1" terrain="1" road="8" name="Andrejevskoje"/>
@@ -1155,7 +1156,7 @@
     <unit id="39702" owner="0" flag="90" face="0" transport="1049" exp="100"/>
   </hex>
   <hex row="30" col="35" terrain="1" name="Kunzevo"/>
-  <hex row="30" col="37" name="Railroad"/>
+  <hex row="30" col="37" name="Railroad" rail="34"/>
   <hex row="30" col="38" terrain="1" name="Moscow"/>
   <hex row="30" col="39" terrain="1" name="Moscow"/>
   <hex row="30" col="40" terrain="1" name="Moscow "/>
@@ -1189,8 +1190,8 @@
   <hex row="31" col="29" terrain="3"/>
   <hex row="31" col="31" terrain="2" name="Odinzovo Airfield" owner="0" flag="89"/>
   <hex row="31" col="33" terrain="3"/>
-  <hex row="31" col="35" name="Railroad"/>
-  <hex row="31" col="36" name="Railroad"/>
+  <hex row="31" col="35" name="Railroad" rail="34"/>
+  <hex row="31" col="36" name="Railroad" rail="34"/>
   <hex row="31" col="37" road="34"/>
   <hex row="31" col="38" road="34"/>
   <hex row="31" col="39" terrain="1" name="Moscow"/>
@@ -1215,8 +1216,8 @@
   <hex row="32" col="29" terrain="1" name="Odinzovo"/>
   <hex row="32" col="30" terrain="2" name="Odinzovo Airfield"/>
   <hex row="32" col="31" terrain="2" name="Odinzovo Airfield"/>
-  <hex row="32" col="33" name="Railroad"/>
-  <hex row="32" col="34" name="Railroad"/>
+  <hex row="32" col="33" name="Railroad" rail="34"/>
+  <hex row="32" col="34" name="Railroad" rail="34"/>
   <hex row="32" col="35" road="130"/>
   <hex row="32" col="36" road="34"/>
   <hex row="32" col="42" terrain="14" name="Moscow"/>
@@ -1244,7 +1245,7 @@
   <hex row="33" col="29" terrain="14" name="Odinzovo"/>
   <hex row="33" col="30" terrain="1" name="Odinzovo"/>
   <hex row="33" col="31" terrain="14" name="Railroad"/>
-  <hex row="33" col="32" name="Railroad"/>
+  <hex row="33" col="32" name="Railroad" rail="34"/>
   <hex row="33" col="33" terrain="14" name="SNOW"/>
   <hex row="33" col="35" terrain="14" name="SNOW"/>
   <hex row="33" col="36" terrain="3"/>

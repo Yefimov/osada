@@ -4,6 +4,7 @@ import org.osada.GameHolder
 import org.osada.hero.HeroCampaign
 import org.osada.model.GameUnit
 import org.osada.rules.GameRules
+import org.osada.rules.PontoonBridges
 import org.osada.rules.isBridgeForSide
 import org.osada.rules.isGround
 import org.osada.rules.unitUsesAmmo
@@ -204,7 +205,7 @@ internal class UnitRenderer(
         val drawX = x - frameW / 2.0 + rc.hexTopWidth / 2.0
         val drawY = y - imgH / 2.0 + rc.v - rc.unitFontSize
 
-        var facing = unit.facing
+        var facing = spriteFacing(unit, isBridge)
         var mirror = false
         if (facing > MAX_FACING_INDEX) {
             facing = FACING_MIRROR_BASE - facing
@@ -224,5 +225,14 @@ internal class UnitRenderer(
 
         if (mirror) ctx.restore()
         return true
+    }
+
+    /** An open pontoon lies across its river, whatever way the formation drove in. */
+    private fun spriteFacing(
+        unit: GameUnit,
+        isBridge: Boolean,
+    ): Int {
+        val map = rc.map
+        return if (isBridge && map != null) PontoonBridges.spanFacing(map, unit) else unit.facing
     }
 }

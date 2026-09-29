@@ -98,8 +98,8 @@ enum class ActionBlockReason {
     /** No free air/naval transport point left in the player's pool. */
     NO_TRANSPORT_AVAILABLE,
 
-    /** Railway: nowhere connected to reach -- no free boarding point along this track. */
-    NO_RAIL_DESTINATION,
+    /** Railway: aboard a train, but not at a station (and without `No Need Station`). */
+    NOT_AT_STATION,
 
     /** Not standing on the airfield/port the embarkation rule requires. */
     NOT_AT_TRANSPORT_FACILITY,
@@ -169,6 +169,10 @@ enum class ActionBlockReason {
 
     /** OG requires an engineering unit to have taken no other action this turn. */
     ENGINEERING_NEEDS_UNSPENT_TURN,
+
+    /** The same rule as relaxed by the efile's `build_start_ex`: the unit may have moved, but must
+     *  not have fired or resupplied. */
+    ENGINEERING_NEEDS_UNFIRED,
 
     /** Another job is already under way on this hex; `amount` is the turns left on it. */
     ENGINEERING_IN_PROGRESS,
@@ -252,6 +256,10 @@ enum class ActionEffectKind {
     /** Returns the formation to the reserve tray, to be placed again; no prestige changes hands. */
     WITHDRAW_TO_TRAY,
 
+    /** An auxiliary goes back into the reserve tray as an auxiliary: still not core, and still left
+     *  behind when the battle ends. */
+    WITHDRAW_AUXILIARY_TO_TRAY,
+
     /** Skips the unit in ready-unit navigation, still counted by the end-turn warning. */
     SLEEP_SKIP,
 
@@ -265,9 +273,14 @@ enum class ActionEffectKind {
      *  chip can say "no unseen hex in range" before the player enters a mode with nothing in it. */
     OPEN_BARRAGE_TARGETING,
 
-    /** Opens the railway destination mode; `amount` is how many stations are reachable along
-     *  connected track, `detail` how many rail transport points the player has left. */
-    OPEN_RAIL_DESTINATIONS,
+    /** Boards a train, which then moves along the track; `amount` is how many trains are free. */
+    BOARD_TRAIN,
+
+    /** Leaves the train here and returns it to the pool; the formation can still move. */
+    LEAVE_TRAIN,
+
+    /** Leaves the train here after it moved this turn, which ends the formation's move. */
+    LEAVE_TRAIN_ENDS_MOVE,
 
     /** Attempts to clear the minefield here; `amount` is the percentage chance of success. */
     CLEAR_MINEFIELD,
@@ -275,8 +288,19 @@ enum class ActionEffectKind {
     /** A failed clearing attempt suppresses the formation. */
     CLEAR_MINEFIELD_RISK,
 
-    /** Starts construction here; `amount` is how many of this side's turns it takes. */
+    /** `amount` prestige, charged once, in full, when the work begins -- never per turn. */
+    PRESTIGE_COST_ONCE,
+
+    /** Starts construction here; `amount` is how many of this side's turns it takes, the turn it
+     *  begins on included (the countdown ticks at the end of every one of them). */
     BUILD_TURNS,
+
+    /** Engineering may begin after moving (`build_start_ex`) while the unit has not fired or
+     *  resupplied. */
+    ENGINEERING_START_AFTER_MOVE,
+
+    /** Engineering must begin before the unit moves, fires or resupplies. */
+    ENGINEERING_START_UNSPENT,
 
     /** Destroys what is on this hex outright, with no waiting. */
     DEMOLISH_NOW,

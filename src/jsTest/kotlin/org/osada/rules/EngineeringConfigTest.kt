@@ -494,6 +494,31 @@ class EngineeringConfigTest : OgRulesTestHarness() {
         assertFalse(Engineering.mayStartWork(sapper), "but the shot is what it must still have")
     }
 
+    /** The chip states Atomic's own figures and start rule, not the manual's: a fixed "12 prestige,
+     *  3 turns, must not have moved" in the help text contradicted the lines under it. */
+    @Test
+    fun theChipStatesTheActiveEfilesPriceDurationAndStartRule() {
+        val map = engineeringWorld()
+        EfileConfig.setForTest(
+            intKeyMap = mapOf("build_start_ex" to 1),
+            rawKeyMap = mapOf("build_cost" to "25,25,25,25,25", "build_turn" to "2,2,2,2,2"),
+        )
+        val sapper = place(map, sapperEqid, 2, 2, side = 0)
+        sapper.hasMoved = true
+        val context = UnitActionContext(map, sapper, friendly)
+
+        val moved = UnitActionAvailability.forAction(UnitActionId.BUILD_FORTIFICATION, context)
+        val effects = moved.effects.associate { it.kind to it.amount }
+        assertEquals(25, effects[ActionEffectKind.PRESTIGE_COST_ONCE], "charged once, in full")
+        assertEquals(2, effects[ActionEffectKind.BUILD_TURNS])
+        assertTrue(ActionEffectKind.ENGINEERING_START_AFTER_MOVE in effects)
+        assertFalse(moved.reasons.any { it.reason == ActionBlockReason.ENGINEERING_NEEDS_UNFIRED })
+
+        sapper.hasFired = true
+        val fired = UnitActionAvailability.forAction(UnitActionId.BUILD_FORTIFICATION, context)
+        assertTrue(fired.reasons.any { it.reason == ActionBlockReason.ENGINEERING_NEEDS_UNFIRED })
+    }
+
     @Test
     fun buildTerrExIsWhatAllowsAFortInTheForest() {
         val map = engineeringWorld()

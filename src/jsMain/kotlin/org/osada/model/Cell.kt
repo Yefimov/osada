@@ -66,6 +66,10 @@ class MovementResults {
      *  to select it, scroll to it or show its action row afterwards. */
     var withdrew: Boolean = false
 
+    /** Set when this move ended a bridge-capable formation on a river, where it starts laying a
+     *  crossing that opens next turn (`rules/PontoonBridges`), so the UI can say so on the hex. */
+    var startedBridge: Boolean = false
+
     /** Set when AA fired on this move (`AAInterception`), whether or not the unit survived. An
      *  intercepted move must never be undoable -- see `MoveExecutor.isUndoable` -- allowing undo
      *  would let a player probe for hidden AA for free and take the probe back, destroying the

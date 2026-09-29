@@ -18,15 +18,16 @@ object CostCalculator {
     private const val FULL_STRENGTH = 10
 
     /**
-     * The upgrade surcharge an `Influence` commander pays instead of [UPGRADE_PENALTY].
-     *
-     * OG's trait reads *"allows the unit to upgrade to better equipment at reduced prestige cost"*
-     * and names no number, so the honest reading of "reduced" is the one that costs the player
-     * nothing beyond the equipment itself: the 20% re-equipping surcharge is waived, and the new
-     * kit is still paid for in full. Waiving more than the surcharge would make an upgrade cheaper
-     * than the machine it buys, which no reading of the sentence supports.
+     * OG's `Influence`: *"Half cost to upgrade or get replacements"* (`* Leaders` list, the
+     * engine's own strings). Until 2026-09-28 OSADA read the manual's vaguer *"reduced cost"* as
+     * waiving only the 20% re-equipping surcharge; the engine's strings name the number.
+     * Applied to a positive net cost only, rounding up and never to zero -- a refund is not halved.
      */
-    private const val INFLUENCE_UPGRADE_PENALTY = 1.0
+    fun influenced(
+        unit: GameUnit,
+        cost: Int,
+    ): Int =
+        if (cost > 0 && Leaders.unitHasLeader(unit, LeaderType.INFLUENCE)) ((cost + 1) / 2).coerceAtLeast(1) else cost
 
     /** Combined buy cost of a unit and (optionally) its transport. Pass -1 to skip either. */
     fun calculateUnitCosts(
@@ -50,12 +51,8 @@ object CostCalculator {
         newEqid: Int,
         transportEqid: Int,
     ): Int {
-        // OG's `Influence` leader waives the re-equipping surcharge -- advertised to the player and
-        // backed by no rule anywhere until 2026-08-18 (`docs/og-fidelity-plan.md` A.4). It applies
-        // only to the CHANGED-equipment branches, because the same-id branches never charged the
-        // surcharge in the first place.
-        val penalty =
-            if (Leaders.unitHasLeader(unit, LeaderType.INFLUENCE)) INFLUENCE_UPGRADE_PENALTY else UPGRADE_PENALTY
+        // OG's `Influence` halves the whole bill, surcharge included ([influenced]).
+        val penalty = UPGRADE_PENALTY
         val newUnitCost =
             if (newEqid > 0) {
                 if (unit.eqid == newEqid) {
@@ -88,7 +85,7 @@ object CostCalculator {
             } else {
                 calculateUnitCosts(unit.eqid, -1)
             }
-        return (newUnitCost + newTransportCost - oldCost) shr 0
+        return influenced(unit, (newUnitCost + newTransportCost - oldCost) shr 0)
     }
 
     /** Prestige cost of a single strength point of [unit]'s equipment. */
@@ -112,11 +109,14 @@ object CostCalculator {
     ): Int {
         val penalty = if (overStrength) OVERSTRENGTH_PENALTY else 1.0
         val standard = kotlin.math.round(calculateUnitCostPerStrength(unit) * penalty).toInt()
-        return EliteReplacements.priced(standard)
+        return influenced(unit, EliteReplacements.priced(standard))
     }
 
     /** Prestige refunded when disbanding/selling [unit] at its current strength. */
     fun calculateUnitSellCost(unit: GameUnit): Int {
+        // A formation this battle LENT the player was never paid for, so parting with it refunds
+        // nothing -- otherwise disbanding a scenario's auxiliaries would turn them into prestige.
+        if (unit.isTemporaryBorrowed) return 0
         val transportEqid = unit.transport?.eqid ?: -1
         return (calculateUnitCosts(unit.eqid, transportEqid) / UPGRADE_PENALTY / FULL_STRENGTH * unit.strength).toInt()
     }

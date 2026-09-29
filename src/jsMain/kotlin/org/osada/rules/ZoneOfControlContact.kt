@@ -10,9 +10,11 @@ import org.osada.model.Hex
  *
  * **Known versus discovered.** The overlay and the route are built only from enemies the mover's
  * side can actually SEE (their hex is spotted, or they revealed themselves by firing), so a hidden
- * unit's position is never read off the highlighting. The walk then stops, without combat, on the
- * first hex where any enemy's zone applies -- a newly discovered contact is a legitimate
- * interruption. OG's manual (6.13, 6.13.1) states exactly this: *"Movement could end before
+ * unit's position is never read off the highlighting. The walk then stops on the first hex where
+ * any enemy's zone applies -- a newly discovered contact is a legitimate interruption. Without
+ * combat when the enemy is beside the route; when it stands ON the route further on, the stop is
+ * a surprise and the existing surprise combat follows
+ * (`MoveReactions.stoppedByZoneOfControl`). OG's manual (6.13, 6.13.1) states exactly this: *"Movement could end before
  * reaching the destination if the unit moves adjacent to or is surprised by a previously hidden
  * enemy unit."*
  *

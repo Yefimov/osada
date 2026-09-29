@@ -711,6 +711,12 @@ try {
       height,
       leftError: Math.round(Math.abs(game.scrollLeft - expectedLeft)),
       topError: Math.round(Math.abs(game.scrollTop - expectedTop)),
+      // One minimap pixel's worth of map: a tap lands on a whole pixel, so that is the resolution
+      // the minimap can resolve. Fixed at 3 while the drawer minimap was ~337px wide; since the
+      // phone puts the zoom/transport controls beside it (2026-09-29) it is ~190px, and a
+      // half-pixel tap offset is ~6 map pixels.
+      leftTolerance: Math.max(3, Math.ceil(source.width * zoom / width)),
+      topTolerance: Math.max(3, Math.ceil(source.height * zoom / height)),
     };
     document.getElementById('osadaDrawerClose').click();
     return result;
@@ -728,7 +734,8 @@ try {
     JSON.stringify(drawer.log));
   ok('drawer does not shift the map', drawer.before.l === drawer.after.l && drawer.before.t === drawer.after.t);
   ok('rendered minimap centre maps to the map centre',
-    drawer.minimapCentre.leftError <= 3 && drawer.minimapCentre.topError <= 3,
+    drawer.minimapCentre.leftError <= drawer.minimapCentre.leftTolerance &&
+      drawer.minimapCentre.topError <= drawer.minimapCentre.topTolerance,
     JSON.stringify(drawer.minimapCentre));
   ok('drawer closes again', drawer.open === false);
 

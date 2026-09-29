@@ -215,7 +215,7 @@
   <hex row="0" col="30" terrain="14" name="COUNTRYSIDE"/>
   <hex row="0" col="31" terrain="16"/>
   <hex row="0" col="32" terrain="14" name="COUNTRYSIDE"/>
-  <hex row="0" col="33" name="Kursk-Orel Railway"/>
+  <hex row="0" col="33" name="Kursk-Orel Railway" rail="17"/>
   <hex row="0" col="34" terrain="14" name="FOREST"/>
   <hex row="0" col="35" terrain="3"/>
   <hex row="0" col="36" terrain="14" name="FOREST"/>
@@ -261,7 +261,7 @@
   <hex row="1" col="30" terrain="16"/>
   <hex row="1" col="31" terrain="16"/>
   <hex row="1" col="32" terrain="16"/>
-  <hex row="1" col="33" name="Kursk-Orel Railway"/>
+  <hex row="1" col="33" name="Kursk-Orel Railway" rail="17"/>
   <hex row="1" col="34" terrain="16"/>
   <hex row="1" col="35" terrain="5"/>
   <hex row="1" col="36" terrain="16"/>
@@ -305,7 +305,7 @@
   <hex row="2" col="30" terrain="16"/>
   <hex row="2" col="31" terrain="16"/>
   <hex row="2" col="32" terrain="16"/>
-  <hex row="2" col="33" name="Kursk-Orel Railway"/>
+  <hex row="2" col="33" name="Kursk-Orel Railway" rail="17"/>
   <hex row="2" col="34" terrain="16"/>
   <hex row="2" col="35" terrain="5"/>
   <hex row="2" col="36" terrain="5"/>
@@ -349,7 +349,7 @@
   <hex row="3" col="30" terrain="16"/>
   <hex row="3" col="31" terrain="16"/>
   <hex row="3" col="32" terrain="16"/>
-  <hex row="3" col="33" name="Kursk-Orel Railway"/>
+  <hex row="3" col="33" name="Kursk-Orel Railway" rail="17"/>
   <hex row="3" col="34" terrain="16"/>
   <hex row="3" col="35" terrain="3"/>
   <hex row="3" col="36" terrain="5"/>
@@ -393,7 +393,7 @@
   <hex row="4" col="30" terrain="16"/>
   <hex row="4" col="31" terrain="16"/>
   <hex row="4" col="32" terrain="16"/>
-  <hex row="4" col="33" name="Kursk-Orel Railway"/>
+  <hex row="4" col="33" name="Kursk-Orel Railway" rail="33"/>
   <hex row="4" col="34" terrain="3"/>
   <hex row="4" col="35" terrain="6" name="HILL"/>
   <hex row="4" col="36" terrain="5"/>
@@ -438,7 +438,7 @@
   <hex row="5" col="29" terrain="16"/>
   <hex row="5" col="30" terrain="1" name="RUBBLE"/>
   <hex row="5" col="31" terrain="16"/>
-  <hex row="5" col="32" name="Kursk-Orel Railway"/>
+  <hex row="5" col="32" name="Kursk-Orel Railway" rail="18"/>
   <hex row="5" col="33" terrain="3"/>
   <hex row="5" col="34" terrain="3"/>
   <hex row="5" col="35" terrain="3"/>
@@ -488,7 +488,7 @@
   <hex row="6" col="29" terrain="16"/>
   <hex row="6" col="30" terrain="16"/>
   <hex row="6" col="31" terrain="16"/>
-  <hex row="6" col="32" name="Kursk-Orel Railway"/>
+  <hex row="6" col="32" name="Kursk-Orel Railway" rail="17"/>
   <hex row="6" col="33" terrain="16"/>
   <hex row="6" col="34" terrain="3"/>
   <hex row="6" col="35" terrain="16"/>
@@ -532,7 +532,7 @@
   <hex row="7" col="29" terrain="16"/>
   <hex row="7" col="30" terrain="16"/>
   <hex row="7" col="31" terrain="16"/>
-  <hex row="7" col="32" name="Kursk-Orel Railway"/>
+  <hex row="7" col="32" name="Kursk-Orel Railway" rail="17"/>
   <hex row="7" col="33" terrain="16"/>
   <hex row="7" col="34" terrain="16">
     <unit id="8293" owner="1" flag="8" face="0" exp="44" str="7" bstr="3"/>
@@ -582,7 +582,7 @@
   <hex row="8" col="29" terrain="16"/>
   <hex row="8" col="30" terrain="16"/>
   <hex row="8" col="31" terrain="16"/>
-  <hex row="8" col="32" name="Kursk-Orel Railway"/>
+  <hex row="8" col="32" name="Kursk-Orel Railway" rail="17"/>
   <hex row="8" col="33" terrain="16"/>
   <hex row="8" col="34" terrain="16"/>
   <hex row="8" col="35" terrain="6" name="HILL"/>
@@ -628,7 +628,7 @@
   <hex row="9" col="29" terrain="8"/>
   <hex row="9" col="30" terrain="16"/>
   <hex row="9" col="31" terrain="3"/>
-  <hex row="9" col="32" name="Kursk-Orel Railway"/>
+  <hex row="9" col="32" name="Kursk-Orel Railway" rail="17"/>
   <hex row="9" col="33" terrain="3"/>
   <hex row="9" col="34" terrain="16"/>
   <hex row="9" col="35" terrain="6" name="HILL"/>
@@ -678,8 +678,8 @@
   <hex row="10" col="29" terrain="3"/>
   <hex row="10" col="30" terrain="3"/>
   <hex row="10" col="31" terrain="3"/>
-  <hex row="10" col="32" name="Kursk-Orel Railway"/>
-  <hex row="10" col="33" name="Kursk-Orel Railway"/>
+  <hex row="10" col="32" name="Kursk-Orel Railway" rail="9"/>
+  <hex row="10" col="33" name="Kursk-Orel Railway" rail="136"/>
   <hex row="10" col="34" terrain="3"/>
   <hex row="10" col="35" terrain="6" name="HILL"/>
   <hex row="10" col="36" terrain="16"/>
@@ -732,7 +732,7 @@
     <unit id="11" owner="1" flag="8" face="0" exp="225" str="7" bstr="1"/>
   </hex>
   <hex row="11" col="33" road="40"/>
-  <hex row="11" col="34" name="Kursk-Orel Railway">
+  <hex row="11" col="34" name="Kursk-Orel Railway" rail="144">
     <unit id="8209" owner="1" flag="8" face="0" exp="69" str="8" bstr="4" ammo="7"/>
   </hex>
   <hex row="11" col="35" terrain="3"/>
@@ -782,7 +782,7 @@
   <hex row="12" col="31" terrain="3"/>
   <hex row="12" col="32" road="130"/>
   <hex row="12" col="33" terrain="16"/>
-  <hex row="12" col="34" road="136" name="Kursk-Orel Railway"/>
+  <hex row="12" col="34" road="136" name="Kursk-Orel Railway" rail="17"/>
   <hex row="12" col="35" road="136"/>
   <hex row="12" col="36" terrain="16"/>
   <hex row="12" col="37" terrain="1" road="32" name="Marloarkhangelsk">
@@ -834,7 +834,7 @@
   <hex row="13" col="31" terrain="6" name="HILL"/>
   <hex row="13" col="32" terrain="3"/>
   <hex row="13" col="33" terrain="16" road="32"/>
-  <hex row="13" col="34" name="Kursk-Orel Railway"/>
+  <hex row="13" col="34" name="Kursk-Orel Railway" rail="17"/>
   <hex row="13" col="35" road="34"/>
   <hex row="13" col="36" road="162"/>
   <hex row="13" col="37" terrain="16"/>
@@ -882,7 +882,7 @@
   <hex row="14" col="31" terrain="10" name="Brusavets River"/>
   <hex row="14" col="32" terrain="8"/>
   <hex row="14" col="33" terrain="3"/>
-  <hex row="14" col="34" name="Kursk-Orel Railway"/>
+  <hex row="14" col="34" name="Kursk-Orel Railway" rail="17"/>
   <hex row="14" col="35" terrain="16"/>
   <hex row="14" col="36" terrain="16"/>
   <hex row="14" col="37" terrain="6" name="HILL"/>
@@ -927,8 +927,8 @@
   <hex row="15" col="30" terrain="10" name="Brusavets River"/>
   <hex row="15" col="31" terrain="3"/>
   <hex row="15" col="32" terrain="3"/>
-  <hex row="15" col="33" name="Kursk-Orel Railway"/>
-  <hex row="15" col="34" name="Kursk-Orel Railway"/>
+  <hex row="15" col="33" name="Kursk-Orel Railway" rail="18"/>
+  <hex row="15" col="34" name="Kursk-Orel Railway" rail="33"/>
   <hex row="15" col="35" terrain="16"/>
   <hex row="15" col="36" terrain="6" name="HILL"/>
   <hex row="15" col="37" terrain="16">
@@ -977,7 +977,7 @@
   <hex row="16" col="30" road="136"/>
   <hex row="16" col="31" terrain="1" road="130" name="Ponyri-Pervyje"/>
   <hex row="16" col="32" terrain="1" road="40" name="Ponyri-Pervyje"/>
-  <hex row="16" col="33" name="Kursk-Orel Railway"/>
+  <hex row="16" col="33" name="Kursk-Orel Railway" rail="33"/>
   <hex row="16" col="35" terrain="6" name="HILL"/>
   <hex row="16" col="36" terrain="6" name="HILL"/>
   <hex row="16" col="37" terrain="6" name="HILL"/>
@@ -1025,7 +1025,7 @@
   </hex>
   <hex row="17" col="30" terrain="1" name="Ponyri-Pervyje"/>
   <hex row="17" col="31" terrain="1" name="Ponyri-Pervyje"/>
-  <hex row="17" col="32" name="Kursk-Orel Railway"/>
+  <hex row="17" col="32" name="Kursk-Orel Railway" rail="34"/>
   <hex row="17" col="33" road="17"/>
   <hex row="17" col="34" terrain="16"/>
   <hex row="17" col="35" terrain="16">
@@ -1176,7 +1176,7 @@
   <hex row="20" col="26" terrain="10" name="Brusavets River"/>
   <hex row="20" col="27" road="34"/>
   <hex row="20" col="28" terrain="1" name="Ponyri-Pervyje"/>
-  <hex row="20" col="29" name="Kursk-Orel Railway"/>
+  <hex row="20" col="29" name="Kursk-Orel Railway" rail="33"/>
   <hex row="20" col="30" terrain="16"/>
   <hex row="20" col="31" terrain="16"/>
   <hex row="20" col="32" terrain="3"/>
@@ -1227,7 +1227,7 @@
   <hex row="21" col="25" road="34"/>
   <hex row="21" col="26" road="34"/>
   <hex row="21" col="27" terrain="16"/>
-  <hex row="21" col="28" name="Kursk-Orel Railway"/>
+  <hex row="21" col="28" name="Kursk-Orel Railway" rail="18"/>
   <hex row="21" col="29" terrain="16"/>
   <hex row="21" col="30" terrain="16"/>
   <hex row="21" col="31" terrain="5" road="18"/>
@@ -1278,8 +1278,8 @@
   <hex row="22" col="24" terrain="10" road="34" name="Brusavets River"/>
   <hex row="22" col="25" terrain="10" name="Brusavets River"/>
   <hex row="22" col="26" terrain="16"/>
-  <hex row="22" col="27" name="Kursk-Orel Railway"/>
-  <hex row="22" col="28" name="Kursk-Orel Railway"/>
+  <hex row="22" col="27" name="Kursk-Orel Railway" rail="34"/>
+  <hex row="22" col="28" name="Kursk-Orel Railway" rail="33"/>
   <hex row="22" col="29" terrain="8"/>
   <hex row="22" col="30" terrain="5"/>
   <hex row="22" col="31" terrain="5" road="17"/>
@@ -1321,7 +1321,7 @@
   <hex row="23" col="23" road="33"/>
   <hex row="23" col="24" terrain="10" name="Brusavets River"/>
   <hex row="23" col="25" terrain="16"/>
-  <hex row="23" col="26" name="Kursk-Orel Railway"/>
+  <hex row="23" col="26" name="Kursk-Orel Railway" rail="18"/>
   <hex row="23" col="27" terrain="16"/>
   <hex row="23" col="28" terrain="16"/>
   <hex row="23" col="29" terrain="16"/>
@@ -1367,7 +1367,7 @@
   <hex row="24" col="23" terrain="5"/>
   <hex row="24" col="24" terrain="10" name="Brusavets River"/>
   <hex row="24" col="25" terrain="16"/>
-  <hex row="24" col="26" name="Kursk-Orel Railway"/>
+  <hex row="24" col="26" name="Kursk-Orel Railway" rail="17"/>
   <hex row="24" col="27" terrain="16"/>
   <hex row="24" col="28" terrain="16"/>
   <hex row="24" col="29" road="10">
@@ -1415,7 +1415,7 @@
   <hex row="25" col="23" terrain="10" name="Brusavets River"/>
   <hex row="25" col="24" terrain="10" name="Brusavets River"/>
   <hex row="25" col="25" terrain="16"/>
-  <hex row="25" col="26" name="Kursk-Orel Railway"/>
+  <hex row="25" col="26" name="Kursk-Orel Railway" rail="17"/>
   <hex row="25" col="27" terrain="16"/>
   <hex row="25" col="28" terrain="16"/>
   <hex row="25" col="29" terrain="16"/>
@@ -1463,7 +1463,7 @@
   <hex row="26" col="23" terrain="16"/>
   <hex row="26" col="24" terrain="10" name="Brusavets River"/>
   <hex row="26" col="25" terrain="16"/>
-  <hex row="26" col="26" name="Kursk-Orel Railway"/>
+  <hex row="26" col="26" name="Kursk-Orel Railway" rail="17"/>
   <hex row="26" col="27" terrain="16"/>
   <hex row="26" col="28" terrain="16"/>
   <hex row="26" col="29" terrain="16" deploy="0"/>
@@ -1509,7 +1509,7 @@
   <hex row="27" col="23" terrain="10" name="Brusavets River"/>
   <hex row="27" col="24" terrain="10" name="Brusavets River"/>
   <hex row="27" col="25" terrain="16"/>
-  <hex row="27" col="26" name="Kursk-Orel Railway"/>
+  <hex row="27" col="26" name="Kursk-Orel Railway" rail="17"/>
   <hex row="27" col="27" terrain="16"/>
   <hex row="27" col="28" terrain="16"/>
   <hex row="27" col="29" terrain="16"/>
@@ -1557,7 +1557,7 @@
   <hex row="28" col="23" terrain="10" name="Brusavets River"/>
   <hex row="28" col="24" terrain="16"/>
   <hex row="28" col="25" terrain="16"/>
-  <hex row="28" col="26" name="Kursk-Orel Railway"/>
+  <hex row="28" col="26" name="Kursk-Orel Railway" rail="17"/>
   <hex row="28" col="27" terrain="16"/>
   <hex row="28" col="28" terrain="16"/>
   <hex row="28" col="29" terrain="16"/>
@@ -1603,7 +1603,7 @@
   <hex row="29" col="23" terrain="16"/>
   <hex row="29" col="24" terrain="3"/>
   <hex row="29" col="25" terrain="3"/>
-  <hex row="29" col="26" name="Kursk-Orel Railway"/>
+  <hex row="29" col="26" name="Kursk-Orel Railway" rail="17"/>
   <hex row="29" col="27" terrain="16"/>
   <hex row="29" col="28" terrain="16"/>
   <hex row="29" col="29" terrain="16"/>
@@ -1651,7 +1651,7 @@
   <hex row="30" col="23" terrain="16"/>
   <hex row="30" col="24" terrain="16"/>
   <hex row="30" col="25" terrain="16"/>
-  <hex row="30" col="26" name="Kursk-Orel Railway"/>
+  <hex row="30" col="26" name="Kursk-Orel Railway" rail="17"/>
   <hex row="30" col="27" terrain="3"/>
   <hex row="30" col="28" terrain="3"/>
   <hex row="30" col="29" terrain="3"/>
@@ -1695,7 +1695,7 @@
   <hex row="31" col="23" terrain="10" name="Brusavets River"/>
   <hex row="31" col="24" terrain="16"/>
   <hex row="31" col="25" terrain="16"/>
-  <hex row="31" col="26" name="Kursk-Orel Railway"/>
+  <hex row="31" col="26" name="Kursk-Orel Railway" rail="17"/>
   <hex row="31" col="27" terrain="3"/>
   <hex row="31" col="28" terrain="3"/>
   <hex row="31" col="29" terrain="3"/>
@@ -1741,7 +1741,7 @@
   <hex row="32" col="23" terrain="10" name="Brusavets River"/>
   <hex row="32" col="24" terrain="16"/>
   <hex row="32" col="25" terrain="16"/>
-  <hex row="32" col="26" name="Kursk-Orel Railway"/>
+  <hex row="32" col="26" name="Kursk-Orel Railway" rail="17"/>
   <hex row="32" col="27" terrain="16"/>
   <hex row="32" col="28" terrain="3"/>
   <hex row="32" col="29" terrain="3"/>
@@ -1785,7 +1785,7 @@
   <hex row="33" col="23" terrain="16"/>
   <hex row="33" col="24" terrain="10" name="Brusavets River"/>
   <hex row="33" col="25" terrain="10" name="Brusavets River"/>
-  <hex row="33" col="26" name="Kursk-Orel Railway"/>
+  <hex row="33" col="26" name="Kursk-Orel Railway" rail="17"/>
   <hex row="33" col="27" terrain="16"/>
   <hex row="33" col="28" terrain="16"/>
   <hex row="33" col="29" terrain="3"/>
@@ -1829,7 +1829,7 @@
   <hex row="34" col="23" terrain="16"/>
   <hex row="34" col="24" terrain="16"/>
   <hex row="34" col="25" terrain="10" name="Brusavets River"/>
-  <hex row="34" col="26" name="Kursk-Orel Railway"/>
+  <hex row="34" col="26" name="Kursk-Orel Railway" rail="17"/>
   <hex row="34" col="27" terrain="16"/>
   <hex row="34" col="28" terrain="16"/>
   <hex row="34" col="29" terrain="16"/>
@@ -1873,7 +1873,7 @@
   <hex row="35" col="23" terrain="10" name="Brusavets River"/>
   <hex row="35" col="24" terrain="10" name="Brusavets River"/>
   <hex row="35" col="25" terrain="16"/>
-  <hex row="35" col="26" name="Kursk-Orel Railway"/>
+  <hex row="35" col="26" name="Kursk-Orel Railway" rail="17"/>
   <hex row="35" col="27" terrain="16"/>
   <hex row="35" col="28" terrain="16"/>
   <hex row="35" col="29" terrain="16"/>
@@ -1917,7 +1917,7 @@
   <hex row="36" col="23" terrain="10" name="Brusavets River"/>
   <hex row="36" col="24" terrain="16"/>
   <hex row="36" col="25" terrain="16"/>
-  <hex row="36" col="26" name="Kursk-Orel Railway"/>
+  <hex row="36" col="26" name="Kursk-Orel Railway" rail="17"/>
   <hex row="36" col="27" terrain="16"/>
   <hex row="36" col="28" terrain="16"/>
   <hex row="36" col="29" terrain="16"/>
@@ -1961,7 +1961,7 @@
   <hex row="37" col="23" terrain="16"/>
   <hex row="37" col="24" terrain="16"/>
   <hex row="37" col="25" terrain="16"/>
-  <hex row="37" col="26" name="Kursk-Orel Railway"/>
+  <hex row="37" col="26" name="Kursk-Orel Railway" rail="17"/>
   <hex row="37" col="27" terrain="16"/>
   <hex row="37" col="28" terrain="16"/>
   <hex row="37" col="29" terrain="16"/>
@@ -2005,7 +2005,7 @@
   <hex row="38" col="23" terrain="14" name="COUNTRYSIDE"/>
   <hex row="38" col="24" terrain="16"/>
   <hex row="38" col="25" terrain="14" name="COUNTRYSIDE"/>
-  <hex row="38" col="26" name="Kursk-Orel Railway"/>
+  <hex row="38" col="26" name="Kursk-Orel Railway" rail="17"/>
   <hex row="38" col="27" terrain="14" name="COUNTRYSIDE"/>
   <hex row="38" col="28" terrain="16"/>
   <hex row="38" col="29" terrain="14" name="COUNTRYSIDE"/>

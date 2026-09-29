@@ -7,7 +7,8 @@
   <hex row="0" col="3" terrain="3"/>
   <hex row="0" col="4" terrain="3"/>
   <hex row="0" col="5" terrain="3"/>
-  <hex row="0" col="7" road="33"/>
+  <hex row="0" col="7" road="33" rail="10"/>
+  <hex row="0" col="8" rail="160"/>
   <hex row="0" col="10" terrain="15"/>
   <hex row="0" col="16" terrain="1" road="187"/>
   <hex row="0" col="17" terrain="10"/>
@@ -41,6 +42,8 @@
   <hex row="1" col="4" terrain="3"/>
   <hex row="1" col="5" terrain="1" road="187"/>
   <hex row="1" col="6" road="18"/>
+  <hex row="1" col="7" rail="10"/>
+  <hex row="1" col="8" rail="160"/>
   <hex row="1" col="10" terrain="10"/>
   <hex row="1" col="13" terrain="1" road="187" name="St. Louis"/>
   <hex row="1" col="15" terrain="1" road="187" name="St. Louis"/>
@@ -69,7 +72,7 @@
   <hex row="1" col="38" terrain="3"/>
   <hex row="1" col="39" terrain="1" road="187" name="St. Louis"/>
   <hex row="1" col="40" terrain="1" road="187" name="St. Louis"/>
-  <hex row="1" col="41" road="162"/>
+  <hex row="1" col="41" road="162" rail="40"/>
   <hex row="1" col="42" road="40"/>
   <hex row="2" col="0" terrain="3"/>
   <hex row="2" col="1" terrain="3"/>
@@ -80,7 +83,8 @@
     <unit id="45958" owner="0" flag="163" face="0" exp="140" str="3" ldr="1" bstr="3" msu="1"/>
   </hex>
   <hex row="2" col="6" road="161"/>
-  <hex row="2" col="7" road="40"/>
+  <hex row="2" col="7" road="40" rail="10"/>
+  <hex row="2" col="8" rail="160"/>
   <hex row="2" col="9" road="40"/>
   <hex row="2" col="10" terrain="10"/>
   <hex row="2" col="11" terrain="1" road="187" name="St. Louis"/>
@@ -109,20 +113,22 @@
   <hex row="2" col="32" terrain="1" road="187" name="St. Louis"/>
   <hex row="2" col="33" terrain="1" road="187" name="St. Louis"/>
   <hex row="2" col="34" terrain="1" road="187" name="St. Louis"/>
-  <hex row="2" col="35" terrain="1" road="187" name="St. Louis"/>
-  <hex row="2" col="36" terrain="1" road="187" name="St. Louis"/>
-  <hex row="2" col="37" road="40"/>
-  <hex row="2" col="38" road="130"/>
-  <hex row="2" col="40" terrain="1" road="187" name="St. Louis"/>
+  <hex row="2" col="35" terrain="1" road="187" name="St. Louis" rail="138"/>
+  <hex row="2" col="36" terrain="1" road="187" name="St. Louis" rail="40"/>
+  <hex row="2" col="37" road="40" rail="130"/>
+  <hex row="2" col="38" road="130" rail="40"/>
+  <hex row="2" col="39" rail="130"/>
+  <hex row="2" col="40" terrain="1" road="187" name="St. Louis" rail="34"/>
   <hex row="2" col="41" terrain="3"/>
-  <hex row="2" col="42" terrain="3"/>
+  <hex row="2" col="42" terrain="3" rail="130"/>
   <hex row="3" col="0" terrain="3"/>
   <hex row="3" col="1" terrain="3"/>
   <hex row="3" col="2" terrain="3"/>
   <hex row="3" col="3" terrain="3"/>
   <hex row="3" col="5" road="17"/>
   <hex row="3" col="6" road="130"/>
-  <hex row="3" col="8" road="130"/>
+  <hex row="3" col="7" rail="18"/>
+  <hex row="3" col="8" road="130" rail="160"/>
   <hex row="3" col="10" terrain="10" road="130"/>
   <hex row="3" col="12" terrain="1" road="187" name="St. Louis"/>
   <hex row="3" col="13" terrain="1" road="187" name="St. Louis"/>
@@ -147,7 +153,8 @@
   <hex row="3" col="33" terrain="1" road="187" name="St. Louis"/>
   <hex row="3" col="34" terrain="1" road="187" name="St. Louis"/>
   <hex row="3" col="35" terrain="1" road="187" name="St. Louis"/>
-  <hex row="3" col="36" terrain="1" road="187" name="St. Louis"/>
+  <hex row="3" col="36" terrain="1" road="187" name="St. Louis" rail="136"/>
+  <hex row="3" col="37" rail="136"/>
   <hex row="3" col="38" road="136"/>
   <hex row="3" col="39" road="136"/>
   <hex row="3" col="41" terrain="3"/>
@@ -158,6 +165,7 @@
   <hex row="4" col="3" terrain="3"/>
   <hex row="4" col="4" terrain="3"/>
   <hex row="4" col="5" road="33"/>
+  <hex row="4" col="7" rail="33"/>
   <hex row="4" col="10" terrain="10"/>
   <hex row="4" col="15" terrain="10"/>
   <hex row="4" col="16" terrain="1" road="187"/>
@@ -180,12 +188,15 @@
   <hex row="4" col="33" terrain="1" road="187" name="St. Louis"/>
   <hex row="4" col="34" terrain="1" road="187" name="St. Louis"/>
   <hex row="4" col="35" terrain="1" road="187" name="St. Louis"/>
+  <hex row="4" col="38" rail="136"/>
+  <hex row="4" col="39" rail="144"/>
   <hex row="4" col="40" road="144"/>
   <hex row="5" col="0" terrain="3"/>
   <hex row="5" col="1" terrain="3"/>
   <hex row="5" col="2" terrain="3"/>
   <hex row="5" col="4" road="18"/>
-  <hex row="5" col="5" road="40"/>
+  <hex row="5" col="5" road="40" rail="34"/>
+  <hex row="5" col="6" rail="34"/>
   <hex row="5" col="10" terrain="10"/>
   <hex row="5" col="11" terrain="10"/>
   <hex row="5" col="14" terrain="10"/>
@@ -194,11 +205,11 @@
   <hex row="5" col="20" terrain="1" road="187" name="St. Louis"/>
   <hex row="5" col="23" terrain="1" road="187" name="St. Louis"/>
   <hex row="5" col="24" terrain="1" road="187" name="St. Louis"/>
-  <hex row="5" col="25" terrain="1" road="187" name="St. Louis"/>
-  <hex row="5" col="26" terrain="1" road="187" name="St. Louis"/>
-  <hex row="5" col="27" terrain="1" road="187" name="St. Louis"/>
+  <hex row="5" col="25" terrain="1" road="187" name="St. Louis" rail="34"/>
+  <hex row="5" col="26" terrain="1" road="187" name="St. Louis" rail="41"/>
+  <hex row="5" col="27" terrain="1" road="187" name="St. Louis" rail="144"/>
   <hex row="5" col="28" terrain="10" road="170" name="Meramec"/>
-  <hex row="5" col="29" terrain="1" road="187" name="St. Louis"/>
+  <hex row="5" col="29" terrain="1" road="187" name="St. Louis" rail="9"/>
   <hex row="5" col="30" terrain="1" road="187" name="St. Louis"/>
   <hex row="5" col="31" terrain="1" road="187" name="St. Louis"/>
   <hex row="5" col="32" terrain="10" name="Mississippi"/>
@@ -206,83 +217,106 @@
   <hex row="5" col="34" terrain="1" road="187" name="St. Louis"/>
   <hex row="5" col="36" road="144"/>
   <hex row="5" col="37" terrain="1" road="187"/>
+  <hex row="5" col="39" rail="17"/>
   <hex row="5" col="40" road="17"/>
   <hex row="6" col="0" terrain="3"/>
   <hex row="6" col="1" terrain="3"/>
   <hex row="6" col="2" terrain="3"/>
-  <hex row="6" col="4" terrain="1" road="187"/>
+  <hex row="6" col="4" terrain="1" road="187" rail="18"/>
   <hex row="6" col="6" road="144"/>
   <hex row="6" col="7" road="34"/>
-  <hex row="6" col="8" terrain="1" road="187"/>
-  <hex row="6" col="9" road="136"/>
+  <hex row="6" col="8" terrain="1" road="187" rail="24"/>
+  <hex row="6" col="9" road="136" rail="136"/>
   <hex row="6" col="11" terrain="10"/>
   <hex row="6" col="12" terrain="10"/>
   <hex row="6" col="13" terrain="10"/>
   <hex row="6" col="14" terrain="10"/>
   <hex row="6" col="17" terrain="1" road="187" name="St. Louis"/>
   <hex row="6" col="18" road="168"/>
-  <hex row="6" col="19" terrain="1" road="187" name="St. Louis"/>
-  <hex row="6" col="24" terrain="1" road="187" name="St. Louis"/>
+  <hex row="6" col="19" terrain="1" road="187" name="St. Louis" rail="40"/>
+  <hex row="6" col="21" rail="40"/>
+  <hex row="6" col="23" rail="34"/>
+  <hex row="6" col="24" terrain="1" road="187" name="St. Louis" rail="34"/>
   <hex row="6" col="26" terrain="1" road="187" name="St. Louis"/>
+  <hex row="6" col="27" rail="17"/>
   <hex row="6" col="28" terrain="10" name="Meramec"/>
   <hex row="6" col="29" terrain="1" road="187" name="St. Louis"/>
-  <hex row="6" col="30" terrain="1" road="187" name="St. Louis"/>
+  <hex row="6" col="30" terrain="1" road="187" name="St. Louis" rail="144"/>
   <hex row="6" col="31" road="147"/>
   <hex row="6" col="32" terrain="1" road="187" name="St. Louis"/>
   <hex row="6" col="34" terrain="10" name="Mississippi"/>
   <hex row="6" col="35" terrain="10" name="Mississippi"/>
   <hex row="6" col="36" terrain="1" road="187"/>
   <hex row="6" col="37" terrain="1" road="187"/>
-  <hex row="6" col="39" terrain="10"/>
+  <hex row="6" col="39" terrain="10" rail="17"/>
   <hex row="6" col="40" road="17"/>
   <hex row="7" col="0" terrain="3"/>
   <hex row="7" col="1" terrain="3"/>
   <hex row="7" col="2" terrain="3"/>
   <hex row="7" col="3" terrain="3"/>
+  <hex row="7" col="4" rail="17"/>
   <hex row="7" col="6" road="19"/>
+  <hex row="7" col="7" rail="34"/>
+  <hex row="7" col="8" rail="33"/>
   <hex row="7" col="9" terrain="3"/>
-  <hex row="7" col="10" road="144"/>
-  <hex row="7" col="11" road="48"/>
+  <hex row="7" col="10" road="144" rail="136"/>
+  <hex row="7" col="11" road="48" rail="136"/>
   <hex row="7" col="12" terrain="10"/>
+  <hex row="7" col="13" rail="40"/>
+  <hex row="7" col="15" rail="40"/>
+  <hex row="7" col="17" rail="34"/>
+  <hex row="7" col="18" rail="34"/>
   <hex row="7" col="19" terrain="1" road="187" name="St. Louis"/>
+  <hex row="7" col="20" rail="130"/>
+  <hex row="7" col="22" rail="130"/>
   <hex row="7" col="23" road="50"/>
   <hex row="7" col="24" terrain="1" road="187" name="St. Louis"/>
   <hex row="7" col="25" terrain="1" road="187" name="St. Louis"/>
+  <hex row="7" col="27" rail="33"/>
   <hex row="7" col="28" terrain="10" name="Meramec"/>
   <hex row="7" col="29" road="17"/>
-  <hex row="7" col="31" road="3"/>
+  <hex row="7" col="30" rail="9"/>
+  <hex row="7" col="31" road="3" rail="136"/>
   <hex row="7" col="32" road="48"/>
   <hex row="7" col="36" terrain="10" name="Mississippi"/>
   <hex row="7" col="37" terrain="10" name="Mississippi"/>
   <hex row="7" col="38" terrain="10"/>
+  <hex row="7" col="39" rail="17"/>
   <hex row="7" col="40" terrain="10" road="17"/>
   <hex row="7" col="41" terrain="10"/>
   <hex row="7" col="42" terrain="10"/>
   <hex row="8" col="0" terrain="3"/>
   <hex row="8" col="1" terrain="3"/>
   <hex row="8" col="2" terrain="3"/>
-  <hex row="8" col="5" road="18"/>
-  <hex row="8" col="6" road="33"/>
+  <hex row="8" col="4" rail="17"/>
+  <hex row="8" col="5" road="18" rail="34"/>
+  <hex row="8" col="6" road="33" rail="34"/>
   <hex row="8" col="7" terrain="3"/>
   <hex row="8" col="8" terrain="3"/>
   <hex row="8" col="9" terrain="3"/>
   <hex row="8" col="10" road="3"/>
   <hex row="8" col="11" road="9"/>
+  <hex row="8" col="12" rail="130"/>
+  <hex row="8" col="14" rail="130"/>
+  <hex row="8" col="16" rail="130"/>
   <hex row="8" col="19" road="33"/>
   <hex row="8" col="21" road="24"/>
   <hex row="8" col="22" road="26"/>
   <hex row="8" col="23" terrain="1" road="187" name="St. Louis"/>
   <hex row="8" col="24" terrain="1" road="187" name="St. Louis"/>
+  <hex row="8" col="25" rail="18"/>
+  <hex row="8" col="26" rail="34"/>
   <hex row="8" col="28" terrain="10" name="Meramec"/>
   <hex row="8" col="29" road="17"/>
-  <hex row="8" col="32" road="9"/>
-  <hex row="8" col="33" terrain="1" road="187"/>
+  <hex row="8" col="32" road="9" rail="136"/>
+  <hex row="8" col="33" terrain="1" road="187" rail="136"/>
   <hex row="8" col="37" terrain="10" name="Mississippi"/>
+  <hex row="8" col="39" rail="17"/>
   <hex row="8" col="40" road="17"/>
   <hex row="9" col="0" terrain="3"/>
   <hex row="9" col="1" terrain="3"/>
-  <hex row="9" col="3" road="24"/>
-  <hex row="9" col="4" road="24"/>
+  <hex row="9" col="3" road="24" rail="34"/>
+  <hex row="9" col="4" road="24" rail="35"/>
   <hex row="9" col="5" road="129"/>
   <hex row="9" col="7" terrain="3"/>
   <hex row="9" col="8" terrain="3"/>
@@ -295,6 +329,7 @@
   <hex row="9" col="20" road="24"/>
   <hex row="9" col="21" road="129"/>
   <hex row="9" col="22" road="129"/>
+  <hex row="9" col="25" rail="17"/>
   <hex row="9" col="27" terrain="10" name="Meramec"/>
   <hex row="9" col="28" terrain="10" name="Meramec"/>
   <hex row="9" col="29" road="17"/>
@@ -302,12 +337,13 @@
     <unit id="44786" owner="1" flag="151" face="0" exp="30"/>
   </hex>
   <hex row="9" col="33" terrain="1" road="187"/>
-  <hex row="9" col="34" terrain="1" road="187"/>
+  <hex row="9" col="34" terrain="1" road="187" rail="144"/>
   <hex row="9" col="37" terrain="10" name="Mississippi"/>
+  <hex row="9" col="39" rail="17"/>
   <hex row="9" col="40" road="17"/>
   <hex row="10" col="0" terrain="3"/>
-  <hex row="10" col="1" road="24"/>
-  <hex row="10" col="2" road="24"/>
+  <hex row="10" col="1" road="24" rail="34"/>
+  <hex row="10" col="2" road="24" rail="34"/>
   <hex row="10" col="3" road="129"/>
   <hex row="10" col="4" road="129"/>
   <hex row="10" col="5" terrain="3"/>
@@ -324,15 +360,16 @@
   <hex row="10" col="19" terrain="1" road="187"/>
   <hex row="10" col="20" road="33"/>
   <hex row="10" col="23" road="24"/>
-  <hex row="10" col="25" terrain="1" road="187"/>
+  <hex row="10" col="25" terrain="1" road="187" rail="33"/>
   <hex row="10" col="27" terrain="10" name="Meramec"/>
   <hex row="10" col="29" road="9"/>
   <hex row="10" col="33" road="10"/>
-  <hex row="10" col="34" road="160"/>
+  <hex row="10" col="34" road="160" rail="9"/>
+  <hex row="10" col="35" rail="144"/>
   <hex row="10" col="37" terrain="10" name="Mississippi"/>
-  <hex row="10" col="39" terrain="1" road="187"/>
+  <hex row="10" col="39" terrain="1" road="187" rail="9"/>
   <hex row="10" col="40" terrain="1" road="187"/>
-  <hex row="11" col="0" road="8"/>
+  <hex row="11" col="0" road="8" rail="2"/>
   <hex row="11" col="1" road="129"/>
   <hex row="11" col="2" road="129"/>
   <hex row="11" col="3" terrain="3"/>
@@ -353,14 +390,16 @@
   <hex row="11" col="21" terrain="1" road="187"/>
   <hex row="11" col="22" road="40"/>
   <hex row="11" col="23" road="129"/>
-  <hex row="11" col="24" road="130"/>
+  <hex row="11" col="24" road="130" rail="18"/>
   <hex row="11" col="25" terrain="10" name="Meramec"/>
   <hex row="11" col="26" terrain="10" name="Meramec"/>
   <hex row="11" col="29" road="10"/>
   <hex row="11" col="30" road="160"/>
   <hex row="11" col="34" road="144"/>
+  <hex row="11" col="35" rail="17"/>
   <hex row="11" col="37" terrain="10" name="Mississippi"/>
-  <hex row="11" col="40" terrain="1" road="187"/>
+  <hex row="11" col="40" terrain="1" road="187" rail="136"/>
+  <hex row="11" col="41" rail="144"/>
   <hex row="12" col="3" terrain="3"/>
   <hex row="12" col="4" terrain="3"/>
   <hex row="12" col="5" terrain="3"/>
@@ -375,13 +414,17 @@
   <hex row="12" col="14" terrain="3"/>
   <hex row="12" col="19" terrain="1" road="187"/>
   <hex row="12" col="22" road="144"/>
+  <hex row="12" col="23" rail="34"/>
+  <hex row="12" col="24" rail="33"/>
   <hex row="12" col="25" terrain="10" name="Meramec"/>
   <hex row="12" col="29" terrain="1" road="187"/>
   <hex row="12" col="30" terrain="1" road="187"/>
   <hex row="12" col="33" terrain="1" road="187"/>
   <hex row="12" col="34" road="49"/>
+  <hex row="12" col="35" rail="17"/>
   <hex row="12" col="37" terrain="10" name="Mississippi"/>
   <hex row="12" col="40" road="17"/>
+  <hex row="12" col="41" rail="9"/>
   <hex row="13" col="1" terrain="3"/>
   <hex row="13" col="2" terrain="3"/>
   <hex row="13" col="3" terrain="3"/>
@@ -396,58 +439,72 @@
   <hex row="13" col="17" road="34"/>
   <hex row="13" col="18" road="34"/>
   <hex row="13" col="19" road="17"/>
-  <hex row="13" col="22" road="9"/>
+  <hex row="13" col="22" road="9" rail="18"/>
   <hex row="13" col="23" road="144"/>
   <hex row="13" col="25" terrain="10" name="Meramec"/>
   <hex row="13" col="29" road="18"/>
   <hex row="13" col="30" terrain="1" road="187"/>
   <hex row="13" col="34" terrain="1" road="187"/>
+  <hex row="13" col="35" rail="17"/>
   <hex row="13" col="37" terrain="10" name="Mississippi"/>
   <hex row="13" col="40" road="17"/>
+  <hex row="13" col="41" rail="10"/>
+  <hex row="13" col="42" rail="160"/>
   <hex row="14" col="8" terrain="3"/>
   <hex row="14" col="13" road="34"/>
   <hex row="14" col="14" terrain="1" road="187"/>
   <hex row="14" col="15" terrain="1" road="187"/>
   <hex row="14" col="16" road="130"/>
   <hex row="14" col="19" terrain="1" road="187"/>
+  <hex row="14" col="22" rail="17"/>
   <hex row="14" col="23" road="17"/>
   <hex row="14" col="25" terrain="10" name="Meramec"/>
   <hex row="14" col="27" terrain="1" road="187"/>
   <hex row="14" col="29" road="17"/>
   <hex row="14" col="33" road="10"/>
   <hex row="14" col="34" road="33"/>
+  <hex row="14" col="35" rail="17"/>
   <hex row="14" col="37" terrain="10" name="Mississippi"/>
   <hex row="14" col="40" road="17"/>
+  <hex row="14" col="41" rail="10"/>
+  <hex row="14" col="42" rail="160"/>
   <hex row="15" col="9" road="34"/>
   <hex row="15" col="10" road="40"/>
   <hex row="15" col="11" road="130"/>
   <hex row="15" col="12" road="34"/>
   <hex row="15" col="19" terrain="1" road="187"/>
   <hex row="15" col="20" terrain="1" road="187"/>
+  <hex row="15" col="22" rail="17"/>
   <hex row="15" col="23" road="33"/>
   <hex row="15" col="25" terrain="10" name="Meramec"/>
   <hex row="15" col="26" terrain="1" road="187"/>
   <hex row="15" col="27" road="137"/>
   <hex row="15" col="29" road="17"/>
   <hex row="15" col="34" road="144"/>
+  <hex row="15" col="35" rail="17"/>
   <hex row="15" col="36" terrain="10" name="Mississippi"/>
   <hex row="15" col="40" road="17"/>
+  <hex row="15" col="41" rail="10"/>
+  <hex row="15" col="42" rail="160"/>
   <hex row="16" col="5" road="34"/>
   <hex row="16" col="6" road="40"/>
   <hex row="16" col="7" road="130"/>
   <hex row="16" col="8" road="34"/>
   <hex row="16" col="19" road="33"/>
-  <hex row="16" col="22" road="10"/>
+  <hex row="16" col="21" rail="34"/>
+  <hex row="16" col="22" road="10" rail="33"/>
   <hex row="16" col="23" road="160"/>
   <hex row="16" col="25" terrain="10" name="Meramec"/>
   <hex row="16" col="28" terrain="1" road="187"/>
   <hex row="16" col="29" terrain="1" road="187"/>
   <hex row="16" col="33" road="18"/>
   <hex row="16" col="34" road="41"/>
-  <hex row="16" col="35" terrain="1" road="187"/>
+  <hex row="16" col="35" terrain="1" road="187" rail="17"/>
   <hex row="16" col="36" terrain="10" name="Mississippi"/>
   <hex row="16" col="37" terrain="10" name="Mississippi"/>
   <hex row="16" col="40" road="17"/>
+  <hex row="16" col="41" rail="10"/>
+  <hex row="16" col="42" rail="160"/>
   <hex row="17" col="0" road="136"/>
   <hex row="17" col="1" road="138"/>
   <hex row="17" col="2" terrain="1" road="187"/>
@@ -455,12 +512,17 @@
   <hex row="17" col="4" road="34"/>
   <hex row="17" col="12" terrain="3"/>
   <hex row="17" col="18" terrain="1" road="187"/>
+  <hex row="17" col="19" rail="10"/>
+  <hex row="17" col="20" rail="34"/>
   <hex row="17" col="22" road="18"/>
   <hex row="17" col="24" terrain="10" name="Meramec"/>
   <hex row="17" col="28" terrain="1" road="187"/>
   <hex row="17" col="33" terrain="1" road="187"/>
+  <hex row="17" col="35" rail="17"/>
   <hex row="17" col="37" terrain="10" name="Mississippi"/>
   <hex row="17" col="40" road="17"/>
+  <hex row="17" col="41" rail="10"/>
+  <hex row="17" col="42" rail="160"/>
   <hex row="18" col="0" terrain="10"/>
   <hex row="18" col="1" terrain="10" name="Meramec"/>
   <hex row="18" col="2" terrain="1" road="187"/>
@@ -475,13 +537,18 @@
   <hex row="18" col="14" terrain="3"/>
   <hex row="18" col="17" road="34"/>
   <hex row="18" col="18" terrain="1" road="187"/>
+  <hex row="18" col="19" rail="10"/>
+  <hex row="18" col="20" rail="160"/>
   <hex row="18" col="22" road="9"/>
   <hex row="18" col="23" terrain="10" road="144" name="Meramec"/>
   <hex row="18" col="24" terrain="10" name="Meramec"/>
   <hex row="18" col="28" road="17"/>
   <hex row="18" col="33" road="17"/>
+  <hex row="18" col="35" rail="17"/>
   <hex row="18" col="38" terrain="10" name="Mississippi"/>
   <hex row="18" col="40" road="17"/>
+  <hex row="18" col="41" rail="10"/>
+  <hex row="18" col="42" rail="160"/>
   <hex row="19" col="2" terrain="10" name="Meramec"/>
   <hex row="19" col="3" road="17"/>
   <hex row="19" col="4" terrain="10" name="Meramec"/>
@@ -495,16 +562,19 @@
   <hex row="19" col="14" terrain="3"/>
   <hex row="19" col="16" road="18"/>
   <hex row="19" col="18" road="9"/>
-  <hex row="19" col="19" terrain="1" road="187"/>
-  <hex row="19" col="20" terrain="1" road="187"/>
+  <hex row="19" col="19" terrain="1" road="187" rail="10"/>
+  <hex row="19" col="20" terrain="1" road="187" rail="160"/>
   <hex row="19" col="21" terrain="10" name="Meramec"/>
   <hex row="19" col="22" terrain="10" name="Meramec"/>
   <hex row="19" col="23" road="11"/>
   <hex row="19" col="24" terrain="1" road="187"/>
   <hex row="19" col="28" road="17"/>
   <hex row="19" col="33" road="17"/>
+  <hex row="19" col="35" rail="17"/>
   <hex row="19" col="38" terrain="10" name="Mississippi"/>
   <hex row="19" col="40" road="17"/>
+  <hex row="19" col="41" rail="10"/>
+  <hex row="19" col="42" rail="160"/>
   <hex row="20" col="3" road="17"/>
   <hex row="20" col="5" terrain="3"/>
   <hex row="20" col="6" terrain="10" name="Meramec"/>
@@ -516,16 +586,18 @@
   <hex row="20" col="13" terrain="3"/>
   <hex row="20" col="14" terrain="3"/>
   <hex row="20" col="16" road="17"/>
-  <hex row="20" col="20" terrain="1" road="187"/>
-  <hex row="20" col="21" terrain="10" name="Meramec"/>
+  <hex row="20" col="20" terrain="1" road="187" rail="136"/>
+  <hex row="20" col="21" terrain="10" name="Meramec" rail="136"/>
   <hex row="20" col="24" terrain="1" road="187"/>
   <hex row="20" col="25" road="136"/>
   <hex row="20" col="27" terrain="1" road="187"/>
   <hex row="20" col="28" road="49"/>
   <hex row="20" col="33" road="9"/>
+  <hex row="20" col="35" rail="9"/>
   <hex row="20" col="38" terrain="10" name="Mississippi"/>
   <hex row="20" col="40" road="9"/>
-  <hex row="20" col="41" road="144"/>
+  <hex row="20" col="41" road="144" rail="10"/>
+  <hex row="20" col="42" rail="160"/>
   <hex row="21" col="3" road="17"/>
   <hex row="21" col="4" terrain="3"/>
   <hex row="21" col="5" terrain="3"/>
@@ -540,6 +612,7 @@
   <hex row="21" col="16" road="33"/>
   <hex row="21" col="19" terrain="10" name="Meramec"/>
   <hex row="21" col="20" terrain="10" name="Meramec"/>
+  <hex row="21" col="22" rail="144"/>
   <hex row="21" col="24" road="17"/>
   <hex row="21" col="26" road="130"/>
   <hex row="21" col="27" road="11"/>
@@ -550,9 +623,12 @@
   <hex row="21" col="32" road="40"/>
   <hex row="21" col="33" terrain="1" road="187"/>
   <hex row="21" col="34" road="160"/>
+  <hex row="21" col="36" rail="136"/>
+  <hex row="21" col="37" rail="144"/>
   <hex row="21" col="38" terrain="10" name="Mississippi"/>
   <hex row="21" col="39" terrain="10" name="Mississippi"/>
-  <hex row="21" col="41" road="17"/>
+  <hex row="21" col="41" road="17" rail="10"/>
+  <hex row="21" col="42" rail="160"/>
   <hex row="22" col="3" road="33"/>
   <hex row="22" col="6" terrain="3"/>
   <hex row="22" col="7" terrain="3"/>
@@ -563,6 +639,7 @@
   <hex row="22" col="16" road="136"/>
   <hex row="22" col="17" road="144"/>
   <hex row="22" col="19" terrain="10" name="Meramec"/>
+  <hex row="22" col="22" rail="17"/>
   <hex row="22" col="24" road="17"/>
   <hex row="22" col="27" road="10"/>
   <hex row="22" col="28" road="160"/>
@@ -570,9 +647,10 @@
   <hex row="22" col="34" terrain="1" road="187"/>
   <hex row="22" col="35" road="146"/>
   <hex row="22" col="36" road="40"/>
-  <hex row="22" col="37" road="136"/>
+  <hex row="22" col="37" road="136" rail="17"/>
   <hex row="22" col="40" terrain="10" name="Mississippi"/>
-  <hex row="22" col="41" road="17"/>
+  <hex row="22" col="41" road="17" rail="10"/>
+  <hex row="22" col="42" rail="160"/>
   <hex row="23" col="2" road="26"/>
   <hex row="23" col="3" terrain="1" road="187"/>
   <hex row="23" col="6" terrain="3"/>
@@ -587,14 +665,18 @@
   <hex row="23" col="16" terrain="10" name="Meramec"/>
   <hex row="23" col="17" terrain="10" road="41" name="Meramec"/>
   <hex row="23" col="18" terrain="10" name="Meramec"/>
+  <hex row="23" col="21" rail="18"/>
+  <hex row="23" col="22" rail="33"/>
   <hex row="23" col="24" road="17"/>
   <hex row="23" col="27" road="10"/>
   <hex row="23" col="28" road="160"/>
   <hex row="23" col="35" terrain="1" road="187"/>
+  <hex row="23" col="37" rail="17"/>
   <hex row="23" col="38" road="136"/>
   <hex row="23" col="39" road="144"/>
   <hex row="23" col="40" terrain="10" name="Mississippi"/>
-  <hex row="23" col="41" road="9"/>
+  <hex row="23" col="41" road="9" rail="10"/>
+  <hex row="23" col="42" rail="160"/>
   <hex row="24" col="1" road="34"/>
   <hex row="24" col="2" terrain="1" road="187"/>
   <hex row="24" col="4" road="136"/>
@@ -606,16 +688,21 @@
   <hex row="24" col="11" terrain="3"/>
   <hex row="24" col="15" road="34"/>
   <hex row="24" col="16" road="42"/>
-  <hex row="24" col="17" terrain="1" road="187"/>
-  <hex row="24" col="18" terrain="1" road="187"/>
+  <hex row="24" col="17" terrain="1" road="187" rail="34"/>
+  <hex row="24" col="18" terrain="1" road="187" rail="40"/>
+  <hex row="24" col="19" rail="130"/>
+  <hex row="24" col="20" rail="40"/>
+  <hex row="24" col="21" rail="129"/>
   <hex row="24" col="23" road="40"/>
   <hex row="24" col="24" terrain="1" road="187"/>
   <hex row="24" col="27" terrain="1" road="187"/>
   <hex row="24" col="28" road="176"/>
   <hex row="24" col="36" terrain="1" road="187"/>
+  <hex row="24" col="37" rail="17"/>
   <hex row="24" col="39" road="9"/>
   <hex row="24" col="40" terrain="10" name="Mississippi"/>
-  <hex row="24" col="42" road="144"/>
+  <hex row="24" col="41" rail="10"/>
+  <hex row="24" col="42" road="144" rail="160"/>
   <hex row="25" col="0" road="2"/>
   <hex row="25" col="1" terrain="3"/>
   <hex row="25" col="2" terrain="3"/>
@@ -625,6 +712,8 @@
   <hex row="25" col="10" terrain="3"/>
   <hex row="25" col="13" terrain="1" road="187"/>
   <hex row="25" col="14" road="18"/>
+  <hex row="25" col="15" rail="34"/>
+  <hex row="25" col="16" rail="34"/>
   <hex row="25" col="18" road="137"/>
   <hex row="25" col="19" road="130"/>
   <hex row="25" col="20" road="40"/>
@@ -633,10 +722,11 @@
   <hex row="25" col="24" terrain="1" road="187"/>
   <hex row="25" col="28" terrain="1" road="187"/>
   <hex row="25" col="36" road="9"/>
-  <hex row="25" col="37" terrain="1" road="187"/>
+  <hex row="25" col="37" terrain="1" road="187" rail="33"/>
   <hex row="25" col="39" terrain="10" name="Mississippi"/>
   <hex row="25" col="40" terrain="10" road="144" name="Mississippi"/>
-  <hex row="25" col="42" road="9"/>
+  <hex row="25" col="41" rail="10"/>
+  <hex row="25" col="42" road="9" rail="160"/>
   <hex row="26" col="2" terrain="3"/>
   <hex row="26" col="4" terrain="3"/>
   <hex row="26" col="8" road="136"/>
@@ -644,22 +734,28 @@
   <hex row="26" col="10" road="40"/>
   <hex row="26" col="11" road="130"/>
   <hex row="26" col="12" road="40"/>
-  <hex row="26" col="13" terrain="1" road="187"/>
-  <hex row="26" col="14" terrain="1" road="187"/>
+  <hex row="26" col="13" terrain="1" road="187" rail="34"/>
+  <hex row="26" col="14" terrain="1" road="187" rail="34"/>
   <hex row="26" col="24" road="17"/>
   <hex row="26" col="28" road="9"/>
   <hex row="26" col="29" road="144"/>
+  <hex row="26" col="36" rail="18"/>
   <hex row="26" col="37" terrain="10" name="Mississippi"/>
   <hex row="26" col="38" terrain="10" name="Mississippi"/>
   <hex row="26" col="40" road="9">
     <unit id="44805" owner="1" flag="151" face="0" exp="20"/>
   </hex>
-  <hex row="26" col="41" road="160"/>
+  <hex row="26" col="41" road="160" rail="10"/>
+  <hex row="26" col="42" rail="160"/>
+  <hex row="27" col="12" rail="18"/>
   <hex row="27" col="14" road="137"/>
   <hex row="27" col="15" road="144"/>
   <hex row="27" col="24" road="17"/>
   <hex row="27" col="29" road="17"/>
+  <hex row="27" col="35" rail="18"/>
+  <hex row="27" col="36" rail="33"/>
   <hex row="27" col="37" terrain="10" name="Mississippi"/>
   <hex row="27" col="40" road="10"/>
-  <hex row="27" col="41" road="144"/>
+  <hex row="27" col="41" road="144" rail="10"/>
+  <hex row="27" col="42" rail="160"/>
 </map>

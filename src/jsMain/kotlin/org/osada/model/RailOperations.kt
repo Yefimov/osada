@@ -3,50 +3,38 @@ package org.osada.model
 import org.osada.rules.RailTransport
 
 /**
- * The map-side half of OG's railway transport: the destination overlay, and making the journey.
+ * The map-side half of OG's railway transport: boarding and leaving a train, with the selection
+ * rebuilt around the result.
  *
  * Split from [RailTransport] itself exactly as `BarrageOperations` is split from `Barrage` — the
- * rule owns what is legal and what the move does, this owns the hexes and the selection, and every
- * caller (the local player, a replayed multiplayer order, a test) takes the same path.
+ * rule owns what is legal and what the action does, this owns the selection, and every caller (the
+ * local player, a replayed multiplayer order, a test) takes the same path.
  */
-internal fun GameMap.openRailDestinations(unit: GameUnit): Int {
-    clearRailTargeting()
-    val cells = RailTransport.destinations(this, unit)
-    cells.forEach { cell ->
-        map?.getOrNull(cell.row)?.getOrNull(cell.col)?.isRailSel = true
+internal fun GameMap.entrainUnit(unit: GameUnit): Boolean {
+    val boarded = RailTransport.entrain(this, unit)
+    if (boarded) {
+        undoState.invalidate(unit, UndoInvalidation.IRREVERSIBLE_ACTION)
+        reselect(unit)
     }
-    currentRailTargets.addAll(cells)
-    return cells.size
-}
-
-/** Leaves the destination mode, clearing the overlay it painted. */
-internal fun GameMap.clearRailTargeting() {
-    currentRailTargets.forEach { cell ->
-        map?.getOrNull(cell.row)?.getOrNull(cell.col)?.isRailSel = false
-        markRepaint(cell)
-    }
-    currentRailTargets.clear()
+    return boarded
 }
 
 /**
- * Rails [unit] to ([row], [col]) and closes the mode.
- *
- * Returns false when the order was not legal — a stale overlay, a hex somebody moved into between
- * opening the mode and clicking, a formation that has since acted. Nothing is spent in that case:
- * a refusal costs the player neither a rail transport point nor their move.
+ * Takes [unit] off its train. Undo is invalidated because the move being undone was the train's,
+ * and replaying it would put a formation back aboard a train the pool has already been given back.
  */
-internal fun GameMap.moveByRail(
-    unit: GameUnit,
-    row: Int,
-    col: Int,
-): Boolean {
-    val moved = RailTransport.entrain(this, unit, row, col)
-    clearRailTargeting()
-    if (moved) {
-        // The move is gone and the formation is somewhere else, so both ranges have to be rebuilt
-        // from the new position rather than the old one.
-        delMoveSel()
-        setAttackRange(unit)
+internal fun GameMap.detrainUnit(unit: GameUnit): Boolean {
+    val left = RailTransport.detrain(this, unit)
+    if (left) {
+        undoState.invalidate(unit, UndoInvalidation.IRREVERSIBLE_ACTION)
+        reselect(unit)
     }
-    return moved
+    return left
+}
+
+/** The unit's movement just changed shape (a train's or its own), so both ranges are rebuilt. */
+private fun GameMap.reselect(unit: GameUnit) {
+    delMoveSel()
+    delAttackSel()
+    selectUnit(unit)
 }

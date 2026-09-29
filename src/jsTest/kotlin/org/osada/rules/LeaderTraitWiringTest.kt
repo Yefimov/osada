@@ -195,6 +195,67 @@ class LeaderTraitWiringTest {
         assertTrue(influentialCost < plainCost, "an Influence commander re-equips for less")
     }
 
+    /** OG's own strings: *"Half cost to upgrade or get replacements"*. */
+    @Test
+    fun influenceHalvesTheUpgradeBill() {
+        val plainCost = CostCalculator.calculateUpgradeCosts(unit(gunEqid), mechGunEqid, -1)
+        val influentialCost =
+            CostCalculator.calculateUpgradeCosts(unit(gunEqid, LeaderType.INFLUENCE), mechGunEqid, -1)
+        assertEquals((plainCost + 1) / 2, influentialCost)
+    }
+
+    @Test
+    fun influenceHalvesReplacements() {
+        val plain = CostCalculator.reinforceCostPerStrength(unit(gunEqid), false)
+        val influential = CostCalculator.reinforceCostPerStrength(unit(gunEqid, LeaderType.INFLUENCE), false)
+        assertEquals((plain + 1) / 2, influential)
+    }
+
+    // ---- Battlefield Intelligence / Infiltration Tactics: the initiative exchange --------------
+
+    @Test
+    fun battlefieldIntelligenceAddsOneInitiativeToTheAttacker() {
+        assertEquals(1, LeaderInitiative.attackerBonus(unit(infantryEqid, LeaderType.BATTLEFIELD_INTELLIGENCE)))
+        assertEquals(0, LeaderInitiative.attackerBonus(unit(infantryEqid)))
+    }
+
+    @Test
+    fun infiltrationBeatsFirstStrikeOnlyByAMarginAboveOne() {
+        val striker = unit(infantryEqid, LeaderType.FIRST_STRIKE)
+        val infiltrator = unit(infantryEqid, LeaderType.INFILTRATION_TACTICS)
+        val plain = unit(infantryEqid)
+
+        assertTrue(LeaderInitiative.defenderFirstStrikeHolds(plain, striker, rawDiff = 5))
+        assertTrue(
+            LeaderInitiative.defenderFirstStrikeHolds(infiltrator, striker, rawDiff = 1),
+            "a margin of 1 is not enough",
+        )
+        assertFalse(LeaderInitiative.defenderFirstStrikeHolds(infiltrator, striker, rawDiff = 2))
+        assertFalse(
+            LeaderInitiative.defenderFirstStrikeHolds(infiltrator, plain, rawDiff = -3),
+            "no First Strike to beat",
+        )
+    }
+
+    @Test
+    fun anInfiltrationCommanderOnARiverIsABridge() {
+        val world = world()
+        val infiltrator = place(world, infantryEqid, 3, 3, LeaderType.INFILTRATION_TACTICS)
+        world.map!![3][3].terrain = TerrainType.RIVER.value
+        assertTrue(MovementRules.isBridgeForSide(infiltrator.getHex(), 0))
+    }
+
+    // ---- Ferocious Defense: suppression does not weaken the unit -------------------------------
+
+    @Test
+    fun ferociousDefenseIgnoresSuppression() {
+        val ferocious = unit(infantryEqid, LeaderType.FEROCIOUS_DEFENSE).apply { hits = 3 }
+        val plain = unit(infantryEqid).apply { hits = 3 }
+        assertEquals(0, UnitCapabilities.effectiveHits(ferocious))
+        assertEquals(3, ferocious.hits, "the counter is kept; only its effect is waived")
+        assertEquals(3, UnitCapabilities.effectiveHits(plain))
+    }
+
     // ---- Alpine Training: forest and mountain cost what clear costs ----------------------------
 
     @Test
@@ -209,6 +270,45 @@ class LeaderTraitWiringTest {
         val alpineCost = costOfEntering(world, alpine, 4, 3)
         assertTrue(plainCost > alpineCost, "the mountain is dearer without the trait")
         assertEquals(costOfEnteringClear(world, alpine), alpineCost, "and costs exactly clear with it")
+    }
+
+    /** OG's current wording: *"Moves through Forest, Hill, Rough and Mountain as clear"*. */
+    @Test
+    fun mountainTrainingAlsoMakesAHillCostWhatClearCosts() {
+        val world = world()
+        val trained = place(world, infantryEqid, 4, 2, LeaderType.ALPINE_TRAINING)
+        world.map!![4][3].terrain = TerrainType.HILL.value
+        assertEquals(costOfEnteringClear(world, trained), costOfEntering(world, trained, 4, 3))
+    }
+
+    // ---- Bridging: a river costs rough, and the holder is a bridge -----------------------------
+
+    @Test
+    fun bridgingMakesARiverCostWhatRoughCosts() {
+        val world = world()
+        val plain = place(world, infantryEqid, 2, 2)
+        val bridger = place(world, infantryEqid, 4, 2, LeaderType.BRIDGING)
+        world.map!![2][3].terrain = TerrainType.RIVER.value
+        world.map!![4][3].terrain = TerrainType.RIVER.value
+        world.map!![4][1].terrain = TerrainType.ROUGH.value
+
+        val roughCost = costOfEntering(world, bridger, 4, 1)
+        assertTrue(roughCost > 0, "the rough hex is reachable")
+        assertEquals(roughCost, costOfEntering(world, bridger, 4, 3), "the river costs exactly rough")
+        assertTrue(costOfEntering(world, plain, 2, 3) != roughCost, "without the trait it does not")
+    }
+
+    @Test
+    fun aBridgingCommanderOnARiverIsABridgeForItsSide() {
+        val world = world()
+        val bridger = place(world, infantryEqid, 3, 3, LeaderType.BRIDGING)
+        val plain = place(world, infantryEqid, 5, 5)
+        world.map!![3][3].terrain = TerrainType.RIVER.value
+        world.map!![5][5].terrain = TerrainType.RIVER.value
+
+        assertTrue(MovementRules.isBridgeForSide(bridger.getHex(), 0))
+        assertFalse(MovementRules.isBridgeForSide(plain.getHex(), 0), "no leader, no bridge")
+        assertFalse(MovementRules.isBridgeForSide(bridger.getHex(), 1), "and never for the enemy")
     }
 
     // ---- Mechanized Veteran: only real once `heavy_move_fire` is on ----------------------------

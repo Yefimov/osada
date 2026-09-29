@@ -99,11 +99,15 @@ internal object Engineering {
      * and a formation that has taken on ammunition this turn has plainly done an action.
      */
     fun mayStartWork(unit: GameUnit): Boolean =
-        if (EfileConfig.flag("build_start_ex", false)) {
+        if (startsAfterMove()) {
             !unit.hasFired && !unit.hasResupplied
         } else {
             !unit.hasMoved && !unit.hasFired && !unit.hasResupplied
         }
+
+    /** Whether the active efile's `build_start_ex` lets a formation that has MOVED still begin
+     *  work -- the one switch [mayStartWork] reads, exposed so the tooltip states the same rule. */
+    fun startsAfterMove(): Boolean = EfileConfig.flag("build_start_ex", false)
 
     /**
      * Whether the SCENARIO authorises [work], on top of [enabled] — OG's own *"All this options

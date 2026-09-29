@@ -3,6 +3,7 @@ package org.osada.model
 import org.osada.rules.AAInterception
 import org.osada.rules.AttackEligibility
 import org.osada.rules.GameRules
+import org.osada.rules.HexGeometry
 import org.osada.rules.Minefields
 import org.osada.rules.MoveAmbush
 import org.osada.rules.UnitPredicates
@@ -47,7 +48,9 @@ internal fun MoveExecutor.reactionStoppingMove(
     //
     // An enemy's surface zone of control ends the walk short of the destination -- including a
     // zone discovered only now (`rules/ZoneOfControlContact`, OG manual 6.13.1). It comes after
-    // the reactions, so an ambush or a minefield on the same step still takes effect.
+    // the reactions, so an ambush or a minefield on the same step still takes effect. When the
+    // hidden enemy projecting it stands further along the route, the stop is a surprise rather
+    // than a contact ([stoppedByZoneOfControl]).
     return applyAAInterception(unit, setup, cell, index == setup.path.lastIndex, result) ||
         ambushedAt(unit, cell, result) ||
         applyMinefield(unit, setup, cell, result) ||
@@ -56,12 +59,23 @@ internal fun MoveExecutor.reactionStoppingMove(
 
 /**
  * The walk entered an enemy's surface zone of control short of its destination
- * (`rules/ZoneOfControlContact`): it ends here, with no combat. Checked LAST, so a leader reaction
- * or a minefield on the same step has already had its turn.
+ * (`rules/ZoneOfControlContact`): it ends here. Checked LAST, so a leader reaction or a minefield on
+ * the same step has already had its turn.
+ *
+ * **Contact or collision.** What the stop means depends on the rest of the ROUTE, not on this hex
+ * alone. When a hidden enemy projecting this zone stands on a later hex of the path the mover was
+ * ordered along, the move has run into it: the walk ends here, short of the occupied hex, and the
+ * mover is surprised -- the same Rugged combat [stoppedByOccupant] starts when nothing stopped the
+ * walk before the enemy's hex (OG, verified by the owner in play: an enemy on the chosen route is
+ * fought, an enemy merely beside it is a contact). Without this, the zone ended every such move one
+ * hex before [stoppedByOccupant] could see the occupant, and a hidden unit on the route was reported
+ * as "contact" with no fight at all. Only when no projector sits on the route is it a plain contact,
+ * with no combat.
  *
  * A zone the mover's side could see was already a route terminal, so in practice this fires on a
- * NEWLY DISCOVERED enemy -- reported as contact. A stale route through a known zone stops here too,
- * which is correct either way. The destination itself is exempt: stopping there is arriving.
+ * NEWLY DISCOVERED enemy. A stale route through a known zone stops here too, as a contact -- a
+ * visible enemy is never turned into a surprise. The destination itself is exempt: stopping there
+ * is arriving.
  */
 private fun MoveExecutor.stoppedByZoneOfControl(
     unit: GameUnit,
@@ -72,10 +86,33 @@ private fun MoveExecutor.stoppedByZoneOfControl(
 ): Boolean {
     val applies = index != setup.path.lastIndex && ZoneOfControlContact.appliesTo(unit)
     val projectors = if (applies) ZoneOfControlContact.projectors(setup.map, cell, setup.side) else emptyList()
-    if (projectors.isNotEmpty()) {
+    if (projectors.isEmpty()) return false
+    val collision = hiddenProjectorAhead(unit, setup, index, projectors)
+    if (collision != null && MoveAmbush.canBeSurprised(unit)) {
+        markSurprise(unit, collision, result)
+    } else {
         result.stoppedByContact = projectors.none { ZoneOfControlContact.isKnownTo(it, setup.side) }
     }
-    return projectors.isNotEmpty()
+    return true
+}
+
+/**
+ * The first hex after [index] on the walked route that holds one of [projectors] the mover's side
+ * cannot see, and that the mover cannot pass into -- the hidden enemy the move is about to run into.
+ * Every such projector is adjacent to the stopping hex, so the surprise combat is between neighbours.
+ */
+private fun hiddenProjectorAhead(
+    unit: GameUnit,
+    setup: MoveExecutor.MoveSetup,
+    index: Int,
+    projectors: List<GameUnit>,
+): Cell? {
+    val unseen = projectors.filterNot { ZoneOfControlContact.isKnownTo(it, setup.side) }
+    if (unseen.isEmpty()) return null
+    return setup.path.drop(index + 1).firstOrNull { ahead ->
+        val occupant = setup.map[ahead.row][ahead.col].unit
+        unseen.any { it === occupant } && !GameRules.canPassInto(setup.map, unit, ahead)
+    }
 }
 
 /**
@@ -207,7 +244,9 @@ internal fun GameMap.surpriseTarget(
     result.ambusher?.takeIf { !it.destroyed && unit.isSurprised && !unit.destroyed }
         ?: bumpedInto(unit, result)
 
-/** The walked-into half of [surpriseTarget]: the hidden enemy on the hex the walk refused. */
+/** The walked-into half of [surpriseTarget]: the hidden enemy on the hex the walk refused. Only while
+ *  the mover stands beside it -- a walk that had to step back off a friendly-held hex
+ *  (`stepBackOffOccupiedHexes`) no longer touches the enemy, and a surprise is fought at contact. */
 private fun GameMap.bumpedInto(
     unit: GameUnit,
     result: MovementResults,
@@ -215,6 +254,7 @@ private fun GameMap.bumpedInto(
     result.surpriseCell
         .firstOrNull()
         ?.takeIf { unit.isSurprised && !unit.destroyed }
+        ?.takeIf { cell -> unit.getPos()?.let { HexGeometry.isAdjacent(it.row, it.col, cell.row, cell.col) } == true }
         ?.let { cell -> map?.getOrNull(cell.row)?.getOrNull(cell.col) }
         ?.getUnit(UnitPredicates.isAir(unit))
         ?.takeIf { enemy ->

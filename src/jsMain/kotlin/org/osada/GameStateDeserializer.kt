@@ -77,6 +77,7 @@ object GameStateDeserializer {
         data: dynamic,
     ) {
         unit.sabotaged = (data.sabotaged as? Boolean) == true
+        unit.bridgeLaying = (data.bridgeLaying as? Boolean) == true
         unit.entrenchment = data.entrenchment as? Int ?: 0
         unit.entrenchTicks = data.entrenchTicks as? Int ?: 0
         unit.experience = data.experience as? Int ?: 0

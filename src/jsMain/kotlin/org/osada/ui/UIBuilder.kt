@@ -38,29 +38,28 @@ object UIBuilder {
             "resupply" to "!",
             "reinforce" to "#",
             "overstrength" to "J",
-            "lay_mines" to "*",
-            // OG marks a barrage-capable record with `=` at the top of its unit info screen
-            // (`tips1.txt`), so the chip wears the mark the player is told to look for.
-            "barrage" to "=",
-            "clear_mines" to "x",
-            // OG's railway transport. The station glyph the five construction chips do not have.
-            "rail_move" to "S",
-            // OG 9.3 Build and Repair. Glyphs picked from the same osada-menu font the rest of the
-            // strip uses; the five constructions share one builder mark because the chip label is
-            // what names the facility, and no hex ever offers more than a couple of them at once.
-            "build_bridge" to "B",
-            "build_fortification" to "F",
-            "build_airfield" to "A",
-            "build_port" to "P",
-            "build_station" to "S",
-            "repair" to "R",
-            "demolish" to "D",
-            // The rail demolition wears the same D as the other one: the chip label is what says
-            // which, exactly as the five construction chips share the builder mark.
-            "blow_rail" to "D",
-            "undo" to "_",
+            "lay_mines" to ActionIcons.LAY_MINES,
+            // OG marks a barrage-capable record with `=` in its unit info screen (`tips1.txt`), but in
+            // osada-menu.ttf `=` is an armoured car, so the chip draws the shells instead.
+            "barrage" to ActionIcons.BARRAGE,
+            "clear_mines" to ActionIcons.CLEAR_MINES,
+            // OG's railway transport: the rail-track glyph (`~`, 0x7E). `S` is not in osada-menu.ttf
+            // at all and rendered as a bare fallback letter.
+            "rail_move" to "~",
+            // OG 9.3 Build and Repair. Drawn (`ActionIcons`) rather than picked from osada-menu.ttf,
+            // which has no hammer and no letter at all for P, R or S: each Build chip is the facility
+            // plus a hammer, Repair is hammer and wrench, and both demolitions are a burst.
+            "build_bridge" to ActionIcons.BUILD_BRIDGE,
+            "build_fortification" to ActionIcons.BUILD_FORTIFICATION,
+            "build_airfield" to ActionIcons.BUILD_AIRFIELD,
+            "build_port" to ActionIcons.BUILD_PORT,
+            "build_station" to ActionIcons.BUILD_STATION,
+            "repair" to ActionIcons.REPAIR,
+            "demolish" to ActionIcons.DEMOLISH,
+            "blow_rail" to ActionIcons.BLOW_RAIL,
+            "undo" to ActionIcons.UNDO,
             // Same back-arrow as Undo: both put the formation back where it was a moment ago.
-            "withdraw" to "_",
+            "withdraw" to ActionIcons.UNDO,
             "sleep" to "t",
         )
 

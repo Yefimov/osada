@@ -2,6 +2,7 @@ package org.osada.model
 
 import org.osada.rules.GameRules
 import org.osada.rules.Minefields
+import org.osada.rules.PontoonBridges
 import org.osada.rules.setSpotRange
 import org.osada.rules.setZOCRange
 
@@ -66,6 +67,9 @@ internal fun GameMap.relocateForced(
     GameRules.setZOCRange(this, unit, true)
     GameRules.setSpotRange(this, unit, true)
     rebuildSpottingForSightBlocker(unit)
+    // A formation pushed off its crossing abandons it, and one pushed into a river has to lay a
+    // new one before anything can use it -- a retreat never opens a crossing on the spot.
+    PontoonBridges.onArrival(unit, toHex)
     val mined = Minefields.threatens(toHex, side)
     val hidden = mined && !Minefields.isDetectedBy(toHex, side)
     val losses = if (hidden) Minefields.strikeDamage(unit) else 0

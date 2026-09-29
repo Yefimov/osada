@@ -118,7 +118,7 @@ internal object UnitIdentityStyles {
     border: 1px solid var(--osada-metal-600); border-radius: 3px; background: rgba(0,0,0,.28);
     color: var(--osada-text-dim); font-size: 9px; font-weight: bold; letter-spacing: .04em; text-transform: uppercase;
 }
-.uc-chip--support { color: #e5c979; border-color: rgba(217,178,90,.65); background: rgba(217,178,90,.10); }
+.uc-chip--support { color: #8fd0ff; border-color: rgba(79,179,255,.7); background: rgba(79,179,255,.14); }
 .uc-chip--warning { color: #d98b79; border-color: rgba(201,70,61,.5); }
 #uc-bars { gap: 2px; }
 /* The whole right-hand column centres as one block; its two rows must not drift apart. */

@@ -980,14 +980,37 @@ body.osada-layout-phone #osada-minimap {
 }
 
 body.osada-layout-phone .osada-sb-panel--minimap {
-    flex: 0 1 42%;
-    min-height: 96px;
+    /* The drawer is wide and short at the 375px landscape height, so the zoom/transport controls sit
+     * BESIDE the minimap instead of under it. Under it, the row spilled out of this panel and was
+     * drawn over the Objectives and Log headings (2026-09-29); shrinking the minimap to make room
+     * left it 21px tall. The panel keeps its own height and the objectives give up the difference. */
+    flex: 0 0 auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0 6px;
+}
+
+body.osada-layout-phone .osada-sb-panel--minimap > .osada-sb-panel__title {
+    flex: 0 0 100%;
 }
 
 body.osada-layout-phone .osada-minimap-frame {
-    flex: 1 1 auto;
-    height: auto;
-    min-height: 96px;
+    flex: 1 1 0;
+    min-width: 0;
+    height: calc(2 * var(--osada-touch-target) + 4px);
+    min-height: 0;
+}
+
+/* Two rows: − 100% + above, the transport pools below. */
+body.osada-layout-phone .osada-zoom-controls {
+    flex: 0 0 auto;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    width: calc(3 * var(--osada-touch-target) + 8px);
+    gap: 4px;
+    margin-top: 0;
 }
 
 body.osada-layout-phone .osada-sb-panel--objectives {
@@ -2076,4 +2099,25 @@ body.osada-map-zooming #game > div:not(#game-zoom-wrap) {
         height: calc(46px + env(safe-area-inset-top, 0px)) !important;
         max-height: calc(46px + env(safe-area-inset-top, 0px)) !important;
     }
+}
+
+/* Transport pools (`ui/TransportPoolStrip`) on a phone: the second line of the controls beside the
+ * minimap. Icon and numbers only; the name is in the long-press panel. */
+body.osada-layout-phone .osada-transport-pools {
+    flex: 0 0 100%;
+    flex-wrap: nowrap;
+    gap: 4px;
+}
+
+body.osada-layout-phone .osada-transport-pool {
+    flex: 1 1 0;
+    justify-content: center;
+    min-width: 0;
+    min-height: var(--osada-touch-target);
+    padding: 0 2px;
+    font-size: 12px;
+}
+
+body.osada-layout-phone .osada-transport-pool__name {
+    display: none;
 }

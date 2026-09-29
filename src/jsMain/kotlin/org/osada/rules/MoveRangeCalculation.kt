@@ -37,6 +37,8 @@ internal object MoveRangeCalculation {
         val ignoresZoc: Boolean,
         val alpineTrained: Boolean,
         val mountainTrained: Boolean,
+        val bridging: Boolean = false,
+        val stranded: Boolean = false,
     )
 
     fun getMoveRange(
@@ -101,7 +103,17 @@ internal object MoveRangeCalculation {
         // as Superior Maneuver above (`docs/og-fidelity-plan.md` A.4). It is a MOVEMENT-COST rule
         // only: the trait says nothing about combat, so terrain defence, entrenchment baselines and
         // close-combat all keep reading the real terrain.
+        //
+        // WIDENED 2026-09-28 from forest and mountain to OG's CURRENT wording, the `* Leaders` list
+        // shipped with the engine (`OPENTXT_SAMPLE/strings-en-template.txt`): *"Mountain Training :
+        // Moves through Forest, Hill, Rough and Mountain as clear"*. The two-terrain reading came
+        // from `Manual_OG-en.pdf`, which is v0.5 and describes an older engine (`docs/og-sources.md`).
         val alpineTrained = Leaders.unitHasLeader(unit, LeaderType.ALPINE_TRAINING)
+
+        // OG's Bridging leader, first half: *"unit treats river hexes like rough terrain"*
+        // (`Manual_OG-en.pdf` §6.12). The second half -- *"while in a river hex it works as a
+        // bridge"* -- is [MovementRules.isBridgeForSide]. Movement cost only, like Mountain Training.
+        val bridging = Leaders.unitHasLeader(unit, LeaderType.BRIDGING)
 
         // OG's `Mountain` equipment ability -- the same shape of rule, from the record instead of
         // a leader. See [terrainColumn].
@@ -118,6 +130,8 @@ internal object MoveRangeCalculation {
             ignoresZoc,
             alpineTrained,
             mountainTrained,
+            bridging,
+            PontoonBridges.stranded(unit, gameMap[pos.row][pos.col]),
         )
     }
 
@@ -194,37 +208,31 @@ internal object MoveRangeCalculation {
             val current = frontier.removeCheapest()
             // Popped in cost order, so `current.cout` is final here; past the allowance nothing
             // beyond it can be afforded either.
-            val expandable = current === origin || current.cout <= context.maxRange
+            // A formation standing as a pontoon in a major river steps off one hex and no further --
+            // the crossing is the move, as it was coming in (`PontoonBridges.stranded`).
+            val expandable = current === origin || (!context.stranded && current.cout <= context.maxRange)
             if (settled.add(cellKey(current.row, current.col)) && expandable) {
-                val reached = neighborsOf(current, byKey, settled)
-                reached.forEach { expandNeighbor(it, current, context, unit) }
-                frontier.addAll(reached.filter { it !in frontier })
+                // Only a cell actually costed from here joins the frontier. One [expandNeighbor]
+                // refused (a major river entered from anywhere but the start hex) still has cout 0,
+                // would pop as the cheapest cell, and would carry the flood across the river.
+                neighborsOf(current, byKey, settled).forEach { cell ->
+                    if (expandNeighbor(cell, current, context, unit) && cell !in frontier) frontier.add(cell)
+                }
             }
         }
         return cells.filter { it.canPass || it.canMove }
     }
 
     /** Resolves [neighbor]'s move cost from [current], applies the enemy-ZOC cost floor, then
-     *  marks it canPass/canMove when reachable within [MoveContext.maxRange]. */
+     *  marks it canPass/canMove when reachable within [MoveContext.maxRange]. False when [neighbor]
+     *  cannot be entered from [current] at all, and was left untouched. */
     private fun expandNeighbor(
         neighbor: ExtendedCell,
         current: ExtendedCell,
         context: MoveContext,
         unit: GameUnit,
-    ) {
+    ): Boolean {
         val hex = context.gameMap[neighbor.row][neighbor.col]
-        resolveNeighborCost(neighbor, hex, context)
-        updateReachDistance(neighbor, current)
-        markPassableAndVisible(neighbor, hex, context, unit)
-    }
-
-    /** Sets [neighbor].cost from the movement table (or rail cost), floored to [ZOC_MOVE_COST]
-     *  when the hex is in the zone of control of an enemy the mover's side can see. */
-    private fun resolveNeighborCost(
-        neighbor: ExtendedCell,
-        hex: Hex,
-        context: MoveContext,
-    ) {
         // The road column is a BONUS, so it may only ever be taken when this movement method can
         // actually use a road. PM applies it unconditionally (`openpanzer.js:2157`), and because
         // the road entry is 255 for all three naval rows, a river hex carrying a road -- i.e. a
@@ -244,7 +252,33 @@ internal object MoveRangeCalculation {
                 unitSide = context.unitSide,
                 terrainCost = context.movementTable[terrainColumn(hex.terrain, context)],
             )
-        neighbor.cost = withRubbleSurcharge(base, hex)
+        // OG permits a bridge unit to enter a major river even when its movement method marks
+        // that terrain impassable (255). Entering costs 254 and ends this move; from the owner's
+        // next turn the stationed unit provides a road-cost pontoon crossing for its side
+        // (`rules/PontoonBridges`). The LXF Manchurian Offensive places its IT-28 BL beside two
+        // such major-river hexes.
+        //
+        // Only from the hex the move started on: one step, the whole move. OG offers the IT-28 BL
+        // at (25,20) exactly its three adjacent Ussuri hexes. Charging 254 alone let it drive along
+        // the bank first and step into any river hex bordering its range (reported 2026-09-28).
+        val pontoon = isPontoonEntry(hex, base, unit)
+        val fromOrigin = current.row == context.pos.row && current.col == context.pos.col
+        if (pontoon && !fromOrigin) return false
+        resolveNeighborCost(neighbor, hex, context, if (pontoon) ZOC_MOVE_COST else base)
+        updateReachDistance(neighbor, current)
+        markPassableAndVisible(neighbor, hex, context, unit)
+        return true
+    }
+
+    /** Sets [neighbor].cost to [entryCost] plus any rubble, floored to [ZOC_MOVE_COST] when the hex
+     *  is in the zone of control of an enemy the mover's side can see, or a known minefield. */
+    private fun resolveNeighborCost(
+        neighbor: ExtendedCell,
+        hex: Hex,
+        context: MoveContext,
+        entryCost: Int,
+    ) {
+        neighbor.cost = withRubbleSurcharge(entryCost, hex)
         // A zone of control the mover's side can SEE -- judged by the enemy unit's own visibility,
         // not by whether this hex is spotted, so a hidden unit next to a spotted hex does not shorten
         // the overlay and give itself away (`ZoneOfControlContact`). The walk stops on discovery.
@@ -286,9 +320,8 @@ internal object MoveRangeCalculation {
         context: MoveContext,
     ): Int =
         when {
-            context.alpineTrained &&
-                (terrain == TerrainType.FOREST.value || terrain == TerrainType.MOUNTAIN.value) ->
-                TerrainType.CLEAR.value
+            context.alpineTrained && terrain in ALPINE_TRAINED_TERRAIN -> TerrainType.CLEAR.value
+            context.bridging && terrain == TerrainType.RIVER.value -> TerrainType.ROUGH.value
 
             context.mountainTrained && terrain in MOUNTAIN_TRAINED_TERRAIN -> TerrainType.CLEAR.value
             else -> terrain
@@ -315,6 +348,15 @@ internal object MoveRangeCalculation {
         val chargeable = cost != IMPASSABLE_TERRAIN_COST && cost != ZOC_MOVE_COST
         return if (churned && chargeable) cost + Barrage.RUBBLE_MOVE_SURCHARGE else cost
     }
+
+    /** The four columns OG's Mountain Training leader discounts; see [terrainColumn]. */
+    private val ALPINE_TRAINED_TERRAIN =
+        setOf(
+            TerrainType.FOREST.value,
+            TerrainType.HILL.value,
+            TerrainType.ROUGH.value,
+            TerrainType.MOUNTAIN.value,
+        )
 
     /** The three columns OG's `Mountain` ability discounts; see [terrainColumn]. */
     private val MOUNTAIN_TRAINED_TERRAIN =
@@ -371,6 +413,17 @@ private fun neighborsOf(
         .getAdjacent(current.row, current.col)
         .mapNotNull { byKey[cellKey(it.row, it.col)] }
         .filter { cellKey(it.row, it.col) !in settled }
+
+/** A river [unit]'s movement method cannot enter ([baseCost] 255), which its bridge capability
+ *  lets it enter anyway. */
+private fun isPontoonEntry(
+    hex: Hex,
+    baseCost: Int,
+    unit: GameUnit,
+): Boolean =
+    baseCost == MoveRangeCalculation.IMPASSABLE_TERRAIN_COST &&
+        PontoonBridges.isRiver(hex) &&
+        MovementRules.hasBridgeCapability(unit)
 
 /** Removes and returns the queued cell with the lowest accumulated cost. */
 private fun MutableList<ExtendedCell>.removeCheapest(): ExtendedCell {

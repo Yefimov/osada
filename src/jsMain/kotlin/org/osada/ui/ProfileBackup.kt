@@ -29,7 +29,12 @@ import kotlin.js.json
  */
 internal object ProfileBackup {
     fun exportToFile() {
-        val bundle = Game.current?.state?.exportProfile() ?: return
+        // The campaign on the map is exported as it stands, not as of its last autosave; storage
+        // is left at the autosave (`CampaignRunBackup.withLiveBattle`).
+        val bundle =
+            Game.current?.state?.exportProfile()?.let {
+                it.copy(runs = it.runs.map(CampaignRunBackup::withLiveBattle))
+            } ?: return
         val json = bundleToJson(bundle)
         downloadJson("osada-profile-backup-${Date().getTime().toLong()}.json", json)
     }

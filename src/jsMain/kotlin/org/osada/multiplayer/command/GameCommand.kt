@@ -171,10 +171,15 @@ data class DisembarkUnit(
     override val actorPlayerId: Int,
 ) : UnitOrder
 
-/** OG's railway movement to an offered station hex (`GameMap.moveByRail`). */
-data class RailMove(
+/** Boarding a train from the rail transport pool (`GameMap.entrainUnit`). */
+data class EntrainUnit(
     val unitId: Int,
-    val destination: HexCoordinate,
+    override val actorPlayerId: Int,
+) : UnitOrder
+
+/** Leaving a train and returning it to the pool (`GameMap.detrainUnit`). */
+data class DetrainUnit(
+    val unitId: Int,
     override val actorPlayerId: Int,
 ) : UnitOrder
 
@@ -300,14 +305,15 @@ private fun UnitOrder.writeUnitOrder(payload: dynamic) {
     when (this) {
         is EmbarkUnit -> payload["unitId"] = unitId
         is DisembarkUnit -> payload["unitId"] = unitId
-        is RailMove -> putDestination(payload, unitId, destination)
+        is EntrainUnit -> payload["unitId"] = unitId
+        is DetrainUnit -> payload["unitId"] = unitId
         is PurchaseAttachment -> putAttachment(payload, unitId, slots)
         is GreenReinforceUnit -> payload["unitId"] = unitId
         is DismissLeader -> payload["unitId"] = unitId
     }
 }
 
-/** A unit and a destination hex -- [RailMove]'s and [DeployUnit]'s fields, which share one shape. */
+/** A unit and a destination hex -- [DeployUnit]'s fields. */
 private fun putDestination(
     payload: dynamic,
     unitId: Int,

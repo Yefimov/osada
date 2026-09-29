@@ -406,6 +406,7 @@
   <hex row="4" col="39" terrain="3"/>
   <hex row="4" col="40" terrain="3"/>
   <hex row="4" col="41" road="33"/>
+  <hex row="4" col="43" rail="187"/>
   <hex row="5" col="1" terrain="6"/>
   <hex row="5" col="2" terrain="6"/>
   <hex row="5" col="3" road="17"/>
@@ -439,6 +440,8 @@
   </hex>
   <hex row="5" col="39" road="34"/>
   <hex row="5" col="40" road="34"/>
+  <hex row="5" col="41" rail="187"/>
+  <hex row="5" col="42" rail="187"/>
   <hex row="6" col="1" terrain="6"/>
   <hex row="6" col="3" road="33"/>
   <hex row="6" col="4" terrain="3"/>
@@ -469,7 +472,8 @@
     <unit id="47459" owner="1" flag="226" face="0" str="5" bstr="5"/>
   </hex>
   <hex row="6" col="38" road="34"/>
-  <hex row="6" col="39" road="40"/>
+  <hex row="6" col="39" road="40" rail="187"/>
+  <hex row="6" col="40" rail="187"/>
   <hex row="6" col="41" road="40"/>
   <hex row="6" col="43" road="40"/>
   <hex row="7" col="2" road="10"/>
@@ -511,6 +515,7 @@
   </hex>
   <hex row="7" col="37" road="17"/>
   <hex row="7" col="38" terrain="1" road="130" name="Majadahonda"/>
+  <hex row="7" col="39" rail="187"/>
   <hex row="7" col="40" road="130"/>
   <hex row="7" col="42" road="130"/>
   <hex row="8" col="2" terrain="1" name="Navalagamella" owner="1" flag="225"/>
@@ -543,6 +548,7 @@
   <hex row="8" col="35" terrain="6"/>
   <hex row="8" col="36" terrain="6"/>
   <hex row="8" col="37" terrain="6" road="9"/>
+  <hex row="8" col="39" rail="187"/>
   <hex row="9" col="5" terrain="3"/>
   <hex row="9" col="6" road="136"/>
   <hex row="9" col="7" road="130"/>
@@ -566,6 +572,7 @@
   <hex row="9" col="35" terrain="3"/>
   <hex row="9" col="36" terrain="6"/>
   <hex row="9" col="38" road="144"/>
+  <hex row="9" col="39" rail="187"/>
   <hex row="9" col="41" terrain="3"/>
   <hex row="9" col="42" terrain="3"/>
   <hex row="10" col="1" terrain="3"/>
@@ -589,6 +596,7 @@
   <hex row="10" col="36" terrain="3"/>
   <hex row="10" col="37" road="18"/>
   <hex row="10" col="38" road="33"/>
+  <hex row="10" col="39" rail="187"/>
   <hex row="10" col="40" terrain="3"/>
   <hex row="11" col="2" terrain="3"/>
   <hex row="11" col="3" terrain="3"/>
@@ -613,6 +621,7 @@
   <hex row="11" col="35" terrain="3"/>
   <hex row="11" col="36" terrain="3"/>
   <hex row="11" col="37" road="9"/>
+  <hex row="11" col="39" rail="187"/>
   <hex row="12" col="2" terrain="3"/>
   <hex row="12" col="3" terrain="3"/>
   <hex row="12" col="4" terrain="3"/>
@@ -639,6 +648,7 @@
   <hex row="12" col="36" terrain="3"/>
   <hex row="12" col="37" terrain="3"/>
   <hex row="12" col="38" road="144"/>
+  <hex row="12" col="39" rail="187"/>
   <hex row="13" col="3" terrain="6" name="Los Llanos"/>
   <hex row="13" col="4" terrain="6" name="Los Llanos"/>
   <hex row="13" col="5" terrain="6" name="Los Llanos"/>
@@ -668,6 +678,7 @@
   <hex row="13" col="35" terrain="3"/>
   <hex row="13" col="36" terrain="3"/>
   <hex row="13" col="38" road="17"/>
+  <hex row="13" col="39" rail="187"/>
   <hex row="14" col="1" terrain="6"/>
   <hex row="14" col="2" terrain="6"/>
   <hex row="14" col="3" terrain="6" name="Los Llanos"/>
@@ -690,6 +701,7 @@
   <hex row="14" col="32" name="Monte Mosquito"/>
   <hex row="14" col="37" road="34"/>
   <hex row="14" col="38" road="33"/>
+  <hex row="14" col="39" rail="187"/>
   <hex row="15" col="2" terrain="6"/>
   <hex row="15" col="3" terrain="6" name="Los Llanos"/>
   <hex row="15" col="4" terrain="6" name="Los Llanos"/>
@@ -713,6 +725,7 @@
   <hex row="15" col="32" terrain="3"/>
   <hex row="15" col="33" terrain="3"/>
   <hex row="15" col="36" road="18"/>
+  <hex row="15" col="39" rail="187"/>
   <hex row="16" col="4" terrain="6" name="Los Llanos"/>
   <hex row="16" col="6" terrain="6" name="Los Llanos"/>
   <hex row="16" col="7" road="34"/>
@@ -736,6 +749,7 @@
   <hex row="16" col="32" terrain="3"/>
   <hex row="16" col="35" terrain="1" name="Boadilla del Monte" owner="1" flag="225" victory="1"/>
   <hex row="16" col="36" road="145"/>
+  <hex row="16" col="39" rail="187"/>
   <hex row="17" col="6" road="18"/>
   <hex row="17" col="8" terrain="3"/>
   <hex row="17" col="9" terrain="3"/>
@@ -753,6 +767,7 @@
   <hex row="17" col="30" terrain="3"/>
   <hex row="17" col="36" road="9"/>
   <hex row="17" col="37" road="136"/>
+  <hex row="17" col="39" rail="187"/>
   <hex row="18" col="5" road="10"/>
   <hex row="18" col="6" road="33"/>
   <hex row="18" col="8" terrain="3"/>
@@ -765,7 +780,8 @@
   <hex row="18" col="17" terrain="6"/>
   <hex row="18" col="18" terrain="6"/>
   <hex row="18" col="25" terrain="10" name="Rio Guadarrama"/>
-  <hex row="18" col="38" road="136"/>
+  <hex row="18" col="37" rail="187"/>
+  <hex row="18" col="38" road="136" rail="187"/>
   <hex row="18" col="39" road="146"/>
   <hex row="18" col="40" road="40"/>
   <hex row="18" col="41" road="136"/>
@@ -779,6 +795,8 @@
   <hex row="19" col="15" terrain="6"/>
   <hex row="19" col="26" terrain="10" name="Rio Guadarrama"/>
   <hex row="19" col="27" terrain="10" name="Rio Guadarrama"/>
+  <hex row="19" col="35" rail="187"/>
+  <hex row="19" col="36" rail="187"/>
   <hex row="19" col="39" road="9"/>
   <hex row="19" col="42" terrain="1" road="136" name="Alarcon" owner="1" flag="225"/>
   <hex row="19" col="43" road="136"/>
@@ -794,6 +812,8 @@
   <hex row="20" col="14" terrain="6" owner="1" flag="225"/>
   <hex row="20" col="15" terrain="6"/>
   <hex row="20" col="27" terrain="10" name="Rio Guadarrama"/>
+  <hex row="20" col="33" rail="187"/>
+  <hex row="20" col="34" rail="187"/>
   <hex row="20" col="40" road="144"/>
   <hex row="21" col="1" terrain="3"/>
   <hex row="21" col="2" terrain="3"/>
@@ -814,6 +834,8 @@
   <hex row="21" col="15" road="136"/>
   <hex row="21" col="24" terrain="3"/>
   <hex row="21" col="27" terrain="10" name="Rio Guadarrama"/>
+  <hex row="21" col="31" rail="187"/>
+  <hex row="21" col="32" rail="187"/>
   <hex row="21" col="40" road="17"/>
   <hex row="22" col="1" terrain="3"/>
   <hex row="22" col="2" terrain="3"/>
@@ -835,6 +857,8 @@
   <hex row="22" col="24" terrain="3"/>
   <hex row="22" col="25" terrain="3"/>
   <hex row="22" col="27" terrain="10" name="Rio Guadarrama"/>
+  <hex row="22" col="29" rail="187"/>
+  <hex row="22" col="30" rail="187"/>
   <hex row="22" col="40" road="17"/>
   <hex row="23" col="2" terrain="3"/>
   <hex row="23" col="3" terrain="3"/>
@@ -858,7 +882,8 @@
   <hex row="23" col="23" terrain="3"/>
   <hex row="23" col="24" terrain="3"/>
   <hex row="23" col="26" terrain="10" name="Rio Guadarrama"/>
-  <hex row="23" col="27" terrain="10" name="Rio Guadarrama"/>
+  <hex row="23" col="27" terrain="10" name="Rio Guadarrama" rail="187"/>
+  <hex row="23" col="28" rail="187"/>
   <hex row="23" col="40" road="17"/>
   <hex row="24" col="2" terrain="3"/>
   <hex row="24" col="3" terrain="3"/>
@@ -872,9 +897,12 @@
   </hex>
   <hex row="24" col="19" terrain="1" road="146" name="Brunete"/>
   <hex row="24" col="20" road="40"/>
-  <hex row="24" col="21" road="130"/>
-  <hex row="24" col="22" road="40"/>
-  <hex row="24" col="23" road="136"/>
+  <hex row="24" col="21" road="130" rail="187"/>
+  <hex row="24" col="22" road="40" rail="187"/>
+  <hex row="24" col="23" road="136" rail="187"/>
+  <hex row="24" col="24" rail="187"/>
+  <hex row="24" col="25" rail="187"/>
+  <hex row="24" col="26" rail="187"/>
   <hex row="24" col="27" terrain="10" name="Rio Guadarrama"/>
   <hex row="24" col="37">
     <unit id="47421" owner="1" flag="226" face="0"/>
@@ -885,6 +913,7 @@
   <hex row="25" col="3" terrain="3"/>
   <hex row="25" col="18" terrain="1" name="Brunete"/>
   <hex row="25" col="19" road="33"/>
+  <hex row="25" col="20" rail="187"/>
   <hex row="25" col="24" road="136"/>
   <hex row="25" col="25" road="130"/>
   <hex row="25" col="26" road="40"/>
@@ -908,6 +937,8 @@
   <hex row="26" col="2" terrain="3"/>
   <hex row="26" col="3" terrain="3"/>
   <hex row="26" col="18" road="18"/>
+  <hex row="26" col="19" rail="187"/>
+  <hex row="26" col="20" rail="187"/>
   <hex row="26" col="28" terrain="10" name="Rio Guadarrama"/>
   <hex row="26" col="29" terrain="10" name="Rio Guadarrama"/>
   <hex row="26" col="32" road="144"/>
@@ -922,6 +953,7 @@
   <hex row="27" col="3" terrain="3"/>
   <hex row="27" col="4" terrain="3"/>
   <hex row="27" col="18" road="17"/>
+  <hex row="27" col="19" rail="187"/>
   <hex row="27" col="29" terrain="6"/>
   <hex row="27" col="30" terrain="10" name="Rio Guadarrama"/>
   <hex row="27" col="32" road="3"/>
@@ -930,6 +962,7 @@
   <hex row="27" col="38" road="17"/>
   <hex row="28" col="17" road="18"/>
   <hex row="28" col="18" road="33"/>
+  <hex row="28" col="19" rail="187"/>
   <hex row="28" col="29" terrain="6"/>
   <hex row="28" col="30" terrain="10" name="Rio Guadarrama"/>
   <hex row="28" col="31" terrain="10" name="Rio Guadarrama"/>
@@ -943,6 +976,7 @@
   <hex row="29" col="6" terrain="1" name="Villanueva de Perales"/>
   <hex row="29" col="7" road="40"/>
   <hex row="29" col="17" road="33"/>
+  <hex row="29" col="19" rail="187"/>
   <hex row="29" col="29" terrain="6"/>
   <hex row="29" col="31" terrain="10" name="Rio Guadarrama"/>
   <hex row="29" col="34" terrain="6"/>
@@ -968,6 +1002,7 @@
   <hex row="30" col="17" terrain="1" name="Sevilla la Nueva" owner="1" flag="225" victory="1">
     <unit id="47425" owner="1" flag="226" face="0" exp="44" str="8" ldr="1" bstr="8"/>
   </hex>
+  <hex row="30" col="19" rail="187"/>
   <hex row="30" col="29" terrain="6"/>
   <hex row="30" col="30" terrain="6"/>
   <hex row="30" col="31" terrain="6"/>
@@ -986,6 +1021,7 @@
   <hex row="31" col="14" terrain="3"/>
   <hex row="31" col="15" road="34"/>
   <hex row="31" col="16" road="161"/>
+  <hex row="31" col="19" rail="187"/>
   <hex row="31" col="27" terrain="6"/>
   <hex row="31" col="28" terrain="6"/>
   <hex row="31" col="29" terrain="6"/>
@@ -1000,6 +1036,7 @@
   <hex row="32" col="12" terrain="3"/>
   <hex row="32" col="13" road="18"/>
   <hex row="32" col="14" road="34"/>
+  <hex row="32" col="19" rail="187"/>
   <hex row="32" col="28" terrain="6"/>
   <hex row="32" col="29" terrain="6"/>
   <hex row="32" col="30" terrain="6"/>
@@ -1010,12 +1047,14 @@
   <hex row="32" col="41" terrain="3"/>
   <hex row="32" col="42" terrain="3"/>
   <hex row="33" col="13" road="17"/>
+  <hex row="33" col="19" rail="187"/>
   <hex row="33" col="28" terrain="6"/>
   <hex row="33" col="30" terrain="10" name="Rio Guadarrama"/>
   <hex row="33" col="35" road="17"/>
   <hex row="33" col="39" terrain="3"/>
   <hex row="33" col="42" terrain="3"/>
   <hex row="34" col="13" road="33"/>
+  <hex row="34" col="19" rail="187"/>
   <hex row="34" col="29" terrain="10" name="Rio Guadarrama"/>
   <hex row="34" col="30" terrain="10" name="Rio Guadarrama"/>
   <hex row="34" col="35" road="17"/>
@@ -1026,6 +1065,7 @@
   <hex row="35" col="16">
     <unit id="47329" owner="1" flag="210" face="0" exp="100" str="5" bstr="5"/>
   </hex>
+  <hex row="35" col="19" rail="187"/>
   <hex row="35" col="21" terrain="3"/>
   <hex row="35" col="27" terrain="10" name="Rio Guadarrama"/>
   <hex row="35" col="28" terrain="10" name="Rio Guadarrama"/>
@@ -1039,6 +1079,7 @@
     <unit id="47325" owner="1" flag="210" face="0" str="4" ldr="1" bstr="4"/>
   </hex>
   <hex row="36" col="14" terrain="2"/>
+  <hex row="36" col="19" rail="187"/>
   <hex row="36" col="20" terrain="3"/>
   <hex row="36" col="21" terrain="3"/>
   <hex row="36" col="22" terrain="3"/>
@@ -1055,6 +1096,7 @@
     <unit id="520" owner="1" flag="226" face="0" str="5" bstr="5"/>
   </hex>
   <hex row="37" col="13" terrain="1" name="Navalcarnero"/>
+  <hex row="37" col="19" rail="187"/>
   <hex row="37" col="20" terrain="3"/>
   <hex row="37" col="21" terrain="3"/>
   <hex row="37" col="22" terrain="3"/>
@@ -1071,6 +1113,7 @@
   <hex row="37" col="41" terrain="3"/>
   <hex row="37" col="42" terrain="3"/>
   <hex row="38" col="11" road="17"/>
+  <hex row="38" col="19" rail="187"/>
   <hex row="38" col="22" terrain="3"/>
   <hex row="38" col="23" terrain="3"/>
   <hex row="38" col="24" terrain="3"/>

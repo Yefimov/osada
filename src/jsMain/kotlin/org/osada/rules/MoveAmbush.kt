@@ -79,7 +79,7 @@ internal object MoveAmbush {
             (overwatch || camouflage) &&
             // "having at least 1 strength point unsuppressed" -- and ammunition and a weapon that
             // can reach this target at all, which is the same question.
-            ambusher.strength > ambusher.hits &&
+            ambusher.strength > UnitCapabilities.effectiveHits(ambusher) &&
             AttackEligibility.canFire(ambusher, mover)
     }
 }

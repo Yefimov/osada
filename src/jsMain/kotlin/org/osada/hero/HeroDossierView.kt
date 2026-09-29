@@ -214,8 +214,10 @@ object HeroDisplay {
 
             LeaderType.TANK_KILLER -> I18n.t("hero.trait.activation.armored_targets")
             LeaderType.STREET_FIGHTER -> I18n.t("hero.trait.activation.urban")
-            LeaderType.INFILTRATION_TACTICS -> I18n.t("hero.trait.activation.forest")
-            LeaderType.AGGRESSIVE_MANEUVER, LeaderType.AGGRESSIVE_TANK_MANEUVER,
+            LeaderType.INFILTRATION_TACTICS, LeaderType.FOREST_CAMOUFLAGE,
+            -> I18n.t("hero.trait.activation.forest")
+            LeaderType.AGGRESSIVE_MANEUVER, LeaderType.AGGRESSIVE_TANK_MANEUVER, LeaderType.ALPINE_TRAINING,
+            LeaderType.BRIDGING,
             -> I18n.t("hero.trait.activation.movement")
 
             LeaderType.SUPERIOR_MANEUVER -> I18n.t("hero.trait.activation.zoc")
@@ -224,7 +226,8 @@ object HeroDisplay {
             -> I18n.t("hero.trait.activation.spotting")
 
             LeaderType.MARKSMAN -> I18n.t("hero.trait.activation.ranged_fire")
-            LeaderType.SKILLED_INTERCEPTOR -> I18n.t("hero.trait.activation.interception")
+            LeaderType.SKILLED_INTERCEPTOR, LeaderType.FLAK_SUPPORT,
+            -> I18n.t("hero.trait.activation.interception")
             LeaderType.SKILLED_GROUND_ATTACK -> I18n.t("hero.trait.activation.ground_attack")
             else -> I18n.t("hero.trait.activation.passive")
         }

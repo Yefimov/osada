@@ -307,6 +307,17 @@ class GameUnit(
     var sabotaged: Boolean = false
 
     /**
+     * A bridge-capable formation that ended a move on a river this turn and is still laying its
+     * crossing (`rules/PontoonBridges`). OG's pontoon carries traffic only from the owner's NEXT
+     * turn, so until [PontoonBridges.completeLaying] clears this at that turn's start the hex is
+     * still a river for everybody.
+     *
+     * Serialized, for the same reason [sabotaged] is: it is a state the unit is in across the
+     * hand-over, and losing it to a reload would open the crossing a turn early.
+     */
+    var bridgeLaying: Boolean = false
+
+    /**
      * How many attacks this formation has RESOLVED AS THE ATTACKER since its last [unitEndTurn].
      *
      * `hasFired` alone cannot express OG's `Devastating Fire` ("the unit may fire twice in a turn"),
@@ -503,6 +514,7 @@ class GameUnit(
         stalinRegimeBoosted = other.stalinRegimeBoosted
         isTemporaryBorrowed = other.isTemporaryBorrowed
         isPurchased = other.isPurchased
+        bridgeLaying = other.bridgeLaying
         formationId = other.formationId
         player = Player().apply { copy(other.player ?: return@apply) }
         if (other.transport != null) {

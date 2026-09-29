@@ -20,6 +20,7 @@ import org.osada.save.SaveStatusBus
 import org.osada.scenario.ScenarioTextLocalization
 import org.osada.scenario.TimedDefeatReason
 import org.osada.scenario.getReinforcements
+import org.osada.scenario.peekNextScenarioRecord
 import org.osada.scenario.removeReinforcement
 import org.osada.ui.HudLog
 import org.osada.ui.MessageDialogs
@@ -91,6 +92,7 @@ fun Game.continueCampaign(
 ) {
     console.log("[OSADA] continueCampaign", outcome)
     val player = campaignPlayer ?: return
+    if (offerRestartBeforeDefeat(outcome, reason)) return
     // A player CHOICE (BGCchoice-style), committed earlier in this scenario's own briefing
     // dialogue, overrides the outcome-branch goto entirely. Taken once, here, so it cannot leak
     // into resolving some later, unrelated transition.
@@ -99,7 +101,7 @@ fun Game.continueCampaign(
     // to record the REAL outcome. recordScenarioCompletion is idempotent per scenario: the
     // move-capture and end-turn completion paths can both reach here for the same battle.
     recordCampaignOutcome(outcome, routeOverride)
-    val capNote = awardOutcomePrestige(player, outcome)
+    val capNote = awardOutcomePrestige(player, outcome, routeOverride)
     // OpenSuite's *"Don't score"* (`rules/CampaignSwitches`): this battle leaves the campaign score
     // where it found it. The carried player IS the score at the start of the battle, since the
     // battle's own player starts at 0 and adds it (`Player.copy(accumulateScore = true)`). A battle
@@ -137,7 +139,7 @@ fun Game.continueCampaign(
     )
     player.setPlayerToHQ()
     savedCampaignPlayer = Player().apply { copy(player) }
-    removeNonCampaignUnitsFlag = true
+    auxiliaryScenarioUnitsFlag = true
     buildCoreUnitsFlag = false
     val outcomeText = campaign!!.getOutcomeText(outcome)
     val epilogue = campaign!!.resolveEpilogue(outcome)
@@ -175,13 +177,18 @@ fun Game.continueCampaign(
  * record call for it (`rules/CampaignPrestigeCap`). Returns a paragraph telling the player what the
  * cap withheld, or "" when it withheld nothing. The cap is measured BEFORE the award, against the
  * army still standing at the end of the battle.
+ *
+ * The award is the COMPLETED scenario's; the cap is the NEXT one's (OG Basic Tutorial p.3), picked
+ * with the same outcome and [routeOverride] `loadNextScenario` is about to use. This runs before
+ * that transition on purpose: afterwards `getOutcomePrestige` would read the next scenario's award.
  */
 private fun Game.awardOutcomePrestige(
     player: Player,
     outcome: String,
+    routeOverride: Int?,
 ): String {
     val full = player.effectivePrestigeIncome(campaign!!.getOutcomePrestige(outcome))
-    val cap = campaign!!.getCurrentScenario()?.prestigecap as? Int
+    val cap = CampaignPrestigeCap.capOf(campaign!!.peekNextScenarioRecord(outcome, routeOverride))
     val granted = CampaignPrestigeCap.cappedAward(full, cap, player)
     player.prestige = (player.prestige + granted).coerceAtLeast(0)
     if (granted >= full) return ""
@@ -333,7 +340,8 @@ private fun localizedOutcomeName(outcome: String): String =
         else -> outcome
     }
 
-private fun Game.lossReason(reason: EndGameType): String =
+// Internal, not private: `offerRestartBeforeDefeat` (GameDefeatChoice.kt) states the same reason.
+internal fun Game.lossReason(reason: EndGameType): String =
     when (reason) {
         EndGameType.MOVE_CAPTURE -> I18n.t("game.loss_reason.objectives")
         EndGameType.NO_TURNS_LEFT ->

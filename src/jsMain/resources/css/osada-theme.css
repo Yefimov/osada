@@ -2086,6 +2086,23 @@ input[type=text], input[type=search] {
     margin-bottom: 8px;
 }
 
+/* The tap-to-explain panel (`TapTip.fromTitle`) mirrors an element's native `title=`, whose line
+   breaks a desktop tooltip shows; keep them, and let a long explanation (the entrenchment
+   breakdown runs to a dozen lines) scroll inside the visible viewport instead of running off a
+   phone's short edge. Taps inside the panel do not dismiss it (`TapTip.installDismissal`), so it
+   may take the pointer for scrolling. */
+#osadaHelpTip {
+    max-height: calc(var(--osada-vv-h, 100dvh) - 12px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    pointer-events: auto;
+}
+
+#osadaHelpTip .osada-wtip__story {
+    white-space: pre-line;
+    margin-bottom: 0;
+}
+
 /* Section head inside the panel (VictoryDeadlineTooltip: which grading rule this scenario runs). */
 .osada-wtip__subtitle {
     margin-top: 2px;
@@ -5264,6 +5281,16 @@ hr {
     text-shadow: 0 1px 2px rgba(0, 0, 0, .7);
 }
 
+/* Drawn chip glyphs (`ui/ActionIcons`): the font glyph's box and colour, and its shadow as a filter
+   because text-shadow does not reach an SVG. */
+.osada-action__glyph svg {
+    width: 1.1em;
+    height: 1.1em;
+    vertical-align: middle;
+    fill: currentColor;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .7));
+}
+
 .osada-action__label {
     font-size: 8px;
     font-weight: bold;
@@ -5596,15 +5623,25 @@ hr {
 }
 
 /* --- scenario / turn / date --- */
+/* The title is the only part of this block that may give way; the turn counter must survive every
+ * width (owner, 2026-09-28). With `min-width: 0` on a flex row the whole block was squeezed past
+ * the turn -- clipped from ~1270px down, gone below ~950px (scripts/verify/topbar-collision-probe.mjs).
+ * `min-width: min-content` on a flex row does not help: the title's full text counts toward the
+ * minimum and the block stops shrinking at all. A grid does: the title's track is
+ * minmax(0, max-content), so it can shrink to nothing, while the turn, date and phase chip keep
+ * max-content tracks -- and the block's min-content is then exactly those. */
 #statusmsg {
     flex: 0 1 auto;
-    min-width: 0;
+    min-width: min-content;
     width: auto !important;
     height: 40px;
     max-height: 40px !important;
-    display: flex;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: minmax(0, max-content);
+    grid-auto-columns: max-content;
     align-items: center;
-    gap: 14px;
+    column-gap: 14px;
     padding: 0 !important;
     overflow: hidden;
 }
@@ -5914,6 +5951,20 @@ hr {
     height: 34px;
 }
 
+/* In-row placement: set by TopBarFit when the centred arrow would cover a
+ * neighbour (the free gap between the two .osada-tb-spacer is off-centre, because the right
+ * cluster is wider). Back in the flex row between the spacers. It KEEPS the desktop arrow -- only
+ * the phone bar (mobile.css) wears the map sprite; the owner asked for the arrow on every desktop
+ * width (2026-09-28). The element, its handler, `selected`, title and accessible name are
+ * unchanged. */
+.osada-tb-combatlog.osada-tb-combatlog--inline {
+    position: static !important;
+    inset: auto !important;
+    margin: 0 !important;
+    transform: none !important;
+    flex: 0 0 34px;
+}
+
 .osada-tb-combatlog:hover {
     filter: drop-shadow(0 0 5px rgba(217, 178, 90, .55)) brightness(1.1);
 }
@@ -6133,24 +6184,63 @@ hr {
     }
 }
 
-@media (max-width: 1180px) {
+/* The Reserves plate turns into its sprite at 1250px, not at 1180px with the rest below. Once the
+ * Turn Report toggle drops into the flex row (CombatLogButtonPlacement) it needs ~43px the bar did
+ * not have between 1181 and ~1210px -- measured with scripts/verify/topbar-collision-probe.mjs,
+ * where #locmsg ran up to 21px past the bar's edge. The word costs ~50px more than the sprite.
+ * The reserves counter (.osada-tb-reserves__badge) is a sibling of the label and stays. */
+@media (max-width: 1250px) {
     .osada-tb-reserves__label {
         display: none;
     }
 
-    /* Swap the hidden word for the supply-crate sprite so the plate is never a blank square. */
+    /* Swap the hidden word for the supply-crate sprite, at the size of its .osada-tb-icon
+     * neighbours (#zoom, ...). The sprite cell is already a framed metal button, so the text
+     * plate's own background and border come off: framing it twice read as a button inside a
+     * button. The phone bar (mobile.css) does the same at touch size. */
     .osada-tb-reserves__ico {
         display: block;
+        width: 34px;
+        height: 34px;
     }
 
     .osada-tb-reserves {
         display: flex;
         align-items: center;
         justify-content: center;
-        padding-left: 8px;
-        padding-right: 8px;
+        width: 34px;
+        min-width: 34px;
+        height: 34px;
+        padding: 0;
+        background: none;
+        border: none;
+        border-radius: 0;
     }
 
+    .osada-tb-reserves:hover .osada-tb-reserves__ico {
+        filter: drop-shadow(0 0 5px rgba(217, 178, 90, .55)) brightness(1.1);
+    }
+
+    .osada-tb-reserves[selected] {
+        background: none;
+    }
+
+    .osada-tb-reserves[selected] .osada-tb-reserves__ico {
+        filter: drop-shadow(0 0 6px rgba(208, 52, 44, .7)) brightness(1.15);
+    }
+
+    /* With no plate to sit inside, the undeployed counter pins to the icon's corner. */
+    .osada-tb-reserves__badge {
+        position: absolute;
+        z-index: 1;
+        top: -4px;
+        right: -6px;
+        margin: 0;
+        padding: 0 4px;
+    }
+}
+
+@media (max-width: 1180px) {
     .osada-tb-brand-logo {
         height: 22px;
     }
@@ -6158,6 +6248,24 @@ hr {
     #locmsg {
         display: none;
     }
+}
+
+/* Fitting a row that is still too long: TopBarFit applies these one level at a time, least valuable
+ * first, and only as many as the bar needs -- measured, because where the row runs out depends on
+ * the scenario title, the language, the prestige digits and the turn count. The turn counter is
+ * never among them (owner, 2026-09-28). The weather icons stay when their words go: hovering them
+ * opens the full weather panel (GameplayLocalization.showWeatherTooltip). */
+#statusbar.osada-tb-fit-1 .osada-tb-brand-logo,
+#statusbar.osada-tb-fit-2 #locmsg,
+#statusbar.osada-tb-fit-3 .osada-tb-weather-txt,
+#statusbar.osada-tb-fit-4 #statusmsg .osada-tb-op,
+#statusbar.osada-tb-fit-5 #statusmsg .osada-tb-date {
+    display: none !important;
+}
+
+/* With the title gone the first grid track would be the turn's; no track may shrink now. */
+#statusbar.osada-tb-fit-4 #statusmsg {
+    grid-template-columns: none;
 }
 
 /* ============================================================================
@@ -9310,4 +9418,50 @@ body.osada-layout-phone .osada-mobile-context__card-toggle {
 
 body.osada-layout-phone .osada-uc-restore {
     display: none !important;
+}
+
+/* Transport pools (air / naval / rail) under the minimap -- `ui/TransportPoolStrip`. */
+.osada-transport-pools {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px;
+    /* A child of the zoom row: its own full-width line on the desktop sidebar. */
+    flex-basis: 100%;
+}
+
+.osada-zoom-controls {
+    flex-wrap: wrap;
+}
+
+.osada-transport-pool {
+    padding: 1px 6px;
+    font-size: 11px;
+    color: var(--osada-brass);
+    background: rgba(0, 0, 0, .35);
+    border: 1px solid var(--osada-metal-600);
+    border-radius: 3px;
+    cursor: help;
+    white-space: nowrap;
+}
+
+.osada-transport-pool--empty {
+    opacity: .55;
+}
+
+.osada-transport-pool {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.osada-transport-pool__glyph {
+    font-size: 12px;
+    line-height: 1;
+}
+
+/* The rail track is osada-menu.ttf's `~`, the same glyph as the "Board train" action chip. */
+.osada-transport-pool__glyph--menu {
+    font-family: osada-menu, sans-serif;
+    font-size: 15px;
 }

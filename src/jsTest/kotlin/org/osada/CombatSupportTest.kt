@@ -9,10 +9,6 @@ import org.osada.model.addPlayer
 import org.osada.model.allocMap
 import org.osada.model.resetEquipment
 import org.osada.rules.UnitCapabilities
-import org.osada.rules.ruleset.ActiveRuleset
-import org.osada.rules.ruleset.RulesetProfileStore
-import org.osada.rules.ruleset.RulesetResolver
-import org.osada.rules.ruleset.RulesetSource
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -198,8 +194,9 @@ class CombatSupportTest {
     }
 
     /**
-     * `combat_support_min_bar` (schema 18): the `Gaz-AAA Radio Truck` case. A supporter below 100
-     * experience lends one bar instead of nothing; the floor never touches its own experience.
+     * The Combat Support floor (a ruleset key at schema 18, always on since 21): the `Gaz-AAA Radio
+     * Truck` case. A supporter below 100 experience lends one bar instead of nothing; the floor never
+     * touches its own experience.
      */
     @Test
     fun aGreenSupporterLendsOneBarWhenTheFloorIsOn() {
@@ -222,25 +219,6 @@ class CombatSupportTest {
         place(map, veteran, 1, 2)
 
         assertEquals(3, UnitCapabilities.combatSupportBars(listOf(recipient, veteran), recipient))
-    }
-
-    /** Author's Vision, and any profile that switches it off: OG's rule, 99 experience lends nothing. */
-    @Test
-    fun withTheFloorOffAGreenSupporterLendsNothingAsInOpenGeneral() {
-        ActiveRuleset.set(
-            RulesetResolver.resolve(RulesetProfileStore.builtIns().first { it.source == RulesetSource.AUTHORS_VISION }),
-        )
-        try {
-            val (map, player) = mapAndPlayer()
-            val recipient = unit(1, player, experience = 0)
-            val radioTruck = unit(2, player, experience = 99)
-            place(map, recipient, 1, 1)
-            place(map, radioTruck, 1, 2)
-
-            assertEquals(0, UnitCapabilities.combatSupportBars(listOf(recipient, radioTruck), recipient))
-        } finally {
-            ActiveRuleset.resetForTest()
-        }
     }
 
     private companion object {

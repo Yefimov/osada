@@ -200,12 +200,7 @@ internal object AttackCalculation {
         context: CombatContext,
     ): Boolean {
         val defenderData = context.defenderData
-        val closeCombat =
-            (
-                UnitPredicates.isCloseCombatTerrain(context.dTerrain) ||
-                    defenderData.uclass == UnitClass.FORTIFICATION.value
-            ) &&
-                context.attackerData.uclass == UnitClass.INFANTRY.value
+        val closeCombat = CloseCombat.applies(context)
         if (closeCombat) {
             stats.defenderDefense = defenderData.closedef
             if (defenderData.uclass == UnitClass.INFANTRY.value) {
@@ -283,7 +278,8 @@ internal object AttackCalculation {
 
     /** Entrenchment defense bonus, bypassed by Infiltration Tactics (unless the defender has
      *  Ferocious Defense) and double-counted for a vehicle attacking entrenched infantry in
-     *  close terrain. */
+     *  close terrain -- the defender's half is [EntrenchmentDefence.defenderBonus], which the unit
+     *  cards read too. */
     fun applyEntrenchment(
         stats: CombatStats,
         attacker: GameUnit,
@@ -293,16 +289,8 @@ internal object AttackCalculation {
         rugged: Boolean = false,
     ) {
         var attackerEntrenchment = 0
-        var defenderEntrenchment = 0
         // OG: *"if A has not moved and not Rugged ... A.EffDef += A.entrench stat"*.
         if (context.attackerEntrenchmentIntact && !closeCombat && !rugged) attackerEntrenchment = attacker.entrenchment
-        if (context.entrenchmentIntact) defenderEntrenchment = defender.entrenchment
-
-        if (Leaders.unitHasLeader(attacker, LeaderType.INFILTRATION_TACTICS) &&
-            !Leaders.unitHasLeader(defender, LeaderType.FEROCIOUS_DEFENSE)
-        ) {
-            defenderEntrenchment = 0
-        }
         if (Leaders.unitHasLeader(defender, LeaderType.INFILTRATION_TACTICS) &&
             !Leaders.unitHasLeader(attacker, LeaderType.FEROCIOUS_DEFENSE)
         ) {
@@ -310,18 +298,7 @@ internal object AttackCalculation {
         }
 
         stats.attackerDefense += attackerEntrenchment
-        stats.defenderDefense += defenderEntrenchment
-
-        val isVehicleAttackingEntrenchedInfantry =
-            context.defenderData.uclass == UnitClass.INFANTRY.value &&
-                UnitPredicates.isCloseCombatTerrain(context.dTerrain) &&
-                !closeCombat &&
-                context.attackerData.uclass > UnitClass.INFANTRY.value &&
-                context.attackerData.uclass < UnitClass.GROUND_TRANSPORT.value
-        if (isVehicleAttackingEntrenchedInfantry) {
-            // infantry in close terrain attacked by a vehicle: its entrenchment counts twice
-            stats.defenderDefense += defenderEntrenchment
-        }
+        stats.defenderDefense += EntrenchmentDefence.defenderBonus(attacker, defender, context, closeCombat).bonus
     }
 
     /** Flat +1-per-100-experience stat bonus, then the hits-taken defense penalty (waived for
@@ -361,7 +338,7 @@ internal object AttackCalculation {
                 attackerData.uclass != UnitClass.FORTIFICATION.value &&
                 (attackerData.uclass < UnitClass.SUBMARINE.value || attackerData.uclass > UnitClass.LIGHT_CRUISER.value)
         if (hitsPenaltyApplies) {
-            val hitsPenalty = 2 * defender.hits
+            val hitsPenalty = 2 * UnitCapabilities.effectiveHits(defender)
             stats.defenderDefense = if (stats.defenderDefense <= hitsPenalty) 0 else stats.defenderDefense - hitsPenalty
         }
     }
@@ -417,9 +394,10 @@ internal object AttackCalculation {
         // OG 6.10 names experience as a third input; OSADA's own model does not read it. Added
         // before the terrain cap for the same reason the attachment penalty is: the cap clamps the
         // initiative a formation EFFECTIVELY brings into the hex. Behind `initiative_model`.
+        // OG's Battlefield Intelligence adds 1 to the ATTACKER's initiative ([LeaderInitiative]).
         val attackerBase =
             context.attackerData.initiative + Attachments.initiativePenalty(attacker) +
-                InitiativeModel.experienceBonus(attacker)
+                InitiativeModel.experienceBonus(attacker) + LeaderInitiative.attackerBonus(attacker)
         val defenderBase =
             context.defenderData.initiative + Attachments.initiativePenalty(defender) +
                 InitiativeModel.experienceBonus(defender)
@@ -436,7 +414,9 @@ internal object AttackCalculation {
             (attackerInitiative + InitiativeModel.randomAdjustment(committed)) -
                 (defenderInitiative + InitiativeModel.randomAdjustment(committed))
         if (Leaders.unitHasLeader(attacker, LeaderType.FIRST_STRIKE)) initiativeDiff = abs(initiativeDiff)
-        if (Leaders.unitHasLeader(defender, LeaderType.FIRST_STRIKE)) initiativeDiff = -abs(initiativeDiff)
+        if (LeaderInitiative.defenderFirstStrikeHolds(attacker, defender, initiativeDiff)) {
+            initiativeDiff = -abs(initiativeDiff)
+        }
         if (initiativeDiff >= 0) {
             stats.attackerDefense += INITIATIVE_DEFENSE_BONUS
             stats.attackerAttack += minOf(INITIATIVE_ATTACK_BONUS_CAP, initiativeDiff)
@@ -505,7 +485,9 @@ internal object AttackCalculation {
                 result.losses <= 1 &&
                 result.kills >= defender.strength &&
                 context.distance == 1 &&
-                !attacker.isSurprised
+                !attacker.isSurprised &&
+                // OG's Resilience: *"Fewer casualties and cannot be overrun"* (`* Leaders` list).
+                !Leaders.unitHasLeader(defender, LeaderType.RESILIENCE)
         if (isOverrun) {
             result.isOverrun = true
         }

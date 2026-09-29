@@ -73,7 +73,10 @@ object GreenReplacements {
      * base. [EliteReplacements] carries the pair.
      */
     fun costPerStrength(unit: GameUnit): Int =
-        (CostCalculator.calculateUnitCostPerStrength(unit) * costPercent() / PERCENT).coerceAtLeast(1)
+        CostCalculator.influenced(
+            unit,
+            (CostCalculator.calculateUnitCostPerStrength(unit) * costPercent() / PERCENT).coerceAtLeast(1),
+        )
 
     /** `green_exp` — what fraction of the formation's own experience the intake arrives with. */
     private fun intakeExperiencePercent(): Int = EfileConfig.intKey("green_exp", 0).coerceIn(0, PERCENT)

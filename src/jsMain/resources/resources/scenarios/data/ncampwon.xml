@@ -110,7 +110,8 @@
   <hex row="3" col="23" terrain="9" name="Sea of Japan"/>
   <hex row="3" col="24" terrain="9" name="Sea of Japan"/>
   <hex row="3" col="25" terrain="9" name="Sea of Japan"/>
-  <hex row="4" col="0" terrain="10" name="Imjin River"/>
+  <hex row="4" col="0" terrain="10" name="Imjin River" rail="136"/>
+  <hex row="4" col="1" rail="136"/>
   <hex row="4" col="2" terrain="4"/>
   <hex row="4" col="3" terrain="4">
     <unit id="20114" owner="1" flag="19" face="0" exp="40" str="7" bstr="4"/>
@@ -137,7 +138,8 @@
   <hex row="4" col="24" terrain="9" name="Sea of Japan"/>
   <hex row="4" col="25" terrain="9" name="Sea of Japan"/>
   <hex row="5" col="1" terrain="4"/>
-  <hex row="5" col="3">
+  <hex row="5" col="2" rail="136"/>
+  <hex row="5" col="3" rail="136">
     <unit id="20114" owner="1" flag="19" face="0" exp="217" str="7" bstr="4"/>
   </hex>
   <hex row="5" col="4" terrain="4" road="9"/>
@@ -165,6 +167,8 @@
   <hex row="6" col="3" terrain="4">
     <unit id="20114" owner="1" flag="19" face="0" exp="154" str="7" bstr="5"/>
   </hex>
+  <hex row="6" col="4" rail="136"/>
+  <hex row="6" col="5" rail="136"/>
   <hex row="6" col="6" terrain="4" road="136"/>
   <hex row="6" col="7" terrain="1" road="160" name="Village" owner="0" flag="25" victory="0"/>
   <hex row="6" col="8" terrain="10"/>
@@ -188,8 +192,8 @@
   <hex row="7" col="3" terrain="4"/>
   <hex row="7" col="4" terrain="4"/>
   <hex row="7" col="5" terrain="4"/>
-  <hex row="7" col="6" road="18"/>
-  <hex row="7" col="7" road="8"/>
+  <hex row="7" col="6" road="18" rail="136"/>
+  <hex row="7" col="7" road="8" rail="136"/>
   <hex row="7" col="9" terrain="10"/>
   <hex row="7" col="10" terrain="4"/>
   <hex row="7" col="11" terrain="10"/>
@@ -209,8 +213,8 @@
   <hex row="8" col="5" road="34"/>
   <hex row="8" col="6" terrain="4" road="41"/>
   <hex row="8" col="7" terrain="10" road="136"/>
-  <hex row="8" col="8" terrain="10" road="136"/>
-  <hex row="8" col="9" road="128"/>
+  <hex row="8" col="8" terrain="10" road="136" rail="136"/>
+  <hex row="8" col="9" road="128" rail="136"/>
   <hex row="8" col="10" terrain="10"/>
   <hex row="8" col="14" terrain="1" road="9" name="Wonsan" deploy="0"/>
   <hex row="8" col="15" terrain="1" road="136" name="Wonsan" owner="0" flag="25">
@@ -235,6 +239,8 @@
   <hex row="9" col="7" terrain="4"/>
   <hex row="9" col="8" road="136"/>
   <hex row="9" col="9" road="136"/>
+  <hex row="9" col="10" rail="136"/>
+  <hex row="9" col="11" rail="136"/>
   <hex row="9" col="14" terrain="1" name="Wonsan" deploy="0"/>
   <hex row="9" col="15" terrain="1" road="34" name="Wonsan"/>
   <hex row="9" col="16" terrain="1" road="160" name="Wonsan"/>
@@ -260,8 +266,8 @@
     <unit id="26158" owner="0" flag="26" face="0" exp="112" str="5" bstr="3"/>
   </hex>
   <hex row="10" col="11" road="138"/>
-  <hex row="10" col="12" terrain="1" road="40" name="Wonsan"/>
-  <hex row="10" col="13" terrain="1" road="170" name="Wonsan"/>
+  <hex row="10" col="12" terrain="1" road="40" name="Wonsan" rail="136"/>
+  <hex row="10" col="13" terrain="1" road="170" name="Wonsan" rail="144"/>
   <hex row="10" col="14" road="34"/>
   <hex row="10" col="15" terrain="1" road="34" name="Wonsan" deploy="0"/>
   <hex row="10" col="17" terrain="10"/>
@@ -285,7 +291,7 @@
   <hex row="11" col="10" terrain="4"/>
   <hex row="11" col="11" terrain="1" road="136" name="Wonsan" deploy="0"/>
   <hex row="11" col="12" terrain="1" road="138" name="Wonsan"/>
-  <hex row="11" col="13" terrain="1" road="170" name="Wonsan" owner="0" flag="25" victory="0" station="1"/>
+  <hex row="11" col="13" terrain="1" road="170" name="Wonsan" owner="0" flag="25" victory="0" station="1" rail="1"/>
   <hex row="11" col="14" terrain="1" road="162" name="Wonsan" deploy="0"/>
   <hex row="11" col="15" terrain="10"/>
   <hex row="11" col="16" terrain="10"/>

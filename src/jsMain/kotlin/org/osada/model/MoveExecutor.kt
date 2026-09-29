@@ -5,6 +5,7 @@ import org.osada.PlayerType
 import org.osada.hero.HeroCampaign
 import org.osada.rules.ExtendedVictory
 import org.osada.rules.GameRules
+import org.osada.rules.PontoonBridges
 import org.osada.rules.TriggerHexes
 import org.osada.rules.TypedVictoryHexes
 import org.osada.rules.UnitCapabilities
@@ -127,6 +128,11 @@ internal class MoveExecutor(
             // enemy parked the mover ON the enemy's hex, two units on one. Panzer Marshal tests
             // `canPassInto` and breaks before its push, which is the order restored here. The other
             // reactions below all stop the unit IN the cell that triggered them, so they stay after.
+            //
+            // This check alone is not enough: an ordinary mover meets a hidden enemy's zone of
+            // control on the hex BEFORE its hex, so the walk would end there one step early. The
+            // zone check therefore looks ahead along this same path and turns that stop into the
+            // same surprise when the enemy stands on the route (`stoppedByZoneOfControl`).
             if (i > 0 && stoppedByOccupant(unit, setup, cell, result)) break
             result.passedCells.add(cell)
             totalCost += if (cell is ExtendedCell) cell.cost else 1
@@ -214,6 +220,8 @@ internal class MoveExecutor(
         // overwritten by it.
         if (applyArrivalEffects(gameMap, unit, toHex, triggerOwnerAtArrival, result)) return
         dismountAfterMove(unit)
+        // After the dismount: a formation still aboard its transport cannot span the river.
+        result.startedBridge = PontoonBridges.onArrival(unit, toHex, setup.fromHex)
         gameMap.setMoveRange(unit)
         gameMap.setAttackRange(unit)
         if (unit.player?.type != PlayerType.HUMAN_LOCAL) {

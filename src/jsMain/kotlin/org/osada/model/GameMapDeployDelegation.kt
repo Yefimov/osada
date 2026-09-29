@@ -51,4 +51,4 @@ fun GameMap.restoreCoreUnitList(
     saved: List<dynamic>,
 ) = coreUnitListOperations.restoreCoreUnitList(player, saved)
 
-fun GameMap.removeNonCampaignUnits(player: Player) = coreUnitListOperations.removeNonCampaignUnits(player)
+fun GameMap.keepScenarioUnitsAsAuxiliary(player: Player) = coreUnitListOperations.keepScenarioUnitsAsAuxiliary(player)

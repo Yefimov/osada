@@ -58,8 +58,8 @@ internal object EquipmentMarkings {
                 ?.let { UnitCapabilities.hasCombatSupport(it) }
                 ?: UnitCapabilities.grantsCombatSupport(data)
         if (hasCombatSupport) {
-            // The same count combat applies -- clamped to five and floored by
-            // `combat_support_min_bar` -- not a private `experience / 100` that disagreed with both.
+            // The same count combat applies -- clamped to five and floored at one -- not a private
+            // `experience / 100` that disagreed with both.
             addHeadquartersMark(parent, unit?.let(UnitCapabilities::lentBars))
         }
         if (UnitCapabilities.hasPhasedMovement(data)) {

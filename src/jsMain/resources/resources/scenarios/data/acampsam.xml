@@ -104,7 +104,7 @@
   <hex row="4" col="24" terrain="13"/>
   <hex row="4" col="25" terrain="1" road="17"/>
   <hex row="4" col="32" road="144"/>
-  <hex row="4" col="40" name="RAILROAD" owner="1" flag="144"/>
+  <hex row="4" col="40" name="RAILROAD" owner="1" flag="144" rail="18"/>
   <hex row="5" col="3" road="9"/>
   <hex row="5" col="4" terrain="15" name="Volga River"/>
   <hex row="5" col="5" terrain="15" name="Volga River"/>
@@ -124,8 +124,8 @@
   <hex row="5" col="31" road="34"/>
   <hex row="5" col="32" terrain="1" road="41"/>
   <hex row="5" col="33" road="136"/>
-  <hex row="5" col="39" name="RAILROAD"/>
-  <hex row="5" col="40" name="RAILROAD"/>
+  <hex row="5" col="39" name="RAILROAD" rail="34"/>
+  <hex row="5" col="40" name="RAILROAD" rail="33"/>
   <hex row="6" col="4" road="144"/>
   <hex row="6" col="5" terrain="15" name="Volga River"/>
   <hex row="6" col="9" road="17"/>
@@ -137,13 +137,13 @@
   <hex row="6" col="26" road="144"/>
   <hex row="6" col="30" road="130"/>
   <hex row="6" col="34" road="136"/>
-  <hex row="6" col="35" road="136" name="RAILROAD">
+  <hex row="6" col="35" road="136" name="RAILROAD" rail="40">
     <unit id="44485" owner="1" flag="145" face="0" transport="42129" exp="100" osada="rework" objrow="9" objcol="19"/>
   </hex>
-  <hex row="6" col="37" name="RAILROAD" owner="1" flag="144">
+  <hex row="6" col="37" name="RAILROAD" owner="1" flag="144" rail="34">
     <unit id="42084" owner="1" flag="101" face="0" exp="100" osada="rework" objrow="9" objcol="19"/>
   </hex>
-  <hex row="6" col="38" name="RAILROAD">
+  <hex row="6" col="38" name="RAILROAD" rail="34">
     <unit id="42043" owner="1" flag="101" face="0" exp="100" osada="rework" objrow="9" objcol="19"/>
   </hex>
   <hex row="6" col="39" road="34">
@@ -162,14 +162,14 @@
   <hex row="7" col="15" road="144"/>
   <hex row="7" col="23" road="33"/>
   <hex row="7" col="26" road="17"/>
-  <hex row="7" col="29" name="RAILROAD"/>
-  <hex row="7" col="31" name="RAILROAD">
+  <hex row="7" col="29" name="RAILROAD" rail="40"/>
+  <hex row="7" col="31" name="RAILROAD" rail="34">
     <unit id="838" owner="0" flag="104" face="0" exp="139" str="8" bstr="5"/>
   </hex>
-  <hex row="7" col="32" name="RAILROAD"/>
-  <hex row="7" col="33" name="RAILROAD"/>
-  <hex row="7" col="34" name="RAILROAD"/>
-  <hex row="7" col="36" road="136" name="RAILROAD" owner="1" flag="144" victory="1" station="1">
+  <hex row="7" col="32" name="RAILROAD" rail="40"/>
+  <hex row="7" col="33" name="RAILROAD" rail="130"/>
+  <hex row="7" col="34" name="RAILROAD" rail="34"/>
+  <hex row="7" col="36" road="136" name="RAILROAD" owner="1" flag="144" victory="1" station="1" rail="130">
     <unit id="42082" owner="1" flag="101" face="0" exp="100" osada="rework" objrow="9" objcol="19"/>
   </hex>
   <hex row="7" col="37" terrain="1" road="162" owner="1" flag="144">
@@ -198,11 +198,11 @@
   <hex row="8" col="21" road="34"/>
   <hex row="8" col="22" terrain="1" road="34"/>
   <hex row="8" col="26" road="17"/>
-  <hex row="8" col="27" name="RAILROAD"/>
-  <hex row="8" col="28" name="RAILROAD">
+  <hex row="8" col="27" name="RAILROAD" rail="34"/>
+  <hex row="8" col="28" name="RAILROAD" rail="34">
     <unit id="838" owner="0" flag="104" face="0" exp="111" str="8" bstr="5"/>
   </hex>
-  <hex row="8" col="30" name="RAILROAD" victory="1"/>
+  <hex row="8" col="30" name="RAILROAD" victory="1" rail="130"/>
   <hex row="8" col="36" road="10">
     <unit id="44451" owner="1" flag="145" face="0" exp="100" osada="rework" objrow="9" objcol="19"/>
   </hex>
@@ -214,15 +214,15 @@
   <hex row="9" col="3" road="40"/>
   <hex row="9" col="5" road="40"/>
   <hex row="9" col="6" road="17" deploy="0"/>
-  <hex row="9" col="7" road="40" name="Samara: RAILROAD">
+  <hex row="9" col="7" road="40" name="Samara: RAILROAD" rail="40">
     <unit id="42377" owner="0" flag="104" face="0" exp="22" str="4" bstr="2"/>
   </hex>
   <hex row="9" col="8" terrain="15" name="Volga River"/>
-  <hex row="9" col="9" terrain="10" road="34" name="Samara: RAILROAD" owner="0" flag="103" victory="0">
+  <hex row="9" col="9" terrain="10" road="34" name="Samara: RAILROAD" owner="0" flag="103" victory="0" rail="40">
     <unit id="42267" owner="0" flag="104" face="0" exp="91" str="7" bstr="4"/>
   </hex>
   <hex row="9" col="10" road="160"/>
-  <hex row="9" col="11" name="Samara River"/>
+  <hex row="9" col="11" name="Samara River" rail="40"/>
   <hex row="9" col="12" terrain="15" name="Samara River"/>
   <hex row="9" col="13" terrain="13"/>
   <hex row="9" col="14" terrain="13"/>
@@ -233,42 +233,42 @@
     <unit id="42267" owner="0" flag="104" face="0" exp="53" str="9" bstr="4"/>
   </hex>
   <hex row="9" col="20" road="34"/>
-  <hex row="9" col="21" name="RAILROAD"/>
-  <hex row="9" col="23" name="RAILROAD"/>
-  <hex row="9" col="24" name="RAILROAD"/>
-  <hex row="9" col="25" name="RAILROAD"/>
-  <hex row="9" col="26" road="17" name="RAILROAD"/>
+  <hex row="9" col="21" name="RAILROAD" rail="40"/>
+  <hex row="9" col="23" name="RAILROAD" rail="34"/>
+  <hex row="9" col="24" name="RAILROAD" rail="40"/>
+  <hex row="9" col="25" name="RAILROAD" rail="130"/>
+  <hex row="9" col="26" road="17" name="RAILROAD" rail="34"/>
   <hex row="9" col="37" road="17"/>
-  <hex row="10" col="0" road="130" name="RAILROAD"/>
-  <hex row="10" col="1" name="RAILROAD"/>
-  <hex row="10" col="2" road="130" name="RAILROAD"/>
-  <hex row="10" col="3" name="RAILROAD"/>
-  <hex row="10" col="4" road="130" name="RAILROAD" deploy="0"/>
-  <hex row="10" col="5" name="RAILROAD"/>
-  <hex row="10" col="6" terrain="1" road="147" name="Samara: RAILROAD" owner="0" flag="103" victory="0" station="1" deploy="0">
+  <hex row="10" col="0" road="130" name="RAILROAD" rail="40"/>
+  <hex row="10" col="1" name="RAILROAD" rail="130"/>
+  <hex row="10" col="2" road="130" name="RAILROAD" rail="40"/>
+  <hex row="10" col="3" name="RAILROAD" rail="130"/>
+  <hex row="10" col="4" road="130" name="RAILROAD" deploy="0" rail="40"/>
+  <hex row="10" col="5" name="RAILROAD" rail="130"/>
+  <hex row="10" col="6" terrain="1" road="147" name="Samara: RAILROAD" owner="0" flag="103" victory="0" station="1" deploy="0" rail="34">
     <unit id="521" owner="0" flag="104" face="0" exp="144" str="8" bstr="5" ammo="9"/>
   </hex>
   <hex row="10" col="7" terrain="1" name="Samara" owner="0" flag="103" victory="0">
     <unit id="42270" owner="0" flag="104" face="0" exp="198" str="7" bstr="4" ammo="5"/>
   </hex>
-  <hex row="10" col="8" road="146" name="Volga River: Alexandrovsk Bridge">
+  <hex row="10" col="8" road="146" name="Volga River: Alexandrovsk Bridge" rail="130">
     <unit id="838" owner="0" flag="104" face="0" exp="57" str="5" bstr="3"/>
   </hex>
   <hex row="10" col="9" terrain="15" name="Samara River"/>
-  <hex row="10" col="10" name="RAILROAD"/>
+  <hex row="10" col="10" name="RAILROAD" rail="130"/>
   <hex row="10" col="11" terrain="15" name="Samara River"/>
-  <hex row="10" col="12" terrain="15" name="RAILROAD"/>
-  <hex row="10" col="13" road="34" name="RAILROAD"/>
+  <hex row="10" col="12" terrain="15" name="RAILROAD" rail="136"/>
+  <hex row="10" col="13" road="34" name="RAILROAD" rail="136"/>
   <hex row="10" col="14" road="34"/>
-  <hex row="10" col="15" name="RAILROAD"/>
+  <hex row="10" col="15" name="RAILROAD" rail="40"/>
   <hex row="10" col="16" road="130"/>
-  <hex row="10" col="17" name="RAILROAD" deploy="0"/>
+  <hex row="10" col="17" name="RAILROAD" deploy="0" rail="40"/>
   <hex row="10" col="18" terrain="1" road="146" name="Kansk"/>
-  <hex row="10" col="19" name="Kansk: RAILROAD" owner="0" flag="103" station="1" deploy="0">
+  <hex row="10" col="19" name="Kansk: RAILROAD" owner="0" flag="103" station="1" deploy="0" rail="34">
     <unit id="521" owner="0" flag="104" face="0" exp="116" str="8" bstr="5" ammo="9"/>
   </hex>
-  <hex row="10" col="20" road="144" name="RAILROAD"/>
-  <hex row="10" col="22" name="RAILROAD"/>
+  <hex row="10" col="20" road="144" name="RAILROAD" rail="34"/>
+  <hex row="10" col="22" name="RAILROAD" rail="130"/>
   <hex row="10" col="26" road="17"/>
   <hex row="10" col="37" road="33"/>
   <hex row="11" col="6" terrain="1" road="17" name="Samara"/>
@@ -278,11 +278,11 @@
   <hex row="11" col="10" terrain="15" name="Samara River"/>
   <hex row="11" col="11" terrain="13" road="34"/>
   <hex row="11" col="12" road="34"/>
-  <hex row="11" col="14" name="RAILROAD">
+  <hex row="11" col="14" name="RAILROAD" rail="130">
     <unit id="838" owner="0" flag="104" face="0" exp="122" str="8" bstr="5"/>
   </hex>
-  <hex row="11" col="16" name="RAILROAD"/>
-  <hex row="11" col="18" road="17" name="RAILROAD"/>
+  <hex row="11" col="16" name="RAILROAD" rail="130"/>
+  <hex row="11" col="18" road="17" name="RAILROAD" rail="130"/>
   <hex row="11" col="20" road="9"/>
   <hex row="11" col="21" road="144"/>
   <hex row="11" col="26" road="17"/>

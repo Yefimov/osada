@@ -3,6 +3,7 @@ package org.osada.hero
 import org.osada.LeaderType
 import org.osada.UnitClass
 import org.osada.hero.HeroTraitCatalog.choose
+import org.osada.model.OgLeaderPools
 
 /**
  * One entry in the data-driven promotion-choice catalogue (§20).
@@ -168,7 +169,94 @@ internal object HeroTraitCatalog {
                 legacyTrait = LeaderType.SUPERIOR_MANEUVER,
                 requiredEvidence = mapOf(EvidenceCategory.MOBILE_WARFARE to 90),
             ),
+            // ---- Open General's traits, 2026-09-28 -------------------------------------------------
+            // Each sits behind a category an `EvidenceRules` achievement actually feeds (an entry
+            // behind an unfed category is the unreachable-trait defect §7.43 removed), none is
+            // zero-evidence, and each is limited to the classes whose rule can fire
+            // ([OgLeaderPools.appliesTo]) so a promotion never offers an inert trait.
+            HeroTraitDefinition(
+                id = "mountain_veteran",
+                title = "Mountain Veteran",
+                categoryId = EvidenceCategory.MOUNTAIN_OPERATIONS,
+                legacyTrait = LeaderType.ALPINE_TRAINING,
+                compatibleUnitClasses = classesFor(LeaderType.ALPINE_TRAINING),
+                requiredEvidence = mapOf(EvidenceCategory.MOUNTAIN_OPERATIONS to 30),
+            ),
+            HeroTraitDefinition(
+                id = "flak_screen",
+                title = "Flak Screen",
+                categoryId = EvidenceCategory.DEFENSIVE_OPERATIONS,
+                legacyTrait = LeaderType.FLAK_SUPPORT,
+                compatibleUnitClasses = setOf(UnitClass.FLAK.value, UnitClass.AIR_DEFENCE.value),
+                requiredEvidence = mapOf(EvidenceCategory.DEFENSIVE_OPERATIONS to 30),
+            ),
+            HeroTraitDefinition(
+                id = "shoulder_to_shoulder",
+                title = "Shoulder to Shoulder",
+                categoryId = EvidenceCategory.DEFENSIVE_OPERATIONS,
+                legacyTrait = LeaderType.EXTENDED_FRONT,
+                compatibleUnitClasses = classesFor(LeaderType.EXTENDED_FRONT),
+                requiredEvidence = mapOf(EvidenceCategory.DEFENSIVE_OPERATIONS to 45),
+            ),
+            HeroTraitDefinition(
+                id = "forest_ambush",
+                title = "Forest Ambush",
+                categoryId = EvidenceCategory.FOREST_OPERATIONS,
+                legacyTrait = LeaderType.FOREST_CAMOUFLAGE,
+                compatibleUnitClasses = classesFor(LeaderType.FOREST_CAMOUFLAGE),
+                requiredEvidence = mapOf(EvidenceCategory.FOREST_OPERATIONS to 60),
+            ),
+            HeroTraitDefinition(
+                id = "river_engineer",
+                title = "River Engineer",
+                categoryId = EvidenceCategory.RIVER_OPERATIONS,
+                legacyTrait = LeaderType.BRIDGING,
+                compatibleUnitClasses = classesFor(LeaderType.BRIDGING),
+                requiredEvidence = mapOf(EvidenceCategory.RIVER_OPERATIONS to 60),
+            ),
+            HeroTraitDefinition(
+                id = "liberator",
+                title = "Liberator",
+                categoryId = EvidenceCategory.URBAN_COMBAT,
+                legacyTrait = LeaderType.LIBERATOR,
+                compatibleUnitClasses = classesFor(LeaderType.LIBERATOR),
+                requiredEvidence = mapOf(EvidenceCategory.URBAN_COMBAT to 60),
+            ),
+            HeroTraitDefinition(
+                id = "shock_command",
+                title = "Shock Command",
+                categoryId = EvidenceCategory.ARMORED_COMBAT,
+                legacyTrait = LeaderType.SHOCK_TACTICS,
+                requiredEvidence = mapOf(EvidenceCategory.ARMORED_COMBAT to 60),
+            ),
+            HeroTraitDefinition(
+                id = "watchful_command",
+                title = "Watchful Command",
+                categoryId = EvidenceCategory.DEFENSIVE_OPERATIONS,
+                legacyTrait = LeaderType.OVERWATCH,
+                compatibleUnitClasses = classesFor(LeaderType.OVERWATCH),
+                requiredEvidence = mapOf(EvidenceCategory.DEFENSIVE_OPERATIONS to 75),
+            ),
+            HeroTraitDefinition(
+                id = "relentless_fire",
+                title = "Relentless Fire",
+                categoryId = EvidenceCategory.OFFENSIVE_OPERATIONS,
+                legacyTrait = LeaderType.DEVASTATING_FIRE,
+                requiredEvidence = mapOf(EvidenceCategory.OFFENSIVE_OPERATIONS to 90),
+            ),
         )
+
+    /** Every unit class [trait]'s rule can fire for, by the same test the legacy pools use. */
+    private fun classesFor(trait: LeaderType): Set<Int> =
+        UnitClass.entries
+            .map { it.value }
+            .filter {
+                it != UnitClass.NONE.value &&
+                    OgLeaderPools.appliesTo(
+                        trait,
+                        it,
+                    )
+            }.toSet()
 
     private val byId: Map<String, HeroTraitDefinition> = ALL.associateBy { it.id }
 

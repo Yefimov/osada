@@ -314,9 +314,9 @@ internal class UnitStatCard(
                 "unit_info.experience.value",
                 mapOf("experience" to experience, "max" to UNIT_MAX_EXPERIENCE),
             )
-        byId("osadaUcEnt")?.textContent = if (entrenchment > 0) "⛨$entrenchment" else ""
-        byId("osadaUcEnt")?.title =
-            I18n.t("unit_info.entrenchment.value", mapOf("value" to entrenchment))
+        // Shown at 0 too for a unit that can dig, so the explanation has something to hover.
+        byId("osadaUcEnt")?.textContent = if (EntrenchmentTooltip.visible(unit)) "⛨$entrenchment" else ""
+        byId("osadaUcEnt")?.title = EntrenchmentTooltip.text(unit)
         val grounded = GameRules.isAir(unit) && GameRules.airGroundedByWeather(unit)
         byId("osadaUcWeather")?.textContent = if (grounded) "⚠" else ""
         byId("osadaUcWeather")?.title =

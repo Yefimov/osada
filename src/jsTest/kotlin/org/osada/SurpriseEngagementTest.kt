@@ -26,10 +26,11 @@ import kotlin.test.assertTrue
  * (`GameMap.surpriseTarget`). Panzer Marshal ran that combat from its move-finish handler and the
  * port had dropped the call; OG lists it among the ways a Normal Combat starts.
  *
- * An ordinary formation reaches the hidden unit's hex: an UNSEEN zone of control does not stop a
- * move (OG's tutorial: an ordinary unit moved into unspotted ground risks that *"the hex could be
- * occupied by an enemy unit that would ambush our unit"*). A `Partizan` walks up too, but OG says
- * it "cannot be surprised" ([partisansCannotBeSurprised]).
+ * Whether the stop is a surprise or a mere contact depends on the ROUTE: a hidden enemy standing on
+ * a hex the ordered path goes through is fought -- even though an ordinary mover is halted by its
+ * zone of control one hex earlier -- while one merely beside the route is a contact without combat
+ * (OG, verified by the owner in play; the two Suomussalmi orders below are the regressions). A
+ * `Partizan` walks up too, but OG says it "cannot be surprised" ([partisansCannotBeSurprised]).
  *
  * Same corridor as `ZoneOfControlMovementTest`: row 1 clear, rows 0 and 2 impassable.
  */
@@ -55,7 +56,7 @@ class SurpriseEngagementTest {
         EquipmentData().apply {
             uclass = UnitClass.INFANTRY.value
             movmethod = MovMethod.LEG.value
-            movpoints = 6
+            movpoints = 8 // enough for the seven-hex Suomussalmi route
             fuel = 0
             ammo = 6
             spotrange = 1
@@ -178,21 +179,107 @@ class SurpriseEngagementTest {
 
     /**
      * No commander, no special: an ordinary rifle company meets the hidden unit's zone of control on
-     * the hex before it and stops there on CONTACT, without a fight (OG manual 6.13.1, restored
-     * 2026-09-27). Surprise is for the movers that zone does not stop, and for a start next to it.
+     * the hex before it. Because that unit stands ON the ordered route, this is a collision, not a
+     * contact: the walk ends short of the occupied hex and the company is surprised (OG, verified by
+     * the owner in play). Before 2026-09-28 the zone stopped the walk a step before the occupant
+     * check could see the enemy, and the move ended as "contact" with no fight.
      */
     @Test
-    fun anOrdinaryFormationStopsOnContactBeforeAHiddenEnemy() {
-        val (map, _) = corridorWithHiddenEnemy()
+    fun anOrdinaryFormationRunningIntoAHiddenEnemyOnItsRouteIsSurprised() {
+        val (map, enemy) = corridorWithHiddenEnemy()
         val mover = place(map, 1, 2, 0, legEqid)
 
         map.setMoveRange(mover)
         val result = map.moveUnit(mover, 1, 6)
 
         assertEquals(1 to 3, mover.getPos()!!.let { it.row to it.col }, "halted on the hex before it")
+        assertTrue(mover.isSurprised)
+        assertFalse(result.stoppedByContact, "a surprise, not a contact")
+        assertEquals(1 to 4, result.surpriseCell.first().let { it.row to it.col })
+        assertSame(enemy, map.surpriseTarget(mover, result))
+    }
+
+    /** A hidden enemy BESIDE the route, not on it, is a contact: the zone stops the walk, nothing fights. */
+    @Test
+    fun aHiddenEnemyBesideTheRouteIsOnlyAContact() {
+        val (map, enemy) = corridorWithHiddenEnemy()
+        map.map!![1][4].delUnit(enemy)
+        map.map!![2][4].setUnit(enemy)
+        val mover = place(map, 1, 2, 0, legEqid)
+
+        map.setMoveRange(mover)
+        val result = map.moveUnit(mover, 1, 6)
+
+        assertEquals(1 to 3, mover.getPos()!!.let { it.row to it.col }, "stopped on entering the zone")
         assertTrue(result.stoppedByContact)
         assertFalse(mover.isSurprised)
         assertNull(map.surpriseTarget(mover, result))
+    }
+
+    /** Suomussalmi, (col 23,row 23) -> (col 20,row 25): the hidden infantry IS the destination. The
+     *  walk stops on the last hex before it and fights. */
+    @Test
+    fun suomussalmiMoveOntoHiddenInfantryStopsBeforeItAndFights() {
+        val route = listOf(23 to 23, 24 to 22, 24 to 21, 25 to 20)
+        val (map, enemy) = suomussalmiRoute(route, enemyAt = 25 to 20)
+        val mover = place(map, 23, 23, 0, legEqid)
+
+        map.setMoveRange(mover)
+        val result = map.moveUnit(mover, 25, 20)
+
+        assertEquals(24 to 21, mover.getPos()!!.let { it.row to it.col })
+        assertTrue(mover.isSurprised)
+        assertEquals(25 to 20, result.surpriseCell.first().let { it.row to it.col })
+        assertSame(enemy, map.surpriseTarget(mover, result))
+    }
+
+    /** Suomussalmi, (col 22,row 27) -> (col 15,row 24) through the enemy on (col 19,row 26): an
+     *  INTERMEDIATE hex of the route, not the destination. Stops on (col 20,row 27) and fights. */
+    @Test
+    fun suomussalmiRouteThroughAnOccupiedIntermediateHexStopsBeforeItAndFights() {
+        val route = listOf(27 to 22, 27 to 21, 27 to 20, 26 to 19, 26 to 18, 25 to 17, 25 to 16, 24 to 15)
+        val (map, enemy) = suomussalmiRoute(route, enemyAt = 26 to 19)
+        val mover = place(map, 27, 22, 0, legEqid)
+
+        map.setMoveRange(mover)
+        val result = map.moveUnit(mover, 24, 15)
+
+        assertEquals(27 to 20, mover.getPos()!!.let { it.row to it.col })
+        assertTrue(mover.isSurprised)
+        assertFalse(result.stoppedByContact)
+        assertEquals(26 to 19, result.surpriseCell.first().let { it.row to it.col })
+        assertSame(enemy, map.surpriseTarget(mover, result))
+    }
+
+    /** Suomussalmi's 34x31 grid with only [route] (row to col) passable, nothing spotted by side 0
+     *  but the start, and a hidden enemy rifle company on [enemyAt]. */
+    private fun suomussalmiRoute(
+        route: List<Pair<Int, Int>>,
+        enemyAt: Pair<Int, Int>,
+    ): Pair<GameMap, GameUnit> {
+        val map =
+            GameMap().apply {
+                rows = 34
+                cols = 31
+                allocMap()
+            }
+        for (playerId in 0..1) {
+            map.addPlayer(
+                Player().apply {
+                    id = playerId
+                    side = playerId
+                    country = 0
+                },
+            )
+        }
+        for (r in 0 until 34) {
+            for (c in 0 until 31) {
+                val hex = map.map!![r][c]
+                hex.terrain = if (r to c in route) TerrainType.CLEAR.value else TerrainType.IMPASSABLE_RIVER.value
+                hex.setSpotted(0, r to c == route.first())
+            }
+        }
+        return map to place(map, enemyAt.first, enemyAt.second, 1, legEqid)
     }
 
     /** Starting next to a hidden enemy and moving through its hex is still a surprise: there was no

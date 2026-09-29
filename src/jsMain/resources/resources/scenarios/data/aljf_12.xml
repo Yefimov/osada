@@ -25,6 +25,7 @@
   <hex row="0" col="25" terrain="3"/>
   <hex row="0" col="27" terrain="3"/>
   <hex row="0" col="28" terrain="13" name="Clayburn Run"/>
+  <hex row="0" col="29" rail="17"/>
   <hex row="0" col="33" terrain="3"/>
   <hex row="0" col="34" terrain="3"/>
   <hex row="0" col="35" terrain="3"/>
@@ -52,6 +53,7 @@
   <hex row="1" col="22" terrain="3"/>
   <hex row="1" col="26" terrain="3"/>
   <hex row="1" col="28" terrain="13" name="Clayburn Run"/>
+  <hex row="1" col="29" rail="17"/>
   <hex row="1" col="33" terrain="3"/>
   <hex row="1" col="34" terrain="3"/>
   <hex row="1" col="35" terrain="3"/>
@@ -84,6 +86,7 @@
   <hex row="2" col="23" terrain="5"/>
   <hex row="2" col="26" terrain="5"/>
   <hex row="2" col="28" terrain="13" name="Clayburn Run"/>
+  <hex row="2" col="29" rail="17"/>
   <hex row="2" col="34" terrain="3"/>
   <hex row="2" col="41" road="34"/>
   <hex row="2" col="42" road="34"/>
@@ -110,6 +113,7 @@
   <hex row="3" col="26" terrain="3"/>
   <hex row="3" col="27" terrain="13" name="Clayburn Run"/>
   <hex row="3" col="28" terrain="13" name="Clayburn Run"/>
+  <hex row="3" col="29" rail="17"/>
   <hex row="3" col="35" road="40"/>
   <hex row="3" col="37" road="40"/>
   <hex row="3" col="39" road="34"/>
@@ -139,7 +143,7 @@
   <hex row="4" col="26" terrain="3"/>
   <hex row="4" col="27" terrain="13" name="Clayburn Run"/>
   <hex row="4" col="28" terrain="3"/>
-  <hex row="4" col="29" terrain="1" road="40" name="Falmouth Station" owner="0" flag="162" station="1"/>
+  <hex row="4" col="29" terrain="1" road="40" name="Falmouth Station" owner="0" flag="162" station="1" rail="17"/>
   <hex row="4" col="31" road="34"/>
   <hex row="4" col="32" road="40"/>
   <hex row="4" col="33" road="130"/>
@@ -171,6 +175,7 @@
   <hex row="5" col="25" terrain="3"/>
   <hex row="5" col="27" terrain="13" road="34" name="Clayburn Run"/>
   <hex row="5" col="28" road="34"/>
+  <hex row="5" col="29" rail="17"/>
   <hex row="5" col="30" terrain="3" road="130"/>
   <hex row="5" col="36" terrain="3"/>
   <hex row="5" col="37" terrain="3"/>
@@ -201,6 +206,7 @@
   </hex>
   <hex row="6" col="26" road="34"/>
   <hex row="6" col="28" terrain="13" name="Clayburn Run"/>
+  <hex row="6" col="29" rail="17"/>
   <hex row="6" col="31" terrain="1" name="Roy"/>
   <hex row="7" col="1" terrain="10" name="Rappahannock River"/>
   <hex row="7" col="3" terrain="5"/>
@@ -231,6 +237,7 @@
   <hex row="7" col="26" terrain="5" name="Stafford Heights"/>
   <hex row="7" col="27" terrain="5" name="Stafford Heights"/>
   <hex row="7" col="28" terrain="13" name="Clayburn Run"/>
+  <hex row="7" col="29" rail="17"/>
   <hex row="7" col="35" terrain="3"/>
   <hex row="7" col="39" terrain="3"/>
   <hex row="8" col="0" terrain="3"/>
@@ -271,6 +278,7 @@
   <hex row="8" col="26" terrain="5" name="Stafford Heights"/>
   <hex row="8" col="27" terrain="5" name="Stafford Heights"/>
   <hex row="8" col="28" terrain="13" name="Clayburn Run"/>
+  <hex row="8" col="29" rail="17"/>
   <hex row="8" col="31" terrain="3"/>
   <hex row="8" col="33" terrain="3"/>
   <hex row="8" col="35" terrain="3"/>
@@ -310,6 +318,7 @@
   <hex row="9" col="26" terrain="5" name="Stafford Heights"/>
   <hex row="9" col="27" terrain="5" name="Stafford Heights"/>
   <hex row="9" col="28" terrain="13" name="Clayburn Run"/>
+  <hex row="9" col="29" rail="17"/>
   <hex row="9" col="31" terrain="5" name="Stafford Heights"/>
   <hex row="9" col="32" terrain="3"/>
   <hex row="9" col="33" terrain="3"/>
@@ -351,6 +360,7 @@
   <hex row="10" col="26" terrain="5" name="Stafford Heights"/>
   <hex row="10" col="27" terrain="5" name="Stafford Heights"/>
   <hex row="10" col="28" terrain="13" name="Clayburn Run"/>
+  <hex row="10" col="29" rail="17"/>
   <hex row="10" col="30" terrain="5" name="Stafford Heights"/>
   <hex row="10" col="31" terrain="3"/>
   <hex row="10" col="32" terrain="3"/>
@@ -385,6 +395,7 @@
   </hex>
   <hex row="11" col="27" terrain="5" name="Stafford Heights"/>
   <hex row="11" col="28" terrain="13" name="Clayburn Run"/>
+  <hex row="11" col="29" rail="17"/>
   <hex row="11" col="30" terrain="5" name="Stafford Heights"/>
   <hex row="11" col="31" terrain="3"/>
   <hex row="11" col="32" terrain="3"/>
@@ -427,6 +438,7 @@
   <hex row="12" col="26" terrain="1" road="41" name="Chatham" deploy="0"/>
   <hex row="12" col="27" terrain="5" road="144" name="Stafford Heights" deploy="0"/>
   <hex row="12" col="28" terrain="13" name="Clayburn Run"/>
+  <hex row="12" col="29" rail="17"/>
   <hex row="12" col="30" terrain="5" name="Stafford Heights"/>
   <hex row="12" col="31" terrain="3"/>
   <hex row="12" col="32" terrain="3"/>
@@ -456,7 +468,7 @@
   <hex row="13" col="26" terrain="10" name="Rappahannock River"/>
   <hex row="13" col="27" terrain="13" road="9" name="Clayburn Run" deploy="0"/>
   <hex row="13" col="28" terrain="13" name="Clayburn Run"/>
-  <hex row="13" col="29" road="40">
+  <hex row="13" col="29" road="40" rail="33">
     <unit id="45975" owner="0" flag="163" face="0" exp="212"/>
   </hex>
   <hex row="13" col="30" terrain="5" name="Stafford Heights"/>
@@ -494,10 +506,10 @@
   <hex row="14" col="26" terrain="10" name="Rappahannock River">
     <unit id="523" owner="0" flag="163" face="0" str="2" bstr="2"/>
   </hex>
-  <hex row="14" col="27" terrain="16">
+  <hex row="14" col="27" terrain="16" rail="34">
     <unit id="45971" owner="0" flag="163" face="0" exp="210"/>
   </hex>
-  <hex row="14" col="28" road="146" owner="0" flag="162" victory="0">
+  <hex row="14" col="28" road="146" owner="0" flag="162" victory="0" rail="34">
     <unit id="46009" owner="0" flag="163" face="0" transport="45993" exp="136"/>
   </hex>
   <hex row="14" col="29" terrain="5" name="Stafford Heights"/>
@@ -535,8 +547,8 @@
   <hex row="15" col="22" terrain="13" road="34" name="Canal"/>
   <hex row="15" col="23" terrain="13" name="Canal"/>
   <hex row="15" col="24" terrain="1" name="Fredericksburg"/>
-  <hex row="15" col="25" terrain="1" road="25" name="Fredericksburg" station="1"/>
-  <hex row="15" col="26" terrain="10" name="Rappahannock River"/>
+  <hex row="15" col="25" terrain="1" road="25" name="Fredericksburg" station="1" rail="34"/>
+  <hex row="15" col="26" terrain="10" name="Rappahannock River" rail="34"/>
   <hex row="15" col="27" terrain="10" name="Rappahannock River"/>
   <hex row="15" col="28" terrain="5" road="17" name="Stafford Heights" deploy="0"/>
   <hex row="15" col="29" terrain="3"/>
@@ -570,7 +582,7 @@
     <unit id="44781" owner="1" flag="151" face="0" exp="131"/>
   </hex>
   <hex row="16" col="21" terrain="5" name="Marye&#x27;s Heights"/>
-  <hex row="16" col="24" terrain="13" name="Canal">
+  <hex row="16" col="24" terrain="13" name="Canal" rail="18">
     <unit id="45971" owner="0" flag="163" face="0" exp="45"/>
   </hex>
   <hex row="16" col="25" road="19"/>
@@ -614,7 +626,7 @@
   <hex row="17" col="21" terrain="13" name="Hazel Run"/>
   <hex row="17" col="22" terrain="13" name="Hazel Run"/>
   <hex row="17" col="23" terrain="13" name="Hazel Run"/>
-  <hex row="17" col="24" terrain="13" name="Hazel Run"/>
+  <hex row="17" col="24" terrain="13" name="Hazel Run" rail="17"/>
   <hex row="17" col="25" terrain="13" road="17" name="Hazel Run"/>
   <hex row="17" col="26" terrain="1" name="Fredericksburg"/>
   <hex row="17" col="27" terrain="10" name="Rappahannock River"/>
@@ -649,7 +661,7 @@
   <hex row="18" col="19" terrain="3"/>
   <hex row="18" col="20" terrain="3"/>
   <hex row="18" col="23" road="34"/>
-  <hex row="18" col="24" road="40"/>
+  <hex row="18" col="24" road="40" rail="17"/>
   <hex row="18" col="25" terrain="1" road="161" name="Furneyborough"/>
   <hex row="18" col="26" terrain="13" name="Hazel Run"/>
   <hex row="18" col="27" terrain="13" name="Hazel Run"/>
@@ -680,7 +692,7 @@
   <hex row="19" col="20" terrain="3"/>
   <hex row="19" col="21" road="34"/>
   <hex row="19" col="22" road="34"/>
-  <hex row="19" col="24" road="18"/>
+  <hex row="19" col="24" road="18" rail="17"/>
   <hex row="19" col="28" terrain="10" name="Rappahannock River"/>
   <hex row="19" col="29" terrain="16"/>
   <hex row="19" col="30" terrain="5" road="136" name="Stafford Heights" deploy="0"/>
@@ -716,7 +728,7 @@
   </hex>
   <hex row="20" col="20" road="34"/>
   <hex row="20" col="21" terrain="3"/>
-  <hex row="20" col="24" road="17"/>
+  <hex row="20" col="24" road="17" rail="17"/>
   <hex row="20" col="27" terrain="13" name="Deep Run"/>
   <hex row="20" col="28" terrain="10" name="Rappahannock River"/>
   <hex row="20" col="29" terrain="10" name="Rappahannock River"/>
@@ -751,7 +763,7 @@
   </hex>
   <hex row="21" col="20" terrain="5"/>
   <hex row="21" col="21" terrain="3"/>
-  <hex row="21" col="24" road="17"/>
+  <hex row="21" col="24" road="17" rail="17"/>
   <hex row="21" col="27" terrain="13" name="Deep Run"/>
   <hex row="21" col="28" terrain="3"/>
   <hex row="21" col="30" terrain="16"/>
@@ -788,7 +800,7 @@
   <hex row="22" col="20" terrain="5"/>
   <hex row="22" col="21" terrain="3"/>
   <hex row="22" col="22" terrain="3"/>
-  <hex row="22" col="24" road="17"/>
+  <hex row="22" col="24" road="17" rail="17"/>
   <hex row="22" col="27" terrain="13" name="Deep Run"/>
   <hex row="22" col="31" terrain="10" name="Rappahannock River">
     <unit id="523" owner="0" flag="163" face="0" str="2" bstr="2"/>
@@ -818,7 +830,7 @@
   <hex row="23" col="15" terrain="3"/>
   <hex row="23" col="20" terrain="5"/>
   <hex row="23" col="21" terrain="5"/>
-  <hex row="23" col="24" road="17"/>
+  <hex row="23" col="24" road="17" rail="17"/>
   <hex row="23" col="27" terrain="13" name="Deep Run"/>
   <hex row="23" col="29">
     <unit id="45969" owner="0" flag="163" face="0" exp="35"/>
@@ -861,8 +873,8 @@
   <hex row="24" col="22" terrain="5">
     <unit id="44798" owner="1" flag="151" face="0" exp="47"/>
   </hex>
-  <hex row="24" col="24" road="9"/>
-  <hex row="24" col="25" road="136"/>
+  <hex row="24" col="24" road="9" rail="9"/>
+  <hex row="24" col="25" road="136" rail="136"/>
   <hex row="24" col="27" terrain="13" name="Deep Run"/>
   <hex row="24" col="30" terrain="1" name="Mansfield"/>
   <hex row="24" col="32" terrain="10" name="Rappahannock River"/>
@@ -898,7 +910,7 @@
   <hex row="25" col="21" terrain="3"/>
   <hex row="25" col="22" terrain="5"/>
   <hex row="25" col="25" terrain="13" name="Deep Run"/>
-  <hex row="25" col="26" terrain="13" road="136" name="Deep Run"/>
+  <hex row="25" col="26" terrain="13" road="136" name="Deep Run" rail="144"/>
   <hex row="25" col="27" road="144"/>
   <hex row="25" col="29" terrain="3"/>
   <hex row="25" col="33">
@@ -935,7 +947,8 @@
   <hex row="26" col="22" terrain="5"/>
   <hex row="26" col="23" terrain="13" name="Deep Run"/>
   <hex row="26" col="24" terrain="13" name="Deep Run"/>
-  <hex row="26" col="27" road="9"/>
+  <hex row="26" col="26" rail="9"/>
+  <hex row="26" col="27" road="9" rail="136"/>
   <hex row="26" col="28" terrain="3"/>
   <hex row="26" col="34" terrain="1" name="Smithfield"/>
   <hex row="26" col="35" terrain="10" name="Rappahannock River"/>
@@ -964,7 +977,7 @@
     <unit id="44792" owner="1" flag="151" face="0" exp="47"/>
   </hex>
   <hex row="27" col="25" terrain="5" name="Prospect Hill"/>
-  <hex row="27" col="28" road="136"/>
+  <hex row="27" col="28" road="136" rail="144"/>
   <hex row="27" col="29" road="136"/>
   <hex row="27" col="34">
     <unit id="45969" owner="0" flag="163" face="0"/>
@@ -1001,6 +1014,8 @@
   </hex>
   <hex row="28" col="26" terrain="5" name="Prospect Hill"/>
   <hex row="28" col="27" terrain="5" name="Prospect Hill"/>
+  <hex row="28" col="28" rail="9"/>
+  <hex row="28" col="29" rail="136"/>
   <hex row="28" col="30" road="136"/>
   <hex row="28" col="31" road="144"/>
   <hex row="28" col="35" terrain="3"/>
@@ -1033,7 +1048,8 @@
   </hex>
   <hex row="29" col="28" terrain="3"/>
   <hex row="29" col="29" terrain="5" name="Prospect Hill"/>
-  <hex row="29" col="31" road="17"/>
+  <hex row="29" col="30" rail="136"/>
+  <hex row="29" col="31" road="17" rail="144"/>
   <hex row="29" col="33" terrain="3"/>
   <hex row="29" col="34" terrain="3"/>
   <hex row="29" col="36" terrain="10" name="Rappahannock River"/>
@@ -1072,7 +1088,7 @@
   <hex row="30" col="27" terrain="3"/>
   <hex row="30" col="28" terrain="5" name="Prospect Hill"/>
   <hex row="30" col="29" terrain="5" name="Prospect Hill"/>
-  <hex row="30" col="31" road="9"/>
+  <hex row="30" col="31" road="9" rail="9"/>
   <hex row="30" col="32" terrain="3"/>
   <hex row="30" col="33" terrain="3"/>
   <hex row="30" col="36" terrain="1" name="Alsop"/>
@@ -1102,7 +1118,7 @@
     <unit id="44787" owner="1" flag="151" face="0" exp="66"/>
   </hex>
   <hex row="31" col="29" terrain="5" name="Prospect Hill"/>
-  <hex row="31" col="32" road="144"/>
+  <hex row="31" col="32" road="144" rail="144"/>
   <hex row="31" col="41" terrain="10" name="Massaponax River"/>
   <hex row="31" col="42" terrain="10" name="Rappahannock River"/>
   <hex row="31" col="43" terrain="10" name="Rappahannock River"/>
@@ -1133,7 +1149,7 @@
   <hex row="32" col="28" terrain="3" road="136"/>
   <hex row="32" col="29" terrain="5" road="136" name="Prospect Hill"/>
   <hex row="32" col="31" road="34"/>
-  <hex row="32" col="32" road="49" name="Hamiltons Crossing" owner="1" flag="150" station="1">
+  <hex row="32" col="32" road="49" name="Hamiltons Crossing" owner="1" flag="150" station="1" rail="17">
     <unit id="44789" owner="1" flag="151" face="0"/>
   </hex>
   <hex row="32" col="33" terrain="1" name="Hamiltons Crossing"/>
@@ -1174,7 +1190,7 @@
   <hex row="33" col="31">
     <unit id="44796" owner="1" flag="151" face="0" exp="124"/>
   </hex>
-  <hex row="33" col="32" road="17"/>
+  <hex row="33" col="32" road="17" rail="17"/>
   <hex row="33" col="38" terrain="3"/>
   <hex row="33" col="39" terrain="3"/>
   <hex row="33" col="41" terrain="10" name="Massaponax River"/>
@@ -1200,7 +1216,7 @@
   <hex row="34" col="28" terrain="10" name="Massaponax River"/>
   <hex row="34" col="29" terrain="10" name="Massaponax River"/>
   <hex row="34" col="30" terrain="3"/>
-  <hex row="34" col="32" road="17"/>
+  <hex row="34" col="32" road="17" rail="17"/>
   <hex row="34" col="41" terrain="10" name="Massaponax River"/>
   <hex row="35" col="0" terrain="3"/>
   <hex row="35" col="1" terrain="3"/>
@@ -1221,7 +1237,7 @@
   <hex row="35" col="26" terrain="10" name="Massaponax River"/>
   <hex row="35" col="29" terrain="3"/>
   <hex row="35" col="30" terrain="10" name="Massaponax River"/>
-  <hex row="35" col="32" road="17"/>
+  <hex row="35" col="32" road="17" rail="17"/>
   <hex row="35" col="40" terrain="10" name="Massaponax River"/>
   <hex row="36" col="0" terrain="3"/>
   <hex row="36" col="1" terrain="3"/>
@@ -1247,7 +1263,7 @@
   <hex row="36" col="29" terrain="3"/>
   <hex row="36" col="30" terrain="10" name="Massaponax River"/>
   <hex row="36" col="31" terrain="10" name="Massaponax River"/>
-  <hex row="36" col="32" road="9"/>
+  <hex row="36" col="32" road="9" rail="17"/>
   <hex row="36" col="33" road="144"/>
   <hex row="36" col="39" terrain="10" name="Massaponax River"/>
   <hex row="36" col="40" terrain="10" name="Massaponax River"/>
@@ -1277,6 +1293,7 @@
   <hex row="37" col="27" terrain="5"/>
   <hex row="37" col="29" terrain="3"/>
   <hex row="37" col="31" terrain="10" name="Massaponax River"/>
+  <hex row="37" col="32" rail="17"/>
   <hex row="37" col="33" terrain="10" road="17" name="Massaponax River"/>
   <hex row="37" col="35" terrain="10" name="Massaponax River"/>
   <hex row="37" col="37" terrain="10" name="Massaponax River"/>

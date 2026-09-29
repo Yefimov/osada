@@ -356,6 +356,11 @@ enum class LeaderType(
     SKILLED_RECONNAISSANCE(31),
     STREET_FIGHTER(32),
     SUPERIOR_MANEUVER(33),
+
+    // Open General's two leader attributes that Panzer Marshal never had (OG list entries 29 and
+    // 35). Numbered past PM's range so no save-visible value moves.
+    EXTENDED_FRONT(34),
+    FLAK_SUPPORT(35),
 }
 
 enum class EndGameType {
@@ -576,10 +581,6 @@ class UiSettings {
      *  Set by the Barrage chip, cleared by firing, by pressing it again, or by selecting anything
      *  else -- a mode the player can enter by accident must be one they can leave the same way. */
     var barrageMode: Boolean = false
-
-    /** OG's railway destination mode is open (`rules/RailTransport`). Mutually exclusive with
-     *  [barrageMode] in practice -- opening either closes the other through `delCurrentUnit`. */
-    var railMode: Boolean = false
     var markCombatUnits: Boolean = true
     var markOwnUnits: Boolean = false
     var markEnemyUnits: Boolean = false

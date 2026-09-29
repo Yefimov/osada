@@ -54,7 +54,12 @@ class Game {
     internal var campaignPlayer: Player? = null
     internal var savedCampaignPlayer: Player? = null
     internal var continueCampaignFlag: Boolean = false
-    internal var removeNonCampaignUnitsFlag: Boolean = false
+
+    /** A campaign defeat is waiting on the restart-or-accept question (`offerRestartBeforeDefeat`);
+     *  the turn loop stands still meanwhile. [defeatAccepted] lets the accepted defeat through. */
+    internal var awaitingDefeatChoice: Boolean = false
+    internal var defeatAccepted: Boolean = false
+    internal var auxiliaryScenarioUnitsFlag: Boolean = false
     internal var buildCoreUnitsFlag: Boolean = false
 
     /** Set by `applyCoreSwitches` when the battle being entered restarts the core: its own placed
@@ -111,7 +116,7 @@ class Game {
     }
 
     fun processTurn() {
-        if (!gameStarted || gameEnded) return
+        if (!gameStarted || gameEnded || awaitingDefeatChoice) return
         if (nextScenarioData != null && continueCampaignFlag && uiMessageClicked) {
             startPendingScenarioTransition()
         } else {
@@ -144,6 +149,8 @@ class Game {
                 .advance(scenario)
             deployArrivingReinforcements()
             announceTurnMessage()
+            org.osada.ui.PontoonBridgeAnnouncements
+                .opened(this)
             // AFTER the new turn is fully set up, not before it. The autosave used to be taken
             // here first, which wrote a snapshot of a turn that had already been handed over --
             // `map.turn` incremented -- but had not yet had its weather rolled or its

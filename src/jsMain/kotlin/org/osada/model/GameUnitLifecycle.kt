@@ -2,15 +2,13 @@ package org.osada.model
 
 import org.osada.UnitClass
 import org.osada.entrenchRateFor
-import org.osada.rules.Attachments
-import org.osada.rules.Craters
+import org.osada.rules.EntrenchmentDefence
 import org.osada.rules.GameRules
 import org.osada.rules.canEntrench
 
 private const val EXPERIENCE_ENTRENCH_DIVISOR = 100
 private const val ENTRENCH_TICK_SLOPE = 9
 private const val ENTRENCH_TICK_BASE = 4
-private const val MAX_ENTRENCHMENT_ABOVE_TERRAIN = 5
 
 /** Converts mutable resource pools exactly once when the mode is toggled or a new unit appears. */
 internal fun GameUnit.synchronizeStalinRegime(enabled: Boolean) {
@@ -43,18 +41,15 @@ fun GameUnit.entrench(): Boolean {
     // Fast Entrench (Attachments.SLOT_FAST_ENTRENCH, DEFERRED.md §1.4 Tier 2) raises the terrain's
     // own entrenchment ceiling for this unit -- both the immediate snap-to-baseline below and the
     // slow tick-up toward baseline+5 pair naturally with the existing per-efile terrain value
-    // rather than needing a new mechanic.
-    // A crater is cover the shells dug for you (`rules/Craters`, OSADA's own rule): it raises the
-    // FLOOR the terrain gives, so it can never beat entrenching and can never be farmed by shelling
-    // your own line. `maxOf`, not `+`, is the whole of that design.
-    val terrainFloor = maxOf(TerrainEx.baseEntrenchment(hex.terrain), Craters.entrenchmentFloor(hex))
-    val terrainEnt = terrainFloor + Attachments.bonus(this, Attachments.SLOT_FAST_ENTRENCH)
+    // rather than needing a new mechanic. The baseline (crater floor included) has one owner, which
+    // the unit card's tooltip reads too.
+    val terrainEnt = EntrenchmentDefence.terrainBaseline(this, hex)
     val unitClass = unitData().uclass
     if (entrenchment >= terrainEnt) {
         var extra = entrenchment - terrainEnt
         var limit = ENTRENCH_TICK_SLOPE * extra + ENTRENCH_TICK_BASE
         entrenchTicks += experience / EXPERIENCE_ENTRENCH_DIVISOR + (terrainEnt + 1) * entrenchRateFor(unitClass)
-        while (entrenchTicks >= limit && entrenchment < terrainEnt + MAX_ENTRENCHMENT_ABOVE_TERRAIN) {
+        while (entrenchTicks >= limit && entrenchment < terrainEnt + EntrenchmentDefence.MAX_ABOVE_TERRAIN) {
             entrenchTicks -= limit
             entrenchment++
             extra++

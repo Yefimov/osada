@@ -9,7 +9,7 @@ import org.osada.model.ensureFormationIds
 import org.osada.model.getPlayers
 import org.osada.model.getUnits
 import org.osada.model.initDossier
-import org.osada.model.removeNonCampaignUnits
+import org.osada.model.keepScenarioUnitsAsAuxiliary
 import org.osada.model.restoreCoreUnitList
 import org.osada.model.undeployCoreUnits
 import org.osada.rules.CampaignStartPrestige
@@ -63,6 +63,9 @@ internal fun Game.handleCampaignScenarioLoaded(fromRestore: Boolean = false) {
     }
     rebuildRestartedCore()
     applyPendingCoreUnitRestore()
+    // The battle's own force stays as auxiliaries (`keepScenarioUnitsAsAuxiliary`). Before the
+    // formation ids below, so a unit that is only lent for this battle is never minted one.
+    if (auxiliaryScenarioUnitsFlag) scenario!!.map.keepScenarioUnitsAsAuxiliary(campaignPlayer!!)
     // The player's whole force is their army and thus hero-eligible (§9.1) — not just the units on
     // deployment hexes. Mint a formation id for every remaining on-map unit so a pre-placed campaign
     // enters the hero system instead of falling back to the dossier-less legacy leader.
@@ -79,15 +82,12 @@ internal fun Game.handleCampaignScenarioLoaded(fromRestore: Boolean = false) {
         // arrives mid-battle, but scenario 2+ reaches this handler with neither: its roster is
         // carried over by `Player.copy` and nothing sweeps the newly loaded map. Without this line a
         // Make Core unit authored into a later scenario would wear the marker, be skipped by
-        // `removeNonCampaignUnits` because it wears it, and still vanish at the NEXT transition
+        // `keepScenarioUnitsAsAuxiliary` because it wears it, and still vanish at the NEXT transition
         // because `setPlayerToHQ` only walks the roster.
         //
         // Idempotent, so running it on scenario 1 straight after `buildCoreUnitList` costs nothing.
         // Placed after `ensureFormationIds` so every unit already carries the id it will keep.
         scenario!!.map.enrollAuthoredCoreUnits(player)
-    }
-    if (removeNonCampaignUnitsFlag) {
-        scenario!!.map.removeNonCampaignUnits(campaignPlayer!!)
     }
     refreshHeroCampaignContext()
     // Consume next-scenario effects queued by the previous transition, after the core roster
@@ -148,7 +148,7 @@ internal fun Game.ensureUiCreated() {
 internal fun Game.onCampaignLoadFinished() {
     console.log("[OSADA] onCampaignLoadFinished")
     savedCampaignPlayer = null
-    removeNonCampaignUnitsFlag = false
+    auxiliaryScenarioUnitsFlag = false
     buildCoreUnitsFlag = true
     val current = campaign?.getCurrentScenario()
     if (current != null) {

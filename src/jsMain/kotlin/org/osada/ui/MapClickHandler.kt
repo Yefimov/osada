@@ -4,6 +4,7 @@ import org.osada.model.Cell
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
 import org.osada.model.Hex
+import org.osada.model.aircraftMayDeployOn
 import org.osada.model.canDeployOnTerrain
 import org.osada.model.delCurrentUnit
 import org.osada.model.getAttackableUnit
@@ -91,16 +92,8 @@ internal class MapClickHandler(
                 isValidDeployTarget(hex, map, map.currentPlayer?.side ?: 0)
 
         logIfEnemyUnattackable(map, hex, currentUnit, unit)
-        // Both targeting modes swallow the click: an offered hex acts, anything else closes the
-        // mode. Folded into one return so the guard stays inside detekt's budget as modes are
-        // added -- a third would otherwise cost another one.
-        if (uiSettings.barrageMode || uiSettings.railMode) {
-            return if (uiSettings.barrageMode) {
-                resolveBarrageClick(map, cell, hex)
-            } else {
-                resolveRailClick(map, cell, hex)
-            }
-        }
+        // The targeting mode swallows the click: an offered hex acts, anything else closes it.
+        if (uiSettings.barrageMode) return resolveBarrageClick(map, cell, hex)
         return when {
             currentUnit != null && hex.isAttackSel && !currentUnit.hasFired ->
                 tryAttackAt(cell.row, cell.col)
@@ -132,16 +125,8 @@ internal class MapClickHandler(
         currentPlayerSide: Int,
     ): Boolean {
         val currentUnit = map.currentUnit
-        // Both targeting modes swallow the click: an offered hex acts, anything else closes the
-        // mode. Folded into one return so the guard stays inside detekt's budget as modes are
-        // added -- a third would otherwise cost another one.
-        if (uiSettings.barrageMode || uiSettings.railMode) {
-            return if (uiSettings.barrageMode) {
-                resolveBarrageClick(map, cell, hex)
-            } else {
-                resolveRailClick(map, cell, hex)
-            }
-        }
+        // The targeting mode swallows the click: an offered hex acts, anything else closes it.
+        if (uiSettings.barrageMode) return resolveBarrageClick(map, cell, hex)
         return when {
             // Movement must win over deployment. In particular, aircraft may occupy the air layer
             // above a hex containing an enemy ground unit.
@@ -177,7 +162,13 @@ internal class MapClickHandler(
     private fun terrainAcceptsReserve(
         unit: GameUnit,
         hex: Hex,
-    ): Boolean = canDeployOnTerrain(unit, hex, GameRules.isAir(unit))
+    ): Boolean {
+        val pos = hex.getPos()
+        return canDeployOnTerrain(unit, hex, GameRules.isAir(unit)) &&
+            ui.game.scenario
+                ?.map
+                ?.aircraftMayDeployOn(unit, pos.row, pos.col) != false
+    }
 
     private fun isValidDeployTarget(
         hex: Hex,

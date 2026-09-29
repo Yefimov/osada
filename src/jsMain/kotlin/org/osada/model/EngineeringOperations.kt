@@ -19,8 +19,8 @@ import org.osada.rules.FacilityOwner
  *
  * OG requires the sapper to have taken no previous action (*"must be in a hex and hasn't done any
  * action"*), which is enforced by `UnitActionAvailability.engineering` and re-asserted here through
- * the same three flags — [GameUnit.hasMoved] is included, so a sapper cannot walk to a river and
- * throw a bridge across it in one turn.
+ * `Engineering.mayStartWork` — the efile's `build_start_ex` drops [GameUnit.hasMoved] from that
+ * test, so under Atomic a sapper CAN walk to a river and start a bridge in the same turn.
  *
  * Demolition is instant and free; construction and repair take turns and, where OG names a figure,
  * prestige. The prestige is charged in full at the START, the way OG's own "The construction of a

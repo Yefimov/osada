@@ -3,6 +3,7 @@ package org.osada.ui
 import org.osada.GameHolder
 import org.osada.model.GameUnit
 import org.osada.model.Hex
+import org.osada.model.aircraftMayDeployOn
 import org.osada.model.canDeployOnTerrain
 import org.osada.model.getAttackableUnit
 import org.osada.model.isInDeployZone
@@ -103,7 +104,10 @@ internal class HexCellRenderer(
         val pos = hex.getPos()
         val isOwnDeployZone = ownSide != null && frame.q.isInDeployZone(ownSide, pos.row, pos.col)
         val terrainAllowsUnit =
-            frame.deployUnit?.let { canDeployOnTerrain(it, hex, frame.airDeploySelected) } ?: true
+            frame.deployUnit?.let {
+                canDeployOnTerrain(it, hex, frame.airDeploySelected) &&
+                    frame.q.aircraftMayDeployOn(it, pos.row, pos.col)
+            } ?: true
         val showDeployHighlight =
             frame.deployMode &&
                 !deployOccupied &&
@@ -310,11 +314,6 @@ internal class HexCellRenderer(
         // Barrage targeting (OG 9.2). Drawn last of the selection overlays: while the mode is open
         // it is the only thing a click can act on.
         if (hex.isBarrageSel) {
-            rc.drawHex(rc.hexesCtx, x, y, hexStyles["barragetarget"])
-        }
-        // Railway destinations, for the same reason and with the same shape: while the mode is
-        // open these are the only hexes a click can act on.
-        if (hex.isRailSel) {
             rc.drawHex(rc.hexesCtx, x, y, hexStyles["barragetarget"])
         }
         // A minefield THIS side has detected. Drawn last so it sits over the move fill -- the player

@@ -8,10 +8,8 @@ import org.osada.model.EquipmentData
 import org.osada.model.GameMap
 import org.osada.model.Player
 import org.osada.model.move
-import org.osada.model.refreshRailPool
 import org.osada.model.returnTransportToPool
 import org.osada.model.takeTransportFromPool
-import org.osada.rules.ruleset.RuleKey
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -35,6 +33,7 @@ import kotlin.test.assertTrue
  */
 class TransportPoolLifetimeTest : OgRulesTestHarness() {
     private val navalTransportEqid = 950
+    private val trainEqid = 951
 
     @BeforeTest
     fun setup() {
@@ -144,35 +143,20 @@ class TransportPoolLifetimeTest : OgRulesTestHarness() {
         assertEquals(navalTransportEqid, unit.carrier, "and still aboard")
     }
 
-    // ---- rail, which has no journey to hold the slot for ---------------------------------------
+    // ---- rail: held for the journey, like air and naval --------------------------------------
 
     @Test
-    fun aRailwayMoveHoldsItsTrainUntilTheOwnerPlaysAgain() {
-        ruleset(RuleKey.RAIL_TRANSPORT to 1)
+    fun aTrainIsHeldForTheWholeJourneyAndReturnedWhenTheFormationStepsOff() {
         val map = world()
         GameHolder.instance = holderFor(map)
-        friendly.railTransports = 1
-        friendly.railTransportsMax = 1
-        railLine(map, row = 3, fromCol = 1, toCol = 6)
-        map.map!![3][1].station = true
-        map.map!![3][6].station = true
-        val unit = place(map, infantryEqid, 3, 1, side = 0)
-
-        assertTrue(RailTransport.entrain(map, unit, 3, 6))
-        assertEquals(0, friendly.railTransports, "the train is in use for the rest of the turn")
-
-        map.endTurn()
-        assertEquals(0, friendly.railTransports, "and stays in use while the opponent plays")
-
-        map.endTurn()
-        assertEquals(1, friendly.railTransports, "free again when its owner's next turn opens")
-    }
-
-    @Test
-    fun aSecondFormationCannotBoardATrainThatIsAlreadyOut() {
-        ruleset(RuleKey.RAIL_TRANSPORT to 1)
-        val map = world()
-        GameHolder.instance = holderFor(map)
+        Equipment.putEquipment(
+            trainEqid,
+            EquipmentData().apply {
+                uclass = UnitClass.GROUND_TRANSPORT.value
+                movmethod = MovMethod.RAIL.value
+                movpoints = 10
+            },
+        )
         friendly.railTransports = 1
         friendly.railTransportsMax = 1
         railLine(map, row = 3, fromCol = 1, toCol = 6)
@@ -180,26 +164,18 @@ class TransportPoolLifetimeTest : OgRulesTestHarness() {
         map.map!![3][6].station = true
         val first = place(map, infantryEqid, 3, 1, side = 0)
         val second = place(map, infantryEqid, 3, 2, side = 0)
+        map.map!![3][2].station = true
 
-        assertTrue(RailTransport.entrain(map, first, 3, 6))
-
+        assertTrue(RailTransport.entrain(map, first))
         assertFalse(RailTransport.canEntrain(second), "one train, and it is already carrying someone")
-        assertFalse(RailTransport.entrain(map, second, 3, 5), "and the move is refused, not merely unoffered")
-        assertEquals(2, second.getPos()?.col, "it did not budge")
-    }
 
-    @Test
-    fun refreshingTheRailPoolRestoresTheAuthoredSizeAndNoMore() {
-        val player =
-            Player().apply {
-                railTransports = 0
-                railTransportsMax = 3
-            }
+        map.endTurn()
+        map.endTurn()
+        assertEquals(0, friendly.railTransports, "still aboard when its owner plays again")
 
-        player.refreshRailPool()
-        player.refreshRailPool()
-
-        assertEquals(3, player.railTransports, "a reset, not an increment: it cannot drift upward")
+        assertTrue(RailTransport.detrain(map, first))
+        assertEquals(1, friendly.railTransports)
+        assertTrue(RailTransport.canEntrain(second), "and the next formation may take it")
     }
 
     // ---- the ceiling has to survive a save ----------------------------------------------------

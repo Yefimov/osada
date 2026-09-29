@@ -10,6 +10,7 @@ import org.osada.rules.ActionAvailability
 import org.osada.rules.ActionBlock
 import org.osada.rules.ActionEffect
 import org.osada.rules.ActionEffectKind
+import org.osada.rules.RailTransport
 import org.osada.rules.SupplyContext
 import org.osada.rules.SupplyContextRules
 import org.osada.rules.SupplySource
@@ -56,7 +57,15 @@ internal object UnitActionPresenter {
             // A failed clearing attempt is a stated risk, not a gain -- painting it the same green
             // as "+3 strength" would read as a benefit.
             ActionEffectKind.CLEAR_MINEFIELD_RISK,
+            // Stepping off after the journey costs the rest of the move; a cost, not a gain.
+            ActionEffectKind.LEAVE_TRAIN_ENDS_MOVE,
+            // When engineering may begin is a condition, not a gain.
+            ActionEffectKind.ENGINEERING_START_AFTER_MOVE,
+            ActionEffectKind.ENGINEERING_START_UNSPENT,
         )
+
+    /** Effects whose wording agrees with their number ("2 ваших хода" / "5 ваших ходов"). */
+    private val PLURAL_EFFECTS = setOf(ActionEffectKind.BUILD_TURNS)
 
     private const val GOOD = "good"
     private const val BAD = "bad"
@@ -107,6 +116,7 @@ internal object UnitActionPresenter {
         when {
             action == UnitActionId.MOUNT && unit.isMounted -> "dismount"
             action == UnitActionId.EMBARK && unit.carrier != 0 -> "disembark"
+            action == UnitActionId.RAIL_MOVE && RailTransport.isEntrained(unit) -> "rail_leave"
             action == UnitActionId.SLEEP && asleep -> "wake"
             else -> action.id
         }
@@ -119,12 +129,11 @@ internal object UnitActionPresenter {
 
     private fun effectLines(effects: List<ActionEffect>): List<Line> =
         effects.map { effect ->
+            val key = "unit_info.action.effect.${effect.kind.name.lowercase()}"
+            val args = mapOf("amount" to effect.amount, "detail" to effect.detail)
             Line(
                 if (effect.kind in NEUTRAL_EFFECTS) DIM else GOOD,
-                I18n.t(
-                    "unit_info.action.effect.${effect.kind.name.lowercase()}",
-                    mapOf("amount" to effect.amount, "detail" to effect.detail),
-                ),
+                if (effect.kind in PLURAL_EFFECTS) I18n.plural(key, effect.amount, args) else I18n.t(key, args),
             )
         }
 

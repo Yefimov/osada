@@ -100,21 +100,36 @@ object MovementRules {
         }
     }
 
-    /** A friendly non-mounted bridge unit on a river/stream hex acts as a road for [side]. The
+    /** A friendly non-mounted bridge unit on a river/stream/major-river hex acts as a road for [side]. The
      *  Bridging attachment (`Attachments.SLOT_BRIDGING`, DEFERRED.md §1.4 Tier 2) is a second,
      *  OR'd source of the same boolean capability -- `Attachments.availableSlots` already refuses
      *  to sell it to a unit that has [Equipment.isBridge] itself, so the two can never both be true
-     *  for the same unit and there is nothing to double-count. */
+     *  for the same unit and there is nothing to double-count.
+     *
+     *  OG's **Bridging leader** is the third source (*"While in a river hex it works as a bridge"*,
+     *  `Manual_OG-en.pdf` §6.12). Until 2026-09-28 the trait was offered, authored on OG scenario
+     *  units and read by no movement rule at all -- its one call site decided who may BUY the
+     *  Bridging attachment.
+     *
+     *  A crossing still being laid ([GameUnit.bridgeLaying]) carries nothing yet: it opens at the
+     *  start of its owner's next turn (`rules/PontoonBridges`). */
     fun isBridgeForSide(
         hex: Hex?,
         side: Int,
     ): Boolean {
-        val bridgeUnit = hex?.unit
-        val onRiverOrStream = hex?.terrain == TerrainType.RIVER.value || hex?.terrain == TerrainType.STREAM.value
-        val isFriendlyDismounted = bridgeUnit != null && !bridgeUnit.isMounted && bridgeUnit.player?.side == side
-        if (bridgeUnit == null || !onRiverOrStream || !isFriendlyDismounted) return false
-        return Equipment.isBridge(bridgeUnit.eqid) || Attachments.has(bridgeUnit, Attachments.SLOT_BRIDGING)
+        val bridgeUnit = hex?.unit ?: return false
+        return bridgeUnit.player?.side == side &&
+            !bridgeUnit.bridgeLaying &&
+            PontoonBridges.canSpan(bridgeUnit, hex)
     }
+
+    /** Sources that let a unit enter a river and serve as a pontoon once stationed there. */
+    internal fun hasBridgeCapability(unit: GameUnit): Boolean =
+        Equipment.isBridge(unit.eqid) ||
+            Attachments.has(unit, Attachments.SLOT_BRIDGING) ||
+            Leaders.unitHasLeader(unit, LeaderType.BRIDGING) ||
+            // Manual 6.12: Infiltration Tactics *"can also act like a bridging unit"*.
+            Leaders.unitHasLeader(unit, LeaderType.INFILTRATION_TACTICS)
 
     /**
      * Adds or removes [unit]'s zone of control on its neighbouring hexes.

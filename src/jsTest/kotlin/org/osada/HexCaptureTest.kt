@@ -103,6 +103,28 @@ class HexCaptureTest {
         assertEquals(player.id, hex.owner, "mounting must not remove the ability to capture")
     }
 
+    /** OG's Liberator: *"Can capture flags"*. A gun cannot take a hex -- unless its commander is one. */
+    @Test
+    fun aLiberatorCommanderLetsAGunTakeTheHex() {
+        val (map, player, hex) = enemyHeldHex()
+        val gun = unit(eqidFor(UnitClass.ARTILLERY), player).apply { leader = LeaderType.LIBERATOR.value }
+
+        map.combatApplication.captureHex(hex, gun)
+
+        assertEquals(player.id, hex.owner)
+    }
+
+    /** ...but a ship stays a ship: the leader half is for LAND formations. */
+    @Test
+    fun aLiberatorAtSeaStillCannotCapture() {
+        val (map, player, hex) = enemyHeldHex()
+        val ship = unit(eqidFor(UnitClass.DESTROYER), player).apply { leader = LeaderType.LIBERATOR.value }
+
+        map.combatApplication.captureHex(hex, ship)
+
+        assertEquals(ENEMY_ID, hex.owner)
+    }
+
     @Test
     fun theCapturingClassSetIsTheOneTheRuleAdvertises() {
         assertTrue(UnitCapabilities.canCaptureHex(EquipmentData().apply { uclass = UnitClass.INFANTRY.value }))

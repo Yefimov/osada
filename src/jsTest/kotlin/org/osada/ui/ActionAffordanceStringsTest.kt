@@ -23,7 +23,10 @@ class ActionAffordanceStringsTest {
     @BeforeTest
     fun setup() = installEnglishUiBundleForTests()
 
-    private fun missing(keys: List<String>): List<String> = keys.filter { I18n.tOrNull(it).isNullOrBlank() }
+    /** A key has copy as a plain string or as a plural entry (`UnitActionPresenter.PLURAL_EFFECTS`),
+     *  which `plural` answers with the key itself only when no branch exists. */
+    private fun missing(keys: List<String>): List<String> =
+        keys.filter { I18n.tOrNull(it).isNullOrBlank() && I18n.plural(it, 2) == it }
 
     @Test
     fun everyActionEffectKindHasCopy() {

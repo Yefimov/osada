@@ -61,6 +61,7 @@ object UnitActionAvailability {
             overstrength(context),
             layMines(context),
             barrage(context),
+            railMove(context),
             clearMines(context),
             engineering(context, UnitActionId.BUILD_BRIDGE),
             engineering(context, UnitActionId.BUILD_FORTIFICATION),
@@ -110,7 +111,8 @@ object UnitActionAvailability {
     private fun mount(context: UnitActionContext): ActionAvailability {
         val unit = context.unit
         val transportable =
-            UnitPredicates.isGround(unit) &&
+            !RailTransport.isEntrained(unit) &&
+                UnitPredicates.isGround(unit) &&
                 (
                     unit.isMounted ||
                         unit.transport != null ||
@@ -148,7 +150,10 @@ object UnitActionAvailability {
     private fun embark(context: UnitActionContext): ActionAvailability {
         val unit = context.unit
         val carried = unit.carrier != 0
-        if (!carried && unit.unitData().embark <= EmbarkType.NONE.value) {
+        // A train is left with the Rail chip, not Disembark: the train record says nothing about
+        // `embark`, and naval disembarkation onto an adjacent hex is not how a train unloads.
+        val aboardTrain = RailTransport.isEntrained(unit)
+        if (aboardTrain || (!carried && unit.unitData().embark <= EmbarkType.NONE.value)) {
             return ActionAvailability.notApplicable(UnitActionId.EMBARK)
         }
         return if (carried) disembark(context) else embarkOnto(context)
@@ -426,8 +431,10 @@ object UnitActionAvailability {
      * Applicable only while [isInitialDeploymentWindow] is open -- turn 1, before any of the
      * player's formations has moved or fired -- so the chip disappears for good the moment the
      * battle actually starts. Three narrowings keep it from doing damage:
-     *  - only a CORE formation on the player's own roster: the tray IS the roster's undeployed
-     *    half, so lifting anything else would make it vanish rather than wait there;
+     *  - only a CORE formation on the player's own roster, or an AUXILIARY this battle lent the
+     *    player: the tray IS the roster's undeployed half, and an auxiliary joins it on the way in
+     *    (`GameMap.undeployUnit`) without becoming core. Anything else would vanish rather than
+     *    wait there;
      *  - only one standing where it could be put back ([canRedeployHere]): an author-placed
      *    formation outside the deploy zone is placed content, and withdrawing it would change the
      *    battle's opening position with no way to restore it (the same rule
@@ -438,23 +445,25 @@ object UnitActionAvailability {
         val unit = context.unit
         val map = context.map
         val player = context.currentPlayer
+        val auxiliary = unit.isTemporaryBorrowed && !unit.isCore
+        val onRoster = unit.isCore && player.getCoreUnitList().any { it === unit }
         val applicable =
             player.type == PlayerType.HUMAN_LOCAL &&
                 unit.owner == player.id &&
-                unit.isCore &&
+                (onRoster || auxiliary) &&
                 unit.isDeployed &&
-                player.getCoreUnitList().any { it === unit } &&
                 map.isInitialDeploymentWindow(player) &&
                 canRedeployHere(map, unit)
         if (!applicable) return ActionAvailability.notApplicable(UnitActionId.WITHDRAW)
         val reasons = mutableListOf<ActionBlock>()
         addTurnBlock(context, reasons)
+        val effect = if (auxiliary) ActionEffectKind.WITHDRAW_AUXILIARY_TO_TRAY else ActionEffectKind.WITHDRAW_TO_TRAY
         return ActionAvailability(
             UnitActionId.WITHDRAW,
             true,
             reasons.isEmpty(),
             reasons,
-            listOf(ActionEffect(ActionEffectKind.WITHDRAW_TO_TRAY)),
+            listOf(ActionEffect(effect)),
         )
     }
 
@@ -540,40 +549,51 @@ object UnitActionAvailability {
     }
 
     /**
-     * OG's railway: a ground formation standing on a boarding point may be railed to another one
-     * along connected track, spending one of its player's rail transport points.
+     * OG's railway, as a toggle: board a train where the formation stands, or leave the one it is
+     * on (`rules/RailTransport`). The train itself moves through the ordinary move range.
      *
-     * **NOT APPLICABLE unless the player actually has a rail pool** -- 120 of the 502 deployed
-     * scenarios grant one since the pools were imported (`docs/og-fidelity-plan.md` §AE.3), so the
-     * chip is absent in the rest rather than present and permanently disabled. That is the same
-     * rule the engineering chips follow: an action a campaign can never take does not belong on
-     * its strip at all.
+     * **NOT APPLICABLE unless the scenario grants this player a rail pool** -- 120 of the 502
+     * deployed scenarios do (`docs/og-fidelity-plan.md` §AE.3) -- so the chip is absent in the rest
+     * rather than present and permanently disabled, the rule the engineering chips follow. A pool
+     * that is merely used up right now shows the chip disabled, with the reason.
      *
-     * **Equipment OG forbids the railway to is not applicable either**, for the same reason and not
-     * merely blocked: a fortification that cannot be entrained is not a formation that has nowhere
-     * to go, and `NO_RAIL_DESTINATION` would say the wrong thing about it. Added with the per-record
-     * permission on 2026-08-29 (`EquipmentData.railTransportable`).
+     * **Equipment OG forbids the railway to is not applicable either**: a fortification that cannot
+     * be entrained is not a formation waiting for a train (`EquipmentData.railTransportable`).
      */
-    private fun railMove(context: UnitActionContext): ActionAvailability {
+    private fun railMove(context: UnitActionContext): ActionAvailability =
+        if (RailTransport.isEntrained(context.unit)) leaveTrain(context) else boardTrain(context)
+
+    private fun boardTrain(context: UnitActionContext): ActionAvailability {
         val unit = context.unit
-        val pool = unit.player?.railTransports ?: 0
-        val onTrack = RailTransport.isBoardingPoint(unit.getHex(), unit)
-        if (pool <= 0 || !onTrack || !unit.unitData(true).canUseRailTransport()) {
+        val offered =
+            (unit.player?.railTransportsMax ?: 0) > 0 &&
+                unit.carrier == 0 &&
+                UnitPredicates.isGround(unit) &&
+                RailTransport.permitsRail(unit)
+        if (!offered || !RailTransport.isBoardingPoint(unit.getHex(), unit)) {
             return ActionAvailability.notApplicable(UnitActionId.RAIL_MOVE)
         }
         val reasons = mutableListOf<ActionBlock>()
         addTurnBlock(context, reasons)
         if (unit.hasMoved) reasons += ActionBlock(ActionBlockReason.ALREADY_MOVED)
         if (unit.hasFired) reasons += ActionBlock(ActionBlockReason.ALREADY_FIRED)
-        val destinations = RailTransport.destinations(context.map, unit).size
-        if (destinations == 0 && reasons.isEmpty()) {
-            reasons += ActionBlock(ActionBlockReason.NO_RAIL_DESTINATION)
+        val pool = unit.player?.railTransports ?: 0
+        if (pool <= 0 || TrainRecords.trainFor(unit) == null) {
+            reasons += ActionBlock(ActionBlockReason.NO_TRANSPORT_AVAILABLE)
         }
-        val effects =
-            listOf(
-                ActionEffect(ActionEffectKind.OPEN_RAIL_DESTINATIONS, destinations, pool),
-                ActionEffect(ActionEffectKind.ENDS_UNIT_ACTION),
-            )
+        val effects = listOf(ActionEffect(ActionEffectKind.BOARD_TRAIN, pool))
+        return ActionAvailability(UnitActionId.RAIL_MOVE, true, reasons.isEmpty(), reasons, effects)
+    }
+
+    /** The same chip on a formation already aboard: it may step off at a station, or anywhere on
+     *  the track with `No Need Station`. */
+    private fun leaveTrain(context: UnitActionContext): ActionAvailability {
+        val unit = context.unit
+        val reasons = mutableListOf<ActionBlock>()
+        addTurnBlock(context, reasons)
+        if (!RailTransport.canDetrain(unit)) reasons += ActionBlock(ActionBlockReason.NOT_AT_STATION)
+        val effect = if (unit.hasMoved) ActionEffectKind.LEAVE_TRAIN_ENDS_MOVE else ActionEffectKind.LEAVE_TRAIN
+        val effects = listOf(ActionEffect(effect))
         return ActionAvailability(UnitActionId.RAIL_MOVE, true, reasons.isEmpty(), reasons, effects)
     }
 
@@ -660,19 +680,35 @@ object UnitActionAvailability {
         addTurnBlock(context, reasons)
         // The efile's own `build_start_ex` may relax OG's "hasn't done any action" to "still has
         // its shot" -- one owner for that reading, so the chip and the order cannot disagree.
+        val afterMove = Engineering.startsAfterMove()
         if (!Engineering.mayStartWork(unit)) {
-            reasons += ActionBlock(ActionBlockReason.ENGINEERING_NEEDS_UNSPENT_TURN)
+            reasons +=
+                ActionBlock(
+                    if (afterMove) {
+                        ActionBlockReason.ENGINEERING_NEEDS_UNFIRED
+                    } else {
+                        ActionBlockReason.ENGINEERING_NEEDS_UNSPENT_TURN
+                    },
+                )
         }
         val missingPrestige = work.costFor() - (unit.player?.prestige ?: 0)
         if (missingPrestige > 0) reasons += ActionBlock(ActionBlockReason.NEEDS_PRESTIGE, missingPrestige)
         val effects = mutableListOf<ActionEffect>()
-        if (work.costFor() > 0) effects += ActionEffect(ActionEffectKind.PRESTIGE_COST, work.costFor())
+        if (work.costFor() > 0) effects += ActionEffect(ActionEffectKind.PRESTIGE_COST_ONCE, work.costFor())
         effects +=
             if (work.turnsFor(unit.getHex()) == 0) {
                 ActionEffect(ActionEffectKind.DEMOLISH_NOW)
             } else {
                 ActionEffect(ActionEffectKind.BUILD_TURNS, work.turnsFor(unit.getHex()))
             }
+        effects +=
+            ActionEffect(
+                if (afterMove) {
+                    ActionEffectKind.ENGINEERING_START_AFTER_MOVE
+                } else {
+                    ActionEffectKind.ENGINEERING_START_UNSPENT
+                },
+            )
         effects += ActionEffect(ActionEffectKind.ENDS_UNIT_ACTION)
         return ActionAvailability(action, true, reasons.isEmpty(), reasons, effects)
     }

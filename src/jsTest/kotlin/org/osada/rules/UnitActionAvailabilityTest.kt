@@ -15,7 +15,11 @@ import org.osada.model.addPlayer
 import org.osada.model.addUnit
 import org.osada.model.allocMap
 import org.osada.model.attackUnit
+import org.osada.model.collectPersistentCampaignUnits
+import org.osada.model.deployPlayerUnit
 import org.osada.model.resetEquipment
+import org.osada.model.restoreCoreUnitList
+import org.osada.model.undeployUnit
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -299,6 +303,7 @@ class UnitActionAvailabilityTest {
                 // OG 9.2's barrage sits with them for the same reason: always resolved, and
                 // not-applicable for a tank, which has no Bomber Size (added 2026-08-26).
                 UnitActionId.BARRAGE,
+                UnitActionId.RAIL_MOVE,
                 UnitActionId.CLEAR_MINES,
                 // OG 9.3's engineering commands, added 2026-08-25, on exactly the same terms:
                 // always resolved, and every one not-applicable here because a tank is neither a
@@ -355,6 +360,52 @@ class UnitActionAvailabilityTest {
         world.friendly.addCoreUnit(unit)
 
         assertFalse(availability(world, unit, UnitActionId.WITHDRAW).applicable)
+    }
+
+    /**
+     * An auxiliary a campaign battle lent the player (`keepScenarioUnitsAsAuxiliary`) may be
+     * withdrawn and placed on another deploy hex like a core formation -- and stays an auxiliary
+     * all the way: never core, worth nothing if sold, and dropped by the carry-over.
+     */
+    @Test
+    fun anAuxiliaryCanBeWithdrawnAndPlacedAgainWithoutBecomingCore() {
+        val world = world()
+        world.map.map!![1][1].isDeployment = world.friendly.id
+        world.map.map!![2][2].isDeployment = world.friendly.id
+        val aux = world.place(infantryEqid, 1, 1).apply { isTemporaryBorrowed = true }
+
+        val chip = availability(world, aux, UnitActionId.WITHDRAW)
+        assertTrue(chip.applicable && chip.enabled)
+        assertEquals(ActionEffectKind.WITHDRAW_AUXILIARY_TO_TRAY, chip.effects.single().kind)
+
+        assertTrue(world.map.undeployUnit(aux))
+        assertFalse(aux.isDeployed)
+        assertFalse(aux.isCore, "withdrawn, still not core")
+        assertTrue(world.friendly.getCoreUnitList().any { it === aux }, "and waiting in the tray")
+
+        assertTrue(world.map.deployPlayerUnit(world.friendly, aux, 2, 2))
+        assertTrue(aux.isDeployed && aux.isTemporaryBorrowed && !aux.isCore, "placed again, as an auxiliary")
+        assertEquals(0, CostCalculator.calculateUnitSellCost(aux), "a lent unit refunds nothing")
+
+        world.map.undeployUnit(aux)
+        world.map.collectPersistentCampaignUnits(world.friendly)
+        assertFalse(world.friendly.getCoreUnitList().any { it === aux }, "left behind at the transition")
+    }
+
+    /** A save taken with an auxiliary in the tray brings it back into the tray -- not into the core. */
+    @Test
+    fun anAuxiliarySavedInTheTrayIsRestoredAsAnAuxiliary() {
+        val world = world()
+        val saved: dynamic = js("({})")
+        saved.eqid = infantryEqid
+        saved.temporaryBorrowed = true
+
+        world.map.restoreCoreUnitList(world.friendly, listOf(saved))
+
+        val restored = world.friendly.getCoreUnitList().single()
+        assertTrue(restored.isTemporaryBorrowed)
+        assertFalse(restored.isCore)
+        assertEquals(null, restored.formationId)
     }
 
     // ---- harness ------------------------------------------------------------------------------

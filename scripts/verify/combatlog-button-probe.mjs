@@ -57,7 +57,9 @@ const ok = (name, pass, detail) => results.push([pass ? 'PASS' : 'FAIL', name, d
 
 const browser = await puppeteer.launch({ executablePath: getChromePath(), headless: 'new', args: ['--no-sandbox'] });
 const page = await browser.newPage();
-await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
+// Wide enough that the centred arrow fits between the spacers on this scenario (Russian UI): the
+// arrow is only centred while it fits (CombatLogButtonPlacement), which here is from ~2000px up.
+await page.setViewport({ width: 2400, height: 900, deviceScaleFactor: 1 });
 
 const errors = [];
 page.on('pageerror', (e) => errors.push(String(e.message).slice(0, 200)));
@@ -130,6 +132,34 @@ try {
     Math.abs(open.button.centre - open.viewportCentre) <= 1 &&
       Math.abs(open.log.centre - open.viewportCentre) <= 1,
     JSON.stringify({ button: open.button.centre, log: open.log.centre, viewport: open.viewportCentre }));
+  await page.evaluate(() => document.getElementById('combatLogButton').click());
+  await sleep(200);
+
+  // ---- a narrower desktop: the compact in-row sprite, never over a neighbour ----
+  await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
+  await sleep(400);
+  const narrow = await measure();
+  const compact = await page.evaluate(() => {
+    const btn = document.getElementById('combatLogButton');
+    const p = document.getElementById('osadaPrestige').getBoundingClientRect();
+    const b = btn.getBoundingClientRect();
+    return {
+      inline: btn.classList.contains('osada-tb-combatlog--inline'),
+      position: getComputedStyle(btn).position,
+      clearOfPrestige: b.right <= p.left || b.left >= p.right,
+      title: btn.title,
+    };
+  });
+  ok('narrow desktop: the button joins the row and keeps the arrow',
+    compact.inline && compact.position === 'static' && narrow.glyphShown && !narrow.icoShown,
+    JSON.stringify({ compact, face: { glyph: narrow.glyphShown, ico: narrow.icoShown } }));
+  ok('narrow desktop: the button does not cover the prestige figure', compact.clearOfPrestige,
+    JSON.stringify(compact));
+  ok('narrow desktop: tooltip survives', !!compact.title, compact.title);
+  await page.evaluate(() => document.getElementById('combatLogButton').click());
+  await sleep(250);
+  ok('narrow desktop: the toggle still opens the report',
+    await page.evaluate(() => document.getElementById('combatLogButton').hasAttribute('selected')), '');
   await page.evaluate(() => document.getElementById('combatLogButton').click());
   await sleep(200);
 

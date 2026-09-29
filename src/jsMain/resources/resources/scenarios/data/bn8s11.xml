@@ -1164,7 +1164,10 @@
     <unit id="7792" owner="1" flag="8" face="0" transport="9830" exp="44" str="8" bstr="5"/>
   </hex>
   <hex row="26" col="38" terrain="10" name="Unac River"/>
-  <hex row="26" col="42" road="2"/>
+  <hex row="26" col="39" rail="18"/>
+  <hex row="26" col="40" rail="40"/>
+  <hex row="26" col="41" rail="130"/>
+  <hex row="26" col="42" road="2" rail="34"/>
   <hex row="27" col="0" terrain="6"/>
   <hex row="27" col="1" terrain="6"/>
   <hex row="27" col="2" terrain="6"/>
@@ -1208,6 +1211,7 @@
   </hex>
   <hex row="27" col="37" terrain="10" name="Unac River"/>
   <hex row="27" col="38" terrain="10" name="Unac River"/>
+  <hex row="27" col="39" rail="33"/>
   <hex row="27" col="42" terrain="5"/>
   <hex row="28" col="0" terrain="6"/>
   <hex row="28" col="1" terrain="6"/>
@@ -1250,6 +1254,7 @@
     <unit id="7730" owner="1" flag="8" face="0" transport="9830" exp="44" str="8" bstr="5"/>
   </hex>
   <hex row="28" col="37" terrain="10" name="Unac River"/>
+  <hex row="28" col="38" rail="18"/>
   <hex row="28" col="41" terrain="5"/>
   <hex row="28" col="42" terrain="5"/>
   <hex row="29" col="0" terrain="6"/>
@@ -1289,6 +1294,8 @@
   <hex row="29" col="33" terrain="8"/>
   <hex row="29" col="35" terrain="15" name="Unac River"/>
   <hex row="29" col="36" terrain="15" name="Unac River"/>
+  <hex row="29" col="37" rail="18"/>
+  <hex row="29" col="38" rail="33"/>
   <hex row="29" col="39" terrain="5"/>
   <hex row="29" col="40" terrain="5"/>
   <hex row="29" col="41" terrain="5"/>
@@ -1335,6 +1342,7 @@
   <hex row="30" col="32" terrain="3" road="17"/>
   <hex row="30" col="33" terrain="10" name="Unac River"/>
   <hex row="30" col="34" terrain="10" name="Unac River"/>
+  <hex row="30" col="37" rail="33"/>
   <hex row="30" col="38" terrain="5"/>
   <hex row="30" col="39" terrain="5"/>
   <hex row="30" col="40" terrain="5"/>
@@ -1377,6 +1385,8 @@
   <hex row="31" col="31" terrain="3"/>
   <hex row="31" col="32" terrain="3" road="17"/>
   <hex row="31" col="33" terrain="15" name="Unac River"/>
+  <hex row="31" col="35" rail="34"/>
+  <hex row="31" col="36" rail="34"/>
   <hex row="31" col="38" terrain="5"/>
   <hex row="31" col="40" terrain="5"/>
   <hex row="31" col="42" terrain="5"/>
@@ -1410,9 +1420,10 @@
   <hex row="32" col="28" terrain="3"/>
   <hex row="32" col="29" terrain="3"/>
   <hex row="32" col="30" terrain="3"/>
-  <hex row="32" col="31" terrain="3" road="42"/>
+  <hex row="32" col="31" terrain="3" road="42" rail="40"/>
   <hex row="32" col="32" terrain="15" road="33" name="Unac River"/>
-  <hex row="32" col="33" road="32"/>
+  <hex row="32" col="33" road="32" rail="34"/>
+  <hex row="32" col="34" rail="34"/>
   <hex row="32" col="35">
     <unit id="32387" owner="0" flag="44" face="0" exp="44" str="2" bstr="2" attach="1"/>
   </hex>
@@ -1450,10 +1461,10 @@
   <hex row="33" col="26" terrain="5"/>
   <hex row="33" col="27" terrain="3"/>
   <hex row="33" col="28" terrain="3"/>
-  <hex row="33" col="29" road="34"/>
-  <hex row="33" col="30" road="34"/>
+  <hex row="33" col="29" road="34" rail="18"/>
+  <hex row="33" col="30" road="34" rail="34"/>
   <hex row="33" col="31" terrain="15" name="Unac River"/>
-  <hex row="33" col="32" terrain="10" road="130" name="Unac River"/>
+  <hex row="33" col="32" terrain="10" road="130" name="Unac River" rail="130"/>
   <hex row="33" col="35" terrain="2" owner="0" flag="43" dirt="1">
     <unit id="32160" owner="0" flag="44" face="0" exp="44" str="5" bstr="5"/>
   </hex>
@@ -1487,6 +1498,7 @@
   <hex row="34" col="26" terrain="3"/>
   <hex row="34" col="27" road="34"/>
   <hex row="34" col="28" road="34"/>
+  <hex row="34" col="29" rail="33"/>
   <hex row="34" col="30" terrain="15" name="Unac River"/>
   <hex row="34" col="32" terrain="1" name="Glamoc" owner="0" flag="43"/>
   <hex row="34" col="33" terrain="1" name="Glamoc"/>
@@ -1524,6 +1536,7 @@
   <hex row="35" col="23" road="34"/>
   <hex row="35" col="24" road="34"/>
   <hex row="35" col="26" road="130"/>
+  <hex row="35" col="28" rail="18"/>
   <hex row="35" col="29" terrain="15" name="Unac River"/>
   <hex row="35" col="30" terrain="15" name="Unac River"/>
   <hex row="35" col="33" terrain="3"/>
@@ -1559,6 +1572,8 @@
   <hex row="36" col="19" terrain="5"/>
   <hex row="36" col="22" road="130"/>
   <hex row="36" col="23" terrain="3"/>
+  <hex row="36" col="27" rail="34"/>
+  <hex row="36" col="28" rail="33"/>
   <hex row="36" col="29" terrain="15" name="Unac River"/>
   <hex row="36" col="31" terrain="3"/>
   <hex row="36" col="32" terrain="3"/>
@@ -1591,6 +1606,8 @@
   <hex row="37" col="22" terrain="13"/>
   <hex row="37" col="23" terrain="3"/>
   <hex row="37" col="24" terrain="3"/>
+  <hex row="37" col="25" rail="34"/>
+  <hex row="37" col="26" rail="34"/>
   <hex row="37" col="27" terrain="15" name="Unac River"/>
   <hex row="37" col="28" terrain="15" name="Unac River"/>
   <hex row="37" col="29" terrain="3"/>

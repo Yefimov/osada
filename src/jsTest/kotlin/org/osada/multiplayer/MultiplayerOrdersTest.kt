@@ -2,17 +2,17 @@ package org.osada.multiplayer
 
 import org.osada.model.GameUnit
 import org.osada.multiplayer.command.CommandValidation
+import org.osada.multiplayer.command.DetrainUnit
 import org.osada.multiplayer.command.DisbandUnit
 import org.osada.multiplayer.command.DisembarkUnit
 import org.osada.multiplayer.command.DismissLeader
 import org.osada.multiplayer.command.EmbarkUnit
+import org.osada.multiplayer.command.EntrainUnit
 import org.osada.multiplayer.command.GameCommandJson
 import org.osada.multiplayer.command.GreenReinforceUnit
-import org.osada.multiplayer.command.HexCoordinate
 import org.osada.multiplayer.command.OsadaGameCommandApplier
 import org.osada.multiplayer.command.OsadaGameCommandValidator
 import org.osada.multiplayer.command.PurchaseAttachment
-import org.osada.multiplayer.command.RailMove
 import org.osada.multiplayer.command.UpgradeUnit
 import org.osada.multiplayer.command.toPayloadJson
 import org.osada.rules.OgRulesTestHarness
@@ -44,7 +44,8 @@ class MultiplayerOrdersTest : OgRulesTestHarness() {
         listOf(
             EmbarkUnit(7, 0),
             DisembarkUnit(7, 0),
-            RailMove(7, HexCoordinate(3, 4), 0),
+            EntrainUnit(7, 0),
+            DetrainUnit(7, 0),
             PurchaseAttachment(7, listOf(2, 5), 0),
             GreenReinforceUnit(7, 0),
             DismissLeader(7, 1),

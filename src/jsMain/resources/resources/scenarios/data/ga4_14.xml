@@ -160,7 +160,7 @@
   <hex row="0" col="4" terrain="14" name="COUNTRYSIDE"/>
   <hex row="0" col="5" terrain="16"/>
   <hex row="0" col="6" terrain="14" name="COUNTRYSIDE"/>
-  <hex row="0" col="7" name="Railroad"/>
+  <hex row="0" col="7" name="Railroad" rail="42"/>
   <hex row="0" col="8" terrain="14" name="Railroad"/>
   <hex row="0" col="9" terrain="1" name="Rajgorod"/>
   <hex row="0" col="10" terrain="14" name="Rajgorod"/>
@@ -202,9 +202,9 @@
   <hex row="1" col="2" terrain="16"/>
   <hex row="1" col="3" road="41"/>
   <hex row="1" col="4" terrain="16"/>
-  <hex row="1" col="5" name="Railroad"/>
-  <hex row="1" col="6" terrain="16" name="Railroad"/>
-  <hex row="1" col="8" name="Railroad"/>
+  <hex row="1" col="5" name="Railroad" rail="34"/>
+  <hex row="1" col="6" terrain="16" name="Railroad" rail="34"/>
+  <hex row="1" col="8" name="Railroad" rail="144"/>
   <hex row="1" col="9" terrain="1" name="Rajgorod"/>
   <hex row="1" col="10" terrain="1" name="Rajgorod"/>
   <hex row="1" col="11" terrain="16"/>
@@ -243,12 +243,12 @@
   <hex row="2" col="0" terrain="14" name="Belda"/>
   <hex row="2" col="1" terrain="1" name="Belda"/>
   <hex row="2" col="2" road="130"/>
-  <hex row="2" col="3" name="Railroad"/>
-  <hex row="2" col="4" name="Railroad"/>
+  <hex row="2" col="3" name="Railroad" rail="34"/>
+  <hex row="2" col="4" name="Railroad" rail="34"/>
   <hex row="2" col="5" terrain="16"/>
   <hex row="2" col="7" terrain="16"/>
-  <hex row="2" col="8" name="Railroad"/>
-  <hex row="2" col="9" name="Railroad"/>
+  <hex row="2" col="8" name="Railroad" rail="9"/>
+  <hex row="2" col="9" name="Railroad" rail="144"/>
   <hex row="2" col="10" terrain="16"/>
   <hex row="2" col="11" terrain="8"/>
   <hex row="2" col="12" terrain="16"/>
@@ -286,15 +286,15 @@
   <hex row="2" col="42" terrain="3"/>
   <hex row="2" col="43" terrain="14" name="Railroad"/>
   <hex row="3" col="0" terrain="14" name="COUNTRYSIDE"/>
-  <hex row="3" col="1" name="Railroad"/>
-  <hex row="3" col="2" name="Railroad"/>
+  <hex row="3" col="1" name="Railroad" rail="34"/>
+  <hex row="3" col="2" name="Railroad" rail="34"/>
   <hex row="3" col="3" terrain="16"/>
   <hex row="3" col="4" terrain="16"/>
   <hex row="3" col="5" terrain="16"/>
   <hex row="3" col="6" terrain="16"/>
   <hex row="3" col="7" terrain="16"/>
   <hex row="3" col="8" terrain="16"/>
-  <hex row="3" col="9" name="Railroad"/>
+  <hex row="3" col="9" name="Railroad" rail="9"/>
   <hex row="3" col="10" terrain="13"/>
   <hex row="3" col="11" terrain="8"/>
   <hex row="3" col="12" terrain="16"/>
@@ -328,8 +328,8 @@
     <unit id="39822" owner="0" flag="90" face="0" exp="100" str="8" bstr="8" ammo="13"/>
   </hex>
   <hex row="3" col="40" terrain="3"/>
-  <hex row="3" col="41" name="Railroad" deploy="0"/>
-  <hex row="3" col="42" name="Railroad" deploy="0"/>
+  <hex row="3" col="41" name="Railroad" deploy="0" rail="34"/>
+  <hex row="3" col="42" name="Railroad" deploy="0" rail="34"/>
   <hex row="3" col="43" terrain="14" name="CLEAR"/>
   <hex row="4" col="0" terrain="14" name="Railroad"/>
   <hex row="4" col="1" terrain="16"/>
@@ -341,7 +341,7 @@
   <hex row="4" col="7" terrain="15" name="Biebrza River"/>
   <hex row="4" col="8" terrain="16"/>
   <hex row="4" col="9" terrain="3"/>
-  <hex row="4" col="10" name="Railroad"/>
+  <hex row="4" col="10" name="Railroad" rail="144"/>
   <hex row="4" col="11" road="136"/>
   <hex row="4" col="12" terrain="15" name="Pond"/>
   <hex row="4" col="13" terrain="15" name="Pond"/>
@@ -374,8 +374,8 @@
   <hex row="4" col="38" road="136">
     <unit id="39465" owner="0" flag="90" face="0" transport="40175" exp="100"/>
   </hex>
-  <hex row="4" col="39" name="Railroad"/>
-  <hex row="4" col="40" name="Railroad" deploy="0"/>
+  <hex row="4" col="39" name="Railroad" rail="34"/>
+  <hex row="4" col="40" name="Railroad" deploy="0" rail="34"/>
   <hex row="4" col="41" terrain="16" deploy="0"/>
   <hex row="4" col="42" terrain="16"/>
   <hex row="4" col="43" terrain="14" name="COUNTRYSIDE"/>
@@ -389,8 +389,8 @@
   <hex row="5" col="7" terrain="3"/>
   <hex row="5" col="8" terrain="15" name="Biebrza River"/>
   <hex row="5" col="9" terrain="16"/>
-  <hex row="5" col="10" name="Railroad"/>
-  <hex row="5" col="11" name="Railroad"/>
+  <hex row="5" col="10" name="Railroad" rail="9"/>
+  <hex row="5" col="11" name="Railroad" rail="144"/>
   <hex row="5" col="12" road="152"/>
   <hex row="5" col="13" terrain="10" road="130" name="Pond"/>
   <hex row="5" col="14" terrain="10" road="33" name="Pond"/>
@@ -414,10 +414,10 @@
   <hex row="5" col="32" terrain="15" name="Lake"/>
   <hex row="5" col="33" terrain="15" name="Lake"/>
   <hex row="5" col="34" terrain="16"/>
-  <hex row="5" col="35" name="Railroad"/>
-  <hex row="5" col="36" name="Railroad"/>
-  <hex row="5" col="37" terrain="3" name="Railroad"/>
-  <hex row="5" col="38" name="Railroad"/>
+  <hex row="5" col="35" name="Railroad" rail="34"/>
+  <hex row="5" col="36" name="Railroad" rail="40"/>
+  <hex row="5" col="37" terrain="3" name="Railroad" rail="130"/>
+  <hex row="5" col="38" name="Railroad" rail="34"/>
   <hex row="5" col="39" terrain="16"/>
   <hex row="5" col="40" road="136"/>
   <hex row="5" col="41" road="130">
@@ -436,7 +436,7 @@
   <hex row="6" col="8" terrain="15" name="Biebrza River"/>
   <hex row="6" col="9" terrain="16"/>
   <hex row="6" col="10" terrain="16"/>
-  <hex row="6" col="11" name="Railroad"/>
+  <hex row="6" col="11" name="Railroad" rail="9"/>
   <hex row="6" col="12" road="17"/>
   <hex row="6" col="13" terrain="3" road="40"/>
   <hex row="6" col="14" terrain="15" name="Pond"/>
@@ -460,8 +460,8 @@
   <hex row="6" col="30" terrain="3"/>
   <hex row="6" col="31" terrain="16"/>
   <hex row="6" col="32" terrain="15" name="Lake"/>
-  <hex row="6" col="33" terrain="1" name="Zabiele"/>
-  <hex row="6" col="34" name="Railroad"/>
+  <hex row="6" col="33" terrain="1" name="Zabiele" rail="34"/>
+  <hex row="6" col="34" name="Railroad" rail="34"/>
   <hex row="6" col="35" road="33"/>
   <hex row="6" col="36" terrain="16"/>
   <hex row="6" col="37" terrain="16"/>
@@ -483,8 +483,8 @@
   <hex row="7" col="9" terrain="15" name="Biebrza River"/>
   <hex row="7" col="10" terrain="16"/>
   <hex row="7" col="11" road="34"/>
-  <hex row="7" col="12" name="Railroad"/>
-  <hex row="7" col="13" name="Railroad"/>
+  <hex row="7" col="12" name="Railroad" rail="136"/>
+  <hex row="7" col="13" name="Railroad" rail="136"/>
   <hex row="7" col="14" road="136"/>
   <hex row="7" col="15" road="144"/>
   <hex row="7" col="16" terrain="16">
@@ -505,7 +505,7 @@
   <hex row="7" col="29" terrain="8"/>
   <hex row="7" col="30" terrain="16"/>
   <hex row="7" col="31" terrain="10" name="Pond"/>
-  <hex row="7" col="32" terrain="1" name="Zabiele" owner="1" flag="7">
+  <hex row="7" col="32" terrain="1" name="Zabiele" owner="1" flag="7" rail="18">
     <unit id="375" owner="1" flag="8" face="0" exp="189" str="9" bstr="1" ammo="10"/>
   </hex>
   <hex row="7" col="33" road="34">
@@ -539,8 +539,8 @@
   <hex row="8" col="11" terrain="15" name="Biebrza River"/>
   <hex row="8" col="12" terrain="16"/>
   <hex row="8" col="13" terrain="16"/>
-  <hex row="8" col="14" name="Railroad"/>
-  <hex row="8" col="15" name="Railroad"/>
+  <hex row="8" col="14" name="Railroad" rail="136"/>
+  <hex row="8" col="15" name="Railroad" rail="136"/>
   <hex row="8" col="16" terrain="16"/>
   <hex row="8" col="17" terrain="16"/>
   <hex row="8" col="18" terrain="10" name="Biebrza River"/>
@@ -560,8 +560,8 @@
   <hex row="8" col="28" terrain="8"/>
   <hex row="8" col="29" terrain="8"/>
   <hex row="8" col="30" terrain="8"/>
-  <hex row="8" col="31" terrain="8" name="Railroad"/>
-  <hex row="8" col="32" name="Railroad"/>
+  <hex row="8" col="31" terrain="8" name="Railroad" rail="34"/>
+  <hex row="8" col="32" name="Railroad" rail="33"/>
   <hex row="8" col="33" terrain="8"/>
   <hex row="8" col="34" terrain="16"/>
   <hex row="8" col="35" terrain="16"/>
@@ -591,10 +591,10 @@
   <hex row="9" col="15" terrain="1" name="Osowiec" owner="1" flag="7">
     <unit id="375" owner="1" flag="8" face="0" exp="121" str="7" bstr="1" ammo="10"/>
   </hex>
-  <hex row="9" col="16" name="Railroad">
+  <hex row="9" col="16" name="Railroad" rail="136">
     <unit id="9969" owner="1" flag="8" face="0" str="5" bstr="1" anchored="1"/>
   </hex>
-  <hex row="9" col="17" name="Railroad">
+  <hex row="9" col="17" name="Railroad" rail="144">
     <unit id="9477" owner="1" flag="8" face="0" exp="50" str="7" bstr="1"/>
   </hex>
   <hex row="9" col="18" terrain="15" name="Biebrza River"/>
@@ -609,7 +609,7 @@
   <hex row="9" col="27" terrain="8"/>
   <hex row="9" col="28" terrain="8"/>
   <hex row="9" col="29" terrain="8"/>
-  <hex row="9" col="30" terrain="8" name="Railroad"/>
+  <hex row="9" col="30" terrain="8" name="Railroad" rail="18"/>
   <hex row="9" col="31" terrain="8" road="34"/>
   <hex row="9" col="32" road="33"/>
   <hex row="9" col="33" terrain="8"/>
@@ -642,9 +642,9 @@
     <unit id="9887" owner="1" flag="8" face="0" str="6" bstr="1"/>
   </hex>
   <hex row="10" col="16" terrain="1" name="Osowiec"/>
-  <hex row="10" col="17" terrain="1" name="Osowiec"/>
+  <hex row="10" col="17" terrain="1" name="Osowiec" rail="1"/>
   <hex row="10" col="18" terrain="10" name="Biebrza River"/>
-  <hex row="10" col="19" terrain="10" name="Biebrza River"/>
+  <hex row="10" col="19" terrain="10" name="Biebrza River" rail="40"/>
   <hex row="10" col="20" terrain="3"/>
   <hex row="10" col="21" road="33">
     <unit id="8188" owner="1" flag="8" face="0" exp="200" str="7" bstr="4" anchored="1"/>
@@ -656,8 +656,8 @@
   <hex row="10" col="26" terrain="16"/>
   <hex row="10" col="27" terrain="10" name="Brzozowka River"/>
   <hex row="10" col="28" terrain="3"/>
-  <hex row="10" col="29" name="Railroad"/>
-  <hex row="10" col="30" name="Railroad"/>
+  <hex row="10" col="29" name="Railroad" rail="18"/>
+  <hex row="10" col="30" name="Railroad" rail="33"/>
   <hex row="10" col="31" terrain="8"/>
   <hex row="10" col="32" terrain="8"/>
   <hex row="10" col="33" terrain="16"/>
@@ -694,12 +694,12 @@
   <hex row="11" col="17" terrain="1" name="Osowiec">
     <unit id="1101" owner="1" flag="8" face="0" str="5" bstr="1"/>
   </hex>
-  <hex row="11" col="18" terrain="1" name="Osowiec" owner="1" flag="7">
+  <hex row="11" col="18" terrain="1" name="Osowiec" owner="1" flag="7" rail="2">
     <unit id="717" owner="1" flag="8" face="0" exp="19" str="8" bstr="1"/>
   </hex>
   <hex row="11" col="19" terrain="10" road="40" name="Biebrza River"/>
-  <hex row="11" col="20" terrain="3" name="Railroad"/>
-  <hex row="11" col="21" name="Railroad"/>
+  <hex row="11" col="20" terrain="3" name="Railroad" rail="136"/>
+  <hex row="11" col="21" name="Railroad" rail="144"/>
   <hex row="11" col="22" terrain="16"/>
   <hex row="11" col="23" terrain="6" name="HILL"/>
   <hex row="11" col="24" terrain="10" name="Brzozowka River"/>
@@ -709,7 +709,7 @@
   <hex row="11" col="26" terrain="10" name="Brzozowka River"/>
   <hex row="11" col="27" terrain="10" name="Brzozowka River"/>
   <hex row="11" col="28" terrain="16"/>
-  <hex row="11" col="29" name="Railroad">
+  <hex row="11" col="29" name="Railroad" rail="33">
     <unit id="9088" owner="1" flag="8" face="0" exp="125" str="7" bstr="1"/>
   </hex>
   <hex row="11" col="30" terrain="8" road="33"/>
@@ -751,7 +751,7 @@
   <hex row="12" col="18" terrain="1" road="34" name="Osowiec"/>
   <hex row="12" col="19" terrain="15" name="Biebrza River"/>
   <hex row="12" col="20" terrain="16"/>
-  <hex row="12" col="21" name="Railroad">
+  <hex row="12" col="21" name="Railroad" rail="9">
     <unit id="404" owner="1" flag="8" face="0" str="5" bstr="1"/>
   </hex>
   <hex row="12" col="22" road="136"/>
@@ -759,8 +759,8 @@
   <hex row="12" col="24" terrain="6" name="HILL"/>
   <hex row="12" col="25" terrain="6" name="HILL"/>
   <hex row="12" col="26" terrain="6" name="HILL"/>
-  <hex row="12" col="27" terrain="10" name="Brzozowka River"/>
-  <hex row="12" col="28" name="Railroad"/>
+  <hex row="12" col="27" terrain="10" name="Brzozowka River" rail="34"/>
+  <hex row="12" col="28" name="Railroad" rail="34"/>
   <hex row="12" col="29" road="33"/>
   <hex row="12" col="30" terrain="16"/>
   <hex row="12" col="31" terrain="3"/>
@@ -798,11 +798,11 @@
   <hex row="13" col="19" terrain="16"/>
   <hex row="13" col="20" terrain="16"/>
   <hex row="13" col="21" terrain="16"/>
-  <hex row="13" col="22" name="Railroad"/>
+  <hex row="13" col="22" name="Railroad" rail="144"/>
   <hex row="13" col="23" terrain="16"/>
   <hex row="13" col="24" road="136"/>
-  <hex row="13" col="25" name="Railroad"/>
-  <hex row="13" col="26" name="Railroad">
+  <hex row="13" col="25" name="Railroad" rail="34"/>
+  <hex row="13" col="26" name="Railroad" rail="34">
     <unit id="839" owner="1" flag="8" face="0" exp="44" str="9" bstr="1" ammo="0"/>
   </hex>
   <hex row="13" col="27" road="130"/>
@@ -844,9 +844,9 @@
   <hex row="14" col="19" terrain="16"/>
   <hex row="14" col="20" terrain="16"/>
   <hex row="14" col="21" terrain="16"/>
-  <hex row="14" col="22" name="Railroad"/>
-  <hex row="14" col="23" name="Railroad"/>
-  <hex row="14" col="24" name="Railroad"/>
+  <hex row="14" col="22" name="Railroad" rail="9"/>
+  <hex row="14" col="23" name="Railroad" rail="130"/>
+  <hex row="14" col="24" name="Railroad" rail="34"/>
   <hex row="14" col="25" road="136"/>
   <hex row="14" col="26" terrain="16"/>
   <hex row="14" col="27" terrain="16">

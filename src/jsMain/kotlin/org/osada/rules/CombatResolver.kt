@@ -353,7 +353,7 @@ object CombatResolver {
         val classEligible =
             UnitPredicates.isAir(attacker) ||
                 UnitCapabilities.hasSupportFire(sData) ||
-                ExtendedNaval.escortsNavalTransport(support, attacker, defender)
+                grantedBySomethingElse(support, attacker, defender, sPos)
         // g2a_intercept_mode bit 1: an AA unit that has already intercepted a moving aircraft
         // this turn cannot also air-defend one (AAInterception.applyInterception sets the flag).
         val notSpentOnInterception = !UnitPredicates.isAir(attacker) || !support.hasInterceptedThisTurn
@@ -368,6 +368,18 @@ object CombatResolver {
             notSpentOnSupport &&
             AttackEligibility.canInitiateAttack(support, attacker, asActiveAttack = false)
     }
+
+    /** Support fire granted by something other than the supporter's class or equipment: OG's
+     *  destroyer escort ([ExtendedNaval]) and OG's Extended Front / Flak Support leaders
+     *  ([LeaderSupportFire]). */
+    private fun grantedBySomethingElse(
+        support: GameUnit,
+        attacker: GameUnit,
+        defender: GameUnit,
+        sPos: Cell,
+    ): Boolean =
+        LeaderSupportFire.grants(support, defender, sPos) ||
+            ExtendedNaval.escortsNavalTransport(support, attacker, defender)
 
     /** Whether a unit losing [current] of [original] strength is past its retreat threshold. */
     fun isLossOverRetreatThreshold(

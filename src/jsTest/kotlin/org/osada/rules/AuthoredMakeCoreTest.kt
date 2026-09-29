@@ -10,6 +10,7 @@ import org.osada.model.Player
 import org.osada.model.addUnit
 import org.osada.model.buildCoreUnitList
 import org.osada.model.enrollAuthoredCoreUnits
+import org.osada.model.keepScenarioUnitsAsAuxiliary
 import org.osada.model.restoreCoreUnitList
 import org.osada.model.undeployCoreUnits
 import kotlin.test.AfterTest
@@ -18,6 +19,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 /**
@@ -176,7 +178,7 @@ class AuthoredMakeCoreTest : OgRulesTestHarness() {
      * Scenario 2+ never runs `buildCoreUnitList` — its roster arrives by `Player.copy` from the
      * previous battle — so the load-time sweep is the only thing that can see a Make Core formation
      * authored into a later scenario. Without it the unit wears the marker, is spared by
-     * `removeNonCampaignUnits` BECAUSE it wears it, and still vanishes at the next transition.
+     * `keepScenarioUnitsAsAuxiliary` BECAUSE it wears it, and still vanishes at the next transition.
      */
     @Test
     fun aMakeCoreUnitAddedInScenarioTwoJoinsTheRestoredRoster() {
@@ -197,6 +199,30 @@ class AuthoredMakeCoreTest : OgRulesTestHarness() {
             "a newly enrolled formation is minted past every id already present",
         )
         assertTrue(survivesTransition(friendly, authored))
+    }
+
+    /**
+     * The Minsk report (2026-09-29): scenario 2+'s own units on the player's deploy hexes are kept as
+     * auxiliaries, not deleted -- and the formation id `addUnit` minted for them at load is taken
+     * back, so nothing downstream mistakes a lent unit for a formation with a history. Units off the
+     * deploy zone, the enemy's, and Make Core units are left exactly as they were.
+     */
+    @Test
+    fun scenarioTwoDeployHexUnitsStayAsAuxiliariesWithNoFormationId() {
+        val map = campaignWorld()
+        val lent = place(map, infantryEqid, 2, 2, 0).apply { formationId = "F-0-99" }
+        val elsewhere = place(map, infantryEqid, 5, 5, 0)
+        val authoredCore = makeCore(place(map, infantryEqid, 6, 6, 0))
+        map.map!![6][6].isDeployment = friendly.id
+
+        map.keepScenarioUnitsAsAuxiliary(friendly)
+
+        assertTrue(lent.isTemporaryBorrowed, "kept on the map, as an auxiliary")
+        assertFalse(lent.destroyed, "not deleted")
+        assertNull(lent.formationId, "and wearing no formation id")
+        assertFalse(elsewhere.isTemporaryBorrowed, "off the deploy zone: unchanged")
+        assertFalse(authoredCore.isTemporaryBorrowed, "Make Core: unchanged")
+        assertFalse(survivesTransition(friendly, lent), "an auxiliary is never carried on")
     }
 
     /** Every path is idempotent, so the loader may call the sweep on top of any other path. */

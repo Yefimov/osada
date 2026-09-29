@@ -10,6 +10,7 @@ import org.osada.model.GameUnit
 import org.osada.model.Player
 import org.osada.model.buyUnit
 import org.osada.model.deployPlayerUnit
+import org.osada.model.friendlyAirfields
 import org.osada.model.getDeployHexes
 import org.osada.model.getUnits
 import org.osada.rules.AiOrders
@@ -93,7 +94,8 @@ class AI(
             AIPurchasing.selectUnits(player, expensiveBudget, CHEAP_CLASSES).units.forEach { player.buyUnit(it, -1) }
         }
         val coreUnits = player.getCoreUnitList()
-        val deployHexes = map.getDeployHexes(player.side)
+        // Airfields as well: a side holding one may base aircraft nowhere else (`aircraftMayDeployOn`).
+        val deployHexes = map.getDeployHexes(player.side).toList() + map.friendlyAirfields(player.side)
         deployHexes.forEach { cell ->
             coreUnits.forEachIndexed { index, unit ->
                 if (!unit.isDeployed) map.deployPlayerUnit(player, index, cell.row, cell.col)

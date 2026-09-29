@@ -53,6 +53,10 @@ internal object MainMenuBuilder {
         // Dissolve the floating rail entirely.
         byId("menu")?.style?.display = "none"
 
+        // Centres the Turn Report toggle only while it fits, and hides the least valuable parts of
+        // the row, one at a time, while it is too long. Installed last: it observes every item.
+        TopBarFit.install()
+
         wireLegacyButtons()
     }
 

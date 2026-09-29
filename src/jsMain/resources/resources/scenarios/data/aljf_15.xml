@@ -236,7 +236,8 @@
   <hex row="5" col="15" terrain="6"/>
   <hex row="5" col="20" road="17"/>
   <hex row="5" col="23" terrain="10" name="Rock Creek"/>
-  <hex row="5" col="41" owner="1" flag="150" deploy="1" station="1"/>
+  <hex row="5" col="41" owner="1" flag="150" deploy="1" station="1" rail="34"/>
+  <hex row="5" col="42" rail="34"/>
   <hex row="6" col="1" terrain="3"/>
   <hex row="6" col="7" terrain="10" name="Willoughby Run"/>
   <hex row="6" col="13" terrain="6"/>
@@ -248,6 +249,9 @@
   <hex row="6" col="20" road="17"/>
   <hex row="6" col="23" terrain="10" name="Rock Creek"/>
   <hex row="6" col="31" terrain="4"/>
+  <hex row="6" col="39" rail="34"/>
+  <hex row="6" col="40" rail="34"/>
+  <hex row="7" col="1" rail="136"/>
   <hex row="7" col="7">
     <unit id="44787" owner="1" flag="151" face="0" exp="135"/>
   </hex>
@@ -278,13 +282,19 @@
   <hex row="7" col="30" terrain="4"/>
   <hex row="7" col="31" terrain="4"/>
   <hex row="7" col="32" terrain="4"/>
+  <hex row="7" col="35" rail="40"/>
+  <hex row="7" col="37" rail="34"/>
+  <hex row="7" col="38" rail="34"/>
   <hex row="7" col="39" road="34"/>
   <hex row="7" col="40" road="40"/>
   <hex row="7" col="41" road="130"/>
   <hex row="7" col="42" road="34"/>
   <hex row="8" col="0" road="8"/>
   <hex row="8" col="1" terrain="3" road="136"/>
-  <hex row="8" col="3" road="40" owner="1" flag="150" deploy="1" station="1"/>
+  <hex row="8" col="2" rail="136"/>
+  <hex row="8" col="3" road="40" owner="1" flag="150" deploy="1" station="1" rail="130"/>
+  <hex row="8" col="4" rail="40"/>
+  <hex row="8" col="5" rail="136"/>
   <hex row="8" col="7">
     <unit id="44787" owner="1" flag="151" face="0" exp="62"/>
   </hex>
@@ -321,13 +331,17 @@
     <unit id="44787" owner="1" flag="151" face="0" exp="150"/>
   </hex>
   <hex row="8" col="23" terrain="10" name="Rock Creek"/>
+  <hex row="8" col="33" rail="34"/>
+  <hex row="8" col="34" rail="34"/>
+  <hex row="8" col="36" rail="130"/>
   <hex row="8" col="37" road="34"/>
   <hex row="8" col="38" road="34"/>
   <hex row="9" col="1" terrain="3"/>
   <hex row="9" col="2" road="130"/>
   <hex row="9" col="4" road="136"/>
   <hex row="9" col="5" road="136"/>
-  <hex row="9" col="7">
+  <hex row="9" col="6" rail="136"/>
+  <hex row="9" col="7" rail="136">
     <unit id="44827" owner="1" flag="151" face="0" transport="44810" exp="74" objcol="10" objrow="0"/>
   </hex>
   <hex row="9" col="8">
@@ -363,6 +377,8 @@
   </hex>
   <hex row="9" col="24" terrain="10" name="Rock Creek"/>
   <hex row="9" col="26" terrain="3"/>
+  <hex row="9" col="31" rail="34"/>
+  <hex row="9" col="32" rail="34"/>
   <hex row="9" col="35" road="34"/>
   <hex row="9" col="36" road="34"/>
   <hex row="10" col="1" terrain="3"/>
@@ -371,10 +387,11 @@
   <hex row="10" col="7" terrain="6" road="136">
     <unit id="44826" owner="1" flag="151" face="0" transport="44814" exp="24" objcol="11" objrow="0"/>
   </hex>
-  <hex row="10" col="8">
+  <hex row="10" col="8" rail="136">
     <unit id="44787" owner="1" flag="151" face="0" exp="162"/>
   </hex>
-  <hex row="10" col="9" terrain="10" name="Willoughby Run"/>
+  <hex row="10" col="9" terrain="10" name="Willoughby Run" rail="136"/>
+  <hex row="10" col="11" rail="40"/>
   <hex row="10" col="13" terrain="6" road="40"/>
   <hex row="10" col="14" terrain="3"/>
   <hex row="10" col="15" terrain="1" road="40" name="Seminary" owner="0" flag="162">
@@ -406,9 +423,12 @@
   <hex row="10" col="26">
     <unit id="44787" owner="1" flag="151" face="0" exp="170"/>
   </hex>
-  <hex row="10" col="27">
+  <hex row="10" col="27" rail="34">
     <unit id="44787" owner="1" flag="151" face="0" exp="34"/>
   </hex>
+  <hex row="10" col="28" rail="40"/>
+  <hex row="10" col="29" rail="130"/>
+  <hex row="10" col="30" rail="34"/>
   <hex row="10" col="33" road="34"/>
   <hex row="10" col="34" road="34"/>
   <hex row="10" col="35">
@@ -426,16 +446,16 @@
     <unit id="44787" owner="1" flag="151" face="0" exp="135"/>
   </hex>
   <hex row="11" col="9" terrain="10" road="130" name="Willoughby Run"/>
-  <hex row="11" col="10" road="40"/>
+  <hex row="11" col="10" road="40" rail="130"/>
   <hex row="11" col="11" road="146"/>
-  <hex row="11" col="12" road="34"/>
-  <hex row="11" col="13" terrain="6">
+  <hex row="11" col="12" road="34" rail="136"/>
+  <hex row="11" col="13" terrain="6" rail="136">
     <unit id="45963" owner="0" flag="163" face="0" exp="191"/>
   </hex>
   <hex row="11" col="14" terrain="6" road="130">
     <unit id="45963" owner="0" flag="163" face="0" exp="33"/>
   </hex>
-  <hex row="11" col="15" terrain="6"/>
+  <hex row="11" col="15" terrain="6" rail="40"/>
   <hex row="11" col="16" road="136"/>
   <hex row="11" col="17" road="144"/>
   <hex row="11" col="18">
@@ -451,10 +471,10 @@
     <unit id="45963" owner="0" flag="163" face="0" exp="115"/>
   </hex>
   <hex row="11" col="24" terrain="10" name="Rock Creek"/>
-  <hex row="11" col="25">
+  <hex row="11" col="25" rail="34">
     <unit id="44787" owner="1" flag="151" face="0" exp="57"/>
   </hex>
-  <hex row="11" col="26" terrain="3">
+  <hex row="11" col="26" terrain="3" rail="34">
     <unit id="44827" owner="1" flag="151" face="0" transport="44810" exp="84"/>
   </hex>
   <hex row="11" col="27" terrain="3">
@@ -491,26 +511,28 @@
   <hex row="12" col="13" terrain="6">
     <unit id="45963" owner="0" flag="163" face="0" exp="106"/>
   </hex>
-  <hex row="12" col="14">
+  <hex row="12" col="14" rail="130">
     <unit id="45998" owner="0" flag="163" face="0" transport="45993" exp="26"/>
   </hex>
-  <hex row="12" col="17" road="9"/>
-  <hex row="12" col="19" terrain="1" road="58" name="Gettysburg" owner="0" flag="162" victory="0" station="1">
+  <hex row="12" col="16" rail="136"/>
+  <hex row="12" col="17" road="9" rail="130"/>
+  <hex row="12" col="18" rail="40"/>
+  <hex row="12" col="19" terrain="1" road="58" name="Gettysburg" owner="0" flag="162" victory="0" station="1" rail="136">
     <unit id="45963" owner="0" flag="163" face="0" exp="48"/>
   </hex>
   <hex row="12" col="20" road="49">
     <unit id="45970" owner="0" flag="163" face="0" exp="203"/>
   </hex>
-  <hex row="12" col="21">
+  <hex row="12" col="21" rail="40">
     <unit id="45970" owner="0" flag="163" face="0" exp="178"/>
   </hex>
   <hex row="12" col="22">
     <unit id="45963" owner="0" flag="163" face="0" exp="156"/>
   </hex>
-  <hex row="12" col="23">
+  <hex row="12" col="23" rail="34">
     <unit id="45963" owner="0" flag="163" face="0" exp="193"/>
   </hex>
-  <hex row="12" col="24" terrain="10" name="Rock Creek"/>
+  <hex row="12" col="24" terrain="10" name="Rock Creek" rail="34"/>
   <hex row="12" col="25">
     <unit id="44787" owner="1" flag="151" face="0" exp="32"/>
   </hex>
@@ -548,13 +570,13 @@
   </hex>
   <hex row="13" col="18" road="138"/>
   <hex row="13" col="19" terrain="1" road="139" name="Gettysburg"/>
-  <hex row="13" col="20" terrain="1" road="185" name="Gettysburg">
+  <hex row="13" col="20" terrain="1" road="185" name="Gettysburg" rail="130">
     <unit id="46008" owner="0" flag="163" face="0" transport="45989" exp="153"/>
   </hex>
   <hex row="13" col="21" terrain="1" road="184" name="Gettysburg" owner="0" flag="162" victory="0">
     <unit id="45963" owner="0" flag="163" face="0" exp="75"/>
   </hex>
-  <hex row="13" col="22">
+  <hex row="13" col="22" rail="130">
     <unit id="46007" owner="0" flag="163" face="0" transport="45993" exp="28"/>
   </hex>
   <hex row="13" col="23" road="40">

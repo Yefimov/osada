@@ -607,7 +607,8 @@
   <hex row="10" col="41" terrain="5"/>
   <hex row="10" col="42" terrain="5"/>
   <hex row="10" col="43" terrain="5"/>
-  <hex row="11" col="1" terrain="1" road="11" name="Pascani">
+  <hex row="11" col="0" rail="136"/>
+  <hex row="11" col="1" terrain="1" road="11" name="Pascani" rail="144">
     <unit id="17730" owner="1" flag="14" face="0" exp="192" str="11" bstr="5"/>
   </hex>
   <hex row="11" col="2" terrain="1" road="144" name="Pascani"/>
@@ -671,25 +672,25 @@
   <hex row="11" col="41" terrain="5"/>
   <hex row="11" col="42" terrain="5"/>
   <hex row="11" col="43" terrain="5"/>
-  <hex row="12" col="1">
+  <hex row="12" col="1" rail="25">
     <unit id="9474" owner="1" flag="8" face="0" transport="9769" exp="33" str="6" bstr="5" anchored="1"/>
   </hex>
   <hex row="12" col="2" terrain="1" road="153" name="Pascani" owner="1" flag="13" victory="1">
     <unit id="17730" owner="1" flag="14" face="0" exp="180" str="9" bstr="5"/>
   </hex>
-  <hex row="12" col="3" terrain="10" road="162" name="Siret"/>
-  <hex row="12" col="4" road="34">
+  <hex row="12" col="3" terrain="10" road="162" name="Siret" rail="34"/>
+  <hex row="12" col="4" road="34" rail="40">
     <unit id="17730" owner="1" flag="14" face="0" exp="153" bstr="5"/>
   </hex>
-  <hex row="12" col="5" terrain="5">
+  <hex row="12" col="5" terrain="5" rail="136">
     <unit id="18180" owner="1" flag="14" face="0" transport="18130" exp="202" str="8" bstr="5"/>
   </hex>
   <hex row="12" col="6" terrain="5" road="136"/>
-  <hex row="12" col="7" terrain="5" road="136">
+  <hex row="12" col="7" terrain="5" road="136" rail="40">
     <unit id="18233" owner="1" flag="14" face="0" transport="18130" exp="216" bstr="5"/>
   </hex>
   <hex row="12" col="8" terrain="5"/>
-  <hex row="12" col="9" terrain="3">
+  <hex row="12" col="9" terrain="3" rail="40">
     <unit id="9480" owner="1" flag="8" face="0" transport="9769" exp="26" str="6" bstr="5" anchored="1"/>
   </hex>
   <hex row="12" col="10" road="144">
@@ -749,35 +750,35 @@
   <hex row="12" col="36" terrain="3"/>
   <hex row="12" col="39" terrain="5"/>
   <hex row="12" col="40" terrain="5"/>
-  <hex row="12" col="41" terrain="1" name="Cornesti" owner="1" flag="13" victory="1" station="1">
+  <hex row="12" col="41" terrain="1" name="Cornesti" owner="1" flag="13" victory="1" station="1" rail="40">
     <unit id="7909" owner="1" flag="8" face="0" exp="183" str="6" bstr="6"/>
   </hex>
   <hex row="12" col="42" terrain="5"/>
   <hex row="12" col="43" terrain="5"/>
-  <hex row="13" col="1">
+  <hex row="13" col="1" rail="19">
     <unit id="18180" owner="1" flag="14" face="0" transport="18130" exp="176" bstr="5"/>
   </hex>
-  <hex row="13" col="2" road="19" station="1">
+  <hex row="13" col="2" road="19" station="1" rail="162">
     <unit id="18237" owner="1" flag="14" face="0" transport="18130" exp="164" str="8" bstr="5"/>
   </hex>
   <hex row="13" col="3" terrain="10" name="Siret"/>
   <hex row="13" col="5" terrain="5"/>
-  <hex row="13" col="6" terrain="5"/>
+  <hex row="13" col="6" terrain="5" rail="130"/>
   <hex row="13" col="7" terrain="5"/>
-  <hex row="13" col="8" terrain="5" road="136"/>
+  <hex row="13" col="8" terrain="5" road="136" rail="130"/>
   <hex row="13" col="9" road="138"/>
-  <hex row="13" col="10" terrain="1" road="57" name="Targu Frumos" owner="1" flag="13" victory="1">
+  <hex row="13" col="10" terrain="1" road="57" name="Targu Frumos" owner="1" flag="13" victory="1" rail="136">
     <unit id="7976" owner="1" flag="8" face="0" exp="19" str="9" bstr="5"/>
   </hex>
-  <hex row="13" col="11" terrain="1" road="168" name="Targu Frumos" station="1"/>
-  <hex row="13" col="12">
+  <hex row="13" col="11" terrain="1" road="168" name="Targu Frumos" station="1" rail="130"/>
+  <hex row="13" col="12" rail="40">
     <unit id="9419" owner="1" flag="8" face="0" exp="126" str="7" ldr="1" bstr="5"/>
   </hex>
-  <hex row="13" col="13" road="40"/>
-  <hex row="13" col="14">
+  <hex row="13" col="13" road="40" rail="130"/>
+  <hex row="13" col="14" rail="40">
     <unit id="9482" owner="1" flag="8" face="0" transport="9729" exp="185" str="7" bstr="5"/>
   </hex>
-  <hex row="13" col="15" road="40"/>
+  <hex row="13" col="15" road="40" rail="136"/>
   <hex row="13" col="16">
     <unit id="9115" owner="1" flag="8" face="0" transport="9729" exp="29" str="7" bstr="5"/>
   </hex>
@@ -800,9 +801,14 @@
   <hex row="13" col="34" terrain="1" road="144" name="Ungheni" owner="1" flag="13">
     <unit id="7976" owner="1" flag="8" face="0" exp="25" str="9" bstr="5"/>
   </hex>
+  <hex row="13" col="37" rail="34"/>
+  <hex row="13" col="38" rail="40"/>
+  <hex row="13" col="39" rail="130"/>
+  <hex row="13" col="40" rail="34"/>
   <hex row="13" col="41" terrain="5"/>
-  <hex row="13" col="42" terrain="5"/>
-  <hex row="14" col="1" terrain="3"/>
+  <hex row="13" col="42" terrain="5" rail="136"/>
+  <hex row="13" col="43" rail="136"/>
+  <hex row="14" col="1" terrain="3" rail="9"/>
   <hex row="14" col="2" road="9"/>
   <hex row="14" col="3" road="144"/>
   <hex row="14" col="4" terrain="10" name="Siret"/>
@@ -815,11 +821,12 @@
   <hex row="14" col="10" terrain="1" road="131" name="Targu Frumos"/>
   <hex row="14" col="12" road="130"/>
   <hex row="14" col="14" road="130"/>
-  <hex row="14" col="16" road="138">
+  <hex row="14" col="16" road="138" rail="136">
     <unit id="9419" owner="1" flag="8" face="0" exp="41" str="7" bstr="5"/>
   </hex>
-  <hex row="14" col="17" road="147" station="1"/>
+  <hex row="14" col="17" road="147" station="1" rail="136"/>
   <hex row="14" col="18" terrain="1" road="162" name="Podu Iloaiei" owner="1" flag="13"/>
+  <hex row="14" col="19" rail="40"/>
   <hex row="14" col="20" terrain="10" road="136" name="Bahlui"/>
   <hex row="14" col="21" terrain="10" road="130" name="Bahlui"/>
   <hex row="14" col="22" road="40"/>
@@ -844,9 +851,12 @@
   <hex row="14" col="34" terrain="1" road="17" name="Ungheni">
     <unit id="9900" owner="1" flag="8" face="0" transport="9824" exp="104" str="11" bstr="5"/>
   </hex>
+  <hex row="14" col="35" rail="34"/>
+  <hex row="14" col="36" rail="34"/>
   <hex row="14" col="41" terrain="5"/>
   <hex row="14" col="42" terrain="5"/>
   <hex row="14" col="43" terrain="5"/>
+  <hex row="15" col="2" rail="144"/>
   <hex row="15" col="3" road="17"/>
   <hex row="15" col="4" terrain="10" name="Siret"/>
   <hex row="15" col="6">
@@ -863,7 +873,11 @@
     <unit id="10053" owner="1" flag="8" face="0" transport="9704" exp="57" str="6" bstr="5"/>
   </hex>
   <hex row="15" col="17" road="17"/>
-  <hex row="15" col="22" terrain="10" name="Bahlui"/>
+  <hex row="15" col="18" rail="130"/>
+  <hex row="15" col="20" rail="136"/>
+  <hex row="15" col="21" rail="130"/>
+  <hex row="15" col="22" terrain="10" name="Bahlui" rail="40"/>
+  <hex row="15" col="23" rail="136"/>
   <hex row="15" col="24" terrain="10" road="138" name="Bahlui"/>
   <hex row="15" col="25" terrain="1" road="155" name="Iasi">
     <unit id="17730" owner="1" flag="14" face="0" exp="196" str="9" bstr="5"/>
@@ -877,14 +891,14 @@
   <hex row="15" col="28" terrain="1" road="185" name="Iasi">
     <unit id="18237" owner="1" flag="14" face="0" transport="18130" exp="220" str="9" bstr="5"/>
   </hex>
-  <hex row="15" col="29" road="178">
+  <hex row="15" col="29" road="178" rail="34">
     <unit id="9897" owner="1" flag="8" face="0" transport="9729" exp="15" str="7" bstr="5"/>
   </hex>
-  <hex row="15" col="30" terrain="10" road="42" name="Jijia"/>
-  <hex row="15" col="31" terrain="10" road="131" name="Jijia"/>
-  <hex row="15" col="32" road="168"/>
-  <hex row="15" col="33" terrain="10" road="130" name="Prut"/>
-  <hex row="15" col="34" road="41">
+  <hex row="15" col="30" terrain="10" road="42" name="Jijia" rail="40"/>
+  <hex row="15" col="31" terrain="10" road="131" name="Jijia" rail="130"/>
+  <hex row="15" col="32" road="168" rail="40"/>
+  <hex row="15" col="33" terrain="10" road="130" name="Prut" rail="130"/>
+  <hex row="15" col="34" road="41" rail="34">
     <unit id="9422" owner="1" flag="8" face="0" exp="142" str="7" bstr="5"/>
   </hex>
   <hex row="15" col="35" road="136"/>
@@ -893,6 +907,7 @@
   <hex row="15" col="39" terrain="3"/>
   <hex row="15" col="42" terrain="5"/>
   <hex row="15" col="43" terrain="5"/>
+  <hex row="16" col="2" rail="17"/>
   <hex row="16" col="3" road="9"/>
   <hex row="16" col="4" terrain="10" name="Siret"/>
   <hex row="16" col="5" terrain="10" name="Siret"/>
@@ -911,10 +926,11 @@
     <unit id="17730" owner="1" flag="14" face="0" exp="151" str="9" bstr="5"/>
   </hex>
   <hex row="16" col="17" road="9"/>
-  <hex row="16" col="25" road="11"/>
-  <hex row="16" col="26" terrain="1" road="187" name="Iasi" station="1"/>
-  <hex row="16" col="27" terrain="1" road="171" name="Iasi"/>
-  <hex row="16" col="28" terrain="1" road="187" name="Iasi" station="1"/>
+  <hex row="16" col="24" rail="152"/>
+  <hex row="16" col="25" road="11" rail="162"/>
+  <hex row="16" col="26" terrain="1" road="187" name="Iasi" station="1" rail="40"/>
+  <hex row="16" col="27" terrain="1" road="171" name="Iasi" rail="130"/>
+  <hex row="16" col="28" terrain="1" road="187" name="Iasi" station="1" rail="34"/>
   <hex row="16" col="29" terrain="1" road="177" name="Iasi"/>
   <hex row="16" col="30" terrain="10" name="Bahlui"/>
   <hex row="16" col="31" terrain="10"/>
@@ -932,6 +948,8 @@
   <hex row="16" col="41" terrain="10" name="Nirnova"/>
   <hex row="16" col="42" terrain="5"/>
   <hex row="16" col="43" terrain="5"/>
+  <hex row="17" col="2" rail="9"/>
+  <hex row="17" col="3" rail="144"/>
   <hex row="17" col="4" road="144"/>
   <hex row="17" col="6" terrain="10" name="Siret"/>
   <hex row="17" col="7" terrain="3"/>
@@ -947,6 +965,7 @@
   </hex>
   <hex row="17" col="18" road="144"/>
   <hex row="17" col="21" terrain="5"/>
+  <hex row="17" col="24" rail="19"/>
   <hex row="17" col="26" terrain="1" road="131" name="Iasi"/>
   <hex row="17" col="28" terrain="1" road="139" name="Iasi"/>
   <hex row="17" col="29" terrain="1" road="137" name="Iasi"/>
@@ -970,6 +989,7 @@
   <hex row="17" col="42" terrain="10" name="Nirnova"/>
   <hex row="18" col="0" terrain="10"/>
   <hex row="18" col="1" terrain="10" name="Moldova"/>
+  <hex row="18" col="3" rail="9"/>
   <hex row="18" col="4" road="9"/>
   <hex row="18" col="5" road="136"/>
   <hex row="18" col="6" terrain="10" name="Siret"/>
@@ -991,6 +1011,7 @@
   <hex row="18" col="18" road="17"/>
   <hex row="18" col="19" terrain="5"/>
   <hex row="18" col="21" terrain="5"/>
+  <hex row="18" col="24" rail="17"/>
   <hex row="18" col="27" terrain="14"/>
   <hex row="18" col="28" terrain="5"/>
   <hex row="18" col="29" terrain="3"/>
@@ -1011,6 +1032,8 @@
   <hex row="18" col="43" terrain="10" name="Nirnova"/>
   <hex row="19" col="0" terrain="5"/>
   <hex row="19" col="1" terrain="10" name="Moldova"/>
+  <hex row="19" col="4" rail="136"/>
+  <hex row="19" col="5" rail="136"/>
   <hex row="19" col="6" terrain="1" road="152" name="Halaucesti" owner="1" flag="13">
     <unit id="17730" owner="1" flag="14" face="0" exp="193" str="11" bstr="5"/>
   </hex>
@@ -1034,6 +1057,7 @@
   <hex row="19" col="23" terrain="1" name="Bogdanesti" owner="1" flag="13">
     <unit id="7976" owner="1" flag="8" face="0" exp="51" str="9" ldr="1" bstr="5"/>
   </hex>
+  <hex row="19" col="24" rail="17"/>
   <hex row="19" col="25" terrain="5"/>
   <hex row="19" col="26" terrain="5"/>
   <hex row="19" col="27" terrain="14"/>
@@ -1053,7 +1077,7 @@
   <hex row="20" col="1" terrain="5"/>
   <hex row="20" col="2" terrain="10" name="Moldova"/>
   <hex row="20" col="3" terrain="10" name="Moldova"/>
-  <hex row="20" col="6" road="27"/>
+  <hex row="20" col="6" road="27" rail="144"/>
   <hex row="20" col="7" road="161"/>
   <hex row="20" col="8" terrain="10" name="Siret"/>
   <hex row="20" col="9" terrain="10" name="Siret"/>
@@ -1077,8 +1101,8 @@
   </hex>
   <hex row="20" col="21" terrain="5" road="144"/>
   <hex row="20" col="22" terrain="5"/>
-  <hex row="20" col="24" terrain="5"/>
-  <hex row="20" col="25" terrain="5"/>
+  <hex row="20" col="24" terrain="5" rail="9"/>
+  <hex row="20" col="25" terrain="5" rail="136"/>
   <hex row="20" col="26" terrain="5"/>
   <hex row="20" col="27" terrain="5"/>
   <hex row="20" col="28" terrain="1" name="Barnova" owner="1" flag="13">
@@ -1097,7 +1121,7 @@
   <hex row="21" col="2" terrain="5"/>
   <hex row="21" col="4" terrain="10" name="Moldova"/>
   <hex row="21" col="5" terrain="10" name="Moldova"/>
-  <hex row="21" col="6" road="19"/>
+  <hex row="21" col="6" road="19" rail="17"/>
   <hex row="21" col="8" terrain="10" name="Siret"/>
   <hex row="21" col="10" terrain="5"/>
   <hex row="21" col="11" terrain="5"/>
@@ -1123,7 +1147,7 @@
   <hex row="21" col="25" terrain="1" name="Ciurea" owner="1" flag="13" victory="1">
     <unit id="17730" owner="1" flag="14" face="0" exp="207" bstr="5"/>
   </hex>
-  <hex row="21" col="26" terrain="5"/>
+  <hex row="21" col="26" terrain="5" rail="144"/>
   <hex row="21" col="27" terrain="5"/>
   <hex row="21" col="28" terrain="14"/>
   <hex row="21" col="29" terrain="3"/>
@@ -1143,7 +1167,7 @@
   <hex row="22" col="1" terrain="5"/>
   <hex row="22" col="2" terrain="5"/>
   <hex row="22" col="5" terrain="10" name="Moldova"/>
-  <hex row="22" col="6" road="17"/>
+  <hex row="22" col="6" road="17" rail="17"/>
   <hex row="22" col="8" terrain="10" name="Siret"/>
   <hex row="22" col="9" terrain="10" name="Siret"/>
   <hex row="22" col="10" terrain="5"/>
@@ -1158,7 +1182,7 @@
     <unit id="17730" owner="1" flag="14" face="0" exp="224" bstr="5"/>
   </hex>
   <hex row="22" col="25" terrain="5"/>
-  <hex row="22" col="26" terrain="5"/>
+  <hex row="22" col="26" terrain="5" rail="17"/>
   <hex row="22" col="27" terrain="3">
     <unit id="17730" owner="1" flag="14" face="0" exp="169" bstr="5"/>
   </hex>
@@ -1178,7 +1202,7 @@
   <hex row="23" col="1" terrain="5" road="40"/>
   <hex row="23" col="2" terrain="5"/>
   <hex row="23" col="3" terrain="5"/>
-  <hex row="23" col="6" terrain="10" road="17" name="Moldova"/>
+  <hex row="23" col="6" terrain="10" road="17" name="Moldova" rail="17"/>
   <hex row="23" col="7" terrain="10" name="Moldova"/>
   <hex row="23" col="9" terrain="10" name="Siret"/>
   <hex row="23" col="11" terrain="5"/>
@@ -1193,7 +1217,7 @@
     <unit id="18237" owner="1" flag="14" face="0" transport="18130" exp="199" str="9" bstr="5"/>
   </hex>
   <hex row="23" col="25" terrain="5"/>
-  <hex row="23" col="26" terrain="5">
+  <hex row="23" col="26" terrain="5" rail="17">
     <unit id="18180" owner="1" flag="14" face="0" transport="18130" exp="180" str="8" bstr="5"/>
   </hex>
   <hex row="23" col="27" terrain="5"/>
@@ -1215,8 +1239,8 @@
   <hex row="24" col="1" terrain="5"/>
   <hex row="24" col="2" terrain="1" road="136" name="Dulcesti" owner="1" flag="13"/>
   <hex row="24" col="3" terrain="5" road="136"/>
-  <hex row="24" col="5" road="58"/>
-  <hex row="24" col="6" road="57" station="1"/>
+  <hex row="24" col="5" road="58" rail="18"/>
+  <hex row="24" col="6" road="57" station="1" rail="33"/>
   <hex row="24" col="7" terrain="1" road="184" name="Roman" owner="1" flag="13" victory="1">
     <unit id="7976" owner="1" flag="8" face="0" exp="172" str="9" bstr="5"/>
   </hex>
@@ -1236,8 +1260,8 @@
   </hex>
   <hex row="24" col="23" terrain="5"/>
   <hex row="24" col="25" terrain="5"/>
-  <hex row="24" col="26" terrain="5"/>
-  <hex row="24" col="27" terrain="5"/>
+  <hex row="24" col="26" terrain="5" rail="9"/>
+  <hex row="24" col="27" terrain="5" rail="144"/>
   <hex row="24" col="28" terrain="5"/>
   <hex row="24" col="30" terrain="3"/>
   <hex row="24" col="31" terrain="3"/>
@@ -1258,7 +1282,7 @@
   <hex row="25" col="2" terrain="5"/>
   <hex row="25" col="3" terrain="5"/>
   <hex row="25" col="4" road="138"/>
-  <hex row="25" col="5" road="147"/>
+  <hex row="25" col="5" road="147" rail="17"/>
   <hex row="25" col="6" terrain="1" road="171" name="Roman">
     <unit id="7976" owner="1" flag="8" face="0" exp="164" str="9" bstr="5"/>
   </hex>
@@ -1279,7 +1303,7 @@
   <hex row="25" col="23" terrain="5"/>
   <hex row="25" col="25" terrain="5"/>
   <hex row="25" col="26" terrain="5"/>
-  <hex row="25" col="27" terrain="5"/>
+  <hex row="25" col="27" terrain="5" rail="17"/>
   <hex row="25" col="28" terrain="3"/>
   <hex row="25" col="29" terrain="3"/>
   <hex row="25" col="30" terrain="3"/>
@@ -1298,7 +1322,7 @@
   <hex row="26" col="1" terrain="5"/>
   <hex row="26" col="2" terrain="5"/>
   <hex row="26" col="3" terrain="1" name="Trifesti" owner="1" flag="13"/>
-  <hex row="26" col="5" road="17"/>
+  <hex row="26" col="5" road="17" rail="17"/>
   <hex row="26" col="6">
     <unit id="9900" owner="1" flag="8" face="0" transport="9708" exp="208" str="9" bstr="5"/>
   </hex>
@@ -1312,7 +1336,7 @@
   <hex row="26" col="23" terrain="5" road="176"/>
   <hex row="26" col="25" terrain="5"/>
   <hex row="26" col="26" terrain="1" name="Scanteia" owner="1" flag="13"/>
-  <hex row="26" col="27" terrain="5"/>
+  <hex row="26" col="27" terrain="5" rail="17"/>
   <hex row="26" col="28" terrain="5"/>
   <hex row="26" col="29" terrain="5"/>
   <hex row="26" col="30" terrain="3"/>
@@ -1333,7 +1357,7 @@
   <hex row="27" col="1" terrain="5"/>
   <hex row="27" col="2" terrain="5"/>
   <hex row="27" col="3" terrain="5"/>
-  <hex row="27" col="5" road="17"/>
+  <hex row="27" col="5" road="17" rail="17"/>
   <hex row="27" col="7" terrain="10" name="Siret"/>
   <hex row="27" col="8" terrain="10" name="Siret"/>
   <hex row="27" col="10" terrain="3"/>
@@ -1358,7 +1382,7 @@
     <unit id="9419" owner="1" flag="8" face="0" exp="55" str="6" ldr="1" bstr="5"/>
   </hex>
   <hex row="27" col="26" terrain="5"/>
-  <hex row="27" col="27" terrain="5"/>
+  <hex row="27" col="27" terrain="5" rail="9"/>
   <hex row="27" col="28" terrain="5"/>
   <hex row="27" col="29" terrain="5"/>
   <hex row="27" col="30" terrain="5">
@@ -1378,7 +1402,7 @@
   <hex row="28" col="1" terrain="5"/>
   <hex row="28" col="2" terrain="5"/>
   <hex row="28" col="3" terrain="5"/>
-  <hex row="28" col="5" road="17"/>
+  <hex row="28" col="5" road="17" rail="17"/>
   <hex row="28" col="6" terrain="10" name="Siret"/>
   <hex row="28" col="10" terrain="5"/>
   <hex row="28" col="11" terrain="5"/>
@@ -1397,7 +1421,7 @@
   <hex row="28" col="25" terrain="10" road="136" name="Barlad"/>
   <hex row="28" col="26" terrain="5"/>
   <hex row="28" col="27" terrain="5"/>
-  <hex row="28" col="28" terrain="5"/>
+  <hex row="28" col="28" terrain="5" rail="144"/>
   <hex row="28" col="29" terrain="5"/>
   <hex row="28" col="30" terrain="5"/>
   <hex row="28" col="31" terrain="5"/>
@@ -1418,7 +1442,7 @@
   <hex row="29" col="4">
     <unit id="11056" owner="1" flag="8" face="0" exp="38" str="9" bstr="5"/>
   </hex>
-  <hex row="29" col="5" road="17">
+  <hex row="29" col="5" road="17" rail="17">
     <unit id="10966" owner="1" flag="8" face="0" exp="127" str="8" bstr="5"/>
   </hex>
   <hex row="29" col="6" terrain="10" name="Siret"/>
@@ -1438,8 +1462,8 @@
   <hex row="29" col="25" terrain="10" name="Barlad"/>
   <hex row="29" col="26" terrain="10" road="136" name="Barlad"/>
   <hex row="29" col="27" road="144"/>
-  <hex row="29" col="28" terrain="5"/>
-  <hex row="29" col="29" terrain="1" name="Zapodeni" owner="1" flag="13" station="1"/>
+  <hex row="29" col="28" terrain="5" rail="9"/>
+  <hex row="29" col="29" terrain="1" name="Zapodeni" owner="1" flag="13" station="1" rail="144"/>
   <hex row="29" col="30" terrain="5"/>
   <hex row="29" col="31" terrain="5"/>
   <hex row="29" col="32" terrain="10" name="Vaslui"/>
@@ -1456,7 +1480,7 @@
     <unit id="10665" owner="1" flag="8" face="0" exp="111" str="5" bstr="5"/>
     <unit id="7909" owner="1" flag="8" face="0" exp="202" str="7" bstr="6"/>
   </hex>
-  <hex row="30" col="5" road="17"/>
+  <hex row="30" col="5" road="17" rail="17"/>
   <hex row="30" col="7" terrain="10" name="Siret"/>
   <hex row="30" col="8" terrain="10" name="Siret"/>
   <hex row="30" col="10" terrain="5"/>
@@ -1476,7 +1500,7 @@
   <hex row="30" col="26" terrain="10" name="Barlad"/>
   <hex row="30" col="27" terrain="10" road="9" name="Barlad"/>
   <hex row="30" col="28" terrain="5"/>
-  <hex row="30" col="29" terrain="5"/>
+  <hex row="30" col="29" terrain="5" rail="9"/>
   <hex row="30" col="30" terrain="5"/>
   <hex row="30" col="31" terrain="5"/>
   <hex row="30" col="32" terrain="10" name="Vaslui"/>
@@ -1491,7 +1515,7 @@
   <hex row="31" col="2" terrain="5"/>
   <hex row="31" col="3" terrain="5"/>
   <hex row="31" col="4" terrain="5"/>
-  <hex row="31" col="5" road="9"/>
+  <hex row="31" col="5" road="9" rail="17"/>
   <hex row="31" col="6" terrain="10" name="Siret"/>
   <hex row="31" col="7" terrain="10" name="Siret"/>
   <hex row="31" col="11" terrain="5"/>
@@ -1508,7 +1532,7 @@
   <hex row="31" col="23" terrain="5"/>
   <hex row="31" col="28" terrain="10" road="136" name="Barlad"/>
   <hex row="31" col="29" terrain="3" road="144"/>
-  <hex row="31" col="30" terrain="5"/>
+  <hex row="31" col="30" terrain="5" rail="144"/>
   <hex row="31" col="31" terrain="5"/>
   <hex row="31" col="33" terrain="10" name="Vaslui"/>
   <hex row="31" col="34" terrain="5" road="17"/>
@@ -1523,7 +1547,7 @@
   <hex row="32" col="2" terrain="5"/>
   <hex row="32" col="3" terrain="5"/>
   <hex row="32" col="4" terrain="5"/>
-  <hex row="32" col="5" terrain="5"/>
+  <hex row="32" col="5" terrain="5" rail="17"/>
   <hex row="32" col="6" road="144"/>
   <hex row="32" col="7" terrain="10" name="Siret"/>
   <hex row="32" col="11" terrain="5"/>
@@ -1539,7 +1563,7 @@
   <hex row="32" col="24" terrain="5"/>
   <hex row="32" col="28" terrain="10" name="Barlad"/>
   <hex row="32" col="29" terrain="10" road="17" name="Barlad"/>
-  <hex row="32" col="30" terrain="5"/>
+  <hex row="32" col="30" terrain="5" rail="17"/>
   <hex row="32" col="31" terrain="10" name="Vaslui"/>
   <hex row="32" col="32" terrain="10" name="Vaslui"/>
   <hex row="32" col="33" terrain="5" road="18"/>
@@ -1555,7 +1579,7 @@
   <hex row="33" col="1" terrain="3"/>
   <hex row="33" col="3" terrain="5"/>
   <hex row="33" col="4" terrain="5"/>
-  <hex row="33" col="5" terrain="5" owner="1" flag="13"/>
+  <hex row="33" col="5" terrain="5" owner="1" flag="13" rail="17"/>
   <hex row="33" col="6" road="17"/>
   <hex row="33" col="7" terrain="10" name="Siret"/>
   <hex row="33" col="8" terrain="10" name="Siret"/>
@@ -1577,7 +1601,7 @@
   <hex row="33" col="25" terrain="5"/>
   <hex row="33" col="27" terrain="5"/>
   <hex row="33" col="29" terrain="10" road="9" name="Barlad"/>
-  <hex row="33" col="30" terrain="5"/>
+  <hex row="33" col="30" terrain="5" rail="17"/>
   <hex row="33" col="31" terrain="10" name="Vaslui"/>
   <hex row="33" col="32" terrain="5"/>
   <hex row="33" col="33" terrain="1" road="41" name="Vaslui" owner="1" flag="13" victory="1">

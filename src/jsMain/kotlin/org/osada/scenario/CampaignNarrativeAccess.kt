@@ -33,11 +33,24 @@ fun Campaign.peekNextScenarioFile(
 fun Campaign.peekNextScenarioRecord(
     outcome: String,
     routeOverride: Int? = null,
+): dynamic = nextScenarioRecord(getCampaignData(), currentScenarioIndex, outcome, routeOverride)
+
+/**
+ * The routing [Campaign.peekNextScenarioRecord] applies, over an explicit record list: [routeOverride]
+ * when a committed choice set one, otherwise the [outcome] branch's `goto` from the record at
+ * [currentIndex]; null for a `goto` past the list (the 254/255 campaign-end sentinels), exactly where
+ * [Campaign.loadNextScenario] returns null. The imported `gotoplayed` pair is not read here because
+ * `loadNextScenario` does not read it either -- the two must stay the same route.
+ */
+internal fun nextScenarioRecord(
+    scenarios: Array<dynamic>,
+    currentIndex: Int,
+    outcome: String,
+    routeOverride: Int? = null,
 ): dynamic {
-    val scenarios = getCampaignData()
     // Bracket access, not `?.get(outcome)`: the outcome map is a plain JS object parsed from the
     // campaign JSON, so a `.get(...)` method call throws "get is not a function" at runtime.
-    val outcomes: dynamic = scenarios.getOrNull(currentScenarioIndex)?.outcome
+    val outcomes: dynamic = scenarios.getOrNull(currentIndex)?.outcome
     val goto = routeOverride ?: (if (outcomes == null) null else outcomes[outcome]?.goto as? Int)
     return goto?.let { scenarios.getOrNull(it) }
 }

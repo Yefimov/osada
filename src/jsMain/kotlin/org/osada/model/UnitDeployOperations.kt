@@ -137,7 +137,11 @@ internal class UnitDeployOperations(
         val hex = gameMap.map?.getOrNull(row)?.getOrNull(col) ?: return false
         val isAir = GameRules.isAir(unit)
         val free = if (isAir) hex.airunit == null else hex.unit == null
-        val allowed = !unit.isDeployed && free && canDeployOnTerrain(unit, hex, isAir)
+        val allowed =
+            !unit.isDeployed &&
+                free &&
+                canDeployOnTerrain(unit, hex, isAir) &&
+                gameMap.aircraftMayDeployOn(unit, row, col)
         if (allowed) {
             if (!isAir && hex.terrain == TerrainType.OCEAN.value) {
                 unit.embark(UnitClass.NAVAL_TRANSPORT)

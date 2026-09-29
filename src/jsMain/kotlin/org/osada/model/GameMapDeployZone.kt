@@ -106,3 +106,40 @@ fun GameMap.isInDeployZone(
     row: Int,
     col: Int,
 ): Boolean = (row * cols + col) in deployZone(side)
+
+/**
+ * Every airfield [side] holds, as deploy cells. An airfield is friendly by its owner's side, with
+ * -1 (unowned) excluded explicitly for the reason [isOutOfZoneDeployTarget] gives.
+ */
+internal fun GameMap.friendlyAirfields(side: Int): List<Cell> =
+    friendlyAirfieldCache.getOrPut(side) {
+        val grid = map ?: return@getOrPut emptyList()
+        val cells = mutableListOf<Cell>()
+        grid.forEachIndexed { r, row ->
+            row.forEachIndexed { c, hex ->
+                if (hex.terrain == TerrainType.AIRFIELD.value && hex.owner != -1 && getPlayer(hex.owner).side == side) {
+                    cells += Cell(r, c)
+                }
+            }
+        }
+        cells
+    }
+
+/**
+ * Whether an aircraft may be placed on ([row], [col]) at all: **only on a friendly airfield, or a
+ * carrier where `Carrier Deploy` permits** ([isOutOfZoneDeployTarget]) -- never on an ordinary hex
+ * of the deploy zone. OG manual p.12: *"Deployment of air units is different, as they can only be
+ * deployed at airfields; some aircraft can be deployed from other units, like carriers."* A side
+ * with no airfield therefore deploys no aircraft until it takes or builds one, which OG's own
+ * scenario text confirms (*"You don't have an airport and won't be able to deploy planes till
+ * you've captured a beachhead and built a landing strip"*). Owner decision 2026-09-29.
+ *
+ * Read by the one placement authority (`UnitDeployOperations.deployPlayerUnit`, so the AI and a
+ * multiplayer host are bound too) and by the deploy highlight and click gate, so a hex is never lit
+ * for a unit that would then be refused. Non-aircraft always pass.
+ */
+internal fun GameMap.aircraftMayDeployOn(
+    unit: GameUnit,
+    row: Int,
+    col: Int,
+): Boolean = !GameRules.isAir(unit) || isOutOfZoneDeployTarget(unit, row, col)

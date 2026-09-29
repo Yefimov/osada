@@ -47,8 +47,16 @@ internal object CampaignStartPrestige {
  * > *"only the prestige cost of the current equipment is counted"* (so an upgrade counts at the
  * > new equipment's price, not at what was paid for it).
  *
- * The cap compared is the scenario JUST PLAYED — the page's example applies Madrid's 2,000 to the
- * award at the end of Madrid. Imported as the scenario record's `prestigecap`; 0 or absent is no cap.
+ * **The cap compared is the NEXT scenario's** — the one the campaign is about to route to — while
+ * the nominal award stays the completed scenario's outcome prestige. OG's Basic Tutorial states it
+ * outright (`open-general.com/docs/OG-tutorial.pdf`, p.3): *"if the player's army added to the
+ * player's available prestige is higher than the cap for the next scenario, he doesn't receive any
+ * after scenario prestige"*. Until 2026-09-28 this read the author's Madrid example as applying the
+ * cap of the scenario just played; that was a misreading, and on `forward` it cut the Suomussalmi
+ * award to Suomussalmi's 2,800 instead of Minsk's 10,000. [capOf] reads the record, the caller
+ * picks it with the transition's own routing (`scenario.peekNextScenarioRecord`). Imported as the
+ * record's `prestigecap`; 0 or absent — including a record whose *"Dont use cap"* is set, which the
+ * importer omits — is no cap, and so is the end of the campaign, where there is no next scenario.
  *
  * **Army value is the purchased formations only** ([org.osada.model.GameUnit.isPurchased]), each
  * at its current unit + transport price, whatever its strength. That covers the page's three
@@ -64,6 +72,10 @@ internal object CampaignPrestigeCap {
             .getCoreUnitList()
             .filter { it.isPurchased && !it.destroyed }
             .sumOf { CostCalculator.calculateUnitCosts(it.eqid, it.transport?.eqid ?: 0) }
+
+    /** The cap authored on [nextScenarioRecord], the scenario the campaign routes to next; null
+     *  when there is none (the campaign ends) or it authors no cap. */
+    fun capOf(nextScenarioRecord: dynamic): Int? = (nextScenarioRecord?.prestigecap as? Int)?.takeIf { it > 0 }
 
     /** [award] cut to the room left under [cap]; unchanged when the rule is off, there is no
      *  cap, or the award is not a gain. */

@@ -76,18 +76,30 @@ internal object RuggedCombat {
         context: CombatContext,
         committed: Boolean,
     ): Boolean {
+        val chance = if (committed) ruggedDefenceOdds(attacker, defender, context) ?: 0.0 else 0.0
+        // No draw when the defence cannot rise at all (not committed, not eligible, or no
+        // entrenchment): both peers skip it alike.
+        return chance > 0 && GameRandomSource.nextInt(PERCENT) + 1 <= chance
+    }
+
+    /**
+     * The percentage chance this exchange raises a rugged defence, or `null` when OG's conditions
+     * rule it out entirely -- the part of [ruggedDefenceRaised] that draws nothing, so the unit card
+     * can state the same odds combat will roll against (`ui/EntrenchmentTooltip`).
+     */
+    fun ruggedDefenceOdds(
+        attacker: GameUnit,
+        defender: GameUnit,
+        context: CombatContext,
+    ): Double? {
         val eligible =
-            committed &&
-                !attacker.isSurprised &&
+            !attacker.isSurprised &&
                 context.attackerData.uclass == UnitClass.INFANTRY.value &&
                 context.defenderData.uclass == UnitClass.INFANTRY.value &&
                 context.distance == 1 &&
                 defender.getAmmo() > 0 &&
                 !avoidsRuggedDefence(attacker, defender, context)
-        if (!eligible) return false
-        val chance = ruggedDefenceChance(attacker, defender)
-        // No draw when the defence cannot rise at all (no entrenchment): both peers skip it alike.
-        return chance > 0 && GameRandomSource.nextInt(PERCENT) + 1 <= chance
+        return if (eligible) ruggedDefenceChance(attacker, defender) else null
     }
 
     /**

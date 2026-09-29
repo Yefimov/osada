@@ -53,6 +53,9 @@ internal object MinimapBuilder {
         window.setInterval({ if (isDrawerVisible()) refresh() }, FALLBACK_INTERVAL_MS)
 
         buildZoomControls(frame.parentElement)
+        // In the zoom row itself: on a phone it shares that row instead of adding a line the
+        // drawer has no height for; on the desktop it wraps under the buttons (`flex-basis: 100%`).
+        TransportPoolStrip.build(byId("osadaZoomControls"))
     }
 
     /** Map-zoom −/100%/+ cluster, docked under the minimap frame (zoom controls belong near the

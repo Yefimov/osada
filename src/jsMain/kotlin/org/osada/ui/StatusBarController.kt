@@ -72,6 +72,7 @@ internal class StatusBarController(
         // Covers turn-change and (via the Task 1 move/attack-finish hooks that already call
         // updateStatusBar for the human player) unit-move/combat-end refresh triggers too.
         MinimapBuilder.refresh()
+        TransportPoolStrip.refresh()
         AttackRingBuilder.refresh()
         GameplayLocalization.refreshStatusBar()
     }

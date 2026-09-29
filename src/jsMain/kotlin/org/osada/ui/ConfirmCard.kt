@@ -24,6 +24,18 @@ internal object ConfirmCard {
         bodyHtml: String,
         confirmLabel: String,
         onConfirm: () -> Unit,
+    ) = openChoice(titleText, bodyHtml, confirmLabel, I18n.t("common.cancel.label"), {}, onConfirm)
+
+    /** [open] with the dismissing button renamed and answered: for a question whose "no" is itself
+     *  an action (a defeat that is accepted rather than retried), not merely a cancel. Escape runs
+     *  [onCancel] too. */
+    fun openChoice(
+        titleText: String,
+        bodyHtml: String,
+        confirmLabel: String,
+        cancelLabel: String,
+        onCancel: () -> Unit,
+        onConfirm: () -> Unit,
     ) {
         close()
         val mainBody = byId("mainbody") ?: return
@@ -48,7 +60,7 @@ internal object ConfirmCard {
 
         val cancelButton = addTag(buttonRow, "button")
         cancelButton.className = "osadaConfirmBoxCancel"
-        cancelButton.textContent = I18n.t("common.cancel.label")
+        cancelButton.textContent = cancelLabel
         cancelButton.setAttribute("tabindex", "0")
 
         val confirmButton = addTag(buttonRow, "button")
@@ -56,7 +68,10 @@ internal object ConfirmCard {
         confirmButton.textContent = confirmLabel
         confirmButton.setAttribute("tabindex", "0")
 
-        cancelButton.onclick = { _ -> close() }
+        cancelButton.onclick = { _ ->
+            close()
+            onCancel()
+        }
         confirmButton.onclick = { _ ->
             close()
             onConfirm()
@@ -67,6 +82,7 @@ internal object ConfirmCard {
                 if ((e.asDynamic().key as? String) == "Escape") {
                     e.preventDefault()
                     close()
+                    onCancel()
                 }
             }
         keydownHandler = handler

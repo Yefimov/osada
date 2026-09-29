@@ -62,7 +62,7 @@ object OSGlue {
         if (NATIVE_PLATFORM == "ios" || NATIVE_PLATFORM == "android") {
             js("window.location = 'osada://savetodisk/' + fileName")
         } else {
-            val data = GameHolder.instance?.state?.exportGameState() ?: ""
+            val data = GameHolder.instance?.let(::diskSavePayload) ?: ""
             val element = js("document.getElementById('savedata')")
             element.download = fileName
             element.href = "data:application/force-download," + encodeURIComponent(data)
@@ -91,3 +91,17 @@ object OSGlue {
 // A real function parameter (not a bare identifier inside a js("...") string) so this doesn't
 // depend on the Kotlin/JS compiler preserving a local variable's exact name in the emitted JS.
 private fun encodeURIComponent(value: String): String = js("encodeURIComponent")(value) as String
+
+/**
+ * A disk save with the battle's opening checkpoint riding along (`MissionRestartCheckpoint.EMBED_KEY`),
+ * so "Restart mission" survives the file being loaded in another browser. The autosave never carries
+ * it: it would double every write for a payload that is already in this browser's storage.
+ */
+private fun diskSavePayload(game: Game): String {
+    val data = game.state?.exportGameState().orEmpty()
+    val checkpoint = game.missionRestartCheckpoint.exportForCurrent()
+    if (data.isEmpty() || checkpoint == null) return data
+    val parsed = JSON.parse<dynamic>(data)
+    parsed[MissionRestartCheckpoint.EMBED_KEY] = checkpoint
+    return JSON.stringify(parsed)
+}

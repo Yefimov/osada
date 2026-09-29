@@ -789,7 +789,7 @@
   <hex row="15" col="25" name="CLEAR"/>
   <hex row="15" col="26" road="8" name="CLEAR"/>
   <hex row="15" col="27" terrain="1" road="187" name="Werchne Tsaritschinskij" owner="1" flag="7" victory="1">
-    <unit id="9544" owner="1" flag="8" face="0" exp="60" str="8" ldr="1" bstr="8" ammo="7" ldrtrait="10"/>
+    <unit id="9544" owner="1" flag="8" face="0" exp="60" str="8" ldr="1" bstr="8" ammo="7" ldrtrait="10" ldrclasstrait="35"/>
   </hex>
   <hex row="15" col="28" terrain="13" road="32" name="Tsaritschinskij"/>
   <hex row="15" col="29" name="CLEAR"/>
@@ -933,7 +933,7 @@
     <unit id="18339" owner="1" flag="14" face="0" exp="158" str="7" bstr="7" ammo="3"/>
   </hex>
   <hex row="18" col="20" name="CLEAR">
-    <unit id="11025" owner="1" flag="8" face="0" exp="181" str="9" ldr="1" bstr="9" ammo="4" ldrclasstrait="7"/>
+    <unit id="11025" owner="1" flag="8" face="0" exp="181" str="9" ldr="1" bstr="9" ammo="4" ldrclasstrait="7" ldrtrait="34"/>
   </hex>
   <hex row="18" col="21" name="CLEAR">
     <unit id="11083" owner="1" flag="8" face="0" exp="146" str="7" bstr="7"/>

@@ -13,9 +13,11 @@ import org.osada.model.beginEngineering
 import org.osada.model.buyUnit
 import org.osada.model.clearMinefield
 import org.osada.model.deployPlayerUnit
+import org.osada.model.detrainUnit
 import org.osada.model.disbandUnit
 import org.osada.model.disembarkUnit
 import org.osada.model.embarkUnit
+import org.osada.model.entrainUnit
 import org.osada.model.executeAttack
 import org.osada.model.fireBarrage
 import org.osada.model.getAttackableUnit
@@ -25,9 +27,7 @@ import org.osada.model.getPlayers
 import org.osada.model.getUnitById
 import org.osada.model.layMinefield
 import org.osada.model.mountUnit
-import org.osada.model.moveByRail
 import org.osada.model.moveUnit
-import org.osada.model.openRailDestinations
 import org.osada.model.purchaseAttachment
 import org.osada.model.reinforceUnit
 import org.osada.model.resupplyUnit
@@ -133,14 +133,14 @@ class OsadaGameCommandValidator(
                         .getCoreUnitList()
                         .any { it.id == command.unitId && !it.isDeployed }
 
-                is UndeployUnit -> unit?.isCore == true && unit.isDeployed
+                is UndeployUnit -> unit != null && (unit.isCore || unit.isTemporaryBorrowed) && unit.isDeployed
                 is PurchaseUnit -> command.equipmentId > 0
                 is UpgradeUnit -> unit != null && command.equipmentId > 0
                 is DisbandUnit -> unit != null
                 is ReorderReserve -> command.destinationIndex >= 0
                 is SetUnitAssignment -> unit != null
                 is EndTurnReady, is EndPlayerTurn, is ChooseCampaignDialogueOption, is ContinueCampaign -> true
-                is UnitOrder -> unitOrderLegal(map, command, unit)
+                is UnitOrder -> unitOrderLegal(command, unit)
             }
         return if (legal) CommandValidation.Accepted else rejected(MultiplayerErrorCode.UNIT_ALREADY_ACTED)
     }
@@ -148,10 +148,9 @@ class OsadaGameCommandValidator(
     /**
      * The unit orders added for rooms on 2026-09-27. The model functions re-check their own
      * preconditions and refuse without mutating anything, so these confirm the unit exists (and is
-     * not destroyed), the efile allows leader dismissal, and a rail destination is a real hex.
+     * not destroyed), and the efile allows leader dismissal.
      */
     private fun unitOrderLegal(
-        map: GameMap,
         command: UnitOrder,
         unit: GameUnit?,
     ): Boolean =
@@ -159,7 +158,6 @@ class OsadaGameCommandValidator(
             !unit.destroyed &&
             when (command) {
                 is DismissLeader -> LeaderDismissal.enabled()
-                is RailMove -> map.map?.getOrNull(command.destination.y)?.getOrNull(command.destination.x) != null
                 else -> true
             }
 
@@ -255,7 +253,8 @@ class OsadaGameCommandApplier(
             is ContinueCampaign -> game.continueCampaign(command.outcome, EndGameType.MOVE_CAPTURE)
             is EmbarkUnit -> map.embarkUnit(requireUnit(map, command.unitId))
             is DisembarkUnit -> map.disembarkUnit(requireUnit(map, command.unitId))
-            is RailMove -> railMove(map, command)
+            is EntrainUnit -> map.entrainUnit(requireUnit(map, command.unitId))
+            is DetrainUnit -> map.detrainUnit(requireUnit(map, command.unitId))
             is GreenReinforceUnit -> greenReinforce(map, command)
             is DismissLeader -> LeaderDismissal.dismiss(requireUnit(map, command.unitId))
             is PurchaseAttachment -> {
@@ -332,17 +331,6 @@ class OsadaGameCommandApplier(
         map: GameMap,
         unitId: Int,
     ): GameUnit = requireNotNull(map.findCommandUnit(unitId)) { "Unknown unit $unitId" }
-
-    /** A rail move to an offered station: the destinations are opened first, exactly as the
-     *  player's chip opens them, so `moveByRail` validates the hex against the same list. */
-    private fun railMove(
-        map: GameMap,
-        command: RailMove,
-    ) {
-        val unit = requireUnit(map, command.unitId)
-        map.openRailDestinations(unit)
-        map.moveByRail(unit, command.destination.y, command.destination.x)
-    }
 
     /** OG's cheap replacement, exactly as the local chip applies it (`UnitContextMenu`). */
     private fun greenReinforce(
@@ -422,7 +410,8 @@ private fun GameCommand.unitIdOrNull(): Int? =
         is SetUnitAssignment -> unitId
         is EmbarkUnit -> unitId
         is DisembarkUnit -> unitId
-        is RailMove -> unitId
+        is EntrainUnit -> unitId
+        is DetrainUnit -> unitId
         is PurchaseAttachment -> unitId
         is GreenReinforceUnit -> unitId
         is DismissLeader -> unitId

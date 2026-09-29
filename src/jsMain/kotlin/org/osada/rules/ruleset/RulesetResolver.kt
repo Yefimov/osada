@@ -112,18 +112,6 @@ object RulesetResolver {
      * asks for them, so Author's Vision has nobody to defer to and OSADA's default stands.
      * (`depot_supply`'s gate is `supply_ex`, which **no shipped efile sets**.)
      *
-     * ### `RAIL_TRANSPORT` joined on 2026-08-29, and why it qualifies
-     *
-     * Its gate is not a bit but a POOL — `railtrans`, the per-player rail transport count. That
-     * gate did not exist when this set was written: the importer could not find the field, so every
-     * deployed scenario carried no pool and the entry would have been meaningless. `+21` was
-     * confirmed and the pools imported on 2026-08-28/29, and **120 deployed scenarios now grant
-     * one** (`docs/og-fidelity-plan.md` §AE.3).
-     *
-     * It meets this set's condition exactly: `RailTransport.canEntrain` already ANDs the key with
-     * the player's pool, so resolving it to 1 hands the decision to the scenario rather than
-     * switching a rule on. A scenario with no pool is unaffected, which is 382 of the 502.
-     *
      * ### `CAMPAIGN_AUTO_REFIT` joined on 2026-09-24
      *
      * Its gate is the CAMPAIGN's per-scenario record rather than the scenario XML: OG stores
@@ -142,7 +130,6 @@ object RulesetResolver {
             RuleKey.EXTENDED_NAVAL,
             RuleKey.BARRAGE,
             RuleKey.BUILD_AND_REPAIR,
-            RuleKey.RAIL_TRANSPORT,
             RuleKey.CAMPAIGN_AUTO_REFIT,
             RuleKey.CAMPAIGN_START_PRESTIGE,
             RuleKey.CAMPAIGN_PRESTIGE_CAP,
@@ -169,12 +156,11 @@ object RulesetResolver {
     /**
      * OSADA inventions that OSADA Default runs and Author's Vision must not.
      *
-     * `craters` and `rail_demolition` never needed this: their OSADA default is already off, so
-     * Author's Vision inherits the right answer. `combat_support_min_bar` is the first one that is
-     * ON by default, and inheriting that would put a non-OG rule into the profile that promises
-     * the content's own rules.
+     * Empty since 2026-09-29: `combat_support_min_bar` was its only member, and schema 21 retired
+     * that rule outright (the floor always applies). The mechanism stays for the next rule that
+     * genuinely must differ.
      */
-    private val OSADA_ONLY = setOf(RuleKey.COMBAT_SUPPORT_MIN_BAR)
+    private val OSADA_ONLY = emptySet<RuleKey>()
 
     /**
      * "On" means "allow the slots this efile defines" and can never invent definitions the content

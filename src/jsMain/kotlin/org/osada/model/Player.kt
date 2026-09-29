@@ -7,6 +7,7 @@ import org.osada.hero.CampaignHeroScope
 import org.osada.hero.FormationIdentity
 import org.osada.hero.HeroCampaign
 import org.osada.i18n.GameText
+import org.osada.rules.TrainRecords
 import org.osada.scoreGains
 
 @JsExport
@@ -163,10 +164,16 @@ class Player {
      * Core-roster insertion is one enrollment path (tray, purchase, carry-over and restore). The
      * campaign-wide ownership sweep also covers non-core pre-placement and scripted reinforcement;
      * [org.osada.hero.FormationIdentity.ensure] is idempotent across both paths.
+     *
+     * **An auxiliary joins the list without becoming core.** A formation lent for this battle
+     * ([GameUnit.isTemporaryBorrowed]) that the player withdraws into the reserve tray waits in the
+     * same list the tray, deployment and the save already read -- but it is never marked core and
+     * never minted a formation id, and the carry-over (`collectPersistentCampaignUnits`) drops it
+     * at the end of the battle as it drops every auxiliary.
      */
     fun addCoreUnit(unit: GameUnit?): Boolean {
         if (unit == null || coreUnits.any { it === unit }) return false
-        unit.isCore = true
+        unit.isCore = !unit.isTemporaryBorrowed
         // Only the campaign player's formations, inside a campaign run, receive a formation id
         // (`hero/CampaignHeroScope`). A standalone purchase and an AI purchase are core to their
         // own battle but never enter the hero roster -- they keep the legacy leader path.
@@ -248,6 +255,9 @@ class Player {
                 unit.hasResupplied = false
                 unit.isSurprised = false
                 unit.isDeployed = false
+                // A formation still aboard a train steps off with the battle: the train belongs to
+                // that scenario's pool, and `unitData()` below must read the formation, not the train.
+                unit.carrier = TrainRecords.carrierAfterBattle(unit.carrier)
                 unit.moveLeft = unit.unitData().movpoints
                 unit.entrenchment = 0
                 unit.entrenchTicks = 0

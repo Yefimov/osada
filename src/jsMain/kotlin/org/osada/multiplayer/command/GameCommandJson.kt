@@ -102,8 +102,8 @@ object GameCommandJson {
 
             EmbarkUnit::class.simpleName -> EmbarkUnit(requiredInt(value.unitId, "unitId"), actor)
             DisembarkUnit::class.simpleName -> DisembarkUnit(requiredInt(value.unitId, "unitId"), actor)
-            RailMove::class.simpleName ->
-                RailMove(requiredInt(value.unitId, "unitId"), coordinate(value.destination), actor)
+            EntrainUnit::class.simpleName -> EntrainUnit(requiredInt(value.unitId, "unitId"), actor)
+            DetrainUnit::class.simpleName -> DetrainUnit(requiredInt(value.unitId, "unitId"), actor)
 
             GreenReinforceUnit::class.simpleName -> GreenReinforceUnit(requiredInt(value.unitId, "unitId"), actor)
             DismissLeader::class.simpleName -> DismissLeader(requiredInt(value.unitId, "unitId"), actor)

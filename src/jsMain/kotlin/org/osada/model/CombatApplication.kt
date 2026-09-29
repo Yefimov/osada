@@ -17,6 +17,7 @@ import org.osada.rules.Sabotage
 import org.osada.rules.SupplyContextRules
 import org.osada.rules.TriggerHexes
 import org.osada.rules.UnitCapabilities
+import org.osada.rules.UnitPredicates
 import org.osada.rules.calculateAttackResults
 import org.osada.rules.getDirection
 import org.osada.rules.isBridgeForSide
@@ -413,7 +414,10 @@ internal class CombatApplication(
         // OG restricts hex capture to ground combat units; PM has no class check at all. Reversed
         // in OG's favour 2026-07-26 (DEFERRED.md §5.4). `unitData(true)` reads the REAL unit, not
         // its transport, so infantry riding a truck still takes the hex it drives into.
-        if (!UnitCapabilities.canCaptureHex(unit.unitData(true))) return
+        // OG's Liberator: *"Can capture flags and gets double prestige for capturing"* -- the first
+        // half lets a land formation outside the capturing classes (a gun, a FlaK) take the hex.
+        val liberates = Leaders.unitHasLeader(unit, LeaderType.LIBERATOR) && UnitPredicates.isGround(unit)
+        if (!UnitCapabilities.canCaptureHex(unit.unitData(true)) && !liberates) return
         val side = player.side
         val notCapturable = hex.owner == -1 && hex.flag == -1
         val oldOwnerSide = if (hex.owner != -1) gameMap.getPlayer(hex.owner).side else -1

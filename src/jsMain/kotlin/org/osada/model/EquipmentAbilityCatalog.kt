@@ -247,8 +247,9 @@ class AbilityGates(
     // Added 2026-08-29. Four abilities were being badged unconditionally while their own rule was
     // off by default -- exactly the promise §K.4 forbids -- because the gate table stopped growing
     // when the schema-11/12 keys were added. `railTransport` covers both rail abilities, and the
-    // per-record `Rail Transportable` permission is now one of them.
-    val railTransport: Boolean = ActiveRuleset.flag(RuleKey.RAIL_TRANSPORT, false),
+    // per-record `Rail Transportable` permission is now one of them. The railway has had no key
+    // since ruleset schema 20 -- it runs wherever a scenario grants a pool -- so the gate is open.
+    val railTransport: Boolean = true,
     val carrierDeploy: Boolean = ActiveRuleset.flag(RuleKey.CARRIER_DEPLOY, false),
     val depotSupply: Boolean = ActiveRuleset.flag(RuleKey.DEPOT_SUPPLY, false),
     val heavyMoveFire: Boolean = ActiveRuleset.flag(RuleKey.HEAVY_MOVE_FIRE, false),

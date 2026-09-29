@@ -9,6 +9,8 @@ import org.osada.rules.AirOperations
 import org.osada.rules.CarrierHangars
 import org.osada.rules.GameRules
 import org.osada.rules.Minefields
+import org.osada.rules.PontoonBridges
+import org.osada.rules.RailTransport
 import org.osada.rules.SpottingModel
 import org.osada.rules.SupplyContextRules
 import org.osada.rules.getResupplyValue
@@ -67,7 +69,6 @@ class GameMap {
     /** Hexes the Barrage targeting mode is currently offering (OG 9.2, `model/BarrageOperations`).
      *  Empty whenever the mode is closed, which is most of the time. */
     internal val currentBarrageTargets: MutableList<Cell> = mutableListOf()
-    internal val currentRailTargets: MutableList<Cell> = mutableListOf()
     internal val undoState = UndoState()
 
     /**
@@ -84,6 +85,13 @@ class GameMap {
      * themselves, so a save carries the outcome and has nothing to say about the announcement.
      */
     internal var lastCounterBattery: List<InterceptionEvent> = emptyList()
+
+    /**
+     * The crossings that opened at the start of the current player's turn (`rules/PontoonBridges`),
+     * written by [endTurn] for the turn announcement. A one-shot channel like [lastCounterBattery]
+     * and, like it, never serialized: the units themselves carry the outcome.
+     */
+    internal var lastBridgesOpened: List<GameUnit> = emptyList()
 
     internal val combatApplication: CombatApplication by lazy { CombatApplication(this) }
     internal val moveExecutor: MoveExecutor by lazy { MoveExecutor(this) }
@@ -128,7 +136,13 @@ class GameMap {
      *  mid-scenario, so [invalidateDeployZones] drops it on every ownership change. */
     internal var deployZoneCache: MutableMap<Int, Set<Int>> = mutableMapOf()
 
-    internal fun invalidateDeployZones() = deployZoneCache.clear()
+    /** Per side, `friendlyAirfields`' answer; ownership decides it, so it drops with the zones. */
+    internal var friendlyAirfieldCache: MutableMap<Int, List<Cell>> = mutableMapOf()
+
+    internal fun invalidateDeployZones() {
+        deployZoneCache.clear()
+        friendlyAirfieldCache.clear()
+    }
 
     fun endTurn() {
         delMoveSel()
@@ -157,13 +171,14 @@ class GameMap {
         currentPlayer?.endTurn(turn)
         val currentIndex = players.indexOf(currentPlayer)
         currentPlayer = if (currentIndex + 1 < players.size) players[currentIndex + 1] else players[0]
-        // The trains the incoming player used last turn are idle again. OSADA's railway move is
-        // atomic, so a slot has no journey to be held for and the turn is the shortest span that
-        // still makes the pool mean *"how many trains can be used at any time"*
-        // (`model/TransportPools`). Air and naval are NOT refreshed here: their cargo is still in
-        // the air or at sea, and they come back one at a time as it lands.
-        currentPlayer?.refreshRailPool()
+        // The incoming player's free trains: the pool less the trains still carrying one of their
+        // formations (`RailTransport.recountPool`). Counted, not tracked, so a train destroyed with
+        // its cargo and a save from before the railway was a container both come back right.
+        currentPlayer?.let { RailTransport.recountPool(this, it) }
         if (currentPlayer?.id == 0) beginNewRound()
+        // A pontoon laid last turn opens now, before the incoming player (or the AI's planner)
+        // reads any move range. After the round wrap, whose unmount sweep can decide it.
+        lastBridgesOpened = currentPlayer?.let { PontoonBridges.completeLaying(this, it.id) }.orEmpty()
         // Minefield detection is refreshed for the side about to play, from where its units now
         // stand. Doing it here rather than during movement means the player sees every field their
         // sappers are next to BEFORE planning a route, which is the half of the mechanic that keeps

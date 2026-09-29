@@ -103,6 +103,9 @@ internal object BottomZoneBuilder {
         val ent = addTag(nameLine, "span")
         ent.id = "osadaUcEnt"
         ent.className = "uc-ent"
+        // The entrenchment breakdown lives in `title=` (`EntrenchmentTooltip`), which a phone never
+        // shows; read at tap time, so it explains the unit selected NOW.
+        TapTip.fromTitle(ent)
         val markings = addTag(nameLine, "span")
         markings.id = "osadaUcMarkings"
         markings.className = "osada-capability-marks"

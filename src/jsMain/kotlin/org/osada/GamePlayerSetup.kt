@@ -70,7 +70,7 @@ private fun Game.applyCoreSwitches(
         CampaignSwitches.restartsCore(record) -> {
             player.setCoreUnitList(emptyList())
             player.country = scenarioCountry
-            removeNonCampaignUnitsFlag = false
+            auxiliaryScenarioUnitsFlag = false
             restartCoreFlag = true
         }
         CampaignSwitches.adoptsMainCountry(record) -> {

@@ -123,7 +123,8 @@ internal object AAInterception {
             val result = GameRules.calculateAttackResults(aa, plane, true, units, committed = true)
             plane.hit(result.kills)
             aa.fire(false)
-            aa.hasInterceptedMovingAirThisTurn = true
+            // OG's Flak Support leader (*"Multiple intercept"*) lifts the one-interception budget.
+            aa.hasInterceptedMovingAirThisTurn = !LeaderSupportFire.interceptsRepeatedly(aa)
             // OG's `Skilled Interceptor` ("can intercept multiple enemy fighters in the defensive
             // phase"): the gun keeps its defensive fire after intercepting, so the one flag that
             // spends it is never set. `hasInterceptedThisTurn` is read in exactly one place
@@ -131,7 +132,8 @@ internal object AAInterception {
             // rather than at the read -- the trait was advertised and inert until 2026-08-18
             // (`docs/og-fidelity-plan.md` A.4), and it is the guaranteed class trait of every
             // Fighter commander.
-            val keepsDefensiveFire = Leaders.unitHasLeader(aa, LeaderType.SKILLED_INTERCEPTOR)
+            val keepsDefensiveFire =
+                Leaders.unitHasLeader(aa, LeaderType.SKILLED_INTERCEPTOR) || LeaderSupportFire.interceptsRepeatedly(aa)
             if ((mode and MODE_NO_AIR_DEFENSE_AFTER_INTERCEPT) != 0 && !keepsDefensiveFire) {
                 aa.hasInterceptedThisTurn = true
             }

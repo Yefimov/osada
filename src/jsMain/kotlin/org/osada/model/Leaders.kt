@@ -14,7 +14,7 @@ import org.osada.rules.UnitExperience
 object Leaders {
     const val LEADER_CHANCE_THRESHOLD = 8
 
-    /** Top of PM's inclusive roll interval, `[bars, 10]`. */
+    /** OG's 20%: a roll on `[1, 10]` succeeds above [LEADER_CHANCE_THRESHOLD]. */
     private const val LEADER_CHANCE_CEILING = 10
 
     val unitClassLeaders: MutableMap<Int, List<LeaderType>> = mutableMapOf()
@@ -148,11 +148,20 @@ object Leaders {
         description[LeaderType.ALL_WEATHER_COMBAT] =
             Pair("All Weather Combat", "The air unit is not affected by weather conditions.")
         description[LeaderType.ALPINE_TRAINING] =
-            Pair("Alpine Training", "When moving the unit treats forest and mountain hexes as clear terrain.")
+            Pair(
+                "Mountain Training",
+                "When moving the unit treats forest, hill, rough and mountain hexes as clear terrain.",
+            )
         description[LeaderType.BATTLEFIELD_INTELLIGENCE] =
-            Pair("Battlefield Intelligence", "The unit is not stopped by adjacent enemies and cannot be surprised.")
+            Pair(
+                "Battlefield Intelligence",
+                "The unit is not stopped by adjacent enemies, cannot be surprised, and gets +1 initiative when attacking.",
+            )
         description[LeaderType.BRIDGING] =
-            Pair("Bridging", "When moving the unit treats passable river hexes as rough terrain.")
+            Pair(
+                "Bridging",
+                "When moving the unit treats river hexes as rough terrain, and while on a river it acts as a bridge.",
+            )
         description[LeaderType.COMBAT_SUPPORT] =
             Pair(
                 "Combat Support",
@@ -162,7 +171,10 @@ object Leaders {
             Pair("Determined Defense", "Each of the unit defense factors is increased by 2.")
         description[LeaderType.DEVASTATING_FIRE] = Pair("Devastating Fire", "The unit may fire twice in a turn.")
         description[LeaderType.FEROCIOUS_DEFENSE] =
-            Pair("Ferocious Defense", "The unit entrenchment cannot be ignored by enemy units.")
+            Pair(
+                "Ferocious Defense",
+                "The unit entrenchment cannot be ignored by enemy units, and suppression does not weaken it.",
+            )
         description[LeaderType.FIRE_DISCIPLINE] =
             Pair("Fire Discipline", "The unit will expend only one-half of an ammunition point each time it attacks.")
         description[LeaderType.FIRST_STRIKE] = Pair("First Strike", "The unit will fire first if it wins initiative.")
@@ -173,27 +185,34 @@ object Leaders {
                     "and it ambushes the first enemy unit that enters its zone of control.",
             )
         description[LeaderType.INFILTRATION_TACTICS] =
-            Pair("Infiltration Tactics", "The unit ignores enemy unit entrenchment when calculating combat results.")
+            Pair(
+                "Infiltration Tactics",
+                "The unit ignores enemy entrenchment, acts as a bridge on a river, and beats First Strike by winning initiative by 2 or more.",
+            )
         description[LeaderType.INFLUENCE] =
-            Pair("Influence", "Allows the unit to upgrade to better equipment at reduced prestige cost.")
+            Pair("Influence", "Upgrades and replacements for the unit cost half the prestige.")
         description[LeaderType.LIBERATOR] =
-            Pair("Liberator", "You receive double prestige for objectives captured by the unit.")
+            Pair("Liberator", "The unit can capture objectives, and you receive double prestige for those it captures.")
         description[LeaderType.OVERWATCH] =
             Pair("Overwatch", "Each turn the unit ambushes the first enemy unit that moves within its range.")
         description[LeaderType.OVERWHELMING_ATTACK] =
             Pair("Overwhelming Attack", "When attacking suppression points are converted to kills.")
         description[LeaderType.RECON_MOVEMENT] = Pair("Recon Movement", "The unit is permitted phased movement.")
         description[LeaderType.RESILIENCE] =
-            Pair("Resilience", "The unit will suffer 1 to 3 fewer casualties when attacked.")
+            Pair("Resilience", "The unit will suffer 1 to 3 fewer casualties when attacked, and cannot be overrun.")
         description[LeaderType.SHOCK_TACTICS] =
             Pair("Shock Tactics", "Suppression inflicted lasts the entire player turn.")
         description[LeaderType.SKILLED_GROUND_ATTACK] =
-            Pair("Skilled Ground Attack", "The unit inflicts 1 to 3 more casualties when attacking.")
+            Pair("Skilled Ground Attack", "An air unit attacking a ground unit gets +4 attack.")
         description[LeaderType.SKILLED_RECONNAISSANCE] =
             Pair("Skilled Reconnaissance", "The unit spotting range is increased by one hex.")
         description[LeaderType.STREET_FIGHTER] = Pair("Street Fighter", "The unit ignores enemy city entrenchment.")
         description[LeaderType.SUPERIOR_MANEUVER] =
             Pair("Superior Maneuver", "The unit may bypass enemy zones of control.")
+        description[LeaderType.EXTENDED_FRONT] =
+            Pair("Extended Front", "The unit gives support fire to adjacent friendly units.")
+        description[LeaderType.FLAK_SUPPORT] =
+            Pair("Flak Support", "The unit gives support fire, and may intercept aircraft more than once a turn.")
     }
 
     /**
@@ -212,51 +231,55 @@ object Leaders {
     ): Boolean = HeroTraitResolver.hasTrait(unit, leader)
 
     /**
-     * A random non-signature leader for [unit]'s class, or -1 when the class has none.
+     * A random individual attribute for [unit], drawn from Open General's list ([OgLeaderPools]), or
+     * -1 when the unit may not have one.
      *
-     * Index 0 is skipped deliberately: it is the class signature trait, which
-     * [getUnitClassLeader] grants separately and unconditionally, so rolling it here would be a
-     * wasted roll. **The last entry used to be skipped too** — `(random * (size - 2)) + 1` spans
-     * `1..size-2` — which was not deliberate, and cost `LeaderType.LIBERATOR` its entire existence:
-     * Liberator is the last entry in all four lists that contain it, is honoured in combat code
-     * (`CombatApplication` doubles capture prestige for it), and could therefore never be obtained
-     * by any means. See `tools/og-import/DEFERRED.md` §7.43.
+     * The pool never contains the class attribute: [getUnitClassLeader] grants that separately and
+     * unconditionally, so rolling it here would be a wasted roll.
+     *
+     * **Was Panzer Marshal's per-class pools until 2026-09-28** ([unitClassLeaders], which now only
+     * feeds the campaign hero generator). Those covered eight classes with six to eight traits
+     * each and gave the other thirteen nothing — so a Flak battery, a warship or a level bomber that
+     * an OG author placed WITH a leader lost it on load, and no scenario unit could ever roll
+     * Camouflage Expert, Overwatch, Resilience or a dozen more of OG's traits.
      */
     fun generateLeader(unit: GameUnit?): Int {
-        // TWO refusals, both checked here rather than at the three callers, because this is the only
-        // place a legacy leader is minted -- combat promotion, the full-experience grant and the
-        // leaders a scenario's own units are born with (`ScenarioUnitParser`) all come through it:
+        // THREE refusals, all checked here rather than at the callers, because this is the only
+        // place a legacy leader is minted -- combat promotion, the full-experience grant, a trigger's
+        // Raise Leader and the leaders a scenario's own units are born with all come through it:
         //  * OG's `Cannot get a leader` (`attrEx` bit 0), wired 2026-08-26. The hero system's half
         //    of the same ability is in `HeroCampaign.attemptEmergence`;
         //  * OG's `noldr_auxunits`, wired 2026-08-28 -- an auxiliary formation in a campaign
-        //    (`rules/AuxiliaryLeaders`).
+        //    (`rules/AuxiliaryLeaders`);
+        //  * OG's `noldr_classunits` -- a class the efile excludes ([OgLeaderPools.classDisabledByEfile]).
         if (unit == null) return -1
+        val uclass = unit.unitData().uclass
         val refused =
-            !UnitCapabilities.canProduceLeader(unit.unitData(true)) || AuxiliaryLeaders.refuses(unit)
-        val leaders = if (refused) null else unitClassLeaders[unit.unitData().uclass]
-        return if (leaders == null || leaders.size < 2) {
-            -1
-        } else {
-            leaders[(GameRandomSource.nextDouble() * (leaders.size - 1)).toInt() + 1].value
-        }
+            !UnitCapabilities.canProduceLeader(unit.unitData(true)) ||
+                AuxiliaryLeaders.refuses(unit) ||
+                OgLeaderPools.classDisabledByEfile(uclass)
+        val pool = if (refused) emptyList() else OgLeaderPools.randomPool(uclass)
+        return if (pool.isEmpty()) -1 else pool[GameRandomSource.nextInt(pool.size)].value
     }
 
     /**
-     * The legacy (Panzer Marshal) acquisition roll, for a unit outside the campaign hero system.
+     * The legacy acquisition roll, for a unit outside the campaign hero system — Open General's
+     * rule (`Manual_OG-en.pdf` §6.12): *"When any unit gains an experience bar (when it reaches 100
+     * experience points or multiple, with the limit in 500), it has the opportunity of 20% of
+     * generating a leader."* The author's combat page states the same trigger: *"if Unit increases
+     * its bars, engine checks if unit can get a leader."*
      *
-     * Restored to PM's rule on 2026-09-27 (`openpanzer.js` `generateLeaderWithChance`;
-     * `docs/leaders.md` §5 recorded the divergence): a leader is a **bar-up event**. Only a combat
-     * whose experience carried the unit across a bar rolls at all, and the roll is uniform over the
-     * inclusive interval from the NEW bar count through [LEADER_CHANCE_CEILING], succeeding above
-     * [LEADER_CHANCE_THRESHOLD] -- 20%, 2/9, 25%, 2/7 for the first four bars, rising with
-     * experience. The port had inverted the gate (any unit already at bar 1+ rolled every combat)
-     * and shrunk the interval from both ends, so bars 2-4 could never produce a leader.
+     * So only a combat that carried the unit across a bar rolls at all, and each bar crossed is
+     * one 20% chance. Bars are counted by [UnitExperience], the engine's one bar scale.
      *
-     * Bars are counted by [UnitExperience], the engine's one bar scale. PM's separate guarantee --
-     * a unit at maximum experience always gains a leader -- maps onto [UnitExperience.cap].
+     * **History.** Restored to PM's rule on 2026-09-27 (uniform over `[bars, 10]`, success above 8:
+     * 20%, 2/9, 25%, 2/7 for bars 1-4), on the belief that OG published no formula. It does — the
+     * sentence above — and PM's only coincides with it at the first bar. Switched to OG's flat 20%
+     * on 2026-09-28. The trigger (a bar-up, not a lottery on every combat) was PM's and OG's alike.
      *
-     * These are PM's odds. OG publishes that leaders come with experience bars but not a formula,
-     * so nothing here should be labelled OG's.
+     * The maximum-experience guarantee is PM's and is kept: OG's manual says nothing about a unit
+     * at the cap, and without it a capped unit that missed its last roll could never get one.
+     * Classes OG only opened to DESIGN-TIME leaders (bunkers, transports) never earn one here.
      */
     fun generateLeaderWithChance(
         unit: GameUnit?,
@@ -264,6 +287,7 @@ object Leaders {
     ): Int {
         if (unit == null || unit.leader != -1) return -1
         return when {
+            !OgLeaderPools.earnsInCombat(unit.unitData().uclass) -> -1
             unit.experience >= UnitExperience.cap() -> generateLeader(unit)
             else -> rollLeaderChance(unit, expGained)
         }
@@ -275,16 +299,19 @@ object Leaders {
     ): Int {
         val barsNow = UnitExperience.barsFor(unit.experience)
         val barsBefore = UnitExperience.barsFor(unit.experience - expGained)
-        if (barsNow <= barsBefore) return -1
-        val chance = GameRandomSource.nextInRange(barsNow, LEADER_CHANCE_CEILING)
-        return if (chance > LEADER_CHANCE_THRESHOLD) generateLeader(unit) else -1
+        repeat(barsNow - barsBefore) {
+            if (GameRandomSource.nextInRange(1, LEADER_CHANCE_CEILING) > LEADER_CHANCE_THRESHOLD) {
+                return generateLeader(unit)
+            }
+        }
+        return -1
     }
 
     /**
      * The led formation's **class attribute** -- OG's second leader trait, the one fixed by unit
      * class rather than picked per formation (`docs/leaders.md` §1).
      *
-     * Derived from the class list by default, and **overridden by the scenario author when
+     * Derived from OG's class table ([OgLeaderPools.classTrait]) by default, and **overridden by the scenario author when
      * [GameUnit.leaderClassTrait] is set**: that is OG's `.xscn` unit `@37`, the Suite's *"According
      * unit's class"* selector, whose zero means exactly this function's derivation and whose
      * non-zero value is the author choosing a different signature for this one formation. 1,401
@@ -298,7 +325,7 @@ object Leaders {
     fun getUnitClassLeader(unit: GameUnit?): Int {
         if (unit == null || unit.leader == -1) return -1
         return unit.leaderClassTrait.takeIf { it > 0 }
-            ?: unitClassLeaders[unit.unitData().uclass]?.firstOrNull()?.value
+            ?: OgLeaderPools.classTrait(unit.unitData().uclass)?.value
             ?: -1
     }
 

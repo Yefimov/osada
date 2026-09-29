@@ -575,9 +575,13 @@
   <hex row="9" col="40" terrain="15" name="Lake"/>
   <hex row="9" col="41" terrain="3"/>
   <hex row="9" col="42" terrain="1" name="Kingissepp"/>
-  <hex row="10" col="2" road="146"/>
-  <hex row="10" col="4" terrain="1" road="130" name="Sillamae" owner="1" flag="7" station="1"/>
-  <hex row="10" col="5" terrain="1" road="8" name="Sillamae"/>
+  <hex row="9" col="43" rail="34"/>
+  <hex row="10" col="0" rail="40"/>
+  <hex row="10" col="1" rail="130"/>
+  <hex row="10" col="2" road="146" rail="40"/>
+  <hex row="10" col="3" rail="130"/>
+  <hex row="10" col="4" terrain="1" road="130" name="Sillamae" owner="1" flag="7" station="1" rail="40"/>
+  <hex row="10" col="5" terrain="1" road="8" name="Sillamae" rail="136"/>
   <hex row="10" col="6" terrain="1" road="130" name="Sillamae"/>
   <hex row="10" col="7" terrain="10"/>
   <hex row="10" col="8" terrain="10" road="136"/>
@@ -616,7 +620,8 @@
   <hex row="10" col="38" terrain="1" road="9" name="Jaanilinn"/>
   <hex row="10" col="39" terrain="3" road="144"/>
   <hex row="10" col="40" terrain="3"/>
-  <hex row="10" col="42">
+  <hex row="10" col="41" rail="34"/>
+  <hex row="10" col="42" rail="34">
     <unit id="20465" owner="0" flag="20" face="0" exp="199" bstr="5"/>
   </hex>
   <hex row="10" col="43" terrain="3"/>
@@ -627,63 +632,67 @@
     <unit id="10015" owner="1" flag="8" face="0" transport="9706" exp="137" str="8" bstr="5"/>
   </hex>
   <hex row="11" col="5" terrain="3"/>
-  <hex row="11" col="6" terrain="10" road="136"/>
-  <hex row="11" col="7" terrain="3" road="128">
+  <hex row="11" col="6" terrain="10" road="136" rail="136"/>
+  <hex row="11" col="7" terrain="3" road="128" rail="130">
     <unit id="9115" owner="1" flag="8" face="0" transport="9848" exp="132" str="9" ldr="1" bstr="5"/>
   </hex>
-  <hex row="11" col="8" terrain="3"/>
-  <hex row="11" col="9" terrain="1" name="Vaivara"/>
-  <hex row="11" col="10" road="146"/>
-  <hex row="11" col="11">
+  <hex row="11" col="8" terrain="3" rail="40"/>
+  <hex row="11" col="9" terrain="1" name="Vaivara" rail="130"/>
+  <hex row="11" col="10" road="146" rail="40"/>
+  <hex row="11" col="11" rail="130">
     <unit id="10056" owner="1" flag="8" face="0" transport="9787" exp="180" str="8" ldr="1" bstr="5"/>
   </hex>
-  <hex row="11" col="12" terrain="11" name="Kinderheim FORTIFICATION" owner="1" flag="7" victory="1">
+  <hex row="11" col="12" terrain="11" name="Kinderheim FORTIFICATION" owner="1" flag="7" victory="1" rail="40">
     <unit id="7976" owner="1" flag="8" face="0" exp="8" str="9" bstr="6"/>
   </hex>
-  <hex row="11" col="14" terrain="11">
+  <hex row="11" col="13" rail="130"/>
+  <hex row="11" col="14" terrain="11" rail="40">
     <unit id="488" owner="1" flag="8" face="0" bstr="1"/>
   </hex>
-  <hex row="11" col="15" terrain="3"/>
-  <hex row="11" col="16" terrain="3">
+  <hex row="11" col="15" terrain="3" rail="130"/>
+  <hex row="11" col="16" terrain="3" rail="40">
     <unit id="9900" owner="1" flag="8" face="0" transport="9708" exp="42" str="6" bstr="5"/>
   </hex>
-  <hex row="11" col="17" terrain="3">
+  <hex row="11" col="17" terrain="3" rail="136">
     <unit id="7976" owner="1" flag="8" face="0" exp="148" str="9" bstr="6"/>
   </hex>
   <hex row="11" col="18" terrain="8"/>
-  <hex row="11" col="19" terrain="8">
+  <hex row="11" col="19" terrain="8" rail="40">
     <unit id="7976" owner="1" flag="8" face="0" exp="100" str="8" bstr="5"/>
   </hex>
   <hex row="11" col="20" terrain="8"/>
-  <hex row="11" col="21" terrain="8"/>
+  <hex row="11" col="21" terrain="8" rail="40"/>
   <hex row="11" col="22" terrain="3"/>
-  <hex row="11" col="23" road="18">
+  <hex row="11" col="23" road="18" rail="40">
     <unit id="8608" owner="1" flag="8" face="0" exp="47" str="8" ldr="1" bstr="5"/>
   </hex>
   <hex row="11" col="24" terrain="1" road="41" name="Narva"/>
-  <hex row="11" col="25" terrain="1" road="144" name="Narva" station="1"/>
+  <hex row="11" col="25" terrain="1" road="144" name="Narva" station="1" rail="40"/>
   <hex row="11" col="26" terrain="1" name="Narva"/>
-  <hex row="11" col="27" terrain="1" name="Narva">
+  <hex row="11" col="27" terrain="1" name="Narva" rail="34">
     <unit id="8599" owner="1" flag="8" face="0" exp="40" str="9" bstr="5"/>
   </hex>
-  <hex row="11" col="28" terrain="11" road="8"/>
-  <hex row="11" col="29" terrain="10" road="130" name="Narva River">
+  <hex row="11" col="28" terrain="11" road="8" rail="40"/>
+  <hex row="11" col="29" terrain="10" road="130" name="Narva River" rail="130">
     <unit id="8989" owner="1" flag="46" face="0" exp="28" str="7" bstr="5"/>
   </hex>
-  <hex row="11" col="30" terrain="1" road="32" name="Narva"/>
-  <hex row="11" col="31" road="41"/>
-  <hex row="11" col="32">
+  <hex row="11" col="30" terrain="1" road="32" name="Narva" rail="40"/>
+  <hex row="11" col="31" road="41" rail="130"/>
+  <hex row="11" col="32" rail="40">
     <unit id="9086" owner="1" flag="46" face="0" transport="9842" exp="71" str="7" bstr="5"/>
   </hex>
-  <hex row="11" col="35" terrain="3"/>
-  <hex row="11" col="36">
+  <hex row="11" col="33" rail="130"/>
+  <hex row="11" col="34" rail="40"/>
+  <hex row="11" col="35" terrain="3" rail="130"/>
+  <hex row="11" col="36" rail="40">
     <unit id="20392" owner="0" flag="20" face="0" exp="200" bstr="7"/>
   </hex>
-  <hex row="11" col="38" terrain="3">
+  <hex row="11" col="37" rail="130"/>
+  <hex row="11" col="38" terrain="3" rail="40">
     <unit id="20699" owner="0" flag="20" face="0" transport="20643" exp="199" bstr="5"/>
   </hex>
-  <hex row="11" col="39" road="9"/>
-  <hex row="11" col="40" terrain="3"/>
+  <hex row="11" col="39" road="9" rail="130"/>
+  <hex row="11" col="40" terrain="3" rail="34"/>
   <hex row="11" col="41" terrain="3"/>
   <hex row="11" col="42" terrain="3"/>
   <hex row="11" col="43" terrain="3"/>
@@ -712,14 +721,17 @@
   <hex row="12" col="15" terrain="10" name="Kulga River"/>
   <hex row="12" col="16" terrain="10" name="Kulga River"/>
   <hex row="12" col="17" terrain="10" name="Kulga River"/>
-  <hex row="12" col="18" terrain="8"/>
+  <hex row="12" col="18" terrain="8" rail="130"/>
   <hex row="12" col="19" terrain="3"/>
+  <hex row="12" col="20" rail="130"/>
   <hex row="12" col="21" terrain="3"/>
+  <hex row="12" col="22" rail="130"/>
   <hex row="12" col="23" road="33"/>
+  <hex row="12" col="24" rail="130"/>
   <hex row="12" col="25" road="9">
     <unit id="31040" owner="1" flag="41" face="0" transport="31141" exp="33" str="7" bstr="5"/>
   </hex>
-  <hex row="12" col="26" terrain="1" name="Narva"/>
+  <hex row="12" col="26" terrain="1" name="Narva" rail="130"/>
   <hex row="12" col="27" terrain="9" name="Narva River"/>
   <hex row="12" col="28" terrain="9" name="Narva River"/>
   <hex row="12" col="30" terrain="1" road="18" name="Narva" owner="1" flag="7">
@@ -987,6 +999,7 @@
   <hex row="17" col="40" terrain="3"/>
   <hex row="17" col="41" terrain="15" name="Lake"/>
   <hex row="17" col="42" terrain="15" name="Lake"/>
+  <hex row="17" col="43" rail="34"/>
   <hex row="18" col="0" terrain="8"/>
   <hex row="18" col="2" terrain="8"/>
   <hex row="18" col="3" terrain="8"/>
@@ -1028,7 +1041,7 @@
   <hex row="18" col="39" terrain="10" name="Pjata River"/>
   <hex row="18" col="40" terrain="15" name="Pjata River"/>
   <hex row="18" col="41" terrain="1" name="Cernovskoe"/>
-  <hex row="18" col="42" terrain="1" road="16" name="Cernovskoe" station="1"/>
+  <hex row="18" col="42" terrain="1" road="16" name="Cernovskoe" station="1" rail="18"/>
   <hex row="18" col="43" terrain="10" name="Pjata River"/>
   <hex row="19" col="0" terrain="8"/>
   <hex row="19" col="2" terrain="8"/>
@@ -1074,8 +1087,8 @@
   <hex row="19" col="38" terrain="8"/>
   <hex row="19" col="39" terrain="8"/>
   <hex row="19" col="40" terrain="15" name="Pjata River"/>
-  <hex row="19" col="41" terrain="10" road="34" name="Pjata River"/>
-  <hex row="19" col="42" terrain="10" road="33" name="Pjata River"/>
+  <hex row="19" col="41" terrain="10" road="34" name="Pjata River" rail="34"/>
+  <hex row="19" col="42" terrain="10" road="33" name="Pjata River" rail="33"/>
   <hex row="19" col="43" terrain="8"/>
   <hex row="20" col="1" terrain="3"/>
   <hex row="20" col="2" terrain="8"/>
@@ -1115,8 +1128,8 @@
   <hex row="20" col="36" terrain="8"/>
   <hex row="20" col="37" terrain="10" name="Tscherna River"/>
   <hex row="20" col="38" terrain="8"/>
-  <hex row="20" col="39" terrain="8"/>
-  <hex row="20" col="40" terrain="8" road="2"/>
+  <hex row="20" col="39" terrain="8" rail="34"/>
+  <hex row="20" col="40" terrain="8" road="2" rail="34"/>
   <hex row="20" col="41" terrain="8"/>
   <hex row="20" col="42" terrain="8"/>
   <hex row="20" col="43" terrain="8"/>
@@ -1156,8 +1169,8 @@
   <hex row="21" col="34" terrain="10" name="Tscherna River"/>
   <hex row="21" col="35" terrain="10" name="Tscherna River"/>
   <hex row="21" col="36" terrain="10" name="Tscherna River"/>
-  <hex row="21" col="37" terrain="3"/>
-  <hex row="21" col="38" terrain="8"/>
+  <hex row="21" col="37" terrain="3" rail="34"/>
+  <hex row="21" col="38" terrain="8" rail="34"/>
   <hex row="21" col="39" terrain="8"/>
   <hex row="21" col="41" terrain="8"/>
   <hex row="21" col="42" terrain="8"/>
@@ -1195,6 +1208,8 @@
   <hex row="22" col="32" terrain="3"/>
   <hex row="22" col="33" terrain="3"/>
   <hex row="22" col="34" terrain="10" name="Tscherna River"/>
+  <hex row="22" col="35" rail="34"/>
+  <hex row="22" col="36" rail="34"/>
   <hex row="22" col="39" terrain="8"/>
   <hex row="22" col="40" terrain="8"/>
   <hex row="22" col="41" terrain="8"/>
@@ -1240,8 +1255,8 @@
   <hex row="23" col="29" terrain="1" road="33" name="Slantsy"/>
   <hex row="23" col="30" terrain="3"/>
   <hex row="23" col="32" terrain="10" name="Pijussa River"/>
-  <hex row="23" col="33" terrain="3"/>
-  <hex row="23" col="34">
+  <hex row="23" col="33" terrain="3" rail="18"/>
+  <hex row="23" col="34" rail="34">
     <unit id="20372" owner="0" flag="20" face="0" exp="96" bstr="7"/>
   </hex>
   <hex row="23" col="36" terrain="1" road="16" name="Tihvinka" owner="0" flag="19"/>
@@ -1292,7 +1307,7 @@
   </hex>
   <hex row="24" col="31" terrain="1" name="Slantsy "/>
   <hex row="24" col="32" terrain="10" name="Pijussa River"/>
-  <hex row="24" col="33" road="32">
+  <hex row="24" col="33" road="32" rail="33">
     <unit id="20687" owner="0" flag="20" face="0" transport="20641" exp="173" bstr="5"/>
   </hex>
   <hex row="24" col="35" road="34"/>
@@ -1337,10 +1352,10 @@
   </hex>
   <hex row="25" col="29" terrain="1" name="Slantsy"/>
   <hex row="25" col="30" terrain="1" road="136" name="Slantsy"/>
-  <hex row="25" col="31" terrain="1" road="138" name="Slantsy" station="1">
+  <hex row="25" col="31" terrain="1" road="138" name="Slantsy" station="1" rail="34">
     <unit id="20609" owner="0" flag="20" face="0" transport="20641" exp="143" str="5" bstr="5"/>
   </hex>
-  <hex row="25" col="32" terrain="10" road="34" name="Pijussa River"/>
+  <hex row="25" col="32" terrain="10" road="34" name="Pijussa River" rail="34"/>
   <hex row="25" col="33" terrain="1" road="18" name="Slantsy"/>
   <hex row="25" col="34" road="34"/>
   <hex row="25" col="39" terrain="3"/>
@@ -1372,7 +1387,8 @@
   <hex row="26" col="25" terrain="3" road="34"/>
   <hex row="26" col="26" road="34"/>
   <hex row="26" col="28" terrain="3"/>
-  <hex row="26" col="30" terrain="16"/>
+  <hex row="26" col="29" rail="34"/>
+  <hex row="26" col="30" terrain="16" rail="34"/>
   <hex row="26" col="31" terrain="10" name="Pijussa River"/>
   <hex row="26" col="32" terrain="10" road="152" name="Pijussa River"/>
   <hex row="26" col="33" terrain="1" road="177" name="Slantsy" owner="0" flag="19">
@@ -1412,6 +1428,8 @@
   <hex row="27" col="24" terrain="3" road="34"/>
   <hex row="27" col="25" terrain="3"/>
   <hex row="27" col="26" terrain="3"/>
+  <hex row="27" col="27" rail="34"/>
+  <hex row="27" col="28" rail="34"/>
   <hex row="27" col="29" terrain="10" name="Pijussa River"/>
   <hex row="27" col="30" terrain="10" name="Pijussa River"/>
   <hex row="27" col="31" terrain="3"/>
@@ -1448,6 +1466,8 @@
   <hex row="28" col="22" terrain="1" road="34" name="Gostizy" owner="0" flag="19"/>
   <hex row="28" col="23" terrain="3"/>
   <hex row="28" col="24" terrain="3"/>
+  <hex row="28" col="25" rail="34"/>
+  <hex row="28" col="26" rail="34"/>
   <hex row="28" col="27" terrain="10" name="Pijussa River"/>
   <hex row="28" col="28" terrain="10" name="Pijussa River"/>
   <hex row="28" col="29" terrain="10" name="Kuscholka River"/>
@@ -1483,6 +1503,8 @@
   <hex row="29" col="22" terrain="11">
     <unit id="890" owner="0" flag="20" face="0" bstr="1"/>
   </hex>
+  <hex row="29" col="23" rail="34"/>
+  <hex row="29" col="24" rail="34"/>
   <hex row="29" col="25" terrain="10" name="Pijussa River"/>
   <hex row="29" col="26" terrain="10" name="Pijussa River"/>
   <hex row="29" col="27" terrain="3"/>
@@ -1520,6 +1542,8 @@
   </hex>
   <hex row="30" col="18" road="34"/>
   <hex row="30" col="20" terrain="13"/>
+  <hex row="30" col="21" rail="18"/>
+  <hex row="30" col="22" rail="34"/>
   <hex row="30" col="23" terrain="8"/>
   <hex row="30" col="24" terrain="8"/>
   <hex row="30" col="25" terrain="10" name="Pijussa River"/>
@@ -1562,6 +1586,7 @@
   <hex row="31" col="18" terrain="10"/>
   <hex row="31" col="19" terrain="13"/>
   <hex row="31" col="20" terrain="3"/>
+  <hex row="31" col="21" rail="17"/>
   <hex row="31" col="22" terrain="3"/>
   <hex row="31" col="23" terrain="8"/>
   <hex row="31" col="24" terrain="8"/>
@@ -1612,6 +1637,7 @@
   <hex row="32" col="18" terrain="10"/>
   <hex row="32" col="19" terrain="3"/>
   <hex row="32" col="20" terrain="3"/>
+  <hex row="32" col="21" rail="17"/>
   <hex row="32" col="22" terrain="8"/>
   <hex row="32" col="23" terrain="10" name="Pijussa River"/>
   <hex row="32" col="24" terrain="10" name="Pijussa River"/>
@@ -1650,6 +1676,7 @@
   <hex row="33" col="17" road="17"/>
   <hex row="33" col="19" terrain="3"/>
   <hex row="33" col="20" terrain="3"/>
+  <hex row="33" col="21" rail="9"/>
   <hex row="33" col="22" terrain="8"/>
   <hex row="33" col="23" terrain="10" name="Pijussa River"/>
   <hex row="33" col="24" terrain="3"/>
@@ -1699,7 +1726,7 @@
   <hex row="34" col="19" terrain="13" road="136"/>
   <hex row="34" col="20" terrain="3"/>
   <hex row="34" col="21" terrain="8"/>
-  <hex row="34" col="22" terrain="8" road="16"/>
+  <hex row="34" col="22" terrain="8" road="16" rail="144"/>
   <hex row="34" col="23" terrain="13"/>
   <hex row="34" col="24" terrain="10" name="Pijussa River"/>
   <hex row="34" col="25" road="34"/>
@@ -1741,8 +1768,8 @@
   <hex row="35" col="19" terrain="8"/>
   <hex row="35" col="20" terrain="8" road="144"/>
   <hex row="35" col="21" terrain="8"/>
-  <hex row="35" col="22" terrain="13" road="9"/>
-  <hex row="35" col="23" road="162"/>
+  <hex row="35" col="22" terrain="13" road="9" rail="9"/>
+  <hex row="35" col="23" road="162" rail="144"/>
   <hex row="35" col="24" terrain="10" road="34" name="Pijussa River"/>
   <hex row="35" col="25" terrain="10" name="Pijussa River"/>
   <hex row="35" col="27" terrain="3" road="17"/>
@@ -1788,6 +1815,7 @@
   </hex>
   <hex row="36" col="21" terrain="3" road="34"/>
   <hex row="36" col="22" road="34"/>
+  <hex row="36" col="23" rail="9"/>
   <hex row="36" col="24" terrain="3"/>
   <hex row="36" col="25" terrain="10" name="Pijussa River"/>
   <hex row="36" col="27" road="9"/>
@@ -1828,6 +1856,7 @@
   <hex row="37" col="20" terrain="3" road="11"/>
   <hex row="37" col="21" road="144"/>
   <hex row="37" col="23" terrain="3"/>
+  <hex row="37" col="24" rail="144"/>
   <hex row="37" col="25" terrain="10" name="Pijussa River"/>
   <hex row="37" col="27" terrain="3"/>
   <hex row="37" col="28" terrain="1" road="136" name="Weino" owner="0" flag="19"/>

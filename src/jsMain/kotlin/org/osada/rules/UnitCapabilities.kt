@@ -342,9 +342,20 @@ object UnitCapabilities {
      * capability — but the note it produced is the Combat Support rule stated in full, so on the
      * card it read as exactly the capability claim the badge makes. Both surfaces read the bit now.
      */
+
     fun hasCombatSupport(unit: GameUnit): Boolean =
         unit.unitData(true).attr and ATTR_MASK_COMBAT_SUPPORT != 0 ||
             Leaders.unitHasLeader(unit, LeaderType.COMBAT_SUPPORT)
+
+    /**
+     * The suppression that actually weighs on [unit]: its [GameUnit.hits], or none for OG's
+     * Ferocious Defense leader, which *"ignores suppression"* (`* Leaders` list). The counter is
+     * still kept -- Overwhelming Attack converts it and the unit card shows it -- only its EFFECT
+     * is waived, at the two places suppression is read: the defence penalty and the strength an
+     * ambusher needs unsuppressed.
+     */
+    fun effectiveHits(unit: GameUnit): Int =
+        if (Leaders.unitHasLeader(unit, LeaderType.FEROCIOUS_DEFENSE)) 0 else unit.hits
 
     /**
      * The equipment-record half of [hasCombatSupport]: OG's `Combat Support` grant (`attr` bit 16)
@@ -385,14 +396,15 @@ object UnitCapabilities {
     }
 
     /**
-     * The bars one supporter lends: its own, floored at one when [RuleKey.COMBAT_SUPPORT_MIN_BAR]
-     * is on. The floor applies to the lending only, never to the unit's own experience. Also what
-     * the unit card's HQ badge states, so the card and the combat roll cannot disagree.
+     * The bars one supporter lends: its own, floored at one. OSADA's rule, not OG's -- in OG *"a CS
+     * unit with 99 experience points would give nothing"*, and a supporter with no attack earns
+     * experience only by being shot, so a bought HQ or radio truck lent nothing for its whole
+     * career. The floor was a ruleset key (`combat_support_min_bar`, schema 18) until the owner
+     * retired it at schema 21 so it always applies. It is on the LENDING only: the unit's own
+     * experience, combat and leader rolls are untouched. Also what the unit card's HQ badge states,
+     * so the card and the combat roll cannot disagree.
      */
-    fun lentBars(supporter: GameUnit): Int {
-        val own = UnitExperience.bars(supporter)
-        return if (ActiveRuleset.flag(RuleKey.COMBAT_SUPPORT_MIN_BAR, true)) maxOf(own, 1) else own
-    }
+    fun lentBars(supporter: GameUnit): Int = maxOf(UnitExperience.bars(supporter), 1)
 
     /**
      * Whether [unit] carries OG's `All Weather` equipment special (`SpecialEx` bit 60.2, `attrEx`

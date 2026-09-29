@@ -27,7 +27,8 @@
       <unit id="1431" owner="0" flag="163" face="0"/>
     </at>
   </reinforce>
-  <hex row="10" col="4" station="1"/>
+  <hex row="9" col="3" rail="9"/>
+  <hex row="10" col="4" station="1" rail="136"/>
   <hex row="0" col="2" terrain="10"/>
   <hex row="0" col="3" terrain="3"/>
   <hex row="0" col="4" terrain="3"/>
@@ -369,8 +370,8 @@
   <hex row="6" col="51" terrain="15" name="Atlantic Ocean"/>
   <hex row="6" col="52" terrain="15" name="Atlantic Ocean"/>
   <hex row="6" col="53" terrain="15" name="Atlantic Ocean"/>
-  <hex row="7" col="0" road="136"/>
-  <hex row="7" col="1" road="136" owner="1" flag="150">
+  <hex row="7" col="0" road="136" rail="136"/>
+  <hex row="7" col="1" road="136" owner="1" flag="150" rail="136">
     <unit id="44805" owner="1" flag="151" face="0"/>
   </hex>
   <hex row="7" col="4" terrain="3"/>
@@ -419,8 +420,8 @@
   <hex row="7" col="51" terrain="15" name="Atlantic Ocean"/>
   <hex row="7" col="52" terrain="15" name="Atlantic Ocean"/>
   <hex row="7" col="53" terrain="15" name="Atlantic Ocean"/>
-  <hex row="8" col="2" road="136"/>
-  <hex row="8" col="3" road="136">
+  <hex row="8" col="2" road="136" rail="136"/>
+  <hex row="8" col="3" road="136" rail="144">
     <unit id="44797" owner="1" flag="151" face="0" exp="41"/>
   </hex>
   <hex row="8" col="6" terrain="8"/>
@@ -513,6 +514,7 @@
   <hex row="9" col="51" terrain="15" name="Atlantic Ocean"/>
   <hex row="9" col="52" terrain="15" name="Atlantic Ocean"/>
   <hex row="9" col="53" terrain="15" name="Atlantic Ocean"/>
+  <hex row="10" col="5" rail="152"/>
   <hex row="10" col="6" road="136"/>
   <hex row="10" col="7" road="136"/>
   <hex row="10" col="8" terrain="3"/>
@@ -569,8 +571,9 @@
   <hex row="11" col="2" terrain="3"/>
   <hex row="11" col="3" terrain="1" name="Happoldt"/>
   <hex row="11" col="4" terrain="3"/>
-  <hex row="11" col="5" terrain="3"/>
-  <hex row="11" col="7" terrain="11" name="Charleston Fortifications">
+  <hex row="11" col="5" terrain="3" rail="9"/>
+  <hex row="11" col="6" rail="136"/>
+  <hex row="11" col="7" terrain="11" name="Charleston Fortifications" rail="136">
     <unit id="932" owner="1" flag="151" face="0"/>
   </hex>
   <hex row="11" col="8" terrain="11" road="136" name="Charleston Fortifications" owner="1" flag="150">
@@ -632,6 +635,10 @@
   <hex row="12" col="3" terrain="15" name="Ashley River"/>
   <hex row="12" col="4" terrain="3"/>
   <hex row="12" col="5" terrain="3"/>
+  <hex row="12" col="6" rail="136"/>
+  <hex row="12" col="7" rail="136"/>
+  <hex row="12" col="8" rail="136"/>
+  <hex row="12" col="9" rail="136"/>
   <hex row="12" col="10" road="136"/>
   <hex row="12" col="11" road="136"/>
   <hex row="12" col="12" terrain="15" name="Cooper River"/>
@@ -690,6 +697,9 @@
   <hex row="13" col="6" terrain="11" name="Charleston Fortifications" owner="1" flag="150">
     <unit id="44815" owner="1" flag="151" face="0" exp="147"/>
   </hex>
+  <hex row="13" col="8" rail="136"/>
+  <hex row="13" col="9" rail="136"/>
+  <hex row="13" col="10" rail="144"/>
   <hex row="13" col="11" terrain="3"/>
   <hex row="13" col="12" terrain="16" road="152"/>
   <hex row="13" col="13" road="136"/>
@@ -749,7 +759,8 @@
   <hex row="14" col="5" terrain="16"/>
   <hex row="14" col="7" terrain="3"/>
   <hex row="14" col="8" terrain="3"/>
-  <hex row="14" col="11" road="34"/>
+  <hex row="14" col="10" rail="153"/>
+  <hex row="14" col="11" road="34" rail="136"/>
   <hex row="14" col="12" road="33"/>
   <hex row="14" col="13" terrain="11" name="Battery Smith" owner="1" flag="150">
     <unit id="44786" owner="1" flag="151" face="0" exp="4"/>
@@ -806,8 +817,9 @@
   <hex row="15" col="7" terrain="3"/>
   <hex row="15" col="8" terrain="3"/>
   <hex row="15" col="9" terrain="3"/>
-  <hex row="15" col="10" road="26"/>
+  <hex row="15" col="10" road="26" rail="17"/>
   <hex row="15" col="11" terrain="1" road="136" name="Charleston"/>
+  <hex row="15" col="12" rail="144"/>
   <hex row="15" col="13" terrain="1" name="Charleston"/>
   <hex row="15" col="14" road="9"/>
   <hex row="15" col="15" terrain="1" road="186" name="Charleston"/>
@@ -857,10 +869,10 @@
   <hex row="16" col="5" terrain="15" name="Ashley River"/>
   <hex row="16" col="6" terrain="15" name="Ashley River"/>
   <hex row="16" col="8" terrain="3"/>
-  <hex row="16" col="10" road="25"/>
+  <hex row="16" col="10" road="25" rail="17"/>
   <hex row="16" col="11" terrain="1" road="136" name="Charleston"/>
-  <hex row="16" col="12" terrain="1" road="136" name="Charleston" station="1"/>
-  <hex row="16" col="13" terrain="1" road="186" name="Charleston">
+  <hex row="16" col="12" terrain="1" road="136" name="Charleston" station="1" rail="9"/>
+  <hex row="16" col="13" terrain="1" road="186" name="Charleston" rail="136">
     <unit id="44827" owner="1" flag="151" face="0" transport="44810" exp="160"/>
   </hex>
   <hex row="16" col="14" terrain="1" road="34" name="Charleston"/>
@@ -920,18 +932,18 @@
   <hex row="17" col="7" terrain="8"/>
   <hex row="17" col="8" terrain="8"/>
   <hex row="17" col="9" terrain="8"/>
-  <hex row="17" col="10" road="17"/>
+  <hex row="17" col="10" road="17" rail="17"/>
   <hex row="17" col="11" terrain="1" name="Charleston"/>
   <hex row="17" col="12" terrain="1" road="138" name="Charleston"/>
   <hex row="17" col="13" terrain="1" road="153" name="Charleston"/>
-  <hex row="17" col="14" terrain="1" road="136" name="Charleston" owner="1" flag="150" victory="1">
+  <hex row="17" col="14" terrain="1" road="136" name="Charleston" owner="1" flag="150" victory="1" rail="136">
     <unit id="44781" owner="1" flag="151" face="0" transport="44811" exp="254"/>
   </hex>
-  <hex row="17" col="15" terrain="1" road="187" name="Charleston">
+  <hex row="17" col="15" terrain="1" road="187" name="Charleston" rail="130">
     <unit id="44784" owner="1" flag="151" face="0" transport="44808" exp="12" ldr="1"/>
   </hex>
-  <hex row="17" col="16" terrain="1" road="34" name="Charleston"/>
-  <hex row="17" col="17" terrain="1" road="17" name="Charleston" station="1"/>
+  <hex row="17" col="16" terrain="1" road="34" name="Charleston" rail="40"/>
+  <hex row="17" col="17" terrain="1" road="17" name="Charleston" station="1" rail="130"/>
   <hex row="17" col="18" terrain="12" road="136" name="Charleston Port"/>
   <hex row="17" col="19" terrain="12" road="160" name="Charleston Port"/>
   <hex row="17" col="20" terrain="15" name="Cooper River"/>
@@ -983,7 +995,7 @@
   <hex row="18" col="7" terrain="8"/>
   <hex row="18" col="8" terrain="8"/>
   <hex row="18" col="9" terrain="8"/>
-  <hex row="18" col="10" road="17">
+  <hex row="18" col="10" road="17" rail="17">
     <unit id="44792" owner="1" flag="151" face="0" exp="89"/>
   </hex>
   <hex row="18" col="11" terrain="3"/>
@@ -1047,7 +1059,7 @@
   <hex row="19" col="7" terrain="8"/>
   <hex row="19" col="8" terrain="3"/>
   <hex row="19" col="9" terrain="8"/>
-  <hex row="19" col="10" terrain="8" road="17">
+  <hex row="19" col="10" terrain="8" road="17" rail="17">
     <unit id="44825" owner="1" flag="151" face="0" exp="39" ldr="1"/>
   </hex>
   <hex row="19" col="11" terrain="11" road="34" name="Battery Gadberry" owner="1" flag="150">
@@ -1112,7 +1124,7 @@
   <hex row="20" col="7" terrain="15" name="Ashley River"/>
   <hex row="20" col="8" terrain="8"/>
   <hex row="20" col="9" terrain="15" name="Ashley River"/>
-  <hex row="20" col="10" road="19">
+  <hex row="20" col="10" road="19" rail="17">
     <unit id="44793" owner="1" flag="151" face="0" exp="90" anchored="1"/>
   </hex>
   <hex row="20" col="11" terrain="15" name="Ashley River"/>
@@ -1172,7 +1184,7 @@
   <hex row="21" col="7" terrain="14"/>
   <hex row="21" col="8" terrain="15" name="Ashley River"/>
   <hex row="21" col="9" terrain="15" name="Ashley River"/>
-  <hex row="21" col="10" terrain="15" road="17" name="Ashley River"/>
+  <hex row="21" col="10" terrain="15" road="17" name="Ashley River" rail="17"/>
   <hex row="21" col="11" terrain="15" name="Ashley River"/>
   <hex row="21" col="12" terrain="15" name="Ashley River"/>
   <hex row="21" col="13" terrain="15" name="Ashley River"/>
@@ -1226,7 +1238,7 @@
   <hex row="22" col="7" terrain="8"/>
   <hex row="22" col="8" terrain="8"/>
   <hex row="22" col="9" terrain="8"/>
-  <hex row="22" col="10" road="17"/>
+  <hex row="22" col="10" road="17" rail="17"/>
   <hex row="22" col="11" terrain="3"/>
   <hex row="22" col="12" terrain="15" name="Ashley River"/>
   <hex row="22" col="13" terrain="15" name="Ashley River"/>
@@ -1279,8 +1291,8 @@
   <hex row="23" col="4" terrain="3"/>
   <hex row="23" col="6" terrain="1" name="Priolean"/>
   <hex row="23" col="8" terrain="8"/>
-  <hex row="23" col="9" road="34"/>
-  <hex row="23" col="10" terrain="1" road="49" name="R.R.Shops" owner="1" flag="150" station="1">
+  <hex row="23" col="9" road="34" rail="34"/>
+  <hex row="23" col="10" terrain="1" road="49" name="R.R.Shops" owner="1" flag="150" station="1" rail="33">
     <unit id="44781" owner="1" flag="151" face="0" anchored="1"/>
   </hex>
   <hex row="23" col="11" terrain="3"/>
@@ -1326,8 +1338,8 @@
   <hex row="24" col="5" terrain="11" name="Charleston Fortifications" owner="1" flag="150">
     <unit id="44815" owner="1" flag="151" face="0" exp="58"/>
   </hex>
-  <hex row="24" col="7" road="34"/>
-  <hex row="24" col="8" road="34"/>
+  <hex row="24" col="7" road="34" rail="34"/>
+  <hex row="24" col="8" road="34" rail="34"/>
   <hex row="24" col="10" road="17"/>
   <hex row="24" col="11" terrain="3"/>
   <hex row="24" col="12" terrain="3"/>
@@ -1373,8 +1385,8 @@
   <hex row="24" col="51" terrain="15" name="Atlantic Ocean"/>
   <hex row="24" col="52" terrain="15" name="Atlantic Ocean"/>
   <hex row="24" col="53" terrain="15" name="Atlantic Ocean"/>
-  <hex row="25" col="5" road="34"/>
-  <hex row="25" col="6" road="34"/>
+  <hex row="25" col="5" road="34" rail="18"/>
+  <hex row="25" col="6" road="34" rail="34"/>
   <hex row="25" col="9" terrain="3"/>
   <hex row="25" col="10" terrain="3" road="9"/>
   <hex row="25" col="11" road="136"/>
@@ -1426,7 +1438,7 @@
   <hex row="25" col="53" terrain="15" name="Atlantic Ocean"/>
   <hex row="26" col="3" terrain="3" road="56"/>
   <hex row="26" col="4" road="18"/>
-  <hex row="26" col="5" terrain="3"/>
+  <hex row="26" col="5" terrain="3" rail="33"/>
   <hex row="26" col="6" terrain="11" name="Charleston Fortifications" owner="1" flag="150">
     <unit id="44787" owner="1" flag="151" face="0" exp="156" anchored="1"/>
   </hex>
@@ -1473,12 +1485,12 @@
   <hex row="26" col="52" terrain="15" name="Atlantic Ocean"/>
   <hex row="26" col="53" terrain="15" name="Atlantic Ocean"/>
   <hex row="27" col="0" road="40"/>
-  <hex row="27" col="1" road="130"/>
+  <hex row="27" col="1" road="130" rail="40"/>
   <hex row="27" col="2" road="34"/>
-  <hex row="27" col="3" road="17" station="1">
+  <hex row="27" col="3" road="17" station="1" rail="34">
     <unit id="44781" owner="1" flag="151" face="0"/>
   </hex>
-  <hex row="27" col="4" terrain="3" road="129"/>
+  <hex row="27" col="4" terrain="3" road="129" rail="34"/>
   <hex row="27" col="5" terrain="10" name="Wappoo Creek"/>
   <hex row="27" col="6" terrain="10" name="Wappoo Creek"/>
   <hex row="27" col="7" terrain="10" name="Wappoo Creek"/>
@@ -1520,7 +1532,8 @@
   <hex row="27" col="51" terrain="15" name="Atlantic Ocean"/>
   <hex row="27" col="52" terrain="15" name="Atlantic Ocean"/>
   <hex row="27" col="53" terrain="15" name="Atlantic Ocean"/>
-  <hex row="28" col="2" terrain="1" name="Thompson"/>
+  <hex row="28" col="0" rail="130"/>
+  <hex row="28" col="2" terrain="1" name="Thompson" rail="130"/>
   <hex row="28" col="3" road="41"/>
   <hex row="28" col="4" terrain="3"/>
   <hex row="28" col="5" terrain="10" name="Wappoo Creek"/>

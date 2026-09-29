@@ -111,6 +111,19 @@ class RulesetPersistenceTest {
         assertTrue(profile.unknownKeys.isEmpty())
     }
 
+    /** Schema <=19 profiles may name `rail_transport`, retired at 20: the railway always runs. */
+    @Test
+    fun theRetiredRailKeyIsDroppedFromAnOldProfile() {
+        val stored =
+            """[{"id":"custom-1","name":"Old","schemaVersion":19,"overrides":{"rail_transport":0}}]"""
+
+        val profile = RulesetProfileStore.parse(stored).single()
+
+        assertTrue(profile.supported)
+        assertTrue(profile.overrides.isEmpty())
+        assertTrue(profile.unknownKeys.isEmpty())
+    }
+
     @Test
     fun aNewerSchemaIsVisibleButUnsupported() {
         val stored = """[{"id":"custom-1","name":"Future","schemaVersion":99,"overrides":{}}]"""
