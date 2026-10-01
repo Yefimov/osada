@@ -128,6 +128,12 @@ internal object CombatPositioning {
      * Surrender is meant to punish being *cut off*: pinned against the map edge, water, mountains
      * or enemies. Being crowded out by your own stack is a traffic-jam, not an encirclement, and
      * must not kill the unit — so the caller skips surrender when this is true.
+     *
+     * **A unit whose own `movpoints` is 0 always gets false**, without its neighbours being
+     * inspected: it could not retreat even onto an empty hex, so its own stack is not what stopped
+     * it. A deployed towed gun (its tractor does not count) therefore surrenders to an owed retreat
+     * even when surrounded by friends — the owner's decision (2026-09-30), not an oversight. Its
+     * exemptions are the same as every other unit's: `No Surrender`, Ferocious Defense.
      */
     fun isRetreatBlockedByOwnUnitsOnly(
         map: Array<Array<Hex>>?,

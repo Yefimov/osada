@@ -221,12 +221,15 @@ internal object Attachments {
      */
     fun availableSlots(unit: GameUnit): List<Pair<Int, EfileConfig.AttachmentSlot>> {
         val config = attachmentConfig()
-        val formation = HeroCampaign.formationFor(unit)
+        // The formation's IDENTITY, not its roster record: a record is written lazily (on purchase,
+        // carry-over, the first notable combat), and one bought before 2026-09-30's Terser fix may
+        // still have none. [HeroCampaign.purchaseAttachment] creates it when it is first needed.
+        val inScope = HeroCampaign.activeFormationId(unit) != null
         // The cap and the "already owned" test both measure against the UNION, so a formation the
         // author already filled cannot have a third slot bought onto it and an authored slot is
         // never offered for sale a second time.
         val fitted = fittedSlots(unit).map { it.first }.toSet()
-        val closed = config == null || formation == null || fitted.size >= MAX_PER_UNIT
+        val closed = config == null || !inScope || fitted.size >= MAX_PER_UNIT
         return if (closed || unit.attachmentsForbidden) {
             emptyList()
         } else {

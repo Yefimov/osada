@@ -562,24 +562,7 @@ internal object GameplayLocalization {
     // (DEFERRED.md §4.1). refreshUnitActions above was split out separately; this one wasn't.
     @Suppress("CyclomaticComplexMethod")
     private fun refreshUnitIdentity(unit: GameUnit) {
-        val data = unit.unitData(true)
-        byId("osadaUcClass")?.apply {
-            val serviceKey =
-                when {
-                    unit.isTemporaryBorrowed || unit.nodossier -> "auxiliary"
-                    HeroCampaign.isHeroEligible(unit) -> "core"
-                    else -> "scenario"
-                }
-            textContent =
-                I18n.t(
-                    "unit_info.identity.class_service",
-                    mapOf(
-                        "class" to GameText.unitClass(data.uclass),
-                        "service" to I18n.t("unit_info.identity.service.$serviceKey"),
-                    ),
-                )
-            title = I18n.t("unit_info.identity.class_service.help")
-        }
+        byId("osadaUcClass")?.let { UnitServiceChip.refresh(it, unit) }
         val states = mutableListOf<String>()
         if (unit.hits > 0) states += I18n.t("unit_info.state.suppressed.label", mapOf("hits" to unit.hits))
         if (unit.isSurprised) states += I18n.t("unit_info.state.surprised.label")

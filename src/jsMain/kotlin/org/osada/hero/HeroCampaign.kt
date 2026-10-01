@@ -273,7 +273,9 @@ internal object HeroCampaign {
         unit: GameUnit,
         slotNumber: Int,
     ): Boolean {
-        val formation = activeFormationId(unit)?.let(roster::formation)
+        // A formation in scope may not have a roster record yet (see `Attachments.availableSlots`);
+        // the purchase is what needs one, so it is registered here.
+        val formation = activeFormationId(unit)?.let { roster.formation(it) ?: synchronizeFormation(unit) }
         val slot = EfileConfig.attachments()?.slots?.get(slotNumber)
         val slotId = slotNumber.toString()
         val legal =

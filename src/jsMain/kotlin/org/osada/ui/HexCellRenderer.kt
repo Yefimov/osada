@@ -25,6 +25,8 @@ internal class HexCellRenderer(
     private val overlayRenderer: OverlayRenderer,
     private val cursorRenderer: CursorRenderer,
 ) {
+    private val destroyedBridgeRenderer = DestroyedBridgeRenderer(rc)
+
     companion object {
         // Stacked-layer marker: two short bars at the top of the hex. Brass is the HUD's own
         // "this is the live one" colour; the idle bar stays visible so the player can see there
@@ -52,6 +54,8 @@ internal class HexCellRenderer(
         if (frame.hexGrid) {
             rc.drawHex(rc.mapCtx, x, y, hexStyles["generic"], hex.terrain)
         }
+        // Terrain damage stays below units, flags and selection, in both zoom modes and on AI turns.
+        destroyedBridgeRenderer.draw(hex, x, y)
         if (isCurrentHex) {
             rc.drawHex(rc.hexesCtx, x, y, hexStyles["currentstroke"])
             rc.drawHex(rc.hexesCtx, x, y, hexStyles["current"])

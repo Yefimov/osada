@@ -5,7 +5,6 @@ package org.osada.ui
 import org.osada.hero.HeroCampaign
 import org.osada.hero.HeroEventDisplay
 import org.osada.hero.HeroHonours
-import org.osada.i18n.GameText
 import org.osada.i18n.I18n
 import org.osada.model.GameUnit
 import org.osada.model.Leaders
@@ -106,6 +105,7 @@ internal object UnitIdentityPresenter {
         leader.onkeydown = null
 
         val dossier = HeroCampaign.dossier(unit)
+        val eligibilityHelp = I18n.t("unit_info.leader.eligibility.help")
         when {
             dossier != null -> {
                 val label =
@@ -118,10 +118,10 @@ internal object UnitIdentityPresenter {
                     CommanderMark.HERO,
                     I18n.t("unit_info.leader.hero.short", mapOf("rank" to dossier.rank, "name" to dossier.name)),
                 )
-                leader.title = "$label\n${I18n.t("unit_info.leader.open_dossier.help")}"
+                leader.title = "$label\n${I18n.t("unit_info.leader.open_dossier.help")}\n$eligibilityHelp"
                 leader.setAttribute(
                     "aria-label",
-                    I18n.t("unit_info.leader.open_dossier.aria", mapOf("label" to label)),
+                    "${I18n.t("unit_info.leader.open_dossier.aria", mapOf("label" to label))}. $eligibilityHelp",
                 )
                 leader.onclick = { event: MouseEvent ->
                     event.stopPropagation()
@@ -138,8 +138,9 @@ internal object UnitIdentityPresenter {
                 leader.title =
                     listOf(label)
                         .plus(descriptions.map { "${it.first}: ${it.second}" })
+                        .plus(eligibilityHelp)
                         .joinToString("\n")
-                leader.setAttribute("aria-label", label)
+                leader.setAttribute("aria-label", "$label. $eligibilityHelp")
                 leader.onclick = { event: MouseEvent ->
                     event.stopPropagation()
                     byId("unit-info")?.classList?.add("uc--expanded")
@@ -150,7 +151,7 @@ internal object UnitIdentityPresenter {
             unit.isTemporaryBorrowed || unit.nodossier -> {
                 renderMark(leader, CommanderMark.NONE, null)
                 val label = I18n.t("unit_info.leader.temporary.label")
-                leader.title = "$label\n${I18n.t("unit_info.leader.temporary.help")}"
+                leader.title = "$label\n${I18n.t("unit_info.leader.temporary.help")}\n$eligibilityHelp"
                 disableInteraction(leader)
             }
 
@@ -159,7 +160,7 @@ internal object UnitIdentityPresenter {
             !HeroCampaign.isHeroEligible(unit) -> {
                 renderMark(leader, CommanderMark.NONE, null)
                 val label = I18n.t("unit_info.leader.scenario_only.label")
-                leader.title = "$label\n${I18n.t("unit_info.leader.scenario_only.help")}"
+                leader.title = "$label\n${I18n.t("unit_info.leader.scenario_only.help")}\n$eligibilityHelp"
                 disableInteraction(leader)
             }
 
@@ -195,8 +196,8 @@ internal object UnitIdentityPresenter {
                             ),
                         )
                     }
-                leader.title = "$label\n$help"
-                leader.setAttribute("aria-label", "$label. $help")
+                leader.title = "$label\n$help\n$eligibilityHelp"
+                leader.setAttribute("aria-label", "$label. $help. $eligibilityHelp")
                 leader.onclick = { event: MouseEvent ->
                     event.stopPropagation()
                     byId("unit-info")?.classList?.add("uc--expanded")
@@ -262,25 +263,7 @@ internal object UnitIdentityPresenter {
         ui: UI,
         unit: GameUnit,
     ) {
-        val data = unit.unitData(true)
-        byId("osadaUcClass")?.apply {
-            val className = GameText.unitClass(data.uclass)
-            val serviceKey =
-                when {
-                    unit.isTemporaryBorrowed || unit.nodossier -> "auxiliary"
-                    HeroCampaign.isHeroEligible(unit) -> "core"
-                    else -> "scenario"
-                }
-            textContent =
-                I18n.t(
-                    "unit_info.identity.class_service",
-                    mapOf(
-                        "class" to className,
-                        "service" to I18n.t("unit_info.identity.service.$serviceKey"),
-                    ),
-                )
-            title = I18n.t("unit_info.identity.class_service.help")
-        }
+        byId("osadaUcClass")?.let { UnitServiceChip.refresh(it, unit) }
 
         val units =
             ui.game.scenario

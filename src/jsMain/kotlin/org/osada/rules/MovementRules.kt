@@ -240,20 +240,20 @@ object MovementRules {
         // strip the sappers scraped during the scenario. Read on the unit's REAL record -- the
         // ability belongs to the airframe, not to anything it is carrying. See [AirfieldQuality].
         val data = unit.unitData(true)
-        val usable = { candidate: Hex? ->
+        val usable = { cell: Cell ->
+            val candidate = map.map?.getOrNull(cell.row)?.getOrNull(cell.col)
             // `isWorking` rather than a bare terrain test: OG's wrecked airfield is "unusable until
             // Repaired", which has to mean an aircraft cannot base on it (`Hex.isWorking`).
+            // Ownership is the FIELD's, not the hex's: one flag speaks for every hex of a multi-hex
+            // airfield ([AirfieldOwnership]).
             candidate?.isWorking(TerrainType.AIRFIELD.value) == true &&
-                candidate.flag == unit.player?.country &&
+                AirfieldOwnership.servesCountry(map, cell.row, cell.col, unit.player?.country) &&
                 !AirfieldQuality.unusableBy(candidate, data)
         }
-        val onOwnAirfield = usable(hex)
+        val onOwnAirfield = usable(pos)
         val onOwnCarrier = hex.unit?.unitData()?.uclass == UnitClass.CARRIER.value && hex.unit?.owner == unit.player?.id
         val neighbours = HexGeometry.getAdjacent(pos.row, pos.col)
-        val adjacentToAirfield =
-            neighbours.any { cell ->
-                usable(map.map?.getOrNull(cell.row)?.getOrNull(cell.col))
-            }
+        val adjacentToAirfield = neighbours.any(usable)
         // OG's `Air support` (`attr` bit 13): "can supply air units, the same than an airfield".
         // Taken at its word -- an airfield services its own hex AND the ring around it, so a
         // seaplane tender or a forward depot does too. Own units only, as the carrier test above.
