@@ -62,6 +62,18 @@ class GameMap {
     internal val units: MutableList<GameUnit> = mutableListOf()
     internal val players: MutableList<Player> = mutableListOf()
     internal var nextUnitId: Int = 0
+
+    /**
+     * Set while a SAVED game is being rebuilt, so [addUnit] keeps the ids the save recorded instead
+     * of numbering the units afresh in grid-scan order.
+     *
+     * Renumbering was harmless for a save loaded by one player. It is not in a room: the host's
+     * units carry the ids the scenario loader gave them, a guest's restored copy carried scan-order
+     * ids, and the two disagreed from the first snapshot after a unit moved out of its scan
+     * position -- so every unit id a guest sent in a command (and every cooperative assignment,
+     * which is keyed by unit id) named a different unit on the host.
+     */
+    internal var preserveUnitIds: Boolean = false
     internal val unitImages: MutableSet<Int> = mutableSetOf()
     internal val currentMoveRange: MutableList<Cell> = mutableListOf()
     internal val currentAttackRange: MutableList<Cell> = mutableListOf()

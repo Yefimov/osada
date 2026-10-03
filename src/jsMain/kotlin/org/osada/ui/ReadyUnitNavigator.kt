@@ -46,7 +46,10 @@ internal class ReadyUnitNavigator(
         return when {
             unit.getMovesLeft() > 0 -> true
             map == null -> false
-            else -> GameRules.getUnitAttackCells(map.map, unit, map.rows, map.cols).isNotEmpty()
+            else ->
+                org.osada.multiplayer.client.OsadaMultiplayer.preview(unit) {
+                    GameRules.getUnitAttackCells(map.map, unit, map.rows, map.cols).isNotEmpty()
+                }
         }
     }
 

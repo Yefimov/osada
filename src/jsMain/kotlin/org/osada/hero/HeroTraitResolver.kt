@@ -3,6 +3,7 @@ package org.osada.hero
 import org.osada.LeaderType
 import org.osada.model.GameUnit
 import org.osada.model.Leaders
+import org.osada.multiplayer.coop.CoopRuntime
 
 /**
  * The compatibility adapter of design brief §24 — the one place that answers "does this unit have
@@ -38,10 +39,14 @@ internal object HeroTraitResolver {
         leader: LeaderType,
     ): Boolean {
         if (unit == null) return false
-        return when (val hero = HeroCampaign.heroFor(unit)) {
-            null -> legacyHasTrait(unit, leader)
-            else -> heroHasTrait(hero, leader)
-        }
+        // A cooperative-commanders match replaces the friendly leader layer wholesale (design §5.3):
+        // when it governs this unit its answer is final, so a hero or a legacy leader can never be
+        // granted on top of a commander's abilities.
+        return CoopRuntime.hasTrait(unit, leader)
+            ?: when (val hero = HeroCampaign.heroFor(unit)) {
+                null -> legacyHasTrait(unit, leader)
+                else -> heroHasTrait(hero, leader)
+            }
     }
 
     /**

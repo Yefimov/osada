@@ -205,12 +205,12 @@ internal class CoreUnitListOperations(
         // survive. A pre-hero save has no key here and gets one on addCoreUnit below.
         unit.formationId = savedUnit.formationId as? String
         unit.player = player
-        applyRestoredTransport(savedUnit, unit)
+        applyRestoredReserveState(savedUnit, unit)
         return unit
     }
 
     /**
-     * Restores a core unit's saved transport.
+     * Restores a reserve's orientation and transport for its next deployment.
      *
      * The saved transport is pulled into a local and null-checked explicitly rather than written as
      * `savedUnit.transport?.let { }`: on a `dynamic` receiver, `?.let` is not the Kotlin scope
@@ -218,10 +218,13 @@ internal class CoreUnitListOperations(
      * threw "tmp0_safe_receiver.let is not a function" and aborted the whole core-roster restore
      * partway through.
      */
-    private fun applyRestoredTransport(
+    private fun applyRestoredReserveState(
         savedUnit: dynamic,
         unit: GameUnit,
     ) {
+        // A room restore must preserve the reserve's orientation too: after deployment it
+        // determines the preferred retreat direction. Older campaign saves omitted this key.
+        unit.facing = savedUnit.facing as? Int ?: 2
         val transport: dynamic = savedUnit.transport
         if (transport == null || transport == undefined) return
         val teqid = transport.eqid as? Int ?: 0

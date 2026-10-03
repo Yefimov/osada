@@ -1,6 +1,5 @@
 package org.osada.rules
 
-import org.osada.EmbarkType
 import org.osada.PlayerType
 import org.osada.TerrainType
 import org.osada.UnitClass
@@ -145,15 +144,15 @@ object UnitActionAvailability {
 
     // ---- Embark / disembark ------------------------------------------------------------------
 
-    /** Applicable to a formation whose equipment declares an air/naval embark class, or that is
-     *  already being carried. */
+    /** Show embarkation only if this mission has a pool this formation can use. A busy pool
+     *  remains applicable; an already carried formation always keeps its disembark action. */
     private fun embark(context: UnitActionContext): ActionAvailability {
         val unit = context.unit
         val carried = unit.carrier != 0
         // A train is left with the Rail chip, not Disembark: the train record says nothing about
         // `embark`, and naval disembarkation onto an adjacent hex is not how a train unloads.
         val aboardTrain = RailTransport.isEntrained(unit)
-        if (aboardTrain || (!carried && unit.unitData().embark <= EmbarkType.NONE.value)) {
+        if (aboardTrain || (!carried && !EmbarkRules.hasTransportPool(unit))) {
             return ActionAvailability.notApplicable(UnitActionId.EMBARK)
         }
         return if (carried) disembark(context) else embarkOnto(context)
@@ -187,7 +186,7 @@ object UnitActionAvailability {
         val unit = context.unit
         val hex = unit.getHex()
         val data = unit.unitData()
-        val onAirfield = hex?.terrain == TerrainType.AIRFIELD.value && data.embark > EmbarkType.NAVAL.value
+        val onAirfield = hex?.terrain == TerrainType.AIRFIELD.value && EmbarkRules.permitsAir(data)
         val onPort = hex?.terrain == TerrainType.PORT.value
         val type = EmbarkRules.getEmbarkType(context.map, unit)
         val reasons = mutableListOf<ActionBlock>()
@@ -201,7 +200,7 @@ object UnitActionAvailability {
             when {
                 type == UnitClass.AIR_TRANSPORT.value -> ActionEffectKind.EMBARK_AIR
                 type == UnitClass.NAVAL_TRANSPORT.value -> ActionEffectKind.EMBARK_NAVAL
-                data.embark > EmbarkType.NAVAL.value -> ActionEffectKind.EMBARK_AIR
+                EmbarkRules.permitsAir(data) -> ActionEffectKind.EMBARK_AIR
                 else -> ActionEffectKind.EMBARK_NAVAL
             }
         val effects = mutableListOf(ActionEffect(effect))
@@ -674,10 +673,14 @@ object UnitActionAvailability {
     ): ActionAvailability {
         val unit = context.unit
         val work =
-            engineeringWorkFor(action, Engineering.availableWork(unit))
+            engineeringWorkFor(action, Engineering.availableWork(unit, ignoreScenarioBan = true))
                 ?: return ActionAvailability.notApplicable(action)
         val reasons = mutableListOf<ActionBlock>()
         addTurnBlock(context, reasons)
+        // Shown greyed rather than hidden, so the player learns the scenario forbids it.
+        if (!Engineering.authorisedByScenario(work)) {
+            reasons += ActionBlock(ActionBlockReason.SCENARIO_FORBIDS_ENGINEERING)
+        }
         // The efile's own `build_start_ex` may relax OG's "hasn't done any action" to "still has
         // its shot" -- one owner for that reading, so the chip and the order cannot disagree.
         val afterMove = Engineering.startsAfterMove()

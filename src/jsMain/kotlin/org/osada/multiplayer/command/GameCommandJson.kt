@@ -110,6 +110,40 @@ object GameCommandJson {
             PurchaseAttachment::class.simpleName ->
                 PurchaseAttachment(requiredInt(value.unitId, "unitId"), intList(value.slots), actor)
 
+            ProposeTransfer::class.simpleName ->
+                ProposeTransfer(requiredInt(value.unitId, "unitId"), value.toCommanderId as? String, actor)
+
+            RespondTransfer::class.simpleName ->
+                RespondTransfer(requiredInt(value.unitId, "unitId"), value.accept as? Boolean ?: false, actor)
+
+            SetLoadout::class.simpleName -> SetLoadout(stringList(value.abilityIds), actor)
+            ResolveCampaignVote::class.simpleName ->
+                ResolveCampaignVote(
+                    requiredString(value.optionId, "optionId"),
+                    actor,
+                )
+            BriefingReady::class.simpleName -> BriefingReady(actor)
+            ProposePurchase::class.simpleName ->
+                ProposePurchase(
+                    requiredInt(value.equipmentId, "equipmentId"),
+                    (value.transportEquipmentId as? Number)?.toInt(),
+                    actor,
+                )
+            RespondPurchase::class.simpleName ->
+                RespondPurchase(
+                    requiredString(value.proposalId, "proposalId"),
+                    value.accept as? Boolean ?: false,
+                    actor,
+                )
+
+            ExcuseSeat::class.simpleName ->
+                ExcuseSeat(
+                    requiredString(value.commanderId, "commanderId"),
+                    value.excused as? Boolean ?: false,
+                    value.delegateToCommanderId as? String,
+                    actor,
+                )
+
             else -> error("Unknown game command kind")
         }
     }
@@ -117,6 +151,11 @@ object GameCommandJson {
     private fun coordinates(value: dynamic): List<HexCoordinate> {
         require(js("Array.isArray(value)") as Boolean)
         return (0 until (value.length as Number).toInt()).map { coordinate(value[it]) }
+    }
+
+    private fun stringList(value: dynamic): List<String> {
+        require(js("Array.isArray(value)") as Boolean)
+        return (0 until (value.length as Number).toInt()).map { requiredString(value[it], "abilityIds") }
     }
 
     private fun intList(value: dynamic): List<Int> {

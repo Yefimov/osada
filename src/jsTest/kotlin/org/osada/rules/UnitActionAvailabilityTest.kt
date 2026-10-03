@@ -408,6 +408,48 @@ class UnitActionAvailabilityTest {
         assertEquals(null, restored.formationId)
     }
 
+    // ---- mission transport availability --------------------------------------------------------
+
+    @Test
+    fun embarkIsAbsentWhenTheMissionHasNoMatchingTransportPool() {
+        val world = world()
+        val unit = world.place(infantryEqid, 1, 1)
+        val data = Equipment.getEquipment(infantryEqid)!!
+        data.airTransportable = 1
+        data.navalTransportable = 0
+        assertFalse(availability(world, unit, UnitActionId.EMBARK).applicable)
+        world.friendly.navalTransportsMax = 3
+        world.friendly.navalTransports = 3
+        assertFalse(availability(world, unit, UnitActionId.EMBARK).applicable, "ships cannot carry air-only cargo")
+        data.navalTransportable = 1
+        assertTrue(availability(world, unit, UnitActionId.EMBARK).applicable)
+    }
+
+    @Test
+    fun busyTransportPoolKeepsTheDisabledActionAndItsReason() {
+        val world = world()
+        val unit = world.place(infantryEqid, 1, 1)
+        Equipment.getEquipment(infantryEqid)!!.airTransportable = 1
+        world.map.map!![1][1].terrain = TerrainType.AIRFIELD.value
+        world.friendly.airTransportsMax = 2
+        val action = availability(world, unit, UnitActionId.EMBARK)
+        assertTrue(action.applicable)
+        assertFalse(action.enabled)
+        assertTrue(action.reasons.any { it.reason == ActionBlockReason.NO_TRANSPORT_AVAILABLE })
+        world.friendly.airTransports = 1
+        assertTrue(availability(world, unit, UnitActionId.EMBARK).enabled)
+    }
+
+    @Test
+    fun embarkedUnitKeepsDisembarkEvenWithoutAnyMissionPool() {
+        val world = world()
+        val unit = world.place(infantryEqid, 1, 1)
+        unit.carrier = -infantryEqid
+        val action = availability(world, unit, UnitActionId.EMBARK)
+        assertTrue(action.applicable)
+        assertTrue(action.enabled, "undoing embarkation does not require a free transport")
+    }
+
     // ---- harness ------------------------------------------------------------------------------
 
     private class World(

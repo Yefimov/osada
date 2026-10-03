@@ -13,12 +13,16 @@ package org.osada.ui
  */
 internal object MinimapPointerInput {
     private var draggingPointer: Int? = null
+    private var pingGesture = false
+    private var startX = 0.0
+    private var startY = 0.0
+    private var moved = false
 
     fun wire(canvas: dynamic) {
         canvas.addEventListener("pointerdown", { event: dynamic -> onDown(canvas, event) })
         canvas.addEventListener("pointermove", { event: dynamic -> onMove(event) })
-        canvas.addEventListener("pointerup", { event: dynamic -> onUp(canvas, event) })
-        canvas.addEventListener("pointercancel", { event: dynamic -> onUp(canvas, event) })
+        canvas.addEventListener("pointerup", { event: dynamic -> onUp(canvas, event, cancelled = false) })
+        canvas.addEventListener("pointercancel", { event: dynamic -> onUp(canvas, event, cancelled = true) })
         canvas.addEventListener("lostpointercapture", { _: dynamic -> draggingPointer = null })
     }
 
@@ -27,26 +31,42 @@ internal object MinimapPointerInput {
         event: dynamic,
     ) {
         val pointerId = (event.pointerId as? Number)?.toInt() ?: return
+        if (draggingPointer != null || (event.button as? Number)?.toInt() != 0) return
         draggingPointer = pointerId
+        pingGesture = MinimapPings.armed
+        startX = clientX(event)
+        startY = clientY(event)
+        moved = false
         // Claimed immediately: the minimap owns this gesture, so the page must not also scroll.
         event.preventDefault()
         if (canvas.setPointerCapture != null && canvas.setPointerCapture != undefined) {
             canvas.setPointerCapture(pointerId)
         }
-        MinimapBuilder.scrollMapTo(clientX(event), clientY(event))
+        if (!pingGesture) MinimapBuilder.scrollMapTo(clientX(event), clientY(event))
     }
 
     private fun onMove(event: dynamic) {
         val pointerId = (event.pointerId as? Number)?.toInt() ?: return
         if (draggingPointer != pointerId) return
-        MinimapBuilder.scrollMapTo(clientX(event), clientY(event))
+        if (kotlin.math.abs(clientX(event) - startX) > TAP_SLOP ||
+            kotlin.math.abs(clientY(event) - startY) > TAP_SLOP
+        ) {
+            moved = true
+        }
+        if (!pingGesture) MinimapBuilder.scrollMapTo(clientX(event), clientY(event))
     }
 
     private fun onUp(
         canvas: dynamic,
         event: dynamic,
+        cancelled: Boolean,
     ) {
         val pointerId = (event.pointerId as? Number)?.toInt() ?: return
+        if (draggingPointer != pointerId) return
+        val completedTap = !cancelled && !moved && withinTapSlop(event)
+        if (pingGesture && completedTap) {
+            MinimapPings.place(canvas, clientX(event), clientY(event))
+        }
         draggingPointer = null
         if (canvas.hasPointerCapture != null &&
             canvas.hasPointerCapture != undefined &&
@@ -59,4 +79,10 @@ internal object MinimapPointerInput {
     private fun clientX(event: dynamic): Double = (event.clientX as? Number)?.toDouble() ?: 0.0
 
     private fun clientY(event: dynamic): Double = (event.clientY as? Number)?.toDouble() ?: 0.0
+
+    private fun withinTapSlop(event: dynamic): Boolean =
+        kotlin.math.abs(clientX(event) - startX) <= TAP_SLOP &&
+            kotlin.math.abs(clientY(event) - startY) <= TAP_SLOP
+
+    private const val TAP_SLOP = 12.0
 }

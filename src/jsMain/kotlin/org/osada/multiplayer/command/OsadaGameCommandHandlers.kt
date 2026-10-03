@@ -12,6 +12,7 @@ import org.osada.model.UndoInvalidation
 import org.osada.model.beginEngineering
 import org.osada.model.buyUnit
 import org.osada.model.clearMinefield
+import org.osada.model.delMoveSel
 import org.osada.model.deployPlayerUnit
 import org.osada.model.detrainUnit
 import org.osada.model.disbandUnit
@@ -32,6 +33,7 @@ import org.osada.model.purchaseAttachment
 import org.osada.model.reinforceUnit
 import org.osada.model.resupplyUnit
 import org.osada.model.sellUnit
+import org.osada.model.setMoveRange
 import org.osada.model.surpriseTarget
 import org.osada.model.undeployUnit
 import org.osada.model.unmountUnit
@@ -140,6 +142,9 @@ class OsadaGameCommandValidator(
                 is ReorderReserve -> command.destinationIndex >= 0
                 is SetUnitAssignment -> unit != null
                 is EndTurnReady, is EndPlayerTurn, is ChooseCampaignDialogueOption, is ContinueCampaign -> true
+                // Cooperative orders are resolved against the cooperative state by the authority's
+                // pipeline, which also decides whether the room has one at all.
+                is CoopOrder -> true
                 is UnitOrder -> unitOrderLegal(command, unit)
             }
         return if (legal) CommandValidation.Accepted else rejected(MultiplayerErrorCode.UNIT_ALREADY_ACTED)
@@ -251,6 +256,8 @@ class OsadaGameCommandApplier(
                 }
 
             is ContinueCampaign -> game.continueCampaign(command.outcome, EndGameType.MOVE_CAPTURE)
+            // Applied by `CoopCommandPipeline`; they change commanders, never the map.
+            is CoopOrder -> Unit
             is EmbarkUnit -> map.embarkUnit(requireUnit(map, command.unitId))
             is DisembarkUnit -> map.disembarkUnit(requireUnit(map, command.unitId))
             is EntrainUnit -> map.entrainUnit(requireUnit(map, command.unitId))
@@ -276,7 +283,13 @@ class OsadaGameCommandApplier(
         command: MoveUnit,
     ) {
         val unit = requireUnit(map, command.unitId)
+        // A command carries no selection. `moveUnit` reads its route from the map's current move
+        // range, which only a UI selection fills -- so a move ordered by anyone but whoever happened
+        // to have this very unit selected on the authority's screen resolved to "no path" and did
+        // nothing, while still being reported as accepted.
+        map.setMoveRange(unit)
         val result = map.moveUnit(unit, command.to.y, command.to.x)
+        restoreAuthoritySelection(map, unit)
         if (result.isVictorySide >= 0) game.handleMoveVictory(result.isVictorySide)
         map.surpriseTarget(unit, result)?.let { target ->
             if (!game.gameEnded) {
@@ -290,6 +303,20 @@ class OsadaGameCommandApplier(
         // after each move (`AnimationOrchestrator.finishMoveAnimation`); a room used to reach them
         // only at the end of the turn.
         if (!game.gameEnded) game.evaluateScenarioEvents()
+    }
+
+    /** Puts the authority's own selection overlay back after a move computed a range for [moved]. */
+    private fun restoreAuthoritySelection(
+        map: GameMap,
+        moved: GameUnit,
+    ) {
+        val selected = map.currentUnit
+        val stillPlanning = selected != null && !selected.hasMoved && !selected.destroyed
+        if (selected != null && stillPlanning && selected !== moved) {
+            map.setMoveRange(selected)
+        } else {
+            map.delMoveSel()
+        }
     }
 
     /**
@@ -390,7 +417,7 @@ class OsadaGameCommandApplier(
  * same reason.
  */
 @Suppress("CyclomaticComplexMethod")
-private fun GameCommand.unitIdOrNull(): Int? =
+internal fun GameCommand.unitIdOrNull(): Int? =
     when (this) {
         is AttackUnit -> attackerUnitId
         is MoveUnit -> unitId
@@ -416,6 +443,7 @@ private fun GameCommand.unitIdOrNull(): Int? =
         is GreenReinforceUnit -> unitId
         is DismissLeader -> unitId
         is PurchaseUnit, is EndTurnReady, is EndPlayerTurn, is ChooseCampaignDialogueOption, is ContinueCampaign -> null
+        is CoopOrder -> null
     }
 
 /**

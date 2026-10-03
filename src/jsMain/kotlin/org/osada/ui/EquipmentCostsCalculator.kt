@@ -51,6 +51,7 @@ internal class EquipmentCostsCalculator(
 
         val (upgradeCost, sellCost) = resolveUpgradeAndSellCost(selectedUnit, eqUnitId, eqTransportId)
         val buyCost = resolveBuyCost(eqUnitId, eqTransportId, year, month)
+        CoopPurchaseButton.update(buyCost)
         UIBuilder.showEquipmentCosts(
             currentPlayer.prestige,
             buyCost,
@@ -212,7 +213,7 @@ internal class EquipmentCostsCalculator(
             (eqTransportId <= 0 || ScenarioPurchaseList.allows(player, eqTransportId))
     }
 
-    private fun resolveBuyCost(
+    internal fun resolveBuyCost(
         eqUnitId: Int,
         eqTransportId: Int,
         year: Int,

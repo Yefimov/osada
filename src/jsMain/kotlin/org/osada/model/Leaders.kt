@@ -6,6 +6,7 @@ import org.osada.LeaderType
 import org.osada.UnitClass
 import org.osada.hero.HeroTraitResolver
 import org.osada.model.Leaders.getUnitClassLeader
+import org.osada.multiplayer.coop.CoopRuntime
 import org.osada.rules.AuxiliaryLeaders
 import org.osada.rules.GameRandomSource
 import org.osada.rules.UnitCapabilities
@@ -243,6 +244,7 @@ object Leaders {
      * an OG author placed WITH a leader lost it on load, and no scenario unit could ever roll
      * Camouflage Expert, Overwatch, Resilience or a dozen more of OG's traits.
      */
+    @Suppress("ReturnCount")
     fun generateLeader(unit: GameUnit?): Int {
         // THREE refusals, all checked here rather than at the callers, because this is the only
         // place a legacy leader is minted -- combat promotion, the full-experience grant, a trigger's
@@ -253,6 +255,9 @@ object Leaders {
         //    (`rules/AuxiliaryLeaders`);
         //  * OG's `noldr_classunits` -- a class the efile excludes ([OgLeaderPools.classDisabledByEfile]).
         if (unit == null) return -1
+        // A cooperative match gives the shared army commanders, not unit leaders (design §5.3): the
+        // legacy roll is suppressed here, the one place a legacy leader is minted.
+        if (CoopRuntime.governs(unit)) return -1
         val uclass = unit.unitData().uclass
         val refused =
             !UnitCapabilities.canProduceLeader(unit.unitData(true)) ||

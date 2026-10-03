@@ -37,6 +37,25 @@ class AttackOutcome(
 )
 
 /**
+ * A resolved attack order as an observer sees it: both units' strength BEFORE the order began
+ * (support fire included), and everything it did. Raised once per [executeAttack], whoever called
+ * it -- a player's order, a surprise engagement or an AI attack -- so a listener (the cooperative
+ * contribution ledger) cannot miss an enemy-turn exchange or count one twice.
+ */
+class AttackReport(
+    val attacker: GameUnit,
+    val defender: GameUnit,
+    val attackerStrengthBefore: Int,
+    val defenderStrengthBefore: Int,
+    val outcome: AttackOutcome,
+)
+
+/** The single seam through which model-level attack resolution is observed. Null outside a room. */
+object AttackObservers {
+    var onResolved: ((GameMap, AttackReport) -> Unit)? = null
+}
+
+/**
  * A complete attack order, resolved in the model: the defender's support fire, Panzer Marshal's
  * "Attack Stopped", the overrun decision, the main exchange, and the defender's retreat or
  * surrender (`docs/design/combat-movement-heroes-weather-audit.md` §4.1).
@@ -103,7 +122,12 @@ internal fun GameMap.executeAttack(
         }
     }
     attacker.isSurprised = false
-    return AttackOutcome(result, supportShots, attackStopped, retreat, surrender)
+    val outcome = AttackOutcome(result, supportShots, attackStopped, retreat, surrender)
+    AttackObservers.onResolved?.invoke(
+        this,
+        AttackReport(attacker, defender, attackerOldStrength, defenderOldStrength, outcome),
+    )
+    return outcome
 }
 
 /**

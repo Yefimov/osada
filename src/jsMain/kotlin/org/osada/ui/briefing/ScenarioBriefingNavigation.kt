@@ -7,7 +7,17 @@ import org.osada.getCampaignPlayer
 
 /** Dialogue-navigation half of [ScenarioBriefingController], split out to keep its
  *  function count in bounds. */
-internal fun ScenarioBriefingController.currentLine(): BriefingLine? = briefing?.lineById(path.lastOrNull()?.lineId)
+internal fun ScenarioBriefingController.currentLine(): BriefingLine? {
+    val step = path.lastOrNull()
+    val line = briefing?.lineById(step?.lineId) ?: return null
+    val selected =
+        org.osada.multiplayer.coop.CoopRuntime.state
+            ?.briefing
+            ?.decisions
+            ?.get(line.id)
+    if (selected != null) step?.selectedChoice = line.choices.firstOrNull { it.id == selected }
+    return line
+}
 
 /** Every turn spoken so far along the CURRENT branch, in order: each visited line, and after any
  *  line the player answered, their chosen reply as its own turn. This is what the conversation
@@ -52,8 +62,9 @@ internal fun ScenarioBriefingController.nextLine() {
 }
 
 internal fun ScenarioBriefingController.choose(choiceId: String) {
-    val current = currentLine() ?: return
-    val choice = current.choices.firstOrNull { it.id == choiceId } ?: return
+    val current = currentLine()
+    val choice = current?.choices?.firstOrNull { it.id == choiceId } ?: return
+    if (CoopBriefingBridge.choose(current.id, choice.id)) return
     // Commit BEFORE navigating. commitChoice is the once-only gate: a double-click, a Back-and-
     // forward, a reopened briefing or a restored save all reach here and all no-op after the
     // first commit, so consequences can never stack.

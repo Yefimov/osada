@@ -62,6 +62,7 @@ internal object BriefingIntroTracker {
 
     @Suppress("TooGenericExceptionCaught")
     fun reset() {
+        if (org.osada.multiplayer.client.OsadaMultiplayer.active) return
         try {
             localStorage.removeItem(STORAGE_KEY)
         } catch (e: Throwable) {

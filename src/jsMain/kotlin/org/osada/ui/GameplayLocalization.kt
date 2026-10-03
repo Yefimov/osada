@@ -642,10 +642,16 @@ internal object GameplayLocalization {
         unit: GameUnit,
         map: GameMap,
     ) {
-        val actionId = UnitActionId.entries.firstOrNull { it.id == action } ?: return
+        val actionId = UnitActionId.entries.firstOrNull { it.id == action }
+        if (actionId == null) {
+            val label = I18n.t("unit_info.action.$action.label")
+            button.querySelector(".osada-action__label")?.textContent = label
+            button.setAttribute("aria-label", label)
+            return
+        }
         val asleep = button.getAttribute("data-action-variant") == "wake"
         val label = I18n.t("unit_info.action.${UnitActionPresenter.variantKey(actionId, unit, asleep)}.label")
-        button.querySelector(".osada-action__label")?.textContent = label
+        button.querySelector(".osada-action__label")?.textContent = UnitActionPages.shortLabel(action, label)
         button.setAttribute("aria-label", label)
         val currentPlayer = map.currentPlayer ?: return
         val availability =

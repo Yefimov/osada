@@ -349,6 +349,7 @@ object GameStateSerializer {
                 Pair("owner", unit.owner),
                 Pair("flag", unit.flag),
                 Pair("strength", unit.strength),
+                Pair("facing", unit.facing),
                 Pair("experience", unit.experience),
                 Pair("leader", unit.leader),
                 Pair("carrier", unit.carrier),

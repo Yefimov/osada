@@ -4,6 +4,7 @@ package org.osada.multiplayer.ui
 
 import kotlinx.browser.document
 import org.osada.i18n.I18n
+import org.osada.multiplayer.coop.CoopCheckpoint
 import org.osada.ui.RulesWindow
 import org.osada.ui.RulesetSelection
 import org.osada.ui.makeHidden
@@ -28,8 +29,10 @@ class HubModel(
     val onlineAvailable: Boolean,
     val backendLabel: String,
     val onCreate: (displayName: String) -> Unit,
+    val onCreateCoop: (displayName: String) -> Unit,
     val onJoin: (roomCode: String, displayName: String) -> Unit,
     val onBack: () -> Unit,
+    val onRestore: (String, CoopCheckpoint) -> Unit,
 )
 
 /** One row of the scenario picker; [group] is the campaign the scenario belongs to. */
@@ -55,6 +58,9 @@ class LobbyModel(
     val onToggleReady: () -> Unit,
     val onStart: () -> Unit,
     val onLeave: () -> Unit,
+    val sides: List<MultiplayerSideChoice> = emptyList(),
+    val selectedPlayerId: Int = 0,
+    val onSideSelected: (Int) -> Unit = {},
 )
 
 /**
@@ -96,6 +102,8 @@ object MultiplayerScreen {
         body.appendChild(choices)
         choices.appendChild(createCard(model, nameInput))
         choices.appendChild(joinCard(model, nameInput))
+        choices.appendChild(coopCard(model, nameInput))
+        CoopRecoveryScreen.appendPicker(body, { nameInput.value }, model.onlineAvailable, model.onRestore)
 
         val footer = panel("osada-mp-footer")
         footer.appendChild(
@@ -164,6 +172,8 @@ object MultiplayerScreen {
         status.textContent = text
     }
 
+    fun statusText(): String = (document.getElementById(STATUS_ID) as? HTMLDivElement)?.textContent.orEmpty()
+
     fun setStatus(value: String) {
         (document.getElementById(STATUS_ID) as? HTMLDivElement)?.textContent = value
     }
@@ -184,6 +194,21 @@ object MultiplayerScreen {
         val create = button(I18n.t("multiplayer.create.label"), primary = true)
         create.disabled = !model.onlineAvailable
         create.onclick = { model.onCreate(nameInput.value) }
+        card.appendChild(create)
+        return card
+    }
+
+    /** The 2-4 player cooperative-commanders room (`docs/design/cooperative-commanders-multiplayer.md`). */
+    private fun coopCard(
+        model: HubModel,
+        nameInput: HTMLInputElement,
+    ): HTMLDivElement {
+        val card = panel("osada-mp-card osada-mp-action-card osada-mp-action-card--host osada-mp-action-card--coop")
+        card.appendChild(stepBadge("03", I18n.t("multiplayer.coop.step.label")))
+        card.appendChild(cardHeading(I18n.t("multiplayer.coop.create.title"), I18n.t("multiplayer.coop.create.help")))
+        val create = button(I18n.t("multiplayer.coop.create.label"), primary = true)
+        create.disabled = !model.onlineAvailable
+        create.onclick = { model.onCreateCoop(nameInput.value) }
         card.appendChild(create)
         return card
     }
@@ -246,13 +271,43 @@ object MultiplayerScreen {
         // The host owns the room's rules; a guest gets the same window read-only
         // (`docs/design/ruleset-profiles.md` §§5, 6).
         RulesWindow.installButton(card, RulesetSelection.Surface.MULTIPLAYER, readOnlyWindow = !model.isHost)
+        card.appendChild(sideSelect(model.sides, model.selectedPlayerId, model.isHost, model.onSideSelected))
         return card
     }
 
-    private fun scenarioSelect(model: LobbyModel): HTMLElement {
+    internal fun sideSelect(
+        sides: List<MultiplayerSideChoice>,
+        selectedPlayerId: Int,
+        editable: Boolean,
+        onSelected: (Int) -> Unit,
+    ): HTMLElement {
+        val select = document.createElement("select") as HTMLSelectElement
+        select.id = "mpSideSelect"
+        select.className = "osada-mp-input"
+        select.disabled = !editable || sides.isEmpty()
+        sides.forEach { side ->
+            val option = document.createElement("option") as HTMLOptionElement
+            option.value = side.playerId.toString()
+            option.textContent = side.label
+            option.selected = side.playerId == selectedPlayerId
+            select.appendChild(option)
+        }
+        select.onchange = { select.value.toIntOrNull()?.let(onSelected) }
+        return field(I18n.t("multiplayer.side.label"), select)
+    }
+
+    private fun scenarioSelect(model: LobbyModel): HTMLElement =
+        scenarioSelect(model.scenarios, model.selectedScenarioFile, model.onScenarioSelected)
+
+    /** The campaign-grouped battle picker; shared with the cooperative lobby. */
+    internal fun scenarioSelect(
+        scenarios: List<ScenarioChoice>,
+        selectedScenarioFile: String?,
+        onScenarioSelected: (String) -> Unit,
+    ): HTMLElement {
         val select = document.createElement("select") as HTMLSelectElement
         select.className = "osada-mp-input osada-mp-scenario-select"
-        if (model.selectedScenarioFile == null) {
+        if (selectedScenarioFile == null) {
             val placeholder = document.createElement("option") as HTMLOptionElement
             placeholder.value = ""
             placeholder.textContent = I18n.t("multiplayer.scenario.choose")
@@ -262,7 +317,7 @@ object MultiplayerScreen {
         // scenario register gives — for free, and with the browser's own keyboard search.
         var group: HTMLElement? = null
         var groupName = ""
-        model.scenarios.forEach { choice ->
+        scenarios.forEach { choice ->
             if (choice.group != groupName || group == null) {
                 groupName = choice.group
                 group =
@@ -274,12 +329,12 @@ object MultiplayerScreen {
             val option = document.createElement("option") as HTMLOptionElement
             option.value = choice.file
             option.textContent = choice.name
-            option.selected = choice.file == model.selectedScenarioFile
+            option.selected = choice.file == selectedScenarioFile
             group.appendChild(option)
         }
         select.onchange = {
             val value = select.value
-            if (value.isNotEmpty()) model.onScenarioSelected(value)
+            if (value.isNotEmpty()) onScenarioSelected(value)
         }
         return select
     }
@@ -367,7 +422,7 @@ object MultiplayerScreen {
         return footer
     }
 
-    private fun ensureRoot(): HTMLDivElement {
+    internal fun ensureRoot(): HTMLDivElement {
         val existing = document.getElementById(ROOT_ID) as? HTMLDivElement
         if (existing != null) {
             existing.className = "mainPanel osada-mp-screen"
@@ -382,7 +437,7 @@ object MultiplayerScreen {
         return root
     }
 
-    private fun appendHeader(
+    internal fun appendHeader(
         root: HTMLDivElement,
         eyebrow: String,
         heading: String,
@@ -410,12 +465,12 @@ object MultiplayerScreen {
         root.appendChild(header)
     }
 
-    private fun text(value: String) = (document.createElement("div") as HTMLDivElement).apply { textContent = value }
+    internal fun text(value: String) = (document.createElement("div") as HTMLDivElement).apply { textContent = value }
 
-    private fun panel(className: String) =
+    internal fun panel(className: String) =
         (document.createElement("div") as HTMLDivElement).apply { this.className = className }
 
-    private fun cardHeading(
+    internal fun cardHeading(
         heading: String,
         description: String,
     ): HTMLDivElement =
@@ -424,7 +479,7 @@ object MultiplayerScreen {
             appendChild(text(description).apply { className = "osada-mp-card-copy" })
         }
 
-    private fun stepBadge(
+    internal fun stepBadge(
         number: String,
         label: String,
     ): HTMLDivElement =
@@ -433,16 +488,16 @@ object MultiplayerScreen {
             appendChild(text(label).apply { className = "osada-mp-step-label" })
         }
 
-    private fun field(
+    internal fun field(
         label: String,
-        control: HTMLInputElement,
+        control: HTMLElement,
     ): HTMLDivElement =
         panel("osada-mp-field").apply {
             appendChild(text(label).apply { className = "osada-mp-field-label" })
             appendChild(control)
         }
 
-    private fun button(
+    internal fun button(
         value: String,
         primary: Boolean = false,
         quiet: Boolean = false,
@@ -457,7 +512,7 @@ object MultiplayerScreen {
             }
     }
 
-    private fun input(
+    internal fun input(
         placeholder: String,
         value: String,
     ) = (document.createElement("input") as HTMLInputElement).apply {

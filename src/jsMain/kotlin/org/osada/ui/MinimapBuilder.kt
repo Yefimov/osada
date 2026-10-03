@@ -49,6 +49,7 @@ internal object MinimapBuilder {
         ctx = cv.getContext("2d")
 
         MinimapPointerInput.wire(cv)
+        MinimapPings.build()
         byId("game")?.addEventListener("scroll", { refreshViewportOnly() })
         window.setInterval({ if (isDrawerVisible()) refresh() }, FALLBACK_INTERVAL_MS)
 
@@ -114,6 +115,7 @@ internal object MinimapBuilder {
         drawVictoryHexes(rc.g, rc.ui, rc.map, rc.srcW, rc.srcH, w, h)
         drawUnitDots(rc.g, rc.ui, rc.map, rc.srcW, rc.srcH, w, h, side)
         drawViewportRect(rc.g, rc.srcW, rc.srcH, w, h)
+        MinimapPings.draw(rc.g, w, h)
     }
 
     private data class RefreshContext(

@@ -346,10 +346,15 @@ class GameStateRestore(
         // blank alloc'd hexes that the very next iteration replaced, silently losing them.
         val grid = map.map ?: return
         populateHexGrid(map, grid, hexRows)
-        for (r in 0 until map.rows) {
-            for (c in 0 until map.cols) {
-                map.setHex(r, c)
+        map.preserveUnitIds = true
+        try {
+            for (r in 0 until map.rows) {
+                for (c in 0 until map.cols) {
+                    map.setHex(r, c)
+                }
             }
+        } finally {
+            map.preserveUnitIds = false
         }
     }
 

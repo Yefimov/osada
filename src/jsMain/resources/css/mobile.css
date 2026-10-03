@@ -659,8 +659,15 @@ body.osada-layout-phone #unit-context {
 }
 
 body.osada-layout-phone .osada-actions {
+    display: flex;
+    flex-wrap: wrap;
     justify-content: flex-start;
     gap: var(--osada-touch-gap);
+}
+
+body.osada-layout-phone .osada-actions .osada-action {
+    width: auto;
+    height: auto;
 }
 
 /* The dock is subtracted from the map, so every pixel it does not need is a row

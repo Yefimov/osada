@@ -2,7 +2,6 @@ package org.osada.ui
 
 import org.osada.model.GameUnit
 import org.osada.model.Hex
-import org.osada.model.getAttackableUnit
 import org.osada.uiSettings
 
 /**
@@ -45,7 +44,7 @@ internal class UnitHoverForecast(
     ) {
         val target =
             if (selected != null && hex.isAttackSel && !selected.hasFired) {
-                hex.getAttackableUnit(selected, uiSettings.airMode)
+                hex.previewAttackableUnit(selected, uiSettings.airMode)
             } else {
                 null
             }

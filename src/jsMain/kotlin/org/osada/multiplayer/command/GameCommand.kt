@@ -203,6 +203,78 @@ data class DismissLeader(
     override val actorPlayerId: Int,
 ) : UnitOrder
 
+/**
+ * The orders only a cooperative-commanders room understands (`docs/design/cooperative-commanders-multiplayer.md`
+ * §6). They are about COMMANDERS, not about a unit's move, so they name no unit the way a [UnitOrder]
+ * does -- a commander asking for a teammate's unit is exactly the case the unit-ownership gate must
+ * not refuse. The authority resolves them against the cooperative state; a room without that state
+ * refuses them.
+ */
+sealed interface CoopOrder : GameCommand
+
+sealed interface CoopBriefingOrder : CoopOrder
+
+sealed interface CoopEconomyOrder : CoopOrder
+
+data class ProposePurchase(
+    val equipmentId: Int,
+    val transportEquipmentId: Int?,
+    override val actorPlayerId: Int,
+) : CoopEconomyOrder
+
+data class RespondPurchase(
+    val proposalId: String,
+    val accept: Boolean,
+    override val actorPlayerId: Int,
+) : CoopEconomyOrder
+
+/** Host breaks a tied vote only after all active commanders have voted. */
+data class ResolveCampaignVote(
+    val optionId: String,
+    override val actorPlayerId: Int,
+) : CoopBriefingOrder
+
+/** Every active commander confirms reading the resolved briefing before battle begins. */
+data class BriefingReady(
+    override val actorPlayerId: Int,
+) : CoopBriefingOrder
+
+/** The owner offers a unit to [toCommanderId], or (with a null target) any other commander asks for it. */
+data class ProposeTransfer(
+    val unitId: Int,
+    val toCommanderId: String?,
+    override val actorPlayerId: Int,
+) : CoopOrder
+
+/** The other party answers a pending transfer; either party may decline (a withdrawal). */
+data class RespondTransfer(
+    val unitId: Int,
+    val accept: Boolean,
+    override val actorPlayerId: Int,
+) : CoopOrder
+
+/**
+ * HOST ONLY: continue without an absent seat, optionally delegating its units to a substitute who
+ * takes them over at the next friendly-turn boundary (§10). Never an automatic reaction to a dropped
+ * socket -- a returning player is not silently demoted.
+ */
+data class ExcuseSeat(
+    val commanderId: String,
+    val excused: Boolean,
+    val delegateToCommanderId: String?,
+    override val actorPlayerId: Int,
+) : CoopOrder
+
+/**
+ * A commander replacing their OWN abilities. Allowed only before the mission's first accepted order:
+ * abilities lock when a mission starts, and the window re-opens for the next one -- which is how a
+ * newly earned slot gets filled by its player's choice rather than assigned.
+ */
+data class SetLoadout(
+    val abilityIds: List<String>,
+    override val actorPlayerId: Int,
+) : CoopOrder
+
 data class ContinueCampaign(
     val outcome: String,
     override val actorPlayerId: Int,
@@ -283,6 +355,7 @@ fun GameCommand.toPayloadJson(): String {
 
         is ContinueCampaign -> payload["outcome"] = outcome
         is UnitOrder -> writeUnitOrder(payload)
+        is CoopOrder -> writeCoopOrder(payload)
     }
     return JSON.stringify(payload)
 }
@@ -310,6 +383,39 @@ private fun UnitOrder.writeUnitOrder(payload: dynamic) {
         is PurchaseAttachment -> putAttachment(payload, unitId, slots)
         is GreenReinforceUnit -> payload["unitId"] = unitId
         is DismissLeader -> payload["unitId"] = unitId
+    }
+}
+
+/** The cooperative orders' fields, apart from `toPayloadJson` for its length budget. */
+private fun CoopOrder.writeCoopOrder(payload: dynamic) {
+    when (this) {
+        is ProposePurchase -> {
+            payload["equipmentId"] = equipmentId
+            payload["transportEquipmentId"] = transportEquipmentId
+        }
+        is RespondPurchase -> {
+            payload["proposalId"] = proposalId
+            payload["accept"] = accept
+        }
+        is ResolveCampaignVote -> payload["optionId"] = optionId
+        is BriefingReady -> Unit
+        is ProposeTransfer -> {
+            payload["unitId"] = unitId
+            payload["toCommanderId"] = toCommanderId
+        }
+
+        is RespondTransfer -> {
+            payload["unitId"] = unitId
+            payload["accept"] = accept
+        }
+
+        is ExcuseSeat -> {
+            payload["commanderId"] = commanderId
+            payload["excused"] = excused
+            payload["delegateToCommanderId"] = delegateToCommanderId
+        }
+
+        is SetLoadout -> payload["abilityIds"] = abilityIds.toTypedArray()
     }
 }
 

@@ -56,6 +56,7 @@ object MultiplayerSnapshotJson {
             "sharedPrestigeAccounts" to stringIntMap(runtime.sharedPrestigeAccounts),
             "unitAssignments" to intStringMap(runtime.unitAssignments),
             "pendingCommand" to null,
+            "coop" to runtime.coopJson?.let { JSON.parse<dynamic>(it) },
         )
 
     private fun decodeRuntime(value: dynamic): MultiplayerRuntimeState =
@@ -70,6 +71,7 @@ object MultiplayerSnapshotJson {
             sharedPrestigeAccounts = decodeStringIntMap(value.sharedPrestigeAccounts),
             unitAssignments = decodeIntStringMap(value.unitAssignments),
             pendingCommand = null,
+            coopJson = if (value.coop == null) null else JSON.stringify(value.coop) as String,
         )
 
     private fun stringIntMap(values: Map<String, Int>): dynamic {

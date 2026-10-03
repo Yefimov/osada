@@ -48,6 +48,7 @@ private fun decisionOption(
     onChoice: (String) -> Unit,
 ) = element("button", "osada-briefing__decision-option").apply {
     asDynamic().type = "button"
+    setAttribute("data-choice-id", choice.id)
     setAttribute(
         "aria-label",
         I18n.t("briefing.decision.option.aria", mapOf("number" to index + 1, "text" to choice.text)),

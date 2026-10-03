@@ -214,6 +214,7 @@ internal object ScenarioBriefingBuilder {
         choices.forEachIndexed { index, choice ->
             val choiceButton = element("button", "osada-dialogue__choice")
             choiceButton.asDynamic().type = "button"
+            choiceButton.setAttribute("data-choice-id", choice.id)
             choiceButton.setAttribute("aria-label", "Response ${index + 1}: ${choice.text}")
             val number = child(choiceButton, "span", "osada-dialogue__choice-number")
             number.textContent = "${index + 1}"

@@ -47,9 +47,33 @@ internal object BriefingLocalization {
             } else {
                 sourceText
             }
-        return CampaignDialogueFilter.apply(
-            BriefingParser.parse(resolver.resolve("scenario.title", source.scenarioTitle), source.rawData, resolver),
-        )
+        val parsed =
+            BriefingParser.parse(
+                resolver.resolve("scenario.title", source.scenarioTitle),
+                source.rawData,
+                resolver,
+            )
+        val shared =
+            org.osada.multiplayer.coop.CoopRuntime.state
+                ?.takeIf { it.missionFile == source.scenarioFile }
+                ?.briefing
+        return if (shared != null) {
+            val nodes = shared.nodes.associateBy { it.id }
+            parsed.copy(
+                dialogue =
+                    parsed.dialogue.filter { it.id in nodes }.map { line ->
+                        line.copy(
+                            next = nodes[line.id]?.next,
+                            choices =
+                                line.choices.map { choice ->
+                                    choice.copy(next = nodes[line.id]?.choices?.get(choice.id))
+                                },
+                        )
+                    },
+            )
+        } else {
+            CampaignDialogueFilter.apply(parsed)
+        }
     }
 
     fun localizeFacts(

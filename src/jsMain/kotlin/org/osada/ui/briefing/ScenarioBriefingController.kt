@@ -112,6 +112,7 @@ internal object ScenarioBriefingController {
      *  decision is still owed, which BEGIN itself is disabled for. Esc must not be a way around it. */
     internal fun finishBriefing() {
         if (pendingChoiceLine() != null) return
+        if (CoopBriefingBridge.finish()) return
         close(runCallback = true)
     }
 
@@ -146,13 +147,15 @@ internal object ScenarioBriefingController {
             ScenarioBriefingBuilder.create(
                 onAdvance = { advanceOrComplete() },
                 onSkip = { skipToNextChoiceOrOrders() },
-                onBegin = { close(runCallback = true) },
+                onBegin = { finishBriefing() },
             )
         view = created
         renderLocalizedChrome(created, parsed, scenarioFacts)
         created.root.addEventListener("keydown", { e -> handleKeyDown(e) })
 
         renderCurrentStage()
+        synchronizeSharedDecisions()
+        CoopBriefingBridge.renderVotes()
         js("setTimeout")({ focusPrimaryControl() }, 0)
     }
 
@@ -168,6 +171,7 @@ internal object ScenarioBriefingController {
             // A decision the player skipped past follows them here and gates BEGIN.
             renderPendingDecision(currentView, pendingChoiceLine()) { chooseFromOrders(it) }
         }
+        CoopBriefingBridge.renderVotes()
     }
 
     /** Turns already in the transcript DOM, so [renderDialogueStage] can APPEND the new ones
@@ -237,7 +241,7 @@ internal object ScenarioBriefingController {
     private fun List<DialogueTurn>.startsWithTurns(prefix: List<DialogueTurn>): Boolean =
         prefix.indices.all { this[it] == prefix[it] }
 
-    private fun close(runCallback: Boolean) {
+    internal fun close(runCallback: Boolean) {
         BriefingTypewriter.cancel()
         revealingLine = null
         renderedTurns = emptyList()

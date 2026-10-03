@@ -7,7 +7,6 @@ import org.osada.model.Hex
 import org.osada.model.aircraftMayDeployOn
 import org.osada.model.canDeployOnTerrain
 import org.osada.model.delCurrentUnit
-import org.osada.model.getAttackableUnit
 import org.osada.model.isInDeployZone
 import org.osada.model.isOutOfZoneDeployTarget
 import org.osada.rules.AttackEligibility
@@ -248,7 +247,7 @@ internal class MapClickHandler(
         val currentUnit = map?.currentUnit
         val hex = map?.map?.get(row)?.get(col)
         val target =
-            if (currentUnit != null && hex != null) hex.getAttackableUnit(currentUnit, uiSettings.airMode) else null
+            if (currentUnit != null && hex != null) hex.previewAttackableUnit(currentUnit, uiSettings.airMode) else null
         if (currentUnit == null || target == null) return false
         // Touch has no hover, so the forecast has to be reachable by tapping the target. The first
         // tap opens it; the attack is committed by the second tap or the Attack button. Which of

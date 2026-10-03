@@ -4,7 +4,6 @@ import kotlinx.browser.document
 import org.osada.model.Cell
 import org.osada.model.GameUnit
 import org.osada.model.Hex
-import org.osada.model.getAttackableUnit
 import org.osada.model.getUnits
 import org.osada.rules.GameRules
 import org.osada.rules.calculateCombatResults
@@ -66,7 +65,7 @@ internal class CursorRenderer(
         hex: Hex,
         currentUnit: GameUnit,
     ) {
-        val target = hex.getAttackableUnit(currentUnit, uiSettings.airMode)
+        val target = hex.previewAttackableUnit(currentUnit, uiSettings.airMode)
         if (target == null) {
             rc.cursorCanvas.style.cursor = "default"
             return
@@ -119,13 +118,15 @@ internal class CursorRenderer(
         bb.textBaseline = "top"
 
         val results =
-            GameRules.calculateCombatResults(
-                attacker,
-                defender,
-                rc.map?.getUnits()?.toList() ?: emptyList(),
-                false,
-                true,
-            )
+            org.osada.multiplayer.client.OsadaMultiplayer.preview(attacker) {
+                GameRules.calculateCombatResults(
+                    attacker,
+                    defender,
+                    rc.map?.getUnits()?.toList() ?: emptyList(),
+                    false,
+                    true,
+                )
+            }
         val losses = results.losses
         val kills = results.kills
 

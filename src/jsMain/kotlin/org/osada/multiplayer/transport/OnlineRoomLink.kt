@@ -30,8 +30,11 @@ class OnlineRoomLink(
     override val state: RoomLinkState
         get() = currentState
 
-    override fun createRoom(displayName: String) {
-        connect { send(MultiplayerMessageType.CREATE_ROOM, json("displayName" to displayName)) }
+    override fun createRoom(
+        displayName: String,
+        mode: String,
+    ) {
+        connect { send(MultiplayerMessageType.CREATE_ROOM, json("displayName" to displayName, "mode" to mode)) }
     }
 
     override fun joinRoom(
@@ -143,6 +146,7 @@ class OnlineRoomLink(
                         isHost = value.isHost as? Boolean ?: false,
                         ready = value.isReady as? Boolean ?: false,
                         connected = value.connected as? Boolean ?: true,
+                        profile = value.profile,
                     )
             }
         }
@@ -150,6 +154,11 @@ class OnlineRoomLink(
             payload.hostParticipantId as? String,
             participants,
             payload.scenarioFile as? String,
+            payload.mode as? String,
+            payload.campaignFile as? String,
+            (payload.difficulty as? Number)?.toInt() ?: 0,
+            payload.recovery,
+            (payload.humanPlayerId as? Number)?.toInt() ?: 0,
         )
     }
 
@@ -164,6 +173,12 @@ class OnlineRoomLink(
             revision = (payload.revision as? Number)?.toLong() ?: 0L,
             scenarioFile = payload.scenarioFile as? String,
             reconnectToken = payload.reconnectToken as? String,
+            mode = payload.mode as? String ?: ROOM_MODE_SHARED,
+            capacity = (payload.capacity as? Number)?.toInt() ?: 2,
+            campaignFile = payload.campaignFile as? String,
+            difficulty = (payload.difficulty as? Number)?.toInt() ?: 0,
+            humanPlayerId = (payload.humanPlayerId as? Number)?.toInt() ?: 0,
+            restoredRoom = payload.recovery as? Boolean ?: false,
         )
 
     private fun messageType(name: String): MultiplayerMessageType? =

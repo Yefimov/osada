@@ -6,6 +6,7 @@ import org.osada.TerrainType
 import org.osada.UnitClass
 import org.osada.model.Cell
 import org.osada.model.Equipment
+import org.osada.model.EquipmentData
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
 import org.osada.model.RAIL_UNKNOWN
@@ -18,6 +19,20 @@ import org.osada.movTable
 internal object EmbarkRules {
     // movTable sentinel cost (see Constants.kt movTableDry doc): 255 = impassable via this table.
     private const val IMPASSABLE_TERRAIN_COST = 255
+
+    fun permitsAir(data: EquipmentData): Boolean = permits(data.airTransportable, data.embark > EmbarkType.NAVAL.value)
+
+    fun permitsNaval(data: EquipmentData): Boolean =
+        permits(data.navalTransportable, data.embark > EmbarkType.NONE.value)
+
+    /** A matching pool exists in this mission, even when all its transports are currently busy. */
+    fun hasTransportPool(unit: GameUnit): Boolean {
+        val player = unit.player ?: return false
+        val data = unit.unitData()
+        val air = permitsAir(data) && maxOf(player.airTransports, player.airTransportsMax) > 0
+        val naval = permitsNaval(data) && maxOf(player.navalTransports, player.navalTransportsMax) > 0
+        return air || naval
+    }
 
     /** The carrier class [unit] could embark onto at its current hex, or NONE. */
     fun getEmbarkType(
@@ -35,12 +50,12 @@ internal object EmbarkRules {
         val canEmbarkAir =
             hex.terrain == TerrainType.AIRFIELD.value &&
                 (unit.player?.airTransports ?: 0) > 0 &&
-                permits(data.airTransportable, data.embark > EmbarkType.NAVAL.value) &&
+                permitsAir(data) &&
                 hex.airunit == null
         val canEmbarkNaval =
             hex.terrain == TerrainType.PORT.value &&
                 (unit.player?.navalTransports ?: 0) > 0 &&
-                permits(data.navalTransportable, data.embark > EmbarkType.NONE.value)
+                permitsNaval(data)
         return when {
             canEmbarkAir -> UnitClass.AIR_TRANSPORT.value
             canEmbarkNaval -> UnitClass.NAVAL_TRANSPORT.value

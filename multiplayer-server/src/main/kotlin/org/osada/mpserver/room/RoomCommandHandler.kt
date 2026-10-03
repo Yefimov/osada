@@ -109,6 +109,7 @@ class RoomCommandHandler(
             Wire.encodeRaw(MessageType.COMMAND_COMMIT, room.latestSnapshot.orEmpty()),
             exceptParticipantId = participantId,
         )
+        acknowledge(room, participantId, payload)
     }
 
     private fun reject(
@@ -141,6 +142,24 @@ class RoomCommandHandler(
         room.broadcastRaw(
             Wire.encodeRaw(MessageType.SNAPSHOT, room.latestSnapshot.orEmpty()),
             exceptParticipantId = participantId,
+        )
+        acknowledge(room, participantId, payload)
+    }
+
+    /** The host also needs an acknowledged checkpoint, without replaying its own game state. */
+    private fun acknowledge(
+        room: Room,
+        participantId: String,
+        payload: JsonObject,
+    ) {
+        room.sendTo(
+            participantId,
+            MessageType.SNAPSHOT_ACK,
+            buildJsonObject {
+                put("recoveryReceipt", JsonPrimitive(true))
+                payload["stateHash"]?.let { put("stateHash", it) }
+                payload["revision"]?.let { put("revision", it) }
+            },
         )
     }
 

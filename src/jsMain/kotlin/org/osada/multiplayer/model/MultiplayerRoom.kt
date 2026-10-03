@@ -88,4 +88,10 @@ data class MultiplayerRuntimeState(
     val sharedPrestigeAccounts: Map<String, Int>,
     val unitAssignments: Map<Int, String>,
     val pendingCommand: PendingCommand?,
+    /**
+     * The cooperative-commanders state (`coop/CoopStateJson`) as the authority serialized it, or null
+     * in every other room. Held as text so the snapshot layer neither interprets nor reorders it;
+     * it is canonicalized into the state hash, so a peer whose copy differs fails validation.
+     */
+    val coopJson: String? = null,
 )

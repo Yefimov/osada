@@ -12,6 +12,7 @@ import org.osada.i18n.CalendarText
 import org.osada.model.EfileConfig
 import org.osada.model.Equipment
 import org.osada.model.GameUnit
+import org.osada.multiplayer.coop.CoopRuntime
 import org.osada.rules.Attachments
 import org.osada.rules.UnitCapabilities
 
@@ -504,7 +505,9 @@ internal object HeroCampaign {
         // (`rules/UnitCapabilities.canProduceLeader`).
         val producesLeaders = UnitCapabilities.canProduceLeader(unit.unitData(true))
         val assessment = RecognitionService.assess(contribution)
-        if (!producesLeaders || !assessment.isNotable) return false
+        // Cooperative commanders replace unit heroes for the shared army: no emergence, and no
+        // recognition banked toward one (design §5.3).
+        if (!producesLeaders || CoopRuntime.governs(unit) || !assessment.isNotable) return false
         val eventId = assessment.event?.eventId ?: EmergenceEvent.DISTINGUISHED_SERVICE.eventId
         val recorded = recordFormationEvent(unit, eventId, turn) ?: formation
         val checked =

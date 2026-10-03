@@ -59,7 +59,12 @@ internal object ArtilleryRangeOverlay {
             } else {
                 // Range 0 is a real authored value under OG's `True range 0` -- such a battery
                 // cannot fire at anything, so it gets no envelope rather than a single own-hex patch.
-                GameRules.getUnitAttackRange(unit)
+                if (map.currentUnit?.id == unit.id) {
+                    org.osada.multiplayer.client.OsadaMultiplayer
+                        .preview(unit) { GameRules.getUnitAttackRange(unit) }
+                } else {
+                    GameRules.getUnitAttackRange(unit)
+                }
             }
         }
 

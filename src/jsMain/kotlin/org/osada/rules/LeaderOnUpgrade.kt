@@ -5,6 +5,7 @@ import org.osada.model.EfileConfig
 import org.osada.model.GameUnit
 import org.osada.model.Leaders
 import org.osada.model.OgLeaderPools
+import org.osada.multiplayer.coop.CoopRuntime
 
 /**
  * OG's `upgrade_ldr` — what becomes of a commander when the formation under them re-equips.
@@ -46,7 +47,9 @@ object LeaderOnUpgrade {
         // OG acts only when the upgrade *"makes random leader attribute useless"* -- until
         // 2026-09-28 OSADA rerolled or removed the commander on EVERY upgrade under modes 1 and 2.
         // "Useless" is the same test the legacy pools are built from ([OgLeaderPools.appliesTo]).
-        if (unit.leader == -1 || stillUseful(unit)) return
+        // Authored leaders on the shared army are kept as data but have no effect in a cooperative
+        // match; re-rolling or removing one would destroy it.
+        if (unit.leader == -1 || CoopRuntime.governs(unit) || stillUseful(unit)) return
         when (EfileConfig.intKey("upgrade_ldr", KEEP)) {
             REROLL_LOSING_A_BAR -> {
                 unit.experience = (unit.experience - BAR).coerceAtLeast(0)

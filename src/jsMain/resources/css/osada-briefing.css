@@ -62,6 +62,22 @@
 }
 
 /* Header strip: operation title (+ act/location subtitle) and historical date --------- */
+.osada-briefing--coop .osada-briefing__shell {
+    grid-template-rows: auto minmax(0, 1fr) auto;
+}
+
+.osada-coop-vote-status {
+    margin: 0;
+    padding: 12px clamp(16px, 3vw, 42px);
+    color: var(--osada-brass);
+    background: rgba(10, 11, 13, .9);
+}
+
+.osada-briefing--coop button[aria-pressed="true"] {
+    outline: 2px solid var(--osada-brass);
+    outline-offset: -2px;
+}
+
 .osada-briefing__header {
     position: relative;
     z-index: 2;

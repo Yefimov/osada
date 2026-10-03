@@ -243,7 +243,10 @@ internal object BottomZoneBuilder {
         cancelHoverPersistTimer()
         val map = GameHolder.instance?.scenario?.map
         val units = map?.getUnits()?.toList() ?: emptyList()
-        val result = GameRules.calculateCombatResults(attacker, defender, units, false, true)
+        val result =
+            org.osada.multiplayer.client.OsadaMultiplayer.preview(attacker) {
+                GameRules.calculateCombatResults(attacker, defender, units, false, true)
+            }
 
         val attackerData = attacker.unitData(true)
         val defenderData = defender.unitData(true)

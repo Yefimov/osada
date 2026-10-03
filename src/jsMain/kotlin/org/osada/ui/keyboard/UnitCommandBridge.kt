@@ -22,6 +22,11 @@ internal object UnitCommandBridge {
     enum class Outcome { ABSENT, BLOCKED, RAN }
 
     fun activate(actionId: String): Outcome {
+        if (chip(actionId) == null) {
+            val row = document.querySelector("#unit-context .osada-actions")
+            val reveal = row?.asDynamic()?.revealAction
+            if (jsTypeOf(reveal) == "function") reveal(actionId)
+        }
         val chip = chip(actionId) ?: return Outcome.ABSENT
         val blocked = chip.getAttribute("aria-disabled") == "true"
         // Focusing a blocked chip opens its anchored reason panel through the chip's own

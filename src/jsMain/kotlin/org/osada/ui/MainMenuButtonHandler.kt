@@ -178,6 +178,7 @@ internal class MainMenuButtonHandler(
             HeroDeskPresenter.isOpen() -> HeroDeskPresenter.close()
             isVisible("equipment") -> byId("eqCloseBut")?.click()
             isVisible("combatLog") -> UICombatLog.toggleCombatLog(false, true)
+            MinimapPings.armed -> MinimapPings.cancel()
             else -> ui.mainMenuButton("options")
         }
     }

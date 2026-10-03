@@ -3,6 +3,7 @@ package org.osada.ui
 import org.osada.GameHolder
 import org.osada.hero.HeroCampaign
 import org.osada.model.GameUnit
+import org.osada.multiplayer.coop.CoopRuntime
 import org.osada.rules.GameRules
 import org.osada.rules.PontoonBridges
 import org.osada.rules.isBridgeForSide
@@ -38,6 +39,10 @@ internal class UnitRenderer(
         // rather than over painted terrain.
         private const val RECESSED_ALPHA = 0.65
         private const val RECESSED_FILTER = "saturate(45%)"
+        private const val SEAT_BADGE_PAD = 1.0
+        private const val SEAT_BADGE_LINE = 1.5
+        private const val SEAT_DIGIT_DIVISOR = 3.0
+        private const val FULL_TURN = 2.0 * kotlin.math.PI
     }
 
     /**
@@ -80,6 +85,39 @@ internal class UnitRenderer(
         drawStrengthBox(ctx, unit, side, isCore, boxX, boxY, boxW, boxH, textOff)
         drawAmmoIndicator(ctx, x, y, unit, side)
         drawLeaderBadge(ctx, y, unit, side, boxX, boxW)
+        drawSeatBadge(ctx, unit, boxX, boxY, boxH)
+    }
+
+    /**
+     * Which commander holds this unit in a cooperative match: a small disc with the seat NUMBER, so
+     * the mark reads without colour. Drawn left of the strength box, on the same row. A unit nobody
+     * has claimed gets no mark -- that absence is the information.
+     */
+    @Suppress("ReturnCount")
+    private fun drawSeatBadge(
+        ctx: dynamic,
+        unit: GameUnit,
+        boxX: Double,
+        boxY: Double,
+        boxH: Double,
+    ) {
+        val coop = CoopRuntime.state ?: return
+        if (!CoopRuntime.governs(unit)) return
+        val owner = coop.commanderById(coop.ownerOf(unit.id)) ?: return
+        val radius = boxH / 2.0 + SEAT_BADGE_PAD
+        val cx = boxX - radius - SEAT_BADGE_PAD
+        val cy = boxY - SEAT_BADGE_PAD + boxH / 2.0
+        ctx.save()
+        ctx.beginPath()
+        ctx.arc(cx, cy, radius, 0.0, FULL_TURN)
+        ctx.fillStyle = "#17191d"
+        ctx.fill()
+        ctx.lineWidth = SEAT_BADGE_LINE
+        ctx.strokeStyle = "#e0b857"
+        ctx.stroke()
+        ctx.fillStyle = "#f6e9c3"
+        ctx.fillText("${owner.seat + 1}", cx - radius / SEAT_DIGIT_DIVISOR, boxY + STRENGTH_TEXT_Y_OFFSET)
+        ctx.restore()
     }
 
     private fun drawStrengthBox(
@@ -156,7 +194,7 @@ internal class UnitRenderer(
         boxX: Double,
         boxW: Double,
     ) {
-        if (!HeroCampaign.hasAnyCommander(unit)) return
+        if (CoopRuntime.governs(unit) || !HeroCampaign.hasAnyCommander(unit)) return
         val img = if (side == 1) rc.leaderAlliedImage else rc.leaderAxisImage
         ctx.drawImage(img, boxX + boxW + 1.0, y + 2.0 * rc.v - LEADER_ICON_Y_OFFSET)
     }

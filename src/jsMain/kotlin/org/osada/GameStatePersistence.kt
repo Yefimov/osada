@@ -61,6 +61,8 @@ class GameStatePersistence(
     private var activeCampaignRunId: String? = null
 
     fun save() {
+        // Network snapshots have their own recovery namespace, including campaign rooms.
+        if (org.osada.multiplayer.client.OsadaMultiplayer.active) return
         val scenario = game.scenario ?: return
         val campaign = game.campaign
         SaveStatusBus.update(SaveStatus.Saving)
@@ -437,6 +439,7 @@ class GameStatePersistence(
      *  never touches campaign runs: those live in [store], keyed by campaign, and are replaced
      *  only through an explicit action (starting/replaying that campaign, or an import). */
     fun clear() {
+        if (org.osada.multiplayer.client.OsadaMultiplayer.active) return
         clearLegacyKeys()
         localStorage.removeItem(standaloneSessionKey)
     }

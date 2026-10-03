@@ -118,31 +118,32 @@ internal object AttackRingBuilder {
         unit: GameUnit,
         row: Int,
         col: Int,
-    ): List<Cell> {
-        val key = row.toLong() * 10000L + col.toLong()
-        hoverCache[key]?.let { return it }
-        val result = mutableListOf<Cell>()
-        if (!unit.hasFired && unit.getAmmo() > 0) {
-            val range = GameRules.getUnitAttackRange(unit)
-            val ring = GameRules.getRing(row, col, range, map.rows, map.cols, false)
-            ring.add(Cell(row, col))
-            for (cell in ring) {
-                val hex = map.map?.getOrNull(cell.row)?.getOrNull(cell.col) ?: continue
-                val target = hex.getAttackableUnit(unit, uiSettings.airMode) ?: continue
-                val attackerIsAir = GameRules.isAir(unit)
-                val targetIsAir = GameRules.isAir(target)
-                if (!attackPreviewAllowsTarget(attackerIsAir, targetIsAir, row, col, cell)) continue
+    ): List<Cell> =
+        org.osada.multiplayer.client.OsadaMultiplayer.preview(unit) {
+            val key = row.toLong() * 10000L + col.toLong()
+            hoverCache[key]?.let { return@preview it }
+            val result = mutableListOf<Cell>()
+            if (!unit.hasFired && unit.getAmmo() > 0) {
+                val range = GameRules.getUnitAttackRange(unit)
+                val ring = GameRules.getRing(row, col, range, map.rows, map.cols, false)
+                ring.add(Cell(row, col))
+                for (cell in ring) {
+                    val hex = map.map?.getOrNull(cell.row)?.getOrNull(cell.col) ?: continue
+                    val target = hex.getAttackableUnit(unit, uiSettings.airMode) ?: continue
+                    val attackerIsAir = GameRules.isAir(unit)
+                    val targetIsAir = GameRules.isAir(target)
+                    if (!attackPreviewAllowsTarget(attackerIsAir, targetIsAir, row, col, cell)) continue
 
-                // The map's native attack-selection edge already marks a ground target directly
-                // under an aircraft. Do not add the DOM ring on top of it and create double edges.
-                val sameHexGroundTarget =
-                    attackerIsAir && !targetIsAir && cell.row == row && cell.col == col
-                if (!sameHexGroundTarget) result.add(cell)
+                    // The map's native attack-selection edge already marks a ground target directly
+                    // under an aircraft. Do not add the DOM ring on top of it and create double edges.
+                    val sameHexGroundTarget =
+                        attackerIsAir && !targetIsAir && cell.row == row && cell.col == col
+                    if (!sameHexGroundTarget) result.add(cell)
+                }
             }
+            hoverCache[key] = result
+            result
         }
-        hoverCache[key] = result
-        return result
-    }
 
     /** Hover-preview extension: "what if I moved here" — only wired if [MEASURED_HOVER_SAFE] is
      *  true (see report for the measured timing this decision is based on). Marks enemies

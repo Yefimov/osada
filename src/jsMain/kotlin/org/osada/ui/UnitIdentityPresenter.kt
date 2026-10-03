@@ -9,6 +9,7 @@ import org.osada.i18n.I18n
 import org.osada.model.GameUnit
 import org.osada.model.Leaders
 import org.osada.model.getUnits
+import org.osada.multiplayer.coop.CoopRuntime
 import org.osada.rules.UnitCapabilities
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.MouseEvent
@@ -107,6 +108,10 @@ internal object UnitIdentityPresenter {
         val dossier = HeroCampaign.dossier(unit)
         val eligibilityHelp = I18n.t("unit_info.leader.eligibility.help")
         when {
+            // A cooperative match replaces the friendly leader layer: no hero, no legacy leader and no
+            // candidate line -- the unit shows who commands it, in words.
+            CoopRuntime.governs(unit) -> presentCoopCommander(leader, unit)
+
             dossier != null -> {
                 val label =
                     I18n.t(
@@ -205,6 +210,31 @@ internal object UnitIdentityPresenter {
                 enableKeyboardActivation(leader)
             }
         }
+    }
+
+    private fun presentCoopCommander(
+        leader: HTMLElement,
+        unit: GameUnit,
+    ) {
+        val coop = CoopRuntime.state ?: return
+        val owner = coop.commanderById(CoopRuntime.commanderIdFor(unit))
+        if (owner == null) {
+            renderMark(leader, CommanderMark.NONE, I18n.t("multiplayer.coop.unit.unassigned"))
+            leader.title = I18n.t("multiplayer.coop.unit.unassigned.help")
+        } else {
+            val label =
+                I18n.t(
+                    "multiplayer.coop.unit.commanded_by",
+                    mapOf(
+                        "name" to owner.name,
+                        "seat" to owner.seat + 1,
+                    ),
+                )
+            renderMark(leader, CommanderMark.HERO, label)
+            leader.title = label
+        }
+        leader.setAttribute("aria-label", leader.title)
+        disableInteraction(leader)
     }
 
     private enum class CommanderMark(

@@ -12,7 +12,11 @@ import org.osada.rules.setZOCRange
 
 /** Unit registry for [GameMap], split out to keep its function count in bounds. */
 fun GameMap.addUnit(unit: GameUnit) {
-    unit.id = nextUnitId++
+    if (preserveUnitIds && unit.id >= 0 && units.none { it.id == unit.id }) {
+        nextUnitId = maxOf(nextUnitId, unit.id + 1)
+    } else {
+        unit.id = nextUnitId++
+    }
     units.add(unit)
     unitImages.add(unit.eqid)
     unit.transport?.let { unitImages.add(it.eqid) }

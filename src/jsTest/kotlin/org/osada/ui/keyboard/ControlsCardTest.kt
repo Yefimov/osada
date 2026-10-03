@@ -164,6 +164,22 @@ class ControlsCardTest {
         assertEquals(document.activeElement, chip, "focus opens the chip's own reason panel")
     }
 
+    @Test
+    fun aCommandOnAnotherPageIsRevealedAndUsesItsChipHandler() {
+        var clicks = 0
+        buildStrip(emptyList())
+        val row = document.querySelector("#unit-context .osada-actions")!!
+        row.asDynamic().revealAction = { id: String ->
+            val chip = buildStrip(listOf(id to true)).first()
+            chip.onclick = { _ ->
+                clicks++
+                Unit
+            }
+        }
+        assertEquals(UnitCommandBridge.Outcome.RAN, UnitCommandBridge.activate("mount"))
+        assertEquals(1, clicks)
+    }
+
     /** A minimal stand-in for `UnitContextButtons`' strip: the bridge only reads `data-action` and
      *  `aria-disabled`, which is exactly the contract the real strip publishes. */
     private fun buildStrip(chips: List<Pair<String, Boolean>>): List<HTMLElement> {

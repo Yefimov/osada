@@ -13,6 +13,8 @@ import org.osada.model.GameUnit
 import org.osada.model.getCountriesBySide
 import org.osada.model.getCountryName
 import org.osada.model.selectUnit
+import org.osada.multiplayer.client.OsadaMultiplayer
+import org.osada.multiplayer.ui.CoopHud
 import org.osada.scenario.objectiveReport
 import org.osada.ui.briefing.BriefingIntroTracker
 import org.osada.ui.briefing.ScenarioFacts
@@ -121,15 +123,17 @@ class UI(
     // Map zoom lives in MapZoom.set() (needs anchor/scroll math this class doesn't otherwise
     // touch) — the Settings "Game Map scale" slider calls it directly now.
 
-    fun uiUnitSelect(unit: GameUnit): Boolean {
-        game.scenario?.map?.selectUnit(unit)
-        buildUnitContext(unit)
-        showUnitInfo(unit)
-        render.render()
-        MinimapBuilder.refresh()
-        AttackRingBuilder.refresh()
-        return true
-    }
+    fun uiUnitSelect(unit: GameUnit): Boolean =
+        OsadaMultiplayer.preview(unit) {
+            game.scenario?.map?.selectUnit(unit)
+            buildUnitContext(unit)
+            showUnitInfo(unit)
+            render.render()
+            MinimapBuilder.refresh()
+            AttackRingBuilder.refresh()
+            CoopHud.onUnitSelected(unit)
+            true
+        }
 
     // ---- Scenario lifecycle ----
 
@@ -173,6 +177,7 @@ class UI(
         }
         console.log("[OSADA] UI.setNewScenario starting image cache")
         render.cacheImages {
+            if (game.scenario?.map !== map) return@cacheImages
             console.log("[OSADA] UI.setNewScenario cacheImages callback")
             render.render()
             // The new battle is now painted; this is the earliest moment the curtain can come down
@@ -186,19 +191,27 @@ class UI(
             eqWindowController.updateEquipmentWindow(UnitClass.TANK.value)
             statusBarController.updateStatusBar()
             mainMenuButtonHandler.checkUndeployedUnits()
-            // Normally a no-op: the game has already started the model (`WeatherModel.init` is
-            // idempotent per scenario). Kept for any load path that reaches the map first.
-            WeatherModel.init(game.scenario)
+            // The game initializes weather before this asynchronous paint. A late image callback
+            // must never consume the weather snapshot parked for a newer network restore.
             WeatherRenderer.start(game.scenario?.atmosferic ?: 0)
             mapReady = true
             if (!showBriefing) {
                 UIBuilder.clearScenarioBriefing()
-                game.uiMessageClicked = true
+                game.uiMessageClicked = org.osada.multiplayer.coop.CoopRuntime.state
+                    ?.briefing
+                    ?.open != true
                 // The restore path never reaches releaseToBattle, so scenario events get their
                 // start-of-battle evaluation here instead. Already-fired events are restored as
                 // fired and are no-ops; this is what stops a save taken before an authored `start`
                 // event fired from resuming into a battle where it never happens.
-                game.evaluateScenarioEvents()
+                if (org.osada.multiplayer.client.OsadaMultiplayer
+                        .isAuthority() &&
+                    org.osada.multiplayer.coop.CoopRuntime.state
+                        ?.briefing
+                        ?.open != true
+                ) {
+                    game.evaluateScenarioEvents()
+                }
             } else if (!campaignCeremony) {
                 openScenarioCeremony(rawBriefing)
             }
@@ -212,6 +225,8 @@ class UI(
 
     /** Hands control to the battle once BOTH the opening ceremony is done and the map is
      *  drawable. Whichever finishes second calls the other's completion. */
+    internal fun releaseCoopOpening() = releaseToBattle()
+
     private fun releaseToBattle() {
         val start = {
             // Dialogue decisions and their immediate campaign effects are committed by now, while
@@ -220,6 +235,8 @@ class UI(
             // reasons: they may depend on a flag a briefing choice just set, and "Restart mission"
             // must reproduce the same opening situation rather than a map without them.
             game.evaluateScenarioEvents()
+            org.osada.multiplayer.client.OsadaMultiplayer
+                .onCoopOpeningFinished()
             game.missionRestartCheckpoint.capture()
             game.uiMessageClicked = true
             // Turn 1's `.tmsg` line, after the briefing rather than underneath it.
@@ -274,13 +291,20 @@ class UI(
             )
         val campaignFile = campaign.file
         val scenarioFile = game.scenario?.file ?: ""
-        if (BriefingIntroTracker.isSeen(campaignFile, scenarioFile)) {
+        if (!org.osada.multiplayer.client.OsadaMultiplayer.active &&
+            BriefingIntroTracker.isSeen(campaignFile, scenarioFile)
+        ) {
             // Retry fast-path: keep the briefing reachable via the reopen button, but skip
             // straight to gameplay — no dialogue, no briefing window.
             UIBuilder.primeScenarioBriefing(campaignFile, scenarioFile, facts, rawBriefing)
             finishOpening()
         } else {
-            BriefingIntroTracker.markSeen(campaignFile, scenarioFile)
+            if (!org.osada.multiplayer.client.OsadaMultiplayer.active) {
+                BriefingIntroTracker.markSeen(
+                    campaignFile,
+                    scenarioFile,
+                )
+            }
             // The campaign ritual replaces the small legacy scenario-start popup entirely; its
             // text now lives as the briefing's final ORDERS section (facts.ordersText above).
             UIBuilder.showScenarioBriefing(campaignFile, scenarioFile, facts, rawBriefing, finishOpening)

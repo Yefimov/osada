@@ -26,6 +26,7 @@ class RoomAdmission(
             return
         }
         room.mutex.withLock {
+            payload.stringOrNull("mode")?.takeIf { it in Room.MODES }?.let { room.mode = it }
             val (member, token) = attach(connection, room, payload.stringOrNull("displayName"))
             room.hostParticipantId = member.participantId
             room.lastActivityAtMillis = clock()
@@ -106,7 +107,7 @@ class RoomAdmission(
         val refusal =
             when {
                 room.started -> ErrorCode.MATCH_ALREADY_STARTED to "This match has already started."
-                room.members.size >= config.maxParticipantsPerRoom -> ErrorCode.ROOM_FULL to "This room is full."
+                room.members.size >= room.capacity(config) -> ErrorCode.ROOM_FULL to "This room is full."
                 else -> null
             }
         if (refusal != null) {
@@ -156,8 +157,14 @@ class RoomAdmission(
                 put("authorityEpoch", JsonPrimitive(room.authorityEpoch))
                 put("revision", JsonPrimitive(room.revision))
                 put("started", JsonPrimitive(room.started))
+                put("recovery", JsonPrimitive(room.recovery != null))
                 put("paused", JsonPrimitive(room.paused))
                 put("scenarioFile", JsonPrimitive(room.scenarioFile))
+                put("mode", JsonPrimitive(room.mode))
+                put("capacity", JsonPrimitive(room.capacity(config)))
+                put("campaignFile", JsonPrimitive(room.campaignFile))
+                put("difficulty", JsonPrimitive(room.difficulty))
+                put("humanPlayerId", JsonPrimitive(room.humanPlayerId))
             },
         )
     }

@@ -80,6 +80,7 @@ class CanonicalStateHasher {
                         .sortedBy { it.key }
                         .joinToString(","),
                 )
+                runtime.coopJson?.let { append('|').append(canonicalizeJson(it)) }
             }
         return "sha256:${Sha256.digest(canonicalPayload)}"
     }

@@ -188,7 +188,10 @@ internal object Engineering {
      * work in progress — OG's own UI offers one job at a time, and two overlapping jobs would need a
      * queue nobody asked for.
      */
-    fun availableWork(unit: GameUnit): List<EngineeringWork> {
+    fun availableWork(
+        unit: GameUnit,
+        ignoreScenarioBan: Boolean = false,
+    ): List<EngineeringWork> {
         val sapper = isSapper(unit)
         val demolisher = canDemolish(unit)
         val hex =
@@ -203,7 +206,7 @@ internal object Engineering {
         return EngineeringWork.entries.filter { work ->
             val hasAbility = if (work.demolition) demolisher else sapper
             hasAbility &&
-                authorisedByScenario(work) &&
+                (ignoreScenarioBan || authorisedByScenario(work)) &&
                 work.permittedByEfileMask() &&
                 work.possibleOn(hex, grid)
         }

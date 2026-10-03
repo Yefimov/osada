@@ -360,6 +360,7 @@ object PortraitComposerV2 {
         permanentInjury: Boolean = false,
         country: Int? = null,
         poolOverride: Pool? = null,
+        femaleOverride: Boolean? = null,
     ): PortraitComposition {
         val facts =
             deriveFacts(
@@ -372,6 +373,7 @@ object PortraitComposerV2 {
                 permanentInjury,
                 country,
                 poolOverride,
+                femaleOverride,
             )
         return PortraitComposition(seed = seed, layerIds = compose(facts, seed), poolId = facts.pool.id)
     }
@@ -739,9 +741,10 @@ object PortraitComposerV2 {
         permanentInjury: Boolean,
         country: Int?,
         poolOverride: Pool?,
+        femaleOverride: Boolean?,
     ): Facts {
         val rank = if (rankId in RANK_AGE) rankId else "lieutenant"
-        val gender = genderFor(seed)
+        val gender = femaleOverride?.let { if (it) "female" else "male" } ?: genderFor(seed)
         val age = ageBand(seed, rank, birthYear, serviceYear)
         val season = if (chance(seed, "season", SEASON_WINTER_CHANCE)) "winter" else "summer"
         val wounded = status == HeroStatus.WOUNDED || status == HeroStatus.SERIOUSLY_WOUNDED

@@ -16,8 +16,13 @@ class Member(
     val reconnectTokenHash: String,
 ) {
     var ready: Boolean = false
+
+    /** The commander profile a cooperative lobby card shows, as the JSON the member sent (size- and
+     *  shape-checked on arrival). The server stores and relays it; it never interprets it. */
+    var profile: JsonObject? = null
     var connection: RoomConnection? = null
     var disconnectedAtMillis: Long? = null
+    var lastMapPingAt: Long? = null
 
     val connected: Boolean
         get() = connection != null
@@ -30,6 +35,7 @@ class Member(
  * authority stays on the host client, which owns the rules and produces every snapshot. See
  * docs/multiplayer-server-deployment.md for why the split is drawn here.
  */
+@Suppress("TooManyFunctions")
 class Room(
     val code: String,
     createdAtMillis: Long,
@@ -44,14 +50,34 @@ class Room(
     var started: Boolean = false
     var paused: Boolean = false
     var scenarioFile: String? = null
+    var humanPlayerId: Int = 0
+
+    /** A cooperative room may play a whole campaign instead of one battle; null means a battle. */
+    var campaignFile: String? = null
+    var difficulty: Int = 0
+    var recovery: JsonObject? = null
+
+    /** [MODE_SHARED] is the original two-human room; [MODE_COOP_COMMANDERS] the 2-4 player mode. */
+    var mode: String = MODE_SHARED
+
+    val isCoop: Boolean
+        get() = mode == MODE_COOP_COMMANDERS
+
+    /** Seats this room admits. Distinct from [minimumToStart]. */
+    fun capacity(config: org.osada.mpserver.ServerConfig): Int =
+        if (isCoop) config.maxCoopParticipants else config.maxParticipantsPerRoom
+
+    /** Connected, ready humans needed before the host may start. A legacy room needs every seat. */
+    fun minimumToStart(config: org.osada.mpserver.ServerConfig): Int =
+        if (isCoop) org.osada.mpserver.ServerConfig.MIN_COOP_PARTICIPANTS else config.maxParticipantsPerRoom
 
     /**
      * Latest snapshot payload as JSON text, exactly as the host client serialized it.
      *
-     * Deliberately not a parsed [JsonObject]: the server never looks inside a snapshot beyond the
-     * revision it reads once on arrival, and a parsed tree of a full game state costs several times
-     * the text. With one retained snapshot per room that difference decides whether a busy server
-     * fits in its heap.
+     * Deliberately not a retained parsed [JsonObject]: normal commits only need their revision.
+     * Recovery bootstrap also checks the envelope and authenticated seat bindings, without game
+     * rule evaluation. A parsed tree costs several times the text; retaining one text snapshot per
+     * room keeps the shared VPS heap bounded.
      */
     var latestSnapshot: String? = null
 
@@ -118,11 +144,16 @@ class Room(
     fun lobbyState(): JsonObject =
         buildJsonObject {
             put("roomCode", JsonPrimitive(code))
+            recovery?.let { put("recovery", it) }
             put("hostParticipantId", JsonPrimitive(hostParticipantId))
             put("started", JsonPrimitive(started))
             put("paused", JsonPrimitive(paused))
             put("revision", JsonPrimitive(revision))
             put("scenarioFile", JsonPrimitive(scenarioFile))
+            put("campaignFile", JsonPrimitive(campaignFile))
+            put("difficulty", JsonPrimitive(difficulty))
+            put("humanPlayerId", JsonPrimitive(humanPlayerId))
+            put("mode", JsonPrimitive(mode))
             put(
                 "participants",
                 buildJsonArray {
@@ -134,6 +165,7 @@ class Room(
                                 put("isHost", JsonPrimitive(member.participantId == hostParticipantId))
                                 put("isReady", JsonPrimitive(member.ready))
                                 put("connected", JsonPrimitive(member.connected))
+                                member.profile?.let { put("profile", it) }
                             },
                         )
                     }
@@ -141,7 +173,10 @@ class Room(
             )
         }
 
-    private companion object {
-        const val MAX_PROCESSED_IDS = 512
+    companion object {
+        const val MODE_SHARED = "SHARED"
+        const val MODE_COOP_COMMANDERS = "COOP_COMMANDERS"
+        val MODES = setOf(MODE_SHARED, MODE_COOP_COMMANDERS)
+        private const val MAX_PROCESSED_IDS = 512
     }
 }

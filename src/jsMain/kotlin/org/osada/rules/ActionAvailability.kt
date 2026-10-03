@@ -177,6 +177,9 @@ enum class ActionBlockReason {
     /** Another job is already under way on this hex; `amount` is the turns left on it. */
     ENGINEERING_IN_PROGRESS,
 
+    /** The scenario author switched this kind of engineering off (OG's Build / Blow / Repair option). */
+    SCENARIO_FORBIDS_ENGINEERING,
+
     /** Not the local human player's turn, so no command may be issued. */
     NOT_LOCAL_TURN,
 }

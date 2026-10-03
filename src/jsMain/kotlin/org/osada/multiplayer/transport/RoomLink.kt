@@ -18,6 +18,13 @@ data class RoomWelcome(
     val revision: Long,
     val scenarioFile: String?,
     val reconnectToken: String?,
+    /** `SHARED` (the original two-human room) or `COOP_COMMANDERS`. */
+    val mode: String = ROOM_MODE_SHARED,
+    val capacity: Int = 2,
+    val campaignFile: String? = null,
+    val difficulty: Int = 0,
+    val restoredRoom: Boolean = false,
+    val humanPlayerId: Int = 0,
 )
 
 data class RoomLobbyParticipant(
@@ -26,7 +33,12 @@ data class RoomLobbyParticipant(
     val isHost: Boolean,
     val ready: Boolean,
     val connected: Boolean,
+    /** The commander card a cooperative lobby shows, exactly as the member sent it; null elsewhere. */
+    val profile: dynamic = null,
 )
+
+const val ROOM_MODE_SHARED = "SHARED"
+const val ROOM_MODE_COOP = "COOP_COMMANDERS"
 
 interface RoomLinkListener {
     fun onLinkState(state: RoomLinkState)
@@ -37,6 +49,11 @@ interface RoomLinkListener {
         hostParticipantId: String?,
         participants: List<RoomLobbyParticipant>,
         scenarioFile: String?,
+        mode: String?,
+        campaignFile: String?,
+        difficulty: Int,
+        recovery: dynamic,
+        humanPlayerId: Int,
     )
 
     /** Everything the session itself interprets: START_GAME, SNAPSHOT, COMMAND_*. */
@@ -69,7 +86,10 @@ interface RoomLinkListener {
 interface RoomLink {
     val state: RoomLinkState
 
-    fun createRoom(displayName: String)
+    fun createRoom(
+        displayName: String,
+        mode: String = ROOM_MODE_SHARED,
+    )
 
     fun joinRoom(
         roomCode: String,

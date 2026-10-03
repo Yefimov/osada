@@ -64,6 +64,17 @@ object Identifiers {
             scenarioFilePattern.matches(value) &&
             !value.contains("..")
 
+    /**
+     * Campaign file names are echoed to every client, which appends them to `resources/campaigns/data/`
+     * (and looks them up in its own register). Same reasoning as [isScenarioFile]: no separator can
+     * occur, so the value cannot leave that directory.
+     */
+    fun isCampaignFile(value: String): Boolean =
+        value.length in 1..MAX_SCENARIO_FILE_LENGTH &&
+            campaignFilePattern.matches(value) &&
+            !value.contains("..")
+
     private const val MAX_SCENARIO_FILE_LENGTH = 64
+    private val campaignFilePattern = Regex("[A-Za-z0-9_\\-]+\\.json")
     private val scenarioFilePattern = Regex("[A-Za-z0-9_\\-]+(\\.[A-Za-z0-9_\\-]+)*\\.xml")
 }
