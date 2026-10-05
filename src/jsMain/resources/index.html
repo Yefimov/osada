@@ -43,6 +43,7 @@
     <link href="css/osada-theme.css" rel="stylesheet" type="text/css">
     <!-- Loads last so it can override desktop geometry without an ! important arms race. -->
     <link href="css/mobile.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="css/music.css">
 </head>
 <body id="mainbody">
 <!-- Boot curtain. Static markup, because the whole point is to be on screen before anything the
@@ -182,6 +183,7 @@
 </div>
 
 <div id="osada-sidebar"> <!-- OSADA operational sidebar (Task 2): toggles / minimap / objectives / log -->
+    <div id="osadaMusicSidebar"></div>
     <div class="osada-sb-toggles">
         <div id="hex" class="osada-sb-toggle" title="Toggle hex grid overlay (H)">Grid</div>
         <div id="air" class="osada-sb-toggle"
@@ -212,6 +214,7 @@
     <div id="osadaSideRail" class="osada-sb-rail">
         <div id="osadaRailExpand" class="osada-sb-rail__expand" title="Expand sidebar">&#8249;</div>
         <div id="osadaRailObjCounter" class="osada-sb-rail__counter" title="Objectives held / total">0/0</div>
+        <div id="osadaMusicRail"></div>
         <div id="osadaRailLogDot" class="osada-sb-rail__dot" title="New log events since collapse"></div>
     </div>
 </div>

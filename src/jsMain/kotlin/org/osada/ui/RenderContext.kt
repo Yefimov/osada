@@ -7,6 +7,7 @@ import org.osada.model.Equipment
 import org.osada.model.GameMap
 import org.osada.model.ScreenPos
 import org.osada.model.getUnitImagesList
+import org.osada.ui.keyboard.CommandRouter
 import org.osada.uiSettings
 import kotlin.js.json
 import kotlin.math.PI
@@ -589,7 +590,7 @@ internal class RenderContext(
         game.style.left = "${left.toInt()}px"
         game.style.top = "${topBar.toInt()}px"
         game.tabIndex = 1
-        game.focus()
+        if (CommandRouter.mayFocusGame()) game.focus()
     }
 
     /**

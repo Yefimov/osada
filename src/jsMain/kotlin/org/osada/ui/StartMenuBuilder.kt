@@ -123,6 +123,16 @@ internal object StartMenuBuilder {
         StartMenuSettingsBuilder.buildSettingsScreen()
 
         GameStateMenuBuilder.buildGameStateMenu()
+        val music = byId("osadaMusicMenu") ?: addTag("startmenu", "div").apply { id = "osadaMusicMenu" }
+        org.osada.ui.music.MusicMiniPlayer
+            .mount(music.id, menu = true)
+        val musicSettings =
+            byId("osadaMusicSettings") ?: addTag("smSettingsContainer", "div").apply {
+                id = "osadaMusicSettings"
+                className = "settingContainer left"
+            }
+        org.osada.ui.music.MusicMiniPlayer
+            .mount(musicSettings.id)
     }
 
     // Shown one at a time, bottom-center of the main menu (user request).

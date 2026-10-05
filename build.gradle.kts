@@ -368,6 +368,14 @@ tasks.register<Exec>("verifyMobileSmokeTest") {
     commandLine("node", "mobile-smoke.mjs")
 }
 
+tasks.register<Exec>("verifyMusicPlayer") {
+    group = "verification"
+    description = "Verifies real music playback, modal access, mobile layout and two-tab ownership"
+    dependsOn("jsBrowserDistribution", "verifyProductionSmokeTestNpmInstall")
+    workingDir = file("scripts/verify")
+    commandLine("node", "music-player.mjs")
+}
+
 /*
  * Общая проверка проекта.
  *

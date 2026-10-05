@@ -36,6 +36,8 @@ internal object MobileOnboarding {
 
     /** Also the Settings "Replay" action, which is why it is public and does not check the flag. */
     fun show() {
+        org.osada.ui.music.MusicLibraryPresenter
+            .yieldToDecision()
         byId(OVERLAY_ID)?.let { delTag(it) }
         val overlay = addTag("mainbody", "div")
         overlay.id = OVERLAY_ID

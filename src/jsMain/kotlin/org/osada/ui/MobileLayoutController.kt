@@ -77,9 +77,13 @@ internal object MobileLayoutController {
 
     fun applyNow() {
         val metrics = ViewportMetricsService.refresh()
+        org.osada.ui.music.MusicLibraryPresenter
+            .resize(metrics)
         val previous = mode
         mode = resolveLayoutMode(matches(MEDIA_COARSE), metrics.width, metrics.height, uiSettings.mobileUiMode)
         applyBodyClasses()
+        org.osada.ui.music.MusicMiniPlayer
+            .reconcilePlacement()
         OrientationGate.update(mode)
         if (previous != mode) MobileDrawer.onLayoutModeChanged(mode)
         // `visualViewport.scroll` fires continuously while a mobile address bar animates, and a

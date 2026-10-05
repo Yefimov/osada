@@ -2,6 +2,7 @@ package org.osada.ui
 
 import kotlinx.browser.document
 import org.w3c.dom.HTMLElement
+import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -14,6 +15,7 @@ import kotlin.test.assertTrue
 class UIBuilderMessagesTest {
     @BeforeTest
     fun setup() {
+        MessageDialogs.clearDynamicMessages()
         listOf("title", "message", "ui-message", "uiokbut", "mainbody", "statusbar-extension").forEach { id ->
             if (byId(id) == null) {
                 val container = document.createElement("div") as HTMLElement
@@ -21,6 +23,13 @@ class UIBuilderMessagesTest {
                 document.body?.appendChild(container)
             }
         }
+        makeHidden("ui-message")
+    }
+
+    @AfterTest
+    fun cleanup() {
+        MessageDialogs.clearDynamicMessages()
+        makeHidden("ui-message")
     }
 
     @Test
@@ -46,6 +55,26 @@ class UIBuilderMessagesTest {
         assertNotNull(box)
         assertEquals("uiMessageBox test-layout", box.className)
         assertTrue(box.querySelector(".uiMessageBoxButton")?.getAttribute("title")?.contains("continue") == true)
+    }
+
+    @Test
+    fun announcementsWaitUntilBothMenuAndMusicReleaseTheirHolds() {
+        MessageDialogs.suspendDynamicMessages("menu")
+        MessageDialogs.suspendDynamicMessages("music")
+        UIBuilder.messageDynamic("Queued", "Body")
+        MessageDialogs.resumeDynamicMessages("music")
+        assertTrue(byId("uiMessageBoxDynamic") == null)
+        MessageDialogs.resumeDynamicMessages("menu")
+        assertNotNull(byId("uiMessageBoxDynamic"))
+    }
+
+    @Test
+    fun requiredMessageDefersAnnouncementsUntilAnswered() {
+        UIBuilder.message("Required", "Body")
+        UIBuilder.messageDynamic("Queued", "Body")
+        assertTrue(byId("uiMessageBoxDynamic") == null)
+        byId("uiokbut")?.click()
+        assertNotNull(byId("uiMessageBoxDynamic"))
     }
 
     @Test

@@ -29,6 +29,7 @@ internal object WeatherRenderer {
 
     fun start(atmospheric: Int) {
         stop()
+        ScenarioAmbience.weather(atmospheric)
         if (atmospheric != WeatherCondition.RAIN.value && atmospheric != WeatherCondition.SNOW.value) return
         mode = atmospheric
         ensureCanvas()
@@ -39,17 +40,10 @@ internal object WeatherRenderer {
                 "resources/ui/weather/snow.png"
             }
         val image = js("new Image()")
-        image.onload = { onLoaded() }
+        image.onload = { if (img === image && mode == atmospheric) onLoaded() }
         image.onerror = { console.error("WeatherRenderer: failed to load $src") }
         image.src = src
         img = image
-        Sound.startAmbient(
-            if (atmospheric == WeatherCondition.RAIN.value) {
-                "resources/sounds/weather/rain.mp3"
-            } else {
-                "resources/sounds/weather/winter.mp3"
-            },
-        )
     }
 
     fun stop() {
@@ -61,7 +55,7 @@ internal object WeatherRenderer {
             ctx.clearRect(0.0, 0.0, canvas.width, canvas.height)
             canvas.style.display = "none"
         }
-        Sound.stopAmbient()
+        img = null
         mode = 0
     }
 

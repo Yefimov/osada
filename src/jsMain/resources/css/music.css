@@ -1,0 +1,166 @@
+/* The user-owned player shares the shell, viewport metrics and modal layers. */
+.osada-music-mini, .osada-music-library {
+    font-family: var(--osada-font-ui, sans-serif);
+    color: #eee6d8;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+.osada-music-mini button, .osada-music-library button, .osada-music-library summary,
+.osada-music-library select, .osada-music-library input[type=search] {
+    font: inherit;
+    color: #eee6d8;
+    background: #23272e;
+    border: 1px solid #77705f;
+    border-radius: 3px;
+    min-height: 32px;
+    padding: 5px 10px;
+    box-sizing: border-box;
+}
+.osada-music-mini button, .osada-music-library button, .osada-music-library summary { cursor: pointer; }
+.osada-music-mini button:hover, .osada-music-library button:hover,
+.osada-music-library button[aria-pressed=true], .osada-music-library summary:hover {
+    border-color: var(--osada-brass, #d9b25a);
+    background: #34302a;
+}
+.osada-music-mini :focus-visible, .osada-music-library :focus-visible { outline: 2px solid #f7d889; outline-offset: 2px; }
+.osada-music-mini button:disabled, .osada-music-library button:disabled { opacity: .5; cursor: default; }
+.osada-music-mini { display: flex; align-items: center; gap: 6px; padding: 4px 8px; flex: 0 0 auto; border-bottom: 1px solid #77705f; }
+#osadaMusicSidebar [data-music-open] { flex: 1; text-align: left; }
+#osadaMusicRail { flex-direction: column; padding: 6px 0; border: 0; }
+#osadaMusicRail button { width: 34px; min-width: 0; padding: 4px; }
+#osada-sidebar.osada-sidebar--collapsed > #osadaMusicSidebar { display: none; }
+#osadaMusicMenu { position: absolute; bottom: 56px; right: 24px; width: 350px; z-index: 3; flex-wrap: wrap; border: 1px solid #77705f; background: #171a20; border-radius: 4px; padding: 10px; }
+.osada-music-mini-info { flex: 1 0 100%; min-width: 0; overflow-wrap: anywhere; font-size: 13px; }
+#osadaMusicMenu [data-music-open] { flex: 1; text-align: left; }
+.osada-music-backdrop { position: fixed; z-index: calc(var(--z-msg, 1000) - 2); background: rgba(0,0,0,.72); align-items: center; justify-content: center; padding: 16px; box-sizing: border-box; overscroll-behavior: contain; }
+.osada-music-library { width: 940px; max-width: 100%; height: 680px; max-height: 100%; min-height: 0; display: flex; flex-direction: column; background: #171a20; border: 1px solid var(--osada-brass, #d9b25a); border-radius: 6px; box-shadow: 0 10px 40px #000; overflow: hidden; }
+.osada-music-library header { display: flex; justify-content: space-between; align-items: center; padding: 8px 16px; border-bottom: 1px solid #77705f; flex-shrink: 0; }
+.osada-music-library h2 { font-size: 20px; font-weight: 500; margin: 0; }
+.osada-music-current { padding: 12px 16px; border-bottom: 1px solid #77705f; flex-shrink: 0; }
+#osadaMusicNow { display: block; font-size: 18px; overflow-wrap: anywhere; }
+#osadaMusicCredit { color: #cbc5b9; font-size: 13px; }
+.osada-music-progress { display: flex; gap: 8px; align-items: center; margin: 6px 0; font-variant-numeric: tabular-nums; }
+.osada-music-progress input { flex: 1; min-width: 0; }
+.osada-music-transport { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.osada-music-library input[type=range] { accent-color: #d9b25a; height: 32px; }
+.osada-music-library input[type=checkbox] { accent-color: #d9b25a; width: 20px; height: 20px; flex-shrink: 0; }
+.osada-music-library label { display: flex; gap: 6px; align-items: center; }
+.osada-music-browser { min-height: 0; flex: 1; display: grid; grid-template-columns: 260px minmax(0,1fr); }
+.osada-music-collections { display: flex; flex-direction: column; min-height: 0; padding: 12px; gap: 10px; border-right: 1px solid #77705f; }
+.osada-music-collections > span { font-size: 16px; }
+.osada-music-collections > label { flex-wrap: wrap; }
+.osada-music-collections select { width: 100%; }
+#osadaMusicCollections { min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
+.osada-music-collection { display: flex; gap: 6px; align-items: center; }
+.osada-music-collection > button { flex: 1; text-align: left; display: flex; flex-direction: row-reverse; align-items: center; justify-content: flex-end; gap: 8px; }
+.osada-music-collection img { width: 40px; height: 40px; object-fit: cover; border-radius: 2px; }
+.osada-music-collection.selected > button { border-color: #d9b25a; }
+.osada-music-tracks { min-height: 0; display: flex; flex-direction: column; padding: 12px; gap: 8px; min-width: 0; }
+.osada-music-tabs { display: flex; gap: 6px; flex-shrink: 0; }
+#osadaMusicBack { display: none; }
+#osadaMusicSearchLabel { display: grid; gap: 4px; }
+#osadaMusicSearchScope { color: #cbc5b9; font-size: 12px; }
+#osadaMusicSearch { width: 100%; min-width: 0; }
+.osada-music-list { flex: 1; min-height: 0; overflow-y: auto; }
+.osada-music-track { display: grid; grid-template-columns: auto auto minmax(0,1fr) auto; gap: 10px; align-items: center; padding: 10px 0; border-bottom: 1px solid #373c45; position: relative; }
+.osada-music-track-info { min-width: 0; overflow-wrap: anywhere; line-height: 1.4; }
+.osada-music-track-info div, .osada-music-track-info span { display: block; font-size: 12px; color: #cbc5b9; }
+.osada-music-track-time { font-variant-numeric: tabular-nums; color: #cbc5b9; font-size: 12px; }
+.osada-music-more > button { position: absolute; right: 0; z-index: 2; box-shadow: 0 4px 15px #000; max-width: 100%; }
+.osada-music-volume, .osada-music-options { position: relative; }
+.osada-music-volume-panel, .osada-music-options-panel { position: absolute; right: 0; z-index: 3; width: 240px; padding: 10px; background: #23272e; border: 1px solid #77705f; box-shadow: 0 4px 15px #000; }
+.osada-music-volume-panel { top: 100%; }
+.osada-music-options-panel { bottom: 100%; }
+.osada-music-volume-panel input { width: 100%; }
+.osada-music-library footer { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 8px 16px; border-top: 1px solid #77705f; flex-shrink: 0; font-size: 13px; }
+.osada-music-options { margin-left: auto; }
+.osada-music-undo { display: flex; gap: 10px; align-items: center; padding: 0 16px; }
+.osada-music-undo:empty { display: none; }
+.osada-music-status { padding: 6px 16px; font-size: 12px; color: #f7d889; flex-shrink: 0; overflow-wrap: anywhere; }
+.osada-music-narrow { padding: 6px; }
+.osada-music-narrow .osada-music-browser { grid-template-columns: minmax(0,1fr); }
+.osada-music-narrow .osada-music-collections { display: none; border: 0; }
+.osada-music-narrow .show-collections .osada-music-collections { display: flex; }
+.osada-music-narrow .show-collections .osada-music-tracks { display: none; }
+.osada-music-narrow #osadaMusicBack { display: block; }
+.osada-music-narrow .osada-music-track { gap: 6px; grid-template-columns: auto auto minmax(0,1fr); }
+.osada-music-narrow .osada-music-track-time { display: none; }
+.osada-music-narrow .osada-music-track button { padding: 5px 6px; }
+.osada-music-short { padding: 6px; }
+.osada-music-short .osada-music-current { padding: 4px 12px; }
+.osada-music-short #osadaMusicCredit { display: none; }
+.osada-music-short #osadaMusicNow { font-size: 14px; }
+.osada-music-short .osada-music-current { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 0 10px; }
+.osada-music-short .osada-music-progress { margin: 0; }
+.osada-music-short .osada-music-transport { grid-column: 1 / -1; }
+.osada-music-short .osada-music-library header { padding: 3px 12px; }
+.osada-music-short .osada-music-library footer { padding: 4px 12px; }
+.osada-input-coarse .osada-music-mini button,
+.osada-input-coarse .osada-music-library button,
+.osada-input-coarse .osada-music-library summary,
+.osada-input-coarse .osada-music-library select,
+.osada-input-coarse .osada-music-library input { min-height: 44px; min-width: 44px; }
+.osada-input-coarse .osada-music-library label { min-height: 44px; }
+.osada-input-coarse .osada-music-library input[type=checkbox] { width: 24px; height: 24px; min-width: 24px; min-height: 24px; margin: 10px; }
+.osada-input-coarse #osadaMusicRail button { width: 44px; }
+body.osada-layout-phone #osadaMusicMenu { position: relative; bottom: auto; right: auto; margin: 12px 16px; width: calc(100% - 32px); }
+body.osada-layout-phone #smButtons > #osadaMusicMenu { width: 100%; margin: 8px 0 0; padding: 6px; }
+#osadaMusicSettings { clear: both; width: 100%; border-top: 1px solid #77705f; margin: 10px 0; }
+/* Short drawers keep both independent scrollers. Recover spacing rather than reducing targets. */
+body.osada-layout-phone.osada-layout-compact #osadaMusicSidebar { padding-top: 0; padding-bottom: 0; }
+body.osada-layout-phone.osada-layout-compact .osada-sb-toggles { padding-top: 4px; padding-bottom: 4px; }
+body.osada-layout-phone.osada-layout-compact #osadaSideBody { padding: 0 10px 2px; gap: 2px; }
+body.osada-layout-phone.osada-layout-compact .osada-sb-panel__title { margin-bottom: 3px; }
+body.osada-input-coarse #osada-sidebar.osada-sidebar--collapsed { width: 48px; }
+@media (max-width: 800px), (max-height: 600px) {
+    #osadaMusicMenu { width: auto; bottom: 12px; right: 12px; }
+    #osadaMusicMenu .osada-music-mini-info { display: none; }
+}
+@media (max-height: 440px) {
+    #osadaMusicRail button:not(:first-child) { display: none; }
+}
+
+/* At short heights, each browser pane scrolls its search/navigation and rows together.
+   Transport stays fixed; the track list cannot collapse to an unreachable zero-height box. */
+.osada-music-short .osada-music-tracks { overflow-y: auto; padding: 6px 10px; }
+.osada-music-short .osada-music-list { flex: 0 0 auto; min-height: 100px; overflow-y: visible; }
+.osada-music-short .osada-music-collections { overflow-y: auto; padding: 6px 10px; gap: 4px; }
+.osada-music-short #osadaMusicCollections { overflow-y: visible; flex-shrink: 0; }
+.osada-music-short .osada-music-collections > label { flex-wrap: nowrap; flex-shrink: 0; }
+.osada-music-short .osada-music-collections select { min-width: 0; flex: 1; }
+.osada-music-short .osada-music-collections > span { display: none; }
+.osada-music-short #osadaMusicSearchScope { display: none; }
+
+/* Revision: shared glyphs, explicit selection and independently padded scrollers. */
+.osada-music-mini svg, .osada-music-library svg { width: 20px; height: 20px; display: block; flex: 0 0 auto; }
+.osada-music-library [data-music-icon], .osada-music-mini [data-music-icon] { display: inline-flex; align-items: center; justify-content: center; min-width: 32px; padding: 5px; }
+#osadaMusicCollections, #osadaMusicList { padding-inline-end: 14px; scrollbar-gutter: stable; }
+.osada-music-volume-inline { display: flex; align-items: center; gap: 6px; margin-left: auto; }
+.osada-music-volume-inline input { width: 120px; max-width: 25vw; }
+#osadaMusicPercentage { min-width: 3em; font-variant-numeric: tabular-nums; }
+.osada-music-options-panel { width: 300px; max-width: 75vw; max-height: 200px; overflow-y: auto; }
+.osada-music-help { display: block; margin: 8px 0; font-size: 12px; line-height: 1.4; color: #cbc5b9; }
+.osada-music-options summary { list-style: none; }
+.osada-music-options summary::-webkit-details-marker { display: none; }
+.osada-music-mini { min-width: 0; }
+#osadaMusicMenu { flex-wrap: nowrap; width: 350px; padding: 6px; }
+.osada-music-mini [data-music-open] { min-width: 0; flex: 1; overflow: hidden; white-space: nowrap; text-align: left; }
+.osada-music-mini-title { display: block; overflow: hidden; text-overflow: ellipsis; }
+.osada-music-mini [data-music-toggle], .osada-music-mini [data-music-next] { flex-shrink: 0; }
+#osadaMusicMenu [data-music-drag] { cursor: grab; touch-action: none; border: 0; background: transparent; color: #a79a7e; }
+#osadaMusicMenu [data-music-drag]:active { cursor: grabbing; }
+.osada-music-picker-slot { position: absolute; top: 42px; left: 0; right: 0; height: 54px; }
+#osadaMusicMenu[data-music-surface=picker] { top: 0; bottom: auto; right: 8px; margin: 0; }
+#smCamp.osada-has-music-slot .osadaScreenBody, #smScen.osada-has-music-slot .osadaScreenBody { top: 104px; }
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .osada-music-title-overflow:hover .osada-music-mini-title { overflow: visible; text-overflow: clip; width: max-content; animation: osada-music-title-scroll 6s 800ms linear alternate infinite; }
+}
+@keyframes osada-music-title-scroll { from { transform: translateX(0); } to { transform: translateX(var(--music-title-travel)); } }
+@media (max-width: 640px) {
+    .osada-music-transport { gap: 4px; }
+    .osada-music-volume-inline { margin-left: 0; }
+    #osadaMusicMenu { max-width: calc(100% - 16px); }
+    body.osada-layout-phone .osada-music-picker-slot #osadaMusicMenu { position: relative; width: 100%; right: auto; top: auto; margin: 0 auto; }
+}
+
+.osada-music-title-tooltip { position: fixed; z-index: calc(var(--z-msg, 1000) + 3); padding: 8px 12px; max-width: min(320px, 90vw); box-sizing: border-box; color: #eee6d8; background: #171a20; border: 1px solid #d9b25a; font: 13px var(--osada-font-ui, sans-serif); pointer-events: none; }

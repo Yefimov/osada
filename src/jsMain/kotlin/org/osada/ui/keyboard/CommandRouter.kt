@@ -15,11 +15,11 @@ import org.w3c.dom.events.Event
 
 /**
  * The single document-level keyboard router
- * (`docs/design/keyboard-shortcuts-and-help.md` §5). Installed once from `UI.init`.
+ * (`docs/design/keyboard-shortcuts-and-help.md` В§5). Installed once from `UI.init`.
  *
  * It owns Escape too. There must be exactly one document-level gameplay listener: two independent
  * ones both fire on the same press, which is how Escape once closed a window *underneath* a modal
- * (`DEFERRED.md` §4.13). Escape's ordered modal stack still lives in
+ * (`DEFERRED.md` В§4.13). Escape's ordered modal stack still lives in
  * `MainMenuButtonHandler.handleGlobalEscape`; this router only decides whether Escape reaches it.
  */
 internal object CommandRouter {
@@ -50,9 +50,13 @@ internal object CommandRouter {
         event: Event,
         ui: UI,
     ) {
+        if (org.osada.ui.music.MusicLibraryPresenter
+                .handleKey(event)
+        ) {
+            return
+        }
         val command = resolve(event) ?: return
-        if (!allowed(command, scope())) return
-        if (dispatch(command, ui)) event.preventDefault()
+        if (allowed(command, scope()) && dispatch(command, ui)) event.preventDefault()
     }
 
     /** The catalog entry this press means, or `null` when the press is not ours: a text control or
@@ -90,6 +94,10 @@ internal object CommandRouter {
      *  pause menu behind a dialog that is still on screen. */
     private fun closeTopmost(ui: UI): Boolean {
         when {
+            org.osada.ui.music.MusicLibraryPresenter
+                .isOpen() ->
+                org.osada.ui.music.MusicLibraryPresenter
+                    .close()
             ControlsCard.isOpen() -> ControlsCard.close()
             ConfirmCard.isOpen() -> ConfirmCard.close()
             else -> ui.mainMenuButtonHandler.handleGlobalEscape()
@@ -108,15 +116,21 @@ internal object CommandRouter {
             Scope.GAMEPLAY -> true
         }
 
+    /** Late image/layout callbacks cannot steal a library or required decision's focus. */
+    internal fun mayFocusGame(): Boolean = scope() == Scope.GAMEPLAY
+
     /**
      * Layer precedence, highest first. The briefing and the promotion dialog own the keyboard
      * outright: the briefing runs its own focused navigation, and the promotion dialog has no
      * cancel path, so neither may leak a gameplay command or an Escape.
      */
+
     internal fun scope(): Scope =
         when {
             UIBuilder.isScenarioBriefingVisible() -> Scope.NONE
             HeroPromotionPresenter.isOpen() -> Scope.NONE
+            org.osada.ui.music.MusicLibraryPresenter
+                .isOpen() -> Scope.CLOSE_ONLY
             ControlsCard.isOpen() -> Scope.CLOSE_ONLY
             ConfirmCard.isOpen() -> Scope.CLOSE_ONLY
             isVisible("ui-message") -> Scope.CLOSE_ONLY

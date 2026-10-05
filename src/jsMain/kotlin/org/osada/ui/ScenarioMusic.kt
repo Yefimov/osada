@@ -1,6 +1,6 @@
 package org.osada.ui
 
-import org.w3c.xhr.XMLHttpRequest
+import org.osada.ui.music.MusicCatalog
 
 /**
  * OG's **custom scenario music** — `.xscn` `@127`, a NUL-terminated track name gated on
@@ -32,9 +32,9 @@ import org.w3c.xhr.XMLHttpRequest
  * string so the XML stays a faithful record of what was written, and a future converted `.ogg`
  * changes only the manifest.
  *
- * An unsupported or absent track falls back to what OSADA already does between battles, which is
- * silence — never to a rejected autoplay promise, which is what a naive `Audio.play()` on a missing
- * file produces.
+ * African Drums participates in an explicitly mapped ordinary music preset. Park routes to
+ * ScenarioAmbience and never resolves as music. Missing tracks remain manifest-gated and silent;
+ * no authored musical context can start playback or override a manual pause.
  */
 object ScenarioMusic {
     const val MANIFEST_URL = "resources/sounds/music/manifest.json"
@@ -49,10 +49,18 @@ object ScenarioMusic {
     /**
      * The URL for [track], or null when it is absent, unplayable, or not listed by the manifest.
      *
+     * A cache-only lookup; production uses [resolve] to wait asynchronously for the allow-list.
      * Public so a caller can tell "there is a track" from "it is playing", which the settings screen
      * would need before it can offer to turn scenario music off.
      */
     fun urlFor(track: String?): String? {
+        if (isEnvironment(track)) return null
+        return legacyUrlFor(track)
+    }
+
+    internal fun isEnvironment(track: String?): Boolean = track?.trim()?.lowercase() == "amb_field.mp3"
+
+    private fun legacyUrlFor(track: String?): String? {
         val name = track?.trim()?.lowercase()?.takeIf { it.isNotEmpty() } ?: return null
         return candidates(name).firstOrNull { it in manifest() }?.let { MUSIC_PATH + it }
     }
@@ -77,40 +85,57 @@ object ScenarioMusic {
         return PLAYABLE.map { "$stem.$it" }
     }
 
-    /**
-     * Starts [track], or silences the music channel when this battle has none it can play.
-     *
-     * **The stop is the point of the `else`.** This used to `return` on an absent or unplayable
-     * track, which left the PREVIOUS battle's score running underneath the new one: only 23 of the
-     * 502 deployed scenarios have a playable track, so the common transition is exactly the one
-     * that took the early exit. `Sound.startMusic` stops what is playing before it starts anything,
-     * so a battle that HAS a track was never affected -- which is why the leak was invisible on the
-     * scenarios anyone was testing with.
-     */
-    fun play(track: String?) {
-        val url = urlFor(track)
-        if (url == null) Sound.stopMusic() else Sound.startMusic(url)
+    /** Updates authored context only. My mix and a user pause survive every scenario transition. */
+    fun play(
+        track: String?,
+        context: String? = track,
+    ) {
+        ScenarioAmbience.context(track, context)
     }
 
-    private fun manifest(): Set<String> {
-        available?.let { return it }
-        val names =
-            try {
-                val request = XMLHttpRequest()
-                request.open("GET", MANIFEST_URL, false)
-                request.send()
-                if (request.status.toInt() != 200) {
-                    emptySet()
-                } else {
-                    val parsed = JSON.parse<dynamic>(request.responseText)
-                    val length = parsed.length as? Int ?: 0
-                    (0 until length).mapNotNull { (parsed[it] as? String)?.lowercase() }.toSet()
-                }
-            } catch (_: Throwable) {
-                emptySet()
-            }
-        available = names
-        return names
+    private var loading = false
+    private val waiters = mutableListOf<() -> Unit>()
+
+    /** Asynchronous legacy allow-list resolution, shared across concurrent scenario loads. */
+    fun resolve(
+        track: String?,
+        done: (String?) -> Unit,
+    ) {
+        if (track.isNullOrBlank()) {
+            done(null)
+            return
+        }
+        ensureManifest { done(urlFor(track)) }
+    }
+
+    internal fun resolveEnvironment(
+        track: String?,
+        done: (String?) -> Unit,
+    ) {
+        if (!isEnvironment(track)) {
+            done(null)
+            return
+        }
+        ensureManifest { done(legacyUrlFor(track)) }
+    }
+
+    private fun manifest(): Set<String> = available ?: emptySet()
+
+    private fun ensureManifest(done: () -> Unit) {
+        if (available != null) {
+            done()
+            return
+        }
+        waiters.add(done)
+        if (loading) return
+        loading = true
+        MusicCatalog.loadJson(MANIFEST_URL) { data ->
+            available = MusicCatalog.strings(data).map { it.lowercase() }.toSet()
+            loading = false
+            val callbacks = waiters.toList()
+            waiters.clear()
+            callbacks.forEach { it() }
+        }
     }
 
     /** Installs a manifest without any network access, for tests. */
@@ -120,5 +145,57 @@ object ScenarioMusic {
 
     internal fun resetForTest() {
         available = null
+        loading = false
+        waiters.clear()
+    }
+}
+
+/** One environmental source: precipitation wins over the current authored Park loop. */
+internal object ScenarioAmbience {
+    private var generation = 0
+    private var active = false
+    private var park: String? = null
+    private var sky = 0
+    private var contextKey: String? = null
+    private var authoredTrack: String? = null
+
+    fun context(
+        track: String?,
+        key: String?,
+    ) {
+        if (active && key == contextKey && track == authoredTrack) return
+        contextKey = key
+        authoredTrack = track
+        val token = ++generation
+        active = key != null
+        park = null
+        sky = 0
+        Sound.stopAmbient()
+        if (!active) return
+        ScenarioMusic.resolveEnvironment(track) { url ->
+            if (token == generation && active) {
+                park = url
+                update()
+            }
+        }
+    }
+
+    fun weather(atmospheric: Int) {
+        sky = atmospheric
+        update()
+    }
+
+    private fun update() {
+        val url =
+            if (!active) {
+                null
+            } else {
+                when (sky) {
+                    2 -> "resources/sounds/weather/rain.mp3"
+                    3 -> "resources/sounds/weather/winter.mp3"
+                    else -> park
+                }
+            }
+        if (url == null) Sound.stopAmbient() else Sound.startAmbient(url)
     }
 }

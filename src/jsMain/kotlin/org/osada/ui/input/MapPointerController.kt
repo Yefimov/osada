@@ -46,6 +46,7 @@ internal class MapPointerController(
     }
 
     private fun onDown(event: dynamic) {
+        if (musicOwnsInput) return
         val sample = sampleOf(event)
         val game = byId("game")?.asDynamic()
         // Claimed here rather than opportunistically later: the map owns every touch that starts
@@ -65,15 +66,26 @@ internal class MapPointerController(
     }
 
     private fun onMove(event: dynamic) {
+        if (musicOwnsInput) return
         val sample = sampleOf(event)
         run(reducer.reduce(GestureInput.Move(sample)), sample)
     }
 
     private fun onUp(event: dynamic) {
+        if (musicOwnsInput) return
         val sample = sampleOf(event)
         releasePointerCapture(element, sample.pointerId)
         run(reducer.reduce(GestureInput.Up(sample)), sample)
     }
+
+    private val musicOwnsInput: Boolean
+        get() {
+            val open =
+                org.osada.ui.music.MusicLibraryPresenter
+                    .isOpen()
+            if (open) suppress("music-library")
+            return open
+        }
 
     private fun onCancel(event: dynamic) {
         val sample = sampleOf(event)
@@ -126,9 +138,11 @@ internal class MapPointerController(
         longPressTimer =
             window.setTimeout({
                 longPressTimer = 0
-                val effects = reducer.reduce(GestureInput.LongPressElapsed(pointerId))
-                if (effects.isNotEmpty()) vibrate()
-                run(effects, null)
+                if (!musicOwnsInput) {
+                    val effects = reducer.reduce(GestureInput.LongPressElapsed(pointerId))
+                    if (effects.isNotEmpty()) vibrate()
+                    run(effects, null)
+                }
             }, GestureConstants.LONG_PRESS_DELAY_MS.toInt())
     }
 

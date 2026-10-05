@@ -378,9 +378,8 @@ internal object StartMenuSettingsBuilder {
                     ?: uiSettings.ambientVolume
             Sound.refreshAmbientVolume() // hear it while adjusting, not on next weather change
         }
-        // The scenario score's own level. Separate from Ambient since 2026-09-02 (user request):
-        // both are continuous loops, but the weather is part of the battle and the score runs
-        // under it, and sharing one slider meant silencing either one silenced the other.
+
+        // Shared music preference: the library and Settings change the same live volume.
         sliderSetting(
             "musicvolume",
             "settings.slider.music_volume.label",
@@ -392,7 +391,7 @@ internal object StartMenuSettingsBuilder {
             uiSettings.musicVolume =
                 (byId("musicvolume")?.asDynamic()?.value as? String)?.toDoubleOrNull()
                     ?: uiSettings.musicVolume
-            Sound.refreshMusicVolume() // a track starts once per battle; without this it waits
+            Sound.refreshMusicVolume()
         }
     }
 

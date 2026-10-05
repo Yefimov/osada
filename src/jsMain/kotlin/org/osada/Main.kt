@@ -25,6 +25,12 @@ fun main() {
             globals.CombatLog = CombatLog
             UnitDescriptions.load()
             console.log("[osada] calling game.init()")
+            org.osada.ui.music.MusicSession
+                .initialize()
+            org.osada.ui.music.MusicMiniPlayer
+                .install()
+            org.osada.ui.music.MusicLibraryPresenter
+                .install()
             game.init()
             console.log("[osada] game.init() returned")
         }

@@ -50,11 +50,18 @@ internal object HeroPromotionPresenter {
     fun isOpen(): Boolean = byId(BOX_ID) != null
 
     private fun showNext() {
-        val announcement = queue.removeFirstOrNull() ?: return
+        val announcement =
+            queue.removeFirstOrNull() ?: run {
+                MessageDialogs.resumeDynamicMessages("decision-promotion")
+                return
+            }
         show(announcement)
     }
 
     private fun show(announcement: HeroPromotionAnnouncement) {
+        MessageDialogs.suspendDynamicMessages("decision-promotion")
+        org.osada.ui.music.MusicLibraryPresenter
+            .yieldToDecision()
         val mainBody = byId("mainbody") ?: return
         val box = addTag(mainBody, "div")
         box.className = "osada-hpp"
@@ -77,6 +84,7 @@ internal object HeroPromotionPresenter {
             )
 
         announcement.choices.forEach { choice -> addChoice(box, announcement.heroId.value, choice) }
+        (box.querySelector(".osada-hpp__choice") as? HTMLElement)?.focus()
     }
 
     private fun addChoice(

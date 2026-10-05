@@ -23,6 +23,10 @@ internal object OrientationGate {
 
     fun update(mode: LayoutMode) {
         val shouldShow = mode == LayoutMode.PHONE_PORTRAIT && !dismissedForSession
+        if (shouldShow) {
+            org.osada.ui.music.MusicLibraryPresenter
+                .yieldToDecision()
+        }
         val gate = if (shouldShow) ensureGate() else document.getElementById(GATE_ID)?.asDynamic()
         gate?.style?.display = if (shouldShow) "flex" else "none"
     }

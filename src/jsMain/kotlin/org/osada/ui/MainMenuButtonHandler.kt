@@ -164,6 +164,10 @@ internal class MainMenuButtonHandler(
      */
     fun handleGlobalEscape() {
         when {
+            org.osada.ui.music.MusicLibraryPresenter
+                .isOpen() ->
+                org.osada.ui.music.MusicLibraryPresenter
+                    .close()
             isVisible("ui-message") -> byId("uiokbut")?.click()
             // Same `--z-msg` tier as `ui-message`, and previously unregistered here: Escape fell
             // through to the pause menu and opened it UNDER the popup that was still on screen.

@@ -216,8 +216,13 @@ class Game {
         applyPendingCoreUnitRestore()
         // The restored period, parked by `GameStateRestore`, is attached here rather than when the UI
         // eventually draws the map (see `onScenarioLoadFinished`).
+        ScenarioMusic.play(scenario?.musicTrack, scenario?.file)
+        org.osada.ui.music.MusicSession
+            .context(campaign?.file, scenario?.file, scenario?.musicTrack)
         org.osada.ui.WeatherModel
             .init(scenario)
+        org.osada.ui.ScenarioAmbience
+            .weather(scenario?.atmosferic ?: 0)
         // A restored campaign battle never runs `handleCampaignScenarioLoaded`, which is where the
         // hero system learns its campaign/scenario/year -- so a restore used to leave that context
         // null, or holding whatever run had been loaded before it.
@@ -300,15 +305,19 @@ class Game {
         // the time this runs. Re-seeding here on a restore would re-roll every outcome still ahead
         // of the save (`rules/GameRandomSource`).
         if (!fromRestore) GameRandomSource.start(Date.now().toLong())
+        ScenarioMusic.play(scenario?.musicTrack, scenario?.file)
+        org.osada.ui.music.MusicSession
+            .context(campaign?.file, scenario?.file, scenario?.musicTrack)
         // The weather model is started by the GAME as soon as the battle exists, not by the UI once
         // the map is drawn: its draws come from the stream just seeded, in a fixed order, and a
         // headless host must produce them too. `WeatherModel.init` is idempotent per scenario.
         org.osada.ui.WeatherModel
             .init(scenario)
+        org.osada.ui.ScenarioAmbience
+            .weather(scenario?.atmosferic ?: 0)
         if (fromRestore) scenario?.let { it.turnMessageShownThrough = it.map.turn }
-        // OG's custom music track for this battle. `ScenarioMusic` plays the licensed files listed
-        // by its manifest and stays silent for an absent source or unsupported format.
-        ScenarioMusic.play(scenario?.musicTrack)
+        // Publish authored context without restarting My mix or reversing a user pause.
+
         // The battle's own translated prose (`<event message>`, `<reinforce message>`). Started
         // here so the bundle is in place long before the first event can fire -- the earliest
         // evaluation happens after the UI's image cache completes, which is far slower than a

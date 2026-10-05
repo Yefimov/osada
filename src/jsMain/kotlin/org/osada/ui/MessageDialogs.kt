@@ -17,10 +17,14 @@ internal object MessageDialogs {
         narrative: Boolean = false,
         callback: (() -> Unit)? = null,
     ) {
+        if (title.isNotBlank() || body.isNotBlank()) suspendDynamicMessages("decision-message")
+        org.osada.ui.music.MusicLibraryPresenter
+            .yieldToDecision()
         // A message with nothing to say must never paint an empty popup over the UI. When a
         // callback is pending we still have to run the flow, just without the box.
         if (title.isBlank() && body.isBlank()) {
             makeHidden("ui-message")
+            resumeDynamicMessages("decision-message")
             if (callback != null) {
                 callback()
             } else {
@@ -42,6 +46,8 @@ internal object MessageDialogs {
         titleEl?.innerHTML = title
         messageEl?.innerHTML = body
         makeVisible("ui-message")
+        uiOkBut?.setAttribute("tabindex", "0")
+        uiOkBut?.focus()
         messageEl?.scrollTop = 0.0
         js("if (typeof game !== 'undefined') game.uiMessageClicked = false")
         uiOkBut?.onclick =
@@ -49,11 +55,13 @@ internal object MessageDialogs {
                 { _: org.w3c.dom.events.MouseEvent ->
                     makeHidden("ui-message")
                     callback()
+                    if (!isVisible("ui-message")) resumeDynamicMessages("decision-message")
                 }
             } else {
                 { _: org.w3c.dom.events.MouseEvent ->
                     makeHidden("ui-message")
                     js("if (typeof game !== 'undefined') game.uiMessageClicked = true")
+                    resumeDynamicMessages("decision-message")
                 }
             }
     }
@@ -89,7 +97,8 @@ internal object MessageDialogs {
     /** The box currently on screen, so [suspendDynamicMessages] can put it back in the queue
      *  rather than throw the player's unread announcement away. */
     private var onScreenDynamicMessage: DynamicMessage? = null
-    private var dynamicMessagesSuspended = false
+    private val dynamicMessageHolds = mutableSetOf<String>()
+    private val dynamicMessagesSuspended: Boolean get() = dynamicMessageHolds.isNotEmpty()
 
     fun messageDynamic(
         title: String,
@@ -107,7 +116,7 @@ internal object MessageDialogs {
         pendingDynamicMessages.clear()
         dynamicMessageShowing = false
         onScreenDynamicMessage = null
-        dynamicMessagesSuspended = false
+        dynamicMessageHolds.clear()
         removeDynamicBox()
     }
 
@@ -123,9 +132,10 @@ internal object MessageDialogs {
      * `ui-message` needs no equivalent — its opener dismisses it through its own OK path, which is
      * what runs the callback it may be holding. These boxes carry no such flow.
      */
-    fun suspendDynamicMessages() {
-        if (dynamicMessagesSuspended) return
-        dynamicMessagesSuspended = true
+    fun suspendDynamicMessages(owner: String = "menu") {
+        val alreadyHeld = dynamicMessagesSuspended
+        dynamicMessageHolds.add(owner)
+        if (alreadyHeld) return
         onScreenDynamicMessage?.let { pendingDynamicMessages.add(0, it) }
         onScreenDynamicMessage = null
         dynamicMessageShowing = false
@@ -144,9 +154,9 @@ internal object MessageDialogs {
     }
 
     /** Reopens whatever [suspendDynamicMessages] put back. A no-op if nothing was suspended. */
-    fun resumeDynamicMessages() {
-        if (!dynamicMessagesSuspended) return
-        dynamicMessagesSuspended = false
+    fun resumeDynamicMessages(owner: String = "menu") {
+        dynamicMessageHolds.remove(owner)
+        if (dynamicMessagesSuspended) return
         showNextDynamicMessage()
     }
 

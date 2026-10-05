@@ -130,6 +130,10 @@ internal object ScenarioBriefingController {
         reviewing: Boolean = false,
     ) {
         close(runCallback = false)
+        org.osada.ui.MessageDialogs
+            .suspendDynamicMessages("decision-briefing")
+        org.osada.ui.music.MusicLibraryPresenter
+            .yieldToDecision()
 
         briefing = parsed
         currentSource = source
@@ -259,5 +263,9 @@ internal object ScenarioBriefingController {
         previousFocus = null
 
         if (runCallback) callback?.invoke()
+        if (view == null) {
+            org.osada.ui.MessageDialogs
+                .resumeDynamicMessages("decision-briefing")
+        }
     }
 }

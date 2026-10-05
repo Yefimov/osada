@@ -2,6 +2,7 @@ package org.osada.ui
 
 import kotlinx.browser.document
 import kotlinx.browser.window
+import org.osada.ui.keyboard.CommandRouter
 import org.w3c.dom.Element
 import org.w3c.dom.HTMLElement
 
@@ -98,12 +99,26 @@ private fun findMatchInSubRules(
 
 fun makeVisible(id: String) {
     byId(id)?.style?.display = "inline"
-    byId("game")?.focus()
+    if (id in setOf("smMain", "smCamp", "smScen", "startmenu")) {
+        org.osada.ui.music.MusicMiniPlayer
+            .reconcilePlacement()
+    }
+    if (CommandRouter.mayFocusGame()
+    ) {
+        byId("game")?.focus()
+    }
 }
 
 fun makeHidden(id: String) {
     byId(id)?.style?.display = "none"
-    byId("game")?.focus()
+    if (id in setOf("smMain", "smCamp", "smScen")) {
+        org.osada.ui.music.MusicMiniPlayer
+            .reconcilePlacement()
+    }
+    if (CommandRouter.mayFocusGame()
+    ) {
+        byId("game")?.focus()
+    }
 }
 
 fun isVisible(id: String): Boolean {

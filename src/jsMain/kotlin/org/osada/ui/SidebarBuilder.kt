@@ -17,6 +17,10 @@ internal object SidebarBuilder {
     private const val COLLAPSE_KEY = "osada-sidebar-collapsed"
 
     fun buildSidebar() {
+        org.osada.ui.music.MusicMiniPlayer
+            .mount("osadaMusicSidebar")
+        org.osada.ui.music.MusicMiniPlayer
+            .mount("osadaMusicRail")
         val hex = byId("hex")
         hex?.let { toggleButton(it, uiSettings.hexGrid) }
         hex?.onclick = { _: org.w3c.dom.events.MouseEvent -> GameHolder.instance?.ui?.mainMenuButton("hex") }

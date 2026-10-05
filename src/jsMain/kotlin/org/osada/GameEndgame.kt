@@ -313,12 +313,13 @@ fun Game.cleanup() {
         .stop()
     org.osada.ui.WeatherModel
         .stop()
-    // `WeatherRenderer.stop()` already silences the weather loop; the scenario score is the other
-    // audio channel and nothing was stopping it, so a battle with a track kept playing it through
-    // the teardown -- into the menu, into the next scenario's briefing, and underneath a next
-    // battle that has no track of its own. Same class of leak as the two below.
-    org.osada.ui.Sound
-        .stopMusic()
+    // User-owned music outlives the scenario; authored source finishes its current recording once.
+    org.osada.ui.music.MusicLibraryPresenter
+        .yieldToDecision()
+    org.osada.ui.ScenarioMusic
+        .play(null)
+    org.osada.ui.music.MusicSession
+        .context(null, null, null)
     // Nothing about the battle just finished may follow the player into the next one. Both of these
     // outlived the transition: HeroCampaign's queues are on a long-lived object cleared only by
     // reset() (a NEW RUN, not a new scenario), and MessageDialogs' boxes are plain DOM nodes under

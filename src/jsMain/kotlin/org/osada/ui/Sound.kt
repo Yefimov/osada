@@ -229,91 +229,136 @@ object Sound {
         )
     val dummy = SoundSprite(listOf(""))
 
-    /** Looping ambient weather sound (rain/winter). Single instance: starting replaces the previous.
-     *  Respects the mute setting. Browsers may defer playback until the first user interaction. */
+    /** Environment is independent of unit mute and the user-owned music session. */
     private var ambient: dynamic = null
+    private var ambientUrl: String? = null
+    private var ambientGeneration = 0
+    private var ambientPending = false
+    private var ambientInstalled = false
+    private var ambientOwner = false
+    private val ambientToken =
+        kotlin.js.Date
+            .now()
+            .toString() + kotlin.random.Random.nextDouble()
+    private const val AMBIENT_OWNER_KEY = "osada-environment-owner"
 
     fun startAmbient(url: String) {
+        installAmbientEvents()
+        if (ambientUrl == url) return
         stopAmbient()
-        if (uiSettings.muteUnitSounds) return
-        try {
-            val a = js("new Audio()")
-            a.src = url
-            a.loop = true
-            // Own slider (Settings > Sound > Ambient volume): a continuous background loop
-            // shouldn't be chained to the discrete unit/fire cue level.
-            a.volume = uiSettings.ambientVolume
-            // play() returns a promise that rejects if autoplay is blocked (no user interaction yet);
-            // swallow it so it isn't an "Uncaught (in promise)". Sound starts after the first click.
-            val p = a.play()
-            if (p != null && p != undefined) p.catch { }
-            ambient = a
-        } catch (_: Throwable) {
-            // Audio may be unavailable (headless/test) or autoplay-blocked; ignore.
-        }
+        ambientUrl = url
+        refreshAmbientVolume()
     }
 
     fun stopAmbient() {
+        ambientGeneration++
+        ambientPending = false
+        ambientUrl = null
+        suspendAmbient()
+    }
+
+    private fun suspendAmbient() {
+        ambientGeneration++
+        ambientPending = false
         try {
             ambient?.pause()
         } catch (_: Throwable) {
         }
         ambient = null
+        try {
+            if (kotlinx.browser.localStorage.getItem(AMBIENT_OWNER_KEY) == ambientToken) {
+                kotlinx.browser.localStorage.removeItem(AMBIENT_OWNER_KEY)
+            }
+        } catch (_: Throwable) {
+        }
+        ambientOwner = false
     }
 
-    /** Live-applies the Ambient slider to a loop that is already playing (the loop only reads
-     *  the setting when it starts, i.e. on weather change). */
+    private fun installAmbientEvents() {
+        if (ambientInstalled) return
+        ambientInstalled = true
+        listOf("pointerdown", "keydown").forEach { type ->
+            kotlinx.browser.document.addEventListener(type, { event ->
+                if (event.isTrusted && ambientPending && ambientOwner) playAmbient()
+            }, true)
+        }
+        kotlinx.browser.document.addEventListener("visibilitychange", {
+            if (ambientVisible()) refreshAmbientVolume() else suspendAmbient()
+        })
+        kotlinx.browser.window.addEventListener("pagehide", { suspendAmbient() })
+        kotlinx.browser.window.addEventListener("storage", { event ->
+            val raw = event.asDynamic()
+            val otherOwner = raw.newValue != ambientToken && raw.newValue != null
+            val lostOwnership = kotlinx.browser.localStorage.getItem(AMBIENT_OWNER_KEY) != ambientToken
+            if (raw.key == AMBIENT_OWNER_KEY && otherOwner && lostOwnership) {
+                suspendAmbient()
+            }
+        })
+    }
+
+    private fun ambientVisible(): Boolean =
+        kotlinx.browser.document
+            .asDynamic()
+            .visibilityState == "visible"
+
+    private fun playAmbient() {
+        val audio = ambient ?: return
+        val token = ambientGeneration
+        ambientPending = false
+        try {
+            val promise = audio.play()
+            if (promise != null && promise != undefined) {
+                promise.then({ _: dynamic ->
+                    if (token != ambientGeneration || !ambientOwner || !ambientVisible()) audio.pause()
+                    null
+                }, { error: dynamic ->
+                    if (token == ambientGeneration) ambientPending = error?.name == "NotAllowedError"
+                    null
+                })
+            }
+        } catch (_: Throwable) {
+            ambientPending = false
+        }
+    }
+
+    /** Zero cancels pending retries; raising the independent environment slider takes effect now. */
     fun refreshAmbientVolume() {
-        try {
-            ambient?.volume = uiSettings.ambientVolume
-        } catch (_: Throwable) {
+        if (!ambientVisible() || uiSettings.ambientVolume <= 0) {
+            suspendAmbient()
+            return
+        }
+        val url = ambientUrl ?: return
+        if (ambient == null) {
+            try {
+                kotlinx.browser.localStorage.setItem(AMBIENT_OWNER_KEY, ambientToken)
+                ambientOwner = true
+                val audio = js("new Audio()")
+                audio.src = url
+                audio.loop = true
+                audio.volume = uiSettings.ambientVolume
+                ambient = audio
+                playAmbient()
+            } catch (_: Throwable) {
+                ambientPending = false
+            }
+        } else {
+            ambient.volume = uiSettings.ambientVolume
         }
     }
 
-    /** The same, for the scenario score, which starts once per battle and would otherwise not hear
-     *  the slider until the next scenario. */
+    /** Compatibility seam: both Settings and library use the independent music preference. */
     fun refreshMusicVolume() {
-        try {
-            music?.volume = uiSettings.musicVolume
-        } catch (_: Throwable) {
-        }
+        org.osada.ui.music.MusicSession
+            .setVolume(uiSettings.musicVolume)
     }
 
-    /**
-     * OG's per-scenario music track (`ui/ScenarioMusic`).
-     *
-     * A SECOND looping element rather than a reuse of [ambient]: the weather ambience owns that one
-     * and restarts it whenever the weather changes, so sharing it would have rain silence the battle
-     * music and the music silence the rain. It reads its OWN level ([UiSettings.musicVolume]) --
-     * it borrowed the Ambient slider when the track first shipped, which meant a player who wanted
-     * the rain but not the score, or the score but not the rain, had no way to say so.
-     */
-    private var music: dynamic = null
-
+    /** Music playback is user-owned. Legacy callers publish scenario context rather than autoplay. */
     fun startMusic(url: String) {
-        stopMusic()
-        if (uiSettings.muteUnitSounds) return
-        try {
-            val a = js("new Audio()")
-            a.src = url
-            a.loop = true
-            a.volume = uiSettings.musicVolume
-            // Autoplay is blocked until the first interaction; swallow the rejection so it is not an
-            // "Uncaught (in promise)", exactly as `startAmbient` does.
-            val p = a.play()
-            if (p != null && p != undefined) p.catch { }
-            music = a
-        } catch (_: Throwable) {
-            // Audio may be unavailable (headless/test) or autoplay-blocked; ignore.
-        }
+        ScenarioMusic.play(url.substringAfterLast('/'))
     }
 
     fun stopMusic() {
-        try {
-            music?.pause()
-        } catch (_: Throwable) {
-        }
-        music = null
+        ScenarioMusic.play(null)
     }
 }
 

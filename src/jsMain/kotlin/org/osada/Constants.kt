@@ -569,12 +569,17 @@ class UiSettings {
     // discrete unit/fire cues — replaces the old hardcoded soundVolume*0.8 coupling.
     var ambientVolume: Double = 0.4
 
-    // The scenario's own music track ([org.osada.ui.ScenarioMusic]) is a THIRD level, not a second
-    // user of the ambient one. It used to share `ambientVolume`, so turning the rain down turned
-    // the score down with it and there was no way to keep one without the other — two continuous
-    // loops that happen to both be continuous are not the same thing to a player. Default lower
-    // than the ambience: a score runs under the battle, the weather is part of it.
-    var musicVolume: Double = 0.3
+    // Compatibility projection; osada-music-v1 owns music volume, independently of game saves.
+    var musicVolume: Double
+        get() {
+            org.osada.ui.music.MusicPreferences
+                .load()
+            return org.osada.ui.music.MusicPreferences.volume
+        }
+        set(value) {
+            org.osada.ui.music.MusicSession
+                .setVolume(value)
+        }
     var deployMode: Boolean = false
 
     /** Whether the selected formation is choosing a hex to shell (OG 9.2, `rules/Barrage`).
@@ -694,6 +699,7 @@ class UiSettings {
     @Suppress("unused")
     @JsName("toJSON")
     fun toJSON(): dynamic {
+        // Music preferences and queue/playhead live exclusively in osada-music-v1.
         val o = js("{}")
         o.airMode = airMode
         o.strategicZoom = strategicZoom

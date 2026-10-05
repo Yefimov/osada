@@ -38,6 +38,9 @@ internal object ConfirmCard {
         onConfirm: () -> Unit,
     ) {
         close()
+        MessageDialogs.suspendDynamicMessages("decision-confirm")
+        org.osada.ui.music.MusicLibraryPresenter
+            .yieldToDecision()
         val mainBody = byId("mainbody") ?: return
         previouslyFocused = document.activeElement as? HTMLElement
 
@@ -105,5 +108,6 @@ internal object ConfirmCard {
         }
         previouslyFocused?.focus()
         previouslyFocused = null
+        MessageDialogs.resumeDynamicMessages("decision-confirm")
     }
 }

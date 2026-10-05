@@ -22,6 +22,19 @@ import kotlin.test.assertTrue
  * files while the listed-id tests cover the deployed paths.
  */
 class AuthoredAudioTest {
+    @Test
+    fun parkIsManifestGatedEnvironmentAndNeverMusicalPlayback() {
+        ScenarioMusic.setManifestForTest(setOf("amb_field.mp3", "africa2.mp3"))
+        assertNull(ScenarioMusic.urlFor("AMB_FIELD.mp3"))
+        var resolved: String? = null
+        ScenarioMusic.resolveEnvironment("AMB_FIELD.mp3") { resolved = it }
+        assertEquals("resources/sounds/music/amb_field.mp3", resolved)
+        assertEquals("resources/sounds/music/africa2.mp3", ScenarioMusic.urlFor("AFRICA2.mp3"))
+        ScenarioMusic.setManifestForTest(emptySet())
+        ScenarioMusic.resolveEnvironment("amb_field.mp3") { resolved = it }
+        assertNull(resolved)
+    }
+
     private companion object {
         const val EQID = 610
         const val MOVE_ID = 1402
